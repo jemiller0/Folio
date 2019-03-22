@@ -27,10 +27,11 @@ namespace FolioConsoleApplication
                 traceSource.TraceEvent(TraceEventType.Information, 0, "Starting");
                 if (args.Length == 0)
                 {
-                    Console.Error.WriteLine("Usage: dotnet FolioConsoleApplication.dll [-Api] [-Delete] [-Load] [-Save] [-Verbose] [-AddressTypesPath <string>] [-AddressTypesWhere <string>] [-GroupsPath <string>] [-GroupsWhere <string>] [-ProxiesPath <string>] [-ProxiesWhere <string>] [-UsersPath <string>] [-UsersWhere <string>]");
-                    traceSource.TraceEvent(TraceEventType.Critical, 0, "Usage: dotnet FolioConsoleApplication.dll [-Api] [-Delete] [-Load] [-Save] [-Verbose] [-AddressTypesPath <string>] [-AddressTypesWhere <string>] [-GroupsPath <string>] [-GroupsWhere <string>] [-ProxiesPath <string>] [-ProxiesWhere <string>] [-UsersPath <string>] [-UsersWhere <string>]");
+                    Console.Error.WriteLine("Usage: dotnet FolioConsoleApplication.dll [-All] [-Api] [-Delete] [-Load] [-Save] [-Verbose] [-AddressTypesPath <string>] [-AddressTypesWhere <string>] [-GroupsPath <string>] [-GroupsWhere <string>] [-ProxiesPath <string>] [-ProxiesWhere <string>] [-UsersPath <string>] [-UsersWhere <string>]");
+                    traceSource.TraceEvent(TraceEventType.Critical, 0, "Usage: dotnet FolioConsoleApplication.dll [-All] [-Api] [-Delete] [-Load] [-Save] [-Verbose] [-AddressTypesPath <string>] [-AddressTypesWhere <string>] [-GroupsPath <string>] [-GroupsWhere <string>] [-ProxiesPath <string>] [-ProxiesWhere <string>] [-UsersPath <string>] [-UsersWhere <string>]");
                     return -1;
                 }
+                var all = args.Any(s3 => s3.Equals("-All", StringComparison.OrdinalIgnoreCase));
                 var api = args.Any(s3 => s3.Equals("-Api", StringComparison.OrdinalIgnoreCase));
                 var delete = args.Any(s3 => s3.Equals("-Delete", StringComparison.OrdinalIgnoreCase));
                 var load = args.Any(s3 => s3.Equals("-Load", StringComparison.OrdinalIgnoreCase));
@@ -43,6 +44,13 @@ namespace FolioConsoleApplication
                 var groupsWhere = args.SkipWhile(s3 => !s3.Equals("-GroupsWhere", StringComparison.OrdinalIgnoreCase)).Skip(1).FirstOrDefault();
                 var proxiesWhere = args.SkipWhile(s3 => !s3.Equals("-ProxiesWhere", StringComparison.OrdinalIgnoreCase)).Skip(1).FirstOrDefault();
                 var usersWhere = args.SkipWhile(s3 => !s3.Equals("-UsersWhere", StringComparison.OrdinalIgnoreCase)).Skip(1).FirstOrDefault();
+                if (all)
+                {
+                    addressTypesPath = "addresstypes.json";
+                    groupsPath = "groups.json";
+                    proxiesPath = "proxies.json";
+                    usersPath = "users.json";
+                }
                 if (save && addressTypesPath != null) SaveAddressTypes(addressTypesPath, addressTypesWhere, api);
                 if (save && groupsPath != null) SaveGroups(groupsPath, groupsWhere, api);
                 if (save && proxiesPath != null) SaveProxies(proxiesPath, proxiesWhere, api);
