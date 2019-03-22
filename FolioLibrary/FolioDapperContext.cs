@@ -413,4 +413,18 @@ namespace FolioLibrary
             }
         }
     }
+
+    public class DbProviderFactories
+    {
+        internal static DbProviderFactory GetFactory(string providerName)
+        {
+            if (providerName == "MySql.Data.MySqlClient" || providerName == "MySql.Data.MySqlClient2")
+                throw new NotSupportedException();
+            else if (providerName == "Npgsql")
+                return NpgsqlFactory.Instance;
+            else if (providerName == "System.Data.SqlClient")
+                throw new NotSupportedException();
+            throw new NotImplementedException();
+        }
+    }
 }
