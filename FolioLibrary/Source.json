@@ -1,0 +1,19 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "description": "purchase order line source",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "code": {
+      "description": "the source code",
+      "type": "string"
+    },
+    "description": {
+      "description": "description of the source",
+      "type": "string"
+    }
+  },
+  "required": [
+    "code"
+  ]
+}

@@ -1,0 +1,21 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "description": "details about an order claim",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "claimed": {
+      "description": "whether or not this purchase order line has been claimed",
+      "type": "boolean"
+    },
+    "sent": {
+      "description": "date a claim was sent",
+      "type": "string",
+      "format": "date-time"
+    },
+    "grace": {
+      "description": "the number of days after the expected receipt date during which claims should not be processed",
+      "type": "integer"
+    }
+  }
+}

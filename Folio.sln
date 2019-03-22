@@ -5,6 +5,8 @@ VisualStudioVersion = 15.0.28307.489
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FolioLibrary", "FolioLibrary\FolioLibrary.csproj", "{91B05C50-998F-4E7B-9152-D1FC04491DD2}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FolioConsoleApplication", "FolioConsoleApplication\FolioConsoleApplication.csproj", "{5916FE4B-2056-4301-A1CD-87EF3E29EC7D}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,10 @@ Global
 		{91B05C50-998F-4E7B-9152-D1FC04491DD2}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{91B05C50-998F-4E7B-9152-D1FC04491DD2}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{91B05C50-998F-4E7B-9152-D1FC04491DD2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5916FE4B-2056-4301-A1CD-87EF3E29EC7D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5916FE4B-2056-4301-A1CD-87EF3E29EC7D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5916FE4B-2056-4301-A1CD-87EF3E29EC7D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5916FE4B-2056-4301-A1CD-87EF3E29EC7D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

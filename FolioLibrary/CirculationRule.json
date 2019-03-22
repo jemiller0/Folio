@@ -1,0 +1,20 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "title": "Circulation Rules Schema",
+  "description": "Circulation rules, described in a bespoke syntax",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "id": {
+      "description": "ID of the circulation rules (should only ever be a single record)",
+      "type": "string"
+    },
+    "rulesAsText": {
+      "description": "Circulation rules represented in text using the bespoke format",
+      "type": "string"
+    }
+  },
+  "required": [
+    "rulesAsText"
+  ]
+}

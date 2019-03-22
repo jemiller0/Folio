@@ -1,0 +1,90 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "description": "A budget",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "id": {
+      "description": "UUID",
+      "type": [
+        "string",
+        "null"
+      ],
+      "pattern": "^[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12}$"
+    },
+    "name": {
+      "description": "The name of the budget",
+      "type": "string"
+    },
+    "budget_status": {
+      "description": "The status of the budget",
+      "type": "string"
+    },
+    "code": {
+      "description": "The code of the budget",
+      "type": "string"
+    },
+    "limit_enc_percent": {
+      "description": "The encumbrance percentage limit for this budget",
+      "type": "number"
+    },
+    "limit_exp_percent": {
+      "description": "The expenditure percentage limit for this budget",
+      "type": "number"
+    },
+    "allocation": {
+      "description": "The amount currently allocated to this budget",
+      "type": "number"
+    },
+    "awaiting_payment": {
+      "description": "The amount currently awaiting payment for this budget",
+      "type": "number"
+    },
+    "available": {
+      "description": "The amount currently available for this budge",
+      "type": "number"
+    },
+    "encumbered": {
+      "description": "The amount currently encumbered for this budget",
+      "type": "number"
+    },
+    "expenditures": {
+      "description": "The amount currently expended for this budget",
+      "type": "number"
+    },
+    "over_encumbrance": {
+      "description": "The amount currently over-encumbered for this budget",
+      "type": "number"
+    },
+    "fund_id": {
+      "description": "UUID",
+      "type": [
+        "string",
+        "null"
+      ],
+      "pattern": "^[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12}$"
+    },
+    "fiscal_year_id": {
+      "description": "UUID",
+      "type": [
+        "string",
+        "null"
+      ],
+      "pattern": "^[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12}$"
+    },
+    "tags": {
+      "id": "tags",
+      "description": "The list of tags associated with this budget",
+      "type": "array",
+      "items": {
+        "description": "UUID",
+        "type": "string",
+        "pattern": "^[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12}$"
+      }
+    }
+  },
+  "required": [
+    "name",
+    "code"
+  ]
+}

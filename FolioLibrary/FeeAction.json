@@ -1,0 +1,50 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "title": "Fee/Fine Actions Schema",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "dateAction": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "typeAction": {
+      "type": "string"
+    },
+    "comments": {
+      "type": "string"
+    },
+    "amountAction": {
+      "type": "number"
+    },
+    "balance": {
+      "type": "number"
+    },
+    "transactionInformation": {
+      "type": "string"
+    },
+    "createdAt": {
+      "type": "string"
+    },
+    "source": {
+      "type": "string"
+    },
+    "paymentMethod": {
+      "type": "string"
+    },
+    "accountId": {
+      "type": "string"
+    },
+    "userId": {
+      "type": "string"
+    },
+    "id": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "accountId",
+    "userId",
+    "id"
+  ]
+}

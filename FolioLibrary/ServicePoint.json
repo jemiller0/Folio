@@ -1,0 +1,131 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "description": "A service point",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "id": {
+      "description": "Id of service-point object",
+      "type": "string"
+    },
+    "name": {
+      "description": "service-point name, a required field",
+      "type": "string"
+    },
+    "code": {
+      "description": "service-point code, a required field",
+      "type": "string"
+    },
+    "discoveryDisplayName": {
+      "description": "display name, a required field",
+      "type": "string"
+    },
+    "description": {
+      "description": "description of the service-point",
+      "type": "string"
+    },
+    "shelvingLagTime": {
+      "description": "shelving lag time",
+      "type": "integer"
+    },
+    "pickupLocation": {
+      "description": "indicates whether or not the service point is a pickup location",
+      "type": "boolean"
+    },
+    "holdShelfExpiryPeriod": {
+      "description": "schema for time-period, which contains time interval 'duration' and the time unit",
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "duration": {
+          "description": "Duration interval",
+          "type": "integer"
+        },
+        "intervalId": {
+          "description": "Unit of time for the duration",
+          "type": "string",
+          "default": "Days",
+          "enum": [
+            "Minutes",
+            "Hours",
+            "Days",
+            "Weeks",
+            "Months"
+          ]
+        }
+      },
+      "required": [
+        "duration",
+        "intervalId"
+      ]
+    },
+    "staffSlips": {
+      "description": "List of staff slips for this service point",
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "id": {
+            "description": "The ID of the staff slip",
+            "type": "string",
+            "pattern": "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-5][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}$"
+          },
+          "printByDefault": {
+            "description": "Whether or not to print the staff slip by default",
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "id",
+          "printByDefault"
+        ]
+      }
+    },
+    "metadata": {
+      "title": "Metadata Schema",
+      "description": "Metadata about creation and changes to records, provided by the server (client should not provide)",
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "createdDate": {
+          "description": "Date and time when the record was created",
+          "type": "string",
+          "format": "date-time"
+        },
+        "createdByUserId": {
+          "description": "ID of the user who created the record",
+          "type": "string",
+          "pattern": "^[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12}$"
+        },
+        "createdByUsername": {
+          "description": "Username of the user who created the record (when available)",
+          "type": "string"
+        },
+        "updatedDate": {
+          "description": "Date and time when the record was last updated",
+          "type": "string",
+          "format": "date-time"
+        },
+        "updatedByUserId": {
+          "description": "ID of the user who last updated the record",
+          "type": "string",
+          "pattern": "^[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12}$"
+        },
+        "updatedByUsername": {
+          "description": "Username of the user who last updated the record (when available)",
+          "type": "string"
+        }
+      },
+      "required": [
+        "createdDate",
+        "createdByUserId"
+      ]
+    }
+  },
+  "required": [
+    "name",
+    "code",
+    "discoveryDisplayName"
+  ]
+}

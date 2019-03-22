@@ -1,0 +1,86 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "description": "A fund to track financial transactions",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "id": {
+      "description": "UUID",
+      "type": [
+        "string",
+        "null"
+      ],
+      "pattern": "^[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12}$"
+    },
+    "name": {
+      "description": "The name of this fund",
+      "type": "string"
+    },
+    "code": {
+      "description": "The numeric code for this fund",
+      "type": "string"
+    },
+    "created_date": {
+      "description": "The creation date of this fund",
+      "type": [
+        "string",
+        "null"
+      ],
+      "format": "date-time"
+    },
+    "fund_status": {
+      "description": "The current status of this fund",
+      "type": "string"
+    },
+    "currency": {
+      "description": "The currency used for this fund",
+      "type": "string"
+    },
+    "description": {
+      "description": "The description of this fund",
+      "type": "string"
+    },
+    "ledger_id": {
+      "description": "UUID",
+      "type": [
+        "string",
+        "null"
+      ],
+      "pattern": "^[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12}$"
+    },
+    "allocation_from": {
+      "id": "allocation_from",
+      "description": "The originating fund of the allocation",
+      "type": "array",
+      "items": {
+        "description": "UUID",
+        "type": "string",
+        "pattern": "^[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12}$"
+      }
+    },
+    "allocation_to": {
+      "id": "allocation_to",
+      "description": "The target fund of the allocation",
+      "type": "array",
+      "items": {
+        "description": "UUID",
+        "type": "string",
+        "pattern": "^[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12}$"
+      }
+    },
+    "tags": {
+      "id": "tags",
+      "description": "The list of tags associated with this fund",
+      "type": "array",
+      "items": {
+        "description": "UUID",
+        "type": "string",
+        "pattern": "^[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12}$"
+      }
+    }
+  },
+  "required": [
+    "name",
+    "code"
+  ]
+}

@@ -1,0 +1,64 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "description": "A vendor account",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "id": {
+      "description": "UUID",
+      "type": [
+        "string",
+        "null"
+      ],
+      "pattern": "^[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12}$"
+    },
+    "name": {
+      "description": "The unique name of this account",
+      "type": "string"
+    },
+    "account_no": {
+      "description": "The unique number of this account",
+      "type": "string"
+    },
+    "description": {
+      "description": "The description of this account",
+      "type": "string"
+    },
+    "app_system_no": {
+      "description": "The unique name of this group",
+      "type": "string"
+    },
+    "payment_method": {
+      "description": "The method of payment for this account",
+      "type": "string"
+    },
+    "account_status": {
+      "description": "The status of this account",
+      "type": "string"
+    },
+    "contact_info": {
+      "description": "The contact info for the account",
+      "type": "string"
+    },
+    "library_code": {
+      "description": "The library code for this account",
+      "type": "string"
+    },
+    "library_edi_code": {
+      "description": "The EDI code for this account",
+      "type": "string"
+    },
+    "notes": {
+      "description": "The notes for this account",
+      "type": "string"
+    }
+  },
+  "required": [
+    "name",
+    "account_no",
+    "payment_method",
+    "account_status",
+    "library_code",
+    "library_edi_code"
+  ]
+}

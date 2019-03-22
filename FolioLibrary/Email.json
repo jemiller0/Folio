@@ -1,0 +1,43 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "description": "An email record",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "id": {
+      "description": "UUID",
+      "type": [
+        "string",
+        "null"
+      ],
+      "pattern": "^[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12}$"
+    },
+    "value": {
+      "description": "The value for this email",
+      "type": "string"
+    },
+    "description": {
+      "description": "The description for this email",
+      "type": "string"
+    },
+    "isPrimary": {
+      "description": "Used to set this email as primary for the contact",
+      "type": "boolean"
+    },
+    "categories": {
+      "id": "categories",
+      "description": "The list of categories for this vendor email",
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "language": {
+      "description": "The language for this vendor email",
+      "type": "string"
+    }
+  },
+  "required": [
+    "value"
+  ]
+}

@@ -1,0 +1,512 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "description": "A holdings record",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "id": {
+      "description": "the system assigned unique ID of the holdings record; UUID",
+      "type": "string"
+    },
+    "hrid": {
+      "description": "the human readable ID, also called eye readable ID. A system-assigned sequential ID which maps to the Instance ID",
+      "type": "string"
+    },
+    "holdingsTypeId": {
+      "description": "unique ID for the type of this holdings record, a UUID",
+      "type": "string"
+    },
+    "formerIds": {
+      "description": "Previous ID(s) assigned to the holdings record",
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "uniqueItems": true
+    },
+    "instanceId": {
+      "type": "string"
+    },
+    "permanentLocationId": {
+      "type": "string"
+    },
+    "temporaryLocationId": {
+      "type": "string"
+    },
+    "electronicAccess": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "uri": {
+            "description": "uniform resource identifier (URI) is a string of characters designed for unambiguous identification of resources",
+            "type": "string"
+          },
+          "linkText": {
+            "description": "the value of the MARC tag field 856 2nd indicator, where the values are: no information provided, resource, version of resource, related resource, no display constant generated",
+            "type": "string"
+          },
+          "materialsSpecification": {
+            "description": "materials specified is used to specify to what portion or aspect of the resource the electronic location and access information applies (e.g. a portion or subset of the item is electronic, or a related electronic resource is being linked to the record)",
+            "type": "string"
+          },
+          "publicNote": {
+            "description": "URL public note to be displayed in the discovery",
+            "type": "string"
+          },
+          "relationshipId": {
+            "description": "relationship between the electronic resource at the location identified and the item described in the record as a whole",
+            "type": "string"
+          }
+        },
+        "required": [
+          "uri"
+        ]
+      }
+    },
+    "callNumberTypeId": {
+      "description": "unique ID for the type of call number on a holdings record, a UUID",
+      "type": "string"
+    },
+    "callNumberPrefix": {
+      "type": "string"
+    },
+    "callNumber": {
+      "type": "string"
+    },
+    "callNumberSuffix": {
+      "type": "string"
+    },
+    "shelvingTitle": {
+      "type": "string"
+    },
+    "acquisitionFormat": {
+      "type": "string"
+    },
+    "acquisitionMethod": {
+      "type": "string"
+    },
+    "receiptStatus": {
+      "type": "string"
+    },
+    "notes": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "holdingsNoteTypeId": {
+            "type": "string"
+          },
+          "note": {
+            "type": "string"
+          },
+          "staffOnly": {
+            "type": "boolean",
+            "default": false
+          }
+        }
+      }
+    },
+    "illPolicyId": {
+      "description": "unique ID for an ILL policy, a UUID",
+      "type": "string"
+    },
+    "retentionPolicy": {
+      "type": "string"
+    },
+    "digitizationPolicy": {
+      "type": "string"
+    },
+    "holdingsStatements": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "statement": {
+            "description": "Textual description of the holdings",
+            "type": "string"
+          },
+          "note": {
+            "description": "Note attached to a holdings statement",
+            "type": "string"
+          }
+        }
+      }
+    },
+    "holdingsStatementsForIndexes": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "statement": {
+            "description": "Textual description of the holdings of indexes",
+            "type": "string"
+          },
+          "note": {
+            "description": "Note attached to a holdings statement",
+            "type": "string"
+          }
+        }
+      }
+    },
+    "holdingsStatementsForSupplements": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "statement": {
+            "description": "textual description of the holdings of supplementary material",
+            "type": "string"
+          },
+          "note": {
+            "description": "note attached to a holdings statement",
+            "type": "string"
+          }
+        }
+      }
+    },
+    "copyNumber": {
+      "type": "string"
+    },
+    "numberOfItems": {
+      "type": "string"
+    },
+    "receivingHistory": {
+      "type": "object",
+      "properties": {
+        "displayType": {
+          "description": "Display hint. 1: Display fields separately. 2: Display fields concatenated",
+          "type": "string"
+        },
+        "entries": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "publicDisplay": {
+                "type": "boolean"
+              },
+              "enumeration": {
+                "type": "string"
+              },
+              "chronology": {
+                "type": "string"
+              }
+            }
+          }
+        }
+      }
+    },
+    "discoverySuppress": {
+      "description": "records the fact that the record should not be displayed in a discovery system",
+      "type": "boolean"
+    },
+    "statisticalCodeIds": {
+      "description": "List of statistical code IDs",
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "uniqueItems": true
+    },
+    "holdingsItems": {
+      "readonly": true,
+      "folio:isVirtual": true,
+      "folio:linkBase": "inventory/items",
+      "folio:linkFromField": "id",
+      "folio:linkToField": "holdingsRecordId",
+      "folio:includedElement": "items",
+      "type": "array",
+      "items": {
+        "description": "An item record",
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "hrid": {
+            "description": "The human readable ID, also called eye readable ID. A system-assigned sequential alternate ID",
+            "type": "string"
+          },
+          "holdingsRecordId": {
+            "type": "string"
+          },
+          "formerIds": {
+            "description": "Previous identifiers assigned to the item",
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "uniqueItems": true
+          },
+          "discoverySuppress": {
+            "description": "Records the fact that the record should not be displayed in a discovery system",
+            "type": "boolean"
+          },
+          "accessionNumber": {
+            "description": "Also called inventar number",
+            "type": "string"
+          },
+          "barcode": {
+            "type": "string"
+          },
+          "itemLevelCallNumber": {
+            "type": "string"
+          },
+          "itemLevelCallNumberPrefix": {
+            "type": "string"
+          },
+          "itemLevelCallNumberSuffix": {
+            "type": "string"
+          },
+          "itemLevelCallNumberTypeId": {
+            "type": "string"
+          },
+          "volume": {
+            "type": "string"
+          },
+          "enumeration": {
+            "type": "string"
+          },
+          "chronology": {
+            "type": "string"
+          },
+          "yearCaption": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "uniqueItems": true
+          },
+          "itemIdentifier": {
+            "type": "string"
+          },
+          "copyNumbers": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "uniqueItems": true
+          },
+          "numberOfPieces": {
+            "type": "string"
+          },
+          "descriptionOfPieces": {
+            "type": "string"
+          },
+          "numberOfMissingPieces": {
+            "type": "string"
+          },
+          "missingPieces": {
+            "type": "string"
+          },
+          "missingPiecesDate": {
+            "type": "string"
+          },
+          "itemDamagedStatusId": {
+            "type": "string"
+          },
+          "itemDamagedStatusDate": {
+            "type": "string"
+          },
+          "notes": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "itemNoteTypeId": {
+                  "type": "string"
+                },
+                "note": {
+                  "type": "string"
+                },
+                "staffOnly": {
+                  "type": "boolean",
+                  "default": false
+                }
+              }
+            }
+          },
+          "circulationNotes": {
+            "description": "Notes to be displayed in circulation processes",
+            "type": "array",
+            "items": {
+              "type": "object",
+              "additionalProperties": false,
+              "properties": {
+                "noteType": {
+                  "description": "Type of circulation process that the note applies to",
+                  "type": "string",
+                  "enum": [
+                    "Check in",
+                    "Check out"
+                  ]
+                },
+                "note": {
+                  "description": "Text to display",
+                  "type": "string"
+                },
+                "staffOnly": {
+                  "type": "boolean",
+                  "default": false
+                }
+              }
+            }
+          },
+          "status": {
+            "description": "The status of the item",
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "name": {
+                "description": "Name of the status e.g. Available, Checked out, In transit",
+                "type": "string"
+              },
+              "date": {
+                "description": "Date of a status",
+                "type": "string"
+              }
+            }
+          },
+          "materialTypeId": {
+            "type": "string"
+          },
+          "permanentLoanTypeId": {
+            "type": "string"
+          },
+          "temporaryLoanTypeId": {
+            "type": "string"
+          },
+          "permanentLocationId": {
+            "type": "string"
+          },
+          "temporaryLocationId": {
+            "type": "string"
+          },
+          "electronicAccess": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "additionalProperties": false,
+              "properties": {
+                "uri": {
+                  "description": "uniform resource identifier (URI) is a string of characters designed for unambiguous identification of resources",
+                  "type": "string"
+                },
+                "linkText": {
+                  "description": "the value of the MARC tag field 856 2nd indicator, where the values are: no information provided, resource, version of resource, related resource, no display constant generated",
+                  "type": "string"
+                },
+                "materialsSpecification": {
+                  "description": "materials specified is used to specify to what portion or aspect of the resource the electronic location and access information applies (e.g. a portion or subset of the item is electronic, or a related electronic resource is being linked to the record)",
+                  "type": "string"
+                },
+                "publicNote": {
+                  "description": "URL public note to be displayed in the discovery",
+                  "type": "string"
+                },
+                "relationshipId": {
+                  "description": "relationship between the electronic resource at the location identified and the item described in the record as a whole",
+                  "type": "string"
+                }
+              },
+              "required": [
+                "uri"
+              ]
+            }
+          },
+          "inTransitDestinationServicePointId": {
+            "description": "Service point an item is intended to be transited to (should only be present when in transit)",
+            "type": "string",
+            "pattern": "^[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12}$"
+          },
+          "statisticalCodeIds": {
+            "description": "List of statistical code IDs",
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "uniqueItems": true
+          },
+          "purchaseOrderLineIdentifier": {
+            "description": "ID referencing a remote purchase order object related to this item",
+            "type": "string"
+          },
+          "metadata": {
+            "title": "Metadata Schema",
+            "description": "Metadata about creation and changes to records, provided by the server (client should not provide)",
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "createdDate": {
+                "description": "Date and time when the record was created",
+                "type": "string",
+                "format": "date-time"
+              },
+              "createdByUserId": {
+                "description": "ID of the user who created the record",
+                "type": "string",
+                "pattern": "^[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12}$"
+              },
+              "createdByUsername": {
+                "description": "Username of the user who created the record (when available)",
+                "type": "string"
+              },
+              "updatedDate": {
+                "description": "Date and time when the record was last updated",
+                "type": "string",
+                "format": "date-time"
+              },
+              "updatedByUserId": {
+                "description": "ID of the user who last updated the record",
+                "type": "string",
+                "pattern": "^[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12}$"
+              },
+              "updatedByUsername": {
+                "description": "Username of the user who last updated the record (when available)",
+                "type": "string"
+              }
+            },
+            "required": [
+              "createdDate",
+              "createdByUserId"
+            ]
+          },
+          "holdingsRecord2": {
+            "folio:$ref": "holdingsrecord.json",
+            "readonly": true,
+            "folio:isVirtual": true,
+            "folio:linkBase": "holdings-storage/holdings",
+            "folio:linkFromField": "holdingsRecordId",
+            "folio:linkToField": "id",
+            "folio:includedElement": "holdingsRecords.0",
+            "type": "object"
+          }
+        },
+        "required": [
+          "materialTypeId",
+          "permanentLoanTypeId",
+          "holdingsRecordId"
+        ]
+      }
+    },
+    "holdingsInstance": {
+      "folio:$ref": "instance.json",
+      "readonly": true,
+      "folio:isVirtual": true,
+      "folio:linkBase": "inventory/instances",
+      "folio:linkFromField": "instanceId",
+      "folio:linkToField": "id",
+      "folio:includedElement": "instances.0",
+      "type": "object"
+    },
+    "metadata": {
+      "$ref": "#/properties/holdingsItems/items/properties/metadata"
+    }
+  },
+  "required": [
+    "instanceId"
+  ]
+}

@@ -1,0 +1,130 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "title": "Loan",
+  "description": "Links the item with the patron and applies certain conditions based on policies",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "id": {
+      "description": "Unique ID (generated UUID) of the loan",
+      "type": "string"
+    },
+    "userId": {
+      "description": "ID of the patron the item was lent to. Required for open loans, not required for closed loans (for anonymization).",
+      "type": "string"
+    },
+    "proxyUserId": {
+      "description": "ID of the user representing a proxy for the patron",
+      "type": "string",
+      "pattern": "^[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12}$"
+    },
+    "itemId": {
+      "description": "ID of the item lent to the patron",
+      "type": "string"
+    },
+    "status": {
+      "description": "Overall status of the loan",
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "name": {
+          "description": "Name of the status (currently can be any value, values commonly used are Open and Closed)",
+          "type": "string"
+        }
+      }
+    },
+    "loanDate": {
+      "description": "Date time when the loan began (typically represented according to rfc3339 section-5.6. Has not had the date-time format validation applied as was not supported at point of introduction and would now be a breaking change)",
+      "type": "string"
+    },
+    "dueDate": {
+      "description": "Date time when the item is due to be returned",
+      "type": "string",
+      "format": "date-time"
+    },
+    "returnDate": {
+      "description": "Date time when the item is returned and the loan ends (typically represented according to rfc3339 section-5.6. Has not had the date-time format validation applied as was not supported at point of introduction and would now be a breaking change)",
+      "type": "string"
+    },
+    "systemReturnDate": {
+      "description": "Date time when the returned item is actually processed",
+      "type": "string",
+      "format": "date-time"
+    },
+    "action": {
+      "description": "Last action performed on a loan (currently can be any value, values commonly used are checkedout and checkedin)",
+      "type": "string"
+    },
+    "actionComment": {
+      "description": "Comment to last action performed on a loan",
+      "type": "string"
+    },
+    "itemStatus": {
+      "description": "Last item status used in relation to this loan (currently can be any value, values commonly used are Checked out and Available)",
+      "type": "string"
+    },
+    "renewalCount": {
+      "description": "Count of how many times a loan has been renewed (incremented by the client)",
+      "type": "integer"
+    },
+    "loanPolicyId": {
+      "description": "ID of last policy used in relation to this loan",
+      "type": "string"
+    },
+    "checkoutServicePointId": {
+      "description": "ID of the Service Point where the last checkout occured",
+      "type": "string",
+      "pattern": "^[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12}$"
+    },
+    "checkinServicePointId": {
+      "description": "ID of the Service Point where the last checkin occured",
+      "type": "string",
+      "pattern": "^[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12}$"
+    },
+    "metadata": {
+      "title": "Metadata Schema",
+      "description": "Metadata about creation and changes to records, provided by the server (client should not provide)",
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "createdDate": {
+          "description": "Date and time when the record was created",
+          "type": "string",
+          "format": "date-time"
+        },
+        "createdByUserId": {
+          "description": "ID of the user who created the record",
+          "type": "string",
+          "pattern": "^[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12}$"
+        },
+        "createdByUsername": {
+          "description": "Username of the user who created the record (when available)",
+          "type": "string"
+        },
+        "updatedDate": {
+          "description": "Date and time when the record was last updated",
+          "type": "string",
+          "format": "date-time"
+        },
+        "updatedByUserId": {
+          "description": "ID of the user who last updated the record",
+          "type": "string",
+          "pattern": "^[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12}$"
+        },
+        "updatedByUsername": {
+          "description": "Username of the user who last updated the record (when available)",
+          "type": "string"
+        }
+      },
+      "required": [
+        "createdDate",
+        "createdByUserId"
+      ]
+    }
+  },
+  "required": [
+    "itemId",
+    "loanDate",
+    "action"
+  ]
+}

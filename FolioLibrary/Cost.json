@@ -1,0 +1,31 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "description": "purchase order line cost record",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "listPrice": {
+      "description": "the per-item list price",
+      "type": "number"
+    },
+    "currency": {
+      "description": "a currency code",
+      "type": "string"
+    },
+    "quantityPhysical": {
+      "description": "quantity of physical items in this purchase order line",
+      "type": "integer"
+    },
+    "quantityElectronic": {
+      "description": "quantity of electronic items in this purchase order line",
+      "type": "integer"
+    },
+    "poLineEstimatedPrice": {
+      "description": "the total estimated price for this purchase order line",
+      "type": "number"
+    }
+  },
+  "required": [
+    "listPrice"
+  ]
+}

@@ -1,0 +1,35 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "description": "A vendor agreement",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "id": {
+      "description": "UUID",
+      "type": [
+        "string",
+        "null"
+      ],
+      "pattern": "^[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12}$"
+    },
+    "name": {
+      "description": "The unique name of this agreement",
+      "type": "string"
+    },
+    "discount": {
+      "description": "The discount amount of this agreement",
+      "type": "number"
+    },
+    "reference_url": {
+      "description": "The reference url for this agreement",
+      "type": "string"
+    },
+    "notes": {
+      "description": "The notes of this agreement",
+      "type": "string"
+    }
+  },
+  "required": [
+    "name"
+  ]
+}

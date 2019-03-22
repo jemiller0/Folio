@@ -1,0 +1,463 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "description": "Patron notice policy",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "id": {
+      "description": "Patron notice policy id, UUID",
+      "type": "string"
+    },
+    "name": {
+      "description": "Patron notice policy name",
+      "type": "string"
+    },
+    "description": {
+      "description": "Patron notice policy description",
+      "type": "string"
+    },
+    "active": {
+      "description": "A flag to determine if a patron notice policy is active",
+      "type": "boolean"
+    },
+    "metadata": {
+      "title": "Metadata Schema",
+      "description": "Metadata about creation and changes to records, provided by the server (client should not provide)",
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "createdDate": {
+          "description": "Date and time when the record was created",
+          "type": "string",
+          "format": "date-time"
+        },
+        "createdByUserId": {
+          "description": "ID of the user who created the record",
+          "type": "string",
+          "pattern": "^[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12}$"
+        },
+        "createdByUsername": {
+          "description": "Username of the user who created the record (when available)",
+          "type": "string"
+        },
+        "updatedDate": {
+          "description": "Date and time when the record was last updated",
+          "type": "string",
+          "format": "date-time"
+        },
+        "updatedByUserId": {
+          "description": "ID of the user who last updated the record",
+          "type": "string",
+          "pattern": "^[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12}$"
+        },
+        "updatedByUsername": {
+          "description": "Username of the user who last updated the record (when available)",
+          "type": "string"
+        }
+      },
+      "required": [
+        "createdDate",
+        "createdByUserId"
+      ]
+    },
+    "loanNotices": {
+      "description": "List of loan notices",
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "name": {
+            "description": "Notice name",
+            "type": "string"
+          },
+          "templateId": {
+            "description": "Template id, UUID",
+            "type": "string"
+          },
+          "templateName": {
+            "description": "Template name",
+            "type": "string"
+          },
+          "format": {
+            "description": "Notice format, send through email, sms etc.",
+            "type": "string",
+            "enum": [
+              "Email",
+              "SMS",
+              "Print"
+            ]
+          },
+          "frequency": {
+            "description": "Frequency, send it once or more",
+            "type": "string",
+            "enum": [
+              "One time",
+              "Recurring"
+            ]
+          },
+          "realTime": {
+            "description": "Is this real time event",
+            "type": "boolean"
+          },
+          "sendOptions": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "sendHow": {
+                "description": "Defines how notice should be sent, before, after or upon",
+                "type": "string",
+                "enum": [
+                  "Upon At",
+                  "Before",
+                  "After"
+                ]
+              },
+              "sendWhen": {
+                "description": "Triggering event",
+                "type": "string",
+                "enum": [
+                  "Due date",
+                  "Overdue",
+                  "Renewed",
+                  "Check in",
+                  "Check out"
+                ]
+              },
+              "sendBy": {
+                "description": "Send by options",
+                "type": "object",
+                "additionalProperties": false,
+                "properties": {
+                  "duration": {
+                    "description": "Duration amount",
+                    "type": "integer",
+                    "minimum": 1.0,
+                    "maximum": 100.0
+                  },
+                  "intervalId": {
+                    "description": "Interval id",
+                    "type": "string",
+                    "enum": [
+                      "Minutes",
+                      "Hours",
+                      "Days",
+                      "Weeks",
+                      "Months",
+                      "Years"
+                    ]
+                  }
+                },
+                "required": [
+                  "duration",
+                  "intervalId"
+                ]
+              },
+              "sendEvery": {
+                "description": "Send every options",
+                "type": "object",
+                "additionalProperties": false,
+                "properties": {
+                  "duration": {
+                    "description": "Duration amount",
+                    "type": "integer",
+                    "minimum": 1.0,
+                    "maximum": 100.0
+                  },
+                  "intervalId": {
+                    "description": "Interval id",
+                    "type": "string",
+                    "enum": [
+                      "Minutes",
+                      "Hours",
+                      "Days",
+                      "Weeks",
+                      "Months",
+                      "Years"
+                    ]
+                  }
+                },
+                "required": [
+                  "duration",
+                  "intervalId"
+                ]
+              }
+            },
+            "required": [
+              "sendWhen"
+            ]
+          }
+        },
+        "required": [
+          "templateId",
+          "format",
+          "realTime"
+        ]
+      }
+    },
+    "feeFineNotices": {
+      "description": "List of fee/fine notices",
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "name": {
+            "description": "Notice name",
+            "type": "string"
+          },
+          "templateId": {
+            "description": "Template id, UUID",
+            "type": "string"
+          },
+          "templateName": {
+            "description": "Template name",
+            "type": "string"
+          },
+          "format": {
+            "description": "Notice format, send through email, sms etc.",
+            "type": "string",
+            "enum": [
+              "Email",
+              "SMS",
+              "Print"
+            ]
+          },
+          "frequency": {
+            "description": "Frequency, send it once or more",
+            "type": "string",
+            "enum": [
+              "One time",
+              "Recurring"
+            ]
+          },
+          "realTime": {
+            "description": "Is this real time event",
+            "type": "boolean"
+          },
+          "sendOptions": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "sendHow": {
+                "description": "Defines how notice should be sent, before, after or upon",
+                "type": "string",
+                "enum": [
+                  "Upon At",
+                  "Before",
+                  "After"
+                ]
+              },
+              "sendBy": {
+                "description": "Send by options",
+                "type": "object",
+                "additionalProperties": false,
+                "properties": {
+                  "duration": {
+                    "description": "Duration amount",
+                    "type": "integer",
+                    "minimum": 1.0,
+                    "maximum": 100.0
+                  },
+                  "intervalId": {
+                    "description": "Interval id",
+                    "type": "string",
+                    "enum": [
+                      "Minutes",
+                      "Hours",
+                      "Days",
+                      "Weeks",
+                      "Months",
+                      "Years"
+                    ]
+                  }
+                },
+                "required": [
+                  "duration",
+                  "intervalId"
+                ]
+              },
+              "sendEvery": {
+                "description": "Send every options",
+                "type": "object",
+                "additionalProperties": false,
+                "properties": {
+                  "duration": {
+                    "description": "Duration amount",
+                    "type": "integer",
+                    "minimum": 1.0,
+                    "maximum": 100.0
+                  },
+                  "intervalId": {
+                    "description": "Interval id",
+                    "type": "string",
+                    "enum": [
+                      "Minutes",
+                      "Hours",
+                      "Days",
+                      "Weeks",
+                      "Months",
+                      "Years"
+                    ]
+                  }
+                },
+                "required": [
+                  "duration",
+                  "intervalId"
+                ]
+              }
+            },
+            "required": [
+              "sendHow"
+            ]
+          }
+        },
+        "required": [
+          "templateId",
+          "format",
+          "realTime"
+        ]
+      }
+    },
+    "requestNotices": {
+      "description": "List of request notice",
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "name": {
+            "description": "Notice name",
+            "type": "string"
+          },
+          "templateId": {
+            "description": "Template id, UUID",
+            "type": "string"
+          },
+          "templateName": {
+            "description": "Template name",
+            "type": "string"
+          },
+          "format": {
+            "description": "Notice format, send through email, sms etc.",
+            "type": "string",
+            "enum": [
+              "Email",
+              "SMS",
+              "Print"
+            ]
+          },
+          "frequency": {
+            "description": "Frequency, send it once or more",
+            "type": "string",
+            "enum": [
+              "One time",
+              "Recurring"
+            ]
+          },
+          "realTime": {
+            "description": "Is this real time event",
+            "type": "boolean"
+          },
+          "sendOptions": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "sendHow": {
+                "description": "Defines how notice should be sent, before, after or upon",
+                "type": "string",
+                "enum": [
+                  "Upon At",
+                  "Before",
+                  "After"
+                ]
+              },
+              "sendWhen": {
+                "description": "User initiated and time driven events for request related notices",
+                "type": "string",
+                "enum": [
+                  "Recall request",
+                  "Recall loanee",
+                  "Hold request",
+                  "Paging request",
+                  "Available",
+                  "Hold Expiration",
+                  "Request cancellation"
+                ]
+              },
+              "sendBy": {
+                "description": "Send by options",
+                "type": "object",
+                "additionalProperties": false,
+                "properties": {
+                  "duration": {
+                    "description": "Duration amount",
+                    "type": "integer",
+                    "minimum": 1.0,
+                    "maximum": 100.0
+                  },
+                  "intervalId": {
+                    "description": "Interval id",
+                    "type": "string",
+                    "enum": [
+                      "Minutes",
+                      "Hours",
+                      "Days",
+                      "Weeks",
+                      "Months",
+                      "Years"
+                    ]
+                  }
+                },
+                "required": [
+                  "duration",
+                  "intervalId"
+                ]
+              },
+              "sendEvery": {
+                "description": "Send every options",
+                "type": "object",
+                "additionalProperties": false,
+                "properties": {
+                  "duration": {
+                    "description": "Duration amount",
+                    "type": "integer",
+                    "minimum": 1.0,
+                    "maximum": 100.0
+                  },
+                  "intervalId": {
+                    "description": "Interval id",
+                    "type": "string",
+                    "enum": [
+                      "Minutes",
+                      "Hours",
+                      "Days",
+                      "Weeks",
+                      "Months",
+                      "Years"
+                    ]
+                  }
+                },
+                "required": [
+                  "duration",
+                  "intervalId"
+                ]
+              }
+            },
+            "required": [
+              "sendWhen"
+            ]
+          }
+        },
+        "required": [
+          "templateId",
+          "format",
+          "realTime"
+        ]
+      }
+    }
+  },
+  "required": [
+    "name"
+  ]
+}

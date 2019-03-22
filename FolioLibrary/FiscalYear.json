@@ -1,0 +1,42 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "description": "A fiscal year record",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "id": {
+      "description": "UUID",
+      "type": [
+        "string",
+        "null"
+      ],
+      "pattern": "^[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12}$"
+    },
+    "name": {
+      "description": "The name of the fiscal year",
+      "type": "string"
+    },
+    "code": {
+      "description": "The code of the fiscal year",
+      "type": "string"
+    },
+    "description": {
+      "description": "The description of the fiscal year",
+      "type": "string"
+    },
+    "start_date": {
+      "description": "The start date of the fiscal year",
+      "type": "string",
+      "format": "date-time"
+    },
+    "end_date": {
+      "description": "The end date of the fiscal year",
+      "type": "string",
+      "format": "date-time"
+    }
+  },
+  "required": [
+    "name",
+    "code"
+  ]
+}

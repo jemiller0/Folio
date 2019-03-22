@@ -1,0 +1,96 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "title": "Permissions Definition Schema",
+  "description": "A Folio permission",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "permissionName": {
+      "description": "The unique name of the permission",
+      "type": "string"
+    },
+    "displayName": {
+      "description": "The human-readable name of the permission",
+      "type": "string"
+    },
+    "id": {
+      "description": "The globally unique (UUID) identifier for the permission",
+      "type": "string"
+    },
+    "description": {
+      "description": "A description of the permission",
+      "type": "string"
+    },
+    "tags": {
+      "description": "A list of tags for searching",
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "subPermissions": {
+      "description": "A list of child permissions granted by this permission",
+      "type": "array"
+    },
+    "childOf": {
+      "description": "A list of permissions that 'own' this permission",
+      "type": "array"
+    },
+    "grantedTo": {
+      "description": "A list of permission users to whom this permission has been granted",
+      "type": "array"
+    },
+    "mutable": {
+      "description": "Whether or not this permission changes at runtime",
+      "type": "boolean"
+    },
+    "visible": {
+      "description": "Whether or not this permission is visible to users",
+      "type": "boolean"
+    },
+    "dummy": {
+      "description": "Is this a temporary dummy permission",
+      "type": "boolean"
+    },
+    "metadata": {
+      "title": "Metadata Schema",
+      "description": "Metadata about creation and changes to records, provided by the server (client should not provide)",
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "createdDate": {
+          "description": "Date and time when the record was created",
+          "type": "string",
+          "format": "date-time"
+        },
+        "createdByUserId": {
+          "description": "ID of the user who created the record",
+          "type": "string",
+          "pattern": "^[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12}$"
+        },
+        "createdByUsername": {
+          "description": "Username of the user who created the record (when available)",
+          "type": "string"
+        },
+        "updatedDate": {
+          "description": "Date and time when the record was last updated",
+          "type": "string",
+          "format": "date-time"
+        },
+        "updatedByUserId": {
+          "description": "ID of the user who last updated the record",
+          "type": "string",
+          "pattern": "^[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12}$"
+        },
+        "updatedByUsername": {
+          "description": "Username of the user who last updated the record (when available)",
+          "type": "string"
+        }
+      },
+      "required": [
+        "createdDate",
+        "createdByUserId"
+      ]
+    }
+  }
+}

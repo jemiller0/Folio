@@ -1,0 +1,216 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "title": "User Schema",
+  "description": "A user",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "username": {
+      "description": "A unique name belonging to a user. Typically used for login",
+      "type": "string"
+    },
+    "id": {
+      "description": "A globally unique (UUID) identifier for the user",
+      "type": "string"
+    },
+    "externalSystemId": {
+      "description": "An ID that corresponds to an external authority",
+      "type": "string"
+    },
+    "barcode": {
+      "description": "The library barcode for this user",
+      "type": "string"
+    },
+    "active": {
+      "description": "A flag to determine if a user can log in, take out loans, etc.",
+      "type": "boolean"
+    },
+    "type": {
+      "description": "The class of user",
+      "type": "string"
+    },
+    "patronGroup": {
+      "description": "A UUID corresponding to the group the user belongs to",
+      "type": "string"
+    },
+    "meta": {
+      "description": "Deprecated",
+      "type": "object"
+    },
+    "proxyFor": {
+      "description": "Deprecated",
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "personal": {
+      "description": "Personal information about the user",
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "lastName": {
+          "description": "The user's surname",
+          "type": "string"
+        },
+        "firstName": {
+          "description": "The user's given name",
+          "type": "string"
+        },
+        "middleName": {
+          "description": "The user's middle name (if any)",
+          "type": "string"
+        },
+        "email": {
+          "description": "The user's email address",
+          "type": "string"
+        },
+        "phone": {
+          "description": "The user's primary phone number",
+          "type": "string"
+        },
+        "mobilePhone": {
+          "description": "The user's mobile phone number",
+          "type": "string"
+        },
+        "dateOfBirth": {
+          "description": "The user's birth date",
+          "type": "string",
+          "format": "date-time"
+        },
+        "addresses": {
+          "description": "Physical addresses associated with the user",
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "id": {
+                "description": "A unique id for this address",
+                "type": "string"
+              },
+              "countryId": {
+                "description": "The country code for this address",
+                "type": "string"
+              },
+              "addressLine1": {
+                "description": "Address, Line 1",
+                "type": "string"
+              },
+              "addressLine2": {
+                "description": "Address, Line 2",
+                "type": "string"
+              },
+              "city": {
+                "description": "City name",
+                "type": "string"
+              },
+              "region": {
+                "description": "Region",
+                "type": "string"
+              },
+              "postalCode": {
+                "description": "Postal Code",
+                "type": "string"
+              },
+              "addressTypeId": {
+                "description": "A UUID that corresponds with an address type object",
+                "type": "string"
+              },
+              "primaryAddress": {
+                "description": "Is this the user's primary address?",
+                "type": "boolean"
+              }
+            }
+          },
+          "minItems": 0
+        },
+        "preferredContactTypeId": {
+          "description": "Id of user's preferred contact type",
+          "type": "string"
+        }
+      },
+      "required": [
+        "lastName"
+      ]
+    },
+    "enrollmentDate": {
+      "description": "The date in which the user joined the organization",
+      "type": "string",
+      "format": "date-time"
+    },
+    "expirationDate": {
+      "description": "The date for when the user becomes inactive",
+      "type": "string",
+      "format": "date-time"
+    },
+    "createdDate": {
+      "description": "Deprecated",
+      "type": "string",
+      "format": "date-time"
+    },
+    "updatedDate": {
+      "description": "Deprecated",
+      "type": "string",
+      "format": "date-time"
+    },
+    "metadata": {
+      "title": "Metadata Schema",
+      "description": "Metadata about creation and changes to records, provided by the server (client should not provide)",
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "createdDate": {
+          "description": "Date and time when the record was created",
+          "type": "string",
+          "format": "date-time"
+        },
+        "createdByUserId": {
+          "description": "ID of the user who created the record",
+          "type": "string",
+          "pattern": "^[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12}$"
+        },
+        "createdByUsername": {
+          "description": "Username of the user who created the record (when available)",
+          "type": "string"
+        },
+        "updatedDate": {
+          "description": "Date and time when the record was last updated",
+          "type": "string",
+          "format": "date-time"
+        },
+        "updatedByUserId": {
+          "description": "ID of the user who last updated the record",
+          "type": "string",
+          "pattern": "^[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12}$"
+        },
+        "updatedByUsername": {
+          "description": "Username of the user who last updated the record (when available)",
+          "type": "string"
+        }
+      },
+      "required": [
+        "createdDate",
+        "createdByUserId"
+      ]
+    },
+    "tags": {
+      "title": "tags",
+      "description": "List of simple tags that can be added to an object",
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "tagList": {
+          "description": "List of tags",
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      }
+    }
+  },
+  "required": [
+    "id"
+  ]
+}

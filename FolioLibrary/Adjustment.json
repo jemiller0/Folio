@@ -1,0 +1,45 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "description": "purchase order adjustments",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "credit": {
+      "description": "amount of credits",
+      "type": "number"
+    },
+    "discount": {
+      "description": "amount of discounts",
+      "type": "number"
+    },
+    "insurance": {
+      "description": "amount of insurance cost",
+      "type": "number"
+    },
+    "invoiceId": {
+      "description": "UUID of the invoice record associated with this adjustment",
+      "type": "string",
+      "pattern": "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-5][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}$"
+    },
+    "overhead": {
+      "description": "amount of overhead costs",
+      "type": "number"
+    },
+    "shipment": {
+      "description": "amount of shipment costs",
+      "type": "number"
+    },
+    "tax1": {
+      "description": "amount of taxes (line 1, e.g. state)",
+      "type": "number"
+    },
+    "tax2": {
+      "description": "amount of taxes (line 2, e.g. federal)",
+      "type": "number"
+    },
+    "useProRate": {
+      "description": "whether or not to pro-rate the order cost",
+      "type": "boolean"
+    }
+  }
+}

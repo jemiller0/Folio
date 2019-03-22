@@ -1,0 +1,283 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "description": "A contact record",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "id": {
+      "description": "UUID",
+      "type": [
+        "string",
+        "null"
+      ],
+      "pattern": "^[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12}$"
+    },
+    "prefix": {
+      "description": "The prefix for this contact person",
+      "type": "string"
+    },
+    "first_name": {
+      "description": "The first name of this contact person",
+      "type": "string"
+    },
+    "last_name": {
+      "description": "The last name of this contact person",
+      "type": "string"
+    },
+    "language": {
+      "description": "The preferred language for this contact person",
+      "type": "string"
+    },
+    "notes": {
+      "description": "The notes for this contact person",
+      "type": "string"
+    },
+    "phone_numbers": {
+      "id": "phone_numbers",
+      "description": "The list of phone numbers for this contact person",
+      "type": "array",
+      "items": {
+        "description": "A phone number record",
+        "type": "object",
+        "properties": {
+          "id": {
+            "description": "UUID",
+            "type": [
+              "string",
+              "null"
+            ],
+            "pattern": "^[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12}$"
+          },
+          "phone_number": {
+            "description": "The entire sequence of digits for this phone number",
+            "type": "string"
+          },
+          "categories": {
+            "id": "categories",
+            "description": "The list of categories for this vendor phone",
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "types": {
+            "id": "types",
+            "description": "The list of types for this vendor phone",
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "isPrimary": {
+            "description": "Used to set this phone number as primary for the contact",
+            "type": "boolean"
+          },
+          "language": {
+            "description": "The language for this vendor phone",
+            "type": "string"
+          }
+        },
+        "required": [
+          "phone_number"
+        ]
+      }
+    },
+    "emails": {
+      "id": "email_addresses",
+      "description": "The list of emails for this contact person",
+      "type": "array",
+      "items": {
+        "description": "An email record",
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "id": {
+            "description": "UUID",
+            "type": [
+              "string",
+              "null"
+            ],
+            "pattern": "^[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12}$"
+          },
+          "value": {
+            "description": "The value for this email",
+            "type": "string"
+          },
+          "description": {
+            "description": "The description for this email",
+            "type": "string"
+          },
+          "isPrimary": {
+            "description": "Used to set this email as primary for the contact",
+            "type": "boolean"
+          },
+          "categories": {
+            "id": "categories",
+            "description": "The list of categories for this vendor email",
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "language": {
+            "description": "The language for this vendor email",
+            "type": "string"
+          }
+        },
+        "required": [
+          "value"
+        ]
+      }
+    },
+    "addresses": {
+      "id": "addresses",
+      "description": "The list of addresses for this contact person",
+      "type": "array",
+      "items": {
+        "description": "An address record",
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "id": {
+            "description": "UUID",
+            "type": [
+              "string",
+              "null"
+            ],
+            "pattern": "^[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12}$"
+          },
+          "addressLine1": {
+            "description": "The first line of this address",
+            "type": "string"
+          },
+          "addressLine2": {
+            "description": "The second line of this address",
+            "type": "string"
+          },
+          "city": {
+            "description": "The city for this address",
+            "type": "string"
+          },
+          "stateRegion": {
+            "description": "The state or region for this address",
+            "type": "string"
+          },
+          "zipCode": {
+            "description": "The zip code for this address",
+            "type": "string"
+          },
+          "country": {
+            "description": "The country for this address",
+            "type": "string"
+          },
+          "isPrimary": {
+            "description": "Used to set this address as primary for the contact",
+            "type": "boolean"
+          },
+          "categories": {
+            "id": "categories",
+            "description": "The list of categories for this vendor address",
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "language": {
+            "description": "The language for this vendor address",
+            "type": "string"
+          }
+        },
+        "required": [
+          "country"
+        ]
+      }
+    },
+    "urls": {
+      "id": "urls",
+      "description": "The list of URLs for this contact person",
+      "type": "array",
+      "items": {
+        "description": "A URL record",
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "id": {
+            "description": "UUID",
+            "type": [
+              "string",
+              "null"
+            ],
+            "pattern": "^[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12}$"
+          },
+          "value": {
+            "description": "The value for this URL",
+            "type": "string",
+            "pattern": "^$|(([Hh][Tt][Tt][Pp]|[Ff][Tt][Pp])([Ss])?://.+$)"
+          },
+          "description": {
+            "description": "The description for this URL",
+            "type": "string"
+          },
+          "language": {
+            "description": "The language for this vendor URL",
+            "type": "string"
+          },
+          "isPrimary": {
+            "description": "Used to set this url as primary for the contact",
+            "type": "boolean"
+          },
+          "categories": {
+            "id": "categories",
+            "description": "The list of categories for this vendor URL",
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "notes": {
+            "description": "The notes for this vendor URL",
+            "type": "string"
+          }
+        },
+        "required": [
+          "value"
+        ]
+      }
+    },
+    "categories": {
+      "id": "contact_category",
+      "description": "The list of contact categories for this vendor contact person",
+      "type": "array",
+      "items": {
+        "description": "A vendor category",
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "id": {
+            "description": "UUID",
+            "type": [
+              "string",
+              "null"
+            ],
+            "pattern": "^[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12}$"
+          },
+          "value": {
+            "description": "The value of this category",
+            "type": "string"
+          }
+        },
+        "required": [
+          "value"
+        ]
+      }
+    },
+    "inactive": {
+      "description": "Used to indicate that a contact is no longer active",
+      "type": "boolean"
+    }
+  },
+  "required": [
+    "first_name",
+    "last_name"
+  ]
+}

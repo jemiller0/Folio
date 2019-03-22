@@ -1,0 +1,46 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "description": "A phone number record",
+  "type": "object",
+  "properties": {
+    "id": {
+      "description": "UUID",
+      "type": [
+        "string",
+        "null"
+      ],
+      "pattern": "^[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12}$"
+    },
+    "phone_number": {
+      "description": "The entire sequence of digits for this phone number",
+      "type": "string"
+    },
+    "categories": {
+      "id": "categories",
+      "description": "The list of categories for this vendor phone",
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "types": {
+      "id": "types",
+      "description": "The list of types for this vendor phone",
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "isPrimary": {
+      "description": "Used to set this phone number as primary for the contact",
+      "type": "boolean"
+    },
+    "language": {
+      "description": "The language for this vendor phone",
+      "type": "string"
+    }
+  },
+  "required": [
+    "phone_number"
+  ]
+}

@@ -1,0 +1,93 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "description": "Notes about all kind of objects",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "id": {
+      "type": "string"
+    },
+    "link": {
+      "description": "Link to the item the note refers to",
+      "example": "/items/1234-567890",
+      "type": "string"
+    },
+    "text": {
+      "description": "The text of the note",
+      "type": "string"
+    },
+    "domain": {
+      "description": "Domain the note belongs to. Used for permissions like notes.domain.items",
+      "example": "items",
+      "type": "string"
+    },
+    "creatorUserName": {
+      "description": "username of the user who created the note",
+      "example": "johndoe17",
+      "readonly": true,
+      "type": "string"
+    },
+    "creatorLastName": {
+      "description": "Last name of the user who created the note",
+      "example": "Doe",
+      "readonly": true,
+      "type": "string"
+    },
+    "creatorFirstName": {
+      "description": "First name of the user who created the note",
+      "example": "John",
+      "readonly": true,
+      "type": "string"
+    },
+    "creatorMiddleName": {
+      "description": "Middle name or initial of the user who created the note",
+      "example": "X.",
+      "readonly": true,
+      "type": "string"
+    },
+    "metadata": {
+      "title": "Metadata Schema",
+      "description": "Metadata about creation and changes to records, provided by the server (client should not provide)",
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "createdDate": {
+          "description": "Date and time when the record was created",
+          "type": "string",
+          "format": "date-time"
+        },
+        "createdByUserId": {
+          "description": "ID of the user who created the record",
+          "type": "string",
+          "pattern": "^[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12}$"
+        },
+        "createdByUsername": {
+          "description": "Username of the user who created the record (when available)",
+          "type": "string"
+        },
+        "updatedDate": {
+          "description": "Date and time when the record was last updated",
+          "type": "string",
+          "format": "date-time"
+        },
+        "updatedByUserId": {
+          "description": "ID of the user who last updated the record",
+          "type": "string",
+          "pattern": "^[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12}$"
+        },
+        "updatedByUsername": {
+          "description": "Username of the user who last updated the record (when available)",
+          "type": "string"
+        }
+      },
+      "required": [
+        "createdDate",
+        "createdByUserId"
+      ]
+    }
+  },
+  "required": [
+    "link",
+    "text"
+  ]
+}

@@ -1,0 +1,153 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "title": "Accounts Schema",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "amount": {
+      "type": "number"
+    },
+    "remaining": {
+      "type": "number"
+    },
+    "dateCreated": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "dateUpdated": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "status": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "name"
+      ]
+    },
+    "paymentStatus": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "name"
+      ]
+    },
+    "feeFineType": {
+      "type": "string"
+    },
+    "feeFineOwner": {
+      "type": "string"
+    },
+    "title": {
+      "type": "string"
+    },
+    "callNumber": {
+      "type": "string"
+    },
+    "barcode": {
+      "type": "string"
+    },
+    "materialType": {
+      "type": "string"
+    },
+    "itemStatus": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "name"
+      ]
+    },
+    "location": {
+      "type": "string"
+    },
+    "metadata": {
+      "title": "Metadata Schema",
+      "description": "Metadata about creation and changes to records, provided by the server (client should not provide)",
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "createdDate": {
+          "description": "Date and time when the record was created",
+          "type": "string",
+          "format": "date-time"
+        },
+        "createdByUserId": {
+          "description": "ID of the user who created the record",
+          "type": "string",
+          "pattern": "^[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12}$"
+        },
+        "createdByUsername": {
+          "description": "Username of the user who created the record (when available)",
+          "type": "string"
+        },
+        "updatedDate": {
+          "description": "Date and time when the record was last updated",
+          "type": "string",
+          "format": "date-time"
+        },
+        "updatedByUserId": {
+          "description": "ID of the user who last updated the record",
+          "type": "string",
+          "pattern": "^[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12}$"
+        },
+        "updatedByUsername": {
+          "description": "Username of the user who last updated the record (when available)",
+          "type": "string"
+        }
+      },
+      "required": [
+        "createdDate",
+        "createdByUserId"
+      ]
+    },
+    "dueDate": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "returnedDate": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "loanId": {
+      "type": "string"
+    },
+    "userId": {
+      "type": "string"
+    },
+    "itemId": {
+      "type": "string"
+    },
+    "materialTypeId": {
+      "type": "string"
+    },
+    "feeFineId": {
+      "type": "string"
+    },
+    "ownerId": {
+      "type": "string"
+    },
+    "id": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "userId",
+    "itemId",
+    "materialTypeId",
+    "feeFineId",
+    "ownerId",
+    "id"
+  ]
+}

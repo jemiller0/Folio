@@ -1,0 +1,76 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "description": "A financial transaction",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "id": {
+      "description": "UUID",
+      "type": [
+        "string",
+        "null"
+      ],
+      "pattern": "^[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12}$"
+    },
+    "allocated": {
+      "description": "The amount allocated by this transaction",
+      "type": "number"
+    },
+    "amount": {
+      "description": "The amount of this transaction",
+      "type": "number"
+    },
+    "available": {
+      "description": "The amount available of this transaction",
+      "type": "number"
+    },
+    "awaiting_payment": {
+      "description": "The amount awaiting payment of this transaction",
+      "type": "number"
+    },
+    "encumbered": {
+      "description": "The amount encumbred by this transaction",
+      "type": "number"
+    },
+    "expenditures": {
+      "description": "The amount expended by this transaction",
+      "type": "number"
+    },
+    "note": {
+      "description": "The note for this transaction",
+      "type": "string"
+    },
+    "overcharge": {
+      "description": "The amount overcharged by this transaction",
+      "type": "number"
+    },
+    "timestamp": {
+      "description": "The timestamp of the transaction",
+      "type": "string",
+      "format": "date-time"
+    },
+    "source_id": {
+      "description": "UUID",
+      "type": [
+        "string",
+        "null"
+      ],
+      "pattern": "^[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12}$"
+    },
+    "transaction_type": {
+      "description": "The type of this transaction",
+      "type": "string"
+    },
+    "budget_id": {
+      "description": "UUID",
+      "type": [
+        "string",
+        "null"
+      ],
+      "pattern": "^[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12}$"
+    }
+  },
+  "required": [
+    "amount"
+  ]
+}

@@ -1,0 +1,93 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "description": "A set of date ranges for materials checkout and their associated due dates.",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "id": {
+      "description": "Unique ID (generated UUID)",
+      "type": "string",
+      "pattern": "^[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12}$"
+    },
+    "name": {
+      "type": "string"
+    },
+    "description": {
+      "type": "string"
+    },
+    "schedules": {
+      "id": "schedules",
+      "type": "array",
+      "items": {
+        "description": "A date range and associated due date, connected with the parent FixedDueDateSchedule.",
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "from": {
+            "description": "The start of a date range during which materials checked out will be assigned the due date in the 'due' field. Conforms to the ISO 8601 date and time format.",
+            "type": "string",
+            "format": "date-time"
+          },
+          "to": {
+            "description": "The end of a date range during which materials checked out will be assigned the due date in the 'due' field. Conforms to the ISO 8601 date and time format.",
+            "type": "string",
+            "format": "date-time"
+          },
+          "due": {
+            "description": "The due date for materials checked out in the date range between the 'from' and 'to' dates. Conforms to the ISO 8601 date and time format.",
+            "type": "string",
+            "format": "date-time"
+          }
+        },
+        "required": [
+          "from",
+          "to",
+          "due"
+        ]
+      }
+    },
+    "metadata": {
+      "title": "Metadata Schema",
+      "description": "Metadata about creation and changes to records, provided by the server (client should not provide)",
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "createdDate": {
+          "description": "Date and time when the record was created",
+          "type": "string",
+          "format": "date-time"
+        },
+        "createdByUserId": {
+          "description": "ID of the user who created the record",
+          "type": "string",
+          "pattern": "^[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12}$"
+        },
+        "createdByUsername": {
+          "description": "Username of the user who created the record (when available)",
+          "type": "string"
+        },
+        "updatedDate": {
+          "description": "Date and time when the record was last updated",
+          "type": "string",
+          "format": "date-time"
+        },
+        "updatedByUserId": {
+          "description": "ID of the user who last updated the record",
+          "type": "string",
+          "pattern": "^[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12}$"
+        },
+        "updatedByUsername": {
+          "description": "Username of the user who last updated the record (when available)",
+          "type": "string"
+        }
+      },
+      "required": [
+        "createdDate",
+        "createdByUserId"
+      ]
+    }
+  },
+  "required": [
+    "name"
+  ]
+}

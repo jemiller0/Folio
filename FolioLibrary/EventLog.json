@@ -1,0 +1,88 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "description": "A logging event that describes the event code and basic information for logging events",
+  "type": "object",
+  "properties": {
+    "id": {
+      "description": "The system assigned unique ID of the instance record; UUID",
+      "type": "string"
+    },
+    "eventType": {
+      "description": "Event type",
+      "enum": [
+        "PASSWORD_RESET",
+        "PASSWORD_CREATE",
+        "PASSWORD_CHANGE",
+        "SUCCESSFUL_LOGIN_ATTEMPT",
+        "FAILED_LOGIN_ATTEMPT",
+        "USER_BLOCK"
+      ]
+    },
+    "tenant": {
+      "description": "The tenant for which the event occurred",
+      "type": "string"
+    },
+    "userId": {
+      "description": "User ID for which the event is registered.",
+      "type": "string"
+    },
+    "ip": {
+      "description": "Client IP address of registered user Okapi",
+      "type": "string"
+    },
+    "browserInformation": {
+      "description": "Client's browser information obtained from User-Agent http header",
+      "type": "string"
+    },
+    "timestamp": {
+      "description": "Event registration time",
+      "type": "string",
+      "format": "date-time"
+    },
+    "metadata": {
+      "title": "Metadata Schema",
+      "description": "Metadata about creation and changes to records, provided by the server (client should not provide)",
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "createdDate": {
+          "description": "Date and time when the record was created",
+          "type": "string",
+          "format": "date-time"
+        },
+        "createdByUserId": {
+          "description": "ID of the user who created the record",
+          "type": "string",
+          "pattern": "^[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12}$"
+        },
+        "createdByUsername": {
+          "description": "Username of the user who created the record (when available)",
+          "type": "string"
+        },
+        "updatedDate": {
+          "description": "Date and time when the record was last updated",
+          "type": "string",
+          "format": "date-time"
+        },
+        "updatedByUserId": {
+          "description": "ID of the user who last updated the record",
+          "type": "string",
+          "pattern": "^[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12}$"
+        },
+        "updatedByUsername": {
+          "description": "Username of the user who last updated the record (when available)",
+          "type": "string"
+        }
+      },
+      "required": [
+        "createdDate",
+        "createdByUserId"
+      ]
+    }
+  },
+  "required": [
+    "tenant",
+    "userId",
+    "eventType"
+  ]
+}

@@ -1,0 +1,60 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "description": "An interface record",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "id": {
+      "description": "UUID",
+      "type": [
+        "string",
+        "null"
+      ],
+      "pattern": "^[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12}$"
+    },
+    "name": {
+      "description": "The name of this interface",
+      "type": "string"
+    },
+    "uri": {
+      "description": "The URI of this interface",
+      "type": "string"
+    },
+    "username": {
+      "description": "The login username for this interface",
+      "type": "string"
+    },
+    "password": {
+      "description": "The login password for this interface",
+      "type": "string"
+    },
+    "notes": {
+      "description": "The notes for this interface",
+      "type": "string"
+    },
+    "available": {
+      "description": "The availability setting for this interface",
+      "type": "boolean"
+    },
+    "delivery_method": {
+      "description": "The delivery method for this interface",
+      "type": "string"
+    },
+    "statistics_format": {
+      "description": "The format of the statistics for this interface",
+      "type": "string"
+    },
+    "locally_stored": {
+      "description": "The locally stored location of this interface",
+      "type": "string"
+    },
+    "online_location": {
+      "description": "The online location for this interface",
+      "type": "string"
+    },
+    "statistics_notes": {
+      "description": "The notes regarding the statistics for this interface",
+      "type": "string"
+    }
+  }
+}

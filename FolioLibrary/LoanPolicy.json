@@ -1,0 +1,199 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "id": {
+      "type": "string"
+    },
+    "name": {
+      "type": "string"
+    },
+    "description": {
+      "type": "string"
+    },
+    "loanable": {
+      "type": "boolean"
+    },
+    "loansPolicy": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "profileId": {
+          "description": "Loan profile",
+          "type": "string"
+        },
+        "period": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "duration": {
+              "description": "Duration of the period, number of times the interval repeats",
+              "type": "integer",
+              "minimum": 1.0
+            },
+            "intervalId": {
+              "description": "Interval for the period, e.g. hours, days or weeks",
+              "type": "string",
+              "enum": [
+                "Minutes",
+                "Hours",
+                "Days",
+                "Weeks",
+                "Months"
+              ]
+            }
+          },
+          "required": [
+            "duration",
+            "intervalId"
+          ]
+        },
+        "closedLibraryDueDateManagementId": {
+          "description": "Closed library due date management",
+          "type": "string"
+        },
+        "gracePeriod": {
+          "$ref": "#/properties/loansPolicy/properties/period"
+        },
+        "openingTimeOffset": {
+          "$ref": "#/properties/loansPolicy/properties/period"
+        },
+        "fixedDueDateScheduleId": {
+          "description": "Fixed due date schedule (due date limit)",
+          "type": "string"
+        }
+      }
+    },
+    "renewable": {
+      "description": "Is item renewable",
+      "type": "boolean"
+    },
+    "renewalsPolicy": {
+      "type": "object",
+      "properties": {
+        "unlimited": {
+          "description": "Unlimited renewals",
+          "type": "boolean"
+        },
+        "numberAllowed": {
+          "description": "Number of renewals allowed",
+          "type": "number"
+        },
+        "renewFromId": {
+          "description": "Renew from date",
+          "type": "string"
+        },
+        "differentPeriod": {
+          "description": "Renewal period different from original loan",
+          "type": "boolean"
+        },
+        "period": {
+          "$ref": "#/properties/loansPolicy/properties/period"
+        },
+        "alternateFixedDueDateScheduleId": {
+          "description": "Alternate fixed due date schedule (due date limit) for renewals",
+          "type": "string"
+        }
+      }
+    },
+    "requestManagement": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "recalls": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "alternateGracePeriod": {
+              "$ref": "#/properties/loansPolicy/properties/period"
+            },
+            "minimumGuaranteedLoanPeriod": {
+              "$ref": "#/properties/loansPolicy/properties/period"
+            },
+            "recallReturnInterval": {
+              "$ref": "#/properties/loansPolicy/properties/period"
+            }
+          }
+        },
+        "holds": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "alternateCheckoutLoanPeriod": {
+              "$ref": "#/properties/loansPolicy/properties/period"
+            },
+            "renewItemsWithRequest": {
+              "description": "Allow renewal of items with active, pending hold request",
+              "type": "boolean"
+            },
+            "alternateRenewalLoanPeriod": {
+              "$ref": "#/properties/loansPolicy/properties/period"
+            }
+          }
+        },
+        "pages": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "alternateCheckoutLoanPeriod": {
+              "$ref": "#/properties/loansPolicy/properties/period"
+            },
+            "renewItemsWithRequest": {
+              "description": "Allow renewal of items with active, pending page request",
+              "type": "boolean"
+            },
+            "alternateRenewalLoanPeriod": {
+              "$ref": "#/properties/loansPolicy/properties/period"
+            }
+          }
+        }
+      }
+    },
+    "metadata": {
+      "title": "Metadata Schema",
+      "description": "Metadata about creation and changes to records, provided by the server (client should not provide)",
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "createdDate": {
+          "description": "Date and time when the record was created",
+          "type": "string",
+          "format": "date-time"
+        },
+        "createdByUserId": {
+          "description": "ID of the user who created the record",
+          "type": "string",
+          "pattern": "^[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12}$"
+        },
+        "createdByUsername": {
+          "description": "Username of the user who created the record (when available)",
+          "type": "string"
+        },
+        "updatedDate": {
+          "description": "Date and time when the record was last updated",
+          "type": "string",
+          "format": "date-time"
+        },
+        "updatedByUserId": {
+          "description": "ID of the user who last updated the record",
+          "type": "string",
+          "pattern": "^[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12}$"
+        },
+        "updatedByUsername": {
+          "description": "Username of the user who last updated the record (when available)",
+          "type": "string"
+        }
+      },
+      "required": [
+        "createdDate",
+        "createdByUserId"
+      ]
+    }
+  },
+  "required": [
+    "name",
+    "loanable",
+    "renewable"
+  ]
+}

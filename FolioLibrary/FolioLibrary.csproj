@@ -4,4 +4,79 @@
     <TargetFramework>netstandard2.0</TargetFramework>
   </PropertyGroup>
 
+  <ItemGroup>
+    <None Remove="Account.json" />
+    <None Remove="Account2.json" />
+    <None Remove="Address.json" />
+    <None Remove="AddressType.json" />
+    <None Remove="Adjustment.json" />
+    <None Remove="Agreement.json" />
+    <None Remove="Alert.json" />
+    <None Remove="Alias.json" />
+    <None Remove="AlternativeTitleType.json" />
+    <None Remove="AuthAttempt.json" />
+    <None Remove="AuthCredentialsHistory.json" />
+    <None Remove="Block.json" />
+    <None Remove="Budget.json" />
+    <None Remove="CallNumberType.json" />
+    <None Remove="Campus.json" />
+    <None Remove="CancellationReason.json" />
+    <None Remove="Category.json" />
+    <None Remove="CirculationRule.json" />
+    <None Remove="Claim.json" />
+    <None Remove="ClassificationType.json" />
+    <None Remove="Comment.json" />
+    <None Remove="Contact.json" />
+    <None Remove="ContributorNameType.json" />
+    <None Remove="ContributorType.json" />
+    <None Remove="Cost.json" />
+    <None Remove="Detail.json" />
+    <None Remove="ElectronicAccessRelationship.json" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="Agreement.json" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="Adjustment.json" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="Account.json" />
+    <EmbeddedResource Include="Account2.json" />
+    <EmbeddedResource Include="Address.json" />
+    <EmbeddedResource Include="AddressType.json" />
+    <EmbeddedResource Include="Alert.json" />
+    <EmbeddedResource Include="Alias.json" />
+    <EmbeddedResource Include="AlternativeTitleType.json" />
+    <EmbeddedResource Include="AuthAttempt.json" />
+    <EmbeddedResource Include="AuthCredentialsHistory.json" />
+    <EmbeddedResource Include="Block.json" />
+    <EmbeddedResource Include="Budget.json" />
+    <EmbeddedResource Include="CallNumberType.json" />
+    <EmbeddedResource Include="Campus.json" />
+    <EmbeddedResource Include="CancellationReason.json" />
+    <EmbeddedResource Include="Category.json" />
+    <EmbeddedResource Include="CirculationRule.json" />
+    <EmbeddedResource Include="Claim.json" />
+    <EmbeddedResource Include="ClassificationType.json" />
+    <EmbeddedResource Include="Comment.json" />
+    <EmbeddedResource Include="Contact.json" />
+    <EmbeddedResource Include="ContributorNameType.json" />
+    <EmbeddedResource Include="ContributorType.json" />
+    <EmbeddedResource Include="Cost.json" />
+    <EmbeddedResource Include="Detail.json" />
+    <EmbeddedResource Include="ElectronicAccessRelationship.json" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Dapper" Version="1.60.1" />
+    <PackageReference Include="Microsoft.CSharp" Version="4.5.0" />
+    <PackageReference Include="Newtonsoft.Json" Version="12.0.1" />
+    <PackageReference Include="Newtonsoft.Json.Schema" Version="3.0.10" />
+    <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="2.2.0" />
+    <PackageReference Include="System.Configuration.ConfigurationManager" Version="4.5.0" />
+  </ItemGroup>
+
 </Project>

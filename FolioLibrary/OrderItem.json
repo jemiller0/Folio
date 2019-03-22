@@ -1,0 +1,625 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "description": "purchase order line",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "id": {
+      "description": "UUID identifying this purchase order line",
+      "type": "string",
+      "pattern": "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-5][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}$"
+    },
+    "edition": {
+      "description": "edition of the material",
+      "type": "string"
+    },
+    "checkinItems": {
+      "description": "if true this will toggle the Check-in workflow for details associated with this PO line",
+      "type": "boolean"
+    },
+    "instanceId": {
+      "description": "UUID of the instance record this purchase order line is related to",
+      "type": "string",
+      "pattern": "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-5][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}$"
+    },
+    "agreementId": {
+      "description": "UUID of the agreement this purchase order line is related to",
+      "type": "string",
+      "pattern": "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-5][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}$"
+    },
+    "acquisitionMethod": {
+      "description": "the acquisition method for this purchase order line",
+      "type": "string",
+      "enum": [
+        "Approval Plan",
+        "Demand Driven Acquisitions (DDA)",
+        "Depository",
+        "Evidence Based Acquisitions (EBA)",
+        "Exchange",
+        "Gift",
+        "Purchase At Vendor System",
+        "Purchase",
+        "Technical"
+      ]
+    },
+    "adjustment": {
+      "description": "purchase order adjustments",
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "credit": {
+          "description": "amount of credits",
+          "type": "number"
+        },
+        "discount": {
+          "description": "amount of discounts",
+          "type": "number"
+        },
+        "insurance": {
+          "description": "amount of insurance cost",
+          "type": "number"
+        },
+        "invoiceId": {
+          "description": "UUID of the invoice record associated with this adjustment",
+          "type": "string",
+          "pattern": "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-5][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}$"
+        },
+        "overhead": {
+          "description": "amount of overhead costs",
+          "type": "number"
+        },
+        "shipment": {
+          "description": "amount of shipment costs",
+          "type": "number"
+        },
+        "tax1": {
+          "description": "amount of taxes (line 1, e.g. state)",
+          "type": "number"
+        },
+        "tax2": {
+          "description": "amount of taxes (line 2, e.g. federal)",
+          "type": "number"
+        },
+        "useProRate": {
+          "description": "whether or not to pro-rate the order cost",
+          "type": "boolean"
+        }
+      }
+    },
+    "alerts": {
+      "id": "alerts",
+      "description": "an array of alert record IDs",
+      "type": "array",
+      "items": {
+        "description": "UUID of an alert record",
+        "type": "string",
+        "pattern": "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-5][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}$"
+      }
+    },
+    "cancellationRestriction": {
+      "description": "whether or not there are cancellation restrictions for this purchase order line",
+      "type": "boolean"
+    },
+    "cancellationRestrictionNote": {
+      "description": "free-form notes related to cancellation restrictions",
+      "type": "string"
+    },
+    "claims": {
+      "id": "claims",
+      "description": "list of claims",
+      "type": "array",
+      "items": {
+        "description": "details about an order claim",
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "claimed": {
+            "description": "whether or not this purchase order line has been claimed",
+            "type": "boolean"
+          },
+          "sent": {
+            "description": "date a claim was sent",
+            "type": "string",
+            "format": "date-time"
+          },
+          "grace": {
+            "description": "the number of days after the expected receipt date during which claims should not be processed",
+            "type": "integer"
+          }
+        }
+      }
+    },
+    "collection": {
+      "description": "whether or not this purchase order line is for a collection",
+      "type": "boolean"
+    },
+    "contributors": {
+      "id": "contributors",
+      "description": "list of contributors to the material",
+      "type": "array",
+      "items": {
+        "description": "contributor to the material",
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "contributor": {
+            "description": "the name of a contributor to the material",
+            "type": "string"
+          },
+          "contributorType": {
+            "description": "UUID of the contributor type",
+            "type": "string",
+            "pattern": "^[a-f0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12}$"
+          }
+        }
+      }
+    },
+    "cost": {
+      "description": "purchase order line cost record",
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "listPrice": {
+          "description": "the per-item list price",
+          "type": "number"
+        },
+        "currency": {
+          "description": "a currency code",
+          "type": "string"
+        },
+        "quantityPhysical": {
+          "description": "quantity of physical items in this purchase order line",
+          "type": "integer"
+        },
+        "quantityElectronic": {
+          "description": "quantity of electronic items in this purchase order line",
+          "type": "integer"
+        },
+        "poLineEstimatedPrice": {
+          "description": "the total estimated price for this purchase order line",
+          "type": "number"
+        }
+      },
+      "required": [
+        "listPrice"
+      ]
+    },
+    "description": {
+      "description": "description of the material",
+      "type": "string"
+    },
+    "details": {
+      "description": "purchase order line details",
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "receivingNote": {
+          "description": "notes regarding receiving instructions",
+          "type": "string"
+        },
+        "productIds": {
+          "id": "productIds",
+          "description": "a list of product identifiers",
+          "type": "array",
+          "items": {
+            "description": "a product identifier",
+            "type": "object",
+            "properties": {
+              "productId": {
+                "description": "the actual id",
+                "type": "string"
+              },
+              "productIdType": {
+                "description": "the type of product id",
+                "type": "string",
+                "enum": [
+                  "ISBN",
+                  "ISSN",
+                  "ISMN",
+                  "EAN",
+                  "Other Standard Identifier",
+                  "Standard Technical Report Number",
+                  "Publisher Number",
+                  "CODEN",
+                  "GPO Item Number",
+                  "Locally-defined identifiers",
+                  "Vendor Title Number",
+                  "Vendor Item Number"
+                ]
+              }
+            }
+          }
+        },
+        "materialTypes": {
+          "id": "materialType",
+          "description": "a list of material type ids",
+          "type": "array",
+          "items": {
+            "description": "UUID associated with this material's type",
+            "type": "string",
+            "pattern": "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-5][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}$"
+          }
+        },
+        "subscriptionFrom": {
+          "description": "the start date of the subscription",
+          "type": [
+            "string",
+            "null"
+          ],
+          "format": "date-time"
+        },
+        "subscriptionInterval": {
+          "description": "the subscription interval in days",
+          "type": "integer"
+        },
+        "subscriptionTo": {
+          "description": "the end date of the subscription",
+          "type": [
+            "string",
+            "null"
+          ],
+          "format": "date-time"
+        }
+      }
+    },
+    "donor": {
+      "description": "the donor contributing to this purchase order line",
+      "type": "string"
+    },
+    "eresource": {
+      "description": "purchase order line e-resource details",
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "activated": {
+          "description": "whether or not this resource is activated",
+          "type": "boolean"
+        },
+        "activationDue": {
+          "description": "number of days until activation, from date of order placement",
+          "type": "integer"
+        },
+        "createInventory": {
+          "description": "whether or not to create an inventory record for this resource",
+          "type": "boolean"
+        },
+        "trial": {
+          "description": "whether or not this is a trial",
+          "type": "boolean"
+        },
+        "expectedActivation": {
+          "description": "expected date the resource will be activated",
+          "type": "string",
+          "format": "date-time"
+        },
+        "userLimit": {
+          "description": "the concurrent user-limit",
+          "type": "integer"
+        },
+        "accessProvider": {
+          "description": "UUID of the access provider",
+          "type": "string",
+          "pattern": "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-5][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}$"
+        },
+        "license": {
+          "description": "purchase order line license record",
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "code": {
+              "description": "license code",
+              "type": "string"
+            },
+            "description": {
+              "description": "license description",
+              "type": "string"
+            },
+            "reference": {
+              "description": "license reference",
+              "type": "string"
+            }
+          }
+        }
+      }
+    },
+    "fundDistribution": {
+      "id": "fundDistribution",
+      "description": "Fund distribution records for this purchase order line",
+      "type": "array",
+      "items": {
+        "description": "purchase order fund distribution",
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "code": {
+            "description": "the fund code",
+            "type": "string"
+          },
+          "encumbrance": {
+            "description": "UUID of encumbrance record associated with this fund distribution",
+            "type": "string",
+            "pattern": "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-5][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}$"
+          },
+          "percentage": {
+            "description": "the percentage of the cost to be applied to this fund",
+            "type": "number"
+          }
+        },
+        "required": [
+          "code",
+          "percentage"
+        ]
+      }
+    },
+    "locations": {
+      "id": "locations",
+      "description": "Location records for this purchase order line",
+      "type": "array",
+      "items": {
+        "description": "purchase order line location record",
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "locationId": {
+            "description": "UUID of the (inventory) location record",
+            "type": "string",
+            "pattern": "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-5][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}$"
+          },
+          "quantity": {
+            "description": "combined/total quanitity of physical and electronic items",
+            "type": "integer"
+          },
+          "quantityElectronic": {
+            "description": "quantity of electronic items",
+            "type": "integer"
+          },
+          "quantityPhysical": {
+            "description": "quantity of physical items",
+            "type": "integer"
+          }
+        }
+      }
+    },
+    "orderFormat": {
+      "description": "The purchase order line format",
+      "type": "string",
+      "enum": [
+        "Electronic Resource",
+        "P/E Mix",
+        "Physical Resource",
+        "Other"
+      ]
+    },
+    "owner": {
+      "description": "the owner of this purchase order line",
+      "type": "string"
+    },
+    "paymentStatus": {
+      "description": "The purchase order line payment status",
+      "type": "string",
+      "enum": [
+        "Awaiting Payment",
+        "Cancelled",
+        "Fully Paid",
+        "Partially Paid",
+        "Payment Not Required",
+        "Pending"
+      ]
+    },
+    "physical": {
+      "description": "purchase order line physical material details",
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "materialSupplier": {
+          "description": "UUID of the material supplier record",
+          "type": "string",
+          "pattern": "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-5][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}$"
+        },
+        "expectedReceiptDate": {
+          "description": "vendor agreed date prior to the Receipt Due date item is expected to be received by",
+          "type": [
+            "string",
+            "null"
+          ],
+          "format": "date-time"
+        },
+        "receiptDue": {
+          "description": "date item should be received by",
+          "type": [
+            "string",
+            "null"
+          ],
+          "format": "date-time"
+        },
+        "volumes": {
+          "description": "list of volumes included to the physical material",
+          "type": "array",
+          "items": {
+            "description": "the identifier of volume",
+            "type": "string"
+          }
+        }
+      },
+      "required": [
+        "volumes"
+      ]
+    },
+    "poLineDescription": {
+      "description": "purchase order line description",
+      "type": "string"
+    },
+    "poLineNumber": {
+      "description": "A human readable number assigned to this PO line",
+      "type": "string",
+      "pattern": "^[a-zA-Z0-9]{5,16}-[0-9]{1,3}$"
+    },
+    "publicationDate": {
+      "description": "date (year) of the material's publication",
+      "type": "string",
+      "pattern": "^[0-9]{4}$"
+    },
+    "publisher": {
+      "description": "publisher of the material",
+      "type": "string"
+    },
+    "purchaseOrderId": {
+      "description": "UUID of the purchase order",
+      "type": "string",
+      "pattern": "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-5][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}$"
+    },
+    "receiptDate": {
+      "description": "date the purchase order line was received",
+      "type": [
+        "string",
+        "null"
+      ],
+      "format": "date-time"
+    },
+    "receiptStatus": {
+      "description": "The purchase order line receipt status",
+      "type": "string",
+      "default": "Pending",
+      "enum": [
+        "Awaiting Receipt",
+        "Cancelled",
+        "Fully Received",
+        "Partially Received",
+        "Pending",
+        "Receipt Not Required"
+      ]
+    },
+    "reportingCodes": {
+      "id": "reportingCodes",
+      "description": "a list of reporting codes associated with this purchase order line",
+      "type": "array",
+      "items": {
+        "description": "UUID of the reporting code",
+        "type": "string",
+        "pattern": "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-5][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}$"
+      }
+    },
+    "requester": {
+      "description": "who requested this purchase order line",
+      "type": "string"
+    },
+    "rush": {
+      "description": "whether or not this is a rush order",
+      "type": "boolean"
+    },
+    "selector": {
+      "description": "who selected this material",
+      "type": "string"
+    },
+    "source": {
+      "description": "purchase order line source",
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "code": {
+          "description": "the source code",
+          "type": "string"
+        },
+        "description": {
+          "description": "description of the source",
+          "type": "string"
+        }
+      },
+      "required": [
+        "code"
+      ]
+    },
+    "tags": {
+      "id": "tags",
+      "description": "arbitrary tags associated with this purchase order line",
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "title": {
+      "description": "title of the material",
+      "type": "string"
+    },
+    "vendorDetail": {
+      "description": "purchase order line vendor details",
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "instructions": {
+          "description": "special instructions for the vendor",
+          "type": "string"
+        },
+        "noteFromVendor": {
+          "description": "free-form notes from the vendor",
+          "type": "string"
+        },
+        "refNumber": {
+          "description": "a reference number for this purchase order line",
+          "type": "string"
+        },
+        "refNumberType": {
+          "description": "the reference number type",
+          "type": "string",
+          "enum": [
+            "Supplier's continuation order",
+            "Supplier's unique order line reference number",
+            "Agent's unique subscription reference number",
+            "Library's continuation order number",
+            "Internal vendor number"
+          ]
+        },
+        "vendorAccount": {
+          "description": "the accound number on the vendor's end associated with this purchase order line",
+          "type": "string"
+        }
+      },
+      "required": [
+        "instructions"
+      ]
+    },
+    "metadata": {
+      "title": "Metadata Schema",
+      "description": "Metadata about creation and changes to records, provided by the server (client should not provide)",
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "createdDate": {
+          "description": "Date and time when the record was created",
+          "type": "string",
+          "format": "date-time"
+        },
+        "createdByUserId": {
+          "description": "ID of the user who created the record",
+          "type": "string",
+          "pattern": "^[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12}$"
+        },
+        "createdByUsername": {
+          "description": "Username of the user who created the record (when available)",
+          "type": "string"
+        },
+        "updatedDate": {
+          "description": "Date and time when the record was last updated",
+          "type": "string",
+          "format": "date-time"
+        },
+        "updatedByUserId": {
+          "description": "ID of the user who last updated the record",
+          "type": "string",
+          "pattern": "^[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12}$"
+        },
+        "updatedByUsername": {
+          "description": "Username of the user who last updated the record (when available)",
+          "type": "string"
+        }
+      },
+      "required": [
+        "createdDate",
+        "createdByUserId"
+      ]
+    }
+  },
+  "required": [
+    "source"
+  ]
+}
