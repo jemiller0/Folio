@@ -83,7 +83,7 @@ namespace FolioLibrary
                 while (jtr.Read() && jtr.TokenType != JsonToken.EndArray)
                 {
                     var jo = (JObject)js.Deserialize(jtr);
-                    traceSource.TraceEvent(TraceEventType.Verbose, 0, jo.ToString());
+                    traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", jo);
                     yield return jo;
                 }
             }
@@ -182,7 +182,7 @@ namespace FolioLibrary
                 while (jtr.Read() && jtr.TokenType != JsonToken.EndArray)
                 {
                     var jo = (JObject)js.Deserialize(jtr);
-                    traceSource.TraceEvent(TraceEventType.Verbose, 0, jo.ToString());
+                    traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", jo);
                     yield return jo;
                 }
             }
@@ -281,7 +281,7 @@ namespace FolioLibrary
                 while (jtr.Read() && jtr.TokenType != JsonToken.EndArray)
                 {
                     var jo = (JObject)js.Deserialize(jtr);
-                    traceSource.TraceEvent(TraceEventType.Verbose, 0, jo.ToString());
+                    traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", jo);
                     yield return jo;
                 }
             }
@@ -362,7 +362,7 @@ namespace FolioLibrary
             var s = Stopwatch.StartNew();
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "Finding campuses");
             AuthenticateIfNecessary();
-            var url = $"{Url}/campuses{(where != null || orderBy != null ? $"?query={WebUtility.UrlEncode(where)}{(orderBy != null ? $"{(where != null ? " " : "")}sortby {WebUtility.UrlEncode(orderBy)}" : "")}" : "")}{(skip != null ? $"{(where != null || orderBy != null ? "&" : "?")}offset={skip}" : "")}{(take != null ? $"{(where != null || orderBy != null || skip != null ? "&" : "?")}limit={take}" : "")}";
+            var url = $"{Url}/location-units/campuses{(where != null || orderBy != null ? $"?query={WebUtility.UrlEncode(where)}{(orderBy != null ? $"{(where != null ? " " : "")}sortby {WebUtility.UrlEncode(orderBy)}" : "")}" : "")}{(skip != null ? $"{(where != null || orderBy != null ? "&" : "?")}offset={skip}" : "")}{(take != null ? $"{(where != null || orderBy != null || skip != null ? "&" : "?")}limit={take}" : "")}";
             traceSource.TraceEvent(TraceEventType.Verbose, 0, url);
             var hrm = httpClient.GetAsync(url).Result;
             if (hrm.StatusCode != HttpStatusCode.OK)
@@ -380,7 +380,7 @@ namespace FolioLibrary
                 while (jtr.Read() && jtr.TokenType != JsonToken.EndArray)
                 {
                     var jo = (JObject)js.Deserialize(jtr);
-                    traceSource.TraceEvent(TraceEventType.Verbose, 0, jo.ToString());
+                    traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", jo);
                     yield return jo;
                 }
             }
@@ -392,7 +392,7 @@ namespace FolioLibrary
             var s = Stopwatch.StartNew();
             traceSource.TraceEvent(TraceEventType.Verbose, 0, $"Getting campus {id}");
             AuthenticateIfNecessary();
-            var url = $"{Url}/campuses/{id}";
+            var url = $"{Url}/location-units/campuses/{id}";
             traceSource.TraceEvent(TraceEventType.Verbose, 0, url);
             var hrm = httpClient.GetAsync(url).Result;
             var s2 = hrm.Content.ReadAsStringAsync().Result;
@@ -410,7 +410,7 @@ namespace FolioLibrary
             if (campus["id"] == null) campus["id"] = Guid.NewGuid();
             traceSource.TraceEvent(TraceEventType.Verbose, 0, $"Inserting campus {campus["id"]}");
             AuthenticateIfNecessary();
-            var url = $"{Url}/campuses";
+            var url = $"{Url}/location-units/campuses";
             traceSource.TraceEvent(TraceEventType.Verbose, 0, url);
             var s2 = campus.ToString();
             traceSource.TraceEvent(TraceEventType.Verbose, 0, s2);
@@ -430,7 +430,7 @@ namespace FolioLibrary
             var s = Stopwatch.StartNew();
             traceSource.TraceEvent(TraceEventType.Verbose, 0, $"Updating campus {campus["id"]}");
             AuthenticateIfNecessary();
-            var url = $"{Url}/campuses/{campus["id"]}";
+            var url = $"{Url}/location-units/campuses/{campus["id"]}";
             traceSource.TraceEvent(TraceEventType.Verbose, 0, url);
             var s2 = campus.ToString();
             traceSource.TraceEvent(TraceEventType.Verbose, 0, s2);
@@ -447,7 +447,7 @@ namespace FolioLibrary
             var s = Stopwatch.StartNew();
             traceSource.TraceEvent(TraceEventType.Verbose, 0, $"Deleting campus {id}");
             AuthenticateIfNecessary();
-            var url = $"{Url}/campuses/{id}";
+            var url = $"{Url}/location-units/campuses/{id}";
             traceSource.TraceEvent(TraceEventType.Verbose, 0, url);
             var hrm = httpClient.DeleteAsync(url).Result;
             var s2 = hrm.Content.ReadAsStringAsync().Result;
@@ -479,7 +479,7 @@ namespace FolioLibrary
                 while (jtr.Read() && jtr.TokenType != JsonToken.EndArray)
                 {
                     var jo = (JObject)js.Deserialize(jtr);
-                    traceSource.TraceEvent(TraceEventType.Verbose, 0, jo.ToString());
+                    traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", jo);
                     yield return jo;
                 }
             }
@@ -578,7 +578,7 @@ namespace FolioLibrary
                 while (jtr.Read() && jtr.TokenType != JsonToken.EndArray)
                 {
                     var jo = (JObject)js.Deserialize(jtr);
-                    traceSource.TraceEvent(TraceEventType.Verbose, 0, jo.ToString());
+                    traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", jo);
                     yield return jo;
                 }
             }
@@ -677,7 +677,7 @@ namespace FolioLibrary
                 while (jtr.Read() && jtr.TokenType != JsonToken.EndArray)
                 {
                     var jo = (JObject)js.Deserialize(jtr);
-                    traceSource.TraceEvent(TraceEventType.Verbose, 0, jo.ToString());
+                    traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", jo);
                     yield return jo;
                 }
             }
@@ -776,7 +776,7 @@ namespace FolioLibrary
                 while (jtr.Read() && jtr.TokenType != JsonToken.EndArray)
                 {
                     var jo = (JObject)js.Deserialize(jtr);
-                    traceSource.TraceEvent(TraceEventType.Verbose, 0, jo.ToString());
+                    traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", jo);
                     yield return jo;
                 }
             }
@@ -875,7 +875,7 @@ namespace FolioLibrary
                 while (jtr.Read() && jtr.TokenType != JsonToken.EndArray)
                 {
                     var jo = (JObject)js.Deserialize(jtr);
-                    traceSource.TraceEvent(TraceEventType.Verbose, 0, jo.ToString());
+                    traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", jo);
                     yield return jo;
                 }
             }
@@ -974,7 +974,7 @@ namespace FolioLibrary
                 while (jtr.Read() && jtr.TokenType != JsonToken.EndArray)
                 {
                     var jo = (JObject)js.Deserialize(jtr);
-                    traceSource.TraceEvent(TraceEventType.Verbose, 0, jo.ToString());
+                    traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", jo);
                     yield return jo;
                 }
             }
@@ -1073,7 +1073,7 @@ namespace FolioLibrary
                 while (jtr.Read() && jtr.TokenType != JsonToken.EndArray)
                 {
                     var jo = (JObject)js.Deserialize(jtr);
-                    traceSource.TraceEvent(TraceEventType.Verbose, 0, jo.ToString());
+                    traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", jo);
                     yield return jo;
                 }
             }
@@ -1172,7 +1172,7 @@ namespace FolioLibrary
                 while (jtr.Read() && jtr.TokenType != JsonToken.EndArray)
                 {
                     var jo = (JObject)js.Deserialize(jtr);
-                    traceSource.TraceEvent(TraceEventType.Verbose, 0, jo.ToString());
+                    traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", jo);
                     yield return jo;
                 }
             }
@@ -1271,7 +1271,7 @@ namespace FolioLibrary
                 while (jtr.Read() && jtr.TokenType != JsonToken.EndArray)
                 {
                     var jo = (JObject)js.Deserialize(jtr);
-                    traceSource.TraceEvent(TraceEventType.Verbose, 0, jo.ToString());
+                    traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", jo);
                     yield return jo;
                 }
             }
@@ -1370,7 +1370,7 @@ namespace FolioLibrary
                 while (jtr.Read() && jtr.TokenType != JsonToken.EndArray)
                 {
                     var jo = (JObject)js.Deserialize(jtr);
-                    traceSource.TraceEvent(TraceEventType.Verbose, 0, jo.ToString());
+                    traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", jo);
                     yield return jo;
                 }
             }
@@ -1469,7 +1469,7 @@ namespace FolioLibrary
                 while (jtr.Read() && jtr.TokenType != JsonToken.EndArray)
                 {
                     var jo = (JObject)js.Deserialize(jtr);
-                    traceSource.TraceEvent(TraceEventType.Verbose, 0, jo.ToString());
+                    traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", jo);
                     yield return jo;
                 }
             }
@@ -1568,7 +1568,7 @@ namespace FolioLibrary
                 while (jtr.Read() && jtr.TokenType != JsonToken.EndArray)
                 {
                     var jo = (JObject)js.Deserialize(jtr);
-                    traceSource.TraceEvent(TraceEventType.Verbose, 0, jo.ToString());
+                    traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", jo);
                     yield return jo;
                 }
             }
@@ -1667,7 +1667,7 @@ namespace FolioLibrary
                 while (jtr.Read() && jtr.TokenType != JsonToken.EndArray)
                 {
                     var jo = (JObject)js.Deserialize(jtr);
-                    traceSource.TraceEvent(TraceEventType.Verbose, 0, jo.ToString());
+                    traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", jo);
                     yield return jo;
                 }
             }
@@ -1766,7 +1766,7 @@ namespace FolioLibrary
                 while (jtr.Read() && jtr.TokenType != JsonToken.EndArray)
                 {
                     var jo = (JObject)js.Deserialize(jtr);
-                    traceSource.TraceEvent(TraceEventType.Verbose, 0, jo.ToString());
+                    traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", jo);
                     yield return jo;
                 }
             }
@@ -1865,7 +1865,7 @@ namespace FolioLibrary
                 while (jtr.Read() && jtr.TokenType != JsonToken.EndArray)
                 {
                     var jo = (JObject)js.Deserialize(jtr);
-                    traceSource.TraceEvent(TraceEventType.Verbose, 0, jo.ToString());
+                    traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", jo);
                     yield return jo;
                 }
             }
@@ -1964,7 +1964,7 @@ namespace FolioLibrary
                 while (jtr.Read() && jtr.TokenType != JsonToken.EndArray)
                 {
                     var jo = (JObject)js.Deserialize(jtr);
-                    traceSource.TraceEvent(TraceEventType.Verbose, 0, jo.ToString());
+                    traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", jo);
                     yield return jo;
                 }
             }
@@ -2063,7 +2063,7 @@ namespace FolioLibrary
                 while (jtr.Read() && jtr.TokenType != JsonToken.EndArray)
                 {
                     var jo = (JObject)js.Deserialize(jtr);
-                    traceSource.TraceEvent(TraceEventType.Verbose, 0, jo.ToString());
+                    traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", jo);
                     yield return jo;
                 }
             }
@@ -2144,7 +2144,7 @@ namespace FolioLibrary
             var s = Stopwatch.StartNew();
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "Finding institutions");
             AuthenticateIfNecessary();
-            var url = $"{Url}/institutions{(where != null || orderBy != null ? $"?query={WebUtility.UrlEncode(where)}{(orderBy != null ? $"{(where != null ? " " : "")}sortby {WebUtility.UrlEncode(orderBy)}" : "")}" : "")}{(skip != null ? $"{(where != null || orderBy != null ? "&" : "?")}offset={skip}" : "")}{(take != null ? $"{(where != null || orderBy != null || skip != null ? "&" : "?")}limit={take}" : "")}";
+            var url = $"{Url}/location-units/institutions{(where != null || orderBy != null ? $"?query={WebUtility.UrlEncode(where)}{(orderBy != null ? $"{(where != null ? " " : "")}sortby {WebUtility.UrlEncode(orderBy)}" : "")}" : "")}{(skip != null ? $"{(where != null || orderBy != null ? "&" : "?")}offset={skip}" : "")}{(take != null ? $"{(where != null || orderBy != null || skip != null ? "&" : "?")}limit={take}" : "")}";
             traceSource.TraceEvent(TraceEventType.Verbose, 0, url);
             var hrm = httpClient.GetAsync(url).Result;
             if (hrm.StatusCode != HttpStatusCode.OK)
@@ -2162,7 +2162,7 @@ namespace FolioLibrary
                 while (jtr.Read() && jtr.TokenType != JsonToken.EndArray)
                 {
                     var jo = (JObject)js.Deserialize(jtr);
-                    traceSource.TraceEvent(TraceEventType.Verbose, 0, jo.ToString());
+                    traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", jo);
                     yield return jo;
                 }
             }
@@ -2174,7 +2174,7 @@ namespace FolioLibrary
             var s = Stopwatch.StartNew();
             traceSource.TraceEvent(TraceEventType.Verbose, 0, $"Getting institution {id}");
             AuthenticateIfNecessary();
-            var url = $"{Url}/institutions/{id}";
+            var url = $"{Url}/location-units/institutions/{id}";
             traceSource.TraceEvent(TraceEventType.Verbose, 0, url);
             var hrm = httpClient.GetAsync(url).Result;
             var s2 = hrm.Content.ReadAsStringAsync().Result;
@@ -2192,7 +2192,7 @@ namespace FolioLibrary
             if (institution["id"] == null) institution["id"] = Guid.NewGuid();
             traceSource.TraceEvent(TraceEventType.Verbose, 0, $"Inserting institution {institution["id"]}");
             AuthenticateIfNecessary();
-            var url = $"{Url}/institutions";
+            var url = $"{Url}/location-units/institutions";
             traceSource.TraceEvent(TraceEventType.Verbose, 0, url);
             var s2 = institution.ToString();
             traceSource.TraceEvent(TraceEventType.Verbose, 0, s2);
@@ -2212,7 +2212,7 @@ namespace FolioLibrary
             var s = Stopwatch.StartNew();
             traceSource.TraceEvent(TraceEventType.Verbose, 0, $"Updating institution {institution["id"]}");
             AuthenticateIfNecessary();
-            var url = $"{Url}/institutions/{institution["id"]}";
+            var url = $"{Url}/location-units/institutions/{institution["id"]}";
             traceSource.TraceEvent(TraceEventType.Verbose, 0, url);
             var s2 = institution.ToString();
             traceSource.TraceEvent(TraceEventType.Verbose, 0, s2);
@@ -2229,7 +2229,7 @@ namespace FolioLibrary
             var s = Stopwatch.StartNew();
             traceSource.TraceEvent(TraceEventType.Verbose, 0, $"Deleting institution {id}");
             AuthenticateIfNecessary();
-            var url = $"{Url}/institutions/{id}";
+            var url = $"{Url}/location-units/institutions/{id}";
             traceSource.TraceEvent(TraceEventType.Verbose, 0, url);
             var hrm = httpClient.DeleteAsync(url).Result;
             var s2 = hrm.Content.ReadAsStringAsync().Result;
@@ -2261,7 +2261,7 @@ namespace FolioLibrary
                 while (jtr.Read() && jtr.TokenType != JsonToken.EndArray)
                 {
                     var jo = (JObject)js.Deserialize(jtr);
-                    traceSource.TraceEvent(TraceEventType.Verbose, 0, jo.ToString());
+                    traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", jo);
                     yield return jo;
                 }
             }
@@ -2360,7 +2360,7 @@ namespace FolioLibrary
                 while (jtr.Read() && jtr.TokenType != JsonToken.EndArray)
                 {
                     var jo = (JObject)js.Deserialize(jtr);
-                    traceSource.TraceEvent(TraceEventType.Verbose, 0, jo.ToString());
+                    traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", jo);
                     yield return jo;
                 }
             }
@@ -2441,7 +2441,7 @@ namespace FolioLibrary
             var s = Stopwatch.StartNew();
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "Finding libraries");
             AuthenticateIfNecessary();
-            var url = $"{Url}/libraries{(where != null || orderBy != null ? $"?query={WebUtility.UrlEncode(where)}{(orderBy != null ? $"{(where != null ? " " : "")}sortby {WebUtility.UrlEncode(orderBy)}" : "")}" : "")}{(skip != null ? $"{(where != null || orderBy != null ? "&" : "?")}offset={skip}" : "")}{(take != null ? $"{(where != null || orderBy != null || skip != null ? "&" : "?")}limit={take}" : "")}";
+            var url = $"{Url}/location-units/libraries{(where != null || orderBy != null ? $"?query={WebUtility.UrlEncode(where)}{(orderBy != null ? $"{(where != null ? " " : "")}sortby {WebUtility.UrlEncode(orderBy)}" : "")}" : "")}{(skip != null ? $"{(where != null || orderBy != null ? "&" : "?")}offset={skip}" : "")}{(take != null ? $"{(where != null || orderBy != null || skip != null ? "&" : "?")}limit={take}" : "")}";
             traceSource.TraceEvent(TraceEventType.Verbose, 0, url);
             var hrm = httpClient.GetAsync(url).Result;
             if (hrm.StatusCode != HttpStatusCode.OK)
@@ -2459,7 +2459,7 @@ namespace FolioLibrary
                 while (jtr.Read() && jtr.TokenType != JsonToken.EndArray)
                 {
                     var jo = (JObject)js.Deserialize(jtr);
-                    traceSource.TraceEvent(TraceEventType.Verbose, 0, jo.ToString());
+                    traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", jo);
                     yield return jo;
                 }
             }
@@ -2471,7 +2471,7 @@ namespace FolioLibrary
             var s = Stopwatch.StartNew();
             traceSource.TraceEvent(TraceEventType.Verbose, 0, $"Getting library {id}");
             AuthenticateIfNecessary();
-            var url = $"{Url}/libraries/{id}";
+            var url = $"{Url}/location-units/libraries/{id}";
             traceSource.TraceEvent(TraceEventType.Verbose, 0, url);
             var hrm = httpClient.GetAsync(url).Result;
             var s2 = hrm.Content.ReadAsStringAsync().Result;
@@ -2489,7 +2489,7 @@ namespace FolioLibrary
             if (library["id"] == null) library["id"] = Guid.NewGuid();
             traceSource.TraceEvent(TraceEventType.Verbose, 0, $"Inserting library {library["id"]}");
             AuthenticateIfNecessary();
-            var url = $"{Url}/libraries";
+            var url = $"{Url}/location-units/libraries";
             traceSource.TraceEvent(TraceEventType.Verbose, 0, url);
             var s2 = library.ToString();
             traceSource.TraceEvent(TraceEventType.Verbose, 0, s2);
@@ -2509,7 +2509,7 @@ namespace FolioLibrary
             var s = Stopwatch.StartNew();
             traceSource.TraceEvent(TraceEventType.Verbose, 0, $"Updating library {library["id"]}");
             AuthenticateIfNecessary();
-            var url = $"{Url}/libraries/{library["id"]}";
+            var url = $"{Url}/location-units/libraries/{library["id"]}";
             traceSource.TraceEvent(TraceEventType.Verbose, 0, url);
             var s2 = library.ToString();
             traceSource.TraceEvent(TraceEventType.Verbose, 0, s2);
@@ -2526,7 +2526,7 @@ namespace FolioLibrary
             var s = Stopwatch.StartNew();
             traceSource.TraceEvent(TraceEventType.Verbose, 0, $"Deleting library {id}");
             AuthenticateIfNecessary();
-            var url = $"{Url}/libraries/{id}";
+            var url = $"{Url}/location-units/libraries/{id}";
             traceSource.TraceEvent(TraceEventType.Verbose, 0, url);
             var hrm = httpClient.DeleteAsync(url).Result;
             var s2 = hrm.Content.ReadAsStringAsync().Result;
@@ -2558,7 +2558,7 @@ namespace FolioLibrary
                 while (jtr.Read() && jtr.TokenType != JsonToken.EndArray)
                 {
                     var jo = (JObject)js.Deserialize(jtr);
-                    traceSource.TraceEvent(TraceEventType.Verbose, 0, jo.ToString());
+                    traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", jo);
                     yield return jo;
                 }
             }
@@ -2657,7 +2657,7 @@ namespace FolioLibrary
                 while (jtr.Read() && jtr.TokenType != JsonToken.EndArray)
                 {
                     var jo = (JObject)js.Deserialize(jtr);
-                    traceSource.TraceEvent(TraceEventType.Verbose, 0, jo.ToString());
+                    traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", jo);
                     yield return jo;
                 }
             }
@@ -2733,6 +2733,105 @@ namespace FolioLibrary
             traceSource.TraceEvent(TraceEventType.Verbose, 0, s.Elapsed.ToString());
         }
 
+        public IEnumerable<JObject> Logins(string where = null, string orderBy = null, int? skip = null, int? take = int.MaxValue)
+        {
+            var s = Stopwatch.StartNew();
+            traceSource.TraceEvent(TraceEventType.Verbose, 0, "Finding logins");
+            AuthenticateIfNecessary();
+            var url = $"{Url}/authn/credentials{(where != null || orderBy != null ? $"?query={WebUtility.UrlEncode(where)}{(orderBy != null ? $"{(where != null ? " " : "")}sortby {WebUtility.UrlEncode(orderBy)}" : "")}" : "")}{(skip != null ? $"{(where != null || orderBy != null ? "&" : "?")}offset={skip}" : "")}{(take != null ? $"{(where != null || orderBy != null || skip != null ? "&" : "?")}limit={take}" : "")}";
+            traceSource.TraceEvent(TraceEventType.Verbose, 0, url);
+            var hrm = httpClient.GetAsync(url).Result;
+            if (hrm.StatusCode != HttpStatusCode.OK)
+            {
+                var s2 = hrm.Content.ReadAsStringAsync().Result;
+                if (hrm.Content.Headers.ContentType.MediaType == "application/json") s2 = JObject.Parse(s2).ToString();
+                traceSource.TraceEvent(TraceEventType.Verbose, 0, s2);
+                throw new HttpRequestException($"Response status code does not indicate success: {hrm.StatusCode} ({hrm.ReasonPhrase}).\r\n{s2}");
+            }
+            using (var sr = new StreamReader(hrm.Content.ReadAsStreamAsync().Result))
+            using (var jtr = new JsonTextReader(sr) { SupportMultipleContent = true })
+            {
+                jtr.Read(); jtr.Read(); jtr.Read();
+                var js = new JsonSerializer();
+                while (jtr.Read() && jtr.TokenType != JsonToken.EndArray)
+                {
+                    var jo = (JObject)js.Deserialize(jtr);
+                    traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", jo);
+                    yield return jo;
+                }
+            }
+            traceSource.TraceEvent(TraceEventType.Verbose, 0, s.Elapsed.ToString());
+        }
+
+        public JObject GetLogin(string id)
+        {
+            var s = Stopwatch.StartNew();
+            traceSource.TraceEvent(TraceEventType.Verbose, 0, $"Getting login {id}");
+            AuthenticateIfNecessary();
+            var url = $"{Url}/authn/credentials/{id}";
+            traceSource.TraceEvent(TraceEventType.Verbose, 0, url);
+            var hrm = httpClient.GetAsync(url).Result;
+            var s2 = hrm.Content.ReadAsStringAsync().Result;
+            var jo = hrm.Content.Headers.ContentType.MediaType == "application/json" ? JObject.Parse(s2) : null;
+            if (jo != null) s2 = jo.ToString();
+            traceSource.TraceEvent(TraceEventType.Verbose, 0, s2);
+            if (hrm.StatusCode != HttpStatusCode.OK) throw new HttpRequestException($"Response status code does not indicate success: {hrm.StatusCode} ({hrm.ReasonPhrase}).\r\n{s2}");
+            traceSource.TraceEvent(TraceEventType.Verbose, 0, s.Elapsed.ToString());
+            return jo;
+        }
+
+        public JObject InsertLogin(JObject login)
+        {
+            var s = Stopwatch.StartNew();
+            if (login["id"] == null) login["id"] = Guid.NewGuid();
+            traceSource.TraceEvent(TraceEventType.Verbose, 0, $"Inserting login {login["id"]}");
+            AuthenticateIfNecessary();
+            var url = $"{Url}/authn/credentials";
+            traceSource.TraceEvent(TraceEventType.Verbose, 0, url);
+            var s2 = login.ToString();
+            traceSource.TraceEvent(TraceEventType.Verbose, 0, s2);
+            var sc = new StringContent(s2, Encoding.UTF8, "application/json");
+            var hrm = httpClient.PostAsync(url, sc).Result;
+            s2 = hrm.Content.ReadAsStringAsync().Result;
+            var jo = hrm.Content.Headers.ContentType.MediaType == "application/json" ? JObject.Parse(s2) : null;
+            if (jo != null) s2 = jo.ToString();
+            traceSource.TraceEvent(TraceEventType.Verbose, 0, s2);
+            if (hrm.StatusCode != HttpStatusCode.Created) throw new HttpRequestException($"Response status code does not indicate success: {hrm.StatusCode} ({hrm.ReasonPhrase}).\r\n{s2}");
+            traceSource.TraceEvent(TraceEventType.Verbose, 0, s.Elapsed.ToString());
+            return jo;
+        }
+
+        public void UpdateLogin(JObject login)
+        {
+            var s = Stopwatch.StartNew();
+            traceSource.TraceEvent(TraceEventType.Verbose, 0, $"Updating login {login["id"]}");
+            AuthenticateIfNecessary();
+            var url = $"{Url}/authn/credentials/{login["id"]}";
+            traceSource.TraceEvent(TraceEventType.Verbose, 0, url);
+            var s2 = login.ToString();
+            traceSource.TraceEvent(TraceEventType.Verbose, 0, s2);
+            var sc = new StringContent(s2, Encoding.UTF8, "application/json");
+            var hrm = httpClient.PutAsync(url, sc).Result;
+            s2 = hrm.Content.ReadAsStringAsync().Result;
+            traceSource.TraceEvent(TraceEventType.Verbose, 0, s2);
+            if (hrm.StatusCode != HttpStatusCode.NoContent) throw new HttpRequestException($"Response status code does not indicate success: {hrm.StatusCode} ({hrm.ReasonPhrase}).\r\n{s2}");
+            traceSource.TraceEvent(TraceEventType.Verbose, 0, s.Elapsed.ToString());
+        }
+
+        public void DeleteLogin(string id)
+        {
+            var s = Stopwatch.StartNew();
+            traceSource.TraceEvent(TraceEventType.Verbose, 0, $"Deleting login {id}");
+            AuthenticateIfNecessary();
+            var url = $"{Url}/authn/credentials/{id}";
+            traceSource.TraceEvent(TraceEventType.Verbose, 0, url);
+            var hrm = httpClient.DeleteAsync(url).Result;
+            var s2 = hrm.Content.ReadAsStringAsync().Result;
+            traceSource.TraceEvent(TraceEventType.Verbose, 0, s2);
+            if (hrm.StatusCode != HttpStatusCode.NoContent) throw new HttpRequestException($"Response status code does not indicate success: {hrm.StatusCode} ({hrm.ReasonPhrase}).\r\n{s2}");
+            traceSource.TraceEvent(TraceEventType.Verbose, 0, s.Elapsed.ToString());
+        }
+
         public IEnumerable<JObject> MaterialTypes(string where = null, string orderBy = null, int? skip = null, int? take = int.MaxValue)
         {
             var s = Stopwatch.StartNew();
@@ -2756,7 +2855,7 @@ namespace FolioLibrary
                 while (jtr.Read() && jtr.TokenType != JsonToken.EndArray)
                 {
                     var jo = (JObject)js.Deserialize(jtr);
-                    traceSource.TraceEvent(TraceEventType.Verbose, 0, jo.ToString());
+                    traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", jo);
                     yield return jo;
                 }
             }
@@ -2855,7 +2954,7 @@ namespace FolioLibrary
                 while (jtr.Read() && jtr.TokenType != JsonToken.EndArray)
                 {
                     var jo = (JObject)js.Deserialize(jtr);
-                    traceSource.TraceEvent(TraceEventType.Verbose, 0, jo.ToString());
+                    traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", jo);
                     yield return jo;
                 }
             }
@@ -2954,7 +3053,7 @@ namespace FolioLibrary
                 while (jtr.Read() && jtr.TokenType != JsonToken.EndArray)
                 {
                     var jo = (JObject)js.Deserialize(jtr);
-                    traceSource.TraceEvent(TraceEventType.Verbose, 0, jo.ToString());
+                    traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", jo);
                     yield return jo;
                 }
             }
@@ -3053,7 +3152,7 @@ namespace FolioLibrary
                 while (jtr.Read() && jtr.TokenType != JsonToken.EndArray)
                 {
                     var jo = (JObject)js.Deserialize(jtr);
-                    traceSource.TraceEvent(TraceEventType.Verbose, 0, jo.ToString());
+                    traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", jo);
                     yield return jo;
                 }
             }
@@ -3152,7 +3251,7 @@ namespace FolioLibrary
                 while (jtr.Read() && jtr.TokenType != JsonToken.EndArray)
                 {
                     var jo = (JObject)js.Deserialize(jtr);
-                    traceSource.TraceEvent(TraceEventType.Verbose, 0, jo.ToString());
+                    traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", jo);
                     yield return jo;
                 }
             }
@@ -3251,7 +3350,7 @@ namespace FolioLibrary
                 while (jtr.Read() && jtr.TokenType != JsonToken.EndArray)
                 {
                     var jo = (JObject)js.Deserialize(jtr);
-                    traceSource.TraceEvent(TraceEventType.Verbose, 0, jo.ToString());
+                    traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", jo);
                     yield return jo;
                 }
             }
@@ -3350,7 +3449,7 @@ namespace FolioLibrary
                 while (jtr.Read() && jtr.TokenType != JsonToken.EndArray)
                 {
                     var jo = (JObject)js.Deserialize(jtr);
-                    traceSource.TraceEvent(TraceEventType.Verbose, 0, jo.ToString());
+                    traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", jo);
                     yield return jo;
                 }
             }
@@ -3449,7 +3548,7 @@ namespace FolioLibrary
                 while (jtr.Read() && jtr.TokenType != JsonToken.EndArray)
                 {
                     var jo = (JObject)js.Deserialize(jtr);
-                    traceSource.TraceEvent(TraceEventType.Verbose, 0, jo.ToString());
+                    traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", jo);
                     yield return jo;
                 }
             }
@@ -3548,7 +3647,7 @@ namespace FolioLibrary
                 while (jtr.Read() && jtr.TokenType != JsonToken.EndArray)
                 {
                     var jo = (JObject)js.Deserialize(jtr);
-                    traceSource.TraceEvent(TraceEventType.Verbose, 0, jo.ToString());
+                    traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", jo);
                     yield return jo;
                 }
             }
@@ -3647,7 +3746,7 @@ namespace FolioLibrary
                 while (jtr.Read() && jtr.TokenType != JsonToken.EndArray)
                 {
                     var jo = (JObject)js.Deserialize(jtr);
-                    traceSource.TraceEvent(TraceEventType.Verbose, 0, jo.ToString());
+                    traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", jo);
                     yield return jo;
                 }
             }
