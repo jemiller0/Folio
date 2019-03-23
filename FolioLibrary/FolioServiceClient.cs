@@ -164,7 +164,7 @@ namespace FolioLibrary
             var s = Stopwatch.StartNew();
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "Finding alternative title types");
             AuthenticateIfNecessary();
-            var url = $"{Url}/alternativetitletypes{(where != null || orderBy != null ? $"?query={WebUtility.UrlEncode(where)}{(orderBy != null ? $"{(where != null ? " " : "")}sortby {WebUtility.UrlEncode(orderBy)}" : "")}" : "")}{(skip != null ? $"{(where != null || orderBy != null ? "&" : "?")}offset={skip}" : "")}{(take != null ? $"{(where != null || orderBy != null || skip != null ? "&" : "?")}limit={take}" : "")}";
+            var url = $"{Url}/alternative-title-types{(where != null || orderBy != null ? $"?query={WebUtility.UrlEncode(where)}{(orderBy != null ? $"{(where != null ? " " : "")}sortby {WebUtility.UrlEncode(orderBy)}" : "")}" : "")}{(skip != null ? $"{(where != null || orderBy != null ? "&" : "?")}offset={skip}" : "")}{(take != null ? $"{(where != null || orderBy != null || skip != null ? "&" : "?")}limit={take}" : "")}";
             traceSource.TraceEvent(TraceEventType.Verbose, 0, url);
             var hrm = httpClient.GetAsync(url).Result;
             if (hrm.StatusCode != HttpStatusCode.OK)
@@ -194,7 +194,7 @@ namespace FolioLibrary
             var s = Stopwatch.StartNew();
             traceSource.TraceEvent(TraceEventType.Verbose, 0, $"Getting alternative title type {id}");
             AuthenticateIfNecessary();
-            var url = $"{Url}/alternativetitletypes/{id}";
+            var url = $"{Url}/alternative-title-types/{id}";
             traceSource.TraceEvent(TraceEventType.Verbose, 0, url);
             var hrm = httpClient.GetAsync(url).Result;
             var s2 = hrm.Content.ReadAsStringAsync().Result;
@@ -212,7 +212,7 @@ namespace FolioLibrary
             if (alternativeTitleType["id"] == null) alternativeTitleType["id"] = Guid.NewGuid();
             traceSource.TraceEvent(TraceEventType.Verbose, 0, $"Inserting alternative title type {alternativeTitleType["id"]}");
             AuthenticateIfNecessary();
-            var url = $"{Url}/alternativetitletypes";
+            var url = $"{Url}/alternative-title-types";
             traceSource.TraceEvent(TraceEventType.Verbose, 0, url);
             var s2 = alternativeTitleType.ToString();
             traceSource.TraceEvent(TraceEventType.Verbose, 0, s2);
@@ -232,7 +232,7 @@ namespace FolioLibrary
             var s = Stopwatch.StartNew();
             traceSource.TraceEvent(TraceEventType.Verbose, 0, $"Updating alternative title type {alternativeTitleType["id"]}");
             AuthenticateIfNecessary();
-            var url = $"{Url}/alternativetitletypes/{alternativeTitleType["id"]}";
+            var url = $"{Url}/alternative-title-types/{alternativeTitleType["id"]}";
             traceSource.TraceEvent(TraceEventType.Verbose, 0, url);
             var s2 = alternativeTitleType.ToString();
             traceSource.TraceEvent(TraceEventType.Verbose, 0, s2);
@@ -249,7 +249,7 @@ namespace FolioLibrary
             var s = Stopwatch.StartNew();
             traceSource.TraceEvent(TraceEventType.Verbose, 0, $"Deleting alternative title type {id}");
             AuthenticateIfNecessary();
-            var url = $"{Url}/alternativetitletypes/{id}";
+            var url = $"{Url}/alternative-title-types/{id}";
             traceSource.TraceEvent(TraceEventType.Verbose, 0, url);
             var hrm = httpClient.DeleteAsync(url).Result;
             var s2 = hrm.Content.ReadAsStringAsync().Result;
@@ -263,7 +263,7 @@ namespace FolioLibrary
             var s = Stopwatch.StartNew();
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "Finding call number types");
             AuthenticateIfNecessary();
-            var url = $"{Url}/callnumbertypes{(where != null || orderBy != null ? $"?query={WebUtility.UrlEncode(where)}{(orderBy != null ? $"{(where != null ? " " : "")}sortby {WebUtility.UrlEncode(orderBy)}" : "")}" : "")}{(skip != null ? $"{(where != null || orderBy != null ? "&" : "?")}offset={skip}" : "")}{(take != null ? $"{(where != null || orderBy != null || skip != null ? "&" : "?")}limit={take}" : "")}";
+            var url = $"{Url}/call-number-types{(where != null || orderBy != null ? $"?query={WebUtility.UrlEncode(where)}{(orderBy != null ? $"{(where != null ? " " : "")}sortby {WebUtility.UrlEncode(orderBy)}" : "")}" : "")}{(skip != null ? $"{(where != null || orderBy != null ? "&" : "?")}offset={skip}" : "")}{(take != null ? $"{(where != null || orderBy != null || skip != null ? "&" : "?")}limit={take}" : "")}";
             traceSource.TraceEvent(TraceEventType.Verbose, 0, url);
             var hrm = httpClient.GetAsync(url).Result;
             if (hrm.StatusCode != HttpStatusCode.OK)
@@ -293,7 +293,7 @@ namespace FolioLibrary
             var s = Stopwatch.StartNew();
             traceSource.TraceEvent(TraceEventType.Verbose, 0, $"Getting call number type {id}");
             AuthenticateIfNecessary();
-            var url = $"{Url}/callnumbertypes/{id}";
+            var url = $"{Url}/call-number-types/{id}";
             traceSource.TraceEvent(TraceEventType.Verbose, 0, url);
             var hrm = httpClient.GetAsync(url).Result;
             var s2 = hrm.Content.ReadAsStringAsync().Result;
@@ -311,7 +311,7 @@ namespace FolioLibrary
             if (callNumberType["id"] == null) callNumberType["id"] = Guid.NewGuid();
             traceSource.TraceEvent(TraceEventType.Verbose, 0, $"Inserting call number type {callNumberType["id"]}");
             AuthenticateIfNecessary();
-            var url = $"{Url}/callnumbertypes";
+            var url = $"{Url}/call-number-types";
             traceSource.TraceEvent(TraceEventType.Verbose, 0, url);
             var s2 = callNumberType.ToString();
             traceSource.TraceEvent(TraceEventType.Verbose, 0, s2);
@@ -331,7 +331,7 @@ namespace FolioLibrary
             var s = Stopwatch.StartNew();
             traceSource.TraceEvent(TraceEventType.Verbose, 0, $"Updating call number type {callNumberType["id"]}");
             AuthenticateIfNecessary();
-            var url = $"{Url}/callnumbertypes/{callNumberType["id"]}";
+            var url = $"{Url}/call-number-types/{callNumberType["id"]}";
             traceSource.TraceEvent(TraceEventType.Verbose, 0, url);
             var s2 = callNumberType.ToString();
             traceSource.TraceEvent(TraceEventType.Verbose, 0, s2);
@@ -348,7 +348,7 @@ namespace FolioLibrary
             var s = Stopwatch.StartNew();
             traceSource.TraceEvent(TraceEventType.Verbose, 0, $"Deleting call number type {id}");
             AuthenticateIfNecessary();
-            var url = $"{Url}/callnumbertypes/{id}";
+            var url = $"{Url}/call-number-types/{id}";
             traceSource.TraceEvent(TraceEventType.Verbose, 0, url);
             var hrm = httpClient.DeleteAsync(url).Result;
             var s2 = hrm.Content.ReadAsStringAsync().Result;
@@ -560,7 +560,7 @@ namespace FolioLibrary
             var s = Stopwatch.StartNew();
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "Finding contributor name types");
             AuthenticateIfNecessary();
-            var url = $"{Url}/contributornametypes{(where != null || orderBy != null ? $"?query={WebUtility.UrlEncode(where)}{(orderBy != null ? $"{(where != null ? " " : "")}sortby {WebUtility.UrlEncode(orderBy)}" : "")}" : "")}{(skip != null ? $"{(where != null || orderBy != null ? "&" : "?")}offset={skip}" : "")}{(take != null ? $"{(where != null || orderBy != null || skip != null ? "&" : "?")}limit={take}" : "")}";
+            var url = $"{Url}/contributor-name-types{(where != null || orderBy != null ? $"?query={WebUtility.UrlEncode(where)}{(orderBy != null ? $"{(where != null ? " " : "")}sortby {WebUtility.UrlEncode(orderBy)}" : "")}" : "")}{(skip != null ? $"{(where != null || orderBy != null ? "&" : "?")}offset={skip}" : "")}{(take != null ? $"{(where != null || orderBy != null || skip != null ? "&" : "?")}limit={take}" : "")}";
             traceSource.TraceEvent(TraceEventType.Verbose, 0, url);
             var hrm = httpClient.GetAsync(url).Result;
             if (hrm.StatusCode != HttpStatusCode.OK)
@@ -590,7 +590,7 @@ namespace FolioLibrary
             var s = Stopwatch.StartNew();
             traceSource.TraceEvent(TraceEventType.Verbose, 0, $"Getting contributor name type {id}");
             AuthenticateIfNecessary();
-            var url = $"{Url}/contributornametypes/{id}";
+            var url = $"{Url}/contributor-name-types/{id}";
             traceSource.TraceEvent(TraceEventType.Verbose, 0, url);
             var hrm = httpClient.GetAsync(url).Result;
             var s2 = hrm.Content.ReadAsStringAsync().Result;
@@ -608,7 +608,7 @@ namespace FolioLibrary
             if (contributorNameType["id"] == null) contributorNameType["id"] = Guid.NewGuid();
             traceSource.TraceEvent(TraceEventType.Verbose, 0, $"Inserting contributor name type {contributorNameType["id"]}");
             AuthenticateIfNecessary();
-            var url = $"{Url}/contributornametypes";
+            var url = $"{Url}/contributor-name-types";
             traceSource.TraceEvent(TraceEventType.Verbose, 0, url);
             var s2 = contributorNameType.ToString();
             traceSource.TraceEvent(TraceEventType.Verbose, 0, s2);
@@ -628,7 +628,7 @@ namespace FolioLibrary
             var s = Stopwatch.StartNew();
             traceSource.TraceEvent(TraceEventType.Verbose, 0, $"Updating contributor name type {contributorNameType["id"]}");
             AuthenticateIfNecessary();
-            var url = $"{Url}/contributornametypes/{contributorNameType["id"]}";
+            var url = $"{Url}/contributor-name-types/{contributorNameType["id"]}";
             traceSource.TraceEvent(TraceEventType.Verbose, 0, url);
             var s2 = contributorNameType.ToString();
             traceSource.TraceEvent(TraceEventType.Verbose, 0, s2);
@@ -645,7 +645,7 @@ namespace FolioLibrary
             var s = Stopwatch.StartNew();
             traceSource.TraceEvent(TraceEventType.Verbose, 0, $"Deleting contributor name type {id}");
             AuthenticateIfNecessary();
-            var url = $"{Url}/contributornametypes/{id}";
+            var url = $"{Url}/contributor-name-types/{id}";
             traceSource.TraceEvent(TraceEventType.Verbose, 0, url);
             var hrm = httpClient.DeleteAsync(url).Result;
             var s2 = hrm.Content.ReadAsStringAsync().Result;
@@ -758,7 +758,7 @@ namespace FolioLibrary
             var s = Stopwatch.StartNew();
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "Finding electronic access relationships");
             AuthenticateIfNecessary();
-            var url = $"{Url}/electronicaccessrelationships{(where != null || orderBy != null ? $"?query={WebUtility.UrlEncode(where)}{(orderBy != null ? $"{(where != null ? " " : "")}sortby {WebUtility.UrlEncode(orderBy)}" : "")}" : "")}{(skip != null ? $"{(where != null || orderBy != null ? "&" : "?")}offset={skip}" : "")}{(take != null ? $"{(where != null || orderBy != null || skip != null ? "&" : "?")}limit={take}" : "")}";
+            var url = $"{Url}/electronic-access-relationships{(where != null || orderBy != null ? $"?query={WebUtility.UrlEncode(where)}{(orderBy != null ? $"{(where != null ? " " : "")}sortby {WebUtility.UrlEncode(orderBy)}" : "")}" : "")}{(skip != null ? $"{(where != null || orderBy != null ? "&" : "?")}offset={skip}" : "")}{(take != null ? $"{(where != null || orderBy != null || skip != null ? "&" : "?")}limit={take}" : "")}";
             traceSource.TraceEvent(TraceEventType.Verbose, 0, url);
             var hrm = httpClient.GetAsync(url).Result;
             if (hrm.StatusCode != HttpStatusCode.OK)
@@ -788,7 +788,7 @@ namespace FolioLibrary
             var s = Stopwatch.StartNew();
             traceSource.TraceEvent(TraceEventType.Verbose, 0, $"Getting electronic access relationship {id}");
             AuthenticateIfNecessary();
-            var url = $"{Url}/electronicaccessrelationships/{id}";
+            var url = $"{Url}/electronic-access-relationships/{id}";
             traceSource.TraceEvent(TraceEventType.Verbose, 0, url);
             var hrm = httpClient.GetAsync(url).Result;
             var s2 = hrm.Content.ReadAsStringAsync().Result;
@@ -806,7 +806,7 @@ namespace FolioLibrary
             if (electronicAccessRelationship["id"] == null) electronicAccessRelationship["id"] = Guid.NewGuid();
             traceSource.TraceEvent(TraceEventType.Verbose, 0, $"Inserting electronic access relationship {electronicAccessRelationship["id"]}");
             AuthenticateIfNecessary();
-            var url = $"{Url}/electronicaccessrelationships";
+            var url = $"{Url}/electronic-access-relationships";
             traceSource.TraceEvent(TraceEventType.Verbose, 0, url);
             var s2 = electronicAccessRelationship.ToString();
             traceSource.TraceEvent(TraceEventType.Verbose, 0, s2);
@@ -826,7 +826,7 @@ namespace FolioLibrary
             var s = Stopwatch.StartNew();
             traceSource.TraceEvent(TraceEventType.Verbose, 0, $"Updating electronic access relationship {electronicAccessRelationship["id"]}");
             AuthenticateIfNecessary();
-            var url = $"{Url}/electronicaccessrelationships/{electronicAccessRelationship["id"]}";
+            var url = $"{Url}/electronic-access-relationships/{electronicAccessRelationship["id"]}";
             traceSource.TraceEvent(TraceEventType.Verbose, 0, url);
             var s2 = electronicAccessRelationship.ToString();
             traceSource.TraceEvent(TraceEventType.Verbose, 0, s2);
@@ -843,7 +843,7 @@ namespace FolioLibrary
             var s = Stopwatch.StartNew();
             traceSource.TraceEvent(TraceEventType.Verbose, 0, $"Deleting electronic access relationship {id}");
             AuthenticateIfNecessary();
-            var url = $"{Url}/electronicaccessrelationships/{id}";
+            var url = $"{Url}/electronic-access-relationships/{id}";
             traceSource.TraceEvent(TraceEventType.Verbose, 0, url);
             var hrm = httpClient.DeleteAsync(url).Result;
             var s2 = hrm.Content.ReadAsStringAsync().Result;
@@ -1055,7 +1055,7 @@ namespace FolioLibrary
             var s = Stopwatch.StartNew();
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "Finding holding note types");
             AuthenticateIfNecessary();
-            var url = $"{Url}/holdingnotetypes{(where != null || orderBy != null ? $"?query={WebUtility.UrlEncode(where)}{(orderBy != null ? $"{(where != null ? " " : "")}sortby {WebUtility.UrlEncode(orderBy)}" : "")}" : "")}{(skip != null ? $"{(where != null || orderBy != null ? "&" : "?")}offset={skip}" : "")}{(take != null ? $"{(where != null || orderBy != null || skip != null ? "&" : "?")}limit={take}" : "")}";
+            var url = $"{Url}/holdings-note-types{(where != null || orderBy != null ? $"?query={WebUtility.UrlEncode(where)}{(orderBy != null ? $"{(where != null ? " " : "")}sortby {WebUtility.UrlEncode(orderBy)}" : "")}" : "")}{(skip != null ? $"{(where != null || orderBy != null ? "&" : "?")}offset={skip}" : "")}{(take != null ? $"{(where != null || orderBy != null || skip != null ? "&" : "?")}limit={take}" : "")}";
             traceSource.TraceEvent(TraceEventType.Verbose, 0, url);
             var hrm = httpClient.GetAsync(url).Result;
             if (hrm.StatusCode != HttpStatusCode.OK)
@@ -1085,7 +1085,7 @@ namespace FolioLibrary
             var s = Stopwatch.StartNew();
             traceSource.TraceEvent(TraceEventType.Verbose, 0, $"Getting holding note type {id}");
             AuthenticateIfNecessary();
-            var url = $"{Url}/holdingnotetypes/{id}";
+            var url = $"{Url}/holdings-note-types/{id}";
             traceSource.TraceEvent(TraceEventType.Verbose, 0, url);
             var hrm = httpClient.GetAsync(url).Result;
             var s2 = hrm.Content.ReadAsStringAsync().Result;
@@ -1103,7 +1103,7 @@ namespace FolioLibrary
             if (holdingNoteType["id"] == null) holdingNoteType["id"] = Guid.NewGuid();
             traceSource.TraceEvent(TraceEventType.Verbose, 0, $"Inserting holding note type {holdingNoteType["id"]}");
             AuthenticateIfNecessary();
-            var url = $"{Url}/holdingnotetypes";
+            var url = $"{Url}/holdings-note-types";
             traceSource.TraceEvent(TraceEventType.Verbose, 0, url);
             var s2 = holdingNoteType.ToString();
             traceSource.TraceEvent(TraceEventType.Verbose, 0, s2);
@@ -1123,7 +1123,7 @@ namespace FolioLibrary
             var s = Stopwatch.StartNew();
             traceSource.TraceEvent(TraceEventType.Verbose, 0, $"Updating holding note type {holdingNoteType["id"]}");
             AuthenticateIfNecessary();
-            var url = $"{Url}/holdingnotetypes/{holdingNoteType["id"]}";
+            var url = $"{Url}/holdings-note-types/{holdingNoteType["id"]}";
             traceSource.TraceEvent(TraceEventType.Verbose, 0, url);
             var s2 = holdingNoteType.ToString();
             traceSource.TraceEvent(TraceEventType.Verbose, 0, s2);
@@ -1140,7 +1140,7 @@ namespace FolioLibrary
             var s = Stopwatch.StartNew();
             traceSource.TraceEvent(TraceEventType.Verbose, 0, $"Deleting holding note type {id}");
             AuthenticateIfNecessary();
-            var url = $"{Url}/holdingnotetypes/{id}";
+            var url = $"{Url}/holdings-note-types/{id}";
             traceSource.TraceEvent(TraceEventType.Verbose, 0, url);
             var hrm = httpClient.DeleteAsync(url).Result;
             var s2 = hrm.Content.ReadAsStringAsync().Result;
@@ -1154,7 +1154,7 @@ namespace FolioLibrary
             var s = Stopwatch.StartNew();
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "Finding holding types");
             AuthenticateIfNecessary();
-            var url = $"{Url}/holdingtypes{(where != null || orderBy != null ? $"?query={WebUtility.UrlEncode(where)}{(orderBy != null ? $"{(where != null ? " " : "")}sortby {WebUtility.UrlEncode(orderBy)}" : "")}" : "")}{(skip != null ? $"{(where != null || orderBy != null ? "&" : "?")}offset={skip}" : "")}{(take != null ? $"{(where != null || orderBy != null || skip != null ? "&" : "?")}limit={take}" : "")}";
+            var url = $"{Url}/holdings-types{(where != null || orderBy != null ? $"?query={WebUtility.UrlEncode(where)}{(orderBy != null ? $"{(where != null ? " " : "")}sortby {WebUtility.UrlEncode(orderBy)}" : "")}" : "")}{(skip != null ? $"{(where != null || orderBy != null ? "&" : "?")}offset={skip}" : "")}{(take != null ? $"{(where != null || orderBy != null || skip != null ? "&" : "?")}limit={take}" : "")}";
             traceSource.TraceEvent(TraceEventType.Verbose, 0, url);
             var hrm = httpClient.GetAsync(url).Result;
             if (hrm.StatusCode != HttpStatusCode.OK)
@@ -1184,7 +1184,7 @@ namespace FolioLibrary
             var s = Stopwatch.StartNew();
             traceSource.TraceEvent(TraceEventType.Verbose, 0, $"Getting holding type {id}");
             AuthenticateIfNecessary();
-            var url = $"{Url}/holdingtypes/{id}";
+            var url = $"{Url}/holdings-types/{id}";
             traceSource.TraceEvent(TraceEventType.Verbose, 0, url);
             var hrm = httpClient.GetAsync(url).Result;
             var s2 = hrm.Content.ReadAsStringAsync().Result;
@@ -1202,7 +1202,7 @@ namespace FolioLibrary
             if (holdingType["id"] == null) holdingType["id"] = Guid.NewGuid();
             traceSource.TraceEvent(TraceEventType.Verbose, 0, $"Inserting holding type {holdingType["id"]}");
             AuthenticateIfNecessary();
-            var url = $"{Url}/holdingtypes";
+            var url = $"{Url}/holdings-types";
             traceSource.TraceEvent(TraceEventType.Verbose, 0, url);
             var s2 = holdingType.ToString();
             traceSource.TraceEvent(TraceEventType.Verbose, 0, s2);
@@ -1222,7 +1222,7 @@ namespace FolioLibrary
             var s = Stopwatch.StartNew();
             traceSource.TraceEvent(TraceEventType.Verbose, 0, $"Updating holding type {holdingType["id"]}");
             AuthenticateIfNecessary();
-            var url = $"{Url}/holdingtypes/{holdingType["id"]}";
+            var url = $"{Url}/holdings-types/{holdingType["id"]}";
             traceSource.TraceEvent(TraceEventType.Verbose, 0, url);
             var s2 = holdingType.ToString();
             traceSource.TraceEvent(TraceEventType.Verbose, 0, s2);
@@ -1239,7 +1239,7 @@ namespace FolioLibrary
             var s = Stopwatch.StartNew();
             traceSource.TraceEvent(TraceEventType.Verbose, 0, $"Deleting holding type {id}");
             AuthenticateIfNecessary();
-            var url = $"{Url}/holdingtypes/{id}";
+            var url = $"{Url}/holdings-types/{id}";
             traceSource.TraceEvent(TraceEventType.Verbose, 0, url);
             var hrm = httpClient.DeleteAsync(url).Result;
             var s2 = hrm.Content.ReadAsStringAsync().Result;
@@ -1352,7 +1352,7 @@ namespace FolioLibrary
             var s = Stopwatch.StartNew();
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "Finding ill policies");
             AuthenticateIfNecessary();
-            var url = $"{Url}/illpolicies{(where != null || orderBy != null ? $"?query={WebUtility.UrlEncode(where)}{(orderBy != null ? $"{(where != null ? " " : "")}sortby {WebUtility.UrlEncode(orderBy)}" : "")}" : "")}{(skip != null ? $"{(where != null || orderBy != null ? "&" : "?")}offset={skip}" : "")}{(take != null ? $"{(where != null || orderBy != null || skip != null ? "&" : "?")}limit={take}" : "")}";
+            var url = $"{Url}/ill-policies{(where != null || orderBy != null ? $"?query={WebUtility.UrlEncode(where)}{(orderBy != null ? $"{(where != null ? " " : "")}sortby {WebUtility.UrlEncode(orderBy)}" : "")}" : "")}{(skip != null ? $"{(where != null || orderBy != null ? "&" : "?")}offset={skip}" : "")}{(take != null ? $"{(where != null || orderBy != null || skip != null ? "&" : "?")}limit={take}" : "")}";
             traceSource.TraceEvent(TraceEventType.Verbose, 0, url);
             var hrm = httpClient.GetAsync(url).Result;
             if (hrm.StatusCode != HttpStatusCode.OK)
@@ -1382,7 +1382,7 @@ namespace FolioLibrary
             var s = Stopwatch.StartNew();
             traceSource.TraceEvent(TraceEventType.Verbose, 0, $"Getting ill policy {id}");
             AuthenticateIfNecessary();
-            var url = $"{Url}/illpolicies/{id}";
+            var url = $"{Url}/ill-policies/{id}";
             traceSource.TraceEvent(TraceEventType.Verbose, 0, url);
             var hrm = httpClient.GetAsync(url).Result;
             var s2 = hrm.Content.ReadAsStringAsync().Result;
@@ -1400,7 +1400,7 @@ namespace FolioLibrary
             if (illPolicy["id"] == null) illPolicy["id"] = Guid.NewGuid();
             traceSource.TraceEvent(TraceEventType.Verbose, 0, $"Inserting ill policy {illPolicy["id"]}");
             AuthenticateIfNecessary();
-            var url = $"{Url}/illpolicies";
+            var url = $"{Url}/ill-policies";
             traceSource.TraceEvent(TraceEventType.Verbose, 0, url);
             var s2 = illPolicy.ToString();
             traceSource.TraceEvent(TraceEventType.Verbose, 0, s2);
@@ -1420,7 +1420,7 @@ namespace FolioLibrary
             var s = Stopwatch.StartNew();
             traceSource.TraceEvent(TraceEventType.Verbose, 0, $"Updating ill policy {illPolicy["id"]}");
             AuthenticateIfNecessary();
-            var url = $"{Url}/illpolicies/{illPolicy["id"]}";
+            var url = $"{Url}/ill-policies/{illPolicy["id"]}";
             traceSource.TraceEvent(TraceEventType.Verbose, 0, url);
             var s2 = illPolicy.ToString();
             traceSource.TraceEvent(TraceEventType.Verbose, 0, s2);
@@ -1437,7 +1437,7 @@ namespace FolioLibrary
             var s = Stopwatch.StartNew();
             traceSource.TraceEvent(TraceEventType.Verbose, 0, $"Deleting ill policy {id}");
             AuthenticateIfNecessary();
-            var url = $"{Url}/illpolicies/{id}";
+            var url = $"{Url}/ill-policies/{id}";
             traceSource.TraceEvent(TraceEventType.Verbose, 0, url);
             var hrm = httpClient.DeleteAsync(url).Result;
             var s2 = hrm.Content.ReadAsStringAsync().Result;
@@ -1649,7 +1649,7 @@ namespace FolioLibrary
             var s = Stopwatch.StartNew();
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "Finding instance relationships");
             AuthenticateIfNecessary();
-            var url = $"{Url}/instancerelationships{(where != null || orderBy != null ? $"?query={WebUtility.UrlEncode(where)}{(orderBy != null ? $"{(where != null ? " " : "")}sortby {WebUtility.UrlEncode(orderBy)}" : "")}" : "")}{(skip != null ? $"{(where != null || orderBy != null ? "&" : "?")}offset={skip}" : "")}{(take != null ? $"{(where != null || orderBy != null || skip != null ? "&" : "?")}limit={take}" : "")}";
+            var url = $"{Url}/instance-storage/instance-relationships{(where != null || orderBy != null ? $"?query={WebUtility.UrlEncode(where)}{(orderBy != null ? $"{(where != null ? " " : "")}sortby {WebUtility.UrlEncode(orderBy)}" : "")}" : "")}{(skip != null ? $"{(where != null || orderBy != null ? "&" : "?")}offset={skip}" : "")}{(take != null ? $"{(where != null || orderBy != null || skip != null ? "&" : "?")}limit={take}" : "")}";
             traceSource.TraceEvent(TraceEventType.Verbose, 0, url);
             var hrm = httpClient.GetAsync(url).Result;
             if (hrm.StatusCode != HttpStatusCode.OK)
@@ -1679,7 +1679,7 @@ namespace FolioLibrary
             var s = Stopwatch.StartNew();
             traceSource.TraceEvent(TraceEventType.Verbose, 0, $"Getting instance relationship {id}");
             AuthenticateIfNecessary();
-            var url = $"{Url}/instancerelationships/{id}";
+            var url = $"{Url}/instance-storage/instance-relationships/{id}";
             traceSource.TraceEvent(TraceEventType.Verbose, 0, url);
             var hrm = httpClient.GetAsync(url).Result;
             var s2 = hrm.Content.ReadAsStringAsync().Result;
@@ -1697,7 +1697,7 @@ namespace FolioLibrary
             if (instanceRelationship["id"] == null) instanceRelationship["id"] = Guid.NewGuid();
             traceSource.TraceEvent(TraceEventType.Verbose, 0, $"Inserting instance relationship {instanceRelationship["id"]}");
             AuthenticateIfNecessary();
-            var url = $"{Url}/instancerelationships";
+            var url = $"{Url}/instance-storage/instance-relationships";
             traceSource.TraceEvent(TraceEventType.Verbose, 0, url);
             var s2 = instanceRelationship.ToString();
             traceSource.TraceEvent(TraceEventType.Verbose, 0, s2);
@@ -1717,7 +1717,7 @@ namespace FolioLibrary
             var s = Stopwatch.StartNew();
             traceSource.TraceEvent(TraceEventType.Verbose, 0, $"Updating instance relationship {instanceRelationship["id"]}");
             AuthenticateIfNecessary();
-            var url = $"{Url}/instancerelationships/{instanceRelationship["id"]}";
+            var url = $"{Url}/instance-storage/instance-relationships/{instanceRelationship["id"]}";
             traceSource.TraceEvent(TraceEventType.Verbose, 0, url);
             var s2 = instanceRelationship.ToString();
             traceSource.TraceEvent(TraceEventType.Verbose, 0, s2);
@@ -1734,7 +1734,7 @@ namespace FolioLibrary
             var s = Stopwatch.StartNew();
             traceSource.TraceEvent(TraceEventType.Verbose, 0, $"Deleting instance relationship {id}");
             AuthenticateIfNecessary();
-            var url = $"{Url}/instancerelationships/{id}";
+            var url = $"{Url}/instance-storage/instance-relationships/{id}";
             traceSource.TraceEvent(TraceEventType.Verbose, 0, url);
             var hrm = httpClient.DeleteAsync(url).Result;
             var s2 = hrm.Content.ReadAsStringAsync().Result;
@@ -1748,7 +1748,7 @@ namespace FolioLibrary
             var s = Stopwatch.StartNew();
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "Finding instance relationship types");
             AuthenticateIfNecessary();
-            var url = $"{Url}/instancerelationshiptypes{(where != null || orderBy != null ? $"?query={WebUtility.UrlEncode(where)}{(orderBy != null ? $"{(where != null ? " " : "")}sortby {WebUtility.UrlEncode(orderBy)}" : "")}" : "")}{(skip != null ? $"{(where != null || orderBy != null ? "&" : "?")}offset={skip}" : "")}{(take != null ? $"{(where != null || orderBy != null || skip != null ? "&" : "?")}limit={take}" : "")}";
+            var url = $"{Url}/instance-relationship-types{(where != null || orderBy != null ? $"?query={WebUtility.UrlEncode(where)}{(orderBy != null ? $"{(where != null ? " " : "")}sortby {WebUtility.UrlEncode(orderBy)}" : "")}" : "")}{(skip != null ? $"{(where != null || orderBy != null ? "&" : "?")}offset={skip}" : "")}{(take != null ? $"{(where != null || orderBy != null || skip != null ? "&" : "?")}limit={take}" : "")}";
             traceSource.TraceEvent(TraceEventType.Verbose, 0, url);
             var hrm = httpClient.GetAsync(url).Result;
             if (hrm.StatusCode != HttpStatusCode.OK)
@@ -1778,7 +1778,7 @@ namespace FolioLibrary
             var s = Stopwatch.StartNew();
             traceSource.TraceEvent(TraceEventType.Verbose, 0, $"Getting instance relationship type {id}");
             AuthenticateIfNecessary();
-            var url = $"{Url}/instancerelationshiptypes/{id}";
+            var url = $"{Url}/instance-relationship-types/{id}";
             traceSource.TraceEvent(TraceEventType.Verbose, 0, url);
             var hrm = httpClient.GetAsync(url).Result;
             var s2 = hrm.Content.ReadAsStringAsync().Result;
@@ -1796,7 +1796,7 @@ namespace FolioLibrary
             if (instanceRelationshipType["id"] == null) instanceRelationshipType["id"] = Guid.NewGuid();
             traceSource.TraceEvent(TraceEventType.Verbose, 0, $"Inserting instance relationship type {instanceRelationshipType["id"]}");
             AuthenticateIfNecessary();
-            var url = $"{Url}/instancerelationshiptypes";
+            var url = $"{Url}/instance-relationship-types";
             traceSource.TraceEvent(TraceEventType.Verbose, 0, url);
             var s2 = instanceRelationshipType.ToString();
             traceSource.TraceEvent(TraceEventType.Verbose, 0, s2);
@@ -1816,7 +1816,7 @@ namespace FolioLibrary
             var s = Stopwatch.StartNew();
             traceSource.TraceEvent(TraceEventType.Verbose, 0, $"Updating instance relationship type {instanceRelationshipType["id"]}");
             AuthenticateIfNecessary();
-            var url = $"{Url}/instancerelationshiptypes/{instanceRelationshipType["id"]}";
+            var url = $"{Url}/instance-relationship-types/{instanceRelationshipType["id"]}";
             traceSource.TraceEvent(TraceEventType.Verbose, 0, url);
             var s2 = instanceRelationshipType.ToString();
             traceSource.TraceEvent(TraceEventType.Verbose, 0, s2);
@@ -1833,106 +1833,7 @@ namespace FolioLibrary
             var s = Stopwatch.StartNew();
             traceSource.TraceEvent(TraceEventType.Verbose, 0, $"Deleting instance relationship type {id}");
             AuthenticateIfNecessary();
-            var url = $"{Url}/instancerelationshiptypes/{id}";
-            traceSource.TraceEvent(TraceEventType.Verbose, 0, url);
-            var hrm = httpClient.DeleteAsync(url).Result;
-            var s2 = hrm.Content.ReadAsStringAsync().Result;
-            traceSource.TraceEvent(TraceEventType.Verbose, 0, s2);
-            if (hrm.StatusCode != HttpStatusCode.NoContent) throw new HttpRequestException($"Response status code does not indicate success: {hrm.StatusCode} ({hrm.ReasonPhrase}).\r\n{s2}");
-            traceSource.TraceEvent(TraceEventType.Verbose, 0, s.Elapsed.ToString());
-        }
-
-        public IEnumerable<JObject> InstanceSourceMarcs(string where = null, string orderBy = null, int? skip = null, int? take = int.MaxValue)
-        {
-            var s = Stopwatch.StartNew();
-            traceSource.TraceEvent(TraceEventType.Verbose, 0, "Finding instance source marcs");
-            AuthenticateIfNecessary();
-            var url = $"{Url}/instancesourcemarcs{(where != null || orderBy != null ? $"?query={WebUtility.UrlEncode(where)}{(orderBy != null ? $"{(where != null ? " " : "")}sortby {WebUtility.UrlEncode(orderBy)}" : "")}" : "")}{(skip != null ? $"{(where != null || orderBy != null ? "&" : "?")}offset={skip}" : "")}{(take != null ? $"{(where != null || orderBy != null || skip != null ? "&" : "?")}limit={take}" : "")}";
-            traceSource.TraceEvent(TraceEventType.Verbose, 0, url);
-            var hrm = httpClient.GetAsync(url).Result;
-            if (hrm.StatusCode != HttpStatusCode.OK)
-            {
-                var s2 = hrm.Content.ReadAsStringAsync().Result;
-                if (hrm.Content.Headers.ContentType.MediaType == "application/json") s2 = JObject.Parse(s2).ToString();
-                traceSource.TraceEvent(TraceEventType.Verbose, 0, s2);
-                throw new HttpRequestException($"Response status code does not indicate success: {hrm.StatusCode} ({hrm.ReasonPhrase}).\r\n{s2}");
-            }
-            using (var sr = new StreamReader(hrm.Content.ReadAsStreamAsync().Result))
-            using (var jtr = new JsonTextReader(sr) { SupportMultipleContent = true })
-            {
-                jtr.Read(); jtr.Read(); jtr.Read();
-                var js = new JsonSerializer();
-                while (jtr.Read() && jtr.TokenType != JsonToken.EndArray)
-                {
-                    var jo = (JObject)js.Deserialize(jtr);
-                    traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", jo);
-                    yield return jo;
-                }
-            }
-            traceSource.TraceEvent(TraceEventType.Verbose, 0, s.Elapsed.ToString());
-        }
-
-        public JObject GetInstanceSourceMarc(string id)
-        {
-            var s = Stopwatch.StartNew();
-            traceSource.TraceEvent(TraceEventType.Verbose, 0, $"Getting instance source marc {id}");
-            AuthenticateIfNecessary();
-            var url = $"{Url}/instancesourcemarcs/{id}";
-            traceSource.TraceEvent(TraceEventType.Verbose, 0, url);
-            var hrm = httpClient.GetAsync(url).Result;
-            var s2 = hrm.Content.ReadAsStringAsync().Result;
-            var jo = hrm.Content.Headers.ContentType.MediaType == "application/json" ? JObject.Parse(s2) : null;
-            if (jo != null) s2 = jo.ToString();
-            traceSource.TraceEvent(TraceEventType.Verbose, 0, s2);
-            if (hrm.StatusCode != HttpStatusCode.OK) throw new HttpRequestException($"Response status code does not indicate success: {hrm.StatusCode} ({hrm.ReasonPhrase}).\r\n{s2}");
-            traceSource.TraceEvent(TraceEventType.Verbose, 0, s.Elapsed.ToString());
-            return jo;
-        }
-
-        public JObject InsertInstanceSourceMarc(JObject instanceSourceMarc)
-        {
-            var s = Stopwatch.StartNew();
-            if (instanceSourceMarc["id"] == null) instanceSourceMarc["id"] = Guid.NewGuid();
-            traceSource.TraceEvent(TraceEventType.Verbose, 0, $"Inserting instance source marc {instanceSourceMarc["id"]}");
-            AuthenticateIfNecessary();
-            var url = $"{Url}/instancesourcemarcs";
-            traceSource.TraceEvent(TraceEventType.Verbose, 0, url);
-            var s2 = instanceSourceMarc.ToString();
-            traceSource.TraceEvent(TraceEventType.Verbose, 0, s2);
-            var sc = new StringContent(s2, Encoding.UTF8, "application/json");
-            var hrm = httpClient.PostAsync(url, sc).Result;
-            s2 = hrm.Content.ReadAsStringAsync().Result;
-            var jo = hrm.Content.Headers.ContentType.MediaType == "application/json" ? JObject.Parse(s2) : null;
-            if (jo != null) s2 = jo.ToString();
-            traceSource.TraceEvent(TraceEventType.Verbose, 0, s2);
-            if (hrm.StatusCode != HttpStatusCode.Created) throw new HttpRequestException($"Response status code does not indicate success: {hrm.StatusCode} ({hrm.ReasonPhrase}).\r\n{s2}");
-            traceSource.TraceEvent(TraceEventType.Verbose, 0, s.Elapsed.ToString());
-            return jo;
-        }
-
-        public void UpdateInstanceSourceMarc(JObject instanceSourceMarc)
-        {
-            var s = Stopwatch.StartNew();
-            traceSource.TraceEvent(TraceEventType.Verbose, 0, $"Updating instance source marc {instanceSourceMarc["id"]}");
-            AuthenticateIfNecessary();
-            var url = $"{Url}/instancesourcemarcs/{instanceSourceMarc["id"]}";
-            traceSource.TraceEvent(TraceEventType.Verbose, 0, url);
-            var s2 = instanceSourceMarc.ToString();
-            traceSource.TraceEvent(TraceEventType.Verbose, 0, s2);
-            var sc = new StringContent(s2, Encoding.UTF8, "application/json");
-            var hrm = httpClient.PutAsync(url, sc).Result;
-            s2 = hrm.Content.ReadAsStringAsync().Result;
-            traceSource.TraceEvent(TraceEventType.Verbose, 0, s2);
-            if (hrm.StatusCode != HttpStatusCode.NoContent) throw new HttpRequestException($"Response status code does not indicate success: {hrm.StatusCode} ({hrm.ReasonPhrase}).\r\n{s2}");
-            traceSource.TraceEvent(TraceEventType.Verbose, 0, s.Elapsed.ToString());
-        }
-
-        public void DeleteInstanceSourceMarc(string id)
-        {
-            var s = Stopwatch.StartNew();
-            traceSource.TraceEvent(TraceEventType.Verbose, 0, $"Deleting instance source marc {id}");
-            AuthenticateIfNecessary();
-            var url = $"{Url}/instancesourcemarcs/{id}";
+            var url = $"{Url}/instance-relationship-types/{id}";
             traceSource.TraceEvent(TraceEventType.Verbose, 0, url);
             var hrm = httpClient.DeleteAsync(url).Result;
             var s2 = hrm.Content.ReadAsStringAsync().Result;
@@ -1946,7 +1847,7 @@ namespace FolioLibrary
             var s = Stopwatch.StartNew();
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "Finding instance statuses");
             AuthenticateIfNecessary();
-            var url = $"{Url}/instancestatuses{(where != null || orderBy != null ? $"?query={WebUtility.UrlEncode(where)}{(orderBy != null ? $"{(where != null ? " " : "")}sortby {WebUtility.UrlEncode(orderBy)}" : "")}" : "")}{(skip != null ? $"{(where != null || orderBy != null ? "&" : "?")}offset={skip}" : "")}{(take != null ? $"{(where != null || orderBy != null || skip != null ? "&" : "?")}limit={take}" : "")}";
+            var url = $"{Url}/instance-statuses{(where != null || orderBy != null ? $"?query={WebUtility.UrlEncode(where)}{(orderBy != null ? $"{(where != null ? " " : "")}sortby {WebUtility.UrlEncode(orderBy)}" : "")}" : "")}{(skip != null ? $"{(where != null || orderBy != null ? "&" : "?")}offset={skip}" : "")}{(take != null ? $"{(where != null || orderBy != null || skip != null ? "&" : "?")}limit={take}" : "")}";
             traceSource.TraceEvent(TraceEventType.Verbose, 0, url);
             var hrm = httpClient.GetAsync(url).Result;
             if (hrm.StatusCode != HttpStatusCode.OK)
@@ -1976,7 +1877,7 @@ namespace FolioLibrary
             var s = Stopwatch.StartNew();
             traceSource.TraceEvent(TraceEventType.Verbose, 0, $"Getting instance status {id}");
             AuthenticateIfNecessary();
-            var url = $"{Url}/instancestatuses/{id}";
+            var url = $"{Url}/instance-statuses/{id}";
             traceSource.TraceEvent(TraceEventType.Verbose, 0, url);
             var hrm = httpClient.GetAsync(url).Result;
             var s2 = hrm.Content.ReadAsStringAsync().Result;
@@ -1994,7 +1895,7 @@ namespace FolioLibrary
             if (instanceStatus["id"] == null) instanceStatus["id"] = Guid.NewGuid();
             traceSource.TraceEvent(TraceEventType.Verbose, 0, $"Inserting instance status {instanceStatus["id"]}");
             AuthenticateIfNecessary();
-            var url = $"{Url}/instancestatuses";
+            var url = $"{Url}/instance-statuses";
             traceSource.TraceEvent(TraceEventType.Verbose, 0, url);
             var s2 = instanceStatus.ToString();
             traceSource.TraceEvent(TraceEventType.Verbose, 0, s2);
@@ -2014,7 +1915,7 @@ namespace FolioLibrary
             var s = Stopwatch.StartNew();
             traceSource.TraceEvent(TraceEventType.Verbose, 0, $"Updating instance status {instanceStatus["id"]}");
             AuthenticateIfNecessary();
-            var url = $"{Url}/instancestatuses/{instanceStatus["id"]}";
+            var url = $"{Url}/instance-statuses/{instanceStatus["id"]}";
             traceSource.TraceEvent(TraceEventType.Verbose, 0, url);
             var s2 = instanceStatus.ToString();
             traceSource.TraceEvent(TraceEventType.Verbose, 0, s2);
@@ -2031,7 +1932,7 @@ namespace FolioLibrary
             var s = Stopwatch.StartNew();
             traceSource.TraceEvent(TraceEventType.Verbose, 0, $"Deleting instance status {id}");
             AuthenticateIfNecessary();
-            var url = $"{Url}/instancestatuses/{id}";
+            var url = $"{Url}/instance-statuses/{id}";
             traceSource.TraceEvent(TraceEventType.Verbose, 0, url);
             var hrm = httpClient.DeleteAsync(url).Result;
             var s2 = hrm.Content.ReadAsStringAsync().Result;
@@ -2342,7 +2243,7 @@ namespace FolioLibrary
             var s = Stopwatch.StartNew();
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "Finding item note types");
             AuthenticateIfNecessary();
-            var url = $"{Url}/itemnotetypes{(where != null || orderBy != null ? $"?query={WebUtility.UrlEncode(where)}{(orderBy != null ? $"{(where != null ? " " : "")}sortby {WebUtility.UrlEncode(orderBy)}" : "")}" : "")}{(skip != null ? $"{(where != null || orderBy != null ? "&" : "?")}offset={skip}" : "")}{(take != null ? $"{(where != null || orderBy != null || skip != null ? "&" : "?")}limit={take}" : "")}";
+            var url = $"{Url}/item-note-types{(where != null || orderBy != null ? $"?query={WebUtility.UrlEncode(where)}{(orderBy != null ? $"{(where != null ? " " : "")}sortby {WebUtility.UrlEncode(orderBy)}" : "")}" : "")}{(skip != null ? $"{(where != null || orderBy != null ? "&" : "?")}offset={skip}" : "")}{(take != null ? $"{(where != null || orderBy != null || skip != null ? "&" : "?")}limit={take}" : "")}";
             traceSource.TraceEvent(TraceEventType.Verbose, 0, url);
             var hrm = httpClient.GetAsync(url).Result;
             if (hrm.StatusCode != HttpStatusCode.OK)
@@ -2372,7 +2273,7 @@ namespace FolioLibrary
             var s = Stopwatch.StartNew();
             traceSource.TraceEvent(TraceEventType.Verbose, 0, $"Getting item note type {id}");
             AuthenticateIfNecessary();
-            var url = $"{Url}/itemnotetypes/{id}";
+            var url = $"{Url}/item-note-types/{id}";
             traceSource.TraceEvent(TraceEventType.Verbose, 0, url);
             var hrm = httpClient.GetAsync(url).Result;
             var s2 = hrm.Content.ReadAsStringAsync().Result;
@@ -2390,7 +2291,7 @@ namespace FolioLibrary
             if (itemNoteType["id"] == null) itemNoteType["id"] = Guid.NewGuid();
             traceSource.TraceEvent(TraceEventType.Verbose, 0, $"Inserting item note type {itemNoteType["id"]}");
             AuthenticateIfNecessary();
-            var url = $"{Url}/itemnotetypes";
+            var url = $"{Url}/item-note-types";
             traceSource.TraceEvent(TraceEventType.Verbose, 0, url);
             var s2 = itemNoteType.ToString();
             traceSource.TraceEvent(TraceEventType.Verbose, 0, s2);
@@ -2410,7 +2311,7 @@ namespace FolioLibrary
             var s = Stopwatch.StartNew();
             traceSource.TraceEvent(TraceEventType.Verbose, 0, $"Updating item note type {itemNoteType["id"]}");
             AuthenticateIfNecessary();
-            var url = $"{Url}/itemnotetypes/{itemNoteType["id"]}";
+            var url = $"{Url}/item-note-types/{itemNoteType["id"]}";
             traceSource.TraceEvent(TraceEventType.Verbose, 0, url);
             var s2 = itemNoteType.ToString();
             traceSource.TraceEvent(TraceEventType.Verbose, 0, s2);
@@ -2427,7 +2328,7 @@ namespace FolioLibrary
             var s = Stopwatch.StartNew();
             traceSource.TraceEvent(TraceEventType.Verbose, 0, $"Deleting item note type {id}");
             AuthenticateIfNecessary();
-            var url = $"{Url}/itemnotetypes/{id}";
+            var url = $"{Url}/item-note-types/{id}";
             traceSource.TraceEvent(TraceEventType.Verbose, 0, url);
             var hrm = httpClient.DeleteAsync(url).Result;
             var s2 = hrm.Content.ReadAsStringAsync().Result;
@@ -2936,7 +2837,7 @@ namespace FolioLibrary
             var s = Stopwatch.StartNew();
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "Finding mode of issuances");
             AuthenticateIfNecessary();
-            var url = $"{Url}/modeofissuances{(where != null || orderBy != null ? $"?query={WebUtility.UrlEncode(where)}{(orderBy != null ? $"{(where != null ? " " : "")}sortby {WebUtility.UrlEncode(orderBy)}" : "")}" : "")}{(skip != null ? $"{(where != null || orderBy != null ? "&" : "?")}offset={skip}" : "")}{(take != null ? $"{(where != null || orderBy != null || skip != null ? "&" : "?")}limit={take}" : "")}";
+            var url = $"{Url}/modes-of-issuance{(where != null || orderBy != null ? $"?query={WebUtility.UrlEncode(where)}{(orderBy != null ? $"{(where != null ? " " : "")}sortby {WebUtility.UrlEncode(orderBy)}" : "")}" : "")}{(skip != null ? $"{(where != null || orderBy != null ? "&" : "?")}offset={skip}" : "")}{(take != null ? $"{(where != null || orderBy != null || skip != null ? "&" : "?")}limit={take}" : "")}";
             traceSource.TraceEvent(TraceEventType.Verbose, 0, url);
             var hrm = httpClient.GetAsync(url).Result;
             if (hrm.StatusCode != HttpStatusCode.OK)
@@ -2966,7 +2867,7 @@ namespace FolioLibrary
             var s = Stopwatch.StartNew();
             traceSource.TraceEvent(TraceEventType.Verbose, 0, $"Getting mode of issuance {id}");
             AuthenticateIfNecessary();
-            var url = $"{Url}/modeofissuances/{id}";
+            var url = $"{Url}/modes-of-issuance/{id}";
             traceSource.TraceEvent(TraceEventType.Verbose, 0, url);
             var hrm = httpClient.GetAsync(url).Result;
             var s2 = hrm.Content.ReadAsStringAsync().Result;
@@ -2984,7 +2885,7 @@ namespace FolioLibrary
             if (modeOfIssuance["id"] == null) modeOfIssuance["id"] = Guid.NewGuid();
             traceSource.TraceEvent(TraceEventType.Verbose, 0, $"Inserting mode of issuance {modeOfIssuance["id"]}");
             AuthenticateIfNecessary();
-            var url = $"{Url}/modeofissuances";
+            var url = $"{Url}/modes-of-issuance";
             traceSource.TraceEvent(TraceEventType.Verbose, 0, url);
             var s2 = modeOfIssuance.ToString();
             traceSource.TraceEvent(TraceEventType.Verbose, 0, s2);
@@ -3004,7 +2905,7 @@ namespace FolioLibrary
             var s = Stopwatch.StartNew();
             traceSource.TraceEvent(TraceEventType.Verbose, 0, $"Updating mode of issuance {modeOfIssuance["id"]}");
             AuthenticateIfNecessary();
-            var url = $"{Url}/modeofissuances/{modeOfIssuance["id"]}";
+            var url = $"{Url}/modes-of-issuance/{modeOfIssuance["id"]}";
             traceSource.TraceEvent(TraceEventType.Verbose, 0, url);
             var s2 = modeOfIssuance.ToString();
             traceSource.TraceEvent(TraceEventType.Verbose, 0, s2);
@@ -3021,7 +2922,7 @@ namespace FolioLibrary
             var s = Stopwatch.StartNew();
             traceSource.TraceEvent(TraceEventType.Verbose, 0, $"Deleting mode of issuance {id}");
             AuthenticateIfNecessary();
-            var url = $"{Url}/modeofissuances/{id}";
+            var url = $"{Url}/modes-of-issuance/{id}";
             traceSource.TraceEvent(TraceEventType.Verbose, 0, url);
             var hrm = httpClient.DeleteAsync(url).Result;
             var s2 = hrm.Content.ReadAsStringAsync().Result;
@@ -3332,7 +3233,7 @@ namespace FolioLibrary
             var s = Stopwatch.StartNew();
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "Finding service points");
             AuthenticateIfNecessary();
-            var url = $"{Url}/servicepoints{(where != null || orderBy != null ? $"?query={WebUtility.UrlEncode(where)}{(orderBy != null ? $"{(where != null ? " " : "")}sortby {WebUtility.UrlEncode(orderBy)}" : "")}" : "")}{(skip != null ? $"{(where != null || orderBy != null ? "&" : "?")}offset={skip}" : "")}{(take != null ? $"{(where != null || orderBy != null || skip != null ? "&" : "?")}limit={take}" : "")}";
+            var url = $"{Url}/service-points{(where != null || orderBy != null ? $"?query={WebUtility.UrlEncode(where)}{(orderBy != null ? $"{(where != null ? " " : "")}sortby {WebUtility.UrlEncode(orderBy)}" : "")}" : "")}{(skip != null ? $"{(where != null || orderBy != null ? "&" : "?")}offset={skip}" : "")}{(take != null ? $"{(where != null || orderBy != null || skip != null ? "&" : "?")}limit={take}" : "")}";
             traceSource.TraceEvent(TraceEventType.Verbose, 0, url);
             var hrm = httpClient.GetAsync(url).Result;
             if (hrm.StatusCode != HttpStatusCode.OK)
@@ -3362,7 +3263,7 @@ namespace FolioLibrary
             var s = Stopwatch.StartNew();
             traceSource.TraceEvent(TraceEventType.Verbose, 0, $"Getting service point {id}");
             AuthenticateIfNecessary();
-            var url = $"{Url}/servicepoints/{id}";
+            var url = $"{Url}/service-points/{id}";
             traceSource.TraceEvent(TraceEventType.Verbose, 0, url);
             var hrm = httpClient.GetAsync(url).Result;
             var s2 = hrm.Content.ReadAsStringAsync().Result;
@@ -3380,7 +3281,7 @@ namespace FolioLibrary
             if (servicePoint["id"] == null) servicePoint["id"] = Guid.NewGuid();
             traceSource.TraceEvent(TraceEventType.Verbose, 0, $"Inserting service point {servicePoint["id"]}");
             AuthenticateIfNecessary();
-            var url = $"{Url}/servicepoints";
+            var url = $"{Url}/service-points";
             traceSource.TraceEvent(TraceEventType.Verbose, 0, url);
             var s2 = servicePoint.ToString();
             traceSource.TraceEvent(TraceEventType.Verbose, 0, s2);
@@ -3400,7 +3301,7 @@ namespace FolioLibrary
             var s = Stopwatch.StartNew();
             traceSource.TraceEvent(TraceEventType.Verbose, 0, $"Updating service point {servicePoint["id"]}");
             AuthenticateIfNecessary();
-            var url = $"{Url}/servicepoints/{servicePoint["id"]}";
+            var url = $"{Url}/service-points/{servicePoint["id"]}";
             traceSource.TraceEvent(TraceEventType.Verbose, 0, url);
             var s2 = servicePoint.ToString();
             traceSource.TraceEvent(TraceEventType.Verbose, 0, s2);
@@ -3417,7 +3318,7 @@ namespace FolioLibrary
             var s = Stopwatch.StartNew();
             traceSource.TraceEvent(TraceEventType.Verbose, 0, $"Deleting service point {id}");
             AuthenticateIfNecessary();
-            var url = $"{Url}/servicepoints/{id}";
+            var url = $"{Url}/service-points/{id}";
             traceSource.TraceEvent(TraceEventType.Verbose, 0, url);
             var hrm = httpClient.DeleteAsync(url).Result;
             var s2 = hrm.Content.ReadAsStringAsync().Result;
@@ -3431,7 +3332,7 @@ namespace FolioLibrary
             var s = Stopwatch.StartNew();
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "Finding service point users");
             AuthenticateIfNecessary();
-            var url = $"{Url}/servicepointusers{(where != null || orderBy != null ? $"?query={WebUtility.UrlEncode(where)}{(orderBy != null ? $"{(where != null ? " " : "")}sortby {WebUtility.UrlEncode(orderBy)}" : "")}" : "")}{(skip != null ? $"{(where != null || orderBy != null ? "&" : "?")}offset={skip}" : "")}{(take != null ? $"{(where != null || orderBy != null || skip != null ? "&" : "?")}limit={take}" : "")}";
+            var url = $"{Url}/service-points-users{(where != null || orderBy != null ? $"?query={WebUtility.UrlEncode(where)}{(orderBy != null ? $"{(where != null ? " " : "")}sortby {WebUtility.UrlEncode(orderBy)}" : "")}" : "")}{(skip != null ? $"{(where != null || orderBy != null ? "&" : "?")}offset={skip}" : "")}{(take != null ? $"{(where != null || orderBy != null || skip != null ? "&" : "?")}limit={take}" : "")}";
             traceSource.TraceEvent(TraceEventType.Verbose, 0, url);
             var hrm = httpClient.GetAsync(url).Result;
             if (hrm.StatusCode != HttpStatusCode.OK)
@@ -3461,7 +3362,7 @@ namespace FolioLibrary
             var s = Stopwatch.StartNew();
             traceSource.TraceEvent(TraceEventType.Verbose, 0, $"Getting service point user {id}");
             AuthenticateIfNecessary();
-            var url = $"{Url}/servicepointusers/{id}";
+            var url = $"{Url}/service-points-users/{id}";
             traceSource.TraceEvent(TraceEventType.Verbose, 0, url);
             var hrm = httpClient.GetAsync(url).Result;
             var s2 = hrm.Content.ReadAsStringAsync().Result;
@@ -3479,7 +3380,7 @@ namespace FolioLibrary
             if (servicePointUser["id"] == null) servicePointUser["id"] = Guid.NewGuid();
             traceSource.TraceEvent(TraceEventType.Verbose, 0, $"Inserting service point user {servicePointUser["id"]}");
             AuthenticateIfNecessary();
-            var url = $"{Url}/servicepointusers";
+            var url = $"{Url}/service-points-users";
             traceSource.TraceEvent(TraceEventType.Verbose, 0, url);
             var s2 = servicePointUser.ToString();
             traceSource.TraceEvent(TraceEventType.Verbose, 0, s2);
@@ -3499,7 +3400,7 @@ namespace FolioLibrary
             var s = Stopwatch.StartNew();
             traceSource.TraceEvent(TraceEventType.Verbose, 0, $"Updating service point user {servicePointUser["id"]}");
             AuthenticateIfNecessary();
-            var url = $"{Url}/servicepointusers/{servicePointUser["id"]}";
+            var url = $"{Url}/service-points-users/{servicePointUser["id"]}";
             traceSource.TraceEvent(TraceEventType.Verbose, 0, url);
             var s2 = servicePointUser.ToString();
             traceSource.TraceEvent(TraceEventType.Verbose, 0, s2);
@@ -3516,7 +3417,7 @@ namespace FolioLibrary
             var s = Stopwatch.StartNew();
             traceSource.TraceEvent(TraceEventType.Verbose, 0, $"Deleting service point user {id}");
             AuthenticateIfNecessary();
-            var url = $"{Url}/servicepointusers/{id}";
+            var url = $"{Url}/service-points-users/{id}";
             traceSource.TraceEvent(TraceEventType.Verbose, 0, url);
             var hrm = httpClient.DeleteAsync(url).Result;
             var s2 = hrm.Content.ReadAsStringAsync().Result;
@@ -3530,7 +3431,7 @@ namespace FolioLibrary
             var s = Stopwatch.StartNew();
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "Finding statistical codes");
             AuthenticateIfNecessary();
-            var url = $"{Url}/statisticalcodes{(where != null || orderBy != null ? $"?query={WebUtility.UrlEncode(where)}{(orderBy != null ? $"{(where != null ? " " : "")}sortby {WebUtility.UrlEncode(orderBy)}" : "")}" : "")}{(skip != null ? $"{(where != null || orderBy != null ? "&" : "?")}offset={skip}" : "")}{(take != null ? $"{(where != null || orderBy != null || skip != null ? "&" : "?")}limit={take}" : "")}";
+            var url = $"{Url}/statistical-codes{(where != null || orderBy != null ? $"?query={WebUtility.UrlEncode(where)}{(orderBy != null ? $"{(where != null ? " " : "")}sortby {WebUtility.UrlEncode(orderBy)}" : "")}" : "")}{(skip != null ? $"{(where != null || orderBy != null ? "&" : "?")}offset={skip}" : "")}{(take != null ? $"{(where != null || orderBy != null || skip != null ? "&" : "?")}limit={take}" : "")}";
             traceSource.TraceEvent(TraceEventType.Verbose, 0, url);
             var hrm = httpClient.GetAsync(url).Result;
             if (hrm.StatusCode != HttpStatusCode.OK)
@@ -3560,7 +3461,7 @@ namespace FolioLibrary
             var s = Stopwatch.StartNew();
             traceSource.TraceEvent(TraceEventType.Verbose, 0, $"Getting statistical code {id}");
             AuthenticateIfNecessary();
-            var url = $"{Url}/statisticalcodes/{id}";
+            var url = $"{Url}/statistical-codes/{id}";
             traceSource.TraceEvent(TraceEventType.Verbose, 0, url);
             var hrm = httpClient.GetAsync(url).Result;
             var s2 = hrm.Content.ReadAsStringAsync().Result;
@@ -3578,7 +3479,7 @@ namespace FolioLibrary
             if (statisticalCode["id"] == null) statisticalCode["id"] = Guid.NewGuid();
             traceSource.TraceEvent(TraceEventType.Verbose, 0, $"Inserting statistical code {statisticalCode["id"]}");
             AuthenticateIfNecessary();
-            var url = $"{Url}/statisticalcodes";
+            var url = $"{Url}/statistical-codes";
             traceSource.TraceEvent(TraceEventType.Verbose, 0, url);
             var s2 = statisticalCode.ToString();
             traceSource.TraceEvent(TraceEventType.Verbose, 0, s2);
@@ -3598,7 +3499,7 @@ namespace FolioLibrary
             var s = Stopwatch.StartNew();
             traceSource.TraceEvent(TraceEventType.Verbose, 0, $"Updating statistical code {statisticalCode["id"]}");
             AuthenticateIfNecessary();
-            var url = $"{Url}/statisticalcodes/{statisticalCode["id"]}";
+            var url = $"{Url}/statistical-codes/{statisticalCode["id"]}";
             traceSource.TraceEvent(TraceEventType.Verbose, 0, url);
             var s2 = statisticalCode.ToString();
             traceSource.TraceEvent(TraceEventType.Verbose, 0, s2);
@@ -3615,7 +3516,7 @@ namespace FolioLibrary
             var s = Stopwatch.StartNew();
             traceSource.TraceEvent(TraceEventType.Verbose, 0, $"Deleting statistical code {id}");
             AuthenticateIfNecessary();
-            var url = $"{Url}/statisticalcodes/{id}";
+            var url = $"{Url}/statistical-codes/{id}";
             traceSource.TraceEvent(TraceEventType.Verbose, 0, url);
             var hrm = httpClient.DeleteAsync(url).Result;
             var s2 = hrm.Content.ReadAsStringAsync().Result;
@@ -3629,7 +3530,7 @@ namespace FolioLibrary
             var s = Stopwatch.StartNew();
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "Finding statistical code types");
             AuthenticateIfNecessary();
-            var url = $"{Url}/statisticalcodetypes{(where != null || orderBy != null ? $"?query={WebUtility.UrlEncode(where)}{(orderBy != null ? $"{(where != null ? " " : "")}sortby {WebUtility.UrlEncode(orderBy)}" : "")}" : "")}{(skip != null ? $"{(where != null || orderBy != null ? "&" : "?")}offset={skip}" : "")}{(take != null ? $"{(where != null || orderBy != null || skip != null ? "&" : "?")}limit={take}" : "")}";
+            var url = $"{Url}/statistical-code-types{(where != null || orderBy != null ? $"?query={WebUtility.UrlEncode(where)}{(orderBy != null ? $"{(where != null ? " " : "")}sortby {WebUtility.UrlEncode(orderBy)}" : "")}" : "")}{(skip != null ? $"{(where != null || orderBy != null ? "&" : "?")}offset={skip}" : "")}{(take != null ? $"{(where != null || orderBy != null || skip != null ? "&" : "?")}limit={take}" : "")}";
             traceSource.TraceEvent(TraceEventType.Verbose, 0, url);
             var hrm = httpClient.GetAsync(url).Result;
             if (hrm.StatusCode != HttpStatusCode.OK)
@@ -3659,7 +3560,7 @@ namespace FolioLibrary
             var s = Stopwatch.StartNew();
             traceSource.TraceEvent(TraceEventType.Verbose, 0, $"Getting statistical code type {id}");
             AuthenticateIfNecessary();
-            var url = $"{Url}/statisticalcodetypes/{id}";
+            var url = $"{Url}/statistical-code-types/{id}";
             traceSource.TraceEvent(TraceEventType.Verbose, 0, url);
             var hrm = httpClient.GetAsync(url).Result;
             var s2 = hrm.Content.ReadAsStringAsync().Result;
@@ -3677,7 +3578,7 @@ namespace FolioLibrary
             if (statisticalCodeType["id"] == null) statisticalCodeType["id"] = Guid.NewGuid();
             traceSource.TraceEvent(TraceEventType.Verbose, 0, $"Inserting statistical code type {statisticalCodeType["id"]}");
             AuthenticateIfNecessary();
-            var url = $"{Url}/statisticalcodetypes";
+            var url = $"{Url}/statistical-code-types";
             traceSource.TraceEvent(TraceEventType.Verbose, 0, url);
             var s2 = statisticalCodeType.ToString();
             traceSource.TraceEvent(TraceEventType.Verbose, 0, s2);
@@ -3697,7 +3598,7 @@ namespace FolioLibrary
             var s = Stopwatch.StartNew();
             traceSource.TraceEvent(TraceEventType.Verbose, 0, $"Updating statistical code type {statisticalCodeType["id"]}");
             AuthenticateIfNecessary();
-            var url = $"{Url}/statisticalcodetypes/{statisticalCodeType["id"]}";
+            var url = $"{Url}/statistical-code-types/{statisticalCodeType["id"]}";
             traceSource.TraceEvent(TraceEventType.Verbose, 0, url);
             var s2 = statisticalCodeType.ToString();
             traceSource.TraceEvent(TraceEventType.Verbose, 0, s2);
@@ -3714,7 +3615,7 @@ namespace FolioLibrary
             var s = Stopwatch.StartNew();
             traceSource.TraceEvent(TraceEventType.Verbose, 0, $"Deleting statistical code type {id}");
             AuthenticateIfNecessary();
-            var url = $"{Url}/statisticalcodetypes/{id}";
+            var url = $"{Url}/statistical-code-types/{id}";
             traceSource.TraceEvent(TraceEventType.Verbose, 0, url);
             var hrm = httpClient.DeleteAsync(url).Result;
             var s2 = hrm.Content.ReadAsStringAsync().Result;

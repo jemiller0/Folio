@@ -31,7 +31,7 @@ namespace FolioConsoleApplication
                 traceSource.TraceEvent(TraceEventType.Information, 0, "Starting");
                 if (args.Length == 0)
                 {
-                    traceSource.TraceEvent(TraceEventType.Critical, 0, "Usage: dotnet FolioConsoleApplication.dll [-All] [-Api] [-Delete] [-Load] [-Save] [-Validate] [-Verbose] [-AllUsers] [-AllInventory] [-AllLogin] [-AllPermissions] [-AddressTypesPath <string>] [-AddressTypesWhere <string>] [-AlternativeTitleTypesPath <string>] [-AlternativeTitleTypesWhere <string>] [-CallNumberTypesPath <string>] [-CallNumberTypesWhere <string>] [-CampusesPath <string>] [-CampusesWhere <string>] [-ClassificationTypesPath <string>] [-ClassificationTypesWhere <string>] [-ContributorNameTypesPath <string>] [-ContributorNameTypesWhere <string>] [-ContributorTypesPath <string>] [-ContributorTypesWhere <string>] [-ElectronicAccessRelationshipsPath <string>] [-ElectronicAccessRelationshipsWhere <string>] [-GroupsPath <string>] [-GroupsWhere <string>] [-HoldingsPath <string>] [-HoldingsWhere <string>] [-HoldingNoteTypesPath <string>] [-HoldingNoteTypesWhere <string>] [-HoldingTypesPath <string>] [-HoldingTypesWhere <string>] [-IdTypesPath <string>] [-IdTypesWhere <string>] [-IllPoliciesPath <string>] [-IllPoliciesWhere <string>] [-InstancesPath <string>] [-InstancesWhere <string>] [-InstanceFormatsPath <string>] [-InstanceFormatsWhere <string>] [-InstanceRelationshipsPath <string>] [-InstanceRelationshipsWhere <string>] [-InstanceRelationshipTypesPath <string>] [-InstanceRelationshipTypesWhere <string>] [-InstanceSourceMarcsPath <string>] [-InstanceSourceMarcsWhere <string>] [-InstanceStatusesPath <string>] [-InstanceStatusesWhere <string>] [-InstanceTypesPath <string>] [-InstanceTypesWhere <string>] [-InstitutionsPath <string>] [-InstitutionsWhere <string>] [-ItemsPath <string>] [-ItemsWhere <string>] [-ItemNoteTypesPath <string>] [-ItemNoteTypesWhere <string>] [-LibrariesPath <string>] [-LibrariesWhere <string>] [-LoanTypesPath <string>] [-LoanTypesWhere <string>] [-LocationsPath <string>] [-LocationsWhere <string>] [-LoginsPath <string>] [-LoginsWhere <string>] [-MaterialTypesPath <string>] [-MaterialTypesWhere <string>] [-ModeOfIssuancesPath <string>] [-ModeOfIssuancesWhere <string>] [-PermissionsPath <string>] [-PermissionsWhere <string>] [-PermissionsUsersPath <string>] [-PermissionsUsersWhere <string>] [-ProxiesPath <string>] [-ProxiesWhere <string>] [-ServicePointsPath <string>] [-ServicePointsWhere <string>] [-ServicePointUsersPath <string>] [-ServicePointUsersWhere <string>] [-StatisticalCodesPath <string>] [-StatisticalCodesWhere <string>] [-StatisticalCodeTypesPath <string>] [-StatisticalCodeTypesWhere <string>] [-UsersPath <string>] [-UsersWhere <string>]");
+                    traceSource.TraceEvent(TraceEventType.Critical, 0, "Usage: dotnet FolioConsoleApplication.dll [-All] [-Api] [-Delete] [-Load] [-Save] [-Validate] [-Verbose] [-AllUsers] [-AllInventory] [-AllLogin] [-AllPermissions] [-AddressTypesPath <string>] [-AddressTypesWhere <string>] [-AlternativeTitleTypesPath <string>] [-AlternativeTitleTypesWhere <string>] [-CallNumberTypesPath <string>] [-CallNumberTypesWhere <string>] [-CampusesPath <string>] [-CampusesWhere <string>] [-ClassificationTypesPath <string>] [-ClassificationTypesWhere <string>] [-ContributorNameTypesPath <string>] [-ContributorNameTypesWhere <string>] [-ContributorTypesPath <string>] [-ContributorTypesWhere <string>] [-ElectronicAccessRelationshipsPath <string>] [-ElectronicAccessRelationshipsWhere <string>] [-GroupsPath <string>] [-GroupsWhere <string>] [-HoldingsPath <string>] [-HoldingsWhere <string>] [-HoldingNoteTypesPath <string>] [-HoldingNoteTypesWhere <string>] [-HoldingTypesPath <string>] [-HoldingTypesWhere <string>] [-IdTypesPath <string>] [-IdTypesWhere <string>] [-IllPoliciesPath <string>] [-IllPoliciesWhere <string>] [-InstancesPath <string>] [-InstancesWhere <string>] [-InstanceFormatsPath <string>] [-InstanceFormatsWhere <string>] [-InstanceRelationshipsPath <string>] [-InstanceRelationshipsWhere <string>] [-InstanceRelationshipTypesPath <string>] [-InstanceRelationshipTypesWhere <string>] [-InstanceStatusesPath <string>] [-InstanceStatusesWhere <string>] [-InstanceTypesPath <string>] [-InstanceTypesWhere <string>] [-InstitutionsPath <string>] [-InstitutionsWhere <string>] [-ItemsPath <string>] [-ItemsWhere <string>] [-ItemNoteTypesPath <string>] [-ItemNoteTypesWhere <string>] [-LibrariesPath <string>] [-LibrariesWhere <string>] [-LoanTypesPath <string>] [-LoanTypesWhere <string>] [-LocationsPath <string>] [-LocationsWhere <string>] [-LoginsPath <string>] [-LoginsWhere <string>] [-MaterialTypesPath <string>] [-MaterialTypesWhere <string>] [-ModeOfIssuancesPath <string>] [-ModeOfIssuancesWhere <string>] [-PermissionsPath <string>] [-PermissionsWhere <string>] [-PermissionsUsersPath <string>] [-PermissionsUsersWhere <string>] [-ProxiesPath <string>] [-ProxiesWhere <string>] [-ServicePointsPath <string>] [-ServicePointsWhere <string>] [-ServicePointUsersPath <string>] [-ServicePointUsersWhere <string>] [-StatisticalCodesPath <string>] [-StatisticalCodesWhere <string>] [-StatisticalCodeTypesPath <string>] [-StatisticalCodeTypesWhere <string>] [-UsersPath <string>] [-UsersWhere <string>]");
                     return -1;
                 }
                 var all = args.Any(s3 => s3.Equals("-All", StringComparison.OrdinalIgnoreCase));
@@ -62,7 +62,6 @@ namespace FolioConsoleApplication
                 var instanceFormatsPath = args.SkipWhile(s3 => !s3.Equals("-InstanceFormatsPath", StringComparison.OrdinalIgnoreCase)).Skip(1).FirstOrDefault();
                 var instanceRelationshipsPath = args.SkipWhile(s3 => !s3.Equals("-InstanceRelationshipsPath", StringComparison.OrdinalIgnoreCase)).Skip(1).FirstOrDefault();
                 var instanceRelationshipTypesPath = args.SkipWhile(s3 => !s3.Equals("-InstanceRelationshipTypesPath", StringComparison.OrdinalIgnoreCase)).Skip(1).FirstOrDefault();
-                var instanceSourceMarcsPath = args.SkipWhile(s3 => !s3.Equals("-InstanceSourceMarcsPath", StringComparison.OrdinalIgnoreCase)).Skip(1).FirstOrDefault();
                 var instanceStatusesPath = args.SkipWhile(s3 => !s3.Equals("-InstanceStatusesPath", StringComparison.OrdinalIgnoreCase)).Skip(1).FirstOrDefault();
                 var instanceTypesPath = args.SkipWhile(s3 => !s3.Equals("-InstanceTypesPath", StringComparison.OrdinalIgnoreCase)).Skip(1).FirstOrDefault();
                 var institutionsPath = args.SkipWhile(s3 => !s3.Equals("-InstitutionsPath", StringComparison.OrdinalIgnoreCase)).Skip(1).FirstOrDefault();
@@ -100,7 +99,6 @@ namespace FolioConsoleApplication
                 var instanceFormatsWhere = args.SkipWhile(s3 => !s3.Equals("-InstanceFormatsWhere", StringComparison.OrdinalIgnoreCase)).Skip(1).FirstOrDefault();
                 var instanceRelationshipsWhere = args.SkipWhile(s3 => !s3.Equals("-InstanceRelationshipsWhere", StringComparison.OrdinalIgnoreCase)).Skip(1).FirstOrDefault();
                 var instanceRelationshipTypesWhere = args.SkipWhile(s3 => !s3.Equals("-InstanceRelationshipTypesWhere", StringComparison.OrdinalIgnoreCase)).Skip(1).FirstOrDefault();
-                var instanceSourceMarcsWhere = args.SkipWhile(s3 => !s3.Equals("-InstanceSourceMarcsWhere", StringComparison.OrdinalIgnoreCase)).Skip(1).FirstOrDefault();
                 var instanceStatusesWhere = args.SkipWhile(s3 => !s3.Equals("-InstanceStatusesWhere", StringComparison.OrdinalIgnoreCase)).Skip(1).FirstOrDefault();
                 var instanceTypesWhere = args.SkipWhile(s3 => !s3.Equals("-InstanceTypesWhere", StringComparison.OrdinalIgnoreCase)).Skip(1).FirstOrDefault();
                 var institutionsWhere = args.SkipWhile(s3 => !s3.Equals("-InstitutionsWhere", StringComparison.OrdinalIgnoreCase)).Skip(1).FirstOrDefault();
@@ -140,7 +138,6 @@ namespace FolioConsoleApplication
                     instanceFormatsPath = "instanceformats.json";
                     instanceRelationshipsPath = "instancerelationships.json";
                     instanceRelationshipTypesPath = "instancerelationshiptypes.json";
-                    instanceSourceMarcsPath = "instancesourcemarcs.json";
                     instanceStatusesPath = "instancestatuses.json";
                     instanceTypesPath = "instancetypes.json";
                     institutionsPath = "institutions.json";
@@ -186,7 +183,6 @@ namespace FolioConsoleApplication
                     instanceFormatsPath = "instanceformats.json";
                     instanceRelationshipsPath = "instancerelationships.json";
                     instanceRelationshipTypesPath = "instancerelationshiptypes.json";
-                    instanceSourceMarcsPath = "instancesourcemarcs.json";
                     instanceStatusesPath = "instancestatuses.json";
                     instanceTypesPath = "instancetypes.json";
                     institutionsPath = "institutions.json";
@@ -237,7 +233,6 @@ namespace FolioConsoleApplication
                 if (save && instanceFormatsPath != null) SaveInstanceFormats(instanceFormatsPath, instanceFormatsWhere);
                 if (save && instanceRelationshipTypesPath != null) SaveInstanceRelationshipTypes(instanceRelationshipTypesPath, instanceRelationshipTypesWhere);
                 if (save && instanceRelationshipsPath != null) SaveInstanceRelationships(instanceRelationshipsPath, instanceRelationshipsWhere);
-                if (save && instanceSourceMarcsPath != null) SaveInstanceSourceMarcs(instanceSourceMarcsPath, instanceSourceMarcsWhere);
                 if (save && instanceStatusesPath != null) SaveInstanceStatuses(instanceStatusesPath, instanceStatusesWhere);
                 if (save && instanceTypesPath != null) SaveInstanceTypes(instanceTypesPath, instanceTypesWhere);
                 if (save && itemNoteTypesPath != null) SaveItemNoteTypes(itemNoteTypesPath, itemNoteTypesWhere);
@@ -260,7 +255,6 @@ namespace FolioConsoleApplication
                 if (delete && itemNoteTypesPath != null) DeleteItemNoteTypes(itemNoteTypesWhere);
                 if (delete && instanceTypesPath != null) DeleteInstanceTypes(instanceTypesWhere);
                 if (delete && instanceStatusesPath != null) DeleteInstanceStatuses(instanceStatusesWhere);
-                if (delete && instanceSourceMarcsPath != null) DeleteInstanceSourceMarcs(instanceSourceMarcsWhere);
                 if (delete && instanceRelationshipsPath != null) DeleteInstanceRelationships(instanceRelationshipsWhere);
                 if (delete && instanceRelationshipTypesPath != null) DeleteInstanceRelationshipTypes(instanceRelationshipTypesWhere);
                 if (delete && instanceFormatsPath != null) DeleteInstanceFormats(instanceFormatsWhere);
@@ -313,7 +307,6 @@ namespace FolioConsoleApplication
                 if (load && instanceFormatsPath != null) LoadInstanceFormats(instanceFormatsPath);
                 if (load && instanceRelationshipTypesPath != null) LoadInstanceRelationshipTypes(instanceRelationshipTypesPath);
                 if (load && instanceRelationshipsPath != null) LoadInstanceRelationships(instanceRelationshipsPath);
-                if (load && instanceSourceMarcsPath != null) LoadInstanceSourceMarcs(instanceSourceMarcsPath);
                 if (load && instanceStatusesPath != null) LoadInstanceStatuses(instanceStatusesPath);
                 if (load && instanceTypesPath != null) LoadInstanceTypes(instanceTypesPath);
                 if (load && itemNoteTypesPath != null) LoadItemNoteTypes(itemNoteTypesPath);
@@ -2609,129 +2602,6 @@ namespace FolioConsoleApplication
                     jtw.WriteEndArray();
                     traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
                     traceSource.TraceEvent(TraceEventType.Information, 0, $"Saved {i} instance relationship types");
-                }
-            }
-            traceSource.TraceEvent(TraceEventType.Information, 0, $"{s.Elapsed} elapsed");
-        }
-
-        public static void DeleteInstanceSourceMarcs(string where = null)
-        {
-            traceSource.TraceEvent(TraceEventType.Information, 0, "Deleting instance source marcs");
-            var s = Stopwatch.StartNew();
-            using (var fdc = new FolioDapperContext())
-            using (var fsc = new FolioServiceClient())
-            {
-                var i = 0;
-                if (api)
-                {
-                    var s2 = Stopwatch.StartNew();
-                    foreach (var jo in fsc.InstanceSourceMarcs(where))
-                    {
-                        fsc.DeleteInstanceSourceMarc((string)jo["id"]);
-                        if (++i % 100 == 0)
-                        {
-                            traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
-                            s2.Restart();
-                        }
-                    }
-                    traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
-                }
-                else
-                {
-                    i = fdc.Execute(where == null ? "TRUNCATE TABLE instance_source_marc" : $"DELETE FROM instance_source_marc WHERE {where}");
-                    fdc.Commit();
-                }
-                traceSource.TraceEvent(TraceEventType.Information, 0, $"Deleted {i} instance source marcs");
-            }
-            traceSource.TraceEvent(TraceEventType.Information, 0, $"{s.Elapsed} elapsed");
-        }
-
-        public static void LoadInstanceSourceMarcs(string path)
-        {
-            traceSource.TraceEvent(TraceEventType.Information, 0, "Loading instance source marcs");
-            var s = Stopwatch.StartNew();
-            using (var sr = new StreamReader(path))
-            using (var jtr = new JsonTextReader(sr) { SupportMultipleContent = true })
-            using (var fbcc = new FolioBulkCopyContext())
-            using (var fsc = new FolioServiceClient())
-            {
-                var s2 = Stopwatch.StartNew();
-                var js = new JsonSerializer();
-                jtr.Read();
-                var i = 0;
-                while (jtr.Read() && jtr.TokenType != JsonToken.EndArray)
-                {
-                    ++i;
-                    var jo = (JObject)js.Deserialize(jtr);
-                    if (validate)
-                    {
-                        var vr = InstanceSourceMarc.ValidateContent(jo.ToString());
-                        if (vr != ValidationResult.Success) throw new ValidationException($"InstanceSourceMarc {jo["id"]}: {vr.ErrorMessage}");
-                    }
-                    if (api)
-                    {
-                        fsc.InsertInstanceSourceMarc(jo);
-                        if (i % 100 == 0)
-                        {
-                            traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
-                            s2.Restart();
-                        }
-                    }
-                    else
-                    {
-                        fbcc.Insert(new InstanceSourceMarc
-                        {
-                            Content = jo.ToString()
-                        });
-                        if (i % 1000 == 0)
-                        {
-                            fbcc.Commit();
-                            if (i % 10000 == 0)
-                            {
-                                traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
-                                s2.Restart();
-                            }
-                    }
-                    }
-                }
-                fbcc.Commit();
-                traceSource.TraceEvent(TraceEventType.Verbose, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
-                traceSource.TraceEvent(TraceEventType.Information, 0, $"Added {i} instance source marcs");
-            }
-            traceSource.TraceEvent(TraceEventType.Information, 0, $"{s.Elapsed} elapsed");
-        }
-
-        public static void SaveInstanceSourceMarcs(string path, string where = null)
-        {
-            traceSource.TraceEvent(TraceEventType.Information, 0, "Saving instance source marcs");
-            var s = Stopwatch.StartNew();
-            using (var fdc = new FolioDapperContext())
-            using (var fsc = new FolioServiceClient())
-            {
-                using (var sw = new StreamWriter(path))
-                using (var jtw = new JsonTextWriter(sw))
-                {
-                    var js = new JsonSerializer { Formatting = Formatting.Indented };
-                    var s2 = Stopwatch.StartNew();
-                    jtw.WriteStartArray();
-                    var i = 0;
-                    foreach (var jo in api ? fsc.InstanceSourceMarcs(where) : fdc.InstanceSourceMarcs(where).Select(ism => JObject.Parse(ism.Content)))
-                    {
-                        if (validate)
-                        {
-                            var vr = InstanceSourceMarc.ValidateContent(jo.ToString());
-                            if (vr != ValidationResult.Success) throw new ValidationException($"InstanceSourceMarc {jo["id"]}: {vr.ErrorMessage}");
-                        }
-                        js.Serialize(jtw, jo);
-                        if (++i % 10000 == 0)
-                        {
-                            traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
-                            s2.Restart();
-                        }
-                    }
-                    jtw.WriteEndArray();
-                    traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
-                    traceSource.TraceEvent(TraceEventType.Information, 0, $"Saved {i} instance source marcs");
                 }
             }
             traceSource.TraceEvent(TraceEventType.Information, 0, $"{s.Elapsed} elapsed");
