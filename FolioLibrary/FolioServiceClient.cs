@@ -63,7 +63,7 @@ namespace FolioLibrary
         public IEnumerable<JObject> AddressTypes(string where = null, string orderBy = null, int? skip = null, int? take = int.MaxValue)
         {
             var s = Stopwatch.StartNew();
-            traceSource.TraceEvent(TraceEventType.Verbose, 0, "Finding address types");
+            traceSource.TraceEvent(TraceEventType.Verbose, 0, "Querying address types");
             AuthenticateIfNecessary();
             var url = $"{Url}/addresstypes{(where != null || orderBy != null ? $"?query={WebUtility.UrlEncode(where)}{(orderBy != null ? $"{(where != null ? " " : "")}sortby {WebUtility.UrlEncode(orderBy)}" : "")}" : "")}{(skip != null ? $"{(where != null || orderBy != null ? "&" : "?")}offset={skip}" : "")}{(take != null ? $"{(where != null || orderBy != null || skip != null ? "&" : "?")}limit={take}" : "")}";
             traceSource.TraceEvent(TraceEventType.Verbose, 0, url);
@@ -162,7 +162,7 @@ namespace FolioLibrary
         public IEnumerable<JObject> AlternativeTitleTypes(string where = null, string orderBy = null, int? skip = null, int? take = int.MaxValue)
         {
             var s = Stopwatch.StartNew();
-            traceSource.TraceEvent(TraceEventType.Verbose, 0, "Finding alternative title types");
+            traceSource.TraceEvent(TraceEventType.Verbose, 0, "Querying alternative title types");
             AuthenticateIfNecessary();
             var url = $"{Url}/alternative-title-types{(where != null || orderBy != null ? $"?query={WebUtility.UrlEncode(where)}{(orderBy != null ? $"{(where != null ? " " : "")}sortby {WebUtility.UrlEncode(orderBy)}" : "")}" : "")}{(skip != null ? $"{(where != null || orderBy != null ? "&" : "?")}offset={skip}" : "")}{(take != null ? $"{(where != null || orderBy != null || skip != null ? "&" : "?")}limit={take}" : "")}";
             traceSource.TraceEvent(TraceEventType.Verbose, 0, url);
@@ -261,7 +261,7 @@ namespace FolioLibrary
         public IEnumerable<JObject> CallNumberTypes(string where = null, string orderBy = null, int? skip = null, int? take = int.MaxValue)
         {
             var s = Stopwatch.StartNew();
-            traceSource.TraceEvent(TraceEventType.Verbose, 0, "Finding call number types");
+            traceSource.TraceEvent(TraceEventType.Verbose, 0, "Querying call number types");
             AuthenticateIfNecessary();
             var url = $"{Url}/call-number-types{(where != null || orderBy != null ? $"?query={WebUtility.UrlEncode(where)}{(orderBy != null ? $"{(where != null ? " " : "")}sortby {WebUtility.UrlEncode(orderBy)}" : "")}" : "")}{(skip != null ? $"{(where != null || orderBy != null ? "&" : "?")}offset={skip}" : "")}{(take != null ? $"{(where != null || orderBy != null || skip != null ? "&" : "?")}limit={take}" : "")}";
             traceSource.TraceEvent(TraceEventType.Verbose, 0, url);
@@ -360,7 +360,7 @@ namespace FolioLibrary
         public IEnumerable<JObject> Campuses(string where = null, string orderBy = null, int? skip = null, int? take = int.MaxValue)
         {
             var s = Stopwatch.StartNew();
-            traceSource.TraceEvent(TraceEventType.Verbose, 0, "Finding campuses");
+            traceSource.TraceEvent(TraceEventType.Verbose, 0, "Querying campuses");
             AuthenticateIfNecessary();
             var url = $"{Url}/location-units/campuses{(where != null || orderBy != null ? $"?query={WebUtility.UrlEncode(where)}{(orderBy != null ? $"{(where != null ? " " : "")}sortby {WebUtility.UrlEncode(orderBy)}" : "")}" : "")}{(skip != null ? $"{(where != null || orderBy != null ? "&" : "?")}offset={skip}" : "")}{(take != null ? $"{(where != null || orderBy != null || skip != null ? "&" : "?")}limit={take}" : "")}";
             traceSource.TraceEvent(TraceEventType.Verbose, 0, url);
@@ -459,7 +459,7 @@ namespace FolioLibrary
         public IEnumerable<JObject> ClassificationTypes(string where = null, string orderBy = null, int? skip = null, int? take = int.MaxValue)
         {
             var s = Stopwatch.StartNew();
-            traceSource.TraceEvent(TraceEventType.Verbose, 0, "Finding classification types");
+            traceSource.TraceEvent(TraceEventType.Verbose, 0, "Querying classification types");
             AuthenticateIfNecessary();
             var url = $"{Url}/classification-types{(where != null || orderBy != null ? $"?query={WebUtility.UrlEncode(where)}{(orderBy != null ? $"{(where != null ? " " : "")}sortby {WebUtility.UrlEncode(orderBy)}" : "")}" : "")}{(skip != null ? $"{(where != null || orderBy != null ? "&" : "?")}offset={skip}" : "")}{(take != null ? $"{(where != null || orderBy != null || skip != null ? "&" : "?")}limit={take}" : "")}";
             traceSource.TraceEvent(TraceEventType.Verbose, 0, url);
@@ -558,7 +558,7 @@ namespace FolioLibrary
         public IEnumerable<JObject> ContributorNameTypes(string where = null, string orderBy = null, int? skip = null, int? take = int.MaxValue)
         {
             var s = Stopwatch.StartNew();
-            traceSource.TraceEvent(TraceEventType.Verbose, 0, "Finding contributor name types");
+            traceSource.TraceEvent(TraceEventType.Verbose, 0, "Querying contributor name types");
             AuthenticateIfNecessary();
             var url = $"{Url}/contributor-name-types{(where != null || orderBy != null ? $"?query={WebUtility.UrlEncode(where)}{(orderBy != null ? $"{(where != null ? " " : "")}sortby {WebUtility.UrlEncode(orderBy)}" : "")}" : "")}{(skip != null ? $"{(where != null || orderBy != null ? "&" : "?")}offset={skip}" : "")}{(take != null ? $"{(where != null || orderBy != null || skip != null ? "&" : "?")}limit={take}" : "")}";
             traceSource.TraceEvent(TraceEventType.Verbose, 0, url);
@@ -657,7 +657,7 @@ namespace FolioLibrary
         public IEnumerable<JObject> ContributorTypes(string where = null, string orderBy = null, int? skip = null, int? take = int.MaxValue)
         {
             var s = Stopwatch.StartNew();
-            traceSource.TraceEvent(TraceEventType.Verbose, 0, "Finding contributor types");
+            traceSource.TraceEvent(TraceEventType.Verbose, 0, "Querying contributor types");
             AuthenticateIfNecessary();
             var url = $"{Url}/contributor-types{(where != null || orderBy != null ? $"?query={WebUtility.UrlEncode(where)}{(orderBy != null ? $"{(where != null ? " " : "")}sortby {WebUtility.UrlEncode(orderBy)}" : "")}" : "")}{(skip != null ? $"{(where != null || orderBy != null ? "&" : "?")}offset={skip}" : "")}{(take != null ? $"{(where != null || orderBy != null || skip != null ? "&" : "?")}limit={take}" : "")}";
             traceSource.TraceEvent(TraceEventType.Verbose, 0, url);
@@ -756,7 +756,7 @@ namespace FolioLibrary
         public IEnumerable<JObject> ElectronicAccessRelationships(string where = null, string orderBy = null, int? skip = null, int? take = int.MaxValue)
         {
             var s = Stopwatch.StartNew();
-            traceSource.TraceEvent(TraceEventType.Verbose, 0, "Finding electronic access relationships");
+            traceSource.TraceEvent(TraceEventType.Verbose, 0, "Querying electronic access relationships");
             AuthenticateIfNecessary();
             var url = $"{Url}/electronic-access-relationships{(where != null || orderBy != null ? $"?query={WebUtility.UrlEncode(where)}{(orderBy != null ? $"{(where != null ? " " : "")}sortby {WebUtility.UrlEncode(orderBy)}" : "")}" : "")}{(skip != null ? $"{(where != null || orderBy != null ? "&" : "?")}offset={skip}" : "")}{(take != null ? $"{(where != null || orderBy != null || skip != null ? "&" : "?")}limit={take}" : "")}";
             traceSource.TraceEvent(TraceEventType.Verbose, 0, url);
@@ -855,7 +855,7 @@ namespace FolioLibrary
         public IEnumerable<JObject> Groups(string where = null, string orderBy = null, int? skip = null, int? take = int.MaxValue)
         {
             var s = Stopwatch.StartNew();
-            traceSource.TraceEvent(TraceEventType.Verbose, 0, "Finding groups");
+            traceSource.TraceEvent(TraceEventType.Verbose, 0, "Querying groups");
             AuthenticateIfNecessary();
             var url = $"{Url}/groups{(where != null || orderBy != null ? $"?query={WebUtility.UrlEncode(where)}{(orderBy != null ? $"{(where != null ? " " : "")}sortby {WebUtility.UrlEncode(orderBy)}" : "")}" : "")}{(skip != null ? $"{(where != null || orderBy != null ? "&" : "?")}offset={skip}" : "")}{(take != null ? $"{(where != null || orderBy != null || skip != null ? "&" : "?")}limit={take}" : "")}";
             traceSource.TraceEvent(TraceEventType.Verbose, 0, url);
@@ -954,7 +954,7 @@ namespace FolioLibrary
         public IEnumerable<JObject> Holdings(string where = null, string orderBy = null, int? skip = null, int? take = int.MaxValue)
         {
             var s = Stopwatch.StartNew();
-            traceSource.TraceEvent(TraceEventType.Verbose, 0, "Finding holdings");
+            traceSource.TraceEvent(TraceEventType.Verbose, 0, "Querying holdings");
             AuthenticateIfNecessary();
             var url = $"{Url}/holdings-storage/holdings{(where != null || orderBy != null ? $"?query={WebUtility.UrlEncode(where)}{(orderBy != null ? $"{(where != null ? " " : "")}sortby {WebUtility.UrlEncode(orderBy)}" : "")}" : "")}{(skip != null ? $"{(where != null || orderBy != null ? "&" : "?")}offset={skip}" : "")}{(take != null ? $"{(where != null || orderBy != null || skip != null ? "&" : "?")}limit={take}" : "")}";
             traceSource.TraceEvent(TraceEventType.Verbose, 0, url);
@@ -1053,7 +1053,7 @@ namespace FolioLibrary
         public IEnumerable<JObject> HoldingNoteTypes(string where = null, string orderBy = null, int? skip = null, int? take = int.MaxValue)
         {
             var s = Stopwatch.StartNew();
-            traceSource.TraceEvent(TraceEventType.Verbose, 0, "Finding holding note types");
+            traceSource.TraceEvent(TraceEventType.Verbose, 0, "Querying holding note types");
             AuthenticateIfNecessary();
             var url = $"{Url}/holdings-note-types{(where != null || orderBy != null ? $"?query={WebUtility.UrlEncode(where)}{(orderBy != null ? $"{(where != null ? " " : "")}sortby {WebUtility.UrlEncode(orderBy)}" : "")}" : "")}{(skip != null ? $"{(where != null || orderBy != null ? "&" : "?")}offset={skip}" : "")}{(take != null ? $"{(where != null || orderBy != null || skip != null ? "&" : "?")}limit={take}" : "")}";
             traceSource.TraceEvent(TraceEventType.Verbose, 0, url);
@@ -1152,7 +1152,7 @@ namespace FolioLibrary
         public IEnumerable<JObject> HoldingTypes(string where = null, string orderBy = null, int? skip = null, int? take = int.MaxValue)
         {
             var s = Stopwatch.StartNew();
-            traceSource.TraceEvent(TraceEventType.Verbose, 0, "Finding holding types");
+            traceSource.TraceEvent(TraceEventType.Verbose, 0, "Querying holding types");
             AuthenticateIfNecessary();
             var url = $"{Url}/holdings-types{(where != null || orderBy != null ? $"?query={WebUtility.UrlEncode(where)}{(orderBy != null ? $"{(where != null ? " " : "")}sortby {WebUtility.UrlEncode(orderBy)}" : "")}" : "")}{(skip != null ? $"{(where != null || orderBy != null ? "&" : "?")}offset={skip}" : "")}{(take != null ? $"{(where != null || orderBy != null || skip != null ? "&" : "?")}limit={take}" : "")}";
             traceSource.TraceEvent(TraceEventType.Verbose, 0, url);
@@ -1251,7 +1251,7 @@ namespace FolioLibrary
         public IEnumerable<JObject> IdTypes(string where = null, string orderBy = null, int? skip = null, int? take = int.MaxValue)
         {
             var s = Stopwatch.StartNew();
-            traceSource.TraceEvent(TraceEventType.Verbose, 0, "Finding id types");
+            traceSource.TraceEvent(TraceEventType.Verbose, 0, "Querying id types");
             AuthenticateIfNecessary();
             var url = $"{Url}/identifier-types{(where != null || orderBy != null ? $"?query={WebUtility.UrlEncode(where)}{(orderBy != null ? $"{(where != null ? " " : "")}sortby {WebUtility.UrlEncode(orderBy)}" : "")}" : "")}{(skip != null ? $"{(where != null || orderBy != null ? "&" : "?")}offset={skip}" : "")}{(take != null ? $"{(where != null || orderBy != null || skip != null ? "&" : "?")}limit={take}" : "")}";
             traceSource.TraceEvent(TraceEventType.Verbose, 0, url);
@@ -1350,7 +1350,7 @@ namespace FolioLibrary
         public IEnumerable<JObject> IllPolicies(string where = null, string orderBy = null, int? skip = null, int? take = int.MaxValue)
         {
             var s = Stopwatch.StartNew();
-            traceSource.TraceEvent(TraceEventType.Verbose, 0, "Finding ill policies");
+            traceSource.TraceEvent(TraceEventType.Verbose, 0, "Querying ill policies");
             AuthenticateIfNecessary();
             var url = $"{Url}/ill-policies{(where != null || orderBy != null ? $"?query={WebUtility.UrlEncode(where)}{(orderBy != null ? $"{(where != null ? " " : "")}sortby {WebUtility.UrlEncode(orderBy)}" : "")}" : "")}{(skip != null ? $"{(where != null || orderBy != null ? "&" : "?")}offset={skip}" : "")}{(take != null ? $"{(where != null || orderBy != null || skip != null ? "&" : "?")}limit={take}" : "")}";
             traceSource.TraceEvent(TraceEventType.Verbose, 0, url);
@@ -1449,7 +1449,7 @@ namespace FolioLibrary
         public IEnumerable<JObject> Instances(string where = null, string orderBy = null, int? skip = null, int? take = int.MaxValue)
         {
             var s = Stopwatch.StartNew();
-            traceSource.TraceEvent(TraceEventType.Verbose, 0, "Finding instances");
+            traceSource.TraceEvent(TraceEventType.Verbose, 0, "Querying instances");
             AuthenticateIfNecessary();
             var url = $"{Url}/instance-storage/instances{(where != null || orderBy != null ? $"?query={WebUtility.UrlEncode(where)}{(orderBy != null ? $"{(where != null ? " " : "")}sortby {WebUtility.UrlEncode(orderBy)}" : "")}" : "")}{(skip != null ? $"{(where != null || orderBy != null ? "&" : "?")}offset={skip}" : "")}{(take != null ? $"{(where != null || orderBy != null || skip != null ? "&" : "?")}limit={take}" : "")}";
             traceSource.TraceEvent(TraceEventType.Verbose, 0, url);
@@ -1548,7 +1548,7 @@ namespace FolioLibrary
         public IEnumerable<JObject> InstanceFormats(string where = null, string orderBy = null, int? skip = null, int? take = int.MaxValue)
         {
             var s = Stopwatch.StartNew();
-            traceSource.TraceEvent(TraceEventType.Verbose, 0, "Finding instance formats");
+            traceSource.TraceEvent(TraceEventType.Verbose, 0, "Querying instance formats");
             AuthenticateIfNecessary();
             var url = $"{Url}/instance-formats{(where != null || orderBy != null ? $"?query={WebUtility.UrlEncode(where)}{(orderBy != null ? $"{(where != null ? " " : "")}sortby {WebUtility.UrlEncode(orderBy)}" : "")}" : "")}{(skip != null ? $"{(where != null || orderBy != null ? "&" : "?")}offset={skip}" : "")}{(take != null ? $"{(where != null || orderBy != null || skip != null ? "&" : "?")}limit={take}" : "")}";
             traceSource.TraceEvent(TraceEventType.Verbose, 0, url);
@@ -1647,7 +1647,7 @@ namespace FolioLibrary
         public IEnumerable<JObject> InstanceRelationships(string where = null, string orderBy = null, int? skip = null, int? take = int.MaxValue)
         {
             var s = Stopwatch.StartNew();
-            traceSource.TraceEvent(TraceEventType.Verbose, 0, "Finding instance relationships");
+            traceSource.TraceEvent(TraceEventType.Verbose, 0, "Querying instance relationships");
             AuthenticateIfNecessary();
             var url = $"{Url}/instance-storage/instance-relationships{(where != null || orderBy != null ? $"?query={WebUtility.UrlEncode(where)}{(orderBy != null ? $"{(where != null ? " " : "")}sortby {WebUtility.UrlEncode(orderBy)}" : "")}" : "")}{(skip != null ? $"{(where != null || orderBy != null ? "&" : "?")}offset={skip}" : "")}{(take != null ? $"{(where != null || orderBy != null || skip != null ? "&" : "?")}limit={take}" : "")}";
             traceSource.TraceEvent(TraceEventType.Verbose, 0, url);
@@ -1746,7 +1746,7 @@ namespace FolioLibrary
         public IEnumerable<JObject> InstanceRelationshipTypes(string where = null, string orderBy = null, int? skip = null, int? take = int.MaxValue)
         {
             var s = Stopwatch.StartNew();
-            traceSource.TraceEvent(TraceEventType.Verbose, 0, "Finding instance relationship types");
+            traceSource.TraceEvent(TraceEventType.Verbose, 0, "Querying instance relationship types");
             AuthenticateIfNecessary();
             var url = $"{Url}/instance-relationship-types{(where != null || orderBy != null ? $"?query={WebUtility.UrlEncode(where)}{(orderBy != null ? $"{(where != null ? " " : "")}sortby {WebUtility.UrlEncode(orderBy)}" : "")}" : "")}{(skip != null ? $"{(where != null || orderBy != null ? "&" : "?")}offset={skip}" : "")}{(take != null ? $"{(where != null || orderBy != null || skip != null ? "&" : "?")}limit={take}" : "")}";
             traceSource.TraceEvent(TraceEventType.Verbose, 0, url);
@@ -1845,7 +1845,7 @@ namespace FolioLibrary
         public IEnumerable<JObject> InstanceStatuses(string where = null, string orderBy = null, int? skip = null, int? take = int.MaxValue)
         {
             var s = Stopwatch.StartNew();
-            traceSource.TraceEvent(TraceEventType.Verbose, 0, "Finding instance statuses");
+            traceSource.TraceEvent(TraceEventType.Verbose, 0, "Querying instance statuses");
             AuthenticateIfNecessary();
             var url = $"{Url}/instance-statuses{(where != null || orderBy != null ? $"?query={WebUtility.UrlEncode(where)}{(orderBy != null ? $"{(where != null ? " " : "")}sortby {WebUtility.UrlEncode(orderBy)}" : "")}" : "")}{(skip != null ? $"{(where != null || orderBy != null ? "&" : "?")}offset={skip}" : "")}{(take != null ? $"{(where != null || orderBy != null || skip != null ? "&" : "?")}limit={take}" : "")}";
             traceSource.TraceEvent(TraceEventType.Verbose, 0, url);
@@ -1944,7 +1944,7 @@ namespace FolioLibrary
         public IEnumerable<JObject> InstanceTypes(string where = null, string orderBy = null, int? skip = null, int? take = int.MaxValue)
         {
             var s = Stopwatch.StartNew();
-            traceSource.TraceEvent(TraceEventType.Verbose, 0, "Finding instance types");
+            traceSource.TraceEvent(TraceEventType.Verbose, 0, "Querying instance types");
             AuthenticateIfNecessary();
             var url = $"{Url}/instance-types{(where != null || orderBy != null ? $"?query={WebUtility.UrlEncode(where)}{(orderBy != null ? $"{(where != null ? " " : "")}sortby {WebUtility.UrlEncode(orderBy)}" : "")}" : "")}{(skip != null ? $"{(where != null || orderBy != null ? "&" : "?")}offset={skip}" : "")}{(take != null ? $"{(where != null || orderBy != null || skip != null ? "&" : "?")}limit={take}" : "")}";
             traceSource.TraceEvent(TraceEventType.Verbose, 0, url);
@@ -2043,7 +2043,7 @@ namespace FolioLibrary
         public IEnumerable<JObject> Institutions(string where = null, string orderBy = null, int? skip = null, int? take = int.MaxValue)
         {
             var s = Stopwatch.StartNew();
-            traceSource.TraceEvent(TraceEventType.Verbose, 0, "Finding institutions");
+            traceSource.TraceEvent(TraceEventType.Verbose, 0, "Querying institutions");
             AuthenticateIfNecessary();
             var url = $"{Url}/location-units/institutions{(where != null || orderBy != null ? $"?query={WebUtility.UrlEncode(where)}{(orderBy != null ? $"{(where != null ? " " : "")}sortby {WebUtility.UrlEncode(orderBy)}" : "")}" : "")}{(skip != null ? $"{(where != null || orderBy != null ? "&" : "?")}offset={skip}" : "")}{(take != null ? $"{(where != null || orderBy != null || skip != null ? "&" : "?")}limit={take}" : "")}";
             traceSource.TraceEvent(TraceEventType.Verbose, 0, url);
@@ -2142,7 +2142,7 @@ namespace FolioLibrary
         public IEnumerable<JObject> Items(string where = null, string orderBy = null, int? skip = null, int? take = int.MaxValue)
         {
             var s = Stopwatch.StartNew();
-            traceSource.TraceEvent(TraceEventType.Verbose, 0, "Finding items");
+            traceSource.TraceEvent(TraceEventType.Verbose, 0, "Querying items");
             AuthenticateIfNecessary();
             var url = $"{Url}/item-storage/items{(where != null || orderBy != null ? $"?query={WebUtility.UrlEncode(where)}{(orderBy != null ? $"{(where != null ? " " : "")}sortby {WebUtility.UrlEncode(orderBy)}" : "")}" : "")}{(skip != null ? $"{(where != null || orderBy != null ? "&" : "?")}offset={skip}" : "")}{(take != null ? $"{(where != null || orderBy != null || skip != null ? "&" : "?")}limit={take}" : "")}";
             traceSource.TraceEvent(TraceEventType.Verbose, 0, url);
@@ -2241,7 +2241,7 @@ namespace FolioLibrary
         public IEnumerable<JObject> ItemNoteTypes(string where = null, string orderBy = null, int? skip = null, int? take = int.MaxValue)
         {
             var s = Stopwatch.StartNew();
-            traceSource.TraceEvent(TraceEventType.Verbose, 0, "Finding item note types");
+            traceSource.TraceEvent(TraceEventType.Verbose, 0, "Querying item note types");
             AuthenticateIfNecessary();
             var url = $"{Url}/item-note-types{(where != null || orderBy != null ? $"?query={WebUtility.UrlEncode(where)}{(orderBy != null ? $"{(where != null ? " " : "")}sortby {WebUtility.UrlEncode(orderBy)}" : "")}" : "")}{(skip != null ? $"{(where != null || orderBy != null ? "&" : "?")}offset={skip}" : "")}{(take != null ? $"{(where != null || orderBy != null || skip != null ? "&" : "?")}limit={take}" : "")}";
             traceSource.TraceEvent(TraceEventType.Verbose, 0, url);
@@ -2340,7 +2340,7 @@ namespace FolioLibrary
         public IEnumerable<JObject> Libraries(string where = null, string orderBy = null, int? skip = null, int? take = int.MaxValue)
         {
             var s = Stopwatch.StartNew();
-            traceSource.TraceEvent(TraceEventType.Verbose, 0, "Finding libraries");
+            traceSource.TraceEvent(TraceEventType.Verbose, 0, "Querying libraries");
             AuthenticateIfNecessary();
             var url = $"{Url}/location-units/libraries{(where != null || orderBy != null ? $"?query={WebUtility.UrlEncode(where)}{(orderBy != null ? $"{(where != null ? " " : "")}sortby {WebUtility.UrlEncode(orderBy)}" : "")}" : "")}{(skip != null ? $"{(where != null || orderBy != null ? "&" : "?")}offset={skip}" : "")}{(take != null ? $"{(where != null || orderBy != null || skip != null ? "&" : "?")}limit={take}" : "")}";
             traceSource.TraceEvent(TraceEventType.Verbose, 0, url);
@@ -2439,7 +2439,7 @@ namespace FolioLibrary
         public IEnumerable<JObject> LoanTypes(string where = null, string orderBy = null, int? skip = null, int? take = int.MaxValue)
         {
             var s = Stopwatch.StartNew();
-            traceSource.TraceEvent(TraceEventType.Verbose, 0, "Finding loan types");
+            traceSource.TraceEvent(TraceEventType.Verbose, 0, "Querying loan types");
             AuthenticateIfNecessary();
             var url = $"{Url}/loan-types{(where != null || orderBy != null ? $"?query={WebUtility.UrlEncode(where)}{(orderBy != null ? $"{(where != null ? " " : "")}sortby {WebUtility.UrlEncode(orderBy)}" : "")}" : "")}{(skip != null ? $"{(where != null || orderBy != null ? "&" : "?")}offset={skip}" : "")}{(take != null ? $"{(where != null || orderBy != null || skip != null ? "&" : "?")}limit={take}" : "")}";
             traceSource.TraceEvent(TraceEventType.Verbose, 0, url);
@@ -2538,7 +2538,7 @@ namespace FolioLibrary
         public IEnumerable<JObject> Locations(string where = null, string orderBy = null, int? skip = null, int? take = int.MaxValue)
         {
             var s = Stopwatch.StartNew();
-            traceSource.TraceEvent(TraceEventType.Verbose, 0, "Finding locations");
+            traceSource.TraceEvent(TraceEventType.Verbose, 0, "Querying locations");
             AuthenticateIfNecessary();
             var url = $"{Url}/locations{(where != null || orderBy != null ? $"?query={WebUtility.UrlEncode(where)}{(orderBy != null ? $"{(where != null ? " " : "")}sortby {WebUtility.UrlEncode(orderBy)}" : "")}" : "")}{(skip != null ? $"{(where != null || orderBy != null ? "&" : "?")}offset={skip}" : "")}{(take != null ? $"{(where != null || orderBy != null || skip != null ? "&" : "?")}limit={take}" : "")}";
             traceSource.TraceEvent(TraceEventType.Verbose, 0, url);
@@ -2637,7 +2637,7 @@ namespace FolioLibrary
         public IEnumerable<JObject> Logins(string where = null, string orderBy = null, int? skip = null, int? take = int.MaxValue)
         {
             var s = Stopwatch.StartNew();
-            traceSource.TraceEvent(TraceEventType.Verbose, 0, "Finding logins");
+            traceSource.TraceEvent(TraceEventType.Verbose, 0, "Querying logins");
             AuthenticateIfNecessary();
             var url = $"{Url}/authn/credentials{(where != null || orderBy != null ? $"?query={WebUtility.UrlEncode(where)}{(orderBy != null ? $"{(where != null ? " " : "")}sortby {WebUtility.UrlEncode(orderBy)}" : "")}" : "")}{(skip != null ? $"{(where != null || orderBy != null ? "&" : "?")}offset={skip}" : "")}{(take != null ? $"{(where != null || orderBy != null || skip != null ? "&" : "?")}limit={take}" : "")}";
             traceSource.TraceEvent(TraceEventType.Verbose, 0, url);
@@ -2736,7 +2736,7 @@ namespace FolioLibrary
         public IEnumerable<JObject> MaterialTypes(string where = null, string orderBy = null, int? skip = null, int? take = int.MaxValue)
         {
             var s = Stopwatch.StartNew();
-            traceSource.TraceEvent(TraceEventType.Verbose, 0, "Finding material types");
+            traceSource.TraceEvent(TraceEventType.Verbose, 0, "Querying material types");
             AuthenticateIfNecessary();
             var url = $"{Url}/material-types{(where != null || orderBy != null ? $"?query={WebUtility.UrlEncode(where)}{(orderBy != null ? $"{(where != null ? " " : "")}sortby {WebUtility.UrlEncode(orderBy)}" : "")}" : "")}{(skip != null ? $"{(where != null || orderBy != null ? "&" : "?")}offset={skip}" : "")}{(take != null ? $"{(where != null || orderBy != null || skip != null ? "&" : "?")}limit={take}" : "")}";
             traceSource.TraceEvent(TraceEventType.Verbose, 0, url);
@@ -2835,7 +2835,7 @@ namespace FolioLibrary
         public IEnumerable<JObject> ModeOfIssuances(string where = null, string orderBy = null, int? skip = null, int? take = int.MaxValue)
         {
             var s = Stopwatch.StartNew();
-            traceSource.TraceEvent(TraceEventType.Verbose, 0, "Finding mode of issuances");
+            traceSource.TraceEvent(TraceEventType.Verbose, 0, "Querying mode of issuances");
             AuthenticateIfNecessary();
             var url = $"{Url}/modes-of-issuance{(where != null || orderBy != null ? $"?query={WebUtility.UrlEncode(where)}{(orderBy != null ? $"{(where != null ? " " : "")}sortby {WebUtility.UrlEncode(orderBy)}" : "")}" : "")}{(skip != null ? $"{(where != null || orderBy != null ? "&" : "?")}offset={skip}" : "")}{(take != null ? $"{(where != null || orderBy != null || skip != null ? "&" : "?")}limit={take}" : "")}";
             traceSource.TraceEvent(TraceEventType.Verbose, 0, url);
@@ -2934,7 +2934,7 @@ namespace FolioLibrary
         public IEnumerable<JObject> Permissions(string where = null, string orderBy = null, int? skip = null, int? take = int.MaxValue)
         {
             var s = Stopwatch.StartNew();
-            traceSource.TraceEvent(TraceEventType.Verbose, 0, "Finding permissions");
+            traceSource.TraceEvent(TraceEventType.Verbose, 0, "Querying permissions");
             AuthenticateIfNecessary();
             var url = $"{Url}/perms/permissions{(where != null || orderBy != null ? $"?query={WebUtility.UrlEncode(where)}{(orderBy != null ? $"{(where != null ? " " : "")}sortby {WebUtility.UrlEncode(orderBy)}" : "")}" : "")}{(skip != null ? $"{(where != null || orderBy != null ? "&" : "?")}offset={skip}" : "")}{(take != null ? $"{(where != null || orderBy != null || skip != null ? "&" : "?")}limit={take}" : "")}";
             traceSource.TraceEvent(TraceEventType.Verbose, 0, url);
@@ -3033,7 +3033,7 @@ namespace FolioLibrary
         public IEnumerable<JObject> PermissionsUsers(string where = null, string orderBy = null, int? skip = null, int? take = int.MaxValue)
         {
             var s = Stopwatch.StartNew();
-            traceSource.TraceEvent(TraceEventType.Verbose, 0, "Finding permissions users");
+            traceSource.TraceEvent(TraceEventType.Verbose, 0, "Querying permissions users");
             AuthenticateIfNecessary();
             var url = $"{Url}/perms/users{(where != null || orderBy != null ? $"?query={WebUtility.UrlEncode(where)}{(orderBy != null ? $"{(where != null ? " " : "")}sortby {WebUtility.UrlEncode(orderBy)}" : "")}" : "")}{(skip != null ? $"{(where != null || orderBy != null ? "&" : "?")}offset={skip}" : "")}{(take != null ? $"{(where != null || orderBy != null || skip != null ? "&" : "?")}limit={take}" : "")}";
             traceSource.TraceEvent(TraceEventType.Verbose, 0, url);
@@ -3132,7 +3132,7 @@ namespace FolioLibrary
         public IEnumerable<JObject> Proxies(string where = null, string orderBy = null, int? skip = null, int? take = int.MaxValue)
         {
             var s = Stopwatch.StartNew();
-            traceSource.TraceEvent(TraceEventType.Verbose, 0, "Finding proxies");
+            traceSource.TraceEvent(TraceEventType.Verbose, 0, "Querying proxies");
             AuthenticateIfNecessary();
             var url = $"{Url}/proxiesfor{(where != null || orderBy != null ? $"?query={WebUtility.UrlEncode(where)}{(orderBy != null ? $"{(where != null ? " " : "")}sortby {WebUtility.UrlEncode(orderBy)}" : "")}" : "")}{(skip != null ? $"{(where != null || orderBy != null ? "&" : "?")}offset={skip}" : "")}{(take != null ? $"{(where != null || orderBy != null || skip != null ? "&" : "?")}limit={take}" : "")}";
             traceSource.TraceEvent(TraceEventType.Verbose, 0, url);
@@ -3231,7 +3231,7 @@ namespace FolioLibrary
         public IEnumerable<JObject> ServicePoints(string where = null, string orderBy = null, int? skip = null, int? take = int.MaxValue)
         {
             var s = Stopwatch.StartNew();
-            traceSource.TraceEvent(TraceEventType.Verbose, 0, "Finding service points");
+            traceSource.TraceEvent(TraceEventType.Verbose, 0, "Querying service points");
             AuthenticateIfNecessary();
             var url = $"{Url}/service-points{(where != null || orderBy != null ? $"?query={WebUtility.UrlEncode(where)}{(orderBy != null ? $"{(where != null ? " " : "")}sortby {WebUtility.UrlEncode(orderBy)}" : "")}" : "")}{(skip != null ? $"{(where != null || orderBy != null ? "&" : "?")}offset={skip}" : "")}{(take != null ? $"{(where != null || orderBy != null || skip != null ? "&" : "?")}limit={take}" : "")}";
             traceSource.TraceEvent(TraceEventType.Verbose, 0, url);
@@ -3330,7 +3330,7 @@ namespace FolioLibrary
         public IEnumerable<JObject> ServicePointUsers(string where = null, string orderBy = null, int? skip = null, int? take = int.MaxValue)
         {
             var s = Stopwatch.StartNew();
-            traceSource.TraceEvent(TraceEventType.Verbose, 0, "Finding service point users");
+            traceSource.TraceEvent(TraceEventType.Verbose, 0, "Querying service point users");
             AuthenticateIfNecessary();
             var url = $"{Url}/service-points-users{(where != null || orderBy != null ? $"?query={WebUtility.UrlEncode(where)}{(orderBy != null ? $"{(where != null ? " " : "")}sortby {WebUtility.UrlEncode(orderBy)}" : "")}" : "")}{(skip != null ? $"{(where != null || orderBy != null ? "&" : "?")}offset={skip}" : "")}{(take != null ? $"{(where != null || orderBy != null || skip != null ? "&" : "?")}limit={take}" : "")}";
             traceSource.TraceEvent(TraceEventType.Verbose, 0, url);
@@ -3429,7 +3429,7 @@ namespace FolioLibrary
         public IEnumerable<JObject> StatisticalCodes(string where = null, string orderBy = null, int? skip = null, int? take = int.MaxValue)
         {
             var s = Stopwatch.StartNew();
-            traceSource.TraceEvent(TraceEventType.Verbose, 0, "Finding statistical codes");
+            traceSource.TraceEvent(TraceEventType.Verbose, 0, "Querying statistical codes");
             AuthenticateIfNecessary();
             var url = $"{Url}/statistical-codes{(where != null || orderBy != null ? $"?query={WebUtility.UrlEncode(where)}{(orderBy != null ? $"{(where != null ? " " : "")}sortby {WebUtility.UrlEncode(orderBy)}" : "")}" : "")}{(skip != null ? $"{(where != null || orderBy != null ? "&" : "?")}offset={skip}" : "")}{(take != null ? $"{(where != null || orderBy != null || skip != null ? "&" : "?")}limit={take}" : "")}";
             traceSource.TraceEvent(TraceEventType.Verbose, 0, url);
@@ -3528,7 +3528,7 @@ namespace FolioLibrary
         public IEnumerable<JObject> StatisticalCodeTypes(string where = null, string orderBy = null, int? skip = null, int? take = int.MaxValue)
         {
             var s = Stopwatch.StartNew();
-            traceSource.TraceEvent(TraceEventType.Verbose, 0, "Finding statistical code types");
+            traceSource.TraceEvent(TraceEventType.Verbose, 0, "Querying statistical code types");
             AuthenticateIfNecessary();
             var url = $"{Url}/statistical-code-types{(where != null || orderBy != null ? $"?query={WebUtility.UrlEncode(where)}{(orderBy != null ? $"{(where != null ? " " : "")}sortby {WebUtility.UrlEncode(orderBy)}" : "")}" : "")}{(skip != null ? $"{(where != null || orderBy != null ? "&" : "?")}offset={skip}" : "")}{(take != null ? $"{(where != null || orderBy != null || skip != null ? "&" : "?")}limit={take}" : "")}";
             traceSource.TraceEvent(TraceEventType.Verbose, 0, url);
@@ -3627,7 +3627,7 @@ namespace FolioLibrary
         public IEnumerable<JObject> Users(string where = null, string orderBy = null, int? skip = null, int? take = int.MaxValue)
         {
             var s = Stopwatch.StartNew();
-            traceSource.TraceEvent(TraceEventType.Verbose, 0, "Finding users");
+            traceSource.TraceEvent(TraceEventType.Verbose, 0, "Querying users");
             AuthenticateIfNecessary();
             var url = $"{Url}/users{(where != null || orderBy != null ? $"?query={WebUtility.UrlEncode(where)}{(orderBy != null ? $"{(where != null ? " " : "")}sortby {WebUtility.UrlEncode(orderBy)}" : "")}" : "")}{(skip != null ? $"{(where != null || orderBy != null ? "&" : "?")}offset={skip}" : "")}{(take != null ? $"{(where != null || orderBy != null || skip != null ? "&" : "?")}limit={take}" : "")}";
             traceSource.TraceEvent(TraceEventType.Verbose, 0, url);
