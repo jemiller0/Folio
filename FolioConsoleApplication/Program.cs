@@ -2172,6 +2172,7 @@ namespace FolioConsoleApplication
                             Content = jo.ToString(),
                             CreationTime = (DateTime?)jo.SelectToken("metadata.createdDate"),
                             CreationUserId = (string)jo.SelectToken("metadata.createdByUserId"),
+                            Instancestatusid = (Guid?)jo.SelectToken("statusId"),
                             Modeofissuanceid = (Guid?)jo.SelectToken("modeOfIssuanceId")
                         });
                         if (i % 1000 == 0)
