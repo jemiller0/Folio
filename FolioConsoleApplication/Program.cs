@@ -214,9 +214,9 @@ namespace FolioConsoleApplication
                 if (save && loginsPath != null) SaveLogins(loginsPath, loginsWhere);
                 if (save && permissionsPath != null) SavePermissions(permissionsPath, permissionsWhere);
                 if (save && permissionsUsersPath != null) SavePermissionsUsers(permissionsUsersPath, permissionsUsersWhere);
-                if (save && librariesPath != null) SaveLibraries(librariesPath, librariesWhere);
                 if (save && institutionsPath != null) SaveInstitutions(institutionsPath, institutionsWhere);
                 if (save && campusesPath != null) SaveCampuses(campusesPath, campusesWhere);
+                if (save && librariesPath != null) SaveLibraries(librariesPath, librariesWhere);
                 if (save && servicePointsPath != null) SaveServicePoints(servicePointsPath, servicePointsWhere);
                 if (save && servicePointUsersPath != null) SaveServicePointUsers(servicePointUsersPath, servicePointUsersWhere);
                 if (save && locationsPath != null) SaveLocations(locationsPath, locationsWhere);
@@ -271,9 +271,9 @@ namespace FolioConsoleApplication
                 if (delete && locationsPath != null) DeleteLocations(locationsWhere);
                 if (delete && servicePointUsersPath != null) DeleteServicePointUsers(servicePointUsersWhere);
                 if (delete && servicePointsPath != null) DeleteServicePoints(servicePointsWhere);
+                if (delete && librariesPath != null) DeleteLibraries(librariesWhere);
                 if (delete && campusesPath != null) DeleteCampuses(campusesWhere);
                 if (delete && institutionsPath != null) DeleteInstitutions(institutionsWhere);
-                if (delete && librariesPath != null) DeleteLibraries(librariesWhere);
                 if (delete && permissionsUsersPath != null) DeletePermissionsUsers(permissionsUsersWhere);
                 if (delete && permissionsPath != null) DeletePermissions(permissionsWhere);
                 if (delete && loginsPath != null) DeleteLogins(loginsWhere);
@@ -288,9 +288,9 @@ namespace FolioConsoleApplication
                 if (load && loginsPath != null) LoadLogins(loginsPath);
                 if (load && permissionsPath != null) LoadPermissions(permissionsPath);
                 if (load && permissionsUsersPath != null) LoadPermissionsUsers(permissionsUsersPath);
-                if (load && librariesPath != null) LoadLibraries(librariesPath);
                 if (load && institutionsPath != null) LoadInstitutions(institutionsPath);
                 if (load && campusesPath != null) LoadCampuses(campusesPath);
+                if (load && librariesPath != null) LoadLibraries(librariesPath);
                 if (load && servicePointsPath != null) LoadServicePoints(servicePointsPath);
                 if (load && servicePointUsersPath != null) LoadServicePointUsers(servicePointUsersPath);
                 if (load && locationsPath != null) LoadLocations(locationsPath);
@@ -336,7 +336,7 @@ namespace FolioConsoleApplication
         {
             traceSource.TraceEvent(TraceEventType.Information, 0, "Deleting address types");
             var s = Stopwatch.StartNew();
-            using (var fdc = new FolioDapperContext())
+            using (var fbcc = new FolioBulkCopyContext())
             using (var fsc = new FolioServiceClient())
             {
                 var i = 0;
@@ -356,8 +356,7 @@ namespace FolioConsoleApplication
                 }
                 else
                 {
-                    i = fdc.Execute(where == null ? "TRUNCATE TABLE addresstype" : $"DELETE FROM addresstype WHERE {where}");
-                    fdc.Commit();
+                    i = fbcc.ExecuteNonQuery($"DELETE FROM addresstype{(where != null ? $" WHERE {where}" : "")}");
                 }
                 traceSource.TraceEvent(TraceEventType.Information, 0, $"Deleted {i} address types");
             }
@@ -462,7 +461,7 @@ namespace FolioConsoleApplication
         {
             traceSource.TraceEvent(TraceEventType.Information, 0, "Deleting alternative title types");
             var s = Stopwatch.StartNew();
-            using (var fdc = new FolioDapperContext())
+            using (var fbcc = new FolioBulkCopyContext())
             using (var fsc = new FolioServiceClient())
             {
                 var i = 0;
@@ -482,8 +481,7 @@ namespace FolioConsoleApplication
                 }
                 else
                 {
-                    i = fdc.Execute(where == null ? "TRUNCATE TABLE alternative_title_type" : $"DELETE FROM alternative_title_type WHERE {where}");
-                    fdc.Commit();
+                    i = fbcc.ExecuteNonQuery($"DELETE FROM alternative_title_type{(where != null ? $" WHERE {where}" : "")}");
                 }
                 traceSource.TraceEvent(TraceEventType.Information, 0, $"Deleted {i} alternative title types");
             }
@@ -588,7 +586,7 @@ namespace FolioConsoleApplication
         {
             traceSource.TraceEvent(TraceEventType.Information, 0, "Deleting call number types");
             var s = Stopwatch.StartNew();
-            using (var fdc = new FolioDapperContext())
+            using (var fbcc = new FolioBulkCopyContext())
             using (var fsc = new FolioServiceClient())
             {
                 var i = 0;
@@ -608,8 +606,7 @@ namespace FolioConsoleApplication
                 }
                 else
                 {
-                    i = fdc.Execute(where == null ? "TRUNCATE TABLE call_number_type" : $"DELETE FROM call_number_type WHERE {where}");
-                    fdc.Commit();
+                    i = fbcc.ExecuteNonQuery($"DELETE FROM call_number_type{(where != null ? $" WHERE {where}" : "")}");
                 }
                 traceSource.TraceEvent(TraceEventType.Information, 0, $"Deleted {i} call number types");
             }
@@ -714,7 +711,7 @@ namespace FolioConsoleApplication
         {
             traceSource.TraceEvent(TraceEventType.Information, 0, "Deleting campuses");
             var s = Stopwatch.StartNew();
-            using (var fdc = new FolioDapperContext())
+            using (var fbcc = new FolioBulkCopyContext())
             using (var fsc = new FolioServiceClient())
             {
                 var i = 0;
@@ -734,8 +731,7 @@ namespace FolioConsoleApplication
                 }
                 else
                 {
-                    i = fdc.Execute(where == null ? "TRUNCATE TABLE loccampus" : $"DELETE FROM loccampus WHERE {where}");
-                    fdc.Commit();
+                    i = fbcc.ExecuteNonQuery($"DELETE FROM loccampus{(where != null ? $" WHERE {where}" : "")}");
                 }
                 traceSource.TraceEvent(TraceEventType.Information, 0, $"Deleted {i} campuses");
             }
@@ -841,7 +837,7 @@ namespace FolioConsoleApplication
         {
             traceSource.TraceEvent(TraceEventType.Information, 0, "Deleting classification types");
             var s = Stopwatch.StartNew();
-            using (var fdc = new FolioDapperContext())
+            using (var fbcc = new FolioBulkCopyContext())
             using (var fsc = new FolioServiceClient())
             {
                 var i = 0;
@@ -861,8 +857,7 @@ namespace FolioConsoleApplication
                 }
                 else
                 {
-                    i = fdc.Execute(where == null ? "TRUNCATE TABLE classification_type" : $"DELETE FROM classification_type WHERE {where}");
-                    fdc.Commit();
+                    i = fbcc.ExecuteNonQuery($"DELETE FROM classification_type{(where != null ? $" WHERE {where}" : "")}");
                 }
                 traceSource.TraceEvent(TraceEventType.Information, 0, $"Deleted {i} classification types");
             }
@@ -967,7 +962,7 @@ namespace FolioConsoleApplication
         {
             traceSource.TraceEvent(TraceEventType.Information, 0, "Deleting contributor name types");
             var s = Stopwatch.StartNew();
-            using (var fdc = new FolioDapperContext())
+            using (var fbcc = new FolioBulkCopyContext())
             using (var fsc = new FolioServiceClient())
             {
                 var i = 0;
@@ -987,8 +982,7 @@ namespace FolioConsoleApplication
                 }
                 else
                 {
-                    i = fdc.Execute(where == null ? "TRUNCATE TABLE contributor_name_type" : $"DELETE FROM contributor_name_type WHERE {where}");
-                    fdc.Commit();
+                    i = fbcc.ExecuteNonQuery($"DELETE FROM contributor_name_type{(where != null ? $" WHERE {where}" : "")}");
                 }
                 traceSource.TraceEvent(TraceEventType.Information, 0, $"Deleted {i} contributor name types");
             }
@@ -1093,7 +1087,7 @@ namespace FolioConsoleApplication
         {
             traceSource.TraceEvent(TraceEventType.Information, 0, "Deleting contributor types");
             var s = Stopwatch.StartNew();
-            using (var fdc = new FolioDapperContext())
+            using (var fbcc = new FolioBulkCopyContext())
             using (var fsc = new FolioServiceClient())
             {
                 var i = 0;
@@ -1113,8 +1107,7 @@ namespace FolioConsoleApplication
                 }
                 else
                 {
-                    i = fdc.Execute(where == null ? "TRUNCATE TABLE contributor_type" : $"DELETE FROM contributor_type WHERE {where}");
-                    fdc.Commit();
+                    i = fbcc.ExecuteNonQuery($"DELETE FROM contributor_type{(where != null ? $" WHERE {where}" : "")}");
                 }
                 traceSource.TraceEvent(TraceEventType.Information, 0, $"Deleted {i} contributor types");
             }
@@ -1217,7 +1210,7 @@ namespace FolioConsoleApplication
         {
             traceSource.TraceEvent(TraceEventType.Information, 0, "Deleting electronic access relationships");
             var s = Stopwatch.StartNew();
-            using (var fdc = new FolioDapperContext())
+            using (var fbcc = new FolioBulkCopyContext())
             using (var fsc = new FolioServiceClient())
             {
                 var i = 0;
@@ -1237,8 +1230,7 @@ namespace FolioConsoleApplication
                 }
                 else
                 {
-                    i = fdc.Execute(where == null ? "TRUNCATE TABLE electronic_access_relationship" : $"DELETE FROM electronic_access_relationship WHERE {where}");
-                    fdc.Commit();
+                    i = fbcc.ExecuteNonQuery($"DELETE FROM electronic_access_relationship{(where != null ? $" WHERE {where}" : "")}");
                 }
                 traceSource.TraceEvent(TraceEventType.Information, 0, $"Deleted {i} electronic access relationships");
             }
@@ -1343,7 +1335,7 @@ namespace FolioConsoleApplication
         {
             traceSource.TraceEvent(TraceEventType.Information, 0, "Deleting groups");
             var s = Stopwatch.StartNew();
-            using (var fdc = new FolioDapperContext())
+            using (var fbcc = new FolioBulkCopyContext())
             using (var fsc = new FolioServiceClient())
             {
                 var i = 0;
@@ -1363,8 +1355,7 @@ namespace FolioConsoleApplication
                 }
                 else
                 {
-                    i = fdc.Execute(where == null ? "TRUNCATE TABLE groups" : $"DELETE FROM groups WHERE {where}");
-                    fdc.Commit();
+                    i = fbcc.ExecuteNonQuery($"DELETE FROM groups{(where != null ? $" WHERE {where}" : "")}");
                 }
                 traceSource.TraceEvent(TraceEventType.Information, 0, $"Deleted {i} groups");
             }
@@ -1469,7 +1460,7 @@ namespace FolioConsoleApplication
         {
             traceSource.TraceEvent(TraceEventType.Information, 0, "Deleting holdings");
             var s = Stopwatch.StartNew();
-            using (var fdc = new FolioDapperContext())
+            using (var fbcc = new FolioBulkCopyContext())
             using (var fsc = new FolioServiceClient())
             {
                 var i = 0;
@@ -1489,8 +1480,7 @@ namespace FolioConsoleApplication
                 }
                 else
                 {
-                    i = fdc.Execute(where == null ? "TRUNCATE TABLE holdings_record" : $"DELETE FROM holdings_record WHERE {where}");
-                    fdc.Commit();
+                    i = fbcc.ExecuteNonQuery($"DELETE FROM holdings_record{(where != null ? $" WHERE {where}" : "")}");
                 }
                 traceSource.TraceEvent(TraceEventType.Information, 0, $"Deleted {i} holdings");
             }
@@ -1601,7 +1591,7 @@ namespace FolioConsoleApplication
         {
             traceSource.TraceEvent(TraceEventType.Information, 0, "Deleting holding note types");
             var s = Stopwatch.StartNew();
-            using (var fdc = new FolioDapperContext())
+            using (var fbcc = new FolioBulkCopyContext())
             using (var fsc = new FolioServiceClient())
             {
                 var i = 0;
@@ -1621,8 +1611,7 @@ namespace FolioConsoleApplication
                 }
                 else
                 {
-                    i = fdc.Execute(where == null ? "TRUNCATE TABLE holdings_note_type" : $"DELETE FROM holdings_note_type WHERE {where}");
-                    fdc.Commit();
+                    i = fbcc.ExecuteNonQuery($"DELETE FROM holdings_note_type{(where != null ? $" WHERE {where}" : "")}");
                 }
                 traceSource.TraceEvent(TraceEventType.Information, 0, $"Deleted {i} holding note types");
             }
@@ -1727,7 +1716,7 @@ namespace FolioConsoleApplication
         {
             traceSource.TraceEvent(TraceEventType.Information, 0, "Deleting holding types");
             var s = Stopwatch.StartNew();
-            using (var fdc = new FolioDapperContext())
+            using (var fbcc = new FolioBulkCopyContext())
             using (var fsc = new FolioServiceClient())
             {
                 var i = 0;
@@ -1747,8 +1736,7 @@ namespace FolioConsoleApplication
                 }
                 else
                 {
-                    i = fdc.Execute(where == null ? "TRUNCATE TABLE holdings_type" : $"DELETE FROM holdings_type WHERE {where}");
-                    fdc.Commit();
+                    i = fbcc.ExecuteNonQuery($"DELETE FROM holdings_type{(where != null ? $" WHERE {where}" : "")}");
                 }
                 traceSource.TraceEvent(TraceEventType.Information, 0, $"Deleted {i} holding types");
             }
@@ -1853,7 +1841,7 @@ namespace FolioConsoleApplication
         {
             traceSource.TraceEvent(TraceEventType.Information, 0, "Deleting id types");
             var s = Stopwatch.StartNew();
-            using (var fdc = new FolioDapperContext())
+            using (var fbcc = new FolioBulkCopyContext())
             using (var fsc = new FolioServiceClient())
             {
                 var i = 0;
@@ -1873,8 +1861,7 @@ namespace FolioConsoleApplication
                 }
                 else
                 {
-                    i = fdc.Execute(where == null ? "TRUNCATE TABLE identifier_type" : $"DELETE FROM identifier_type WHERE {where}");
-                    fdc.Commit();
+                    i = fbcc.ExecuteNonQuery($"DELETE FROM identifier_type{(where != null ? $" WHERE {where}" : "")}");
                 }
                 traceSource.TraceEvent(TraceEventType.Information, 0, $"Deleted {i} id types");
             }
@@ -1979,7 +1966,7 @@ namespace FolioConsoleApplication
         {
             traceSource.TraceEvent(TraceEventType.Information, 0, "Deleting ill policies");
             var s = Stopwatch.StartNew();
-            using (var fdc = new FolioDapperContext())
+            using (var fbcc = new FolioBulkCopyContext())
             using (var fsc = new FolioServiceClient())
             {
                 var i = 0;
@@ -1999,8 +1986,7 @@ namespace FolioConsoleApplication
                 }
                 else
                 {
-                    i = fdc.Execute(where == null ? "TRUNCATE TABLE ill_policy" : $"DELETE FROM ill_policy WHERE {where}");
-                    fdc.Commit();
+                    i = fbcc.ExecuteNonQuery($"DELETE FROM ill_policy{(where != null ? $" WHERE {where}" : "")}");
                 }
                 traceSource.TraceEvent(TraceEventType.Information, 0, $"Deleted {i} ill policies");
             }
@@ -2105,7 +2091,7 @@ namespace FolioConsoleApplication
         {
             traceSource.TraceEvent(TraceEventType.Information, 0, "Deleting instances");
             var s = Stopwatch.StartNew();
-            using (var fdc = new FolioDapperContext())
+            using (var fbcc = new FolioBulkCopyContext())
             using (var fsc = new FolioServiceClient())
             {
                 var i = 0;
@@ -2125,8 +2111,7 @@ namespace FolioConsoleApplication
                 }
                 else
                 {
-                    i = fdc.Execute(where == null ? "TRUNCATE TABLE instance" : $"DELETE FROM instance WHERE {where}");
-                    fdc.Commit();
+                    i = fbcc.ExecuteNonQuery($"DELETE FROM instance{(where != null ? $" WHERE {where}" : "")}");
                 }
                 traceSource.TraceEvent(TraceEventType.Information, 0, $"Deleted {i} instances");
             }
@@ -2233,7 +2218,7 @@ namespace FolioConsoleApplication
         {
             traceSource.TraceEvent(TraceEventType.Information, 0, "Deleting instance formats");
             var s = Stopwatch.StartNew();
-            using (var fdc = new FolioDapperContext())
+            using (var fbcc = new FolioBulkCopyContext())
             using (var fsc = new FolioServiceClient())
             {
                 var i = 0;
@@ -2253,8 +2238,7 @@ namespace FolioConsoleApplication
                 }
                 else
                 {
-                    i = fdc.Execute(where == null ? "TRUNCATE TABLE instance_format" : $"DELETE FROM instance_format WHERE {where}");
-                    fdc.Commit();
+                    i = fbcc.ExecuteNonQuery($"DELETE FROM instance_format{(where != null ? $" WHERE {where}" : "")}");
                 }
                 traceSource.TraceEvent(TraceEventType.Information, 0, $"Deleted {i} instance formats");
             }
@@ -2357,7 +2341,7 @@ namespace FolioConsoleApplication
         {
             traceSource.TraceEvent(TraceEventType.Information, 0, "Deleting instance relationships");
             var s = Stopwatch.StartNew();
-            using (var fdc = new FolioDapperContext())
+            using (var fbcc = new FolioBulkCopyContext())
             using (var fsc = new FolioServiceClient())
             {
                 var i = 0;
@@ -2377,8 +2361,7 @@ namespace FolioConsoleApplication
                 }
                 else
                 {
-                    i = fdc.Execute(where == null ? "TRUNCATE TABLE instance_relationship" : $"DELETE FROM instance_relationship WHERE {where}");
-                    fdc.Commit();
+                    i = fbcc.ExecuteNonQuery($"DELETE FROM instance_relationship{(where != null ? $" WHERE {where}" : "")}");
                 }
                 traceSource.TraceEvent(TraceEventType.Information, 0, $"Deleted {i} instance relationships");
             }
@@ -2486,7 +2469,7 @@ namespace FolioConsoleApplication
         {
             traceSource.TraceEvent(TraceEventType.Information, 0, "Deleting instance relationship types");
             var s = Stopwatch.StartNew();
-            using (var fdc = new FolioDapperContext())
+            using (var fbcc = new FolioBulkCopyContext())
             using (var fsc = new FolioServiceClient())
             {
                 var i = 0;
@@ -2506,8 +2489,7 @@ namespace FolioConsoleApplication
                 }
                 else
                 {
-                    i = fdc.Execute(where == null ? "TRUNCATE TABLE instance_relationship_type" : $"DELETE FROM instance_relationship_type WHERE {where}");
-                    fdc.Commit();
+                    i = fbcc.ExecuteNonQuery($"DELETE FROM instance_relationship_type{(where != null ? $" WHERE {where}" : "")}");
                 }
                 traceSource.TraceEvent(TraceEventType.Information, 0, $"Deleted {i} instance relationship types");
             }
@@ -2612,7 +2594,7 @@ namespace FolioConsoleApplication
         {
             traceSource.TraceEvent(TraceEventType.Information, 0, "Deleting instance statuses");
             var s = Stopwatch.StartNew();
-            using (var fdc = new FolioDapperContext())
+            using (var fbcc = new FolioBulkCopyContext())
             using (var fsc = new FolioServiceClient())
             {
                 var i = 0;
@@ -2632,8 +2614,7 @@ namespace FolioConsoleApplication
                 }
                 else
                 {
-                    i = fdc.Execute(where == null ? "TRUNCATE TABLE instance_status" : $"DELETE FROM instance_status WHERE {where}");
-                    fdc.Commit();
+                    i = fbcc.ExecuteNonQuery($"DELETE FROM instance_status{(where != null ? $" WHERE {where}" : "")}");
                 }
                 traceSource.TraceEvent(TraceEventType.Information, 0, $"Deleted {i} instance statuses");
             }
@@ -2738,7 +2719,7 @@ namespace FolioConsoleApplication
         {
             traceSource.TraceEvent(TraceEventType.Information, 0, "Deleting instance types");
             var s = Stopwatch.StartNew();
-            using (var fdc = new FolioDapperContext())
+            using (var fbcc = new FolioBulkCopyContext())
             using (var fsc = new FolioServiceClient())
             {
                 var i = 0;
@@ -2758,8 +2739,7 @@ namespace FolioConsoleApplication
                 }
                 else
                 {
-                    i = fdc.Execute(where == null ? "TRUNCATE TABLE instance_type" : $"DELETE FROM instance_type WHERE {where}");
-                    fdc.Commit();
+                    i = fbcc.ExecuteNonQuery($"DELETE FROM instance_type{(where != null ? $" WHERE {where}" : "")}");
                 }
                 traceSource.TraceEvent(TraceEventType.Information, 0, $"Deleted {i} instance types");
             }
@@ -2862,7 +2842,7 @@ namespace FolioConsoleApplication
         {
             traceSource.TraceEvent(TraceEventType.Information, 0, "Deleting institutions");
             var s = Stopwatch.StartNew();
-            using (var fdc = new FolioDapperContext())
+            using (var fbcc = new FolioBulkCopyContext())
             using (var fsc = new FolioServiceClient())
             {
                 var i = 0;
@@ -2882,8 +2862,7 @@ namespace FolioConsoleApplication
                 }
                 else
                 {
-                    i = fdc.Execute(where == null ? "TRUNCATE TABLE locinstitution" : $"DELETE FROM locinstitution WHERE {where}");
-                    fdc.Commit();
+                    i = fbcc.ExecuteNonQuery($"DELETE FROM locinstitution{(where != null ? $" WHERE {where}" : "")}");
                 }
                 traceSource.TraceEvent(TraceEventType.Information, 0, $"Deleted {i} institutions");
             }
@@ -2988,7 +2967,7 @@ namespace FolioConsoleApplication
         {
             traceSource.TraceEvent(TraceEventType.Information, 0, "Deleting items");
             var s = Stopwatch.StartNew();
-            using (var fdc = new FolioDapperContext())
+            using (var fbcc = new FolioBulkCopyContext())
             using (var fsc = new FolioServiceClient())
             {
                 var i = 0;
@@ -3008,8 +2987,7 @@ namespace FolioConsoleApplication
                 }
                 else
                 {
-                    i = fdc.Execute(where == null ? "TRUNCATE TABLE item" : $"DELETE FROM item WHERE {where}");
-                    fdc.Commit();
+                    i = fbcc.ExecuteNonQuery($"DELETE FROM item{(where != null ? $" WHERE {where}" : "")}");
                 }
                 traceSource.TraceEvent(TraceEventType.Information, 0, $"Deleted {i} items");
             }
@@ -3120,7 +3098,7 @@ namespace FolioConsoleApplication
         {
             traceSource.TraceEvent(TraceEventType.Information, 0, "Deleting item note types");
             var s = Stopwatch.StartNew();
-            using (var fdc = new FolioDapperContext())
+            using (var fbcc = new FolioBulkCopyContext())
             using (var fsc = new FolioServiceClient())
             {
                 var i = 0;
@@ -3140,8 +3118,7 @@ namespace FolioConsoleApplication
                 }
                 else
                 {
-                    i = fdc.Execute(where == null ? "TRUNCATE TABLE item_note_type" : $"DELETE FROM item_note_type WHERE {where}");
-                    fdc.Commit();
+                    i = fbcc.ExecuteNonQuery($"DELETE FROM item_note_type{(where != null ? $" WHERE {where}" : "")}");
                 }
                 traceSource.TraceEvent(TraceEventType.Information, 0, $"Deleted {i} item note types");
             }
@@ -3246,7 +3223,7 @@ namespace FolioConsoleApplication
         {
             traceSource.TraceEvent(TraceEventType.Information, 0, "Deleting libraries");
             var s = Stopwatch.StartNew();
-            using (var fdc = new FolioDapperContext())
+            using (var fbcc = new FolioBulkCopyContext())
             using (var fsc = new FolioServiceClient())
             {
                 var i = 0;
@@ -3266,8 +3243,7 @@ namespace FolioConsoleApplication
                 }
                 else
                 {
-                    i = fdc.Execute(where == null ? "TRUNCATE TABLE loclibrary" : $"DELETE FROM loclibrary WHERE {where}");
-                    fdc.Commit();
+                    i = fbcc.ExecuteNonQuery($"DELETE FROM loclibrary{(where != null ? $" WHERE {where}" : "")}");
                 }
                 traceSource.TraceEvent(TraceEventType.Information, 0, $"Deleted {i} libraries");
             }
@@ -3373,7 +3349,7 @@ namespace FolioConsoleApplication
         {
             traceSource.TraceEvent(TraceEventType.Information, 0, "Deleting loan types");
             var s = Stopwatch.StartNew();
-            using (var fdc = new FolioDapperContext())
+            using (var fbcc = new FolioBulkCopyContext())
             using (var fsc = new FolioServiceClient())
             {
                 var i = 0;
@@ -3393,8 +3369,7 @@ namespace FolioConsoleApplication
                 }
                 else
                 {
-                    i = fdc.Execute(where == null ? "TRUNCATE TABLE loan_type" : $"DELETE FROM loan_type WHERE {where}");
-                    fdc.Commit();
+                    i = fbcc.ExecuteNonQuery($"DELETE FROM loan_type{(where != null ? $" WHERE {where}" : "")}");
                 }
                 traceSource.TraceEvent(TraceEventType.Information, 0, $"Deleted {i} loan types");
             }
@@ -3499,7 +3474,7 @@ namespace FolioConsoleApplication
         {
             traceSource.TraceEvent(TraceEventType.Information, 0, "Deleting locations");
             var s = Stopwatch.StartNew();
-            using (var fdc = new FolioDapperContext())
+            using (var fbcc = new FolioBulkCopyContext())
             using (var fsc = new FolioServiceClient())
             {
                 var i = 0;
@@ -3519,8 +3494,7 @@ namespace FolioConsoleApplication
                 }
                 else
                 {
-                    i = fdc.Execute(where == null ? "TRUNCATE TABLE location" : $"DELETE FROM location WHERE {where}");
-                    fdc.Commit();
+                    i = fbcc.ExecuteNonQuery($"DELETE FROM location{(where != null ? $" WHERE {where}" : "")}");
                 }
                 traceSource.TraceEvent(TraceEventType.Information, 0, $"Deleted {i} locations");
             }
@@ -3628,7 +3602,7 @@ namespace FolioConsoleApplication
         {
             traceSource.TraceEvent(TraceEventType.Information, 0, "Deleting logins");
             var s = Stopwatch.StartNew();
-            using (var fdc = new FolioDapperContext())
+            using (var fbcc = new FolioBulkCopyContext())
             using (var fsc = new FolioServiceClient())
             {
                 var i = 0;
@@ -3648,8 +3622,7 @@ namespace FolioConsoleApplication
                 }
                 else
                 {
-                    i = fdc.Execute(where == null ? "TRUNCATE TABLE auth_credentials" : $"DELETE FROM auth_credentials WHERE {where}");
-                    fdc.Commit();
+                    i = fbcc.ExecuteNonQuery($"DELETE FROM auth_credentials{(where != null ? $" WHERE {where}" : "")}");
                 }
                 traceSource.TraceEvent(TraceEventType.Information, 0, $"Deleted {i} logins");
             }
@@ -3754,7 +3727,7 @@ namespace FolioConsoleApplication
         {
             traceSource.TraceEvent(TraceEventType.Information, 0, "Deleting material types");
             var s = Stopwatch.StartNew();
-            using (var fdc = new FolioDapperContext())
+            using (var fbcc = new FolioBulkCopyContext())
             using (var fsc = new FolioServiceClient())
             {
                 var i = 0;
@@ -3774,8 +3747,7 @@ namespace FolioConsoleApplication
                 }
                 else
                 {
-                    i = fdc.Execute(where == null ? "TRUNCATE TABLE material_type" : $"DELETE FROM material_type WHERE {where}");
-                    fdc.Commit();
+                    i = fbcc.ExecuteNonQuery($"DELETE FROM material_type{(where != null ? $" WHERE {where}" : "")}");
                 }
                 traceSource.TraceEvent(TraceEventType.Information, 0, $"Deleted {i} material types");
             }
@@ -3880,7 +3852,7 @@ namespace FolioConsoleApplication
         {
             traceSource.TraceEvent(TraceEventType.Information, 0, "Deleting mode of issuances");
             var s = Stopwatch.StartNew();
-            using (var fdc = new FolioDapperContext())
+            using (var fbcc = new FolioBulkCopyContext())
             using (var fsc = new FolioServiceClient())
             {
                 var i = 0;
@@ -3900,8 +3872,7 @@ namespace FolioConsoleApplication
                 }
                 else
                 {
-                    i = fdc.Execute(where == null ? "TRUNCATE TABLE mode_of_issuance" : $"DELETE FROM mode_of_issuance WHERE {where}");
-                    fdc.Commit();
+                    i = fbcc.ExecuteNonQuery($"DELETE FROM mode_of_issuance{(where != null ? $" WHERE {where}" : "")}");
                 }
                 traceSource.TraceEvent(TraceEventType.Information, 0, $"Deleted {i} mode of issuances");
             }
@@ -4006,7 +3977,7 @@ namespace FolioConsoleApplication
         {
             traceSource.TraceEvent(TraceEventType.Information, 0, "Deleting permissions");
             var s = Stopwatch.StartNew();
-            using (var fdc = new FolioDapperContext())
+            using (var fbcc = new FolioBulkCopyContext())
             using (var fsc = new FolioServiceClient())
             {
                 var i = 0;
@@ -4026,8 +3997,7 @@ namespace FolioConsoleApplication
                 }
                 else
                 {
-                    i = fdc.Execute(where == null ? "TRUNCATE TABLE permissions" : $"DELETE FROM permissions WHERE {where}");
-                    fdc.Commit();
+                    i = fbcc.ExecuteNonQuery($"DELETE FROM permissions{(where != null ? $" WHERE {where}" : "")}");
                 }
                 traceSource.TraceEvent(TraceEventType.Information, 0, $"Deleted {i} permissions");
             }
@@ -4132,7 +4102,7 @@ namespace FolioConsoleApplication
         {
             traceSource.TraceEvent(TraceEventType.Information, 0, "Deleting permissions users");
             var s = Stopwatch.StartNew();
-            using (var fdc = new FolioDapperContext())
+            using (var fbcc = new FolioBulkCopyContext())
             using (var fsc = new FolioServiceClient())
             {
                 var i = 0;
@@ -4152,8 +4122,7 @@ namespace FolioConsoleApplication
                 }
                 else
                 {
-                    i = fdc.Execute(where == null ? "TRUNCATE TABLE permissions_users" : $"DELETE FROM permissions_users WHERE {where}");
-                    fdc.Commit();
+                    i = fbcc.ExecuteNonQuery($"DELETE FROM permissions_users{(where != null ? $" WHERE {where}" : "")}");
                 }
                 traceSource.TraceEvent(TraceEventType.Information, 0, $"Deleted {i} permissions users");
             }
@@ -4258,7 +4227,7 @@ namespace FolioConsoleApplication
         {
             traceSource.TraceEvent(TraceEventType.Information, 0, "Deleting proxies");
             var s = Stopwatch.StartNew();
-            using (var fdc = new FolioDapperContext())
+            using (var fbcc = new FolioBulkCopyContext())
             using (var fsc = new FolioServiceClient())
             {
                 var i = 0;
@@ -4278,8 +4247,7 @@ namespace FolioConsoleApplication
                 }
                 else
                 {
-                    i = fdc.Execute(where == null ? "TRUNCATE TABLE proxyfor" : $"DELETE FROM proxyfor WHERE {where}");
-                    fdc.Commit();
+                    i = fbcc.ExecuteNonQuery($"DELETE FROM proxyfor{(where != null ? $" WHERE {where}" : "")}");
                 }
                 traceSource.TraceEvent(TraceEventType.Information, 0, $"Deleted {i} proxies");
             }
@@ -4384,7 +4352,7 @@ namespace FolioConsoleApplication
         {
             traceSource.TraceEvent(TraceEventType.Information, 0, "Deleting service points");
             var s = Stopwatch.StartNew();
-            using (var fdc = new FolioDapperContext())
+            using (var fbcc = new FolioBulkCopyContext())
             using (var fsc = new FolioServiceClient())
             {
                 var i = 0;
@@ -4404,8 +4372,7 @@ namespace FolioConsoleApplication
                 }
                 else
                 {
-                    i = fdc.Execute(where == null ? "TRUNCATE TABLE service_point" : $"DELETE FROM service_point WHERE {where}");
-                    fdc.Commit();
+                    i = fbcc.ExecuteNonQuery($"DELETE FROM service_point{(where != null ? $" WHERE {where}" : "")}");
                 }
                 traceSource.TraceEvent(TraceEventType.Information, 0, $"Deleted {i} service points");
             }
@@ -4510,7 +4477,7 @@ namespace FolioConsoleApplication
         {
             traceSource.TraceEvent(TraceEventType.Information, 0, "Deleting service point users");
             var s = Stopwatch.StartNew();
-            using (var fdc = new FolioDapperContext())
+            using (var fbcc = new FolioBulkCopyContext())
             using (var fsc = new FolioServiceClient())
             {
                 var i = 0;
@@ -4530,8 +4497,7 @@ namespace FolioConsoleApplication
                 }
                 else
                 {
-                    i = fdc.Execute(where == null ? "TRUNCATE TABLE service_point_user" : $"DELETE FROM service_point_user WHERE {where}");
-                    fdc.Commit();
+                    i = fbcc.ExecuteNonQuery($"DELETE FROM service_point_user{(where != null ? $" WHERE {where}" : "")}");
                 }
                 traceSource.TraceEvent(TraceEventType.Information, 0, $"Deleted {i} service point users");
             }
@@ -4637,7 +4603,7 @@ namespace FolioConsoleApplication
         {
             traceSource.TraceEvent(TraceEventType.Information, 0, "Deleting statistical codes");
             var s = Stopwatch.StartNew();
-            using (var fdc = new FolioDapperContext())
+            using (var fbcc = new FolioBulkCopyContext())
             using (var fsc = new FolioServiceClient())
             {
                 var i = 0;
@@ -4657,8 +4623,7 @@ namespace FolioConsoleApplication
                 }
                 else
                 {
-                    i = fdc.Execute(where == null ? "TRUNCATE TABLE statistical_code" : $"DELETE FROM statistical_code WHERE {where}");
-                    fdc.Commit();
+                    i = fbcc.ExecuteNonQuery($"DELETE FROM statistical_code{(where != null ? $" WHERE {where}" : "")}");
                 }
                 traceSource.TraceEvent(TraceEventType.Information, 0, $"Deleted {i} statistical codes");
             }
@@ -4764,7 +4729,7 @@ namespace FolioConsoleApplication
         {
             traceSource.TraceEvent(TraceEventType.Information, 0, "Deleting statistical code types");
             var s = Stopwatch.StartNew();
-            using (var fdc = new FolioDapperContext())
+            using (var fbcc = new FolioBulkCopyContext())
             using (var fsc = new FolioServiceClient())
             {
                 var i = 0;
@@ -4784,8 +4749,7 @@ namespace FolioConsoleApplication
                 }
                 else
                 {
-                    i = fdc.Execute(where == null ? "TRUNCATE TABLE statistical_code_type" : $"DELETE FROM statistical_code_type WHERE {where}");
-                    fdc.Commit();
+                    i = fbcc.ExecuteNonQuery($"DELETE FROM statistical_code_type{(where != null ? $" WHERE {where}" : "")}");
                 }
                 traceSource.TraceEvent(TraceEventType.Information, 0, $"Deleted {i} statistical code types");
             }
@@ -4890,7 +4854,7 @@ namespace FolioConsoleApplication
         {
             traceSource.TraceEvent(TraceEventType.Information, 0, "Deleting users");
             var s = Stopwatch.StartNew();
-            using (var fdc = new FolioDapperContext())
+            using (var fbcc = new FolioBulkCopyContext())
             using (var fsc = new FolioServiceClient())
             {
                 var i = 0;
@@ -4910,8 +4874,7 @@ namespace FolioConsoleApplication
                 }
                 else
                 {
-                    i = fdc.Execute(where == null ? "TRUNCATE TABLE users" : $"DELETE FROM users WHERE {where}");
-                    fdc.Commit();
+                    i = fbcc.ExecuteNonQuery($"DELETE FROM users{(where != null ? $" WHERE {where}" : "")}");
                 }
                 traceSource.TraceEvent(TraceEventType.Information, 0, $"Deleted {i} users");
             }

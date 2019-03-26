@@ -44,7 +44,7 @@ namespace FolioLibrary
             }
         }
 
-        public void ExecuteNonQuery(string commandText) => sqlBulkCopy.ExecuteNonQuery(commandText);
+        public int ExecuteNonQuery(string commandText) => sqlBulkCopy.ExecuteNonQuery(commandText);
 
         public void Insert(Account account)
         {
@@ -3288,15 +3288,16 @@ namespace FolioLibrary
 
         public void WriteToServer(DataTable table) => ExecuteNonQuery($"{(false && IsMySql ? $"LOCK TABLES {DestinationTableName} WRITE; ALTER TABLE {DestinationTableName} DISABLE KEYS; " : "")}{(IsSqlServer ? $"SET IDENTITY_INSERT {DestinationTableName} ON; " : "")}INSERT INTO {DestinationTableName} ({string.Join(", ", table.Columns.Cast<DataColumn>().Select(dc2 => dc2.ColumnName))}) VALUES {string.Join(",", table.Rows.Cast<DataRow>().Select(dr => $"({string.Join(",", table.Columns.Cast<DataColumn>().Select(dc2 => dr[dc2] == DBNull.Value ? "NULL" : dc2.DataType == typeof(string) ? $"'{SqlEncode((string)dr[dc2])}'" : dc2.DataType == typeof(Guid) ? $"'{dr[dc2]}'" : dc2.DataType == typeof(DateTime) ? $"'{(DateTime)dr[dc2]:yyyy-MM-dd HH:mm:ss.FFFFFFF}'" : dc2.DataType == typeof(bool) ? IsPostgreSql ? (bool)dr[dc2] ? "true" : "false" : (bool)dr[dc2] ? "1" : "0" : dc2.DataType == typeof(byte[]) ? IsMySql ? $"X'{string.Join("", ((byte[])dr[dc2]).Select(b => b.ToString("X2")))}'" : IsSqlServer ? $"0x{string.Join("", ((byte[])dr[dc2]).Select(b => b.ToString("X2")))}" : throw new NotImplementedException() : dr[dc2]))})"))}{(IsSqlServer ? $"; SET IDENTITY_INSERT {DestinationTableName} OFF" : "")}{(false && IsMySql ? $"; ALTER TABLE {DestinationTableName} ENABLE KEYS; UNLOCK TABLES" : "")}");
 
-        public void ExecuteNonQuery(string commandText)
+        public int ExecuteNonQuery(string commandText)
         {
             using (var dc = Connection.CreateCommand())
             {
                 dc.CommandText = commandText;
                 dc.Transaction = Transaction;
                 traceSource.TraceEvent(TraceEventType.Verbose, 0, dc.CommandText);
-                dc.ExecuteNonQuery();
+                var i = dc.ExecuteNonQuery();
                 Commit();
+                return i;
             }
         }
 
@@ -3391,15 +3392,16 @@ namespace FolioLibrary
             Commit();
         }
 
-        public void ExecuteNonQuery(string commandText)
+        public int ExecuteNonQuery(string commandText)
         {
             using (var dc = Connection.CreateCommand())
             {
                 dc.CommandText = commandText;
                 dc.Transaction = Transaction;
                 traceSource.TraceEvent(TraceEventType.Verbose, 0, dc.CommandText);
-                dc.ExecuteNonQuery();
+                var i = dc.ExecuteNonQuery();
                 Commit();
+                return i;
             }
         }
 
