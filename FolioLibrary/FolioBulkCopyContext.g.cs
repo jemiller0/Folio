@@ -3240,7 +3240,7 @@ namespace FolioLibrary
             return value;
         }
     }
-    
+
     public class MySqlBulkCopy : IDisposable
     {
         private string connectionString;
