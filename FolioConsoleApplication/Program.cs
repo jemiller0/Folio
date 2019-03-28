@@ -1,11 +1,13 @@
 using FolioLibrary;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+using NJsonSchema;
 using System;
 using System.ComponentModel.DataAnnotations;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 
 namespace FolioConsoleApplication
 {
@@ -368,11 +370,13 @@ namespace FolioConsoleApplication
             traceSource.TraceEvent(TraceEventType.Information, 0, "Loading address types");
             var s = Stopwatch.StartNew();
             using (var sr = new StreamReader(path))
+            using (var sr2 = new StreamReader(Assembly.GetAssembly(typeof(FolioContext)).GetManifestResourceStream("FolioLibrary.AddressType.json")))
             using (var jtr = new JsonTextReader(sr) { SupportMultipleContent = true })
             using (var fbcc = new FolioBulkCopyContext())
             using (var fsc = new FolioServiceClient())
             {
                 var s2 = Stopwatch.StartNew();
+                var js4 = JsonSchema4.FromJsonAsync(sr2.ReadToEndAsync().Result).Result;
                 var js = new JsonSerializer();
                 jtr.Read();
                 var i = 0;
@@ -382,8 +386,8 @@ namespace FolioConsoleApplication
                     var jo = (JObject)js.Deserialize(jtr);
                     if (validate)
                     {
-                        var vr = AddressType.ValidateContent(jo.ToString());
-                        if (vr != ValidationResult.Success) throw new ValidationException($"AddressType {jo["id"]}: {vr.ErrorMessage}");
+                        var l = js4.Validate(jo);
+                        if (l.Any()) throw new ValidationException($"AddressType {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
                     }
                     if (api)
                     {
@@ -411,7 +415,7 @@ namespace FolioConsoleApplication
                                 traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
                                 s2.Restart();
                             }
-                    }
+                        }
                     }
                 }
                 fbcc.Commit();
@@ -427,32 +431,32 @@ namespace FolioConsoleApplication
             var s = Stopwatch.StartNew();
             using (var fdc = new FolioDapperContext())
             using (var fsc = new FolioServiceClient())
+            using (var sr = new StreamReader(Assembly.GetAssembly(typeof(FolioContext)).GetManifestResourceStream("FolioLibrary.AddressType.json")))
+            using (var sw = new StreamWriter(path))
+            using (var jtw = new JsonTextWriter(sw))
             {
-                using (var sw = new StreamWriter(path))
-                using (var jtw = new JsonTextWriter(sw))
+                var s2 = Stopwatch.StartNew();
+                var js4 = JsonSchema4.FromJsonAsync(sr.ReadToEndAsync().Result).Result;
+                var js = new JsonSerializer { Formatting = Formatting.Indented };
+                jtw.WriteStartArray();
+                var i = 0;
+                foreach (var jo in api ? fsc.AddressTypes(where) : fdc.AddressTypes(where).Select(at => JObject.Parse(at.Content)))
                 {
-                    var js = new JsonSerializer { Formatting = Formatting.Indented };
-                    var s2 = Stopwatch.StartNew();
-                    jtw.WriteStartArray();
-                    var i = 0;
-                    foreach (var jo in api ? fsc.AddressTypes(where) : fdc.AddressTypes(where).Select(at => JObject.Parse(at.Content)))
+                    if (validate)
                     {
-                        if (validate)
-                        {
-                            var vr = AddressType.ValidateContent(jo.ToString());
-                            if (vr != ValidationResult.Success) throw new ValidationException($"AddressType {jo["id"]}: {vr.ErrorMessage}");
-                        }
-                        js.Serialize(jtw, jo);
-                        if (++i % 10000 == 0)
-                        {
-                            traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
-                            s2.Restart();
-                        }
+                        var l = js4.Validate(jo);
+                        if (l.Any()) throw new ValidationException($"AddressType {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
                     }
-                    jtw.WriteEndArray();
-                    traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
-                    traceSource.TraceEvent(TraceEventType.Information, 0, $"Saved {i} address types");
+                    js.Serialize(jtw, jo);
+                    if (++i % 10000 == 0)
+                    {
+                        traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
+                        s2.Restart();
+                    }
                 }
+                jtw.WriteEndArray();
+                traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
+                traceSource.TraceEvent(TraceEventType.Information, 0, $"Saved {i} address types");
             }
             traceSource.TraceEvent(TraceEventType.Information, 0, $"{s.Elapsed} elapsed");
         }
@@ -493,11 +497,13 @@ namespace FolioConsoleApplication
             traceSource.TraceEvent(TraceEventType.Information, 0, "Loading alternative title types");
             var s = Stopwatch.StartNew();
             using (var sr = new StreamReader(path))
+            using (var sr2 = new StreamReader(Assembly.GetAssembly(typeof(FolioContext)).GetManifestResourceStream("FolioLibrary.AlternativeTitleType.json")))
             using (var jtr = new JsonTextReader(sr) { SupportMultipleContent = true })
             using (var fbcc = new FolioBulkCopyContext())
             using (var fsc = new FolioServiceClient())
             {
                 var s2 = Stopwatch.StartNew();
+                var js4 = JsonSchema4.FromJsonAsync(sr2.ReadToEndAsync().Result).Result;
                 var js = new JsonSerializer();
                 jtr.Read();
                 var i = 0;
@@ -507,8 +513,8 @@ namespace FolioConsoleApplication
                     var jo = (JObject)js.Deserialize(jtr);
                     if (validate)
                     {
-                        var vr = AlternativeTitleType.ValidateContent(jo.ToString());
-                        if (vr != ValidationResult.Success) throw new ValidationException($"AlternativeTitleType {jo["id"]}: {vr.ErrorMessage}");
+                        var l = js4.Validate(jo);
+                        if (l.Any()) throw new ValidationException($"AlternativeTitleType {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
                     }
                     if (api)
                     {
@@ -536,7 +542,7 @@ namespace FolioConsoleApplication
                                 traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
                                 s2.Restart();
                             }
-                    }
+                        }
                     }
                 }
                 fbcc.Commit();
@@ -552,32 +558,32 @@ namespace FolioConsoleApplication
             var s = Stopwatch.StartNew();
             using (var fdc = new FolioDapperContext())
             using (var fsc = new FolioServiceClient())
+            using (var sr = new StreamReader(Assembly.GetAssembly(typeof(FolioContext)).GetManifestResourceStream("FolioLibrary.AlternativeTitleType.json")))
+            using (var sw = new StreamWriter(path))
+            using (var jtw = new JsonTextWriter(sw))
             {
-                using (var sw = new StreamWriter(path))
-                using (var jtw = new JsonTextWriter(sw))
+                var s2 = Stopwatch.StartNew();
+                var js4 = JsonSchema4.FromJsonAsync(sr.ReadToEndAsync().Result).Result;
+                var js = new JsonSerializer { Formatting = Formatting.Indented };
+                jtw.WriteStartArray();
+                var i = 0;
+                foreach (var jo in api ? fsc.AlternativeTitleTypes(where) : fdc.AlternativeTitleTypes(where).Select(att => JObject.Parse(att.Content)))
                 {
-                    var js = new JsonSerializer { Formatting = Formatting.Indented };
-                    var s2 = Stopwatch.StartNew();
-                    jtw.WriteStartArray();
-                    var i = 0;
-                    foreach (var jo in api ? fsc.AlternativeTitleTypes(where) : fdc.AlternativeTitleTypes(where).Select(att => JObject.Parse(att.Content)))
+                    if (validate)
                     {
-                        if (validate)
-                        {
-                            var vr = AlternativeTitleType.ValidateContent(jo.ToString());
-                            if (vr != ValidationResult.Success) throw new ValidationException($"AlternativeTitleType {jo["id"]}: {vr.ErrorMessage}");
-                        }
-                        js.Serialize(jtw, jo);
-                        if (++i % 10000 == 0)
-                        {
-                            traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
-                            s2.Restart();
-                        }
+                        var l = js4.Validate(jo);
+                        if (l.Any()) throw new ValidationException($"AlternativeTitleType {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
                     }
-                    jtw.WriteEndArray();
-                    traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
-                    traceSource.TraceEvent(TraceEventType.Information, 0, $"Saved {i} alternative title types");
+                    js.Serialize(jtw, jo);
+                    if (++i % 10000 == 0)
+                    {
+                        traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
+                        s2.Restart();
+                    }
                 }
+                jtw.WriteEndArray();
+                traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
+                traceSource.TraceEvent(TraceEventType.Information, 0, $"Saved {i} alternative title types");
             }
             traceSource.TraceEvent(TraceEventType.Information, 0, $"{s.Elapsed} elapsed");
         }
@@ -618,11 +624,13 @@ namespace FolioConsoleApplication
             traceSource.TraceEvent(TraceEventType.Information, 0, "Loading call number types");
             var s = Stopwatch.StartNew();
             using (var sr = new StreamReader(path))
+            using (var sr2 = new StreamReader(Assembly.GetAssembly(typeof(FolioContext)).GetManifestResourceStream("FolioLibrary.CallNumberType.json")))
             using (var jtr = new JsonTextReader(sr) { SupportMultipleContent = true })
             using (var fbcc = new FolioBulkCopyContext())
             using (var fsc = new FolioServiceClient())
             {
                 var s2 = Stopwatch.StartNew();
+                var js4 = JsonSchema4.FromJsonAsync(sr2.ReadToEndAsync().Result).Result;
                 var js = new JsonSerializer();
                 jtr.Read();
                 var i = 0;
@@ -632,8 +640,8 @@ namespace FolioConsoleApplication
                     var jo = (JObject)js.Deserialize(jtr);
                     if (validate)
                     {
-                        var vr = CallNumberType.ValidateContent(jo.ToString());
-                        if (vr != ValidationResult.Success) throw new ValidationException($"CallNumberType {jo["id"]}: {vr.ErrorMessage}");
+                        var l = js4.Validate(jo);
+                        if (l.Any()) throw new ValidationException($"CallNumberType {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
                     }
                     if (api)
                     {
@@ -661,7 +669,7 @@ namespace FolioConsoleApplication
                                 traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
                                 s2.Restart();
                             }
-                    }
+                        }
                     }
                 }
                 fbcc.Commit();
@@ -677,32 +685,32 @@ namespace FolioConsoleApplication
             var s = Stopwatch.StartNew();
             using (var fdc = new FolioDapperContext())
             using (var fsc = new FolioServiceClient())
+            using (var sr = new StreamReader(Assembly.GetAssembly(typeof(FolioContext)).GetManifestResourceStream("FolioLibrary.CallNumberType.json")))
+            using (var sw = new StreamWriter(path))
+            using (var jtw = new JsonTextWriter(sw))
             {
-                using (var sw = new StreamWriter(path))
-                using (var jtw = new JsonTextWriter(sw))
+                var s2 = Stopwatch.StartNew();
+                var js4 = JsonSchema4.FromJsonAsync(sr.ReadToEndAsync().Result).Result;
+                var js = new JsonSerializer { Formatting = Formatting.Indented };
+                jtw.WriteStartArray();
+                var i = 0;
+                foreach (var jo in api ? fsc.CallNumberTypes(where) : fdc.CallNumberTypes(where).Select(cnt => JObject.Parse(cnt.Content)))
                 {
-                    var js = new JsonSerializer { Formatting = Formatting.Indented };
-                    var s2 = Stopwatch.StartNew();
-                    jtw.WriteStartArray();
-                    var i = 0;
-                    foreach (var jo in api ? fsc.CallNumberTypes(where) : fdc.CallNumberTypes(where).Select(cnt => JObject.Parse(cnt.Content)))
+                    if (validate)
                     {
-                        if (validate)
-                        {
-                            var vr = CallNumberType.ValidateContent(jo.ToString());
-                            if (vr != ValidationResult.Success) throw new ValidationException($"CallNumberType {jo["id"]}: {vr.ErrorMessage}");
-                        }
-                        js.Serialize(jtw, jo);
-                        if (++i % 10000 == 0)
-                        {
-                            traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
-                            s2.Restart();
-                        }
+                        var l = js4.Validate(jo);
+                        if (l.Any()) throw new ValidationException($"CallNumberType {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
                     }
-                    jtw.WriteEndArray();
-                    traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
-                    traceSource.TraceEvent(TraceEventType.Information, 0, $"Saved {i} call number types");
+                    js.Serialize(jtw, jo);
+                    if (++i % 10000 == 0)
+                    {
+                        traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
+                        s2.Restart();
+                    }
                 }
+                jtw.WriteEndArray();
+                traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
+                traceSource.TraceEvent(TraceEventType.Information, 0, $"Saved {i} call number types");
             }
             traceSource.TraceEvent(TraceEventType.Information, 0, $"{s.Elapsed} elapsed");
         }
@@ -743,11 +751,13 @@ namespace FolioConsoleApplication
             traceSource.TraceEvent(TraceEventType.Information, 0, "Loading campuses");
             var s = Stopwatch.StartNew();
             using (var sr = new StreamReader(path))
+            using (var sr2 = new StreamReader(Assembly.GetAssembly(typeof(FolioContext)).GetManifestResourceStream("FolioLibrary.Campus.json")))
             using (var jtr = new JsonTextReader(sr) { SupportMultipleContent = true })
             using (var fbcc = new FolioBulkCopyContext())
             using (var fsc = new FolioServiceClient())
             {
                 var s2 = Stopwatch.StartNew();
+                var js4 = JsonSchema4.FromJsonAsync(sr2.ReadToEndAsync().Result).Result;
                 var js = new JsonSerializer();
                 jtr.Read();
                 var i = 0;
@@ -757,8 +767,8 @@ namespace FolioConsoleApplication
                     var jo = (JObject)js.Deserialize(jtr);
                     if (validate)
                     {
-                        var vr = Campus.ValidateContent(jo.ToString());
-                        if (vr != ValidationResult.Success) throw new ValidationException($"Campus {jo["id"]}: {vr.ErrorMessage}");
+                        var l = js4.Validate(jo);
+                        if (l.Any()) throw new ValidationException($"Campus {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
                     }
                     if (api)
                     {
@@ -787,7 +797,7 @@ namespace FolioConsoleApplication
                                 traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
                                 s2.Restart();
                             }
-                    }
+                        }
                     }
                 }
                 fbcc.Commit();
@@ -803,32 +813,32 @@ namespace FolioConsoleApplication
             var s = Stopwatch.StartNew();
             using (var fdc = new FolioDapperContext())
             using (var fsc = new FolioServiceClient())
+            using (var sr = new StreamReader(Assembly.GetAssembly(typeof(FolioContext)).GetManifestResourceStream("FolioLibrary.Campus.json")))
+            using (var sw = new StreamWriter(path))
+            using (var jtw = new JsonTextWriter(sw))
             {
-                using (var sw = new StreamWriter(path))
-                using (var jtw = new JsonTextWriter(sw))
+                var s2 = Stopwatch.StartNew();
+                var js4 = JsonSchema4.FromJsonAsync(sr.ReadToEndAsync().Result).Result;
+                var js = new JsonSerializer { Formatting = Formatting.Indented };
+                jtw.WriteStartArray();
+                var i = 0;
+                foreach (var jo in api ? fsc.Campuses(where) : fdc.Campuses(where).Select(c => JObject.Parse(c.Content)))
                 {
-                    var js = new JsonSerializer { Formatting = Formatting.Indented };
-                    var s2 = Stopwatch.StartNew();
-                    jtw.WriteStartArray();
-                    var i = 0;
-                    foreach (var jo in api ? fsc.Campuses(where) : fdc.Campuses(where).Select(c => JObject.Parse(c.Content)))
+                    if (validate)
                     {
-                        if (validate)
-                        {
-                            var vr = Campus.ValidateContent(jo.ToString());
-                            if (vr != ValidationResult.Success) throw new ValidationException($"Campus {jo["id"]}: {vr.ErrorMessage}");
-                        }
-                        js.Serialize(jtw, jo);
-                        if (++i % 10000 == 0)
-                        {
-                            traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
-                            s2.Restart();
-                        }
+                        var l = js4.Validate(jo);
+                        if (l.Any()) throw new ValidationException($"Campus {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
                     }
-                    jtw.WriteEndArray();
-                    traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
-                    traceSource.TraceEvent(TraceEventType.Information, 0, $"Saved {i} campuses");
+                    js.Serialize(jtw, jo);
+                    if (++i % 10000 == 0)
+                    {
+                        traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
+                        s2.Restart();
+                    }
                 }
+                jtw.WriteEndArray();
+                traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
+                traceSource.TraceEvent(TraceEventType.Information, 0, $"Saved {i} campuses");
             }
             traceSource.TraceEvent(TraceEventType.Information, 0, $"{s.Elapsed} elapsed");
         }
@@ -869,11 +879,13 @@ namespace FolioConsoleApplication
             traceSource.TraceEvent(TraceEventType.Information, 0, "Loading classification types");
             var s = Stopwatch.StartNew();
             using (var sr = new StreamReader(path))
+            using (var sr2 = new StreamReader(Assembly.GetAssembly(typeof(FolioContext)).GetManifestResourceStream("FolioLibrary.ClassificationType.json")))
             using (var jtr = new JsonTextReader(sr) { SupportMultipleContent = true })
             using (var fbcc = new FolioBulkCopyContext())
             using (var fsc = new FolioServiceClient())
             {
                 var s2 = Stopwatch.StartNew();
+                var js4 = JsonSchema4.FromJsonAsync(sr2.ReadToEndAsync().Result).Result;
                 var js = new JsonSerializer();
                 jtr.Read();
                 var i = 0;
@@ -883,8 +895,8 @@ namespace FolioConsoleApplication
                     var jo = (JObject)js.Deserialize(jtr);
                     if (validate)
                     {
-                        var vr = ClassificationType.ValidateContent(jo.ToString());
-                        if (vr != ValidationResult.Success) throw new ValidationException($"ClassificationType {jo["id"]}: {vr.ErrorMessage}");
+                        var l = js4.Validate(jo);
+                        if (l.Any()) throw new ValidationException($"ClassificationType {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
                     }
                     if (api)
                     {
@@ -912,7 +924,7 @@ namespace FolioConsoleApplication
                                 traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
                                 s2.Restart();
                             }
-                    }
+                        }
                     }
                 }
                 fbcc.Commit();
@@ -928,32 +940,32 @@ namespace FolioConsoleApplication
             var s = Stopwatch.StartNew();
             using (var fdc = new FolioDapperContext())
             using (var fsc = new FolioServiceClient())
+            using (var sr = new StreamReader(Assembly.GetAssembly(typeof(FolioContext)).GetManifestResourceStream("FolioLibrary.ClassificationType.json")))
+            using (var sw = new StreamWriter(path))
+            using (var jtw = new JsonTextWriter(sw))
             {
-                using (var sw = new StreamWriter(path))
-                using (var jtw = new JsonTextWriter(sw))
+                var s2 = Stopwatch.StartNew();
+                var js4 = JsonSchema4.FromJsonAsync(sr.ReadToEndAsync().Result).Result;
+                var js = new JsonSerializer { Formatting = Formatting.Indented };
+                jtw.WriteStartArray();
+                var i = 0;
+                foreach (var jo in api ? fsc.ClassificationTypes(where) : fdc.ClassificationTypes(where).Select(ct => JObject.Parse(ct.Content)))
                 {
-                    var js = new JsonSerializer { Formatting = Formatting.Indented };
-                    var s2 = Stopwatch.StartNew();
-                    jtw.WriteStartArray();
-                    var i = 0;
-                    foreach (var jo in api ? fsc.ClassificationTypes(where) : fdc.ClassificationTypes(where).Select(ct => JObject.Parse(ct.Content)))
+                    if (validate)
                     {
-                        if (validate)
-                        {
-                            var vr = ClassificationType.ValidateContent(jo.ToString());
-                            if (vr != ValidationResult.Success) throw new ValidationException($"ClassificationType {jo["id"]}: {vr.ErrorMessage}");
-                        }
-                        js.Serialize(jtw, jo);
-                        if (++i % 10000 == 0)
-                        {
-                            traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
-                            s2.Restart();
-                        }
+                        var l = js4.Validate(jo);
+                        if (l.Any()) throw new ValidationException($"ClassificationType {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
                     }
-                    jtw.WriteEndArray();
-                    traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
-                    traceSource.TraceEvent(TraceEventType.Information, 0, $"Saved {i} classification types");
+                    js.Serialize(jtw, jo);
+                    if (++i % 10000 == 0)
+                    {
+                        traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
+                        s2.Restart();
+                    }
                 }
+                jtw.WriteEndArray();
+                traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
+                traceSource.TraceEvent(TraceEventType.Information, 0, $"Saved {i} classification types");
             }
             traceSource.TraceEvent(TraceEventType.Information, 0, $"{s.Elapsed} elapsed");
         }
@@ -994,11 +1006,13 @@ namespace FolioConsoleApplication
             traceSource.TraceEvent(TraceEventType.Information, 0, "Loading contributor name types");
             var s = Stopwatch.StartNew();
             using (var sr = new StreamReader(path))
+            using (var sr2 = new StreamReader(Assembly.GetAssembly(typeof(FolioContext)).GetManifestResourceStream("FolioLibrary.ContributorNameType.json")))
             using (var jtr = new JsonTextReader(sr) { SupportMultipleContent = true })
             using (var fbcc = new FolioBulkCopyContext())
             using (var fsc = new FolioServiceClient())
             {
                 var s2 = Stopwatch.StartNew();
+                var js4 = JsonSchema4.FromJsonAsync(sr2.ReadToEndAsync().Result).Result;
                 var js = new JsonSerializer();
                 jtr.Read();
                 var i = 0;
@@ -1008,8 +1022,8 @@ namespace FolioConsoleApplication
                     var jo = (JObject)js.Deserialize(jtr);
                     if (validate)
                     {
-                        var vr = ContributorNameType.ValidateContent(jo.ToString());
-                        if (vr != ValidationResult.Success) throw new ValidationException($"ContributorNameType {jo["id"]}: {vr.ErrorMessage}");
+                        var l = js4.Validate(jo);
+                        if (l.Any()) throw new ValidationException($"ContributorNameType {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
                     }
                     if (api)
                     {
@@ -1037,7 +1051,7 @@ namespace FolioConsoleApplication
                                 traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
                                 s2.Restart();
                             }
-                    }
+                        }
                     }
                 }
                 fbcc.Commit();
@@ -1053,32 +1067,32 @@ namespace FolioConsoleApplication
             var s = Stopwatch.StartNew();
             using (var fdc = new FolioDapperContext())
             using (var fsc = new FolioServiceClient())
+            using (var sr = new StreamReader(Assembly.GetAssembly(typeof(FolioContext)).GetManifestResourceStream("FolioLibrary.ContributorNameType.json")))
+            using (var sw = new StreamWriter(path))
+            using (var jtw = new JsonTextWriter(sw))
             {
-                using (var sw = new StreamWriter(path))
-                using (var jtw = new JsonTextWriter(sw))
+                var s2 = Stopwatch.StartNew();
+                var js4 = JsonSchema4.FromJsonAsync(sr.ReadToEndAsync().Result).Result;
+                var js = new JsonSerializer { Formatting = Formatting.Indented };
+                jtw.WriteStartArray();
+                var i = 0;
+                foreach (var jo in api ? fsc.ContributorNameTypes(where) : fdc.ContributorNameTypes(where).Select(cnt => JObject.Parse(cnt.Content)))
                 {
-                    var js = new JsonSerializer { Formatting = Formatting.Indented };
-                    var s2 = Stopwatch.StartNew();
-                    jtw.WriteStartArray();
-                    var i = 0;
-                    foreach (var jo in api ? fsc.ContributorNameTypes(where) : fdc.ContributorNameTypes(where).Select(cnt => JObject.Parse(cnt.Content)))
+                    if (validate)
                     {
-                        if (validate)
-                        {
-                            var vr = ContributorNameType.ValidateContent(jo.ToString());
-                            if (vr != ValidationResult.Success) throw new ValidationException($"ContributorNameType {jo["id"]}: {vr.ErrorMessage}");
-                        }
-                        js.Serialize(jtw, jo);
-                        if (++i % 10000 == 0)
-                        {
-                            traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
-                            s2.Restart();
-                        }
+                        var l = js4.Validate(jo);
+                        if (l.Any()) throw new ValidationException($"ContributorNameType {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
                     }
-                    jtw.WriteEndArray();
-                    traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
-                    traceSource.TraceEvent(TraceEventType.Information, 0, $"Saved {i} contributor name types");
+                    js.Serialize(jtw, jo);
+                    if (++i % 10000 == 0)
+                    {
+                        traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
+                        s2.Restart();
+                    }
                 }
+                jtw.WriteEndArray();
+                traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
+                traceSource.TraceEvent(TraceEventType.Information, 0, $"Saved {i} contributor name types");
             }
             traceSource.TraceEvent(TraceEventType.Information, 0, $"{s.Elapsed} elapsed");
         }
@@ -1119,11 +1133,13 @@ namespace FolioConsoleApplication
             traceSource.TraceEvent(TraceEventType.Information, 0, "Loading contributor types");
             var s = Stopwatch.StartNew();
             using (var sr = new StreamReader(path))
+            using (var sr2 = new StreamReader(Assembly.GetAssembly(typeof(FolioContext)).GetManifestResourceStream("FolioLibrary.ContributorType.json")))
             using (var jtr = new JsonTextReader(sr) { SupportMultipleContent = true })
             using (var fbcc = new FolioBulkCopyContext())
             using (var fsc = new FolioServiceClient())
             {
                 var s2 = Stopwatch.StartNew();
+                var js4 = JsonSchema4.FromJsonAsync(sr2.ReadToEndAsync().Result).Result;
                 var js = new JsonSerializer();
                 jtr.Read();
                 var i = 0;
@@ -1133,8 +1149,8 @@ namespace FolioConsoleApplication
                     var jo = (JObject)js.Deserialize(jtr);
                     if (validate)
                     {
-                        var vr = ContributorType.ValidateContent(jo.ToString());
-                        if (vr != ValidationResult.Success) throw new ValidationException($"ContributorType {jo["id"]}: {vr.ErrorMessage}");
+                        var l = js4.Validate(jo);
+                        if (l.Any()) throw new ValidationException($"ContributorType {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
                     }
                     if (api)
                     {
@@ -1160,7 +1176,7 @@ namespace FolioConsoleApplication
                                 traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
                                 s2.Restart();
                             }
-                    }
+                        }
                     }
                 }
                 fbcc.Commit();
@@ -1176,32 +1192,32 @@ namespace FolioConsoleApplication
             var s = Stopwatch.StartNew();
             using (var fdc = new FolioDapperContext())
             using (var fsc = new FolioServiceClient())
+            using (var sr = new StreamReader(Assembly.GetAssembly(typeof(FolioContext)).GetManifestResourceStream("FolioLibrary.ContributorType.json")))
+            using (var sw = new StreamWriter(path))
+            using (var jtw = new JsonTextWriter(sw))
             {
-                using (var sw = new StreamWriter(path))
-                using (var jtw = new JsonTextWriter(sw))
+                var s2 = Stopwatch.StartNew();
+                var js4 = JsonSchema4.FromJsonAsync(sr.ReadToEndAsync().Result).Result;
+                var js = new JsonSerializer { Formatting = Formatting.Indented };
+                jtw.WriteStartArray();
+                var i = 0;
+                foreach (var jo in api ? fsc.ContributorTypes(where) : fdc.ContributorTypes(where).Select(ct => JObject.Parse(ct.Content)))
                 {
-                    var js = new JsonSerializer { Formatting = Formatting.Indented };
-                    var s2 = Stopwatch.StartNew();
-                    jtw.WriteStartArray();
-                    var i = 0;
-                    foreach (var jo in api ? fsc.ContributorTypes(where) : fdc.ContributorTypes(where).Select(ct => JObject.Parse(ct.Content)))
+                    if (validate)
                     {
-                        if (validate)
-                        {
-                            var vr = ContributorType.ValidateContent(jo.ToString());
-                            if (vr != ValidationResult.Success) throw new ValidationException($"ContributorType {jo["id"]}: {vr.ErrorMessage}");
-                        }
-                        js.Serialize(jtw, jo);
-                        if (++i % 10000 == 0)
-                        {
-                            traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
-                            s2.Restart();
-                        }
+                        var l = js4.Validate(jo);
+                        if (l.Any()) throw new ValidationException($"ContributorType {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
                     }
-                    jtw.WriteEndArray();
-                    traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
-                    traceSource.TraceEvent(TraceEventType.Information, 0, $"Saved {i} contributor types");
+                    js.Serialize(jtw, jo);
+                    if (++i % 10000 == 0)
+                    {
+                        traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
+                        s2.Restart();
+                    }
                 }
+                jtw.WriteEndArray();
+                traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
+                traceSource.TraceEvent(TraceEventType.Information, 0, $"Saved {i} contributor types");
             }
             traceSource.TraceEvent(TraceEventType.Information, 0, $"{s.Elapsed} elapsed");
         }
@@ -1242,11 +1258,13 @@ namespace FolioConsoleApplication
             traceSource.TraceEvent(TraceEventType.Information, 0, "Loading electronic access relationships");
             var s = Stopwatch.StartNew();
             using (var sr = new StreamReader(path))
+            using (var sr2 = new StreamReader(Assembly.GetAssembly(typeof(FolioContext)).GetManifestResourceStream("FolioLibrary.ElectronicAccessRelationship.json")))
             using (var jtr = new JsonTextReader(sr) { SupportMultipleContent = true })
             using (var fbcc = new FolioBulkCopyContext())
             using (var fsc = new FolioServiceClient())
             {
                 var s2 = Stopwatch.StartNew();
+                var js4 = JsonSchema4.FromJsonAsync(sr2.ReadToEndAsync().Result).Result;
                 var js = new JsonSerializer();
                 jtr.Read();
                 var i = 0;
@@ -1256,8 +1274,8 @@ namespace FolioConsoleApplication
                     var jo = (JObject)js.Deserialize(jtr);
                     if (validate)
                     {
-                        var vr = ElectronicAccessRelationship.ValidateContent(jo.ToString());
-                        if (vr != ValidationResult.Success) throw new ValidationException($"ElectronicAccessRelationship {jo["id"]}: {vr.ErrorMessage}");
+                        var l = js4.Validate(jo);
+                        if (l.Any()) throw new ValidationException($"ElectronicAccessRelationship {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
                     }
                     if (api)
                     {
@@ -1285,7 +1303,7 @@ namespace FolioConsoleApplication
                                 traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
                                 s2.Restart();
                             }
-                    }
+                        }
                     }
                 }
                 fbcc.Commit();
@@ -1301,32 +1319,32 @@ namespace FolioConsoleApplication
             var s = Stopwatch.StartNew();
             using (var fdc = new FolioDapperContext())
             using (var fsc = new FolioServiceClient())
+            using (var sr = new StreamReader(Assembly.GetAssembly(typeof(FolioContext)).GetManifestResourceStream("FolioLibrary.ElectronicAccessRelationship.json")))
+            using (var sw = new StreamWriter(path))
+            using (var jtw = new JsonTextWriter(sw))
             {
-                using (var sw = new StreamWriter(path))
-                using (var jtw = new JsonTextWriter(sw))
+                var s2 = Stopwatch.StartNew();
+                var js4 = JsonSchema4.FromJsonAsync(sr.ReadToEndAsync().Result).Result;
+                var js = new JsonSerializer { Formatting = Formatting.Indented };
+                jtw.WriteStartArray();
+                var i = 0;
+                foreach (var jo in api ? fsc.ElectronicAccessRelationships(where) : fdc.ElectronicAccessRelationships(where).Select(ear => JObject.Parse(ear.Content)))
                 {
-                    var js = new JsonSerializer { Formatting = Formatting.Indented };
-                    var s2 = Stopwatch.StartNew();
-                    jtw.WriteStartArray();
-                    var i = 0;
-                    foreach (var jo in api ? fsc.ElectronicAccessRelationships(where) : fdc.ElectronicAccessRelationships(where).Select(ear => JObject.Parse(ear.Content)))
+                    if (validate)
                     {
-                        if (validate)
-                        {
-                            var vr = ElectronicAccessRelationship.ValidateContent(jo.ToString());
-                            if (vr != ValidationResult.Success) throw new ValidationException($"ElectronicAccessRelationship {jo["id"]}: {vr.ErrorMessage}");
-                        }
-                        js.Serialize(jtw, jo);
-                        if (++i % 10000 == 0)
-                        {
-                            traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
-                            s2.Restart();
-                        }
+                        var l = js4.Validate(jo);
+                        if (l.Any()) throw new ValidationException($"ElectronicAccessRelationship {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
                     }
-                    jtw.WriteEndArray();
-                    traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
-                    traceSource.TraceEvent(TraceEventType.Information, 0, $"Saved {i} electronic access relationships");
+                    js.Serialize(jtw, jo);
+                    if (++i % 10000 == 0)
+                    {
+                        traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
+                        s2.Restart();
+                    }
                 }
+                jtw.WriteEndArray();
+                traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
+                traceSource.TraceEvent(TraceEventType.Information, 0, $"Saved {i} electronic access relationships");
             }
             traceSource.TraceEvent(TraceEventType.Information, 0, $"{s.Elapsed} elapsed");
         }
@@ -1367,11 +1385,13 @@ namespace FolioConsoleApplication
             traceSource.TraceEvent(TraceEventType.Information, 0, "Loading groups");
             var s = Stopwatch.StartNew();
             using (var sr = new StreamReader(path))
+            using (var sr2 = new StreamReader(Assembly.GetAssembly(typeof(FolioContext)).GetManifestResourceStream("FolioLibrary.Group.json")))
             using (var jtr = new JsonTextReader(sr) { SupportMultipleContent = true })
             using (var fbcc = new FolioBulkCopyContext())
             using (var fsc = new FolioServiceClient())
             {
                 var s2 = Stopwatch.StartNew();
+                var js4 = JsonSchema4.FromJsonAsync(sr2.ReadToEndAsync().Result).Result;
                 var js = new JsonSerializer();
                 jtr.Read();
                 var i = 0;
@@ -1381,8 +1401,8 @@ namespace FolioConsoleApplication
                     var jo = (JObject)js.Deserialize(jtr);
                     if (validate)
                     {
-                        var vr = Group.ValidateContent(jo.ToString());
-                        if (vr != ValidationResult.Success) throw new ValidationException($"Group {jo["id"]}: {vr.ErrorMessage}");
+                        var l = js4.Validate(jo);
+                        if (l.Any()) throw new ValidationException($"Group {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
                     }
                     if (api)
                     {
@@ -1410,7 +1430,7 @@ namespace FolioConsoleApplication
                                 traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
                                 s2.Restart();
                             }
-                    }
+                        }
                     }
                 }
                 fbcc.Commit();
@@ -1426,32 +1446,32 @@ namespace FolioConsoleApplication
             var s = Stopwatch.StartNew();
             using (var fdc = new FolioDapperContext())
             using (var fsc = new FolioServiceClient())
+            using (var sr = new StreamReader(Assembly.GetAssembly(typeof(FolioContext)).GetManifestResourceStream("FolioLibrary.Group.json")))
+            using (var sw = new StreamWriter(path))
+            using (var jtw = new JsonTextWriter(sw))
             {
-                using (var sw = new StreamWriter(path))
-                using (var jtw = new JsonTextWriter(sw))
+                var s2 = Stopwatch.StartNew();
+                var js4 = JsonSchema4.FromJsonAsync(sr.ReadToEndAsync().Result).Result;
+                var js = new JsonSerializer { Formatting = Formatting.Indented };
+                jtw.WriteStartArray();
+                var i = 0;
+                foreach (var jo in api ? fsc.Groups(where) : fdc.Groups(where).Select(g => JObject.Parse(g.Content)))
                 {
-                    var js = new JsonSerializer { Formatting = Formatting.Indented };
-                    var s2 = Stopwatch.StartNew();
-                    jtw.WriteStartArray();
-                    var i = 0;
-                    foreach (var jo in api ? fsc.Groups(where) : fdc.Groups(where).Select(g => JObject.Parse(g.Content)))
+                    if (validate)
                     {
-                        if (validate)
-                        {
-                            var vr = Group.ValidateContent(jo.ToString());
-                            if (vr != ValidationResult.Success) throw new ValidationException($"Group {jo["id"]}: {vr.ErrorMessage}");
-                        }
-                        js.Serialize(jtw, jo);
-                        if (++i % 10000 == 0)
-                        {
-                            traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
-                            s2.Restart();
-                        }
+                        var l = js4.Validate(jo);
+                        if (l.Any()) throw new ValidationException($"Group {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
                     }
-                    jtw.WriteEndArray();
-                    traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
-                    traceSource.TraceEvent(TraceEventType.Information, 0, $"Saved {i} groups");
+                    js.Serialize(jtw, jo);
+                    if (++i % 10000 == 0)
+                    {
+                        traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
+                        s2.Restart();
+                    }
                 }
+                jtw.WriteEndArray();
+                traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
+                traceSource.TraceEvent(TraceEventType.Information, 0, $"Saved {i} groups");
             }
             traceSource.TraceEvent(TraceEventType.Information, 0, $"{s.Elapsed} elapsed");
         }
@@ -1492,11 +1512,13 @@ namespace FolioConsoleApplication
             traceSource.TraceEvent(TraceEventType.Information, 0, "Loading holdings");
             var s = Stopwatch.StartNew();
             using (var sr = new StreamReader(path))
+            using (var sr2 = new StreamReader(Assembly.GetAssembly(typeof(FolioContext)).GetManifestResourceStream("FolioLibrary.Holding.json")))
             using (var jtr = new JsonTextReader(sr) { SupportMultipleContent = true })
             using (var fbcc = new FolioBulkCopyContext())
             using (var fsc = new FolioServiceClient())
             {
                 var s2 = Stopwatch.StartNew();
+                var js4 = JsonSchema4.FromJsonAsync(sr2.ReadToEndAsync().Result).Result;
                 var js = new JsonSerializer();
                 jtr.Read();
                 var i = 0;
@@ -1506,8 +1528,8 @@ namespace FolioConsoleApplication
                     var jo = (JObject)js.Deserialize(jtr);
                     if (validate)
                     {
-                        var vr = Holding.ValidateContent(jo.ToString());
-                        if (vr != ValidationResult.Success) throw new ValidationException($"Holding {jo["id"]}: {vr.ErrorMessage}");
+                        var l = js4.Validate(jo);
+                        if (l.Any()) throw new ValidationException($"Holding {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
                     }
                     if (api)
                     {
@@ -1541,7 +1563,7 @@ namespace FolioConsoleApplication
                                 traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
                                 s2.Restart();
                             }
-                    }
+                        }
                     }
                 }
                 fbcc.Commit();
@@ -1557,32 +1579,32 @@ namespace FolioConsoleApplication
             var s = Stopwatch.StartNew();
             using (var fdc = new FolioDapperContext())
             using (var fsc = new FolioServiceClient())
+            using (var sr = new StreamReader(Assembly.GetAssembly(typeof(FolioContext)).GetManifestResourceStream("FolioLibrary.Holding.json")))
+            using (var sw = new StreamWriter(path))
+            using (var jtw = new JsonTextWriter(sw))
             {
-                using (var sw = new StreamWriter(path))
-                using (var jtw = new JsonTextWriter(sw))
+                var s2 = Stopwatch.StartNew();
+                var js4 = JsonSchema4.FromJsonAsync(sr.ReadToEndAsync().Result).Result;
+                var js = new JsonSerializer { Formatting = Formatting.Indented };
+                jtw.WriteStartArray();
+                var i = 0;
+                foreach (var jo in api ? fsc.Holdings(where) : fdc.Holdings(where).Select(h => JObject.Parse(h.Content)))
                 {
-                    var js = new JsonSerializer { Formatting = Formatting.Indented };
-                    var s2 = Stopwatch.StartNew();
-                    jtw.WriteStartArray();
-                    var i = 0;
-                    foreach (var jo in api ? fsc.Holdings(where) : fdc.Holdings(where).Select(h => JObject.Parse(h.Content)))
+                    if (validate)
                     {
-                        if (validate)
-                        {
-                            var vr = Holding.ValidateContent(jo.ToString());
-                            if (vr != ValidationResult.Success) throw new ValidationException($"Holding {jo["id"]}: {vr.ErrorMessage}");
-                        }
-                        js.Serialize(jtw, jo);
-                        if (++i % 10000 == 0)
-                        {
-                            traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
-                            s2.Restart();
-                        }
+                        var l = js4.Validate(jo);
+                        if (l.Any()) throw new ValidationException($"Holding {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
                     }
-                    jtw.WriteEndArray();
-                    traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
-                    traceSource.TraceEvent(TraceEventType.Information, 0, $"Saved {i} holdings");
+                    js.Serialize(jtw, jo);
+                    if (++i % 10000 == 0)
+                    {
+                        traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
+                        s2.Restart();
+                    }
                 }
+                jtw.WriteEndArray();
+                traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
+                traceSource.TraceEvent(TraceEventType.Information, 0, $"Saved {i} holdings");
             }
             traceSource.TraceEvent(TraceEventType.Information, 0, $"{s.Elapsed} elapsed");
         }
@@ -1623,11 +1645,13 @@ namespace FolioConsoleApplication
             traceSource.TraceEvent(TraceEventType.Information, 0, "Loading holding note types");
             var s = Stopwatch.StartNew();
             using (var sr = new StreamReader(path))
+            using (var sr2 = new StreamReader(Assembly.GetAssembly(typeof(FolioContext)).GetManifestResourceStream("FolioLibrary.HoldingNoteType.json")))
             using (var jtr = new JsonTextReader(sr) { SupportMultipleContent = true })
             using (var fbcc = new FolioBulkCopyContext())
             using (var fsc = new FolioServiceClient())
             {
                 var s2 = Stopwatch.StartNew();
+                var js4 = JsonSchema4.FromJsonAsync(sr2.ReadToEndAsync().Result).Result;
                 var js = new JsonSerializer();
                 jtr.Read();
                 var i = 0;
@@ -1637,8 +1661,8 @@ namespace FolioConsoleApplication
                     var jo = (JObject)js.Deserialize(jtr);
                     if (validate)
                     {
-                        var vr = HoldingNoteType.ValidateContent(jo.ToString());
-                        if (vr != ValidationResult.Success) throw new ValidationException($"HoldingNoteType {jo["id"]}: {vr.ErrorMessage}");
+                        var l = js4.Validate(jo);
+                        if (l.Any()) throw new ValidationException($"HoldingNoteType {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
                     }
                     if (api)
                     {
@@ -1666,7 +1690,7 @@ namespace FolioConsoleApplication
                                 traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
                                 s2.Restart();
                             }
-                    }
+                        }
                     }
                 }
                 fbcc.Commit();
@@ -1682,32 +1706,32 @@ namespace FolioConsoleApplication
             var s = Stopwatch.StartNew();
             using (var fdc = new FolioDapperContext())
             using (var fsc = new FolioServiceClient())
+            using (var sr = new StreamReader(Assembly.GetAssembly(typeof(FolioContext)).GetManifestResourceStream("FolioLibrary.HoldingNoteType.json")))
+            using (var sw = new StreamWriter(path))
+            using (var jtw = new JsonTextWriter(sw))
             {
-                using (var sw = new StreamWriter(path))
-                using (var jtw = new JsonTextWriter(sw))
+                var s2 = Stopwatch.StartNew();
+                var js4 = JsonSchema4.FromJsonAsync(sr.ReadToEndAsync().Result).Result;
+                var js = new JsonSerializer { Formatting = Formatting.Indented };
+                jtw.WriteStartArray();
+                var i = 0;
+                foreach (var jo in api ? fsc.HoldingNoteTypes(where) : fdc.HoldingNoteTypes(where).Select(hnt => JObject.Parse(hnt.Content)))
                 {
-                    var js = new JsonSerializer { Formatting = Formatting.Indented };
-                    var s2 = Stopwatch.StartNew();
-                    jtw.WriteStartArray();
-                    var i = 0;
-                    foreach (var jo in api ? fsc.HoldingNoteTypes(where) : fdc.HoldingNoteTypes(where).Select(hnt => JObject.Parse(hnt.Content)))
+                    if (validate)
                     {
-                        if (validate)
-                        {
-                            var vr = HoldingNoteType.ValidateContent(jo.ToString());
-                            if (vr != ValidationResult.Success) throw new ValidationException($"HoldingNoteType {jo["id"]}: {vr.ErrorMessage}");
-                        }
-                        js.Serialize(jtw, jo);
-                        if (++i % 10000 == 0)
-                        {
-                            traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
-                            s2.Restart();
-                        }
+                        var l = js4.Validate(jo);
+                        if (l.Any()) throw new ValidationException($"HoldingNoteType {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
                     }
-                    jtw.WriteEndArray();
-                    traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
-                    traceSource.TraceEvent(TraceEventType.Information, 0, $"Saved {i} holding note types");
+                    js.Serialize(jtw, jo);
+                    if (++i % 10000 == 0)
+                    {
+                        traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
+                        s2.Restart();
+                    }
                 }
+                jtw.WriteEndArray();
+                traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
+                traceSource.TraceEvent(TraceEventType.Information, 0, $"Saved {i} holding note types");
             }
             traceSource.TraceEvent(TraceEventType.Information, 0, $"{s.Elapsed} elapsed");
         }
@@ -1748,11 +1772,13 @@ namespace FolioConsoleApplication
             traceSource.TraceEvent(TraceEventType.Information, 0, "Loading holding types");
             var s = Stopwatch.StartNew();
             using (var sr = new StreamReader(path))
+            using (var sr2 = new StreamReader(Assembly.GetAssembly(typeof(FolioContext)).GetManifestResourceStream("FolioLibrary.HoldingType.json")))
             using (var jtr = new JsonTextReader(sr) { SupportMultipleContent = true })
             using (var fbcc = new FolioBulkCopyContext())
             using (var fsc = new FolioServiceClient())
             {
                 var s2 = Stopwatch.StartNew();
+                var js4 = JsonSchema4.FromJsonAsync(sr2.ReadToEndAsync().Result).Result;
                 var js = new JsonSerializer();
                 jtr.Read();
                 var i = 0;
@@ -1762,8 +1788,8 @@ namespace FolioConsoleApplication
                     var jo = (JObject)js.Deserialize(jtr);
                     if (validate)
                     {
-                        var vr = HoldingType.ValidateContent(jo.ToString());
-                        if (vr != ValidationResult.Success) throw new ValidationException($"HoldingType {jo["id"]}: {vr.ErrorMessage}");
+                        var l = js4.Validate(jo);
+                        if (l.Any()) throw new ValidationException($"HoldingType {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
                     }
                     if (api)
                     {
@@ -1791,7 +1817,7 @@ namespace FolioConsoleApplication
                                 traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
                                 s2.Restart();
                             }
-                    }
+                        }
                     }
                 }
                 fbcc.Commit();
@@ -1807,32 +1833,32 @@ namespace FolioConsoleApplication
             var s = Stopwatch.StartNew();
             using (var fdc = new FolioDapperContext())
             using (var fsc = new FolioServiceClient())
+            using (var sr = new StreamReader(Assembly.GetAssembly(typeof(FolioContext)).GetManifestResourceStream("FolioLibrary.HoldingType.json")))
+            using (var sw = new StreamWriter(path))
+            using (var jtw = new JsonTextWriter(sw))
             {
-                using (var sw = new StreamWriter(path))
-                using (var jtw = new JsonTextWriter(sw))
+                var s2 = Stopwatch.StartNew();
+                var js4 = JsonSchema4.FromJsonAsync(sr.ReadToEndAsync().Result).Result;
+                var js = new JsonSerializer { Formatting = Formatting.Indented };
+                jtw.WriteStartArray();
+                var i = 0;
+                foreach (var jo in api ? fsc.HoldingTypes(where) : fdc.HoldingTypes(where).Select(ht => JObject.Parse(ht.Content)))
                 {
-                    var js = new JsonSerializer { Formatting = Formatting.Indented };
-                    var s2 = Stopwatch.StartNew();
-                    jtw.WriteStartArray();
-                    var i = 0;
-                    foreach (var jo in api ? fsc.HoldingTypes(where) : fdc.HoldingTypes(where).Select(ht => JObject.Parse(ht.Content)))
+                    if (validate)
                     {
-                        if (validate)
-                        {
-                            var vr = HoldingType.ValidateContent(jo.ToString());
-                            if (vr != ValidationResult.Success) throw new ValidationException($"HoldingType {jo["id"]}: {vr.ErrorMessage}");
-                        }
-                        js.Serialize(jtw, jo);
-                        if (++i % 10000 == 0)
-                        {
-                            traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
-                            s2.Restart();
-                        }
+                        var l = js4.Validate(jo);
+                        if (l.Any()) throw new ValidationException($"HoldingType {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
                     }
-                    jtw.WriteEndArray();
-                    traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
-                    traceSource.TraceEvent(TraceEventType.Information, 0, $"Saved {i} holding types");
+                    js.Serialize(jtw, jo);
+                    if (++i % 10000 == 0)
+                    {
+                        traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
+                        s2.Restart();
+                    }
                 }
+                jtw.WriteEndArray();
+                traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
+                traceSource.TraceEvent(TraceEventType.Information, 0, $"Saved {i} holding types");
             }
             traceSource.TraceEvent(TraceEventType.Information, 0, $"{s.Elapsed} elapsed");
         }
@@ -1873,11 +1899,13 @@ namespace FolioConsoleApplication
             traceSource.TraceEvent(TraceEventType.Information, 0, "Loading id types");
             var s = Stopwatch.StartNew();
             using (var sr = new StreamReader(path))
+            using (var sr2 = new StreamReader(Assembly.GetAssembly(typeof(FolioContext)).GetManifestResourceStream("FolioLibrary.IdType.json")))
             using (var jtr = new JsonTextReader(sr) { SupportMultipleContent = true })
             using (var fbcc = new FolioBulkCopyContext())
             using (var fsc = new FolioServiceClient())
             {
                 var s2 = Stopwatch.StartNew();
+                var js4 = JsonSchema4.FromJsonAsync(sr2.ReadToEndAsync().Result).Result;
                 var js = new JsonSerializer();
                 jtr.Read();
                 var i = 0;
@@ -1887,8 +1915,8 @@ namespace FolioConsoleApplication
                     var jo = (JObject)js.Deserialize(jtr);
                     if (validate)
                     {
-                        var vr = IdType.ValidateContent(jo.ToString());
-                        if (vr != ValidationResult.Success) throw new ValidationException($"IdType {jo["id"]}: {vr.ErrorMessage}");
+                        var l = js4.Validate(jo);
+                        if (l.Any()) throw new ValidationException($"IdType {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
                     }
                     if (api)
                     {
@@ -1916,7 +1944,7 @@ namespace FolioConsoleApplication
                                 traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
                                 s2.Restart();
                             }
-                    }
+                        }
                     }
                 }
                 fbcc.Commit();
@@ -1932,32 +1960,32 @@ namespace FolioConsoleApplication
             var s = Stopwatch.StartNew();
             using (var fdc = new FolioDapperContext())
             using (var fsc = new FolioServiceClient())
+            using (var sr = new StreamReader(Assembly.GetAssembly(typeof(FolioContext)).GetManifestResourceStream("FolioLibrary.IdType.json")))
+            using (var sw = new StreamWriter(path))
+            using (var jtw = new JsonTextWriter(sw))
             {
-                using (var sw = new StreamWriter(path))
-                using (var jtw = new JsonTextWriter(sw))
+                var s2 = Stopwatch.StartNew();
+                var js4 = JsonSchema4.FromJsonAsync(sr.ReadToEndAsync().Result).Result;
+                var js = new JsonSerializer { Formatting = Formatting.Indented };
+                jtw.WriteStartArray();
+                var i = 0;
+                foreach (var jo in api ? fsc.IdTypes(where) : fdc.IdTypes(where).Select(it => JObject.Parse(it.Content)))
                 {
-                    var js = new JsonSerializer { Formatting = Formatting.Indented };
-                    var s2 = Stopwatch.StartNew();
-                    jtw.WriteStartArray();
-                    var i = 0;
-                    foreach (var jo in api ? fsc.IdTypes(where) : fdc.IdTypes(where).Select(it => JObject.Parse(it.Content)))
+                    if (validate)
                     {
-                        if (validate)
-                        {
-                            var vr = IdType.ValidateContent(jo.ToString());
-                            if (vr != ValidationResult.Success) throw new ValidationException($"IdType {jo["id"]}: {vr.ErrorMessage}");
-                        }
-                        js.Serialize(jtw, jo);
-                        if (++i % 10000 == 0)
-                        {
-                            traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
-                            s2.Restart();
-                        }
+                        var l = js4.Validate(jo);
+                        if (l.Any()) throw new ValidationException($"IdType {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
                     }
-                    jtw.WriteEndArray();
-                    traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
-                    traceSource.TraceEvent(TraceEventType.Information, 0, $"Saved {i} id types");
+                    js.Serialize(jtw, jo);
+                    if (++i % 10000 == 0)
+                    {
+                        traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
+                        s2.Restart();
+                    }
                 }
+                jtw.WriteEndArray();
+                traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
+                traceSource.TraceEvent(TraceEventType.Information, 0, $"Saved {i} id types");
             }
             traceSource.TraceEvent(TraceEventType.Information, 0, $"{s.Elapsed} elapsed");
         }
@@ -1998,11 +2026,13 @@ namespace FolioConsoleApplication
             traceSource.TraceEvent(TraceEventType.Information, 0, "Loading ill policies");
             var s = Stopwatch.StartNew();
             using (var sr = new StreamReader(path))
+            using (var sr2 = new StreamReader(Assembly.GetAssembly(typeof(FolioContext)).GetManifestResourceStream("FolioLibrary.IllPolicy.json")))
             using (var jtr = new JsonTextReader(sr) { SupportMultipleContent = true })
             using (var fbcc = new FolioBulkCopyContext())
             using (var fsc = new FolioServiceClient())
             {
                 var s2 = Stopwatch.StartNew();
+                var js4 = JsonSchema4.FromJsonAsync(sr2.ReadToEndAsync().Result).Result;
                 var js = new JsonSerializer();
                 jtr.Read();
                 var i = 0;
@@ -2012,8 +2042,8 @@ namespace FolioConsoleApplication
                     var jo = (JObject)js.Deserialize(jtr);
                     if (validate)
                     {
-                        var vr = IllPolicy.ValidateContent(jo.ToString());
-                        if (vr != ValidationResult.Success) throw new ValidationException($"IllPolicy {jo["id"]}: {vr.ErrorMessage}");
+                        var l = js4.Validate(jo);
+                        if (l.Any()) throw new ValidationException($"IllPolicy {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
                     }
                     if (api)
                     {
@@ -2041,7 +2071,7 @@ namespace FolioConsoleApplication
                                 traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
                                 s2.Restart();
                             }
-                    }
+                        }
                     }
                 }
                 fbcc.Commit();
@@ -2057,32 +2087,32 @@ namespace FolioConsoleApplication
             var s = Stopwatch.StartNew();
             using (var fdc = new FolioDapperContext())
             using (var fsc = new FolioServiceClient())
+            using (var sr = new StreamReader(Assembly.GetAssembly(typeof(FolioContext)).GetManifestResourceStream("FolioLibrary.IllPolicy.json")))
+            using (var sw = new StreamWriter(path))
+            using (var jtw = new JsonTextWriter(sw))
             {
-                using (var sw = new StreamWriter(path))
-                using (var jtw = new JsonTextWriter(sw))
+                var s2 = Stopwatch.StartNew();
+                var js4 = JsonSchema4.FromJsonAsync(sr.ReadToEndAsync().Result).Result;
+                var js = new JsonSerializer { Formatting = Formatting.Indented };
+                jtw.WriteStartArray();
+                var i = 0;
+                foreach (var jo in api ? fsc.IllPolicies(where) : fdc.IllPolicies(where).Select(ip => JObject.Parse(ip.Content)))
                 {
-                    var js = new JsonSerializer { Formatting = Formatting.Indented };
-                    var s2 = Stopwatch.StartNew();
-                    jtw.WriteStartArray();
-                    var i = 0;
-                    foreach (var jo in api ? fsc.IllPolicies(where) : fdc.IllPolicies(where).Select(ip => JObject.Parse(ip.Content)))
+                    if (validate)
                     {
-                        if (validate)
-                        {
-                            var vr = IllPolicy.ValidateContent(jo.ToString());
-                            if (vr != ValidationResult.Success) throw new ValidationException($"IllPolicy {jo["id"]}: {vr.ErrorMessage}");
-                        }
-                        js.Serialize(jtw, jo);
-                        if (++i % 10000 == 0)
-                        {
-                            traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
-                            s2.Restart();
-                        }
+                        var l = js4.Validate(jo);
+                        if (l.Any()) throw new ValidationException($"IllPolicy {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
                     }
-                    jtw.WriteEndArray();
-                    traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
-                    traceSource.TraceEvent(TraceEventType.Information, 0, $"Saved {i} ill policies");
+                    js.Serialize(jtw, jo);
+                    if (++i % 10000 == 0)
+                    {
+                        traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
+                        s2.Restart();
+                    }
                 }
+                jtw.WriteEndArray();
+                traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
+                traceSource.TraceEvent(TraceEventType.Information, 0, $"Saved {i} ill policies");
             }
             traceSource.TraceEvent(TraceEventType.Information, 0, $"{s.Elapsed} elapsed");
         }
@@ -2123,11 +2153,13 @@ namespace FolioConsoleApplication
             traceSource.TraceEvent(TraceEventType.Information, 0, "Loading instances");
             var s = Stopwatch.StartNew();
             using (var sr = new StreamReader(path))
+            using (var sr2 = new StreamReader(Assembly.GetAssembly(typeof(FolioContext)).GetManifestResourceStream("FolioLibrary.Instance.json")))
             using (var jtr = new JsonTextReader(sr) { SupportMultipleContent = true })
             using (var fbcc = new FolioBulkCopyContext())
             using (var fsc = new FolioServiceClient())
             {
                 var s2 = Stopwatch.StartNew();
+                var js4 = JsonSchema4.FromJsonAsync(sr2.ReadToEndAsync().Result).Result;
                 var js = new JsonSerializer();
                 jtr.Read();
                 var i = 0;
@@ -2137,8 +2169,8 @@ namespace FolioConsoleApplication
                     var jo = (JObject)js.Deserialize(jtr);
                     if (validate)
                     {
-                        var vr = Instance.ValidateContent(jo.ToString());
-                        if (vr != ValidationResult.Success) throw new ValidationException($"Instance {jo["id"]}: {vr.ErrorMessage}");
+                        var l = js4.Validate(jo);
+                        if (l.Any()) throw new ValidationException($"Instance {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
                     }
                     if (api)
                     {
@@ -2168,7 +2200,7 @@ namespace FolioConsoleApplication
                                 traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
                                 s2.Restart();
                             }
-                    }
+                        }
                     }
                 }
                 fbcc.Commit();
@@ -2184,32 +2216,32 @@ namespace FolioConsoleApplication
             var s = Stopwatch.StartNew();
             using (var fdc = new FolioDapperContext())
             using (var fsc = new FolioServiceClient())
+            using (var sr = new StreamReader(Assembly.GetAssembly(typeof(FolioContext)).GetManifestResourceStream("FolioLibrary.Instance.json")))
+            using (var sw = new StreamWriter(path))
+            using (var jtw = new JsonTextWriter(sw))
             {
-                using (var sw = new StreamWriter(path))
-                using (var jtw = new JsonTextWriter(sw))
+                var s2 = Stopwatch.StartNew();
+                var js4 = JsonSchema4.FromJsonAsync(sr.ReadToEndAsync().Result).Result;
+                var js = new JsonSerializer { Formatting = Formatting.Indented };
+                jtw.WriteStartArray();
+                var i = 0;
+                foreach (var jo in api ? fsc.Instances(where) : fdc.Instances(where).Select(i2 => JObject.Parse(i2.Content)))
                 {
-                    var js = new JsonSerializer { Formatting = Formatting.Indented };
-                    var s2 = Stopwatch.StartNew();
-                    jtw.WriteStartArray();
-                    var i = 0;
-                    foreach (var jo in api ? fsc.Instances(where) : fdc.Instances(where).Select(i2 => JObject.Parse(i2.Content)))
+                    if (validate)
                     {
-                        if (validate)
-                        {
-                            var vr = Instance.ValidateContent(jo.ToString());
-                            if (vr != ValidationResult.Success) throw new ValidationException($"Instance {jo["id"]}: {vr.ErrorMessage}");
-                        }
-                        js.Serialize(jtw, jo);
-                        if (++i % 10000 == 0)
-                        {
-                            traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
-                            s2.Restart();
-                        }
+                        var l = js4.Validate(jo);
+                        if (l.Any()) throw new ValidationException($"Instance {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
                     }
-                    jtw.WriteEndArray();
-                    traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
-                    traceSource.TraceEvent(TraceEventType.Information, 0, $"Saved {i} instances");
+                    js.Serialize(jtw, jo);
+                    if (++i % 10000 == 0)
+                    {
+                        traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
+                        s2.Restart();
+                    }
                 }
+                jtw.WriteEndArray();
+                traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
+                traceSource.TraceEvent(TraceEventType.Information, 0, $"Saved {i} instances");
             }
             traceSource.TraceEvent(TraceEventType.Information, 0, $"{s.Elapsed} elapsed");
         }
@@ -2250,11 +2282,13 @@ namespace FolioConsoleApplication
             traceSource.TraceEvent(TraceEventType.Information, 0, "Loading instance formats");
             var s = Stopwatch.StartNew();
             using (var sr = new StreamReader(path))
+            using (var sr2 = new StreamReader(Assembly.GetAssembly(typeof(FolioContext)).GetManifestResourceStream("FolioLibrary.InstanceFormat.json")))
             using (var jtr = new JsonTextReader(sr) { SupportMultipleContent = true })
             using (var fbcc = new FolioBulkCopyContext())
             using (var fsc = new FolioServiceClient())
             {
                 var s2 = Stopwatch.StartNew();
+                var js4 = JsonSchema4.FromJsonAsync(sr2.ReadToEndAsync().Result).Result;
                 var js = new JsonSerializer();
                 jtr.Read();
                 var i = 0;
@@ -2264,8 +2298,8 @@ namespace FolioConsoleApplication
                     var jo = (JObject)js.Deserialize(jtr);
                     if (validate)
                     {
-                        var vr = InstanceFormat.ValidateContent(jo.ToString());
-                        if (vr != ValidationResult.Success) throw new ValidationException($"InstanceFormat {jo["id"]}: {vr.ErrorMessage}");
+                        var l = js4.Validate(jo);
+                        if (l.Any()) throw new ValidationException($"InstanceFormat {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
                     }
                     if (api)
                     {
@@ -2291,7 +2325,7 @@ namespace FolioConsoleApplication
                                 traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
                                 s2.Restart();
                             }
-                    }
+                        }
                     }
                 }
                 fbcc.Commit();
@@ -2307,32 +2341,32 @@ namespace FolioConsoleApplication
             var s = Stopwatch.StartNew();
             using (var fdc = new FolioDapperContext())
             using (var fsc = new FolioServiceClient())
+            using (var sr = new StreamReader(Assembly.GetAssembly(typeof(FolioContext)).GetManifestResourceStream("FolioLibrary.InstanceFormat.json")))
+            using (var sw = new StreamWriter(path))
+            using (var jtw = new JsonTextWriter(sw))
             {
-                using (var sw = new StreamWriter(path))
-                using (var jtw = new JsonTextWriter(sw))
+                var s2 = Stopwatch.StartNew();
+                var js4 = JsonSchema4.FromJsonAsync(sr.ReadToEndAsync().Result).Result;
+                var js = new JsonSerializer { Formatting = Formatting.Indented };
+                jtw.WriteStartArray();
+                var i = 0;
+                foreach (var jo in api ? fsc.InstanceFormats(where) : fdc.InstanceFormats(where).Select(@if => JObject.Parse(@if.Content)))
                 {
-                    var js = new JsonSerializer { Formatting = Formatting.Indented };
-                    var s2 = Stopwatch.StartNew();
-                    jtw.WriteStartArray();
-                    var i = 0;
-                    foreach (var jo in api ? fsc.InstanceFormats(where) : fdc.InstanceFormats(where).Select(@if => JObject.Parse(@if.Content)))
+                    if (validate)
                     {
-                        if (validate)
-                        {
-                            var vr = InstanceFormat.ValidateContent(jo.ToString());
-                            if (vr != ValidationResult.Success) throw new ValidationException($"InstanceFormat {jo["id"]}: {vr.ErrorMessage}");
-                        }
-                        js.Serialize(jtw, jo);
-                        if (++i % 10000 == 0)
-                        {
-                            traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
-                            s2.Restart();
-                        }
+                        var l = js4.Validate(jo);
+                        if (l.Any()) throw new ValidationException($"InstanceFormat {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
                     }
-                    jtw.WriteEndArray();
-                    traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
-                    traceSource.TraceEvent(TraceEventType.Information, 0, $"Saved {i} instance formats");
+                    js.Serialize(jtw, jo);
+                    if (++i % 10000 == 0)
+                    {
+                        traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
+                        s2.Restart();
+                    }
                 }
+                jtw.WriteEndArray();
+                traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
+                traceSource.TraceEvent(TraceEventType.Information, 0, $"Saved {i} instance formats");
             }
             traceSource.TraceEvent(TraceEventType.Information, 0, $"{s.Elapsed} elapsed");
         }
@@ -2373,11 +2407,13 @@ namespace FolioConsoleApplication
             traceSource.TraceEvent(TraceEventType.Information, 0, "Loading instance relationships");
             var s = Stopwatch.StartNew();
             using (var sr = new StreamReader(path))
+            using (var sr2 = new StreamReader(Assembly.GetAssembly(typeof(FolioContext)).GetManifestResourceStream("FolioLibrary.InstanceRelationship.json")))
             using (var jtr = new JsonTextReader(sr) { SupportMultipleContent = true })
             using (var fbcc = new FolioBulkCopyContext())
             using (var fsc = new FolioServiceClient())
             {
                 var s2 = Stopwatch.StartNew();
+                var js4 = JsonSchema4.FromJsonAsync(sr2.ReadToEndAsync().Result).Result;
                 var js = new JsonSerializer();
                 jtr.Read();
                 var i = 0;
@@ -2387,8 +2423,8 @@ namespace FolioConsoleApplication
                     var jo = (JObject)js.Deserialize(jtr);
                     if (validate)
                     {
-                        var vr = InstanceRelationship.ValidateContent(jo.ToString());
-                        if (vr != ValidationResult.Success) throw new ValidationException($"InstanceRelationship {jo["id"]}: {vr.ErrorMessage}");
+                        var l = js4.Validate(jo);
+                        if (l.Any()) throw new ValidationException($"InstanceRelationship {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
                     }
                     if (api)
                     {
@@ -2419,7 +2455,7 @@ namespace FolioConsoleApplication
                                 traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
                                 s2.Restart();
                             }
-                    }
+                        }
                     }
                 }
                 fbcc.Commit();
@@ -2435,32 +2471,32 @@ namespace FolioConsoleApplication
             var s = Stopwatch.StartNew();
             using (var fdc = new FolioDapperContext())
             using (var fsc = new FolioServiceClient())
+            using (var sr = new StreamReader(Assembly.GetAssembly(typeof(FolioContext)).GetManifestResourceStream("FolioLibrary.InstanceRelationship.json")))
+            using (var sw = new StreamWriter(path))
+            using (var jtw = new JsonTextWriter(sw))
             {
-                using (var sw = new StreamWriter(path))
-                using (var jtw = new JsonTextWriter(sw))
+                var s2 = Stopwatch.StartNew();
+                var js4 = JsonSchema4.FromJsonAsync(sr.ReadToEndAsync().Result).Result;
+                var js = new JsonSerializer { Formatting = Formatting.Indented };
+                jtw.WriteStartArray();
+                var i = 0;
+                foreach (var jo in api ? fsc.InstanceRelationships(where) : fdc.InstanceRelationships(where).Select(ir => JObject.Parse(ir.Content)))
                 {
-                    var js = new JsonSerializer { Formatting = Formatting.Indented };
-                    var s2 = Stopwatch.StartNew();
-                    jtw.WriteStartArray();
-                    var i = 0;
-                    foreach (var jo in api ? fsc.InstanceRelationships(where) : fdc.InstanceRelationships(where).Select(ir => JObject.Parse(ir.Content)))
+                    if (validate)
                     {
-                        if (validate)
-                        {
-                            var vr = InstanceRelationship.ValidateContent(jo.ToString());
-                            if (vr != ValidationResult.Success) throw new ValidationException($"InstanceRelationship {jo["id"]}: {vr.ErrorMessage}");
-                        }
-                        js.Serialize(jtw, jo);
-                        if (++i % 10000 == 0)
-                        {
-                            traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
-                            s2.Restart();
-                        }
+                        var l = js4.Validate(jo);
+                        if (l.Any()) throw new ValidationException($"InstanceRelationship {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
                     }
-                    jtw.WriteEndArray();
-                    traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
-                    traceSource.TraceEvent(TraceEventType.Information, 0, $"Saved {i} instance relationships");
+                    js.Serialize(jtw, jo);
+                    if (++i % 10000 == 0)
+                    {
+                        traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
+                        s2.Restart();
+                    }
                 }
+                jtw.WriteEndArray();
+                traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
+                traceSource.TraceEvent(TraceEventType.Information, 0, $"Saved {i} instance relationships");
             }
             traceSource.TraceEvent(TraceEventType.Information, 0, $"{s.Elapsed} elapsed");
         }
@@ -2501,11 +2537,13 @@ namespace FolioConsoleApplication
             traceSource.TraceEvent(TraceEventType.Information, 0, "Loading instance relationship types");
             var s = Stopwatch.StartNew();
             using (var sr = new StreamReader(path))
+            using (var sr2 = new StreamReader(Assembly.GetAssembly(typeof(FolioContext)).GetManifestResourceStream("FolioLibrary.InstanceRelationshipType.json")))
             using (var jtr = new JsonTextReader(sr) { SupportMultipleContent = true })
             using (var fbcc = new FolioBulkCopyContext())
             using (var fsc = new FolioServiceClient())
             {
                 var s2 = Stopwatch.StartNew();
+                var js4 = JsonSchema4.FromJsonAsync(sr2.ReadToEndAsync().Result).Result;
                 var js = new JsonSerializer();
                 jtr.Read();
                 var i = 0;
@@ -2515,8 +2553,8 @@ namespace FolioConsoleApplication
                     var jo = (JObject)js.Deserialize(jtr);
                     if (validate)
                     {
-                        var vr = InstanceRelationshipType.ValidateContent(jo.ToString());
-                        if (vr != ValidationResult.Success) throw new ValidationException($"InstanceRelationshipType {jo["id"]}: {vr.ErrorMessage}");
+                        var l = js4.Validate(jo);
+                        if (l.Any()) throw new ValidationException($"InstanceRelationshipType {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
                     }
                     if (api)
                     {
@@ -2544,7 +2582,7 @@ namespace FolioConsoleApplication
                                 traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
                                 s2.Restart();
                             }
-                    }
+                        }
                     }
                 }
                 fbcc.Commit();
@@ -2560,32 +2598,32 @@ namespace FolioConsoleApplication
             var s = Stopwatch.StartNew();
             using (var fdc = new FolioDapperContext())
             using (var fsc = new FolioServiceClient())
+            using (var sr = new StreamReader(Assembly.GetAssembly(typeof(FolioContext)).GetManifestResourceStream("FolioLibrary.InstanceRelationshipType.json")))
+            using (var sw = new StreamWriter(path))
+            using (var jtw = new JsonTextWriter(sw))
             {
-                using (var sw = new StreamWriter(path))
-                using (var jtw = new JsonTextWriter(sw))
+                var s2 = Stopwatch.StartNew();
+                var js4 = JsonSchema4.FromJsonAsync(sr.ReadToEndAsync().Result).Result;
+                var js = new JsonSerializer { Formatting = Formatting.Indented };
+                jtw.WriteStartArray();
+                var i = 0;
+                foreach (var jo in api ? fsc.InstanceRelationshipTypes(where) : fdc.InstanceRelationshipTypes(where).Select(irt => JObject.Parse(irt.Content)))
                 {
-                    var js = new JsonSerializer { Formatting = Formatting.Indented };
-                    var s2 = Stopwatch.StartNew();
-                    jtw.WriteStartArray();
-                    var i = 0;
-                    foreach (var jo in api ? fsc.InstanceRelationshipTypes(where) : fdc.InstanceRelationshipTypes(where).Select(irt => JObject.Parse(irt.Content)))
+                    if (validate)
                     {
-                        if (validate)
-                        {
-                            var vr = InstanceRelationshipType.ValidateContent(jo.ToString());
-                            if (vr != ValidationResult.Success) throw new ValidationException($"InstanceRelationshipType {jo["id"]}: {vr.ErrorMessage}");
-                        }
-                        js.Serialize(jtw, jo);
-                        if (++i % 10000 == 0)
-                        {
-                            traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
-                            s2.Restart();
-                        }
+                        var l = js4.Validate(jo);
+                        if (l.Any()) throw new ValidationException($"InstanceRelationshipType {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
                     }
-                    jtw.WriteEndArray();
-                    traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
-                    traceSource.TraceEvent(TraceEventType.Information, 0, $"Saved {i} instance relationship types");
+                    js.Serialize(jtw, jo);
+                    if (++i % 10000 == 0)
+                    {
+                        traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
+                        s2.Restart();
+                    }
                 }
+                jtw.WriteEndArray();
+                traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
+                traceSource.TraceEvent(TraceEventType.Information, 0, $"Saved {i} instance relationship types");
             }
             traceSource.TraceEvent(TraceEventType.Information, 0, $"{s.Elapsed} elapsed");
         }
@@ -2626,11 +2664,13 @@ namespace FolioConsoleApplication
             traceSource.TraceEvent(TraceEventType.Information, 0, "Loading instance statuses");
             var s = Stopwatch.StartNew();
             using (var sr = new StreamReader(path))
+            using (var sr2 = new StreamReader(Assembly.GetAssembly(typeof(FolioContext)).GetManifestResourceStream("FolioLibrary.InstanceStatus.json")))
             using (var jtr = new JsonTextReader(sr) { SupportMultipleContent = true })
             using (var fbcc = new FolioBulkCopyContext())
             using (var fsc = new FolioServiceClient())
             {
                 var s2 = Stopwatch.StartNew();
+                var js4 = JsonSchema4.FromJsonAsync(sr2.ReadToEndAsync().Result).Result;
                 var js = new JsonSerializer();
                 jtr.Read();
                 var i = 0;
@@ -2640,8 +2680,8 @@ namespace FolioConsoleApplication
                     var jo = (JObject)js.Deserialize(jtr);
                     if (validate)
                     {
-                        var vr = InstanceStatus.ValidateContent(jo.ToString());
-                        if (vr != ValidationResult.Success) throw new ValidationException($"InstanceStatus {jo["id"]}: {vr.ErrorMessage}");
+                        var l = js4.Validate(jo);
+                        if (l.Any()) throw new ValidationException($"InstanceStatus {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
                     }
                     if (api)
                     {
@@ -2669,7 +2709,7 @@ namespace FolioConsoleApplication
                                 traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
                                 s2.Restart();
                             }
-                    }
+                        }
                     }
                 }
                 fbcc.Commit();
@@ -2685,32 +2725,32 @@ namespace FolioConsoleApplication
             var s = Stopwatch.StartNew();
             using (var fdc = new FolioDapperContext())
             using (var fsc = new FolioServiceClient())
+            using (var sr = new StreamReader(Assembly.GetAssembly(typeof(FolioContext)).GetManifestResourceStream("FolioLibrary.InstanceStatus.json")))
+            using (var sw = new StreamWriter(path))
+            using (var jtw = new JsonTextWriter(sw))
             {
-                using (var sw = new StreamWriter(path))
-                using (var jtw = new JsonTextWriter(sw))
+                var s2 = Stopwatch.StartNew();
+                var js4 = JsonSchema4.FromJsonAsync(sr.ReadToEndAsync().Result).Result;
+                var js = new JsonSerializer { Formatting = Formatting.Indented };
+                jtw.WriteStartArray();
+                var i = 0;
+                foreach (var jo in api ? fsc.InstanceStatuses(where) : fdc.InstanceStatuses(where).Select(@is => JObject.Parse(@is.Content)))
                 {
-                    var js = new JsonSerializer { Formatting = Formatting.Indented };
-                    var s2 = Stopwatch.StartNew();
-                    jtw.WriteStartArray();
-                    var i = 0;
-                    foreach (var jo in api ? fsc.InstanceStatuses(where) : fdc.InstanceStatuses(where).Select(@is => JObject.Parse(@is.Content)))
+                    if (validate)
                     {
-                        if (validate)
-                        {
-                            var vr = InstanceStatus.ValidateContent(jo.ToString());
-                            if (vr != ValidationResult.Success) throw new ValidationException($"InstanceStatus {jo["id"]}: {vr.ErrorMessage}");
-                        }
-                        js.Serialize(jtw, jo);
-                        if (++i % 10000 == 0)
-                        {
-                            traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
-                            s2.Restart();
-                        }
+                        var l = js4.Validate(jo);
+                        if (l.Any()) throw new ValidationException($"InstanceStatus {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
                     }
-                    jtw.WriteEndArray();
-                    traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
-                    traceSource.TraceEvent(TraceEventType.Information, 0, $"Saved {i} instance statuses");
+                    js.Serialize(jtw, jo);
+                    if (++i % 10000 == 0)
+                    {
+                        traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
+                        s2.Restart();
+                    }
                 }
+                jtw.WriteEndArray();
+                traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
+                traceSource.TraceEvent(TraceEventType.Information, 0, $"Saved {i} instance statuses");
             }
             traceSource.TraceEvent(TraceEventType.Information, 0, $"{s.Elapsed} elapsed");
         }
@@ -2751,11 +2791,13 @@ namespace FolioConsoleApplication
             traceSource.TraceEvent(TraceEventType.Information, 0, "Loading instance types");
             var s = Stopwatch.StartNew();
             using (var sr = new StreamReader(path))
+            using (var sr2 = new StreamReader(Assembly.GetAssembly(typeof(FolioContext)).GetManifestResourceStream("FolioLibrary.InstanceType.json")))
             using (var jtr = new JsonTextReader(sr) { SupportMultipleContent = true })
             using (var fbcc = new FolioBulkCopyContext())
             using (var fsc = new FolioServiceClient())
             {
                 var s2 = Stopwatch.StartNew();
+                var js4 = JsonSchema4.FromJsonAsync(sr2.ReadToEndAsync().Result).Result;
                 var js = new JsonSerializer();
                 jtr.Read();
                 var i = 0;
@@ -2765,8 +2807,8 @@ namespace FolioConsoleApplication
                     var jo = (JObject)js.Deserialize(jtr);
                     if (validate)
                     {
-                        var vr = InstanceType.ValidateContent(jo.ToString());
-                        if (vr != ValidationResult.Success) throw new ValidationException($"InstanceType {jo["id"]}: {vr.ErrorMessage}");
+                        var l = js4.Validate(jo);
+                        if (l.Any()) throw new ValidationException($"InstanceType {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
                     }
                     if (api)
                     {
@@ -2792,7 +2834,7 @@ namespace FolioConsoleApplication
                                 traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
                                 s2.Restart();
                             }
-                    }
+                        }
                     }
                 }
                 fbcc.Commit();
@@ -2808,32 +2850,32 @@ namespace FolioConsoleApplication
             var s = Stopwatch.StartNew();
             using (var fdc = new FolioDapperContext())
             using (var fsc = new FolioServiceClient())
+            using (var sr = new StreamReader(Assembly.GetAssembly(typeof(FolioContext)).GetManifestResourceStream("FolioLibrary.InstanceType.json")))
+            using (var sw = new StreamWriter(path))
+            using (var jtw = new JsonTextWriter(sw))
             {
-                using (var sw = new StreamWriter(path))
-                using (var jtw = new JsonTextWriter(sw))
+                var s2 = Stopwatch.StartNew();
+                var js4 = JsonSchema4.FromJsonAsync(sr.ReadToEndAsync().Result).Result;
+                var js = new JsonSerializer { Formatting = Formatting.Indented };
+                jtw.WriteStartArray();
+                var i = 0;
+                foreach (var jo in api ? fsc.InstanceTypes(where) : fdc.InstanceTypes(where).Select(it => JObject.Parse(it.Content)))
                 {
-                    var js = new JsonSerializer { Formatting = Formatting.Indented };
-                    var s2 = Stopwatch.StartNew();
-                    jtw.WriteStartArray();
-                    var i = 0;
-                    foreach (var jo in api ? fsc.InstanceTypes(where) : fdc.InstanceTypes(where).Select(it => JObject.Parse(it.Content)))
+                    if (validate)
                     {
-                        if (validate)
-                        {
-                            var vr = InstanceType.ValidateContent(jo.ToString());
-                            if (vr != ValidationResult.Success) throw new ValidationException($"InstanceType {jo["id"]}: {vr.ErrorMessage}");
-                        }
-                        js.Serialize(jtw, jo);
-                        if (++i % 10000 == 0)
-                        {
-                            traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
-                            s2.Restart();
-                        }
+                        var l = js4.Validate(jo);
+                        if (l.Any()) throw new ValidationException($"InstanceType {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
                     }
-                    jtw.WriteEndArray();
-                    traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
-                    traceSource.TraceEvent(TraceEventType.Information, 0, $"Saved {i} instance types");
+                    js.Serialize(jtw, jo);
+                    if (++i % 10000 == 0)
+                    {
+                        traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
+                        s2.Restart();
+                    }
                 }
+                jtw.WriteEndArray();
+                traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
+                traceSource.TraceEvent(TraceEventType.Information, 0, $"Saved {i} instance types");
             }
             traceSource.TraceEvent(TraceEventType.Information, 0, $"{s.Elapsed} elapsed");
         }
@@ -2874,11 +2916,13 @@ namespace FolioConsoleApplication
             traceSource.TraceEvent(TraceEventType.Information, 0, "Loading institutions");
             var s = Stopwatch.StartNew();
             using (var sr = new StreamReader(path))
+            using (var sr2 = new StreamReader(Assembly.GetAssembly(typeof(FolioContext)).GetManifestResourceStream("FolioLibrary.Institution.json")))
             using (var jtr = new JsonTextReader(sr) { SupportMultipleContent = true })
             using (var fbcc = new FolioBulkCopyContext())
             using (var fsc = new FolioServiceClient())
             {
                 var s2 = Stopwatch.StartNew();
+                var js4 = JsonSchema4.FromJsonAsync(sr2.ReadToEndAsync().Result).Result;
                 var js = new JsonSerializer();
                 jtr.Read();
                 var i = 0;
@@ -2888,8 +2932,8 @@ namespace FolioConsoleApplication
                     var jo = (JObject)js.Deserialize(jtr);
                     if (validate)
                     {
-                        var vr = Institution.ValidateContent(jo.ToString());
-                        if (vr != ValidationResult.Success) throw new ValidationException($"Institution {jo["id"]}: {vr.ErrorMessage}");
+                        var l = js4.Validate(jo);
+                        if (l.Any()) throw new ValidationException($"Institution {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
                     }
                     if (api)
                     {
@@ -2917,7 +2961,7 @@ namespace FolioConsoleApplication
                                 traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
                                 s2.Restart();
                             }
-                    }
+                        }
                     }
                 }
                 fbcc.Commit();
@@ -2933,32 +2977,32 @@ namespace FolioConsoleApplication
             var s = Stopwatch.StartNew();
             using (var fdc = new FolioDapperContext())
             using (var fsc = new FolioServiceClient())
+            using (var sr = new StreamReader(Assembly.GetAssembly(typeof(FolioContext)).GetManifestResourceStream("FolioLibrary.Institution.json")))
+            using (var sw = new StreamWriter(path))
+            using (var jtw = new JsonTextWriter(sw))
             {
-                using (var sw = new StreamWriter(path))
-                using (var jtw = new JsonTextWriter(sw))
+                var s2 = Stopwatch.StartNew();
+                var js4 = JsonSchema4.FromJsonAsync(sr.ReadToEndAsync().Result).Result;
+                var js = new JsonSerializer { Formatting = Formatting.Indented };
+                jtw.WriteStartArray();
+                var i = 0;
+                foreach (var jo in api ? fsc.Institutions(where) : fdc.Institutions(where).Select(i2 => JObject.Parse(i2.Content)))
                 {
-                    var js = new JsonSerializer { Formatting = Formatting.Indented };
-                    var s2 = Stopwatch.StartNew();
-                    jtw.WriteStartArray();
-                    var i = 0;
-                    foreach (var jo in api ? fsc.Institutions(where) : fdc.Institutions(where).Select(i2 => JObject.Parse(i2.Content)))
+                    if (validate)
                     {
-                        if (validate)
-                        {
-                            var vr = Institution.ValidateContent(jo.ToString());
-                            if (vr != ValidationResult.Success) throw new ValidationException($"Institution {jo["id"]}: {vr.ErrorMessage}");
-                        }
-                        js.Serialize(jtw, jo);
-                        if (++i % 10000 == 0)
-                        {
-                            traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
-                            s2.Restart();
-                        }
+                        var l = js4.Validate(jo);
+                        if (l.Any()) throw new ValidationException($"Institution {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
                     }
-                    jtw.WriteEndArray();
-                    traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
-                    traceSource.TraceEvent(TraceEventType.Information, 0, $"Saved {i} institutions");
+                    js.Serialize(jtw, jo);
+                    if (++i % 10000 == 0)
+                    {
+                        traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
+                        s2.Restart();
+                    }
                 }
+                jtw.WriteEndArray();
+                traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
+                traceSource.TraceEvent(TraceEventType.Information, 0, $"Saved {i} institutions");
             }
             traceSource.TraceEvent(TraceEventType.Information, 0, $"{s.Elapsed} elapsed");
         }
@@ -2999,11 +3043,13 @@ namespace FolioConsoleApplication
             traceSource.TraceEvent(TraceEventType.Information, 0, "Loading items");
             var s = Stopwatch.StartNew();
             using (var sr = new StreamReader(path))
+            using (var sr2 = new StreamReader(Assembly.GetAssembly(typeof(FolioContext)).GetManifestResourceStream("FolioLibrary.Item.json")))
             using (var jtr = new JsonTextReader(sr) { SupportMultipleContent = true })
             using (var fbcc = new FolioBulkCopyContext())
             using (var fsc = new FolioServiceClient())
             {
                 var s2 = Stopwatch.StartNew();
+                var js4 = JsonSchema4.FromJsonAsync(sr2.ReadToEndAsync().Result).Result;
                 var js = new JsonSerializer();
                 jtr.Read();
                 var i = 0;
@@ -3013,8 +3059,8 @@ namespace FolioConsoleApplication
                     var jo = (JObject)js.Deserialize(jtr);
                     if (validate)
                     {
-                        var vr = Item.ValidateContent(jo.ToString());
-                        if (vr != ValidationResult.Success) throw new ValidationException($"Item {jo["id"]}: {vr.ErrorMessage}");
+                        var l = js4.Validate(jo);
+                        if (l.Any()) throw new ValidationException($"Item {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
                     }
                     if (api)
                     {
@@ -3048,7 +3094,7 @@ namespace FolioConsoleApplication
                                 traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
                                 s2.Restart();
                             }
-                    }
+                        }
                     }
                 }
                 fbcc.Commit();
@@ -3064,32 +3110,32 @@ namespace FolioConsoleApplication
             var s = Stopwatch.StartNew();
             using (var fdc = new FolioDapperContext())
             using (var fsc = new FolioServiceClient())
+            using (var sr = new StreamReader(Assembly.GetAssembly(typeof(FolioContext)).GetManifestResourceStream("FolioLibrary.Item.json")))
+            using (var sw = new StreamWriter(path))
+            using (var jtw = new JsonTextWriter(sw))
             {
-                using (var sw = new StreamWriter(path))
-                using (var jtw = new JsonTextWriter(sw))
+                var s2 = Stopwatch.StartNew();
+                var js4 = JsonSchema4.FromJsonAsync(sr.ReadToEndAsync().Result).Result;
+                var js = new JsonSerializer { Formatting = Formatting.Indented };
+                jtw.WriteStartArray();
+                var i = 0;
+                foreach (var jo in api ? fsc.Items(where) : fdc.Items(where).Select(i2 => JObject.Parse(i2.Content)))
                 {
-                    var js = new JsonSerializer { Formatting = Formatting.Indented };
-                    var s2 = Stopwatch.StartNew();
-                    jtw.WriteStartArray();
-                    var i = 0;
-                    foreach (var jo in api ? fsc.Items(where) : fdc.Items(where).Select(i2 => JObject.Parse(i2.Content)))
+                    if (validate)
                     {
-                        if (validate)
-                        {
-                            var vr = Item.ValidateContent(jo.ToString());
-                            if (vr != ValidationResult.Success) throw new ValidationException($"Item {jo["id"]}: {vr.ErrorMessage}");
-                        }
-                        js.Serialize(jtw, jo);
-                        if (++i % 10000 == 0)
-                        {
-                            traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
-                            s2.Restart();
-                        }
+                        var l = js4.Validate(jo);
+                        if (l.Any()) throw new ValidationException($"Item {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
                     }
-                    jtw.WriteEndArray();
-                    traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
-                    traceSource.TraceEvent(TraceEventType.Information, 0, $"Saved {i} items");
+                    js.Serialize(jtw, jo);
+                    if (++i % 10000 == 0)
+                    {
+                        traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
+                        s2.Restart();
+                    }
                 }
+                jtw.WriteEndArray();
+                traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
+                traceSource.TraceEvent(TraceEventType.Information, 0, $"Saved {i} items");
             }
             traceSource.TraceEvent(TraceEventType.Information, 0, $"{s.Elapsed} elapsed");
         }
@@ -3130,11 +3176,13 @@ namespace FolioConsoleApplication
             traceSource.TraceEvent(TraceEventType.Information, 0, "Loading item note types");
             var s = Stopwatch.StartNew();
             using (var sr = new StreamReader(path))
+            using (var sr2 = new StreamReader(Assembly.GetAssembly(typeof(FolioContext)).GetManifestResourceStream("FolioLibrary.ItemNoteType.json")))
             using (var jtr = new JsonTextReader(sr) { SupportMultipleContent = true })
             using (var fbcc = new FolioBulkCopyContext())
             using (var fsc = new FolioServiceClient())
             {
                 var s2 = Stopwatch.StartNew();
+                var js4 = JsonSchema4.FromJsonAsync(sr2.ReadToEndAsync().Result).Result;
                 var js = new JsonSerializer();
                 jtr.Read();
                 var i = 0;
@@ -3144,8 +3192,8 @@ namespace FolioConsoleApplication
                     var jo = (JObject)js.Deserialize(jtr);
                     if (validate)
                     {
-                        var vr = ItemNoteType.ValidateContent(jo.ToString());
-                        if (vr != ValidationResult.Success) throw new ValidationException($"ItemNoteType {jo["id"]}: {vr.ErrorMessage}");
+                        var l = js4.Validate(jo);
+                        if (l.Any()) throw new ValidationException($"ItemNoteType {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
                     }
                     if (api)
                     {
@@ -3173,7 +3221,7 @@ namespace FolioConsoleApplication
                                 traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
                                 s2.Restart();
                             }
-                    }
+                        }
                     }
                 }
                 fbcc.Commit();
@@ -3189,32 +3237,32 @@ namespace FolioConsoleApplication
             var s = Stopwatch.StartNew();
             using (var fdc = new FolioDapperContext())
             using (var fsc = new FolioServiceClient())
+            using (var sr = new StreamReader(Assembly.GetAssembly(typeof(FolioContext)).GetManifestResourceStream("FolioLibrary.ItemNoteType.json")))
+            using (var sw = new StreamWriter(path))
+            using (var jtw = new JsonTextWriter(sw))
             {
-                using (var sw = new StreamWriter(path))
-                using (var jtw = new JsonTextWriter(sw))
+                var s2 = Stopwatch.StartNew();
+                var js4 = JsonSchema4.FromJsonAsync(sr.ReadToEndAsync().Result).Result;
+                var js = new JsonSerializer { Formatting = Formatting.Indented };
+                jtw.WriteStartArray();
+                var i = 0;
+                foreach (var jo in api ? fsc.ItemNoteTypes(where) : fdc.ItemNoteTypes(where).Select(@int => JObject.Parse(@int.Content)))
                 {
-                    var js = new JsonSerializer { Formatting = Formatting.Indented };
-                    var s2 = Stopwatch.StartNew();
-                    jtw.WriteStartArray();
-                    var i = 0;
-                    foreach (var jo in api ? fsc.ItemNoteTypes(where) : fdc.ItemNoteTypes(where).Select(@int => JObject.Parse(@int.Content)))
+                    if (validate)
                     {
-                        if (validate)
-                        {
-                            var vr = ItemNoteType.ValidateContent(jo.ToString());
-                            if (vr != ValidationResult.Success) throw new ValidationException($"ItemNoteType {jo["id"]}: {vr.ErrorMessage}");
-                        }
-                        js.Serialize(jtw, jo);
-                        if (++i % 10000 == 0)
-                        {
-                            traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
-                            s2.Restart();
-                        }
+                        var l = js4.Validate(jo);
+                        if (l.Any()) throw new ValidationException($"ItemNoteType {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
                     }
-                    jtw.WriteEndArray();
-                    traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
-                    traceSource.TraceEvent(TraceEventType.Information, 0, $"Saved {i} item note types");
+                    js.Serialize(jtw, jo);
+                    if (++i % 10000 == 0)
+                    {
+                        traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
+                        s2.Restart();
+                    }
                 }
+                jtw.WriteEndArray();
+                traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
+                traceSource.TraceEvent(TraceEventType.Information, 0, $"Saved {i} item note types");
             }
             traceSource.TraceEvent(TraceEventType.Information, 0, $"{s.Elapsed} elapsed");
         }
@@ -3255,11 +3303,13 @@ namespace FolioConsoleApplication
             traceSource.TraceEvent(TraceEventType.Information, 0, "Loading libraries");
             var s = Stopwatch.StartNew();
             using (var sr = new StreamReader(path))
+            using (var sr2 = new StreamReader(Assembly.GetAssembly(typeof(FolioContext)).GetManifestResourceStream("FolioLibrary.Library.json")))
             using (var jtr = new JsonTextReader(sr) { SupportMultipleContent = true })
             using (var fbcc = new FolioBulkCopyContext())
             using (var fsc = new FolioServiceClient())
             {
                 var s2 = Stopwatch.StartNew();
+                var js4 = JsonSchema4.FromJsonAsync(sr2.ReadToEndAsync().Result).Result;
                 var js = new JsonSerializer();
                 jtr.Read();
                 var i = 0;
@@ -3269,8 +3319,8 @@ namespace FolioConsoleApplication
                     var jo = (JObject)js.Deserialize(jtr);
                     if (validate)
                     {
-                        var vr = Library.ValidateContent(jo.ToString());
-                        if (vr != ValidationResult.Success) throw new ValidationException($"Library {jo["id"]}: {vr.ErrorMessage}");
+                        var l = js4.Validate(jo);
+                        if (l.Any()) throw new ValidationException($"Library {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
                     }
                     if (api)
                     {
@@ -3299,7 +3349,7 @@ namespace FolioConsoleApplication
                                 traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
                                 s2.Restart();
                             }
-                    }
+                        }
                     }
                 }
                 fbcc.Commit();
@@ -3315,32 +3365,32 @@ namespace FolioConsoleApplication
             var s = Stopwatch.StartNew();
             using (var fdc = new FolioDapperContext())
             using (var fsc = new FolioServiceClient())
+            using (var sr = new StreamReader(Assembly.GetAssembly(typeof(FolioContext)).GetManifestResourceStream("FolioLibrary.Library.json")))
+            using (var sw = new StreamWriter(path))
+            using (var jtw = new JsonTextWriter(sw))
             {
-                using (var sw = new StreamWriter(path))
-                using (var jtw = new JsonTextWriter(sw))
+                var s2 = Stopwatch.StartNew();
+                var js4 = JsonSchema4.FromJsonAsync(sr.ReadToEndAsync().Result).Result;
+                var js = new JsonSerializer { Formatting = Formatting.Indented };
+                jtw.WriteStartArray();
+                var i = 0;
+                foreach (var jo in api ? fsc.Libraries(where) : fdc.Libraries(where).Select(l => JObject.Parse(l.Content)))
                 {
-                    var js = new JsonSerializer { Formatting = Formatting.Indented };
-                    var s2 = Stopwatch.StartNew();
-                    jtw.WriteStartArray();
-                    var i = 0;
-                    foreach (var jo in api ? fsc.Libraries(where) : fdc.Libraries(where).Select(l => JObject.Parse(l.Content)))
+                    if (validate)
                     {
-                        if (validate)
-                        {
-                            var vr = Library.ValidateContent(jo.ToString());
-                            if (vr != ValidationResult.Success) throw new ValidationException($"Library {jo["id"]}: {vr.ErrorMessage}");
-                        }
-                        js.Serialize(jtw, jo);
-                        if (++i % 10000 == 0)
-                        {
-                            traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
-                            s2.Restart();
-                        }
+                        var l = js4.Validate(jo);
+                        if (l.Any()) throw new ValidationException($"Library {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
                     }
-                    jtw.WriteEndArray();
-                    traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
-                    traceSource.TraceEvent(TraceEventType.Information, 0, $"Saved {i} libraries");
+                    js.Serialize(jtw, jo);
+                    if (++i % 10000 == 0)
+                    {
+                        traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
+                        s2.Restart();
+                    }
                 }
+                jtw.WriteEndArray();
+                traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
+                traceSource.TraceEvent(TraceEventType.Information, 0, $"Saved {i} libraries");
             }
             traceSource.TraceEvent(TraceEventType.Information, 0, $"{s.Elapsed} elapsed");
         }
@@ -3381,11 +3431,13 @@ namespace FolioConsoleApplication
             traceSource.TraceEvent(TraceEventType.Information, 0, "Loading loan types");
             var s = Stopwatch.StartNew();
             using (var sr = new StreamReader(path))
+            using (var sr2 = new StreamReader(Assembly.GetAssembly(typeof(FolioContext)).GetManifestResourceStream("FolioLibrary.LoanType.json")))
             using (var jtr = new JsonTextReader(sr) { SupportMultipleContent = true })
             using (var fbcc = new FolioBulkCopyContext())
             using (var fsc = new FolioServiceClient())
             {
                 var s2 = Stopwatch.StartNew();
+                var js4 = JsonSchema4.FromJsonAsync(sr2.ReadToEndAsync().Result).Result;
                 var js = new JsonSerializer();
                 jtr.Read();
                 var i = 0;
@@ -3395,8 +3447,8 @@ namespace FolioConsoleApplication
                     var jo = (JObject)js.Deserialize(jtr);
                     if (validate)
                     {
-                        var vr = LoanType.ValidateContent(jo.ToString());
-                        if (vr != ValidationResult.Success) throw new ValidationException($"LoanType {jo["id"]}: {vr.ErrorMessage}");
+                        var l = js4.Validate(jo);
+                        if (l.Any()) throw new ValidationException($"LoanType {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
                     }
                     if (api)
                     {
@@ -3424,7 +3476,7 @@ namespace FolioConsoleApplication
                                 traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
                                 s2.Restart();
                             }
-                    }
+                        }
                     }
                 }
                 fbcc.Commit();
@@ -3440,32 +3492,32 @@ namespace FolioConsoleApplication
             var s = Stopwatch.StartNew();
             using (var fdc = new FolioDapperContext())
             using (var fsc = new FolioServiceClient())
+            using (var sr = new StreamReader(Assembly.GetAssembly(typeof(FolioContext)).GetManifestResourceStream("FolioLibrary.LoanType.json")))
+            using (var sw = new StreamWriter(path))
+            using (var jtw = new JsonTextWriter(sw))
             {
-                using (var sw = new StreamWriter(path))
-                using (var jtw = new JsonTextWriter(sw))
+                var s2 = Stopwatch.StartNew();
+                var js4 = JsonSchema4.FromJsonAsync(sr.ReadToEndAsync().Result).Result;
+                var js = new JsonSerializer { Formatting = Formatting.Indented };
+                jtw.WriteStartArray();
+                var i = 0;
+                foreach (var jo in api ? fsc.LoanTypes(where) : fdc.LoanTypes(where).Select(lt => JObject.Parse(lt.Content)))
                 {
-                    var js = new JsonSerializer { Formatting = Formatting.Indented };
-                    var s2 = Stopwatch.StartNew();
-                    jtw.WriteStartArray();
-                    var i = 0;
-                    foreach (var jo in api ? fsc.LoanTypes(where) : fdc.LoanTypes(where).Select(lt => JObject.Parse(lt.Content)))
+                    if (validate)
                     {
-                        if (validate)
-                        {
-                            var vr = LoanType.ValidateContent(jo.ToString());
-                            if (vr != ValidationResult.Success) throw new ValidationException($"LoanType {jo["id"]}: {vr.ErrorMessage}");
-                        }
-                        js.Serialize(jtw, jo);
-                        if (++i % 10000 == 0)
-                        {
-                            traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
-                            s2.Restart();
-                        }
+                        var l = js4.Validate(jo);
+                        if (l.Any()) throw new ValidationException($"LoanType {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
                     }
-                    jtw.WriteEndArray();
-                    traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
-                    traceSource.TraceEvent(TraceEventType.Information, 0, $"Saved {i} loan types");
+                    js.Serialize(jtw, jo);
+                    if (++i % 10000 == 0)
+                    {
+                        traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
+                        s2.Restart();
+                    }
                 }
+                jtw.WriteEndArray();
+                traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
+                traceSource.TraceEvent(TraceEventType.Information, 0, $"Saved {i} loan types");
             }
             traceSource.TraceEvent(TraceEventType.Information, 0, $"{s.Elapsed} elapsed");
         }
@@ -3506,11 +3558,13 @@ namespace FolioConsoleApplication
             traceSource.TraceEvent(TraceEventType.Information, 0, "Loading locations");
             var s = Stopwatch.StartNew();
             using (var sr = new StreamReader(path))
+            using (var sr2 = new StreamReader(Assembly.GetAssembly(typeof(FolioContext)).GetManifestResourceStream("FolioLibrary.Location.json")))
             using (var jtr = new JsonTextReader(sr) { SupportMultipleContent = true })
             using (var fbcc = new FolioBulkCopyContext())
             using (var fsc = new FolioServiceClient())
             {
                 var s2 = Stopwatch.StartNew();
+                var js4 = JsonSchema4.FromJsonAsync(sr2.ReadToEndAsync().Result).Result;
                 var js = new JsonSerializer();
                 jtr.Read();
                 var i = 0;
@@ -3520,8 +3574,8 @@ namespace FolioConsoleApplication
                     var jo = (JObject)js.Deserialize(jtr);
                     if (validate)
                     {
-                        var vr = Location.ValidateContent(jo.ToString());
-                        if (vr != ValidationResult.Success) throw new ValidationException($"Location {jo["id"]}: {vr.ErrorMessage}");
+                        var l = js4.Validate(jo);
+                        if (l.Any()) throw new ValidationException($"Location {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
                     }
                     if (api)
                     {
@@ -3552,7 +3606,7 @@ namespace FolioConsoleApplication
                                 traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
                                 s2.Restart();
                             }
-                    }
+                        }
                     }
                 }
                 fbcc.Commit();
@@ -3568,32 +3622,32 @@ namespace FolioConsoleApplication
             var s = Stopwatch.StartNew();
             using (var fdc = new FolioDapperContext())
             using (var fsc = new FolioServiceClient())
+            using (var sr = new StreamReader(Assembly.GetAssembly(typeof(FolioContext)).GetManifestResourceStream("FolioLibrary.Location.json")))
+            using (var sw = new StreamWriter(path))
+            using (var jtw = new JsonTextWriter(sw))
             {
-                using (var sw = new StreamWriter(path))
-                using (var jtw = new JsonTextWriter(sw))
+                var s2 = Stopwatch.StartNew();
+                var js4 = JsonSchema4.FromJsonAsync(sr.ReadToEndAsync().Result).Result;
+                var js = new JsonSerializer { Formatting = Formatting.Indented };
+                jtw.WriteStartArray();
+                var i = 0;
+                foreach (var jo in api ? fsc.Locations(where) : fdc.Locations(where).Select(l => JObject.Parse(l.Content)))
                 {
-                    var js = new JsonSerializer { Formatting = Formatting.Indented };
-                    var s2 = Stopwatch.StartNew();
-                    jtw.WriteStartArray();
-                    var i = 0;
-                    foreach (var jo in api ? fsc.Locations(where) : fdc.Locations(where).Select(l => JObject.Parse(l.Content)))
+                    if (validate)
                     {
-                        if (validate)
-                        {
-                            var vr = Location.ValidateContent(jo.ToString());
-                            if (vr != ValidationResult.Success) throw new ValidationException($"Location {jo["id"]}: {vr.ErrorMessage}");
-                        }
-                        js.Serialize(jtw, jo);
-                        if (++i % 10000 == 0)
-                        {
-                            traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
-                            s2.Restart();
-                        }
+                        var l = js4.Validate(jo);
+                        if (l.Any()) throw new ValidationException($"Location {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
                     }
-                    jtw.WriteEndArray();
-                    traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
-                    traceSource.TraceEvent(TraceEventType.Information, 0, $"Saved {i} locations");
+                    js.Serialize(jtw, jo);
+                    if (++i % 10000 == 0)
+                    {
+                        traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
+                        s2.Restart();
+                    }
                 }
+                jtw.WriteEndArray();
+                traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
+                traceSource.TraceEvent(TraceEventType.Information, 0, $"Saved {i} locations");
             }
             traceSource.TraceEvent(TraceEventType.Information, 0, $"{s.Elapsed} elapsed");
         }
@@ -3634,11 +3688,13 @@ namespace FolioConsoleApplication
             traceSource.TraceEvent(TraceEventType.Information, 0, "Loading logins");
             var s = Stopwatch.StartNew();
             using (var sr = new StreamReader(path))
+            using (var sr2 = new StreamReader(Assembly.GetAssembly(typeof(FolioContext)).GetManifestResourceStream("FolioLibrary.Login.json")))
             using (var jtr = new JsonTextReader(sr) { SupportMultipleContent = true })
             using (var fbcc = new FolioBulkCopyContext())
             using (var fsc = new FolioServiceClient())
             {
                 var s2 = Stopwatch.StartNew();
+                var js4 = JsonSchema4.FromJsonAsync(sr2.ReadToEndAsync().Result).Result;
                 var js = new JsonSerializer();
                 jtr.Read();
                 var i = 0;
@@ -3648,8 +3704,8 @@ namespace FolioConsoleApplication
                     var jo = (JObject)js.Deserialize(jtr);
                     if (validate)
                     {
-                        var vr = Login.ValidateContent(jo.ToString());
-                        if (vr != ValidationResult.Success) throw new ValidationException($"Login {jo["id"]}: {vr.ErrorMessage}");
+                        var l = js4.Validate(jo);
+                        if (l.Any()) throw new ValidationException($"Login {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
                     }
                     if (api)
                     {
@@ -3677,7 +3733,7 @@ namespace FolioConsoleApplication
                                 traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
                                 s2.Restart();
                             }
-                    }
+                        }
                     }
                 }
                 fbcc.Commit();
@@ -3693,32 +3749,32 @@ namespace FolioConsoleApplication
             var s = Stopwatch.StartNew();
             using (var fdc = new FolioDapperContext())
             using (var fsc = new FolioServiceClient())
+            using (var sr = new StreamReader(Assembly.GetAssembly(typeof(FolioContext)).GetManifestResourceStream("FolioLibrary.Login.json")))
+            using (var sw = new StreamWriter(path))
+            using (var jtw = new JsonTextWriter(sw))
             {
-                using (var sw = new StreamWriter(path))
-                using (var jtw = new JsonTextWriter(sw))
+                var s2 = Stopwatch.StartNew();
+                var js4 = JsonSchema4.FromJsonAsync(sr.ReadToEndAsync().Result).Result;
+                var js = new JsonSerializer { Formatting = Formatting.Indented };
+                jtw.WriteStartArray();
+                var i = 0;
+                foreach (var jo in api ? fsc.Logins(where) : fdc.Logins(where).Select(l => JObject.Parse(l.Content)))
                 {
-                    var js = new JsonSerializer { Formatting = Formatting.Indented };
-                    var s2 = Stopwatch.StartNew();
-                    jtw.WriteStartArray();
-                    var i = 0;
-                    foreach (var jo in api ? fsc.Logins(where) : fdc.Logins(where).Select(l => JObject.Parse(l.Content)))
+                    if (validate)
                     {
-                        if (validate)
-                        {
-                            var vr = Login.ValidateContent(jo.ToString());
-                            if (vr != ValidationResult.Success) throw new ValidationException($"Login {jo["id"]}: {vr.ErrorMessage}");
-                        }
-                        js.Serialize(jtw, jo);
-                        if (++i % 10000 == 0)
-                        {
-                            traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
-                            s2.Restart();
-                        }
+                        var l = js4.Validate(jo);
+                        if (l.Any()) throw new ValidationException($"Login {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
                     }
-                    jtw.WriteEndArray();
-                    traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
-                    traceSource.TraceEvent(TraceEventType.Information, 0, $"Saved {i} logins");
+                    js.Serialize(jtw, jo);
+                    if (++i % 10000 == 0)
+                    {
+                        traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
+                        s2.Restart();
+                    }
                 }
+                jtw.WriteEndArray();
+                traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
+                traceSource.TraceEvent(TraceEventType.Information, 0, $"Saved {i} logins");
             }
             traceSource.TraceEvent(TraceEventType.Information, 0, $"{s.Elapsed} elapsed");
         }
@@ -3759,11 +3815,13 @@ namespace FolioConsoleApplication
             traceSource.TraceEvent(TraceEventType.Information, 0, "Loading material types");
             var s = Stopwatch.StartNew();
             using (var sr = new StreamReader(path))
+            using (var sr2 = new StreamReader(Assembly.GetAssembly(typeof(FolioContext)).GetManifestResourceStream("FolioLibrary.MaterialType.json")))
             using (var jtr = new JsonTextReader(sr) { SupportMultipleContent = true })
             using (var fbcc = new FolioBulkCopyContext())
             using (var fsc = new FolioServiceClient())
             {
                 var s2 = Stopwatch.StartNew();
+                var js4 = JsonSchema4.FromJsonAsync(sr2.ReadToEndAsync().Result).Result;
                 var js = new JsonSerializer();
                 jtr.Read();
                 var i = 0;
@@ -3773,8 +3831,8 @@ namespace FolioConsoleApplication
                     var jo = (JObject)js.Deserialize(jtr);
                     if (validate)
                     {
-                        var vr = MaterialType.ValidateContent(jo.ToString());
-                        if (vr != ValidationResult.Success) throw new ValidationException($"MaterialType {jo["id"]}: {vr.ErrorMessage}");
+                        var l = js4.Validate(jo);
+                        if (l.Any()) throw new ValidationException($"MaterialType {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
                     }
                     if (api)
                     {
@@ -3802,7 +3860,7 @@ namespace FolioConsoleApplication
                                 traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
                                 s2.Restart();
                             }
-                    }
+                        }
                     }
                 }
                 fbcc.Commit();
@@ -3818,32 +3876,32 @@ namespace FolioConsoleApplication
             var s = Stopwatch.StartNew();
             using (var fdc = new FolioDapperContext())
             using (var fsc = new FolioServiceClient())
+            using (var sr = new StreamReader(Assembly.GetAssembly(typeof(FolioContext)).GetManifestResourceStream("FolioLibrary.MaterialType.json")))
+            using (var sw = new StreamWriter(path))
+            using (var jtw = new JsonTextWriter(sw))
             {
-                using (var sw = new StreamWriter(path))
-                using (var jtw = new JsonTextWriter(sw))
+                var s2 = Stopwatch.StartNew();
+                var js4 = JsonSchema4.FromJsonAsync(sr.ReadToEndAsync().Result).Result;
+                var js = new JsonSerializer { Formatting = Formatting.Indented };
+                jtw.WriteStartArray();
+                var i = 0;
+                foreach (var jo in api ? fsc.MaterialTypes(where) : fdc.MaterialTypes(where).Select(mt => JObject.Parse(mt.Content)))
                 {
-                    var js = new JsonSerializer { Formatting = Formatting.Indented };
-                    var s2 = Stopwatch.StartNew();
-                    jtw.WriteStartArray();
-                    var i = 0;
-                    foreach (var jo in api ? fsc.MaterialTypes(where) : fdc.MaterialTypes(where).Select(mt => JObject.Parse(mt.Content)))
+                    if (validate)
                     {
-                        if (validate)
-                        {
-                            var vr = MaterialType.ValidateContent(jo.ToString());
-                            if (vr != ValidationResult.Success) throw new ValidationException($"MaterialType {jo["id"]}: {vr.ErrorMessage}");
-                        }
-                        js.Serialize(jtw, jo);
-                        if (++i % 10000 == 0)
-                        {
-                            traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
-                            s2.Restart();
-                        }
+                        var l = js4.Validate(jo);
+                        if (l.Any()) throw new ValidationException($"MaterialType {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
                     }
-                    jtw.WriteEndArray();
-                    traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
-                    traceSource.TraceEvent(TraceEventType.Information, 0, $"Saved {i} material types");
+                    js.Serialize(jtw, jo);
+                    if (++i % 10000 == 0)
+                    {
+                        traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
+                        s2.Restart();
+                    }
                 }
+                jtw.WriteEndArray();
+                traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
+                traceSource.TraceEvent(TraceEventType.Information, 0, $"Saved {i} material types");
             }
             traceSource.TraceEvent(TraceEventType.Information, 0, $"{s.Elapsed} elapsed");
         }
@@ -3884,11 +3942,13 @@ namespace FolioConsoleApplication
             traceSource.TraceEvent(TraceEventType.Information, 0, "Loading mode of issuances");
             var s = Stopwatch.StartNew();
             using (var sr = new StreamReader(path))
+            using (var sr2 = new StreamReader(Assembly.GetAssembly(typeof(FolioContext)).GetManifestResourceStream("FolioLibrary.ModeOfIssuance.json")))
             using (var jtr = new JsonTextReader(sr) { SupportMultipleContent = true })
             using (var fbcc = new FolioBulkCopyContext())
             using (var fsc = new FolioServiceClient())
             {
                 var s2 = Stopwatch.StartNew();
+                var js4 = JsonSchema4.FromJsonAsync(sr2.ReadToEndAsync().Result).Result;
                 var js = new JsonSerializer();
                 jtr.Read();
                 var i = 0;
@@ -3898,8 +3958,8 @@ namespace FolioConsoleApplication
                     var jo = (JObject)js.Deserialize(jtr);
                     if (validate)
                     {
-                        var vr = ModeOfIssuance.ValidateContent(jo.ToString());
-                        if (vr != ValidationResult.Success) throw new ValidationException($"ModeOfIssuance {jo["id"]}: {vr.ErrorMessage}");
+                        var l = js4.Validate(jo);
+                        if (l.Any()) throw new ValidationException($"ModeOfIssuance {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
                     }
                     if (api)
                     {
@@ -3927,7 +3987,7 @@ namespace FolioConsoleApplication
                                 traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
                                 s2.Restart();
                             }
-                    }
+                        }
                     }
                 }
                 fbcc.Commit();
@@ -3943,32 +4003,32 @@ namespace FolioConsoleApplication
             var s = Stopwatch.StartNew();
             using (var fdc = new FolioDapperContext())
             using (var fsc = new FolioServiceClient())
+            using (var sr = new StreamReader(Assembly.GetAssembly(typeof(FolioContext)).GetManifestResourceStream("FolioLibrary.ModeOfIssuance.json")))
+            using (var sw = new StreamWriter(path))
+            using (var jtw = new JsonTextWriter(sw))
             {
-                using (var sw = new StreamWriter(path))
-                using (var jtw = new JsonTextWriter(sw))
+                var s2 = Stopwatch.StartNew();
+                var js4 = JsonSchema4.FromJsonAsync(sr.ReadToEndAsync().Result).Result;
+                var js = new JsonSerializer { Formatting = Formatting.Indented };
+                jtw.WriteStartArray();
+                var i = 0;
+                foreach (var jo in api ? fsc.ModeOfIssuances(where) : fdc.ModeOfIssuances(where).Select(moi => JObject.Parse(moi.Content)))
                 {
-                    var js = new JsonSerializer { Formatting = Formatting.Indented };
-                    var s2 = Stopwatch.StartNew();
-                    jtw.WriteStartArray();
-                    var i = 0;
-                    foreach (var jo in api ? fsc.ModeOfIssuances(where) : fdc.ModeOfIssuances(where).Select(moi => JObject.Parse(moi.Content)))
+                    if (validate)
                     {
-                        if (validate)
-                        {
-                            var vr = ModeOfIssuance.ValidateContent(jo.ToString());
-                            if (vr != ValidationResult.Success) throw new ValidationException($"ModeOfIssuance {jo["id"]}: {vr.ErrorMessage}");
-                        }
-                        js.Serialize(jtw, jo);
-                        if (++i % 10000 == 0)
-                        {
-                            traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
-                            s2.Restart();
-                        }
+                        var l = js4.Validate(jo);
+                        if (l.Any()) throw new ValidationException($"ModeOfIssuance {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
                     }
-                    jtw.WriteEndArray();
-                    traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
-                    traceSource.TraceEvent(TraceEventType.Information, 0, $"Saved {i} mode of issuances");
+                    js.Serialize(jtw, jo);
+                    if (++i % 10000 == 0)
+                    {
+                        traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
+                        s2.Restart();
+                    }
                 }
+                jtw.WriteEndArray();
+                traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
+                traceSource.TraceEvent(TraceEventType.Information, 0, $"Saved {i} mode of issuances");
             }
             traceSource.TraceEvent(TraceEventType.Information, 0, $"{s.Elapsed} elapsed");
         }
@@ -4009,11 +4069,13 @@ namespace FolioConsoleApplication
             traceSource.TraceEvent(TraceEventType.Information, 0, "Loading permissions");
             var s = Stopwatch.StartNew();
             using (var sr = new StreamReader(path))
+            using (var sr2 = new StreamReader(Assembly.GetAssembly(typeof(FolioContext)).GetManifestResourceStream("FolioLibrary.Permission.json")))
             using (var jtr = new JsonTextReader(sr) { SupportMultipleContent = true })
             using (var fbcc = new FolioBulkCopyContext())
             using (var fsc = new FolioServiceClient())
             {
                 var s2 = Stopwatch.StartNew();
+                var js4 = JsonSchema4.FromJsonAsync(sr2.ReadToEndAsync().Result).Result;
                 var js = new JsonSerializer();
                 jtr.Read();
                 var i = 0;
@@ -4023,8 +4085,8 @@ namespace FolioConsoleApplication
                     var jo = (JObject)js.Deserialize(jtr);
                     if (validate)
                     {
-                        var vr = Permission.ValidateContent(jo.ToString());
-                        if (vr != ValidationResult.Success) throw new ValidationException($"Permission {jo["id"]}: {vr.ErrorMessage}");
+                        var l = js4.Validate(jo);
+                        if (l.Any()) throw new ValidationException($"Permission {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
                     }
                     if (api)
                     {
@@ -4052,7 +4114,7 @@ namespace FolioConsoleApplication
                                 traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
                                 s2.Restart();
                             }
-                    }
+                        }
                     }
                 }
                 fbcc.Commit();
@@ -4068,32 +4130,32 @@ namespace FolioConsoleApplication
             var s = Stopwatch.StartNew();
             using (var fdc = new FolioDapperContext())
             using (var fsc = new FolioServiceClient())
+            using (var sr = new StreamReader(Assembly.GetAssembly(typeof(FolioContext)).GetManifestResourceStream("FolioLibrary.Permission.json")))
+            using (var sw = new StreamWriter(path))
+            using (var jtw = new JsonTextWriter(sw))
             {
-                using (var sw = new StreamWriter(path))
-                using (var jtw = new JsonTextWriter(sw))
+                var s2 = Stopwatch.StartNew();
+                var js4 = JsonSchema4.FromJsonAsync(sr.ReadToEndAsync().Result).Result;
+                var js = new JsonSerializer { Formatting = Formatting.Indented };
+                jtw.WriteStartArray();
+                var i = 0;
+                foreach (var jo in api ? fsc.Permissions(where) : fdc.Permissions(where).Select(p => JObject.Parse(p.Content)))
                 {
-                    var js = new JsonSerializer { Formatting = Formatting.Indented };
-                    var s2 = Stopwatch.StartNew();
-                    jtw.WriteStartArray();
-                    var i = 0;
-                    foreach (var jo in api ? fsc.Permissions(where) : fdc.Permissions(where).Select(p => JObject.Parse(p.Content)))
+                    if (validate)
                     {
-                        if (validate)
-                        {
-                            var vr = Permission.ValidateContent(jo.ToString());
-                            if (vr != ValidationResult.Success) throw new ValidationException($"Permission {jo["id"]}: {vr.ErrorMessage}");
-                        }
-                        js.Serialize(jtw, jo);
-                        if (++i % 10000 == 0)
-                        {
-                            traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
-                            s2.Restart();
-                        }
+                        var l = js4.Validate(jo);
+                        if (l.Any()) throw new ValidationException($"Permission {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
                     }
-                    jtw.WriteEndArray();
-                    traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
-                    traceSource.TraceEvent(TraceEventType.Information, 0, $"Saved {i} permissions");
+                    js.Serialize(jtw, jo);
+                    if (++i % 10000 == 0)
+                    {
+                        traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
+                        s2.Restart();
+                    }
                 }
+                jtw.WriteEndArray();
+                traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
+                traceSource.TraceEvent(TraceEventType.Information, 0, $"Saved {i} permissions");
             }
             traceSource.TraceEvent(TraceEventType.Information, 0, $"{s.Elapsed} elapsed");
         }
@@ -4134,11 +4196,13 @@ namespace FolioConsoleApplication
             traceSource.TraceEvent(TraceEventType.Information, 0, "Loading permissions users");
             var s = Stopwatch.StartNew();
             using (var sr = new StreamReader(path))
+            using (var sr2 = new StreamReader(Assembly.GetAssembly(typeof(FolioContext)).GetManifestResourceStream("FolioLibrary.PermissionsUser.json")))
             using (var jtr = new JsonTextReader(sr) { SupportMultipleContent = true })
             using (var fbcc = new FolioBulkCopyContext())
             using (var fsc = new FolioServiceClient())
             {
                 var s2 = Stopwatch.StartNew();
+                var js4 = JsonSchema4.FromJsonAsync(sr2.ReadToEndAsync().Result).Result;
                 var js = new JsonSerializer();
                 jtr.Read();
                 var i = 0;
@@ -4148,8 +4212,8 @@ namespace FolioConsoleApplication
                     var jo = (JObject)js.Deserialize(jtr);
                     if (validate)
                     {
-                        var vr = PermissionsUser.ValidateContent(jo.ToString());
-                        if (vr != ValidationResult.Success) throw new ValidationException($"PermissionsUser {jo["id"]}: {vr.ErrorMessage}");
+                        var l = js4.Validate(jo);
+                        if (l.Any()) throw new ValidationException($"PermissionsUser {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
                     }
                     if (api)
                     {
@@ -4177,7 +4241,7 @@ namespace FolioConsoleApplication
                                 traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
                                 s2.Restart();
                             }
-                    }
+                        }
                     }
                 }
                 fbcc.Commit();
@@ -4193,32 +4257,32 @@ namespace FolioConsoleApplication
             var s = Stopwatch.StartNew();
             using (var fdc = new FolioDapperContext())
             using (var fsc = new FolioServiceClient())
+            using (var sr = new StreamReader(Assembly.GetAssembly(typeof(FolioContext)).GetManifestResourceStream("FolioLibrary.PermissionsUser.json")))
+            using (var sw = new StreamWriter(path))
+            using (var jtw = new JsonTextWriter(sw))
             {
-                using (var sw = new StreamWriter(path))
-                using (var jtw = new JsonTextWriter(sw))
+                var s2 = Stopwatch.StartNew();
+                var js4 = JsonSchema4.FromJsonAsync(sr.ReadToEndAsync().Result).Result;
+                var js = new JsonSerializer { Formatting = Formatting.Indented };
+                jtw.WriteStartArray();
+                var i = 0;
+                foreach (var jo in api ? fsc.PermissionsUsers(where) : fdc.PermissionsUsers(where).Select(pu => JObject.Parse(pu.Content)))
                 {
-                    var js = new JsonSerializer { Formatting = Formatting.Indented };
-                    var s2 = Stopwatch.StartNew();
-                    jtw.WriteStartArray();
-                    var i = 0;
-                    foreach (var jo in api ? fsc.PermissionsUsers(where) : fdc.PermissionsUsers(where).Select(pu => JObject.Parse(pu.Content)))
+                    if (validate)
                     {
-                        if (validate)
-                        {
-                            var vr = PermissionsUser.ValidateContent(jo.ToString());
-                            if (vr != ValidationResult.Success) throw new ValidationException($"PermissionsUser {jo["id"]}: {vr.ErrorMessage}");
-                        }
-                        js.Serialize(jtw, jo);
-                        if (++i % 10000 == 0)
-                        {
-                            traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
-                            s2.Restart();
-                        }
+                        var l = js4.Validate(jo);
+                        if (l.Any()) throw new ValidationException($"PermissionsUser {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
                     }
-                    jtw.WriteEndArray();
-                    traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
-                    traceSource.TraceEvent(TraceEventType.Information, 0, $"Saved {i} permissions users");
+                    js.Serialize(jtw, jo);
+                    if (++i % 10000 == 0)
+                    {
+                        traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
+                        s2.Restart();
+                    }
                 }
+                jtw.WriteEndArray();
+                traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
+                traceSource.TraceEvent(TraceEventType.Information, 0, $"Saved {i} permissions users");
             }
             traceSource.TraceEvent(TraceEventType.Information, 0, $"{s.Elapsed} elapsed");
         }
@@ -4259,11 +4323,13 @@ namespace FolioConsoleApplication
             traceSource.TraceEvent(TraceEventType.Information, 0, "Loading proxies");
             var s = Stopwatch.StartNew();
             using (var sr = new StreamReader(path))
+            using (var sr2 = new StreamReader(Assembly.GetAssembly(typeof(FolioContext)).GetManifestResourceStream("FolioLibrary.Proxy.json")))
             using (var jtr = new JsonTextReader(sr) { SupportMultipleContent = true })
             using (var fbcc = new FolioBulkCopyContext())
             using (var fsc = new FolioServiceClient())
             {
                 var s2 = Stopwatch.StartNew();
+                var js4 = JsonSchema4.FromJsonAsync(sr2.ReadToEndAsync().Result).Result;
                 var js = new JsonSerializer();
                 jtr.Read();
                 var i = 0;
@@ -4273,8 +4339,8 @@ namespace FolioConsoleApplication
                     var jo = (JObject)js.Deserialize(jtr);
                     if (validate)
                     {
-                        var vr = Proxy.ValidateContent(jo.ToString());
-                        if (vr != ValidationResult.Success) throw new ValidationException($"Proxy {jo["id"]}: {vr.ErrorMessage}");
+                        var l = js4.Validate(jo);
+                        if (l.Any()) throw new ValidationException($"Proxy {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
                     }
                     if (api)
                     {
@@ -4302,7 +4368,7 @@ namespace FolioConsoleApplication
                                 traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
                                 s2.Restart();
                             }
-                    }
+                        }
                     }
                 }
                 fbcc.Commit();
@@ -4318,32 +4384,32 @@ namespace FolioConsoleApplication
             var s = Stopwatch.StartNew();
             using (var fdc = new FolioDapperContext())
             using (var fsc = new FolioServiceClient())
+            using (var sr = new StreamReader(Assembly.GetAssembly(typeof(FolioContext)).GetManifestResourceStream("FolioLibrary.Proxy.json")))
+            using (var sw = new StreamWriter(path))
+            using (var jtw = new JsonTextWriter(sw))
             {
-                using (var sw = new StreamWriter(path))
-                using (var jtw = new JsonTextWriter(sw))
+                var s2 = Stopwatch.StartNew();
+                var js4 = JsonSchema4.FromJsonAsync(sr.ReadToEndAsync().Result).Result;
+                var js = new JsonSerializer { Formatting = Formatting.Indented };
+                jtw.WriteStartArray();
+                var i = 0;
+                foreach (var jo in api ? fsc.Proxies(where) : fdc.Proxies(where).Select(p => JObject.Parse(p.Content)))
                 {
-                    var js = new JsonSerializer { Formatting = Formatting.Indented };
-                    var s2 = Stopwatch.StartNew();
-                    jtw.WriteStartArray();
-                    var i = 0;
-                    foreach (var jo in api ? fsc.Proxies(where) : fdc.Proxies(where).Select(p => JObject.Parse(p.Content)))
+                    if (validate)
                     {
-                        if (validate)
-                        {
-                            var vr = Proxy.ValidateContent(jo.ToString());
-                            if (vr != ValidationResult.Success) throw new ValidationException($"Proxy {jo["id"]}: {vr.ErrorMessage}");
-                        }
-                        js.Serialize(jtw, jo);
-                        if (++i % 10000 == 0)
-                        {
-                            traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
-                            s2.Restart();
-                        }
+                        var l = js4.Validate(jo);
+                        if (l.Any()) throw new ValidationException($"Proxy {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
                     }
-                    jtw.WriteEndArray();
-                    traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
-                    traceSource.TraceEvent(TraceEventType.Information, 0, $"Saved {i} proxies");
+                    js.Serialize(jtw, jo);
+                    if (++i % 10000 == 0)
+                    {
+                        traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
+                        s2.Restart();
+                    }
                 }
+                jtw.WriteEndArray();
+                traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
+                traceSource.TraceEvent(TraceEventType.Information, 0, $"Saved {i} proxies");
             }
             traceSource.TraceEvent(TraceEventType.Information, 0, $"{s.Elapsed} elapsed");
         }
@@ -4384,11 +4450,13 @@ namespace FolioConsoleApplication
             traceSource.TraceEvent(TraceEventType.Information, 0, "Loading service points");
             var s = Stopwatch.StartNew();
             using (var sr = new StreamReader(path))
+            using (var sr2 = new StreamReader(Assembly.GetAssembly(typeof(FolioContext)).GetManifestResourceStream("FolioLibrary.ServicePoint.json")))
             using (var jtr = new JsonTextReader(sr) { SupportMultipleContent = true })
             using (var fbcc = new FolioBulkCopyContext())
             using (var fsc = new FolioServiceClient())
             {
                 var s2 = Stopwatch.StartNew();
+                var js4 = JsonSchema4.FromJsonAsync(sr2.ReadToEndAsync().Result).Result;
                 var js = new JsonSerializer();
                 jtr.Read();
                 var i = 0;
@@ -4398,8 +4466,8 @@ namespace FolioConsoleApplication
                     var jo = (JObject)js.Deserialize(jtr);
                     if (validate)
                     {
-                        var vr = ServicePoint.ValidateContent(jo.ToString());
-                        if (vr != ValidationResult.Success) throw new ValidationException($"ServicePoint {jo["id"]}: {vr.ErrorMessage}");
+                        var l = js4.Validate(jo);
+                        if (l.Any()) throw new ValidationException($"ServicePoint {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
                     }
                     if (api)
                     {
@@ -4427,7 +4495,7 @@ namespace FolioConsoleApplication
                                 traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
                                 s2.Restart();
                             }
-                    }
+                        }
                     }
                 }
                 fbcc.Commit();
@@ -4443,32 +4511,32 @@ namespace FolioConsoleApplication
             var s = Stopwatch.StartNew();
             using (var fdc = new FolioDapperContext())
             using (var fsc = new FolioServiceClient())
+            using (var sr = new StreamReader(Assembly.GetAssembly(typeof(FolioContext)).GetManifestResourceStream("FolioLibrary.ServicePoint.json")))
+            using (var sw = new StreamWriter(path))
+            using (var jtw = new JsonTextWriter(sw))
             {
-                using (var sw = new StreamWriter(path))
-                using (var jtw = new JsonTextWriter(sw))
+                var s2 = Stopwatch.StartNew();
+                var js4 = JsonSchema4.FromJsonAsync(sr.ReadToEndAsync().Result).Result;
+                var js = new JsonSerializer { Formatting = Formatting.Indented };
+                jtw.WriteStartArray();
+                var i = 0;
+                foreach (var jo in api ? fsc.ServicePoints(where) : fdc.ServicePoints(where).Select(sp => JObject.Parse(sp.Content)))
                 {
-                    var js = new JsonSerializer { Formatting = Formatting.Indented };
-                    var s2 = Stopwatch.StartNew();
-                    jtw.WriteStartArray();
-                    var i = 0;
-                    foreach (var jo in api ? fsc.ServicePoints(where) : fdc.ServicePoints(where).Select(sp => JObject.Parse(sp.Content)))
+                    if (validate)
                     {
-                        if (validate)
-                        {
-                            var vr = ServicePoint.ValidateContent(jo.ToString());
-                            if (vr != ValidationResult.Success) throw new ValidationException($"ServicePoint {jo["id"]}: {vr.ErrorMessage}");
-                        }
-                        js.Serialize(jtw, jo);
-                        if (++i % 10000 == 0)
-                        {
-                            traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
-                            s2.Restart();
-                        }
+                        var l = js4.Validate(jo);
+                        if (l.Any()) throw new ValidationException($"ServicePoint {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
                     }
-                    jtw.WriteEndArray();
-                    traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
-                    traceSource.TraceEvent(TraceEventType.Information, 0, $"Saved {i} service points");
+                    js.Serialize(jtw, jo);
+                    if (++i % 10000 == 0)
+                    {
+                        traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
+                        s2.Restart();
+                    }
                 }
+                jtw.WriteEndArray();
+                traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
+                traceSource.TraceEvent(TraceEventType.Information, 0, $"Saved {i} service points");
             }
             traceSource.TraceEvent(TraceEventType.Information, 0, $"{s.Elapsed} elapsed");
         }
@@ -4509,11 +4577,13 @@ namespace FolioConsoleApplication
             traceSource.TraceEvent(TraceEventType.Information, 0, "Loading service point users");
             var s = Stopwatch.StartNew();
             using (var sr = new StreamReader(path))
+            using (var sr2 = new StreamReader(Assembly.GetAssembly(typeof(FolioContext)).GetManifestResourceStream("FolioLibrary.ServicePointUser.json")))
             using (var jtr = new JsonTextReader(sr) { SupportMultipleContent = true })
             using (var fbcc = new FolioBulkCopyContext())
             using (var fsc = new FolioServiceClient())
             {
                 var s2 = Stopwatch.StartNew();
+                var js4 = JsonSchema4.FromJsonAsync(sr2.ReadToEndAsync().Result).Result;
                 var js = new JsonSerializer();
                 jtr.Read();
                 var i = 0;
@@ -4523,8 +4593,8 @@ namespace FolioConsoleApplication
                     var jo = (JObject)js.Deserialize(jtr);
                     if (validate)
                     {
-                        var vr = ServicePointUser.ValidateContent(jo.ToString());
-                        if (vr != ValidationResult.Success) throw new ValidationException($"ServicePointUser {jo["id"]}: {vr.ErrorMessage}");
+                        var l = js4.Validate(jo);
+                        if (l.Any()) throw new ValidationException($"ServicePointUser {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
                     }
                     if (api)
                     {
@@ -4553,7 +4623,7 @@ namespace FolioConsoleApplication
                                 traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
                                 s2.Restart();
                             }
-                    }
+                        }
                     }
                 }
                 fbcc.Commit();
@@ -4569,32 +4639,32 @@ namespace FolioConsoleApplication
             var s = Stopwatch.StartNew();
             using (var fdc = new FolioDapperContext())
             using (var fsc = new FolioServiceClient())
+            using (var sr = new StreamReader(Assembly.GetAssembly(typeof(FolioContext)).GetManifestResourceStream("FolioLibrary.ServicePointUser.json")))
+            using (var sw = new StreamWriter(path))
+            using (var jtw = new JsonTextWriter(sw))
             {
-                using (var sw = new StreamWriter(path))
-                using (var jtw = new JsonTextWriter(sw))
+                var s2 = Stopwatch.StartNew();
+                var js4 = JsonSchema4.FromJsonAsync(sr.ReadToEndAsync().Result).Result;
+                var js = new JsonSerializer { Formatting = Formatting.Indented };
+                jtw.WriteStartArray();
+                var i = 0;
+                foreach (var jo in api ? fsc.ServicePointUsers(where) : fdc.ServicePointUsers(where).Select(spu => JObject.Parse(spu.Content)))
                 {
-                    var js = new JsonSerializer { Formatting = Formatting.Indented };
-                    var s2 = Stopwatch.StartNew();
-                    jtw.WriteStartArray();
-                    var i = 0;
-                    foreach (var jo in api ? fsc.ServicePointUsers(where) : fdc.ServicePointUsers(where).Select(spu => JObject.Parse(spu.Content)))
+                    if (validate)
                     {
-                        if (validate)
-                        {
-                            var vr = ServicePointUser.ValidateContent(jo.ToString());
-                            if (vr != ValidationResult.Success) throw new ValidationException($"ServicePointUser {jo["id"]}: {vr.ErrorMessage}");
-                        }
-                        js.Serialize(jtw, jo);
-                        if (++i % 10000 == 0)
-                        {
-                            traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
-                            s2.Restart();
-                        }
+                        var l = js4.Validate(jo);
+                        if (l.Any()) throw new ValidationException($"ServicePointUser {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
                     }
-                    jtw.WriteEndArray();
-                    traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
-                    traceSource.TraceEvent(TraceEventType.Information, 0, $"Saved {i} service point users");
+                    js.Serialize(jtw, jo);
+                    if (++i % 10000 == 0)
+                    {
+                        traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
+                        s2.Restart();
+                    }
                 }
+                jtw.WriteEndArray();
+                traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
+                traceSource.TraceEvent(TraceEventType.Information, 0, $"Saved {i} service point users");
             }
             traceSource.TraceEvent(TraceEventType.Information, 0, $"{s.Elapsed} elapsed");
         }
@@ -4635,11 +4705,13 @@ namespace FolioConsoleApplication
             traceSource.TraceEvent(TraceEventType.Information, 0, "Loading statistical codes");
             var s = Stopwatch.StartNew();
             using (var sr = new StreamReader(path))
+            using (var sr2 = new StreamReader(Assembly.GetAssembly(typeof(FolioContext)).GetManifestResourceStream("FolioLibrary.StatisticalCode.json")))
             using (var jtr = new JsonTextReader(sr) { SupportMultipleContent = true })
             using (var fbcc = new FolioBulkCopyContext())
             using (var fsc = new FolioServiceClient())
             {
                 var s2 = Stopwatch.StartNew();
+                var js4 = JsonSchema4.FromJsonAsync(sr2.ReadToEndAsync().Result).Result;
                 var js = new JsonSerializer();
                 jtr.Read();
                 var i = 0;
@@ -4649,8 +4721,8 @@ namespace FolioConsoleApplication
                     var jo = (JObject)js.Deserialize(jtr);
                     if (validate)
                     {
-                        var vr = StatisticalCode.ValidateContent(jo.ToString());
-                        if (vr != ValidationResult.Success) throw new ValidationException($"StatisticalCode {jo["id"]}: {vr.ErrorMessage}");
+                        var l = js4.Validate(jo);
+                        if (l.Any()) throw new ValidationException($"StatisticalCode {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
                     }
                     if (api)
                     {
@@ -4679,7 +4751,7 @@ namespace FolioConsoleApplication
                                 traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
                                 s2.Restart();
                             }
-                    }
+                        }
                     }
                 }
                 fbcc.Commit();
@@ -4695,32 +4767,32 @@ namespace FolioConsoleApplication
             var s = Stopwatch.StartNew();
             using (var fdc = new FolioDapperContext())
             using (var fsc = new FolioServiceClient())
+            using (var sr = new StreamReader(Assembly.GetAssembly(typeof(FolioContext)).GetManifestResourceStream("FolioLibrary.StatisticalCode.json")))
+            using (var sw = new StreamWriter(path))
+            using (var jtw = new JsonTextWriter(sw))
             {
-                using (var sw = new StreamWriter(path))
-                using (var jtw = new JsonTextWriter(sw))
+                var s2 = Stopwatch.StartNew();
+                var js4 = JsonSchema4.FromJsonAsync(sr.ReadToEndAsync().Result).Result;
+                var js = new JsonSerializer { Formatting = Formatting.Indented };
+                jtw.WriteStartArray();
+                var i = 0;
+                foreach (var jo in api ? fsc.StatisticalCodes(where) : fdc.StatisticalCodes(where).Select(sc => JObject.Parse(sc.Content)))
                 {
-                    var js = new JsonSerializer { Formatting = Formatting.Indented };
-                    var s2 = Stopwatch.StartNew();
-                    jtw.WriteStartArray();
-                    var i = 0;
-                    foreach (var jo in api ? fsc.StatisticalCodes(where) : fdc.StatisticalCodes(where).Select(sc => JObject.Parse(sc.Content)))
+                    if (validate)
                     {
-                        if (validate)
-                        {
-                            var vr = StatisticalCode.ValidateContent(jo.ToString());
-                            if (vr != ValidationResult.Success) throw new ValidationException($"StatisticalCode {jo["id"]}: {vr.ErrorMessage}");
-                        }
-                        js.Serialize(jtw, jo);
-                        if (++i % 10000 == 0)
-                        {
-                            traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
-                            s2.Restart();
-                        }
+                        var l = js4.Validate(jo);
+                        if (l.Any()) throw new ValidationException($"StatisticalCode {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
                     }
-                    jtw.WriteEndArray();
-                    traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
-                    traceSource.TraceEvent(TraceEventType.Information, 0, $"Saved {i} statistical codes");
+                    js.Serialize(jtw, jo);
+                    if (++i % 10000 == 0)
+                    {
+                        traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
+                        s2.Restart();
+                    }
                 }
+                jtw.WriteEndArray();
+                traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
+                traceSource.TraceEvent(TraceEventType.Information, 0, $"Saved {i} statistical codes");
             }
             traceSource.TraceEvent(TraceEventType.Information, 0, $"{s.Elapsed} elapsed");
         }
@@ -4761,11 +4833,13 @@ namespace FolioConsoleApplication
             traceSource.TraceEvent(TraceEventType.Information, 0, "Loading statistical code types");
             var s = Stopwatch.StartNew();
             using (var sr = new StreamReader(path))
+            using (var sr2 = new StreamReader(Assembly.GetAssembly(typeof(FolioContext)).GetManifestResourceStream("FolioLibrary.StatisticalCodeType.json")))
             using (var jtr = new JsonTextReader(sr) { SupportMultipleContent = true })
             using (var fbcc = new FolioBulkCopyContext())
             using (var fsc = new FolioServiceClient())
             {
                 var s2 = Stopwatch.StartNew();
+                var js4 = JsonSchema4.FromJsonAsync(sr2.ReadToEndAsync().Result).Result;
                 var js = new JsonSerializer();
                 jtr.Read();
                 var i = 0;
@@ -4775,8 +4849,8 @@ namespace FolioConsoleApplication
                     var jo = (JObject)js.Deserialize(jtr);
                     if (validate)
                     {
-                        var vr = StatisticalCodeType.ValidateContent(jo.ToString());
-                        if (vr != ValidationResult.Success) throw new ValidationException($"StatisticalCodeType {jo["id"]}: {vr.ErrorMessage}");
+                        var l = js4.Validate(jo);
+                        if (l.Any()) throw new ValidationException($"StatisticalCodeType {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
                     }
                     if (api)
                     {
@@ -4804,7 +4878,7 @@ namespace FolioConsoleApplication
                                 traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
                                 s2.Restart();
                             }
-                    }
+                        }
                     }
                 }
                 fbcc.Commit();
@@ -4820,32 +4894,32 @@ namespace FolioConsoleApplication
             var s = Stopwatch.StartNew();
             using (var fdc = new FolioDapperContext())
             using (var fsc = new FolioServiceClient())
+            using (var sr = new StreamReader(Assembly.GetAssembly(typeof(FolioContext)).GetManifestResourceStream("FolioLibrary.StatisticalCodeType.json")))
+            using (var sw = new StreamWriter(path))
+            using (var jtw = new JsonTextWriter(sw))
             {
-                using (var sw = new StreamWriter(path))
-                using (var jtw = new JsonTextWriter(sw))
+                var s2 = Stopwatch.StartNew();
+                var js4 = JsonSchema4.FromJsonAsync(sr.ReadToEndAsync().Result).Result;
+                var js = new JsonSerializer { Formatting = Formatting.Indented };
+                jtw.WriteStartArray();
+                var i = 0;
+                foreach (var jo in api ? fsc.StatisticalCodeTypes(where) : fdc.StatisticalCodeTypes(where).Select(sct => JObject.Parse(sct.Content)))
                 {
-                    var js = new JsonSerializer { Formatting = Formatting.Indented };
-                    var s2 = Stopwatch.StartNew();
-                    jtw.WriteStartArray();
-                    var i = 0;
-                    foreach (var jo in api ? fsc.StatisticalCodeTypes(where) : fdc.StatisticalCodeTypes(where).Select(sct => JObject.Parse(sct.Content)))
+                    if (validate)
                     {
-                        if (validate)
-                        {
-                            var vr = StatisticalCodeType.ValidateContent(jo.ToString());
-                            if (vr != ValidationResult.Success) throw new ValidationException($"StatisticalCodeType {jo["id"]}: {vr.ErrorMessage}");
-                        }
-                        js.Serialize(jtw, jo);
-                        if (++i % 10000 == 0)
-                        {
-                            traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
-                            s2.Restart();
-                        }
+                        var l = js4.Validate(jo);
+                        if (l.Any()) throw new ValidationException($"StatisticalCodeType {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
                     }
-                    jtw.WriteEndArray();
-                    traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
-                    traceSource.TraceEvent(TraceEventType.Information, 0, $"Saved {i} statistical code types");
+                    js.Serialize(jtw, jo);
+                    if (++i % 10000 == 0)
+                    {
+                        traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
+                        s2.Restart();
+                    }
                 }
+                jtw.WriteEndArray();
+                traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
+                traceSource.TraceEvent(TraceEventType.Information, 0, $"Saved {i} statistical code types");
             }
             traceSource.TraceEvent(TraceEventType.Information, 0, $"{s.Elapsed} elapsed");
         }
@@ -4886,11 +4960,13 @@ namespace FolioConsoleApplication
             traceSource.TraceEvent(TraceEventType.Information, 0, "Loading users");
             var s = Stopwatch.StartNew();
             using (var sr = new StreamReader(path))
+            using (var sr2 = new StreamReader(Assembly.GetAssembly(typeof(FolioContext)).GetManifestResourceStream("FolioLibrary.User.json")))
             using (var jtr = new JsonTextReader(sr) { SupportMultipleContent = true })
             using (var fbcc = new FolioBulkCopyContext())
             using (var fsc = new FolioServiceClient())
             {
                 var s2 = Stopwatch.StartNew();
+                var js4 = JsonSchema4.FromJsonAsync(sr2.ReadToEndAsync().Result).Result;
                 var js = new JsonSerializer();
                 jtr.Read();
                 var i = 0;
@@ -4900,8 +4976,8 @@ namespace FolioConsoleApplication
                     var jo = (JObject)js.Deserialize(jtr);
                     if (validate)
                     {
-                        var vr = User.ValidateContent(jo.ToString());
-                        if (vr != ValidationResult.Success) throw new ValidationException($"User {jo["id"]}: {vr.ErrorMessage}");
+                        var l = js4.Validate(jo);
+                        if (l.Any()) throw new ValidationException($"User {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
                     }
                     if (api)
                     {
@@ -4929,7 +5005,7 @@ namespace FolioConsoleApplication
                                 traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
                                 s2.Restart();
                             }
-                    }
+                        }
                     }
                 }
                 fbcc.Commit();
@@ -4945,32 +5021,32 @@ namespace FolioConsoleApplication
             var s = Stopwatch.StartNew();
             using (var fdc = new FolioDapperContext())
             using (var fsc = new FolioServiceClient())
+            using (var sr = new StreamReader(Assembly.GetAssembly(typeof(FolioContext)).GetManifestResourceStream("FolioLibrary.User.json")))
+            using (var sw = new StreamWriter(path))
+            using (var jtw = new JsonTextWriter(sw))
             {
-                using (var sw = new StreamWriter(path))
-                using (var jtw = new JsonTextWriter(sw))
+                var s2 = Stopwatch.StartNew();
+                var js4 = JsonSchema4.FromJsonAsync(sr.ReadToEndAsync().Result).Result;
+                var js = new JsonSerializer { Formatting = Formatting.Indented };
+                jtw.WriteStartArray();
+                var i = 0;
+                foreach (var jo in api ? fsc.Users(where) : fdc.Users(where).Select(u => JObject.Parse(u.Content)))
                 {
-                    var js = new JsonSerializer { Formatting = Formatting.Indented };
-                    var s2 = Stopwatch.StartNew();
-                    jtw.WriteStartArray();
-                    var i = 0;
-                    foreach (var jo in api ? fsc.Users(where) : fdc.Users(where).Select(u => JObject.Parse(u.Content)))
+                    if (validate)
                     {
-                        if (validate)
-                        {
-                            var vr = User.ValidateContent(jo.ToString());
-                            if (vr != ValidationResult.Success) throw new ValidationException($"User {jo["id"]}: {vr.ErrorMessage}");
-                        }
-                        js.Serialize(jtw, jo);
-                        if (++i % 10000 == 0)
-                        {
-                            traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
-                            s2.Restart();
-                        }
+                        var l = js4.Validate(jo);
+                        if (l.Any()) throw new ValidationException($"User {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
                     }
-                    jtw.WriteEndArray();
-                    traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
-                    traceSource.TraceEvent(TraceEventType.Information, 0, $"Saved {i} users");
+                    js.Serialize(jtw, jo);
+                    if (++i % 10000 == 0)
+                    {
+                        traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
+                        s2.Restart();
+                    }
                 }
+                jtw.WriteEndArray();
+                traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
+                traceSource.TraceEvent(TraceEventType.Information, 0, $"Saved {i} users");
             }
             traceSource.TraceEvent(TraceEventType.Information, 0, $"{s.Elapsed} elapsed");
         }

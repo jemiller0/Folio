@@ -1,9 +1,9 @@
-using Newtonsoft.Json;
-using Newtonsoft.Json.Schema;
+using NJsonSchema;
 using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.IO;
+using System.Linq;
 using System.Reflection;
 
 namespace FolioLibrary
@@ -13,25 +13,11 @@ namespace FolioLibrary
     {
         public static ValidationResult ValidateContent(string value)
         {
-            using (var sr = new StringReader(value))
-            using (var jtr = new JsonTextReader(sr))
-            using (var sr2 = new StreamReader(Assembly.GetExecutingAssembly().GetManifestResourceStream("FolioLibrary.Adjustment.json")))
-            using (var jtr2 = new JsonTextReader(sr2))
-            using (var jsvr = new JSchemaValidatingReader(jtr))
-            using (var sw = new StringWriter())
+            using (var sr = new StreamReader(Assembly.GetExecutingAssembly().GetManifestResourceStream("FolioLibrary.Adjustment.json")))
             {
-                jsvr.Schema = JSchema.Load(jtr2);
-                jsvr.ValidationEventHandler += (sender, e) => sw.WriteLine(e.Message);
-                try
-                {
-                    while (jsvr.Read()) ;
-                    var s = sw.ToString();
-                    if (s.Length != 0) return new ValidationResult($"The Content field is invalid. {s}", new[] { "Content" });
-                }
-                catch (Exception e)
-                {
-                    return new ValidationResult($"The Content field is invalid. {e.Message}", new[] { "Content" });
-                }
+                var js = JsonSchema4.FromJsonAsync(sr.ReadToEndAsync().Result).Result;
+                var l = js.Validate(value);
+                if (l.Any()) return new ValidationResult($"The Content field is invalid. {string.Join(" ", l.Select(ve => ve.ToString()))}", new[] { "Content" });
             }
             return ValidationResult.Success;
         }
