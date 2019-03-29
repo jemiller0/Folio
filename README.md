@@ -1,8 +1,8 @@
-# Folio command-line import/export utility
+# Folio console application
 
 ## Description
 
-This project includes a command-line application that can be used to load and save data to and from a FOLIO database to JSON files. The data can be loaded and saved using either the FOLIO web API or using the PostgreSQL COPY command.
+This project includes a console application that can be used to load and save data to and from a FOLIO database to JSON files. The data can be loaded and saved using either the FOLIO web API or using the PostgreSQL COPY command.
 
 ## Requirements
 
