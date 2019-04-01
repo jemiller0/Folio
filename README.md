@@ -1,7 +1,7 @@
 # Folio console application
 
 ## Description
-
+ 
 This project includes a console application that can be used to load and save data to and from a FOLIO database to JSON files. The data can be loaded and saved using SQL or the FOLIO web API.
 
 ## Requirements
