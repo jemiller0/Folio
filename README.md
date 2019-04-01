@@ -167,5 +167,11 @@ FolioLibrary/Folio.sql contains SQL views that can be helpful for reviewing load
 
 ## References
 
+FOLIO API Documentation
+https://dev.folio.org/reference/api/
 A Gentle Introduction to CQL
 http://zing.z3950.org/cql/intro.html
+
+## Author
+
+Jon Miller
