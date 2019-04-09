@@ -1,7 +1,6 @@
 DROP SCHEMA IF EXISTS uc CASCADE;
 CREATE SCHEMA uc;
 CREATE FUNCTION uc.timestamp_cast(IN TEXT) RETURNS TIMESTAMP WITH TIME ZONE AS 'SELECT CAST($1 AS TIMESTAMP WITH TIME ZONE);' LANGUAGE 'sql' IMMUTABLE;
---DROP VIEW IF EXISTS uc.accounts;
 CREATE VIEW uc.accounts AS
 SELECT
 id AS id,
@@ -35,7 +34,6 @@ CAST(jsonb->>'feeFineId' AS UUID) AS fee_id,
 CAST(jsonb->>'ownerId' AS UUID) AS owner_id,
 jsonb_pretty(jsonb) AS content
 FROM diku_mod_feesfines.accounts;
---DROP VIEW IF EXISTS uc.account2s;
 CREATE VIEW uc.account2s AS
 SELECT
 id AS id,
@@ -51,14 +49,12 @@ CAST(jsonb->>'library_edi_code' AS VARCHAR(1024)) AS library_edi_code,
 CAST(jsonb->>'notes' AS VARCHAR(1024)) AS notes,
 jsonb_pretty(jsonb) AS content
 FROM diku_mod_vendors.account;
---DROP VIEW IF EXISTS uc.address_categories;
 CREATE VIEW uc.address_categories AS
 SELECT
 id AS id,
 address_id AS address_id,
 CAST(jsonb AS VARCHAR(1024)) AS content
 FROM (SELECT id::text || ordinality::text AS id, id AS address_id, value AS jsonb FROM diku_mod_vendors.address, jsonb_array_elements_text((jsonb->>'categories')::jsonb) WITH ORDINALITY) a;
---DROP VIEW IF EXISTS uc.addresses;
 CREATE VIEW uc.addresses AS
 SELECT
 id AS id,
@@ -72,7 +68,6 @@ CAST(jsonb->>'isPrimary' AS BOOLEAN) AS is_primary,
 CAST(jsonb->>'language' AS VARCHAR(1024)) AS language,
 jsonb_pretty(jsonb) AS content
 FROM diku_mod_vendors.address;
---DROP VIEW IF EXISTS uc.address_types;
 CREATE VIEW uc.address_types AS
 SELECT
 id AS id,
@@ -86,7 +81,6 @@ CAST(jsonb#>>'{metadata,updatedByUserId}' AS UUID) AS updated_by_user_id,
 CAST(jsonb#>>'{metadata,updatedByUsername}' AS VARCHAR(1024)) AS updated_by_username,
 jsonb_pretty(jsonb) AS content
 FROM diku_mod_users.addresstype;
---DROP VIEW IF EXISTS uc.agreements;
 CREATE VIEW uc.agreements AS
 SELECT
 id AS id,
@@ -96,14 +90,12 @@ CAST(jsonb->>'reference_url' AS VARCHAR(1024)) AS reference_url,
 CAST(jsonb->>'notes' AS VARCHAR(1024)) AS notes,
 jsonb_pretty(jsonb) AS content
 FROM diku_mod_vendors.agreement;
---DROP VIEW IF EXISTS uc.alerts;
 CREATE VIEW uc.alerts AS
 SELECT
 id AS id,
 CAST(jsonb->>'alert' AS VARCHAR(1024)) AS alert,
 jsonb_pretty(jsonb) AS content
 FROM diku_mod_orders_storage.alert;
---DROP VIEW IF EXISTS uc.aliases;
 CREATE VIEW uc.aliases AS
 SELECT
 id AS id,
@@ -111,7 +103,6 @@ CAST(jsonb->>'value' AS VARCHAR(1024)) AS value,
 CAST(jsonb->>'description' AS VARCHAR(1024)) AS description,
 jsonb_pretty(jsonb) AS content
 FROM diku_mod_vendors.alias;
---DROP VIEW IF EXISTS uc.alternative_title_types;
 CREATE VIEW uc.alternative_title_types AS
 SELECT
 _id AS id,
@@ -125,7 +116,6 @@ CAST(jsonb#>>'{metadata,updatedByUserId}' AS UUID) AS updated_by_user_id,
 CAST(jsonb#>>'{metadata,updatedByUsername}' AS VARCHAR(1024)) AS updated_by_username,
 jsonb_pretty(jsonb) AS content
 FROM diku_mod_inventory_storage.alternative_title_type;
---DROP VIEW IF EXISTS uc.auth_attempts;
 CREATE VIEW uc.auth_attempts AS
 SELECT
 _id AS id,
@@ -134,7 +124,6 @@ uc.TIMESTAMP_CAST(jsonb->>'lastAttempt') AS last_attempt,
 CAST(jsonb->>'attemptCount' AS INTEGER) AS attempt_count,
 jsonb_pretty(jsonb) AS content
 FROM diku_mod_login.auth_attempts;
---DROP VIEW IF EXISTS uc.auth_credentials_histories;
 CREATE VIEW uc.auth_credentials_histories AS
 SELECT
 _id AS id,
@@ -150,7 +139,6 @@ CAST(jsonb#>>'{metadata,updatedByUserId}' AS UUID) AS updated_by_user_id,
 CAST(jsonb#>>'{metadata,updatedByUsername}' AS VARCHAR(1024)) AS updated_by_username,
 jsonb_pretty(jsonb) AS content
 FROM diku_mod_login.auth_credentials_history;
---DROP VIEW IF EXISTS uc.blocks;
 CREATE VIEW uc.blocks AS
 SELECT
 id AS id,
@@ -171,14 +159,12 @@ CAST(jsonb#>>'{metadata,updatedByUserId}' AS UUID) AS updated_by_user_id,
 CAST(jsonb#>>'{metadata,updatedByUsername}' AS VARCHAR(1024)) AS updated_by_username,
 jsonb_pretty(jsonb) AS content
 FROM diku_mod_feesfines.manualblocks;
---DROP VIEW IF EXISTS uc.budget_tags;
 CREATE VIEW uc.budget_tags AS
 SELECT
 id AS id,
 budget_id AS budget_id,
 CAST(jsonb AS VARCHAR(1024)) AS content
 FROM (SELECT id::text || ordinality::text AS id, id AS budget_id, value AS jsonb FROM diku_mod_finance_storage.budget, jsonb_array_elements_text((jsonb->>'tags')::jsonb) WITH ORDINALITY) a;
---DROP VIEW IF EXISTS uc.budgets;
 CREATE VIEW uc.budgets AS
 SELECT
 id AS id,
@@ -199,7 +185,6 @@ jsonb_pretty(jsonb) AS content,
 fund_id AS fund_id,
 fiscal_year_id AS fiscal_year_id
 FROM diku_mod_finance_storage.budget;
---DROP VIEW IF EXISTS uc.call_number_types;
 CREATE VIEW uc.call_number_types AS
 SELECT
 _id AS id,
@@ -213,7 +198,6 @@ CAST(jsonb#>>'{metadata,updatedByUserId}' AS UUID) AS updated_by_user_id,
 CAST(jsonb#>>'{metadata,updatedByUsername}' AS VARCHAR(1024)) AS updated_by_username,
 jsonb_pretty(jsonb) AS content
 FROM diku_mod_inventory_storage.call_number_type;
---DROP VIEW IF EXISTS uc.campuses;
 CREATE VIEW uc.campuses AS
 SELECT
 _id AS id,
@@ -229,7 +213,6 @@ CAST(jsonb#>>'{metadata,updatedByUsername}' AS VARCHAR(1024)) AS updated_by_user
 jsonb_pretty(jsonb) AS content,
 institutionid AS institutionid
 FROM diku_mod_inventory_storage.loccampus;
---DROP VIEW IF EXISTS uc.cancellation_reasons;
 CREATE VIEW uc.cancellation_reasons AS
 SELECT
 _id AS id,
@@ -245,14 +228,12 @@ CAST(jsonb#>>'{metadata,updatedByUserId}' AS UUID) AS updated_by_user_id,
 CAST(jsonb#>>'{metadata,updatedByUsername}' AS VARCHAR(1024)) AS updated_by_username,
 jsonb_pretty(jsonb) AS content
 FROM diku_mod_circulation_storage.cancellation_reason;
---DROP VIEW IF EXISTS uc.categories;
 CREATE VIEW uc.categories AS
 SELECT
 id AS id,
 CAST(jsonb->>'value' AS VARCHAR(1024)) AS value,
 jsonb_pretty(jsonb) AS content
 FROM diku_mod_vendors.category;
---DROP VIEW IF EXISTS uc.circulation_rules;
 CREATE VIEW uc.circulation_rules AS
 SELECT
 _id AS id,
@@ -260,7 +241,6 @@ CAST(jsonb->>'rulesAsText' AS VARCHAR(1024)) AS rules_as_text,
 jsonb_pretty(jsonb) AS content,
 lock AS lock
 FROM diku_mod_circulation_storage.circulation_rules;
---DROP VIEW IF EXISTS uc.claims;
 CREATE VIEW uc.claims AS
 SELECT
 id AS id,
@@ -269,7 +249,6 @@ uc.TIMESTAMP_CAST(jsonb->>'sent') AS sent,
 CAST(jsonb->>'grace' AS INTEGER) AS grace,
 jsonb_pretty(jsonb) AS content
 FROM diku_mod_orders_storage.claim;
---DROP VIEW IF EXISTS uc.classification_types;
 CREATE VIEW uc.classification_types AS
 SELECT
 _id AS id,
@@ -282,7 +261,6 @@ CAST(jsonb#>>'{metadata,updatedByUserId}' AS UUID) AS updated_by_user_id,
 CAST(jsonb#>>'{metadata,updatedByUsername}' AS VARCHAR(1024)) AS updated_by_username,
 jsonb_pretty(jsonb) AS content
 FROM diku_mod_inventory_storage.classification_type;
---DROP VIEW IF EXISTS uc.comments;
 CREATE VIEW uc.comments AS
 SELECT
 id AS id,
@@ -298,21 +276,18 @@ CAST(jsonb#>>'{metadata,updatedByUserId}' AS UUID) AS updated_by_user_id,
 CAST(jsonb#>>'{metadata,updatedByUsername}' AS VARCHAR(1024)) AS updated_by_username,
 jsonb_pretty(jsonb) AS content
 FROM diku_mod_feesfines.comments;
---DROP VIEW IF EXISTS uc.contact_phone_number_categories;
 CREATE VIEW uc.contact_phone_number_categories AS
 SELECT
 id AS id,
 contact_phone_number_id AS contact_phone_number_id,
 CAST(jsonb AS VARCHAR(1024)) AS content
 FROM (SELECT id::text || ordinality::text AS id, id AS contact_phone_number_id, value AS jsonb FROM (SELECT id::text || ordinality::text AS id, id AS contact_id, value AS jsonb FROM diku_mod_vendors.contact, jsonb_array_elements((jsonb->>'phone_numbers')::jsonb) WITH ORDINALITY) a, jsonb_array_elements_text((jsonb->>'categories')::jsonb) WITH ORDINALITY) a;
---DROP VIEW IF EXISTS uc.contact_phone_number_types;
 CREATE VIEW uc.contact_phone_number_types AS
 SELECT
 id AS id,
 contact_phone_number_id AS contact_phone_number_id,
 CAST(jsonb AS VARCHAR(1024)) AS content
 FROM (SELECT id::text || ordinality::text AS id, id AS contact_phone_number_id, value AS jsonb FROM (SELECT id::text || ordinality::text AS id, id AS contact_id, value AS jsonb FROM diku_mod_vendors.contact, jsonb_array_elements((jsonb->>'phone_numbers')::jsonb) WITH ORDINALITY) a, jsonb_array_elements_text((jsonb->>'types')::jsonb) WITH ORDINALITY) a;
---DROP VIEW IF EXISTS uc.contact_phone_numbers;
 CREATE VIEW uc.contact_phone_numbers AS
 SELECT
 id AS id,
@@ -322,14 +297,12 @@ CAST(jsonb->>'phone_number' AS VARCHAR(1024)) AS phone_number,
 CAST(jsonb->>'isPrimary' AS BOOLEAN) AS is_primary,
 CAST(jsonb->>'language' AS VARCHAR(1024)) AS language
 FROM (SELECT id::text || ordinality::text AS id, id AS contact_id, value AS jsonb FROM diku_mod_vendors.contact, jsonb_array_elements((jsonb->>'phone_numbers')::jsonb) WITH ORDINALITY) a;
---DROP VIEW IF EXISTS uc.contact_email_categories;
 CREATE VIEW uc.contact_email_categories AS
 SELECT
 id AS id,
 contact_email_id AS contact_email_id,
 CAST(jsonb AS VARCHAR(1024)) AS content
 FROM (SELECT id::text || ordinality::text AS id, id AS contact_email_id, value AS jsonb FROM (SELECT id::text || ordinality::text AS id, id AS contact_id, value AS jsonb FROM diku_mod_vendors.contact, jsonb_array_elements((jsonb->>'emails')::jsonb) WITH ORDINALITY) a, jsonb_array_elements_text((jsonb->>'categories')::jsonb) WITH ORDINALITY) a;
---DROP VIEW IF EXISTS uc.contact_emails;
 CREATE VIEW uc.contact_emails AS
 SELECT
 id AS id,
@@ -340,14 +313,12 @@ CAST(jsonb->>'description' AS VARCHAR(1024)) AS description,
 CAST(jsonb->>'isPrimary' AS BOOLEAN) AS is_primary,
 CAST(jsonb->>'language' AS VARCHAR(1024)) AS language
 FROM (SELECT id::text || ordinality::text AS id, id AS contact_id, value AS jsonb FROM diku_mod_vendors.contact, jsonb_array_elements((jsonb->>'emails')::jsonb) WITH ORDINALITY) a;
---DROP VIEW IF EXISTS uc.contact_address_categories;
 CREATE VIEW uc.contact_address_categories AS
 SELECT
 id AS id,
 contact_address_id AS contact_address_id,
 CAST(jsonb AS VARCHAR(1024)) AS content
 FROM (SELECT id::text || ordinality::text AS id, id AS contact_address_id, value AS jsonb FROM (SELECT id::text || ordinality::text AS id, id AS contact_id, value AS jsonb FROM diku_mod_vendors.contact, jsonb_array_elements((jsonb->>'addresses')::jsonb) WITH ORDINALITY) a, jsonb_array_elements_text((jsonb->>'categories')::jsonb) WITH ORDINALITY) a;
---DROP VIEW IF EXISTS uc.contact_addresses;
 CREATE VIEW uc.contact_addresses AS
 SELECT
 id AS id,
@@ -362,14 +333,12 @@ CAST(jsonb->>'country' AS VARCHAR(1024)) AS country,
 CAST(jsonb->>'isPrimary' AS BOOLEAN) AS is_primary,
 CAST(jsonb->>'language' AS VARCHAR(1024)) AS language
 FROM (SELECT id::text || ordinality::text AS id, id AS contact_id, value AS jsonb FROM diku_mod_vendors.contact, jsonb_array_elements((jsonb->>'addresses')::jsonb) WITH ORDINALITY) a;
---DROP VIEW IF EXISTS uc.contact_url_categories;
 CREATE VIEW uc.contact_url_categories AS
 SELECT
 id AS id,
 contact_url_id AS contact_url_id,
 CAST(jsonb AS VARCHAR(1024)) AS content
 FROM (SELECT id::text || ordinality::text AS id, id AS contact_url_id, value AS jsonb FROM (SELECT id::text || ordinality::text AS id, id AS contact_id, value AS jsonb FROM diku_mod_vendors.contact, jsonb_array_elements((jsonb->>'urls')::jsonb) WITH ORDINALITY) a, jsonb_array_elements_text((jsonb->>'categories')::jsonb) WITH ORDINALITY) a;
---DROP VIEW IF EXISTS uc.contact_urls;
 CREATE VIEW uc.contact_urls AS
 SELECT
 id AS id,
@@ -381,7 +350,6 @@ CAST(jsonb->>'language' AS VARCHAR(1024)) AS language,
 CAST(jsonb->>'isPrimary' AS BOOLEAN) AS is_primary,
 CAST(jsonb->>'notes' AS VARCHAR(1024)) AS notes
 FROM (SELECT id::text || ordinality::text AS id, id AS contact_id, value AS jsonb FROM diku_mod_vendors.contact, jsonb_array_elements((jsonb->>'urls')::jsonb) WITH ORDINALITY) a;
---DROP VIEW IF EXISTS uc.contact_categories;
 CREATE VIEW uc.contact_categories AS
 SELECT
 id AS id,
@@ -389,7 +357,6 @@ contact_id AS contact_id,
 CAST(jsonb->>'id' AS UUID) AS id2,
 CAST(jsonb->>'value' AS VARCHAR(1024)) AS value
 FROM (SELECT id::text || ordinality::text AS id, id AS contact_id, value AS jsonb FROM diku_mod_vendors.contact, jsonb_array_elements((jsonb->>'categories')::jsonb) WITH ORDINALITY) a;
---DROP VIEW IF EXISTS uc.contacts;
 CREATE VIEW uc.contacts AS
 SELECT
 id AS id,
@@ -401,7 +368,6 @@ CAST(jsonb->>'notes' AS VARCHAR(1024)) AS notes,
 CAST(jsonb->>'inactive' AS BOOLEAN) AS inactive,
 jsonb_pretty(jsonb) AS content
 FROM diku_mod_vendors.contact;
---DROP VIEW IF EXISTS uc.contributor_name_types;
 CREATE VIEW uc.contributor_name_types AS
 SELECT
 _id AS id,
@@ -415,7 +381,6 @@ CAST(jsonb#>>'{metadata,updatedByUserId}' AS UUID) AS updated_by_user_id,
 CAST(jsonb#>>'{metadata,updatedByUsername}' AS VARCHAR(1024)) AS updated_by_username,
 jsonb_pretty(jsonb) AS content
 FROM diku_mod_inventory_storage.contributor_name_type;
---DROP VIEW IF EXISTS uc.contributor_types;
 CREATE VIEW uc.contributor_types AS
 SELECT
 _id AS id,
@@ -429,7 +394,6 @@ CAST(jsonb#>>'{metadata,updatedByUserId}' AS UUID) AS updated_by_user_id,
 CAST(jsonb#>>'{metadata,updatedByUsername}' AS VARCHAR(1024)) AS updated_by_username,
 jsonb_pretty(jsonb) AS content
 FROM diku_mod_inventory_storage.contributor_type;
---DROP VIEW IF EXISTS uc.costs;
 CREATE VIEW uc.costs AS
 SELECT
 id AS id,
@@ -444,7 +408,6 @@ CAST(jsonb->>'quantityElectronic' AS INTEGER) AS quantity_electronic,
 CAST(jsonb->>'poLineEstimatedPrice' AS DECIMAL(19,2)) AS po_line_estimated_price,
 jsonb_pretty(jsonb) AS content
 FROM diku_mod_orders_storage.cost;
---DROP VIEW IF EXISTS uc.detail_product_ids;
 CREATE VIEW uc.detail_product_ids AS
 SELECT
 id AS id,
@@ -452,7 +415,6 @@ detail_id AS detail_id,
 CAST(jsonb->>'productId' AS VARCHAR(1024)) AS product_id,
 CAST(jsonb->>'productIdType' AS VARCHAR(1024)) AS product_id_type
 FROM (SELECT id::text || ordinality::text AS id, id AS detail_id, value AS jsonb FROM diku_mod_orders_storage.details, jsonb_array_elements((jsonb->>'productIds')::jsonb) WITH ORDINALITY) a;
---DROP VIEW IF EXISTS uc.details;
 CREATE VIEW uc.details AS
 SELECT
 id AS id,
@@ -462,7 +424,6 @@ CAST(jsonb->>'subscriptionInterval' AS INTEGER) AS subscription_interval,
 uc.TIMESTAMP_CAST(jsonb->>'subscriptionTo') AS subscription_to,
 jsonb_pretty(jsonb) AS content
 FROM diku_mod_orders_storage.details;
---DROP VIEW IF EXISTS uc.electronic_access_relationships;
 CREATE VIEW uc.electronic_access_relationships AS
 SELECT
 _id AS id,
@@ -475,14 +436,12 @@ CAST(jsonb#>>'{metadata,updatedByUserId}' AS UUID) AS updated_by_user_id,
 CAST(jsonb#>>'{metadata,updatedByUsername}' AS VARCHAR(1024)) AS updated_by_username,
 jsonb_pretty(jsonb) AS content
 FROM diku_mod_inventory_storage.electronic_access_relationship;
---DROP VIEW IF EXISTS uc.email_categories;
 CREATE VIEW uc.email_categories AS
 SELECT
 id AS id,
 email_id AS email_id,
 CAST(jsonb AS VARCHAR(1024)) AS content
 FROM (SELECT id::text || ordinality::text AS id, id AS email_id, value AS jsonb FROM diku_mod_vendors.email, jsonb_array_elements_text((jsonb->>'categories')::jsonb) WITH ORDINALITY) a;
---DROP VIEW IF EXISTS uc.emails;
 CREATE VIEW uc.emails AS
 SELECT
 id AS id,
@@ -492,7 +451,6 @@ CAST(jsonb->>'isPrimary' AS BOOLEAN) AS is_primary,
 CAST(jsonb->>'language' AS VARCHAR(1024)) AS language,
 jsonb_pretty(jsonb) AS content
 FROM diku_mod_vendors.email;
---DROP VIEW IF EXISTS uc.eresources;
 CREATE VIEW uc.eresources AS
 SELECT
 id AS id,
@@ -509,7 +467,6 @@ CAST(jsonb#>>'{license,reference}' AS VARCHAR(1024)) AS license_reference,
 CAST(jsonb->>'materialType' AS UUID) AS material_type_id,
 jsonb_pretty(jsonb) AS content
 FROM diku_mod_orders_storage.eresource;
---DROP VIEW IF EXISTS uc.event_logs;
 CREATE VIEW uc.event_logs AS
 SELECT
 _id AS id,
@@ -526,7 +483,6 @@ CAST(jsonb#>>'{metadata,updatedByUserId}' AS UUID) AS updated_by_user_id,
 CAST(jsonb#>>'{metadata,updatedByUsername}' AS VARCHAR(1024)) AS updated_by_username,
 jsonb_pretty(jsonb) AS content
 FROM diku_mod_login.event_logs;
---DROP VIEW IF EXISTS uc.fees;
 CREATE VIEW uc.fees AS
 SELECT
 id AS id,
@@ -544,7 +500,6 @@ CAST(jsonb#>>'{metadata,updatedByUsername}' AS VARCHAR(1024)) AS updated_by_user
 jsonb_pretty(jsonb) AS content,
 ownerid AS ownerid
 FROM diku_mod_feesfines.feefines;
---DROP VIEW IF EXISTS uc.fee_actions;
 CREATE VIEW uc.fee_actions AS
 SELECT
 id AS id,
@@ -561,7 +516,6 @@ CAST(jsonb->>'accountId' AS UUID) AS account_id,
 CAST(jsonb->>'userId' AS UUID) AS user_id,
 jsonb_pretty(jsonb) AS content
 FROM diku_mod_feesfines.feefineactions;
---DROP VIEW IF EXISTS uc.fiscal_years;
 CREATE VIEW uc.fiscal_years AS
 SELECT
 id AS id,
@@ -572,7 +526,6 @@ uc.TIMESTAMP_CAST(jsonb->>'start_date') AS start_date,
 uc.TIMESTAMP_CAST(jsonb->>'end_date') AS end_date,
 jsonb_pretty(jsonb) AS content
 FROM diku_mod_finance_storage.fiscal_year;
---DROP VIEW IF EXISTS uc.fixed_due_date_schedule_schedules;
 CREATE VIEW uc.fixed_due_date_schedule_schedules AS
 SELECT
 id AS id,
@@ -581,7 +534,6 @@ uc.TIMESTAMP_CAST(jsonb->>'from') AS from,
 uc.TIMESTAMP_CAST(jsonb->>'to') AS to,
 uc.TIMESTAMP_CAST(jsonb->>'due') AS due
 FROM (SELECT _id::text || ordinality::text AS id, _id AS fixed_due_date_schedule_id, value AS jsonb FROM diku_mod_circulation_storage.fixed_due_date_schedule, jsonb_array_elements((jsonb->>'schedules')::jsonb) WITH ORDINALITY) a;
---DROP VIEW IF EXISTS uc.fixed_due_date_schedules;
 CREATE VIEW uc.fixed_due_date_schedules AS
 SELECT
 _id AS id,
@@ -595,28 +547,24 @@ CAST(jsonb#>>'{metadata,updatedByUserId}' AS UUID) AS updated_by_user_id,
 CAST(jsonb#>>'{metadata,updatedByUsername}' AS VARCHAR(1024)) AS updated_by_username,
 jsonb_pretty(jsonb) AS content
 FROM diku_mod_circulation_storage.fixed_due_date_schedule;
---DROP VIEW IF EXISTS uc.fund_allocation_from;
 CREATE VIEW uc.fund_allocation_from AS
 SELECT
 id AS id,
 fund_id AS fund_id,
 CAST(jsonb AS VARCHAR(1024)) AS content
 FROM (SELECT id::text || ordinality::text AS id, id AS fund_id, value AS jsonb FROM diku_mod_finance_storage.fund, jsonb_array_elements_text((jsonb->>'allocation_from')::jsonb) WITH ORDINALITY) a;
---DROP VIEW IF EXISTS uc.fund_allocation_to;
 CREATE VIEW uc.fund_allocation_to AS
 SELECT
 id AS id,
 fund_id AS fund_id,
 CAST(jsonb AS VARCHAR(1024)) AS content
 FROM (SELECT id::text || ordinality::text AS id, id AS fund_id, value AS jsonb FROM diku_mod_finance_storage.fund, jsonb_array_elements_text((jsonb->>'allocation_to')::jsonb) WITH ORDINALITY) a;
---DROP VIEW IF EXISTS uc.fund_tags;
 CREATE VIEW uc.fund_tags AS
 SELECT
 id AS id,
 fund_id AS fund_id,
 CAST(jsonb AS VARCHAR(1024)) AS content
 FROM (SELECT id::text || ordinality::text AS id, id AS fund_id, value AS jsonb FROM diku_mod_finance_storage.fund, jsonb_array_elements_text((jsonb->>'tags')::jsonb) WITH ORDINALITY) a;
---DROP VIEW IF EXISTS uc.funds;
 CREATE VIEW uc.funds AS
 SELECT
 id AS id,
@@ -630,7 +578,6 @@ CAST(jsonb->>'ledger_id' AS UUID) AS ledger_id2,
 jsonb_pretty(jsonb) AS content,
 ledger_id AS ledger_id
 FROM diku_mod_finance_storage.fund;
---DROP VIEW IF EXISTS uc.fund_distributions;
 CREATE VIEW uc.fund_distributions AS
 SELECT
 id AS id,
@@ -643,7 +590,6 @@ CAST(jsonb->>'budget_id' AS UUID) AS budget_id2,
 jsonb_pretty(jsonb) AS content,
 budget_id AS budget_id
 FROM diku_mod_finance_storage.fund_distribution;
---DROP VIEW IF EXISTS uc.fund_distribution2s;
 CREATE VIEW uc.fund_distribution2s AS
 SELECT
 id AS id,
@@ -652,7 +598,6 @@ CAST(jsonb->>'encumbrance' AS UUID) AS encumbrance_id,
 CAST(jsonb->>'percentage' AS DECIMAL(19,2)) AS percentage,
 jsonb_pretty(jsonb) AS content
 FROM diku_mod_orders_storage.fund_distribution;
---DROP VIEW IF EXISTS uc.groups;
 CREATE VIEW uc.groups AS
 SELECT
 id AS id,
@@ -666,14 +611,12 @@ CAST(jsonb#>>'{metadata,updatedByUserId}' AS UUID) AS updated_by_user_id,
 CAST(jsonb#>>'{metadata,updatedByUsername}' AS VARCHAR(1024)) AS updated_by_username,
 jsonb_pretty(jsonb) AS content
 FROM diku_mod_users.groups;
---DROP VIEW IF EXISTS uc.holding_former_ids;
 CREATE VIEW uc.holding_former_ids AS
 SELECT
 id AS id,
 holding_id AS holding_id,
 CAST(jsonb AS VARCHAR(1024)) AS content
 FROM (SELECT _id::text || ordinality::text AS id, _id AS holding_id, value AS jsonb FROM diku_mod_inventory_storage.holdings_record, jsonb_array_elements_text((jsonb->>'formerIds')::jsonb) WITH ORDINALITY) a;
---DROP VIEW IF EXISTS uc.holding_electronic_accesses;
 CREATE VIEW uc.holding_electronic_accesses AS
 SELECT
 id AS id,
@@ -684,7 +627,6 @@ CAST(jsonb->>'materialsSpecification' AS VARCHAR(1024)) AS materials_specificati
 CAST(jsonb->>'publicNote' AS VARCHAR(1024)) AS public_note,
 CAST(jsonb->>'relationshipId' AS UUID) AS relationship_id
 FROM (SELECT _id::text || ordinality::text AS id, _id AS holding_id, value AS jsonb FROM diku_mod_inventory_storage.holdings_record, jsonb_array_elements((jsonb->>'electronicAccess')::jsonb) WITH ORDINALITY) a;
---DROP VIEW IF EXISTS uc.holding_notes;
 CREATE VIEW uc.holding_notes AS
 SELECT
 id AS id,
@@ -693,7 +635,6 @@ CAST(jsonb->>'holdingsNoteTypeId' AS UUID) AS holding_note_type_id,
 CAST(jsonb->>'note' AS VARCHAR(1024)) AS note,
 CAST(jsonb->>'staffOnly' AS BOOLEAN) AS staff_only
 FROM (SELECT _id::text || ordinality::text AS id, _id AS holding_id, value AS jsonb FROM diku_mod_inventory_storage.holdings_record, jsonb_array_elements((jsonb->>'notes')::jsonb) WITH ORDINALITY) a;
---DROP VIEW IF EXISTS uc.extents;
 CREATE VIEW uc.extents AS
 SELECT
 id AS id,
@@ -701,7 +642,6 @@ holding_id AS holding_id,
 CAST(jsonb->>'statement' AS VARCHAR(1024)) AS statement,
 CAST(jsonb->>'note' AS VARCHAR(1024)) AS note
 FROM (SELECT _id::text || ordinality::text AS id, _id AS holding_id, value AS jsonb FROM diku_mod_inventory_storage.holdings_record, jsonb_array_elements((jsonb->>'holdingsStatements')::jsonb) WITH ORDINALITY) a;
---DROP VIEW IF EXISTS uc.index_statements;
 CREATE VIEW uc.index_statements AS
 SELECT
 id AS id,
@@ -709,7 +649,6 @@ holding_id AS holding_id,
 CAST(jsonb->>'statement' AS VARCHAR(1024)) AS statement,
 CAST(jsonb->>'note' AS VARCHAR(1024)) AS note
 FROM (SELECT _id::text || ordinality::text AS id, _id AS holding_id, value AS jsonb FROM diku_mod_inventory_storage.holdings_record, jsonb_array_elements((jsonb->>'holdingsStatementsForIndexes')::jsonb) WITH ORDINALITY) a;
---DROP VIEW IF EXISTS uc.supplement_statements;
 CREATE VIEW uc.supplement_statements AS
 SELECT
 id AS id,
@@ -717,7 +656,6 @@ holding_id AS holding_id,
 CAST(jsonb->>'statement' AS VARCHAR(1024)) AS statement,
 CAST(jsonb->>'note' AS VARCHAR(1024)) AS note
 FROM (SELECT _id::text || ordinality::text AS id, _id AS holding_id, value AS jsonb FROM diku_mod_inventory_storage.holdings_record, jsonb_array_elements((jsonb->>'holdingsStatementsForSupplements')::jsonb) WITH ORDINALITY) a;
---DROP VIEW IF EXISTS uc.holding_entries;
 CREATE VIEW uc.holding_entries AS
 SELECT
 id AS id,
@@ -726,14 +664,12 @@ CAST(jsonb->>'publicDisplay' AS BOOLEAN) AS public_display,
 CAST(jsonb->>'enumeration' AS VARCHAR(1024)) AS enumeration,
 CAST(jsonb->>'chronology' AS VARCHAR(1024)) AS chronology
 FROM (SELECT _id::text || ordinality::text AS id, _id AS holding_id, value AS jsonb FROM diku_mod_inventory_storage.holdings_record, jsonb_array_elements((jsonb#>>'{receivingHistory,entries}')::jsonb) WITH ORDINALITY) a;
---DROP VIEW IF EXISTS uc.holding_statistical_code_ids;
 CREATE VIEW uc.holding_statistical_code_ids AS
 SELECT
 id AS id,
 holding_id AS holding_id,
 CAST(jsonb AS VARCHAR(1024)) AS content
 FROM (SELECT _id::text || ordinality::text AS id, _id AS holding_id, value AS jsonb FROM diku_mod_inventory_storage.holdings_record, jsonb_array_elements_text((jsonb->>'statisticalCodeIds')::jsonb) WITH ORDINALITY) a;
---DROP VIEW IF EXISTS uc.holdings;
 CREATE VIEW uc.holdings AS
 SELECT
 _id AS id,
@@ -771,7 +707,6 @@ holdingstypeid AS holdingstypeid,
 callnumbertypeid AS callnumbertypeid,
 illpolicyid AS illpolicyid
 FROM diku_mod_inventory_storage.holdings_record;
---DROP VIEW IF EXISTS uc.holding_note_types;
 CREATE VIEW uc.holding_note_types AS
 SELECT
 _id AS id,
@@ -785,7 +720,6 @@ CAST(jsonb#>>'{metadata,updatedByUserId}' AS UUID) AS updated_by_user_id,
 CAST(jsonb#>>'{metadata,updatedByUsername}' AS VARCHAR(1024)) AS updated_by_username,
 jsonb_pretty(jsonb) AS content
 FROM diku_mod_inventory_storage.holdings_note_type;
---DROP VIEW IF EXISTS uc.holding_types;
 CREATE VIEW uc.holding_types AS
 SELECT
 _id AS id,
@@ -799,7 +733,6 @@ CAST(jsonb#>>'{metadata,updatedByUserId}' AS UUID) AS updated_by_user_id,
 CAST(jsonb#>>'{metadata,updatedByUsername}' AS VARCHAR(1024)) AS updated_by_username,
 jsonb_pretty(jsonb) AS content
 FROM diku_mod_inventory_storage.holdings_type;
---DROP VIEW IF EXISTS uc.id_types;
 CREATE VIEW uc.id_types AS
 SELECT
 _id AS id,
@@ -812,7 +745,6 @@ CAST(jsonb#>>'{metadata,updatedByUserId}' AS UUID) AS updated_by_user_id,
 CAST(jsonb#>>'{metadata,updatedByUsername}' AS VARCHAR(1024)) AS updated_by_username,
 jsonb_pretty(jsonb) AS content
 FROM diku_mod_inventory_storage.identifier_type;
---DROP VIEW IF EXISTS uc.ill_policies;
 CREATE VIEW uc.ill_policies AS
 SELECT
 _id AS id,
@@ -826,7 +758,6 @@ CAST(jsonb#>>'{metadata,updatedByUserId}' AS UUID) AS updated_by_user_id,
 CAST(jsonb#>>'{metadata,updatedByUsername}' AS VARCHAR(1024)) AS updated_by_username,
 jsonb_pretty(jsonb) AS content
 FROM diku_mod_inventory_storage.ill_policy;
---DROP VIEW IF EXISTS uc.alternative_titles;
 CREATE VIEW uc.alternative_titles AS
 SELECT
 id AS id,
@@ -834,21 +765,18 @@ instance_id AS instance_id,
 CAST(jsonb->>'alternativeTitleTypeId' AS UUID) AS alternative_title_type_id,
 CAST(jsonb->>'alternativeTitle' AS VARCHAR(1024)) AS alternative_title
 FROM (SELECT _id::text || ordinality::text AS id, _id AS instance_id, value AS jsonb FROM diku_mod_inventory_storage.instance, jsonb_array_elements((jsonb->>'alternativeTitles')::jsonb) WITH ORDINALITY) a;
---DROP VIEW IF EXISTS uc.editions;
 CREATE VIEW uc.editions AS
 SELECT
 id AS id,
 instance_id AS instance_id,
 CAST(jsonb AS VARCHAR(1024)) AS content
 FROM (SELECT _id::text || ordinality::text AS id, _id AS instance_id, value AS jsonb FROM diku_mod_inventory_storage.instance, jsonb_array_elements_text((jsonb->>'editions')::jsonb) WITH ORDINALITY) a;
---DROP VIEW IF EXISTS uc.series;
 CREATE VIEW uc.series AS
 SELECT
 id AS id,
 instance_id AS instance_id,
 CAST(jsonb AS VARCHAR(1024)) AS content
 FROM (SELECT _id::text || ordinality::text AS id, _id AS instance_id, value AS jsonb FROM diku_mod_inventory_storage.instance, jsonb_array_elements_text((jsonb->>'series')::jsonb) WITH ORDINALITY) a;
---DROP VIEW IF EXISTS uc.identifiers;
 CREATE VIEW uc.identifiers AS
 SELECT
 id AS id,
@@ -856,7 +784,6 @@ instance_id AS instance_id,
 CAST(jsonb->>'value' AS VARCHAR(1024)) AS value,
 CAST(jsonb->>'identifierTypeId' AS UUID) AS identifier_type_id
 FROM (SELECT _id::text || ordinality::text AS id, _id AS instance_id, value AS jsonb FROM diku_mod_inventory_storage.instance, jsonb_array_elements((jsonb->>'identifiers')::jsonb) WITH ORDINALITY) a;
---DROP VIEW IF EXISTS uc.contributors;
 CREATE VIEW uc.contributors AS
 SELECT
 id AS id,
@@ -867,14 +794,12 @@ CAST(jsonb->>'contributorTypeText' AS VARCHAR(1024)) AS contributor_type_text,
 CAST(jsonb->>'contributorNameTypeId' AS UUID) AS contributor_name_type_id,
 CAST(jsonb->>'primary' AS BOOLEAN) AS primary
 FROM (SELECT _id::text || ordinality::text AS id, _id AS instance_id, value AS jsonb FROM diku_mod_inventory_storage.instance, jsonb_array_elements((jsonb->>'contributors')::jsonb) WITH ORDINALITY) a;
---DROP VIEW IF EXISTS uc.subjects;
 CREATE VIEW uc.subjects AS
 SELECT
 id AS id,
 instance_id AS instance_id,
 CAST(jsonb AS VARCHAR(1024)) AS content
 FROM (SELECT _id::text || ordinality::text AS id, _id AS instance_id, value AS jsonb FROM diku_mod_inventory_storage.instance, jsonb_array_elements_text((jsonb->>'subjects')::jsonb) WITH ORDINALITY) a;
---DROP VIEW IF EXISTS uc.classifications;
 CREATE VIEW uc.classifications AS
 SELECT
 id AS id,
@@ -882,7 +807,6 @@ instance_id AS instance_id,
 CAST(jsonb->>'classificationNumber' AS VARCHAR(1024)) AS classification_number,
 CAST(jsonb->>'classificationTypeId' AS UUID) AS classification_type_id
 FROM (SELECT _id::text || ordinality::text AS id, _id AS instance_id, value AS jsonb FROM diku_mod_inventory_storage.instance, jsonb_array_elements((jsonb->>'classifications')::jsonb) WITH ORDINALITY) a;
---DROP VIEW IF EXISTS uc.publications;
 CREATE VIEW uc.publications AS
 SELECT
 id AS id,
@@ -892,21 +816,18 @@ CAST(jsonb->>'place' AS VARCHAR(1024)) AS place,
 CAST(jsonb->>'dateOfPublication' AS VARCHAR(1024)) AS date_of_publication,
 CAST(jsonb->>'role' AS VARCHAR(1024)) AS role
 FROM (SELECT _id::text || ordinality::text AS id, _id AS instance_id, value AS jsonb FROM diku_mod_inventory_storage.instance, jsonb_array_elements((jsonb->>'publication')::jsonb) WITH ORDINALITY) a;
---DROP VIEW IF EXISTS uc.publication_frequency;
 CREATE VIEW uc.publication_frequency AS
 SELECT
 id AS id,
 instance_id AS instance_id,
 CAST(jsonb AS VARCHAR(1024)) AS content
 FROM (SELECT _id::text || ordinality::text AS id, _id AS instance_id, value AS jsonb FROM diku_mod_inventory_storage.instance, jsonb_array_elements_text((jsonb->>'publicationFrequency')::jsonb) WITH ORDINALITY) a;
---DROP VIEW IF EXISTS uc.publication_range;
 CREATE VIEW uc.publication_range AS
 SELECT
 id AS id,
 instance_id AS instance_id,
 CAST(jsonb AS VARCHAR(1024)) AS content
 FROM (SELECT _id::text || ordinality::text AS id, _id AS instance_id, value AS jsonb FROM diku_mod_inventory_storage.instance, jsonb_array_elements_text((jsonb->>'publicationRange')::jsonb) WITH ORDINALITY) a;
---DROP VIEW IF EXISTS uc.electronic_accesses;
 CREATE VIEW uc.electronic_accesses AS
 SELECT
 id AS id,
@@ -917,42 +838,36 @@ CAST(jsonb->>'materialsSpecification' AS VARCHAR(1024)) AS materials_specificati
 CAST(jsonb->>'publicNote' AS VARCHAR(1024)) AS public_note,
 CAST(jsonb->>'relationshipId' AS UUID) AS relationship_id
 FROM (SELECT _id::text || ordinality::text AS id, _id AS instance_id, value AS jsonb FROM diku_mod_inventory_storage.instance, jsonb_array_elements((jsonb->>'electronicAccess')::jsonb) WITH ORDINALITY) a;
---DROP VIEW IF EXISTS uc.instance_format_ids;
 CREATE VIEW uc.instance_format_ids AS
 SELECT
 id AS id,
 instance_id AS instance_id,
 CAST(jsonb AS VARCHAR(1024)) AS content
 FROM (SELECT _id::text || ordinality::text AS id, _id AS instance_id, value AS jsonb FROM diku_mod_inventory_storage.instance, jsonb_array_elements_text((jsonb->>'instanceFormatIds')::jsonb) WITH ORDINALITY) a;
---DROP VIEW IF EXISTS uc.physical_descriptions;
 CREATE VIEW uc.physical_descriptions AS
 SELECT
 id AS id,
 instance_id AS instance_id,
 CAST(jsonb AS VARCHAR(1024)) AS content
 FROM (SELECT _id::text || ordinality::text AS id, _id AS instance_id, value AS jsonb FROM diku_mod_inventory_storage.instance, jsonb_array_elements_text((jsonb->>'physicalDescriptions')::jsonb) WITH ORDINALITY) a;
---DROP VIEW IF EXISTS uc.languages;
 CREATE VIEW uc.languages AS
 SELECT
 id AS id,
 instance_id AS instance_id,
 CAST(jsonb AS VARCHAR(1024)) AS content
 FROM (SELECT _id::text || ordinality::text AS id, _id AS instance_id, value AS jsonb FROM diku_mod_inventory_storage.instance, jsonb_array_elements_text((jsonb->>'languages')::jsonb) WITH ORDINALITY) a;
---DROP VIEW IF EXISTS uc.notes;
 CREATE VIEW uc.notes AS
 SELECT
 id AS id,
 instance_id AS instance_id,
 CAST(jsonb AS VARCHAR(1024)) AS content
 FROM (SELECT _id::text || ordinality::text AS id, _id AS instance_id, value AS jsonb FROM diku_mod_inventory_storage.instance, jsonb_array_elements_text((jsonb->>'notes')::jsonb) WITH ORDINALITY) a;
---DROP VIEW IF EXISTS uc.statistical_code_ids;
 CREATE VIEW uc.statistical_code_ids AS
 SELECT
 id AS id,
 instance_id AS instance_id,
 CAST(jsonb AS VARCHAR(1024)) AS content
 FROM (SELECT _id::text || ordinality::text AS id, _id AS instance_id, value AS jsonb FROM diku_mod_inventory_storage.instance, jsonb_array_elements_text((jsonb->>'statisticalCodeIds')::jsonb) WITH ORDINALITY) a;
---DROP VIEW IF EXISTS uc.instances;
 CREATE VIEW uc.instances AS
 SELECT
 _id AS id,
@@ -979,7 +894,6 @@ jsonb_pretty(jsonb) AS content,
 instancestatusid AS instancestatusid,
 modeofissuanceid AS modeofissuanceid
 FROM diku_mod_inventory_storage.instance;
---DROP VIEW IF EXISTS uc.formats;
 CREATE VIEW uc.formats AS
 SELECT
 _id AS id,
@@ -994,7 +908,6 @@ CAST(jsonb#>>'{metadata,updatedByUserId}' AS UUID) AS updated_by_user_id,
 CAST(jsonb#>>'{metadata,updatedByUsername}' AS VARCHAR(1024)) AS updated_by_username,
 jsonb_pretty(jsonb) AS content
 FROM diku_mod_inventory_storage.instance_format;
---DROP VIEW IF EXISTS uc.relationships;
 CREATE VIEW uc.relationships AS
 SELECT
 _id AS id,
@@ -1012,7 +925,6 @@ superinstanceid AS superinstanceid,
 subinstanceid AS subinstanceid,
 instancerelationshiptypeid AS instancerelationshiptypeid
 FROM diku_mod_inventory_storage.instance_relationship;
---DROP VIEW IF EXISTS uc.relationship_types;
 CREATE VIEW uc.relationship_types AS
 SELECT
 _id AS id,
@@ -1025,21 +937,18 @@ CAST(jsonb#>>'{metadata,updatedByUserId}' AS UUID) AS updated_by_user_id,
 CAST(jsonb#>>'{metadata,updatedByUsername}' AS VARCHAR(1024)) AS updated_by_username,
 jsonb_pretty(jsonb) AS content
 FROM diku_mod_inventory_storage.instance_relationship_type;
---DROP VIEW IF EXISTS uc.source_marc_fields;
 CREATE VIEW uc.source_marc_fields AS
 SELECT
 id AS id,
 source_marc_id AS source_marc_id,
 CAST(jsonb AS VARCHAR(1024)) AS content
 FROM (SELECT _id::text || ordinality::text AS id, _id AS source_marc_id, value AS jsonb FROM diku_mod_inventory_storage.instance_source_marc, jsonb_array_elements_text((jsonb->>'fields')::jsonb) WITH ORDINALITY) a;
---DROP VIEW IF EXISTS uc.source_marcs;
 CREATE VIEW uc.source_marcs AS
 SELECT
 _id AS id,
 CAST(jsonb->>'leader' AS VARCHAR(24)) AS leader,
 jsonb_pretty(jsonb) AS content
 FROM diku_mod_inventory_storage.instance_source_marc;
---DROP VIEW IF EXISTS uc.statuses;
 CREATE VIEW uc.statuses AS
 SELECT
 _id AS id,
@@ -1054,7 +963,6 @@ CAST(jsonb#>>'{metadata,updatedByUserId}' AS UUID) AS updated_by_user_id,
 CAST(jsonb#>>'{metadata,updatedByUsername}' AS VARCHAR(1024)) AS updated_by_username,
 jsonb_pretty(jsonb) AS content
 FROM diku_mod_inventory_storage.instance_status;
---DROP VIEW IF EXISTS uc.instance_types;
 CREATE VIEW uc.instance_types AS
 SELECT
 _id AS id,
@@ -1068,7 +976,6 @@ CAST(jsonb#>>'{metadata,updatedByUserId}' AS UUID) AS updated_by_user_id,
 CAST(jsonb#>>'{metadata,updatedByUsername}' AS VARCHAR(1024)) AS updated_by_username,
 jsonb_pretty(jsonb) AS content
 FROM diku_mod_inventory_storage.instance_type;
---DROP VIEW IF EXISTS uc.institutions;
 CREATE VIEW uc.institutions AS
 SELECT
 _id AS id,
@@ -1082,7 +989,6 @@ CAST(jsonb#>>'{metadata,updatedByUserId}' AS UUID) AS updated_by_user_id,
 CAST(jsonb#>>'{metadata,updatedByUsername}' AS VARCHAR(1024)) AS updated_by_username,
 jsonb_pretty(jsonb) AS content
 FROM diku_mod_inventory_storage.locinstitution;
---DROP VIEW IF EXISTS uc.interfaces;
 CREATE VIEW uc.interfaces AS
 SELECT
 id AS id,
@@ -1099,28 +1005,24 @@ CAST(jsonb->>'online_location' AS VARCHAR(1024)) AS online_location,
 CAST(jsonb->>'statistics_notes' AS VARCHAR(1024)) AS statistics_notes,
 jsonb_pretty(jsonb) AS content
 FROM diku_mod_vendors.interface;
---DROP VIEW IF EXISTS uc.item_former_ids;
 CREATE VIEW uc.item_former_ids AS
 SELECT
 id AS id,
 item_id AS item_id,
 CAST(jsonb AS VARCHAR(1024)) AS content
 FROM (SELECT _id::text || ordinality::text AS id, _id AS item_id, value AS jsonb FROM diku_mod_inventory_storage.item, jsonb_array_elements_text((jsonb->>'formerIds')::jsonb) WITH ORDINALITY) a;
---DROP VIEW IF EXISTS uc.item_year_caption;
 CREATE VIEW uc.item_year_caption AS
 SELECT
 id AS id,
 item_id AS item_id,
 CAST(jsonb AS VARCHAR(1024)) AS content
 FROM (SELECT _id::text || ordinality::text AS id, _id AS item_id, value AS jsonb FROM diku_mod_inventory_storage.item, jsonb_array_elements_text((jsonb->>'yearCaption')::jsonb) WITH ORDINALITY) a;
---DROP VIEW IF EXISTS uc.copy_numbers;
 CREATE VIEW uc.copy_numbers AS
 SELECT
 id AS id,
 item_id AS item_id,
 CAST(jsonb AS VARCHAR(1024)) AS content
 FROM (SELECT _id::text || ordinality::text AS id, _id AS item_id, value AS jsonb FROM diku_mod_inventory_storage.item, jsonb_array_elements_text((jsonb->>'copyNumbers')::jsonb) WITH ORDINALITY) a;
---DROP VIEW IF EXISTS uc.item_notes;
 CREATE VIEW uc.item_notes AS
 SELECT
 id AS id,
@@ -1129,7 +1031,6 @@ CAST(jsonb->>'itemNoteTypeId' AS UUID) AS item_note_type_id,
 CAST(jsonb->>'note' AS VARCHAR(1024)) AS note,
 CAST(jsonb->>'staffOnly' AS BOOLEAN) AS staff_only
 FROM (SELECT _id::text || ordinality::text AS id, _id AS item_id, value AS jsonb FROM diku_mod_inventory_storage.item, jsonb_array_elements((jsonb->>'notes')::jsonb) WITH ORDINALITY) a;
---DROP VIEW IF EXISTS uc.circulation_notes;
 CREATE VIEW uc.circulation_notes AS
 SELECT
 id AS id,
@@ -1138,7 +1039,6 @@ CAST(jsonb->>'noteType' AS VARCHAR(1024)) AS note_type,
 CAST(jsonb->>'note' AS VARCHAR(1024)) AS note,
 CAST(jsonb->>'staffOnly' AS BOOLEAN) AS staff_only
 FROM (SELECT _id::text || ordinality::text AS id, _id AS item_id, value AS jsonb FROM diku_mod_inventory_storage.item, jsonb_array_elements((jsonb->>'circulationNotes')::jsonb) WITH ORDINALITY) a;
---DROP VIEW IF EXISTS uc.item_electronic_accesses;
 CREATE VIEW uc.item_electronic_accesses AS
 SELECT
 id AS id,
@@ -1149,14 +1049,12 @@ CAST(jsonb->>'materialsSpecification' AS VARCHAR(1024)) AS materials_specificati
 CAST(jsonb->>'publicNote' AS VARCHAR(1024)) AS public_note,
 CAST(jsonb->>'relationshipId' AS UUID) AS relationship_id
 FROM (SELECT _id::text || ordinality::text AS id, _id AS item_id, value AS jsonb FROM diku_mod_inventory_storage.item, jsonb_array_elements((jsonb->>'electronicAccess')::jsonb) WITH ORDINALITY) a;
---DROP VIEW IF EXISTS uc.item_statistical_code_ids;
 CREATE VIEW uc.item_statistical_code_ids AS
 SELECT
 id AS id,
 item_id AS item_id,
 CAST(jsonb AS VARCHAR(1024)) AS content
 FROM (SELECT _id::text || ordinality::text AS id, _id AS item_id, value AS jsonb FROM diku_mod_inventory_storage.item, jsonb_array_elements_text((jsonb->>'statisticalCodeIds')::jsonb) WITH ORDINALITY) a;
---DROP VIEW IF EXISTS uc.items;
 CREATE VIEW uc.items AS
 SELECT
 _id AS id,
@@ -1203,7 +1101,6 @@ materialtypeid AS materialtypeid,
 permanentlocationid AS permanentlocationid,
 temporarylocationid AS temporarylocationid
 FROM diku_mod_inventory_storage.item;
---DROP VIEW IF EXISTS uc.item_note_types;
 CREATE VIEW uc.item_note_types AS
 SELECT
 _id AS id,
@@ -1217,14 +1114,12 @@ CAST(jsonb#>>'{metadata,updatedByUserId}' AS UUID) AS updated_by_user_id,
 CAST(jsonb#>>'{metadata,updatedByUsername}' AS VARCHAR(1024)) AS updated_by_username,
 jsonb_pretty(jsonb) AS content
 FROM diku_mod_inventory_storage.item_note_type;
---DROP VIEW IF EXISTS uc.ledger_fiscal_years;
 CREATE VIEW uc.ledger_fiscal_years AS
 SELECT
 id AS id,
 ledger_id AS ledger_id,
 CAST(jsonb AS VARCHAR(1024)) AS content
 FROM (SELECT id::text || ordinality::text AS id, id AS ledger_id, value AS jsonb FROM diku_mod_finance_storage.ledger, jsonb_array_elements_text((jsonb->>'fiscal_years')::jsonb) WITH ORDINALITY) a;
---DROP VIEW IF EXISTS uc.ledgers;
 CREATE VIEW uc.ledgers AS
 SELECT
 id AS id,
@@ -1236,7 +1131,6 @@ uc.TIMESTAMP_CAST(jsonb->>'period_start') AS period_start,
 uc.TIMESTAMP_CAST(jsonb->>'period_end') AS period_end,
 jsonb_pretty(jsonb) AS content
 FROM diku_mod_finance_storage.ledger;
---DROP VIEW IF EXISTS uc.libraries;
 CREATE VIEW uc.libraries AS
 SELECT
 _id AS id,
@@ -1252,7 +1146,6 @@ CAST(jsonb#>>'{metadata,updatedByUsername}' AS VARCHAR(1024)) AS updated_by_user
 jsonb_pretty(jsonb) AS content,
 campusid AS campusid
 FROM diku_mod_inventory_storage.loclibrary;
---DROP VIEW IF EXISTS uc.loans;
 CREATE VIEW uc.loans AS
 SELECT
 _id AS id,
@@ -1279,7 +1172,6 @@ CAST(jsonb#>>'{metadata,updatedByUserId}' AS UUID) AS updated_by_user_id,
 CAST(jsonb#>>'{metadata,updatedByUsername}' AS VARCHAR(1024)) AS updated_by_username,
 jsonb_pretty(jsonb) AS content
 FROM diku_mod_circulation_storage.loan;
---DROP VIEW IF EXISTS uc.loan_policies;
 CREATE VIEW uc.loan_policies AS
 SELECT
 _id AS id,
@@ -1329,7 +1221,6 @@ jsonb_pretty(jsonb) AS content,
 loanspolicy_fixedduedatescheduleid AS loanspolicy_fixedduedatescheduleid,
 renewalspolicy_alternatefixedduedatescheduleid AS renewalspolicy_alternatefixedduedatescheduleid
 FROM diku_mod_circulation_storage.loan_policy;
---DROP VIEW IF EXISTS uc.loan_types;
 CREATE VIEW uc.loan_types AS
 SELECT
 _id AS id,
@@ -1342,14 +1233,12 @@ CAST(jsonb#>>'{metadata,updatedByUserId}' AS UUID) AS updated_by_user_id,
 CAST(jsonb#>>'{metadata,updatedByUsername}' AS VARCHAR(1024)) AS updated_by_username,
 jsonb_pretty(jsonb) AS content
 FROM diku_mod_inventory_storage.loan_type;
---DROP VIEW IF EXISTS uc.location_service_point_ids;
 CREATE VIEW uc.location_service_point_ids AS
 SELECT
 id AS id,
 location_id AS location_id,
 CAST(jsonb AS VARCHAR(1024)) AS content
 FROM (SELECT _id::text || ordinality::text AS id, _id AS location_id, value AS jsonb FROM diku_mod_inventory_storage.location, jsonb_array_elements_text((jsonb->>'servicePointIds')::jsonb) WITH ORDINALITY) a;
---DROP VIEW IF EXISTS uc.locations;
 CREATE VIEW uc.locations AS
 SELECT
 _id AS id,
@@ -1373,7 +1262,6 @@ institutionid AS institutionid,
 campusid AS campusid,
 libraryid AS libraryid
 FROM diku_mod_inventory_storage.location;
---DROP VIEW IF EXISTS uc.logins;
 CREATE VIEW uc.logins AS
 SELECT
 _id AS id,
@@ -1388,7 +1276,6 @@ CAST(jsonb#>>'{metadata,updatedByUserId}' AS UUID) AS updated_by_user_id,
 CAST(jsonb#>>'{metadata,updatedByUsername}' AS VARCHAR(1024)) AS updated_by_username,
 jsonb_pretty(jsonb) AS content
 FROM diku_mod_login.auth_credentials;
---DROP VIEW IF EXISTS uc.material_types;
 CREATE VIEW uc.material_types AS
 SELECT
 _id AS id,
@@ -1402,7 +1289,6 @@ CAST(jsonb#>>'{metadata,updatedByUserId}' AS UUID) AS updated_by_user_id,
 CAST(jsonb#>>'{metadata,updatedByUsername}' AS VARCHAR(1024)) AS updated_by_username,
 jsonb_pretty(jsonb) AS content
 FROM diku_mod_inventory_storage.material_type;
---DROP VIEW IF EXISTS uc.mode_of_issuances;
 CREATE VIEW uc.mode_of_issuances AS
 SELECT
 _id AS id,
@@ -1415,7 +1301,6 @@ CAST(jsonb#>>'{metadata,updatedByUserId}' AS UUID) AS updated_by_user_id,
 CAST(jsonb#>>'{metadata,updatedByUsername}' AS VARCHAR(1024)) AS updated_by_username,
 jsonb_pretty(jsonb) AS content
 FROM diku_mod_inventory_storage.mode_of_issuance;
---DROP VIEW IF EXISTS uc.note_links;
 CREATE VIEW uc.note_links AS
 SELECT
 id AS id,
@@ -1424,7 +1309,6 @@ CAST(jsonb->>'id' AS VARCHAR(1024)) AS id2,
 CAST(jsonb->>'type' AS VARCHAR(1024)) AS type,
 CAST(jsonb->>'domain' AS VARCHAR(1024)) AS domain
 FROM (SELECT id::text || ordinality::text AS id, id AS note_id, value AS jsonb FROM diku_mod_notes.note_data, jsonb_array_elements((jsonb->>'links')::jsonb) WITH ORDINALITY) a;
---DROP VIEW IF EXISTS uc.notes2;
 CREATE VIEW uc.notes2 AS
 SELECT
 id AS id,
@@ -1446,14 +1330,12 @@ CAST(jsonb#>>'{metadata,updatedByUserId}' AS UUID) AS updated_by_user_id,
 CAST(jsonb#>>'{metadata,updatedByUsername}' AS VARCHAR(1024)) AS updated_by_username,
 jsonb_pretty(jsonb) AS content
 FROM diku_mod_notes.note_data;
---DROP VIEW IF EXISTS uc.order_notes;
 CREATE VIEW uc.order_notes AS
 SELECT
 id AS id,
 order_id AS order_id,
 CAST(jsonb AS VARCHAR(1024)) AS content
 FROM (SELECT id::text || ordinality::text AS id, id AS order_id, value AS jsonb FROM diku_mod_orders_storage.purchase_order, jsonb_array_elements_text((jsonb->>'notes')::jsonb) WITH ORDINALITY) a;
---DROP VIEW IF EXISTS uc.orders;
 CREATE VIEW uc.orders AS
 SELECT
 id AS id,
@@ -1481,14 +1363,12 @@ CAST(jsonb#>>'{metadata,updatedByUserId}' AS UUID) AS updated_by_user_id,
 CAST(jsonb#>>'{metadata,updatedByUsername}' AS VARCHAR(1024)) AS updated_by_username,
 jsonb_pretty(jsonb) AS content
 FROM diku_mod_orders_storage.purchase_order;
---DROP VIEW IF EXISTS uc.order_item_alerts;
 CREATE VIEW uc.order_item_alerts AS
 SELECT
 id AS id,
 order_item_id AS order_item_id,
 CAST(jsonb AS UUID) AS alert_id
 FROM (SELECT id::text || ordinality::text AS id, id AS order_item_id, value AS jsonb FROM diku_mod_orders_storage.po_line, jsonb_array_elements_text((jsonb->>'alerts')::jsonb) WITH ORDINALITY) a;
---DROP VIEW IF EXISTS uc.order_item_claims;
 CREATE VIEW uc.order_item_claims AS
 SELECT
 id AS id,
@@ -1497,7 +1377,6 @@ CAST(jsonb->>'claimed' AS BOOLEAN) AS claimed,
 uc.TIMESTAMP_CAST(jsonb->>'sent') AS sent,
 CAST(jsonb->>'grace' AS INTEGER) AS grace
 FROM (SELECT id::text || ordinality::text AS id, id AS order_item_id, value AS jsonb FROM diku_mod_orders_storage.po_line, jsonb_array_elements((jsonb->>'claims')::jsonb) WITH ORDINALITY) a;
---DROP VIEW IF EXISTS uc.order_item_contributors;
 CREATE VIEW uc.order_item_contributors AS
 SELECT
 id AS id,
@@ -1505,7 +1384,6 @@ order_item_id AS order_item_id,
 CAST(jsonb->>'contributor' AS VARCHAR(1024)) AS contributor,
 CAST(jsonb->>'contributorType' AS VARCHAR(1024)) AS contributor_type
 FROM (SELECT id::text || ordinality::text AS id, id AS order_item_id, value AS jsonb FROM diku_mod_orders_storage.po_line, jsonb_array_elements((jsonb->>'contributors')::jsonb) WITH ORDINALITY) a;
---DROP VIEW IF EXISTS uc.order_item_product_ids;
 CREATE VIEW uc.order_item_product_ids AS
 SELECT
 id AS id,
@@ -1513,7 +1391,6 @@ order_item_id AS order_item_id,
 CAST(jsonb->>'productId' AS UUID) AS product_id,
 CAST(jsonb->>'productIdType' AS VARCHAR(1024)) AS product_id_type
 FROM (SELECT id::text || ordinality::text AS id, id AS order_item_id, value AS jsonb FROM diku_mod_orders_storage.po_line, jsonb_array_elements((jsonb#>>'{details,productIds}')::jsonb) WITH ORDINALITY) a;
---DROP VIEW IF EXISTS uc.order_item_fund_distributions;
 CREATE VIEW uc.order_item_fund_distributions AS
 SELECT
 id AS id,
@@ -1522,7 +1399,6 @@ CAST(jsonb->>'code' AS VARCHAR(1024)) AS code,
 CAST(jsonb->>'encumbrance' AS UUID) AS encumbrance_id,
 CAST(jsonb->>'percentage' AS DECIMAL(19,2)) AS percentage
 FROM (SELECT id::text || ordinality::text AS id, id AS order_item_id, value AS jsonb FROM diku_mod_orders_storage.po_line, jsonb_array_elements((jsonb->>'fundDistribution')::jsonb) WITH ORDINALITY) a;
---DROP VIEW IF EXISTS uc.order_item_locations;
 CREATE VIEW uc.order_item_locations AS
 SELECT
 id AS id,
@@ -1532,28 +1408,24 @@ CAST(jsonb->>'quantity' AS INTEGER) AS quantity,
 CAST(jsonb->>'quantityElectronic' AS INTEGER) AS quantity_electronic,
 CAST(jsonb->>'quantityPhysical' AS INTEGER) AS quantity_physical
 FROM (SELECT id::text || ordinality::text AS id, id AS order_item_id, value AS jsonb FROM diku_mod_orders_storage.po_line, jsonb_array_elements((jsonb->>'locations')::jsonb) WITH ORDINALITY) a;
---DROP VIEW IF EXISTS uc.order_item_volumes;
 CREATE VIEW uc.order_item_volumes AS
 SELECT
 id AS id,
 order_item_id AS order_item_id,
 CAST(jsonb AS VARCHAR(1024)) AS content
 FROM (SELECT id::text || ordinality::text AS id, id AS order_item_id, value AS jsonb FROM diku_mod_orders_storage.po_line, jsonb_array_elements_text((jsonb#>>'{physical,volumes}')::jsonb) WITH ORDINALITY) a;
---DROP VIEW IF EXISTS uc.order_item_reporting_codes;
 CREATE VIEW uc.order_item_reporting_codes AS
 SELECT
 id AS id,
 order_item_id AS order_item_id,
 CAST(jsonb AS UUID) AS reporting_code_id
 FROM (SELECT id::text || ordinality::text AS id, id AS order_item_id, value AS jsonb FROM diku_mod_orders_storage.po_line, jsonb_array_elements_text((jsonb->>'reportingCodes')::jsonb) WITH ORDINALITY) a;
---DROP VIEW IF EXISTS uc.order_item_tags;
 CREATE VIEW uc.order_item_tags AS
 SELECT
 id AS id,
 order_item_id AS order_item_id,
 CAST(jsonb AS VARCHAR(1024)) AS content
 FROM (SELECT id::text || ordinality::text AS id, id AS order_item_id, value AS jsonb FROM diku_mod_orders_storage.po_line, jsonb_array_elements_text((jsonb->>'tags')::jsonb) WITH ORDINALITY) a;
---DROP VIEW IF EXISTS uc.order_items;
 CREATE VIEW uc.order_items AS
 SELECT
 id AS id,
@@ -1625,7 +1497,6 @@ CAST(jsonb#>>'{metadata,updatedByUserId}' AS UUID) AS updated_by_user_id,
 CAST(jsonb#>>'{metadata,updatedByUsername}' AS VARCHAR(1024)) AS updated_by_username,
 jsonb_pretty(jsonb) AS content
 FROM diku_mod_orders_storage.po_line;
---DROP VIEW IF EXISTS uc.order_item_locations2;
 CREATE VIEW uc.order_item_locations2 AS
 SELECT
 id AS id,
@@ -1635,7 +1506,6 @@ CAST(jsonb->>'quantityElectronic' AS INTEGER) AS quantity_electronic,
 CAST(jsonb->>'quantityPhysical' AS INTEGER) AS quantity_physical,
 jsonb_pretty(jsonb) AS content
 FROM diku_mod_orders_storage.location;
---DROP VIEW IF EXISTS uc.service_point_owners;
 CREATE VIEW uc.service_point_owners AS
 SELECT
 id AS id,
@@ -1643,7 +1513,6 @@ owner_id AS owner_id,
 CAST(jsonb->>'value' AS VARCHAR(1024)) AS value,
 CAST(jsonb->>'label' AS VARCHAR(1024)) AS label
 FROM (SELECT id::text || ordinality::text AS id, id AS owner_id, value AS jsonb FROM diku_mod_feesfines.owners, jsonb_array_elements((jsonb->>'servicePointOwner')::jsonb) WITH ORDINALITY) a;
---DROP VIEW IF EXISTS uc.owners;
 CREATE VIEW uc.owners AS
 SELECT
 id AS id,
@@ -1659,7 +1528,6 @@ CAST(jsonb#>>'{metadata,updatedByUserId}' AS UUID) AS updated_by_user_id,
 CAST(jsonb#>>'{metadata,updatedByUsername}' AS VARCHAR(1024)) AS updated_by_username,
 jsonb_pretty(jsonb) AS content
 FROM diku_mod_feesfines.owners;
---DROP VIEW IF EXISTS uc.patron_notice_policy_loan_notices;
 CREATE VIEW uc.patron_notice_policy_loan_notices AS
 SELECT
 id AS id,
@@ -1677,7 +1545,6 @@ CAST(jsonb#>>'{sendOptions,sendBy,intervalId}' AS UUID) AS send_options_send_by_
 CAST(jsonb#>>'{sendOptions,sendEvery,duration}' AS INTEGER) AS send_options_send_every_duration,
 CAST(jsonb#>>'{sendOptions,sendEvery,intervalId}' AS UUID) AS send_options_send_every_interval_id
 FROM (SELECT _id::text || ordinality::text AS id, _id AS patron_notice_policy_id, value AS jsonb FROM diku_mod_circulation_storage.patron_notice_policy, jsonb_array_elements((jsonb->>'loanNotices')::jsonb) WITH ORDINALITY) a;
---DROP VIEW IF EXISTS uc.patron_notice_policy_fee_fine_notices;
 CREATE VIEW uc.patron_notice_policy_fee_fine_notices AS
 SELECT
 id AS id,
@@ -1694,7 +1561,6 @@ CAST(jsonb#>>'{sendOptions,sendBy,intervalId}' AS UUID) AS send_options_send_by_
 CAST(jsonb#>>'{sendOptions,sendEvery,duration}' AS INTEGER) AS send_options_send_every_duration,
 CAST(jsonb#>>'{sendOptions,sendEvery,intervalId}' AS UUID) AS send_options_send_every_interval_id
 FROM (SELECT _id::text || ordinality::text AS id, _id AS patron_notice_policy_id, value AS jsonb FROM diku_mod_circulation_storage.patron_notice_policy, jsonb_array_elements((jsonb->>'feeFineNotices')::jsonb) WITH ORDINALITY) a;
---DROP VIEW IF EXISTS uc.patron_notice_policy_request_notices;
 CREATE VIEW uc.patron_notice_policy_request_notices AS
 SELECT
 id AS id,
@@ -1712,7 +1578,6 @@ CAST(jsonb#>>'{sendOptions,sendBy,intervalId}' AS UUID) AS send_options_send_by_
 CAST(jsonb#>>'{sendOptions,sendEvery,duration}' AS INTEGER) AS send_options_send_every_duration,
 CAST(jsonb#>>'{sendOptions,sendEvery,intervalId}' AS UUID) AS send_options_send_every_interval_id
 FROM (SELECT _id::text || ordinality::text AS id, _id AS patron_notice_policy_id, value AS jsonb FROM diku_mod_circulation_storage.patron_notice_policy, jsonb_array_elements((jsonb->>'requestNotices')::jsonb) WITH ORDINALITY) a;
---DROP VIEW IF EXISTS uc.patron_notice_policies;
 CREATE VIEW uc.patron_notice_policies AS
 SELECT
 _id AS id,
@@ -1727,7 +1592,6 @@ CAST(jsonb#>>'{metadata,updatedByUserId}' AS UUID) AS updated_by_user_id,
 CAST(jsonb#>>'{metadata,updatedByUsername}' AS VARCHAR(1024)) AS updated_by_username,
 jsonb_pretty(jsonb) AS content
 FROM diku_mod_circulation_storage.patron_notice_policy;
---DROP VIEW IF EXISTS uc.payments;
 CREATE VIEW uc.payments AS
 SELECT
 id AS id,
@@ -1742,35 +1606,30 @@ CAST(jsonb#>>'{metadata,updatedByUsername}' AS VARCHAR(1024)) AS updated_by_user
 CAST(jsonb->>'ownerId' AS UUID) AS owner_id,
 jsonb_pretty(jsonb) AS content
 FROM diku_mod_feesfines.payments;
---DROP VIEW IF EXISTS uc.permission_tags;
 CREATE VIEW uc.permission_tags AS
 SELECT
 id AS id,
 permission_id AS permission_id,
 CAST(jsonb AS VARCHAR(1024)) AS content
 FROM (SELECT _id::text || ordinality::text AS id, _id AS permission_id, value AS jsonb FROM diku_mod_permissions.permissions, jsonb_array_elements_text((jsonb->>'tags')::jsonb) WITH ORDINALITY) a;
---DROP VIEW IF EXISTS uc.permission_sub_permissions;
 CREATE VIEW uc.permission_sub_permissions AS
 SELECT
 id AS id,
 permission_id AS permission_id,
 CAST(jsonb AS VARCHAR(1024)) AS content
 FROM (SELECT _id::text || ordinality::text AS id, _id AS permission_id, value AS jsonb FROM diku_mod_permissions.permissions, jsonb_array_elements_text((jsonb->>'subPermissions')::jsonb) WITH ORDINALITY) a;
---DROP VIEW IF EXISTS uc.permission_child_of;
 CREATE VIEW uc.permission_child_of AS
 SELECT
 id AS id,
 permission_id AS permission_id,
 CAST(jsonb AS VARCHAR(1024)) AS content
 FROM (SELECT _id::text || ordinality::text AS id, _id AS permission_id, value AS jsonb FROM diku_mod_permissions.permissions, jsonb_array_elements_text((jsonb->>'childOf')::jsonb) WITH ORDINALITY) a;
---DROP VIEW IF EXISTS uc.permission_granted_to;
 CREATE VIEW uc.permission_granted_to AS
 SELECT
 id AS id,
 permission_id AS permission_id,
 CAST(jsonb AS UUID) AS permissions_user_id
 FROM (SELECT _id::text || ordinality::text AS id, _id AS permission_id, value AS jsonb FROM diku_mod_permissions.permissions, jsonb_array_elements_text((jsonb->>'grantedTo')::jsonb) WITH ORDINALITY) a;
---DROP VIEW IF EXISTS uc.permissions;
 CREATE VIEW uc.permissions AS
 SELECT
 _id AS id,
@@ -1788,14 +1647,12 @@ CAST(jsonb#>>'{metadata,updatedByUserId}' AS UUID) AS updated_by_user_id,
 CAST(jsonb#>>'{metadata,updatedByUsername}' AS VARCHAR(1024)) AS updated_by_username,
 jsonb_pretty(jsonb) AS content
 FROM diku_mod_permissions.permissions;
---DROP VIEW IF EXISTS uc.permissions_user_permissions;
 CREATE VIEW uc.permissions_user_permissions AS
 SELECT
 id AS id,
 permissions_user_id AS permissions_user_id,
 CAST(jsonb AS VARCHAR(1024)) AS content
 FROM (SELECT _id::text || ordinality::text AS id, _id AS permissions_user_id, value AS jsonb FROM diku_mod_permissions.permissions_users, jsonb_array_elements_text((jsonb->>'permissions')::jsonb) WITH ORDINALITY) a;
---DROP VIEW IF EXISTS uc.permissions_users;
 CREATE VIEW uc.permissions_users AS
 SELECT
 _id AS id,
@@ -1808,21 +1665,18 @@ CAST(jsonb#>>'{metadata,updatedByUserId}' AS UUID) AS updated_by_user_id,
 CAST(jsonb#>>'{metadata,updatedByUsername}' AS VARCHAR(1024)) AS updated_by_username,
 jsonb_pretty(jsonb) AS content
 FROM diku_mod_permissions.permissions_users;
---DROP VIEW IF EXISTS uc.phone_number_categories;
 CREATE VIEW uc.phone_number_categories AS
 SELECT
 id AS id,
 phone_number_id AS phone_number_id,
 CAST(jsonb AS VARCHAR(1024)) AS content
 FROM (SELECT id::text || ordinality::text AS id, id AS phone_number_id, value AS jsonb FROM diku_mod_vendors.phone_number, jsonb_array_elements_text((jsonb->>'categories')::jsonb) WITH ORDINALITY) a;
---DROP VIEW IF EXISTS uc.phone_number_types;
 CREATE VIEW uc.phone_number_types AS
 SELECT
 id AS id,
 phone_number_id AS phone_number_id,
 CAST(jsonb AS VARCHAR(1024)) AS content
 FROM (SELECT id::text || ordinality::text AS id, id AS phone_number_id, value AS jsonb FROM diku_mod_vendors.phone_number, jsonb_array_elements_text((jsonb->>'types')::jsonb) WITH ORDINALITY) a;
---DROP VIEW IF EXISTS uc.phone_numbers;
 CREATE VIEW uc.phone_numbers AS
 SELECT
 id AS id,
@@ -1831,14 +1685,12 @@ CAST(jsonb->>'isPrimary' AS BOOLEAN) AS is_primary,
 CAST(jsonb->>'language' AS VARCHAR(1024)) AS language,
 jsonb_pretty(jsonb) AS content
 FROM diku_mod_vendors.phone_number;
---DROP VIEW IF EXISTS uc.physical_volumes;
 CREATE VIEW uc.physical_volumes AS
 SELECT
 id AS id,
 physical_id AS physical_id,
 CAST(jsonb AS VARCHAR(1024)) AS content
 FROM (SELECT id::text || ordinality::text AS id, id AS physical_id, value AS jsonb FROM diku_mod_orders_storage.physical, jsonb_array_elements_text((jsonb->>'volumes')::jsonb) WITH ORDINALITY) a;
---DROP VIEW IF EXISTS uc.physicals;
 CREATE VIEW uc.physicals AS
 SELECT
 id AS id,
@@ -1849,7 +1701,6 @@ uc.TIMESTAMP_CAST(jsonb->>'expectedReceiptDate') AS expected_receipt_date,
 uc.TIMESTAMP_CAST(jsonb->>'receiptDue') AS receipt_due,
 jsonb_pretty(jsonb) AS content
 FROM diku_mod_orders_storage.physical;
---DROP VIEW IF EXISTS uc.pieces;
 CREATE VIEW uc.pieces AS
 SELECT
 id AS id,
@@ -1864,7 +1715,6 @@ CAST(jsonb->>'supplement' AS BOOLEAN) AS supplement,
 uc.TIMESTAMP_CAST(jsonb->>'receivedDate') AS received_date,
 jsonb_pretty(jsonb) AS content
 FROM diku_mod_orders_storage.pieces;
---DROP VIEW IF EXISTS uc.proxies;
 CREATE VIEW uc.proxies AS
 SELECT
 id AS id,
@@ -1883,7 +1733,6 @@ CAST(jsonb#>>'{metadata,updatedByUserId}' AS UUID) AS updated_by_user_id,
 CAST(jsonb#>>'{metadata,updatedByUsername}' AS VARCHAR(1024)) AS updated_by_username,
 jsonb_pretty(jsonb) AS content
 FROM diku_mod_users.proxyfor;
---DROP VIEW IF EXISTS uc.refunds;
 CREATE VIEW uc.refunds AS
 SELECT
 id AS id,
@@ -1898,7 +1747,6 @@ CAST(jsonb#>>'{metadata,updatedByUsername}' AS VARCHAR(1024)) AS updated_by_user
 CAST(jsonb->>'accountId' AS UUID) AS account_id,
 jsonb_pretty(jsonb) AS content
 FROM diku_mod_feesfines.refunds;
---DROP VIEW IF EXISTS uc.reporting_codes;
 CREATE VIEW uc.reporting_codes AS
 SELECT
 id AS id,
@@ -1906,14 +1754,12 @@ CAST(jsonb->>'code' AS VARCHAR(1024)) AS code,
 CAST(jsonb->>'description' AS VARCHAR(1024)) AS description,
 jsonb_pretty(jsonb) AS content
 FROM diku_mod_orders_storage.reporting_code;
---DROP VIEW IF EXISTS uc.request_tags;
 CREATE VIEW uc.request_tags AS
 SELECT
 id AS id,
 request_id AS request_id,
 CAST(jsonb AS VARCHAR(1024)) AS content
 FROM (SELECT _id::text || ordinality::text AS id, _id AS request_id, value AS jsonb FROM diku_mod_circulation_storage.request, jsonb_array_elements_text((jsonb#>>'{tags,tagList}')::jsonb) WITH ORDINALITY) a;
---DROP VIEW IF EXISTS uc.requests;
 CREATE VIEW uc.requests AS
 SELECT
 _id AS id,
@@ -1954,14 +1800,12 @@ CAST(jsonb#>>'{metadata,updatedByUsername}' AS VARCHAR(1024)) AS updated_by_user
 jsonb_pretty(jsonb) AS content,
 cancellationreasonid AS cancellationreasonid
 FROM diku_mod_circulation_storage.request;
---DROP VIEW IF EXISTS uc.request_policy_request_types;
 CREATE VIEW uc.request_policy_request_types AS
 SELECT
 id AS id,
 request_policy_id AS request_policy_id,
 CAST(jsonb AS VARCHAR(1024)) AS content
 FROM (SELECT _id::text || ordinality::text AS id, _id AS request_policy_id, value AS jsonb FROM diku_mod_circulation_storage.request_policy, jsonb_array_elements_text((jsonb->>'requestTypes')::jsonb) WITH ORDINALITY) a;
---DROP VIEW IF EXISTS uc.request_policies;
 CREATE VIEW uc.request_policies AS
 SELECT
 _id AS id,
@@ -1975,7 +1819,6 @@ CAST(jsonb#>>'{metadata,updatedByUserId}' AS UUID) AS updated_by_user_id,
 CAST(jsonb#>>'{metadata,updatedByUsername}' AS VARCHAR(1024)) AS updated_by_username,
 jsonb_pretty(jsonb) AS content
 FROM diku_mod_circulation_storage.request_policy;
---DROP VIEW IF EXISTS uc.service_point_staff_slips;
 CREATE VIEW uc.service_point_staff_slips AS
 SELECT
 id AS id,
@@ -1983,7 +1826,6 @@ service_point_id AS service_point_id,
 CAST(jsonb->>'id' AS UUID) AS staff_slip_id,
 CAST(jsonb->>'printByDefault' AS BOOLEAN) AS print_by_default
 FROM (SELECT _id::text || ordinality::text AS id, _id AS service_point_id, value AS jsonb FROM diku_mod_inventory_storage.service_point, jsonb_array_elements((jsonb->>'staffSlips')::jsonb) WITH ORDINALITY) a;
---DROP VIEW IF EXISTS uc.service_points;
 CREATE VIEW uc.service_points AS
 SELECT
 _id AS id,
@@ -2003,14 +1845,12 @@ CAST(jsonb#>>'{metadata,updatedByUserId}' AS UUID) AS updated_by_user_id,
 CAST(jsonb#>>'{metadata,updatedByUsername}' AS VARCHAR(1024)) AS updated_by_username,
 jsonb_pretty(jsonb) AS content
 FROM diku_mod_inventory_storage.service_point;
---DROP VIEW IF EXISTS uc.service_point_user_service_points;
 CREATE VIEW uc.service_point_user_service_points AS
 SELECT
 id AS id,
 service_point_user_id AS service_point_user_id,
 CAST(jsonb AS UUID) AS service_point_id
 FROM (SELECT _id::text || ordinality::text AS id, _id AS service_point_user_id, value AS jsonb FROM diku_mod_inventory_storage.service_point_user, jsonb_array_elements_text((jsonb->>'servicePointsIds')::jsonb) WITH ORDINALITY) a;
---DROP VIEW IF EXISTS uc.service_point_users;
 CREATE VIEW uc.service_point_users AS
 SELECT
 _id AS id,
@@ -2025,7 +1865,6 @@ CAST(jsonb#>>'{metadata,updatedByUsername}' AS VARCHAR(1024)) AS updated_by_user
 jsonb_pretty(jsonb) AS content,
 defaultservicepointid AS defaultservicepointid
 FROM diku_mod_inventory_storage.service_point_user;
---DROP VIEW IF EXISTS uc.sources;
 CREATE VIEW uc.sources AS
 SELECT
 id AS id,
@@ -2033,7 +1872,6 @@ CAST(jsonb->>'code' AS VARCHAR(1024)) AS code,
 CAST(jsonb->>'description' AS VARCHAR(1024)) AS description,
 jsonb_pretty(jsonb) AS content
 FROM diku_mod_orders_storage.source;
---DROP VIEW IF EXISTS uc.staff_slip_staff_slips;
 CREATE VIEW uc.staff_slip_staff_slips AS
 SELECT
 id AS id,
@@ -2050,14 +1888,12 @@ uc.TIMESTAMP_CAST(jsonb#>>'{metadata,updatedDate}') AS updated_date,
 CAST(jsonb#>>'{metadata,updatedByUserId}' AS UUID) AS updated_by_user_id,
 CAST(jsonb#>>'{metadata,updatedByUsername}' AS VARCHAR(1024)) AS updated_by_username
 FROM (SELECT _id::text || ordinality::text AS id, _id AS staff_slip_id, value AS jsonb FROM diku_mod_circulation_storage.staff_slips, jsonb_array_elements((jsonb->>'staffSlips')::jsonb) WITH ORDINALITY) a;
---DROP VIEW IF EXISTS uc.staff_slips;
 CREATE VIEW uc.staff_slips AS
 SELECT
 _id AS id,
 CAST(jsonb->>'totalRecords' AS INTEGER) AS total_records,
 jsonb_pretty(jsonb) AS content
 FROM diku_mod_circulation_storage.staff_slips;
---DROP VIEW IF EXISTS uc.statistical_codes;
 CREATE VIEW uc.statistical_codes AS
 SELECT
 _id AS id,
@@ -2073,7 +1909,6 @@ CAST(jsonb#>>'{metadata,updatedByUsername}' AS VARCHAR(1024)) AS updated_by_user
 jsonb_pretty(jsonb) AS content,
 statisticalcodetypeid AS statisticalcodetypeid
 FROM diku_mod_inventory_storage.statistical_code;
---DROP VIEW IF EXISTS uc.statistical_code_types;
 CREATE VIEW uc.statistical_code_types AS
 SELECT
 _id AS id,
@@ -2087,7 +1922,6 @@ CAST(jsonb#>>'{metadata,updatedByUserId}' AS UUID) AS updated_by_user_id,
 CAST(jsonb#>>'{metadata,updatedByUsername}' AS VARCHAR(1024)) AS updated_by_username,
 jsonb_pretty(jsonb) AS content
 FROM diku_mod_inventory_storage.statistical_code_type;
---DROP VIEW IF EXISTS uc.tags;
 CREATE VIEW uc.tags AS
 SELECT
 _id AS id,
@@ -2101,7 +1935,6 @@ CAST(jsonb#>>'{metadata,updatedByUserId}' AS UUID) AS updated_by_user_id,
 CAST(jsonb#>>'{metadata,updatedByUsername}' AS VARCHAR(1024)) AS updated_by_username,
 jsonb_pretty(jsonb) AS content
 FROM diku_mod_tags.tags;
---DROP VIEW IF EXISTS uc.transactions;
 CREATE VIEW uc.transactions AS
 SELECT
 id AS id,
@@ -2120,7 +1953,6 @@ CAST(jsonb->>'budget_id' AS UUID) AS budget_id2,
 jsonb_pretty(jsonb) AS content,
 budget_id AS budget_id
 FROM diku_mod_finance_storage.transaction;
---DROP VIEW IF EXISTS uc.transfers;
 CREATE VIEW uc.transfers AS
 SELECT
 id AS id,
@@ -2135,7 +1967,6 @@ CAST(jsonb#>>'{metadata,updatedByUsername}' AS VARCHAR(1024)) AS updated_by_user
 CAST(jsonb->>'ownerId' AS UUID) AS owner_id,
 jsonb_pretty(jsonb) AS content
 FROM diku_mod_feesfines.transfers;
---DROP VIEW IF EXISTS uc.transfer_criterias;
 CREATE VIEW uc.transfer_criterias AS
 SELECT
 id AS id,
@@ -2145,14 +1976,12 @@ CAST(jsonb->>'value' AS DECIMAL(19,2)) AS value,
 CAST(jsonb->>'interval' AS VARCHAR(1024)) AS interval,
 jsonb_pretty(jsonb) AS content
 FROM diku_mod_feesfines.transfer_criteria;
---DROP VIEW IF EXISTS uc.url_categories;
 CREATE VIEW uc.url_categories AS
 SELECT
 id AS id,
 url_id AS url_id,
 CAST(jsonb AS VARCHAR(1024)) AS content
 FROM (SELECT id::text || ordinality::text AS id, id AS url_id, value AS jsonb FROM diku_mod_vendors.url, jsonb_array_elements_text((jsonb->>'categories')::jsonb) WITH ORDINALITY) a;
---DROP VIEW IF EXISTS uc.urls;
 CREATE VIEW uc.urls AS
 SELECT
 id AS id,
@@ -2163,7 +1992,6 @@ CAST(jsonb->>'isPrimary' AS BOOLEAN) AS is_primary,
 CAST(jsonb->>'notes' AS VARCHAR(1024)) AS notes,
 jsonb_pretty(jsonb) AS content
 FROM diku_mod_vendors.url;
---DROP VIEW IF EXISTS uc.user_addresses;
 CREATE VIEW uc.user_addresses AS
 SELECT
 id AS id,
@@ -2178,14 +2006,12 @@ CAST(jsonb->>'postalCode' AS VARCHAR(1024)) AS postal_code,
 CAST(jsonb->>'addressTypeId' AS UUID) AS address_type_id,
 CAST(jsonb->>'primaryAddress' AS BOOLEAN) AS primary_address
 FROM (SELECT id::text || ordinality::text AS id, id AS user_id, value AS jsonb FROM diku_mod_users.users, jsonb_array_elements((jsonb#>>'{personal,addresses}')::jsonb) WITH ORDINALITY) a;
---DROP VIEW IF EXISTS uc.user_tags;
 CREATE VIEW uc.user_tags AS
 SELECT
 id AS id,
 user_id AS user_id,
 CAST(jsonb AS VARCHAR(1024)) AS content
 FROM (SELECT id::text || ordinality::text AS id, id AS user_id, value AS jsonb FROM diku_mod_users.users, jsonb_array_elements_text((jsonb#>>'{tags,tagList}')::jsonb) WITH ORDINALITY) a;
---DROP VIEW IF EXISTS uc.users;
 CREATE VIEW uc.users AS
 SELECT
 id AS id,
@@ -2214,7 +2040,6 @@ CAST(jsonb#>>'{metadata,updatedByUserId}' AS UUID) AS updated_by_user_id,
 CAST(jsonb#>>'{metadata,updatedByUsername}' AS VARCHAR(1024)) AS updated_by_username,
 jsonb_pretty(jsonb) AS content
 FROM diku_mod_users.users;
---DROP VIEW IF EXISTS uc.vendor_aliases;
 CREATE VIEW uc.vendor_aliases AS
 SELECT
 id AS id,
@@ -2223,14 +2048,12 @@ CAST(jsonb->>'id' AS UUID) AS id2,
 CAST(jsonb->>'value' AS VARCHAR(1024)) AS value,
 CAST(jsonb->>'description' AS VARCHAR(1024)) AS description
 FROM (SELECT id::text || ordinality::text AS id, id AS vendor_id, value AS jsonb FROM diku_mod_vendors.vendor, jsonb_array_elements((jsonb->>'aliases')::jsonb) WITH ORDINALITY) a;
---DROP VIEW IF EXISTS uc.vendor_address_categories;
 CREATE VIEW uc.vendor_address_categories AS
 SELECT
 id AS id,
 vendor_address_id AS vendor_address_id,
 CAST(jsonb AS VARCHAR(1024)) AS content
 FROM (SELECT id::text || ordinality::text AS id, id AS vendor_address_id, value AS jsonb FROM (SELECT id::text || ordinality::text AS id, id AS vendor_id, value AS jsonb FROM diku_mod_vendors.vendor, jsonb_array_elements((jsonb->>'addresses')::jsonb) WITH ORDINALITY) a, jsonb_array_elements_text((jsonb->>'categories')::jsonb) WITH ORDINALITY) a;
---DROP VIEW IF EXISTS uc.vendor_addresses;
 CREATE VIEW uc.vendor_addresses AS
 SELECT
 id AS id,
@@ -2245,21 +2068,18 @@ CAST(jsonb->>'country' AS VARCHAR(1024)) AS country,
 CAST(jsonb->>'isPrimary' AS BOOLEAN) AS is_primary,
 CAST(jsonb->>'language' AS VARCHAR(1024)) AS language
 FROM (SELECT id::text || ordinality::text AS id, id AS vendor_id, value AS jsonb FROM diku_mod_vendors.vendor, jsonb_array_elements((jsonb->>'addresses')::jsonb) WITH ORDINALITY) a;
---DROP VIEW IF EXISTS uc.vendor_phone_number_categories;
 CREATE VIEW uc.vendor_phone_number_categories AS
 SELECT
 id AS id,
 vendor_phone_number_id AS vendor_phone_number_id,
 CAST(jsonb AS VARCHAR(1024)) AS content
 FROM (SELECT id::text || ordinality::text AS id, id AS vendor_phone_number_id, value AS jsonb FROM (SELECT id::text || ordinality::text AS id, id AS vendor_id, value AS jsonb FROM diku_mod_vendors.vendor, jsonb_array_elements((jsonb->>'phone_numbers')::jsonb) WITH ORDINALITY) a, jsonb_array_elements_text((jsonb->>'categories')::jsonb) WITH ORDINALITY) a;
---DROP VIEW IF EXISTS uc.vendor_phone_number_types;
 CREATE VIEW uc.vendor_phone_number_types AS
 SELECT
 id AS id,
 vendor_phone_number_id AS vendor_phone_number_id,
 CAST(jsonb AS VARCHAR(1024)) AS content
 FROM (SELECT id::text || ordinality::text AS id, id AS vendor_phone_number_id, value AS jsonb FROM (SELECT id::text || ordinality::text AS id, id AS vendor_id, value AS jsonb FROM diku_mod_vendors.vendor, jsonb_array_elements((jsonb->>'phone_numbers')::jsonb) WITH ORDINALITY) a, jsonb_array_elements_text((jsonb->>'types')::jsonb) WITH ORDINALITY) a;
---DROP VIEW IF EXISTS uc.vendor_phone_numbers;
 CREATE VIEW uc.vendor_phone_numbers AS
 SELECT
 id AS id,
@@ -2269,14 +2089,12 @@ CAST(jsonb->>'phone_number' AS VARCHAR(1024)) AS phone_number,
 CAST(jsonb->>'isPrimary' AS BOOLEAN) AS is_primary,
 CAST(jsonb->>'language' AS VARCHAR(1024)) AS language
 FROM (SELECT id::text || ordinality::text AS id, id AS vendor_id, value AS jsonb FROM diku_mod_vendors.vendor, jsonb_array_elements((jsonb->>'phone_numbers')::jsonb) WITH ORDINALITY) a;
---DROP VIEW IF EXISTS uc.email_address_categories;
 CREATE VIEW uc.email_address_categories AS
 SELECT
 id AS id,
 vendor_email_id AS vendor_email_id,
 CAST(jsonb AS VARCHAR(1024)) AS content
 FROM (SELECT id::text || ordinality::text AS id, id AS vendor_email_id, value AS jsonb FROM (SELECT id::text || ordinality::text AS id, id AS vendor_id, value AS jsonb FROM diku_mod_vendors.vendor, jsonb_array_elements((jsonb->>'emails')::jsonb) WITH ORDINALITY) a, jsonb_array_elements_text((jsonb->>'categories')::jsonb) WITH ORDINALITY) a;
---DROP VIEW IF EXISTS uc.vendor_emails;
 CREATE VIEW uc.vendor_emails AS
 SELECT
 id AS id,
@@ -2287,14 +2105,12 @@ CAST(jsonb->>'description' AS VARCHAR(1024)) AS description,
 CAST(jsonb->>'isPrimary' AS BOOLEAN) AS is_primary,
 CAST(jsonb->>'language' AS VARCHAR(1024)) AS language
 FROM (SELECT id::text || ordinality::text AS id, id AS vendor_id, value AS jsonb FROM diku_mod_vendors.vendor, jsonb_array_elements((jsonb->>'emails')::jsonb) WITH ORDINALITY) a;
---DROP VIEW IF EXISTS uc.vendor_url_categories;
 CREATE VIEW uc.vendor_url_categories AS
 SELECT
 id AS id,
 vendor_url_id AS vendor_url_id,
 CAST(jsonb AS VARCHAR(1024)) AS content
 FROM (SELECT id::text || ordinality::text AS id, id AS vendor_url_id, value AS jsonb FROM (SELECT id::text || ordinality::text AS id, id AS vendor_id, value AS jsonb FROM diku_mod_vendors.vendor, jsonb_array_elements((jsonb->>'urls')::jsonb) WITH ORDINALITY) a, jsonb_array_elements_text((jsonb->>'categories')::jsonb) WITH ORDINALITY) a;
---DROP VIEW IF EXISTS uc.vendor_urls;
 CREATE VIEW uc.vendor_urls AS
 SELECT
 id AS id,
@@ -2306,14 +2122,12 @@ CAST(jsonb->>'language' AS VARCHAR(1024)) AS language,
 CAST(jsonb->>'isPrimary' AS BOOLEAN) AS is_primary,
 CAST(jsonb->>'notes' AS VARCHAR(1024)) AS notes
 FROM (SELECT id::text || ordinality::text AS id, id AS vendor_id, value AS jsonb FROM diku_mod_vendors.vendor, jsonb_array_elements((jsonb->>'urls')::jsonb) WITH ORDINALITY) a;
---DROP VIEW IF EXISTS uc.vendor_contacts;
 CREATE VIEW uc.vendor_contacts AS
 SELECT
 id AS id,
 vendor_id AS vendor_id,
-CAST(jsonb AS VARCHAR(1024)) AS content
+CAST(jsonb AS UUID) AS contact_id
 FROM (SELECT id::text || ordinality::text AS id, id AS vendor_id, value AS jsonb FROM diku_mod_vendors.vendor, jsonb_array_elements_text((jsonb->>'contacts')::jsonb) WITH ORDINALITY) a;
---DROP VIEW IF EXISTS uc.vendor_agreements;
 CREATE VIEW uc.vendor_agreements AS
 SELECT
 id AS id,
@@ -2324,14 +2138,12 @@ CAST(jsonb->>'discount' AS DECIMAL(19,2)) AS discount,
 CAST(jsonb->>'reference_url' AS VARCHAR(1024)) AS reference_url,
 CAST(jsonb->>'notes' AS VARCHAR(1024)) AS notes
 FROM (SELECT id::text || ordinality::text AS id, id AS vendor_id, value AS jsonb FROM diku_mod_vendors.vendor, jsonb_array_elements((jsonb->>'agreements')::jsonb) WITH ORDINALITY) a;
---DROP VIEW IF EXISTS uc.currencies;
 CREATE VIEW uc.currencies AS
 SELECT
 id AS id,
 vendor_id AS vendor_id,
 CAST(jsonb AS VARCHAR(1024)) AS content
 FROM (SELECT id::text || ordinality::text AS id, id AS vendor_id, value AS jsonb FROM diku_mod_vendors.vendor, jsonb_array_elements_text((jsonb->>'vendor_currencies')::jsonb) WITH ORDINALITY) a;
---DROP VIEW IF EXISTS uc.vendor_interfaces;
 CREATE VIEW uc.vendor_interfaces AS
 SELECT
 id AS id,
@@ -2349,7 +2161,6 @@ CAST(jsonb->>'locally_stored' AS VARCHAR(1024)) AS locally_stored,
 CAST(jsonb->>'online_location' AS VARCHAR(1024)) AS online_location,
 CAST(jsonb->>'statistics_notes' AS VARCHAR(1024)) AS statistics_notes
 FROM (SELECT id::text || ordinality::text AS id, id AS vendor_id, value AS jsonb FROM diku_mod_vendors.vendor, jsonb_array_elements((jsonb->>'interfaces')::jsonb) WITH ORDINALITY) a;
---DROP VIEW IF EXISTS uc.vendor_accounts;
 CREATE VIEW uc.vendor_accounts AS
 SELECT
 id AS id,
@@ -2366,7 +2177,6 @@ CAST(jsonb->>'library_code' AS VARCHAR(1024)) AS library_code,
 CAST(jsonb->>'library_edi_code' AS VARCHAR(1024)) AS library_edi_code,
 CAST(jsonb->>'notes' AS VARCHAR(1024)) AS notes
 FROM (SELECT id::text || ordinality::text AS id, id AS vendor_id, value AS jsonb FROM diku_mod_vendors.vendor, jsonb_array_elements((jsonb->>'accounts')::jsonb) WITH ORDINALITY) a;
---DROP VIEW IF EXISTS uc.vendor_vendor_types;
 CREATE VIEW uc.vendor_vendor_types AS
 SELECT
 id AS id,
@@ -2375,7 +2185,6 @@ CAST(jsonb->>'id' AS UUID) AS id2,
 CAST(jsonb->>'value' AS VARCHAR(1024)) AS value,
 CAST(jsonb->>'locked' AS BOOLEAN) AS locked
 FROM (SELECT id::text || ordinality::text AS id, id AS vendor_id, value AS jsonb FROM diku_mod_vendors.vendor, jsonb_array_elements((jsonb->>'vendor_types')::jsonb) WITH ORDINALITY) a;
---DROP VIEW IF EXISTS uc.vendor_changelogs;
 CREATE VIEW uc.vendor_changelogs AS
 SELECT
 id AS id,
@@ -2383,7 +2192,6 @@ vendor_id AS vendor_id,
 CAST(jsonb->>'description' AS VARCHAR(1024)) AS description,
 uc.TIMESTAMP_CAST(jsonb->>'timestamp') AS timestamp
 FROM (SELECT id::text || ordinality::text AS id, id AS vendor_id, value AS jsonb FROM diku_mod_vendors.vendor, jsonb_array_elements((jsonb->>'changelogs')::jsonb) WITH ORDINALITY) a;
---DROP VIEW IF EXISTS uc.vendors;
 CREATE VIEW uc.vendors AS
 SELECT
 id AS id,
@@ -2447,7 +2255,6 @@ CAST(jsonb#>>'{edi,edi_job,scheduling_notes}' AS VARCHAR(1024)) AS edi_job_sched
 CAST(jsonb->>'san_code' AS VARCHAR(1024)) AS san_code,
 jsonb_pretty(jsonb) AS content
 FROM diku_mod_vendors.vendor;
---DROP VIEW IF EXISTS uc.vendor_details;
 CREATE VIEW uc.vendor_details AS
 SELECT
 id AS id,
@@ -2458,7 +2265,6 @@ CAST(jsonb->>'refNumberType' AS VARCHAR(1024)) AS ref_number_type,
 CAST(jsonb->>'vendorAccount' AS VARCHAR(1024)) AS vendor_account,
 jsonb_pretty(jsonb) AS content
 FROM diku_mod_orders_storage.vendor_detail;
---DROP VIEW IF EXISTS uc.vendor_types;
 CREATE VIEW uc.vendor_types AS
 SELECT
 id AS id,
@@ -2466,7 +2272,6 @@ CAST(jsonb->>'value' AS VARCHAR(1024)) AS value,
 CAST(jsonb->>'locked' AS BOOLEAN) AS locked,
 jsonb_pretty(jsonb) AS content
 FROM diku_mod_vendors.vendor_type;
---DROP VIEW IF EXISTS uc.waives;
 CREATE VIEW uc.waives AS
 SELECT
 id AS id,
