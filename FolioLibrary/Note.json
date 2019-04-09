@@ -5,45 +5,63 @@
   "additionalProperties": false,
   "properties": {
     "id": {
+      "description": "Unique generated identifier for the note",
+      "example": "62d00c36-a94f-434d-9cd2-c7ea159303da",
       "type": "string"
     },
-    "link": {
-      "description": "Link to the item the note refers to",
-      "example": "/items/1234-567890",
+    "type": {
+      "description": "Type of note (configured in settings)",
+      "example": "Access issues",
       "type": "string"
     },
-    "text": {
-      "description": "The text of the note",
+    "title": {
+      "description": "Note title",
+      "example": "BU Campus only issues",
       "type": "string"
     },
-    "domain": {
-      "description": "Domain the note belongs to. Used for permissions like notes.domain.items",
-      "example": "items",
+    "content": {
+      "description": "Content of the note",
+      "example": "There are access issues at BU campus",
       "type": "string"
     },
-    "creatorUserName": {
-      "description": "username of the user who created the note",
-      "example": "johndoe17",
+    "status": {
+      "description": "Status of note - applies when searching by link.id and status",
+      "example": "ASSIGNED",
       "readonly": true,
-      "type": "string"
+      "type": "string",
+      "enum": [
+        "ASSIGNED",
+        "UNASSIGNED"
+      ]
     },
-    "creatorLastName": {
-      "description": "Last name of the user who created the note",
-      "example": "Doe",
-      "readonly": true,
-      "type": "string"
+    "creator": {
+      "description": "User Display Information",
+      "javaType": "org.folio.rest.jaxrs.model.UserDisplayInfo",
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "lastName": {
+          "description": "Last name of the user",
+          "example": "Doe",
+          "readonly": true,
+          "type": "string"
+        },
+        "firstName": {
+          "description": "First name of the user",
+          "example": "John",
+          "readonly": true,
+          "type": "string"
+        },
+        "middleName": {
+          "description": "Middle name or initial of the user",
+          "example": "X.",
+          "readonly": true,
+          "type": "string"
+        }
+      }
     },
-    "creatorFirstName": {
-      "description": "First name of the user who created the note",
-      "example": "John",
-      "readonly": true,
-      "type": "string"
-    },
-    "creatorMiddleName": {
-      "description": "Middle name or initial of the user who created the note",
-      "example": "X.",
-      "readonly": true,
-      "type": "string"
+    "updater": {
+      "$ref": "#/properties/creator"
     },
     "metadata": {
       "title": "Metadata Schema",
@@ -57,7 +75,7 @@
           "format": "date-time"
         },
         "createdByUserId": {
-          "description": "ID of the user who created the record",
+          "description": "ID of the user who created the record (when available)",
           "type": "string",
           "pattern": "^[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12}$"
         },
@@ -71,7 +89,7 @@
           "format": "date-time"
         },
         "updatedByUserId": {
-          "description": "ID of the user who last updated the record",
+          "description": "ID of the user who last updated the record (when available)",
           "type": "string",
           "pattern": "^[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12}$"
         },
@@ -81,13 +99,44 @@
         }
       },
       "required": [
-        "createdDate",
-        "createdByUserId"
+        "createdDate"
       ]
+    },
+    "links": {
+      "description": "Collection of links to associated objects",
+      "type": "array",
+      "items": {
+        "description": "Link to object associated with a note",
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "id": {
+            "description": "Id of object linked to note",
+            "example": "1234-5678",
+            "type": "string"
+          },
+          "type": {
+            "description": "Type of object linked to note",
+            "example": "package",
+            "type": "string"
+          },
+          "domain": {
+            "description": "Domain associated with object linked to note",
+            "example": "eholdings",
+            "type": "string"
+          }
+        },
+        "required": [
+          "id",
+          "type",
+          "domain"
+        ]
+      }
     }
   },
   "required": [
-    "link",
-    "text"
+    "type",
+    "title",
+    "content"
   ]
 }

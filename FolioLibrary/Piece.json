@@ -17,6 +17,15 @@
       "description": "Free form commentary",
       "type": "string"
     },
+    "format": {
+      "description": "The format of the piece",
+      "type": "string",
+      "enum": [
+        "Physical",
+        "Electronic",
+        "Other"
+      ]
+    },
     "itemId": {
       "description": "UUID of the associated item record",
       "type": "string",
@@ -53,6 +62,7 @@
   },
   "required": [
     "poLineId",
-    "receivingStatus"
+    "receivingStatus",
+    "format"
   ]
 }

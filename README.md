@@ -1,8 +1,8 @@
 # Folio console application
 
 ## Description
- 
-This project includes a console application that can be used to load and save data to and from a FOLIO database to JSON files. The data can be loaded and saved using SQL or the FOLIO web API.
+
+This project includes a console application that can be used to load and save data to and from a FOLIO database and JSON files. The data can be loaded and saved using SQL or the FOLIO web API.
 
 ## Requirements
 
@@ -125,11 +125,12 @@ dotnet FolioConsoleApplication.dll -save -allinventory -validate
 -Delete
 -Load
 -Save
+-TracePath <string>
 -Validate
 -Verbose
 -All{Module}
--{Module}Path <string>
--{Module}Where <string>
+-{Entity}Path <string>
+-{Entity}Where <string>
 ```
 
 ## Notes
@@ -159,6 +160,7 @@ FolioLibrary/Folio.sql contains SQL views that can be helpful for reviewing load
 
 ## Future enhancements
 
+* Add support for additional FOLIO modules
 * Switch to using bulk load web APIs when if/when they become available
 * Parse command-line arguments in more robust manner
 * Add multi-threading support

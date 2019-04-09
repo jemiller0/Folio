@@ -277,109 +277,12 @@
     },
     "contacts": {
       "id": "contact",
-      "description": "The list of contacts for this vendor",
+      "description": "An array of contact record IDs",
       "type": "array",
       "items": {
-        "description": "A contact record",
-        "type": "object",
-        "additionalProperties": false,
-        "properties": {
-          "id": {
-            "description": "UUID",
-            "type": [
-              "string",
-              "null"
-            ],
-            "pattern": "^[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12}$"
-          },
-          "prefix": {
-            "description": "The prefix for this contact person",
-            "type": "string"
-          },
-          "first_name": {
-            "description": "The first name of this contact person",
-            "type": "string"
-          },
-          "last_name": {
-            "description": "The last name of this contact person",
-            "type": "string"
-          },
-          "language": {
-            "description": "The preferred language for this contact person",
-            "type": "string"
-          },
-          "notes": {
-            "description": "The notes for this contact person",
-            "type": "string"
-          },
-          "phone_numbers": {
-            "id": "phone_numbers",
-            "description": "The list of phone numbers for this contact person",
-            "type": "array",
-            "items": {
-              "$ref": "phone_numbers#/items"
-            }
-          },
-          "emails": {
-            "id": "email_addresses",
-            "description": "The list of emails for this contact person",
-            "type": "array",
-            "items": {
-              "$ref": "email_addresses#/items"
-            }
-          },
-          "addresses": {
-            "id": "addresses",
-            "description": "The list of addresses for this contact person",
-            "type": "array",
-            "items": {
-              "$ref": "addresses#/items"
-            }
-          },
-          "urls": {
-            "id": "urls",
-            "description": "The list of URLs for this contact person",
-            "type": "array",
-            "items": {
-              "$ref": "urls#/items"
-            }
-          },
-          "categories": {
-            "id": "contact_category",
-            "description": "The list of contact categories for this vendor contact person",
-            "type": "array",
-            "items": {
-              "description": "A vendor category",
-              "type": "object",
-              "additionalProperties": false,
-              "properties": {
-                "id": {
-                  "description": "UUID",
-                  "type": [
-                    "string",
-                    "null"
-                  ],
-                  "pattern": "^[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12}$"
-                },
-                "value": {
-                  "description": "The value of this category",
-                  "type": "string"
-                }
-              },
-              "required": [
-                "value"
-              ]
-            }
-          },
-          "inactive": {
-            "description": "Used to indicate that a contact is no longer active",
-            "type": "boolean"
-          }
-        },
-        "required": [
-          "first_name",
-          "last_name"
-        ]
+        "description": "UUID of a contact record",
+        "type": "string",
+        "pattern": "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-5][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}$"
       }
     },
     "agreements": {
