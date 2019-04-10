@@ -9,6 +9,11 @@
       "example": "62d00c36-a94f-434d-9cd2-c7ea159303da",
       "type": "string"
     },
+    "typeId": {
+      "description": "Type id of note",
+      "example": "13d00c36-a94f-434d-9cd2-c7ea159303da",
+      "type": "string"
+    },
     "type": {
       "description": "Type of note (configured in settings)",
       "example": "Access issues",
@@ -135,7 +140,7 @@
     }
   },
   "required": [
-    "type",
+    "typeId",
     "title",
     "content"
   ]

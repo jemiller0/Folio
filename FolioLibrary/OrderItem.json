@@ -376,6 +376,7 @@
     "paymentStatus": {
       "description": "The purchase order line payment status",
       "type": "string",
+      "default": "Pending",
       "enum": [
         "Awaiting Payment",
         "Cancelled",

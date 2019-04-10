@@ -1312,6 +1312,7 @@ FROM (SELECT id::text || ordinality::text AS id, id AS note_id, value AS jsonb F
 CREATE VIEW uc.notes2 AS
 SELECT
 id AS id,
+CAST(jsonb->>'typeId' AS UUID) AS type_id,
 CAST(jsonb->>'type' AS VARCHAR(1024)) AS type,
 CAST(jsonb->>'title' AS VARCHAR(1024)) AS title,
 CAST(jsonb->>'content' AS VARCHAR(1024)) AS content2,
