@@ -163,7 +163,7 @@ CREATE VIEW uc.budget_tags AS
 SELECT
 id AS id,
 budget_id AS budget_id,
-CAST(jsonb AS VARCHAR(1024)) AS content
+CAST(jsonb AS UUID) AS tag_id
 FROM (SELECT id::text || ordinality::text AS id, id AS budget_id, value AS jsonb FROM diku_mod_finance_storage.budget, jsonb_array_elements_text((jsonb->>'tags')::jsonb) WITH ORDINALITY) a;
 CREATE VIEW uc.budgets AS
 SELECT
@@ -551,19 +551,19 @@ CREATE VIEW uc.fund_allocation_from AS
 SELECT
 id AS id,
 fund_id AS fund_id,
-CAST(jsonb AS VARCHAR(1024)) AS content
+CAST(jsonb AS UUID) AS from_fund_id
 FROM (SELECT id::text || ordinality::text AS id, id AS fund_id, value AS jsonb FROM diku_mod_finance_storage.fund, jsonb_array_elements_text((jsonb->>'allocation_from')::jsonb) WITH ORDINALITY) a;
 CREATE VIEW uc.fund_allocation_to AS
 SELECT
 id AS id,
 fund_id AS fund_id,
-CAST(jsonb AS VARCHAR(1024)) AS content
+CAST(jsonb AS UUID) AS to_fund_id
 FROM (SELECT id::text || ordinality::text AS id, id AS fund_id, value AS jsonb FROM diku_mod_finance_storage.fund, jsonb_array_elements_text((jsonb->>'allocation_to')::jsonb) WITH ORDINALITY) a;
 CREATE VIEW uc.fund_tags AS
 SELECT
 id AS id,
 fund_id AS fund_id,
-CAST(jsonb AS VARCHAR(1024)) AS content
+CAST(jsonb AS UUID) AS tag_id
 FROM (SELECT id::text || ordinality::text AS id, id AS fund_id, value AS jsonb FROM diku_mod_finance_storage.fund, jsonb_array_elements_text((jsonb->>'tags')::jsonb) WITH ORDINALITY) a;
 CREATE VIEW uc.funds AS
 SELECT
@@ -1118,7 +1118,7 @@ CREATE VIEW uc.ledger_fiscal_years AS
 SELECT
 id AS id,
 ledger_id AS ledger_id,
-CAST(jsonb AS VARCHAR(1024)) AS content
+CAST(jsonb AS UUID) AS fiscal_year_id
 FROM (SELECT id::text || ordinality::text AS id, id AS ledger_id, value AS jsonb FROM diku_mod_finance_storage.ledger, jsonb_array_elements_text((jsonb->>'fiscal_years')::jsonb) WITH ORDINALITY) a;
 CREATE VIEW uc.ledgers AS
 SELECT
@@ -1306,14 +1306,14 @@ SELECT
 id AS id,
 note_id AS note_id,
 CAST(jsonb->>'id' AS VARCHAR(1024)) AS id2,
-CAST(jsonb->>'type' AS VARCHAR(1024)) AS type,
-CAST(jsonb->>'domain' AS VARCHAR(1024)) AS domain
+CAST(jsonb->>'type' AS VARCHAR(1024)) AS type
 FROM (SELECT id::text || ordinality::text AS id, id AS note_id, value AS jsonb FROM diku_mod_notes.note_data, jsonb_array_elements((jsonb->>'links')::jsonb) WITH ORDINALITY) a;
 CREATE VIEW uc.notes2 AS
 SELECT
 id AS id,
 CAST(jsonb->>'typeId' AS UUID) AS type_id,
 CAST(jsonb->>'type' AS VARCHAR(1024)) AS type,
+CAST(jsonb->>'domain' AS VARCHAR(1024)) AS domain,
 CAST(jsonb->>'title' AS VARCHAR(1024)) AS title,
 CAST(jsonb->>'content' AS VARCHAR(1024)) AS content2,
 CAST(jsonb->>'status' AS VARCHAR(1024)) AS status,
@@ -2053,7 +2053,7 @@ CREATE VIEW uc.vendor_address_categories AS
 SELECT
 id AS id,
 vendor_address_id AS vendor_address_id,
-CAST(jsonb AS VARCHAR(1024)) AS content
+CAST(jsonb AS UUID) AS category_id
 FROM (SELECT id::text || ordinality::text AS id, id AS vendor_address_id, value AS jsonb FROM (SELECT id::text || ordinality::text AS id, id AS vendor_id, value AS jsonb FROM diku_mod_vendors.vendor, jsonb_array_elements((jsonb->>'addresses')::jsonb) WITH ORDINALITY) a, jsonb_array_elements_text((jsonb->>'categories')::jsonb) WITH ORDINALITY) a;
 CREATE VIEW uc.vendor_addresses AS
 SELECT
@@ -2073,7 +2073,7 @@ CREATE VIEW uc.vendor_phone_number_categories AS
 SELECT
 id AS id,
 vendor_phone_number_id AS vendor_phone_number_id,
-CAST(jsonb AS VARCHAR(1024)) AS content
+CAST(jsonb AS UUID) AS category_id
 FROM (SELECT id::text || ordinality::text AS id, id AS vendor_phone_number_id, value AS jsonb FROM (SELECT id::text || ordinality::text AS id, id AS vendor_id, value AS jsonb FROM diku_mod_vendors.vendor, jsonb_array_elements((jsonb->>'phone_numbers')::jsonb) WITH ORDINALITY) a, jsonb_array_elements_text((jsonb->>'categories')::jsonb) WITH ORDINALITY) a;
 CREATE VIEW uc.vendor_phone_number_types AS
 SELECT

@@ -20,6 +20,11 @@
       "readonly": true,
       "type": "string"
     },
+    "domain": {
+      "description": "Domain associated with this note",
+      "example": "eholdings",
+      "type": "string"
+    },
     "title": {
       "description": "Note title",
       "example": "BU Campus only issues",
@@ -125,23 +130,19 @@
             "description": "Type of object linked to note",
             "example": "package",
             "type": "string"
-          },
-          "domain": {
-            "description": "Domain associated with object linked to note",
-            "example": "eholdings",
-            "type": "string"
           }
         },
         "required": [
           "id",
-          "type",
-          "domain"
+          "type"
         ]
       }
     }
   },
   "required": [
     "typeId",
-    "title"
+    "title",
+    "domain",
+    "links"
   ]
 }
