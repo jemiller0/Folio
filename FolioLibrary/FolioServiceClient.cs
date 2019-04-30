@@ -18,6 +18,7 @@ namespace FolioLibrary
     public class FolioServiceClient : IDisposable
     {
         private string accessToken = ConfigurationManager.AppSettings["accessToken"];
+        private Formatting formatting = traceSource.Switch.Level == SourceLevels.Verbose ? Formatting.Indented : Formatting.None;
         private HttpClient httpClient = new HttpClient();
         private readonly static JsonSerializerSettings jsonSerializerSettings = new JsonSerializerSettings { ContractResolver = new CamelCasePropertyNamesContractResolver(), NullValueHandling = NullValueHandling.Ignore, Formatting = Formatting.Indented };
         public string Password { get; set; } = ConfigurationManager.AppSettings["password"];
@@ -65,7 +66,7 @@ namespace FolioLibrary
             var s = Stopwatch.StartNew();
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "Querying address types");
             AuthenticateIfNecessary();
-            var url = $"{Url}/addresstypes{(where != null || orderBy != null ? $"?query={WebUtility.UrlEncode(where)}{(orderBy != null ? $"{(where != null ? " " : "")}sortby {WebUtility.UrlEncode(orderBy)}" : "")}" : "")}{(skip != null ? $"{(where != null || orderBy != null ? "&" : "?")}offset={skip}" : "")}{(take != null ? $"{(where != null || orderBy != null || skip != null ? "&" : "?")}limit={take}" : "")}";
+            var url = $"{Url}/addresstypes{(where != null || orderBy != null ? $"?query={WebUtility.UrlEncode(where)}{(orderBy != null ? $"{(where != null ? " " : "cql.allrecords=1 ")}sortby {WebUtility.UrlEncode(orderBy)}" : "")}" : "")}{(skip != null ? $"{(where != null || orderBy != null ? "&" : "?")}offset={skip}" : "")}{(take != null ? $"{(where != null || orderBy != null || skip != null ? "&" : "?")}limit={take}" : "")}";
             traceSource.TraceEvent(TraceEventType.Verbose, 0, url);
             var hrm = httpClient.GetAsync(url).Result;
             if (hrm.StatusCode != HttpStatusCode.OK)
@@ -100,7 +101,6 @@ namespace FolioLibrary
             var hrm = httpClient.GetAsync(url).Result;
             var s2 = hrm.Content.ReadAsStringAsync().Result;
             var jo = hrm.Content.Headers.ContentType.MediaType == "application/json" ? JObject.Parse(s2) : null;
-            if (jo != null) s2 = jo.ToString();
             traceSource.TraceEvent(TraceEventType.Verbose, 0, s2);
             if (hrm.StatusCode != HttpStatusCode.OK) throw new HttpRequestException($"Response status code does not indicate success: {hrm.StatusCode} ({hrm.ReasonPhrase}).\r\n{s2}");
             traceSource.TraceEvent(TraceEventType.Verbose, 0, s.Elapsed.ToString());
@@ -115,13 +115,12 @@ namespace FolioLibrary
             AuthenticateIfNecessary();
             var url = $"{Url}/addresstypes";
             traceSource.TraceEvent(TraceEventType.Verbose, 0, url);
-            var s2 = addressType.ToString();
+            var s2 = addressType.ToString(formatting);
             traceSource.TraceEvent(TraceEventType.Verbose, 0, s2);
             var sc = new StringContent(s2, Encoding.UTF8, "application/json");
             var hrm = httpClient.PostAsync(url, sc).Result;
             s2 = hrm.Content.ReadAsStringAsync().Result;
             var jo = hrm.Content.Headers.ContentType.MediaType == "application/json" ? JObject.Parse(s2) : null;
-            if (jo != null) s2 = jo.ToString();
             traceSource.TraceEvent(TraceEventType.Verbose, 0, s2);
             if (hrm.StatusCode != HttpStatusCode.Created) throw new HttpRequestException($"Response status code does not indicate success: {hrm.StatusCode} ({hrm.ReasonPhrase}).\r\n{s2}");
             traceSource.TraceEvent(TraceEventType.Verbose, 0, s.Elapsed.ToString());
@@ -135,7 +134,7 @@ namespace FolioLibrary
             AuthenticateIfNecessary();
             var url = $"{Url}/addresstypes/{addressType["id"]}";
             traceSource.TraceEvent(TraceEventType.Verbose, 0, url);
-            var s2 = addressType.ToString();
+            var s2 = addressType.ToString(formatting);
             traceSource.TraceEvent(TraceEventType.Verbose, 0, s2);
             var sc = new StringContent(s2, Encoding.UTF8, "application/json");
             var hrm = httpClient.PutAsync(url, sc).Result;
@@ -164,7 +163,7 @@ namespace FolioLibrary
             var s = Stopwatch.StartNew();
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "Querying alternative title types");
             AuthenticateIfNecessary();
-            var url = $"{Url}/alternative-title-types{(where != null || orderBy != null ? $"?query={WebUtility.UrlEncode(where)}{(orderBy != null ? $"{(where != null ? " " : "")}sortby {WebUtility.UrlEncode(orderBy)}" : "")}" : "")}{(skip != null ? $"{(where != null || orderBy != null ? "&" : "?")}offset={skip}" : "")}{(take != null ? $"{(where != null || orderBy != null || skip != null ? "&" : "?")}limit={take}" : "")}";
+            var url = $"{Url}/alternative-title-types{(where != null || orderBy != null ? $"?query={WebUtility.UrlEncode(where)}{(orderBy != null ? $"{(where != null ? " " : "cql.allrecords=1 ")}sortby {WebUtility.UrlEncode(orderBy)}" : "")}" : "")}{(skip != null ? $"{(where != null || orderBy != null ? "&" : "?")}offset={skip}" : "")}{(take != null ? $"{(where != null || orderBy != null || skip != null ? "&" : "?")}limit={take}" : "")}";
             traceSource.TraceEvent(TraceEventType.Verbose, 0, url);
             var hrm = httpClient.GetAsync(url).Result;
             if (hrm.StatusCode != HttpStatusCode.OK)
@@ -199,7 +198,6 @@ namespace FolioLibrary
             var hrm = httpClient.GetAsync(url).Result;
             var s2 = hrm.Content.ReadAsStringAsync().Result;
             var jo = hrm.Content.Headers.ContentType.MediaType == "application/json" ? JObject.Parse(s2) : null;
-            if (jo != null) s2 = jo.ToString();
             traceSource.TraceEvent(TraceEventType.Verbose, 0, s2);
             if (hrm.StatusCode != HttpStatusCode.OK) throw new HttpRequestException($"Response status code does not indicate success: {hrm.StatusCode} ({hrm.ReasonPhrase}).\r\n{s2}");
             traceSource.TraceEvent(TraceEventType.Verbose, 0, s.Elapsed.ToString());
@@ -214,13 +212,12 @@ namespace FolioLibrary
             AuthenticateIfNecessary();
             var url = $"{Url}/alternative-title-types";
             traceSource.TraceEvent(TraceEventType.Verbose, 0, url);
-            var s2 = alternativeTitleType.ToString();
+            var s2 = alternativeTitleType.ToString(formatting);
             traceSource.TraceEvent(TraceEventType.Verbose, 0, s2);
             var sc = new StringContent(s2, Encoding.UTF8, "application/json");
             var hrm = httpClient.PostAsync(url, sc).Result;
             s2 = hrm.Content.ReadAsStringAsync().Result;
             var jo = hrm.Content.Headers.ContentType.MediaType == "application/json" ? JObject.Parse(s2) : null;
-            if (jo != null) s2 = jo.ToString();
             traceSource.TraceEvent(TraceEventType.Verbose, 0, s2);
             if (hrm.StatusCode != HttpStatusCode.Created) throw new HttpRequestException($"Response status code does not indicate success: {hrm.StatusCode} ({hrm.ReasonPhrase}).\r\n{s2}");
             traceSource.TraceEvent(TraceEventType.Verbose, 0, s.Elapsed.ToString());
@@ -234,7 +231,7 @@ namespace FolioLibrary
             AuthenticateIfNecessary();
             var url = $"{Url}/alternative-title-types/{alternativeTitleType["id"]}";
             traceSource.TraceEvent(TraceEventType.Verbose, 0, url);
-            var s2 = alternativeTitleType.ToString();
+            var s2 = alternativeTitleType.ToString(formatting);
             traceSource.TraceEvent(TraceEventType.Verbose, 0, s2);
             var sc = new StringContent(s2, Encoding.UTF8, "application/json");
             var hrm = httpClient.PutAsync(url, sc).Result;
@@ -263,7 +260,7 @@ namespace FolioLibrary
             var s = Stopwatch.StartNew();
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "Querying call number types");
             AuthenticateIfNecessary();
-            var url = $"{Url}/call-number-types{(where != null || orderBy != null ? $"?query={WebUtility.UrlEncode(where)}{(orderBy != null ? $"{(where != null ? " " : "")}sortby {WebUtility.UrlEncode(orderBy)}" : "")}" : "")}{(skip != null ? $"{(where != null || orderBy != null ? "&" : "?")}offset={skip}" : "")}{(take != null ? $"{(where != null || orderBy != null || skip != null ? "&" : "?")}limit={take}" : "")}";
+            var url = $"{Url}/call-number-types{(where != null || orderBy != null ? $"?query={WebUtility.UrlEncode(where)}{(orderBy != null ? $"{(where != null ? " " : "cql.allrecords=1 ")}sortby {WebUtility.UrlEncode(orderBy)}" : "")}" : "")}{(skip != null ? $"{(where != null || orderBy != null ? "&" : "?")}offset={skip}" : "")}{(take != null ? $"{(where != null || orderBy != null || skip != null ? "&" : "?")}limit={take}" : "")}";
             traceSource.TraceEvent(TraceEventType.Verbose, 0, url);
             var hrm = httpClient.GetAsync(url).Result;
             if (hrm.StatusCode != HttpStatusCode.OK)
@@ -298,7 +295,6 @@ namespace FolioLibrary
             var hrm = httpClient.GetAsync(url).Result;
             var s2 = hrm.Content.ReadAsStringAsync().Result;
             var jo = hrm.Content.Headers.ContentType.MediaType == "application/json" ? JObject.Parse(s2) : null;
-            if (jo != null) s2 = jo.ToString();
             traceSource.TraceEvent(TraceEventType.Verbose, 0, s2);
             if (hrm.StatusCode != HttpStatusCode.OK) throw new HttpRequestException($"Response status code does not indicate success: {hrm.StatusCode} ({hrm.ReasonPhrase}).\r\n{s2}");
             traceSource.TraceEvent(TraceEventType.Verbose, 0, s.Elapsed.ToString());
@@ -313,13 +309,12 @@ namespace FolioLibrary
             AuthenticateIfNecessary();
             var url = $"{Url}/call-number-types";
             traceSource.TraceEvent(TraceEventType.Verbose, 0, url);
-            var s2 = callNumberType.ToString();
+            var s2 = callNumberType.ToString(formatting);
             traceSource.TraceEvent(TraceEventType.Verbose, 0, s2);
             var sc = new StringContent(s2, Encoding.UTF8, "application/json");
             var hrm = httpClient.PostAsync(url, sc).Result;
             s2 = hrm.Content.ReadAsStringAsync().Result;
             var jo = hrm.Content.Headers.ContentType.MediaType == "application/json" ? JObject.Parse(s2) : null;
-            if (jo != null) s2 = jo.ToString();
             traceSource.TraceEvent(TraceEventType.Verbose, 0, s2);
             if (hrm.StatusCode != HttpStatusCode.Created) throw new HttpRequestException($"Response status code does not indicate success: {hrm.StatusCode} ({hrm.ReasonPhrase}).\r\n{s2}");
             traceSource.TraceEvent(TraceEventType.Verbose, 0, s.Elapsed.ToString());
@@ -333,7 +328,7 @@ namespace FolioLibrary
             AuthenticateIfNecessary();
             var url = $"{Url}/call-number-types/{callNumberType["id"]}";
             traceSource.TraceEvent(TraceEventType.Verbose, 0, url);
-            var s2 = callNumberType.ToString();
+            var s2 = callNumberType.ToString(formatting);
             traceSource.TraceEvent(TraceEventType.Verbose, 0, s2);
             var sc = new StringContent(s2, Encoding.UTF8, "application/json");
             var hrm = httpClient.PutAsync(url, sc).Result;
@@ -362,7 +357,7 @@ namespace FolioLibrary
             var s = Stopwatch.StartNew();
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "Querying campuses");
             AuthenticateIfNecessary();
-            var url = $"{Url}/location-units/campuses{(where != null || orderBy != null ? $"?query={WebUtility.UrlEncode(where)}{(orderBy != null ? $"{(where != null ? " " : "")}sortby {WebUtility.UrlEncode(orderBy)}" : "")}" : "")}{(skip != null ? $"{(where != null || orderBy != null ? "&" : "?")}offset={skip}" : "")}{(take != null ? $"{(where != null || orderBy != null || skip != null ? "&" : "?")}limit={take}" : "")}";
+            var url = $"{Url}/location-units/campuses{(where != null || orderBy != null ? $"?query={WebUtility.UrlEncode(where)}{(orderBy != null ? $"{(where != null ? " " : "cql.allrecords=1 ")}sortby {WebUtility.UrlEncode(orderBy)}" : "")}" : "")}{(skip != null ? $"{(where != null || orderBy != null ? "&" : "?")}offset={skip}" : "")}{(take != null ? $"{(where != null || orderBy != null || skip != null ? "&" : "?")}limit={take}" : "")}";
             traceSource.TraceEvent(TraceEventType.Verbose, 0, url);
             var hrm = httpClient.GetAsync(url).Result;
             if (hrm.StatusCode != HttpStatusCode.OK)
@@ -397,7 +392,6 @@ namespace FolioLibrary
             var hrm = httpClient.GetAsync(url).Result;
             var s2 = hrm.Content.ReadAsStringAsync().Result;
             var jo = hrm.Content.Headers.ContentType.MediaType == "application/json" ? JObject.Parse(s2) : null;
-            if (jo != null) s2 = jo.ToString();
             traceSource.TraceEvent(TraceEventType.Verbose, 0, s2);
             if (hrm.StatusCode != HttpStatusCode.OK) throw new HttpRequestException($"Response status code does not indicate success: {hrm.StatusCode} ({hrm.ReasonPhrase}).\r\n{s2}");
             traceSource.TraceEvent(TraceEventType.Verbose, 0, s.Elapsed.ToString());
@@ -412,13 +406,12 @@ namespace FolioLibrary
             AuthenticateIfNecessary();
             var url = $"{Url}/location-units/campuses";
             traceSource.TraceEvent(TraceEventType.Verbose, 0, url);
-            var s2 = campus.ToString();
+            var s2 = campus.ToString(formatting);
             traceSource.TraceEvent(TraceEventType.Verbose, 0, s2);
             var sc = new StringContent(s2, Encoding.UTF8, "application/json");
             var hrm = httpClient.PostAsync(url, sc).Result;
             s2 = hrm.Content.ReadAsStringAsync().Result;
             var jo = hrm.Content.Headers.ContentType.MediaType == "application/json" ? JObject.Parse(s2) : null;
-            if (jo != null) s2 = jo.ToString();
             traceSource.TraceEvent(TraceEventType.Verbose, 0, s2);
             if (hrm.StatusCode != HttpStatusCode.Created) throw new HttpRequestException($"Response status code does not indicate success: {hrm.StatusCode} ({hrm.ReasonPhrase}).\r\n{s2}");
             traceSource.TraceEvent(TraceEventType.Verbose, 0, s.Elapsed.ToString());
@@ -432,7 +425,7 @@ namespace FolioLibrary
             AuthenticateIfNecessary();
             var url = $"{Url}/location-units/campuses/{campus["id"]}";
             traceSource.TraceEvent(TraceEventType.Verbose, 0, url);
-            var s2 = campus.ToString();
+            var s2 = campus.ToString(formatting);
             traceSource.TraceEvent(TraceEventType.Verbose, 0, s2);
             var sc = new StringContent(s2, Encoding.UTF8, "application/json");
             var hrm = httpClient.PutAsync(url, sc).Result;
@@ -461,7 +454,7 @@ namespace FolioLibrary
             var s = Stopwatch.StartNew();
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "Querying classification types");
             AuthenticateIfNecessary();
-            var url = $"{Url}/classification-types{(where != null || orderBy != null ? $"?query={WebUtility.UrlEncode(where)}{(orderBy != null ? $"{(where != null ? " " : "")}sortby {WebUtility.UrlEncode(orderBy)}" : "")}" : "")}{(skip != null ? $"{(where != null || orderBy != null ? "&" : "?")}offset={skip}" : "")}{(take != null ? $"{(where != null || orderBy != null || skip != null ? "&" : "?")}limit={take}" : "")}";
+            var url = $"{Url}/classification-types{(where != null || orderBy != null ? $"?query={WebUtility.UrlEncode(where)}{(orderBy != null ? $"{(where != null ? " " : "cql.allrecords=1 ")}sortby {WebUtility.UrlEncode(orderBy)}" : "")}" : "")}{(skip != null ? $"{(where != null || orderBy != null ? "&" : "?")}offset={skip}" : "")}{(take != null ? $"{(where != null || orderBy != null || skip != null ? "&" : "?")}limit={take}" : "")}";
             traceSource.TraceEvent(TraceEventType.Verbose, 0, url);
             var hrm = httpClient.GetAsync(url).Result;
             if (hrm.StatusCode != HttpStatusCode.OK)
@@ -496,7 +489,6 @@ namespace FolioLibrary
             var hrm = httpClient.GetAsync(url).Result;
             var s2 = hrm.Content.ReadAsStringAsync().Result;
             var jo = hrm.Content.Headers.ContentType.MediaType == "application/json" ? JObject.Parse(s2) : null;
-            if (jo != null) s2 = jo.ToString();
             traceSource.TraceEvent(TraceEventType.Verbose, 0, s2);
             if (hrm.StatusCode != HttpStatusCode.OK) throw new HttpRequestException($"Response status code does not indicate success: {hrm.StatusCode} ({hrm.ReasonPhrase}).\r\n{s2}");
             traceSource.TraceEvent(TraceEventType.Verbose, 0, s.Elapsed.ToString());
@@ -511,13 +503,12 @@ namespace FolioLibrary
             AuthenticateIfNecessary();
             var url = $"{Url}/classification-types";
             traceSource.TraceEvent(TraceEventType.Verbose, 0, url);
-            var s2 = classificationType.ToString();
+            var s2 = classificationType.ToString(formatting);
             traceSource.TraceEvent(TraceEventType.Verbose, 0, s2);
             var sc = new StringContent(s2, Encoding.UTF8, "application/json");
             var hrm = httpClient.PostAsync(url, sc).Result;
             s2 = hrm.Content.ReadAsStringAsync().Result;
             var jo = hrm.Content.Headers.ContentType.MediaType == "application/json" ? JObject.Parse(s2) : null;
-            if (jo != null) s2 = jo.ToString();
             traceSource.TraceEvent(TraceEventType.Verbose, 0, s2);
             if (hrm.StatusCode != HttpStatusCode.Created) throw new HttpRequestException($"Response status code does not indicate success: {hrm.StatusCode} ({hrm.ReasonPhrase}).\r\n{s2}");
             traceSource.TraceEvent(TraceEventType.Verbose, 0, s.Elapsed.ToString());
@@ -531,7 +522,7 @@ namespace FolioLibrary
             AuthenticateIfNecessary();
             var url = $"{Url}/classification-types/{classificationType["id"]}";
             traceSource.TraceEvent(TraceEventType.Verbose, 0, url);
-            var s2 = classificationType.ToString();
+            var s2 = classificationType.ToString(formatting);
             traceSource.TraceEvent(TraceEventType.Verbose, 0, s2);
             var sc = new StringContent(s2, Encoding.UTF8, "application/json");
             var hrm = httpClient.PutAsync(url, sc).Result;
@@ -560,7 +551,7 @@ namespace FolioLibrary
             var s = Stopwatch.StartNew();
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "Querying contributor name types");
             AuthenticateIfNecessary();
-            var url = $"{Url}/contributor-name-types{(where != null || orderBy != null ? $"?query={WebUtility.UrlEncode(where)}{(orderBy != null ? $"{(where != null ? " " : "")}sortby {WebUtility.UrlEncode(orderBy)}" : "")}" : "")}{(skip != null ? $"{(where != null || orderBy != null ? "&" : "?")}offset={skip}" : "")}{(take != null ? $"{(where != null || orderBy != null || skip != null ? "&" : "?")}limit={take}" : "")}";
+            var url = $"{Url}/contributor-name-types{(where != null || orderBy != null ? $"?query={WebUtility.UrlEncode(where)}{(orderBy != null ? $"{(where != null ? " " : "cql.allrecords=1 ")}sortby {WebUtility.UrlEncode(orderBy)}" : "")}" : "")}{(skip != null ? $"{(where != null || orderBy != null ? "&" : "?")}offset={skip}" : "")}{(take != null ? $"{(where != null || orderBy != null || skip != null ? "&" : "?")}limit={take}" : "")}";
             traceSource.TraceEvent(TraceEventType.Verbose, 0, url);
             var hrm = httpClient.GetAsync(url).Result;
             if (hrm.StatusCode != HttpStatusCode.OK)
@@ -595,7 +586,6 @@ namespace FolioLibrary
             var hrm = httpClient.GetAsync(url).Result;
             var s2 = hrm.Content.ReadAsStringAsync().Result;
             var jo = hrm.Content.Headers.ContentType.MediaType == "application/json" ? JObject.Parse(s2) : null;
-            if (jo != null) s2 = jo.ToString();
             traceSource.TraceEvent(TraceEventType.Verbose, 0, s2);
             if (hrm.StatusCode != HttpStatusCode.OK) throw new HttpRequestException($"Response status code does not indicate success: {hrm.StatusCode} ({hrm.ReasonPhrase}).\r\n{s2}");
             traceSource.TraceEvent(TraceEventType.Verbose, 0, s.Elapsed.ToString());
@@ -610,13 +600,12 @@ namespace FolioLibrary
             AuthenticateIfNecessary();
             var url = $"{Url}/contributor-name-types";
             traceSource.TraceEvent(TraceEventType.Verbose, 0, url);
-            var s2 = contributorNameType.ToString();
+            var s2 = contributorNameType.ToString(formatting);
             traceSource.TraceEvent(TraceEventType.Verbose, 0, s2);
             var sc = new StringContent(s2, Encoding.UTF8, "application/json");
             var hrm = httpClient.PostAsync(url, sc).Result;
             s2 = hrm.Content.ReadAsStringAsync().Result;
             var jo = hrm.Content.Headers.ContentType.MediaType == "application/json" ? JObject.Parse(s2) : null;
-            if (jo != null) s2 = jo.ToString();
             traceSource.TraceEvent(TraceEventType.Verbose, 0, s2);
             if (hrm.StatusCode != HttpStatusCode.Created) throw new HttpRequestException($"Response status code does not indicate success: {hrm.StatusCode} ({hrm.ReasonPhrase}).\r\n{s2}");
             traceSource.TraceEvent(TraceEventType.Verbose, 0, s.Elapsed.ToString());
@@ -630,7 +619,7 @@ namespace FolioLibrary
             AuthenticateIfNecessary();
             var url = $"{Url}/contributor-name-types/{contributorNameType["id"]}";
             traceSource.TraceEvent(TraceEventType.Verbose, 0, url);
-            var s2 = contributorNameType.ToString();
+            var s2 = contributorNameType.ToString(formatting);
             traceSource.TraceEvent(TraceEventType.Verbose, 0, s2);
             var sc = new StringContent(s2, Encoding.UTF8, "application/json");
             var hrm = httpClient.PutAsync(url, sc).Result;
@@ -659,7 +648,7 @@ namespace FolioLibrary
             var s = Stopwatch.StartNew();
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "Querying contributor types");
             AuthenticateIfNecessary();
-            var url = $"{Url}/contributor-types{(where != null || orderBy != null ? $"?query={WebUtility.UrlEncode(where)}{(orderBy != null ? $"{(where != null ? " " : "")}sortby {WebUtility.UrlEncode(orderBy)}" : "")}" : "")}{(skip != null ? $"{(where != null || orderBy != null ? "&" : "?")}offset={skip}" : "")}{(take != null ? $"{(where != null || orderBy != null || skip != null ? "&" : "?")}limit={take}" : "")}";
+            var url = $"{Url}/contributor-types{(where != null || orderBy != null ? $"?query={WebUtility.UrlEncode(where)}{(orderBy != null ? $"{(where != null ? " " : "cql.allrecords=1 ")}sortby {WebUtility.UrlEncode(orderBy)}" : "")}" : "")}{(skip != null ? $"{(where != null || orderBy != null ? "&" : "?")}offset={skip}" : "")}{(take != null ? $"{(where != null || orderBy != null || skip != null ? "&" : "?")}limit={take}" : "")}";
             traceSource.TraceEvent(TraceEventType.Verbose, 0, url);
             var hrm = httpClient.GetAsync(url).Result;
             if (hrm.StatusCode != HttpStatusCode.OK)
@@ -694,7 +683,6 @@ namespace FolioLibrary
             var hrm = httpClient.GetAsync(url).Result;
             var s2 = hrm.Content.ReadAsStringAsync().Result;
             var jo = hrm.Content.Headers.ContentType.MediaType == "application/json" ? JObject.Parse(s2) : null;
-            if (jo != null) s2 = jo.ToString();
             traceSource.TraceEvent(TraceEventType.Verbose, 0, s2);
             if (hrm.StatusCode != HttpStatusCode.OK) throw new HttpRequestException($"Response status code does not indicate success: {hrm.StatusCode} ({hrm.ReasonPhrase}).\r\n{s2}");
             traceSource.TraceEvent(TraceEventType.Verbose, 0, s.Elapsed.ToString());
@@ -709,13 +697,12 @@ namespace FolioLibrary
             AuthenticateIfNecessary();
             var url = $"{Url}/contributor-types";
             traceSource.TraceEvent(TraceEventType.Verbose, 0, url);
-            var s2 = contributorType.ToString();
+            var s2 = contributorType.ToString(formatting);
             traceSource.TraceEvent(TraceEventType.Verbose, 0, s2);
             var sc = new StringContent(s2, Encoding.UTF8, "application/json");
             var hrm = httpClient.PostAsync(url, sc).Result;
             s2 = hrm.Content.ReadAsStringAsync().Result;
             var jo = hrm.Content.Headers.ContentType.MediaType == "application/json" ? JObject.Parse(s2) : null;
-            if (jo != null) s2 = jo.ToString();
             traceSource.TraceEvent(TraceEventType.Verbose, 0, s2);
             if (hrm.StatusCode != HttpStatusCode.Created) throw new HttpRequestException($"Response status code does not indicate success: {hrm.StatusCode} ({hrm.ReasonPhrase}).\r\n{s2}");
             traceSource.TraceEvent(TraceEventType.Verbose, 0, s.Elapsed.ToString());
@@ -729,7 +716,7 @@ namespace FolioLibrary
             AuthenticateIfNecessary();
             var url = $"{Url}/contributor-types/{contributorType["id"]}";
             traceSource.TraceEvent(TraceEventType.Verbose, 0, url);
-            var s2 = contributorType.ToString();
+            var s2 = contributorType.ToString(formatting);
             traceSource.TraceEvent(TraceEventType.Verbose, 0, s2);
             var sc = new StringContent(s2, Encoding.UTF8, "application/json");
             var hrm = httpClient.PutAsync(url, sc).Result;
@@ -758,7 +745,7 @@ namespace FolioLibrary
             var s = Stopwatch.StartNew();
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "Querying electronic access relationships");
             AuthenticateIfNecessary();
-            var url = $"{Url}/electronic-access-relationships{(where != null || orderBy != null ? $"?query={WebUtility.UrlEncode(where)}{(orderBy != null ? $"{(where != null ? " " : "")}sortby {WebUtility.UrlEncode(orderBy)}" : "")}" : "")}{(skip != null ? $"{(where != null || orderBy != null ? "&" : "?")}offset={skip}" : "")}{(take != null ? $"{(where != null || orderBy != null || skip != null ? "&" : "?")}limit={take}" : "")}";
+            var url = $"{Url}/electronic-access-relationships{(where != null || orderBy != null ? $"?query={WebUtility.UrlEncode(where)}{(orderBy != null ? $"{(where != null ? " " : "cql.allrecords=1 ")}sortby {WebUtility.UrlEncode(orderBy)}" : "")}" : "")}{(skip != null ? $"{(where != null || orderBy != null ? "&" : "?")}offset={skip}" : "")}{(take != null ? $"{(where != null || orderBy != null || skip != null ? "&" : "?")}limit={take}" : "")}";
             traceSource.TraceEvent(TraceEventType.Verbose, 0, url);
             var hrm = httpClient.GetAsync(url).Result;
             if (hrm.StatusCode != HttpStatusCode.OK)
@@ -793,7 +780,6 @@ namespace FolioLibrary
             var hrm = httpClient.GetAsync(url).Result;
             var s2 = hrm.Content.ReadAsStringAsync().Result;
             var jo = hrm.Content.Headers.ContentType.MediaType == "application/json" ? JObject.Parse(s2) : null;
-            if (jo != null) s2 = jo.ToString();
             traceSource.TraceEvent(TraceEventType.Verbose, 0, s2);
             if (hrm.StatusCode != HttpStatusCode.OK) throw new HttpRequestException($"Response status code does not indicate success: {hrm.StatusCode} ({hrm.ReasonPhrase}).\r\n{s2}");
             traceSource.TraceEvent(TraceEventType.Verbose, 0, s.Elapsed.ToString());
@@ -808,13 +794,12 @@ namespace FolioLibrary
             AuthenticateIfNecessary();
             var url = $"{Url}/electronic-access-relationships";
             traceSource.TraceEvent(TraceEventType.Verbose, 0, url);
-            var s2 = electronicAccessRelationship.ToString();
+            var s2 = electronicAccessRelationship.ToString(formatting);
             traceSource.TraceEvent(TraceEventType.Verbose, 0, s2);
             var sc = new StringContent(s2, Encoding.UTF8, "application/json");
             var hrm = httpClient.PostAsync(url, sc).Result;
             s2 = hrm.Content.ReadAsStringAsync().Result;
             var jo = hrm.Content.Headers.ContentType.MediaType == "application/json" ? JObject.Parse(s2) : null;
-            if (jo != null) s2 = jo.ToString();
             traceSource.TraceEvent(TraceEventType.Verbose, 0, s2);
             if (hrm.StatusCode != HttpStatusCode.Created) throw new HttpRequestException($"Response status code does not indicate success: {hrm.StatusCode} ({hrm.ReasonPhrase}).\r\n{s2}");
             traceSource.TraceEvent(TraceEventType.Verbose, 0, s.Elapsed.ToString());
@@ -828,7 +813,7 @@ namespace FolioLibrary
             AuthenticateIfNecessary();
             var url = $"{Url}/electronic-access-relationships/{electronicAccessRelationship["id"]}";
             traceSource.TraceEvent(TraceEventType.Verbose, 0, url);
-            var s2 = electronicAccessRelationship.ToString();
+            var s2 = electronicAccessRelationship.ToString(formatting);
             traceSource.TraceEvent(TraceEventType.Verbose, 0, s2);
             var sc = new StringContent(s2, Encoding.UTF8, "application/json");
             var hrm = httpClient.PutAsync(url, sc).Result;
@@ -857,7 +842,7 @@ namespace FolioLibrary
             var s = Stopwatch.StartNew();
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "Querying groups");
             AuthenticateIfNecessary();
-            var url = $"{Url}/groups{(where != null || orderBy != null ? $"?query={WebUtility.UrlEncode(where)}{(orderBy != null ? $"{(where != null ? " " : "")}sortby {WebUtility.UrlEncode(orderBy)}" : "")}" : "")}{(skip != null ? $"{(where != null || orderBy != null ? "&" : "?")}offset={skip}" : "")}{(take != null ? $"{(where != null || orderBy != null || skip != null ? "&" : "?")}limit={take}" : "")}";
+            var url = $"{Url}/groups{(where != null || orderBy != null ? $"?query={WebUtility.UrlEncode(where)}{(orderBy != null ? $"{(where != null ? " " : "cql.allrecords=1 ")}sortby {WebUtility.UrlEncode(orderBy)}" : "")}" : "")}{(skip != null ? $"{(where != null || orderBy != null ? "&" : "?")}offset={skip}" : "")}{(take != null ? $"{(where != null || orderBy != null || skip != null ? "&" : "?")}limit={take}" : "")}";
             traceSource.TraceEvent(TraceEventType.Verbose, 0, url);
             var hrm = httpClient.GetAsync(url).Result;
             if (hrm.StatusCode != HttpStatusCode.OK)
@@ -892,7 +877,6 @@ namespace FolioLibrary
             var hrm = httpClient.GetAsync(url).Result;
             var s2 = hrm.Content.ReadAsStringAsync().Result;
             var jo = hrm.Content.Headers.ContentType.MediaType == "application/json" ? JObject.Parse(s2) : null;
-            if (jo != null) s2 = jo.ToString();
             traceSource.TraceEvent(TraceEventType.Verbose, 0, s2);
             if (hrm.StatusCode != HttpStatusCode.OK) throw new HttpRequestException($"Response status code does not indicate success: {hrm.StatusCode} ({hrm.ReasonPhrase}).\r\n{s2}");
             traceSource.TraceEvent(TraceEventType.Verbose, 0, s.Elapsed.ToString());
@@ -907,13 +891,12 @@ namespace FolioLibrary
             AuthenticateIfNecessary();
             var url = $"{Url}/groups";
             traceSource.TraceEvent(TraceEventType.Verbose, 0, url);
-            var s2 = group.ToString();
+            var s2 = group.ToString(formatting);
             traceSource.TraceEvent(TraceEventType.Verbose, 0, s2);
             var sc = new StringContent(s2, Encoding.UTF8, "application/json");
             var hrm = httpClient.PostAsync(url, sc).Result;
             s2 = hrm.Content.ReadAsStringAsync().Result;
             var jo = hrm.Content.Headers.ContentType.MediaType == "application/json" ? JObject.Parse(s2) : null;
-            if (jo != null) s2 = jo.ToString();
             traceSource.TraceEvent(TraceEventType.Verbose, 0, s2);
             if (hrm.StatusCode != HttpStatusCode.Created) throw new HttpRequestException($"Response status code does not indicate success: {hrm.StatusCode} ({hrm.ReasonPhrase}).\r\n{s2}");
             traceSource.TraceEvent(TraceEventType.Verbose, 0, s.Elapsed.ToString());
@@ -927,7 +910,7 @@ namespace FolioLibrary
             AuthenticateIfNecessary();
             var url = $"{Url}/groups/{group["id"]}";
             traceSource.TraceEvent(TraceEventType.Verbose, 0, url);
-            var s2 = group.ToString();
+            var s2 = group.ToString(formatting);
             traceSource.TraceEvent(TraceEventType.Verbose, 0, s2);
             var sc = new StringContent(s2, Encoding.UTF8, "application/json");
             var hrm = httpClient.PutAsync(url, sc).Result;
@@ -956,7 +939,7 @@ namespace FolioLibrary
             var s = Stopwatch.StartNew();
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "Querying holdings");
             AuthenticateIfNecessary();
-            var url = $"{Url}/holdings-storage/holdings{(where != null || orderBy != null ? $"?query={WebUtility.UrlEncode(where)}{(orderBy != null ? $"{(where != null ? " " : "")}sortby {WebUtility.UrlEncode(orderBy)}" : "")}" : "")}{(skip != null ? $"{(where != null || orderBy != null ? "&" : "?")}offset={skip}" : "")}{(take != null ? $"{(where != null || orderBy != null || skip != null ? "&" : "?")}limit={take}" : "")}";
+            var url = $"{Url}/holdings-storage/holdings{(where != null || orderBy != null ? $"?query={WebUtility.UrlEncode(where)}{(orderBy != null ? $"{(where != null ? " " : "cql.allrecords=1 ")}sortby {WebUtility.UrlEncode(orderBy)}" : "")}" : "")}{(skip != null ? $"{(where != null || orderBy != null ? "&" : "?")}offset={skip}" : "")}{(take != null ? $"{(where != null || orderBy != null || skip != null ? "&" : "?")}limit={take}" : "")}";
             traceSource.TraceEvent(TraceEventType.Verbose, 0, url);
             var hrm = httpClient.GetAsync(url).Result;
             if (hrm.StatusCode != HttpStatusCode.OK)
@@ -991,7 +974,6 @@ namespace FolioLibrary
             var hrm = httpClient.GetAsync(url).Result;
             var s2 = hrm.Content.ReadAsStringAsync().Result;
             var jo = hrm.Content.Headers.ContentType.MediaType == "application/json" ? JObject.Parse(s2) : null;
-            if (jo != null) s2 = jo.ToString();
             traceSource.TraceEvent(TraceEventType.Verbose, 0, s2);
             if (hrm.StatusCode != HttpStatusCode.OK) throw new HttpRequestException($"Response status code does not indicate success: {hrm.StatusCode} ({hrm.ReasonPhrase}).\r\n{s2}");
             traceSource.TraceEvent(TraceEventType.Verbose, 0, s.Elapsed.ToString());
@@ -1006,13 +988,12 @@ namespace FolioLibrary
             AuthenticateIfNecessary();
             var url = $"{Url}/holdings-storage/holdings";
             traceSource.TraceEvent(TraceEventType.Verbose, 0, url);
-            var s2 = holding.ToString();
+            var s2 = holding.ToString(formatting);
             traceSource.TraceEvent(TraceEventType.Verbose, 0, s2);
             var sc = new StringContent(s2, Encoding.UTF8, "application/json");
             var hrm = httpClient.PostAsync(url, sc).Result;
             s2 = hrm.Content.ReadAsStringAsync().Result;
             var jo = hrm.Content.Headers.ContentType.MediaType == "application/json" ? JObject.Parse(s2) : null;
-            if (jo != null) s2 = jo.ToString();
             traceSource.TraceEvent(TraceEventType.Verbose, 0, s2);
             if (hrm.StatusCode != HttpStatusCode.Created) throw new HttpRequestException($"Response status code does not indicate success: {hrm.StatusCode} ({hrm.ReasonPhrase}).\r\n{s2}");
             traceSource.TraceEvent(TraceEventType.Verbose, 0, s.Elapsed.ToString());
@@ -1026,7 +1007,7 @@ namespace FolioLibrary
             AuthenticateIfNecessary();
             var url = $"{Url}/holdings-storage/holdings/{holding["id"]}";
             traceSource.TraceEvent(TraceEventType.Verbose, 0, url);
-            var s2 = holding.ToString();
+            var s2 = holding.ToString(formatting);
             traceSource.TraceEvent(TraceEventType.Verbose, 0, s2);
             var sc = new StringContent(s2, Encoding.UTF8, "application/json");
             var hrm = httpClient.PutAsync(url, sc).Result;
@@ -1055,7 +1036,7 @@ namespace FolioLibrary
             var s = Stopwatch.StartNew();
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "Querying holding note types");
             AuthenticateIfNecessary();
-            var url = $"{Url}/holdings-note-types{(where != null || orderBy != null ? $"?query={WebUtility.UrlEncode(where)}{(orderBy != null ? $"{(where != null ? " " : "")}sortby {WebUtility.UrlEncode(orderBy)}" : "")}" : "")}{(skip != null ? $"{(where != null || orderBy != null ? "&" : "?")}offset={skip}" : "")}{(take != null ? $"{(where != null || orderBy != null || skip != null ? "&" : "?")}limit={take}" : "")}";
+            var url = $"{Url}/holdings-note-types{(where != null || orderBy != null ? $"?query={WebUtility.UrlEncode(where)}{(orderBy != null ? $"{(where != null ? " " : "cql.allrecords=1 ")}sortby {WebUtility.UrlEncode(orderBy)}" : "")}" : "")}{(skip != null ? $"{(where != null || orderBy != null ? "&" : "?")}offset={skip}" : "")}{(take != null ? $"{(where != null || orderBy != null || skip != null ? "&" : "?")}limit={take}" : "")}";
             traceSource.TraceEvent(TraceEventType.Verbose, 0, url);
             var hrm = httpClient.GetAsync(url).Result;
             if (hrm.StatusCode != HttpStatusCode.OK)
@@ -1090,7 +1071,6 @@ namespace FolioLibrary
             var hrm = httpClient.GetAsync(url).Result;
             var s2 = hrm.Content.ReadAsStringAsync().Result;
             var jo = hrm.Content.Headers.ContentType.MediaType == "application/json" ? JObject.Parse(s2) : null;
-            if (jo != null) s2 = jo.ToString();
             traceSource.TraceEvent(TraceEventType.Verbose, 0, s2);
             if (hrm.StatusCode != HttpStatusCode.OK) throw new HttpRequestException($"Response status code does not indicate success: {hrm.StatusCode} ({hrm.ReasonPhrase}).\r\n{s2}");
             traceSource.TraceEvent(TraceEventType.Verbose, 0, s.Elapsed.ToString());
@@ -1105,13 +1085,12 @@ namespace FolioLibrary
             AuthenticateIfNecessary();
             var url = $"{Url}/holdings-note-types";
             traceSource.TraceEvent(TraceEventType.Verbose, 0, url);
-            var s2 = holdingNoteType.ToString();
+            var s2 = holdingNoteType.ToString(formatting);
             traceSource.TraceEvent(TraceEventType.Verbose, 0, s2);
             var sc = new StringContent(s2, Encoding.UTF8, "application/json");
             var hrm = httpClient.PostAsync(url, sc).Result;
             s2 = hrm.Content.ReadAsStringAsync().Result;
             var jo = hrm.Content.Headers.ContentType.MediaType == "application/json" ? JObject.Parse(s2) : null;
-            if (jo != null) s2 = jo.ToString();
             traceSource.TraceEvent(TraceEventType.Verbose, 0, s2);
             if (hrm.StatusCode != HttpStatusCode.Created) throw new HttpRequestException($"Response status code does not indicate success: {hrm.StatusCode} ({hrm.ReasonPhrase}).\r\n{s2}");
             traceSource.TraceEvent(TraceEventType.Verbose, 0, s.Elapsed.ToString());
@@ -1125,7 +1104,7 @@ namespace FolioLibrary
             AuthenticateIfNecessary();
             var url = $"{Url}/holdings-note-types/{holdingNoteType["id"]}";
             traceSource.TraceEvent(TraceEventType.Verbose, 0, url);
-            var s2 = holdingNoteType.ToString();
+            var s2 = holdingNoteType.ToString(formatting);
             traceSource.TraceEvent(TraceEventType.Verbose, 0, s2);
             var sc = new StringContent(s2, Encoding.UTF8, "application/json");
             var hrm = httpClient.PutAsync(url, sc).Result;
@@ -1154,7 +1133,7 @@ namespace FolioLibrary
             var s = Stopwatch.StartNew();
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "Querying holding types");
             AuthenticateIfNecessary();
-            var url = $"{Url}/holdings-types{(where != null || orderBy != null ? $"?query={WebUtility.UrlEncode(where)}{(orderBy != null ? $"{(where != null ? " " : "")}sortby {WebUtility.UrlEncode(orderBy)}" : "")}" : "")}{(skip != null ? $"{(where != null || orderBy != null ? "&" : "?")}offset={skip}" : "")}{(take != null ? $"{(where != null || orderBy != null || skip != null ? "&" : "?")}limit={take}" : "")}";
+            var url = $"{Url}/holdings-types{(where != null || orderBy != null ? $"?query={WebUtility.UrlEncode(where)}{(orderBy != null ? $"{(where != null ? " " : "cql.allrecords=1 ")}sortby {WebUtility.UrlEncode(orderBy)}" : "")}" : "")}{(skip != null ? $"{(where != null || orderBy != null ? "&" : "?")}offset={skip}" : "")}{(take != null ? $"{(where != null || orderBy != null || skip != null ? "&" : "?")}limit={take}" : "")}";
             traceSource.TraceEvent(TraceEventType.Verbose, 0, url);
             var hrm = httpClient.GetAsync(url).Result;
             if (hrm.StatusCode != HttpStatusCode.OK)
@@ -1189,7 +1168,6 @@ namespace FolioLibrary
             var hrm = httpClient.GetAsync(url).Result;
             var s2 = hrm.Content.ReadAsStringAsync().Result;
             var jo = hrm.Content.Headers.ContentType.MediaType == "application/json" ? JObject.Parse(s2) : null;
-            if (jo != null) s2 = jo.ToString();
             traceSource.TraceEvent(TraceEventType.Verbose, 0, s2);
             if (hrm.StatusCode != HttpStatusCode.OK) throw new HttpRequestException($"Response status code does not indicate success: {hrm.StatusCode} ({hrm.ReasonPhrase}).\r\n{s2}");
             traceSource.TraceEvent(TraceEventType.Verbose, 0, s.Elapsed.ToString());
@@ -1204,13 +1182,12 @@ namespace FolioLibrary
             AuthenticateIfNecessary();
             var url = $"{Url}/holdings-types";
             traceSource.TraceEvent(TraceEventType.Verbose, 0, url);
-            var s2 = holdingType.ToString();
+            var s2 = holdingType.ToString(formatting);
             traceSource.TraceEvent(TraceEventType.Verbose, 0, s2);
             var sc = new StringContent(s2, Encoding.UTF8, "application/json");
             var hrm = httpClient.PostAsync(url, sc).Result;
             s2 = hrm.Content.ReadAsStringAsync().Result;
             var jo = hrm.Content.Headers.ContentType.MediaType == "application/json" ? JObject.Parse(s2) : null;
-            if (jo != null) s2 = jo.ToString();
             traceSource.TraceEvent(TraceEventType.Verbose, 0, s2);
             if (hrm.StatusCode != HttpStatusCode.Created) throw new HttpRequestException($"Response status code does not indicate success: {hrm.StatusCode} ({hrm.ReasonPhrase}).\r\n{s2}");
             traceSource.TraceEvent(TraceEventType.Verbose, 0, s.Elapsed.ToString());
@@ -1224,7 +1201,7 @@ namespace FolioLibrary
             AuthenticateIfNecessary();
             var url = $"{Url}/holdings-types/{holdingType["id"]}";
             traceSource.TraceEvent(TraceEventType.Verbose, 0, url);
-            var s2 = holdingType.ToString();
+            var s2 = holdingType.ToString(formatting);
             traceSource.TraceEvent(TraceEventType.Verbose, 0, s2);
             var sc = new StringContent(s2, Encoding.UTF8, "application/json");
             var hrm = httpClient.PutAsync(url, sc).Result;
@@ -1253,7 +1230,7 @@ namespace FolioLibrary
             var s = Stopwatch.StartNew();
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "Querying id types");
             AuthenticateIfNecessary();
-            var url = $"{Url}/identifier-types{(where != null || orderBy != null ? $"?query={WebUtility.UrlEncode(where)}{(orderBy != null ? $"{(where != null ? " " : "")}sortby {WebUtility.UrlEncode(orderBy)}" : "")}" : "")}{(skip != null ? $"{(where != null || orderBy != null ? "&" : "?")}offset={skip}" : "")}{(take != null ? $"{(where != null || orderBy != null || skip != null ? "&" : "?")}limit={take}" : "")}";
+            var url = $"{Url}/identifier-types{(where != null || orderBy != null ? $"?query={WebUtility.UrlEncode(where)}{(orderBy != null ? $"{(where != null ? " " : "cql.allrecords=1 ")}sortby {WebUtility.UrlEncode(orderBy)}" : "")}" : "")}{(skip != null ? $"{(where != null || orderBy != null ? "&" : "?")}offset={skip}" : "")}{(take != null ? $"{(where != null || orderBy != null || skip != null ? "&" : "?")}limit={take}" : "")}";
             traceSource.TraceEvent(TraceEventType.Verbose, 0, url);
             var hrm = httpClient.GetAsync(url).Result;
             if (hrm.StatusCode != HttpStatusCode.OK)
@@ -1288,7 +1265,6 @@ namespace FolioLibrary
             var hrm = httpClient.GetAsync(url).Result;
             var s2 = hrm.Content.ReadAsStringAsync().Result;
             var jo = hrm.Content.Headers.ContentType.MediaType == "application/json" ? JObject.Parse(s2) : null;
-            if (jo != null) s2 = jo.ToString();
             traceSource.TraceEvent(TraceEventType.Verbose, 0, s2);
             if (hrm.StatusCode != HttpStatusCode.OK) throw new HttpRequestException($"Response status code does not indicate success: {hrm.StatusCode} ({hrm.ReasonPhrase}).\r\n{s2}");
             traceSource.TraceEvent(TraceEventType.Verbose, 0, s.Elapsed.ToString());
@@ -1303,13 +1279,12 @@ namespace FolioLibrary
             AuthenticateIfNecessary();
             var url = $"{Url}/identifier-types";
             traceSource.TraceEvent(TraceEventType.Verbose, 0, url);
-            var s2 = idType.ToString();
+            var s2 = idType.ToString(formatting);
             traceSource.TraceEvent(TraceEventType.Verbose, 0, s2);
             var sc = new StringContent(s2, Encoding.UTF8, "application/json");
             var hrm = httpClient.PostAsync(url, sc).Result;
             s2 = hrm.Content.ReadAsStringAsync().Result;
             var jo = hrm.Content.Headers.ContentType.MediaType == "application/json" ? JObject.Parse(s2) : null;
-            if (jo != null) s2 = jo.ToString();
             traceSource.TraceEvent(TraceEventType.Verbose, 0, s2);
             if (hrm.StatusCode != HttpStatusCode.Created) throw new HttpRequestException($"Response status code does not indicate success: {hrm.StatusCode} ({hrm.ReasonPhrase}).\r\n{s2}");
             traceSource.TraceEvent(TraceEventType.Verbose, 0, s.Elapsed.ToString());
@@ -1323,7 +1298,7 @@ namespace FolioLibrary
             AuthenticateIfNecessary();
             var url = $"{Url}/identifier-types/{idType["id"]}";
             traceSource.TraceEvent(TraceEventType.Verbose, 0, url);
-            var s2 = idType.ToString();
+            var s2 = idType.ToString(formatting);
             traceSource.TraceEvent(TraceEventType.Verbose, 0, s2);
             var sc = new StringContent(s2, Encoding.UTF8, "application/json");
             var hrm = httpClient.PutAsync(url, sc).Result;
@@ -1352,7 +1327,7 @@ namespace FolioLibrary
             var s = Stopwatch.StartNew();
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "Querying ill policies");
             AuthenticateIfNecessary();
-            var url = $"{Url}/ill-policies{(where != null || orderBy != null ? $"?query={WebUtility.UrlEncode(where)}{(orderBy != null ? $"{(where != null ? " " : "")}sortby {WebUtility.UrlEncode(orderBy)}" : "")}" : "")}{(skip != null ? $"{(where != null || orderBy != null ? "&" : "?")}offset={skip}" : "")}{(take != null ? $"{(where != null || orderBy != null || skip != null ? "&" : "?")}limit={take}" : "")}";
+            var url = $"{Url}/ill-policies{(where != null || orderBy != null ? $"?query={WebUtility.UrlEncode(where)}{(orderBy != null ? $"{(where != null ? " " : "cql.allrecords=1 ")}sortby {WebUtility.UrlEncode(orderBy)}" : "")}" : "")}{(skip != null ? $"{(where != null || orderBy != null ? "&" : "?")}offset={skip}" : "")}{(take != null ? $"{(where != null || orderBy != null || skip != null ? "&" : "?")}limit={take}" : "")}";
             traceSource.TraceEvent(TraceEventType.Verbose, 0, url);
             var hrm = httpClient.GetAsync(url).Result;
             if (hrm.StatusCode != HttpStatusCode.OK)
@@ -1387,7 +1362,6 @@ namespace FolioLibrary
             var hrm = httpClient.GetAsync(url).Result;
             var s2 = hrm.Content.ReadAsStringAsync().Result;
             var jo = hrm.Content.Headers.ContentType.MediaType == "application/json" ? JObject.Parse(s2) : null;
-            if (jo != null) s2 = jo.ToString();
             traceSource.TraceEvent(TraceEventType.Verbose, 0, s2);
             if (hrm.StatusCode != HttpStatusCode.OK) throw new HttpRequestException($"Response status code does not indicate success: {hrm.StatusCode} ({hrm.ReasonPhrase}).\r\n{s2}");
             traceSource.TraceEvent(TraceEventType.Verbose, 0, s.Elapsed.ToString());
@@ -1402,13 +1376,12 @@ namespace FolioLibrary
             AuthenticateIfNecessary();
             var url = $"{Url}/ill-policies";
             traceSource.TraceEvent(TraceEventType.Verbose, 0, url);
-            var s2 = illPolicy.ToString();
+            var s2 = illPolicy.ToString(formatting);
             traceSource.TraceEvent(TraceEventType.Verbose, 0, s2);
             var sc = new StringContent(s2, Encoding.UTF8, "application/json");
             var hrm = httpClient.PostAsync(url, sc).Result;
             s2 = hrm.Content.ReadAsStringAsync().Result;
             var jo = hrm.Content.Headers.ContentType.MediaType == "application/json" ? JObject.Parse(s2) : null;
-            if (jo != null) s2 = jo.ToString();
             traceSource.TraceEvent(TraceEventType.Verbose, 0, s2);
             if (hrm.StatusCode != HttpStatusCode.Created) throw new HttpRequestException($"Response status code does not indicate success: {hrm.StatusCode} ({hrm.ReasonPhrase}).\r\n{s2}");
             traceSource.TraceEvent(TraceEventType.Verbose, 0, s.Elapsed.ToString());
@@ -1422,7 +1395,7 @@ namespace FolioLibrary
             AuthenticateIfNecessary();
             var url = $"{Url}/ill-policies/{illPolicy["id"]}";
             traceSource.TraceEvent(TraceEventType.Verbose, 0, url);
-            var s2 = illPolicy.ToString();
+            var s2 = illPolicy.ToString(formatting);
             traceSource.TraceEvent(TraceEventType.Verbose, 0, s2);
             var sc = new StringContent(s2, Encoding.UTF8, "application/json");
             var hrm = httpClient.PutAsync(url, sc).Result;
@@ -1451,7 +1424,7 @@ namespace FolioLibrary
             var s = Stopwatch.StartNew();
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "Querying instances");
             AuthenticateIfNecessary();
-            var url = $"{Url}/instance-storage/instances{(where != null || orderBy != null ? $"?query={WebUtility.UrlEncode(where)}{(orderBy != null ? $"{(where != null ? " " : "")}sortby {WebUtility.UrlEncode(orderBy)}" : "")}" : "")}{(skip != null ? $"{(where != null || orderBy != null ? "&" : "?")}offset={skip}" : "")}{(take != null ? $"{(where != null || orderBy != null || skip != null ? "&" : "?")}limit={take}" : "")}";
+            var url = $"{Url}/instance-storage/instances{(where != null || orderBy != null ? $"?query={WebUtility.UrlEncode(where)}{(orderBy != null ? $"{(where != null ? " " : "cql.allrecords=1 ")}sortby {WebUtility.UrlEncode(orderBy)}" : "")}" : "")}{(skip != null ? $"{(where != null || orderBy != null ? "&" : "?")}offset={skip}" : "")}{(take != null ? $"{(where != null || orderBy != null || skip != null ? "&" : "?")}limit={take}" : "")}";
             traceSource.TraceEvent(TraceEventType.Verbose, 0, url);
             var hrm = httpClient.GetAsync(url).Result;
             if (hrm.StatusCode != HttpStatusCode.OK)
@@ -1486,7 +1459,6 @@ namespace FolioLibrary
             var hrm = httpClient.GetAsync(url).Result;
             var s2 = hrm.Content.ReadAsStringAsync().Result;
             var jo = hrm.Content.Headers.ContentType.MediaType == "application/json" ? JObject.Parse(s2) : null;
-            if (jo != null) s2 = jo.ToString();
             traceSource.TraceEvent(TraceEventType.Verbose, 0, s2);
             if (hrm.StatusCode != HttpStatusCode.OK) throw new HttpRequestException($"Response status code does not indicate success: {hrm.StatusCode} ({hrm.ReasonPhrase}).\r\n{s2}");
             traceSource.TraceEvent(TraceEventType.Verbose, 0, s.Elapsed.ToString());
@@ -1501,13 +1473,12 @@ namespace FolioLibrary
             AuthenticateIfNecessary();
             var url = $"{Url}/instance-storage/instances";
             traceSource.TraceEvent(TraceEventType.Verbose, 0, url);
-            var s2 = instance.ToString();
+            var s2 = instance.ToString(formatting);
             traceSource.TraceEvent(TraceEventType.Verbose, 0, s2);
             var sc = new StringContent(s2, Encoding.UTF8, "application/json");
             var hrm = httpClient.PostAsync(url, sc).Result;
             s2 = hrm.Content.ReadAsStringAsync().Result;
             var jo = hrm.Content.Headers.ContentType.MediaType == "application/json" ? JObject.Parse(s2) : null;
-            if (jo != null) s2 = jo.ToString();
             traceSource.TraceEvent(TraceEventType.Verbose, 0, s2);
             if (hrm.StatusCode != HttpStatusCode.Created) throw new HttpRequestException($"Response status code does not indicate success: {hrm.StatusCode} ({hrm.ReasonPhrase}).\r\n{s2}");
             traceSource.TraceEvent(TraceEventType.Verbose, 0, s.Elapsed.ToString());
@@ -1521,7 +1492,7 @@ namespace FolioLibrary
             AuthenticateIfNecessary();
             var url = $"{Url}/instance-storage/instances/{instance["id"]}";
             traceSource.TraceEvent(TraceEventType.Verbose, 0, url);
-            var s2 = instance.ToString();
+            var s2 = instance.ToString(formatting);
             traceSource.TraceEvent(TraceEventType.Verbose, 0, s2);
             var sc = new StringContent(s2, Encoding.UTF8, "application/json");
             var hrm = httpClient.PutAsync(url, sc).Result;
@@ -1550,7 +1521,7 @@ namespace FolioLibrary
             var s = Stopwatch.StartNew();
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "Querying instance formats");
             AuthenticateIfNecessary();
-            var url = $"{Url}/instance-formats{(where != null || orderBy != null ? $"?query={WebUtility.UrlEncode(where)}{(orderBy != null ? $"{(where != null ? " " : "")}sortby {WebUtility.UrlEncode(orderBy)}" : "")}" : "")}{(skip != null ? $"{(where != null || orderBy != null ? "&" : "?")}offset={skip}" : "")}{(take != null ? $"{(where != null || orderBy != null || skip != null ? "&" : "?")}limit={take}" : "")}";
+            var url = $"{Url}/instance-formats{(where != null || orderBy != null ? $"?query={WebUtility.UrlEncode(where)}{(orderBy != null ? $"{(where != null ? " " : "cql.allrecords=1 ")}sortby {WebUtility.UrlEncode(orderBy)}" : "")}" : "")}{(skip != null ? $"{(where != null || orderBy != null ? "&" : "?")}offset={skip}" : "")}{(take != null ? $"{(where != null || orderBy != null || skip != null ? "&" : "?")}limit={take}" : "")}";
             traceSource.TraceEvent(TraceEventType.Verbose, 0, url);
             var hrm = httpClient.GetAsync(url).Result;
             if (hrm.StatusCode != HttpStatusCode.OK)
@@ -1585,7 +1556,6 @@ namespace FolioLibrary
             var hrm = httpClient.GetAsync(url).Result;
             var s2 = hrm.Content.ReadAsStringAsync().Result;
             var jo = hrm.Content.Headers.ContentType.MediaType == "application/json" ? JObject.Parse(s2) : null;
-            if (jo != null) s2 = jo.ToString();
             traceSource.TraceEvent(TraceEventType.Verbose, 0, s2);
             if (hrm.StatusCode != HttpStatusCode.OK) throw new HttpRequestException($"Response status code does not indicate success: {hrm.StatusCode} ({hrm.ReasonPhrase}).\r\n{s2}");
             traceSource.TraceEvent(TraceEventType.Verbose, 0, s.Elapsed.ToString());
@@ -1600,13 +1570,12 @@ namespace FolioLibrary
             AuthenticateIfNecessary();
             var url = $"{Url}/instance-formats";
             traceSource.TraceEvent(TraceEventType.Verbose, 0, url);
-            var s2 = instanceFormat.ToString();
+            var s2 = instanceFormat.ToString(formatting);
             traceSource.TraceEvent(TraceEventType.Verbose, 0, s2);
             var sc = new StringContent(s2, Encoding.UTF8, "application/json");
             var hrm = httpClient.PostAsync(url, sc).Result;
             s2 = hrm.Content.ReadAsStringAsync().Result;
             var jo = hrm.Content.Headers.ContentType.MediaType == "application/json" ? JObject.Parse(s2) : null;
-            if (jo != null) s2 = jo.ToString();
             traceSource.TraceEvent(TraceEventType.Verbose, 0, s2);
             if (hrm.StatusCode != HttpStatusCode.Created) throw new HttpRequestException($"Response status code does not indicate success: {hrm.StatusCode} ({hrm.ReasonPhrase}).\r\n{s2}");
             traceSource.TraceEvent(TraceEventType.Verbose, 0, s.Elapsed.ToString());
@@ -1620,7 +1589,7 @@ namespace FolioLibrary
             AuthenticateIfNecessary();
             var url = $"{Url}/instance-formats/{instanceFormat["id"]}";
             traceSource.TraceEvent(TraceEventType.Verbose, 0, url);
-            var s2 = instanceFormat.ToString();
+            var s2 = instanceFormat.ToString(formatting);
             traceSource.TraceEvent(TraceEventType.Verbose, 0, s2);
             var sc = new StringContent(s2, Encoding.UTF8, "application/json");
             var hrm = httpClient.PutAsync(url, sc).Result;
@@ -1649,7 +1618,7 @@ namespace FolioLibrary
             var s = Stopwatch.StartNew();
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "Querying instance relationships");
             AuthenticateIfNecessary();
-            var url = $"{Url}/instance-storage/instance-relationships{(where != null || orderBy != null ? $"?query={WebUtility.UrlEncode(where)}{(orderBy != null ? $"{(where != null ? " " : "")}sortby {WebUtility.UrlEncode(orderBy)}" : "")}" : "")}{(skip != null ? $"{(where != null || orderBy != null ? "&" : "?")}offset={skip}" : "")}{(take != null ? $"{(where != null || orderBy != null || skip != null ? "&" : "?")}limit={take}" : "")}";
+            var url = $"{Url}/instance-storage/instance-relationships{(where != null || orderBy != null ? $"?query={WebUtility.UrlEncode(where)}{(orderBy != null ? $"{(where != null ? " " : "cql.allrecords=1 ")}sortby {WebUtility.UrlEncode(orderBy)}" : "")}" : "")}{(skip != null ? $"{(where != null || orderBy != null ? "&" : "?")}offset={skip}" : "")}{(take != null ? $"{(where != null || orderBy != null || skip != null ? "&" : "?")}limit={take}" : "")}";
             traceSource.TraceEvent(TraceEventType.Verbose, 0, url);
             var hrm = httpClient.GetAsync(url).Result;
             if (hrm.StatusCode != HttpStatusCode.OK)
@@ -1684,7 +1653,6 @@ namespace FolioLibrary
             var hrm = httpClient.GetAsync(url).Result;
             var s2 = hrm.Content.ReadAsStringAsync().Result;
             var jo = hrm.Content.Headers.ContentType.MediaType == "application/json" ? JObject.Parse(s2) : null;
-            if (jo != null) s2 = jo.ToString();
             traceSource.TraceEvent(TraceEventType.Verbose, 0, s2);
             if (hrm.StatusCode != HttpStatusCode.OK) throw new HttpRequestException($"Response status code does not indicate success: {hrm.StatusCode} ({hrm.ReasonPhrase}).\r\n{s2}");
             traceSource.TraceEvent(TraceEventType.Verbose, 0, s.Elapsed.ToString());
@@ -1699,13 +1667,12 @@ namespace FolioLibrary
             AuthenticateIfNecessary();
             var url = $"{Url}/instance-storage/instance-relationships";
             traceSource.TraceEvent(TraceEventType.Verbose, 0, url);
-            var s2 = instanceRelationship.ToString();
+            var s2 = instanceRelationship.ToString(formatting);
             traceSource.TraceEvent(TraceEventType.Verbose, 0, s2);
             var sc = new StringContent(s2, Encoding.UTF8, "application/json");
             var hrm = httpClient.PostAsync(url, sc).Result;
             s2 = hrm.Content.ReadAsStringAsync().Result;
             var jo = hrm.Content.Headers.ContentType.MediaType == "application/json" ? JObject.Parse(s2) : null;
-            if (jo != null) s2 = jo.ToString();
             traceSource.TraceEvent(TraceEventType.Verbose, 0, s2);
             if (hrm.StatusCode != HttpStatusCode.Created) throw new HttpRequestException($"Response status code does not indicate success: {hrm.StatusCode} ({hrm.ReasonPhrase}).\r\n{s2}");
             traceSource.TraceEvent(TraceEventType.Verbose, 0, s.Elapsed.ToString());
@@ -1719,7 +1686,7 @@ namespace FolioLibrary
             AuthenticateIfNecessary();
             var url = $"{Url}/instance-storage/instance-relationships/{instanceRelationship["id"]}";
             traceSource.TraceEvent(TraceEventType.Verbose, 0, url);
-            var s2 = instanceRelationship.ToString();
+            var s2 = instanceRelationship.ToString(formatting);
             traceSource.TraceEvent(TraceEventType.Verbose, 0, s2);
             var sc = new StringContent(s2, Encoding.UTF8, "application/json");
             var hrm = httpClient.PutAsync(url, sc).Result;
@@ -1748,7 +1715,7 @@ namespace FolioLibrary
             var s = Stopwatch.StartNew();
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "Querying instance relationship types");
             AuthenticateIfNecessary();
-            var url = $"{Url}/instance-relationship-types{(where != null || orderBy != null ? $"?query={WebUtility.UrlEncode(where)}{(orderBy != null ? $"{(where != null ? " " : "")}sortby {WebUtility.UrlEncode(orderBy)}" : "")}" : "")}{(skip != null ? $"{(where != null || orderBy != null ? "&" : "?")}offset={skip}" : "")}{(take != null ? $"{(where != null || orderBy != null || skip != null ? "&" : "?")}limit={take}" : "")}";
+            var url = $"{Url}/instance-relationship-types{(where != null || orderBy != null ? $"?query={WebUtility.UrlEncode(where)}{(orderBy != null ? $"{(where != null ? " " : "cql.allrecords=1 ")}sortby {WebUtility.UrlEncode(orderBy)}" : "")}" : "")}{(skip != null ? $"{(where != null || orderBy != null ? "&" : "?")}offset={skip}" : "")}{(take != null ? $"{(where != null || orderBy != null || skip != null ? "&" : "?")}limit={take}" : "")}";
             traceSource.TraceEvent(TraceEventType.Verbose, 0, url);
             var hrm = httpClient.GetAsync(url).Result;
             if (hrm.StatusCode != HttpStatusCode.OK)
@@ -1783,7 +1750,6 @@ namespace FolioLibrary
             var hrm = httpClient.GetAsync(url).Result;
             var s2 = hrm.Content.ReadAsStringAsync().Result;
             var jo = hrm.Content.Headers.ContentType.MediaType == "application/json" ? JObject.Parse(s2) : null;
-            if (jo != null) s2 = jo.ToString();
             traceSource.TraceEvent(TraceEventType.Verbose, 0, s2);
             if (hrm.StatusCode != HttpStatusCode.OK) throw new HttpRequestException($"Response status code does not indicate success: {hrm.StatusCode} ({hrm.ReasonPhrase}).\r\n{s2}");
             traceSource.TraceEvent(TraceEventType.Verbose, 0, s.Elapsed.ToString());
@@ -1798,13 +1764,12 @@ namespace FolioLibrary
             AuthenticateIfNecessary();
             var url = $"{Url}/instance-relationship-types";
             traceSource.TraceEvent(TraceEventType.Verbose, 0, url);
-            var s2 = instanceRelationshipType.ToString();
+            var s2 = instanceRelationshipType.ToString(formatting);
             traceSource.TraceEvent(TraceEventType.Verbose, 0, s2);
             var sc = new StringContent(s2, Encoding.UTF8, "application/json");
             var hrm = httpClient.PostAsync(url, sc).Result;
             s2 = hrm.Content.ReadAsStringAsync().Result;
             var jo = hrm.Content.Headers.ContentType.MediaType == "application/json" ? JObject.Parse(s2) : null;
-            if (jo != null) s2 = jo.ToString();
             traceSource.TraceEvent(TraceEventType.Verbose, 0, s2);
             if (hrm.StatusCode != HttpStatusCode.Created) throw new HttpRequestException($"Response status code does not indicate success: {hrm.StatusCode} ({hrm.ReasonPhrase}).\r\n{s2}");
             traceSource.TraceEvent(TraceEventType.Verbose, 0, s.Elapsed.ToString());
@@ -1818,7 +1783,7 @@ namespace FolioLibrary
             AuthenticateIfNecessary();
             var url = $"{Url}/instance-relationship-types/{instanceRelationshipType["id"]}";
             traceSource.TraceEvent(TraceEventType.Verbose, 0, url);
-            var s2 = instanceRelationshipType.ToString();
+            var s2 = instanceRelationshipType.ToString(formatting);
             traceSource.TraceEvent(TraceEventType.Verbose, 0, s2);
             var sc = new StringContent(s2, Encoding.UTF8, "application/json");
             var hrm = httpClient.PutAsync(url, sc).Result;
@@ -1847,7 +1812,7 @@ namespace FolioLibrary
             var s = Stopwatch.StartNew();
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "Querying instance statuses");
             AuthenticateIfNecessary();
-            var url = $"{Url}/instance-statuses{(where != null || orderBy != null ? $"?query={WebUtility.UrlEncode(where)}{(orderBy != null ? $"{(where != null ? " " : "")}sortby {WebUtility.UrlEncode(orderBy)}" : "")}" : "")}{(skip != null ? $"{(where != null || orderBy != null ? "&" : "?")}offset={skip}" : "")}{(take != null ? $"{(where != null || orderBy != null || skip != null ? "&" : "?")}limit={take}" : "")}";
+            var url = $"{Url}/instance-statuses{(where != null || orderBy != null ? $"?query={WebUtility.UrlEncode(where)}{(orderBy != null ? $"{(where != null ? " " : "cql.allrecords=1 ")}sortby {WebUtility.UrlEncode(orderBy)}" : "")}" : "")}{(skip != null ? $"{(where != null || orderBy != null ? "&" : "?")}offset={skip}" : "")}{(take != null ? $"{(where != null || orderBy != null || skip != null ? "&" : "?")}limit={take}" : "")}";
             traceSource.TraceEvent(TraceEventType.Verbose, 0, url);
             var hrm = httpClient.GetAsync(url).Result;
             if (hrm.StatusCode != HttpStatusCode.OK)
@@ -1882,7 +1847,6 @@ namespace FolioLibrary
             var hrm = httpClient.GetAsync(url).Result;
             var s2 = hrm.Content.ReadAsStringAsync().Result;
             var jo = hrm.Content.Headers.ContentType.MediaType == "application/json" ? JObject.Parse(s2) : null;
-            if (jo != null) s2 = jo.ToString();
             traceSource.TraceEvent(TraceEventType.Verbose, 0, s2);
             if (hrm.StatusCode != HttpStatusCode.OK) throw new HttpRequestException($"Response status code does not indicate success: {hrm.StatusCode} ({hrm.ReasonPhrase}).\r\n{s2}");
             traceSource.TraceEvent(TraceEventType.Verbose, 0, s.Elapsed.ToString());
@@ -1897,13 +1861,12 @@ namespace FolioLibrary
             AuthenticateIfNecessary();
             var url = $"{Url}/instance-statuses";
             traceSource.TraceEvent(TraceEventType.Verbose, 0, url);
-            var s2 = instanceStatus.ToString();
+            var s2 = instanceStatus.ToString(formatting);
             traceSource.TraceEvent(TraceEventType.Verbose, 0, s2);
             var sc = new StringContent(s2, Encoding.UTF8, "application/json");
             var hrm = httpClient.PostAsync(url, sc).Result;
             s2 = hrm.Content.ReadAsStringAsync().Result;
             var jo = hrm.Content.Headers.ContentType.MediaType == "application/json" ? JObject.Parse(s2) : null;
-            if (jo != null) s2 = jo.ToString();
             traceSource.TraceEvent(TraceEventType.Verbose, 0, s2);
             if (hrm.StatusCode != HttpStatusCode.Created) throw new HttpRequestException($"Response status code does not indicate success: {hrm.StatusCode} ({hrm.ReasonPhrase}).\r\n{s2}");
             traceSource.TraceEvent(TraceEventType.Verbose, 0, s.Elapsed.ToString());
@@ -1917,7 +1880,7 @@ namespace FolioLibrary
             AuthenticateIfNecessary();
             var url = $"{Url}/instance-statuses/{instanceStatus["id"]}";
             traceSource.TraceEvent(TraceEventType.Verbose, 0, url);
-            var s2 = instanceStatus.ToString();
+            var s2 = instanceStatus.ToString(formatting);
             traceSource.TraceEvent(TraceEventType.Verbose, 0, s2);
             var sc = new StringContent(s2, Encoding.UTF8, "application/json");
             var hrm = httpClient.PutAsync(url, sc).Result;
@@ -1946,7 +1909,7 @@ namespace FolioLibrary
             var s = Stopwatch.StartNew();
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "Querying instance types");
             AuthenticateIfNecessary();
-            var url = $"{Url}/instance-types{(where != null || orderBy != null ? $"?query={WebUtility.UrlEncode(where)}{(orderBy != null ? $"{(where != null ? " " : "")}sortby {WebUtility.UrlEncode(orderBy)}" : "")}" : "")}{(skip != null ? $"{(where != null || orderBy != null ? "&" : "?")}offset={skip}" : "")}{(take != null ? $"{(where != null || orderBy != null || skip != null ? "&" : "?")}limit={take}" : "")}";
+            var url = $"{Url}/instance-types{(where != null || orderBy != null ? $"?query={WebUtility.UrlEncode(where)}{(orderBy != null ? $"{(where != null ? " " : "cql.allrecords=1 ")}sortby {WebUtility.UrlEncode(orderBy)}" : "")}" : "")}{(skip != null ? $"{(where != null || orderBy != null ? "&" : "?")}offset={skip}" : "")}{(take != null ? $"{(where != null || orderBy != null || skip != null ? "&" : "?")}limit={take}" : "")}";
             traceSource.TraceEvent(TraceEventType.Verbose, 0, url);
             var hrm = httpClient.GetAsync(url).Result;
             if (hrm.StatusCode != HttpStatusCode.OK)
@@ -1981,7 +1944,6 @@ namespace FolioLibrary
             var hrm = httpClient.GetAsync(url).Result;
             var s2 = hrm.Content.ReadAsStringAsync().Result;
             var jo = hrm.Content.Headers.ContentType.MediaType == "application/json" ? JObject.Parse(s2) : null;
-            if (jo != null) s2 = jo.ToString();
             traceSource.TraceEvent(TraceEventType.Verbose, 0, s2);
             if (hrm.StatusCode != HttpStatusCode.OK) throw new HttpRequestException($"Response status code does not indicate success: {hrm.StatusCode} ({hrm.ReasonPhrase}).\r\n{s2}");
             traceSource.TraceEvent(TraceEventType.Verbose, 0, s.Elapsed.ToString());
@@ -1996,13 +1958,12 @@ namespace FolioLibrary
             AuthenticateIfNecessary();
             var url = $"{Url}/instance-types";
             traceSource.TraceEvent(TraceEventType.Verbose, 0, url);
-            var s2 = instanceType.ToString();
+            var s2 = instanceType.ToString(formatting);
             traceSource.TraceEvent(TraceEventType.Verbose, 0, s2);
             var sc = new StringContent(s2, Encoding.UTF8, "application/json");
             var hrm = httpClient.PostAsync(url, sc).Result;
             s2 = hrm.Content.ReadAsStringAsync().Result;
             var jo = hrm.Content.Headers.ContentType.MediaType == "application/json" ? JObject.Parse(s2) : null;
-            if (jo != null) s2 = jo.ToString();
             traceSource.TraceEvent(TraceEventType.Verbose, 0, s2);
             if (hrm.StatusCode != HttpStatusCode.Created) throw new HttpRequestException($"Response status code does not indicate success: {hrm.StatusCode} ({hrm.ReasonPhrase}).\r\n{s2}");
             traceSource.TraceEvent(TraceEventType.Verbose, 0, s.Elapsed.ToString());
@@ -2016,7 +1977,7 @@ namespace FolioLibrary
             AuthenticateIfNecessary();
             var url = $"{Url}/instance-types/{instanceType["id"]}";
             traceSource.TraceEvent(TraceEventType.Verbose, 0, url);
-            var s2 = instanceType.ToString();
+            var s2 = instanceType.ToString(formatting);
             traceSource.TraceEvent(TraceEventType.Verbose, 0, s2);
             var sc = new StringContent(s2, Encoding.UTF8, "application/json");
             var hrm = httpClient.PutAsync(url, sc).Result;
@@ -2045,7 +2006,7 @@ namespace FolioLibrary
             var s = Stopwatch.StartNew();
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "Querying institutions");
             AuthenticateIfNecessary();
-            var url = $"{Url}/location-units/institutions{(where != null || orderBy != null ? $"?query={WebUtility.UrlEncode(where)}{(orderBy != null ? $"{(where != null ? " " : "")}sortby {WebUtility.UrlEncode(orderBy)}" : "")}" : "")}{(skip != null ? $"{(where != null || orderBy != null ? "&" : "?")}offset={skip}" : "")}{(take != null ? $"{(where != null || orderBy != null || skip != null ? "&" : "?")}limit={take}" : "")}";
+            var url = $"{Url}/location-units/institutions{(where != null || orderBy != null ? $"?query={WebUtility.UrlEncode(where)}{(orderBy != null ? $"{(where != null ? " " : "cql.allrecords=1 ")}sortby {WebUtility.UrlEncode(orderBy)}" : "")}" : "")}{(skip != null ? $"{(where != null || orderBy != null ? "&" : "?")}offset={skip}" : "")}{(take != null ? $"{(where != null || orderBy != null || skip != null ? "&" : "?")}limit={take}" : "")}";
             traceSource.TraceEvent(TraceEventType.Verbose, 0, url);
             var hrm = httpClient.GetAsync(url).Result;
             if (hrm.StatusCode != HttpStatusCode.OK)
@@ -2080,7 +2041,6 @@ namespace FolioLibrary
             var hrm = httpClient.GetAsync(url).Result;
             var s2 = hrm.Content.ReadAsStringAsync().Result;
             var jo = hrm.Content.Headers.ContentType.MediaType == "application/json" ? JObject.Parse(s2) : null;
-            if (jo != null) s2 = jo.ToString();
             traceSource.TraceEvent(TraceEventType.Verbose, 0, s2);
             if (hrm.StatusCode != HttpStatusCode.OK) throw new HttpRequestException($"Response status code does not indicate success: {hrm.StatusCode} ({hrm.ReasonPhrase}).\r\n{s2}");
             traceSource.TraceEvent(TraceEventType.Verbose, 0, s.Elapsed.ToString());
@@ -2095,13 +2055,12 @@ namespace FolioLibrary
             AuthenticateIfNecessary();
             var url = $"{Url}/location-units/institutions";
             traceSource.TraceEvent(TraceEventType.Verbose, 0, url);
-            var s2 = institution.ToString();
+            var s2 = institution.ToString(formatting);
             traceSource.TraceEvent(TraceEventType.Verbose, 0, s2);
             var sc = new StringContent(s2, Encoding.UTF8, "application/json");
             var hrm = httpClient.PostAsync(url, sc).Result;
             s2 = hrm.Content.ReadAsStringAsync().Result;
             var jo = hrm.Content.Headers.ContentType.MediaType == "application/json" ? JObject.Parse(s2) : null;
-            if (jo != null) s2 = jo.ToString();
             traceSource.TraceEvent(TraceEventType.Verbose, 0, s2);
             if (hrm.StatusCode != HttpStatusCode.Created) throw new HttpRequestException($"Response status code does not indicate success: {hrm.StatusCode} ({hrm.ReasonPhrase}).\r\n{s2}");
             traceSource.TraceEvent(TraceEventType.Verbose, 0, s.Elapsed.ToString());
@@ -2115,7 +2074,7 @@ namespace FolioLibrary
             AuthenticateIfNecessary();
             var url = $"{Url}/location-units/institutions/{institution["id"]}";
             traceSource.TraceEvent(TraceEventType.Verbose, 0, url);
-            var s2 = institution.ToString();
+            var s2 = institution.ToString(formatting);
             traceSource.TraceEvent(TraceEventType.Verbose, 0, s2);
             var sc = new StringContent(s2, Encoding.UTF8, "application/json");
             var hrm = httpClient.PutAsync(url, sc).Result;
@@ -2144,7 +2103,7 @@ namespace FolioLibrary
             var s = Stopwatch.StartNew();
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "Querying items");
             AuthenticateIfNecessary();
-            var url = $"{Url}/item-storage/items{(where != null || orderBy != null ? $"?query={WebUtility.UrlEncode(where)}{(orderBy != null ? $"{(where != null ? " " : "")}sortby {WebUtility.UrlEncode(orderBy)}" : "")}" : "")}{(skip != null ? $"{(where != null || orderBy != null ? "&" : "?")}offset={skip}" : "")}{(take != null ? $"{(where != null || orderBy != null || skip != null ? "&" : "?")}limit={take}" : "")}";
+            var url = $"{Url}/item-storage/items{(where != null || orderBy != null ? $"?query={WebUtility.UrlEncode(where)}{(orderBy != null ? $"{(where != null ? " " : "cql.allrecords=1 ")}sortby {WebUtility.UrlEncode(orderBy)}" : "")}" : "")}{(skip != null ? $"{(where != null || orderBy != null ? "&" : "?")}offset={skip}" : "")}{(take != null ? $"{(where != null || orderBy != null || skip != null ? "&" : "?")}limit={take}" : "")}";
             traceSource.TraceEvent(TraceEventType.Verbose, 0, url);
             var hrm = httpClient.GetAsync(url).Result;
             if (hrm.StatusCode != HttpStatusCode.OK)
@@ -2179,7 +2138,6 @@ namespace FolioLibrary
             var hrm = httpClient.GetAsync(url).Result;
             var s2 = hrm.Content.ReadAsStringAsync().Result;
             var jo = hrm.Content.Headers.ContentType.MediaType == "application/json" ? JObject.Parse(s2) : null;
-            if (jo != null) s2 = jo.ToString();
             traceSource.TraceEvent(TraceEventType.Verbose, 0, s2);
             if (hrm.StatusCode != HttpStatusCode.OK) throw new HttpRequestException($"Response status code does not indicate success: {hrm.StatusCode} ({hrm.ReasonPhrase}).\r\n{s2}");
             traceSource.TraceEvent(TraceEventType.Verbose, 0, s.Elapsed.ToString());
@@ -2194,13 +2152,12 @@ namespace FolioLibrary
             AuthenticateIfNecessary();
             var url = $"{Url}/item-storage/items";
             traceSource.TraceEvent(TraceEventType.Verbose, 0, url);
-            var s2 = item.ToString();
+            var s2 = item.ToString(formatting);
             traceSource.TraceEvent(TraceEventType.Verbose, 0, s2);
             var sc = new StringContent(s2, Encoding.UTF8, "application/json");
             var hrm = httpClient.PostAsync(url, sc).Result;
             s2 = hrm.Content.ReadAsStringAsync().Result;
             var jo = hrm.Content.Headers.ContentType.MediaType == "application/json" ? JObject.Parse(s2) : null;
-            if (jo != null) s2 = jo.ToString();
             traceSource.TraceEvent(TraceEventType.Verbose, 0, s2);
             if (hrm.StatusCode != HttpStatusCode.Created) throw new HttpRequestException($"Response status code does not indicate success: {hrm.StatusCode} ({hrm.ReasonPhrase}).\r\n{s2}");
             traceSource.TraceEvent(TraceEventType.Verbose, 0, s.Elapsed.ToString());
@@ -2214,7 +2171,7 @@ namespace FolioLibrary
             AuthenticateIfNecessary();
             var url = $"{Url}/item-storage/items/{item["id"]}";
             traceSource.TraceEvent(TraceEventType.Verbose, 0, url);
-            var s2 = item.ToString();
+            var s2 = item.ToString(formatting);
             traceSource.TraceEvent(TraceEventType.Verbose, 0, s2);
             var sc = new StringContent(s2, Encoding.UTF8, "application/json");
             var hrm = httpClient.PutAsync(url, sc).Result;
@@ -2243,7 +2200,7 @@ namespace FolioLibrary
             var s = Stopwatch.StartNew();
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "Querying item note types");
             AuthenticateIfNecessary();
-            var url = $"{Url}/item-note-types{(where != null || orderBy != null ? $"?query={WebUtility.UrlEncode(where)}{(orderBy != null ? $"{(where != null ? " " : "")}sortby {WebUtility.UrlEncode(orderBy)}" : "")}" : "")}{(skip != null ? $"{(where != null || orderBy != null ? "&" : "?")}offset={skip}" : "")}{(take != null ? $"{(where != null || orderBy != null || skip != null ? "&" : "?")}limit={take}" : "")}";
+            var url = $"{Url}/item-note-types{(where != null || orderBy != null ? $"?query={WebUtility.UrlEncode(where)}{(orderBy != null ? $"{(where != null ? " " : "cql.allrecords=1 ")}sortby {WebUtility.UrlEncode(orderBy)}" : "")}" : "")}{(skip != null ? $"{(where != null || orderBy != null ? "&" : "?")}offset={skip}" : "")}{(take != null ? $"{(where != null || orderBy != null || skip != null ? "&" : "?")}limit={take}" : "")}";
             traceSource.TraceEvent(TraceEventType.Verbose, 0, url);
             var hrm = httpClient.GetAsync(url).Result;
             if (hrm.StatusCode != HttpStatusCode.OK)
@@ -2278,7 +2235,6 @@ namespace FolioLibrary
             var hrm = httpClient.GetAsync(url).Result;
             var s2 = hrm.Content.ReadAsStringAsync().Result;
             var jo = hrm.Content.Headers.ContentType.MediaType == "application/json" ? JObject.Parse(s2) : null;
-            if (jo != null) s2 = jo.ToString();
             traceSource.TraceEvent(TraceEventType.Verbose, 0, s2);
             if (hrm.StatusCode != HttpStatusCode.OK) throw new HttpRequestException($"Response status code does not indicate success: {hrm.StatusCode} ({hrm.ReasonPhrase}).\r\n{s2}");
             traceSource.TraceEvent(TraceEventType.Verbose, 0, s.Elapsed.ToString());
@@ -2293,13 +2249,12 @@ namespace FolioLibrary
             AuthenticateIfNecessary();
             var url = $"{Url}/item-note-types";
             traceSource.TraceEvent(TraceEventType.Verbose, 0, url);
-            var s2 = itemNoteType.ToString();
+            var s2 = itemNoteType.ToString(formatting);
             traceSource.TraceEvent(TraceEventType.Verbose, 0, s2);
             var sc = new StringContent(s2, Encoding.UTF8, "application/json");
             var hrm = httpClient.PostAsync(url, sc).Result;
             s2 = hrm.Content.ReadAsStringAsync().Result;
             var jo = hrm.Content.Headers.ContentType.MediaType == "application/json" ? JObject.Parse(s2) : null;
-            if (jo != null) s2 = jo.ToString();
             traceSource.TraceEvent(TraceEventType.Verbose, 0, s2);
             if (hrm.StatusCode != HttpStatusCode.Created) throw new HttpRequestException($"Response status code does not indicate success: {hrm.StatusCode} ({hrm.ReasonPhrase}).\r\n{s2}");
             traceSource.TraceEvent(TraceEventType.Verbose, 0, s.Elapsed.ToString());
@@ -2313,7 +2268,7 @@ namespace FolioLibrary
             AuthenticateIfNecessary();
             var url = $"{Url}/item-note-types/{itemNoteType["id"]}";
             traceSource.TraceEvent(TraceEventType.Verbose, 0, url);
-            var s2 = itemNoteType.ToString();
+            var s2 = itemNoteType.ToString(formatting);
             traceSource.TraceEvent(TraceEventType.Verbose, 0, s2);
             var sc = new StringContent(s2, Encoding.UTF8, "application/json");
             var hrm = httpClient.PutAsync(url, sc).Result;
@@ -2342,7 +2297,7 @@ namespace FolioLibrary
             var s = Stopwatch.StartNew();
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "Querying libraries");
             AuthenticateIfNecessary();
-            var url = $"{Url}/location-units/libraries{(where != null || orderBy != null ? $"?query={WebUtility.UrlEncode(where)}{(orderBy != null ? $"{(where != null ? " " : "")}sortby {WebUtility.UrlEncode(orderBy)}" : "")}" : "")}{(skip != null ? $"{(where != null || orderBy != null ? "&" : "?")}offset={skip}" : "")}{(take != null ? $"{(where != null || orderBy != null || skip != null ? "&" : "?")}limit={take}" : "")}";
+            var url = $"{Url}/location-units/libraries{(where != null || orderBy != null ? $"?query={WebUtility.UrlEncode(where)}{(orderBy != null ? $"{(where != null ? " " : "cql.allrecords=1 ")}sortby {WebUtility.UrlEncode(orderBy)}" : "")}" : "")}{(skip != null ? $"{(where != null || orderBy != null ? "&" : "?")}offset={skip}" : "")}{(take != null ? $"{(where != null || orderBy != null || skip != null ? "&" : "?")}limit={take}" : "")}";
             traceSource.TraceEvent(TraceEventType.Verbose, 0, url);
             var hrm = httpClient.GetAsync(url).Result;
             if (hrm.StatusCode != HttpStatusCode.OK)
@@ -2377,7 +2332,6 @@ namespace FolioLibrary
             var hrm = httpClient.GetAsync(url).Result;
             var s2 = hrm.Content.ReadAsStringAsync().Result;
             var jo = hrm.Content.Headers.ContentType.MediaType == "application/json" ? JObject.Parse(s2) : null;
-            if (jo != null) s2 = jo.ToString();
             traceSource.TraceEvent(TraceEventType.Verbose, 0, s2);
             if (hrm.StatusCode != HttpStatusCode.OK) throw new HttpRequestException($"Response status code does not indicate success: {hrm.StatusCode} ({hrm.ReasonPhrase}).\r\n{s2}");
             traceSource.TraceEvent(TraceEventType.Verbose, 0, s.Elapsed.ToString());
@@ -2392,13 +2346,12 @@ namespace FolioLibrary
             AuthenticateIfNecessary();
             var url = $"{Url}/location-units/libraries";
             traceSource.TraceEvent(TraceEventType.Verbose, 0, url);
-            var s2 = library.ToString();
+            var s2 = library.ToString(formatting);
             traceSource.TraceEvent(TraceEventType.Verbose, 0, s2);
             var sc = new StringContent(s2, Encoding.UTF8, "application/json");
             var hrm = httpClient.PostAsync(url, sc).Result;
             s2 = hrm.Content.ReadAsStringAsync().Result;
             var jo = hrm.Content.Headers.ContentType.MediaType == "application/json" ? JObject.Parse(s2) : null;
-            if (jo != null) s2 = jo.ToString();
             traceSource.TraceEvent(TraceEventType.Verbose, 0, s2);
             if (hrm.StatusCode != HttpStatusCode.Created) throw new HttpRequestException($"Response status code does not indicate success: {hrm.StatusCode} ({hrm.ReasonPhrase}).\r\n{s2}");
             traceSource.TraceEvent(TraceEventType.Verbose, 0, s.Elapsed.ToString());
@@ -2412,7 +2365,7 @@ namespace FolioLibrary
             AuthenticateIfNecessary();
             var url = $"{Url}/location-units/libraries/{library["id"]}";
             traceSource.TraceEvent(TraceEventType.Verbose, 0, url);
-            var s2 = library.ToString();
+            var s2 = library.ToString(formatting);
             traceSource.TraceEvent(TraceEventType.Verbose, 0, s2);
             var sc = new StringContent(s2, Encoding.UTF8, "application/json");
             var hrm = httpClient.PutAsync(url, sc).Result;
@@ -2441,7 +2394,7 @@ namespace FolioLibrary
             var s = Stopwatch.StartNew();
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "Querying loan types");
             AuthenticateIfNecessary();
-            var url = $"{Url}/loan-types{(where != null || orderBy != null ? $"?query={WebUtility.UrlEncode(where)}{(orderBy != null ? $"{(where != null ? " " : "")}sortby {WebUtility.UrlEncode(orderBy)}" : "")}" : "")}{(skip != null ? $"{(where != null || orderBy != null ? "&" : "?")}offset={skip}" : "")}{(take != null ? $"{(where != null || orderBy != null || skip != null ? "&" : "?")}limit={take}" : "")}";
+            var url = $"{Url}/loan-types{(where != null || orderBy != null ? $"?query={WebUtility.UrlEncode(where)}{(orderBy != null ? $"{(where != null ? " " : "cql.allrecords=1 ")}sortby {WebUtility.UrlEncode(orderBy)}" : "")}" : "")}{(skip != null ? $"{(where != null || orderBy != null ? "&" : "?")}offset={skip}" : "")}{(take != null ? $"{(where != null || orderBy != null || skip != null ? "&" : "?")}limit={take}" : "")}";
             traceSource.TraceEvent(TraceEventType.Verbose, 0, url);
             var hrm = httpClient.GetAsync(url).Result;
             if (hrm.StatusCode != HttpStatusCode.OK)
@@ -2476,7 +2429,6 @@ namespace FolioLibrary
             var hrm = httpClient.GetAsync(url).Result;
             var s2 = hrm.Content.ReadAsStringAsync().Result;
             var jo = hrm.Content.Headers.ContentType.MediaType == "application/json" ? JObject.Parse(s2) : null;
-            if (jo != null) s2 = jo.ToString();
             traceSource.TraceEvent(TraceEventType.Verbose, 0, s2);
             if (hrm.StatusCode != HttpStatusCode.OK) throw new HttpRequestException($"Response status code does not indicate success: {hrm.StatusCode} ({hrm.ReasonPhrase}).\r\n{s2}");
             traceSource.TraceEvent(TraceEventType.Verbose, 0, s.Elapsed.ToString());
@@ -2491,13 +2443,12 @@ namespace FolioLibrary
             AuthenticateIfNecessary();
             var url = $"{Url}/loan-types";
             traceSource.TraceEvent(TraceEventType.Verbose, 0, url);
-            var s2 = loanType.ToString();
+            var s2 = loanType.ToString(formatting);
             traceSource.TraceEvent(TraceEventType.Verbose, 0, s2);
             var sc = new StringContent(s2, Encoding.UTF8, "application/json");
             var hrm = httpClient.PostAsync(url, sc).Result;
             s2 = hrm.Content.ReadAsStringAsync().Result;
             var jo = hrm.Content.Headers.ContentType.MediaType == "application/json" ? JObject.Parse(s2) : null;
-            if (jo != null) s2 = jo.ToString();
             traceSource.TraceEvent(TraceEventType.Verbose, 0, s2);
             if (hrm.StatusCode != HttpStatusCode.Created) throw new HttpRequestException($"Response status code does not indicate success: {hrm.StatusCode} ({hrm.ReasonPhrase}).\r\n{s2}");
             traceSource.TraceEvent(TraceEventType.Verbose, 0, s.Elapsed.ToString());
@@ -2511,7 +2462,7 @@ namespace FolioLibrary
             AuthenticateIfNecessary();
             var url = $"{Url}/loan-types/{loanType["id"]}";
             traceSource.TraceEvent(TraceEventType.Verbose, 0, url);
-            var s2 = loanType.ToString();
+            var s2 = loanType.ToString(formatting);
             traceSource.TraceEvent(TraceEventType.Verbose, 0, s2);
             var sc = new StringContent(s2, Encoding.UTF8, "application/json");
             var hrm = httpClient.PutAsync(url, sc).Result;
@@ -2540,7 +2491,7 @@ namespace FolioLibrary
             var s = Stopwatch.StartNew();
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "Querying locations");
             AuthenticateIfNecessary();
-            var url = $"{Url}/locations{(where != null || orderBy != null ? $"?query={WebUtility.UrlEncode(where)}{(orderBy != null ? $"{(where != null ? " " : "")}sortby {WebUtility.UrlEncode(orderBy)}" : "")}" : "")}{(skip != null ? $"{(where != null || orderBy != null ? "&" : "?")}offset={skip}" : "")}{(take != null ? $"{(where != null || orderBy != null || skip != null ? "&" : "?")}limit={take}" : "")}";
+            var url = $"{Url}/locations{(where != null || orderBy != null ? $"?query={WebUtility.UrlEncode(where)}{(orderBy != null ? $"{(where != null ? " " : "cql.allrecords=1 ")}sortby {WebUtility.UrlEncode(orderBy)}" : "")}" : "")}{(skip != null ? $"{(where != null || orderBy != null ? "&" : "?")}offset={skip}" : "")}{(take != null ? $"{(where != null || orderBy != null || skip != null ? "&" : "?")}limit={take}" : "")}";
             traceSource.TraceEvent(TraceEventType.Verbose, 0, url);
             var hrm = httpClient.GetAsync(url).Result;
             if (hrm.StatusCode != HttpStatusCode.OK)
@@ -2575,7 +2526,6 @@ namespace FolioLibrary
             var hrm = httpClient.GetAsync(url).Result;
             var s2 = hrm.Content.ReadAsStringAsync().Result;
             var jo = hrm.Content.Headers.ContentType.MediaType == "application/json" ? JObject.Parse(s2) : null;
-            if (jo != null) s2 = jo.ToString();
             traceSource.TraceEvent(TraceEventType.Verbose, 0, s2);
             if (hrm.StatusCode != HttpStatusCode.OK) throw new HttpRequestException($"Response status code does not indicate success: {hrm.StatusCode} ({hrm.ReasonPhrase}).\r\n{s2}");
             traceSource.TraceEvent(TraceEventType.Verbose, 0, s.Elapsed.ToString());
@@ -2590,13 +2540,12 @@ namespace FolioLibrary
             AuthenticateIfNecessary();
             var url = $"{Url}/locations";
             traceSource.TraceEvent(TraceEventType.Verbose, 0, url);
-            var s2 = location.ToString();
+            var s2 = location.ToString(formatting);
             traceSource.TraceEvent(TraceEventType.Verbose, 0, s2);
             var sc = new StringContent(s2, Encoding.UTF8, "application/json");
             var hrm = httpClient.PostAsync(url, sc).Result;
             s2 = hrm.Content.ReadAsStringAsync().Result;
             var jo = hrm.Content.Headers.ContentType.MediaType == "application/json" ? JObject.Parse(s2) : null;
-            if (jo != null) s2 = jo.ToString();
             traceSource.TraceEvent(TraceEventType.Verbose, 0, s2);
             if (hrm.StatusCode != HttpStatusCode.Created) throw new HttpRequestException($"Response status code does not indicate success: {hrm.StatusCode} ({hrm.ReasonPhrase}).\r\n{s2}");
             traceSource.TraceEvent(TraceEventType.Verbose, 0, s.Elapsed.ToString());
@@ -2610,7 +2559,7 @@ namespace FolioLibrary
             AuthenticateIfNecessary();
             var url = $"{Url}/locations/{location["id"]}";
             traceSource.TraceEvent(TraceEventType.Verbose, 0, url);
-            var s2 = location.ToString();
+            var s2 = location.ToString(formatting);
             traceSource.TraceEvent(TraceEventType.Verbose, 0, s2);
             var sc = new StringContent(s2, Encoding.UTF8, "application/json");
             var hrm = httpClient.PutAsync(url, sc).Result;
@@ -2639,7 +2588,7 @@ namespace FolioLibrary
             var s = Stopwatch.StartNew();
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "Querying logins");
             AuthenticateIfNecessary();
-            var url = $"{Url}/authn/credentials{(where != null || orderBy != null ? $"?query={WebUtility.UrlEncode(where)}{(orderBy != null ? $"{(where != null ? " " : "")}sortby {WebUtility.UrlEncode(orderBy)}" : "")}" : "")}{(skip != null ? $"{(where != null || orderBy != null ? "&" : "?")}offset={skip}" : "")}{(take != null ? $"{(where != null || orderBy != null || skip != null ? "&" : "?")}length={take}" : "")}";
+            var url = $"{Url}/authn/credentials{(where != null || orderBy != null ? $"?query={WebUtility.UrlEncode(where)}{(orderBy != null ? $"{(where != null ? " " : "cql.allrecords=1 ")}sortby {WebUtility.UrlEncode(orderBy)}" : "")}" : "")}{(skip != null ? $"{(where != null || orderBy != null ? "&" : "?")}offset={skip}" : "")}{(take != null ? $"{(where != null || orderBy != null || skip != null ? "&" : "?")}length={take}" : "")}";
             traceSource.TraceEvent(TraceEventType.Verbose, 0, url);
             var hrm = httpClient.GetAsync(url).Result;
             if (hrm.StatusCode != HttpStatusCode.OK)
@@ -2674,7 +2623,6 @@ namespace FolioLibrary
             var hrm = httpClient.GetAsync(url).Result;
             var s2 = hrm.Content.ReadAsStringAsync().Result;
             var jo = hrm.Content.Headers.ContentType.MediaType == "application/json" ? JObject.Parse(s2) : null;
-            if (jo != null) s2 = jo.ToString();
             traceSource.TraceEvent(TraceEventType.Verbose, 0, s2);
             if (hrm.StatusCode != HttpStatusCode.OK) throw new HttpRequestException($"Response status code does not indicate success: {hrm.StatusCode} ({hrm.ReasonPhrase}).\r\n{s2}");
             traceSource.TraceEvent(TraceEventType.Verbose, 0, s.Elapsed.ToString());
@@ -2689,13 +2637,12 @@ namespace FolioLibrary
             AuthenticateIfNecessary();
             var url = $"{Url}/authn/credentials";
             traceSource.TraceEvent(TraceEventType.Verbose, 0, url);
-            var s2 = login.ToString();
+            var s2 = login.ToString(formatting);
             traceSource.TraceEvent(TraceEventType.Verbose, 0, s2);
             var sc = new StringContent(s2, Encoding.UTF8, "application/json");
             var hrm = httpClient.PostAsync(url, sc).Result;
             s2 = hrm.Content.ReadAsStringAsync().Result;
             var jo = hrm.Content.Headers.ContentType.MediaType == "application/json" ? JObject.Parse(s2) : null;
-            if (jo != null) s2 = jo.ToString();
             traceSource.TraceEvent(TraceEventType.Verbose, 0, s2);
             if (hrm.StatusCode != HttpStatusCode.Created) throw new HttpRequestException($"Response status code does not indicate success: {hrm.StatusCode} ({hrm.ReasonPhrase}).\r\n{s2}");
             traceSource.TraceEvent(TraceEventType.Verbose, 0, s.Elapsed.ToString());
@@ -2709,7 +2656,7 @@ namespace FolioLibrary
             AuthenticateIfNecessary();
             var url = $"{Url}/authn/credentials/{login["id"]}";
             traceSource.TraceEvent(TraceEventType.Verbose, 0, url);
-            var s2 = login.ToString();
+            var s2 = login.ToString(formatting);
             traceSource.TraceEvent(TraceEventType.Verbose, 0, s2);
             var sc = new StringContent(s2, Encoding.UTF8, "application/json");
             var hrm = httpClient.PutAsync(url, sc).Result;
@@ -2738,7 +2685,7 @@ namespace FolioLibrary
             var s = Stopwatch.StartNew();
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "Querying material types");
             AuthenticateIfNecessary();
-            var url = $"{Url}/material-types{(where != null || orderBy != null ? $"?query={WebUtility.UrlEncode(where)}{(orderBy != null ? $"{(where != null ? " " : "")}sortby {WebUtility.UrlEncode(orderBy)}" : "")}" : "")}{(skip != null ? $"{(where != null || orderBy != null ? "&" : "?")}offset={skip}" : "")}{(take != null ? $"{(where != null || orderBy != null || skip != null ? "&" : "?")}limit={take}" : "")}";
+            var url = $"{Url}/material-types{(where != null || orderBy != null ? $"?query={WebUtility.UrlEncode(where)}{(orderBy != null ? $"{(where != null ? " " : "cql.allrecords=1 ")}sortby {WebUtility.UrlEncode(orderBy)}" : "")}" : "")}{(skip != null ? $"{(where != null || orderBy != null ? "&" : "?")}offset={skip}" : "")}{(take != null ? $"{(where != null || orderBy != null || skip != null ? "&" : "?")}limit={take}" : "")}";
             traceSource.TraceEvent(TraceEventType.Verbose, 0, url);
             var hrm = httpClient.GetAsync(url).Result;
             if (hrm.StatusCode != HttpStatusCode.OK)
@@ -2773,7 +2720,6 @@ namespace FolioLibrary
             var hrm = httpClient.GetAsync(url).Result;
             var s2 = hrm.Content.ReadAsStringAsync().Result;
             var jo = hrm.Content.Headers.ContentType.MediaType == "application/json" ? JObject.Parse(s2) : null;
-            if (jo != null) s2 = jo.ToString();
             traceSource.TraceEvent(TraceEventType.Verbose, 0, s2);
             if (hrm.StatusCode != HttpStatusCode.OK) throw new HttpRequestException($"Response status code does not indicate success: {hrm.StatusCode} ({hrm.ReasonPhrase}).\r\n{s2}");
             traceSource.TraceEvent(TraceEventType.Verbose, 0, s.Elapsed.ToString());
@@ -2788,13 +2734,12 @@ namespace FolioLibrary
             AuthenticateIfNecessary();
             var url = $"{Url}/material-types";
             traceSource.TraceEvent(TraceEventType.Verbose, 0, url);
-            var s2 = materialType.ToString();
+            var s2 = materialType.ToString(formatting);
             traceSource.TraceEvent(TraceEventType.Verbose, 0, s2);
             var sc = new StringContent(s2, Encoding.UTF8, "application/json");
             var hrm = httpClient.PostAsync(url, sc).Result;
             s2 = hrm.Content.ReadAsStringAsync().Result;
             var jo = hrm.Content.Headers.ContentType.MediaType == "application/json" ? JObject.Parse(s2) : null;
-            if (jo != null) s2 = jo.ToString();
             traceSource.TraceEvent(TraceEventType.Verbose, 0, s2);
             if (hrm.StatusCode != HttpStatusCode.Created) throw new HttpRequestException($"Response status code does not indicate success: {hrm.StatusCode} ({hrm.ReasonPhrase}).\r\n{s2}");
             traceSource.TraceEvent(TraceEventType.Verbose, 0, s.Elapsed.ToString());
@@ -2808,7 +2753,7 @@ namespace FolioLibrary
             AuthenticateIfNecessary();
             var url = $"{Url}/material-types/{materialType["id"]}";
             traceSource.TraceEvent(TraceEventType.Verbose, 0, url);
-            var s2 = materialType.ToString();
+            var s2 = materialType.ToString(formatting);
             traceSource.TraceEvent(TraceEventType.Verbose, 0, s2);
             var sc = new StringContent(s2, Encoding.UTF8, "application/json");
             var hrm = httpClient.PutAsync(url, sc).Result;
@@ -2837,7 +2782,7 @@ namespace FolioLibrary
             var s = Stopwatch.StartNew();
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "Querying mode of issuances");
             AuthenticateIfNecessary();
-            var url = $"{Url}/modes-of-issuance{(where != null || orderBy != null ? $"?query={WebUtility.UrlEncode(where)}{(orderBy != null ? $"{(where != null ? " " : "")}sortby {WebUtility.UrlEncode(orderBy)}" : "")}" : "")}{(skip != null ? $"{(where != null || orderBy != null ? "&" : "?")}offset={skip}" : "")}{(take != null ? $"{(where != null || orderBy != null || skip != null ? "&" : "?")}limit={take}" : "")}";
+            var url = $"{Url}/modes-of-issuance{(where != null || orderBy != null ? $"?query={WebUtility.UrlEncode(where)}{(orderBy != null ? $"{(where != null ? " " : "cql.allrecords=1 ")}sortby {WebUtility.UrlEncode(orderBy)}" : "")}" : "")}{(skip != null ? $"{(where != null || orderBy != null ? "&" : "?")}offset={skip}" : "")}{(take != null ? $"{(where != null || orderBy != null || skip != null ? "&" : "?")}limit={take}" : "")}";
             traceSource.TraceEvent(TraceEventType.Verbose, 0, url);
             var hrm = httpClient.GetAsync(url).Result;
             if (hrm.StatusCode != HttpStatusCode.OK)
@@ -2872,7 +2817,6 @@ namespace FolioLibrary
             var hrm = httpClient.GetAsync(url).Result;
             var s2 = hrm.Content.ReadAsStringAsync().Result;
             var jo = hrm.Content.Headers.ContentType.MediaType == "application/json" ? JObject.Parse(s2) : null;
-            if (jo != null) s2 = jo.ToString();
             traceSource.TraceEvent(TraceEventType.Verbose, 0, s2);
             if (hrm.StatusCode != HttpStatusCode.OK) throw new HttpRequestException($"Response status code does not indicate success: {hrm.StatusCode} ({hrm.ReasonPhrase}).\r\n{s2}");
             traceSource.TraceEvent(TraceEventType.Verbose, 0, s.Elapsed.ToString());
@@ -2887,13 +2831,12 @@ namespace FolioLibrary
             AuthenticateIfNecessary();
             var url = $"{Url}/modes-of-issuance";
             traceSource.TraceEvent(TraceEventType.Verbose, 0, url);
-            var s2 = modeOfIssuance.ToString();
+            var s2 = modeOfIssuance.ToString(formatting);
             traceSource.TraceEvent(TraceEventType.Verbose, 0, s2);
             var sc = new StringContent(s2, Encoding.UTF8, "application/json");
             var hrm = httpClient.PostAsync(url, sc).Result;
             s2 = hrm.Content.ReadAsStringAsync().Result;
             var jo = hrm.Content.Headers.ContentType.MediaType == "application/json" ? JObject.Parse(s2) : null;
-            if (jo != null) s2 = jo.ToString();
             traceSource.TraceEvent(TraceEventType.Verbose, 0, s2);
             if (hrm.StatusCode != HttpStatusCode.Created) throw new HttpRequestException($"Response status code does not indicate success: {hrm.StatusCode} ({hrm.ReasonPhrase}).\r\n{s2}");
             traceSource.TraceEvent(TraceEventType.Verbose, 0, s.Elapsed.ToString());
@@ -2907,7 +2850,7 @@ namespace FolioLibrary
             AuthenticateIfNecessary();
             var url = $"{Url}/modes-of-issuance/{modeOfIssuance["id"]}";
             traceSource.TraceEvent(TraceEventType.Verbose, 0, url);
-            var s2 = modeOfIssuance.ToString();
+            var s2 = modeOfIssuance.ToString(formatting);
             traceSource.TraceEvent(TraceEventType.Verbose, 0, s2);
             var sc = new StringContent(s2, Encoding.UTF8, "application/json");
             var hrm = httpClient.PutAsync(url, sc).Result;
@@ -2936,7 +2879,7 @@ namespace FolioLibrary
             var s = Stopwatch.StartNew();
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "Querying permissions");
             AuthenticateIfNecessary();
-            var url = $"{Url}/perms/permissions{(where != null || orderBy != null ? $"?query={WebUtility.UrlEncode(where)}{(orderBy != null ? $"{(where != null ? " " : "")}sortby {WebUtility.UrlEncode(orderBy)}" : "")}" : "")}{(skip != null ? $"{(where != null || orderBy != null ? "&" : "?")}offset={skip}" : "")}{(take != null ? $"{(where != null || orderBy != null || skip != null ? "&" : "?")}length={take}" : "")}";
+            var url = $"{Url}/perms/permissions{(where != null || orderBy != null ? $"?query={WebUtility.UrlEncode(where)}{(orderBy != null ? $"{(where != null ? " " : "cql.allrecords=1 ")}sortby {WebUtility.UrlEncode(orderBy)}" : "")}" : "")}{(skip != null ? $"{(where != null || orderBy != null ? "&" : "?")}offset={skip}" : "")}{(take != null ? $"{(where != null || orderBy != null || skip != null ? "&" : "?")}length={take}" : "")}";
             traceSource.TraceEvent(TraceEventType.Verbose, 0, url);
             var hrm = httpClient.GetAsync(url).Result;
             if (hrm.StatusCode != HttpStatusCode.OK)
@@ -2971,7 +2914,6 @@ namespace FolioLibrary
             var hrm = httpClient.GetAsync(url).Result;
             var s2 = hrm.Content.ReadAsStringAsync().Result;
             var jo = hrm.Content.Headers.ContentType.MediaType == "application/json" ? JObject.Parse(s2) : null;
-            if (jo != null) s2 = jo.ToString();
             traceSource.TraceEvent(TraceEventType.Verbose, 0, s2);
             if (hrm.StatusCode != HttpStatusCode.OK) throw new HttpRequestException($"Response status code does not indicate success: {hrm.StatusCode} ({hrm.ReasonPhrase}).\r\n{s2}");
             traceSource.TraceEvent(TraceEventType.Verbose, 0, s.Elapsed.ToString());
@@ -2986,13 +2928,12 @@ namespace FolioLibrary
             AuthenticateIfNecessary();
             var url = $"{Url}/perms/permissions";
             traceSource.TraceEvent(TraceEventType.Verbose, 0, url);
-            var s2 = permission.ToString();
+            var s2 = permission.ToString(formatting);
             traceSource.TraceEvent(TraceEventType.Verbose, 0, s2);
             var sc = new StringContent(s2, Encoding.UTF8, "application/json");
             var hrm = httpClient.PostAsync(url, sc).Result;
             s2 = hrm.Content.ReadAsStringAsync().Result;
             var jo = hrm.Content.Headers.ContentType.MediaType == "application/json" ? JObject.Parse(s2) : null;
-            if (jo != null) s2 = jo.ToString();
             traceSource.TraceEvent(TraceEventType.Verbose, 0, s2);
             if (hrm.StatusCode != HttpStatusCode.Created) throw new HttpRequestException($"Response status code does not indicate success: {hrm.StatusCode} ({hrm.ReasonPhrase}).\r\n{s2}");
             traceSource.TraceEvent(TraceEventType.Verbose, 0, s.Elapsed.ToString());
@@ -3006,7 +2947,7 @@ namespace FolioLibrary
             AuthenticateIfNecessary();
             var url = $"{Url}/perms/permissions/{permission["id"]}";
             traceSource.TraceEvent(TraceEventType.Verbose, 0, url);
-            var s2 = permission.ToString();
+            var s2 = permission.ToString(formatting);
             traceSource.TraceEvent(TraceEventType.Verbose, 0, s2);
             var sc = new StringContent(s2, Encoding.UTF8, "application/json");
             var hrm = httpClient.PutAsync(url, sc).Result;
@@ -3035,7 +2976,7 @@ namespace FolioLibrary
             var s = Stopwatch.StartNew();
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "Querying permissions users");
             AuthenticateIfNecessary();
-            var url = $"{Url}/perms/users{(where != null || orderBy != null ? $"?query={WebUtility.UrlEncode(where)}{(orderBy != null ? $"{(where != null ? " " : "")}sortby {WebUtility.UrlEncode(orderBy)}" : "")}" : "")}{(skip != null ? $"{(where != null || orderBy != null ? "&" : "?")}offset={skip}" : "")}{(take != null ? $"{(where != null || orderBy != null || skip != null ? "&" : "?")}length={take}" : "")}";
+            var url = $"{Url}/perms/users{(where != null || orderBy != null ? $"?query={WebUtility.UrlEncode(where)}{(orderBy != null ? $"{(where != null ? " " : "cql.allrecords=1 ")}sortby {WebUtility.UrlEncode(orderBy)}" : "")}" : "")}{(skip != null ? $"{(where != null || orderBy != null ? "&" : "?")}offset={skip}" : "")}{(take != null ? $"{(where != null || orderBy != null || skip != null ? "&" : "?")}length={take}" : "")}";
             traceSource.TraceEvent(TraceEventType.Verbose, 0, url);
             var hrm = httpClient.GetAsync(url).Result;
             if (hrm.StatusCode != HttpStatusCode.OK)
@@ -3070,7 +3011,6 @@ namespace FolioLibrary
             var hrm = httpClient.GetAsync(url).Result;
             var s2 = hrm.Content.ReadAsStringAsync().Result;
             var jo = hrm.Content.Headers.ContentType.MediaType == "application/json" ? JObject.Parse(s2) : null;
-            if (jo != null) s2 = jo.ToString();
             traceSource.TraceEvent(TraceEventType.Verbose, 0, s2);
             if (hrm.StatusCode != HttpStatusCode.OK) throw new HttpRequestException($"Response status code does not indicate success: {hrm.StatusCode} ({hrm.ReasonPhrase}).\r\n{s2}");
             traceSource.TraceEvent(TraceEventType.Verbose, 0, s.Elapsed.ToString());
@@ -3085,13 +3025,12 @@ namespace FolioLibrary
             AuthenticateIfNecessary();
             var url = $"{Url}/perms/users";
             traceSource.TraceEvent(TraceEventType.Verbose, 0, url);
-            var s2 = permissionsUser.ToString();
+            var s2 = permissionsUser.ToString(formatting);
             traceSource.TraceEvent(TraceEventType.Verbose, 0, s2);
             var sc = new StringContent(s2, Encoding.UTF8, "application/json");
             var hrm = httpClient.PostAsync(url, sc).Result;
             s2 = hrm.Content.ReadAsStringAsync().Result;
             var jo = hrm.Content.Headers.ContentType.MediaType == "application/json" ? JObject.Parse(s2) : null;
-            if (jo != null) s2 = jo.ToString();
             traceSource.TraceEvent(TraceEventType.Verbose, 0, s2);
             if (hrm.StatusCode != HttpStatusCode.Created) throw new HttpRequestException($"Response status code does not indicate success: {hrm.StatusCode} ({hrm.ReasonPhrase}).\r\n{s2}");
             traceSource.TraceEvent(TraceEventType.Verbose, 0, s.Elapsed.ToString());
@@ -3105,7 +3044,7 @@ namespace FolioLibrary
             AuthenticateIfNecessary();
             var url = $"{Url}/perms/users/{permissionsUser["id"]}";
             traceSource.TraceEvent(TraceEventType.Verbose, 0, url);
-            var s2 = permissionsUser.ToString();
+            var s2 = permissionsUser.ToString(formatting);
             traceSource.TraceEvent(TraceEventType.Verbose, 0, s2);
             var sc = new StringContent(s2, Encoding.UTF8, "application/json");
             var hrm = httpClient.PutAsync(url, sc).Result;
@@ -3134,7 +3073,7 @@ namespace FolioLibrary
             var s = Stopwatch.StartNew();
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "Querying proxies");
             AuthenticateIfNecessary();
-            var url = $"{Url}/proxiesfor{(where != null || orderBy != null ? $"?query={WebUtility.UrlEncode(where)}{(orderBy != null ? $"{(where != null ? " " : "")}sortby {WebUtility.UrlEncode(orderBy)}" : "")}" : "")}{(skip != null ? $"{(where != null || orderBy != null ? "&" : "?")}offset={skip}" : "")}{(take != null ? $"{(where != null || orderBy != null || skip != null ? "&" : "?")}limit={take}" : "")}";
+            var url = $"{Url}/proxiesfor{(where != null || orderBy != null ? $"?query={WebUtility.UrlEncode(where)}{(orderBy != null ? $"{(where != null ? " " : "cql.allrecords=1 ")}sortby {WebUtility.UrlEncode(orderBy)}" : "")}" : "")}{(skip != null ? $"{(where != null || orderBy != null ? "&" : "?")}offset={skip}" : "")}{(take != null ? $"{(where != null || orderBy != null || skip != null ? "&" : "?")}limit={take}" : "")}";
             traceSource.TraceEvent(TraceEventType.Verbose, 0, url);
             var hrm = httpClient.GetAsync(url).Result;
             if (hrm.StatusCode != HttpStatusCode.OK)
@@ -3169,7 +3108,6 @@ namespace FolioLibrary
             var hrm = httpClient.GetAsync(url).Result;
             var s2 = hrm.Content.ReadAsStringAsync().Result;
             var jo = hrm.Content.Headers.ContentType.MediaType == "application/json" ? JObject.Parse(s2) : null;
-            if (jo != null) s2 = jo.ToString();
             traceSource.TraceEvent(TraceEventType.Verbose, 0, s2);
             if (hrm.StatusCode != HttpStatusCode.OK) throw new HttpRequestException($"Response status code does not indicate success: {hrm.StatusCode} ({hrm.ReasonPhrase}).\r\n{s2}");
             traceSource.TraceEvent(TraceEventType.Verbose, 0, s.Elapsed.ToString());
@@ -3184,13 +3122,12 @@ namespace FolioLibrary
             AuthenticateIfNecessary();
             var url = $"{Url}/proxiesfor";
             traceSource.TraceEvent(TraceEventType.Verbose, 0, url);
-            var s2 = proxy.ToString();
+            var s2 = proxy.ToString(formatting);
             traceSource.TraceEvent(TraceEventType.Verbose, 0, s2);
             var sc = new StringContent(s2, Encoding.UTF8, "application/json");
             var hrm = httpClient.PostAsync(url, sc).Result;
             s2 = hrm.Content.ReadAsStringAsync().Result;
             var jo = hrm.Content.Headers.ContentType.MediaType == "application/json" ? JObject.Parse(s2) : null;
-            if (jo != null) s2 = jo.ToString();
             traceSource.TraceEvent(TraceEventType.Verbose, 0, s2);
             if (hrm.StatusCode != HttpStatusCode.Created) throw new HttpRequestException($"Response status code does not indicate success: {hrm.StatusCode} ({hrm.ReasonPhrase}).\r\n{s2}");
             traceSource.TraceEvent(TraceEventType.Verbose, 0, s.Elapsed.ToString());
@@ -3204,7 +3141,7 @@ namespace FolioLibrary
             AuthenticateIfNecessary();
             var url = $"{Url}/proxiesfor/{proxy["id"]}";
             traceSource.TraceEvent(TraceEventType.Verbose, 0, url);
-            var s2 = proxy.ToString();
+            var s2 = proxy.ToString(formatting);
             traceSource.TraceEvent(TraceEventType.Verbose, 0, s2);
             var sc = new StringContent(s2, Encoding.UTF8, "application/json");
             var hrm = httpClient.PutAsync(url, sc).Result;
@@ -3233,7 +3170,7 @@ namespace FolioLibrary
             var s = Stopwatch.StartNew();
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "Querying service points");
             AuthenticateIfNecessary();
-            var url = $"{Url}/service-points{(where != null || orderBy != null ? $"?query={WebUtility.UrlEncode(where)}{(orderBy != null ? $"{(where != null ? " " : "")}sortby {WebUtility.UrlEncode(orderBy)}" : "")}" : "")}{(skip != null ? $"{(where != null || orderBy != null ? "&" : "?")}offset={skip}" : "")}{(take != null ? $"{(where != null || orderBy != null || skip != null ? "&" : "?")}limit={take}" : "")}";
+            var url = $"{Url}/service-points{(where != null || orderBy != null ? $"?query={WebUtility.UrlEncode(where)}{(orderBy != null ? $"{(where != null ? " " : "cql.allrecords=1 ")}sortby {WebUtility.UrlEncode(orderBy)}" : "")}" : "")}{(skip != null ? $"{(where != null || orderBy != null ? "&" : "?")}offset={skip}" : "")}{(take != null ? $"{(where != null || orderBy != null || skip != null ? "&" : "?")}limit={take}" : "")}";
             traceSource.TraceEvent(TraceEventType.Verbose, 0, url);
             var hrm = httpClient.GetAsync(url).Result;
             if (hrm.StatusCode != HttpStatusCode.OK)
@@ -3268,7 +3205,6 @@ namespace FolioLibrary
             var hrm = httpClient.GetAsync(url).Result;
             var s2 = hrm.Content.ReadAsStringAsync().Result;
             var jo = hrm.Content.Headers.ContentType.MediaType == "application/json" ? JObject.Parse(s2) : null;
-            if (jo != null) s2 = jo.ToString();
             traceSource.TraceEvent(TraceEventType.Verbose, 0, s2);
             if (hrm.StatusCode != HttpStatusCode.OK) throw new HttpRequestException($"Response status code does not indicate success: {hrm.StatusCode} ({hrm.ReasonPhrase}).\r\n{s2}");
             traceSource.TraceEvent(TraceEventType.Verbose, 0, s.Elapsed.ToString());
@@ -3283,13 +3219,12 @@ namespace FolioLibrary
             AuthenticateIfNecessary();
             var url = $"{Url}/service-points";
             traceSource.TraceEvent(TraceEventType.Verbose, 0, url);
-            var s2 = servicePoint.ToString();
+            var s2 = servicePoint.ToString(formatting);
             traceSource.TraceEvent(TraceEventType.Verbose, 0, s2);
             var sc = new StringContent(s2, Encoding.UTF8, "application/json");
             var hrm = httpClient.PostAsync(url, sc).Result;
             s2 = hrm.Content.ReadAsStringAsync().Result;
             var jo = hrm.Content.Headers.ContentType.MediaType == "application/json" ? JObject.Parse(s2) : null;
-            if (jo != null) s2 = jo.ToString();
             traceSource.TraceEvent(TraceEventType.Verbose, 0, s2);
             if (hrm.StatusCode != HttpStatusCode.Created) throw new HttpRequestException($"Response status code does not indicate success: {hrm.StatusCode} ({hrm.ReasonPhrase}).\r\n{s2}");
             traceSource.TraceEvent(TraceEventType.Verbose, 0, s.Elapsed.ToString());
@@ -3303,7 +3238,7 @@ namespace FolioLibrary
             AuthenticateIfNecessary();
             var url = $"{Url}/service-points/{servicePoint["id"]}";
             traceSource.TraceEvent(TraceEventType.Verbose, 0, url);
-            var s2 = servicePoint.ToString();
+            var s2 = servicePoint.ToString(formatting);
             traceSource.TraceEvent(TraceEventType.Verbose, 0, s2);
             var sc = new StringContent(s2, Encoding.UTF8, "application/json");
             var hrm = httpClient.PutAsync(url, sc).Result;
@@ -3332,7 +3267,7 @@ namespace FolioLibrary
             var s = Stopwatch.StartNew();
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "Querying service point users");
             AuthenticateIfNecessary();
-            var url = $"{Url}/service-points-users{(where != null || orderBy != null ? $"?query={WebUtility.UrlEncode(where)}{(orderBy != null ? $"{(where != null ? " " : "")}sortby {WebUtility.UrlEncode(orderBy)}" : "")}" : "")}{(skip != null ? $"{(where != null || orderBy != null ? "&" : "?")}offset={skip}" : "")}{(take != null ? $"{(where != null || orderBy != null || skip != null ? "&" : "?")}limit={take}" : "")}";
+            var url = $"{Url}/service-points-users{(where != null || orderBy != null ? $"?query={WebUtility.UrlEncode(where)}{(orderBy != null ? $"{(where != null ? " " : "cql.allrecords=1 ")}sortby {WebUtility.UrlEncode(orderBy)}" : "")}" : "")}{(skip != null ? $"{(where != null || orderBy != null ? "&" : "?")}offset={skip}" : "")}{(take != null ? $"{(where != null || orderBy != null || skip != null ? "&" : "?")}limit={take}" : "")}";
             traceSource.TraceEvent(TraceEventType.Verbose, 0, url);
             var hrm = httpClient.GetAsync(url).Result;
             if (hrm.StatusCode != HttpStatusCode.OK)
@@ -3367,7 +3302,6 @@ namespace FolioLibrary
             var hrm = httpClient.GetAsync(url).Result;
             var s2 = hrm.Content.ReadAsStringAsync().Result;
             var jo = hrm.Content.Headers.ContentType.MediaType == "application/json" ? JObject.Parse(s2) : null;
-            if (jo != null) s2 = jo.ToString();
             traceSource.TraceEvent(TraceEventType.Verbose, 0, s2);
             if (hrm.StatusCode != HttpStatusCode.OK) throw new HttpRequestException($"Response status code does not indicate success: {hrm.StatusCode} ({hrm.ReasonPhrase}).\r\n{s2}");
             traceSource.TraceEvent(TraceEventType.Verbose, 0, s.Elapsed.ToString());
@@ -3382,13 +3316,12 @@ namespace FolioLibrary
             AuthenticateIfNecessary();
             var url = $"{Url}/service-points-users";
             traceSource.TraceEvent(TraceEventType.Verbose, 0, url);
-            var s2 = servicePointUser.ToString();
+            var s2 = servicePointUser.ToString(formatting);
             traceSource.TraceEvent(TraceEventType.Verbose, 0, s2);
             var sc = new StringContent(s2, Encoding.UTF8, "application/json");
             var hrm = httpClient.PostAsync(url, sc).Result;
             s2 = hrm.Content.ReadAsStringAsync().Result;
             var jo = hrm.Content.Headers.ContentType.MediaType == "application/json" ? JObject.Parse(s2) : null;
-            if (jo != null) s2 = jo.ToString();
             traceSource.TraceEvent(TraceEventType.Verbose, 0, s2);
             if (hrm.StatusCode != HttpStatusCode.Created) throw new HttpRequestException($"Response status code does not indicate success: {hrm.StatusCode} ({hrm.ReasonPhrase}).\r\n{s2}");
             traceSource.TraceEvent(TraceEventType.Verbose, 0, s.Elapsed.ToString());
@@ -3402,7 +3335,7 @@ namespace FolioLibrary
             AuthenticateIfNecessary();
             var url = $"{Url}/service-points-users/{servicePointUser["id"]}";
             traceSource.TraceEvent(TraceEventType.Verbose, 0, url);
-            var s2 = servicePointUser.ToString();
+            var s2 = servicePointUser.ToString(formatting);
             traceSource.TraceEvent(TraceEventType.Verbose, 0, s2);
             var sc = new StringContent(s2, Encoding.UTF8, "application/json");
             var hrm = httpClient.PutAsync(url, sc).Result;
@@ -3431,7 +3364,7 @@ namespace FolioLibrary
             var s = Stopwatch.StartNew();
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "Querying statistical codes");
             AuthenticateIfNecessary();
-            var url = $"{Url}/statistical-codes{(where != null || orderBy != null ? $"?query={WebUtility.UrlEncode(where)}{(orderBy != null ? $"{(where != null ? " " : "")}sortby {WebUtility.UrlEncode(orderBy)}" : "")}" : "")}{(skip != null ? $"{(where != null || orderBy != null ? "&" : "?")}offset={skip}" : "")}{(take != null ? $"{(where != null || orderBy != null || skip != null ? "&" : "?")}limit={take}" : "")}";
+            var url = $"{Url}/statistical-codes{(where != null || orderBy != null ? $"?query={WebUtility.UrlEncode(where)}{(orderBy != null ? $"{(where != null ? " " : "cql.allrecords=1 ")}sortby {WebUtility.UrlEncode(orderBy)}" : "")}" : "")}{(skip != null ? $"{(where != null || orderBy != null ? "&" : "?")}offset={skip}" : "")}{(take != null ? $"{(where != null || orderBy != null || skip != null ? "&" : "?")}limit={take}" : "")}";
             traceSource.TraceEvent(TraceEventType.Verbose, 0, url);
             var hrm = httpClient.GetAsync(url).Result;
             if (hrm.StatusCode != HttpStatusCode.OK)
@@ -3466,7 +3399,6 @@ namespace FolioLibrary
             var hrm = httpClient.GetAsync(url).Result;
             var s2 = hrm.Content.ReadAsStringAsync().Result;
             var jo = hrm.Content.Headers.ContentType.MediaType == "application/json" ? JObject.Parse(s2) : null;
-            if (jo != null) s2 = jo.ToString();
             traceSource.TraceEvent(TraceEventType.Verbose, 0, s2);
             if (hrm.StatusCode != HttpStatusCode.OK) throw new HttpRequestException($"Response status code does not indicate success: {hrm.StatusCode} ({hrm.ReasonPhrase}).\r\n{s2}");
             traceSource.TraceEvent(TraceEventType.Verbose, 0, s.Elapsed.ToString());
@@ -3481,13 +3413,12 @@ namespace FolioLibrary
             AuthenticateIfNecessary();
             var url = $"{Url}/statistical-codes";
             traceSource.TraceEvent(TraceEventType.Verbose, 0, url);
-            var s2 = statisticalCode.ToString();
+            var s2 = statisticalCode.ToString(formatting);
             traceSource.TraceEvent(TraceEventType.Verbose, 0, s2);
             var sc = new StringContent(s2, Encoding.UTF8, "application/json");
             var hrm = httpClient.PostAsync(url, sc).Result;
             s2 = hrm.Content.ReadAsStringAsync().Result;
             var jo = hrm.Content.Headers.ContentType.MediaType == "application/json" ? JObject.Parse(s2) : null;
-            if (jo != null) s2 = jo.ToString();
             traceSource.TraceEvent(TraceEventType.Verbose, 0, s2);
             if (hrm.StatusCode != HttpStatusCode.Created) throw new HttpRequestException($"Response status code does not indicate success: {hrm.StatusCode} ({hrm.ReasonPhrase}).\r\n{s2}");
             traceSource.TraceEvent(TraceEventType.Verbose, 0, s.Elapsed.ToString());
@@ -3501,7 +3432,7 @@ namespace FolioLibrary
             AuthenticateIfNecessary();
             var url = $"{Url}/statistical-codes/{statisticalCode["id"]}";
             traceSource.TraceEvent(TraceEventType.Verbose, 0, url);
-            var s2 = statisticalCode.ToString();
+            var s2 = statisticalCode.ToString(formatting);
             traceSource.TraceEvent(TraceEventType.Verbose, 0, s2);
             var sc = new StringContent(s2, Encoding.UTF8, "application/json");
             var hrm = httpClient.PutAsync(url, sc).Result;
@@ -3530,7 +3461,7 @@ namespace FolioLibrary
             var s = Stopwatch.StartNew();
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "Querying statistical code types");
             AuthenticateIfNecessary();
-            var url = $"{Url}/statistical-code-types{(where != null || orderBy != null ? $"?query={WebUtility.UrlEncode(where)}{(orderBy != null ? $"{(where != null ? " " : "")}sortby {WebUtility.UrlEncode(orderBy)}" : "")}" : "")}{(skip != null ? $"{(where != null || orderBy != null ? "&" : "?")}offset={skip}" : "")}{(take != null ? $"{(where != null || orderBy != null || skip != null ? "&" : "?")}limit={take}" : "")}";
+            var url = $"{Url}/statistical-code-types{(where != null || orderBy != null ? $"?query={WebUtility.UrlEncode(where)}{(orderBy != null ? $"{(where != null ? " " : "cql.allrecords=1 ")}sortby {WebUtility.UrlEncode(orderBy)}" : "")}" : "")}{(skip != null ? $"{(where != null || orderBy != null ? "&" : "?")}offset={skip}" : "")}{(take != null ? $"{(where != null || orderBy != null || skip != null ? "&" : "?")}limit={take}" : "")}";
             traceSource.TraceEvent(TraceEventType.Verbose, 0, url);
             var hrm = httpClient.GetAsync(url).Result;
             if (hrm.StatusCode != HttpStatusCode.OK)
@@ -3565,7 +3496,6 @@ namespace FolioLibrary
             var hrm = httpClient.GetAsync(url).Result;
             var s2 = hrm.Content.ReadAsStringAsync().Result;
             var jo = hrm.Content.Headers.ContentType.MediaType == "application/json" ? JObject.Parse(s2) : null;
-            if (jo != null) s2 = jo.ToString();
             traceSource.TraceEvent(TraceEventType.Verbose, 0, s2);
             if (hrm.StatusCode != HttpStatusCode.OK) throw new HttpRequestException($"Response status code does not indicate success: {hrm.StatusCode} ({hrm.ReasonPhrase}).\r\n{s2}");
             traceSource.TraceEvent(TraceEventType.Verbose, 0, s.Elapsed.ToString());
@@ -3580,13 +3510,12 @@ namespace FolioLibrary
             AuthenticateIfNecessary();
             var url = $"{Url}/statistical-code-types";
             traceSource.TraceEvent(TraceEventType.Verbose, 0, url);
-            var s2 = statisticalCodeType.ToString();
+            var s2 = statisticalCodeType.ToString(formatting);
             traceSource.TraceEvent(TraceEventType.Verbose, 0, s2);
             var sc = new StringContent(s2, Encoding.UTF8, "application/json");
             var hrm = httpClient.PostAsync(url, sc).Result;
             s2 = hrm.Content.ReadAsStringAsync().Result;
             var jo = hrm.Content.Headers.ContentType.MediaType == "application/json" ? JObject.Parse(s2) : null;
-            if (jo != null) s2 = jo.ToString();
             traceSource.TraceEvent(TraceEventType.Verbose, 0, s2);
             if (hrm.StatusCode != HttpStatusCode.Created) throw new HttpRequestException($"Response status code does not indicate success: {hrm.StatusCode} ({hrm.ReasonPhrase}).\r\n{s2}");
             traceSource.TraceEvent(TraceEventType.Verbose, 0, s.Elapsed.ToString());
@@ -3600,7 +3529,7 @@ namespace FolioLibrary
             AuthenticateIfNecessary();
             var url = $"{Url}/statistical-code-types/{statisticalCodeType["id"]}";
             traceSource.TraceEvent(TraceEventType.Verbose, 0, url);
-            var s2 = statisticalCodeType.ToString();
+            var s2 = statisticalCodeType.ToString(formatting);
             traceSource.TraceEvent(TraceEventType.Verbose, 0, s2);
             var sc = new StringContent(s2, Encoding.UTF8, "application/json");
             var hrm = httpClient.PutAsync(url, sc).Result;
@@ -3629,7 +3558,7 @@ namespace FolioLibrary
             var s = Stopwatch.StartNew();
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "Querying users");
             AuthenticateIfNecessary();
-            var url = $"{Url}/users{(where != null || orderBy != null ? $"?query={WebUtility.UrlEncode(where)}{(orderBy != null ? $"{(where != null ? " " : "")}sortby {WebUtility.UrlEncode(orderBy)}" : "")}" : "")}{(skip != null ? $"{(where != null || orderBy != null ? "&" : "?")}offset={skip}" : "")}{(take != null ? $"{(where != null || orderBy != null || skip != null ? "&" : "?")}limit={take}" : "")}";
+            var url = $"{Url}/users{(where != null || orderBy != null ? $"?query={WebUtility.UrlEncode(where)}{(orderBy != null ? $"{(where != null ? " " : "cql.allrecords=1 ")}sortby {WebUtility.UrlEncode(orderBy)}" : "")}" : "")}{(skip != null ? $"{(where != null || orderBy != null ? "&" : "?")}offset={skip}" : "")}{(take != null ? $"{(where != null || orderBy != null || skip != null ? "&" : "?")}limit={take}" : "")}";
             traceSource.TraceEvent(TraceEventType.Verbose, 0, url);
             var hrm = httpClient.GetAsync(url).Result;
             if (hrm.StatusCode != HttpStatusCode.OK)
@@ -3664,7 +3593,6 @@ namespace FolioLibrary
             var hrm = httpClient.GetAsync(url).Result;
             var s2 = hrm.Content.ReadAsStringAsync().Result;
             var jo = hrm.Content.Headers.ContentType.MediaType == "application/json" ? JObject.Parse(s2) : null;
-            if (jo != null) s2 = jo.ToString();
             traceSource.TraceEvent(TraceEventType.Verbose, 0, s2);
             if (hrm.StatusCode != HttpStatusCode.OK) throw new HttpRequestException($"Response status code does not indicate success: {hrm.StatusCode} ({hrm.ReasonPhrase}).\r\n{s2}");
             traceSource.TraceEvent(TraceEventType.Verbose, 0, s.Elapsed.ToString());
@@ -3679,13 +3607,12 @@ namespace FolioLibrary
             AuthenticateIfNecessary();
             var url = $"{Url}/users";
             traceSource.TraceEvent(TraceEventType.Verbose, 0, url);
-            var s2 = user.ToString();
+            var s2 = user.ToString(formatting);
             traceSource.TraceEvent(TraceEventType.Verbose, 0, s2);
             var sc = new StringContent(s2, Encoding.UTF8, "application/json");
             var hrm = httpClient.PostAsync(url, sc).Result;
             s2 = hrm.Content.ReadAsStringAsync().Result;
             var jo = hrm.Content.Headers.ContentType.MediaType == "application/json" ? JObject.Parse(s2) : null;
-            if (jo != null) s2 = jo.ToString();
             traceSource.TraceEvent(TraceEventType.Verbose, 0, s2);
             if (hrm.StatusCode != HttpStatusCode.Created) throw new HttpRequestException($"Response status code does not indicate success: {hrm.StatusCode} ({hrm.ReasonPhrase}).\r\n{s2}");
             traceSource.TraceEvent(TraceEventType.Verbose, 0, s.Elapsed.ToString());
@@ -3699,7 +3626,7 @@ namespace FolioLibrary
             AuthenticateIfNecessary();
             var url = $"{Url}/users/{user["id"]}";
             traceSource.TraceEvent(TraceEventType.Verbose, 0, url);
-            var s2 = user.ToString();
+            var s2 = user.ToString(formatting);
             traceSource.TraceEvent(TraceEventType.Verbose, 0, s2);
             var sc = new StringContent(s2, Encoding.UTF8, "application/json");
             var hrm = httpClient.PutAsync(url, sc).Result;

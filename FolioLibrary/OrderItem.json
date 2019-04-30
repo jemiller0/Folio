@@ -356,7 +356,10 @@
             "description": "quantity of physical items",
             "type": "integer"
           }
-        }
+        },
+        "required": [
+          "locationId"
+        ]
       }
     },
     "orderFormat": {

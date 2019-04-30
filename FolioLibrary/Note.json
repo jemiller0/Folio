@@ -17,6 +17,7 @@
     "type": {
       "description": "Type of note (configured in settings)",
       "example": "Access issues",
+      "readonly": true,
       "type": "string"
     },
     "title": {
@@ -141,7 +142,6 @@
   },
   "required": [
     "typeId",
-    "title",
-    "content"
+    "title"
   ]
 }
