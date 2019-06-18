@@ -1,0 +1,257 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "description": "invoice line",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "id": {
+      "description": "UUID of this invoice line",
+      "type": "string",
+      "pattern": "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-5][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}$"
+    },
+    "adjustments": {
+      "description": "Defined in settings - the amount field will be editable and pro-rate toggle will be editable if enabled for that adjustment",
+      "type": "array",
+      "items": {
+        "description": "Adjustment",
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "id": {
+            "description": "UUID of this adjustment",
+            "type": "string",
+            "pattern": "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-5][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}$"
+          },
+          "adjustmentId": {
+            "description": "UUID of the Invoice adjustment incase of prorated adjustments",
+            "type": "string",
+            "pattern": "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-5][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}$"
+          },
+          "description": {
+            "description": "Displayed in invoice line as a name for the input",
+            "type": "string"
+          },
+          "fundDistributions": {
+            "id": "fundDistributions",
+            "description": "Fund distribution records from which this adjustment will be paid; only valid at invoice level",
+            "type": "array",
+            "items": {
+              "description": "Invoice/voucher line fund distribution",
+              "type": "object",
+              "additionalProperties": false,
+              "properties": {
+                "code": {
+                  "description": "The code of the fund associated with this fund distribution",
+                  "type": "string"
+                },
+                "encumbrance": {
+                  "description": "UUID of encumbrance record associated with this fund distribution",
+                  "type": "string",
+                  "pattern": "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-5][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}$"
+                },
+                "fundId": {
+                  "description": "UUID of the fund associated with this fund distribution",
+                  "type": "string",
+                  "pattern": "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-5][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}$"
+                },
+                "invoiceLineId": {
+                  "description": "UUID of the invoice line associated with this fund distribution",
+                  "type": "string",
+                  "pattern": "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-5][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}$"
+                },
+                "percentage": {
+                  "description": "The percentage of the cost to be applied to this fund",
+                  "type": "number"
+                }
+              },
+              "required": [
+                "fundId",
+                "percentage"
+              ]
+            }
+          },
+          "prorate": {
+            "description": "Displayed in invoice line per adjustment in toggled on in settings",
+            "type": "string",
+            "default": "Not prorated",
+            "enum": [
+              "By line",
+              "By amount",
+              "By quantity",
+              "Not prorated"
+            ]
+          },
+          "relationToTotal": {
+            "description": "Relationship of this adjustment to the total;In addition to: added to subtotal;Included in: reported as subtotal portion;Separate from:calculated from subtotal",
+            "type": "string",
+            "default": "In addition to",
+            "enum": [
+              "In addition to",
+              "Included in",
+              "Separate from"
+            ]
+          },
+          "type": {
+            "description": "Adjustment type",
+            "type": "string",
+            "enum": [
+              "Percentage",
+              "Amount"
+            ]
+          },
+          "value": {
+            "description": "Adjustment value",
+            "type": "number"
+          }
+        },
+        "required": [
+          "description",
+          "prorate",
+          "relationToTotal",
+          "type",
+          "value"
+        ]
+      }
+    },
+    "adjustmentsTotal": {
+      "description": "Sum of all invoice line adjustments. The value is calculated \"on the fly\" and never persisted",
+      "readonly": true,
+      "type": "number"
+    },
+    "comment": {
+      "description": "Free form commentary",
+      "type": "string"
+    },
+    "description": {
+      "description": "Title as captured in the Purchase Order Line. In the absence of a POL link this could be used to describe the POL",
+      "type": "string"
+    },
+    "fundDistributions": {
+      "description": "List of fund distributions",
+      "type": "array",
+      "items": {
+        "$ref": "fundDistributions#/items"
+      },
+      "minItems": 1
+    },
+    "invoiceId": {
+      "description": "UUID of this parent invoice",
+      "type": "string",
+      "pattern": "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-5][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}$"
+    },
+    "invoiceLineNumber": {
+      "description": "Sequentially generated and not editable by the user.",
+      "type": "string"
+    },
+    "invoiceLineStatus": {
+      "description": "Invoice line status",
+      "type": "string",
+      "enum": [
+        "Open",
+        "Reviewed",
+        "Approved",
+        "Paid",
+        "Cancelled",
+        "Error"
+      ]
+    },
+    "poLineId": {
+      "description": "UUID of the corresponding purchase order line this invoice line is based on",
+      "type": "string",
+      "pattern": "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-5][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}$"
+    },
+    "productId": {
+      "description": "product identifier",
+      "type": "string"
+    },
+    "productIdType": {
+      "description": "The UUID corresponding to the type of product id",
+      "type": "string",
+      "pattern": "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-5][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}$"
+    },
+    "quantity": {
+      "description": "quantity",
+      "type": "integer"
+    },
+    "releaseEncumbrance": {
+      "description": "This is intended to not only release encumbrances but to indicate that this is the final invoice line for corresponding order line. This should take into account the fiscal year. We may release encumbrance for this FY but for on-going orders expect to encumber again next year.",
+      "type": "boolean",
+      "default": true
+    },
+    "subscriptionInfo": {
+      "description": "The user should use this field to provide info on the subscription (eg. which volumes are being invoiced). It is MANDATORY if the chk_subscription_overlap is FALSE AND there is no start date provided",
+      "type": "string"
+    },
+    "subscriptionStart": {
+      "description": "Subscription start date",
+      "type": "string",
+      "format": "date-time"
+    },
+    "subscriptionEnd": {
+      "description": "Subscription end date",
+      "type": "string",
+      "format": "date-time"
+    },
+    "subTotal": {
+      "description": "Invoice line amount before adjustments are applied",
+      "type": "number"
+    },
+    "total": {
+      "description": "Invoice line total amount which is sum of subTotal and adjustmentsTotal. The value is calculated \"on the fly\" and never persisted",
+      "readonly": true,
+      "type": "number"
+    },
+    "vendorRefNo": {
+      "description": "This is the number used to match POLs created by import to invoices created by import",
+      "type": "string"
+    },
+    "metadata": {
+      "title": "Metadata Schema",
+      "description": "Metadata about creation and changes to records, provided by the server (client should not provide)",
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "createdDate": {
+          "description": "Date and time when the record was created",
+          "type": "string",
+          "format": "date-time"
+        },
+        "createdByUserId": {
+          "description": "ID of the user who created the record (when available)",
+          "type": "string",
+          "pattern": "^[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12}$"
+        },
+        "createdByUsername": {
+          "description": "Username of the user who created the record (when available)",
+          "type": "string"
+        },
+        "updatedDate": {
+          "description": "Date and time when the record was last updated",
+          "type": "string",
+          "format": "date-time"
+        },
+        "updatedByUserId": {
+          "description": "ID of the user who last updated the record (when available)",
+          "type": "string",
+          "pattern": "^[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12}$"
+        },
+        "updatedByUsername": {
+          "description": "Username of the user who last updated the record (when available)",
+          "type": "string"
+        }
+      },
+      "required": [
+        "createdDate"
+      ]
+    }
+  },
+  "required": [
+    "description",
+    "fundDistributions",
+    "invoiceId",
+    "invoiceLineStatus",
+    "subTotal",
+    "quantity",
+    "releaseEncumbrance"
+  ]
+}

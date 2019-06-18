@@ -15,7 +15,7 @@ namespace FolioLibrary
         {
             using (var sr = new StreamReader(Assembly.GetExecutingAssembly().GetManifestResourceStream("FolioLibrary.Piece.json")))
             {
-                var js = JsonSchema4.FromJsonAsync(sr.ReadToEndAsync().Result).Result;
+                var js = JsonSchema.FromJsonAsync(sr.ReadToEndAsync().Result).Result;
                 var l = js.Validate(value);
                 if (l.Any()) return new ValidationResult($"The Content field is invalid. {string.Join(" ", l.Select(ve => ve.ToString()))}", new[] { "Content" });
             }
@@ -34,6 +34,12 @@ namespace FolioLibrary
         [Column("created_by"), Display(Name = "Creation User Id", Order = 4), Editable(false)]
         public virtual string CreationUserId { get; set; }
 
-        public override string ToString() => $"{{ {nameof(Id)} = {Id}, {nameof(Content)} = {Content}, {nameof(CreationTime)} = {CreationTime}, {nameof(CreationUserId)} = {CreationUserId} }}";
+        [Display(Name = "Order Item", Order = 5)]
+        public virtual OrderItem OrderItem { get; set; }
+
+        [Column("polineid"), Display(Name = "Order Item", Order = 6), Editable(false), ForeignKey("OrderItem")]
+        public virtual Guid? Polineid { get; set; }
+
+        public override string ToString() => $"{{ {nameof(Id)} = {Id}, {nameof(Content)} = {Content}, {nameof(CreationTime)} = {CreationTime}, {nameof(CreationUserId)} = {CreationUserId}, {nameof(Polineid)} = {Polineid} }}";
     }
 }

@@ -18,6 +18,11 @@
       "type": "string",
       "pattern": "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-5][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}$"
     },
+    "billTo": {
+      "description": "UUID of the billing address",
+      "type": "string",
+      "pattern": "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-5][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}$"
+    },
     "closeReason": {
       "description": "purchase order closing reason record",
       "type": "object",
@@ -63,6 +68,10 @@
         "Ongoing"
       ]
     },
+    "owner": {
+      "description": "The team owner of this purchase order",
+      "type": "string"
+    },
     "reEncumber": {
       "description": "indicates this purchase order should be re-encumbered each fiscal year. Only applies to ongoing orders",
       "type": "boolean"
@@ -105,6 +114,11 @@
           "format": "date-time"
         }
       }
+    },
+    "shipTo": {
+      "description": "UUID of the shipping address",
+      "type": "string",
+      "pattern": "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-5][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}$"
     },
     "vendor": {
       "description": "UUID of the vendor record",

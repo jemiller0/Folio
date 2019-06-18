@@ -16,7 +16,7 @@ namespace FolioLibrary
         {
             using (var sr = new StreamReader(Assembly.GetExecutingAssembly().GetManifestResourceStream("FolioLibrary.Fund.json")))
             {
-                var js = JsonSchema4.FromJsonAsync(sr.ReadToEndAsync().Result).Result;
+                var js = JsonSchema.FromJsonAsync(sr.ReadToEndAsync().Result).Result;
                 var l = js.Validate(value);
                 if (l.Any()) return new ValidationResult($"The Content field is invalid. {string.Join(" ", l.Select(ve => ve.ToString()))}", new[] { "Content" });
             }
@@ -38,11 +38,14 @@ namespace FolioLibrary
         [Display(Order = 5)]
         public virtual Ledger Ledger { get; set; }
 
-        [Column("ledger_id"), Display(Name = "Ledger", Order = 6), Editable(false)]
+        [Column("ledgerid"), Display(Name = "Ledger", Order = 6), Editable(false)]
         public virtual Guid? LedgerId { get; set; }
 
         [ScaffoldColumn(false)]
         public virtual ICollection<Budget> Budgets { get; set; }
+
+        [ScaffoldColumn(false)]
+        public virtual ICollection<Encumbrance> Encumbrances { get; set; }
 
         public override string ToString() => $"{{ {nameof(Id)} = {Id}, {nameof(Content)} = {Content}, {nameof(CreationTime)} = {CreationTime}, {nameof(CreationUserId)} = {CreationUserId}, {nameof(LedgerId)} = {LedgerId} }}";
     }

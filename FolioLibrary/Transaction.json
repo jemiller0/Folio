@@ -10,7 +10,7 @@
         "string",
         "null"
       ],
-      "pattern": "^[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12}$"
+      "pattern": "^[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[1-5][a-fA-F0-9]{3}-[89abAB][a-fA-F0-9]{3}-[a-fA-F0-9]{12}$"
     },
     "allocated": {
       "description": "The amount allocated by this transaction",
@@ -24,7 +24,7 @@
       "description": "The amount available of this transaction",
       "type": "number"
     },
-    "awaiting_payment": {
+    "awaitingPayment": {
       "description": "The amount awaiting payment of this transaction",
       "type": "number"
     },
@@ -49,25 +49,25 @@
       "type": "string",
       "format": "date-time"
     },
-    "source_id": {
+    "sourceId": {
       "description": "UUID",
       "type": [
         "string",
         "null"
       ],
-      "pattern": "^[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12}$"
+      "pattern": "^[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[1-5][a-fA-F0-9]{3}-[89abAB][a-fA-F0-9]{3}-[a-fA-F0-9]{12}$"
     },
-    "transaction_type": {
+    "transactionType": {
       "description": "The type of this transaction",
       "type": "string"
     },
-    "budget_id": {
+    "budgetId": {
       "description": "UUID",
       "type": [
         "string",
         "null"
       ],
-      "pattern": "^[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12}$"
+      "pattern": "^[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[1-5][a-fA-F0-9]{3}-[89abAB][a-fA-F0-9]{3}-[a-fA-F0-9]{12}$"
     }
   },
   "required": [

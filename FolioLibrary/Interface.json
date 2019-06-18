@@ -5,7 +5,7 @@
   "additionalProperties": false,
   "properties": {
     "id": {
-      "description": "UUID",
+      "description": "The unique id of this interface",
       "type": [
         "string",
         "null"
@@ -36,25 +36,47 @@
       "description": "The availability setting for this interface",
       "type": "boolean"
     },
-    "delivery_method": {
+    "deliveryMethod": {
       "description": "The delivery method for this interface",
-      "type": "string"
+      "type": "string",
+      "enum": [
+        "Online",
+        "FTP",
+        "Email",
+        "Other"
+      ]
     },
-    "statistics_format": {
+    "statisticsFormat": {
       "description": "The format of the statistics for this interface",
       "type": "string"
     },
-    "locally_stored": {
+    "locallyStored": {
       "description": "The locally stored location of this interface",
       "type": "string"
     },
-    "online_location": {
+    "onlineLocation": {
       "description": "The online location for this interface",
       "type": "string"
     },
-    "statistics_notes": {
+    "statisticsNotes": {
       "description": "The notes regarding the statistics for this interface",
       "type": "string"
+    },
+    "type": {
+      "description": "Interface types",
+      "type": "array",
+      "items": {
+        "description": "the type of interface",
+        "type": "string",
+        "enum": [
+          "Admin",
+          "End user",
+          "Reports",
+          "Orders",
+          "Invoices",
+          "Other"
+        ]
+      }
     }
   }
 }

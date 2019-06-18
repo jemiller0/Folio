@@ -15,7 +15,7 @@ namespace FolioLibrary
         {
             using (var sr = new StreamReader(Assembly.GetExecutingAssembly().GetManifestResourceStream("FolioLibrary.Note.json")))
             {
-                var js = JsonSchema4.FromJsonAsync(sr.ReadToEndAsync().Result).Result;
+                var js = JsonSchema.FromJsonAsync(sr.ReadToEndAsync().Result).Result;
                 var l = js.Validate(value);
                 if (l.Any()) return new ValidationResult($"The Content field is invalid. {string.Join(" ", l.Select(ve => ve.ToString()))}", new[] { "Content" });
             }
@@ -28,12 +28,12 @@ namespace FolioLibrary
         [Column("jsonb"), CustomValidation(typeof(Note), nameof(ValidateContent)), DataType(DataType.MultilineText), Display(Order = 2), Required]
         public virtual string Content { get; set; }
 
-        [Column("creation_date"), DataType(DataType.DateTime), Display(Name = "Creation Time", Order = 3), DisplayFormat(DataFormatString = "{0:g}"), Editable(false)]
-        public virtual DateTime? CreationTime { get; set; }
+        [Display(Name = "Temporary Type", Order = 3)]
+        public virtual NoteType TemporaryType { get; set; }
 
-        [Column("created_by"), Display(Name = "Creation User Id", Order = 4), Editable(false)]
-        public virtual string CreationUserId { get; set; }
+        [Column("temporary_type_id"), Display(Name = "Temporary Type", Order = 4), Editable(false)]
+        public virtual Guid? TemporaryTypeId { get; set; }
 
-        public override string ToString() => $"{{ {nameof(Id)} = {Id}, {nameof(Content)} = {Content}, {nameof(CreationTime)} = {CreationTime}, {nameof(CreationUserId)} = {CreationUserId} }}";
+        public override string ToString() => $"{{ {nameof(Id)} = {Id}, {nameof(Content)} = {Content}, {nameof(TemporaryTypeId)} = {TemporaryTypeId} }}";
     }
 }

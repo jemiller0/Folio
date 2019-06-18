@@ -1,5 +1,6 @@
 using NJsonSchema;
 using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.IO;
@@ -15,7 +16,7 @@ namespace FolioLibrary
         {
             using (var sr = new StreamReader(Assembly.GetExecutingAssembly().GetManifestResourceStream("FolioLibrary.Order.json")))
             {
-                var js = JsonSchema4.FromJsonAsync(sr.ReadToEndAsync().Result).Result;
+                var js = JsonSchema.FromJsonAsync(sr.ReadToEndAsync().Result).Result;
                 var l = js.Validate(value);
                 if (l.Any()) return new ValidationResult($"The Content field is invalid. {string.Join(" ", l.Select(ve => ve.ToString()))}", new[] { "Content" });
             }
@@ -33,6 +34,12 @@ namespace FolioLibrary
 
         [Column("created_by"), Display(Name = "Creation User Id", Order = 4), Editable(false)]
         public virtual string CreationUserId { get; set; }
+
+        [ScaffoldColumn(false)]
+        public virtual ICollection<OrderInvoiceRelationship> OrderInvoiceRelationships { get; set; }
+
+        [ScaffoldColumn(false)]
+        public virtual ICollection<OrderItem> OrderItems { get; set; }
 
         public override string ToString() => $"{{ {nameof(Id)} = {Id}, {nameof(Content)} = {Content}, {nameof(CreationTime)} = {CreationTime}, {nameof(CreationUserId)} = {CreationUserId} }}";
     }

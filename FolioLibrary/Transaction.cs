@@ -15,7 +15,7 @@ namespace FolioLibrary
         {
             using (var sr = new StreamReader(Assembly.GetExecutingAssembly().GetManifestResourceStream("FolioLibrary.Transaction.json")))
             {
-                var js = JsonSchema4.FromJsonAsync(sr.ReadToEndAsync().Result).Result;
+                var js = JsonSchema.FromJsonAsync(sr.ReadToEndAsync().Result).Result;
                 var l = js.Validate(value);
                 if (l.Any()) return new ValidationResult($"The Content field is invalid. {string.Join(" ", l.Select(ve => ve.ToString()))}", new[] { "Content" });
             }
@@ -37,9 +37,9 @@ namespace FolioLibrary
         [Display(Order = 5)]
         public virtual Budget Budget { get; set; }
 
-        [Column("budget_id"), Display(Name = "Budget", Order = 6), Editable(false)]
-        public virtual Guid? BudgetId { get; set; }
+        [Column("budgetid"), Display(Name = "Budget", Order = 6), Editable(false), ForeignKey("Budget")]
+        public virtual Guid? Budgetid { get; set; }
 
-        public override string ToString() => $"{{ {nameof(Id)} = {Id}, {nameof(Content)} = {Content}, {nameof(CreationTime)} = {CreationTime}, {nameof(CreationUserId)} = {CreationUserId}, {nameof(BudgetId)} = {BudgetId} }}";
+        public override string ToString() => $"{{ {nameof(Id)} = {Id}, {nameof(Content)} = {Content}, {nameof(CreationTime)} = {CreationTime}, {nameof(CreationUserId)} = {CreationUserId}, {nameof(Budgetid)} = {Budgetid} }}";
     }
 }

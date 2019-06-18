@@ -393,7 +393,7 @@ namespace FolioConsoleApplication
             using (var fsc = new FolioServiceClient())
             {
                 var s2 = Stopwatch.StartNew();
-                var js4 = JsonSchema4.FromJsonAsync(sr2.ReadToEndAsync().Result).Result;
+                var js4 = JsonSchema.FromJsonAsync(sr2.ReadToEndAsync().Result).Result;
                 var js = new JsonSerializer();
                 jtr.Read();
                 var i = 0;
@@ -453,7 +453,7 @@ namespace FolioConsoleApplication
             using (var jtw = new JsonTextWriter(sw))
             {
                 var s2 = Stopwatch.StartNew();
-                var js4 = JsonSchema4.FromJsonAsync(sr.ReadToEndAsync().Result).Result;
+                var js4 = JsonSchema.FromJsonAsync(sr.ReadToEndAsync().Result).Result;
                 var js = new JsonSerializer { Formatting = Formatting.Indented };
                 jtw.WriteStartArray();
                 var i = 0;
@@ -520,7 +520,7 @@ namespace FolioConsoleApplication
             using (var fsc = new FolioServiceClient())
             {
                 var s2 = Stopwatch.StartNew();
-                var js4 = JsonSchema4.FromJsonAsync(sr2.ReadToEndAsync().Result).Result;
+                var js4 = JsonSchema.FromJsonAsync(sr2.ReadToEndAsync().Result).Result;
                 var js = new JsonSerializer();
                 jtr.Read();
                 var i = 0;
@@ -580,7 +580,7 @@ namespace FolioConsoleApplication
             using (var jtw = new JsonTextWriter(sw))
             {
                 var s2 = Stopwatch.StartNew();
-                var js4 = JsonSchema4.FromJsonAsync(sr.ReadToEndAsync().Result).Result;
+                var js4 = JsonSchema.FromJsonAsync(sr.ReadToEndAsync().Result).Result;
                 var js = new JsonSerializer { Formatting = Formatting.Indented };
                 jtw.WriteStartArray();
                 var i = 0;
@@ -647,7 +647,7 @@ namespace FolioConsoleApplication
             using (var fsc = new FolioServiceClient())
             {
                 var s2 = Stopwatch.StartNew();
-                var js4 = JsonSchema4.FromJsonAsync(sr2.ReadToEndAsync().Result).Result;
+                var js4 = JsonSchema.FromJsonAsync(sr2.ReadToEndAsync().Result).Result;
                 var js = new JsonSerializer();
                 jtr.Read();
                 var i = 0;
@@ -707,7 +707,7 @@ namespace FolioConsoleApplication
             using (var jtw = new JsonTextWriter(sw))
             {
                 var s2 = Stopwatch.StartNew();
-                var js4 = JsonSchema4.FromJsonAsync(sr.ReadToEndAsync().Result).Result;
+                var js4 = JsonSchema.FromJsonAsync(sr.ReadToEndAsync().Result).Result;
                 var js = new JsonSerializer { Formatting = Formatting.Indented };
                 jtw.WriteStartArray();
                 var i = 0;
@@ -774,7 +774,7 @@ namespace FolioConsoleApplication
             using (var fsc = new FolioServiceClient())
             {
                 var s2 = Stopwatch.StartNew();
-                var js4 = JsonSchema4.FromJsonAsync(sr2.ReadToEndAsync().Result).Result;
+                var js4 = JsonSchema.FromJsonAsync(sr2.ReadToEndAsync().Result).Result;
                 var js = new JsonSerializer();
                 jtr.Read();
                 var i = 0;
@@ -835,7 +835,7 @@ namespace FolioConsoleApplication
             using (var jtw = new JsonTextWriter(sw))
             {
                 var s2 = Stopwatch.StartNew();
-                var js4 = JsonSchema4.FromJsonAsync(sr.ReadToEndAsync().Result).Result;
+                var js4 = JsonSchema.FromJsonAsync(sr.ReadToEndAsync().Result).Result;
                 var js = new JsonSerializer { Formatting = Formatting.Indented };
                 jtw.WriteStartArray();
                 var i = 0;
@@ -902,7 +902,7 @@ namespace FolioConsoleApplication
             using (var fsc = new FolioServiceClient())
             {
                 var s2 = Stopwatch.StartNew();
-                var js4 = JsonSchema4.FromJsonAsync(sr2.ReadToEndAsync().Result).Result;
+                var js4 = JsonSchema.FromJsonAsync(sr2.ReadToEndAsync().Result).Result;
                 var js = new JsonSerializer();
                 jtr.Read();
                 var i = 0;
@@ -962,7 +962,7 @@ namespace FolioConsoleApplication
             using (var jtw = new JsonTextWriter(sw))
             {
                 var s2 = Stopwatch.StartNew();
-                var js4 = JsonSchema4.FromJsonAsync(sr.ReadToEndAsync().Result).Result;
+                var js4 = JsonSchema.FromJsonAsync(sr.ReadToEndAsync().Result).Result;
                 var js = new JsonSerializer { Formatting = Formatting.Indented };
                 jtw.WriteStartArray();
                 var i = 0;
@@ -1029,7 +1029,7 @@ namespace FolioConsoleApplication
             using (var fsc = new FolioServiceClient())
             {
                 var s2 = Stopwatch.StartNew();
-                var js4 = JsonSchema4.FromJsonAsync(sr2.ReadToEndAsync().Result).Result;
+                var js4 = JsonSchema.FromJsonAsync(sr2.ReadToEndAsync().Result).Result;
                 var js = new JsonSerializer();
                 jtr.Read();
                 var i = 0;
@@ -1089,7 +1089,7 @@ namespace FolioConsoleApplication
             using (var jtw = new JsonTextWriter(sw))
             {
                 var s2 = Stopwatch.StartNew();
-                var js4 = JsonSchema4.FromJsonAsync(sr.ReadToEndAsync().Result).Result;
+                var js4 = JsonSchema.FromJsonAsync(sr.ReadToEndAsync().Result).Result;
                 var js = new JsonSerializer { Formatting = Formatting.Indented };
                 jtw.WriteStartArray();
                 var i = 0;
@@ -1156,7 +1156,7 @@ namespace FolioConsoleApplication
             using (var fsc = new FolioServiceClient())
             {
                 var s2 = Stopwatch.StartNew();
-                var js4 = JsonSchema4.FromJsonAsync(sr2.ReadToEndAsync().Result).Result;
+                var js4 = JsonSchema.FromJsonAsync(sr2.ReadToEndAsync().Result).Result;
                 var js = new JsonSerializer();
                 jtr.Read();
                 var i = 0;
@@ -1214,7 +1214,7 @@ namespace FolioConsoleApplication
             using (var jtw = new JsonTextWriter(sw))
             {
                 var s2 = Stopwatch.StartNew();
-                var js4 = JsonSchema4.FromJsonAsync(sr.ReadToEndAsync().Result).Result;
+                var js4 = JsonSchema.FromJsonAsync(sr.ReadToEndAsync().Result).Result;
                 var js = new JsonSerializer { Formatting = Formatting.Indented };
                 jtw.WriteStartArray();
                 var i = 0;
@@ -1281,7 +1281,7 @@ namespace FolioConsoleApplication
             using (var fsc = new FolioServiceClient())
             {
                 var s2 = Stopwatch.StartNew();
-                var js4 = JsonSchema4.FromJsonAsync(sr2.ReadToEndAsync().Result).Result;
+                var js4 = JsonSchema.FromJsonAsync(sr2.ReadToEndAsync().Result).Result;
                 var js = new JsonSerializer();
                 jtr.Read();
                 var i = 0;
@@ -1341,7 +1341,7 @@ namespace FolioConsoleApplication
             using (var jtw = new JsonTextWriter(sw))
             {
                 var s2 = Stopwatch.StartNew();
-                var js4 = JsonSchema4.FromJsonAsync(sr.ReadToEndAsync().Result).Result;
+                var js4 = JsonSchema.FromJsonAsync(sr.ReadToEndAsync().Result).Result;
                 var js = new JsonSerializer { Formatting = Formatting.Indented };
                 jtw.WriteStartArray();
                 var i = 0;
@@ -1408,7 +1408,7 @@ namespace FolioConsoleApplication
             using (var fsc = new FolioServiceClient())
             {
                 var s2 = Stopwatch.StartNew();
-                var js4 = JsonSchema4.FromJsonAsync(sr2.ReadToEndAsync().Result).Result;
+                var js4 = JsonSchema.FromJsonAsync(sr2.ReadToEndAsync().Result).Result;
                 var js = new JsonSerializer();
                 jtr.Read();
                 var i = 0;
@@ -1468,7 +1468,7 @@ namespace FolioConsoleApplication
             using (var jtw = new JsonTextWriter(sw))
             {
                 var s2 = Stopwatch.StartNew();
-                var js4 = JsonSchema4.FromJsonAsync(sr.ReadToEndAsync().Result).Result;
+                var js4 = JsonSchema.FromJsonAsync(sr.ReadToEndAsync().Result).Result;
                 var js = new JsonSerializer { Formatting = Formatting.Indented };
                 jtw.WriteStartArray();
                 var i = 0;
@@ -1535,7 +1535,7 @@ namespace FolioConsoleApplication
             using (var fsc = new FolioServiceClient())
             {
                 var s2 = Stopwatch.StartNew();
-                var js4 = JsonSchema4.FromJsonAsync(sr2.ReadToEndAsync().Result).Result;
+                var js4 = JsonSchema.FromJsonAsync(sr2.ReadToEndAsync().Result).Result;
                 var js = new JsonSerializer();
                 jtr.Read();
                 var i = 0;
@@ -1601,7 +1601,7 @@ namespace FolioConsoleApplication
             using (var jtw = new JsonTextWriter(sw))
             {
                 var s2 = Stopwatch.StartNew();
-                var js4 = JsonSchema4.FromJsonAsync(sr.ReadToEndAsync().Result).Result;
+                var js4 = JsonSchema.FromJsonAsync(sr.ReadToEndAsync().Result).Result;
                 var js = new JsonSerializer { Formatting = Formatting.Indented };
                 jtw.WriteStartArray();
                 var i = 0;
@@ -1668,7 +1668,7 @@ namespace FolioConsoleApplication
             using (var fsc = new FolioServiceClient())
             {
                 var s2 = Stopwatch.StartNew();
-                var js4 = JsonSchema4.FromJsonAsync(sr2.ReadToEndAsync().Result).Result;
+                var js4 = JsonSchema.FromJsonAsync(sr2.ReadToEndAsync().Result).Result;
                 var js = new JsonSerializer();
                 jtr.Read();
                 var i = 0;
@@ -1728,7 +1728,7 @@ namespace FolioConsoleApplication
             using (var jtw = new JsonTextWriter(sw))
             {
                 var s2 = Stopwatch.StartNew();
-                var js4 = JsonSchema4.FromJsonAsync(sr.ReadToEndAsync().Result).Result;
+                var js4 = JsonSchema.FromJsonAsync(sr.ReadToEndAsync().Result).Result;
                 var js = new JsonSerializer { Formatting = Formatting.Indented };
                 jtw.WriteStartArray();
                 var i = 0;
@@ -1795,7 +1795,7 @@ namespace FolioConsoleApplication
             using (var fsc = new FolioServiceClient())
             {
                 var s2 = Stopwatch.StartNew();
-                var js4 = JsonSchema4.FromJsonAsync(sr2.ReadToEndAsync().Result).Result;
+                var js4 = JsonSchema.FromJsonAsync(sr2.ReadToEndAsync().Result).Result;
                 var js = new JsonSerializer();
                 jtr.Read();
                 var i = 0;
@@ -1855,7 +1855,7 @@ namespace FolioConsoleApplication
             using (var jtw = new JsonTextWriter(sw))
             {
                 var s2 = Stopwatch.StartNew();
-                var js4 = JsonSchema4.FromJsonAsync(sr.ReadToEndAsync().Result).Result;
+                var js4 = JsonSchema.FromJsonAsync(sr.ReadToEndAsync().Result).Result;
                 var js = new JsonSerializer { Formatting = Formatting.Indented };
                 jtw.WriteStartArray();
                 var i = 0;
@@ -1922,7 +1922,7 @@ namespace FolioConsoleApplication
             using (var fsc = new FolioServiceClient())
             {
                 var s2 = Stopwatch.StartNew();
-                var js4 = JsonSchema4.FromJsonAsync(sr2.ReadToEndAsync().Result).Result;
+                var js4 = JsonSchema.FromJsonAsync(sr2.ReadToEndAsync().Result).Result;
                 var js = new JsonSerializer();
                 jtr.Read();
                 var i = 0;
@@ -1982,7 +1982,7 @@ namespace FolioConsoleApplication
             using (var jtw = new JsonTextWriter(sw))
             {
                 var s2 = Stopwatch.StartNew();
-                var js4 = JsonSchema4.FromJsonAsync(sr.ReadToEndAsync().Result).Result;
+                var js4 = JsonSchema.FromJsonAsync(sr.ReadToEndAsync().Result).Result;
                 var js = new JsonSerializer { Formatting = Formatting.Indented };
                 jtw.WriteStartArray();
                 var i = 0;
@@ -2049,7 +2049,7 @@ namespace FolioConsoleApplication
             using (var fsc = new FolioServiceClient())
             {
                 var s2 = Stopwatch.StartNew();
-                var js4 = JsonSchema4.FromJsonAsync(sr2.ReadToEndAsync().Result).Result;
+                var js4 = JsonSchema.FromJsonAsync(sr2.ReadToEndAsync().Result).Result;
                 var js = new JsonSerializer();
                 jtr.Read();
                 var i = 0;
@@ -2109,7 +2109,7 @@ namespace FolioConsoleApplication
             using (var jtw = new JsonTextWriter(sw))
             {
                 var s2 = Stopwatch.StartNew();
-                var js4 = JsonSchema4.FromJsonAsync(sr.ReadToEndAsync().Result).Result;
+                var js4 = JsonSchema.FromJsonAsync(sr.ReadToEndAsync().Result).Result;
                 var js = new JsonSerializer { Formatting = Formatting.Indented };
                 jtw.WriteStartArray();
                 var i = 0;
@@ -2176,7 +2176,7 @@ namespace FolioConsoleApplication
             using (var fsc = new FolioServiceClient())
             {
                 var s2 = Stopwatch.StartNew();
-                var js4 = JsonSchema4.FromJsonAsync(sr2.ReadToEndAsync().Result).Result;
+                var js4 = JsonSchema.FromJsonAsync(sr2.ReadToEndAsync().Result).Result;
                 var js = new JsonSerializer();
                 jtr.Read();
                 var i = 0;
@@ -2238,7 +2238,7 @@ namespace FolioConsoleApplication
             using (var jtw = new JsonTextWriter(sw))
             {
                 var s2 = Stopwatch.StartNew();
-                var js4 = JsonSchema4.FromJsonAsync(sr.ReadToEndAsync().Result).Result;
+                var js4 = JsonSchema.FromJsonAsync(sr.ReadToEndAsync().Result).Result;
                 var js = new JsonSerializer { Formatting = Formatting.Indented };
                 jtw.WriteStartArray();
                 var i = 0;
@@ -2305,7 +2305,7 @@ namespace FolioConsoleApplication
             using (var fsc = new FolioServiceClient())
             {
                 var s2 = Stopwatch.StartNew();
-                var js4 = JsonSchema4.FromJsonAsync(sr2.ReadToEndAsync().Result).Result;
+                var js4 = JsonSchema.FromJsonAsync(sr2.ReadToEndAsync().Result).Result;
                 var js = new JsonSerializer();
                 jtr.Read();
                 var i = 0;
@@ -2363,7 +2363,7 @@ namespace FolioConsoleApplication
             using (var jtw = new JsonTextWriter(sw))
             {
                 var s2 = Stopwatch.StartNew();
-                var js4 = JsonSchema4.FromJsonAsync(sr.ReadToEndAsync().Result).Result;
+                var js4 = JsonSchema.FromJsonAsync(sr.ReadToEndAsync().Result).Result;
                 var js = new JsonSerializer { Formatting = Formatting.Indented };
                 jtw.WriteStartArray();
                 var i = 0;
@@ -2430,7 +2430,7 @@ namespace FolioConsoleApplication
             using (var fsc = new FolioServiceClient())
             {
                 var s2 = Stopwatch.StartNew();
-                var js4 = JsonSchema4.FromJsonAsync(sr2.ReadToEndAsync().Result).Result;
+                var js4 = JsonSchema.FromJsonAsync(sr2.ReadToEndAsync().Result).Result;
                 var js = new JsonSerializer();
                 jtr.Read();
                 var i = 0;
@@ -2493,7 +2493,7 @@ namespace FolioConsoleApplication
             using (var jtw = new JsonTextWriter(sw))
             {
                 var s2 = Stopwatch.StartNew();
-                var js4 = JsonSchema4.FromJsonAsync(sr.ReadToEndAsync().Result).Result;
+                var js4 = JsonSchema.FromJsonAsync(sr.ReadToEndAsync().Result).Result;
                 var js = new JsonSerializer { Formatting = Formatting.Indented };
                 jtw.WriteStartArray();
                 var i = 0;
@@ -2560,7 +2560,7 @@ namespace FolioConsoleApplication
             using (var fsc = new FolioServiceClient())
             {
                 var s2 = Stopwatch.StartNew();
-                var js4 = JsonSchema4.FromJsonAsync(sr2.ReadToEndAsync().Result).Result;
+                var js4 = JsonSchema.FromJsonAsync(sr2.ReadToEndAsync().Result).Result;
                 var js = new JsonSerializer();
                 jtr.Read();
                 var i = 0;
@@ -2620,7 +2620,7 @@ namespace FolioConsoleApplication
             using (var jtw = new JsonTextWriter(sw))
             {
                 var s2 = Stopwatch.StartNew();
-                var js4 = JsonSchema4.FromJsonAsync(sr.ReadToEndAsync().Result).Result;
+                var js4 = JsonSchema.FromJsonAsync(sr.ReadToEndAsync().Result).Result;
                 var js = new JsonSerializer { Formatting = Formatting.Indented };
                 jtw.WriteStartArray();
                 var i = 0;
@@ -2687,7 +2687,7 @@ namespace FolioConsoleApplication
             using (var fsc = new FolioServiceClient())
             {
                 var s2 = Stopwatch.StartNew();
-                var js4 = JsonSchema4.FromJsonAsync(sr2.ReadToEndAsync().Result).Result;
+                var js4 = JsonSchema.FromJsonAsync(sr2.ReadToEndAsync().Result).Result;
                 var js = new JsonSerializer();
                 jtr.Read();
                 var i = 0;
@@ -2747,7 +2747,7 @@ namespace FolioConsoleApplication
             using (var jtw = new JsonTextWriter(sw))
             {
                 var s2 = Stopwatch.StartNew();
-                var js4 = JsonSchema4.FromJsonAsync(sr.ReadToEndAsync().Result).Result;
+                var js4 = JsonSchema.FromJsonAsync(sr.ReadToEndAsync().Result).Result;
                 var js = new JsonSerializer { Formatting = Formatting.Indented };
                 jtw.WriteStartArray();
                 var i = 0;
@@ -2814,7 +2814,7 @@ namespace FolioConsoleApplication
             using (var fsc = new FolioServiceClient())
             {
                 var s2 = Stopwatch.StartNew();
-                var js4 = JsonSchema4.FromJsonAsync(sr2.ReadToEndAsync().Result).Result;
+                var js4 = JsonSchema.FromJsonAsync(sr2.ReadToEndAsync().Result).Result;
                 var js = new JsonSerializer();
                 jtr.Read();
                 var i = 0;
@@ -2872,7 +2872,7 @@ namespace FolioConsoleApplication
             using (var jtw = new JsonTextWriter(sw))
             {
                 var s2 = Stopwatch.StartNew();
-                var js4 = JsonSchema4.FromJsonAsync(sr.ReadToEndAsync().Result).Result;
+                var js4 = JsonSchema.FromJsonAsync(sr.ReadToEndAsync().Result).Result;
                 var js = new JsonSerializer { Formatting = Formatting.Indented };
                 jtw.WriteStartArray();
                 var i = 0;
@@ -2939,7 +2939,7 @@ namespace FolioConsoleApplication
             using (var fsc = new FolioServiceClient())
             {
                 var s2 = Stopwatch.StartNew();
-                var js4 = JsonSchema4.FromJsonAsync(sr2.ReadToEndAsync().Result).Result;
+                var js4 = JsonSchema.FromJsonAsync(sr2.ReadToEndAsync().Result).Result;
                 var js = new JsonSerializer();
                 jtr.Read();
                 var i = 0;
@@ -2999,7 +2999,7 @@ namespace FolioConsoleApplication
             using (var jtw = new JsonTextWriter(sw))
             {
                 var s2 = Stopwatch.StartNew();
-                var js4 = JsonSchema4.FromJsonAsync(sr.ReadToEndAsync().Result).Result;
+                var js4 = JsonSchema.FromJsonAsync(sr.ReadToEndAsync().Result).Result;
                 var js = new JsonSerializer { Formatting = Formatting.Indented };
                 jtw.WriteStartArray();
                 var i = 0;
@@ -3066,7 +3066,7 @@ namespace FolioConsoleApplication
             using (var fsc = new FolioServiceClient())
             {
                 var s2 = Stopwatch.StartNew();
-                var js4 = JsonSchema4.FromJsonAsync(sr2.ReadToEndAsync().Result).Result;
+                var js4 = JsonSchema.FromJsonAsync(sr2.ReadToEndAsync().Result).Result;
                 var js = new JsonSerializer();
                 jtr.Read();
                 var i = 0;
@@ -3132,7 +3132,7 @@ namespace FolioConsoleApplication
             using (var jtw = new JsonTextWriter(sw))
             {
                 var s2 = Stopwatch.StartNew();
-                var js4 = JsonSchema4.FromJsonAsync(sr.ReadToEndAsync().Result).Result;
+                var js4 = JsonSchema.FromJsonAsync(sr.ReadToEndAsync().Result).Result;
                 var js = new JsonSerializer { Formatting = Formatting.Indented };
                 jtw.WriteStartArray();
                 var i = 0;
@@ -3199,7 +3199,7 @@ namespace FolioConsoleApplication
             using (var fsc = new FolioServiceClient())
             {
                 var s2 = Stopwatch.StartNew();
-                var js4 = JsonSchema4.FromJsonAsync(sr2.ReadToEndAsync().Result).Result;
+                var js4 = JsonSchema.FromJsonAsync(sr2.ReadToEndAsync().Result).Result;
                 var js = new JsonSerializer();
                 jtr.Read();
                 var i = 0;
@@ -3259,7 +3259,7 @@ namespace FolioConsoleApplication
             using (var jtw = new JsonTextWriter(sw))
             {
                 var s2 = Stopwatch.StartNew();
-                var js4 = JsonSchema4.FromJsonAsync(sr.ReadToEndAsync().Result).Result;
+                var js4 = JsonSchema.FromJsonAsync(sr.ReadToEndAsync().Result).Result;
                 var js = new JsonSerializer { Formatting = Formatting.Indented };
                 jtw.WriteStartArray();
                 var i = 0;
@@ -3326,7 +3326,7 @@ namespace FolioConsoleApplication
             using (var fsc = new FolioServiceClient())
             {
                 var s2 = Stopwatch.StartNew();
-                var js4 = JsonSchema4.FromJsonAsync(sr2.ReadToEndAsync().Result).Result;
+                var js4 = JsonSchema.FromJsonAsync(sr2.ReadToEndAsync().Result).Result;
                 var js = new JsonSerializer();
                 jtr.Read();
                 var i = 0;
@@ -3387,7 +3387,7 @@ namespace FolioConsoleApplication
             using (var jtw = new JsonTextWriter(sw))
             {
                 var s2 = Stopwatch.StartNew();
-                var js4 = JsonSchema4.FromJsonAsync(sr.ReadToEndAsync().Result).Result;
+                var js4 = JsonSchema.FromJsonAsync(sr.ReadToEndAsync().Result).Result;
                 var js = new JsonSerializer { Formatting = Formatting.Indented };
                 jtw.WriteStartArray();
                 var i = 0;
@@ -3454,7 +3454,7 @@ namespace FolioConsoleApplication
             using (var fsc = new FolioServiceClient())
             {
                 var s2 = Stopwatch.StartNew();
-                var js4 = JsonSchema4.FromJsonAsync(sr2.ReadToEndAsync().Result).Result;
+                var js4 = JsonSchema.FromJsonAsync(sr2.ReadToEndAsync().Result).Result;
                 var js = new JsonSerializer();
                 jtr.Read();
                 var i = 0;
@@ -3514,7 +3514,7 @@ namespace FolioConsoleApplication
             using (var jtw = new JsonTextWriter(sw))
             {
                 var s2 = Stopwatch.StartNew();
-                var js4 = JsonSchema4.FromJsonAsync(sr.ReadToEndAsync().Result).Result;
+                var js4 = JsonSchema.FromJsonAsync(sr.ReadToEndAsync().Result).Result;
                 var js = new JsonSerializer { Formatting = Formatting.Indented };
                 jtw.WriteStartArray();
                 var i = 0;
@@ -3581,7 +3581,7 @@ namespace FolioConsoleApplication
             using (var fsc = new FolioServiceClient())
             {
                 var s2 = Stopwatch.StartNew();
-                var js4 = JsonSchema4.FromJsonAsync(sr2.ReadToEndAsync().Result).Result;
+                var js4 = JsonSchema.FromJsonAsync(sr2.ReadToEndAsync().Result).Result;
                 var js = new JsonSerializer();
                 jtr.Read();
                 var i = 0;
@@ -3644,7 +3644,7 @@ namespace FolioConsoleApplication
             using (var jtw = new JsonTextWriter(sw))
             {
                 var s2 = Stopwatch.StartNew();
-                var js4 = JsonSchema4.FromJsonAsync(sr.ReadToEndAsync().Result).Result;
+                var js4 = JsonSchema.FromJsonAsync(sr.ReadToEndAsync().Result).Result;
                 var js = new JsonSerializer { Formatting = Formatting.Indented };
                 jtw.WriteStartArray();
                 var i = 0;
@@ -3711,7 +3711,7 @@ namespace FolioConsoleApplication
             using (var fsc = new FolioServiceClient())
             {
                 var s2 = Stopwatch.StartNew();
-                var js4 = JsonSchema4.FromJsonAsync(sr2.ReadToEndAsync().Result).Result;
+                var js4 = JsonSchema.FromJsonAsync(sr2.ReadToEndAsync().Result).Result;
                 var js = new JsonSerializer();
                 jtr.Read();
                 var i = 0;
@@ -3771,7 +3771,7 @@ namespace FolioConsoleApplication
             using (var jtw = new JsonTextWriter(sw))
             {
                 var s2 = Stopwatch.StartNew();
-                var js4 = JsonSchema4.FromJsonAsync(sr.ReadToEndAsync().Result).Result;
+                var js4 = JsonSchema.FromJsonAsync(sr.ReadToEndAsync().Result).Result;
                 var js = new JsonSerializer { Formatting = Formatting.Indented };
                 jtw.WriteStartArray();
                 var i = 0;
@@ -3838,7 +3838,7 @@ namespace FolioConsoleApplication
             using (var fsc = new FolioServiceClient())
             {
                 var s2 = Stopwatch.StartNew();
-                var js4 = JsonSchema4.FromJsonAsync(sr2.ReadToEndAsync().Result).Result;
+                var js4 = JsonSchema.FromJsonAsync(sr2.ReadToEndAsync().Result).Result;
                 var js = new JsonSerializer();
                 jtr.Read();
                 var i = 0;
@@ -3898,7 +3898,7 @@ namespace FolioConsoleApplication
             using (var jtw = new JsonTextWriter(sw))
             {
                 var s2 = Stopwatch.StartNew();
-                var js4 = JsonSchema4.FromJsonAsync(sr.ReadToEndAsync().Result).Result;
+                var js4 = JsonSchema.FromJsonAsync(sr.ReadToEndAsync().Result).Result;
                 var js = new JsonSerializer { Formatting = Formatting.Indented };
                 jtw.WriteStartArray();
                 var i = 0;
@@ -3965,7 +3965,7 @@ namespace FolioConsoleApplication
             using (var fsc = new FolioServiceClient())
             {
                 var s2 = Stopwatch.StartNew();
-                var js4 = JsonSchema4.FromJsonAsync(sr2.ReadToEndAsync().Result).Result;
+                var js4 = JsonSchema.FromJsonAsync(sr2.ReadToEndAsync().Result).Result;
                 var js = new JsonSerializer();
                 jtr.Read();
                 var i = 0;
@@ -4025,7 +4025,7 @@ namespace FolioConsoleApplication
             using (var jtw = new JsonTextWriter(sw))
             {
                 var s2 = Stopwatch.StartNew();
-                var js4 = JsonSchema4.FromJsonAsync(sr.ReadToEndAsync().Result).Result;
+                var js4 = JsonSchema.FromJsonAsync(sr.ReadToEndAsync().Result).Result;
                 var js = new JsonSerializer { Formatting = Formatting.Indented };
                 jtw.WriteStartArray();
                 var i = 0;
@@ -4092,7 +4092,7 @@ namespace FolioConsoleApplication
             using (var fsc = new FolioServiceClient())
             {
                 var s2 = Stopwatch.StartNew();
-                var js4 = JsonSchema4.FromJsonAsync(sr2.ReadToEndAsync().Result).Result;
+                var js4 = JsonSchema.FromJsonAsync(sr2.ReadToEndAsync().Result).Result;
                 var js = new JsonSerializer();
                 jtr.Read();
                 var i = 0;
@@ -4152,7 +4152,7 @@ namespace FolioConsoleApplication
             using (var jtw = new JsonTextWriter(sw))
             {
                 var s2 = Stopwatch.StartNew();
-                var js4 = JsonSchema4.FromJsonAsync(sr.ReadToEndAsync().Result).Result;
+                var js4 = JsonSchema.FromJsonAsync(sr.ReadToEndAsync().Result).Result;
                 var js = new JsonSerializer { Formatting = Formatting.Indented };
                 jtw.WriteStartArray();
                 var i = 0;
@@ -4219,7 +4219,7 @@ namespace FolioConsoleApplication
             using (var fsc = new FolioServiceClient())
             {
                 var s2 = Stopwatch.StartNew();
-                var js4 = JsonSchema4.FromJsonAsync(sr2.ReadToEndAsync().Result).Result;
+                var js4 = JsonSchema.FromJsonAsync(sr2.ReadToEndAsync().Result).Result;
                 var js = new JsonSerializer();
                 jtr.Read();
                 var i = 0;
@@ -4279,7 +4279,7 @@ namespace FolioConsoleApplication
             using (var jtw = new JsonTextWriter(sw))
             {
                 var s2 = Stopwatch.StartNew();
-                var js4 = JsonSchema4.FromJsonAsync(sr.ReadToEndAsync().Result).Result;
+                var js4 = JsonSchema.FromJsonAsync(sr.ReadToEndAsync().Result).Result;
                 var js = new JsonSerializer { Formatting = Formatting.Indented };
                 jtw.WriteStartArray();
                 var i = 0;
@@ -4346,7 +4346,7 @@ namespace FolioConsoleApplication
             using (var fsc = new FolioServiceClient())
             {
                 var s2 = Stopwatch.StartNew();
-                var js4 = JsonSchema4.FromJsonAsync(sr2.ReadToEndAsync().Result).Result;
+                var js4 = JsonSchema.FromJsonAsync(sr2.ReadToEndAsync().Result).Result;
                 var js = new JsonSerializer();
                 jtr.Read();
                 var i = 0;
@@ -4406,7 +4406,7 @@ namespace FolioConsoleApplication
             using (var jtw = new JsonTextWriter(sw))
             {
                 var s2 = Stopwatch.StartNew();
-                var js4 = JsonSchema4.FromJsonAsync(sr.ReadToEndAsync().Result).Result;
+                var js4 = JsonSchema.FromJsonAsync(sr.ReadToEndAsync().Result).Result;
                 var js = new JsonSerializer { Formatting = Formatting.Indented };
                 jtw.WriteStartArray();
                 var i = 0;
@@ -4473,7 +4473,7 @@ namespace FolioConsoleApplication
             using (var fsc = new FolioServiceClient())
             {
                 var s2 = Stopwatch.StartNew();
-                var js4 = JsonSchema4.FromJsonAsync(sr2.ReadToEndAsync().Result).Result;
+                var js4 = JsonSchema.FromJsonAsync(sr2.ReadToEndAsync().Result).Result;
                 var js = new JsonSerializer();
                 jtr.Read();
                 var i = 0;
@@ -4533,7 +4533,7 @@ namespace FolioConsoleApplication
             using (var jtw = new JsonTextWriter(sw))
             {
                 var s2 = Stopwatch.StartNew();
-                var js4 = JsonSchema4.FromJsonAsync(sr.ReadToEndAsync().Result).Result;
+                var js4 = JsonSchema.FromJsonAsync(sr.ReadToEndAsync().Result).Result;
                 var js = new JsonSerializer { Formatting = Formatting.Indented };
                 jtw.WriteStartArray();
                 var i = 0;
@@ -4600,7 +4600,7 @@ namespace FolioConsoleApplication
             using (var fsc = new FolioServiceClient())
             {
                 var s2 = Stopwatch.StartNew();
-                var js4 = JsonSchema4.FromJsonAsync(sr2.ReadToEndAsync().Result).Result;
+                var js4 = JsonSchema.FromJsonAsync(sr2.ReadToEndAsync().Result).Result;
                 var js = new JsonSerializer();
                 jtr.Read();
                 var i = 0;
@@ -4661,7 +4661,7 @@ namespace FolioConsoleApplication
             using (var jtw = new JsonTextWriter(sw))
             {
                 var s2 = Stopwatch.StartNew();
-                var js4 = JsonSchema4.FromJsonAsync(sr.ReadToEndAsync().Result).Result;
+                var js4 = JsonSchema.FromJsonAsync(sr.ReadToEndAsync().Result).Result;
                 var js = new JsonSerializer { Formatting = Formatting.Indented };
                 jtw.WriteStartArray();
                 var i = 0;
@@ -4728,7 +4728,7 @@ namespace FolioConsoleApplication
             using (var fsc = new FolioServiceClient())
             {
                 var s2 = Stopwatch.StartNew();
-                var js4 = JsonSchema4.FromJsonAsync(sr2.ReadToEndAsync().Result).Result;
+                var js4 = JsonSchema.FromJsonAsync(sr2.ReadToEndAsync().Result).Result;
                 var js = new JsonSerializer();
                 jtr.Read();
                 var i = 0;
@@ -4789,7 +4789,7 @@ namespace FolioConsoleApplication
             using (var jtw = new JsonTextWriter(sw))
             {
                 var s2 = Stopwatch.StartNew();
-                var js4 = JsonSchema4.FromJsonAsync(sr.ReadToEndAsync().Result).Result;
+                var js4 = JsonSchema.FromJsonAsync(sr.ReadToEndAsync().Result).Result;
                 var js = new JsonSerializer { Formatting = Formatting.Indented };
                 jtw.WriteStartArray();
                 var i = 0;
@@ -4856,7 +4856,7 @@ namespace FolioConsoleApplication
             using (var fsc = new FolioServiceClient())
             {
                 var s2 = Stopwatch.StartNew();
-                var js4 = JsonSchema4.FromJsonAsync(sr2.ReadToEndAsync().Result).Result;
+                var js4 = JsonSchema.FromJsonAsync(sr2.ReadToEndAsync().Result).Result;
                 var js = new JsonSerializer();
                 jtr.Read();
                 var i = 0;
@@ -4916,7 +4916,7 @@ namespace FolioConsoleApplication
             using (var jtw = new JsonTextWriter(sw))
             {
                 var s2 = Stopwatch.StartNew();
-                var js4 = JsonSchema4.FromJsonAsync(sr.ReadToEndAsync().Result).Result;
+                var js4 = JsonSchema.FromJsonAsync(sr.ReadToEndAsync().Result).Result;
                 var js = new JsonSerializer { Formatting = Formatting.Indented };
                 jtw.WriteStartArray();
                 var i = 0;
@@ -4983,7 +4983,7 @@ namespace FolioConsoleApplication
             using (var fsc = new FolioServiceClient())
             {
                 var s2 = Stopwatch.StartNew();
-                var js4 = JsonSchema4.FromJsonAsync(sr2.ReadToEndAsync().Result).Result;
+                var js4 = JsonSchema.FromJsonAsync(sr2.ReadToEndAsync().Result).Result;
                 var js = new JsonSerializer();
                 jtr.Read();
                 var i = 0;
@@ -5043,7 +5043,7 @@ namespace FolioConsoleApplication
             using (var jtw = new JsonTextWriter(sw))
             {
                 var s2 = Stopwatch.StartNew();
-                var js4 = JsonSchema4.FromJsonAsync(sr.ReadToEndAsync().Result).Result;
+                var js4 = JsonSchema.FromJsonAsync(sr.ReadToEndAsync().Result).Result;
                 var js = new JsonSerializer { Formatting = Formatting.Indented };
                 jtw.WriteStartArray();
                 var i = 0;

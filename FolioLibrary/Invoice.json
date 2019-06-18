@@ -1,0 +1,285 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "description": "invoice",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "id": {
+      "description": "UUID of this invoice",
+      "type": "string",
+      "pattern": "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-5][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}$"
+    },
+    "adjustments": {
+      "description": "List of invoice level adjustments. The adjustments can be pro-rated which are defined at the invoice level, but are applied to the invoice lines. A generic example is a shipping fee which should be spread out across all of the invoice lines so that all funds involved pay some portion of the fee.",
+      "type": "array",
+      "items": {
+        "description": "Adjustment",
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "id": {
+            "description": "UUID of this adjustment",
+            "type": "string",
+            "pattern": "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-5][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}$"
+          },
+          "adjustmentId": {
+            "description": "UUID of the Invoice adjustment incase of prorated adjustments",
+            "type": "string",
+            "pattern": "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-5][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}$"
+          },
+          "description": {
+            "description": "Displayed in invoice line as a name for the input",
+            "type": "string"
+          },
+          "fundDistributions": {
+            "id": "fundDistributions",
+            "description": "Fund distribution records from which this adjustment will be paid; only valid at invoice level",
+            "type": "array",
+            "items": {
+              "description": "Invoice/voucher line fund distribution",
+              "type": "object",
+              "additionalProperties": false,
+              "properties": {
+                "code": {
+                  "description": "The code of the fund associated with this fund distribution",
+                  "type": "string"
+                },
+                "encumbrance": {
+                  "description": "UUID of encumbrance record associated with this fund distribution",
+                  "type": "string",
+                  "pattern": "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-5][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}$"
+                },
+                "fundId": {
+                  "description": "UUID of the fund associated with this fund distribution",
+                  "type": "string",
+                  "pattern": "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-5][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}$"
+                },
+                "invoiceLineId": {
+                  "description": "UUID of the invoice line associated with this fund distribution",
+                  "type": "string",
+                  "pattern": "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-5][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}$"
+                },
+                "percentage": {
+                  "description": "The percentage of the cost to be applied to this fund",
+                  "type": "number"
+                }
+              },
+              "required": [
+                "fundId",
+                "percentage"
+              ]
+            }
+          },
+          "prorate": {
+            "description": "Displayed in invoice line per adjustment in toggled on in settings",
+            "type": "string",
+            "default": "Not prorated",
+            "enum": [
+              "By line",
+              "By amount",
+              "By quantity",
+              "Not prorated"
+            ]
+          },
+          "relationToTotal": {
+            "description": "Relationship of this adjustment to the total;In addition to: added to subtotal;Included in: reported as subtotal portion;Separate from:calculated from subtotal",
+            "type": "string",
+            "default": "In addition to",
+            "enum": [
+              "In addition to",
+              "Included in",
+              "Separate from"
+            ]
+          },
+          "type": {
+            "description": "Adjustment type",
+            "type": "string",
+            "enum": [
+              "Percentage",
+              "Amount"
+            ]
+          },
+          "value": {
+            "description": "Adjustment value",
+            "type": "number"
+          }
+        },
+        "required": [
+          "description",
+          "prorate",
+          "relationToTotal",
+          "type",
+          "value"
+        ]
+      }
+    },
+    "adjustmentsTotal": {
+      "description": "Total amount which is sum of all invoice line adjustments and all non-prorated invoice level adjustments. The value is calculated \"on the fly\" and never persisted",
+      "readonly": true,
+      "type": "number"
+    },
+    "approvedBy": {
+      "description": "UUID of user that approved this invoice",
+      "type": "string",
+      "pattern": "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-5][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}$"
+    },
+    "approvalDate": {
+      "description": "Date the invoice was approved for processing",
+      "type": "string",
+      "format": "date-time"
+    },
+    "chkSubscriptionOverlap": {
+      "description": "IF TRUE the system will check if there is another invoice for this subscription and whether the dates overlap. IF the dates overlap, the system should issue an alert.",
+      "type": "boolean"
+    },
+    "currency": {
+      "description": "Ideally this is the ISO code and not something the user defines",
+      "type": "string"
+    },
+    "folioInvoiceNo": {
+      "description": "Invoice number in folio system",
+      "type": "string"
+    },
+    "invoiceDate": {
+      "description": "Invoice date",
+      "type": "string",
+      "format": "date-time"
+    },
+    "lockTotal": {
+      "description": "Indicates that the total is keyed in and shouldn't be updated based on calculations. The calculated total must match this before the invoice can be approved",
+      "type": "boolean",
+      "default": false
+    },
+    "note": {
+      "description": "Invoice note",
+      "type": "string"
+    },
+    "paymentDue": {
+      "description": "When this is required to be paid. Generally governed by the relationship with the Vendor",
+      "type": "string",
+      "format": "date-time"
+    },
+    "paymentTerms": {
+      "description": "Invoice payment terms",
+      "type": "string"
+    },
+    "paymentMethod": {
+      "description": "Inherited from vendor record",
+      "type": "string"
+    },
+    "status": {
+      "description": "Open: Record has been created, Reviewed: details have been verified, Approved: Funds are release, Paid: confirmation that funds have been exchanged and check number has been returned amounts are frozen, cancelled.\nNote: invoices are never partially paid.",
+      "type": "string",
+      "enum": [
+        "Open",
+        "Reviewed",
+        "Approved",
+        "Paid",
+        "Cancelled"
+      ]
+    },
+    "source": {
+      "description": "This does not denote a user ID but describes how the record was created. Eg. Manually, EDIFACT, MARC etc",
+      "type": "string",
+      "pattern": "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-5][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}$"
+    },
+    "subTotal": {
+      "description": "Invoice amount before adjustments are applied. This is sum of all subTotal amounts of the corresponding invoice lines. The value is calculated \"on the fly\" and never persisted",
+      "readonly": true,
+      "type": "number"
+    },
+    "total": {
+      "description": "The total amount of this invoice which is sum of subTotal and adjustmentsTotal. If lockTotal is true, then total is persisted and never replaced with a calculated value. Otherwise total is calculated \"on the fly\" and never persisted.",
+      "type": "number"
+    },
+    "vendorInvoiceNo": {
+      "description": "This is the number from the vendor's invoice, which is different from the folioInvoiceNo",
+      "type": "string"
+    },
+    "disbursementNumber": {
+      "description": "The identifier for the physical transaction corresponding to a payment (Eg. Check #, EFT # etc.) Brought in from external source",
+      "type": "string"
+    },
+    "voucherNumber": {
+      "description": "Number generated by folio that will eventually identify the payment request sent out to external financial system.",
+      "type": "string"
+    },
+    "paymentId": {
+      "description": "Id of payment",
+      "type": "string",
+      "pattern": "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-5][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}$"
+    },
+    "disbursementDate": {
+      "description": "Date payment was made from financial system (eg. corresponding check date)",
+      "type": "string",
+      "format": "date-time"
+    },
+    "poNumbers": {
+      "id": "poNumbers",
+      "description": "May or may not be provided; references the PO associated to the invoice",
+      "type": "array",
+      "items": {
+        "description": "A human readable ID assigned to this purchase order",
+        "type": "string",
+        "pattern": "^[a-zA-Z0-9]{5,16}$"
+      }
+    },
+    "vendorId": {
+      "description": "UUID of vendor",
+      "type": "string",
+      "pattern": "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-5][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}$"
+    },
+    "manualPayment": {
+      "description": "This would keep the invoice from being feed into the batch process (Not generate a external voucher/payment) but would still move values in the system. Note: this is ideally defined by the vendor relationship and exposed for override on the invoice.",
+      "type": "boolean"
+    },
+    "metadata": {
+      "title": "Metadata Schema",
+      "description": "Metadata about creation and changes to records, provided by the server (client should not provide)",
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "createdDate": {
+          "description": "Date and time when the record was created",
+          "type": "string",
+          "format": "date-time"
+        },
+        "createdByUserId": {
+          "description": "ID of the user who created the record (when available)",
+          "type": "string",
+          "pattern": "^[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12}$"
+        },
+        "createdByUsername": {
+          "description": "Username of the user who created the record (when available)",
+          "type": "string"
+        },
+        "updatedDate": {
+          "description": "Date and time when the record was last updated",
+          "type": "string",
+          "format": "date-time"
+        },
+        "updatedByUserId": {
+          "description": "ID of the user who last updated the record (when available)",
+          "type": "string",
+          "pattern": "^[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12}$"
+        },
+        "updatedByUsername": {
+          "description": "Username of the user who last updated the record (when available)",
+          "type": "string"
+        }
+      },
+      "required": [
+        "createdDate"
+      ]
+    }
+  },
+  "required": [
+    "currency",
+    "invoiceDate",
+    "paymentMethod",
+    "status",
+    "source",
+    "vendorInvoiceNo",
+    "vendorId"
+  ]
+}

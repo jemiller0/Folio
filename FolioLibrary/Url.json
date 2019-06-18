@@ -5,7 +5,7 @@
   "additionalProperties": false,
   "properties": {
     "id": {
-      "description": "UUID",
+      "description": "The unique id of this url",
       "type": [
         "string",
         "null"
@@ -22,7 +22,7 @@
       "type": "string"
     },
     "language": {
-      "description": "The language for this vendor URL",
+      "description": "The language for this organization URL",
       "type": "string"
     },
     "isPrimary": {
@@ -31,14 +31,14 @@
     },
     "categories": {
       "id": "categories",
-      "description": "The list of categories for this vendor URL",
+      "description": "The list of categories for this organization URL",
       "type": "array",
       "items": {
         "type": "string"
       }
     },
     "notes": {
-      "description": "The notes for this vendor URL",
+      "description": "The notes for this organization URL",
       "type": "string"
     }
   },

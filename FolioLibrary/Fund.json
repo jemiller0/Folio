@@ -5,82 +5,117 @@
   "additionalProperties": false,
   "properties": {
     "id": {
-      "description": "UUID",
-      "type": [
-        "string",
-        "null"
-      ],
-      "pattern": "^[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12}$"
+      "description": "UUID of this fund",
+      "type": "string",
+      "pattern": "^[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[1-5][a-fA-F0-9]{3}-[89abAB][a-fA-F0-9]{3}-[a-fA-F0-9]{12}$"
     },
-    "name": {
-      "description": "The name of this fund",
-      "type": "string"
+    "acquisitionsUnit": {
+      "description": "The location/branch/division etc. that's responsible for this fund.",
+      "type": "string",
+      "pattern": "^[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[1-5][a-fA-F0-9]{3}-[89abAB][a-fA-F0-9]{3}-[a-fA-F0-9]{12}$"
+    },
+    "allocationFrom": {
+      "description": "All the funds that this fund is allowed to receive money from. This would be 1 fund or none. If this field is blank their is no restriction on allocating to this fund",
+      "type": "array",
+      "items": {
+        "description": "UUID of the fund this fund is allowed to receive money from",
+        "type": "string",
+        "pattern": "^[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[1-5][a-fA-F0-9]{3}-[89abAB][a-fA-F0-9]{3}-[a-fA-F0-9]{12}$"
+      }
+    },
+    "allocationTo": {
+      "description": "All the funds that this fund is allowed to send money to. This could be one or many.",
+      "type": "array",
+      "items": {
+        "description": "UUID of the fund this fund is allowed to send money to",
+        "type": "string",
+        "pattern": "^[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[1-5][a-fA-F0-9]{3}-[89abAB][a-fA-F0-9]{3}-[a-fA-F0-9]{12}$"
+      }
     },
     "code": {
-      "description": "The numeric code for this fund",
-      "type": "string"
-    },
-    "created_date": {
-      "description": "The creation date of this fund",
-      "type": [
-        "string",
-        "null"
-      ],
-      "format": "date-time"
-    },
-    "fund_status": {
-      "description": "The current status of this fund",
-      "type": "string"
-    },
-    "currency": {
-      "description": "The currency used for this fund",
+      "description": "A unique code associated with the fund",
       "type": "string"
     },
     "description": {
       "description": "The description of this fund",
       "type": "string"
     },
-    "ledger_id": {
-      "description": "UUID",
-      "type": [
-        "string",
-        "null"
-      ],
-      "pattern": "^[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12}$"
+    "externalAccountNo": {
+      "description": "Corresponding account in the financial system. Will be recorded in payment generated as well.",
+      "type": "string"
     },
-    "allocation_from": {
-      "id": "allocation_from",
-      "description": "The originating fund of the allocation",
-      "type": "array",
-      "items": {
-        "description": "UUID",
-        "type": "string",
-        "pattern": "^[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12}$"
-      }
+    "fundStatus": {
+      "description": "The current status of this fund",
+      "type": "string",
+      "enum": [
+        "Active",
+        "Frozen",
+        "Inactive"
+      ]
     },
-    "allocation_to": {
-      "id": "allocation_to",
-      "description": "The target fund of the allocation",
-      "type": "array",
-      "items": {
-        "description": "UUID",
-        "type": "string",
-        "pattern": "^[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12}$"
-      }
+    "ledgerId": {
+      "description": "UUID of the financial ledger associated with this fund",
+      "type": "string",
+      "pattern": "^[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[1-5][a-fA-F0-9]{3}-[89abAB][a-fA-F0-9]{3}-[a-fA-F0-9]{12}$"
+    },
+    "name": {
+      "description": "The name of this fund",
+      "type": "string"
     },
     "tags": {
-      "id": "tags",
       "description": "The list of tags associated with this fund",
       "type": "array",
       "items": {
-        "description": "UUID",
+        "description": "UUID of tag",
         "type": "string",
-        "pattern": "^[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12}$"
+        "pattern": "^[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[1-5][a-fA-F0-9]{3}-[89abAB][a-fA-F0-9]{3}-[a-fA-F0-9]{12}$"
       }
+    },
+    "metadata": {
+      "title": "Metadata Schema",
+      "description": "Metadata about creation and changes to records, provided by the server (client should not provide)",
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "createdDate": {
+          "description": "Date and time when the record was created",
+          "type": "string",
+          "format": "date-time"
+        },
+        "createdByUserId": {
+          "description": "ID of the user who created the record (when available)",
+          "type": "string",
+          "pattern": "^[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12}$"
+        },
+        "createdByUsername": {
+          "description": "Username of the user who created the record (when available)",
+          "type": "string"
+        },
+        "updatedDate": {
+          "description": "Date and time when the record was last updated",
+          "type": "string",
+          "format": "date-time"
+        },
+        "updatedByUserId": {
+          "description": "ID of the user who last updated the record (when available)",
+          "type": "string",
+          "pattern": "^[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12}$"
+        },
+        "updatedByUsername": {
+          "description": "Username of the user who last updated the record (when available)",
+          "type": "string"
+        }
+      },
+      "required": [
+        "createdDate"
+      ]
     }
   },
   "required": [
-    "name",
-    "code"
+    "externalAccountNo",
+    "code",
+    "fundStatus",
+    "ledgerId",
+    "name"
   ]
 }

@@ -1,11 +1,11 @@
 {
   "$schema": "http://json-schema.org/draft-04/schema#",
-  "description": "A vendor category",
+  "description": "An organization category",
   "type": "object",
   "additionalProperties": false,
   "properties": {
     "id": {
-      "description": "UUID",
+      "description": "The unique id of this category",
       "type": [
         "string",
         "null"

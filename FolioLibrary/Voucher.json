@@ -1,0 +1,137 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "description": "voucher",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "id": {
+      "description": "UUID of this voucher",
+      "type": "string",
+      "pattern": "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-5][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}$"
+    },
+    "accountingCode": {
+      "description": "Number that represents the vendor is an external accounting system which may include details like \"Address code\" in it. This is the number as stated on the invoice",
+      "type": "string"
+    },
+    "amount": {
+      "description": "The amount that is actually paid",
+      "type": "number"
+    },
+    "batchNumber": {
+      "description": "Only required when voucher is being output automatically; date formatted or allow library to specify structure and start",
+      "type": "string"
+    },
+    "disbursementNumber": {
+      "description": "The identifier for the physical transaction corresponding to a payment;Brought in from external source",
+      "type": "string"
+    },
+    "disbursementDate": {
+      "description": "Date payment was made from financial system",
+      "type": "string",
+      "format": "date-time"
+    },
+    "disbursementAmount": {
+      "description": "The amount of the payment made outside of FOLIO",
+      "type": "number"
+    },
+    "invoiceCurrency": {
+      "description": "The currency in which invoice was originally defined",
+      "type": "string"
+    },
+    "invoiceId": {
+      "description": "Corresponding invoice Id",
+      "type": "string",
+      "pattern": "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-5][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}$"
+    },
+    "exchangeRate": {
+      "description": "Exchange rate used to generate transaction",
+      "type": "number"
+    },
+    "exportToAccounting": {
+      "description": "Export this payment record to a financial system",
+      "type": "boolean"
+    },
+    "status": {
+      "description": "Status of the voucher",
+      "type": "string",
+      "enum": [
+        "Awaiting payment",
+        "Paid"
+      ]
+    },
+    "systemCurrency": {
+      "description": "The currency in which the voucher was paid",
+      "type": "string"
+    },
+    "type": {
+      "description": "Indicates type of payment to account",
+      "type": "string",
+      "enum": [
+        "Payment",
+        "Pre-payment",
+        "Credit",
+        "Voucher"
+      ]
+    },
+    "voucherDate": {
+      "description": "The date the invoice status changes to approved",
+      "type": "string",
+      "format": "date-time"
+    },
+    "voucherNumber": {
+      "description": "Invoice number in folio system",
+      "type": "string",
+      "pattern": "^[a-zA-Z0-9]*$"
+    },
+    "metadata": {
+      "title": "Metadata Schema",
+      "description": "Metadata about creation and changes to records, provided by the server (client should not provide)",
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "createdDate": {
+          "description": "Date and time when the record was created",
+          "type": "string",
+          "format": "date-time"
+        },
+        "createdByUserId": {
+          "description": "ID of the user who created the record (when available)",
+          "type": "string",
+          "pattern": "^[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12}$"
+        },
+        "createdByUsername": {
+          "description": "Username of the user who created the record (when available)",
+          "type": "string"
+        },
+        "updatedDate": {
+          "description": "Date and time when the record was last updated",
+          "type": "string",
+          "format": "date-time"
+        },
+        "updatedByUserId": {
+          "description": "ID of the user who last updated the record (when available)",
+          "type": "string",
+          "pattern": "^[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12}$"
+        },
+        "updatedByUsername": {
+          "description": "Username of the user who last updated the record (when available)",
+          "type": "string"
+        }
+      },
+      "required": [
+        "createdDate"
+      ]
+    }
+  },
+  "required": [
+    "accountingCode",
+    "amount",
+    "exportToAccounting",
+    "invoiceCurrency",
+    "invoiceId",
+    "type",
+    "status",
+    "systemCurrency",
+    "voucherNumber"
+  ]
+}

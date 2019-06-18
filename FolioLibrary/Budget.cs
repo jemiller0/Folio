@@ -16,7 +16,7 @@ namespace FolioLibrary
         {
             using (var sr = new StreamReader(Assembly.GetExecutingAssembly().GetManifestResourceStream("FolioLibrary.Budget.json")))
             {
-                var js = JsonSchema4.FromJsonAsync(sr.ReadToEndAsync().Result).Result;
+                var js = JsonSchema.FromJsonAsync(sr.ReadToEndAsync().Result).Result;
                 var l = js.Validate(value);
                 if (l.Any()) return new ValidationResult($"The Content field is invalid. {string.Join(" ", l.Select(ve => ve.ToString()))}", new[] { "Content" });
             }
@@ -38,14 +38,17 @@ namespace FolioLibrary
         [Display(Order = 5)]
         public virtual Fund Fund { get; set; }
 
-        [Column("fund_id"), Display(Name = "Fund", Order = 6), Editable(false)]
+        [Column("fundid"), Display(Name = "Fund", Order = 6), Editable(false)]
         public virtual Guid? FundId { get; set; }
 
         [Display(Name = "Fiscal Year", Order = 7)]
         public virtual FiscalYear FiscalYear { get; set; }
 
-        [Column("fiscal_year_id"), Display(Name = "Fiscal Year", Order = 8), Editable(false)]
+        [Column("fiscalyearid"), Display(Name = "Fiscal Year", Order = 8), Editable(false)]
         public virtual Guid? FiscalYearId { get; set; }
+
+        [ScaffoldColumn(false)]
+        public virtual ICollection<Encumbrance> Encumbrances { get; set; }
 
         [ScaffoldColumn(false)]
         public virtual ICollection<FundDistribution> FundDistributions { get; set; }

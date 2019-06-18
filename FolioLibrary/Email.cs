@@ -8,14 +8,14 @@ using System.Reflection;
 
 namespace FolioLibrary
 {
-    [Table("email", Schema = "diku_mod_vendors")]
+    [Table("emails", Schema = "diku_mod_organizations_storage")]
     public partial class Email
     {
         public static ValidationResult ValidateContent(string value)
         {
             using (var sr = new StreamReader(Assembly.GetExecutingAssembly().GetManifestResourceStream("FolioLibrary.Email.json")))
             {
-                var js = JsonSchema4.FromJsonAsync(sr.ReadToEndAsync().Result).Result;
+                var js = JsonSchema.FromJsonAsync(sr.ReadToEndAsync().Result).Result;
                 var l = js.Validate(value);
                 if (l.Any()) return new ValidationResult($"The Content field is invalid. {string.Join(" ", l.Select(ve => ve.ToString()))}", new[] { "Content" });
             }

@@ -63,13 +63,9 @@ namespace FolioLibrary
             base.OnModelCreating(modelBuilder);
             this.GetService<ILoggerFactory>().AddProvider(new LoggingProvider());
             if (IsPostgreSql) modelBuilder.Entity<Account>().Property(nameof(Account.Content)).HasColumnType("jsonb");
-            if (IsPostgreSql) modelBuilder.Entity<Account2>().Property(nameof(Account2.Content)).HasColumnType("jsonb");
             if (IsPostgreSql) modelBuilder.Entity<Address>().Property(nameof(Address.Content)).HasColumnType("jsonb");
             if (IsPostgreSql) modelBuilder.Entity<AddressType>().Property(nameof(AddressType.Content)).HasColumnType("jsonb");
-            if (IsPostgreSql) modelBuilder.Entity<Adjustment>().Property(nameof(Adjustment.Content)).HasColumnType("jsonb");
-            if (IsPostgreSql) modelBuilder.Entity<Agreement>().Property(nameof(Agreement.Content)).HasColumnType("jsonb");
             if (IsPostgreSql) modelBuilder.Entity<Alert>().Property(nameof(Alert.Content)).HasColumnType("jsonb");
-            if (IsPostgreSql) modelBuilder.Entity<Alias>().Property(nameof(Alias.Content)).HasColumnType("jsonb");
             if (IsPostgreSql) modelBuilder.Entity<AlternativeTitleType>().Property(nameof(AlternativeTitleType.Content)).HasColumnType("jsonb");
             if (IsPostgreSql) modelBuilder.Entity<AuditLoan>().Property(nameof(AuditLoan.Content)).HasColumnType("jsonb");
             if (IsPostgreSql) modelBuilder.Entity<AuthAttempt>().Property(nameof(AuthAttempt.Content)).HasColumnType("jsonb");
@@ -82,18 +78,14 @@ namespace FolioLibrary
             if (IsPostgreSql) modelBuilder.Entity<CancellationReason>().Property(nameof(CancellationReason.Content)).HasColumnType("jsonb");
             if (IsPostgreSql) modelBuilder.Entity<Category>().Property(nameof(Category.Content)).HasColumnType("jsonb");
             if (IsPostgreSql) modelBuilder.Entity<CirculationRule>().Property(nameof(CirculationRule.Content)).HasColumnType("jsonb");
-            if (IsPostgreSql) modelBuilder.Entity<Claim>().Property(nameof(Claim.Content)).HasColumnType("jsonb");
             if (IsPostgreSql) modelBuilder.Entity<ClassificationType>().Property(nameof(ClassificationType.Content)).HasColumnType("jsonb");
             if (IsPostgreSql) modelBuilder.Entity<Comment>().Property(nameof(Comment.Content)).HasColumnType("jsonb");
             if (IsPostgreSql) modelBuilder.Entity<Contact>().Property(nameof(Contact.Content)).HasColumnType("jsonb");
-            if (IsPostgreSql) modelBuilder.Entity<ContactCategory>().Property(nameof(ContactCategory.Content)).HasColumnType("jsonb");
             if (IsPostgreSql) modelBuilder.Entity<ContributorNameType>().Property(nameof(ContributorNameType.Content)).HasColumnType("jsonb");
             if (IsPostgreSql) modelBuilder.Entity<ContributorType>().Property(nameof(ContributorType.Content)).HasColumnType("jsonb");
-            if (IsPostgreSql) modelBuilder.Entity<Cost>().Property(nameof(Cost.Content)).HasColumnType("jsonb");
-            if (IsPostgreSql) modelBuilder.Entity<Detail>().Property(nameof(Detail.Content)).HasColumnType("jsonb");
             if (IsPostgreSql) modelBuilder.Entity<ElectronicAccessRelationship>().Property(nameof(ElectronicAccessRelationship.Content)).HasColumnType("jsonb");
             if (IsPostgreSql) modelBuilder.Entity<Email>().Property(nameof(Email.Content)).HasColumnType("jsonb");
-            if (IsPostgreSql) modelBuilder.Entity<Eresource>().Property(nameof(Eresource.Content)).HasColumnType("jsonb");
+            if (IsPostgreSql) modelBuilder.Entity<Encumbrance>().Property(nameof(Encumbrance.Content)).HasColumnType("jsonb");
             if (IsPostgreSql) modelBuilder.Entity<EventLog>().Property(nameof(EventLog.Content)).HasColumnType("jsonb");
             if (IsPostgreSql) modelBuilder.Entity<Fee>().Property(nameof(Fee.Content)).HasColumnType("jsonb");
             if (IsPostgreSql) modelBuilder.Entity<FeeAction>().Property(nameof(FeeAction.Content)).HasColumnType("jsonb");
@@ -101,7 +93,6 @@ namespace FolioLibrary
             if (IsPostgreSql) modelBuilder.Entity<FixedDueDateSchedule>().Property(nameof(FixedDueDateSchedule.Content)).HasColumnType("jsonb");
             if (IsPostgreSql) modelBuilder.Entity<Fund>().Property(nameof(Fund.Content)).HasColumnType("jsonb");
             if (IsPostgreSql) modelBuilder.Entity<FundDistribution>().Property(nameof(FundDistribution.Content)).HasColumnType("jsonb");
-            if (IsPostgreSql) modelBuilder.Entity<FundDistribution2>().Property(nameof(FundDistribution2.Content)).HasColumnType("jsonb");
             if (IsPostgreSql) modelBuilder.Entity<Group>().Property(nameof(Group.Content)).HasColumnType("jsonb");
             if (IsPostgreSql) modelBuilder.Entity<Holding>().Property(nameof(Holding.Content)).HasColumnType("jsonb");
             if (IsPostgreSql) modelBuilder.Entity<HoldingNoteType>().Property(nameof(HoldingNoteType.Content)).HasColumnType("jsonb");
@@ -117,6 +108,8 @@ namespace FolioLibrary
             if (IsPostgreSql) modelBuilder.Entity<InstanceType>().Property(nameof(InstanceType.Content)).HasColumnType("jsonb");
             if (IsPostgreSql) modelBuilder.Entity<Institution>().Property(nameof(Institution.Content)).HasColumnType("jsonb");
             if (IsPostgreSql) modelBuilder.Entity<Interface>().Property(nameof(Interface.Content)).HasColumnType("jsonb");
+            if (IsPostgreSql) modelBuilder.Entity<Invoice>().Property(nameof(Invoice.Content)).HasColumnType("jsonb");
+            if (IsPostgreSql) modelBuilder.Entity<InvoiceItem>().Property(nameof(InvoiceItem.Content)).HasColumnType("jsonb");
             if (IsPostgreSql) modelBuilder.Entity<Item>().Property(nameof(Item.Content)).HasColumnType("jsonb");
             if (IsPostgreSql) modelBuilder.Entity<ItemNoteType>().Property(nameof(ItemNoteType.Content)).HasColumnType("jsonb");
             if (IsPostgreSql) modelBuilder.Entity<Ledger>().Property(nameof(Ledger.Content)).HasColumnType("jsonb");
@@ -129,25 +122,26 @@ namespace FolioLibrary
             if (IsPostgreSql) modelBuilder.Entity<MaterialType>().Property(nameof(MaterialType.Content)).HasColumnType("jsonb");
             if (IsPostgreSql) modelBuilder.Entity<ModeOfIssuance>().Property(nameof(ModeOfIssuance.Content)).HasColumnType("jsonb");
             if (IsPostgreSql) modelBuilder.Entity<Note>().Property(nameof(Note.Content)).HasColumnType("jsonb");
+            if (IsPostgreSql) modelBuilder.Entity<NoteType>().Property(nameof(NoteType.Content)).HasColumnType("jsonb");
             if (IsPostgreSql) modelBuilder.Entity<Order>().Property(nameof(Order.Content)).HasColumnType("jsonb");
+            if (IsPostgreSql) modelBuilder.Entity<OrderInvoiceRelationship>().Property(nameof(OrderInvoiceRelationship.Content)).HasColumnType("jsonb");
             if (IsPostgreSql) modelBuilder.Entity<OrderItem>().Property(nameof(OrderItem.Content)).HasColumnType("jsonb");
-            if (IsPostgreSql) modelBuilder.Entity<OrderItemLocation>().Property(nameof(OrderItemLocation.Content)).HasColumnType("jsonb");
+            if (IsPostgreSql) modelBuilder.Entity<Organization>().Property(nameof(Organization.Content)).HasColumnType("jsonb");
             if (IsPostgreSql) modelBuilder.Entity<Owner>().Property(nameof(Owner.Content)).HasColumnType("jsonb");
             if (IsPostgreSql) modelBuilder.Entity<PatronNoticePolicy>().Property(nameof(PatronNoticePolicy.Content)).HasColumnType("jsonb");
             if (IsPostgreSql) modelBuilder.Entity<Payment>().Property(nameof(Payment.Content)).HasColumnType("jsonb");
             if (IsPostgreSql) modelBuilder.Entity<Permission>().Property(nameof(Permission.Content)).HasColumnType("jsonb");
             if (IsPostgreSql) modelBuilder.Entity<PermissionsUser>().Property(nameof(PermissionsUser.Content)).HasColumnType("jsonb");
             if (IsPostgreSql) modelBuilder.Entity<PhoneNumber>().Property(nameof(PhoneNumber.Content)).HasColumnType("jsonb");
-            if (IsPostgreSql) modelBuilder.Entity<Physical>().Property(nameof(Physical.Content)).HasColumnType("jsonb");
             if (IsPostgreSql) modelBuilder.Entity<Piece>().Property(nameof(Piece.Content)).HasColumnType("jsonb");
             if (IsPostgreSql) modelBuilder.Entity<Proxy>().Property(nameof(Proxy.Content)).HasColumnType("jsonb");
             if (IsPostgreSql) modelBuilder.Entity<Refund>().Property(nameof(Refund.Content)).HasColumnType("jsonb");
             if (IsPostgreSql) modelBuilder.Entity<ReportingCode>().Property(nameof(ReportingCode.Content)).HasColumnType("jsonb");
             if (IsPostgreSql) modelBuilder.Entity<Request>().Property(nameof(Request.Content)).HasColumnType("jsonb");
             if (IsPostgreSql) modelBuilder.Entity<RequestPolicy>().Property(nameof(RequestPolicy.Content)).HasColumnType("jsonb");
+            if (IsPostgreSql) modelBuilder.Entity<ScheduledNotice>().Property(nameof(ScheduledNotice.Content)).HasColumnType("jsonb");
             if (IsPostgreSql) modelBuilder.Entity<ServicePoint>().Property(nameof(ServicePoint.Content)).HasColumnType("jsonb");
             if (IsPostgreSql) modelBuilder.Entity<ServicePointUser>().Property(nameof(ServicePointUser.Content)).HasColumnType("jsonb");
-            if (IsPostgreSql) modelBuilder.Entity<Source>().Property(nameof(Source.Content)).HasColumnType("jsonb");
             if (IsPostgreSql) modelBuilder.Entity<StaffSlip>().Property(nameof(StaffSlip.Content)).HasColumnType("jsonb");
             if (IsPostgreSql) modelBuilder.Entity<StatisticalCode>().Property(nameof(StatisticalCode.Content)).HasColumnType("jsonb");
             if (IsPostgreSql) modelBuilder.Entity<StatisticalCodeType>().Property(nameof(StatisticalCodeType.Content)).HasColumnType("jsonb");
@@ -157,17 +151,17 @@ namespace FolioLibrary
             if (IsPostgreSql) modelBuilder.Entity<TransferCriteria>().Property(nameof(TransferCriteria.Content)).HasColumnType("jsonb");
             if (IsPostgreSql) modelBuilder.Entity<Url>().Property(nameof(Url.Content)).HasColumnType("jsonb");
             if (IsPostgreSql) modelBuilder.Entity<User>().Property(nameof(User.Content)).HasColumnType("jsonb");
-            if (IsPostgreSql) modelBuilder.Entity<Vendor>().Property(nameof(Vendor.Content)).HasColumnType("jsonb");
-            if (IsPostgreSql) modelBuilder.Entity<VendorCategory>().Property(nameof(VendorCategory.Content)).HasColumnType("jsonb");
-            if (IsPostgreSql) modelBuilder.Entity<VendorDetail>().Property(nameof(VendorDetail.Content)).HasColumnType("jsonb");
-            if (IsPostgreSql) modelBuilder.Entity<VendorType>().Property(nameof(VendorType.Content)).HasColumnType("jsonb");
+            if (IsPostgreSql) modelBuilder.Entity<Voucher>().Property(nameof(Voucher.Content)).HasColumnType("jsonb");
+            if (IsPostgreSql) modelBuilder.Entity<VoucherItem>().Property(nameof(VoucherItem.Content)).HasColumnType("jsonb");
             if (IsPostgreSql) modelBuilder.Entity<Waive>().Property(nameof(Waive.Content)).HasColumnType("jsonb");
             modelBuilder.Entity<Budget>().HasOne(typeof(Fund), nameof(Budget.Fund)).WithMany(nameof(Fund.Budgets)).HasForeignKey(nameof(Budget.FundId)).OnDelete(DeleteBehavior.Restrict);
             modelBuilder.Entity<Budget>().HasOne(typeof(FiscalYear), nameof(Budget.FiscalYear)).WithMany(nameof(FiscalYear.Budgets)).HasForeignKey(nameof(Budget.FiscalYearId)).OnDelete(DeleteBehavior.Restrict);
             modelBuilder.Entity<Campus>().HasOne(typeof(Institution), nameof(Campus.Institution)).WithMany(nameof(Institution.Campuses)).HasForeignKey(nameof(Campus.Institutionid)).OnDelete(DeleteBehavior.Restrict);
+            modelBuilder.Entity<Encumbrance>().HasOne(typeof(Budget), nameof(Encumbrance.Budget)).WithMany(nameof(Budget.Encumbrances)).HasForeignKey(nameof(Encumbrance.Budgetid)).OnDelete(DeleteBehavior.Restrict);
+            modelBuilder.Entity<Encumbrance>().HasOne(typeof(Fund), nameof(Encumbrance.Fund)).WithMany(nameof(Fund.Encumbrances)).HasForeignKey(nameof(Encumbrance.Fundid)).OnDelete(DeleteBehavior.Restrict);
             modelBuilder.Entity<Fee>().HasOne(typeof(Owner), nameof(Fee.Owner)).WithMany(nameof(Owner.Fees)).HasForeignKey(nameof(Fee.Ownerid)).OnDelete(DeleteBehavior.Restrict);
             modelBuilder.Entity<Fund>().HasOne(typeof(Ledger), nameof(Fund.Ledger)).WithMany(nameof(Ledger.Funds)).HasForeignKey(nameof(Fund.LedgerId)).OnDelete(DeleteBehavior.Restrict);
-            modelBuilder.Entity<FundDistribution>().HasOne(typeof(Budget), nameof(FundDistribution.Budget)).WithMany(nameof(Budget.FundDistributions)).HasForeignKey(nameof(FundDistribution.BudgetId)).OnDelete(DeleteBehavior.Restrict);
+            modelBuilder.Entity<FundDistribution>().HasOne(typeof(Budget), nameof(FundDistribution.Budget)).WithMany(nameof(Budget.FundDistributions)).HasForeignKey(nameof(FundDistribution.Budgetid)).OnDelete(DeleteBehavior.Restrict);
             modelBuilder.Entity<Holding>().HasOne(typeof(Instance), nameof(Holding.Instance)).WithMany(nameof(Instance.Holdings)).HasForeignKey(nameof(Holding.Instanceid)).OnDelete(DeleteBehavior.Restrict);
             modelBuilder.Entity<Holding>().HasOne(typeof(Location), nameof(Holding.Location)).WithMany(nameof(Location.Holdings)).HasForeignKey(nameof(Holding.Permanentlocationid)).OnDelete(DeleteBehavior.Restrict);
             modelBuilder.Entity<Holding>().HasOne(typeof(Location), nameof(Holding.Location1)).WithMany(nameof(Location.Holdings1)).HasForeignKey(nameof(Holding.Temporarylocationid)).OnDelete(DeleteBehavior.Restrict);
@@ -180,6 +174,7 @@ namespace FolioLibrary
             modelBuilder.Entity<InstanceRelationship>().HasOne(typeof(Instance), nameof(InstanceRelationship.Instance)).WithMany(nameof(Instance.InstanceRelationships)).HasForeignKey(nameof(InstanceRelationship.Subinstanceid)).OnDelete(DeleteBehavior.Restrict);
             modelBuilder.Entity<InstanceRelationship>().HasOne(typeof(InstanceRelationshipType), nameof(InstanceRelationship.InstanceRelationshipType)).WithMany(nameof(InstanceRelationshipType.InstanceRelationships)).HasForeignKey(nameof(InstanceRelationship.Instancerelationshiptypeid)).OnDelete(DeleteBehavior.Restrict);
             modelBuilder.Entity<InstanceSourceMarc>().HasOne(typeof(Instance), nameof(InstanceSourceMarc.Instance)).WithOne(nameof(Instance.InstanceSourceMarc)).HasForeignKey(typeof(InstanceSourceMarc), nameof(InstanceSourceMarc.Id)).IsRequired().OnDelete(DeleteBehavior.Restrict);
+            modelBuilder.Entity<InvoiceItem>().HasOne(typeof(Invoice), nameof(InvoiceItem.Invoice)).WithMany(nameof(Invoice.InvoiceItems)).HasForeignKey(nameof(InvoiceItem.Invoiceid)).OnDelete(DeleteBehavior.Restrict);
             modelBuilder.Entity<Item>().HasOne(typeof(Holding), nameof(Item.Holding)).WithMany(nameof(Holding.Items)).HasForeignKey(nameof(Item.Holdingsrecordid)).OnDelete(DeleteBehavior.Restrict);
             modelBuilder.Entity<Item>().HasOne(typeof(LoanType), nameof(Item.LoanType)).WithMany(nameof(LoanType.Items)).HasForeignKey(nameof(Item.Permanentloantypeid)).OnDelete(DeleteBehavior.Restrict);
             modelBuilder.Entity<Item>().HasOne(typeof(LoanType), nameof(Item.LoanType1)).WithMany(nameof(LoanType.Items1)).HasForeignKey(nameof(Item.Temporaryloantypeid)).OnDelete(DeleteBehavior.Restrict);
@@ -192,10 +187,16 @@ namespace FolioLibrary
             modelBuilder.Entity<Location>().HasOne(typeof(Institution), nameof(Location.Institution)).WithMany(nameof(Institution.Locations)).HasForeignKey(nameof(Location.Institutionid)).OnDelete(DeleteBehavior.Restrict);
             modelBuilder.Entity<Location>().HasOne(typeof(Campus), nameof(Location.Campus)).WithMany(nameof(Campus.Locations)).HasForeignKey(nameof(Location.Campusid)).OnDelete(DeleteBehavior.Restrict);
             modelBuilder.Entity<Location>().HasOne(typeof(Library), nameof(Location.Library)).WithMany(nameof(Library.Locations)).HasForeignKey(nameof(Location.Libraryid)).OnDelete(DeleteBehavior.Restrict);
+            modelBuilder.Entity<Note>().HasOne(typeof(NoteType), nameof(Note.TemporaryType)).WithMany(nameof(NoteType.Notes)).HasForeignKey(nameof(Note.TemporaryTypeId)).OnDelete(DeleteBehavior.Restrict);
+            modelBuilder.Entity<OrderInvoiceRelationship>().HasOne(typeof(Order), nameof(OrderInvoiceRelationship.Order)).WithMany(nameof(Order.OrderInvoiceRelationships)).HasForeignKey(nameof(OrderInvoiceRelationship.Purchaseorderid)).OnDelete(DeleteBehavior.Restrict);
+            modelBuilder.Entity<OrderItem>().HasOne(typeof(Order), nameof(OrderItem.Order)).WithMany(nameof(Order.OrderItems)).HasForeignKey(nameof(OrderItem.Purchaseorderid)).OnDelete(DeleteBehavior.Restrict);
+            modelBuilder.Entity<Piece>().HasOne(typeof(OrderItem), nameof(Piece.OrderItem)).WithMany(nameof(OrderItem.Pieces)).HasForeignKey(nameof(Piece.Polineid)).OnDelete(DeleteBehavior.Restrict);
             modelBuilder.Entity<Request>().HasOne(typeof(CancellationReason), nameof(Request.CancellationReason)).WithMany(nameof(CancellationReason.Requests)).HasForeignKey(nameof(Request.Cancellationreasonid)).OnDelete(DeleteBehavior.Restrict);
             modelBuilder.Entity<ServicePointUser>().HasOne(typeof(ServicePoint), nameof(ServicePointUser.ServicePoint)).WithMany(nameof(ServicePoint.ServicePointUsers)).HasForeignKey(nameof(ServicePointUser.Defaultservicepointid)).OnDelete(DeleteBehavior.Restrict);
             modelBuilder.Entity<StatisticalCode>().HasOne(typeof(StatisticalCodeType), nameof(StatisticalCode.StatisticalCodeType)).WithMany(nameof(StatisticalCodeType.StatisticalCodes)).HasForeignKey(nameof(StatisticalCode.Statisticalcodetypeid)).OnDelete(DeleteBehavior.Restrict);
-            modelBuilder.Entity<Transaction>().HasOne(typeof(Budget), nameof(Transaction.Budget)).WithMany(nameof(Budget.Transactions)).HasForeignKey(nameof(Transaction.BudgetId)).OnDelete(DeleteBehavior.Restrict);
+            modelBuilder.Entity<Transaction>().HasOne(typeof(Budget), nameof(Transaction.Budget)).WithMany(nameof(Budget.Transactions)).HasForeignKey(nameof(Transaction.Budgetid)).OnDelete(DeleteBehavior.Restrict);
+            modelBuilder.Entity<Voucher>().HasOne(typeof(Invoice), nameof(Voucher.Invoice)).WithMany(nameof(Invoice.Vouchers)).HasForeignKey(nameof(Voucher.Invoiceid)).OnDelete(DeleteBehavior.Restrict);
+            modelBuilder.Entity<VoucherItem>().HasOne(typeof(Voucher), nameof(VoucherItem.Voucher)).WithMany(nameof(Voucher.VoucherItems)).HasForeignKey(nameof(VoucherItem.Voucherid)).OnDelete(DeleteBehavior.Restrict);
             Database.SetCommandTimeout(90);
         }
 
@@ -204,13 +205,9 @@ namespace FolioLibrary
         public bool IsSqlServer => providerName == "System.Data.SqlClient";
         public string ProviderName => providerName;
         public DbSet<Account> Accounts { get; set; }
-        public DbSet<Account2> Account2s { get; set; }
         public DbSet<Address> Addresses { get; set; }
         public DbSet<AddressType> AddressTypes { get; set; }
-        public DbSet<Adjustment> Adjustments { get; set; }
-        public DbSet<Agreement> Agreements { get; set; }
         public DbSet<Alert> Alerts { get; set; }
-        public DbSet<Alias> Aliases { get; set; }
         public DbSet<AlternativeTitleType> AlternativeTitleTypes { get; set; }
         public DbSet<AuditLoan> AuditLoans { get; set; }
         public DbSet<AuthAttempt> AuthAttempts { get; set; }
@@ -223,18 +220,14 @@ namespace FolioLibrary
         public DbSet<CancellationReason> CancellationReasons { get; set; }
         public DbSet<Category> Categories { get; set; }
         public DbSet<CirculationRule> CirculationRules { get; set; }
-        public DbSet<Claim> Claims { get; set; }
         public DbSet<ClassificationType> ClassificationTypes { get; set; }
         public DbSet<Comment> Comments { get; set; }
         public DbSet<Contact> Contacts { get; set; }
-        public DbSet<ContactCategory> ContactCategories { get; set; }
         public DbSet<ContributorNameType> ContributorNameTypes { get; set; }
         public DbSet<ContributorType> ContributorTypes { get; set; }
-        public DbSet<Cost> Costs { get; set; }
-        public DbSet<Detail> Details { get; set; }
         public DbSet<ElectronicAccessRelationship> ElectronicAccessRelationships { get; set; }
         public DbSet<Email> Emails { get; set; }
-        public DbSet<Eresource> Eresources { get; set; }
+        public DbSet<Encumbrance> Encumbrances { get; set; }
         public DbSet<EventLog> EventLogs { get; set; }
         public DbSet<Fee> Fees { get; set; }
         public DbSet<FeeAction> FeeActions { get; set; }
@@ -242,7 +235,6 @@ namespace FolioLibrary
         public DbSet<FixedDueDateSchedule> FixedDueDateSchedules { get; set; }
         public DbSet<Fund> Funds { get; set; }
         public DbSet<FundDistribution> FundDistributions { get; set; }
-        public DbSet<FundDistribution2> FundDistribution2s { get; set; }
         public DbSet<Group> Groups { get; set; }
         public DbSet<Holding> Holdings { get; set; }
         public DbSet<HoldingNoteType> HoldingNoteTypes { get; set; }
@@ -258,6 +250,8 @@ namespace FolioLibrary
         public DbSet<InstanceType> InstanceTypes { get; set; }
         public DbSet<Institution> Institutions { get; set; }
         public DbSet<Interface> Interfaces { get; set; }
+        public DbSet<Invoice> Invoices { get; set; }
+        public DbSet<InvoiceItem> InvoiceItems { get; set; }
         public DbSet<Item> Items { get; set; }
         public DbSet<ItemNoteType> ItemNoteTypes { get; set; }
         public DbSet<Ledger> Ledgers { get; set; }
@@ -270,25 +264,26 @@ namespace FolioLibrary
         public DbSet<MaterialType> MaterialTypes { get; set; }
         public DbSet<ModeOfIssuance> ModeOfIssuances { get; set; }
         public DbSet<Note> Notes { get; set; }
+        public DbSet<NoteType> NoteTypes { get; set; }
         public DbSet<Order> Orders { get; set; }
+        public DbSet<OrderInvoiceRelationship> OrderInvoiceRelationships { get; set; }
         public DbSet<OrderItem> OrderItems { get; set; }
-        public DbSet<OrderItemLocation> OrderItemLocations { get; set; }
+        public DbSet<Organization> Organizations { get; set; }
         public DbSet<Owner> Owners { get; set; }
         public DbSet<PatronNoticePolicy> PatronNoticePolicies { get; set; }
         public DbSet<Payment> Payments { get; set; }
         public DbSet<Permission> Permissions { get; set; }
         public DbSet<PermissionsUser> PermissionsUsers { get; set; }
         public DbSet<PhoneNumber> PhoneNumbers { get; set; }
-        public DbSet<Physical> Physicals { get; set; }
         public DbSet<Piece> Pieces { get; set; }
         public DbSet<Proxy> Proxies { get; set; }
         public DbSet<Refund> Refunds { get; set; }
         public DbSet<ReportingCode> ReportingCodes { get; set; }
         public DbSet<Request> Requests { get; set; }
         public DbSet<RequestPolicy> RequestPolicies { get; set; }
+        public DbSet<ScheduledNotice> ScheduledNotices { get; set; }
         public DbSet<ServicePoint> ServicePoints { get; set; }
         public DbSet<ServicePointUser> ServicePointUsers { get; set; }
-        public DbSet<Source> Sources { get; set; }
         public DbSet<StaffSlip> StaffSlips { get; set; }
         public DbSet<StatisticalCode> StatisticalCodes { get; set; }
         public DbSet<StatisticalCodeType> StatisticalCodeTypes { get; set; }
@@ -298,10 +293,8 @@ namespace FolioLibrary
         public DbSet<TransferCriteria> TransferCriterias { get; set; }
         public DbSet<Url> Urls { get; set; }
         public DbSet<User> Users { get; set; }
-        public DbSet<Vendor> Vendors { get; set; }
-        public DbSet<VendorCategory> VendorCategories { get; set; }
-        public DbSet<VendorDetail> VendorDetails { get; set; }
-        public DbSet<VendorType> VendorTypes { get; set; }
+        public DbSet<Voucher> Vouchers { get; set; }
+        public DbSet<VoucherItem> VoucherItems { get; set; }
         public DbSet<Waive> Waives { get; set; }
     }
 }

@@ -5,7 +5,7 @@
   "additionalProperties": false,
   "properties": {
     "id": {
-      "description": "UUID",
+      "description": "The unique id of this email",
       "type": [
         "string",
         "null"
@@ -26,14 +26,14 @@
     },
     "categories": {
       "id": "categories",
-      "description": "The list of categories for this vendor email",
+      "description": "The list of categories for this organization email",
       "type": "array",
       "items": {
         "type": "string"
       }
     },
     "language": {
-      "description": "The language for this vendor email",
+      "description": "The language for this organization email",
       "type": "string"
     }
   },
