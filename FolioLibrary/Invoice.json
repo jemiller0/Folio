@@ -128,6 +128,11 @@
       "type": "string",
       "format": "date-time"
     },
+    "billTo": {
+      "description": "UUID of the billing address",
+      "type": "string",
+      "pattern": "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-5][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}$"
+    },
     "chkSubscriptionOverlap": {
       "description": "IF TRUE the system will check if there is another invoice for this subscription and whether the dates overlap. IF the dates overlap, the system should issue an alert.",
       "type": "boolean"
@@ -135,6 +140,11 @@
     "currency": {
       "description": "Ideally this is the ISO code and not something the user defines",
       "type": "string"
+    },
+    "exportToAccounting": {
+      "description": "This would keep the invoice from being feed into the batch process (i.e. not generate an external voucher/payment) but would still move values in the system. This might be defined by the vendor relationship and exposed for override on the invoice.",
+      "type": "boolean",
+      "default": false
     },
     "folioInvoiceNo": {
       "description": "Invoice number in folio system",

@@ -11,7 +11,7 @@ This project includes a console application that can be used to load and save da
 
 ## Optional
 
-* Visual Studio 2017 https://visualstudio.microsoft.com/vs/community/
+* Visual Studio 2019 https://visualstudio.microsoft.com/vs/community/
 * Visual Studio Code https://code.visualstudio.com/?wt.mc_id=vscom_downloads
 
 ## Installation

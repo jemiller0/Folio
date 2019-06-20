@@ -341,21 +341,6 @@ CAST(jsonb#>>'{metadata,updatedByUserId}' AS UUID) AS updated_by_user_id,
 CAST(jsonb#>>'{metadata,updatedByUsername}' AS VARCHAR(1024)) AS updated_by_username,
 jsonb_pretty(jsonb) AS content
 FROM diku_mod_inventory_storage.electronic_access_relationship;
-CREATE VIEW uc.email_categories AS
-SELECT
-id AS id,
-email_id AS email_id,
-CAST(jsonb AS UUID) AS category_id
-FROM (SELECT id::text || ordinality::text AS id, id AS email_id, value AS jsonb FROM diku_mod_organizations_storage.emails, jsonb_array_elements_text((jsonb->>'categories')::jsonb) WITH ORDINALITY) a;
-CREATE VIEW uc.emails AS
-SELECT
-id AS id,
-CAST(jsonb->>'value' AS VARCHAR(1024)) AS value,
-CAST(jsonb->>'description' AS VARCHAR(1024)) AS description,
-CAST(jsonb->>'isPrimary' AS BOOLEAN) AS is_primary,
-CAST(jsonb->>'language' AS VARCHAR(1024)) AS language,
-jsonb_pretty(jsonb) AS content
-FROM diku_mod_organizations_storage.emails;
 CREATE VIEW uc.encumbrances AS
 SELECT
 id AS id,
@@ -470,7 +455,6 @@ FROM (SELECT id::text || ordinality::text AS id, id AS fund_id, value AS jsonb F
 CREATE VIEW uc.funds AS
 SELECT
 id AS id,
-CAST(jsonb->>'acquisitionsUnit' AS VARCHAR(1024)) AS acquisitions_unit,
 CAST(jsonb->>'code' AS VARCHAR(1024)) AS code,
 CAST(jsonb->>'description' AS VARCHAR(1024)) AS description,
 CAST(jsonb->>'externalAccountNo' AS VARCHAR(1024)) AS external_account_no,
@@ -943,8 +927,10 @@ id AS id,
 CAST(jsonb->>'adjustmentsTotal' AS DECIMAL(19,2)) AS adjustments_total,
 CAST(jsonb->>'approvedBy' AS UUID) AS approved_by_id,
 uc.TIMESTAMP_CAST(jsonb->>'approvalDate') AS approval_date,
+CAST(jsonb->>'billTo' AS UUID) AS bill_to_id,
 CAST(jsonb->>'chkSubscriptionOverlap' AS BOOLEAN) AS chk_subscription_overlap,
 CAST(jsonb->>'currency' AS VARCHAR(1024)) AS currency,
+CAST(jsonb->>'exportToAccounting' AS BOOLEAN) AS export_to_accounting,
 CAST(jsonb->>'folioInvoiceNo' AS VARCHAR(1024)) AS folio_invoice_no,
 uc.TIMESTAMP_CAST(jsonb->>'invoiceDate') AS invoice_date,
 CAST(jsonb->>'lockTotal' AS BOOLEAN) AS lock_total,
@@ -1376,7 +1362,6 @@ uc.TIMESTAMP_CAST(jsonb->>'dateOrdered') AS date_ordered,
 CAST(jsonb->>'manualPo' AS BOOLEAN) AS manual_po,
 CAST(jsonb->>'poNumber' AS VARCHAR(1024)) AS po_number,
 CAST(jsonb->>'orderType' AS VARCHAR(1024)) AS order_type,
-CAST(jsonb->>'owner' AS VARCHAR(1024)) AS owner,
 CAST(jsonb->>'reEncumber' AS BOOLEAN) AS re_encumber,
 CAST(jsonb#>>'{renewal,cycle}' AS VARCHAR(1024)) AS renewal_cycle,
 CAST(jsonb#>>'{renewal,interval}' AS INTEGER) AS renewal_interval,
@@ -2174,22 +2159,6 @@ CAST(jsonb->>'value' AS DECIMAL(19,2)) AS value,
 CAST(jsonb->>'interval' AS VARCHAR(1024)) AS interval,
 jsonb_pretty(jsonb) AS content
 FROM diku_mod_feesfines.transfer_criteria;
-CREATE VIEW uc.url_categories AS
-SELECT
-id AS id,
-url_id AS url_id,
-CAST(jsonb AS UUID) AS category_id
-FROM (SELECT id::text || ordinality::text AS id, id AS url_id, value AS jsonb FROM diku_mod_organizations_storage.urls, jsonb_array_elements_text((jsonb->>'categories')::jsonb) WITH ORDINALITY) a;
-CREATE VIEW uc.urls AS
-SELECT
-id AS id,
-CAST(jsonb->>'value' AS VARCHAR(1024)) AS value,
-CAST(jsonb->>'description' AS VARCHAR(1024)) AS description,
-CAST(jsonb->>'language' AS VARCHAR(1024)) AS language,
-CAST(jsonb->>'isPrimary' AS BOOLEAN) AS is_primary,
-CAST(jsonb->>'notes' AS VARCHAR(1024)) AS notes,
-jsonb_pretty(jsonb) AS content
-FROM diku_mod_organizations_storage.urls;
 CREATE VIEW uc.user_addresses AS
 SELECT
 id AS id,

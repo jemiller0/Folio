@@ -63,7 +63,6 @@ namespace FolioLibrary
             base.OnModelCreating(modelBuilder);
             this.GetService<ILoggerFactory>().AddProvider(new LoggingProvider());
             if (IsPostgreSql) modelBuilder.Entity<Account>().Property(nameof(Account.Content)).HasColumnType("jsonb");
-            if (IsPostgreSql) modelBuilder.Entity<Address>().Property(nameof(Address.Content)).HasColumnType("jsonb");
             if (IsPostgreSql) modelBuilder.Entity<AddressType>().Property(nameof(AddressType.Content)).HasColumnType("jsonb");
             if (IsPostgreSql) modelBuilder.Entity<Alert>().Property(nameof(Alert.Content)).HasColumnType("jsonb");
             if (IsPostgreSql) modelBuilder.Entity<AlternativeTitleType>().Property(nameof(AlternativeTitleType.Content)).HasColumnType("jsonb");
@@ -84,7 +83,6 @@ namespace FolioLibrary
             if (IsPostgreSql) modelBuilder.Entity<ContributorNameType>().Property(nameof(ContributorNameType.Content)).HasColumnType("jsonb");
             if (IsPostgreSql) modelBuilder.Entity<ContributorType>().Property(nameof(ContributorType.Content)).HasColumnType("jsonb");
             if (IsPostgreSql) modelBuilder.Entity<ElectronicAccessRelationship>().Property(nameof(ElectronicAccessRelationship.Content)).HasColumnType("jsonb");
-            if (IsPostgreSql) modelBuilder.Entity<Email>().Property(nameof(Email.Content)).HasColumnType("jsonb");
             if (IsPostgreSql) modelBuilder.Entity<Encumbrance>().Property(nameof(Encumbrance.Content)).HasColumnType("jsonb");
             if (IsPostgreSql) modelBuilder.Entity<EventLog>().Property(nameof(EventLog.Content)).HasColumnType("jsonb");
             if (IsPostgreSql) modelBuilder.Entity<Fee>().Property(nameof(Fee.Content)).HasColumnType("jsonb");
@@ -132,7 +130,6 @@ namespace FolioLibrary
             if (IsPostgreSql) modelBuilder.Entity<Payment>().Property(nameof(Payment.Content)).HasColumnType("jsonb");
             if (IsPostgreSql) modelBuilder.Entity<Permission>().Property(nameof(Permission.Content)).HasColumnType("jsonb");
             if (IsPostgreSql) modelBuilder.Entity<PermissionsUser>().Property(nameof(PermissionsUser.Content)).HasColumnType("jsonb");
-            if (IsPostgreSql) modelBuilder.Entity<PhoneNumber>().Property(nameof(PhoneNumber.Content)).HasColumnType("jsonb");
             if (IsPostgreSql) modelBuilder.Entity<Piece>().Property(nameof(Piece.Content)).HasColumnType("jsonb");
             if (IsPostgreSql) modelBuilder.Entity<Proxy>().Property(nameof(Proxy.Content)).HasColumnType("jsonb");
             if (IsPostgreSql) modelBuilder.Entity<Refund>().Property(nameof(Refund.Content)).HasColumnType("jsonb");
@@ -149,7 +146,6 @@ namespace FolioLibrary
             if (IsPostgreSql) modelBuilder.Entity<Transaction>().Property(nameof(Transaction.Content)).HasColumnType("jsonb");
             if (IsPostgreSql) modelBuilder.Entity<Transfer>().Property(nameof(Transfer.Content)).HasColumnType("jsonb");
             if (IsPostgreSql) modelBuilder.Entity<TransferCriteria>().Property(nameof(TransferCriteria.Content)).HasColumnType("jsonb");
-            if (IsPostgreSql) modelBuilder.Entity<Url>().Property(nameof(Url.Content)).HasColumnType("jsonb");
             if (IsPostgreSql) modelBuilder.Entity<User>().Property(nameof(User.Content)).HasColumnType("jsonb");
             if (IsPostgreSql) modelBuilder.Entity<Voucher>().Property(nameof(Voucher.Content)).HasColumnType("jsonb");
             if (IsPostgreSql) modelBuilder.Entity<VoucherItem>().Property(nameof(VoucherItem.Content)).HasColumnType("jsonb");
@@ -205,7 +201,6 @@ namespace FolioLibrary
         public bool IsSqlServer => providerName == "System.Data.SqlClient";
         public string ProviderName => providerName;
         public DbSet<Account> Accounts { get; set; }
-        public DbSet<Address> Addresses { get; set; }
         public DbSet<AddressType> AddressTypes { get; set; }
         public DbSet<Alert> Alerts { get; set; }
         public DbSet<AlternativeTitleType> AlternativeTitleTypes { get; set; }
@@ -226,7 +221,6 @@ namespace FolioLibrary
         public DbSet<ContributorNameType> ContributorNameTypes { get; set; }
         public DbSet<ContributorType> ContributorTypes { get; set; }
         public DbSet<ElectronicAccessRelationship> ElectronicAccessRelationships { get; set; }
-        public DbSet<Email> Emails { get; set; }
         public DbSet<Encumbrance> Encumbrances { get; set; }
         public DbSet<EventLog> EventLogs { get; set; }
         public DbSet<Fee> Fees { get; set; }
@@ -274,7 +268,6 @@ namespace FolioLibrary
         public DbSet<Payment> Payments { get; set; }
         public DbSet<Permission> Permissions { get; set; }
         public DbSet<PermissionsUser> PermissionsUsers { get; set; }
-        public DbSet<PhoneNumber> PhoneNumbers { get; set; }
         public DbSet<Piece> Pieces { get; set; }
         public DbSet<Proxy> Proxies { get; set; }
         public DbSet<Refund> Refunds { get; set; }
@@ -291,7 +284,6 @@ namespace FolioLibrary
         public DbSet<Transaction> Transactions { get; set; }
         public DbSet<Transfer> Transfers { get; set; }
         public DbSet<TransferCriteria> TransferCriterias { get; set; }
-        public DbSet<Url> Urls { get; set; }
         public DbSet<User> Users { get; set; }
         public DbSet<Voucher> Vouchers { get; set; }
         public DbSet<VoucherItem> VoucherItems { get; set; }

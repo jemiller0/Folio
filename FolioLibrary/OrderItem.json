@@ -72,7 +72,8 @@
         "properties": {
           "claimed": {
             "description": "whether or not this purchase order line has been claimed",
-            "type": "boolean"
+            "type": "boolean",
+            "default": false
           },
           "sent": {
             "description": "date a claim was sent",
@@ -88,7 +89,8 @@
     },
     "collection": {
       "description": "whether or not this purchase order line is for a collection",
-      "type": "boolean"
+      "type": "boolean",
+      "default": false
     },
     "contributors": {
       "id": "contributors",
@@ -228,7 +230,8 @@
       "properties": {
         "activated": {
           "description": "whether or not this resource is activated",
-          "type": "boolean"
+          "type": "boolean",
+          "default": false
         },
         "activationDue": {
           "description": "number of days until activation, from date of order placement",
@@ -246,7 +249,8 @@
         },
         "trial": {
           "description": "whether or not this is a trial",
-          "type": "boolean"
+          "type": "boolean",
+          "default": false
         },
         "expectedActivation": {
           "description": "expected date the resource will be activated",
@@ -491,7 +495,8 @@
     },
     "rush": {
       "description": "whether or not this is a rush order",
-      "type": "boolean"
+      "type": "boolean",
+      "default": false
     },
     "selector": {
       "description": "who selected this material",

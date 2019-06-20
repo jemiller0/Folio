@@ -34,7 +34,7 @@ namespace FolioConsoleApplication
                 Initialize();
                 if (args.Length == 0)
                 {
-                    traceSource.TraceEvent(TraceEventType.Critical, 0, "Usage: dotnet FolioConsoleApplication.dll [-All] [-Api] [-Delete] [-Load] [-Save] [-Validate] [-Verbose] [-AllUsers] [-AllInventory] [-AllLogin] [-AllPermissions] [-AddressTypesPath <string>] [-AddressTypesWhere <string>] [-AlternativeTitleTypesPath <string>] [-AlternativeTitleTypesWhere <string>] [-CallNumberTypesPath <string>] [-CallNumberTypesWhere <string>] [-CampusesPath <string>] [-CampusesWhere <string>] [-ClassificationTypesPath <string>] [-ClassificationTypesWhere <string>] [-ContributorNameTypesPath <string>] [-ContributorNameTypesWhere <string>] [-ContributorTypesPath <string>] [-ContributorTypesWhere <string>] [-ElectronicAccessRelationshipsPath <string>] [-ElectronicAccessRelationshipsWhere <string>] [-GroupsPath <string>] [-GroupsWhere <string>] [-HoldingsPath <string>] [-HoldingsWhere <string>] [-HoldingNoteTypesPath <string>] [-HoldingNoteTypesWhere <string>] [-HoldingTypesPath <string>] [-HoldingTypesWhere <string>] [-IdTypesPath <string>] [-IdTypesWhere <string>] [-IllPoliciesPath <string>] [-IllPoliciesWhere <string>] [-InstancesPath <string>] [-InstancesWhere <string>] [-InstanceFormatsPath <string>] [-InstanceFormatsWhere <string>] [-InstanceRelationshipsPath <string>] [-InstanceRelationshipsWhere <string>] [-InstanceRelationshipTypesPath <string>] [-InstanceRelationshipTypesWhere <string>] [-InstanceStatusesPath <string>] [-InstanceStatusesWhere <string>] [-InstanceTypesPath <string>] [-InstanceTypesWhere <string>] [-InstitutionsPath <string>] [-InstitutionsWhere <string>] [-ItemsPath <string>] [-ItemsWhere <string>] [-ItemNoteTypesPath <string>] [-ItemNoteTypesWhere <string>] [-LibrariesPath <string>] [-LibrariesWhere <string>] [-LoanTypesPath <string>] [-LoanTypesWhere <string>] [-LocationsPath <string>] [-LocationsWhere <string>] [-LoginsPath <string>] [-LoginsWhere <string>] [-MaterialTypesPath <string>] [-MaterialTypesWhere <string>] [-ModeOfIssuancesPath <string>] [-ModeOfIssuancesWhere <string>] [-PermissionsPath <string>] [-PermissionsWhere <string>] [-PermissionsUsersPath <string>] [-PermissionsUsersWhere <string>] [-ProxiesPath <string>] [-ProxiesWhere <string>] [-ServicePointsPath <string>] [-ServicePointsWhere <string>] [-ServicePointUsersPath <string>] [-ServicePointUsersWhere <string>] [-StatisticalCodesPath <string>] [-StatisticalCodesWhere <string>] [-StatisticalCodeTypesPath <string>] [-StatisticalCodeTypesWhere <string>] [-UsersPath <string>] [-UsersWhere <string>]");
+                    traceSource.TraceEvent(TraceEventType.Critical, 0, "Usage: dotnet FolioConsoleApplication.dll [-All] [-Api] [-Delete] [-Load] [-Save] [-Validate] [-Verbose] [-AllUsers] [-AllInventory] [-AllOrganizations] [-AllLogin] [-AllPermissions] [-AddressTypesPath <string>] [-AddressTypesWhere <string>] [-AlternativeTitleTypesPath <string>] [-AlternativeTitleTypesWhere <string>] [-CallNumberTypesPath <string>] [-CallNumberTypesWhere <string>] [-CampusesPath <string>] [-CampusesWhere <string>] [-CategoriesPath <string>] [-CategoriesWhere <string>] [-ClassificationTypesPath <string>] [-ClassificationTypesWhere <string>] [-ContactsPath <string>] [-ContactsWhere <string>] [-ContributorNameTypesPath <string>] [-ContributorNameTypesWhere <string>] [-ContributorTypesPath <string>] [-ContributorTypesWhere <string>] [-ElectronicAccessRelationshipsPath <string>] [-ElectronicAccessRelationshipsWhere <string>] [-GroupsPath <string>] [-GroupsWhere <string>] [-HoldingsPath <string>] [-HoldingsWhere <string>] [-HoldingNoteTypesPath <string>] [-HoldingNoteTypesWhere <string>] [-HoldingTypesPath <string>] [-HoldingTypesWhere <string>] [-IdTypesPath <string>] [-IdTypesWhere <string>] [-IllPoliciesPath <string>] [-IllPoliciesWhere <string>] [-InstancesPath <string>] [-InstancesWhere <string>] [-InstanceFormatsPath <string>] [-InstanceFormatsWhere <string>] [-InstanceRelationshipsPath <string>] [-InstanceRelationshipsWhere <string>] [-InstanceRelationshipTypesPath <string>] [-InstanceRelationshipTypesWhere <string>] [-InstanceStatusesPath <string>] [-InstanceStatusesWhere <string>] [-InstanceTypesPath <string>] [-InstanceTypesWhere <string>] [-InstitutionsPath <string>] [-InstitutionsWhere <string>] [-InterfacesPath <string>] [-InterfacesWhere <string>] [-ItemsPath <string>] [-ItemsWhere <string>] [-ItemNoteTypesPath <string>] [-ItemNoteTypesWhere <string>] [-LibrariesPath <string>] [-LibrariesWhere <string>] [-LoanTypesPath <string>] [-LoanTypesWhere <string>] [-LocationsPath <string>] [-LocationsWhere <string>] [-LoginsPath <string>] [-LoginsWhere <string>] [-MaterialTypesPath <string>] [-MaterialTypesWhere <string>] [-ModeOfIssuancesPath <string>] [-ModeOfIssuancesWhere <string>] [-OrganizationsPath <string>] [-OrganizationsWhere <string>] [-PermissionsPath <string>] [-PermissionsWhere <string>] [-PermissionsUsersPath <string>] [-PermissionsUsersWhere <string>] [-ProxiesPath <string>] [-ProxiesWhere <string>] [-ServicePointsPath <string>] [-ServicePointsWhere <string>] [-ServicePointUsersPath <string>] [-ServicePointUsersWhere <string>] [-StatisticalCodesPath <string>] [-StatisticalCodesWhere <string>] [-StatisticalCodeTypesPath <string>] [-StatisticalCodeTypesWhere <string>] [-UsersPath <string>] [-UsersWhere <string>]");
                     return -1;
                 }
                 var all = args.Any(s3 => s3.Equals("-All", StringComparison.OrdinalIgnoreCase));
@@ -45,13 +45,16 @@ namespace FolioConsoleApplication
                 validate = args.Any(s3 => s3.Equals("-Validate", StringComparison.OrdinalIgnoreCase));
                 var allUsers = args.Any(s3 => s3.Equals("-AllUsers", StringComparison.OrdinalIgnoreCase));
                 var allInventory = args.Any(s3 => s3.Equals("-AllInventory", StringComparison.OrdinalIgnoreCase));
+                var allOrganizations = args.Any(s3 => s3.Equals("-AllOrganizations", StringComparison.OrdinalIgnoreCase));
                 var allLogin = args.Any(s3 => s3.Equals("-AllLogin", StringComparison.OrdinalIgnoreCase));
                 var allPermissions = args.Any(s3 => s3.Equals("-AllPermissions", StringComparison.OrdinalIgnoreCase));
                 var addressTypesPath = args.SkipWhile(s3 => !s3.Equals("-AddressTypesPath", StringComparison.OrdinalIgnoreCase)).Skip(1).FirstOrDefault();
                 var alternativeTitleTypesPath = args.SkipWhile(s3 => !s3.Equals("-AlternativeTitleTypesPath", StringComparison.OrdinalIgnoreCase)).Skip(1).FirstOrDefault();
                 var callNumberTypesPath = args.SkipWhile(s3 => !s3.Equals("-CallNumberTypesPath", StringComparison.OrdinalIgnoreCase)).Skip(1).FirstOrDefault();
                 var campusesPath = args.SkipWhile(s3 => !s3.Equals("-CampusesPath", StringComparison.OrdinalIgnoreCase)).Skip(1).FirstOrDefault();
+                var categoriesPath = args.SkipWhile(s3 => !s3.Equals("-CategoriesPath", StringComparison.OrdinalIgnoreCase)).Skip(1).FirstOrDefault();
                 var classificationTypesPath = args.SkipWhile(s3 => !s3.Equals("-ClassificationTypesPath", StringComparison.OrdinalIgnoreCase)).Skip(1).FirstOrDefault();
+                var contactsPath = args.SkipWhile(s3 => !s3.Equals("-ContactsPath", StringComparison.OrdinalIgnoreCase)).Skip(1).FirstOrDefault();
                 var contributorNameTypesPath = args.SkipWhile(s3 => !s3.Equals("-ContributorNameTypesPath", StringComparison.OrdinalIgnoreCase)).Skip(1).FirstOrDefault();
                 var contributorTypesPath = args.SkipWhile(s3 => !s3.Equals("-ContributorTypesPath", StringComparison.OrdinalIgnoreCase)).Skip(1).FirstOrDefault();
                 var electronicAccessRelationshipsPath = args.SkipWhile(s3 => !s3.Equals("-ElectronicAccessRelationshipsPath", StringComparison.OrdinalIgnoreCase)).Skip(1).FirstOrDefault();
@@ -68,6 +71,7 @@ namespace FolioConsoleApplication
                 var instanceStatusesPath = args.SkipWhile(s3 => !s3.Equals("-InstanceStatusesPath", StringComparison.OrdinalIgnoreCase)).Skip(1).FirstOrDefault();
                 var instanceTypesPath = args.SkipWhile(s3 => !s3.Equals("-InstanceTypesPath", StringComparison.OrdinalIgnoreCase)).Skip(1).FirstOrDefault();
                 var institutionsPath = args.SkipWhile(s3 => !s3.Equals("-InstitutionsPath", StringComparison.OrdinalIgnoreCase)).Skip(1).FirstOrDefault();
+                var interfacesPath = args.SkipWhile(s3 => !s3.Equals("-InterfacesPath", StringComparison.OrdinalIgnoreCase)).Skip(1).FirstOrDefault();
                 var itemsPath = args.SkipWhile(s3 => !s3.Equals("-ItemsPath", StringComparison.OrdinalIgnoreCase)).Skip(1).FirstOrDefault();
                 var itemNoteTypesPath = args.SkipWhile(s3 => !s3.Equals("-ItemNoteTypesPath", StringComparison.OrdinalIgnoreCase)).Skip(1).FirstOrDefault();
                 var librariesPath = args.SkipWhile(s3 => !s3.Equals("-LibrariesPath", StringComparison.OrdinalIgnoreCase)).Skip(1).FirstOrDefault();
@@ -76,6 +80,7 @@ namespace FolioConsoleApplication
                 var loginsPath = args.SkipWhile(s3 => !s3.Equals("-LoginsPath", StringComparison.OrdinalIgnoreCase)).Skip(1).FirstOrDefault();
                 var materialTypesPath = args.SkipWhile(s3 => !s3.Equals("-MaterialTypesPath", StringComparison.OrdinalIgnoreCase)).Skip(1).FirstOrDefault();
                 var modeOfIssuancesPath = args.SkipWhile(s3 => !s3.Equals("-ModeOfIssuancesPath", StringComparison.OrdinalIgnoreCase)).Skip(1).FirstOrDefault();
+                var organizationsPath = args.SkipWhile(s3 => !s3.Equals("-OrganizationsPath", StringComparison.OrdinalIgnoreCase)).Skip(1).FirstOrDefault();
                 var permissionsPath = args.SkipWhile(s3 => !s3.Equals("-PermissionsPath", StringComparison.OrdinalIgnoreCase)).Skip(1).FirstOrDefault();
                 var permissionsUsersPath = args.SkipWhile(s3 => !s3.Equals("-PermissionsUsersPath", StringComparison.OrdinalIgnoreCase)).Skip(1).FirstOrDefault();
                 var proxiesPath = args.SkipWhile(s3 => !s3.Equals("-ProxiesPath", StringComparison.OrdinalIgnoreCase)).Skip(1).FirstOrDefault();
@@ -88,7 +93,9 @@ namespace FolioConsoleApplication
                 var alternativeTitleTypesWhere = args.SkipWhile(s3 => !s3.Equals("-AlternativeTitleTypesWhere", StringComparison.OrdinalIgnoreCase)).Skip(1).FirstOrDefault();
                 var callNumberTypesWhere = args.SkipWhile(s3 => !s3.Equals("-CallNumberTypesWhere", StringComparison.OrdinalIgnoreCase)).Skip(1).FirstOrDefault();
                 var campusesWhere = args.SkipWhile(s3 => !s3.Equals("-CampusesWhere", StringComparison.OrdinalIgnoreCase)).Skip(1).FirstOrDefault();
+                var categoriesWhere = args.SkipWhile(s3 => !s3.Equals("-CategoriesWhere", StringComparison.OrdinalIgnoreCase)).Skip(1).FirstOrDefault();
                 var classificationTypesWhere = args.SkipWhile(s3 => !s3.Equals("-ClassificationTypesWhere", StringComparison.OrdinalIgnoreCase)).Skip(1).FirstOrDefault();
+                var contactsWhere = args.SkipWhile(s3 => !s3.Equals("-ContactsWhere", StringComparison.OrdinalIgnoreCase)).Skip(1).FirstOrDefault();
                 var contributorNameTypesWhere = args.SkipWhile(s3 => !s3.Equals("-ContributorNameTypesWhere", StringComparison.OrdinalIgnoreCase)).Skip(1).FirstOrDefault();
                 var contributorTypesWhere = args.SkipWhile(s3 => !s3.Equals("-ContributorTypesWhere", StringComparison.OrdinalIgnoreCase)).Skip(1).FirstOrDefault();
                 var electronicAccessRelationshipsWhere = args.SkipWhile(s3 => !s3.Equals("-ElectronicAccessRelationshipsWhere", StringComparison.OrdinalIgnoreCase)).Skip(1).FirstOrDefault();
@@ -105,6 +112,7 @@ namespace FolioConsoleApplication
                 var instanceStatusesWhere = args.SkipWhile(s3 => !s3.Equals("-InstanceStatusesWhere", StringComparison.OrdinalIgnoreCase)).Skip(1).FirstOrDefault();
                 var instanceTypesWhere = args.SkipWhile(s3 => !s3.Equals("-InstanceTypesWhere", StringComparison.OrdinalIgnoreCase)).Skip(1).FirstOrDefault();
                 var institutionsWhere = args.SkipWhile(s3 => !s3.Equals("-InstitutionsWhere", StringComparison.OrdinalIgnoreCase)).Skip(1).FirstOrDefault();
+                var interfacesWhere = args.SkipWhile(s3 => !s3.Equals("-InterfacesWhere", StringComparison.OrdinalIgnoreCase)).Skip(1).FirstOrDefault();
                 var itemsWhere = args.SkipWhile(s3 => !s3.Equals("-ItemsWhere", StringComparison.OrdinalIgnoreCase)).Skip(1).FirstOrDefault();
                 var itemNoteTypesWhere = args.SkipWhile(s3 => !s3.Equals("-ItemNoteTypesWhere", StringComparison.OrdinalIgnoreCase)).Skip(1).FirstOrDefault();
                 var librariesWhere = args.SkipWhile(s3 => !s3.Equals("-LibrariesWhere", StringComparison.OrdinalIgnoreCase)).Skip(1).FirstOrDefault();
@@ -113,6 +121,7 @@ namespace FolioConsoleApplication
                 var loginsWhere = args.SkipWhile(s3 => !s3.Equals("-LoginsWhere", StringComparison.OrdinalIgnoreCase)).Skip(1).FirstOrDefault();
                 var materialTypesWhere = args.SkipWhile(s3 => !s3.Equals("-MaterialTypesWhere", StringComparison.OrdinalIgnoreCase)).Skip(1).FirstOrDefault();
                 var modeOfIssuancesWhere = args.SkipWhile(s3 => !s3.Equals("-ModeOfIssuancesWhere", StringComparison.OrdinalIgnoreCase)).Skip(1).FirstOrDefault();
+                var organizationsWhere = args.SkipWhile(s3 => !s3.Equals("-OrganizationsWhere", StringComparison.OrdinalIgnoreCase)).Skip(1).FirstOrDefault();
                 var permissionsWhere = args.SkipWhile(s3 => !s3.Equals("-PermissionsWhere", StringComparison.OrdinalIgnoreCase)).Skip(1).FirstOrDefault();
                 var permissionsUsersWhere = args.SkipWhile(s3 => !s3.Equals("-PermissionsUsersWhere", StringComparison.OrdinalIgnoreCase)).Skip(1).FirstOrDefault();
                 var proxiesWhere = args.SkipWhile(s3 => !s3.Equals("-ProxiesWhere", StringComparison.OrdinalIgnoreCase)).Skip(1).FirstOrDefault();
@@ -127,7 +136,9 @@ namespace FolioConsoleApplication
                     alternativeTitleTypesPath = "alternativetitletypes.json";
                     callNumberTypesPath = "callnumbertypes.json";
                     campusesPath = "campuses.json";
+                    categoriesPath = "categories.json";
                     classificationTypesPath = "classificationtypes.json";
+                    contactsPath = "contacts.json";
                     contributorNameTypesPath = "contributornametypes.json";
                     contributorTypesPath = "contributortypes.json";
                     electronicAccessRelationshipsPath = "electronicaccessrelationships.json";
@@ -144,6 +155,7 @@ namespace FolioConsoleApplication
                     instanceStatusesPath = "instancestatuses.json";
                     instanceTypesPath = "instancetypes.json";
                     institutionsPath = "institutions.json";
+                    interfacesPath = "interfaces.json";
                     itemsPath = "items.json";
                     itemNoteTypesPath = "itemnotetypes.json";
                     librariesPath = "libraries.json";
@@ -152,6 +164,7 @@ namespace FolioConsoleApplication
                     loginsPath = "logins.json";
                     materialTypesPath = "materialtypes.json";
                     modeOfIssuancesPath = "modeofissuances.json";
+                    organizationsPath = "organizations.json";
                     permissionsPath = "permissions.json";
                     permissionsUsersPath = "permissionsusers.json";
                     proxiesPath = "proxies.json";
@@ -201,6 +214,13 @@ namespace FolioConsoleApplication
                     statisticalCodesPath = "statisticalcodes.json";
                     statisticalCodeTypesPath = "statisticalcodetypes.json";
                 }
+                if (allOrganizations)
+                {
+                    categoriesPath = "categories.json";
+                    contactsPath = "contacts.json";
+                    interfacesPath = "interfaces.json";
+                    organizationsPath = "organizations.json";
+                }
                 if (allLogin)
                 {
                     loginsPath = "logins.json";
@@ -210,6 +230,10 @@ namespace FolioConsoleApplication
                     permissionsPath = "permissions.json";
                     permissionsUsersPath = "permissionsusers.json";
                 }
+                if (save && categoriesPath != null) SaveCategories(categoriesPath, categoriesWhere);
+                if (save && contactsPath != null) SaveContacts(contactsPath, contactsWhere);
+                if (save && interfacesPath != null) SaveInterfaces(interfacesPath, interfacesWhere);
+                if (save && organizationsPath != null) SaveOrganizations(organizationsPath, organizationsWhere);
                 if (save && addressTypesPath != null) SaveAddressTypes(addressTypesPath, addressTypesWhere);
                 if (save && groupsPath != null) SaveGroups(groupsPath, groupsWhere);
                 if (save && usersPath != null) SaveUsers(usersPath, usersWhere);
@@ -284,6 +308,14 @@ namespace FolioConsoleApplication
                 if (delete && usersPath != null) DeleteUsers(usersWhere);
                 if (delete && groupsPath != null) DeleteGroups(groupsWhere);
                 if (delete && addressTypesPath != null) DeleteAddressTypes(addressTypesWhere);
+                if (delete && categoriesPath != null) DeleteCategories(categoriesWhere);
+                if (delete && contactsPath != null) DeleteContacts(contactsWhere);
+                if (delete && interfacesPath != null) DeleteInterfaces(interfacesWhere);
+                if (delete && organizationsPath != null) DeleteOrganizations(organizationsWhere);
+                if (load && categoriesPath != null) LoadCategories(categoriesPath);
+                if (load && contactsPath != null) LoadContacts(contactsPath);
+                if (load && interfacesPath != null) LoadInterfaces(interfacesPath);
+                if (load && organizationsPath != null) LoadOrganizations(organizationsPath);
                 if (load && addressTypesPath != null) LoadAddressTypes(addressTypesPath);
                 if (load && groupsPath != null) LoadGroups(groupsPath);
                 if (load && usersPath != null) LoadUsers(usersPath);
@@ -375,7 +407,7 @@ namespace FolioConsoleApplication
                 }
                 else
                 {
-                    i = fbcc.ExecuteNonQuery($"DELETE FROM addresstype{(where != null ? $" WHERE {where}" : "")}");
+                    i = fbcc.ExecuteNonQuery($"DELETE FROM diku_mod_users.addresstype{(where != null ? $" WHERE {where}" : "")}");
                 }
                 traceSource.TraceEvent(TraceEventType.Information, 0, $"Deleted {i} address types");
             }
@@ -502,7 +534,7 @@ namespace FolioConsoleApplication
                 }
                 else
                 {
-                    i = fbcc.ExecuteNonQuery($"DELETE FROM alternative_title_type{(where != null ? $" WHERE {where}" : "")}");
+                    i = fbcc.ExecuteNonQuery($"DELETE FROM diku_mod_inventory_storage.alternative_title_type{(where != null ? $" WHERE {where}" : "")}");
                 }
                 traceSource.TraceEvent(TraceEventType.Information, 0, $"Deleted {i} alternative title types");
             }
@@ -629,7 +661,7 @@ namespace FolioConsoleApplication
                 }
                 else
                 {
-                    i = fbcc.ExecuteNonQuery($"DELETE FROM call_number_type{(where != null ? $" WHERE {where}" : "")}");
+                    i = fbcc.ExecuteNonQuery($"DELETE FROM diku_mod_inventory_storage.call_number_type{(where != null ? $" WHERE {where}" : "")}");
                 }
                 traceSource.TraceEvent(TraceEventType.Information, 0, $"Deleted {i} call number types");
             }
@@ -756,7 +788,7 @@ namespace FolioConsoleApplication
                 }
                 else
                 {
-                    i = fbcc.ExecuteNonQuery($"DELETE FROM loccampus{(where != null ? $" WHERE {where}" : "")}");
+                    i = fbcc.ExecuteNonQuery($"DELETE FROM diku_mod_inventory_storage.loccampus{(where != null ? $" WHERE {where}" : "")}");
                 }
                 traceSource.TraceEvent(TraceEventType.Information, 0, $"Deleted {i} campuses");
             }
@@ -860,6 +892,131 @@ namespace FolioConsoleApplication
             traceSource.TraceEvent(TraceEventType.Information, 0, $"{s.Elapsed} elapsed");
         }
 
+        public static void DeleteCategories(string where = null)
+        {
+            traceSource.TraceEvent(TraceEventType.Information, 0, "Deleting categories");
+            var s = Stopwatch.StartNew();
+            using (var fbcc = new FolioBulkCopyContext())
+            using (var fsc = new FolioServiceClient())
+            {
+                var i = 0;
+                if (api)
+                {
+                    var s2 = Stopwatch.StartNew();
+                    foreach (var jo in fsc.Categories(where))
+                    {
+                        fsc.DeleteCategory((string)jo["id"]);
+                        if (++i % 100 == 0)
+                        {
+                            traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
+                            s2.Restart();
+                        }
+                    }
+                    traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
+                }
+                else
+                {
+                    i = fbcc.ExecuteNonQuery($"DELETE FROM diku_mod_organizations_storage.categories{(where != null ? $" WHERE {where}" : "")}");
+                }
+                traceSource.TraceEvent(TraceEventType.Information, 0, $"Deleted {i} categories");
+            }
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"{s.Elapsed} elapsed");
+        }
+
+        public static void LoadCategories(string path)
+        {
+            traceSource.TraceEvent(TraceEventType.Information, 0, "Loading categories");
+            var s = Stopwatch.StartNew();
+            using (var sr = new StreamReader(path))
+            using (var sr2 = new StreamReader(Assembly.GetAssembly(typeof(FolioContext)).GetManifestResourceStream("FolioLibrary.Category.json")))
+            using (var jtr = new JsonTextReader(sr) { SupportMultipleContent = true })
+            using (var fbcc = new FolioBulkCopyContext())
+            using (var fsc = new FolioServiceClient())
+            {
+                var s2 = Stopwatch.StartNew();
+                var js4 = JsonSchema.FromJsonAsync(sr2.ReadToEndAsync().Result).Result;
+                var js = new JsonSerializer();
+                jtr.Read();
+                var i = 0;
+                while (jtr.Read() && jtr.TokenType != JsonToken.EndArray)
+                {
+                    ++i;
+                    var jo = (JObject)js.Deserialize(jtr);
+                    if (validate)
+                    {
+                        var l = js4.Validate(jo);
+                        if (l.Any()) throw new ValidationException($"Category {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
+                    }
+                    if (api)
+                    {
+                        fsc.InsertCategory(jo);
+                        if (i % 100 == 0)
+                        {
+                            traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
+                            s2.Restart();
+                        }
+                    }
+                    else
+                    {
+                        fbcc.Insert(new Category
+                        {
+                            Id = (Guid?)jo.SelectToken("id"),
+                            Content = jo.ToString()
+                        });
+                        if (i % 1000 == 0)
+                        {
+                            fbcc.Commit();
+                            if (i % 10000 == 0)
+                            {
+                                traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
+                                s2.Restart();
+                            }
+                        }
+                    }
+                }
+                fbcc.Commit();
+                traceSource.TraceEvent(TraceEventType.Verbose, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
+                traceSource.TraceEvent(TraceEventType.Information, 0, $"Added {i} categories");
+            }
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"{s.Elapsed} elapsed");
+        }
+
+        public static void SaveCategories(string path, string where = null)
+        {
+            traceSource.TraceEvent(TraceEventType.Information, 0, "Saving categories");
+            var s = Stopwatch.StartNew();
+            using (var fdc = new FolioDapperContext())
+            using (var fsc = new FolioServiceClient())
+            using (var sr = new StreamReader(Assembly.GetAssembly(typeof(FolioContext)).GetManifestResourceStream("FolioLibrary.Category.json")))
+            using (var sw = new StreamWriter(path))
+            using (var jtw = new JsonTextWriter(sw))
+            {
+                var s2 = Stopwatch.StartNew();
+                var js4 = JsonSchema.FromJsonAsync(sr.ReadToEndAsync().Result).Result;
+                var js = new JsonSerializer { Formatting = Formatting.Indented };
+                jtw.WriteStartArray();
+                var i = 0;
+                foreach (var jo in api ? fsc.Categories(where) : fdc.Categories(where).Select(c => JObject.Parse(c.Content)))
+                {
+                    if (validate)
+                    {
+                        var l = js4.Validate(jo);
+                        if (l.Any()) throw new ValidationException($"Category {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
+                    }
+                    js.Serialize(jtw, jo);
+                    if (++i % 10000 == 0)
+                    {
+                        traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
+                        s2.Restart();
+                    }
+                }
+                jtw.WriteEndArray();
+                traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
+                traceSource.TraceEvent(TraceEventType.Information, 0, $"Saved {i} categories");
+            }
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"{s.Elapsed} elapsed");
+        }
+
         public static void DeleteClassificationTypes(string where = null)
         {
             traceSource.TraceEvent(TraceEventType.Information, 0, "Deleting classification types");
@@ -884,7 +1041,7 @@ namespace FolioConsoleApplication
                 }
                 else
                 {
-                    i = fbcc.ExecuteNonQuery($"DELETE FROM classification_type{(where != null ? $" WHERE {where}" : "")}");
+                    i = fbcc.ExecuteNonQuery($"DELETE FROM diku_mod_inventory_storage.classification_type{(where != null ? $" WHERE {where}" : "")}");
                 }
                 traceSource.TraceEvent(TraceEventType.Information, 0, $"Deleted {i} classification types");
             }
@@ -987,6 +1144,131 @@ namespace FolioConsoleApplication
             traceSource.TraceEvent(TraceEventType.Information, 0, $"{s.Elapsed} elapsed");
         }
 
+        public static void DeleteContacts(string where = null)
+        {
+            traceSource.TraceEvent(TraceEventType.Information, 0, "Deleting contacts");
+            var s = Stopwatch.StartNew();
+            using (var fbcc = new FolioBulkCopyContext())
+            using (var fsc = new FolioServiceClient())
+            {
+                var i = 0;
+                if (api)
+                {
+                    var s2 = Stopwatch.StartNew();
+                    foreach (var jo in fsc.Contacts(where))
+                    {
+                        fsc.DeleteContact((string)jo["id"]);
+                        if (++i % 100 == 0)
+                        {
+                            traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
+                            s2.Restart();
+                        }
+                    }
+                    traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
+                }
+                else
+                {
+                    i = fbcc.ExecuteNonQuery($"DELETE FROM diku_mod_organizations_storage.contacts{(where != null ? $" WHERE {where}" : "")}");
+                }
+                traceSource.TraceEvent(TraceEventType.Information, 0, $"Deleted {i} contacts");
+            }
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"{s.Elapsed} elapsed");
+        }
+
+        public static void LoadContacts(string path)
+        {
+            traceSource.TraceEvent(TraceEventType.Information, 0, "Loading contacts");
+            var s = Stopwatch.StartNew();
+            using (var sr = new StreamReader(path))
+            using (var sr2 = new StreamReader(Assembly.GetAssembly(typeof(FolioContext)).GetManifestResourceStream("FolioLibrary.Contact.json")))
+            using (var jtr = new JsonTextReader(sr) { SupportMultipleContent = true })
+            using (var fbcc = new FolioBulkCopyContext())
+            using (var fsc = new FolioServiceClient())
+            {
+                var s2 = Stopwatch.StartNew();
+                var js4 = JsonSchema.FromJsonAsync(sr2.ReadToEndAsync().Result).Result;
+                var js = new JsonSerializer();
+                jtr.Read();
+                var i = 0;
+                while (jtr.Read() && jtr.TokenType != JsonToken.EndArray)
+                {
+                    ++i;
+                    var jo = (JObject)js.Deserialize(jtr);
+                    if (validate)
+                    {
+                        var l = js4.Validate(jo);
+                        if (l.Any()) throw new ValidationException($"Contact {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
+                    }
+                    if (api)
+                    {
+                        fsc.InsertContact(jo);
+                        if (i % 100 == 0)
+                        {
+                            traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
+                            s2.Restart();
+                        }
+                    }
+                    else
+                    {
+                        fbcc.Insert(new Contact
+                        {
+                            Id = (Guid?)jo.SelectToken("id"),
+                            Content = jo.ToString()
+                        });
+                        if (i % 1000 == 0)
+                        {
+                            fbcc.Commit();
+                            if (i % 10000 == 0)
+                            {
+                                traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
+                                s2.Restart();
+                            }
+                        }
+                    }
+                }
+                fbcc.Commit();
+                traceSource.TraceEvent(TraceEventType.Verbose, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
+                traceSource.TraceEvent(TraceEventType.Information, 0, $"Added {i} contacts");
+            }
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"{s.Elapsed} elapsed");
+        }
+
+        public static void SaveContacts(string path, string where = null)
+        {
+            traceSource.TraceEvent(TraceEventType.Information, 0, "Saving contacts");
+            var s = Stopwatch.StartNew();
+            using (var fdc = new FolioDapperContext())
+            using (var fsc = new FolioServiceClient())
+            using (var sr = new StreamReader(Assembly.GetAssembly(typeof(FolioContext)).GetManifestResourceStream("FolioLibrary.Contact.json")))
+            using (var sw = new StreamWriter(path))
+            using (var jtw = new JsonTextWriter(sw))
+            {
+                var s2 = Stopwatch.StartNew();
+                var js4 = JsonSchema.FromJsonAsync(sr.ReadToEndAsync().Result).Result;
+                var js = new JsonSerializer { Formatting = Formatting.Indented };
+                jtw.WriteStartArray();
+                var i = 0;
+                foreach (var jo in api ? fsc.Contacts(where) : fdc.Contacts(where).Select(c => JObject.Parse(c.Content)))
+                {
+                    if (validate)
+                    {
+                        var l = js4.Validate(jo);
+                        if (l.Any()) throw new ValidationException($"Contact {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
+                    }
+                    js.Serialize(jtw, jo);
+                    if (++i % 10000 == 0)
+                    {
+                        traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
+                        s2.Restart();
+                    }
+                }
+                jtw.WriteEndArray();
+                traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
+                traceSource.TraceEvent(TraceEventType.Information, 0, $"Saved {i} contacts");
+            }
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"{s.Elapsed} elapsed");
+        }
+
         public static void DeleteContributorNameTypes(string where = null)
         {
             traceSource.TraceEvent(TraceEventType.Information, 0, "Deleting contributor name types");
@@ -1011,7 +1293,7 @@ namespace FolioConsoleApplication
                 }
                 else
                 {
-                    i = fbcc.ExecuteNonQuery($"DELETE FROM contributor_name_type{(where != null ? $" WHERE {where}" : "")}");
+                    i = fbcc.ExecuteNonQuery($"DELETE FROM diku_mod_inventory_storage.contributor_name_type{(where != null ? $" WHERE {where}" : "")}");
                 }
                 traceSource.TraceEvent(TraceEventType.Information, 0, $"Deleted {i} contributor name types");
             }
@@ -1138,7 +1420,7 @@ namespace FolioConsoleApplication
                 }
                 else
                 {
-                    i = fbcc.ExecuteNonQuery($"DELETE FROM contributor_type{(where != null ? $" WHERE {where}" : "")}");
+                    i = fbcc.ExecuteNonQuery($"DELETE FROM diku_mod_inventory_storage.contributor_type{(where != null ? $" WHERE {where}" : "")}");
                 }
                 traceSource.TraceEvent(TraceEventType.Information, 0, $"Deleted {i} contributor types");
             }
@@ -1263,7 +1545,7 @@ namespace FolioConsoleApplication
                 }
                 else
                 {
-                    i = fbcc.ExecuteNonQuery($"DELETE FROM electronic_access_relationship{(where != null ? $" WHERE {where}" : "")}");
+                    i = fbcc.ExecuteNonQuery($"DELETE FROM diku_mod_inventory_storage.electronic_access_relationship{(where != null ? $" WHERE {where}" : "")}");
                 }
                 traceSource.TraceEvent(TraceEventType.Information, 0, $"Deleted {i} electronic access relationships");
             }
@@ -1390,7 +1672,7 @@ namespace FolioConsoleApplication
                 }
                 else
                 {
-                    i = fbcc.ExecuteNonQuery($"DELETE FROM groups{(where != null ? $" WHERE {where}" : "")}");
+                    i = fbcc.ExecuteNonQuery($"DELETE FROM diku_mod_users.groups{(where != null ? $" WHERE {where}" : "")}");
                 }
                 traceSource.TraceEvent(TraceEventType.Information, 0, $"Deleted {i} groups");
             }
@@ -1517,7 +1799,7 @@ namespace FolioConsoleApplication
                 }
                 else
                 {
-                    i = fbcc.ExecuteNonQuery($"DELETE FROM holdings_record{(where != null ? $" WHERE {where}" : "")}");
+                    i = fbcc.ExecuteNonQuery($"DELETE FROM diku_mod_inventory_storage.holdings_record{(where != null ? $" WHERE {where}" : "")}");
                 }
                 traceSource.TraceEvent(TraceEventType.Information, 0, $"Deleted {i} holdings");
             }
@@ -1650,7 +1932,7 @@ namespace FolioConsoleApplication
                 }
                 else
                 {
-                    i = fbcc.ExecuteNonQuery($"DELETE FROM holdings_note_type{(where != null ? $" WHERE {where}" : "")}");
+                    i = fbcc.ExecuteNonQuery($"DELETE FROM diku_mod_inventory_storage.holdings_note_type{(where != null ? $" WHERE {where}" : "")}");
                 }
                 traceSource.TraceEvent(TraceEventType.Information, 0, $"Deleted {i} holding note types");
             }
@@ -1777,7 +2059,7 @@ namespace FolioConsoleApplication
                 }
                 else
                 {
-                    i = fbcc.ExecuteNonQuery($"DELETE FROM holdings_type{(where != null ? $" WHERE {where}" : "")}");
+                    i = fbcc.ExecuteNonQuery($"DELETE FROM diku_mod_inventory_storage.holdings_type{(where != null ? $" WHERE {where}" : "")}");
                 }
                 traceSource.TraceEvent(TraceEventType.Information, 0, $"Deleted {i} holding types");
             }
@@ -1904,7 +2186,7 @@ namespace FolioConsoleApplication
                 }
                 else
                 {
-                    i = fbcc.ExecuteNonQuery($"DELETE FROM identifier_type{(where != null ? $" WHERE {where}" : "")}");
+                    i = fbcc.ExecuteNonQuery($"DELETE FROM diku_mod_inventory_storage.identifier_type{(where != null ? $" WHERE {where}" : "")}");
                 }
                 traceSource.TraceEvent(TraceEventType.Information, 0, $"Deleted {i} id types");
             }
@@ -2031,7 +2313,7 @@ namespace FolioConsoleApplication
                 }
                 else
                 {
-                    i = fbcc.ExecuteNonQuery($"DELETE FROM ill_policy{(where != null ? $" WHERE {where}" : "")}");
+                    i = fbcc.ExecuteNonQuery($"DELETE FROM diku_mod_inventory_storage.ill_policy{(where != null ? $" WHERE {where}" : "")}");
                 }
                 traceSource.TraceEvent(TraceEventType.Information, 0, $"Deleted {i} ill policies");
             }
@@ -2158,7 +2440,7 @@ namespace FolioConsoleApplication
                 }
                 else
                 {
-                    i = fbcc.ExecuteNonQuery($"DELETE FROM instance{(where != null ? $" WHERE {where}" : "")}");
+                    i = fbcc.ExecuteNonQuery($"DELETE FROM diku_mod_inventory_storage.instance{(where != null ? $" WHERE {where}" : "")}");
                 }
                 traceSource.TraceEvent(TraceEventType.Information, 0, $"Deleted {i} instances");
             }
@@ -2287,7 +2569,7 @@ namespace FolioConsoleApplication
                 }
                 else
                 {
-                    i = fbcc.ExecuteNonQuery($"DELETE FROM instance_format{(where != null ? $" WHERE {where}" : "")}");
+                    i = fbcc.ExecuteNonQuery($"DELETE FROM diku_mod_inventory_storage.instance_format{(where != null ? $" WHERE {where}" : "")}");
                 }
                 traceSource.TraceEvent(TraceEventType.Information, 0, $"Deleted {i} instance formats");
             }
@@ -2412,7 +2694,7 @@ namespace FolioConsoleApplication
                 }
                 else
                 {
-                    i = fbcc.ExecuteNonQuery($"DELETE FROM instance_relationship{(where != null ? $" WHERE {where}" : "")}");
+                    i = fbcc.ExecuteNonQuery($"DELETE FROM diku_mod_inventory_storage.instance_relationship{(where != null ? $" WHERE {where}" : "")}");
                 }
                 traceSource.TraceEvent(TraceEventType.Information, 0, $"Deleted {i} instance relationships");
             }
@@ -2542,7 +2824,7 @@ namespace FolioConsoleApplication
                 }
                 else
                 {
-                    i = fbcc.ExecuteNonQuery($"DELETE FROM instance_relationship_type{(where != null ? $" WHERE {where}" : "")}");
+                    i = fbcc.ExecuteNonQuery($"DELETE FROM diku_mod_inventory_storage.instance_relationship_type{(where != null ? $" WHERE {where}" : "")}");
                 }
                 traceSource.TraceEvent(TraceEventType.Information, 0, $"Deleted {i} instance relationship types");
             }
@@ -2669,7 +2951,7 @@ namespace FolioConsoleApplication
                 }
                 else
                 {
-                    i = fbcc.ExecuteNonQuery($"DELETE FROM instance_status{(where != null ? $" WHERE {where}" : "")}");
+                    i = fbcc.ExecuteNonQuery($"DELETE FROM diku_mod_inventory_storage.instance_status{(where != null ? $" WHERE {where}" : "")}");
                 }
                 traceSource.TraceEvent(TraceEventType.Information, 0, $"Deleted {i} instance statuses");
             }
@@ -2796,7 +3078,7 @@ namespace FolioConsoleApplication
                 }
                 else
                 {
-                    i = fbcc.ExecuteNonQuery($"DELETE FROM instance_type{(where != null ? $" WHERE {where}" : "")}");
+                    i = fbcc.ExecuteNonQuery($"DELETE FROM diku_mod_inventory_storage.instance_type{(where != null ? $" WHERE {where}" : "")}");
                 }
                 traceSource.TraceEvent(TraceEventType.Information, 0, $"Deleted {i} instance types");
             }
@@ -2921,7 +3203,7 @@ namespace FolioConsoleApplication
                 }
                 else
                 {
-                    i = fbcc.ExecuteNonQuery($"DELETE FROM locinstitution{(where != null ? $" WHERE {where}" : "")}");
+                    i = fbcc.ExecuteNonQuery($"DELETE FROM diku_mod_inventory_storage.locinstitution{(where != null ? $" WHERE {where}" : "")}");
                 }
                 traceSource.TraceEvent(TraceEventType.Information, 0, $"Deleted {i} institutions");
             }
@@ -3024,6 +3306,131 @@ namespace FolioConsoleApplication
             traceSource.TraceEvent(TraceEventType.Information, 0, $"{s.Elapsed} elapsed");
         }
 
+        public static void DeleteInterfaces(string where = null)
+        {
+            traceSource.TraceEvent(TraceEventType.Information, 0, "Deleting interfaces");
+            var s = Stopwatch.StartNew();
+            using (var fbcc = new FolioBulkCopyContext())
+            using (var fsc = new FolioServiceClient())
+            {
+                var i = 0;
+                if (api)
+                {
+                    var s2 = Stopwatch.StartNew();
+                    foreach (var jo in fsc.Interfaces(where))
+                    {
+                        fsc.DeleteInterface((string)jo["id"]);
+                        if (++i % 100 == 0)
+                        {
+                            traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
+                            s2.Restart();
+                        }
+                    }
+                    traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
+                }
+                else
+                {
+                    i = fbcc.ExecuteNonQuery($"DELETE FROM diku_mod_organizations_storage.interfaces{(where != null ? $" WHERE {where}" : "")}");
+                }
+                traceSource.TraceEvent(TraceEventType.Information, 0, $"Deleted {i} interfaces");
+            }
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"{s.Elapsed} elapsed");
+        }
+
+        public static void LoadInterfaces(string path)
+        {
+            traceSource.TraceEvent(TraceEventType.Information, 0, "Loading interfaces");
+            var s = Stopwatch.StartNew();
+            using (var sr = new StreamReader(path))
+            using (var sr2 = new StreamReader(Assembly.GetAssembly(typeof(FolioContext)).GetManifestResourceStream("FolioLibrary.Interface.json")))
+            using (var jtr = new JsonTextReader(sr) { SupportMultipleContent = true })
+            using (var fbcc = new FolioBulkCopyContext())
+            using (var fsc = new FolioServiceClient())
+            {
+                var s2 = Stopwatch.StartNew();
+                var js4 = JsonSchema.FromJsonAsync(sr2.ReadToEndAsync().Result).Result;
+                var js = new JsonSerializer();
+                jtr.Read();
+                var i = 0;
+                while (jtr.Read() && jtr.TokenType != JsonToken.EndArray)
+                {
+                    ++i;
+                    var jo = (JObject)js.Deserialize(jtr);
+                    if (validate)
+                    {
+                        var l = js4.Validate(jo);
+                        if (l.Any()) throw new ValidationException($"Interface {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
+                    }
+                    if (api)
+                    {
+                        fsc.InsertInterface(jo);
+                        if (i % 100 == 0)
+                        {
+                            traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
+                            s2.Restart();
+                        }
+                    }
+                    else
+                    {
+                        fbcc.Insert(new Interface
+                        {
+                            Id = (Guid?)jo.SelectToken("id"),
+                            Content = jo.ToString()
+                        });
+                        if (i % 1000 == 0)
+                        {
+                            fbcc.Commit();
+                            if (i % 10000 == 0)
+                            {
+                                traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
+                                s2.Restart();
+                            }
+                        }
+                    }
+                }
+                fbcc.Commit();
+                traceSource.TraceEvent(TraceEventType.Verbose, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
+                traceSource.TraceEvent(TraceEventType.Information, 0, $"Added {i} interfaces");
+            }
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"{s.Elapsed} elapsed");
+        }
+
+        public static void SaveInterfaces(string path, string where = null)
+        {
+            traceSource.TraceEvent(TraceEventType.Information, 0, "Saving interfaces");
+            var s = Stopwatch.StartNew();
+            using (var fdc = new FolioDapperContext())
+            using (var fsc = new FolioServiceClient())
+            using (var sr = new StreamReader(Assembly.GetAssembly(typeof(FolioContext)).GetManifestResourceStream("FolioLibrary.Interface.json")))
+            using (var sw = new StreamWriter(path))
+            using (var jtw = new JsonTextWriter(sw))
+            {
+                var s2 = Stopwatch.StartNew();
+                var js4 = JsonSchema.FromJsonAsync(sr.ReadToEndAsync().Result).Result;
+                var js = new JsonSerializer { Formatting = Formatting.Indented };
+                jtw.WriteStartArray();
+                var i = 0;
+                foreach (var jo in api ? fsc.Interfaces(where) : fdc.Interfaces(where).Select(i2 => JObject.Parse(i2.Content)))
+                {
+                    if (validate)
+                    {
+                        var l = js4.Validate(jo);
+                        if (l.Any()) throw new ValidationException($"Interface {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
+                    }
+                    js.Serialize(jtw, jo);
+                    if (++i % 10000 == 0)
+                    {
+                        traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
+                        s2.Restart();
+                    }
+                }
+                jtw.WriteEndArray();
+                traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
+                traceSource.TraceEvent(TraceEventType.Information, 0, $"Saved {i} interfaces");
+            }
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"{s.Elapsed} elapsed");
+        }
+
         public static void DeleteItems(string where = null)
         {
             traceSource.TraceEvent(TraceEventType.Information, 0, "Deleting items");
@@ -3048,7 +3455,7 @@ namespace FolioConsoleApplication
                 }
                 else
                 {
-                    i = fbcc.ExecuteNonQuery($"DELETE FROM item{(where != null ? $" WHERE {where}" : "")}");
+                    i = fbcc.ExecuteNonQuery($"DELETE FROM diku_mod_inventory_storage.item{(where != null ? $" WHERE {where}" : "")}");
                 }
                 traceSource.TraceEvent(TraceEventType.Information, 0, $"Deleted {i} items");
             }
@@ -3181,7 +3588,7 @@ namespace FolioConsoleApplication
                 }
                 else
                 {
-                    i = fbcc.ExecuteNonQuery($"DELETE FROM item_note_type{(where != null ? $" WHERE {where}" : "")}");
+                    i = fbcc.ExecuteNonQuery($"DELETE FROM diku_mod_inventory_storage.item_note_type{(where != null ? $" WHERE {where}" : "")}");
                 }
                 traceSource.TraceEvent(TraceEventType.Information, 0, $"Deleted {i} item note types");
             }
@@ -3308,7 +3715,7 @@ namespace FolioConsoleApplication
                 }
                 else
                 {
-                    i = fbcc.ExecuteNonQuery($"DELETE FROM loclibrary{(where != null ? $" WHERE {where}" : "")}");
+                    i = fbcc.ExecuteNonQuery($"DELETE FROM diku_mod_inventory_storage.loclibrary{(where != null ? $" WHERE {where}" : "")}");
                 }
                 traceSource.TraceEvent(TraceEventType.Information, 0, $"Deleted {i} libraries");
             }
@@ -3436,7 +3843,7 @@ namespace FolioConsoleApplication
                 }
                 else
                 {
-                    i = fbcc.ExecuteNonQuery($"DELETE FROM loan_type{(where != null ? $" WHERE {where}" : "")}");
+                    i = fbcc.ExecuteNonQuery($"DELETE FROM diku_mod_inventory_storage.loan_type{(where != null ? $" WHERE {where}" : "")}");
                 }
                 traceSource.TraceEvent(TraceEventType.Information, 0, $"Deleted {i} loan types");
             }
@@ -3563,7 +3970,7 @@ namespace FolioConsoleApplication
                 }
                 else
                 {
-                    i = fbcc.ExecuteNonQuery($"DELETE FROM location{(where != null ? $" WHERE {where}" : "")}");
+                    i = fbcc.ExecuteNonQuery($"DELETE FROM diku_mod_inventory_storage.location{(where != null ? $" WHERE {where}" : "")}");
                 }
                 traceSource.TraceEvent(TraceEventType.Information, 0, $"Deleted {i} locations");
             }
@@ -3693,7 +4100,7 @@ namespace FolioConsoleApplication
                 }
                 else
                 {
-                    i = fbcc.ExecuteNonQuery($"DELETE FROM auth_credentials{(where != null ? $" WHERE {where}" : "")}");
+                    i = fbcc.ExecuteNonQuery($"DELETE FROM diku_mod_login.auth_credentials{(where != null ? $" WHERE {where}" : "")}");
                 }
                 traceSource.TraceEvent(TraceEventType.Information, 0, $"Deleted {i} logins");
             }
@@ -3820,7 +4227,7 @@ namespace FolioConsoleApplication
                 }
                 else
                 {
-                    i = fbcc.ExecuteNonQuery($"DELETE FROM material_type{(where != null ? $" WHERE {where}" : "")}");
+                    i = fbcc.ExecuteNonQuery($"DELETE FROM diku_mod_inventory_storage.material_type{(where != null ? $" WHERE {where}" : "")}");
                 }
                 traceSource.TraceEvent(TraceEventType.Information, 0, $"Deleted {i} material types");
             }
@@ -3947,7 +4354,7 @@ namespace FolioConsoleApplication
                 }
                 else
                 {
-                    i = fbcc.ExecuteNonQuery($"DELETE FROM mode_of_issuance{(where != null ? $" WHERE {where}" : "")}");
+                    i = fbcc.ExecuteNonQuery($"DELETE FROM diku_mod_inventory_storage.mode_of_issuance{(where != null ? $" WHERE {where}" : "")}");
                 }
                 traceSource.TraceEvent(TraceEventType.Information, 0, $"Deleted {i} mode of issuances");
             }
@@ -4050,6 +4457,131 @@ namespace FolioConsoleApplication
             traceSource.TraceEvent(TraceEventType.Information, 0, $"{s.Elapsed} elapsed");
         }
 
+        public static void DeleteOrganizations(string where = null)
+        {
+            traceSource.TraceEvent(TraceEventType.Information, 0, "Deleting organizations");
+            var s = Stopwatch.StartNew();
+            using (var fbcc = new FolioBulkCopyContext())
+            using (var fsc = new FolioServiceClient())
+            {
+                var i = 0;
+                if (api)
+                {
+                    var s2 = Stopwatch.StartNew();
+                    foreach (var jo in fsc.Organizations(where))
+                    {
+                        fsc.DeleteOrganization((string)jo["id"]);
+                        if (++i % 100 == 0)
+                        {
+                            traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
+                            s2.Restart();
+                        }
+                    }
+                    traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
+                }
+                else
+                {
+                    i = fbcc.ExecuteNonQuery($"DELETE FROM diku_mod_organizations_storage.organizations{(where != null ? $" WHERE {where}" : "")}");
+                }
+                traceSource.TraceEvent(TraceEventType.Information, 0, $"Deleted {i} organizations");
+            }
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"{s.Elapsed} elapsed");
+        }
+
+        public static void LoadOrganizations(string path)
+        {
+            traceSource.TraceEvent(TraceEventType.Information, 0, "Loading organizations");
+            var s = Stopwatch.StartNew();
+            using (var sr = new StreamReader(path))
+            using (var sr2 = new StreamReader(Assembly.GetAssembly(typeof(FolioContext)).GetManifestResourceStream("FolioLibrary.Organization.json")))
+            using (var jtr = new JsonTextReader(sr) { SupportMultipleContent = true })
+            using (var fbcc = new FolioBulkCopyContext())
+            using (var fsc = new FolioServiceClient())
+            {
+                var s2 = Stopwatch.StartNew();
+                var js4 = JsonSchema.FromJsonAsync(sr2.ReadToEndAsync().Result).Result;
+                var js = new JsonSerializer();
+                jtr.Read();
+                var i = 0;
+                while (jtr.Read() && jtr.TokenType != JsonToken.EndArray)
+                {
+                    ++i;
+                    var jo = (JObject)js.Deserialize(jtr);
+                    if (validate)
+                    {
+                        var l = js4.Validate(jo);
+                        if (l.Any()) throw new ValidationException($"Organization {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
+                    }
+                    if (api)
+                    {
+                        fsc.InsertOrganization(jo);
+                        if (i % 100 == 0)
+                        {
+                            traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
+                            s2.Restart();
+                        }
+                    }
+                    else
+                    {
+                        fbcc.Insert(new Organization
+                        {
+                            Id = (Guid?)jo.SelectToken("id"),
+                            Content = jo.ToString()
+                        });
+                        if (i % 1000 == 0)
+                        {
+                            fbcc.Commit();
+                            if (i % 10000 == 0)
+                            {
+                                traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
+                                s2.Restart();
+                            }
+                        }
+                    }
+                }
+                fbcc.Commit();
+                traceSource.TraceEvent(TraceEventType.Verbose, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
+                traceSource.TraceEvent(TraceEventType.Information, 0, $"Added {i} organizations");
+            }
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"{s.Elapsed} elapsed");
+        }
+
+        public static void SaveOrganizations(string path, string where = null)
+        {
+            traceSource.TraceEvent(TraceEventType.Information, 0, "Saving organizations");
+            var s = Stopwatch.StartNew();
+            using (var fdc = new FolioDapperContext())
+            using (var fsc = new FolioServiceClient())
+            using (var sr = new StreamReader(Assembly.GetAssembly(typeof(FolioContext)).GetManifestResourceStream("FolioLibrary.Organization.json")))
+            using (var sw = new StreamWriter(path))
+            using (var jtw = new JsonTextWriter(sw))
+            {
+                var s2 = Stopwatch.StartNew();
+                var js4 = JsonSchema.FromJsonAsync(sr.ReadToEndAsync().Result).Result;
+                var js = new JsonSerializer { Formatting = Formatting.Indented };
+                jtw.WriteStartArray();
+                var i = 0;
+                foreach (var jo in api ? fsc.Organizations(where) : fdc.Organizations(where).Select(o => JObject.Parse(o.Content)))
+                {
+                    if (validate)
+                    {
+                        var l = js4.Validate(jo);
+                        if (l.Any()) throw new ValidationException($"Organization {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
+                    }
+                    js.Serialize(jtw, jo);
+                    if (++i % 10000 == 0)
+                    {
+                        traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
+                        s2.Restart();
+                    }
+                }
+                jtw.WriteEndArray();
+                traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
+                traceSource.TraceEvent(TraceEventType.Information, 0, $"Saved {i} organizations");
+            }
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"{s.Elapsed} elapsed");
+        }
+
         public static void DeletePermissions(string where = null)
         {
             traceSource.TraceEvent(TraceEventType.Information, 0, "Deleting permissions");
@@ -4074,7 +4606,7 @@ namespace FolioConsoleApplication
                 }
                 else
                 {
-                    i = fbcc.ExecuteNonQuery($"DELETE FROM permissions{(where != null ? $" WHERE {where}" : "")}");
+                    i = fbcc.ExecuteNonQuery($"DELETE FROM diku_mod_permissions.permissions{(where != null ? $" WHERE {where}" : "")}");
                 }
                 traceSource.TraceEvent(TraceEventType.Information, 0, $"Deleted {i} permissions");
             }
@@ -4201,7 +4733,7 @@ namespace FolioConsoleApplication
                 }
                 else
                 {
-                    i = fbcc.ExecuteNonQuery($"DELETE FROM permissions_users{(where != null ? $" WHERE {where}" : "")}");
+                    i = fbcc.ExecuteNonQuery($"DELETE FROM diku_mod_permissions.permissions_users{(where != null ? $" WHERE {where}" : "")}");
                 }
                 traceSource.TraceEvent(TraceEventType.Information, 0, $"Deleted {i} permissions users");
             }
@@ -4328,7 +4860,7 @@ namespace FolioConsoleApplication
                 }
                 else
                 {
-                    i = fbcc.ExecuteNonQuery($"DELETE FROM proxyfor{(where != null ? $" WHERE {where}" : "")}");
+                    i = fbcc.ExecuteNonQuery($"DELETE FROM diku_mod_users.proxyfor{(where != null ? $" WHERE {where}" : "")}");
                 }
                 traceSource.TraceEvent(TraceEventType.Information, 0, $"Deleted {i} proxies");
             }
@@ -4455,7 +4987,7 @@ namespace FolioConsoleApplication
                 }
                 else
                 {
-                    i = fbcc.ExecuteNonQuery($"DELETE FROM service_point{(where != null ? $" WHERE {where}" : "")}");
+                    i = fbcc.ExecuteNonQuery($"DELETE FROM diku_mod_inventory_storage.service_point{(where != null ? $" WHERE {where}" : "")}");
                 }
                 traceSource.TraceEvent(TraceEventType.Information, 0, $"Deleted {i} service points");
             }
@@ -4582,7 +5114,7 @@ namespace FolioConsoleApplication
                 }
                 else
                 {
-                    i = fbcc.ExecuteNonQuery($"DELETE FROM service_point_user{(where != null ? $" WHERE {where}" : "")}");
+                    i = fbcc.ExecuteNonQuery($"DELETE FROM diku_mod_inventory_storage.service_point_user{(where != null ? $" WHERE {where}" : "")}");
                 }
                 traceSource.TraceEvent(TraceEventType.Information, 0, $"Deleted {i} service point users");
             }
@@ -4710,7 +5242,7 @@ namespace FolioConsoleApplication
                 }
                 else
                 {
-                    i = fbcc.ExecuteNonQuery($"DELETE FROM statistical_code{(where != null ? $" WHERE {where}" : "")}");
+                    i = fbcc.ExecuteNonQuery($"DELETE FROM diku_mod_inventory_storage.statistical_code{(where != null ? $" WHERE {where}" : "")}");
                 }
                 traceSource.TraceEvent(TraceEventType.Information, 0, $"Deleted {i} statistical codes");
             }
@@ -4838,7 +5370,7 @@ namespace FolioConsoleApplication
                 }
                 else
                 {
-                    i = fbcc.ExecuteNonQuery($"DELETE FROM statistical_code_type{(where != null ? $" WHERE {where}" : "")}");
+                    i = fbcc.ExecuteNonQuery($"DELETE FROM diku_mod_inventory_storage.statistical_code_type{(where != null ? $" WHERE {where}" : "")}");
                 }
                 traceSource.TraceEvent(TraceEventType.Information, 0, $"Deleted {i} statistical code types");
             }
@@ -4965,7 +5497,7 @@ namespace FolioConsoleApplication
                 }
                 else
                 {
-                    i = fbcc.ExecuteNonQuery($"DELETE FROM users{(where != null ? $" WHERE {where}" : "")}");
+                    i = fbcc.ExecuteNonQuery($"DELETE FROM diku_mod_users.users{(where != null ? $" WHERE {where}" : "")}");
                 }
                 traceSource.TraceEvent(TraceEventType.Information, 0, $"Deleted {i} users");
             }

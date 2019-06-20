@@ -11,7 +11,8 @@
     },
     "approved": {
       "description": "whether or not the purchase order has been approved",
-      "type": "boolean"
+      "type": "boolean",
+      "default": false
     },
     "assignedTo": {
       "description": "UUID of the user this purchase order his assigned to",
@@ -68,13 +69,10 @@
         "Ongoing"
       ]
     },
-    "owner": {
-      "description": "The team owner of this purchase order",
-      "type": "string"
-    },
     "reEncumber": {
       "description": "indicates this purchase order should be re-encumbered each fiscal year. Only applies to ongoing orders",
-      "type": "boolean"
+      "type": "boolean",
+      "default": false
     },
     "renewal": {
       "description": "renewal details for Purchase Order",
@@ -99,7 +97,8 @@
         },
         "manualRenewal": {
           "description": "whether or not this is a manual renewal",
-          "type": "boolean"
+          "type": "boolean",
+          "default": false
         },
         "reviewPeriod": {
           "description": "time prior to renewal where changes can be made to subscription",
