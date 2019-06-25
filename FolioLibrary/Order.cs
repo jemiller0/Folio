@@ -36,7 +36,7 @@ namespace FolioLibrary
         public virtual string CreationUserId { get; set; }
 
         [ScaffoldColumn(false)]
-        public virtual ICollection<OrderInvoiceRelationship> OrderInvoiceRelationships { get; set; }
+        public virtual ICollection<OrderInvoice> OrderInvoices { get; set; }
 
         [ScaffoldColumn(false)]
         public virtual ICollection<OrderItem> OrderItems { get; set; }

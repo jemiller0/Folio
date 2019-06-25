@@ -6,7 +6,6 @@
 
   <ItemGroup>
     <None Remove="Account.json" />
-    <None Remove="Address.json" />
     <None Remove="AddressType.json" />
     <None Remove="Alert.json" />
     <None Remove="AlternativeTitleType.json" />
@@ -25,7 +24,6 @@
     <None Remove="ContributorNameType.json" />
     <None Remove="ContributorType.json" />
     <None Remove="ElectronicAccessRelationship.json" />
-    <None Remove="Email.json" />
     <None Remove="Encumbrance.json" />
     <None Remove="EventLog.json" />
     <None Remove="Fee.json" />
@@ -64,7 +62,7 @@
     <None Remove="ModeOfIssuance.json" />
     <None Remove="Note.json" />
     <None Remove="Order.json" />
-    <None Remove="OrderInvoiceRelationship.json" />
+    <None Remove="OrderInvoice.json" />
     <None Remove="OrderItem.json" />
     <None Remove="Organization.json" />
     <None Remove="Owner.json" />
@@ -72,7 +70,6 @@
     <None Remove="Payment.json" />
     <None Remove="Permission.json" />
     <None Remove="PermissionsUser.json" />
-    <None Remove="PhoneNumber.json" />
     <None Remove="Piece.json" />
     <None Remove="Proxy.json" />
     <None Remove="Refund.json" />
@@ -89,7 +86,6 @@
     <None Remove="Transaction.json" />
     <None Remove="Transfer.json" />
     <None Remove="TransferCriteria.json" />
-    <None Remove="Url.json" />
     <None Remove="User.json" />
     <None Remove="Voucher.json" />
     <None Remove="VoucherItem.json" />
@@ -153,7 +149,7 @@
     <EmbeddedResource Include="ModeOfIssuance.json" />
     <EmbeddedResource Include="Note.json" />
     <EmbeddedResource Include="Order.json" />
-    <EmbeddedResource Include="OrderInvoiceRelationship.json" />
+    <EmbeddedResource Include="OrderInvoice.json" />
     <EmbeddedResource Include="OrderItem.json" />
     <EmbeddedResource Include="Organization.json" />
     <EmbeddedResource Include="Owner.json" />
@@ -182,6 +178,7 @@
     <EmbeddedResource Include="VoucherItem.json" />
     <EmbeddedResource Include="Waive.json" />
   </ItemGroup>
+
   <ItemGroup>
     <PackageReference Include="Dapper" Version="1.60.6" />
     <PackageReference Include="Microsoft.CSharp" Version="4.5.0" />

@@ -9,11 +9,11 @@ using System.Reflection;
 namespace FolioLibrary
 {
     [Table("order_invoice_relationship", Schema = "diku_mod_orders_storage")]
-    public partial class OrderInvoiceRelationship
+    public partial class OrderInvoice
     {
         public static ValidationResult ValidateContent(string value)
         {
-            using (var sr = new StreamReader(Assembly.GetExecutingAssembly().GetManifestResourceStream("FolioLibrary.OrderInvoiceRelationship.json")))
+            using (var sr = new StreamReader(Assembly.GetExecutingAssembly().GetManifestResourceStream("FolioLibrary.OrderInvoice.json")))
             {
                 var js = JsonSchema.FromJsonAsync(sr.ReadToEndAsync().Result).Result;
                 var l = js.Validate(value);
@@ -25,7 +25,7 @@ namespace FolioLibrary
         [Column("id"), Display(Order = 1), Editable(false)]
         public virtual Guid? Id { get; set; }
 
-        [Column("jsonb"), CustomValidation(typeof(OrderInvoiceRelationship), nameof(ValidateContent)), DataType(DataType.MultilineText), Display(Order = 2), Required]
+        [Column("jsonb"), CustomValidation(typeof(OrderInvoice), nameof(ValidateContent)), DataType(DataType.MultilineText), Display(Order = 2), Required]
         public virtual string Content { get; set; }
 
         [Display(Order = 3)]

@@ -12,7 +12,7 @@ namespace FolioLibrary
 {
     public partial class FolioBulkCopyContext : IDisposable
     {
-        private DataTable accountsDataTable, addressTypesDataTable, alertsDataTable, alternativeTitleTypesDataTable, auditLoansDataTable, authAttemptsDataTable, authCredentialsHistoriesDataTable, authPasswordActionsDataTable, blocksDataTable, budgetsDataTable, callNumberTypesDataTable, campusesDataTable, cancellationReasonsDataTable, categoriesDataTable, circulationRulesDataTable, classificationTypesDataTable, commentsDataTable, contactsDataTable, contributorNameTypesDataTable, contributorTypesDataTable, electronicAccessRelationshipsDataTable, encumbrancesDataTable, eventLogsDataTable, feesDataTable, feeActionsDataTable, fiscalYearsDataTable, fixedDueDateSchedulesDataTable, fundsDataTable, fundDistributionsDataTable, groupsDataTable, holdingsDataTable, holdingNoteTypesDataTable, holdingTypesDataTable, idTypesDataTable, illPoliciesDataTable, instancesDataTable, instanceFormatsDataTable, instanceRelationshipsDataTable, instanceRelationshipTypesDataTable, instanceSourceMarcsDataTable, instanceStatusesDataTable, instanceTypesDataTable, institutionsDataTable, interfacesDataTable, invoicesDataTable, invoiceItemsDataTable, itemsDataTable, itemNoteTypesDataTable, ledgersDataTable, librariesDataTable, loansDataTable, loanPoliciesDataTable, loanTypesDataTable, locationsDataTable, loginsDataTable, materialTypesDataTable, modeOfIssuancesDataTable, notesDataTable, noteTypesDataTable, ordersDataTable, orderInvoiceRelationshipsDataTable, orderItemsDataTable, organizationsDataTable, ownersDataTable, patronNoticePoliciesDataTable, paymentsDataTable, permissionsDataTable, permissionsUsersDataTable, piecesDataTable, proxiesDataTable, refundsDataTable, reportingCodesDataTable, requestsDataTable, requestPoliciesDataTable, scheduledNoticesDataTable, servicePointsDataTable, servicePointUsersDataTable, staffSlipsDataTable, statisticalCodesDataTable, statisticalCodeTypesDataTable, tagsDataTable, transactionsDataTable, transfersDataTable, transferCriteriasDataTable, usersDataTable, vouchersDataTable, voucherItemsDataTable, waivesDataTable;
+        private DataTable accountsDataTable, addressTypesDataTable, alertsDataTable, alternativeTitleTypesDataTable, auditLoansDataTable, authAttemptsDataTable, authCredentialsHistoriesDataTable, authPasswordActionsDataTable, blocksDataTable, budgetsDataTable, callNumberTypesDataTable, campusesDataTable, cancellationReasonsDataTable, categoriesDataTable, circulationRulesDataTable, classificationTypesDataTable, commentsDataTable, contactsDataTable, contributorNameTypesDataTable, contributorTypesDataTable, electronicAccessRelationshipsDataTable, encumbrancesDataTable, eventLogsDataTable, feesDataTable, feeActionsDataTable, fiscalYearsDataTable, fixedDueDateSchedulesDataTable, fundsDataTable, fundDistributionsDataTable, groupsDataTable, holdingsDataTable, holdingNoteTypesDataTable, holdingTypesDataTable, idTypesDataTable, illPoliciesDataTable, instancesDataTable, instanceFormatsDataTable, instanceRelationshipsDataTable, instanceRelationshipTypesDataTable, instanceSourceMarcsDataTable, instanceStatusesDataTable, instanceTypesDataTable, institutionsDataTable, interfacesDataTable, invoicesDataTable, invoiceItemsDataTable, itemsDataTable, itemNoteTypesDataTable, ledgersDataTable, librariesDataTable, loansDataTable, loanPoliciesDataTable, loanTypesDataTable, locationsDataTable, loginsDataTable, materialTypesDataTable, modeOfIssuancesDataTable, notesDataTable, noteTypesDataTable, ordersDataTable, orderInvoicesDataTable, orderItemsDataTable, organizationsDataTable, ownersDataTable, patronNoticePoliciesDataTable, paymentsDataTable, permissionsDataTable, permissionsUsersDataTable, piecesDataTable, proxiesDataTable, refundsDataTable, reportingCodesDataTable, requestsDataTable, requestPoliciesDataTable, scheduledNoticesDataTable, servicePointsDataTable, servicePointUsersDataTable, staffSlipsDataTable, statisticalCodesDataTable, statisticalCodeTypesDataTable, tagsDataTable, transactionsDataTable, transfersDataTable, transferCriteriasDataTable, usersDataTable, vouchersDataTable, voucherItemsDataTable, waivesDataTable;
         private bool checkConstraints;
         private string connectionString;
         private bool identityInsert;
@@ -1230,21 +1230,21 @@ namespace FolioLibrary
             ordersDataTable.Rows.Add(dr);
         }
 
-        public void Insert(OrderInvoiceRelationship orderInvoiceRelationship)
+        public void Insert(OrderInvoice orderInvoice)
         {
-            if (orderInvoiceRelationshipsDataTable == null)
+            if (orderInvoicesDataTable == null)
             {
-                orderInvoiceRelationshipsDataTable = new DataTable();
-                orderInvoiceRelationshipsDataTable.Columns.Add(new DataColumn { ColumnName = "id", DataType = typeof(Guid) });
-                orderInvoiceRelationshipsDataTable.Columns.Add(new DataColumn { ColumnName = "jsonb", DataType = typeof(string) });
-                orderInvoiceRelationshipsDataTable.Columns.Add(new DataColumn { ColumnName = "purchaseorderid", DataType = typeof(Guid) });
-                orderInvoiceRelationshipsDataTable.Columns["jsonb"].ExtendedProperties["NpgsqlDbType"] = NpgsqlDbType.Jsonb;
+                orderInvoicesDataTable = new DataTable();
+                orderInvoicesDataTable.Columns.Add(new DataColumn { ColumnName = "id", DataType = typeof(Guid) });
+                orderInvoicesDataTable.Columns.Add(new DataColumn { ColumnName = "jsonb", DataType = typeof(string) });
+                orderInvoicesDataTable.Columns.Add(new DataColumn { ColumnName = "purchaseorderid", DataType = typeof(Guid) });
+                orderInvoicesDataTable.Columns["jsonb"].ExtendedProperties["NpgsqlDbType"] = NpgsqlDbType.Jsonb;
             }
-            var dr = orderInvoiceRelationshipsDataTable.NewRow();
-            dr["id"] = (object)orderInvoiceRelationship.Id ?? DBNull.Value;
-            dr["jsonb"] = (object)orderInvoiceRelationship.Content ?? DBNull.Value;
-            dr["purchaseorderid"] = (object)orderInvoiceRelationship.Purchaseorderid ?? DBNull.Value;
-            orderInvoiceRelationshipsDataTable.Rows.Add(dr);
+            var dr = orderInvoicesDataTable.NewRow();
+            dr["id"] = (object)orderInvoice.Id ?? DBNull.Value;
+            dr["jsonb"] = (object)orderInvoice.Content ?? DBNull.Value;
+            dr["purchaseorderid"] = (object)orderInvoice.Purchaseorderid ?? DBNull.Value;
+            orderInvoicesDataTable.Rows.Add(dr);
         }
 
         public void Insert(OrderItem orderItem)
@@ -2459,15 +2459,15 @@ namespace FolioLibrary
                 sqlBulkCopy.WriteToServer(ordersDataTable);
                 ordersDataTable.Clear();
             }
-            if (orderInvoiceRelationshipsDataTable != null && orderInvoiceRelationshipsDataTable.Rows.Count > 0)
+            if (orderInvoicesDataTable != null && orderInvoicesDataTable.Rows.Count > 0)
             {
                 sqlBulkCopy.DestinationTableName = $"diku_mod_orders_storage{(IsMySql ? "_" : ".")}order_invoice_relationship";
                 sqlBulkCopy.ColumnMappings.Clear();
                 sqlBulkCopy.ColumnMappings.Add("id", "id");
                 sqlBulkCopy.ColumnMappings.Add("jsonb", "jsonb");
                 sqlBulkCopy.ColumnMappings.Add("purchaseorderid", "purchaseorderid");
-                sqlBulkCopy.WriteToServer(orderInvoiceRelationshipsDataTable);
-                orderInvoiceRelationshipsDataTable.Clear();
+                sqlBulkCopy.WriteToServer(orderInvoicesDataTable);
+                orderInvoicesDataTable.Clear();
             }
             if (orderItemsDataTable != null && orderItemsDataTable.Rows.Count > 0)
             {
@@ -2839,7 +2839,7 @@ namespace FolioLibrary
             if (notesDataTable != null) notesDataTable.Dispose();
             if (noteTypesDataTable != null) noteTypesDataTable.Dispose();
             if (ordersDataTable != null) ordersDataTable.Dispose();
-            if (orderInvoiceRelationshipsDataTable != null) orderInvoiceRelationshipsDataTable.Dispose();
+            if (orderInvoicesDataTable != null) orderInvoicesDataTable.Dispose();
             if (orderItemsDataTable != null) orderItemsDataTable.Dispose();
             if (organizationsDataTable != null) organizationsDataTable.Dispose();
             if (ownersDataTable != null) ownersDataTable.Dispose();

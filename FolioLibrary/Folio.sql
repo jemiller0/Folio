@@ -999,7 +999,7 @@ CAST(jsonb->>'invoiceId' AS UUID) AS invoice_id,
 CAST(jsonb->>'invoiceLineNumber' AS VARCHAR(1024)) AS invoice_line_number,
 CAST(jsonb->>'invoiceLineStatus' AS VARCHAR(1024)) AS invoice_line_status,
 CAST(jsonb->>'poLineId' AS UUID) AS po_line_id,
-CAST(jsonb->>'productId' AS UUID) AS product_id,
+CAST(jsonb->>'productId' AS VARCHAR(1024)) AS product_id,
 CAST(jsonb->>'productIdType' AS UUID) AS product_id_type_id,
 CAST(jsonb->>'quantity' AS INTEGER) AS quantity,
 CAST(jsonb->>'releaseEncumbrance' AS BOOLEAN) AS release_encumbrance,
@@ -1379,13 +1379,12 @@ CAST(jsonb#>>'{metadata,updatedByUserId}' AS UUID) AS updated_by_user_id,
 CAST(jsonb#>>'{metadata,updatedByUsername}' AS VARCHAR(1024)) AS updated_by_username,
 jsonb_pretty(jsonb) AS content
 FROM diku_mod_orders_storage.purchase_order;
-CREATE VIEW uc.order_invoice_relationships AS
+CREATE VIEW uc.order_invoices AS
 SELECT
 id AS id,
-CAST(jsonb->>'purchaseOrderId' AS UUID) AS purchase_order_id,
+CAST(jsonb->>'purchaseOrderId' AS UUID) AS order_id,
 CAST(jsonb->>'invoiceId' AS UUID) AS invoice_id,
-jsonb_pretty(jsonb) AS content,
-purchaseorderid AS purchaseorderid
+jsonb_pretty(jsonb) AS content
 FROM diku_mod_orders_storage.order_invoice_relationship;
 CREATE VIEW uc.order_item_alerts AS
 SELECT
@@ -1406,13 +1405,13 @@ SELECT
 id AS id,
 order_item_id AS order_item_id,
 CAST(jsonb->>'contributor' AS VARCHAR(1024)) AS contributor,
-CAST(jsonb->>'contributorType' AS VARCHAR(1024)) AS contributor_type
+CAST(jsonb->>'contributorType' AS UUID) AS contributor_type_id
 FROM (SELECT id::text || ordinality::text AS id, id AS order_item_id, value AS jsonb FROM diku_mod_orders_storage.po_line, jsonb_array_elements((jsonb->>'contributors')::jsonb) WITH ORDINALITY) a;
 CREATE VIEW uc.order_item_product_ids AS
 SELECT
 id AS id,
 order_item_id AS order_item_id,
-CAST(jsonb->>'productId' AS UUID) AS product_id,
+CAST(jsonb->>'productId' AS VARCHAR(1024)) AS product_id,
 CAST(jsonb->>'productIdType' AS UUID) AS product_id_type_id
 FROM (SELECT id::text || ordinality::text AS id, id AS order_item_id, value AS jsonb FROM diku_mod_orders_storage.po_line, jsonb_array_elements((jsonb#>>'{details,productIds}')::jsonb) WITH ORDINALITY) a;
 CREATE VIEW uc.order_item_fund_distributions AS
@@ -1499,7 +1498,7 @@ CAST(jsonb->>'poLineDescription' AS VARCHAR(1024)) AS po_line_description,
 CAST(jsonb->>'poLineNumber' AS VARCHAR(1024)) AS po_line_number,
 CAST(jsonb->>'publicationDate' AS VARCHAR(1024)) AS publication_year,
 CAST(jsonb->>'publisher' AS VARCHAR(1024)) AS publisher,
-CAST(jsonb->>'purchaseOrderId' AS UUID) AS purchase_order_id,
+CAST(jsonb->>'purchaseOrderId' AS UUID) AS order_id,
 uc.TIMESTAMP_CAST(jsonb->>'receiptDate') AS receipt_date,
 CAST(jsonb->>'receiptStatus' AS VARCHAR(1024)) AS receipt_status,
 CAST(jsonb->>'requester' AS VARCHAR(1024)) AS requester,
@@ -1519,8 +1518,7 @@ CAST(jsonb#>>'{metadata,createdByUsername}' AS VARCHAR(1024)) AS created_by_user
 uc.TIMESTAMP_CAST(jsonb#>>'{metadata,updatedDate}') AS updated_date,
 CAST(jsonb#>>'{metadata,updatedByUserId}' AS UUID) AS updated_by_user_id,
 CAST(jsonb#>>'{metadata,updatedByUsername}' AS VARCHAR(1024)) AS updated_by_username,
-jsonb_pretty(jsonb) AS content,
-purchaseorderid AS purchaseorderid
+jsonb_pretty(jsonb) AS content
 FROM diku_mod_orders_storage.po_line;
 CREATE VIEW uc.organization_aliases AS
 SELECT
@@ -1882,8 +1880,7 @@ CAST(jsonb->>'poLineId' AS UUID) AS po_line_id,
 CAST(jsonb->>'receivingStatus' AS VARCHAR(1024)) AS receiving_status,
 CAST(jsonb->>'supplement' AS BOOLEAN) AS supplement,
 uc.TIMESTAMP_CAST(jsonb->>'receivedDate') AS received_date,
-jsonb_pretty(jsonb) AS content,
-polineid AS polineid
+jsonb_pretty(jsonb) AS content
 FROM diku_mod_orders_storage.pieces;
 CREATE VIEW uc.proxies AS
 SELECT
