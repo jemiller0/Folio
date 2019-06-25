@@ -17,6 +17,7 @@ namespace FolioConsoleApplication
         private static bool force;
         private readonly static TraceSource traceSource = new TraceSource("FolioConsoleApplication", SourceLevels.Information);
         private static bool validate;
+        private static bool whatIf;
 
         static int Main(string[] args)
         {
@@ -35,7 +36,7 @@ namespace FolioConsoleApplication
                 Initialize();
                 if (args.Length == 0)
                 {
-                    traceSource.TraceEvent(TraceEventType.Critical, 0, "Usage: dotnet FolioConsoleApplication.dll [-All] [-Api] [-Delete] [-Force] [-Load] [-Save] [-Validate] [-Verbose] [-AllUsers] [-AllOrders] [-AllInventory] [-AllOrganizations] [-AllLogin] [-AllPermissions] [-AddressTypesPath <string>] [-AddressTypesWhere <string>] [-AlertsPath <string>] [-AlertsWhere <string>] [-AlternativeTitleTypesPath <string>] [-AlternativeTitleTypesWhere <string>] [-CallNumberTypesPath <string>] [-CallNumberTypesWhere <string>] [-CampusesPath <string>] [-CampusesWhere <string>] [-CategoriesPath <string>] [-CategoriesWhere <string>] [-ClassificationTypesPath <string>] [-ClassificationTypesWhere <string>] [-ContactsPath <string>] [-ContactsWhere <string>] [-ContributorNameTypesPath <string>] [-ContributorNameTypesWhere <string>] [-ContributorTypesPath <string>] [-ContributorTypesWhere <string>] [-ElectronicAccessRelationshipsPath <string>] [-ElectronicAccessRelationshipsWhere <string>] [-GroupsPath <string>] [-GroupsWhere <string>] [-HoldingsPath <string>] [-HoldingsWhere <string>] [-HoldingNoteTypesPath <string>] [-HoldingNoteTypesWhere <string>] [-HoldingTypesPath <string>] [-HoldingTypesWhere <string>] [-IdTypesPath <string>] [-IdTypesWhere <string>] [-IllPoliciesPath <string>] [-IllPoliciesWhere <string>] [-InstancesPath <string>] [-InstancesWhere <string>] [-InstanceFormatsPath <string>] [-InstanceFormatsWhere <string>] [-InstanceRelationshipsPath <string>] [-InstanceRelationshipsWhere <string>] [-InstanceRelationshipTypesPath <string>] [-InstanceRelationshipTypesWhere <string>] [-InstanceStatusesPath <string>] [-InstanceStatusesWhere <string>] [-InstanceTypesPath <string>] [-InstanceTypesWhere <string>] [-InstitutionsPath <string>] [-InstitutionsWhere <string>] [-InterfacesPath <string>] [-InterfacesWhere <string>] [-ItemsPath <string>] [-ItemsWhere <string>] [-ItemNoteTypesPath <string>] [-ItemNoteTypesWhere <string>] [-LibrariesPath <string>] [-LibrariesWhere <string>] [-LoanTypesPath <string>] [-LoanTypesWhere <string>] [-LocationsPath <string>] [-LocationsWhere <string>] [-LoginsPath <string>] [-LoginsWhere <string>] [-MaterialTypesPath <string>] [-MaterialTypesWhere <string>] [-ModeOfIssuancesPath <string>] [-ModeOfIssuancesWhere <string>] [-OrdersPath <string>] [-OrdersWhere <string>] [-OrderItemsPath <string>] [-OrderItemsWhere <string>] [-OrganizationsPath <string>] [-OrganizationsWhere <string>] [-PermissionsPath <string>] [-PermissionsWhere <string>] [-PermissionsUsersPath <string>] [-PermissionsUsersWhere <string>] [-PiecesPath <string>] [-PiecesWhere <string>] [-ProxiesPath <string>] [-ProxiesWhere <string>] [-ReportingCodesPath <string>] [-ReportingCodesWhere <string>] [-ServicePointsPath <string>] [-ServicePointsWhere <string>] [-ServicePointUsersPath <string>] [-ServicePointUsersWhere <string>] [-StatisticalCodesPath <string>] [-StatisticalCodesWhere <string>] [-StatisticalCodeTypesPath <string>] [-StatisticalCodeTypesWhere <string>] [-UsersPath <string>] [-UsersWhere <string>]");
+                    traceSource.TraceEvent(TraceEventType.Critical, 0, "Usage: dotnet FolioConsoleApplication.dll [-All] [-Api] [-Delete] [-Force] [-Load] [-Save] [-Validate] [-Verbose] [-WhatIf] [-AllUsers] [-AllOrders] [-AllInventory] [-AllOrganizations] [-AllLogin] [-AllPermissions] [-AddressTypesPath <string>] [-AddressTypesWhere <string>] [-AlertsPath <string>] [-AlertsWhere <string>] [-AlternativeTitleTypesPath <string>] [-AlternativeTitleTypesWhere <string>] [-CallNumberTypesPath <string>] [-CallNumberTypesWhere <string>] [-CampusesPath <string>] [-CampusesWhere <string>] [-CategoriesPath <string>] [-CategoriesWhere <string>] [-ClassificationTypesPath <string>] [-ClassificationTypesWhere <string>] [-ContactsPath <string>] [-ContactsWhere <string>] [-ContributorNameTypesPath <string>] [-ContributorNameTypesWhere <string>] [-ContributorTypesPath <string>] [-ContributorTypesWhere <string>] [-ElectronicAccessRelationshipsPath <string>] [-ElectronicAccessRelationshipsWhere <string>] [-GroupsPath <string>] [-GroupsWhere <string>] [-HoldingsPath <string>] [-HoldingsWhere <string>] [-HoldingNoteTypesPath <string>] [-HoldingNoteTypesWhere <string>] [-HoldingTypesPath <string>] [-HoldingTypesWhere <string>] [-IdTypesPath <string>] [-IdTypesWhere <string>] [-IllPoliciesPath <string>] [-IllPoliciesWhere <string>] [-InstancesPath <string>] [-InstancesWhere <string>] [-InstanceFormatsPath <string>] [-InstanceFormatsWhere <string>] [-InstanceRelationshipsPath <string>] [-InstanceRelationshipsWhere <string>] [-InstanceRelationshipTypesPath <string>] [-InstanceRelationshipTypesWhere <string>] [-InstanceStatusesPath <string>] [-InstanceStatusesWhere <string>] [-InstanceTypesPath <string>] [-InstanceTypesWhere <string>] [-InstitutionsPath <string>] [-InstitutionsWhere <string>] [-InterfacesPath <string>] [-InterfacesWhere <string>] [-ItemsPath <string>] [-ItemsWhere <string>] [-ItemNoteTypesPath <string>] [-ItemNoteTypesWhere <string>] [-LibrariesPath <string>] [-LibrariesWhere <string>] [-LoanTypesPath <string>] [-LoanTypesWhere <string>] [-LocationsPath <string>] [-LocationsWhere <string>] [-LoginsPath <string>] [-LoginsWhere <string>] [-MaterialTypesPath <string>] [-MaterialTypesWhere <string>] [-ModeOfIssuancesPath <string>] [-ModeOfIssuancesWhere <string>] [-OrdersPath <string>] [-OrdersWhere <string>] [-OrderItemsPath <string>] [-OrderItemsWhere <string>] [-OrganizationsPath <string>] [-OrganizationsWhere <string>] [-PermissionsPath <string>] [-PermissionsWhere <string>] [-PermissionsUsersPath <string>] [-PermissionsUsersWhere <string>] [-PiecesPath <string>] [-PiecesWhere <string>] [-ProxiesPath <string>] [-ProxiesWhere <string>] [-ReportingCodesPath <string>] [-ReportingCodesWhere <string>] [-ServicePointsPath <string>] [-ServicePointsWhere <string>] [-ServicePointUsersPath <string>] [-ServicePointUsersWhere <string>] [-StatisticalCodesPath <string>] [-StatisticalCodesWhere <string>] [-StatisticalCodeTypesPath <string>] [-StatisticalCodeTypesWhere <string>] [-UsersPath <string>] [-UsersWhere <string>]");
                     return -1;
                 }
                 var all = args.Any(s3 => s3.Equals("-All", StringComparison.OrdinalIgnoreCase));
@@ -45,6 +46,7 @@ namespace FolioConsoleApplication
                 var load = args.Any(s3 => s3.Equals("-Load", StringComparison.OrdinalIgnoreCase));
                 var save = args.Any(s3 => s3.Equals("-Save", StringComparison.OrdinalIgnoreCase));
                 validate = args.Any(s3 => s3.Equals("-Validate", StringComparison.OrdinalIgnoreCase));
+                whatIf = args.Any(s3 => s3.Equals("-WhatIf", StringComparison.OrdinalIgnoreCase));
                 var allUsers = args.Any(s3 => s3.Equals("-AllUsers", StringComparison.OrdinalIgnoreCase));
                 var allOrders = args.Any(s3 => s3.Equals("-AllOrders", StringComparison.OrdinalIgnoreCase));
                 var allInventory = args.Any(s3 => s3.Equals("-AllInventory", StringComparison.OrdinalIgnoreCase));
@@ -437,7 +439,7 @@ namespace FolioConsoleApplication
                     var s2 = Stopwatch.StartNew();
                     foreach (var jo in fsc.AddressTypes(where))
                     {
-                        fsc.DeleteAddressType((string)jo["id"]);
+                        if (!whatIf) fsc.DeleteAddressType((string)jo["id"]);
                         if (++i % 100 == 0)
                         {
                             traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
@@ -448,7 +450,7 @@ namespace FolioConsoleApplication
                 }
                 else
                 {
-                    i = fbcc.ExecuteNonQuery($"DELETE FROM diku_mod_users.addresstype{(where != null ? $" WHERE {where}" : "")}");
+                    if (!whatIf) i = fbcc.ExecuteNonQuery($"DELETE FROM diku_mod_users.addresstype{(where != null ? $" WHERE {where}" : "")}");
                 }
                 traceSource.TraceEvent(TraceEventType.Information, 0, $"Deleted {i} address types");
             }
@@ -481,7 +483,7 @@ namespace FolioConsoleApplication
                     }
                     if (api)
                     {
-                        fsc.InsertAddressType(jo);
+                        if (!whatIf) fsc.InsertAddressType(jo);
                         if (i % 100 == 0)
                         {
                             traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
@@ -490,7 +492,7 @@ namespace FolioConsoleApplication
                     }
                     else
                     {
-                        fbcc.Insert(new AddressType
+                        if (!whatIf) fbcc.Insert(new AddressType
                         {
                             Id = (Guid?)jo.SelectToken("id"),
                             Content = jo.ToString(),
@@ -522,7 +524,7 @@ namespace FolioConsoleApplication
             using (var fdc = new FolioDapperContext())
             using (var fsc = new FolioServiceClient())
             using (var sr = new StreamReader(Assembly.GetAssembly(typeof(FolioContext)).GetManifestResourceStream("FolioLibrary.AddressType.json")))
-            using (var sw = new StreamWriter(path))
+            using (var sw = new StreamWriter(whatIf ? (Stream)new MemoryStream() : new FileStream(path, FileMode.Create)))
             using (var jtw = new JsonTextWriter(sw))
             {
                 var s2 = Stopwatch.StartNew();
@@ -537,7 +539,7 @@ namespace FolioConsoleApplication
                         var l = js4.Validate(jo);
                         if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"AddressType {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"AddressType {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
                     }
-                    js.Serialize(jtw, jo);
+                    if (!whatIf) js.Serialize(jtw, jo);
                     if (++i % 10000 == 0)
                     {
                         traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
@@ -564,7 +566,7 @@ namespace FolioConsoleApplication
                     var s2 = Stopwatch.StartNew();
                     foreach (var jo in fsc.Alerts(where))
                     {
-                        fsc.DeleteAlert((string)jo["id"]);
+                        if (!whatIf) fsc.DeleteAlert((string)jo["id"]);
                         if (++i % 100 == 0)
                         {
                             traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
@@ -575,7 +577,7 @@ namespace FolioConsoleApplication
                 }
                 else
                 {
-                    i = fbcc.ExecuteNonQuery($"DELETE FROM diku_mod_orders_storage.alert{(where != null ? $" WHERE {where}" : "")}");
+                    if (!whatIf) i = fbcc.ExecuteNonQuery($"DELETE FROM diku_mod_orders_storage.alert{(where != null ? $" WHERE {where}" : "")}");
                 }
                 traceSource.TraceEvent(TraceEventType.Information, 0, $"Deleted {i} alerts");
             }
@@ -608,7 +610,7 @@ namespace FolioConsoleApplication
                     }
                     if (api)
                     {
-                        fsc.InsertAlert(jo);
+                        if (!whatIf) fsc.InsertAlert(jo);
                         if (i % 100 == 0)
                         {
                             traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
@@ -617,7 +619,7 @@ namespace FolioConsoleApplication
                     }
                     else
                     {
-                        fbcc.Insert(new Alert
+                        if (!whatIf) fbcc.Insert(new Alert
                         {
                             Id = (Guid?)jo.SelectToken("id"),
                             Content = jo.ToString()
@@ -647,7 +649,7 @@ namespace FolioConsoleApplication
             using (var fdc = new FolioDapperContext())
             using (var fsc = new FolioServiceClient())
             using (var sr = new StreamReader(Assembly.GetAssembly(typeof(FolioContext)).GetManifestResourceStream("FolioLibrary.Alert.json")))
-            using (var sw = new StreamWriter(path))
+            using (var sw = new StreamWriter(whatIf ? (Stream)new MemoryStream() : new FileStream(path, FileMode.Create)))
             using (var jtw = new JsonTextWriter(sw))
             {
                 var s2 = Stopwatch.StartNew();
@@ -662,7 +664,7 @@ namespace FolioConsoleApplication
                         var l = js4.Validate(jo);
                         if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"Alert {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"Alert {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
                     }
-                    js.Serialize(jtw, jo);
+                    if (!whatIf) js.Serialize(jtw, jo);
                     if (++i % 10000 == 0)
                     {
                         traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
@@ -689,7 +691,7 @@ namespace FolioConsoleApplication
                     var s2 = Stopwatch.StartNew();
                     foreach (var jo in fsc.AlternativeTitleTypes(where))
                     {
-                        fsc.DeleteAlternativeTitleType((string)jo["id"]);
+                        if (!whatIf) fsc.DeleteAlternativeTitleType((string)jo["id"]);
                         if (++i % 100 == 0)
                         {
                             traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
@@ -700,7 +702,7 @@ namespace FolioConsoleApplication
                 }
                 else
                 {
-                    i = fbcc.ExecuteNonQuery($"DELETE FROM diku_mod_inventory_storage.alternative_title_type{(where != null ? $" WHERE {where}" : "")}");
+                    if (!whatIf) i = fbcc.ExecuteNonQuery($"DELETE FROM diku_mod_inventory_storage.alternative_title_type{(where != null ? $" WHERE {where}" : "")}");
                 }
                 traceSource.TraceEvent(TraceEventType.Information, 0, $"Deleted {i} alternative title types");
             }
@@ -733,7 +735,7 @@ namespace FolioConsoleApplication
                     }
                     if (api)
                     {
-                        fsc.InsertAlternativeTitleType(jo);
+                        if (!whatIf) fsc.InsertAlternativeTitleType(jo);
                         if (i % 100 == 0)
                         {
                             traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
@@ -742,7 +744,7 @@ namespace FolioConsoleApplication
                     }
                     else
                     {
-                        fbcc.Insert(new AlternativeTitleType
+                        if (!whatIf) fbcc.Insert(new AlternativeTitleType
                         {
                             Id = (Guid?)jo.SelectToken("id"),
                             Content = jo.ToString(),
@@ -774,7 +776,7 @@ namespace FolioConsoleApplication
             using (var fdc = new FolioDapperContext())
             using (var fsc = new FolioServiceClient())
             using (var sr = new StreamReader(Assembly.GetAssembly(typeof(FolioContext)).GetManifestResourceStream("FolioLibrary.AlternativeTitleType.json")))
-            using (var sw = new StreamWriter(path))
+            using (var sw = new StreamWriter(whatIf ? (Stream)new MemoryStream() : new FileStream(path, FileMode.Create)))
             using (var jtw = new JsonTextWriter(sw))
             {
                 var s2 = Stopwatch.StartNew();
@@ -789,7 +791,7 @@ namespace FolioConsoleApplication
                         var l = js4.Validate(jo);
                         if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"AlternativeTitleType {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"AlternativeTitleType {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
                     }
-                    js.Serialize(jtw, jo);
+                    if (!whatIf) js.Serialize(jtw, jo);
                     if (++i % 10000 == 0)
                     {
                         traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
@@ -816,7 +818,7 @@ namespace FolioConsoleApplication
                     var s2 = Stopwatch.StartNew();
                     foreach (var jo in fsc.CallNumberTypes(where))
                     {
-                        fsc.DeleteCallNumberType((string)jo["id"]);
+                        if (!whatIf) fsc.DeleteCallNumberType((string)jo["id"]);
                         if (++i % 100 == 0)
                         {
                             traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
@@ -827,7 +829,7 @@ namespace FolioConsoleApplication
                 }
                 else
                 {
-                    i = fbcc.ExecuteNonQuery($"DELETE FROM diku_mod_inventory_storage.call_number_type{(where != null ? $" WHERE {where}" : "")}");
+                    if (!whatIf) i = fbcc.ExecuteNonQuery($"DELETE FROM diku_mod_inventory_storage.call_number_type{(where != null ? $" WHERE {where}" : "")}");
                 }
                 traceSource.TraceEvent(TraceEventType.Information, 0, $"Deleted {i} call number types");
             }
@@ -860,7 +862,7 @@ namespace FolioConsoleApplication
                     }
                     if (api)
                     {
-                        fsc.InsertCallNumberType(jo);
+                        if (!whatIf) fsc.InsertCallNumberType(jo);
                         if (i % 100 == 0)
                         {
                             traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
@@ -869,7 +871,7 @@ namespace FolioConsoleApplication
                     }
                     else
                     {
-                        fbcc.Insert(new CallNumberType
+                        if (!whatIf) fbcc.Insert(new CallNumberType
                         {
                             Id = (Guid?)jo.SelectToken("id"),
                             Content = jo.ToString(),
@@ -901,7 +903,7 @@ namespace FolioConsoleApplication
             using (var fdc = new FolioDapperContext())
             using (var fsc = new FolioServiceClient())
             using (var sr = new StreamReader(Assembly.GetAssembly(typeof(FolioContext)).GetManifestResourceStream("FolioLibrary.CallNumberType.json")))
-            using (var sw = new StreamWriter(path))
+            using (var sw = new StreamWriter(whatIf ? (Stream)new MemoryStream() : new FileStream(path, FileMode.Create)))
             using (var jtw = new JsonTextWriter(sw))
             {
                 var s2 = Stopwatch.StartNew();
@@ -916,7 +918,7 @@ namespace FolioConsoleApplication
                         var l = js4.Validate(jo);
                         if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"CallNumberType {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"CallNumberType {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
                     }
-                    js.Serialize(jtw, jo);
+                    if (!whatIf) js.Serialize(jtw, jo);
                     if (++i % 10000 == 0)
                     {
                         traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
@@ -943,7 +945,7 @@ namespace FolioConsoleApplication
                     var s2 = Stopwatch.StartNew();
                     foreach (var jo in fsc.Campuses(where))
                     {
-                        fsc.DeleteCampus((string)jo["id"]);
+                        if (!whatIf) fsc.DeleteCampus((string)jo["id"]);
                         if (++i % 100 == 0)
                         {
                             traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
@@ -954,7 +956,7 @@ namespace FolioConsoleApplication
                 }
                 else
                 {
-                    i = fbcc.ExecuteNonQuery($"DELETE FROM diku_mod_inventory_storage.loccampus{(where != null ? $" WHERE {where}" : "")}");
+                    if (!whatIf) i = fbcc.ExecuteNonQuery($"DELETE FROM diku_mod_inventory_storage.loccampus{(where != null ? $" WHERE {where}" : "")}");
                 }
                 traceSource.TraceEvent(TraceEventType.Information, 0, $"Deleted {i} campuses");
             }
@@ -987,7 +989,7 @@ namespace FolioConsoleApplication
                     }
                     if (api)
                     {
-                        fsc.InsertCampus(jo);
+                        if (!whatIf) fsc.InsertCampus(jo);
                         if (i % 100 == 0)
                         {
                             traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
@@ -996,7 +998,7 @@ namespace FolioConsoleApplication
                     }
                     else
                     {
-                        fbcc.Insert(new Campus
+                        if (!whatIf) fbcc.Insert(new Campus
                         {
                             Id = (Guid?)jo.SelectToken("id"),
                             Content = jo.ToString(),
@@ -1029,7 +1031,7 @@ namespace FolioConsoleApplication
             using (var fdc = new FolioDapperContext())
             using (var fsc = new FolioServiceClient())
             using (var sr = new StreamReader(Assembly.GetAssembly(typeof(FolioContext)).GetManifestResourceStream("FolioLibrary.Campus.json")))
-            using (var sw = new StreamWriter(path))
+            using (var sw = new StreamWriter(whatIf ? (Stream)new MemoryStream() : new FileStream(path, FileMode.Create)))
             using (var jtw = new JsonTextWriter(sw))
             {
                 var s2 = Stopwatch.StartNew();
@@ -1044,7 +1046,7 @@ namespace FolioConsoleApplication
                         var l = js4.Validate(jo);
                         if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"Campus {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"Campus {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
                     }
-                    js.Serialize(jtw, jo);
+                    if (!whatIf) js.Serialize(jtw, jo);
                     if (++i % 10000 == 0)
                     {
                         traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
@@ -1071,7 +1073,7 @@ namespace FolioConsoleApplication
                     var s2 = Stopwatch.StartNew();
                     foreach (var jo in fsc.Categories(where))
                     {
-                        fsc.DeleteCategory((string)jo["id"]);
+                        if (!whatIf) fsc.DeleteCategory((string)jo["id"]);
                         if (++i % 100 == 0)
                         {
                             traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
@@ -1082,7 +1084,7 @@ namespace FolioConsoleApplication
                 }
                 else
                 {
-                    i = fbcc.ExecuteNonQuery($"DELETE FROM diku_mod_organizations_storage.categories{(where != null ? $" WHERE {where}" : "")}");
+                    if (!whatIf) i = fbcc.ExecuteNonQuery($"DELETE FROM diku_mod_organizations_storage.categories{(where != null ? $" WHERE {where}" : "")}");
                 }
                 traceSource.TraceEvent(TraceEventType.Information, 0, $"Deleted {i} categories");
             }
@@ -1115,7 +1117,7 @@ namespace FolioConsoleApplication
                     }
                     if (api)
                     {
-                        fsc.InsertCategory(jo);
+                        if (!whatIf) fsc.InsertCategory(jo);
                         if (i % 100 == 0)
                         {
                             traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
@@ -1124,7 +1126,7 @@ namespace FolioConsoleApplication
                     }
                     else
                     {
-                        fbcc.Insert(new Category
+                        if (!whatIf) fbcc.Insert(new Category
                         {
                             Id = (Guid?)jo.SelectToken("id"),
                             Content = jo.ToString()
@@ -1154,7 +1156,7 @@ namespace FolioConsoleApplication
             using (var fdc = new FolioDapperContext())
             using (var fsc = new FolioServiceClient())
             using (var sr = new StreamReader(Assembly.GetAssembly(typeof(FolioContext)).GetManifestResourceStream("FolioLibrary.Category.json")))
-            using (var sw = new StreamWriter(path))
+            using (var sw = new StreamWriter(whatIf ? (Stream)new MemoryStream() : new FileStream(path, FileMode.Create)))
             using (var jtw = new JsonTextWriter(sw))
             {
                 var s2 = Stopwatch.StartNew();
@@ -1169,7 +1171,7 @@ namespace FolioConsoleApplication
                         var l = js4.Validate(jo);
                         if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"Category {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"Category {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
                     }
-                    js.Serialize(jtw, jo);
+                    if (!whatIf) js.Serialize(jtw, jo);
                     if (++i % 10000 == 0)
                     {
                         traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
@@ -1196,7 +1198,7 @@ namespace FolioConsoleApplication
                     var s2 = Stopwatch.StartNew();
                     foreach (var jo in fsc.ClassificationTypes(where))
                     {
-                        fsc.DeleteClassificationType((string)jo["id"]);
+                        if (!whatIf) fsc.DeleteClassificationType((string)jo["id"]);
                         if (++i % 100 == 0)
                         {
                             traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
@@ -1207,7 +1209,7 @@ namespace FolioConsoleApplication
                 }
                 else
                 {
-                    i = fbcc.ExecuteNonQuery($"DELETE FROM diku_mod_inventory_storage.classification_type{(where != null ? $" WHERE {where}" : "")}");
+                    if (!whatIf) i = fbcc.ExecuteNonQuery($"DELETE FROM diku_mod_inventory_storage.classification_type{(where != null ? $" WHERE {where}" : "")}");
                 }
                 traceSource.TraceEvent(TraceEventType.Information, 0, $"Deleted {i} classification types");
             }
@@ -1240,7 +1242,7 @@ namespace FolioConsoleApplication
                     }
                     if (api)
                     {
-                        fsc.InsertClassificationType(jo);
+                        if (!whatIf) fsc.InsertClassificationType(jo);
                         if (i % 100 == 0)
                         {
                             traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
@@ -1249,7 +1251,7 @@ namespace FolioConsoleApplication
                     }
                     else
                     {
-                        fbcc.Insert(new ClassificationType
+                        if (!whatIf) fbcc.Insert(new ClassificationType
                         {
                             Id = (Guid?)jo.SelectToken("id"),
                             Content = jo.ToString(),
@@ -1281,7 +1283,7 @@ namespace FolioConsoleApplication
             using (var fdc = new FolioDapperContext())
             using (var fsc = new FolioServiceClient())
             using (var sr = new StreamReader(Assembly.GetAssembly(typeof(FolioContext)).GetManifestResourceStream("FolioLibrary.ClassificationType.json")))
-            using (var sw = new StreamWriter(path))
+            using (var sw = new StreamWriter(whatIf ? (Stream)new MemoryStream() : new FileStream(path, FileMode.Create)))
             using (var jtw = new JsonTextWriter(sw))
             {
                 var s2 = Stopwatch.StartNew();
@@ -1296,7 +1298,7 @@ namespace FolioConsoleApplication
                         var l = js4.Validate(jo);
                         if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"ClassificationType {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"ClassificationType {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
                     }
-                    js.Serialize(jtw, jo);
+                    if (!whatIf) js.Serialize(jtw, jo);
                     if (++i % 10000 == 0)
                     {
                         traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
@@ -1323,7 +1325,7 @@ namespace FolioConsoleApplication
                     var s2 = Stopwatch.StartNew();
                     foreach (var jo in fsc.Contacts(where))
                     {
-                        fsc.DeleteContact((string)jo["id"]);
+                        if (!whatIf) fsc.DeleteContact((string)jo["id"]);
                         if (++i % 100 == 0)
                         {
                             traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
@@ -1334,7 +1336,7 @@ namespace FolioConsoleApplication
                 }
                 else
                 {
-                    i = fbcc.ExecuteNonQuery($"DELETE FROM diku_mod_organizations_storage.contacts{(where != null ? $" WHERE {where}" : "")}");
+                    if (!whatIf) i = fbcc.ExecuteNonQuery($"DELETE FROM diku_mod_organizations_storage.contacts{(where != null ? $" WHERE {where}" : "")}");
                 }
                 traceSource.TraceEvent(TraceEventType.Information, 0, $"Deleted {i} contacts");
             }
@@ -1367,7 +1369,7 @@ namespace FolioConsoleApplication
                     }
                     if (api)
                     {
-                        fsc.InsertContact(jo);
+                        if (!whatIf) fsc.InsertContact(jo);
                         if (i % 100 == 0)
                         {
                             traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
@@ -1376,7 +1378,7 @@ namespace FolioConsoleApplication
                     }
                     else
                     {
-                        fbcc.Insert(new Contact
+                        if (!whatIf) fbcc.Insert(new Contact
                         {
                             Id = (Guid?)jo.SelectToken("id"),
                             Content = jo.ToString()
@@ -1406,7 +1408,7 @@ namespace FolioConsoleApplication
             using (var fdc = new FolioDapperContext())
             using (var fsc = new FolioServiceClient())
             using (var sr = new StreamReader(Assembly.GetAssembly(typeof(FolioContext)).GetManifestResourceStream("FolioLibrary.Contact.json")))
-            using (var sw = new StreamWriter(path))
+            using (var sw = new StreamWriter(whatIf ? (Stream)new MemoryStream() : new FileStream(path, FileMode.Create)))
             using (var jtw = new JsonTextWriter(sw))
             {
                 var s2 = Stopwatch.StartNew();
@@ -1421,7 +1423,7 @@ namespace FolioConsoleApplication
                         var l = js4.Validate(jo);
                         if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"Contact {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"Contact {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
                     }
-                    js.Serialize(jtw, jo);
+                    if (!whatIf) js.Serialize(jtw, jo);
                     if (++i % 10000 == 0)
                     {
                         traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
@@ -1448,7 +1450,7 @@ namespace FolioConsoleApplication
                     var s2 = Stopwatch.StartNew();
                     foreach (var jo in fsc.ContributorNameTypes(where))
                     {
-                        fsc.DeleteContributorNameType((string)jo["id"]);
+                        if (!whatIf) fsc.DeleteContributorNameType((string)jo["id"]);
                         if (++i % 100 == 0)
                         {
                             traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
@@ -1459,7 +1461,7 @@ namespace FolioConsoleApplication
                 }
                 else
                 {
-                    i = fbcc.ExecuteNonQuery($"DELETE FROM diku_mod_inventory_storage.contributor_name_type{(where != null ? $" WHERE {where}" : "")}");
+                    if (!whatIf) i = fbcc.ExecuteNonQuery($"DELETE FROM diku_mod_inventory_storage.contributor_name_type{(where != null ? $" WHERE {where}" : "")}");
                 }
                 traceSource.TraceEvent(TraceEventType.Information, 0, $"Deleted {i} contributor name types");
             }
@@ -1492,7 +1494,7 @@ namespace FolioConsoleApplication
                     }
                     if (api)
                     {
-                        fsc.InsertContributorNameType(jo);
+                        if (!whatIf) fsc.InsertContributorNameType(jo);
                         if (i % 100 == 0)
                         {
                             traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
@@ -1501,7 +1503,7 @@ namespace FolioConsoleApplication
                     }
                     else
                     {
-                        fbcc.Insert(new ContributorNameType
+                        if (!whatIf) fbcc.Insert(new ContributorNameType
                         {
                             Id = (Guid?)jo.SelectToken("id"),
                             Content = jo.ToString(),
@@ -1533,7 +1535,7 @@ namespace FolioConsoleApplication
             using (var fdc = new FolioDapperContext())
             using (var fsc = new FolioServiceClient())
             using (var sr = new StreamReader(Assembly.GetAssembly(typeof(FolioContext)).GetManifestResourceStream("FolioLibrary.ContributorNameType.json")))
-            using (var sw = new StreamWriter(path))
+            using (var sw = new StreamWriter(whatIf ? (Stream)new MemoryStream() : new FileStream(path, FileMode.Create)))
             using (var jtw = new JsonTextWriter(sw))
             {
                 var s2 = Stopwatch.StartNew();
@@ -1548,7 +1550,7 @@ namespace FolioConsoleApplication
                         var l = js4.Validate(jo);
                         if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"ContributorNameType {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"ContributorNameType {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
                     }
-                    js.Serialize(jtw, jo);
+                    if (!whatIf) js.Serialize(jtw, jo);
                     if (++i % 10000 == 0)
                     {
                         traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
@@ -1575,7 +1577,7 @@ namespace FolioConsoleApplication
                     var s2 = Stopwatch.StartNew();
                     foreach (var jo in fsc.ContributorTypes(where))
                     {
-                        fsc.DeleteContributorType((string)jo["id"]);
+                        if (!whatIf) fsc.DeleteContributorType((string)jo["id"]);
                         if (++i % 100 == 0)
                         {
                             traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
@@ -1586,7 +1588,7 @@ namespace FolioConsoleApplication
                 }
                 else
                 {
-                    i = fbcc.ExecuteNonQuery($"DELETE FROM diku_mod_inventory_storage.contributor_type{(where != null ? $" WHERE {where}" : "")}");
+                    if (!whatIf) i = fbcc.ExecuteNonQuery($"DELETE FROM diku_mod_inventory_storage.contributor_type{(where != null ? $" WHERE {where}" : "")}");
                 }
                 traceSource.TraceEvent(TraceEventType.Information, 0, $"Deleted {i} contributor types");
             }
@@ -1619,7 +1621,7 @@ namespace FolioConsoleApplication
                     }
                     if (api)
                     {
-                        fsc.InsertContributorType(jo);
+                        if (!whatIf) fsc.InsertContributorType(jo);
                         if (i % 100 == 0)
                         {
                             traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
@@ -1628,7 +1630,7 @@ namespace FolioConsoleApplication
                     }
                     else
                     {
-                        fbcc.Insert(new ContributorType
+                        if (!whatIf) fbcc.Insert(new ContributorType
                         {
                             Id = (Guid?)jo.SelectToken("id"),
                             Content = jo.ToString()
@@ -1658,7 +1660,7 @@ namespace FolioConsoleApplication
             using (var fdc = new FolioDapperContext())
             using (var fsc = new FolioServiceClient())
             using (var sr = new StreamReader(Assembly.GetAssembly(typeof(FolioContext)).GetManifestResourceStream("FolioLibrary.ContributorType.json")))
-            using (var sw = new StreamWriter(path))
+            using (var sw = new StreamWriter(whatIf ? (Stream)new MemoryStream() : new FileStream(path, FileMode.Create)))
             using (var jtw = new JsonTextWriter(sw))
             {
                 var s2 = Stopwatch.StartNew();
@@ -1673,7 +1675,7 @@ namespace FolioConsoleApplication
                         var l = js4.Validate(jo);
                         if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"ContributorType {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"ContributorType {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
                     }
-                    js.Serialize(jtw, jo);
+                    if (!whatIf) js.Serialize(jtw, jo);
                     if (++i % 10000 == 0)
                     {
                         traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
@@ -1700,7 +1702,7 @@ namespace FolioConsoleApplication
                     var s2 = Stopwatch.StartNew();
                     foreach (var jo in fsc.ElectronicAccessRelationships(where))
                     {
-                        fsc.DeleteElectronicAccessRelationship((string)jo["id"]);
+                        if (!whatIf) fsc.DeleteElectronicAccessRelationship((string)jo["id"]);
                         if (++i % 100 == 0)
                         {
                             traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
@@ -1711,7 +1713,7 @@ namespace FolioConsoleApplication
                 }
                 else
                 {
-                    i = fbcc.ExecuteNonQuery($"DELETE FROM diku_mod_inventory_storage.electronic_access_relationship{(where != null ? $" WHERE {where}" : "")}");
+                    if (!whatIf) i = fbcc.ExecuteNonQuery($"DELETE FROM diku_mod_inventory_storage.electronic_access_relationship{(where != null ? $" WHERE {where}" : "")}");
                 }
                 traceSource.TraceEvent(TraceEventType.Information, 0, $"Deleted {i} electronic access relationships");
             }
@@ -1744,7 +1746,7 @@ namespace FolioConsoleApplication
                     }
                     if (api)
                     {
-                        fsc.InsertElectronicAccessRelationship(jo);
+                        if (!whatIf) fsc.InsertElectronicAccessRelationship(jo);
                         if (i % 100 == 0)
                         {
                             traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
@@ -1753,7 +1755,7 @@ namespace FolioConsoleApplication
                     }
                     else
                     {
-                        fbcc.Insert(new ElectronicAccessRelationship
+                        if (!whatIf) fbcc.Insert(new ElectronicAccessRelationship
                         {
                             Id = (Guid?)jo.SelectToken("id"),
                             Content = jo.ToString(),
@@ -1785,7 +1787,7 @@ namespace FolioConsoleApplication
             using (var fdc = new FolioDapperContext())
             using (var fsc = new FolioServiceClient())
             using (var sr = new StreamReader(Assembly.GetAssembly(typeof(FolioContext)).GetManifestResourceStream("FolioLibrary.ElectronicAccessRelationship.json")))
-            using (var sw = new StreamWriter(path))
+            using (var sw = new StreamWriter(whatIf ? (Stream)new MemoryStream() : new FileStream(path, FileMode.Create)))
             using (var jtw = new JsonTextWriter(sw))
             {
                 var s2 = Stopwatch.StartNew();
@@ -1800,7 +1802,7 @@ namespace FolioConsoleApplication
                         var l = js4.Validate(jo);
                         if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"ElectronicAccessRelationship {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"ElectronicAccessRelationship {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
                     }
-                    js.Serialize(jtw, jo);
+                    if (!whatIf) js.Serialize(jtw, jo);
                     if (++i % 10000 == 0)
                     {
                         traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
@@ -1827,7 +1829,7 @@ namespace FolioConsoleApplication
                     var s2 = Stopwatch.StartNew();
                     foreach (var jo in fsc.Groups(where))
                     {
-                        fsc.DeleteGroup((string)jo["id"]);
+                        if (!whatIf) fsc.DeleteGroup((string)jo["id"]);
                         if (++i % 100 == 0)
                         {
                             traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
@@ -1838,7 +1840,7 @@ namespace FolioConsoleApplication
                 }
                 else
                 {
-                    i = fbcc.ExecuteNonQuery($"DELETE FROM diku_mod_users.groups{(where != null ? $" WHERE {where}" : "")}");
+                    if (!whatIf) i = fbcc.ExecuteNonQuery($"DELETE FROM diku_mod_users.groups{(where != null ? $" WHERE {where}" : "")}");
                 }
                 traceSource.TraceEvent(TraceEventType.Information, 0, $"Deleted {i} groups");
             }
@@ -1871,7 +1873,7 @@ namespace FolioConsoleApplication
                     }
                     if (api)
                     {
-                        fsc.InsertGroup(jo);
+                        if (!whatIf) fsc.InsertGroup(jo);
                         if (i % 100 == 0)
                         {
                             traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
@@ -1880,7 +1882,7 @@ namespace FolioConsoleApplication
                     }
                     else
                     {
-                        fbcc.Insert(new Group
+                        if (!whatIf) fbcc.Insert(new Group
                         {
                             Id = (Guid?)jo.SelectToken("id"),
                             Content = jo.ToString(),
@@ -1912,7 +1914,7 @@ namespace FolioConsoleApplication
             using (var fdc = new FolioDapperContext())
             using (var fsc = new FolioServiceClient())
             using (var sr = new StreamReader(Assembly.GetAssembly(typeof(FolioContext)).GetManifestResourceStream("FolioLibrary.Group.json")))
-            using (var sw = new StreamWriter(path))
+            using (var sw = new StreamWriter(whatIf ? (Stream)new MemoryStream() : new FileStream(path, FileMode.Create)))
             using (var jtw = new JsonTextWriter(sw))
             {
                 var s2 = Stopwatch.StartNew();
@@ -1927,7 +1929,7 @@ namespace FolioConsoleApplication
                         var l = js4.Validate(jo);
                         if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"Group {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"Group {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
                     }
-                    js.Serialize(jtw, jo);
+                    if (!whatIf) js.Serialize(jtw, jo);
                     if (++i % 10000 == 0)
                     {
                         traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
@@ -1954,7 +1956,7 @@ namespace FolioConsoleApplication
                     var s2 = Stopwatch.StartNew();
                     foreach (var jo in fsc.Holdings(where))
                     {
-                        fsc.DeleteHolding((string)jo["id"]);
+                        if (!whatIf) fsc.DeleteHolding((string)jo["id"]);
                         if (++i % 100 == 0)
                         {
                             traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
@@ -1965,7 +1967,7 @@ namespace FolioConsoleApplication
                 }
                 else
                 {
-                    i = fbcc.ExecuteNonQuery($"DELETE FROM diku_mod_inventory_storage.holdings_record{(where != null ? $" WHERE {where}" : "")}");
+                    if (!whatIf) i = fbcc.ExecuteNonQuery($"DELETE FROM diku_mod_inventory_storage.holdings_record{(where != null ? $" WHERE {where}" : "")}");
                 }
                 traceSource.TraceEvent(TraceEventType.Information, 0, $"Deleted {i} holdings");
             }
@@ -1998,7 +2000,7 @@ namespace FolioConsoleApplication
                     }
                     if (api)
                     {
-                        fsc.InsertHolding(jo);
+                        if (!whatIf) fsc.InsertHolding(jo);
                         if (i % 100 == 0)
                         {
                             traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
@@ -2007,7 +2009,7 @@ namespace FolioConsoleApplication
                     }
                     else
                     {
-                        fbcc.Insert(new Holding
+                        if (!whatIf) fbcc.Insert(new Holding
                         {
                             Id = (Guid?)jo.SelectToken("id"),
                             Content = jo.ToString(),
@@ -2045,7 +2047,7 @@ namespace FolioConsoleApplication
             using (var fdc = new FolioDapperContext())
             using (var fsc = new FolioServiceClient())
             using (var sr = new StreamReader(Assembly.GetAssembly(typeof(FolioContext)).GetManifestResourceStream("FolioLibrary.Holding.json")))
-            using (var sw = new StreamWriter(path))
+            using (var sw = new StreamWriter(whatIf ? (Stream)new MemoryStream() : new FileStream(path, FileMode.Create)))
             using (var jtw = new JsonTextWriter(sw))
             {
                 var s2 = Stopwatch.StartNew();
@@ -2060,7 +2062,7 @@ namespace FolioConsoleApplication
                         var l = js4.Validate(jo);
                         if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"Holding {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"Holding {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
                     }
-                    js.Serialize(jtw, jo);
+                    if (!whatIf) js.Serialize(jtw, jo);
                     if (++i % 10000 == 0)
                     {
                         traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
@@ -2087,7 +2089,7 @@ namespace FolioConsoleApplication
                     var s2 = Stopwatch.StartNew();
                     foreach (var jo in fsc.HoldingNoteTypes(where))
                     {
-                        fsc.DeleteHoldingNoteType((string)jo["id"]);
+                        if (!whatIf) fsc.DeleteHoldingNoteType((string)jo["id"]);
                         if (++i % 100 == 0)
                         {
                             traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
@@ -2098,7 +2100,7 @@ namespace FolioConsoleApplication
                 }
                 else
                 {
-                    i = fbcc.ExecuteNonQuery($"DELETE FROM diku_mod_inventory_storage.holdings_note_type{(where != null ? $" WHERE {where}" : "")}");
+                    if (!whatIf) i = fbcc.ExecuteNonQuery($"DELETE FROM diku_mod_inventory_storage.holdings_note_type{(where != null ? $" WHERE {where}" : "")}");
                 }
                 traceSource.TraceEvent(TraceEventType.Information, 0, $"Deleted {i} holding note types");
             }
@@ -2131,7 +2133,7 @@ namespace FolioConsoleApplication
                     }
                     if (api)
                     {
-                        fsc.InsertHoldingNoteType(jo);
+                        if (!whatIf) fsc.InsertHoldingNoteType(jo);
                         if (i % 100 == 0)
                         {
                             traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
@@ -2140,7 +2142,7 @@ namespace FolioConsoleApplication
                     }
                     else
                     {
-                        fbcc.Insert(new HoldingNoteType
+                        if (!whatIf) fbcc.Insert(new HoldingNoteType
                         {
                             Id = (Guid?)jo.SelectToken("id"),
                             Content = jo.ToString(),
@@ -2172,7 +2174,7 @@ namespace FolioConsoleApplication
             using (var fdc = new FolioDapperContext())
             using (var fsc = new FolioServiceClient())
             using (var sr = new StreamReader(Assembly.GetAssembly(typeof(FolioContext)).GetManifestResourceStream("FolioLibrary.HoldingNoteType.json")))
-            using (var sw = new StreamWriter(path))
+            using (var sw = new StreamWriter(whatIf ? (Stream)new MemoryStream() : new FileStream(path, FileMode.Create)))
             using (var jtw = new JsonTextWriter(sw))
             {
                 var s2 = Stopwatch.StartNew();
@@ -2187,7 +2189,7 @@ namespace FolioConsoleApplication
                         var l = js4.Validate(jo);
                         if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"HoldingNoteType {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"HoldingNoteType {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
                     }
-                    js.Serialize(jtw, jo);
+                    if (!whatIf) js.Serialize(jtw, jo);
                     if (++i % 10000 == 0)
                     {
                         traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
@@ -2214,7 +2216,7 @@ namespace FolioConsoleApplication
                     var s2 = Stopwatch.StartNew();
                     foreach (var jo in fsc.HoldingTypes(where))
                     {
-                        fsc.DeleteHoldingType((string)jo["id"]);
+                        if (!whatIf) fsc.DeleteHoldingType((string)jo["id"]);
                         if (++i % 100 == 0)
                         {
                             traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
@@ -2225,7 +2227,7 @@ namespace FolioConsoleApplication
                 }
                 else
                 {
-                    i = fbcc.ExecuteNonQuery($"DELETE FROM diku_mod_inventory_storage.holdings_type{(where != null ? $" WHERE {where}" : "")}");
+                    if (!whatIf) i = fbcc.ExecuteNonQuery($"DELETE FROM diku_mod_inventory_storage.holdings_type{(where != null ? $" WHERE {where}" : "")}");
                 }
                 traceSource.TraceEvent(TraceEventType.Information, 0, $"Deleted {i} holding types");
             }
@@ -2258,7 +2260,7 @@ namespace FolioConsoleApplication
                     }
                     if (api)
                     {
-                        fsc.InsertHoldingType(jo);
+                        if (!whatIf) fsc.InsertHoldingType(jo);
                         if (i % 100 == 0)
                         {
                             traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
@@ -2267,7 +2269,7 @@ namespace FolioConsoleApplication
                     }
                     else
                     {
-                        fbcc.Insert(new HoldingType
+                        if (!whatIf) fbcc.Insert(new HoldingType
                         {
                             Id = (Guid?)jo.SelectToken("id"),
                             Content = jo.ToString(),
@@ -2299,7 +2301,7 @@ namespace FolioConsoleApplication
             using (var fdc = new FolioDapperContext())
             using (var fsc = new FolioServiceClient())
             using (var sr = new StreamReader(Assembly.GetAssembly(typeof(FolioContext)).GetManifestResourceStream("FolioLibrary.HoldingType.json")))
-            using (var sw = new StreamWriter(path))
+            using (var sw = new StreamWriter(whatIf ? (Stream)new MemoryStream() : new FileStream(path, FileMode.Create)))
             using (var jtw = new JsonTextWriter(sw))
             {
                 var s2 = Stopwatch.StartNew();
@@ -2314,7 +2316,7 @@ namespace FolioConsoleApplication
                         var l = js4.Validate(jo);
                         if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"HoldingType {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"HoldingType {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
                     }
-                    js.Serialize(jtw, jo);
+                    if (!whatIf) js.Serialize(jtw, jo);
                     if (++i % 10000 == 0)
                     {
                         traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
@@ -2341,7 +2343,7 @@ namespace FolioConsoleApplication
                     var s2 = Stopwatch.StartNew();
                     foreach (var jo in fsc.IdTypes(where))
                     {
-                        fsc.DeleteIdType((string)jo["id"]);
+                        if (!whatIf) fsc.DeleteIdType((string)jo["id"]);
                         if (++i % 100 == 0)
                         {
                             traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
@@ -2352,7 +2354,7 @@ namespace FolioConsoleApplication
                 }
                 else
                 {
-                    i = fbcc.ExecuteNonQuery($"DELETE FROM diku_mod_inventory_storage.identifier_type{(where != null ? $" WHERE {where}" : "")}");
+                    if (!whatIf) i = fbcc.ExecuteNonQuery($"DELETE FROM diku_mod_inventory_storage.identifier_type{(where != null ? $" WHERE {where}" : "")}");
                 }
                 traceSource.TraceEvent(TraceEventType.Information, 0, $"Deleted {i} id types");
             }
@@ -2385,7 +2387,7 @@ namespace FolioConsoleApplication
                     }
                     if (api)
                     {
-                        fsc.InsertIdType(jo);
+                        if (!whatIf) fsc.InsertIdType(jo);
                         if (i % 100 == 0)
                         {
                             traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
@@ -2394,7 +2396,7 @@ namespace FolioConsoleApplication
                     }
                     else
                     {
-                        fbcc.Insert(new IdType
+                        if (!whatIf) fbcc.Insert(new IdType
                         {
                             Id = (Guid?)jo.SelectToken("id"),
                             Content = jo.ToString(),
@@ -2426,7 +2428,7 @@ namespace FolioConsoleApplication
             using (var fdc = new FolioDapperContext())
             using (var fsc = new FolioServiceClient())
             using (var sr = new StreamReader(Assembly.GetAssembly(typeof(FolioContext)).GetManifestResourceStream("FolioLibrary.IdType.json")))
-            using (var sw = new StreamWriter(path))
+            using (var sw = new StreamWriter(whatIf ? (Stream)new MemoryStream() : new FileStream(path, FileMode.Create)))
             using (var jtw = new JsonTextWriter(sw))
             {
                 var s2 = Stopwatch.StartNew();
@@ -2441,7 +2443,7 @@ namespace FolioConsoleApplication
                         var l = js4.Validate(jo);
                         if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"IdType {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"IdType {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
                     }
-                    js.Serialize(jtw, jo);
+                    if (!whatIf) js.Serialize(jtw, jo);
                     if (++i % 10000 == 0)
                     {
                         traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
@@ -2468,7 +2470,7 @@ namespace FolioConsoleApplication
                     var s2 = Stopwatch.StartNew();
                     foreach (var jo in fsc.IllPolicies(where))
                     {
-                        fsc.DeleteIllPolicy((string)jo["id"]);
+                        if (!whatIf) fsc.DeleteIllPolicy((string)jo["id"]);
                         if (++i % 100 == 0)
                         {
                             traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
@@ -2479,7 +2481,7 @@ namespace FolioConsoleApplication
                 }
                 else
                 {
-                    i = fbcc.ExecuteNonQuery($"DELETE FROM diku_mod_inventory_storage.ill_policy{(where != null ? $" WHERE {where}" : "")}");
+                    if (!whatIf) i = fbcc.ExecuteNonQuery($"DELETE FROM diku_mod_inventory_storage.ill_policy{(where != null ? $" WHERE {where}" : "")}");
                 }
                 traceSource.TraceEvent(TraceEventType.Information, 0, $"Deleted {i} ill policies");
             }
@@ -2512,7 +2514,7 @@ namespace FolioConsoleApplication
                     }
                     if (api)
                     {
-                        fsc.InsertIllPolicy(jo);
+                        if (!whatIf) fsc.InsertIllPolicy(jo);
                         if (i % 100 == 0)
                         {
                             traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
@@ -2521,7 +2523,7 @@ namespace FolioConsoleApplication
                     }
                     else
                     {
-                        fbcc.Insert(new IllPolicy
+                        if (!whatIf) fbcc.Insert(new IllPolicy
                         {
                             Id = (Guid?)jo.SelectToken("id"),
                             Content = jo.ToString(),
@@ -2553,7 +2555,7 @@ namespace FolioConsoleApplication
             using (var fdc = new FolioDapperContext())
             using (var fsc = new FolioServiceClient())
             using (var sr = new StreamReader(Assembly.GetAssembly(typeof(FolioContext)).GetManifestResourceStream("FolioLibrary.IllPolicy.json")))
-            using (var sw = new StreamWriter(path))
+            using (var sw = new StreamWriter(whatIf ? (Stream)new MemoryStream() : new FileStream(path, FileMode.Create)))
             using (var jtw = new JsonTextWriter(sw))
             {
                 var s2 = Stopwatch.StartNew();
@@ -2568,7 +2570,7 @@ namespace FolioConsoleApplication
                         var l = js4.Validate(jo);
                         if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"IllPolicy {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"IllPolicy {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
                     }
-                    js.Serialize(jtw, jo);
+                    if (!whatIf) js.Serialize(jtw, jo);
                     if (++i % 10000 == 0)
                     {
                         traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
@@ -2595,7 +2597,7 @@ namespace FolioConsoleApplication
                     var s2 = Stopwatch.StartNew();
                     foreach (var jo in fsc.Instances(where))
                     {
-                        fsc.DeleteInstance((string)jo["id"]);
+                        if (!whatIf) fsc.DeleteInstance((string)jo["id"]);
                         if (++i % 100 == 0)
                         {
                             traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
@@ -2606,7 +2608,7 @@ namespace FolioConsoleApplication
                 }
                 else
                 {
-                    i = fbcc.ExecuteNonQuery($"DELETE FROM diku_mod_inventory_storage.instance{(where != null ? $" WHERE {where}" : "")}");
+                    if (!whatIf) i = fbcc.ExecuteNonQuery($"DELETE FROM diku_mod_inventory_storage.instance{(where != null ? $" WHERE {where}" : "")}");
                 }
                 traceSource.TraceEvent(TraceEventType.Information, 0, $"Deleted {i} instances");
             }
@@ -2639,7 +2641,7 @@ namespace FolioConsoleApplication
                     }
                     if (api)
                     {
-                        fsc.InsertInstance(jo);
+                        if (!whatIf) fsc.InsertInstance(jo);
                         if (i % 100 == 0)
                         {
                             traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
@@ -2648,7 +2650,7 @@ namespace FolioConsoleApplication
                     }
                     else
                     {
-                        fbcc.Insert(new Instance
+                        if (!whatIf) fbcc.Insert(new Instance
                         {
                             Id = (Guid?)jo.SelectToken("id"),
                             Content = jo.ToString(),
@@ -2682,7 +2684,7 @@ namespace FolioConsoleApplication
             using (var fdc = new FolioDapperContext())
             using (var fsc = new FolioServiceClient())
             using (var sr = new StreamReader(Assembly.GetAssembly(typeof(FolioContext)).GetManifestResourceStream("FolioLibrary.Instance.json")))
-            using (var sw = new StreamWriter(path))
+            using (var sw = new StreamWriter(whatIf ? (Stream)new MemoryStream() : new FileStream(path, FileMode.Create)))
             using (var jtw = new JsonTextWriter(sw))
             {
                 var s2 = Stopwatch.StartNew();
@@ -2697,7 +2699,7 @@ namespace FolioConsoleApplication
                         var l = js4.Validate(jo);
                         if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"Instance {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"Instance {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
                     }
-                    js.Serialize(jtw, jo);
+                    if (!whatIf) js.Serialize(jtw, jo);
                     if (++i % 10000 == 0)
                     {
                         traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
@@ -2724,7 +2726,7 @@ namespace FolioConsoleApplication
                     var s2 = Stopwatch.StartNew();
                     foreach (var jo in fsc.InstanceFormats(where))
                     {
-                        fsc.DeleteInstanceFormat((string)jo["id"]);
+                        if (!whatIf) fsc.DeleteInstanceFormat((string)jo["id"]);
                         if (++i % 100 == 0)
                         {
                             traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
@@ -2735,7 +2737,7 @@ namespace FolioConsoleApplication
                 }
                 else
                 {
-                    i = fbcc.ExecuteNonQuery($"DELETE FROM diku_mod_inventory_storage.instance_format{(where != null ? $" WHERE {where}" : "")}");
+                    if (!whatIf) i = fbcc.ExecuteNonQuery($"DELETE FROM diku_mod_inventory_storage.instance_format{(where != null ? $" WHERE {where}" : "")}");
                 }
                 traceSource.TraceEvent(TraceEventType.Information, 0, $"Deleted {i} instance formats");
             }
@@ -2768,7 +2770,7 @@ namespace FolioConsoleApplication
                     }
                     if (api)
                     {
-                        fsc.InsertInstanceFormat(jo);
+                        if (!whatIf) fsc.InsertInstanceFormat(jo);
                         if (i % 100 == 0)
                         {
                             traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
@@ -2777,7 +2779,7 @@ namespace FolioConsoleApplication
                     }
                     else
                     {
-                        fbcc.Insert(new InstanceFormat
+                        if (!whatIf) fbcc.Insert(new InstanceFormat
                         {
                             Id = (Guid?)jo.SelectToken("id"),
                             Content = jo.ToString()
@@ -2807,7 +2809,7 @@ namespace FolioConsoleApplication
             using (var fdc = new FolioDapperContext())
             using (var fsc = new FolioServiceClient())
             using (var sr = new StreamReader(Assembly.GetAssembly(typeof(FolioContext)).GetManifestResourceStream("FolioLibrary.InstanceFormat.json")))
-            using (var sw = new StreamWriter(path))
+            using (var sw = new StreamWriter(whatIf ? (Stream)new MemoryStream() : new FileStream(path, FileMode.Create)))
             using (var jtw = new JsonTextWriter(sw))
             {
                 var s2 = Stopwatch.StartNew();
@@ -2822,7 +2824,7 @@ namespace FolioConsoleApplication
                         var l = js4.Validate(jo);
                         if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"InstanceFormat {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"InstanceFormat {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
                     }
-                    js.Serialize(jtw, jo);
+                    if (!whatIf) js.Serialize(jtw, jo);
                     if (++i % 10000 == 0)
                     {
                         traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
@@ -2849,7 +2851,7 @@ namespace FolioConsoleApplication
                     var s2 = Stopwatch.StartNew();
                     foreach (var jo in fsc.InstanceRelationships(where))
                     {
-                        fsc.DeleteInstanceRelationship((string)jo["id"]);
+                        if (!whatIf) fsc.DeleteInstanceRelationship((string)jo["id"]);
                         if (++i % 100 == 0)
                         {
                             traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
@@ -2860,7 +2862,7 @@ namespace FolioConsoleApplication
                 }
                 else
                 {
-                    i = fbcc.ExecuteNonQuery($"DELETE FROM diku_mod_inventory_storage.instance_relationship{(where != null ? $" WHERE {where}" : "")}");
+                    if (!whatIf) i = fbcc.ExecuteNonQuery($"DELETE FROM diku_mod_inventory_storage.instance_relationship{(where != null ? $" WHERE {where}" : "")}");
                 }
                 traceSource.TraceEvent(TraceEventType.Information, 0, $"Deleted {i} instance relationships");
             }
@@ -2893,7 +2895,7 @@ namespace FolioConsoleApplication
                     }
                     if (api)
                     {
-                        fsc.InsertInstanceRelationship(jo);
+                        if (!whatIf) fsc.InsertInstanceRelationship(jo);
                         if (i % 100 == 0)
                         {
                             traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
@@ -2902,7 +2904,7 @@ namespace FolioConsoleApplication
                     }
                     else
                     {
-                        fbcc.Insert(new InstanceRelationship
+                        if (!whatIf) fbcc.Insert(new InstanceRelationship
                         {
                             Id = (Guid?)jo.SelectToken("id"),
                             Content = jo.ToString(),
@@ -2937,7 +2939,7 @@ namespace FolioConsoleApplication
             using (var fdc = new FolioDapperContext())
             using (var fsc = new FolioServiceClient())
             using (var sr = new StreamReader(Assembly.GetAssembly(typeof(FolioContext)).GetManifestResourceStream("FolioLibrary.InstanceRelationship.json")))
-            using (var sw = new StreamWriter(path))
+            using (var sw = new StreamWriter(whatIf ? (Stream)new MemoryStream() : new FileStream(path, FileMode.Create)))
             using (var jtw = new JsonTextWriter(sw))
             {
                 var s2 = Stopwatch.StartNew();
@@ -2952,7 +2954,7 @@ namespace FolioConsoleApplication
                         var l = js4.Validate(jo);
                         if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"InstanceRelationship {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"InstanceRelationship {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
                     }
-                    js.Serialize(jtw, jo);
+                    if (!whatIf) js.Serialize(jtw, jo);
                     if (++i % 10000 == 0)
                     {
                         traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
@@ -2979,7 +2981,7 @@ namespace FolioConsoleApplication
                     var s2 = Stopwatch.StartNew();
                     foreach (var jo in fsc.InstanceRelationshipTypes(where))
                     {
-                        fsc.DeleteInstanceRelationshipType((string)jo["id"]);
+                        if (!whatIf) fsc.DeleteInstanceRelationshipType((string)jo["id"]);
                         if (++i % 100 == 0)
                         {
                             traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
@@ -2990,7 +2992,7 @@ namespace FolioConsoleApplication
                 }
                 else
                 {
-                    i = fbcc.ExecuteNonQuery($"DELETE FROM diku_mod_inventory_storage.instance_relationship_type{(where != null ? $" WHERE {where}" : "")}");
+                    if (!whatIf) i = fbcc.ExecuteNonQuery($"DELETE FROM diku_mod_inventory_storage.instance_relationship_type{(where != null ? $" WHERE {where}" : "")}");
                 }
                 traceSource.TraceEvent(TraceEventType.Information, 0, $"Deleted {i} instance relationship types");
             }
@@ -3023,7 +3025,7 @@ namespace FolioConsoleApplication
                     }
                     if (api)
                     {
-                        fsc.InsertInstanceRelationshipType(jo);
+                        if (!whatIf) fsc.InsertInstanceRelationshipType(jo);
                         if (i % 100 == 0)
                         {
                             traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
@@ -3032,7 +3034,7 @@ namespace FolioConsoleApplication
                     }
                     else
                     {
-                        fbcc.Insert(new InstanceRelationshipType
+                        if (!whatIf) fbcc.Insert(new InstanceRelationshipType
                         {
                             Id = (Guid?)jo.SelectToken("id"),
                             Content = jo.ToString(),
@@ -3064,7 +3066,7 @@ namespace FolioConsoleApplication
             using (var fdc = new FolioDapperContext())
             using (var fsc = new FolioServiceClient())
             using (var sr = new StreamReader(Assembly.GetAssembly(typeof(FolioContext)).GetManifestResourceStream("FolioLibrary.InstanceRelationshipType.json")))
-            using (var sw = new StreamWriter(path))
+            using (var sw = new StreamWriter(whatIf ? (Stream)new MemoryStream() : new FileStream(path, FileMode.Create)))
             using (var jtw = new JsonTextWriter(sw))
             {
                 var s2 = Stopwatch.StartNew();
@@ -3079,7 +3081,7 @@ namespace FolioConsoleApplication
                         var l = js4.Validate(jo);
                         if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"InstanceRelationshipType {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"InstanceRelationshipType {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
                     }
-                    js.Serialize(jtw, jo);
+                    if (!whatIf) js.Serialize(jtw, jo);
                     if (++i % 10000 == 0)
                     {
                         traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
@@ -3106,7 +3108,7 @@ namespace FolioConsoleApplication
                     var s2 = Stopwatch.StartNew();
                     foreach (var jo in fsc.InstanceStatuses(where))
                     {
-                        fsc.DeleteInstanceStatus((string)jo["id"]);
+                        if (!whatIf) fsc.DeleteInstanceStatus((string)jo["id"]);
                         if (++i % 100 == 0)
                         {
                             traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
@@ -3117,7 +3119,7 @@ namespace FolioConsoleApplication
                 }
                 else
                 {
-                    i = fbcc.ExecuteNonQuery($"DELETE FROM diku_mod_inventory_storage.instance_status{(where != null ? $" WHERE {where}" : "")}");
+                    if (!whatIf) i = fbcc.ExecuteNonQuery($"DELETE FROM diku_mod_inventory_storage.instance_status{(where != null ? $" WHERE {where}" : "")}");
                 }
                 traceSource.TraceEvent(TraceEventType.Information, 0, $"Deleted {i} instance statuses");
             }
@@ -3150,7 +3152,7 @@ namespace FolioConsoleApplication
                     }
                     if (api)
                     {
-                        fsc.InsertInstanceStatus(jo);
+                        if (!whatIf) fsc.InsertInstanceStatus(jo);
                         if (i % 100 == 0)
                         {
                             traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
@@ -3159,7 +3161,7 @@ namespace FolioConsoleApplication
                     }
                     else
                     {
-                        fbcc.Insert(new InstanceStatus
+                        if (!whatIf) fbcc.Insert(new InstanceStatus
                         {
                             Id = (Guid?)jo.SelectToken("id"),
                             Content = jo.ToString(),
@@ -3191,7 +3193,7 @@ namespace FolioConsoleApplication
             using (var fdc = new FolioDapperContext())
             using (var fsc = new FolioServiceClient())
             using (var sr = new StreamReader(Assembly.GetAssembly(typeof(FolioContext)).GetManifestResourceStream("FolioLibrary.InstanceStatus.json")))
-            using (var sw = new StreamWriter(path))
+            using (var sw = new StreamWriter(whatIf ? (Stream)new MemoryStream() : new FileStream(path, FileMode.Create)))
             using (var jtw = new JsonTextWriter(sw))
             {
                 var s2 = Stopwatch.StartNew();
@@ -3206,7 +3208,7 @@ namespace FolioConsoleApplication
                         var l = js4.Validate(jo);
                         if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"InstanceStatus {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"InstanceStatus {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
                     }
-                    js.Serialize(jtw, jo);
+                    if (!whatIf) js.Serialize(jtw, jo);
                     if (++i % 10000 == 0)
                     {
                         traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
@@ -3233,7 +3235,7 @@ namespace FolioConsoleApplication
                     var s2 = Stopwatch.StartNew();
                     foreach (var jo in fsc.InstanceTypes(where))
                     {
-                        fsc.DeleteInstanceType((string)jo["id"]);
+                        if (!whatIf) fsc.DeleteInstanceType((string)jo["id"]);
                         if (++i % 100 == 0)
                         {
                             traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
@@ -3244,7 +3246,7 @@ namespace FolioConsoleApplication
                 }
                 else
                 {
-                    i = fbcc.ExecuteNonQuery($"DELETE FROM diku_mod_inventory_storage.instance_type{(where != null ? $" WHERE {where}" : "")}");
+                    if (!whatIf) i = fbcc.ExecuteNonQuery($"DELETE FROM diku_mod_inventory_storage.instance_type{(where != null ? $" WHERE {where}" : "")}");
                 }
                 traceSource.TraceEvent(TraceEventType.Information, 0, $"Deleted {i} instance types");
             }
@@ -3277,7 +3279,7 @@ namespace FolioConsoleApplication
                     }
                     if (api)
                     {
-                        fsc.InsertInstanceType(jo);
+                        if (!whatIf) fsc.InsertInstanceType(jo);
                         if (i % 100 == 0)
                         {
                             traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
@@ -3286,7 +3288,7 @@ namespace FolioConsoleApplication
                     }
                     else
                     {
-                        fbcc.Insert(new InstanceType
+                        if (!whatIf) fbcc.Insert(new InstanceType
                         {
                             Id = (Guid?)jo.SelectToken("id"),
                             Content = jo.ToString()
@@ -3316,7 +3318,7 @@ namespace FolioConsoleApplication
             using (var fdc = new FolioDapperContext())
             using (var fsc = new FolioServiceClient())
             using (var sr = new StreamReader(Assembly.GetAssembly(typeof(FolioContext)).GetManifestResourceStream("FolioLibrary.InstanceType.json")))
-            using (var sw = new StreamWriter(path))
+            using (var sw = new StreamWriter(whatIf ? (Stream)new MemoryStream() : new FileStream(path, FileMode.Create)))
             using (var jtw = new JsonTextWriter(sw))
             {
                 var s2 = Stopwatch.StartNew();
@@ -3331,7 +3333,7 @@ namespace FolioConsoleApplication
                         var l = js4.Validate(jo);
                         if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"InstanceType {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"InstanceType {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
                     }
-                    js.Serialize(jtw, jo);
+                    if (!whatIf) js.Serialize(jtw, jo);
                     if (++i % 10000 == 0)
                     {
                         traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
@@ -3358,7 +3360,7 @@ namespace FolioConsoleApplication
                     var s2 = Stopwatch.StartNew();
                     foreach (var jo in fsc.Institutions(where))
                     {
-                        fsc.DeleteInstitution((string)jo["id"]);
+                        if (!whatIf) fsc.DeleteInstitution((string)jo["id"]);
                         if (++i % 100 == 0)
                         {
                             traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
@@ -3369,7 +3371,7 @@ namespace FolioConsoleApplication
                 }
                 else
                 {
-                    i = fbcc.ExecuteNonQuery($"DELETE FROM diku_mod_inventory_storage.locinstitution{(where != null ? $" WHERE {where}" : "")}");
+                    if (!whatIf) i = fbcc.ExecuteNonQuery($"DELETE FROM diku_mod_inventory_storage.locinstitution{(where != null ? $" WHERE {where}" : "")}");
                 }
                 traceSource.TraceEvent(TraceEventType.Information, 0, $"Deleted {i} institutions");
             }
@@ -3402,7 +3404,7 @@ namespace FolioConsoleApplication
                     }
                     if (api)
                     {
-                        fsc.InsertInstitution(jo);
+                        if (!whatIf) fsc.InsertInstitution(jo);
                         if (i % 100 == 0)
                         {
                             traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
@@ -3411,7 +3413,7 @@ namespace FolioConsoleApplication
                     }
                     else
                     {
-                        fbcc.Insert(new Institution
+                        if (!whatIf) fbcc.Insert(new Institution
                         {
                             Id = (Guid?)jo.SelectToken("id"),
                             Content = jo.ToString(),
@@ -3443,7 +3445,7 @@ namespace FolioConsoleApplication
             using (var fdc = new FolioDapperContext())
             using (var fsc = new FolioServiceClient())
             using (var sr = new StreamReader(Assembly.GetAssembly(typeof(FolioContext)).GetManifestResourceStream("FolioLibrary.Institution.json")))
-            using (var sw = new StreamWriter(path))
+            using (var sw = new StreamWriter(whatIf ? (Stream)new MemoryStream() : new FileStream(path, FileMode.Create)))
             using (var jtw = new JsonTextWriter(sw))
             {
                 var s2 = Stopwatch.StartNew();
@@ -3458,7 +3460,7 @@ namespace FolioConsoleApplication
                         var l = js4.Validate(jo);
                         if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"Institution {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"Institution {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
                     }
-                    js.Serialize(jtw, jo);
+                    if (!whatIf) js.Serialize(jtw, jo);
                     if (++i % 10000 == 0)
                     {
                         traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
@@ -3485,7 +3487,7 @@ namespace FolioConsoleApplication
                     var s2 = Stopwatch.StartNew();
                     foreach (var jo in fsc.Interfaces(where))
                     {
-                        fsc.DeleteInterface((string)jo["id"]);
+                        if (!whatIf) fsc.DeleteInterface((string)jo["id"]);
                         if (++i % 100 == 0)
                         {
                             traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
@@ -3496,7 +3498,7 @@ namespace FolioConsoleApplication
                 }
                 else
                 {
-                    i = fbcc.ExecuteNonQuery($"DELETE FROM diku_mod_organizations_storage.interfaces{(where != null ? $" WHERE {where}" : "")}");
+                    if (!whatIf) i = fbcc.ExecuteNonQuery($"DELETE FROM diku_mod_organizations_storage.interfaces{(where != null ? $" WHERE {where}" : "")}");
                 }
                 traceSource.TraceEvent(TraceEventType.Information, 0, $"Deleted {i} interfaces");
             }
@@ -3529,7 +3531,7 @@ namespace FolioConsoleApplication
                     }
                     if (api)
                     {
-                        fsc.InsertInterface(jo);
+                        if (!whatIf) fsc.InsertInterface(jo);
                         if (i % 100 == 0)
                         {
                             traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
@@ -3538,7 +3540,7 @@ namespace FolioConsoleApplication
                     }
                     else
                     {
-                        fbcc.Insert(new Interface
+                        if (!whatIf) fbcc.Insert(new Interface
                         {
                             Id = (Guid?)jo.SelectToken("id"),
                             Content = jo.ToString()
@@ -3568,7 +3570,7 @@ namespace FolioConsoleApplication
             using (var fdc = new FolioDapperContext())
             using (var fsc = new FolioServiceClient())
             using (var sr = new StreamReader(Assembly.GetAssembly(typeof(FolioContext)).GetManifestResourceStream("FolioLibrary.Interface.json")))
-            using (var sw = new StreamWriter(path))
+            using (var sw = new StreamWriter(whatIf ? (Stream)new MemoryStream() : new FileStream(path, FileMode.Create)))
             using (var jtw = new JsonTextWriter(sw))
             {
                 var s2 = Stopwatch.StartNew();
@@ -3583,7 +3585,7 @@ namespace FolioConsoleApplication
                         var l = js4.Validate(jo);
                         if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"Interface {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"Interface {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
                     }
-                    js.Serialize(jtw, jo);
+                    if (!whatIf) js.Serialize(jtw, jo);
                     if (++i % 10000 == 0)
                     {
                         traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
@@ -3610,7 +3612,7 @@ namespace FolioConsoleApplication
                     var s2 = Stopwatch.StartNew();
                     foreach (var jo in fsc.Items(where))
                     {
-                        fsc.DeleteItem((string)jo["id"]);
+                        if (!whatIf) fsc.DeleteItem((string)jo["id"]);
                         if (++i % 100 == 0)
                         {
                             traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
@@ -3621,7 +3623,7 @@ namespace FolioConsoleApplication
                 }
                 else
                 {
-                    i = fbcc.ExecuteNonQuery($"DELETE FROM diku_mod_inventory_storage.item{(where != null ? $" WHERE {where}" : "")}");
+                    if (!whatIf) i = fbcc.ExecuteNonQuery($"DELETE FROM diku_mod_inventory_storage.item{(where != null ? $" WHERE {where}" : "")}");
                 }
                 traceSource.TraceEvent(TraceEventType.Information, 0, $"Deleted {i} items");
             }
@@ -3654,7 +3656,7 @@ namespace FolioConsoleApplication
                     }
                     if (api)
                     {
-                        fsc.InsertItem(jo);
+                        if (!whatIf) fsc.InsertItem(jo);
                         if (i % 100 == 0)
                         {
                             traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
@@ -3663,7 +3665,7 @@ namespace FolioConsoleApplication
                     }
                     else
                     {
-                        fbcc.Insert(new Item
+                        if (!whatIf) fbcc.Insert(new Item
                         {
                             Id = (Guid?)jo.SelectToken("id"),
                             Content = jo.ToString(),
@@ -3701,7 +3703,7 @@ namespace FolioConsoleApplication
             using (var fdc = new FolioDapperContext())
             using (var fsc = new FolioServiceClient())
             using (var sr = new StreamReader(Assembly.GetAssembly(typeof(FolioContext)).GetManifestResourceStream("FolioLibrary.Item.json")))
-            using (var sw = new StreamWriter(path))
+            using (var sw = new StreamWriter(whatIf ? (Stream)new MemoryStream() : new FileStream(path, FileMode.Create)))
             using (var jtw = new JsonTextWriter(sw))
             {
                 var s2 = Stopwatch.StartNew();
@@ -3716,7 +3718,7 @@ namespace FolioConsoleApplication
                         var l = js4.Validate(jo);
                         if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"Item {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"Item {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
                     }
-                    js.Serialize(jtw, jo);
+                    if (!whatIf) js.Serialize(jtw, jo);
                     if (++i % 10000 == 0)
                     {
                         traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
@@ -3743,7 +3745,7 @@ namespace FolioConsoleApplication
                     var s2 = Stopwatch.StartNew();
                     foreach (var jo in fsc.ItemNoteTypes(where))
                     {
-                        fsc.DeleteItemNoteType((string)jo["id"]);
+                        if (!whatIf) fsc.DeleteItemNoteType((string)jo["id"]);
                         if (++i % 100 == 0)
                         {
                             traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
@@ -3754,7 +3756,7 @@ namespace FolioConsoleApplication
                 }
                 else
                 {
-                    i = fbcc.ExecuteNonQuery($"DELETE FROM diku_mod_inventory_storage.item_note_type{(where != null ? $" WHERE {where}" : "")}");
+                    if (!whatIf) i = fbcc.ExecuteNonQuery($"DELETE FROM diku_mod_inventory_storage.item_note_type{(where != null ? $" WHERE {where}" : "")}");
                 }
                 traceSource.TraceEvent(TraceEventType.Information, 0, $"Deleted {i} item note types");
             }
@@ -3787,7 +3789,7 @@ namespace FolioConsoleApplication
                     }
                     if (api)
                     {
-                        fsc.InsertItemNoteType(jo);
+                        if (!whatIf) fsc.InsertItemNoteType(jo);
                         if (i % 100 == 0)
                         {
                             traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
@@ -3796,7 +3798,7 @@ namespace FolioConsoleApplication
                     }
                     else
                     {
-                        fbcc.Insert(new ItemNoteType
+                        if (!whatIf) fbcc.Insert(new ItemNoteType
                         {
                             Id = (Guid?)jo.SelectToken("id"),
                             Content = jo.ToString(),
@@ -3828,7 +3830,7 @@ namespace FolioConsoleApplication
             using (var fdc = new FolioDapperContext())
             using (var fsc = new FolioServiceClient())
             using (var sr = new StreamReader(Assembly.GetAssembly(typeof(FolioContext)).GetManifestResourceStream("FolioLibrary.ItemNoteType.json")))
-            using (var sw = new StreamWriter(path))
+            using (var sw = new StreamWriter(whatIf ? (Stream)new MemoryStream() : new FileStream(path, FileMode.Create)))
             using (var jtw = new JsonTextWriter(sw))
             {
                 var s2 = Stopwatch.StartNew();
@@ -3843,7 +3845,7 @@ namespace FolioConsoleApplication
                         var l = js4.Validate(jo);
                         if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"ItemNoteType {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"ItemNoteType {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
                     }
-                    js.Serialize(jtw, jo);
+                    if (!whatIf) js.Serialize(jtw, jo);
                     if (++i % 10000 == 0)
                     {
                         traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
@@ -3870,7 +3872,7 @@ namespace FolioConsoleApplication
                     var s2 = Stopwatch.StartNew();
                     foreach (var jo in fsc.Libraries(where))
                     {
-                        fsc.DeleteLibrary((string)jo["id"]);
+                        if (!whatIf) fsc.DeleteLibrary((string)jo["id"]);
                         if (++i % 100 == 0)
                         {
                             traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
@@ -3881,7 +3883,7 @@ namespace FolioConsoleApplication
                 }
                 else
                 {
-                    i = fbcc.ExecuteNonQuery($"DELETE FROM diku_mod_inventory_storage.loclibrary{(where != null ? $" WHERE {where}" : "")}");
+                    if (!whatIf) i = fbcc.ExecuteNonQuery($"DELETE FROM diku_mod_inventory_storage.loclibrary{(where != null ? $" WHERE {where}" : "")}");
                 }
                 traceSource.TraceEvent(TraceEventType.Information, 0, $"Deleted {i} libraries");
             }
@@ -3914,7 +3916,7 @@ namespace FolioConsoleApplication
                     }
                     if (api)
                     {
-                        fsc.InsertLibrary(jo);
+                        if (!whatIf) fsc.InsertLibrary(jo);
                         if (i % 100 == 0)
                         {
                             traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
@@ -3923,7 +3925,7 @@ namespace FolioConsoleApplication
                     }
                     else
                     {
-                        fbcc.Insert(new Library
+                        if (!whatIf) fbcc.Insert(new Library
                         {
                             Id = (Guid?)jo.SelectToken("id"),
                             Content = jo.ToString(),
@@ -3956,7 +3958,7 @@ namespace FolioConsoleApplication
             using (var fdc = new FolioDapperContext())
             using (var fsc = new FolioServiceClient())
             using (var sr = new StreamReader(Assembly.GetAssembly(typeof(FolioContext)).GetManifestResourceStream("FolioLibrary.Library.json")))
-            using (var sw = new StreamWriter(path))
+            using (var sw = new StreamWriter(whatIf ? (Stream)new MemoryStream() : new FileStream(path, FileMode.Create)))
             using (var jtw = new JsonTextWriter(sw))
             {
                 var s2 = Stopwatch.StartNew();
@@ -3971,7 +3973,7 @@ namespace FolioConsoleApplication
                         var l = js4.Validate(jo);
                         if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"Library {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"Library {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
                     }
-                    js.Serialize(jtw, jo);
+                    if (!whatIf) js.Serialize(jtw, jo);
                     if (++i % 10000 == 0)
                     {
                         traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
@@ -3998,7 +4000,7 @@ namespace FolioConsoleApplication
                     var s2 = Stopwatch.StartNew();
                     foreach (var jo in fsc.LoanTypes(where))
                     {
-                        fsc.DeleteLoanType((string)jo["id"]);
+                        if (!whatIf) fsc.DeleteLoanType((string)jo["id"]);
                         if (++i % 100 == 0)
                         {
                             traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
@@ -4009,7 +4011,7 @@ namespace FolioConsoleApplication
                 }
                 else
                 {
-                    i = fbcc.ExecuteNonQuery($"DELETE FROM diku_mod_inventory_storage.loan_type{(where != null ? $" WHERE {where}" : "")}");
+                    if (!whatIf) i = fbcc.ExecuteNonQuery($"DELETE FROM diku_mod_inventory_storage.loan_type{(where != null ? $" WHERE {where}" : "")}");
                 }
                 traceSource.TraceEvent(TraceEventType.Information, 0, $"Deleted {i} loan types");
             }
@@ -4042,7 +4044,7 @@ namespace FolioConsoleApplication
                     }
                     if (api)
                     {
-                        fsc.InsertLoanType(jo);
+                        if (!whatIf) fsc.InsertLoanType(jo);
                         if (i % 100 == 0)
                         {
                             traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
@@ -4051,7 +4053,7 @@ namespace FolioConsoleApplication
                     }
                     else
                     {
-                        fbcc.Insert(new LoanType
+                        if (!whatIf) fbcc.Insert(new LoanType
                         {
                             Id = (Guid?)jo.SelectToken("id"),
                             Content = jo.ToString(),
@@ -4083,7 +4085,7 @@ namespace FolioConsoleApplication
             using (var fdc = new FolioDapperContext())
             using (var fsc = new FolioServiceClient())
             using (var sr = new StreamReader(Assembly.GetAssembly(typeof(FolioContext)).GetManifestResourceStream("FolioLibrary.LoanType.json")))
-            using (var sw = new StreamWriter(path))
+            using (var sw = new StreamWriter(whatIf ? (Stream)new MemoryStream() : new FileStream(path, FileMode.Create)))
             using (var jtw = new JsonTextWriter(sw))
             {
                 var s2 = Stopwatch.StartNew();
@@ -4098,7 +4100,7 @@ namespace FolioConsoleApplication
                         var l = js4.Validate(jo);
                         if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"LoanType {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"LoanType {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
                     }
-                    js.Serialize(jtw, jo);
+                    if (!whatIf) js.Serialize(jtw, jo);
                     if (++i % 10000 == 0)
                     {
                         traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
@@ -4125,7 +4127,7 @@ namespace FolioConsoleApplication
                     var s2 = Stopwatch.StartNew();
                     foreach (var jo in fsc.Locations(where))
                     {
-                        fsc.DeleteLocation((string)jo["id"]);
+                        if (!whatIf) fsc.DeleteLocation((string)jo["id"]);
                         if (++i % 100 == 0)
                         {
                             traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
@@ -4136,7 +4138,7 @@ namespace FolioConsoleApplication
                 }
                 else
                 {
-                    i = fbcc.ExecuteNonQuery($"DELETE FROM diku_mod_inventory_storage.location{(where != null ? $" WHERE {where}" : "")}");
+                    if (!whatIf) i = fbcc.ExecuteNonQuery($"DELETE FROM diku_mod_inventory_storage.location{(where != null ? $" WHERE {where}" : "")}");
                 }
                 traceSource.TraceEvent(TraceEventType.Information, 0, $"Deleted {i} locations");
             }
@@ -4169,7 +4171,7 @@ namespace FolioConsoleApplication
                     }
                     if (api)
                     {
-                        fsc.InsertLocation(jo);
+                        if (!whatIf) fsc.InsertLocation(jo);
                         if (i % 100 == 0)
                         {
                             traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
@@ -4178,7 +4180,7 @@ namespace FolioConsoleApplication
                     }
                     else
                     {
-                        fbcc.Insert(new Location
+                        if (!whatIf) fbcc.Insert(new Location
                         {
                             Id = (Guid?)jo.SelectToken("id"),
                             Content = jo.ToString(),
@@ -4213,7 +4215,7 @@ namespace FolioConsoleApplication
             using (var fdc = new FolioDapperContext())
             using (var fsc = new FolioServiceClient())
             using (var sr = new StreamReader(Assembly.GetAssembly(typeof(FolioContext)).GetManifestResourceStream("FolioLibrary.Location.json")))
-            using (var sw = new StreamWriter(path))
+            using (var sw = new StreamWriter(whatIf ? (Stream)new MemoryStream() : new FileStream(path, FileMode.Create)))
             using (var jtw = new JsonTextWriter(sw))
             {
                 var s2 = Stopwatch.StartNew();
@@ -4228,7 +4230,7 @@ namespace FolioConsoleApplication
                         var l = js4.Validate(jo);
                         if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"Location {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"Location {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
                     }
-                    js.Serialize(jtw, jo);
+                    if (!whatIf) js.Serialize(jtw, jo);
                     if (++i % 10000 == 0)
                     {
                         traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
@@ -4255,7 +4257,7 @@ namespace FolioConsoleApplication
                     var s2 = Stopwatch.StartNew();
                     foreach (var jo in fsc.Logins(where))
                     {
-                        fsc.DeleteLogin((string)jo["id"]);
+                        if (!whatIf) fsc.DeleteLogin((string)jo["id"]);
                         if (++i % 100 == 0)
                         {
                             traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
@@ -4266,7 +4268,7 @@ namespace FolioConsoleApplication
                 }
                 else
                 {
-                    i = fbcc.ExecuteNonQuery($"DELETE FROM diku_mod_login.auth_credentials{(where != null ? $" WHERE {where}" : "")}");
+                    if (!whatIf) i = fbcc.ExecuteNonQuery($"DELETE FROM diku_mod_login.auth_credentials{(where != null ? $" WHERE {where}" : "")}");
                 }
                 traceSource.TraceEvent(TraceEventType.Information, 0, $"Deleted {i} logins");
             }
@@ -4299,7 +4301,7 @@ namespace FolioConsoleApplication
                     }
                     if (api)
                     {
-                        fsc.InsertLogin(jo);
+                        if (!whatIf) fsc.InsertLogin(jo);
                         if (i % 100 == 0)
                         {
                             traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
@@ -4308,7 +4310,7 @@ namespace FolioConsoleApplication
                     }
                     else
                     {
-                        fbcc.Insert(new Login
+                        if (!whatIf) fbcc.Insert(new Login
                         {
                             Id = (Guid?)jo.SelectToken("id"),
                             Content = jo.ToString(),
@@ -4340,7 +4342,7 @@ namespace FolioConsoleApplication
             using (var fdc = new FolioDapperContext())
             using (var fsc = new FolioServiceClient())
             using (var sr = new StreamReader(Assembly.GetAssembly(typeof(FolioContext)).GetManifestResourceStream("FolioLibrary.Login.json")))
-            using (var sw = new StreamWriter(path))
+            using (var sw = new StreamWriter(whatIf ? (Stream)new MemoryStream() : new FileStream(path, FileMode.Create)))
             using (var jtw = new JsonTextWriter(sw))
             {
                 var s2 = Stopwatch.StartNew();
@@ -4355,7 +4357,7 @@ namespace FolioConsoleApplication
                         var l = js4.Validate(jo);
                         if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"Login {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"Login {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
                     }
-                    js.Serialize(jtw, jo);
+                    if (!whatIf) js.Serialize(jtw, jo);
                     if (++i % 10000 == 0)
                     {
                         traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
@@ -4382,7 +4384,7 @@ namespace FolioConsoleApplication
                     var s2 = Stopwatch.StartNew();
                     foreach (var jo in fsc.MaterialTypes(where))
                     {
-                        fsc.DeleteMaterialType((string)jo["id"]);
+                        if (!whatIf) fsc.DeleteMaterialType((string)jo["id"]);
                         if (++i % 100 == 0)
                         {
                             traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
@@ -4393,7 +4395,7 @@ namespace FolioConsoleApplication
                 }
                 else
                 {
-                    i = fbcc.ExecuteNonQuery($"DELETE FROM diku_mod_inventory_storage.material_type{(where != null ? $" WHERE {where}" : "")}");
+                    if (!whatIf) i = fbcc.ExecuteNonQuery($"DELETE FROM diku_mod_inventory_storage.material_type{(where != null ? $" WHERE {where}" : "")}");
                 }
                 traceSource.TraceEvent(TraceEventType.Information, 0, $"Deleted {i} material types");
             }
@@ -4426,7 +4428,7 @@ namespace FolioConsoleApplication
                     }
                     if (api)
                     {
-                        fsc.InsertMaterialType(jo);
+                        if (!whatIf) fsc.InsertMaterialType(jo);
                         if (i % 100 == 0)
                         {
                             traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
@@ -4435,7 +4437,7 @@ namespace FolioConsoleApplication
                     }
                     else
                     {
-                        fbcc.Insert(new MaterialType
+                        if (!whatIf) fbcc.Insert(new MaterialType
                         {
                             Id = (Guid?)jo.SelectToken("id"),
                             Content = jo.ToString(),
@@ -4467,7 +4469,7 @@ namespace FolioConsoleApplication
             using (var fdc = new FolioDapperContext())
             using (var fsc = new FolioServiceClient())
             using (var sr = new StreamReader(Assembly.GetAssembly(typeof(FolioContext)).GetManifestResourceStream("FolioLibrary.MaterialType.json")))
-            using (var sw = new StreamWriter(path))
+            using (var sw = new StreamWriter(whatIf ? (Stream)new MemoryStream() : new FileStream(path, FileMode.Create)))
             using (var jtw = new JsonTextWriter(sw))
             {
                 var s2 = Stopwatch.StartNew();
@@ -4482,7 +4484,7 @@ namespace FolioConsoleApplication
                         var l = js4.Validate(jo);
                         if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"MaterialType {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"MaterialType {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
                     }
-                    js.Serialize(jtw, jo);
+                    if (!whatIf) js.Serialize(jtw, jo);
                     if (++i % 10000 == 0)
                     {
                         traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
@@ -4509,7 +4511,7 @@ namespace FolioConsoleApplication
                     var s2 = Stopwatch.StartNew();
                     foreach (var jo in fsc.ModeOfIssuances(where))
                     {
-                        fsc.DeleteModeOfIssuance((string)jo["id"]);
+                        if (!whatIf) fsc.DeleteModeOfIssuance((string)jo["id"]);
                         if (++i % 100 == 0)
                         {
                             traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
@@ -4520,7 +4522,7 @@ namespace FolioConsoleApplication
                 }
                 else
                 {
-                    i = fbcc.ExecuteNonQuery($"DELETE FROM diku_mod_inventory_storage.mode_of_issuance{(where != null ? $" WHERE {where}" : "")}");
+                    if (!whatIf) i = fbcc.ExecuteNonQuery($"DELETE FROM diku_mod_inventory_storage.mode_of_issuance{(where != null ? $" WHERE {where}" : "")}");
                 }
                 traceSource.TraceEvent(TraceEventType.Information, 0, $"Deleted {i} mode of issuances");
             }
@@ -4553,7 +4555,7 @@ namespace FolioConsoleApplication
                     }
                     if (api)
                     {
-                        fsc.InsertModeOfIssuance(jo);
+                        if (!whatIf) fsc.InsertModeOfIssuance(jo);
                         if (i % 100 == 0)
                         {
                             traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
@@ -4562,7 +4564,7 @@ namespace FolioConsoleApplication
                     }
                     else
                     {
-                        fbcc.Insert(new ModeOfIssuance
+                        if (!whatIf) fbcc.Insert(new ModeOfIssuance
                         {
                             Id = (Guid?)jo.SelectToken("id"),
                             Content = jo.ToString(),
@@ -4594,7 +4596,7 @@ namespace FolioConsoleApplication
             using (var fdc = new FolioDapperContext())
             using (var fsc = new FolioServiceClient())
             using (var sr = new StreamReader(Assembly.GetAssembly(typeof(FolioContext)).GetManifestResourceStream("FolioLibrary.ModeOfIssuance.json")))
-            using (var sw = new StreamWriter(path))
+            using (var sw = new StreamWriter(whatIf ? (Stream)new MemoryStream() : new FileStream(path, FileMode.Create)))
             using (var jtw = new JsonTextWriter(sw))
             {
                 var s2 = Stopwatch.StartNew();
@@ -4609,7 +4611,7 @@ namespace FolioConsoleApplication
                         var l = js4.Validate(jo);
                         if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"ModeOfIssuance {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"ModeOfIssuance {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
                     }
-                    js.Serialize(jtw, jo);
+                    if (!whatIf) js.Serialize(jtw, jo);
                     if (++i % 10000 == 0)
                     {
                         traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
@@ -4636,7 +4638,7 @@ namespace FolioConsoleApplication
                     var s2 = Stopwatch.StartNew();
                     foreach (var jo in fsc.Orders(where))
                     {
-                        fsc.DeleteOrder((string)jo["id"]);
+                        if (!whatIf) fsc.DeleteOrder((string)jo["id"]);
                         if (++i % 100 == 0)
                         {
                             traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
@@ -4647,7 +4649,7 @@ namespace FolioConsoleApplication
                 }
                 else
                 {
-                    i = fbcc.ExecuteNonQuery($"DELETE FROM diku_mod_orders_storage.purchase_order{(where != null ? $" WHERE {where}" : "")}");
+                    if (!whatIf) i = fbcc.ExecuteNonQuery($"DELETE FROM diku_mod_orders_storage.purchase_order{(where != null ? $" WHERE {where}" : "")}");
                 }
                 traceSource.TraceEvent(TraceEventType.Information, 0, $"Deleted {i} orders");
             }
@@ -4680,7 +4682,7 @@ namespace FolioConsoleApplication
                     }
                     if (api)
                     {
-                        fsc.InsertOrder(jo);
+                        if (!whatIf) fsc.InsertOrder(jo);
                         if (i % 100 == 0)
                         {
                             traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
@@ -4689,7 +4691,7 @@ namespace FolioConsoleApplication
                     }
                     else
                     {
-                        fbcc.Insert(new Order
+                        if (!whatIf) fbcc.Insert(new Order
                         {
                             Id = (Guid?)jo.SelectToken("id"),
                             Content = jo.ToString(),
@@ -4721,7 +4723,7 @@ namespace FolioConsoleApplication
             using (var fdc = new FolioDapperContext())
             using (var fsc = new FolioServiceClient())
             using (var sr = new StreamReader(Assembly.GetAssembly(typeof(FolioContext)).GetManifestResourceStream("FolioLibrary.Order.json")))
-            using (var sw = new StreamWriter(path))
+            using (var sw = new StreamWriter(whatIf ? (Stream)new MemoryStream() : new FileStream(path, FileMode.Create)))
             using (var jtw = new JsonTextWriter(sw))
             {
                 var s2 = Stopwatch.StartNew();
@@ -4736,7 +4738,7 @@ namespace FolioConsoleApplication
                         var l = js4.Validate(jo);
                         if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"Order {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"Order {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
                     }
-                    js.Serialize(jtw, jo);
+                    if (!whatIf) js.Serialize(jtw, jo);
                     if (++i % 10000 == 0)
                     {
                         traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
@@ -4763,7 +4765,7 @@ namespace FolioConsoleApplication
                     var s2 = Stopwatch.StartNew();
                     foreach (var jo in fsc.OrderItems(where))
                     {
-                        fsc.DeleteOrderItem((string)jo["id"]);
+                        if (!whatIf) fsc.DeleteOrderItem((string)jo["id"]);
                         if (++i % 100 == 0)
                         {
                             traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
@@ -4774,7 +4776,7 @@ namespace FolioConsoleApplication
                 }
                 else
                 {
-                    i = fbcc.ExecuteNonQuery($"DELETE FROM diku_mod_orders_storage.po_line{(where != null ? $" WHERE {where}" : "")}");
+                    if (!whatIf) i = fbcc.ExecuteNonQuery($"DELETE FROM diku_mod_orders_storage.po_line{(where != null ? $" WHERE {where}" : "")}");
                 }
                 traceSource.TraceEvent(TraceEventType.Information, 0, $"Deleted {i} order items");
             }
@@ -4807,7 +4809,7 @@ namespace FolioConsoleApplication
                     }
                     if (api)
                     {
-                        fsc.InsertOrderItem(jo);
+                        if (!whatIf) fsc.InsertOrderItem(jo);
                         if (i % 100 == 0)
                         {
                             traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
@@ -4816,7 +4818,7 @@ namespace FolioConsoleApplication
                     }
                     else
                     {
-                        fbcc.Insert(new OrderItem
+                        if (!whatIf) fbcc.Insert(new OrderItem
                         {
                             Id = (Guid?)jo.SelectToken("id"),
                             Content = jo.ToString(),
@@ -4849,7 +4851,7 @@ namespace FolioConsoleApplication
             using (var fdc = new FolioDapperContext())
             using (var fsc = new FolioServiceClient())
             using (var sr = new StreamReader(Assembly.GetAssembly(typeof(FolioContext)).GetManifestResourceStream("FolioLibrary.OrderItem.json")))
-            using (var sw = new StreamWriter(path))
+            using (var sw = new StreamWriter(whatIf ? (Stream)new MemoryStream() : new FileStream(path, FileMode.Create)))
             using (var jtw = new JsonTextWriter(sw))
             {
                 var s2 = Stopwatch.StartNew();
@@ -4864,7 +4866,7 @@ namespace FolioConsoleApplication
                         var l = js4.Validate(jo);
                         if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"OrderItem {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"OrderItem {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
                     }
-                    js.Serialize(jtw, jo);
+                    if (!whatIf) js.Serialize(jtw, jo);
                     if (++i % 10000 == 0)
                     {
                         traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
@@ -4891,7 +4893,7 @@ namespace FolioConsoleApplication
                     var s2 = Stopwatch.StartNew();
                     foreach (var jo in fsc.Organizations(where))
                     {
-                        fsc.DeleteOrganization((string)jo["id"]);
+                        if (!whatIf) fsc.DeleteOrganization((string)jo["id"]);
                         if (++i % 100 == 0)
                         {
                             traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
@@ -4902,7 +4904,7 @@ namespace FolioConsoleApplication
                 }
                 else
                 {
-                    i = fbcc.ExecuteNonQuery($"DELETE FROM diku_mod_organizations_storage.organizations{(where != null ? $" WHERE {where}" : "")}");
+                    if (!whatIf) i = fbcc.ExecuteNonQuery($"DELETE FROM diku_mod_organizations_storage.organizations{(where != null ? $" WHERE {where}" : "")}");
                 }
                 traceSource.TraceEvent(TraceEventType.Information, 0, $"Deleted {i} organizations");
             }
@@ -4935,7 +4937,7 @@ namespace FolioConsoleApplication
                     }
                     if (api)
                     {
-                        fsc.InsertOrganization(jo);
+                        if (!whatIf) fsc.InsertOrganization(jo);
                         if (i % 100 == 0)
                         {
                             traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
@@ -4944,7 +4946,7 @@ namespace FolioConsoleApplication
                     }
                     else
                     {
-                        fbcc.Insert(new Organization
+                        if (!whatIf) fbcc.Insert(new Organization
                         {
                             Id = (Guid?)jo.SelectToken("id"),
                             Content = jo.ToString()
@@ -4974,7 +4976,7 @@ namespace FolioConsoleApplication
             using (var fdc = new FolioDapperContext())
             using (var fsc = new FolioServiceClient())
             using (var sr = new StreamReader(Assembly.GetAssembly(typeof(FolioContext)).GetManifestResourceStream("FolioLibrary.Organization.json")))
-            using (var sw = new StreamWriter(path))
+            using (var sw = new StreamWriter(whatIf ? (Stream)new MemoryStream() : new FileStream(path, FileMode.Create)))
             using (var jtw = new JsonTextWriter(sw))
             {
                 var s2 = Stopwatch.StartNew();
@@ -4989,7 +4991,7 @@ namespace FolioConsoleApplication
                         var l = js4.Validate(jo);
                         if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"Organization {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"Organization {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
                     }
-                    js.Serialize(jtw, jo);
+                    if (!whatIf) js.Serialize(jtw, jo);
                     if (++i % 10000 == 0)
                     {
                         traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
@@ -5016,7 +5018,7 @@ namespace FolioConsoleApplication
                     var s2 = Stopwatch.StartNew();
                     foreach (var jo in fsc.Permissions(where))
                     {
-                        fsc.DeletePermission((string)jo["id"]);
+                        if (!whatIf) fsc.DeletePermission((string)jo["id"]);
                         if (++i % 100 == 0)
                         {
                             traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
@@ -5027,7 +5029,7 @@ namespace FolioConsoleApplication
                 }
                 else
                 {
-                    i = fbcc.ExecuteNonQuery($"DELETE FROM diku_mod_permissions.permissions{(where != null ? $" WHERE {where}" : "")}");
+                    if (!whatIf) i = fbcc.ExecuteNonQuery($"DELETE FROM diku_mod_permissions.permissions{(where != null ? $" WHERE {where}" : "")}");
                 }
                 traceSource.TraceEvent(TraceEventType.Information, 0, $"Deleted {i} permissions");
             }
@@ -5060,7 +5062,7 @@ namespace FolioConsoleApplication
                     }
                     if (api)
                     {
-                        fsc.InsertPermission(jo);
+                        if (!whatIf) fsc.InsertPermission(jo);
                         if (i % 100 == 0)
                         {
                             traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
@@ -5069,7 +5071,7 @@ namespace FolioConsoleApplication
                     }
                     else
                     {
-                        fbcc.Insert(new Permission
+                        if (!whatIf) fbcc.Insert(new Permission
                         {
                             Id = (Guid?)jo.SelectToken("id"),
                             Content = jo.ToString(),
@@ -5101,7 +5103,7 @@ namespace FolioConsoleApplication
             using (var fdc = new FolioDapperContext())
             using (var fsc = new FolioServiceClient())
             using (var sr = new StreamReader(Assembly.GetAssembly(typeof(FolioContext)).GetManifestResourceStream("FolioLibrary.Permission.json")))
-            using (var sw = new StreamWriter(path))
+            using (var sw = new StreamWriter(whatIf ? (Stream)new MemoryStream() : new FileStream(path, FileMode.Create)))
             using (var jtw = new JsonTextWriter(sw))
             {
                 var s2 = Stopwatch.StartNew();
@@ -5116,7 +5118,7 @@ namespace FolioConsoleApplication
                         var l = js4.Validate(jo);
                         if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"Permission {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"Permission {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
                     }
-                    js.Serialize(jtw, jo);
+                    if (!whatIf) js.Serialize(jtw, jo);
                     if (++i % 10000 == 0)
                     {
                         traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
@@ -5143,7 +5145,7 @@ namespace FolioConsoleApplication
                     var s2 = Stopwatch.StartNew();
                     foreach (var jo in fsc.PermissionsUsers(where))
                     {
-                        fsc.DeletePermissionsUser((string)jo["id"]);
+                        if (!whatIf) fsc.DeletePermissionsUser((string)jo["id"]);
                         if (++i % 100 == 0)
                         {
                             traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
@@ -5154,7 +5156,7 @@ namespace FolioConsoleApplication
                 }
                 else
                 {
-                    i = fbcc.ExecuteNonQuery($"DELETE FROM diku_mod_permissions.permissions_users{(where != null ? $" WHERE {where}" : "")}");
+                    if (!whatIf) i = fbcc.ExecuteNonQuery($"DELETE FROM diku_mod_permissions.permissions_users{(where != null ? $" WHERE {where}" : "")}");
                 }
                 traceSource.TraceEvent(TraceEventType.Information, 0, $"Deleted {i} permissions users");
             }
@@ -5187,7 +5189,7 @@ namespace FolioConsoleApplication
                     }
                     if (api)
                     {
-                        fsc.InsertPermissionsUser(jo);
+                        if (!whatIf) fsc.InsertPermissionsUser(jo);
                         if (i % 100 == 0)
                         {
                             traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
@@ -5196,7 +5198,7 @@ namespace FolioConsoleApplication
                     }
                     else
                     {
-                        fbcc.Insert(new PermissionsUser
+                        if (!whatIf) fbcc.Insert(new PermissionsUser
                         {
                             Id = (Guid?)jo.SelectToken("id"),
                             Content = jo.ToString(),
@@ -5228,7 +5230,7 @@ namespace FolioConsoleApplication
             using (var fdc = new FolioDapperContext())
             using (var fsc = new FolioServiceClient())
             using (var sr = new StreamReader(Assembly.GetAssembly(typeof(FolioContext)).GetManifestResourceStream("FolioLibrary.PermissionsUser.json")))
-            using (var sw = new StreamWriter(path))
+            using (var sw = new StreamWriter(whatIf ? (Stream)new MemoryStream() : new FileStream(path, FileMode.Create)))
             using (var jtw = new JsonTextWriter(sw))
             {
                 var s2 = Stopwatch.StartNew();
@@ -5243,7 +5245,7 @@ namespace FolioConsoleApplication
                         var l = js4.Validate(jo);
                         if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"PermissionsUser {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"PermissionsUser {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
                     }
-                    js.Serialize(jtw, jo);
+                    if (!whatIf) js.Serialize(jtw, jo);
                     if (++i % 10000 == 0)
                     {
                         traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
@@ -5270,7 +5272,7 @@ namespace FolioConsoleApplication
                     var s2 = Stopwatch.StartNew();
                     foreach (var jo in fsc.Pieces(where))
                     {
-                        fsc.DeletePiece((string)jo["id"]);
+                        if (!whatIf) fsc.DeletePiece((string)jo["id"]);
                         if (++i % 100 == 0)
                         {
                             traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
@@ -5281,7 +5283,7 @@ namespace FolioConsoleApplication
                 }
                 else
                 {
-                    i = fbcc.ExecuteNonQuery($"DELETE FROM diku_mod_orders_storage.pieces{(where != null ? $" WHERE {where}" : "")}");
+                    if (!whatIf) i = fbcc.ExecuteNonQuery($"DELETE FROM diku_mod_orders_storage.pieces{(where != null ? $" WHERE {where}" : "")}");
                 }
                 traceSource.TraceEvent(TraceEventType.Information, 0, $"Deleted {i} pieces");
             }
@@ -5314,7 +5316,7 @@ namespace FolioConsoleApplication
                     }
                     if (api)
                     {
-                        fsc.InsertPiece(jo);
+                        if (!whatIf) fsc.InsertPiece(jo);
                         if (i % 100 == 0)
                         {
                             traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
@@ -5323,7 +5325,7 @@ namespace FolioConsoleApplication
                     }
                     else
                     {
-                        fbcc.Insert(new Piece
+                        if (!whatIf) fbcc.Insert(new Piece
                         {
                             Id = (Guid?)jo.SelectToken("id"),
                             Content = jo.ToString(),
@@ -5354,7 +5356,7 @@ namespace FolioConsoleApplication
             using (var fdc = new FolioDapperContext())
             using (var fsc = new FolioServiceClient())
             using (var sr = new StreamReader(Assembly.GetAssembly(typeof(FolioContext)).GetManifestResourceStream("FolioLibrary.Piece.json")))
-            using (var sw = new StreamWriter(path))
+            using (var sw = new StreamWriter(whatIf ? (Stream)new MemoryStream() : new FileStream(path, FileMode.Create)))
             using (var jtw = new JsonTextWriter(sw))
             {
                 var s2 = Stopwatch.StartNew();
@@ -5369,7 +5371,7 @@ namespace FolioConsoleApplication
                         var l = js4.Validate(jo);
                         if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"Piece {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"Piece {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
                     }
-                    js.Serialize(jtw, jo);
+                    if (!whatIf) js.Serialize(jtw, jo);
                     if (++i % 10000 == 0)
                     {
                         traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
@@ -5396,7 +5398,7 @@ namespace FolioConsoleApplication
                     var s2 = Stopwatch.StartNew();
                     foreach (var jo in fsc.Proxies(where))
                     {
-                        fsc.DeleteProxy((string)jo["id"]);
+                        if (!whatIf) fsc.DeleteProxy((string)jo["id"]);
                         if (++i % 100 == 0)
                         {
                             traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
@@ -5407,7 +5409,7 @@ namespace FolioConsoleApplication
                 }
                 else
                 {
-                    i = fbcc.ExecuteNonQuery($"DELETE FROM diku_mod_users.proxyfor{(where != null ? $" WHERE {where}" : "")}");
+                    if (!whatIf) i = fbcc.ExecuteNonQuery($"DELETE FROM diku_mod_users.proxyfor{(where != null ? $" WHERE {where}" : "")}");
                 }
                 traceSource.TraceEvent(TraceEventType.Information, 0, $"Deleted {i} proxies");
             }
@@ -5440,7 +5442,7 @@ namespace FolioConsoleApplication
                     }
                     if (api)
                     {
-                        fsc.InsertProxy(jo);
+                        if (!whatIf) fsc.InsertProxy(jo);
                         if (i % 100 == 0)
                         {
                             traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
@@ -5449,7 +5451,7 @@ namespace FolioConsoleApplication
                     }
                     else
                     {
-                        fbcc.Insert(new Proxy
+                        if (!whatIf) fbcc.Insert(new Proxy
                         {
                             Id = (Guid?)jo.SelectToken("id"),
                             Content = jo.ToString(),
@@ -5481,7 +5483,7 @@ namespace FolioConsoleApplication
             using (var fdc = new FolioDapperContext())
             using (var fsc = new FolioServiceClient())
             using (var sr = new StreamReader(Assembly.GetAssembly(typeof(FolioContext)).GetManifestResourceStream("FolioLibrary.Proxy.json")))
-            using (var sw = new StreamWriter(path))
+            using (var sw = new StreamWriter(whatIf ? (Stream)new MemoryStream() : new FileStream(path, FileMode.Create)))
             using (var jtw = new JsonTextWriter(sw))
             {
                 var s2 = Stopwatch.StartNew();
@@ -5496,7 +5498,7 @@ namespace FolioConsoleApplication
                         var l = js4.Validate(jo);
                         if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"Proxy {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"Proxy {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
                     }
-                    js.Serialize(jtw, jo);
+                    if (!whatIf) js.Serialize(jtw, jo);
                     if (++i % 10000 == 0)
                     {
                         traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
@@ -5523,7 +5525,7 @@ namespace FolioConsoleApplication
                     var s2 = Stopwatch.StartNew();
                     foreach (var jo in fsc.ReportingCodes(where))
                     {
-                        fsc.DeleteReportingCode((string)jo["id"]);
+                        if (!whatIf) fsc.DeleteReportingCode((string)jo["id"]);
                         if (++i % 100 == 0)
                         {
                             traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
@@ -5534,7 +5536,7 @@ namespace FolioConsoleApplication
                 }
                 else
                 {
-                    i = fbcc.ExecuteNonQuery($"DELETE FROM diku_mod_orders_storage.reporting_code{(where != null ? $" WHERE {where}" : "")}");
+                    if (!whatIf) i = fbcc.ExecuteNonQuery($"DELETE FROM diku_mod_orders_storage.reporting_code{(where != null ? $" WHERE {where}" : "")}");
                 }
                 traceSource.TraceEvent(TraceEventType.Information, 0, $"Deleted {i} reporting codes");
             }
@@ -5567,7 +5569,7 @@ namespace FolioConsoleApplication
                     }
                     if (api)
                     {
-                        fsc.InsertReportingCode(jo);
+                        if (!whatIf) fsc.InsertReportingCode(jo);
                         if (i % 100 == 0)
                         {
                             traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
@@ -5576,7 +5578,7 @@ namespace FolioConsoleApplication
                     }
                     else
                     {
-                        fbcc.Insert(new ReportingCode
+                        if (!whatIf) fbcc.Insert(new ReportingCode
                         {
                             Id = (Guid?)jo.SelectToken("id"),
                             Content = jo.ToString()
@@ -5606,7 +5608,7 @@ namespace FolioConsoleApplication
             using (var fdc = new FolioDapperContext())
             using (var fsc = new FolioServiceClient())
             using (var sr = new StreamReader(Assembly.GetAssembly(typeof(FolioContext)).GetManifestResourceStream("FolioLibrary.ReportingCode.json")))
-            using (var sw = new StreamWriter(path))
+            using (var sw = new StreamWriter(whatIf ? (Stream)new MemoryStream() : new FileStream(path, FileMode.Create)))
             using (var jtw = new JsonTextWriter(sw))
             {
                 var s2 = Stopwatch.StartNew();
@@ -5621,7 +5623,7 @@ namespace FolioConsoleApplication
                         var l = js4.Validate(jo);
                         if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"ReportingCode {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"ReportingCode {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
                     }
-                    js.Serialize(jtw, jo);
+                    if (!whatIf) js.Serialize(jtw, jo);
                     if (++i % 10000 == 0)
                     {
                         traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
@@ -5648,7 +5650,7 @@ namespace FolioConsoleApplication
                     var s2 = Stopwatch.StartNew();
                     foreach (var jo in fsc.ServicePoints(where))
                     {
-                        fsc.DeleteServicePoint((string)jo["id"]);
+                        if (!whatIf) fsc.DeleteServicePoint((string)jo["id"]);
                         if (++i % 100 == 0)
                         {
                             traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
@@ -5659,7 +5661,7 @@ namespace FolioConsoleApplication
                 }
                 else
                 {
-                    i = fbcc.ExecuteNonQuery($"DELETE FROM diku_mod_inventory_storage.service_point{(where != null ? $" WHERE {where}" : "")}");
+                    if (!whatIf) i = fbcc.ExecuteNonQuery($"DELETE FROM diku_mod_inventory_storage.service_point{(where != null ? $" WHERE {where}" : "")}");
                 }
                 traceSource.TraceEvent(TraceEventType.Information, 0, $"Deleted {i} service points");
             }
@@ -5692,7 +5694,7 @@ namespace FolioConsoleApplication
                     }
                     if (api)
                     {
-                        fsc.InsertServicePoint(jo);
+                        if (!whatIf) fsc.InsertServicePoint(jo);
                         if (i % 100 == 0)
                         {
                             traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
@@ -5701,7 +5703,7 @@ namespace FolioConsoleApplication
                     }
                     else
                     {
-                        fbcc.Insert(new ServicePoint
+                        if (!whatIf) fbcc.Insert(new ServicePoint
                         {
                             Id = (Guid?)jo.SelectToken("id"),
                             Content = jo.ToString(),
@@ -5733,7 +5735,7 @@ namespace FolioConsoleApplication
             using (var fdc = new FolioDapperContext())
             using (var fsc = new FolioServiceClient())
             using (var sr = new StreamReader(Assembly.GetAssembly(typeof(FolioContext)).GetManifestResourceStream("FolioLibrary.ServicePoint.json")))
-            using (var sw = new StreamWriter(path))
+            using (var sw = new StreamWriter(whatIf ? (Stream)new MemoryStream() : new FileStream(path, FileMode.Create)))
             using (var jtw = new JsonTextWriter(sw))
             {
                 var s2 = Stopwatch.StartNew();
@@ -5748,7 +5750,7 @@ namespace FolioConsoleApplication
                         var l = js4.Validate(jo);
                         if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"ServicePoint {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"ServicePoint {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
                     }
-                    js.Serialize(jtw, jo);
+                    if (!whatIf) js.Serialize(jtw, jo);
                     if (++i % 10000 == 0)
                     {
                         traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
@@ -5775,7 +5777,7 @@ namespace FolioConsoleApplication
                     var s2 = Stopwatch.StartNew();
                     foreach (var jo in fsc.ServicePointUsers(where))
                     {
-                        fsc.DeleteServicePointUser((string)jo["id"]);
+                        if (!whatIf) fsc.DeleteServicePointUser((string)jo["id"]);
                         if (++i % 100 == 0)
                         {
                             traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
@@ -5786,7 +5788,7 @@ namespace FolioConsoleApplication
                 }
                 else
                 {
-                    i = fbcc.ExecuteNonQuery($"DELETE FROM diku_mod_inventory_storage.service_point_user{(where != null ? $" WHERE {where}" : "")}");
+                    if (!whatIf) i = fbcc.ExecuteNonQuery($"DELETE FROM diku_mod_inventory_storage.service_point_user{(where != null ? $" WHERE {where}" : "")}");
                 }
                 traceSource.TraceEvent(TraceEventType.Information, 0, $"Deleted {i} service point users");
             }
@@ -5819,7 +5821,7 @@ namespace FolioConsoleApplication
                     }
                     if (api)
                     {
-                        fsc.InsertServicePointUser(jo);
+                        if (!whatIf) fsc.InsertServicePointUser(jo);
                         if (i % 100 == 0)
                         {
                             traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
@@ -5828,7 +5830,7 @@ namespace FolioConsoleApplication
                     }
                     else
                     {
-                        fbcc.Insert(new ServicePointUser
+                        if (!whatIf) fbcc.Insert(new ServicePointUser
                         {
                             Id = (Guid?)jo.SelectToken("id"),
                             Content = jo.ToString(),
@@ -5861,7 +5863,7 @@ namespace FolioConsoleApplication
             using (var fdc = new FolioDapperContext())
             using (var fsc = new FolioServiceClient())
             using (var sr = new StreamReader(Assembly.GetAssembly(typeof(FolioContext)).GetManifestResourceStream("FolioLibrary.ServicePointUser.json")))
-            using (var sw = new StreamWriter(path))
+            using (var sw = new StreamWriter(whatIf ? (Stream)new MemoryStream() : new FileStream(path, FileMode.Create)))
             using (var jtw = new JsonTextWriter(sw))
             {
                 var s2 = Stopwatch.StartNew();
@@ -5876,7 +5878,7 @@ namespace FolioConsoleApplication
                         var l = js4.Validate(jo);
                         if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"ServicePointUser {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"ServicePointUser {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
                     }
-                    js.Serialize(jtw, jo);
+                    if (!whatIf) js.Serialize(jtw, jo);
                     if (++i % 10000 == 0)
                     {
                         traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
@@ -5903,7 +5905,7 @@ namespace FolioConsoleApplication
                     var s2 = Stopwatch.StartNew();
                     foreach (var jo in fsc.StatisticalCodes(where))
                     {
-                        fsc.DeleteStatisticalCode((string)jo["id"]);
+                        if (!whatIf) fsc.DeleteStatisticalCode((string)jo["id"]);
                         if (++i % 100 == 0)
                         {
                             traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
@@ -5914,7 +5916,7 @@ namespace FolioConsoleApplication
                 }
                 else
                 {
-                    i = fbcc.ExecuteNonQuery($"DELETE FROM diku_mod_inventory_storage.statistical_code{(where != null ? $" WHERE {where}" : "")}");
+                    if (!whatIf) i = fbcc.ExecuteNonQuery($"DELETE FROM diku_mod_inventory_storage.statistical_code{(where != null ? $" WHERE {where}" : "")}");
                 }
                 traceSource.TraceEvent(TraceEventType.Information, 0, $"Deleted {i} statistical codes");
             }
@@ -5947,7 +5949,7 @@ namespace FolioConsoleApplication
                     }
                     if (api)
                     {
-                        fsc.InsertStatisticalCode(jo);
+                        if (!whatIf) fsc.InsertStatisticalCode(jo);
                         if (i % 100 == 0)
                         {
                             traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
@@ -5956,7 +5958,7 @@ namespace FolioConsoleApplication
                     }
                     else
                     {
-                        fbcc.Insert(new StatisticalCode
+                        if (!whatIf) fbcc.Insert(new StatisticalCode
                         {
                             Id = (Guid?)jo.SelectToken("id"),
                             Content = jo.ToString(),
@@ -5989,7 +5991,7 @@ namespace FolioConsoleApplication
             using (var fdc = new FolioDapperContext())
             using (var fsc = new FolioServiceClient())
             using (var sr = new StreamReader(Assembly.GetAssembly(typeof(FolioContext)).GetManifestResourceStream("FolioLibrary.StatisticalCode.json")))
-            using (var sw = new StreamWriter(path))
+            using (var sw = new StreamWriter(whatIf ? (Stream)new MemoryStream() : new FileStream(path, FileMode.Create)))
             using (var jtw = new JsonTextWriter(sw))
             {
                 var s2 = Stopwatch.StartNew();
@@ -6004,7 +6006,7 @@ namespace FolioConsoleApplication
                         var l = js4.Validate(jo);
                         if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"StatisticalCode {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"StatisticalCode {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
                     }
-                    js.Serialize(jtw, jo);
+                    if (!whatIf) js.Serialize(jtw, jo);
                     if (++i % 10000 == 0)
                     {
                         traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
@@ -6031,7 +6033,7 @@ namespace FolioConsoleApplication
                     var s2 = Stopwatch.StartNew();
                     foreach (var jo in fsc.StatisticalCodeTypes(where))
                     {
-                        fsc.DeleteStatisticalCodeType((string)jo["id"]);
+                        if (!whatIf) fsc.DeleteStatisticalCodeType((string)jo["id"]);
                         if (++i % 100 == 0)
                         {
                             traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
@@ -6042,7 +6044,7 @@ namespace FolioConsoleApplication
                 }
                 else
                 {
-                    i = fbcc.ExecuteNonQuery($"DELETE FROM diku_mod_inventory_storage.statistical_code_type{(where != null ? $" WHERE {where}" : "")}");
+                    if (!whatIf) i = fbcc.ExecuteNonQuery($"DELETE FROM diku_mod_inventory_storage.statistical_code_type{(where != null ? $" WHERE {where}" : "")}");
                 }
                 traceSource.TraceEvent(TraceEventType.Information, 0, $"Deleted {i} statistical code types");
             }
@@ -6075,7 +6077,7 @@ namespace FolioConsoleApplication
                     }
                     if (api)
                     {
-                        fsc.InsertStatisticalCodeType(jo);
+                        if (!whatIf) fsc.InsertStatisticalCodeType(jo);
                         if (i % 100 == 0)
                         {
                             traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
@@ -6084,7 +6086,7 @@ namespace FolioConsoleApplication
                     }
                     else
                     {
-                        fbcc.Insert(new StatisticalCodeType
+                        if (!whatIf) fbcc.Insert(new StatisticalCodeType
                         {
                             Id = (Guid?)jo.SelectToken("id"),
                             Content = jo.ToString(),
@@ -6116,7 +6118,7 @@ namespace FolioConsoleApplication
             using (var fdc = new FolioDapperContext())
             using (var fsc = new FolioServiceClient())
             using (var sr = new StreamReader(Assembly.GetAssembly(typeof(FolioContext)).GetManifestResourceStream("FolioLibrary.StatisticalCodeType.json")))
-            using (var sw = new StreamWriter(path))
+            using (var sw = new StreamWriter(whatIf ? (Stream)new MemoryStream() : new FileStream(path, FileMode.Create)))
             using (var jtw = new JsonTextWriter(sw))
             {
                 var s2 = Stopwatch.StartNew();
@@ -6131,7 +6133,7 @@ namespace FolioConsoleApplication
                         var l = js4.Validate(jo);
                         if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"StatisticalCodeType {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"StatisticalCodeType {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
                     }
-                    js.Serialize(jtw, jo);
+                    if (!whatIf) js.Serialize(jtw, jo);
                     if (++i % 10000 == 0)
                     {
                         traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
@@ -6158,7 +6160,7 @@ namespace FolioConsoleApplication
                     var s2 = Stopwatch.StartNew();
                     foreach (var jo in fsc.Users(where))
                     {
-                        fsc.DeleteUser((string)jo["id"]);
+                        if (!whatIf) fsc.DeleteUser((string)jo["id"]);
                         if (++i % 100 == 0)
                         {
                             traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
@@ -6169,7 +6171,7 @@ namespace FolioConsoleApplication
                 }
                 else
                 {
-                    i = fbcc.ExecuteNonQuery($"DELETE FROM diku_mod_users.users{(where != null ? $" WHERE {where}" : "")}");
+                    if (!whatIf) i = fbcc.ExecuteNonQuery($"DELETE FROM diku_mod_users.users{(where != null ? $" WHERE {where}" : "")}");
                 }
                 traceSource.TraceEvent(TraceEventType.Information, 0, $"Deleted {i} users");
             }
@@ -6202,7 +6204,7 @@ namespace FolioConsoleApplication
                     }
                     if (api)
                     {
-                        fsc.InsertUser(jo);
+                        if (!whatIf) fsc.InsertUser(jo);
                         if (i % 100 == 0)
                         {
                             traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
@@ -6211,7 +6213,7 @@ namespace FolioConsoleApplication
                     }
                     else
                     {
-                        fbcc.Insert(new User
+                        if (!whatIf) fbcc.Insert(new User
                         {
                             Id = (Guid?)jo.SelectToken("id"),
                             Content = jo.ToString(),
@@ -6243,7 +6245,7 @@ namespace FolioConsoleApplication
             using (var fdc = new FolioDapperContext())
             using (var fsc = new FolioServiceClient())
             using (var sr = new StreamReader(Assembly.GetAssembly(typeof(FolioContext)).GetManifestResourceStream("FolioLibrary.User.json")))
-            using (var sw = new StreamWriter(path))
+            using (var sw = new StreamWriter(whatIf ? (Stream)new MemoryStream() : new FileStream(path, FileMode.Create)))
             using (var jtw = new JsonTextWriter(sw))
             {
                 var s2 = Stopwatch.StartNew();
@@ -6258,7 +6260,7 @@ namespace FolioConsoleApplication
                         var l = js4.Validate(jo);
                         if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"User {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"User {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
                     }
-                    js.Serialize(jtw, jo);
+                    if (!whatIf) js.Serialize(jtw, jo);
                     if (++i % 10000 == 0)
                     {
                         traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
