@@ -114,7 +114,7 @@ dotnet FolioConsoleApplication.dll -delete -load -userspath users.json -userswhe
 
 ### Save all inventory module and validate
 ```
-dotnet FolioConsoleApplication.dll -save -allinventory -validate
+dotnet FolioConsoleApplication.dll -save -allinventory -validate -force
 ```
 
 ## Parameters
@@ -123,6 +123,7 @@ dotnet FolioConsoleApplication.dll -save -allinventory -validate
 -All
 -Api
 -Delete
+-Force
 -Load
 -Save
 -TracePath <string>
