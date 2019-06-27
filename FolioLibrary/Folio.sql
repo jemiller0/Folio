@@ -1195,7 +1195,7 @@ CAST(jsonb#>>'{loansPolicy,closedLibraryDueDateManagementId}' AS VARCHAR(1024)) 
 CAST(jsonb#>>'{loansPolicy,gracePeriod,duration}' AS INTEGER) AS loans_policy_grace_period_duration,
 CAST(jsonb#>>'{loansPolicy,gracePeriod,intervalId}' AS VARCHAR(1024)) AS loans_policy_grace_period_interval_id,
 CAST(jsonb#>>'{loansPolicy,openingTimeOffset,duration}' AS INTEGER) AS loans_policy_opening_time_offset_duration,
-CAST(jsonb#>>'{loansPolicy,openingTimeOffset,intervalId}' AS UUID) AS loans_policy_opening_time_offset_interval_id,
+CAST(jsonb#>>'{loansPolicy,openingTimeOffset,intervalId}' AS VARCHAR(1024)) AS loans_policy_opening_time_offset_interval_id,
 CAST(jsonb#>>'{loansPolicy,fixedDueDateScheduleId}' AS UUID) AS loans_policy_fixed_due_date_schedule_id,
 CAST(jsonb->>'renewable' AS BOOLEAN) AS renewable,
 CAST(jsonb#>>'{renewalsPolicy,unlimited}' AS BOOLEAN) AS renewals_policy_unlimited,
@@ -1206,30 +1206,28 @@ CAST(jsonb#>>'{renewalsPolicy,period,duration}' AS INTEGER) AS renewals_policy_p
 CAST(jsonb#>>'{renewalsPolicy,period,intervalId}' AS VARCHAR(1024)) AS renewals_policy_period_interval_id,
 CAST(jsonb#>>'{renewalsPolicy,alternateFixedDueDateScheduleId}' AS UUID) AS renewals_policy_alternate_fixed_due_date_schedule_id,
 CAST(jsonb#>>'{requestManagement,recalls,alternateGracePeriod,duration}' AS INTEGER) AS recalls_alternate_grace_period_duration,
-CAST(jsonb#>>'{requestManagement,recalls,alternateGracePeriod,intervalId}' AS UUID) AS recalls_alternate_grace_period_interval_id,
+CAST(jsonb#>>'{requestManagement,recalls,alternateGracePeriod,intervalId}' AS VARCHAR(1024)) AS recalls_alternate_grace_period_interval_id,
 CAST(jsonb#>>'{requestManagement,recalls,minimumGuaranteedLoanPeriod,duration}' AS INTEGER) AS recalls_minimum_guaranteed_loan_period_duration,
-CAST(jsonb#>>'{requestManagement,recalls,minimumGuaranteedLoanPeriod,intervalId}' AS UUID) AS recalls_minimum_guaranteed_loan_period_interval_id,
+CAST(jsonb#>>'{requestManagement,recalls,minimumGuaranteedLoanPeriod,intervalId}' AS VARCHAR(1024)) AS recalls_minimum_guaranteed_loan_period_interval_id,
 CAST(jsonb#>>'{requestManagement,recalls,recallReturnInterval,duration}' AS INTEGER) AS recalls_recall_return_interval_duration,
-CAST(jsonb#>>'{requestManagement,recalls,recallReturnInterval,intervalId}' AS UUID) AS recalls_recall_return_interval_interval_id,
+CAST(jsonb#>>'{requestManagement,recalls,recallReturnInterval,intervalId}' AS VARCHAR(1024)) AS recalls_recall_return_interval_interval_id,
 CAST(jsonb#>>'{requestManagement,holds,alternateCheckoutLoanPeriod,duration}' AS INTEGER) AS holds_alternate_checkout_loan_period_duration,
-CAST(jsonb#>>'{requestManagement,holds,alternateCheckoutLoanPeriod,intervalId}' AS UUID) AS holds_alternate_checkout_loan_period_interval_id,
+CAST(jsonb#>>'{requestManagement,holds,alternateCheckoutLoanPeriod,intervalId}' AS VARCHAR(1024)) AS holds_alternate_checkout_loan_period_interval_id,
 CAST(jsonb#>>'{requestManagement,holds,renewItemsWithRequest}' AS BOOLEAN) AS holds_renew_items_with_request,
 CAST(jsonb#>>'{requestManagement,holds,alternateRenewalLoanPeriod,duration}' AS INTEGER) AS holds_alternate_renewal_loan_period_duration,
-CAST(jsonb#>>'{requestManagement,holds,alternateRenewalLoanPeriod,intervalId}' AS UUID) AS holds_alternate_renewal_loan_period_interval_id,
+CAST(jsonb#>>'{requestManagement,holds,alternateRenewalLoanPeriod,intervalId}' AS VARCHAR(1024)) AS holds_alternate_renewal_loan_period_interval_id,
 CAST(jsonb#>>'{requestManagement,pages,alternateCheckoutLoanPeriod,duration}' AS INTEGER) AS pages_alternate_checkout_loan_period_duration,
-CAST(jsonb#>>'{requestManagement,pages,alternateCheckoutLoanPeriod,intervalId}' AS UUID) AS pages_alternate_checkout_loan_period_interval_id,
+CAST(jsonb#>>'{requestManagement,pages,alternateCheckoutLoanPeriod,intervalId}' AS VARCHAR(1024)) AS pages_alternate_checkout_loan_period_interval_id,
 CAST(jsonb#>>'{requestManagement,pages,renewItemsWithRequest}' AS BOOLEAN) AS pages_renew_items_with_request,
 CAST(jsonb#>>'{requestManagement,pages,alternateRenewalLoanPeriod,duration}' AS INTEGER) AS pages_alternate_renewal_loan_period_duration,
-CAST(jsonb#>>'{requestManagement,pages,alternateRenewalLoanPeriod,intervalId}' AS UUID) AS pages_alternate_renewal_loan_period_interval_id,
+CAST(jsonb#>>'{requestManagement,pages,alternateRenewalLoanPeriod,intervalId}' AS VARCHAR(1024)) AS pages_alternate_renewal_loan_period_interval_id,
 uc.TIMESTAMP_CAST(jsonb#>>'{metadata,createdDate}') AS created_date,
 CAST(jsonb#>>'{metadata,createdByUserId}' AS UUID) AS created_by_user_id,
 CAST(jsonb#>>'{metadata,createdByUsername}' AS VARCHAR(1024)) AS created_by_username,
 uc.TIMESTAMP_CAST(jsonb#>>'{metadata,updatedDate}') AS updated_date,
 CAST(jsonb#>>'{metadata,updatedByUserId}' AS UUID) AS updated_by_user_id,
 CAST(jsonb#>>'{metadata,updatedByUsername}' AS VARCHAR(1024)) AS updated_by_username,
-jsonb_pretty(jsonb) AS content,
-loanspolicy_fixedduedatescheduleid AS loanspolicy_fixedduedatescheduleid,
-renewalspolicy_alternatefixedduedatescheduleid AS renewalspolicy_alternatefixedduedatescheduleid
+jsonb_pretty(jsonb) AS content
 FROM diku_mod_circulation_storage.loan_policy;
 CREATE VIEW uc.loan_types AS
 SELECT
@@ -1964,8 +1962,7 @@ uc.TIMESTAMP_CAST(jsonb#>>'{metadata,updatedDate}') AS updated_date,
 CAST(jsonb#>>'{metadata,updatedByUserId}' AS UUID) AS updated_by_user_id,
 CAST(jsonb#>>'{metadata,updatedByUsername}' AS VARCHAR(1024)) AS updated_by_username,
 uc.TIMESTAMP_CAST(jsonb->>'awaitingPickupRequestClosedDate') AS awaiting_pickup_request_closed_date,
-jsonb_pretty(jsonb) AS content,
-cancellationreasonid AS cancellationreasonid
+jsonb_pretty(jsonb) AS content
 FROM diku_mod_circulation_storage.request;
 CREATE VIEW uc.request_policy_request_types AS
 SELECT
@@ -2052,11 +2049,9 @@ CAST(jsonb#>>'{metadata,updatedByUsername}' AS VARCHAR(1024)) AS updated_by_user
 jsonb_pretty(jsonb) AS content,
 defaultservicepointid AS defaultservicepointid
 FROM diku_mod_inventory_storage.service_point_user;
-CREATE VIEW uc.staff_slip_staff_slips AS
+CREATE VIEW uc.staff_slips AS
 SELECT
-id AS id,
-staff_slip_id AS staff_slip_id,
-CAST(jsonb->>'id' AS VARCHAR(1024)) AS id2,
+_id AS id,
 CAST(jsonb->>'name' AS VARCHAR(1024)) AS name,
 CAST(jsonb->>'description' AS VARCHAR(1024)) AS description,
 CAST(jsonb->>'active' AS BOOLEAN) AS active,
@@ -2066,12 +2061,7 @@ CAST(jsonb#>>'{metadata,createdByUserId}' AS UUID) AS created_by_user_id,
 CAST(jsonb#>>'{metadata,createdByUsername}' AS VARCHAR(1024)) AS created_by_username,
 uc.TIMESTAMP_CAST(jsonb#>>'{metadata,updatedDate}') AS updated_date,
 CAST(jsonb#>>'{metadata,updatedByUserId}' AS UUID) AS updated_by_user_id,
-CAST(jsonb#>>'{metadata,updatedByUsername}' AS VARCHAR(1024)) AS updated_by_username
-FROM (SELECT _id::text || ordinality::text AS id, _id AS staff_slip_id, value AS jsonb FROM diku_mod_circulation_storage.staff_slips, jsonb_array_elements((jsonb->>'staffSlips')::jsonb) WITH ORDINALITY) a;
-CREATE VIEW uc.staff_slips AS
-SELECT
-_id AS id,
-CAST(jsonb->>'totalRecords' AS INTEGER) AS total_records,
+CAST(jsonb#>>'{metadata,updatedByUsername}' AS VARCHAR(1024)) AS updated_by_username,
 jsonb_pretty(jsonb) AS content
 FROM diku_mod_circulation_storage.staff_slips;
 CREATE VIEW uc.statistical_codes AS
