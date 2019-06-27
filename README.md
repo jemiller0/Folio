@@ -117,6 +117,11 @@ dotnet FolioConsoleApplication.dll -delete -load -userspath users.json -userswhe
 dotnet FolioConsoleApplication.dll -save -allinventory -validate -force
 ```
 
+### Validate all
+```
+dotnet FolioConsoleApplication.dll -save -all -validate -force -whatif
+```
+
 ## Parameters
 
 ```
