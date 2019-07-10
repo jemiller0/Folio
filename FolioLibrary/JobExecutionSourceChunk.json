@@ -1,0 +1,57 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "description": "Job Execution Source Chunk Schema",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "id": {
+      "description": "Unique identifier",
+      "type": "string"
+    },
+    "jobExecutionId": {
+      "description": "Foreign Key to the Job Execution this chunk belongs to",
+      "type": "string"
+    },
+    "last": {
+      "description": "True if this is the last chunk False otherwise",
+      "type": "boolean"
+    },
+    "state": {
+      "description": "Represents the current state of the chunk processing, possible values: InProgress, Completed, Error",
+      "type": "string",
+      "enum": [
+        "IN_PROGRESS",
+        "COMPLETED",
+        "ERROR"
+      ]
+    },
+    "chunkSize": {
+      "description": "The total number of records in the chunk",
+      "type": "integer"
+    },
+    "processedAmount": {
+      "description": "The number of records which have been processed already",
+      "type": "integer",
+      "default": 0
+    },
+    "createdDate": {
+      "description": "Instant when chunk processing was started",
+      "type": "string",
+      "format": "date-time"
+    },
+    "completedDate": {
+      "description": "Instant when chunk processing was completed",
+      "type": "string",
+      "format": "date-time"
+    },
+    "error": {
+      "description": "Contains an error message and trace stack if the chunk processing has failed, makes sense only if State == Error",
+      "type": "string"
+    }
+  },
+  "required": [
+    "jobExecutionId",
+    "last",
+    "state"
+  ]
+}

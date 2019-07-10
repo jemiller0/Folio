@@ -193,6 +193,7 @@ CREATE VIEW uc.classification_types AS
 SELECT
 _id AS id,
 CAST(jsonb->>'name' AS VARCHAR(1024)) AS name,
+CAST(jsonb->>'source' AS VARCHAR(1024)) AS source,
 uc.TIMESTAMP_CAST(jsonb#>>'{metadata,createdDate}') AS created_date,
 CAST(jsonb#>>'{metadata,createdByUserId}' AS UUID) AS created_by_user_id,
 CAST(jsonb#>>'{metadata,createdByUsername}' AS VARCHAR(1024)) AS created_by_username,
@@ -354,6 +355,12 @@ CAST(jsonb->>'poLineId' AS UUID) AS po_line_id,
 CAST(jsonb->>'status' AS VARCHAR(1024)) AS status,
 jsonb_pretty(jsonb) AS content
 FROM diku_mod_finance_storage.encumbrance;
+CREATE VIEW uc.error_records AS
+SELECT
+_id AS id,
+CAST(jsonb->>'description' AS VARCHAR(1024)) AS description,
+jsonb_pretty(jsonb) AS content
+FROM diku_mod_source_record_storage.error_records;
 CREATE VIEW uc.event_logs AS
 SELECT
 _id AS id,
@@ -619,6 +626,7 @@ CREATE VIEW uc.id_types AS
 SELECT
 _id AS id,
 CAST(jsonb->>'name' AS VARCHAR(1024)) AS name,
+CAST(jsonb->>'source' AS VARCHAR(1024)) AS source,
 uc.TIMESTAMP_CAST(jsonb#>>'{metadata,createdDate}') AS created_date,
 CAST(jsonb#>>'{metadata,createdByUserId}' AS UUID) AS created_by_user_id,
 CAST(jsonb#>>'{metadata,createdByUsername}' AS VARCHAR(1024)) AS created_by_username,
@@ -1124,6 +1132,39 @@ CAST(jsonb#>>'{metadata,updatedByUserId}' AS UUID) AS updated_by_user_id,
 CAST(jsonb#>>'{metadata,updatedByUsername}' AS VARCHAR(1024)) AS updated_by_username,
 jsonb_pretty(jsonb) AS content
 FROM diku_mod_inventory_storage.item_note_type;
+CREATE VIEW uc.job_executions AS
+SELECT
+_id AS id,
+CAST(jsonb->>'hrId' AS UUID) AS hr_id,
+CAST(jsonb->>'parentJobId' AS UUID) AS parent_job_id,
+CAST(jsonb->>'subordinationType' AS VARCHAR(1024)) AS subordination_type,
+CAST(jsonb#>>'{jobProfileInfo,name}' AS VARCHAR(1024)) AS job_profile_info_name,
+CAST(jsonb#>>'{jobProfileInfo,dataType}' AS VARCHAR(1024)) AS job_profile_info_data_type,
+CAST(jsonb->>'sourcePath' AS VARCHAR(1024)) AS source_path,
+CAST(jsonb#>>'{runBy,firstName}' AS VARCHAR(1024)) AS run_by_first_name,
+CAST(jsonb#>>'{runBy,lastName}' AS VARCHAR(1024)) AS run_by_last_name,
+CAST(jsonb#>>'{progress,current}' AS INTEGER) AS progress_current,
+CAST(jsonb#>>'{progress,total}' AS INTEGER) AS progress_total,
+uc.TIMESTAMP_CAST(jsonb->>'startedDate') AS started_date,
+uc.TIMESTAMP_CAST(jsonb->>'completedDate') AS completed_date,
+CAST(jsonb->>'status' AS VARCHAR(1024)) AS status,
+CAST(jsonb->>'uiStatus' AS VARCHAR(1024)) AS ui_status,
+CAST(jsonb->>'errorStatus' AS VARCHAR(1024)) AS error_status,
+CAST(jsonb->>'userId' AS UUID) AS user_id,
+jsonb_pretty(jsonb) AS content
+FROM diku_mod_source_record_manager.job_executions;
+CREATE VIEW uc.job_execution_source_chunks AS
+SELECT
+_id AS id,
+CAST(jsonb->>'jobExecutionId' AS UUID) AS job_execution_id,
+CAST(jsonb->>'last' AS BOOLEAN) AS last,
+CAST(jsonb->>'state' AS VARCHAR(1024)) AS state,
+CAST(jsonb->>'chunkSize' AS INTEGER) AS chunk_size,
+CAST(jsonb->>'processedAmount' AS INTEGER) AS processed_amount,
+uc.TIMESTAMP_CAST(jsonb->>'completedDate') AS completed_date,
+CAST(jsonb->>'error' AS VARCHAR(1024)) AS error,
+jsonb_pretty(jsonb) AS content
+FROM diku_mod_source_record_manager.job_execution_source_chunks;
 CREATE VIEW uc.ledger_fiscal_years AS
 SELECT
 id AS id,
@@ -1284,6 +1325,12 @@ CAST(jsonb#>>'{metadata,updatedByUserId}' AS UUID) AS updated_by_user_id,
 CAST(jsonb#>>'{metadata,updatedByUsername}' AS VARCHAR(1024)) AS updated_by_username,
 jsonb_pretty(jsonb) AS content
 FROM diku_mod_login.auth_credentials;
+CREATE VIEW uc.marc_records AS
+SELECT
+_id AS id,
+CAST(jsonb->>'formattedContent' AS VARCHAR(1024)) AS formatted_content,
+jsonb_pretty(jsonb) AS content
+FROM diku_mod_source_record_storage.marc_records;
 CREATE VIEW uc.material_types AS
 SELECT
 _id AS id,
@@ -1301,6 +1348,7 @@ CREATE VIEW uc.mode_of_issuances AS
 SELECT
 _id AS id,
 CAST(jsonb->>'name' AS VARCHAR(1024)) AS name,
+CAST(jsonb->>'source' AS VARCHAR(1024)) AS source,
 uc.TIMESTAMP_CAST(jsonb#>>'{metadata,createdDate}') AS created_date,
 CAST(jsonb#>>'{metadata,createdByUserId}' AS UUID) AS created_by_user_id,
 CAST(jsonb#>>'{metadata,createdByUsername}' AS VARCHAR(1024)) AS created_by_username,
@@ -1402,7 +1450,7 @@ SELECT
 id AS id,
 order_item_id AS order_item_id,
 CAST(jsonb->>'contributor' AS VARCHAR(1024)) AS contributor,
-CAST(jsonb->>'contributorType' AS UUID) AS contributor_type_id
+CAST(jsonb->>'contributorNameTypeId' AS UUID) AS contributor_name_type_id
 FROM (SELECT id::text || ordinality::text AS id, id AS order_item_id, value AS jsonb FROM diku_mod_orders_storage.po_line, jsonb_array_elements((jsonb->>'contributors')::jsonb) WITH ORDINALITY) a;
 CREATE VIEW uc.order_item_product_ids AS
 SELECT
@@ -1897,6 +1945,33 @@ CAST(jsonb#>>'{metadata,updatedByUserId}' AS UUID) AS updated_by_user_id,
 CAST(jsonb#>>'{metadata,updatedByUsername}' AS VARCHAR(1024)) AS updated_by_username,
 jsonb_pretty(jsonb) AS content
 FROM diku_mod_users.proxyfor;
+CREATE VIEW uc.raw_records AS
+SELECT
+_id AS id,
+CAST(jsonb->>'content' AS VARCHAR(1024)) AS content2,
+jsonb_pretty(jsonb) AS content
+FROM diku_mod_source_record_storage.raw_records;
+CREATE VIEW uc.records AS
+SELECT
+_id AS id,
+CAST(jsonb->>'snapshotId' AS UUID) AS snapshot_id,
+CAST(jsonb->>'matchedProfileId' AS UUID) AS matched_profile_id,
+CAST(jsonb->>'matchedId' AS UUID) AS matched_id,
+CAST(jsonb->>'generation' AS INTEGER) AS generation,
+CAST(jsonb->>'recordType' AS VARCHAR(1024)) AS record_type,
+CAST(jsonb->>'rawRecordId' AS UUID) AS raw_record_id,
+CAST(jsonb->>'parsedRecordId' AS UUID) AS parsed_record_id,
+CAST(jsonb->>'errorRecordId' AS UUID) AS error_record_id,
+CAST(jsonb->>'deleted' AS BOOLEAN) AS deleted,
+CAST(jsonb#>>'{additionalInfo,suppressDiscovery}' AS BOOLEAN) AS additional_info_suppress_discovery,
+uc.TIMESTAMP_CAST(jsonb#>>'{metadata,createdDate}') AS created_date,
+CAST(jsonb#>>'{metadata,createdByUserId}' AS UUID) AS created_by_user_id,
+CAST(jsonb#>>'{metadata,createdByUsername}' AS VARCHAR(1024)) AS created_by_username,
+uc.TIMESTAMP_CAST(jsonb#>>'{metadata,updatedDate}') AS updated_date,
+CAST(jsonb#>>'{metadata,updatedByUserId}' AS UUID) AS updated_by_user_id,
+CAST(jsonb#>>'{metadata,updatedByUsername}' AS VARCHAR(1024)) AS updated_by_username,
+jsonb_pretty(jsonb) AS content
+FROM diku_mod_source_record_storage.records;
 CREATE VIEW uc.refunds AS
 SELECT
 id AS id,
@@ -2049,6 +2124,20 @@ CAST(jsonb#>>'{metadata,updatedByUsername}' AS VARCHAR(1024)) AS updated_by_user
 jsonb_pretty(jsonb) AS content,
 defaultservicepointid AS defaultservicepointid
 FROM diku_mod_inventory_storage.service_point_user;
+CREATE VIEW uc.snapshots AS
+SELECT
+_id AS id,
+CAST(jsonb->>'jobExecutionId' AS UUID) AS job_execution_id,
+CAST(jsonb->>'status' AS VARCHAR(1024)) AS status,
+uc.TIMESTAMP_CAST(jsonb->>'processingStartedDate') AS processing_started_date,
+uc.TIMESTAMP_CAST(jsonb#>>'{metadata,createdDate}') AS created_date,
+CAST(jsonb#>>'{metadata,createdByUserId}' AS UUID) AS created_by_user_id,
+CAST(jsonb#>>'{metadata,createdByUsername}' AS VARCHAR(1024)) AS created_by_username,
+uc.TIMESTAMP_CAST(jsonb#>>'{metadata,updatedDate}') AS updated_date,
+CAST(jsonb#>>'{metadata,updatedByUserId}' AS UUID) AS updated_by_user_id,
+CAST(jsonb#>>'{metadata,updatedByUsername}' AS VARCHAR(1024)) AS updated_by_username,
+jsonb_pretty(jsonb) AS content
+FROM diku_mod_source_record_storage.snapshots;
 CREATE VIEW uc.staff_slips AS
 SELECT
 _id AS id,

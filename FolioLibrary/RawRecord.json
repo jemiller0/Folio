@@ -1,0 +1,22 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "description": "Raw Record data model",
+  "excludedFromEqualsAndHashCode": [
+    "content"
+  ],
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "id": {
+      "description": "UUID",
+      "type": "string"
+    },
+    "content": {
+      "description": "Raw data",
+      "type": "string"
+    }
+  },
+  "required": [
+    "content"
+  ]
+}

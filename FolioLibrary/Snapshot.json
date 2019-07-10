@@ -1,18 +1,35 @@
 {
   "$schema": "http://json-schema.org/draft-04/schema#",
-  "description": "A mode of issuance to be assigned to an Instance",
+  "description": "Snapshot Schema",
   "type": "object",
+  "additionalProperties": false,
   "properties": {
-    "id": {
+    "jobExecutionId": {
+      "description": "Corresponding jobExecution id",
       "type": "string"
     },
-    "name": {
-      "description": "label for the mode of issuance",
-      "type": "string"
+    "status": {
+      "description": "JobExecution status Enum",
+      "type": "string",
+      "additionalProperties": false,
+      "enum": [
+        "PARENT",
+        "NEW",
+        "FILE_UPLOADED",
+        "PARSING_IN_PROGRESS",
+        "PARSING_FINISHED",
+        "PROCESSING_IN_PROGRESS",
+        "PROCESSING_FINISHED",
+        "COMMIT_IN_PROGRESS",
+        "COMMITTED",
+        "ERROR",
+        "DISCARDED"
+      ]
     },
-    "source": {
-      "description": "label indicating where the mode of issuance entry originates from, i.e. 'rdamodeissue' or 'local'",
-      "type": "string"
+    "processingStartedDate": {
+      "description": "Date and time when parsing of records started, set when status is updated to PARSING_IN_PROGRESS",
+      "type": "string",
+      "format": "date-time"
     },
     "metadata": {
       "title": "Metadata Schema",
@@ -55,6 +72,7 @@
     }
   },
   "required": [
-    "name"
+    "jobExecutionId",
+    "status"
   ]
 }

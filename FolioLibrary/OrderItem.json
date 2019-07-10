@@ -105,12 +105,15 @@
             "description": "the name of a contributor to the material",
             "type": "string"
           },
-          "contributorType": {
+          "contributorNameTypeId": {
             "description": "UUID of the contributor type",
             "type": "string",
             "pattern": "^[a-f0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12}$"
           }
-        }
+        },
+        "required": [
+          "contributorNameTypeId"
+        ]
       }
     },
     "cost": {

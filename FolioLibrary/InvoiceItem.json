@@ -278,7 +278,6 @@
   },
   "required": [
     "description",
-    "fundDistributions",
     "invoiceId",
     "invoiceLineStatus",
     "subTotal",

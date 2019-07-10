@@ -1,0 +1,26 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "description": "Error Record data model",
+  "excludedFromEqualsAndHashCode": [
+    "content"
+  ],
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "id": {
+      "description": "UUID",
+      "type": "string"
+    },
+    "description": {
+      "description": "Error description",
+      "type": "string"
+    },
+    "content": {
+      "description": "Record content"
+    }
+  },
+  "required": [
+    "description",
+    "content"
+  ]
+}

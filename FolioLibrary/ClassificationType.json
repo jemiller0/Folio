@@ -10,6 +10,10 @@
       "description": "label for the classification type",
       "type": "string"
     },
+    "source": {
+      "description": "label indicating where the classification type entry originates from, i.e. 'folio' or 'local'",
+      "type": "string"
+    },
     "metadata": {
       "title": "Metadata Schema",
       "description": "Metadata about creation and changes to records, provided by the server (client should not provide)",

@@ -1,0 +1,160 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "description": "Job Execution Schema",
+  "excludedFromEqualsAndHashCode": [
+    "hrId",
+    "progress",
+    "runBy"
+  ],
+  "type": "object",
+  "properties": {
+    "id": {
+      "description": "Unique identifier",
+      "type": "string"
+    },
+    "hrId": {
+      "description": "Human readable id",
+      "type": "string"
+    },
+    "parentJobId": {
+      "description": "Id of the parent JobExecution entity",
+      "type": "string"
+    },
+    "subordinationType": {
+      "description": "Type of subordination to another JobExecution entities",
+      "type": "string",
+      "enum": [
+        "CHILD",
+        "PARENT_SINGLE",
+        "PARENT_MULTIPLE"
+      ]
+    },
+    "jobProfileInfo": {
+      "description": "Related JobProfile information",
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "description": "Unique JobProfile identifier",
+          "type": "string"
+        },
+        "name": {
+          "description": "Job Profile name",
+          "type": "string"
+        },
+        "dataType": {
+          "description": "Data Types Enum",
+          "type": "string",
+          "additionalProperties": false,
+          "enum": [
+            "Delimited",
+            "EDIFACT",
+            "MARC"
+          ]
+        }
+      },
+      "required": [
+        "id",
+        "name"
+      ]
+    },
+    "sourcePath": {
+      "description": "Path to the file",
+      "type": "string"
+    },
+    "runBy": {
+      "description": "First and last name of the user that triggered the job execution",
+      "type": "object",
+      "properties": {
+        "firstName": {
+          "description": "First name",
+          "type": "string"
+        },
+        "lastName": {
+          "description": "Last name",
+          "type": "string"
+        }
+      }
+    },
+    "progress": {
+      "description": "Execution progress of the job",
+      "type": "object",
+      "properties": {
+        "current": {
+          "description": "Currently processing record",
+          "type": "integer"
+        },
+        "total": {
+          "description": "Total number of records to be processed",
+          "type": "integer"
+        }
+      }
+    },
+    "startedDate": {
+      "description": "Date and time when the job execution started",
+      "type": "string",
+      "format": "date-time"
+    },
+    "completedDate": {
+      "description": "Date and time when the job execution completed",
+      "type": "string",
+      "format": "date-time"
+    },
+    "status": {
+      "description": "JobExecution status Enum",
+      "type": "string",
+      "additionalProperties": false,
+      "enum": [
+        "PARENT",
+        "NEW",
+        "FILE_UPLOADED",
+        "PARSING_IN_PROGRESS",
+        "PARSING_FINISHED",
+        "PROCESSING_IN_PROGRESS",
+        "PROCESSING_FINISHED",
+        "COMMIT_IN_PROGRESS",
+        "COMMITTED",
+        "ERROR",
+        "DISCARDED"
+      ]
+    },
+    "uiStatus": {
+      "description": "JobExecution UI status Enum",
+      "type": "string",
+      "additionalProperties": false,
+      "enum": [
+        "PARENT",
+        "INITIALIZATION",
+        "PREPARING_FOR_PREVIEW",
+        "READY_FOR_PREVIEW",
+        "RUNNING",
+        "RUNNING_COMPLETE",
+        "ERROR",
+        "DISCARDED"
+      ]
+    },
+    "errorStatus": {
+      "description": "JobExecution error status Enum",
+      "type": "string",
+      "additionalProperties": false,
+      "enum": [
+        "SNAPSHOT_UPDATE_ERROR",
+        "RECORD_UPDATE_ERROR",
+        "FILE_PROCESSING_ERROR",
+        "INSTANCE_CREATING_ERROR"
+      ]
+    },
+    "userId": {
+      "description": "ID of the user who created the JobExecution",
+      "type": "string"
+    }
+  },
+  "required": [
+    "id",
+    "parentJobId",
+    "subordinationType",
+    "status",
+    "uiStatus",
+    "userId"
+  ]
+}

@@ -1,0 +1,26 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "description": "Parsed Record Schema",
+  "excludedFromEqualsAndHashCode": [
+    "content",
+    "formattedContent"
+  ],
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "id": {
+      "description": "UUID",
+      "type": "string"
+    },
+    "content": {
+      "description": "Parsed record content, e.g. MARC record"
+    },
+    "formattedContent": {
+      "description": "Parsed content represented in human readable form",
+      "type": "string"
+    }
+  },
+  "required": [
+    "content"
+  ]
+}

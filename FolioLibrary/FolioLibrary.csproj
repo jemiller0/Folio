@@ -25,6 +25,7 @@
     <None Remove="ContributorType.json" />
     <None Remove="ElectronicAccessRelationship.json" />
     <None Remove="Encumbrance.json" />
+    <None Remove="ErrorRecord.json" />
     <None Remove="EventLog.json" />
     <None Remove="Fee.json" />
     <None Remove="FeeAction.json" />
@@ -51,6 +52,8 @@
     <None Remove="InvoiceItem.json" />
     <None Remove="Item.json" />
     <None Remove="ItemNoteType.json" />
+    <None Remove="JobExecution.json" />
+    <None Remove="JobExecutionSourceChunk.json" />
     <None Remove="Ledger.json" />
     <None Remove="Library.json" />
     <None Remove="Loan.json" />
@@ -58,6 +61,7 @@
     <None Remove="LoanType.json" />
     <None Remove="Location.json" />
     <None Remove="Login.json" />
+    <None Remove="MarcRecord.json" />
     <None Remove="MaterialType.json" />
     <None Remove="ModeOfIssuance.json" />
     <None Remove="Note.json" />
@@ -72,6 +76,8 @@
     <None Remove="PermissionsUser.json" />
     <None Remove="Piece.json" />
     <None Remove="Proxy.json" />
+    <None Remove="RawRecord.json" />
+    <None Remove="Record.json" />
     <None Remove="Refund.json" />
     <None Remove="ReportingCode.json" />
     <None Remove="Request.json" />
@@ -79,6 +85,7 @@
     <None Remove="ScheduledNotice.json" />
     <None Remove="ServicePoint.json" />
     <None Remove="ServicePointUser.json" />
+    <None Remove="Snapshot.json" />
     <None Remove="StaffSlip.json" />
     <None Remove="StatisticalCode.json" />
     <None Remove="StatisticalCodeType.json" />
@@ -112,6 +119,7 @@
     <EmbeddedResource Include="ContributorType.json" />
     <EmbeddedResource Include="ElectronicAccessRelationship.json" />
     <EmbeddedResource Include="Encumbrance.json" />
+    <EmbeddedResource Include="ErrorRecord.json" />
     <EmbeddedResource Include="EventLog.json" />
     <EmbeddedResource Include="Fee.json" />
     <EmbeddedResource Include="FeeAction.json" />
@@ -138,6 +146,8 @@
     <EmbeddedResource Include="InvoiceItem.json" />
     <EmbeddedResource Include="Item.json" />
     <EmbeddedResource Include="ItemNoteType.json" />
+    <EmbeddedResource Include="JobExecution.json" />
+    <EmbeddedResource Include="JobExecutionSourceChunk.json" />
     <EmbeddedResource Include="Ledger.json" />
     <EmbeddedResource Include="Library.json" />
     <EmbeddedResource Include="Loan.json" />
@@ -145,6 +155,7 @@
     <EmbeddedResource Include="LoanType.json" />
     <EmbeddedResource Include="Location.json" />
     <EmbeddedResource Include="Login.json" />
+    <EmbeddedResource Include="MarcRecord.json" />
     <EmbeddedResource Include="MaterialType.json" />
     <EmbeddedResource Include="ModeOfIssuance.json" />
     <EmbeddedResource Include="Note.json" />
@@ -159,6 +170,8 @@
     <EmbeddedResource Include="PermissionsUser.json" />
     <EmbeddedResource Include="Piece.json" />
     <EmbeddedResource Include="Proxy.json" />
+    <EmbeddedResource Include="RawRecord.json" />
+    <EmbeddedResource Include="Record.json" />
     <EmbeddedResource Include="Refund.json" />
     <EmbeddedResource Include="ReportingCode.json" />
     <EmbeddedResource Include="Request.json" />
@@ -166,6 +179,7 @@
     <EmbeddedResource Include="ScheduledNotice.json" />
     <EmbeddedResource Include="ServicePoint.json" />
     <EmbeddedResource Include="ServicePointUser.json" />
+    <EmbeddedResource Include="Snapshot.json" />
     <EmbeddedResource Include="StaffSlip.json" />
     <EmbeddedResource Include="StatisticalCode.json" />
     <EmbeddedResource Include="StatisticalCodeType.json" />
@@ -178,7 +192,7 @@
     <EmbeddedResource Include="VoucherItem.json" />
     <EmbeddedResource Include="Waive.json" />
   </ItemGroup>
-
+  
   <ItemGroup>
     <PackageReference Include="Dapper" Version="1.60.6" />
     <PackageReference Include="Microsoft.CSharp" Version="4.5.0" />

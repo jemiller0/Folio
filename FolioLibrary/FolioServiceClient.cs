@@ -3553,6 +3553,103 @@ namespace FolioLibrary
             traceSource.TraceEvent(TraceEventType.Verbose, 0, s.Elapsed.ToString());
         }
 
+        public IEnumerable<JObject> JobExecutions(string where = null, string orderBy = null, int? skip = null, int? take = int.MaxValue)
+        {
+            var s = Stopwatch.StartNew();
+            traceSource.TraceEvent(TraceEventType.Verbose, 0, "Querying job executions");
+            AuthenticateIfNecessary();
+            var url = $"{Url}/change-manager/job-executions{(where != null || orderBy != null ? $"?query={WebUtility.UrlEncode(where)}{(orderBy != null ? $"{(where != null ? " " : "cql.allrecords=1 ")}sortby {WebUtility.UrlEncode(orderBy)}" : "")}" : "")}{(skip != null ? $"{(where != null || orderBy != null ? "&" : "?")}offset={skip}" : "")}{(take != null ? $"{(where != null || orderBy != null || skip != null ? "&" : "?")}limit={take}" : "")}";
+            traceSource.TraceEvent(TraceEventType.Verbose, 0, url);
+            var hrm = httpClient.GetAsync(url).Result;
+            if (hrm.StatusCode != HttpStatusCode.OK)
+            {
+                var s2 = hrm.Content.ReadAsStringAsync().Result;
+                if (hrm.Content.Headers.ContentType.MediaType == "application/json") s2 = JObject.Parse(s2).ToString();
+                traceSource.TraceEvent(TraceEventType.Verbose, 0, s2);
+                throw new HttpRequestException($"Response status code does not indicate success: {hrm.StatusCode} ({hrm.ReasonPhrase}).\r\n{s2}");
+            }
+            using (var sr = new StreamReader(hrm.Content.ReadAsStreamAsync().Result))
+            using (var jtr = new JsonTextReader(sr) { SupportMultipleContent = true })
+            {
+                jtr.Read(); jtr.Read(); jtr.Read();
+                var js = new JsonSerializer();
+                while (jtr.Read() && jtr.TokenType != JsonToken.EndArray)
+                {
+                    var jo = (JObject)js.Deserialize(jtr);
+                    traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", jo);
+                    yield return jo;
+                }
+            }
+            traceSource.TraceEvent(TraceEventType.Verbose, 0, s.Elapsed.ToString());
+        }
+
+        public JObject GetJobExecution(string id)
+        {
+            var s = Stopwatch.StartNew();
+            traceSource.TraceEvent(TraceEventType.Verbose, 0, $"Getting job execution {id}");
+            AuthenticateIfNecessary();
+            var url = $"{Url}/change-manager/job-executions/{id}";
+            traceSource.TraceEvent(TraceEventType.Verbose, 0, url);
+            var hrm = httpClient.GetAsync(url).Result;
+            var s2 = hrm.Content.ReadAsStringAsync().Result;
+            var jo = hrm.Content.Headers.ContentType.MediaType == "application/json" ? JObject.Parse(s2) : null;
+            traceSource.TraceEvent(TraceEventType.Verbose, 0, s2);
+            if (hrm.StatusCode != HttpStatusCode.OK) throw new HttpRequestException($"Response status code does not indicate success: {hrm.StatusCode} ({hrm.ReasonPhrase}).\r\n{s2}");
+            traceSource.TraceEvent(TraceEventType.Verbose, 0, s.Elapsed.ToString());
+            return jo;
+        }
+
+        public JObject InsertJobExecution(JObject jobExecution)
+        {
+            var s = Stopwatch.StartNew();
+            if (jobExecution["id"] == null) jobExecution["id"] = Guid.NewGuid();
+            traceSource.TraceEvent(TraceEventType.Verbose, 0, $"Inserting job execution {jobExecution["id"]}");
+            AuthenticateIfNecessary();
+            var url = $"{Url}/change-manager/job-executions";
+            traceSource.TraceEvent(TraceEventType.Verbose, 0, url);
+            var s2 = jobExecution.ToString(formatting);
+            traceSource.TraceEvent(TraceEventType.Verbose, 0, s2);
+            var sc = new StringContent(s2, Encoding.UTF8, "application/json");
+            var hrm = httpClient.PostAsync(url, sc).Result;
+            s2 = hrm.Content.ReadAsStringAsync().Result;
+            var jo = hrm.Content.Headers.ContentType.MediaType == "application/json" ? JObject.Parse(s2) : null;
+            traceSource.TraceEvent(TraceEventType.Verbose, 0, s2);
+            if (hrm.StatusCode != HttpStatusCode.Created) throw new HttpRequestException($"Response status code does not indicate success: {hrm.StatusCode} ({hrm.ReasonPhrase}).\r\n{s2}");
+            traceSource.TraceEvent(TraceEventType.Verbose, 0, s.Elapsed.ToString());
+            return jo;
+        }
+
+        public void UpdateJobExecution(JObject jobExecution)
+        {
+            var s = Stopwatch.StartNew();
+            traceSource.TraceEvent(TraceEventType.Verbose, 0, $"Updating job execution {jobExecution["id"]}");
+            AuthenticateIfNecessary();
+            var url = $"{Url}/change-manager/job-executions/{jobExecution["id"]}";
+            traceSource.TraceEvent(TraceEventType.Verbose, 0, url);
+            var s2 = jobExecution.ToString(formatting);
+            traceSource.TraceEvent(TraceEventType.Verbose, 0, s2);
+            var sc = new StringContent(s2, Encoding.UTF8, "application/json");
+            var hrm = httpClient.PutAsync(url, sc).Result;
+            s2 = hrm.Content.ReadAsStringAsync().Result;
+            traceSource.TraceEvent(TraceEventType.Verbose, 0, s2);
+            if (hrm.StatusCode != HttpStatusCode.NoContent) throw new HttpRequestException($"Response status code does not indicate success: {hrm.StatusCode} ({hrm.ReasonPhrase}).\r\n{s2}");
+            traceSource.TraceEvent(TraceEventType.Verbose, 0, s.Elapsed.ToString());
+        }
+
+        public void DeleteJobExecution(string id)
+        {
+            var s = Stopwatch.StartNew();
+            traceSource.TraceEvent(TraceEventType.Verbose, 0, $"Deleting job execution {id}");
+            AuthenticateIfNecessary();
+            var url = $"{Url}/change-manager/job-executions/{id}";
+            traceSource.TraceEvent(TraceEventType.Verbose, 0, url);
+            var hrm = httpClient.DeleteAsync(url).Result;
+            var s2 = hrm.Content.ReadAsStringAsync().Result;
+            traceSource.TraceEvent(TraceEventType.Verbose, 0, s2);
+            if (hrm.StatusCode != HttpStatusCode.NoContent) throw new HttpRequestException($"Response status code does not indicate success: {hrm.StatusCode} ({hrm.ReasonPhrase}).\r\n{s2}");
+            traceSource.TraceEvent(TraceEventType.Verbose, 0, s.Elapsed.ToString());
+        }
+
         public IEnumerable<JObject> Ledgers(string where = null, string orderBy = null, int? skip = null, int? take = int.MaxValue)
         {
             var s = Stopwatch.StartNew();
@@ -5202,6 +5299,103 @@ namespace FolioLibrary
             traceSource.TraceEvent(TraceEventType.Verbose, 0, s.Elapsed.ToString());
         }
 
+        public IEnumerable<JObject> Records(string where = null, string orderBy = null, int? skip = null, int? take = int.MaxValue)
+        {
+            var s = Stopwatch.StartNew();
+            traceSource.TraceEvent(TraceEventType.Verbose, 0, "Querying records");
+            AuthenticateIfNecessary();
+            var url = $"{Url}/source-storage/records{(where != null || orderBy != null ? $"?query={WebUtility.UrlEncode(where)}{(orderBy != null ? $"{(where != null ? " " : "cql.allrecords=1 ")}sortby {WebUtility.UrlEncode(orderBy)}" : "")}" : "")}{(skip != null ? $"{(where != null || orderBy != null ? "&" : "?")}offset={skip}" : "")}{(take != null ? $"{(where != null || orderBy != null || skip != null ? "&" : "?")}limit={take}" : "")}";
+            traceSource.TraceEvent(TraceEventType.Verbose, 0, url);
+            var hrm = httpClient.GetAsync(url).Result;
+            if (hrm.StatusCode != HttpStatusCode.OK)
+            {
+                var s2 = hrm.Content.ReadAsStringAsync().Result;
+                if (hrm.Content.Headers.ContentType.MediaType == "application/json") s2 = JObject.Parse(s2).ToString();
+                traceSource.TraceEvent(TraceEventType.Verbose, 0, s2);
+                throw new HttpRequestException($"Response status code does not indicate success: {hrm.StatusCode} ({hrm.ReasonPhrase}).\r\n{s2}");
+            }
+            using (var sr = new StreamReader(hrm.Content.ReadAsStreamAsync().Result))
+            using (var jtr = new JsonTextReader(sr) { SupportMultipleContent = true })
+            {
+                jtr.Read(); jtr.Read(); jtr.Read();
+                var js = new JsonSerializer();
+                while (jtr.Read() && jtr.TokenType != JsonToken.EndArray)
+                {
+                    var jo = (JObject)js.Deserialize(jtr);
+                    traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", jo);
+                    yield return jo;
+                }
+            }
+            traceSource.TraceEvent(TraceEventType.Verbose, 0, s.Elapsed.ToString());
+        }
+
+        public JObject GetRecord(string id)
+        {
+            var s = Stopwatch.StartNew();
+            traceSource.TraceEvent(TraceEventType.Verbose, 0, $"Getting record {id}");
+            AuthenticateIfNecessary();
+            var url = $"{Url}/source-storage/records/{id}";
+            traceSource.TraceEvent(TraceEventType.Verbose, 0, url);
+            var hrm = httpClient.GetAsync(url).Result;
+            var s2 = hrm.Content.ReadAsStringAsync().Result;
+            var jo = hrm.Content.Headers.ContentType.MediaType == "application/json" ? JObject.Parse(s2) : null;
+            traceSource.TraceEvent(TraceEventType.Verbose, 0, s2);
+            if (hrm.StatusCode != HttpStatusCode.OK) throw new HttpRequestException($"Response status code does not indicate success: {hrm.StatusCode} ({hrm.ReasonPhrase}).\r\n{s2}");
+            traceSource.TraceEvent(TraceEventType.Verbose, 0, s.Elapsed.ToString());
+            return jo;
+        }
+
+        public JObject InsertRecord(JObject record)
+        {
+            var s = Stopwatch.StartNew();
+            if (record["id"] == null) record["id"] = Guid.NewGuid();
+            traceSource.TraceEvent(TraceEventType.Verbose, 0, $"Inserting record {record["id"]}");
+            AuthenticateIfNecessary();
+            var url = $"{Url}/source-storage/records";
+            traceSource.TraceEvent(TraceEventType.Verbose, 0, url);
+            var s2 = record.ToString(formatting);
+            traceSource.TraceEvent(TraceEventType.Verbose, 0, s2);
+            var sc = new StringContent(s2, Encoding.UTF8, "application/json");
+            var hrm = httpClient.PostAsync(url, sc).Result;
+            s2 = hrm.Content.ReadAsStringAsync().Result;
+            var jo = hrm.Content.Headers.ContentType.MediaType == "application/json" ? JObject.Parse(s2) : null;
+            traceSource.TraceEvent(TraceEventType.Verbose, 0, s2);
+            if (hrm.StatusCode != HttpStatusCode.Created) throw new HttpRequestException($"Response status code does not indicate success: {hrm.StatusCode} ({hrm.ReasonPhrase}).\r\n{s2}");
+            traceSource.TraceEvent(TraceEventType.Verbose, 0, s.Elapsed.ToString());
+            return jo;
+        }
+
+        public void UpdateRecord(JObject record)
+        {
+            var s = Stopwatch.StartNew();
+            traceSource.TraceEvent(TraceEventType.Verbose, 0, $"Updating record {record["id"]}");
+            AuthenticateIfNecessary();
+            var url = $"{Url}/source-storage/records/{record["id"]}";
+            traceSource.TraceEvent(TraceEventType.Verbose, 0, url);
+            var s2 = record.ToString(formatting);
+            traceSource.TraceEvent(TraceEventType.Verbose, 0, s2);
+            var sc = new StringContent(s2, Encoding.UTF8, "application/json");
+            var hrm = httpClient.PutAsync(url, sc).Result;
+            s2 = hrm.Content.ReadAsStringAsync().Result;
+            traceSource.TraceEvent(TraceEventType.Verbose, 0, s2);
+            if (hrm.StatusCode != HttpStatusCode.NoContent) throw new HttpRequestException($"Response status code does not indicate success: {hrm.StatusCode} ({hrm.ReasonPhrase}).\r\n{s2}");
+            traceSource.TraceEvent(TraceEventType.Verbose, 0, s.Elapsed.ToString());
+        }
+
+        public void DeleteRecord(string id)
+        {
+            var s = Stopwatch.StartNew();
+            traceSource.TraceEvent(TraceEventType.Verbose, 0, $"Deleting record {id}");
+            AuthenticateIfNecessary();
+            var url = $"{Url}/source-storage/records/{id}";
+            traceSource.TraceEvent(TraceEventType.Verbose, 0, url);
+            var hrm = httpClient.DeleteAsync(url).Result;
+            var s2 = hrm.Content.ReadAsStringAsync().Result;
+            traceSource.TraceEvent(TraceEventType.Verbose, 0, s2);
+            if (hrm.StatusCode != HttpStatusCode.NoContent) throw new HttpRequestException($"Response status code does not indicate success: {hrm.StatusCode} ({hrm.ReasonPhrase}).\r\n{s2}");
+            traceSource.TraceEvent(TraceEventType.Verbose, 0, s.Elapsed.ToString());
+        }
+
         public IEnumerable<JObject> ReportingCodes(string where = null, string orderBy = null, int? skip = null, int? take = int.MaxValue)
         {
             var s = Stopwatch.StartNew();
@@ -5776,6 +5970,103 @@ namespace FolioLibrary
             traceSource.TraceEvent(TraceEventType.Verbose, 0, $"Deleting service point user {id}");
             AuthenticateIfNecessary();
             var url = $"{Url}/service-points-users/{id}";
+            traceSource.TraceEvent(TraceEventType.Verbose, 0, url);
+            var hrm = httpClient.DeleteAsync(url).Result;
+            var s2 = hrm.Content.ReadAsStringAsync().Result;
+            traceSource.TraceEvent(TraceEventType.Verbose, 0, s2);
+            if (hrm.StatusCode != HttpStatusCode.NoContent) throw new HttpRequestException($"Response status code does not indicate success: {hrm.StatusCode} ({hrm.ReasonPhrase}).\r\n{s2}");
+            traceSource.TraceEvent(TraceEventType.Verbose, 0, s.Elapsed.ToString());
+        }
+
+        public IEnumerable<JObject> Snapshots(string where = null, string orderBy = null, int? skip = null, int? take = int.MaxValue)
+        {
+            var s = Stopwatch.StartNew();
+            traceSource.TraceEvent(TraceEventType.Verbose, 0, "Querying snapshots");
+            AuthenticateIfNecessary();
+            var url = $"{Url}/source-storage/snapshots{(where != null || orderBy != null ? $"?query={WebUtility.UrlEncode(where)}{(orderBy != null ? $"{(where != null ? " " : "cql.allrecords=1 ")}sortby {WebUtility.UrlEncode(orderBy)}" : "")}" : "")}{(skip != null ? $"{(where != null || orderBy != null ? "&" : "?")}offset={skip}" : "")}{(take != null ? $"{(where != null || orderBy != null || skip != null ? "&" : "?")}limit={take}" : "")}";
+            traceSource.TraceEvent(TraceEventType.Verbose, 0, url);
+            var hrm = httpClient.GetAsync(url).Result;
+            if (hrm.StatusCode != HttpStatusCode.OK)
+            {
+                var s2 = hrm.Content.ReadAsStringAsync().Result;
+                if (hrm.Content.Headers.ContentType.MediaType == "application/json") s2 = JObject.Parse(s2).ToString();
+                traceSource.TraceEvent(TraceEventType.Verbose, 0, s2);
+                throw new HttpRequestException($"Response status code does not indicate success: {hrm.StatusCode} ({hrm.ReasonPhrase}).\r\n{s2}");
+            }
+            using (var sr = new StreamReader(hrm.Content.ReadAsStreamAsync().Result))
+            using (var jtr = new JsonTextReader(sr) { SupportMultipleContent = true })
+            {
+                jtr.Read(); jtr.Read(); jtr.Read();
+                var js = new JsonSerializer();
+                while (jtr.Read() && jtr.TokenType != JsonToken.EndArray)
+                {
+                    var jo = (JObject)js.Deserialize(jtr);
+                    traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", jo);
+                    yield return jo;
+                }
+            }
+            traceSource.TraceEvent(TraceEventType.Verbose, 0, s.Elapsed.ToString());
+        }
+
+        public JObject GetSnapshot(string id)
+        {
+            var s = Stopwatch.StartNew();
+            traceSource.TraceEvent(TraceEventType.Verbose, 0, $"Getting snapshot {id}");
+            AuthenticateIfNecessary();
+            var url = $"{Url}/source-storage/snapshots/{id}";
+            traceSource.TraceEvent(TraceEventType.Verbose, 0, url);
+            var hrm = httpClient.GetAsync(url).Result;
+            var s2 = hrm.Content.ReadAsStringAsync().Result;
+            var jo = hrm.Content.Headers.ContentType.MediaType == "application/json" ? JObject.Parse(s2) : null;
+            traceSource.TraceEvent(TraceEventType.Verbose, 0, s2);
+            if (hrm.StatusCode != HttpStatusCode.OK) throw new HttpRequestException($"Response status code does not indicate success: {hrm.StatusCode} ({hrm.ReasonPhrase}).\r\n{s2}");
+            traceSource.TraceEvent(TraceEventType.Verbose, 0, s.Elapsed.ToString());
+            return jo;
+        }
+
+        public JObject InsertSnapshot(JObject snapshot)
+        {
+            var s = Stopwatch.StartNew();
+            if (snapshot["jobExecutionId"] == null) snapshot["jobExecutionId"] = Guid.NewGuid();
+            traceSource.TraceEvent(TraceEventType.Verbose, 0, $"Inserting snapshot {snapshot["jobExecutionId"]}");
+            AuthenticateIfNecessary();
+            var url = $"{Url}/source-storage/snapshots";
+            traceSource.TraceEvent(TraceEventType.Verbose, 0, url);
+            var s2 = snapshot.ToString(formatting);
+            traceSource.TraceEvent(TraceEventType.Verbose, 0, s2);
+            var sc = new StringContent(s2, Encoding.UTF8, "application/json");
+            var hrm = httpClient.PostAsync(url, sc).Result;
+            s2 = hrm.Content.ReadAsStringAsync().Result;
+            var jo = hrm.Content.Headers.ContentType.MediaType == "application/json" ? JObject.Parse(s2) : null;
+            traceSource.TraceEvent(TraceEventType.Verbose, 0, s2);
+            if (hrm.StatusCode != HttpStatusCode.Created) throw new HttpRequestException($"Response status code does not indicate success: {hrm.StatusCode} ({hrm.ReasonPhrase}).\r\n{s2}");
+            traceSource.TraceEvent(TraceEventType.Verbose, 0, s.Elapsed.ToString());
+            return jo;
+        }
+
+        public void UpdateSnapshot(JObject snapshot)
+        {
+            var s = Stopwatch.StartNew();
+            traceSource.TraceEvent(TraceEventType.Verbose, 0, $"Updating snapshot {snapshot["jobExecutionId"]}");
+            AuthenticateIfNecessary();
+            var url = $"{Url}/source-storage/snapshots/{snapshot["jobExecutionId"]}";
+            traceSource.TraceEvent(TraceEventType.Verbose, 0, url);
+            var s2 = snapshot.ToString(formatting);
+            traceSource.TraceEvent(TraceEventType.Verbose, 0, s2);
+            var sc = new StringContent(s2, Encoding.UTF8, "application/json");
+            var hrm = httpClient.PutAsync(url, sc).Result;
+            s2 = hrm.Content.ReadAsStringAsync().Result;
+            traceSource.TraceEvent(TraceEventType.Verbose, 0, s2);
+            if (hrm.StatusCode != HttpStatusCode.NoContent) throw new HttpRequestException($"Response status code does not indicate success: {hrm.StatusCode} ({hrm.ReasonPhrase}).\r\n{s2}");
+            traceSource.TraceEvent(TraceEventType.Verbose, 0, s.Elapsed.ToString());
+        }
+
+        public void DeleteSnapshot(string id)
+        {
+            var s = Stopwatch.StartNew();
+            traceSource.TraceEvent(TraceEventType.Verbose, 0, $"Deleting snapshot {id}");
+            AuthenticateIfNecessary();
+            var url = $"{Url}/source-storage/snapshots/{id}";
             traceSource.TraceEvent(TraceEventType.Verbose, 0, url);
             var hrm = httpClient.DeleteAsync(url).Result;
             var s2 = hrm.Content.ReadAsStringAsync().Result;
