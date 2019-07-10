@@ -78,6 +78,45 @@
           "language": {
             "description": "The language for this organization phone",
             "type": "string"
+          },
+          "metadata": {
+            "title": "Metadata Schema",
+            "description": "Metadata about creation and changes to records, provided by the server (client should not provide)",
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "createdDate": {
+                "description": "Date and time when the record was created",
+                "type": "string",
+                "format": "date-time"
+              },
+              "createdByUserId": {
+                "description": "ID of the user who created the record (when available)",
+                "type": "string",
+                "pattern": "^[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12}$"
+              },
+              "createdByUsername": {
+                "description": "Username of the user who created the record (when available)",
+                "type": "string"
+              },
+              "updatedDate": {
+                "description": "Date and time when the record was last updated",
+                "type": "string",
+                "format": "date-time"
+              },
+              "updatedByUserId": {
+                "description": "ID of the user who last updated the record (when available)",
+                "type": "string",
+                "pattern": "^[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12}$"
+              },
+              "updatedByUsername": {
+                "description": "Username of the user who last updated the record (when available)",
+                "type": "string"
+              }
+            },
+            "required": [
+              "createdDate"
+            ]
           }
         },
         "required": [
@@ -125,6 +164,9 @@
           "language": {
             "description": "The language for this organization email",
             "type": "string"
+          },
+          "metadata": {
+            "$ref": "phoneNumbers#/items/properties/metadata"
           }
         },
         "required": [
@@ -188,6 +230,9 @@
           "language": {
             "description": "The language for this organization address",
             "type": "string"
+          },
+          "metadata": {
+            "$ref": "phoneNumbers#/items/properties/metadata"
           }
         }
       }
@@ -237,6 +282,9 @@
           "notes": {
             "description": "The notes for this organization URL",
             "type": "string"
+          },
+          "metadata": {
+            "$ref": "phoneNumbers#/items/properties/metadata"
           }
         },
         "required": [
@@ -258,6 +306,45 @@
       "description": "Used to indicate that a contact is no longer active",
       "type": "boolean",
       "default": false
+    },
+    "metadata": {
+      "title": "Metadata Schema",
+      "description": "Metadata about creation and changes to records, provided by the server (client should not provide)",
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "createdDate": {
+          "description": "Date and time when the record was created",
+          "type": "string",
+          "format": "date-time"
+        },
+        "createdByUserId": {
+          "description": "ID of the user who created the record (when available)",
+          "type": "string",
+          "pattern": "^[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12}$"
+        },
+        "createdByUsername": {
+          "description": "Username of the user who created the record (when available)",
+          "type": "string"
+        },
+        "updatedDate": {
+          "description": "Date and time when the record was last updated",
+          "type": "string",
+          "format": "date-time"
+        },
+        "updatedByUserId": {
+          "description": "ID of the user who last updated the record (when available)",
+          "type": "string",
+          "pattern": "^[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12}$"
+        },
+        "updatedByUsername": {
+          "description": "Username of the user who last updated the record (when available)",
+          "type": "string"
+        }
+      },
+      "required": [
+        "createdDate"
+      ]
     }
   },
   "required": [

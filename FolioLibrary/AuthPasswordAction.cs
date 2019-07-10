@@ -7,7 +7,7 @@ namespace FolioLibrary
     [Table("auth_password_action", Schema = "diku_mod_login")]
     public partial class AuthPasswordAction
     {
-        [Column("_id"), Display(Order = 1), Editable(false)]
+        [Column("id"), Display(Order = 1), Editable(false)]
         public virtual Guid? Id { get; set; }
 
         [Column("jsonb"), DataType(DataType.MultilineText), Display(Order = 2), Required]

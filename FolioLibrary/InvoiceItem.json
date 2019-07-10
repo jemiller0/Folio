@@ -162,8 +162,7 @@
           "fundId",
           "percentage"
         ]
-      },
-      "minItems": 1
+      }
     },
     "invoiceId": {
       "description": "UUID of this parent invoice",

@@ -150,14 +150,14 @@ namespace FolioLibrary
             if (authAttemptsDataTable == null)
             {
                 authAttemptsDataTable = new DataTable();
-                authAttemptsDataTable.Columns.Add(new DataColumn { ColumnName = "_id", DataType = typeof(Guid) });
+                authAttemptsDataTable.Columns.Add(new DataColumn { ColumnName = "id", DataType = typeof(Guid) });
                 authAttemptsDataTable.Columns.Add(new DataColumn { ColumnName = "jsonb", DataType = typeof(string) });
                 authAttemptsDataTable.Columns.Add(new DataColumn { ColumnName = "creation_date", DataType = typeof(DateTime) });
                 authAttemptsDataTable.Columns.Add(new DataColumn { ColumnName = "created_by", DataType = typeof(string) });
                 authAttemptsDataTable.Columns["jsonb"].ExtendedProperties["NpgsqlDbType"] = NpgsqlDbType.Jsonb;
             }
             var dr = authAttemptsDataTable.NewRow();
-            dr["_id"] = (object)authAttempt.Id ?? DBNull.Value;
+            dr["id"] = (object)authAttempt.Id ?? DBNull.Value;
             dr["jsonb"] = (object)authAttempt.Content ?? DBNull.Value;
             dr["creation_date"] = (object)authAttempt.CreationTime ?? DBNull.Value;
             dr["created_by"] = (object)authAttempt.CreationUserId ?? DBNull.Value;
@@ -169,14 +169,14 @@ namespace FolioLibrary
             if (authCredentialsHistoriesDataTable == null)
             {
                 authCredentialsHistoriesDataTable = new DataTable();
-                authCredentialsHistoriesDataTable.Columns.Add(new DataColumn { ColumnName = "_id", DataType = typeof(Guid) });
+                authCredentialsHistoriesDataTable.Columns.Add(new DataColumn { ColumnName = "id", DataType = typeof(Guid) });
                 authCredentialsHistoriesDataTable.Columns.Add(new DataColumn { ColumnName = "jsonb", DataType = typeof(string) });
                 authCredentialsHistoriesDataTable.Columns.Add(new DataColumn { ColumnName = "creation_date", DataType = typeof(DateTime) });
                 authCredentialsHistoriesDataTable.Columns.Add(new DataColumn { ColumnName = "created_by", DataType = typeof(string) });
                 authCredentialsHistoriesDataTable.Columns["jsonb"].ExtendedProperties["NpgsqlDbType"] = NpgsqlDbType.Jsonb;
             }
             var dr = authCredentialsHistoriesDataTable.NewRow();
-            dr["_id"] = (object)authCredentialsHistory.Id ?? DBNull.Value;
+            dr["id"] = (object)authCredentialsHistory.Id ?? DBNull.Value;
             dr["jsonb"] = (object)authCredentialsHistory.Content ?? DBNull.Value;
             dr["creation_date"] = (object)authCredentialsHistory.CreationTime ?? DBNull.Value;
             dr["created_by"] = (object)authCredentialsHistory.CreationUserId ?? DBNull.Value;
@@ -188,14 +188,14 @@ namespace FolioLibrary
             if (authPasswordActionsDataTable == null)
             {
                 authPasswordActionsDataTable = new DataTable();
-                authPasswordActionsDataTable.Columns.Add(new DataColumn { ColumnName = "_id", DataType = typeof(Guid) });
+                authPasswordActionsDataTable.Columns.Add(new DataColumn { ColumnName = "id", DataType = typeof(Guid) });
                 authPasswordActionsDataTable.Columns.Add(new DataColumn { ColumnName = "jsonb", DataType = typeof(string) });
                 authPasswordActionsDataTable.Columns.Add(new DataColumn { ColumnName = "creation_date", DataType = typeof(DateTime) });
                 authPasswordActionsDataTable.Columns.Add(new DataColumn { ColumnName = "created_by", DataType = typeof(string) });
                 authPasswordActionsDataTable.Columns["jsonb"].ExtendedProperties["NpgsqlDbType"] = NpgsqlDbType.Jsonb;
             }
             var dr = authPasswordActionsDataTable.NewRow();
-            dr["_id"] = (object)authPasswordAction.Id ?? DBNull.Value;
+            dr["id"] = (object)authPasswordAction.Id ?? DBNull.Value;
             dr["jsonb"] = (object)authPasswordAction.Content ?? DBNull.Value;
             dr["creation_date"] = (object)authPasswordAction.CreationTime ?? DBNull.Value;
             dr["created_by"] = (object)authPasswordAction.CreationUserId ?? DBNull.Value;
@@ -496,14 +496,14 @@ namespace FolioLibrary
             if (eventLogsDataTable == null)
             {
                 eventLogsDataTable = new DataTable();
-                eventLogsDataTable.Columns.Add(new DataColumn { ColumnName = "_id", DataType = typeof(Guid) });
+                eventLogsDataTable.Columns.Add(new DataColumn { ColumnName = "id", DataType = typeof(Guid) });
                 eventLogsDataTable.Columns.Add(new DataColumn { ColumnName = "jsonb", DataType = typeof(string) });
                 eventLogsDataTable.Columns.Add(new DataColumn { ColumnName = "creation_date", DataType = typeof(DateTime) });
                 eventLogsDataTable.Columns.Add(new DataColumn { ColumnName = "created_by", DataType = typeof(string) });
                 eventLogsDataTable.Columns["jsonb"].ExtendedProperties["NpgsqlDbType"] = NpgsqlDbType.Jsonb;
             }
             var dr = eventLogsDataTable.NewRow();
-            dr["_id"] = (object)eventLog.Id ?? DBNull.Value;
+            dr["id"] = (object)eventLog.Id ?? DBNull.Value;
             dr["jsonb"] = (object)eventLog.Content ?? DBNull.Value;
             dr["creation_date"] = (object)eventLog.CreationTime ?? DBNull.Value;
             dr["created_by"] = (object)eventLog.CreationUserId ?? DBNull.Value;
@@ -1178,14 +1178,14 @@ namespace FolioLibrary
             if (loginsDataTable == null)
             {
                 loginsDataTable = new DataTable();
-                loginsDataTable.Columns.Add(new DataColumn { ColumnName = "_id", DataType = typeof(Guid) });
+                loginsDataTable.Columns.Add(new DataColumn { ColumnName = "id", DataType = typeof(Guid) });
                 loginsDataTable.Columns.Add(new DataColumn { ColumnName = "jsonb", DataType = typeof(string) });
                 loginsDataTable.Columns.Add(new DataColumn { ColumnName = "creation_date", DataType = typeof(DateTime) });
                 loginsDataTable.Columns.Add(new DataColumn { ColumnName = "created_by", DataType = typeof(string) });
                 loginsDataTable.Columns["jsonb"].ExtendedProperties["NpgsqlDbType"] = NpgsqlDbType.Jsonb;
             }
             var dr = loginsDataTable.NewRow();
-            dr["_id"] = (object)login.Id ?? DBNull.Value;
+            dr["id"] = (object)login.Id ?? DBNull.Value;
             dr["jsonb"] = (object)login.Content ?? DBNull.Value;
             dr["creation_date"] = (object)login.CreationTime ?? DBNull.Value;
             dr["created_by"] = (object)login.CreationUserId ?? DBNull.Value;
@@ -1965,7 +1965,7 @@ namespace FolioLibrary
             {
                 sqlBulkCopy.DestinationTableName = $"diku_mod_login{(IsMySql ? "_" : ".")}auth_attempts";
                 sqlBulkCopy.ColumnMappings.Clear();
-                sqlBulkCopy.ColumnMappings.Add("_id", "_id");
+                sqlBulkCopy.ColumnMappings.Add("id", "id");
                 sqlBulkCopy.ColumnMappings.Add("jsonb", "jsonb");
                 sqlBulkCopy.ColumnMappings.Add("creation_date", "creation_date");
                 sqlBulkCopy.ColumnMappings.Add("created_by", "created_by");
@@ -1976,7 +1976,7 @@ namespace FolioLibrary
             {
                 sqlBulkCopy.DestinationTableName = $"diku_mod_login{(IsMySql ? "_" : ".")}auth_credentials_history";
                 sqlBulkCopy.ColumnMappings.Clear();
-                sqlBulkCopy.ColumnMappings.Add("_id", "_id");
+                sqlBulkCopy.ColumnMappings.Add("id", "id");
                 sqlBulkCopy.ColumnMappings.Add("jsonb", "jsonb");
                 sqlBulkCopy.ColumnMappings.Add("creation_date", "creation_date");
                 sqlBulkCopy.ColumnMappings.Add("created_by", "created_by");
@@ -1987,7 +1987,7 @@ namespace FolioLibrary
             {
                 sqlBulkCopy.DestinationTableName = $"diku_mod_login{(IsMySql ? "_" : ".")}auth_password_action";
                 sqlBulkCopy.ColumnMappings.Clear();
-                sqlBulkCopy.ColumnMappings.Add("_id", "_id");
+                sqlBulkCopy.ColumnMappings.Add("id", "id");
                 sqlBulkCopy.ColumnMappings.Add("jsonb", "jsonb");
                 sqlBulkCopy.ColumnMappings.Add("creation_date", "creation_date");
                 sqlBulkCopy.ColumnMappings.Add("created_by", "created_by");
@@ -2165,7 +2165,7 @@ namespace FolioLibrary
             {
                 sqlBulkCopy.DestinationTableName = $"diku_mod_login{(IsMySql ? "_" : ".")}event_logs";
                 sqlBulkCopy.ColumnMappings.Clear();
-                sqlBulkCopy.ColumnMappings.Add("_id", "_id");
+                sqlBulkCopy.ColumnMappings.Add("id", "id");
                 sqlBulkCopy.ColumnMappings.Add("jsonb", "jsonb");
                 sqlBulkCopy.ColumnMappings.Add("creation_date", "creation_date");
                 sqlBulkCopy.ColumnMappings.Add("created_by", "created_by");
@@ -2557,7 +2557,7 @@ namespace FolioLibrary
             {
                 sqlBulkCopy.DestinationTableName = $"diku_mod_login{(IsMySql ? "_" : ".")}auth_credentials";
                 sqlBulkCopy.ColumnMappings.Clear();
-                sqlBulkCopy.ColumnMappings.Add("_id", "_id");
+                sqlBulkCopy.ColumnMappings.Add("id", "id");
                 sqlBulkCopy.ColumnMappings.Add("jsonb", "jsonb");
                 sqlBulkCopy.ColumnMappings.Add("creation_date", "creation_date");
                 sqlBulkCopy.ColumnMappings.Add("created_by", "created_by");
