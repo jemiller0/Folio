@@ -5,8 +5,8 @@
   "additionalProperties": false,
   "properties": {
     "id": {
-      "description": "The system assigned unique ID of the instance record; UUID",
-      "type": "string"
+      "type": "string",
+      "pattern": "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-5][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}$"
     },
     "hrid": {
       "description": "The human readable ID, also called eye readable ID. A system-assigned sequential ID which maps to the Instance ID",
@@ -31,8 +31,7 @@
         "type": "object",
         "properties": {
           "alternativeTitleTypeId": {
-            "description": "ID for an alternative title qualifier",
-            "type": "string"
+            "$ref": "#/properties/id"
           },
           "alternativeTitle": {
             "description": "An alternative title for the resource",
@@ -70,8 +69,7 @@
             "type": "string"
           },
           "identifierTypeId": {
-            "description": "Resource identifier type (e.g. ISBN, ISSN, LCCN, CODEN, Locally defined identifiers)",
-            "type": "string"
+            "$ref": "#/properties/id"
           }
         },
         "required": [
@@ -93,16 +91,14 @@
             "type": "string"
           },
           "contributorTypeId": {
-            "description": "ID for the contributor type term defined as a referencetable in settings",
-            "type": "string"
+            "$ref": "#/properties/id"
           },
           "contributorTypeText": {
             "description": "Free text element for adding contributor type terms other that defined by the MARC code list for relators",
             "type": "string"
           },
           "contributorNameTypeId": {
-            "description": "Contributor type terms defined by the MARC code list for relators",
-            "type": "string"
+            "$ref": "#/properties/id"
           },
           "primary": {
             "description": "Whether this is the primary contributor",
@@ -136,8 +132,7 @@
             "type": "string"
           },
           "classificationTypeId": {
-            "description": "List of classification schemas (e.g. LC, Canadian Classification, NLM, National Agricultural Library, UDC, and Dewey)",
-            "type": "string"
+            "$ref": "#/properties/id"
           }
         },
         "required": [
@@ -212,8 +207,7 @@
             "type": "string"
           },
           "relationshipId": {
-            "description": "Relationship between the electronic resource at the location identified and the item described in the record as a whole",
-            "type": "string"
+            "$ref": "#/properties/id"
           }
         },
         "required": [
@@ -222,14 +216,13 @@
       }
     },
     "instanceTypeId": {
-      "description": "The unique term for the resource type whether it's from the RDA content term list of locally defined",
-      "type": "string"
+      "$ref": "#/properties/id"
     },
     "instanceFormatIds": {
-      "description": "The unique term for the format whether it's from the RDA carrier term list of locally defined",
+      "description": "UUIDs for the unique terms for the format whether it's from the RDA carrier term list of locally defined",
       "type": "array",
       "items": {
-        "type": "string"
+        "$ref": "#/properties/id"
       }
     },
     "physicalDescriptions": {
@@ -251,12 +244,25 @@
       "description": "Bibliographic notes (e.g. general notes, specialized notes), and administrative notes",
       "type": "array",
       "items": {
-        "type": "string"
+        "type": "object",
+        "properties": {
+          "instanceNoteTypeId": {
+            "$ref": "#/properties/id"
+          },
+          "note": {
+            "description": "Text content of the note",
+            "type": "string"
+          },
+          "staffOnly": {
+            "description": "If true, determines that the note should not be visible for others than staff",
+            "type": "boolean",
+            "default": false
+          }
+        }
       }
     },
     "modeOfIssuanceId": {
-      "description": "RDA mode of issuance is a categorization reflecting whether a resource is issued in one or more parts, the way it is updated, and whether its termination is predetermined or not (e.g. monograph,  sequential monograph, serial; integrating Resource, other)",
-      "type": "string"
+      "$ref": "#/properties/id"
     },
     "catalogedDate": {
       "description": "Date or timestamp on an instance for when is was considered cataloged",
@@ -278,7 +284,7 @@
       "description": "List of statistical code IDs",
       "type": "array",
       "items": {
-        "type": "string"
+        "$ref": "#/properties/id"
       },
       "uniqueItems": true
     },
@@ -291,8 +297,7 @@
       ]
     },
     "statusId": {
-      "description": "Instance status term (e.g. cataloged, uncatalogued, batch loaded, temporary, other, not yet assigned)",
-      "type": "string"
+      "$ref": "#/properties/id"
     },
     "statusUpdatedDate": {
       "description": "Date [or timestamp] for when the instance status was updated",
@@ -438,17 +443,21 @@
             "type": "string"
           },
           "notes": {
+            "description": "Notes about action, copy, binding etc.",
             "type": "array",
             "items": {
               "type": "object",
               "properties": {
                 "holdingsNoteTypeId": {
+                  "description": "ID of the type of note",
                   "type": "string"
                 },
                 "note": {
+                  "description": "Text content of the note",
                   "type": "string"
                 },
                 "staffOnly": {
+                  "description": "If true, determines that the note should not be visible for others than staff",
                   "type": "boolean",
                   "default": false
                 }
@@ -659,17 +668,21 @@
                   "type": "string"
                 },
                 "notes": {
+                  "description": "Notes about action, copy, binding etc.",
                   "type": "array",
                   "items": {
                     "type": "object",
                     "properties": {
                       "itemNoteTypeId": {
+                        "description": "ID of the type of note",
                         "type": "string"
                       },
                       "note": {
+                        "description": "Text content of the note",
                         "type": "string"
                       },
                       "staffOnly": {
+                        "description": "If true, determines that the note should not be visible for others than staff",
                         "type": "boolean",
                         "default": false
                       }

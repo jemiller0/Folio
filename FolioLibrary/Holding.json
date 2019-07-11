@@ -91,17 +91,21 @@
       "type": "string"
     },
     "notes": {
+      "description": "Notes about action, copy, binding etc.",
       "type": "array",
       "items": {
         "type": "object",
         "properties": {
           "holdingsNoteTypeId": {
+            "description": "ID of the type of note",
             "type": "string"
           },
           "note": {
+            "description": "Text content of the note",
             "type": "string"
           },
           "staffOnly": {
+            "description": "If true, determines that the note should not be visible for others than staff",
             "type": "boolean",
             "default": false
           }
@@ -312,17 +316,21 @@
             "type": "string"
           },
           "notes": {
+            "description": "Notes about action, copy, binding etc.",
             "type": "array",
             "items": {
               "type": "object",
               "properties": {
                 "itemNoteTypeId": {
+                  "description": "ID of the type of note",
                   "type": "string"
                 },
                 "note": {
+                  "description": "Text content of the note",
                   "type": "string"
                 },
                 "staffOnly": {
+                  "description": "If true, determines that the note should not be visible for others than staff",
                   "type": "boolean",
                   "default": false
                 }

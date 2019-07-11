@@ -786,8 +786,10 @@ CREATE VIEW uc.notes AS
 SELECT
 id AS id,
 instance_id AS instance_id,
-CAST(jsonb AS VARCHAR(1024)) AS content
-FROM (SELECT _id::text || ordinality::text AS id, _id AS instance_id, value AS jsonb FROM diku_mod_inventory_storage.instance, jsonb_array_elements_text((jsonb->>'notes')::jsonb) WITH ORDINALITY) a;
+CAST(jsonb->>'instanceNoteTypeId' AS UUID) AS instance_note_type_id,
+CAST(jsonb->>'note' AS VARCHAR(1024)) AS note,
+CAST(jsonb->>'staffOnly' AS BOOLEAN) AS staff_only
+FROM (SELECT _id::text || ordinality::text AS id, _id AS instance_id, value AS jsonb FROM diku_mod_inventory_storage.instance, jsonb_array_elements((jsonb->>'notes')::jsonb) WITH ORDINALITY) a;
 CREATE VIEW uc.statistical_code_ids AS
 SELECT
 id AS id,
