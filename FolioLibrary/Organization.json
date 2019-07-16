@@ -207,7 +207,7 @@
             "type": "string"
           },
           "metadata": {
-            "$ref": "addresses#/items/properties/metadata"
+            "$ref": "#/properties/addresses/items/properties/metadata"
           }
         },
         "required": [
@@ -257,7 +257,7 @@
             "type": "string"
           },
           "metadata": {
-            "$ref": "addresses#/items/properties/metadata"
+            "$ref": "#/properties/addresses/items/properties/metadata"
           }
         },
         "required": [
@@ -312,7 +312,7 @@
             "type": "string"
           },
           "metadata": {
-            "$ref": "addresses#/items/properties/metadata"
+            "$ref": "#/properties/addresses/items/properties/metadata"
           }
         },
         "required": [

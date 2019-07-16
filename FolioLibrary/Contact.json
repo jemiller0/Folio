@@ -166,7 +166,7 @@
             "type": "string"
           },
           "metadata": {
-            "$ref": "phoneNumbers#/items/properties/metadata"
+            "$ref": "#/properties/phoneNumbers/items/properties/metadata"
           }
         },
         "required": [
@@ -232,7 +232,7 @@
             "type": "string"
           },
           "metadata": {
-            "$ref": "phoneNumbers#/items/properties/metadata"
+            "$ref": "#/properties/phoneNumbers/items/properties/metadata"
           }
         }
       }
@@ -284,7 +284,7 @@
             "type": "string"
           },
           "metadata": {
-            "$ref": "phoneNumbers#/items/properties/metadata"
+            "$ref": "#/properties/phoneNumbers/items/properties/metadata"
           }
         },
         "required": [
