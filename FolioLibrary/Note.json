@@ -34,8 +34,7 @@
     "content": {
       "description": "Content of the note",
       "example": "There are access issues at BU campus",
-      "type": "string",
-      "maxLength": 1500
+      "type": "string"
     },
     "status": {
       "description": "Status of note - applies when searching by link.id and status",

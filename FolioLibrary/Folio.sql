@@ -971,6 +971,12 @@ id AS id,
 invoice_id AS invoice_id,
 CAST(jsonb AS VARCHAR(1024)) AS content
 FROM (SELECT id::text || ordinality::text AS id, id AS invoice_id, value AS jsonb FROM diku_mod_invoice_storage.invoices, jsonb_array_elements_text((jsonb->>'poNumbers')::jsonb) WITH ORDINALITY) a;
+CREATE VIEW uc.invoice_tags AS
+SELECT
+id AS id,
+invoice_id AS invoice_id,
+CAST(jsonb AS VARCHAR(1024)) AS content
+FROM (SELECT id::text || ordinality::text AS id, id AS invoice_id, value AS jsonb FROM diku_mod_invoice_storage.invoices, jsonb_array_elements_text((jsonb#>>'{tags,tagList}')::jsonb) WITH ORDINALITY) a;
 CREATE VIEW uc.invoices AS
 SELECT
 id AS id,
@@ -1039,6 +1045,12 @@ CAST(jsonb->>'fundId' AS UUID) AS fund_id,
 CAST(jsonb->>'invoiceLineId' AS UUID) AS invoice_item_id,
 CAST(jsonb->>'percentage' AS DECIMAL(19,2)) AS percentage
 FROM (SELECT id::text || ordinality::text AS id, id AS invoice_item_id, value AS jsonb FROM diku_mod_invoice_storage.invoice_lines, jsonb_array_elements((jsonb->>'fundDistributions')::jsonb) WITH ORDINALITY) a;
+CREATE VIEW uc.invoice_item_tags AS
+SELECT
+id AS id,
+invoice_item_id AS invoice_item_id,
+CAST(jsonb AS VARCHAR(1024)) AS content
+FROM (SELECT id::text || ordinality::text AS id, id AS invoice_item_id, value AS jsonb FROM diku_mod_invoice_storage.invoice_lines, jsonb_array_elements_text((jsonb#>>'{tags,tagList}')::jsonb) WITH ORDINALITY) a;
 CREATE VIEW uc.invoice_items AS
 SELECT
 id AS id,
@@ -1415,7 +1427,7 @@ CAST(jsonb->>'typeId' AS UUID) AS type_id,
 CAST(jsonb->>'type' AS VARCHAR(1024)) AS type,
 CAST(jsonb->>'domain' AS VARCHAR(1024)) AS domain,
 CAST(jsonb->>'title' AS VARCHAR(75)) AS title,
-CAST(jsonb->>'content' AS VARCHAR(1500)) AS content2,
+CAST(jsonb->>'content' AS VARCHAR(1024)) AS content2,
 CAST(jsonb->>'status' AS VARCHAR(1024)) AS status,
 CAST(jsonb#>>'{creator,lastName}' AS VARCHAR(1024)) AS creator_last_name,
 CAST(jsonb#>>'{creator,firstName}' AS VARCHAR(1024)) AS creator_first_name,
@@ -1438,6 +1450,12 @@ id AS id,
 order_id AS order_id,
 CAST(jsonb AS VARCHAR(1024)) AS content
 FROM (SELECT id::text || ordinality::text AS id, id AS order_id, value AS jsonb FROM diku_mod_orders_storage.purchase_order, jsonb_array_elements_text((jsonb->>'notes')::jsonb) WITH ORDINALITY) a;
+CREATE VIEW uc.order_tags AS
+SELECT
+id AS id,
+order_id AS order_id,
+CAST(jsonb AS VARCHAR(1024)) AS content
+FROM (SELECT id::text || ordinality::text AS id, id AS order_id, value AS jsonb FROM diku_mod_orders_storage.purchase_order, jsonb_array_elements_text((jsonb#>>'{tags,tagList}')::jsonb) WITH ORDINALITY) a;
 CREATE VIEW uc.orders AS
 SELECT
 id AS id,
@@ -1538,7 +1556,7 @@ SELECT
 id AS id,
 order_item_id AS order_item_id,
 CAST(jsonb AS VARCHAR(1024)) AS content
-FROM (SELECT id::text || ordinality::text AS id, id AS order_item_id, value AS jsonb FROM diku_mod_orders_storage.po_line, jsonb_array_elements_text((jsonb->>'tags')::jsonb) WITH ORDINALITY) a;
+FROM (SELECT id::text || ordinality::text AS id, id AS order_item_id, value AS jsonb FROM diku_mod_orders_storage.po_line, jsonb_array_elements_text((jsonb#>>'{tags,tagList}')::jsonb) WITH ORDINALITY) a;
 CREATE VIEW uc.order_items AS
 SELECT
 id AS id,

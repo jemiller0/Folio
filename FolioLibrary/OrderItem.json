@@ -524,11 +524,18 @@
       ]
     },
     "tags": {
-      "id": "tags",
-      "description": "arbitrary tags associated with this purchase order line",
-      "type": "array",
-      "items": {
-        "type": "string"
+      "title": "tags",
+      "description": "List of simple tags that can be added to an object",
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "tagList": {
+          "description": "List of tags",
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
       }
     },
     "title": {
