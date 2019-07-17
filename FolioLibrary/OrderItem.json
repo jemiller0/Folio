@@ -506,21 +506,13 @@
       "type": "string"
     },
     "source": {
-      "description": "purchase order line source",
-      "type": "object",
-      "additionalProperties": false,
-      "properties": {
-        "code": {
-          "description": "the source code",
-          "type": "string"
-        },
-        "description": {
-          "description": "description of the source",
-          "type": "string"
-        }
-      },
-      "required": [
-        "code"
+      "description": "The source of the Order",
+      "type": "string",
+      "enum": [
+        "User",
+        "API",
+        "EDI",
+        "MARC"
       ]
     },
     "tags": {
