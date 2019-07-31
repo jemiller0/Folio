@@ -980,6 +980,7 @@ FROM (SELECT id::text || ordinality::text AS id, id AS invoice_id, value AS json
 CREATE VIEW uc.invoices AS
 SELECT
 id AS id,
+CAST(jsonb->>'accountingCode' AS VARCHAR(1024)) AS accounting_code,
 CAST(jsonb->>'adjustmentsTotal' AS DECIMAL(19,2)) AS adjustments_total,
 CAST(jsonb->>'approvedBy' AS UUID) AS approved_by_id,
 uc.TIMESTAMP_CAST(jsonb->>'approvalDate') AS approval_date,
@@ -995,7 +996,7 @@ uc.TIMESTAMP_CAST(jsonb->>'paymentDue') AS payment_due,
 CAST(jsonb->>'paymentTerms' AS VARCHAR(1024)) AS payment_terms,
 CAST(jsonb->>'paymentMethod' AS VARCHAR(1024)) AS payment_method,
 CAST(jsonb->>'status' AS VARCHAR(1024)) AS status,
-CAST(jsonb->>'source' AS UUID) AS source_id,
+CAST(jsonb->>'source' AS VARCHAR(1024)) AS source,
 CAST(jsonb->>'subTotal' AS DECIMAL(19,2)) AS sub_total,
 CAST(jsonb->>'total' AS DECIMAL(19,2)) AS total,
 CAST(jsonb->>'vendorInvoiceNo' AS VARCHAR(1024)) AS vendor_invoice_no,
@@ -1053,6 +1054,8 @@ FROM (SELECT id::text || ordinality::text AS id, id AS invoice_item_id, value AS
 CREATE VIEW uc.invoice_items AS
 SELECT
 id AS id,
+CAST(jsonb->>'accountingCode' AS VARCHAR(1024)) AS accounting_code,
+CAST(jsonb->>'accountNumber' AS VARCHAR(1024)) AS account_number,
 CAST(jsonb->>'adjustmentsTotal' AS DECIMAL(19,2)) AS adjustments_total,
 CAST(jsonb->>'comment' AS VARCHAR(1024)) AS comment,
 CAST(jsonb->>'description' AS VARCHAR(1024)) AS description,
@@ -1108,8 +1111,13 @@ CREATE VIEW uc.circulation_notes AS
 SELECT
 id AS id,
 item_id AS item_id,
+CAST(jsonb->>'id' AS VARCHAR(1024)) AS id2,
 CAST(jsonb->>'noteType' AS VARCHAR(1024)) AS note_type,
 CAST(jsonb->>'note' AS VARCHAR(1024)) AS note,
+CAST(jsonb#>>'{source,id}' AS VARCHAR(1024)) AS source_id,
+CAST(jsonb#>>'{source,personal,lastName}' AS VARCHAR(1024)) AS source_personal_last_name,
+CAST(jsonb#>>'{source,personal,firstName}' AS VARCHAR(1024)) AS source_personal_first_name,
+CAST(jsonb->>'date' AS VARCHAR(1024)) AS date,
 CAST(jsonb->>'staffOnly' AS BOOLEAN) AS staff_only
 FROM (SELECT _id::text || ordinality::text AS id, _id AS item_id, value AS jsonb FROM diku_mod_inventory_storage.item, jsonb_array_elements((jsonb->>'circulationNotes')::jsonb) WITH ORDINALITY) a;
 CREATE VIEW uc.item_electronic_accesses AS
@@ -1450,6 +1458,12 @@ id AS id,
 order_id AS order_id,
 CAST(jsonb AS VARCHAR(1024)) AS content
 FROM (SELECT id::text || ordinality::text AS id, id AS order_id, value AS jsonb FROM diku_mod_orders_storage.purchase_order, jsonb_array_elements_text((jsonb->>'notes')::jsonb) WITH ORDINALITY) a;
+CREATE VIEW uc.order_acquisition_units AS
+SELECT
+id AS id,
+order_id AS order_id,
+CAST(jsonb AS UUID) AS acquisition_unit_id
+FROM (SELECT id::text || ordinality::text AS id, id AS order_id, value AS jsonb FROM diku_mod_orders_storage.purchase_order, jsonb_array_elements_text((jsonb->>'acqUnitIds')::jsonb) WITH ORDINALITY) a;
 CREATE VIEW uc.order_tags AS
 SELECT
 id AS id,
@@ -1775,6 +1789,12 @@ organization_id AS organization_id,
 CAST(jsonb->>'description' AS VARCHAR(1024)) AS description,
 uc.TIMESTAMP_CAST(jsonb->>'timestamp') AS timestamp
 FROM (SELECT id::text || ordinality::text AS id, id AS organization_id, value AS jsonb FROM diku_mod_organizations_storage.organizations, jsonb_array_elements((jsonb->>'changelogs')::jsonb) WITH ORDINALITY) a;
+CREATE VIEW uc.organization_tags AS
+SELECT
+id AS id,
+organization_id AS organization_id,
+CAST(jsonb AS VARCHAR(1024)) AS content
+FROM (SELECT id::text || ordinality::text AS id, id AS organization_id, value AS jsonb FROM diku_mod_organizations_storage.organizations, jsonb_array_elements_text((jsonb#>>'{tags,tagList}')::jsonb) WITH ORDINALITY) a;
 CREATE VIEW uc.organizations AS
 SELECT
 id AS id,

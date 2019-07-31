@@ -9,6 +9,10 @@
       "type": "string",
       "pattern": "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-5][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}$"
     },
+    "accountingCode": {
+      "description": "Number that represents the vendor is an external accounting system which may include details like \"Address code\" in it. This is the number as stated on the invoice",
+      "type": "string"
+    },
     "adjustments": {
       "description": "List of invoice level adjustments. The adjustments can be pro-rated which are defined at the invoice level, but are applied to the invoice lines. A generic example is a shipping fee which should be spread out across all of the invoice lines so that all funds involved pay some portion of the fee.",
       "type": "array",
@@ -189,9 +193,13 @@
       ]
     },
     "source": {
-      "description": "This does not denote a user ID but describes how the record was created. Eg. Manually, EDIFACT, MARC etc",
+      "description": "This does not denote a user ID but describes how the record was created. Eg. User, API, EDI",
       "type": "string",
-      "pattern": "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-5][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}$"
+      "enum": [
+        "User",
+        "API",
+        "EDI"
+      ]
     },
     "subTotal": {
       "description": "Invoice amount before adjustments are applied. This is sum of all subTotal amounts of the corresponding invoice lines. The value is calculated \"on the fly\" and never persisted",
