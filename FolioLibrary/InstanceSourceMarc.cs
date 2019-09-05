@@ -22,7 +22,7 @@ namespace FolioLibrary
             return ValidationResult.Success;
         }
 
-        [Column("_id"), Display(Name = "Instance", Order = 1), Editable(false), ForeignKey("Instance")]
+        [Column("id"), Display(Name = "Instance", Order = 1), Editable(false), ForeignKey("Instance")]
         public virtual Guid? Id { get; set; }
 
         [Display(Order = 2)]

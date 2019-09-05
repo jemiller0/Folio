@@ -1,36 +1,19 @@
 {
   "$schema": "http://json-schema.org/draft-04/schema#",
-  "title": "Owner Schema",
+  "description": "An Instance note type",
   "type": "object",
   "additionalProperties": false,
   "properties": {
-    "owner": {
+    "id": {
+      "type": "string",
+      "pattern": "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-5][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}$"
+    },
+    "name": {
+      "description": "name of the Instance note type",
       "type": "string"
     },
-    "desc": {
-      "type": "string"
-    },
-    "servicePointOwner": {
-      "type": "array",
-      "items": {
-        "type": "object",
-        "properties": {
-          "value": {
-            "type": "string"
-          },
-          "label": {
-            "type": "string"
-          }
-        },
-        "required": [
-          "value"
-        ]
-      }
-    },
-    "defaultChargeNoticeId": {
-      "type": "string"
-    },
-    "defaultActionNoticeId": {
+    "source": {
+      "description": "label indicating where the Instance note type entry originates from, i.e. 'folio' or 'local'",
       "type": "string"
     },
     "metadata": {
@@ -71,9 +54,10 @@
       "required": [
         "createdDate"
       ]
-    },
-    "id": {
-      "type": "string"
     }
-  }
+  },
+  "required": [
+    "name",
+    "source"
+  ]
 }

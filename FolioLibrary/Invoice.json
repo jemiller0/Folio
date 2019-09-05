@@ -118,8 +118,7 @@
       }
     },
     "adjustmentsTotal": {
-      "description": "Total amount which is sum of all invoice line adjustments and all non-prorated invoice level adjustments. The value is calculated \"on the fly\" and never persisted",
-      "readonly": true,
+      "description": "Total amount which is sum of all invoice line adjustments and all non-prorated invoice level adjustments. This amount is always calculated by system.",
       "type": "number"
     },
     "approvedBy": {
@@ -202,8 +201,7 @@
       ]
     },
     "subTotal": {
-      "description": "Invoice amount before adjustments are applied. This is sum of all subTotal amounts of the corresponding invoice lines. The value is calculated \"on the fly\" and never persisted",
-      "readonly": true,
+      "description": "Invoice amount before adjustments are applied. This is sum of all subTotal amounts of the corresponding invoice lines. This amount is always calculated by system.",
       "type": "number"
     },
     "total": {
@@ -250,6 +248,15 @@
     "manualPayment": {
       "description": "This would keep the invoice from being feed into the batch process (Not generate a external voucher/payment) but would still move values in the system. Note: this is ideally defined by the vendor relationship and exposed for override on the invoice.",
       "type": "boolean"
+    },
+    "acqUnitIds": {
+      "description": "acquisition unit ids associated with this invoice",
+      "type": "array",
+      "items": {
+        "description": "The UUID format string",
+        "type": "string",
+        "pattern": "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-5][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}$"
+      }
     },
     "metadata": {
       "title": "Metadata Schema",

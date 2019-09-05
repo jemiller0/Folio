@@ -1,37 +1,23 @@
 {
   "$schema": "http://json-schema.org/draft-04/schema#",
-  "title": "Owner Schema",
+  "description": "Relationship between a user and an acquistions Unit",
   "type": "object",
   "additionalProperties": false,
   "properties": {
-    "owner": {
-      "type": "string"
+    "id": {
+      "description": "UUID of this membership record",
+      "type": "string",
+      "pattern": "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-5][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}$"
     },
-    "desc": {
-      "type": "string"
+    "userId": {
+      "description": "The UUID of the user to associate with the acquisitions unit",
+      "type": "string",
+      "pattern": "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-5][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}$"
     },
-    "servicePointOwner": {
-      "type": "array",
-      "items": {
-        "type": "object",
-        "properties": {
-          "value": {
-            "type": "string"
-          },
-          "label": {
-            "type": "string"
-          }
-        },
-        "required": [
-          "value"
-        ]
-      }
-    },
-    "defaultChargeNoticeId": {
-      "type": "string"
-    },
-    "defaultActionNoticeId": {
-      "type": "string"
+    "acquisitionsUnitId": {
+      "description": "The acquisition unit the user is a member of",
+      "type": "string",
+      "pattern": "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-5][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}$"
     },
     "metadata": {
       "title": "Metadata Schema",
@@ -71,9 +57,10 @@
       "required": [
         "createdDate"
       ]
-    },
-    "id": {
-      "type": "string"
     }
-  }
+  },
+  "required": [
+    "userId",
+    "acquisitionsUnitId"
+  ]
 }

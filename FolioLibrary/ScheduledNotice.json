@@ -18,10 +18,24 @@
       "type": "string",
       "pattern": "^[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12}$"
     },
+    "recipientUserId": {
+      "description": "Id of the user to whom this notice should be sent to",
+      "type": "string",
+      "pattern": "^[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12}$"
+    },
     "nextRunTime": {
       "description": "Next run time",
       "type": "string",
       "format": "date-time"
+    },
+    "triggeringEvent": {
+      "description": "Scheduled notice triggering event",
+      "type": "string",
+      "enum": [
+        "Hold expiration",
+        "Request expiration",
+        "Due date"
+      ]
     },
     "noticeConfig": {
       "type": "object",

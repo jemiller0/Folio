@@ -5,26 +5,22 @@
   "additionalProperties": false,
   "properties": {
     "id": {
-      "description": "UUID of this fund",
+      "description": "The UUID format string",
       "type": "string",
-      "pattern": "^[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[1-5][a-fA-F0-9]{3}-[89abAB][a-fA-F0-9]{3}-[a-fA-F0-9]{12}$"
+      "pattern": "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-5][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}$"
     },
-    "allocationFrom": {
+    "allocatedFromIds": {
       "description": "All the funds that this fund is allowed to receive money from. This would be 1 fund or none. If this field is blank their is no restriction on allocating to this fund",
       "type": "array",
       "items": {
-        "description": "UUID of the fund this fund is allowed to receive money from",
-        "type": "string",
-        "pattern": "^[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[1-5][a-fA-F0-9]{3}-[89abAB][a-fA-F0-9]{3}-[a-fA-F0-9]{12}$"
+        "$ref": "#/properties/id"
       }
     },
-    "allocationTo": {
+    "allocatedToIds": {
       "description": "All the funds that this fund is allowed to send money to. This could be one or many.",
       "type": "array",
       "items": {
-        "description": "UUID of the fund this fund is allowed to send money to",
-        "type": "string",
-        "pattern": "^[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[1-5][a-fA-F0-9]{3}-[89abAB][a-fA-F0-9]{3}-[a-fA-F0-9]{12}$"
+        "$ref": "#/properties/id"
       }
     },
     "code": {
@@ -48,22 +44,36 @@
         "Inactive"
       ]
     },
+    "fundTypeId": {
+      "$ref": "#/properties/id"
+    },
     "ledgerId": {
-      "description": "UUID of the financial ledger associated with this fund",
-      "type": "string",
-      "pattern": "^[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[1-5][a-fA-F0-9]{3}-[89abAB][a-fA-F0-9]{3}-[a-fA-F0-9]{12}$"
+      "$ref": "#/properties/id"
     },
     "name": {
       "description": "The name of this fund",
       "type": "string"
     },
-    "tags": {
-      "description": "The list of tags associated with this fund",
+    "acqUnitIds": {
+      "description": "acquisition unit ids associated with this fund",
       "type": "array",
       "items": {
-        "description": "UUID of tag",
-        "type": "string",
-        "pattern": "^[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[1-5][a-fA-F0-9]{3}-[89abAB][a-fA-F0-9]{3}-[a-fA-F0-9]{12}$"
+        "$ref": "#/properties/id"
+      }
+    },
+    "tags": {
+      "title": "tags",
+      "description": "List of simple tags that can be added to an object",
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "tagList": {
+          "description": "List of tags",
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
       }
     },
     "metadata": {
@@ -107,7 +117,6 @@
     }
   },
   "required": [
-    "externalAccountNo",
     "code",
     "fundStatus",
     "ledgerId",

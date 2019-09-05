@@ -34,6 +34,12 @@ namespace FolioLibrary
         [Column("created_by"), Display(Name = "Creation User Id", Order = 4), Editable(false)]
         public virtual string CreationUserId { get; set; }
 
-        public override string ToString() => $"{{ {nameof(Id)} = {Id}, {nameof(Content)} = {Content}, {nameof(CreationTime)} = {CreationTime}, {nameof(CreationUserId)} = {CreationUserId} }}";
+        [Display(Order = 5)]
+        public virtual Group Group { get; set; }
+
+        [Column("patrongroup"), Display(Name = "Group", Order = 6), Editable(false), ForeignKey("Group")]
+        public virtual Guid? Patrongroup { get; set; }
+
+        public override string ToString() => $"{{ {nameof(Id)} = {Id}, {nameof(Content)} = {Content}, {nameof(CreationTime)} = {CreationTime}, {nameof(CreationUserId)} = {CreationUserId}, {nameof(Patrongroup)} = {Patrongroup} }}";
     }
 }

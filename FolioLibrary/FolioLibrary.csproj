@@ -6,6 +6,7 @@
 
   <ItemGroup>
     <None Remove="Account.json" />
+    <None Remove="AcquisitionsUnit.json" />
     <None Remove="AddressType.json" />
     <None Remove="Alert.json" />
     <None Remove="AlternativeTitleType.json" />
@@ -41,6 +42,7 @@
     <None Remove="IllPolicy.json" />
     <None Remove="Instance.json" />
     <None Remove="InstanceFormat.json" />
+    <None Remove="InstanceNoteType.json" />
     <None Remove="InstanceRelationship.json" />
     <None Remove="InstanceRelationshipType.json" />
     <None Remove="InstanceSourceMarc.json" />
@@ -48,6 +50,7 @@
     <None Remove="InstanceType.json" />
     <None Remove="Institution.json" />
     <None Remove="Interface.json" />
+    <None Remove="InterfaceCredential.json" />
     <None Remove="Invoice.json" />
     <None Remove="InvoiceItem.json" />
     <None Remove="Item.json" />
@@ -64,6 +67,7 @@
     <None Remove="MarcRecord.json" />
     <None Remove="MaterialType.json" />
     <None Remove="ModeOfIssuance.json" />
+    <None Remove="NatureOfContentTerm.json" />
     <None Remove="Note.json" />
     <None Remove="Order.json" />
     <None Remove="OrderInvoice.json" />
@@ -94,12 +98,14 @@
     <None Remove="Transfer.json" />
     <None Remove="TransferCriteria.json" />
     <None Remove="User.json" />
+    <None Remove="UserAcquisitionsUnit.json" />
     <None Remove="Voucher.json" />
     <None Remove="VoucherItem.json" />
     <None Remove="Waive.json" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Account.json" />
+    <EmbeddedResource Include="AcquisitionsUnit.json" />
     <EmbeddedResource Include="AddressType.json" />
     <EmbeddedResource Include="Alert.json" />
     <EmbeddedResource Include="AlternativeTitleType.json" />
@@ -135,6 +141,7 @@
     <EmbeddedResource Include="IllPolicy.json" />
     <EmbeddedResource Include="Instance.json" />
     <EmbeddedResource Include="InstanceFormat.json" />
+    <EmbeddedResource Include="InstanceNoteType.json" />
     <EmbeddedResource Include="InstanceRelationship.json" />
     <EmbeddedResource Include="InstanceRelationshipType.json" />
     <EmbeddedResource Include="InstanceSourceMarc.json" />
@@ -142,6 +149,7 @@
     <EmbeddedResource Include="InstanceType.json" />
     <EmbeddedResource Include="Institution.json" />
     <EmbeddedResource Include="Interface.json" />
+    <EmbeddedResource Include="InterfaceCredential.json" />
     <EmbeddedResource Include="Invoice.json" />
     <EmbeddedResource Include="InvoiceItem.json" />
     <EmbeddedResource Include="Item.json" />
@@ -158,6 +166,7 @@
     <EmbeddedResource Include="MarcRecord.json" />
     <EmbeddedResource Include="MaterialType.json" />
     <EmbeddedResource Include="ModeOfIssuance.json" />
+    <EmbeddedResource Include="NatureOfContentTerm.json" />
     <EmbeddedResource Include="Note.json" />
     <EmbeddedResource Include="Order.json" />
     <EmbeddedResource Include="OrderInvoice.json" />
@@ -188,17 +197,18 @@
     <EmbeddedResource Include="Transfer.json" />
     <EmbeddedResource Include="TransferCriteria.json" />
     <EmbeddedResource Include="User.json" />
+    <EmbeddedResource Include="UserAcquisitionsUnit.json" />
     <EmbeddedResource Include="Voucher.json" />
     <EmbeddedResource Include="VoucherItem.json" />
     <EmbeddedResource Include="Waive.json" />
   </ItemGroup>
-  
+
   <ItemGroup>
-    <PackageReference Include="Dapper" Version="1.60.6" />
+    <PackageReference Include="Dapper" Version="2.0.4" />
     <PackageReference Include="Microsoft.CSharp" Version="4.5.0" />
     <PackageReference Include="Newtonsoft.Json" Version="12.0.2" />
     <PackageReference Include="Newtonsoft.Json.Schema" Version="3.0.11" />
-    <PackageReference Include="NJsonSchema" Version="10.0.21" />
+    <PackageReference Include="NJsonSchema" Version="10.0.23" />
     <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="2.2.4" />
     <PackageReference Include="System.Configuration.ConfigurationManager" Version="4.5.0" />
   </ItemGroup>

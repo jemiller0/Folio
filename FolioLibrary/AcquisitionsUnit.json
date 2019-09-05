@@ -1,37 +1,42 @@
 {
   "$schema": "http://json-schema.org/draft-04/schema#",
-  "title": "Owner Schema",
+  "description": "Acquisitions Units",
   "type": "object",
   "additionalProperties": false,
   "properties": {
-    "owner": {
+    "id": {
+      "description": "The UUID format string",
+      "type": "string",
+      "pattern": "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-5][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}$"
+    },
+    "name": {
+      "description": "a name for this acquisitions unit",
       "type": "string"
     },
-    "desc": {
-      "type": "string"
+    "isDeleted": {
+      "description": "If true, the record is marked for deletion at some point. This prevents it from being assigned to any record.",
+      "type": "boolean",
+      "default": false
     },
-    "servicePointOwner": {
-      "type": "array",
-      "items": {
-        "type": "object",
-        "properties": {
-          "value": {
-            "type": "string"
-          },
-          "label": {
-            "type": "string"
-          }
-        },
-        "required": [
-          "value"
-        ]
-      }
+    "protectCreate": {
+      "description": "if true, only members can create records associated with this acq unit.",
+      "type": "boolean",
+      "default": true
     },
-    "defaultChargeNoticeId": {
-      "type": "string"
+    "protectRead": {
+      "description": "if true, only members can read/view records associated with this acq unit.",
+      "type": "boolean",
+      "default": false
     },
-    "defaultActionNoticeId": {
-      "type": "string"
+    "protectUpdate": {
+      "description": "if true, only members can update records associated with this acq unit.",
+      "type": "boolean",
+      "default": true
+    },
+    "protectDelete": {
+      "description": "if true, only members can delete records associated with this acq unit.",
+      "type": "boolean",
+      "default": true
     },
     "metadata": {
       "title": "Metadata Schema",
@@ -71,9 +76,10 @@
       "required": [
         "createdDate"
       ]
-    },
-    "id": {
-      "type": "string"
     }
-  }
+  },
+  "required": [
+    "name",
+    "isDeleted"
+  ]
 }

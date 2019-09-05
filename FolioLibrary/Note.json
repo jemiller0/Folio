@@ -7,12 +7,14 @@
     "id": {
       "description": "Unique generated identifier for the note",
       "example": "62d00c36-a94f-434d-9cd2-c7ea159303da",
-      "type": "string"
+      "type": "string",
+      "pattern": "^[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12}$"
     },
     "typeId": {
       "description": "Type id of note",
       "example": "13d00c36-a94f-434d-9cd2-c7ea159303da",
-      "type": "string"
+      "type": "string",
+      "pattern": "^[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12}$"
     },
     "type": {
       "description": "Type of note (configured in settings)",

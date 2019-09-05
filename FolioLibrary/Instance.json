@@ -303,6 +303,21 @@
       "description": "Date [or timestamp] for when the instance status was updated",
       "type": "string"
     },
+    "tags": {
+      "title": "tags",
+      "description": "List of simple tags that can be added to an object",
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "tagList": {
+          "description": "List of tags",
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      }
+    },
     "metadata": {
       "title": "Metadata Schema",
       "description": "Metadata about creation and changes to records, provided by the server (client should not provide)",
@@ -827,6 +842,9 @@
                   "description": "ID referencing a remote purchase order object related to this item",
                   "type": "string"
                 },
+                "tags": {
+                  "$ref": "#/properties/tags"
+                },
                 "metadata": {
                   "$ref": "#/properties/metadata"
                 },
@@ -858,6 +876,9 @@
             "folio:includedElement": "instances.0",
             "type": "object"
           },
+          "tags": {
+            "$ref": "#/properties/tags"
+          },
           "metadata": {
             "$ref": "#/properties/metadata"
           }
@@ -866,6 +887,14 @@
           "instanceId"
         ]
       }
+    },
+    "natureOfContentTermIds": {
+      "description": "Array of UUID for the Instance nature of content (e.g. bibliography, biography, exhibition catalogue, festschrift, newspaper, proceedings, research report, thesis or website)",
+      "type": "array",
+      "items": {
+        "$ref": "#/properties/id"
+      },
+      "uniqueItems": true
     }
   },
   "required": [

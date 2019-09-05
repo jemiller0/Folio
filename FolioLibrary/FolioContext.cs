@@ -63,6 +63,7 @@ namespace FolioLibrary
             base.OnModelCreating(modelBuilder);
             this.GetService<ILoggerFactory>().AddProvider(new LoggingProvider());
             if (IsPostgreSql) modelBuilder.Entity<Account>().Property(nameof(Account.Content)).HasColumnType("jsonb");
+            if (IsPostgreSql) modelBuilder.Entity<AcquisitionsUnit>().Property(nameof(AcquisitionsUnit.Content)).HasColumnType("jsonb");
             if (IsPostgreSql) modelBuilder.Entity<AddressType>().Property(nameof(AddressType.Content)).HasColumnType("jsonb");
             if (IsPostgreSql) modelBuilder.Entity<Alert>().Property(nameof(Alert.Content)).HasColumnType("jsonb");
             if (IsPostgreSql) modelBuilder.Entity<AlternativeTitleType>().Property(nameof(AlternativeTitleType.Content)).HasColumnType("jsonb");
@@ -100,6 +101,7 @@ namespace FolioLibrary
             if (IsPostgreSql) modelBuilder.Entity<IllPolicy>().Property(nameof(IllPolicy.Content)).HasColumnType("jsonb");
             if (IsPostgreSql) modelBuilder.Entity<Instance>().Property(nameof(Instance.Content)).HasColumnType("jsonb");
             if (IsPostgreSql) modelBuilder.Entity<InstanceFormat>().Property(nameof(InstanceFormat.Content)).HasColumnType("jsonb");
+            if (IsPostgreSql) modelBuilder.Entity<InstanceNoteType>().Property(nameof(InstanceNoteType.Content)).HasColumnType("jsonb");
             if (IsPostgreSql) modelBuilder.Entity<InstanceRelationship>().Property(nameof(InstanceRelationship.Content)).HasColumnType("jsonb");
             if (IsPostgreSql) modelBuilder.Entity<InstanceRelationshipType>().Property(nameof(InstanceRelationshipType.Content)).HasColumnType("jsonb");
             if (IsPostgreSql) modelBuilder.Entity<InstanceSourceMarc>().Property(nameof(InstanceSourceMarc.Content)).HasColumnType("jsonb");
@@ -107,6 +109,7 @@ namespace FolioLibrary
             if (IsPostgreSql) modelBuilder.Entity<InstanceType>().Property(nameof(InstanceType.Content)).HasColumnType("jsonb");
             if (IsPostgreSql) modelBuilder.Entity<Institution>().Property(nameof(Institution.Content)).HasColumnType("jsonb");
             if (IsPostgreSql) modelBuilder.Entity<Interface>().Property(nameof(Interface.Content)).HasColumnType("jsonb");
+            if (IsPostgreSql) modelBuilder.Entity<InterfaceCredential>().Property(nameof(InterfaceCredential.Content)).HasColumnType("jsonb");
             if (IsPostgreSql) modelBuilder.Entity<Invoice>().Property(nameof(Invoice.Content)).HasColumnType("jsonb");
             if (IsPostgreSql) modelBuilder.Entity<InvoiceItem>().Property(nameof(InvoiceItem.Content)).HasColumnType("jsonb");
             if (IsPostgreSql) modelBuilder.Entity<Item>().Property(nameof(Item.Content)).HasColumnType("jsonb");
@@ -123,6 +126,7 @@ namespace FolioLibrary
             if (IsPostgreSql) modelBuilder.Entity<MarcRecord>().Property(nameof(MarcRecord.Content)).HasColumnType("jsonb");
             if (IsPostgreSql) modelBuilder.Entity<MaterialType>().Property(nameof(MaterialType.Content)).HasColumnType("jsonb");
             if (IsPostgreSql) modelBuilder.Entity<ModeOfIssuance>().Property(nameof(ModeOfIssuance.Content)).HasColumnType("jsonb");
+            if (IsPostgreSql) modelBuilder.Entity<NatureOfContentTerm>().Property(nameof(NatureOfContentTerm.Content)).HasColumnType("jsonb");
             if (IsPostgreSql) modelBuilder.Entity<Note>().Property(nameof(Note.Content)).HasColumnType("jsonb");
             if (IsPostgreSql) modelBuilder.Entity<NoteType>().Property(nameof(NoteType.Content)).HasColumnType("jsonb");
             if (IsPostgreSql) modelBuilder.Entity<Order>().Property(nameof(Order.Content)).HasColumnType("jsonb");
@@ -154,6 +158,7 @@ namespace FolioLibrary
             if (IsPostgreSql) modelBuilder.Entity<Transfer>().Property(nameof(Transfer.Content)).HasColumnType("jsonb");
             if (IsPostgreSql) modelBuilder.Entity<TransferCriteria>().Property(nameof(TransferCriteria.Content)).HasColumnType("jsonb");
             if (IsPostgreSql) modelBuilder.Entity<User>().Property(nameof(User.Content)).HasColumnType("jsonb");
+            if (IsPostgreSql) modelBuilder.Entity<UserAcquisitionsUnit>().Property(nameof(UserAcquisitionsUnit.Content)).HasColumnType("jsonb");
             if (IsPostgreSql) modelBuilder.Entity<Voucher>().Property(nameof(Voucher.Content)).HasColumnType("jsonb");
             if (IsPostgreSql) modelBuilder.Entity<VoucherItem>().Property(nameof(VoucherItem.Content)).HasColumnType("jsonb");
             if (IsPostgreSql) modelBuilder.Entity<Waive>().Property(nameof(Waive.Content)).HasColumnType("jsonb");
@@ -177,6 +182,7 @@ namespace FolioLibrary
             modelBuilder.Entity<InstanceRelationship>().HasOne(typeof(Instance), nameof(InstanceRelationship.Instance)).WithMany(nameof(Instance.InstanceRelationships)).HasForeignKey(nameof(InstanceRelationship.Subinstanceid)).OnDelete(DeleteBehavior.Restrict);
             modelBuilder.Entity<InstanceRelationship>().HasOne(typeof(InstanceRelationshipType), nameof(InstanceRelationship.InstanceRelationshipType)).WithMany(nameof(InstanceRelationshipType.InstanceRelationships)).HasForeignKey(nameof(InstanceRelationship.Instancerelationshiptypeid)).OnDelete(DeleteBehavior.Restrict);
             modelBuilder.Entity<InstanceSourceMarc>().HasOne(typeof(Instance), nameof(InstanceSourceMarc.Instance)).WithOne(nameof(Instance.InstanceSourceMarc)).HasForeignKey(typeof(InstanceSourceMarc), nameof(InstanceSourceMarc.Id)).IsRequired().OnDelete(DeleteBehavior.Restrict);
+            modelBuilder.Entity<InterfaceCredential>().HasOne(typeof(Interface), nameof(InterfaceCredential.Interface)).WithMany(nameof(Interface.InterfaceCredentials)).HasForeignKey(nameof(InterfaceCredential.Interfaceid)).OnDelete(DeleteBehavior.Restrict);
             modelBuilder.Entity<InvoiceItem>().HasOne(typeof(Invoice), nameof(InvoiceItem.Invoice)).WithMany(nameof(Invoice.InvoiceItems)).HasForeignKey(nameof(InvoiceItem.Invoiceid)).OnDelete(DeleteBehavior.Restrict);
             modelBuilder.Entity<Item>().HasOne(typeof(Holding), nameof(Item.Holding)).WithMany(nameof(Holding.Items)).HasForeignKey(nameof(Item.Holdingsrecordid)).OnDelete(DeleteBehavior.Restrict);
             modelBuilder.Entity<Item>().HasOne(typeof(LoanType), nameof(Item.LoanType)).WithMany(nameof(LoanType.Items)).HasForeignKey(nameof(Item.Permanentloantypeid)).OnDelete(DeleteBehavior.Restrict);
@@ -199,6 +205,8 @@ namespace FolioLibrary
             modelBuilder.Entity<ServicePointUser>().HasOne(typeof(ServicePoint), nameof(ServicePointUser.ServicePoint)).WithMany(nameof(ServicePoint.ServicePointUsers)).HasForeignKey(nameof(ServicePointUser.Defaultservicepointid)).OnDelete(DeleteBehavior.Restrict);
             modelBuilder.Entity<StatisticalCode>().HasOne(typeof(StatisticalCodeType), nameof(StatisticalCode.StatisticalCodeType)).WithMany(nameof(StatisticalCodeType.StatisticalCodes)).HasForeignKey(nameof(StatisticalCode.Statisticalcodetypeid)).OnDelete(DeleteBehavior.Restrict);
             modelBuilder.Entity<Transaction>().HasOne(typeof(Budget), nameof(Transaction.Budget)).WithMany(nameof(Budget.Transactions)).HasForeignKey(nameof(Transaction.Budgetid)).OnDelete(DeleteBehavior.Restrict);
+            modelBuilder.Entity<User>().HasOne(typeof(Group), nameof(User.Group)).WithMany(nameof(Group.Users)).HasForeignKey(nameof(User.Patrongroup)).OnDelete(DeleteBehavior.Restrict);
+            modelBuilder.Entity<UserAcquisitionsUnit>().HasOne(typeof(AcquisitionsUnit), nameof(UserAcquisitionsUnit.AcquisitionsUnit)).WithMany(nameof(AcquisitionsUnit.UserAcquisitionsUnits)).HasForeignKey(nameof(UserAcquisitionsUnit.Acquisitionsunitid)).OnDelete(DeleteBehavior.Restrict);
             modelBuilder.Entity<Voucher>().HasOne(typeof(Invoice), nameof(Voucher.Invoice)).WithMany(nameof(Invoice.Vouchers)).HasForeignKey(nameof(Voucher.Invoiceid)).OnDelete(DeleteBehavior.Restrict);
             modelBuilder.Entity<VoucherItem>().HasOne(typeof(Voucher), nameof(VoucherItem.Voucher)).WithMany(nameof(Voucher.VoucherItems)).HasForeignKey(nameof(VoucherItem.Voucherid)).OnDelete(DeleteBehavior.Restrict);
             Database.SetCommandTimeout(90);
@@ -209,6 +217,7 @@ namespace FolioLibrary
         public bool IsSqlServer => providerName == "System.Data.SqlClient";
         public string ProviderName => providerName;
         public DbSet<Account> Accounts { get; set; }
+        public DbSet<AcquisitionsUnit> AcquisitionsUnits { get; set; }
         public DbSet<AddressType> AddressTypes { get; set; }
         public DbSet<Alert> Alerts { get; set; }
         public DbSet<AlternativeTitleType> AlternativeTitleTypes { get; set; }
@@ -246,6 +255,7 @@ namespace FolioLibrary
         public DbSet<IllPolicy> IllPolicies { get; set; }
         public DbSet<Instance> Instances { get; set; }
         public DbSet<InstanceFormat> InstanceFormats { get; set; }
+        public DbSet<InstanceNoteType> InstanceNoteTypes { get; set; }
         public DbSet<InstanceRelationship> InstanceRelationships { get; set; }
         public DbSet<InstanceRelationshipType> InstanceRelationshipTypes { get; set; }
         public DbSet<InstanceSourceMarc> InstanceSourceMarcs { get; set; }
@@ -253,6 +263,7 @@ namespace FolioLibrary
         public DbSet<InstanceType> InstanceTypes { get; set; }
         public DbSet<Institution> Institutions { get; set; }
         public DbSet<Interface> Interfaces { get; set; }
+        public DbSet<InterfaceCredential> InterfaceCredentials { get; set; }
         public DbSet<Invoice> Invoices { get; set; }
         public DbSet<InvoiceItem> InvoiceItems { get; set; }
         public DbSet<Item> Items { get; set; }
@@ -269,6 +280,7 @@ namespace FolioLibrary
         public DbSet<MarcRecord> MarcRecords { get; set; }
         public DbSet<MaterialType> MaterialTypes { get; set; }
         public DbSet<ModeOfIssuance> ModeOfIssuances { get; set; }
+        public DbSet<NatureOfContentTerm> NatureOfContentTerms { get; set; }
         public DbSet<Note> Notes { get; set; }
         public DbSet<NoteType> NoteTypes { get; set; }
         public DbSet<Order> Orders { get; set; }
@@ -300,6 +312,7 @@ namespace FolioLibrary
         public DbSet<Transfer> Transfers { get; set; }
         public DbSet<TransferCriteria> TransferCriterias { get; set; }
         public DbSet<User> Users { get; set; }
+        public DbSet<UserAcquisitionsUnit> UserAcquisitionsUnits { get; set; }
         public DbSet<Voucher> Vouchers { get; set; }
         public DbSet<VoucherItem> VoucherItems { get; set; }
         public DbSet<Waive> Waives { get; set; }
