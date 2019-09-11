@@ -1,44 +1,57 @@
 {
   "$schema": "http://json-schema.org/draft-04/schema#",
-  "title": "Fee/Fine Actions Schema",
+  "title": "Fee/fine actions schema",
+  "description": "Transactions or activities associated with a user fee/fine account",
   "type": "object",
   "additionalProperties": false,
   "properties": {
     "dateAction": {
+      "description": "Date and time the transaction of the fine/fee was created",
       "type": "string",
       "format": "date-time"
     },
     "typeAction": {
+      "description": "Type of activity including the type of transaction",
       "type": "string"
     },
     "comments": {
+      "description": "Additional information entered as part of the activity or on this screen as a 'Staff info only' activity",
       "type": "string"
     },
     "amountAction": {
+      "description": "Amount of activity",
       "type": "number"
     },
     "balance": {
+      "description": "Calculated amount of remaining balance based on original fee/fine and what has been paid/waived/tranferred/refunded",
       "type": "number"
     },
     "transactionInformation": {
+      "description": "Number or other transaction id related to payment",
       "type": "string"
     },
     "createdAt": {
+      "description": "Location where activity took place (from login information)",
       "type": "string"
     },
     "source": {
+      "description": "Person who processed activity (from login information)",
       "type": "string"
     },
     "paymentMethod": {
+      "description": "Overall status of the action-setting",
       "type": "string"
     },
     "accountId": {
+      "description": "ID of the accounts",
       "type": "string"
     },
     "userId": {
+      "description": "ID of the user",
       "type": "string"
     },
     "id": {
+      "description": "Fine/fee action id, UUID",
       "type": "string"
     }
   },

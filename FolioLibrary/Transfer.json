@@ -1,13 +1,16 @@
 {
   "$schema": "http://json-schema.org/draft-04/schema#",
-  "title": "Transfers Schema",
+  "title": "CRUD Fee/Fine Transfer Accounts Settings schema",
+  "description": "Allows Fee/Fine Owner to identify accepted locations to which fees/fines are transferred",
   "type": "object",
   "additionalProperties": false,
   "properties": {
     "accountName": {
+      "description": "Transfer account name",
       "type": "string"
     },
     "desc": {
+      "description": "Transfer account description",
       "type": "string"
     },
     "metadata": {
@@ -50,10 +53,15 @@
       ]
     },
     "ownerId": {
+      "description": "ID of the owner",
       "type": "string"
     },
     "id": {
+      "description": "Transfer account id, UUID",
       "type": "string"
     }
-  }
+  },
+  "required": [
+    "accountName"
+  ]
 }

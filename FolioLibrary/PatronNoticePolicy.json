@@ -120,7 +120,8 @@
                   "Overdue",
                   "Renewed",
                   "Check in",
-                  "Check out"
+                  "Check out",
+                  "Manual due date change"
                 ]
               },
               "sendBy": {

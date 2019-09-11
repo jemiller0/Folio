@@ -5746,7 +5746,9 @@ namespace FolioConsoleApplication
                         if (!whatIf) fbcc.Insert(new Ledger
                         {
                             Id = (Guid?)jo.SelectToken("id"),
-                            Content = jo.ToString()
+                            Content = jo.ToString(),
+                            CreationTime = (DateTime?)jo.SelectToken("metadata.createdDate"),
+                            CreationUserId = (string)jo.SelectToken("metadata.createdByUserId")
                         });
                         if (i % 1000 == 0)
                         {

@@ -1,13 +1,16 @@
 {
   "$schema": "http://json-schema.org/draft-04/schema#",
-  "title": "Refunds Schema",
+  "title": "Refund Reasons schema",
+  "description": "CRUD Fee/Fine Refund Reasons",
   "type": "object",
   "additionalProperties": false,
   "properties": {
     "nameReason": {
+      "description": "Refund reason is required field",
       "type": "string"
     },
     "description": {
+      "description": "Refund reason description",
       "type": "string"
     },
     "metadata": {
@@ -50,10 +53,15 @@
       ]
     },
     "accountId": {
+      "description": "ID of the User fine/fee account",
       "type": "string"
     },
     "id": {
+      "description": "Refund reason id, UUID",
       "type": "string"
     }
-  }
+  },
+  "required": [
+    "nameReason"
+  ]
 }

@@ -1,13 +1,16 @@
 {
   "$schema": "http://json-schema.org/draft-04/schema#",
-  "title": "Payments Schema",
+  "title": "CRUD Payments Methods Settings schema",
+  "description": "CRUD Fee/Fine Payment Methods Settings",
   "type": "object",
   "additionalProperties": false,
   "properties": {
     "nameMethod": {
+      "description": "Payment method name",
       "type": "string"
     },
     "allowedRefundMethod": {
+      "description": "A flag to determine if refund method is allowed default at 'Yes'",
       "type": "boolean"
     },
     "metadata": {
@@ -50,10 +53,15 @@
       ]
     },
     "ownerId": {
+      "description": "ID of the owner",
       "type": "string"
     },
     "id": {
+      "description": "Payment method id, UUID",
       "type": "string"
     }
-  }
+  },
+  "required": [
+    "nameMethod"
+  ]
 }

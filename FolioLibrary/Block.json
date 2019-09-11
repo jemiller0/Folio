@@ -1,35 +1,45 @@
 {
   "$schema": "http://json-schema.org/draft-04/schema#",
-  "title": "Manual Patron Block Schema",
+  "title": "Manual patron block schema",
+  "description": "Allows institution to manually block a patron from borrowing, renewing, and/or requesting until specified issue is resolved",
   "type": "object",
   "additionalProperties": false,
   "properties": {
     "type": {
+      "description": "Type of patron block",
       "type": "string"
     },
     "desc": {
+      "description": "Patron block description",
       "type": "string"
     },
     "staffInformation": {
+      "description": "Additional information to staff (optional)",
       "type": "string"
     },
     "patronMessage": {
+      "description": "Message to patron (optional)",
       "type": "string"
     },
     "expirationDate": {
+      "description": "Date and time the patron block expiration if is provided the patron block should be automatically removed on that date",
       "type": "string",
       "format": "date-time"
     },
     "borrowing": {
+      "description": "A flag to determine borrowing block action",
       "type": "boolean"
     },
     "renewals": {
+      "description": "A flag to determine renewal block action",
       "type": "boolean"
     },
     "requests": {
+      "description": "A flag to determine request block action",
       "type": "boolean"
     },
     "userId": {
+      "description": "ID of the user",
       "type": "string"
     },
     "metadata": {
@@ -72,6 +82,7 @@
       ]
     },
     "id": {
+      "description": "Patron block id, UUID",
       "type": "string"
     }
   },

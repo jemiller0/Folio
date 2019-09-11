@@ -1326,12 +1326,12 @@ uc.TIMESTAMP_CAST(jsonb->>'completedDate') AS completed_date,
 CAST(jsonb->>'error' AS VARCHAR(1024)) AS error,
 jsonb_pretty(jsonb) AS content
 FROM diku_mod_source_record_manager.job_execution_source_chunks;
-CREATE VIEW uc.ledger_fiscal_years AS
+CREATE VIEW uc.ledger_acquisitions_units AS
 SELECT
 id AS id,
 ledger_id AS ledger_id,
-CAST(jsonb AS UUID) AS fiscal_year_id
-FROM (SELECT id::text || ordinality::text AS id, id AS ledger_id, value AS jsonb FROM diku_mod_finance_storage.ledger, jsonb_array_elements_text((jsonb->>'fiscalYears')::jsonb) WITH ORDINALITY) a;
+CAST(jsonb AS UUID) AS acquisitions_unit_id
+FROM (SELECT id::text || ordinality::text AS id, id AS ledger_id, value AS jsonb FROM diku_mod_finance_storage.ledger, jsonb_array_elements_text((jsonb->>'acqUnitIds')::jsonb) WITH ORDINALITY) a;
 CREATE VIEW uc.ledgers AS
 SELECT
 id AS id,
@@ -1339,8 +1339,16 @@ CAST(jsonb->>'name' AS VARCHAR(1024)) AS name,
 CAST(jsonb->>'code' AS VARCHAR(1024)) AS code,
 CAST(jsonb->>'description' AS VARCHAR(1024)) AS description,
 CAST(jsonb->>'ledgerStatus' AS VARCHAR(1024)) AS ledger_status,
-uc.TIMESTAMP_CAST(jsonb->>'periodStart') AS period_start,
-uc.TIMESTAMP_CAST(jsonb->>'periodEnd') AS period_end,
+CAST(jsonb->>'allocated' AS DECIMAL(19,2)) AS allocated,
+CAST(jsonb->>'available' AS DECIMAL(19,2)) AS available,
+CAST(jsonb->>'unavailable' AS DECIMAL(19,2)) AS unavailable,
+CAST(jsonb->>'currency' AS VARCHAR(1024)) AS currency,
+uc.TIMESTAMP_CAST(jsonb#>>'{metadata,createdDate}') AS created_date,
+CAST(jsonb#>>'{metadata,createdByUserId}' AS UUID) AS created_by_user_id,
+CAST(jsonb#>>'{metadata,createdByUsername}' AS VARCHAR(1024)) AS created_by_username,
+uc.TIMESTAMP_CAST(jsonb#>>'{metadata,updatedDate}') AS updated_date,
+CAST(jsonb#>>'{metadata,updatedByUserId}' AS UUID) AS updated_by_user_id,
+CAST(jsonb#>>'{metadata,updatedByUsername}' AS VARCHAR(1024)) AS updated_by_username,
 jsonb_pretty(jsonb) AS content
 FROM diku_mod_finance_storage.ledger;
 CREATE VIEW uc.libraries AS

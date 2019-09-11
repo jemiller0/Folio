@@ -1,22 +1,28 @@
 {
   "$schema": "http://json-schema.org/draft-04/schema#",
-  "title": "Transfer-criteria Schema",
+  "title": "Transfer criteria schema",
+  "description": "CRUD Fee/Fine transfer criteria",
   "type": "object",
   "additionalProperties": false,
   "properties": {
     "criteria": {
+      "description": "Not implemented yet",
       "type": "string"
     },
     "type": {
+      "description": "Not implemented yet",
       "type": "string"
     },
     "value": {
+      "description": "Not implemented yet",
       "type": "number"
     },
     "interval": {
+      "description": "Not implemented yet",
       "type": "string"
     },
     "id": {
+      "description": "Transfer criteria id, UUID",
       "type": "string"
     }
   }

@@ -1,13 +1,16 @@
 {
   "$schema": "http://json-schema.org/draft-04/schema#",
-  "title": "Waives Schema",
+  "title": "Waive Reasons Settings schema",
+  "description": "CRUD Fee/Fine Waive Reasons Settings",
   "type": "object",
   "additionalProperties": false,
   "properties": {
     "nameReason": {
+      "description": "Waive reason name",
       "type": "string"
     },
     "description": {
+      "description": "Waive reason description",
       "type": "string"
     },
     "metadata": {
@@ -50,10 +53,15 @@
       ]
     },
     "accountId": {
+      "description": "ID of the User fine/fee account",
       "type": "string"
     },
     "id": {
+      "description": "Waive reason id, UUID",
       "type": "string"
     }
-  }
+  },
+  "required": [
+    "nameReason"
+  ]
 }
