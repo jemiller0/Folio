@@ -24,6 +24,7 @@
     <None Remove="Contact.json" />
     <None Remove="ContributorNameType.json" />
     <None Remove="ContributorType.json" />
+    <None Remove="Document.json" />
     <None Remove="ElectronicAccessRelationship.json" />
     <None Remove="Encumbrance.json" />
     <None Remove="ErrorRecord.json" />
@@ -54,6 +55,7 @@
     <None Remove="Invoice.json" />
     <None Remove="InvoiceItem.json" />
     <None Remove="Item.json" />
+    <None Remove="ItemDamagedStatus.json" />
     <None Remove="ItemNoteType.json" />
     <None Remove="JobExecution.json" />
     <None Remove="JobExecutionSourceChunk.json" />
@@ -123,6 +125,7 @@
     <EmbeddedResource Include="Contact.json" />
     <EmbeddedResource Include="ContributorNameType.json" />
     <EmbeddedResource Include="ContributorType.json" />
+    <EmbeddedResource Include="Document.json" />
     <EmbeddedResource Include="ElectronicAccessRelationship.json" />
     <EmbeddedResource Include="Encumbrance.json" />
     <EmbeddedResource Include="ErrorRecord.json" />
@@ -153,6 +156,7 @@
     <EmbeddedResource Include="Invoice.json" />
     <EmbeddedResource Include="InvoiceItem.json" />
     <EmbeddedResource Include="Item.json" />
+    <EmbeddedResource Include="ItemDamagedStatus.json" />
     <EmbeddedResource Include="ItemNoteType.json" />
     <EmbeddedResource Include="JobExecution.json" />
     <EmbeddedResource Include="JobExecutionSourceChunk.json" />

@@ -47,6 +47,12 @@ namespace FolioLibrary
         [Column("modeofissuanceid"), Display(Name = "Mode Of Issuance", Order = 8), Editable(false), ForeignKey("ModeOfIssuance")]
         public virtual Guid? Modeofissuanceid { get; set; }
 
+        [Display(Name = "Instance Type", Order = 9)]
+        public virtual InstanceType InstanceType { get; set; }
+
+        [Column("instancetypeid"), Display(Name = "Instance Type", Order = 10), Editable(false), ForeignKey("InstanceType")]
+        public virtual Guid? Instancetypeid { get; set; }
+
         [ScaffoldColumn(false)]
         public virtual ICollection<Holding> Holdings { get; set; }
 
@@ -56,9 +62,9 @@ namespace FolioLibrary
         [ScaffoldColumn(false)]
         public virtual ICollection<InstanceRelationship> InstanceRelationships1 { get; set; }
 
-        [Display(Name = "Instance Source Marc", Order = 12)]
+        [Display(Name = "Instance Source Marc", Order = 14)]
         public virtual InstanceSourceMarc InstanceSourceMarc { get; set; }
 
-        public override string ToString() => $"{{ {nameof(Id)} = {Id}, {nameof(Content)} = {Content}, {nameof(CreationTime)} = {CreationTime}, {nameof(CreationUserId)} = {CreationUserId}, {nameof(Instancestatusid)} = {Instancestatusid}, {nameof(Modeofissuanceid)} = {Modeofissuanceid} }}";
+        public override string ToString() => $"{{ {nameof(Id)} = {Id}, {nameof(Content)} = {Content}, {nameof(CreationTime)} = {CreationTime}, {nameof(CreationUserId)} = {CreationUserId}, {nameof(Instancestatusid)} = {Instancestatusid}, {nameof(Modeofissuanceid)} = {Modeofissuanceid}, {nameof(Instancetypeid)} = {Instancetypeid} }}";
     }
 }

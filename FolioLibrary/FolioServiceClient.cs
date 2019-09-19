@@ -61,12 +61,12 @@ namespace FolioLibrary
             traceSource.TraceEvent(TraceEventType.Verbose, 0, s2.Elapsed.ToString());
         }
 
-        public IEnumerable<JObject> AcquisitionsUnits(string where = null, string orderBy = null, int? skip = null, int? take = int.MaxValue)
+        public IEnumerable<JObject> AcquisitionsUnits(string where = null, string orderBy = null, int? skip = null, int? take = null)
         {
             var s = Stopwatch.StartNew();
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "Querying acquisitions units");
             AuthenticateIfNecessary();
-            var url = $"{Url}/acquisitions-units-storage/units{(where != null || orderBy != null ? $"?query={WebUtility.UrlEncode(where)}{(orderBy != null ? $"{(where != null ? " " : "cql.allrecords=1 ")}sortby {WebUtility.UrlEncode(orderBy)}" : "")}" : "")}{(skip != null ? $"{(where != null || orderBy != null ? "&" : "?")}offset={skip}" : "")}{(take != null ? $"{(where != null || orderBy != null || skip != null ? "&" : "?")}limit={take}" : "")}";
+            var url = $"{Url}/acquisitions-units-storage/units{(where != null || orderBy != null ? $"?query={WebUtility.UrlEncode(where)}{(orderBy != null ? $"{(where != null ? " " : "cql.allrecords=1 ")}sortby {WebUtility.UrlEncode(orderBy)}" : "")}" : "")}{(skip != null ? $"{(where != null || orderBy != null ? "&" : "?")}offset={skip}" : "")}{(where != null || orderBy != null || skip != null ? "&" : "?")}limit={take ?? int.MaxValue}";
             traceSource.TraceEvent(TraceEventType.Verbose, 0, url);
             var hrm = httpClient.GetAsync(url).Result;
             if (hrm.StatusCode != HttpStatusCode.OK)
@@ -158,12 +158,12 @@ namespace FolioLibrary
             traceSource.TraceEvent(TraceEventType.Verbose, 0, s.Elapsed.ToString());
         }
 
-        public IEnumerable<JObject> AddressTypes(string where = null, string orderBy = null, int? skip = null, int? take = int.MaxValue)
+        public IEnumerable<JObject> AddressTypes(string where = null, string orderBy = null, int? skip = null, int? take = null)
         {
             var s = Stopwatch.StartNew();
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "Querying address types");
             AuthenticateIfNecessary();
-            var url = $"{Url}/addresstypes{(where != null || orderBy != null ? $"?query={WebUtility.UrlEncode(where)}{(orderBy != null ? $"{(where != null ? " " : "cql.allrecords=1 ")}sortby {WebUtility.UrlEncode(orderBy)}" : "")}" : "")}{(skip != null ? $"{(where != null || orderBy != null ? "&" : "?")}offset={skip}" : "")}{(take != null ? $"{(where != null || orderBy != null || skip != null ? "&" : "?")}limit={take}" : "")}";
+            var url = $"{Url}/addresstypes{(where != null || orderBy != null ? $"?query={WebUtility.UrlEncode(where)}{(orderBy != null ? $"{(where != null ? " " : "cql.allrecords=1 ")}sortby {WebUtility.UrlEncode(orderBy)}" : "")}" : "")}{(skip != null ? $"{(where != null || orderBy != null ? "&" : "?")}offset={skip}" : "")}{(where != null || orderBy != null || skip != null ? "&" : "?")}limit={take ?? int.MaxValue}";
             traceSource.TraceEvent(TraceEventType.Verbose, 0, url);
             var hrm = httpClient.GetAsync(url).Result;
             if (hrm.StatusCode != HttpStatusCode.OK)
@@ -255,12 +255,12 @@ namespace FolioLibrary
             traceSource.TraceEvent(TraceEventType.Verbose, 0, s.Elapsed.ToString());
         }
 
-        public IEnumerable<JObject> Alerts(string where = null, string orderBy = null, int? skip = null, int? take = int.MaxValue)
+        public IEnumerable<JObject> Alerts(string where = null, string orderBy = null, int? skip = null, int? take = null)
         {
             var s = Stopwatch.StartNew();
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "Querying alerts");
             AuthenticateIfNecessary();
-            var url = $"{Url}/orders-storage/alerts{(where != null || orderBy != null ? $"?query={WebUtility.UrlEncode(where)}{(orderBy != null ? $"{(where != null ? " " : "cql.allrecords=1 ")}sortby {WebUtility.UrlEncode(orderBy)}" : "")}" : "")}{(skip != null ? $"{(where != null || orderBy != null ? "&" : "?")}offset={skip}" : "")}{(take != null ? $"{(where != null || orderBy != null || skip != null ? "&" : "?")}limit={take}" : "")}";
+            var url = $"{Url}/orders-storage/alerts{(where != null || orderBy != null ? $"?query={WebUtility.UrlEncode(where)}{(orderBy != null ? $"{(where != null ? " " : "cql.allrecords=1 ")}sortby {WebUtility.UrlEncode(orderBy)}" : "")}" : "")}{(skip != null ? $"{(where != null || orderBy != null ? "&" : "?")}offset={skip}" : "")}{(where != null || orderBy != null || skip != null ? "&" : "?")}limit={take ?? int.MaxValue}";
             traceSource.TraceEvent(TraceEventType.Verbose, 0, url);
             var hrm = httpClient.GetAsync(url).Result;
             if (hrm.StatusCode != HttpStatusCode.OK)
@@ -352,12 +352,12 @@ namespace FolioLibrary
             traceSource.TraceEvent(TraceEventType.Verbose, 0, s.Elapsed.ToString());
         }
 
-        public IEnumerable<JObject> AlternativeTitleTypes(string where = null, string orderBy = null, int? skip = null, int? take = int.MaxValue)
+        public IEnumerable<JObject> AlternativeTitleTypes(string where = null, string orderBy = null, int? skip = null, int? take = null)
         {
             var s = Stopwatch.StartNew();
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "Querying alternative title types");
             AuthenticateIfNecessary();
-            var url = $"{Url}/alternative-title-types{(where != null || orderBy != null ? $"?query={WebUtility.UrlEncode(where)}{(orderBy != null ? $"{(where != null ? " " : "cql.allrecords=1 ")}sortby {WebUtility.UrlEncode(orderBy)}" : "")}" : "")}{(skip != null ? $"{(where != null || orderBy != null ? "&" : "?")}offset={skip}" : "")}{(take != null ? $"{(where != null || orderBy != null || skip != null ? "&" : "?")}limit={take}" : "")}";
+            var url = $"{Url}/alternative-title-types{(where != null || orderBy != null ? $"?query={WebUtility.UrlEncode(where)}{(orderBy != null ? $"{(where != null ? " " : "cql.allrecords=1 ")}sortby {WebUtility.UrlEncode(orderBy)}" : "")}" : "")}{(skip != null ? $"{(where != null || orderBy != null ? "&" : "?")}offset={skip}" : "")}{(where != null || orderBy != null || skip != null ? "&" : "?")}limit={take ?? int.MaxValue}";
             traceSource.TraceEvent(TraceEventType.Verbose, 0, url);
             var hrm = httpClient.GetAsync(url).Result;
             if (hrm.StatusCode != HttpStatusCode.OK)
@@ -449,12 +449,12 @@ namespace FolioLibrary
             traceSource.TraceEvent(TraceEventType.Verbose, 0, s.Elapsed.ToString());
         }
 
-        public IEnumerable<JObject> Budgets(string where = null, string orderBy = null, int? skip = null, int? take = int.MaxValue)
+        public IEnumerable<JObject> Budgets(string where = null, string orderBy = null, int? skip = null, int? take = null)
         {
             var s = Stopwatch.StartNew();
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "Querying budgets");
             AuthenticateIfNecessary();
-            var url = $"{Url}/finance-storage/budgets{(where != null || orderBy != null ? $"?query={WebUtility.UrlEncode(where)}{(orderBy != null ? $"{(where != null ? " " : "cql.allrecords=1 ")}sortby {WebUtility.UrlEncode(orderBy)}" : "")}" : "")}{(skip != null ? $"{(where != null || orderBy != null ? "&" : "?")}offset={skip}" : "")}{(take != null ? $"{(where != null || orderBy != null || skip != null ? "&" : "?")}limit={take}" : "")}";
+            var url = $"{Url}/finance-storage/budgets{(where != null || orderBy != null ? $"?query={WebUtility.UrlEncode(where)}{(orderBy != null ? $"{(where != null ? " " : "cql.allrecords=1 ")}sortby {WebUtility.UrlEncode(orderBy)}" : "")}" : "")}{(skip != null ? $"{(where != null || orderBy != null ? "&" : "?")}offset={skip}" : "")}{(where != null || orderBy != null || skip != null ? "&" : "?")}limit={take ?? int.MaxValue}";
             traceSource.TraceEvent(TraceEventType.Verbose, 0, url);
             var hrm = httpClient.GetAsync(url).Result;
             if (hrm.StatusCode != HttpStatusCode.OK)
@@ -546,12 +546,12 @@ namespace FolioLibrary
             traceSource.TraceEvent(TraceEventType.Verbose, 0, s.Elapsed.ToString());
         }
 
-        public IEnumerable<JObject> CallNumberTypes(string where = null, string orderBy = null, int? skip = null, int? take = int.MaxValue)
+        public IEnumerable<JObject> CallNumberTypes(string where = null, string orderBy = null, int? skip = null, int? take = null)
         {
             var s = Stopwatch.StartNew();
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "Querying call number types");
             AuthenticateIfNecessary();
-            var url = $"{Url}/call-number-types{(where != null || orderBy != null ? $"?query={WebUtility.UrlEncode(where)}{(orderBy != null ? $"{(where != null ? " " : "cql.allrecords=1 ")}sortby {WebUtility.UrlEncode(orderBy)}" : "")}" : "")}{(skip != null ? $"{(where != null || orderBy != null ? "&" : "?")}offset={skip}" : "")}{(take != null ? $"{(where != null || orderBy != null || skip != null ? "&" : "?")}limit={take}" : "")}";
+            var url = $"{Url}/call-number-types{(where != null || orderBy != null ? $"?query={WebUtility.UrlEncode(where)}{(orderBy != null ? $"{(where != null ? " " : "cql.allrecords=1 ")}sortby {WebUtility.UrlEncode(orderBy)}" : "")}" : "")}{(skip != null ? $"{(where != null || orderBy != null ? "&" : "?")}offset={skip}" : "")}{(where != null || orderBy != null || skip != null ? "&" : "?")}limit={take ?? int.MaxValue}";
             traceSource.TraceEvent(TraceEventType.Verbose, 0, url);
             var hrm = httpClient.GetAsync(url).Result;
             if (hrm.StatusCode != HttpStatusCode.OK)
@@ -643,12 +643,12 @@ namespace FolioLibrary
             traceSource.TraceEvent(TraceEventType.Verbose, 0, s.Elapsed.ToString());
         }
 
-        public IEnumerable<JObject> Campuses(string where = null, string orderBy = null, int? skip = null, int? take = int.MaxValue)
+        public IEnumerable<JObject> Campuses(string where = null, string orderBy = null, int? skip = null, int? take = null)
         {
             var s = Stopwatch.StartNew();
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "Querying campuses");
             AuthenticateIfNecessary();
-            var url = $"{Url}/location-units/campuses{(where != null || orderBy != null ? $"?query={WebUtility.UrlEncode(where)}{(orderBy != null ? $"{(where != null ? " " : "cql.allrecords=1 ")}sortby {WebUtility.UrlEncode(orderBy)}" : "")}" : "")}{(skip != null ? $"{(where != null || orderBy != null ? "&" : "?")}offset={skip}" : "")}{(take != null ? $"{(where != null || orderBy != null || skip != null ? "&" : "?")}limit={take}" : "")}";
+            var url = $"{Url}/location-units/campuses{(where != null || orderBy != null ? $"?query={WebUtility.UrlEncode(where)}{(orderBy != null ? $"{(where != null ? " " : "cql.allrecords=1 ")}sortby {WebUtility.UrlEncode(orderBy)}" : "")}" : "")}{(skip != null ? $"{(where != null || orderBy != null ? "&" : "?")}offset={skip}" : "")}{(where != null || orderBy != null || skip != null ? "&" : "?")}limit={take ?? int.MaxValue}";
             traceSource.TraceEvent(TraceEventType.Verbose, 0, url);
             var hrm = httpClient.GetAsync(url).Result;
             if (hrm.StatusCode != HttpStatusCode.OK)
@@ -740,12 +740,12 @@ namespace FolioLibrary
             traceSource.TraceEvent(TraceEventType.Verbose, 0, s.Elapsed.ToString());
         }
 
-        public IEnumerable<JObject> CancellationReasons(string where = null, string orderBy = null, int? skip = null, int? take = int.MaxValue)
+        public IEnumerable<JObject> CancellationReasons(string where = null, string orderBy = null, int? skip = null, int? take = null)
         {
             var s = Stopwatch.StartNew();
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "Querying cancellation reasons");
             AuthenticateIfNecessary();
-            var url = $"{Url}/cancellation-reason-storage/cancellation-reasons{(where != null || orderBy != null ? $"?query={WebUtility.UrlEncode(where)}{(orderBy != null ? $"{(where != null ? " " : "cql.allrecords=1 ")}sortby {WebUtility.UrlEncode(orderBy)}" : "")}" : "")}{(skip != null ? $"{(where != null || orderBy != null ? "&" : "?")}offset={skip}" : "")}{(take != null ? $"{(where != null || orderBy != null || skip != null ? "&" : "?")}limit={take}" : "")}";
+            var url = $"{Url}/cancellation-reason-storage/cancellation-reasons{(where != null || orderBy != null ? $"?query={WebUtility.UrlEncode(where)}{(orderBy != null ? $"{(where != null ? " " : "cql.allrecords=1 ")}sortby {WebUtility.UrlEncode(orderBy)}" : "")}" : "")}{(skip != null ? $"{(where != null || orderBy != null ? "&" : "?")}offset={skip}" : "")}{(where != null || orderBy != null || skip != null ? "&" : "?")}limit={take ?? int.MaxValue}";
             traceSource.TraceEvent(TraceEventType.Verbose, 0, url);
             var hrm = httpClient.GetAsync(url).Result;
             if (hrm.StatusCode != HttpStatusCode.OK)
@@ -837,12 +837,12 @@ namespace FolioLibrary
             traceSource.TraceEvent(TraceEventType.Verbose, 0, s.Elapsed.ToString());
         }
 
-        public IEnumerable<JObject> Categories(string where = null, string orderBy = null, int? skip = null, int? take = int.MaxValue)
+        public IEnumerable<JObject> Categories(string where = null, string orderBy = null, int? skip = null, int? take = null)
         {
             var s = Stopwatch.StartNew();
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "Querying categories");
             AuthenticateIfNecessary();
-            var url = $"{Url}/organizations-storage/categories{(where != null || orderBy != null ? $"?query={WebUtility.UrlEncode(where)}{(orderBy != null ? $"{(where != null ? " " : "cql.allrecords=1 ")}sortby {WebUtility.UrlEncode(orderBy)}" : "")}" : "")}{(skip != null ? $"{(where != null || orderBy != null ? "&" : "?")}offset={skip}" : "")}{(take != null ? $"{(where != null || orderBy != null || skip != null ? "&" : "?")}limit={take}" : "")}";
+            var url = $"{Url}/organizations-storage/categories{(where != null || orderBy != null ? $"?query={WebUtility.UrlEncode(where)}{(orderBy != null ? $"{(where != null ? " " : "cql.allrecords=1 ")}sortby {WebUtility.UrlEncode(orderBy)}" : "")}" : "")}{(skip != null ? $"{(where != null || orderBy != null ? "&" : "?")}offset={skip}" : "")}{(where != null || orderBy != null || skip != null ? "&" : "?")}limit={take ?? int.MaxValue}";
             traceSource.TraceEvent(TraceEventType.Verbose, 0, url);
             var hrm = httpClient.GetAsync(url).Result;
             if (hrm.StatusCode != HttpStatusCode.OK)
@@ -934,12 +934,12 @@ namespace FolioLibrary
             traceSource.TraceEvent(TraceEventType.Verbose, 0, s.Elapsed.ToString());
         }
 
-        public IEnumerable<JObject> ClassificationTypes(string where = null, string orderBy = null, int? skip = null, int? take = int.MaxValue)
+        public IEnumerable<JObject> ClassificationTypes(string where = null, string orderBy = null, int? skip = null, int? take = null)
         {
             var s = Stopwatch.StartNew();
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "Querying classification types");
             AuthenticateIfNecessary();
-            var url = $"{Url}/classification-types{(where != null || orderBy != null ? $"?query={WebUtility.UrlEncode(where)}{(orderBy != null ? $"{(where != null ? " " : "cql.allrecords=1 ")}sortby {WebUtility.UrlEncode(orderBy)}" : "")}" : "")}{(skip != null ? $"{(where != null || orderBy != null ? "&" : "?")}offset={skip}" : "")}{(take != null ? $"{(where != null || orderBy != null || skip != null ? "&" : "?")}limit={take}" : "")}";
+            var url = $"{Url}/classification-types{(where != null || orderBy != null ? $"?query={WebUtility.UrlEncode(where)}{(orderBy != null ? $"{(where != null ? " " : "cql.allrecords=1 ")}sortby {WebUtility.UrlEncode(orderBy)}" : "")}" : "")}{(skip != null ? $"{(where != null || orderBy != null ? "&" : "?")}offset={skip}" : "")}{(where != null || orderBy != null || skip != null ? "&" : "?")}limit={take ?? int.MaxValue}";
             traceSource.TraceEvent(TraceEventType.Verbose, 0, url);
             var hrm = httpClient.GetAsync(url).Result;
             if (hrm.StatusCode != HttpStatusCode.OK)
@@ -1031,12 +1031,12 @@ namespace FolioLibrary
             traceSource.TraceEvent(TraceEventType.Verbose, 0, s.Elapsed.ToString());
         }
 
-        public IEnumerable<JObject> Contacts(string where = null, string orderBy = null, int? skip = null, int? take = int.MaxValue)
+        public IEnumerable<JObject> Contacts(string where = null, string orderBy = null, int? skip = null, int? take = null)
         {
             var s = Stopwatch.StartNew();
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "Querying contacts");
             AuthenticateIfNecessary();
-            var url = $"{Url}/organizations-storage/contacts{(where != null || orderBy != null ? $"?query={WebUtility.UrlEncode(where)}{(orderBy != null ? $"{(where != null ? " " : "cql.allrecords=1 ")}sortby {WebUtility.UrlEncode(orderBy)}" : "")}" : "")}{(skip != null ? $"{(where != null || orderBy != null ? "&" : "?")}offset={skip}" : "")}{(take != null ? $"{(where != null || orderBy != null || skip != null ? "&" : "?")}limit={take}" : "")}";
+            var url = $"{Url}/organizations-storage/contacts{(where != null || orderBy != null ? $"?query={WebUtility.UrlEncode(where)}{(orderBy != null ? $"{(where != null ? " " : "cql.allrecords=1 ")}sortby {WebUtility.UrlEncode(orderBy)}" : "")}" : "")}{(skip != null ? $"{(where != null || orderBy != null ? "&" : "?")}offset={skip}" : "")}{(where != null || orderBy != null || skip != null ? "&" : "?")}limit={take ?? int.MaxValue}";
             traceSource.TraceEvent(TraceEventType.Verbose, 0, url);
             var hrm = httpClient.GetAsync(url).Result;
             if (hrm.StatusCode != HttpStatusCode.OK)
@@ -1128,12 +1128,12 @@ namespace FolioLibrary
             traceSource.TraceEvent(TraceEventType.Verbose, 0, s.Elapsed.ToString());
         }
 
-        public IEnumerable<JObject> ContributorNameTypes(string where = null, string orderBy = null, int? skip = null, int? take = int.MaxValue)
+        public IEnumerable<JObject> ContributorNameTypes(string where = null, string orderBy = null, int? skip = null, int? take = null)
         {
             var s = Stopwatch.StartNew();
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "Querying contributor name types");
             AuthenticateIfNecessary();
-            var url = $"{Url}/contributor-name-types{(where != null || orderBy != null ? $"?query={WebUtility.UrlEncode(where)}{(orderBy != null ? $"{(where != null ? " " : "cql.allrecords=1 ")}sortby {WebUtility.UrlEncode(orderBy)}" : "")}" : "")}{(skip != null ? $"{(where != null || orderBy != null ? "&" : "?")}offset={skip}" : "")}{(take != null ? $"{(where != null || orderBy != null || skip != null ? "&" : "?")}limit={take}" : "")}";
+            var url = $"{Url}/contributor-name-types{(where != null || orderBy != null ? $"?query={WebUtility.UrlEncode(where)}{(orderBy != null ? $"{(where != null ? " " : "cql.allrecords=1 ")}sortby {WebUtility.UrlEncode(orderBy)}" : "")}" : "")}{(skip != null ? $"{(where != null || orderBy != null ? "&" : "?")}offset={skip}" : "")}{(where != null || orderBy != null || skip != null ? "&" : "?")}limit={take ?? int.MaxValue}";
             traceSource.TraceEvent(TraceEventType.Verbose, 0, url);
             var hrm = httpClient.GetAsync(url).Result;
             if (hrm.StatusCode != HttpStatusCode.OK)
@@ -1225,12 +1225,12 @@ namespace FolioLibrary
             traceSource.TraceEvent(TraceEventType.Verbose, 0, s.Elapsed.ToString());
         }
 
-        public IEnumerable<JObject> ContributorTypes(string where = null, string orderBy = null, int? skip = null, int? take = int.MaxValue)
+        public IEnumerable<JObject> ContributorTypes(string where = null, string orderBy = null, int? skip = null, int? take = null)
         {
             var s = Stopwatch.StartNew();
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "Querying contributor types");
             AuthenticateIfNecessary();
-            var url = $"{Url}/contributor-types{(where != null || orderBy != null ? $"?query={WebUtility.UrlEncode(where)}{(orderBy != null ? $"{(where != null ? " " : "cql.allrecords=1 ")}sortby {WebUtility.UrlEncode(orderBy)}" : "")}" : "")}{(skip != null ? $"{(where != null || orderBy != null ? "&" : "?")}offset={skip}" : "")}{(take != null ? $"{(where != null || orderBy != null || skip != null ? "&" : "?")}limit={take}" : "")}";
+            var url = $"{Url}/contributor-types{(where != null || orderBy != null ? $"?query={WebUtility.UrlEncode(where)}{(orderBy != null ? $"{(where != null ? " " : "cql.allrecords=1 ")}sortby {WebUtility.UrlEncode(orderBy)}" : "")}" : "")}{(skip != null ? $"{(where != null || orderBy != null ? "&" : "?")}offset={skip}" : "")}{(where != null || orderBy != null || skip != null ? "&" : "?")}limit={take ?? int.MaxValue}";
             traceSource.TraceEvent(TraceEventType.Verbose, 0, url);
             var hrm = httpClient.GetAsync(url).Result;
             if (hrm.StatusCode != HttpStatusCode.OK)
@@ -1322,12 +1322,12 @@ namespace FolioLibrary
             traceSource.TraceEvent(TraceEventType.Verbose, 0, s.Elapsed.ToString());
         }
 
-        public IEnumerable<JObject> ElectronicAccessRelationships(string where = null, string orderBy = null, int? skip = null, int? take = int.MaxValue)
+        public IEnumerable<JObject> ElectronicAccessRelationships(string where = null, string orderBy = null, int? skip = null, int? take = null)
         {
             var s = Stopwatch.StartNew();
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "Querying electronic access relationships");
             AuthenticateIfNecessary();
-            var url = $"{Url}/electronic-access-relationships{(where != null || orderBy != null ? $"?query={WebUtility.UrlEncode(where)}{(orderBy != null ? $"{(where != null ? " " : "cql.allrecords=1 ")}sortby {WebUtility.UrlEncode(orderBy)}" : "")}" : "")}{(skip != null ? $"{(where != null || orderBy != null ? "&" : "?")}offset={skip}" : "")}{(take != null ? $"{(where != null || orderBy != null || skip != null ? "&" : "?")}limit={take}" : "")}";
+            var url = $"{Url}/electronic-access-relationships{(where != null || orderBy != null ? $"?query={WebUtility.UrlEncode(where)}{(orderBy != null ? $"{(where != null ? " " : "cql.allrecords=1 ")}sortby {WebUtility.UrlEncode(orderBy)}" : "")}" : "")}{(skip != null ? $"{(where != null || orderBy != null ? "&" : "?")}offset={skip}" : "")}{(where != null || orderBy != null || skip != null ? "&" : "?")}limit={take ?? int.MaxValue}";
             traceSource.TraceEvent(TraceEventType.Verbose, 0, url);
             var hrm = httpClient.GetAsync(url).Result;
             if (hrm.StatusCode != HttpStatusCode.OK)
@@ -1419,12 +1419,12 @@ namespace FolioLibrary
             traceSource.TraceEvent(TraceEventType.Verbose, 0, s.Elapsed.ToString());
         }
 
-        public IEnumerable<JObject> FiscalYears(string where = null, string orderBy = null, int? skip = null, int? take = int.MaxValue)
+        public IEnumerable<JObject> FiscalYears(string where = null, string orderBy = null, int? skip = null, int? take = null)
         {
             var s = Stopwatch.StartNew();
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "Querying fiscal years");
             AuthenticateIfNecessary();
-            var url = $"{Url}/finance-storage/fiscal-years{(where != null || orderBy != null ? $"?query={WebUtility.UrlEncode(where)}{(orderBy != null ? $"{(where != null ? " " : "cql.allrecords=1 ")}sortby {WebUtility.UrlEncode(orderBy)}" : "")}" : "")}{(skip != null ? $"{(where != null || orderBy != null ? "&" : "?")}offset={skip}" : "")}{(take != null ? $"{(where != null || orderBy != null || skip != null ? "&" : "?")}limit={take}" : "")}";
+            var url = $"{Url}/finance-storage/fiscal-years{(where != null || orderBy != null ? $"?query={WebUtility.UrlEncode(where)}{(orderBy != null ? $"{(where != null ? " " : "cql.allrecords=1 ")}sortby {WebUtility.UrlEncode(orderBy)}" : "")}" : "")}{(skip != null ? $"{(where != null || orderBy != null ? "&" : "?")}offset={skip}" : "")}{(where != null || orderBy != null || skip != null ? "&" : "?")}limit={take ?? int.MaxValue}";
             traceSource.TraceEvent(TraceEventType.Verbose, 0, url);
             var hrm = httpClient.GetAsync(url).Result;
             if (hrm.StatusCode != HttpStatusCode.OK)
@@ -1516,12 +1516,12 @@ namespace FolioLibrary
             traceSource.TraceEvent(TraceEventType.Verbose, 0, s.Elapsed.ToString());
         }
 
-        public IEnumerable<JObject> FixedDueDateSchedules(string where = null, string orderBy = null, int? skip = null, int? take = int.MaxValue)
+        public IEnumerable<JObject> FixedDueDateSchedules(string where = null, string orderBy = null, int? skip = null, int? take = null)
         {
             var s = Stopwatch.StartNew();
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "Querying fixed due date schedules");
             AuthenticateIfNecessary();
-            var url = $"{Url}/fixed-due-date-schedule-storage/fixed-due-date-schedules{(where != null || orderBy != null ? $"?query={WebUtility.UrlEncode(where)}{(orderBy != null ? $"{(where != null ? " " : "cql.allrecords=1 ")}sortby {WebUtility.UrlEncode(orderBy)}" : "")}" : "")}{(skip != null ? $"{(where != null || orderBy != null ? "&" : "?")}offset={skip}" : "")}{(take != null ? $"{(where != null || orderBy != null || skip != null ? "&" : "?")}limit={take}" : "")}";
+            var url = $"{Url}/fixed-due-date-schedule-storage/fixed-due-date-schedules{(where != null || orderBy != null ? $"?query={WebUtility.UrlEncode(where)}{(orderBy != null ? $"{(where != null ? " " : "cql.allrecords=1 ")}sortby {WebUtility.UrlEncode(orderBy)}" : "")}" : "")}{(skip != null ? $"{(where != null || orderBy != null ? "&" : "?")}offset={skip}" : "")}{(where != null || orderBy != null || skip != null ? "&" : "?")}limit={take ?? int.MaxValue}";
             traceSource.TraceEvent(TraceEventType.Verbose, 0, url);
             var hrm = httpClient.GetAsync(url).Result;
             if (hrm.StatusCode != HttpStatusCode.OK)
@@ -1613,12 +1613,12 @@ namespace FolioLibrary
             traceSource.TraceEvent(TraceEventType.Verbose, 0, s.Elapsed.ToString());
         }
 
-        public IEnumerable<JObject> Funds(string where = null, string orderBy = null, int? skip = null, int? take = int.MaxValue)
+        public IEnumerable<JObject> Funds(string where = null, string orderBy = null, int? skip = null, int? take = null)
         {
             var s = Stopwatch.StartNew();
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "Querying funds");
             AuthenticateIfNecessary();
-            var url = $"{Url}/finance-storage/funds{(where != null || orderBy != null ? $"?query={WebUtility.UrlEncode(where)}{(orderBy != null ? $"{(where != null ? " " : "cql.allrecords=1 ")}sortby {WebUtility.UrlEncode(orderBy)}" : "")}" : "")}{(skip != null ? $"{(where != null || orderBy != null ? "&" : "?")}offset={skip}" : "")}{(take != null ? $"{(where != null || orderBy != null || skip != null ? "&" : "?")}limit={take}" : "")}";
+            var url = $"{Url}/finance-storage/funds{(where != null || orderBy != null ? $"?query={WebUtility.UrlEncode(where)}{(orderBy != null ? $"{(where != null ? " " : "cql.allrecords=1 ")}sortby {WebUtility.UrlEncode(orderBy)}" : "")}" : "")}{(skip != null ? $"{(where != null || orderBy != null ? "&" : "?")}offset={skip}" : "")}{(where != null || orderBy != null || skip != null ? "&" : "?")}limit={take ?? int.MaxValue}";
             traceSource.TraceEvent(TraceEventType.Verbose, 0, url);
             var hrm = httpClient.GetAsync(url).Result;
             if (hrm.StatusCode != HttpStatusCode.OK)
@@ -1710,12 +1710,12 @@ namespace FolioLibrary
             traceSource.TraceEvent(TraceEventType.Verbose, 0, s.Elapsed.ToString());
         }
 
-        public IEnumerable<JObject> FundDistributions(string where = null, string orderBy = null, int? skip = null, int? take = int.MaxValue)
+        public IEnumerable<JObject> FundDistributions(string where = null, string orderBy = null, int? skip = null, int? take = null)
         {
             var s = Stopwatch.StartNew();
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "Querying fund distributions");
             AuthenticateIfNecessary();
-            var url = $"{Url}/finance-storage/fund-distributions{(where != null || orderBy != null ? $"?query={WebUtility.UrlEncode(where)}{(orderBy != null ? $"{(where != null ? " " : "cql.allrecords=1 ")}sortby {WebUtility.UrlEncode(orderBy)}" : "")}" : "")}{(skip != null ? $"{(where != null || orderBy != null ? "&" : "?")}offset={skip}" : "")}{(take != null ? $"{(where != null || orderBy != null || skip != null ? "&" : "?")}limit={take}" : "")}";
+            var url = $"{Url}/finance-storage/fund-distributions{(where != null || orderBy != null ? $"?query={WebUtility.UrlEncode(where)}{(orderBy != null ? $"{(where != null ? " " : "cql.allrecords=1 ")}sortby {WebUtility.UrlEncode(orderBy)}" : "")}" : "")}{(skip != null ? $"{(where != null || orderBy != null ? "&" : "?")}offset={skip}" : "")}{(where != null || orderBy != null || skip != null ? "&" : "?")}limit={take ?? int.MaxValue}";
             traceSource.TraceEvent(TraceEventType.Verbose, 0, url);
             var hrm = httpClient.GetAsync(url).Result;
             if (hrm.StatusCode != HttpStatusCode.OK)
@@ -1807,12 +1807,12 @@ namespace FolioLibrary
             traceSource.TraceEvent(TraceEventType.Verbose, 0, s.Elapsed.ToString());
         }
 
-        public IEnumerable<JObject> Groups(string where = null, string orderBy = null, int? skip = null, int? take = int.MaxValue)
+        public IEnumerable<JObject> Groups(string where = null, string orderBy = null, int? skip = null, int? take = null)
         {
             var s = Stopwatch.StartNew();
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "Querying groups");
             AuthenticateIfNecessary();
-            var url = $"{Url}/groups{(where != null || orderBy != null ? $"?query={WebUtility.UrlEncode(where)}{(orderBy != null ? $"{(where != null ? " " : "cql.allrecords=1 ")}sortby {WebUtility.UrlEncode(orderBy)}" : "")}" : "")}{(skip != null ? $"{(where != null || orderBy != null ? "&" : "?")}offset={skip}" : "")}{(take != null ? $"{(where != null || orderBy != null || skip != null ? "&" : "?")}limit={take}" : "")}";
+            var url = $"{Url}/groups{(where != null || orderBy != null ? $"?query={WebUtility.UrlEncode(where)}{(orderBy != null ? $"{(where != null ? " " : "cql.allrecords=1 ")}sortby {WebUtility.UrlEncode(orderBy)}" : "")}" : "")}{(skip != null ? $"{(where != null || orderBy != null ? "&" : "?")}offset={skip}" : "")}{(where != null || orderBy != null || skip != null ? "&" : "?")}limit={take ?? int.MaxValue}";
             traceSource.TraceEvent(TraceEventType.Verbose, 0, url);
             var hrm = httpClient.GetAsync(url).Result;
             if (hrm.StatusCode != HttpStatusCode.OK)
@@ -1904,12 +1904,12 @@ namespace FolioLibrary
             traceSource.TraceEvent(TraceEventType.Verbose, 0, s.Elapsed.ToString());
         }
 
-        public IEnumerable<JObject> Holdings(string where = null, string orderBy = null, int? skip = null, int? take = int.MaxValue)
+        public IEnumerable<JObject> Holdings(string where = null, string orderBy = null, int? skip = null, int? take = null)
         {
             var s = Stopwatch.StartNew();
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "Querying holdings");
             AuthenticateIfNecessary();
-            var url = $"{Url}/holdings-storage/holdings{(where != null || orderBy != null ? $"?query={WebUtility.UrlEncode(where)}{(orderBy != null ? $"{(where != null ? " " : "cql.allrecords=1 ")}sortby {WebUtility.UrlEncode(orderBy)}" : "")}" : "")}{(skip != null ? $"{(where != null || orderBy != null ? "&" : "?")}offset={skip}" : "")}{(take != null ? $"{(where != null || orderBy != null || skip != null ? "&" : "?")}limit={take}" : "")}";
+            var url = $"{Url}/holdings-storage/holdings{(where != null || orderBy != null ? $"?query={WebUtility.UrlEncode(where)}{(orderBy != null ? $"{(where != null ? " " : "cql.allrecords=1 ")}sortby {WebUtility.UrlEncode(orderBy)}" : "")}" : "")}{(skip != null ? $"{(where != null || orderBy != null ? "&" : "?")}offset={skip}" : "")}{(where != null || orderBy != null || skip != null ? "&" : "?")}limit={take ?? int.MaxValue}";
             traceSource.TraceEvent(TraceEventType.Verbose, 0, url);
             var hrm = httpClient.GetAsync(url).Result;
             if (hrm.StatusCode != HttpStatusCode.OK)
@@ -2001,12 +2001,12 @@ namespace FolioLibrary
             traceSource.TraceEvent(TraceEventType.Verbose, 0, s.Elapsed.ToString());
         }
 
-        public IEnumerable<JObject> HoldingNoteTypes(string where = null, string orderBy = null, int? skip = null, int? take = int.MaxValue)
+        public IEnumerable<JObject> HoldingNoteTypes(string where = null, string orderBy = null, int? skip = null, int? take = null)
         {
             var s = Stopwatch.StartNew();
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "Querying holding note types");
             AuthenticateIfNecessary();
-            var url = $"{Url}/holdings-note-types{(where != null || orderBy != null ? $"?query={WebUtility.UrlEncode(where)}{(orderBy != null ? $"{(where != null ? " " : "cql.allrecords=1 ")}sortby {WebUtility.UrlEncode(orderBy)}" : "")}" : "")}{(skip != null ? $"{(where != null || orderBy != null ? "&" : "?")}offset={skip}" : "")}{(take != null ? $"{(where != null || orderBy != null || skip != null ? "&" : "?")}limit={take}" : "")}";
+            var url = $"{Url}/holdings-note-types{(where != null || orderBy != null ? $"?query={WebUtility.UrlEncode(where)}{(orderBy != null ? $"{(where != null ? " " : "cql.allrecords=1 ")}sortby {WebUtility.UrlEncode(orderBy)}" : "")}" : "")}{(skip != null ? $"{(where != null || orderBy != null ? "&" : "?")}offset={skip}" : "")}{(where != null || orderBy != null || skip != null ? "&" : "?")}limit={take ?? int.MaxValue}";
             traceSource.TraceEvent(TraceEventType.Verbose, 0, url);
             var hrm = httpClient.GetAsync(url).Result;
             if (hrm.StatusCode != HttpStatusCode.OK)
@@ -2098,12 +2098,12 @@ namespace FolioLibrary
             traceSource.TraceEvent(TraceEventType.Verbose, 0, s.Elapsed.ToString());
         }
 
-        public IEnumerable<JObject> HoldingTypes(string where = null, string orderBy = null, int? skip = null, int? take = int.MaxValue)
+        public IEnumerable<JObject> HoldingTypes(string where = null, string orderBy = null, int? skip = null, int? take = null)
         {
             var s = Stopwatch.StartNew();
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "Querying holding types");
             AuthenticateIfNecessary();
-            var url = $"{Url}/holdings-types{(where != null || orderBy != null ? $"?query={WebUtility.UrlEncode(where)}{(orderBy != null ? $"{(where != null ? " " : "cql.allrecords=1 ")}sortby {WebUtility.UrlEncode(orderBy)}" : "")}" : "")}{(skip != null ? $"{(where != null || orderBy != null ? "&" : "?")}offset={skip}" : "")}{(take != null ? $"{(where != null || orderBy != null || skip != null ? "&" : "?")}limit={take}" : "")}";
+            var url = $"{Url}/holdings-types{(where != null || orderBy != null ? $"?query={WebUtility.UrlEncode(where)}{(orderBy != null ? $"{(where != null ? " " : "cql.allrecords=1 ")}sortby {WebUtility.UrlEncode(orderBy)}" : "")}" : "")}{(skip != null ? $"{(where != null || orderBy != null ? "&" : "?")}offset={skip}" : "")}{(where != null || orderBy != null || skip != null ? "&" : "?")}limit={take ?? int.MaxValue}";
             traceSource.TraceEvent(TraceEventType.Verbose, 0, url);
             var hrm = httpClient.GetAsync(url).Result;
             if (hrm.StatusCode != HttpStatusCode.OK)
@@ -2195,12 +2195,12 @@ namespace FolioLibrary
             traceSource.TraceEvent(TraceEventType.Verbose, 0, s.Elapsed.ToString());
         }
 
-        public IEnumerable<JObject> IdTypes(string where = null, string orderBy = null, int? skip = null, int? take = int.MaxValue)
+        public IEnumerable<JObject> IdTypes(string where = null, string orderBy = null, int? skip = null, int? take = null)
         {
             var s = Stopwatch.StartNew();
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "Querying id types");
             AuthenticateIfNecessary();
-            var url = $"{Url}/identifier-types{(where != null || orderBy != null ? $"?query={WebUtility.UrlEncode(where)}{(orderBy != null ? $"{(where != null ? " " : "cql.allrecords=1 ")}sortby {WebUtility.UrlEncode(orderBy)}" : "")}" : "")}{(skip != null ? $"{(where != null || orderBy != null ? "&" : "?")}offset={skip}" : "")}{(take != null ? $"{(where != null || orderBy != null || skip != null ? "&" : "?")}limit={take}" : "")}";
+            var url = $"{Url}/identifier-types{(where != null || orderBy != null ? $"?query={WebUtility.UrlEncode(where)}{(orderBy != null ? $"{(where != null ? " " : "cql.allrecords=1 ")}sortby {WebUtility.UrlEncode(orderBy)}" : "")}" : "")}{(skip != null ? $"{(where != null || orderBy != null ? "&" : "?")}offset={skip}" : "")}{(where != null || orderBy != null || skip != null ? "&" : "?")}limit={take ?? int.MaxValue}";
             traceSource.TraceEvent(TraceEventType.Verbose, 0, url);
             var hrm = httpClient.GetAsync(url).Result;
             if (hrm.StatusCode != HttpStatusCode.OK)
@@ -2292,12 +2292,12 @@ namespace FolioLibrary
             traceSource.TraceEvent(TraceEventType.Verbose, 0, s.Elapsed.ToString());
         }
 
-        public IEnumerable<JObject> IllPolicies(string where = null, string orderBy = null, int? skip = null, int? take = int.MaxValue)
+        public IEnumerable<JObject> IllPolicies(string where = null, string orderBy = null, int? skip = null, int? take = null)
         {
             var s = Stopwatch.StartNew();
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "Querying ill policies");
             AuthenticateIfNecessary();
-            var url = $"{Url}/ill-policies{(where != null || orderBy != null ? $"?query={WebUtility.UrlEncode(where)}{(orderBy != null ? $"{(where != null ? " " : "cql.allrecords=1 ")}sortby {WebUtility.UrlEncode(orderBy)}" : "")}" : "")}{(skip != null ? $"{(where != null || orderBy != null ? "&" : "?")}offset={skip}" : "")}{(take != null ? $"{(where != null || orderBy != null || skip != null ? "&" : "?")}limit={take}" : "")}";
+            var url = $"{Url}/ill-policies{(where != null || orderBy != null ? $"?query={WebUtility.UrlEncode(where)}{(orderBy != null ? $"{(where != null ? " " : "cql.allrecords=1 ")}sortby {WebUtility.UrlEncode(orderBy)}" : "")}" : "")}{(skip != null ? $"{(where != null || orderBy != null ? "&" : "?")}offset={skip}" : "")}{(where != null || orderBy != null || skip != null ? "&" : "?")}limit={take ?? int.MaxValue}";
             traceSource.TraceEvent(TraceEventType.Verbose, 0, url);
             var hrm = httpClient.GetAsync(url).Result;
             if (hrm.StatusCode != HttpStatusCode.OK)
@@ -2389,12 +2389,12 @@ namespace FolioLibrary
             traceSource.TraceEvent(TraceEventType.Verbose, 0, s.Elapsed.ToString());
         }
 
-        public IEnumerable<JObject> Instances(string where = null, string orderBy = null, int? skip = null, int? take = int.MaxValue)
+        public IEnumerable<JObject> Instances(string where = null, string orderBy = null, int? skip = null, int? take = null)
         {
             var s = Stopwatch.StartNew();
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "Querying instances");
             AuthenticateIfNecessary();
-            var url = $"{Url}/instance-storage/instances{(where != null || orderBy != null ? $"?query={WebUtility.UrlEncode(where)}{(orderBy != null ? $"{(where != null ? " " : "cql.allrecords=1 ")}sortby {WebUtility.UrlEncode(orderBy)}" : "")}" : "")}{(skip != null ? $"{(where != null || orderBy != null ? "&" : "?")}offset={skip}" : "")}{(take != null ? $"{(where != null || orderBy != null || skip != null ? "&" : "?")}limit={take}" : "")}";
+            var url = $"{Url}/instance-storage/instances{(where != null || orderBy != null ? $"?query={WebUtility.UrlEncode(where)}{(orderBy != null ? $"{(where != null ? " " : "cql.allrecords=1 ")}sortby {WebUtility.UrlEncode(orderBy)}" : "")}" : "")}{(skip != null ? $"{(where != null || orderBy != null ? "&" : "?")}offset={skip}" : "")}{(where != null || orderBy != null || skip != null ? "&" : "?")}limit={take ?? int.MaxValue}";
             traceSource.TraceEvent(TraceEventType.Verbose, 0, url);
             var hrm = httpClient.GetAsync(url).Result;
             if (hrm.StatusCode != HttpStatusCode.OK)
@@ -2486,12 +2486,12 @@ namespace FolioLibrary
             traceSource.TraceEvent(TraceEventType.Verbose, 0, s.Elapsed.ToString());
         }
 
-        public IEnumerable<JObject> InstanceFormats(string where = null, string orderBy = null, int? skip = null, int? take = int.MaxValue)
+        public IEnumerable<JObject> InstanceFormats(string where = null, string orderBy = null, int? skip = null, int? take = null)
         {
             var s = Stopwatch.StartNew();
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "Querying instance formats");
             AuthenticateIfNecessary();
-            var url = $"{Url}/instance-formats{(where != null || orderBy != null ? $"?query={WebUtility.UrlEncode(where)}{(orderBy != null ? $"{(where != null ? " " : "cql.allrecords=1 ")}sortby {WebUtility.UrlEncode(orderBy)}" : "")}" : "")}{(skip != null ? $"{(where != null || orderBy != null ? "&" : "?")}offset={skip}" : "")}{(take != null ? $"{(where != null || orderBy != null || skip != null ? "&" : "?")}limit={take}" : "")}";
+            var url = $"{Url}/instance-formats{(where != null || orderBy != null ? $"?query={WebUtility.UrlEncode(where)}{(orderBy != null ? $"{(where != null ? " " : "cql.allrecords=1 ")}sortby {WebUtility.UrlEncode(orderBy)}" : "")}" : "")}{(skip != null ? $"{(where != null || orderBy != null ? "&" : "?")}offset={skip}" : "")}{(where != null || orderBy != null || skip != null ? "&" : "?")}limit={take ?? int.MaxValue}";
             traceSource.TraceEvent(TraceEventType.Verbose, 0, url);
             var hrm = httpClient.GetAsync(url).Result;
             if (hrm.StatusCode != HttpStatusCode.OK)
@@ -2583,12 +2583,12 @@ namespace FolioLibrary
             traceSource.TraceEvent(TraceEventType.Verbose, 0, s.Elapsed.ToString());
         }
 
-        public IEnumerable<JObject> InstanceNoteTypes(string where = null, string orderBy = null, int? skip = null, int? take = int.MaxValue)
+        public IEnumerable<JObject> InstanceNoteTypes(string where = null, string orderBy = null, int? skip = null, int? take = null)
         {
             var s = Stopwatch.StartNew();
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "Querying instance note types");
             AuthenticateIfNecessary();
-            var url = $"{Url}/instance-note-types{(where != null || orderBy != null ? $"?query={WebUtility.UrlEncode(where)}{(orderBy != null ? $"{(where != null ? " " : "cql.allrecords=1 ")}sortby {WebUtility.UrlEncode(orderBy)}" : "")}" : "")}{(skip != null ? $"{(where != null || orderBy != null ? "&" : "?")}offset={skip}" : "")}{(take != null ? $"{(where != null || orderBy != null || skip != null ? "&" : "?")}limit={take}" : "")}";
+            var url = $"{Url}/instance-note-types{(where != null || orderBy != null ? $"?query={WebUtility.UrlEncode(where)}{(orderBy != null ? $"{(where != null ? " " : "cql.allrecords=1 ")}sortby {WebUtility.UrlEncode(orderBy)}" : "")}" : "")}{(skip != null ? $"{(where != null || orderBy != null ? "&" : "?")}offset={skip}" : "")}{(where != null || orderBy != null || skip != null ? "&" : "?")}limit={take ?? int.MaxValue}";
             traceSource.TraceEvent(TraceEventType.Verbose, 0, url);
             var hrm = httpClient.GetAsync(url).Result;
             if (hrm.StatusCode != HttpStatusCode.OK)
@@ -2680,12 +2680,12 @@ namespace FolioLibrary
             traceSource.TraceEvent(TraceEventType.Verbose, 0, s.Elapsed.ToString());
         }
 
-        public IEnumerable<JObject> InstanceRelationships(string where = null, string orderBy = null, int? skip = null, int? take = int.MaxValue)
+        public IEnumerable<JObject> InstanceRelationships(string where = null, string orderBy = null, int? skip = null, int? take = null)
         {
             var s = Stopwatch.StartNew();
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "Querying instance relationships");
             AuthenticateIfNecessary();
-            var url = $"{Url}/instance-storage/instance-relationships{(where != null || orderBy != null ? $"?query={WebUtility.UrlEncode(where)}{(orderBy != null ? $"{(where != null ? " " : "cql.allrecords=1 ")}sortby {WebUtility.UrlEncode(orderBy)}" : "")}" : "")}{(skip != null ? $"{(where != null || orderBy != null ? "&" : "?")}offset={skip}" : "")}{(take != null ? $"{(where != null || orderBy != null || skip != null ? "&" : "?")}limit={take}" : "")}";
+            var url = $"{Url}/instance-storage/instance-relationships{(where != null || orderBy != null ? $"?query={WebUtility.UrlEncode(where)}{(orderBy != null ? $"{(where != null ? " " : "cql.allrecords=1 ")}sortby {WebUtility.UrlEncode(orderBy)}" : "")}" : "")}{(skip != null ? $"{(where != null || orderBy != null ? "&" : "?")}offset={skip}" : "")}{(where != null || orderBy != null || skip != null ? "&" : "?")}limit={take ?? int.MaxValue}";
             traceSource.TraceEvent(TraceEventType.Verbose, 0, url);
             var hrm = httpClient.GetAsync(url).Result;
             if (hrm.StatusCode != HttpStatusCode.OK)
@@ -2777,12 +2777,12 @@ namespace FolioLibrary
             traceSource.TraceEvent(TraceEventType.Verbose, 0, s.Elapsed.ToString());
         }
 
-        public IEnumerable<JObject> InstanceRelationshipTypes(string where = null, string orderBy = null, int? skip = null, int? take = int.MaxValue)
+        public IEnumerable<JObject> InstanceRelationshipTypes(string where = null, string orderBy = null, int? skip = null, int? take = null)
         {
             var s = Stopwatch.StartNew();
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "Querying instance relationship types");
             AuthenticateIfNecessary();
-            var url = $"{Url}/instance-relationship-types{(where != null || orderBy != null ? $"?query={WebUtility.UrlEncode(where)}{(orderBy != null ? $"{(where != null ? " " : "cql.allrecords=1 ")}sortby {WebUtility.UrlEncode(orderBy)}" : "")}" : "")}{(skip != null ? $"{(where != null || orderBy != null ? "&" : "?")}offset={skip}" : "")}{(take != null ? $"{(where != null || orderBy != null || skip != null ? "&" : "?")}limit={take}" : "")}";
+            var url = $"{Url}/instance-relationship-types{(where != null || orderBy != null ? $"?query={WebUtility.UrlEncode(where)}{(orderBy != null ? $"{(where != null ? " " : "cql.allrecords=1 ")}sortby {WebUtility.UrlEncode(orderBy)}" : "")}" : "")}{(skip != null ? $"{(where != null || orderBy != null ? "&" : "?")}offset={skip}" : "")}{(where != null || orderBy != null || skip != null ? "&" : "?")}limit={take ?? int.MaxValue}";
             traceSource.TraceEvent(TraceEventType.Verbose, 0, url);
             var hrm = httpClient.GetAsync(url).Result;
             if (hrm.StatusCode != HttpStatusCode.OK)
@@ -2874,12 +2874,12 @@ namespace FolioLibrary
             traceSource.TraceEvent(TraceEventType.Verbose, 0, s.Elapsed.ToString());
         }
 
-        public IEnumerable<JObject> InstanceStatuses(string where = null, string orderBy = null, int? skip = null, int? take = int.MaxValue)
+        public IEnumerable<JObject> InstanceStatuses(string where = null, string orderBy = null, int? skip = null, int? take = null)
         {
             var s = Stopwatch.StartNew();
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "Querying instance statuses");
             AuthenticateIfNecessary();
-            var url = $"{Url}/instance-statuses{(where != null || orderBy != null ? $"?query={WebUtility.UrlEncode(where)}{(orderBy != null ? $"{(where != null ? " " : "cql.allrecords=1 ")}sortby {WebUtility.UrlEncode(orderBy)}" : "")}" : "")}{(skip != null ? $"{(where != null || orderBy != null ? "&" : "?")}offset={skip}" : "")}{(take != null ? $"{(where != null || orderBy != null || skip != null ? "&" : "?")}limit={take}" : "")}";
+            var url = $"{Url}/instance-statuses{(where != null || orderBy != null ? $"?query={WebUtility.UrlEncode(where)}{(orderBy != null ? $"{(where != null ? " " : "cql.allrecords=1 ")}sortby {WebUtility.UrlEncode(orderBy)}" : "")}" : "")}{(skip != null ? $"{(where != null || orderBy != null ? "&" : "?")}offset={skip}" : "")}{(where != null || orderBy != null || skip != null ? "&" : "?")}limit={take ?? int.MaxValue}";
             traceSource.TraceEvent(TraceEventType.Verbose, 0, url);
             var hrm = httpClient.GetAsync(url).Result;
             if (hrm.StatusCode != HttpStatusCode.OK)
@@ -2971,12 +2971,12 @@ namespace FolioLibrary
             traceSource.TraceEvent(TraceEventType.Verbose, 0, s.Elapsed.ToString());
         }
 
-        public IEnumerable<JObject> InstanceTypes(string where = null, string orderBy = null, int? skip = null, int? take = int.MaxValue)
+        public IEnumerable<JObject> InstanceTypes(string where = null, string orderBy = null, int? skip = null, int? take = null)
         {
             var s = Stopwatch.StartNew();
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "Querying instance types");
             AuthenticateIfNecessary();
-            var url = $"{Url}/instance-types{(where != null || orderBy != null ? $"?query={WebUtility.UrlEncode(where)}{(orderBy != null ? $"{(where != null ? " " : "cql.allrecords=1 ")}sortby {WebUtility.UrlEncode(orderBy)}" : "")}" : "")}{(skip != null ? $"{(where != null || orderBy != null ? "&" : "?")}offset={skip}" : "")}{(take != null ? $"{(where != null || orderBy != null || skip != null ? "&" : "?")}limit={take}" : "")}";
+            var url = $"{Url}/instance-types{(where != null || orderBy != null ? $"?query={WebUtility.UrlEncode(where)}{(orderBy != null ? $"{(where != null ? " " : "cql.allrecords=1 ")}sortby {WebUtility.UrlEncode(orderBy)}" : "")}" : "")}{(skip != null ? $"{(where != null || orderBy != null ? "&" : "?")}offset={skip}" : "")}{(where != null || orderBy != null || skip != null ? "&" : "?")}limit={take ?? int.MaxValue}";
             traceSource.TraceEvent(TraceEventType.Verbose, 0, url);
             var hrm = httpClient.GetAsync(url).Result;
             if (hrm.StatusCode != HttpStatusCode.OK)
@@ -3068,12 +3068,12 @@ namespace FolioLibrary
             traceSource.TraceEvent(TraceEventType.Verbose, 0, s.Elapsed.ToString());
         }
 
-        public IEnumerable<JObject> Institutions(string where = null, string orderBy = null, int? skip = null, int? take = int.MaxValue)
+        public IEnumerable<JObject> Institutions(string where = null, string orderBy = null, int? skip = null, int? take = null)
         {
             var s = Stopwatch.StartNew();
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "Querying institutions");
             AuthenticateIfNecessary();
-            var url = $"{Url}/location-units/institutions{(where != null || orderBy != null ? $"?query={WebUtility.UrlEncode(where)}{(orderBy != null ? $"{(where != null ? " " : "cql.allrecords=1 ")}sortby {WebUtility.UrlEncode(orderBy)}" : "")}" : "")}{(skip != null ? $"{(where != null || orderBy != null ? "&" : "?")}offset={skip}" : "")}{(take != null ? $"{(where != null || orderBy != null || skip != null ? "&" : "?")}limit={take}" : "")}";
+            var url = $"{Url}/location-units/institutions{(where != null || orderBy != null ? $"?query={WebUtility.UrlEncode(where)}{(orderBy != null ? $"{(where != null ? " " : "cql.allrecords=1 ")}sortby {WebUtility.UrlEncode(orderBy)}" : "")}" : "")}{(skip != null ? $"{(where != null || orderBy != null ? "&" : "?")}offset={skip}" : "")}{(where != null || orderBy != null || skip != null ? "&" : "?")}limit={take ?? int.MaxValue}";
             traceSource.TraceEvent(TraceEventType.Verbose, 0, url);
             var hrm = httpClient.GetAsync(url).Result;
             if (hrm.StatusCode != HttpStatusCode.OK)
@@ -3165,12 +3165,12 @@ namespace FolioLibrary
             traceSource.TraceEvent(TraceEventType.Verbose, 0, s.Elapsed.ToString());
         }
 
-        public IEnumerable<JObject> Interfaces(string where = null, string orderBy = null, int? skip = null, int? take = int.MaxValue)
+        public IEnumerable<JObject> Interfaces(string where = null, string orderBy = null, int? skip = null, int? take = null)
         {
             var s = Stopwatch.StartNew();
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "Querying interfaces");
             AuthenticateIfNecessary();
-            var url = $"{Url}/organizations-storage/interfaces{(where != null || orderBy != null ? $"?query={WebUtility.UrlEncode(where)}{(orderBy != null ? $"{(where != null ? " " : "cql.allrecords=1 ")}sortby {WebUtility.UrlEncode(orderBy)}" : "")}" : "")}{(skip != null ? $"{(where != null || orderBy != null ? "&" : "?")}offset={skip}" : "")}{(take != null ? $"{(where != null || orderBy != null || skip != null ? "&" : "?")}limit={take}" : "")}";
+            var url = $"{Url}/organizations-storage/interfaces{(where != null || orderBy != null ? $"?query={WebUtility.UrlEncode(where)}{(orderBy != null ? $"{(where != null ? " " : "cql.allrecords=1 ")}sortby {WebUtility.UrlEncode(orderBy)}" : "")}" : "")}{(skip != null ? $"{(where != null || orderBy != null ? "&" : "?")}offset={skip}" : "")}{(where != null || orderBy != null || skip != null ? "&" : "?")}limit={take ?? int.MaxValue}";
             traceSource.TraceEvent(TraceEventType.Verbose, 0, url);
             var hrm = httpClient.GetAsync(url).Result;
             if (hrm.StatusCode != HttpStatusCode.OK)
@@ -3262,12 +3262,12 @@ namespace FolioLibrary
             traceSource.TraceEvent(TraceEventType.Verbose, 0, s.Elapsed.ToString());
         }
 
-        public IEnumerable<JObject> Invoices(string where = null, string orderBy = null, int? skip = null, int? take = int.MaxValue)
+        public IEnumerable<JObject> Invoices(string where = null, string orderBy = null, int? skip = null, int? take = null)
         {
             var s = Stopwatch.StartNew();
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "Querying invoices");
             AuthenticateIfNecessary();
-            var url = $"{Url}/invoice-storage/invoices{(where != null || orderBy != null ? $"?query={WebUtility.UrlEncode(where)}{(orderBy != null ? $"{(where != null ? " " : "cql.allrecords=1 ")}sortby {WebUtility.UrlEncode(orderBy)}" : "")}" : "")}{(skip != null ? $"{(where != null || orderBy != null ? "&" : "?")}offset={skip}" : "")}{(take != null ? $"{(where != null || orderBy != null || skip != null ? "&" : "?")}limit={take}" : "")}";
+            var url = $"{Url}/invoice-storage/invoices{(where != null || orderBy != null ? $"?query={WebUtility.UrlEncode(where)}{(orderBy != null ? $"{(where != null ? " " : "cql.allrecords=1 ")}sortby {WebUtility.UrlEncode(orderBy)}" : "")}" : "")}{(skip != null ? $"{(where != null || orderBy != null ? "&" : "?")}offset={skip}" : "")}{(where != null || orderBy != null || skip != null ? "&" : "?")}limit={take ?? int.MaxValue}";
             traceSource.TraceEvent(TraceEventType.Verbose, 0, url);
             var hrm = httpClient.GetAsync(url).Result;
             if (hrm.StatusCode != HttpStatusCode.OK)
@@ -3359,12 +3359,12 @@ namespace FolioLibrary
             traceSource.TraceEvent(TraceEventType.Verbose, 0, s.Elapsed.ToString());
         }
 
-        public IEnumerable<JObject> InvoiceItems(string where = null, string orderBy = null, int? skip = null, int? take = int.MaxValue)
+        public IEnumerable<JObject> InvoiceItems(string where = null, string orderBy = null, int? skip = null, int? take = null)
         {
             var s = Stopwatch.StartNew();
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "Querying invoice items");
             AuthenticateIfNecessary();
-            var url = $"{Url}/invoice-storage/invoice-lines{(where != null || orderBy != null ? $"?query={WebUtility.UrlEncode(where)}{(orderBy != null ? $"{(where != null ? " " : "cql.allrecords=1 ")}sortby {WebUtility.UrlEncode(orderBy)}" : "")}" : "")}{(skip != null ? $"{(where != null || orderBy != null ? "&" : "?")}offset={skip}" : "")}{(take != null ? $"{(where != null || orderBy != null || skip != null ? "&" : "?")}limit={take}" : "")}";
+            var url = $"{Url}/invoice-storage/invoice-lines{(where != null || orderBy != null ? $"?query={WebUtility.UrlEncode(where)}{(orderBy != null ? $"{(where != null ? " " : "cql.allrecords=1 ")}sortby {WebUtility.UrlEncode(orderBy)}" : "")}" : "")}{(skip != null ? $"{(where != null || orderBy != null ? "&" : "?")}offset={skip}" : "")}{(where != null || orderBy != null || skip != null ? "&" : "?")}limit={take ?? int.MaxValue}";
             traceSource.TraceEvent(TraceEventType.Verbose, 0, url);
             var hrm = httpClient.GetAsync(url).Result;
             if (hrm.StatusCode != HttpStatusCode.OK)
@@ -3456,12 +3456,12 @@ namespace FolioLibrary
             traceSource.TraceEvent(TraceEventType.Verbose, 0, s.Elapsed.ToString());
         }
 
-        public IEnumerable<JObject> Items(string where = null, string orderBy = null, int? skip = null, int? take = int.MaxValue)
+        public IEnumerable<JObject> Items(string where = null, string orderBy = null, int? skip = null, int? take = null)
         {
             var s = Stopwatch.StartNew();
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "Querying items");
             AuthenticateIfNecessary();
-            var url = $"{Url}/item-storage/items{(where != null || orderBy != null ? $"?query={WebUtility.UrlEncode(where)}{(orderBy != null ? $"{(where != null ? " " : "cql.allrecords=1 ")}sortby {WebUtility.UrlEncode(orderBy)}" : "")}" : "")}{(skip != null ? $"{(where != null || orderBy != null ? "&" : "?")}offset={skip}" : "")}{(take != null ? $"{(where != null || orderBy != null || skip != null ? "&" : "?")}limit={take}" : "")}";
+            var url = $"{Url}/item-storage/items{(where != null || orderBy != null ? $"?query={WebUtility.UrlEncode(where)}{(orderBy != null ? $"{(where != null ? " " : "cql.allrecords=1 ")}sortby {WebUtility.UrlEncode(orderBy)}" : "")}" : "")}{(skip != null ? $"{(where != null || orderBy != null ? "&" : "?")}offset={skip}" : "")}{(where != null || orderBy != null || skip != null ? "&" : "?")}limit={take ?? int.MaxValue}";
             traceSource.TraceEvent(TraceEventType.Verbose, 0, url);
             var hrm = httpClient.GetAsync(url).Result;
             if (hrm.StatusCode != HttpStatusCode.OK)
@@ -3553,12 +3553,109 @@ namespace FolioLibrary
             traceSource.TraceEvent(TraceEventType.Verbose, 0, s.Elapsed.ToString());
         }
 
-        public IEnumerable<JObject> ItemNoteTypes(string where = null, string orderBy = null, int? skip = null, int? take = int.MaxValue)
+        public IEnumerable<JObject> ItemDamagedStatuses(string where = null, string orderBy = null, int? skip = null, int? take = null)
+        {
+            var s = Stopwatch.StartNew();
+            traceSource.TraceEvent(TraceEventType.Verbose, 0, "Querying item damaged statuses");
+            AuthenticateIfNecessary();
+            var url = $"{Url}/item-damaged-statuses{(where != null || orderBy != null ? $"?query={WebUtility.UrlEncode(where)}{(orderBy != null ? $"{(where != null ? " " : "cql.allrecords=1 ")}sortby {WebUtility.UrlEncode(orderBy)}" : "")}" : "")}{(skip != null ? $"{(where != null || orderBy != null ? "&" : "?")}offset={skip}" : "")}{(where != null || orderBy != null || skip != null ? "&" : "?")}limit={take ?? int.MaxValue}";
+            traceSource.TraceEvent(TraceEventType.Verbose, 0, url);
+            var hrm = httpClient.GetAsync(url).Result;
+            if (hrm.StatusCode != HttpStatusCode.OK)
+            {
+                var s2 = hrm.Content.ReadAsStringAsync().Result;
+                if (hrm.Content.Headers.ContentType.MediaType == "application/json") s2 = JObject.Parse(s2).ToString();
+                traceSource.TraceEvent(TraceEventType.Verbose, 0, s2);
+                throw new HttpRequestException($"Response status code does not indicate success: {hrm.StatusCode} ({hrm.ReasonPhrase}).\r\n{s2}");
+            }
+            using (var sr = new StreamReader(hrm.Content.ReadAsStreamAsync().Result))
+            using (var jtr = new JsonTextReader(sr) { SupportMultipleContent = true })
+            {
+                jtr.Read(); jtr.Read(); jtr.Read();
+                var js = new JsonSerializer();
+                while (jtr.Read() && jtr.TokenType != JsonToken.EndArray)
+                {
+                    var jo = (JObject)js.Deserialize(jtr);
+                    traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", jo);
+                    yield return jo;
+                }
+            }
+            traceSource.TraceEvent(TraceEventType.Verbose, 0, s.Elapsed.ToString());
+        }
+
+        public JObject GetItemDamagedStatus(string id)
+        {
+            var s = Stopwatch.StartNew();
+            traceSource.TraceEvent(TraceEventType.Verbose, 0, $"Getting item damaged status {id}");
+            AuthenticateIfNecessary();
+            var url = $"{Url}/item-damaged-statuses/{id}";
+            traceSource.TraceEvent(TraceEventType.Verbose, 0, url);
+            var hrm = httpClient.GetAsync(url).Result;
+            var s2 = hrm.Content.ReadAsStringAsync().Result;
+            var jo = hrm.Content.Headers.ContentType.MediaType == "application/json" ? JObject.Parse(s2) : null;
+            traceSource.TraceEvent(TraceEventType.Verbose, 0, s2);
+            if (hrm.StatusCode != HttpStatusCode.OK) throw new HttpRequestException($"Response status code does not indicate success: {hrm.StatusCode} ({hrm.ReasonPhrase}).\r\n{s2}");
+            traceSource.TraceEvent(TraceEventType.Verbose, 0, s.Elapsed.ToString());
+            return jo;
+        }
+
+        public JObject InsertItemDamagedStatus(JObject itemDamagedStatus)
+        {
+            var s = Stopwatch.StartNew();
+            if (itemDamagedStatus["id"] == null) itemDamagedStatus["id"] = Guid.NewGuid();
+            traceSource.TraceEvent(TraceEventType.Verbose, 0, $"Inserting item damaged status {itemDamagedStatus["id"]}");
+            AuthenticateIfNecessary();
+            var url = $"{Url}/item-damaged-statuses";
+            traceSource.TraceEvent(TraceEventType.Verbose, 0, url);
+            var s2 = itemDamagedStatus.ToString(formatting);
+            traceSource.TraceEvent(TraceEventType.Verbose, 0, s2);
+            var sc = new StringContent(s2, Encoding.UTF8, "application/json");
+            var hrm = httpClient.PostAsync(url, sc).Result;
+            s2 = hrm.Content.ReadAsStringAsync().Result;
+            var jo = hrm.Content.Headers.ContentType.MediaType == "application/json" ? JObject.Parse(s2) : null;
+            traceSource.TraceEvent(TraceEventType.Verbose, 0, s2);
+            if (hrm.StatusCode != HttpStatusCode.Created) throw new HttpRequestException($"Response status code does not indicate success: {hrm.StatusCode} ({hrm.ReasonPhrase}).\r\n{s2}");
+            traceSource.TraceEvent(TraceEventType.Verbose, 0, s.Elapsed.ToString());
+            return jo;
+        }
+
+        public void UpdateItemDamagedStatus(JObject itemDamagedStatus)
+        {
+            var s = Stopwatch.StartNew();
+            traceSource.TraceEvent(TraceEventType.Verbose, 0, $"Updating item damaged status {itemDamagedStatus["id"]}");
+            AuthenticateIfNecessary();
+            var url = $"{Url}/item-damaged-statuses/{itemDamagedStatus["id"]}";
+            traceSource.TraceEvent(TraceEventType.Verbose, 0, url);
+            var s2 = itemDamagedStatus.ToString(formatting);
+            traceSource.TraceEvent(TraceEventType.Verbose, 0, s2);
+            var sc = new StringContent(s2, Encoding.UTF8, "application/json");
+            var hrm = httpClient.PutAsync(url, sc).Result;
+            s2 = hrm.Content.ReadAsStringAsync().Result;
+            traceSource.TraceEvent(TraceEventType.Verbose, 0, s2);
+            if (hrm.StatusCode != HttpStatusCode.NoContent) throw new HttpRequestException($"Response status code does not indicate success: {hrm.StatusCode} ({hrm.ReasonPhrase}).\r\n{s2}");
+            traceSource.TraceEvent(TraceEventType.Verbose, 0, s.Elapsed.ToString());
+        }
+
+        public void DeleteItemDamagedStatus(string id)
+        {
+            var s = Stopwatch.StartNew();
+            traceSource.TraceEvent(TraceEventType.Verbose, 0, $"Deleting item damaged status {id}");
+            AuthenticateIfNecessary();
+            var url = $"{Url}/item-damaged-statuses/{id}";
+            traceSource.TraceEvent(TraceEventType.Verbose, 0, url);
+            var hrm = httpClient.DeleteAsync(url).Result;
+            var s2 = hrm.Content.ReadAsStringAsync().Result;
+            traceSource.TraceEvent(TraceEventType.Verbose, 0, s2);
+            if (hrm.StatusCode != HttpStatusCode.NoContent) throw new HttpRequestException($"Response status code does not indicate success: {hrm.StatusCode} ({hrm.ReasonPhrase}).\r\n{s2}");
+            traceSource.TraceEvent(TraceEventType.Verbose, 0, s.Elapsed.ToString());
+        }
+
+        public IEnumerable<JObject> ItemNoteTypes(string where = null, string orderBy = null, int? skip = null, int? take = null)
         {
             var s = Stopwatch.StartNew();
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "Querying item note types");
             AuthenticateIfNecessary();
-            var url = $"{Url}/item-note-types{(where != null || orderBy != null ? $"?query={WebUtility.UrlEncode(where)}{(orderBy != null ? $"{(where != null ? " " : "cql.allrecords=1 ")}sortby {WebUtility.UrlEncode(orderBy)}" : "")}" : "")}{(skip != null ? $"{(where != null || orderBy != null ? "&" : "?")}offset={skip}" : "")}{(take != null ? $"{(where != null || orderBy != null || skip != null ? "&" : "?")}limit={take}" : "")}";
+            var url = $"{Url}/item-note-types{(where != null || orderBy != null ? $"?query={WebUtility.UrlEncode(where)}{(orderBy != null ? $"{(where != null ? " " : "cql.allrecords=1 ")}sortby {WebUtility.UrlEncode(orderBy)}" : "")}" : "")}{(skip != null ? $"{(where != null || orderBy != null ? "&" : "?")}offset={skip}" : "")}{(where != null || orderBy != null || skip != null ? "&" : "?")}limit={take ?? int.MaxValue}";
             traceSource.TraceEvent(TraceEventType.Verbose, 0, url);
             var hrm = httpClient.GetAsync(url).Result;
             if (hrm.StatusCode != HttpStatusCode.OK)
@@ -3650,12 +3747,12 @@ namespace FolioLibrary
             traceSource.TraceEvent(TraceEventType.Verbose, 0, s.Elapsed.ToString());
         }
 
-        public IEnumerable<JObject> Ledgers(string where = null, string orderBy = null, int? skip = null, int? take = int.MaxValue)
+        public IEnumerable<JObject> Ledgers(string where = null, string orderBy = null, int? skip = null, int? take = null)
         {
             var s = Stopwatch.StartNew();
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "Querying ledgers");
             AuthenticateIfNecessary();
-            var url = $"{Url}/finance-storage/ledgers{(where != null || orderBy != null ? $"?query={WebUtility.UrlEncode(where)}{(orderBy != null ? $"{(where != null ? " " : "cql.allrecords=1 ")}sortby {WebUtility.UrlEncode(orderBy)}" : "")}" : "")}{(skip != null ? $"{(where != null || orderBy != null ? "&" : "?")}offset={skip}" : "")}{(take != null ? $"{(where != null || orderBy != null || skip != null ? "&" : "?")}limit={take}" : "")}";
+            var url = $"{Url}/finance-storage/ledgers{(where != null || orderBy != null ? $"?query={WebUtility.UrlEncode(where)}{(orderBy != null ? $"{(where != null ? " " : "cql.allrecords=1 ")}sortby {WebUtility.UrlEncode(orderBy)}" : "")}" : "")}{(skip != null ? $"{(where != null || orderBy != null ? "&" : "?")}offset={skip}" : "")}{(where != null || orderBy != null || skip != null ? "&" : "?")}limit={take ?? int.MaxValue}";
             traceSource.TraceEvent(TraceEventType.Verbose, 0, url);
             var hrm = httpClient.GetAsync(url).Result;
             if (hrm.StatusCode != HttpStatusCode.OK)
@@ -3747,12 +3844,12 @@ namespace FolioLibrary
             traceSource.TraceEvent(TraceEventType.Verbose, 0, s.Elapsed.ToString());
         }
 
-        public IEnumerable<JObject> Libraries(string where = null, string orderBy = null, int? skip = null, int? take = int.MaxValue)
+        public IEnumerable<JObject> Libraries(string where = null, string orderBy = null, int? skip = null, int? take = null)
         {
             var s = Stopwatch.StartNew();
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "Querying libraries");
             AuthenticateIfNecessary();
-            var url = $"{Url}/location-units/libraries{(where != null || orderBy != null ? $"?query={WebUtility.UrlEncode(where)}{(orderBy != null ? $"{(where != null ? " " : "cql.allrecords=1 ")}sortby {WebUtility.UrlEncode(orderBy)}" : "")}" : "")}{(skip != null ? $"{(where != null || orderBy != null ? "&" : "?")}offset={skip}" : "")}{(take != null ? $"{(where != null || orderBy != null || skip != null ? "&" : "?")}limit={take}" : "")}";
+            var url = $"{Url}/location-units/libraries{(where != null || orderBy != null ? $"?query={WebUtility.UrlEncode(where)}{(orderBy != null ? $"{(where != null ? " " : "cql.allrecords=1 ")}sortby {WebUtility.UrlEncode(orderBy)}" : "")}" : "")}{(skip != null ? $"{(where != null || orderBy != null ? "&" : "?")}offset={skip}" : "")}{(where != null || orderBy != null || skip != null ? "&" : "?")}limit={take ?? int.MaxValue}";
             traceSource.TraceEvent(TraceEventType.Verbose, 0, url);
             var hrm = httpClient.GetAsync(url).Result;
             if (hrm.StatusCode != HttpStatusCode.OK)
@@ -3844,12 +3941,12 @@ namespace FolioLibrary
             traceSource.TraceEvent(TraceEventType.Verbose, 0, s.Elapsed.ToString());
         }
 
-        public IEnumerable<JObject> Loans(string where = null, string orderBy = null, int? skip = null, int? take = int.MaxValue)
+        public IEnumerable<JObject> Loans(string where = null, string orderBy = null, int? skip = null, int? take = null)
         {
             var s = Stopwatch.StartNew();
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "Querying loans");
             AuthenticateIfNecessary();
-            var url = $"{Url}/loan-storage/loans{(where != null || orderBy != null ? $"?query={WebUtility.UrlEncode(where)}{(orderBy != null ? $"{(where != null ? " " : "cql.allrecords=1 ")}sortby {WebUtility.UrlEncode(orderBy)}" : "")}" : "")}{(skip != null ? $"{(where != null || orderBy != null ? "&" : "?")}offset={skip}" : "")}{(take != null ? $"{(where != null || orderBy != null || skip != null ? "&" : "?")}limit={take}" : "")}";
+            var url = $"{Url}/loan-storage/loans{(where != null || orderBy != null ? $"?query={WebUtility.UrlEncode(where)}{(orderBy != null ? $"{(where != null ? " " : "cql.allrecords=1 ")}sortby {WebUtility.UrlEncode(orderBy)}" : "")}" : "")}{(skip != null ? $"{(where != null || orderBy != null ? "&" : "?")}offset={skip}" : "")}{(where != null || orderBy != null || skip != null ? "&" : "?")}limit={take ?? int.MaxValue}";
             traceSource.TraceEvent(TraceEventType.Verbose, 0, url);
             var hrm = httpClient.GetAsync(url).Result;
             if (hrm.StatusCode != HttpStatusCode.OK)
@@ -3941,12 +4038,12 @@ namespace FolioLibrary
             traceSource.TraceEvent(TraceEventType.Verbose, 0, s.Elapsed.ToString());
         }
 
-        public IEnumerable<JObject> LoanPolicies(string where = null, string orderBy = null, int? skip = null, int? take = int.MaxValue)
+        public IEnumerable<JObject> LoanPolicies(string where = null, string orderBy = null, int? skip = null, int? take = null)
         {
             var s = Stopwatch.StartNew();
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "Querying loan policies");
             AuthenticateIfNecessary();
-            var url = $"{Url}/loan-policy-storage/loan-policies{(where != null || orderBy != null ? $"?query={WebUtility.UrlEncode(where)}{(orderBy != null ? $"{(where != null ? " " : "cql.allrecords=1 ")}sortby {WebUtility.UrlEncode(orderBy)}" : "")}" : "")}{(skip != null ? $"{(where != null || orderBy != null ? "&" : "?")}offset={skip}" : "")}{(take != null ? $"{(where != null || orderBy != null || skip != null ? "&" : "?")}limit={take}" : "")}";
+            var url = $"{Url}/loan-policy-storage/loan-policies{(where != null || orderBy != null ? $"?query={WebUtility.UrlEncode(where)}{(orderBy != null ? $"{(where != null ? " " : "cql.allrecords=1 ")}sortby {WebUtility.UrlEncode(orderBy)}" : "")}" : "")}{(skip != null ? $"{(where != null || orderBy != null ? "&" : "?")}offset={skip}" : "")}{(where != null || orderBy != null || skip != null ? "&" : "?")}limit={take ?? int.MaxValue}";
             traceSource.TraceEvent(TraceEventType.Verbose, 0, url);
             var hrm = httpClient.GetAsync(url).Result;
             if (hrm.StatusCode != HttpStatusCode.OK)
@@ -4038,12 +4135,12 @@ namespace FolioLibrary
             traceSource.TraceEvent(TraceEventType.Verbose, 0, s.Elapsed.ToString());
         }
 
-        public IEnumerable<JObject> LoanTypes(string where = null, string orderBy = null, int? skip = null, int? take = int.MaxValue)
+        public IEnumerable<JObject> LoanTypes(string where = null, string orderBy = null, int? skip = null, int? take = null)
         {
             var s = Stopwatch.StartNew();
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "Querying loan types");
             AuthenticateIfNecessary();
-            var url = $"{Url}/loan-types{(where != null || orderBy != null ? $"?query={WebUtility.UrlEncode(where)}{(orderBy != null ? $"{(where != null ? " " : "cql.allrecords=1 ")}sortby {WebUtility.UrlEncode(orderBy)}" : "")}" : "")}{(skip != null ? $"{(where != null || orderBy != null ? "&" : "?")}offset={skip}" : "")}{(take != null ? $"{(where != null || orderBy != null || skip != null ? "&" : "?")}limit={take}" : "")}";
+            var url = $"{Url}/loan-types{(where != null || orderBy != null ? $"?query={WebUtility.UrlEncode(where)}{(orderBy != null ? $"{(where != null ? " " : "cql.allrecords=1 ")}sortby {WebUtility.UrlEncode(orderBy)}" : "")}" : "")}{(skip != null ? $"{(where != null || orderBy != null ? "&" : "?")}offset={skip}" : "")}{(where != null || orderBy != null || skip != null ? "&" : "?")}limit={take ?? int.MaxValue}";
             traceSource.TraceEvent(TraceEventType.Verbose, 0, url);
             var hrm = httpClient.GetAsync(url).Result;
             if (hrm.StatusCode != HttpStatusCode.OK)
@@ -4135,12 +4232,12 @@ namespace FolioLibrary
             traceSource.TraceEvent(TraceEventType.Verbose, 0, s.Elapsed.ToString());
         }
 
-        public IEnumerable<JObject> Locations(string where = null, string orderBy = null, int? skip = null, int? take = int.MaxValue)
+        public IEnumerable<JObject> Locations(string where = null, string orderBy = null, int? skip = null, int? take = null)
         {
             var s = Stopwatch.StartNew();
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "Querying locations");
             AuthenticateIfNecessary();
-            var url = $"{Url}/locations{(where != null || orderBy != null ? $"?query={WebUtility.UrlEncode(where)}{(orderBy != null ? $"{(where != null ? " " : "cql.allrecords=1 ")}sortby {WebUtility.UrlEncode(orderBy)}" : "")}" : "")}{(skip != null ? $"{(where != null || orderBy != null ? "&" : "?")}offset={skip}" : "")}{(take != null ? $"{(where != null || orderBy != null || skip != null ? "&" : "?")}limit={take}" : "")}";
+            var url = $"{Url}/locations{(where != null || orderBy != null ? $"?query={WebUtility.UrlEncode(where)}{(orderBy != null ? $"{(where != null ? " " : "cql.allrecords=1 ")}sortby {WebUtility.UrlEncode(orderBy)}" : "")}" : "")}{(skip != null ? $"{(where != null || orderBy != null ? "&" : "?")}offset={skip}" : "")}{(where != null || orderBy != null || skip != null ? "&" : "?")}limit={take ?? int.MaxValue}";
             traceSource.TraceEvent(TraceEventType.Verbose, 0, url);
             var hrm = httpClient.GetAsync(url).Result;
             if (hrm.StatusCode != HttpStatusCode.OK)
@@ -4232,12 +4329,12 @@ namespace FolioLibrary
             traceSource.TraceEvent(TraceEventType.Verbose, 0, s.Elapsed.ToString());
         }
 
-        public IEnumerable<JObject> Logins(string where = null, string orderBy = null, int? skip = null, int? take = int.MaxValue)
+        public IEnumerable<JObject> Logins(string where = null, string orderBy = null, int? skip = null, int? take = null)
         {
             var s = Stopwatch.StartNew();
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "Querying logins");
             AuthenticateIfNecessary();
-            var url = $"{Url}/authn/credentials{(where != null || orderBy != null ? $"?query={WebUtility.UrlEncode(where)}{(orderBy != null ? $"{(where != null ? " " : "cql.allrecords=1 ")}sortby {WebUtility.UrlEncode(orderBy)}" : "")}" : "")}{(skip != null ? $"{(where != null || orderBy != null ? "&" : "?")}offset={skip}" : "")}{(take != null ? $"{(where != null || orderBy != null || skip != null ? "&" : "?")}length={take}" : "")}";
+            var url = $"{Url}/authn/credentials{(where != null || orderBy != null ? $"?query={WebUtility.UrlEncode(where)}{(orderBy != null ? $"{(where != null ? " " : "cql.allrecords=1 ")}sortby {WebUtility.UrlEncode(orderBy)}" : "")}" : "")}{(skip != null ? $"{(where != null || orderBy != null ? "&" : "?")}offset={skip}" : "")}{(where != null || orderBy != null || skip != null ? "&" : "?")}length={take ?? int.MaxValue}";
             traceSource.TraceEvent(TraceEventType.Verbose, 0, url);
             var hrm = httpClient.GetAsync(url).Result;
             if (hrm.StatusCode != HttpStatusCode.OK)
@@ -4329,12 +4426,12 @@ namespace FolioLibrary
             traceSource.TraceEvent(TraceEventType.Verbose, 0, s.Elapsed.ToString());
         }
 
-        public IEnumerable<JObject> MaterialTypes(string where = null, string orderBy = null, int? skip = null, int? take = int.MaxValue)
+        public IEnumerable<JObject> MaterialTypes(string where = null, string orderBy = null, int? skip = null, int? take = null)
         {
             var s = Stopwatch.StartNew();
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "Querying material types");
             AuthenticateIfNecessary();
-            var url = $"{Url}/material-types{(where != null || orderBy != null ? $"?query={WebUtility.UrlEncode(where)}{(orderBy != null ? $"{(where != null ? " " : "cql.allrecords=1 ")}sortby {WebUtility.UrlEncode(orderBy)}" : "")}" : "")}{(skip != null ? $"{(where != null || orderBy != null ? "&" : "?")}offset={skip}" : "")}{(take != null ? $"{(where != null || orderBy != null || skip != null ? "&" : "?")}limit={take}" : "")}";
+            var url = $"{Url}/material-types{(where != null || orderBy != null ? $"?query={WebUtility.UrlEncode(where)}{(orderBy != null ? $"{(where != null ? " " : "cql.allrecords=1 ")}sortby {WebUtility.UrlEncode(orderBy)}" : "")}" : "")}{(skip != null ? $"{(where != null || orderBy != null ? "&" : "?")}offset={skip}" : "")}{(where != null || orderBy != null || skip != null ? "&" : "?")}limit={take ?? int.MaxValue}";
             traceSource.TraceEvent(TraceEventType.Verbose, 0, url);
             var hrm = httpClient.GetAsync(url).Result;
             if (hrm.StatusCode != HttpStatusCode.OK)
@@ -4426,12 +4523,12 @@ namespace FolioLibrary
             traceSource.TraceEvent(TraceEventType.Verbose, 0, s.Elapsed.ToString());
         }
 
-        public IEnumerable<JObject> ModeOfIssuances(string where = null, string orderBy = null, int? skip = null, int? take = int.MaxValue)
+        public IEnumerable<JObject> ModeOfIssuances(string where = null, string orderBy = null, int? skip = null, int? take = null)
         {
             var s = Stopwatch.StartNew();
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "Querying mode of issuances");
             AuthenticateIfNecessary();
-            var url = $"{Url}/modes-of-issuance{(where != null || orderBy != null ? $"?query={WebUtility.UrlEncode(where)}{(orderBy != null ? $"{(where != null ? " " : "cql.allrecords=1 ")}sortby {WebUtility.UrlEncode(orderBy)}" : "")}" : "")}{(skip != null ? $"{(where != null || orderBy != null ? "&" : "?")}offset={skip}" : "")}{(take != null ? $"{(where != null || orderBy != null || skip != null ? "&" : "?")}limit={take}" : "")}";
+            var url = $"{Url}/modes-of-issuance{(where != null || orderBy != null ? $"?query={WebUtility.UrlEncode(where)}{(orderBy != null ? $"{(where != null ? " " : "cql.allrecords=1 ")}sortby {WebUtility.UrlEncode(orderBy)}" : "")}" : "")}{(skip != null ? $"{(where != null || orderBy != null ? "&" : "?")}offset={skip}" : "")}{(where != null || orderBy != null || skip != null ? "&" : "?")}limit={take ?? int.MaxValue}";
             traceSource.TraceEvent(TraceEventType.Verbose, 0, url);
             var hrm = httpClient.GetAsync(url).Result;
             if (hrm.StatusCode != HttpStatusCode.OK)
@@ -4523,12 +4620,12 @@ namespace FolioLibrary
             traceSource.TraceEvent(TraceEventType.Verbose, 0, s.Elapsed.ToString());
         }
 
-        public IEnumerable<JObject> NatureOfContentTerms(string where = null, string orderBy = null, int? skip = null, int? take = int.MaxValue)
+        public IEnumerable<JObject> NatureOfContentTerms(string where = null, string orderBy = null, int? skip = null, int? take = null)
         {
             var s = Stopwatch.StartNew();
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "Querying nature of content terms");
             AuthenticateIfNecessary();
-            var url = $"{Url}/nature-of-content-terms{(where != null || orderBy != null ? $"?query={WebUtility.UrlEncode(where)}{(orderBy != null ? $"{(where != null ? " " : "cql.allrecords=1 ")}sortby {WebUtility.UrlEncode(orderBy)}" : "")}" : "")}{(skip != null ? $"{(where != null || orderBy != null ? "&" : "?")}offset={skip}" : "")}{(take != null ? $"{(where != null || orderBy != null || skip != null ? "&" : "?")}limit={take}" : "")}";
+            var url = $"{Url}/nature-of-content-terms{(where != null || orderBy != null ? $"?query={WebUtility.UrlEncode(where)}{(orderBy != null ? $"{(where != null ? " " : "cql.allrecords=1 ")}sortby {WebUtility.UrlEncode(orderBy)}" : "")}" : "")}{(skip != null ? $"{(where != null || orderBy != null ? "&" : "?")}offset={skip}" : "")}{(where != null || orderBy != null || skip != null ? "&" : "?")}limit={take ?? int.MaxValue}";
             traceSource.TraceEvent(TraceEventType.Verbose, 0, url);
             var hrm = httpClient.GetAsync(url).Result;
             if (hrm.StatusCode != HttpStatusCode.OK)
@@ -4620,12 +4717,12 @@ namespace FolioLibrary
             traceSource.TraceEvent(TraceEventType.Verbose, 0, s.Elapsed.ToString());
         }
 
-        public IEnumerable<JObject> Orders(string where = null, string orderBy = null, int? skip = null, int? take = int.MaxValue)
+        public IEnumerable<JObject> Orders(string where = null, string orderBy = null, int? skip = null, int? take = null)
         {
             var s = Stopwatch.StartNew();
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "Querying orders");
             AuthenticateIfNecessary();
-            var url = $"{Url}/orders-storage/purchase-orders{(where != null || orderBy != null ? $"?query={WebUtility.UrlEncode(where)}{(orderBy != null ? $"{(where != null ? " " : "cql.allrecords=1 ")}sortby {WebUtility.UrlEncode(orderBy)}" : "")}" : "")}{(skip != null ? $"{(where != null || orderBy != null ? "&" : "?")}offset={skip}" : "")}{(take != null ? $"{(where != null || orderBy != null || skip != null ? "&" : "?")}limit={take}" : "")}";
+            var url = $"{Url}/orders-storage/purchase-orders{(where != null || orderBy != null ? $"?query={WebUtility.UrlEncode(where)}{(orderBy != null ? $"{(where != null ? " " : "cql.allrecords=1 ")}sortby {WebUtility.UrlEncode(orderBy)}" : "")}" : "")}{(skip != null ? $"{(where != null || orderBy != null ? "&" : "?")}offset={skip}" : "")}{(where != null || orderBy != null || skip != null ? "&" : "?")}limit={take ?? int.MaxValue}";
             traceSource.TraceEvent(TraceEventType.Verbose, 0, url);
             var hrm = httpClient.GetAsync(url).Result;
             if (hrm.StatusCode != HttpStatusCode.OK)
@@ -4717,12 +4814,12 @@ namespace FolioLibrary
             traceSource.TraceEvent(TraceEventType.Verbose, 0, s.Elapsed.ToString());
         }
 
-        public IEnumerable<JObject> OrderItems(string where = null, string orderBy = null, int? skip = null, int? take = int.MaxValue)
+        public IEnumerable<JObject> OrderItems(string where = null, string orderBy = null, int? skip = null, int? take = null)
         {
             var s = Stopwatch.StartNew();
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "Querying order items");
             AuthenticateIfNecessary();
-            var url = $"{Url}/orders-storage/po-lines{(where != null || orderBy != null ? $"?query={WebUtility.UrlEncode(where)}{(orderBy != null ? $"{(where != null ? " " : "cql.allrecords=1 ")}sortby {WebUtility.UrlEncode(orderBy)}" : "")}" : "")}{(skip != null ? $"{(where != null || orderBy != null ? "&" : "?")}offset={skip}" : "")}{(take != null ? $"{(where != null || orderBy != null || skip != null ? "&" : "?")}limit={take}" : "")}";
+            var url = $"{Url}/orders-storage/po-lines{(where != null || orderBy != null ? $"?query={WebUtility.UrlEncode(where)}{(orderBy != null ? $"{(where != null ? " " : "cql.allrecords=1 ")}sortby {WebUtility.UrlEncode(orderBy)}" : "")}" : "")}{(skip != null ? $"{(where != null || orderBy != null ? "&" : "?")}offset={skip}" : "")}{(where != null || orderBy != null || skip != null ? "&" : "?")}limit={take ?? int.MaxValue}";
             traceSource.TraceEvent(TraceEventType.Verbose, 0, url);
             var hrm = httpClient.GetAsync(url).Result;
             if (hrm.StatusCode != HttpStatusCode.OK)
@@ -4814,12 +4911,12 @@ namespace FolioLibrary
             traceSource.TraceEvent(TraceEventType.Verbose, 0, s.Elapsed.ToString());
         }
 
-        public IEnumerable<JObject> Organizations(string where = null, string orderBy = null, int? skip = null, int? take = int.MaxValue)
+        public IEnumerable<JObject> Organizations(string where = null, string orderBy = null, int? skip = null, int? take = null)
         {
             var s = Stopwatch.StartNew();
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "Querying organizations");
             AuthenticateIfNecessary();
-            var url = $"{Url}/organizations-storage/organizations{(where != null || orderBy != null ? $"?query={WebUtility.UrlEncode(where)}{(orderBy != null ? $"{(where != null ? " " : "cql.allrecords=1 ")}sortby {WebUtility.UrlEncode(orderBy)}" : "")}" : "")}{(skip != null ? $"{(where != null || orderBy != null ? "&" : "?")}offset={skip}" : "")}{(take != null ? $"{(where != null || orderBy != null || skip != null ? "&" : "?")}limit={take}" : "")}";
+            var url = $"{Url}/organizations-storage/organizations{(where != null || orderBy != null ? $"?query={WebUtility.UrlEncode(where)}{(orderBy != null ? $"{(where != null ? " " : "cql.allrecords=1 ")}sortby {WebUtility.UrlEncode(orderBy)}" : "")}" : "")}{(skip != null ? $"{(where != null || orderBy != null ? "&" : "?")}offset={skip}" : "")}{(where != null || orderBy != null || skip != null ? "&" : "?")}limit={take ?? int.MaxValue}";
             traceSource.TraceEvent(TraceEventType.Verbose, 0, url);
             var hrm = httpClient.GetAsync(url).Result;
             if (hrm.StatusCode != HttpStatusCode.OK)
@@ -4911,12 +5008,12 @@ namespace FolioLibrary
             traceSource.TraceEvent(TraceEventType.Verbose, 0, s.Elapsed.ToString());
         }
 
-        public IEnumerable<JObject> PatronNoticePolicies(string where = null, string orderBy = null, int? skip = null, int? take = int.MaxValue)
+        public IEnumerable<JObject> PatronNoticePolicies(string where = null, string orderBy = null, int? skip = null, int? take = null)
         {
             var s = Stopwatch.StartNew();
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "Querying patron notice policies");
             AuthenticateIfNecessary();
-            var url = $"{Url}/patron-notice-policy-storage/patron-notice-policies{(where != null || orderBy != null ? $"?query={WebUtility.UrlEncode(where)}{(orderBy != null ? $"{(where != null ? " " : "cql.allrecords=1 ")}sortby {WebUtility.UrlEncode(orderBy)}" : "")}" : "")}{(skip != null ? $"{(where != null || orderBy != null ? "&" : "?")}offset={skip}" : "")}{(take != null ? $"{(where != null || orderBy != null || skip != null ? "&" : "?")}limit={take}" : "")}";
+            var url = $"{Url}/patron-notice-policy-storage/patron-notice-policies{(where != null || orderBy != null ? $"?query={WebUtility.UrlEncode(where)}{(orderBy != null ? $"{(where != null ? " " : "cql.allrecords=1 ")}sortby {WebUtility.UrlEncode(orderBy)}" : "")}" : "")}{(skip != null ? $"{(where != null || orderBy != null ? "&" : "?")}offset={skip}" : "")}{(where != null || orderBy != null || skip != null ? "&" : "?")}limit={take ?? int.MaxValue}";
             traceSource.TraceEvent(TraceEventType.Verbose, 0, url);
             var hrm = httpClient.GetAsync(url).Result;
             if (hrm.StatusCode != HttpStatusCode.OK)
@@ -5008,12 +5105,12 @@ namespace FolioLibrary
             traceSource.TraceEvent(TraceEventType.Verbose, 0, s.Elapsed.ToString());
         }
 
-        public IEnumerable<JObject> Permissions(string where = null, string orderBy = null, int? skip = null, int? take = int.MaxValue)
+        public IEnumerable<JObject> Permissions(string where = null, string orderBy = null, int? skip = null, int? take = null)
         {
             var s = Stopwatch.StartNew();
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "Querying permissions");
             AuthenticateIfNecessary();
-            var url = $"{Url}/perms/permissions{(where != null || orderBy != null ? $"?query={WebUtility.UrlEncode(where)}{(orderBy != null ? $"{(where != null ? " " : "cql.allrecords=1 ")}sortby {WebUtility.UrlEncode(orderBy)}" : "")}" : "")}{(skip != null ? $"{(where != null || orderBy != null ? "&" : "?")}offset={skip}" : "")}{(take != null ? $"{(where != null || orderBy != null || skip != null ? "&" : "?")}length={take}" : "")}";
+            var url = $"{Url}/perms/permissions{(where != null || orderBy != null ? $"?query={WebUtility.UrlEncode(where)}{(orderBy != null ? $"{(where != null ? " " : "cql.allrecords=1 ")}sortby {WebUtility.UrlEncode(orderBy)}" : "")}" : "")}{(skip != null ? $"{(where != null || orderBy != null ? "&" : "?")}offset={skip}" : "")}{(where != null || orderBy != null || skip != null ? "&" : "?")}length={take ?? int.MaxValue}";
             traceSource.TraceEvent(TraceEventType.Verbose, 0, url);
             var hrm = httpClient.GetAsync(url).Result;
             if (hrm.StatusCode != HttpStatusCode.OK)
@@ -5105,12 +5202,12 @@ namespace FolioLibrary
             traceSource.TraceEvent(TraceEventType.Verbose, 0, s.Elapsed.ToString());
         }
 
-        public IEnumerable<JObject> PermissionsUsers(string where = null, string orderBy = null, int? skip = null, int? take = int.MaxValue)
+        public IEnumerable<JObject> PermissionsUsers(string where = null, string orderBy = null, int? skip = null, int? take = null)
         {
             var s = Stopwatch.StartNew();
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "Querying permissions users");
             AuthenticateIfNecessary();
-            var url = $"{Url}/perms/users{(where != null || orderBy != null ? $"?query={WebUtility.UrlEncode(where)}{(orderBy != null ? $"{(where != null ? " " : "cql.allrecords=1 ")}sortby {WebUtility.UrlEncode(orderBy)}" : "")}" : "")}{(skip != null ? $"{(where != null || orderBy != null ? "&" : "?")}offset={skip}" : "")}{(take != null ? $"{(where != null || orderBy != null || skip != null ? "&" : "?")}length={take}" : "")}";
+            var url = $"{Url}/perms/users{(where != null || orderBy != null ? $"?query={WebUtility.UrlEncode(where)}{(orderBy != null ? $"{(where != null ? " " : "cql.allrecords=1 ")}sortby {WebUtility.UrlEncode(orderBy)}" : "")}" : "")}{(skip != null ? $"{(where != null || orderBy != null ? "&" : "?")}offset={skip}" : "")}{(where != null || orderBy != null || skip != null ? "&" : "?")}length={take ?? int.MaxValue}";
             traceSource.TraceEvent(TraceEventType.Verbose, 0, url);
             var hrm = httpClient.GetAsync(url).Result;
             if (hrm.StatusCode != HttpStatusCode.OK)
@@ -5202,12 +5299,12 @@ namespace FolioLibrary
             traceSource.TraceEvent(TraceEventType.Verbose, 0, s.Elapsed.ToString());
         }
 
-        public IEnumerable<JObject> Pieces(string where = null, string orderBy = null, int? skip = null, int? take = int.MaxValue)
+        public IEnumerable<JObject> Pieces(string where = null, string orderBy = null, int? skip = null, int? take = null)
         {
             var s = Stopwatch.StartNew();
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "Querying pieces");
             AuthenticateIfNecessary();
-            var url = $"{Url}/orders-storage/pieces{(where != null || orderBy != null ? $"?query={WebUtility.UrlEncode(where)}{(orderBy != null ? $"{(where != null ? " " : "cql.allrecords=1 ")}sortby {WebUtility.UrlEncode(orderBy)}" : "")}" : "")}{(skip != null ? $"{(where != null || orderBy != null ? "&" : "?")}offset={skip}" : "")}{(take != null ? $"{(where != null || orderBy != null || skip != null ? "&" : "?")}limit={take}" : "")}";
+            var url = $"{Url}/orders-storage/pieces{(where != null || orderBy != null ? $"?query={WebUtility.UrlEncode(where)}{(orderBy != null ? $"{(where != null ? " " : "cql.allrecords=1 ")}sortby {WebUtility.UrlEncode(orderBy)}" : "")}" : "")}{(skip != null ? $"{(where != null || orderBy != null ? "&" : "?")}offset={skip}" : "")}{(where != null || orderBy != null || skip != null ? "&" : "?")}limit={take ?? int.MaxValue}";
             traceSource.TraceEvent(TraceEventType.Verbose, 0, url);
             var hrm = httpClient.GetAsync(url).Result;
             if (hrm.StatusCode != HttpStatusCode.OK)
@@ -5299,12 +5396,12 @@ namespace FolioLibrary
             traceSource.TraceEvent(TraceEventType.Verbose, 0, s.Elapsed.ToString());
         }
 
-        public IEnumerable<JObject> Proxies(string where = null, string orderBy = null, int? skip = null, int? take = int.MaxValue)
+        public IEnumerable<JObject> Proxies(string where = null, string orderBy = null, int? skip = null, int? take = null)
         {
             var s = Stopwatch.StartNew();
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "Querying proxies");
             AuthenticateIfNecessary();
-            var url = $"{Url}/proxiesfor{(where != null || orderBy != null ? $"?query={WebUtility.UrlEncode(where)}{(orderBy != null ? $"{(where != null ? " " : "cql.allrecords=1 ")}sortby {WebUtility.UrlEncode(orderBy)}" : "")}" : "")}{(skip != null ? $"{(where != null || orderBy != null ? "&" : "?")}offset={skip}" : "")}{(take != null ? $"{(where != null || orderBy != null || skip != null ? "&" : "?")}limit={take}" : "")}";
+            var url = $"{Url}/proxiesfor{(where != null || orderBy != null ? $"?query={WebUtility.UrlEncode(where)}{(orderBy != null ? $"{(where != null ? " " : "cql.allrecords=1 ")}sortby {WebUtility.UrlEncode(orderBy)}" : "")}" : "")}{(skip != null ? $"{(where != null || orderBy != null ? "&" : "?")}offset={skip}" : "")}{(where != null || orderBy != null || skip != null ? "&" : "?")}limit={take ?? int.MaxValue}";
             traceSource.TraceEvent(TraceEventType.Verbose, 0, url);
             var hrm = httpClient.GetAsync(url).Result;
             if (hrm.StatusCode != HttpStatusCode.OK)
@@ -5396,12 +5493,12 @@ namespace FolioLibrary
             traceSource.TraceEvent(TraceEventType.Verbose, 0, s.Elapsed.ToString());
         }
 
-        public IEnumerable<JObject> Records(string where = null, string orderBy = null, int? skip = null, int? take = int.MaxValue)
+        public IEnumerable<JObject> Records(string where = null, string orderBy = null, int? skip = null, int? take = null)
         {
             var s = Stopwatch.StartNew();
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "Querying records");
             AuthenticateIfNecessary();
-            var url = $"{Url}/source-storage/records{(where != null || orderBy != null ? $"?query={WebUtility.UrlEncode(where)}{(orderBy != null ? $"{(where != null ? " " : "cql.allrecords=1 ")}sortby {WebUtility.UrlEncode(orderBy)}" : "")}" : "")}{(skip != null ? $"{(where != null || orderBy != null ? "&" : "?")}offset={skip}" : "")}{(take != null ? $"{(where != null || orderBy != null || skip != null ? "&" : "?")}limit={take}" : "")}";
+            var url = $"{Url}/source-storage/records{(where != null || orderBy != null ? $"?query={WebUtility.UrlEncode(where)}{(orderBy != null ? $"{(where != null ? " " : "cql.allrecords=1 ")}sortby {WebUtility.UrlEncode(orderBy)}" : "")}" : "")}{(skip != null ? $"{(where != null || orderBy != null ? "&" : "?")}offset={skip}" : "")}{(where != null || orderBy != null || skip != null ? "&" : "?")}limit={take ?? int.MaxValue}";
             traceSource.TraceEvent(TraceEventType.Verbose, 0, url);
             var hrm = httpClient.GetAsync(url).Result;
             if (hrm.StatusCode != HttpStatusCode.OK)
@@ -5513,12 +5610,12 @@ namespace FolioLibrary
             traceSource.TraceEvent(TraceEventType.Verbose, 0, s.Elapsed.ToString());
         }
 
-        public IEnumerable<JObject> ReportingCodes(string where = null, string orderBy = null, int? skip = null, int? take = int.MaxValue)
+        public IEnumerable<JObject> ReportingCodes(string where = null, string orderBy = null, int? skip = null, int? take = null)
         {
             var s = Stopwatch.StartNew();
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "Querying reporting codes");
             AuthenticateIfNecessary();
-            var url = $"{Url}/orders-storage/reporting-codes{(where != null || orderBy != null ? $"?query={WebUtility.UrlEncode(where)}{(orderBy != null ? $"{(where != null ? " " : "cql.allrecords=1 ")}sortby {WebUtility.UrlEncode(orderBy)}" : "")}" : "")}{(skip != null ? $"{(where != null || orderBy != null ? "&" : "?")}offset={skip}" : "")}{(take != null ? $"{(where != null || orderBy != null || skip != null ? "&" : "?")}limit={take}" : "")}";
+            var url = $"{Url}/orders-storage/reporting-codes{(where != null || orderBy != null ? $"?query={WebUtility.UrlEncode(where)}{(orderBy != null ? $"{(where != null ? " " : "cql.allrecords=1 ")}sortby {WebUtility.UrlEncode(orderBy)}" : "")}" : "")}{(skip != null ? $"{(where != null || orderBy != null ? "&" : "?")}offset={skip}" : "")}{(where != null || orderBy != null || skip != null ? "&" : "?")}limit={take ?? int.MaxValue}";
             traceSource.TraceEvent(TraceEventType.Verbose, 0, url);
             var hrm = httpClient.GetAsync(url).Result;
             if (hrm.StatusCode != HttpStatusCode.OK)
@@ -5610,12 +5707,12 @@ namespace FolioLibrary
             traceSource.TraceEvent(TraceEventType.Verbose, 0, s.Elapsed.ToString());
         }
 
-        public IEnumerable<JObject> Requests(string where = null, string orderBy = null, int? skip = null, int? take = int.MaxValue)
+        public IEnumerable<JObject> Requests(string where = null, string orderBy = null, int? skip = null, int? take = null)
         {
             var s = Stopwatch.StartNew();
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "Querying requests");
             AuthenticateIfNecessary();
-            var url = $"{Url}/request-storage/requests{(where != null || orderBy != null ? $"?query={WebUtility.UrlEncode(where)}{(orderBy != null ? $"{(where != null ? " " : "cql.allrecords=1 ")}sortby {WebUtility.UrlEncode(orderBy)}" : "")}" : "")}{(skip != null ? $"{(where != null || orderBy != null ? "&" : "?")}offset={skip}" : "")}{(take != null ? $"{(where != null || orderBy != null || skip != null ? "&" : "?")}limit={take}" : "")}";
+            var url = $"{Url}/request-storage/requests{(where != null || orderBy != null ? $"?query={WebUtility.UrlEncode(where)}{(orderBy != null ? $"{(where != null ? " " : "cql.allrecords=1 ")}sortby {WebUtility.UrlEncode(orderBy)}" : "")}" : "")}{(skip != null ? $"{(where != null || orderBy != null ? "&" : "?")}offset={skip}" : "")}{(where != null || orderBy != null || skip != null ? "&" : "?")}limit={take ?? int.MaxValue}";
             traceSource.TraceEvent(TraceEventType.Verbose, 0, url);
             var hrm = httpClient.GetAsync(url).Result;
             if (hrm.StatusCode != HttpStatusCode.OK)
@@ -5707,12 +5804,12 @@ namespace FolioLibrary
             traceSource.TraceEvent(TraceEventType.Verbose, 0, s.Elapsed.ToString());
         }
 
-        public IEnumerable<JObject> RequestPolicies(string where = null, string orderBy = null, int? skip = null, int? take = int.MaxValue)
+        public IEnumerable<JObject> RequestPolicies(string where = null, string orderBy = null, int? skip = null, int? take = null)
         {
             var s = Stopwatch.StartNew();
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "Querying request policies");
             AuthenticateIfNecessary();
-            var url = $"{Url}/request-policy-storage/request-policies{(where != null || orderBy != null ? $"?query={WebUtility.UrlEncode(where)}{(orderBy != null ? $"{(where != null ? " " : "cql.allrecords=1 ")}sortby {WebUtility.UrlEncode(orderBy)}" : "")}" : "")}{(skip != null ? $"{(where != null || orderBy != null ? "&" : "?")}offset={skip}" : "")}{(take != null ? $"{(where != null || orderBy != null || skip != null ? "&" : "?")}limit={take}" : "")}";
+            var url = $"{Url}/request-policy-storage/request-policies{(where != null || orderBy != null ? $"?query={WebUtility.UrlEncode(where)}{(orderBy != null ? $"{(where != null ? " " : "cql.allrecords=1 ")}sortby {WebUtility.UrlEncode(orderBy)}" : "")}" : "")}{(skip != null ? $"{(where != null || orderBy != null ? "&" : "?")}offset={skip}" : "")}{(where != null || orderBy != null || skip != null ? "&" : "?")}limit={take ?? int.MaxValue}";
             traceSource.TraceEvent(TraceEventType.Verbose, 0, url);
             var hrm = httpClient.GetAsync(url).Result;
             if (hrm.StatusCode != HttpStatusCode.OK)
@@ -5804,12 +5901,12 @@ namespace FolioLibrary
             traceSource.TraceEvent(TraceEventType.Verbose, 0, s.Elapsed.ToString());
         }
 
-        public IEnumerable<JObject> ScheduledNotices(string where = null, string orderBy = null, int? skip = null, int? take = int.MaxValue)
+        public IEnumerable<JObject> ScheduledNotices(string where = null, string orderBy = null, int? skip = null, int? take = null)
         {
             var s = Stopwatch.StartNew();
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "Querying scheduled notices");
             AuthenticateIfNecessary();
-            var url = $"{Url}/scheduled-notice-storage/scheduled-notices{(where != null || orderBy != null ? $"?query={WebUtility.UrlEncode(where)}{(orderBy != null ? $"{(where != null ? " " : "cql.allrecords=1 ")}sortby {WebUtility.UrlEncode(orderBy)}" : "")}" : "")}{(skip != null ? $"{(where != null || orderBy != null ? "&" : "?")}offset={skip}" : "")}{(take != null ? $"{(where != null || orderBy != null || skip != null ? "&" : "?")}limit={take}" : "")}";
+            var url = $"{Url}/scheduled-notice-storage/scheduled-notices{(where != null || orderBy != null ? $"?query={WebUtility.UrlEncode(where)}{(orderBy != null ? $"{(where != null ? " " : "cql.allrecords=1 ")}sortby {WebUtility.UrlEncode(orderBy)}" : "")}" : "")}{(skip != null ? $"{(where != null || orderBy != null ? "&" : "?")}offset={skip}" : "")}{(where != null || orderBy != null || skip != null ? "&" : "?")}limit={take ?? int.MaxValue}";
             traceSource.TraceEvent(TraceEventType.Verbose, 0, url);
             var hrm = httpClient.GetAsync(url).Result;
             if (hrm.StatusCode != HttpStatusCode.OK)
@@ -5901,12 +5998,12 @@ namespace FolioLibrary
             traceSource.TraceEvent(TraceEventType.Verbose, 0, s.Elapsed.ToString());
         }
 
-        public IEnumerable<JObject> ServicePoints(string where = null, string orderBy = null, int? skip = null, int? take = int.MaxValue)
+        public IEnumerable<JObject> ServicePoints(string where = null, string orderBy = null, int? skip = null, int? take = null)
         {
             var s = Stopwatch.StartNew();
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "Querying service points");
             AuthenticateIfNecessary();
-            var url = $"{Url}/service-points{(where != null || orderBy != null ? $"?query={WebUtility.UrlEncode(where)}{(orderBy != null ? $"{(where != null ? " " : "cql.allrecords=1 ")}sortby {WebUtility.UrlEncode(orderBy)}" : "")}" : "")}{(skip != null ? $"{(where != null || orderBy != null ? "&" : "?")}offset={skip}" : "")}{(take != null ? $"{(where != null || orderBy != null || skip != null ? "&" : "?")}limit={take}" : "")}";
+            var url = $"{Url}/service-points{(where != null || orderBy != null ? $"?query={WebUtility.UrlEncode(where)}{(orderBy != null ? $"{(where != null ? " " : "cql.allrecords=1 ")}sortby {WebUtility.UrlEncode(orderBy)}" : "")}" : "")}{(skip != null ? $"{(where != null || orderBy != null ? "&" : "?")}offset={skip}" : "")}{(where != null || orderBy != null || skip != null ? "&" : "?")}limit={take ?? int.MaxValue}";
             traceSource.TraceEvent(TraceEventType.Verbose, 0, url);
             var hrm = httpClient.GetAsync(url).Result;
             if (hrm.StatusCode != HttpStatusCode.OK)
@@ -5998,12 +6095,12 @@ namespace FolioLibrary
             traceSource.TraceEvent(TraceEventType.Verbose, 0, s.Elapsed.ToString());
         }
 
-        public IEnumerable<JObject> ServicePointUsers(string where = null, string orderBy = null, int? skip = null, int? take = int.MaxValue)
+        public IEnumerable<JObject> ServicePointUsers(string where = null, string orderBy = null, int? skip = null, int? take = null)
         {
             var s = Stopwatch.StartNew();
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "Querying service point users");
             AuthenticateIfNecessary();
-            var url = $"{Url}/service-points-users{(where != null || orderBy != null ? $"?query={WebUtility.UrlEncode(where)}{(orderBy != null ? $"{(where != null ? " " : "cql.allrecords=1 ")}sortby {WebUtility.UrlEncode(orderBy)}" : "")}" : "")}{(skip != null ? $"{(where != null || orderBy != null ? "&" : "?")}offset={skip}" : "")}{(take != null ? $"{(where != null || orderBy != null || skip != null ? "&" : "?")}limit={take}" : "")}";
+            var url = $"{Url}/service-points-users{(where != null || orderBy != null ? $"?query={WebUtility.UrlEncode(where)}{(orderBy != null ? $"{(where != null ? " " : "cql.allrecords=1 ")}sortby {WebUtility.UrlEncode(orderBy)}" : "")}" : "")}{(skip != null ? $"{(where != null || orderBy != null ? "&" : "?")}offset={skip}" : "")}{(where != null || orderBy != null || skip != null ? "&" : "?")}limit={take ?? int.MaxValue}";
             traceSource.TraceEvent(TraceEventType.Verbose, 0, url);
             var hrm = httpClient.GetAsync(url).Result;
             if (hrm.StatusCode != HttpStatusCode.OK)
@@ -6095,12 +6192,12 @@ namespace FolioLibrary
             traceSource.TraceEvent(TraceEventType.Verbose, 0, s.Elapsed.ToString());
         }
 
-        public IEnumerable<JObject> Snapshots(string where = null, string orderBy = null, int? skip = null, int? take = int.MaxValue)
+        public IEnumerable<JObject> Snapshots(string where = null, string orderBy = null, int? skip = null, int? take = null)
         {
             var s = Stopwatch.StartNew();
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "Querying snapshots");
             AuthenticateIfNecessary();
-            var url = $"{Url}/source-storage/snapshots{(where != null || orderBy != null ? $"?query={WebUtility.UrlEncode(where)}{(orderBy != null ? $"{(where != null ? " " : "cql.allrecords=1 ")}sortby {WebUtility.UrlEncode(orderBy)}" : "")}" : "")}{(skip != null ? $"{(where != null || orderBy != null ? "&" : "?")}offset={skip}" : "")}{(take != null ? $"{(where != null || orderBy != null || skip != null ? "&" : "?")}limit={take}" : "")}";
+            var url = $"{Url}/source-storage/snapshots{(where != null || orderBy != null ? $"?query={WebUtility.UrlEncode(where)}{(orderBy != null ? $"{(where != null ? " " : "cql.allrecords=1 ")}sortby {WebUtility.UrlEncode(orderBy)}" : "")}" : "")}{(skip != null ? $"{(where != null || orderBy != null ? "&" : "?")}offset={skip}" : "")}{(where != null || orderBy != null || skip != null ? "&" : "?")}limit={take ?? int.MaxValue}";
             traceSource.TraceEvent(TraceEventType.Verbose, 0, url);
             var hrm = httpClient.GetAsync(url).Result;
             if (hrm.StatusCode != HttpStatusCode.OK)
@@ -6192,12 +6289,12 @@ namespace FolioLibrary
             traceSource.TraceEvent(TraceEventType.Verbose, 0, s.Elapsed.ToString());
         }
 
-        public IEnumerable<JObject> StaffSlips(string where = null, string orderBy = null, int? skip = null, int? take = int.MaxValue)
+        public IEnumerable<JObject> StaffSlips(string where = null, string orderBy = null, int? skip = null, int? take = null)
         {
             var s = Stopwatch.StartNew();
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "Querying staff slips");
             AuthenticateIfNecessary();
-            var url = $"{Url}/staff-slips-storage/staff-slips{(where != null || orderBy != null ? $"?query={WebUtility.UrlEncode(where)}{(orderBy != null ? $"{(where != null ? " " : "cql.allrecords=1 ")}sortby {WebUtility.UrlEncode(orderBy)}" : "")}" : "")}{(skip != null ? $"{(where != null || orderBy != null ? "&" : "?")}offset={skip}" : "")}{(take != null ? $"{(where != null || orderBy != null || skip != null ? "&" : "?")}limit={take}" : "")}";
+            var url = $"{Url}/staff-slips-storage/staff-slips{(where != null || orderBy != null ? $"?query={WebUtility.UrlEncode(where)}{(orderBy != null ? $"{(where != null ? " " : "cql.allrecords=1 ")}sortby {WebUtility.UrlEncode(orderBy)}" : "")}" : "")}{(skip != null ? $"{(where != null || orderBy != null ? "&" : "?")}offset={skip}" : "")}{(where != null || orderBy != null || skip != null ? "&" : "?")}limit={take ?? int.MaxValue}";
             traceSource.TraceEvent(TraceEventType.Verbose, 0, url);
             var hrm = httpClient.GetAsync(url).Result;
             if (hrm.StatusCode != HttpStatusCode.OK)
@@ -6289,12 +6386,12 @@ namespace FolioLibrary
             traceSource.TraceEvent(TraceEventType.Verbose, 0, s.Elapsed.ToString());
         }
 
-        public IEnumerable<JObject> StatisticalCodes(string where = null, string orderBy = null, int? skip = null, int? take = int.MaxValue)
+        public IEnumerable<JObject> StatisticalCodes(string where = null, string orderBy = null, int? skip = null, int? take = null)
         {
             var s = Stopwatch.StartNew();
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "Querying statistical codes");
             AuthenticateIfNecessary();
-            var url = $"{Url}/statistical-codes{(where != null || orderBy != null ? $"?query={WebUtility.UrlEncode(where)}{(orderBy != null ? $"{(where != null ? " " : "cql.allrecords=1 ")}sortby {WebUtility.UrlEncode(orderBy)}" : "")}" : "")}{(skip != null ? $"{(where != null || orderBy != null ? "&" : "?")}offset={skip}" : "")}{(take != null ? $"{(where != null || orderBy != null || skip != null ? "&" : "?")}limit={take}" : "")}";
+            var url = $"{Url}/statistical-codes{(where != null || orderBy != null ? $"?query={WebUtility.UrlEncode(where)}{(orderBy != null ? $"{(where != null ? " " : "cql.allrecords=1 ")}sortby {WebUtility.UrlEncode(orderBy)}" : "")}" : "")}{(skip != null ? $"{(where != null || orderBy != null ? "&" : "?")}offset={skip}" : "")}{(where != null || orderBy != null || skip != null ? "&" : "?")}limit={take ?? int.MaxValue}";
             traceSource.TraceEvent(TraceEventType.Verbose, 0, url);
             var hrm = httpClient.GetAsync(url).Result;
             if (hrm.StatusCode != HttpStatusCode.OK)
@@ -6386,12 +6483,12 @@ namespace FolioLibrary
             traceSource.TraceEvent(TraceEventType.Verbose, 0, s.Elapsed.ToString());
         }
 
-        public IEnumerable<JObject> StatisticalCodeTypes(string where = null, string orderBy = null, int? skip = null, int? take = int.MaxValue)
+        public IEnumerable<JObject> StatisticalCodeTypes(string where = null, string orderBy = null, int? skip = null, int? take = null)
         {
             var s = Stopwatch.StartNew();
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "Querying statistical code types");
             AuthenticateIfNecessary();
-            var url = $"{Url}/statistical-code-types{(where != null || orderBy != null ? $"?query={WebUtility.UrlEncode(where)}{(orderBy != null ? $"{(where != null ? " " : "cql.allrecords=1 ")}sortby {WebUtility.UrlEncode(orderBy)}" : "")}" : "")}{(skip != null ? $"{(where != null || orderBy != null ? "&" : "?")}offset={skip}" : "")}{(take != null ? $"{(where != null || orderBy != null || skip != null ? "&" : "?")}limit={take}" : "")}";
+            var url = $"{Url}/statistical-code-types{(where != null || orderBy != null ? $"?query={WebUtility.UrlEncode(where)}{(orderBy != null ? $"{(where != null ? " " : "cql.allrecords=1 ")}sortby {WebUtility.UrlEncode(orderBy)}" : "")}" : "")}{(skip != null ? $"{(where != null || orderBy != null ? "&" : "?")}offset={skip}" : "")}{(where != null || orderBy != null || skip != null ? "&" : "?")}limit={take ?? int.MaxValue}";
             traceSource.TraceEvent(TraceEventType.Verbose, 0, url);
             var hrm = httpClient.GetAsync(url).Result;
             if (hrm.StatusCode != HttpStatusCode.OK)
@@ -6483,12 +6580,12 @@ namespace FolioLibrary
             traceSource.TraceEvent(TraceEventType.Verbose, 0, s.Elapsed.ToString());
         }
 
-        public IEnumerable<JObject> Users(string where = null, string orderBy = null, int? skip = null, int? take = int.MaxValue)
+        public IEnumerable<JObject> Users(string where = null, string orderBy = null, int? skip = null, int? take = null)
         {
             var s = Stopwatch.StartNew();
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "Querying users");
             AuthenticateIfNecessary();
-            var url = $"{Url}/users{(where != null || orderBy != null ? $"?query={WebUtility.UrlEncode(where)}{(orderBy != null ? $"{(where != null ? " " : "cql.allrecords=1 ")}sortby {WebUtility.UrlEncode(orderBy)}" : "")}" : "")}{(skip != null ? $"{(where != null || orderBy != null ? "&" : "?")}offset={skip}" : "")}{(take != null ? $"{(where != null || orderBy != null || skip != null ? "&" : "?")}limit={take}" : "")}";
+            var url = $"{Url}/users{(where != null || orderBy != null ? $"?query={WebUtility.UrlEncode(where)}{(orderBy != null ? $"{(where != null ? " " : "cql.allrecords=1 ")}sortby {WebUtility.UrlEncode(orderBy)}" : "")}" : "")}{(skip != null ? $"{(where != null || orderBy != null ? "&" : "?")}offset={skip}" : "")}{(where != null || orderBy != null || skip != null ? "&" : "?")}limit={take ?? int.MaxValue}";
             traceSource.TraceEvent(TraceEventType.Verbose, 0, url);
             var hrm = httpClient.GetAsync(url).Result;
             if (hrm.StatusCode != HttpStatusCode.OK)
@@ -6580,12 +6677,12 @@ namespace FolioLibrary
             traceSource.TraceEvent(TraceEventType.Verbose, 0, s.Elapsed.ToString());
         }
 
-        public IEnumerable<JObject> UserAcquisitionsUnits(string where = null, string orderBy = null, int? skip = null, int? take = int.MaxValue)
+        public IEnumerable<JObject> UserAcquisitionsUnits(string where = null, string orderBy = null, int? skip = null, int? take = null)
         {
             var s = Stopwatch.StartNew();
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "Querying user acquisitions units");
             AuthenticateIfNecessary();
-            var url = $"{Url}/acquisitions-units-storage/memberships{(where != null || orderBy != null ? $"?query={WebUtility.UrlEncode(where)}{(orderBy != null ? $"{(where != null ? " " : "cql.allrecords=1 ")}sortby {WebUtility.UrlEncode(orderBy)}" : "")}" : "")}{(skip != null ? $"{(where != null || orderBy != null ? "&" : "?")}offset={skip}" : "")}{(take != null ? $"{(where != null || orderBy != null || skip != null ? "&" : "?")}limit={take}" : "")}";
+            var url = $"{Url}/acquisitions-units-storage/memberships{(where != null || orderBy != null ? $"?query={WebUtility.UrlEncode(where)}{(orderBy != null ? $"{(where != null ? " " : "cql.allrecords=1 ")}sortby {WebUtility.UrlEncode(orderBy)}" : "")}" : "")}{(skip != null ? $"{(where != null || orderBy != null ? "&" : "?")}offset={skip}" : "")}{(where != null || orderBy != null || skip != null ? "&" : "?")}limit={take ?? int.MaxValue}";
             traceSource.TraceEvent(TraceEventType.Verbose, 0, url);
             var hrm = httpClient.GetAsync(url).Result;
             if (hrm.StatusCode != HttpStatusCode.OK)
@@ -6677,12 +6774,12 @@ namespace FolioLibrary
             traceSource.TraceEvent(TraceEventType.Verbose, 0, s.Elapsed.ToString());
         }
 
-        public IEnumerable<JObject> Vouchers(string where = null, string orderBy = null, int? skip = null, int? take = int.MaxValue)
+        public IEnumerable<JObject> Vouchers(string where = null, string orderBy = null, int? skip = null, int? take = null)
         {
             var s = Stopwatch.StartNew();
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "Querying vouchers");
             AuthenticateIfNecessary();
-            var url = $"{Url}/voucher-storage/vouchers{(where != null || orderBy != null ? $"?query={WebUtility.UrlEncode(where)}{(orderBy != null ? $"{(where != null ? " " : "cql.allrecords=1 ")}sortby {WebUtility.UrlEncode(orderBy)}" : "")}" : "")}{(skip != null ? $"{(where != null || orderBy != null ? "&" : "?")}offset={skip}" : "")}{(take != null ? $"{(where != null || orderBy != null || skip != null ? "&" : "?")}limit={take}" : "")}";
+            var url = $"{Url}/voucher-storage/vouchers{(where != null || orderBy != null ? $"?query={WebUtility.UrlEncode(where)}{(orderBy != null ? $"{(where != null ? " " : "cql.allrecords=1 ")}sortby {WebUtility.UrlEncode(orderBy)}" : "")}" : "")}{(skip != null ? $"{(where != null || orderBy != null ? "&" : "?")}offset={skip}" : "")}{(where != null || orderBy != null || skip != null ? "&" : "?")}limit={take ?? int.MaxValue}";
             traceSource.TraceEvent(TraceEventType.Verbose, 0, url);
             var hrm = httpClient.GetAsync(url).Result;
             if (hrm.StatusCode != HttpStatusCode.OK)
@@ -6774,12 +6871,12 @@ namespace FolioLibrary
             traceSource.TraceEvent(TraceEventType.Verbose, 0, s.Elapsed.ToString());
         }
 
-        public IEnumerable<JObject> VoucherItems(string where = null, string orderBy = null, int? skip = null, int? take = int.MaxValue)
+        public IEnumerable<JObject> VoucherItems(string where = null, string orderBy = null, int? skip = null, int? take = null)
         {
             var s = Stopwatch.StartNew();
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "Querying voucher items");
             AuthenticateIfNecessary();
-            var url = $"{Url}/voucher-storage/voucher-lines{(where != null || orderBy != null ? $"?query={WebUtility.UrlEncode(where)}{(orderBy != null ? $"{(where != null ? " " : "cql.allrecords=1 ")}sortby {WebUtility.UrlEncode(orderBy)}" : "")}" : "")}{(skip != null ? $"{(where != null || orderBy != null ? "&" : "?")}offset={skip}" : "")}{(take != null ? $"{(where != null || orderBy != null || skip != null ? "&" : "?")}limit={take}" : "")}";
+            var url = $"{Url}/voucher-storage/voucher-lines{(where != null || orderBy != null ? $"?query={WebUtility.UrlEncode(where)}{(orderBy != null ? $"{(where != null ? " " : "cql.allrecords=1 ")}sortby {WebUtility.UrlEncode(orderBy)}" : "")}" : "")}{(skip != null ? $"{(where != null || orderBy != null ? "&" : "?")}offset={skip}" : "")}{(where != null || orderBy != null || skip != null ? "&" : "?")}limit={take ?? int.MaxValue}";
             traceSource.TraceEvent(TraceEventType.Verbose, 0, url);
             var hrm = httpClient.GetAsync(url).Result;
             if (hrm.StatusCode != HttpStatusCode.OK)

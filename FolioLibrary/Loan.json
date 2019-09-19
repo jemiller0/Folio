@@ -85,6 +85,10 @@
       "description": "Patron Group Id at checkout",
       "type": "string"
     },
+    "dueDateChangedByRecall": {
+      "description": "Indicates whether or not this loan had its due date modified by a recall on the loaned item",
+      "type": "boolean"
+    },
     "metadata": {
       "title": "Metadata Schema",
       "description": "Metadata about creation and changes to records, provided by the server (client should not provide)",

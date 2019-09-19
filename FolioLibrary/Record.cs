@@ -34,6 +34,12 @@ namespace FolioLibrary
         [Column("created_by"), Display(Name = "Creation User Id", Order = 4), Editable(false)]
         public virtual string CreationUserId { get; set; }
 
-        public override string ToString() => $"{{ {nameof(Id)} = {Id}, {nameof(Content)} = {Content}, {nameof(CreationTime)} = {CreationTime}, {nameof(CreationUserId)} = {CreationUserId} }}";
+        [Column("jobexecutionid"), Display(Name = "Snapshot", Order = 5), Editable(false), ForeignKey("Snapshot")]
+        public virtual Guid? Jobexecutionid { get; set; }
+
+        [Display(Order = 6)]
+        public virtual Snapshot Snapshot { get; set; }
+
+        public override string ToString() => $"{{ {nameof(Id)} = {Id}, {nameof(Content)} = {Content}, {nameof(CreationTime)} = {CreationTime}, {nameof(CreationUserId)} = {CreationUserId}, {nameof(Jobexecutionid)} = {Jobexecutionid} }}";
     }
 }

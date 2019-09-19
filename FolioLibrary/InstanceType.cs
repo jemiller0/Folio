@@ -1,5 +1,6 @@
 using NJsonSchema;
 using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.IO;
@@ -27,6 +28,9 @@ namespace FolioLibrary
 
         [Column("jsonb"), CustomValidation(typeof(InstanceType), nameof(ValidateContent)), DataType(DataType.MultilineText), Display(Order = 2), Required]
         public virtual string Content { get; set; }
+
+        [ScaffoldColumn(false)]
+        public virtual ICollection<Instance> Instances { get; set; }
 
         public override string ToString() => $"{{ {nameof(Id)} = {Id}, {nameof(Content)} = {Content} }}";
     }

@@ -12,7 +12,7 @@ namespace FolioLibrary
 {
     public partial class FolioBulkCopyContext : IDisposable
     {
-        private DataTable accountsDataTable, acquisitionsUnitsDataTable, addressTypesDataTable, alertsDataTable, alternativeTitleTypesDataTable, auditLoansDataTable, authAttemptsDataTable, authCredentialsHistoriesDataTable, authPasswordActionsDataTable, blocksDataTable, budgetsDataTable, callNumberTypesDataTable, campusesDataTable, cancellationReasonsDataTable, categoriesDataTable, circulationRulesDataTable, classificationTypesDataTable, commentsDataTable, contactsDataTable, contributorNameTypesDataTable, contributorTypesDataTable, electronicAccessRelationshipsDataTable, encumbrancesDataTable, errorRecordsDataTable, eventLogsDataTable, feesDataTable, feeActionsDataTable, fiscalYearsDataTable, fixedDueDateSchedulesDataTable, fundsDataTable, fundDistributionsDataTable, groupsDataTable, holdingsDataTable, holdingNoteTypesDataTable, holdingTypesDataTable, idTypesDataTable, illPoliciesDataTable, instancesDataTable, instanceFormatsDataTable, instanceNoteTypesDataTable, instanceRelationshipsDataTable, instanceRelationshipTypesDataTable, instanceSourceMarcsDataTable, instanceStatusesDataTable, instanceTypesDataTable, institutionsDataTable, interfacesDataTable, interfaceCredentialsDataTable, invoicesDataTable, invoiceItemsDataTable, itemsDataTable, itemNoteTypesDataTable, jobExecutionsDataTable, jobExecutionSourceChunksDataTable, ledgersDataTable, librariesDataTable, loansDataTable, loanPoliciesDataTable, loanTypesDataTable, locationsDataTable, loginsDataTable, marcRecordsDataTable, materialTypesDataTable, modeOfIssuancesDataTable, natureOfContentTermsDataTable, notesDataTable, noteTypesDataTable, ordersDataTable, orderInvoicesDataTable, orderItemsDataTable, organizationsDataTable, ownersDataTable, patronNoticePoliciesDataTable, paymentsDataTable, permissionsDataTable, permissionsUsersDataTable, piecesDataTable, proxiesDataTable, rawRecordsDataTable, recordsDataTable, refundsDataTable, reportingCodesDataTable, requestsDataTable, requestPoliciesDataTable, scheduledNoticesDataTable, servicePointsDataTable, servicePointUsersDataTable, snapshotsDataTable, staffSlipsDataTable, statisticalCodesDataTable, statisticalCodeTypesDataTable, tagsDataTable, transactionsDataTable, transfersDataTable, transferCriteriasDataTable, usersDataTable, userAcquisitionsUnitsDataTable, vouchersDataTable, voucherItemsDataTable, waivesDataTable;
+        private DataTable accountsDataTable, acquisitionsUnitsDataTable, addressTypesDataTable, alertsDataTable, alternativeTitleTypesDataTable, auditLoansDataTable, authAttemptsDataTable, authCredentialsHistoriesDataTable, authPasswordActionsDataTable, blocksDataTable, budgetsDataTable, callNumberTypesDataTable, campusesDataTable, cancellationReasonsDataTable, categoriesDataTable, circulationRulesDataTable, classificationTypesDataTable, commentsDataTable, contactsDataTable, contributorNameTypesDataTable, contributorTypesDataTable, documentsDataTable, electronicAccessRelationshipsDataTable, encumbrancesDataTable, errorRecordsDataTable, eventLogsDataTable, feesDataTable, feeActionsDataTable, fiscalYearsDataTable, fixedDueDateSchedulesDataTable, fundsDataTable, fundDistributionsDataTable, groupsDataTable, holdingsDataTable, holdingNoteTypesDataTable, holdingTypesDataTable, idTypesDataTable, illPoliciesDataTable, instancesDataTable, instanceFormatsDataTable, instanceNoteTypesDataTable, instanceRelationshipsDataTable, instanceRelationshipTypesDataTable, instanceSourceMarcsDataTable, instanceStatusesDataTable, instanceTypesDataTable, institutionsDataTable, interfacesDataTable, interfaceCredentialsDataTable, invoicesDataTable, invoiceItemsDataTable, itemsDataTable, itemDamagedStatusesDataTable, itemNoteTypesDataTable, jobExecutionsDataTable, jobExecutionSourceChunksDataTable, ledgersDataTable, librariesDataTable, loansDataTable, loanPoliciesDataTable, loanTypesDataTable, locationsDataTable, loginsDataTable, marcRecordsDataTable, materialTypesDataTable, modeOfIssuancesDataTable, natureOfContentTermsDataTable, notesDataTable, noteTypesDataTable, ordersDataTable, orderInvoicesDataTable, orderItemsDataTable, organizationsDataTable, ownersDataTable, patronNoticePoliciesDataTable, paymentsDataTable, permissionsDataTable, permissionsUsersDataTable, piecesDataTable, proxiesDataTable, rawRecordsDataTable, recordsDataTable, refundsDataTable, reportingCodesDataTable, requestsDataTable, requestPoliciesDataTable, scheduledNoticesDataTable, servicePointsDataTable, servicePointUsersDataTable, snapshotsDataTable, staffSlipsDataTable, statisticalCodesDataTable, statisticalCodeTypesDataTable, tagsDataTable, transactionsDataTable, transfersDataTable, transferCriteriasDataTable, usersDataTable, userAcquisitionsUnitsDataTable, vouchersDataTable, voucherItemsDataTable, waivesDataTable;
         private bool checkConstraints;
         private string connectionString;
         private bool identityInsert;
@@ -443,6 +443,29 @@ namespace FolioLibrary
             contributorTypesDataTable.Rows.Add(dr);
         }
 
+        public void Insert(Document document)
+        {
+            if (documentsDataTable == null)
+            {
+                documentsDataTable = new DataTable();
+                documentsDataTable.Columns.Add(new DataColumn { ColumnName = "id", DataType = typeof(Guid) });
+                documentsDataTable.Columns.Add(new DataColumn { ColumnName = "jsonb", DataType = typeof(string) });
+                documentsDataTable.Columns.Add(new DataColumn { ColumnName = "creation_date", DataType = typeof(DateTime) });
+                documentsDataTable.Columns.Add(new DataColumn { ColumnName = "created_by", DataType = typeof(string) });
+                documentsDataTable.Columns.Add(new DataColumn { ColumnName = "invoiceid", DataType = typeof(Guid) });
+                documentsDataTable.Columns.Add(new DataColumn { ColumnName = "document_data", DataType = typeof(string) });
+                documentsDataTable.Columns["jsonb"].ExtendedProperties["NpgsqlDbType"] = NpgsqlDbType.Jsonb;
+            }
+            var dr = documentsDataTable.NewRow();
+            dr["id"] = (object)document.Id ?? DBNull.Value;
+            dr["jsonb"] = (object)document.Content ?? DBNull.Value;
+            dr["creation_date"] = (object)document.CreationTime ?? DBNull.Value;
+            dr["created_by"] = (object)document.CreationUserId ?? DBNull.Value;
+            dr["invoiceid"] = (object)document.Invoiceid ?? DBNull.Value;
+            dr["document_data"] = (object)document.DocumentData ?? DBNull.Value;
+            documentsDataTable.Rows.Add(dr);
+        }
+
         public void Insert(ElectronicAccessRelationship electronicAccessRelationship)
         {
             if (electronicAccessRelationshipsDataTable == null)
@@ -776,6 +799,7 @@ namespace FolioLibrary
                 instancesDataTable.Columns.Add(new DataColumn { ColumnName = "created_by", DataType = typeof(string) });
                 instancesDataTable.Columns.Add(new DataColumn { ColumnName = "instancestatusid", DataType = typeof(Guid) });
                 instancesDataTable.Columns.Add(new DataColumn { ColumnName = "modeofissuanceid", DataType = typeof(Guid) });
+                instancesDataTable.Columns.Add(new DataColumn { ColumnName = "instancetypeid", DataType = typeof(Guid) });
                 instancesDataTable.Columns["jsonb"].ExtendedProperties["NpgsqlDbType"] = NpgsqlDbType.Jsonb;
             }
             var dr = instancesDataTable.NewRow();
@@ -785,6 +809,7 @@ namespace FolioLibrary
             dr["created_by"] = (object)instance.CreationUserId ?? DBNull.Value;
             dr["instancestatusid"] = (object)instance.Instancestatusid ?? DBNull.Value;
             dr["modeofissuanceid"] = (object)instance.Modeofissuanceid ?? DBNull.Value;
+            dr["instancetypeid"] = (object)instance.Instancetypeid ?? DBNull.Value;
             instancesDataTable.Rows.Add(dr);
         }
 
@@ -1043,6 +1068,25 @@ namespace FolioLibrary
             dr["permanentlocationid"] = (object)item.Permanentlocationid ?? DBNull.Value;
             dr["temporarylocationid"] = (object)item.Temporarylocationid ?? DBNull.Value;
             itemsDataTable.Rows.Add(dr);
+        }
+
+        public void Insert(ItemDamagedStatus itemDamagedStatus)
+        {
+            if (itemDamagedStatusesDataTable == null)
+            {
+                itemDamagedStatusesDataTable = new DataTable();
+                itemDamagedStatusesDataTable.Columns.Add(new DataColumn { ColumnName = "id", DataType = typeof(Guid) });
+                itemDamagedStatusesDataTable.Columns.Add(new DataColumn { ColumnName = "jsonb", DataType = typeof(string) });
+                itemDamagedStatusesDataTable.Columns.Add(new DataColumn { ColumnName = "creation_date", DataType = typeof(DateTime) });
+                itemDamagedStatusesDataTable.Columns.Add(new DataColumn { ColumnName = "created_by", DataType = typeof(string) });
+                itemDamagedStatusesDataTable.Columns["jsonb"].ExtendedProperties["NpgsqlDbType"] = NpgsqlDbType.Jsonb;
+            }
+            var dr = itemDamagedStatusesDataTable.NewRow();
+            dr["id"] = (object)itemDamagedStatus.Id ?? DBNull.Value;
+            dr["jsonb"] = (object)itemDamagedStatus.Content ?? DBNull.Value;
+            dr["creation_date"] = (object)itemDamagedStatus.CreationTime ?? DBNull.Value;
+            dr["created_by"] = (object)itemDamagedStatus.CreationUserId ?? DBNull.Value;
+            itemDamagedStatusesDataTable.Rows.Add(dr);
         }
 
         public void Insert(ItemNoteType itemNoteType)
@@ -1588,6 +1632,7 @@ namespace FolioLibrary
                 recordsDataTable.Columns.Add(new DataColumn { ColumnName = "jsonb", DataType = typeof(string) });
                 recordsDataTable.Columns.Add(new DataColumn { ColumnName = "creation_date", DataType = typeof(DateTime) });
                 recordsDataTable.Columns.Add(new DataColumn { ColumnName = "created_by", DataType = typeof(string) });
+                recordsDataTable.Columns.Add(new DataColumn { ColumnName = "jobexecutionid", DataType = typeof(Guid) });
                 recordsDataTable.Columns["jsonb"].ExtendedProperties["NpgsqlDbType"] = NpgsqlDbType.Jsonb;
             }
             var dr = recordsDataTable.NewRow();
@@ -1595,6 +1640,7 @@ namespace FolioLibrary
             dr["jsonb"] = (object)record.Content ?? DBNull.Value;
             dr["creation_date"] = (object)record.CreationTime ?? DBNull.Value;
             dr["created_by"] = (object)record.CreationUserId ?? DBNull.Value;
+            dr["jobexecutionid"] = (object)record.Jobexecutionid ?? DBNull.Value;
             recordsDataTable.Rows.Add(dr);
         }
 
@@ -2225,6 +2271,19 @@ namespace FolioLibrary
                 sqlBulkCopy.WriteToServer(contributorTypesDataTable);
                 contributorTypesDataTable.Clear();
             }
+            if (documentsDataTable != null && documentsDataTable.Rows.Count > 0)
+            {
+                sqlBulkCopy.DestinationTableName = $"diku_mod_invoice_storage{(IsMySql ? "_" : ".")}documents";
+                sqlBulkCopy.ColumnMappings.Clear();
+                sqlBulkCopy.ColumnMappings.Add("id", "id");
+                sqlBulkCopy.ColumnMappings.Add("jsonb", "jsonb");
+                sqlBulkCopy.ColumnMappings.Add("creation_date", "creation_date");
+                sqlBulkCopy.ColumnMappings.Add("created_by", "created_by");
+                sqlBulkCopy.ColumnMappings.Add("invoiceid", "invoiceid");
+                sqlBulkCopy.ColumnMappings.Add("document_data", "document_data");
+                sqlBulkCopy.WriteToServer(documentsDataTable);
+                documentsDataTable.Clear();
+            }
             if (electronicAccessRelationshipsDataTable != null && electronicAccessRelationshipsDataTable.Rows.Count > 0)
             {
                 sqlBulkCopy.DestinationTableName = $"diku_mod_inventory_storage{(IsMySql ? "_" : ".")}electronic_access_relationship";
@@ -2420,6 +2479,7 @@ namespace FolioLibrary
                 sqlBulkCopy.ColumnMappings.Add("created_by", "created_by");
                 sqlBulkCopy.ColumnMappings.Add("instancestatusid", "instancestatusid");
                 sqlBulkCopy.ColumnMappings.Add("modeofissuanceid", "modeofissuanceid");
+                sqlBulkCopy.ColumnMappings.Add("instancetypeid", "instancetypeid");
                 sqlBulkCopy.WriteToServer(instancesDataTable);
                 instancesDataTable.Clear();
             }
@@ -2570,6 +2630,17 @@ namespace FolioLibrary
                 sqlBulkCopy.ColumnMappings.Add("temporarylocationid", "temporarylocationid");
                 sqlBulkCopy.WriteToServer(itemsDataTable);
                 itemsDataTable.Clear();
+            }
+            if (itemDamagedStatusesDataTable != null && itemDamagedStatusesDataTable.Rows.Count > 0)
+            {
+                sqlBulkCopy.DestinationTableName = $"diku_mod_inventory_storage{(IsMySql ? "_" : ".")}item_damaged_status";
+                sqlBulkCopy.ColumnMappings.Clear();
+                sqlBulkCopy.ColumnMappings.Add("id", "id");
+                sqlBulkCopy.ColumnMappings.Add("jsonb", "jsonb");
+                sqlBulkCopy.ColumnMappings.Add("creation_date", "creation_date");
+                sqlBulkCopy.ColumnMappings.Add("created_by", "created_by");
+                sqlBulkCopy.WriteToServer(itemDamagedStatusesDataTable);
+                itemDamagedStatusesDataTable.Clear();
             }
             if (itemNoteTypesDataTable != null && itemNoteTypesDataTable.Rows.Count > 0)
             {
@@ -2888,6 +2959,7 @@ namespace FolioLibrary
                 sqlBulkCopy.ColumnMappings.Add("jsonb", "jsonb");
                 sqlBulkCopy.ColumnMappings.Add("creation_date", "creation_date");
                 sqlBulkCopy.ColumnMappings.Add("created_by", "created_by");
+                sqlBulkCopy.ColumnMappings.Add("jobexecutionid", "jobexecutionid");
                 sqlBulkCopy.WriteToServer(recordsDataTable);
                 recordsDataTable.Clear();
             }
@@ -3145,6 +3217,7 @@ namespace FolioLibrary
             if (contactsDataTable != null) contactsDataTable.Dispose();
             if (contributorNameTypesDataTable != null) contributorNameTypesDataTable.Dispose();
             if (contributorTypesDataTable != null) contributorTypesDataTable.Dispose();
+            if (documentsDataTable != null) documentsDataTable.Dispose();
             if (electronicAccessRelationshipsDataTable != null) electronicAccessRelationshipsDataTable.Dispose();
             if (encumbrancesDataTable != null) encumbrancesDataTable.Dispose();
             if (errorRecordsDataTable != null) errorRecordsDataTable.Dispose();
@@ -3175,6 +3248,7 @@ namespace FolioLibrary
             if (invoicesDataTable != null) invoicesDataTable.Dispose();
             if (invoiceItemsDataTable != null) invoiceItemsDataTable.Dispose();
             if (itemsDataTable != null) itemsDataTable.Dispose();
+            if (itemDamagedStatusesDataTable != null) itemDamagedStatusesDataTable.Dispose();
             if (itemNoteTypesDataTable != null) itemNoteTypesDataTable.Dispose();
             if (jobExecutionsDataTable != null) jobExecutionsDataTable.Dispose();
             if (jobExecutionSourceChunksDataTable != null) jobExecutionSourceChunksDataTable.Dispose();

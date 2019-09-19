@@ -16,6 +16,7 @@ namespace FolioConsoleApplication
     {
         private static bool api;
         private static bool force;
+        private static int? take;
         private readonly static TraceSource traceSource = new TraceSource("FolioConsoleApplication", SourceLevels.Information);
         private static bool validate;
         private static bool whatIf;
@@ -37,7 +38,7 @@ namespace FolioConsoleApplication
                 Initialize();
                 if (args.Length == 0)
                 {
-                    traceSource.TraceEvent(TraceEventType.Critical, 0, "Usage: dotnet FolioConsoleApplication.dll [-All] [-Api] [-Delete] [-Force] [-Load] [-Save] [-Validate] [-Verbose] [-WhatIf] [-AllOrders] [-AllUsers] [-AllInventory] [-AllFinance] [-AllCirculation] [-AllOrganizations] [-AllSource] [-AllInvoices] [-AllLogin] [-AllPermissions] [-AcquisitionsUnitsPath <string>] [-AcquisitionsUnitsWhere <string>] [-AddressTypesPath <string>] [-AddressTypesWhere <string>] [-AlertsPath <string>] [-AlertsWhere <string>] [-AlternativeTitleTypesPath <string>] [-AlternativeTitleTypesWhere <string>] [-BudgetsPath <string>] [-BudgetsWhere <string>] [-CallNumberTypesPath <string>] [-CallNumberTypesWhere <string>] [-CampusesPath <string>] [-CampusesWhere <string>] [-CancellationReasonsPath <string>] [-CancellationReasonsWhere <string>] [-CategoriesPath <string>] [-CategoriesWhere <string>] [-ClassificationTypesPath <string>] [-ClassificationTypesWhere <string>] [-ContactsPath <string>] [-ContactsWhere <string>] [-ContributorNameTypesPath <string>] [-ContributorNameTypesWhere <string>] [-ContributorTypesPath <string>] [-ContributorTypesWhere <string>] [-ElectronicAccessRelationshipsPath <string>] [-ElectronicAccessRelationshipsWhere <string>] [-EncumbrancesPath <string>] [-EncumbrancesWhere <string>] [-ErrorRecordsPath <string>] [-ErrorRecordsWhere <string>] [-FiscalYearsPath <string>] [-FiscalYearsWhere <string>] [-FixedDueDateSchedulesPath <string>] [-FixedDueDateSchedulesWhere <string>] [-FundsPath <string>] [-FundsWhere <string>] [-FundDistributionsPath <string>] [-FundDistributionsWhere <string>] [-GroupsPath <string>] [-GroupsWhere <string>] [-HoldingsPath <string>] [-HoldingsWhere <string>] [-HoldingNoteTypesPath <string>] [-HoldingNoteTypesWhere <string>] [-HoldingTypesPath <string>] [-HoldingTypesWhere <string>] [-IdTypesPath <string>] [-IdTypesWhere <string>] [-IllPoliciesPath <string>] [-IllPoliciesWhere <string>] [-InstancesPath <string>] [-InstancesWhere <string>] [-InstanceFormatsPath <string>] [-InstanceFormatsWhere <string>] [-InstanceNoteTypesPath <string>] [-InstanceNoteTypesWhere <string>] [-InstanceRelationshipsPath <string>] [-InstanceRelationshipsWhere <string>] [-InstanceRelationshipTypesPath <string>] [-InstanceRelationshipTypesWhere <string>] [-InstanceStatusesPath <string>] [-InstanceStatusesWhere <string>] [-InstanceTypesPath <string>] [-InstanceTypesWhere <string>] [-InstitutionsPath <string>] [-InstitutionsWhere <string>] [-InterfacesPath <string>] [-InterfacesWhere <string>] [-InterfaceCredentialsPath <string>] [-InterfaceCredentialsWhere <string>] [-InvoicesPath <string>] [-InvoicesWhere <string>] [-InvoiceItemsPath <string>] [-InvoiceItemsWhere <string>] [-ItemsPath <string>] [-ItemsWhere <string>] [-ItemNoteTypesPath <string>] [-ItemNoteTypesWhere <string>] [-LedgersPath <string>] [-LedgersWhere <string>] [-LibrariesPath <string>] [-LibrariesWhere <string>] [-LoansPath <string>] [-LoansWhere <string>] [-LoanPoliciesPath <string>] [-LoanPoliciesWhere <string>] [-LoanTypesPath <string>] [-LoanTypesWhere <string>] [-LocationsPath <string>] [-LocationsWhere <string>] [-LoginsPath <string>] [-LoginsWhere <string>] [-MarcRecordsPath <string>] [-MarcRecordsWhere <string>] [-MaterialTypesPath <string>] [-MaterialTypesWhere <string>] [-ModeOfIssuancesPath <string>] [-ModeOfIssuancesWhere <string>] [-NatureOfContentTermsPath <string>] [-NatureOfContentTermsWhere <string>] [-OrdersPath <string>] [-OrdersWhere <string>] [-OrderItemsPath <string>] [-OrderItemsWhere <string>] [-OrganizationsPath <string>] [-OrganizationsWhere <string>] [-PatronNoticePoliciesPath <string>] [-PatronNoticePoliciesWhere <string>] [-PermissionsPath <string>] [-PermissionsWhere <string>] [-PermissionsUsersPath <string>] [-PermissionsUsersWhere <string>] [-PiecesPath <string>] [-PiecesWhere <string>] [-ProxiesPath <string>] [-ProxiesWhere <string>] [-RawRecordsPath <string>] [-RawRecordsWhere <string>] [-RecordsPath <string>] [-RecordsWhere <string>] [-ReportingCodesPath <string>] [-ReportingCodesWhere <string>] [-RequestsPath <string>] [-RequestsWhere <string>] [-RequestPoliciesPath <string>] [-RequestPoliciesWhere <string>] [-ScheduledNoticesPath <string>] [-ScheduledNoticesWhere <string>] [-ServicePointsPath <string>] [-ServicePointsWhere <string>] [-ServicePointUsersPath <string>] [-ServicePointUsersWhere <string>] [-SnapshotsPath <string>] [-SnapshotsWhere <string>] [-StaffSlipsPath <string>] [-StaffSlipsWhere <string>] [-StatisticalCodesPath <string>] [-StatisticalCodesWhere <string>] [-StatisticalCodeTypesPath <string>] [-StatisticalCodeTypesWhere <string>] [-UsersPath <string>] [-UsersWhere <string>] [-UserAcquisitionsUnitsPath <string>] [-UserAcquisitionsUnitsWhere <string>] [-VouchersPath <string>] [-VouchersWhere <string>] [-VoucherItemsPath <string>] [-VoucherItemsWhere <string>]");
+                    traceSource.TraceEvent(TraceEventType.Critical, 0, "Usage: dotnet FolioConsoleApplication.dll [-All] [-Api] [-Delete] [-Force] [-Load] [-Save] [-Validate] [-Verbose] [-WhatIf] [-AllOrders] [-AllUsers] [-AllInventory] [-AllFinance] [-AllCirculation] [-AllOrganizations] [-AllInvoices] [-AllSource] [-AllLogin] [-AllPermissions] [-AcquisitionsUnitsPath <string>] [-AcquisitionsUnitsWhere <string>] [-AddressTypesPath <string>] [-AddressTypesWhere <string>] [-AlertsPath <string>] [-AlertsWhere <string>] [-AlternativeTitleTypesPath <string>] [-AlternativeTitleTypesWhere <string>] [-BudgetsPath <string>] [-BudgetsWhere <string>] [-CallNumberTypesPath <string>] [-CallNumberTypesWhere <string>] [-CampusesPath <string>] [-CampusesWhere <string>] [-CancellationReasonsPath <string>] [-CancellationReasonsWhere <string>] [-CategoriesPath <string>] [-CategoriesWhere <string>] [-ClassificationTypesPath <string>] [-ClassificationTypesWhere <string>] [-ContactsPath <string>] [-ContactsWhere <string>] [-ContributorNameTypesPath <string>] [-ContributorNameTypesWhere <string>] [-ContributorTypesPath <string>] [-ContributorTypesWhere <string>] [-DocumentsPath <string>] [-DocumentsWhere <string>] [-ElectronicAccessRelationshipsPath <string>] [-ElectronicAccessRelationshipsWhere <string>] [-EncumbrancesPath <string>] [-EncumbrancesWhere <string>] [-ErrorRecordsPath <string>] [-ErrorRecordsWhere <string>] [-FiscalYearsPath <string>] [-FiscalYearsWhere <string>] [-FixedDueDateSchedulesPath <string>] [-FixedDueDateSchedulesWhere <string>] [-FundsPath <string>] [-FundsWhere <string>] [-FundDistributionsPath <string>] [-FundDistributionsWhere <string>] [-GroupsPath <string>] [-GroupsWhere <string>] [-HoldingsPath <string>] [-HoldingsWhere <string>] [-HoldingNoteTypesPath <string>] [-HoldingNoteTypesWhere <string>] [-HoldingTypesPath <string>] [-HoldingTypesWhere <string>] [-IdTypesPath <string>] [-IdTypesWhere <string>] [-IllPoliciesPath <string>] [-IllPoliciesWhere <string>] [-InstancesPath <string>] [-InstancesWhere <string>] [-InstanceFormatsPath <string>] [-InstanceFormatsWhere <string>] [-InstanceNoteTypesPath <string>] [-InstanceNoteTypesWhere <string>] [-InstanceRelationshipsPath <string>] [-InstanceRelationshipsWhere <string>] [-InstanceRelationshipTypesPath <string>] [-InstanceRelationshipTypesWhere <string>] [-InstanceStatusesPath <string>] [-InstanceStatusesWhere <string>] [-InstanceTypesPath <string>] [-InstanceTypesWhere <string>] [-InstitutionsPath <string>] [-InstitutionsWhere <string>] [-InterfacesPath <string>] [-InterfacesWhere <string>] [-InterfaceCredentialsPath <string>] [-InterfaceCredentialsWhere <string>] [-InvoicesPath <string>] [-InvoicesWhere <string>] [-InvoiceItemsPath <string>] [-InvoiceItemsWhere <string>] [-ItemsPath <string>] [-ItemsWhere <string>] [-ItemDamagedStatusesPath <string>] [-ItemDamagedStatusesWhere <string>] [-ItemNoteTypesPath <string>] [-ItemNoteTypesWhere <string>] [-LedgersPath <string>] [-LedgersWhere <string>] [-LibrariesPath <string>] [-LibrariesWhere <string>] [-LoansPath <string>] [-LoansWhere <string>] [-LoanPoliciesPath <string>] [-LoanPoliciesWhere <string>] [-LoanTypesPath <string>] [-LoanTypesWhere <string>] [-LocationsPath <string>] [-LocationsWhere <string>] [-LoginsPath <string>] [-LoginsWhere <string>] [-MarcRecordsPath <string>] [-MarcRecordsWhere <string>] [-MaterialTypesPath <string>] [-MaterialTypesWhere <string>] [-ModeOfIssuancesPath <string>] [-ModeOfIssuancesWhere <string>] [-NatureOfContentTermsPath <string>] [-NatureOfContentTermsWhere <string>] [-OrdersPath <string>] [-OrdersWhere <string>] [-OrderItemsPath <string>] [-OrderItemsWhere <string>] [-OrganizationsPath <string>] [-OrganizationsWhere <string>] [-PatronNoticePoliciesPath <string>] [-PatronNoticePoliciesWhere <string>] [-PermissionsPath <string>] [-PermissionsWhere <string>] [-PermissionsUsersPath <string>] [-PermissionsUsersWhere <string>] [-PiecesPath <string>] [-PiecesWhere <string>] [-ProxiesPath <string>] [-ProxiesWhere <string>] [-RawRecordsPath <string>] [-RawRecordsWhere <string>] [-RecordsPath <string>] [-RecordsWhere <string>] [-ReportingCodesPath <string>] [-ReportingCodesWhere <string>] [-RequestsPath <string>] [-RequestsWhere <string>] [-RequestPoliciesPath <string>] [-RequestPoliciesWhere <string>] [-ScheduledNoticesPath <string>] [-ScheduledNoticesWhere <string>] [-ServicePointsPath <string>] [-ServicePointsWhere <string>] [-ServicePointUsersPath <string>] [-ServicePointUsersWhere <string>] [-SnapshotsPath <string>] [-SnapshotsWhere <string>] [-StaffSlipsPath <string>] [-StaffSlipsWhere <string>] [-StatisticalCodesPath <string>] [-StatisticalCodesWhere <string>] [-StatisticalCodeTypesPath <string>] [-StatisticalCodeTypesWhere <string>] [-UsersPath <string>] [-UsersWhere <string>] [-UserAcquisitionsUnitsPath <string>] [-UserAcquisitionsUnitsWhere <string>] [-VouchersPath <string>] [-VouchersWhere <string>] [-VoucherItemsPath <string>] [-VoucherItemsWhere <string>]");
                     return -1;
                 }
                 var all = args.Any(s3 => s3.Equals("-All", StringComparison.OrdinalIgnoreCase));
@@ -46,6 +47,7 @@ namespace FolioConsoleApplication
                 force = args.Any(s3 => s3.Equals("-Force", StringComparison.OrdinalIgnoreCase));
                 var load = args.Any(s3 => s3.Equals("-Load", StringComparison.OrdinalIgnoreCase));
                 var save = args.Any(s3 => s3.Equals("-Save", StringComparison.OrdinalIgnoreCase));
+                take = int.TryParse(args.SkipWhile(s3 => !s3.Equals("-Take", StringComparison.OrdinalIgnoreCase)).Skip(1).FirstOrDefault(), out int i) ? (int?)i : null;
                 validate = args.Any(s3 => s3.Equals("-Validate", StringComparison.OrdinalIgnoreCase));
                 whatIf = args.Any(s3 => s3.Equals("-WhatIf", StringComparison.OrdinalIgnoreCase));
                 var allCirculation = args.Any(s3 => s3.Equals("-AllCirculation", StringComparison.OrdinalIgnoreCase));
@@ -71,6 +73,7 @@ namespace FolioConsoleApplication
                 var contactsPath = args.SkipWhile(s3 => !s3.Equals("-ContactsPath", StringComparison.OrdinalIgnoreCase)).Skip(1).FirstOrDefault();
                 var contributorNameTypesPath = args.SkipWhile(s3 => !s3.Equals("-ContributorNameTypesPath", StringComparison.OrdinalIgnoreCase)).Skip(1).FirstOrDefault();
                 var contributorTypesPath = args.SkipWhile(s3 => !s3.Equals("-ContributorTypesPath", StringComparison.OrdinalIgnoreCase)).Skip(1).FirstOrDefault();
+                var documentsPath = args.SkipWhile(s3 => !s3.Equals("-DocumentsPath", StringComparison.OrdinalIgnoreCase)).Skip(1).FirstOrDefault();
                 var electronicAccessRelationshipsPath = args.SkipWhile(s3 => !s3.Equals("-ElectronicAccessRelationshipsPath", StringComparison.OrdinalIgnoreCase)).Skip(1).FirstOrDefault();
                 var encumbrancesPath = args.SkipWhile(s3 => !s3.Equals("-EncumbrancesPath", StringComparison.OrdinalIgnoreCase)).Skip(1).FirstOrDefault();
                 var errorRecordsPath = args.SkipWhile(s3 => !s3.Equals("-ErrorRecordsPath", StringComparison.OrdinalIgnoreCase)).Skip(1).FirstOrDefault();
@@ -97,6 +100,7 @@ namespace FolioConsoleApplication
                 var invoicesPath = args.SkipWhile(s3 => !s3.Equals("-InvoicesPath", StringComparison.OrdinalIgnoreCase)).Skip(1).FirstOrDefault();
                 var invoiceItemsPath = args.SkipWhile(s3 => !s3.Equals("-InvoiceItemsPath", StringComparison.OrdinalIgnoreCase)).Skip(1).FirstOrDefault();
                 var itemsPath = args.SkipWhile(s3 => !s3.Equals("-ItemsPath", StringComparison.OrdinalIgnoreCase)).Skip(1).FirstOrDefault();
+                var itemDamagedStatusesPath = args.SkipWhile(s3 => !s3.Equals("-ItemDamagedStatusesPath", StringComparison.OrdinalIgnoreCase)).Skip(1).FirstOrDefault();
                 var itemNoteTypesPath = args.SkipWhile(s3 => !s3.Equals("-ItemNoteTypesPath", StringComparison.OrdinalIgnoreCase)).Skip(1).FirstOrDefault();
                 var ledgersPath = args.SkipWhile(s3 => !s3.Equals("-LedgersPath", StringComparison.OrdinalIgnoreCase)).Skip(1).FirstOrDefault();
                 var librariesPath = args.SkipWhile(s3 => !s3.Equals("-LibrariesPath", StringComparison.OrdinalIgnoreCase)).Skip(1).FirstOrDefault();
@@ -146,6 +150,7 @@ namespace FolioConsoleApplication
                 var contactsWhere = args.SkipWhile(s3 => !s3.Equals("-ContactsWhere", StringComparison.OrdinalIgnoreCase)).Skip(1).FirstOrDefault();
                 var contributorNameTypesWhere = args.SkipWhile(s3 => !s3.Equals("-ContributorNameTypesWhere", StringComparison.OrdinalIgnoreCase)).Skip(1).FirstOrDefault();
                 var contributorTypesWhere = args.SkipWhile(s3 => !s3.Equals("-ContributorTypesWhere", StringComparison.OrdinalIgnoreCase)).Skip(1).FirstOrDefault();
+                var documentsWhere = args.SkipWhile(s3 => !s3.Equals("-DocumentsWhere", StringComparison.OrdinalIgnoreCase)).Skip(1).FirstOrDefault();
                 var electronicAccessRelationshipsWhere = args.SkipWhile(s3 => !s3.Equals("-ElectronicAccessRelationshipsWhere", StringComparison.OrdinalIgnoreCase)).Skip(1).FirstOrDefault();
                 var encumbrancesWhere = args.SkipWhile(s3 => !s3.Equals("-EncumbrancesWhere", StringComparison.OrdinalIgnoreCase)).Skip(1).FirstOrDefault();
                 var errorRecordsWhere = args.SkipWhile(s3 => !s3.Equals("-ErrorRecordsWhere", StringComparison.OrdinalIgnoreCase)).Skip(1).FirstOrDefault();
@@ -172,6 +177,7 @@ namespace FolioConsoleApplication
                 var invoicesWhere = args.SkipWhile(s3 => !s3.Equals("-InvoicesWhere", StringComparison.OrdinalIgnoreCase)).Skip(1).FirstOrDefault();
                 var invoiceItemsWhere = args.SkipWhile(s3 => !s3.Equals("-InvoiceItemsWhere", StringComparison.OrdinalIgnoreCase)).Skip(1).FirstOrDefault();
                 var itemsWhere = args.SkipWhile(s3 => !s3.Equals("-ItemsWhere", StringComparison.OrdinalIgnoreCase)).Skip(1).FirstOrDefault();
+                var itemDamagedStatusesWhere = args.SkipWhile(s3 => !s3.Equals("-ItemDamagedStatusesWhere", StringComparison.OrdinalIgnoreCase)).Skip(1).FirstOrDefault();
                 var itemNoteTypesWhere = args.SkipWhile(s3 => !s3.Equals("-ItemNoteTypesWhere", StringComparison.OrdinalIgnoreCase)).Skip(1).FirstOrDefault();
                 var ledgersWhere = args.SkipWhile(s3 => !s3.Equals("-LedgersWhere", StringComparison.OrdinalIgnoreCase)).Skip(1).FirstOrDefault();
                 var librariesWhere = args.SkipWhile(s3 => !s3.Equals("-LibrariesWhere", StringComparison.OrdinalIgnoreCase)).Skip(1).FirstOrDefault();
@@ -223,6 +229,7 @@ namespace FolioConsoleApplication
                     contactsPath = "contacts.json";
                     contributorNameTypesPath = "contributornametypes.json";
                     contributorTypesPath = "contributortypes.json";
+                    if (!api) documentsPath = "documents.json";
                     electronicAccessRelationshipsPath = "electronicaccessrelationships.json";
                     if (!api) encumbrancesPath = "encumbrances.json";
                     if (!api) errorRecordsPath = "errorrecords.json";
@@ -249,6 +256,7 @@ namespace FolioConsoleApplication
                     invoicesPath = "invoices.json";
                     invoiceItemsPath = "invoiceitems.json";
                     itemsPath = "items.json";
+                    itemDamagedStatusesPath = "itemdamagedstatuses.json";
                     itemNoteTypesPath = "itemnotetypes.json";
                     ledgersPath = "ledgers.json";
                     librariesPath = "libraries.json";
@@ -330,6 +338,7 @@ namespace FolioConsoleApplication
                     instanceTypesPath = "instancetypes.json";
                     institutionsPath = "institutions.json";
                     itemsPath = "items.json";
+                    itemDamagedStatusesPath = "itemdamagedstatuses.json";
                     itemNoteTypesPath = "itemnotetypes.json";
                     librariesPath = "libraries.json";
                     loanTypesPath = "loantypes.json";
@@ -344,6 +353,7 @@ namespace FolioConsoleApplication
                 }
                 if (allInvoices)
                 {
+                    if (!api) documentsPath = "documents.json";
                     invoicesPath = "invoices.json";
                     invoiceItemsPath = "invoiceitems.json";
                     vouchersPath = "vouchers.json";
@@ -392,8 +402,10 @@ namespace FolioConsoleApplication
                     usersPath = "users.json";
                 }
                 if (save && acquisitionsUnitsPath != null) SaveAcquisitionsUnits(acquisitionsUnitsPath, acquisitionsUnitsWhere);
+                if (save && documentsPath != null) SaveDocuments(documentsPath, documentsWhere);
                 if (save && instanceNoteTypesPath != null) SaveInstanceNoteTypes(instanceNoteTypesPath, instanceNoteTypesWhere);
                 if (save && interfaceCredentialsPath != null) SaveInterfaceCredentials(interfaceCredentialsPath, interfaceCredentialsWhere);
+                if (save && itemDamagedStatusesPath != null) SaveItemDamagedStatuses(itemDamagedStatusesPath, itemDamagedStatusesWhere);
                 if (save && natureOfContentTermsPath != null) SaveNatureOfContentTerms(natureOfContentTermsPath, natureOfContentTermsWhere);
                 if (save && userAcquisitionsUnitsPath != null) SaveUserAcquisitionsUnits(userAcquisitionsUnitsPath, userAcquisitionsUnitsWhere);
                 if (save && addressTypesPath != null) SaveAddressTypes(addressTypesPath, addressTypesWhere);
@@ -537,13 +549,17 @@ namespace FolioConsoleApplication
                 if (delete && groupsPath != null) DeleteGroups(groupsWhere);
                 if (delete && addressTypesPath != null) DeleteAddressTypes(addressTypesWhere);
                 if (delete && acquisitionsUnitsPath != null) DeleteAcquisitionsUnits(acquisitionsUnitsWhere);
+                if (delete && documentsPath != null) DeleteDocuments(documentsWhere);
                 if (delete && instanceNoteTypesPath != null) DeleteInstanceNoteTypes(instanceNoteTypesWhere);
                 if (delete && interfaceCredentialsPath != null) DeleteInterfaceCredentials(interfaceCredentialsWhere);
+                if (delete && itemDamagedStatusesPath != null) DeleteItemDamagedStatuses(itemDamagedStatusesWhere);
                 if (delete && natureOfContentTermsPath != null) DeleteNatureOfContentTerms(natureOfContentTermsWhere);
                 if (delete && userAcquisitionsUnitsPath != null) DeleteUserAcquisitionsUnits(userAcquisitionsUnitsWhere);
                 if (load && acquisitionsUnitsPath != null) LoadAcquisitionsUnits(acquisitionsUnitsPath);
+                if (load && documentsPath != null) LoadDocuments(documentsPath);
                 if (load && instanceNoteTypesPath != null) LoadInstanceNoteTypes(instanceNoteTypesPath);
                 if (load && interfaceCredentialsPath != null) LoadInterfaceCredentials(interfaceCredentialsPath);
+                if (load && itemDamagedStatusesPath != null) LoadItemDamagedStatuses(itemDamagedStatusesPath);
                 if (load && natureOfContentTermsPath != null) LoadNatureOfContentTerms(natureOfContentTermsPath);
                 if (load && userAcquisitionsUnitsPath != null) LoadUserAcquisitionsUnits(userAcquisitionsUnitsPath);
                 if (load && addressTypesPath != null) LoadAddressTypes(addressTypesPath);
@@ -694,6 +710,7 @@ namespace FolioConsoleApplication
                 var i = 0;
                 while (jtr.Read() && jtr.TokenType != JsonToken.EndArray)
                 {
+                    if (take != null && take <= i) break;
                     ++i;
                     var jo = (JObject)js.Deserialize(jtr);
                     if (validate)
@@ -752,7 +769,7 @@ namespace FolioConsoleApplication
                 var js = new JsonSerializer { Formatting = Formatting.Indented };
                 jtw.WriteStartArray();
                 var i = 0;
-                foreach (var jo in api ? fsc.AcquisitionsUnits(where) : fdc.AcquisitionsUnits(where).Select(au => JObject.Parse(au.Content)))
+                foreach (var jo in api ? fsc.AcquisitionsUnits(where, take: take) : fdc.AcquisitionsUnits(where, take: take).Select(au => JObject.Parse(au.Content)))
                 {
                     if (validate)
                     {
@@ -821,6 +838,7 @@ namespace FolioConsoleApplication
                 var i = 0;
                 while (jtr.Read() && jtr.TokenType != JsonToken.EndArray)
                 {
+                    if (take != null && take <= i) break;
                     ++i;
                     var jo = (JObject)js.Deserialize(jtr);
                     if (validate)
@@ -879,7 +897,7 @@ namespace FolioConsoleApplication
                 var js = new JsonSerializer { Formatting = Formatting.Indented };
                 jtw.WriteStartArray();
                 var i = 0;
-                foreach (var jo in api ? fsc.AddressTypes(where) : fdc.AddressTypes(where).Select(at => JObject.Parse(at.Content)))
+                foreach (var jo in api ? fsc.AddressTypes(where, take: take) : fdc.AddressTypes(where, take: take).Select(at => JObject.Parse(at.Content)))
                 {
                     if (validate)
                     {
@@ -948,6 +966,7 @@ namespace FolioConsoleApplication
                 var i = 0;
                 while (jtr.Read() && jtr.TokenType != JsonToken.EndArray)
                 {
+                    if (take != null && take <= i) break;
                     ++i;
                     var jo = (JObject)js.Deserialize(jtr);
                     if (validate)
@@ -1004,7 +1023,7 @@ namespace FolioConsoleApplication
                 var js = new JsonSerializer { Formatting = Formatting.Indented };
                 jtw.WriteStartArray();
                 var i = 0;
-                foreach (var jo in api ? fsc.Alerts(where) : fdc.Alerts(where).Select(a => JObject.Parse(a.Content)))
+                foreach (var jo in api ? fsc.Alerts(where, take: take) : fdc.Alerts(where, take: take).Select(a => JObject.Parse(a.Content)))
                 {
                     if (validate)
                     {
@@ -1073,6 +1092,7 @@ namespace FolioConsoleApplication
                 var i = 0;
                 while (jtr.Read() && jtr.TokenType != JsonToken.EndArray)
                 {
+                    if (take != null && take <= i) break;
                     ++i;
                     var jo = (JObject)js.Deserialize(jtr);
                     if (validate)
@@ -1131,7 +1151,7 @@ namespace FolioConsoleApplication
                 var js = new JsonSerializer { Formatting = Formatting.Indented };
                 jtw.WriteStartArray();
                 var i = 0;
-                foreach (var jo in api ? fsc.AlternativeTitleTypes(where) : fdc.AlternativeTitleTypes(where).Select(att => JObject.Parse(att.Content)))
+                foreach (var jo in api ? fsc.AlternativeTitleTypes(where, take: take) : fdc.AlternativeTitleTypes(where, take: take).Select(att => JObject.Parse(att.Content)))
                 {
                     if (validate)
                     {
@@ -1200,6 +1220,7 @@ namespace FolioConsoleApplication
                 var i = 0;
                 while (jtr.Read() && jtr.TokenType != JsonToken.EndArray)
                 {
+                    if (take != null && take <= i) break;
                     ++i;
                     var jo = (JObject)js.Deserialize(jtr);
                     if (validate)
@@ -1260,7 +1281,7 @@ namespace FolioConsoleApplication
                 var js = new JsonSerializer { Formatting = Formatting.Indented };
                 jtw.WriteStartArray();
                 var i = 0;
-                foreach (var jo in api ? fsc.Budgets(where) : fdc.Budgets(where).Select(b => JObject.Parse(b.Content)))
+                foreach (var jo in api ? fsc.Budgets(where, take: take) : fdc.Budgets(where, take: take).Select(b => JObject.Parse(b.Content)))
                 {
                     if (validate)
                     {
@@ -1329,6 +1350,7 @@ namespace FolioConsoleApplication
                 var i = 0;
                 while (jtr.Read() && jtr.TokenType != JsonToken.EndArray)
                 {
+                    if (take != null && take <= i) break;
                     ++i;
                     var jo = (JObject)js.Deserialize(jtr);
                     if (validate)
@@ -1387,7 +1409,7 @@ namespace FolioConsoleApplication
                 var js = new JsonSerializer { Formatting = Formatting.Indented };
                 jtw.WriteStartArray();
                 var i = 0;
-                foreach (var jo in api ? fsc.CallNumberTypes(where) : fdc.CallNumberTypes(where).Select(cnt => JObject.Parse(cnt.Content)))
+                foreach (var jo in api ? fsc.CallNumberTypes(where, take: take) : fdc.CallNumberTypes(where, take: take).Select(cnt => JObject.Parse(cnt.Content)))
                 {
                     if (validate)
                     {
@@ -1456,6 +1478,7 @@ namespace FolioConsoleApplication
                 var i = 0;
                 while (jtr.Read() && jtr.TokenType != JsonToken.EndArray)
                 {
+                    if (take != null && take <= i) break;
                     ++i;
                     var jo = (JObject)js.Deserialize(jtr);
                     if (validate)
@@ -1515,7 +1538,7 @@ namespace FolioConsoleApplication
                 var js = new JsonSerializer { Formatting = Formatting.Indented };
                 jtw.WriteStartArray();
                 var i = 0;
-                foreach (var jo in api ? fsc.Campuses(where) : fdc.Campuses(where).Select(c => JObject.Parse(c.Content)))
+                foreach (var jo in api ? fsc.Campuses(where, take: take) : fdc.Campuses(where, take: take).Select(c => JObject.Parse(c.Content)))
                 {
                     if (validate)
                     {
@@ -1584,6 +1607,7 @@ namespace FolioConsoleApplication
                 var i = 0;
                 while (jtr.Read() && jtr.TokenType != JsonToken.EndArray)
                 {
+                    if (take != null && take <= i) break;
                     ++i;
                     var jo = (JObject)js.Deserialize(jtr);
                     if (validate)
@@ -1642,7 +1666,7 @@ namespace FolioConsoleApplication
                 var js = new JsonSerializer { Formatting = Formatting.Indented };
                 jtw.WriteStartArray();
                 var i = 0;
-                foreach (var jo in api ? fsc.CancellationReasons(where) : fdc.CancellationReasons(where).Select(cr => JObject.Parse(cr.Content)))
+                foreach (var jo in api ? fsc.CancellationReasons(where, take: take) : fdc.CancellationReasons(where, take: take).Select(cr => JObject.Parse(cr.Content)))
                 {
                     if (validate)
                     {
@@ -1711,6 +1735,7 @@ namespace FolioConsoleApplication
                 var i = 0;
                 while (jtr.Read() && jtr.TokenType != JsonToken.EndArray)
                 {
+                    if (take != null && take <= i) break;
                     ++i;
                     var jo = (JObject)js.Deserialize(jtr);
                     if (validate)
@@ -1769,7 +1794,7 @@ namespace FolioConsoleApplication
                 var js = new JsonSerializer { Formatting = Formatting.Indented };
                 jtw.WriteStartArray();
                 var i = 0;
-                foreach (var jo in api ? fsc.Categories(where) : fdc.Categories(where).Select(c => JObject.Parse(c.Content)))
+                foreach (var jo in api ? fsc.Categories(where, take: take) : fdc.Categories(where, take: take).Select(c => JObject.Parse(c.Content)))
                 {
                     if (validate)
                     {
@@ -1838,6 +1863,7 @@ namespace FolioConsoleApplication
                 var i = 0;
                 while (jtr.Read() && jtr.TokenType != JsonToken.EndArray)
                 {
+                    if (take != null && take <= i) break;
                     ++i;
                     var jo = (JObject)js.Deserialize(jtr);
                     if (validate)
@@ -1896,7 +1922,7 @@ namespace FolioConsoleApplication
                 var js = new JsonSerializer { Formatting = Formatting.Indented };
                 jtw.WriteStartArray();
                 var i = 0;
-                foreach (var jo in api ? fsc.ClassificationTypes(where) : fdc.ClassificationTypes(where).Select(ct => JObject.Parse(ct.Content)))
+                foreach (var jo in api ? fsc.ClassificationTypes(where, take: take) : fdc.ClassificationTypes(where, take: take).Select(ct => JObject.Parse(ct.Content)))
                 {
                     if (validate)
                     {
@@ -1965,6 +1991,7 @@ namespace FolioConsoleApplication
                 var i = 0;
                 while (jtr.Read() && jtr.TokenType != JsonToken.EndArray)
                 {
+                    if (take != null && take <= i) break;
                     ++i;
                     var jo = (JObject)js.Deserialize(jtr);
                     if (validate)
@@ -2023,7 +2050,7 @@ namespace FolioConsoleApplication
                 var js = new JsonSerializer { Formatting = Formatting.Indented };
                 jtw.WriteStartArray();
                 var i = 0;
-                foreach (var jo in api ? fsc.Contacts(where) : fdc.Contacts(where).Select(c => JObject.Parse(c.Content)))
+                foreach (var jo in api ? fsc.Contacts(where, take: take) : fdc.Contacts(where, take: take).Select(c => JObject.Parse(c.Content)))
                 {
                     if (validate)
                     {
@@ -2092,6 +2119,7 @@ namespace FolioConsoleApplication
                 var i = 0;
                 while (jtr.Read() && jtr.TokenType != JsonToken.EndArray)
                 {
+                    if (take != null && take <= i) break;
                     ++i;
                     var jo = (JObject)js.Deserialize(jtr);
                     if (validate)
@@ -2150,7 +2178,7 @@ namespace FolioConsoleApplication
                 var js = new JsonSerializer { Formatting = Formatting.Indented };
                 jtw.WriteStartArray();
                 var i = 0;
-                foreach (var jo in api ? fsc.ContributorNameTypes(where) : fdc.ContributorNameTypes(where).Select(cnt => JObject.Parse(cnt.Content)))
+                foreach (var jo in api ? fsc.ContributorNameTypes(where, take: take) : fdc.ContributorNameTypes(where, take: take).Select(cnt => JObject.Parse(cnt.Content)))
                 {
                     if (validate)
                     {
@@ -2219,6 +2247,7 @@ namespace FolioConsoleApplication
                 var i = 0;
                 while (jtr.Read() && jtr.TokenType != JsonToken.EndArray)
                 {
+                    if (take != null && take <= i) break;
                     ++i;
                     var jo = (JObject)js.Deserialize(jtr);
                     if (validate)
@@ -2275,7 +2304,7 @@ namespace FolioConsoleApplication
                 var js = new JsonSerializer { Formatting = Formatting.Indented };
                 jtw.WriteStartArray();
                 var i = 0;
-                foreach (var jo in api ? fsc.ContributorTypes(where) : fdc.ContributorTypes(where).Select(ct => JObject.Parse(ct.Content)))
+                foreach (var jo in api ? fsc.ContributorTypes(where, take: take) : fdc.ContributorTypes(where, take: take).Select(ct => JObject.Parse(ct.Content)))
                 {
                     if (validate)
                     {
@@ -2292,6 +2321,117 @@ namespace FolioConsoleApplication
                 jtw.WriteEndArray();
                 traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
                 traceSource.TraceEvent(TraceEventType.Information, 0, $"Saved {i} contributor types");
+            }
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"{s.Elapsed} elapsed");
+        }
+
+        public static void DeleteDocuments(string where = null)
+        {
+            traceSource.TraceEvent(TraceEventType.Information, 0, "Deleting documents");
+            var s = Stopwatch.StartNew();
+            using (var fbcc = new FolioBulkCopyContext())
+            {
+                var i = 0;
+                if (api)
+                {
+                    throw new NotSupportedException();
+                }
+                else
+                {
+                    if (!whatIf) i = fbcc.ExecuteNonQuery($"DELETE FROM diku_mod_invoice_storage.documents{(where != null ? $" WHERE {where}" : "")}");
+                }
+                traceSource.TraceEvent(TraceEventType.Information, 0, $"Deleted {i} documents");
+            }
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"{s.Elapsed} elapsed");
+        }
+
+        public static void LoadDocuments(string path)
+        {
+            traceSource.TraceEvent(TraceEventType.Information, 0, "Loading documents");
+            var s = Stopwatch.StartNew();
+            using (var sr = new StreamReader(path))
+            using (var sr2 = new StreamReader(Assembly.GetAssembly(typeof(FolioContext)).GetManifestResourceStream("FolioLibrary.Document.json")))
+            using (var jtr = new JsonTextReader(sr) { SupportMultipleContent = true })
+            using (var fbcc = new FolioBulkCopyContext())
+            {
+                var s2 = Stopwatch.StartNew();
+                var js4 = JsonSchema.FromJsonAsync(sr2.ReadToEndAsync().Result).Result;
+                var js = new JsonSerializer();
+                jtr.Read();
+                var i = 0;
+                while (jtr.Read() && jtr.TokenType != JsonToken.EndArray)
+                {
+                    if (take != null && take <= i) break;
+                    ++i;
+                    var jo = (JObject)js.Deserialize(jtr);
+                    if (validate)
+                    {
+                        var l = js4.Validate(jo);
+                        if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"Document {jo["documentMetadata.id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"Document {jo["documentMetadata.id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
+                    }
+                    if (api)
+                    {
+                        throw new NotSupportedException();
+                    }
+                    else
+                    {
+                        if (!whatIf) fbcc.Insert(new Document
+                        {
+                            Id = (Guid?)jo.SelectToken("documentMetadata.id"),
+                            Content = jo.ToString(),
+                            CreationTime = (DateTime?)jo.SelectToken("documentMetadata.metadata.createdDate"),
+                            CreationUserId = (string)jo.SelectToken("documentMetadata.metadata.createdByUserId"),
+                            Invoiceid = (Guid?)jo.SelectToken("documentMetadata.invoiceId")
+                        });
+                        if (i % 1000 == 0)
+                        {
+                            fbcc.Commit();
+                            if (i % 10000 == 0)
+                            {
+                                traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
+                                s2.Restart();
+                            }
+                        }
+                    }
+                }
+                fbcc.Commit();
+                traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
+                traceSource.TraceEvent(TraceEventType.Information, 0, $"Added {i} documents");
+            }
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"{s.Elapsed} elapsed");
+        }
+
+        public static void SaveDocuments(string path, string where = null)
+        {
+            traceSource.TraceEvent(TraceEventType.Information, 0, "Saving documents");
+            var s = Stopwatch.StartNew();
+            using (var fdc = new FolioDapperContext())
+            using (var sr = new StreamReader(Assembly.GetAssembly(typeof(FolioContext)).GetManifestResourceStream("FolioLibrary.Document.json")))
+            using (var sw = new StreamWriter(whatIf ? (Stream)new MemoryStream() : new FileStream(path, FileMode.Create)))
+            using (var jtw = new JsonTextWriter(sw))
+            {
+                var s2 = Stopwatch.StartNew();
+                var js4 = JsonSchema.FromJsonAsync(sr.ReadToEndAsync().Result).Result;
+                var js = new JsonSerializer { Formatting = Formatting.Indented };
+                jtw.WriteStartArray();
+                var i = 0;
+                foreach (var jo in api ? throw new NotSupportedException() : fdc.Documents(where, take: take).Select(d => JObject.Parse(d.Content)))
+                {
+                    if (validate)
+                    {
+                        var l = js4.Validate(jo);
+                        if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"Document {jo["documentMetadata.id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"Document {jo["documentMetadata.id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
+                    }
+                    if (!whatIf) js.Serialize(jtw, jo);
+                    if (++i % 10000 == 0)
+                    {
+                        traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
+                        s2.Restart();
+                    }
+                }
+                jtw.WriteEndArray();
+                traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
+                traceSource.TraceEvent(TraceEventType.Information, 0, $"Saved {i} documents");
             }
             traceSource.TraceEvent(TraceEventType.Information, 0, $"{s.Elapsed} elapsed");
         }
@@ -2344,6 +2484,7 @@ namespace FolioConsoleApplication
                 var i = 0;
                 while (jtr.Read() && jtr.TokenType != JsonToken.EndArray)
                 {
+                    if (take != null && take <= i) break;
                     ++i;
                     var jo = (JObject)js.Deserialize(jtr);
                     if (validate)
@@ -2402,7 +2543,7 @@ namespace FolioConsoleApplication
                 var js = new JsonSerializer { Formatting = Formatting.Indented };
                 jtw.WriteStartArray();
                 var i = 0;
-                foreach (var jo in api ? fsc.ElectronicAccessRelationships(where) : fdc.ElectronicAccessRelationships(where).Select(ear => JObject.Parse(ear.Content)))
+                foreach (var jo in api ? fsc.ElectronicAccessRelationships(where, take: take) : fdc.ElectronicAccessRelationships(where, take: take).Select(ear => JObject.Parse(ear.Content)))
                 {
                     if (validate)
                     {
@@ -2459,6 +2600,7 @@ namespace FolioConsoleApplication
                 var i = 0;
                 while (jtr.Read() && jtr.TokenType != JsonToken.EndArray)
                 {
+                    if (take != null && take <= i) break;
                     ++i;
                     var jo = (JObject)js.Deserialize(jtr);
                     if (validate)
@@ -2508,7 +2650,7 @@ namespace FolioConsoleApplication
                 var js = new JsonSerializer { Formatting = Formatting.Indented };
                 jtw.WriteStartArray();
                 var i = 0;
-                foreach (var jo in api ? throw new NotSupportedException() : fdc.Encumbrances(where).Select(e2 => JObject.Parse(e2.Content)))
+                foreach (var jo in api ? throw new NotSupportedException() : fdc.Encumbrances(where, take: take).Select(e2 => JObject.Parse(e2.Content)))
                 {
                     if (validate)
                     {
@@ -2565,6 +2707,7 @@ namespace FolioConsoleApplication
                 var i = 0;
                 while (jtr.Read() && jtr.TokenType != JsonToken.EndArray)
                 {
+                    if (take != null && take <= i) break;
                     ++i;
                     var jo = (JObject)js.Deserialize(jtr);
                     if (validate)
@@ -2615,7 +2758,7 @@ namespace FolioConsoleApplication
                 var js = new JsonSerializer { Formatting = Formatting.Indented };
                 jtw.WriteStartArray();
                 var i = 0;
-                foreach (var jo in api ? throw new NotSupportedException() : fdc.ErrorRecords(where).Select(er => JObject.Parse(er.Content)))
+                foreach (var jo in api ? throw new NotSupportedException() : fdc.ErrorRecords(where, take: take).Select(er => JObject.Parse(er.Content)))
                 {
                     if (validate)
                     {
@@ -2684,6 +2827,7 @@ namespace FolioConsoleApplication
                 var i = 0;
                 while (jtr.Read() && jtr.TokenType != JsonToken.EndArray)
                 {
+                    if (take != null && take <= i) break;
                     ++i;
                     var jo = (JObject)js.Deserialize(jtr);
                     if (validate)
@@ -2742,7 +2886,7 @@ namespace FolioConsoleApplication
                 var js = new JsonSerializer { Formatting = Formatting.Indented };
                 jtw.WriteStartArray();
                 var i = 0;
-                foreach (var jo in api ? fsc.FiscalYears(where) : fdc.FiscalYears(where).Select(fy => JObject.Parse(fy.Content)))
+                foreach (var jo in api ? fsc.FiscalYears(where, take: take) : fdc.FiscalYears(where, take: take).Select(fy => JObject.Parse(fy.Content)))
                 {
                     if (validate)
                     {
@@ -2811,6 +2955,7 @@ namespace FolioConsoleApplication
                 var i = 0;
                 while (jtr.Read() && jtr.TokenType != JsonToken.EndArray)
                 {
+                    if (take != null && take <= i) break;
                     ++i;
                     var jo = (JObject)js.Deserialize(jtr);
                     if (validate)
@@ -2867,7 +3012,7 @@ namespace FolioConsoleApplication
                 var js = new JsonSerializer { Formatting = Formatting.Indented };
                 jtw.WriteStartArray();
                 var i = 0;
-                foreach (var jo in api ? fsc.FixedDueDateSchedules(where) : fdc.FixedDueDateSchedules(where).Select(fdds => JObject.Parse(fdds.Content)))
+                foreach (var jo in api ? fsc.FixedDueDateSchedules(where, take: take) : fdc.FixedDueDateSchedules(where, take: take).Select(fdds => JObject.Parse(fdds.Content)))
                 {
                     if (validate)
                     {
@@ -2936,6 +3081,7 @@ namespace FolioConsoleApplication
                 var i = 0;
                 while (jtr.Read() && jtr.TokenType != JsonToken.EndArray)
                 {
+                    if (take != null && take <= i) break;
                     ++i;
                     var jo = (JObject)js.Deserialize(jtr);
                     if (validate)
@@ -2995,7 +3141,7 @@ namespace FolioConsoleApplication
                 var js = new JsonSerializer { Formatting = Formatting.Indented };
                 jtw.WriteStartArray();
                 var i = 0;
-                foreach (var jo in api ? fsc.Funds(where) : fdc.Funds(where).Select(f => JObject.Parse(f.Content)))
+                foreach (var jo in api ? fsc.Funds(where, take: take) : fdc.Funds(where, take: take).Select(f => JObject.Parse(f.Content)))
                 {
                     if (validate)
                     {
@@ -3064,6 +3210,7 @@ namespace FolioConsoleApplication
                 var i = 0;
                 while (jtr.Read() && jtr.TokenType != JsonToken.EndArray)
                 {
+                    if (take != null && take <= i) break;
                     ++i;
                     var jo = (JObject)js.Deserialize(jtr);
                     if (validate)
@@ -3121,7 +3268,7 @@ namespace FolioConsoleApplication
                 var js = new JsonSerializer { Formatting = Formatting.Indented };
                 jtw.WriteStartArray();
                 var i = 0;
-                foreach (var jo in api ? fsc.FundDistributions(where) : fdc.FundDistributions(where).Select(fd => JObject.Parse(fd.Content)))
+                foreach (var jo in api ? fsc.FundDistributions(where, take: take) : fdc.FundDistributions(where, take: take).Select(fd => JObject.Parse(fd.Content)))
                 {
                     if (validate)
                     {
@@ -3190,6 +3337,7 @@ namespace FolioConsoleApplication
                 var i = 0;
                 while (jtr.Read() && jtr.TokenType != JsonToken.EndArray)
                 {
+                    if (take != null && take <= i) break;
                     ++i;
                     var jo = (JObject)js.Deserialize(jtr);
                     if (validate)
@@ -3248,7 +3396,7 @@ namespace FolioConsoleApplication
                 var js = new JsonSerializer { Formatting = Formatting.Indented };
                 jtw.WriteStartArray();
                 var i = 0;
-                foreach (var jo in api ? fsc.Groups(where) : fdc.Groups(where).Select(g => JObject.Parse(g.Content)))
+                foreach (var jo in api ? fsc.Groups(where, take: take) : fdc.Groups(where, take: take).Select(g => JObject.Parse(g.Content)))
                 {
                     if (validate)
                     {
@@ -3317,6 +3465,7 @@ namespace FolioConsoleApplication
                 var i = 0;
                 while (jtr.Read() && jtr.TokenType != JsonToken.EndArray)
                 {
+                    if (take != null && take <= i) break;
                     ++i;
                     var jo = (JObject)js.Deserialize(jtr);
                     if (validate)
@@ -3381,7 +3530,7 @@ namespace FolioConsoleApplication
                 var js = new JsonSerializer { Formatting = Formatting.Indented };
                 jtw.WriteStartArray();
                 var i = 0;
-                foreach (var jo in api ? fsc.Holdings(where) : fdc.Holdings(where).Select(h => JObject.Parse(h.Content)))
+                foreach (var jo in api ? fsc.Holdings(where, take: take) : fdc.Holdings(where, take: take).Select(h => JObject.Parse(h.Content)))
                 {
                     if (validate)
                     {
@@ -3450,6 +3599,7 @@ namespace FolioConsoleApplication
                 var i = 0;
                 while (jtr.Read() && jtr.TokenType != JsonToken.EndArray)
                 {
+                    if (take != null && take <= i) break;
                     ++i;
                     var jo = (JObject)js.Deserialize(jtr);
                     if (validate)
@@ -3508,7 +3658,7 @@ namespace FolioConsoleApplication
                 var js = new JsonSerializer { Formatting = Formatting.Indented };
                 jtw.WriteStartArray();
                 var i = 0;
-                foreach (var jo in api ? fsc.HoldingNoteTypes(where) : fdc.HoldingNoteTypes(where).Select(hnt => JObject.Parse(hnt.Content)))
+                foreach (var jo in api ? fsc.HoldingNoteTypes(where, take: take) : fdc.HoldingNoteTypes(where, take: take).Select(hnt => JObject.Parse(hnt.Content)))
                 {
                     if (validate)
                     {
@@ -3577,6 +3727,7 @@ namespace FolioConsoleApplication
                 var i = 0;
                 while (jtr.Read() && jtr.TokenType != JsonToken.EndArray)
                 {
+                    if (take != null && take <= i) break;
                     ++i;
                     var jo = (JObject)js.Deserialize(jtr);
                     if (validate)
@@ -3635,7 +3786,7 @@ namespace FolioConsoleApplication
                 var js = new JsonSerializer { Formatting = Formatting.Indented };
                 jtw.WriteStartArray();
                 var i = 0;
-                foreach (var jo in api ? fsc.HoldingTypes(where) : fdc.HoldingTypes(where).Select(ht => JObject.Parse(ht.Content)))
+                foreach (var jo in api ? fsc.HoldingTypes(where, take: take) : fdc.HoldingTypes(where, take: take).Select(ht => JObject.Parse(ht.Content)))
                 {
                     if (validate)
                     {
@@ -3704,6 +3855,7 @@ namespace FolioConsoleApplication
                 var i = 0;
                 while (jtr.Read() && jtr.TokenType != JsonToken.EndArray)
                 {
+                    if (take != null && take <= i) break;
                     ++i;
                     var jo = (JObject)js.Deserialize(jtr);
                     if (validate)
@@ -3762,7 +3914,7 @@ namespace FolioConsoleApplication
                 var js = new JsonSerializer { Formatting = Formatting.Indented };
                 jtw.WriteStartArray();
                 var i = 0;
-                foreach (var jo in api ? fsc.IdTypes(where) : fdc.IdTypes(where).Select(it => JObject.Parse(it.Content)))
+                foreach (var jo in api ? fsc.IdTypes(where, take: take) : fdc.IdTypes(where, take: take).Select(it => JObject.Parse(it.Content)))
                 {
                     if (validate)
                     {
@@ -3831,6 +3983,7 @@ namespace FolioConsoleApplication
                 var i = 0;
                 while (jtr.Read() && jtr.TokenType != JsonToken.EndArray)
                 {
+                    if (take != null && take <= i) break;
                     ++i;
                     var jo = (JObject)js.Deserialize(jtr);
                     if (validate)
@@ -3889,7 +4042,7 @@ namespace FolioConsoleApplication
                 var js = new JsonSerializer { Formatting = Formatting.Indented };
                 jtw.WriteStartArray();
                 var i = 0;
-                foreach (var jo in api ? fsc.IllPolicies(where) : fdc.IllPolicies(where).Select(ip => JObject.Parse(ip.Content)))
+                foreach (var jo in api ? fsc.IllPolicies(where, take: take) : fdc.IllPolicies(where, take: take).Select(ip => JObject.Parse(ip.Content)))
                 {
                     if (validate)
                     {
@@ -3958,6 +4111,7 @@ namespace FolioConsoleApplication
                 var i = 0;
                 while (jtr.Read() && jtr.TokenType != JsonToken.EndArray)
                 {
+                    if (take != null && take <= i) break;
                     ++i;
                     var jo = (JObject)js.Deserialize(jtr);
                     if (validate)
@@ -3983,7 +4137,8 @@ namespace FolioConsoleApplication
                             CreationTime = (DateTime?)jo.SelectToken("metadata.createdDate"),
                             CreationUserId = (string)jo.SelectToken("metadata.createdByUserId"),
                             Instancestatusid = (Guid?)jo.SelectToken("statusId"),
-                            Modeofissuanceid = (Guid?)jo.SelectToken("modeOfIssuanceId")
+                            Modeofissuanceid = (Guid?)jo.SelectToken("modeOfIssuanceId"),
+                            Instancetypeid = (Guid?)jo.SelectToken("instanceTypeId")
                         });
                         if (i % 1000 == 0)
                         {
@@ -4018,7 +4173,7 @@ namespace FolioConsoleApplication
                 var js = new JsonSerializer { Formatting = Formatting.Indented };
                 jtw.WriteStartArray();
                 var i = 0;
-                foreach (var jo in api ? fsc.Instances(where) : fdc.Instances(where).Select(i2 => JObject.Parse(i2.Content)))
+                foreach (var jo in api ? fsc.Instances(where, take: take) : fdc.Instances(where, take: take).Select(i2 => JObject.Parse(i2.Content)))
                 {
                     if (validate)
                     {
@@ -4087,6 +4242,7 @@ namespace FolioConsoleApplication
                 var i = 0;
                 while (jtr.Read() && jtr.TokenType != JsonToken.EndArray)
                 {
+                    if (take != null && take <= i) break;
                     ++i;
                     var jo = (JObject)js.Deserialize(jtr);
                     if (validate)
@@ -4143,7 +4299,7 @@ namespace FolioConsoleApplication
                 var js = new JsonSerializer { Formatting = Formatting.Indented };
                 jtw.WriteStartArray();
                 var i = 0;
-                foreach (var jo in api ? fsc.InstanceFormats(where) : fdc.InstanceFormats(where).Select(@if => JObject.Parse(@if.Content)))
+                foreach (var jo in api ? fsc.InstanceFormats(where, take: take) : fdc.InstanceFormats(where, take: take).Select(@if => JObject.Parse(@if.Content)))
                 {
                     if (validate)
                     {
@@ -4212,6 +4368,7 @@ namespace FolioConsoleApplication
                 var i = 0;
                 while (jtr.Read() && jtr.TokenType != JsonToken.EndArray)
                 {
+                    if (take != null && take <= i) break;
                     ++i;
                     var jo = (JObject)js.Deserialize(jtr);
                     if (validate)
@@ -4270,7 +4427,7 @@ namespace FolioConsoleApplication
                 var js = new JsonSerializer { Formatting = Formatting.Indented };
                 jtw.WriteStartArray();
                 var i = 0;
-                foreach (var jo in api ? fsc.InstanceNoteTypes(where) : fdc.InstanceNoteTypes(where).Select(@int => JObject.Parse(@int.Content)))
+                foreach (var jo in api ? fsc.InstanceNoteTypes(where, take: take) : fdc.InstanceNoteTypes(where, take: take).Select(@int => JObject.Parse(@int.Content)))
                 {
                     if (validate)
                     {
@@ -4339,6 +4496,7 @@ namespace FolioConsoleApplication
                 var i = 0;
                 while (jtr.Read() && jtr.TokenType != JsonToken.EndArray)
                 {
+                    if (take != null && take <= i) break;
                     ++i;
                     var jo = (JObject)js.Deserialize(jtr);
                     if (validate)
@@ -4400,7 +4558,7 @@ namespace FolioConsoleApplication
                 var js = new JsonSerializer { Formatting = Formatting.Indented };
                 jtw.WriteStartArray();
                 var i = 0;
-                foreach (var jo in api ? fsc.InstanceRelationships(where) : fdc.InstanceRelationships(where).Select(ir => JObject.Parse(ir.Content)))
+                foreach (var jo in api ? fsc.InstanceRelationships(where, take: take) : fdc.InstanceRelationships(where, take: take).Select(ir => JObject.Parse(ir.Content)))
                 {
                     if (validate)
                     {
@@ -4469,6 +4627,7 @@ namespace FolioConsoleApplication
                 var i = 0;
                 while (jtr.Read() && jtr.TokenType != JsonToken.EndArray)
                 {
+                    if (take != null && take <= i) break;
                     ++i;
                     var jo = (JObject)js.Deserialize(jtr);
                     if (validate)
@@ -4527,7 +4686,7 @@ namespace FolioConsoleApplication
                 var js = new JsonSerializer { Formatting = Formatting.Indented };
                 jtw.WriteStartArray();
                 var i = 0;
-                foreach (var jo in api ? fsc.InstanceRelationshipTypes(where) : fdc.InstanceRelationshipTypes(where).Select(irt => JObject.Parse(irt.Content)))
+                foreach (var jo in api ? fsc.InstanceRelationshipTypes(where, take: take) : fdc.InstanceRelationshipTypes(where, take: take).Select(irt => JObject.Parse(irt.Content)))
                 {
                     if (validate)
                     {
@@ -4596,6 +4755,7 @@ namespace FolioConsoleApplication
                 var i = 0;
                 while (jtr.Read() && jtr.TokenType != JsonToken.EndArray)
                 {
+                    if (take != null && take <= i) break;
                     ++i;
                     var jo = (JObject)js.Deserialize(jtr);
                     if (validate)
@@ -4654,7 +4814,7 @@ namespace FolioConsoleApplication
                 var js = new JsonSerializer { Formatting = Formatting.Indented };
                 jtw.WriteStartArray();
                 var i = 0;
-                foreach (var jo in api ? fsc.InstanceStatuses(where) : fdc.InstanceStatuses(where).Select(@is => JObject.Parse(@is.Content)))
+                foreach (var jo in api ? fsc.InstanceStatuses(where, take: take) : fdc.InstanceStatuses(where, take: take).Select(@is => JObject.Parse(@is.Content)))
                 {
                     if (validate)
                     {
@@ -4723,6 +4883,7 @@ namespace FolioConsoleApplication
                 var i = 0;
                 while (jtr.Read() && jtr.TokenType != JsonToken.EndArray)
                 {
+                    if (take != null && take <= i) break;
                     ++i;
                     var jo = (JObject)js.Deserialize(jtr);
                     if (validate)
@@ -4779,7 +4940,7 @@ namespace FolioConsoleApplication
                 var js = new JsonSerializer { Formatting = Formatting.Indented };
                 jtw.WriteStartArray();
                 var i = 0;
-                foreach (var jo in api ? fsc.InstanceTypes(where) : fdc.InstanceTypes(where).Select(it => JObject.Parse(it.Content)))
+                foreach (var jo in api ? fsc.InstanceTypes(where, take: take) : fdc.InstanceTypes(where, take: take).Select(it => JObject.Parse(it.Content)))
                 {
                     if (validate)
                     {
@@ -4848,6 +5009,7 @@ namespace FolioConsoleApplication
                 var i = 0;
                 while (jtr.Read() && jtr.TokenType != JsonToken.EndArray)
                 {
+                    if (take != null && take <= i) break;
                     ++i;
                     var jo = (JObject)js.Deserialize(jtr);
                     if (validate)
@@ -4906,7 +5068,7 @@ namespace FolioConsoleApplication
                 var js = new JsonSerializer { Formatting = Formatting.Indented };
                 jtw.WriteStartArray();
                 var i = 0;
-                foreach (var jo in api ? fsc.Institutions(where) : fdc.Institutions(where).Select(i2 => JObject.Parse(i2.Content)))
+                foreach (var jo in api ? fsc.Institutions(where, take: take) : fdc.Institutions(where, take: take).Select(i2 => JObject.Parse(i2.Content)))
                 {
                     if (validate)
                     {
@@ -4975,6 +5137,7 @@ namespace FolioConsoleApplication
                 var i = 0;
                 while (jtr.Read() && jtr.TokenType != JsonToken.EndArray)
                 {
+                    if (take != null && take <= i) break;
                     ++i;
                     var jo = (JObject)js.Deserialize(jtr);
                     if (validate)
@@ -5033,7 +5196,7 @@ namespace FolioConsoleApplication
                 var js = new JsonSerializer { Formatting = Formatting.Indented };
                 jtw.WriteStartArray();
                 var i = 0;
-                foreach (var jo in api ? fsc.Interfaces(where) : fdc.Interfaces(where).Select(i2 => JObject.Parse(i2.Content)))
+                foreach (var jo in api ? fsc.Interfaces(where, take: take) : fdc.Interfaces(where, take: take).Select(i2 => JObject.Parse(i2.Content)))
                 {
                     if (validate)
                     {
@@ -5090,6 +5253,7 @@ namespace FolioConsoleApplication
                 var i = 0;
                 while (jtr.Read() && jtr.TokenType != JsonToken.EndArray)
                 {
+                    if (take != null && take <= i) break;
                     ++i;
                     var jo = (JObject)js.Deserialize(jtr);
                     if (validate)
@@ -5141,7 +5305,7 @@ namespace FolioConsoleApplication
                 var js = new JsonSerializer { Formatting = Formatting.Indented };
                 jtw.WriteStartArray();
                 var i = 0;
-                foreach (var jo in api ? throw new NotSupportedException() : fdc.InterfaceCredentials(where).Select(ic => JObject.Parse(ic.Content)))
+                foreach (var jo in api ? throw new NotSupportedException() : fdc.InterfaceCredentials(where, take: take).Select(ic => JObject.Parse(ic.Content)))
                 {
                     if (validate)
                     {
@@ -5210,6 +5374,7 @@ namespace FolioConsoleApplication
                 var i = 0;
                 while (jtr.Read() && jtr.TokenType != JsonToken.EndArray)
                 {
+                    if (take != null && take <= i) break;
                     ++i;
                     var jo = (JObject)js.Deserialize(jtr);
                     if (validate)
@@ -5268,7 +5433,7 @@ namespace FolioConsoleApplication
                 var js = new JsonSerializer { Formatting = Formatting.Indented };
                 jtw.WriteStartArray();
                 var i = 0;
-                foreach (var jo in api ? fsc.Invoices(where) : fdc.Invoices(where).Select(i2 => JObject.Parse(i2.Content)))
+                foreach (var jo in api ? fsc.Invoices(where, take: take) : fdc.Invoices(where, take: take).Select(i2 => JObject.Parse(i2.Content)))
                 {
                     if (validate)
                     {
@@ -5337,6 +5502,7 @@ namespace FolioConsoleApplication
                 var i = 0;
                 while (jtr.Read() && jtr.TokenType != JsonToken.EndArray)
                 {
+                    if (take != null && take <= i) break;
                     ++i;
                     var jo = (JObject)js.Deserialize(jtr);
                     if (validate)
@@ -5396,7 +5562,7 @@ namespace FolioConsoleApplication
                 var js = new JsonSerializer { Formatting = Formatting.Indented };
                 jtw.WriteStartArray();
                 var i = 0;
-                foreach (var jo in api ? fsc.InvoiceItems(where) : fdc.InvoiceItems(where).Select(ii => JObject.Parse(ii.Content)))
+                foreach (var jo in api ? fsc.InvoiceItems(where, take: take) : fdc.InvoiceItems(where, take: take).Select(ii => JObject.Parse(ii.Content)))
                 {
                     if (validate)
                     {
@@ -5465,6 +5631,7 @@ namespace FolioConsoleApplication
                 var i = 0;
                 while (jtr.Read() && jtr.TokenType != JsonToken.EndArray)
                 {
+                    if (take != null && take <= i) break;
                     ++i;
                     var jo = (JObject)js.Deserialize(jtr);
                     if (validate)
@@ -5529,7 +5696,7 @@ namespace FolioConsoleApplication
                 var js = new JsonSerializer { Formatting = Formatting.Indented };
                 jtw.WriteStartArray();
                 var i = 0;
-                foreach (var jo in api ? fsc.Items(where) : fdc.Items(where).Select(i2 => JObject.Parse(i2.Content)))
+                foreach (var jo in api ? fsc.Items(where, take: take) : fdc.Items(where, take: take).Select(i2 => JObject.Parse(i2.Content)))
                 {
                     if (validate)
                     {
@@ -5546,6 +5713,134 @@ namespace FolioConsoleApplication
                 jtw.WriteEndArray();
                 traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
                 traceSource.TraceEvent(TraceEventType.Information, 0, $"Saved {i} items");
+            }
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"{s.Elapsed} elapsed");
+        }
+
+        public static void DeleteItemDamagedStatuses(string where = null)
+        {
+            traceSource.TraceEvent(TraceEventType.Information, 0, "Deleting item damaged statuses");
+            var s = Stopwatch.StartNew();
+            using (var fbcc = new FolioBulkCopyContext())
+            using (var fsc = new FolioServiceClient())
+            {
+                var i = 0;
+                if (api)
+                {
+                    var s2 = Stopwatch.StartNew();
+                    foreach (var jo in fsc.ItemDamagedStatuses(where))
+                    {
+                        if (!whatIf) fsc.DeleteItemDamagedStatus((string)jo["id"]);
+                        if (++i % 100 == 0)
+                        {
+                            traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
+                            s2.Restart();
+                        }
+                    }
+                    traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
+                }
+                else
+                {
+                    if (!whatIf) i = fbcc.ExecuteNonQuery($"DELETE FROM diku_mod_inventory_storage.item_damaged_status{(where != null ? $" WHERE {where}" : "")}");
+                }
+                traceSource.TraceEvent(TraceEventType.Information, 0, $"Deleted {i} item damaged statuses");
+            }
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"{s.Elapsed} elapsed");
+        }
+
+        public static void LoadItemDamagedStatuses(string path)
+        {
+            traceSource.TraceEvent(TraceEventType.Information, 0, "Loading item damaged statuses");
+            var s = Stopwatch.StartNew();
+            using (var sr = new StreamReader(path))
+            using (var sr2 = new StreamReader(Assembly.GetAssembly(typeof(FolioContext)).GetManifestResourceStream("FolioLibrary.ItemDamagedStatus.json")))
+            using (var jtr = new JsonTextReader(sr) { SupportMultipleContent = true })
+            using (var fbcc = new FolioBulkCopyContext())
+            using (var fsc = new FolioServiceClient())
+            {
+                var s2 = Stopwatch.StartNew();
+                var js4 = JsonSchema.FromJsonAsync(sr2.ReadToEndAsync().Result).Result;
+                var js = new JsonSerializer();
+                jtr.Read();
+                var i = 0;
+                while (jtr.Read() && jtr.TokenType != JsonToken.EndArray)
+                {
+                    if (take != null && take <= i) break;
+                    ++i;
+                    var jo = (JObject)js.Deserialize(jtr);
+                    if (validate)
+                    {
+                        var l = js4.Validate(jo);
+                        if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"ItemDamagedStatus {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"ItemDamagedStatus {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
+                    }
+                    if (api)
+                    {
+                        if (!whatIf) fsc.InsertItemDamagedStatus(jo);
+                        if (i % 100 == 0)
+                        {
+                            traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
+                            s2.Restart();
+                        }
+                    }
+                    else
+                    {
+                        if (!whatIf) fbcc.Insert(new ItemDamagedStatus
+                        {
+                            Id = (Guid?)jo.SelectToken("id"),
+                            Content = jo.ToString(),
+                            CreationTime = (DateTime?)jo.SelectToken("metadata.createdDate"),
+                            CreationUserId = (string)jo.SelectToken("metadata.createdByUserId")
+                        });
+                        if (i % 1000 == 0)
+                        {
+                            fbcc.Commit();
+                            if (i % 10000 == 0)
+                            {
+                                traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
+                                s2.Restart();
+                            }
+                        }
+                    }
+                }
+                fbcc.Commit();
+                traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
+                traceSource.TraceEvent(TraceEventType.Information, 0, $"Added {i} item damaged statuses");
+            }
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"{s.Elapsed} elapsed");
+        }
+
+        public static void SaveItemDamagedStatuses(string path, string where = null)
+        {
+            traceSource.TraceEvent(TraceEventType.Information, 0, "Saving item damaged statuses");
+            var s = Stopwatch.StartNew();
+            using (var fdc = new FolioDapperContext())
+            using (var fsc = new FolioServiceClient())
+            using (var sr = new StreamReader(Assembly.GetAssembly(typeof(FolioContext)).GetManifestResourceStream("FolioLibrary.ItemDamagedStatus.json")))
+            using (var sw = new StreamWriter(whatIf ? (Stream)new MemoryStream() : new FileStream(path, FileMode.Create)))
+            using (var jtw = new JsonTextWriter(sw))
+            {
+                var s2 = Stopwatch.StartNew();
+                var js4 = JsonSchema.FromJsonAsync(sr.ReadToEndAsync().Result).Result;
+                var js = new JsonSerializer { Formatting = Formatting.Indented };
+                jtw.WriteStartArray();
+                var i = 0;
+                foreach (var jo in api ? fsc.ItemDamagedStatuses(where, take: take) : fdc.ItemDamagedStatuses(where, take: take).Select(ids => JObject.Parse(ids.Content)))
+                {
+                    if (validate)
+                    {
+                        var l = js4.Validate(jo);
+                        if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"ItemDamagedStatus {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"ItemDamagedStatus {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
+                    }
+                    if (!whatIf) js.Serialize(jtw, jo);
+                    if (++i % 10000 == 0)
+                    {
+                        traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
+                        s2.Restart();
+                    }
+                }
+                jtw.WriteEndArray();
+                traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
+                traceSource.TraceEvent(TraceEventType.Information, 0, $"Saved {i} item damaged statuses");
             }
             traceSource.TraceEvent(TraceEventType.Information, 0, $"{s.Elapsed} elapsed");
         }
@@ -5598,6 +5893,7 @@ namespace FolioConsoleApplication
                 var i = 0;
                 while (jtr.Read() && jtr.TokenType != JsonToken.EndArray)
                 {
+                    if (take != null && take <= i) break;
                     ++i;
                     var jo = (JObject)js.Deserialize(jtr);
                     if (validate)
@@ -5656,7 +5952,7 @@ namespace FolioConsoleApplication
                 var js = new JsonSerializer { Formatting = Formatting.Indented };
                 jtw.WriteStartArray();
                 var i = 0;
-                foreach (var jo in api ? fsc.ItemNoteTypes(where) : fdc.ItemNoteTypes(where).Select(@int => JObject.Parse(@int.Content)))
+                foreach (var jo in api ? fsc.ItemNoteTypes(where, take: take) : fdc.ItemNoteTypes(where, take: take).Select(@int => JObject.Parse(@int.Content)))
                 {
                     if (validate)
                     {
@@ -5725,6 +6021,7 @@ namespace FolioConsoleApplication
                 var i = 0;
                 while (jtr.Read() && jtr.TokenType != JsonToken.EndArray)
                 {
+                    if (take != null && take <= i) break;
                     ++i;
                     var jo = (JObject)js.Deserialize(jtr);
                     if (validate)
@@ -5783,7 +6080,7 @@ namespace FolioConsoleApplication
                 var js = new JsonSerializer { Formatting = Formatting.Indented };
                 jtw.WriteStartArray();
                 var i = 0;
-                foreach (var jo in api ? fsc.Ledgers(where) : fdc.Ledgers(where).Select(l => JObject.Parse(l.Content)))
+                foreach (var jo in api ? fsc.Ledgers(where, take: take) : fdc.Ledgers(where, take: take).Select(l => JObject.Parse(l.Content)))
                 {
                     if (validate)
                     {
@@ -5852,6 +6149,7 @@ namespace FolioConsoleApplication
                 var i = 0;
                 while (jtr.Read() && jtr.TokenType != JsonToken.EndArray)
                 {
+                    if (take != null && take <= i) break;
                     ++i;
                     var jo = (JObject)js.Deserialize(jtr);
                     if (validate)
@@ -5911,7 +6209,7 @@ namespace FolioConsoleApplication
                 var js = new JsonSerializer { Formatting = Formatting.Indented };
                 jtw.WriteStartArray();
                 var i = 0;
-                foreach (var jo in api ? fsc.Libraries(where) : fdc.Libraries(where).Select(l => JObject.Parse(l.Content)))
+                foreach (var jo in api ? fsc.Libraries(where, take: take) : fdc.Libraries(where, take: take).Select(l => JObject.Parse(l.Content)))
                 {
                     if (validate)
                     {
@@ -5980,6 +6278,7 @@ namespace FolioConsoleApplication
                 var i = 0;
                 while (jtr.Read() && jtr.TokenType != JsonToken.EndArray)
                 {
+                    if (take != null && take <= i) break;
                     ++i;
                     var jo = (JObject)js.Deserialize(jtr);
                     if (validate)
@@ -6038,7 +6337,7 @@ namespace FolioConsoleApplication
                 var js = new JsonSerializer { Formatting = Formatting.Indented };
                 jtw.WriteStartArray();
                 var i = 0;
-                foreach (var jo in api ? fsc.Loans(where) : fdc.Loans(where).Select(l => JObject.Parse(l.Content)))
+                foreach (var jo in api ? fsc.Loans(where, take: take) : fdc.Loans(where, take: take).Select(l => JObject.Parse(l.Content)))
                 {
                     if (validate)
                     {
@@ -6107,6 +6406,7 @@ namespace FolioConsoleApplication
                 var i = 0;
                 while (jtr.Read() && jtr.TokenType != JsonToken.EndArray)
                 {
+                    if (take != null && take <= i) break;
                     ++i;
                     var jo = (JObject)js.Deserialize(jtr);
                     if (validate)
@@ -6167,7 +6467,7 @@ namespace FolioConsoleApplication
                 var js = new JsonSerializer { Formatting = Formatting.Indented };
                 jtw.WriteStartArray();
                 var i = 0;
-                foreach (var jo in api ? fsc.LoanPolicies(where) : fdc.LoanPolicies(where).Select(lp => JObject.Parse(lp.Content)))
+                foreach (var jo in api ? fsc.LoanPolicies(where, take: take) : fdc.LoanPolicies(where, take: take).Select(lp => JObject.Parse(lp.Content)))
                 {
                     if (validate)
                     {
@@ -6236,6 +6536,7 @@ namespace FolioConsoleApplication
                 var i = 0;
                 while (jtr.Read() && jtr.TokenType != JsonToken.EndArray)
                 {
+                    if (take != null && take <= i) break;
                     ++i;
                     var jo = (JObject)js.Deserialize(jtr);
                     if (validate)
@@ -6294,7 +6595,7 @@ namespace FolioConsoleApplication
                 var js = new JsonSerializer { Formatting = Formatting.Indented };
                 jtw.WriteStartArray();
                 var i = 0;
-                foreach (var jo in api ? fsc.LoanTypes(where) : fdc.LoanTypes(where).Select(lt => JObject.Parse(lt.Content)))
+                foreach (var jo in api ? fsc.LoanTypes(where, take: take) : fdc.LoanTypes(where, take: take).Select(lt => JObject.Parse(lt.Content)))
                 {
                     if (validate)
                     {
@@ -6363,6 +6664,7 @@ namespace FolioConsoleApplication
                 var i = 0;
                 while (jtr.Read() && jtr.TokenType != JsonToken.EndArray)
                 {
+                    if (take != null && take <= i) break;
                     ++i;
                     var jo = (JObject)js.Deserialize(jtr);
                     if (validate)
@@ -6424,7 +6726,7 @@ namespace FolioConsoleApplication
                 var js = new JsonSerializer { Formatting = Formatting.Indented };
                 jtw.WriteStartArray();
                 var i = 0;
-                foreach (var jo in api ? fsc.Locations(where) : fdc.Locations(where).Select(l => JObject.Parse(l.Content)))
+                foreach (var jo in api ? fsc.Locations(where, take: take) : fdc.Locations(where, take: take).Select(l => JObject.Parse(l.Content)))
                 {
                     if (validate)
                     {
@@ -6493,6 +6795,7 @@ namespace FolioConsoleApplication
                 var i = 0;
                 while (jtr.Read() && jtr.TokenType != JsonToken.EndArray)
                 {
+                    if (take != null && take <= i) break;
                     ++i;
                     var jo = (JObject)js.Deserialize(jtr);
                     if (validate)
@@ -6551,7 +6854,7 @@ namespace FolioConsoleApplication
                 var js = new JsonSerializer { Formatting = Formatting.Indented };
                 jtw.WriteStartArray();
                 var i = 0;
-                foreach (var jo in api ? fsc.Logins(where) : fdc.Logins(where).Select(l => JObject.Parse(l.Content)))
+                foreach (var jo in api ? fsc.Logins(where, take: take) : fdc.Logins(where, take: take).Select(l => JObject.Parse(l.Content)))
                 {
                     if (validate)
                     {
@@ -6608,6 +6911,7 @@ namespace FolioConsoleApplication
                 var i = 0;
                 while (jtr.Read() && jtr.TokenType != JsonToken.EndArray)
                 {
+                    if (take != null && take <= i) break;
                     ++i;
                     var jo = (JObject)js.Deserialize(jtr);
                     if (validate)
@@ -6658,7 +6962,7 @@ namespace FolioConsoleApplication
                 var js = new JsonSerializer { Formatting = Formatting.Indented };
                 jtw.WriteStartArray();
                 var i = 0;
-                foreach (var jo in api ? throw new NotSupportedException() : fdc.MarcRecords(where).Select(mr => JObject.Parse(mr.Content)))
+                foreach (var jo in api ? throw new NotSupportedException() : fdc.MarcRecords(where, take: take).Select(mr => JObject.Parse(mr.Content)))
                 {
                     if (validate)
                     {
@@ -6727,6 +7031,7 @@ namespace FolioConsoleApplication
                 var i = 0;
                 while (jtr.Read() && jtr.TokenType != JsonToken.EndArray)
                 {
+                    if (take != null && take <= i) break;
                     ++i;
                     var jo = (JObject)js.Deserialize(jtr);
                     if (validate)
@@ -6785,7 +7090,7 @@ namespace FolioConsoleApplication
                 var js = new JsonSerializer { Formatting = Formatting.Indented };
                 jtw.WriteStartArray();
                 var i = 0;
-                foreach (var jo in api ? fsc.MaterialTypes(where) : fdc.MaterialTypes(where).Select(mt => JObject.Parse(mt.Content)))
+                foreach (var jo in api ? fsc.MaterialTypes(where, take: take) : fdc.MaterialTypes(where, take: take).Select(mt => JObject.Parse(mt.Content)))
                 {
                     if (validate)
                     {
@@ -6854,6 +7159,7 @@ namespace FolioConsoleApplication
                 var i = 0;
                 while (jtr.Read() && jtr.TokenType != JsonToken.EndArray)
                 {
+                    if (take != null && take <= i) break;
                     ++i;
                     var jo = (JObject)js.Deserialize(jtr);
                     if (validate)
@@ -6912,7 +7218,7 @@ namespace FolioConsoleApplication
                 var js = new JsonSerializer { Formatting = Formatting.Indented };
                 jtw.WriteStartArray();
                 var i = 0;
-                foreach (var jo in api ? fsc.ModeOfIssuances(where) : fdc.ModeOfIssuances(where).Select(moi => JObject.Parse(moi.Content)))
+                foreach (var jo in api ? fsc.ModeOfIssuances(where, take: take) : fdc.ModeOfIssuances(where, take: take).Select(moi => JObject.Parse(moi.Content)))
                 {
                     if (validate)
                     {
@@ -6981,6 +7287,7 @@ namespace FolioConsoleApplication
                 var i = 0;
                 while (jtr.Read() && jtr.TokenType != JsonToken.EndArray)
                 {
+                    if (take != null && take <= i) break;
                     ++i;
                     var jo = (JObject)js.Deserialize(jtr);
                     if (validate)
@@ -7039,7 +7346,7 @@ namespace FolioConsoleApplication
                 var js = new JsonSerializer { Formatting = Formatting.Indented };
                 jtw.WriteStartArray();
                 var i = 0;
-                foreach (var jo in api ? fsc.NatureOfContentTerms(where) : fdc.NatureOfContentTerms(where).Select(noct => JObject.Parse(noct.Content)))
+                foreach (var jo in api ? fsc.NatureOfContentTerms(where, take: take) : fdc.NatureOfContentTerms(where, take: take).Select(noct => JObject.Parse(noct.Content)))
                 {
                     if (validate)
                     {
@@ -7108,6 +7415,7 @@ namespace FolioConsoleApplication
                 var i = 0;
                 while (jtr.Read() && jtr.TokenType != JsonToken.EndArray)
                 {
+                    if (take != null && take <= i) break;
                     ++i;
                     var jo = (JObject)js.Deserialize(jtr);
                     if (validate)
@@ -7166,7 +7474,7 @@ namespace FolioConsoleApplication
                 var js = new JsonSerializer { Formatting = Formatting.Indented };
                 jtw.WriteStartArray();
                 var i = 0;
-                foreach (var jo in api ? fsc.Orders(where) : fdc.Orders(where).Select(o => JObject.Parse(o.Content)))
+                foreach (var jo in api ? fsc.Orders(where, take: take) : fdc.Orders(where, take: take).Select(o => JObject.Parse(o.Content)))
                 {
                     if (validate)
                     {
@@ -7235,6 +7543,7 @@ namespace FolioConsoleApplication
                 var i = 0;
                 while (jtr.Read() && jtr.TokenType != JsonToken.EndArray)
                 {
+                    if (take != null && take <= i) break;
                     ++i;
                     var jo = (JObject)js.Deserialize(jtr);
                     if (validate)
@@ -7294,7 +7603,7 @@ namespace FolioConsoleApplication
                 var js = new JsonSerializer { Formatting = Formatting.Indented };
                 jtw.WriteStartArray();
                 var i = 0;
-                foreach (var jo in api ? fsc.OrderItems(where) : fdc.OrderItems(where).Select(oi => JObject.Parse(oi.Content)))
+                foreach (var jo in api ? fsc.OrderItems(where, take: take) : fdc.OrderItems(where, take: take).Select(oi => JObject.Parse(oi.Content)))
                 {
                     if (validate)
                     {
@@ -7363,6 +7672,7 @@ namespace FolioConsoleApplication
                 var i = 0;
                 while (jtr.Read() && jtr.TokenType != JsonToken.EndArray)
                 {
+                    if (take != null && take <= i) break;
                     ++i;
                     var jo = (JObject)js.Deserialize(jtr);
                     if (validate)
@@ -7421,7 +7731,7 @@ namespace FolioConsoleApplication
                 var js = new JsonSerializer { Formatting = Formatting.Indented };
                 jtw.WriteStartArray();
                 var i = 0;
-                foreach (var jo in api ? fsc.Organizations(where) : fdc.Organizations(where).Select(o => JObject.Parse(o.Content)))
+                foreach (var jo in api ? fsc.Organizations(where, take: take) : fdc.Organizations(where, take: take).Select(o => JObject.Parse(o.Content)))
                 {
                     if (validate)
                     {
@@ -7490,6 +7800,7 @@ namespace FolioConsoleApplication
                 var i = 0;
                 while (jtr.Read() && jtr.TokenType != JsonToken.EndArray)
                 {
+                    if (take != null && take <= i) break;
                     ++i;
                     var jo = (JObject)js.Deserialize(jtr);
                     if (validate)
@@ -7548,7 +7859,7 @@ namespace FolioConsoleApplication
                 var js = new JsonSerializer { Formatting = Formatting.Indented };
                 jtw.WriteStartArray();
                 var i = 0;
-                foreach (var jo in api ? fsc.PatronNoticePolicies(where) : fdc.PatronNoticePolicies(where).Select(pnp => JObject.Parse(pnp.Content)))
+                foreach (var jo in api ? fsc.PatronNoticePolicies(where, take: take) : fdc.PatronNoticePolicies(where, take: take).Select(pnp => JObject.Parse(pnp.Content)))
                 {
                     if (validate)
                     {
@@ -7617,6 +7928,7 @@ namespace FolioConsoleApplication
                 var i = 0;
                 while (jtr.Read() && jtr.TokenType != JsonToken.EndArray)
                 {
+                    if (take != null && take <= i) break;
                     ++i;
                     var jo = (JObject)js.Deserialize(jtr);
                     if (validate)
@@ -7675,7 +7987,7 @@ namespace FolioConsoleApplication
                 var js = new JsonSerializer { Formatting = Formatting.Indented };
                 jtw.WriteStartArray();
                 var i = 0;
-                foreach (var jo in api ? fsc.Permissions(where) : fdc.Permissions(where).Select(p => JObject.Parse(p.Content)))
+                foreach (var jo in api ? fsc.Permissions(where, take: take) : fdc.Permissions(where, take: take).Select(p => JObject.Parse(p.Content)))
                 {
                     if (validate)
                     {
@@ -7744,6 +8056,7 @@ namespace FolioConsoleApplication
                 var i = 0;
                 while (jtr.Read() && jtr.TokenType != JsonToken.EndArray)
                 {
+                    if (take != null && take <= i) break;
                     ++i;
                     var jo = (JObject)js.Deserialize(jtr);
                     if (validate)
@@ -7802,7 +8115,7 @@ namespace FolioConsoleApplication
                 var js = new JsonSerializer { Formatting = Formatting.Indented };
                 jtw.WriteStartArray();
                 var i = 0;
-                foreach (var jo in api ? fsc.PermissionsUsers(where) : fdc.PermissionsUsers(where).Select(pu => JObject.Parse(pu.Content)))
+                foreach (var jo in api ? fsc.PermissionsUsers(where, take: take) : fdc.PermissionsUsers(where, take: take).Select(pu => JObject.Parse(pu.Content)))
                 {
                     if (validate)
                     {
@@ -7871,6 +8184,7 @@ namespace FolioConsoleApplication
                 var i = 0;
                 while (jtr.Read() && jtr.TokenType != JsonToken.EndArray)
                 {
+                    if (take != null && take <= i) break;
                     ++i;
                     var jo = (JObject)js.Deserialize(jtr);
                     if (validate)
@@ -7928,7 +8242,7 @@ namespace FolioConsoleApplication
                 var js = new JsonSerializer { Formatting = Formatting.Indented };
                 jtw.WriteStartArray();
                 var i = 0;
-                foreach (var jo in api ? fsc.Pieces(where) : fdc.Pieces(where).Select(p => JObject.Parse(p.Content)))
+                foreach (var jo in api ? fsc.Pieces(where, take: take) : fdc.Pieces(where, take: take).Select(p => JObject.Parse(p.Content)))
                 {
                     if (validate)
                     {
@@ -7997,6 +8311,7 @@ namespace FolioConsoleApplication
                 var i = 0;
                 while (jtr.Read() && jtr.TokenType != JsonToken.EndArray)
                 {
+                    if (take != null && take <= i) break;
                     ++i;
                     var jo = (JObject)js.Deserialize(jtr);
                     if (validate)
@@ -8055,7 +8370,7 @@ namespace FolioConsoleApplication
                 var js = new JsonSerializer { Formatting = Formatting.Indented };
                 jtw.WriteStartArray();
                 var i = 0;
-                foreach (var jo in api ? fsc.Proxies(where) : fdc.Proxies(where).Select(p => JObject.Parse(p.Content)))
+                foreach (var jo in api ? fsc.Proxies(where, take: take) : fdc.Proxies(where, take: take).Select(p => JObject.Parse(p.Content)))
                 {
                     if (validate)
                     {
@@ -8112,6 +8427,7 @@ namespace FolioConsoleApplication
                 var i = 0;
                 while (jtr.Read() && jtr.TokenType != JsonToken.EndArray)
                 {
+                    if (take != null && take <= i) break;
                     ++i;
                     var jo = (JObject)js.Deserialize(jtr);
                     if (validate)
@@ -8162,7 +8478,7 @@ namespace FolioConsoleApplication
                 var js = new JsonSerializer { Formatting = Formatting.Indented };
                 jtw.WriteStartArray();
                 var i = 0;
-                foreach (var jo in api ? throw new NotSupportedException() : fdc.RawRecords(where).Select(rr => JObject.Parse(rr.Content)))
+                foreach (var jo in api ? throw new NotSupportedException() : fdc.RawRecords(where, take: take).Select(rr => JObject.Parse(rr.Content)))
                 {
                     if (validate)
                     {
@@ -8232,6 +8548,7 @@ namespace FolioConsoleApplication
                 var l2 = new List<JObject>(1000);
                 while (jtr.Read() && jtr.TokenType != JsonToken.EndArray)
                 {
+                    if (take != null && take <= i) break;
                     ++i;
                     var jo = (JObject)js.Deserialize(jtr);
                     if (validate)
@@ -8293,7 +8610,7 @@ namespace FolioConsoleApplication
                 var js = new JsonSerializer { Formatting = Formatting.Indented };
                 jtw.WriteStartArray();
                 var i = 0;
-                foreach (var jo in api ? fsc.Records(where) : fdc.Records(where).Select(r => JObject.Parse(r.Content)))
+                foreach (var jo in api ? fsc.Records(where, take: take) : fdc.Records(where, take: take).Select(r => JObject.Parse(r.Content)))
                 {
                     if (validate)
                     {
@@ -8362,6 +8679,7 @@ namespace FolioConsoleApplication
                 var i = 0;
                 while (jtr.Read() && jtr.TokenType != JsonToken.EndArray)
                 {
+                    if (take != null && take <= i) break;
                     ++i;
                     var jo = (JObject)js.Deserialize(jtr);
                     if (validate)
@@ -8418,7 +8736,7 @@ namespace FolioConsoleApplication
                 var js = new JsonSerializer { Formatting = Formatting.Indented };
                 jtw.WriteStartArray();
                 var i = 0;
-                foreach (var jo in api ? fsc.ReportingCodes(where) : fdc.ReportingCodes(where).Select(rc => JObject.Parse(rc.Content)))
+                foreach (var jo in api ? fsc.ReportingCodes(where, take: take) : fdc.ReportingCodes(where, take: take).Select(rc => JObject.Parse(rc.Content)))
                 {
                     if (validate)
                     {
@@ -8487,6 +8805,7 @@ namespace FolioConsoleApplication
                 var i = 0;
                 while (jtr.Read() && jtr.TokenType != JsonToken.EndArray)
                 {
+                    if (take != null && take <= i) break;
                     ++i;
                     var jo = (JObject)js.Deserialize(jtr);
                     if (validate)
@@ -8546,7 +8865,7 @@ namespace FolioConsoleApplication
                 var js = new JsonSerializer { Formatting = Formatting.Indented };
                 jtw.WriteStartArray();
                 var i = 0;
-                foreach (var jo in api ? fsc.Requests(where) : fdc.Requests(where).Select(r => JObject.Parse(r.Content)))
+                foreach (var jo in api ? fsc.Requests(where, take: take) : fdc.Requests(where, take: take).Select(r => JObject.Parse(r.Content)))
                 {
                     if (validate)
                     {
@@ -8615,6 +8934,7 @@ namespace FolioConsoleApplication
                 var i = 0;
                 while (jtr.Read() && jtr.TokenType != JsonToken.EndArray)
                 {
+                    if (take != null && take <= i) break;
                     ++i;
                     var jo = (JObject)js.Deserialize(jtr);
                     if (validate)
@@ -8673,7 +8993,7 @@ namespace FolioConsoleApplication
                 var js = new JsonSerializer { Formatting = Formatting.Indented };
                 jtw.WriteStartArray();
                 var i = 0;
-                foreach (var jo in api ? fsc.RequestPolicies(where) : fdc.RequestPolicies(where).Select(rp => JObject.Parse(rp.Content)))
+                foreach (var jo in api ? fsc.RequestPolicies(where, take: take) : fdc.RequestPolicies(where, take: take).Select(rp => JObject.Parse(rp.Content)))
                 {
                     if (validate)
                     {
@@ -8742,6 +9062,7 @@ namespace FolioConsoleApplication
                 var i = 0;
                 while (jtr.Read() && jtr.TokenType != JsonToken.EndArray)
                 {
+                    if (take != null && take <= i) break;
                     ++i;
                     var jo = (JObject)js.Deserialize(jtr);
                     if (validate)
@@ -8800,7 +9121,7 @@ namespace FolioConsoleApplication
                 var js = new JsonSerializer { Formatting = Formatting.Indented };
                 jtw.WriteStartArray();
                 var i = 0;
-                foreach (var jo in api ? fsc.ScheduledNotices(where) : fdc.ScheduledNotices(where).Select(sn => JObject.Parse(sn.Content)))
+                foreach (var jo in api ? fsc.ScheduledNotices(where, take: take) : fdc.ScheduledNotices(where, take: take).Select(sn => JObject.Parse(sn.Content)))
                 {
                     if (validate)
                     {
@@ -8869,6 +9190,7 @@ namespace FolioConsoleApplication
                 var i = 0;
                 while (jtr.Read() && jtr.TokenType != JsonToken.EndArray)
                 {
+                    if (take != null && take <= i) break;
                     ++i;
                     var jo = (JObject)js.Deserialize(jtr);
                     if (validate)
@@ -8927,7 +9249,7 @@ namespace FolioConsoleApplication
                 var js = new JsonSerializer { Formatting = Formatting.Indented };
                 jtw.WriteStartArray();
                 var i = 0;
-                foreach (var jo in api ? fsc.ServicePoints(where) : fdc.ServicePoints(where).Select(sp => JObject.Parse(sp.Content)))
+                foreach (var jo in api ? fsc.ServicePoints(where, take: take) : fdc.ServicePoints(where, take: take).Select(sp => JObject.Parse(sp.Content)))
                 {
                     if (validate)
                     {
@@ -8996,6 +9318,7 @@ namespace FolioConsoleApplication
                 var i = 0;
                 while (jtr.Read() && jtr.TokenType != JsonToken.EndArray)
                 {
+                    if (take != null && take <= i) break;
                     ++i;
                     var jo = (JObject)js.Deserialize(jtr);
                     if (validate)
@@ -9055,7 +9378,7 @@ namespace FolioConsoleApplication
                 var js = new JsonSerializer { Formatting = Formatting.Indented };
                 jtw.WriteStartArray();
                 var i = 0;
-                foreach (var jo in api ? fsc.ServicePointUsers(where) : fdc.ServicePointUsers(where).Select(spu => JObject.Parse(spu.Content)))
+                foreach (var jo in api ? fsc.ServicePointUsers(where, take: take) : fdc.ServicePointUsers(where, take: take).Select(spu => JObject.Parse(spu.Content)))
                 {
                     if (validate)
                     {
@@ -9124,6 +9447,7 @@ namespace FolioConsoleApplication
                 var i = 0;
                 while (jtr.Read() && jtr.TokenType != JsonToken.EndArray)
                 {
+                    if (take != null && take <= i) break;
                     ++i;
                     var jo = (JObject)js.Deserialize(jtr);
                     if (validate)
@@ -9182,7 +9506,7 @@ namespace FolioConsoleApplication
                 var js = new JsonSerializer { Formatting = Formatting.Indented };
                 jtw.WriteStartArray();
                 var i = 0;
-                foreach (var jo in api ? fsc.Snapshots(where) : fdc.Snapshots(where).Select(s3 => JObject.Parse(s3.Content)))
+                foreach (var jo in api ? fsc.Snapshots(where, take: take) : fdc.Snapshots(where, take: take).Select(s3 => JObject.Parse(s3.Content)))
                 {
                     if (validate)
                     {
@@ -9251,6 +9575,7 @@ namespace FolioConsoleApplication
                 var i = 0;
                 while (jtr.Read() && jtr.TokenType != JsonToken.EndArray)
                 {
+                    if (take != null && take <= i) break;
                     ++i;
                     var jo = (JObject)js.Deserialize(jtr);
                     if (validate)
@@ -9309,7 +9634,7 @@ namespace FolioConsoleApplication
                 var js = new JsonSerializer { Formatting = Formatting.Indented };
                 jtw.WriteStartArray();
                 var i = 0;
-                foreach (var jo in api ? fsc.StaffSlips(where) : fdc.StaffSlips(where).Select(ss => JObject.Parse(ss.Content)))
+                foreach (var jo in api ? fsc.StaffSlips(where, take: take) : fdc.StaffSlips(where, take: take).Select(ss => JObject.Parse(ss.Content)))
                 {
                     if (validate)
                     {
@@ -9378,6 +9703,7 @@ namespace FolioConsoleApplication
                 var i = 0;
                 while (jtr.Read() && jtr.TokenType != JsonToken.EndArray)
                 {
+                    if (take != null && take <= i) break;
                     ++i;
                     var jo = (JObject)js.Deserialize(jtr);
                     if (validate)
@@ -9437,7 +9763,7 @@ namespace FolioConsoleApplication
                 var js = new JsonSerializer { Formatting = Formatting.Indented };
                 jtw.WriteStartArray();
                 var i = 0;
-                foreach (var jo in api ? fsc.StatisticalCodes(where) : fdc.StatisticalCodes(where).Select(sc => JObject.Parse(sc.Content)))
+                foreach (var jo in api ? fsc.StatisticalCodes(where, take: take) : fdc.StatisticalCodes(where, take: take).Select(sc => JObject.Parse(sc.Content)))
                 {
                     if (validate)
                     {
@@ -9506,6 +9832,7 @@ namespace FolioConsoleApplication
                 var i = 0;
                 while (jtr.Read() && jtr.TokenType != JsonToken.EndArray)
                 {
+                    if (take != null && take <= i) break;
                     ++i;
                     var jo = (JObject)js.Deserialize(jtr);
                     if (validate)
@@ -9564,7 +9891,7 @@ namespace FolioConsoleApplication
                 var js = new JsonSerializer { Formatting = Formatting.Indented };
                 jtw.WriteStartArray();
                 var i = 0;
-                foreach (var jo in api ? fsc.StatisticalCodeTypes(where) : fdc.StatisticalCodeTypes(where).Select(sct => JObject.Parse(sct.Content)))
+                foreach (var jo in api ? fsc.StatisticalCodeTypes(where, take: take) : fdc.StatisticalCodeTypes(where, take: take).Select(sct => JObject.Parse(sct.Content)))
                 {
                     if (validate)
                     {
@@ -9633,6 +9960,7 @@ namespace FolioConsoleApplication
                 var i = 0;
                 while (jtr.Read() && jtr.TokenType != JsonToken.EndArray)
                 {
+                    if (take != null && take <= i) break;
                     ++i;
                     var jo = (JObject)js.Deserialize(jtr);
                     if (validate)
@@ -9692,7 +10020,7 @@ namespace FolioConsoleApplication
                 var js = new JsonSerializer { Formatting = Formatting.Indented };
                 jtw.WriteStartArray();
                 var i = 0;
-                foreach (var jo in api ? fsc.Users(where) : fdc.Users(where).Select(u => JObject.Parse(u.Content)))
+                foreach (var jo in api ? fsc.Users(where, take: take) : fdc.Users(where, take: take).Select(u => JObject.Parse(u.Content)))
                 {
                     if (validate)
                     {
@@ -9761,6 +10089,7 @@ namespace FolioConsoleApplication
                 var i = 0;
                 while (jtr.Read() && jtr.TokenType != JsonToken.EndArray)
                 {
+                    if (take != null && take <= i) break;
                     ++i;
                     var jo = (JObject)js.Deserialize(jtr);
                     if (validate)
@@ -9820,7 +10149,7 @@ namespace FolioConsoleApplication
                 var js = new JsonSerializer { Formatting = Formatting.Indented };
                 jtw.WriteStartArray();
                 var i = 0;
-                foreach (var jo in api ? fsc.UserAcquisitionsUnits(where) : fdc.UserAcquisitionsUnits(where).Select(uau => JObject.Parse(uau.Content)))
+                foreach (var jo in api ? fsc.UserAcquisitionsUnits(where, take: take) : fdc.UserAcquisitionsUnits(where, take: take).Select(uau => JObject.Parse(uau.Content)))
                 {
                     if (validate)
                     {
@@ -9889,6 +10218,7 @@ namespace FolioConsoleApplication
                 var i = 0;
                 while (jtr.Read() && jtr.TokenType != JsonToken.EndArray)
                 {
+                    if (take != null && take <= i) break;
                     ++i;
                     var jo = (JObject)js.Deserialize(jtr);
                     if (validate)
@@ -9948,7 +10278,7 @@ namespace FolioConsoleApplication
                 var js = new JsonSerializer { Formatting = Formatting.Indented };
                 jtw.WriteStartArray();
                 var i = 0;
-                foreach (var jo in api ? fsc.Vouchers(where) : fdc.Vouchers(where).Select(v => JObject.Parse(v.Content)))
+                foreach (var jo in api ? fsc.Vouchers(where, take: take) : fdc.Vouchers(where, take: take).Select(v => JObject.Parse(v.Content)))
                 {
                     if (validate)
                     {
@@ -10017,6 +10347,7 @@ namespace FolioConsoleApplication
                 var i = 0;
                 while (jtr.Read() && jtr.TokenType != JsonToken.EndArray)
                 {
+                    if (take != null && take <= i) break;
                     ++i;
                     var jo = (JObject)js.Deserialize(jtr);
                     if (validate)
@@ -10076,7 +10407,7 @@ namespace FolioConsoleApplication
                 var js = new JsonSerializer { Formatting = Formatting.Indented };
                 jtw.WriteStartArray();
                 var i = 0;
-                foreach (var jo in api ? fsc.VoucherItems(where) : fdc.VoucherItems(where).Select(vi => JObject.Parse(vi.Content)))
+                foreach (var jo in api ? fsc.VoucherItems(where, take: take) : fdc.VoucherItems(where, take: take).Select(vi => JObject.Parse(vi.Content)))
                 {
                     if (validate)
                     {
