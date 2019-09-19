@@ -131,6 +131,7 @@ dotnet FolioConsoleApplication.dll -save -all -validate -force -whatif
 -Force
 -Load
 -Save
+-Take <int>
 -TracePath <string>
 -Validate
 -Verbose
