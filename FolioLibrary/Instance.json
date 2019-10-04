@@ -5,6 +5,7 @@
   "additionalProperties": false,
   "properties": {
     "id": {
+      "description": "A universally unique identifier (UUID), this is a 128-bit number used to identify a record and is shown in hex with dashes, for example 6312d172-f0cf-40f6-b27d-9fa8feaf332f; the UUID version must be from 1-5; see https://dev.folio.org/guides/uuids/",
       "type": "string",
       "pattern": "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-5][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}$"
     },
@@ -395,9 +396,11 @@
             "type": "string"
           },
           "permanentLocationId": {
+            "description": "The permanent shelving location in which an item resides.",
             "type": "string"
           },
           "temporaryLocationId": {
+            "description": "Temporary location is the temporary location, shelving location, or holding which is a physical place where items are stored, or an Online location.",
             "type": "string"
           },
           "electronicAccess": {
@@ -437,15 +440,19 @@
             "type": "string"
           },
           "callNumberPrefix": {
+            "description": "Prefix of the call number on the holding level.",
             "type": "string"
           },
           "callNumber": {
+            "description": "Call Number is an identifier assigned to an item, usually printed on a label attached to the item.",
             "type": "string"
           },
           "callNumberSuffix": {
+            "description": "Suffix of the call number on the holding level.",
             "type": "string"
           },
           "shelvingTitle": {
+            "description": "Indicates the shelving form of title.",
             "type": "string"
           },
           "acquisitionFormat": {
@@ -455,6 +462,7 @@
             "type": "string"
           },
           "receiptStatus": {
+            "description": "Receipt status (e.g. pending, awaiting receipt, partially received, fully received, receipt not required, and cancelled)",
             "type": "string"
           },
           "notes": {
@@ -484,6 +492,7 @@
             "type": "string"
           },
           "retentionPolicy": {
+            "description": "Records information regarding how long we have agreed to keep something.",
             "type": "string"
           },
           "digitizationPolicy": {
@@ -495,7 +504,7 @@
               "type": "object",
               "properties": {
                 "statement": {
-                  "description": "Textual description of the holdings",
+                  "description": "Specifices the exact content to which the library has access, typically for continuing publications.",
                   "type": "string"
                 },
                 "note": {
@@ -538,9 +547,11 @@
             }
           },
           "copyNumber": {
+            "description": "Item/Piece ID (usually barcode) for systems that do not use item records. Ability to designate the copy number if institution chooses to use copy numbers.",
             "type": "string"
           },
           "numberOfItems": {
+            "description": "Text (Number)",
             "type": "string"
           },
           "receivingHistory": {
@@ -551,17 +562,21 @@
                 "type": "string"
               },
               "entries": {
+                "description": ".",
                 "type": "array",
                 "items": {
                   "type": "object",
                   "properties": {
                     "publicDisplay": {
+                      "description": "Defines if the receivingHistory should be visible to the public.",
                       "type": "boolean"
                     },
                     "enumeration": {
+                      "description": "This is the volume/issue number (e.g. v.71:no.6-2)",
                       "type": "string"
                     },
                     "chronology": {
+                      "description": "Repeated element from Receiving history - Enumeration AND Receiving history - Chronology",
                       "type": "string"
                     }
                   }
@@ -603,6 +618,7 @@
                   "type": "string"
                 },
                 "holdingsRecordId": {
+                  "description": "ID of the holdings record the item is a member of.",
                   "type": "string"
                 },
                 "formerIds": {
@@ -622,30 +638,39 @@
                   "type": "string"
                 },
                 "barcode": {
+                  "description": "Unique inventory control number for physical resources, used largely for circulation purposes",
                   "type": "string"
                 },
                 "itemLevelCallNumber": {
+                  "description": "Call Number is an identifier assigned to an item, usually printed on a label attached to the item. The call number is used to determine the items physical position in a shelving sequence, e.g. K1 .M44. The Item level call number, is the call number on item level.",
                   "type": "string"
                 },
                 "itemLevelCallNumberPrefix": {
+                  "description": "Prefix of the call number on the item level.",
                   "type": "string"
                 },
                 "itemLevelCallNumberSuffix": {
+                  "description": "Suffix of the call number on the item level.",
                   "type": "string"
                 },
                 "itemLevelCallNumberTypeId": {
+                  "description": "Identifies the source of the call number, e.g., LCC, Dewey, NLM, etc.",
                   "type": "string"
                 },
                 "volume": {
+                  "description": "Volume is intended for monographs when a multipart monograph (e.g. a biography of George Bernard Shaw in three volumes).",
                   "type": "string"
                 },
                 "enumeration": {
+                  "description": "Enumeration is the descriptive information for the numbering scheme of a serial.",
                   "type": "string"
                 },
                 "chronology": {
+                  "description": "Chronology is the descriptive information for the dating scheme of a serial.",
                   "type": "string"
                 },
                 "yearCaption": {
+                  "description": "In multipart monographs, a caption is a character(s) used to label a level of chronology, e.g., year 1985.",
                   "type": "array",
                   "items": {
                     "type": "string"
@@ -653,9 +678,11 @@
                   "uniqueItems": true
                 },
                 "itemIdentifier": {
+                  "description": "Item identifier number, e.g. imported from the union catalogue (read only).",
                   "type": "string"
                 },
                 "copyNumbers": {
+                  "description": "Copy number is the piece identifier. The copy number reflects if the library has one (or more) copies of a single-volume monograph; one (or more) copies of a multi-volume, (e.g. Copy 1, or C.7.)",
                   "type": "array",
                   "items": {
                     "type": "string"
@@ -663,18 +690,22 @@
                   "uniqueItems": true
                 },
                 "numberOfPieces": {
+                  "description": "Number of pieces. Used when an item is checked out or returned to verify that all parts are present (e.g. 7 CDs in a set).",
                   "type": "string"
                 },
                 "descriptionOfPieces": {
                   "type": "string"
                 },
                 "numberOfMissingPieces": {
+                  "description": "Number of missing pieces.",
                   "type": "string"
                 },
                 "missingPieces": {
+                  "description": "Description of the missing pieces. ",
                   "type": "string"
                 },
                 "missingPiecesDate": {
+                  "description": "Date when the piece(s) went missing.",
                   "type": "string"
                 },
                 "itemDamagedStatusId": {
@@ -779,18 +810,23 @@
                   }
                 },
                 "materialTypeId": {
+                  "description": "Material type, term. Define what type of thing the item is.",
                   "type": "string"
                 },
                 "permanentLoanTypeId": {
+                  "description": "The permanent loan type, is the default loan type for a given item. Loan types are tenant-defined.",
                   "type": "string"
                 },
                 "temporaryLoanTypeId": {
+                  "description": "Temporary loan type, is the temporary loan type for a given item.",
                   "type": "string"
                 },
                 "permanentLocationId": {
+                  "description": "Permanent item location is the default location, shelving location, or holding which is a physical place where items are stored, or an Online location.",
                   "type": "string"
                 },
                 "temporaryLocationId": {
+                  "description": "Temporary item location is the temporarily location, shelving location, or holding which is a physical place where items are stored, or an Online location.",
                   "type": "string"
                 },
                 "electronicAccess": {

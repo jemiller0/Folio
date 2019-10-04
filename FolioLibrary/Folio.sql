@@ -1407,6 +1407,7 @@ id AS id,
 CAST(jsonb->>'userId' AS UUID) AS user_id,
 CAST(jsonb->>'proxyUserId' AS UUID) AS proxy_user_id,
 CAST(jsonb->>'itemId' AS UUID) AS item_id,
+CAST(jsonb->>'itemEffectiveLocationAtCheckOut' AS UUID) AS item_effective_location_at_check_out_id,
 CAST(jsonb#>>'{status,name}' AS VARCHAR(1024)) AS status_name,
 uc.TIMESTAMP_CAST(jsonb->>'loanDate') AS loan_date,
 uc.TIMESTAMP_CAST(jsonb->>'dueDate') AS due_date,
@@ -1690,7 +1691,8 @@ SELECT
 id AS id,
 order_item_id AS order_item_id,
 CAST(jsonb->>'productId' AS VARCHAR(1024)) AS product_id,
-CAST(jsonb->>'productIdType' AS UUID) AS product_id_type_id
+CAST(jsonb->>'productIdType' AS UUID) AS product_id_type_id,
+CAST(jsonb->>'qualifier' AS VARCHAR(1024)) AS qualifier
 FROM (SELECT id::text || ordinality::text AS id, id AS order_item_id, value AS jsonb FROM diku_mod_orders_storage.po_line, jsonb_array_elements((jsonb#>>'{details,productIds}')::jsonb) WITH ORDINALITY) a;
 CREATE VIEW uc.order_item_fund_distributions AS
 SELECT
