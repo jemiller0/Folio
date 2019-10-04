@@ -122,11 +122,30 @@ dotnet FolioConsoleApplication.dll -save -allinventory -validate -force
 dotnet FolioConsoleApplication.dll -save -all -validate -force -whatif
 ```
 
+### Save all using SQL to GZip compressed files
+
+```
+dotnet FolioConsoleApplication.dll -save -all -compress
+```
+
+### Load all using SQL from GZip compressed files
+
+```
+dotnet FolioConsoleApplication.dll -delete -load -all -compress
+```
+
+### Load users using SQL from GZip compressed file
+
+```
+dotnet FolioConsoleApplication.dll -delete -load -userspath users.json.gz
+```
+
 ## Parameters
 
 ```
 -All
 -Api
+-Compress
 -Delete
 -Force
 -Load
@@ -163,7 +182,6 @@ FolioLibrary/Folio.sql contains SQL views that can be helpful for reviewing load
 * Logins can't be round-tripped using web API, the API uses a different JSON schema than is used in the database
 * SQL views for tables that have large numbers of instances may not be performant
 * Doesn't currently use a robust command-line parsing library, mispelled arguments will be ignored
-* Loading/saving of InstanceSourcMarc is not supported due to unconventional JSON (I think this is an obsolete table anyway)
 
 ## Future enhancements
 
@@ -171,7 +189,6 @@ FolioLibrary/Folio.sql contains SQL views that can be helpful for reviewing load
 * Switch to using bulk load web APIs when if/when they become available
 * Parse command-line arguments in more robust manner
 * Add multi-threading support
-* Add support for reading GZipped files
 * Switch to new memory optimized Microsoft JSON parser
 
 ## References
