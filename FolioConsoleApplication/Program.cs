@@ -18,6 +18,7 @@ namespace FolioConsoleApplication
         private static bool api;
         private static bool compress;
         private static bool force;
+        private static string path;
         private static int? take;
         private readonly static TraceSource traceSource = new TraceSource("FolioConsoleApplication", SourceLevels.Information);
         private static bool validate;
@@ -40,7 +41,7 @@ namespace FolioConsoleApplication
                 Initialize();
                 if (args.Length == 0)
                 {
-                    traceSource.TraceEvent(TraceEventType.Critical, 0, "Usage: dotnet FolioConsoleApplication.dll [-All] [-Api] [-Compress] [-Delete] [-Force] [-Load] [-Save] [-Validate] [-Verbose] [-WhatIf] [-AllOrders] [-AllUsers] [-AllInventory] [-AllFinance] [-AllCirculation] [-AllOrganizations] [-AllInvoices] [-AllSource] [-AllLogin] [-AllPermissions] [-AcquisitionsUnitsPath <string>] [-AcquisitionsUnitsWhere <string>] [-AddressTypesPath <string>] [-AddressTypesWhere <string>] [-AlertsPath <string>] [-AlertsWhere <string>] [-AlternativeTitleTypesPath <string>] [-AlternativeTitleTypesWhere <string>] [-BudgetsPath <string>] [-BudgetsWhere <string>] [-CallNumberTypesPath <string>] [-CallNumberTypesWhere <string>] [-CampusesPath <string>] [-CampusesWhere <string>] [-CancellationReasonsPath <string>] [-CancellationReasonsWhere <string>] [-CategoriesPath <string>] [-CategoriesWhere <string>] [-ClassificationTypesPath <string>] [-ClassificationTypesWhere <string>] [-ContactsPath <string>] [-ContactsWhere <string>] [-ContributorNameTypesPath <string>] [-ContributorNameTypesWhere <string>] [-ContributorTypesPath <string>] [-ContributorTypesWhere <string>] [-DocumentsPath <string>] [-DocumentsWhere <string>] [-ElectronicAccessRelationshipsPath <string>] [-ElectronicAccessRelationshipsWhere <string>] [-EncumbrancesPath <string>] [-EncumbrancesWhere <string>] [-ErrorRecordsPath <string>] [-ErrorRecordsWhere <string>] [-FiscalYearsPath <string>] [-FiscalYearsWhere <string>] [-FixedDueDateSchedulesPath <string>] [-FixedDueDateSchedulesWhere <string>] [-FundsPath <string>] [-FundsWhere <string>] [-FundDistributionsPath <string>] [-FundDistributionsWhere <string>] [-GroupsPath <string>] [-GroupsWhere <string>] [-HoldingsPath <string>] [-HoldingsWhere <string>] [-HoldingNoteTypesPath <string>] [-HoldingNoteTypesWhere <string>] [-HoldingTypesPath <string>] [-HoldingTypesWhere <string>] [-IdTypesPath <string>] [-IdTypesWhere <string>] [-IllPoliciesPath <string>] [-IllPoliciesWhere <string>] [-InstancesPath <string>] [-InstancesWhere <string>] [-InstanceFormatsPath <string>] [-InstanceFormatsWhere <string>] [-InstanceNoteTypesPath <string>] [-InstanceNoteTypesWhere <string>] [-InstanceRelationshipsPath <string>] [-InstanceRelationshipsWhere <string>] [-InstanceRelationshipTypesPath <string>] [-InstanceRelationshipTypesWhere <string>] [-InstanceStatusesPath <string>] [-InstanceStatusesWhere <string>] [-InstanceTypesPath <string>] [-InstanceTypesWhere <string>] [-InstitutionsPath <string>] [-InstitutionsWhere <string>] [-InterfacesPath <string>] [-InterfacesWhere <string>] [-InterfaceCredentialsPath <string>] [-InterfaceCredentialsWhere <string>] [-InvoicesPath <string>] [-InvoicesWhere <string>] [-InvoiceItemsPath <string>] [-InvoiceItemsWhere <string>] [-ItemsPath <string>] [-ItemsWhere <string>] [-ItemDamagedStatusesPath <string>] [-ItemDamagedStatusesWhere <string>] [-ItemNoteTypesPath <string>] [-ItemNoteTypesWhere <string>] [-LedgersPath <string>] [-LedgersWhere <string>] [-LibrariesPath <string>] [-LibrariesWhere <string>] [-LoansPath <string>] [-LoansWhere <string>] [-LoanPoliciesPath <string>] [-LoanPoliciesWhere <string>] [-LoanTypesPath <string>] [-LoanTypesWhere <string>] [-LocationsPath <string>] [-LocationsWhere <string>] [-LoginsPath <string>] [-LoginsWhere <string>] [-MarcRecordsPath <string>] [-MarcRecordsWhere <string>] [-MaterialTypesPath <string>] [-MaterialTypesWhere <string>] [-ModeOfIssuancesPath <string>] [-ModeOfIssuancesWhere <string>] [-NatureOfContentTermsPath <string>] [-NatureOfContentTermsWhere <string>] [-OrdersPath <string>] [-OrdersWhere <string>] [-OrderItemsPath <string>] [-OrderItemsWhere <string>] [-OrganizationsPath <string>] [-OrganizationsWhere <string>] [-PatronNoticePoliciesPath <string>] [-PatronNoticePoliciesWhere <string>] [-PermissionsPath <string>] [-PermissionsWhere <string>] [-PermissionsUsersPath <string>] [-PermissionsUsersWhere <string>] [-PiecesPath <string>] [-PiecesWhere <string>] [-ProxiesPath <string>] [-ProxiesWhere <string>] [-RawRecordsPath <string>] [-RawRecordsWhere <string>] [-RecordsPath <string>] [-RecordsWhere <string>] [-ReportingCodesPath <string>] [-ReportingCodesWhere <string>] [-RequestsPath <string>] [-RequestsWhere <string>] [-RequestPoliciesPath <string>] [-RequestPoliciesWhere <string>] [-ScheduledNoticesPath <string>] [-ScheduledNoticesWhere <string>] [-ServicePointsPath <string>] [-ServicePointsWhere <string>] [-ServicePointUsersPath <string>] [-ServicePointUsersWhere <string>] [-SnapshotsPath <string>] [-SnapshotsWhere <string>] [-StaffSlipsPath <string>] [-StaffSlipsWhere <string>] [-StatisticalCodesPath <string>] [-StatisticalCodesWhere <string>] [-StatisticalCodeTypesPath <string>] [-StatisticalCodeTypesWhere <string>] [-UsersPath <string>] [-UsersWhere <string>] [-UserAcquisitionsUnitsPath <string>] [-UserAcquisitionsUnitsWhere <string>] [-VouchersPath <string>] [-VouchersWhere <string>] [-VoucherItemsPath <string>] [-VoucherItemsWhere <string>]");
+                    traceSource.TraceEvent(TraceEventType.Critical, 0, "Usage: dotnet FolioConsoleApplication.dll [-All] [-Api] [-Compress] [-Delete] [-Force] [-Load] [-Path <string>] [-Save] [-Validate] [-Verbose] [-WhatIf] [-AllOrders] [-AllUsers] [-AllInventory] [-AllFinance] [-AllCirculation] [-AllOrganizations] [-AllInvoices] [-AllSource] [-AllLogin] [-AllPermissions] [-AcquisitionsUnitsPath <string>] [-AcquisitionsUnitsWhere <string>] [-AddressTypesPath <string>] [-AddressTypesWhere <string>] [-AlertsPath <string>] [-AlertsWhere <string>] [-AlternativeTitleTypesPath <string>] [-AlternativeTitleTypesWhere <string>] [-BudgetsPath <string>] [-BudgetsWhere <string>] [-CallNumberTypesPath <string>] [-CallNumberTypesWhere <string>] [-CampusesPath <string>] [-CampusesWhere <string>] [-CancellationReasonsPath <string>] [-CancellationReasonsWhere <string>] [-CategoriesPath <string>] [-CategoriesWhere <string>] [-ClassificationTypesPath <string>] [-ClassificationTypesWhere <string>] [-ContactsPath <string>] [-ContactsWhere <string>] [-ContributorNameTypesPath <string>] [-ContributorNameTypesWhere <string>] [-ContributorTypesPath <string>] [-ContributorTypesWhere <string>] [-DocumentsPath <string>] [-DocumentsWhere <string>] [-ElectronicAccessRelationshipsPath <string>] [-ElectronicAccessRelationshipsWhere <string>] [-EncumbrancesPath <string>] [-EncumbrancesWhere <string>] [-ErrorRecordsPath <string>] [-ErrorRecordsWhere <string>] [-FiscalYearsPath <string>] [-FiscalYearsWhere <string>] [-FixedDueDateSchedulesPath <string>] [-FixedDueDateSchedulesWhere <string>] [-FundsPath <string>] [-FundsWhere <string>] [-FundDistributionsPath <string>] [-FundDistributionsWhere <string>] [-GroupsPath <string>] [-GroupsWhere <string>] [-HoldingsPath <string>] [-HoldingsWhere <string>] [-HoldingNoteTypesPath <string>] [-HoldingNoteTypesWhere <string>] [-HoldingTypesPath <string>] [-HoldingTypesWhere <string>] [-IdTypesPath <string>] [-IdTypesWhere <string>] [-IllPoliciesPath <string>] [-IllPoliciesWhere <string>] [-InstancesPath <string>] [-InstancesWhere <string>] [-InstanceFormatsPath <string>] [-InstanceFormatsWhere <string>] [-InstanceNoteTypesPath <string>] [-InstanceNoteTypesWhere <string>] [-InstanceRelationshipsPath <string>] [-InstanceRelationshipsWhere <string>] [-InstanceRelationshipTypesPath <string>] [-InstanceRelationshipTypesWhere <string>] [-InstanceStatusesPath <string>] [-InstanceStatusesWhere <string>] [-InstanceTypesPath <string>] [-InstanceTypesWhere <string>] [-InstitutionsPath <string>] [-InstitutionsWhere <string>] [-InterfacesPath <string>] [-InterfacesWhere <string>] [-InterfaceCredentialsPath <string>] [-InterfaceCredentialsWhere <string>] [-InvoicesPath <string>] [-InvoicesWhere <string>] [-InvoiceItemsPath <string>] [-InvoiceItemsWhere <string>] [-ItemsPath <string>] [-ItemsWhere <string>] [-ItemDamagedStatusesPath <string>] [-ItemDamagedStatusesWhere <string>] [-ItemNoteTypesPath <string>] [-ItemNoteTypesWhere <string>] [-LedgersPath <string>] [-LedgersWhere <string>] [-LibrariesPath <string>] [-LibrariesWhere <string>] [-LoansPath <string>] [-LoansWhere <string>] [-LoanPoliciesPath <string>] [-LoanPoliciesWhere <string>] [-LoanTypesPath <string>] [-LoanTypesWhere <string>] [-LocationsPath <string>] [-LocationsWhere <string>] [-LoginsPath <string>] [-LoginsWhere <string>] [-MarcRecordsPath <string>] [-MarcRecordsWhere <string>] [-MaterialTypesPath <string>] [-MaterialTypesWhere <string>] [-ModeOfIssuancesPath <string>] [-ModeOfIssuancesWhere <string>] [-NatureOfContentTermsPath <string>] [-NatureOfContentTermsWhere <string>] [-OrdersPath <string>] [-OrdersWhere <string>] [-OrderItemsPath <string>] [-OrderItemsWhere <string>] [-OrganizationsPath <string>] [-OrganizationsWhere <string>] [-PatronNoticePoliciesPath <string>] [-PatronNoticePoliciesWhere <string>] [-PermissionsPath <string>] [-PermissionsWhere <string>] [-PermissionsUsersPath <string>] [-PermissionsUsersWhere <string>] [-PiecesPath <string>] [-PiecesWhere <string>] [-ProxiesPath <string>] [-ProxiesWhere <string>] [-RawRecordsPath <string>] [-RawRecordsWhere <string>] [-RecordsPath <string>] [-RecordsWhere <string>] [-ReportingCodesPath <string>] [-ReportingCodesWhere <string>] [-RequestsPath <string>] [-RequestsWhere <string>] [-RequestPoliciesPath <string>] [-RequestPoliciesWhere <string>] [-ScheduledNoticesPath <string>] [-ScheduledNoticesWhere <string>] [-ServicePointsPath <string>] [-ServicePointsWhere <string>] [-ServicePointUsersPath <string>] [-ServicePointUsersWhere <string>] [-SnapshotsPath <string>] [-SnapshotsWhere <string>] [-StaffSlipsPath <string>] [-StaffSlipsWhere <string>] [-StatisticalCodesPath <string>] [-StatisticalCodesWhere <string>] [-StatisticalCodeTypesPath <string>] [-StatisticalCodeTypesWhere <string>] [-UsersPath <string>] [-UsersWhere <string>] [-UserAcquisitionsUnitsPath <string>] [-UserAcquisitionsUnitsWhere <string>] [-VouchersPath <string>] [-VouchersWhere <string>] [-VoucherItemsPath <string>] [-VoucherItemsWhere <string>]");
                     return -1;
                 }
                 var all = args.Any(s3 => s3.Equals("-All", StringComparison.OrdinalIgnoreCase));
@@ -49,6 +50,7 @@ namespace FolioConsoleApplication
                 var delete = args.Any(s3 => s3.Equals("-Delete", StringComparison.OrdinalIgnoreCase));
                 force = args.Any(s3 => s3.Equals("-Force", StringComparison.OrdinalIgnoreCase));
                 var load = args.Any(s3 => s3.Equals("-Load", StringComparison.OrdinalIgnoreCase));
+                path = args.SkipWhile(s3 => !s3.Equals("-Path", StringComparison.OrdinalIgnoreCase)).Skip(1).FirstOrDefault() ?? ".";
                 var save = args.Any(s3 => s3.Equals("-Save", StringComparison.OrdinalIgnoreCase));
                 take = int.TryParse(args.SkipWhile(s3 => !s3.Equals("-Take", StringComparison.OrdinalIgnoreCase)).Skip(1).FirstOrDefault(), out int i) ? (int?)i : null;
                 validate = args.Any(s3 => s3.Equals("-Validate", StringComparison.OrdinalIgnoreCase));
@@ -219,190 +221,190 @@ namespace FolioConsoleApplication
                 var voucherItemsWhere = args.SkipWhile(s3 => !s3.Equals("-VoucherItemsWhere", StringComparison.OrdinalIgnoreCase)).Skip(1).FirstOrDefault();
                 if (all)
                 {
-                    acquisitionsUnitsPath = "acquisitionsunits.json";
-                    addressTypesPath = "addresstypes.json";
-                    alertsPath = "alerts.json";
-                    alternativeTitleTypesPath = "alternativetitletypes.json";
-                    budgetsPath = "budgets.json";
-                    callNumberTypesPath = "callnumbertypes.json";
-                    campusesPath = "campuses.json";
-                    cancellationReasonsPath = "cancellationreasons.json";
-                    categoriesPath = "categories.json";
-                    classificationTypesPath = "classificationtypes.json";
-                    contactsPath = "contacts.json";
-                    contributorNameTypesPath = "contributornametypes.json";
-                    contributorTypesPath = "contributortypes.json";
-                    if (!api) documentsPath = "documents.json";
-                    electronicAccessRelationshipsPath = "electronicaccessrelationships.json";
-                    if (!api) encumbrancesPath = "encumbrances.json";
-                    if (!api) errorRecordsPath = "errorrecords.json";
-                    fiscalYearsPath = "fiscalyears.json";
-                    fixedDueDateSchedulesPath = "fixedduedateschedules.json";
-                    fundsPath = "funds.json";
-                    fundDistributionsPath = "funddistributions.json";
-                    groupsPath = "groups.json";
-                    holdingsPath = "holdings.json";
-                    holdingNoteTypesPath = "holdingnotetypes.json";
-                    holdingTypesPath = "holdingtypes.json";
-                    idTypesPath = "idtypes.json";
-                    illPoliciesPath = "illpolicies.json";
-                    instancesPath = "instances.json";
-                    instanceFormatsPath = "instanceformats.json";
-                    instanceNoteTypesPath = "instancenotetypes.json";
-                    instanceRelationshipsPath = "instancerelationships.json";
-                    instanceRelationshipTypesPath = "instancerelationshiptypes.json";
-                    instanceStatusesPath = "instancestatuses.json";
-                    instanceTypesPath = "instancetypes.json";
-                    institutionsPath = "institutions.json";
-                    interfacesPath = "interfaces.json";
-                    if (!api) interfaceCredentialsPath = "interfacecredentials.json";
-                    invoicesPath = "invoices.json";
-                    invoiceItemsPath = "invoiceitems.json";
-                    itemsPath = "items.json";
-                    itemDamagedStatusesPath = "itemdamagedstatuses.json";
-                    itemNoteTypesPath = "itemnotetypes.json";
-                    ledgersPath = "ledgers.json";
-                    librariesPath = "libraries.json";
-                    loansPath = "loans.json";
-                    loanPoliciesPath = "loanpolicies.json";
-                    loanTypesPath = "loantypes.json";
-                    locationsPath = "locations.json";
-                    loginsPath = "logins.json";
-                    if (!api) marcRecordsPath = "marcrecords.json";
-                    materialTypesPath = "materialtypes.json";
-                    modeOfIssuancesPath = "modeofissuances.json";
-                    natureOfContentTermsPath = "natureofcontentterms.json";
-                    ordersPath = "orders.json";
-                    orderItemsPath = "orderitems.json";
-                    organizationsPath = "organizations.json";
-                    patronNoticePoliciesPath = "patronnoticepolicies.json";
-                    permissionsPath = "permissions.json";
-                    permissionsUsersPath = "permissionsusers.json";
-                    piecesPath = "pieces.json";
-                    proxiesPath = "proxies.json";
-                    if (!api) rawRecordsPath = "rawrecords.json";
-                    recordsPath = "records.json";
-                    reportingCodesPath = "reportingcodes.json";
-                    requestsPath = "requests.json";
-                    requestPoliciesPath = "requestpolicies.json";
-                    scheduledNoticesPath = "schedulednotices.json";
-                    servicePointsPath = "servicepoints.json";
-                    servicePointUsersPath = "servicepointusers.json";
-                    snapshotsPath = "snapshots.json";
-                    staffSlipsPath = "staffslips.json";
-                    statisticalCodesPath = "statisticalcodes.json";
-                    statisticalCodeTypesPath = "statisticalcodetypes.json";
-                    usersPath = "users.json";
-                    userAcquisitionsUnitsPath = "useracquisitionsunits.json";
-                    vouchersPath = "vouchers.json";
-                    voucherItemsPath = "voucheritems.json";
+                    acquisitionsUnitsPath = $"{path}/acquisitionsunits.json";
+                    addressTypesPath = $"{path}/addresstypes.json";
+                    alertsPath = $"{path}/alerts.json";
+                    alternativeTitleTypesPath = $"{path}/alternativetitletypes.json";
+                    budgetsPath = $"{path}/budgets.json";
+                    callNumberTypesPath = $"{path}/callnumbertypes.json";
+                    campusesPath = $"{path}/campuses.json";
+                    cancellationReasonsPath = $"{path}/cancellationreasons.json";
+                    categoriesPath = $"{path}/categories.json";
+                    classificationTypesPath = $"{path}/classificationtypes.json";
+                    contactsPath = $"{path}/contacts.json";
+                    contributorNameTypesPath = $"{path}/contributornametypes.json";
+                    contributorTypesPath = $"{path}/contributortypes.json";
+                    if (!api) documentsPath = $"{path}/documents.json";
+                    electronicAccessRelationshipsPath = $"{path}/electronicaccessrelationships.json";
+                    if (!api) encumbrancesPath = $"{path}/encumbrances.json";
+                    if (!api) errorRecordsPath = $"{path}/errorrecords.json";
+                    fiscalYearsPath = $"{path}/fiscalyears.json";
+                    fixedDueDateSchedulesPath = $"{path}/fixedduedateschedules.json";
+                    fundsPath = $"{path}/funds.json";
+                    fundDistributionsPath = $"{path}/funddistributions.json";
+                    groupsPath = $"{path}/groups.json";
+                    holdingsPath = $"{path}/holdings.json";
+                    holdingNoteTypesPath = $"{path}/holdingnotetypes.json";
+                    holdingTypesPath = $"{path}/holdingtypes.json";
+                    idTypesPath = $"{path}/idtypes.json";
+                    illPoliciesPath = $"{path}/illpolicies.json";
+                    instancesPath = $"{path}/instances.json";
+                    instanceFormatsPath = $"{path}/instanceformats.json";
+                    instanceNoteTypesPath = $"{path}/instancenotetypes.json";
+                    instanceRelationshipsPath = $"{path}/instancerelationships.json";
+                    instanceRelationshipTypesPath = $"{path}/instancerelationshiptypes.json";
+                    instanceStatusesPath = $"{path}/instancestatuses.json";
+                    instanceTypesPath = $"{path}/instancetypes.json";
+                    institutionsPath = $"{path}/institutions.json";
+                    interfacesPath = $"{path}/interfaces.json";
+                    if (!api) interfaceCredentialsPath = $"{path}/interfacecredentials.json";
+                    invoicesPath = $"{path}/invoices.json";
+                    invoiceItemsPath = $"{path}/invoiceitems.json";
+                    itemsPath = $"{path}/items.json";
+                    itemDamagedStatusesPath = $"{path}/itemdamagedstatuses.json";
+                    itemNoteTypesPath = $"{path}/itemnotetypes.json";
+                    ledgersPath = $"{path}/ledgers.json";
+                    librariesPath = $"{path}/libraries.json";
+                    loansPath = $"{path}/loans.json";
+                    loanPoliciesPath = $"{path}/loanpolicies.json";
+                    loanTypesPath = $"{path}/loantypes.json";
+                    locationsPath = $"{path}/locations.json";
+                    loginsPath = $"{path}/logins.json";
+                    if (!api) marcRecordsPath = $"{path}/marcrecords.json";
+                    materialTypesPath = $"{path}/materialtypes.json";
+                    modeOfIssuancesPath = $"{path}/modeofissuances.json";
+                    natureOfContentTermsPath = $"{path}/natureofcontentterms.json";
+                    ordersPath = $"{path}/orders.json";
+                    orderItemsPath = $"{path}/orderitems.json";
+                    organizationsPath = $"{path}/organizations.json";
+                    patronNoticePoliciesPath = $"{path}/patronnoticepolicies.json";
+                    permissionsPath = $"{path}/permissions.json";
+                    permissionsUsersPath = $"{path}/permissionsusers.json";
+                    piecesPath = $"{path}/pieces.json";
+                    proxiesPath = $"{path}/proxies.json";
+                    if (!api) rawRecordsPath = $"{path}/rawrecords.json";
+                    recordsPath = $"{path}/records.json";
+                    reportingCodesPath = $"{path}/reportingcodes.json";
+                    requestsPath = $"{path}/requests.json";
+                    requestPoliciesPath = $"{path}/requestpolicies.json";
+                    scheduledNoticesPath = $"{path}/schedulednotices.json";
+                    servicePointsPath = $"{path}/servicepoints.json";
+                    servicePointUsersPath = $"{path}/servicepointusers.json";
+                    snapshotsPath = $"{path}/snapshots.json";
+                    staffSlipsPath = $"{path}/staffslips.json";
+                    statisticalCodesPath = $"{path}/statisticalcodes.json";
+                    statisticalCodeTypesPath = $"{path}/statisticalcodetypes.json";
+                    usersPath = $"{path}/users.json";
+                    userAcquisitionsUnitsPath = $"{path}/useracquisitionsunits.json";
+                    vouchersPath = $"{path}/vouchers.json";
+                    voucherItemsPath = $"{path}/voucheritems.json";
                 }
                 if (allCirculation)
                 {
-                    cancellationReasonsPath = "cancellationreasons.json";
-                    fixedDueDateSchedulesPath = "fixedduedateschedules.json";
-                    loansPath = "loans.json";
-                    loanPoliciesPath = "loanpolicies.json";
-                    patronNoticePoliciesPath = "patronnoticepolicies.json";
-                    requestsPath = "requests.json";
-                    requestPoliciesPath = "requestpolicies.json";
-                    scheduledNoticesPath = "schedulednotices.json";
-                    staffSlipsPath = "staffslips.json";
+                    cancellationReasonsPath = $"{path}/cancellationreasons.json";
+                    fixedDueDateSchedulesPath = $"{path}/fixedduedateschedules.json";
+                    loansPath = $"{path}/loans.json";
+                    loanPoliciesPath = $"{path}/loanpolicies.json";
+                    patronNoticePoliciesPath = $"{path}/patronnoticepolicies.json";
+                    requestsPath = $"{path}/requests.json";
+                    requestPoliciesPath = $"{path}/requestpolicies.json";
+                    scheduledNoticesPath = $"{path}/schedulednotices.json";
+                    staffSlipsPath = $"{path}/staffslips.json";
                 }
                 if (allFinance)
                 {
-                    budgetsPath = "budgets.json";
-                    if (!api) encumbrancesPath = "encumbrances.json";
-                    fiscalYearsPath = "fiscalyears.json";
-                    fundsPath = "funds.json";
-                    fundDistributionsPath = "funddistributions.json";
-                    ledgersPath = "ledgers.json";
+                    budgetsPath = $"{path}/budgets.json";
+                    if (!api) encumbrancesPath = $"{path}/encumbrances.json";
+                    fiscalYearsPath = $"{path}/fiscalyears.json";
+                    fundsPath = $"{path}/funds.json";
+                    fundDistributionsPath = $"{path}/funddistributions.json";
+                    ledgersPath = $"{path}/ledgers.json";
                 }
                 if (allInventory)
                 {
-                    alternativeTitleTypesPath = "alternativetitletypes.json";
-                    callNumberTypesPath = "callnumbertypes.json";
-                    campusesPath = "campuses.json";
-                    classificationTypesPath = "classificationtypes.json";
-                    contributorNameTypesPath = "contributornametypes.json";
-                    contributorTypesPath = "contributortypes.json";
-                    electronicAccessRelationshipsPath = "electronicaccessrelationships.json";
-                    holdingsPath = "holdings.json";
-                    holdingNoteTypesPath = "holdingnotetypes.json";
-                    holdingTypesPath = "holdingtypes.json";
-                    idTypesPath = "idtypes.json";
-                    illPoliciesPath = "illpolicies.json";
-                    instancesPath = "instances.json";
-                    instanceFormatsPath = "instanceformats.json";
-                    instanceNoteTypesPath = "instancenotetypes.json";
-                    instanceRelationshipsPath = "instancerelationships.json";
-                    instanceRelationshipTypesPath = "instancerelationshiptypes.json";
-                    instanceStatusesPath = "instancestatuses.json";
-                    instanceTypesPath = "instancetypes.json";
-                    institutionsPath = "institutions.json";
-                    itemsPath = "items.json";
-                    itemDamagedStatusesPath = "itemdamagedstatuses.json";
-                    itemNoteTypesPath = "itemnotetypes.json";
-                    librariesPath = "libraries.json";
-                    loanTypesPath = "loantypes.json";
-                    locationsPath = "locations.json";
-                    materialTypesPath = "materialtypes.json";
-                    modeOfIssuancesPath = "modeofissuances.json";
-                    natureOfContentTermsPath = "natureofcontentterms.json";
-                    servicePointsPath = "servicepoints.json";
-                    servicePointUsersPath = "servicepointusers.json";
-                    statisticalCodesPath = "statisticalcodes.json";
-                    statisticalCodeTypesPath = "statisticalcodetypes.json";
+                    alternativeTitleTypesPath = $"{path}/alternativetitletypes.json";
+                    callNumberTypesPath = $"{path}/callnumbertypes.json";
+                    campusesPath = $"{path}/campuses.json";
+                    classificationTypesPath = $"{path}/classificationtypes.json";
+                    contributorNameTypesPath = $"{path}/contributornametypes.json";
+                    contributorTypesPath = $"{path}/contributortypes.json";
+                    electronicAccessRelationshipsPath = $"{path}/electronicaccessrelationships.json";
+                    holdingsPath = $"{path}/holdings.json";
+                    holdingNoteTypesPath = $"{path}/holdingnotetypes.json";
+                    holdingTypesPath = $"{path}/holdingtypes.json";
+                    idTypesPath = $"{path}/idtypes.json";
+                    illPoliciesPath = $"{path}/illpolicies.json";
+                    instancesPath = $"{path}/instances.json";
+                    instanceFormatsPath = $"{path}/instanceformats.json";
+                    instanceNoteTypesPath = $"{path}/instancenotetypes.json";
+                    instanceRelationshipsPath = $"{path}/instancerelationships.json";
+                    instanceRelationshipTypesPath = $"{path}/instancerelationshiptypes.json";
+                    instanceStatusesPath = $"{path}/instancestatuses.json";
+                    instanceTypesPath = $"{path}/instancetypes.json";
+                    institutionsPath = $"{path}/institutions.json";
+                    itemsPath = $"{path}/items.json";
+                    itemDamagedStatusesPath = $"{path}/itemdamagedstatuses.json";
+                    itemNoteTypesPath = $"{path}/itemnotetypes.json";
+                    librariesPath = $"{path}/libraries.json";
+                    loanTypesPath = $"{path}/loantypes.json";
+                    locationsPath = $"{path}/locations.json";
+                    materialTypesPath = $"{path}/materialtypes.json";
+                    modeOfIssuancesPath = $"{path}/modeofissuances.json";
+                    natureOfContentTermsPath = $"{path}/natureofcontentterms.json";
+                    servicePointsPath = $"{path}/servicepoints.json";
+                    servicePointUsersPath = $"{path}/servicepointusers.json";
+                    statisticalCodesPath = $"{path}/statisticalcodes.json";
+                    statisticalCodeTypesPath = $"{path}/statisticalcodetypes.json";
                 }
                 if (allInvoices)
                 {
-                    if (!api) documentsPath = "documents.json";
-                    invoicesPath = "invoices.json";
-                    invoiceItemsPath = "invoiceitems.json";
-                    vouchersPath = "vouchers.json";
-                    voucherItemsPath = "voucheritems.json";
+                    if (!api) documentsPath = $"{path}/documents.json";
+                    invoicesPath = $"{path}/invoices.json";
+                    invoiceItemsPath = $"{path}/invoiceitems.json";
+                    vouchersPath = $"{path}/vouchers.json";
+                    voucherItemsPath = $"{path}/voucheritems.json";
                 }
                 if (allLogin)
                 {
-                    loginsPath = "logins.json";
+                    loginsPath = $"{path}/logins.json";
                 }
                 if (allOrders)
                 {
-                    acquisitionsUnitsPath = "acquisitionsunits.json";
-                    alertsPath = "alerts.json";
-                    ordersPath = "orders.json";
-                    orderItemsPath = "orderitems.json";
-                    piecesPath = "pieces.json";
-                    reportingCodesPath = "reportingcodes.json";
-                    userAcquisitionsUnitsPath = "useracquisitionsunits.json";
+                    acquisitionsUnitsPath = $"{path}/acquisitionsunits.json";
+                    alertsPath = $"{path}/alerts.json";
+                    ordersPath = $"{path}/orders.json";
+                    orderItemsPath = $"{path}/orderitems.json";
+                    piecesPath = $"{path}/pieces.json";
+                    reportingCodesPath = $"{path}/reportingcodes.json";
+                    userAcquisitionsUnitsPath = $"{path}/useracquisitionsunits.json";
                 }
                 if (allOrganizations)
                 {
-                    categoriesPath = "categories.json";
-                    contactsPath = "contacts.json";
-                    interfacesPath = "interfaces.json";
-                    if (!api) interfaceCredentialsPath = "interfacecredentials.json";
-                    organizationsPath = "organizations.json";
+                    categoriesPath = $"{path}/categories.json";
+                    contactsPath = $"{path}/contacts.json";
+                    interfacesPath = $"{path}/interfaces.json";
+                    if (!api) interfaceCredentialsPath = $"{path}/interfacecredentials.json";
+                    organizationsPath = $"{path}/organizations.json";
                 }
                 if (allPermissions)
                 {
-                    permissionsPath = "permissions.json";
-                    permissionsUsersPath = "permissionsusers.json";
+                    permissionsPath = $"{path}/permissions.json";
+                    permissionsUsersPath = $"{path}/permissionsusers.json";
                 }
                 if (allSource)
                 {
-                    if (!api) errorRecordsPath = "errorrecords.json";
-                    if (!api) marcRecordsPath = "marcrecords.json";
-                    if (!api) rawRecordsPath = "rawrecords.json";
-                    recordsPath = "records.json";
-                    snapshotsPath = "snapshots.json";
+                    if (!api) errorRecordsPath = $"{path}/errorrecords.json";
+                    if (!api) marcRecordsPath = $"{path}/marcrecords.json";
+                    if (!api) rawRecordsPath = $"{path}/rawrecords.json";
+                    recordsPath = $"{path}/records.json";
+                    snapshotsPath = $"{path}/snapshots.json";
                 }
                 if (allUsers)
                 {
-                    addressTypesPath = "addresstypes.json";
-                    groupsPath = "groups.json";
-                    proxiesPath = "proxies.json";
-                    usersPath = "users.json";
+                    addressTypesPath = $"{path}/addresstypes.json";
+                    groupsPath = $"{path}/groups.json";
+                    proxiesPath = $"{path}/proxies.json";
+                    usersPath = $"{path}/users.json";
                 }
                 if (save && acquisitionsUnitsPath != null) SaveAcquisitionsUnits(acquisitionsUnitsPath, acquisitionsUnitsWhere);
                 if (save && documentsPath != null) SaveDocuments(documentsPath, documentsWhere);

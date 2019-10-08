@@ -7,7 +7,7 @@ This project includes a console application that can be used to load and save da
 ## Requirements
 
 * Git https://git-scm.com/
-* .NET Core SDK v2.2 https://dotnet.microsoft.com/download
+* .NET Core 3.0 SDK https://dotnet.microsoft.com/download
 
 ## Optional
 
@@ -32,7 +32,7 @@ dotnet build
 Run the application without specifying any arguments for the first time to generate default configuration files and see the command-line options.
 
 ```
-cd FolioConsoleApplication/bin/Debug/netcoreapp2.2
+cd FolioConsoleApplication/bin/Debug/netcoreapp3.0
 dotnet FolioConsoleApplication.dll
 ```
 
@@ -140,6 +140,12 @@ dotnet FolioConsoleApplication.dll -delete -load -all -compress
 dotnet FolioConsoleApplication.dll -delete -load -userspath users.json.gz
 ```
 
+### Save all using SQL to path
+
+```
+dotnet FolioConsoleApplication.dll -save -all -path data
+```
+
 ## Parameters
 
 ```
@@ -149,6 +155,7 @@ dotnet FolioConsoleApplication.dll -delete -load -userspath users.json.gz
 -Delete
 -Force
 -Load
+-Path <string>
 -Save
 -Take <int>
 -TracePath <string>
