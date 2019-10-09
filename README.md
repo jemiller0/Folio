@@ -146,6 +146,12 @@ dotnet FolioConsoleApplication.dll -delete -load -userspath users.json.gz
 dotnet FolioConsoleApplication.dll -save -all -path data
 ```
 
+### Save all using SQL using 16 threads
+
+```
+dotnet FolioConsoleApplication.dll -save -all -threads 16
+```
+
 ## Parameters
 
 ```
@@ -158,6 +164,7 @@ dotnet FolioConsoleApplication.dll -save -all -path data
 -Path <string>
 -Save
 -Take <int>
+-Threads <int>
 -TracePath <string>
 -Validate
 -Verbose
@@ -195,7 +202,6 @@ FolioLibrary/Folio.sql contains SQL views that can be helpful for reviewing load
 * Add support for additional FOLIO modules
 * Switch to using bulk load web APIs when if/when they become available
 * Parse command-line arguments in more robust manner
-* Add multi-threading support
 * Switch to new memory optimized Microsoft JSON parser
 
 ## References
