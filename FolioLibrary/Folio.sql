@@ -253,6 +253,25 @@ CAST(jsonb#>>'{metadata,updatedByUserId}' AS UUID) AS updated_by_user_id,
 CAST(jsonb#>>'{metadata,updatedByUsername}' AS VARCHAR(1024)) AS updated_by_username,
 jsonb_pretty(jsonb) AS content
 FROM diku_mod_feesfines.comments;
+CREATE VIEW uc.configurations AS
+SELECT
+id AS id,
+CAST(jsonb->>'module' AS VARCHAR(1024)) AS module,
+CAST(jsonb->>'configName' AS VARCHAR(1024)) AS config_name,
+CAST(jsonb->>'code' AS VARCHAR(1024)) AS code,
+CAST(jsonb->>'description' AS VARCHAR(1024)) AS description,
+CAST(jsonb->>'default' AS BOOLEAN) AS default,
+CAST(jsonb->>'enabled' AS BOOLEAN) AS enabled,
+CAST(jsonb->>'value' AS VARCHAR(1024)) AS value,
+CAST(jsonb->>'userId' AS VARCHAR(128)) AS user_id,
+uc.TIMESTAMP_CAST(jsonb#>>'{metadata,createdDate}') AS created_date,
+CAST(jsonb#>>'{metadata,createdByUserId}' AS UUID) AS created_by_user_id,
+CAST(jsonb#>>'{metadata,createdByUsername}' AS VARCHAR(1024)) AS created_by_username,
+uc.TIMESTAMP_CAST(jsonb#>>'{metadata,updatedDate}') AS updated_date,
+CAST(jsonb#>>'{metadata,updatedByUserId}' AS UUID) AS updated_by_user_id,
+CAST(jsonb#>>'{metadata,updatedByUsername}' AS VARCHAR(1024)) AS updated_by_username,
+jsonb_pretty(jsonb) AS content
+FROM diku_mod_configuration.config_data;
 CREATE VIEW uc.contact_phone_number_categories AS
 SELECT
 id AS id,
@@ -1059,7 +1078,8 @@ CAST(jsonb->>'code' AS VARCHAR(1024)) AS code,
 CAST(jsonb->>'encumbrance' AS UUID) AS encumbrance_id,
 CAST(jsonb->>'fundId' AS UUID) AS fund_id,
 CAST(jsonb->>'invoiceLineId' AS UUID) AS invoice_item_id,
-CAST(jsonb->>'percentage' AS DECIMAL(19,2)) AS percentage
+CAST(jsonb->>'distributionType' AS VARCHAR(1024)) AS distribution_type,
+CAST(jsonb->>'value' AS DECIMAL(19,2)) AS value
 FROM (SELECT id::text || ordinality::text AS id, id AS invoice_adjustment_id, value AS jsonb FROM (SELECT id::text || ordinality::text AS id, id AS invoice_id, value AS jsonb FROM diku_mod_invoice_storage.invoices, jsonb_array_elements((jsonb->>'adjustments')::jsonb) WITH ORDINALITY) a, jsonb_array_elements((jsonb->>'fundDistributions')::jsonb) WITH ORDINALITY) a;
 CREATE VIEW uc.invoice_adjustments AS
 SELECT
@@ -1136,7 +1156,8 @@ CAST(jsonb->>'code' AS VARCHAR(1024)) AS code,
 CAST(jsonb->>'encumbrance' AS UUID) AS encumbrance_id,
 CAST(jsonb->>'fundId' AS UUID) AS fund_id,
 CAST(jsonb->>'invoiceLineId' AS UUID) AS invoice_item_id,
-CAST(jsonb->>'percentage' AS DECIMAL(19,2)) AS percentage
+CAST(jsonb->>'distributionType' AS VARCHAR(1024)) AS distribution_type,
+CAST(jsonb->>'value' AS DECIMAL(19,2)) AS value
 FROM (SELECT id::text || ordinality::text AS id, id AS invoice_item_adjustment_id, value AS jsonb FROM (SELECT id::text || ordinality::text AS id, id AS invoice_item_id, value AS jsonb FROM diku_mod_invoice_storage.invoice_lines, jsonb_array_elements((jsonb->>'adjustments')::jsonb) WITH ORDINALITY) a, jsonb_array_elements((jsonb->>'fundDistributions')::jsonb) WITH ORDINALITY) a;
 CREATE VIEW uc.invoice_item_adjustments AS
 SELECT
@@ -1157,7 +1178,8 @@ invoice_item_id AS invoice_item_id,
 CAST(jsonb->>'code' AS VARCHAR(1024)) AS code,
 CAST(jsonb->>'encumbrance' AS UUID) AS encumbrance_id,
 CAST(jsonb->>'fundId' AS UUID) AS fund_id,
-CAST(jsonb->>'percentage' AS DECIMAL(19,2)) AS percentage
+CAST(jsonb->>'distributionType' AS VARCHAR(1024)) AS distribution_type,
+CAST(jsonb->>'value' AS DECIMAL(19,2)) AS value
 FROM (SELECT id::text || ordinality::text AS id, id AS invoice_item_id, value AS jsonb FROM diku_mod_invoice_storage.invoice_lines, jsonb_array_elements((jsonb->>'fundDistributions')::jsonb) WITH ORDINALITY) a;
 CREATE VIEW uc.invoice_item_tags AS
 SELECT
@@ -1701,7 +1723,8 @@ order_item_id AS order_item_id,
 CAST(jsonb->>'code' AS VARCHAR(1024)) AS code,
 CAST(jsonb->>'encumbrance' AS UUID) AS encumbrance_id,
 CAST(jsonb->>'fundId' AS UUID) AS fund_id,
-CAST(jsonb->>'percentage' AS DECIMAL(19,2)) AS percentage
+CAST(jsonb->>'distributionType' AS VARCHAR(1024)) AS distribution_type,
+CAST(jsonb->>'value' AS DECIMAL(19,2)) AS value
 FROM (SELECT id::text || ordinality::text AS id, id AS order_item_id, value AS jsonb FROM diku_mod_orders_storage.po_line, jsonb_array_elements((jsonb->>'fundDistribution')::jsonb) WITH ORDINALITY) a;
 CREATE VIEW uc.order_item_locations AS
 SELECT
@@ -2623,7 +2646,8 @@ CAST(jsonb->>'code' AS VARCHAR(1024)) AS code,
 CAST(jsonb->>'encumbrance' AS UUID) AS encumbrance_id,
 CAST(jsonb->>'fundId' AS UUID) AS fund_id,
 CAST(jsonb->>'invoiceLineId' AS UUID) AS invoice_item_id,
-CAST(jsonb->>'percentage' AS DECIMAL(19,2)) AS percentage
+CAST(jsonb->>'distributionType' AS VARCHAR(1024)) AS distribution_type,
+CAST(jsonb->>'value' AS DECIMAL(19,2)) AS value
 FROM (SELECT id::text || ordinality::text AS id, id AS voucher_item_id, value AS jsonb FROM diku_mod_invoice_storage.voucher_lines, jsonb_array_elements((jsonb->>'fundDistributions')::jsonb) WITH ORDINALITY) a;
 CREATE VIEW uc.voucher_item_source_ids AS
 SELECT

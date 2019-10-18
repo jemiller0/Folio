@@ -80,6 +80,7 @@ namespace FolioLibrary
             if (IsPostgreSql) modelBuilder.Entity<CirculationRule>().Property(nameof(CirculationRule.Content)).HasColumnType("jsonb");
             if (IsPostgreSql) modelBuilder.Entity<ClassificationType>().Property(nameof(ClassificationType.Content)).HasColumnType("jsonb");
             if (IsPostgreSql) modelBuilder.Entity<Comment>().Property(nameof(Comment.Content)).HasColumnType("jsonb");
+            if (IsPostgreSql) modelBuilder.Entity<Configuration>().Property(nameof(Configuration.Content)).HasColumnType("jsonb");
             if (IsPostgreSql) modelBuilder.Entity<Contact>().Property(nameof(Contact.Content)).HasColumnType("jsonb");
             if (IsPostgreSql) modelBuilder.Entity<ContributorNameType>().Property(nameof(ContributorNameType.Content)).HasColumnType("jsonb");
             if (IsPostgreSql) modelBuilder.Entity<ContributorType>().Property(nameof(ContributorType.Content)).HasColumnType("jsonb");
@@ -239,6 +240,7 @@ namespace FolioLibrary
         public DbSet<CirculationRule> CirculationRules { get; set; }
         public DbSet<ClassificationType> ClassificationTypes { get; set; }
         public DbSet<Comment> Comments { get; set; }
+        public DbSet<Configuration> Configurations { get; set; }
         public DbSet<Contact> Contacts { get; set; }
         public DbSet<ContributorNameType> ContributorNameTypes { get; set; }
         public DbSet<ContributorType> ContributorTypes { get; set; }

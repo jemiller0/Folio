@@ -12,7 +12,7 @@ namespace FolioLibrary
 {
     public partial class FolioBulkCopyContext : IDisposable
     {
-        private DataTable accountsDataTable, acquisitionsUnitsDataTable, addressTypesDataTable, alertsDataTable, alternativeTitleTypesDataTable, auditLoansDataTable, authAttemptsDataTable, authCredentialsHistoriesDataTable, authPasswordActionsDataTable, blocksDataTable, budgetsDataTable, callNumberTypesDataTable, campusesDataTable, cancellationReasonsDataTable, categoriesDataTable, circulationRulesDataTable, classificationTypesDataTable, commentsDataTable, contactsDataTable, contributorNameTypesDataTable, contributorTypesDataTable, documentsDataTable, electronicAccessRelationshipsDataTable, encumbrancesDataTable, errorRecordsDataTable, eventLogsDataTable, feesDataTable, feeActionsDataTable, fiscalYearsDataTable, fixedDueDateSchedulesDataTable, fundsDataTable, fundDistributionsDataTable, groupsDataTable, holdingsDataTable, holdingNoteTypesDataTable, holdingTypesDataTable, idTypesDataTable, illPoliciesDataTable, instancesDataTable, instanceFormatsDataTable, instanceNoteTypesDataTable, instanceRelationshipsDataTable, instanceRelationshipTypesDataTable, instanceSourceMarcsDataTable, instanceStatusesDataTable, instanceTypesDataTable, institutionsDataTable, interfacesDataTable, interfaceCredentialsDataTable, invoicesDataTable, invoiceItemsDataTable, itemsDataTable, itemDamagedStatusesDataTable, itemNoteTypesDataTable, jobExecutionsDataTable, jobExecutionSourceChunksDataTable, ledgersDataTable, librariesDataTable, loansDataTable, loanPoliciesDataTable, loanTypesDataTable, locationsDataTable, loginsDataTable, marcRecordsDataTable, materialTypesDataTable, modeOfIssuancesDataTable, natureOfContentTermsDataTable, notesDataTable, noteTypesDataTable, ordersDataTable, orderInvoicesDataTable, orderItemsDataTable, organizationsDataTable, ownersDataTable, patronNoticePoliciesDataTable, paymentsDataTable, permissionsDataTable, permissionsUsersDataTable, piecesDataTable, proxiesDataTable, rawRecordsDataTable, recordsDataTable, refundsDataTable, reportingCodesDataTable, requestsDataTable, requestPoliciesDataTable, scheduledNoticesDataTable, servicePointsDataTable, servicePointUsersDataTable, snapshotsDataTable, staffSlipsDataTable, statisticalCodesDataTable, statisticalCodeTypesDataTable, tagsDataTable, transactionsDataTable, transfersDataTable, transferCriteriasDataTable, usersDataTable, userAcquisitionsUnitsDataTable, vouchersDataTable, voucherItemsDataTable, waivesDataTable;
+        private DataTable accountsDataTable, acquisitionsUnitsDataTable, addressTypesDataTable, alertsDataTable, alternativeTitleTypesDataTable, auditLoansDataTable, authAttemptsDataTable, authCredentialsHistoriesDataTable, authPasswordActionsDataTable, blocksDataTable, budgetsDataTable, callNumberTypesDataTable, campusesDataTable, cancellationReasonsDataTable, categoriesDataTable, circulationRulesDataTable, classificationTypesDataTable, commentsDataTable, configurationsDataTable, contactsDataTable, contributorNameTypesDataTable, contributorTypesDataTable, documentsDataTable, electronicAccessRelationshipsDataTable, encumbrancesDataTable, errorRecordsDataTable, eventLogsDataTable, feesDataTable, feeActionsDataTable, fiscalYearsDataTable, fixedDueDateSchedulesDataTable, fundsDataTable, fundDistributionsDataTable, groupsDataTable, holdingsDataTable, holdingNoteTypesDataTable, holdingTypesDataTable, idTypesDataTable, illPoliciesDataTable, instancesDataTable, instanceFormatsDataTable, instanceNoteTypesDataTable, instanceRelationshipsDataTable, instanceRelationshipTypesDataTable, instanceSourceMarcsDataTable, instanceStatusesDataTable, instanceTypesDataTable, institutionsDataTable, interfacesDataTable, interfaceCredentialsDataTable, invoicesDataTable, invoiceItemsDataTable, itemsDataTable, itemDamagedStatusesDataTable, itemNoteTypesDataTable, jobExecutionsDataTable, jobExecutionSourceChunksDataTable, ledgersDataTable, librariesDataTable, loansDataTable, loanPoliciesDataTable, loanTypesDataTable, locationsDataTable, loginsDataTable, marcRecordsDataTable, materialTypesDataTable, modeOfIssuancesDataTable, natureOfContentTermsDataTable, notesDataTable, noteTypesDataTable, ordersDataTable, orderInvoicesDataTable, orderItemsDataTable, organizationsDataTable, ownersDataTable, patronNoticePoliciesDataTable, paymentsDataTable, permissionsDataTable, permissionsUsersDataTable, piecesDataTable, proxiesDataTable, rawRecordsDataTable, recordsDataTable, refundsDataTable, reportingCodesDataTable, requestsDataTable, requestPoliciesDataTable, scheduledNoticesDataTable, servicePointsDataTable, servicePointUsersDataTable, snapshotsDataTable, staffSlipsDataTable, statisticalCodesDataTable, statisticalCodeTypesDataTable, tagsDataTable, transactionsDataTable, transfersDataTable, transferCriteriasDataTable, usersDataTable, userAcquisitionsUnitsDataTable, vouchersDataTable, voucherItemsDataTable, waivesDataTable;
         private bool checkConstraints;
         private string connectionString;
         private bool identityInsert;
@@ -388,6 +388,25 @@ namespace FolioLibrary
             dr["creation_date"] = (object)comment.CreationTime ?? DBNull.Value;
             dr["created_by"] = (object)comment.CreationUserId ?? DBNull.Value;
             commentsDataTable.Rows.Add(dr);
+        }
+
+        public void Insert(Configuration configuration)
+        {
+            if (configurationsDataTable == null)
+            {
+                configurationsDataTable = new DataTable();
+                configurationsDataTable.Columns.Add(new DataColumn { ColumnName = "id", DataType = typeof(Guid) });
+                configurationsDataTable.Columns.Add(new DataColumn { ColumnName = "jsonb", DataType = typeof(string) });
+                configurationsDataTable.Columns.Add(new DataColumn { ColumnName = "creation_date", DataType = typeof(DateTime) });
+                configurationsDataTable.Columns.Add(new DataColumn { ColumnName = "created_by", DataType = typeof(string) });
+                configurationsDataTable.Columns["jsonb"].ExtendedProperties["NpgsqlDbType"] = NpgsqlDbType.Jsonb;
+            }
+            var dr = configurationsDataTable.NewRow();
+            dr["id"] = (object)configuration.Id ?? DBNull.Value;
+            dr["jsonb"] = (object)configuration.Content ?? DBNull.Value;
+            dr["creation_date"] = (object)configuration.CreationTime ?? DBNull.Value;
+            dr["created_by"] = (object)configuration.CreationUserId ?? DBNull.Value;
+            configurationsDataTable.Rows.Add(dr);
         }
 
         public void Insert(Contact contact)
@@ -2240,6 +2259,17 @@ namespace FolioLibrary
                 sqlBulkCopy.WriteToServer(commentsDataTable);
                 commentsDataTable.Clear();
             }
+            if (configurationsDataTable != null && configurationsDataTable.Rows.Count > 0)
+            {
+                sqlBulkCopy.DestinationTableName = $"diku_mod_configuration{(IsMySql ? "_" : ".")}config_data";
+                sqlBulkCopy.ColumnMappings.Clear();
+                sqlBulkCopy.ColumnMappings.Add("id", "id");
+                sqlBulkCopy.ColumnMappings.Add("jsonb", "jsonb");
+                sqlBulkCopy.ColumnMappings.Add("creation_date", "creation_date");
+                sqlBulkCopy.ColumnMappings.Add("created_by", "created_by");
+                sqlBulkCopy.WriteToServer(configurationsDataTable);
+                configurationsDataTable.Clear();
+            }
             if (contactsDataTable != null && contactsDataTable.Rows.Count > 0)
             {
                 sqlBulkCopy.DestinationTableName = $"diku_mod_organizations_storage{(IsMySql ? "_" : ".")}contacts";
@@ -3214,6 +3244,7 @@ namespace FolioLibrary
             if (circulationRulesDataTable != null) circulationRulesDataTable.Dispose();
             if (classificationTypesDataTable != null) classificationTypesDataTable.Dispose();
             if (commentsDataTable != null) commentsDataTable.Dispose();
+            if (configurationsDataTable != null) configurationsDataTable.Dispose();
             if (contactsDataTable != null) contactsDataTable.Dispose();
             if (contributorNameTypesDataTable != null) contributorNameTypesDataTable.Dispose();
             if (contributorTypesDataTable != null) contributorTypesDataTable.Dispose();

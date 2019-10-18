@@ -1031,6 +1031,103 @@ namespace FolioLibrary
             traceSource.TraceEvent(TraceEventType.Verbose, 0, s.Elapsed.ToString());
         }
 
+        public IEnumerable<JObject> Configurations(string where = null, string orderBy = null, int? skip = null, int? take = null)
+        {
+            var s = Stopwatch.StartNew();
+            traceSource.TraceEvent(TraceEventType.Verbose, 0, "Querying configurations");
+            AuthenticateIfNecessary();
+            var url = $"{Url}/configurations{(where != null || orderBy != null ? $"?query={WebUtility.UrlEncode(where)}{(orderBy != null ? $"{(where != null ? " " : "cql.allrecords=1 ")}sortby {WebUtility.UrlEncode(orderBy)}" : "")}" : "")}{(skip != null ? $"{(where != null || orderBy != null ? "&" : "?")}offset={skip}" : "")}{(where != null || orderBy != null || skip != null ? "&" : "?")}limit={take ?? int.MaxValue}";
+            traceSource.TraceEvent(TraceEventType.Verbose, 0, url);
+            var hrm = httpClient.GetAsync(url).Result;
+            if (hrm.StatusCode != HttpStatusCode.OK)
+            {
+                var s2 = hrm.Content.ReadAsStringAsync().Result;
+                if (hrm.Content.Headers.ContentType.MediaType == "application/json") s2 = JObject.Parse(s2).ToString();
+                traceSource.TraceEvent(TraceEventType.Verbose, 0, s2);
+                throw new HttpRequestException($"Response status code does not indicate success: {hrm.StatusCode} ({hrm.ReasonPhrase}).\r\n{s2}");
+            }
+            using (var sr = new StreamReader(hrm.Content.ReadAsStreamAsync().Result))
+            using (var jtr = new JsonTextReader(sr) { SupportMultipleContent = true })
+            {
+                jtr.Read(); jtr.Read(); jtr.Read();
+                var js = new JsonSerializer();
+                while (jtr.Read() && jtr.TokenType != JsonToken.EndArray)
+                {
+                    var jo = (JObject)js.Deserialize(jtr);
+                    traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", jo);
+                    yield return jo;
+                }
+            }
+            traceSource.TraceEvent(TraceEventType.Verbose, 0, s.Elapsed.ToString());
+        }
+
+        public JObject GetConfiguration(string id)
+        {
+            var s = Stopwatch.StartNew();
+            traceSource.TraceEvent(TraceEventType.Verbose, 0, $"Getting configuration {id}");
+            AuthenticateIfNecessary();
+            var url = $"{Url}/configurations/{id}";
+            traceSource.TraceEvent(TraceEventType.Verbose, 0, url);
+            var hrm = httpClient.GetAsync(url).Result;
+            var s2 = hrm.Content.ReadAsStringAsync().Result;
+            var jo = hrm.Content.Headers.ContentType.MediaType == "application/json" ? JObject.Parse(s2) : null;
+            traceSource.TraceEvent(TraceEventType.Verbose, 0, s2);
+            if (hrm.StatusCode != HttpStatusCode.OK) throw new HttpRequestException($"Response status code does not indicate success: {hrm.StatusCode} ({hrm.ReasonPhrase}).\r\n{s2}");
+            traceSource.TraceEvent(TraceEventType.Verbose, 0, s.Elapsed.ToString());
+            return jo;
+        }
+
+        public JObject InsertConfiguration(JObject configuration)
+        {
+            var s = Stopwatch.StartNew();
+            if (configuration["id"] == null) configuration["id"] = Guid.NewGuid();
+            traceSource.TraceEvent(TraceEventType.Verbose, 0, $"Inserting configuration {configuration["id"]}");
+            AuthenticateIfNecessary();
+            var url = $"{Url}/configurations";
+            traceSource.TraceEvent(TraceEventType.Verbose, 0, url);
+            var s2 = configuration.ToString(formatting);
+            traceSource.TraceEvent(TraceEventType.Verbose, 0, s2);
+            var sc = new StringContent(s2, Encoding.UTF8, "application/json");
+            var hrm = httpClient.PostAsync(url, sc).Result;
+            s2 = hrm.Content.ReadAsStringAsync().Result;
+            var jo = hrm.Content.Headers.ContentType.MediaType == "application/json" ? JObject.Parse(s2) : null;
+            traceSource.TraceEvent(TraceEventType.Verbose, 0, s2);
+            if (hrm.StatusCode != HttpStatusCode.Created) throw new HttpRequestException($"Response status code does not indicate success: {hrm.StatusCode} ({hrm.ReasonPhrase}).\r\n{s2}");
+            traceSource.TraceEvent(TraceEventType.Verbose, 0, s.Elapsed.ToString());
+            return jo;
+        }
+
+        public void UpdateConfiguration(JObject configuration)
+        {
+            var s = Stopwatch.StartNew();
+            traceSource.TraceEvent(TraceEventType.Verbose, 0, $"Updating configuration {configuration["id"]}");
+            AuthenticateIfNecessary();
+            var url = $"{Url}/configurations/{configuration["id"]}";
+            traceSource.TraceEvent(TraceEventType.Verbose, 0, url);
+            var s2 = configuration.ToString(formatting);
+            traceSource.TraceEvent(TraceEventType.Verbose, 0, s2);
+            var sc = new StringContent(s2, Encoding.UTF8, "application/json");
+            var hrm = httpClient.PutAsync(url, sc).Result;
+            s2 = hrm.Content.ReadAsStringAsync().Result;
+            traceSource.TraceEvent(TraceEventType.Verbose, 0, s2);
+            if (hrm.StatusCode != HttpStatusCode.NoContent) throw new HttpRequestException($"Response status code does not indicate success: {hrm.StatusCode} ({hrm.ReasonPhrase}).\r\n{s2}");
+            traceSource.TraceEvent(TraceEventType.Verbose, 0, s.Elapsed.ToString());
+        }
+
+        public void DeleteConfiguration(string id)
+        {
+            var s = Stopwatch.StartNew();
+            traceSource.TraceEvent(TraceEventType.Verbose, 0, $"Deleting configuration {id}");
+            AuthenticateIfNecessary();
+            var url = $"{Url}/configurations/{id}";
+            traceSource.TraceEvent(TraceEventType.Verbose, 0, url);
+            var hrm = httpClient.DeleteAsync(url).Result;
+            var s2 = hrm.Content.ReadAsStringAsync().Result;
+            traceSource.TraceEvent(TraceEventType.Verbose, 0, s2);
+            if (hrm.StatusCode != HttpStatusCode.NoContent) throw new HttpRequestException($"Response status code does not indicate success: {hrm.StatusCode} ({hrm.ReasonPhrase}).\r\n{s2}");
+            traceSource.TraceEvent(TraceEventType.Verbose, 0, s.Elapsed.ToString());
+        }
+
         public IEnumerable<JObject> Contacts(string where = null, string orderBy = null, int? skip = null, int? take = null)
         {
             var s = Stopwatch.StartNew();

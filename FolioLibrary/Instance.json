@@ -373,16 +373,14 @@
         "additionalProperties": false,
         "properties": {
           "id": {
-            "description": "the system assigned unique ID of the holdings record; UUID",
-            "type": "string"
+            "$ref": "#/properties/id"
           },
           "hrid": {
             "description": "the human readable ID, also called eye readable ID. A system-assigned sequential ID which maps to the Instance ID",
             "type": "string"
           },
           "holdingsTypeId": {
-            "description": "unique ID for the type of this holdings record, a UUID",
-            "type": "string"
+            "$ref": "#/properties/id"
           },
           "formerIds": {
             "description": "Previous ID(s) assigned to the holdings record",
@@ -393,15 +391,13 @@
             "uniqueItems": true
           },
           "instanceId": {
-            "type": "string"
+            "$ref": "#/properties/id"
           },
           "permanentLocationId": {
-            "description": "The permanent shelving location in which an item resides.",
-            "type": "string"
+            "$ref": "#/properties/id"
           },
           "temporaryLocationId": {
-            "description": "Temporary location is the temporary location, shelving location, or holding which is a physical place where items are stored, or an Online location.",
-            "type": "string"
+            "$ref": "#/properties/id"
           },
           "electronicAccess": {
             "type": "array",
@@ -436,8 +432,7 @@
             }
           },
           "callNumberTypeId": {
-            "description": "unique ID for the type of call number on a holdings record, a UUID",
-            "type": "string"
+            "$ref": "#/properties/id"
           },
           "callNumberPrefix": {
             "description": "Prefix of the call number on the holding level.",
@@ -472,8 +467,7 @@
               "type": "object",
               "properties": {
                 "holdingsNoteTypeId": {
-                  "description": "ID of the type of note",
-                  "type": "string"
+                  "$ref": "#/properties/id"
                 },
                 "note": {
                   "description": "Text content of the note",
@@ -488,8 +482,7 @@
             }
           },
           "illPolicyId": {
-            "description": "unique ID for an ILL policy, a UUID",
-            "type": "string"
+            "$ref": "#/properties/id"
           },
           "retentionPolicy": {
             "description": "Records information regarding how long we have agreed to keep something.",
@@ -592,7 +585,7 @@
             "description": "List of statistical code IDs",
             "type": "array",
             "items": {
-              "type": "string"
+              "$ref": "#/properties/id"
             },
             "uniqueItems": true
           },
@@ -920,7 +913,8 @@
           }
         },
         "required": [
-          "instanceId"
+          "instanceId",
+          "permanentLocationId"
         ]
       }
     },

@@ -5,16 +5,16 @@
   "additionalProperties": false,
   "properties": {
     "id": {
-      "description": "the system assigned unique ID of the holdings record; UUID",
-      "type": "string"
+      "description": "A universally unique identifier (UUID), this is a 128-bit number used to identify a record and is shown in hex with dashes, for example 6312d172-f0cf-40f6-b27d-9fa8feaf332f; the UUID version must be from 1-5; see https://dev.folio.org/guides/uuids/",
+      "type": "string",
+      "pattern": "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-5][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}$"
     },
     "hrid": {
       "description": "the human readable ID, also called eye readable ID. A system-assigned sequential ID which maps to the Instance ID",
       "type": "string"
     },
     "holdingsTypeId": {
-      "description": "unique ID for the type of this holdings record, a UUID",
-      "type": "string"
+      "$ref": "#/properties/id"
     },
     "formerIds": {
       "description": "Previous ID(s) assigned to the holdings record",
@@ -25,15 +25,13 @@
       "uniqueItems": true
     },
     "instanceId": {
-      "type": "string"
+      "$ref": "#/properties/id"
     },
     "permanentLocationId": {
-      "description": "The permanent shelving location in which an item resides.",
-      "type": "string"
+      "$ref": "#/properties/id"
     },
     "temporaryLocationId": {
-      "description": "Temporary location is the temporary location, shelving location, or holding which is a physical place where items are stored, or an Online location.",
-      "type": "string"
+      "$ref": "#/properties/id"
     },
     "electronicAccess": {
       "type": "array",
@@ -68,8 +66,7 @@
       }
     },
     "callNumberTypeId": {
-      "description": "unique ID for the type of call number on a holdings record, a UUID",
-      "type": "string"
+      "$ref": "#/properties/id"
     },
     "callNumberPrefix": {
       "description": "Prefix of the call number on the holding level.",
@@ -104,8 +101,7 @@
         "type": "object",
         "properties": {
           "holdingsNoteTypeId": {
-            "description": "ID of the type of note",
-            "type": "string"
+            "$ref": "#/properties/id"
           },
           "note": {
             "description": "Text content of the note",
@@ -120,8 +116,7 @@
       }
     },
     "illPolicyId": {
-      "description": "unique ID for an ILL policy, a UUID",
-      "type": "string"
+      "$ref": "#/properties/id"
     },
     "retentionPolicy": {
       "description": "Records information regarding how long we have agreed to keep something.",
@@ -224,7 +219,7 @@
       "description": "List of statistical code IDs",
       "type": "array",
       "items": {
-        "type": "string"
+        "$ref": "#/properties/id"
       },
       "uniqueItems": true
     },
@@ -600,6 +595,7 @@
     }
   },
   "required": [
-    "instanceId"
+    "instanceId",
+    "permanentLocationId"
   ]
 }

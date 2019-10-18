@@ -30,28 +30,34 @@
             "type": "string"
           },
           "encumbrance": {
-            "description": "UUID of encumbrance record associated with this fund distribution",
+            "description": "The UUID format string",
             "type": "string",
             "pattern": "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-5][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}$"
           },
           "fundId": {
-            "description": "UUID of the fund associated with this fund distribution",
-            "type": "string",
-            "pattern": "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-5][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}$"
+            "$ref": "#/properties/fundDistributions/items/properties/encumbrance"
           },
           "invoiceLineId": {
-            "description": "UUID of the invoice line associated with this fund distribution",
-            "type": "string",
-            "pattern": "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-5][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}$"
+            "$ref": "#/properties/fundDistributions/items/properties/encumbrance"
           },
-          "percentage": {
+          "distributionType": {
+            "description": "Percentage or amount type of the value property",
+            "type": "string",
+            "default": "percentage",
+            "enum": [
+              "amount",
+              "percentage"
+            ]
+          },
+          "value": {
             "description": "The percentage of the cost to be applied to this fund",
             "type": "number"
           }
         },
         "required": [
           "fundId",
-          "percentage"
+          "distributionType",
+          "value"
         ]
       },
       "minItems": 1

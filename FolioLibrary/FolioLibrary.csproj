@@ -21,6 +21,7 @@
     <None Remove="CirculationRule.json" />
     <None Remove="ClassificationType.json" />
     <None Remove="Comment.json" />
+    <None Remove="Configuration.json" />
     <None Remove="Contact.json" />
     <None Remove="ContributorNameType.json" />
     <None Remove="ContributorType.json" />
@@ -122,6 +123,7 @@
     <EmbeddedResource Include="CirculationRule.json" />
     <EmbeddedResource Include="ClassificationType.json" />
     <EmbeddedResource Include="Comment.json" />
+    <EmbeddedResource Include="Configuration.json" />
     <EmbeddedResource Include="Contact.json" />
     <EmbeddedResource Include="ContributorNameType.json" />
     <EmbeddedResource Include="ContributorType.json" />
@@ -212,7 +214,7 @@
     <PackageReference Include="Microsoft.CSharp" Version="4.6.0" />
     <PackageReference Include="Newtonsoft.Json" Version="12.0.2" />
     <PackageReference Include="Newtonsoft.Json.Schema" Version="3.0.11" />
-    <PackageReference Include="NJsonSchema" Version="10.0.25" />
+    <PackageReference Include="NJsonSchema" Version="10.0.27" />
     <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="3.0.1" />
     <PackageReference Include="System.Configuration.ConfigurationManager" Version="4.6.0" />
   </ItemGroup>
