@@ -67,6 +67,7 @@
     <None Remove="LoanType.json" />
     <None Remove="Location.json" />
     <None Remove="Login.json" />
+    <None Remove="LostItemFeePolicy.json" />
     <None Remove="MarcRecord.json" />
     <None Remove="MaterialType.json" />
     <None Remove="ModeOfIssuance.json" />
@@ -75,7 +76,9 @@
     <None Remove="Order.json" />
     <None Remove="OrderInvoice.json" />
     <None Remove="OrderItem.json" />
+    <None Remove="OrderTemplate.json" />
     <None Remove="Organization.json" />
+    <None Remove="OverdueFinePolicy.json" />
     <None Remove="Owner.json" />
     <None Remove="PatronNoticePolicy.json" />
     <None Remove="Payment.json" />
@@ -169,6 +172,7 @@
     <EmbeddedResource Include="LoanType.json" />
     <EmbeddedResource Include="Location.json" />
     <EmbeddedResource Include="Login.json" />
+    <EmbeddedResource Include="LostItemFeePolicy.json" />
     <EmbeddedResource Include="MarcRecord.json" />
     <EmbeddedResource Include="MaterialType.json" />
     <EmbeddedResource Include="ModeOfIssuance.json" />
@@ -177,7 +181,9 @@
     <EmbeddedResource Include="Order.json" />
     <EmbeddedResource Include="OrderInvoice.json" />
     <EmbeddedResource Include="OrderItem.json" />
+    <EmbeddedResource Include="OrderTemplate.json" />
     <EmbeddedResource Include="Organization.json" />
+    <EmbeddedResource Include="OverdueFinePolicy.json" />
     <EmbeddedResource Include="Owner.json" />
     <EmbeddedResource Include="PatronNoticePolicy.json" />
     <EmbeddedResource Include="Payment.json" />

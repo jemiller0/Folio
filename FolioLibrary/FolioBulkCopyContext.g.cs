@@ -12,7 +12,7 @@ namespace FolioLibrary
 {
     public partial class FolioBulkCopyContext : IDisposable
     {
-        private DataTable accountsDataTable, acquisitionsUnitsDataTable, addressTypesDataTable, alertsDataTable, alternativeTitleTypesDataTable, auditLoansDataTable, authAttemptsDataTable, authCredentialsHistoriesDataTable, authPasswordActionsDataTable, blocksDataTable, budgetsDataTable, callNumberTypesDataTable, campusesDataTable, cancellationReasonsDataTable, categoriesDataTable, circulationRulesDataTable, classificationTypesDataTable, commentsDataTable, configurationsDataTable, contactsDataTable, contributorNameTypesDataTable, contributorTypesDataTable, documentsDataTable, electronicAccessRelationshipsDataTable, encumbrancesDataTable, errorRecordsDataTable, eventLogsDataTable, feesDataTable, feeActionsDataTable, fiscalYearsDataTable, fixedDueDateSchedulesDataTable, fundsDataTable, fundDistributionsDataTable, groupsDataTable, holdingsDataTable, holdingNoteTypesDataTable, holdingTypesDataTable, idTypesDataTable, illPoliciesDataTable, instancesDataTable, instanceFormatsDataTable, instanceNoteTypesDataTable, instanceRelationshipsDataTable, instanceRelationshipTypesDataTable, instanceSourceMarcsDataTable, instanceStatusesDataTable, instanceTypesDataTable, institutionsDataTable, interfacesDataTable, interfaceCredentialsDataTable, invoicesDataTable, invoiceItemsDataTable, itemsDataTable, itemDamagedStatusesDataTable, itemNoteTypesDataTable, jobExecutionsDataTable, jobExecutionSourceChunksDataTable, ledgersDataTable, librariesDataTable, loansDataTable, loanPoliciesDataTable, loanTypesDataTable, locationsDataTable, loginsDataTable, marcRecordsDataTable, materialTypesDataTable, modeOfIssuancesDataTable, natureOfContentTermsDataTable, notesDataTable, noteTypesDataTable, ordersDataTable, orderInvoicesDataTable, orderItemsDataTable, organizationsDataTable, ownersDataTable, patronNoticePoliciesDataTable, paymentsDataTable, permissionsDataTable, permissionsUsersDataTable, piecesDataTable, proxiesDataTable, rawRecordsDataTable, recordsDataTable, refundsDataTable, reportingCodesDataTable, requestsDataTable, requestPoliciesDataTable, scheduledNoticesDataTable, servicePointsDataTable, servicePointUsersDataTable, snapshotsDataTable, staffSlipsDataTable, statisticalCodesDataTable, statisticalCodeTypesDataTable, tagsDataTable, transactionsDataTable, transfersDataTable, transferCriteriasDataTable, usersDataTable, userAcquisitionsUnitsDataTable, vouchersDataTable, voucherItemsDataTable, waivesDataTable;
+        private DataTable accountsDataTable, acquisitionsUnitsDataTable, addressTypesDataTable, alertsDataTable, alternativeTitleTypesDataTable, auditLoansDataTable, authAttemptsDataTable, authCredentialsHistoriesDataTable, authPasswordActionsDataTable, blocksDataTable, budgetsDataTable, callNumberTypesDataTable, campusesDataTable, cancellationReasonsDataTable, categoriesDataTable, circulationRulesDataTable, classificationTypesDataTable, commentsDataTable, configurationsDataTable, contactsDataTable, contributorNameTypesDataTable, contributorTypesDataTable, documentsDataTable, electronicAccessRelationshipsDataTable, encumbrancesDataTable, errorRecordsDataTable, eventLogsDataTable, feesDataTable, feeActionsDataTable, fiscalYearsDataTable, fixedDueDateSchedulesDataTable, fundsDataTable, fundDistributionsDataTable, groupsDataTable, holdingsDataTable, holdingNoteTypesDataTable, holdingTypesDataTable, idTypesDataTable, illPoliciesDataTable, instancesDataTable, instanceFormatsDataTable, instanceNoteTypesDataTable, instanceRelationshipsDataTable, instanceRelationshipTypesDataTable, instanceSourceMarcsDataTable, instanceStatusesDataTable, instanceTypesDataTable, institutionsDataTable, interfacesDataTable, interfaceCredentialsDataTable, invoicesDataTable, invoiceItemsDataTable, itemsDataTable, itemDamagedStatusesDataTable, itemNoteTypesDataTable, jobExecutionsDataTable, jobExecutionSourceChunksDataTable, ledgersDataTable, librariesDataTable, loansDataTable, loanPoliciesDataTable, loanTypesDataTable, locationsDataTable, loginsDataTable, lostItemFeePoliciesDataTable, marcRecordsDataTable, materialTypesDataTable, modeOfIssuancesDataTable, natureOfContentTermsDataTable, notesDataTable, noteTypesDataTable, ordersDataTable, orderInvoicesDataTable, orderItemsDataTable, orderTemplatesDataTable, organizationsDataTable, overdueFinePoliciesDataTable, ownersDataTable, patronNoticePoliciesDataTable, paymentsDataTable, permissionsDataTable, permissionsUsersDataTable, piecesDataTable, proxiesDataTable, rawRecordsDataTable, recordsDataTable, refundsDataTable, reportingCodesDataTable, requestsDataTable, requestPoliciesDataTable, scheduledNoticesDataTable, servicePointsDataTable, servicePointUsersDataTable, snapshotsDataTable, staffSlipsDataTable, statisticalCodesDataTable, statisticalCodeTypesDataTable, tagsDataTable, transactionsDataTable, transfersDataTable, transferCriteriasDataTable, usersDataTable, userAcquisitionsUnitsDataTable, vouchersDataTable, voucherItemsDataTable, waivesDataTable;
         private bool checkConstraints;
         private string connectionString;
         private bool identityInsert;
@@ -1304,6 +1304,25 @@ namespace FolioLibrary
             loginsDataTable.Rows.Add(dr);
         }
 
+        public void Insert(LostItemFeePolicy lostItemFeePolicy)
+        {
+            if (lostItemFeePoliciesDataTable == null)
+            {
+                lostItemFeePoliciesDataTable = new DataTable();
+                lostItemFeePoliciesDataTable.Columns.Add(new DataColumn { ColumnName = "id", DataType = typeof(Guid) });
+                lostItemFeePoliciesDataTable.Columns.Add(new DataColumn { ColumnName = "jsonb", DataType = typeof(string) });
+                lostItemFeePoliciesDataTable.Columns.Add(new DataColumn { ColumnName = "creation_date", DataType = typeof(DateTime) });
+                lostItemFeePoliciesDataTable.Columns.Add(new DataColumn { ColumnName = "created_by", DataType = typeof(string) });
+                lostItemFeePoliciesDataTable.Columns["jsonb"].ExtendedProperties["NpgsqlDbType"] = NpgsqlDbType.Jsonb;
+            }
+            var dr = lostItemFeePoliciesDataTable.NewRow();
+            dr["id"] = (object)lostItemFeePolicy.Id ?? DBNull.Value;
+            dr["jsonb"] = (object)lostItemFeePolicy.Content ?? DBNull.Value;
+            dr["creation_date"] = (object)lostItemFeePolicy.CreationTime ?? DBNull.Value;
+            dr["created_by"] = (object)lostItemFeePolicy.CreationUserId ?? DBNull.Value;
+            lostItemFeePoliciesDataTable.Rows.Add(dr);
+        }
+
         public void Insert(MarcRecord marcRecord)
         {
             if (marcRecordsDataTable == null)
@@ -1469,6 +1488,21 @@ namespace FolioLibrary
             orderItemsDataTable.Rows.Add(dr);
         }
 
+        public void Insert(OrderTemplate orderTemplate)
+        {
+            if (orderTemplatesDataTable == null)
+            {
+                orderTemplatesDataTable = new DataTable();
+                orderTemplatesDataTable.Columns.Add(new DataColumn { ColumnName = "id", DataType = typeof(Guid) });
+                orderTemplatesDataTable.Columns.Add(new DataColumn { ColumnName = "jsonb", DataType = typeof(string) });
+                orderTemplatesDataTable.Columns["jsonb"].ExtendedProperties["NpgsqlDbType"] = NpgsqlDbType.Jsonb;
+            }
+            var dr = orderTemplatesDataTable.NewRow();
+            dr["id"] = (object)orderTemplate.Id ?? DBNull.Value;
+            dr["jsonb"] = (object)orderTemplate.Content ?? DBNull.Value;
+            orderTemplatesDataTable.Rows.Add(dr);
+        }
+
         public void Insert(Organization organization)
         {
             if (organizationsDataTable == null)
@@ -1486,6 +1520,25 @@ namespace FolioLibrary
             dr["creation_date"] = (object)organization.CreationTime ?? DBNull.Value;
             dr["created_by"] = (object)organization.CreationUserId ?? DBNull.Value;
             organizationsDataTable.Rows.Add(dr);
+        }
+
+        public void Insert(OverdueFinePolicy overdueFinePolicy)
+        {
+            if (overdueFinePoliciesDataTable == null)
+            {
+                overdueFinePoliciesDataTable = new DataTable();
+                overdueFinePoliciesDataTable.Columns.Add(new DataColumn { ColumnName = "id", DataType = typeof(Guid) });
+                overdueFinePoliciesDataTable.Columns.Add(new DataColumn { ColumnName = "jsonb", DataType = typeof(string) });
+                overdueFinePoliciesDataTable.Columns.Add(new DataColumn { ColumnName = "creation_date", DataType = typeof(DateTime) });
+                overdueFinePoliciesDataTable.Columns.Add(new DataColumn { ColumnName = "created_by", DataType = typeof(string) });
+                overdueFinePoliciesDataTable.Columns["jsonb"].ExtendedProperties["NpgsqlDbType"] = NpgsqlDbType.Jsonb;
+            }
+            var dr = overdueFinePoliciesDataTable.NewRow();
+            dr["id"] = (object)overdueFinePolicy.Id ?? DBNull.Value;
+            dr["jsonb"] = (object)overdueFinePolicy.Content ?? DBNull.Value;
+            dr["creation_date"] = (object)overdueFinePolicy.CreationTime ?? DBNull.Value;
+            dr["created_by"] = (object)overdueFinePolicy.CreationUserId ?? DBNull.Value;
+            overdueFinePoliciesDataTable.Rows.Add(dr);
         }
 
         public void Insert(Owner owner)
@@ -2785,6 +2838,17 @@ namespace FolioLibrary
                 sqlBulkCopy.WriteToServer(loginsDataTable);
                 loginsDataTable.Clear();
             }
+            if (lostItemFeePoliciesDataTable != null && lostItemFeePoliciesDataTable.Rows.Count > 0)
+            {
+                sqlBulkCopy.DestinationTableName = $"diku_mod_feesfines{(IsMySql ? "_" : ".")}lost_item_fee_policy";
+                sqlBulkCopy.ColumnMappings.Clear();
+                sqlBulkCopy.ColumnMappings.Add("id", "id");
+                sqlBulkCopy.ColumnMappings.Add("jsonb", "jsonb");
+                sqlBulkCopy.ColumnMappings.Add("creation_date", "creation_date");
+                sqlBulkCopy.ColumnMappings.Add("created_by", "created_by");
+                sqlBulkCopy.WriteToServer(lostItemFeePoliciesDataTable);
+                lostItemFeePoliciesDataTable.Clear();
+            }
             if (marcRecordsDataTable != null && marcRecordsDataTable.Rows.Count > 0)
             {
                 sqlBulkCopy.DestinationTableName = $"diku_mod_source_record_storage{(IsMySql ? "_" : ".")}marc_records";
@@ -2881,6 +2945,15 @@ namespace FolioLibrary
                 sqlBulkCopy.WriteToServer(orderItemsDataTable);
                 orderItemsDataTable.Clear();
             }
+            if (orderTemplatesDataTable != null && orderTemplatesDataTable.Rows.Count > 0)
+            {
+                sqlBulkCopy.DestinationTableName = $"diku_mod_orders_storage{(IsMySql ? "_" : ".")}order_templates";
+                sqlBulkCopy.ColumnMappings.Clear();
+                sqlBulkCopy.ColumnMappings.Add("id", "id");
+                sqlBulkCopy.ColumnMappings.Add("jsonb", "jsonb");
+                sqlBulkCopy.WriteToServer(orderTemplatesDataTable);
+                orderTemplatesDataTable.Clear();
+            }
             if (organizationsDataTable != null && organizationsDataTable.Rows.Count > 0)
             {
                 sqlBulkCopy.DestinationTableName = $"diku_mod_organizations_storage{(IsMySql ? "_" : ".")}organizations";
@@ -2891,6 +2964,17 @@ namespace FolioLibrary
                 sqlBulkCopy.ColumnMappings.Add("created_by", "created_by");
                 sqlBulkCopy.WriteToServer(organizationsDataTable);
                 organizationsDataTable.Clear();
+            }
+            if (overdueFinePoliciesDataTable != null && overdueFinePoliciesDataTable.Rows.Count > 0)
+            {
+                sqlBulkCopy.DestinationTableName = $"diku_mod_feesfines{(IsMySql ? "_" : ".")}overdue_fine_policy";
+                sqlBulkCopy.ColumnMappings.Clear();
+                sqlBulkCopy.ColumnMappings.Add("id", "id");
+                sqlBulkCopy.ColumnMappings.Add("jsonb", "jsonb");
+                sqlBulkCopy.ColumnMappings.Add("creation_date", "creation_date");
+                sqlBulkCopy.ColumnMappings.Add("created_by", "created_by");
+                sqlBulkCopy.WriteToServer(overdueFinePoliciesDataTable);
+                overdueFinePoliciesDataTable.Clear();
             }
             if (ownersDataTable != null && ownersDataTable.Rows.Count > 0)
             {
@@ -3290,6 +3374,7 @@ namespace FolioLibrary
             if (loanTypesDataTable != null) loanTypesDataTable.Dispose();
             if (locationsDataTable != null) locationsDataTable.Dispose();
             if (loginsDataTable != null) loginsDataTable.Dispose();
+            if (lostItemFeePoliciesDataTable != null) lostItemFeePoliciesDataTable.Dispose();
             if (marcRecordsDataTable != null) marcRecordsDataTable.Dispose();
             if (materialTypesDataTable != null) materialTypesDataTable.Dispose();
             if (modeOfIssuancesDataTable != null) modeOfIssuancesDataTable.Dispose();
@@ -3299,7 +3384,9 @@ namespace FolioLibrary
             if (ordersDataTable != null) ordersDataTable.Dispose();
             if (orderInvoicesDataTable != null) orderInvoicesDataTable.Dispose();
             if (orderItemsDataTable != null) orderItemsDataTable.Dispose();
+            if (orderTemplatesDataTable != null) orderTemplatesDataTable.Dispose();
             if (organizationsDataTable != null) organizationsDataTable.Dispose();
+            if (overdueFinePoliciesDataTable != null) overdueFinePoliciesDataTable.Dispose();
             if (ownersDataTable != null) ownersDataTable.Dispose();
             if (patronNoticePoliciesDataTable != null) patronNoticePoliciesDataTable.Dispose();
             if (paymentsDataTable != null) paymentsDataTable.Dispose();

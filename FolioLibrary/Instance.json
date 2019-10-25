@@ -540,7 +540,7 @@
             }
           },
           "copyNumber": {
-            "description": "Item/Piece ID (usually barcode) for systems that do not use item records. Ability to designate the copy number if institution chooses to use copy numbers.",
+            "description": "Item/Piece ID (usually barcode) for systems that do not use item records. Ability to designate the copy number if institution chooses to use copy numbers.",
             "type": "string"
           },
           "numberOfItems": {
@@ -821,6 +821,9 @@
                 "temporaryLocationId": {
                   "description": "Temporary item location is the temporarily location, shelving location, or holding which is a physical place where items are stored, or an Online location.",
                   "type": "string"
+                },
+                "effectiveLocationId": {
+                  "$ref": "#/properties/id"
                 },
                 "electronicAccess": {
                   "type": "array",

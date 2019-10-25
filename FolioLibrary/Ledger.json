@@ -21,6 +21,9 @@
       "description": "The description of the ledger",
       "type": "string"
     },
+    "fiscalYearOneId": {
+      "$ref": "#/properties/id"
+    },
     "ledgerStatus": {
       "description": "The status of the ledger",
       "type": "string",
@@ -96,6 +99,7 @@
   "required": [
     "name",
     "code",
+    "fiscalYearOneId",
     "ledgerStatus"
   ]
 }

@@ -529,6 +529,7 @@ CAST(jsonb->>'currency' AS VARCHAR(1024)) AS currency,
 CAST(jsonb->>'description' AS VARCHAR(1024)) AS description,
 uc.TIMESTAMP_CAST(jsonb->>'periodStart') AS period_start,
 uc.TIMESTAMP_CAST(jsonb->>'periodEnd') AS period_end,
+CAST(jsonb->>'series' AS VARCHAR(1024)) AS series,
 uc.TIMESTAMP_CAST(jsonb#>>'{metadata,createdDate}') AS created_date,
 CAST(jsonb#>>'{metadata,createdByUserId}' AS UUID) AS created_by_user_id,
 CAST(jsonb#>>'{metadata,createdByUsername}' AS VARCHAR(1024)) AS created_by_username,
@@ -1308,6 +1309,7 @@ CAST(jsonb->>'permanentLoanTypeId' AS UUID) AS permanent_loan_type_id,
 CAST(jsonb->>'temporaryLoanTypeId' AS UUID) AS temporary_loan_type_id,
 CAST(jsonb->>'permanentLocationId' AS UUID) AS permanent_location_id,
 CAST(jsonb->>'temporaryLocationId' AS UUID) AS temporary_location_id,
+CAST(jsonb->>'effectiveLocationId' AS UUID) AS effective_location_id,
 CAST(jsonb->>'inTransitDestinationServicePointId' AS UUID) AS in_transit_destination_service_point_id,
 CAST(jsonb->>'purchaseOrderLineIdentifier' AS UUID) AS order_item_id,
 uc.TIMESTAMP_CAST(jsonb#>>'{metadata,createdDate}') AS created_date,
@@ -1395,6 +1397,7 @@ id AS id,
 CAST(jsonb->>'name' AS VARCHAR(1024)) AS name,
 CAST(jsonb->>'code' AS VARCHAR(1024)) AS code,
 CAST(jsonb->>'description' AS VARCHAR(1024)) AS description,
+CAST(jsonb->>'fiscalYearOneId' AS UUID) AS fiscal_year_one_id,
 CAST(jsonb->>'ledgerStatus' AS VARCHAR(1024)) AS ledger_status,
 CAST(jsonb->>'allocated' AS DECIMAL(19,2)) AS allocated,
 CAST(jsonb->>'available' AS DECIMAL(19,2)) AS available,
@@ -1554,6 +1557,37 @@ CAST(jsonb#>>'{metadata,updatedByUserId}' AS UUID) AS updated_by_user_id,
 CAST(jsonb#>>'{metadata,updatedByUsername}' AS VARCHAR(1024)) AS updated_by_username,
 jsonb_pretty(jsonb) AS content
 FROM diku_mod_login.auth_credentials;
+CREATE VIEW uc.lost_item_fee_policies AS
+SELECT
+id AS id,
+CAST(jsonb->>'name' AS VARCHAR(1024)) AS name,
+CAST(jsonb->>'description' AS VARCHAR(1024)) AS description,
+CAST(jsonb#>>'{itemAgedLostOverdue,duration}' AS INTEGER) AS item_aged_lost_overdue_duration,
+CAST(jsonb#>>'{itemAgedLostOverdue,intervalId}' AS UUID) AS item_aged_lost_overdue_interval_id,
+CAST(jsonb#>>'{patronBilledAfterAgedLost,duration}' AS INTEGER) AS patron_billed_after_aged_lost_duration,
+CAST(jsonb#>>'{patronBilledAfterAgedLost,intervalId}' AS UUID) AS patron_billed_after_aged_lost_interval_id,
+CAST(jsonb#>>'{chargeAmountItem,chargeType}' AS VARCHAR(1024)) AS charge_amount_item_charge_type,
+CAST(jsonb#>>'{chargeAmountItem,amount}' AS DECIMAL(19,2)) AS charge_amount_item_amount,
+CAST(jsonb->>'lostItemProcessingFee' AS DECIMAL(19,2)) AS lost_item_processing_fee,
+CAST(jsonb->>'chargeAmountItemPatron' AS BOOLEAN) AS charge_amount_item_patron,
+CAST(jsonb->>'chargeAmountItemSystem' AS BOOLEAN) AS charge_amount_item_system,
+CAST(jsonb#>>'{lostItemChargeFeeFine,duration}' AS INTEGER) AS lost_item_charge_fee_fine_duration,
+CAST(jsonb#>>'{lostItemChargeFeeFine,intervalId}' AS UUID) AS lost_item_charge_fee_fine_interval_id,
+CAST(jsonb->>'returnedLostItemProcessingFee' AS BOOLEAN) AS returned_lost_item_processing_fee,
+CAST(jsonb->>'replacedLostItemProcessingFee' AS BOOLEAN) AS replaced_lost_item_processing_fee,
+CAST(jsonb->>'replacementProcessingFee' AS DECIMAL(19,2)) AS replacement_processing_fee,
+CAST(jsonb->>'replacementAllowed' AS BOOLEAN) AS replacement_allowed,
+CAST(jsonb->>'lostItemReturned' AS VARCHAR(1024)) AS lost_item_returned,
+CAST(jsonb#>>'{feesFinesShallRefunded,duration}' AS INTEGER) AS fees_fines_shall_refunded_duration,
+CAST(jsonb#>>'{feesFinesShallRefunded,intervalId}' AS UUID) AS fees_fines_shall_refunded_interval_id,
+uc.TIMESTAMP_CAST(jsonb#>>'{metadata,createdDate}') AS created_date,
+CAST(jsonb#>>'{metadata,createdByUserId}' AS UUID) AS created_by_user_id,
+CAST(jsonb#>>'{metadata,createdByUsername}' AS VARCHAR(1024)) AS created_by_username,
+uc.TIMESTAMP_CAST(jsonb#>>'{metadata,updatedDate}') AS updated_date,
+CAST(jsonb#>>'{metadata,updatedByUserId}' AS UUID) AS updated_by_user_id,
+CAST(jsonb#>>'{metadata,updatedByUsername}' AS VARCHAR(1024)) AS updated_by_username,
+jsonb_pretty(jsonb) AS content
+FROM diku_mod_feesfines.lost_item_fee_policy;
 CREATE VIEW uc.marc_records AS
 SELECT
 _id AS id,
@@ -1822,6 +1856,14 @@ CAST(jsonb#>>'{metadata,updatedByUserId}' AS UUID) AS updated_by_user_id,
 CAST(jsonb#>>'{metadata,updatedByUsername}' AS VARCHAR(1024)) AS updated_by_username,
 jsonb_pretty(jsonb) AS content
 FROM diku_mod_orders_storage.po_line;
+CREATE VIEW uc.order_templates AS
+SELECT
+id AS id,
+CAST(jsonb->>'templateName' AS VARCHAR(1024)) AS template_name,
+CAST(jsonb->>'templateCode' AS VARCHAR(1024)) AS template_code,
+CAST(jsonb->>'templateDescription' AS VARCHAR(1024)) AS template_description,
+jsonb_pretty(jsonb) AS content
+FROM diku_mod_orders_storage.order_templates;
 CREATE VIEW uc.organization_aliases AS
 SELECT
 id AS id,
@@ -2047,6 +2089,28 @@ CAST(jsonb#>>'{metadata,updatedByUserId}' AS UUID) AS updated_by_user_id,
 CAST(jsonb#>>'{metadata,updatedByUsername}' AS VARCHAR(1024)) AS updated_by_username,
 jsonb_pretty(jsonb) AS content
 FROM diku_mod_organizations_storage.organizations;
+CREATE VIEW uc.overdue_fine_policies AS
+SELECT
+id AS id,
+CAST(jsonb->>'name' AS VARCHAR(1024)) AS name,
+CAST(jsonb->>'description' AS VARCHAR(1024)) AS description,
+CAST(jsonb#>>'{overdueFine,quantity}' AS DECIMAL(19,2)) AS overdue_fine_quantity,
+CAST(jsonb#>>'{overdueFine,intervalId}' AS UUID) AS overdue_fine_interval_id,
+CAST(jsonb->>'countClosed' AS BOOLEAN) AS count_closed,
+CAST(jsonb->>'maxOverdueFine' AS DECIMAL(19,2)) AS max_overdue_fine,
+CAST(jsonb->>'forgiveOverdueFine' AS BOOLEAN) AS forgive_overdue_fine,
+CAST(jsonb#>>'{overdueRecallFine,quantity}' AS DECIMAL(19,2)) AS overdue_recall_fine_quantity,
+CAST(jsonb#>>'{overdueRecallFine,intervalId}' AS UUID) AS overdue_recall_fine_interval_id,
+CAST(jsonb->>'gracePeriodRecall' AS BOOLEAN) AS grace_period_recall,
+CAST(jsonb->>'maxOverdueRecallFine' AS DECIMAL(19,2)) AS max_overdue_recall_fine,
+uc.TIMESTAMP_CAST(jsonb#>>'{metadata,createdDate}') AS created_date,
+CAST(jsonb#>>'{metadata,createdByUserId}' AS UUID) AS created_by_user_id,
+CAST(jsonb#>>'{metadata,createdByUsername}' AS VARCHAR(1024)) AS created_by_username,
+uc.TIMESTAMP_CAST(jsonb#>>'{metadata,updatedDate}') AS updated_date,
+CAST(jsonb#>>'{metadata,updatedByUserId}' AS UUID) AS updated_by_user_id,
+CAST(jsonb#>>'{metadata,updatedByUsername}' AS VARCHAR(1024)) AS updated_by_username,
+jsonb_pretty(jsonb) AS content
+FROM diku_mod_feesfines.overdue_fine_policy;
 CREATE VIEW uc.service_point_owners AS
 SELECT
 id AS id,

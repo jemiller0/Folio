@@ -126,6 +126,7 @@ namespace FolioLibrary
             if (IsPostgreSql) modelBuilder.Entity<LoanType>().Property(nameof(LoanType.Content)).HasColumnType("jsonb");
             if (IsPostgreSql) modelBuilder.Entity<Location>().Property(nameof(Location.Content)).HasColumnType("jsonb");
             if (IsPostgreSql) modelBuilder.Entity<Login>().Property(nameof(Login.Content)).HasColumnType("jsonb");
+            if (IsPostgreSql) modelBuilder.Entity<LostItemFeePolicy>().Property(nameof(LostItemFeePolicy.Content)).HasColumnType("jsonb");
             if (IsPostgreSql) modelBuilder.Entity<MarcRecord>().Property(nameof(MarcRecord.Content)).HasColumnType("jsonb");
             if (IsPostgreSql) modelBuilder.Entity<MaterialType>().Property(nameof(MaterialType.Content)).HasColumnType("jsonb");
             if (IsPostgreSql) modelBuilder.Entity<ModeOfIssuance>().Property(nameof(ModeOfIssuance.Content)).HasColumnType("jsonb");
@@ -135,7 +136,9 @@ namespace FolioLibrary
             if (IsPostgreSql) modelBuilder.Entity<Order>().Property(nameof(Order.Content)).HasColumnType("jsonb");
             if (IsPostgreSql) modelBuilder.Entity<OrderInvoice>().Property(nameof(OrderInvoice.Content)).HasColumnType("jsonb");
             if (IsPostgreSql) modelBuilder.Entity<OrderItem>().Property(nameof(OrderItem.Content)).HasColumnType("jsonb");
+            if (IsPostgreSql) modelBuilder.Entity<OrderTemplate>().Property(nameof(OrderTemplate.Content)).HasColumnType("jsonb");
             if (IsPostgreSql) modelBuilder.Entity<Organization>().Property(nameof(Organization.Content)).HasColumnType("jsonb");
+            if (IsPostgreSql) modelBuilder.Entity<OverdueFinePolicy>().Property(nameof(OverdueFinePolicy.Content)).HasColumnType("jsonb");
             if (IsPostgreSql) modelBuilder.Entity<Owner>().Property(nameof(Owner.Content)).HasColumnType("jsonb");
             if (IsPostgreSql) modelBuilder.Entity<PatronNoticePolicy>().Property(nameof(PatronNoticePolicy.Content)).HasColumnType("jsonb");
             if (IsPostgreSql) modelBuilder.Entity<Payment>().Property(nameof(Payment.Content)).HasColumnType("jsonb");
@@ -286,6 +289,7 @@ namespace FolioLibrary
         public DbSet<LoanType> LoanTypes { get; set; }
         public DbSet<Location> Locations { get; set; }
         public DbSet<Login> Logins { get; set; }
+        public DbSet<LostItemFeePolicy> LostItemFeePolicies { get; set; }
         public DbSet<MarcRecord> MarcRecords { get; set; }
         public DbSet<MaterialType> MaterialTypes { get; set; }
         public DbSet<ModeOfIssuance> ModeOfIssuances { get; set; }
@@ -295,7 +299,9 @@ namespace FolioLibrary
         public DbSet<Order> Orders { get; set; }
         public DbSet<OrderInvoice> OrderInvoices { get; set; }
         public DbSet<OrderItem> OrderItems { get; set; }
+        public DbSet<OrderTemplate> OrderTemplates { get; set; }
         public DbSet<Organization> Organizations { get; set; }
+        public DbSet<OverdueFinePolicy> OverdueFinePolicies { get; set; }
         public DbSet<Owner> Owners { get; set; }
         public DbSet<PatronNoticePolicy> PatronNoticePolicies { get; set; }
         public DbSet<Payment> Payments { get; set; }

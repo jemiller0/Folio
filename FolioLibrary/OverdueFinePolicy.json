@@ -1,51 +1,64 @@
 {
   "$schema": "http://json-schema.org/draft-04/schema#",
-  "description": "A fiscal year record",
+  "title": "Overdue fine policies schema",
+  "description": "Overdue fine policy to be associated with a loan policy by the Circulation Rules Editor",
   "type": "object",
   "additionalProperties": false,
   "properties": {
-    "id": {
-      "description": "The UUID format string",
-      "type": "string",
-      "pattern": "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-5][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}$"
-    },
-    "acqUnitIds": {
-      "description": "UUIDs of the acquisition units associated with this fiscal year",
-      "type": "array",
-      "items": {
-        "$ref": "#/properties/id"
-      }
-    },
     "name": {
-      "description": "The name of the fiscal year",
-      "type": "string"
-    },
-    "code": {
-      "description": "The code of the fiscal year",
-      "type": "string",
-      "pattern": "^[a-zA-Z]+[0-9]{4}$"
-    },
-    "currency": {
-      "description": "Currency code which is recorded when the FY ends, otherwise the system currency can be assumed",
+      "description": "Overdue fine policy name",
       "type": "string"
     },
     "description": {
-      "description": "The description of the fiscal year",
+      "description": "Overdue fine policy description",
       "type": "string"
     },
-    "periodStart": {
-      "description": "The start date of the fiscal year",
-      "type": "string",
-      "format": "date-time"
+    "overdueFine": {
+      "description": "Amount of times the interval repeats",
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "quantity": {
+          "description": "Quantity of the number of times the interval repeats",
+          "type": "number",
+          "minimum": 1.0
+        },
+        "intervalId": {
+          "description": "Interval for the period, e.g. hour, day, week, month or year",
+          "type": "string",
+          "enum": [
+            "minute",
+            "hour",
+            "day",
+            "week",
+            "month",
+            "year"
+          ]
+        }
+      }
     },
-    "periodEnd": {
-      "description": "The end date of the fiscal year",
-      "type": "string",
-      "format": "date-time"
+    "countClosed": {
+      "description": "A flag to determine if a fine is count closed",
+      "type": "boolean"
     },
-    "series": {
-      "description": "The fiscal year series",
-      "type": "string"
+    "maxOverdueFine": {
+      "description": "Maximum overdue fine",
+      "type": "number"
+    },
+    "forgiveOverdueFine": {
+      "description": "A flag to determine forgive overdue fine if item renewed",
+      "type": "boolean"
+    },
+    "overdueRecallFine": {
+      "$ref": "#/properties/overdueFine"
+    },
+    "gracePeriodRecall": {
+      "description": "Grace period for recall",
+      "type": "boolean"
+    },
+    "maxOverdueRecallFine": {
+      "description": "Maximum overdue recall fine",
+      "type": "number"
     },
     "metadata": {
       "title": "Metadata Schema",
@@ -85,12 +98,13 @@
       "required": [
         "createdDate"
       ]
+    },
+    "id": {
+      "description": "Overdue fine policy id, UUID",
+      "type": "string"
     }
   },
   "required": [
-    "code",
-    "name",
-    "periodStart",
-    "periodEnd"
+    "name"
   ]
 }
