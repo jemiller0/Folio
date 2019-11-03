@@ -168,6 +168,7 @@ dotnet FolioConsoleApplication.dll -save -all -threads 16
 -TracePath <string>
 -Validate
 -Verbose
+-Warning
 -All{Module}
 -{Entity}Path <string>
 -{Entity}Where <string>
