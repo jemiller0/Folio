@@ -45,6 +45,7 @@ namespace FolioLibrary
             providerName = ConfigurationManager.ConnectionStrings[name].ProviderName;
             connectionString = ConfigurationManager.ConnectionStrings[name].ConnectionString;
             databaseName = Regex.Match(connectionString, @"(?i);?Database=(?<Database>\w+)").Groups["Database"].Value;
+            Database.SetCommandTimeout(180);
         }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
@@ -218,7 +219,6 @@ namespace FolioLibrary
             modelBuilder.Entity<UserAcquisitionsUnit>().HasOne(typeof(AcquisitionsUnit), nameof(UserAcquisitionsUnit.AcquisitionsUnit)).WithMany(nameof(AcquisitionsUnit.UserAcquisitionsUnits)).HasForeignKey(nameof(UserAcquisitionsUnit.Acquisitionsunitid)).OnDelete(DeleteBehavior.Restrict);
             modelBuilder.Entity<Voucher>().HasOne(typeof(Invoice), nameof(Voucher.Invoice)).WithMany(nameof(Invoice.Vouchers)).HasForeignKey(nameof(Voucher.Invoiceid)).OnDelete(DeleteBehavior.Restrict);
             modelBuilder.Entity<VoucherItem>().HasOne(typeof(Voucher), nameof(VoucherItem.Voucher)).WithMany(nameof(Voucher.VoucherItems)).HasForeignKey(nameof(VoucherItem.Voucherid)).OnDelete(DeleteBehavior.Restrict);
-            Database.SetCommandTimeout(90);
         }
 
         public bool IsMySql => providerName == "MySql.Data.MySqlClient";

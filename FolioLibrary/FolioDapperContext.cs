@@ -14,7 +14,7 @@ namespace FolioLibrary
     public class FolioDapperContext : IDisposable
     {
         private string connectionString;
-        public int? CommandTimeout { get; set; } = 90;
+        public int? CommandTimeout { get; set; } = 180;
         private DbConnection dbConnection;
         private DbTransaction dbTransaction;
         private string providerName;
