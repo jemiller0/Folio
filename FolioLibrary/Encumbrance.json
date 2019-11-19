@@ -24,10 +24,39 @@
         "Released",
         "Unreleased"
       ]
+    },
+    "orderType": {
+      "description": "Taken from the purchase order",
+      "type": "string",
+      "enum": [
+        "One-Time",
+        "Ongoing"
+      ]
+    },
+    "subscription": {
+      "description": "Taken from the purchase Order,for fiscal year rollover",
+      "type": "boolean"
+    },
+    "reEncumber": {
+      "description": "Taken from the purchase Order,for fiscal year rollover",
+      "type": "boolean"
+    },
+    "sourcePurchaseOrderId": {
+      "description": "The UUID format string",
+      "type": "string",
+      "pattern": "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-5][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}$"
+    },
+    "sourcePoLineId": {
+      "$ref": "#/properties/sourcePurchaseOrderId"
     }
   },
   "required": [
     "initialAmountEncumbered",
-    "status"
+    "status",
+    "orderType",
+    "subscription",
+    "reEncumber",
+    "sourcePurchaseOrderId",
+    "sourcePoLineId"
   ]
 }

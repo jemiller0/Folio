@@ -457,6 +457,11 @@ CAST(jsonb->>'amountAwaitingPayment' AS DECIMAL(19,2)) AS amount_awaiting_paymen
 CAST(jsonb->>'amountExpended' AS DECIMAL(19,2)) AS amount_expended,
 CAST(jsonb->>'initialAmountEncumbered' AS DECIMAL(19,2)) AS initial_amount_encumbered,
 jsonb->>'status' AS status,
+jsonb->>'orderType' AS order_type,
+CAST(jsonb->>'subscription' AS BOOLEAN) AS subscription,
+CAST(jsonb->>'reEncumber' AS BOOLEAN) AS re_encumber,
+CAST(jsonb->>'sourcePurchaseOrderId' AS UUID) AS source_purchase_order_id,
+CAST(jsonb->>'sourcePoLineId' AS UUID) AS source_po_line_id,
 jsonb_pretty(jsonb) AS content
 FROM diku_mod_finance_storage.encumbrance;
 CREATE VIEW uc.error_records AS
@@ -693,7 +698,7 @@ FROM (SELECT id::text || ordinality::text AS id, id AS holding_id, value AS json
 CREATE VIEW uc.holdings AS
 SELECT
 id AS id,
-CAST(jsonb->>'hrid' AS INTEGER) AS hrid,
+CAST(SUBSTRING(jsonb->>'hrid' FROM 3) AS INTEGER) AS hrid,
 CAST(jsonb->>'holdingsTypeId' AS UUID) AS holding_type_id,
 CAST(jsonb->>'instanceId' AS UUID) AS instance_id,
 CAST(jsonb->>'permanentLocationId' AS UUID) AS permanent_location_id,
@@ -906,7 +911,7 @@ FROM (SELECT id::text || ordinality::text AS id, id AS instance_id, value AS jso
 CREATE VIEW uc.instances AS
 SELECT
 id AS id,
-CAST(jsonb->>'hrid' AS INTEGER) AS hrid,
+CAST(SUBSTRING(jsonb->>'hrid' FROM 3) AS INTEGER) AS hrid,
 jsonb->>'source' AS source,
 jsonb->>'title' AS title,
 jsonb->'contributors'->0->>'name' AS author,
@@ -1283,7 +1288,7 @@ FROM (SELECT id::text || ordinality::text AS id, id AS item_id, value AS jsonb F
 CREATE VIEW uc.items AS
 SELECT
 id AS id,
-CAST(jsonb->>'hrid' AS INTEGER) AS hrid,
+CAST(SUBSTRING(jsonb->>'hrid' FROM 3) AS INTEGER) AS hrid,
 CAST(jsonb->>'holdingsRecordId' AS UUID) AS holding_id,
 CAST(jsonb->>'discoverySuppress' AS BOOLEAN) AS discovery_suppress,
 jsonb->>'accessionNumber' AS accession_number,
@@ -1292,6 +1297,7 @@ jsonb->>'itemLevelCallNumber' AS call_number,
 jsonb->>'itemLevelCallNumberPrefix' AS call_number_prefix,
 jsonb->>'itemLevelCallNumberSuffix' AS call_number_suffix,
 CAST(jsonb->>'itemLevelCallNumberTypeId' AS UUID) AS call_number_type_id,
+jsonb#>>'{effectiveCallNumberComponents,callNumber}' AS effective_call_number_components_call_number,
 jsonb->>'volume' AS volume,
 jsonb->>'enumeration' AS enumeration,
 jsonb->>'chronology' AS chronology,
@@ -1319,6 +1325,9 @@ jsonb#>>'{metadata,createdByUsername}' AS created_by_username,
 uc.TIMESTAMP_CAST(jsonb#>>'{metadata,updatedDate}') AS updated_date,
 CAST(jsonb#>>'{metadata,updatedByUserId}' AS UUID) AS updated_by_user_id,
 jsonb#>>'{metadata,updatedByUsername}' AS updated_by_username,
+uc.TIMESTAMP_CAST(jsonb#>>'{lastCheckIn,dateTime}') AS last_check_in_date_time,
+CAST(jsonb#>>'{lastCheckIn,servicePointId}' AS UUID) AS last_check_in_service_point_id,
+CAST(jsonb#>>'{lastCheckIn,staffMemberId}' AS UUID) AS last_check_in_staff_member_id,
 jsonb_pretty(jsonb) AS content,
 holdingsrecordid AS holdingsrecordid,
 permanentloantypeid AS permanentloantypeid,
@@ -1471,6 +1480,7 @@ jsonb#>>'{loansPolicy,gracePeriod,intervalId}' AS loans_policy_grace_period_inte
 CAST(jsonb#>>'{loansPolicy,openingTimeOffset,duration}' AS INTEGER) AS loans_policy_opening_time_offset_duration,
 jsonb#>>'{loansPolicy,openingTimeOffset,intervalId}' AS loans_policy_opening_time_offset_interval_id,
 CAST(jsonb#>>'{loansPolicy,fixedDueDateScheduleId}' AS UUID) AS loans_policy_fixed_due_date_schedule_id,
+CAST(jsonb#>>'{loansPolicy,itemLimit}' AS INTEGER) AS loans_policy_item_limit,
 CAST(jsonb->>'renewable' AS BOOLEAN) AS renewable,
 CAST(jsonb#>>'{renewalsPolicy,unlimited}' AS BOOLEAN) AS renewals_policy_unlimited,
 CAST(jsonb#>>'{renewalsPolicy,numberAllowed}' AS DECIMAL(19,2)) AS renewals_policy_number_allowed,
@@ -1665,6 +1675,19 @@ jsonb#>>'{metadata,updatedByUsername}' AS updated_by_username,
 jsonb_pretty(jsonb) AS content,
 temporary_type_id AS temporary_type_id
 FROM diku_mod_notes.note_data;
+CREATE VIEW uc.note_types AS
+SELECT
+id AS id,
+jsonb->>'name' AS name,
+CAST(jsonb#>>'{usage,noteTotal}' AS INTEGER) AS usage_note_total,
+uc.TIMESTAMP_CAST(jsonb#>>'{metadata,createdDate}') AS created_date,
+CAST(jsonb#>>'{metadata,createdByUserId}' AS UUID) AS created_by_user_id,
+jsonb#>>'{metadata,createdByUsername}' AS created_by_username,
+uc.TIMESTAMP_CAST(jsonb#>>'{metadata,updatedDate}') AS updated_date,
+CAST(jsonb#>>'{metadata,updatedByUserId}' AS UUID) AS updated_by_user_id,
+jsonb#>>'{metadata,updatedByUsername}' AS updated_by_username,
+jsonb_pretty(jsonb) AS content
+FROM diku_mod_notes.note_type;
 CREATE VIEW uc.order_notes AS
 SELECT
 id AS id,
@@ -2570,12 +2593,18 @@ CAST(jsonb#>>'{encumbrance,amountAwaitingPayment}' AS DECIMAL(19,2)) AS encumbra
 CAST(jsonb#>>'{encumbrance,amountExpended}' AS DECIMAL(19,2)) AS encumbrance_amount_expended,
 CAST(jsonb#>>'{encumbrance,initialAmountEncumbered}' AS DECIMAL(19,2)) AS encumbrance_initial_amount_encumbered,
 jsonb#>>'{encumbrance,status}' AS encumbrance_status,
+jsonb#>>'{encumbrance,orderType}' AS encumbrance_order_type,
+CAST(jsonb#>>'{encumbrance,subscription}' AS BOOLEAN) AS encumbrance_subscription,
+CAST(jsonb#>>'{encumbrance,reEncumber}' AS BOOLEAN) AS encumbrance_re_encumber,
+CAST(jsonb#>>'{encumbrance,sourcePurchaseOrderId}' AS UUID) AS encumbrance_source_purchase_order_id,
+CAST(jsonb#>>'{encumbrance,sourcePoLineId}' AS UUID) AS encumbrance_source_po_line_id,
 CAST(jsonb->>'fiscalYearId' AS UUID) AS fiscal_year_id,
 CAST(jsonb->>'fromFundId' AS UUID) AS from_fund_id,
 CAST(jsonb->>'paymentEncumbranceId' AS UUID) AS payment_encumbrance_id,
 jsonb->>'source' AS source,
 CAST(jsonb->>'sourceFiscalYearId' AS UUID) AS source_fiscal_year_id,
 CAST(jsonb->>'sourceInvoiceId' AS UUID) AS source_invoice_id,
+CAST(jsonb->>'sourceInvoiceLineId' AS UUID) AS source_invoice_line_id,
 CAST(jsonb->>'toFundId' AS UUID) AS to_fund_id,
 jsonb->>'transactionType' AS transaction_type,
 uc.TIMESTAMP_CAST(jsonb#>>'{metadata,createdDate}') AS created_date,

@@ -69,7 +69,7 @@
     "poNumber": {
       "description": "A human readable ID assigned to this purchase order",
       "type": "string",
-      "pattern": "^[a-zA-Z0-9]{5,16}$"
+      "pattern": "^[a-zA-Z0-9]{1,16}$"
     },
     "orderType": {
       "description": "the purchase order type",

@@ -45,7 +45,7 @@ namespace FolioLibrary
             providerName = ConfigurationManager.ConnectionStrings[name].ProviderName;
             connectionString = ConfigurationManager.ConnectionStrings[name].ConnectionString;
             databaseName = Regex.Match(connectionString, @"(?i);?Database=(?<Database>\w+)").Groups["Database"].Value;
-            Database.SetCommandTimeout(180);
+            Database.SetCommandTimeout(30);
         }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)

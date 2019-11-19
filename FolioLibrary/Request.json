@@ -45,6 +45,7 @@
         "Open - Not yet filled",
         "Open - Awaiting pickup",
         "Open - In transit",
+        "Open - Awaiting delivery",
         "Closed - Filled",
         "Closed - Cancelled",
         "Closed - Unfilled",
