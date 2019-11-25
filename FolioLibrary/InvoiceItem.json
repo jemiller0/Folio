@@ -5,7 +5,7 @@
   "additionalProperties": false,
   "properties": {
     "id": {
-      "description": "UUID of this invoice line",
+      "description": "The UUID format string",
       "type": "string",
       "pattern": "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-5][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}$"
     },
@@ -26,7 +26,7 @@
         "additionalProperties": false,
         "properties": {
           "id": {
-            "description": "UUID of this adjustment",
+            "description": "The UUID format string",
             "type": "string",
             "pattern": "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-5][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}$"
           },
@@ -58,10 +58,14 @@
                   "pattern": "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-5][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}$"
                 },
                 "fundId": {
-                  "$ref": "#/properties/adjustments/items/properties/fundDistributions/items/properties/encumbrance"
+                  "description": "The UUID format string",
+                  "type": "string",
+                  "pattern": "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-5][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}$"
                 },
                 "invoiceLineId": {
-                  "$ref": "#/properties/adjustments/items/properties/fundDistributions/items/properties/encumbrance"
+                  "description": "The UUID format string",
+                  "type": "string",
+                  "pattern": "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-5][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}$"
                 },
                 "distributionType": {
                   "description": "Percentage or amount type of the value property",
@@ -147,9 +151,7 @@
       }
     },
     "invoiceId": {
-      "description": "UUID of this parent invoice",
-      "type": "string",
-      "pattern": "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-5][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}$"
+      "$ref": "#/properties/id"
     },
     "invoiceLineNumber": {
       "description": "Sequentially generated and not editable by the user.",
@@ -168,9 +170,7 @@
       ]
     },
     "poLineId": {
-      "description": "UUID of the corresponding purchase order line this invoice line is based on",
-      "type": "string",
-      "pattern": "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-5][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}$"
+      "$ref": "#/properties/id"
     },
     "productId": {
       "description": "product identifier",

@@ -5,7 +5,7 @@
   "additionalProperties": false,
   "properties": {
     "id": {
-      "description": "UUID of this invoice",
+      "description": "The UUID format string",
       "type": "string",
       "pattern": "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-5][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}$"
     },
@@ -22,7 +22,7 @@
         "additionalProperties": false,
         "properties": {
           "id": {
-            "description": "UUID of this adjustment",
+            "description": "The UUID format string",
             "type": "string",
             "pattern": "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-5][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}$"
           },
@@ -54,10 +54,14 @@
                   "pattern": "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-5][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}$"
                 },
                 "fundId": {
-                  "$ref": "#/properties/adjustments/items/properties/fundDistributions/items/properties/encumbrance"
+                  "description": "The UUID format string",
+                  "type": "string",
+                  "pattern": "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-5][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}$"
                 },
                 "invoiceLineId": {
-                  "$ref": "#/properties/adjustments/items/properties/fundDistributions/items/properties/encumbrance"
+                  "description": "The UUID format string",
+                  "type": "string",
+                  "pattern": "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-5][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}$"
                 },
                 "distributionType": {
                   "description": "Percentage or amount type of the value property",
@@ -128,9 +132,7 @@
       "type": "number"
     },
     "approvedBy": {
-      "description": "UUID of user that approved this invoice",
-      "type": "string",
-      "pattern": "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-5][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}$"
+      "$ref": "#/properties/id"
     },
     "approvalDate": {
       "description": "Date the invoice was approved for processing",
@@ -138,9 +140,7 @@
       "format": "date-time"
     },
     "billTo": {
-      "description": "UUID of the billing address",
-      "type": "string",
-      "pattern": "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-5][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}$"
+      "$ref": "#/properties/id"
     },
     "chkSubscriptionOverlap": {
       "description": "IF TRUE the system will check if there is another invoice for this subscription and whether the dates overlap. IF the dates overlap, the system should issue an alert.",
@@ -227,9 +227,7 @@
       "type": "string"
     },
     "paymentId": {
-      "description": "Id of payment",
-      "type": "string",
-      "pattern": "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-5][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}$"
+      "$ref": "#/properties/id"
     },
     "disbursementDate": {
       "description": "Date payment was made from financial system (eg. corresponding check date)",
@@ -243,13 +241,11 @@
       "items": {
         "description": "A human readable ID assigned to this purchase order",
         "type": "string",
-        "pattern": "^[a-zA-Z0-9]{5,16}$"
+        "pattern": "^[a-zA-Z0-9]{1,16}$"
       }
     },
     "vendorId": {
-      "description": "UUID of vendor",
-      "type": "string",
-      "pattern": "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-5][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}$"
+      "$ref": "#/properties/id"
     },
     "manualPayment": {
       "description": "This would keep the invoice from being feed into the batch process (Not generate a external voucher/payment) but would still move values in the system. Note: this is ideally defined by the vendor relationship and exposed for override on the invoice.",
@@ -259,9 +255,7 @@
       "description": "acquisition unit ids associated with this invoice",
       "type": "array",
       "items": {
-        "description": "The UUID format string",
-        "type": "string",
-        "pattern": "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-5][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}$"
+        "$ref": "#/properties/id"
       }
     },
     "metadata": {
