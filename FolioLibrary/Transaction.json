@@ -28,15 +28,18 @@
       "properties": {
         "amountAwaitingPayment": {
           "description": "The amount of awaiting for payment",
-          "type": "number"
+          "type": "number",
+          "default": 0
         },
         "amountExpended": {
           "description": "The amount currently expended by this encumbrance",
-          "type": "number"
+          "type": "number",
+          "default": 0
         },
         "initialAmountEncumbered": {
           "description": "The initial amount of this encumbrance. Shouldn't change once create",
-          "type": "number"
+          "type": "number",
+          "default": 0
         },
         "status": {
           "description": "The status of this encumbrance",

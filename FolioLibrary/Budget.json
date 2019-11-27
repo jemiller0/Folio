@@ -26,43 +26,53 @@
     },
     "allowableEncumbrance": {
       "description": "The encumbrance percentage limit for this budget",
-      "type": "number"
+      "type": "number",
+      "default": 0
     },
     "allowableExpenditure": {
       "description": "The expenditure percentage limit for this budget",
-      "type": "number"
+      "type": "number",
+      "default": 0
     },
     "allocated": {
       "description": "The amount currently allocated to this budget",
-      "type": "number"
+      "type": "number",
+      "default": 0
     },
     "awaitingPayment": {
       "description": "The amount currently awaiting payment for this budget",
-      "type": "number"
+      "type": "number",
+      "default": 0
     },
     "available": {
       "description": "The amount currently available for this budge",
-      "type": "number"
+      "type": "number",
+      "default": 0
     },
     "encumbered": {
       "description": "The amount currently encumbered for this budget",
-      "type": "number"
+      "type": "number",
+      "default": 0
     },
     "expenditures": {
       "description": "The amount currently expended for this budget",
-      "type": "number"
+      "type": "number",
+      "default": 0
     },
     "unavailable": {
       "description": "Unavailable amount for this budget",
-      "type": "number"
+      "type": "number",
+      "default": 0
     },
     "overEncumbrance": {
       "description": "The amount currently over-encumbered for this budget",
-      "type": "number"
+      "type": "number",
+      "default": 0
     },
     "overExpended": {
       "description": "Amount the budget is over expended.",
-      "type": "number"
+      "type": "number",
+      "default": 0
     },
     "fundId": {
       "$ref": "#/properties/id"
