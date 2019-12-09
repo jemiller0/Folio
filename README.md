@@ -7,7 +7,7 @@ This project includes a console application that can be used to load and save da
 ## Requirements
 
 * Git https://git-scm.com/
-* .NET Core 3.0 SDK https://dotnet.microsoft.com/download
+* .NET Core 3.1 SDK https://dotnet.microsoft.com/download
 
 ## Optional
 
@@ -32,7 +32,7 @@ dotnet build
 Run the application without specifying any arguments for the first time to generate default configuration files and see the command-line options.
 
 ```
-cd FolioConsoleApplication/bin/Debug/netcoreapp3.0
+cd FolioConsoleApplication/bin/Debug/netcoreapp3.1
 dotnet FolioConsoleApplication.dll
 ```
 
