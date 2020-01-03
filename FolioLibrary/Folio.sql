@@ -450,20 +450,6 @@ CAST(jsonb#>>'{metadata,updatedByUserId}' AS UUID) AS updated_by_user_id,
 jsonb#>>'{metadata,updatedByUsername}' AS updated_by_username,
 jsonb_pretty(jsonb) AS content
 FROM diku_mod_inventory_storage.electronic_access_relationship;
-CREATE VIEW uc.encumbrances AS
-SELECT
-id AS id,
-CAST(jsonb->>'amountAwaitingPayment' AS DECIMAL(19,2)) AS amount_awaiting_payment,
-CAST(jsonb->>'amountExpended' AS DECIMAL(19,2)) AS amount_expended,
-CAST(jsonb->>'initialAmountEncumbered' AS DECIMAL(19,2)) AS initial_amount_encumbered,
-jsonb->>'status' AS status,
-jsonb->>'orderType' AS order_type,
-CAST(jsonb->>'subscription' AS BOOLEAN) AS subscription,
-CAST(jsonb->>'reEncumber' AS BOOLEAN) AS re_encumber,
-CAST(jsonb->>'sourcePurchaseOrderId' AS UUID) AS source_purchase_order_id,
-CAST(jsonb->>'sourcePoLineId' AS UUID) AS source_po_line_id,
-jsonb_pretty(jsonb) AS content
-FROM diku_mod_finance_storage.encumbrance;
 CREATE VIEW uc.error_records AS
 SELECT
 _id AS id,
@@ -509,6 +495,7 @@ id AS id,
 uc.TIMESTAMP_CAST(jsonb->>'dateAction') AS date_action,
 jsonb->>'typeAction' AS type_action,
 jsonb->>'comments' AS comments,
+CAST(jsonb->>'notify' AS BOOLEAN) AS notify,
 CAST(jsonb->>'amountAction' AS DECIMAL(19,2)) AS amount_action,
 CAST(jsonb->>'balance' AS DECIMAL(19,2)) AS balance,
 jsonb->>'transactionInformation' AS transaction_information,
@@ -519,6 +506,27 @@ CAST(jsonb->>'accountId' AS UUID) AS account_id,
 CAST(jsonb->>'userId' AS UUID) AS user_id,
 jsonb_pretty(jsonb) AS content
 FROM diku_mod_feesfines.feefineactions;
+CREATE VIEW uc.finance_group_acquisitions_units AS
+SELECT
+id AS id,
+finance_group_id AS finance_group_id,
+CAST(jsonb AS UUID) AS acquisitions_unit_id
+FROM (SELECT id::text || ordinality::text AS id, id AS finance_group_id, value AS jsonb FROM diku_mod_finance_storage.groups, jsonb_array_elements_text((jsonb->>'acqUnitIds')::jsonb) WITH ORDINALITY) a;
+CREATE VIEW uc.finance_groups AS
+SELECT
+id AS id,
+jsonb->>'code' AS code,
+jsonb->>'description' AS description,
+jsonb->>'name' AS name,
+jsonb->>'status' AS status,
+uc.TIMESTAMP_CAST(jsonb#>>'{metadata,createdDate}') AS created_date,
+CAST(jsonb#>>'{metadata,createdByUserId}' AS UUID) AS created_by_user_id,
+jsonb#>>'{metadata,createdByUsername}' AS created_by_username,
+uc.TIMESTAMP_CAST(jsonb#>>'{metadata,updatedDate}') AS updated_date,
+CAST(jsonb#>>'{metadata,updatedByUserId}' AS UUID) AS updated_by_user_id,
+jsonb#>>'{metadata,updatedByUsername}' AS updated_by_username,
+jsonb_pretty(jsonb) AS content
+FROM diku_mod_finance_storage.groups;
 CREATE VIEW uc.fiscal_year_acquisitions_units AS
 SELECT
 id AS id,
@@ -617,6 +625,12 @@ CAST(jsonb->>'sourceId' AS UUID) AS source_id,
 CAST(jsonb->>'budgetId' AS UUID) AS budget_id,
 jsonb_pretty(jsonb) AS content
 FROM diku_mod_finance_storage.fund_distribution;
+CREATE VIEW uc.fund_types AS
+SELECT
+id AS id,
+jsonb->>'name' AS name,
+jsonb_pretty(jsonb) AS content
+FROM diku_mod_finance_storage.fund_type;
 CREATE VIEW uc.groups AS
 SELECT
 id AS id,
@@ -630,6 +644,15 @@ CAST(jsonb#>>'{metadata,updatedByUserId}' AS UUID) AS updated_by_user_id,
 jsonb#>>'{metadata,updatedByUsername}' AS updated_by_username,
 jsonb_pretty(jsonb) AS content
 FROM diku_mod_users.groups;
+CREATE VIEW uc.group_fund_fiscal_years AS
+SELECT
+id AS id,
+CAST(jsonb->>'budgetId' AS UUID) AS budget_id,
+CAST(jsonb->>'groupId' AS UUID) AS group_id,
+CAST(jsonb->>'fiscalYearId' AS UUID) AS fiscal_year_id,
+CAST(jsonb->>'fundId' AS UUID) AS fund_id,
+jsonb_pretty(jsonb) AS content
+FROM diku_mod_finance_storage.group_fund_fiscal_year;
 CREATE VIEW uc.holding_former_ids AS
 SELECT
 id AS id,
@@ -758,6 +781,18 @@ CAST(jsonb#>>'{metadata,updatedByUserId}' AS UUID) AS updated_by_user_id,
 jsonb#>>'{metadata,updatedByUsername}' AS updated_by_username,
 jsonb_pretty(jsonb) AS content
 FROM diku_mod_inventory_storage.holdings_type;
+CREATE VIEW uc.hrid_settings AS
+SELECT
+id AS id,
+jsonb#>>'{instances,prefix}' AS instances_prefix,
+CAST(jsonb#>>'{instances,startNumber}' AS INTEGER) AS instances_start_number,
+jsonb#>>'{holdings,prefix}' AS holdings_prefix,
+CAST(jsonb#>>'{holdings,startNumber}' AS INTEGER) AS holdings_start_number,
+jsonb#>>'{items,prefix}' AS items_prefix,
+CAST(jsonb#>>'{items,startNumber}' AS INTEGER) AS items_start_number,
+jsonb_pretty(jsonb) AS content,
+lock AS lock
+FROM diku_mod_inventory_storage.hrid_settings;
 CREATE VIEW uc.id_types AS
 SELECT
 id AS id,
@@ -914,7 +949,7 @@ id AS id,
 CAST(SUBSTRING(jsonb->>'hrid' FROM 3) AS INTEGER) AS hrid,
 jsonb->>'source' AS source,
 jsonb->>'title' AS title,
-jsonb->'contributors'->0->>'name' AS author,
+jsonb#>>'{contributors,0,name}' AS author,
 jsonb->>'indexTitle' AS index_title,
 CAST(jsonb->>'instanceTypeId' AS UUID) AS instance_type_id,
 CAST(jsonb->>'modeOfIssuanceId' AS UUID) AS mode_of_issuance_id,
@@ -1367,7 +1402,7 @@ FROM diku_mod_inventory_storage.item_note_type;
 CREATE VIEW uc.job_executions AS
 SELECT
 _id AS id,
-CAST(jsonb->>'hrId' AS UUID) AS hr_id,
+jsonb->>'hrId' AS hr_id,
 CAST(jsonb->>'parentJobId' AS UUID) AS parent_job_id,
 jsonb->>'subordinationType' AS subordination_type,
 jsonb#>>'{jobProfileInfo,name}' AS job_profile_info_name,
@@ -1415,6 +1450,8 @@ CAST(jsonb->>'allocated' AS DECIMAL(19,2)) AS allocated,
 CAST(jsonb->>'available' AS DECIMAL(19,2)) AS available,
 CAST(jsonb->>'unavailable' AS DECIMAL(19,2)) AS unavailable,
 jsonb->>'currency' AS currency,
+CAST(jsonb->>'restrictEncumbrance' AS BOOLEAN) AS restrict_encumbrance,
+CAST(jsonb->>'restrictExpenditures' AS BOOLEAN) AS restrict_expenditures,
 uc.TIMESTAMP_CAST(jsonb#>>'{metadata,createdDate}') AS created_date,
 CAST(jsonb#>>'{metadata,createdByUserId}' AS UUID) AS created_by_user_id,
 jsonb#>>'{metadata,createdByUsername}' AS created_by_username,
@@ -1423,6 +1460,17 @@ CAST(jsonb#>>'{metadata,updatedByUserId}' AS UUID) AS updated_by_user_id,
 jsonb#>>'{metadata,updatedByUsername}' AS updated_by_username,
 jsonb_pretty(jsonb) AS content
 FROM diku_mod_finance_storage.ledger;
+CREATE VIEW uc.ledger_fiscal_years AS
+SELECT
+id AS id,
+CAST(jsonb->>'ledgerId' AS UUID) AS ledger_id,
+CAST(jsonb->>'fiscalYearId' AS UUID) AS fiscal_year_id,
+CAST(jsonb->>'allocated' AS DECIMAL(19,2)) AS allocated,
+CAST(jsonb->>'available' AS DECIMAL(19,2)) AS available,
+CAST(jsonb->>'unavailable' AS DECIMAL(19,2)) AS unavailable,
+jsonb->>'currency' AS currency,
+jsonb_pretty(jsonb) AS content
+FROM diku_mod_finance_storage.ledgerfy;
 CREATE VIEW uc.libraries AS
 SELECT
 id AS id,
@@ -1460,6 +1508,8 @@ CAST(jsonb->>'checkinServicePointId' AS UUID) AS checkin_service_point_id,
 CAST(jsonb->>'patronGroupIdAtCheckout' AS UUID) AS group_id,
 CAST(jsonb->>'dueDateChangedByRecall' AS BOOLEAN) AS due_date_changed_by_recall,
 uc.TIMESTAMP_CAST(jsonb->>'declaredLostDate') AS declared_lost_date,
+CAST(jsonb->>'overdueFinePolicyId' AS UUID) AS overdue_fine_policy_id,
+CAST(jsonb->>'lostItemPolicyId' AS UUID) AS lost_item_policy_id,
 uc.TIMESTAMP_CAST(jsonb#>>'{metadata,createdDate}') AS created_date,
 CAST(jsonb#>>'{metadata,createdByUserId}' AS UUID) AS created_by_user_id,
 jsonb#>>'{metadata,createdByUsername}' AS created_by_username,
@@ -1891,6 +1941,12 @@ jsonb->>'templateCode' AS template_code,
 jsonb->>'templateDescription' AS template_description,
 jsonb_pretty(jsonb) AS content
 FROM diku_mod_orders_storage.order_templates;
+CREATE VIEW uc.order_transaction_summaries AS
+SELECT
+id AS id,
+CAST(jsonb->>'numTransactions' AS INTEGER) AS num_transactions,
+jsonb_pretty(jsonb) AS content
+FROM diku_mod_finance_storage.order_transaction_summaries;
 CREATE VIEW uc.organization_aliases AS
 SELECT
 id AS id,
@@ -2160,6 +2216,20 @@ CAST(jsonb#>>'{metadata,updatedByUserId}' AS UUID) AS updated_by_user_id,
 jsonb#>>'{metadata,updatedByUsername}' AS updated_by_username,
 jsonb_pretty(jsonb) AS content
 FROM diku_mod_feesfines.owners;
+CREATE VIEW uc.patron_action_sessions AS
+SELECT
+id AS id,
+CAST(jsonb->>'patronId' AS UUID) AS patron_id,
+CAST(jsonb->>'loanId' AS UUID) AS loan_id,
+jsonb->>'actionType' AS action_type,
+uc.TIMESTAMP_CAST(jsonb#>>'{metadata,createdDate}') AS created_date,
+CAST(jsonb#>>'{metadata,createdByUserId}' AS UUID) AS created_by_user_id,
+jsonb#>>'{metadata,createdByUsername}' AS created_by_username,
+uc.TIMESTAMP_CAST(jsonb#>>'{metadata,updatedDate}') AS updated_date,
+CAST(jsonb#>>'{metadata,updatedByUserId}' AS UUID) AS updated_by_user_id,
+jsonb#>>'{metadata,updatedByUsername}' AS updated_by_username,
+jsonb_pretty(jsonb) AS content
+FROM diku_mod_circulation_storage.patron_action_session;
 CREATE VIEW uc.patron_notice_policy_loan_notices AS
 SELECT
 id AS id,
@@ -2703,6 +2773,23 @@ jsonb#>>'{metadata,updatedByUsername}' AS updated_by_username,
 jsonb_pretty(jsonb) AS content,
 acquisitionsunitid AS acquisitionsunitid
 FROM diku_mod_orders_storage.acquisitions_unit_membership;
+CREATE VIEW uc.user_request_preferences AS
+SELECT
+id AS id,
+CAST(jsonb->>'userId' AS UUID) AS user_id,
+CAST(jsonb->>'holdShelf' AS BOOLEAN) AS hold_shelf,
+CAST(jsonb->>'delivery' AS BOOLEAN) AS delivery,
+CAST(jsonb->>'defaultServicePointId' AS UUID) AS default_service_point_id,
+CAST(jsonb->>'defaultDeliveryAddressTypeId' AS UUID) AS default_delivery_address_type_id,
+jsonb->>'fulfillment' AS fulfillment,
+uc.TIMESTAMP_CAST(jsonb#>>'{metadata,createdDate}') AS created_date,
+CAST(jsonb#>>'{metadata,createdByUserId}' AS UUID) AS created_by_user_id,
+jsonb#>>'{metadata,createdByUsername}' AS created_by_username,
+uc.TIMESTAMP_CAST(jsonb#>>'{metadata,updatedDate}') AS updated_date,
+CAST(jsonb#>>'{metadata,updatedByUserId}' AS UUID) AS updated_by_user_id,
+jsonb#>>'{metadata,updatedByUsername}' AS updated_by_username,
+jsonb_pretty(jsonb) AS content
+FROM diku_mod_circulation_storage.user_request_preference;
 CREATE VIEW uc.voucher_acquisitions_units AS
 SELECT
 id AS id,

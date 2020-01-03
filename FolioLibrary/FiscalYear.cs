@@ -38,6 +38,21 @@ namespace FolioLibrary
         [ScaffoldColumn(false)]
         public virtual ICollection<Budget> Budgets { get; set; }
 
+        [ScaffoldColumn(false)]
+        public virtual ICollection<GroupFundFiscalYear> GroupFundFiscalYears { get; set; }
+
+        [ScaffoldColumn(false)]
+        public virtual ICollection<LedgerFiscalYear> LedgerFiscalYears { get; set; }
+
+        [ScaffoldColumn(false)]
+        public virtual ICollection<Ledger> Ledgers { get; set; }
+
+        [ScaffoldColumn(false)]
+        public virtual ICollection<Transaction> Transactions { get; set; }
+
+        [ScaffoldColumn(false)]
+        public virtual ICollection<Transaction> Transactions1 { get; set; }
+
         public override string ToString() => $"{{ {nameof(Id)} = {Id}, {nameof(Content)} = {Content}, {nameof(CreationTime)} = {CreationTime}, {nameof(CreationUserId)} = {CreationUserId} }}";
     }
 }

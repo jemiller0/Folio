@@ -5,12 +5,9 @@
   "additionalProperties": false,
   "properties": {
     "id": {
-      "description": "The unique id of this contact",
-      "type": [
-        "string",
-        "null"
-      ],
-      "pattern": "^[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12}$"
+      "description": "The UUID format string",
+      "type": "string",
+      "pattern": "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-5][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}$"
     },
     "prefix": {
       "description": "The prefix for this contact person",
@@ -42,12 +39,9 @@
         "additionalProperties": false,
         "properties": {
           "id": {
-            "description": "UUID",
-            "type": [
-              "string",
-              "null"
-            ],
-            "pattern": "^[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12}$"
+            "description": "The UUID format string",
+            "type": "string",
+            "pattern": "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-5][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}$"
           },
           "phoneNumber": {
             "description": "The entire sequence of digits for this phone number",
@@ -134,12 +128,9 @@
         "additionalProperties": false,
         "properties": {
           "id": {
-            "description": "The unique id of this email",
-            "type": [
-              "string",
-              "null"
-            ],
-            "pattern": "^[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12}$"
+            "description": "The UUID format string",
+            "type": "string",
+            "pattern": "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-5][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}$"
           },
           "value": {
             "description": "The value for this email",
@@ -184,12 +175,9 @@
         "additionalProperties": false,
         "properties": {
           "id": {
-            "description": "UUID",
-            "type": [
-              "string",
-              "null"
-            ],
-            "pattern": "^[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12}$"
+            "description": "The UUID format string",
+            "type": "string",
+            "pattern": "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-5][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}$"
           },
           "addressLine1": {
             "description": "The first line of this address",
@@ -247,12 +235,9 @@
         "additionalProperties": false,
         "properties": {
           "id": {
-            "description": "The unique id of this url",
-            "type": [
-              "string",
-              "null"
-            ],
-            "pattern": "^[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12}$"
+            "description": "The UUID format string",
+            "type": "string",
+            "pattern": "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-5][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}$"
           },
           "value": {
             "description": "The value for this URL",
@@ -297,9 +282,9 @@
       "description": "The list of contact categories associated with this organization contact person",
       "type": "array",
       "items": {
-        "description": "UUID of the contact category",
+        "description": "The UUID format string",
         "type": "string",
-        "pattern": "^[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12}$"
+        "pattern": "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-5][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}$"
       }
     },
     "inactive": {

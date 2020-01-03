@@ -5,12 +5,9 @@
   "additionalProperties": false,
   "properties": {
     "id": {
-      "description": "The unique UUID for this organization",
-      "type": [
-        "string",
-        "null"
-      ],
-      "pattern": "^[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12}$"
+      "description": "The UUID format string",
+      "type": "string",
+      "pattern": "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-5][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}$"
     },
     "name": {
       "description": "The name of this organization",
@@ -70,12 +67,9 @@
         "additionalProperties": false,
         "properties": {
           "id": {
-            "description": "UUID",
-            "type": [
-              "string",
-              "null"
-            ],
-            "pattern": "^[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12}$"
+            "description": "The UUID format string",
+            "type": "string",
+            "pattern": "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-5][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}$"
           },
           "addressLine1": {
             "description": "The first line of this address",
@@ -169,12 +163,9 @@
         "additionalProperties": false,
         "properties": {
           "id": {
-            "description": "UUID",
-            "type": [
-              "string",
-              "null"
-            ],
-            "pattern": "^[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12}$"
+            "description": "The UUID format string",
+            "type": "string",
+            "pattern": "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-5][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}$"
           },
           "phoneNumber": {
             "description": "The entire sequence of digits for this phone number",
@@ -225,12 +216,9 @@
         "additionalProperties": false,
         "properties": {
           "id": {
-            "description": "The unique id of this email",
-            "type": [
-              "string",
-              "null"
-            ],
-            "pattern": "^[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12}$"
+            "description": "The UUID format string",
+            "type": "string",
+            "pattern": "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-5][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}$"
           },
           "value": {
             "description": "The value for this email",
@@ -275,12 +263,9 @@
         "additionalProperties": false,
         "properties": {
           "id": {
-            "description": "The unique id of this url",
-            "type": [
-              "string",
-              "null"
-            ],
-            "pattern": "^[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12}$"
+            "description": "The UUID format string",
+            "type": "string",
+            "pattern": "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-5][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}$"
           },
           "value": {
             "description": "The value for this URL",
@@ -325,7 +310,7 @@
       "description": "An array of contact record IDs",
       "type": "array",
       "items": {
-        "description": "UUID of a contact record",
+        "description": "The UUID format string",
         "type": "string",
         "pattern": "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-5][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}$"
       }
@@ -636,7 +621,7 @@
       "description": "The list of interfaces assigned to this organization",
       "type": "array",
       "items": {
-        "description": "UUID of an interface record",
+        "description": "The UUID format string",
         "type": "string",
         "pattern": "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-5][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}$"
       }
@@ -714,7 +699,8 @@
     "isVendor": {
       "id": "isVendor",
       "description": "Used to indicate that this organization is also a vendor",
-      "type": "boolean"
+      "type": "boolean",
+      "default": false
     },
     "sanCode": {
       "description": "The SAN code for this organization address",

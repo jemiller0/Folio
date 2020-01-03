@@ -18,6 +18,10 @@
       "description": "Additional information entered as part of the activity or on this screen as a 'Staff info only' activity",
       "type": "string"
     },
+    "notify": {
+      "description": "A flag to determine if a patron should be notified or not",
+      "type": "boolean"
+    },
     "amountAction": {
       "description": "Amount of activity",
       "type": "number"

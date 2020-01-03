@@ -34,12 +34,30 @@ namespace FolioLibrary
         [Column("created_by"), Display(Name = "Creation User Id", Order = 4), Editable(false)]
         public virtual string CreationUserId { get; set; }
 
-        [Display(Order = 5)]
-        public virtual Budget Budget { get; set; }
+        [Display(Name = "Fiscal Year", Order = 5), InverseProperty("Transactions")]
+        public virtual FiscalYear FiscalYear { get; set; }
 
-        [Column("budgetid"), Display(Name = "Budget", Order = 6), Editable(false), ForeignKey("Budget")]
-        public virtual Guid? Budgetid { get; set; }
+        [Column("fiscalyearid"), Display(Name = "Fiscal Year", Order = 6), Editable(false), ForeignKey("FiscalYear")]
+        public virtual Guid? Fiscalyearid { get; set; }
 
-        public override string ToString() => $"{{ {nameof(Id)} = {Id}, {nameof(Content)} = {Content}, {nameof(CreationTime)} = {CreationTime}, {nameof(CreationUserId)} = {CreationUserId}, {nameof(Budgetid)} = {Budgetid} }}";
+        [Column("fromfundid"), Display(Name = "Fund", Order = 7), Editable(false), ForeignKey("Fund")]
+        public virtual Guid? Fromfundid { get; set; }
+
+        [Display(Order = 8), InverseProperty("Transactions")]
+        public virtual Fund Fund { get; set; }
+
+        [Display(Name = "Fiscal Year 1", Order = 9), InverseProperty("Transactions1")]
+        public virtual FiscalYear FiscalYear1 { get; set; }
+
+        [Column("sourcefiscalyearid"), Display(Name = "Fiscal Year 1", Order = 10), Editable(false), ForeignKey("FiscalYear1")]
+        public virtual Guid? Sourcefiscalyearid { get; set; }
+
+        [Display(Name = "Fund 1", Order = 11), InverseProperty("Transactions1")]
+        public virtual Fund Fund1 { get; set; }
+
+        [Column("tofundid"), Display(Name = "Fund 1", Order = 12), Editable(false), ForeignKey("Fund1")]
+        public virtual Guid? Tofundid { get; set; }
+
+        public override string ToString() => $"{{ {nameof(Id)} = {Id}, {nameof(Content)} = {Content}, {nameof(CreationTime)} = {CreationTime}, {nameof(CreationUserId)} = {CreationUserId}, {nameof(Fiscalyearid)} = {Fiscalyearid}, {nameof(Fromfundid)} = {Fromfundid}, {nameof(Sourcefiscalyearid)} = {Sourcefiscalyearid}, {nameof(Tofundid)} = {Tofundid} }}";
     }
 }

@@ -27,19 +27,22 @@
     <None Remove="ContributorType.json" />
     <None Remove="Document.json" />
     <None Remove="ElectronicAccessRelationship.json" />
-    <None Remove="Encumbrance.json" />
     <None Remove="ErrorRecord.json" />
     <None Remove="EventLog.json" />
     <None Remove="Fee.json" />
     <None Remove="FeeAction.json" />
+    <None Remove="FinanceGroup.json" />
     <None Remove="FiscalYear.json" />
     <None Remove="FixedDueDateSchedule.json" />
     <None Remove="Fund.json" />
     <None Remove="FundDistribution.json" />
+    <None Remove="FundType.json" />
     <None Remove="Group.json" />
+    <None Remove="GroupFundFiscalYear.json" />
     <None Remove="Holding.json" />
     <None Remove="HoldingNoteType.json" />
     <None Remove="HoldingType.json" />
+    <None Remove="HridSetting.json" />
     <None Remove="IdType.json" />
     <None Remove="IllPolicy.json" />
     <None Remove="Instance.json" />
@@ -61,6 +64,7 @@
     <None Remove="JobExecution.json" />
     <None Remove="JobExecutionSourceChunk.json" />
     <None Remove="Ledger.json" />
+    <None Remove="LedgerFiscalYear.json" />
     <None Remove="Library.json" />
     <None Remove="Loan.json" />
     <None Remove="LoanPolicy.json" />
@@ -73,13 +77,16 @@
     <None Remove="ModeOfIssuance.json" />
     <None Remove="NatureOfContentTerm.json" />
     <None Remove="Note.json" />
+    <None Remove="NoteType.json" />
     <None Remove="Order.json" />
     <None Remove="OrderInvoice.json" />
     <None Remove="OrderItem.json" />
     <None Remove="OrderTemplate.json" />
+    <None Remove="OrderTransactionSummary.json" />
     <None Remove="Organization.json" />
     <None Remove="OverdueFinePolicy.json" />
     <None Remove="Owner.json" />
+    <None Remove="PatronActionSession.json" />
     <None Remove="PatronNoticePolicy.json" />
     <None Remove="Payment.json" />
     <None Remove="Permission.json" />
@@ -105,6 +112,7 @@
     <None Remove="TransferCriteria.json" />
     <None Remove="User.json" />
     <None Remove="UserAcquisitionsUnit.json" />
+    <None Remove="UserRequestPreference.json" />
     <None Remove="Voucher.json" />
     <None Remove="VoucherItem.json" />
     <None Remove="Waive.json" />
@@ -132,19 +140,22 @@
     <EmbeddedResource Include="ContributorType.json" />
     <EmbeddedResource Include="Document.json" />
     <EmbeddedResource Include="ElectronicAccessRelationship.json" />
-    <EmbeddedResource Include="Encumbrance.json" />
     <EmbeddedResource Include="ErrorRecord.json" />
     <EmbeddedResource Include="EventLog.json" />
     <EmbeddedResource Include="Fee.json" />
     <EmbeddedResource Include="FeeAction.json" />
+    <EmbeddedResource Include="FinanceGroup.json" />
     <EmbeddedResource Include="FiscalYear.json" />
     <EmbeddedResource Include="FixedDueDateSchedule.json" />
     <EmbeddedResource Include="Fund.json" />
     <EmbeddedResource Include="FundDistribution.json" />
+    <EmbeddedResource Include="FundType.json" />
     <EmbeddedResource Include="Group.json" />
+    <EmbeddedResource Include="GroupFundFiscalYear.json" />
     <EmbeddedResource Include="Holding.json" />
     <EmbeddedResource Include="HoldingNoteType.json" />
     <EmbeddedResource Include="HoldingType.json" />
+    <EmbeddedResource Include="HridSetting.json" />
     <EmbeddedResource Include="IdType.json" />
     <EmbeddedResource Include="IllPolicy.json" />
     <EmbeddedResource Include="Instance.json" />
@@ -166,6 +177,7 @@
     <EmbeddedResource Include="JobExecution.json" />
     <EmbeddedResource Include="JobExecutionSourceChunk.json" />
     <EmbeddedResource Include="Ledger.json" />
+    <EmbeddedResource Include="LedgerFiscalYear.json" />
     <EmbeddedResource Include="Library.json" />
     <EmbeddedResource Include="Loan.json" />
     <EmbeddedResource Include="LoanPolicy.json" />
@@ -178,13 +190,16 @@
     <EmbeddedResource Include="ModeOfIssuance.json" />
     <EmbeddedResource Include="NatureOfContentTerm.json" />
     <EmbeddedResource Include="Note.json" />
+    <EmbeddedResource Include="NoteType.json" />
     <EmbeddedResource Include="Order.json" />
     <EmbeddedResource Include="OrderInvoice.json" />
     <EmbeddedResource Include="OrderItem.json" />
     <EmbeddedResource Include="OrderTemplate.json" />
+    <EmbeddedResource Include="OrderTransactionSummary.json" />
     <EmbeddedResource Include="Organization.json" />
     <EmbeddedResource Include="OverdueFinePolicy.json" />
     <EmbeddedResource Include="Owner.json" />
+    <EmbeddedResource Include="PatronActionSession.json" />
     <EmbeddedResource Include="PatronNoticePolicy.json" />
     <EmbeddedResource Include="Payment.json" />
     <EmbeddedResource Include="Permission.json" />
@@ -210,6 +225,7 @@
     <EmbeddedResource Include="TransferCriteria.json" />
     <EmbeddedResource Include="User.json" />
     <EmbeddedResource Include="UserAcquisitionsUnit.json" />
+    <EmbeddedResource Include="UserRequestPreference.json" />
     <EmbeddedResource Include="Voucher.json" />
     <EmbeddedResource Include="VoucherItem.json" />
     <EmbeddedResource Include="Waive.json" />
@@ -220,7 +236,7 @@
     <PackageReference Include="Microsoft.CSharp" Version="4.7.0" />
     <PackageReference Include="Newtonsoft.Json" Version="12.0.3" />
     <PackageReference Include="Newtonsoft.Json.Schema" Version="3.0.11" />
-    <PackageReference Include="NJsonSchema" Version="10.0.28" />
+    <PackageReference Include="NJsonSchema" Version="10.1.2" />
     <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="3.1.0" />
     <PackageReference Include="System.Configuration.ConfigurationManager" Version="4.7.0" />
   </ItemGroup>

@@ -1,6 +1,6 @@
 {
   "$schema": "http://json-schema.org/draft-04/schema#",
-  "description": "A financial ledger",
+  "description": "A group",
   "type": "object",
   "additionalProperties": false,
   "properties": {
@@ -9,65 +9,33 @@
       "type": "string",
       "pattern": "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-5][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}$"
     },
-    "name": {
-      "description": "The name of the ledger",
-      "type": "string"
-    },
-    "code": {
-      "description": "The code for the ledger",
-      "type": "string"
-    },
-    "description": {
-      "description": "The description of the ledger",
-      "type": "string"
-    },
-    "fiscalYearOneId": {
-      "$ref": "#/properties/id"
-    },
-    "ledgerStatus": {
-      "description": "The status of the ledger",
-      "type": "string",
-      "enum": [
-        "Active",
-        "Inactive",
-        "Frozen"
-      ]
-    },
-    "allocated": {
-      "description": "The amount currently allocated to this ledger",
-      "readonly": true,
-      "type": "number"
-    },
-    "available": {
-      "description": "The amount currently available in this ledger",
-      "readonly": true,
-      "type": "number"
-    },
-    "unavailable": {
-      "description": "The amount already utilized from the allocated amount",
-      "readonly": true,
-      "type": "number"
-    },
-    "currency": {
-      "description": "The ISO code for currency",
-      "type": "string"
-    },
     "acqUnitIds": {
-      "description": "acquisition unit ids associated with this ledger",
+      "description": "UUIDs of the acquisition units associated with this group",
       "type": "array",
       "items": {
         "$ref": "#/properties/id"
       }
     },
-    "restrictEncumbrance": {
-      "description": "If true, imposes restrictions on encumbrances",
-      "type": "boolean",
-      "default": true
+    "code": {
+      "description": "The code of the group",
+      "type": "string"
     },
-    "restrictExpenditures": {
-      "description": "If true, imposes restrictions on payments",
-      "type": "boolean",
-      "default": true
+    "description": {
+      "description": "The description of the group",
+      "type": "string"
+    },
+    "name": {
+      "description": "The name of the group",
+      "type": "string"
+    },
+    "status": {
+      "description": "The status of the group",
+      "type": "string",
+      "enum": [
+        "Active",
+        "Frozen",
+        "Inactive"
+      ]
     },
     "metadata": {
       "title": "Metadata Schema",
@@ -110,11 +78,8 @@
     }
   },
   "required": [
-    "name",
     "code",
-    "fiscalYearOneId",
-    "ledgerStatus",
-    "restrictEncumbrance",
-    "restrictExpenditures"
+    "name",
+    "status"
   ]
 }

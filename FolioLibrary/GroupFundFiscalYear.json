@@ -1,6 +1,6 @@
 {
   "$schema": "http://json-schema.org/draft-04/schema#",
-  "description": "An interface credential record",
+  "description": "A relationship between group and fund on a per fiscal year basis",
   "type": "object",
   "additionalProperties": false,
   "properties": {
@@ -9,21 +9,22 @@
       "type": "string",
       "pattern": "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-5][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}$"
     },
-    "username": {
-      "description": "The login username for this interface",
-      "type": "string"
+    "budgetId": {
+      "$ref": "#/properties/id"
     },
-    "password": {
-      "description": "The login password for this interface",
-      "type": "string"
+    "groupId": {
+      "$ref": "#/properties/id"
     },
-    "interfaceId": {
+    "fiscalYearId": {
+      "$ref": "#/properties/id"
+    },
+    "fundId": {
       "$ref": "#/properties/id"
     }
   },
   "required": [
-    "interfaceId",
-    "username",
-    "password"
+    "groupId",
+    "fiscalYearId",
+    "fundId"
   ]
 }

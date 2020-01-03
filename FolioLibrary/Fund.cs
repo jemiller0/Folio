@@ -41,12 +41,24 @@ namespace FolioLibrary
         [Column("ledgerid"), Display(Name = "Ledger", Order = 6), Editable(false)]
         public virtual Guid? LedgerId { get; set; }
 
+        [Display(Name = "Fund Type", Order = 7)]
+        public virtual FundType FundType { get; set; }
+
+        [Column("fundtypeid"), Display(Name = "Fund Type", Order = 8), Editable(false), ForeignKey("FundType")]
+        public virtual Guid? Fundtypeid { get; set; }
+
         [ScaffoldColumn(false)]
         public virtual ICollection<Budget> Budgets { get; set; }
 
         [ScaffoldColumn(false)]
-        public virtual ICollection<Encumbrance> Encumbrances { get; set; }
+        public virtual ICollection<GroupFundFiscalYear> GroupFundFiscalYears { get; set; }
 
-        public override string ToString() => $"{{ {nameof(Id)} = {Id}, {nameof(Content)} = {Content}, {nameof(CreationTime)} = {CreationTime}, {nameof(CreationUserId)} = {CreationUserId}, {nameof(LedgerId)} = {LedgerId} }}";
+        [ScaffoldColumn(false)]
+        public virtual ICollection<Transaction> Transactions { get; set; }
+
+        [ScaffoldColumn(false)]
+        public virtual ICollection<Transaction> Transactions1 { get; set; }
+
+        public override string ToString() => $"{{ {nameof(Id)} = {Id}, {nameof(Content)} = {Content}, {nameof(CreationTime)} = {CreationTime}, {nameof(CreationUserId)} = {CreationUserId}, {nameof(LedgerId)} = {LedgerId}, {nameof(Fundtypeid)} = {Fundtypeid} }}";
     }
 }
