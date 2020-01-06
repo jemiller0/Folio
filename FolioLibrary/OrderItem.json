@@ -185,11 +185,12 @@
           "description": "a list of product identifiers",
           "type": "array",
           "items": {
-            "description": "a product identifier",
+            "description": "Product identifier",
             "type": "object",
+            "additionalProperties": false,
             "properties": {
               "productId": {
-                "description": "the actual id",
+                "description": "The actual product identifier",
                 "type": "string"
               },
               "productIdType": {

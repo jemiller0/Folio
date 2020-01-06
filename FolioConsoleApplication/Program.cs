@@ -4808,6 +4808,7 @@ namespace FolioConsoleApplication
                 var js = new JsonSerializer();
                 jtr.Read();
                 var i = 0;
+                var l2 = new List<JObject>(1000);
                 while (jtr.Read() && jtr.TokenType != JsonToken.EndArray)
                 {
                     if (take != null && take <= i) break;
@@ -4820,9 +4821,11 @@ namespace FolioConsoleApplication
                     }
                     if (api)
                     {
-                        if (!whatIf) fsc.InsertHolding(jo);
-                        if (i % 100 == 0)
+                        l2.Add(jo);
+                        if (i % 1000 == 0)
                         {
+                            if (!whatIf) fsc.InsertHoldings(l2);
+                            l2.Clear();
                             traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
                             s2.Restart();
                         }
@@ -4853,6 +4856,7 @@ namespace FolioConsoleApplication
                         }
                     }
                 }
+                if (api && !whatIf && l2.Any()) fsc.InsertHoldings(l2);
                 fbcc.Commit();
                 traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
                 traceSource.TraceEvent(TraceEventType.Information, 0, $"Added {i} holdings");
@@ -5562,6 +5566,7 @@ namespace FolioConsoleApplication
                 var js = new JsonSerializer();
                 jtr.Read();
                 var i = 0;
+                var l2 = new List<JObject>(1000);
                 while (jtr.Read() && jtr.TokenType != JsonToken.EndArray)
                 {
                     if (take != null && take <= i) break;
@@ -5574,9 +5579,11 @@ namespace FolioConsoleApplication
                     }
                     if (api)
                     {
-                        if (!whatIf) fsc.InsertInstance(jo);
-                        if (i % 100 == 0)
+                        l2.Add(jo);
+                        if (i % 1000 == 0)
                         {
+                            if (!whatIf) fsc.InsertInstances(l2);
+                            l2.Clear();
                             traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
                             s2.Restart();
                         }
@@ -5604,6 +5611,7 @@ namespace FolioConsoleApplication
                         }
                     }
                 }
+                if (api && !whatIf && l2.Any()) fsc.InsertInstances(l2);
                 fbcc.Commit();
                 traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
                 traceSource.TraceEvent(TraceEventType.Information, 0, $"Added {i} instances");
@@ -7082,6 +7090,7 @@ namespace FolioConsoleApplication
                 var js = new JsonSerializer();
                 jtr.Read();
                 var i = 0;
+                var l2 = new List<JObject>(1000);
                 while (jtr.Read() && jtr.TokenType != JsonToken.EndArray)
                 {
                     if (take != null && take <= i) break;
@@ -7094,9 +7103,11 @@ namespace FolioConsoleApplication
                     }
                     if (api)
                     {
-                        if (!whatIf) fsc.InsertItem(jo);
-                        if (i % 100 == 0)
+                        l2.Add(jo);
+                        if (i % 1000 == 0)
                         {
+                            if (!whatIf) fsc.InsertItems(l2);
+                            l2.Clear();
                             traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
                             s2.Restart();
                         }
@@ -7127,6 +7138,7 @@ namespace FolioConsoleApplication
                         }
                     }
                 }
+                if (api && !whatIf && l2.Any()) fsc.InsertItems(l2);
                 fbcc.Commit();
                 traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
                 traceSource.TraceEvent(TraceEventType.Information, 0, $"Added {i} items");

@@ -2843,6 +2843,26 @@ namespace FolioLibrary
             return jo;
         }
 
+        public JObject InsertHoldings(IEnumerable<JObject> holdings)
+        {
+            var s = Stopwatch.StartNew();
+            foreach (var h in holdings) if (h["id"] == null) h["id"] = Guid.NewGuid();
+            traceSource.TraceEvent(TraceEventType.Verbose, 0, $"Inserting holdings {string.Join(", ", holdings.Select(h => h["id"]))}");
+            AuthenticateIfNecessary();
+            var url = $"{Url}/holdings-storage/batch/synchronous";
+            traceSource.TraceEvent(TraceEventType.Verbose, 0, url);
+            var s2 = new JObject(new JProperty("holdingsRecords", new JArray(holdings))).ToString(formatting);
+            traceSource.TraceEvent(TraceEventType.Verbose, 0, s2);
+            var sc = new StringContent(s2, Encoding.UTF8, "application/json");
+            var hrm = httpClient.PostAsync(url, sc).Result;
+            s2 = hrm.Content.ReadAsStringAsync().Result;
+            var jo = hrm.Content.Headers?.ContentType?.MediaType == "application/json" ? JObject.Parse(s2) : null;
+            traceSource.TraceEvent(TraceEventType.Verbose, 0, s2);
+            if (hrm.StatusCode != HttpStatusCode.Created) throw new HttpRequestException($"Response status code does not indicate success: {hrm.StatusCode} ({hrm.ReasonPhrase}).\r\n{s2}");
+            traceSource.TraceEvent(TraceEventType.Verbose, 0, s.Elapsed.ToString());
+            return jo;
+        }
+
         public void UpdateHolding(JObject holding)
         {
             var s = Stopwatch.StartNew();
@@ -3322,6 +3342,26 @@ namespace FolioLibrary
             var hrm = httpClient.PostAsync(url, sc).Result;
             s2 = hrm.Content.ReadAsStringAsync().Result;
             var jo = hrm.Content.Headers.ContentType.MediaType == "application/json" ? JObject.Parse(s2) : null;
+            traceSource.TraceEvent(TraceEventType.Verbose, 0, s2);
+            if (hrm.StatusCode != HttpStatusCode.Created) throw new HttpRequestException($"Response status code does not indicate success: {hrm.StatusCode} ({hrm.ReasonPhrase}).\r\n{s2}");
+            traceSource.TraceEvent(TraceEventType.Verbose, 0, s.Elapsed.ToString());
+            return jo;
+        }
+
+        public JObject InsertInstances(IEnumerable<JObject> instances)
+        {
+            var s = Stopwatch.StartNew();
+            foreach (var i in instances) if (i["id"] == null) i["id"] = Guid.NewGuid();
+            traceSource.TraceEvent(TraceEventType.Verbose, 0, $"Inserting instances {string.Join(", ", instances.Select(i => i["id"]))}");
+            AuthenticateIfNecessary();
+            var url = $"{Url}/instance-storage/batch/synchronous";
+            traceSource.TraceEvent(TraceEventType.Verbose, 0, url);
+            var s2 = new JObject(new JProperty("instances", new JArray(instances))).ToString(formatting);
+            traceSource.TraceEvent(TraceEventType.Verbose, 0, s2);
+            var sc = new StringContent(s2, Encoding.UTF8, "application/json");
+            var hrm = httpClient.PostAsync(url, sc).Result;
+            s2 = hrm.Content.ReadAsStringAsync().Result;
+            var jo = hrm.Content.Headers?.ContentType?.MediaType == "application/json" ? JObject.Parse(s2) : null;
             traceSource.TraceEvent(TraceEventType.Verbose, 0, s2);
             if (hrm.StatusCode != HttpStatusCode.Created) throw new HttpRequestException($"Response status code does not indicate success: {hrm.StatusCode} ({hrm.ReasonPhrase}).\r\n{s2}");
             traceSource.TraceEvent(TraceEventType.Verbose, 0, s.Elapsed.ToString());
@@ -4389,6 +4429,26 @@ namespace FolioLibrary
             var hrm = httpClient.PostAsync(url, sc).Result;
             s2 = hrm.Content.ReadAsStringAsync().Result;
             var jo = hrm.Content.Headers.ContentType.MediaType == "application/json" ? JObject.Parse(s2) : null;
+            traceSource.TraceEvent(TraceEventType.Verbose, 0, s2);
+            if (hrm.StatusCode != HttpStatusCode.Created) throw new HttpRequestException($"Response status code does not indicate success: {hrm.StatusCode} ({hrm.ReasonPhrase}).\r\n{s2}");
+            traceSource.TraceEvent(TraceEventType.Verbose, 0, s.Elapsed.ToString());
+            return jo;
+        }
+
+        public JObject InsertItems(IEnumerable<JObject> items)
+        {
+            var s = Stopwatch.StartNew();
+            foreach (var i in items) if (i["id"] == null) i["id"] = Guid.NewGuid();
+            traceSource.TraceEvent(TraceEventType.Verbose, 0, $"Inserting items {string.Join(", ", items.Select(i => i["id"]))}");
+            AuthenticateIfNecessary();
+            var url = $"{Url}/item-storage/batch/synchronous";
+            traceSource.TraceEvent(TraceEventType.Verbose, 0, url);
+            var s2 = new JObject(new JProperty("items", new JArray(items))).ToString(formatting);
+            traceSource.TraceEvent(TraceEventType.Verbose, 0, s2);
+            var sc = new StringContent(s2, Encoding.UTF8, "application/json");
+            var hrm = httpClient.PostAsync(url, sc).Result;
+            s2 = hrm.Content.ReadAsStringAsync().Result;
+            var jo = hrm.Content.Headers?.ContentType?.MediaType == "application/json" ? JObject.Parse(s2) : null;
             traceSource.TraceEvent(TraceEventType.Verbose, 0, s2);
             if (hrm.StatusCode != HttpStatusCode.Created) throw new HttpRequestException($"Response status code does not indicate success: {hrm.StatusCode} ({hrm.ReasonPhrase}).\r\n{s2}");
             traceSource.TraceEvent(TraceEventType.Verbose, 0, s.Elapsed.ToString());
@@ -7221,7 +7281,7 @@ namespace FolioLibrary
             var sc = new StringContent(s2, Encoding.UTF8, "application/json");
             var hrm = httpClient.PostAsync(url, sc).Result;
             s2 = hrm.Content.ReadAsStringAsync().Result;
-            var jo = hrm.Content.Headers.ContentType.MediaType == "application/json" ? JObject.Parse(s2) : null;
+            var jo = hrm.Content.Headers?.ContentType?.MediaType == "application/json" ? JObject.Parse(s2) : null;
             traceSource.TraceEvent(TraceEventType.Verbose, 0, s2);
             if (hrm.StatusCode != HttpStatusCode.Created) throw new HttpRequestException($"Response status code does not indicate success: {hrm.StatusCode} ({hrm.ReasonPhrase}).\r\n{s2}");
             traceSource.TraceEvent(TraceEventType.Verbose, 0, s.Elapsed.ToString());
