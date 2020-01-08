@@ -5,7 +5,7 @@
   "additionalProperties": false,
   "properties": {
     "id": {
-      "description": "UUID of this piece record",
+      "description": "The UUID format string",
       "type": "string",
       "pattern": "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-5][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}$"
     },
@@ -27,19 +27,13 @@
       ]
     },
     "itemId": {
-      "description": "UUID of the associated item record",
-      "type": "string",
-      "pattern": "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-5][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}$"
+      "$ref": "#/properties/id"
     },
     "locationId": {
-      "description": "UUID of the (inventory) location record",
-      "type": "string",
-      "pattern": "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-5][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}$"
+      "$ref": "#/properties/id"
     },
     "poLineId": {
-      "description": "UUID of the purchase order line this record is associated with",
-      "type": "string",
-      "pattern": "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-5][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}$"
+      "$ref": "#/properties/id"
     },
     "receivingStatus": {
       "description": "the status of this piece",
@@ -54,15 +48,21 @@
       "description": "Whether or not this is supplementary material",
       "type": "boolean"
     },
+    "receiptDate": {
+      "description": "Date that associated item is expected to arrive",
+      "type": "string",
+      "format": "date-time"
+    },
     "receivedDate": {
-      "description": "date received",
+      "description": "The date associated item is actually received",
       "type": "string",
       "format": "date-time"
     }
   },
   "required": [
+    "format",
     "poLineId",
-    "receivingStatus",
-    "format"
+    "receiptDate",
+    "receivingStatus"
   ]
 }

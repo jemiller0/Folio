@@ -650,6 +650,11 @@ namespace FolioLibrary
             {
                 return Connection.ExecuteScalar<T>(sql, param, Transaction, commandTimeout ?? CommandTimeout);
             }
+            catch (NpgsqlException e)
+            {
+                if (e.Message == "Exception while reading from stream") traceSource.TraceEvent(TraceEventType.Verbose, 0, string.Join("\r\n", Query<string>($"EXPLAIN {sql}")));
+                throw e;
+            }
             finally
             {
                 traceSource.TraceEvent(TraceEventType.Verbose, 0, $"{sql} {param} {s.Elapsed}");
@@ -665,6 +670,11 @@ namespace FolioLibrary
             {
                 return Connection.Query(sql, param, Transaction, false, commandTimeout ?? CommandTimeout);
             }
+            catch (NpgsqlException e)
+            {
+                if (e.Message == "Exception while reading from stream") traceSource.TraceEvent(TraceEventType.Verbose, 0, string.Join("\r\n", Query<string>($"EXPLAIN {sql}")));
+                throw e;
+            }
             finally
             {
                 traceSource.TraceEvent(TraceEventType.Verbose, 0, $"{sql} {param} {s.Elapsed}");
@@ -679,6 +689,11 @@ namespace FolioLibrary
             try
             {
                 return Connection.Query<T>(sql, param, Transaction, false, commandTimeout ?? CommandTimeout);
+            }
+            catch (NpgsqlException e)
+            {
+                if (e.Message == "Exception while reading from stream") traceSource.TraceEvent(TraceEventType.Verbose, 0, string.Join("\r\n", Query<string>($"EXPLAIN {sql}")));
+                throw e;
             }
             finally
             {
