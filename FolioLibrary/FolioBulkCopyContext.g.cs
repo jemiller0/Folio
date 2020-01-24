@@ -1126,6 +1126,7 @@ namespace FolioLibrary
                 itemsDataTable.Columns.Add(new DataColumn { ColumnName = "materialtypeid", DataType = typeof(Guid) });
                 itemsDataTable.Columns.Add(new DataColumn { ColumnName = "permanentlocationid", DataType = typeof(Guid) });
                 itemsDataTable.Columns.Add(new DataColumn { ColumnName = "temporarylocationid", DataType = typeof(Guid) });
+                itemsDataTable.Columns.Add(new DataColumn { ColumnName = "effectivelocationid", DataType = typeof(Guid) });
                 itemsDataTable.Columns["jsonb"].ExtendedProperties["NpgsqlDbType"] = NpgsqlDbType.Jsonb;
             }
             var dr = itemsDataTable.NewRow();
@@ -1139,6 +1140,7 @@ namespace FolioLibrary
             dr["materialtypeid"] = (object)item.Materialtypeid ?? DBNull.Value;
             dr["permanentlocationid"] = (object)item.Permanentlocationid ?? DBNull.Value;
             dr["temporarylocationid"] = (object)item.Temporarylocationid ?? DBNull.Value;
+            dr["effectivelocationid"] = (object)item.Effectivelocationid ?? DBNull.Value;
             itemsDataTable.Rows.Add(dr);
         }
 
@@ -2919,6 +2921,7 @@ namespace FolioLibrary
                 sqlBulkCopy.ColumnMappings.Add("materialtypeid", "materialtypeid");
                 sqlBulkCopy.ColumnMappings.Add("permanentlocationid", "permanentlocationid");
                 sqlBulkCopy.ColumnMappings.Add("temporarylocationid", "temporarylocationid");
+                sqlBulkCopy.ColumnMappings.Add("effectivelocationid", "effectivelocationid");
                 sqlBulkCopy.WriteToServer(itemsDataTable);
                 itemsDataTable.Clear();
             }

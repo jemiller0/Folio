@@ -65,6 +65,9 @@ namespace FolioLibrary
         [ScaffoldColumn(false)]
         public virtual ICollection<Item> Items1 { get; set; }
 
+        [ScaffoldColumn(false)]
+        public virtual ICollection<Item> Items2 { get; set; }
+
         public override string ToString() => $"{{ {nameof(Id)} = {Id}, {nameof(Content)} = {Content}, {nameof(CreationTime)} = {CreationTime}, {nameof(CreationUserId)} = {CreationUserId}, {nameof(Institutionid)} = {Institutionid}, {nameof(Campusid)} = {Campusid}, {nameof(Libraryid)} = {Libraryid} }}";
     }
 }

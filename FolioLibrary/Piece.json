@@ -62,7 +62,6 @@
   "required": [
     "format",
     "poLineId",
-    "receiptDate",
     "receivingStatus"
   ]
 }

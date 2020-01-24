@@ -7125,7 +7125,8 @@ namespace FolioConsoleApplication
                             Temporaryloantypeid = (Guid?)jo.SelectToken("temporaryLoanTypeId"),
                             Materialtypeid = (Guid?)jo.SelectToken("materialTypeId"),
                             Permanentlocationid = (Guid?)jo.SelectToken("permanentLocationId"),
-                            Temporarylocationid = (Guid?)jo.SelectToken("temporaryLocationId")
+                            Temporarylocationid = (Guid?)jo.SelectToken("temporaryLocationId"),
+                            Effectivelocationid = (Guid?)jo.SelectToken("effectiveLocationId")
                         });
                         if (i % 1000 == 0)
                         {

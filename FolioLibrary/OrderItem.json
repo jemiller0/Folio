@@ -5,7 +5,7 @@
   "additionalProperties": false,
   "properties": {
     "id": {
-      "description": "UUID identifying this purchase order line",
+      "description": "The UUID format string",
       "type": "string",
       "pattern": "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-5][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}$"
     },
@@ -18,15 +18,8 @@
       "type": "boolean",
       "default": false
     },
-    "instanceId": {
-      "description": "UUID of the instance record this purchase order line is related to",
-      "type": "string",
-      "pattern": "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-5][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}$"
-    },
     "agreementId": {
-      "description": "UUID of the agreement this purchase order line is related to",
-      "type": "string",
-      "pattern": "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-5][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}$"
+      "$ref": "#/properties/id"
     },
     "acquisitionMethod": {
       "description": "the acquisition method for this purchase order line",
@@ -48,7 +41,7 @@
       "description": "an array of alert record IDs",
       "type": "array",
       "items": {
-        "description": "UUID of an alert record",
+        "description": "The UUID format string",
         "type": "string",
         "pattern": "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-5][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}$"
       }
@@ -314,12 +307,10 @@
             "type": "string"
           },
           "encumbrance": {
-            "description": "The UUID format string",
-            "type": "string",
-            "pattern": "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-5][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}$"
+            "$ref": "#/properties/id"
           },
           "fundId": {
-            "$ref": "#/properties/fundDistribution/items/properties/encumbrance"
+            "$ref": "#/properties/id"
           },
           "distributionType": {
             "description": "Percentage or amount type of the value property",
@@ -341,6 +332,11 @@
           "value"
         ]
       }
+    },
+    "isPackage": {
+      "description": "Indicates that this POL is for a package",
+      "type": "boolean",
+      "default": false
     },
     "locations": {
       "id": "locations",
@@ -470,9 +466,7 @@
       "type": "string"
     },
     "purchaseOrderId": {
-      "description": "UUID of the purchase order",
-      "type": "string",
-      "pattern": "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-5][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}$"
+      "$ref": "#/properties/id"
     },
     "receiptDate": {
       "description": "date the purchase order line was received",
@@ -500,9 +494,7 @@
       "description": "a list of reporting codes associated with this purchase order line",
       "type": "array",
       "items": {
-        "description": "UUID of the reporting code",
-        "type": "string",
-        "pattern": "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-5][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}$"
+        "$ref": "#/properties/id"
       }
     },
     "requester": {
@@ -543,7 +535,7 @@
         }
       }
     },
-    "title": {
+    "titleOrPackage": {
       "description": "title of the material",
       "type": "string"
     },
@@ -627,6 +619,7 @@
   "required": [
     "orderFormat",
     "source",
-    "purchaseOrderId"
+    "purchaseOrderId",
+    "titleOrPackage"
   ]
 }

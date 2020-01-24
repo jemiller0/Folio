@@ -58,18 +58,24 @@ namespace FolioLibrary
         [Column("materialtypeid"), Display(Name = "Material Type", Order = 12), Editable(false), ForeignKey("MaterialType")]
         public virtual Guid? Materialtypeid { get; set; }
 
-        [Display(Order = 13), InverseProperty("Items")]
-        public virtual Location Location { get; set; }
-
-        [Column("permanentlocationid"), Display(Name = "Location", Order = 14), Editable(false), ForeignKey("Location")]
-        public virtual Guid? Permanentlocationid { get; set; }
-
-        [Display(Name = "Location 1", Order = 15), InverseProperty("Items1")]
+        [Display(Name = "Location 1", Order = 13), InverseProperty("Items1")]
         public virtual Location Location1 { get; set; }
 
-        [Column("temporarylocationid"), Display(Name = "Location 1", Order = 16), Editable(false), ForeignKey("Location1")]
+        [Column("permanentlocationid"), Display(Name = "Location 1", Order = 14), Editable(false), ForeignKey("Location1")]
+        public virtual Guid? Permanentlocationid { get; set; }
+
+        [Display(Name = "Location 2", Order = 15), InverseProperty("Items2")]
+        public virtual Location Location2 { get; set; }
+
+        [Column("temporarylocationid"), Display(Name = "Location 2", Order = 16), Editable(false), ForeignKey("Location2")]
         public virtual Guid? Temporarylocationid { get; set; }
 
-        public override string ToString() => $"{{ {nameof(Id)} = {Id}, {nameof(Content)} = {Content}, {nameof(CreationTime)} = {CreationTime}, {nameof(CreationUserId)} = {CreationUserId}, {nameof(Holdingsrecordid)} = {Holdingsrecordid}, {nameof(Permanentloantypeid)} = {Permanentloantypeid}, {nameof(Temporaryloantypeid)} = {Temporaryloantypeid}, {nameof(Materialtypeid)} = {Materialtypeid}, {nameof(Permanentlocationid)} = {Permanentlocationid}, {nameof(Temporarylocationid)} = {Temporarylocationid} }}";
+        [Column("effectivelocationid"), Display(Name = "Location", Order = 17), Editable(false), ForeignKey("Location")]
+        public virtual Guid? Effectivelocationid { get; set; }
+
+        [Display(Order = 18), InverseProperty("Items")]
+        public virtual Location Location { get; set; }
+
+        public override string ToString() => $"{{ {nameof(Id)} = {Id}, {nameof(Content)} = {Content}, {nameof(CreationTime)} = {CreationTime}, {nameof(CreationUserId)} = {CreationUserId}, {nameof(Holdingsrecordid)} = {Holdingsrecordid}, {nameof(Permanentloantypeid)} = {Permanentloantypeid}, {nameof(Temporaryloantypeid)} = {Temporaryloantypeid}, {nameof(Materialtypeid)} = {Materialtypeid}, {nameof(Permanentlocationid)} = {Permanentlocationid}, {nameof(Temporarylocationid)} = {Temporarylocationid}, {nameof(Effectivelocationid)} = {Effectivelocationid} }}";
     }
 }

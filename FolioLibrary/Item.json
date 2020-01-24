@@ -103,19 +103,16 @@
       "description": "Item identifier number, e.g. imported from the union catalogue (read only).",
       "type": "string"
     },
-    "copyNumbers": {
-      "description": "Copy number is the piece identifier. The copy number reflects if the library has one (or more) copies of a single-volume monograph; one (or more) copies of a multi-volume, (e.g. Copy 1, or C.7.)",
-      "type": "array",
-      "items": {
-        "type": "string"
-      },
-      "uniqueItems": true
+    "copyNumber": {
+      "description": "Copy number is the piece identifier. The copy number reflects if the library has a copy of a single-volume monograph; one copy of a multi-volume, (e.g. Copy 1, or C.7.)",
+      "type": "string"
     },
     "numberOfPieces": {
       "description": "Number of pieces. Used when an item is checked out or returned to verify that all parts are present (e.g. 7 CDs in a set).",
       "type": "string"
     },
     "descriptionOfPieces": {
+      "description": "Description of item pieces.",
       "type": "string"
     },
     "numberOfMissingPieces": {
@@ -131,9 +128,11 @@
       "type": "string"
     },
     "itemDamagedStatusId": {
+      "description": "Item dame status id identifier.",
       "type": "string"
     },
     "itemDamagedStatusDate": {
+      "description": "Date and time when the item was damaged.",
       "type": "string"
     },
     "notes": {
@@ -210,6 +209,7 @@
             "type": "string"
           },
           "staffOnly": {
+            "description": "Flag to restrict display of this note",
             "type": "boolean",
             "default": false
           }
@@ -223,13 +223,31 @@
       "properties": {
         "name": {
           "description": "Name of the status e.g. Available, Checked out, In transit",
-          "type": "string"
+          "type": "string",
+          "enum": [
+            "Available",
+            "Awaiting pickup",
+            "Awaiting delivery",
+            "Checked out",
+            "In process",
+            "In transit",
+            "Missing",
+            "On order",
+            "Paged",
+            "Declared lost",
+            "Order closed"
+          ]
         },
         "date": {
           "description": "Date and time when the status was last changed",
-          "type": "string"
+          "readonly": true,
+          "type": "string",
+          "format": "date-time"
         }
-      }
+      },
+      "required": [
+        "name"
+      ]
     },
     "materialTypeId": {
       "description": "Material type, term. Define what type of thing the item is.",
@@ -255,6 +273,7 @@
       "$ref": "#/properties/effectiveCallNumberComponents/properties/typeId"
     },
     "electronicAccess": {
+      "description": "References for accessing the item by URL.",
       "type": "array",
       "items": {
         "type": "object",
@@ -358,6 +377,7 @@
       ]
     },
     "holdingsRecord2": {
+      "description": "Item associated holdings record object.",
       "folio:$ref": "holdingsrecord.json",
       "readonly": true,
       "folio:isVirtual": true,
@@ -389,6 +409,7 @@
   "required": [
     "materialTypeId",
     "permanentLoanTypeId",
-    "holdingsRecordId"
+    "holdingsRecordId",
+    "status"
   ]
 }

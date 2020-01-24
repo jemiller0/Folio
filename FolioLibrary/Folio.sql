@@ -747,13 +747,7 @@ jsonb#>>'{metadata,createdByUsername}' AS created_by_username,
 uc.TIMESTAMP_CAST(jsonb#>>'{metadata,updatedDate}') AS updated_date,
 CAST(jsonb#>>'{metadata,updatedByUserId}' AS UUID) AS updated_by_user_id,
 jsonb#>>'{metadata,updatedByUsername}' AS updated_by_username,
-jsonb_pretty(jsonb) AS content,
-instanceid AS instanceid,
-permanentlocationid AS permanentlocationid,
-temporarylocationid AS temporarylocationid,
-holdingstypeid AS holdingstypeid,
-callnumbertypeid AS callnumbertypeid,
-illpolicyid AS illpolicyid
+jsonb_pretty(jsonb) AS content
 FROM diku_mod_inventory_storage.holdings_record;
 CREATE VIEW uc.holding_note_types AS
 SELECT
@@ -967,9 +961,7 @@ jsonb#>>'{metadata,createdByUsername}' AS created_by_username,
 uc.TIMESTAMP_CAST(jsonb#>>'{metadata,updatedDate}') AS updated_date,
 CAST(jsonb#>>'{metadata,updatedByUserId}' AS UUID) AS updated_by_user_id,
 jsonb#>>'{metadata,updatedByUsername}' AS updated_by_username,
-jsonb_pretty(jsonb) AS content,
-instancestatusid AS instancestatusid,
-modeofissuanceid AS modeofissuanceid
+jsonb_pretty(jsonb) AS content
 FROM diku_mod_inventory_storage.instance;
 CREATE VIEW uc.formats AS
 SELECT
@@ -1272,12 +1264,6 @@ id AS id,
 item_id AS item_id,
 CAST(jsonb AS VARCHAR(1024)) AS content
 FROM (SELECT id::text || ordinality::text AS id, id AS item_id, value AS jsonb FROM diku_mod_inventory_storage.item, jsonb_array_elements_text((jsonb->>'yearCaption')::jsonb) WITH ORDINALITY) a;
-CREATE VIEW uc.copy_numbers AS
-SELECT
-id AS id,
-item_id AS item_id,
-CAST(jsonb AS VARCHAR(1024)) AS content
-FROM (SELECT id::text || ordinality::text AS id, id AS item_id, value AS jsonb FROM diku_mod_inventory_storage.item, jsonb_array_elements_text((jsonb->>'copyNumbers')::jsonb) WITH ORDINALITY) a;
 CREATE VIEW uc.item_notes AS
 SELECT
 id AS id,
@@ -1341,13 +1327,14 @@ jsonb->>'volume' AS volume,
 jsonb->>'enumeration' AS enumeration,
 jsonb->>'chronology' AS chronology,
 jsonb->>'itemIdentifier' AS item_identifier,
+jsonb->>'copyNumber' AS copy_number,
 jsonb->>'numberOfPieces' AS number_of_pieces,
 jsonb->>'descriptionOfPieces' AS description_of_pieces,
 jsonb->>'numberOfMissingPieces' AS number_of_missing_pieces,
 jsonb->>'missingPieces' AS missing_pieces,
 jsonb->>'missingPiecesDate' AS missing_pieces_date,
 CAST(jsonb->>'itemDamagedStatusId' AS UUID) AS item_damaged_status_id,
-jsonb->>'itemDamagedStatusDate' AS item_damaged_status_date,
+uc.TIMESTAMP_CAST(jsonb->>'itemDamagedStatusDate') AS item_damaged_status_date,
 jsonb#>>'{status,name}' AS status_name,
 uc.TIMESTAMP_CAST(jsonb#>>'{status,date}') AS status_date,
 CAST(jsonb->>'materialTypeId' AS UUID) AS material_type_id,
@@ -1367,13 +1354,7 @@ jsonb#>>'{metadata,updatedByUsername}' AS updated_by_username,
 uc.TIMESTAMP_CAST(jsonb#>>'{lastCheckIn,dateTime}') AS last_check_in_date_time,
 CAST(jsonb#>>'{lastCheckIn,servicePointId}' AS UUID) AS last_check_in_service_point_id,
 CAST(jsonb#>>'{lastCheckIn,staffMemberId}' AS UUID) AS last_check_in_staff_member_id,
-jsonb_pretty(jsonb) AS content,
-holdingsrecordid AS holdingsrecordid,
-permanentloantypeid AS permanentloantypeid,
-temporaryloantypeid AS temporaryloantypeid,
-materialtypeid AS materialtypeid,
-permanentlocationid AS permanentlocationid,
-temporarylocationid AS temporarylocationid
+jsonb_pretty(jsonb) AS content
 FROM diku_mod_inventory_storage.item;
 CREATE VIEW uc.item_damaged_statuses AS
 SELECT
@@ -1871,7 +1852,6 @@ SELECT
 id AS id,
 jsonb->>'edition' AS edition,
 CAST(jsonb->>'checkinItems' AS BOOLEAN) AS checkin_items,
-CAST(jsonb->>'instanceId' AS UUID) AS instance_id,
 CAST(jsonb->>'agreementId' AS UUID) AS agreement_id,
 jsonb->>'acquisitionMethod' AS acquisition_method,
 CAST(jsonb->>'cancellationRestriction' AS BOOLEAN) AS cancellation_restriction,
@@ -1903,6 +1883,7 @@ jsonb#>>'{eresource,license,code}' AS eresource_license_code,
 jsonb#>>'{eresource,license,description}' AS eresource_license_description,
 jsonb#>>'{eresource,license,reference}' AS eresource_license_reference,
 CAST(jsonb#>>'{eresource,materialType}' AS UUID) AS eresource_material_type_id,
+CAST(jsonb->>'isPackage' AS BOOLEAN) AS is_package,
 jsonb->>'orderFormat' AS order_format,
 jsonb->>'paymentStatus' AS payment_status,
 jsonb#>>'{physical,createInventory}' AS physical_create_inventory,
@@ -1921,7 +1902,7 @@ jsonb->>'requester' AS requester,
 CAST(jsonb->>'rush' AS BOOLEAN) AS rush,
 jsonb->>'selector' AS selector,
 jsonb->>'source' AS source,
-jsonb->>'title' AS title,
+jsonb->>'titleOrPackage' AS title_or_package,
 jsonb#>>'{vendorDetail,instructions}' AS vendor_detail_instructions,
 jsonb#>>'{vendorDetail,noteFromVendor}' AS vendor_detail_note_from_vendor,
 jsonb#>>'{vendorDetail,refNumber}' AS vendor_detail_ref_number,
