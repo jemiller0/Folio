@@ -2432,6 +2432,13 @@ jsonb->>'code' AS code,
 jsonb->>'description' AS description,
 jsonb_pretty(jsonb) AS content
 FROM diku_mod_orders_storage.reporting_code;
+CREATE VIEW uc.request_identifiers AS
+SELECT
+id AS id,
+request_id AS request_id,
+jsonb->>'value' AS value,
+CAST(jsonb->>'identifierTypeId' AS UUID) AS identifier_type_id
+FROM (SELECT id::text || ordinality::text AS id, id AS request_id, value AS jsonb FROM diku_mod_circulation_storage.request, jsonb_array_elements((jsonb#>>'{item,identifiers}')::jsonb) WITH ORDINALITY) a;
 CREATE VIEW uc.request_tags AS
 SELECT
 id AS id,

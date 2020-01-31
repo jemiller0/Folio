@@ -788,6 +788,7 @@
   },
   "required": [
     "name",
-    "status"
+    "status",
+    "code"
   ]
 }

@@ -85,6 +85,30 @@
         "barcode": {
           "description": "barcode of the item",
           "type": "string"
+        },
+        "identifiers": {
+          "description": "An extensible set of name-value pairs of identifiers associated with the resource",
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "value": {
+                "description": "Resource identifier value",
+                "type": "string"
+              },
+              "identifierTypeId": {
+                "description": "The UUID format string",
+                "type": "string",
+                "pattern": "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-5][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}$"
+              }
+            },
+            "required": [
+              "value",
+              "identifierTypeId"
+            ]
+          },
+          "minItems": 0
         }
       }
     },
