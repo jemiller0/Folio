@@ -5,20 +5,18 @@
   "additionalProperties": false,
   "properties": {
     "id": {
-      "description": "UUID",
-      "type": "string"
+      "description": "The UUID format string",
+      "type": "string",
+      "pattern": "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-5][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}$"
     },
     "snapshotId": {
-      "description": "Corresponding snapshot id, which is the same as jobExecutionId",
-      "type": "string"
+      "$ref": "#/properties/id"
     },
     "matchedProfileId": {
-      "description": "Id of the matcher profile which is applied for the record",
-      "type": "string"
+      "$ref": "#/properties/id"
     },
     "matchedId": {
-      "description": "Represents relations with another matched records, necessary for saving the history of applying changes for inventory/holding/etc records",
-      "type": "string"
+      "$ref": "#/properties/id"
     },
     "generation": {
       "description": "Generation from the last record with the same matchedId incremented by 1. Starts from 0.",
@@ -34,21 +32,35 @@
       ]
     },
     "rawRecordId": {
-      "description": "Reference to the corresponding raw record",
-      "type": "string"
+      "$ref": "#/properties/id"
     },
     "parsedRecordId": {
-      "description": "Reference to the corresponding parsed record",
-      "type": "string"
+      "$ref": "#/properties/id"
     },
     "errorRecordId": {
-      "description": "Reference to the corresponding error record",
-      "type": "string"
+      "$ref": "#/properties/id"
+    },
+    "externalIdsHolder": {
+      "description": "Contains identifiers of external entities (instance, holding)",
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "instanceId": {
+          "description": "The UUID format string",
+          "type": "string",
+          "pattern": "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-5][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}$"
+        }
+      }
     },
     "deleted": {
       "description": "Flag indicates that the record marked as deleted",
       "type": "boolean",
       "default": false
+    },
+    "order": {
+      "description": "Order of the record in imported file",
+      "type": "integer",
+      "minimum": 0.0
     },
     "additionalInfo": {
       "description": "Auxiliary data which is not related to MARC type record",

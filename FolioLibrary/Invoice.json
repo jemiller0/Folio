@@ -139,6 +139,12 @@
       "type": "string",
       "format": "date-time"
     },
+    "batchGroupId": {
+      "description": "UUID of the batch group to use when generating batch vouchers",
+      "type": "string",
+      "default": "2a2cb998-1437-41d1-88ad-01930aaeadd5",
+      "pattern": "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-5][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}$"
+    },
     "billTo": {
       "$ref": "#/properties/id"
     },
@@ -314,6 +320,7 @@
     }
   },
   "required": [
+    "batchGroupId",
     "currency",
     "invoiceDate",
     "paymentMethod",

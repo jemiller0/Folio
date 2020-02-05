@@ -99,6 +99,11 @@
       "type": "string",
       "format": "date-time"
     },
+    "claimedReturnedDate": {
+      "description": "Date and time the item was claimed returned for this loan",
+      "type": "string",
+      "format": "date-time"
+    },
     "overdueFinePolicyId": {
       "description": "ID of overdue fines policy at the time the item is check-in or renewed",
       "type": "string",
