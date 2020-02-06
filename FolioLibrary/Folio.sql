@@ -1391,6 +1391,7 @@ CAST(jsonb->>'parentJobId' AS UUID) AS parent_job_id,
 jsonb->>'subordinationType' AS subordination_type,
 jsonb#>>'{jobProfileInfo,name}' AS job_profile_info_name,
 jsonb#>>'{jobProfileInfo,dataType}' AS job_profile_info_data_type,
+CAST(jsonb->>'jobProfileSnapshotWrapperId' AS UUID) AS job_profile_snapshot_wrapper_id,
 jsonb->>'sourcePath' AS source_path,
 jsonb->>'fileName' AS file_name,
 jsonb#>>'{runBy,firstName}' AS run_by_first_name,
@@ -1614,23 +1615,23 @@ id AS id,
 jsonb->>'name' AS name,
 jsonb->>'description' AS description,
 CAST(jsonb#>>'{itemAgedLostOverdue,duration}' AS INTEGER) AS item_aged_lost_overdue_duration,
-CAST(jsonb#>>'{itemAgedLostOverdue,intervalId}' AS UUID) AS item_aged_lost_overdue_interval_id,
+jsonb#>>'{itemAgedLostOverdue,intervalId}' AS item_aged_lost_overdue_interval_id,
 CAST(jsonb#>>'{patronBilledAfterAgedLost,duration}' AS INTEGER) AS patron_billed_after_aged_lost_duration,
-CAST(jsonb#>>'{patronBilledAfterAgedLost,intervalId}' AS UUID) AS patron_billed_after_aged_lost_interval_id,
+jsonb#>>'{patronBilledAfterAgedLost,intervalId}' AS patron_billed_after_aged_lost_interval_id,
 jsonb#>>'{chargeAmountItem,chargeType}' AS charge_amount_item_charge_type,
 CAST(jsonb#>>'{chargeAmountItem,amount}' AS DECIMAL(19,2)) AS charge_amount_item_amount,
 CAST(jsonb->>'lostItemProcessingFee' AS DECIMAL(19,2)) AS lost_item_processing_fee,
 CAST(jsonb->>'chargeAmountItemPatron' AS BOOLEAN) AS charge_amount_item_patron,
 CAST(jsonb->>'chargeAmountItemSystem' AS BOOLEAN) AS charge_amount_item_system,
 CAST(jsonb#>>'{lostItemChargeFeeFine,duration}' AS INTEGER) AS lost_item_charge_fee_fine_duration,
-CAST(jsonb#>>'{lostItemChargeFeeFine,intervalId}' AS UUID) AS lost_item_charge_fee_fine_interval_id,
+jsonb#>>'{lostItemChargeFeeFine,intervalId}' AS lost_item_charge_fee_fine_interval_id,
 CAST(jsonb->>'returnedLostItemProcessingFee' AS BOOLEAN) AS returned_lost_item_processing_fee,
 CAST(jsonb->>'replacedLostItemProcessingFee' AS BOOLEAN) AS replaced_lost_item_processing_fee,
 CAST(jsonb->>'replacementProcessingFee' AS DECIMAL(19,2)) AS replacement_processing_fee,
 CAST(jsonb->>'replacementAllowed' AS BOOLEAN) AS replacement_allowed,
 jsonb->>'lostItemReturned' AS lost_item_returned,
 CAST(jsonb#>>'{feesFinesShallRefunded,duration}' AS INTEGER) AS fees_fines_shall_refunded_duration,
-CAST(jsonb#>>'{feesFinesShallRefunded,intervalId}' AS UUID) AS fees_fines_shall_refunded_interval_id,
+jsonb#>>'{feesFinesShallRefunded,intervalId}' AS fees_fines_shall_refunded_interval_id,
 uc.TIMESTAMP_CAST(jsonb#>>'{metadata,createdDate}') AS created_date,
 CAST(jsonb#>>'{metadata,createdByUserId}' AS UUID) AS created_by_user_id,
 jsonb#>>'{metadata,createdByUsername}' AS created_by_username,
@@ -2165,12 +2166,12 @@ id AS id,
 jsonb->>'name' AS name,
 jsonb->>'description' AS description,
 CAST(jsonb#>>'{overdueFine,quantity}' AS DECIMAL(19,2)) AS overdue_fine_quantity,
-CAST(jsonb#>>'{overdueFine,intervalId}' AS UUID) AS overdue_fine_interval_id,
+jsonb#>>'{overdueFine,intervalId}' AS overdue_fine_interval_id,
 CAST(jsonb->>'countClosed' AS BOOLEAN) AS count_closed,
 CAST(jsonb->>'maxOverdueFine' AS DECIMAL(19,2)) AS max_overdue_fine,
 CAST(jsonb->>'forgiveOverdueFine' AS BOOLEAN) AS forgive_overdue_fine,
 CAST(jsonb#>>'{overdueRecallFine,quantity}' AS DECIMAL(19,2)) AS overdue_recall_fine_quantity,
-CAST(jsonb#>>'{overdueRecallFine,intervalId}' AS UUID) AS overdue_recall_fine_interval_id,
+jsonb#>>'{overdueRecallFine,intervalId}' AS overdue_recall_fine_interval_id,
 CAST(jsonb->>'gracePeriodRecall' AS BOOLEAN) AS grace_period_recall,
 CAST(jsonb->>'maxOverdueRecallFine' AS DECIMAL(19,2)) AS max_overdue_recall_fine,
 uc.TIMESTAMP_CAST(jsonb#>>'{metadata,createdDate}') AS created_date,
@@ -2230,9 +2231,9 @@ CAST(jsonb->>'realTime' AS BOOLEAN) AS real_time,
 jsonb#>>'{sendOptions,sendHow}' AS send_options_send_how,
 jsonb#>>'{sendOptions,sendWhen}' AS send_options_send_when,
 CAST(jsonb#>>'{sendOptions,sendBy,duration}' AS INTEGER) AS send_options_send_by_duration,
-CAST(jsonb#>>'{sendOptions,sendBy,intervalId}' AS UUID) AS send_options_send_by_interval_id,
+jsonb#>>'{sendOptions,sendBy,intervalId}' AS send_options_send_by_interval_id,
 CAST(jsonb#>>'{sendOptions,sendEvery,duration}' AS INTEGER) AS send_options_send_every_duration,
-CAST(jsonb#>>'{sendOptions,sendEvery,intervalId}' AS UUID) AS send_options_send_every_interval_id
+jsonb#>>'{sendOptions,sendEvery,intervalId}' AS send_options_send_every_interval_id
 FROM (SELECT id::text || ordinality::text AS id, id AS patron_notice_policy_id, value AS jsonb FROM diku_mod_circulation_storage.patron_notice_policy, jsonb_array_elements((jsonb->>'loanNotices')::jsonb) WITH ORDINALITY) a;
 CREATE VIEW uc.patron_notice_policy_fee_fine_notices AS
 SELECT
@@ -2246,9 +2247,9 @@ jsonb->>'frequency' AS frequency,
 CAST(jsonb->>'realTime' AS BOOLEAN) AS real_time,
 jsonb#>>'{sendOptions,sendHow}' AS send_options_send_how,
 CAST(jsonb#>>'{sendOptions,sendBy,duration}' AS INTEGER) AS send_options_send_by_duration,
-CAST(jsonb#>>'{sendOptions,sendBy,intervalId}' AS UUID) AS send_options_send_by_interval_id,
+jsonb#>>'{sendOptions,sendBy,intervalId}' AS send_options_send_by_interval_id,
 CAST(jsonb#>>'{sendOptions,sendEvery,duration}' AS INTEGER) AS send_options_send_every_duration,
-CAST(jsonb#>>'{sendOptions,sendEvery,intervalId}' AS UUID) AS send_options_send_every_interval_id
+jsonb#>>'{sendOptions,sendEvery,intervalId}' AS send_options_send_every_interval_id
 FROM (SELECT id::text || ordinality::text AS id, id AS patron_notice_policy_id, value AS jsonb FROM diku_mod_circulation_storage.patron_notice_policy, jsonb_array_elements((jsonb->>'feeFineNotices')::jsonb) WITH ORDINALITY) a;
 CREATE VIEW uc.patron_notice_policy_request_notices AS
 SELECT
@@ -2263,9 +2264,9 @@ CAST(jsonb->>'realTime' AS BOOLEAN) AS real_time,
 jsonb#>>'{sendOptions,sendHow}' AS send_options_send_how,
 jsonb#>>'{sendOptions,sendWhen}' AS send_options_send_when,
 CAST(jsonb#>>'{sendOptions,sendBy,duration}' AS INTEGER) AS send_options_send_by_duration,
-CAST(jsonb#>>'{sendOptions,sendBy,intervalId}' AS UUID) AS send_options_send_by_interval_id,
+jsonb#>>'{sendOptions,sendBy,intervalId}' AS send_options_send_by_interval_id,
 CAST(jsonb#>>'{sendOptions,sendEvery,duration}' AS INTEGER) AS send_options_send_every_duration,
-CAST(jsonb#>>'{sendOptions,sendEvery,intervalId}' AS UUID) AS send_options_send_every_interval_id
+jsonb#>>'{sendOptions,sendEvery,intervalId}' AS send_options_send_every_interval_id
 FROM (SELECT id::text || ordinality::text AS id, id AS patron_notice_policy_id, value AS jsonb FROM diku_mod_circulation_storage.patron_notice_policy, jsonb_array_elements((jsonb->>'requestNotices')::jsonb) WITH ORDINALITY) a;
 CREATE VIEW uc.patron_notice_policies AS
 SELECT
@@ -2520,7 +2521,7 @@ uc.TIMESTAMP_CAST(jsonb->>'nextRunTime') AS next_run_time,
 jsonb->>'triggeringEvent' AS triggering_event,
 jsonb#>>'{noticeConfig,timing}' AS notice_config_timing,
 CAST(jsonb#>>'{noticeConfig,recurringPeriod,duration}' AS INTEGER) AS notice_config_recurring_period_duration,
-CAST(jsonb#>>'{noticeConfig,recurringPeriod,intervalId}' AS UUID) AS notice_config_recurring_period_interval_id,
+jsonb#>>'{noticeConfig,recurringPeriod,intervalId}' AS notice_config_recurring_period_interval_id,
 CAST(jsonb#>>'{noticeConfig,templateId}' AS UUID) AS notice_config_template_id,
 jsonb#>>'{noticeConfig,format}' AS notice_config_format,
 CAST(jsonb#>>'{noticeConfig,sendInRealTime}' AS BOOLEAN) AS notice_config_send_in_real_time,
@@ -2647,6 +2648,25 @@ CAST(jsonb#>>'{metadata,updatedByUserId}' AS UUID) AS updated_by_user_id,
 jsonb#>>'{metadata,updatedByUsername}' AS updated_by_username,
 jsonb_pretty(jsonb) AS content
 FROM diku_mod_tags.tags;
+CREATE VIEW uc.template_output_formats AS
+SELECT
+id AS id,
+template_id AS template_id,
+CAST(jsonb AS VARCHAR(1024)) AS content
+FROM (SELECT id::text || ordinality::text AS id, id AS template_id, value AS jsonb FROM diku_mod_template_engine.template, jsonb_array_elements_text((jsonb->>'outputFormats')::jsonb) WITH ORDINALITY) a;
+CREATE VIEW uc.templates AS
+SELECT
+id AS id,
+jsonb->>'description' AS description,
+jsonb->>'templateResolver' AS template_resolver,
+uc.TIMESTAMP_CAST(jsonb#>>'{metadata,createdDate}') AS created_date,
+CAST(jsonb#>>'{metadata,createdByUserId}' AS UUID) AS created_by_user_id,
+jsonb#>>'{metadata,createdByUsername}' AS created_by_username,
+uc.TIMESTAMP_CAST(jsonb#>>'{metadata,updatedDate}') AS updated_date,
+CAST(jsonb#>>'{metadata,updatedByUserId}' AS UUID) AS updated_by_user_id,
+jsonb#>>'{metadata,updatedByUsername}' AS updated_by_username,
+jsonb_pretty(jsonb) AS content
+FROM diku_mod_template_engine.template;
 CREATE VIEW uc.transaction_tags AS
 SELECT
 id AS id,

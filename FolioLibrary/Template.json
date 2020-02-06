@@ -1,0 +1,131 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "description": "Template",
+  "type": "object",
+  "properties": {
+    "id": {
+      "description": "Template id",
+      "type": "string"
+    },
+    "description": {
+      "description": "Template description",
+      "type": "string"
+    },
+    "outputFormats": {
+      "description": "Array of output formats",
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "templateResolver": {
+      "description": "Template engine name",
+      "type": "string"
+    },
+    "localizedTemplates": {
+      "description": "List of localized templates",
+      "type": "object",
+      "additionalProperties": {
+        "description": "Template content",
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "header": {
+            "description": "Template for header",
+            "type": "string",
+            "pattern": "\\S+.*"
+          },
+          "body": {
+            "description": "Template for body",
+            "type": "string",
+            "pattern": "\\S+.*"
+          },
+          "attachments": {
+            "id": "attachments",
+            "description": "List of attachments",
+            "type": "array",
+            "items": {
+              "description": "Message attachment",
+              "type": "object",
+              "additionalProperties": false,
+              "properties": {
+                "contentType": {
+                  "description": "Content type",
+                  "type": "string"
+                },
+                "name": {
+                  "description": "Name",
+                  "type": "string"
+                },
+                "description": {
+                  "description": "Description",
+                  "type": "string"
+                },
+                "data": {
+                  "description": "Attachment data",
+                  "type": "string"
+                },
+                "disposition": {
+                  "description": "Disposition",
+                  "type": "string"
+                },
+                "contentId": {
+                  "description": "Content id",
+                  "type": "string"
+                }
+              }
+            }
+          }
+        },
+        "required": [
+          "header",
+          "body"
+        ]
+      }
+    },
+    "metadata": {
+      "title": "Metadata Schema",
+      "description": "Metadata about creation and changes to records, provided by the server (client should not provide)",
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "createdDate": {
+          "description": "Date and time when the record was created",
+          "type": "string",
+          "format": "date-time"
+        },
+        "createdByUserId": {
+          "description": "ID of the user who created the record (when available)",
+          "type": "string",
+          "pattern": "^[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12}$"
+        },
+        "createdByUsername": {
+          "description": "Username of the user who created the record (when available)",
+          "type": "string"
+        },
+        "updatedDate": {
+          "description": "Date and time when the record was last updated",
+          "type": "string",
+          "format": "date-time"
+        },
+        "updatedByUserId": {
+          "description": "ID of the user who last updated the record (when available)",
+          "type": "string",
+          "pattern": "^[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12}$"
+        },
+        "updatedByUsername": {
+          "description": "Username of the user who last updated the record (when available)",
+          "type": "string"
+        }
+      },
+      "required": [
+        "createdDate"
+      ]
+    }
+  },
+  "required": [
+    "templateResolver",
+    "localizedTemplates",
+    "outputFormats"
+  ]
+}

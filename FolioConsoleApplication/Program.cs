@@ -42,7 +42,7 @@ namespace FolioConsoleApplication
                 Initialize();
                 if (args.Length == 0)
                 {
-                    traceSource.TraceEvent(TraceEventType.Critical, 0, "Usage: dotnet FolioConsoleApplication.dll [-All] [-Api] [-Compress] [-Delete] [-Force] [-Load] [-Path <string>] [-Save] [-Validate] [-Verbose] [-Warning] [-WhatIf] [-AllCirculation] [-AllConfiguration] [-AllFees] [-AllFinance] [-AllInventory] [-AllInvoices] [-AllLogin] [-AllOrders] [-AllOrganizations] [-AllPermissions] [-AllSource] [-AllUsers] [-AccountsPath <string>] [-AccountsWhere <string>] [-AcquisitionsUnitsPath <string>] [-AcquisitionsUnitsWhere <string>] [-AddressTypesPath <string>] [-AddressTypesWhere <string>] [-AlertsPath <string>] [-AlertsWhere <string>] [-AlternativeTitleTypesPath <string>] [-AlternativeTitleTypesWhere <string>] [-BlocksPath <string>] [-BlocksWhere <string>] [-BudgetsPath <string>] [-BudgetsWhere <string>] [-CallNumberTypesPath <string>] [-CallNumberTypesWhere <string>] [-CampusesPath <string>] [-CampusesWhere <string>] [-CancellationReasonsPath <string>] [-CancellationReasonsWhere <string>] [-CategoriesPath <string>] [-CategoriesWhere <string>] [-CirculationRulesPath <string>] [-CirculationRulesWhere <string>] [-ClassificationTypesPath <string>] [-ClassificationTypesWhere <string>] [-CommentsPath <string>] [-CommentsWhere <string>] [-ConfigurationsPath <string>] [-ConfigurationsWhere <string>] [-ContactsPath <string>] [-ContactsWhere <string>] [-ContributorNameTypesPath <string>] [-ContributorNameTypesWhere <string>] [-ContributorTypesPath <string>] [-ContributorTypesWhere <string>] [-DocumentsPath <string>] [-DocumentsWhere <string>] [-ElectronicAccessRelationshipsPath <string>] [-ElectronicAccessRelationshipsWhere <string>] [-ErrorRecordsPath <string>] [-ErrorRecordsWhere <string>] [-FeesPath <string>] [-FeesWhere <string>] [-FeeActionsPath <string>] [-FeeActionsWhere <string>] [-FinanceGroupsPath <string>] [-FinanceGroupsWhere <string>] [-FiscalYearsPath <string>] [-FiscalYearsWhere <string>] [-FixedDueDateSchedulesPath <string>] [-FixedDueDateSchedulesWhere <string>] [-FundsPath <string>] [-FundsWhere <string>] [-FundDistributionsPath <string>] [-FundDistributionsWhere <string>] [-FundTypesPath <string>] [-FundTypesWhere <string>] [-GroupsPath <string>] [-GroupsWhere <string>] [-GroupFundFiscalYearsPath <string>] [-GroupFundFiscalYearsWhere <string>] [-HoldingsPath <string>] [-HoldingsWhere <string>] [-HoldingNoteTypesPath <string>] [-HoldingNoteTypesWhere <string>] [-HoldingTypesPath <string>] [-HoldingTypesWhere <string>] [-HridSettingsPath <string>] [-HridSettingsWhere <string>] [-IdTypesPath <string>] [-IdTypesWhere <string>] [-IllPoliciesPath <string>] [-IllPoliciesWhere <string>] [-InstancesPath <string>] [-InstancesWhere <string>] [-InstanceFormatsPath <string>] [-InstanceFormatsWhere <string>] [-InstanceNoteTypesPath <string>] [-InstanceNoteTypesWhere <string>] [-InstanceRelationshipsPath <string>] [-InstanceRelationshipsWhere <string>] [-InstanceRelationshipTypesPath <string>] [-InstanceRelationshipTypesWhere <string>] [-InstanceStatusesPath <string>] [-InstanceStatusesWhere <string>] [-InstanceTypesPath <string>] [-InstanceTypesWhere <string>] [-InstitutionsPath <string>] [-InstitutionsWhere <string>] [-InterfacesPath <string>] [-InterfacesWhere <string>] [-InterfaceCredentialsPath <string>] [-InterfaceCredentialsWhere <string>] [-InvoicesPath <string>] [-InvoicesWhere <string>] [-InvoiceItemsPath <string>] [-InvoiceItemsWhere <string>] [-ItemsPath <string>] [-ItemsWhere <string>] [-ItemDamagedStatusesPath <string>] [-ItemDamagedStatusesWhere <string>] [-ItemNoteTypesPath <string>] [-ItemNoteTypesWhere <string>] [-LedgersPath <string>] [-LedgersWhere <string>] [-LedgerFiscalYearsPath <string>] [-LedgerFiscalYearsWhere <string>] [-LibrariesPath <string>] [-LibrariesWhere <string>] [-LoansPath <string>] [-LoansWhere <string>] [-LoanPoliciesPath <string>] [-LoanPoliciesWhere <string>] [-LoanTypesPath <string>] [-LoanTypesWhere <string>] [-LocationsPath <string>] [-LocationsWhere <string>] [-LoginsPath <string>] [-LoginsWhere <string>] [-LostItemFeePoliciesPath <string>] [-LostItemFeePoliciesWhere <string>] [-MarcRecordsPath <string>] [-MarcRecordsWhere <string>] [-MaterialTypesPath <string>] [-MaterialTypesWhere <string>] [-ModeOfIssuancesPath <string>] [-ModeOfIssuancesWhere <string>] [-NatureOfContentTermsPath <string>] [-NatureOfContentTermsWhere <string>] [-OrdersPath <string>] [-OrdersWhere <string>] [-OrderInvoicesPath <string>] [-OrderInvoicesWhere <string>] [-OrderItemsPath <string>] [-OrderItemsWhere <string>] [-OrderTemplatesPath <string>] [-OrderTemplatesWhere <string>] [-OrderTransactionSummariesPath <string>] [-OrderTransactionSummariesWhere <string>] [-OrganizationsPath <string>] [-OrganizationsWhere <string>] [-OverdueFinePoliciesPath <string>] [-OverdueFinePoliciesWhere <string>] [-OwnersPath <string>] [-OwnersWhere <string>] [-PatronActionSessionsPath <string>] [-PatronActionSessionsWhere <string>] [-PatronNoticePoliciesPath <string>] [-PatronNoticePoliciesWhere <string>] [-PaymentsPath <string>] [-PaymentsWhere <string>] [-PermissionsPath <string>] [-PermissionsWhere <string>] [-PermissionsUsersPath <string>] [-PermissionsUsersWhere <string>] [-PiecesPath <string>] [-PiecesWhere <string>] [-ProxiesPath <string>] [-ProxiesWhere <string>] [-RawRecordsPath <string>] [-RawRecordsWhere <string>] [-RecordsPath <string>] [-RecordsWhere <string>] [-RefundsPath <string>] [-RefundsWhere <string>] [-ReportingCodesPath <string>] [-ReportingCodesWhere <string>] [-RequestsPath <string>] [-RequestsWhere <string>] [-RequestPoliciesPath <string>] [-RequestPoliciesWhere <string>] [-ScheduledNoticesPath <string>] [-ScheduledNoticesWhere <string>] [-ServicePointsPath <string>] [-ServicePointsWhere <string>] [-ServicePointUsersPath <string>] [-ServicePointUsersWhere <string>] [-SnapshotsPath <string>] [-SnapshotsWhere <string>] [-StaffSlipsPath <string>] [-StaffSlipsWhere <string>] [-StatisticalCodesPath <string>] [-StatisticalCodesWhere <string>] [-StatisticalCodeTypesPath <string>] [-StatisticalCodeTypesWhere <string>] [-TransactionsPath <string>] [-TransactionsWhere <string>] [-TransfersPath <string>] [-TransfersWhere <string>] [-TransferCriteriasPath <string>] [-TransferCriteriasWhere <string>] [-UsersPath <string>] [-UsersWhere <string>] [-UserAcquisitionsUnitsPath <string>] [-UserAcquisitionsUnitsWhere <string>] [-UserRequestPreferencesPath <string>] [-UserRequestPreferencesWhere <string>] [-VouchersPath <string>] [-VouchersWhere <string>] [-VoucherItemsPath <string>] [-VoucherItemsWhere <string>] [-WaivesPath <string>] [-WaivesWhere <string>]");
+                    traceSource.TraceEvent(TraceEventType.Critical, 0, "Usage: dotnet FolioConsoleApplication.dll [-All] [-Api] [-Compress] [-Delete] [-Force] [-Load] [-Path <string>] [-Save] [-Validate] [-Verbose] [-Warning] [-WhatIf] [-AllCirculation] [-AllConfiguration] [-AllFees] [-AllFinance] [-AllInventory] [-AllInvoices] [-AllLogin] [-AllOrders] [-AllOrganizations] [-AllPermissions] [-AllSource] [-AllTemplates] [-AllUsers] [-AccountsPath <string>] [-AccountsWhere <string>] [-AcquisitionsUnitsPath <string>] [-AcquisitionsUnitsWhere <string>] [-AddressTypesPath <string>] [-AddressTypesWhere <string>] [-AlertsPath <string>] [-AlertsWhere <string>] [-AlternativeTitleTypesPath <string>] [-AlternativeTitleTypesWhere <string>] [-BlocksPath <string>] [-BlocksWhere <string>] [-BudgetsPath <string>] [-BudgetsWhere <string>] [-CallNumberTypesPath <string>] [-CallNumberTypesWhere <string>] [-CampusesPath <string>] [-CampusesWhere <string>] [-CancellationReasonsPath <string>] [-CancellationReasonsWhere <string>] [-CategoriesPath <string>] [-CategoriesWhere <string>] [-CirculationRulesPath <string>] [-CirculationRulesWhere <string>] [-ClassificationTypesPath <string>] [-ClassificationTypesWhere <string>] [-CommentsPath <string>] [-CommentsWhere <string>] [-ConfigurationsPath <string>] [-ConfigurationsWhere <string>] [-ContactsPath <string>] [-ContactsWhere <string>] [-ContributorNameTypesPath <string>] [-ContributorNameTypesWhere <string>] [-ContributorTypesPath <string>] [-ContributorTypesWhere <string>] [-DocumentsPath <string>] [-DocumentsWhere <string>] [-ElectronicAccessRelationshipsPath <string>] [-ElectronicAccessRelationshipsWhere <string>] [-ErrorRecordsPath <string>] [-ErrorRecordsWhere <string>] [-FeesPath <string>] [-FeesWhere <string>] [-FeeActionsPath <string>] [-FeeActionsWhere <string>] [-FinanceGroupsPath <string>] [-FinanceGroupsWhere <string>] [-FiscalYearsPath <string>] [-FiscalYearsWhere <string>] [-FixedDueDateSchedulesPath <string>] [-FixedDueDateSchedulesWhere <string>] [-FundsPath <string>] [-FundsWhere <string>] [-FundDistributionsPath <string>] [-FundDistributionsWhere <string>] [-FundTypesPath <string>] [-FundTypesWhere <string>] [-GroupsPath <string>] [-GroupsWhere <string>] [-GroupFundFiscalYearsPath <string>] [-GroupFundFiscalYearsWhere <string>] [-HoldingsPath <string>] [-HoldingsWhere <string>] [-HoldingNoteTypesPath <string>] [-HoldingNoteTypesWhere <string>] [-HoldingTypesPath <string>] [-HoldingTypesWhere <string>] [-HridSettingsPath <string>] [-HridSettingsWhere <string>] [-IdTypesPath <string>] [-IdTypesWhere <string>] [-IllPoliciesPath <string>] [-IllPoliciesWhere <string>] [-InstancesPath <string>] [-InstancesWhere <string>] [-InstanceFormatsPath <string>] [-InstanceFormatsWhere <string>] [-InstanceNoteTypesPath <string>] [-InstanceNoteTypesWhere <string>] [-InstanceRelationshipsPath <string>] [-InstanceRelationshipsWhere <string>] [-InstanceRelationshipTypesPath <string>] [-InstanceRelationshipTypesWhere <string>] [-InstanceStatusesPath <string>] [-InstanceStatusesWhere <string>] [-InstanceTypesPath <string>] [-InstanceTypesWhere <string>] [-InstitutionsPath <string>] [-InstitutionsWhere <string>] [-InterfacesPath <string>] [-InterfacesWhere <string>] [-InterfaceCredentialsPath <string>] [-InterfaceCredentialsWhere <string>] [-InvoicesPath <string>] [-InvoicesWhere <string>] [-InvoiceItemsPath <string>] [-InvoiceItemsWhere <string>] [-ItemsPath <string>] [-ItemsWhere <string>] [-ItemDamagedStatusesPath <string>] [-ItemDamagedStatusesWhere <string>] [-ItemNoteTypesPath <string>] [-ItemNoteTypesWhere <string>] [-LedgersPath <string>] [-LedgersWhere <string>] [-LedgerFiscalYearsPath <string>] [-LedgerFiscalYearsWhere <string>] [-LibrariesPath <string>] [-LibrariesWhere <string>] [-LoansPath <string>] [-LoansWhere <string>] [-LoanPoliciesPath <string>] [-LoanPoliciesWhere <string>] [-LoanTypesPath <string>] [-LoanTypesWhere <string>] [-LocationsPath <string>] [-LocationsWhere <string>] [-LoginsPath <string>] [-LoginsWhere <string>] [-LostItemFeePoliciesPath <string>] [-LostItemFeePoliciesWhere <string>] [-MarcRecordsPath <string>] [-MarcRecordsWhere <string>] [-MaterialTypesPath <string>] [-MaterialTypesWhere <string>] [-ModeOfIssuancesPath <string>] [-ModeOfIssuancesWhere <string>] [-NatureOfContentTermsPath <string>] [-NatureOfContentTermsWhere <string>] [-OrdersPath <string>] [-OrdersWhere <string>] [-OrderInvoicesPath <string>] [-OrderInvoicesWhere <string>] [-OrderItemsPath <string>] [-OrderItemsWhere <string>] [-OrderTemplatesPath <string>] [-OrderTemplatesWhere <string>] [-OrderTransactionSummariesPath <string>] [-OrderTransactionSummariesWhere <string>] [-OrganizationsPath <string>] [-OrganizationsWhere <string>] [-OverdueFinePoliciesPath <string>] [-OverdueFinePoliciesWhere <string>] [-OwnersPath <string>] [-OwnersWhere <string>] [-PatronActionSessionsPath <string>] [-PatronActionSessionsWhere <string>] [-PatronNoticePoliciesPath <string>] [-PatronNoticePoliciesWhere <string>] [-PaymentsPath <string>] [-PaymentsWhere <string>] [-PermissionsPath <string>] [-PermissionsWhere <string>] [-PermissionsUsersPath <string>] [-PermissionsUsersWhere <string>] [-PiecesPath <string>] [-PiecesWhere <string>] [-ProxiesPath <string>] [-ProxiesWhere <string>] [-RawRecordsPath <string>] [-RawRecordsWhere <string>] [-RecordsPath <string>] [-RecordsWhere <string>] [-RefundsPath <string>] [-RefundsWhere <string>] [-ReportingCodesPath <string>] [-ReportingCodesWhere <string>] [-RequestsPath <string>] [-RequestsWhere <string>] [-RequestPoliciesPath <string>] [-RequestPoliciesWhere <string>] [-ScheduledNoticesPath <string>] [-ScheduledNoticesWhere <string>] [-ServicePointsPath <string>] [-ServicePointsWhere <string>] [-ServicePointUsersPath <string>] [-ServicePointUsersWhere <string>] [-SnapshotsPath <string>] [-SnapshotsWhere <string>] [-StaffSlipsPath <string>] [-StaffSlipsWhere <string>] [-StatisticalCodesPath <string>] [-StatisticalCodesWhere <string>] [-StatisticalCodeTypesPath <string>] [-StatisticalCodeTypesWhere <string>] [-TemplatesPath <string>] [-TemplatesWhere <string>] [-TransactionsPath <string>] [-TransactionsWhere <string>] [-TransfersPath <string>] [-TransfersWhere <string>] [-TransferCriteriasPath <string>] [-TransferCriteriasWhere <string>] [-UsersPath <string>] [-UsersWhere <string>] [-UserAcquisitionsUnitsPath <string>] [-UserAcquisitionsUnitsWhere <string>] [-UserRequestPreferencesPath <string>] [-UserRequestPreferencesWhere <string>] [-VouchersPath <string>] [-VouchersWhere <string>] [-VoucherItemsPath <string>] [-VoucherItemsWhere <string>] [-WaivesPath <string>] [-WaivesWhere <string>]");
                     return -1;
                 }
                 var all = args.Any(s3 => s3.Equals("-All", StringComparison.OrdinalIgnoreCase));
@@ -68,6 +68,7 @@ namespace FolioConsoleApplication
                 var allOrganizations = args.Any(s3 => s3.Equals("-AllOrganizations", StringComparison.OrdinalIgnoreCase));
                 var allPermissions = args.Any(s3 => s3.Equals("-AllPermissions", StringComparison.OrdinalIgnoreCase));
                 var allSource = args.Any(s3 => s3.Equals("-AllSource", StringComparison.OrdinalIgnoreCase));
+                var allTemplates = args.Any(s3 => s3.Equals("-AllTemplates", StringComparison.OrdinalIgnoreCase));
                 var allUsers = args.Any(s3 => s3.Equals("-AllUsers", StringComparison.OrdinalIgnoreCase));
                 var accountsPath = args.SkipWhile(s3 => !s3.Equals("-AccountsPath", StringComparison.OrdinalIgnoreCase)).Skip(1).FirstOrDefault();
                 var acquisitionsUnitsPath = args.SkipWhile(s3 => !s3.Equals("-AcquisitionsUnitsPath", StringComparison.OrdinalIgnoreCase)).Skip(1).FirstOrDefault();
@@ -162,6 +163,7 @@ namespace FolioConsoleApplication
                 var staffSlipsPath = args.SkipWhile(s3 => !s3.Equals("-StaffSlipsPath", StringComparison.OrdinalIgnoreCase)).Skip(1).FirstOrDefault();
                 var statisticalCodesPath = args.SkipWhile(s3 => !s3.Equals("-StatisticalCodesPath", StringComparison.OrdinalIgnoreCase)).Skip(1).FirstOrDefault();
                 var statisticalCodeTypesPath = args.SkipWhile(s3 => !s3.Equals("-StatisticalCodeTypesPath", StringComparison.OrdinalIgnoreCase)).Skip(1).FirstOrDefault();
+                var templatesPath = args.SkipWhile(s3 => !s3.Equals("-TemplatesPath", StringComparison.OrdinalIgnoreCase)).Skip(1).FirstOrDefault();
                 var transactionsPath = args.SkipWhile(s3 => !s3.Equals("-TransactionsPath", StringComparison.OrdinalIgnoreCase)).Skip(1).FirstOrDefault();
                 var transfersPath = args.SkipWhile(s3 => !s3.Equals("-TransfersPath", StringComparison.OrdinalIgnoreCase)).Skip(1).FirstOrDefault();
                 var transferCriteriasPath = args.SkipWhile(s3 => !s3.Equals("-TransferCriteriasPath", StringComparison.OrdinalIgnoreCase)).Skip(1).FirstOrDefault();
@@ -264,6 +266,7 @@ namespace FolioConsoleApplication
                 var staffSlipsWhere = args.SkipWhile(s3 => !s3.Equals("-StaffSlipsWhere", StringComparison.OrdinalIgnoreCase)).Skip(1).FirstOrDefault();
                 var statisticalCodesWhere = args.SkipWhile(s3 => !s3.Equals("-StatisticalCodesWhere", StringComparison.OrdinalIgnoreCase)).Skip(1).FirstOrDefault();
                 var statisticalCodeTypesWhere = args.SkipWhile(s3 => !s3.Equals("-StatisticalCodeTypesWhere", StringComparison.OrdinalIgnoreCase)).Skip(1).FirstOrDefault();
+                var templatesWhere = args.SkipWhile(s3 => !s3.Equals("-TemplatesWhere", StringComparison.OrdinalIgnoreCase)).Skip(1).FirstOrDefault();
                 var transactionsWhere = args.SkipWhile(s3 => !s3.Equals("-TransactionsWhere", StringComparison.OrdinalIgnoreCase)).Skip(1).FirstOrDefault();
                 var transfersWhere = args.SkipWhile(s3 => !s3.Equals("-TransfersWhere", StringComparison.OrdinalIgnoreCase)).Skip(1).FirstOrDefault();
                 var transferCriteriasWhere = args.SkipWhile(s3 => !s3.Equals("-TransferCriteriasWhere", StringComparison.OrdinalIgnoreCase)).Skip(1).FirstOrDefault();
@@ -368,6 +371,7 @@ namespace FolioConsoleApplication
                     staffSlipsPath = $"{path}/staffslips.json";
                     statisticalCodesPath = $"{path}/statisticalcodes.json";
                     statisticalCodeTypesPath = $"{path}/statisticalcodetypes.json";
+                    templatesPath = $"{path}/templates.json";
                     transactionsPath = $"{path}/transactions.json";
                     transfersPath = $"{path}/transfers.json";
                     transferCriteriasPath = $"{path}/transfercriterias.json";
@@ -509,6 +513,10 @@ namespace FolioConsoleApplication
                     recordsPath = $"{path}/records.json";
                     snapshotsPath = $"{path}/snapshots.json";
                 }
+                if (allTemplates)
+                {
+                    templatesPath = $"{path}/templates.json";
+                }
                 if (allUsers)
                 {
                     addressTypesPath = $"{path}/addresstypes.json";
@@ -518,6 +526,7 @@ namespace FolioConsoleApplication
                 }
                 var l = new List<Action>();
                 if (save && configurationsPath != null) l.Add(() => SaveConfigurations(configurationsPath, configurationsWhere));
+                if (save && templatesPath != null) l.Add(() => SaveTemplates(templatesPath, templatesWhere));
                 if (save && addressTypesPath != null) l.Add(() => SaveAddressTypes(addressTypesPath, addressTypesWhere));
                 if (save && groupsPath != null) l.Add(() => SaveGroups(groupsPath, groupsWhere));
                 if (save && usersPath != null) l.Add(() => SaveUsers(usersPath, usersWhere));
@@ -721,8 +730,10 @@ namespace FolioConsoleApplication
                 if (delete && usersPath != null) DeleteUsers(usersWhere);
                 if (delete && groupsPath != null) DeleteGroups(groupsWhere);
                 if (delete && addressTypesPath != null) DeleteAddressTypes(addressTypesWhere);
+                if (delete && templatesPath != null) DeleteTemplates(templatesWhere);
                 if (delete && configurationsPath != null) DeleteConfigurations(configurationsWhere);
                 if (load && configurationsPath != null) LoadConfigurations(configurationsPath);
+                if (load && templatesPath != null) LoadTemplates(templatesPath);
                 if (load && addressTypesPath != null) LoadAddressTypes(addressTypesPath);
                 if (load && groupsPath != null) LoadGroups(groupsPath);
                 if (load && usersPath != null) LoadUsers(usersPath);
@@ -12632,6 +12643,134 @@ namespace FolioConsoleApplication
                 jtw.WriteEndArray();
                 traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
                 traceSource.TraceEvent(TraceEventType.Information, 0, $"Saved {i} statistical code types");
+            }
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"{s.Elapsed} elapsed");
+        }
+
+        public static void DeleteTemplates(string where = null)
+        {
+            traceSource.TraceEvent(TraceEventType.Information, 0, "Deleting templates");
+            var s = Stopwatch.StartNew();
+            using (var fbcc = new FolioBulkCopyContext())
+            using (var fsc = new FolioServiceClient())
+            {
+                var i = 0;
+                if (api)
+                {
+                    var s2 = Stopwatch.StartNew();
+                    foreach (var jo in fsc.Templates(where))
+                    {
+                        if (!whatIf) fsc.DeleteTemplate((string)jo["id"]);
+                        if (++i % 100 == 0)
+                        {
+                            traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
+                            s2.Restart();
+                        }
+                    }
+                    traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
+                }
+                else
+                {
+                    if (!whatIf) i = fbcc.ExecuteNonQuery($"DELETE FROM diku_mod_template_engine.template{(where != null ? $" WHERE {where}" : "")}");
+                }
+                traceSource.TraceEvent(TraceEventType.Information, 0, $"Deleted {i} templates");
+            }
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"{s.Elapsed} elapsed");
+        }
+
+        public static void LoadTemplates(string path)
+        {
+            traceSource.TraceEvent(TraceEventType.Information, 0, "Loading templates");
+            var s = Stopwatch.StartNew();
+            using (var sr = new StreamReader(compress || path.EndsWith(".gz") ? (Stream)new GZipStream(File.OpenRead($"{path}{(path.EndsWith(".gz") ? "" : ".gz")}"), CompressionMode.Decompress) : File.OpenRead(path)))
+            using (var sr2 = new StreamReader(Assembly.GetAssembly(typeof(FolioContext)).GetManifestResourceStream("FolioLibrary.Template.json")))
+            using (var jtr = new JsonTextReader(sr) { SupportMultipleContent = true })
+            using (var fbcc = new FolioBulkCopyContext())
+            using (var fsc = new FolioServiceClient())
+            {
+                var s2 = Stopwatch.StartNew();
+                var js4 = JsonSchema.FromJsonAsync(sr2.ReadToEndAsync().Result).Result;
+                var js = new JsonSerializer();
+                jtr.Read();
+                var i = 0;
+                while (jtr.Read() && jtr.TokenType != JsonToken.EndArray)
+                {
+                    if (take != null && take <= i) break;
+                    ++i;
+                    var jo = (JObject)js.Deserialize(jtr);
+                    if (validate)
+                    {
+                        var l = js4.Validate(jo);
+                        if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"Template {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"Template {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
+                    }
+                    if (api)
+                    {
+                        if (!whatIf) fsc.InsertTemplate(jo);
+                        if (i % 100 == 0)
+                        {
+                            traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
+                            s2.Restart();
+                        }
+                    }
+                    else
+                    {
+                        if (!whatIf) fbcc.Insert(new Template
+                        {
+                            Id = (Guid?)jo.SelectToken("id"),
+                            Content = jo.ToString(),
+                            CreationTime = (DateTime?)jo.SelectToken("metadata.createdDate"),
+                            CreationUserId = (string)jo.SelectToken("metadata.createdByUserId")
+                        });
+                        if (i % 1000 == 0)
+                        {
+                            fbcc.Commit();
+                            if (i % 10000 == 0)
+                            {
+                                traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
+                                s2.Restart();
+                            }
+                        }
+                    }
+                }
+                fbcc.Commit();
+                traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
+                traceSource.TraceEvent(TraceEventType.Information, 0, $"Added {i} templates");
+            }
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"{s.Elapsed} elapsed");
+        }
+
+        public static void SaveTemplates(string path, string where = null)
+        {
+            traceSource.TraceEvent(TraceEventType.Information, 0, "Saving templates");
+            var s = Stopwatch.StartNew();
+            using (var fdc = new FolioDapperContext())
+            using (var fsc = new FolioServiceClient())
+            using (var sr = new StreamReader(Assembly.GetAssembly(typeof(FolioContext)).GetManifestResourceStream("FolioLibrary.Template.json")))
+            using (var sw = new StreamWriter(whatIf ? new MemoryStream() : compress ? (Stream)new GZipStream(new FileStream($"{path}.gz", FileMode.Create), CompressionMode.Compress) : new FileStream(path, FileMode.Create)))
+            using (var jtw = new JsonTextWriter(sw))
+            {
+                var s2 = Stopwatch.StartNew();
+                var js4 = JsonSchema.FromJsonAsync(sr.ReadToEndAsync().Result).Result;
+                var js = new JsonSerializer { Formatting = Formatting.Indented };
+                jtw.WriteStartArray();
+                var i = 0;
+                foreach (var jo in api ? fsc.Templates(where, take: take) : fdc.Templates(where, take: take).Select(t => JObject.Parse(t.Content)))
+                {
+                    if (validate)
+                    {
+                        var l = js4.Validate(jo);
+                        if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"Template {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"Template {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
+                    }
+                    if (!whatIf) js.Serialize(jtw, jo);
+                    if (++i % 10000 == 0)
+                    {
+                        traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
+                        s2.Restart();
+                    }
+                }
+                jtw.WriteEndArray();
+                traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
+                traceSource.TraceEvent(TraceEventType.Information, 0, $"Saved {i} templates");
             }
             traceSource.TraceEvent(TraceEventType.Information, 0, $"{s.Elapsed} elapsed");
         }

@@ -181,6 +181,7 @@ namespace FolioLibrary
             if (IsPostgreSql) modelBuilder.Entity<StatisticalCode>().Property(nameof(StatisticalCode.Content)).HasColumnType("jsonb");
             if (IsPostgreSql) modelBuilder.Entity<StatisticalCodeType>().Property(nameof(StatisticalCodeType.Content)).HasColumnType("jsonb");
             if (IsPostgreSql) modelBuilder.Entity<Tag>().Property(nameof(Tag.Content)).HasColumnType("jsonb");
+            if (IsPostgreSql) modelBuilder.Entity<Template>().Property(nameof(Template.Content)).HasColumnType("jsonb");
             if (IsPostgreSql) modelBuilder.Entity<Transaction>().Property(nameof(Transaction.Content)).HasColumnType("jsonb");
             if (IsPostgreSql) modelBuilder.Entity<Transfer>().Property(nameof(Transfer.Content)).HasColumnType("jsonb");
             if (IsPostgreSql) modelBuilder.Entity<TransferCriteria>().Property(nameof(TransferCriteria.Content)).HasColumnType("jsonb");
@@ -363,6 +364,7 @@ namespace FolioLibrary
         public DbSet<StatisticalCode> StatisticalCodes { get; set; }
         public DbSet<StatisticalCodeType> StatisticalCodeTypes { get; set; }
         public DbSet<Tag> Tags { get; set; }
+        public DbSet<Template> Templates { get; set; }
         public DbSet<Transaction> Transactions { get; set; }
         public DbSet<Transfer> Transfers { get; set; }
         public DbSet<TransferCriteria> TransferCriterias { get; set; }

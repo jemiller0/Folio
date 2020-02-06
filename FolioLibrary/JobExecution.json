@@ -58,6 +58,9 @@
         "name"
       ]
     },
+    "jobProfileSnapshotWrapperId": {
+      "$ref": "#/properties/id"
+    },
     "sourcePath": {
       "description": "Path to the file",
       "type": "string"

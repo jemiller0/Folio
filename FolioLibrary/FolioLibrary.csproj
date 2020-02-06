@@ -107,6 +107,7 @@
     <None Remove="StatisticalCode.json" />
     <None Remove="StatisticalCodeType.json" />
     <None Remove="Tag.json" />
+    <None Remove="Template.json" />
     <None Remove="Transaction.json" />
     <None Remove="Transfer.json" />
     <None Remove="TransferCriteria.json" />
@@ -220,6 +221,7 @@
     <EmbeddedResource Include="StatisticalCode.json" />
     <EmbeddedResource Include="StatisticalCodeType.json" />
     <EmbeddedResource Include="Tag.json" />
+    <EmbeddedResource Include="Template.json" />
     <EmbeddedResource Include="Transaction.json" />
     <EmbeddedResource Include="Transfer.json" />
     <EmbeddedResource Include="TransferCriteria.json" />
@@ -230,14 +232,14 @@
     <EmbeddedResource Include="VoucherItem.json" />
     <EmbeddedResource Include="Waive.json" />
   </ItemGroup>
-
+  
   <ItemGroup>
     <PackageReference Include="Dapper" Version="2.0.30" />
     <PackageReference Include="Microsoft.CSharp" Version="4.7.0" />
     <PackageReference Include="Newtonsoft.Json" Version="12.0.3" />
     <PackageReference Include="Newtonsoft.Json.Schema" Version="3.0.13" />
     <PackageReference Include="NJsonSchema" Version="10.1.5" />
-    <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="3.1.1.1" />
+    <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="3.1.1.2" />
     <PackageReference Include="System.Configuration.ConfigurationManager" Version="4.7.0" />
   </ItemGroup>
 
