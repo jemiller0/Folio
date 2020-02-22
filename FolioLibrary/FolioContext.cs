@@ -66,7 +66,6 @@ namespace FolioLibrary
             else if (IsMySql)
             {
                 throw new NotSupportedException();
-                optionsBuilder.AddInterceptors(new MySqlCommandInterceptor());
             }
             else if (IsPostgreSql)
                 optionsBuilder.UseNpgsql(connectionString);
@@ -280,6 +279,7 @@ namespace FolioLibrary
         public DbSet<Contact> Contacts { get; set; }
         public DbSet<ContributorNameType> ContributorNameTypes { get; set; }
         public DbSet<ContributorType> ContributorTypes { get; set; }
+        public DbSet<Country> Countries { get; set; }
         public DbSet<Document> Documents { get; set; }
         public DbSet<ElectronicAccessRelationship> ElectronicAccessRelationships { get; set; }
         public DbSet<ErrorRecord> ErrorRecords { get; set; }

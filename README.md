@@ -22,10 +22,21 @@ Get a copy of the project source code by cloning it from the GitHub repository.
 git clone https://github.com/jemiller0/Folio.git
 ```
 
-Build the project.
+Change to the project directory.
 
 ```
 cd Folio
+```
+
+If you are going to use SQL and are using a tenant name other than the default "diku" tenant name, change the tenant name to the name of your tenant. Replace TENANT below with the name of your tenant. Warning: this command does a recursive replace on all files under the current directory. Make sure you run it from the project directory.
+
+```
+grep -rlZ 'diku_' . | xargs -0 sed -i 's/diku_/TENANT_/g'
+```
+
+Build the project.
+
+```
 dotnet build
 ```
 
@@ -33,7 +44,7 @@ Run the application without specifying any arguments for the first time to gener
 
 ```
 cd FolioConsoleApplication/bin/Debug/netcoreapp3.1
-dotnet FolioConsoleApplication.dll
+./folio
 ```
 
 To load and save data using PostgreSQL SQL, specify the host name, username, password, and database in `ConnectionStrings.config`.
@@ -53,103 +64,115 @@ vim AppSettings.config
 ### Save all using SQL
 
 ```
-dotnet FolioConsoleApplication.dll -save -all
+./folio -save -all
 ```
 
 ### Save all using web API
 
 ```
-dotnet FolioConsoleApplication.dll -save -all -api
+./folio -save -all -api
 ```
 
 ### Load all using SQL
 
 ```
-dotnet FolioConsoleApplication.dll -delete -load -all
+./folio -delete -load -all
 ```
 
 ### Save all users module using SQL
 
 ```
-dotnet FolioConsoleApplication.dll -save -allusers
+./folio -save -allusers
 ```
 
 ### Load all users module using SQL
 
 ```
-dotnet FolioConsoleApplication.dll -delete -load -allusers
+./folio -delete -load -allusers
 ```
 
 ### Save users using SQL
 
 ```
-dotnet FolioConsoleApplication.dll -save -userspath users.json
+./folio -save -userspath users.json
 ```
 
 ### Load users using SQL
 
 ```
-dotnet FolioConsoleApplication.dll -delete -load -userspath users.json
+./folio -delete -load -userspath users.json
+```
+
+### Update users, disable users that weren't updated excluding the current user using SQL
+
+```
+./folio -update -disable -userspath users.json
+```
+
+### Update users, disable users that weren't updated excluding the current user and matching a where filter using SQL
+
+```
+./folio -update -disable -userspath users.json -userswhere "jsonb#>>'{customFields,source}' = 'University'"
 ```
 
 ### Save users, permissions users, and logins without admin using SQL
 ```
-dotnet FolioConsoleApplication.dll -save -userspath users.json -userswhere "id != '53c92517-e96d-4233-b9e6-3cc410bf36bf'" -permissionsuserspath permissionsusers.json -permissionsuserswhere "jsonb->>'userId' != '53c92517-e96d-4233-b9e6-3cc410bf36bf'" -loginspath logins.json -loginswhere "jsonb->>'userId' != '53c92517-e96d-4233-b9e6-3cc410bf36bf'" -verbose
+./folio -save -userspath users.json -userswhere "id != '53c92517-e96d-4233-b9e6-3cc410bf36bf'" -permissionsuserspath permissionsusers.json -permissionsuserswhere "jsonb->>'userId' != '53c92517-e96d-4233-b9e6-3cc410bf36bf'" -loginspath logins.json -loginswhere "jsonb->>'userId' != '53c92517-e96d-4233-b9e6-3cc410bf36bf'" -verbose
 ```
 
 ### Load users, permissions users, and logins without admin using SQL
 ```
-dotnet FolioConsoleApplication.dll -delete -load -userspath users.json -userswhere "id != '53c92517-e96d-4233-b9e6-3cc410bf36bf'" -permissionsuserspath permissionsusers.json -permissionsuserswhere "jsonb->>'userId' != '53c92517-e96d-4233-b9e6-3cc410bf36bf'" -loginspath logins.json -loginswhere "jsonb->>'userId' != '53c92517-e96d-4233-b9e6-3cc410bf36bf'" -verbose
+./folio -delete -load -userspath users.json -userswhere "id != '53c92517-e96d-4233-b9e6-3cc410bf36bf'" -permissionsuserspath permissionsusers.json -permissionsuserswhere "jsonb->>'userId' != '53c92517-e96d-4233-b9e6-3cc410bf36bf'" -loginspath logins.json -loginswhere "jsonb->>'userId' != '53c92517-e96d-4233-b9e6-3cc410bf36bf'" -verbose
 ```
 
 ### Save users and permissions users without admin using web API
 ```
-dotnet FolioConsoleApplication.dll -save -userspath users.json -userswhere "id <> 53c92517-e96d-4233-b9e6-3cc410bf36bf" -permissionsuserspath permissionsusers.json -permissionsuserswhere "userId <> 53c92517-e96d-4233-b9e6-3cc410bf36bf" -api
+./folio -save -userspath users.json -userswhere "id <> 53c92517-e96d-4233-b9e6-3cc410bf36bf" -permissionsuserspath permissionsusers.json -permissionsuserswhere "userId <> 53c92517-e96d-4233-b9e6-3cc410bf36bf" -api
 ```
 
 ### Load users and permissions users without admin using web API
 ```
-dotnet FolioConsoleApplication.dll -delete -load -userspath users.json -userswhere "id <> 53c92517-e96d-4233-b9e6-3cc410bf36bf" -permissionsuserspath permissionsusers.json -permissionsuserswhere "userId <> 53c92517-e96d-4233-b9e6-3cc410bf36bf" -api
+./folio -delete -load -userspath users.json -userswhere "id <> 53c92517-e96d-4233-b9e6-3cc410bf36bf" -permissionsuserspath permissionsusers.json -permissionsuserswhere "userId <> 53c92517-e96d-4233-b9e6-3cc410bf36bf" -api
 ```
 
 ### Save all inventory module and validate
 ```
-dotnet FolioConsoleApplication.dll -save -allinventory -validate -force
+./folio -save -allinventory -validate -force
 ```
 
 ### Validate all
 ```
-dotnet FolioConsoleApplication.dll -save -all -validate -force -whatif
+./folio -save -all -validate -force -whatif
 ```
 
 ### Save all using SQL to GZip compressed files
 
 ```
-dotnet FolioConsoleApplication.dll -save -all -compress
+./folio -save -all -compress
 ```
 
 ### Load all using SQL from GZip compressed files
 
 ```
-dotnet FolioConsoleApplication.dll -delete -load -all -compress
+./folio -delete -load -all -compress
 ```
 
 ### Load users using SQL from GZip compressed file
 
 ```
-dotnet FolioConsoleApplication.dll -delete -load -userspath users.json.gz
+./folio -delete -load -userspath users.json.gz
 ```
 
 ### Save all using SQL to path
 
 ```
-dotnet FolioConsoleApplication.dll -save -all -path data
+./folio -save -all -path data
 ```
 
 ### Save all using SQL using 16 threads
 
 ```
-dotnet FolioConsoleApplication.dll -save -all -threads 16
+./folio -save -all -threads 16
 ```
 
 ## Parameters
