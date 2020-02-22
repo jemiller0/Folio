@@ -13307,7 +13307,7 @@ namespace FolioConsoleApplication
                         jo = jo2;
                     }
                     else
-                        if ((string)jo["id"] == null) jo["id"] = Guid.NewGuid();
+                        if ((string)jo["id"] == null) jo["id"] = Guid.NewGuid().ToString();
                     jo.RemoveNullAndEmptyProperties();
                     if (validate)
                     {

@@ -115,6 +115,12 @@ vim AppSettings.config
 ./folio -validate -update -disable -userspath users.json -userswhere "jsonb#>>'{customFields,source}' = 'University'"
 ```
 
+### Update users using API
+
+```
+./folio -update -userspath users.json -api
+```
+
 ### Save users, permissions users, and logins without admin using SQL
 ```
 ./folio -save -userspath users.json -userswhere "id != '53c92517-e96d-4233-b9e6-3cc410bf36bf'" -permissionsuserspath permissionsusers.json -permissionsuserswhere "jsonb->>'userId' != '53c92517-e96d-4233-b9e6-3cc410bf36bf'" -loginspath logins.json -loginswhere "jsonb->>'userId' != '53c92517-e96d-4233-b9e6-3cc410bf36bf'" -verbose
