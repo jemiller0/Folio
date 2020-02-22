@@ -28,7 +28,7 @@ Change to the project directory.
 cd Folio
 ```
 
-If you are going to use SQL and are using a tenant name other than the default "diku" tenant name, change the tenant name to the name of your tenant. Replace TENANT below with the name of your tenant. Warning: this command does a recursive replace on all files under the current directory. Make sure you run it from the project directory.
+If you are going to use SQL and are using a tenant name other than the default "diku" tenant name, change the tenant name to the name of your tenant. Replace TENANT below with the name of your tenant. Warning: this command does a recursive replace on all files in the current directory. Make sure you run it from the project directory.
 
 ```
 grep -rlZ 'diku_' . | xargs -0 sed -i 's/diku_/TENANT_/g'
@@ -103,16 +103,16 @@ vim AppSettings.config
 ./folio -delete -load -userspath users.json
 ```
 
-### Update users, disable users that weren't updated excluding the current user using SQL
+### Validate and update users, and disable users that weren't updated excluding the current user using SQL
 
 ```
-./folio -update -disable -userspath users.json
+./folio -validate -update -disable -userspath users.json
 ```
 
-### Update users, disable users that weren't updated excluding the current user and matching a where filter using SQL
+### Validate and update users, and disable users that weren't updated excluding the current user and matching a where filter using SQL
 
 ```
-./folio -update -disable -userspath users.json -userswhere "jsonb#>>'{customFields,source}' = 'University'"
+./folio -validate -update -disable -userspath users.json -userswhere "jsonb#>>'{customFields,source}' = 'University'"
 ```
 
 ### Save users, permissions users, and logins without admin using SQL
