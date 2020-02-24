@@ -84,42 +84,31 @@
       "type": "boolean",
       "default": false
     },
-    "renewal": {
-      "description": "renewal details for Purchase Order",
+    "ongoing": {
+      "description": "Ongoing details for Purchase Order",
       "type": "object",
       "additionalProperties": false,
       "properties": {
-        "cycle": {
-          "description": "length of the renewal cycle",
-          "type": "string",
-          "enum": [
-            "Two Years",
-            "One Year",
-            "3 Months",
-            "6 Months",
-            "1 Month",
-            "Manual"
-          ]
-        },
         "interval": {
-          "description": "renewal interval (in days?)",
+          "description": "Renewal interval (in days)",
           "type": "integer"
         },
-        "manualRenewal": {
-          "description": "whether or not this is a manual renewal",
+        "isSubscription": {
+          "description": "Whether or not this is a subscription",
           "type": "boolean",
-          "default": false
+          "default": "false"
+        },
+        "manualRenewal": {
+          "description": "Whether or not this is a manual renewal",
+          "type": "boolean"
         },
         "reviewPeriod": {
-          "description": "time prior to renewal where changes can be made to subscription",
+          "description": "Time prior to renewal where changes can be made to subscription",
           "type": "integer"
         },
         "renewalDate": {
-          "description": "date renewal was confirmed by vendor or sent to vendor",
-          "type": [
-            "string",
-            "null"
-          ],
+          "description": "The date this Ongoing PO's order lines were renewed",
+          "type": "string",
           "format": "date-time"
         }
       }
