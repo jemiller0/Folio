@@ -57,9 +57,12 @@ namespace FolioConsoleApplication
                 var delete = args.Any(s3 => s3.Equals("-Delete", StringComparison.OrdinalIgnoreCase));
                 var disable = args.Any(s3 => s3.Equals("-Disable", StringComparison.OrdinalIgnoreCase));
                 force = args.Any(s3 => s3.Equals("-Force", StringComparison.OrdinalIgnoreCase));
+                var import = args.Any(s3 => s3.Equals("-Import", StringComparison.OrdinalIgnoreCase));
                 var load = args.Any(s3 => s3.Equals("-Load", StringComparison.OrdinalIgnoreCase));
+                var merge = args.Any(s3 => s3.Equals("-Merge", StringComparison.OrdinalIgnoreCase));
                 var path = args.SkipWhile(s3 => !s3.Equals("-Path", StringComparison.OrdinalIgnoreCase)).Skip(1).FirstOrDefault() ?? ".";
                 var save = args.Any(s3 => s3.Equals("-Save", StringComparison.OrdinalIgnoreCase));
+                var source = args.SkipWhile(s3 => !s3.Equals("-Source", StringComparison.OrdinalIgnoreCase)).Skip(1).FirstOrDefault();
                 take = int.TryParse(args.SkipWhile(s3 => !s3.Equals("-Take", StringComparison.OrdinalIgnoreCase)).Skip(1).FirstOrDefault(), out int i) ? (int?)i : null;
                 var threads = int.TryParse(args.SkipWhile(s3 => !s3.Equals("-Threads", StringComparison.OrdinalIgnoreCase)).Skip(1).FirstOrDefault(), out i) ? (int?)i : null;
                 var update = args.Any(s3 => s3.Equals("-Update", StringComparison.OrdinalIgnoreCase));
@@ -741,6 +744,7 @@ namespace FolioConsoleApplication
                 if (delete && addressTypesPath != null) DeleteAddressTypes(addressTypesWhere);
                 if (delete && templatesPath != null) DeleteTemplates(templatesWhere);
                 if (delete && configurationsPath != null) DeleteConfigurations(configurationsWhere);
+                if (import && usersPath != null) ImportUsers(usersPath, source, disable, merge);
                 if (load && configurationsPath != null) LoadConfigurations(configurationsPath);
                 if (load && templatesPath != null) LoadTemplates(templatesPath);
                 if (load && addressTypesPath != null) LoadAddressTypes(addressTypesPath);
@@ -13356,6 +13360,23 @@ namespace FolioConsoleApplication
                     }
                     traceSource.TraceEvent(TraceEventType.Information, 0, $"Disabled {k} users");
                 }
+            }
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"{s.Elapsed} elapsed");
+        }
+
+        public static void ImportUsers(string path, string source = null, bool disable = true, bool merge = true)
+        {
+            traceSource.TraceEvent(TraceEventType.Information, 0, "Importing users");
+            var s = Stopwatch.StartNew();
+            using (var fsc = new FolioServiceClient())
+            {
+                var l = JToken.Parse(File.ReadAllText(path)).Cast<JObject>();
+                if (take != null) l = l.Take(take.Value);
+                var jo = fsc.ImportUsers(l, source, disable, merge);
+                traceSource.TraceEvent(TraceEventType.Information, 0, $"{jo["totalRecords"]} {s.Elapsed}");
+                traceSource.TraceEvent(TraceEventType.Information, 0, $"Added {jo["createdRecords"]} users");
+                traceSource.TraceEvent(TraceEventType.Information, 0, $"Updated {jo["updatedRecords"]} users");
+                traceSource.TraceEvent(TraceEventType.Information, 0, $"Failed {jo["failedRecords"]} users");
             }
             traceSource.TraceEvent(TraceEventType.Information, 0, $"{s.Elapsed} elapsed");
         }

@@ -12,6 +12,7 @@ using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Security.Authentication;
 using System.Text;
+using System.Threading;
 
 namespace FolioLibrary
 {
@@ -19,7 +20,7 @@ namespace FolioLibrary
     {
         private string accessToken = ConfigurationManager.AppSettings["accessToken"];
         private Formatting formatting = traceSource.Switch.Level == SourceLevels.Verbose ? Formatting.Indented : Formatting.None;
-        private HttpClient httpClient = new HttpClient();
+        private HttpClient httpClient = new HttpClient { Timeout = Timeout.InfiniteTimeSpan };
         private readonly static JsonSerializerSettings jsonSerializerSettings = new JsonSerializerSettings { ContractResolver = new CamelCasePropertyNamesContractResolver(), NullValueHandling = NullValueHandling.Ignore, Formatting = Formatting.Indented };
         public string Password { get; set; } = ConfigurationManager.AppSettings["password"];
         public string Tenant { get; set; } = ConfigurationManager.AppSettings["tenant"];
@@ -8855,6 +8856,25 @@ namespace FolioLibrary
             traceSource.TraceEvent(TraceEventType.Verbose, 0, s2);
             if (hrm.StatusCode != HttpStatusCode.NoContent) throw new HttpRequestException($"Response status code does not indicate success: {hrm.StatusCode} ({hrm.ReasonPhrase}).\r\n{s2}");
             traceSource.TraceEvent(TraceEventType.Verbose, 0, s.Elapsed.ToString());
+        }
+
+        public JObject ImportUsers(IEnumerable<JObject> users, string source = null, bool disable = true, bool merge = true)
+        {
+            var s = Stopwatch.StartNew();
+            traceSource.TraceEvent(TraceEventType.Verbose, 0, $"Importing users {string.Join(", ", users.Select(u => u["id"]))}");
+            AuthenticateIfNecessary();
+            var url = $"{Url}/user-import";
+            traceSource.TraceEvent(TraceEventType.Verbose, 0, url);
+            var s2 = new JObject(new JProperty("users", new JArray(users)), new JProperty("totalRecords", users.Count()), new JProperty("deactivateMissingUsers", disable), new JProperty("updateOnlyPresentFields", merge), new JProperty("sourceType", source)).ToString(formatting);
+            traceSource.TraceEvent(TraceEventType.Verbose, 0, s2);
+            var sc = new StringContent(s2, Encoding.UTF8, "application/json");
+            var hrm = httpClient.PostAsync(url, sc).Result;
+            s2 = hrm.Content.ReadAsStringAsync().Result;
+            var jo = hrm.Content.Headers?.ContentType?.MediaType == "application/json" ? JObject.Parse(s2) : null;
+            traceSource.TraceEvent(TraceEventType.Verbose, 0, s2);
+            if (hrm.StatusCode != HttpStatusCode.OK) throw new HttpRequestException($"Response status code does not indicate success: {hrm.StatusCode} ({hrm.ReasonPhrase}).\r\n{s2}");
+            traceSource.TraceEvent(TraceEventType.Verbose, 0, s.Elapsed.ToString());
+            return jo;
         }
 
         public void DeleteUser(string id)
