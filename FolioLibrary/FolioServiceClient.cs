@@ -80,7 +80,7 @@ namespace FolioLibrary
             using (var sr = new StreamReader(hrm.Content.ReadAsStreamAsync().Result))
             using (var jtr = new JsonTextReader(sr) { SupportMultipleContent = true })
             {
-                jtr.Read(); jtr.Read(); jtr.Read();
+                if (!jtr.Read()) throw new InvalidDataException(hrm.Content.ReadAsStringAsync().Result); jtr.Read(); jtr.Read();
                 var js = new JsonSerializer();
                 while (jtr.Read() && jtr.TokenType != JsonToken.EndArray)
                 {
@@ -177,7 +177,7 @@ namespace FolioLibrary
             using (var sr = new StreamReader(hrm.Content.ReadAsStreamAsync().Result))
             using (var jtr = new JsonTextReader(sr) { SupportMultipleContent = true })
             {
-                jtr.Read(); jtr.Read(); jtr.Read();
+                if (!jtr.Read()) throw new InvalidDataException(hrm.Content.ReadAsStringAsync().Result); jtr.Read(); jtr.Read();
                 var js = new JsonSerializer();
                 while (jtr.Read() && jtr.TokenType != JsonToken.EndArray)
                 {
@@ -274,7 +274,7 @@ namespace FolioLibrary
             using (var sr = new StreamReader(hrm.Content.ReadAsStreamAsync().Result))
             using (var jtr = new JsonTextReader(sr) { SupportMultipleContent = true })
             {
-                jtr.Read(); jtr.Read(); jtr.Read();
+                if (!jtr.Read()) throw new InvalidDataException(hrm.Content.ReadAsStringAsync().Result); jtr.Read(); jtr.Read();
                 var js = new JsonSerializer();
                 while (jtr.Read() && jtr.TokenType != JsonToken.EndArray)
                 {
@@ -371,7 +371,7 @@ namespace FolioLibrary
             using (var sr = new StreamReader(hrm.Content.ReadAsStreamAsync().Result))
             using (var jtr = new JsonTextReader(sr) { SupportMultipleContent = true })
             {
-                jtr.Read(); jtr.Read(); jtr.Read();
+                if (!jtr.Read()) throw new InvalidDataException(hrm.Content.ReadAsStringAsync().Result); jtr.Read(); jtr.Read();
                 var js = new JsonSerializer();
                 while (jtr.Read() && jtr.TokenType != JsonToken.EndArray)
                 {
@@ -468,7 +468,7 @@ namespace FolioLibrary
             using (var sr = new StreamReader(hrm.Content.ReadAsStreamAsync().Result))
             using (var jtr = new JsonTextReader(sr) { SupportMultipleContent = true })
             {
-                jtr.Read(); jtr.Read(); jtr.Read();
+                if (!jtr.Read()) throw new InvalidDataException(hrm.Content.ReadAsStringAsync().Result); jtr.Read(); jtr.Read();
                 var js = new JsonSerializer();
                 while (jtr.Read() && jtr.TokenType != JsonToken.EndArray)
                 {
@@ -565,7 +565,7 @@ namespace FolioLibrary
             using (var sr = new StreamReader(hrm.Content.ReadAsStreamAsync().Result))
             using (var jtr = new JsonTextReader(sr) { SupportMultipleContent = true })
             {
-                jtr.Read(); jtr.Read(); jtr.Read();
+                if (!jtr.Read()) throw new InvalidDataException(hrm.Content.ReadAsStringAsync().Result); jtr.Read(); jtr.Read();
                 var js = new JsonSerializer();
                 while (jtr.Read() && jtr.TokenType != JsonToken.EndArray)
                 {
@@ -662,7 +662,7 @@ namespace FolioLibrary
             using (var sr = new StreamReader(hrm.Content.ReadAsStreamAsync().Result))
             using (var jtr = new JsonTextReader(sr) { SupportMultipleContent = true })
             {
-                jtr.Read(); jtr.Read(); jtr.Read();
+                if (!jtr.Read()) throw new InvalidDataException(hrm.Content.ReadAsStringAsync().Result); jtr.Read(); jtr.Read();
                 var js = new JsonSerializer();
                 while (jtr.Read() && jtr.TokenType != JsonToken.EndArray)
                 {
@@ -759,7 +759,7 @@ namespace FolioLibrary
             using (var sr = new StreamReader(hrm.Content.ReadAsStreamAsync().Result))
             using (var jtr = new JsonTextReader(sr) { SupportMultipleContent = true })
             {
-                jtr.Read(); jtr.Read(); jtr.Read();
+                if (!jtr.Read()) throw new InvalidDataException(hrm.Content.ReadAsStringAsync().Result); jtr.Read(); jtr.Read();
                 var js = new JsonSerializer();
                 while (jtr.Read() && jtr.TokenType != JsonToken.EndArray)
                 {
@@ -856,7 +856,7 @@ namespace FolioLibrary
             using (var sr = new StreamReader(hrm.Content.ReadAsStreamAsync().Result))
             using (var jtr = new JsonTextReader(sr) { SupportMultipleContent = true })
             {
-                jtr.Read(); jtr.Read(); jtr.Read();
+                if (!jtr.Read()) throw new InvalidDataException(hrm.Content.ReadAsStringAsync().Result); jtr.Read(); jtr.Read();
                 var js = new JsonSerializer();
                 while (jtr.Read() && jtr.TokenType != JsonToken.EndArray)
                 {
@@ -953,7 +953,7 @@ namespace FolioLibrary
             using (var sr = new StreamReader(hrm.Content.ReadAsStreamAsync().Result))
             using (var jtr = new JsonTextReader(sr) { SupportMultipleContent = true })
             {
-                jtr.Read(); jtr.Read(); jtr.Read();
+                if (!jtr.Read()) throw new InvalidDataException(hrm.Content.ReadAsStringAsync().Result); jtr.Read(); jtr.Read();
                 var js = new JsonSerializer();
                 while (jtr.Read() && jtr.TokenType != JsonToken.EndArray)
                 {
@@ -1050,7 +1050,7 @@ namespace FolioLibrary
             using (var sr = new StreamReader(hrm.Content.ReadAsStreamAsync().Result))
             using (var jtr = new JsonTextReader(sr) { SupportMultipleContent = true })
             {
-                jtr.Read(); jtr.Read(); jtr.Read();
+                if (!jtr.Read()) throw new InvalidDataException(hrm.Content.ReadAsStringAsync().Result); jtr.Read(); jtr.Read();
                 var js = new JsonSerializer();
                 while (jtr.Read() && jtr.TokenType != JsonToken.EndArray)
                 {
@@ -1147,7 +1147,7 @@ namespace FolioLibrary
             using (var sr = new StreamReader(hrm.Content.ReadAsStreamAsync().Result))
             using (var jtr = new JsonTextReader(sr) { SupportMultipleContent = true })
             {
-                jtr.Read(); jtr.Read(); jtr.Read();
+                if (!jtr.Read()) throw new InvalidDataException(hrm.Content.ReadAsStringAsync().Result); jtr.Read(); jtr.Read();
                 var js = new JsonSerializer();
                 while (jtr.Read() && jtr.TokenType != JsonToken.EndArray)
                 {
@@ -1244,7 +1244,7 @@ namespace FolioLibrary
             using (var sr = new StreamReader(hrm.Content.ReadAsStreamAsync().Result))
             using (var jtr = new JsonTextReader(sr) { SupportMultipleContent = true })
             {
-                jtr.Read(); jtr.Read(); jtr.Read();
+                if (!jtr.Read()) throw new InvalidDataException(hrm.Content.ReadAsStringAsync().Result); jtr.Read(); jtr.Read();
                 var js = new JsonSerializer();
                 while (jtr.Read() && jtr.TokenType != JsonToken.EndArray)
                 {
@@ -1341,7 +1341,7 @@ namespace FolioLibrary
             using (var sr = new StreamReader(hrm.Content.ReadAsStreamAsync().Result))
             using (var jtr = new JsonTextReader(sr) { SupportMultipleContent = true })
             {
-                jtr.Read(); jtr.Read(); jtr.Read();
+                if (!jtr.Read()) throw new InvalidDataException(hrm.Content.ReadAsStringAsync().Result); jtr.Read(); jtr.Read();
                 var js = new JsonSerializer();
                 while (jtr.Read() && jtr.TokenType != JsonToken.EndArray)
                 {
@@ -1438,7 +1438,7 @@ namespace FolioLibrary
             using (var sr = new StreamReader(hrm.Content.ReadAsStreamAsync().Result))
             using (var jtr = new JsonTextReader(sr) { SupportMultipleContent = true })
             {
-                jtr.Read(); jtr.Read(); jtr.Read();
+                if (!jtr.Read()) throw new InvalidDataException(hrm.Content.ReadAsStringAsync().Result); jtr.Read(); jtr.Read();
                 var js = new JsonSerializer();
                 while (jtr.Read() && jtr.TokenType != JsonToken.EndArray)
                 {
@@ -1535,7 +1535,7 @@ namespace FolioLibrary
             using (var sr = new StreamReader(hrm.Content.ReadAsStreamAsync().Result))
             using (var jtr = new JsonTextReader(sr) { SupportMultipleContent = true })
             {
-                jtr.Read(); jtr.Read(); jtr.Read();
+                if (!jtr.Read()) throw new InvalidDataException(hrm.Content.ReadAsStringAsync().Result); jtr.Read(); jtr.Read();
                 var js = new JsonSerializer();
                 while (jtr.Read() && jtr.TokenType != JsonToken.EndArray)
                 {
@@ -1632,7 +1632,7 @@ namespace FolioLibrary
             using (var sr = new StreamReader(hrm.Content.ReadAsStreamAsync().Result))
             using (var jtr = new JsonTextReader(sr) { SupportMultipleContent = true })
             {
-                jtr.Read(); jtr.Read(); jtr.Read();
+                if (!jtr.Read()) throw new InvalidDataException(hrm.Content.ReadAsStringAsync().Result); jtr.Read(); jtr.Read();
                 var js = new JsonSerializer();
                 while (jtr.Read() && jtr.TokenType != JsonToken.EndArray)
                 {
@@ -1729,7 +1729,7 @@ namespace FolioLibrary
             using (var sr = new StreamReader(hrm.Content.ReadAsStreamAsync().Result))
             using (var jtr = new JsonTextReader(sr) { SupportMultipleContent = true })
             {
-                jtr.Read(); jtr.Read(); jtr.Read();
+                if (!jtr.Read()) throw new InvalidDataException(hrm.Content.ReadAsStringAsync().Result); jtr.Read(); jtr.Read();
                 var js = new JsonSerializer();
                 while (jtr.Read() && jtr.TokenType != JsonToken.EndArray)
                 {
@@ -1826,7 +1826,7 @@ namespace FolioLibrary
             using (var sr = new StreamReader(hrm.Content.ReadAsStreamAsync().Result))
             using (var jtr = new JsonTextReader(sr) { SupportMultipleContent = true })
             {
-                jtr.Read(); jtr.Read(); jtr.Read();
+                if (!jtr.Read()) throw new InvalidDataException(hrm.Content.ReadAsStringAsync().Result); jtr.Read(); jtr.Read();
                 var js = new JsonSerializer();
                 while (jtr.Read() && jtr.TokenType != JsonToken.EndArray)
                 {
@@ -1923,7 +1923,7 @@ namespace FolioLibrary
             using (var sr = new StreamReader(hrm.Content.ReadAsStreamAsync().Result))
             using (var jtr = new JsonTextReader(sr) { SupportMultipleContent = true })
             {
-                jtr.Read(); jtr.Read(); jtr.Read();
+                if (!jtr.Read()) throw new InvalidDataException(hrm.Content.ReadAsStringAsync().Result); jtr.Read(); jtr.Read();
                 var js = new JsonSerializer();
                 while (jtr.Read() && jtr.TokenType != JsonToken.EndArray)
                 {
@@ -2020,7 +2020,7 @@ namespace FolioLibrary
             using (var sr = new StreamReader(hrm.Content.ReadAsStreamAsync().Result))
             using (var jtr = new JsonTextReader(sr) { SupportMultipleContent = true })
             {
-                jtr.Read(); jtr.Read(); jtr.Read();
+                if (!jtr.Read()) throw new InvalidDataException(hrm.Content.ReadAsStringAsync().Result); jtr.Read(); jtr.Read();
                 var js = new JsonSerializer();
                 while (jtr.Read() && jtr.TokenType != JsonToken.EndArray)
                 {
@@ -2117,7 +2117,7 @@ namespace FolioLibrary
             using (var sr = new StreamReader(hrm.Content.ReadAsStreamAsync().Result))
             using (var jtr = new JsonTextReader(sr) { SupportMultipleContent = true })
             {
-                jtr.Read(); jtr.Read(); jtr.Read();
+                if (!jtr.Read()) throw new InvalidDataException(hrm.Content.ReadAsStringAsync().Result); jtr.Read(); jtr.Read();
                 var js = new JsonSerializer();
                 while (jtr.Read() && jtr.TokenType != JsonToken.EndArray)
                 {
@@ -2214,7 +2214,7 @@ namespace FolioLibrary
             using (var sr = new StreamReader(hrm.Content.ReadAsStreamAsync().Result))
             using (var jtr = new JsonTextReader(sr) { SupportMultipleContent = true })
             {
-                jtr.Read(); jtr.Read(); jtr.Read();
+                if (!jtr.Read()) throw new InvalidDataException(hrm.Content.ReadAsStringAsync().Result); jtr.Read(); jtr.Read();
                 var js = new JsonSerializer();
                 while (jtr.Read() && jtr.TokenType != JsonToken.EndArray)
                 {
@@ -2311,7 +2311,7 @@ namespace FolioLibrary
             using (var sr = new StreamReader(hrm.Content.ReadAsStreamAsync().Result))
             using (var jtr = new JsonTextReader(sr) { SupportMultipleContent = true })
             {
-                jtr.Read(); jtr.Read(); jtr.Read();
+                if (!jtr.Read()) throw new InvalidDataException(hrm.Content.ReadAsStringAsync().Result); jtr.Read(); jtr.Read();
                 var js = new JsonSerializer();
                 while (jtr.Read() && jtr.TokenType != JsonToken.EndArray)
                 {
@@ -2408,7 +2408,7 @@ namespace FolioLibrary
             using (var sr = new StreamReader(hrm.Content.ReadAsStreamAsync().Result))
             using (var jtr = new JsonTextReader(sr) { SupportMultipleContent = true })
             {
-                jtr.Read(); jtr.Read(); jtr.Read();
+                if (!jtr.Read()) throw new InvalidDataException(hrm.Content.ReadAsStringAsync().Result); jtr.Read(); jtr.Read();
                 var js = new JsonSerializer();
                 while (jtr.Read() && jtr.TokenType != JsonToken.EndArray)
                 {
@@ -2505,7 +2505,7 @@ namespace FolioLibrary
             using (var sr = new StreamReader(hrm.Content.ReadAsStreamAsync().Result))
             using (var jtr = new JsonTextReader(sr) { SupportMultipleContent = true })
             {
-                jtr.Read(); jtr.Read(); jtr.Read();
+                if (!jtr.Read()) throw new InvalidDataException(hrm.Content.ReadAsStringAsync().Result); jtr.Read(); jtr.Read();
                 var js = new JsonSerializer();
                 while (jtr.Read() && jtr.TokenType != JsonToken.EndArray)
                 {
@@ -2602,7 +2602,7 @@ namespace FolioLibrary
             using (var sr = new StreamReader(hrm.Content.ReadAsStreamAsync().Result))
             using (var jtr = new JsonTextReader(sr) { SupportMultipleContent = true })
             {
-                jtr.Read(); jtr.Read(); jtr.Read();
+                if (!jtr.Read()) throw new InvalidDataException(hrm.Content.ReadAsStringAsync().Result); jtr.Read(); jtr.Read();
                 var js = new JsonSerializer();
                 while (jtr.Read() && jtr.TokenType != JsonToken.EndArray)
                 {
@@ -2699,7 +2699,7 @@ namespace FolioLibrary
             using (var sr = new StreamReader(hrm.Content.ReadAsStreamAsync().Result))
             using (var jtr = new JsonTextReader(sr) { SupportMultipleContent = true })
             {
-                jtr.Read(); jtr.Read(); jtr.Read();
+                if (!jtr.Read()) throw new InvalidDataException(hrm.Content.ReadAsStringAsync().Result); jtr.Read(); jtr.Read();
                 var js = new JsonSerializer();
                 while (jtr.Read() && jtr.TokenType != JsonToken.EndArray)
                 {
@@ -2796,7 +2796,7 @@ namespace FolioLibrary
             using (var sr = new StreamReader(hrm.Content.ReadAsStreamAsync().Result))
             using (var jtr = new JsonTextReader(sr) { SupportMultipleContent = true })
             {
-                jtr.Read(); jtr.Read(); jtr.Read();
+                if (!jtr.Read()) throw new InvalidDataException(hrm.Content.ReadAsStringAsync().Result); jtr.Read(); jtr.Read();
                 var js = new JsonSerializer();
                 while (jtr.Read() && jtr.TokenType != JsonToken.EndArray)
                 {
@@ -2913,7 +2913,7 @@ namespace FolioLibrary
             using (var sr = new StreamReader(hrm.Content.ReadAsStreamAsync().Result))
             using (var jtr = new JsonTextReader(sr) { SupportMultipleContent = true })
             {
-                jtr.Read(); jtr.Read(); jtr.Read();
+                if (!jtr.Read()) throw new InvalidDataException(hrm.Content.ReadAsStringAsync().Result); jtr.Read(); jtr.Read();
                 var js = new JsonSerializer();
                 while (jtr.Read() && jtr.TokenType != JsonToken.EndArray)
                 {
@@ -3010,7 +3010,7 @@ namespace FolioLibrary
             using (var sr = new StreamReader(hrm.Content.ReadAsStreamAsync().Result))
             using (var jtr = new JsonTextReader(sr) { SupportMultipleContent = true })
             {
-                jtr.Read(); jtr.Read(); jtr.Read();
+                if (!jtr.Read()) throw new InvalidDataException(hrm.Content.ReadAsStringAsync().Result); jtr.Read(); jtr.Read();
                 var js = new JsonSerializer();
                 while (jtr.Read() && jtr.TokenType != JsonToken.EndArray)
                 {
@@ -3107,7 +3107,7 @@ namespace FolioLibrary
             using (var sr = new StreamReader(hrm.Content.ReadAsStreamAsync().Result))
             using (var jtr = new JsonTextReader(sr) { SupportMultipleContent = true })
             {
-                jtr.Read(); jtr.Read(); jtr.Read();
+                if (!jtr.Read()) throw new InvalidDataException(hrm.Content.ReadAsStringAsync().Result); jtr.Read(); jtr.Read();
                 var js = new JsonSerializer();
                 while (jtr.Read() && jtr.TokenType != JsonToken.EndArray)
                 {
@@ -3204,7 +3204,7 @@ namespace FolioLibrary
             using (var sr = new StreamReader(hrm.Content.ReadAsStreamAsync().Result))
             using (var jtr = new JsonTextReader(sr) { SupportMultipleContent = true })
             {
-                jtr.Read(); jtr.Read(); jtr.Read();
+                if (!jtr.Read()) throw new InvalidDataException(hrm.Content.ReadAsStringAsync().Result); jtr.Read(); jtr.Read();
                 var js = new JsonSerializer();
                 while (jtr.Read() && jtr.TokenType != JsonToken.EndArray)
                 {
@@ -3301,7 +3301,7 @@ namespace FolioLibrary
             using (var sr = new StreamReader(hrm.Content.ReadAsStreamAsync().Result))
             using (var jtr = new JsonTextReader(sr) { SupportMultipleContent = true })
             {
-                jtr.Read(); jtr.Read(); jtr.Read();
+                if (!jtr.Read()) throw new InvalidDataException(hrm.Content.ReadAsStringAsync().Result); jtr.Read(); jtr.Read();
                 var js = new JsonSerializer();
                 while (jtr.Read() && jtr.TokenType != JsonToken.EndArray)
                 {
@@ -3418,7 +3418,7 @@ namespace FolioLibrary
             using (var sr = new StreamReader(hrm.Content.ReadAsStreamAsync().Result))
             using (var jtr = new JsonTextReader(sr) { SupportMultipleContent = true })
             {
-                jtr.Read(); jtr.Read(); jtr.Read();
+                if (!jtr.Read()) throw new InvalidDataException(hrm.Content.ReadAsStringAsync().Result); jtr.Read(); jtr.Read();
                 var js = new JsonSerializer();
                 while (jtr.Read() && jtr.TokenType != JsonToken.EndArray)
                 {
@@ -3515,7 +3515,7 @@ namespace FolioLibrary
             using (var sr = new StreamReader(hrm.Content.ReadAsStreamAsync().Result))
             using (var jtr = new JsonTextReader(sr) { SupportMultipleContent = true })
             {
-                jtr.Read(); jtr.Read(); jtr.Read();
+                if (!jtr.Read()) throw new InvalidDataException(hrm.Content.ReadAsStringAsync().Result); jtr.Read(); jtr.Read();
                 var js = new JsonSerializer();
                 while (jtr.Read() && jtr.TokenType != JsonToken.EndArray)
                 {
@@ -3612,7 +3612,7 @@ namespace FolioLibrary
             using (var sr = new StreamReader(hrm.Content.ReadAsStreamAsync().Result))
             using (var jtr = new JsonTextReader(sr) { SupportMultipleContent = true })
             {
-                jtr.Read(); jtr.Read(); jtr.Read();
+                if (!jtr.Read()) throw new InvalidDataException(hrm.Content.ReadAsStringAsync().Result); jtr.Read(); jtr.Read();
                 var js = new JsonSerializer();
                 while (jtr.Read() && jtr.TokenType != JsonToken.EndArray)
                 {
@@ -3709,7 +3709,7 @@ namespace FolioLibrary
             using (var sr = new StreamReader(hrm.Content.ReadAsStreamAsync().Result))
             using (var jtr = new JsonTextReader(sr) { SupportMultipleContent = true })
             {
-                jtr.Read(); jtr.Read(); jtr.Read();
+                if (!jtr.Read()) throw new InvalidDataException(hrm.Content.ReadAsStringAsync().Result); jtr.Read(); jtr.Read();
                 var js = new JsonSerializer();
                 while (jtr.Read() && jtr.TokenType != JsonToken.EndArray)
                 {
@@ -3806,7 +3806,7 @@ namespace FolioLibrary
             using (var sr = new StreamReader(hrm.Content.ReadAsStreamAsync().Result))
             using (var jtr = new JsonTextReader(sr) { SupportMultipleContent = true })
             {
-                jtr.Read(); jtr.Read(); jtr.Read();
+                if (!jtr.Read()) throw new InvalidDataException(hrm.Content.ReadAsStringAsync().Result); jtr.Read(); jtr.Read();
                 var js = new JsonSerializer();
                 while (jtr.Read() && jtr.TokenType != JsonToken.EndArray)
                 {
@@ -3903,7 +3903,7 @@ namespace FolioLibrary
             using (var sr = new StreamReader(hrm.Content.ReadAsStreamAsync().Result))
             using (var jtr = new JsonTextReader(sr) { SupportMultipleContent = true })
             {
-                jtr.Read(); jtr.Read(); jtr.Read();
+                if (!jtr.Read()) throw new InvalidDataException(hrm.Content.ReadAsStringAsync().Result); jtr.Read(); jtr.Read();
                 var js = new JsonSerializer();
                 while (jtr.Read() && jtr.TokenType != JsonToken.EndArray)
                 {
@@ -4000,7 +4000,7 @@ namespace FolioLibrary
             using (var sr = new StreamReader(hrm.Content.ReadAsStreamAsync().Result))
             using (var jtr = new JsonTextReader(sr) { SupportMultipleContent = true })
             {
-                jtr.Read(); jtr.Read(); jtr.Read();
+                if (!jtr.Read()) throw new InvalidDataException(hrm.Content.ReadAsStringAsync().Result); jtr.Read(); jtr.Read();
                 var js = new JsonSerializer();
                 while (jtr.Read() && jtr.TokenType != JsonToken.EndArray)
                 {
@@ -4097,7 +4097,7 @@ namespace FolioLibrary
             using (var sr = new StreamReader(hrm.Content.ReadAsStreamAsync().Result))
             using (var jtr = new JsonTextReader(sr) { SupportMultipleContent = true })
             {
-                jtr.Read(); jtr.Read(); jtr.Read();
+                if (!jtr.Read()) throw new InvalidDataException(hrm.Content.ReadAsStringAsync().Result); jtr.Read(); jtr.Read();
                 var js = new JsonSerializer();
                 while (jtr.Read() && jtr.TokenType != JsonToken.EndArray)
                 {
@@ -4194,7 +4194,7 @@ namespace FolioLibrary
             using (var sr = new StreamReader(hrm.Content.ReadAsStreamAsync().Result))
             using (var jtr = new JsonTextReader(sr) { SupportMultipleContent = true })
             {
-                jtr.Read(); jtr.Read(); jtr.Read();
+                if (!jtr.Read()) throw new InvalidDataException(hrm.Content.ReadAsStringAsync().Result); jtr.Read(); jtr.Read();
                 var js = new JsonSerializer();
                 while (jtr.Read() && jtr.TokenType != JsonToken.EndArray)
                 {
@@ -4291,7 +4291,7 @@ namespace FolioLibrary
             using (var sr = new StreamReader(hrm.Content.ReadAsStreamAsync().Result))
             using (var jtr = new JsonTextReader(sr) { SupportMultipleContent = true })
             {
-                jtr.Read(); jtr.Read(); jtr.Read();
+                if (!jtr.Read()) throw new InvalidDataException(hrm.Content.ReadAsStringAsync().Result); jtr.Read(); jtr.Read();
                 var js = new JsonSerializer();
                 while (jtr.Read() && jtr.TokenType != JsonToken.EndArray)
                 {
@@ -4388,7 +4388,7 @@ namespace FolioLibrary
             using (var sr = new StreamReader(hrm.Content.ReadAsStreamAsync().Result))
             using (var jtr = new JsonTextReader(sr) { SupportMultipleContent = true })
             {
-                jtr.Read(); jtr.Read(); jtr.Read();
+                if (!jtr.Read()) throw new InvalidDataException(hrm.Content.ReadAsStringAsync().Result); jtr.Read(); jtr.Read();
                 var js = new JsonSerializer();
                 while (jtr.Read() && jtr.TokenType != JsonToken.EndArray)
                 {
@@ -4505,7 +4505,7 @@ namespace FolioLibrary
             using (var sr = new StreamReader(hrm.Content.ReadAsStreamAsync().Result))
             using (var jtr = new JsonTextReader(sr) { SupportMultipleContent = true })
             {
-                jtr.Read(); jtr.Read(); jtr.Read();
+                if (!jtr.Read()) throw new InvalidDataException(hrm.Content.ReadAsStringAsync().Result); jtr.Read(); jtr.Read();
                 var js = new JsonSerializer();
                 while (jtr.Read() && jtr.TokenType != JsonToken.EndArray)
                 {
@@ -4602,7 +4602,7 @@ namespace FolioLibrary
             using (var sr = new StreamReader(hrm.Content.ReadAsStreamAsync().Result))
             using (var jtr = new JsonTextReader(sr) { SupportMultipleContent = true })
             {
-                jtr.Read(); jtr.Read(); jtr.Read();
+                if (!jtr.Read()) throw new InvalidDataException(hrm.Content.ReadAsStringAsync().Result); jtr.Read(); jtr.Read();
                 var js = new JsonSerializer();
                 while (jtr.Read() && jtr.TokenType != JsonToken.EndArray)
                 {
@@ -4699,7 +4699,7 @@ namespace FolioLibrary
             using (var sr = new StreamReader(hrm.Content.ReadAsStreamAsync().Result))
             using (var jtr = new JsonTextReader(sr) { SupportMultipleContent = true })
             {
-                jtr.Read(); jtr.Read(); jtr.Read();
+                if (!jtr.Read()) throw new InvalidDataException(hrm.Content.ReadAsStringAsync().Result); jtr.Read(); jtr.Read();
                 var js = new JsonSerializer();
                 while (jtr.Read() && jtr.TokenType != JsonToken.EndArray)
                 {
@@ -4796,7 +4796,7 @@ namespace FolioLibrary
             using (var sr = new StreamReader(hrm.Content.ReadAsStreamAsync().Result))
             using (var jtr = new JsonTextReader(sr) { SupportMultipleContent = true })
             {
-                jtr.Read(); jtr.Read(); jtr.Read();
+                if (!jtr.Read()) throw new InvalidDataException(hrm.Content.ReadAsStringAsync().Result); jtr.Read(); jtr.Read();
                 var js = new JsonSerializer();
                 while (jtr.Read() && jtr.TokenType != JsonToken.EndArray)
                 {
@@ -4893,7 +4893,7 @@ namespace FolioLibrary
             using (var sr = new StreamReader(hrm.Content.ReadAsStreamAsync().Result))
             using (var jtr = new JsonTextReader(sr) { SupportMultipleContent = true })
             {
-                jtr.Read(); jtr.Read(); jtr.Read();
+                if (!jtr.Read()) throw new InvalidDataException(hrm.Content.ReadAsStringAsync().Result); jtr.Read(); jtr.Read();
                 var js = new JsonSerializer();
                 while (jtr.Read() && jtr.TokenType != JsonToken.EndArray)
                 {
@@ -4990,7 +4990,7 @@ namespace FolioLibrary
             using (var sr = new StreamReader(hrm.Content.ReadAsStreamAsync().Result))
             using (var jtr = new JsonTextReader(sr) { SupportMultipleContent = true })
             {
-                jtr.Read(); jtr.Read(); jtr.Read();
+                if (!jtr.Read()) throw new InvalidDataException(hrm.Content.ReadAsStringAsync().Result); jtr.Read(); jtr.Read();
                 var js = new JsonSerializer();
                 while (jtr.Read() && jtr.TokenType != JsonToken.EndArray)
                 {
@@ -5087,7 +5087,7 @@ namespace FolioLibrary
             using (var sr = new StreamReader(hrm.Content.ReadAsStreamAsync().Result))
             using (var jtr = new JsonTextReader(sr) { SupportMultipleContent = true })
             {
-                jtr.Read(); jtr.Read(); jtr.Read();
+                if (!jtr.Read()) throw new InvalidDataException(hrm.Content.ReadAsStringAsync().Result); jtr.Read(); jtr.Read();
                 var js = new JsonSerializer();
                 while (jtr.Read() && jtr.TokenType != JsonToken.EndArray)
                 {
@@ -5184,7 +5184,7 @@ namespace FolioLibrary
             using (var sr = new StreamReader(hrm.Content.ReadAsStreamAsync().Result))
             using (var jtr = new JsonTextReader(sr) { SupportMultipleContent = true })
             {
-                jtr.Read(); jtr.Read(); jtr.Read();
+                if (!jtr.Read()) throw new InvalidDataException(hrm.Content.ReadAsStringAsync().Result); jtr.Read(); jtr.Read();
                 var js = new JsonSerializer();
                 while (jtr.Read() && jtr.TokenType != JsonToken.EndArray)
                 {
@@ -5281,7 +5281,7 @@ namespace FolioLibrary
             using (var sr = new StreamReader(hrm.Content.ReadAsStreamAsync().Result))
             using (var jtr = new JsonTextReader(sr) { SupportMultipleContent = true })
             {
-                jtr.Read(); jtr.Read(); jtr.Read();
+                if (!jtr.Read()) throw new InvalidDataException(hrm.Content.ReadAsStringAsync().Result); jtr.Read(); jtr.Read();
                 var js = new JsonSerializer();
                 while (jtr.Read() && jtr.TokenType != JsonToken.EndArray)
                 {
@@ -5378,7 +5378,7 @@ namespace FolioLibrary
             using (var sr = new StreamReader(hrm.Content.ReadAsStreamAsync().Result))
             using (var jtr = new JsonTextReader(sr) { SupportMultipleContent = true })
             {
-                jtr.Read(); jtr.Read(); jtr.Read();
+                if (!jtr.Read()) throw new InvalidDataException(hrm.Content.ReadAsStringAsync().Result); jtr.Read(); jtr.Read();
                 var js = new JsonSerializer();
                 while (jtr.Read() && jtr.TokenType != JsonToken.EndArray)
                 {
@@ -5475,7 +5475,7 @@ namespace FolioLibrary
             using (var sr = new StreamReader(hrm.Content.ReadAsStreamAsync().Result))
             using (var jtr = new JsonTextReader(sr) { SupportMultipleContent = true })
             {
-                jtr.Read(); jtr.Read(); jtr.Read();
+                if (!jtr.Read()) throw new InvalidDataException(hrm.Content.ReadAsStringAsync().Result); jtr.Read(); jtr.Read();
                 var js = new JsonSerializer();
                 while (jtr.Read() && jtr.TokenType != JsonToken.EndArray)
                 {
@@ -5572,7 +5572,7 @@ namespace FolioLibrary
             using (var sr = new StreamReader(hrm.Content.ReadAsStreamAsync().Result))
             using (var jtr = new JsonTextReader(sr) { SupportMultipleContent = true })
             {
-                jtr.Read(); jtr.Read(); jtr.Read();
+                if (!jtr.Read()) throw new InvalidDataException(hrm.Content.ReadAsStringAsync().Result); jtr.Read(); jtr.Read();
                 var js = new JsonSerializer();
                 while (jtr.Read() && jtr.TokenType != JsonToken.EndArray)
                 {
@@ -5669,7 +5669,7 @@ namespace FolioLibrary
             using (var sr = new StreamReader(hrm.Content.ReadAsStreamAsync().Result))
             using (var jtr = new JsonTextReader(sr) { SupportMultipleContent = true })
             {
-                jtr.Read(); jtr.Read(); jtr.Read();
+                if (!jtr.Read()) throw new InvalidDataException(hrm.Content.ReadAsStringAsync().Result); jtr.Read(); jtr.Read();
                 var js = new JsonSerializer();
                 while (jtr.Read() && jtr.TokenType != JsonToken.EndArray)
                 {
@@ -5766,7 +5766,7 @@ namespace FolioLibrary
             using (var sr = new StreamReader(hrm.Content.ReadAsStreamAsync().Result))
             using (var jtr = new JsonTextReader(sr) { SupportMultipleContent = true })
             {
-                jtr.Read(); jtr.Read(); jtr.Read();
+                if (!jtr.Read()) throw new InvalidDataException(hrm.Content.ReadAsStringAsync().Result); jtr.Read(); jtr.Read();
                 var js = new JsonSerializer();
                 while (jtr.Read() && jtr.TokenType != JsonToken.EndArray)
                 {
@@ -5863,7 +5863,7 @@ namespace FolioLibrary
             using (var sr = new StreamReader(hrm.Content.ReadAsStreamAsync().Result))
             using (var jtr = new JsonTextReader(sr) { SupportMultipleContent = true })
             {
-                jtr.Read(); jtr.Read(); jtr.Read();
+                if (!jtr.Read()) throw new InvalidDataException(hrm.Content.ReadAsStringAsync().Result); jtr.Read(); jtr.Read();
                 var js = new JsonSerializer();
                 while (jtr.Read() && jtr.TokenType != JsonToken.EndArray)
                 {
@@ -5960,7 +5960,7 @@ namespace FolioLibrary
             using (var sr = new StreamReader(hrm.Content.ReadAsStreamAsync().Result))
             using (var jtr = new JsonTextReader(sr) { SupportMultipleContent = true })
             {
-                jtr.Read(); jtr.Read(); jtr.Read();
+                if (!jtr.Read()) throw new InvalidDataException(hrm.Content.ReadAsStringAsync().Result); jtr.Read(); jtr.Read();
                 var js = new JsonSerializer();
                 while (jtr.Read() && jtr.TokenType != JsonToken.EndArray)
                 {
@@ -6057,7 +6057,7 @@ namespace FolioLibrary
             using (var sr = new StreamReader(hrm.Content.ReadAsStreamAsync().Result))
             using (var jtr = new JsonTextReader(sr) { SupportMultipleContent = true })
             {
-                jtr.Read(); jtr.Read(); jtr.Read();
+                if (!jtr.Read()) throw new InvalidDataException(hrm.Content.ReadAsStringAsync().Result); jtr.Read(); jtr.Read();
                 var js = new JsonSerializer();
                 while (jtr.Read() && jtr.TokenType != JsonToken.EndArray)
                 {
@@ -6154,7 +6154,7 @@ namespace FolioLibrary
             using (var sr = new StreamReader(hrm.Content.ReadAsStreamAsync().Result))
             using (var jtr = new JsonTextReader(sr) { SupportMultipleContent = true })
             {
-                jtr.Read(); jtr.Read(); jtr.Read();
+                if (!jtr.Read()) throw new InvalidDataException(hrm.Content.ReadAsStringAsync().Result); jtr.Read(); jtr.Read();
                 var js = new JsonSerializer();
                 while (jtr.Read() && jtr.TokenType != JsonToken.EndArray)
                 {
@@ -6251,7 +6251,7 @@ namespace FolioLibrary
             using (var sr = new StreamReader(hrm.Content.ReadAsStreamAsync().Result))
             using (var jtr = new JsonTextReader(sr) { SupportMultipleContent = true })
             {
-                jtr.Read(); jtr.Read(); jtr.Read();
+                if (!jtr.Read()) throw new InvalidDataException(hrm.Content.ReadAsStringAsync().Result); jtr.Read(); jtr.Read();
                 var js = new JsonSerializer();
                 while (jtr.Read() && jtr.TokenType != JsonToken.EndArray)
                 {
@@ -6348,7 +6348,7 @@ namespace FolioLibrary
             using (var sr = new StreamReader(hrm.Content.ReadAsStreamAsync().Result))
             using (var jtr = new JsonTextReader(sr) { SupportMultipleContent = true })
             {
-                jtr.Read(); jtr.Read(); jtr.Read();
+                if (!jtr.Read()) throw new InvalidDataException(hrm.Content.ReadAsStringAsync().Result); jtr.Read(); jtr.Read();
                 var js = new JsonSerializer();
                 while (jtr.Read() && jtr.TokenType != JsonToken.EndArray)
                 {
@@ -6445,7 +6445,7 @@ namespace FolioLibrary
             using (var sr = new StreamReader(hrm.Content.ReadAsStreamAsync().Result))
             using (var jtr = new JsonTextReader(sr) { SupportMultipleContent = true })
             {
-                jtr.Read(); jtr.Read(); jtr.Read();
+                if (!jtr.Read()) throw new InvalidDataException(hrm.Content.ReadAsStringAsync().Result); jtr.Read(); jtr.Read();
                 var js = new JsonSerializer();
                 while (jtr.Read() && jtr.TokenType != JsonToken.EndArray)
                 {
@@ -6542,7 +6542,7 @@ namespace FolioLibrary
             using (var sr = new StreamReader(hrm.Content.ReadAsStreamAsync().Result))
             using (var jtr = new JsonTextReader(sr) { SupportMultipleContent = true })
             {
-                jtr.Read(); jtr.Read(); jtr.Read();
+                if (!jtr.Read()) throw new InvalidDataException(hrm.Content.ReadAsStringAsync().Result); jtr.Read(); jtr.Read();
                 var js = new JsonSerializer();
                 while (jtr.Read() && jtr.TokenType != JsonToken.EndArray)
                 {
@@ -6639,7 +6639,7 @@ namespace FolioLibrary
             using (var sr = new StreamReader(hrm.Content.ReadAsStreamAsync().Result))
             using (var jtr = new JsonTextReader(sr) { SupportMultipleContent = true })
             {
-                jtr.Read(); jtr.Read(); jtr.Read();
+                if (!jtr.Read()) throw new InvalidDataException(hrm.Content.ReadAsStringAsync().Result); jtr.Read(); jtr.Read();
                 var js = new JsonSerializer();
                 while (jtr.Read() && jtr.TokenType != JsonToken.EndArray)
                 {
@@ -6736,7 +6736,7 @@ namespace FolioLibrary
             using (var sr = new StreamReader(hrm.Content.ReadAsStreamAsync().Result))
             using (var jtr = new JsonTextReader(sr) { SupportMultipleContent = true })
             {
-                jtr.Read(); jtr.Read(); jtr.Read();
+                if (!jtr.Read()) throw new InvalidDataException(hrm.Content.ReadAsStringAsync().Result); jtr.Read(); jtr.Read();
                 var js = new JsonSerializer();
                 while (jtr.Read() && jtr.TokenType != JsonToken.EndArray)
                 {
@@ -6833,7 +6833,7 @@ namespace FolioLibrary
             using (var sr = new StreamReader(hrm.Content.ReadAsStreamAsync().Result))
             using (var jtr = new JsonTextReader(sr) { SupportMultipleContent = true })
             {
-                jtr.Read(); jtr.Read(); jtr.Read();
+                if (!jtr.Read()) throw new InvalidDataException(hrm.Content.ReadAsStringAsync().Result); jtr.Read(); jtr.Read();
                 var js = new JsonSerializer();
                 while (jtr.Read() && jtr.TokenType != JsonToken.EndArray)
                 {
@@ -6930,7 +6930,7 @@ namespace FolioLibrary
             using (var sr = new StreamReader(hrm.Content.ReadAsStreamAsync().Result))
             using (var jtr = new JsonTextReader(sr) { SupportMultipleContent = true })
             {
-                jtr.Read(); jtr.Read(); jtr.Read();
+                if (!jtr.Read()) throw new InvalidDataException(hrm.Content.ReadAsStringAsync().Result); jtr.Read(); jtr.Read();
                 var js = new JsonSerializer();
                 while (jtr.Read() && jtr.TokenType != JsonToken.EndArray)
                 {
@@ -7027,7 +7027,7 @@ namespace FolioLibrary
             using (var sr = new StreamReader(hrm.Content.ReadAsStreamAsync().Result))
             using (var jtr = new JsonTextReader(sr) { SupportMultipleContent = true })
             {
-                jtr.Read(); jtr.Read(); jtr.Read();
+                if (!jtr.Read()) throw new InvalidDataException(hrm.Content.ReadAsStringAsync().Result); jtr.Read(); jtr.Read();
                 var js = new JsonSerializer();
                 while (jtr.Read() && jtr.TokenType != JsonToken.EndArray)
                 {
@@ -7124,7 +7124,7 @@ namespace FolioLibrary
             using (var sr = new StreamReader(hrm.Content.ReadAsStreamAsync().Result))
             using (var jtr = new JsonTextReader(sr) { SupportMultipleContent = true })
             {
-                jtr.Read(); jtr.Read(); jtr.Read();
+                if (!jtr.Read()) throw new InvalidDataException(hrm.Content.ReadAsStringAsync().Result); jtr.Read(); jtr.Read();
                 var js = new JsonSerializer();
                 while (jtr.Read() && jtr.TokenType != JsonToken.EndArray)
                 {
@@ -7221,7 +7221,7 @@ namespace FolioLibrary
             using (var sr = new StreamReader(hrm.Content.ReadAsStreamAsync().Result))
             using (var jtr = new JsonTextReader(sr) { SupportMultipleContent = true })
             {
-                jtr.Read(); jtr.Read(); jtr.Read();
+                if (!jtr.Read()) throw new InvalidDataException(hrm.Content.ReadAsStringAsync().Result); jtr.Read(); jtr.Read();
                 var js = new JsonSerializer();
                 while (jtr.Read() && jtr.TokenType != JsonToken.EndArray)
                 {
@@ -7338,7 +7338,7 @@ namespace FolioLibrary
             using (var sr = new StreamReader(hrm.Content.ReadAsStreamAsync().Result))
             using (var jtr = new JsonTextReader(sr) { SupportMultipleContent = true })
             {
-                jtr.Read(); jtr.Read(); jtr.Read();
+                if (!jtr.Read()) throw new InvalidDataException(hrm.Content.ReadAsStringAsync().Result); jtr.Read(); jtr.Read();
                 var js = new JsonSerializer();
                 while (jtr.Read() && jtr.TokenType != JsonToken.EndArray)
                 {
@@ -7435,7 +7435,7 @@ namespace FolioLibrary
             using (var sr = new StreamReader(hrm.Content.ReadAsStreamAsync().Result))
             using (var jtr = new JsonTextReader(sr) { SupportMultipleContent = true })
             {
-                jtr.Read(); jtr.Read(); jtr.Read();
+                if (!jtr.Read()) throw new InvalidDataException(hrm.Content.ReadAsStringAsync().Result); jtr.Read(); jtr.Read();
                 var js = new JsonSerializer();
                 while (jtr.Read() && jtr.TokenType != JsonToken.EndArray)
                 {
@@ -7532,7 +7532,7 @@ namespace FolioLibrary
             using (var sr = new StreamReader(hrm.Content.ReadAsStreamAsync().Result))
             using (var jtr = new JsonTextReader(sr) { SupportMultipleContent = true })
             {
-                jtr.Read(); jtr.Read(); jtr.Read();
+                if (!jtr.Read()) throw new InvalidDataException(hrm.Content.ReadAsStringAsync().Result); jtr.Read(); jtr.Read();
                 var js = new JsonSerializer();
                 while (jtr.Read() && jtr.TokenType != JsonToken.EndArray)
                 {
@@ -7629,7 +7629,7 @@ namespace FolioLibrary
             using (var sr = new StreamReader(hrm.Content.ReadAsStreamAsync().Result))
             using (var jtr = new JsonTextReader(sr) { SupportMultipleContent = true })
             {
-                jtr.Read(); jtr.Read(); jtr.Read();
+                if (!jtr.Read()) throw new InvalidDataException(hrm.Content.ReadAsStringAsync().Result); jtr.Read(); jtr.Read();
                 var js = new JsonSerializer();
                 while (jtr.Read() && jtr.TokenType != JsonToken.EndArray)
                 {
@@ -7726,7 +7726,7 @@ namespace FolioLibrary
             using (var sr = new StreamReader(hrm.Content.ReadAsStreamAsync().Result))
             using (var jtr = new JsonTextReader(sr) { SupportMultipleContent = true })
             {
-                jtr.Read(); jtr.Read(); jtr.Read();
+                if (!jtr.Read()) throw new InvalidDataException(hrm.Content.ReadAsStringAsync().Result); jtr.Read(); jtr.Read();
                 var js = new JsonSerializer();
                 while (jtr.Read() && jtr.TokenType != JsonToken.EndArray)
                 {
@@ -7823,7 +7823,7 @@ namespace FolioLibrary
             using (var sr = new StreamReader(hrm.Content.ReadAsStreamAsync().Result))
             using (var jtr = new JsonTextReader(sr) { SupportMultipleContent = true })
             {
-                jtr.Read(); jtr.Read(); jtr.Read();
+                if (!jtr.Read()) throw new InvalidDataException(hrm.Content.ReadAsStringAsync().Result); jtr.Read(); jtr.Read();
                 var js = new JsonSerializer();
                 while (jtr.Read() && jtr.TokenType != JsonToken.EndArray)
                 {
@@ -7920,7 +7920,7 @@ namespace FolioLibrary
             using (var sr = new StreamReader(hrm.Content.ReadAsStreamAsync().Result))
             using (var jtr = new JsonTextReader(sr) { SupportMultipleContent = true })
             {
-                jtr.Read(); jtr.Read(); jtr.Read();
+                if (!jtr.Read()) throw new InvalidDataException(hrm.Content.ReadAsStringAsync().Result); jtr.Read(); jtr.Read();
                 var js = new JsonSerializer();
                 while (jtr.Read() && jtr.TokenType != JsonToken.EndArray)
                 {
@@ -8017,7 +8017,7 @@ namespace FolioLibrary
             using (var sr = new StreamReader(hrm.Content.ReadAsStreamAsync().Result))
             using (var jtr = new JsonTextReader(sr) { SupportMultipleContent = true })
             {
-                jtr.Read(); jtr.Read(); jtr.Read();
+                if (!jtr.Read()) throw new InvalidDataException(hrm.Content.ReadAsStringAsync().Result); jtr.Read(); jtr.Read();
                 var js = new JsonSerializer();
                 while (jtr.Read() && jtr.TokenType != JsonToken.EndArray)
                 {
@@ -8114,7 +8114,7 @@ namespace FolioLibrary
             using (var sr = new StreamReader(hrm.Content.ReadAsStreamAsync().Result))
             using (var jtr = new JsonTextReader(sr) { SupportMultipleContent = true })
             {
-                jtr.Read(); jtr.Read(); jtr.Read();
+                if (!jtr.Read()) throw new InvalidDataException(hrm.Content.ReadAsStringAsync().Result); jtr.Read(); jtr.Read();
                 var js = new JsonSerializer();
                 while (jtr.Read() && jtr.TokenType != JsonToken.EndArray)
                 {
@@ -8211,7 +8211,7 @@ namespace FolioLibrary
             using (var sr = new StreamReader(hrm.Content.ReadAsStreamAsync().Result))
             using (var jtr = new JsonTextReader(sr) { SupportMultipleContent = true })
             {
-                jtr.Read(); jtr.Read(); jtr.Read();
+                if (!jtr.Read()) throw new InvalidDataException(hrm.Content.ReadAsStringAsync().Result); jtr.Read(); jtr.Read();
                 var js = new JsonSerializer();
                 while (jtr.Read() && jtr.TokenType != JsonToken.EndArray)
                 {
@@ -8308,7 +8308,7 @@ namespace FolioLibrary
             using (var sr = new StreamReader(hrm.Content.ReadAsStreamAsync().Result))
             using (var jtr = new JsonTextReader(sr) { SupportMultipleContent = true })
             {
-                jtr.Read(); jtr.Read(); jtr.Read();
+                if (!jtr.Read()) throw new InvalidDataException(hrm.Content.ReadAsStringAsync().Result); jtr.Read(); jtr.Read();
                 var js = new JsonSerializer();
                 while (jtr.Read() && jtr.TokenType != JsonToken.EndArray)
                 {
@@ -8405,7 +8405,7 @@ namespace FolioLibrary
             using (var sr = new StreamReader(hrm.Content.ReadAsStreamAsync().Result))
             using (var jtr = new JsonTextReader(sr) { SupportMultipleContent = true })
             {
-                jtr.Read(); jtr.Read(); jtr.Read();
+                if (!jtr.Read()) throw new InvalidDataException(hrm.Content.ReadAsStringAsync().Result); jtr.Read(); jtr.Read();
                 var js = new JsonSerializer();
                 while (jtr.Read() && jtr.TokenType != JsonToken.EndArray)
                 {
@@ -8502,7 +8502,7 @@ namespace FolioLibrary
             using (var sr = new StreamReader(hrm.Content.ReadAsStreamAsync().Result))
             using (var jtr = new JsonTextReader(sr) { SupportMultipleContent = true })
             {
-                jtr.Read(); jtr.Read(); jtr.Read();
+                if (!jtr.Read()) throw new InvalidDataException(hrm.Content.ReadAsStringAsync().Result); jtr.Read(); jtr.Read();
                 var js = new JsonSerializer();
                 while (jtr.Read() && jtr.TokenType != JsonToken.EndArray)
                 {
@@ -8599,7 +8599,7 @@ namespace FolioLibrary
             using (var sr = new StreamReader(hrm.Content.ReadAsStreamAsync().Result))
             using (var jtr = new JsonTextReader(sr) { SupportMultipleContent = true })
             {
-                jtr.Read(); jtr.Read(); jtr.Read();
+                if (!jtr.Read()) throw new InvalidDataException(hrm.Content.ReadAsStringAsync().Result); jtr.Read(); jtr.Read();
                 var js = new JsonSerializer();
                 while (jtr.Read() && jtr.TokenType != JsonToken.EndArray)
                 {
@@ -8696,7 +8696,7 @@ namespace FolioLibrary
             using (var sr = new StreamReader(hrm.Content.ReadAsStreamAsync().Result))
             using (var jtr = new JsonTextReader(sr) { SupportMultipleContent = true })
             {
-                jtr.Read(); jtr.Read(); jtr.Read();
+                if (!jtr.Read()) throw new InvalidDataException(hrm.Content.ReadAsStringAsync().Result); jtr.Read(); jtr.Read();
                 var js = new JsonSerializer();
                 while (jtr.Read() && jtr.TokenType != JsonToken.EndArray)
                 {
@@ -8793,7 +8793,7 @@ namespace FolioLibrary
             using (var sr = new StreamReader(hrm.Content.ReadAsStreamAsync().Result))
             using (var jtr = new JsonTextReader(sr) { SupportMultipleContent = true })
             {
-                jtr.Read(); jtr.Read(); jtr.Read();
+                if (!jtr.Read()) throw new InvalidDataException(hrm.Content.ReadAsStringAsync().Result); jtr.Read(); jtr.Read();
                 var js = new JsonSerializer();
                 while (jtr.Read() && jtr.TokenType != JsonToken.EndArray)
                 {
@@ -8909,7 +8909,7 @@ namespace FolioLibrary
             using (var sr = new StreamReader(hrm.Content.ReadAsStreamAsync().Result))
             using (var jtr = new JsonTextReader(sr) { SupportMultipleContent = true })
             {
-                jtr.Read(); jtr.Read(); jtr.Read();
+                if (!jtr.Read()) throw new InvalidDataException(hrm.Content.ReadAsStringAsync().Result); jtr.Read(); jtr.Read();
                 var js = new JsonSerializer();
                 while (jtr.Read() && jtr.TokenType != JsonToken.EndArray)
                 {
@@ -9006,7 +9006,7 @@ namespace FolioLibrary
             using (var sr = new StreamReader(hrm.Content.ReadAsStreamAsync().Result))
             using (var jtr = new JsonTextReader(sr) { SupportMultipleContent = true })
             {
-                jtr.Read(); jtr.Read(); jtr.Read();
+                if (!jtr.Read()) throw new InvalidDataException(hrm.Content.ReadAsStringAsync().Result); jtr.Read(); jtr.Read();
                 var js = new JsonSerializer();
                 while (jtr.Read() && jtr.TokenType != JsonToken.EndArray)
                 {
@@ -9103,7 +9103,7 @@ namespace FolioLibrary
             using (var sr = new StreamReader(hrm.Content.ReadAsStreamAsync().Result))
             using (var jtr = new JsonTextReader(sr) { SupportMultipleContent = true })
             {
-                jtr.Read(); jtr.Read(); jtr.Read();
+                if (!jtr.Read()) throw new InvalidDataException(hrm.Content.ReadAsStringAsync().Result); jtr.Read(); jtr.Read();
                 var js = new JsonSerializer();
                 while (jtr.Read() && jtr.TokenType != JsonToken.EndArray)
                 {
@@ -9200,7 +9200,7 @@ namespace FolioLibrary
             using (var sr = new StreamReader(hrm.Content.ReadAsStreamAsync().Result))
             using (var jtr = new JsonTextReader(sr) { SupportMultipleContent = true })
             {
-                jtr.Read(); jtr.Read(); jtr.Read();
+                if (!jtr.Read()) throw new InvalidDataException(hrm.Content.ReadAsStringAsync().Result); jtr.Read(); jtr.Read();
                 var js = new JsonSerializer();
                 while (jtr.Read() && jtr.TokenType != JsonToken.EndArray)
                 {
@@ -9297,7 +9297,7 @@ namespace FolioLibrary
             using (var sr = new StreamReader(hrm.Content.ReadAsStreamAsync().Result))
             using (var jtr = new JsonTextReader(sr) { SupportMultipleContent = true })
             {
-                jtr.Read(); jtr.Read(); jtr.Read();
+                if (!jtr.Read()) throw new InvalidDataException(hrm.Content.ReadAsStringAsync().Result); jtr.Read(); jtr.Read();
                 var js = new JsonSerializer();
                 while (jtr.Read() && jtr.TokenType != JsonToken.EndArray)
                 {
