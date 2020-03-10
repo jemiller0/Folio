@@ -279,7 +279,8 @@
     },
     "discoverySuppress": {
       "description": "Records the fact that the record should not be displayed in a discovery system",
-      "type": "boolean"
+      "type": "boolean",
+      "default": false
     },
     "statisticalCodeIds": {
       "description": "List of statistical code IDs",

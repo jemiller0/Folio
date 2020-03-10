@@ -96,6 +96,11 @@
         },
         "content": {
           "description": "Profile content (plain Object)"
+        },
+        "order": {
+          "description": "The execution order of the 'detail' profile. Job, Action and Matching profiles have an execution order, but this field is always 0 for Mapping profiles because of o2o relationship",
+          "type": "integer",
+          "default": 0
         }
       },
       "required": [
@@ -194,7 +199,8 @@
         "SNAPSHOT_UPDATE_ERROR",
         "RECORD_UPDATE_ERROR",
         "FILE_PROCESSING_ERROR",
-        "INSTANCE_CREATING_ERROR"
+        "INSTANCE_CREATING_ERROR",
+        "PROFILE_SNAPSHOT_CREATING_ERROR"
       ]
     },
     "userId": {

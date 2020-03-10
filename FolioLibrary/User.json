@@ -212,8 +212,5 @@
       "description": "Object that contains custom field",
       "type": "object"
     }
-  },
-  "required": [
-    "id"
-  ]
+  }
 }

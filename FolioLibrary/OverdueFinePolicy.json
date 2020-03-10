@@ -19,9 +19,8 @@
       "additionalProperties": false,
       "properties": {
         "quantity": {
-          "description": "Quantity of the number of times the interval repeats",
-          "type": "number",
-          "minimum": 1.0
+          "description": "Fine amount per interval",
+          "type": "number"
         },
         "intervalId": {
           "description": "Interval for the period, e.g. hour, day, week, month or year",
