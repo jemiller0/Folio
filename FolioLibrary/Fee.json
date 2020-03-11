@@ -5,8 +5,13 @@
   "type": "object",
   "additionalProperties": false,
   "properties": {
+    "automatic": {
+      "description": "A flag to indicate that fee/fine was created automatically.",
+      "type": "boolean",
+      "default": false
+    },
     "feeFineType": {
-      "description": "Description of fee/fine that is up to the desecration of the user",
+      "description": "Description of fee/fine that is up to the discretion of the user",
       "type": "string"
     },
     "defaultAmount": {
@@ -71,6 +76,6 @@
   },
   "required": [
     "feeFineType",
-    "ownerId"
+    "automatic"
   ]
 }

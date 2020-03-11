@@ -475,6 +475,7 @@ FROM diku_mod_login.event_logs;
 CREATE VIEW uc.fees AS
 SELECT
 id AS id,
+CAST(jsonb->>'automatic' AS BOOLEAN) AS automatic,
 jsonb->>'feeFineType' AS fee_fine_type,
 CAST(jsonb->>'defaultAmount' AS DECIMAL(19,2)) AS default_amount,
 CAST(jsonb->>'chargeNoticeId' AS UUID) AS charge_notice_id,
