@@ -1939,6 +1939,7 @@ CREATE VIEW uc.order_transaction_summaries AS
 SELECT
 id AS id,
 CAST(jsonb->>'numTransactions' AS INTEGER) AS num_transactions,
+CAST(jsonb->>'isProcessed' AS BOOLEAN) AS is_processed,
 jsonb_pretty(jsonb) AS content
 FROM diku_mod_finance_storage.order_transaction_summaries;
 CREATE VIEW uc.organization_aliases AS

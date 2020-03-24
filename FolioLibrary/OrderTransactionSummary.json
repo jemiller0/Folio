@@ -12,6 +12,11 @@
     "numTransactions": {
       "description": "Total number of transactions (encumbrances) expected for this order",
       "type": "integer"
+    },
+    "isProcessed": {
+      "description": "If true no more transactions expected for processing",
+      "type": "boolean",
+      "default": false
     }
   },
   "required": [
