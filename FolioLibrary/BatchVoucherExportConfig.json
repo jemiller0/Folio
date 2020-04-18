@@ -1,0 +1,100 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "description": "Configuration information for a voucher export - there's only one of these for a given batchGroup",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "id": {
+      "description": "The UUID format string",
+      "type": "string",
+      "pattern": "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-5][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}$"
+    },
+    "batchGroupId": {
+      "$ref": "#/properties/id"
+    },
+    "enableScheduledExport": {
+      "description": "Whether or not to enable scheduled batch voucher exports",
+      "type": "boolean",
+      "default": false
+    },
+    "format": {
+      "description": "Desired format (MIME type) of the batch voucher",
+      "type": "string",
+      "default": "Application/json",
+      "enum": [
+        "Application/json",
+        "Application/xml"
+      ]
+    },
+    "startTime": {
+      "description": "The time of day to trigger an export if enableDailyExport == true.  Format: HH:MM",
+      "type": "string",
+      "default": "00:00",
+      "pattern": "^([0-9]|0[0-9]|1[0-9]|2[0-3])[:][0-5][0-9]$"
+    },
+    "uploadURI": {
+      "description": "URI batch vouchers should be uploaded to.  Limited to FTP initially",
+      "type": "string",
+      "pattern": "^ftp://([\\.\\_\\-a-z0-9]+)(/([\\./\\-\\_\\.a-z0-9]?)+)?$"
+    },
+    "weekdays": {
+      "description": "An array of weekdays (enum: Sunday, Monday, etc.) indicating which days to trigger exports on.  If empty, indicates daily exports",
+      "type": "array",
+      "items": {
+        "type": "string",
+        "uniqueItems": true,
+        "enum": [
+          "Sunday",
+          "Monday",
+          "Tuesday",
+          "Wednesday",
+          "Thursday",
+          "Friday",
+          "Saturday"
+        ]
+      }
+    },
+    "metadata": {
+      "title": "Metadata Schema",
+      "description": "Metadata about creation and changes to records, provided by the server (client should not provide)",
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "createdDate": {
+          "description": "Date and time when the record was created",
+          "type": "string",
+          "format": "date-time"
+        },
+        "createdByUserId": {
+          "description": "ID of the user who created the record (when available)",
+          "type": "string",
+          "pattern": "^[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12}$"
+        },
+        "createdByUsername": {
+          "description": "Username of the user who created the record (when available)",
+          "type": "string"
+        },
+        "updatedDate": {
+          "description": "Date and time when the record was last updated",
+          "type": "string",
+          "format": "date-time"
+        },
+        "updatedByUserId": {
+          "description": "ID of the user who last updated the record (when available)",
+          "type": "string",
+          "pattern": "^[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12}$"
+        },
+        "updatedByUsername": {
+          "description": "Username of the user who last updated the record (when available)",
+          "type": "string"
+        }
+      },
+      "required": [
+        "createdDate"
+      ]
+    }
+  },
+  "required": [
+    "batchGroupId"
+  ]
+}

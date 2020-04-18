@@ -1,6 +1,5 @@
 using NJsonSchema;
 using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.IO;
@@ -9,12 +8,12 @@ using System.Reflection;
 
 namespace FolioLibrary
 {
-    [Table("budget", Schema = "diku_mod_finance_storage")]
-    public partial class Budget
+    [Table("feefines", Schema = "diku_mod_feesfines")]
+    public partial class FeeType
     {
         public static ValidationResult ValidateContent(string value)
         {
-            using (var sr = new StreamReader(Assembly.GetExecutingAssembly().GetManifestResourceStream("FolioLibrary.Budget.json")))
+            using (var sr = new StreamReader(Assembly.GetExecutingAssembly().GetManifestResourceStream("FolioLibrary.FeeType.json")))
             {
                 var js = JsonSchema.FromJsonAsync(sr.ReadToEndAsync().Result).Result;
                 var l = js.Validate(value);
@@ -26,7 +25,7 @@ namespace FolioLibrary
         [Column("id"), Display(Order = 1), Editable(false)]
         public virtual Guid? Id { get; set; }
 
-        [Column("jsonb"), CustomValidation(typeof(Budget), nameof(ValidateContent)), DataType(DataType.MultilineText), Display(Order = 2), Required]
+        [Column("jsonb"), CustomValidation(typeof(FeeType), nameof(ValidateContent)), DataType(DataType.MultilineText), Display(Order = 2), Required]
         public virtual string Content { get; set; }
 
         [Column("creation_date"), DataType(DataType.DateTime), Display(Name = "Creation Time", Order = 3), DisplayFormat(DataFormatString = "{0:g}"), Editable(false)]
@@ -36,20 +35,11 @@ namespace FolioLibrary
         public virtual string CreationUserId { get; set; }
 
         [Display(Order = 5)]
-        public virtual Fund Fund { get; set; }
+        public virtual Owner Owner { get; set; }
 
-        [Column("fundid"), Display(Name = "Fund", Order = 6), Editable(false)]
-        public virtual Guid? FundId { get; set; }
+        [Column("ownerid"), Display(Name = "Owner", Order = 6), Editable(false), ForeignKey("Owner")]
+        public virtual Guid? Ownerid { get; set; }
 
-        [Display(Name = "Fiscal Year", Order = 7)]
-        public virtual FiscalYear FiscalYear { get; set; }
-
-        [Column("fiscalyearid"), Display(Name = "Fiscal Year", Order = 8), Editable(false)]
-        public virtual Guid? FiscalYearId { get; set; }
-
-        [ScaffoldColumn(false)]
-        public virtual ICollection<GroupFundFiscalYear> GroupFundFiscalYears { get; set; }
-
-        public override string ToString() => $"{{ {nameof(Id)} = {Id}, {nameof(Content)} = {Content}, {nameof(CreationTime)} = {CreationTime}, {nameof(CreationUserId)} = {CreationUserId}, {nameof(FundId)} = {FundId}, {nameof(FiscalYearId)} = {FiscalYearId} }}";
+        public override string ToString() => $"{{ {nameof(Id)} = {Id}, {nameof(Content)} = {Content}, {nameof(CreationTime)} = {CreationTime}, {nameof(CreationUserId)} = {CreationUserId}, {nameof(Ownerid)} = {Ownerid} }}";
     }
 }

@@ -1,0 +1,105 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "description": "Collection of available conditions",
+  "type": "object",
+  "properties": {
+    "patronBlockConditions": {
+      "id": "patronBlockConditions",
+      "description": "List of of available patron block conditions",
+      "type": "array",
+      "items": {
+        "description": "Patron block conditions schema",
+        "type": "object",
+        "properties": {
+          "id": {
+            "description": "The UUID format string",
+            "type": "string",
+            "pattern": "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-5][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}$"
+          },
+          "name": {
+            "description": "The name of the condition",
+            "type": "string"
+          },
+          "blockBorrowing": {
+            "description": "This flag indicates the block for borrowings",
+            "type": "boolean"
+          },
+          "blockRenewals": {
+            "description": "This flag indicates the block for renewals",
+            "type": "boolean"
+          },
+          "blockRequests": {
+            "description": "This flag indicates the block for requests",
+            "type": "boolean"
+          },
+          "valueType": {
+            "description": "Defines limit type",
+            "type": "string",
+            "enum": [
+              "Integer",
+              "Double"
+            ]
+          },
+          "message": {
+            "description": "A message to be displayed",
+            "type": "string"
+          },
+          "metadata": {
+            "title": "Metadata Schema",
+            "description": "Metadata about creation and changes to records, provided by the server (client should not provide)",
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "createdDate": {
+                "description": "Date and time when the record was created",
+                "type": "string",
+                "format": "date-time"
+              },
+              "createdByUserId": {
+                "description": "ID of the user who created the record (when available)",
+                "type": "string",
+                "pattern": "^[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12}$"
+              },
+              "createdByUsername": {
+                "description": "Username of the user who created the record (when available)",
+                "type": "string"
+              },
+              "updatedDate": {
+                "description": "Date and time when the record was last updated",
+                "type": "string",
+                "format": "date-time"
+              },
+              "updatedByUserId": {
+                "description": "ID of the user who last updated the record (when available)",
+                "type": "string",
+                "pattern": "^[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12}$"
+              },
+              "updatedByUsername": {
+                "description": "Username of the user who last updated the record (when available)",
+                "type": "string"
+              }
+            },
+            "required": [
+              "createdDate"
+            ]
+          }
+        },
+        "required": [
+          "id",
+          "name",
+          "blockBorrowing",
+          "blockRenewals",
+          "blockRequests",
+          "valueType"
+        ]
+      }
+    },
+    "totalRecords": {
+      "type": "integer"
+    }
+  },
+  "required": [
+    "patronBlockConditions",
+    "totalRecords"
+  ]
+}

@@ -12,12 +12,17 @@
     <None Remove="AlternativeTitleType.json" />
     <None Remove="AuthAttempt.json" />
     <None Remove="AuthCredentialsHistory.json" />
+    <None Remove="BatchGroup.json" />
+    <None Remove="BatchVoucher.json" />
+    <None Remove="BatchVoucherExport.json" />
+    <None Remove="BatchVoucherExportConfig.json" />
     <None Remove="Block.json" />
     <None Remove="Budget.json" />
     <None Remove="CallNumberType.json" />
     <None Remove="Campus.json" />
     <None Remove="CancellationReason.json" />
     <None Remove="Category.json" />
+    <None Remove="CheckIn.json" />
     <None Remove="CirculationRule.json" />
     <None Remove="ClassificationType.json" />
     <None Remove="Comment.json" />
@@ -29,13 +34,13 @@
     <None Remove="ElectronicAccessRelationship.json" />
     <None Remove="ErrorRecord.json" />
     <None Remove="EventLog.json" />
-    <None Remove="Fee.json" />
+    <None Remove="ExportConfigCredential.json" />
     <None Remove="FeeAction.json" />
+    <None Remove="FeeType.json" />
     <None Remove="FinanceGroup.json" />
     <None Remove="FiscalYear.json" />
     <None Remove="FixedDueDateSchedule.json" />
     <None Remove="Fund.json" />
-    <None Remove="FundDistribution.json" />
     <None Remove="FundType.json" />
     <None Remove="Group.json" />
     <None Remove="GroupFundFiscalYear.json" />
@@ -58,6 +63,7 @@
     <None Remove="InterfaceCredential.json" />
     <None Remove="Invoice.json" />
     <None Remove="InvoiceItem.json" />
+    <None Remove="InvoiceTransactionSummary.json" />
     <None Remove="Item.json" />
     <None Remove="ItemDamagedStatus.json" />
     <None Remove="ItemNoteType.json" />
@@ -87,13 +93,18 @@
     <None Remove="OverdueFinePolicy.json" />
     <None Remove="Owner.json" />
     <None Remove="PatronActionSession.json" />
+    <None Remove="PatronBlockCondition.json" />
+    <None Remove="PatronBlockLimit.json" />
     <None Remove="PatronNoticePolicy.json" />
     <None Remove="Payment.json" />
     <None Remove="Permission.json" />
     <None Remove="PermissionsUser.json" />
     <None Remove="Piece.json" />
+    <None Remove="PrecedingSucceedingTitle.json" />
+    <None Remove="Prefix.json" />
     <None Remove="Proxy.json" />
     <None Remove="RawRecord.json" />
+    <None Remove="ReasonsForClosure.json" />
     <None Remove="Record.json" />
     <None Remove="Refund.json" />
     <None Remove="ReportingCode.json" />
@@ -106,8 +117,10 @@
     <None Remove="StaffSlip.json" />
     <None Remove="StatisticalCode.json" />
     <None Remove="StatisticalCodeType.json" />
+    <None Remove="Suffix.json" />
     <None Remove="Tag.json" />
     <None Remove="Template.json" />
+    <None Remove="Title.json" />
     <None Remove="Transaction.json" />
     <None Remove="Transfer.json" />
     <None Remove="TransferCriteria.json" />
@@ -126,12 +139,17 @@
     <EmbeddedResource Include="AlternativeTitleType.json" />
     <EmbeddedResource Include="AuthAttempt.json" />
     <EmbeddedResource Include="AuthCredentialsHistory.json" />
+    <EmbeddedResource Include="BatchGroup.json" />
+    <EmbeddedResource Include="BatchVoucher.json" />
+    <EmbeddedResource Include="BatchVoucherExport.json" />
+    <EmbeddedResource Include="BatchVoucherExportConfig.json" />
     <EmbeddedResource Include="Block.json" />
     <EmbeddedResource Include="Budget.json" />
     <EmbeddedResource Include="CallNumberType.json" />
     <EmbeddedResource Include="Campus.json" />
     <EmbeddedResource Include="CancellationReason.json" />
     <EmbeddedResource Include="Category.json" />
+    <EmbeddedResource Include="CheckIn.json" />
     <EmbeddedResource Include="CirculationRule.json" />
     <EmbeddedResource Include="ClassificationType.json" />
     <EmbeddedResource Include="Comment.json" />
@@ -143,13 +161,13 @@
     <EmbeddedResource Include="ElectronicAccessRelationship.json" />
     <EmbeddedResource Include="ErrorRecord.json" />
     <EmbeddedResource Include="EventLog.json" />
-    <EmbeddedResource Include="Fee.json" />
+    <EmbeddedResource Include="ExportConfigCredential.json" />
     <EmbeddedResource Include="FeeAction.json" />
+    <EmbeddedResource Include="FeeType.json" />
     <EmbeddedResource Include="FinanceGroup.json" />
     <EmbeddedResource Include="FiscalYear.json" />
     <EmbeddedResource Include="FixedDueDateSchedule.json" />
     <EmbeddedResource Include="Fund.json" />
-    <EmbeddedResource Include="FundDistribution.json" />
     <EmbeddedResource Include="FundType.json" />
     <EmbeddedResource Include="Group.json" />
     <EmbeddedResource Include="GroupFundFiscalYear.json" />
@@ -172,6 +190,7 @@
     <EmbeddedResource Include="InterfaceCredential.json" />
     <EmbeddedResource Include="Invoice.json" />
     <EmbeddedResource Include="InvoiceItem.json" />
+    <EmbeddedResource Include="InvoiceTransactionSummary.json" />
     <EmbeddedResource Include="Item.json" />
     <EmbeddedResource Include="ItemDamagedStatus.json" />
     <EmbeddedResource Include="ItemNoteType.json" />
@@ -201,13 +220,18 @@
     <EmbeddedResource Include="OverdueFinePolicy.json" />
     <EmbeddedResource Include="Owner.json" />
     <EmbeddedResource Include="PatronActionSession.json" />
+    <EmbeddedResource Include="PatronBlockCondition.json" />
+    <EmbeddedResource Include="PatronBlockLimit.json" />
     <EmbeddedResource Include="PatronNoticePolicy.json" />
     <EmbeddedResource Include="Payment.json" />
     <EmbeddedResource Include="Permission.json" />
     <EmbeddedResource Include="PermissionsUser.json" />
     <EmbeddedResource Include="Piece.json" />
+    <EmbeddedResource Include="PrecedingSucceedingTitle.json" />
+    <EmbeddedResource Include="Prefix.json" />
     <EmbeddedResource Include="Proxy.json" />
     <EmbeddedResource Include="RawRecord.json" />
+    <EmbeddedResource Include="ReasonsForClosure.json" />
     <EmbeddedResource Include="Record.json" />
     <EmbeddedResource Include="Refund.json" />
     <EmbeddedResource Include="ReportingCode.json" />
@@ -220,8 +244,10 @@
     <EmbeddedResource Include="StaffSlip.json" />
     <EmbeddedResource Include="StatisticalCode.json" />
     <EmbeddedResource Include="StatisticalCodeType.json" />
+    <EmbeddedResource Include="Suffix.json" />
     <EmbeddedResource Include="Tag.json" />
     <EmbeddedResource Include="Template.json" />
+    <EmbeddedResource Include="Title.json" />
     <EmbeddedResource Include="Transaction.json" />
     <EmbeddedResource Include="Transfer.json" />
     <EmbeddedResource Include="TransferCriteria.json" />
@@ -234,12 +260,12 @@
   </ItemGroup>
   
   <ItemGroup>
-    <PackageReference Include="Dapper" Version="2.0.30" />
+    <PackageReference Include="Dapper" Version="2.0.35" />
     <PackageReference Include="Microsoft.CSharp" Version="4.7.0" />
     <PackageReference Include="Newtonsoft.Json" Version="12.0.3" />
     <PackageReference Include="Newtonsoft.Json.Schema" Version="3.0.13" />
-    <PackageReference Include="NJsonSchema" Version="10.1.11" />
-    <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="3.1.2" />
+    <PackageReference Include="NJsonSchema" Version="10.1.12" />
+    <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="3.1.3" />
     <PackageReference Include="System.Configuration.ConfigurationManager" Version="4.7.0" />
   </ItemGroup>
 

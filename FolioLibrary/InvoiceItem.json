@@ -39,6 +39,11 @@
             "description": "Displayed in invoice line as a name for the input",
             "type": "string"
           },
+          "exportToAccounting": {
+            "description": "Whether or not to show this adjustment in batchedVoucherLines",
+            "type": "boolean",
+            "default": false
+          },
           "fundDistributions": {
             "id": "fundDistributions",
             "description": "Fund distribution records from which this adjustment will be paid; only valid at invoice level",
@@ -124,6 +129,7 @@
         },
         "required": [
           "description",
+          "exportToAccounting",
           "prorate",
           "relationToTotal",
           "type",

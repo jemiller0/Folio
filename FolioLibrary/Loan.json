@@ -152,6 +152,21 @@
       "required": [
         "createdDate"
       ]
+    },
+    "agedToLostDelayedBilling": {
+      "description": "Aged to Lost Delayed Billing processing",
+      "type": "object",
+      "properties": {
+        "lostItemHasBeenBilled": {
+          "description": "Indicates if the aged to lost fee has been billed (for use where delayed billing is set up)",
+          "type": "boolean"
+        },
+        "dateLostItemShouldBeBilled": {
+          "description": "Indicates when the aged to lost fee should be billed (for use where delayed billing is set up)",
+          "type": "string",
+          "format": "date-time"
+        }
+      }
     }
   },
   "required": [

@@ -71,6 +71,14 @@
       "type": "string",
       "pattern": "^[a-zA-Z0-9]{1,16}$"
     },
+    "poNumberPrefix": {
+      "description": "Purchase order number prefix",
+      "type": "string"
+    },
+    "poNumberSuffix": {
+      "description": "Purchase order number suffix",
+      "type": "string"
+    },
     "orderType": {
       "description": "the purchase order type",
       "type": "string",

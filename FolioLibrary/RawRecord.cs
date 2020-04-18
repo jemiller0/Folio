@@ -22,7 +22,7 @@ namespace FolioLibrary
             return ValidationResult.Success;
         }
 
-        [Column("_id"), Display(Order = 1), Editable(false)]
+        [Column("id"), Display(Order = 1), Editable(false)]
         public virtual Guid? Id { get; set; }
 
         [Column("jsonb"), CustomValidation(typeof(RawRecord), nameof(ValidateContent)), DataType(DataType.MultilineText), Display(Order = 2), Required]

@@ -1,0 +1,108 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "description": "Title",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "id": {
+      "description": "The UUID format string",
+      "type": "string",
+      "pattern": "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-5][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}$"
+    },
+    "title": {
+      "description": "The title name",
+      "type": "string"
+    },
+    "poLineId": {
+      "$ref": "#/properties/id"
+    },
+    "instanceId": {
+      "$ref": "#/properties/id"
+    },
+    "productIds": {
+      "id": "productIds",
+      "description": "List of product identifiers",
+      "type": "array",
+      "items": {
+        "description": "Product identifier",
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "productId": {
+            "description": "The actual product identifier",
+            "type": "string"
+          },
+          "productIdType": {
+            "description": "The UUID corresponding to the type of product id",
+            "type": "string",
+            "pattern": "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-5][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}$"
+          },
+          "qualifier": {
+            "description": "Information about the binding, format, volume numbers, part of a set, publisher, distributor, etc. which might be enclosed in parenthesis",
+            "type": "string"
+          }
+        }
+      }
+    },
+    "contributors": {
+      "id": "contributors",
+      "description": "List of contributors to the material",
+      "type": "array",
+      "items": {
+        "description": "contributor to the material",
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "contributor": {
+            "description": "the name of a contributor to the material",
+            "type": "string"
+          },
+          "contributorNameTypeId": {
+            "description": "UUID of the contributor type",
+            "type": "string",
+            "pattern": "^[a-f0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12}$"
+          }
+        },
+        "required": [
+          "contributorNameTypeId"
+        ]
+      }
+    },
+    "publisher": {
+      "description": "Publisher of the material",
+      "type": "string"
+    },
+    "edition": {
+      "description": "Edition of the material",
+      "type": "string"
+    },
+    "publishedDate": {
+      "description": "Year of the material's publication",
+      "type": "string",
+      "pattern": "^[0-9]{4}$"
+    },
+    "subscriptionFrom": {
+      "description": "The start date of the subscription",
+      "type": "string",
+      "format": "date-time"
+    },
+    "subscriptionTo": {
+      "description": "The end date of the subscription",
+      "type": "string",
+      "format": "date-time"
+    },
+    "subscriptionInterval": {
+      "description": "The subscription interval in days",
+      "type": "integer"
+    },
+    "isAcknowledged": {
+      "description": "Flag for acknowledge receiving note",
+      "type": "boolean",
+      "default": false
+    }
+  },
+  "required": [
+    "title",
+    "poLineId"
+  ]
+}

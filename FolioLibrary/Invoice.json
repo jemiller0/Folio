@@ -35,6 +35,11 @@
             "description": "Displayed in invoice line as a name for the input",
             "type": "string"
           },
+          "exportToAccounting": {
+            "description": "Whether or not to show this adjustment in batchedVoucherLines",
+            "type": "boolean",
+            "default": false
+          },
           "fundDistributions": {
             "id": "fundDistributions",
             "description": "Fund distribution records from which this adjustment will be paid; only valid at invoice level",
@@ -120,6 +125,7 @@
         },
         "required": [
           "description",
+          "exportToAccounting",
           "prorate",
           "relationToTotal",
           "type",
@@ -155,6 +161,15 @@
     "currency": {
       "description": "Ideally this is the ISO code and not something the user defines",
       "type": "string"
+    },
+    "enclosureNeeded": {
+      "description": "Indicates that an enclosure is needed",
+      "type": "boolean",
+      "default": false
+    },
+    "exchangeRate": {
+      "description": "Exchange rate",
+      "type": "number"
     },
     "exportToAccounting": {
       "description": "This would keep the invoice from being feed into the batch process (i.e. not generate an external voucher/payment) but would still move values in the system. This might be defined by the vendor relationship and exposed for override on the invoice.",

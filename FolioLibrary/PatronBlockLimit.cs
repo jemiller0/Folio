@@ -8,12 +8,12 @@ using System.Reflection;
 
 namespace FolioLibrary
 {
-    [Table("encumbrance", Schema = "diku_mod_finance_storage")]
-    public partial class Encumbrance
+    [Table("patron_block_limits", Schema = "diku_mod_users")]
+    public partial class PatronBlockLimit
     {
         public static ValidationResult ValidateContent(string value)
         {
-            using (var sr = new StreamReader(Assembly.GetExecutingAssembly().GetManifestResourceStream("FolioLibrary.Encumbrance.json")))
+            using (var sr = new StreamReader(Assembly.GetExecutingAssembly().GetManifestResourceStream("FolioLibrary.PatronBlockLimit.json")))
             {
                 var js = JsonSchema.FromJsonAsync(sr.ReadToEndAsync().Result).Result;
                 var l = js.Validate(value);
@@ -25,7 +25,7 @@ namespace FolioLibrary
         [Column("id"), Display(Order = 1), Editable(false)]
         public virtual Guid? Id { get; set; }
 
-        [Column("jsonb"), CustomValidation(typeof(Encumbrance), nameof(ValidateContent)), DataType(DataType.MultilineText), Display(Order = 2), Required]
+        [Column("jsonb"), CustomValidation(typeof(PatronBlockLimit), nameof(ValidateContent)), DataType(DataType.MultilineText), Display(Order = 2), Required]
         public virtual string Content { get; set; }
 
         [Column("creation_date"), DataType(DataType.DateTime), Display(Name = "Creation Time", Order = 3), DisplayFormat(DataFormatString = "{0:g}"), Editable(false)]
@@ -34,18 +34,6 @@ namespace FolioLibrary
         [Column("created_by"), Display(Name = "Creation User Id", Order = 4), Editable(false)]
         public virtual string CreationUserId { get; set; }
 
-        [Display(Order = 5)]
-        public virtual Budget Budget { get; set; }
-
-        [Column("budgetid"), Display(Name = "Budget", Order = 6), Editable(false), ForeignKey("Budget")]
-        public virtual Guid? Budgetid { get; set; }
-
-        [Display(Order = 7)]
-        public virtual Fund Fund { get; set; }
-
-        [Column("fundid"), Display(Name = "Fund", Order = 8), Editable(false), ForeignKey("Fund")]
-        public virtual Guid? Fundid { get; set; }
-
-        public override string ToString() => $"{{ {nameof(Id)} = {Id}, {nameof(Content)} = {Content}, {nameof(CreationTime)} = {CreationTime}, {nameof(CreationUserId)} = {CreationUserId}, {nameof(Budgetid)} = {Budgetid}, {nameof(Fundid)} = {Fundid} }}";
+        public override string ToString() => $"{{ {nameof(Id)} = {Id}, {nameof(Content)} = {Content}, {nameof(CreationTime)} = {CreationTime}, {nameof(CreationUserId)} = {CreationUserId} }}";
     }
 }

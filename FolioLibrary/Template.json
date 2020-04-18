@@ -7,6 +7,15 @@
       "description": "Template id",
       "type": "string"
     },
+    "name": {
+      "type": "string"
+    },
+    "active": {
+      "type": "boolean"
+    },
+    "category": {
+      "type": "string"
+    },
     "description": {
       "description": "Template description",
       "type": "string"

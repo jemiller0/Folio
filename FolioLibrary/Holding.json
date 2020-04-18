@@ -118,6 +118,18 @@
     "illPolicyId": {
       "$ref": "#/properties/id"
     },
+    "illPolicy": {
+      "description": "expanded ILL Policy object corresponding to illPolicyId",
+      "javaType": "org.folio.rest.jaxrs.model.IllPolicyVirtual",
+      "folio:$ref": "illpolicy.json",
+      "readonly": true,
+      "folio:isVirtual": true,
+      "folio:linkBase": "ill-policies",
+      "folio:linkFromField": "illPolicyId",
+      "folio:linkToField": "id",
+      "folio:includedElement": "illPolicies.0",
+      "type": "object"
+    },
     "retentionPolicy": {
       "description": "Records information regarding how long we have agreed to keep something.",
       "type": "string"
@@ -466,7 +478,8 @@
                   "Paged",
                   "Declared lost",
                   "Order closed",
-                  "Claimed returned"
+                  "Claimed returned",
+                  "Withdrawn"
                 ]
               },
               "date": {

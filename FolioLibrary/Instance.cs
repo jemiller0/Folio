@@ -65,6 +65,12 @@ namespace FolioLibrary
         [Display(Name = "Instance Source Marc", Order = 14)]
         public virtual InstanceSourceMarc InstanceSourceMarc { get; set; }
 
+        [ScaffoldColumn(false)]
+        public virtual ICollection<PrecedingSucceedingTitle> PrecedingSucceedingTitles { get; set; }
+
+        [ScaffoldColumn(false)]
+        public virtual ICollection<PrecedingSucceedingTitle> PrecedingSucceedingTitles1 { get; set; }
+
         public override string ToString() => $"{{ {nameof(Id)} = {Id}, {nameof(Content)} = {Content}, {nameof(CreationTime)} = {CreationTime}, {nameof(CreationUserId)} = {CreationUserId}, {nameof(Instancestatusid)} = {Instancestatusid}, {nameof(Modeofissuanceid)} = {Modeofissuanceid}, {nameof(Instancetypeid)} = {Instancetypeid} }}";
     }
 }

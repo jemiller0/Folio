@@ -1,0 +1,45 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "description": "Check-in operation",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "id": {
+      "description": "The UUID format string",
+      "type": "string",
+      "pattern": "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-5][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}$"
+    },
+    "occurredDateTime": {
+      "description": "Date and time when the check-in occurred",
+      "type": "string",
+      "format": "date-time"
+    },
+    "itemId": {
+      "$ref": "#/properties/id"
+    },
+    "itemStatusPriorToCheckIn": {
+      "description": "Item status prior to check-in",
+      "type": "string"
+    },
+    "requestQueueSize": {
+      "description": "Request queue size for the item",
+      "type": "integer",
+      "minimum": 0.0
+    },
+    "itemLocationId": {
+      "$ref": "#/properties/id"
+    },
+    "servicePointId": {
+      "$ref": "#/properties/id"
+    },
+    "performedByUserId": {
+      "$ref": "#/properties/id"
+    }
+  },
+  "required": [
+    "occurredDateTime",
+    "itemId",
+    "servicePointId",
+    "performedByUserId"
+  ]
+}

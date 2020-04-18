@@ -1,23 +1,49 @@
 {
   "$schema": "http://json-schema.org/draft-04/schema#",
-  "description": "Relationship between a user and an acquistions Unit",
+  "description": "A relationship of a given type between a super-instance and a sub-instance",
   "type": "object",
   "additionalProperties": false,
   "properties": {
     "id": {
-      "description": "UUID of this membership record",
+      "description": "A universally unique identifier (UUID), this is a 128-bit number used to identify a record and is shown in hex with dashes, for example 6312d172-f0cf-40f6-b27d-9fa8feaf332f; the UUID version must be from 1-5; see https://dev.folio.org/guides/uuids/",
       "type": "string",
       "pattern": "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-5][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}$"
     },
-    "userId": {
-      "description": "The UUID of the user to associate with the acquisitions unit",
-      "type": "string",
-      "pattern": "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-5][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}$"
+    "precedingInstanceId": {
+      "$ref": "#/properties/id"
     },
-    "acquisitionsUnitId": {
-      "description": "The acquisition unit the user is a member of",
-      "type": "string",
-      "pattern": "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-5][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}$"
+    "succeedingInstanceId": {
+      "$ref": "#/properties/id"
+    },
+    "title": {
+      "description": "The primary title (or label) associated with the resource",
+      "type": "string"
+    },
+    "hrid": {
+      "description": "The human readable ID, also called eye readable ID. A system-assigned sequential ID which maps to the Instance ID",
+      "type": "string"
+    },
+    "identifiers": {
+      "description": "An extensible set of name-value pairs of identifiers associated with the resource",
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "value": {
+            "description": "Resource identifier value",
+            "type": "string"
+          },
+          "identifierTypeId": {
+            "$ref": "#/properties/id"
+          }
+        },
+        "required": [
+          "value",
+          "identifierTypeId"
+        ]
+      },
+      "minItems": 0
     },
     "metadata": {
       "title": "Metadata Schema",
@@ -58,9 +84,5 @@
         "createdDate"
       ]
     }
-  },
-  "required": [
-    "userId",
-    "acquisitionsUnitId"
-  ]
+  }
 }

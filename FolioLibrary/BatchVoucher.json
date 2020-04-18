@@ -1,0 +1,184 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "description": "top-level batch voucher, i.e. a collection of batched vouchers",
+  "type": "object",
+  "properties": {
+    "id": {
+      "description": "The UUID format string",
+      "type": "string",
+      "pattern": "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-5][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}$"
+    },
+    "batchGroup": {
+      "description": "The human-readable name of the batch group used when generating this batch voucher",
+      "type": "string"
+    },
+    "batchedVouchers": {
+      "id": "batchVouchers",
+      "description": "an array of batched voucher records",
+      "type": "array",
+      "items": {
+        "description": "A single voucher which is part of a batch voucher",
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "accountingCode": {
+            "description": "Number that represents the vendor is an external accounting system which may include details like \"Address code\" in it. This is the number as stated on the invoice",
+            "type": "string"
+          },
+          "amount": {
+            "description": "The amount that is actually paid",
+            "type": "number"
+          },
+          "batchedVoucherLines": {
+            "id": "batchedVoucherLines",
+            "description": "an array of batched voucher line records",
+            "type": "array",
+            "items": {
+              "description": "One line of a batched voucher",
+              "type": "object",
+              "additionalProperties": false,
+              "properties": {
+                "amount": {
+                  "description": "Total amount of this voucher",
+                  "type": "number"
+                },
+                "fundCodes": {
+                  "id": "fundCodes",
+                  "description": "an array of fund codes",
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                },
+                "externalAccountNumber": {
+                  "description": "All distributions that come from funds with the same account number are grouped by voucher line",
+                  "type": "string"
+                }
+              },
+              "required": [
+                "amount",
+                "externalAccountNumber",
+                "fundCodes"
+              ]
+            }
+          },
+          "disbursementNumber": {
+            "description": "The identifier for the physical transaction corresponding to a payment;Brought in from external source",
+            "type": "string"
+          },
+          "disbursementDate": {
+            "description": "Date payment was made from financial system",
+            "type": "string",
+            "format": "date-time"
+          },
+          "disbursementAmount": {
+            "description": "The amount of the payment made outside of FOLIO",
+            "type": "number"
+          },
+          "enclosureNeeded": {
+            "description": "Indicates that an enclosure is needed",
+            "type": "boolean",
+            "default": false
+          },
+          "exchangeRate": {
+            "description": "Exchange rate used to generate transaction",
+            "type": "number"
+          },
+          "folioInvoiceNo": {
+            "description": "Represents associated invoice number",
+            "type": "string"
+          },
+          "invoiceCurrency": {
+            "description": "The currency in which invoice was originally defined",
+            "type": "string"
+          },
+          "invoiceNote": {
+            "description": "Free-form notes from the invoice",
+            "type": "string"
+          },
+          "status": {
+            "description": "Status of the voucher",
+            "type": "string",
+            "enum": [
+              "Awaiting payment",
+              "Paid"
+            ]
+          },
+          "systemCurrency": {
+            "description": "The currency in which the voucher was paid",
+            "type": "string"
+          },
+          "type": {
+            "description": "Indicates type of payment to account",
+            "type": "string",
+            "enum": [
+              "Payment",
+              "Pre-payment",
+              "Credit",
+              "Voucher"
+            ]
+          },
+          "vendorInvoiceNo": {
+            "description": "Corresponding invoice's vendorInvoiceNo",
+            "type": "string"
+          },
+          "vendorName": {
+            "description": "The name of the vendor",
+            "type": "string"
+          },
+          "voucherDate": {
+            "description": "The date the invoice status changes to approved",
+            "type": "string",
+            "format": "date-time"
+          },
+          "voucherNumber": {
+            "description": "Number generated by folio that will eventually identify the payment request sent out to external financial system.",
+            "type": "string",
+            "pattern": "^[a-zA-Z0-9]*$"
+          }
+        },
+        "required": [
+          "accountingCode",
+          "amount",
+          "batchedVoucherLines",
+          "folioInvoiceNo",
+          "invoiceCurrency",
+          "status",
+          "systemCurrency",
+          "type",
+          "vendorInvoiceNo",
+          "vendorName",
+          "voucherDate",
+          "voucherNumber"
+        ]
+      }
+    },
+    "created": {
+      "description": "When this batch voucher was created",
+      "type": "string",
+      "format": "date-time"
+    },
+    "start": {
+      "description": "This export is for all vouchers between start and end",
+      "type": "string",
+      "format": "date-time"
+    },
+    "end": {
+      "description": "This export is for all vouchers between start and end",
+      "type": "string",
+      "format": "date-time"
+    },
+    "totalRecords": {
+      "description": "total number of records in the array",
+      "type": "integer"
+    }
+  },
+  "required": [
+    "batchGroup",
+    "batchedVouchers",
+    "created",
+    "start",
+    "end",
+    "totalRecords"
+  ]
+}

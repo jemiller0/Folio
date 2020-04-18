@@ -35,6 +35,12 @@ namespace FolioLibrary
         [Column("created_by"), Display(Name = "Creation User Id", Order = 4), Editable(false)]
         public virtual string CreationUserId { get; set; }
 
+        [Display(Name = "Batch Group", Order = 5)]
+        public virtual BatchGroup BatchGroup { get; set; }
+
+        [Column("batchgroupid"), Display(Name = "Batch Group", Order = 6), Editable(false), ForeignKey("BatchGroup")]
+        public virtual Guid? Batchgroupid { get; set; }
+
         [ScaffoldColumn(false)]
         public virtual ICollection<Document> Documents { get; set; }
 
@@ -44,6 +50,6 @@ namespace FolioLibrary
         [ScaffoldColumn(false)]
         public virtual ICollection<Voucher> Vouchers { get; set; }
 
-        public override string ToString() => $"{{ {nameof(Id)} = {Id}, {nameof(Content)} = {Content}, {nameof(CreationTime)} = {CreationTime}, {nameof(CreationUserId)} = {CreationUserId} }}";
+        public override string ToString() => $"{{ {nameof(Id)} = {Id}, {nameof(Content)} = {Content}, {nameof(CreationTime)} = {CreationTime}, {nameof(CreationUserId)} = {CreationUserId}, {nameof(Batchgroupid)} = {Batchgroupid} }}";
     }
 }

@@ -48,7 +48,7 @@ namespace FolioConsoleApplication
                 Initialize();
                 if (args.Length == 0)
                 {
-                    traceSource.TraceEvent(TraceEventType.Critical, 0, "Usage: folio [-All] [-Api] [-Compress] [-Delete] [-Disable] [-Force] [-Load] [-Path <string>] [-Save] [-Update] [-Validate] [-Verbose] [-Warning] [-WhatIf] [-AllCirculation] [-AllConfiguration] [-AllFees] [-AllFinance] [-AllInventory] [-AllInvoices] [-AllLogin] [-AllOrders] [-AllOrganizations] [-AllPermissions] [-AllSource] [-AllTemplates] [-AllUsers] [-AccountsPath <string>] [-AccountsWhere <string>] [-AcquisitionsUnitsPath <string>] [-AcquisitionsUnitsWhere <string>] [-AddressTypesPath <string>] [-AddressTypesWhere <string>] [-AlertsPath <string>] [-AlertsWhere <string>] [-AlternativeTitleTypesPath <string>] [-AlternativeTitleTypesWhere <string>] [-BlocksPath <string>] [-BlocksWhere <string>] [-BudgetsPath <string>] [-BudgetsWhere <string>] [-CallNumberTypesPath <string>] [-CallNumberTypesWhere <string>] [-CampusesPath <string>] [-CampusesWhere <string>] [-CancellationReasonsPath <string>] [-CancellationReasonsWhere <string>] [-CategoriesPath <string>] [-CategoriesWhere <string>] [-CirculationRulesPath <string>] [-CirculationRulesWhere <string>] [-ClassificationTypesPath <string>] [-ClassificationTypesWhere <string>] [-CommentsPath <string>] [-CommentsWhere <string>] [-ConfigurationsPath <string>] [-ConfigurationsWhere <string>] [-ContactsPath <string>] [-ContactsWhere <string>] [-ContributorNameTypesPath <string>] [-ContributorNameTypesWhere <string>] [-ContributorTypesPath <string>] [-ContributorTypesWhere <string>] [-DocumentsPath <string>] [-DocumentsWhere <string>] [-ElectronicAccessRelationshipsPath <string>] [-ElectronicAccessRelationshipsWhere <string>] [-ErrorRecordsPath <string>] [-ErrorRecordsWhere <string>] [-FeesPath <string>] [-FeesWhere <string>] [-FeeActionsPath <string>] [-FeeActionsWhere <string>] [-FinanceGroupsPath <string>] [-FinanceGroupsWhere <string>] [-FiscalYearsPath <string>] [-FiscalYearsWhere <string>] [-FixedDueDateSchedulesPath <string>] [-FixedDueDateSchedulesWhere <string>] [-FundsPath <string>] [-FundsWhere <string>] [-FundDistributionsPath <string>] [-FundDistributionsWhere <string>] [-FundTypesPath <string>] [-FundTypesWhere <string>] [-GroupsPath <string>] [-GroupsWhere <string>] [-GroupFundFiscalYearsPath <string>] [-GroupFundFiscalYearsWhere <string>] [-HoldingsPath <string>] [-HoldingsWhere <string>] [-HoldingNoteTypesPath <string>] [-HoldingNoteTypesWhere <string>] [-HoldingTypesPath <string>] [-HoldingTypesWhere <string>] [-HridSettingsPath <string>] [-HridSettingsWhere <string>] [-IdTypesPath <string>] [-IdTypesWhere <string>] [-IllPoliciesPath <string>] [-IllPoliciesWhere <string>] [-InstancesPath <string>] [-InstancesWhere <string>] [-InstanceFormatsPath <string>] [-InstanceFormatsWhere <string>] [-InstanceNoteTypesPath <string>] [-InstanceNoteTypesWhere <string>] [-InstanceRelationshipsPath <string>] [-InstanceRelationshipsWhere <string>] [-InstanceRelationshipTypesPath <string>] [-InstanceRelationshipTypesWhere <string>] [-InstanceStatusesPath <string>] [-InstanceStatusesWhere <string>] [-InstanceTypesPath <string>] [-InstanceTypesWhere <string>] [-InstitutionsPath <string>] [-InstitutionsWhere <string>] [-InterfacesPath <string>] [-InterfacesWhere <string>] [-InterfaceCredentialsPath <string>] [-InterfaceCredentialsWhere <string>] [-InvoicesPath <string>] [-InvoicesWhere <string>] [-InvoiceItemsPath <string>] [-InvoiceItemsWhere <string>] [-ItemsPath <string>] [-ItemsWhere <string>] [-ItemDamagedStatusesPath <string>] [-ItemDamagedStatusesWhere <string>] [-ItemNoteTypesPath <string>] [-ItemNoteTypesWhere <string>] [-LedgersPath <string>] [-LedgersWhere <string>] [-LedgerFiscalYearsPath <string>] [-LedgerFiscalYearsWhere <string>] [-LibrariesPath <string>] [-LibrariesWhere <string>] [-LoansPath <string>] [-LoansWhere <string>] [-LoanPoliciesPath <string>] [-LoanPoliciesWhere <string>] [-LoanTypesPath <string>] [-LoanTypesWhere <string>] [-LocationsPath <string>] [-LocationsWhere <string>] [-LoginsPath <string>] [-LoginsWhere <string>] [-LostItemFeePoliciesPath <string>] [-LostItemFeePoliciesWhere <string>] [-MarcRecordsPath <string>] [-MarcRecordsWhere <string>] [-MaterialTypesPath <string>] [-MaterialTypesWhere <string>] [-ModeOfIssuancesPath <string>] [-ModeOfIssuancesWhere <string>] [-NatureOfContentTermsPath <string>] [-NatureOfContentTermsWhere <string>] [-OrdersPath <string>] [-OrdersWhere <string>] [-OrderInvoicesPath <string>] [-OrderInvoicesWhere <string>] [-OrderItemsPath <string>] [-OrderItemsWhere <string>] [-OrderTemplatesPath <string>] [-OrderTemplatesWhere <string>] [-OrderTransactionSummariesPath <string>] [-OrderTransactionSummariesWhere <string>] [-OrganizationsPath <string>] [-OrganizationsWhere <string>] [-OverdueFinePoliciesPath <string>] [-OverdueFinePoliciesWhere <string>] [-OwnersPath <string>] [-OwnersWhere <string>] [-PatronActionSessionsPath <string>] [-PatronActionSessionsWhere <string>] [-PatronNoticePoliciesPath <string>] [-PatronNoticePoliciesWhere <string>] [-PaymentsPath <string>] [-PaymentsWhere <string>] [-PermissionsPath <string>] [-PermissionsWhere <string>] [-PermissionsUsersPath <string>] [-PermissionsUsersWhere <string>] [-PiecesPath <string>] [-PiecesWhere <string>] [-ProxiesPath <string>] [-ProxiesWhere <string>] [-RawRecordsPath <string>] [-RawRecordsWhere <string>] [-RecordsPath <string>] [-RecordsWhere <string>] [-RefundsPath <string>] [-RefundsWhere <string>] [-ReportingCodesPath <string>] [-ReportingCodesWhere <string>] [-RequestsPath <string>] [-RequestsWhere <string>] [-RequestPoliciesPath <string>] [-RequestPoliciesWhere <string>] [-ScheduledNoticesPath <string>] [-ScheduledNoticesWhere <string>] [-ServicePointsPath <string>] [-ServicePointsWhere <string>] [-ServicePointUsersPath <string>] [-ServicePointUsersWhere <string>] [-SnapshotsPath <string>] [-SnapshotsWhere <string>] [-StaffSlipsPath <string>] [-StaffSlipsWhere <string>] [-StatisticalCodesPath <string>] [-StatisticalCodesWhere <string>] [-StatisticalCodeTypesPath <string>] [-StatisticalCodeTypesWhere <string>] [-TemplatesPath <string>] [-TemplatesWhere <string>] [-TransactionsPath <string>] [-TransactionsWhere <string>] [-TransfersPath <string>] [-TransfersWhere <string>] [-TransferCriteriasPath <string>] [-TransferCriteriasWhere <string>] [-UsersPath <string>] [-UsersWhere <string>] [-UserAcquisitionsUnitsPath <string>] [-UserAcquisitionsUnitsWhere <string>] [-UserRequestPreferencesPath <string>] [-UserRequestPreferencesWhere <string>] [-VouchersPath <string>] [-VouchersWhere <string>] [-VoucherItemsPath <string>] [-VoucherItemsWhere <string>] [-WaivesPath <string>] [-WaivesWhere <string>]");
+                    traceSource.TraceEvent(TraceEventType.Critical, 0, "Usage: folio [-All] [-Api] [-Compress] [-Delete] [-Disable] [-Force] [-Load] [-Path <string>] [-Save] [-Update] [-Validate] [-Verbose] [-Warning] [-WhatIf] [-AllCirculation] [-AllConfiguration] [-AllFees] [-AllFinance] [-AllInventory] [-AllInvoices] [-AllLogin] [-AllOrders] [-AllOrganizations] [-AllPermissions] [-AllSource] [-AllTemplates] [-AllUsers] [-AccountsPath <string>] [-AccountsWhere <string>] [-AcquisitionsUnitsPath <string>] [-AcquisitionsUnitsWhere <string>] [-AddressTypesPath <string>] [-AddressTypesWhere <string>] [-AlertsPath <string>] [-AlertsWhere <string>] [-AlternativeTitleTypesPath <string>] [-AlternativeTitleTypesWhere <string>] [-BatchGroupsPath <string>] [-BatchGroupsWhere <string>] [-BatchVouchersPath <string>] [-BatchVouchersWhere <string>] [-BatchVoucherExportsPath <string>] [-BatchVoucherExportsWhere <string>] [-BatchVoucherExportConfigsPath <string>] [-BatchVoucherExportConfigsWhere <string>] [-BlocksPath <string>] [-BlocksWhere <string>] [-BudgetsPath <string>] [-BudgetsWhere <string>] [-CallNumberTypesPath <string>] [-CallNumberTypesWhere <string>] [-CampusesPath <string>] [-CampusesWhere <string>] [-CancellationReasonsPath <string>] [-CancellationReasonsWhere <string>] [-CategoriesPath <string>] [-CategoriesWhere <string>] [-CheckInsPath <string>] [-CheckInsWhere <string>] [-CirculationRulesPath <string>] [-CirculationRulesWhere <string>] [-ClassificationTypesPath <string>] [-ClassificationTypesWhere <string>] [-CommentsPath <string>] [-CommentsWhere <string>] [-ConfigurationsPath <string>] [-ConfigurationsWhere <string>] [-ContactsPath <string>] [-ContactsWhere <string>] [-ContributorNameTypesPath <string>] [-ContributorNameTypesWhere <string>] [-ContributorTypesPath <string>] [-ContributorTypesWhere <string>] [-DocumentsPath <string>] [-DocumentsWhere <string>] [-ElectronicAccessRelationshipsPath <string>] [-ElectronicAccessRelationshipsWhere <string>] [-ErrorRecordsPath <string>] [-ErrorRecordsWhere <string>] [-ExportConfigCredentialsPath <string>] [-ExportConfigCredentialsWhere <string>] [-FeeActionsPath <string>] [-FeeActionsWhere <string>] [-FeeTypesPath <string>] [-FeeTypesWhere <string>] [-FinanceGroupsPath <string>] [-FinanceGroupsWhere <string>] [-FiscalYearsPath <string>] [-FiscalYearsWhere <string>] [-FixedDueDateSchedulesPath <string>] [-FixedDueDateSchedulesWhere <string>] [-FundsPath <string>] [-FundsWhere <string>] [-FundTypesPath <string>] [-FundTypesWhere <string>] [-GroupsPath <string>] [-GroupsWhere <string>] [-GroupFundFiscalYearsPath <string>] [-GroupFundFiscalYearsWhere <string>] [-HoldingsPath <string>] [-HoldingsWhere <string>] [-HoldingNoteTypesPath <string>] [-HoldingNoteTypesWhere <string>] [-HoldingTypesPath <string>] [-HoldingTypesWhere <string>] [-HridSettingsPath <string>] [-HridSettingsWhere <string>] [-IdTypesPath <string>] [-IdTypesWhere <string>] [-IllPoliciesPath <string>] [-IllPoliciesWhere <string>] [-InstancesPath <string>] [-InstancesWhere <string>] [-InstanceFormatsPath <string>] [-InstanceFormatsWhere <string>] [-InstanceNoteTypesPath <string>] [-InstanceNoteTypesWhere <string>] [-InstanceRelationshipsPath <string>] [-InstanceRelationshipsWhere <string>] [-InstanceRelationshipTypesPath <string>] [-InstanceRelationshipTypesWhere <string>] [-InstanceStatusesPath <string>] [-InstanceStatusesWhere <string>] [-InstanceTypesPath <string>] [-InstanceTypesWhere <string>] [-InstitutionsPath <string>] [-InstitutionsWhere <string>] [-InterfacesPath <string>] [-InterfacesWhere <string>] [-InterfaceCredentialsPath <string>] [-InterfaceCredentialsWhere <string>] [-InvoicesPath <string>] [-InvoicesWhere <string>] [-InvoiceItemsPath <string>] [-InvoiceItemsWhere <string>] [-InvoiceTransactionSummariesPath <string>] [-InvoiceTransactionSummariesWhere <string>] [-ItemsPath <string>] [-ItemsWhere <string>] [-ItemDamagedStatusesPath <string>] [-ItemDamagedStatusesWhere <string>] [-ItemNoteTypesPath <string>] [-ItemNoteTypesWhere <string>] [-LedgersPath <string>] [-LedgersWhere <string>] [-LedgerFiscalYearsPath <string>] [-LedgerFiscalYearsWhere <string>] [-LibrariesPath <string>] [-LibrariesWhere <string>] [-LoansPath <string>] [-LoansWhere <string>] [-LoanPoliciesPath <string>] [-LoanPoliciesWhere <string>] [-LoanTypesPath <string>] [-LoanTypesWhere <string>] [-LocationsPath <string>] [-LocationsWhere <string>] [-LoginsPath <string>] [-LoginsWhere <string>] [-LostItemFeePoliciesPath <string>] [-LostItemFeePoliciesWhere <string>] [-MarcRecordsPath <string>] [-MarcRecordsWhere <string>] [-MaterialTypesPath <string>] [-MaterialTypesWhere <string>] [-ModeOfIssuancesPath <string>] [-ModeOfIssuancesWhere <string>] [-NatureOfContentTermsPath <string>] [-NatureOfContentTermsWhere <string>] [-OrdersPath <string>] [-OrdersWhere <string>] [-OrderInvoicesPath <string>] [-OrderInvoicesWhere <string>] [-OrderItemsPath <string>] [-OrderItemsWhere <string>] [-OrderTemplatesPath <string>] [-OrderTemplatesWhere <string>] [-OrderTransactionSummariesPath <string>] [-OrderTransactionSummariesWhere <string>] [-OrganizationsPath <string>] [-OrganizationsWhere <string>] [-OverdueFinePoliciesPath <string>] [-OverdueFinePoliciesWhere <string>] [-OwnersPath <string>] [-OwnersWhere <string>] [-PatronActionSessionsPath <string>] [-PatronActionSessionsWhere <string>] [-PatronBlockConditionsPath <string>] [-PatronBlockConditionsWhere <string>] [-PatronBlockLimitsPath <string>] [-PatronBlockLimitsWhere <string>] [-PatronNoticePoliciesPath <string>] [-PatronNoticePoliciesWhere <string>] [-PaymentsPath <string>] [-PaymentsWhere <string>] [-PermissionsPath <string>] [-PermissionsWhere <string>] [-PermissionsUsersPath <string>] [-PermissionsUsersWhere <string>] [-PiecesPath <string>] [-PiecesWhere <string>] [-PrecedingSucceedingTitlesPath <string>] [-PrecedingSucceedingTitlesWhere <string>] [-PrefixesPath <string>] [-PrefixesWhere <string>] [-ProxiesPath <string>] [-ProxiesWhere <string>] [-RawRecordsPath <string>] [-RawRecordsWhere <string>] [-ReasonsForClosuresPath <string>] [-ReasonsForClosuresWhere <string>] [-RecordsPath <string>] [-RecordsWhere <string>] [-RefundsPath <string>] [-RefundsWhere <string>] [-ReportingCodesPath <string>] [-ReportingCodesWhere <string>] [-RequestsPath <string>] [-RequestsWhere <string>] [-RequestPoliciesPath <string>] [-RequestPoliciesWhere <string>] [-ScheduledNoticesPath <string>] [-ScheduledNoticesWhere <string>] [-ServicePointsPath <string>] [-ServicePointsWhere <string>] [-ServicePointUsersPath <string>] [-ServicePointUsersWhere <string>] [-SnapshotsPath <string>] [-SnapshotsWhere <string>] [-StaffSlipsPath <string>] [-StaffSlipsWhere <string>] [-StatisticalCodesPath <string>] [-StatisticalCodesWhere <string>] [-StatisticalCodeTypesPath <string>] [-StatisticalCodeTypesWhere <string>] [-SuffixesPath <string>] [-SuffixesWhere <string>] [-TemplatesPath <string>] [-TemplatesWhere <string>] [-TitlesPath <string>] [-TitlesWhere <string>] [-TransactionsPath <string>] [-TransactionsWhere <string>] [-TransfersPath <string>] [-TransfersWhere <string>] [-TransferCriteriasPath <string>] [-TransferCriteriasWhere <string>] [-UsersPath <string>] [-UsersWhere <string>] [-UserAcquisitionsUnitsPath <string>] [-UserAcquisitionsUnitsWhere <string>] [-UserRequestPreferencesPath <string>] [-UserRequestPreferencesWhere <string>] [-VouchersPath <string>] [-VouchersWhere <string>] [-VoucherItemsPath <string>] [-VoucherItemsWhere <string>] [-WaivesPath <string>] [-WaivesWhere <string>]");
                     return -1;
                 }
                 var all = args.Any(s3 => s3.Equals("-All", StringComparison.OrdinalIgnoreCase));
@@ -86,12 +86,17 @@ namespace FolioConsoleApplication
                 var addressTypesPath = args.SkipWhile(s3 => !s3.Equals("-AddressTypesPath", StringComparison.OrdinalIgnoreCase)).Skip(1).FirstOrDefault();
                 var alertsPath = args.SkipWhile(s3 => !s3.Equals("-AlertsPath", StringComparison.OrdinalIgnoreCase)).Skip(1).FirstOrDefault();
                 var alternativeTitleTypesPath = args.SkipWhile(s3 => !s3.Equals("-AlternativeTitleTypesPath", StringComparison.OrdinalIgnoreCase)).Skip(1).FirstOrDefault();
+                var batchGroupsPath = args.SkipWhile(s3 => !s3.Equals("-BatchGroupsPath", StringComparison.OrdinalIgnoreCase)).Skip(1).FirstOrDefault();
+                var batchVouchersPath = args.SkipWhile(s3 => !s3.Equals("-BatchVouchersPath", StringComparison.OrdinalIgnoreCase)).Skip(1).FirstOrDefault();
+                var batchVoucherExportsPath = args.SkipWhile(s3 => !s3.Equals("-BatchVoucherExportsPath", StringComparison.OrdinalIgnoreCase)).Skip(1).FirstOrDefault();
+                var batchVoucherExportConfigsPath = args.SkipWhile(s3 => !s3.Equals("-BatchVoucherExportConfigsPath", StringComparison.OrdinalIgnoreCase)).Skip(1).FirstOrDefault();
                 var blocksPath = args.SkipWhile(s3 => !s3.Equals("-BlocksPath", StringComparison.OrdinalIgnoreCase)).Skip(1).FirstOrDefault();
                 var budgetsPath = args.SkipWhile(s3 => !s3.Equals("-BudgetsPath", StringComparison.OrdinalIgnoreCase)).Skip(1).FirstOrDefault();
                 var callNumberTypesPath = args.SkipWhile(s3 => !s3.Equals("-CallNumberTypesPath", StringComparison.OrdinalIgnoreCase)).Skip(1).FirstOrDefault();
                 var campusesPath = args.SkipWhile(s3 => !s3.Equals("-CampusesPath", StringComparison.OrdinalIgnoreCase)).Skip(1).FirstOrDefault();
                 var cancellationReasonsPath = args.SkipWhile(s3 => !s3.Equals("-CancellationReasonsPath", StringComparison.OrdinalIgnoreCase)).Skip(1).FirstOrDefault();
                 var categoriesPath = args.SkipWhile(s3 => !s3.Equals("-CategoriesPath", StringComparison.OrdinalIgnoreCase)).Skip(1).FirstOrDefault();
+                var checkInsPath = args.SkipWhile(s3 => !s3.Equals("-CheckInsPath", StringComparison.OrdinalIgnoreCase)).Skip(1).FirstOrDefault();
                 var circulationRulesPath = args.SkipWhile(s3 => !s3.Equals("-CirculationRulesPath", StringComparison.OrdinalIgnoreCase)).Skip(1).FirstOrDefault();
                 var classificationTypesPath = args.SkipWhile(s3 => !s3.Equals("-ClassificationTypesPath", StringComparison.OrdinalIgnoreCase)).Skip(1).FirstOrDefault();
                 var commentsPath = args.SkipWhile(s3 => !s3.Equals("-CommentsPath", StringComparison.OrdinalIgnoreCase)).Skip(1).FirstOrDefault();
@@ -102,13 +107,13 @@ namespace FolioConsoleApplication
                 var documentsPath = args.SkipWhile(s3 => !s3.Equals("-DocumentsPath", StringComparison.OrdinalIgnoreCase)).Skip(1).FirstOrDefault();
                 var electronicAccessRelationshipsPath = args.SkipWhile(s3 => !s3.Equals("-ElectronicAccessRelationshipsPath", StringComparison.OrdinalIgnoreCase)).Skip(1).FirstOrDefault();
                 var errorRecordsPath = args.SkipWhile(s3 => !s3.Equals("-ErrorRecordsPath", StringComparison.OrdinalIgnoreCase)).Skip(1).FirstOrDefault();
-                var feesPath = args.SkipWhile(s3 => !s3.Equals("-FeesPath", StringComparison.OrdinalIgnoreCase)).Skip(1).FirstOrDefault();
+                var exportConfigCredentialsPath = args.SkipWhile(s3 => !s3.Equals("-ExportConfigCredentialsPath", StringComparison.OrdinalIgnoreCase)).Skip(1).FirstOrDefault();
                 var feeActionsPath = args.SkipWhile(s3 => !s3.Equals("-FeeActionsPath", StringComparison.OrdinalIgnoreCase)).Skip(1).FirstOrDefault();
+                var feeTypesPath = args.SkipWhile(s3 => !s3.Equals("-FeeTypesPath", StringComparison.OrdinalIgnoreCase)).Skip(1).FirstOrDefault();
                 var financeGroupsPath = args.SkipWhile(s3 => !s3.Equals("-FinanceGroupsPath", StringComparison.OrdinalIgnoreCase)).Skip(1).FirstOrDefault();
                 var fiscalYearsPath = args.SkipWhile(s3 => !s3.Equals("-FiscalYearsPath", StringComparison.OrdinalIgnoreCase)).Skip(1).FirstOrDefault();
                 var fixedDueDateSchedulesPath = args.SkipWhile(s3 => !s3.Equals("-FixedDueDateSchedulesPath", StringComparison.OrdinalIgnoreCase)).Skip(1).FirstOrDefault();
                 var fundsPath = args.SkipWhile(s3 => !s3.Equals("-FundsPath", StringComparison.OrdinalIgnoreCase)).Skip(1).FirstOrDefault();
-                var fundDistributionsPath = args.SkipWhile(s3 => !s3.Equals("-FundDistributionsPath", StringComparison.OrdinalIgnoreCase)).Skip(1).FirstOrDefault();
                 var fundTypesPath = args.SkipWhile(s3 => !s3.Equals("-FundTypesPath", StringComparison.OrdinalIgnoreCase)).Skip(1).FirstOrDefault();
                 var groupsPath = args.SkipWhile(s3 => !s3.Equals("-GroupsPath", StringComparison.OrdinalIgnoreCase)).Skip(1).FirstOrDefault();
                 var groupFundFiscalYearsPath = args.SkipWhile(s3 => !s3.Equals("-GroupFundFiscalYearsPath", StringComparison.OrdinalIgnoreCase)).Skip(1).FirstOrDefault();
@@ -130,6 +135,7 @@ namespace FolioConsoleApplication
                 var interfaceCredentialsPath = args.SkipWhile(s3 => !s3.Equals("-InterfaceCredentialsPath", StringComparison.OrdinalIgnoreCase)).Skip(1).FirstOrDefault();
                 var invoicesPath = args.SkipWhile(s3 => !s3.Equals("-InvoicesPath", StringComparison.OrdinalIgnoreCase)).Skip(1).FirstOrDefault();
                 var invoiceItemsPath = args.SkipWhile(s3 => !s3.Equals("-InvoiceItemsPath", StringComparison.OrdinalIgnoreCase)).Skip(1).FirstOrDefault();
+                var invoiceTransactionSummariesPath = args.SkipWhile(s3 => !s3.Equals("-InvoiceTransactionSummariesPath", StringComparison.OrdinalIgnoreCase)).Skip(1).FirstOrDefault();
                 var itemsPath = args.SkipWhile(s3 => !s3.Equals("-ItemsPath", StringComparison.OrdinalIgnoreCase)).Skip(1).FirstOrDefault();
                 var itemDamagedStatusesPath = args.SkipWhile(s3 => !s3.Equals("-ItemDamagedStatusesPath", StringComparison.OrdinalIgnoreCase)).Skip(1).FirstOrDefault();
                 var itemNoteTypesPath = args.SkipWhile(s3 => !s3.Equals("-ItemNoteTypesPath", StringComparison.OrdinalIgnoreCase)).Skip(1).FirstOrDefault();
@@ -155,13 +161,18 @@ namespace FolioConsoleApplication
                 var overdueFinePoliciesPath = args.SkipWhile(s3 => !s3.Equals("-OverdueFinePoliciesPath", StringComparison.OrdinalIgnoreCase)).Skip(1).FirstOrDefault();
                 var ownersPath = args.SkipWhile(s3 => !s3.Equals("-OwnersPath", StringComparison.OrdinalIgnoreCase)).Skip(1).FirstOrDefault();
                 var patronActionSessionsPath = args.SkipWhile(s3 => !s3.Equals("-PatronActionSessionsPath", StringComparison.OrdinalIgnoreCase)).Skip(1).FirstOrDefault();
+                var patronBlockConditionsPath = args.SkipWhile(s3 => !s3.Equals("-PatronBlockConditionsPath", StringComparison.OrdinalIgnoreCase)).Skip(1).FirstOrDefault();
+                var patronBlockLimitsPath = args.SkipWhile(s3 => !s3.Equals("-PatronBlockLimitsPath", StringComparison.OrdinalIgnoreCase)).Skip(1).FirstOrDefault();
                 var patronNoticePoliciesPath = args.SkipWhile(s3 => !s3.Equals("-PatronNoticePoliciesPath", StringComparison.OrdinalIgnoreCase)).Skip(1).FirstOrDefault();
                 var paymentsPath = args.SkipWhile(s3 => !s3.Equals("-PaymentsPath", StringComparison.OrdinalIgnoreCase)).Skip(1).FirstOrDefault();
                 var permissionsPath = args.SkipWhile(s3 => !s3.Equals("-PermissionsPath", StringComparison.OrdinalIgnoreCase)).Skip(1).FirstOrDefault();
                 var permissionsUsersPath = args.SkipWhile(s3 => !s3.Equals("-PermissionsUsersPath", StringComparison.OrdinalIgnoreCase)).Skip(1).FirstOrDefault();
                 var piecesPath = args.SkipWhile(s3 => !s3.Equals("-PiecesPath", StringComparison.OrdinalIgnoreCase)).Skip(1).FirstOrDefault();
+                var precedingSucceedingTitlesPath = args.SkipWhile(s3 => !s3.Equals("-PrecedingSucceedingTitlesPath", StringComparison.OrdinalIgnoreCase)).Skip(1).FirstOrDefault();
+                var prefixesPath = args.SkipWhile(s3 => !s3.Equals("-PrefixesPath", StringComparison.OrdinalIgnoreCase)).Skip(1).FirstOrDefault();
                 var proxiesPath = args.SkipWhile(s3 => !s3.Equals("-ProxiesPath", StringComparison.OrdinalIgnoreCase)).Skip(1).FirstOrDefault();
                 var rawRecordsPath = args.SkipWhile(s3 => !s3.Equals("-RawRecordsPath", StringComparison.OrdinalIgnoreCase)).Skip(1).FirstOrDefault();
+                var reasonsForClosuresPath = args.SkipWhile(s3 => !s3.Equals("-ReasonsForClosuresPath", StringComparison.OrdinalIgnoreCase)).Skip(1).FirstOrDefault();
                 var recordsPath = args.SkipWhile(s3 => !s3.Equals("-RecordsPath", StringComparison.OrdinalIgnoreCase)).Skip(1).FirstOrDefault();
                 var refundsPath = args.SkipWhile(s3 => !s3.Equals("-RefundsPath", StringComparison.OrdinalIgnoreCase)).Skip(1).FirstOrDefault();
                 var reportingCodesPath = args.SkipWhile(s3 => !s3.Equals("-ReportingCodesPath", StringComparison.OrdinalIgnoreCase)).Skip(1).FirstOrDefault();
@@ -174,7 +185,9 @@ namespace FolioConsoleApplication
                 var staffSlipsPath = args.SkipWhile(s3 => !s3.Equals("-StaffSlipsPath", StringComparison.OrdinalIgnoreCase)).Skip(1).FirstOrDefault();
                 var statisticalCodesPath = args.SkipWhile(s3 => !s3.Equals("-StatisticalCodesPath", StringComparison.OrdinalIgnoreCase)).Skip(1).FirstOrDefault();
                 var statisticalCodeTypesPath = args.SkipWhile(s3 => !s3.Equals("-StatisticalCodeTypesPath", StringComparison.OrdinalIgnoreCase)).Skip(1).FirstOrDefault();
+                var suffixesPath = args.SkipWhile(s3 => !s3.Equals("-SuffixesPath", StringComparison.OrdinalIgnoreCase)).Skip(1).FirstOrDefault();
                 var templatesPath = args.SkipWhile(s3 => !s3.Equals("-TemplatesPath", StringComparison.OrdinalIgnoreCase)).Skip(1).FirstOrDefault();
+                var titlesPath = args.SkipWhile(s3 => !s3.Equals("-TitlesPath", StringComparison.OrdinalIgnoreCase)).Skip(1).FirstOrDefault();
                 var transactionsPath = args.SkipWhile(s3 => !s3.Equals("-TransactionsPath", StringComparison.OrdinalIgnoreCase)).Skip(1).FirstOrDefault();
                 var transfersPath = args.SkipWhile(s3 => !s3.Equals("-TransfersPath", StringComparison.OrdinalIgnoreCase)).Skip(1).FirstOrDefault();
                 var transferCriteriasPath = args.SkipWhile(s3 => !s3.Equals("-TransferCriteriasPath", StringComparison.OrdinalIgnoreCase)).Skip(1).FirstOrDefault();
@@ -189,12 +202,17 @@ namespace FolioConsoleApplication
                 var addressTypesWhere = args.SkipWhile(s3 => !s3.Equals("-AddressTypesWhere", StringComparison.OrdinalIgnoreCase)).Skip(1).FirstOrDefault();
                 var alertsWhere = args.SkipWhile(s3 => !s3.Equals("-AlertsWhere", StringComparison.OrdinalIgnoreCase)).Skip(1).FirstOrDefault();
                 var alternativeTitleTypesWhere = args.SkipWhile(s3 => !s3.Equals("-AlternativeTitleTypesWhere", StringComparison.OrdinalIgnoreCase)).Skip(1).FirstOrDefault();
+                var batchGroupsWhere = args.SkipWhile(s3 => !s3.Equals("-BatchGroupsWhere", StringComparison.OrdinalIgnoreCase)).Skip(1).FirstOrDefault();
+                var batchVouchersWhere = args.SkipWhile(s3 => !s3.Equals("-BatchVouchersWhere", StringComparison.OrdinalIgnoreCase)).Skip(1).FirstOrDefault();
+                var batchVoucherExportsWhere = args.SkipWhile(s3 => !s3.Equals("-BatchVoucherExportsWhere", StringComparison.OrdinalIgnoreCase)).Skip(1).FirstOrDefault();
+                var batchVoucherExportConfigsWhere = args.SkipWhile(s3 => !s3.Equals("-BatchVoucherExportConfigsWhere", StringComparison.OrdinalIgnoreCase)).Skip(1).FirstOrDefault();
                 var blocksWhere = args.SkipWhile(s3 => !s3.Equals("-BlocksWhere", StringComparison.OrdinalIgnoreCase)).Skip(1).FirstOrDefault();
                 var budgetsWhere = args.SkipWhile(s3 => !s3.Equals("-BudgetsWhere", StringComparison.OrdinalIgnoreCase)).Skip(1).FirstOrDefault();
                 var callNumberTypesWhere = args.SkipWhile(s3 => !s3.Equals("-CallNumberTypesWhere", StringComparison.OrdinalIgnoreCase)).Skip(1).FirstOrDefault();
                 var campusesWhere = args.SkipWhile(s3 => !s3.Equals("-CampusesWhere", StringComparison.OrdinalIgnoreCase)).Skip(1).FirstOrDefault();
                 var cancellationReasonsWhere = args.SkipWhile(s3 => !s3.Equals("-CancellationReasonsWhere", StringComparison.OrdinalIgnoreCase)).Skip(1).FirstOrDefault();
                 var categoriesWhere = args.SkipWhile(s3 => !s3.Equals("-CategoriesWhere", StringComparison.OrdinalIgnoreCase)).Skip(1).FirstOrDefault();
+                var checkInsWhere = args.SkipWhile(s3 => !s3.Equals("-CheckInsWhere", StringComparison.OrdinalIgnoreCase)).Skip(1).FirstOrDefault();
                 var circulationRulesWhere = args.SkipWhile(s3 => !s3.Equals("-CirculationRulesWhere", StringComparison.OrdinalIgnoreCase)).Skip(1).FirstOrDefault();
                 var classificationTypesWhere = args.SkipWhile(s3 => !s3.Equals("-ClassificationTypesWhere", StringComparison.OrdinalIgnoreCase)).Skip(1).FirstOrDefault();
                 var commentsWhere = args.SkipWhile(s3 => !s3.Equals("-CommentsWhere", StringComparison.OrdinalIgnoreCase)).Skip(1).FirstOrDefault();
@@ -205,13 +223,13 @@ namespace FolioConsoleApplication
                 var documentsWhere = args.SkipWhile(s3 => !s3.Equals("-DocumentsWhere", StringComparison.OrdinalIgnoreCase)).Skip(1).FirstOrDefault();
                 var electronicAccessRelationshipsWhere = args.SkipWhile(s3 => !s3.Equals("-ElectronicAccessRelationshipsWhere", StringComparison.OrdinalIgnoreCase)).Skip(1).FirstOrDefault();
                 var errorRecordsWhere = args.SkipWhile(s3 => !s3.Equals("-ErrorRecordsWhere", StringComparison.OrdinalIgnoreCase)).Skip(1).FirstOrDefault();
-                var feesWhere = args.SkipWhile(s3 => !s3.Equals("-FeesWhere", StringComparison.OrdinalIgnoreCase)).Skip(1).FirstOrDefault();
+                var exportConfigCredentialsWhere = args.SkipWhile(s3 => !s3.Equals("-ExportConfigCredentialsWhere", StringComparison.OrdinalIgnoreCase)).Skip(1).FirstOrDefault();
                 var feeActionsWhere = args.SkipWhile(s3 => !s3.Equals("-FeeActionsWhere", StringComparison.OrdinalIgnoreCase)).Skip(1).FirstOrDefault();
+                var feeTypesWhere = args.SkipWhile(s3 => !s3.Equals("-FeeTypesWhere", StringComparison.OrdinalIgnoreCase)).Skip(1).FirstOrDefault();
                 var financeGroupsWhere = args.SkipWhile(s3 => !s3.Equals("-FinanceGroupsWhere", StringComparison.OrdinalIgnoreCase)).Skip(1).FirstOrDefault();
                 var fiscalYearsWhere = args.SkipWhile(s3 => !s3.Equals("-FiscalYearsWhere", StringComparison.OrdinalIgnoreCase)).Skip(1).FirstOrDefault();
                 var fixedDueDateSchedulesWhere = args.SkipWhile(s3 => !s3.Equals("-FixedDueDateSchedulesWhere", StringComparison.OrdinalIgnoreCase)).Skip(1).FirstOrDefault();
                 var fundsWhere = args.SkipWhile(s3 => !s3.Equals("-FundsWhere", StringComparison.OrdinalIgnoreCase)).Skip(1).FirstOrDefault();
-                var fundDistributionsWhere = args.SkipWhile(s3 => !s3.Equals("-FundDistributionsWhere", StringComparison.OrdinalIgnoreCase)).Skip(1).FirstOrDefault();
                 var fundTypesWhere = args.SkipWhile(s3 => !s3.Equals("-FundTypesWhere", StringComparison.OrdinalIgnoreCase)).Skip(1).FirstOrDefault();
                 var groupsWhere = args.SkipWhile(s3 => !s3.Equals("-GroupsWhere", StringComparison.OrdinalIgnoreCase)).Skip(1).FirstOrDefault();
                 var groupFundFiscalYearsWhere = args.SkipWhile(s3 => !s3.Equals("-GroupFundFiscalYearsWhere", StringComparison.OrdinalIgnoreCase)).Skip(1).FirstOrDefault();
@@ -233,6 +251,7 @@ namespace FolioConsoleApplication
                 var interfaceCredentialsWhere = args.SkipWhile(s3 => !s3.Equals("-InterfaceCredentialsWhere", StringComparison.OrdinalIgnoreCase)).Skip(1).FirstOrDefault();
                 var invoicesWhere = args.SkipWhile(s3 => !s3.Equals("-InvoicesWhere", StringComparison.OrdinalIgnoreCase)).Skip(1).FirstOrDefault();
                 var invoiceItemsWhere = args.SkipWhile(s3 => !s3.Equals("-InvoiceItemsWhere", StringComparison.OrdinalIgnoreCase)).Skip(1).FirstOrDefault();
+                var invoiceTransactionSummariesWhere = args.SkipWhile(s3 => !s3.Equals("-InvoiceTransactionSummariesWhere", StringComparison.OrdinalIgnoreCase)).Skip(1).FirstOrDefault();
                 var itemsWhere = args.SkipWhile(s3 => !s3.Equals("-ItemsWhere", StringComparison.OrdinalIgnoreCase)).Skip(1).FirstOrDefault();
                 var itemDamagedStatusesWhere = args.SkipWhile(s3 => !s3.Equals("-ItemDamagedStatusesWhere", StringComparison.OrdinalIgnoreCase)).Skip(1).FirstOrDefault();
                 var itemNoteTypesWhere = args.SkipWhile(s3 => !s3.Equals("-ItemNoteTypesWhere", StringComparison.OrdinalIgnoreCase)).Skip(1).FirstOrDefault();
@@ -258,13 +277,18 @@ namespace FolioConsoleApplication
                 var overdueFinePoliciesWhere = args.SkipWhile(s3 => !s3.Equals("-OverdueFinePoliciesWhere", StringComparison.OrdinalIgnoreCase)).Skip(1).FirstOrDefault();
                 var ownersWhere = args.SkipWhile(s3 => !s3.Equals("-OwnersWhere", StringComparison.OrdinalIgnoreCase)).Skip(1).FirstOrDefault();
                 var patronActionSessionsWhere = args.SkipWhile(s3 => !s3.Equals("-PatronActionSessionsWhere", StringComparison.OrdinalIgnoreCase)).Skip(1).FirstOrDefault();
+                var patronBlockConditionsWhere = args.SkipWhile(s3 => !s3.Equals("-PatronBlockConditionsWhere", StringComparison.OrdinalIgnoreCase)).Skip(1).FirstOrDefault();
+                var patronBlockLimitsWhere = args.SkipWhile(s3 => !s3.Equals("-PatronBlockLimitsWhere", StringComparison.OrdinalIgnoreCase)).Skip(1).FirstOrDefault();
                 var patronNoticePoliciesWhere = args.SkipWhile(s3 => !s3.Equals("-PatronNoticePoliciesWhere", StringComparison.OrdinalIgnoreCase)).Skip(1).FirstOrDefault();
                 var paymentsWhere = args.SkipWhile(s3 => !s3.Equals("-PaymentsWhere", StringComparison.OrdinalIgnoreCase)).Skip(1).FirstOrDefault();
                 var permissionsWhere = args.SkipWhile(s3 => !s3.Equals("-PermissionsWhere", StringComparison.OrdinalIgnoreCase)).Skip(1).FirstOrDefault();
                 var permissionsUsersWhere = args.SkipWhile(s3 => !s3.Equals("-PermissionsUsersWhere", StringComparison.OrdinalIgnoreCase)).Skip(1).FirstOrDefault();
                 var piecesWhere = args.SkipWhile(s3 => !s3.Equals("-PiecesWhere", StringComparison.OrdinalIgnoreCase)).Skip(1).FirstOrDefault();
+                var precedingSucceedingTitlesWhere = args.SkipWhile(s3 => !s3.Equals("-PrecedingSucceedingTitlesWhere", StringComparison.OrdinalIgnoreCase)).Skip(1).FirstOrDefault();
+                var prefixesWhere = args.SkipWhile(s3 => !s3.Equals("-PrefixesWhere", StringComparison.OrdinalIgnoreCase)).Skip(1).FirstOrDefault();
                 var proxiesWhere = args.SkipWhile(s3 => !s3.Equals("-ProxiesWhere", StringComparison.OrdinalIgnoreCase)).Skip(1).FirstOrDefault();
                 var rawRecordsWhere = args.SkipWhile(s3 => !s3.Equals("-RawRecordsWhere", StringComparison.OrdinalIgnoreCase)).Skip(1).FirstOrDefault();
+                var reasonsForClosuresWhere = args.SkipWhile(s3 => !s3.Equals("-ReasonsForClosuresWhere", StringComparison.OrdinalIgnoreCase)).Skip(1).FirstOrDefault();
                 var recordsWhere = args.SkipWhile(s3 => !s3.Equals("-RecordsWhere", StringComparison.OrdinalIgnoreCase)).Skip(1).FirstOrDefault();
                 var refundsWhere = args.SkipWhile(s3 => !s3.Equals("-RefundsWhere", StringComparison.OrdinalIgnoreCase)).Skip(1).FirstOrDefault();
                 var reportingCodesWhere = args.SkipWhile(s3 => !s3.Equals("-ReportingCodesWhere", StringComparison.OrdinalIgnoreCase)).Skip(1).FirstOrDefault();
@@ -277,7 +301,9 @@ namespace FolioConsoleApplication
                 var staffSlipsWhere = args.SkipWhile(s3 => !s3.Equals("-StaffSlipsWhere", StringComparison.OrdinalIgnoreCase)).Skip(1).FirstOrDefault();
                 var statisticalCodesWhere = args.SkipWhile(s3 => !s3.Equals("-StatisticalCodesWhere", StringComparison.OrdinalIgnoreCase)).Skip(1).FirstOrDefault();
                 var statisticalCodeTypesWhere = args.SkipWhile(s3 => !s3.Equals("-StatisticalCodeTypesWhere", StringComparison.OrdinalIgnoreCase)).Skip(1).FirstOrDefault();
+                var suffixesWhere = args.SkipWhile(s3 => !s3.Equals("-SuffixesWhere", StringComparison.OrdinalIgnoreCase)).Skip(1).FirstOrDefault();
                 var templatesWhere = args.SkipWhile(s3 => !s3.Equals("-TemplatesWhere", StringComparison.OrdinalIgnoreCase)).Skip(1).FirstOrDefault();
+                var titlesWhere = args.SkipWhile(s3 => !s3.Equals("-TitlesWhere", StringComparison.OrdinalIgnoreCase)).Skip(1).FirstOrDefault();
                 var transactionsWhere = args.SkipWhile(s3 => !s3.Equals("-TransactionsWhere", StringComparison.OrdinalIgnoreCase)).Skip(1).FirstOrDefault();
                 var transfersWhere = args.SkipWhile(s3 => !s3.Equals("-TransfersWhere", StringComparison.OrdinalIgnoreCase)).Skip(1).FirstOrDefault();
                 var transferCriteriasWhere = args.SkipWhile(s3 => !s3.Equals("-TransferCriteriasWhere", StringComparison.OrdinalIgnoreCase)).Skip(1).FirstOrDefault();
@@ -295,12 +321,17 @@ namespace FolioConsoleApplication
                     addressTypesPath = $"{path}/addresstypes.json";
                     alertsPath = $"{path}/alerts.json";
                     alternativeTitleTypesPath = $"{path}/alternativetitletypes.json";
+                    batchGroupsPath = $"{path}/batchgroups.json";
+                    if (!api) batchVouchersPath = $"{path}/batchvouchers.json";
+                    batchVoucherExportsPath = $"{path}/batchvoucherexports.json";
+                    batchVoucherExportConfigsPath = $"{path}/batchvoucherexportconfigs.json";
                     blocksPath = $"{path}/blocks.json";
                     budgetsPath = $"{path}/budgets.json";
                     callNumberTypesPath = $"{path}/callnumbertypes.json";
                     campusesPath = $"{path}/campuses.json";
                     cancellationReasonsPath = $"{path}/cancellationreasons.json";
                     categoriesPath = $"{path}/categories.json";
+                    checkInsPath = $"{path}/checkins.json";
                     if (!api) circulationRulesPath = $"{path}/circulationrules.json";
                     classificationTypesPath = $"{path}/classificationtypes.json";
                     commentsPath = $"{path}/comments.json";
@@ -311,13 +342,13 @@ namespace FolioConsoleApplication
                     if (!api) documentsPath = $"{path}/documents.json";
                     electronicAccessRelationshipsPath = $"{path}/electronicaccessrelationships.json";
                     if (!api) errorRecordsPath = $"{path}/errorrecords.json";
-                    feesPath = $"{path}/fees.json";
+                    if (!api) exportConfigCredentialsPath = $"{path}/exportconfigcredentials.json";
                     feeActionsPath = $"{path}/feeactions.json";
+                    feeTypesPath = $"{path}/feetypes.json";
                     financeGroupsPath = $"{path}/financegroups.json";
                     fiscalYearsPath = $"{path}/fiscalyears.json";
                     fixedDueDateSchedulesPath = $"{path}/fixedduedateschedules.json";
                     fundsPath = $"{path}/funds.json";
-                    fundDistributionsPath = $"{path}/funddistributions.json";
                     fundTypesPath = $"{path}/fundtypes.json";
                     groupsPath = $"{path}/groups.json";
                     groupFundFiscalYearsPath = $"{path}/groupfundfiscalyears.json";
@@ -339,6 +370,7 @@ namespace FolioConsoleApplication
                     if (!api) interfaceCredentialsPath = $"{path}/interfacecredentials.json";
                     invoicesPath = $"{path}/invoices.json";
                     invoiceItemsPath = $"{path}/invoiceitems.json";
+                    if (!api) invoiceTransactionSummariesPath = $"{path}/invoicetransactionsummaries.json";
                     itemsPath = $"{path}/items.json";
                     itemDamagedStatusesPath = $"{path}/itemdamagedstatuses.json";
                     itemNoteTypesPath = $"{path}/itemnotetypes.json";
@@ -364,13 +396,18 @@ namespace FolioConsoleApplication
                     overdueFinePoliciesPath = $"{path}/overduefinepolicies.json";
                     ownersPath = $"{path}/owners.json";
                     patronActionSessionsPath = $"{path}/patronactionsessions.json";
+                    patronBlockConditionsPath = $"{path}/patronblockconditions.json";
+                    patronBlockLimitsPath = $"{path}/patronblocklimits.json";
                     patronNoticePoliciesPath = $"{path}/patronnoticepolicies.json";
                     paymentsPath = $"{path}/payments.json";
                     permissionsPath = $"{path}/permissions.json";
                     permissionsUsersPath = $"{path}/permissionsusers.json";
                     piecesPath = $"{path}/pieces.json";
+                    precedingSucceedingTitlesPath = $"{path}/precedingsucceedingtitles.json";
+                    prefixesPath = $"{path}/prefixes.json";
                     proxiesPath = $"{path}/proxies.json";
                     if (!api) rawRecordsPath = $"{path}/rawrecords.json";
+                    reasonsForClosuresPath = $"{path}/reasonsforclosures.json";
                     recordsPath = $"{path}/records.json";
                     refundsPath = $"{path}/refunds.json";
                     reportingCodesPath = $"{path}/reportingcodes.json";
@@ -383,7 +420,9 @@ namespace FolioConsoleApplication
                     staffSlipsPath = $"{path}/staffslips.json";
                     statisticalCodesPath = $"{path}/statisticalcodes.json";
                     statisticalCodeTypesPath = $"{path}/statisticalcodetypes.json";
+                    suffixesPath = $"{path}/suffixes.json";
                     templatesPath = $"{path}/templates.json";
+                    titlesPath = $"{path}/titles.json";
                     transactionsPath = $"{path}/transactions.json";
                     transfersPath = $"{path}/transfers.json";
                     transferCriteriasPath = $"{path}/transfercriterias.json";
@@ -397,6 +436,7 @@ namespace FolioConsoleApplication
                 if (allCirculation)
                 {
                     cancellationReasonsPath = $"{path}/cancellationreasons.json";
+                    checkInsPath = $"{path}/checkins.json";
                     if (!api) circulationRulesPath = $"{path}/circulationrules.json";
                     fixedDueDateSchedulesPath = $"{path}/fixedduedateschedules.json";
                     loansPath = $"{path}/loans.json";
@@ -418,8 +458,8 @@ namespace FolioConsoleApplication
                     accountsPath = $"{path}/accounts.json";
                     blocksPath = $"{path}/blocks.json";
                     commentsPath = $"{path}/comments.json";
-                    feesPath = $"{path}/fees.json";
                     feeActionsPath = $"{path}/feeactions.json";
+                    feeTypesPath = $"{path}/feetypes.json";
                     lostItemFeePoliciesPath = $"{path}/lostitemfeepolicies.json";
                     overdueFinePoliciesPath = $"{path}/overduefinepolicies.json";
                     ownersPath = $"{path}/owners.json";
@@ -435,9 +475,9 @@ namespace FolioConsoleApplication
                     financeGroupsPath = $"{path}/financegroups.json";
                     fiscalYearsPath = $"{path}/fiscalyears.json";
                     fundsPath = $"{path}/funds.json";
-                    fundDistributionsPath = $"{path}/funddistributions.json";
                     fundTypesPath = $"{path}/fundtypes.json";
                     groupFundFiscalYearsPath = $"{path}/groupfundfiscalyears.json";
+                    if (!api) invoiceTransactionSummariesPath = $"{path}/invoicetransactionsummaries.json";
                     ledgersPath = $"{path}/ledgers.json";
                     ledgerFiscalYearsPath = $"{path}/ledgerfiscalyears.json";
                     if (!api) orderTransactionSummariesPath = $"{path}/ordertransactionsummaries.json";
@@ -475,6 +515,7 @@ namespace FolioConsoleApplication
                     materialTypesPath = $"{path}/materialtypes.json";
                     modeOfIssuancesPath = $"{path}/modeofissuances.json";
                     natureOfContentTermsPath = $"{path}/natureofcontentterms.json";
+                    precedingSucceedingTitlesPath = $"{path}/precedingsucceedingtitles.json";
                     servicePointsPath = $"{path}/servicepoints.json";
                     servicePointUsersPath = $"{path}/servicepointusers.json";
                     statisticalCodesPath = $"{path}/statisticalcodes.json";
@@ -482,7 +523,12 @@ namespace FolioConsoleApplication
                 }
                 if (allInvoices)
                 {
+                    batchGroupsPath = $"{path}/batchgroups.json";
+                    if (!api) batchVouchersPath = $"{path}/batchvouchers.json";
+                    batchVoucherExportsPath = $"{path}/batchvoucherexports.json";
+                    batchVoucherExportConfigsPath = $"{path}/batchvoucherexportconfigs.json";
                     if (!api) documentsPath = $"{path}/documents.json";
+                    if (!api) exportConfigCredentialsPath = $"{path}/exportconfigcredentials.json";
                     invoicesPath = $"{path}/invoices.json";
                     invoiceItemsPath = $"{path}/invoiceitems.json";
                     vouchersPath = $"{path}/vouchers.json";
@@ -501,7 +547,11 @@ namespace FolioConsoleApplication
                     orderItemsPath = $"{path}/orderitems.json";
                     orderTemplatesPath = $"{path}/ordertemplates.json";
                     piecesPath = $"{path}/pieces.json";
+                    prefixesPath = $"{path}/prefixes.json";
+                    reasonsForClosuresPath = $"{path}/reasonsforclosures.json";
                     reportingCodesPath = $"{path}/reportingcodes.json";
+                    suffixesPath = $"{path}/suffixes.json";
+                    titlesPath = $"{path}/titles.json";
                     userAcquisitionsUnitsPath = $"{path}/useracquisitionsunits.json";
                 }
                 if (allOrganizations)
@@ -533,6 +583,8 @@ namespace FolioConsoleApplication
                 {
                     addressTypesPath = $"{path}/addresstypes.json";
                     groupsPath = $"{path}/groups.json";
+                    patronBlockConditionsPath = $"{path}/patronblockconditions.json";
+                    patronBlockLimitsPath = $"{path}/patronblocklimits.json";
                     proxiesPath = $"{path}/proxies.json";
                     usersPath = $"{path}/users.json";
                 }
@@ -543,6 +595,8 @@ namespace FolioConsoleApplication
                 if (save && groupsPath != null) l.Add(() => SaveGroups(groupsPath, groupsWhere));
                 if (save && usersPath != null) l.Add(() => SaveUsers(usersPath, usersWhere));
                 if (save && proxiesPath != null) l.Add(() => SaveProxies(proxiesPath, proxiesWhere));
+                if (save && patronBlockConditionsPath != null) l.Add(() => SavePatronBlockConditions(patronBlockConditionsPath, patronBlockConditionsWhere));
+                if (save && patronBlockLimitsPath != null) l.Add(() => SavePatronBlockLimits(patronBlockLimitsPath, patronBlockLimitsWhere));
                 if (save && loginsPath != null) l.Add(() => SaveLogins(loginsPath, loginsWhere));
                 if (save && permissionsPath != null) l.Add(() => SavePermissions(permissionsPath, permissionsWhere));
                 if (save && permissionsUsersPath != null) l.Add(() => SavePermissionsUsers(permissionsUsersPath, permissionsUsersWhere));
@@ -580,6 +634,7 @@ namespace FolioConsoleApplication
                 if (save && instancesPath != null) l.Add(() => SaveInstances(instancesPath, instancesWhere));
                 if (save && holdingsPath != null) l.Add(() => SaveHoldings(holdingsPath, holdingsWhere));
                 if (save && itemsPath != null) l.Add(() => SaveItems(itemsPath, itemsWhere));
+                if (save && precedingSucceedingTitlesPath != null) l.Add(() => SavePrecedingSucceedingTitles(precedingSucceedingTitlesPath, precedingSucceedingTitlesWhere));
                 if (save && snapshotsPath != null) l.Add(() => SaveSnapshots(snapshotsPath, snapshotsWhere));
                 if (save && recordsPath != null) l.Add(() => SaveRecords(recordsPath, recordsWhere));
                 if (save && rawRecordsPath != null) l.Add(() => SaveRawRecords(rawRecordsPath, rawRecordsWhere));
@@ -598,7 +653,6 @@ namespace FolioConsoleApplication
                 if (save && fundsPath != null) l.Add(() => SaveFunds(fundsPath, fundsWhere));
                 if (save && budgetsPath != null) l.Add(() => SaveBudgets(budgetsPath, budgetsWhere));
                 if (save && groupFundFiscalYearsPath != null) l.Add(() => SaveGroupFundFiscalYears(groupFundFiscalYearsPath, groupFundFiscalYearsWhere));
-                if (save && fundDistributionsPath != null) l.Add(() => SaveFundDistributions(fundDistributionsPath, fundDistributionsWhere));
                 if (save && acquisitionsUnitsPath != null) l.Add(() => SaveAcquisitionsUnits(acquisitionsUnitsPath, acquisitionsUnitsWhere));
                 if (save && reportingCodesPath != null) l.Add(() => SaveReportingCodes(reportingCodesPath, reportingCodesWhere));
                 if (save && alertsPath != null) l.Add(() => SaveAlerts(alertsPath, alertsWhere));
@@ -608,13 +662,23 @@ namespace FolioConsoleApplication
                 if (save && orderItemsPath != null) l.Add(() => SaveOrderItems(orderItemsPath, orderItemsWhere));
                 if (save && piecesPath != null) l.Add(() => SavePieces(piecesPath, piecesWhere));
                 if (save && userAcquisitionsUnitsPath != null) l.Add(() => SaveUserAcquisitionsUnits(userAcquisitionsUnitsPath, userAcquisitionsUnitsWhere));
+                if (save && prefixesPath != null) l.Add(() => SavePrefixes(prefixesPath, prefixesWhere));
+                if (save && suffixesPath != null) l.Add(() => SaveSuffixes(suffixesPath, suffixesWhere));
+                if (save && reasonsForClosuresPath != null) l.Add(() => SaveReasonsForClosures(reasonsForClosuresPath, reasonsForClosuresWhere));
+                if (save && titlesPath != null) l.Add(() => SaveTitles(titlesPath, titlesWhere));
+                if (save && orderTransactionSummariesPath != null) l.Add(() => SaveOrderTransactionSummaries(orderTransactionSummariesPath, orderTransactionSummariesWhere));
                 if (save && invoicesPath != null) l.Add(() => SaveInvoices(invoicesPath, invoicesWhere));
                 if (save && documentsPath != null) l.Add(() => SaveDocuments(documentsPath, documentsWhere));
                 if (save && invoiceItemsPath != null) l.Add(() => SaveInvoiceItems(invoiceItemsPath, invoiceItemsWhere));
                 if (save && vouchersPath != null) l.Add(() => SaveVouchers(vouchersPath, vouchersWhere));
                 if (save && voucherItemsPath != null) l.Add(() => SaveVoucherItems(voucherItemsPath, voucherItemsWhere));
+                if (save && batchGroupsPath != null) l.Add(() => SaveBatchGroups(batchGroupsPath, batchGroupsWhere));
+                if (save && batchVouchersPath != null) l.Add(() => SaveBatchVouchers(batchVouchersPath, batchVouchersWhere));
+                if (save && batchVoucherExportsPath != null) l.Add(() => SaveBatchVoucherExports(batchVoucherExportsPath, batchVoucherExportsWhere));
+                if (save && batchVoucherExportConfigsPath != null) l.Add(() => SaveBatchVoucherExportConfigs(batchVoucherExportConfigsPath, batchVoucherExportConfigsWhere));
+                if (save && exportConfigCredentialsPath != null) l.Add(() => SaveExportConfigCredentials(exportConfigCredentialsPath, exportConfigCredentialsWhere));
                 if (save && transactionsPath != null) l.Add(() => SaveTransactions(transactionsPath, transactionsWhere));
-                if (save && orderTransactionSummariesPath != null) l.Add(() => SaveOrderTransactionSummaries(orderTransactionSummariesPath, orderTransactionSummariesWhere));
+                if (save && invoiceTransactionSummariesPath != null) l.Add(() => SaveInvoiceTransactionSummaries(invoiceTransactionSummariesPath, invoiceTransactionSummariesWhere));
                 if (save && cancellationReasonsPath != null) l.Add(() => SaveCancellationReasons(cancellationReasonsPath, cancellationReasonsWhere));
                 if (save && circulationRulesPath != null) l.Add(() => SaveCirculationRules(circulationRulesPath, circulationRulesWhere));
                 if (save && fixedDueDateSchedulesPath != null) l.Add(() => SaveFixedDueDateSchedules(fixedDueDateSchedulesPath, fixedDueDateSchedulesWhere));
@@ -627,10 +691,9 @@ namespace FolioConsoleApplication
                 if (save && staffSlipsPath != null) l.Add(() => SaveStaffSlips(staffSlipsPath, staffSlipsWhere));
                 if (save && patronActionSessionsPath != null) l.Add(() => SavePatronActionSessions(patronActionSessionsPath, patronActionSessionsWhere));
                 if (save && userRequestPreferencesPath != null) l.Add(() => SaveUserRequestPreferences(userRequestPreferencesPath, userRequestPreferencesWhere));
-                if (save && accountsPath != null) l.Add(() => SaveAccounts(accountsPath, accountsWhere));
+                if (save && checkInsPath != null) l.Add(() => SaveCheckIns(checkInsPath, checkInsWhere));
                 if (save && blocksPath != null) l.Add(() => SaveBlocks(blocksPath, blocksWhere));
                 if (save && commentsPath != null) l.Add(() => SaveComments(commentsPath, commentsWhere));
-                if (save && feesPath != null) l.Add(() => SaveFees(feesPath, feesWhere));
                 if (save && feeActionsPath != null) l.Add(() => SaveFeeActions(feeActionsPath, feeActionsWhere));
                 if (save && lostItemFeePoliciesPath != null) l.Add(() => SaveLostItemFeePolicies(lostItemFeePoliciesPath, lostItemFeePoliciesWhere));
                 if (save && overdueFinePoliciesPath != null) l.Add(() => SaveOverdueFinePolicies(overdueFinePoliciesPath, overdueFinePoliciesWhere));
@@ -640,11 +703,13 @@ namespace FolioConsoleApplication
                 if (save && transfersPath != null) l.Add(() => SaveTransfers(transfersPath, transfersWhere));
                 if (save && transferCriteriasPath != null) l.Add(() => SaveTransferCriterias(transferCriteriasPath, transferCriteriasWhere));
                 if (save && waivesPath != null) l.Add(() => SaveWaives(waivesPath, waivesWhere));
+                if (save && feeTypesPath != null) l.Add(() => SaveFeeTypes(feeTypesPath, feeTypesWhere));
+                if (save && accountsPath != null) l.Add(() => SaveAccounts(accountsPath, accountsWhere));
                 if (threads == 1) foreach (var a in l) a(); else l.AsParallel().WithDegreeOfParallelism(threads ?? Environment.ProcessorCount).ForAll(a => a());
                 if (delete && accountsPath != null) DeleteAccounts(accountsWhere);
+                if (delete && feeTypesPath != null) DeleteFeeTypes(feeTypesWhere);
                 if (delete && blocksPath != null) DeleteBlocks(blocksWhere);
                 if (delete && commentsPath != null) DeleteComments(commentsWhere);
-                if (delete && feesPath != null) DeleteFees(feesWhere);
                 if (delete && feeActionsPath != null) DeleteFeeActions(feeActionsWhere);
                 if (delete && lostItemFeePoliciesPath != null) DeleteLostItemFeePolicies(lostItemFeePoliciesWhere);
                 if (delete && overdueFinePoliciesPath != null) DeleteOverdueFinePolicies(overdueFinePoliciesWhere);
@@ -654,6 +719,7 @@ namespace FolioConsoleApplication
                 if (delete && transfersPath != null) DeleteTransfers(transfersWhere);
                 if (delete && transferCriteriasPath != null) DeleteTransferCriterias(transferCriteriasWhere);
                 if (delete && waivesPath != null) DeleteWaives(waivesWhere);
+                if (delete && checkInsPath != null) DeleteCheckIns(checkInsWhere);
                 if (delete && userRequestPreferencesPath != null) DeleteUserRequestPreferences(userRequestPreferencesWhere);
                 if (delete && patronActionSessionsPath != null) DeletePatronActionSessions(patronActionSessionsWhere);
                 if (delete && staffSlipsPath != null) DeleteStaffSlips(staffSlipsWhere);
@@ -666,13 +732,23 @@ namespace FolioConsoleApplication
                 if (delete && fixedDueDateSchedulesPath != null) DeleteFixedDueDateSchedules(fixedDueDateSchedulesWhere);
                 if (delete && circulationRulesPath != null) DeleteCirculationRules(circulationRulesWhere);
                 if (delete && cancellationReasonsPath != null) DeleteCancellationReasons(cancellationReasonsWhere);
-                if (delete && orderTransactionSummariesPath != null) DeleteOrderTransactionSummaries(orderTransactionSummariesWhere);
+                if (delete && invoiceTransactionSummariesPath != null) DeleteInvoiceTransactionSummaries(invoiceTransactionSummariesWhere);
+                if (delete && exportConfigCredentialsPath != null) DeleteExportConfigCredentials(exportConfigCredentialsWhere);
                 if (delete && transactionsPath != null) DeleteTransactions(transactionsWhere);
+                if (delete && batchVoucherExportConfigsPath != null) DeleteBatchVoucherExportConfigs(batchVoucherExportConfigsWhere);
+                if (delete && batchVoucherExportsPath != null) DeleteBatchVoucherExports(batchVoucherExportsWhere);
+                if (delete && batchVouchersPath != null) DeleteBatchVouchers(batchVouchersWhere);
+                if (delete && batchGroupsPath != null) DeleteBatchGroups(batchGroupsWhere);
                 if (delete && voucherItemsPath != null) DeleteVoucherItems(voucherItemsWhere);
                 if (delete && vouchersPath != null) DeleteVouchers(vouchersWhere);
                 if (delete && invoiceItemsPath != null) DeleteInvoiceItems(invoiceItemsWhere);
                 if (delete && documentsPath != null) DeleteDocuments(documentsWhere);
                 if (delete && invoicesPath != null) DeleteInvoices(invoicesWhere);
+                if (delete && orderTransactionSummariesPath != null) DeleteOrderTransactionSummaries(orderTransactionSummariesWhere);
+                if (delete && titlesPath != null) DeleteTitles(titlesWhere);
+                if (delete && reasonsForClosuresPath != null) DeleteReasonsForClosures(reasonsForClosuresWhere);
+                if (delete && suffixesPath != null) DeleteSuffixes(suffixesWhere);
+                if (delete && prefixesPath != null) DeletePrefixes(prefixesWhere);
                 if (delete && userAcquisitionsUnitsPath != null) DeleteUserAcquisitionsUnits(userAcquisitionsUnitsWhere);
                 if (delete && piecesPath != null) DeletePieces(piecesWhere);
                 if (delete && orderItemsPath != null) DeleteOrderItems(orderItemsWhere);
@@ -682,7 +758,6 @@ namespace FolioConsoleApplication
                 if (delete && orderTemplatesPath != null) DeleteOrderTemplates(orderTemplatesWhere);
                 if (delete && reportingCodesPath != null) DeleteReportingCodes(reportingCodesWhere);
                 if (delete && acquisitionsUnitsPath != null) DeleteAcquisitionsUnits(acquisitionsUnitsWhere);
-                if (delete && fundDistributionsPath != null) DeleteFundDistributions(fundDistributionsWhere);
                 if (delete && groupFundFiscalYearsPath != null) DeleteGroupFundFiscalYears(groupFundFiscalYearsWhere);
                 if (delete && budgetsPath != null) DeleteBudgets(budgetsWhere);
                 if (delete && fundsPath != null) DeleteFunds(fundsWhere);
@@ -701,6 +776,7 @@ namespace FolioConsoleApplication
                 if (delete && rawRecordsPath != null) DeleteRawRecords(rawRecordsWhere);
                 if (delete && recordsPath != null) DeleteRecords(recordsWhere);
                 if (delete && snapshotsPath != null) DeleteSnapshots(snapshotsWhere);
+                if (delete && precedingSucceedingTitlesPath != null) DeletePrecedingSucceedingTitles(precedingSucceedingTitlesWhere);
                 if (delete && itemsPath != null) DeleteItems(itemsWhere);
                 if (delete && holdingsPath != null) DeleteHoldings(holdingsWhere);
                 if (delete && instancesPath != null) DeleteInstances(instancesWhere);
@@ -738,6 +814,8 @@ namespace FolioConsoleApplication
                 if (delete && permissionsUsersPath != null) DeletePermissionsUsers(permissionsUsersWhere);
                 if (delete && permissionsPath != null) DeletePermissions(permissionsWhere);
                 if (delete && loginsPath != null) DeleteLogins(loginsWhere);
+                if (delete && patronBlockLimitsPath != null) DeletePatronBlockLimits(patronBlockLimitsWhere);
+                if (delete && patronBlockConditionsPath != null) DeletePatronBlockConditions(patronBlockConditionsWhere);
                 if (delete && proxiesPath != null) DeleteProxies(proxiesWhere);
                 if (delete && usersPath != null) DeleteUsers(usersWhere);
                 if (delete && groupsPath != null) DeleteGroups(groupsWhere);
@@ -751,6 +829,8 @@ namespace FolioConsoleApplication
                 if (load && groupsPath != null) LoadGroups(groupsPath);
                 if (load && usersPath != null) LoadUsers(usersPath);
                 if (load && proxiesPath != null) LoadProxies(proxiesPath);
+                if (load && patronBlockConditionsPath != null) LoadPatronBlockConditions(patronBlockConditionsPath);
+                if (load && patronBlockLimitsPath != null) LoadPatronBlockLimits(patronBlockLimitsPath);
                 if (load && loginsPath != null) LoadLogins(loginsPath);
                 if (load && permissionsPath != null) LoadPermissions(permissionsPath);
                 if (load && permissionsUsersPath != null) LoadPermissionsUsers(permissionsUsersPath);
@@ -788,6 +868,7 @@ namespace FolioConsoleApplication
                 if (load && instancesPath != null) LoadInstances(instancesPath);
                 if (load && holdingsPath != null) LoadHoldings(holdingsPath);
                 if (load && itemsPath != null) LoadItems(itemsPath);
+                if (load && precedingSucceedingTitlesPath != null) LoadPrecedingSucceedingTitles(precedingSucceedingTitlesPath);
                 if (load && snapshotsPath != null) LoadSnapshots(snapshotsPath);
                 if (load && recordsPath != null) LoadRecords(recordsPath);
                 if (load && rawRecordsPath != null) LoadRawRecords(rawRecordsPath);
@@ -806,7 +887,6 @@ namespace FolioConsoleApplication
                 if (load && fundsPath != null) LoadFunds(fundsPath);
                 if (load && budgetsPath != null) LoadBudgets(budgetsPath);
                 if (load && groupFundFiscalYearsPath != null) LoadGroupFundFiscalYears(groupFundFiscalYearsPath);
-                if (load && fundDistributionsPath != null) LoadFundDistributions(fundDistributionsPath);
                 if (load && acquisitionsUnitsPath != null) LoadAcquisitionsUnits(acquisitionsUnitsPath);
                 if (load && reportingCodesPath != null) LoadReportingCodes(reportingCodesPath);
                 if (load && alertsPath != null) LoadAlerts(alertsPath);
@@ -816,13 +896,23 @@ namespace FolioConsoleApplication
                 if (load && orderItemsPath != null) LoadOrderItems(orderItemsPath);
                 if (load && piecesPath != null) LoadPieces(piecesPath);
                 if (load && userAcquisitionsUnitsPath != null) LoadUserAcquisitionsUnits(userAcquisitionsUnitsPath);
+                if (load && prefixesPath != null) LoadPrefixes(prefixesPath);
+                if (load && suffixesPath != null) LoadSuffixes(suffixesPath);
+                if (load && reasonsForClosuresPath != null) LoadReasonsForClosures(reasonsForClosuresPath);
+                if (load && titlesPath != null) LoadTitles(titlesPath);
+                if (load && orderTransactionSummariesPath != null) LoadOrderTransactionSummaries(orderTransactionSummariesPath);
                 if (load && invoicesPath != null) LoadInvoices(invoicesPath);
                 if (load && documentsPath != null) LoadDocuments(documentsPath);
                 if (load && invoiceItemsPath != null) LoadInvoiceItems(invoiceItemsPath);
                 if (load && vouchersPath != null) LoadVouchers(vouchersPath);
                 if (load && voucherItemsPath != null) LoadVoucherItems(voucherItemsPath);
+                if (load && batchGroupsPath != null) LoadBatchGroups(batchGroupsPath);
+                if (load && batchVouchersPath != null) LoadBatchVouchers(batchVouchersPath);
+                if (load && batchVoucherExportsPath != null) LoadBatchVoucherExports(batchVoucherExportsPath);
+                if (load && batchVoucherExportConfigsPath != null) LoadBatchVoucherExportConfigs(batchVoucherExportConfigsPath);
+                if (load && exportConfigCredentialsPath != null) LoadExportConfigCredentials(exportConfigCredentialsPath);
                 if (load && transactionsPath != null) LoadTransactions(transactionsPath);
-                if (load && orderTransactionSummariesPath != null) LoadOrderTransactionSummaries(orderTransactionSummariesPath);
+                if (load && invoiceTransactionSummariesPath != null) LoadInvoiceTransactionSummaries(invoiceTransactionSummariesPath);
                 if (load && cancellationReasonsPath != null) LoadCancellationReasons(cancellationReasonsPath);
                 if (load && circulationRulesPath != null) LoadCirculationRules(circulationRulesPath);
                 if (load && fixedDueDateSchedulesPath != null) LoadFixedDueDateSchedules(fixedDueDateSchedulesPath);
@@ -835,10 +925,9 @@ namespace FolioConsoleApplication
                 if (load && staffSlipsPath != null) LoadStaffSlips(staffSlipsPath);
                 if (load && patronActionSessionsPath != null) LoadPatronActionSessions(patronActionSessionsPath);
                 if (load && userRequestPreferencesPath != null) LoadUserRequestPreferences(userRequestPreferencesPath);
-                if (load && accountsPath != null) LoadAccounts(accountsPath);
+                if (load && checkInsPath != null) LoadCheckIns(checkInsPath);
                 if (load && blocksPath != null) LoadBlocks(blocksPath);
                 if (load && commentsPath != null) LoadComments(commentsPath);
-                if (load && feesPath != null) LoadFees(feesPath);
                 if (load && feeActionsPath != null) LoadFeeActions(feeActionsPath);
                 if (load && lostItemFeePoliciesPath != null) LoadLostItemFeePolicies(lostItemFeePoliciesPath);
                 if (load && overdueFinePoliciesPath != null) LoadOverdueFinePolicies(overdueFinePoliciesPath);
@@ -848,6 +937,8 @@ namespace FolioConsoleApplication
                 if (load && transfersPath != null) LoadTransfers(transfersPath);
                 if (load && transferCriteriasPath != null) LoadTransferCriterias(transferCriteriasPath);
                 if (load && waivesPath != null) LoadWaives(waivesPath);
+                if (load && feeTypesPath != null) LoadFeeTypes(feeTypesPath);
+                if (load && accountsPath != null) LoadAccounts(accountsPath);
                 if (update && usersPath != null) UpdateUsers(usersPath, usersWhere, disable);
             }
             catch (Exception e)
@@ -1514,6 +1605,501 @@ namespace FolioConsoleApplication
                 jtw.WriteEndArray();
                 traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
                 traceSource.TraceEvent(TraceEventType.Information, 0, $"Saved {i} alternative title types");
+            }
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"{s.Elapsed} elapsed");
+        }
+
+        public static void DeleteBatchGroups(string where = null)
+        {
+            traceSource.TraceEvent(TraceEventType.Information, 0, "Deleting batch groups");
+            var s = Stopwatch.StartNew();
+            using (var fbcc = new FolioBulkCopyContext())
+            using (var fsc = new FolioServiceClient())
+            {
+                var i = 0;
+                if (api)
+                {
+                    var s2 = Stopwatch.StartNew();
+                    foreach (var jo in fsc.BatchGroups(where))
+                    {
+                        if (!whatIf) fsc.DeleteBatchGroup((string)jo["id"]);
+                        if (++i % 100 == 0)
+                        {
+                            traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
+                            s2.Restart();
+                        }
+                    }
+                    traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
+                }
+                else
+                {
+                    if (!whatIf) i = fbcc.ExecuteNonQuery($"DELETE FROM diku_mod_invoice_storage.batch_groups{(where != null ? $" WHERE {where}" : "")}");
+                }
+                traceSource.TraceEvent(TraceEventType.Information, 0, $"Deleted {i} batch groups");
+            }
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"{s.Elapsed} elapsed");
+        }
+
+        public static void LoadBatchGroups(string path)
+        {
+            traceSource.TraceEvent(TraceEventType.Information, 0, "Loading batch groups");
+            var s = Stopwatch.StartNew();
+            using (var sr = new StreamReader(compress || path.EndsWith(".gz") ? (Stream)new GZipStream(File.OpenRead($"{path}{(path.EndsWith(".gz") ? "" : ".gz")}"), CompressionMode.Decompress) : File.OpenRead(path)))
+            using (var sr2 = new StreamReader(Assembly.GetAssembly(typeof(FolioContext)).GetManifestResourceStream("FolioLibrary.BatchGroup.json")))
+            using (var jtr = new JsonTextReader(sr) { SupportMultipleContent = true })
+            using (var fbcc = new FolioBulkCopyContext())
+            using (var fsc = new FolioServiceClient())
+            {
+                var s2 = Stopwatch.StartNew();
+                var js4 = JsonSchema.FromJsonAsync(sr2.ReadToEndAsync().Result).Result;
+                var js = new JsonSerializer();
+                jtr.Read();
+                var i = 0;
+                while (jtr.Read() && jtr.TokenType != JsonToken.EndArray)
+                {
+                    if (take != null && take <= i) break;
+                    ++i;
+                    var jo = (JObject)js.Deserialize(jtr);
+                    if (validate)
+                    {
+                        var l = js4.Validate(jo);
+                        if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"BatchGroup {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"BatchGroup {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
+                    }
+                    if (api)
+                    {
+                        if (!whatIf) fsc.InsertBatchGroup(jo);
+                        if (i % 100 == 0)
+                        {
+                            traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
+                            s2.Restart();
+                        }
+                    }
+                    else
+                    {
+                        if (!whatIf) fbcc.Insert(new BatchGroup
+                        {
+                            Id = (Guid?)jo.SelectToken("id"),
+                            Content = jo.ToString(),
+                            CreationTime = (DateTime?)jo.SelectToken("metadata.createdDate"),
+                            CreationUserId = (string)jo.SelectToken("metadata.createdByUserId")
+                        });
+                        if (i % 1000 == 0)
+                        {
+                            fbcc.Commit();
+                            if (i % 10000 == 0)
+                            {
+                                traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
+                                s2.Restart();
+                            }
+                        }
+                    }
+                }
+                fbcc.Commit();
+                traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
+                traceSource.TraceEvent(TraceEventType.Information, 0, $"Added {i} batch groups");
+            }
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"{s.Elapsed} elapsed");
+        }
+
+        public static void SaveBatchGroups(string path, string where = null)
+        {
+            traceSource.TraceEvent(TraceEventType.Information, 0, "Saving batch groups");
+            var s = Stopwatch.StartNew();
+            using (var fdc = new FolioDapperContext())
+            using (var fsc = new FolioServiceClient())
+            using (var sr = new StreamReader(Assembly.GetAssembly(typeof(FolioContext)).GetManifestResourceStream("FolioLibrary.BatchGroup.json")))
+            using (var sw = new StreamWriter(whatIf ? new MemoryStream() : compress ? (Stream)new GZipStream(new FileStream($"{path}.gz", FileMode.Create), CompressionMode.Compress) : new FileStream(path, FileMode.Create)))
+            using (var jtw = new JsonTextWriter(sw))
+            {
+                var s2 = Stopwatch.StartNew();
+                var js4 = JsonSchema.FromJsonAsync(sr.ReadToEndAsync().Result).Result;
+                var js = new JsonSerializer { Formatting = Formatting.Indented };
+                jtw.WriteStartArray();
+                var i = 0;
+                foreach (var jo in api ? fsc.BatchGroups(where, take: take) : fdc.BatchGroups(where, take: take).Select(bg => JObject.Parse(bg.Content)))
+                {
+                    if (validate)
+                    {
+                        var l = js4.Validate(jo);
+                        if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"BatchGroup {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"BatchGroup {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
+                    }
+                    if (!whatIf) js.Serialize(jtw, jo);
+                    if (++i % 10000 == 0)
+                    {
+                        traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
+                        s2.Restart();
+                    }
+                }
+                jtw.WriteEndArray();
+                traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
+                traceSource.TraceEvent(TraceEventType.Information, 0, $"Saved {i} batch groups");
+            }
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"{s.Elapsed} elapsed");
+        }
+
+        public static void DeleteBatchVouchers(string where = null)
+        {
+            traceSource.TraceEvent(TraceEventType.Information, 0, "Deleting batch vouchers");
+            var s = Stopwatch.StartNew();
+            using (var fbcc = new FolioBulkCopyContext())
+            {
+                var i = 0;
+                if (api)
+                {
+                    throw new NotSupportedException();
+                }
+                else
+                {
+                    if (!whatIf) i = fbcc.ExecuteNonQuery($"DELETE FROM diku_mod_invoice_storage.batch_vouchers{(where != null ? $" WHERE {where}" : "")}");
+                }
+                traceSource.TraceEvent(TraceEventType.Information, 0, $"Deleted {i} batch vouchers");
+            }
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"{s.Elapsed} elapsed");
+        }
+
+        public static void LoadBatchVouchers(string path)
+        {
+            traceSource.TraceEvent(TraceEventType.Information, 0, "Loading batch vouchers");
+            var s = Stopwatch.StartNew();
+            using (var sr = new StreamReader(compress || path.EndsWith(".gz") ? (Stream)new GZipStream(File.OpenRead($"{path}{(path.EndsWith(".gz") ? "" : ".gz")}"), CompressionMode.Decompress) : File.OpenRead(path)))
+            using (var sr2 = new StreamReader(Assembly.GetAssembly(typeof(FolioContext)).GetManifestResourceStream("FolioLibrary.BatchVoucher.json")))
+            using (var jtr = new JsonTextReader(sr) { SupportMultipleContent = true })
+            using (var fbcc = new FolioBulkCopyContext())
+            {
+                var s2 = Stopwatch.StartNew();
+                var js4 = JsonSchema.FromJsonAsync(sr2.ReadToEndAsync().Result).Result;
+                var js = new JsonSerializer();
+                jtr.Read();
+                var i = 0;
+                while (jtr.Read() && jtr.TokenType != JsonToken.EndArray)
+                {
+                    if (take != null && take <= i) break;
+                    ++i;
+                    var jo = (JObject)js.Deserialize(jtr);
+                    if (validate)
+                    {
+                        var l = js4.Validate(jo);
+                        if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"BatchVoucher {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"BatchVoucher {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
+                    }
+                    if (api)
+                    {
+                        throw new NotSupportedException();
+                    }
+                    else
+                    {
+                        if (!whatIf) fbcc.Insert(new BatchVoucher
+                        {
+                            Id = (Guid?)jo.SelectToken("id"),
+                            Content = jo.ToString()
+                        });
+                        if (i % 1000 == 0)
+                        {
+                            fbcc.Commit();
+                            if (i % 10000 == 0)
+                            {
+                                traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
+                                s2.Restart();
+                            }
+                        }
+                    }
+                }
+                fbcc.Commit();
+                traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
+                traceSource.TraceEvent(TraceEventType.Information, 0, $"Added {i} batch vouchers");
+            }
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"{s.Elapsed} elapsed");
+        }
+
+        public static void SaveBatchVouchers(string path, string where = null)
+        {
+            traceSource.TraceEvent(TraceEventType.Information, 0, "Saving batch vouchers");
+            var s = Stopwatch.StartNew();
+            using (var fdc = new FolioDapperContext())
+            using (var sr = new StreamReader(Assembly.GetAssembly(typeof(FolioContext)).GetManifestResourceStream("FolioLibrary.BatchVoucher.json")))
+            using (var sw = new StreamWriter(whatIf ? new MemoryStream() : compress ? (Stream)new GZipStream(new FileStream($"{path}.gz", FileMode.Create), CompressionMode.Compress) : new FileStream(path, FileMode.Create)))
+            using (var jtw = new JsonTextWriter(sw))
+            {
+                var s2 = Stopwatch.StartNew();
+                var js4 = JsonSchema.FromJsonAsync(sr.ReadToEndAsync().Result).Result;
+                var js = new JsonSerializer { Formatting = Formatting.Indented };
+                jtw.WriteStartArray();
+                var i = 0;
+                foreach (var jo in api ? throw new NotSupportedException() : fdc.BatchVouchers(where, take: take).Select(bv => JObject.Parse(bv.Content)))
+                {
+                    if (validate)
+                    {
+                        var l = js4.Validate(jo);
+                        if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"BatchVoucher {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"BatchVoucher {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
+                    }
+                    if (!whatIf) js.Serialize(jtw, jo);
+                    if (++i % 10000 == 0)
+                    {
+                        traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
+                        s2.Restart();
+                    }
+                }
+                jtw.WriteEndArray();
+                traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
+                traceSource.TraceEvent(TraceEventType.Information, 0, $"Saved {i} batch vouchers");
+            }
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"{s.Elapsed} elapsed");
+        }
+
+        public static void DeleteBatchVoucherExports(string where = null)
+        {
+            traceSource.TraceEvent(TraceEventType.Information, 0, "Deleting batch voucher exports");
+            var s = Stopwatch.StartNew();
+            using (var fbcc = new FolioBulkCopyContext())
+            using (var fsc = new FolioServiceClient())
+            {
+                var i = 0;
+                if (api)
+                {
+                    var s2 = Stopwatch.StartNew();
+                    foreach (var jo in fsc.BatchVoucherExports(where))
+                    {
+                        if (!whatIf) fsc.DeleteBatchVoucherExport((string)jo["id"]);
+                        if (++i % 100 == 0)
+                        {
+                            traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
+                            s2.Restart();
+                        }
+                    }
+                    traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
+                }
+                else
+                {
+                    if (!whatIf) i = fbcc.ExecuteNonQuery($"DELETE FROM diku_mod_invoice_storage.batch_voucher_exports{(where != null ? $" WHERE {where}" : "")}");
+                }
+                traceSource.TraceEvent(TraceEventType.Information, 0, $"Deleted {i} batch voucher exports");
+            }
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"{s.Elapsed} elapsed");
+        }
+
+        public static void LoadBatchVoucherExports(string path)
+        {
+            traceSource.TraceEvent(TraceEventType.Information, 0, "Loading batch voucher exports");
+            var s = Stopwatch.StartNew();
+            using (var sr = new StreamReader(compress || path.EndsWith(".gz") ? (Stream)new GZipStream(File.OpenRead($"{path}{(path.EndsWith(".gz") ? "" : ".gz")}"), CompressionMode.Decompress) : File.OpenRead(path)))
+            using (var sr2 = new StreamReader(Assembly.GetAssembly(typeof(FolioContext)).GetManifestResourceStream("FolioLibrary.BatchVoucherExport.json")))
+            using (var jtr = new JsonTextReader(sr) { SupportMultipleContent = true })
+            using (var fbcc = new FolioBulkCopyContext())
+            using (var fsc = new FolioServiceClient())
+            {
+                var s2 = Stopwatch.StartNew();
+                var js4 = JsonSchema.FromJsonAsync(sr2.ReadToEndAsync().Result).Result;
+                var js = new JsonSerializer();
+                jtr.Read();
+                var i = 0;
+                while (jtr.Read() && jtr.TokenType != JsonToken.EndArray)
+                {
+                    if (take != null && take <= i) break;
+                    ++i;
+                    var jo = (JObject)js.Deserialize(jtr);
+                    if (validate)
+                    {
+                        var l = js4.Validate(jo);
+                        if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"BatchVoucherExport {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"BatchVoucherExport {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
+                    }
+                    if (api)
+                    {
+                        if (!whatIf) fsc.InsertBatchVoucherExport(jo);
+                        if (i % 100 == 0)
+                        {
+                            traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
+                            s2.Restart();
+                        }
+                    }
+                    else
+                    {
+                        if (!whatIf) fbcc.Insert(new BatchVoucherExport
+                        {
+                            Id = (Guid?)jo.SelectToken("id"),
+                            Content = jo.ToString(),
+                            CreationTime = (DateTime?)jo.SelectToken("metadata.createdDate"),
+                            CreationUserId = (string)jo.SelectToken("metadata.createdByUserId"),
+                            Batchgroupid = (Guid?)jo.SelectToken("batchGroupId"),
+                            Batchvoucherid = (Guid?)jo.SelectToken("batchVoucherId")
+                        });
+                        if (i % 1000 == 0)
+                        {
+                            fbcc.Commit();
+                            if (i % 10000 == 0)
+                            {
+                                traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
+                                s2.Restart();
+                            }
+                        }
+                    }
+                }
+                fbcc.Commit();
+                traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
+                traceSource.TraceEvent(TraceEventType.Information, 0, $"Added {i} batch voucher exports");
+            }
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"{s.Elapsed} elapsed");
+        }
+
+        public static void SaveBatchVoucherExports(string path, string where = null)
+        {
+            traceSource.TraceEvent(TraceEventType.Information, 0, "Saving batch voucher exports");
+            var s = Stopwatch.StartNew();
+            using (var fdc = new FolioDapperContext())
+            using (var fsc = new FolioServiceClient())
+            using (var sr = new StreamReader(Assembly.GetAssembly(typeof(FolioContext)).GetManifestResourceStream("FolioLibrary.BatchVoucherExport.json")))
+            using (var sw = new StreamWriter(whatIf ? new MemoryStream() : compress ? (Stream)new GZipStream(new FileStream($"{path}.gz", FileMode.Create), CompressionMode.Compress) : new FileStream(path, FileMode.Create)))
+            using (var jtw = new JsonTextWriter(sw))
+            {
+                var s2 = Stopwatch.StartNew();
+                var js4 = JsonSchema.FromJsonAsync(sr.ReadToEndAsync().Result).Result;
+                var js = new JsonSerializer { Formatting = Formatting.Indented };
+                jtw.WriteStartArray();
+                var i = 0;
+                foreach (var jo in api ? fsc.BatchVoucherExports(where, take: take) : fdc.BatchVoucherExports(where, take: take).Select(bve => JObject.Parse(bve.Content)))
+                {
+                    if (validate)
+                    {
+                        var l = js4.Validate(jo);
+                        if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"BatchVoucherExport {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"BatchVoucherExport {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
+                    }
+                    if (!whatIf) js.Serialize(jtw, jo);
+                    if (++i % 10000 == 0)
+                    {
+                        traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
+                        s2.Restart();
+                    }
+                }
+                jtw.WriteEndArray();
+                traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
+                traceSource.TraceEvent(TraceEventType.Information, 0, $"Saved {i} batch voucher exports");
+            }
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"{s.Elapsed} elapsed");
+        }
+
+        public static void DeleteBatchVoucherExportConfigs(string where = null)
+        {
+            traceSource.TraceEvent(TraceEventType.Information, 0, "Deleting batch voucher export configs");
+            var s = Stopwatch.StartNew();
+            using (var fbcc = new FolioBulkCopyContext())
+            using (var fsc = new FolioServiceClient())
+            {
+                var i = 0;
+                if (api)
+                {
+                    var s2 = Stopwatch.StartNew();
+                    foreach (var jo in fsc.BatchVoucherExportConfigs(where))
+                    {
+                        if (!whatIf) fsc.DeleteBatchVoucherExportConfig((string)jo["id"]);
+                        if (++i % 100 == 0)
+                        {
+                            traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
+                            s2.Restart();
+                        }
+                    }
+                    traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
+                }
+                else
+                {
+                    if (!whatIf) i = fbcc.ExecuteNonQuery($"DELETE FROM diku_mod_invoice_storage.batch_voucher_export_configs{(where != null ? $" WHERE {where}" : "")}");
+                }
+                traceSource.TraceEvent(TraceEventType.Information, 0, $"Deleted {i} batch voucher export configs");
+            }
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"{s.Elapsed} elapsed");
+        }
+
+        public static void LoadBatchVoucherExportConfigs(string path)
+        {
+            traceSource.TraceEvent(TraceEventType.Information, 0, "Loading batch voucher export configs");
+            var s = Stopwatch.StartNew();
+            using (var sr = new StreamReader(compress || path.EndsWith(".gz") ? (Stream)new GZipStream(File.OpenRead($"{path}{(path.EndsWith(".gz") ? "" : ".gz")}"), CompressionMode.Decompress) : File.OpenRead(path)))
+            using (var sr2 = new StreamReader(Assembly.GetAssembly(typeof(FolioContext)).GetManifestResourceStream("FolioLibrary.BatchVoucherExportConfig.json")))
+            using (var jtr = new JsonTextReader(sr) { SupportMultipleContent = true })
+            using (var fbcc = new FolioBulkCopyContext())
+            using (var fsc = new FolioServiceClient())
+            {
+                var s2 = Stopwatch.StartNew();
+                var js4 = JsonSchema.FromJsonAsync(sr2.ReadToEndAsync().Result).Result;
+                var js = new JsonSerializer();
+                jtr.Read();
+                var i = 0;
+                while (jtr.Read() && jtr.TokenType != JsonToken.EndArray)
+                {
+                    if (take != null && take <= i) break;
+                    ++i;
+                    var jo = (JObject)js.Deserialize(jtr);
+                    if (validate)
+                    {
+                        var l = js4.Validate(jo);
+                        if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"BatchVoucherExportConfig {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"BatchVoucherExportConfig {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
+                    }
+                    if (api)
+                    {
+                        if (!whatIf) fsc.InsertBatchVoucherExportConfig(jo);
+                        if (i % 100 == 0)
+                        {
+                            traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
+                            s2.Restart();
+                        }
+                    }
+                    else
+                    {
+                        if (!whatIf) fbcc.Insert(new BatchVoucherExportConfig
+                        {
+                            Id = (Guid?)jo.SelectToken("id"),
+                            Content = jo.ToString(),
+                            CreationTime = (DateTime?)jo.SelectToken("metadata.createdDate"),
+                            CreationUserId = (string)jo.SelectToken("metadata.createdByUserId"),
+                            Batchgroupid = (Guid?)jo.SelectToken("batchGroupId")
+                        });
+                        if (i % 1000 == 0)
+                        {
+                            fbcc.Commit();
+                            if (i % 10000 == 0)
+                            {
+                                traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
+                                s2.Restart();
+                            }
+                        }
+                    }
+                }
+                fbcc.Commit();
+                traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
+                traceSource.TraceEvent(TraceEventType.Information, 0, $"Added {i} batch voucher export configs");
+            }
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"{s.Elapsed} elapsed");
+        }
+
+        public static void SaveBatchVoucherExportConfigs(string path, string where = null)
+        {
+            traceSource.TraceEvent(TraceEventType.Information, 0, "Saving batch voucher export configs");
+            var s = Stopwatch.StartNew();
+            using (var fdc = new FolioDapperContext())
+            using (var fsc = new FolioServiceClient())
+            using (var sr = new StreamReader(Assembly.GetAssembly(typeof(FolioContext)).GetManifestResourceStream("FolioLibrary.BatchVoucherExportConfig.json")))
+            using (var sw = new StreamWriter(whatIf ? new MemoryStream() : compress ? (Stream)new GZipStream(new FileStream($"{path}.gz", FileMode.Create), CompressionMode.Compress) : new FileStream(path, FileMode.Create)))
+            using (var jtw = new JsonTextWriter(sw))
+            {
+                var s2 = Stopwatch.StartNew();
+                var js4 = JsonSchema.FromJsonAsync(sr.ReadToEndAsync().Result).Result;
+                var js = new JsonSerializer { Formatting = Formatting.Indented };
+                jtw.WriteStartArray();
+                var i = 0;
+                foreach (var jo in api ? fsc.BatchVoucherExportConfigs(where, take: take) : fdc.BatchVoucherExportConfigs(where, take: take).Select(bvec => JObject.Parse(bvec.Content)))
+                {
+                    if (validate)
+                    {
+                        var l = js4.Validate(jo);
+                        if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"BatchVoucherExportConfig {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"BatchVoucherExportConfig {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
+                    }
+                    if (!whatIf) js.Serialize(jtw, jo);
+                    if (++i % 10000 == 0)
+                    {
+                        traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
+                        s2.Restart();
+                    }
+                }
+                jtw.WriteEndArray();
+                traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
+                traceSource.TraceEvent(TraceEventType.Information, 0, $"Saved {i} batch voucher export configs");
             }
             traceSource.TraceEvent(TraceEventType.Information, 0, $"{s.Elapsed} elapsed");
         }
@@ -2285,6 +2871,132 @@ namespace FolioConsoleApplication
                 jtw.WriteEndArray();
                 traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
                 traceSource.TraceEvent(TraceEventType.Information, 0, $"Saved {i} categories");
+            }
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"{s.Elapsed} elapsed");
+        }
+
+        public static void DeleteCheckIns(string where = null)
+        {
+            traceSource.TraceEvent(TraceEventType.Information, 0, "Deleting check ins");
+            var s = Stopwatch.StartNew();
+            using (var fbcc = new FolioBulkCopyContext())
+            using (var fsc = new FolioServiceClient())
+            {
+                var i = 0;
+                if (api)
+                {
+                    var s2 = Stopwatch.StartNew();
+                    foreach (var jo in fsc.CheckIns(where))
+                    {
+                        if (!whatIf) fsc.DeleteCheckIn((string)jo["id"]);
+                        if (++i % 100 == 0)
+                        {
+                            traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
+                            s2.Restart();
+                        }
+                    }
+                    traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
+                }
+                else
+                {
+                    if (!whatIf) i = fbcc.ExecuteNonQuery($"DELETE FROM diku_mod_circulation_storage.check_in{(where != null ? $" WHERE {where}" : "")}");
+                }
+                traceSource.TraceEvent(TraceEventType.Information, 0, $"Deleted {i} check ins");
+            }
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"{s.Elapsed} elapsed");
+        }
+
+        public static void LoadCheckIns(string path)
+        {
+            traceSource.TraceEvent(TraceEventType.Information, 0, "Loading check ins");
+            var s = Stopwatch.StartNew();
+            using (var sr = new StreamReader(compress || path.EndsWith(".gz") ? (Stream)new GZipStream(File.OpenRead($"{path}{(path.EndsWith(".gz") ? "" : ".gz")}"), CompressionMode.Decompress) : File.OpenRead(path)))
+            using (var sr2 = new StreamReader(Assembly.GetAssembly(typeof(FolioContext)).GetManifestResourceStream("FolioLibrary.CheckIn.json")))
+            using (var jtr = new JsonTextReader(sr) { SupportMultipleContent = true })
+            using (var fbcc = new FolioBulkCopyContext())
+            using (var fsc = new FolioServiceClient())
+            {
+                var s2 = Stopwatch.StartNew();
+                var js4 = JsonSchema.FromJsonAsync(sr2.ReadToEndAsync().Result).Result;
+                var js = new JsonSerializer();
+                jtr.Read();
+                var i = 0;
+                while (jtr.Read() && jtr.TokenType != JsonToken.EndArray)
+                {
+                    if (take != null && take <= i) break;
+                    ++i;
+                    var jo = (JObject)js.Deserialize(jtr);
+                    if (validate)
+                    {
+                        var l = js4.Validate(jo);
+                        if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"CheckIn {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"CheckIn {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
+                    }
+                    if (api)
+                    {
+                        if (!whatIf) fsc.InsertCheckIn(jo);
+                        if (i % 100 == 0)
+                        {
+                            traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
+                            s2.Restart();
+                        }
+                    }
+                    else
+                    {
+                        if (!whatIf) fbcc.Insert(new CheckIn
+                        {
+                            Id = (Guid?)jo.SelectToken("id"),
+                            Content = jo.ToString()
+                        });
+                        if (i % 1000 == 0)
+                        {
+                            fbcc.Commit();
+                            if (i % 10000 == 0)
+                            {
+                                traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
+                                s2.Restart();
+                            }
+                        }
+                    }
+                }
+                fbcc.Commit();
+                traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
+                traceSource.TraceEvent(TraceEventType.Information, 0, $"Added {i} check ins");
+            }
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"{s.Elapsed} elapsed");
+        }
+
+        public static void SaveCheckIns(string path, string where = null)
+        {
+            traceSource.TraceEvent(TraceEventType.Information, 0, "Saving check ins");
+            var s = Stopwatch.StartNew();
+            using (var fdc = new FolioDapperContext())
+            using (var fsc = new FolioServiceClient())
+            using (var sr = new StreamReader(Assembly.GetAssembly(typeof(FolioContext)).GetManifestResourceStream("FolioLibrary.CheckIn.json")))
+            using (var sw = new StreamWriter(whatIf ? new MemoryStream() : compress ? (Stream)new GZipStream(new FileStream($"{path}.gz", FileMode.Create), CompressionMode.Compress) : new FileStream(path, FileMode.Create)))
+            using (var jtw = new JsonTextWriter(sw))
+            {
+                var s2 = Stopwatch.StartNew();
+                var js4 = JsonSchema.FromJsonAsync(sr.ReadToEndAsync().Result).Result;
+                var js = new JsonSerializer { Formatting = Formatting.Indented };
+                jtw.WriteStartArray();
+                var i = 0;
+                foreach (var jo in api ? fsc.CheckIns(where, take: take) : fdc.CheckIns(where, take: take).Select(ci => JObject.Parse(ci.Content)))
+                {
+                    if (validate)
+                    {
+                        var l = js4.Validate(jo);
+                        if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"CheckIn {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"CheckIn {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
+                    }
+                    if (!whatIf) js.Serialize(jtw, jo);
+                    if (++i % 10000 == 0)
+                    {
+                        traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
+                        s2.Restart();
+                    }
+                }
+                jtw.WriteEndArray();
+                traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
+                traceSource.TraceEvent(TraceEventType.Information, 0, $"Saved {i} check ins");
             }
             traceSource.TraceEvent(TraceEventType.Information, 0, $"{s.Elapsed} elapsed");
         }
@@ -3510,46 +4222,34 @@ namespace FolioConsoleApplication
             traceSource.TraceEvent(TraceEventType.Information, 0, $"{s.Elapsed} elapsed");
         }
 
-        public static void DeleteFees(string where = null)
+        public static void DeleteExportConfigCredentials(string where = null)
         {
-            traceSource.TraceEvent(TraceEventType.Information, 0, "Deleting fees");
+            traceSource.TraceEvent(TraceEventType.Information, 0, "Deleting export config credentials");
             var s = Stopwatch.StartNew();
             using (var fbcc = new FolioBulkCopyContext())
-            using (var fsc = new FolioServiceClient())
             {
                 var i = 0;
                 if (api)
                 {
-                    var s2 = Stopwatch.StartNew();
-                    foreach (var jo in fsc.Fees(where))
-                    {
-                        if (!whatIf) fsc.DeleteFee((string)jo["id"]);
-                        if (++i % 100 == 0)
-                        {
-                            traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
-                            s2.Restart();
-                        }
-                    }
-                    traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
+                    throw new NotSupportedException();
                 }
                 else
                 {
-                    if (!whatIf) i = fbcc.ExecuteNonQuery($"DELETE FROM diku_mod_feesfines.feefines{(where != null ? $" WHERE {where}" : "")}");
+                    if (!whatIf) i = fbcc.ExecuteNonQuery($"DELETE FROM diku_mod_invoice_storage.export_config_credentials{(where != null ? $" WHERE {where}" : "")}");
                 }
-                traceSource.TraceEvent(TraceEventType.Information, 0, $"Deleted {i} fees");
+                traceSource.TraceEvent(TraceEventType.Information, 0, $"Deleted {i} export config credentials");
             }
             traceSource.TraceEvent(TraceEventType.Information, 0, $"{s.Elapsed} elapsed");
         }
 
-        public static void LoadFees(string path)
+        public static void LoadExportConfigCredentials(string path)
         {
-            traceSource.TraceEvent(TraceEventType.Information, 0, "Loading fees");
+            traceSource.TraceEvent(TraceEventType.Information, 0, "Loading export config credentials");
             var s = Stopwatch.StartNew();
             using (var sr = new StreamReader(compress || path.EndsWith(".gz") ? (Stream)new GZipStream(File.OpenRead($"{path}{(path.EndsWith(".gz") ? "" : ".gz")}"), CompressionMode.Decompress) : File.OpenRead(path)))
-            using (var sr2 = new StreamReader(Assembly.GetAssembly(typeof(FolioContext)).GetManifestResourceStream("FolioLibrary.Fee.json")))
+            using (var sr2 = new StreamReader(Assembly.GetAssembly(typeof(FolioContext)).GetManifestResourceStream("FolioLibrary.ExportConfigCredential.json")))
             using (var jtr = new JsonTextReader(sr) { SupportMultipleContent = true })
             using (var fbcc = new FolioBulkCopyContext())
-            using (var fsc = new FolioServiceClient())
             {
                 var s2 = Stopwatch.StartNew();
                 var js4 = JsonSchema.FromJsonAsync(sr2.ReadToEndAsync().Result).Result;
@@ -3564,26 +4264,21 @@ namespace FolioConsoleApplication
                     if (validate)
                     {
                         var l = js4.Validate(jo);
-                        if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"Fee {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"Fee {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
+                        if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"ExportConfigCredential {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"ExportConfigCredential {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
                     }
                     if (api)
                     {
-                        if (!whatIf) fsc.InsertFee(jo);
-                        if (i % 100 == 0)
-                        {
-                            traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
-                            s2.Restart();
-                        }
+                        throw new NotSupportedException();
                     }
                     else
                     {
-                        if (!whatIf) fbcc.Insert(new Fee
+                        if (!whatIf) fbcc.Insert(new ExportConfigCredential
                         {
                             Id = (Guid?)jo.SelectToken("id"),
                             Content = jo.ToString(),
                             CreationTime = (DateTime?)jo.SelectToken("metadata.createdDate"),
                             CreationUserId = (string)jo.SelectToken("metadata.createdByUserId"),
-                            Ownerid = (Guid?)jo.SelectToken("ownerId")
+                            Exportconfigid = (Guid?)jo.SelectToken("exportConfigId")
                         });
                         if (i % 1000 == 0)
                         {
@@ -3598,18 +4293,17 @@ namespace FolioConsoleApplication
                 }
                 fbcc.Commit();
                 traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
-                traceSource.TraceEvent(TraceEventType.Information, 0, $"Added {i} fees");
+                traceSource.TraceEvent(TraceEventType.Information, 0, $"Added {i} export config credentials");
             }
             traceSource.TraceEvent(TraceEventType.Information, 0, $"{s.Elapsed} elapsed");
         }
 
-        public static void SaveFees(string path, string where = null)
+        public static void SaveExportConfigCredentials(string path, string where = null)
         {
-            traceSource.TraceEvent(TraceEventType.Information, 0, "Saving fees");
+            traceSource.TraceEvent(TraceEventType.Information, 0, "Saving export config credentials");
             var s = Stopwatch.StartNew();
             using (var fdc = new FolioDapperContext())
-            using (var fsc = new FolioServiceClient())
-            using (var sr = new StreamReader(Assembly.GetAssembly(typeof(FolioContext)).GetManifestResourceStream("FolioLibrary.Fee.json")))
+            using (var sr = new StreamReader(Assembly.GetAssembly(typeof(FolioContext)).GetManifestResourceStream("FolioLibrary.ExportConfigCredential.json")))
             using (var sw = new StreamWriter(whatIf ? new MemoryStream() : compress ? (Stream)new GZipStream(new FileStream($"{path}.gz", FileMode.Create), CompressionMode.Compress) : new FileStream(path, FileMode.Create)))
             using (var jtw = new JsonTextWriter(sw))
             {
@@ -3618,12 +4312,12 @@ namespace FolioConsoleApplication
                 var js = new JsonSerializer { Formatting = Formatting.Indented };
                 jtw.WriteStartArray();
                 var i = 0;
-                foreach (var jo in api ? fsc.Fees(where, take: take) : fdc.Fees(where, take: take).Select(f => JObject.Parse(f.Content)))
+                foreach (var jo in api ? throw new NotSupportedException() : fdc.ExportConfigCredentials(where, take: take).Select(ecc => JObject.Parse(ecc.Content)))
                 {
                     if (validate)
                     {
                         var l = js4.Validate(jo);
-                        if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"Fee {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"Fee {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
+                        if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"ExportConfigCredential {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"ExportConfigCredential {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
                     }
                     if (!whatIf) js.Serialize(jtw, jo);
                     if (++i % 10000 == 0)
@@ -3634,7 +4328,7 @@ namespace FolioConsoleApplication
                 }
                 jtw.WriteEndArray();
                 traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
-                traceSource.TraceEvent(TraceEventType.Information, 0, $"Saved {i} fees");
+                traceSource.TraceEvent(TraceEventType.Information, 0, $"Saved {i} export config credentials");
             }
             traceSource.TraceEvent(TraceEventType.Information, 0, $"{s.Elapsed} elapsed");
         }
@@ -3761,6 +4455,135 @@ namespace FolioConsoleApplication
                 jtw.WriteEndArray();
                 traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
                 traceSource.TraceEvent(TraceEventType.Information, 0, $"Saved {i} fee actions");
+            }
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"{s.Elapsed} elapsed");
+        }
+
+        public static void DeleteFeeTypes(string where = null)
+        {
+            traceSource.TraceEvent(TraceEventType.Information, 0, "Deleting fee types");
+            var s = Stopwatch.StartNew();
+            using (var fbcc = new FolioBulkCopyContext())
+            using (var fsc = new FolioServiceClient())
+            {
+                var i = 0;
+                if (api)
+                {
+                    var s2 = Stopwatch.StartNew();
+                    foreach (var jo in fsc.FeeTypes(where))
+                    {
+                        if (!whatIf) fsc.DeleteFeeType((string)jo["id"]);
+                        if (++i % 100 == 0)
+                        {
+                            traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
+                            s2.Restart();
+                        }
+                    }
+                    traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
+                }
+                else
+                {
+                    if (!whatIf) i = fbcc.ExecuteNonQuery($"DELETE FROM diku_mod_feesfines.feefines{(where != null ? $" WHERE {where}" : "")}");
+                }
+                traceSource.TraceEvent(TraceEventType.Information, 0, $"Deleted {i} fee types");
+            }
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"{s.Elapsed} elapsed");
+        }
+
+        public static void LoadFeeTypes(string path)
+        {
+            traceSource.TraceEvent(TraceEventType.Information, 0, "Loading fee types");
+            var s = Stopwatch.StartNew();
+            using (var sr = new StreamReader(compress || path.EndsWith(".gz") ? (Stream)new GZipStream(File.OpenRead($"{path}{(path.EndsWith(".gz") ? "" : ".gz")}"), CompressionMode.Decompress) : File.OpenRead(path)))
+            using (var sr2 = new StreamReader(Assembly.GetAssembly(typeof(FolioContext)).GetManifestResourceStream("FolioLibrary.FeeType.json")))
+            using (var jtr = new JsonTextReader(sr) { SupportMultipleContent = true })
+            using (var fbcc = new FolioBulkCopyContext())
+            using (var fsc = new FolioServiceClient())
+            {
+                var s2 = Stopwatch.StartNew();
+                var js4 = JsonSchema.FromJsonAsync(sr2.ReadToEndAsync().Result).Result;
+                var js = new JsonSerializer();
+                jtr.Read();
+                var i = 0;
+                while (jtr.Read() && jtr.TokenType != JsonToken.EndArray)
+                {
+                    if (take != null && take <= i) break;
+                    ++i;
+                    var jo = (JObject)js.Deserialize(jtr);
+                    if (validate)
+                    {
+                        var l = js4.Validate(jo);
+                        if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"FeeType {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"FeeType {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
+                    }
+                    if (api)
+                    {
+                        if (!whatIf) fsc.InsertFeeType(jo);
+                        if (i % 100 == 0)
+                        {
+                            traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
+                            s2.Restart();
+                        }
+                    }
+                    else
+                    {
+                        if (!whatIf) fbcc.Insert(new FeeType
+                        {
+                            Id = (Guid?)jo.SelectToken("id"),
+                            Content = jo.ToString(),
+                            CreationTime = (DateTime?)jo.SelectToken("metadata.createdDate"),
+                            CreationUserId = (string)jo.SelectToken("metadata.createdByUserId"),
+                            Ownerid = (Guid?)jo.SelectToken("ownerId")
+                        });
+                        if (i % 1000 == 0)
+                        {
+                            fbcc.Commit();
+                            if (i % 10000 == 0)
+                            {
+                                traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
+                                s2.Restart();
+                            }
+                        }
+                    }
+                }
+                fbcc.Commit();
+                traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
+                traceSource.TraceEvent(TraceEventType.Information, 0, $"Added {i} fee types");
+            }
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"{s.Elapsed} elapsed");
+        }
+
+        public static void SaveFeeTypes(string path, string where = null)
+        {
+            traceSource.TraceEvent(TraceEventType.Information, 0, "Saving fee types");
+            var s = Stopwatch.StartNew();
+            using (var fdc = new FolioDapperContext())
+            using (var fsc = new FolioServiceClient())
+            using (var sr = new StreamReader(Assembly.GetAssembly(typeof(FolioContext)).GetManifestResourceStream("FolioLibrary.FeeType.json")))
+            using (var sw = new StreamWriter(whatIf ? new MemoryStream() : compress ? (Stream)new GZipStream(new FileStream($"{path}.gz", FileMode.Create), CompressionMode.Compress) : new FileStream(path, FileMode.Create)))
+            using (var jtw = new JsonTextWriter(sw))
+            {
+                var s2 = Stopwatch.StartNew();
+                var js4 = JsonSchema.FromJsonAsync(sr.ReadToEndAsync().Result).Result;
+                var js = new JsonSerializer { Formatting = Formatting.Indented };
+                jtw.WriteStartArray();
+                var i = 0;
+                foreach (var jo in api ? fsc.FeeTypes(where, take: take) : fdc.FeeTypes(where, take: take).Select(ft => JObject.Parse(ft.Content)))
+                {
+                    if (validate)
+                    {
+                        var l = js4.Validate(jo);
+                        if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"FeeType {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"FeeType {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
+                    }
+                    if (!whatIf) js.Serialize(jtw, jo);
+                    if (++i % 10000 == 0)
+                    {
+                        traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
+                        s2.Restart();
+                    }
+                }
+                jtw.WriteEndArray();
+                traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
+                traceSource.TraceEvent(TraceEventType.Information, 0, $"Saved {i} fee types");
             }
             traceSource.TraceEvent(TraceEventType.Information, 0, $"{s.Elapsed} elapsed");
         }
@@ -4273,133 +5096,6 @@ namespace FolioConsoleApplication
                 jtw.WriteEndArray();
                 traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
                 traceSource.TraceEvent(TraceEventType.Information, 0, $"Saved {i} funds");
-            }
-            traceSource.TraceEvent(TraceEventType.Information, 0, $"{s.Elapsed} elapsed");
-        }
-
-        public static void DeleteFundDistributions(string where = null)
-        {
-            traceSource.TraceEvent(TraceEventType.Information, 0, "Deleting fund distributions");
-            var s = Stopwatch.StartNew();
-            using (var fbcc = new FolioBulkCopyContext())
-            using (var fsc = new FolioServiceClient())
-            {
-                var i = 0;
-                if (api)
-                {
-                    var s2 = Stopwatch.StartNew();
-                    foreach (var jo in fsc.FundDistributions(where))
-                    {
-                        if (!whatIf) fsc.DeleteFundDistribution((string)jo["id"]);
-                        if (++i % 100 == 0)
-                        {
-                            traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
-                            s2.Restart();
-                        }
-                    }
-                    traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
-                }
-                else
-                {
-                    if (!whatIf) i = fbcc.ExecuteNonQuery($"DELETE FROM diku_mod_finance_storage.fund_distribution{(where != null ? $" WHERE {where}" : "")}");
-                }
-                traceSource.TraceEvent(TraceEventType.Information, 0, $"Deleted {i} fund distributions");
-            }
-            traceSource.TraceEvent(TraceEventType.Information, 0, $"{s.Elapsed} elapsed");
-        }
-
-        public static void LoadFundDistributions(string path)
-        {
-            traceSource.TraceEvent(TraceEventType.Information, 0, "Loading fund distributions");
-            var s = Stopwatch.StartNew();
-            using (var sr = new StreamReader(compress || path.EndsWith(".gz") ? (Stream)new GZipStream(File.OpenRead($"{path}{(path.EndsWith(".gz") ? "" : ".gz")}"), CompressionMode.Decompress) : File.OpenRead(path)))
-            using (var sr2 = new StreamReader(Assembly.GetAssembly(typeof(FolioContext)).GetManifestResourceStream("FolioLibrary.FundDistribution.json")))
-            using (var jtr = new JsonTextReader(sr) { SupportMultipleContent = true })
-            using (var fbcc = new FolioBulkCopyContext())
-            using (var fsc = new FolioServiceClient())
-            {
-                var s2 = Stopwatch.StartNew();
-                var js4 = JsonSchema.FromJsonAsync(sr2.ReadToEndAsync().Result).Result;
-                var js = new JsonSerializer();
-                jtr.Read();
-                var i = 0;
-                while (jtr.Read() && jtr.TokenType != JsonToken.EndArray)
-                {
-                    if (take != null && take <= i) break;
-                    ++i;
-                    var jo = (JObject)js.Deserialize(jtr);
-                    if (validate)
-                    {
-                        var l = js4.Validate(jo);
-                        if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"FundDistribution {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"FundDistribution {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
-                    }
-                    if (api)
-                    {
-                        if (!whatIf) fsc.InsertFundDistribution(jo);
-                        if (i % 100 == 0)
-                        {
-                            traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
-                            s2.Restart();
-                        }
-                    }
-                    else
-                    {
-                        if (!whatIf) fbcc.Insert(new FundDistribution
-                        {
-                            Id = (Guid?)jo.SelectToken("id"),
-                            Content = jo.ToString(),
-                            Budgetid = (Guid?)jo.SelectToken("budgetId")
-                        });
-                        if (i % 1000 == 0)
-                        {
-                            fbcc.Commit();
-                            if (i % 10000 == 0)
-                            {
-                                traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
-                                s2.Restart();
-                            }
-                        }
-                    }
-                }
-                fbcc.Commit();
-                traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
-                traceSource.TraceEvent(TraceEventType.Information, 0, $"Added {i} fund distributions");
-            }
-            traceSource.TraceEvent(TraceEventType.Information, 0, $"{s.Elapsed} elapsed");
-        }
-
-        public static void SaveFundDistributions(string path, string where = null)
-        {
-            traceSource.TraceEvent(TraceEventType.Information, 0, "Saving fund distributions");
-            var s = Stopwatch.StartNew();
-            using (var fdc = new FolioDapperContext())
-            using (var fsc = new FolioServiceClient())
-            using (var sr = new StreamReader(Assembly.GetAssembly(typeof(FolioContext)).GetManifestResourceStream("FolioLibrary.FundDistribution.json")))
-            using (var sw = new StreamWriter(whatIf ? new MemoryStream() : compress ? (Stream)new GZipStream(new FileStream($"{path}.gz", FileMode.Create), CompressionMode.Compress) : new FileStream(path, FileMode.Create)))
-            using (var jtw = new JsonTextWriter(sw))
-            {
-                var s2 = Stopwatch.StartNew();
-                var js4 = JsonSchema.FromJsonAsync(sr.ReadToEndAsync().Result).Result;
-                var js = new JsonSerializer { Formatting = Formatting.Indented };
-                jtw.WriteStartArray();
-                var i = 0;
-                foreach (var jo in api ? fsc.FundDistributions(where, take: take) : fdc.FundDistributions(where, take: take).Select(fd => JObject.Parse(fd.Content)))
-                {
-                    if (validate)
-                    {
-                        var l = js4.Validate(jo);
-                        if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"FundDistribution {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"FundDistribution {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
-                    }
-                    if (!whatIf) js.Serialize(jtw, jo);
-                    if (++i % 10000 == 0)
-                    {
-                        traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
-                        s2.Restart();
-                    }
-                }
-                jtw.WriteEndArray();
-                traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
-                traceSource.TraceEvent(TraceEventType.Information, 0, $"Saved {i} fund distributions");
             }
             traceSource.TraceEvent(TraceEventType.Information, 0, $"{s.Elapsed} elapsed");
         }
@@ -6885,7 +7581,8 @@ namespace FolioConsoleApplication
                             Id = (Guid?)jo.SelectToken("id"),
                             Content = jo.ToString(),
                             CreationTime = (DateTime?)jo.SelectToken("metadata.createdDate"),
-                            CreationUserId = (string)jo.SelectToken("metadata.createdByUserId")
+                            CreationUserId = (string)jo.SelectToken("metadata.createdByUserId"),
+                            Batchgroupid = (Guid?)jo.SelectToken("batchGroupId")
                         });
                         if (i % 1000 == 0)
                         {
@@ -7066,6 +7763,114 @@ namespace FolioConsoleApplication
                 jtw.WriteEndArray();
                 traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
                 traceSource.TraceEvent(TraceEventType.Information, 0, $"Saved {i} invoice items");
+            }
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"{s.Elapsed} elapsed");
+        }
+
+        public static void DeleteInvoiceTransactionSummaries(string where = null)
+        {
+            traceSource.TraceEvent(TraceEventType.Information, 0, "Deleting invoice transaction summaries");
+            var s = Stopwatch.StartNew();
+            using (var fbcc = new FolioBulkCopyContext())
+            {
+                var i = 0;
+                if (api)
+                {
+                    throw new NotSupportedException();
+                }
+                else
+                {
+                    if (!whatIf) i = fbcc.ExecuteNonQuery($"DELETE FROM diku_mod_finance_storage.invoice_transaction_summaries{(where != null ? $" WHERE {where}" : "")}");
+                }
+                traceSource.TraceEvent(TraceEventType.Information, 0, $"Deleted {i} invoice transaction summaries");
+            }
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"{s.Elapsed} elapsed");
+        }
+
+        public static void LoadInvoiceTransactionSummaries(string path)
+        {
+            traceSource.TraceEvent(TraceEventType.Information, 0, "Loading invoice transaction summaries");
+            var s = Stopwatch.StartNew();
+            using (var sr = new StreamReader(compress || path.EndsWith(".gz") ? (Stream)new GZipStream(File.OpenRead($"{path}{(path.EndsWith(".gz") ? "" : ".gz")}"), CompressionMode.Decompress) : File.OpenRead(path)))
+            using (var sr2 = new StreamReader(Assembly.GetAssembly(typeof(FolioContext)).GetManifestResourceStream("FolioLibrary.InvoiceTransactionSummary.json")))
+            using (var jtr = new JsonTextReader(sr) { SupportMultipleContent = true })
+            using (var fbcc = new FolioBulkCopyContext())
+            {
+                var s2 = Stopwatch.StartNew();
+                var js4 = JsonSchema.FromJsonAsync(sr2.ReadToEndAsync().Result).Result;
+                var js = new JsonSerializer();
+                jtr.Read();
+                var i = 0;
+                while (jtr.Read() && jtr.TokenType != JsonToken.EndArray)
+                {
+                    if (take != null && take <= i) break;
+                    ++i;
+                    var jo = (JObject)js.Deserialize(jtr);
+                    if (validate)
+                    {
+                        var l = js4.Validate(jo);
+                        if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"InvoiceTransactionSummary {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"InvoiceTransactionSummary {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
+                    }
+                    if (api)
+                    {
+                        throw new NotSupportedException();
+                    }
+                    else
+                    {
+                        if (!whatIf) fbcc.Insert(new InvoiceTransactionSummary
+                        {
+                            Id = (Guid?)jo.SelectToken("id"),
+                            Content = jo.ToString()
+                        });
+                        if (i % 1000 == 0)
+                        {
+                            fbcc.Commit();
+                            if (i % 10000 == 0)
+                            {
+                                traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
+                                s2.Restart();
+                            }
+                        }
+                    }
+                }
+                fbcc.Commit();
+                traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
+                traceSource.TraceEvent(TraceEventType.Information, 0, $"Added {i} invoice transaction summaries");
+            }
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"{s.Elapsed} elapsed");
+        }
+
+        public static void SaveInvoiceTransactionSummaries(string path, string where = null)
+        {
+            traceSource.TraceEvent(TraceEventType.Information, 0, "Saving invoice transaction summaries");
+            var s = Stopwatch.StartNew();
+            using (var fdc = new FolioDapperContext())
+            using (var sr = new StreamReader(Assembly.GetAssembly(typeof(FolioContext)).GetManifestResourceStream("FolioLibrary.InvoiceTransactionSummary.json")))
+            using (var sw = new StreamWriter(whatIf ? new MemoryStream() : compress ? (Stream)new GZipStream(new FileStream($"{path}.gz", FileMode.Create), CompressionMode.Compress) : new FileStream(path, FileMode.Create)))
+            using (var jtw = new JsonTextWriter(sw))
+            {
+                var s2 = Stopwatch.StartNew();
+                var js4 = JsonSchema.FromJsonAsync(sr.ReadToEndAsync().Result).Result;
+                var js = new JsonSerializer { Formatting = Formatting.Indented };
+                jtw.WriteStartArray();
+                var i = 0;
+                foreach (var jo in api ? throw new NotSupportedException() : fdc.InvoiceTransactionSummaries(where, take: take).Select(its => JObject.Parse(its.Content)))
+                {
+                    if (validate)
+                    {
+                        var l = js4.Validate(jo);
+                        if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"InvoiceTransactionSummary {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"InvoiceTransactionSummary {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
+                    }
+                    if (!whatIf) js.Serialize(jtw, jo);
+                    if (++i % 10000 == 0)
+                    {
+                        traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
+                        s2.Restart();
+                    }
+                }
+                jtw.WriteEndArray();
+                traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
+                traceSource.TraceEvent(TraceEventType.Information, 0, $"Saved {i} invoice transaction summaries");
             }
             traceSource.TraceEvent(TraceEventType.Information, 0, $"{s.Elapsed} elapsed");
         }
@@ -10246,6 +11051,256 @@ namespace FolioConsoleApplication
             traceSource.TraceEvent(TraceEventType.Information, 0, $"{s.Elapsed} elapsed");
         }
 
+        public static void DeletePatronBlockConditions(string where = null)
+        {
+            traceSource.TraceEvent(TraceEventType.Information, 0, "Deleting patron block conditions");
+            var s = Stopwatch.StartNew();
+            using (var fbcc = new FolioBulkCopyContext())
+            using (var fsc = new FolioServiceClient())
+            {
+                var i = 0;
+                if (api)
+                {
+                    var s2 = Stopwatch.StartNew();
+                    foreach (var jo in fsc.PatronBlockConditions(where))
+                    {
+                        if (!whatIf) fsc.DeletePatronBlockCondition((string)jo[""]);
+                        if (++i % 100 == 0)
+                        {
+                            traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
+                            s2.Restart();
+                        }
+                    }
+                    traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
+                }
+                else
+                {
+                    if (!whatIf) i = fbcc.ExecuteNonQuery($"DELETE FROM diku_mod_users.patron_block_conditions{(where != null ? $" WHERE {where}" : "")}");
+                }
+                traceSource.TraceEvent(TraceEventType.Information, 0, $"Deleted {i} patron block conditions");
+            }
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"{s.Elapsed} elapsed");
+        }
+
+        public static void LoadPatronBlockConditions(string path)
+        {
+            traceSource.TraceEvent(TraceEventType.Information, 0, "Loading patron block conditions");
+            var s = Stopwatch.StartNew();
+            using (var sr = new StreamReader(compress || path.EndsWith(".gz") ? (Stream)new GZipStream(File.OpenRead($"{path}{(path.EndsWith(".gz") ? "" : ".gz")}"), CompressionMode.Decompress) : File.OpenRead(path)))
+            using (var sr2 = new StreamReader(Assembly.GetAssembly(typeof(FolioContext)).GetManifestResourceStream("FolioLibrary.PatronBlockCondition.json")))
+            using (var jtr = new JsonTextReader(sr) { SupportMultipleContent = true })
+            using (var fbcc = new FolioBulkCopyContext())
+            using (var fsc = new FolioServiceClient())
+            {
+                var s2 = Stopwatch.StartNew();
+                var js4 = JsonSchema.FromJsonAsync(sr2.ReadToEndAsync().Result).Result;
+                var js = new JsonSerializer();
+                jtr.Read();
+                var i = 0;
+                while (jtr.Read() && jtr.TokenType != JsonToken.EndArray)
+                {
+                    if (take != null && take <= i) break;
+                    ++i;
+                    var jo = (JObject)js.Deserialize(jtr);
+                    if (validate)
+                    {
+                        var l = js4.Validate(jo);
+                        if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"PatronBlockCondition {jo[""]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"PatronBlockCondition {jo[""]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
+                    }
+                    if (api)
+                    {
+                        if (!whatIf) fsc.InsertPatronBlockCondition(jo);
+                        if (i % 100 == 0)
+                        {
+                            traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
+                            s2.Restart();
+                        }
+                    }
+                    else
+                    {
+                        if (!whatIf) fbcc.Insert(new PatronBlockCondition
+                        {
+                            Content = jo.ToString()
+                        });
+                        if (i % 1000 == 0)
+                        {
+                            fbcc.Commit();
+                            if (i % 10000 == 0)
+                            {
+                                traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
+                                s2.Restart();
+                            }
+                        }
+                    }
+                }
+                fbcc.Commit();
+                traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
+                traceSource.TraceEvent(TraceEventType.Information, 0, $"Added {i} patron block conditions");
+            }
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"{s.Elapsed} elapsed");
+        }
+
+        public static void SavePatronBlockConditions(string path, string where = null)
+        {
+            traceSource.TraceEvent(TraceEventType.Information, 0, "Saving patron block conditions");
+            var s = Stopwatch.StartNew();
+            using (var fdc = new FolioDapperContext())
+            using (var fsc = new FolioServiceClient())
+            using (var sr = new StreamReader(Assembly.GetAssembly(typeof(FolioContext)).GetManifestResourceStream("FolioLibrary.PatronBlockCondition.json")))
+            using (var sw = new StreamWriter(whatIf ? new MemoryStream() : compress ? (Stream)new GZipStream(new FileStream($"{path}.gz", FileMode.Create), CompressionMode.Compress) : new FileStream(path, FileMode.Create)))
+            using (var jtw = new JsonTextWriter(sw))
+            {
+                var s2 = Stopwatch.StartNew();
+                var js4 = JsonSchema.FromJsonAsync(sr.ReadToEndAsync().Result).Result;
+                var js = new JsonSerializer { Formatting = Formatting.Indented };
+                jtw.WriteStartArray();
+                var i = 0;
+                foreach (var jo in api ? fsc.PatronBlockConditions(where, take: take) : fdc.PatronBlockConditions(where, take: take).Select(pbc => JObject.Parse(pbc.Content)))
+                {
+                    if (validate)
+                    {
+                        var l = js4.Validate(jo);
+                        if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"PatronBlockCondition {jo[""]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"PatronBlockCondition {jo[""]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
+                    }
+                    if (!whatIf) js.Serialize(jtw, jo);
+                    if (++i % 10000 == 0)
+                    {
+                        traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
+                        s2.Restart();
+                    }
+                }
+                jtw.WriteEndArray();
+                traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
+                traceSource.TraceEvent(TraceEventType.Information, 0, $"Saved {i} patron block conditions");
+            }
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"{s.Elapsed} elapsed");
+        }
+
+        public static void DeletePatronBlockLimits(string where = null)
+        {
+            traceSource.TraceEvent(TraceEventType.Information, 0, "Deleting patron block limits");
+            var s = Stopwatch.StartNew();
+            using (var fbcc = new FolioBulkCopyContext())
+            using (var fsc = new FolioServiceClient())
+            {
+                var i = 0;
+                if (api)
+                {
+                    var s2 = Stopwatch.StartNew();
+                    foreach (var jo in fsc.PatronBlockLimits(where))
+                    {
+                        if (!whatIf) fsc.DeletePatronBlockLimit((string)jo[""]);
+                        if (++i % 100 == 0)
+                        {
+                            traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
+                            s2.Restart();
+                        }
+                    }
+                    traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
+                }
+                else
+                {
+                    if (!whatIf) i = fbcc.ExecuteNonQuery($"DELETE FROM diku_mod_users.patron_block_limits{(where != null ? $" WHERE {where}" : "")}");
+                }
+                traceSource.TraceEvent(TraceEventType.Information, 0, $"Deleted {i} patron block limits");
+            }
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"{s.Elapsed} elapsed");
+        }
+
+        public static void LoadPatronBlockLimits(string path)
+        {
+            traceSource.TraceEvent(TraceEventType.Information, 0, "Loading patron block limits");
+            var s = Stopwatch.StartNew();
+            using (var sr = new StreamReader(compress || path.EndsWith(".gz") ? (Stream)new GZipStream(File.OpenRead($"{path}{(path.EndsWith(".gz") ? "" : ".gz")}"), CompressionMode.Decompress) : File.OpenRead(path)))
+            using (var sr2 = new StreamReader(Assembly.GetAssembly(typeof(FolioContext)).GetManifestResourceStream("FolioLibrary.PatronBlockLimit.json")))
+            using (var jtr = new JsonTextReader(sr) { SupportMultipleContent = true })
+            using (var fbcc = new FolioBulkCopyContext())
+            using (var fsc = new FolioServiceClient())
+            {
+                var s2 = Stopwatch.StartNew();
+                var js4 = JsonSchema.FromJsonAsync(sr2.ReadToEndAsync().Result).Result;
+                var js = new JsonSerializer();
+                jtr.Read();
+                var i = 0;
+                while (jtr.Read() && jtr.TokenType != JsonToken.EndArray)
+                {
+                    if (take != null && take <= i) break;
+                    ++i;
+                    var jo = (JObject)js.Deserialize(jtr);
+                    if (validate)
+                    {
+                        var l = js4.Validate(jo);
+                        if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"PatronBlockLimit {jo[""]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"PatronBlockLimit {jo[""]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
+                    }
+                    if (api)
+                    {
+                        if (!whatIf) fsc.InsertPatronBlockLimit(jo);
+                        if (i % 100 == 0)
+                        {
+                            traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
+                            s2.Restart();
+                        }
+                    }
+                    else
+                    {
+                        if (!whatIf) fbcc.Insert(new PatronBlockLimit
+                        {
+                            Content = jo.ToString()
+                        });
+                        if (i % 1000 == 0)
+                        {
+                            fbcc.Commit();
+                            if (i % 10000 == 0)
+                            {
+                                traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
+                                s2.Restart();
+                            }
+                        }
+                    }
+                }
+                fbcc.Commit();
+                traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
+                traceSource.TraceEvent(TraceEventType.Information, 0, $"Added {i} patron block limits");
+            }
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"{s.Elapsed} elapsed");
+        }
+
+        public static void SavePatronBlockLimits(string path, string where = null)
+        {
+            traceSource.TraceEvent(TraceEventType.Information, 0, "Saving patron block limits");
+            var s = Stopwatch.StartNew();
+            using (var fdc = new FolioDapperContext())
+            using (var fsc = new FolioServiceClient())
+            using (var sr = new StreamReader(Assembly.GetAssembly(typeof(FolioContext)).GetManifestResourceStream("FolioLibrary.PatronBlockLimit.json")))
+            using (var sw = new StreamWriter(whatIf ? new MemoryStream() : compress ? (Stream)new GZipStream(new FileStream($"{path}.gz", FileMode.Create), CompressionMode.Compress) : new FileStream(path, FileMode.Create)))
+            using (var jtw = new JsonTextWriter(sw))
+            {
+                var s2 = Stopwatch.StartNew();
+                var js4 = JsonSchema.FromJsonAsync(sr.ReadToEndAsync().Result).Result;
+                var js = new JsonSerializer { Formatting = Formatting.Indented };
+                jtw.WriteStartArray();
+                var i = 0;
+                foreach (var jo in api ? fsc.PatronBlockLimits(where, take: take) : fdc.PatronBlockLimits(where, take: take).Select(pbl => JObject.Parse(pbl.Content)))
+                {
+                    if (validate)
+                    {
+                        var l = js4.Validate(jo);
+                        if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"PatronBlockLimit {jo[""]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"PatronBlockLimit {jo[""]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
+                    }
+                    if (!whatIf) js.Serialize(jtw, jo);
+                    if (++i % 10000 == 0)
+                    {
+                        traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
+                        s2.Restart();
+                    }
+                }
+                jtw.WriteEndArray();
+                traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
+                traceSource.TraceEvent(TraceEventType.Information, 0, $"Saved {i} patron block limits");
+            }
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"{s.Elapsed} elapsed");
+        }
+
         public static void DeletePatronNoticePolicies(string where = null)
         {
             traceSource.TraceEvent(TraceEventType.Information, 0, "Deleting patron notice policies");
@@ -10885,6 +11940,262 @@ namespace FolioConsoleApplication
             traceSource.TraceEvent(TraceEventType.Information, 0, $"{s.Elapsed} elapsed");
         }
 
+        public static void DeletePrecedingSucceedingTitles(string where = null)
+        {
+            traceSource.TraceEvent(TraceEventType.Information, 0, "Deleting preceding succeeding titles");
+            var s = Stopwatch.StartNew();
+            using (var fbcc = new FolioBulkCopyContext())
+            using (var fsc = new FolioServiceClient())
+            {
+                var i = 0;
+                if (api)
+                {
+                    var s2 = Stopwatch.StartNew();
+                    foreach (var jo in fsc.PrecedingSucceedingTitles(where))
+                    {
+                        if (!whatIf) fsc.DeletePrecedingSucceedingTitle((string)jo["id"]);
+                        if (++i % 100 == 0)
+                        {
+                            traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
+                            s2.Restart();
+                        }
+                    }
+                    traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
+                }
+                else
+                {
+                    if (!whatIf) i = fbcc.ExecuteNonQuery($"DELETE FROM diku_mod_inventory_storage.preceding_succeeding_title{(where != null ? $" WHERE {where}" : "")}");
+                }
+                traceSource.TraceEvent(TraceEventType.Information, 0, $"Deleted {i} preceding succeeding titles");
+            }
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"{s.Elapsed} elapsed");
+        }
+
+        public static void LoadPrecedingSucceedingTitles(string path)
+        {
+            traceSource.TraceEvent(TraceEventType.Information, 0, "Loading preceding succeeding titles");
+            var s = Stopwatch.StartNew();
+            using (var sr = new StreamReader(compress || path.EndsWith(".gz") ? (Stream)new GZipStream(File.OpenRead($"{path}{(path.EndsWith(".gz") ? "" : ".gz")}"), CompressionMode.Decompress) : File.OpenRead(path)))
+            using (var sr2 = new StreamReader(Assembly.GetAssembly(typeof(FolioContext)).GetManifestResourceStream("FolioLibrary.PrecedingSucceedingTitle.json")))
+            using (var jtr = new JsonTextReader(sr) { SupportMultipleContent = true })
+            using (var fbcc = new FolioBulkCopyContext())
+            using (var fsc = new FolioServiceClient())
+            {
+                var s2 = Stopwatch.StartNew();
+                var js4 = JsonSchema.FromJsonAsync(sr2.ReadToEndAsync().Result).Result;
+                var js = new JsonSerializer();
+                jtr.Read();
+                var i = 0;
+                while (jtr.Read() && jtr.TokenType != JsonToken.EndArray)
+                {
+                    if (take != null && take <= i) break;
+                    ++i;
+                    var jo = (JObject)js.Deserialize(jtr);
+                    if (validate)
+                    {
+                        var l = js4.Validate(jo);
+                        if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"PrecedingSucceedingTitle {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"PrecedingSucceedingTitle {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
+                    }
+                    if (api)
+                    {
+                        if (!whatIf) fsc.InsertPrecedingSucceedingTitle(jo);
+                        if (i % 100 == 0)
+                        {
+                            traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
+                            s2.Restart();
+                        }
+                    }
+                    else
+                    {
+                        if (!whatIf) fbcc.Insert(new PrecedingSucceedingTitle
+                        {
+                            Id = (Guid?)jo.SelectToken("id"),
+                            Content = jo.ToString(),
+                            CreationTime = (DateTime?)jo.SelectToken("metadata.createdDate"),
+                            CreationUserId = (string)jo.SelectToken("metadata.createdByUserId"),
+                            Precedinginstanceid = (Guid?)jo.SelectToken("precedingInstanceId"),
+                            Succeedinginstanceid = (Guid?)jo.SelectToken("succeedingInstanceId")
+                        });
+                        if (i % 1000 == 0)
+                        {
+                            fbcc.Commit();
+                            if (i % 10000 == 0)
+                            {
+                                traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
+                                s2.Restart();
+                            }
+                        }
+                    }
+                }
+                fbcc.Commit();
+                traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
+                traceSource.TraceEvent(TraceEventType.Information, 0, $"Added {i} preceding succeeding titles");
+            }
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"{s.Elapsed} elapsed");
+        }
+
+        public static void SavePrecedingSucceedingTitles(string path, string where = null)
+        {
+            traceSource.TraceEvent(TraceEventType.Information, 0, "Saving preceding succeeding titles");
+            var s = Stopwatch.StartNew();
+            using (var fdc = new FolioDapperContext())
+            using (var fsc = new FolioServiceClient())
+            using (var sr = new StreamReader(Assembly.GetAssembly(typeof(FolioContext)).GetManifestResourceStream("FolioLibrary.PrecedingSucceedingTitle.json")))
+            using (var sw = new StreamWriter(whatIf ? new MemoryStream() : compress ? (Stream)new GZipStream(new FileStream($"{path}.gz", FileMode.Create), CompressionMode.Compress) : new FileStream(path, FileMode.Create)))
+            using (var jtw = new JsonTextWriter(sw))
+            {
+                var s2 = Stopwatch.StartNew();
+                var js4 = JsonSchema.FromJsonAsync(sr.ReadToEndAsync().Result).Result;
+                var js = new JsonSerializer { Formatting = Formatting.Indented };
+                jtw.WriteStartArray();
+                var i = 0;
+                foreach (var jo in api ? fsc.PrecedingSucceedingTitles(where, take: take) : fdc.PrecedingSucceedingTitles(where, take: take).Select(pst => JObject.Parse(pst.Content)))
+                {
+                    if (validate)
+                    {
+                        var l = js4.Validate(jo);
+                        if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"PrecedingSucceedingTitle {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"PrecedingSucceedingTitle {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
+                    }
+                    if (!whatIf) js.Serialize(jtw, jo);
+                    if (++i % 10000 == 0)
+                    {
+                        traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
+                        s2.Restart();
+                    }
+                }
+                jtw.WriteEndArray();
+                traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
+                traceSource.TraceEvent(TraceEventType.Information, 0, $"Saved {i} preceding succeeding titles");
+            }
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"{s.Elapsed} elapsed");
+        }
+
+        public static void DeletePrefixes(string where = null)
+        {
+            traceSource.TraceEvent(TraceEventType.Information, 0, "Deleting prefixes");
+            var s = Stopwatch.StartNew();
+            using (var fbcc = new FolioBulkCopyContext())
+            using (var fsc = new FolioServiceClient())
+            {
+                var i = 0;
+                if (api)
+                {
+                    var s2 = Stopwatch.StartNew();
+                    foreach (var jo in fsc.Prefixes(where))
+                    {
+                        if (!whatIf) fsc.DeletePrefix((string)jo["id"]);
+                        if (++i % 100 == 0)
+                        {
+                            traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
+                            s2.Restart();
+                        }
+                    }
+                    traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
+                }
+                else
+                {
+                    if (!whatIf) i = fbcc.ExecuteNonQuery($"DELETE FROM diku_mod_orders_storage.prefixes{(where != null ? $" WHERE {where}" : "")}");
+                }
+                traceSource.TraceEvent(TraceEventType.Information, 0, $"Deleted {i} prefixes");
+            }
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"{s.Elapsed} elapsed");
+        }
+
+        public static void LoadPrefixes(string path)
+        {
+            traceSource.TraceEvent(TraceEventType.Information, 0, "Loading prefixes");
+            var s = Stopwatch.StartNew();
+            using (var sr = new StreamReader(compress || path.EndsWith(".gz") ? (Stream)new GZipStream(File.OpenRead($"{path}{(path.EndsWith(".gz") ? "" : ".gz")}"), CompressionMode.Decompress) : File.OpenRead(path)))
+            using (var sr2 = new StreamReader(Assembly.GetAssembly(typeof(FolioContext)).GetManifestResourceStream("FolioLibrary.Prefix.json")))
+            using (var jtr = new JsonTextReader(sr) { SupportMultipleContent = true })
+            using (var fbcc = new FolioBulkCopyContext())
+            using (var fsc = new FolioServiceClient())
+            {
+                var s2 = Stopwatch.StartNew();
+                var js4 = JsonSchema.FromJsonAsync(sr2.ReadToEndAsync().Result).Result;
+                var js = new JsonSerializer();
+                jtr.Read();
+                var i = 0;
+                while (jtr.Read() && jtr.TokenType != JsonToken.EndArray)
+                {
+                    if (take != null && take <= i) break;
+                    ++i;
+                    var jo = (JObject)js.Deserialize(jtr);
+                    if (validate)
+                    {
+                        var l = js4.Validate(jo);
+                        if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"Prefix {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"Prefix {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
+                    }
+                    if (api)
+                    {
+                        if (!whatIf) fsc.InsertPrefix(jo);
+                        if (i % 100 == 0)
+                        {
+                            traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
+                            s2.Restart();
+                        }
+                    }
+                    else
+                    {
+                        if (!whatIf) fbcc.Insert(new Prefix
+                        {
+                            Id = (Guid?)jo.SelectToken("id"),
+                            Content = jo.ToString()
+                        });
+                        if (i % 1000 == 0)
+                        {
+                            fbcc.Commit();
+                            if (i % 10000 == 0)
+                            {
+                                traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
+                                s2.Restart();
+                            }
+                        }
+                    }
+                }
+                fbcc.Commit();
+                traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
+                traceSource.TraceEvent(TraceEventType.Information, 0, $"Added {i} prefixes");
+            }
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"{s.Elapsed} elapsed");
+        }
+
+        public static void SavePrefixes(string path, string where = null)
+        {
+            traceSource.TraceEvent(TraceEventType.Information, 0, "Saving prefixes");
+            var s = Stopwatch.StartNew();
+            using (var fdc = new FolioDapperContext())
+            using (var fsc = new FolioServiceClient())
+            using (var sr = new StreamReader(Assembly.GetAssembly(typeof(FolioContext)).GetManifestResourceStream("FolioLibrary.Prefix.json")))
+            using (var sw = new StreamWriter(whatIf ? new MemoryStream() : compress ? (Stream)new GZipStream(new FileStream($"{path}.gz", FileMode.Create), CompressionMode.Compress) : new FileStream(path, FileMode.Create)))
+            using (var jtw = new JsonTextWriter(sw))
+            {
+                var s2 = Stopwatch.StartNew();
+                var js4 = JsonSchema.FromJsonAsync(sr.ReadToEndAsync().Result).Result;
+                var js = new JsonSerializer { Formatting = Formatting.Indented };
+                jtw.WriteStartArray();
+                var i = 0;
+                foreach (var jo in api ? fsc.Prefixes(where, take: take) : fdc.Prefixes(where, take: take).Select(p => JObject.Parse(p.Content)))
+                {
+                    if (validate)
+                    {
+                        var l = js4.Validate(jo);
+                        if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"Prefix {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"Prefix {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
+                    }
+                    if (!whatIf) js.Serialize(jtw, jo);
+                    if (++i % 10000 == 0)
+                    {
+                        traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
+                        s2.Restart();
+                    }
+                }
+                jtw.WriteEndArray();
+                traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
+                traceSource.TraceEvent(TraceEventType.Information, 0, $"Saved {i} prefixes");
+            }
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"{s.Elapsed} elapsed");
+        }
+
         public static void DeleteProxies(string where = null)
         {
             traceSource.TraceEvent(TraceEventType.Information, 0, "Deleting proxies");
@@ -11117,6 +12428,132 @@ namespace FolioConsoleApplication
                 jtw.WriteEndArray();
                 traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
                 traceSource.TraceEvent(TraceEventType.Information, 0, $"Saved {i} raw records");
+            }
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"{s.Elapsed} elapsed");
+        }
+
+        public static void DeleteReasonsForClosures(string where = null)
+        {
+            traceSource.TraceEvent(TraceEventType.Information, 0, "Deleting reasons for closures");
+            var s = Stopwatch.StartNew();
+            using (var fbcc = new FolioBulkCopyContext())
+            using (var fsc = new FolioServiceClient())
+            {
+                var i = 0;
+                if (api)
+                {
+                    var s2 = Stopwatch.StartNew();
+                    foreach (var jo in fsc.ReasonsForClosures(where))
+                    {
+                        if (!whatIf) fsc.DeleteReasonsForClosure((string)jo["id"]);
+                        if (++i % 100 == 0)
+                        {
+                            traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
+                            s2.Restart();
+                        }
+                    }
+                    traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
+                }
+                else
+                {
+                    if (!whatIf) i = fbcc.ExecuteNonQuery($"DELETE FROM diku_mod_orders_storage.reasons_for_closure{(where != null ? $" WHERE {where}" : "")}");
+                }
+                traceSource.TraceEvent(TraceEventType.Information, 0, $"Deleted {i} reasons for closures");
+            }
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"{s.Elapsed} elapsed");
+        }
+
+        public static void LoadReasonsForClosures(string path)
+        {
+            traceSource.TraceEvent(TraceEventType.Information, 0, "Loading reasons for closures");
+            var s = Stopwatch.StartNew();
+            using (var sr = new StreamReader(compress || path.EndsWith(".gz") ? (Stream)new GZipStream(File.OpenRead($"{path}{(path.EndsWith(".gz") ? "" : ".gz")}"), CompressionMode.Decompress) : File.OpenRead(path)))
+            using (var sr2 = new StreamReader(Assembly.GetAssembly(typeof(FolioContext)).GetManifestResourceStream("FolioLibrary.ReasonsForClosure.json")))
+            using (var jtr = new JsonTextReader(sr) { SupportMultipleContent = true })
+            using (var fbcc = new FolioBulkCopyContext())
+            using (var fsc = new FolioServiceClient())
+            {
+                var s2 = Stopwatch.StartNew();
+                var js4 = JsonSchema.FromJsonAsync(sr2.ReadToEndAsync().Result).Result;
+                var js = new JsonSerializer();
+                jtr.Read();
+                var i = 0;
+                while (jtr.Read() && jtr.TokenType != JsonToken.EndArray)
+                {
+                    if (take != null && take <= i) break;
+                    ++i;
+                    var jo = (JObject)js.Deserialize(jtr);
+                    if (validate)
+                    {
+                        var l = js4.Validate(jo);
+                        if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"ReasonsForClosure {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"ReasonsForClosure {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
+                    }
+                    if (api)
+                    {
+                        if (!whatIf) fsc.InsertReasonsForClosure(jo);
+                        if (i % 100 == 0)
+                        {
+                            traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
+                            s2.Restart();
+                        }
+                    }
+                    else
+                    {
+                        if (!whatIf) fbcc.Insert(new ReasonsForClosure
+                        {
+                            Id = (Guid?)jo.SelectToken("id"),
+                            Content = jo.ToString()
+                        });
+                        if (i % 1000 == 0)
+                        {
+                            fbcc.Commit();
+                            if (i % 10000 == 0)
+                            {
+                                traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
+                                s2.Restart();
+                            }
+                        }
+                    }
+                }
+                fbcc.Commit();
+                traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
+                traceSource.TraceEvent(TraceEventType.Information, 0, $"Added {i} reasons for closures");
+            }
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"{s.Elapsed} elapsed");
+        }
+
+        public static void SaveReasonsForClosures(string path, string where = null)
+        {
+            traceSource.TraceEvent(TraceEventType.Information, 0, "Saving reasons for closures");
+            var s = Stopwatch.StartNew();
+            using (var fdc = new FolioDapperContext())
+            using (var fsc = new FolioServiceClient())
+            using (var sr = new StreamReader(Assembly.GetAssembly(typeof(FolioContext)).GetManifestResourceStream("FolioLibrary.ReasonsForClosure.json")))
+            using (var sw = new StreamWriter(whatIf ? new MemoryStream() : compress ? (Stream)new GZipStream(new FileStream($"{path}.gz", FileMode.Create), CompressionMode.Compress) : new FileStream(path, FileMode.Create)))
+            using (var jtw = new JsonTextWriter(sw))
+            {
+                var s2 = Stopwatch.StartNew();
+                var js4 = JsonSchema.FromJsonAsync(sr.ReadToEndAsync().Result).Result;
+                var js = new JsonSerializer { Formatting = Formatting.Indented };
+                jtw.WriteStartArray();
+                var i = 0;
+                foreach (var jo in api ? fsc.ReasonsForClosures(where, take: take) : fdc.ReasonsForClosures(where, take: take).Select(rfc => JObject.Parse(rfc.Content)))
+                {
+                    if (validate)
+                    {
+                        var l = js4.Validate(jo);
+                        if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"ReasonsForClosure {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"ReasonsForClosure {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
+                    }
+                    if (!whatIf) js.Serialize(jtw, jo);
+                    if (++i % 10000 == 0)
+                    {
+                        traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
+                        s2.Restart();
+                    }
+                }
+                jtw.WriteEndArray();
+                traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
+                traceSource.TraceEvent(TraceEventType.Information, 0, $"Saved {i} reasons for closures");
             }
             traceSource.TraceEvent(TraceEventType.Information, 0, $"{s.Elapsed} elapsed");
         }
@@ -12662,6 +14099,132 @@ namespace FolioConsoleApplication
             traceSource.TraceEvent(TraceEventType.Information, 0, $"{s.Elapsed} elapsed");
         }
 
+        public static void DeleteSuffixes(string where = null)
+        {
+            traceSource.TraceEvent(TraceEventType.Information, 0, "Deleting suffixes");
+            var s = Stopwatch.StartNew();
+            using (var fbcc = new FolioBulkCopyContext())
+            using (var fsc = new FolioServiceClient())
+            {
+                var i = 0;
+                if (api)
+                {
+                    var s2 = Stopwatch.StartNew();
+                    foreach (var jo in fsc.Suffixes(where))
+                    {
+                        if (!whatIf) fsc.DeleteSuffix((string)jo["id"]);
+                        if (++i % 100 == 0)
+                        {
+                            traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
+                            s2.Restart();
+                        }
+                    }
+                    traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
+                }
+                else
+                {
+                    if (!whatIf) i = fbcc.ExecuteNonQuery($"DELETE FROM diku_mod_orders_storage.suffixes{(where != null ? $" WHERE {where}" : "")}");
+                }
+                traceSource.TraceEvent(TraceEventType.Information, 0, $"Deleted {i} suffixes");
+            }
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"{s.Elapsed} elapsed");
+        }
+
+        public static void LoadSuffixes(string path)
+        {
+            traceSource.TraceEvent(TraceEventType.Information, 0, "Loading suffixes");
+            var s = Stopwatch.StartNew();
+            using (var sr = new StreamReader(compress || path.EndsWith(".gz") ? (Stream)new GZipStream(File.OpenRead($"{path}{(path.EndsWith(".gz") ? "" : ".gz")}"), CompressionMode.Decompress) : File.OpenRead(path)))
+            using (var sr2 = new StreamReader(Assembly.GetAssembly(typeof(FolioContext)).GetManifestResourceStream("FolioLibrary.Suffix.json")))
+            using (var jtr = new JsonTextReader(sr) { SupportMultipleContent = true })
+            using (var fbcc = new FolioBulkCopyContext())
+            using (var fsc = new FolioServiceClient())
+            {
+                var s2 = Stopwatch.StartNew();
+                var js4 = JsonSchema.FromJsonAsync(sr2.ReadToEndAsync().Result).Result;
+                var js = new JsonSerializer();
+                jtr.Read();
+                var i = 0;
+                while (jtr.Read() && jtr.TokenType != JsonToken.EndArray)
+                {
+                    if (take != null && take <= i) break;
+                    ++i;
+                    var jo = (JObject)js.Deserialize(jtr);
+                    if (validate)
+                    {
+                        var l = js4.Validate(jo);
+                        if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"Suffix {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"Suffix {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
+                    }
+                    if (api)
+                    {
+                        if (!whatIf) fsc.InsertSuffix(jo);
+                        if (i % 100 == 0)
+                        {
+                            traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
+                            s2.Restart();
+                        }
+                    }
+                    else
+                    {
+                        if (!whatIf) fbcc.Insert(new Suffix
+                        {
+                            Id = (Guid?)jo.SelectToken("id"),
+                            Content = jo.ToString()
+                        });
+                        if (i % 1000 == 0)
+                        {
+                            fbcc.Commit();
+                            if (i % 10000 == 0)
+                            {
+                                traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
+                                s2.Restart();
+                            }
+                        }
+                    }
+                }
+                fbcc.Commit();
+                traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
+                traceSource.TraceEvent(TraceEventType.Information, 0, $"Added {i} suffixes");
+            }
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"{s.Elapsed} elapsed");
+        }
+
+        public static void SaveSuffixes(string path, string where = null)
+        {
+            traceSource.TraceEvent(TraceEventType.Information, 0, "Saving suffixes");
+            var s = Stopwatch.StartNew();
+            using (var fdc = new FolioDapperContext())
+            using (var fsc = new FolioServiceClient())
+            using (var sr = new StreamReader(Assembly.GetAssembly(typeof(FolioContext)).GetManifestResourceStream("FolioLibrary.Suffix.json")))
+            using (var sw = new StreamWriter(whatIf ? new MemoryStream() : compress ? (Stream)new GZipStream(new FileStream($"{path}.gz", FileMode.Create), CompressionMode.Compress) : new FileStream(path, FileMode.Create)))
+            using (var jtw = new JsonTextWriter(sw))
+            {
+                var s2 = Stopwatch.StartNew();
+                var js4 = JsonSchema.FromJsonAsync(sr.ReadToEndAsync().Result).Result;
+                var js = new JsonSerializer { Formatting = Formatting.Indented };
+                jtw.WriteStartArray();
+                var i = 0;
+                foreach (var jo in api ? fsc.Suffixes(where, take: take) : fdc.Suffixes(where, take: take).Select(s3 => JObject.Parse(s3.Content)))
+                {
+                    if (validate)
+                    {
+                        var l = js4.Validate(jo);
+                        if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"Suffix {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"Suffix {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
+                    }
+                    if (!whatIf) js.Serialize(jtw, jo);
+                    if (++i % 10000 == 0)
+                    {
+                        traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
+                        s2.Restart();
+                    }
+                }
+                jtw.WriteEndArray();
+                traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
+                traceSource.TraceEvent(TraceEventType.Information, 0, $"Saved {i} suffixes");
+            }
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"{s.Elapsed} elapsed");
+        }
+
         public static void DeleteTemplates(string where = null)
         {
             traceSource.TraceEvent(TraceEventType.Information, 0, "Deleting templates");
@@ -12786,6 +14349,133 @@ namespace FolioConsoleApplication
                 jtw.WriteEndArray();
                 traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
                 traceSource.TraceEvent(TraceEventType.Information, 0, $"Saved {i} templates");
+            }
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"{s.Elapsed} elapsed");
+        }
+
+        public static void DeleteTitles(string where = null)
+        {
+            traceSource.TraceEvent(TraceEventType.Information, 0, "Deleting titles");
+            var s = Stopwatch.StartNew();
+            using (var fbcc = new FolioBulkCopyContext())
+            using (var fsc = new FolioServiceClient())
+            {
+                var i = 0;
+                if (api)
+                {
+                    var s2 = Stopwatch.StartNew();
+                    foreach (var jo in fsc.Titles(where))
+                    {
+                        if (!whatIf) fsc.DeleteTitle((string)jo["id"]);
+                        if (++i % 100 == 0)
+                        {
+                            traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
+                            s2.Restart();
+                        }
+                    }
+                    traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
+                }
+                else
+                {
+                    if (!whatIf) i = fbcc.ExecuteNonQuery($"DELETE FROM diku_mod_orders_storage.titles{(where != null ? $" WHERE {where}" : "")}");
+                }
+                traceSource.TraceEvent(TraceEventType.Information, 0, $"Deleted {i} titles");
+            }
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"{s.Elapsed} elapsed");
+        }
+
+        public static void LoadTitles(string path)
+        {
+            traceSource.TraceEvent(TraceEventType.Information, 0, "Loading titles");
+            var s = Stopwatch.StartNew();
+            using (var sr = new StreamReader(compress || path.EndsWith(".gz") ? (Stream)new GZipStream(File.OpenRead($"{path}{(path.EndsWith(".gz") ? "" : ".gz")}"), CompressionMode.Decompress) : File.OpenRead(path)))
+            using (var sr2 = new StreamReader(Assembly.GetAssembly(typeof(FolioContext)).GetManifestResourceStream("FolioLibrary.Title.json")))
+            using (var jtr = new JsonTextReader(sr) { SupportMultipleContent = true })
+            using (var fbcc = new FolioBulkCopyContext())
+            using (var fsc = new FolioServiceClient())
+            {
+                var s2 = Stopwatch.StartNew();
+                var js4 = JsonSchema.FromJsonAsync(sr2.ReadToEndAsync().Result).Result;
+                var js = new JsonSerializer();
+                jtr.Read();
+                var i = 0;
+                while (jtr.Read() && jtr.TokenType != JsonToken.EndArray)
+                {
+                    if (take != null && take <= i) break;
+                    ++i;
+                    var jo = (JObject)js.Deserialize(jtr);
+                    if (validate)
+                    {
+                        var l = js4.Validate(jo);
+                        if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"Title {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"Title {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
+                    }
+                    if (api)
+                    {
+                        if (!whatIf) fsc.InsertTitle(jo);
+                        if (i % 100 == 0)
+                        {
+                            traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
+                            s2.Restart();
+                        }
+                    }
+                    else
+                    {
+                        if (!whatIf) fbcc.Insert(new Title
+                        {
+                            Id = (Guid?)jo.SelectToken("id"),
+                            Content = jo.ToString(),
+                            Polineid = (Guid?)jo.SelectToken("poLineId")
+                        });
+                        if (i % 1000 == 0)
+                        {
+                            fbcc.Commit();
+                            if (i % 10000 == 0)
+                            {
+                                traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
+                                s2.Restart();
+                            }
+                        }
+                    }
+                }
+                fbcc.Commit();
+                traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
+                traceSource.TraceEvent(TraceEventType.Information, 0, $"Added {i} titles");
+            }
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"{s.Elapsed} elapsed");
+        }
+
+        public static void SaveTitles(string path, string where = null)
+        {
+            traceSource.TraceEvent(TraceEventType.Information, 0, "Saving titles");
+            var s = Stopwatch.StartNew();
+            using (var fdc = new FolioDapperContext())
+            using (var fsc = new FolioServiceClient())
+            using (var sr = new StreamReader(Assembly.GetAssembly(typeof(FolioContext)).GetManifestResourceStream("FolioLibrary.Title.json")))
+            using (var sw = new StreamWriter(whatIf ? new MemoryStream() : compress ? (Stream)new GZipStream(new FileStream($"{path}.gz", FileMode.Create), CompressionMode.Compress) : new FileStream(path, FileMode.Create)))
+            using (var jtw = new JsonTextWriter(sw))
+            {
+                var s2 = Stopwatch.StartNew();
+                var js4 = JsonSchema.FromJsonAsync(sr.ReadToEndAsync().Result).Result;
+                var js = new JsonSerializer { Formatting = Formatting.Indented };
+                jtw.WriteStartArray();
+                var i = 0;
+                foreach (var jo in api ? fsc.Titles(where, take: take) : fdc.Titles(where, take: take).Select(t => JObject.Parse(t.Content)))
+                {
+                    if (validate)
+                    {
+                        var l = js4.Validate(jo);
+                        if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"Title {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"Title {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
+                    }
+                    if (!whatIf) js.Serialize(jtw, jo);
+                    if (++i % 10000 == 0)
+                    {
+                        traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
+                        s2.Restart();
+                    }
+                }
+                jtw.WriteEndArray();
+                traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
+                traceSource.TraceEvent(TraceEventType.Information, 0, $"Saved {i} titles");
             }
             traceSource.TraceEvent(TraceEventType.Information, 0, $"{s.Elapsed} elapsed");
         }
@@ -13747,7 +15437,8 @@ namespace FolioConsoleApplication
                             Content = jo.ToString(),
                             CreationTime = (DateTime?)jo.SelectToken("metadata.createdDate"),
                             CreationUserId = (string)jo.SelectToken("metadata.createdByUserId"),
-                            Invoiceid = (Guid?)jo.SelectToken("invoiceId")
+                            Invoiceid = (Guid?)jo.SelectToken("invoiceId"),
+                            Batchgroupid = (Guid?)jo.SelectToken("batchGroupId")
                         });
                         if (i % 1000 == 0)
                         {

@@ -111,6 +111,17 @@
       "required": [
         "createdDate"
       ]
+    },
+    "state": {
+      "description": "This field represents the actual state of a particular SRS record. Can be: ACTUAL, OLD, DRAFT, DELETED. ",
+      "type": "string",
+      "default": "ACTUAL",
+      "enum": [
+        "ACTUAL",
+        "OLD",
+        "DRAFT",
+        "DELETED"
+      ]
     }
   },
   "required": [
