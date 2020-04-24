@@ -71,6 +71,17 @@
           },
           "identifierTypeId": {
             "$ref": "#/properties/id"
+          },
+          "identifierTypeObject": {
+            "description": "Information about identifier type, looked up from identifierTypeId",
+            "folio:$ref": "illpolicy.json",
+            "readonly": true,
+            "folio:isVirtual": true,
+            "folio:linkBase": "identifier-types",
+            "folio:linkFromField": "identifierTypeId",
+            "folio:linkToField": "id",
+            "folio:includedElement": "identifierTypes.0",
+            "type": "object"
           }
         },
         "required": [

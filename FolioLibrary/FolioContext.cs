@@ -75,7 +75,6 @@ namespace FolioLibrary
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
-            if (IsPostgreSql) modelBuilder.Entity<Account>().Property(nameof(Account.Content)).HasColumnType("jsonb");
             if (IsPostgreSql) modelBuilder.Entity<AcquisitionsUnit>().Property(nameof(AcquisitionsUnit.Content)).HasColumnType("jsonb");
             if (IsPostgreSql) modelBuilder.Entity<AddressType>().Property(nameof(AddressType.Content)).HasColumnType("jsonb");
             if (IsPostgreSql) modelBuilder.Entity<Alert>().Property(nameof(Alert.Content)).HasColumnType("jsonb");
@@ -107,6 +106,7 @@ namespace FolioLibrary
             if (IsPostgreSql) modelBuilder.Entity<ErrorRecord>().Property(nameof(ErrorRecord.Content)).HasColumnType("jsonb");
             if (IsPostgreSql) modelBuilder.Entity<EventLog>().Property(nameof(EventLog.Content)).HasColumnType("jsonb");
             if (IsPostgreSql) modelBuilder.Entity<ExportConfigCredential>().Property(nameof(ExportConfigCredential.Content)).HasColumnType("jsonb");
+            if (IsPostgreSql) modelBuilder.Entity<Fee>().Property(nameof(Fee.Content)).HasColumnType("jsonb");
             if (IsPostgreSql) modelBuilder.Entity<FeeAction>().Property(nameof(FeeAction.Content)).HasColumnType("jsonb");
             if (IsPostgreSql) modelBuilder.Entity<FeeType>().Property(nameof(FeeType.Content)).HasColumnType("jsonb");
             if (IsPostgreSql) modelBuilder.Entity<FinanceGroup>().Property(nameof(FinanceGroup.Content)).HasColumnType("jsonb");
@@ -170,7 +170,7 @@ namespace FolioLibrary
             if (IsPostgreSql) modelBuilder.Entity<PatronBlockCondition>().Property(nameof(PatronBlockCondition.Content)).HasColumnType("jsonb");
             if (IsPostgreSql) modelBuilder.Entity<PatronBlockLimit>().Property(nameof(PatronBlockLimit.Content)).HasColumnType("jsonb");
             if (IsPostgreSql) modelBuilder.Entity<PatronNoticePolicy>().Property(nameof(PatronNoticePolicy.Content)).HasColumnType("jsonb");
-            if (IsPostgreSql) modelBuilder.Entity<Payment>().Property(nameof(Payment.Content)).HasColumnType("jsonb");
+            if (IsPostgreSql) modelBuilder.Entity<PaymentMethod>().Property(nameof(PaymentMethod.Content)).HasColumnType("jsonb");
             if (IsPostgreSql) modelBuilder.Entity<Permission>().Property(nameof(Permission.Content)).HasColumnType("jsonb");
             if (IsPostgreSql) modelBuilder.Entity<PermissionsUser>().Property(nameof(PermissionsUser.Content)).HasColumnType("jsonb");
             if (IsPostgreSql) modelBuilder.Entity<Piece>().Property(nameof(Piece.Content)).HasColumnType("jsonb");
@@ -180,7 +180,7 @@ namespace FolioLibrary
             if (IsPostgreSql) modelBuilder.Entity<RawRecord>().Property(nameof(RawRecord.Content)).HasColumnType("jsonb");
             if (IsPostgreSql) modelBuilder.Entity<ReasonsForClosure>().Property(nameof(ReasonsForClosure.Content)).HasColumnType("jsonb");
             if (IsPostgreSql) modelBuilder.Entity<Record>().Property(nameof(Record.Content)).HasColumnType("jsonb");
-            if (IsPostgreSql) modelBuilder.Entity<Refund>().Property(nameof(Refund.Content)).HasColumnType("jsonb");
+            if (IsPostgreSql) modelBuilder.Entity<RefundReason>().Property(nameof(RefundReason.Content)).HasColumnType("jsonb");
             if (IsPostgreSql) modelBuilder.Entity<ReportingCode>().Property(nameof(ReportingCode.Content)).HasColumnType("jsonb");
             if (IsPostgreSql) modelBuilder.Entity<Request>().Property(nameof(Request.Content)).HasColumnType("jsonb");
             if (IsPostgreSql) modelBuilder.Entity<RequestPolicy>().Property(nameof(RequestPolicy.Content)).HasColumnType("jsonb");
@@ -196,14 +196,14 @@ namespace FolioLibrary
             if (IsPostgreSql) modelBuilder.Entity<Template>().Property(nameof(Template.Content)).HasColumnType("jsonb");
             if (IsPostgreSql) modelBuilder.Entity<Title>().Property(nameof(Title.Content)).HasColumnType("jsonb");
             if (IsPostgreSql) modelBuilder.Entity<Transaction>().Property(nameof(Transaction.Content)).HasColumnType("jsonb");
-            if (IsPostgreSql) modelBuilder.Entity<Transfer>().Property(nameof(Transfer.Content)).HasColumnType("jsonb");
+            if (IsPostgreSql) modelBuilder.Entity<TransferAccount>().Property(nameof(TransferAccount.Content)).HasColumnType("jsonb");
             if (IsPostgreSql) modelBuilder.Entity<TransferCriteria>().Property(nameof(TransferCriteria.Content)).HasColumnType("jsonb");
             if (IsPostgreSql) modelBuilder.Entity<User>().Property(nameof(User.Content)).HasColumnType("jsonb");
             if (IsPostgreSql) modelBuilder.Entity<UserAcquisitionsUnit>().Property(nameof(UserAcquisitionsUnit.Content)).HasColumnType("jsonb");
             if (IsPostgreSql) modelBuilder.Entity<UserRequestPreference>().Property(nameof(UserRequestPreference.Content)).HasColumnType("jsonb");
             if (IsPostgreSql) modelBuilder.Entity<Voucher>().Property(nameof(Voucher.Content)).HasColumnType("jsonb");
             if (IsPostgreSql) modelBuilder.Entity<VoucherItem>().Property(nameof(VoucherItem.Content)).HasColumnType("jsonb");
-            if (IsPostgreSql) modelBuilder.Entity<Waive>().Property(nameof(Waive.Content)).HasColumnType("jsonb");
+            if (IsPostgreSql) modelBuilder.Entity<WaiveReason>().Property(nameof(WaiveReason.Content)).HasColumnType("jsonb");
             modelBuilder.Entity<BatchVoucherExport>().HasOne(typeof(BatchGroup), nameof(BatchVoucherExport.BatchGroup)).WithMany(nameof(BatchGroup.BatchVoucherExports)).HasForeignKey(nameof(BatchVoucherExport.Batchgroupid)).OnDelete(DeleteBehavior.Restrict);
             modelBuilder.Entity<BatchVoucherExport>().HasOne(typeof(BatchVoucher), nameof(BatchVoucherExport.BatchVoucher)).WithMany(nameof(BatchVoucher.BatchVoucherExports)).HasForeignKey(nameof(BatchVoucherExport.Batchvoucherid)).OnDelete(DeleteBehavior.Restrict);
             modelBuilder.Entity<BatchVoucherExportConfig>().HasOne(typeof(BatchGroup), nameof(BatchVoucherExportConfig.BatchGroup)).WithMany(nameof(BatchGroup.BatchVoucherExportConfigs)).HasForeignKey(nameof(BatchVoucherExportConfig.Batchgroupid)).OnDelete(DeleteBehavior.Restrict);
@@ -280,7 +280,6 @@ namespace FolioLibrary
         public bool IsPostgreSql => providerName == "Npgsql";
         public bool IsSqlServer => providerName == "System.Data.SqlClient";
         public string ProviderName => providerName;
-        public DbSet<Account> Accounts { get; set; }
         public DbSet<AcquisitionsUnit> AcquisitionsUnits { get; set; }
         public DbSet<AddressType> AddressTypes { get; set; }
         public DbSet<Alert> Alerts { get; set; }
@@ -313,6 +312,7 @@ namespace FolioLibrary
         public DbSet<ErrorRecord> ErrorRecords { get; set; }
         public DbSet<EventLog> EventLogs { get; set; }
         public DbSet<ExportConfigCredential> ExportConfigCredentials { get; set; }
+        public DbSet<Fee> Fees { get; set; }
         public DbSet<FeeAction> FeeActions { get; set; }
         public DbSet<FeeType> FeeTypes { get; set; }
         public DbSet<FinanceGroup> FinanceGroups { get; set; }
@@ -377,7 +377,7 @@ namespace FolioLibrary
         public DbSet<PatronBlockCondition> PatronBlockConditions { get; set; }
         public DbSet<PatronBlockLimit> PatronBlockLimits { get; set; }
         public DbSet<PatronNoticePolicy> PatronNoticePolicies { get; set; }
-        public DbSet<Payment> Payments { get; set; }
+        public DbSet<PaymentMethod> PaymentMethods { get; set; }
         public DbSet<Permission> Permissions { get; set; }
         public DbSet<PermissionsUser> PermissionsUsers { get; set; }
         public DbSet<Piece> Pieces { get; set; }
@@ -387,7 +387,7 @@ namespace FolioLibrary
         public DbSet<RawRecord> RawRecords { get; set; }
         public DbSet<ReasonsForClosure> ReasonsForClosures { get; set; }
         public DbSet<Record> Records { get; set; }
-        public DbSet<Refund> Refunds { get; set; }
+        public DbSet<RefundReason> RefundReasons { get; set; }
         public DbSet<ReportingCode> ReportingCodes { get; set; }
         public DbSet<Request> Requests { get; set; }
         public DbSet<RequestPolicy> RequestPolicies { get; set; }
@@ -403,13 +403,13 @@ namespace FolioLibrary
         public DbSet<Template> Templates { get; set; }
         public DbSet<Title> Titles { get; set; }
         public DbSet<Transaction> Transactions { get; set; }
-        public DbSet<Transfer> Transfers { get; set; }
+        public DbSet<TransferAccount> TransferAccounts { get; set; }
         public DbSet<TransferCriteria> TransferCriterias { get; set; }
         public DbSet<User> Users { get; set; }
         public DbSet<UserAcquisitionsUnit> UserAcquisitionsUnits { get; set; }
         public DbSet<UserRequestPreference> UserRequestPreferences { get; set; }
         public DbSet<Voucher> Vouchers { get; set; }
         public DbSet<VoucherItem> VoucherItems { get; set; }
-        public DbSet<Waive> Waives { get; set; }
+        public DbSet<WaiveReason> WaiveReasons { get; set; }
     }
 }

@@ -98,10 +98,10 @@
       "description": "The readable identifier of the record that resulted in the creation of this transaction",
       "type": "string",
       "enum": [
-        "Credit",
-        "Manual",
         "User",
-        "Voucher"
+        "FiscalYear",
+        "PoLine",
+        "Invoice"
       ]
     },
     "sourceFiscalYearId": {

@@ -8,12 +8,12 @@ using System.Reflection;
 
 namespace FolioLibrary
 {
-    [Table("payments", Schema = "diku_mod_feesfines")]
-    public partial class Payment
+    [Table("refunds", Schema = "diku_mod_feesfines")]
+    public partial class RefundReason
     {
         public static ValidationResult ValidateContent(string value)
         {
-            using (var sr = new StreamReader(Assembly.GetExecutingAssembly().GetManifestResourceStream("FolioLibrary.Payment.json")))
+            using (var sr = new StreamReader(Assembly.GetExecutingAssembly().GetManifestResourceStream("FolioLibrary.RefundReason.json")))
             {
                 var js = JsonSchema.FromJsonAsync(sr.ReadToEndAsync().Result).Result;
                 var l = js.Validate(value);
@@ -25,7 +25,7 @@ namespace FolioLibrary
         [Column("id"), Display(Order = 1), Editable(false)]
         public virtual Guid? Id { get; set; }
 
-        [Column("jsonb"), CustomValidation(typeof(Payment), nameof(ValidateContent)), DataType(DataType.MultilineText), Display(Order = 2), Required]
+        [Column("jsonb"), CustomValidation(typeof(RefundReason), nameof(ValidateContent)), DataType(DataType.MultilineText), Display(Order = 2), Required]
         public virtual string Content { get; set; }
 
         [Column("creation_date"), DataType(DataType.DateTime), Display(Name = "Creation Time", Order = 3), DisplayFormat(DataFormatString = "{0:g}"), Editable(false)]

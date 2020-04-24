@@ -8,12 +8,12 @@ using System.Reflection;
 
 namespace FolioLibrary
 {
-    [Table("waives", Schema = "diku_mod_feesfines")]
-    public partial class Waive
+    [Table("accounts", Schema = "diku_mod_feesfines")]
+    public partial class Fee
     {
         public static ValidationResult ValidateContent(string value)
         {
-            using (var sr = new StreamReader(Assembly.GetExecutingAssembly().GetManifestResourceStream("FolioLibrary.Waive.json")))
+            using (var sr = new StreamReader(Assembly.GetExecutingAssembly().GetManifestResourceStream("FolioLibrary.Fee.json")))
             {
                 var js = JsonSchema.FromJsonAsync(sr.ReadToEndAsync().Result).Result;
                 var l = js.Validate(value);
@@ -25,7 +25,7 @@ namespace FolioLibrary
         [Column("id"), Display(Order = 1), Editable(false)]
         public virtual Guid? Id { get; set; }
 
-        [Column("jsonb"), CustomValidation(typeof(Waive), nameof(ValidateContent)), DataType(DataType.MultilineText), Display(Order = 2), Required]
+        [Column("jsonb"), CustomValidation(typeof(Fee), nameof(ValidateContent)), DataType(DataType.MultilineText), Display(Order = 2), Required]
         public virtual string Content { get; set; }
 
         [Column("creation_date"), DataType(DataType.DateTime), Display(Name = "Creation Time", Order = 3), DisplayFormat(DataFormatString = "{0:g}"), Editable(false)]

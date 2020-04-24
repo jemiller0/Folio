@@ -333,6 +333,9 @@
         ]
       }
     },
+    "instanceId": {
+      "$ref": "#/properties/id"
+    },
     "isPackage": {
       "description": "Indicates that this POL is for a package",
       "type": "boolean",

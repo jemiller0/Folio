@@ -62,103 +62,6 @@ namespace FolioLibrary
             traceSource.TraceEvent(TraceEventType.Verbose, 0, s2.Elapsed.ToString());
         }
 
-        public IEnumerable<JObject> Accounts(string where = null, string orderBy = null, int? skip = null, int? take = null)
-        {
-            var s = Stopwatch.StartNew();
-            traceSource.TraceEvent(TraceEventType.Verbose, 0, "Querying accounts");
-            AuthenticateIfNecessary();
-            var url = $"{Url}/accounts{(where != null || orderBy != null ? $"?query={WebUtility.UrlEncode(where)}{(orderBy != null ? $"{(where != null ? " " : "cql.allrecords=1 ")}sortby {WebUtility.UrlEncode(orderBy)}" : "")}" : "")}{(skip != null ? $"{(where != null || orderBy != null ? "&" : "?")}offset={skip}" : "")}{(where != null || orderBy != null || skip != null ? "&" : "?")}limit={take ?? int.MaxValue}";
-            traceSource.TraceEvent(TraceEventType.Verbose, 0, url);
-            var hrm = httpClient.GetAsync(url).Result;
-            if (hrm.StatusCode != HttpStatusCode.OK)
-            {
-                var s2 = hrm.Content.ReadAsStringAsync().Result;
-                if (hrm.Content.Headers.ContentType.MediaType == "application/json") s2 = JObject.Parse(s2).ToString();
-                traceSource.TraceEvent(TraceEventType.Verbose, 0, s2);
-                throw new HttpRequestException($"Response status code does not indicate success: {hrm.StatusCode} ({hrm.ReasonPhrase}).\r\n{s2}");
-            }
-            using (var sr = new StreamReader(hrm.Content.ReadAsStreamAsync().Result))
-            using (var jtr = new JsonTextReader(sr) { SupportMultipleContent = true })
-            {
-                if (!jtr.Read()) throw new InvalidDataException(hrm.Content.ReadAsStringAsync().Result); jtr.Read(); jtr.Read();
-                var js = new JsonSerializer();
-                while (jtr.Read() && jtr.TokenType != JsonToken.EndArray)
-                {
-                    var jo = (JObject)js.Deserialize(jtr);
-                    traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", jo);
-                    yield return jo;
-                }
-            }
-            traceSource.TraceEvent(TraceEventType.Verbose, 0, s.Elapsed.ToString());
-        }
-
-        public JObject GetAccount(string id)
-        {
-            var s = Stopwatch.StartNew();
-            traceSource.TraceEvent(TraceEventType.Verbose, 0, $"Getting account {id}");
-            AuthenticateIfNecessary();
-            var url = $"{Url}/accounts/{id}";
-            traceSource.TraceEvent(TraceEventType.Verbose, 0, url);
-            var hrm = httpClient.GetAsync(url).Result;
-            var s2 = hrm.Content.ReadAsStringAsync().Result;
-            var jo = hrm.Content.Headers.ContentType.MediaType == "application/json" ? JObject.Parse(s2) : null;
-            traceSource.TraceEvent(TraceEventType.Verbose, 0, s2);
-            if (hrm.StatusCode != HttpStatusCode.OK) throw new HttpRequestException($"Response status code does not indicate success: {hrm.StatusCode} ({hrm.ReasonPhrase}).\r\n{s2}");
-            traceSource.TraceEvent(TraceEventType.Verbose, 0, s.Elapsed.ToString());
-            return jo;
-        }
-
-        public JObject InsertAccount(JObject account)
-        {
-            var s = Stopwatch.StartNew();
-            if (account["id"] == null) account["id"] = Guid.NewGuid();
-            traceSource.TraceEvent(TraceEventType.Verbose, 0, $"Inserting account {account["id"]}");
-            AuthenticateIfNecessary();
-            var url = $"{Url}/accounts";
-            traceSource.TraceEvent(TraceEventType.Verbose, 0, url);
-            var s2 = account.ToString(formatting);
-            traceSource.TraceEvent(TraceEventType.Verbose, 0, s2);
-            var sc = new StringContent(s2, Encoding.UTF8, "application/json");
-            var hrm = httpClient.PostAsync(url, sc).Result;
-            s2 = hrm.Content.ReadAsStringAsync().Result;
-            var jo = hrm.Content.Headers.ContentType.MediaType == "application/json" ? JObject.Parse(s2) : null;
-            traceSource.TraceEvent(TraceEventType.Verbose, 0, s2);
-            if (hrm.StatusCode != HttpStatusCode.Created) throw new HttpRequestException($"Response status code does not indicate success: {hrm.StatusCode} ({hrm.ReasonPhrase}).\r\n{s2}");
-            traceSource.TraceEvent(TraceEventType.Verbose, 0, s.Elapsed.ToString());
-            return jo;
-        }
-
-        public void UpdateAccount(JObject account)
-        {
-            var s = Stopwatch.StartNew();
-            traceSource.TraceEvent(TraceEventType.Verbose, 0, $"Updating account {account["id"]}");
-            AuthenticateIfNecessary();
-            var url = $"{Url}/accounts/{account["id"]}";
-            traceSource.TraceEvent(TraceEventType.Verbose, 0, url);
-            var s2 = account.ToString(formatting);
-            traceSource.TraceEvent(TraceEventType.Verbose, 0, s2);
-            var sc = new StringContent(s2, Encoding.UTF8, "application/json");
-            var hrm = httpClient.PutAsync(url, sc).Result;
-            s2 = hrm.Content.ReadAsStringAsync().Result;
-            traceSource.TraceEvent(TraceEventType.Verbose, 0, s2);
-            if (hrm.StatusCode != HttpStatusCode.NoContent) throw new HttpRequestException($"Response status code does not indicate success: {hrm.StatusCode} ({hrm.ReasonPhrase}).\r\n{s2}");
-            traceSource.TraceEvent(TraceEventType.Verbose, 0, s.Elapsed.ToString());
-        }
-
-        public void DeleteAccount(string id)
-        {
-            var s = Stopwatch.StartNew();
-            traceSource.TraceEvent(TraceEventType.Verbose, 0, $"Deleting account {id}");
-            AuthenticateIfNecessary();
-            var url = $"{Url}/accounts/{id}";
-            traceSource.TraceEvent(TraceEventType.Verbose, 0, url);
-            var hrm = httpClient.DeleteAsync(url).Result;
-            var s2 = hrm.Content.ReadAsStringAsync().Result;
-            traceSource.TraceEvent(TraceEventType.Verbose, 0, s2);
-            if (hrm.StatusCode != HttpStatusCode.NoContent) throw new HttpRequestException($"Response status code does not indicate success: {hrm.StatusCode} ({hrm.ReasonPhrase}).\r\n{s2}");
-            traceSource.TraceEvent(TraceEventType.Verbose, 0, s.Elapsed.ToString());
-        }
-
         public IEnumerable<JObject> AcquisitionsUnits(string where = null, string orderBy = null, int? skip = null, int? take = null)
         {
             var s = Stopwatch.StartNew();
@@ -2188,6 +2091,103 @@ namespace FolioLibrary
             traceSource.TraceEvent(TraceEventType.Verbose, 0, $"Deleting electronic access relationship {id}");
             AuthenticateIfNecessary();
             var url = $"{Url}/electronic-access-relationships/{id}";
+            traceSource.TraceEvent(TraceEventType.Verbose, 0, url);
+            var hrm = httpClient.DeleteAsync(url).Result;
+            var s2 = hrm.Content.ReadAsStringAsync().Result;
+            traceSource.TraceEvent(TraceEventType.Verbose, 0, s2);
+            if (hrm.StatusCode != HttpStatusCode.NoContent) throw new HttpRequestException($"Response status code does not indicate success: {hrm.StatusCode} ({hrm.ReasonPhrase}).\r\n{s2}");
+            traceSource.TraceEvent(TraceEventType.Verbose, 0, s.Elapsed.ToString());
+        }
+
+        public IEnumerable<JObject> Fees(string where = null, string orderBy = null, int? skip = null, int? take = null)
+        {
+            var s = Stopwatch.StartNew();
+            traceSource.TraceEvent(TraceEventType.Verbose, 0, "Querying fees");
+            AuthenticateIfNecessary();
+            var url = $"{Url}/accounts{(where != null || orderBy != null ? $"?query={WebUtility.UrlEncode(where)}{(orderBy != null ? $"{(where != null ? " " : "cql.allrecords=1 ")}sortby {WebUtility.UrlEncode(orderBy)}" : "")}" : "")}{(skip != null ? $"{(where != null || orderBy != null ? "&" : "?")}offset={skip}" : "")}{(where != null || orderBy != null || skip != null ? "&" : "?")}limit={take ?? int.MaxValue}";
+            traceSource.TraceEvent(TraceEventType.Verbose, 0, url);
+            var hrm = httpClient.GetAsync(url).Result;
+            if (hrm.StatusCode != HttpStatusCode.OK)
+            {
+                var s2 = hrm.Content.ReadAsStringAsync().Result;
+                if (hrm.Content.Headers.ContentType.MediaType == "application/json") s2 = JObject.Parse(s2).ToString();
+                traceSource.TraceEvent(TraceEventType.Verbose, 0, s2);
+                throw new HttpRequestException($"Response status code does not indicate success: {hrm.StatusCode} ({hrm.ReasonPhrase}).\r\n{s2}");
+            }
+            using (var sr = new StreamReader(hrm.Content.ReadAsStreamAsync().Result))
+            using (var jtr = new JsonTextReader(sr) { SupportMultipleContent = true })
+            {
+                if (!jtr.Read()) throw new InvalidDataException(hrm.Content.ReadAsStringAsync().Result); jtr.Read(); jtr.Read();
+                var js = new JsonSerializer();
+                while (jtr.Read() && jtr.TokenType != JsonToken.EndArray)
+                {
+                    var jo = (JObject)js.Deserialize(jtr);
+                    traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", jo);
+                    yield return jo;
+                }
+            }
+            traceSource.TraceEvent(TraceEventType.Verbose, 0, s.Elapsed.ToString());
+        }
+
+        public JObject GetFee(string id)
+        {
+            var s = Stopwatch.StartNew();
+            traceSource.TraceEvent(TraceEventType.Verbose, 0, $"Getting fee {id}");
+            AuthenticateIfNecessary();
+            var url = $"{Url}/accounts/{id}";
+            traceSource.TraceEvent(TraceEventType.Verbose, 0, url);
+            var hrm = httpClient.GetAsync(url).Result;
+            var s2 = hrm.Content.ReadAsStringAsync().Result;
+            var jo = hrm.Content.Headers.ContentType.MediaType == "application/json" ? JObject.Parse(s2) : null;
+            traceSource.TraceEvent(TraceEventType.Verbose, 0, s2);
+            if (hrm.StatusCode != HttpStatusCode.OK) throw new HttpRequestException($"Response status code does not indicate success: {hrm.StatusCode} ({hrm.ReasonPhrase}).\r\n{s2}");
+            traceSource.TraceEvent(TraceEventType.Verbose, 0, s.Elapsed.ToString());
+            return jo;
+        }
+
+        public JObject InsertFee(JObject fee)
+        {
+            var s = Stopwatch.StartNew();
+            if (fee["id"] == null) fee["id"] = Guid.NewGuid();
+            traceSource.TraceEvent(TraceEventType.Verbose, 0, $"Inserting fee {fee["id"]}");
+            AuthenticateIfNecessary();
+            var url = $"{Url}/accounts";
+            traceSource.TraceEvent(TraceEventType.Verbose, 0, url);
+            var s2 = fee.ToString(formatting);
+            traceSource.TraceEvent(TraceEventType.Verbose, 0, s2);
+            var sc = new StringContent(s2, Encoding.UTF8, "application/json");
+            var hrm = httpClient.PostAsync(url, sc).Result;
+            s2 = hrm.Content.ReadAsStringAsync().Result;
+            var jo = hrm.Content.Headers.ContentType.MediaType == "application/json" ? JObject.Parse(s2) : null;
+            traceSource.TraceEvent(TraceEventType.Verbose, 0, s2);
+            if (hrm.StatusCode != HttpStatusCode.Created) throw new HttpRequestException($"Response status code does not indicate success: {hrm.StatusCode} ({hrm.ReasonPhrase}).\r\n{s2}");
+            traceSource.TraceEvent(TraceEventType.Verbose, 0, s.Elapsed.ToString());
+            return jo;
+        }
+
+        public void UpdateFee(JObject fee)
+        {
+            var s = Stopwatch.StartNew();
+            traceSource.TraceEvent(TraceEventType.Verbose, 0, $"Updating fee {fee["id"]}");
+            AuthenticateIfNecessary();
+            var url = $"{Url}/accounts/{fee["id"]}";
+            traceSource.TraceEvent(TraceEventType.Verbose, 0, url);
+            var s2 = fee.ToString(formatting);
+            traceSource.TraceEvent(TraceEventType.Verbose, 0, s2);
+            var sc = new StringContent(s2, Encoding.UTF8, "application/json");
+            var hrm = httpClient.PutAsync(url, sc).Result;
+            s2 = hrm.Content.ReadAsStringAsync().Result;
+            traceSource.TraceEvent(TraceEventType.Verbose, 0, s2);
+            if (hrm.StatusCode != HttpStatusCode.NoContent) throw new HttpRequestException($"Response status code does not indicate success: {hrm.StatusCode} ({hrm.ReasonPhrase}).\r\n{s2}");
+            traceSource.TraceEvent(TraceEventType.Verbose, 0, s.Elapsed.ToString());
+        }
+
+        public void DeleteFee(string id)
+        {
+            var s = Stopwatch.StartNew();
+            traceSource.TraceEvent(TraceEventType.Verbose, 0, $"Deleting fee {id}");
+            AuthenticateIfNecessary();
+            var url = $"{Url}/accounts/{id}";
             traceSource.TraceEvent(TraceEventType.Verbose, 0, url);
             var hrm = httpClient.DeleteAsync(url).Result;
             var s2 = hrm.Content.ReadAsStringAsync().Result;
@@ -7203,10 +7203,10 @@ namespace FolioLibrary
             traceSource.TraceEvent(TraceEventType.Verbose, 0, s.Elapsed.ToString());
         }
 
-        public IEnumerable<JObject> Payments(string where = null, string orderBy = null, int? skip = null, int? take = null)
+        public IEnumerable<JObject> PaymentMethods(string where = null, string orderBy = null, int? skip = null, int? take = null)
         {
             var s = Stopwatch.StartNew();
-            traceSource.TraceEvent(TraceEventType.Verbose, 0, "Querying payments");
+            traceSource.TraceEvent(TraceEventType.Verbose, 0, "Querying payment methods");
             AuthenticateIfNecessary();
             var url = $"{Url}/payments{(where != null || orderBy != null ? $"?query={WebUtility.UrlEncode(where)}{(orderBy != null ? $"{(where != null ? " " : "cql.allrecords=1 ")}sortby {WebUtility.UrlEncode(orderBy)}" : "")}" : "")}{(skip != null ? $"{(where != null || orderBy != null ? "&" : "?")}offset={skip}" : "")}{(where != null || orderBy != null || skip != null ? "&" : "?")}limit={take ?? int.MaxValue}";
             traceSource.TraceEvent(TraceEventType.Verbose, 0, url);
@@ -7233,10 +7233,10 @@ namespace FolioLibrary
             traceSource.TraceEvent(TraceEventType.Verbose, 0, s.Elapsed.ToString());
         }
 
-        public JObject GetPayment(string id)
+        public JObject GetPaymentMethod(string id)
         {
             var s = Stopwatch.StartNew();
-            traceSource.TraceEvent(TraceEventType.Verbose, 0, $"Getting payment {id}");
+            traceSource.TraceEvent(TraceEventType.Verbose, 0, $"Getting payment method {id}");
             AuthenticateIfNecessary();
             var url = $"{Url}/payments/{id}";
             traceSource.TraceEvent(TraceEventType.Verbose, 0, url);
@@ -7249,15 +7249,15 @@ namespace FolioLibrary
             return jo;
         }
 
-        public JObject InsertPayment(JObject payment)
+        public JObject InsertPaymentMethod(JObject paymentMethod)
         {
             var s = Stopwatch.StartNew();
-            if (payment["id"] == null) payment["id"] = Guid.NewGuid();
-            traceSource.TraceEvent(TraceEventType.Verbose, 0, $"Inserting payment {payment["id"]}");
+            if (paymentMethod["id"] == null) paymentMethod["id"] = Guid.NewGuid();
+            traceSource.TraceEvent(TraceEventType.Verbose, 0, $"Inserting payment method {paymentMethod["id"]}");
             AuthenticateIfNecessary();
             var url = $"{Url}/payments";
             traceSource.TraceEvent(TraceEventType.Verbose, 0, url);
-            var s2 = payment.ToString(formatting);
+            var s2 = paymentMethod.ToString(formatting);
             traceSource.TraceEvent(TraceEventType.Verbose, 0, s2);
             var sc = new StringContent(s2, Encoding.UTF8, "application/json");
             var hrm = httpClient.PostAsync(url, sc).Result;
@@ -7269,14 +7269,14 @@ namespace FolioLibrary
             return jo;
         }
 
-        public void UpdatePayment(JObject payment)
+        public void UpdatePaymentMethod(JObject paymentMethod)
         {
             var s = Stopwatch.StartNew();
-            traceSource.TraceEvent(TraceEventType.Verbose, 0, $"Updating payment {payment["id"]}");
+            traceSource.TraceEvent(TraceEventType.Verbose, 0, $"Updating payment method {paymentMethod["id"]}");
             AuthenticateIfNecessary();
-            var url = $"{Url}/payments/{payment["id"]}";
+            var url = $"{Url}/payments/{paymentMethod["id"]}";
             traceSource.TraceEvent(TraceEventType.Verbose, 0, url);
-            var s2 = payment.ToString(formatting);
+            var s2 = paymentMethod.ToString(formatting);
             traceSource.TraceEvent(TraceEventType.Verbose, 0, s2);
             var sc = new StringContent(s2, Encoding.UTF8, "application/json");
             var hrm = httpClient.PutAsync(url, sc).Result;
@@ -7286,10 +7286,10 @@ namespace FolioLibrary
             traceSource.TraceEvent(TraceEventType.Verbose, 0, s.Elapsed.ToString());
         }
 
-        public void DeletePayment(string id)
+        public void DeletePaymentMethod(string id)
         {
             var s = Stopwatch.StartNew();
-            traceSource.TraceEvent(TraceEventType.Verbose, 0, $"Deleting payment {id}");
+            traceSource.TraceEvent(TraceEventType.Verbose, 0, $"Deleting payment method {id}");
             AuthenticateIfNecessary();
             var url = $"{Url}/payments/{id}";
             traceSource.TraceEvent(TraceEventType.Verbose, 0, url);
@@ -8096,10 +8096,10 @@ namespace FolioLibrary
             traceSource.TraceEvent(TraceEventType.Verbose, 0, s.Elapsed.ToString());
         }
 
-        public IEnumerable<JObject> Refunds(string where = null, string orderBy = null, int? skip = null, int? take = null)
+        public IEnumerable<JObject> RefundReasons(string where = null, string orderBy = null, int? skip = null, int? take = null)
         {
             var s = Stopwatch.StartNew();
-            traceSource.TraceEvent(TraceEventType.Verbose, 0, "Querying refunds");
+            traceSource.TraceEvent(TraceEventType.Verbose, 0, "Querying refund reasons");
             AuthenticateIfNecessary();
             var url = $"{Url}/refunds{(where != null || orderBy != null ? $"?query={WebUtility.UrlEncode(where)}{(orderBy != null ? $"{(where != null ? " " : "cql.allrecords=1 ")}sortby {WebUtility.UrlEncode(orderBy)}" : "")}" : "")}{(skip != null ? $"{(where != null || orderBy != null ? "&" : "?")}offset={skip}" : "")}{(where != null || orderBy != null || skip != null ? "&" : "?")}limit={take ?? int.MaxValue}";
             traceSource.TraceEvent(TraceEventType.Verbose, 0, url);
@@ -8126,10 +8126,10 @@ namespace FolioLibrary
             traceSource.TraceEvent(TraceEventType.Verbose, 0, s.Elapsed.ToString());
         }
 
-        public JObject GetRefund(string id)
+        public JObject GetRefundReason(string id)
         {
             var s = Stopwatch.StartNew();
-            traceSource.TraceEvent(TraceEventType.Verbose, 0, $"Getting refund {id}");
+            traceSource.TraceEvent(TraceEventType.Verbose, 0, $"Getting refund reason {id}");
             AuthenticateIfNecessary();
             var url = $"{Url}/refunds/{id}";
             traceSource.TraceEvent(TraceEventType.Verbose, 0, url);
@@ -8142,15 +8142,15 @@ namespace FolioLibrary
             return jo;
         }
 
-        public JObject InsertRefund(JObject refund)
+        public JObject InsertRefundReason(JObject refundReason)
         {
             var s = Stopwatch.StartNew();
-            if (refund["id"] == null) refund["id"] = Guid.NewGuid();
-            traceSource.TraceEvent(TraceEventType.Verbose, 0, $"Inserting refund {refund["id"]}");
+            if (refundReason["id"] == null) refundReason["id"] = Guid.NewGuid();
+            traceSource.TraceEvent(TraceEventType.Verbose, 0, $"Inserting refund reason {refundReason["id"]}");
             AuthenticateIfNecessary();
             var url = $"{Url}/refunds";
             traceSource.TraceEvent(TraceEventType.Verbose, 0, url);
-            var s2 = refund.ToString(formatting);
+            var s2 = refundReason.ToString(formatting);
             traceSource.TraceEvent(TraceEventType.Verbose, 0, s2);
             var sc = new StringContent(s2, Encoding.UTF8, "application/json");
             var hrm = httpClient.PostAsync(url, sc).Result;
@@ -8162,14 +8162,14 @@ namespace FolioLibrary
             return jo;
         }
 
-        public void UpdateRefund(JObject refund)
+        public void UpdateRefundReason(JObject refundReason)
         {
             var s = Stopwatch.StartNew();
-            traceSource.TraceEvent(TraceEventType.Verbose, 0, $"Updating refund {refund["id"]}");
+            traceSource.TraceEvent(TraceEventType.Verbose, 0, $"Updating refund reason {refundReason["id"]}");
             AuthenticateIfNecessary();
-            var url = $"{Url}/refunds/{refund["id"]}";
+            var url = $"{Url}/refunds/{refundReason["id"]}";
             traceSource.TraceEvent(TraceEventType.Verbose, 0, url);
-            var s2 = refund.ToString(formatting);
+            var s2 = refundReason.ToString(formatting);
             traceSource.TraceEvent(TraceEventType.Verbose, 0, s2);
             var sc = new StringContent(s2, Encoding.UTF8, "application/json");
             var hrm = httpClient.PutAsync(url, sc).Result;
@@ -8179,10 +8179,10 @@ namespace FolioLibrary
             traceSource.TraceEvent(TraceEventType.Verbose, 0, s.Elapsed.ToString());
         }
 
-        public void DeleteRefund(string id)
+        public void DeleteRefundReason(string id)
         {
             var s = Stopwatch.StartNew();
-            traceSource.TraceEvent(TraceEventType.Verbose, 0, $"Deleting refund {id}");
+            traceSource.TraceEvent(TraceEventType.Verbose, 0, $"Deleting refund reason {id}");
             AuthenticateIfNecessary();
             var url = $"{Url}/refunds/{id}";
             traceSource.TraceEvent(TraceEventType.Verbose, 0, url);
@@ -9551,10 +9551,10 @@ namespace FolioLibrary
             traceSource.TraceEvent(TraceEventType.Verbose, 0, s.Elapsed.ToString());
         }
 
-        public IEnumerable<JObject> Transfers(string where = null, string orderBy = null, int? skip = null, int? take = null)
+        public IEnumerable<JObject> TransferAccounts(string where = null, string orderBy = null, int? skip = null, int? take = null)
         {
             var s = Stopwatch.StartNew();
-            traceSource.TraceEvent(TraceEventType.Verbose, 0, "Querying transfers");
+            traceSource.TraceEvent(TraceEventType.Verbose, 0, "Querying transfer accounts");
             AuthenticateIfNecessary();
             var url = $"{Url}/transfers{(where != null || orderBy != null ? $"?query={WebUtility.UrlEncode(where)}{(orderBy != null ? $"{(where != null ? " " : "cql.allrecords=1 ")}sortby {WebUtility.UrlEncode(orderBy)}" : "")}" : "")}{(skip != null ? $"{(where != null || orderBy != null ? "&" : "?")}offset={skip}" : "")}{(where != null || orderBy != null || skip != null ? "&" : "?")}limit={take ?? int.MaxValue}";
             traceSource.TraceEvent(TraceEventType.Verbose, 0, url);
@@ -9581,10 +9581,10 @@ namespace FolioLibrary
             traceSource.TraceEvent(TraceEventType.Verbose, 0, s.Elapsed.ToString());
         }
 
-        public JObject GetTransfer(string id)
+        public JObject GetTransferAccount(string id)
         {
             var s = Stopwatch.StartNew();
-            traceSource.TraceEvent(TraceEventType.Verbose, 0, $"Getting transfer {id}");
+            traceSource.TraceEvent(TraceEventType.Verbose, 0, $"Getting transfer account {id}");
             AuthenticateIfNecessary();
             var url = $"{Url}/transfers/{id}";
             traceSource.TraceEvent(TraceEventType.Verbose, 0, url);
@@ -9597,15 +9597,15 @@ namespace FolioLibrary
             return jo;
         }
 
-        public JObject InsertTransfer(JObject transfer)
+        public JObject InsertTransferAccount(JObject transferAccount)
         {
             var s = Stopwatch.StartNew();
-            if (transfer["id"] == null) transfer["id"] = Guid.NewGuid();
-            traceSource.TraceEvent(TraceEventType.Verbose, 0, $"Inserting transfer {transfer["id"]}");
+            if (transferAccount["id"] == null) transferAccount["id"] = Guid.NewGuid();
+            traceSource.TraceEvent(TraceEventType.Verbose, 0, $"Inserting transfer account {transferAccount["id"]}");
             AuthenticateIfNecessary();
             var url = $"{Url}/transfers";
             traceSource.TraceEvent(TraceEventType.Verbose, 0, url);
-            var s2 = transfer.ToString(formatting);
+            var s2 = transferAccount.ToString(formatting);
             traceSource.TraceEvent(TraceEventType.Verbose, 0, s2);
             var sc = new StringContent(s2, Encoding.UTF8, "application/json");
             var hrm = httpClient.PostAsync(url, sc).Result;
@@ -9617,14 +9617,14 @@ namespace FolioLibrary
             return jo;
         }
 
-        public void UpdateTransfer(JObject transfer)
+        public void UpdateTransferAccount(JObject transferAccount)
         {
             var s = Stopwatch.StartNew();
-            traceSource.TraceEvent(TraceEventType.Verbose, 0, $"Updating transfer {transfer["id"]}");
+            traceSource.TraceEvent(TraceEventType.Verbose, 0, $"Updating transfer account {transferAccount["id"]}");
             AuthenticateIfNecessary();
-            var url = $"{Url}/transfers/{transfer["id"]}";
+            var url = $"{Url}/transfers/{transferAccount["id"]}";
             traceSource.TraceEvent(TraceEventType.Verbose, 0, url);
-            var s2 = transfer.ToString(formatting);
+            var s2 = transferAccount.ToString(formatting);
             traceSource.TraceEvent(TraceEventType.Verbose, 0, s2);
             var sc = new StringContent(s2, Encoding.UTF8, "application/json");
             var hrm = httpClient.PutAsync(url, sc).Result;
@@ -9634,10 +9634,10 @@ namespace FolioLibrary
             traceSource.TraceEvent(TraceEventType.Verbose, 0, s.Elapsed.ToString());
         }
 
-        public void DeleteTransfer(string id)
+        public void DeleteTransferAccount(string id)
         {
             var s = Stopwatch.StartNew();
-            traceSource.TraceEvent(TraceEventType.Verbose, 0, $"Deleting transfer {id}");
+            traceSource.TraceEvent(TraceEventType.Verbose, 0, $"Deleting transfer account {id}");
             AuthenticateIfNecessary();
             var url = $"{Url}/transfers/{id}";
             traceSource.TraceEvent(TraceEventType.Verbose, 0, url);
@@ -10249,10 +10249,10 @@ namespace FolioLibrary
             traceSource.TraceEvent(TraceEventType.Verbose, 0, s.Elapsed.ToString());
         }
 
-        public IEnumerable<JObject> Waives(string where = null, string orderBy = null, int? skip = null, int? take = null)
+        public IEnumerable<JObject> WaiveReasons(string where = null, string orderBy = null, int? skip = null, int? take = null)
         {
             var s = Stopwatch.StartNew();
-            traceSource.TraceEvent(TraceEventType.Verbose, 0, "Querying waives");
+            traceSource.TraceEvent(TraceEventType.Verbose, 0, "Querying waive reasons");
             AuthenticateIfNecessary();
             var url = $"{Url}/waives{(where != null || orderBy != null ? $"?query={WebUtility.UrlEncode(where)}{(orderBy != null ? $"{(where != null ? " " : "cql.allrecords=1 ")}sortby {WebUtility.UrlEncode(orderBy)}" : "")}" : "")}{(skip != null ? $"{(where != null || orderBy != null ? "&" : "?")}offset={skip}" : "")}{(where != null || orderBy != null || skip != null ? "&" : "?")}limit={take ?? int.MaxValue}";
             traceSource.TraceEvent(TraceEventType.Verbose, 0, url);
@@ -10279,10 +10279,10 @@ namespace FolioLibrary
             traceSource.TraceEvent(TraceEventType.Verbose, 0, s.Elapsed.ToString());
         }
 
-        public JObject GetWaive(string id)
+        public JObject GetWaiveReason(string id)
         {
             var s = Stopwatch.StartNew();
-            traceSource.TraceEvent(TraceEventType.Verbose, 0, $"Getting waive {id}");
+            traceSource.TraceEvent(TraceEventType.Verbose, 0, $"Getting waive reason {id}");
             AuthenticateIfNecessary();
             var url = $"{Url}/waives/{id}";
             traceSource.TraceEvent(TraceEventType.Verbose, 0, url);
@@ -10295,15 +10295,15 @@ namespace FolioLibrary
             return jo;
         }
 
-        public JObject InsertWaive(JObject waive)
+        public JObject InsertWaiveReason(JObject waiveReason)
         {
             var s = Stopwatch.StartNew();
-            if (waive["id"] == null) waive["id"] = Guid.NewGuid();
-            traceSource.TraceEvent(TraceEventType.Verbose, 0, $"Inserting waive {waive["id"]}");
+            if (waiveReason["id"] == null) waiveReason["id"] = Guid.NewGuid();
+            traceSource.TraceEvent(TraceEventType.Verbose, 0, $"Inserting waive reason {waiveReason["id"]}");
             AuthenticateIfNecessary();
             var url = $"{Url}/waives";
             traceSource.TraceEvent(TraceEventType.Verbose, 0, url);
-            var s2 = waive.ToString(formatting);
+            var s2 = waiveReason.ToString(formatting);
             traceSource.TraceEvent(TraceEventType.Verbose, 0, s2);
             var sc = new StringContent(s2, Encoding.UTF8, "application/json");
             var hrm = httpClient.PostAsync(url, sc).Result;
@@ -10315,14 +10315,14 @@ namespace FolioLibrary
             return jo;
         }
 
-        public void UpdateWaive(JObject waive)
+        public void UpdateWaiveReason(JObject waiveReason)
         {
             var s = Stopwatch.StartNew();
-            traceSource.TraceEvent(TraceEventType.Verbose, 0, $"Updating waive {waive["id"]}");
+            traceSource.TraceEvent(TraceEventType.Verbose, 0, $"Updating waive reason {waiveReason["id"]}");
             AuthenticateIfNecessary();
-            var url = $"{Url}/waives/{waive["id"]}";
+            var url = $"{Url}/waives/{waiveReason["id"]}";
             traceSource.TraceEvent(TraceEventType.Verbose, 0, url);
-            var s2 = waive.ToString(formatting);
+            var s2 = waiveReason.ToString(formatting);
             traceSource.TraceEvent(TraceEventType.Verbose, 0, s2);
             var sc = new StringContent(s2, Encoding.UTF8, "application/json");
             var hrm = httpClient.PutAsync(url, sc).Result;
@@ -10332,10 +10332,10 @@ namespace FolioLibrary
             traceSource.TraceEvent(TraceEventType.Verbose, 0, s.Elapsed.ToString());
         }
 
-        public void DeleteWaive(string id)
+        public void DeleteWaiveReason(string id)
         {
             var s = Stopwatch.StartNew();
-            traceSource.TraceEvent(TraceEventType.Verbose, 0, $"Deleting waive {id}");
+            traceSource.TraceEvent(TraceEventType.Verbose, 0, $"Deleting waive reason {id}");
             AuthenticateIfNecessary();
             var url = $"{Url}/waives/{id}";
             traceSource.TraceEvent(TraceEventType.Verbose, 0, url);

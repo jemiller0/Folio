@@ -1,41 +1,6 @@
 DROP SCHEMA IF EXISTS uc CASCADE;
 CREATE SCHEMA uc;
 CREATE FUNCTION uc.timestamp_cast(IN TEXT) RETURNS TIMESTAMP WITH TIME ZONE AS 'SELECT CAST($1 AS TIMESTAMP WITH TIME ZONE);' LANGUAGE 'sql' IMMUTABLE;
-CREATE VIEW uc.accounts AS
-SELECT
-id AS id,
-CAST(jsonb->>'amount' AS DECIMAL(19,2)) AS amount,
-CAST(jsonb->>'remaining' AS DECIMAL(19,2)) AS remaining,
-uc.TIMESTAMP_CAST(jsonb->>'dateCreated') AS date_created,
-uc.TIMESTAMP_CAST(jsonb->>'dateUpdated') AS date_updated,
-jsonb#>>'{status,name}' AS status_name,
-jsonb#>>'{paymentStatus,name}' AS payment_status_name,
-jsonb->>'feeFineType' AS fee_fine_type,
-jsonb->>'feeFineOwner' AS fee_fine_owner,
-jsonb->>'title' AS title,
-jsonb->>'callNumber' AS call_number,
-jsonb->>'barcode' AS barcode,
-jsonb->>'materialType' AS material_type,
-jsonb#>>'{itemStatus,name}' AS item_status_name,
-jsonb->>'location' AS location,
-uc.TIMESTAMP_CAST(jsonb#>>'{metadata,createdDate}') AS created_date,
-CAST(jsonb#>>'{metadata,createdByUserId}' AS UUID) AS created_by_user_id,
-jsonb#>>'{metadata,createdByUsername}' AS created_by_username,
-uc.TIMESTAMP_CAST(jsonb#>>'{metadata,updatedDate}') AS updated_date,
-CAST(jsonb#>>'{metadata,updatedByUserId}' AS UUID) AS updated_by_user_id,
-jsonb#>>'{metadata,updatedByUsername}' AS updated_by_username,
-uc.TIMESTAMP_CAST(jsonb->>'dueDate') AS due_date,
-uc.TIMESTAMP_CAST(jsonb->>'returnedDate') AS returned_date,
-CAST(jsonb->>'loanId' AS UUID) AS loan_id,
-CAST(jsonb->>'userId' AS UUID) AS user_id,
-CAST(jsonb->>'itemId' AS UUID) AS item_id,
-CAST(jsonb->>'materialTypeId' AS UUID) AS material_type_id,
-CAST(jsonb->>'feeFineId' AS UUID) AS fee_type_id,
-CAST(jsonb->>'ownerId' AS UUID) AS owner_id,
-CAST(jsonb->>'holdingsRecordId' AS UUID) AS holding_id,
-CAST(jsonb->>'instanceId' AS UUID) AS instance_id,
-jsonb_pretty(jsonb) AS content
-FROM diku_mod_feesfines.accounts;
 CREATE VIEW uc.acquisitions_units AS
 SELECT
 id AS id,
@@ -597,6 +562,41 @@ CAST(jsonb#>>'{metadata,updatedByUserId}' AS UUID) AS updated_by_user_id,
 jsonb#>>'{metadata,updatedByUsername}' AS updated_by_username,
 jsonb_pretty(jsonb) AS content
 FROM diku_mod_invoice_storage.export_config_credentials;
+CREATE VIEW uc.fees AS
+SELECT
+id AS id,
+CAST(jsonb->>'amount' AS DECIMAL(19,2)) AS amount,
+CAST(jsonb->>'remaining' AS DECIMAL(19,2)) AS remaining,
+uc.TIMESTAMP_CAST(jsonb->>'dateCreated') AS date_created,
+uc.TIMESTAMP_CAST(jsonb->>'dateUpdated') AS date_updated,
+jsonb#>>'{status,name}' AS status_name,
+jsonb#>>'{paymentStatus,name}' AS payment_status_name,
+jsonb->>'feeFineType' AS fee_fine_type,
+jsonb->>'feeFineOwner' AS fee_fine_owner,
+jsonb->>'title' AS title,
+jsonb->>'callNumber' AS call_number,
+jsonb->>'barcode' AS barcode,
+jsonb->>'materialType' AS material_type,
+jsonb#>>'{itemStatus,name}' AS item_status_name,
+jsonb->>'location' AS location,
+uc.TIMESTAMP_CAST(jsonb#>>'{metadata,createdDate}') AS created_date,
+CAST(jsonb#>>'{metadata,createdByUserId}' AS UUID) AS created_by_user_id,
+jsonb#>>'{metadata,createdByUsername}' AS created_by_username,
+uc.TIMESTAMP_CAST(jsonb#>>'{metadata,updatedDate}') AS updated_date,
+CAST(jsonb#>>'{metadata,updatedByUserId}' AS UUID) AS updated_by_user_id,
+jsonb#>>'{metadata,updatedByUsername}' AS updated_by_username,
+uc.TIMESTAMP_CAST(jsonb->>'dueDate') AS due_date,
+uc.TIMESTAMP_CAST(jsonb->>'returnedDate') AS returned_date,
+CAST(jsonb->>'loanId' AS UUID) AS loan_id,
+CAST(jsonb->>'userId' AS UUID) AS user_id,
+CAST(jsonb->>'itemId' AS UUID) AS item_id,
+CAST(jsonb->>'materialTypeId' AS UUID) AS material_type_id,
+CAST(jsonb->>'feeFineId' AS UUID) AS fee_type_id,
+CAST(jsonb->>'ownerId' AS UUID) AS owner_id,
+CAST(jsonb->>'holdingsRecordId' AS UUID) AS holding_id,
+CAST(jsonb->>'instanceId' AS UUID) AS instance_id,
+jsonb_pretty(jsonb) AS content
+FROM diku_mod_feesfines.accounts;
 CREATE VIEW uc.fee_actions AS
 SELECT
 id AS id,
@@ -2022,6 +2022,7 @@ jsonb#>>'{eresource,license,code}' AS eresource_license_code,
 jsonb#>>'{eresource,license,description}' AS eresource_license_description,
 jsonb#>>'{eresource,license,reference}' AS eresource_license_reference,
 CAST(jsonb#>>'{eresource,materialType}' AS UUID) AS eresource_material_type_id,
+CAST(jsonb->>'instanceId' AS UUID) AS instance_id,
 CAST(jsonb->>'isPackage' AS BOOLEAN) AS is_package,
 jsonb->>'orderFormat' AS order_format,
 jsonb->>'paymentStatus' AS payment_status,
@@ -2461,10 +2462,10 @@ CAST(jsonb#>>'{metadata,updatedByUserId}' AS UUID) AS updated_by_user_id,
 jsonb#>>'{metadata,updatedByUsername}' AS updated_by_username,
 jsonb_pretty(jsonb) AS content
 FROM diku_mod_circulation_storage.patron_notice_policy;
-CREATE VIEW uc.payments AS
+CREATE VIEW uc.payment_methods AS
 SELECT
 id AS id,
-jsonb->>'nameMethod' AS name_method,
+jsonb->>'nameMethod' AS name,
 CAST(jsonb->>'allowedRefundMethod' AS BOOLEAN) AS allowed_refund_method,
 uc.TIMESTAMP_CAST(jsonb#>>'{metadata,createdDate}') AS created_date,
 CAST(jsonb#>>'{metadata,createdByUserId}' AS UUID) AS created_by_user_id,
@@ -2634,10 +2635,10 @@ jsonb->>'state' AS state,
 jsonb_pretty(jsonb) AS content,
 jobexecutionid AS jobexecutionid
 FROM diku_mod_source_record_storage.records;
-CREATE VIEW uc.refunds AS
+CREATE VIEW uc.refund_reasons AS
 SELECT
 id AS id,
-jsonb->>'nameReason' AS name_reason,
+jsonb->>'nameReason' AS name,
 jsonb->>'description' AS description,
 uc.TIMESTAMP_CAST(jsonb#>>'{metadata,createdDate}') AS created_date,
 CAST(jsonb#>>'{metadata,createdByUserId}' AS UUID) AS created_by_user_id,
@@ -2961,10 +2962,10 @@ CAST(jsonb#>>'{metadata,updatedByUserId}' AS UUID) AS updated_by_user_id,
 jsonb#>>'{metadata,updatedByUsername}' AS updated_by_username,
 jsonb_pretty(jsonb) AS content
 FROM diku_mod_finance_storage.transaction;
-CREATE VIEW uc.transfers AS
+CREATE VIEW uc.transfer_accounts AS
 SELECT
 id AS id,
-jsonb->>'accountName' AS account_name,
+jsonb->>'accountName' AS name,
 jsonb->>'desc' AS desc,
 uc.TIMESTAMP_CAST(jsonb#>>'{metadata,createdDate}') AS created_date,
 CAST(jsonb#>>'{metadata,createdByUserId}' AS UUID) AS created_by_user_id,
@@ -3126,10 +3127,10 @@ CAST(jsonb#>>'{metadata,updatedByUserId}' AS UUID) AS updated_by_user_id,
 jsonb#>>'{metadata,updatedByUsername}' AS updated_by_username,
 jsonb_pretty(jsonb) AS content
 FROM diku_mod_invoice_storage.voucher_lines;
-CREATE VIEW uc.waives AS
+CREATE VIEW uc.waive_reasons AS
 SELECT
 id AS id,
-jsonb->>'nameReason' AS name_reason,
+jsonb->>'nameReason' AS name,
 jsonb->>'description' AS description,
 uc.TIMESTAMP_CAST(jsonb#>>'{metadata,createdDate}') AS created_date,
 CAST(jsonb#>>'{metadata,createdByUserId}' AS UUID) AS created_by_user_id,
