@@ -107,7 +107,6 @@ namespace FolioLibrary
             if (IsPostgreSql) modelBuilder.Entity<EventLog>().Property(nameof(EventLog.Content)).HasColumnType("jsonb");
             if (IsPostgreSql) modelBuilder.Entity<ExportConfigCredential>().Property(nameof(ExportConfigCredential.Content)).HasColumnType("jsonb");
             if (IsPostgreSql) modelBuilder.Entity<Fee>().Property(nameof(Fee.Content)).HasColumnType("jsonb");
-            if (IsPostgreSql) modelBuilder.Entity<FeeAction>().Property(nameof(FeeAction.Content)).HasColumnType("jsonb");
             if (IsPostgreSql) modelBuilder.Entity<FeeType>().Property(nameof(FeeType.Content)).HasColumnType("jsonb");
             if (IsPostgreSql) modelBuilder.Entity<FinanceGroup>().Property(nameof(FinanceGroup.Content)).HasColumnType("jsonb");
             if (IsPostgreSql) modelBuilder.Entity<FiscalYear>().Property(nameof(FiscalYear.Content)).HasColumnType("jsonb");
@@ -170,6 +169,7 @@ namespace FolioLibrary
             if (IsPostgreSql) modelBuilder.Entity<PatronBlockCondition>().Property(nameof(PatronBlockCondition.Content)).HasColumnType("jsonb");
             if (IsPostgreSql) modelBuilder.Entity<PatronBlockLimit>().Property(nameof(PatronBlockLimit.Content)).HasColumnType("jsonb");
             if (IsPostgreSql) modelBuilder.Entity<PatronNoticePolicy>().Property(nameof(PatronNoticePolicy.Content)).HasColumnType("jsonb");
+            if (IsPostgreSql) modelBuilder.Entity<Payment>().Property(nameof(Payment.Content)).HasColumnType("jsonb");
             if (IsPostgreSql) modelBuilder.Entity<PaymentMethod>().Property(nameof(PaymentMethod.Content)).HasColumnType("jsonb");
             if (IsPostgreSql) modelBuilder.Entity<Permission>().Property(nameof(Permission.Content)).HasColumnType("jsonb");
             if (IsPostgreSql) modelBuilder.Entity<PermissionsUser>().Property(nameof(PermissionsUser.Content)).HasColumnType("jsonb");
@@ -313,7 +313,6 @@ namespace FolioLibrary
         public DbSet<EventLog> EventLogs { get; set; }
         public DbSet<ExportConfigCredential> ExportConfigCredentials { get; set; }
         public DbSet<Fee> Fees { get; set; }
-        public DbSet<FeeAction> FeeActions { get; set; }
         public DbSet<FeeType> FeeTypes { get; set; }
         public DbSet<FinanceGroup> FinanceGroups { get; set; }
         public DbSet<FiscalYear> FiscalYears { get; set; }
@@ -377,6 +376,7 @@ namespace FolioLibrary
         public DbSet<PatronBlockCondition> PatronBlockConditions { get; set; }
         public DbSet<PatronBlockLimit> PatronBlockLimits { get; set; }
         public DbSet<PatronNoticePolicy> PatronNoticePolicies { get; set; }
+        public DbSet<Payment> Payments { get; set; }
         public DbSet<PaymentMethod> PaymentMethods { get; set; }
         public DbSet<Permission> Permissions { get; set; }
         public DbSet<PermissionsUser> PermissionsUsers { get; set; }

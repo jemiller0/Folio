@@ -597,23 +597,6 @@ CAST(jsonb->>'holdingsRecordId' AS UUID) AS holding_id,
 CAST(jsonb->>'instanceId' AS UUID) AS instance_id,
 jsonb_pretty(jsonb) AS content
 FROM diku_mod_feesfines.accounts;
-CREATE VIEW uc.fee_actions AS
-SELECT
-id AS id,
-uc.TIMESTAMP_CAST(jsonb->>'dateAction') AS date_action,
-jsonb->>'typeAction' AS type_action,
-jsonb->>'comments' AS comments,
-CAST(jsonb->>'notify' AS BOOLEAN) AS notify,
-CAST(jsonb->>'amountAction' AS DECIMAL(19,2)) AS amount_action,
-CAST(jsonb->>'balance' AS DECIMAL(19,2)) AS balance,
-jsonb->>'transactionInformation' AS transaction_information,
-jsonb->>'createdAt' AS created_at,
-jsonb->>'source' AS source,
-jsonb->>'paymentMethod' AS payment_method,
-CAST(jsonb->>'accountId' AS UUID) AS account_id,
-CAST(jsonb->>'userId' AS UUID) AS user_id,
-jsonb_pretty(jsonb) AS content
-FROM diku_mod_feesfines.feefineactions;
 CREATE VIEW uc.fee_types AS
 SELECT
 id AS id,
@@ -2462,6 +2445,23 @@ CAST(jsonb#>>'{metadata,updatedByUserId}' AS UUID) AS updated_by_user_id,
 jsonb#>>'{metadata,updatedByUsername}' AS updated_by_username,
 jsonb_pretty(jsonb) AS content
 FROM diku_mod_circulation_storage.patron_notice_policy;
+CREATE VIEW uc.payments AS
+SELECT
+id AS id,
+uc.TIMESTAMP_CAST(jsonb->>'dateAction') AS date_action,
+jsonb->>'typeAction' AS type_action,
+jsonb->>'comments' AS comments,
+CAST(jsonb->>'notify' AS BOOLEAN) AS notify,
+CAST(jsonb->>'amountAction' AS DECIMAL(19,2)) AS amount_action,
+CAST(jsonb->>'balance' AS DECIMAL(19,2)) AS balance,
+jsonb->>'transactionInformation' AS transaction_information,
+jsonb->>'createdAt' AS created_at,
+jsonb->>'source' AS source,
+jsonb->>'paymentMethod' AS payment_method,
+CAST(jsonb->>'accountId' AS UUID) AS fee_id,
+CAST(jsonb->>'userId' AS UUID) AS user_id,
+jsonb_pretty(jsonb) AS content
+FROM diku_mod_feesfines.feefineactions;
 CREATE VIEW uc.payment_methods AS
 SELECT
 id AS id,

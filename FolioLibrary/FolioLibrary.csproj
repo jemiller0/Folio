@@ -35,7 +35,7 @@
     <None Remove="EventLog.json" />
     <None Remove="ExportConfigCredential.json" />
     <None Remove="Fee.json" />
-    <None Remove="FeeAction.json" />
+    <None Remove="Payment.json" />
     <None Remove="FeeType.json" />
     <None Remove="FinanceGroup.json" />
     <None Remove="FiscalYear.json" />
@@ -162,7 +162,7 @@
     <EmbeddedResource Include="EventLog.json" />
     <EmbeddedResource Include="ExportConfigCredential.json" />
     <EmbeddedResource Include="Fee.json" />
-    <EmbeddedResource Include="FeeAction.json" />
+    <EmbeddedResource Include="Payment.json" />
     <EmbeddedResource Include="FeeType.json" />
     <EmbeddedResource Include="FinanceGroup.json" />
     <EmbeddedResource Include="FiscalYear.json" />
