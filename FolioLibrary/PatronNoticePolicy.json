@@ -125,18 +125,18 @@
                 ]
               },
               "sendBy": {
-                "description": "Send by options",
+                "description": "Time interval",
                 "type": "object",
                 "additionalProperties": false,
                 "properties": {
                   "duration": {
-                    "description": "Duration amount",
+                    "description": "Interval duration, number of time units",
                     "type": "integer",
                     "minimum": 1.0,
                     "maximum": 100.0
                   },
                   "intervalId": {
-                    "description": "Interval id",
+                    "description": "Unit of time",
                     "type": "string",
                     "enum": [
                       "Minutes",
@@ -154,33 +154,7 @@
                 ]
               },
               "sendEvery": {
-                "description": "Send every options",
-                "type": "object",
-                "additionalProperties": false,
-                "properties": {
-                  "duration": {
-                    "description": "Duration amount",
-                    "type": "integer",
-                    "minimum": 1.0,
-                    "maximum": 100.0
-                  },
-                  "intervalId": {
-                    "description": "Interval id",
-                    "type": "string",
-                    "enum": [
-                      "Minutes",
-                      "Hours",
-                      "Days",
-                      "Weeks",
-                      "Months",
-                      "Years"
-                    ]
-                  }
-                },
-                "required": [
-                  "duration",
-                  "intervalId"
-                ]
+                "$ref": "#/properties/loanNotices/items/properties/sendOptions/properties/sendBy"
               }
             },
             "required": [
@@ -240,75 +214,30 @@
             "additionalProperties": false,
             "properties": {
               "sendHow": {
-                "description": "Defines how notice should be sent, before, after or upon",
+                "description": "Defines how notice should be sent: after or upon",
                 "type": "string",
                 "enum": [
                   "Upon At",
-                  "Before",
                   "After"
                 ]
               },
-              "sendBy": {
-                "description": "Send by options",
-                "type": "object",
-                "additionalProperties": false,
-                "properties": {
-                  "duration": {
-                    "description": "Duration amount",
-                    "type": "integer",
-                    "minimum": 1.0,
-                    "maximum": 100.0
-                  },
-                  "intervalId": {
-                    "description": "Interval id",
-                    "type": "string",
-                    "enum": [
-                      "Minutes",
-                      "Hours",
-                      "Days",
-                      "Weeks",
-                      "Months",
-                      "Years"
-                    ]
-                  }
-                },
-                "required": [
-                  "duration",
-                  "intervalId"
+              "sendWhen": {
+                "description": "Triggering event",
+                "type": "string",
+                "enum": [
+                  "Overdue fine returned",
+                  "Overdue fine renewed"
                 ]
               },
+              "sendBy": {
+                "$ref": "#/properties/loanNotices/items/properties/sendOptions/properties/sendBy"
+              },
               "sendEvery": {
-                "description": "Send every options",
-                "type": "object",
-                "additionalProperties": false,
-                "properties": {
-                  "duration": {
-                    "description": "Duration amount",
-                    "type": "integer",
-                    "minimum": 1.0,
-                    "maximum": 100.0
-                  },
-                  "intervalId": {
-                    "description": "Interval id",
-                    "type": "string",
-                    "enum": [
-                      "Minutes",
-                      "Hours",
-                      "Days",
-                      "Weeks",
-                      "Months",
-                      "Years"
-                    ]
-                  }
-                },
-                "required": [
-                  "duration",
-                  "intervalId"
-                ]
+                "$ref": "#/properties/loanNotices/items/properties/sendOptions/properties/sendBy"
               }
             },
             "required": [
-              "sendHow"
+              "sendWhen"
             ]
           }
         },
@@ -386,62 +315,10 @@
                 ]
               },
               "sendBy": {
-                "description": "Send by options",
-                "type": "object",
-                "additionalProperties": false,
-                "properties": {
-                  "duration": {
-                    "description": "Duration amount",
-                    "type": "integer",
-                    "minimum": 1.0,
-                    "maximum": 100.0
-                  },
-                  "intervalId": {
-                    "description": "Interval id",
-                    "type": "string",
-                    "enum": [
-                      "Minutes",
-                      "Hours",
-                      "Days",
-                      "Weeks",
-                      "Months",
-                      "Years"
-                    ]
-                  }
-                },
-                "required": [
-                  "duration",
-                  "intervalId"
-                ]
+                "$ref": "#/properties/loanNotices/items/properties/sendOptions/properties/sendBy"
               },
               "sendEvery": {
-                "description": "Send every options",
-                "type": "object",
-                "additionalProperties": false,
-                "properties": {
-                  "duration": {
-                    "description": "Duration amount",
-                    "type": "integer",
-                    "minimum": 1.0,
-                    "maximum": 100.0
-                  },
-                  "intervalId": {
-                    "description": "Interval id",
-                    "type": "string",
-                    "enum": [
-                      "Minutes",
-                      "Hours",
-                      "Days",
-                      "Weeks",
-                      "Months",
-                      "Years"
-                    ]
-                  }
-                },
-                "required": [
-                  "duration",
-                  "intervalId"
-                ]
+                "$ref": "#/properties/loanNotices/items/properties/sendOptions/properties/sendBy"
               }
             },
             "required": [

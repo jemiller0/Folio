@@ -4,24 +4,21 @@
   "additionalProperties": false,
   "properties": {
     "id": {
-      "description": "UUID of scheduled task",
+      "description": "The UUID format string",
       "type": "string",
-      "pattern": "^[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12}$"
+      "pattern": "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-5][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}$"
     },
     "loanId": {
-      "description": "UUID of related loan for loan notices",
-      "type": "string",
-      "pattern": "^[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12}$"
+      "$ref": "#/properties/id"
     },
     "requestId": {
-      "description": "UUID of related request for request notices",
-      "type": "string",
-      "pattern": "^[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12}$"
+      "$ref": "#/properties/id"
+    },
+    "feeFineActionId": {
+      "$ref": "#/properties/id"
     },
     "recipientUserId": {
-      "description": "Id of the user to whom this notice should be sent to",
-      "type": "string",
-      "pattern": "^[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12}$"
+      "$ref": "#/properties/id"
     },
     "nextRunTime": {
       "description": "Next run time",
@@ -34,7 +31,9 @@
       "enum": [
         "Hold expiration",
         "Request expiration",
-        "Due date"
+        "Due date",
+        "Overdue fine returned",
+        "Overdue fine renewed"
       ]
     },
     "noticeConfig": {
@@ -77,9 +76,7 @@
           ]
         },
         "templateId": {
-          "description": "UUID of related template",
-          "type": "string",
-          "pattern": "^[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12}$"
+          "$ref": "#/properties/id"
         },
         "format": {
           "description": "Notice format",
