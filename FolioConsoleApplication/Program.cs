@@ -447,7 +447,7 @@ namespace FolioConsoleApplication
                     cancellationReasonsPath = $"{path}/cancellationreasons.json";
                     categoriesPath = $"{path}/categories.json";
                     checkInsPath = $"{path}/checkins.json";
-                    if (!api) circulationRulesPath = $"{path}/circulationrules.json";
+                    circulationRulesPath = $"{path}/circulationrules.json";
                     classificationTypesPath = $"{path}/classificationtypes.json";
                     commentsPath = $"{path}/comments.json";
                     configurationsPath = $"{path}/configurations.json";
@@ -470,7 +470,7 @@ namespace FolioConsoleApplication
                     holdingsPath = $"{path}/holdings.json";
                     holdingNoteTypesPath = $"{path}/holdingnotetypes.json";
                     holdingTypesPath = $"{path}/holdingtypes.json";
-                    if (!api) hridSettingsPath = $"{path}/hridsettings.json";
+                    hridSettingsPath = $"{path}/hridsettings.json";
                     idTypesPath = $"{path}/idtypes.json";
                     illPoliciesPath = $"{path}/illpolicies.json";
                     instancesPath = $"{path}/instances.json";
@@ -553,7 +553,7 @@ namespace FolioConsoleApplication
                 {
                     cancellationReasonsPath = $"{path}/cancellationreasons.json";
                     checkInsPath = $"{path}/checkins.json";
-                    if (!api) circulationRulesPath = $"{path}/circulationrules.json";
+                    circulationRulesPath = $"{path}/circulationrules.json";
                     fixedDueDateSchedulesPath = $"{path}/fixedduedateschedules.json";
                     loansPath = $"{path}/loans.json";
                     loanPoliciesPath = $"{path}/loanpolicies.json";
@@ -611,7 +611,7 @@ namespace FolioConsoleApplication
                     holdingsPath = $"{path}/holdings.json";
                     holdingNoteTypesPath = $"{path}/holdingnotetypes.json";
                     holdingTypesPath = $"{path}/holdingtypes.json";
-                    if (!api) hridSettingsPath = $"{path}/hridsettings.json";
+                    hridSettingsPath = $"{path}/hridsettings.json";
                     idTypesPath = $"{path}/idtypes.json";
                     illPoliciesPath = $"{path}/illpolicies.json";
                     instancesPath = $"{path}/instances.json";
@@ -3017,6 +3017,7 @@ namespace FolioConsoleApplication
             using (var sr2 = new StreamReader(Assembly.GetAssembly(typeof(FolioContext)).GetManifestResourceStream("FolioLibrary.CirculationRule.json")))
             using (var jtr = new JsonTextReader(sr) { SupportMultipleContent = true })
             using (var fbcc = new FolioBulkCopyContext())
+            using (var fsc = new FolioServiceClient())
             {
                 var s2 = Stopwatch.StartNew();
                 var js4 = JsonSchema.FromJsonAsync(sr2.ReadToEndAsync().Result).Result;
@@ -3035,7 +3036,12 @@ namespace FolioConsoleApplication
                     }
                     if (api)
                     {
-                        throw new NotSupportedException();
+                        if (!whatIf) fsc.UpdateCirculationRule(jo);
+                        if (i % 100 == 0)
+                        {
+                            traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
+                            s2.Restart();
+                        }
                     }
                     else
                     {
@@ -3067,6 +3073,7 @@ namespace FolioConsoleApplication
             traceSource.TraceEvent(TraceEventType.Information, 0, "Saving circulation rules");
             var s = Stopwatch.StartNew();
             using (var fdc = new FolioDapperContext())
+            using (var fsc = new FolioServiceClient())
             using (var sr = new StreamReader(Assembly.GetAssembly(typeof(FolioContext)).GetManifestResourceStream("FolioLibrary.CirculationRule.json")))
             using (var sw = new StreamWriter(whatIf ? new MemoryStream() : compress ? (Stream)new GZipStream(new FileStream($"{path}.gz", FileMode.Create), CompressionMode.Compress) : new FileStream(path, FileMode.Create)))
             using (var jtw = new JsonTextWriter(sw))
@@ -3076,7 +3083,7 @@ namespace FolioConsoleApplication
                 var js = new JsonSerializer { Formatting = Formatting.Indented };
                 jtw.WriteStartArray();
                 var i = 0;
-                foreach (var jo in api ? throw new NotSupportedException() : fdc.CirculationRules(where, take: take).Select(cr => JObject.Parse(cr.Content)))
+                foreach (var jo in api ? new [] { fsc.GetCirculationRule() } : fdc.CirculationRules(where, take: take).Select(cr => JObject.Parse(cr.Content)))
                 {
                     if (validate)
                     {
@@ -5896,6 +5903,7 @@ namespace FolioConsoleApplication
             using (var sr2 = new StreamReader(Assembly.GetAssembly(typeof(FolioContext)).GetManifestResourceStream("FolioLibrary.HridSetting.json")))
             using (var jtr = new JsonTextReader(sr) { SupportMultipleContent = true })
             using (var fbcc = new FolioBulkCopyContext())
+            using (var fsc = new FolioServiceClient())
             {
                 var s2 = Stopwatch.StartNew();
                 var js4 = JsonSchema.FromJsonAsync(sr2.ReadToEndAsync().Result).Result;
@@ -5914,7 +5922,12 @@ namespace FolioConsoleApplication
                     }
                     if (api)
                     {
-                        throw new NotSupportedException();
+                        if (!whatIf) fsc.UpdateHridSetting(jo);
+                        if (i % 100 == 0)
+                        {
+                            traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
+                            s2.Restart();
+                        }
                     }
                     else
                     {
@@ -5946,6 +5959,7 @@ namespace FolioConsoleApplication
             traceSource.TraceEvent(TraceEventType.Information, 0, "Saving hrid settings");
             var s = Stopwatch.StartNew();
             using (var fdc = new FolioDapperContext())
+            using (var fsc = new FolioServiceClient())
             using (var sr = new StreamReader(Assembly.GetAssembly(typeof(FolioContext)).GetManifestResourceStream("FolioLibrary.HridSetting.json")))
             using (var sw = new StreamWriter(whatIf ? new MemoryStream() : compress ? (Stream)new GZipStream(new FileStream($"{path}.gz", FileMode.Create), CompressionMode.Compress) : new FileStream(path, FileMode.Create)))
             using (var jtw = new JsonTextWriter(sw))
@@ -5955,7 +5969,7 @@ namespace FolioConsoleApplication
                 var js = new JsonSerializer { Formatting = Formatting.Indented };
                 jtw.WriteStartArray();
                 var i = 0;
-                foreach (var jo in api ? throw new NotSupportedException() : fdc.HridSettings(where, take: take).Select(hs => JObject.Parse(hs.Content)))
+                foreach (var jo in api ? new [] { fsc.GetHridSetting() } : fdc.HridSettings(where, take: take).Select(hs => JObject.Parse(hs.Content)))
                 {
                     if (validate)
                     {
