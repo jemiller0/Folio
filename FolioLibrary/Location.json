@@ -32,13 +32,43 @@
       "description": "The UUID of the institution, the first-level location unit, this (shelf) location belongs to.",
       "type": "string"
     },
+    "institution": {
+      "folio:$ref": "locinst.json",
+      "readonly": true,
+      "folio:isVirtual": true,
+      "folio:linkBase": "location-units/institutions",
+      "folio:linkFromField": "institutionId",
+      "folio:linkToField": "id",
+      "folio:includedElement": "locinsts.0",
+      "type": "object"
+    },
     "campusId": {
       "description": "The UUID of the campus, the second-level location unit, this (shelf) location belongs to.",
       "type": "string"
     },
+    "campus": {
+      "folio:$ref": "loccamp.json",
+      "readonly": true,
+      "folio:isVirtual": true,
+      "folio:linkBase": "location-units/campuses",
+      "folio:linkFromField": "campusId",
+      "folio:linkToField": "id",
+      "folio:includedElement": "loccamps.0",
+      "type": "object"
+    },
     "libraryId": {
       "description": "The UUID of the library, the third-level location unit, this (shelf) location belongs to.",
       "type": "string"
+    },
+    "library": {
+      "folio:$ref": "locinst.json",
+      "readonly": true,
+      "folio:isVirtual": true,
+      "folio:linkBase": "location-units/libraries",
+      "folio:linkFromField": "libraryId",
+      "folio:linkToField": "id",
+      "folio:includedElement": "loclibs.0",
+      "type": "object"
     },
     "details": {
       "description": "Details about this (shelf) location.",
@@ -48,6 +78,136 @@
       "description": "The UUID of the primary service point of this (shelf) location.",
       "type": "string",
       "pattern": "^[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12}$"
+    },
+    "primaryServicePointObject": {
+      "folio:isVirtual": true,
+      "description": "A service point",
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "description": "Id of service-point object",
+          "type": "string"
+        },
+        "name": {
+          "description": "service-point name, a required field",
+          "type": "string"
+        },
+        "code": {
+          "description": "service-point code, a required field",
+          "type": "string"
+        },
+        "discoveryDisplayName": {
+          "description": "display name, a required field",
+          "type": "string"
+        },
+        "description": {
+          "description": "description of the service-point",
+          "type": "string"
+        },
+        "shelvingLagTime": {
+          "description": "shelving lag time",
+          "type": "integer"
+        },
+        "pickupLocation": {
+          "description": "indicates whether or not the service point is a pickup location",
+          "type": "boolean"
+        },
+        "holdShelfExpiryPeriod": {
+          "description": "schema for time-period, which contains time interval 'duration' and the time unit",
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "duration": {
+              "description": "Duration interval",
+              "type": "integer"
+            },
+            "intervalId": {
+              "description": "Unit of time for the duration",
+              "type": "string",
+              "default": "Days",
+              "enum": [
+                "Minutes",
+                "Hours",
+                "Days",
+                "Weeks",
+                "Months"
+              ]
+            }
+          },
+          "required": [
+            "duration",
+            "intervalId"
+          ]
+        },
+        "staffSlips": {
+          "description": "List of staff slips for this service point",
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "id": {
+                "description": "The ID of the staff slip",
+                "type": "string",
+                "pattern": "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-5][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}$"
+              },
+              "printByDefault": {
+                "description": "Whether or not to print the staff slip by default",
+                "type": "boolean"
+              }
+            },
+            "required": [
+              "id",
+              "printByDefault"
+            ]
+          }
+        },
+        "metadata": {
+          "title": "Metadata Schema",
+          "description": "Metadata about creation and changes to records, provided by the server (client should not provide)",
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "createdDate": {
+              "description": "Date and time when the record was created",
+              "type": "string",
+              "format": "date-time"
+            },
+            "createdByUserId": {
+              "description": "ID of the user who created the record (when available)",
+              "type": "string",
+              "pattern": "^[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12}$"
+            },
+            "createdByUsername": {
+              "description": "Username of the user who created the record (when available)",
+              "type": "string"
+            },
+            "updatedDate": {
+              "description": "Date and time when the record was last updated",
+              "type": "string",
+              "format": "date-time"
+            },
+            "updatedByUserId": {
+              "description": "ID of the user who last updated the record (when available)",
+              "type": "string",
+              "pattern": "^[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12}$"
+            },
+            "updatedByUsername": {
+              "description": "Username of the user who last updated the record (when available)",
+              "type": "string"
+            }
+          },
+          "required": [
+            "createdDate"
+          ]
+        }
+      },
+      "required": [
+        "name",
+        "code",
+        "discoveryDisplayName"
+      ]
     },
     "servicePointIds": {
       "description": "All service points that this (shelf) location has.",
@@ -61,44 +221,21 @@
         }
       }
     },
+    "servicePoints": {
+      "description": "List of dereferenced service points",
+      "readonly": true,
+      "folio:isVirtual": true,
+      "folio:linkBase": "service-points",
+      "folio:linkFromField": "servicePointIds",
+      "folio:linkToField": "id",
+      "folio:includedElement": "servicepoints",
+      "type": "array",
+      "items": {
+        "$ref": "#/properties/primaryServicePointObject"
+      }
+    },
     "metadata": {
-      "title": "Metadata Schema",
-      "description": "Metadata about creation and changes to records, provided by the server (client should not provide)",
-      "type": "object",
-      "additionalProperties": false,
-      "properties": {
-        "createdDate": {
-          "description": "Date and time when the record was created",
-          "type": "string",
-          "format": "date-time"
-        },
-        "createdByUserId": {
-          "description": "ID of the user who created the record (when available)",
-          "type": "string",
-          "pattern": "^[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12}$"
-        },
-        "createdByUsername": {
-          "description": "Username of the user who created the record (when available)",
-          "type": "string"
-        },
-        "updatedDate": {
-          "description": "Date and time when the record was last updated",
-          "type": "string",
-          "format": "date-time"
-        },
-        "updatedByUserId": {
-          "description": "ID of the user who last updated the record (when available)",
-          "type": "string",
-          "pattern": "^[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12}$"
-        },
-        "updatedByUsername": {
-          "description": "Username of the user who last updated the record (when available)",
-          "type": "string"
-        }
-      },
-      "required": [
-        "createdDate"
-      ]
+      "$ref": "#/properties/primaryServicePointObject/properties/metadata"
     }
   },
   "required": [

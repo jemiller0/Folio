@@ -145,6 +145,17 @@
             "description": "ID of the type of note",
             "type": "string"
           },
+          "itemNoteType": {
+            "folio:$ref": "itemnotetype.json",
+            "javaType": "org.folio.rest.jaxrs.model.itemNoteTypeVirtual",
+            "readonly": true,
+            "folio:isVirtual": true,
+            "folio:linkBase": "item-note-types",
+            "folio:linkFromField": "itemNoteTypeId",
+            "folio:linkToField": "id",
+            "folio:includedElement": "itemNoteTypes.0",
+            "type": "object"
+          },
           "note": {
             "description": "Text content of the note",
             "type": "string"
@@ -267,9 +278,29 @@
       "description": "Permanent item location is the default location, shelving location, or holding which is a physical place where items are stored, or an Online location.",
       "type": "string"
     },
+    "permanentLocation": {
+      "folio:$ref": "location.json",
+      "readonly": true,
+      "folio:isVirtual": true,
+      "folio:linkBase": "locations",
+      "folio:linkFromField": "permanentLocationId",
+      "folio:linkToField": "id",
+      "folio:includedElement": "locations.0",
+      "type": "object"
+    },
     "temporaryLocationId": {
       "description": "Temporary item location is the temporarily location, shelving location, or holding which is a physical place where items are stored, or an Online location.",
       "type": "string"
+    },
+    "temporaryLocation": {
+      "folio:$ref": "location.json",
+      "readonly": true,
+      "folio:isVirtual": true,
+      "folio:linkBase": "locations",
+      "folio:linkFromField": "temporaryLocationId",
+      "folio:linkToField": "id",
+      "folio:includedElement": "locations.0",
+      "type": "object"
     },
     "effectiveLocationId": {
       "$ref": "#/properties/effectiveCallNumberComponents/properties/typeId"

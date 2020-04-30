@@ -112,6 +112,18 @@
           "contributorNameTypeId": {
             "$ref": "#/properties/id"
           },
+          "contributorNameType": {
+            "description": "Dereferenced contributor-name type",
+            "javaType": "org.folio.rest.jaxrs.model.contributorNameTypeVirtual",
+            "readonly": true,
+            "folio:$ref": "contributornametype.json",
+            "folio:isVirtual": true,
+            "folio:linkBase": "contributor-name-types",
+            "folio:linkFromField": "contributorNameTypeId",
+            "folio:linkToField": "id",
+            "folio:includedElement": "contributorNameTypes.0",
+            "type": "object"
+          },
           "primary": {
             "description": "Whether this is the primary contributor",
             "type": "boolean"
@@ -145,6 +157,18 @@
           },
           "classificationTypeId": {
             "$ref": "#/properties/id"
+          },
+          "classificationType": {
+            "description": "Dereferenced classification schema",
+            "javaType": "org.folio.rest.jaxrs.model.classificationTypeVirtual",
+            "readonly": true,
+            "folio:$ref": "classificationtype.json",
+            "folio:isVirtual": true,
+            "folio:linkBase": "classification-types",
+            "folio:linkFromField": "classificationTypeId",
+            "folio:linkToField": "id",
+            "folio:includedElement": "classificationTypes.0",
+            "type": "object"
           }
         },
         "required": [
@@ -235,6 +259,81 @@
       "type": "array",
       "items": {
         "$ref": "#/properties/id"
+      }
+    },
+    "instanceFormats": {
+      "description": "List of dereferenced instance formats",
+      "readonly": true,
+      "folio:isVirtual": true,
+      "folio:linkBase": "instance-formats",
+      "folio:linkFromField": "instanceFormatIds",
+      "folio:linkToField": "id",
+      "folio:includedElement": "instanceFormats",
+      "type": "array",
+      "items": {
+        "description": "The format of an Instance",
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "name": {
+            "description": "label for the Instance format",
+            "type": "string"
+          },
+          "code": {
+            "description": "distinct code for the Instance format",
+            "type": "string"
+          },
+          "source": {
+            "description": "origin of the Instance format record",
+            "type": "string"
+          },
+          "metadata": {
+            "title": "Metadata Schema",
+            "description": "Metadata about creation and changes to records, provided by the server (client should not provide)",
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "createdDate": {
+                "description": "Date and time when the record was created",
+                "type": "string",
+                "format": "date-time"
+              },
+              "createdByUserId": {
+                "description": "ID of the user who created the record (when available)",
+                "type": "string",
+                "pattern": "^[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12}$"
+              },
+              "createdByUsername": {
+                "description": "Username of the user who created the record (when available)",
+                "type": "string"
+              },
+              "updatedDate": {
+                "description": "Date and time when the record was last updated",
+                "type": "string",
+                "format": "date-time"
+              },
+              "updatedByUserId": {
+                "description": "ID of the user who last updated the record (when available)",
+                "type": "string",
+                "pattern": "^[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12}$"
+              },
+              "updatedByUsername": {
+                "description": "Username of the user who last updated the record (when available)",
+                "type": "string"
+              }
+            },
+            "required": [
+              "createdDate"
+            ]
+          }
+        },
+        "required": [
+          "name",
+          "code",
+          "source"
+        ]
       }
     },
     "physicalDescriptions": {
@@ -332,43 +431,7 @@
       }
     },
     "metadata": {
-      "title": "Metadata Schema",
-      "description": "Metadata about creation and changes to records, provided by the server (client should not provide)",
-      "type": "object",
-      "additionalProperties": false,
-      "properties": {
-        "createdDate": {
-          "description": "Date and time when the record was created",
-          "type": "string",
-          "format": "date-time"
-        },
-        "createdByUserId": {
-          "description": "ID of the user who created the record (when available)",
-          "type": "string",
-          "pattern": "^[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12}$"
-        },
-        "createdByUsername": {
-          "description": "Username of the user who created the record (when available)",
-          "type": "string"
-        },
-        "updatedDate": {
-          "description": "Date and time when the record was last updated",
-          "type": "string",
-          "format": "date-time"
-        },
-        "updatedByUserId": {
-          "description": "ID of the user who last updated the record (when available)",
-          "type": "string",
-          "pattern": "^[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12}$"
-        },
-        "updatedByUsername": {
-          "description": "Username of the user who last updated the record (when available)",
-          "type": "string"
-        }
-      },
-      "required": [
-        "createdDate"
-      ]
+      "$ref": "#/properties/instanceFormats/items/properties/metadata"
     },
     "holdingsRecords2": {
       "description": "List of holdings records",
@@ -407,6 +470,16 @@
           },
           "permanentLocationId": {
             "$ref": "#/properties/id"
+          },
+          "permanentLocation": {
+            "folio:$ref": "location.json",
+            "readonly": true,
+            "folio:isVirtual": true,
+            "folio:linkBase": "locations",
+            "folio:linkFromField": "permanentLocationId",
+            "folio:linkToField": "id",
+            "folio:includedElement": "locations.0",
+            "type": "object"
           },
           "temporaryLocationId": {
             "$ref": "#/properties/id"
@@ -765,6 +838,17 @@
                         "description": "ID of the type of note",
                         "type": "string"
                       },
+                      "itemNoteType": {
+                        "folio:$ref": "itemnotetype.json",
+                        "javaType": "org.folio.rest.jaxrs.model.itemNoteTypeVirtual",
+                        "readonly": true,
+                        "folio:isVirtual": true,
+                        "folio:linkBase": "item-note-types",
+                        "folio:linkFromField": "itemNoteTypeId",
+                        "folio:linkToField": "id",
+                        "folio:includedElement": "itemNoteTypes.0",
+                        "type": "object"
+                      },
                       "note": {
                         "description": "Text content of the note",
                         "type": "string"
@@ -887,9 +971,29 @@
                   "description": "Permanent item location is the default location, shelving location, or holding which is a physical place where items are stored, or an Online location.",
                   "type": "string"
                 },
+                "permanentLocation": {
+                  "folio:$ref": "location.json",
+                  "readonly": true,
+                  "folio:isVirtual": true,
+                  "folio:linkBase": "locations",
+                  "folio:linkFromField": "permanentLocationId",
+                  "folio:linkToField": "id",
+                  "folio:includedElement": "locations.0",
+                  "type": "object"
+                },
                 "temporaryLocationId": {
                   "description": "Temporary item location is the temporarily location, shelving location, or holding which is a physical place where items are stored, or an Online location.",
                   "type": "string"
+                },
+                "temporaryLocation": {
+                  "folio:$ref": "location.json",
+                  "readonly": true,
+                  "folio:isVirtual": true,
+                  "folio:linkBase": "locations",
+                  "folio:linkFromField": "temporaryLocationId",
+                  "folio:linkToField": "id",
+                  "folio:includedElement": "locations.0",
+                  "type": "object"
                 },
                 "effectiveLocationId": {
                   "$ref": "#/properties/id"
@@ -948,7 +1052,7 @@
                   "$ref": "#/properties/tags"
                 },
                 "metadata": {
-                  "$ref": "#/properties/metadata"
+                  "$ref": "#/properties/instanceFormats/items/properties/metadata"
                 },
                 "holdingsRecord2": {
                   "description": "Item associated holdings record object.",
@@ -988,6 +1092,18 @@
               ]
             }
           },
+          "bareHoldingsItems": {
+            "readonly": true,
+            "folio:isVirtual": true,
+            "folio:linkBase": "item-storage/items",
+            "folio:linkFromField": "id",
+            "folio:linkToField": "holdingsRecordId",
+            "folio:includedElement": "items",
+            "type": "array",
+            "items": {
+              "$ref": "#/properties/holdingsRecords2/items/properties/holdingsItems/items"
+            }
+          },
           "holdingsInstance": {
             "folio:$ref": "instance.json",
             "readonly": true,
@@ -1002,7 +1118,7 @@
             "$ref": "#/properties/tags"
           },
           "metadata": {
-            "$ref": "#/properties/metadata"
+            "$ref": "#/properties/instanceFormats/items/properties/metadata"
           }
         },
         "required": [

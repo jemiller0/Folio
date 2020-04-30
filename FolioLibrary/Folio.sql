@@ -2180,6 +2180,12 @@ id AS id,
 organization_id AS organization_id,
 CAST(jsonb AS UUID) AS interface_id
 FROM (SELECT id::text || ordinality::text AS id, id AS organization_id, value AS jsonb FROM diku_mod_organizations_storage.organizations, jsonb_array_elements_text((jsonb->>'interfaces')::jsonb) WITH ORDINALITY) a;
+CREATE VIEW uc.organization_account_acquisitions_units AS
+SELECT
+id AS id,
+organization_account_id AS organization_account_id,
+CAST(jsonb AS UUID) AS acquisitions_unit_id
+FROM (SELECT id::text || ordinality::text AS id, id AS organization_account_id, value AS jsonb FROM (SELECT id::text || ordinality::text AS id, id AS organization_id, value AS jsonb FROM diku_mod_organizations_storage.organizations, jsonb_array_elements((jsonb->>'accounts')::jsonb) WITH ORDINALITY) a, jsonb_array_elements_text((jsonb->>'acqUnitIds')::jsonb) WITH ORDINALITY) a;
 CREATE VIEW uc.organization_accounts AS
 SELECT
 id AS id,
@@ -2202,6 +2208,12 @@ organization_id AS organization_id,
 jsonb->>'description' AS description,
 uc.TIMESTAMP_CAST(jsonb->>'timestamp') AS timestamp
 FROM (SELECT id::text || ordinality::text AS id, id AS organization_id, value AS jsonb FROM diku_mod_organizations_storage.organizations, jsonb_array_elements((jsonb->>'changelogs')::jsonb) WITH ORDINALITY) a;
+CREATE VIEW uc.organization_acquisitions_units AS
+SELECT
+id AS id,
+organization_id AS organization_id,
+CAST(jsonb AS UUID) AS acquisitions_unit_id
+FROM (SELECT id::text || ordinality::text AS id, id AS organization_id, value AS jsonb FROM diku_mod_organizations_storage.organizations, jsonb_array_elements_text((jsonb->>'acqUnitIds')::jsonb) WITH ORDINALITY) a;
 CREATE VIEW uc.organization_tags AS
 SELECT
 id AS id,
