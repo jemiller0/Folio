@@ -8408,22 +8408,11 @@ namespace FolioConsoleApplication
             traceSource.TraceEvent(TraceEventType.Information, 0, "Deleting ledger fiscal years");
             var s = Stopwatch.StartNew();
             using (var fbcc = new FolioBulkCopyContext())
-            using (var fsc = new FolioServiceClient())
             {
                 var i = 0;
                 if (api)
                 {
-                    var s2 = Stopwatch.StartNew();
-                    foreach (var jo in fsc.LedgerFiscalYears(where))
-                    {
-                        if (!whatIf) fsc.DeleteLedgerFiscalYear((string)jo["id"]);
-                        if (++i % 100 == 0)
-                        {
-                            traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
-                            s2.Restart();
-                        }
-                    }
-                    traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
+                    throw new NotSupportedException();
                 }
                 else
                 {
@@ -8442,7 +8431,6 @@ namespace FolioConsoleApplication
             using (var sr2 = new StreamReader(Assembly.GetAssembly(typeof(FolioContext)).GetManifestResourceStream("FolioLibrary.LedgerFiscalYear.json")))
             using (var jtr = new JsonTextReader(sr) { SupportMultipleContent = true })
             using (var fbcc = new FolioBulkCopyContext())
-            using (var fsc = new FolioServiceClient())
             {
                 var s2 = Stopwatch.StartNew();
                 var js4 = JsonSchema.FromJsonAsync(sr2.ReadToEndAsync().Result).Result;
@@ -8461,12 +8449,7 @@ namespace FolioConsoleApplication
                     }
                     if (api)
                     {
-                        if (!whatIf) fsc.InsertLedgerFiscalYear(jo);
-                        if (i % 100 == 0)
-                        {
-                            traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
-                            s2.Restart();
-                        }
+                        throw new NotSupportedException();
                     }
                     else
                     {
