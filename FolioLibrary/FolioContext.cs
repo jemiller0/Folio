@@ -101,6 +101,7 @@ namespace FolioLibrary
             if (IsPostgreSql) modelBuilder.Entity<Contact>().Property(nameof(Contact.Content)).HasColumnType("jsonb");
             if (IsPostgreSql) modelBuilder.Entity<ContributorNameType>().Property(nameof(ContributorNameType.Content)).HasColumnType("jsonb");
             if (IsPostgreSql) modelBuilder.Entity<ContributorType>().Property(nameof(ContributorType.Content)).HasColumnType("jsonb");
+            if (IsPostgreSql) modelBuilder.Entity<CustomField>().Property(nameof(CustomField.Content)).HasColumnType("jsonb");
             if (IsPostgreSql) modelBuilder.Entity<Document>().Property(nameof(Document.Content)).HasColumnType("jsonb");
             if (IsPostgreSql) modelBuilder.Entity<ElectronicAccessRelationship>().Property(nameof(ElectronicAccessRelationship.Content)).HasColumnType("jsonb");
             if (IsPostgreSql) modelBuilder.Entity<ErrorRecord>().Property(nameof(ErrorRecord.Content)).HasColumnType("jsonb");
@@ -307,6 +308,7 @@ namespace FolioLibrary
         public DbSet<ContributorNameType> ContributorNameTypes { get; set; }
         public DbSet<ContributorType> ContributorTypes { get; set; }
         public DbSet<Country> Countries { get; set; }
+        public DbSet<CustomField> CustomFields { get; set; }
         public DbSet<Document> Documents { get; set; }
         public DbSet<ElectronicAccessRelationship> ElectronicAccessRelationships { get; set; }
         public DbSet<ErrorRecord> ErrorRecords { get; set; }

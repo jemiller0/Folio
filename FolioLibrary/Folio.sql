@@ -491,6 +491,47 @@ CAST(jsonb#>>'{metadata,updatedByUserId}' AS UUID) AS updated_by_user_id,
 jsonb#>>'{metadata,updatedByUsername}' AS updated_by_username,
 jsonb_pretty(jsonb) AS content
 FROM diku_mod_inventory_storage.contributor_type;
+CREATE VIEW uc.custom_field_defaults AS
+SELECT
+id AS id,
+custom_field_id AS custom_field_id,
+CAST(jsonb AS VARCHAR(1024)) AS content
+FROM (SELECT id::text || ordinality::text AS id, id AS custom_field_id, value AS jsonb FROM diku_mod_users.custom_fields, jsonb_array_elements_text((jsonb#>>'{selectField,defaults}')::jsonb) WITH ORDINALITY) a;
+CREATE VIEW uc.custom_field_values AS
+SELECT
+id AS id,
+custom_field_id AS custom_field_id,
+CAST(jsonb AS VARCHAR(1024)) AS content
+FROM (SELECT id::text || ordinality::text AS id, id AS custom_field_id, value AS jsonb FROM diku_mod_users.custom_fields, jsonb_array_elements_text((jsonb#>>'{selectField,options,values}')::jsonb) WITH ORDINALITY) a;
+CREATE VIEW uc.custom_field_sorted AS
+SELECT
+id AS id,
+custom_field_id AS custom_field_id,
+CAST(jsonb AS VARCHAR(1024)) AS content
+FROM (SELECT id::text || ordinality::text AS id, id AS custom_field_id, value AS jsonb FROM diku_mod_users.custom_fields, jsonb_array_elements_text((jsonb#>>'{selectField,options,sorted}')::jsonb) WITH ORDINALITY) a;
+CREATE VIEW uc.custom_fields AS
+SELECT
+id AS id,
+jsonb->>'name' AS name,
+CAST(jsonb->>'refId' AS VARCHAR(128)) AS ref_id,
+jsonb->>'type' AS type,
+jsonb->>'entityType' AS entity_type,
+CAST(jsonb->>'visible' AS BOOLEAN) AS visible,
+CAST(jsonb->>'required' AS BOOLEAN) AS required,
+CAST(jsonb->>'isRepeatable' AS BOOLEAN) AS is_repeatable,
+CAST(jsonb->>'order' AS INTEGER) AS order,
+jsonb->>'helpText' AS help_text,
+CAST(jsonb#>>'{checkboxField,default}' AS BOOLEAN) AS checkbox_field_default,
+CAST(jsonb#>>'{selectField,multiSelect}' AS BOOLEAN) AS select_field_multi_select,
+jsonb#>>'{selectField,options,sortingOrder}' AS select_field_options_sorting_order,
+uc.TIMESTAMP_CAST(jsonb#>>'{metadata,createdDate}') AS created_date,
+CAST(jsonb#>>'{metadata,createdByUserId}' AS UUID) AS created_by_user_id,
+jsonb#>>'{metadata,createdByUsername}' AS created_by_username,
+uc.TIMESTAMP_CAST(jsonb#>>'{metadata,updatedDate}') AS updated_date,
+CAST(jsonb#>>'{metadata,updatedByUserId}' AS UUID) AS updated_by_user_id,
+jsonb#>>'{metadata,updatedByUsername}' AS updated_by_username,
+jsonb_pretty(jsonb) AS content
+FROM diku_mod_users.custom_fields;
 CREATE VIEW uc.documents AS
 SELECT
 id AS id,
@@ -818,7 +859,7 @@ FROM (SELECT id::text || ordinality::text AS id, id AS holding_id, value AS json
 CREATE VIEW uc.holdings AS
 SELECT
 id AS id,
-CAST(SUBSTRING(jsonb->>'hrid' FROM 3) AS INTEGER) AS hrid,
+CAST(jsonb->>'hrid' AS INTEGER) AS hrid,
 CAST(jsonb->>'holdingsTypeId' AS UUID) AS holding_type_id,
 CAST(jsonb->>'instanceId' AS UUID) AS instance_id,
 CAST(jsonb->>'permanentLocationId' AS UUID) AS permanent_location_id,
@@ -1037,7 +1078,7 @@ FROM (SELECT id::text || ordinality::text AS id, id AS instance_id, value AS jso
 CREATE VIEW uc.instances AS
 SELECT
 id AS id,
-CAST(SUBSTRING(jsonb->>'hrid' FROM 3) AS INTEGER) AS hrid,
+CAST(jsonb->>'hrid' AS INTEGER) AS hrid,
 jsonb->>'source' AS source,
 jsonb->>'title' AS title,
 jsonb#>>'{contributors,0,name}' AS author,
@@ -1419,7 +1460,7 @@ FROM (SELECT id::text || ordinality::text AS id, id AS item_id, value AS jsonb F
 CREATE VIEW uc.items AS
 SELECT
 id AS id,
-CAST(SUBSTRING(jsonb->>'hrid' FROM 3) AS INTEGER) AS hrid,
+CAST(jsonb->>'hrid' AS INTEGER) AS hrid,
 CAST(jsonb->>'holdingsRecordId' AS UUID) AS holding_id,
 CAST(jsonb->>'discoverySuppress' AS BOOLEAN) AS discovery_suppress,
 jsonb->>'accessionNumber' AS accession_number,
@@ -2208,12 +2249,6 @@ organization_id AS organization_id,
 jsonb->>'description' AS description,
 uc.TIMESTAMP_CAST(jsonb->>'timestamp') AS timestamp
 FROM (SELECT id::text || ordinality::text AS id, id AS organization_id, value AS jsonb FROM diku_mod_organizations_storage.organizations, jsonb_array_elements((jsonb->>'changelogs')::jsonb) WITH ORDINALITY) a;
-CREATE VIEW uc.organization_acquisitions_units AS
-SELECT
-id AS id,
-organization_id AS organization_id,
-CAST(jsonb AS UUID) AS acquisitions_unit_id
-FROM (SELECT id::text || ordinality::text AS id, id AS organization_id, value AS jsonb FROM diku_mod_organizations_storage.organizations, jsonb_array_elements_text((jsonb->>'acqUnitIds')::jsonb) WITH ORDINALITY) a;
 CREATE VIEW uc.organization_tags AS
 SELECT
 id AS id,
@@ -3155,6 +3190,18 @@ jsonb#>>'{metadata,updatedByUsername}' AS updated_by_username,
 CAST(jsonb->>'accountId' AS UUID) AS account_id,
 jsonb_pretty(jsonb) AS content
 FROM diku_mod_feesfines.waives;
+CREATE VIEW uc.addresses AS
+SELECT 
+c.id, 
+(c.value::jsonb)->>'name' AS name, 
+(c.value::jsonb)->>'address' AS content, 
+c.enabled, 
+c.created_date, 
+c.created_by_user_id, 
+c.updated_date, 
+c.updated_by_user_id   
+FROM uc.configurations c
+WHERE c.config_name = 'tenant.addresses';
 CREATE TABLE uc.countries (
     alpha2_code VARCHAR(2) NOT NULL,
     alpha3_code VARCHAR(3) NOT NULL,

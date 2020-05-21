@@ -29,13 +29,13 @@
     <None Remove="Contact.json" />
     <None Remove="ContributorNameType.json" />
     <None Remove="ContributorType.json" />
+    <None Remove="CustomField.json" />
     <None Remove="Document.json" />
     <None Remove="ElectronicAccessRelationship.json" />
     <None Remove="ErrorRecord.json" />
     <None Remove="EventLog.json" />
     <None Remove="ExportConfigCredential.json" />
     <None Remove="Fee.json" />
-    <None Remove="Payment.json" />
     <None Remove="FeeType.json" />
     <None Remove="FinanceGroup.json" />
     <None Remove="FiscalYear.json" />
@@ -96,6 +96,7 @@
     <None Remove="PatronBlockCondition.json" />
     <None Remove="PatronBlockLimit.json" />
     <None Remove="PatronNoticePolicy.json" />
+    <None Remove="Payment.json" />
     <None Remove="PaymentMethod.json" />
     <None Remove="Permission.json" />
     <None Remove="PermissionsUser.json" />
@@ -156,13 +157,13 @@
     <EmbeddedResource Include="Contact.json" />
     <EmbeddedResource Include="ContributorNameType.json" />
     <EmbeddedResource Include="ContributorType.json" />
+    <EmbeddedResource Include="CustomField.json" />
     <EmbeddedResource Include="Document.json" />
     <EmbeddedResource Include="ElectronicAccessRelationship.json" />
     <EmbeddedResource Include="ErrorRecord.json" />
     <EmbeddedResource Include="EventLog.json" />
     <EmbeddedResource Include="ExportConfigCredential.json" />
     <EmbeddedResource Include="Fee.json" />
-    <EmbeddedResource Include="Payment.json" />
     <EmbeddedResource Include="FeeType.json" />
     <EmbeddedResource Include="FinanceGroup.json" />
     <EmbeddedResource Include="FiscalYear.json" />
@@ -223,6 +224,7 @@
     <EmbeddedResource Include="PatronBlockCondition.json" />
     <EmbeddedResource Include="PatronBlockLimit.json" />
     <EmbeddedResource Include="PatronNoticePolicy.json" />
+    <EmbeddedResource Include="Payment.json" />
     <EmbeddedResource Include="PaymentMethod.json" />
     <EmbeddedResource Include="Permission.json" />
     <EmbeddedResource Include="PermissionsUser.json" />
@@ -258,13 +260,13 @@
     <EmbeddedResource Include="VoucherItem.json" />
     <EmbeddedResource Include="WaiveReason.json" />
   </ItemGroup>
-
+  
   <ItemGroup>
     <PackageReference Include="Dapper" Version="2.0.35" />
     <PackageReference Include="Microsoft.CSharp" Version="4.7.0" />
     <PackageReference Include="Newtonsoft.Json" Version="12.0.3" />
     <PackageReference Include="Newtonsoft.Json.Schema" Version="3.0.13" />
-    <PackageReference Include="NJsonSchema" Version="10.1.12" />
+    <PackageReference Include="NJsonSchema" Version="10.1.16" />
     <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="3.1.3" />
     <PackageReference Include="System.Configuration.ConfigurationManager" Version="4.7.0" />
   </ItemGroup>

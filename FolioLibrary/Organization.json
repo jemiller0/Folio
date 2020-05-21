@@ -741,13 +741,6 @@
         ]
       }
     },
-    "acqUnitIds": {
-      "description": "Acquisition unit UUIDs associated with this organization",
-      "type": "array",
-      "items": {
-        "$ref": "#/properties/id"
-      }
-    },
     "tags": {
       "title": "tags",
       "description": "List of simple tags that can be added to an object",
