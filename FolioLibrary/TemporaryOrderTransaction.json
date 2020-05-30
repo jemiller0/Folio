@@ -1,0 +1,192 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "description": "A financial transaction",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "id": {
+      "description": "The UUID format string",
+      "type": "string",
+      "pattern": "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-5][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}$"
+    },
+    "amount": {
+      "description": "The amount of this transaction. For encumbrances: This is initialAmountEncumbered - (amountAwaitingPayment + amountExpended)",
+      "type": "number"
+    },
+    "currency": {
+      "description": "Currency code for this transaction - from the system currency",
+      "type": "string"
+    },
+    "description": {
+      "description": "Description of this transaction",
+      "type": "string"
+    },
+    "encumbrance": {
+      "description": "The encumbrance associated with the payment/credit taking place",
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "amountAwaitingPayment": {
+          "description": "The amount of awaiting for payment",
+          "type": "number",
+          "default": 0
+        },
+        "amountExpended": {
+          "description": "The amount currently expended by this encumbrance",
+          "type": "number",
+          "default": 0
+        },
+        "initialAmountEncumbered": {
+          "description": "The initial amount of this encumbrance. Shouldn't change once create",
+          "type": "number",
+          "default": 0
+        },
+        "status": {
+          "description": "The status of this encumbrance",
+          "type": "string",
+          "default": "Unreleased",
+          "enum": [
+            "Released",
+            "Unreleased"
+          ]
+        },
+        "orderType": {
+          "description": "Taken from the purchase order",
+          "type": "string",
+          "enum": [
+            "One-Time",
+            "Ongoing"
+          ]
+        },
+        "subscription": {
+          "description": "Taken from the purchase Order,for fiscal year rollover",
+          "type": "boolean"
+        },
+        "reEncumber": {
+          "description": "Taken from the purchase Order,for fiscal year rollover",
+          "type": "boolean"
+        },
+        "sourcePurchaseOrderId": {
+          "description": "The UUID format string",
+          "type": "string",
+          "pattern": "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-5][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}$"
+        },
+        "sourcePoLineId": {
+          "$ref": "#/properties/encumbrance/properties/sourcePurchaseOrderId"
+        }
+      },
+      "required": [
+        "initialAmountEncumbered",
+        "status",
+        "orderType",
+        "subscription",
+        "reEncumber",
+        "sourcePurchaseOrderId",
+        "sourcePoLineId"
+      ]
+    },
+    "fiscalYearId": {
+      "$ref": "#/properties/id"
+    },
+    "fromFundId": {
+      "$ref": "#/properties/id"
+    },
+    "paymentEncumbranceId": {
+      "$ref": "#/properties/id"
+    },
+    "source": {
+      "description": "The readable identifier of the record that resulted in the creation of this transaction",
+      "type": "string",
+      "enum": [
+        "User",
+        "FiscalYear",
+        "PoLine",
+        "Invoice"
+      ]
+    },
+    "sourceFiscalYearId": {
+      "$ref": "#/properties/id"
+    },
+    "sourceInvoiceId": {
+      "$ref": "#/properties/id"
+    },
+    "sourceInvoiceLineId": {
+      "$ref": "#/properties/id"
+    },
+    "tags": {
+      "title": "tags",
+      "description": "List of simple tags that can be added to an object",
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "tagList": {
+          "description": "List of tags",
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "toFundId": {
+      "$ref": "#/properties/id"
+    },
+    "transactionType": {
+      "description": "This describes the type of transaction",
+      "type": "string",
+      "enum": [
+        "Allocation",
+        "Credit",
+        "Encumbrance",
+        "Payment",
+        "Transfer"
+      ]
+    },
+    "metadata": {
+      "title": "Metadata Schema",
+      "description": "Metadata about creation and changes to records, provided by the server (client should not provide)",
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "createdDate": {
+          "description": "Date and time when the record was created",
+          "type": "string",
+          "format": "date-time"
+        },
+        "createdByUserId": {
+          "description": "ID of the user who created the record (when available)",
+          "type": "string",
+          "pattern": "^[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12}$"
+        },
+        "createdByUsername": {
+          "description": "Username of the user who created the record (when available)",
+          "type": "string"
+        },
+        "updatedDate": {
+          "description": "Date and time when the record was last updated",
+          "type": "string",
+          "format": "date-time"
+        },
+        "updatedByUserId": {
+          "description": "ID of the user who last updated the record (when available)",
+          "type": "string",
+          "pattern": "^[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12}$"
+        },
+        "updatedByUsername": {
+          "description": "Username of the user who last updated the record (when available)",
+          "type": "string"
+        }
+      },
+      "required": [
+        "createdDate"
+      ]
+    }
+  },
+  "required": [
+    "amount",
+    "currency",
+    "fiscalYearId",
+    "source",
+    "transactionType"
+  ]
+}

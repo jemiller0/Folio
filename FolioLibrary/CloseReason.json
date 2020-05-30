@@ -1,0 +1,31 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "description": "Reason for closure object",
+  "javaType": "org.folio.rest.jaxrs.model.ReasonForClosure",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "id": {
+      "description": "The UUID format string",
+      "type": "string",
+      "pattern": "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-5][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}$"
+    },
+    "reason": {
+      "description": "Reason for closure",
+      "type": "string"
+    },
+    "source": {
+      "description": "Source of reason for closure",
+      "type": "string",
+      "default": "User",
+      "enum": [
+        "User",
+        "System"
+      ]
+    }
+  },
+  "required": [
+    "reason",
+    "source"
+  ]
+}

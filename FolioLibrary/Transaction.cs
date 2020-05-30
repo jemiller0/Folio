@@ -1,5 +1,6 @@
 using NJsonSchema;
 using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.IO;
@@ -57,6 +58,9 @@ namespace FolioLibrary
 
         [Column("tofundid"), Display(Name = "Fund 1", Order = 12), Editable(false), ForeignKey("Fund1")]
         public virtual Guid? Tofundid { get; set; }
+
+        [ScaffoldColumn(false)]
+        public virtual ICollection<TemporaryInvoiceTransaction> TemporaryInvoiceTransactions { get; set; }
 
         public override string ToString() => $"{{ {nameof(Id)} = {Id}, {nameof(Content)} = {Content}, {nameof(CreationTime)} = {CreationTime}, {nameof(CreationUserId)} = {CreationUserId}, {nameof(Fiscalyearid)} = {Fiscalyearid}, {nameof(Fromfundid)} = {Fromfundid}, {nameof(Sourcefiscalyearid)} = {Sourcefiscalyearid}, {nameof(Tofundid)} = {Tofundid} }}";
     }

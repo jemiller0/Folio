@@ -24,6 +24,7 @@
     <None Remove="CheckIn.json" />
     <None Remove="CirculationRule.json" />
     <None Remove="ClassificationType.json" />
+    <None Remove="CloseReason.json" />
     <None Remove="Comment.json" />
     <None Remove="Configuration.json" />
     <None Remove="Contact.json" />
@@ -105,7 +106,6 @@
     <None Remove="Prefix.json" />
     <None Remove="Proxy.json" />
     <None Remove="RawRecord.json" />
-    <None Remove="ReasonsForClosure.json" />
     <None Remove="Record.json" />
     <None Remove="RefundReason.json" />
     <None Remove="ReportingCode.json" />
@@ -121,6 +121,8 @@
     <None Remove="Suffix.json" />
     <None Remove="Tag.json" />
     <None Remove="Template.json" />
+    <None Remove="TemporaryInvoiceTransaction.json" />
+    <None Remove="TemporaryOrderTransaction.json" />
     <None Remove="Title.json" />
     <None Remove="Transaction.json" />
     <None Remove="TransferAccount.json" />
@@ -152,6 +154,7 @@
     <EmbeddedResource Include="CheckIn.json" />
     <EmbeddedResource Include="CirculationRule.json" />
     <EmbeddedResource Include="ClassificationType.json" />
+    <EmbeddedResource Include="CloseReason.json" />
     <EmbeddedResource Include="Comment.json" />
     <EmbeddedResource Include="Configuration.json" />
     <EmbeddedResource Include="Contact.json" />
@@ -233,7 +236,6 @@
     <EmbeddedResource Include="Prefix.json" />
     <EmbeddedResource Include="Proxy.json" />
     <EmbeddedResource Include="RawRecord.json" />
-    <EmbeddedResource Include="ReasonsForClosure.json" />
     <EmbeddedResource Include="Record.json" />
     <EmbeddedResource Include="RefundReason.json" />
     <EmbeddedResource Include="ReportingCode.json" />
@@ -249,6 +251,8 @@
     <EmbeddedResource Include="Suffix.json" />
     <EmbeddedResource Include="Tag.json" />
     <EmbeddedResource Include="Template.json" />
+    <EmbeddedResource Include="TemporaryInvoiceTransaction.json" />
+    <EmbeddedResource Include="TemporaryOrderTransaction.json" />
     <EmbeddedResource Include="Title.json" />
     <EmbeddedResource Include="Transaction.json" />
     <EmbeddedResource Include="TransferAccount.json" />
@@ -266,8 +270,8 @@
     <PackageReference Include="Microsoft.CSharp" Version="4.7.0" />
     <PackageReference Include="Newtonsoft.Json" Version="12.0.3" />
     <PackageReference Include="Newtonsoft.Json.Schema" Version="3.0.13" />
-    <PackageReference Include="NJsonSchema" Version="10.1.16" />
-    <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="3.1.3" />
+    <PackageReference Include="NJsonSchema" Version="10.1.18" />
+    <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="3.1.4" />
     <PackageReference Include="System.Configuration.ConfigurationManager" Version="4.7.0" />
   </ItemGroup>
 

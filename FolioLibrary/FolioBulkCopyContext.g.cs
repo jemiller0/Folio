@@ -12,7 +12,7 @@ namespace FolioLibrary
 {
     public partial class FolioBulkCopyContext : IDisposable
     {
-        private DataTable acquisitionsUnitsDataTable, addressTypesDataTable, alertsDataTable, alternativeTitleTypesDataTable, auditLoansDataTable, authAttemptsDataTable, authCredentialsHistoriesDataTable, authPasswordActionsDataTable, batchGroupsDataTable, batchVouchersDataTable, batchVoucherExportsDataTable, batchVoucherExportConfigsDataTable, blocksDataTable, budgetsDataTable, callNumberTypesDataTable, campusesDataTable, cancellationReasonsDataTable, categoriesDataTable, checkInsDataTable, circulationRulesDataTable, classificationTypesDataTable, commentsDataTable, configurationsDataTable, contactsDataTable, contributorNameTypesDataTable, contributorTypesDataTable, countriesDataTable, customFieldsDataTable, documentsDataTable, electronicAccessRelationshipsDataTable, errorRecordsDataTable, eventLogsDataTable, exportConfigCredentialsDataTable, feesDataTable, feeTypesDataTable, financeGroupsDataTable, fiscalYearsDataTable, fixedDueDateSchedulesDataTable, fundsDataTable, fundTypesDataTable, groupsDataTable, groupFundFiscalYearsDataTable, holdingsDataTable, holdingNoteTypesDataTable, holdingTypesDataTable, hridSettingsDataTable, idTypesDataTable, illPoliciesDataTable, instancesDataTable, instanceFormatsDataTable, instanceNoteTypesDataTable, instanceRelationshipsDataTable, instanceRelationshipTypesDataTable, instanceSourceMarcsDataTable, instanceStatusesDataTable, instanceTypesDataTable, institutionsDataTable, interfacesDataTable, interfaceCredentialsDataTable, invoicesDataTable, invoiceItemsDataTable, invoiceTransactionSummariesDataTable, itemsDataTable, itemDamagedStatusesDataTable, itemNoteTypesDataTable, jobExecutionsDataTable, jobExecutionProgressesDataTable, jobExecutionSourceChunksDataTable, journalRecordsDataTable, ledgersDataTable, ledgerFiscalYearsDataTable, librariesDataTable, loansDataTable, loanPoliciesDataTable, loanTypesDataTable, locationsDataTable, loginsDataTable, lostItemFeePoliciesDataTable, mappingRulesDataTable, marcRecordsDataTable, materialTypesDataTable, modeOfIssuancesDataTable, natureOfContentTermsDataTable, notesDataTable, noteTypesDataTable, ordersDataTable, orderInvoicesDataTable, orderItemsDataTable, orderTemplatesDataTable, orderTransactionSummariesDataTable, organizationsDataTable, overdueFinePoliciesDataTable, ownersDataTable, patronActionSessionsDataTable, patronBlockConditionsDataTable, patronBlockLimitsDataTable, patronNoticePoliciesDataTable, paymentsDataTable, paymentMethodsDataTable, permissionsDataTable, permissionsUsersDataTable, piecesDataTable, precedingSucceedingTitlesDataTable, prefixesDataTable, proxiesDataTable, rawRecordsDataTable, reasonsForClosuresDataTable, recordsDataTable, refundReasonsDataTable, reportingCodesDataTable, requestsDataTable, requestPoliciesDataTable, scheduledNoticesDataTable, servicePointsDataTable, servicePointUsersDataTable, snapshotsDataTable, staffSlipsDataTable, statisticalCodesDataTable, statisticalCodeTypesDataTable, suffixesDataTable, tagsDataTable, templatesDataTable, titlesDataTable, transactionsDataTable, transferAccountsDataTable, transferCriteriasDataTable, usersDataTable, userAcquisitionsUnitsDataTable, userRequestPreferencesDataTable, vouchersDataTable, voucherItemsDataTable, waiveReasonsDataTable;
+        private DataTable acquisitionsUnitsDataTable, addressTypesDataTable, alertsDataTable, alternativeTitleTypesDataTable, auditLoansDataTable, authAttemptsDataTable, authCredentialsHistoriesDataTable, authPasswordActionsDataTable, batchGroupsDataTable, batchVouchersDataTable, batchVoucherExportsDataTable, batchVoucherExportConfigsDataTable, blocksDataTable, budgetsDataTable, callNumberTypesDataTable, campusesDataTable, cancellationReasonsDataTable, categoriesDataTable, checkInsDataTable, circulationRulesDataTable, classificationTypesDataTable, closeReasonsDataTable, commentsDataTable, configurationsDataTable, contactsDataTable, contributorNameTypesDataTable, contributorTypesDataTable, countriesDataTable, customFieldsDataTable, documentsDataTable, electronicAccessRelationshipsDataTable, errorRecordsDataTable, eventLogsDataTable, exportConfigCredentialsDataTable, feesDataTable, feeTypesDataTable, financeGroupsDataTable, fiscalYearsDataTable, fixedDueDateSchedulesDataTable, fundsDataTable, fundTypesDataTable, groupsDataTable, groupFundFiscalYearsDataTable, holdingsDataTable, holdingNoteTypesDataTable, holdingTypesDataTable, hridSettingsDataTable, idTypesDataTable, illPoliciesDataTable, instancesDataTable, instanceFormatsDataTable, instanceNoteTypesDataTable, instanceRelationshipsDataTable, instanceRelationshipTypesDataTable, instanceSourceMarcsDataTable, instanceStatusesDataTable, instanceTypesDataTable, institutionsDataTable, interfacesDataTable, interfaceCredentialsDataTable, invoicesDataTable, invoiceItemsDataTable, invoiceTransactionSummariesDataTable, itemsDataTable, itemDamagedStatusesDataTable, itemNoteTypesDataTable, jobExecutionsDataTable, jobExecutionProgressesDataTable, jobExecutionSourceChunksDataTable, journalRecordsDataTable, ledgersDataTable, ledgerFiscalYearsDataTable, librariesDataTable, loansDataTable, loanPoliciesDataTable, loanTypesDataTable, locationsDataTable, loginsDataTable, lostItemFeePoliciesDataTable, mappingRulesDataTable, marcRecordsDataTable, materialTypesDataTable, modeOfIssuancesDataTable, natureOfContentTermsDataTable, notesDataTable, noteTypesDataTable, ordersDataTable, orderInvoicesDataTable, orderItemsDataTable, orderTemplatesDataTable, orderTransactionSummariesDataTable, organizationsDataTable, overdueFinePoliciesDataTable, ownersDataTable, patronActionSessionsDataTable, patronBlockConditionsDataTable, patronBlockLimitsDataTable, patronNoticePoliciesDataTable, paymentsDataTable, paymentMethodsDataTable, permissionsDataTable, permissionsUsersDataTable, piecesDataTable, precedingSucceedingTitlesDataTable, prefixesDataTable, proxiesDataTable, rawRecordsDataTable, recordsDataTable, refundReasonsDataTable, reportingCodesDataTable, requestsDataTable, requestPoliciesDataTable, scheduledNoticesDataTable, servicePointsDataTable, servicePointUsersDataTable, snapshotsDataTable, staffSlipsDataTable, statisticalCodesDataTable, statisticalCodeTypesDataTable, suffixesDataTable, tagsDataTable, templatesDataTable, temporaryInvoiceTransactionsDataTable, temporaryOrderTransactionsDataTable, titlesDataTable, transactionsDataTable, transferAccountsDataTable, transferCriteriasDataTable, usersDataTable, userAcquisitionsUnitsDataTable, userRequestPreferencesDataTable, vouchersDataTable, voucherItemsDataTable, waiveReasonsDataTable;
         private bool checkConstraints;
         private string connectionString;
         private bool identityInsert;
@@ -447,6 +447,21 @@ namespace FolioLibrary
             dr["creation_date"] = (object)classificationType.CreationTime ?? DBNull.Value;
             dr["created_by"] = (object)classificationType.CreationUserId ?? DBNull.Value;
             classificationTypesDataTable.Rows.Add(dr);
+        }
+
+        public void Insert(CloseReason closeReason)
+        {
+            if (closeReasonsDataTable == null)
+            {
+                closeReasonsDataTable = new DataTable();
+                closeReasonsDataTable.Columns.Add(new DataColumn { ColumnName = "id", DataType = typeof(Guid) });
+                closeReasonsDataTable.Columns.Add(new DataColumn { ColumnName = "jsonb", DataType = typeof(string) });
+                closeReasonsDataTable.Columns["jsonb"].ExtendedProperties["NpgsqlDbType"] = NpgsqlDbType.Jsonb;
+            }
+            var dr = closeReasonsDataTable.NewRow();
+            dr["id"] = (object)closeReason.Id ?? DBNull.Value;
+            dr["jsonb"] = (object)closeReason.Content ?? DBNull.Value;
+            closeReasonsDataTable.Rows.Add(dr);
         }
 
         public void Insert(Comment comment)
@@ -2092,21 +2107,6 @@ namespace FolioLibrary
             rawRecordsDataTable.Rows.Add(dr);
         }
 
-        public void Insert(ReasonsForClosure reasonsForClosure)
-        {
-            if (reasonsForClosuresDataTable == null)
-            {
-                reasonsForClosuresDataTable = new DataTable();
-                reasonsForClosuresDataTable.Columns.Add(new DataColumn { ColumnName = "id", DataType = typeof(Guid) });
-                reasonsForClosuresDataTable.Columns.Add(new DataColumn { ColumnName = "jsonb", DataType = typeof(string) });
-                reasonsForClosuresDataTable.Columns["jsonb"].ExtendedProperties["NpgsqlDbType"] = NpgsqlDbType.Jsonb;
-            }
-            var dr = reasonsForClosuresDataTable.NewRow();
-            dr["id"] = (object)reasonsForClosure.Id ?? DBNull.Value;
-            dr["jsonb"] = (object)reasonsForClosure.Content ?? DBNull.Value;
-            reasonsForClosuresDataTable.Rows.Add(dr);
-        }
-
         public void Insert(Record record)
         {
             if (recordsDataTable == null)
@@ -2394,6 +2394,52 @@ namespace FolioLibrary
             dr["creation_date"] = (object)template.CreationTime ?? DBNull.Value;
             dr["created_by"] = (object)template.CreationUserId ?? DBNull.Value;
             templatesDataTable.Rows.Add(dr);
+        }
+
+        public void Insert(TemporaryInvoiceTransaction temporaryInvoiceTransaction)
+        {
+            if (temporaryInvoiceTransactionsDataTable == null)
+            {
+                temporaryInvoiceTransactionsDataTable = new DataTable();
+                temporaryInvoiceTransactionsDataTable.Columns.Add(new DataColumn { ColumnName = "id", DataType = typeof(Guid) });
+                temporaryInvoiceTransactionsDataTable.Columns.Add(new DataColumn { ColumnName = "jsonb", DataType = typeof(string) });
+                temporaryInvoiceTransactionsDataTable.Columns.Add(new DataColumn { ColumnName = "sourceinvoiceid", DataType = typeof(Guid) });
+                temporaryInvoiceTransactionsDataTable.Columns.Add(new DataColumn { ColumnName = "paymentencumbranceid", DataType = typeof(Guid) });
+                temporaryInvoiceTransactionsDataTable.Columns.Add(new DataColumn { ColumnName = "fromfundid", DataType = typeof(Guid) });
+                temporaryInvoiceTransactionsDataTable.Columns.Add(new DataColumn { ColumnName = "tofundid", DataType = typeof(Guid) });
+                temporaryInvoiceTransactionsDataTable.Columns.Add(new DataColumn { ColumnName = "fiscalyearid", DataType = typeof(Guid) });
+                temporaryInvoiceTransactionsDataTable.Columns["jsonb"].ExtendedProperties["NpgsqlDbType"] = NpgsqlDbType.Jsonb;
+            }
+            var dr = temporaryInvoiceTransactionsDataTable.NewRow();
+            dr["id"] = (object)temporaryInvoiceTransaction.Id ?? DBNull.Value;
+            dr["jsonb"] = (object)temporaryInvoiceTransaction.Content ?? DBNull.Value;
+            dr["sourceinvoiceid"] = (object)temporaryInvoiceTransaction.Sourceinvoiceid ?? DBNull.Value;
+            dr["paymentencumbranceid"] = (object)temporaryInvoiceTransaction.Paymentencumbranceid ?? DBNull.Value;
+            dr["fromfundid"] = (object)temporaryInvoiceTransaction.Fromfundid ?? DBNull.Value;
+            dr["tofundid"] = (object)temporaryInvoiceTransaction.Tofundid ?? DBNull.Value;
+            dr["fiscalyearid"] = (object)temporaryInvoiceTransaction.Fiscalyearid ?? DBNull.Value;
+            temporaryInvoiceTransactionsDataTable.Rows.Add(dr);
+        }
+
+        public void Insert(TemporaryOrderTransaction temporaryOrderTransaction)
+        {
+            if (temporaryOrderTransactionsDataTable == null)
+            {
+                temporaryOrderTransactionsDataTable = new DataTable();
+                temporaryOrderTransactionsDataTable.Columns.Add(new DataColumn { ColumnName = "id", DataType = typeof(Guid) });
+                temporaryOrderTransactionsDataTable.Columns.Add(new DataColumn { ColumnName = "jsonb", DataType = typeof(string) });
+                temporaryOrderTransactionsDataTable.Columns.Add(new DataColumn { ColumnName = "encumbrance_sourcepurchaseorderid", DataType = typeof(Guid) });
+                temporaryOrderTransactionsDataTable.Columns.Add(new DataColumn { ColumnName = "fiscalyearid", DataType = typeof(Guid) });
+                temporaryOrderTransactionsDataTable.Columns.Add(new DataColumn { ColumnName = "fromfundid", DataType = typeof(Guid) });
+                temporaryOrderTransactionsDataTable.Columns["jsonb"].ExtendedProperties["NpgsqlDbType"] = NpgsqlDbType.Jsonb;
+            }
+            var dr = temporaryOrderTransactionsDataTable.NewRow();
+            dr["id"] = (object)temporaryOrderTransaction.Id ?? DBNull.Value;
+            dr["jsonb"] = (object)temporaryOrderTransaction.Content ?? DBNull.Value;
+            dr["encumbrance_sourcepurchaseorderid"] = (object)temporaryOrderTransaction.EncumbranceSourcepurchaseorderid ?? DBNull.Value;
+            dr["fiscalyearid"] = (object)temporaryOrderTransaction.Fiscalyearid ?? DBNull.Value;
+            dr["fromfundid"] = (object)temporaryOrderTransaction.Fromfundid ?? DBNull.Value;
+            temporaryOrderTransactionsDataTable.Rows.Add(dr);
         }
 
         public void Insert(Title title)
@@ -2835,6 +2881,15 @@ namespace FolioLibrary
                 sqlBulkCopy.ColumnMappings.Add("created_by", "created_by");
                 sqlBulkCopy.WriteToServer(classificationTypesDataTable);
                 classificationTypesDataTable.Clear();
+            }
+            if (closeReasonsDataTable != null && closeReasonsDataTable.Rows.Count > 0)
+            {
+                sqlBulkCopy.DestinationTableName = $"diku_mod_orders_storage{(IsMySql ? "_" : ".")}reasons_for_closure";
+                sqlBulkCopy.ColumnMappings.Clear();
+                sqlBulkCopy.ColumnMappings.Add("id", "id");
+                sqlBulkCopy.ColumnMappings.Add("jsonb", "jsonb");
+                sqlBulkCopy.WriteToServer(closeReasonsDataTable);
+                closeReasonsDataTable.Clear();
             }
             if (commentsDataTable != null && commentsDataTable.Rows.Count > 0)
             {
@@ -3785,15 +3840,6 @@ namespace FolioLibrary
                 sqlBulkCopy.WriteToServer(rawRecordsDataTable);
                 rawRecordsDataTable.Clear();
             }
-            if (reasonsForClosuresDataTable != null && reasonsForClosuresDataTable.Rows.Count > 0)
-            {
-                sqlBulkCopy.DestinationTableName = $"diku_mod_orders_storage{(IsMySql ? "_" : ".")}reasons_for_closure";
-                sqlBulkCopy.ColumnMappings.Clear();
-                sqlBulkCopy.ColumnMappings.Add("id", "id");
-                sqlBulkCopy.ColumnMappings.Add("jsonb", "jsonb");
-                sqlBulkCopy.WriteToServer(reasonsForClosuresDataTable);
-                reasonsForClosuresDataTable.Clear();
-            }
             if (recordsDataTable != null && recordsDataTable.Rows.Count > 0)
             {
                 sqlBulkCopy.DestinationTableName = $"diku_mod_source_record_storage{(IsMySql ? "_" : ".")}records";
@@ -3961,6 +4007,32 @@ namespace FolioLibrary
                 sqlBulkCopy.WriteToServer(templatesDataTable);
                 templatesDataTable.Clear();
             }
+            if (temporaryInvoiceTransactionsDataTable != null && temporaryInvoiceTransactionsDataTable.Rows.Count > 0)
+            {
+                sqlBulkCopy.DestinationTableName = $"diku_mod_finance_storage{(IsMySql ? "_" : ".")}temporary_invoice_transactions";
+                sqlBulkCopy.ColumnMappings.Clear();
+                sqlBulkCopy.ColumnMappings.Add("id", "id");
+                sqlBulkCopy.ColumnMappings.Add("jsonb", "jsonb");
+                sqlBulkCopy.ColumnMappings.Add("sourceinvoiceid", "sourceinvoiceid");
+                sqlBulkCopy.ColumnMappings.Add("paymentencumbranceid", "paymentencumbranceid");
+                sqlBulkCopy.ColumnMappings.Add("fromfundid", "fromfundid");
+                sqlBulkCopy.ColumnMappings.Add("tofundid", "tofundid");
+                sqlBulkCopy.ColumnMappings.Add("fiscalyearid", "fiscalyearid");
+                sqlBulkCopy.WriteToServer(temporaryInvoiceTransactionsDataTable);
+                temporaryInvoiceTransactionsDataTable.Clear();
+            }
+            if (temporaryOrderTransactionsDataTable != null && temporaryOrderTransactionsDataTable.Rows.Count > 0)
+            {
+                sqlBulkCopy.DestinationTableName = $"diku_mod_finance_storage{(IsMySql ? "_" : ".")}temporary_order_transactions";
+                sqlBulkCopy.ColumnMappings.Clear();
+                sqlBulkCopy.ColumnMappings.Add("id", "id");
+                sqlBulkCopy.ColumnMappings.Add("jsonb", "jsonb");
+                sqlBulkCopy.ColumnMappings.Add("encumbrance_sourcepurchaseorderid", "encumbrance_sourcepurchaseorderid");
+                sqlBulkCopy.ColumnMappings.Add("fiscalyearid", "fiscalyearid");
+                sqlBulkCopy.ColumnMappings.Add("fromfundid", "fromfundid");
+                sqlBulkCopy.WriteToServer(temporaryOrderTransactionsDataTable);
+                temporaryOrderTransactionsDataTable.Clear();
+            }
             if (titlesDataTable != null && titlesDataTable.Rows.Count > 0)
             {
                 sqlBulkCopy.DestinationTableName = $"diku_mod_orders_storage{(IsMySql ? "_" : ".")}titles";
@@ -4105,6 +4177,7 @@ namespace FolioLibrary
             if (checkInsDataTable != null) checkInsDataTable.Dispose();
             if (circulationRulesDataTable != null) circulationRulesDataTable.Dispose();
             if (classificationTypesDataTable != null) classificationTypesDataTable.Dispose();
+            if (closeReasonsDataTable != null) closeReasonsDataTable.Dispose();
             if (commentsDataTable != null) commentsDataTable.Dispose();
             if (configurationsDataTable != null) configurationsDataTable.Dispose();
             if (contactsDataTable != null) contactsDataTable.Dispose();
@@ -4190,7 +4263,6 @@ namespace FolioLibrary
             if (prefixesDataTable != null) prefixesDataTable.Dispose();
             if (proxiesDataTable != null) proxiesDataTable.Dispose();
             if (rawRecordsDataTable != null) rawRecordsDataTable.Dispose();
-            if (reasonsForClosuresDataTable != null) reasonsForClosuresDataTable.Dispose();
             if (recordsDataTable != null) recordsDataTable.Dispose();
             if (refundReasonsDataTable != null) refundReasonsDataTable.Dispose();
             if (reportingCodesDataTable != null) reportingCodesDataTable.Dispose();
@@ -4206,6 +4278,8 @@ namespace FolioLibrary
             if (suffixesDataTable != null) suffixesDataTable.Dispose();
             if (tagsDataTable != null) tagsDataTable.Dispose();
             if (templatesDataTable != null) templatesDataTable.Dispose();
+            if (temporaryInvoiceTransactionsDataTable != null) temporaryInvoiceTransactionsDataTable.Dispose();
+            if (temporaryOrderTransactionsDataTable != null) temporaryOrderTransactionsDataTable.Dispose();
             if (titlesDataTable != null) titlesDataTable.Dispose();
             if (transactionsDataTable != null) transactionsDataTable.Dispose();
             if (transferAccountsDataTable != null) transferAccountsDataTable.Dispose();

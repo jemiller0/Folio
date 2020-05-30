@@ -1,6 +1,6 @@
 DROP SCHEMA IF EXISTS uc CASCADE;
 CREATE SCHEMA uc;
-CREATE FUNCTION uc.timestamp_cast(IN TEXT) RETURNS TIMESTAMP WITH TIME ZONE AS 'SELECT CAST($1 AS TIMESTAMP WITH TIME ZONE);' LANGUAGE 'sql' IMMUTABLE;
+CREATE FUNCTION uc.timestamp_cast(IN TEXT) RETURNS TIMESTAMP WITH TIME ZONE LANGUAGE PLPGSQL IMMUTABLE AS 'BEGIN RETURN $1::TIMESTAMP WITH TIME ZONE; EXCEPTION WHEN OTHERS THEN RETURN NULL; END';
 CREATE VIEW uc.acquisitions_units AS
 SELECT
 id AS id,
@@ -314,6 +314,13 @@ CAST(jsonb#>>'{metadata,updatedByUserId}' AS UUID) AS updated_by_user_id,
 jsonb#>>'{metadata,updatedByUsername}' AS updated_by_username,
 jsonb_pretty(jsonb) AS content
 FROM diku_mod_inventory_storage.classification_type;
+CREATE VIEW uc.close_reasons AS
+SELECT
+id AS id,
+jsonb->>'reason' AS name,
+jsonb->>'source' AS source,
+jsonb_pretty(jsonb) AS content
+FROM diku_mod_orders_storage.reasons_for_closure;
 CREATE VIEW uc.comments AS
 SELECT
 id AS id,
@@ -2651,13 +2658,6 @@ id AS id,
 jsonb->>'content' AS content2,
 jsonb_pretty(jsonb) AS content
 FROM diku_mod_source_record_storage.raw_records;
-CREATE VIEW uc.reasons_for_closures AS
-SELECT
-id AS id,
-jsonb->>'reason' AS reason,
-jsonb->>'source' AS source,
-jsonb_pretty(jsonb) AS content
-FROM diku_mod_orders_storage.reasons_for_closure;
 CREATE VIEW uc.records AS
 SELECT
 id AS id,
@@ -2943,6 +2943,90 @@ CAST(jsonb#>>'{metadata,updatedByUserId}' AS UUID) AS updated_by_user_id,
 jsonb#>>'{metadata,updatedByUsername}' AS updated_by_username,
 jsonb_pretty(jsonb) AS content
 FROM diku_mod_template_engine.template;
+CREATE VIEW uc.temporary_invoice_transaction_tags AS
+SELECT
+id AS id,
+temporary_invoice_transaction_id AS temporary_invoice_transaction_id,
+CAST(jsonb AS VARCHAR(1024)) AS content
+FROM (SELECT id::text || ordinality::text AS id, id AS temporary_invoice_transaction_id, value AS jsonb FROM diku_mod_finance_storage.temporary_invoice_transactions, jsonb_array_elements_text((jsonb#>>'{tags,tagList}')::jsonb) WITH ORDINALITY) a;
+CREATE VIEW uc.temporary_invoice_transactions AS
+SELECT
+id AS id,
+CAST(jsonb->>'amount' AS DECIMAL(19,2)) AS amount,
+jsonb->>'currency' AS currency,
+jsonb->>'description' AS description,
+CAST(jsonb#>>'{encumbrance,amountAwaitingPayment}' AS DECIMAL(19,2)) AS encumbrance_amount_awaiting_payment,
+CAST(jsonb#>>'{encumbrance,amountExpended}' AS DECIMAL(19,2)) AS encumbrance_amount_expended,
+CAST(jsonb#>>'{encumbrance,initialAmountEncumbered}' AS DECIMAL(19,2)) AS encumbrance_initial_amount_encumbered,
+jsonb#>>'{encumbrance,status}' AS encumbrance_status,
+jsonb#>>'{encumbrance,orderType}' AS encumbrance_order_type,
+CAST(jsonb#>>'{encumbrance,subscription}' AS BOOLEAN) AS encumbrance_subscription,
+CAST(jsonb#>>'{encumbrance,reEncumber}' AS BOOLEAN) AS encumbrance_re_encumber,
+CAST(jsonb#>>'{encumbrance,sourcePurchaseOrderId}' AS UUID) AS encumbrance_source_purchase_order_id,
+CAST(jsonb#>>'{encumbrance,sourcePoLineId}' AS UUID) AS encumbrance_source_po_line_id,
+CAST(jsonb->>'fiscalYearId' AS UUID) AS fiscal_year_id,
+CAST(jsonb->>'fromFundId' AS UUID) AS from_fund_id,
+CAST(jsonb->>'paymentEncumbranceId' AS UUID) AS payment_encumbrance_id,
+jsonb->>'source' AS source,
+CAST(jsonb->>'sourceFiscalYearId' AS UUID) AS source_fiscal_year_id,
+CAST(jsonb->>'sourceInvoiceId' AS UUID) AS source_invoice_id,
+CAST(jsonb->>'sourceInvoiceLineId' AS UUID) AS source_invoice_line_id,
+CAST(jsonb->>'toFundId' AS UUID) AS to_fund_id,
+jsonb->>'transactionType' AS transaction_type,
+uc.TIMESTAMP_CAST(jsonb#>>'{metadata,createdDate}') AS created_date,
+CAST(jsonb#>>'{metadata,createdByUserId}' AS UUID) AS created_by_user_id,
+jsonb#>>'{metadata,createdByUsername}' AS created_by_username,
+uc.TIMESTAMP_CAST(jsonb#>>'{metadata,updatedDate}') AS updated_date,
+CAST(jsonb#>>'{metadata,updatedByUserId}' AS UUID) AS updated_by_user_id,
+jsonb#>>'{metadata,updatedByUsername}' AS updated_by_username,
+jsonb_pretty(jsonb) AS content,
+sourceinvoiceid AS sourceinvoiceid,
+paymentencumbranceid AS paymentencumbranceid,
+fromfundid AS fromfundid,
+tofundid AS tofundid,
+fiscalyearid AS fiscalyearid
+FROM diku_mod_finance_storage.temporary_invoice_transactions;
+CREATE VIEW uc.temporary_order_transaction_tags AS
+SELECT
+id AS id,
+temporary_order_transaction_id AS temporary_order_transaction_id,
+CAST(jsonb AS VARCHAR(1024)) AS content
+FROM (SELECT id::text || ordinality::text AS id, id AS temporary_order_transaction_id, value AS jsonb FROM diku_mod_finance_storage.temporary_order_transactions, jsonb_array_elements_text((jsonb#>>'{tags,tagList}')::jsonb) WITH ORDINALITY) a;
+CREATE VIEW uc.temporary_order_transactions AS
+SELECT
+id AS id,
+CAST(jsonb->>'amount' AS DECIMAL(19,2)) AS amount,
+jsonb->>'currency' AS currency,
+jsonb->>'description' AS description,
+CAST(jsonb#>>'{encumbrance,amountAwaitingPayment}' AS DECIMAL(19,2)) AS encumbrance_amount_awaiting_payment,
+CAST(jsonb#>>'{encumbrance,amountExpended}' AS DECIMAL(19,2)) AS encumbrance_amount_expended,
+CAST(jsonb#>>'{encumbrance,initialAmountEncumbered}' AS DECIMAL(19,2)) AS encumbrance_initial_amount_encumbered,
+jsonb#>>'{encumbrance,status}' AS encumbrance_status,
+jsonb#>>'{encumbrance,orderType}' AS encumbrance_order_type,
+CAST(jsonb#>>'{encumbrance,subscription}' AS BOOLEAN) AS encumbrance_subscription,
+CAST(jsonb#>>'{encumbrance,reEncumber}' AS BOOLEAN) AS encumbrance_re_encumber,
+CAST(jsonb#>>'{encumbrance,sourcePurchaseOrderId}' AS UUID) AS encumbrance_source_purchase_order_id,
+CAST(jsonb#>>'{encumbrance,sourcePoLineId}' AS UUID) AS encumbrance_source_po_line_id,
+CAST(jsonb->>'fiscalYearId' AS UUID) AS fiscal_year_id,
+CAST(jsonb->>'fromFundId' AS UUID) AS from_fund_id,
+CAST(jsonb->>'paymentEncumbranceId' AS UUID) AS payment_encumbrance_id,
+jsonb->>'source' AS source,
+CAST(jsonb->>'sourceFiscalYearId' AS UUID) AS source_fiscal_year_id,
+CAST(jsonb->>'sourceInvoiceId' AS UUID) AS source_invoice_id,
+CAST(jsonb->>'sourceInvoiceLineId' AS UUID) AS source_invoice_line_id,
+CAST(jsonb->>'toFundId' AS UUID) AS to_fund_id,
+jsonb->>'transactionType' AS transaction_type,
+uc.TIMESTAMP_CAST(jsonb#>>'{metadata,createdDate}') AS created_date,
+CAST(jsonb#>>'{metadata,createdByUserId}' AS UUID) AS created_by_user_id,
+jsonb#>>'{metadata,createdByUsername}' AS created_by_username,
+uc.TIMESTAMP_CAST(jsonb#>>'{metadata,updatedDate}') AS updated_date,
+CAST(jsonb#>>'{metadata,updatedByUserId}' AS UUID) AS updated_by_user_id,
+jsonb#>>'{metadata,updatedByUsername}' AS updated_by_username,
+jsonb_pretty(jsonb) AS content,
+encumbrance_sourcepurchaseorderid AS encumbrance_sourcepurchaseorderid,
+fiscalyearid AS fiscalyearid,
+fromfundid AS fromfundid
+FROM diku_mod_finance_storage.temporary_order_transactions;
 CREATE VIEW uc.title_product_ids AS
 SELECT
 id AS id,

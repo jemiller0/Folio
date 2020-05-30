@@ -1550,6 +1550,103 @@ namespace FolioLibrary
             traceSource.TraceEvent(TraceEventType.Verbose, 0, s.Elapsed.ToString());
         }
 
+        public IEnumerable<JObject> CloseReasons(string where = null, string orderBy = null, int? skip = null, int? take = null)
+        {
+            var s = Stopwatch.StartNew();
+            traceSource.TraceEvent(TraceEventType.Verbose, 0, "Querying close reasons");
+            AuthenticateIfNecessary();
+            var url = $"{Url}/orders-storage/configuration/reasons-for-closure{(where != null || orderBy != null ? $"?query={WebUtility.UrlEncode(where)}{(orderBy != null ? $"{(where != null ? " " : "cql.allrecords=1 ")}sortby {WebUtility.UrlEncode(orderBy)}" : "")}" : "")}{(skip != null ? $"{(where != null || orderBy != null ? "&" : "?")}offset={skip}" : "")}{(where != null || orderBy != null || skip != null ? "&" : "?")}limit={take ?? int.MaxValue}";
+            traceSource.TraceEvent(TraceEventType.Verbose, 0, url);
+            var hrm = httpClient.GetAsync(url).Result;
+            if (hrm.StatusCode != HttpStatusCode.OK)
+            {
+                var s2 = hrm.Content.ReadAsStringAsync().Result;
+                if (hrm.Content.Headers.ContentType.MediaType == "application/json") s2 = JObject.Parse(s2).ToString();
+                traceSource.TraceEvent(TraceEventType.Verbose, 0, s2);
+                throw new HttpRequestException($"Response status code does not indicate success: {hrm.StatusCode} ({hrm.ReasonPhrase}).\r\n{s2}");
+            }
+            using (var sr = new StreamReader(hrm.Content.ReadAsStreamAsync().Result))
+            using (var jtr = new JsonTextReader(sr) { SupportMultipleContent = true })
+            {
+                if (!jtr.Read()) throw new InvalidDataException(hrm.Content.ReadAsStringAsync().Result); jtr.Read(); jtr.Read();
+                var js = new JsonSerializer();
+                while (jtr.Read() && jtr.TokenType != JsonToken.EndArray)
+                {
+                    var jo = (JObject)js.Deserialize(jtr);
+                    traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", jo);
+                    yield return jo;
+                }
+            }
+            traceSource.TraceEvent(TraceEventType.Verbose, 0, s.Elapsed.ToString());
+        }
+
+        public JObject GetCloseReason(string id)
+        {
+            var s = Stopwatch.StartNew();
+            traceSource.TraceEvent(TraceEventType.Verbose, 0, $"Getting close reason {id}");
+            AuthenticateIfNecessary();
+            var url = $"{Url}/orders-storage/configuration/reasons-for-closure/{id}";
+            traceSource.TraceEvent(TraceEventType.Verbose, 0, url);
+            var hrm = httpClient.GetAsync(url).Result;
+            var s2 = hrm.Content.ReadAsStringAsync().Result;
+            var jo = hrm.Content.Headers.ContentType.MediaType == "application/json" ? JObject.Parse(s2) : null;
+            traceSource.TraceEvent(TraceEventType.Verbose, 0, s2);
+            if (hrm.StatusCode != HttpStatusCode.OK) throw new HttpRequestException($"Response status code does not indicate success: {hrm.StatusCode} ({hrm.ReasonPhrase}).\r\n{s2}");
+            traceSource.TraceEvent(TraceEventType.Verbose, 0, s.Elapsed.ToString());
+            return jo;
+        }
+
+        public JObject InsertCloseReason(JObject closeReason)
+        {
+            var s = Stopwatch.StartNew();
+            if (closeReason["id"] == null) closeReason["id"] = Guid.NewGuid();
+            traceSource.TraceEvent(TraceEventType.Verbose, 0, $"Inserting close reason {closeReason["id"]}");
+            AuthenticateIfNecessary();
+            var url = $"{Url}/orders-storage/configuration/reasons-for-closure";
+            traceSource.TraceEvent(TraceEventType.Verbose, 0, url);
+            var s2 = closeReason.ToString(formatting);
+            traceSource.TraceEvent(TraceEventType.Verbose, 0, s2);
+            var sc = new StringContent(s2, Encoding.UTF8, "application/json");
+            var hrm = httpClient.PostAsync(url, sc).Result;
+            s2 = hrm.Content.ReadAsStringAsync().Result;
+            var jo = hrm.Content.Headers.ContentType.MediaType == "application/json" ? JObject.Parse(s2) : null;
+            traceSource.TraceEvent(TraceEventType.Verbose, 0, s2);
+            if (hrm.StatusCode != HttpStatusCode.Created) throw new HttpRequestException($"Response status code does not indicate success: {hrm.StatusCode} ({hrm.ReasonPhrase}).\r\n{s2}");
+            traceSource.TraceEvent(TraceEventType.Verbose, 0, s.Elapsed.ToString());
+            return jo;
+        }
+
+        public void UpdateCloseReason(JObject closeReason)
+        {
+            var s = Stopwatch.StartNew();
+            traceSource.TraceEvent(TraceEventType.Verbose, 0, $"Updating close reason {closeReason["id"]}");
+            AuthenticateIfNecessary();
+            var url = $"{Url}/orders-storage/configuration/reasons-for-closure/{closeReason["id"]}";
+            traceSource.TraceEvent(TraceEventType.Verbose, 0, url);
+            var s2 = closeReason.ToString(formatting);
+            traceSource.TraceEvent(TraceEventType.Verbose, 0, s2);
+            var sc = new StringContent(s2, Encoding.UTF8, "application/json");
+            var hrm = httpClient.PutAsync(url, sc).Result;
+            s2 = hrm.Content.ReadAsStringAsync().Result;
+            traceSource.TraceEvent(TraceEventType.Verbose, 0, s2);
+            if (hrm.StatusCode != HttpStatusCode.NoContent) throw new HttpRequestException($"Response status code does not indicate success: {hrm.StatusCode} ({hrm.ReasonPhrase}).\r\n{s2}");
+            traceSource.TraceEvent(TraceEventType.Verbose, 0, s.Elapsed.ToString());
+        }
+
+        public void DeleteCloseReason(string id)
+        {
+            var s = Stopwatch.StartNew();
+            traceSource.TraceEvent(TraceEventType.Verbose, 0, $"Deleting close reason {id}");
+            AuthenticateIfNecessary();
+            var url = $"{Url}/orders-storage/configuration/reasons-for-closure/{id}";
+            traceSource.TraceEvent(TraceEventType.Verbose, 0, url);
+            var hrm = httpClient.DeleteAsync(url).Result;
+            var s2 = hrm.Content.ReadAsStringAsync().Result;
+            traceSource.TraceEvent(TraceEventType.Verbose, 0, s2);
+            if (hrm.StatusCode != HttpStatusCode.NoContent) throw new HttpRequestException($"Response status code does not indicate success: {hrm.StatusCode} ({hrm.ReasonPhrase}).\r\n{s2}");
+            traceSource.TraceEvent(TraceEventType.Verbose, 0, s.Elapsed.ToString());
+        }
+
         public IEnumerable<JObject> Comments(string where = null, string orderBy = null, int? skip = null, int? take = null)
         {
             var s = Stopwatch.StartNew();
@@ -7980,103 +8077,6 @@ namespace FolioLibrary
             traceSource.TraceEvent(TraceEventType.Verbose, 0, $"Deleting proxy {id}");
             AuthenticateIfNecessary();
             var url = $"{Url}/proxiesfor/{id}";
-            traceSource.TraceEvent(TraceEventType.Verbose, 0, url);
-            var hrm = httpClient.DeleteAsync(url).Result;
-            var s2 = hrm.Content.ReadAsStringAsync().Result;
-            traceSource.TraceEvent(TraceEventType.Verbose, 0, s2);
-            if (hrm.StatusCode != HttpStatusCode.NoContent) throw new HttpRequestException($"Response status code does not indicate success: {hrm.StatusCode} ({hrm.ReasonPhrase}).\r\n{s2}");
-            traceSource.TraceEvent(TraceEventType.Verbose, 0, s.Elapsed.ToString());
-        }
-
-        public IEnumerable<JObject> ReasonsForClosures(string where = null, string orderBy = null, int? skip = null, int? take = null)
-        {
-            var s = Stopwatch.StartNew();
-            traceSource.TraceEvent(TraceEventType.Verbose, 0, "Querying reasons for closures");
-            AuthenticateIfNecessary();
-            var url = $"{Url}/orders-storage/configuration/reasons-for-closure{(where != null || orderBy != null ? $"?query={WebUtility.UrlEncode(where)}{(orderBy != null ? $"{(where != null ? " " : "cql.allrecords=1 ")}sortby {WebUtility.UrlEncode(orderBy)}" : "")}" : "")}{(skip != null ? $"{(where != null || orderBy != null ? "&" : "?")}offset={skip}" : "")}{(where != null || orderBy != null || skip != null ? "&" : "?")}limit={take ?? int.MaxValue}";
-            traceSource.TraceEvent(TraceEventType.Verbose, 0, url);
-            var hrm = httpClient.GetAsync(url).Result;
-            if (hrm.StatusCode != HttpStatusCode.OK)
-            {
-                var s2 = hrm.Content.ReadAsStringAsync().Result;
-                if (hrm.Content.Headers.ContentType.MediaType == "application/json") s2 = JObject.Parse(s2).ToString();
-                traceSource.TraceEvent(TraceEventType.Verbose, 0, s2);
-                throw new HttpRequestException($"Response status code does not indicate success: {hrm.StatusCode} ({hrm.ReasonPhrase}).\r\n{s2}");
-            }
-            using (var sr = new StreamReader(hrm.Content.ReadAsStreamAsync().Result))
-            using (var jtr = new JsonTextReader(sr) { SupportMultipleContent = true })
-            {
-                if (!jtr.Read()) throw new InvalidDataException(hrm.Content.ReadAsStringAsync().Result); jtr.Read(); jtr.Read();
-                var js = new JsonSerializer();
-                while (jtr.Read() && jtr.TokenType != JsonToken.EndArray)
-                {
-                    var jo = (JObject)js.Deserialize(jtr);
-                    traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", jo);
-                    yield return jo;
-                }
-            }
-            traceSource.TraceEvent(TraceEventType.Verbose, 0, s.Elapsed.ToString());
-        }
-
-        public JObject GetReasonsForClosure(string id)
-        {
-            var s = Stopwatch.StartNew();
-            traceSource.TraceEvent(TraceEventType.Verbose, 0, $"Getting reasons for closure {id}");
-            AuthenticateIfNecessary();
-            var url = $"{Url}/orders-storage/configuration/reasons-for-closure/{id}";
-            traceSource.TraceEvent(TraceEventType.Verbose, 0, url);
-            var hrm = httpClient.GetAsync(url).Result;
-            var s2 = hrm.Content.ReadAsStringAsync().Result;
-            var jo = hrm.Content.Headers.ContentType.MediaType == "application/json" ? JObject.Parse(s2) : null;
-            traceSource.TraceEvent(TraceEventType.Verbose, 0, s2);
-            if (hrm.StatusCode != HttpStatusCode.OK) throw new HttpRequestException($"Response status code does not indicate success: {hrm.StatusCode} ({hrm.ReasonPhrase}).\r\n{s2}");
-            traceSource.TraceEvent(TraceEventType.Verbose, 0, s.Elapsed.ToString());
-            return jo;
-        }
-
-        public JObject InsertReasonsForClosure(JObject reasonsForClosure)
-        {
-            var s = Stopwatch.StartNew();
-            if (reasonsForClosure["id"] == null) reasonsForClosure["id"] = Guid.NewGuid();
-            traceSource.TraceEvent(TraceEventType.Verbose, 0, $"Inserting reasons for closure {reasonsForClosure["id"]}");
-            AuthenticateIfNecessary();
-            var url = $"{Url}/orders-storage/configuration/reasons-for-closure";
-            traceSource.TraceEvent(TraceEventType.Verbose, 0, url);
-            var s2 = reasonsForClosure.ToString(formatting);
-            traceSource.TraceEvent(TraceEventType.Verbose, 0, s2);
-            var sc = new StringContent(s2, Encoding.UTF8, "application/json");
-            var hrm = httpClient.PostAsync(url, sc).Result;
-            s2 = hrm.Content.ReadAsStringAsync().Result;
-            var jo = hrm.Content.Headers.ContentType.MediaType == "application/json" ? JObject.Parse(s2) : null;
-            traceSource.TraceEvent(TraceEventType.Verbose, 0, s2);
-            if (hrm.StatusCode != HttpStatusCode.Created) throw new HttpRequestException($"Response status code does not indicate success: {hrm.StatusCode} ({hrm.ReasonPhrase}).\r\n{s2}");
-            traceSource.TraceEvent(TraceEventType.Verbose, 0, s.Elapsed.ToString());
-            return jo;
-        }
-
-        public void UpdateReasonsForClosure(JObject reasonsForClosure)
-        {
-            var s = Stopwatch.StartNew();
-            traceSource.TraceEvent(TraceEventType.Verbose, 0, $"Updating reasons for closure {reasonsForClosure["id"]}");
-            AuthenticateIfNecessary();
-            var url = $"{Url}/orders-storage/configuration/reasons-for-closure/{reasonsForClosure["id"]}";
-            traceSource.TraceEvent(TraceEventType.Verbose, 0, url);
-            var s2 = reasonsForClosure.ToString(formatting);
-            traceSource.TraceEvent(TraceEventType.Verbose, 0, s2);
-            var sc = new StringContent(s2, Encoding.UTF8, "application/json");
-            var hrm = httpClient.PutAsync(url, sc).Result;
-            s2 = hrm.Content.ReadAsStringAsync().Result;
-            traceSource.TraceEvent(TraceEventType.Verbose, 0, s2);
-            if (hrm.StatusCode != HttpStatusCode.NoContent) throw new HttpRequestException($"Response status code does not indicate success: {hrm.StatusCode} ({hrm.ReasonPhrase}).\r\n{s2}");
-            traceSource.TraceEvent(TraceEventType.Verbose, 0, s.Elapsed.ToString());
-        }
-
-        public void DeleteReasonsForClosure(string id)
-        {
-            var s = Stopwatch.StartNew();
-            traceSource.TraceEvent(TraceEventType.Verbose, 0, $"Deleting reasons for closure {id}");
-            AuthenticateIfNecessary();
-            var url = $"{Url}/orders-storage/configuration/reasons-for-closure/{id}";
             traceSource.TraceEvent(TraceEventType.Verbose, 0, url);
             var hrm = httpClient.DeleteAsync(url).Result;
             var s2 = hrm.Content.ReadAsStringAsync().Result;

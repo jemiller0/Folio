@@ -48,6 +48,12 @@ namespace FolioLibrary
         public virtual ICollection<Ledger> Ledgers { get; set; }
 
         [ScaffoldColumn(false)]
+        public virtual ICollection<TemporaryInvoiceTransaction> TemporaryInvoiceTransactions { get; set; }
+
+        [ScaffoldColumn(false)]
+        public virtual ICollection<TemporaryOrderTransaction> TemporaryOrderTransactions { get; set; }
+
+        [ScaffoldColumn(false)]
         public virtual ICollection<Transaction> Transactions { get; set; }
 
         [ScaffoldColumn(false)]
