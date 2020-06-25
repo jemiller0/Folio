@@ -18,17 +18,17 @@ namespace FolioConsoleApplication
 {
     partial class Program4
     {
-        private static bool api;
+        public static bool api;
         private static bool compress;
         private static string emailAddress = ConfigurationManager.AppSettings["emailAddress"];
         private static string emailName = ConfigurationManager.AppSettings["emailName"];
         private static bool force;
         private static string smtpHost = ConfigurationManager.AppSettings["smtpHost"];
         private static int? take;
-        private readonly static TraceSource traceSource = new TraceSource("FolioConsoleApplication", SourceLevels.Information);
-        private static string userId;
-        private static bool validate;
-        private static bool whatIf;
+        public readonly static TraceSource traceSource = new TraceSource("FolioConsoleApplication", SourceLevels.Information);
+        public static string userId;
+        public static bool validate;
+        public static bool whatIf;
 
         static int Main(string[] args)
         {
@@ -39,7 +39,7 @@ namespace FolioConsoleApplication
                 var verbose = args.Any(s3 => s3.Equals("-Verbose", StringComparison.OrdinalIgnoreCase));
                 var warning = args.Any(s3 => s3.Equals("-Warning", StringComparison.OrdinalIgnoreCase));
                 traceSource.Listeners.Add(new TextWriterTraceListener(Console.Out) { TraceOutputOptions = TraceOptions.DateTime | TraceOptions.ThreadId });
-                if (tracePath != null) traceSource.Listeners.Add(new DefaultTraceListener() { LogFileName = tracePath, TraceOutputOptions = TraceOptions.DateTime | TraceOptions.ThreadId });
+                if (tracePath != null) traceSource.Listeners.Add(new TextWriterTraceListener(new StreamWriter(tracePath, true) { AutoFlush = true }) { TraceOutputOptions = TraceOptions.DateTime | TraceOptions.ThreadId });
                 FolioBulkCopyContext.traceSource.Listeners.AddRange(traceSource.Listeners);
                 FolioDapperContext.traceSource.Listeners.AddRange(traceSource.Listeners);
                 FolioServiceClient.traceSource.Listeners.AddRange(traceSource.Listeners);
@@ -3107,7 +3107,7 @@ namespace FolioConsoleApplication
                 var js = new JsonSerializer { Formatting = Formatting.Indented };
                 jtw.WriteStartArray();
                 var i = 0;
-                foreach (var jo in api ? new [] { fsc.GetCirculationRule() } : fdc.CirculationRules(where, take: take).Select(cr => JObject.Parse(cr.Content)))
+                foreach (var jo in api ? new[] { fsc.GetCirculationRule() } : fdc.CirculationRules(where, take: take).Select(cr => JObject.Parse(cr.Content)))
                 {
                     if (validate)
                     {
@@ -6245,7 +6245,7 @@ namespace FolioConsoleApplication
                 var js = new JsonSerializer { Formatting = Formatting.Indented };
                 jtw.WriteStartArray();
                 var i = 0;
-                foreach (var jo in api ? new [] { fsc.GetHridSetting() } : fdc.HridSettings(where, take: take).Select(hs => JObject.Parse(hs.Content)))
+                foreach (var jo in api ? new[] { fsc.GetHridSetting() } : fdc.HridSettings(where, take: take).Select(hs => JObject.Parse(hs.Content)))
                 {
                     if (validate)
                     {
@@ -15481,6 +15481,7 @@ namespace FolioConsoleApplication
                     if (jo.SelectToken("metadata.createdByUserId") == null && jo2 == null) ((JObject)jo["metadata"]).Add(new JProperty("createdByUserId", userId));
                     if (jo.SelectToken("metadata.updatedDate") == null) ((JObject)jo["metadata"]).Add(new JProperty("updatedDate", dt));
                     if (jo.SelectToken("metadata.updatedByUserId") == null) ((JObject)jo["metadata"]).Add(new JProperty("updatedByUserId", userId));
+                    if (jo.SelectToken("enrollmentDate") == null && jo2 == null) jo.Add(new JProperty("enrollmentDate", dt));
                     if (jo2 != null)
                     {
                         jo2.Merge(jo, new JsonMergeSettings { MergeArrayHandling = MergeArrayHandling.Replace, MergeNullValueHandling = MergeNullValueHandling.Merge });
@@ -15494,9 +15495,23 @@ namespace FolioConsoleApplication
                         var l = js2.Validate(jo);
                         if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"User {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"User {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
                     }
+                    var jo3 = jo2 == null ? JObject.FromObject(new
+                    {
+                        id = Guid.NewGuid(),
+                        userId = (Guid?)jo.SelectToken("id"),
+                        permissions = new object[] { },
+                        metadata = new
+                        {
+                            createdDate = (DateTime?)jo.SelectToken("metadata.createdDate"),
+                            createdByUserId = (string)jo.SelectToken("metadata.createdByUserId"),
+                            updatedDate = (DateTime?)jo.SelectToken("metadata.updatedDate"),
+                            updatedByUserId = (string)jo.SelectToken("metadata.updatedByUserId")
+                        }
+                    }, js) : null;
+                    jo3?.RemoveNullAndEmptyProperties();
                     if (api)
                     {
-                        if (!whatIf) if (jo2 == null) { fsc.InsertUser(jo); ++j; } else { fsc.UpdateUser(jo); ++k; }
+                        if (!whatIf) if (jo2 == null) { fsc.InsertUser(jo); fsc.InsertPermissionsUser(jo3); ++j; } else { fsc.UpdateUser(jo); ++k; }
                         if (i % 100 == 0)
                         {
                             traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
@@ -15513,7 +15528,14 @@ namespace FolioConsoleApplication
                             CreationUserId = (string)jo.SelectToken("metadata.createdByUserId"),
                             Patrongroup = (Guid?)jo.SelectToken("patronGroup")
                         };
-                        if (!whatIf) if (jo2 == null) { fdc.Insert(u); ++j; } else { fdc.Update(u); ++k; }
+                        var pu = jo2 == null ? new PermissionsUser
+                        {
+                            Id = (Guid?)jo3.SelectToken("id"),
+                            Content = jo3.ToString(),
+                            CreationTime = (DateTime?)jo3.SelectToken("metadata.createdDate"),
+                            CreationUserId = (string)jo3.SelectToken("metadata.createdByUserId")
+                        } : null;
+                        if (!whatIf) if (jo2 == null) { fdc.Insert(u); fdc.Insert(pu); ++j; } else { fdc.Update(u); ++k; }
                         if (i % 1000 == 0)
                         {
                             fdc.Commit();
@@ -15531,7 +15553,7 @@ namespace FolioConsoleApplication
                     if (api) throw new NotImplementedException();
                     else
                     {
-                        k = fdc.Execute($"UPDATE diku_mod_users.users SET jsonb = jsonb_set(jsonb, '{{active}}', 'false') WHERE (jsonb#>>'{{metadata,updatedDate}}')::timestamptz < @dt::timestamptz AND id != '{userId}'{(where != null ? $" AND {where}" : "")}", new { dt = dt.ToLocalTime() });
+                        k = fdc.Execute($"UPDATE diku_mod_users.users SET jsonb = jsonb_set(jsonb, '{{active}}', 'false') WHERE (jsonb->>'active')::BOOLEAN = true AND (jsonb#>>'{{metadata,updatedDate}}')::timestamptz < @dt::timestamptz AND id != '{userId}'{(where != null ? $" AND {where}" : "")}", new { dt = dt.ToLocalTime() });
                         fdc.Commit();
                     }
                     traceSource.TraceEvent(TraceEventType.Information, 0, $"Disabled {k} users");
