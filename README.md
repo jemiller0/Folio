@@ -287,7 +287,6 @@ FolioLibrary/Folio.sql contains SQL views that can be helpful for reviewing load
 ## Limitations
 
 * SQL support currently assumes you are using the diku default tenant name
-* Querying data using the web API does not page the results, all data is streamed from one API call
 * Logins can't be round-tripped using web API, the API uses a different JSON schema than is used in the database
 * SQL views for tables that have large numbers of instances may not be performant
 * Doesn't currently use a robust command-line parsing library, mispelled arguments will be ignored
