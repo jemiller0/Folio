@@ -117,6 +117,7 @@ namespace FolioLibrary
             AuthenticateIfNecessary();
             skip = skip ?? 0;
             take = take ?? int.MaxValue;
+            orderBy = orderBy ?? "id";
             while (take > 0)
             {
                 var url = $"{Url}/acquisitions-units-storage/units{(where != null || orderBy != null ? $"?query={WebUtility.UrlEncode(where)}{(orderBy != null ? $"{(where != null ? " " : "cql.allrecords=1 ")}sortby {WebUtility.UrlEncode(orderBy)}" : "")}" : "")}{(skip != null ? $"{(where != null || orderBy != null ? "&" : "?")}offset={skip}" : "")}{(where != null || orderBy != null || skip != null ? "&" : "?")}limit={Math.Min(take.Value, 10000)}";
@@ -254,6 +255,7 @@ namespace FolioLibrary
             AuthenticateIfNecessary();
             skip = skip ?? 0;
             take = take ?? int.MaxValue;
+            orderBy = orderBy ?? "id";
             while (take > 0)
             {
                 var url = $"{Url}/addresstypes{(where != null || orderBy != null ? $"?query={WebUtility.UrlEncode(where)}{(orderBy != null ? $"{(where != null ? " " : "cql.allrecords=1 ")}sortby {WebUtility.UrlEncode(orderBy)}" : "")}" : "")}{(skip != null ? $"{(where != null || orderBy != null ? "&" : "?")}offset={skip}" : "")}{(where != null || orderBy != null || skip != null ? "&" : "?")}limit={Math.Min(take.Value, 10000)}";
@@ -391,6 +393,7 @@ namespace FolioLibrary
             AuthenticateIfNecessary();
             skip = skip ?? 0;
             take = take ?? int.MaxValue;
+            orderBy = orderBy ?? "id";
             while (take > 0)
             {
                 var url = $"{Url}/orders-storage/alerts{(where != null || orderBy != null ? $"?query={WebUtility.UrlEncode(where)}{(orderBy != null ? $"{(where != null ? " " : "cql.allrecords=1 ")}sortby {WebUtility.UrlEncode(orderBy)}" : "")}" : "")}{(skip != null ? $"{(where != null || orderBy != null ? "&" : "?")}offset={skip}" : "")}{(where != null || orderBy != null || skip != null ? "&" : "?")}limit={Math.Min(take.Value, 10000)}";
@@ -528,6 +531,7 @@ namespace FolioLibrary
             AuthenticateIfNecessary();
             skip = skip ?? 0;
             take = take ?? int.MaxValue;
+            orderBy = orderBy ?? "id";
             while (take > 0)
             {
                 var url = $"{Url}/alternative-title-types{(where != null || orderBy != null ? $"?query={WebUtility.UrlEncode(where)}{(orderBy != null ? $"{(where != null ? " " : "cql.allrecords=1 ")}sortby {WebUtility.UrlEncode(orderBy)}" : "")}" : "")}{(skip != null ? $"{(where != null || orderBy != null ? "&" : "?")}offset={skip}" : "")}{(where != null || orderBy != null || skip != null ? "&" : "?")}limit={Math.Min(take.Value, 10000)}";
@@ -665,6 +669,7 @@ namespace FolioLibrary
             AuthenticateIfNecessary();
             skip = skip ?? 0;
             take = take ?? int.MaxValue;
+            orderBy = orderBy ?? "id";
             while (take > 0)
             {
                 var url = $"{Url}/batch-group-storage/batch-groups{(where != null || orderBy != null ? $"?query={WebUtility.UrlEncode(where)}{(orderBy != null ? $"{(where != null ? " " : "cql.allrecords=1 ")}sortby {WebUtility.UrlEncode(orderBy)}" : "")}" : "")}{(skip != null ? $"{(where != null || orderBy != null ? "&" : "?")}offset={skip}" : "")}{(where != null || orderBy != null || skip != null ? "&" : "?")}limit={Math.Min(take.Value, 10000)}";
@@ -802,6 +807,7 @@ namespace FolioLibrary
             AuthenticateIfNecessary();
             skip = skip ?? 0;
             take = take ?? int.MaxValue;
+            orderBy = orderBy ?? "id";
             while (take > 0)
             {
                 var url = $"{Url}/batch-voucher-storage/batch-voucher-exports{(where != null || orderBy != null ? $"?query={WebUtility.UrlEncode(where)}{(orderBy != null ? $"{(where != null ? " " : "cql.allrecords=1 ")}sortby {WebUtility.UrlEncode(orderBy)}" : "")}" : "")}{(skip != null ? $"{(where != null || orderBy != null ? "&" : "?")}offset={skip}" : "")}{(where != null || orderBy != null || skip != null ? "&" : "?")}limit={Math.Min(take.Value, 10000)}";
@@ -939,6 +945,7 @@ namespace FolioLibrary
             AuthenticateIfNecessary();
             skip = skip ?? 0;
             take = take ?? int.MaxValue;
+            orderBy = orderBy ?? "id";
             while (take > 0)
             {
                 var url = $"{Url}/batch-voucher-storage/export-configurations{(where != null || orderBy != null ? $"?query={WebUtility.UrlEncode(where)}{(orderBy != null ? $"{(where != null ? " " : "cql.allrecords=1 ")}sortby {WebUtility.UrlEncode(orderBy)}" : "")}" : "")}{(skip != null ? $"{(where != null || orderBy != null ? "&" : "?")}offset={skip}" : "")}{(where != null || orderBy != null || skip != null ? "&" : "?")}limit={Math.Min(take.Value, 10000)}";
@@ -1076,6 +1083,7 @@ namespace FolioLibrary
             AuthenticateIfNecessary();
             skip = skip ?? 0;
             take = take ?? int.MaxValue;
+            orderBy = orderBy ?? "id";
             while (take > 0)
             {
                 var url = $"{Url}/manualblocks{(where != null || orderBy != null ? $"?query={WebUtility.UrlEncode(where)}{(orderBy != null ? $"{(where != null ? " " : "cql.allrecords=1 ")}sortby {WebUtility.UrlEncode(orderBy)}" : "")}" : "")}{(skip != null ? $"{(where != null || orderBy != null ? "&" : "?")}offset={skip}" : "")}{(where != null || orderBy != null || skip != null ? "&" : "?")}limit={Math.Min(take.Value, 10000)}";
@@ -1213,6 +1221,7 @@ namespace FolioLibrary
             AuthenticateIfNecessary();
             skip = skip ?? 0;
             take = take ?? int.MaxValue;
+            orderBy = orderBy ?? "id";
             while (take > 0)
             {
                 var url = $"{Url}/finance-storage/budgets{(where != null || orderBy != null ? $"?query={WebUtility.UrlEncode(where)}{(orderBy != null ? $"{(where != null ? " " : "cql.allrecords=1 ")}sortby {WebUtility.UrlEncode(orderBy)}" : "")}" : "")}{(skip != null ? $"{(where != null || orderBy != null ? "&" : "?")}offset={skip}" : "")}{(where != null || orderBy != null || skip != null ? "&" : "?")}limit={Math.Min(take.Value, 10000)}";
@@ -1350,6 +1359,7 @@ namespace FolioLibrary
             AuthenticateIfNecessary();
             skip = skip ?? 0;
             take = take ?? int.MaxValue;
+            orderBy = orderBy ?? "id";
             while (take > 0)
             {
                 var url = $"{Url}/call-number-types{(where != null || orderBy != null ? $"?query={WebUtility.UrlEncode(where)}{(orderBy != null ? $"{(where != null ? " " : "cql.allrecords=1 ")}sortby {WebUtility.UrlEncode(orderBy)}" : "")}" : "")}{(skip != null ? $"{(where != null || orderBy != null ? "&" : "?")}offset={skip}" : "")}{(where != null || orderBy != null || skip != null ? "&" : "?")}limit={Math.Min(take.Value, 10000)}";
@@ -1487,6 +1497,7 @@ namespace FolioLibrary
             AuthenticateIfNecessary();
             skip = skip ?? 0;
             take = take ?? int.MaxValue;
+            orderBy = orderBy ?? "id";
             while (take > 0)
             {
                 var url = $"{Url}/location-units/campuses{(where != null || orderBy != null ? $"?query={WebUtility.UrlEncode(where)}{(orderBy != null ? $"{(where != null ? " " : "cql.allrecords=1 ")}sortby {WebUtility.UrlEncode(orderBy)}" : "")}" : "")}{(skip != null ? $"{(where != null || orderBy != null ? "&" : "?")}offset={skip}" : "")}{(where != null || orderBy != null || skip != null ? "&" : "?")}limit={Math.Min(take.Value, 10000)}";
@@ -1624,6 +1635,7 @@ namespace FolioLibrary
             AuthenticateIfNecessary();
             skip = skip ?? 0;
             take = take ?? int.MaxValue;
+            orderBy = orderBy ?? "id";
             while (take > 0)
             {
                 var url = $"{Url}/cancellation-reason-storage/cancellation-reasons{(where != null || orderBy != null ? $"?query={WebUtility.UrlEncode(where)}{(orderBy != null ? $"{(where != null ? " " : "cql.allrecords=1 ")}sortby {WebUtility.UrlEncode(orderBy)}" : "")}" : "")}{(skip != null ? $"{(where != null || orderBy != null ? "&" : "?")}offset={skip}" : "")}{(where != null || orderBy != null || skip != null ? "&" : "?")}limit={Math.Min(take.Value, 10000)}";
@@ -1761,6 +1773,7 @@ namespace FolioLibrary
             AuthenticateIfNecessary();
             skip = skip ?? 0;
             take = take ?? int.MaxValue;
+            orderBy = orderBy ?? "id";
             while (take > 0)
             {
                 var url = $"{Url}/organizations-storage/categories{(where != null || orderBy != null ? $"?query={WebUtility.UrlEncode(where)}{(orderBy != null ? $"{(where != null ? " " : "cql.allrecords=1 ")}sortby {WebUtility.UrlEncode(orderBy)}" : "")}" : "")}{(skip != null ? $"{(where != null || orderBy != null ? "&" : "?")}offset={skip}" : "")}{(where != null || orderBy != null || skip != null ? "&" : "?")}limit={Math.Min(take.Value, 10000)}";
@@ -1898,6 +1911,7 @@ namespace FolioLibrary
             AuthenticateIfNecessary();
             skip = skip ?? 0;
             take = take ?? int.MaxValue;
+            orderBy = orderBy ?? "id";
             while (take > 0)
             {
                 var url = $"{Url}/check-in-storage/check-ins{(where != null || orderBy != null ? $"?query={WebUtility.UrlEncode(where)}{(orderBy != null ? $"{(where != null ? " " : "cql.allrecords=1 ")}sortby {WebUtility.UrlEncode(orderBy)}" : "")}" : "")}{(skip != null ? $"{(where != null || orderBy != null ? "&" : "?")}offset={skip}" : "")}{(where != null || orderBy != null || skip != null ? "&" : "?")}limit={Math.Min(take.Value, 10000)}";
@@ -2069,6 +2083,7 @@ namespace FolioLibrary
             AuthenticateIfNecessary();
             skip = skip ?? 0;
             take = take ?? int.MaxValue;
+            orderBy = orderBy ?? "id";
             while (take > 0)
             {
                 var url = $"{Url}/classification-types{(where != null || orderBy != null ? $"?query={WebUtility.UrlEncode(where)}{(orderBy != null ? $"{(where != null ? " " : "cql.allrecords=1 ")}sortby {WebUtility.UrlEncode(orderBy)}" : "")}" : "")}{(skip != null ? $"{(where != null || orderBy != null ? "&" : "?")}offset={skip}" : "")}{(where != null || orderBy != null || skip != null ? "&" : "?")}limit={Math.Min(take.Value, 10000)}";
@@ -2206,6 +2221,7 @@ namespace FolioLibrary
             AuthenticateIfNecessary();
             skip = skip ?? 0;
             take = take ?? int.MaxValue;
+            orderBy = orderBy ?? "id";
             while (take > 0)
             {
                 var url = $"{Url}/orders-storage/configuration/reasons-for-closure{(where != null || orderBy != null ? $"?query={WebUtility.UrlEncode(where)}{(orderBy != null ? $"{(where != null ? " " : "cql.allrecords=1 ")}sortby {WebUtility.UrlEncode(orderBy)}" : "")}" : "")}{(skip != null ? $"{(where != null || orderBy != null ? "&" : "?")}offset={skip}" : "")}{(where != null || orderBy != null || skip != null ? "&" : "?")}limit={Math.Min(take.Value, 10000)}";
@@ -2343,6 +2359,7 @@ namespace FolioLibrary
             AuthenticateIfNecessary();
             skip = skip ?? 0;
             take = take ?? int.MaxValue;
+            orderBy = orderBy ?? "id";
             while (take > 0)
             {
                 var url = $"{Url}/comments{(where != null || orderBy != null ? $"?query={WebUtility.UrlEncode(where)}{(orderBy != null ? $"{(where != null ? " " : "cql.allrecords=1 ")}sortby {WebUtility.UrlEncode(orderBy)}" : "")}" : "")}{(skip != null ? $"{(where != null || orderBy != null ? "&" : "?")}offset={skip}" : "")}{(where != null || orderBy != null || skip != null ? "&" : "?")}limit={Math.Min(take.Value, 10000)}";
@@ -2480,6 +2497,7 @@ namespace FolioLibrary
             AuthenticateIfNecessary();
             skip = skip ?? 0;
             take = take ?? int.MaxValue;
+            orderBy = orderBy ?? "id";
             while (take > 0)
             {
                 var url = $"{Url}/configurations/entries{(where != null || orderBy != null ? $"?query={WebUtility.UrlEncode(where)}{(orderBy != null ? $"{(where != null ? " " : "cql.allrecords=1 ")}sortby {WebUtility.UrlEncode(orderBy)}" : "")}" : "")}{(skip != null ? $"{(where != null || orderBy != null ? "&" : "?")}offset={skip}" : "")}{(where != null || orderBy != null || skip != null ? "&" : "?")}limit={Math.Min(take.Value, 10000)}";
@@ -2617,6 +2635,7 @@ namespace FolioLibrary
             AuthenticateIfNecessary();
             skip = skip ?? 0;
             take = take ?? int.MaxValue;
+            orderBy = orderBy ?? "id";
             while (take > 0)
             {
                 var url = $"{Url}/organizations-storage/contacts{(where != null || orderBy != null ? $"?query={WebUtility.UrlEncode(where)}{(orderBy != null ? $"{(where != null ? " " : "cql.allrecords=1 ")}sortby {WebUtility.UrlEncode(orderBy)}" : "")}" : "")}{(skip != null ? $"{(where != null || orderBy != null ? "&" : "?")}offset={skip}" : "")}{(where != null || orderBy != null || skip != null ? "&" : "?")}limit={Math.Min(take.Value, 10000)}";
@@ -2754,6 +2773,7 @@ namespace FolioLibrary
             AuthenticateIfNecessary();
             skip = skip ?? 0;
             take = take ?? int.MaxValue;
+            orderBy = orderBy ?? "id";
             while (take > 0)
             {
                 var url = $"{Url}/contributor-name-types{(where != null || orderBy != null ? $"?query={WebUtility.UrlEncode(where)}{(orderBy != null ? $"{(where != null ? " " : "cql.allrecords=1 ")}sortby {WebUtility.UrlEncode(orderBy)}" : "")}" : "")}{(skip != null ? $"{(where != null || orderBy != null ? "&" : "?")}offset={skip}" : "")}{(where != null || orderBy != null || skip != null ? "&" : "?")}limit={Math.Min(take.Value, 10000)}";
@@ -2891,6 +2911,7 @@ namespace FolioLibrary
             AuthenticateIfNecessary();
             skip = skip ?? 0;
             take = take ?? int.MaxValue;
+            orderBy = orderBy ?? "id";
             while (take > 0)
             {
                 var url = $"{Url}/contributor-types{(where != null || orderBy != null ? $"?query={WebUtility.UrlEncode(where)}{(orderBy != null ? $"{(where != null ? " " : "cql.allrecords=1 ")}sortby {WebUtility.UrlEncode(orderBy)}" : "")}" : "")}{(skip != null ? $"{(where != null || orderBy != null ? "&" : "?")}offset={skip}" : "")}{(where != null || orderBy != null || skip != null ? "&" : "?")}limit={Math.Min(take.Value, 10000)}";
@@ -3030,6 +3051,7 @@ namespace FolioLibrary
             AuthenticateIfNecessary();
             skip = skip ?? 0;
             take = take ?? int.MaxValue;
+            orderBy = orderBy ?? "id";
             while (take > 0)
             {
                 var url = $"{Url}/custom-fields{(where != null || orderBy != null ? $"?query={WebUtility.UrlEncode(where)}{(orderBy != null ? $"{(where != null ? " " : "cql.allrecords=1 ")}sortby {WebUtility.UrlEncode(orderBy)}" : "")}" : "")}{(skip != null ? $"{(where != null || orderBy != null ? "&" : "?")}offset={skip}" : "")}{(where != null || orderBy != null || skip != null ? "&" : "?")}limit={Math.Min(take.Value, 10000)}";
@@ -3177,6 +3199,7 @@ namespace FolioLibrary
             AuthenticateIfNecessary();
             skip = skip ?? 0;
             take = take ?? int.MaxValue;
+            orderBy = orderBy ?? "id";
             while (take > 0)
             {
                 var url = $"{Url}/electronic-access-relationships{(where != null || orderBy != null ? $"?query={WebUtility.UrlEncode(where)}{(orderBy != null ? $"{(where != null ? " " : "cql.allrecords=1 ")}sortby {WebUtility.UrlEncode(orderBy)}" : "")}" : "")}{(skip != null ? $"{(where != null || orderBy != null ? "&" : "?")}offset={skip}" : "")}{(where != null || orderBy != null || skip != null ? "&" : "?")}limit={Math.Min(take.Value, 10000)}";
@@ -3314,6 +3337,7 @@ namespace FolioLibrary
             AuthenticateIfNecessary();
             skip = skip ?? 0;
             take = take ?? int.MaxValue;
+            orderBy = orderBy ?? "id";
             while (take > 0)
             {
                 var url = $"{Url}/accounts{(where != null || orderBy != null ? $"?query={WebUtility.UrlEncode(where)}{(orderBy != null ? $"{(where != null ? " " : "cql.allrecords=1 ")}sortby {WebUtility.UrlEncode(orderBy)}" : "")}" : "")}{(skip != null ? $"{(where != null || orderBy != null ? "&" : "?")}offset={skip}" : "")}{(where != null || orderBy != null || skip != null ? "&" : "?")}limit={Math.Min(take.Value, 10000)}";
@@ -3451,6 +3475,7 @@ namespace FolioLibrary
             AuthenticateIfNecessary();
             skip = skip ?? 0;
             take = take ?? int.MaxValue;
+            orderBy = orderBy ?? "id";
             while (take > 0)
             {
                 var url = $"{Url}/feefines{(where != null || orderBy != null ? $"?query={WebUtility.UrlEncode(where)}{(orderBy != null ? $"{(where != null ? " " : "cql.allrecords=1 ")}sortby {WebUtility.UrlEncode(orderBy)}" : "")}" : "")}{(skip != null ? $"{(where != null || orderBy != null ? "&" : "?")}offset={skip}" : "")}{(where != null || orderBy != null || skip != null ? "&" : "?")}limit={Math.Min(take.Value, 10000)}";
@@ -3588,6 +3613,7 @@ namespace FolioLibrary
             AuthenticateIfNecessary();
             skip = skip ?? 0;
             take = take ?? int.MaxValue;
+            orderBy = orderBy ?? "id";
             while (take > 0)
             {
                 var url = $"{Url}/finance-storage/groups{(where != null || orderBy != null ? $"?query={WebUtility.UrlEncode(where)}{(orderBy != null ? $"{(where != null ? " " : "cql.allrecords=1 ")}sortby {WebUtility.UrlEncode(orderBy)}" : "")}" : "")}{(skip != null ? $"{(where != null || orderBy != null ? "&" : "?")}offset={skip}" : "")}{(where != null || orderBy != null || skip != null ? "&" : "?")}limit={Math.Min(take.Value, 10000)}";
@@ -3725,6 +3751,7 @@ namespace FolioLibrary
             AuthenticateIfNecessary();
             skip = skip ?? 0;
             take = take ?? int.MaxValue;
+            orderBy = orderBy ?? "id";
             while (take > 0)
             {
                 var url = $"{Url}/finance-storage/fiscal-years{(where != null || orderBy != null ? $"?query={WebUtility.UrlEncode(where)}{(orderBy != null ? $"{(where != null ? " " : "cql.allrecords=1 ")}sortby {WebUtility.UrlEncode(orderBy)}" : "")}" : "")}{(skip != null ? $"{(where != null || orderBy != null ? "&" : "?")}offset={skip}" : "")}{(where != null || orderBy != null || skip != null ? "&" : "?")}limit={Math.Min(take.Value, 10000)}";
@@ -3862,6 +3889,7 @@ namespace FolioLibrary
             AuthenticateIfNecessary();
             skip = skip ?? 0;
             take = take ?? int.MaxValue;
+            orderBy = orderBy ?? "id";
             while (take > 0)
             {
                 var url = $"{Url}/fixed-due-date-schedule-storage/fixed-due-date-schedules{(where != null || orderBy != null ? $"?query={WebUtility.UrlEncode(where)}{(orderBy != null ? $"{(where != null ? " " : "cql.allrecords=1 ")}sortby {WebUtility.UrlEncode(orderBy)}" : "")}" : "")}{(skip != null ? $"{(where != null || orderBy != null ? "&" : "?")}offset={skip}" : "")}{(where != null || orderBy != null || skip != null ? "&" : "?")}limit={Math.Min(take.Value, 10000)}";
@@ -3999,6 +4027,7 @@ namespace FolioLibrary
             AuthenticateIfNecessary();
             skip = skip ?? 0;
             take = take ?? int.MaxValue;
+            orderBy = orderBy ?? "id";
             while (take > 0)
             {
                 var url = $"{Url}/finance-storage/funds{(where != null || orderBy != null ? $"?query={WebUtility.UrlEncode(where)}{(orderBy != null ? $"{(where != null ? " " : "cql.allrecords=1 ")}sortby {WebUtility.UrlEncode(orderBy)}" : "")}" : "")}{(skip != null ? $"{(where != null || orderBy != null ? "&" : "?")}offset={skip}" : "")}{(where != null || orderBy != null || skip != null ? "&" : "?")}limit={Math.Min(take.Value, 10000)}";
@@ -4136,6 +4165,7 @@ namespace FolioLibrary
             AuthenticateIfNecessary();
             skip = skip ?? 0;
             take = take ?? int.MaxValue;
+            orderBy = orderBy ?? "id";
             while (take > 0)
             {
                 var url = $"{Url}/finance-storage/fund-types{(where != null || orderBy != null ? $"?query={WebUtility.UrlEncode(where)}{(orderBy != null ? $"{(where != null ? " " : "cql.allrecords=1 ")}sortby {WebUtility.UrlEncode(orderBy)}" : "")}" : "")}{(skip != null ? $"{(where != null || orderBy != null ? "&" : "?")}offset={skip}" : "")}{(where != null || orderBy != null || skip != null ? "&" : "?")}limit={Math.Min(take.Value, 10000)}";
@@ -4273,6 +4303,7 @@ namespace FolioLibrary
             AuthenticateIfNecessary();
             skip = skip ?? 0;
             take = take ?? int.MaxValue;
+            orderBy = orderBy ?? "id";
             while (take > 0)
             {
                 var url = $"{Url}/groups{(where != null || orderBy != null ? $"?query={WebUtility.UrlEncode(where)}{(orderBy != null ? $"{(where != null ? " " : "cql.allrecords=1 ")}sortby {WebUtility.UrlEncode(orderBy)}" : "")}" : "")}{(skip != null ? $"{(where != null || orderBy != null ? "&" : "?")}offset={skip}" : "")}{(where != null || orderBy != null || skip != null ? "&" : "?")}limit={Math.Min(take.Value, 10000)}";
@@ -4410,6 +4441,7 @@ namespace FolioLibrary
             AuthenticateIfNecessary();
             skip = skip ?? 0;
             take = take ?? int.MaxValue;
+            orderBy = orderBy ?? "id";
             while (take > 0)
             {
                 var url = $"{Url}/finance-storage/group-fund-fiscal-years{(where != null || orderBy != null ? $"?query={WebUtility.UrlEncode(where)}{(orderBy != null ? $"{(where != null ? " " : "cql.allrecords=1 ")}sortby {WebUtility.UrlEncode(orderBy)}" : "")}" : "")}{(skip != null ? $"{(where != null || orderBy != null ? "&" : "?")}offset={skip}" : "")}{(where != null || orderBy != null || skip != null ? "&" : "?")}limit={Math.Min(take.Value, 10000)}";
@@ -4547,6 +4579,7 @@ namespace FolioLibrary
             AuthenticateIfNecessary();
             skip = skip ?? 0;
             take = take ?? int.MaxValue;
+            orderBy = orderBy ?? "id";
             while (take > 0)
             {
                 var url = $"{Url}/holdings-storage/holdings{(where != null || orderBy != null ? $"?query={WebUtility.UrlEncode(where)}{(orderBy != null ? $"{(where != null ? " " : "cql.allrecords=1 ")}sortby {WebUtility.UrlEncode(orderBy)}" : "")}" : "")}{(skip != null ? $"{(where != null || orderBy != null ? "&" : "?")}offset={skip}" : "")}{(where != null || orderBy != null || skip != null ? "&" : "?")}limit={Math.Min(take.Value, 10000)}";
@@ -4704,6 +4737,7 @@ namespace FolioLibrary
             AuthenticateIfNecessary();
             skip = skip ?? 0;
             take = take ?? int.MaxValue;
+            orderBy = orderBy ?? "id";
             while (take > 0)
             {
                 var url = $"{Url}/holdings-note-types{(where != null || orderBy != null ? $"?query={WebUtility.UrlEncode(where)}{(orderBy != null ? $"{(where != null ? " " : "cql.allrecords=1 ")}sortby {WebUtility.UrlEncode(orderBy)}" : "")}" : "")}{(skip != null ? $"{(where != null || orderBy != null ? "&" : "?")}offset={skip}" : "")}{(where != null || orderBy != null || skip != null ? "&" : "?")}limit={Math.Min(take.Value, 10000)}";
@@ -4841,6 +4875,7 @@ namespace FolioLibrary
             AuthenticateIfNecessary();
             skip = skip ?? 0;
             take = take ?? int.MaxValue;
+            orderBy = orderBy ?? "id";
             while (take > 0)
             {
                 var url = $"{Url}/holdings-types{(where != null || orderBy != null ? $"?query={WebUtility.UrlEncode(where)}{(orderBy != null ? $"{(where != null ? " " : "cql.allrecords=1 ")}sortby {WebUtility.UrlEncode(orderBy)}" : "")}" : "")}{(skip != null ? $"{(where != null || orderBy != null ? "&" : "?")}offset={skip}" : "")}{(where != null || orderBy != null || skip != null ? "&" : "?")}limit={Math.Min(take.Value, 10000)}";
@@ -5012,6 +5047,7 @@ namespace FolioLibrary
             AuthenticateIfNecessary();
             skip = skip ?? 0;
             take = take ?? int.MaxValue;
+            orderBy = orderBy ?? "id";
             while (take > 0)
             {
                 var url = $"{Url}/identifier-types{(where != null || orderBy != null ? $"?query={WebUtility.UrlEncode(where)}{(orderBy != null ? $"{(where != null ? " " : "cql.allrecords=1 ")}sortby {WebUtility.UrlEncode(orderBy)}" : "")}" : "")}{(skip != null ? $"{(where != null || orderBy != null ? "&" : "?")}offset={skip}" : "")}{(where != null || orderBy != null || skip != null ? "&" : "?")}limit={Math.Min(take.Value, 10000)}";
@@ -5149,6 +5185,7 @@ namespace FolioLibrary
             AuthenticateIfNecessary();
             skip = skip ?? 0;
             take = take ?? int.MaxValue;
+            orderBy = orderBy ?? "id";
             while (take > 0)
             {
                 var url = $"{Url}/ill-policies{(where != null || orderBy != null ? $"?query={WebUtility.UrlEncode(where)}{(orderBy != null ? $"{(where != null ? " " : "cql.allrecords=1 ")}sortby {WebUtility.UrlEncode(orderBy)}" : "")}" : "")}{(skip != null ? $"{(where != null || orderBy != null ? "&" : "?")}offset={skip}" : "")}{(where != null || orderBy != null || skip != null ? "&" : "?")}limit={Math.Min(take.Value, 10000)}";
@@ -5286,6 +5323,7 @@ namespace FolioLibrary
             AuthenticateIfNecessary();
             skip = skip ?? 0;
             take = take ?? int.MaxValue;
+            orderBy = orderBy ?? "id";
             while (take > 0)
             {
                 var url = $"{Url}/instance-storage/instances{(where != null || orderBy != null ? $"?query={WebUtility.UrlEncode(where)}{(orderBy != null ? $"{(where != null ? " " : "cql.allrecords=1 ")}sortby {WebUtility.UrlEncode(orderBy)}" : "")}" : "")}{(skip != null ? $"{(where != null || orderBy != null ? "&" : "?")}offset={skip}" : "")}{(where != null || orderBy != null || skip != null ? "&" : "?")}limit={Math.Min(take.Value, 10000)}";
@@ -5443,6 +5481,7 @@ namespace FolioLibrary
             AuthenticateIfNecessary();
             skip = skip ?? 0;
             take = take ?? int.MaxValue;
+            orderBy = orderBy ?? "id";
             while (take > 0)
             {
                 var url = $"{Url}/instance-formats{(where != null || orderBy != null ? $"?query={WebUtility.UrlEncode(where)}{(orderBy != null ? $"{(where != null ? " " : "cql.allrecords=1 ")}sortby {WebUtility.UrlEncode(orderBy)}" : "")}" : "")}{(skip != null ? $"{(where != null || orderBy != null ? "&" : "?")}offset={skip}" : "")}{(where != null || orderBy != null || skip != null ? "&" : "?")}limit={Math.Min(take.Value, 10000)}";
@@ -5580,6 +5619,7 @@ namespace FolioLibrary
             AuthenticateIfNecessary();
             skip = skip ?? 0;
             take = take ?? int.MaxValue;
+            orderBy = orderBy ?? "id";
             while (take > 0)
             {
                 var url = $"{Url}/instance-note-types{(where != null || orderBy != null ? $"?query={WebUtility.UrlEncode(where)}{(orderBy != null ? $"{(where != null ? " " : "cql.allrecords=1 ")}sortby {WebUtility.UrlEncode(orderBy)}" : "")}" : "")}{(skip != null ? $"{(where != null || orderBy != null ? "&" : "?")}offset={skip}" : "")}{(where != null || orderBy != null || skip != null ? "&" : "?")}limit={Math.Min(take.Value, 10000)}";
@@ -5717,6 +5757,7 @@ namespace FolioLibrary
             AuthenticateIfNecessary();
             skip = skip ?? 0;
             take = take ?? int.MaxValue;
+            orderBy = orderBy ?? "id";
             while (take > 0)
             {
                 var url = $"{Url}/instance-storage/instance-relationships{(where != null || orderBy != null ? $"?query={WebUtility.UrlEncode(where)}{(orderBy != null ? $"{(where != null ? " " : "cql.allrecords=1 ")}sortby {WebUtility.UrlEncode(orderBy)}" : "")}" : "")}{(skip != null ? $"{(where != null || orderBy != null ? "&" : "?")}offset={skip}" : "")}{(where != null || orderBy != null || skip != null ? "&" : "?")}limit={Math.Min(take.Value, 10000)}";
@@ -5854,6 +5895,7 @@ namespace FolioLibrary
             AuthenticateIfNecessary();
             skip = skip ?? 0;
             take = take ?? int.MaxValue;
+            orderBy = orderBy ?? "id";
             while (take > 0)
             {
                 var url = $"{Url}/instance-relationship-types{(where != null || orderBy != null ? $"?query={WebUtility.UrlEncode(where)}{(orderBy != null ? $"{(where != null ? " " : "cql.allrecords=1 ")}sortby {WebUtility.UrlEncode(orderBy)}" : "")}" : "")}{(skip != null ? $"{(where != null || orderBy != null ? "&" : "?")}offset={skip}" : "")}{(where != null || orderBy != null || skip != null ? "&" : "?")}limit={Math.Min(take.Value, 10000)}";
@@ -5991,6 +6033,7 @@ namespace FolioLibrary
             AuthenticateIfNecessary();
             skip = skip ?? 0;
             take = take ?? int.MaxValue;
+            orderBy = orderBy ?? "id";
             while (take > 0)
             {
                 var url = $"{Url}/instance-statuses{(where != null || orderBy != null ? $"?query={WebUtility.UrlEncode(where)}{(orderBy != null ? $"{(where != null ? " " : "cql.allrecords=1 ")}sortby {WebUtility.UrlEncode(orderBy)}" : "")}" : "")}{(skip != null ? $"{(where != null || orderBy != null ? "&" : "?")}offset={skip}" : "")}{(where != null || orderBy != null || skip != null ? "&" : "?")}limit={Math.Min(take.Value, 10000)}";
@@ -6128,6 +6171,7 @@ namespace FolioLibrary
             AuthenticateIfNecessary();
             skip = skip ?? 0;
             take = take ?? int.MaxValue;
+            orderBy = orderBy ?? "id";
             while (take > 0)
             {
                 var url = $"{Url}/instance-types{(where != null || orderBy != null ? $"?query={WebUtility.UrlEncode(where)}{(orderBy != null ? $"{(where != null ? " " : "cql.allrecords=1 ")}sortby {WebUtility.UrlEncode(orderBy)}" : "")}" : "")}{(skip != null ? $"{(where != null || orderBy != null ? "&" : "?")}offset={skip}" : "")}{(where != null || orderBy != null || skip != null ? "&" : "?")}limit={Math.Min(take.Value, 10000)}";
@@ -6265,6 +6309,7 @@ namespace FolioLibrary
             AuthenticateIfNecessary();
             skip = skip ?? 0;
             take = take ?? int.MaxValue;
+            orderBy = orderBy ?? "id";
             while (take > 0)
             {
                 var url = $"{Url}/location-units/institutions{(where != null || orderBy != null ? $"?query={WebUtility.UrlEncode(where)}{(orderBy != null ? $"{(where != null ? " " : "cql.allrecords=1 ")}sortby {WebUtility.UrlEncode(orderBy)}" : "")}" : "")}{(skip != null ? $"{(where != null || orderBy != null ? "&" : "?")}offset={skip}" : "")}{(where != null || orderBy != null || skip != null ? "&" : "?")}limit={Math.Min(take.Value, 10000)}";
@@ -6402,6 +6447,7 @@ namespace FolioLibrary
             AuthenticateIfNecessary();
             skip = skip ?? 0;
             take = take ?? int.MaxValue;
+            orderBy = orderBy ?? "id";
             while (take > 0)
             {
                 var url = $"{Url}/organizations-storage/interfaces{(where != null || orderBy != null ? $"?query={WebUtility.UrlEncode(where)}{(orderBy != null ? $"{(where != null ? " " : "cql.allrecords=1 ")}sortby {WebUtility.UrlEncode(orderBy)}" : "")}" : "")}{(skip != null ? $"{(where != null || orderBy != null ? "&" : "?")}offset={skip}" : "")}{(where != null || orderBy != null || skip != null ? "&" : "?")}limit={Math.Min(take.Value, 10000)}";
@@ -6539,6 +6585,7 @@ namespace FolioLibrary
             AuthenticateIfNecessary();
             skip = skip ?? 0;
             take = take ?? int.MaxValue;
+            orderBy = orderBy ?? "id";
             while (take > 0)
             {
                 var url = $"{Url}/invoice-storage/invoices{(where != null || orderBy != null ? $"?query={WebUtility.UrlEncode(where)}{(orderBy != null ? $"{(where != null ? " " : "cql.allrecords=1 ")}sortby {WebUtility.UrlEncode(orderBy)}" : "")}" : "")}{(skip != null ? $"{(where != null || orderBy != null ? "&" : "?")}offset={skip}" : "")}{(where != null || orderBy != null || skip != null ? "&" : "?")}limit={Math.Min(take.Value, 10000)}";
@@ -6676,6 +6723,7 @@ namespace FolioLibrary
             AuthenticateIfNecessary();
             skip = skip ?? 0;
             take = take ?? int.MaxValue;
+            orderBy = orderBy ?? "id";
             while (take > 0)
             {
                 var url = $"{Url}/invoice-storage/invoice-lines{(where != null || orderBy != null ? $"?query={WebUtility.UrlEncode(where)}{(orderBy != null ? $"{(where != null ? " " : "cql.allrecords=1 ")}sortby {WebUtility.UrlEncode(orderBy)}" : "")}" : "")}{(skip != null ? $"{(where != null || orderBy != null ? "&" : "?")}offset={skip}" : "")}{(where != null || orderBy != null || skip != null ? "&" : "?")}limit={Math.Min(take.Value, 10000)}";
@@ -6813,6 +6861,7 @@ namespace FolioLibrary
             AuthenticateIfNecessary();
             skip = skip ?? 0;
             take = take ?? int.MaxValue;
+            orderBy = orderBy ?? "id";
             while (take > 0)
             {
                 var url = $"{Url}/item-storage/items{(where != null || orderBy != null ? $"?query={WebUtility.UrlEncode(where)}{(orderBy != null ? $"{(where != null ? " " : "cql.allrecords=1 ")}sortby {WebUtility.UrlEncode(orderBy)}" : "")}" : "")}{(skip != null ? $"{(where != null || orderBy != null ? "&" : "?")}offset={skip}" : "")}{(where != null || orderBy != null || skip != null ? "&" : "?")}limit={Math.Min(take.Value, 10000)}";
@@ -6970,6 +7019,7 @@ namespace FolioLibrary
             AuthenticateIfNecessary();
             skip = skip ?? 0;
             take = take ?? int.MaxValue;
+            orderBy = orderBy ?? "id";
             while (take > 0)
             {
                 var url = $"{Url}/item-damaged-statuses{(where != null || orderBy != null ? $"?query={WebUtility.UrlEncode(where)}{(orderBy != null ? $"{(where != null ? " " : "cql.allrecords=1 ")}sortby {WebUtility.UrlEncode(orderBy)}" : "")}" : "")}{(skip != null ? $"{(where != null || orderBy != null ? "&" : "?")}offset={skip}" : "")}{(where != null || orderBy != null || skip != null ? "&" : "?")}limit={Math.Min(take.Value, 10000)}";
@@ -7107,6 +7157,7 @@ namespace FolioLibrary
             AuthenticateIfNecessary();
             skip = skip ?? 0;
             take = take ?? int.MaxValue;
+            orderBy = orderBy ?? "id";
             while (take > 0)
             {
                 var url = $"{Url}/item-note-types{(where != null || orderBy != null ? $"?query={WebUtility.UrlEncode(where)}{(orderBy != null ? $"{(where != null ? " " : "cql.allrecords=1 ")}sortby {WebUtility.UrlEncode(orderBy)}" : "")}" : "")}{(skip != null ? $"{(where != null || orderBy != null ? "&" : "?")}offset={skip}" : "")}{(where != null || orderBy != null || skip != null ? "&" : "?")}limit={Math.Min(take.Value, 10000)}";
@@ -7244,6 +7295,7 @@ namespace FolioLibrary
             AuthenticateIfNecessary();
             skip = skip ?? 0;
             take = take ?? int.MaxValue;
+            orderBy = orderBy ?? "id";
             while (take > 0)
             {
                 var url = $"{Url}/finance-storage/ledgers{(where != null || orderBy != null ? $"?query={WebUtility.UrlEncode(where)}{(orderBy != null ? $"{(where != null ? " " : "cql.allrecords=1 ")}sortby {WebUtility.UrlEncode(orderBy)}" : "")}" : "")}{(skip != null ? $"{(where != null || orderBy != null ? "&" : "?")}offset={skip}" : "")}{(where != null || orderBy != null || skip != null ? "&" : "?")}limit={Math.Min(take.Value, 10000)}";
@@ -7381,6 +7433,7 @@ namespace FolioLibrary
             AuthenticateIfNecessary();
             skip = skip ?? 0;
             take = take ?? int.MaxValue;
+            orderBy = orderBy ?? "id";
             while (take > 0)
             {
                 var url = $"{Url}/location-units/libraries{(where != null || orderBy != null ? $"?query={WebUtility.UrlEncode(where)}{(orderBy != null ? $"{(where != null ? " " : "cql.allrecords=1 ")}sortby {WebUtility.UrlEncode(orderBy)}" : "")}" : "")}{(skip != null ? $"{(where != null || orderBy != null ? "&" : "?")}offset={skip}" : "")}{(where != null || orderBy != null || skip != null ? "&" : "?")}limit={Math.Min(take.Value, 10000)}";
@@ -7518,6 +7571,7 @@ namespace FolioLibrary
             AuthenticateIfNecessary();
             skip = skip ?? 0;
             take = take ?? int.MaxValue;
+            orderBy = orderBy ?? "id";
             while (take > 0)
             {
                 var url = $"{Url}/loan-storage/loans{(where != null || orderBy != null ? $"?query={WebUtility.UrlEncode(where)}{(orderBy != null ? $"{(where != null ? " " : "cql.allrecords=1 ")}sortby {WebUtility.UrlEncode(orderBy)}" : "")}" : "")}{(skip != null ? $"{(where != null || orderBy != null ? "&" : "?")}offset={skip}" : "")}{(where != null || orderBy != null || skip != null ? "&" : "?")}limit={Math.Min(take.Value, 10000)}";
@@ -7655,6 +7709,7 @@ namespace FolioLibrary
             AuthenticateIfNecessary();
             skip = skip ?? 0;
             take = take ?? int.MaxValue;
+            orderBy = orderBy ?? "id";
             while (take > 0)
             {
                 var url = $"{Url}/loan-policy-storage/loan-policies{(where != null || orderBy != null ? $"?query={WebUtility.UrlEncode(where)}{(orderBy != null ? $"{(where != null ? " " : "cql.allrecords=1 ")}sortby {WebUtility.UrlEncode(orderBy)}" : "")}" : "")}{(skip != null ? $"{(where != null || orderBy != null ? "&" : "?")}offset={skip}" : "")}{(where != null || orderBy != null || skip != null ? "&" : "?")}limit={Math.Min(take.Value, 10000)}";
@@ -7792,6 +7847,7 @@ namespace FolioLibrary
             AuthenticateIfNecessary();
             skip = skip ?? 0;
             take = take ?? int.MaxValue;
+            orderBy = orderBy ?? "id";
             while (take > 0)
             {
                 var url = $"{Url}/loan-types{(where != null || orderBy != null ? $"?query={WebUtility.UrlEncode(where)}{(orderBy != null ? $"{(where != null ? " " : "cql.allrecords=1 ")}sortby {WebUtility.UrlEncode(orderBy)}" : "")}" : "")}{(skip != null ? $"{(where != null || orderBy != null ? "&" : "?")}offset={skip}" : "")}{(where != null || orderBy != null || skip != null ? "&" : "?")}limit={Math.Min(take.Value, 10000)}";
@@ -7929,6 +7985,7 @@ namespace FolioLibrary
             AuthenticateIfNecessary();
             skip = skip ?? 0;
             take = take ?? int.MaxValue;
+            orderBy = orderBy ?? "id";
             while (take > 0)
             {
                 var url = $"{Url}/locations{(where != null || orderBy != null ? $"?query={WebUtility.UrlEncode(where)}{(orderBy != null ? $"{(where != null ? " " : "cql.allrecords=1 ")}sortby {WebUtility.UrlEncode(orderBy)}" : "")}" : "")}{(skip != null ? $"{(where != null || orderBy != null ? "&" : "?")}offset={skip}" : "")}{(where != null || orderBy != null || skip != null ? "&" : "?")}limit={Math.Min(take.Value, 10000)}";
@@ -8066,6 +8123,7 @@ namespace FolioLibrary
             AuthenticateIfNecessary();
             skip = skip ?? 0;
             take = take ?? int.MaxValue;
+            orderBy = orderBy ?? "id";
             while (take > 0)
             {
                 var url = $"{Url}/authn/credentials{(where != null || orderBy != null ? $"?query={WebUtility.UrlEncode(where)}{(orderBy != null ? $"{(where != null ? " " : "cql.allrecords=1 ")}sortby {WebUtility.UrlEncode(orderBy)}" : "")}" : "")}{(skip != null ? $"{(where != null || orderBy != null ? "&" : "?")}offset={skip}" : "")}{(where != null || orderBy != null || skip != null ? "&" : "?")}length={Math.Min(take.Value, 10000)}";
@@ -8203,6 +8261,7 @@ namespace FolioLibrary
             AuthenticateIfNecessary();
             skip = skip ?? 0;
             take = take ?? int.MaxValue;
+            orderBy = orderBy ?? "id";
             while (take > 0)
             {
                 var url = $"{Url}/lost-item-fees-policies{(where != null || orderBy != null ? $"?query={WebUtility.UrlEncode(where)}{(orderBy != null ? $"{(where != null ? " " : "cql.allrecords=1 ")}sortby {WebUtility.UrlEncode(orderBy)}" : "")}" : "")}{(skip != null ? $"{(where != null || orderBy != null ? "&" : "?")}offset={skip}" : "")}{(where != null || orderBy != null || skip != null ? "&" : "?")}limit={Math.Min(take.Value, 10000)}";
@@ -8340,6 +8399,7 @@ namespace FolioLibrary
             AuthenticateIfNecessary();
             skip = skip ?? 0;
             take = take ?? int.MaxValue;
+            orderBy = orderBy ?? "id";
             while (take > 0)
             {
                 var url = $"{Url}/material-types{(where != null || orderBy != null ? $"?query={WebUtility.UrlEncode(where)}{(orderBy != null ? $"{(where != null ? " " : "cql.allrecords=1 ")}sortby {WebUtility.UrlEncode(orderBy)}" : "")}" : "")}{(skip != null ? $"{(where != null || orderBy != null ? "&" : "?")}offset={skip}" : "")}{(where != null || orderBy != null || skip != null ? "&" : "?")}limit={Math.Min(take.Value, 10000)}";
@@ -8477,6 +8537,7 @@ namespace FolioLibrary
             AuthenticateIfNecessary();
             skip = skip ?? 0;
             take = take ?? int.MaxValue;
+            orderBy = orderBy ?? "id";
             while (take > 0)
             {
                 var url = $"{Url}/modes-of-issuance{(where != null || orderBy != null ? $"?query={WebUtility.UrlEncode(where)}{(orderBy != null ? $"{(where != null ? " " : "cql.allrecords=1 ")}sortby {WebUtility.UrlEncode(orderBy)}" : "")}" : "")}{(skip != null ? $"{(where != null || orderBy != null ? "&" : "?")}offset={skip}" : "")}{(where != null || orderBy != null || skip != null ? "&" : "?")}limit={Math.Min(take.Value, 10000)}";
@@ -8614,6 +8675,7 @@ namespace FolioLibrary
             AuthenticateIfNecessary();
             skip = skip ?? 0;
             take = take ?? int.MaxValue;
+            orderBy = orderBy ?? "id";
             while (take > 0)
             {
                 var url = $"{Url}/nature-of-content-terms{(where != null || orderBy != null ? $"?query={WebUtility.UrlEncode(where)}{(orderBy != null ? $"{(where != null ? " " : "cql.allrecords=1 ")}sortby {WebUtility.UrlEncode(orderBy)}" : "")}" : "")}{(skip != null ? $"{(where != null || orderBy != null ? "&" : "?")}offset={skip}" : "")}{(where != null || orderBy != null || skip != null ? "&" : "?")}limit={Math.Min(take.Value, 10000)}";
@@ -8751,6 +8813,7 @@ namespace FolioLibrary
             AuthenticateIfNecessary();
             skip = skip ?? 0;
             take = take ?? int.MaxValue;
+            orderBy = orderBy ?? "id";
             while (take > 0)
             {
                 var url = $"{Url}/notes{(where != null || orderBy != null ? $"?query={WebUtility.UrlEncode(where)}{(orderBy != null ? $"{(where != null ? " " : "cql.allrecords=1 ")}sortby {WebUtility.UrlEncode(orderBy)}" : "")}" : "")}{(skip != null ? $"{(where != null || orderBy != null ? "&" : "?")}offset={skip}" : "")}{(where != null || orderBy != null || skip != null ? "&" : "?")}limit={Math.Min(take.Value, 10000)}";
@@ -8888,6 +8951,7 @@ namespace FolioLibrary
             AuthenticateIfNecessary();
             skip = skip ?? 0;
             take = take ?? int.MaxValue;
+            orderBy = orderBy ?? "id";
             while (take > 0)
             {
                 var url = $"{Url}/note-types{(where != null || orderBy != null ? $"?query={WebUtility.UrlEncode(where)}{(orderBy != null ? $"{(where != null ? " " : "cql.allrecords=1 ")}sortby {WebUtility.UrlEncode(orderBy)}" : "")}" : "")}{(skip != null ? $"{(where != null || orderBy != null ? "&" : "?")}offset={skip}" : "")}{(where != null || orderBy != null || skip != null ? "&" : "?")}limit={Math.Min(take.Value, 10000)}";
@@ -9025,6 +9089,7 @@ namespace FolioLibrary
             AuthenticateIfNecessary();
             skip = skip ?? 0;
             take = take ?? int.MaxValue;
+            orderBy = orderBy ?? "id";
             while (take > 0)
             {
                 var url = $"{Url}/orders-storage/purchase-orders{(where != null || orderBy != null ? $"?query={WebUtility.UrlEncode(where)}{(orderBy != null ? $"{(where != null ? " " : "cql.allrecords=1 ")}sortby {WebUtility.UrlEncode(orderBy)}" : "")}" : "")}{(skip != null ? $"{(where != null || orderBy != null ? "&" : "?")}offset={skip}" : "")}{(where != null || orderBy != null || skip != null ? "&" : "?")}limit={Math.Min(take.Value, 10000)}";
@@ -9162,6 +9227,7 @@ namespace FolioLibrary
             AuthenticateIfNecessary();
             skip = skip ?? 0;
             take = take ?? int.MaxValue;
+            orderBy = orderBy ?? "id";
             while (take > 0)
             {
                 var url = $"{Url}/orders-storage/order-invoice-relns{(where != null || orderBy != null ? $"?query={WebUtility.UrlEncode(where)}{(orderBy != null ? $"{(where != null ? " " : "cql.allrecords=1 ")}sortby {WebUtility.UrlEncode(orderBy)}" : "")}" : "")}{(skip != null ? $"{(where != null || orderBy != null ? "&" : "?")}offset={skip}" : "")}{(where != null || orderBy != null || skip != null ? "&" : "?")}limit={Math.Min(take.Value, 10000)}";
@@ -9299,6 +9365,7 @@ namespace FolioLibrary
             AuthenticateIfNecessary();
             skip = skip ?? 0;
             take = take ?? int.MaxValue;
+            orderBy = orderBy ?? "id";
             while (take > 0)
             {
                 var url = $"{Url}/orders-storage/po-lines{(where != null || orderBy != null ? $"?query={WebUtility.UrlEncode(where)}{(orderBy != null ? $"{(where != null ? " " : "cql.allrecords=1 ")}sortby {WebUtility.UrlEncode(orderBy)}" : "")}" : "")}{(skip != null ? $"{(where != null || orderBy != null ? "&" : "?")}offset={skip}" : "")}{(where != null || orderBy != null || skip != null ? "&" : "?")}limit={Math.Min(take.Value, 10000)}";
@@ -9436,6 +9503,7 @@ namespace FolioLibrary
             AuthenticateIfNecessary();
             skip = skip ?? 0;
             take = take ?? int.MaxValue;
+            orderBy = orderBy ?? "id";
             while (take > 0)
             {
                 var url = $"{Url}/orders-storage/order-templates{(where != null || orderBy != null ? $"?query={WebUtility.UrlEncode(where)}{(orderBy != null ? $"{(where != null ? " " : "cql.allrecords=1 ")}sortby {WebUtility.UrlEncode(orderBy)}" : "")}" : "")}{(skip != null ? $"{(where != null || orderBy != null ? "&" : "?")}offset={skip}" : "")}{(where != null || orderBy != null || skip != null ? "&" : "?")}limit={Math.Min(take.Value, 10000)}";
@@ -9573,6 +9641,7 @@ namespace FolioLibrary
             AuthenticateIfNecessary();
             skip = skip ?? 0;
             take = take ?? int.MaxValue;
+            orderBy = orderBy ?? "id";
             while (take > 0)
             {
                 var url = $"{Url}/organizations-storage/organizations{(where != null || orderBy != null ? $"?query={WebUtility.UrlEncode(where)}{(orderBy != null ? $"{(where != null ? " " : "cql.allrecords=1 ")}sortby {WebUtility.UrlEncode(orderBy)}" : "")}" : "")}{(skip != null ? $"{(where != null || orderBy != null ? "&" : "?")}offset={skip}" : "")}{(where != null || orderBy != null || skip != null ? "&" : "?")}limit={Math.Min(take.Value, 10000)}";
@@ -9710,6 +9779,7 @@ namespace FolioLibrary
             AuthenticateIfNecessary();
             skip = skip ?? 0;
             take = take ?? int.MaxValue;
+            orderBy = orderBy ?? "id";
             while (take > 0)
             {
                 var url = $"{Url}/overdue-fines-policies{(where != null || orderBy != null ? $"?query={WebUtility.UrlEncode(where)}{(orderBy != null ? $"{(where != null ? " " : "cql.allrecords=1 ")}sortby {WebUtility.UrlEncode(orderBy)}" : "")}" : "")}{(skip != null ? $"{(where != null || orderBy != null ? "&" : "?")}offset={skip}" : "")}{(where != null || orderBy != null || skip != null ? "&" : "?")}limit={Math.Min(take.Value, 10000)}";
@@ -9847,6 +9917,7 @@ namespace FolioLibrary
             AuthenticateIfNecessary();
             skip = skip ?? 0;
             take = take ?? int.MaxValue;
+            orderBy = orderBy ?? "id";
             while (take > 0)
             {
                 var url = $"{Url}/owners{(where != null || orderBy != null ? $"?query={WebUtility.UrlEncode(where)}{(orderBy != null ? $"{(where != null ? " " : "cql.allrecords=1 ")}sortby {WebUtility.UrlEncode(orderBy)}" : "")}" : "")}{(skip != null ? $"{(where != null || orderBy != null ? "&" : "?")}offset={skip}" : "")}{(where != null || orderBy != null || skip != null ? "&" : "?")}limit={Math.Min(take.Value, 10000)}";
@@ -9984,6 +10055,7 @@ namespace FolioLibrary
             AuthenticateIfNecessary();
             skip = skip ?? 0;
             take = take ?? int.MaxValue;
+            orderBy = orderBy ?? "id";
             while (take > 0)
             {
                 var url = $"{Url}/patron-action-session-storage/patron-action-sessions{(where != null || orderBy != null ? $"?query={WebUtility.UrlEncode(where)}{(orderBy != null ? $"{(where != null ? " " : "cql.allrecords=1 ")}sortby {WebUtility.UrlEncode(orderBy)}" : "")}" : "")}{(skip != null ? $"{(where != null || orderBy != null ? "&" : "?")}offset={skip}" : "")}{(where != null || orderBy != null || skip != null ? "&" : "?")}limit={Math.Min(take.Value, 10000)}";
@@ -10121,6 +10193,7 @@ namespace FolioLibrary
             AuthenticateIfNecessary();
             skip = skip ?? 0;
             take = take ?? int.MaxValue;
+            orderBy = orderBy ?? "id";
             while (take > 0)
             {
                 var url = $"{Url}/patron-block-conditions{(where != null || orderBy != null ? $"?query={WebUtility.UrlEncode(where)}{(orderBy != null ? $"{(where != null ? " " : "cql.allrecords=1 ")}sortby {WebUtility.UrlEncode(orderBy)}" : "")}" : "")}{(skip != null ? $"{(where != null || orderBy != null ? "&" : "?")}offset={skip}" : "")}{(where != null || orderBy != null || skip != null ? "&" : "?")}limit={Math.Min(take.Value, 10000)}";
@@ -10258,6 +10331,7 @@ namespace FolioLibrary
             AuthenticateIfNecessary();
             skip = skip ?? 0;
             take = take ?? int.MaxValue;
+            orderBy = orderBy ?? "id";
             while (take > 0)
             {
                 var url = $"{Url}/patron-block-limits{(where != null || orderBy != null ? $"?query={WebUtility.UrlEncode(where)}{(orderBy != null ? $"{(where != null ? " " : "cql.allrecords=1 ")}sortby {WebUtility.UrlEncode(orderBy)}" : "")}" : "")}{(skip != null ? $"{(where != null || orderBy != null ? "&" : "?")}offset={skip}" : "")}{(where != null || orderBy != null || skip != null ? "&" : "?")}limit={Math.Min(take.Value, 10000)}";
@@ -10395,6 +10469,7 @@ namespace FolioLibrary
             AuthenticateIfNecessary();
             skip = skip ?? 0;
             take = take ?? int.MaxValue;
+            orderBy = orderBy ?? "id";
             while (take > 0)
             {
                 var url = $"{Url}/patron-notice-policy-storage/patron-notice-policies{(where != null || orderBy != null ? $"?query={WebUtility.UrlEncode(where)}{(orderBy != null ? $"{(where != null ? " " : "cql.allrecords=1 ")}sortby {WebUtility.UrlEncode(orderBy)}" : "")}" : "")}{(skip != null ? $"{(where != null || orderBy != null ? "&" : "?")}offset={skip}" : "")}{(where != null || orderBy != null || skip != null ? "&" : "?")}limit={Math.Min(take.Value, 10000)}";
@@ -10532,6 +10607,7 @@ namespace FolioLibrary
             AuthenticateIfNecessary();
             skip = skip ?? 0;
             take = take ?? int.MaxValue;
+            orderBy = orderBy ?? "id";
             while (take > 0)
             {
                 var url = $"{Url}/feefineactions{(where != null || orderBy != null ? $"?query={WebUtility.UrlEncode(where)}{(orderBy != null ? $"{(where != null ? " " : "cql.allrecords=1 ")}sortby {WebUtility.UrlEncode(orderBy)}" : "")}" : "")}{(skip != null ? $"{(where != null || orderBy != null ? "&" : "?")}offset={skip}" : "")}{(where != null || orderBy != null || skip != null ? "&" : "?")}limit={Math.Min(take.Value, 10000)}";
@@ -10669,6 +10745,7 @@ namespace FolioLibrary
             AuthenticateIfNecessary();
             skip = skip ?? 0;
             take = take ?? int.MaxValue;
+            orderBy = orderBy ?? "id";
             while (take > 0)
             {
                 var url = $"{Url}/payments{(where != null || orderBy != null ? $"?query={WebUtility.UrlEncode(where)}{(orderBy != null ? $"{(where != null ? " " : "cql.allrecords=1 ")}sortby {WebUtility.UrlEncode(orderBy)}" : "")}" : "")}{(skip != null ? $"{(where != null || orderBy != null ? "&" : "?")}offset={skip}" : "")}{(where != null || orderBy != null || skip != null ? "&" : "?")}limit={Math.Min(take.Value, 10000)}";
@@ -10806,6 +10883,7 @@ namespace FolioLibrary
             AuthenticateIfNecessary();
             skip = skip ?? 0;
             take = take ?? int.MaxValue;
+            orderBy = orderBy ?? "id";
             while (take > 0)
             {
                 var url = $"{Url}/perms/permissions{(where != null || orderBy != null ? $"?query={WebUtility.UrlEncode(where)}{(orderBy != null ? $"{(where != null ? " " : "cql.allrecords=1 ")}sortby {WebUtility.UrlEncode(orderBy)}" : "")}" : "")}{(skip != null ? $"{(where != null || orderBy != null ? "&" : "?")}offset={skip}" : "")}{(where != null || orderBy != null || skip != null ? "&" : "?")}length={Math.Min(take.Value, 10000)}";
@@ -10943,6 +11021,7 @@ namespace FolioLibrary
             AuthenticateIfNecessary();
             skip = skip ?? 0;
             take = take ?? int.MaxValue;
+            orderBy = orderBy ?? "id";
             while (take > 0)
             {
                 var url = $"{Url}/perms/users{(where != null || orderBy != null ? $"?query={WebUtility.UrlEncode(where)}{(orderBy != null ? $"{(where != null ? " " : "cql.allrecords=1 ")}sortby {WebUtility.UrlEncode(orderBy)}" : "")}" : "")}{(skip != null ? $"{(where != null || orderBy != null ? "&" : "?")}offset={skip}" : "")}{(where != null || orderBy != null || skip != null ? "&" : "?")}length={Math.Min(take.Value, 10000)}";
@@ -11080,6 +11159,7 @@ namespace FolioLibrary
             AuthenticateIfNecessary();
             skip = skip ?? 0;
             take = take ?? int.MaxValue;
+            orderBy = orderBy ?? "id";
             while (take > 0)
             {
                 var url = $"{Url}/orders-storage/pieces{(where != null || orderBy != null ? $"?query={WebUtility.UrlEncode(where)}{(orderBy != null ? $"{(where != null ? " " : "cql.allrecords=1 ")}sortby {WebUtility.UrlEncode(orderBy)}" : "")}" : "")}{(skip != null ? $"{(where != null || orderBy != null ? "&" : "?")}offset={skip}" : "")}{(where != null || orderBy != null || skip != null ? "&" : "?")}limit={Math.Min(take.Value, 10000)}";
@@ -11217,6 +11297,7 @@ namespace FolioLibrary
             AuthenticateIfNecessary();
             skip = skip ?? 0;
             take = take ?? int.MaxValue;
+            orderBy = orderBy ?? "id";
             while (take > 0)
             {
                 var url = $"{Url}/preceding-succeeding-titles{(where != null || orderBy != null ? $"?query={WebUtility.UrlEncode(where)}{(orderBy != null ? $"{(where != null ? " " : "cql.allrecords=1 ")}sortby {WebUtility.UrlEncode(orderBy)}" : "")}" : "")}{(skip != null ? $"{(where != null || orderBy != null ? "&" : "?")}offset={skip}" : "")}{(where != null || orderBy != null || skip != null ? "&" : "?")}limit={Math.Min(take.Value, 10000)}";
@@ -11354,6 +11435,7 @@ namespace FolioLibrary
             AuthenticateIfNecessary();
             skip = skip ?? 0;
             take = take ?? int.MaxValue;
+            orderBy = orderBy ?? "id";
             while (take > 0)
             {
                 var url = $"{Url}/orders-storage/configuration/prefixes{(where != null || orderBy != null ? $"?query={WebUtility.UrlEncode(where)}{(orderBy != null ? $"{(where != null ? " " : "cql.allrecords=1 ")}sortby {WebUtility.UrlEncode(orderBy)}" : "")}" : "")}{(skip != null ? $"{(where != null || orderBy != null ? "&" : "?")}offset={skip}" : "")}{(where != null || orderBy != null || skip != null ? "&" : "?")}limit={Math.Min(take.Value, 10000)}";
@@ -11491,6 +11573,7 @@ namespace FolioLibrary
             AuthenticateIfNecessary();
             skip = skip ?? 0;
             take = take ?? int.MaxValue;
+            orderBy = orderBy ?? "id";
             while (take > 0)
             {
                 var url = $"{Url}/proxiesfor{(where != null || orderBy != null ? $"?query={WebUtility.UrlEncode(where)}{(orderBy != null ? $"{(where != null ? " " : "cql.allrecords=1 ")}sortby {WebUtility.UrlEncode(orderBy)}" : "")}" : "")}{(skip != null ? $"{(where != null || orderBy != null ? "&" : "?")}offset={skip}" : "")}{(where != null || orderBy != null || skip != null ? "&" : "?")}limit={Math.Min(take.Value, 10000)}";
@@ -11628,6 +11711,7 @@ namespace FolioLibrary
             AuthenticateIfNecessary();
             skip = skip ?? 0;
             take = take ?? int.MaxValue;
+            orderBy = orderBy ?? "id";
             while (take > 0)
             {
                 var url = $"{Url}/source-storage/records{(where != null || orderBy != null ? $"?query={WebUtility.UrlEncode(where)}{(orderBy != null ? $"{(where != null ? " " : "cql.allrecords=1 ")}sortby {WebUtility.UrlEncode(orderBy)}" : "")}" : "")}{(skip != null ? $"{(where != null || orderBy != null ? "&" : "?")}offset={skip}" : "")}{(where != null || orderBy != null || skip != null ? "&" : "?")}limit={Math.Min(take.Value, 10000)}";
@@ -11785,6 +11869,7 @@ namespace FolioLibrary
             AuthenticateIfNecessary();
             skip = skip ?? 0;
             take = take ?? int.MaxValue;
+            orderBy = orderBy ?? "id";
             while (take > 0)
             {
                 var url = $"{Url}/refunds{(where != null || orderBy != null ? $"?query={WebUtility.UrlEncode(where)}{(orderBy != null ? $"{(where != null ? " " : "cql.allrecords=1 ")}sortby {WebUtility.UrlEncode(orderBy)}" : "")}" : "")}{(skip != null ? $"{(where != null || orderBy != null ? "&" : "?")}offset={skip}" : "")}{(where != null || orderBy != null || skip != null ? "&" : "?")}limit={Math.Min(take.Value, 10000)}";
@@ -11922,6 +12007,7 @@ namespace FolioLibrary
             AuthenticateIfNecessary();
             skip = skip ?? 0;
             take = take ?? int.MaxValue;
+            orderBy = orderBy ?? "id";
             while (take > 0)
             {
                 var url = $"{Url}/orders-storage/reporting-codes{(where != null || orderBy != null ? $"?query={WebUtility.UrlEncode(where)}{(orderBy != null ? $"{(where != null ? " " : "cql.allrecords=1 ")}sortby {WebUtility.UrlEncode(orderBy)}" : "")}" : "")}{(skip != null ? $"{(where != null || orderBy != null ? "&" : "?")}offset={skip}" : "")}{(where != null || orderBy != null || skip != null ? "&" : "?")}limit={Math.Min(take.Value, 10000)}";
@@ -12059,6 +12145,7 @@ namespace FolioLibrary
             AuthenticateIfNecessary();
             skip = skip ?? 0;
             take = take ?? int.MaxValue;
+            orderBy = orderBy ?? "id";
             while (take > 0)
             {
                 var url = $"{Url}/request-storage/requests{(where != null || orderBy != null ? $"?query={WebUtility.UrlEncode(where)}{(orderBy != null ? $"{(where != null ? " " : "cql.allrecords=1 ")}sortby {WebUtility.UrlEncode(orderBy)}" : "")}" : "")}{(skip != null ? $"{(where != null || orderBy != null ? "&" : "?")}offset={skip}" : "")}{(where != null || orderBy != null || skip != null ? "&" : "?")}limit={Math.Min(take.Value, 10000)}";
@@ -12196,6 +12283,7 @@ namespace FolioLibrary
             AuthenticateIfNecessary();
             skip = skip ?? 0;
             take = take ?? int.MaxValue;
+            orderBy = orderBy ?? "id";
             while (take > 0)
             {
                 var url = $"{Url}/request-policy-storage/request-policies{(where != null || orderBy != null ? $"?query={WebUtility.UrlEncode(where)}{(orderBy != null ? $"{(where != null ? " " : "cql.allrecords=1 ")}sortby {WebUtility.UrlEncode(orderBy)}" : "")}" : "")}{(skip != null ? $"{(where != null || orderBy != null ? "&" : "?")}offset={skip}" : "")}{(where != null || orderBy != null || skip != null ? "&" : "?")}limit={Math.Min(take.Value, 10000)}";
@@ -12333,6 +12421,7 @@ namespace FolioLibrary
             AuthenticateIfNecessary();
             skip = skip ?? 0;
             take = take ?? int.MaxValue;
+            orderBy = orderBy ?? "id";
             while (take > 0)
             {
                 var url = $"{Url}/scheduled-notice-storage/scheduled-notices{(where != null || orderBy != null ? $"?query={WebUtility.UrlEncode(where)}{(orderBy != null ? $"{(where != null ? " " : "cql.allrecords=1 ")}sortby {WebUtility.UrlEncode(orderBy)}" : "")}" : "")}{(skip != null ? $"{(where != null || orderBy != null ? "&" : "?")}offset={skip}" : "")}{(where != null || orderBy != null || skip != null ? "&" : "?")}limit={Math.Min(take.Value, 10000)}";
@@ -12470,6 +12559,7 @@ namespace FolioLibrary
             AuthenticateIfNecessary();
             skip = skip ?? 0;
             take = take ?? int.MaxValue;
+            orderBy = orderBy ?? "id";
             while (take > 0)
             {
                 var url = $"{Url}/service-points{(where != null || orderBy != null ? $"?query={WebUtility.UrlEncode(where)}{(orderBy != null ? $"{(where != null ? " " : "cql.allrecords=1 ")}sortby {WebUtility.UrlEncode(orderBy)}" : "")}" : "")}{(skip != null ? $"{(where != null || orderBy != null ? "&" : "?")}offset={skip}" : "")}{(where != null || orderBy != null || skip != null ? "&" : "?")}limit={Math.Min(take.Value, 10000)}";
@@ -12607,6 +12697,7 @@ namespace FolioLibrary
             AuthenticateIfNecessary();
             skip = skip ?? 0;
             take = take ?? int.MaxValue;
+            orderBy = orderBy ?? "id";
             while (take > 0)
             {
                 var url = $"{Url}/service-points-users{(where != null || orderBy != null ? $"?query={WebUtility.UrlEncode(where)}{(orderBy != null ? $"{(where != null ? " " : "cql.allrecords=1 ")}sortby {WebUtility.UrlEncode(orderBy)}" : "")}" : "")}{(skip != null ? $"{(where != null || orderBy != null ? "&" : "?")}offset={skip}" : "")}{(where != null || orderBy != null || skip != null ? "&" : "?")}limit={Math.Min(take.Value, 10000)}";
@@ -12744,6 +12835,7 @@ namespace FolioLibrary
             AuthenticateIfNecessary();
             skip = skip ?? 0;
             take = take ?? int.MaxValue;
+            orderBy = orderBy ?? "id";
             while (take > 0)
             {
                 var url = $"{Url}/source-storage/snapshots{(where != null || orderBy != null ? $"?query={WebUtility.UrlEncode(where)}{(orderBy != null ? $"{(where != null ? " " : "cql.allrecords=1 ")}sortby {WebUtility.UrlEncode(orderBy)}" : "")}" : "")}{(skip != null ? $"{(where != null || orderBy != null ? "&" : "?")}offset={skip}" : "")}{(where != null || orderBy != null || skip != null ? "&" : "?")}limit={Math.Min(take.Value, 10000)}";
@@ -12881,6 +12973,7 @@ namespace FolioLibrary
             AuthenticateIfNecessary();
             skip = skip ?? 0;
             take = take ?? int.MaxValue;
+            orderBy = orderBy ?? "id";
             while (take > 0)
             {
                 var url = $"{Url}/staff-slips-storage/staff-slips{(where != null || orderBy != null ? $"?query={WebUtility.UrlEncode(where)}{(orderBy != null ? $"{(where != null ? " " : "cql.allrecords=1 ")}sortby {WebUtility.UrlEncode(orderBy)}" : "")}" : "")}{(skip != null ? $"{(where != null || orderBy != null ? "&" : "?")}offset={skip}" : "")}{(where != null || orderBy != null || skip != null ? "&" : "?")}limit={Math.Min(take.Value, 10000)}";
@@ -13018,6 +13111,7 @@ namespace FolioLibrary
             AuthenticateIfNecessary();
             skip = skip ?? 0;
             take = take ?? int.MaxValue;
+            orderBy = orderBy ?? "id";
             while (take > 0)
             {
                 var url = $"{Url}/statistical-codes{(where != null || orderBy != null ? $"?query={WebUtility.UrlEncode(where)}{(orderBy != null ? $"{(where != null ? " " : "cql.allrecords=1 ")}sortby {WebUtility.UrlEncode(orderBy)}" : "")}" : "")}{(skip != null ? $"{(where != null || orderBy != null ? "&" : "?")}offset={skip}" : "")}{(where != null || orderBy != null || skip != null ? "&" : "?")}limit={Math.Min(take.Value, 10000)}";
@@ -13155,6 +13249,7 @@ namespace FolioLibrary
             AuthenticateIfNecessary();
             skip = skip ?? 0;
             take = take ?? int.MaxValue;
+            orderBy = orderBy ?? "id";
             while (take > 0)
             {
                 var url = $"{Url}/statistical-code-types{(where != null || orderBy != null ? $"?query={WebUtility.UrlEncode(where)}{(orderBy != null ? $"{(where != null ? " " : "cql.allrecords=1 ")}sortby {WebUtility.UrlEncode(orderBy)}" : "")}" : "")}{(skip != null ? $"{(where != null || orderBy != null ? "&" : "?")}offset={skip}" : "")}{(where != null || orderBy != null || skip != null ? "&" : "?")}limit={Math.Min(take.Value, 10000)}";
@@ -13292,6 +13387,7 @@ namespace FolioLibrary
             AuthenticateIfNecessary();
             skip = skip ?? 0;
             take = take ?? int.MaxValue;
+            orderBy = orderBy ?? "id";
             while (take > 0)
             {
                 var url = $"{Url}/orders-storage/configuration/suffixes{(where != null || orderBy != null ? $"?query={WebUtility.UrlEncode(where)}{(orderBy != null ? $"{(where != null ? " " : "cql.allrecords=1 ")}sortby {WebUtility.UrlEncode(orderBy)}" : "")}" : "")}{(skip != null ? $"{(where != null || orderBy != null ? "&" : "?")}offset={skip}" : "")}{(where != null || orderBy != null || skip != null ? "&" : "?")}limit={Math.Min(take.Value, 10000)}";
@@ -13429,6 +13525,7 @@ namespace FolioLibrary
             AuthenticateIfNecessary();
             skip = skip ?? 0;
             take = take ?? int.MaxValue;
+            orderBy = orderBy ?? "id";
             while (take > 0)
             {
                 var url = $"{Url}/tags{(where != null || orderBy != null ? $"?query={WebUtility.UrlEncode(where)}{(orderBy != null ? $"{(where != null ? " " : "cql.allrecords=1 ")}sortby {WebUtility.UrlEncode(orderBy)}" : "")}" : "")}{(skip != null ? $"{(where != null || orderBy != null ? "&" : "?")}offset={skip}" : "")}{(where != null || orderBy != null || skip != null ? "&" : "?")}limit={Math.Min(take.Value, 10000)}";
@@ -13566,6 +13663,7 @@ namespace FolioLibrary
             AuthenticateIfNecessary();
             skip = skip ?? 0;
             take = take ?? int.MaxValue;
+            orderBy = orderBy ?? "id";
             while (take > 0)
             {
                 var url = $"{Url}/templates{(where != null || orderBy != null ? $"?query={WebUtility.UrlEncode(where)}{(orderBy != null ? $"{(where != null ? " " : "cql.allrecords=1 ")}sortby {WebUtility.UrlEncode(orderBy)}" : "")}" : "")}{(skip != null ? $"{(where != null || orderBy != null ? "&" : "?")}offset={skip}" : "")}{(where != null || orderBy != null || skip != null ? "&" : "?")}limit={Math.Min(take.Value, 10000)}";
@@ -13703,6 +13801,7 @@ namespace FolioLibrary
             AuthenticateIfNecessary();
             skip = skip ?? 0;
             take = take ?? int.MaxValue;
+            orderBy = orderBy ?? "id";
             while (take > 0)
             {
                 var url = $"{Url}/orders-storage/titles{(where != null || orderBy != null ? $"?query={WebUtility.UrlEncode(where)}{(orderBy != null ? $"{(where != null ? " " : "cql.allrecords=1 ")}sortby {WebUtility.UrlEncode(orderBy)}" : "")}" : "")}{(skip != null ? $"{(where != null || orderBy != null ? "&" : "?")}offset={skip}" : "")}{(where != null || orderBy != null || skip != null ? "&" : "?")}limit={Math.Min(take.Value, 10000)}";
@@ -13840,6 +13939,7 @@ namespace FolioLibrary
             AuthenticateIfNecessary();
             skip = skip ?? 0;
             take = take ?? int.MaxValue;
+            orderBy = orderBy ?? "id";
             while (take > 0)
             {
                 var url = $"{Url}/finance-storage/transactions{(where != null || orderBy != null ? $"?query={WebUtility.UrlEncode(where)}{(orderBy != null ? $"{(where != null ? " " : "cql.allrecords=1 ")}sortby {WebUtility.UrlEncode(orderBy)}" : "")}" : "")}{(skip != null ? $"{(where != null || orderBy != null ? "&" : "?")}offset={skip}" : "")}{(where != null || orderBy != null || skip != null ? "&" : "?")}limit={Math.Min(take.Value, 10000)}";
@@ -13977,6 +14077,7 @@ namespace FolioLibrary
             AuthenticateIfNecessary();
             skip = skip ?? 0;
             take = take ?? int.MaxValue;
+            orderBy = orderBy ?? "id";
             while (take > 0)
             {
                 var url = $"{Url}/transfers{(where != null || orderBy != null ? $"?query={WebUtility.UrlEncode(where)}{(orderBy != null ? $"{(where != null ? " " : "cql.allrecords=1 ")}sortby {WebUtility.UrlEncode(orderBy)}" : "")}" : "")}{(skip != null ? $"{(where != null || orderBy != null ? "&" : "?")}offset={skip}" : "")}{(where != null || orderBy != null || skip != null ? "&" : "?")}limit={Math.Min(take.Value, 10000)}";
@@ -14114,6 +14215,7 @@ namespace FolioLibrary
             AuthenticateIfNecessary();
             skip = skip ?? 0;
             take = take ?? int.MaxValue;
+            orderBy = orderBy ?? "id";
             while (take > 0)
             {
                 var url = $"{Url}/transfer-criterias{(where != null || orderBy != null ? $"?query={WebUtility.UrlEncode(where)}{(orderBy != null ? $"{(where != null ? " " : "cql.allrecords=1 ")}sortby {WebUtility.UrlEncode(orderBy)}" : "")}" : "")}{(skip != null ? $"{(where != null || orderBy != null ? "&" : "?")}offset={skip}" : "")}{(where != null || orderBy != null || skip != null ? "&" : "?")}limit={Math.Min(take.Value, 10000)}";
@@ -14251,6 +14353,7 @@ namespace FolioLibrary
             AuthenticateIfNecessary();
             skip = skip ?? 0;
             take = take ?? int.MaxValue;
+            orderBy = orderBy ?? "id";
             while (take > 0)
             {
                 var url = $"{Url}/users{(where != null || orderBy != null ? $"?query={WebUtility.UrlEncode(where)}{(orderBy != null ? $"{(where != null ? " " : "cql.allrecords=1 ")}sortby {WebUtility.UrlEncode(orderBy)}" : "")}" : "")}{(skip != null ? $"{(where != null || orderBy != null ? "&" : "?")}offset={skip}" : "")}{(where != null || orderBy != null || skip != null ? "&" : "?")}limit={Math.Min(take.Value, 10000)}";
@@ -14407,6 +14510,7 @@ namespace FolioLibrary
             AuthenticateIfNecessary();
             skip = skip ?? 0;
             take = take ?? int.MaxValue;
+            orderBy = orderBy ?? "id";
             while (take > 0)
             {
                 var url = $"{Url}/acquisitions-units-storage/memberships{(where != null || orderBy != null ? $"?query={WebUtility.UrlEncode(where)}{(orderBy != null ? $"{(where != null ? " " : "cql.allrecords=1 ")}sortby {WebUtility.UrlEncode(orderBy)}" : "")}" : "")}{(skip != null ? $"{(where != null || orderBy != null ? "&" : "?")}offset={skip}" : "")}{(where != null || orderBy != null || skip != null ? "&" : "?")}limit={Math.Min(take.Value, 10000)}";
@@ -14544,6 +14648,7 @@ namespace FolioLibrary
             AuthenticateIfNecessary();
             skip = skip ?? 0;
             take = take ?? int.MaxValue;
+            orderBy = orderBy ?? "id";
             while (take > 0)
             {
                 var url = $"{Url}/request-preference-storage/request-preference{(where != null || orderBy != null ? $"?query={WebUtility.UrlEncode(where)}{(orderBy != null ? $"{(where != null ? " " : "cql.allrecords=1 ")}sortby {WebUtility.UrlEncode(orderBy)}" : "")}" : "")}{(skip != null ? $"{(where != null || orderBy != null ? "&" : "?")}offset={skip}" : "")}{(where != null || orderBy != null || skip != null ? "&" : "?")}limit={Math.Min(take.Value, 10000)}";
@@ -14681,6 +14786,7 @@ namespace FolioLibrary
             AuthenticateIfNecessary();
             skip = skip ?? 0;
             take = take ?? int.MaxValue;
+            orderBy = orderBy ?? "id";
             while (take > 0)
             {
                 var url = $"{Url}/voucher-storage/vouchers{(where != null || orderBy != null ? $"?query={WebUtility.UrlEncode(where)}{(orderBy != null ? $"{(where != null ? " " : "cql.allrecords=1 ")}sortby {WebUtility.UrlEncode(orderBy)}" : "")}" : "")}{(skip != null ? $"{(where != null || orderBy != null ? "&" : "?")}offset={skip}" : "")}{(where != null || orderBy != null || skip != null ? "&" : "?")}limit={Math.Min(take.Value, 10000)}";
@@ -14818,6 +14924,7 @@ namespace FolioLibrary
             AuthenticateIfNecessary();
             skip = skip ?? 0;
             take = take ?? int.MaxValue;
+            orderBy = orderBy ?? "id";
             while (take > 0)
             {
                 var url = $"{Url}/voucher-storage/voucher-lines{(where != null || orderBy != null ? $"?query={WebUtility.UrlEncode(where)}{(orderBy != null ? $"{(where != null ? " " : "cql.allrecords=1 ")}sortby {WebUtility.UrlEncode(orderBy)}" : "")}" : "")}{(skip != null ? $"{(where != null || orderBy != null ? "&" : "?")}offset={skip}" : "")}{(where != null || orderBy != null || skip != null ? "&" : "?")}limit={Math.Min(take.Value, 10000)}";
@@ -14955,6 +15062,7 @@ namespace FolioLibrary
             AuthenticateIfNecessary();
             skip = skip ?? 0;
             take = take ?? int.MaxValue;
+            orderBy = orderBy ?? "id";
             while (take > 0)
             {
                 var url = $"{Url}/waives{(where != null || orderBy != null ? $"?query={WebUtility.UrlEncode(where)}{(orderBy != null ? $"{(where != null ? " " : "cql.allrecords=1 ")}sortby {WebUtility.UrlEncode(orderBy)}" : "")}" : "")}{(skip != null ? $"{(where != null || orderBy != null ? "&" : "?")}offset={skip}" : "")}{(where != null || orderBy != null || skip != null ? "&" : "?")}limit={Math.Min(take.Value, 10000)}";
