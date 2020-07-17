@@ -12,11 +12,10 @@ namespace FolioLibrary
 {
     public partial class FolioBulkCopyContext : IDisposable
     {
-        private DataTable acquisitionsUnitsDataTable, addressTypesDataTable, alertsDataTable, alternativeTitleTypesDataTable, auditLoansDataTable, authAttemptsDataTable, authCredentialsHistoriesDataTable, authPasswordActionsDataTable, batchGroupsDataTable, batchVouchersDataTable, batchVoucherExportsDataTable, batchVoucherExportConfigsDataTable, blocksDataTable, budgetsDataTable, callNumberTypesDataTable, campusesDataTable, cancellationReasonsDataTable, categoriesDataTable, checkInsDataTable, circulationRulesDataTable, classificationTypesDataTable, closeReasonsDataTable, commentsDataTable, configurationsDataTable, contactsDataTable, contributorNameTypesDataTable, contributorTypesDataTable, countriesDataTable, customFieldsDataTable, documentsDataTable, electronicAccessRelationshipsDataTable, errorRecordsDataTable, eventLogsDataTable, exportConfigCredentialsDataTable, feesDataTable, feeTypesDataTable, financeGroupsDataTable, fiscalYearsDataTable, fixedDueDateSchedulesDataTable, fundsDataTable, fundTypesDataTable, groupsDataTable, groupFundFiscalYearsDataTable, holdingsDataTable, holdingNoteTypesDataTable, holdingTypesDataTable, hridSettingsDataTable, idTypesDataTable, illPoliciesDataTable, instancesDataTable, instanceFormatsDataTable, instanceNoteTypesDataTable, instanceRelationshipsDataTable, instanceRelationshipTypesDataTable, instanceSourceMarcsDataTable, instanceStatusesDataTable, instanceTypesDataTable, institutionsDataTable, interfacesDataTable, interfaceCredentialsDataTable, invoicesDataTable, invoiceItemsDataTable, invoiceTransactionSummariesDataTable, itemsDataTable, itemDamagedStatusesDataTable, itemNoteTypesDataTable, jobExecutionsDataTable, jobExecutionProgressesDataTable, jobExecutionSourceChunksDataTable, journalRecordsDataTable, ledgersDataTable, ledgerFiscalYearsDataTable, librariesDataTable, loansDataTable, loanPoliciesDataTable, loanTypesDataTable, locationsDataTable, loginsDataTable, lostItemFeePoliciesDataTable, mappingRulesDataTable, marcRecordsDataTable, materialTypesDataTable, modeOfIssuancesDataTable, natureOfContentTermsDataTable, notesDataTable, noteTypesDataTable, ordersDataTable, orderInvoicesDataTable, orderItemsDataTable, orderTemplatesDataTable, orderTransactionSummariesDataTable, organizationsDataTable, overdueFinePoliciesDataTable, ownersDataTable, patronActionSessionsDataTable, patronBlockConditionsDataTable, patronBlockLimitsDataTable, patronNoticePoliciesDataTable, paymentsDataTable, paymentMethodsDataTable, permissionsDataTable, permissionsUsersDataTable, piecesDataTable, precedingSucceedingTitlesDataTable, prefixesDataTable, proxiesDataTable, rawRecordsDataTable, recordsDataTable, refundReasonsDataTable, reportingCodesDataTable, requestsDataTable, requestPoliciesDataTable, scheduledNoticesDataTable, servicePointsDataTable, servicePointUsersDataTable, snapshotsDataTable, staffSlipsDataTable, statisticalCodesDataTable, statisticalCodeTypesDataTable, suffixesDataTable, tagsDataTable, templatesDataTable, temporaryInvoiceTransactionsDataTable, temporaryOrderTransactionsDataTable, titlesDataTable, transactionsDataTable, transferAccountsDataTable, transferCriteriasDataTable, usersDataTable, userAcquisitionsUnitsDataTable, userRequestPreferencesDataTable, vouchersDataTable, voucherItemsDataTable, waiveReasonsDataTable;
+        private DataTable acquisitionsUnitsDataTable, addressTypesDataTable, alertsDataTable, alternativeTitleTypesDataTable, auditLoansDataTable, authAttemptsDataTable, authCredentialsHistoriesDataTable, authPasswordActionsDataTable, batchGroupsDataTable, batchVouchersDataTable, batchVoucherExportsDataTable, batchVoucherExportConfigsDataTable, blocksDataTable, budgetsDataTable, callNumberTypesDataTable, campusesDataTable, cancellationReasonsDataTable, categoriesDataTable, checkInsDataTable, circulationRulesDataTable, classificationTypesDataTable, closeReasonsDataTable, commentsDataTable, configurationsDataTable, contactsDataTable, contributorNameTypesDataTable, contributorTypesDataTable, customFieldsDataTable, documentsDataTable, electronicAccessRelationshipsDataTable, errorRecordsDataTable, eventLogsDataTable, exportConfigCredentialsDataTable, feesDataTable, feeTypesDataTable, financeGroupsDataTable, fiscalYearsDataTable, fixedDueDateSchedulesDataTable, fundsDataTable, fundTypesDataTable, groupsDataTable, groupFundFiscalYearsDataTable, holdingsDataTable, holdingNoteTypesDataTable, holdingTypesDataTable, hridSettingsDataTable, idTypesDataTable, illPoliciesDataTable, instancesDataTable, instanceFormatsDataTable, instanceNoteTypesDataTable, instanceRelationshipsDataTable, instanceRelationshipTypesDataTable, instanceSourceMarcsDataTable, instanceStatusesDataTable, instanceTypesDataTable, institutionsDataTable, interfacesDataTable, interfaceCredentialsDataTable, invoicesDataTable, invoiceItemsDataTable, invoiceTransactionSummariesDataTable, itemsDataTable, itemDamagedStatusesDataTable, itemNoteTypesDataTable, jobExecutionsDataTable, jobExecutionProgressesDataTable, jobExecutionSourceChunksDataTable, journalRecordsDataTable, ledgersDataTable, ledgerFiscalYearsDataTable, librariesDataTable, loansDataTable, loanPoliciesDataTable, loanTypesDataTable, locationsDataTable, loginsDataTable, lostItemFeePoliciesDataTable, mappingRulesDataTable, marcRecordsDataTable, materialTypesDataTable, modeOfIssuancesDataTable, natureOfContentTermsDataTable, notesDataTable, noteTypesDataTable, ordersDataTable, orderInvoicesDataTable, orderItemsDataTable, orderTemplatesDataTable, orderTransactionSummariesDataTable, organizationsDataTable, overdueFinePoliciesDataTable, ownersDataTable, patronActionSessionsDataTable, patronBlockConditionsDataTable, patronBlockLimitsDataTable, patronNoticePoliciesDataTable, paymentsDataTable, paymentMethodsDataTable, permissionsDataTable, permissionsUsersDataTable, piecesDataTable, precedingSucceedingTitlesDataTable, prefixesDataTable, proxiesDataTable, rawRecordsDataTable, recordsDataTable, refundReasonsDataTable, reportingCodesDataTable, requestsDataTable, requestPoliciesDataTable, scheduledNoticesDataTable, servicePointsDataTable, servicePointUsersDataTable, snapshotsDataTable, staffSlipsDataTable, statisticalCodesDataTable, statisticalCodeTypesDataTable, suffixesDataTable, tagsDataTable, templatesDataTable, temporaryInvoiceTransactionsDataTable, temporaryOrderTransactionsDataTable, titlesDataTable, transactionsDataTable, transferAccountsDataTable, transferCriteriasDataTable, usersDataTable, userAcquisitionsUnitsDataTable, userRequestPreferencesDataTable, vouchersDataTable, voucherItemsDataTable, waiveReasonsDataTable;
         private bool checkConstraints;
         private string connectionString;
         private bool identityInsert;
-        private string name;
         private string providerName;
         private dynamic sqlBulkCopy;
         public readonly static TraceSource traceSource = new TraceSource("FolioLibrary", SourceLevels.Information);
@@ -26,14 +25,11 @@ namespace FolioLibrary
         public bool IsSqlServer => providerName == "System.Data.SqlClient";
         public string ProviderName => providerName;
 
-        public FolioBulkCopyContext(bool identityInsert = true, bool checkConstraints = false) : this("FolioContext", identityInsert, checkConstraints) { }
-
-        public FolioBulkCopyContext(string name, bool identityInsert = true, bool checkConstraints = false)
+        public FolioBulkCopyContext(string name = "FolioContext", bool identityInsert = true, bool checkConstraints = false, string providerName = "Npgsql")
         {
-            this.name = name;
-            if (ConfigurationManager.ConnectionStrings[name] == null) return;
-            connectionString = ConfigurationManager.ConnectionStrings[name].ConnectionString;
-            providerName = ConfigurationManager.ConnectionStrings[name].ProviderName;
+            connectionString = ConfigurationManager.ConnectionStrings[name]?.ConnectionString ?? name;
+            if (connectionString.Contains("http")) return;
+            this.providerName = ConfigurationManager.ConnectionStrings[name]?.ProviderName ?? providerName;
             this.identityInsert = identityInsert;
             this.checkConstraints = checkConstraints;
             if (IsSqlServer) throw new NotImplementedException();
@@ -553,23 +549,6 @@ namespace FolioLibrary
             dr["id"] = (object)contributorType.Id ?? DBNull.Value;
             dr["jsonb"] = (object)contributorType.Content ?? DBNull.Value;
             contributorTypesDataTable.Rows.Add(dr);
-        }
-
-        public void Insert(Country country)
-        {
-            if (countriesDataTable == null)
-            {
-                countriesDataTable = new DataTable();
-                countriesDataTable.Columns.Add(new DataColumn { ColumnName = "alpha2_code", DataType = typeof(string) });
-                countriesDataTable.Columns.Add(new DataColumn { ColumnName = "alpha3_code", DataType = typeof(string) });
-                countriesDataTable.Columns.Add(new DataColumn { ColumnName = "name", DataType = typeof(string) });
-                
-            }
-            var dr = countriesDataTable.NewRow();
-            dr["alpha2_code"] = (object)country.Alpha2Code ?? DBNull.Value;
-            dr["alpha3_code"] = (object)country.Alpha3Code ?? DBNull.Value;
-            dr["name"] = (object)country.Name ?? DBNull.Value;
-            countriesDataTable.Rows.Add(dr);
         }
 
         public void Insert(CustomField customField)
@@ -1381,28 +1360,28 @@ namespace FolioLibrary
                 journalRecordsDataTable.Columns.Add(new DataColumn { ColumnName = "id", DataType = typeof(Guid) });
                 journalRecordsDataTable.Columns.Add(new DataColumn { ColumnName = "job_execution_id", DataType = typeof(Guid) });
                 journalRecordsDataTable.Columns.Add(new DataColumn { ColumnName = "source_id", DataType = typeof(Guid) });
-                journalRecordsDataTable.Columns.Add(new DataColumn { ColumnName = "source_record_order", DataType = typeof(int) });
                 journalRecordsDataTable.Columns.Add(new DataColumn { ColumnName = "entity_type", DataType = typeof(string) });
                 journalRecordsDataTable.Columns.Add(new DataColumn { ColumnName = "entity_id", DataType = typeof(string) });
                 journalRecordsDataTable.Columns.Add(new DataColumn { ColumnName = "entity_hrid", DataType = typeof(string) });
                 journalRecordsDataTable.Columns.Add(new DataColumn { ColumnName = "action_type", DataType = typeof(string) });
                 journalRecordsDataTable.Columns.Add(new DataColumn { ColumnName = "action_status", DataType = typeof(string) });
-                journalRecordsDataTable.Columns.Add(new DataColumn { ColumnName = "error", DataType = typeof(string) });
                 journalRecordsDataTable.Columns.Add(new DataColumn { ColumnName = "action_date", DataType = typeof(DateTime) });
+                journalRecordsDataTable.Columns.Add(new DataColumn { ColumnName = "source_record_order", DataType = typeof(int) });
+                journalRecordsDataTable.Columns.Add(new DataColumn { ColumnName = "error", DataType = typeof(string) });
                 
             }
             var dr = journalRecordsDataTable.NewRow();
             dr["id"] = (object)journalRecord.Id ?? DBNull.Value;
             dr["job_execution_id"] = (object)journalRecord.JobExecutionId ?? DBNull.Value;
             dr["source_id"] = (object)journalRecord.SourceId ?? DBNull.Value;
-            dr["source_record_order"] = (object)journalRecord.SourceRecordOrder ?? DBNull.Value;
             dr["entity_type"] = (object)journalRecord.EntityType ?? DBNull.Value;
             dr["entity_id"] = (object)journalRecord.EntityId ?? DBNull.Value;
             dr["entity_hrid"] = (object)journalRecord.EntityHrid ?? DBNull.Value;
             dr["action_type"] = (object)journalRecord.ActionType ?? DBNull.Value;
             dr["action_status"] = (object)journalRecord.ActionStatus ?? DBNull.Value;
-            dr["error"] = (object)journalRecord.Error ?? DBNull.Value;
             dr["action_date"] = (object)journalRecord.ActionDate ?? DBNull.Value;
+            dr["source_record_order"] = (object)journalRecord.SourceRecordOrder ?? DBNull.Value;
+            dr["error"] = (object)journalRecord.Error ?? DBNull.Value;
             journalRecordsDataTable.Rows.Add(dr);
         }
 
@@ -2944,16 +2923,6 @@ namespace FolioLibrary
                 sqlBulkCopy.WriteToServer(contributorTypesDataTable);
                 contributorTypesDataTable.Clear();
             }
-            if (countriesDataTable != null && countriesDataTable.Rows.Count > 0)
-            {
-                sqlBulkCopy.DestinationTableName = $"uc{(IsMySql ? "_" : ".")}countries";
-                sqlBulkCopy.ColumnMappings.Clear();
-                sqlBulkCopy.ColumnMappings.Add("alpha2_code", "alpha2_code");
-                sqlBulkCopy.ColumnMappings.Add("alpha3_code", "alpha3_code");
-                sqlBulkCopy.ColumnMappings.Add("name", "name");
-                sqlBulkCopy.WriteToServer(countriesDataTable);
-                countriesDataTable.Clear();
-            }
             if (customFieldsDataTable != null && customFieldsDataTable.Rows.Count > 0)
             {
                 sqlBulkCopy.DestinationTableName = $"diku_mod_users{(IsMySql ? "_" : ".")}custom_fields";
@@ -3423,14 +3392,14 @@ namespace FolioLibrary
                 sqlBulkCopy.ColumnMappings.Add("id", "id");
                 sqlBulkCopy.ColumnMappings.Add("job_execution_id", "job_execution_id");
                 sqlBulkCopy.ColumnMappings.Add("source_id", "source_id");
-                sqlBulkCopy.ColumnMappings.Add("source_record_order", "source_record_order");
                 sqlBulkCopy.ColumnMappings.Add("entity_type", "entity_type");
                 sqlBulkCopy.ColumnMappings.Add("entity_id", "entity_id");
                 sqlBulkCopy.ColumnMappings.Add("entity_hrid", "entity_hrid");
                 sqlBulkCopy.ColumnMappings.Add("action_type", "action_type");
                 sqlBulkCopy.ColumnMappings.Add("action_status", "action_status");
-                sqlBulkCopy.ColumnMappings.Add("error", "error");
                 sqlBulkCopy.ColumnMappings.Add("action_date", "action_date");
+                sqlBulkCopy.ColumnMappings.Add("source_record_order", "source_record_order");
+                sqlBulkCopy.ColumnMappings.Add("error", "error");
                 sqlBulkCopy.WriteToServer(journalRecordsDataTable);
                 journalRecordsDataTable.Clear();
             }
@@ -4183,7 +4152,6 @@ namespace FolioLibrary
             if (contactsDataTable != null) contactsDataTable.Dispose();
             if (contributorNameTypesDataTable != null) contributorNameTypesDataTable.Dispose();
             if (contributorTypesDataTable != null) contributorTypesDataTable.Dispose();
-            if (countriesDataTable != null) countriesDataTable.Dispose();
             if (customFieldsDataTable != null) customFieldsDataTable.Dispose();
             if (documentsDataTable != null) documentsDataTable.Dispose();
             if (electronicAccessRelationshipsDataTable != null) electronicAccessRelationshipsDataTable.Dispose();
@@ -4317,8 +4285,8 @@ namespace FolioLibrary
 
         public MySqlBulkCopy(string name, bool checkConstraints)
         {
-            providerName = ConfigurationManager.ConnectionStrings[name].ProviderName;
-            connectionString = ConfigurationManager.ConnectionStrings[name].ConnectionString;
+            providerName = "MySql.Data.MySqlClient";
+            connectionString = ConfigurationManager.ConnectionStrings[name]?.ConnectionString ?? name;
             if (!checkConstraints) DisableConstraints();
         }
 
@@ -4405,8 +4373,8 @@ namespace FolioLibrary
 
         public PostgreSqlBulkCopy(string name, bool checkConstraints)
         {
-            providerName = ConfigurationManager.ConnectionStrings[name].ProviderName;
-            connectionString = ConfigurationManager.ConnectionStrings[name].ConnectionString;
+            providerName = "Npgsql";
+            connectionString = ConfigurationManager.ConnectionStrings[name]?.ConnectionString ?? name;
             if (!checkConstraints) DisableConstraints();
         }
 

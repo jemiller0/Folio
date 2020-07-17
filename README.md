@@ -47,16 +47,22 @@ cd FolioConsoleApplication/bin/Debug/netcoreapp3.1
 ./folio
 ```
 
-To load and save data using PostgreSQL SQL, specify the host name, username, password, and database in `ConnectionStrings.config`.
+To load and save data using PostgreSQL SQL, specify the host name, username, password, and database for the FolioContext connection string in `ConnectionStrings.config`.
 
 ```
-vim ConnectionStrings.config
+nano ConnectionStrings.config
 ```
 
-To load and save data using the FOLIO web API, Specify the URL, tenant, username, and password in `AppSettings.config`.
+To load and save data using the FOLIO web API, specify the URL, tenant, username, and password for the FolioServiceClient connection string in `ConnectionStrings.config`.
 
 ```
-vim AppSettings.config
+nano ConnectionStrings.config
+```
+
+To have exceptions sent using email, specify the smtpHost, emailAddress, and emailName in `AppSettings.config`.
+
+```
+nano AppSettings.config
 ```
 
 ## Examples
@@ -91,10 +97,22 @@ vim AppSettings.config
 ./folio -delete -load -allusers
 ```
 
+### Save users using SQL using default file name
+
+```
+./folio -save -users
+```
+
 ### Save users using SQL
 
 ```
 ./folio -save -userspath users.json
+```
+
+### Load users using SQL using default file name
+
+```
+./folio -delete -load -users
 ```
 
 ### Load users using SQL
@@ -187,24 +205,78 @@ vim AppSettings.config
 ./folio -save -all -threads 16
 ```
 
+### Query users using API
+
+```
+./folio -api -query -users -where 'personal.lastName == "Miller"' -orderby 'username' -select 'id,username,personal.firstName,personal.lastName,personal.addresses[0].countryId as country' -skip 1 -take 3
+```
+
+### Query address types using SQL and pipe it to the PowerShell ConvertFrom-Json cmdlet so that it can be displayed as a formatted table
+
+```
+./folio -query -addresstypes -where "jsonb->>'addressType' IN ('Campus', 'Home')" -select 'id,addressType' | ConvertFrom-Json
+```
+
+```
+id                                   addressType
+--                                   -----------
+7e99be3c-ada2-4e88-9303-a2c8a8e2b08e Campus
+2abe6fe7-519f-40fd-ba24-9c2a14fbf4cb Home
+```
+
+### Query address types using SQL and pipe it to the PowerShell ConvertFrom-Json cmdlet so that it can be displayed as a formatted table
+
+```
+./folio -query -addresstypes -where "jsonb->>'addressType' IN ('Campus', 'Home')" -select 'id,addressType' | ConvertFrom-Json
+```
+
+```
+id                                   addressType
+--                                   -----------
+7e99be3c-ada2-4e88-9303-a2c8a8e2b08e Campus
+2abe6fe7-519f-40fd-ba24-9c2a14fbf4cb Home
+```
+
+### Query address types using SQL and pipe it to the PowerShell ConvertFrom-Json cmdlet and then to the ConvertTo-Csv cmdlet to convert it to CSV
+
+```
+./folio -query -addresstypes -where "jsonb->>'addressType' IN ('Campus', 'Home')" -select 'id,addressType' | ConvertFrom-Json | ConvertTo-Csv
+```
+
+```
+"id","addressType"
+"7e99be3c-ada2-4e88-9303-a2c8a8e2b08e","Campus"
+"2abe6fe7-519f-40fd-ba24-9c2a14fbf4cb","Home"
+```
+
 ## Parameters
 
 ```
 -All
 -Api
 -Compress
+-Connection <string>
+-ConnectionString <string>
 -Delete
+-Disable
 -Force
 -Load
+-OrderBy <string>
 -Path <string>
+-Query
+-Select <string>
 -Save
+-Skip <int>
 -Take <int>
 -Threads <int>
 -TracePath <string>
 -Validate
 -Verbose
 -Warning
+-WhatIf
+-Where <string>
 -All{Module}
+-{Entity}
 -{Entity}Path <string>
 -{Entity}Where <string>
 ```

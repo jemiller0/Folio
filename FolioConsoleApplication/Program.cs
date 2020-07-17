@@ -12,7 +12,10 @@ using System.IO.Compression;
 using System.Linq;
 using System.Net.Mail;
 using System.Reflection;
+using System.Text;
+using System.Text.RegularExpressions;
 using Configuration = FolioLibrary.Configuration;
+using Group = FolioLibrary.Group;
 
 namespace FolioConsoleApplication
 {
@@ -20,9 +23,13 @@ namespace FolioConsoleApplication
     {
         public static bool api;
         private static bool compress;
+        private static string connectionString;
         private static string emailAddress = ConfigurationManager.AppSettings["emailAddress"];
         private static string emailName = ConfigurationManager.AppSettings["emailName"];
         private static bool force;
+        private static JsonSerializer jsonSerializer = new JsonSerializer { Formatting = Formatting.Indented };
+        public static string orderBy;
+        private static int? skip;
         private static string smtpHost = ConfigurationManager.AppSettings["smtpHost"];
         private static int? take;
         public readonly static TraceSource traceSource = new TraceSource("FolioConsoleApplication", SourceLevels.Information);
@@ -35,10 +42,12 @@ namespace FolioConsoleApplication
             var s = Stopwatch.StartNew();
             try
             {
+                Console.OutputEncoding = Encoding.UTF8;
+                var query = args.Any(s3 => s3.Equals("-Query", StringComparison.OrdinalIgnoreCase));
                 var tracePath = args.SkipWhile(s3 => !s3.Equals("-TracePath", StringComparison.OrdinalIgnoreCase)).Skip(1).FirstOrDefault();
                 var verbose = args.Any(s3 => s3.Equals("-Verbose", StringComparison.OrdinalIgnoreCase));
-                var warning = args.Any(s3 => s3.Equals("-Warning", StringComparison.OrdinalIgnoreCase));
-                traceSource.Listeners.Add(new TextWriterTraceListener(Console.Out) { TraceOutputOptions = TraceOptions.DateTime | TraceOptions.ThreadId });
+                var warning = args.Any(s3 => s3.Equals("-Warning", StringComparison.OrdinalIgnoreCase)) || query;
+                traceSource.Listeners.Add(new TextWriterTraceListener(Console.Error) { TraceOutputOptions = TraceOptions.DateTime | TraceOptions.ThreadId });
                 if (tracePath != null) traceSource.Listeners.Add(new TextWriterTraceListener(new StreamWriter(tracePath, true) { AutoFlush = true }) { TraceOutputOptions = TraceOptions.DateTime | TraceOptions.ThreadId });
                 FolioBulkCopyContext.traceSource.Listeners.AddRange(traceSource.Listeners);
                 FolioDapperContext.traceSource.Listeners.AddRange(traceSource.Listeners);
@@ -48,26 +57,34 @@ namespace FolioConsoleApplication
                 Initialize();
                 if (args.Length == 0)
                 {
-                    traceSource.TraceEvent(TraceEventType.Critical, 0, "Usage: folio [-All] [-Api] [-Compress] [-Delete] [-Disable] [-Force] [-Load] [-Path <string>] [-Save] [-Update] [-Validate] [-Verbose] [-Warning] [-WhatIf] [-AllCirculation] [-AllConfiguration] [-AllFees] [-AllFinance] [-AllInventory] [-AllInvoices] [-AllLogin] [-AllOrders] [-AllOrganizations] [-AllPermissions] [-AllSource] [-AllTemplates] [-AllUsers] [-AcquisitionsUnitsPath <string>] [-AcquisitionsUnitsWhere <string>] [-AddressTypesPath <string>] [-AddressTypesWhere <string>] [-AlertsPath <string>] [-AlertsWhere <string>] [-AlternativeTitleTypesPath <string>] [-AlternativeTitleTypesWhere <string>] [-BatchGroupsPath <string>] [-BatchGroupsWhere <string>] [-BatchVouchersPath <string>] [-BatchVouchersWhere <string>] [-BatchVoucherExportsPath <string>] [-BatchVoucherExportsWhere <string>] [-BatchVoucherExportConfigsPath <string>] [-BatchVoucherExportConfigsWhere <string>] [-BlocksPath <string>] [-BlocksWhere <string>] [-BudgetsPath <string>] [-BudgetsWhere <string>] [-CallNumberTypesPath <string>] [-CallNumberTypesWhere <string>] [-CampusesPath <string>] [-CampusesWhere <string>] [-CancellationReasonsPath <string>] [-CancellationReasonsWhere <string>] [-CategoriesPath <string>] [-CategoriesWhere <string>] [-CheckInsPath <string>] [-CheckInsWhere <string>] [-CirculationRulesPath <string>] [-CirculationRulesWhere <string>] [-ClassificationTypesPath <string>] [-ClassificationTypesWhere <string>] [-CloseReasonsPath <string>] [-CloseReasonsWhere <string>] [-CommentsPath <string>] [-CommentsWhere <string>] [-ConfigurationsPath <string>] [-ConfigurationsWhere <string>] [-ContactsPath <string>] [-ContactsWhere <string>] [-ContributorNameTypesPath <string>] [-ContributorNameTypesWhere <string>] [-ContributorTypesPath <string>] [-ContributorTypesWhere <string>] [-CustomFieldsPath <string>] [-CustomFieldsWhere <string>] [-DocumentsPath <string>] [-DocumentsWhere <string>] [-ElectronicAccessRelationshipsPath <string>] [-ElectronicAccessRelationshipsWhere <string>] [-ErrorRecordsPath <string>] [-ErrorRecordsWhere <string>] [-ExportConfigCredentialsPath <string>] [-ExportConfigCredentialsWhere <string>] [-FeesPath <string>] [-FeesWhere <string>] [-FeeTypesPath <string>] [-FeeTypesWhere <string>] [-FinanceGroupsPath <string>] [-FinanceGroupsWhere <string>] [-FiscalYearsPath <string>] [-FiscalYearsWhere <string>] [-FixedDueDateSchedulesPath <string>] [-FixedDueDateSchedulesWhere <string>] [-FundsPath <string>] [-FundsWhere <string>] [-FundTypesPath <string>] [-FundTypesWhere <string>] [-GroupsPath <string>] [-GroupsWhere <string>] [-GroupFundFiscalYearsPath <string>] [-GroupFundFiscalYearsWhere <string>] [-HoldingsPath <string>] [-HoldingsWhere <string>] [-HoldingNoteTypesPath <string>] [-HoldingNoteTypesWhere <string>] [-HoldingTypesPath <string>] [-HoldingTypesWhere <string>] [-HridSettingsPath <string>] [-HridSettingsWhere <string>] [-IdTypesPath <string>] [-IdTypesWhere <string>] [-IllPoliciesPath <string>] [-IllPoliciesWhere <string>] [-InstancesPath <string>] [-InstancesWhere <string>] [-InstanceFormatsPath <string>] [-InstanceFormatsWhere <string>] [-InstanceNoteTypesPath <string>] [-InstanceNoteTypesWhere <string>] [-InstanceRelationshipsPath <string>] [-InstanceRelationshipsWhere <string>] [-InstanceRelationshipTypesPath <string>] [-InstanceRelationshipTypesWhere <string>] [-InstanceStatusesPath <string>] [-InstanceStatusesWhere <string>] [-InstanceTypesPath <string>] [-InstanceTypesWhere <string>] [-InstitutionsPath <string>] [-InstitutionsWhere <string>] [-InterfacesPath <string>] [-InterfacesWhere <string>] [-InterfaceCredentialsPath <string>] [-InterfaceCredentialsWhere <string>] [-InvoicesPath <string>] [-InvoicesWhere <string>] [-InvoiceItemsPath <string>] [-InvoiceItemsWhere <string>] [-InvoiceTransactionSummariesPath <string>] [-InvoiceTransactionSummariesWhere <string>] [-ItemsPath <string>] [-ItemsWhere <string>] [-ItemDamagedStatusesPath <string>] [-ItemDamagedStatusesWhere <string>] [-ItemNoteTypesPath <string>] [-ItemNoteTypesWhere <string>] [-LedgersPath <string>] [-LedgersWhere <string>] [-LedgerFiscalYearsPath <string>] [-LedgerFiscalYearsWhere <string>] [-LibrariesPath <string>] [-LibrariesWhere <string>] [-LoansPath <string>] [-LoansWhere <string>] [-LoanPoliciesPath <string>] [-LoanPoliciesWhere <string>] [-LoanTypesPath <string>] [-LoanTypesWhere <string>] [-LocationsPath <string>] [-LocationsWhere <string>] [-LoginsPath <string>] [-LoginsWhere <string>] [-LostItemFeePoliciesPath <string>] [-LostItemFeePoliciesWhere <string>] [-MarcRecordsPath <string>] [-MarcRecordsWhere <string>] [-MaterialTypesPath <string>] [-MaterialTypesWhere <string>] [-ModeOfIssuancesPath <string>] [-ModeOfIssuancesWhere <string>] [-NatureOfContentTermsPath <string>] [-NatureOfContentTermsWhere <string>] [-OrdersPath <string>] [-OrdersWhere <string>] [-OrderInvoicesPath <string>] [-OrderInvoicesWhere <string>] [-OrderItemsPath <string>] [-OrderItemsWhere <string>] [-OrderTemplatesPath <string>] [-OrderTemplatesWhere <string>] [-OrderTransactionSummariesPath <string>] [-OrderTransactionSummariesWhere <string>] [-OrganizationsPath <string>] [-OrganizationsWhere <string>] [-OverdueFinePoliciesPath <string>] [-OverdueFinePoliciesWhere <string>] [-OwnersPath <string>] [-OwnersWhere <string>] [-PatronActionSessionsPath <string>] [-PatronActionSessionsWhere <string>] [-PatronBlockConditionsPath <string>] [-PatronBlockConditionsWhere <string>] [-PatronBlockLimitsPath <string>] [-PatronBlockLimitsWhere <string>] [-PatronNoticePoliciesPath <string>] [-PatronNoticePoliciesWhere <string>] [-PaymentsPath <string>] [-PaymentsWhere <string>] [-PaymentMethodsPath <string>] [-PaymentMethodsWhere <string>] [-PermissionsPath <string>] [-PermissionsWhere <string>] [-PermissionsUsersPath <string>] [-PermissionsUsersWhere <string>] [-PiecesPath <string>] [-PiecesWhere <string>] [-PrecedingSucceedingTitlesPath <string>] [-PrecedingSucceedingTitlesWhere <string>] [-PrefixesPath <string>] [-PrefixesWhere <string>] [-ProxiesPath <string>] [-ProxiesWhere <string>] [-RawRecordsPath <string>] [-RawRecordsWhere <string>] [-RecordsPath <string>] [-RecordsWhere <string>] [-RefundReasonsPath <string>] [-RefundReasonsWhere <string>] [-ReportingCodesPath <string>] [-ReportingCodesWhere <string>] [-RequestsPath <string>] [-RequestsWhere <string>] [-RequestPoliciesPath <string>] [-RequestPoliciesWhere <string>] [-ScheduledNoticesPath <string>] [-ScheduledNoticesWhere <string>] [-ServicePointsPath <string>] [-ServicePointsWhere <string>] [-ServicePointUsersPath <string>] [-ServicePointUsersWhere <string>] [-SnapshotsPath <string>] [-SnapshotsWhere <string>] [-StaffSlipsPath <string>] [-StaffSlipsWhere <string>] [-StatisticalCodesPath <string>] [-StatisticalCodesWhere <string>] [-StatisticalCodeTypesPath <string>] [-StatisticalCodeTypesWhere <string>] [-SuffixesPath <string>] [-SuffixesWhere <string>] [-TemplatesPath <string>] [-TemplatesWhere <string>] [-TemporaryInvoiceTransactionsPath <string>] [-TemporaryInvoiceTransactionsWhere <string>] [-TemporaryOrderTransactionsPath <string>] [-TemporaryOrderTransactionsWhere <string>] [-TitlesPath <string>] [-TitlesWhere <string>] [-TransactionsPath <string>] [-TransactionsWhere <string>] [-TransferAccountsPath <string>] [-TransferAccountsWhere <string>] [-TransferCriteriasPath <string>] [-TransferCriteriasWhere <string>] [-UsersPath <string>] [-UsersWhere <string>] [-UserAcquisitionsUnitsPath <string>] [-UserAcquisitionsUnitsWhere <string>] [-UserRequestPreferencesPath <string>] [-UserRequestPreferencesWhere <string>] [-VouchersPath <string>] [-VouchersWhere <string>] [-VoucherItemsPath <string>] [-VoucherItemsWhere <string>] [-WaiveReasonsPath <string>] [-WaiveReasonsWhere <string>]");
+                    traceSource.TraceEvent(TraceEventType.Critical, 0, "Usage: folio [-All] [-Api] [-Compress] [-Connection <string>] [-ConnectionString <string>] [-Delete] [-Disable] [-Force] [-Load] [-OrderBy <string>] [-Path <string>] [-Query] [-Save] [-Select <string>] [-Skip <int>] [-Take <int>] [-Update] [-Validate] [-Verbose] [-Warning] [-WhatIf] [-Where <string>] [-AllCirculation] [-AllConfiguration] [-AllFees] [-AllFinance] [-AllInventory] [-AllInvoices] [-AllLogin] [-AllOrders] [-AllOrganizations] [-AllPermissions] [-AllSource] [-AllTemplates] [-AllUsers] [-AcquisitionsUnits] [-AcquisitionsUnitsPath <string>] [-AcquisitionsUnitsWhere <string>] [-AddressTypes] [-AddressTypesPath <string>] [-AddressTypesWhere <string>] [-Alerts] [-AlertsPath <string>] [-AlertsWhere <string>] [-AlternativeTitleTypes] [-AlternativeTitleTypesPath <string>] [-AlternativeTitleTypesWhere <string>] [-BatchGroups] [-BatchGroupsPath <string>] [-BatchGroupsWhere <string>] [-BatchVouchers] [-BatchVouchersPath <string>] [-BatchVouchersWhere <string>] [-BatchVoucherExports] [-BatchVoucherExportsPath <string>] [-BatchVoucherExportsWhere <string>] [-BatchVoucherExportConfigs] [-BatchVoucherExportConfigsPath <string>] [-BatchVoucherExportConfigsWhere <string>] [-Blocks] [-BlocksPath <string>] [-BlocksWhere <string>] [-Budgets] [-BudgetsPath <string>] [-BudgetsWhere <string>] [-CallNumberTypes] [-CallNumberTypesPath <string>] [-CallNumberTypesWhere <string>] [-Campuses] [-CampusesPath <string>] [-CampusesWhere <string>] [-CancellationReasons] [-CancellationReasonsPath <string>] [-CancellationReasonsWhere <string>] [-Categories] [-CategoriesPath <string>] [-CategoriesWhere <string>] [-CheckIns] [-CheckInsPath <string>] [-CheckInsWhere <string>] [-CirculationRules] [-CirculationRulesPath <string>] [-CirculationRulesWhere <string>] [-ClassificationTypes] [-ClassificationTypesPath <string>] [-ClassificationTypesWhere <string>] [-CloseReasons] [-CloseReasonsPath <string>] [-CloseReasonsWhere <string>] [-Comments] [-CommentsPath <string>] [-CommentsWhere <string>] [-Configurations] [-ConfigurationsPath <string>] [-ConfigurationsWhere <string>] [-Contacts] [-ContactsPath <string>] [-ContactsWhere <string>] [-ContributorNameTypes] [-ContributorNameTypesPath <string>] [-ContributorNameTypesWhere <string>] [-ContributorTypes] [-ContributorTypesPath <string>] [-ContributorTypesWhere <string>] [-CustomFields] [-CustomFieldsPath <string>] [-CustomFieldsWhere <string>] [-Documents] [-DocumentsPath <string>] [-DocumentsWhere <string>] [-ElectronicAccessRelationships] [-ElectronicAccessRelationshipsPath <string>] [-ElectronicAccessRelationshipsWhere <string>] [-ErrorRecords] [-ErrorRecordsPath <string>] [-ErrorRecordsWhere <string>] [-ExportConfigCredentials] [-ExportConfigCredentialsPath <string>] [-ExportConfigCredentialsWhere <string>] [-Fees] [-FeesPath <string>] [-FeesWhere <string>] [-FeeTypes] [-FeeTypesPath <string>] [-FeeTypesWhere <string>] [-FinanceGroups] [-FinanceGroupsPath <string>] [-FinanceGroupsWhere <string>] [-FiscalYears] [-FiscalYearsPath <string>] [-FiscalYearsWhere <string>] [-FixedDueDateSchedules] [-FixedDueDateSchedulesPath <string>] [-FixedDueDateSchedulesWhere <string>] [-Funds] [-FundsPath <string>] [-FundsWhere <string>] [-FundTypes] [-FundTypesPath <string>] [-FundTypesWhere <string>] [-Groups] [-GroupsPath <string>] [-GroupsWhere <string>] [-GroupFundFiscalYears] [-GroupFundFiscalYearsPath <string>] [-GroupFundFiscalYearsWhere <string>] [-Holdings] [-HoldingsPath <string>] [-HoldingsWhere <string>] [-HoldingNoteTypes] [-HoldingNoteTypesPath <string>] [-HoldingNoteTypesWhere <string>] [-HoldingTypes] [-HoldingTypesPath <string>] [-HoldingTypesWhere <string>] [-HridSettings] [-HridSettingsPath <string>] [-HridSettingsWhere <string>] [-IdTypes] [-IdTypesPath <string>] [-IdTypesWhere <string>] [-IllPolicies] [-IllPoliciesPath <string>] [-IllPoliciesWhere <string>] [-Instances] [-InstancesPath <string>] [-InstancesWhere <string>] [-InstanceFormats] [-InstanceFormatsPath <string>] [-InstanceFormatsWhere <string>] [-InstanceNoteTypes] [-InstanceNoteTypesPath <string>] [-InstanceNoteTypesWhere <string>] [-InstanceRelationships] [-InstanceRelationshipsPath <string>] [-InstanceRelationshipsWhere <string>] [-InstanceRelationshipTypes] [-InstanceRelationshipTypesPath <string>] [-InstanceRelationshipTypesWhere <string>] [-InstanceStatuses] [-InstanceStatusesPath <string>] [-InstanceStatusesWhere <string>] [-InstanceTypes] [-InstanceTypesPath <string>] [-InstanceTypesWhere <string>] [-Institutions] [-InstitutionsPath <string>] [-InstitutionsWhere <string>] [-Interfaces] [-InterfacesPath <string>] [-InterfacesWhere <string>] [-InterfaceCredentials] [-InterfaceCredentialsPath <string>] [-InterfaceCredentialsWhere <string>] [-Invoices] [-InvoicesPath <string>] [-InvoicesWhere <string>] [-InvoiceItems] [-InvoiceItemsPath <string>] [-InvoiceItemsWhere <string>] [-InvoiceTransactionSummaries] [-InvoiceTransactionSummariesPath <string>] [-InvoiceTransactionSummariesWhere <string>] [-Items] [-ItemsPath <string>] [-ItemsWhere <string>] [-ItemDamagedStatuses] [-ItemDamagedStatusesPath <string>] [-ItemDamagedStatusesWhere <string>] [-ItemNoteTypes] [-ItemNoteTypesPath <string>] [-ItemNoteTypesWhere <string>] [-Ledgers] [-LedgersPath <string>] [-LedgersWhere <string>] [-LedgerFiscalYears] [-LedgerFiscalYearsPath <string>] [-LedgerFiscalYearsWhere <string>] [-Libraries] [-LibrariesPath <string>] [-LibrariesWhere <string>] [-Loans] [-LoansPath <string>] [-LoansWhere <string>] [-LoanPolicies] [-LoanPoliciesPath <string>] [-LoanPoliciesWhere <string>] [-LoanTypes] [-LoanTypesPath <string>] [-LoanTypesWhere <string>] [-Locations] [-LocationsPath <string>] [-LocationsWhere <string>] [-Logins] [-LoginsPath <string>] [-LoginsWhere <string>] [-LostItemFeePolicies] [-LostItemFeePoliciesPath <string>] [-LostItemFeePoliciesWhere <string>] [-MarcRecords] [-MarcRecordsPath <string>] [-MarcRecordsWhere <string>] [-MaterialTypes] [-MaterialTypesPath <string>] [-MaterialTypesWhere <string>] [-ModeOfIssuances] [-ModeOfIssuancesPath <string>] [-ModeOfIssuancesWhere <string>] [-NatureOfContentTerms] [-NatureOfContentTermsPath <string>] [-NatureOfContentTermsWhere <string>] [-Orders] [-OrdersPath <string>] [-OrdersWhere <string>] [-OrderInvoices] [-OrderInvoicesPath <string>] [-OrderInvoicesWhere <string>] [-OrderItems] [-OrderItemsPath <string>] [-OrderItemsWhere <string>] [-OrderTemplates] [-OrderTemplatesPath <string>] [-OrderTemplatesWhere <string>] [-OrderTransactionSummaries] [-OrderTransactionSummariesPath <string>] [-OrderTransactionSummariesWhere <string>] [-Organizations] [-OrganizationsPath <string>] [-OrganizationsWhere <string>] [-OverdueFinePolicies] [-OverdueFinePoliciesPath <string>] [-OverdueFinePoliciesWhere <string>] [-Owners] [-OwnersPath <string>] [-OwnersWhere <string>] [-PatronActionSessions] [-PatronActionSessionsPath <string>] [-PatronActionSessionsWhere <string>] [-PatronBlockConditions] [-PatronBlockConditionsPath <string>] [-PatronBlockConditionsWhere <string>] [-PatronBlockLimits] [-PatronBlockLimitsPath <string>] [-PatronBlockLimitsWhere <string>] [-PatronNoticePolicies] [-PatronNoticePoliciesPath <string>] [-PatronNoticePoliciesWhere <string>] [-Payments] [-PaymentsPath <string>] [-PaymentsWhere <string>] [-PaymentMethods] [-PaymentMethodsPath <string>] [-PaymentMethodsWhere <string>] [-Permissions] [-PermissionsPath <string>] [-PermissionsWhere <string>] [-PermissionsUsers] [-PermissionsUsersPath <string>] [-PermissionsUsersWhere <string>] [-Pieces] [-PiecesPath <string>] [-PiecesWhere <string>] [-PrecedingSucceedingTitles] [-PrecedingSucceedingTitlesPath <string>] [-PrecedingSucceedingTitlesWhere <string>] [-Prefixes] [-PrefixesPath <string>] [-PrefixesWhere <string>] [-Proxies] [-ProxiesPath <string>] [-ProxiesWhere <string>] [-RawRecords] [-RawRecordsPath <string>] [-RawRecordsWhere <string>] [-Records] [-RecordsPath <string>] [-RecordsWhere <string>] [-RefundReasons] [-RefundReasonsPath <string>] [-RefundReasonsWhere <string>] [-ReportingCodes] [-ReportingCodesPath <string>] [-ReportingCodesWhere <string>] [-Requests] [-RequestsPath <string>] [-RequestsWhere <string>] [-RequestPolicies] [-RequestPoliciesPath <string>] [-RequestPoliciesWhere <string>] [-ScheduledNotices] [-ScheduledNoticesPath <string>] [-ScheduledNoticesWhere <string>] [-ServicePoints] [-ServicePointsPath <string>] [-ServicePointsWhere <string>] [-ServicePointUsers] [-ServicePointUsersPath <string>] [-ServicePointUsersWhere <string>] [-Snapshots] [-SnapshotsPath <string>] [-SnapshotsWhere <string>] [-StaffSlips] [-StaffSlipsPath <string>] [-StaffSlipsWhere <string>] [-StatisticalCodes] [-StatisticalCodesPath <string>] [-StatisticalCodesWhere <string>] [-StatisticalCodeTypes] [-StatisticalCodeTypesPath <string>] [-StatisticalCodeTypesWhere <string>] [-Suffixes] [-SuffixesPath <string>] [-SuffixesWhere <string>] [-Templates] [-TemplatesPath <string>] [-TemplatesWhere <string>] [-TemporaryInvoiceTransactions] [-TemporaryInvoiceTransactionsPath <string>] [-TemporaryInvoiceTransactionsWhere <string>] [-TemporaryOrderTransactions] [-TemporaryOrderTransactionsPath <string>] [-TemporaryOrderTransactionsWhere <string>] [-Titles] [-TitlesPath <string>] [-TitlesWhere <string>] [-Transactions] [-TransactionsPath <string>] [-TransactionsWhere <string>] [-TransferAccounts] [-TransferAccountsPath <string>] [-TransferAccountsWhere <string>] [-TransferCriterias] [-TransferCriteriasPath <string>] [-TransferCriteriasWhere <string>] [-Users] [-UsersPath <string>] [-UsersWhere <string>] [-UserAcquisitionsUnits] [-UserAcquisitionsUnitsPath <string>] [-UserAcquisitionsUnitsWhere <string>] [-UserRequestPreferences] [-UserRequestPreferencesPath <string>] [-UserRequestPreferencesWhere <string>] [-Vouchers] [-VouchersPath <string>] [-VouchersWhere <string>] [-VoucherItems] [-VoucherItemsPath <string>] [-VoucherItemsWhere <string>] [-WaiveReasons] [-WaiveReasonsPath <string>] [-WaiveReasonsWhere <string>]");
                     return -1;
                 }
                 var all = args.Any(s3 => s3.Equals("-All", StringComparison.OrdinalIgnoreCase));
                 api = args.Any(s3 => s3.Equals("-Api", StringComparison.OrdinalIgnoreCase));
                 compress = args.Any(s3 => s3.Equals("-Compress", StringComparison.OrdinalIgnoreCase));
+                var connection = args.SkipWhile(s3 => !s3.Equals("-Connection", StringComparison.OrdinalIgnoreCase)).Skip(1).FirstOrDefault();
+                connectionString = args.SkipWhile(s3 => !s3.Equals("-ConnectionString", StringComparison.OrdinalIgnoreCase)).Skip(1).FirstOrDefault() ?? ConfigurationManager.ConnectionStrings[connection]?.ConnectionString ?? ConfigurationManager.ConnectionStrings[api ? "FolioServiceClient" : "FolioContext"]?.ConnectionString ?? ConfigurationManager.ConnectionStrings[api ? "FolioContext" : "FolioServiceClient"]?.ConnectionString;
+                if (connectionString == null) throw new ArgumentNullException(nameof(connectionString));
+                api = connectionString.StartsWith("http");
                 var delete = args.Any(s3 => s3.Equals("-Delete", StringComparison.OrdinalIgnoreCase));
                 var disable = args.Any(s3 => s3.Equals("-Disable", StringComparison.OrdinalIgnoreCase));
                 force = args.Any(s3 => s3.Equals("-Force", StringComparison.OrdinalIgnoreCase));
                 var import = args.Any(s3 => s3.Equals("-Import", StringComparison.OrdinalIgnoreCase));
                 var load = args.Any(s3 => s3.Equals("-Load", StringComparison.OrdinalIgnoreCase));
                 var merge = args.Any(s3 => s3.Equals("-Merge", StringComparison.OrdinalIgnoreCase));
+                orderBy = args.SkipWhile(s3 => !s3.Equals("-OrderBy", StringComparison.OrdinalIgnoreCase)).Skip(1).FirstOrDefault();
                 var path = args.SkipWhile(s3 => !s3.Equals("-Path", StringComparison.OrdinalIgnoreCase)).Skip(1).FirstOrDefault() ?? ".";
                 var save = args.Any(s3 => s3.Equals("-Save", StringComparison.OrdinalIgnoreCase));
+                var select = args.SkipWhile(s3 => !s3.Equals("-Select", StringComparison.OrdinalIgnoreCase)).Skip(1).FirstOrDefault();
+                skip = int.TryParse(args.SkipWhile(s3 => !s3.Equals("-Skip", StringComparison.OrdinalIgnoreCase)).Skip(1).FirstOrDefault(), out int i) ? (int?)i : null;
                 var source = args.SkipWhile(s3 => !s3.Equals("-Source", StringComparison.OrdinalIgnoreCase)).Skip(1).FirstOrDefault();
-                take = int.TryParse(args.SkipWhile(s3 => !s3.Equals("-Take", StringComparison.OrdinalIgnoreCase)).Skip(1).FirstOrDefault(), out int i) ? (int?)i : null;
+                take = int.TryParse(args.SkipWhile(s3 => !s3.Equals("-Take", StringComparison.OrdinalIgnoreCase)).Skip(1).FirstOrDefault(), out i) ? (int?)i : null;
                 var threads = int.TryParse(args.SkipWhile(s3 => !s3.Equals("-Threads", StringComparison.OrdinalIgnoreCase)).Skip(1).FirstOrDefault(), out i) ? (int?)i : null;
                 var update = args.Any(s3 => s3.Equals("-Update", StringComparison.OrdinalIgnoreCase));
                 validate = args.Any(s3 => s3.Equals("-Validate", StringComparison.OrdinalIgnoreCase));
                 whatIf = args.Any(s3 => s3.Equals("-WhatIf", StringComparison.OrdinalIgnoreCase));
+                var where = args.SkipWhile(s3 => !s3.Equals("-Where", StringComparison.OrdinalIgnoreCase)).Skip(1).FirstOrDefault();
                 var allCirculation = args.Any(s3 => s3.Equals("-AllCirculation", StringComparison.OrdinalIgnoreCase));
                 var allConfiguration = args.Any(s3 => s3.Equals("-AllConfiguration", StringComparison.OrdinalIgnoreCase));
                 var allFees = args.Any(s3 => s3.Equals("-AllFees", StringComparison.OrdinalIgnoreCase));
@@ -81,6 +98,125 @@ namespace FolioConsoleApplication
                 var allSource = args.Any(s3 => s3.Equals("-AllSource", StringComparison.OrdinalIgnoreCase));
                 var allTemplates = args.Any(s3 => s3.Equals("-AllTemplates", StringComparison.OrdinalIgnoreCase));
                 var allUsers = args.Any(s3 => s3.Equals("-AllUsers", StringComparison.OrdinalIgnoreCase));
+                var acquisitionsUnits = args.Any(s3 => s3.Equals("-AcquisitionsUnits", StringComparison.OrdinalIgnoreCase));
+                var addressTypes = args.Any(s3 => s3.Equals("-AddressTypes", StringComparison.OrdinalIgnoreCase));
+                var alerts = args.Any(s3 => s3.Equals("-Alerts", StringComparison.OrdinalIgnoreCase));
+                var alternativeTitleTypes = args.Any(s3 => s3.Equals("-AlternativeTitleTypes", StringComparison.OrdinalIgnoreCase));
+                var batchGroups = args.Any(s3 => s3.Equals("-BatchGroups", StringComparison.OrdinalIgnoreCase));
+                var batchVouchers = args.Any(s3 => s3.Equals("-BatchVouchers", StringComparison.OrdinalIgnoreCase));
+                var batchVoucherExports = args.Any(s3 => s3.Equals("-BatchVoucherExports", StringComparison.OrdinalIgnoreCase));
+                var batchVoucherExportConfigs = args.Any(s3 => s3.Equals("-BatchVoucherExportConfigs", StringComparison.OrdinalIgnoreCase));
+                var blocks = args.Any(s3 => s3.Equals("-Blocks", StringComparison.OrdinalIgnoreCase));
+                var budgets = args.Any(s3 => s3.Equals("-Budgets", StringComparison.OrdinalIgnoreCase));
+                var callNumberTypes = args.Any(s3 => s3.Equals("-CallNumberTypes", StringComparison.OrdinalIgnoreCase));
+                var campuses = args.Any(s3 => s3.Equals("-Campuses", StringComparison.OrdinalIgnoreCase));
+                var cancellationReasons = args.Any(s3 => s3.Equals("-CancellationReasons", StringComparison.OrdinalIgnoreCase));
+                var categories = args.Any(s3 => s3.Equals("-Categories", StringComparison.OrdinalIgnoreCase));
+                var checkIns = args.Any(s3 => s3.Equals("-CheckIns", StringComparison.OrdinalIgnoreCase));
+                var circulationRules = args.Any(s3 => s3.Equals("-CirculationRules", StringComparison.OrdinalIgnoreCase));
+                var classificationTypes = args.Any(s3 => s3.Equals("-ClassificationTypes", StringComparison.OrdinalIgnoreCase));
+                var closeReasons = args.Any(s3 => s3.Equals("-CloseReasons", StringComparison.OrdinalIgnoreCase));
+                var comments = args.Any(s3 => s3.Equals("-Comments", StringComparison.OrdinalIgnoreCase));
+                var configurations = args.Any(s3 => s3.Equals("-Configurations", StringComparison.OrdinalIgnoreCase));
+                var contacts = args.Any(s3 => s3.Equals("-Contacts", StringComparison.OrdinalIgnoreCase));
+                var contributorNameTypes = args.Any(s3 => s3.Equals("-ContributorNameTypes", StringComparison.OrdinalIgnoreCase));
+                var contributorTypes = args.Any(s3 => s3.Equals("-ContributorTypes", StringComparison.OrdinalIgnoreCase));
+                var customFields = args.Any(s3 => s3.Equals("-CustomFields", StringComparison.OrdinalIgnoreCase));
+                var documents = args.Any(s3 => s3.Equals("-Documents", StringComparison.OrdinalIgnoreCase));
+                var electronicAccessRelationships = args.Any(s3 => s3.Equals("-ElectronicAccessRelationships", StringComparison.OrdinalIgnoreCase));
+                var errorRecords = args.Any(s3 => s3.Equals("-ErrorRecords", StringComparison.OrdinalIgnoreCase));
+                var exportConfigCredentials = args.Any(s3 => s3.Equals("-ExportConfigCredentials", StringComparison.OrdinalIgnoreCase));
+                var fees = args.Any(s3 => s3.Equals("-Fees", StringComparison.OrdinalIgnoreCase));
+                var feeTypes = args.Any(s3 => s3.Equals("-FeeTypes", StringComparison.OrdinalIgnoreCase));
+                var financeGroups = args.Any(s3 => s3.Equals("-FinanceGroups", StringComparison.OrdinalIgnoreCase));
+                var fiscalYears = args.Any(s3 => s3.Equals("-FiscalYears", StringComparison.OrdinalIgnoreCase));
+                var fixedDueDateSchedules = args.Any(s3 => s3.Equals("-FixedDueDateSchedules", StringComparison.OrdinalIgnoreCase));
+                var funds = args.Any(s3 => s3.Equals("-Funds", StringComparison.OrdinalIgnoreCase));
+                var fundTypes = args.Any(s3 => s3.Equals("-FundTypes", StringComparison.OrdinalIgnoreCase));
+                var groups = args.Any(s3 => s3.Equals("-Groups", StringComparison.OrdinalIgnoreCase));
+                var groupFundFiscalYears = args.Any(s3 => s3.Equals("-GroupFundFiscalYears", StringComparison.OrdinalIgnoreCase));
+                var holdings = args.Any(s3 => s3.Equals("-Holdings", StringComparison.OrdinalIgnoreCase));
+                var holdingNoteTypes = args.Any(s3 => s3.Equals("-HoldingNoteTypes", StringComparison.OrdinalIgnoreCase));
+                var holdingTypes = args.Any(s3 => s3.Equals("-HoldingTypes", StringComparison.OrdinalIgnoreCase));
+                var hridSettings = args.Any(s3 => s3.Equals("-HridSettings", StringComparison.OrdinalIgnoreCase));
+                var idTypes = args.Any(s3 => s3.Equals("-IdTypes", StringComparison.OrdinalIgnoreCase));
+                var illPolicies = args.Any(s3 => s3.Equals("-IllPolicies", StringComparison.OrdinalIgnoreCase));
+                var instances = args.Any(s3 => s3.Equals("-Instances", StringComparison.OrdinalIgnoreCase));
+                var instanceFormats = args.Any(s3 => s3.Equals("-InstanceFormats", StringComparison.OrdinalIgnoreCase));
+                var instanceNoteTypes = args.Any(s3 => s3.Equals("-InstanceNoteTypes", StringComparison.OrdinalIgnoreCase));
+                var instanceRelationships = args.Any(s3 => s3.Equals("-InstanceRelationships", StringComparison.OrdinalIgnoreCase));
+                var instanceRelationshipTypes = args.Any(s3 => s3.Equals("-InstanceRelationshipTypes", StringComparison.OrdinalIgnoreCase));
+                var instanceStatuses = args.Any(s3 => s3.Equals("-InstanceStatuses", StringComparison.OrdinalIgnoreCase));
+                var instanceTypes = args.Any(s3 => s3.Equals("-InstanceTypes", StringComparison.OrdinalIgnoreCase));
+                var institutions = args.Any(s3 => s3.Equals("-Institutions", StringComparison.OrdinalIgnoreCase));
+                var interfaces = args.Any(s3 => s3.Equals("-Interfaces", StringComparison.OrdinalIgnoreCase));
+                var interfaceCredentials = args.Any(s3 => s3.Equals("-InterfaceCredentials", StringComparison.OrdinalIgnoreCase));
+                var invoices = args.Any(s3 => s3.Equals("-Invoices", StringComparison.OrdinalIgnoreCase));
+                var invoiceItems = args.Any(s3 => s3.Equals("-InvoiceItems", StringComparison.OrdinalIgnoreCase));
+                var invoiceTransactionSummaries = args.Any(s3 => s3.Equals("-InvoiceTransactionSummaries", StringComparison.OrdinalIgnoreCase));
+                var items = args.Any(s3 => s3.Equals("-Items", StringComparison.OrdinalIgnoreCase));
+                var itemDamagedStatuses = args.Any(s3 => s3.Equals("-ItemDamagedStatuses", StringComparison.OrdinalIgnoreCase));
+                var itemNoteTypes = args.Any(s3 => s3.Equals("-ItemNoteTypes", StringComparison.OrdinalIgnoreCase));
+                var ledgers = args.Any(s3 => s3.Equals("-Ledgers", StringComparison.OrdinalIgnoreCase));
+                var ledgerFiscalYears = args.Any(s3 => s3.Equals("-LedgerFiscalYears", StringComparison.OrdinalIgnoreCase));
+                var libraries = args.Any(s3 => s3.Equals("-Libraries", StringComparison.OrdinalIgnoreCase));
+                var loans = args.Any(s3 => s3.Equals("-Loans", StringComparison.OrdinalIgnoreCase));
+                var loanPolicies = args.Any(s3 => s3.Equals("-LoanPolicies", StringComparison.OrdinalIgnoreCase));
+                var loanTypes = args.Any(s3 => s3.Equals("-LoanTypes", StringComparison.OrdinalIgnoreCase));
+                var locations = args.Any(s3 => s3.Equals("-Locations", StringComparison.OrdinalIgnoreCase));
+                var logins = args.Any(s3 => s3.Equals("-Logins", StringComparison.OrdinalIgnoreCase));
+                var lostItemFeePolicies = args.Any(s3 => s3.Equals("-LostItemFeePolicies", StringComparison.OrdinalIgnoreCase));
+                var marcRecords = args.Any(s3 => s3.Equals("-MarcRecords", StringComparison.OrdinalIgnoreCase));
+                var materialTypes = args.Any(s3 => s3.Equals("-MaterialTypes", StringComparison.OrdinalIgnoreCase));
+                var modeOfIssuances = args.Any(s3 => s3.Equals("-ModeOfIssuances", StringComparison.OrdinalIgnoreCase));
+                var natureOfContentTerms = args.Any(s3 => s3.Equals("-NatureOfContentTerms", StringComparison.OrdinalIgnoreCase));
+                var orders = args.Any(s3 => s3.Equals("-Orders", StringComparison.OrdinalIgnoreCase));
+                var orderInvoices = args.Any(s3 => s3.Equals("-OrderInvoices", StringComparison.OrdinalIgnoreCase));
+                var orderItems = args.Any(s3 => s3.Equals("-OrderItems", StringComparison.OrdinalIgnoreCase));
+                var orderTemplates = args.Any(s3 => s3.Equals("-OrderTemplates", StringComparison.OrdinalIgnoreCase));
+                var orderTransactionSummaries = args.Any(s3 => s3.Equals("-OrderTransactionSummaries", StringComparison.OrdinalIgnoreCase));
+                var organizations = args.Any(s3 => s3.Equals("-Organizations", StringComparison.OrdinalIgnoreCase));
+                var overdueFinePolicies = args.Any(s3 => s3.Equals("-OverdueFinePolicies", StringComparison.OrdinalIgnoreCase));
+                var owners = args.Any(s3 => s3.Equals("-Owners", StringComparison.OrdinalIgnoreCase));
+                var patronActionSessions = args.Any(s3 => s3.Equals("-PatronActionSessions", StringComparison.OrdinalIgnoreCase));
+                var patronBlockConditions = args.Any(s3 => s3.Equals("-PatronBlockConditions", StringComparison.OrdinalIgnoreCase));
+                var patronBlockLimits = args.Any(s3 => s3.Equals("-PatronBlockLimits", StringComparison.OrdinalIgnoreCase));
+                var patronNoticePolicies = args.Any(s3 => s3.Equals("-PatronNoticePolicies", StringComparison.OrdinalIgnoreCase));
+                var payments = args.Any(s3 => s3.Equals("-Payments", StringComparison.OrdinalIgnoreCase));
+                var paymentMethods = args.Any(s3 => s3.Equals("-PaymentMethods", StringComparison.OrdinalIgnoreCase));
+                var permissions = args.Any(s3 => s3.Equals("-Permissions", StringComparison.OrdinalIgnoreCase));
+                var permissionsUsers = args.Any(s3 => s3.Equals("-PermissionsUsers", StringComparison.OrdinalIgnoreCase));
+                var pieces = args.Any(s3 => s3.Equals("-Pieces", StringComparison.OrdinalIgnoreCase));
+                var precedingSucceedingTitles = args.Any(s3 => s3.Equals("-PrecedingSucceedingTitles", StringComparison.OrdinalIgnoreCase));
+                var prefixes = args.Any(s3 => s3.Equals("-Prefixes", StringComparison.OrdinalIgnoreCase));
+                var proxies = args.Any(s3 => s3.Equals("-Proxies", StringComparison.OrdinalIgnoreCase));
+                var rawRecords = args.Any(s3 => s3.Equals("-RawRecords", StringComparison.OrdinalIgnoreCase));
+                var records = args.Any(s3 => s3.Equals("-Records", StringComparison.OrdinalIgnoreCase));
+                var refundReasons = args.Any(s3 => s3.Equals("-RefundReasons", StringComparison.OrdinalIgnoreCase));
+                var reportingCodes = args.Any(s3 => s3.Equals("-ReportingCodes", StringComparison.OrdinalIgnoreCase));
+                var requests = args.Any(s3 => s3.Equals("-Requests", StringComparison.OrdinalIgnoreCase));
+                var requestPolicies = args.Any(s3 => s3.Equals("-RequestPolicies", StringComparison.OrdinalIgnoreCase));
+                var scheduledNotices = args.Any(s3 => s3.Equals("-ScheduledNotices", StringComparison.OrdinalIgnoreCase));
+                var servicePoints = args.Any(s3 => s3.Equals("-ServicePoints", StringComparison.OrdinalIgnoreCase));
+                var servicePointUsers = args.Any(s3 => s3.Equals("-ServicePointUsers", StringComparison.OrdinalIgnoreCase));
+                var snapshots = args.Any(s3 => s3.Equals("-Snapshots", StringComparison.OrdinalIgnoreCase));
+                var staffSlips = args.Any(s3 => s3.Equals("-StaffSlips", StringComparison.OrdinalIgnoreCase));
+                var statisticalCodes = args.Any(s3 => s3.Equals("-StatisticalCodes", StringComparison.OrdinalIgnoreCase));
+                var statisticalCodeTypes = args.Any(s3 => s3.Equals("-StatisticalCodeTypes", StringComparison.OrdinalIgnoreCase));
+                var suffixes = args.Any(s3 => s3.Equals("-Suffixes", StringComparison.OrdinalIgnoreCase));
+                var templates = args.Any(s3 => s3.Equals("-Templates", StringComparison.OrdinalIgnoreCase));
+                var temporaryInvoiceTransactions = args.Any(s3 => s3.Equals("-TemporaryInvoiceTransactions", StringComparison.OrdinalIgnoreCase));
+                var temporaryOrderTransactions = args.Any(s3 => s3.Equals("-TemporaryOrderTransactions", StringComparison.OrdinalIgnoreCase));
+                var titles = args.Any(s3 => s3.Equals("-Titles", StringComparison.OrdinalIgnoreCase));
+                var transactions = args.Any(s3 => s3.Equals("-Transactions", StringComparison.OrdinalIgnoreCase));
+                var transferAccounts = args.Any(s3 => s3.Equals("-TransferAccounts", StringComparison.OrdinalIgnoreCase));
+                var transferCriterias = args.Any(s3 => s3.Equals("-TransferCriterias", StringComparison.OrdinalIgnoreCase));
+                var users = args.Any(s3 => s3.Equals("-Users", StringComparison.OrdinalIgnoreCase));
+                var userAcquisitionsUnits = args.Any(s3 => s3.Equals("-UserAcquisitionsUnits", StringComparison.OrdinalIgnoreCase));
+                var userRequestPreferences = args.Any(s3 => s3.Equals("-UserRequestPreferences", StringComparison.OrdinalIgnoreCase));
+                var vouchers = args.Any(s3 => s3.Equals("-Vouchers", StringComparison.OrdinalIgnoreCase));
+                var voucherItems = args.Any(s3 => s3.Equals("-VoucherItems", StringComparison.OrdinalIgnoreCase));
+                var waiveReasons = args.Any(s3 => s3.Equals("-WaiveReasons", StringComparison.OrdinalIgnoreCase));
                 var acquisitionsUnitsPath = args.SkipWhile(s3 => !s3.Equals("-AcquisitionsUnitsPath", StringComparison.OrdinalIgnoreCase)).Skip(1).FirstOrDefault();
                 var addressTypesPath = args.SkipWhile(s3 => !s3.Equals("-AddressTypesPath", StringComparison.OrdinalIgnoreCase)).Skip(1).FirstOrDefault();
                 var alertsPath = args.SkipWhile(s3 => !s3.Equals("-AlertsPath", StringComparison.OrdinalIgnoreCase)).Skip(1).FirstOrDefault();
@@ -200,125 +336,125 @@ namespace FolioConsoleApplication
                 var vouchersPath = args.SkipWhile(s3 => !s3.Equals("-VouchersPath", StringComparison.OrdinalIgnoreCase)).Skip(1).FirstOrDefault();
                 var voucherItemsPath = args.SkipWhile(s3 => !s3.Equals("-VoucherItemsPath", StringComparison.OrdinalIgnoreCase)).Skip(1).FirstOrDefault();
                 var waiveReasonsPath = args.SkipWhile(s3 => !s3.Equals("-WaiveReasonsPath", StringComparison.OrdinalIgnoreCase)).Skip(1).FirstOrDefault();
-                if (acquisitionsUnitsPath == ".") acquisitionsUnitsPath = $"{(path != null ? $"{path}/" : "")}acquisitionsunits.json";
-                if (addressTypesPath == ".") addressTypesPath = $"{(path != null ? $"{path}/" : "")}addresstypes.json";
-                if (alertsPath == ".") alertsPath = $"{(path != null ? $"{path}/" : "")}alerts.json";
-                if (alternativeTitleTypesPath == ".") alternativeTitleTypesPath = $"{(path != null ? $"{path}/" : "")}alternativetitletypes.json";
-                if (batchGroupsPath == ".") batchGroupsPath = $"{(path != null ? $"{path}/" : "")}batchgroups.json";
-                if (batchVouchersPath == ".") batchVouchersPath = $"{(path != null ? $"{path}/" : "")}batchvouchers.json";
-                if (batchVoucherExportsPath == ".") batchVoucherExportsPath = $"{(path != null ? $"{path}/" : "")}batchvoucherexports.json";
-                if (batchVoucherExportConfigsPath == ".") batchVoucherExportConfigsPath = $"{(path != null ? $"{path}/" : "")}batchvoucherexportconfigs.json";
-                if (blocksPath == ".") blocksPath = $"{(path != null ? $"{path}/" : "")}blocks.json";
-                if (budgetsPath == ".") budgetsPath = $"{(path != null ? $"{path}/" : "")}budgets.json";
-                if (callNumberTypesPath == ".") callNumberTypesPath = $"{(path != null ? $"{path}/" : "")}callnumbertypes.json";
-                if (campusesPath == ".") campusesPath = $"{(path != null ? $"{path}/" : "")}campuses.json";
-                if (cancellationReasonsPath == ".") cancellationReasonsPath = $"{(path != null ? $"{path}/" : "")}cancellationreasons.json";
-                if (categoriesPath == ".") categoriesPath = $"{(path != null ? $"{path}/" : "")}categories.json";
-                if (checkInsPath == ".") checkInsPath = $"{(path != null ? $"{path}/" : "")}checkins.json";
-                if (circulationRulesPath == ".") circulationRulesPath = $"{(path != null ? $"{path}/" : "")}circulationrules.json";
-                if (classificationTypesPath == ".") classificationTypesPath = $"{(path != null ? $"{path}/" : "")}classificationtypes.json";
-                if (closeReasonsPath == ".") closeReasonsPath = $"{(path != null ? $"{path}/" : "")}closereasons.json";
-                if (commentsPath == ".") commentsPath = $"{(path != null ? $"{path}/" : "")}comments.json";
-                if (configurationsPath == ".") configurationsPath = $"{(path != null ? $"{path}/" : "")}configurations.json";
-                if (contactsPath == ".") contactsPath = $"{(path != null ? $"{path}/" : "")}contacts.json";
-                if (contributorNameTypesPath == ".") contributorNameTypesPath = $"{(path != null ? $"{path}/" : "")}contributornametypes.json";
-                if (contributorTypesPath == ".") contributorTypesPath = $"{(path != null ? $"{path}/" : "")}contributortypes.json";
-                if (customFieldsPath == ".") customFieldsPath = $"{(path != null ? $"{path}/" : "")}customfields.json";
-                if (documentsPath == ".") documentsPath = $"{(path != null ? $"{path}/" : "")}documents.json";
-                if (electronicAccessRelationshipsPath == ".") electronicAccessRelationshipsPath = $"{(path != null ? $"{path}/" : "")}electronicaccessrelationships.json";
-                if (errorRecordsPath == ".") errorRecordsPath = $"{(path != null ? $"{path}/" : "")}errorrecords.json";
-                if (exportConfigCredentialsPath == ".") exportConfigCredentialsPath = $"{(path != null ? $"{path}/" : "")}exportconfigcredentials.json";
-                if (feesPath == ".") feesPath = $"{(path != null ? $"{path}/" : "")}fees.json";
-                if (feeTypesPath == ".") feeTypesPath = $"{(path != null ? $"{path}/" : "")}feetypes.json";
-                if (financeGroupsPath == ".") financeGroupsPath = $"{(path != null ? $"{path}/" : "")}financegroups.json";
-                if (fiscalYearsPath == ".") fiscalYearsPath = $"{(path != null ? $"{path}/" : "")}fiscalyears.json";
-                if (fixedDueDateSchedulesPath == ".") fixedDueDateSchedulesPath = $"{(path != null ? $"{path}/" : "")}fixedduedateschedules.json";
-                if (fundsPath == ".") fundsPath = $"{(path != null ? $"{path}/" : "")}funds.json";
-                if (fundTypesPath == ".") fundTypesPath = $"{(path != null ? $"{path}/" : "")}fundtypes.json";
-                if (groupsPath == ".") groupsPath = $"{(path != null ? $"{path}/" : "")}groups.json";
-                if (groupFundFiscalYearsPath == ".") groupFundFiscalYearsPath = $"{(path != null ? $"{path}/" : "")}groupfundfiscalyears.json";
-                if (holdingsPath == ".") holdingsPath = $"{(path != null ? $"{path}/" : "")}holdings.json";
-                if (holdingNoteTypesPath == ".") holdingNoteTypesPath = $"{(path != null ? $"{path}/" : "")}holdingnotetypes.json";
-                if (holdingTypesPath == ".") holdingTypesPath = $"{(path != null ? $"{path}/" : "")}holdingtypes.json";
-                if (hridSettingsPath == ".") hridSettingsPath = $"{(path != null ? $"{path}/" : "")}hridsettings.json";
-                if (idTypesPath == ".") idTypesPath = $"{(path != null ? $"{path}/" : "")}idtypes.json";
-                if (illPoliciesPath == ".") illPoliciesPath = $"{(path != null ? $"{path}/" : "")}illpolicies.json";
-                if (instancesPath == ".") instancesPath = $"{(path != null ? $"{path}/" : "")}instances.json";
-                if (instanceFormatsPath == ".") instanceFormatsPath = $"{(path != null ? $"{path}/" : "")}instanceformats.json";
-                if (instanceNoteTypesPath == ".") instanceNoteTypesPath = $"{(path != null ? $"{path}/" : "")}instancenotetypes.json";
-                if (instanceRelationshipsPath == ".") instanceRelationshipsPath = $"{(path != null ? $"{path}/" : "")}instancerelationships.json";
-                if (instanceRelationshipTypesPath == ".") instanceRelationshipTypesPath = $"{(path != null ? $"{path}/" : "")}instancerelationshiptypes.json";
-                if (instanceStatusesPath == ".") instanceStatusesPath = $"{(path != null ? $"{path}/" : "")}instancestatuses.json";
-                if (instanceTypesPath == ".") instanceTypesPath = $"{(path != null ? $"{path}/" : "")}instancetypes.json";
-                if (institutionsPath == ".") institutionsPath = $"{(path != null ? $"{path}/" : "")}institutions.json";
-                if (interfacesPath == ".") interfacesPath = $"{(path != null ? $"{path}/" : "")}interfaces.json";
-                if (interfaceCredentialsPath == ".") interfaceCredentialsPath = $"{(path != null ? $"{path}/" : "")}interfacecredentials.json";
-                if (invoicesPath == ".") invoicesPath = $"{(path != null ? $"{path}/" : "")}invoices.json";
-                if (invoiceItemsPath == ".") invoiceItemsPath = $"{(path != null ? $"{path}/" : "")}invoiceitems.json";
-                if (invoiceTransactionSummariesPath == ".") invoiceTransactionSummariesPath = $"{(path != null ? $"{path}/" : "")}invoicetransactionsummaries.json";
-                if (itemsPath == ".") itemsPath = $"{(path != null ? $"{path}/" : "")}items.json";
-                if (itemDamagedStatusesPath == ".") itemDamagedStatusesPath = $"{(path != null ? $"{path}/" : "")}itemdamagedstatuses.json";
-                if (itemNoteTypesPath == ".") itemNoteTypesPath = $"{(path != null ? $"{path}/" : "")}itemnotetypes.json";
-                if (ledgersPath == ".") ledgersPath = $"{(path != null ? $"{path}/" : "")}ledgers.json";
-                if (ledgerFiscalYearsPath == ".") ledgerFiscalYearsPath = $"{(path != null ? $"{path}/" : "")}ledgerfiscalyears.json";
-                if (librariesPath == ".") librariesPath = $"{(path != null ? $"{path}/" : "")}libraries.json";
-                if (loansPath == ".") loansPath = $"{(path != null ? $"{path}/" : "")}loans.json";
-                if (loanPoliciesPath == ".") loanPoliciesPath = $"{(path != null ? $"{path}/" : "")}loanpolicies.json";
-                if (loanTypesPath == ".") loanTypesPath = $"{(path != null ? $"{path}/" : "")}loantypes.json";
-                if (locationsPath == ".") locationsPath = $"{(path != null ? $"{path}/" : "")}locations.json";
-                if (loginsPath == ".") loginsPath = $"{(path != null ? $"{path}/" : "")}logins.json";
-                if (lostItemFeePoliciesPath == ".") lostItemFeePoliciesPath = $"{(path != null ? $"{path}/" : "")}lostitemfeepolicies.json";
-                if (marcRecordsPath == ".") marcRecordsPath = $"{(path != null ? $"{path}/" : "")}marcrecords.json";
-                if (materialTypesPath == ".") materialTypesPath = $"{(path != null ? $"{path}/" : "")}materialtypes.json";
-                if (modeOfIssuancesPath == ".") modeOfIssuancesPath = $"{(path != null ? $"{path}/" : "")}modeofissuances.json";
-                if (natureOfContentTermsPath == ".") natureOfContentTermsPath = $"{(path != null ? $"{path}/" : "")}natureofcontentterms.json";
-                if (ordersPath == ".") ordersPath = $"{(path != null ? $"{path}/" : "")}orders.json";
-                if (orderInvoicesPath == ".") orderInvoicesPath = $"{(path != null ? $"{path}/" : "")}orderinvoices.json";
-                if (orderItemsPath == ".") orderItemsPath = $"{(path != null ? $"{path}/" : "")}orderitems.json";
-                if (orderTemplatesPath == ".") orderTemplatesPath = $"{(path != null ? $"{path}/" : "")}ordertemplates.json";
-                if (orderTransactionSummariesPath == ".") orderTransactionSummariesPath = $"{(path != null ? $"{path}/" : "")}ordertransactionsummaries.json";
-                if (organizationsPath == ".") organizationsPath = $"{(path != null ? $"{path}/" : "")}organizations.json";
-                if (overdueFinePoliciesPath == ".") overdueFinePoliciesPath = $"{(path != null ? $"{path}/" : "")}overduefinepolicies.json";
-                if (ownersPath == ".") ownersPath = $"{(path != null ? $"{path}/" : "")}owners.json";
-                if (patronActionSessionsPath == ".") patronActionSessionsPath = $"{(path != null ? $"{path}/" : "")}patronactionsessions.json";
-                if (patronBlockConditionsPath == ".") patronBlockConditionsPath = $"{(path != null ? $"{path}/" : "")}patronblockconditions.json";
-                if (patronBlockLimitsPath == ".") patronBlockLimitsPath = $"{(path != null ? $"{path}/" : "")}patronblocklimits.json";
-                if (patronNoticePoliciesPath == ".") patronNoticePoliciesPath = $"{(path != null ? $"{path}/" : "")}patronnoticepolicies.json";
-                if (paymentsPath == ".") paymentsPath = $"{(path != null ? $"{path}/" : "")}payments.json";
-                if (paymentMethodsPath == ".") paymentMethodsPath = $"{(path != null ? $"{path}/" : "")}paymentmethods.json";
-                if (permissionsPath == ".") permissionsPath = $"{(path != null ? $"{path}/" : "")}permissions.json";
-                if (permissionsUsersPath == ".") permissionsUsersPath = $"{(path != null ? $"{path}/" : "")}permissionsusers.json";
-                if (piecesPath == ".") piecesPath = $"{(path != null ? $"{path}/" : "")}pieces.json";
-                if (precedingSucceedingTitlesPath == ".") precedingSucceedingTitlesPath = $"{(path != null ? $"{path}/" : "")}precedingsucceedingtitles.json";
-                if (prefixesPath == ".") prefixesPath = $"{(path != null ? $"{path}/" : "")}prefixes.json";
-                if (proxiesPath == ".") proxiesPath = $"{(path != null ? $"{path}/" : "")}proxies.json";
-                if (rawRecordsPath == ".") rawRecordsPath = $"{(path != null ? $"{path}/" : "")}rawrecords.json";
-                if (recordsPath == ".") recordsPath = $"{(path != null ? $"{path}/" : "")}records.json";
-                if (refundReasonsPath == ".") refundReasonsPath = $"{(path != null ? $"{path}/" : "")}refundreasons.json";
-                if (reportingCodesPath == ".") reportingCodesPath = $"{(path != null ? $"{path}/" : "")}reportingcodes.json";
-                if (requestsPath == ".") requestsPath = $"{(path != null ? $"{path}/" : "")}requests.json";
-                if (requestPoliciesPath == ".") requestPoliciesPath = $"{(path != null ? $"{path}/" : "")}requestpolicies.json";
-                if (scheduledNoticesPath == ".") scheduledNoticesPath = $"{(path != null ? $"{path}/" : "")}schedulednotices.json";
-                if (servicePointsPath == ".") servicePointsPath = $"{(path != null ? $"{path}/" : "")}servicepoints.json";
-                if (servicePointUsersPath == ".") servicePointUsersPath = $"{(path != null ? $"{path}/" : "")}servicepointusers.json";
-                if (snapshotsPath == ".") snapshotsPath = $"{(path != null ? $"{path}/" : "")}snapshots.json";
-                if (staffSlipsPath == ".") staffSlipsPath = $"{(path != null ? $"{path}/" : "")}staffslips.json";
-                if (statisticalCodesPath == ".") statisticalCodesPath = $"{(path != null ? $"{path}/" : "")}statisticalcodes.json";
-                if (statisticalCodeTypesPath == ".") statisticalCodeTypesPath = $"{(path != null ? $"{path}/" : "")}statisticalcodetypes.json";
-                if (suffixesPath == ".") suffixesPath = $"{(path != null ? $"{path}/" : "")}suffixes.json";
-                if (templatesPath == ".") templatesPath = $"{(path != null ? $"{path}/" : "")}templates.json";
-                if (temporaryInvoiceTransactionsPath == ".") temporaryInvoiceTransactionsPath = $"{(path != null ? $"{path}/" : "")}temporaryinvoicetransactions.json";
-                if (temporaryOrderTransactionsPath == ".") temporaryOrderTransactionsPath = $"{(path != null ? $"{path}/" : "")}temporaryordertransactions.json";
-                if (titlesPath == ".") titlesPath = $"{(path != null ? $"{path}/" : "")}titles.json";
-                if (transactionsPath == ".") transactionsPath = $"{(path != null ? $"{path}/" : "")}transactions.json";
-                if (transferAccountsPath == ".") transferAccountsPath = $"{(path != null ? $"{path}/" : "")}transferaccounts.json";
-                if (transferCriteriasPath == ".") transferCriteriasPath = $"{(path != null ? $"{path}/" : "")}transfercriterias.json";
-                if (usersPath == ".") usersPath = $"{(path != null ? $"{path}/" : "")}users.json";
-                if (userAcquisitionsUnitsPath == ".") userAcquisitionsUnitsPath = $"{(path != null ? $"{path}/" : "")}useracquisitionsunits.json";
-                if (userRequestPreferencesPath == ".") userRequestPreferencesPath = $"{(path != null ? $"{path}/" : "")}userrequestpreferences.json";
-                if (vouchersPath == ".") vouchersPath = $"{(path != null ? $"{path}/" : "")}vouchers.json";
-                if (voucherItemsPath == ".") voucherItemsPath = $"{(path != null ? $"{path}/" : "")}voucheritems.json";
-                if (waiveReasonsPath == ".") waiveReasonsPath = $"{(path != null ? $"{path}/" : "")}waivereasons.json";
+                if (acquisitionsUnits && acquisitionsUnitsPath == null || acquisitionsUnitsPath == ".") acquisitionsUnitsPath = $"{(path != null ? $"{path}/" : "")}acquisitionsunits.json";
+                if (addressTypes && addressTypesPath == null || addressTypesPath == ".") addressTypesPath = $"{(path != null ? $"{path}/" : "")}addresstypes.json";
+                if (alerts && alertsPath == null || alertsPath == ".") alertsPath = $"{(path != null ? $"{path}/" : "")}alerts.json";
+                if (alternativeTitleTypes && alternativeTitleTypesPath == null || alternativeTitleTypesPath == ".") alternativeTitleTypesPath = $"{(path != null ? $"{path}/" : "")}alternativetitletypes.json";
+                if (batchGroups && batchGroupsPath == null || batchGroupsPath == ".") batchGroupsPath = $"{(path != null ? $"{path}/" : "")}batchgroups.json";
+                if (batchVouchers && batchVouchersPath == null || batchVouchersPath == ".") batchVouchersPath = $"{(path != null ? $"{path}/" : "")}batchvouchers.json";
+                if (batchVoucherExports && batchVoucherExportsPath == null || batchVoucherExportsPath == ".") batchVoucherExportsPath = $"{(path != null ? $"{path}/" : "")}batchvoucherexports.json";
+                if (batchVoucherExportConfigs && batchVoucherExportConfigsPath == null || batchVoucherExportConfigsPath == ".") batchVoucherExportConfigsPath = $"{(path != null ? $"{path}/" : "")}batchvoucherexportconfigs.json";
+                if (blocks && blocksPath == null || blocksPath == ".") blocksPath = $"{(path != null ? $"{path}/" : "")}blocks.json";
+                if (budgets && budgetsPath == null || budgetsPath == ".") budgetsPath = $"{(path != null ? $"{path}/" : "")}budgets.json";
+                if (callNumberTypes && callNumberTypesPath == null || callNumberTypesPath == ".") callNumberTypesPath = $"{(path != null ? $"{path}/" : "")}callnumbertypes.json";
+                if (campuses && campusesPath == null || campusesPath == ".") campusesPath = $"{(path != null ? $"{path}/" : "")}campuses.json";
+                if (cancellationReasons && cancellationReasonsPath == null || cancellationReasonsPath == ".") cancellationReasonsPath = $"{(path != null ? $"{path}/" : "")}cancellationreasons.json";
+                if (categories && categoriesPath == null || categoriesPath == ".") categoriesPath = $"{(path != null ? $"{path}/" : "")}categories.json";
+                if (checkIns && checkInsPath == null || checkInsPath == ".") checkInsPath = $"{(path != null ? $"{path}/" : "")}checkins.json";
+                if (circulationRules && circulationRulesPath == null || circulationRulesPath == ".") circulationRulesPath = $"{(path != null ? $"{path}/" : "")}circulationrules.json";
+                if (classificationTypes && classificationTypesPath == null || classificationTypesPath == ".") classificationTypesPath = $"{(path != null ? $"{path}/" : "")}classificationtypes.json";
+                if (closeReasons && closeReasonsPath == null || closeReasonsPath == ".") closeReasonsPath = $"{(path != null ? $"{path}/" : "")}closereasons.json";
+                if (comments && commentsPath == null || commentsPath == ".") commentsPath = $"{(path != null ? $"{path}/" : "")}comments.json";
+                if (configurations && configurationsPath == null || configurationsPath == ".") configurationsPath = $"{(path != null ? $"{path}/" : "")}configurations.json";
+                if (contacts && contactsPath == null || contactsPath == ".") contactsPath = $"{(path != null ? $"{path}/" : "")}contacts.json";
+                if (contributorNameTypes && contributorNameTypesPath == null || contributorNameTypesPath == ".") contributorNameTypesPath = $"{(path != null ? $"{path}/" : "")}contributornametypes.json";
+                if (contributorTypes && contributorTypesPath == null || contributorTypesPath == ".") contributorTypesPath = $"{(path != null ? $"{path}/" : "")}contributortypes.json";
+                if (customFields && customFieldsPath == null || customFieldsPath == ".") customFieldsPath = $"{(path != null ? $"{path}/" : "")}customfields.json";
+                if (documents && documentsPath == null || documentsPath == ".") documentsPath = $"{(path != null ? $"{path}/" : "")}documents.json";
+                if (electronicAccessRelationships && electronicAccessRelationshipsPath == null || electronicAccessRelationshipsPath == ".") electronicAccessRelationshipsPath = $"{(path != null ? $"{path}/" : "")}electronicaccessrelationships.json";
+                if (errorRecords && errorRecordsPath == null || errorRecordsPath == ".") errorRecordsPath = $"{(path != null ? $"{path}/" : "")}errorrecords.json";
+                if (exportConfigCredentials && exportConfigCredentialsPath == null || exportConfigCredentialsPath == ".") exportConfigCredentialsPath = $"{(path != null ? $"{path}/" : "")}exportconfigcredentials.json";
+                if (fees && feesPath == null || feesPath == ".") feesPath = $"{(path != null ? $"{path}/" : "")}fees.json";
+                if (feeTypes && feeTypesPath == null || feeTypesPath == ".") feeTypesPath = $"{(path != null ? $"{path}/" : "")}feetypes.json";
+                if (financeGroups && financeGroupsPath == null || financeGroupsPath == ".") financeGroupsPath = $"{(path != null ? $"{path}/" : "")}financegroups.json";
+                if (fiscalYears && fiscalYearsPath == null || fiscalYearsPath == ".") fiscalYearsPath = $"{(path != null ? $"{path}/" : "")}fiscalyears.json";
+                if (fixedDueDateSchedules && fixedDueDateSchedulesPath == null || fixedDueDateSchedulesPath == ".") fixedDueDateSchedulesPath = $"{(path != null ? $"{path}/" : "")}fixedduedateschedules.json";
+                if (funds && fundsPath == null || fundsPath == ".") fundsPath = $"{(path != null ? $"{path}/" : "")}funds.json";
+                if (fundTypes && fundTypesPath == null || fundTypesPath == ".") fundTypesPath = $"{(path != null ? $"{path}/" : "")}fundtypes.json";
+                if (groups && groupsPath == null || groupsPath == ".") groupsPath = $"{(path != null ? $"{path}/" : "")}groups.json";
+                if (groupFundFiscalYears && groupFundFiscalYearsPath == null || groupFundFiscalYearsPath == ".") groupFundFiscalYearsPath = $"{(path != null ? $"{path}/" : "")}groupfundfiscalyears.json";
+                if (holdings && holdingsPath == null || holdingsPath == ".") holdingsPath = $"{(path != null ? $"{path}/" : "")}holdings.json";
+                if (holdingNoteTypes && holdingNoteTypesPath == null || holdingNoteTypesPath == ".") holdingNoteTypesPath = $"{(path != null ? $"{path}/" : "")}holdingnotetypes.json";
+                if (holdingTypes && holdingTypesPath == null || holdingTypesPath == ".") holdingTypesPath = $"{(path != null ? $"{path}/" : "")}holdingtypes.json";
+                if (hridSettings && hridSettingsPath == null || hridSettingsPath == ".") hridSettingsPath = $"{(path != null ? $"{path}/" : "")}hridsettings.json";
+                if (idTypes && idTypesPath == null || idTypesPath == ".") idTypesPath = $"{(path != null ? $"{path}/" : "")}idtypes.json";
+                if (illPolicies && illPoliciesPath == null || illPoliciesPath == ".") illPoliciesPath = $"{(path != null ? $"{path}/" : "")}illpolicies.json";
+                if (instances && instancesPath == null || instancesPath == ".") instancesPath = $"{(path != null ? $"{path}/" : "")}instances.json";
+                if (instanceFormats && instanceFormatsPath == null || instanceFormatsPath == ".") instanceFormatsPath = $"{(path != null ? $"{path}/" : "")}instanceformats.json";
+                if (instanceNoteTypes && instanceNoteTypesPath == null || instanceNoteTypesPath == ".") instanceNoteTypesPath = $"{(path != null ? $"{path}/" : "")}instancenotetypes.json";
+                if (instanceRelationships && instanceRelationshipsPath == null || instanceRelationshipsPath == ".") instanceRelationshipsPath = $"{(path != null ? $"{path}/" : "")}instancerelationships.json";
+                if (instanceRelationshipTypes && instanceRelationshipTypesPath == null || instanceRelationshipTypesPath == ".") instanceRelationshipTypesPath = $"{(path != null ? $"{path}/" : "")}instancerelationshiptypes.json";
+                if (instanceStatuses && instanceStatusesPath == null || instanceStatusesPath == ".") instanceStatusesPath = $"{(path != null ? $"{path}/" : "")}instancestatuses.json";
+                if (instanceTypes && instanceTypesPath == null || instanceTypesPath == ".") instanceTypesPath = $"{(path != null ? $"{path}/" : "")}instancetypes.json";
+                if (institutions && institutionsPath == null || institutionsPath == ".") institutionsPath = $"{(path != null ? $"{path}/" : "")}institutions.json";
+                if (interfaces && interfacesPath == null || interfacesPath == ".") interfacesPath = $"{(path != null ? $"{path}/" : "")}interfaces.json";
+                if (interfaceCredentials && interfaceCredentialsPath == null || interfaceCredentialsPath == ".") interfaceCredentialsPath = $"{(path != null ? $"{path}/" : "")}interfacecredentials.json";
+                if (invoices && invoicesPath == null || invoicesPath == ".") invoicesPath = $"{(path != null ? $"{path}/" : "")}invoices.json";
+                if (invoiceItems && invoiceItemsPath == null || invoiceItemsPath == ".") invoiceItemsPath = $"{(path != null ? $"{path}/" : "")}invoiceitems.json";
+                if (invoiceTransactionSummaries && invoiceTransactionSummariesPath == null || invoiceTransactionSummariesPath == ".") invoiceTransactionSummariesPath = $"{(path != null ? $"{path}/" : "")}invoicetransactionsummaries.json";
+                if (items && itemsPath == null || itemsPath == ".") itemsPath = $"{(path != null ? $"{path}/" : "")}items.json";
+                if (itemDamagedStatuses && itemDamagedStatusesPath == null || itemDamagedStatusesPath == ".") itemDamagedStatusesPath = $"{(path != null ? $"{path}/" : "")}itemdamagedstatuses.json";
+                if (itemNoteTypes && itemNoteTypesPath == null || itemNoteTypesPath == ".") itemNoteTypesPath = $"{(path != null ? $"{path}/" : "")}itemnotetypes.json";
+                if (ledgers && ledgersPath == null || ledgersPath == ".") ledgersPath = $"{(path != null ? $"{path}/" : "")}ledgers.json";
+                if (ledgerFiscalYears && ledgerFiscalYearsPath == null || ledgerFiscalYearsPath == ".") ledgerFiscalYearsPath = $"{(path != null ? $"{path}/" : "")}ledgerfiscalyears.json";
+                if (libraries && librariesPath == null || librariesPath == ".") librariesPath = $"{(path != null ? $"{path}/" : "")}libraries.json";
+                if (loans && loansPath == null || loansPath == ".") loansPath = $"{(path != null ? $"{path}/" : "")}loans.json";
+                if (loanPolicies && loanPoliciesPath == null || loanPoliciesPath == ".") loanPoliciesPath = $"{(path != null ? $"{path}/" : "")}loanpolicies.json";
+                if (loanTypes && loanTypesPath == null || loanTypesPath == ".") loanTypesPath = $"{(path != null ? $"{path}/" : "")}loantypes.json";
+                if (locations && locationsPath == null || locationsPath == ".") locationsPath = $"{(path != null ? $"{path}/" : "")}locations.json";
+                if (logins && loginsPath == null || loginsPath == ".") loginsPath = $"{(path != null ? $"{path}/" : "")}logins.json";
+                if (lostItemFeePolicies && lostItemFeePoliciesPath == null || lostItemFeePoliciesPath == ".") lostItemFeePoliciesPath = $"{(path != null ? $"{path}/" : "")}lostitemfeepolicies.json";
+                if (marcRecords && marcRecordsPath == null || marcRecordsPath == ".") marcRecordsPath = $"{(path != null ? $"{path}/" : "")}marcrecords.json";
+                if (materialTypes && materialTypesPath == null || materialTypesPath == ".") materialTypesPath = $"{(path != null ? $"{path}/" : "")}materialtypes.json";
+                if (modeOfIssuances && modeOfIssuancesPath == null || modeOfIssuancesPath == ".") modeOfIssuancesPath = $"{(path != null ? $"{path}/" : "")}modeofissuances.json";
+                if (natureOfContentTerms && natureOfContentTermsPath == null || natureOfContentTermsPath == ".") natureOfContentTermsPath = $"{(path != null ? $"{path}/" : "")}natureofcontentterms.json";
+                if (orders && ordersPath == null || ordersPath == ".") ordersPath = $"{(path != null ? $"{path}/" : "")}orders.json";
+                if (orderInvoices && orderInvoicesPath == null || orderInvoicesPath == ".") orderInvoicesPath = $"{(path != null ? $"{path}/" : "")}orderinvoices.json";
+                if (orderItems && orderItemsPath == null || orderItemsPath == ".") orderItemsPath = $"{(path != null ? $"{path}/" : "")}orderitems.json";
+                if (orderTemplates && orderTemplatesPath == null || orderTemplatesPath == ".") orderTemplatesPath = $"{(path != null ? $"{path}/" : "")}ordertemplates.json";
+                if (orderTransactionSummaries && orderTransactionSummariesPath == null || orderTransactionSummariesPath == ".") orderTransactionSummariesPath = $"{(path != null ? $"{path}/" : "")}ordertransactionsummaries.json";
+                if (organizations && organizationsPath == null || organizationsPath == ".") organizationsPath = $"{(path != null ? $"{path}/" : "")}organizations.json";
+                if (overdueFinePolicies && overdueFinePoliciesPath == null || overdueFinePoliciesPath == ".") overdueFinePoliciesPath = $"{(path != null ? $"{path}/" : "")}overduefinepolicies.json";
+                if (owners && ownersPath == null || ownersPath == ".") ownersPath = $"{(path != null ? $"{path}/" : "")}owners.json";
+                if (patronActionSessions && patronActionSessionsPath == null || patronActionSessionsPath == ".") patronActionSessionsPath = $"{(path != null ? $"{path}/" : "")}patronactionsessions.json";
+                if (patronBlockConditions && patronBlockConditionsPath == null || patronBlockConditionsPath == ".") patronBlockConditionsPath = $"{(path != null ? $"{path}/" : "")}patronblockconditions.json";
+                if (patronBlockLimits && patronBlockLimitsPath == null || patronBlockLimitsPath == ".") patronBlockLimitsPath = $"{(path != null ? $"{path}/" : "")}patronblocklimits.json";
+                if (patronNoticePolicies && patronNoticePoliciesPath == null || patronNoticePoliciesPath == ".") patronNoticePoliciesPath = $"{(path != null ? $"{path}/" : "")}patronnoticepolicies.json";
+                if (payments && paymentsPath == null || paymentsPath == ".") paymentsPath = $"{(path != null ? $"{path}/" : "")}payments.json";
+                if (paymentMethods && paymentMethodsPath == null || paymentMethodsPath == ".") paymentMethodsPath = $"{(path != null ? $"{path}/" : "")}paymentmethods.json";
+                if (permissions && permissionsPath == null || permissionsPath == ".") permissionsPath = $"{(path != null ? $"{path}/" : "")}permissions.json";
+                if (permissionsUsers && permissionsUsersPath == null || permissionsUsersPath == ".") permissionsUsersPath = $"{(path != null ? $"{path}/" : "")}permissionsusers.json";
+                if (pieces && piecesPath == null || piecesPath == ".") piecesPath = $"{(path != null ? $"{path}/" : "")}pieces.json";
+                if (precedingSucceedingTitles && precedingSucceedingTitlesPath == null || precedingSucceedingTitlesPath == ".") precedingSucceedingTitlesPath = $"{(path != null ? $"{path}/" : "")}precedingsucceedingtitles.json";
+                if (prefixes && prefixesPath == null || prefixesPath == ".") prefixesPath = $"{(path != null ? $"{path}/" : "")}prefixes.json";
+                if (proxies && proxiesPath == null || proxiesPath == ".") proxiesPath = $"{(path != null ? $"{path}/" : "")}proxies.json";
+                if (rawRecords && rawRecordsPath == null || rawRecordsPath == ".") rawRecordsPath = $"{(path != null ? $"{path}/" : "")}rawrecords.json";
+                if (records && recordsPath == null || recordsPath == ".") recordsPath = $"{(path != null ? $"{path}/" : "")}records.json";
+                if (refundReasons && refundReasonsPath == null || refundReasonsPath == ".") refundReasonsPath = $"{(path != null ? $"{path}/" : "")}refundreasons.json";
+                if (reportingCodes && reportingCodesPath == null || reportingCodesPath == ".") reportingCodesPath = $"{(path != null ? $"{path}/" : "")}reportingcodes.json";
+                if (requests && requestsPath == null || requestsPath == ".") requestsPath = $"{(path != null ? $"{path}/" : "")}requests.json";
+                if (requestPolicies && requestPoliciesPath == null || requestPoliciesPath == ".") requestPoliciesPath = $"{(path != null ? $"{path}/" : "")}requestpolicies.json";
+                if (scheduledNotices && scheduledNoticesPath == null || scheduledNoticesPath == ".") scheduledNoticesPath = $"{(path != null ? $"{path}/" : "")}schedulednotices.json";
+                if (servicePoints && servicePointsPath == null || servicePointsPath == ".") servicePointsPath = $"{(path != null ? $"{path}/" : "")}servicepoints.json";
+                if (servicePointUsers && servicePointUsersPath == null || servicePointUsersPath == ".") servicePointUsersPath = $"{(path != null ? $"{path}/" : "")}servicepointusers.json";
+                if (snapshots && snapshotsPath == null || snapshotsPath == ".") snapshotsPath = $"{(path != null ? $"{path}/" : "")}snapshots.json";
+                if (staffSlips && staffSlipsPath == null || staffSlipsPath == ".") staffSlipsPath = $"{(path != null ? $"{path}/" : "")}staffslips.json";
+                if (statisticalCodes && statisticalCodesPath == null || statisticalCodesPath == ".") statisticalCodesPath = $"{(path != null ? $"{path}/" : "")}statisticalcodes.json";
+                if (statisticalCodeTypes && statisticalCodeTypesPath == null || statisticalCodeTypesPath == ".") statisticalCodeTypesPath = $"{(path != null ? $"{path}/" : "")}statisticalcodetypes.json";
+                if (suffixes && suffixesPath == null || suffixesPath == ".") suffixesPath = $"{(path != null ? $"{path}/" : "")}suffixes.json";
+                if (templates && templatesPath == null || templatesPath == ".") templatesPath = $"{(path != null ? $"{path}/" : "")}templates.json";
+                if (temporaryInvoiceTransactions && temporaryInvoiceTransactionsPath == null || temporaryInvoiceTransactionsPath == ".") temporaryInvoiceTransactionsPath = $"{(path != null ? $"{path}/" : "")}temporaryinvoicetransactions.json";
+                if (temporaryOrderTransactions && temporaryOrderTransactionsPath == null || temporaryOrderTransactionsPath == ".") temporaryOrderTransactionsPath = $"{(path != null ? $"{path}/" : "")}temporaryordertransactions.json";
+                if (titles && titlesPath == null || titlesPath == ".") titlesPath = $"{(path != null ? $"{path}/" : "")}titles.json";
+                if (transactions && transactionsPath == null || transactionsPath == ".") transactionsPath = $"{(path != null ? $"{path}/" : "")}transactions.json";
+                if (transferAccounts && transferAccountsPath == null || transferAccountsPath == ".") transferAccountsPath = $"{(path != null ? $"{path}/" : "")}transferaccounts.json";
+                if (transferCriterias && transferCriteriasPath == null || transferCriteriasPath == ".") transferCriteriasPath = $"{(path != null ? $"{path}/" : "")}transfercriterias.json";
+                if (users && usersPath == null || usersPath == ".") usersPath = $"{(path != null ? $"{path}/" : "")}users.json";
+                if (userAcquisitionsUnits && userAcquisitionsUnitsPath == null || userAcquisitionsUnitsPath == ".") userAcquisitionsUnitsPath = $"{(path != null ? $"{path}/" : "")}useracquisitionsunits.json";
+                if (userRequestPreferences && userRequestPreferencesPath == null || userRequestPreferencesPath == ".") userRequestPreferencesPath = $"{(path != null ? $"{path}/" : "")}userrequestpreferences.json";
+                if (vouchers && vouchersPath == null || vouchersPath == ".") vouchersPath = $"{(path != null ? $"{path}/" : "")}vouchers.json";
+                if (voucherItems && voucherItemsPath == null || voucherItemsPath == ".") voucherItemsPath = $"{(path != null ? $"{path}/" : "")}voucheritems.json";
+                if (waiveReasons && waiveReasonsPath == null || waiveReasonsPath == ".") waiveReasonsPath = $"{(path != null ? $"{path}/" : "")}waivereasons.json";
                 var acquisitionsUnitsWhere = args.SkipWhile(s3 => !s3.Equals("-AcquisitionsUnitsWhere", StringComparison.OrdinalIgnoreCase)).Skip(1).FirstOrDefault();
                 var addressTypesWhere = args.SkipWhile(s3 => !s3.Equals("-AddressTypesWhere", StringComparison.OrdinalIgnoreCase)).Skip(1).FirstOrDefault();
                 var alertsWhere = args.SkipWhile(s3 => !s3.Equals("-AlertsWhere", StringComparison.OrdinalIgnoreCase)).Skip(1).FirstOrDefault();
@@ -438,7 +574,7 @@ namespace FolioConsoleApplication
                 var vouchersWhere = args.SkipWhile(s3 => !s3.Equals("-VouchersWhere", StringComparison.OrdinalIgnoreCase)).Skip(1).FirstOrDefault();
                 var voucherItemsWhere = args.SkipWhile(s3 => !s3.Equals("-VoucherItemsWhere", StringComparison.OrdinalIgnoreCase)).Skip(1).FirstOrDefault();
                 var waiveReasonsWhere = args.SkipWhile(s3 => !s3.Equals("-WaiveReasonsWhere", StringComparison.OrdinalIgnoreCase)).Skip(1).FirstOrDefault();
-                if (update) if (api) using (var fsc = new FolioServiceClient()) userId = (string)fsc.Users($"username = '{ConfigurationManager.AppSettings["username"] ?? Environment.UserName}'").Single()["id"]; else using (var fdc = new FolioDapperContext()) userId = fdc.Users($"jsonb->> 'username' = '{ConfigurationManager.AppSettings["username"] ?? Environment.UserName}'").Select(u => u.Id.ToString()).Single();
+                if (update) if (api) using (var fsc = new FolioServiceClient(connectionString)) userId = (string)fsc.Users($"username = '{ConfigurationManager.AppSettings["username"] ?? Environment.UserName}'").Single()["id"]; else using (var fdc = new FolioDapperContext(connectionString)) userId = fdc.Users($"jsonb->> 'username' = '{ConfigurationManager.AppSettings["username"] ?? Environment.UserName}'").Select(u => u.Id.ToString()).Single();
                 if (all)
                 {
                     acquisitionsUnitsPath = $"{path}/acquisitionsunits.json";
@@ -501,7 +637,7 @@ namespace FolioConsoleApplication
                     itemDamagedStatusesPath = $"{path}/itemdamagedstatuses.json";
                     itemNoteTypesPath = $"{path}/itemnotetypes.json";
                     ledgersPath = $"{path}/ledgers.json";
-                    ledgerFiscalYearsPath = $"{path}/ledgerfiscalyears.json";
+                    if (!api) ledgerFiscalYearsPath = $"{path}/ledgerfiscalyears.json";
                     librariesPath = $"{path}/libraries.json";
                     loansPath = $"{path}/loans.json";
                     loanPoliciesPath = $"{path}/loanpolicies.json";
@@ -607,7 +743,7 @@ namespace FolioConsoleApplication
                     groupFundFiscalYearsPath = $"{path}/groupfundfiscalyears.json";
                     if (!api) invoiceTransactionSummariesPath = $"{path}/invoicetransactionsummaries.json";
                     ledgersPath = $"{path}/ledgers.json";
-                    ledgerFiscalYearsPath = $"{path}/ledgerfiscalyears.json";
+                    if (!api) ledgerFiscalYearsPath = $"{path}/ledgerfiscalyears.json";
                     if (!api) orderTransactionSummariesPath = $"{path}/ordertransactionsummaries.json";
                     if (!api) temporaryInvoiceTransactionsPath = $"{path}/temporaryinvoicetransactions.json";
                     if (!api) temporaryOrderTransactionsPath = $"{path}/temporaryordertransactions.json";
@@ -719,6 +855,125 @@ namespace FolioConsoleApplication
                     proxiesPath = $"{path}/proxies.json";
                     usersPath = $"{path}/users.json";
                 }
+                if (query && acquisitionsUnits) QueryAcquisitionsUnits(where, orderBy, skip, take, select);
+                if (query && addressTypes) QueryAddressTypes(where, orderBy, skip, take, select);
+                if (query && alerts) QueryAlerts(where, orderBy, skip, take, select);
+                if (query && alternativeTitleTypes) QueryAlternativeTitleTypes(where, orderBy, skip, take, select);
+                if (query && batchGroups) QueryBatchGroups(where, orderBy, skip, take, select);
+                if (query && batchVoucherExportConfigs) QueryBatchVoucherExportConfigs(where, orderBy, skip, take, select);
+                if (query && batchVoucherExports) QueryBatchVoucherExports(where, orderBy, skip, take, select);
+                if (query && batchVouchers) QueryBatchVouchers(where, orderBy, skip, take, select);
+                if (query && blocks) QueryBlocks(where, orderBy, skip, take, select);
+                if (query && budgets) QueryBudgets(where, orderBy, skip, take, select);
+                if (query && callNumberTypes) QueryCallNumberTypes(where, orderBy, skip, take, select);
+                if (query && campuses) QueryCampuses(where, orderBy, skip, take, select);
+                if (query && cancellationReasons) QueryCancellationReasons(where, orderBy, skip, take, select);
+                if (query && categories) QueryCategories(where, orderBy, skip, take, select);
+                if (query && checkIns) QueryCheckIns(where, orderBy, skip, take, select);
+                if (query && circulationRules) QueryCirculationRules(where, orderBy, skip, take, select);
+                if (query && classificationTypes) QueryClassificationTypes(where, orderBy, skip, take, select);
+                if (query && closeReasons) QueryCloseReasons(where, orderBy, skip, take, select);
+                if (query && comments) QueryComments(where, orderBy, skip, take, select);
+                if (query && configurations) QueryConfigurations(where, orderBy, skip, take, select);
+                if (query && contacts) QueryContacts(where, orderBy, skip, take, select);
+                if (query && contributorNameTypes) QueryContributorNameTypes(where, orderBy, skip, take, select);
+                if (query && contributorTypes) QueryContributorTypes(where, orderBy, skip, take, select);
+                if (query && customFields) QueryCustomFields(where, orderBy, skip, take, select);
+                if (query && documents) QueryDocuments(where, orderBy, skip, take, select);
+                if (query && electronicAccessRelationships) QueryElectronicAccessRelationships(where, orderBy, skip, take, select);
+                if (query && errorRecords) QueryErrorRecords(where, orderBy, skip, take, select);
+                if (query && exportConfigCredentials) QueryExportConfigCredentials(where, orderBy, skip, take, select);
+                if (query && fees) QueryFees(where, orderBy, skip, take, select);
+                if (query && feeTypes) QueryFeeTypes(where, orderBy, skip, take, select);
+                if (query && financeGroups) QueryFinanceGroups(where, orderBy, skip, take, select);
+                if (query && fiscalYears) QueryFiscalYears(where, orderBy, skip, take, select);
+                if (query && fixedDueDateSchedules) QueryFixedDueDateSchedules(where, orderBy, skip, take, select);
+                if (query && funds) QueryFunds(where, orderBy, skip, take, select);
+                if (query && fundTypes) QueryFundTypes(where, orderBy, skip, take, select);
+                if (query && groupFundFiscalYears) QueryGroupFundFiscalYears(where, orderBy, skip, take, select);
+                if (query && groups) QueryGroups(where, orderBy, skip, take, select);
+                if (query && holdingNoteTypes) QueryHoldingNoteTypes(where, orderBy, skip, take, select);
+                if (query && holdings) QueryHoldings(where, orderBy, skip, take, select);
+                if (query && holdingTypes) QueryHoldingTypes(where, orderBy, skip, take, select);
+                if (query && hridSettings) QueryHridSettings(where, orderBy, skip, take, select);
+                if (query && idTypes) QueryIdTypes(where, orderBy, skip, take, select);
+                if (query && illPolicies) QueryIllPolicies(where, orderBy, skip, take, select);
+                if (query && instanceFormats) QueryInstanceFormats(where, orderBy, skip, take, select);
+                if (query && instanceNoteTypes) QueryInstanceNoteTypes(where, orderBy, skip, take, select);
+                if (query && instanceRelationships) QueryInstanceRelationships(where, orderBy, skip, take, select);
+                if (query && instanceRelationshipTypes) QueryInstanceRelationshipTypes(where, orderBy, skip, take, select);
+                if (query && instances) QueryInstances(where, orderBy, skip, take, select);
+                if (query && instanceStatuses) QueryInstanceStatuses(where, orderBy, skip, take, select);
+                if (query && instanceTypes) QueryInstanceTypes(where, orderBy, skip, take, select);
+                if (query && institutions) QueryInstitutions(where, orderBy, skip, take, select);
+                if (query && interfaceCredentials) QueryInterfaceCredentials(where, orderBy, skip, take, select);
+                if (query && interfaces) QueryInterfaces(where, orderBy, skip, take, select);
+                if (query && invoiceItems) QueryInvoiceItems(where, orderBy, skip, take, select);
+                if (query && invoices) QueryInvoices(where, orderBy, skip, take, select);
+                if (query && invoiceTransactionSummaries) QueryInvoiceTransactionSummaries(where, orderBy, skip, take, select);
+                if (query && itemDamagedStatuses) QueryItemDamagedStatuses(where, orderBy, skip, take, select);
+                if (query && itemNoteTypes) QueryItemNoteTypes(where, orderBy, skip, take, select);
+                if (query && items) QueryItems(where, orderBy, skip, take, select);
+                if (query && ledgerFiscalYears) QueryLedgerFiscalYears(where, orderBy, skip, take, select);
+                if (query && ledgers) QueryLedgers(where, orderBy, skip, take, select);
+                if (query && libraries) QueryLibraries(where, orderBy, skip, take, select);
+                if (query && loanPolicies) QueryLoanPolicies(where, orderBy, skip, take, select);
+                if (query && loans) QueryLoans(where, orderBy, skip, take, select);
+                if (query && loanTypes) QueryLoanTypes(where, orderBy, skip, take, select);
+                if (query && locations) QueryLocations(where, orderBy, skip, take, select);
+                if (query && logins) QueryLogins(where, orderBy, skip, take, select);
+                if (query && lostItemFeePolicies) QueryLostItemFeePolicies(where, orderBy, skip, take, select);
+                if (query && marcRecords) QueryMarcRecords(where, orderBy, skip, take, select);
+                if (query && materialTypes) QueryMaterialTypes(where, orderBy, skip, take, select);
+                if (query && modeOfIssuances) QueryModeOfIssuances(where, orderBy, skip, take, select);
+                if (query && natureOfContentTerms) QueryNatureOfContentTerms(where, orderBy, skip, take, select);
+                if (query && orderInvoices) QueryOrderInvoices(where, orderBy, skip, take, select);
+                if (query && orderItems) QueryOrderItems(where, orderBy, skip, take, select);
+                if (query && orders) QueryOrders(where, orderBy, skip, take, select);
+                if (query && orderTemplates) QueryOrderTemplates(where, orderBy, skip, take, select);
+                if (query && orderTransactionSummaries) QueryOrderTransactionSummaries(where, orderBy, skip, take, select);
+                if (query && organizations) QueryOrganizations(where, orderBy, skip, take, select);
+                if (query && overdueFinePolicies) QueryOverdueFinePolicies(where, orderBy, skip, take, select);
+                if (query && owners) QueryOwners(where, orderBy, skip, take, select);
+                if (query && patronActionSessions) QueryPatronActionSessions(where, orderBy, skip, take, select);
+                if (query && patronBlockConditions) QueryPatronBlockConditions(where, orderBy, skip, take, select);
+                if (query && patronBlockLimits) QueryPatronBlockLimits(where, orderBy, skip, take, select);
+                if (query && patronNoticePolicies) QueryPatronNoticePolicies(where, orderBy, skip, take, select);
+                if (query && paymentMethods) QueryPaymentMethods(where, orderBy, skip, take, select);
+                if (query && payments) QueryPayments(where, orderBy, skip, take, select);
+                if (query && permissions) QueryPermissions(where, orderBy, skip, take, select);
+                if (query && permissionsUsers) QueryPermissionsUsers(where, orderBy, skip, take, select);
+                if (query && pieces) QueryPieces(where, orderBy, skip, take, select);
+                if (query && precedingSucceedingTitles) QueryPrecedingSucceedingTitles(where, orderBy, skip, take, select);
+                if (query && prefixes) QueryPrefixes(where, orderBy, skip, take, select);
+                if (query && proxies) QueryProxies(where, orderBy, skip, take, select);
+                if (query && rawRecords) QueryRawRecords(where, orderBy, skip, take, select);
+                if (query && records) QueryRecords(where, orderBy, skip, take, select);
+                if (query && refundReasons) QueryRefundReasons(where, orderBy, skip, take, select);
+                if (query && reportingCodes) QueryReportingCodes(where, orderBy, skip, take, select);
+                if (query && requestPolicies) QueryRequestPolicies(where, orderBy, skip, take, select);
+                if (query && requests) QueryRequests(where, orderBy, skip, take, select);
+                if (query && scheduledNotices) QueryScheduledNotices(where, orderBy, skip, take, select);
+                if (query && servicePoints) QueryServicePoints(where, orderBy, skip, take, select);
+                if (query && servicePointUsers) QueryServicePointUsers(where, orderBy, skip, take, select);
+                if (query && snapshots) QuerySnapshots(where, orderBy, skip, take, select);
+                if (query && staffSlips) QueryStaffSlips(where, orderBy, skip, take, select);
+                if (query && statisticalCodes) QueryStatisticalCodes(where, orderBy, skip, take, select);
+                if (query && statisticalCodeTypes) QueryStatisticalCodeTypes(where, orderBy, skip, take, select);
+                if (query && suffixes) QuerySuffixes(where, orderBy, skip, take, select);
+                if (query && templates) QueryTemplates(where, orderBy, skip, take, select);
+                if (query && temporaryInvoiceTransactions) QueryTemporaryInvoiceTransactions(where, orderBy, skip, take, select);
+                if (query && temporaryOrderTransactions) QueryTemporaryOrderTransactions(where, orderBy, skip, take, select);
+                if (query && titles) QueryTitles(where, orderBy, skip, take, select);
+                if (query && transactions) QueryTransactions(where, orderBy, skip, take, select);
+                if (query && transferAccounts) QueryTransferAccounts(where, orderBy, skip, take, select);
+                if (query && transferCriterias) QueryTransferCriterias(where, orderBy, skip, take, select);
+                if (query && userAcquisitionsUnits) QueryUserAcquisitionsUnits(where, orderBy, skip, take, select);
+                if (query && userRequestPreferences) QueryUserRequestPreferences(where, orderBy, skip, take, select);
+                if (query && users) QueryUsers(where, orderBy, skip, take, select);
+                if (query && voucherItems) QueryVoucherItems(where, orderBy, skip, take, select);
+                if (query && vouchers) QueryVouchers(where, orderBy, skip, take, select);
+                if (query && waiveReasons) QueryWaiveReasons(where, orderBy, skip, take, select);
                 var l = new List<Action>();
                 if (save && configurationsPath != null) l.Add(() => SaveConfigurations(configurationsPath, configurationsWhere));
                 if (save && templatesPath != null) l.Add(() => SaveTemplates(templatesPath, templatesWhere));
@@ -840,125 +1095,125 @@ namespace FolioConsoleApplication
                 if (save && feesPath != null) l.Add(() => SaveFees(feesPath, feesWhere));
                 if (save && paymentsPath != null) l.Add(() => SavePayments(paymentsPath, paymentsWhere));
                 if (threads == 1) foreach (var a in l) a(); else l.AsParallel().WithDegreeOfParallelism(threads ?? Environment.ProcessorCount).ForAll(a => a());
-                if (delete && paymentsPath != null) DeletePayments(paymentsWhere);
-                if (delete && feesPath != null) DeleteFees(feesWhere);
-                if (delete && feeTypesPath != null) DeleteFeeTypes(feeTypesWhere);
-                if (delete && blocksPath != null) DeleteBlocks(blocksWhere);
-                if (delete && commentsPath != null) DeleteComments(commentsWhere);
-                if (delete && lostItemFeePoliciesPath != null) DeleteLostItemFeePolicies(lostItemFeePoliciesWhere);
-                if (delete && overdueFinePoliciesPath != null) DeleteOverdueFinePolicies(overdueFinePoliciesWhere);
-                if (delete && ownersPath != null) DeleteOwners(ownersWhere);
-                if (delete && paymentMethodsPath != null) DeletePaymentMethods(paymentMethodsWhere);
-                if (delete && refundReasonsPath != null) DeleteRefundReasons(refundReasonsWhere);
-                if (delete && transferAccountsPath != null) DeleteTransferAccounts(transferAccountsWhere);
-                if (delete && transferCriteriasPath != null) DeleteTransferCriterias(transferCriteriasWhere);
-                if (delete && waiveReasonsPath != null) DeleteWaiveReasons(waiveReasonsWhere);
-                if (delete && checkInsPath != null) DeleteCheckIns(checkInsWhere);
-                if (delete && userRequestPreferencesPath != null) DeleteUserRequestPreferences(userRequestPreferencesWhere);
-                if (delete && patronActionSessionsPath != null) DeletePatronActionSessions(patronActionSessionsWhere);
-                if (delete && staffSlipsPath != null) DeleteStaffSlips(staffSlipsWhere);
-                if (delete && scheduledNoticesPath != null) DeleteScheduledNotices(scheduledNoticesWhere);
-                if (delete && requestsPath != null) DeleteRequests(requestsWhere);
-                if (delete && loansPath != null) DeleteLoans(loansWhere);
-                if (delete && requestPoliciesPath != null) DeleteRequestPolicies(requestPoliciesWhere);
-                if (delete && patronNoticePoliciesPath != null) DeletePatronNoticePolicies(patronNoticePoliciesWhere);
-                if (delete && loanPoliciesPath != null) DeleteLoanPolicies(loanPoliciesWhere);
-                if (delete && fixedDueDateSchedulesPath != null) DeleteFixedDueDateSchedules(fixedDueDateSchedulesWhere);
-                if (delete && circulationRulesPath != null) DeleteCirculationRules(circulationRulesWhere);
-                if (delete && cancellationReasonsPath != null) DeleteCancellationReasons(cancellationReasonsWhere);
-                if (delete && invoiceTransactionSummariesPath != null) DeleteInvoiceTransactionSummaries(invoiceTransactionSummariesWhere);
-                if (delete && orderInvoicesPath != null) DeleteOrderInvoices(orderInvoicesWhere);
-                if (delete && temporaryInvoiceTransactionsPath != null) DeleteTemporaryInvoiceTransactions(temporaryInvoiceTransactionsWhere);
-                if (delete && exportConfigCredentialsPath != null) DeleteExportConfigCredentials(exportConfigCredentialsWhere);
-                if (delete && transactionsPath != null) DeleteTransactions(transactionsWhere);
-                if (delete && batchVoucherExportConfigsPath != null) DeleteBatchVoucherExportConfigs(batchVoucherExportConfigsWhere);
-                if (delete && batchVoucherExportsPath != null) DeleteBatchVoucherExports(batchVoucherExportsWhere);
-                if (delete && batchVouchersPath != null) DeleteBatchVouchers(batchVouchersWhere);
-                if (delete && batchGroupsPath != null) DeleteBatchGroups(batchGroupsWhere);
-                if (delete && voucherItemsPath != null) DeleteVoucherItems(voucherItemsWhere);
-                if (delete && vouchersPath != null) DeleteVouchers(vouchersWhere);
-                if (delete && invoiceItemsPath != null) DeleteInvoiceItems(invoiceItemsWhere);
-                if (delete && documentsPath != null) DeleteDocuments(documentsWhere);
-                if (delete && invoicesPath != null) DeleteInvoices(invoicesWhere);
-                if (delete && orderTransactionSummariesPath != null) DeleteOrderTransactionSummaries(orderTransactionSummariesWhere);
-                if (delete && temporaryOrderTransactionsPath != null) DeleteTemporaryOrderTransactions(temporaryOrderTransactionsWhere);
-                if (delete && piecesPath != null) DeletePieces(piecesWhere);
-                if (delete && titlesPath != null) DeleteTitles(titlesWhere);
-                if (delete && orderItemsPath != null) DeleteOrderItems(orderItemsWhere);
-                if (delete && ordersPath != null) DeleteOrders(ordersWhere);
-                if (delete && orderTemplatesPath != null) DeleteOrderTemplates(orderTemplatesWhere);
-                if (delete && alertsPath != null) DeleteAlerts(alertsWhere);
-                if (delete && reportingCodesPath != null) DeleteReportingCodes(reportingCodesWhere);
-                if (delete && userAcquisitionsUnitsPath != null) DeleteUserAcquisitionsUnits(userAcquisitionsUnitsWhere);
-                if (delete && acquisitionsUnitsPath != null) DeleteAcquisitionsUnits(acquisitionsUnitsWhere);
-                if (delete && closeReasonsPath != null) DeleteCloseReasons(closeReasonsWhere);
-                if (delete && suffixesPath != null) DeleteSuffixes(suffixesWhere);
-                if (delete && prefixesPath != null) DeletePrefixes(prefixesWhere);
-                if (delete && groupFundFiscalYearsPath != null) DeleteGroupFundFiscalYears(groupFundFiscalYearsWhere);
-                if (delete && budgetsPath != null) DeleteBudgets(budgetsWhere);
-                if (delete && fundsPath != null) DeleteFunds(fundsWhere);
-                if (delete && fundTypesPath != null) DeleteFundTypes(fundTypesWhere);
-                if (delete && ledgerFiscalYearsPath != null) DeleteLedgerFiscalYears(ledgerFiscalYearsWhere);
-                if (delete && ledgersPath != null) DeleteLedgers(ledgersWhere);
-                if (delete && fiscalYearsPath != null) DeleteFiscalYears(fiscalYearsWhere);
-                if (delete && financeGroupsPath != null) DeleteFinanceGroups(financeGroupsWhere);
-                if (delete && organizationsPath != null) DeleteOrganizations(organizationsWhere);
-                if (delete && interfaceCredentialsPath != null) DeleteInterfaceCredentials(interfaceCredentialsWhere);
-                if (delete && interfacesPath != null) DeleteInterfaces(interfacesWhere);
-                if (delete && contactsPath != null) DeleteContacts(contactsWhere);
-                if (delete && categoriesPath != null) DeleteCategories(categoriesWhere);
-                if (delete && errorRecordsPath != null) DeleteErrorRecords(errorRecordsWhere);
-                if (delete && marcRecordsPath != null) DeleteMarcRecords(marcRecordsWhere);
-                if (delete && rawRecordsPath != null) DeleteRawRecords(rawRecordsWhere);
-                if (delete && recordsPath != null) DeleteRecords(recordsWhere);
-                if (delete && snapshotsPath != null) DeleteSnapshots(snapshotsWhere);
-                if (delete && precedingSucceedingTitlesPath != null) DeletePrecedingSucceedingTitles(precedingSucceedingTitlesWhere);
-                if (delete && itemsPath != null) DeleteItems(itemsWhere);
-                if (delete && holdingsPath != null) DeleteHoldings(holdingsWhere);
-                if (delete && instancesPath != null) DeleteInstances(instancesWhere);
-                if (delete && statisticalCodesPath != null) DeleteStatisticalCodes(statisticalCodesWhere);
-                if (delete && statisticalCodeTypesPath != null) DeleteStatisticalCodeTypes(statisticalCodeTypesWhere);
-                if (delete && modeOfIssuancesPath != null) DeleteModeOfIssuances(modeOfIssuancesWhere);
-                if (delete && materialTypesPath != null) DeleteMaterialTypes(materialTypesWhere);
-                if (delete && loanTypesPath != null) DeleteLoanTypes(loanTypesWhere);
-                if (delete && itemNoteTypesPath != null) DeleteItemNoteTypes(itemNoteTypesWhere);
-                if (delete && instanceTypesPath != null) DeleteInstanceTypes(instanceTypesWhere);
-                if (delete && instanceStatusesPath != null) DeleteInstanceStatuses(instanceStatusesWhere);
-                if (delete && instanceRelationshipsPath != null) DeleteInstanceRelationships(instanceRelationshipsWhere);
-                if (delete && instanceRelationshipTypesPath != null) DeleteInstanceRelationshipTypes(instanceRelationshipTypesWhere);
-                if (delete && instanceFormatsPath != null) DeleteInstanceFormats(instanceFormatsWhere);
-                if (delete && illPoliciesPath != null) DeleteIllPolicies(illPoliciesWhere);
-                if (delete && idTypesPath != null) DeleteIdTypes(idTypesWhere);
-                if (delete && holdingTypesPath != null) DeleteHoldingTypes(holdingTypesWhere);
-                if (delete && holdingNoteTypesPath != null) DeleteHoldingNoteTypes(holdingNoteTypesWhere);
-                if (delete && electronicAccessRelationshipsPath != null) DeleteElectronicAccessRelationships(electronicAccessRelationshipsWhere);
-                if (delete && contributorTypesPath != null) DeleteContributorTypes(contributorTypesWhere);
-                if (delete && contributorNameTypesPath != null) DeleteContributorNameTypes(contributorNameTypesWhere);
-                if (delete && classificationTypesPath != null) DeleteClassificationTypes(classificationTypesWhere);
-                if (delete && callNumberTypesPath != null) DeleteCallNumberTypes(callNumberTypesWhere);
-                if (delete && alternativeTitleTypesPath != null) DeleteAlternativeTitleTypes(alternativeTitleTypesWhere);
-                if (delete && locationsPath != null) DeleteLocations(locationsWhere);
-                if (delete && servicePointUsersPath != null) DeleteServicePointUsers(servicePointUsersWhere);
-                if (delete && servicePointsPath != null) DeleteServicePoints(servicePointsWhere);
-                if (delete && librariesPath != null) DeleteLibraries(librariesWhere);
-                if (delete && campusesPath != null) DeleteCampuses(campusesWhere);
-                if (delete && institutionsPath != null) DeleteInstitutions(institutionsWhere);
-                if (delete && hridSettingsPath != null) DeleteHridSettings(hridSettingsWhere);
-                if (delete && instanceNoteTypesPath != null) DeleteInstanceNoteTypes(instanceNoteTypesWhere);
-                if (delete && itemDamagedStatusesPath != null) DeleteItemDamagedStatuses(itemDamagedStatusesWhere);
-                if (delete && natureOfContentTermsPath != null) DeleteNatureOfContentTerms(natureOfContentTermsWhere);
-                if (delete && permissionsUsersPath != null) DeletePermissionsUsers(permissionsUsersWhere);
-                if (delete && permissionsPath != null) DeletePermissions(permissionsWhere);
-                if (delete && loginsPath != null) DeleteLogins(loginsWhere);
-                if (delete && patronBlockLimitsPath != null) DeletePatronBlockLimits(patronBlockLimitsWhere);
-                if (delete && patronBlockConditionsPath != null) DeletePatronBlockConditions(patronBlockConditionsWhere);
-                if (delete && proxiesPath != null) DeleteProxies(proxiesWhere);
-                if (delete && usersPath != null) DeleteUsers(usersWhere);
-                if (delete && groupsPath != null) DeleteGroups(groupsWhere);
-                if (delete && addressTypesPath != null) DeleteAddressTypes(addressTypesWhere);
-                if (delete && customFieldsPath != null) DeleteCustomFields(customFieldsWhere);
-                if (delete && templatesPath != null) DeleteTemplates(templatesWhere);
-                if (delete && configurationsPath != null) DeleteConfigurations(configurationsWhere);
+                if (delete && (payments || paymentsPath != null)) DeletePayments(paymentsWhere);
+                if (delete && (fees || feesPath != null)) DeleteFees(feesWhere);
+                if (delete && (feeTypes || feeTypesPath != null)) DeleteFeeTypes(feeTypesWhere);
+                if (delete && (blocks || blocksPath != null)) DeleteBlocks(blocksWhere);
+                if (delete && (comments || commentsPath != null)) DeleteComments(commentsWhere);
+                if (delete && (lostItemFeePolicies || lostItemFeePoliciesPath != null)) DeleteLostItemFeePolicies(lostItemFeePoliciesWhere);
+                if (delete && (overdueFinePolicies || overdueFinePoliciesPath != null)) DeleteOverdueFinePolicies(overdueFinePoliciesWhere);
+                if (delete && (owners || ownersPath != null)) DeleteOwners(ownersWhere);
+                if (delete && (paymentMethods || paymentMethodsPath != null)) DeletePaymentMethods(paymentMethodsWhere);
+                if (delete && (refundReasons || refundReasonsPath != null)) DeleteRefundReasons(refundReasonsWhere);
+                if (delete && (transferAccounts || transferAccountsPath != null)) DeleteTransferAccounts(transferAccountsWhere);
+                if (delete && (transferCriterias || transferCriteriasPath != null)) DeleteTransferCriterias(transferCriteriasWhere);
+                if (delete && (waiveReasons || waiveReasonsPath != null)) DeleteWaiveReasons(waiveReasonsWhere);
+                if (delete && (checkIns || checkInsPath != null)) DeleteCheckIns(checkInsWhere);
+                if (delete && (userRequestPreferences || userRequestPreferencesPath != null)) DeleteUserRequestPreferences(userRequestPreferencesWhere);
+                if (delete && (patronActionSessions || patronActionSessionsPath != null)) DeletePatronActionSessions(patronActionSessionsWhere);
+                if (delete && (staffSlips || staffSlipsPath != null)) DeleteStaffSlips(staffSlipsWhere);
+                if (delete && (scheduledNotices || scheduledNoticesPath != null)) DeleteScheduledNotices(scheduledNoticesWhere);
+                if (delete && (requests || requestsPath != null)) DeleteRequests(requestsWhere);
+                if (delete && (loans || loansPath != null)) DeleteLoans(loansWhere);
+                if (delete && (requestPolicies || requestPoliciesPath != null)) DeleteRequestPolicies(requestPoliciesWhere);
+                if (delete && (patronNoticePolicies || patronNoticePoliciesPath != null)) DeletePatronNoticePolicies(patronNoticePoliciesWhere);
+                if (delete && (loanPolicies || loanPoliciesPath != null)) DeleteLoanPolicies(loanPoliciesWhere);
+                if (delete && (fixedDueDateSchedules || fixedDueDateSchedulesPath != null)) DeleteFixedDueDateSchedules(fixedDueDateSchedulesWhere);
+                if (delete && (circulationRules || circulationRulesPath != null)) DeleteCirculationRules(circulationRulesWhere);
+                if (delete && (cancellationReasons || cancellationReasonsPath != null)) DeleteCancellationReasons(cancellationReasonsWhere);
+                if (delete && (invoiceTransactionSummaries || invoiceTransactionSummariesPath != null)) DeleteInvoiceTransactionSummaries(invoiceTransactionSummariesWhere);
+                if (delete && (orderInvoices || orderInvoicesPath != null)) DeleteOrderInvoices(orderInvoicesWhere);
+                if (delete && (temporaryInvoiceTransactions || temporaryInvoiceTransactionsPath != null)) DeleteTemporaryInvoiceTransactions(temporaryInvoiceTransactionsWhere);
+                if (delete && (exportConfigCredentials || exportConfigCredentialsPath != null)) DeleteExportConfigCredentials(exportConfigCredentialsWhere);
+                if (delete && (transactions || transactionsPath != null)) DeleteTransactions(transactionsWhere);
+                if (delete && (batchVoucherExportConfigs || batchVoucherExportConfigsPath != null)) DeleteBatchVoucherExportConfigs(batchVoucherExportConfigsWhere);
+                if (delete && (batchVoucherExports || batchVoucherExportsPath != null)) DeleteBatchVoucherExports(batchVoucherExportsWhere);
+                if (delete && (batchVouchers || batchVouchersPath != null)) DeleteBatchVouchers(batchVouchersWhere);
+                if (delete && (batchGroups || batchGroupsPath != null)) DeleteBatchGroups(batchGroupsWhere);
+                if (delete && (voucherItems || voucherItemsPath != null)) DeleteVoucherItems(voucherItemsWhere);
+                if (delete && (vouchers || vouchersPath != null)) DeleteVouchers(vouchersWhere);
+                if (delete && (invoiceItems || invoiceItemsPath != null)) DeleteInvoiceItems(invoiceItemsWhere);
+                if (delete && (documents || documentsPath != null)) DeleteDocuments(documentsWhere);
+                if (delete && (invoices || invoicesPath != null)) DeleteInvoices(invoicesWhere);
+                if (delete && (orderTransactionSummaries || orderTransactionSummariesPath != null)) DeleteOrderTransactionSummaries(orderTransactionSummariesWhere);
+                if (delete && (temporaryOrderTransactions || temporaryOrderTransactionsPath != null)) DeleteTemporaryOrderTransactions(temporaryOrderTransactionsWhere);
+                if (delete && (pieces || piecesPath != null)) DeletePieces(piecesWhere);
+                if (delete && (titles || titlesPath != null)) DeleteTitles(titlesWhere);
+                if (delete && (orderItems || orderItemsPath != null)) DeleteOrderItems(orderItemsWhere);
+                if (delete && (orders || ordersPath != null)) DeleteOrders(ordersWhere);
+                if (delete && (orderTemplates || orderTemplatesPath != null)) DeleteOrderTemplates(orderTemplatesWhere);
+                if (delete && (alerts || alertsPath != null)) DeleteAlerts(alertsWhere);
+                if (delete && (reportingCodes || reportingCodesPath != null)) DeleteReportingCodes(reportingCodesWhere);
+                if (delete && (userAcquisitionsUnits || userAcquisitionsUnitsPath != null)) DeleteUserAcquisitionsUnits(userAcquisitionsUnitsWhere);
+                if (delete && (acquisitionsUnits || acquisitionsUnitsPath != null)) DeleteAcquisitionsUnits(acquisitionsUnitsWhere);
+                if (delete && (closeReasons || closeReasonsPath != null)) DeleteCloseReasons(closeReasonsWhere);
+                if (delete && (suffixes || suffixesPath != null)) DeleteSuffixes(suffixesWhere);
+                if (delete && (prefixes || prefixesPath != null)) DeletePrefixes(prefixesWhere);
+                if (delete && (groupFundFiscalYears || groupFundFiscalYearsPath != null)) DeleteGroupFundFiscalYears(groupFundFiscalYearsWhere);
+                if (delete && (budgets || budgetsPath != null)) DeleteBudgets(budgetsWhere);
+                if (delete && (funds || fundsPath != null)) DeleteFunds(fundsWhere);
+                if (delete && (fundTypes || fundTypesPath != null)) DeleteFundTypes(fundTypesWhere);
+                if (delete && (ledgerFiscalYears || ledgerFiscalYearsPath != null)) DeleteLedgerFiscalYears(ledgerFiscalYearsWhere);
+                if (delete && (ledgers || ledgersPath != null)) DeleteLedgers(ledgersWhere);
+                if (delete && (fiscalYears || fiscalYearsPath != null)) DeleteFiscalYears(fiscalYearsWhere);
+                if (delete && (financeGroups || financeGroupsPath != null)) DeleteFinanceGroups(financeGroupsWhere);
+                if (delete && (organizations || organizationsPath != null)) DeleteOrganizations(organizationsWhere);
+                if (delete && (interfaceCredentials || interfaceCredentialsPath != null)) DeleteInterfaceCredentials(interfaceCredentialsWhere);
+                if (delete && (interfaces || interfacesPath != null)) DeleteInterfaces(interfacesWhere);
+                if (delete && (contacts || contactsPath != null)) DeleteContacts(contactsWhere);
+                if (delete && (categories || categoriesPath != null)) DeleteCategories(categoriesWhere);
+                if (delete && (errorRecords || errorRecordsPath != null)) DeleteErrorRecords(errorRecordsWhere);
+                if (delete && (marcRecords || marcRecordsPath != null)) DeleteMarcRecords(marcRecordsWhere);
+                if (delete && (rawRecords || rawRecordsPath != null)) DeleteRawRecords(rawRecordsWhere);
+                if (delete && (records || recordsPath != null)) DeleteRecords(recordsWhere);
+                if (delete && (snapshots || snapshotsPath != null)) DeleteSnapshots(snapshotsWhere);
+                if (delete && (precedingSucceedingTitles || precedingSucceedingTitlesPath != null)) DeletePrecedingSucceedingTitles(precedingSucceedingTitlesWhere);
+                if (delete && (items || itemsPath != null)) DeleteItems(itemsWhere);
+                if (delete && (holdings || holdingsPath != null)) DeleteHoldings(holdingsWhere);
+                if (delete && (instances || instancesPath != null)) DeleteInstances(instancesWhere);
+                if (delete && (statisticalCodes || statisticalCodesPath != null)) DeleteStatisticalCodes(statisticalCodesWhere);
+                if (delete && (statisticalCodeTypes || statisticalCodeTypesPath != null)) DeleteStatisticalCodeTypes(statisticalCodeTypesWhere);
+                if (delete && (modeOfIssuances || modeOfIssuancesPath != null)) DeleteModeOfIssuances(modeOfIssuancesWhere);
+                if (delete && (materialTypes || materialTypesPath != null)) DeleteMaterialTypes(materialTypesWhere);
+                if (delete && (loanTypes || loanTypesPath != null)) DeleteLoanTypes(loanTypesWhere);
+                if (delete && (itemNoteTypes || itemNoteTypesPath != null)) DeleteItemNoteTypes(itemNoteTypesWhere);
+                if (delete && (instanceTypes || instanceTypesPath != null)) DeleteInstanceTypes(instanceTypesWhere);
+                if (delete && (instanceStatuses || instanceStatusesPath != null)) DeleteInstanceStatuses(instanceStatusesWhere);
+                if (delete && (instanceRelationships || instanceRelationshipsPath != null)) DeleteInstanceRelationships(instanceRelationshipsWhere);
+                if (delete && (instanceRelationshipTypes || instanceRelationshipTypesPath != null)) DeleteInstanceRelationshipTypes(instanceRelationshipTypesWhere);
+                if (delete && (instanceFormats || instanceFormatsPath != null)) DeleteInstanceFormats(instanceFormatsWhere);
+                if (delete && (illPolicies || illPoliciesPath != null)) DeleteIllPolicies(illPoliciesWhere);
+                if (delete && (idTypes || idTypesPath != null)) DeleteIdTypes(idTypesWhere);
+                if (delete && (holdingTypes || holdingTypesPath != null)) DeleteHoldingTypes(holdingTypesWhere);
+                if (delete && (holdingNoteTypes || holdingNoteTypesPath != null)) DeleteHoldingNoteTypes(holdingNoteTypesWhere);
+                if (delete && (electronicAccessRelationships || electronicAccessRelationshipsPath != null)) DeleteElectronicAccessRelationships(electronicAccessRelationshipsWhere);
+                if (delete && (contributorTypes || contributorTypesPath != null)) DeleteContributorTypes(contributorTypesWhere);
+                if (delete && (contributorNameTypes || contributorNameTypesPath != null)) DeleteContributorNameTypes(contributorNameTypesWhere);
+                if (delete && (classificationTypes || classificationTypesPath != null)) DeleteClassificationTypes(classificationTypesWhere);
+                if (delete && (callNumberTypes || callNumberTypesPath != null)) DeleteCallNumberTypes(callNumberTypesWhere);
+                if (delete && (alternativeTitleTypes || alternativeTitleTypesPath != null)) DeleteAlternativeTitleTypes(alternativeTitleTypesWhere);
+                if (delete && (locations || locationsPath != null)) DeleteLocations(locationsWhere);
+                if (delete && (servicePointUsers || servicePointUsersPath != null)) DeleteServicePointUsers(servicePointUsersWhere);
+                if (delete && (servicePoints || servicePointsPath != null)) DeleteServicePoints(servicePointsWhere);
+                if (delete && (libraries || librariesPath != null)) DeleteLibraries(librariesWhere);
+                if (delete && (campuses || campusesPath != null)) DeleteCampuses(campusesWhere);
+                if (delete && (institutions || institutionsPath != null)) DeleteInstitutions(institutionsWhere);
+                if (delete && (hridSettings || hridSettingsPath != null)) DeleteHridSettings(hridSettingsWhere);
+                if (delete && (instanceNoteTypes || instanceNoteTypesPath != null)) DeleteInstanceNoteTypes(instanceNoteTypesWhere);
+                if (delete && (itemDamagedStatuses || itemDamagedStatusesPath != null)) DeleteItemDamagedStatuses(itemDamagedStatusesWhere);
+                if (delete && (natureOfContentTerms || natureOfContentTermsPath != null)) DeleteNatureOfContentTerms(natureOfContentTermsWhere);
+                if (delete && (permissionsUsers || permissionsUsersPath != null)) DeletePermissionsUsers(permissionsUsersWhere);
+                if (delete && (permissions || permissionsPath != null)) DeletePermissions(permissionsWhere);
+                if (delete && (logins || loginsPath != null)) DeleteLogins(loginsWhere);
+                if (delete && (patronBlockLimits || patronBlockLimitsPath != null)) DeletePatronBlockLimits(patronBlockLimitsWhere);
+                if (delete && (patronBlockConditions || patronBlockConditionsPath != null)) DeletePatronBlockConditions(patronBlockConditionsWhere);
+                if (delete && (proxies || proxiesPath != null)) DeleteProxies(proxiesWhere);
+                if (delete && (users || usersPath != null)) DeleteUsers(usersWhere);
+                if (delete && (groups || groupsPath != null)) DeleteGroups(groupsWhere);
+                if (delete && (addressTypes || addressTypesPath != null)) DeleteAddressTypes(addressTypesWhere);
+                if (delete && (customFields || customFieldsPath != null)) DeleteCustomFields(customFieldsWhere);
+                if (delete && (templates || templatesPath != null)) DeleteTemplates(templatesWhere);
+                if (delete && (configurations || configurationsPath != null)) DeleteConfigurations(configurationsWhere);
                 if (import && usersPath != null) ImportUsers(usersPath, source, disable, merge);
                 if (load && configurationsPath != null) LoadConfigurations(configurationsPath);
                 if (load && templatesPath != null) LoadTemplates(templatesPath);
@@ -1100,14 +1355,33 @@ namespace FolioConsoleApplication
             var path = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "ConnectionStrings.config");
             if (!File.Exists(path))
             {
-                File.WriteAllText(path, "<connectionStrings>\r\n  <add name=\"FolioContext\" providerName=\"Npgsql\" connectionString=\"Host=localhost;Username=postgres;Password=;Database=folio\" />\r\n</connectionStrings>");
+                File.WriteAllText(path, "<connectionStrings>\r\n  <add name=\"FolioContext\" providerName=\"Npgsql\" connectionString=\"Host=localhost;Username=postgres;Password=;Database=folio\" />\r\n  <add name=\"FolioServiceClient\" connectionString=\"http://localhost:9130/diku?username=diku_admin&amp;password=\" />\r\n</connectionStrings>");
                 traceSource.TraceEvent(TraceEventType.Information, 0, $"Created {path}");
             }
             path = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "AppSettings.config");
             if (!File.Exists(path))
             {
-                File.WriteAllText(path, "<appSettings>\r\n  <add key=\"url\" value=\"http://localhost:9130\"/>\r\n  <add key=\"tenant\" value=\"diku\"/>\r\n  <add key=\"username\" value=\"diku_admin\"/>\r\n  <add key=\"password\" value=\"\"/>\r\n</appSettings>");
+                File.WriteAllText(path, "<appSettings>\r\n  <!--<add key=\"smtpHost\" value=\"\"/>\r\n  <add key=\"emailAddress\" value=\"\"/>\r\n  <add key=\"emailName\" value=\"\"/>-->\r\n</appSettings>");
                 traceSource.TraceEvent(TraceEventType.Information, 0, $"Created {path}");
+            }
+        }
+
+        public static void QueryAcquisitionsUnits(string where = null, string orderBy = null, int? skip = null, int? take = null, string select = null)
+        {
+            using (var fdc = new FolioDapperContext(connectionString))
+            using (var fsc = new FolioServiceClient(connectionString))
+            using (var jtw = new JsonTextWriter(Console.Out))
+            {
+                jtw.WriteStartArray();
+                foreach (var jo in (api ? fsc.AcquisitionsUnits(where, orderBy, skip, take) : fdc.AcquisitionsUnits(where, null, orderBy, skip, take).Select(au => JObject.Parse(au.Content))).Select(jo =>
+                {
+                    return select == null ? jo : new JObject(select.Split(",").Select(s =>
+                    {
+                        var m = Regex.Match(s.Trim(), @"(?<Path>\S+)((?i) as (?<Name>.+))?", RegexOptions.Compiled);
+                        return new JProperty(m.Groups["Name"].Success ? m.Groups["Name"].Value : m.Groups["Path"].Value.Split(".").Last(), jo.SelectToken(m.Groups["Path"].Value));
+                    }));
+                })) jsonSerializer.Serialize(jtw, jo);
+                jtw.WriteEndArray();
             }
         }
 
@@ -1115,8 +1389,8 @@ namespace FolioConsoleApplication
         {
             traceSource.TraceEvent(TraceEventType.Information, 0, "Deleting acquisitions units");
             var s = Stopwatch.StartNew();
-            using (var fbcc = new FolioBulkCopyContext())
-            using (var fsc = new FolioServiceClient())
+            using (var fbcc = new FolioBulkCopyContext(connectionString))
+            using (var fsc = new FolioServiceClient(connectionString))
             {
                 var i = 0;
                 if (api)
@@ -1149,8 +1423,8 @@ namespace FolioConsoleApplication
             using (var sr = new StreamReader(compress || path.EndsWith(".gz") ? (Stream)new GZipStream(File.OpenRead($"{path}{(path.EndsWith(".gz") ? "" : ".gz")}"), CompressionMode.Decompress) : File.OpenRead(path)))
             using (var sr2 = new StreamReader(Assembly.GetAssembly(typeof(FolioContext)).GetManifestResourceStream("FolioLibrary.AcquisitionsUnit.json")))
             using (var jtr = new JsonTextReader(sr) { SupportMultipleContent = true })
-            using (var fbcc = new FolioBulkCopyContext())
-            using (var fsc = new FolioServiceClient())
+            using (var fbcc = new FolioBulkCopyContext(connectionString))
+            using (var fsc = new FolioServiceClient(connectionString))
             {
                 var s2 = Stopwatch.StartNew();
                 var js4 = JsonSchema.FromJsonAsync(sr2.ReadToEndAsync().Result).Result;
@@ -1207,8 +1481,8 @@ namespace FolioConsoleApplication
         {
             traceSource.TraceEvent(TraceEventType.Information, 0, "Saving acquisitions units");
             var s = Stopwatch.StartNew();
-            using (var fdc = new FolioDapperContext())
-            using (var fsc = new FolioServiceClient())
+            using (var fdc = new FolioDapperContext(connectionString))
+            using (var fsc = new FolioServiceClient(connectionString))
             using (var sr = new StreamReader(Assembly.GetAssembly(typeof(FolioContext)).GetManifestResourceStream("FolioLibrary.AcquisitionsUnit.json")))
             using (var sw = new StreamWriter(whatIf ? new MemoryStream() : compress ? (Stream)new GZipStream(new FileStream($"{path}.gz", FileMode.Create), CompressionMode.Compress) : new FileStream(path, FileMode.Create)))
             using (var jtw = new JsonTextWriter(sw))
@@ -1218,7 +1492,7 @@ namespace FolioConsoleApplication
                 var js = new JsonSerializer { Formatting = Formatting.Indented };
                 jtw.WriteStartArray();
                 var i = 0;
-                foreach (var jo in api ? fsc.AcquisitionsUnits(where, take: take) : fdc.AcquisitionsUnits(where, take: take).Select(au => JObject.Parse(au.Content)))
+                foreach (var jo in api ? fsc.AcquisitionsUnits(where, orderBy, skip, take) : fdc.AcquisitionsUnits(where, null, orderBy, skip, take).Select(au => JObject.Parse(au.Content)))
                 {
                     if (validate)
                     {
@@ -1239,12 +1513,31 @@ namespace FolioConsoleApplication
             traceSource.TraceEvent(TraceEventType.Information, 0, $"{s.Elapsed} elapsed");
         }
 
+        public static void QueryAddressTypes(string where = null, string orderBy = null, int? skip = null, int? take = null, string select = null)
+        {
+            using (var fdc = new FolioDapperContext(connectionString))
+            using (var fsc = new FolioServiceClient(connectionString))
+            using (var jtw = new JsonTextWriter(Console.Out))
+            {
+                jtw.WriteStartArray();
+                foreach (var jo in (api ? fsc.AddressTypes(where, orderBy, skip, take) : fdc.AddressTypes(where, null, orderBy, skip, take).Select(at => JObject.Parse(at.Content))).Select(jo =>
+                {
+                    return select == null ? jo : new JObject(select.Split(",").Select(s =>
+                    {
+                        var m = Regex.Match(s.Trim(), @"(?<Path>\S+)((?i) as (?<Name>.+))?", RegexOptions.Compiled);
+                        return new JProperty(m.Groups["Name"].Success ? m.Groups["Name"].Value : m.Groups["Path"].Value.Split(".").Last(), jo.SelectToken(m.Groups["Path"].Value));
+                    }));
+                })) jsonSerializer.Serialize(jtw, jo);
+                jtw.WriteEndArray();
+            }
+        }
+
         public static void DeleteAddressTypes(string where = null)
         {
             traceSource.TraceEvent(TraceEventType.Information, 0, "Deleting address types");
             var s = Stopwatch.StartNew();
-            using (var fbcc = new FolioBulkCopyContext())
-            using (var fsc = new FolioServiceClient())
+            using (var fbcc = new FolioBulkCopyContext(connectionString))
+            using (var fsc = new FolioServiceClient(connectionString))
             {
                 var i = 0;
                 if (api)
@@ -1277,8 +1570,8 @@ namespace FolioConsoleApplication
             using (var sr = new StreamReader(compress || path.EndsWith(".gz") ? (Stream)new GZipStream(File.OpenRead($"{path}{(path.EndsWith(".gz") ? "" : ".gz")}"), CompressionMode.Decompress) : File.OpenRead(path)))
             using (var sr2 = new StreamReader(Assembly.GetAssembly(typeof(FolioContext)).GetManifestResourceStream("FolioLibrary.AddressType.json")))
             using (var jtr = new JsonTextReader(sr) { SupportMultipleContent = true })
-            using (var fbcc = new FolioBulkCopyContext())
-            using (var fsc = new FolioServiceClient())
+            using (var fbcc = new FolioBulkCopyContext(connectionString))
+            using (var fsc = new FolioServiceClient(connectionString))
             {
                 var s2 = Stopwatch.StartNew();
                 var js4 = JsonSchema.FromJsonAsync(sr2.ReadToEndAsync().Result).Result;
@@ -1335,8 +1628,8 @@ namespace FolioConsoleApplication
         {
             traceSource.TraceEvent(TraceEventType.Information, 0, "Saving address types");
             var s = Stopwatch.StartNew();
-            using (var fdc = new FolioDapperContext())
-            using (var fsc = new FolioServiceClient())
+            using (var fdc = new FolioDapperContext(connectionString))
+            using (var fsc = new FolioServiceClient(connectionString))
             using (var sr = new StreamReader(Assembly.GetAssembly(typeof(FolioContext)).GetManifestResourceStream("FolioLibrary.AddressType.json")))
             using (var sw = new StreamWriter(whatIf ? new MemoryStream() : compress ? (Stream)new GZipStream(new FileStream($"{path}.gz", FileMode.Create), CompressionMode.Compress) : new FileStream(path, FileMode.Create)))
             using (var jtw = new JsonTextWriter(sw))
@@ -1346,7 +1639,7 @@ namespace FolioConsoleApplication
                 var js = new JsonSerializer { Formatting = Formatting.Indented };
                 jtw.WriteStartArray();
                 var i = 0;
-                foreach (var jo in api ? fsc.AddressTypes(where, take: take) : fdc.AddressTypes(where, take: take).Select(at => JObject.Parse(at.Content)))
+                foreach (var jo in api ? fsc.AddressTypes(where, orderBy, skip, take) : fdc.AddressTypes(where, null, orderBy, skip, take).Select(at => JObject.Parse(at.Content)))
                 {
                     if (validate)
                     {
@@ -1367,12 +1660,31 @@ namespace FolioConsoleApplication
             traceSource.TraceEvent(TraceEventType.Information, 0, $"{s.Elapsed} elapsed");
         }
 
+        public static void QueryAlerts(string where = null, string orderBy = null, int? skip = null, int? take = null, string select = null)
+        {
+            using (var fdc = new FolioDapperContext(connectionString))
+            using (var fsc = new FolioServiceClient(connectionString))
+            using (var jtw = new JsonTextWriter(Console.Out))
+            {
+                jtw.WriteStartArray();
+                foreach (var jo in (api ? fsc.Alerts(where, orderBy, skip, take) : fdc.Alerts(where, null, orderBy, skip, take).Select(a => JObject.Parse(a.Content))).Select(jo =>
+                {
+                    return select == null ? jo : new JObject(select.Split(",").Select(s =>
+                    {
+                        var m = Regex.Match(s.Trim(), @"(?<Path>\S+)((?i) as (?<Name>.+))?", RegexOptions.Compiled);
+                        return new JProperty(m.Groups["Name"].Success ? m.Groups["Name"].Value : m.Groups["Path"].Value.Split(".").Last(), jo.SelectToken(m.Groups["Path"].Value));
+                    }));
+                })) jsonSerializer.Serialize(jtw, jo);
+                jtw.WriteEndArray();
+            }
+        }
+
         public static void DeleteAlerts(string where = null)
         {
             traceSource.TraceEvent(TraceEventType.Information, 0, "Deleting alerts");
             var s = Stopwatch.StartNew();
-            using (var fbcc = new FolioBulkCopyContext())
-            using (var fsc = new FolioServiceClient())
+            using (var fbcc = new FolioBulkCopyContext(connectionString))
+            using (var fsc = new FolioServiceClient(connectionString))
             {
                 var i = 0;
                 if (api)
@@ -1405,8 +1717,8 @@ namespace FolioConsoleApplication
             using (var sr = new StreamReader(compress || path.EndsWith(".gz") ? (Stream)new GZipStream(File.OpenRead($"{path}{(path.EndsWith(".gz") ? "" : ".gz")}"), CompressionMode.Decompress) : File.OpenRead(path)))
             using (var sr2 = new StreamReader(Assembly.GetAssembly(typeof(FolioContext)).GetManifestResourceStream("FolioLibrary.Alert.json")))
             using (var jtr = new JsonTextReader(sr) { SupportMultipleContent = true })
-            using (var fbcc = new FolioBulkCopyContext())
-            using (var fsc = new FolioServiceClient())
+            using (var fbcc = new FolioBulkCopyContext(connectionString))
+            using (var fsc = new FolioServiceClient(connectionString))
             {
                 var s2 = Stopwatch.StartNew();
                 var js4 = JsonSchema.FromJsonAsync(sr2.ReadToEndAsync().Result).Result;
@@ -1461,8 +1773,8 @@ namespace FolioConsoleApplication
         {
             traceSource.TraceEvent(TraceEventType.Information, 0, "Saving alerts");
             var s = Stopwatch.StartNew();
-            using (var fdc = new FolioDapperContext())
-            using (var fsc = new FolioServiceClient())
+            using (var fdc = new FolioDapperContext(connectionString))
+            using (var fsc = new FolioServiceClient(connectionString))
             using (var sr = new StreamReader(Assembly.GetAssembly(typeof(FolioContext)).GetManifestResourceStream("FolioLibrary.Alert.json")))
             using (var sw = new StreamWriter(whatIf ? new MemoryStream() : compress ? (Stream)new GZipStream(new FileStream($"{path}.gz", FileMode.Create), CompressionMode.Compress) : new FileStream(path, FileMode.Create)))
             using (var jtw = new JsonTextWriter(sw))
@@ -1472,7 +1784,7 @@ namespace FolioConsoleApplication
                 var js = new JsonSerializer { Formatting = Formatting.Indented };
                 jtw.WriteStartArray();
                 var i = 0;
-                foreach (var jo in api ? fsc.Alerts(where, take: take) : fdc.Alerts(where, take: take).Select(a => JObject.Parse(a.Content)))
+                foreach (var jo in api ? fsc.Alerts(where, orderBy, skip, take) : fdc.Alerts(where, null, orderBy, skip, take).Select(a => JObject.Parse(a.Content)))
                 {
                     if (validate)
                     {
@@ -1493,12 +1805,31 @@ namespace FolioConsoleApplication
             traceSource.TraceEvent(TraceEventType.Information, 0, $"{s.Elapsed} elapsed");
         }
 
+        public static void QueryAlternativeTitleTypes(string where = null, string orderBy = null, int? skip = null, int? take = null, string select = null)
+        {
+            using (var fdc = new FolioDapperContext(connectionString))
+            using (var fsc = new FolioServiceClient(connectionString))
+            using (var jtw = new JsonTextWriter(Console.Out))
+            {
+                jtw.WriteStartArray();
+                foreach (var jo in (api ? fsc.AlternativeTitleTypes(where, orderBy, skip, take) : fdc.AlternativeTitleTypes(where, null, orderBy, skip, take).Select(att => JObject.Parse(att.Content))).Select(jo =>
+                {
+                    return select == null ? jo : new JObject(select.Split(",").Select(s =>
+                    {
+                        var m = Regex.Match(s.Trim(), @"(?<Path>\S+)((?i) as (?<Name>.+))?", RegexOptions.Compiled);
+                        return new JProperty(m.Groups["Name"].Success ? m.Groups["Name"].Value : m.Groups["Path"].Value.Split(".").Last(), jo.SelectToken(m.Groups["Path"].Value));
+                    }));
+                })) jsonSerializer.Serialize(jtw, jo);
+                jtw.WriteEndArray();
+            }
+        }
+
         public static void DeleteAlternativeTitleTypes(string where = null)
         {
             traceSource.TraceEvent(TraceEventType.Information, 0, "Deleting alternative title types");
             var s = Stopwatch.StartNew();
-            using (var fbcc = new FolioBulkCopyContext())
-            using (var fsc = new FolioServiceClient())
+            using (var fbcc = new FolioBulkCopyContext(connectionString))
+            using (var fsc = new FolioServiceClient(connectionString))
             {
                 var i = 0;
                 if (api)
@@ -1531,8 +1862,8 @@ namespace FolioConsoleApplication
             using (var sr = new StreamReader(compress || path.EndsWith(".gz") ? (Stream)new GZipStream(File.OpenRead($"{path}{(path.EndsWith(".gz") ? "" : ".gz")}"), CompressionMode.Decompress) : File.OpenRead(path)))
             using (var sr2 = new StreamReader(Assembly.GetAssembly(typeof(FolioContext)).GetManifestResourceStream("FolioLibrary.AlternativeTitleType.json")))
             using (var jtr = new JsonTextReader(sr) { SupportMultipleContent = true })
-            using (var fbcc = new FolioBulkCopyContext())
-            using (var fsc = new FolioServiceClient())
+            using (var fbcc = new FolioBulkCopyContext(connectionString))
+            using (var fsc = new FolioServiceClient(connectionString))
             {
                 var s2 = Stopwatch.StartNew();
                 var js4 = JsonSchema.FromJsonAsync(sr2.ReadToEndAsync().Result).Result;
@@ -1589,8 +1920,8 @@ namespace FolioConsoleApplication
         {
             traceSource.TraceEvent(TraceEventType.Information, 0, "Saving alternative title types");
             var s = Stopwatch.StartNew();
-            using (var fdc = new FolioDapperContext())
-            using (var fsc = new FolioServiceClient())
+            using (var fdc = new FolioDapperContext(connectionString))
+            using (var fsc = new FolioServiceClient(connectionString))
             using (var sr = new StreamReader(Assembly.GetAssembly(typeof(FolioContext)).GetManifestResourceStream("FolioLibrary.AlternativeTitleType.json")))
             using (var sw = new StreamWriter(whatIf ? new MemoryStream() : compress ? (Stream)new GZipStream(new FileStream($"{path}.gz", FileMode.Create), CompressionMode.Compress) : new FileStream(path, FileMode.Create)))
             using (var jtw = new JsonTextWriter(sw))
@@ -1600,7 +1931,7 @@ namespace FolioConsoleApplication
                 var js = new JsonSerializer { Formatting = Formatting.Indented };
                 jtw.WriteStartArray();
                 var i = 0;
-                foreach (var jo in api ? fsc.AlternativeTitleTypes(where, take: take) : fdc.AlternativeTitleTypes(where, take: take).Select(att => JObject.Parse(att.Content)))
+                foreach (var jo in api ? fsc.AlternativeTitleTypes(where, orderBy, skip, take) : fdc.AlternativeTitleTypes(where, null, orderBy, skip, take).Select(att => JObject.Parse(att.Content)))
                 {
                     if (validate)
                     {
@@ -1621,12 +1952,31 @@ namespace FolioConsoleApplication
             traceSource.TraceEvent(TraceEventType.Information, 0, $"{s.Elapsed} elapsed");
         }
 
+        public static void QueryBatchGroups(string where = null, string orderBy = null, int? skip = null, int? take = null, string select = null)
+        {
+            using (var fdc = new FolioDapperContext(connectionString))
+            using (var fsc = new FolioServiceClient(connectionString))
+            using (var jtw = new JsonTextWriter(Console.Out))
+            {
+                jtw.WriteStartArray();
+                foreach (var jo in (api ? fsc.BatchGroups(where, orderBy, skip, take) : fdc.BatchGroups(where, null, orderBy, skip, take).Select(bg => JObject.Parse(bg.Content))).Select(jo =>
+                {
+                    return select == null ? jo : new JObject(select.Split(",").Select(s =>
+                    {
+                        var m = Regex.Match(s.Trim(), @"(?<Path>\S+)((?i) as (?<Name>.+))?", RegexOptions.Compiled);
+                        return new JProperty(m.Groups["Name"].Success ? m.Groups["Name"].Value : m.Groups["Path"].Value.Split(".").Last(), jo.SelectToken(m.Groups["Path"].Value));
+                    }));
+                })) jsonSerializer.Serialize(jtw, jo);
+                jtw.WriteEndArray();
+            }
+        }
+
         public static void DeleteBatchGroups(string where = null)
         {
             traceSource.TraceEvent(TraceEventType.Information, 0, "Deleting batch groups");
             var s = Stopwatch.StartNew();
-            using (var fbcc = new FolioBulkCopyContext())
-            using (var fsc = new FolioServiceClient())
+            using (var fbcc = new FolioBulkCopyContext(connectionString))
+            using (var fsc = new FolioServiceClient(connectionString))
             {
                 var i = 0;
                 if (api)
@@ -1659,8 +2009,8 @@ namespace FolioConsoleApplication
             using (var sr = new StreamReader(compress || path.EndsWith(".gz") ? (Stream)new GZipStream(File.OpenRead($"{path}{(path.EndsWith(".gz") ? "" : ".gz")}"), CompressionMode.Decompress) : File.OpenRead(path)))
             using (var sr2 = new StreamReader(Assembly.GetAssembly(typeof(FolioContext)).GetManifestResourceStream("FolioLibrary.BatchGroup.json")))
             using (var jtr = new JsonTextReader(sr) { SupportMultipleContent = true })
-            using (var fbcc = new FolioBulkCopyContext())
-            using (var fsc = new FolioServiceClient())
+            using (var fbcc = new FolioBulkCopyContext(connectionString))
+            using (var fsc = new FolioServiceClient(connectionString))
             {
                 var s2 = Stopwatch.StartNew();
                 var js4 = JsonSchema.FromJsonAsync(sr2.ReadToEndAsync().Result).Result;
@@ -1717,8 +2067,8 @@ namespace FolioConsoleApplication
         {
             traceSource.TraceEvent(TraceEventType.Information, 0, "Saving batch groups");
             var s = Stopwatch.StartNew();
-            using (var fdc = new FolioDapperContext())
-            using (var fsc = new FolioServiceClient())
+            using (var fdc = new FolioDapperContext(connectionString))
+            using (var fsc = new FolioServiceClient(connectionString))
             using (var sr = new StreamReader(Assembly.GetAssembly(typeof(FolioContext)).GetManifestResourceStream("FolioLibrary.BatchGroup.json")))
             using (var sw = new StreamWriter(whatIf ? new MemoryStream() : compress ? (Stream)new GZipStream(new FileStream($"{path}.gz", FileMode.Create), CompressionMode.Compress) : new FileStream(path, FileMode.Create)))
             using (var jtw = new JsonTextWriter(sw))
@@ -1728,7 +2078,7 @@ namespace FolioConsoleApplication
                 var js = new JsonSerializer { Formatting = Formatting.Indented };
                 jtw.WriteStartArray();
                 var i = 0;
-                foreach (var jo in api ? fsc.BatchGroups(where, take: take) : fdc.BatchGroups(where, take: take).Select(bg => JObject.Parse(bg.Content)))
+                foreach (var jo in api ? fsc.BatchGroups(where, orderBy, skip, take) : fdc.BatchGroups(where, null, orderBy, skip, take).Select(bg => JObject.Parse(bg.Content)))
                 {
                     if (validate)
                     {
@@ -1749,11 +2099,29 @@ namespace FolioConsoleApplication
             traceSource.TraceEvent(TraceEventType.Information, 0, $"{s.Elapsed} elapsed");
         }
 
+        public static void QueryBatchVouchers(string where = null, string orderBy = null, int? skip = null, int? take = null, string select = null)
+        {
+            using (var fdc = new FolioDapperContext(connectionString))
+            using (var jtw = new JsonTextWriter(Console.Out))
+            {
+                jtw.WriteStartArray();
+                foreach (var jo in (api ? throw new NotSupportedException() : fdc.BatchVouchers(where, null, orderBy, skip, take).Select(bv => JObject.Parse(bv.Content))).Select(jo =>
+                {
+                    return select == null ? jo : new JObject(select.Split(",").Select(s =>
+                    {
+                        var m = Regex.Match(s.Trim(), @"(?<Path>\S+)((?i) as (?<Name>.+))?", RegexOptions.Compiled);
+                        return new JProperty(m.Groups["Name"].Success ? m.Groups["Name"].Value : m.Groups["Path"].Value.Split(".").Last(), jo.SelectToken(m.Groups["Path"].Value));
+                    }));
+                })) jsonSerializer.Serialize(jtw, jo);
+                jtw.WriteEndArray();
+            }
+        }
+
         public static void DeleteBatchVouchers(string where = null)
         {
             traceSource.TraceEvent(TraceEventType.Information, 0, "Deleting batch vouchers");
             var s = Stopwatch.StartNew();
-            using (var fbcc = new FolioBulkCopyContext())
+            using (var fbcc = new FolioBulkCopyContext(connectionString))
             {
                 var i = 0;
                 if (api)
@@ -1776,7 +2144,7 @@ namespace FolioConsoleApplication
             using (var sr = new StreamReader(compress || path.EndsWith(".gz") ? (Stream)new GZipStream(File.OpenRead($"{path}{(path.EndsWith(".gz") ? "" : ".gz")}"), CompressionMode.Decompress) : File.OpenRead(path)))
             using (var sr2 = new StreamReader(Assembly.GetAssembly(typeof(FolioContext)).GetManifestResourceStream("FolioLibrary.BatchVoucher.json")))
             using (var jtr = new JsonTextReader(sr) { SupportMultipleContent = true })
-            using (var fbcc = new FolioBulkCopyContext())
+            using (var fbcc = new FolioBulkCopyContext(connectionString))
             {
                 var s2 = Stopwatch.StartNew();
                 var js4 = JsonSchema.FromJsonAsync(sr2.ReadToEndAsync().Result).Result;
@@ -1826,7 +2194,7 @@ namespace FolioConsoleApplication
         {
             traceSource.TraceEvent(TraceEventType.Information, 0, "Saving batch vouchers");
             var s = Stopwatch.StartNew();
-            using (var fdc = new FolioDapperContext())
+            using (var fdc = new FolioDapperContext(connectionString))
             using (var sr = new StreamReader(Assembly.GetAssembly(typeof(FolioContext)).GetManifestResourceStream("FolioLibrary.BatchVoucher.json")))
             using (var sw = new StreamWriter(whatIf ? new MemoryStream() : compress ? (Stream)new GZipStream(new FileStream($"{path}.gz", FileMode.Create), CompressionMode.Compress) : new FileStream(path, FileMode.Create)))
             using (var jtw = new JsonTextWriter(sw))
@@ -1836,7 +2204,7 @@ namespace FolioConsoleApplication
                 var js = new JsonSerializer { Formatting = Formatting.Indented };
                 jtw.WriteStartArray();
                 var i = 0;
-                foreach (var jo in api ? throw new NotSupportedException() : fdc.BatchVouchers(where, take: take).Select(bv => JObject.Parse(bv.Content)))
+                foreach (var jo in api ? throw new NotSupportedException() : fdc.BatchVouchers(where, null, orderBy, skip, take).Select(bv => JObject.Parse(bv.Content)))
                 {
                     if (validate)
                     {
@@ -1857,12 +2225,31 @@ namespace FolioConsoleApplication
             traceSource.TraceEvent(TraceEventType.Information, 0, $"{s.Elapsed} elapsed");
         }
 
+        public static void QueryBatchVoucherExports(string where = null, string orderBy = null, int? skip = null, int? take = null, string select = null)
+        {
+            using (var fdc = new FolioDapperContext(connectionString))
+            using (var fsc = new FolioServiceClient(connectionString))
+            using (var jtw = new JsonTextWriter(Console.Out))
+            {
+                jtw.WriteStartArray();
+                foreach (var jo in (api ? fsc.BatchVoucherExports(where, orderBy, skip, take) : fdc.BatchVoucherExports(where, null, orderBy, skip, take).Select(bve => JObject.Parse(bve.Content))).Select(jo =>
+                {
+                    return select == null ? jo : new JObject(select.Split(",").Select(s =>
+                    {
+                        var m = Regex.Match(s.Trim(), @"(?<Path>\S+)((?i) as (?<Name>.+))?", RegexOptions.Compiled);
+                        return new JProperty(m.Groups["Name"].Success ? m.Groups["Name"].Value : m.Groups["Path"].Value.Split(".").Last(), jo.SelectToken(m.Groups["Path"].Value));
+                    }));
+                })) jsonSerializer.Serialize(jtw, jo);
+                jtw.WriteEndArray();
+            }
+        }
+
         public static void DeleteBatchVoucherExports(string where = null)
         {
             traceSource.TraceEvent(TraceEventType.Information, 0, "Deleting batch voucher exports");
             var s = Stopwatch.StartNew();
-            using (var fbcc = new FolioBulkCopyContext())
-            using (var fsc = new FolioServiceClient())
+            using (var fbcc = new FolioBulkCopyContext(connectionString))
+            using (var fsc = new FolioServiceClient(connectionString))
             {
                 var i = 0;
                 if (api)
@@ -1895,8 +2282,8 @@ namespace FolioConsoleApplication
             using (var sr = new StreamReader(compress || path.EndsWith(".gz") ? (Stream)new GZipStream(File.OpenRead($"{path}{(path.EndsWith(".gz") ? "" : ".gz")}"), CompressionMode.Decompress) : File.OpenRead(path)))
             using (var sr2 = new StreamReader(Assembly.GetAssembly(typeof(FolioContext)).GetManifestResourceStream("FolioLibrary.BatchVoucherExport.json")))
             using (var jtr = new JsonTextReader(sr) { SupportMultipleContent = true })
-            using (var fbcc = new FolioBulkCopyContext())
-            using (var fsc = new FolioServiceClient())
+            using (var fbcc = new FolioBulkCopyContext(connectionString))
+            using (var fsc = new FolioServiceClient(connectionString))
             {
                 var s2 = Stopwatch.StartNew();
                 var js4 = JsonSchema.FromJsonAsync(sr2.ReadToEndAsync().Result).Result;
@@ -1955,8 +2342,8 @@ namespace FolioConsoleApplication
         {
             traceSource.TraceEvent(TraceEventType.Information, 0, "Saving batch voucher exports");
             var s = Stopwatch.StartNew();
-            using (var fdc = new FolioDapperContext())
-            using (var fsc = new FolioServiceClient())
+            using (var fdc = new FolioDapperContext(connectionString))
+            using (var fsc = new FolioServiceClient(connectionString))
             using (var sr = new StreamReader(Assembly.GetAssembly(typeof(FolioContext)).GetManifestResourceStream("FolioLibrary.BatchVoucherExport.json")))
             using (var sw = new StreamWriter(whatIf ? new MemoryStream() : compress ? (Stream)new GZipStream(new FileStream($"{path}.gz", FileMode.Create), CompressionMode.Compress) : new FileStream(path, FileMode.Create)))
             using (var jtw = new JsonTextWriter(sw))
@@ -1966,7 +2353,7 @@ namespace FolioConsoleApplication
                 var js = new JsonSerializer { Formatting = Formatting.Indented };
                 jtw.WriteStartArray();
                 var i = 0;
-                foreach (var jo in api ? fsc.BatchVoucherExports(where, take: take) : fdc.BatchVoucherExports(where, take: take).Select(bve => JObject.Parse(bve.Content)))
+                foreach (var jo in api ? fsc.BatchVoucherExports(where, orderBy, skip, take) : fdc.BatchVoucherExports(where, null, orderBy, skip, take).Select(bve => JObject.Parse(bve.Content)))
                 {
                     if (validate)
                     {
@@ -1987,12 +2374,31 @@ namespace FolioConsoleApplication
             traceSource.TraceEvent(TraceEventType.Information, 0, $"{s.Elapsed} elapsed");
         }
 
+        public static void QueryBatchVoucherExportConfigs(string where = null, string orderBy = null, int? skip = null, int? take = null, string select = null)
+        {
+            using (var fdc = new FolioDapperContext(connectionString))
+            using (var fsc = new FolioServiceClient(connectionString))
+            using (var jtw = new JsonTextWriter(Console.Out))
+            {
+                jtw.WriteStartArray();
+                foreach (var jo in (api ? fsc.BatchVoucherExportConfigs(where, orderBy, skip, take) : fdc.BatchVoucherExportConfigs(where, null, orderBy, skip, take).Select(bvec => JObject.Parse(bvec.Content))).Select(jo =>
+                {
+                    return select == null ? jo : new JObject(select.Split(",").Select(s =>
+                    {
+                        var m = Regex.Match(s.Trim(), @"(?<Path>\S+)((?i) as (?<Name>.+))?", RegexOptions.Compiled);
+                        return new JProperty(m.Groups["Name"].Success ? m.Groups["Name"].Value : m.Groups["Path"].Value.Split(".").Last(), jo.SelectToken(m.Groups["Path"].Value));
+                    }));
+                })) jsonSerializer.Serialize(jtw, jo);
+                jtw.WriteEndArray();
+            }
+        }
+
         public static void DeleteBatchVoucherExportConfigs(string where = null)
         {
             traceSource.TraceEvent(TraceEventType.Information, 0, "Deleting batch voucher export configs");
             var s = Stopwatch.StartNew();
-            using (var fbcc = new FolioBulkCopyContext())
-            using (var fsc = new FolioServiceClient())
+            using (var fbcc = new FolioBulkCopyContext(connectionString))
+            using (var fsc = new FolioServiceClient(connectionString))
             {
                 var i = 0;
                 if (api)
@@ -2025,8 +2431,8 @@ namespace FolioConsoleApplication
             using (var sr = new StreamReader(compress || path.EndsWith(".gz") ? (Stream)new GZipStream(File.OpenRead($"{path}{(path.EndsWith(".gz") ? "" : ".gz")}"), CompressionMode.Decompress) : File.OpenRead(path)))
             using (var sr2 = new StreamReader(Assembly.GetAssembly(typeof(FolioContext)).GetManifestResourceStream("FolioLibrary.BatchVoucherExportConfig.json")))
             using (var jtr = new JsonTextReader(sr) { SupportMultipleContent = true })
-            using (var fbcc = new FolioBulkCopyContext())
-            using (var fsc = new FolioServiceClient())
+            using (var fbcc = new FolioBulkCopyContext(connectionString))
+            using (var fsc = new FolioServiceClient(connectionString))
             {
                 var s2 = Stopwatch.StartNew();
                 var js4 = JsonSchema.FromJsonAsync(sr2.ReadToEndAsync().Result).Result;
@@ -2084,8 +2490,8 @@ namespace FolioConsoleApplication
         {
             traceSource.TraceEvent(TraceEventType.Information, 0, "Saving batch voucher export configs");
             var s = Stopwatch.StartNew();
-            using (var fdc = new FolioDapperContext())
-            using (var fsc = new FolioServiceClient())
+            using (var fdc = new FolioDapperContext(connectionString))
+            using (var fsc = new FolioServiceClient(connectionString))
             using (var sr = new StreamReader(Assembly.GetAssembly(typeof(FolioContext)).GetManifestResourceStream("FolioLibrary.BatchVoucherExportConfig.json")))
             using (var sw = new StreamWriter(whatIf ? new MemoryStream() : compress ? (Stream)new GZipStream(new FileStream($"{path}.gz", FileMode.Create), CompressionMode.Compress) : new FileStream(path, FileMode.Create)))
             using (var jtw = new JsonTextWriter(sw))
@@ -2095,7 +2501,7 @@ namespace FolioConsoleApplication
                 var js = new JsonSerializer { Formatting = Formatting.Indented };
                 jtw.WriteStartArray();
                 var i = 0;
-                foreach (var jo in api ? fsc.BatchVoucherExportConfigs(where, take: take) : fdc.BatchVoucherExportConfigs(where, take: take).Select(bvec => JObject.Parse(bvec.Content)))
+                foreach (var jo in api ? fsc.BatchVoucherExportConfigs(where, orderBy, skip, take) : fdc.BatchVoucherExportConfigs(where, null, orderBy, skip, take).Select(bvec => JObject.Parse(bvec.Content)))
                 {
                     if (validate)
                     {
@@ -2116,12 +2522,31 @@ namespace FolioConsoleApplication
             traceSource.TraceEvent(TraceEventType.Information, 0, $"{s.Elapsed} elapsed");
         }
 
+        public static void QueryBlocks(string where = null, string orderBy = null, int? skip = null, int? take = null, string select = null)
+        {
+            using (var fdc = new FolioDapperContext(connectionString))
+            using (var fsc = new FolioServiceClient(connectionString))
+            using (var jtw = new JsonTextWriter(Console.Out))
+            {
+                jtw.WriteStartArray();
+                foreach (var jo in (api ? fsc.Blocks(where, orderBy, skip, take) : fdc.Blocks(where, null, orderBy, skip, take).Select(b => JObject.Parse(b.Content))).Select(jo =>
+                {
+                    return select == null ? jo : new JObject(select.Split(",").Select(s =>
+                    {
+                        var m = Regex.Match(s.Trim(), @"(?<Path>\S+)((?i) as (?<Name>.+))?", RegexOptions.Compiled);
+                        return new JProperty(m.Groups["Name"].Success ? m.Groups["Name"].Value : m.Groups["Path"].Value.Split(".").Last(), jo.SelectToken(m.Groups["Path"].Value));
+                    }));
+                })) jsonSerializer.Serialize(jtw, jo);
+                jtw.WriteEndArray();
+            }
+        }
+
         public static void DeleteBlocks(string where = null)
         {
             traceSource.TraceEvent(TraceEventType.Information, 0, "Deleting blocks");
             var s = Stopwatch.StartNew();
-            using (var fbcc = new FolioBulkCopyContext())
-            using (var fsc = new FolioServiceClient())
+            using (var fbcc = new FolioBulkCopyContext(connectionString))
+            using (var fsc = new FolioServiceClient(connectionString))
             {
                 var i = 0;
                 if (api)
@@ -2154,8 +2579,8 @@ namespace FolioConsoleApplication
             using (var sr = new StreamReader(compress || path.EndsWith(".gz") ? (Stream)new GZipStream(File.OpenRead($"{path}{(path.EndsWith(".gz") ? "" : ".gz")}"), CompressionMode.Decompress) : File.OpenRead(path)))
             using (var sr2 = new StreamReader(Assembly.GetAssembly(typeof(FolioContext)).GetManifestResourceStream("FolioLibrary.Block.json")))
             using (var jtr = new JsonTextReader(sr) { SupportMultipleContent = true })
-            using (var fbcc = new FolioBulkCopyContext())
-            using (var fsc = new FolioServiceClient())
+            using (var fbcc = new FolioBulkCopyContext(connectionString))
+            using (var fsc = new FolioServiceClient(connectionString))
             {
                 var s2 = Stopwatch.StartNew();
                 var js4 = JsonSchema.FromJsonAsync(sr2.ReadToEndAsync().Result).Result;
@@ -2212,8 +2637,8 @@ namespace FolioConsoleApplication
         {
             traceSource.TraceEvent(TraceEventType.Information, 0, "Saving blocks");
             var s = Stopwatch.StartNew();
-            using (var fdc = new FolioDapperContext())
-            using (var fsc = new FolioServiceClient())
+            using (var fdc = new FolioDapperContext(connectionString))
+            using (var fsc = new FolioServiceClient(connectionString))
             using (var sr = new StreamReader(Assembly.GetAssembly(typeof(FolioContext)).GetManifestResourceStream("FolioLibrary.Block.json")))
             using (var sw = new StreamWriter(whatIf ? new MemoryStream() : compress ? (Stream)new GZipStream(new FileStream($"{path}.gz", FileMode.Create), CompressionMode.Compress) : new FileStream(path, FileMode.Create)))
             using (var jtw = new JsonTextWriter(sw))
@@ -2223,7 +2648,7 @@ namespace FolioConsoleApplication
                 var js = new JsonSerializer { Formatting = Formatting.Indented };
                 jtw.WriteStartArray();
                 var i = 0;
-                foreach (var jo in api ? fsc.Blocks(where, take: take) : fdc.Blocks(where, take: take).Select(b => JObject.Parse(b.Content)))
+                foreach (var jo in api ? fsc.Blocks(where, orderBy, skip, take) : fdc.Blocks(where, null, orderBy, skip, take).Select(b => JObject.Parse(b.Content)))
                 {
                     if (validate)
                     {
@@ -2244,12 +2669,31 @@ namespace FolioConsoleApplication
             traceSource.TraceEvent(TraceEventType.Information, 0, $"{s.Elapsed} elapsed");
         }
 
+        public static void QueryBudgets(string where = null, string orderBy = null, int? skip = null, int? take = null, string select = null)
+        {
+            using (var fdc = new FolioDapperContext(connectionString))
+            using (var fsc = new FolioServiceClient(connectionString))
+            using (var jtw = new JsonTextWriter(Console.Out))
+            {
+                jtw.WriteStartArray();
+                foreach (var jo in (api ? fsc.Budgets(where, orderBy, skip, take) : fdc.Budgets(where, null, orderBy, skip, take).Select(b => JObject.Parse(b.Content))).Select(jo =>
+                {
+                    return select == null ? jo : new JObject(select.Split(",").Select(s =>
+                    {
+                        var m = Regex.Match(s.Trim(), @"(?<Path>\S+)((?i) as (?<Name>.+))?", RegexOptions.Compiled);
+                        return new JProperty(m.Groups["Name"].Success ? m.Groups["Name"].Value : m.Groups["Path"].Value.Split(".").Last(), jo.SelectToken(m.Groups["Path"].Value));
+                    }));
+                })) jsonSerializer.Serialize(jtw, jo);
+                jtw.WriteEndArray();
+            }
+        }
+
         public static void DeleteBudgets(string where = null)
         {
             traceSource.TraceEvent(TraceEventType.Information, 0, "Deleting budgets");
             var s = Stopwatch.StartNew();
-            using (var fbcc = new FolioBulkCopyContext())
-            using (var fsc = new FolioServiceClient())
+            using (var fbcc = new FolioBulkCopyContext(connectionString))
+            using (var fsc = new FolioServiceClient(connectionString))
             {
                 var i = 0;
                 if (api)
@@ -2282,8 +2726,8 @@ namespace FolioConsoleApplication
             using (var sr = new StreamReader(compress || path.EndsWith(".gz") ? (Stream)new GZipStream(File.OpenRead($"{path}{(path.EndsWith(".gz") ? "" : ".gz")}"), CompressionMode.Decompress) : File.OpenRead(path)))
             using (var sr2 = new StreamReader(Assembly.GetAssembly(typeof(FolioContext)).GetManifestResourceStream("FolioLibrary.Budget.json")))
             using (var jtr = new JsonTextReader(sr) { SupportMultipleContent = true })
-            using (var fbcc = new FolioBulkCopyContext())
-            using (var fsc = new FolioServiceClient())
+            using (var fbcc = new FolioBulkCopyContext(connectionString))
+            using (var fsc = new FolioServiceClient(connectionString))
             {
                 var s2 = Stopwatch.StartNew();
                 var js4 = JsonSchema.FromJsonAsync(sr2.ReadToEndAsync().Result).Result;
@@ -2342,8 +2786,8 @@ namespace FolioConsoleApplication
         {
             traceSource.TraceEvent(TraceEventType.Information, 0, "Saving budgets");
             var s = Stopwatch.StartNew();
-            using (var fdc = new FolioDapperContext())
-            using (var fsc = new FolioServiceClient())
+            using (var fdc = new FolioDapperContext(connectionString))
+            using (var fsc = new FolioServiceClient(connectionString))
             using (var sr = new StreamReader(Assembly.GetAssembly(typeof(FolioContext)).GetManifestResourceStream("FolioLibrary.Budget.json")))
             using (var sw = new StreamWriter(whatIf ? new MemoryStream() : compress ? (Stream)new GZipStream(new FileStream($"{path}.gz", FileMode.Create), CompressionMode.Compress) : new FileStream(path, FileMode.Create)))
             using (var jtw = new JsonTextWriter(sw))
@@ -2353,7 +2797,7 @@ namespace FolioConsoleApplication
                 var js = new JsonSerializer { Formatting = Formatting.Indented };
                 jtw.WriteStartArray();
                 var i = 0;
-                foreach (var jo in api ? fsc.Budgets(where, take: take) : fdc.Budgets(where, take: take).Select(b => JObject.Parse(b.Content)))
+                foreach (var jo in api ? fsc.Budgets(where, orderBy, skip, take) : fdc.Budgets(where, null, orderBy, skip, take).Select(b => JObject.Parse(b.Content)))
                 {
                     if (validate)
                     {
@@ -2374,12 +2818,31 @@ namespace FolioConsoleApplication
             traceSource.TraceEvent(TraceEventType.Information, 0, $"{s.Elapsed} elapsed");
         }
 
+        public static void QueryCallNumberTypes(string where = null, string orderBy = null, int? skip = null, int? take = null, string select = null)
+        {
+            using (var fdc = new FolioDapperContext(connectionString))
+            using (var fsc = new FolioServiceClient(connectionString))
+            using (var jtw = new JsonTextWriter(Console.Out))
+            {
+                jtw.WriteStartArray();
+                foreach (var jo in (api ? fsc.CallNumberTypes(where, orderBy, skip, take) : fdc.CallNumberTypes(where, null, orderBy, skip, take).Select(cnt => JObject.Parse(cnt.Content))).Select(jo =>
+                {
+                    return select == null ? jo : new JObject(select.Split(",").Select(s =>
+                    {
+                        var m = Regex.Match(s.Trim(), @"(?<Path>\S+)((?i) as (?<Name>.+))?", RegexOptions.Compiled);
+                        return new JProperty(m.Groups["Name"].Success ? m.Groups["Name"].Value : m.Groups["Path"].Value.Split(".").Last(), jo.SelectToken(m.Groups["Path"].Value));
+                    }));
+                })) jsonSerializer.Serialize(jtw, jo);
+                jtw.WriteEndArray();
+            }
+        }
+
         public static void DeleteCallNumberTypes(string where = null)
         {
             traceSource.TraceEvent(TraceEventType.Information, 0, "Deleting call number types");
             var s = Stopwatch.StartNew();
-            using (var fbcc = new FolioBulkCopyContext())
-            using (var fsc = new FolioServiceClient())
+            using (var fbcc = new FolioBulkCopyContext(connectionString))
+            using (var fsc = new FolioServiceClient(connectionString))
             {
                 var i = 0;
                 if (api)
@@ -2412,8 +2875,8 @@ namespace FolioConsoleApplication
             using (var sr = new StreamReader(compress || path.EndsWith(".gz") ? (Stream)new GZipStream(File.OpenRead($"{path}{(path.EndsWith(".gz") ? "" : ".gz")}"), CompressionMode.Decompress) : File.OpenRead(path)))
             using (var sr2 = new StreamReader(Assembly.GetAssembly(typeof(FolioContext)).GetManifestResourceStream("FolioLibrary.CallNumberType.json")))
             using (var jtr = new JsonTextReader(sr) { SupportMultipleContent = true })
-            using (var fbcc = new FolioBulkCopyContext())
-            using (var fsc = new FolioServiceClient())
+            using (var fbcc = new FolioBulkCopyContext(connectionString))
+            using (var fsc = new FolioServiceClient(connectionString))
             {
                 var s2 = Stopwatch.StartNew();
                 var js4 = JsonSchema.FromJsonAsync(sr2.ReadToEndAsync().Result).Result;
@@ -2470,8 +2933,8 @@ namespace FolioConsoleApplication
         {
             traceSource.TraceEvent(TraceEventType.Information, 0, "Saving call number types");
             var s = Stopwatch.StartNew();
-            using (var fdc = new FolioDapperContext())
-            using (var fsc = new FolioServiceClient())
+            using (var fdc = new FolioDapperContext(connectionString))
+            using (var fsc = new FolioServiceClient(connectionString))
             using (var sr = new StreamReader(Assembly.GetAssembly(typeof(FolioContext)).GetManifestResourceStream("FolioLibrary.CallNumberType.json")))
             using (var sw = new StreamWriter(whatIf ? new MemoryStream() : compress ? (Stream)new GZipStream(new FileStream($"{path}.gz", FileMode.Create), CompressionMode.Compress) : new FileStream(path, FileMode.Create)))
             using (var jtw = new JsonTextWriter(sw))
@@ -2481,7 +2944,7 @@ namespace FolioConsoleApplication
                 var js = new JsonSerializer { Formatting = Formatting.Indented };
                 jtw.WriteStartArray();
                 var i = 0;
-                foreach (var jo in api ? fsc.CallNumberTypes(where, take: take) : fdc.CallNumberTypes(where, take: take).Select(cnt => JObject.Parse(cnt.Content)))
+                foreach (var jo in api ? fsc.CallNumberTypes(where, orderBy, skip, take) : fdc.CallNumberTypes(where, null, orderBy, skip, take).Select(cnt => JObject.Parse(cnt.Content)))
                 {
                     if (validate)
                     {
@@ -2502,12 +2965,31 @@ namespace FolioConsoleApplication
             traceSource.TraceEvent(TraceEventType.Information, 0, $"{s.Elapsed} elapsed");
         }
 
+        public static void QueryCampuses(string where = null, string orderBy = null, int? skip = null, int? take = null, string select = null)
+        {
+            using (var fdc = new FolioDapperContext(connectionString))
+            using (var fsc = new FolioServiceClient(connectionString))
+            using (var jtw = new JsonTextWriter(Console.Out))
+            {
+                jtw.WriteStartArray();
+                foreach (var jo in (api ? fsc.Campuses(where, orderBy, skip, take) : fdc.Campuses(where, null, orderBy, skip, take).Select(c => JObject.Parse(c.Content))).Select(jo =>
+                {
+                    return select == null ? jo : new JObject(select.Split(",").Select(s =>
+                    {
+                        var m = Regex.Match(s.Trim(), @"(?<Path>\S+)((?i) as (?<Name>.+))?", RegexOptions.Compiled);
+                        return new JProperty(m.Groups["Name"].Success ? m.Groups["Name"].Value : m.Groups["Path"].Value.Split(".").Last(), jo.SelectToken(m.Groups["Path"].Value));
+                    }));
+                })) jsonSerializer.Serialize(jtw, jo);
+                jtw.WriteEndArray();
+            }
+        }
+
         public static void DeleteCampuses(string where = null)
         {
             traceSource.TraceEvent(TraceEventType.Information, 0, "Deleting campuses");
             var s = Stopwatch.StartNew();
-            using (var fbcc = new FolioBulkCopyContext())
-            using (var fsc = new FolioServiceClient())
+            using (var fbcc = new FolioBulkCopyContext(connectionString))
+            using (var fsc = new FolioServiceClient(connectionString))
             {
                 var i = 0;
                 if (api)
@@ -2540,8 +3022,8 @@ namespace FolioConsoleApplication
             using (var sr = new StreamReader(compress || path.EndsWith(".gz") ? (Stream)new GZipStream(File.OpenRead($"{path}{(path.EndsWith(".gz") ? "" : ".gz")}"), CompressionMode.Decompress) : File.OpenRead(path)))
             using (var sr2 = new StreamReader(Assembly.GetAssembly(typeof(FolioContext)).GetManifestResourceStream("FolioLibrary.Campus.json")))
             using (var jtr = new JsonTextReader(sr) { SupportMultipleContent = true })
-            using (var fbcc = new FolioBulkCopyContext())
-            using (var fsc = new FolioServiceClient())
+            using (var fbcc = new FolioBulkCopyContext(connectionString))
+            using (var fsc = new FolioServiceClient(connectionString))
             {
                 var s2 = Stopwatch.StartNew();
                 var js4 = JsonSchema.FromJsonAsync(sr2.ReadToEndAsync().Result).Result;
@@ -2599,8 +3081,8 @@ namespace FolioConsoleApplication
         {
             traceSource.TraceEvent(TraceEventType.Information, 0, "Saving campuses");
             var s = Stopwatch.StartNew();
-            using (var fdc = new FolioDapperContext())
-            using (var fsc = new FolioServiceClient())
+            using (var fdc = new FolioDapperContext(connectionString))
+            using (var fsc = new FolioServiceClient(connectionString))
             using (var sr = new StreamReader(Assembly.GetAssembly(typeof(FolioContext)).GetManifestResourceStream("FolioLibrary.Campus.json")))
             using (var sw = new StreamWriter(whatIf ? new MemoryStream() : compress ? (Stream)new GZipStream(new FileStream($"{path}.gz", FileMode.Create), CompressionMode.Compress) : new FileStream(path, FileMode.Create)))
             using (var jtw = new JsonTextWriter(sw))
@@ -2610,7 +3092,7 @@ namespace FolioConsoleApplication
                 var js = new JsonSerializer { Formatting = Formatting.Indented };
                 jtw.WriteStartArray();
                 var i = 0;
-                foreach (var jo in api ? fsc.Campuses(where, take: take) : fdc.Campuses(where, take: take).Select(c => JObject.Parse(c.Content)))
+                foreach (var jo in api ? fsc.Campuses(where, orderBy, skip, take) : fdc.Campuses(where, null, orderBy, skip, take).Select(c => JObject.Parse(c.Content)))
                 {
                     if (validate)
                     {
@@ -2631,12 +3113,31 @@ namespace FolioConsoleApplication
             traceSource.TraceEvent(TraceEventType.Information, 0, $"{s.Elapsed} elapsed");
         }
 
+        public static void QueryCancellationReasons(string where = null, string orderBy = null, int? skip = null, int? take = null, string select = null)
+        {
+            using (var fdc = new FolioDapperContext(connectionString))
+            using (var fsc = new FolioServiceClient(connectionString))
+            using (var jtw = new JsonTextWriter(Console.Out))
+            {
+                jtw.WriteStartArray();
+                foreach (var jo in (api ? fsc.CancellationReasons(where, orderBy, skip, take) : fdc.CancellationReasons(where, null, orderBy, skip, take).Select(cr => JObject.Parse(cr.Content))).Select(jo =>
+                {
+                    return select == null ? jo : new JObject(select.Split(",").Select(s =>
+                    {
+                        var m = Regex.Match(s.Trim(), @"(?<Path>\S+)((?i) as (?<Name>.+))?", RegexOptions.Compiled);
+                        return new JProperty(m.Groups["Name"].Success ? m.Groups["Name"].Value : m.Groups["Path"].Value.Split(".").Last(), jo.SelectToken(m.Groups["Path"].Value));
+                    }));
+                })) jsonSerializer.Serialize(jtw, jo);
+                jtw.WriteEndArray();
+            }
+        }
+
         public static void DeleteCancellationReasons(string where = null)
         {
             traceSource.TraceEvent(TraceEventType.Information, 0, "Deleting cancellation reasons");
             var s = Stopwatch.StartNew();
-            using (var fbcc = new FolioBulkCopyContext())
-            using (var fsc = new FolioServiceClient())
+            using (var fbcc = new FolioBulkCopyContext(connectionString))
+            using (var fsc = new FolioServiceClient(connectionString))
             {
                 var i = 0;
                 if (api)
@@ -2669,8 +3170,8 @@ namespace FolioConsoleApplication
             using (var sr = new StreamReader(compress || path.EndsWith(".gz") ? (Stream)new GZipStream(File.OpenRead($"{path}{(path.EndsWith(".gz") ? "" : ".gz")}"), CompressionMode.Decompress) : File.OpenRead(path)))
             using (var sr2 = new StreamReader(Assembly.GetAssembly(typeof(FolioContext)).GetManifestResourceStream("FolioLibrary.CancellationReason.json")))
             using (var jtr = new JsonTextReader(sr) { SupportMultipleContent = true })
-            using (var fbcc = new FolioBulkCopyContext())
-            using (var fsc = new FolioServiceClient())
+            using (var fbcc = new FolioBulkCopyContext(connectionString))
+            using (var fsc = new FolioServiceClient(connectionString))
             {
                 var s2 = Stopwatch.StartNew();
                 var js4 = JsonSchema.FromJsonAsync(sr2.ReadToEndAsync().Result).Result;
@@ -2727,8 +3228,8 @@ namespace FolioConsoleApplication
         {
             traceSource.TraceEvent(TraceEventType.Information, 0, "Saving cancellation reasons");
             var s = Stopwatch.StartNew();
-            using (var fdc = new FolioDapperContext())
-            using (var fsc = new FolioServiceClient())
+            using (var fdc = new FolioDapperContext(connectionString))
+            using (var fsc = new FolioServiceClient(connectionString))
             using (var sr = new StreamReader(Assembly.GetAssembly(typeof(FolioContext)).GetManifestResourceStream("FolioLibrary.CancellationReason.json")))
             using (var sw = new StreamWriter(whatIf ? new MemoryStream() : compress ? (Stream)new GZipStream(new FileStream($"{path}.gz", FileMode.Create), CompressionMode.Compress) : new FileStream(path, FileMode.Create)))
             using (var jtw = new JsonTextWriter(sw))
@@ -2738,7 +3239,7 @@ namespace FolioConsoleApplication
                 var js = new JsonSerializer { Formatting = Formatting.Indented };
                 jtw.WriteStartArray();
                 var i = 0;
-                foreach (var jo in api ? fsc.CancellationReasons(where, take: take) : fdc.CancellationReasons(where, take: take).Select(cr => JObject.Parse(cr.Content)))
+                foreach (var jo in api ? fsc.CancellationReasons(where, orderBy, skip, take) : fdc.CancellationReasons(where, null, orderBy, skip, take).Select(cr => JObject.Parse(cr.Content)))
                 {
                     if (validate)
                     {
@@ -2759,12 +3260,31 @@ namespace FolioConsoleApplication
             traceSource.TraceEvent(TraceEventType.Information, 0, $"{s.Elapsed} elapsed");
         }
 
+        public static void QueryCategories(string where = null, string orderBy = null, int? skip = null, int? take = null, string select = null)
+        {
+            using (var fdc = new FolioDapperContext(connectionString))
+            using (var fsc = new FolioServiceClient(connectionString))
+            using (var jtw = new JsonTextWriter(Console.Out))
+            {
+                jtw.WriteStartArray();
+                foreach (var jo in (api ? fsc.Categories(where, orderBy, skip, take) : fdc.Categories(where, null, orderBy, skip, take).Select(c => JObject.Parse(c.Content))).Select(jo =>
+                {
+                    return select == null ? jo : new JObject(select.Split(",").Select(s =>
+                    {
+                        var m = Regex.Match(s.Trim(), @"(?<Path>\S+)((?i) as (?<Name>.+))?", RegexOptions.Compiled);
+                        return new JProperty(m.Groups["Name"].Success ? m.Groups["Name"].Value : m.Groups["Path"].Value.Split(".").Last(), jo.SelectToken(m.Groups["Path"].Value));
+                    }));
+                })) jsonSerializer.Serialize(jtw, jo);
+                jtw.WriteEndArray();
+            }
+        }
+
         public static void DeleteCategories(string where = null)
         {
             traceSource.TraceEvent(TraceEventType.Information, 0, "Deleting categories");
             var s = Stopwatch.StartNew();
-            using (var fbcc = new FolioBulkCopyContext())
-            using (var fsc = new FolioServiceClient())
+            using (var fbcc = new FolioBulkCopyContext(connectionString))
+            using (var fsc = new FolioServiceClient(connectionString))
             {
                 var i = 0;
                 if (api)
@@ -2797,8 +3317,8 @@ namespace FolioConsoleApplication
             using (var sr = new StreamReader(compress || path.EndsWith(".gz") ? (Stream)new GZipStream(File.OpenRead($"{path}{(path.EndsWith(".gz") ? "" : ".gz")}"), CompressionMode.Decompress) : File.OpenRead(path)))
             using (var sr2 = new StreamReader(Assembly.GetAssembly(typeof(FolioContext)).GetManifestResourceStream("FolioLibrary.Category.json")))
             using (var jtr = new JsonTextReader(sr) { SupportMultipleContent = true })
-            using (var fbcc = new FolioBulkCopyContext())
-            using (var fsc = new FolioServiceClient())
+            using (var fbcc = new FolioBulkCopyContext(connectionString))
+            using (var fsc = new FolioServiceClient(connectionString))
             {
                 var s2 = Stopwatch.StartNew();
                 var js4 = JsonSchema.FromJsonAsync(sr2.ReadToEndAsync().Result).Result;
@@ -2855,8 +3375,8 @@ namespace FolioConsoleApplication
         {
             traceSource.TraceEvent(TraceEventType.Information, 0, "Saving categories");
             var s = Stopwatch.StartNew();
-            using (var fdc = new FolioDapperContext())
-            using (var fsc = new FolioServiceClient())
+            using (var fdc = new FolioDapperContext(connectionString))
+            using (var fsc = new FolioServiceClient(connectionString))
             using (var sr = new StreamReader(Assembly.GetAssembly(typeof(FolioContext)).GetManifestResourceStream("FolioLibrary.Category.json")))
             using (var sw = new StreamWriter(whatIf ? new MemoryStream() : compress ? (Stream)new GZipStream(new FileStream($"{path}.gz", FileMode.Create), CompressionMode.Compress) : new FileStream(path, FileMode.Create)))
             using (var jtw = new JsonTextWriter(sw))
@@ -2866,7 +3386,7 @@ namespace FolioConsoleApplication
                 var js = new JsonSerializer { Formatting = Formatting.Indented };
                 jtw.WriteStartArray();
                 var i = 0;
-                foreach (var jo in api ? fsc.Categories(where, take: take) : fdc.Categories(where, take: take).Select(c => JObject.Parse(c.Content)))
+                foreach (var jo in api ? fsc.Categories(where, orderBy, skip, take) : fdc.Categories(where, null, orderBy, skip, take).Select(c => JObject.Parse(c.Content)))
                 {
                     if (validate)
                     {
@@ -2887,12 +3407,31 @@ namespace FolioConsoleApplication
             traceSource.TraceEvent(TraceEventType.Information, 0, $"{s.Elapsed} elapsed");
         }
 
+        public static void QueryCheckIns(string where = null, string orderBy = null, int? skip = null, int? take = null, string select = null)
+        {
+            using (var fdc = new FolioDapperContext(connectionString))
+            using (var fsc = new FolioServiceClient(connectionString))
+            using (var jtw = new JsonTextWriter(Console.Out))
+            {
+                jtw.WriteStartArray();
+                foreach (var jo in (api ? fsc.CheckIns(where, orderBy, skip, take) : fdc.CheckIns(where, null, orderBy, skip, take).Select(ci => JObject.Parse(ci.Content))).Select(jo =>
+                {
+                    return select == null ? jo : new JObject(select.Split(",").Select(s =>
+                    {
+                        var m = Regex.Match(s.Trim(), @"(?<Path>\S+)((?i) as (?<Name>.+))?", RegexOptions.Compiled);
+                        return new JProperty(m.Groups["Name"].Success ? m.Groups["Name"].Value : m.Groups["Path"].Value.Split(".").Last(), jo.SelectToken(m.Groups["Path"].Value));
+                    }));
+                })) jsonSerializer.Serialize(jtw, jo);
+                jtw.WriteEndArray();
+            }
+        }
+
         public static void DeleteCheckIns(string where = null)
         {
             traceSource.TraceEvent(TraceEventType.Information, 0, "Deleting check ins");
             var s = Stopwatch.StartNew();
-            using (var fbcc = new FolioBulkCopyContext())
-            using (var fsc = new FolioServiceClient())
+            using (var fbcc = new FolioBulkCopyContext(connectionString))
+            using (var fsc = new FolioServiceClient(connectionString))
             {
                 var i = 0;
                 if (api)
@@ -2925,8 +3464,8 @@ namespace FolioConsoleApplication
             using (var sr = new StreamReader(compress || path.EndsWith(".gz") ? (Stream)new GZipStream(File.OpenRead($"{path}{(path.EndsWith(".gz") ? "" : ".gz")}"), CompressionMode.Decompress) : File.OpenRead(path)))
             using (var sr2 = new StreamReader(Assembly.GetAssembly(typeof(FolioContext)).GetManifestResourceStream("FolioLibrary.CheckIn.json")))
             using (var jtr = new JsonTextReader(sr) { SupportMultipleContent = true })
-            using (var fbcc = new FolioBulkCopyContext())
-            using (var fsc = new FolioServiceClient())
+            using (var fbcc = new FolioBulkCopyContext(connectionString))
+            using (var fsc = new FolioServiceClient(connectionString))
             {
                 var s2 = Stopwatch.StartNew();
                 var js4 = JsonSchema.FromJsonAsync(sr2.ReadToEndAsync().Result).Result;
@@ -2981,8 +3520,8 @@ namespace FolioConsoleApplication
         {
             traceSource.TraceEvent(TraceEventType.Information, 0, "Saving check ins");
             var s = Stopwatch.StartNew();
-            using (var fdc = new FolioDapperContext())
-            using (var fsc = new FolioServiceClient())
+            using (var fdc = new FolioDapperContext(connectionString))
+            using (var fsc = new FolioServiceClient(connectionString))
             using (var sr = new StreamReader(Assembly.GetAssembly(typeof(FolioContext)).GetManifestResourceStream("FolioLibrary.CheckIn.json")))
             using (var sw = new StreamWriter(whatIf ? new MemoryStream() : compress ? (Stream)new GZipStream(new FileStream($"{path}.gz", FileMode.Create), CompressionMode.Compress) : new FileStream(path, FileMode.Create)))
             using (var jtw = new JsonTextWriter(sw))
@@ -2992,7 +3531,7 @@ namespace FolioConsoleApplication
                 var js = new JsonSerializer { Formatting = Formatting.Indented };
                 jtw.WriteStartArray();
                 var i = 0;
-                foreach (var jo in api ? fsc.CheckIns(where, take: take) : fdc.CheckIns(where, take: take).Select(ci => JObject.Parse(ci.Content)))
+                foreach (var jo in api ? fsc.CheckIns(where, orderBy, skip, take) : fdc.CheckIns(where, null, orderBy, skip, take).Select(ci => JObject.Parse(ci.Content)))
                 {
                     if (validate)
                     {
@@ -3013,11 +3552,30 @@ namespace FolioConsoleApplication
             traceSource.TraceEvent(TraceEventType.Information, 0, $"{s.Elapsed} elapsed");
         }
 
+        public static void QueryCirculationRules(string where = null, string orderBy = null, int? skip = null, int? take = null, string select = null)
+        {
+            using (var fdc = new FolioDapperContext(connectionString))
+            using (var fsc = new FolioServiceClient(connectionString))
+            using (var jtw = new JsonTextWriter(Console.Out))
+            {
+                jtw.WriteStartArray();
+                foreach (var jo in (api ? new[] { fsc.GetCirculationRule() } : fdc.CirculationRules(where, null, orderBy, skip, take).Select(cr => JObject.Parse(cr.Content))).Select(jo =>
+                {
+                    return select == null ? jo : new JObject(select.Split(",").Select(s =>
+                    {
+                        var m = Regex.Match(s.Trim(), @"(?<Path>\S+)((?i) as (?<Name>.+))?", RegexOptions.Compiled);
+                        return new JProperty(m.Groups["Name"].Success ? m.Groups["Name"].Value : m.Groups["Path"].Value.Split(".").Last(), jo.SelectToken(m.Groups["Path"].Value));
+                    }));
+                })) jsonSerializer.Serialize(jtw, jo);
+                jtw.WriteEndArray();
+            }
+        }
+
         public static void DeleteCirculationRules(string where = null)
         {
             traceSource.TraceEvent(TraceEventType.Information, 0, "Deleting circulation rules");
             var s = Stopwatch.StartNew();
-            using (var fbcc = new FolioBulkCopyContext())
+            using (var fbcc = new FolioBulkCopyContext(connectionString))
             {
                 var i = 0;
                 if (api)
@@ -3040,8 +3598,8 @@ namespace FolioConsoleApplication
             using (var sr = new StreamReader(compress || path.EndsWith(".gz") ? (Stream)new GZipStream(File.OpenRead($"{path}{(path.EndsWith(".gz") ? "" : ".gz")}"), CompressionMode.Decompress) : File.OpenRead(path)))
             using (var sr2 = new StreamReader(Assembly.GetAssembly(typeof(FolioContext)).GetManifestResourceStream("FolioLibrary.CirculationRule.json")))
             using (var jtr = new JsonTextReader(sr) { SupportMultipleContent = true })
-            using (var fbcc = new FolioBulkCopyContext())
-            using (var fsc = new FolioServiceClient())
+            using (var fbcc = new FolioBulkCopyContext(connectionString))
+            using (var fsc = new FolioServiceClient(connectionString))
             {
                 var s2 = Stopwatch.StartNew();
                 var js4 = JsonSchema.FromJsonAsync(sr2.ReadToEndAsync().Result).Result;
@@ -3096,8 +3654,8 @@ namespace FolioConsoleApplication
         {
             traceSource.TraceEvent(TraceEventType.Information, 0, "Saving circulation rules");
             var s = Stopwatch.StartNew();
-            using (var fdc = new FolioDapperContext())
-            using (var fsc = new FolioServiceClient())
+            using (var fdc = new FolioDapperContext(connectionString))
+            using (var fsc = new FolioServiceClient(connectionString))
             using (var sr = new StreamReader(Assembly.GetAssembly(typeof(FolioContext)).GetManifestResourceStream("FolioLibrary.CirculationRule.json")))
             using (var sw = new StreamWriter(whatIf ? new MemoryStream() : compress ? (Stream)new GZipStream(new FileStream($"{path}.gz", FileMode.Create), CompressionMode.Compress) : new FileStream(path, FileMode.Create)))
             using (var jtw = new JsonTextWriter(sw))
@@ -3107,7 +3665,7 @@ namespace FolioConsoleApplication
                 var js = new JsonSerializer { Formatting = Formatting.Indented };
                 jtw.WriteStartArray();
                 var i = 0;
-                foreach (var jo in api ? new[] { fsc.GetCirculationRule() } : fdc.CirculationRules(where, take: take).Select(cr => JObject.Parse(cr.Content)))
+                foreach (var jo in api ? new[] { fsc.GetCirculationRule() } : fdc.CirculationRules(where, null, orderBy, skip, take).Select(cr => JObject.Parse(cr.Content)))
                 {
                     if (validate)
                     {
@@ -3128,12 +3686,31 @@ namespace FolioConsoleApplication
             traceSource.TraceEvent(TraceEventType.Information, 0, $"{s.Elapsed} elapsed");
         }
 
+        public static void QueryClassificationTypes(string where = null, string orderBy = null, int? skip = null, int? take = null, string select = null)
+        {
+            using (var fdc = new FolioDapperContext(connectionString))
+            using (var fsc = new FolioServiceClient(connectionString))
+            using (var jtw = new JsonTextWriter(Console.Out))
+            {
+                jtw.WriteStartArray();
+                foreach (var jo in (api ? fsc.ClassificationTypes(where, orderBy, skip, take) : fdc.ClassificationTypes(where, null, orderBy, skip, take).Select(ct => JObject.Parse(ct.Content))).Select(jo =>
+                {
+                    return select == null ? jo : new JObject(select.Split(",").Select(s =>
+                    {
+                        var m = Regex.Match(s.Trim(), @"(?<Path>\S+)((?i) as (?<Name>.+))?", RegexOptions.Compiled);
+                        return new JProperty(m.Groups["Name"].Success ? m.Groups["Name"].Value : m.Groups["Path"].Value.Split(".").Last(), jo.SelectToken(m.Groups["Path"].Value));
+                    }));
+                })) jsonSerializer.Serialize(jtw, jo);
+                jtw.WriteEndArray();
+            }
+        }
+
         public static void DeleteClassificationTypes(string where = null)
         {
             traceSource.TraceEvent(TraceEventType.Information, 0, "Deleting classification types");
             var s = Stopwatch.StartNew();
-            using (var fbcc = new FolioBulkCopyContext())
-            using (var fsc = new FolioServiceClient())
+            using (var fbcc = new FolioBulkCopyContext(connectionString))
+            using (var fsc = new FolioServiceClient(connectionString))
             {
                 var i = 0;
                 if (api)
@@ -3166,8 +3743,8 @@ namespace FolioConsoleApplication
             using (var sr = new StreamReader(compress || path.EndsWith(".gz") ? (Stream)new GZipStream(File.OpenRead($"{path}{(path.EndsWith(".gz") ? "" : ".gz")}"), CompressionMode.Decompress) : File.OpenRead(path)))
             using (var sr2 = new StreamReader(Assembly.GetAssembly(typeof(FolioContext)).GetManifestResourceStream("FolioLibrary.ClassificationType.json")))
             using (var jtr = new JsonTextReader(sr) { SupportMultipleContent = true })
-            using (var fbcc = new FolioBulkCopyContext())
-            using (var fsc = new FolioServiceClient())
+            using (var fbcc = new FolioBulkCopyContext(connectionString))
+            using (var fsc = new FolioServiceClient(connectionString))
             {
                 var s2 = Stopwatch.StartNew();
                 var js4 = JsonSchema.FromJsonAsync(sr2.ReadToEndAsync().Result).Result;
@@ -3224,8 +3801,8 @@ namespace FolioConsoleApplication
         {
             traceSource.TraceEvent(TraceEventType.Information, 0, "Saving classification types");
             var s = Stopwatch.StartNew();
-            using (var fdc = new FolioDapperContext())
-            using (var fsc = new FolioServiceClient())
+            using (var fdc = new FolioDapperContext(connectionString))
+            using (var fsc = new FolioServiceClient(connectionString))
             using (var sr = new StreamReader(Assembly.GetAssembly(typeof(FolioContext)).GetManifestResourceStream("FolioLibrary.ClassificationType.json")))
             using (var sw = new StreamWriter(whatIf ? new MemoryStream() : compress ? (Stream)new GZipStream(new FileStream($"{path}.gz", FileMode.Create), CompressionMode.Compress) : new FileStream(path, FileMode.Create)))
             using (var jtw = new JsonTextWriter(sw))
@@ -3235,7 +3812,7 @@ namespace FolioConsoleApplication
                 var js = new JsonSerializer { Formatting = Formatting.Indented };
                 jtw.WriteStartArray();
                 var i = 0;
-                foreach (var jo in api ? fsc.ClassificationTypes(where, take: take) : fdc.ClassificationTypes(where, take: take).Select(ct => JObject.Parse(ct.Content)))
+                foreach (var jo in api ? fsc.ClassificationTypes(where, orderBy, skip, take) : fdc.ClassificationTypes(where, null, orderBy, skip, take).Select(ct => JObject.Parse(ct.Content)))
                 {
                     if (validate)
                     {
@@ -3256,12 +3833,31 @@ namespace FolioConsoleApplication
             traceSource.TraceEvent(TraceEventType.Information, 0, $"{s.Elapsed} elapsed");
         }
 
+        public static void QueryCloseReasons(string where = null, string orderBy = null, int? skip = null, int? take = null, string select = null)
+        {
+            using (var fdc = new FolioDapperContext(connectionString))
+            using (var fsc = new FolioServiceClient(connectionString))
+            using (var jtw = new JsonTextWriter(Console.Out))
+            {
+                jtw.WriteStartArray();
+                foreach (var jo in (api ? fsc.CloseReasons(where, orderBy, skip, take) : fdc.CloseReasons(where, null, orderBy, skip, take).Select(cr => JObject.Parse(cr.Content))).Select(jo =>
+                {
+                    return select == null ? jo : new JObject(select.Split(",").Select(s =>
+                    {
+                        var m = Regex.Match(s.Trim(), @"(?<Path>\S+)((?i) as (?<Name>.+))?", RegexOptions.Compiled);
+                        return new JProperty(m.Groups["Name"].Success ? m.Groups["Name"].Value : m.Groups["Path"].Value.Split(".").Last(), jo.SelectToken(m.Groups["Path"].Value));
+                    }));
+                })) jsonSerializer.Serialize(jtw, jo);
+                jtw.WriteEndArray();
+            }
+        }
+
         public static void DeleteCloseReasons(string where = null)
         {
             traceSource.TraceEvent(TraceEventType.Information, 0, "Deleting close reasons");
             var s = Stopwatch.StartNew();
-            using (var fbcc = new FolioBulkCopyContext())
-            using (var fsc = new FolioServiceClient())
+            using (var fbcc = new FolioBulkCopyContext(connectionString))
+            using (var fsc = new FolioServiceClient(connectionString))
             {
                 var i = 0;
                 if (api)
@@ -3294,8 +3890,8 @@ namespace FolioConsoleApplication
             using (var sr = new StreamReader(compress || path.EndsWith(".gz") ? (Stream)new GZipStream(File.OpenRead($"{path}{(path.EndsWith(".gz") ? "" : ".gz")}"), CompressionMode.Decompress) : File.OpenRead(path)))
             using (var sr2 = new StreamReader(Assembly.GetAssembly(typeof(FolioContext)).GetManifestResourceStream("FolioLibrary.CloseReason.json")))
             using (var jtr = new JsonTextReader(sr) { SupportMultipleContent = true })
-            using (var fbcc = new FolioBulkCopyContext())
-            using (var fsc = new FolioServiceClient())
+            using (var fbcc = new FolioBulkCopyContext(connectionString))
+            using (var fsc = new FolioServiceClient(connectionString))
             {
                 var s2 = Stopwatch.StartNew();
                 var js4 = JsonSchema.FromJsonAsync(sr2.ReadToEndAsync().Result).Result;
@@ -3350,8 +3946,8 @@ namespace FolioConsoleApplication
         {
             traceSource.TraceEvent(TraceEventType.Information, 0, "Saving close reasons");
             var s = Stopwatch.StartNew();
-            using (var fdc = new FolioDapperContext())
-            using (var fsc = new FolioServiceClient())
+            using (var fdc = new FolioDapperContext(connectionString))
+            using (var fsc = new FolioServiceClient(connectionString))
             using (var sr = new StreamReader(Assembly.GetAssembly(typeof(FolioContext)).GetManifestResourceStream("FolioLibrary.CloseReason.json")))
             using (var sw = new StreamWriter(whatIf ? new MemoryStream() : compress ? (Stream)new GZipStream(new FileStream($"{path}.gz", FileMode.Create), CompressionMode.Compress) : new FileStream(path, FileMode.Create)))
             using (var jtw = new JsonTextWriter(sw))
@@ -3361,7 +3957,7 @@ namespace FolioConsoleApplication
                 var js = new JsonSerializer { Formatting = Formatting.Indented };
                 jtw.WriteStartArray();
                 var i = 0;
-                foreach (var jo in api ? fsc.CloseReasons(where, take: take) : fdc.CloseReasons(where, take: take).Select(cr => JObject.Parse(cr.Content)))
+                foreach (var jo in api ? fsc.CloseReasons(where, orderBy, skip, take) : fdc.CloseReasons(where, null, orderBy, skip, take).Select(cr => JObject.Parse(cr.Content)))
                 {
                     if (validate)
                     {
@@ -3382,12 +3978,31 @@ namespace FolioConsoleApplication
             traceSource.TraceEvent(TraceEventType.Information, 0, $"{s.Elapsed} elapsed");
         }
 
+        public static void QueryComments(string where = null, string orderBy = null, int? skip = null, int? take = null, string select = null)
+        {
+            using (var fdc = new FolioDapperContext(connectionString))
+            using (var fsc = new FolioServiceClient(connectionString))
+            using (var jtw = new JsonTextWriter(Console.Out))
+            {
+                jtw.WriteStartArray();
+                foreach (var jo in (api ? fsc.Comments(where, orderBy, skip, take) : fdc.Comments(where, null, orderBy, skip, take).Select(c => JObject.Parse(c.Content))).Select(jo =>
+                {
+                    return select == null ? jo : new JObject(select.Split(",").Select(s =>
+                    {
+                        var m = Regex.Match(s.Trim(), @"(?<Path>\S+)((?i) as (?<Name>.+))?", RegexOptions.Compiled);
+                        return new JProperty(m.Groups["Name"].Success ? m.Groups["Name"].Value : m.Groups["Path"].Value.Split(".").Last(), jo.SelectToken(m.Groups["Path"].Value));
+                    }));
+                })) jsonSerializer.Serialize(jtw, jo);
+                jtw.WriteEndArray();
+            }
+        }
+
         public static void DeleteComments(string where = null)
         {
             traceSource.TraceEvent(TraceEventType.Information, 0, "Deleting comments");
             var s = Stopwatch.StartNew();
-            using (var fbcc = new FolioBulkCopyContext())
-            using (var fsc = new FolioServiceClient())
+            using (var fbcc = new FolioBulkCopyContext(connectionString))
+            using (var fsc = new FolioServiceClient(connectionString))
             {
                 var i = 0;
                 if (api)
@@ -3420,8 +4035,8 @@ namespace FolioConsoleApplication
             using (var sr = new StreamReader(compress || path.EndsWith(".gz") ? (Stream)new GZipStream(File.OpenRead($"{path}{(path.EndsWith(".gz") ? "" : ".gz")}"), CompressionMode.Decompress) : File.OpenRead(path)))
             using (var sr2 = new StreamReader(Assembly.GetAssembly(typeof(FolioContext)).GetManifestResourceStream("FolioLibrary.Comment.json")))
             using (var jtr = new JsonTextReader(sr) { SupportMultipleContent = true })
-            using (var fbcc = new FolioBulkCopyContext())
-            using (var fsc = new FolioServiceClient())
+            using (var fbcc = new FolioBulkCopyContext(connectionString))
+            using (var fsc = new FolioServiceClient(connectionString))
             {
                 var s2 = Stopwatch.StartNew();
                 var js4 = JsonSchema.FromJsonAsync(sr2.ReadToEndAsync().Result).Result;
@@ -3478,8 +4093,8 @@ namespace FolioConsoleApplication
         {
             traceSource.TraceEvent(TraceEventType.Information, 0, "Saving comments");
             var s = Stopwatch.StartNew();
-            using (var fdc = new FolioDapperContext())
-            using (var fsc = new FolioServiceClient())
+            using (var fdc = new FolioDapperContext(connectionString))
+            using (var fsc = new FolioServiceClient(connectionString))
             using (var sr = new StreamReader(Assembly.GetAssembly(typeof(FolioContext)).GetManifestResourceStream("FolioLibrary.Comment.json")))
             using (var sw = new StreamWriter(whatIf ? new MemoryStream() : compress ? (Stream)new GZipStream(new FileStream($"{path}.gz", FileMode.Create), CompressionMode.Compress) : new FileStream(path, FileMode.Create)))
             using (var jtw = new JsonTextWriter(sw))
@@ -3489,7 +4104,7 @@ namespace FolioConsoleApplication
                 var js = new JsonSerializer { Formatting = Formatting.Indented };
                 jtw.WriteStartArray();
                 var i = 0;
-                foreach (var jo in api ? fsc.Comments(where, take: take) : fdc.Comments(where, take: take).Select(c => JObject.Parse(c.Content)))
+                foreach (var jo in api ? fsc.Comments(where, orderBy, skip, take) : fdc.Comments(where, null, orderBy, skip, take).Select(c => JObject.Parse(c.Content)))
                 {
                     if (validate)
                     {
@@ -3510,12 +4125,31 @@ namespace FolioConsoleApplication
             traceSource.TraceEvent(TraceEventType.Information, 0, $"{s.Elapsed} elapsed");
         }
 
+        public static void QueryConfigurations(string where = null, string orderBy = null, int? skip = null, int? take = null, string select = null)
+        {
+            using (var fdc = new FolioDapperContext(connectionString))
+            using (var fsc = new FolioServiceClient(connectionString))
+            using (var jtw = new JsonTextWriter(Console.Out))
+            {
+                jtw.WriteStartArray();
+                foreach (var jo in (api ? fsc.Configurations(where, orderBy, skip, take) : fdc.Configurations(where, null, orderBy, skip, take).Select(c => JObject.Parse(c.Content))).Select(jo =>
+                {
+                    return select == null ? jo : new JObject(select.Split(",").Select(s =>
+                    {
+                        var m = Regex.Match(s.Trim(), @"(?<Path>\S+)((?i) as (?<Name>.+))?", RegexOptions.Compiled);
+                        return new JProperty(m.Groups["Name"].Success ? m.Groups["Name"].Value : m.Groups["Path"].Value.Split(".").Last(), jo.SelectToken(m.Groups["Path"].Value));
+                    }));
+                })) jsonSerializer.Serialize(jtw, jo);
+                jtw.WriteEndArray();
+            }
+        }
+
         public static void DeleteConfigurations(string where = null)
         {
             traceSource.TraceEvent(TraceEventType.Information, 0, "Deleting configurations");
             var s = Stopwatch.StartNew();
-            using (var fbcc = new FolioBulkCopyContext())
-            using (var fsc = new FolioServiceClient())
+            using (var fbcc = new FolioBulkCopyContext(connectionString))
+            using (var fsc = new FolioServiceClient(connectionString))
             {
                 var i = 0;
                 if (api)
@@ -3548,8 +4182,8 @@ namespace FolioConsoleApplication
             using (var sr = new StreamReader(compress || path.EndsWith(".gz") ? (Stream)new GZipStream(File.OpenRead($"{path}{(path.EndsWith(".gz") ? "" : ".gz")}"), CompressionMode.Decompress) : File.OpenRead(path)))
             using (var sr2 = new StreamReader(Assembly.GetAssembly(typeof(FolioContext)).GetManifestResourceStream("FolioLibrary.Configuration.json")))
             using (var jtr = new JsonTextReader(sr) { SupportMultipleContent = true })
-            using (var fbcc = new FolioBulkCopyContext())
-            using (var fsc = new FolioServiceClient())
+            using (var fbcc = new FolioBulkCopyContext(connectionString))
+            using (var fsc = new FolioServiceClient(connectionString))
             {
                 var s2 = Stopwatch.StartNew();
                 var js4 = JsonSchema.FromJsonAsync(sr2.ReadToEndAsync().Result).Result;
@@ -3606,8 +4240,8 @@ namespace FolioConsoleApplication
         {
             traceSource.TraceEvent(TraceEventType.Information, 0, "Saving configurations");
             var s = Stopwatch.StartNew();
-            using (var fdc = new FolioDapperContext())
-            using (var fsc = new FolioServiceClient())
+            using (var fdc = new FolioDapperContext(connectionString))
+            using (var fsc = new FolioServiceClient(connectionString))
             using (var sr = new StreamReader(Assembly.GetAssembly(typeof(FolioContext)).GetManifestResourceStream("FolioLibrary.Configuration.json")))
             using (var sw = new StreamWriter(whatIf ? new MemoryStream() : compress ? (Stream)new GZipStream(new FileStream($"{path}.gz", FileMode.Create), CompressionMode.Compress) : new FileStream(path, FileMode.Create)))
             using (var jtw = new JsonTextWriter(sw))
@@ -3617,7 +4251,7 @@ namespace FolioConsoleApplication
                 var js = new JsonSerializer { Formatting = Formatting.Indented };
                 jtw.WriteStartArray();
                 var i = 0;
-                foreach (var jo in api ? fsc.Configurations(where, take: take) : fdc.Configurations(where, take: take).Select(c => JObject.Parse(c.Content)))
+                foreach (var jo in api ? fsc.Configurations(where, orderBy, skip, take) : fdc.Configurations(where, null, orderBy, skip, take).Select(c => JObject.Parse(c.Content)))
                 {
                     if (validate)
                     {
@@ -3638,12 +4272,31 @@ namespace FolioConsoleApplication
             traceSource.TraceEvent(TraceEventType.Information, 0, $"{s.Elapsed} elapsed");
         }
 
+        public static void QueryContacts(string where = null, string orderBy = null, int? skip = null, int? take = null, string select = null)
+        {
+            using (var fdc = new FolioDapperContext(connectionString))
+            using (var fsc = new FolioServiceClient(connectionString))
+            using (var jtw = new JsonTextWriter(Console.Out))
+            {
+                jtw.WriteStartArray();
+                foreach (var jo in (api ? fsc.Contacts(where, orderBy, skip, take) : fdc.Contacts(where, null, orderBy, skip, take).Select(c => JObject.Parse(c.Content))).Select(jo =>
+                {
+                    return select == null ? jo : new JObject(select.Split(",").Select(s =>
+                    {
+                        var m = Regex.Match(s.Trim(), @"(?<Path>\S+)((?i) as (?<Name>.+))?", RegexOptions.Compiled);
+                        return new JProperty(m.Groups["Name"].Success ? m.Groups["Name"].Value : m.Groups["Path"].Value.Split(".").Last(), jo.SelectToken(m.Groups["Path"].Value));
+                    }));
+                })) jsonSerializer.Serialize(jtw, jo);
+                jtw.WriteEndArray();
+            }
+        }
+
         public static void DeleteContacts(string where = null)
         {
             traceSource.TraceEvent(TraceEventType.Information, 0, "Deleting contacts");
             var s = Stopwatch.StartNew();
-            using (var fbcc = new FolioBulkCopyContext())
-            using (var fsc = new FolioServiceClient())
+            using (var fbcc = new FolioBulkCopyContext(connectionString))
+            using (var fsc = new FolioServiceClient(connectionString))
             {
                 var i = 0;
                 if (api)
@@ -3676,8 +4329,8 @@ namespace FolioConsoleApplication
             using (var sr = new StreamReader(compress || path.EndsWith(".gz") ? (Stream)new GZipStream(File.OpenRead($"{path}{(path.EndsWith(".gz") ? "" : ".gz")}"), CompressionMode.Decompress) : File.OpenRead(path)))
             using (var sr2 = new StreamReader(Assembly.GetAssembly(typeof(FolioContext)).GetManifestResourceStream("FolioLibrary.Contact.json")))
             using (var jtr = new JsonTextReader(sr) { SupportMultipleContent = true })
-            using (var fbcc = new FolioBulkCopyContext())
-            using (var fsc = new FolioServiceClient())
+            using (var fbcc = new FolioBulkCopyContext(connectionString))
+            using (var fsc = new FolioServiceClient(connectionString))
             {
                 var s2 = Stopwatch.StartNew();
                 var js4 = JsonSchema.FromJsonAsync(sr2.ReadToEndAsync().Result).Result;
@@ -3734,8 +4387,8 @@ namespace FolioConsoleApplication
         {
             traceSource.TraceEvent(TraceEventType.Information, 0, "Saving contacts");
             var s = Stopwatch.StartNew();
-            using (var fdc = new FolioDapperContext())
-            using (var fsc = new FolioServiceClient())
+            using (var fdc = new FolioDapperContext(connectionString))
+            using (var fsc = new FolioServiceClient(connectionString))
             using (var sr = new StreamReader(Assembly.GetAssembly(typeof(FolioContext)).GetManifestResourceStream("FolioLibrary.Contact.json")))
             using (var sw = new StreamWriter(whatIf ? new MemoryStream() : compress ? (Stream)new GZipStream(new FileStream($"{path}.gz", FileMode.Create), CompressionMode.Compress) : new FileStream(path, FileMode.Create)))
             using (var jtw = new JsonTextWriter(sw))
@@ -3745,7 +4398,7 @@ namespace FolioConsoleApplication
                 var js = new JsonSerializer { Formatting = Formatting.Indented };
                 jtw.WriteStartArray();
                 var i = 0;
-                foreach (var jo in api ? fsc.Contacts(where, take: take) : fdc.Contacts(where, take: take).Select(c => JObject.Parse(c.Content)))
+                foreach (var jo in api ? fsc.Contacts(where, orderBy, skip, take) : fdc.Contacts(where, null, orderBy, skip, take).Select(c => JObject.Parse(c.Content)))
                 {
                     if (validate)
                     {
@@ -3766,12 +4419,31 @@ namespace FolioConsoleApplication
             traceSource.TraceEvent(TraceEventType.Information, 0, $"{s.Elapsed} elapsed");
         }
 
+        public static void QueryContributorNameTypes(string where = null, string orderBy = null, int? skip = null, int? take = null, string select = null)
+        {
+            using (var fdc = new FolioDapperContext(connectionString))
+            using (var fsc = new FolioServiceClient(connectionString))
+            using (var jtw = new JsonTextWriter(Console.Out))
+            {
+                jtw.WriteStartArray();
+                foreach (var jo in (api ? fsc.ContributorNameTypes(where, orderBy, skip, take) : fdc.ContributorNameTypes(where, null, orderBy, skip, take).Select(cnt => JObject.Parse(cnt.Content))).Select(jo =>
+                {
+                    return select == null ? jo : new JObject(select.Split(",").Select(s =>
+                    {
+                        var m = Regex.Match(s.Trim(), @"(?<Path>\S+)((?i) as (?<Name>.+))?", RegexOptions.Compiled);
+                        return new JProperty(m.Groups["Name"].Success ? m.Groups["Name"].Value : m.Groups["Path"].Value.Split(".").Last(), jo.SelectToken(m.Groups["Path"].Value));
+                    }));
+                })) jsonSerializer.Serialize(jtw, jo);
+                jtw.WriteEndArray();
+            }
+        }
+
         public static void DeleteContributorNameTypes(string where = null)
         {
             traceSource.TraceEvent(TraceEventType.Information, 0, "Deleting contributor name types");
             var s = Stopwatch.StartNew();
-            using (var fbcc = new FolioBulkCopyContext())
-            using (var fsc = new FolioServiceClient())
+            using (var fbcc = new FolioBulkCopyContext(connectionString))
+            using (var fsc = new FolioServiceClient(connectionString))
             {
                 var i = 0;
                 if (api)
@@ -3804,8 +4476,8 @@ namespace FolioConsoleApplication
             using (var sr = new StreamReader(compress || path.EndsWith(".gz") ? (Stream)new GZipStream(File.OpenRead($"{path}{(path.EndsWith(".gz") ? "" : ".gz")}"), CompressionMode.Decompress) : File.OpenRead(path)))
             using (var sr2 = new StreamReader(Assembly.GetAssembly(typeof(FolioContext)).GetManifestResourceStream("FolioLibrary.ContributorNameType.json")))
             using (var jtr = new JsonTextReader(sr) { SupportMultipleContent = true })
-            using (var fbcc = new FolioBulkCopyContext())
-            using (var fsc = new FolioServiceClient())
+            using (var fbcc = new FolioBulkCopyContext(connectionString))
+            using (var fsc = new FolioServiceClient(connectionString))
             {
                 var s2 = Stopwatch.StartNew();
                 var js4 = JsonSchema.FromJsonAsync(sr2.ReadToEndAsync().Result).Result;
@@ -3862,8 +4534,8 @@ namespace FolioConsoleApplication
         {
             traceSource.TraceEvent(TraceEventType.Information, 0, "Saving contributor name types");
             var s = Stopwatch.StartNew();
-            using (var fdc = new FolioDapperContext())
-            using (var fsc = new FolioServiceClient())
+            using (var fdc = new FolioDapperContext(connectionString))
+            using (var fsc = new FolioServiceClient(connectionString))
             using (var sr = new StreamReader(Assembly.GetAssembly(typeof(FolioContext)).GetManifestResourceStream("FolioLibrary.ContributorNameType.json")))
             using (var sw = new StreamWriter(whatIf ? new MemoryStream() : compress ? (Stream)new GZipStream(new FileStream($"{path}.gz", FileMode.Create), CompressionMode.Compress) : new FileStream(path, FileMode.Create)))
             using (var jtw = new JsonTextWriter(sw))
@@ -3873,7 +4545,7 @@ namespace FolioConsoleApplication
                 var js = new JsonSerializer { Formatting = Formatting.Indented };
                 jtw.WriteStartArray();
                 var i = 0;
-                foreach (var jo in api ? fsc.ContributorNameTypes(where, take: take) : fdc.ContributorNameTypes(where, take: take).Select(cnt => JObject.Parse(cnt.Content)))
+                foreach (var jo in api ? fsc.ContributorNameTypes(where, orderBy, skip, take) : fdc.ContributorNameTypes(where, null, orderBy, skip, take).Select(cnt => JObject.Parse(cnt.Content)))
                 {
                     if (validate)
                     {
@@ -3894,12 +4566,31 @@ namespace FolioConsoleApplication
             traceSource.TraceEvent(TraceEventType.Information, 0, $"{s.Elapsed} elapsed");
         }
 
+        public static void QueryContributorTypes(string where = null, string orderBy = null, int? skip = null, int? take = null, string select = null)
+        {
+            using (var fdc = new FolioDapperContext(connectionString))
+            using (var fsc = new FolioServiceClient(connectionString))
+            using (var jtw = new JsonTextWriter(Console.Out))
+            {
+                jtw.WriteStartArray();
+                foreach (var jo in (api ? fsc.ContributorTypes(where, orderBy, skip, take) : fdc.ContributorTypes(where, null, orderBy, skip, take).Select(ct => JObject.Parse(ct.Content))).Select(jo =>
+                {
+                    return select == null ? jo : new JObject(select.Split(",").Select(s =>
+                    {
+                        var m = Regex.Match(s.Trim(), @"(?<Path>\S+)((?i) as (?<Name>.+))?", RegexOptions.Compiled);
+                        return new JProperty(m.Groups["Name"].Success ? m.Groups["Name"].Value : m.Groups["Path"].Value.Split(".").Last(), jo.SelectToken(m.Groups["Path"].Value));
+                    }));
+                })) jsonSerializer.Serialize(jtw, jo);
+                jtw.WriteEndArray();
+            }
+        }
+
         public static void DeleteContributorTypes(string where = null)
         {
             traceSource.TraceEvent(TraceEventType.Information, 0, "Deleting contributor types");
             var s = Stopwatch.StartNew();
-            using (var fbcc = new FolioBulkCopyContext())
-            using (var fsc = new FolioServiceClient())
+            using (var fbcc = new FolioBulkCopyContext(connectionString))
+            using (var fsc = new FolioServiceClient(connectionString))
             {
                 var i = 0;
                 if (api)
@@ -3932,8 +4623,8 @@ namespace FolioConsoleApplication
             using (var sr = new StreamReader(compress || path.EndsWith(".gz") ? (Stream)new GZipStream(File.OpenRead($"{path}{(path.EndsWith(".gz") ? "" : ".gz")}"), CompressionMode.Decompress) : File.OpenRead(path)))
             using (var sr2 = new StreamReader(Assembly.GetAssembly(typeof(FolioContext)).GetManifestResourceStream("FolioLibrary.ContributorType.json")))
             using (var jtr = new JsonTextReader(sr) { SupportMultipleContent = true })
-            using (var fbcc = new FolioBulkCopyContext())
-            using (var fsc = new FolioServiceClient())
+            using (var fbcc = new FolioBulkCopyContext(connectionString))
+            using (var fsc = new FolioServiceClient(connectionString))
             {
                 var s2 = Stopwatch.StartNew();
                 var js4 = JsonSchema.FromJsonAsync(sr2.ReadToEndAsync().Result).Result;
@@ -3988,8 +4679,8 @@ namespace FolioConsoleApplication
         {
             traceSource.TraceEvent(TraceEventType.Information, 0, "Saving contributor types");
             var s = Stopwatch.StartNew();
-            using (var fdc = new FolioDapperContext())
-            using (var fsc = new FolioServiceClient())
+            using (var fdc = new FolioDapperContext(connectionString))
+            using (var fsc = new FolioServiceClient(connectionString))
             using (var sr = new StreamReader(Assembly.GetAssembly(typeof(FolioContext)).GetManifestResourceStream("FolioLibrary.ContributorType.json")))
             using (var sw = new StreamWriter(whatIf ? new MemoryStream() : compress ? (Stream)new GZipStream(new FileStream($"{path}.gz", FileMode.Create), CompressionMode.Compress) : new FileStream(path, FileMode.Create)))
             using (var jtw = new JsonTextWriter(sw))
@@ -3999,7 +4690,7 @@ namespace FolioConsoleApplication
                 var js = new JsonSerializer { Formatting = Formatting.Indented };
                 jtw.WriteStartArray();
                 var i = 0;
-                foreach (var jo in api ? fsc.ContributorTypes(where, take: take) : fdc.ContributorTypes(where, take: take).Select(ct => JObject.Parse(ct.Content)))
+                foreach (var jo in api ? fsc.ContributorTypes(where, orderBy, skip, take) : fdc.ContributorTypes(where, null, orderBy, skip, take).Select(ct => JObject.Parse(ct.Content)))
                 {
                     if (validate)
                     {
@@ -4020,12 +4711,31 @@ namespace FolioConsoleApplication
             traceSource.TraceEvent(TraceEventType.Information, 0, $"{s.Elapsed} elapsed");
         }
 
+        public static void QueryCustomFields(string where = null, string orderBy = null, int? skip = null, int? take = null, string select = null)
+        {
+            using (var fdc = new FolioDapperContext(connectionString))
+            using (var fsc = new FolioServiceClient(connectionString))
+            using (var jtw = new JsonTextWriter(Console.Out))
+            {
+                jtw.WriteStartArray();
+                foreach (var jo in (api ? fsc.CustomFields(where, orderBy, skip, take) : fdc.CustomFields(where, null, orderBy, skip, take).Select(cf => JObject.Parse(cf.Content))).Select(jo =>
+                {
+                    return select == null ? jo : new JObject(select.Split(",").Select(s =>
+                    {
+                        var m = Regex.Match(s.Trim(), @"(?<Path>\S+)((?i) as (?<Name>.+))?", RegexOptions.Compiled);
+                        return new JProperty(m.Groups["Name"].Success ? m.Groups["Name"].Value : m.Groups["Path"].Value.Split(".").Last(), jo.SelectToken(m.Groups["Path"].Value));
+                    }));
+                })) jsonSerializer.Serialize(jtw, jo);
+                jtw.WriteEndArray();
+            }
+        }
+
         public static void DeleteCustomFields(string where = null)
         {
             traceSource.TraceEvent(TraceEventType.Information, 0, "Deleting custom fields");
             var s = Stopwatch.StartNew();
-            using (var fbcc = new FolioBulkCopyContext())
-            using (var fsc = new FolioServiceClient())
+            using (var fbcc = new FolioBulkCopyContext(connectionString))
+            using (var fsc = new FolioServiceClient(connectionString))
             {
                 var i = 0;
                 if (api)
@@ -4058,8 +4768,8 @@ namespace FolioConsoleApplication
             using (var sr = new StreamReader(compress || path.EndsWith(".gz") ? (Stream)new GZipStream(File.OpenRead($"{path}{(path.EndsWith(".gz") ? "" : ".gz")}"), CompressionMode.Decompress) : File.OpenRead(path)))
             using (var sr2 = new StreamReader(Assembly.GetAssembly(typeof(FolioContext)).GetManifestResourceStream("FolioLibrary.CustomField.json")))
             using (var jtr = new JsonTextReader(sr) { SupportMultipleContent = true })
-            using (var fbcc = new FolioBulkCopyContext())
-            using (var fsc = new FolioServiceClient())
+            using (var fbcc = new FolioBulkCopyContext(connectionString))
+            using (var fsc = new FolioServiceClient(connectionString))
             {
                 var s2 = Stopwatch.StartNew();
                 var js4 = JsonSchema.FromJsonAsync(sr2.ReadToEndAsync().Result).Result;
@@ -4114,8 +4824,8 @@ namespace FolioConsoleApplication
         {
             traceSource.TraceEvent(TraceEventType.Information, 0, "Saving custom fields");
             var s = Stopwatch.StartNew();
-            using (var fdc = new FolioDapperContext())
-            using (var fsc = new FolioServiceClient())
+            using (var fdc = new FolioDapperContext(connectionString))
+            using (var fsc = new FolioServiceClient(connectionString))
             using (var sr = new StreamReader(Assembly.GetAssembly(typeof(FolioContext)).GetManifestResourceStream("FolioLibrary.CustomField.json")))
             using (var sw = new StreamWriter(whatIf ? new MemoryStream() : compress ? (Stream)new GZipStream(new FileStream($"{path}.gz", FileMode.Create), CompressionMode.Compress) : new FileStream(path, FileMode.Create)))
             using (var jtw = new JsonTextWriter(sw))
@@ -4125,7 +4835,7 @@ namespace FolioConsoleApplication
                 var js = new JsonSerializer { Formatting = Formatting.Indented };
                 jtw.WriteStartArray();
                 var i = 0;
-                foreach (var jo in api ? fsc.CustomFields(where, take: take) : fdc.CustomFields(where, take: take).Select(cf => JObject.Parse(cf.Content)))
+                foreach (var jo in api ? fsc.CustomFields(where, orderBy, skip, take) : fdc.CustomFields(where, null, orderBy, skip, take).Select(cf => JObject.Parse(cf.Content)))
                 {
                     if (validate)
                     {
@@ -4146,11 +4856,29 @@ namespace FolioConsoleApplication
             traceSource.TraceEvent(TraceEventType.Information, 0, $"{s.Elapsed} elapsed");
         }
 
+        public static void QueryDocuments(string where = null, string orderBy = null, int? skip = null, int? take = null, string select = null)
+        {
+            using (var fdc = new FolioDapperContext(connectionString))
+            using (var jtw = new JsonTextWriter(Console.Out))
+            {
+                jtw.WriteStartArray();
+                foreach (var jo in (api ? throw new NotSupportedException() : fdc.Documents(where, null, orderBy, skip, take).Select(d => JObject.Parse(d.Content))).Select(jo =>
+                {
+                    return select == null ? jo : new JObject(select.Split(",").Select(s =>
+                    {
+                        var m = Regex.Match(s.Trim(), @"(?<Path>\S+)((?i) as (?<Name>.+))?", RegexOptions.Compiled);
+                        return new JProperty(m.Groups["Name"].Success ? m.Groups["Name"].Value : m.Groups["Path"].Value.Split(".").Last(), jo.SelectToken(m.Groups["Path"].Value));
+                    }));
+                })) jsonSerializer.Serialize(jtw, jo);
+                jtw.WriteEndArray();
+            }
+        }
+
         public static void DeleteDocuments(string where = null)
         {
             traceSource.TraceEvent(TraceEventType.Information, 0, "Deleting documents");
             var s = Stopwatch.StartNew();
-            using (var fbcc = new FolioBulkCopyContext())
+            using (var fbcc = new FolioBulkCopyContext(connectionString))
             {
                 var i = 0;
                 if (api)
@@ -4173,7 +4901,7 @@ namespace FolioConsoleApplication
             using (var sr = new StreamReader(compress || path.EndsWith(".gz") ? (Stream)new GZipStream(File.OpenRead($"{path}{(path.EndsWith(".gz") ? "" : ".gz")}"), CompressionMode.Decompress) : File.OpenRead(path)))
             using (var sr2 = new StreamReader(Assembly.GetAssembly(typeof(FolioContext)).GetManifestResourceStream("FolioLibrary.Document.json")))
             using (var jtr = new JsonTextReader(sr) { SupportMultipleContent = true })
-            using (var fbcc = new FolioBulkCopyContext())
+            using (var fbcc = new FolioBulkCopyContext(connectionString))
             {
                 var s2 = Stopwatch.StartNew();
                 var js4 = JsonSchema.FromJsonAsync(sr2.ReadToEndAsync().Result).Result;
@@ -4226,7 +4954,7 @@ namespace FolioConsoleApplication
         {
             traceSource.TraceEvent(TraceEventType.Information, 0, "Saving documents");
             var s = Stopwatch.StartNew();
-            using (var fdc = new FolioDapperContext())
+            using (var fdc = new FolioDapperContext(connectionString))
             using (var sr = new StreamReader(Assembly.GetAssembly(typeof(FolioContext)).GetManifestResourceStream("FolioLibrary.Document.json")))
             using (var sw = new StreamWriter(whatIf ? new MemoryStream() : compress ? (Stream)new GZipStream(new FileStream($"{path}.gz", FileMode.Create), CompressionMode.Compress) : new FileStream(path, FileMode.Create)))
             using (var jtw = new JsonTextWriter(sw))
@@ -4236,7 +4964,7 @@ namespace FolioConsoleApplication
                 var js = new JsonSerializer { Formatting = Formatting.Indented };
                 jtw.WriteStartArray();
                 var i = 0;
-                foreach (var jo in api ? throw new NotSupportedException() : fdc.Documents(where, take: take).Select(d => JObject.Parse(d.Content)))
+                foreach (var jo in api ? throw new NotSupportedException() : fdc.Documents(where, null, orderBy, skip, take).Select(d => JObject.Parse(d.Content)))
                 {
                     if (validate)
                     {
@@ -4257,12 +4985,31 @@ namespace FolioConsoleApplication
             traceSource.TraceEvent(TraceEventType.Information, 0, $"{s.Elapsed} elapsed");
         }
 
+        public static void QueryElectronicAccessRelationships(string where = null, string orderBy = null, int? skip = null, int? take = null, string select = null)
+        {
+            using (var fdc = new FolioDapperContext(connectionString))
+            using (var fsc = new FolioServiceClient(connectionString))
+            using (var jtw = new JsonTextWriter(Console.Out))
+            {
+                jtw.WriteStartArray();
+                foreach (var jo in (api ? fsc.ElectronicAccessRelationships(where, orderBy, skip, take) : fdc.ElectronicAccessRelationships(where, null, orderBy, skip, take).Select(ear => JObject.Parse(ear.Content))).Select(jo =>
+                {
+                    return select == null ? jo : new JObject(select.Split(",").Select(s =>
+                    {
+                        var m = Regex.Match(s.Trim(), @"(?<Path>\S+)((?i) as (?<Name>.+))?", RegexOptions.Compiled);
+                        return new JProperty(m.Groups["Name"].Success ? m.Groups["Name"].Value : m.Groups["Path"].Value.Split(".").Last(), jo.SelectToken(m.Groups["Path"].Value));
+                    }));
+                })) jsonSerializer.Serialize(jtw, jo);
+                jtw.WriteEndArray();
+            }
+        }
+
         public static void DeleteElectronicAccessRelationships(string where = null)
         {
             traceSource.TraceEvent(TraceEventType.Information, 0, "Deleting electronic access relationships");
             var s = Stopwatch.StartNew();
-            using (var fbcc = new FolioBulkCopyContext())
-            using (var fsc = new FolioServiceClient())
+            using (var fbcc = new FolioBulkCopyContext(connectionString))
+            using (var fsc = new FolioServiceClient(connectionString))
             {
                 var i = 0;
                 if (api)
@@ -4295,8 +5042,8 @@ namespace FolioConsoleApplication
             using (var sr = new StreamReader(compress || path.EndsWith(".gz") ? (Stream)new GZipStream(File.OpenRead($"{path}{(path.EndsWith(".gz") ? "" : ".gz")}"), CompressionMode.Decompress) : File.OpenRead(path)))
             using (var sr2 = new StreamReader(Assembly.GetAssembly(typeof(FolioContext)).GetManifestResourceStream("FolioLibrary.ElectronicAccessRelationship.json")))
             using (var jtr = new JsonTextReader(sr) { SupportMultipleContent = true })
-            using (var fbcc = new FolioBulkCopyContext())
-            using (var fsc = new FolioServiceClient())
+            using (var fbcc = new FolioBulkCopyContext(connectionString))
+            using (var fsc = new FolioServiceClient(connectionString))
             {
                 var s2 = Stopwatch.StartNew();
                 var js4 = JsonSchema.FromJsonAsync(sr2.ReadToEndAsync().Result).Result;
@@ -4353,8 +5100,8 @@ namespace FolioConsoleApplication
         {
             traceSource.TraceEvent(TraceEventType.Information, 0, "Saving electronic access relationships");
             var s = Stopwatch.StartNew();
-            using (var fdc = new FolioDapperContext())
-            using (var fsc = new FolioServiceClient())
+            using (var fdc = new FolioDapperContext(connectionString))
+            using (var fsc = new FolioServiceClient(connectionString))
             using (var sr = new StreamReader(Assembly.GetAssembly(typeof(FolioContext)).GetManifestResourceStream("FolioLibrary.ElectronicAccessRelationship.json")))
             using (var sw = new StreamWriter(whatIf ? new MemoryStream() : compress ? (Stream)new GZipStream(new FileStream($"{path}.gz", FileMode.Create), CompressionMode.Compress) : new FileStream(path, FileMode.Create)))
             using (var jtw = new JsonTextWriter(sw))
@@ -4364,7 +5111,7 @@ namespace FolioConsoleApplication
                 var js = new JsonSerializer { Formatting = Formatting.Indented };
                 jtw.WriteStartArray();
                 var i = 0;
-                foreach (var jo in api ? fsc.ElectronicAccessRelationships(where, take: take) : fdc.ElectronicAccessRelationships(where, take: take).Select(ear => JObject.Parse(ear.Content)))
+                foreach (var jo in api ? fsc.ElectronicAccessRelationships(where, orderBy, skip, take) : fdc.ElectronicAccessRelationships(where, null, orderBy, skip, take).Select(ear => JObject.Parse(ear.Content)))
                 {
                     if (validate)
                     {
@@ -4385,11 +5132,29 @@ namespace FolioConsoleApplication
             traceSource.TraceEvent(TraceEventType.Information, 0, $"{s.Elapsed} elapsed");
         }
 
+        public static void QueryErrorRecords(string where = null, string orderBy = null, int? skip = null, int? take = null, string select = null)
+        {
+            using (var fdc = new FolioDapperContext(connectionString))
+            using (var jtw = new JsonTextWriter(Console.Out))
+            {
+                jtw.WriteStartArray();
+                foreach (var jo in (api ? throw new NotSupportedException() : fdc.ErrorRecords(where, null, orderBy, skip, take).Select(er => JObject.Parse(er.Content))).Select(jo =>
+                {
+                    return select == null ? jo : new JObject(select.Split(",").Select(s =>
+                    {
+                        var m = Regex.Match(s.Trim(), @"(?<Path>\S+)((?i) as (?<Name>.+))?", RegexOptions.Compiled);
+                        return new JProperty(m.Groups["Name"].Success ? m.Groups["Name"].Value : m.Groups["Path"].Value.Split(".").Last(), jo.SelectToken(m.Groups["Path"].Value));
+                    }));
+                })) jsonSerializer.Serialize(jtw, jo);
+                jtw.WriteEndArray();
+            }
+        }
+
         public static void DeleteErrorRecords(string where = null)
         {
             traceSource.TraceEvent(TraceEventType.Information, 0, "Deleting error records");
             var s = Stopwatch.StartNew();
-            using (var fbcc = new FolioBulkCopyContext())
+            using (var fbcc = new FolioBulkCopyContext(connectionString))
             {
                 var i = 0;
                 if (api)
@@ -4412,7 +5177,7 @@ namespace FolioConsoleApplication
             using (var sr = new StreamReader(compress || path.EndsWith(".gz") ? (Stream)new GZipStream(File.OpenRead($"{path}{(path.EndsWith(".gz") ? "" : ".gz")}"), CompressionMode.Decompress) : File.OpenRead(path)))
             using (var sr2 = new StreamReader(Assembly.GetAssembly(typeof(FolioContext)).GetManifestResourceStream("FolioLibrary.ErrorRecord.json")))
             using (var jtr = new JsonTextReader(sr) { SupportMultipleContent = true })
-            using (var fbcc = new FolioBulkCopyContext())
+            using (var fbcc = new FolioBulkCopyContext(connectionString))
             {
                 var s2 = Stopwatch.StartNew();
                 var js4 = JsonSchema.FromJsonAsync(sr2.ReadToEndAsync().Result).Result;
@@ -4462,7 +5227,7 @@ namespace FolioConsoleApplication
         {
             traceSource.TraceEvent(TraceEventType.Information, 0, "Saving error records");
             var s = Stopwatch.StartNew();
-            using (var fdc = new FolioDapperContext())
+            using (var fdc = new FolioDapperContext(connectionString))
             using (var sr = new StreamReader(Assembly.GetAssembly(typeof(FolioContext)).GetManifestResourceStream("FolioLibrary.ErrorRecord.json")))
             using (var sw = new StreamWriter(whatIf ? new MemoryStream() : compress ? (Stream)new GZipStream(new FileStream($"{path}.gz", FileMode.Create), CompressionMode.Compress) : new FileStream(path, FileMode.Create)))
             using (var jtw = new JsonTextWriter(sw))
@@ -4472,7 +5237,7 @@ namespace FolioConsoleApplication
                 var js = new JsonSerializer { Formatting = Formatting.Indented };
                 jtw.WriteStartArray();
                 var i = 0;
-                foreach (var jo in api ? throw new NotSupportedException() : fdc.ErrorRecords(where, take: take).Select(er => JObject.Parse(er.Content)))
+                foreach (var jo in api ? throw new NotSupportedException() : fdc.ErrorRecords(where, null, orderBy, skip, take).Select(er => JObject.Parse(er.Content)))
                 {
                     if (validate)
                     {
@@ -4493,11 +5258,29 @@ namespace FolioConsoleApplication
             traceSource.TraceEvent(TraceEventType.Information, 0, $"{s.Elapsed} elapsed");
         }
 
+        public static void QueryExportConfigCredentials(string where = null, string orderBy = null, int? skip = null, int? take = null, string select = null)
+        {
+            using (var fdc = new FolioDapperContext(connectionString))
+            using (var jtw = new JsonTextWriter(Console.Out))
+            {
+                jtw.WriteStartArray();
+                foreach (var jo in (api ? throw new NotSupportedException() : fdc.ExportConfigCredentials(where, null, orderBy, skip, take).Select(ecc => JObject.Parse(ecc.Content))).Select(jo =>
+                {
+                    return select == null ? jo : new JObject(select.Split(",").Select(s =>
+                    {
+                        var m = Regex.Match(s.Trim(), @"(?<Path>\S+)((?i) as (?<Name>.+))?", RegexOptions.Compiled);
+                        return new JProperty(m.Groups["Name"].Success ? m.Groups["Name"].Value : m.Groups["Path"].Value.Split(".").Last(), jo.SelectToken(m.Groups["Path"].Value));
+                    }));
+                })) jsonSerializer.Serialize(jtw, jo);
+                jtw.WriteEndArray();
+            }
+        }
+
         public static void DeleteExportConfigCredentials(string where = null)
         {
             traceSource.TraceEvent(TraceEventType.Information, 0, "Deleting export config credentials");
             var s = Stopwatch.StartNew();
-            using (var fbcc = new FolioBulkCopyContext())
+            using (var fbcc = new FolioBulkCopyContext(connectionString))
             {
                 var i = 0;
                 if (api)
@@ -4520,7 +5303,7 @@ namespace FolioConsoleApplication
             using (var sr = new StreamReader(compress || path.EndsWith(".gz") ? (Stream)new GZipStream(File.OpenRead($"{path}{(path.EndsWith(".gz") ? "" : ".gz")}"), CompressionMode.Decompress) : File.OpenRead(path)))
             using (var sr2 = new StreamReader(Assembly.GetAssembly(typeof(FolioContext)).GetManifestResourceStream("FolioLibrary.ExportConfigCredential.json")))
             using (var jtr = new JsonTextReader(sr) { SupportMultipleContent = true })
-            using (var fbcc = new FolioBulkCopyContext())
+            using (var fbcc = new FolioBulkCopyContext(connectionString))
             {
                 var s2 = Stopwatch.StartNew();
                 var js4 = JsonSchema.FromJsonAsync(sr2.ReadToEndAsync().Result).Result;
@@ -4573,7 +5356,7 @@ namespace FolioConsoleApplication
         {
             traceSource.TraceEvent(TraceEventType.Information, 0, "Saving export config credentials");
             var s = Stopwatch.StartNew();
-            using (var fdc = new FolioDapperContext())
+            using (var fdc = new FolioDapperContext(connectionString))
             using (var sr = new StreamReader(Assembly.GetAssembly(typeof(FolioContext)).GetManifestResourceStream("FolioLibrary.ExportConfigCredential.json")))
             using (var sw = new StreamWriter(whatIf ? new MemoryStream() : compress ? (Stream)new GZipStream(new FileStream($"{path}.gz", FileMode.Create), CompressionMode.Compress) : new FileStream(path, FileMode.Create)))
             using (var jtw = new JsonTextWriter(sw))
@@ -4583,7 +5366,7 @@ namespace FolioConsoleApplication
                 var js = new JsonSerializer { Formatting = Formatting.Indented };
                 jtw.WriteStartArray();
                 var i = 0;
-                foreach (var jo in api ? throw new NotSupportedException() : fdc.ExportConfigCredentials(where, take: take).Select(ecc => JObject.Parse(ecc.Content)))
+                foreach (var jo in api ? throw new NotSupportedException() : fdc.ExportConfigCredentials(where, null, orderBy, skip, take).Select(ecc => JObject.Parse(ecc.Content)))
                 {
                     if (validate)
                     {
@@ -4604,12 +5387,31 @@ namespace FolioConsoleApplication
             traceSource.TraceEvent(TraceEventType.Information, 0, $"{s.Elapsed} elapsed");
         }
 
+        public static void QueryFees(string where = null, string orderBy = null, int? skip = null, int? take = null, string select = null)
+        {
+            using (var fdc = new FolioDapperContext(connectionString))
+            using (var fsc = new FolioServiceClient(connectionString))
+            using (var jtw = new JsonTextWriter(Console.Out))
+            {
+                jtw.WriteStartArray();
+                foreach (var jo in (api ? fsc.Fees(where, orderBy, skip, take) : fdc.Fees(where, null, orderBy, skip, take).Select(f => JObject.Parse(f.Content))).Select(jo =>
+                {
+                    return select == null ? jo : new JObject(select.Split(",").Select(s =>
+                    {
+                        var m = Regex.Match(s.Trim(), @"(?<Path>\S+)((?i) as (?<Name>.+))?", RegexOptions.Compiled);
+                        return new JProperty(m.Groups["Name"].Success ? m.Groups["Name"].Value : m.Groups["Path"].Value.Split(".").Last(), jo.SelectToken(m.Groups["Path"].Value));
+                    }));
+                })) jsonSerializer.Serialize(jtw, jo);
+                jtw.WriteEndArray();
+            }
+        }
+
         public static void DeleteFees(string where = null)
         {
             traceSource.TraceEvent(TraceEventType.Information, 0, "Deleting fees");
             var s = Stopwatch.StartNew();
-            using (var fbcc = new FolioBulkCopyContext())
-            using (var fsc = new FolioServiceClient())
+            using (var fbcc = new FolioBulkCopyContext(connectionString))
+            using (var fsc = new FolioServiceClient(connectionString))
             {
                 var i = 0;
                 if (api)
@@ -4642,8 +5444,8 @@ namespace FolioConsoleApplication
             using (var sr = new StreamReader(compress || path.EndsWith(".gz") ? (Stream)new GZipStream(File.OpenRead($"{path}{(path.EndsWith(".gz") ? "" : ".gz")}"), CompressionMode.Decompress) : File.OpenRead(path)))
             using (var sr2 = new StreamReader(Assembly.GetAssembly(typeof(FolioContext)).GetManifestResourceStream("FolioLibrary.Fee.json")))
             using (var jtr = new JsonTextReader(sr) { SupportMultipleContent = true })
-            using (var fbcc = new FolioBulkCopyContext())
-            using (var fsc = new FolioServiceClient())
+            using (var fbcc = new FolioBulkCopyContext(connectionString))
+            using (var fsc = new FolioServiceClient(connectionString))
             {
                 var s2 = Stopwatch.StartNew();
                 var js4 = JsonSchema.FromJsonAsync(sr2.ReadToEndAsync().Result).Result;
@@ -4700,8 +5502,8 @@ namespace FolioConsoleApplication
         {
             traceSource.TraceEvent(TraceEventType.Information, 0, "Saving fees");
             var s = Stopwatch.StartNew();
-            using (var fdc = new FolioDapperContext())
-            using (var fsc = new FolioServiceClient())
+            using (var fdc = new FolioDapperContext(connectionString))
+            using (var fsc = new FolioServiceClient(connectionString))
             using (var sr = new StreamReader(Assembly.GetAssembly(typeof(FolioContext)).GetManifestResourceStream("FolioLibrary.Fee.json")))
             using (var sw = new StreamWriter(whatIf ? new MemoryStream() : compress ? (Stream)new GZipStream(new FileStream($"{path}.gz", FileMode.Create), CompressionMode.Compress) : new FileStream(path, FileMode.Create)))
             using (var jtw = new JsonTextWriter(sw))
@@ -4711,7 +5513,7 @@ namespace FolioConsoleApplication
                 var js = new JsonSerializer { Formatting = Formatting.Indented };
                 jtw.WriteStartArray();
                 var i = 0;
-                foreach (var jo in api ? fsc.Fees(where, take: take) : fdc.Fees(where, take: take).Select(f => JObject.Parse(f.Content)))
+                foreach (var jo in api ? fsc.Fees(where, orderBy, skip, take) : fdc.Fees(where, null, orderBy, skip, take).Select(f => JObject.Parse(f.Content)))
                 {
                     if (validate)
                     {
@@ -4732,12 +5534,31 @@ namespace FolioConsoleApplication
             traceSource.TraceEvent(TraceEventType.Information, 0, $"{s.Elapsed} elapsed");
         }
 
+        public static void QueryFeeTypes(string where = null, string orderBy = null, int? skip = null, int? take = null, string select = null)
+        {
+            using (var fdc = new FolioDapperContext(connectionString))
+            using (var fsc = new FolioServiceClient(connectionString))
+            using (var jtw = new JsonTextWriter(Console.Out))
+            {
+                jtw.WriteStartArray();
+                foreach (var jo in (api ? fsc.FeeTypes(where, orderBy, skip, take) : fdc.FeeTypes(where, null, orderBy, skip, take).Select(ft => JObject.Parse(ft.Content))).Select(jo =>
+                {
+                    return select == null ? jo : new JObject(select.Split(",").Select(s =>
+                    {
+                        var m = Regex.Match(s.Trim(), @"(?<Path>\S+)((?i) as (?<Name>.+))?", RegexOptions.Compiled);
+                        return new JProperty(m.Groups["Name"].Success ? m.Groups["Name"].Value : m.Groups["Path"].Value.Split(".").Last(), jo.SelectToken(m.Groups["Path"].Value));
+                    }));
+                })) jsonSerializer.Serialize(jtw, jo);
+                jtw.WriteEndArray();
+            }
+        }
+
         public static void DeleteFeeTypes(string where = null)
         {
             traceSource.TraceEvent(TraceEventType.Information, 0, "Deleting fee types");
             var s = Stopwatch.StartNew();
-            using (var fbcc = new FolioBulkCopyContext())
-            using (var fsc = new FolioServiceClient())
+            using (var fbcc = new FolioBulkCopyContext(connectionString))
+            using (var fsc = new FolioServiceClient(connectionString))
             {
                 var i = 0;
                 if (api)
@@ -4770,8 +5591,8 @@ namespace FolioConsoleApplication
             using (var sr = new StreamReader(compress || path.EndsWith(".gz") ? (Stream)new GZipStream(File.OpenRead($"{path}{(path.EndsWith(".gz") ? "" : ".gz")}"), CompressionMode.Decompress) : File.OpenRead(path)))
             using (var sr2 = new StreamReader(Assembly.GetAssembly(typeof(FolioContext)).GetManifestResourceStream("FolioLibrary.FeeType.json")))
             using (var jtr = new JsonTextReader(sr) { SupportMultipleContent = true })
-            using (var fbcc = new FolioBulkCopyContext())
-            using (var fsc = new FolioServiceClient())
+            using (var fbcc = new FolioBulkCopyContext(connectionString))
+            using (var fsc = new FolioServiceClient(connectionString))
             {
                 var s2 = Stopwatch.StartNew();
                 var js4 = JsonSchema.FromJsonAsync(sr2.ReadToEndAsync().Result).Result;
@@ -4829,8 +5650,8 @@ namespace FolioConsoleApplication
         {
             traceSource.TraceEvent(TraceEventType.Information, 0, "Saving fee types");
             var s = Stopwatch.StartNew();
-            using (var fdc = new FolioDapperContext())
-            using (var fsc = new FolioServiceClient())
+            using (var fdc = new FolioDapperContext(connectionString))
+            using (var fsc = new FolioServiceClient(connectionString))
             using (var sr = new StreamReader(Assembly.GetAssembly(typeof(FolioContext)).GetManifestResourceStream("FolioLibrary.FeeType.json")))
             using (var sw = new StreamWriter(whatIf ? new MemoryStream() : compress ? (Stream)new GZipStream(new FileStream($"{path}.gz", FileMode.Create), CompressionMode.Compress) : new FileStream(path, FileMode.Create)))
             using (var jtw = new JsonTextWriter(sw))
@@ -4840,7 +5661,7 @@ namespace FolioConsoleApplication
                 var js = new JsonSerializer { Formatting = Formatting.Indented };
                 jtw.WriteStartArray();
                 var i = 0;
-                foreach (var jo in api ? fsc.FeeTypes(where, take: take) : fdc.FeeTypes(where, take: take).Select(ft => JObject.Parse(ft.Content)))
+                foreach (var jo in api ? fsc.FeeTypes(where, orderBy, skip, take) : fdc.FeeTypes(where, null, orderBy, skip, take).Select(ft => JObject.Parse(ft.Content)))
                 {
                     if (validate)
                     {
@@ -4861,12 +5682,31 @@ namespace FolioConsoleApplication
             traceSource.TraceEvent(TraceEventType.Information, 0, $"{s.Elapsed} elapsed");
         }
 
+        public static void QueryFinanceGroups(string where = null, string orderBy = null, int? skip = null, int? take = null, string select = null)
+        {
+            using (var fdc = new FolioDapperContext(connectionString))
+            using (var fsc = new FolioServiceClient(connectionString))
+            using (var jtw = new JsonTextWriter(Console.Out))
+            {
+                jtw.WriteStartArray();
+                foreach (var jo in (api ? fsc.FinanceGroups(where, orderBy, skip, take) : fdc.FinanceGroups(where, null, orderBy, skip, take).Select(fg => JObject.Parse(fg.Content))).Select(jo =>
+                {
+                    return select == null ? jo : new JObject(select.Split(",").Select(s =>
+                    {
+                        var m = Regex.Match(s.Trim(), @"(?<Path>\S+)((?i) as (?<Name>.+))?", RegexOptions.Compiled);
+                        return new JProperty(m.Groups["Name"].Success ? m.Groups["Name"].Value : m.Groups["Path"].Value.Split(".").Last(), jo.SelectToken(m.Groups["Path"].Value));
+                    }));
+                })) jsonSerializer.Serialize(jtw, jo);
+                jtw.WriteEndArray();
+            }
+        }
+
         public static void DeleteFinanceGroups(string where = null)
         {
             traceSource.TraceEvent(TraceEventType.Information, 0, "Deleting finance groups");
             var s = Stopwatch.StartNew();
-            using (var fbcc = new FolioBulkCopyContext())
-            using (var fsc = new FolioServiceClient())
+            using (var fbcc = new FolioBulkCopyContext(connectionString))
+            using (var fsc = new FolioServiceClient(connectionString))
             {
                 var i = 0;
                 if (api)
@@ -4899,8 +5739,8 @@ namespace FolioConsoleApplication
             using (var sr = new StreamReader(compress || path.EndsWith(".gz") ? (Stream)new GZipStream(File.OpenRead($"{path}{(path.EndsWith(".gz") ? "" : ".gz")}"), CompressionMode.Decompress) : File.OpenRead(path)))
             using (var sr2 = new StreamReader(Assembly.GetAssembly(typeof(FolioContext)).GetManifestResourceStream("FolioLibrary.FinanceGroup.json")))
             using (var jtr = new JsonTextReader(sr) { SupportMultipleContent = true })
-            using (var fbcc = new FolioBulkCopyContext())
-            using (var fsc = new FolioServiceClient())
+            using (var fbcc = new FolioBulkCopyContext(connectionString))
+            using (var fsc = new FolioServiceClient(connectionString))
             {
                 var s2 = Stopwatch.StartNew();
                 var js4 = JsonSchema.FromJsonAsync(sr2.ReadToEndAsync().Result).Result;
@@ -4957,8 +5797,8 @@ namespace FolioConsoleApplication
         {
             traceSource.TraceEvent(TraceEventType.Information, 0, "Saving finance groups");
             var s = Stopwatch.StartNew();
-            using (var fdc = new FolioDapperContext())
-            using (var fsc = new FolioServiceClient())
+            using (var fdc = new FolioDapperContext(connectionString))
+            using (var fsc = new FolioServiceClient(connectionString))
             using (var sr = new StreamReader(Assembly.GetAssembly(typeof(FolioContext)).GetManifestResourceStream("FolioLibrary.FinanceGroup.json")))
             using (var sw = new StreamWriter(whatIf ? new MemoryStream() : compress ? (Stream)new GZipStream(new FileStream($"{path}.gz", FileMode.Create), CompressionMode.Compress) : new FileStream(path, FileMode.Create)))
             using (var jtw = new JsonTextWriter(sw))
@@ -4968,7 +5808,7 @@ namespace FolioConsoleApplication
                 var js = new JsonSerializer { Formatting = Formatting.Indented };
                 jtw.WriteStartArray();
                 var i = 0;
-                foreach (var jo in api ? fsc.FinanceGroups(where, take: take) : fdc.FinanceGroups(where, take: take).Select(fg => JObject.Parse(fg.Content)))
+                foreach (var jo in api ? fsc.FinanceGroups(where, orderBy, skip, take) : fdc.FinanceGroups(where, null, orderBy, skip, take).Select(fg => JObject.Parse(fg.Content)))
                 {
                     if (validate)
                     {
@@ -4989,12 +5829,31 @@ namespace FolioConsoleApplication
             traceSource.TraceEvent(TraceEventType.Information, 0, $"{s.Elapsed} elapsed");
         }
 
+        public static void QueryFiscalYears(string where = null, string orderBy = null, int? skip = null, int? take = null, string select = null)
+        {
+            using (var fdc = new FolioDapperContext(connectionString))
+            using (var fsc = new FolioServiceClient(connectionString))
+            using (var jtw = new JsonTextWriter(Console.Out))
+            {
+                jtw.WriteStartArray();
+                foreach (var jo in (api ? fsc.FiscalYears(where, orderBy, skip, take) : fdc.FiscalYears(where, null, orderBy, skip, take).Select(fy => JObject.Parse(fy.Content))).Select(jo =>
+                {
+                    return select == null ? jo : new JObject(select.Split(",").Select(s =>
+                    {
+                        var m = Regex.Match(s.Trim(), @"(?<Path>\S+)((?i) as (?<Name>.+))?", RegexOptions.Compiled);
+                        return new JProperty(m.Groups["Name"].Success ? m.Groups["Name"].Value : m.Groups["Path"].Value.Split(".").Last(), jo.SelectToken(m.Groups["Path"].Value));
+                    }));
+                })) jsonSerializer.Serialize(jtw, jo);
+                jtw.WriteEndArray();
+            }
+        }
+
         public static void DeleteFiscalYears(string where = null)
         {
             traceSource.TraceEvent(TraceEventType.Information, 0, "Deleting fiscal years");
             var s = Stopwatch.StartNew();
-            using (var fbcc = new FolioBulkCopyContext())
-            using (var fsc = new FolioServiceClient())
+            using (var fbcc = new FolioBulkCopyContext(connectionString))
+            using (var fsc = new FolioServiceClient(connectionString))
             {
                 var i = 0;
                 if (api)
@@ -5027,8 +5886,8 @@ namespace FolioConsoleApplication
             using (var sr = new StreamReader(compress || path.EndsWith(".gz") ? (Stream)new GZipStream(File.OpenRead($"{path}{(path.EndsWith(".gz") ? "" : ".gz")}"), CompressionMode.Decompress) : File.OpenRead(path)))
             using (var sr2 = new StreamReader(Assembly.GetAssembly(typeof(FolioContext)).GetManifestResourceStream("FolioLibrary.FiscalYear.json")))
             using (var jtr = new JsonTextReader(sr) { SupportMultipleContent = true })
-            using (var fbcc = new FolioBulkCopyContext())
-            using (var fsc = new FolioServiceClient())
+            using (var fbcc = new FolioBulkCopyContext(connectionString))
+            using (var fsc = new FolioServiceClient(connectionString))
             {
                 var s2 = Stopwatch.StartNew();
                 var js4 = JsonSchema.FromJsonAsync(sr2.ReadToEndAsync().Result).Result;
@@ -5085,8 +5944,8 @@ namespace FolioConsoleApplication
         {
             traceSource.TraceEvent(TraceEventType.Information, 0, "Saving fiscal years");
             var s = Stopwatch.StartNew();
-            using (var fdc = new FolioDapperContext())
-            using (var fsc = new FolioServiceClient())
+            using (var fdc = new FolioDapperContext(connectionString))
+            using (var fsc = new FolioServiceClient(connectionString))
             using (var sr = new StreamReader(Assembly.GetAssembly(typeof(FolioContext)).GetManifestResourceStream("FolioLibrary.FiscalYear.json")))
             using (var sw = new StreamWriter(whatIf ? new MemoryStream() : compress ? (Stream)new GZipStream(new FileStream($"{path}.gz", FileMode.Create), CompressionMode.Compress) : new FileStream(path, FileMode.Create)))
             using (var jtw = new JsonTextWriter(sw))
@@ -5096,7 +5955,7 @@ namespace FolioConsoleApplication
                 var js = new JsonSerializer { Formatting = Formatting.Indented };
                 jtw.WriteStartArray();
                 var i = 0;
-                foreach (var jo in api ? fsc.FiscalYears(where, take: take) : fdc.FiscalYears(where, take: take).Select(fy => JObject.Parse(fy.Content)))
+                foreach (var jo in api ? fsc.FiscalYears(where, orderBy, skip, take) : fdc.FiscalYears(where, null, orderBy, skip, take).Select(fy => JObject.Parse(fy.Content)))
                 {
                     if (validate)
                     {
@@ -5117,12 +5976,31 @@ namespace FolioConsoleApplication
             traceSource.TraceEvent(TraceEventType.Information, 0, $"{s.Elapsed} elapsed");
         }
 
+        public static void QueryFixedDueDateSchedules(string where = null, string orderBy = null, int? skip = null, int? take = null, string select = null)
+        {
+            using (var fdc = new FolioDapperContext(connectionString))
+            using (var fsc = new FolioServiceClient(connectionString))
+            using (var jtw = new JsonTextWriter(Console.Out))
+            {
+                jtw.WriteStartArray();
+                foreach (var jo in (api ? fsc.FixedDueDateSchedules(where, orderBy, skip, take) : fdc.FixedDueDateSchedules(where, null, orderBy, skip, take).Select(fdds => JObject.Parse(fdds.Content))).Select(jo =>
+                {
+                    return select == null ? jo : new JObject(select.Split(",").Select(s =>
+                    {
+                        var m = Regex.Match(s.Trim(), @"(?<Path>\S+)((?i) as (?<Name>.+))?", RegexOptions.Compiled);
+                        return new JProperty(m.Groups["Name"].Success ? m.Groups["Name"].Value : m.Groups["Path"].Value.Split(".").Last(), jo.SelectToken(m.Groups["Path"].Value));
+                    }));
+                })) jsonSerializer.Serialize(jtw, jo);
+                jtw.WriteEndArray();
+            }
+        }
+
         public static void DeleteFixedDueDateSchedules(string where = null)
         {
             traceSource.TraceEvent(TraceEventType.Information, 0, "Deleting fixed due date schedules");
             var s = Stopwatch.StartNew();
-            using (var fbcc = new FolioBulkCopyContext())
-            using (var fsc = new FolioServiceClient())
+            using (var fbcc = new FolioBulkCopyContext(connectionString))
+            using (var fsc = new FolioServiceClient(connectionString))
             {
                 var i = 0;
                 if (api)
@@ -5155,8 +6033,8 @@ namespace FolioConsoleApplication
             using (var sr = new StreamReader(compress || path.EndsWith(".gz") ? (Stream)new GZipStream(File.OpenRead($"{path}{(path.EndsWith(".gz") ? "" : ".gz")}"), CompressionMode.Decompress) : File.OpenRead(path)))
             using (var sr2 = new StreamReader(Assembly.GetAssembly(typeof(FolioContext)).GetManifestResourceStream("FolioLibrary.FixedDueDateSchedule.json")))
             using (var jtr = new JsonTextReader(sr) { SupportMultipleContent = true })
-            using (var fbcc = new FolioBulkCopyContext())
-            using (var fsc = new FolioServiceClient())
+            using (var fbcc = new FolioBulkCopyContext(connectionString))
+            using (var fsc = new FolioServiceClient(connectionString))
             {
                 var s2 = Stopwatch.StartNew();
                 var js4 = JsonSchema.FromJsonAsync(sr2.ReadToEndAsync().Result).Result;
@@ -5211,8 +6089,8 @@ namespace FolioConsoleApplication
         {
             traceSource.TraceEvent(TraceEventType.Information, 0, "Saving fixed due date schedules");
             var s = Stopwatch.StartNew();
-            using (var fdc = new FolioDapperContext())
-            using (var fsc = new FolioServiceClient())
+            using (var fdc = new FolioDapperContext(connectionString))
+            using (var fsc = new FolioServiceClient(connectionString))
             using (var sr = new StreamReader(Assembly.GetAssembly(typeof(FolioContext)).GetManifestResourceStream("FolioLibrary.FixedDueDateSchedule.json")))
             using (var sw = new StreamWriter(whatIf ? new MemoryStream() : compress ? (Stream)new GZipStream(new FileStream($"{path}.gz", FileMode.Create), CompressionMode.Compress) : new FileStream(path, FileMode.Create)))
             using (var jtw = new JsonTextWriter(sw))
@@ -5222,7 +6100,7 @@ namespace FolioConsoleApplication
                 var js = new JsonSerializer { Formatting = Formatting.Indented };
                 jtw.WriteStartArray();
                 var i = 0;
-                foreach (var jo in api ? fsc.FixedDueDateSchedules(where, take: take) : fdc.FixedDueDateSchedules(where, take: take).Select(fdds => JObject.Parse(fdds.Content)))
+                foreach (var jo in api ? fsc.FixedDueDateSchedules(where, orderBy, skip, take) : fdc.FixedDueDateSchedules(where, null, orderBy, skip, take).Select(fdds => JObject.Parse(fdds.Content)))
                 {
                     if (validate)
                     {
@@ -5243,12 +6121,31 @@ namespace FolioConsoleApplication
             traceSource.TraceEvent(TraceEventType.Information, 0, $"{s.Elapsed} elapsed");
         }
 
+        public static void QueryFunds(string where = null, string orderBy = null, int? skip = null, int? take = null, string select = null)
+        {
+            using (var fdc = new FolioDapperContext(connectionString))
+            using (var fsc = new FolioServiceClient(connectionString))
+            using (var jtw = new JsonTextWriter(Console.Out))
+            {
+                jtw.WriteStartArray();
+                foreach (var jo in (api ? fsc.Funds(where, orderBy, skip, take) : fdc.Funds(where, null, orderBy, skip, take).Select(f => JObject.Parse(f.Content))).Select(jo =>
+                {
+                    return select == null ? jo : new JObject(select.Split(",").Select(s =>
+                    {
+                        var m = Regex.Match(s.Trim(), @"(?<Path>\S+)((?i) as (?<Name>.+))?", RegexOptions.Compiled);
+                        return new JProperty(m.Groups["Name"].Success ? m.Groups["Name"].Value : m.Groups["Path"].Value.Split(".").Last(), jo.SelectToken(m.Groups["Path"].Value));
+                    }));
+                })) jsonSerializer.Serialize(jtw, jo);
+                jtw.WriteEndArray();
+            }
+        }
+
         public static void DeleteFunds(string where = null)
         {
             traceSource.TraceEvent(TraceEventType.Information, 0, "Deleting funds");
             var s = Stopwatch.StartNew();
-            using (var fbcc = new FolioBulkCopyContext())
-            using (var fsc = new FolioServiceClient())
+            using (var fbcc = new FolioBulkCopyContext(connectionString))
+            using (var fsc = new FolioServiceClient(connectionString))
             {
                 var i = 0;
                 if (api)
@@ -5281,8 +6178,8 @@ namespace FolioConsoleApplication
             using (var sr = new StreamReader(compress || path.EndsWith(".gz") ? (Stream)new GZipStream(File.OpenRead($"{path}{(path.EndsWith(".gz") ? "" : ".gz")}"), CompressionMode.Decompress) : File.OpenRead(path)))
             using (var sr2 = new StreamReader(Assembly.GetAssembly(typeof(FolioContext)).GetManifestResourceStream("FolioLibrary.Fund.json")))
             using (var jtr = new JsonTextReader(sr) { SupportMultipleContent = true })
-            using (var fbcc = new FolioBulkCopyContext())
-            using (var fsc = new FolioServiceClient())
+            using (var fbcc = new FolioBulkCopyContext(connectionString))
+            using (var fsc = new FolioServiceClient(connectionString))
             {
                 var s2 = Stopwatch.StartNew();
                 var js4 = JsonSchema.FromJsonAsync(sr2.ReadToEndAsync().Result).Result;
@@ -5341,8 +6238,8 @@ namespace FolioConsoleApplication
         {
             traceSource.TraceEvent(TraceEventType.Information, 0, "Saving funds");
             var s = Stopwatch.StartNew();
-            using (var fdc = new FolioDapperContext())
-            using (var fsc = new FolioServiceClient())
+            using (var fdc = new FolioDapperContext(connectionString))
+            using (var fsc = new FolioServiceClient(connectionString))
             using (var sr = new StreamReader(Assembly.GetAssembly(typeof(FolioContext)).GetManifestResourceStream("FolioLibrary.Fund.json")))
             using (var sw = new StreamWriter(whatIf ? new MemoryStream() : compress ? (Stream)new GZipStream(new FileStream($"{path}.gz", FileMode.Create), CompressionMode.Compress) : new FileStream(path, FileMode.Create)))
             using (var jtw = new JsonTextWriter(sw))
@@ -5352,7 +6249,7 @@ namespace FolioConsoleApplication
                 var js = new JsonSerializer { Formatting = Formatting.Indented };
                 jtw.WriteStartArray();
                 var i = 0;
-                foreach (var jo in api ? fsc.Funds(where, take: take) : fdc.Funds(where, take: take).Select(f => JObject.Parse(f.Content)))
+                foreach (var jo in api ? fsc.Funds(where, orderBy, skip, take) : fdc.Funds(where, null, orderBy, skip, take).Select(f => JObject.Parse(f.Content)))
                 {
                     if (validate)
                     {
@@ -5373,12 +6270,31 @@ namespace FolioConsoleApplication
             traceSource.TraceEvent(TraceEventType.Information, 0, $"{s.Elapsed} elapsed");
         }
 
+        public static void QueryFundTypes(string where = null, string orderBy = null, int? skip = null, int? take = null, string select = null)
+        {
+            using (var fdc = new FolioDapperContext(connectionString))
+            using (var fsc = new FolioServiceClient(connectionString))
+            using (var jtw = new JsonTextWriter(Console.Out))
+            {
+                jtw.WriteStartArray();
+                foreach (var jo in (api ? fsc.FundTypes(where, orderBy, skip, take) : fdc.FundTypes(where, null, orderBy, skip, take).Select(ft => JObject.Parse(ft.Content))).Select(jo =>
+                {
+                    return select == null ? jo : new JObject(select.Split(",").Select(s =>
+                    {
+                        var m = Regex.Match(s.Trim(), @"(?<Path>\S+)((?i) as (?<Name>.+))?", RegexOptions.Compiled);
+                        return new JProperty(m.Groups["Name"].Success ? m.Groups["Name"].Value : m.Groups["Path"].Value.Split(".").Last(), jo.SelectToken(m.Groups["Path"].Value));
+                    }));
+                })) jsonSerializer.Serialize(jtw, jo);
+                jtw.WriteEndArray();
+            }
+        }
+
         public static void DeleteFundTypes(string where = null)
         {
             traceSource.TraceEvent(TraceEventType.Information, 0, "Deleting fund types");
             var s = Stopwatch.StartNew();
-            using (var fbcc = new FolioBulkCopyContext())
-            using (var fsc = new FolioServiceClient())
+            using (var fbcc = new FolioBulkCopyContext(connectionString))
+            using (var fsc = new FolioServiceClient(connectionString))
             {
                 var i = 0;
                 if (api)
@@ -5411,8 +6327,8 @@ namespace FolioConsoleApplication
             using (var sr = new StreamReader(compress || path.EndsWith(".gz") ? (Stream)new GZipStream(File.OpenRead($"{path}{(path.EndsWith(".gz") ? "" : ".gz")}"), CompressionMode.Decompress) : File.OpenRead(path)))
             using (var sr2 = new StreamReader(Assembly.GetAssembly(typeof(FolioContext)).GetManifestResourceStream("FolioLibrary.FundType.json")))
             using (var jtr = new JsonTextReader(sr) { SupportMultipleContent = true })
-            using (var fbcc = new FolioBulkCopyContext())
-            using (var fsc = new FolioServiceClient())
+            using (var fbcc = new FolioBulkCopyContext(connectionString))
+            using (var fsc = new FolioServiceClient(connectionString))
             {
                 var s2 = Stopwatch.StartNew();
                 var js4 = JsonSchema.FromJsonAsync(sr2.ReadToEndAsync().Result).Result;
@@ -5467,8 +6383,8 @@ namespace FolioConsoleApplication
         {
             traceSource.TraceEvent(TraceEventType.Information, 0, "Saving fund types");
             var s = Stopwatch.StartNew();
-            using (var fdc = new FolioDapperContext())
-            using (var fsc = new FolioServiceClient())
+            using (var fdc = new FolioDapperContext(connectionString))
+            using (var fsc = new FolioServiceClient(connectionString))
             using (var sr = new StreamReader(Assembly.GetAssembly(typeof(FolioContext)).GetManifestResourceStream("FolioLibrary.FundType.json")))
             using (var sw = new StreamWriter(whatIf ? new MemoryStream() : compress ? (Stream)new GZipStream(new FileStream($"{path}.gz", FileMode.Create), CompressionMode.Compress) : new FileStream(path, FileMode.Create)))
             using (var jtw = new JsonTextWriter(sw))
@@ -5478,7 +6394,7 @@ namespace FolioConsoleApplication
                 var js = new JsonSerializer { Formatting = Formatting.Indented };
                 jtw.WriteStartArray();
                 var i = 0;
-                foreach (var jo in api ? fsc.FundTypes(where, take: take) : fdc.FundTypes(where, take: take).Select(ft => JObject.Parse(ft.Content)))
+                foreach (var jo in api ? fsc.FundTypes(where, orderBy, skip, take) : fdc.FundTypes(where, null, orderBy, skip, take).Select(ft => JObject.Parse(ft.Content)))
                 {
                     if (validate)
                     {
@@ -5499,12 +6415,31 @@ namespace FolioConsoleApplication
             traceSource.TraceEvent(TraceEventType.Information, 0, $"{s.Elapsed} elapsed");
         }
 
+        public static void QueryGroups(string where = null, string orderBy = null, int? skip = null, int? take = null, string select = null)
+        {
+            using (var fdc = new FolioDapperContext(connectionString))
+            using (var fsc = new FolioServiceClient(connectionString))
+            using (var jtw = new JsonTextWriter(Console.Out))
+            {
+                jtw.WriteStartArray();
+                foreach (var jo in (api ? fsc.Groups(where, orderBy, skip, take) : fdc.Groups(where, null, orderBy, skip, take).Select(g => JObject.Parse(g.Content))).Select(jo =>
+                {
+                    return select == null ? jo : new JObject(select.Split(",").Select(s =>
+                    {
+                        var m = Regex.Match(s.Trim(), @"(?<Path>\S+)((?i) as (?<Name>.+))?", RegexOptions.Compiled);
+                        return new JProperty(m.Groups["Name"].Success ? m.Groups["Name"].Value : m.Groups["Path"].Value.Split(".").Last(), jo.SelectToken(m.Groups["Path"].Value));
+                    }));
+                })) jsonSerializer.Serialize(jtw, jo);
+                jtw.WriteEndArray();
+            }
+        }
+
         public static void DeleteGroups(string where = null)
         {
             traceSource.TraceEvent(TraceEventType.Information, 0, "Deleting groups");
             var s = Stopwatch.StartNew();
-            using (var fbcc = new FolioBulkCopyContext())
-            using (var fsc = new FolioServiceClient())
+            using (var fbcc = new FolioBulkCopyContext(connectionString))
+            using (var fsc = new FolioServiceClient(connectionString))
             {
                 var i = 0;
                 if (api)
@@ -5537,8 +6472,8 @@ namespace FolioConsoleApplication
             using (var sr = new StreamReader(compress || path.EndsWith(".gz") ? (Stream)new GZipStream(File.OpenRead($"{path}{(path.EndsWith(".gz") ? "" : ".gz")}"), CompressionMode.Decompress) : File.OpenRead(path)))
             using (var sr2 = new StreamReader(Assembly.GetAssembly(typeof(FolioContext)).GetManifestResourceStream("FolioLibrary.Group.json")))
             using (var jtr = new JsonTextReader(sr) { SupportMultipleContent = true })
-            using (var fbcc = new FolioBulkCopyContext())
-            using (var fsc = new FolioServiceClient())
+            using (var fbcc = new FolioBulkCopyContext(connectionString))
+            using (var fsc = new FolioServiceClient(connectionString))
             {
                 var s2 = Stopwatch.StartNew();
                 var js4 = JsonSchema.FromJsonAsync(sr2.ReadToEndAsync().Result).Result;
@@ -5595,8 +6530,8 @@ namespace FolioConsoleApplication
         {
             traceSource.TraceEvent(TraceEventType.Information, 0, "Saving groups");
             var s = Stopwatch.StartNew();
-            using (var fdc = new FolioDapperContext())
-            using (var fsc = new FolioServiceClient())
+            using (var fdc = new FolioDapperContext(connectionString))
+            using (var fsc = new FolioServiceClient(connectionString))
             using (var sr = new StreamReader(Assembly.GetAssembly(typeof(FolioContext)).GetManifestResourceStream("FolioLibrary.Group.json")))
             using (var sw = new StreamWriter(whatIf ? new MemoryStream() : compress ? (Stream)new GZipStream(new FileStream($"{path}.gz", FileMode.Create), CompressionMode.Compress) : new FileStream(path, FileMode.Create)))
             using (var jtw = new JsonTextWriter(sw))
@@ -5606,7 +6541,7 @@ namespace FolioConsoleApplication
                 var js = new JsonSerializer { Formatting = Formatting.Indented };
                 jtw.WriteStartArray();
                 var i = 0;
-                foreach (var jo in api ? fsc.Groups(where, take: take) : fdc.Groups(where, take: take).Select(g => JObject.Parse(g.Content)))
+                foreach (var jo in api ? fsc.Groups(where, orderBy, skip, take) : fdc.Groups(where, null, orderBy, skip, take).Select(g => JObject.Parse(g.Content)))
                 {
                     if (validate)
                     {
@@ -5627,12 +6562,31 @@ namespace FolioConsoleApplication
             traceSource.TraceEvent(TraceEventType.Information, 0, $"{s.Elapsed} elapsed");
         }
 
+        public static void QueryGroupFundFiscalYears(string where = null, string orderBy = null, int? skip = null, int? take = null, string select = null)
+        {
+            using (var fdc = new FolioDapperContext(connectionString))
+            using (var fsc = new FolioServiceClient(connectionString))
+            using (var jtw = new JsonTextWriter(Console.Out))
+            {
+                jtw.WriteStartArray();
+                foreach (var jo in (api ? fsc.GroupFundFiscalYears(where, orderBy, skip, take) : fdc.GroupFundFiscalYears(where, null, orderBy, skip, take).Select(gffy => JObject.Parse(gffy.Content))).Select(jo =>
+                {
+                    return select == null ? jo : new JObject(select.Split(",").Select(s =>
+                    {
+                        var m = Regex.Match(s.Trim(), @"(?<Path>\S+)((?i) as (?<Name>.+))?", RegexOptions.Compiled);
+                        return new JProperty(m.Groups["Name"].Success ? m.Groups["Name"].Value : m.Groups["Path"].Value.Split(".").Last(), jo.SelectToken(m.Groups["Path"].Value));
+                    }));
+                })) jsonSerializer.Serialize(jtw, jo);
+                jtw.WriteEndArray();
+            }
+        }
+
         public static void DeleteGroupFundFiscalYears(string where = null)
         {
             traceSource.TraceEvent(TraceEventType.Information, 0, "Deleting group fund fiscal years");
             var s = Stopwatch.StartNew();
-            using (var fbcc = new FolioBulkCopyContext())
-            using (var fsc = new FolioServiceClient())
+            using (var fbcc = new FolioBulkCopyContext(connectionString))
+            using (var fsc = new FolioServiceClient(connectionString))
             {
                 var i = 0;
                 if (api)
@@ -5665,8 +6619,8 @@ namespace FolioConsoleApplication
             using (var sr = new StreamReader(compress || path.EndsWith(".gz") ? (Stream)new GZipStream(File.OpenRead($"{path}{(path.EndsWith(".gz") ? "" : ".gz")}"), CompressionMode.Decompress) : File.OpenRead(path)))
             using (var sr2 = new StreamReader(Assembly.GetAssembly(typeof(FolioContext)).GetManifestResourceStream("FolioLibrary.GroupFundFiscalYear.json")))
             using (var jtr = new JsonTextReader(sr) { SupportMultipleContent = true })
-            using (var fbcc = new FolioBulkCopyContext())
-            using (var fsc = new FolioServiceClient())
+            using (var fbcc = new FolioBulkCopyContext(connectionString))
+            using (var fsc = new FolioServiceClient(connectionString))
             {
                 var s2 = Stopwatch.StartNew();
                 var js4 = JsonSchema.FromJsonAsync(sr2.ReadToEndAsync().Result).Result;
@@ -5725,8 +6679,8 @@ namespace FolioConsoleApplication
         {
             traceSource.TraceEvent(TraceEventType.Information, 0, "Saving group fund fiscal years");
             var s = Stopwatch.StartNew();
-            using (var fdc = new FolioDapperContext())
-            using (var fsc = new FolioServiceClient())
+            using (var fdc = new FolioDapperContext(connectionString))
+            using (var fsc = new FolioServiceClient(connectionString))
             using (var sr = new StreamReader(Assembly.GetAssembly(typeof(FolioContext)).GetManifestResourceStream("FolioLibrary.GroupFundFiscalYear.json")))
             using (var sw = new StreamWriter(whatIf ? new MemoryStream() : compress ? (Stream)new GZipStream(new FileStream($"{path}.gz", FileMode.Create), CompressionMode.Compress) : new FileStream(path, FileMode.Create)))
             using (var jtw = new JsonTextWriter(sw))
@@ -5736,7 +6690,7 @@ namespace FolioConsoleApplication
                 var js = new JsonSerializer { Formatting = Formatting.Indented };
                 jtw.WriteStartArray();
                 var i = 0;
-                foreach (var jo in api ? fsc.GroupFundFiscalYears(where, take: take) : fdc.GroupFundFiscalYears(where, take: take).Select(gffy => JObject.Parse(gffy.Content)))
+                foreach (var jo in api ? fsc.GroupFundFiscalYears(where, orderBy, skip, take) : fdc.GroupFundFiscalYears(where, null, orderBy, skip, take).Select(gffy => JObject.Parse(gffy.Content)))
                 {
                     if (validate)
                     {
@@ -5757,12 +6711,31 @@ namespace FolioConsoleApplication
             traceSource.TraceEvent(TraceEventType.Information, 0, $"{s.Elapsed} elapsed");
         }
 
+        public static void QueryHoldings(string where = null, string orderBy = null, int? skip = null, int? take = null, string select = null)
+        {
+            using (var fdc = new FolioDapperContext(connectionString))
+            using (var fsc = new FolioServiceClient(connectionString))
+            using (var jtw = new JsonTextWriter(Console.Out))
+            {
+                jtw.WriteStartArray();
+                foreach (var jo in (api ? fsc.Holdings(where, orderBy, skip, take) : fdc.Holdings(where, null, orderBy, skip, take).Select(h => JObject.Parse(h.Content))).Select(jo =>
+                {
+                    return select == null ? jo : new JObject(select.Split(",").Select(s =>
+                    {
+                        var m = Regex.Match(s.Trim(), @"(?<Path>\S+)((?i) as (?<Name>.+))?", RegexOptions.Compiled);
+                        return new JProperty(m.Groups["Name"].Success ? m.Groups["Name"].Value : m.Groups["Path"].Value.Split(".").Last(), jo.SelectToken(m.Groups["Path"].Value));
+                    }));
+                })) jsonSerializer.Serialize(jtw, jo);
+                jtw.WriteEndArray();
+            }
+        }
+
         public static void DeleteHoldings(string where = null)
         {
             traceSource.TraceEvent(TraceEventType.Information, 0, "Deleting holdings");
             var s = Stopwatch.StartNew();
-            using (var fbcc = new FolioBulkCopyContext())
-            using (var fsc = new FolioServiceClient())
+            using (var fbcc = new FolioBulkCopyContext(connectionString))
+            using (var fsc = new FolioServiceClient(connectionString))
             {
                 var i = 0;
                 if (api)
@@ -5795,8 +6768,8 @@ namespace FolioConsoleApplication
             using (var sr = new StreamReader(compress || path.EndsWith(".gz") ? (Stream)new GZipStream(File.OpenRead($"{path}{(path.EndsWith(".gz") ? "" : ".gz")}"), CompressionMode.Decompress) : File.OpenRead(path)))
             using (var sr2 = new StreamReader(Assembly.GetAssembly(typeof(FolioContext)).GetManifestResourceStream("FolioLibrary.Holding.json")))
             using (var jtr = new JsonTextReader(sr) { SupportMultipleContent = true })
-            using (var fbcc = new FolioBulkCopyContext())
-            using (var fsc = new FolioServiceClient())
+            using (var fbcc = new FolioBulkCopyContext(connectionString))
+            using (var fsc = new FolioServiceClient(connectionString))
             {
                 var s2 = Stopwatch.StartNew();
                 var js4 = JsonSchema.FromJsonAsync(sr2.ReadToEndAsync().Result).Result;
@@ -5863,8 +6836,8 @@ namespace FolioConsoleApplication
         {
             traceSource.TraceEvent(TraceEventType.Information, 0, "Saving holdings");
             var s = Stopwatch.StartNew();
-            using (var fdc = new FolioDapperContext())
-            using (var fsc = new FolioServiceClient())
+            using (var fdc = new FolioDapperContext(connectionString))
+            using (var fsc = new FolioServiceClient(connectionString))
             using (var sr = new StreamReader(Assembly.GetAssembly(typeof(FolioContext)).GetManifestResourceStream("FolioLibrary.Holding.json")))
             using (var sw = new StreamWriter(whatIf ? new MemoryStream() : compress ? (Stream)new GZipStream(new FileStream($"{path}.gz", FileMode.Create), CompressionMode.Compress) : new FileStream(path, FileMode.Create)))
             using (var jtw = new JsonTextWriter(sw))
@@ -5874,7 +6847,7 @@ namespace FolioConsoleApplication
                 var js = new JsonSerializer { Formatting = Formatting.Indented };
                 jtw.WriteStartArray();
                 var i = 0;
-                foreach (var jo in api ? fsc.Holdings(where, take: take) : fdc.Holdings(where, take: take).Select(h => JObject.Parse(h.Content)))
+                foreach (var jo in api ? fsc.Holdings(where, orderBy, skip, take) : fdc.Holdings(where, null, orderBy, skip, take).Select(h => JObject.Parse(h.Content)))
                 {
                     if (validate)
                     {
@@ -5895,12 +6868,31 @@ namespace FolioConsoleApplication
             traceSource.TraceEvent(TraceEventType.Information, 0, $"{s.Elapsed} elapsed");
         }
 
+        public static void QueryHoldingNoteTypes(string where = null, string orderBy = null, int? skip = null, int? take = null, string select = null)
+        {
+            using (var fdc = new FolioDapperContext(connectionString))
+            using (var fsc = new FolioServiceClient(connectionString))
+            using (var jtw = new JsonTextWriter(Console.Out))
+            {
+                jtw.WriteStartArray();
+                foreach (var jo in (api ? fsc.HoldingNoteTypes(where, orderBy, skip, take) : fdc.HoldingNoteTypes(where, null, orderBy, skip, take).Select(hnt => JObject.Parse(hnt.Content))).Select(jo =>
+                {
+                    return select == null ? jo : new JObject(select.Split(",").Select(s =>
+                    {
+                        var m = Regex.Match(s.Trim(), @"(?<Path>\S+)((?i) as (?<Name>.+))?", RegexOptions.Compiled);
+                        return new JProperty(m.Groups["Name"].Success ? m.Groups["Name"].Value : m.Groups["Path"].Value.Split(".").Last(), jo.SelectToken(m.Groups["Path"].Value));
+                    }));
+                })) jsonSerializer.Serialize(jtw, jo);
+                jtw.WriteEndArray();
+            }
+        }
+
         public static void DeleteHoldingNoteTypes(string where = null)
         {
             traceSource.TraceEvent(TraceEventType.Information, 0, "Deleting holding note types");
             var s = Stopwatch.StartNew();
-            using (var fbcc = new FolioBulkCopyContext())
-            using (var fsc = new FolioServiceClient())
+            using (var fbcc = new FolioBulkCopyContext(connectionString))
+            using (var fsc = new FolioServiceClient(connectionString))
             {
                 var i = 0;
                 if (api)
@@ -5933,8 +6925,8 @@ namespace FolioConsoleApplication
             using (var sr = new StreamReader(compress || path.EndsWith(".gz") ? (Stream)new GZipStream(File.OpenRead($"{path}{(path.EndsWith(".gz") ? "" : ".gz")}"), CompressionMode.Decompress) : File.OpenRead(path)))
             using (var sr2 = new StreamReader(Assembly.GetAssembly(typeof(FolioContext)).GetManifestResourceStream("FolioLibrary.HoldingNoteType.json")))
             using (var jtr = new JsonTextReader(sr) { SupportMultipleContent = true })
-            using (var fbcc = new FolioBulkCopyContext())
-            using (var fsc = new FolioServiceClient())
+            using (var fbcc = new FolioBulkCopyContext(connectionString))
+            using (var fsc = new FolioServiceClient(connectionString))
             {
                 var s2 = Stopwatch.StartNew();
                 var js4 = JsonSchema.FromJsonAsync(sr2.ReadToEndAsync().Result).Result;
@@ -5991,8 +6983,8 @@ namespace FolioConsoleApplication
         {
             traceSource.TraceEvent(TraceEventType.Information, 0, "Saving holding note types");
             var s = Stopwatch.StartNew();
-            using (var fdc = new FolioDapperContext())
-            using (var fsc = new FolioServiceClient())
+            using (var fdc = new FolioDapperContext(connectionString))
+            using (var fsc = new FolioServiceClient(connectionString))
             using (var sr = new StreamReader(Assembly.GetAssembly(typeof(FolioContext)).GetManifestResourceStream("FolioLibrary.HoldingNoteType.json")))
             using (var sw = new StreamWriter(whatIf ? new MemoryStream() : compress ? (Stream)new GZipStream(new FileStream($"{path}.gz", FileMode.Create), CompressionMode.Compress) : new FileStream(path, FileMode.Create)))
             using (var jtw = new JsonTextWriter(sw))
@@ -6002,7 +6994,7 @@ namespace FolioConsoleApplication
                 var js = new JsonSerializer { Formatting = Formatting.Indented };
                 jtw.WriteStartArray();
                 var i = 0;
-                foreach (var jo in api ? fsc.HoldingNoteTypes(where, take: take) : fdc.HoldingNoteTypes(where, take: take).Select(hnt => JObject.Parse(hnt.Content)))
+                foreach (var jo in api ? fsc.HoldingNoteTypes(where, orderBy, skip, take) : fdc.HoldingNoteTypes(where, null, orderBy, skip, take).Select(hnt => JObject.Parse(hnt.Content)))
                 {
                     if (validate)
                     {
@@ -6023,12 +7015,31 @@ namespace FolioConsoleApplication
             traceSource.TraceEvent(TraceEventType.Information, 0, $"{s.Elapsed} elapsed");
         }
 
+        public static void QueryHoldingTypes(string where = null, string orderBy = null, int? skip = null, int? take = null, string select = null)
+        {
+            using (var fdc = new FolioDapperContext(connectionString))
+            using (var fsc = new FolioServiceClient(connectionString))
+            using (var jtw = new JsonTextWriter(Console.Out))
+            {
+                jtw.WriteStartArray();
+                foreach (var jo in (api ? fsc.HoldingTypes(where, orderBy, skip, take) : fdc.HoldingTypes(where, null, orderBy, skip, take).Select(ht => JObject.Parse(ht.Content))).Select(jo =>
+                {
+                    return select == null ? jo : new JObject(select.Split(",").Select(s =>
+                    {
+                        var m = Regex.Match(s.Trim(), @"(?<Path>\S+)((?i) as (?<Name>.+))?", RegexOptions.Compiled);
+                        return new JProperty(m.Groups["Name"].Success ? m.Groups["Name"].Value : m.Groups["Path"].Value.Split(".").Last(), jo.SelectToken(m.Groups["Path"].Value));
+                    }));
+                })) jsonSerializer.Serialize(jtw, jo);
+                jtw.WriteEndArray();
+            }
+        }
+
         public static void DeleteHoldingTypes(string where = null)
         {
             traceSource.TraceEvent(TraceEventType.Information, 0, "Deleting holding types");
             var s = Stopwatch.StartNew();
-            using (var fbcc = new FolioBulkCopyContext())
-            using (var fsc = new FolioServiceClient())
+            using (var fbcc = new FolioBulkCopyContext(connectionString))
+            using (var fsc = new FolioServiceClient(connectionString))
             {
                 var i = 0;
                 if (api)
@@ -6061,8 +7072,8 @@ namespace FolioConsoleApplication
             using (var sr = new StreamReader(compress || path.EndsWith(".gz") ? (Stream)new GZipStream(File.OpenRead($"{path}{(path.EndsWith(".gz") ? "" : ".gz")}"), CompressionMode.Decompress) : File.OpenRead(path)))
             using (var sr2 = new StreamReader(Assembly.GetAssembly(typeof(FolioContext)).GetManifestResourceStream("FolioLibrary.HoldingType.json")))
             using (var jtr = new JsonTextReader(sr) { SupportMultipleContent = true })
-            using (var fbcc = new FolioBulkCopyContext())
-            using (var fsc = new FolioServiceClient())
+            using (var fbcc = new FolioBulkCopyContext(connectionString))
+            using (var fsc = new FolioServiceClient(connectionString))
             {
                 var s2 = Stopwatch.StartNew();
                 var js4 = JsonSchema.FromJsonAsync(sr2.ReadToEndAsync().Result).Result;
@@ -6119,8 +7130,8 @@ namespace FolioConsoleApplication
         {
             traceSource.TraceEvent(TraceEventType.Information, 0, "Saving holding types");
             var s = Stopwatch.StartNew();
-            using (var fdc = new FolioDapperContext())
-            using (var fsc = new FolioServiceClient())
+            using (var fdc = new FolioDapperContext(connectionString))
+            using (var fsc = new FolioServiceClient(connectionString))
             using (var sr = new StreamReader(Assembly.GetAssembly(typeof(FolioContext)).GetManifestResourceStream("FolioLibrary.HoldingType.json")))
             using (var sw = new StreamWriter(whatIf ? new MemoryStream() : compress ? (Stream)new GZipStream(new FileStream($"{path}.gz", FileMode.Create), CompressionMode.Compress) : new FileStream(path, FileMode.Create)))
             using (var jtw = new JsonTextWriter(sw))
@@ -6130,7 +7141,7 @@ namespace FolioConsoleApplication
                 var js = new JsonSerializer { Formatting = Formatting.Indented };
                 jtw.WriteStartArray();
                 var i = 0;
-                foreach (var jo in api ? fsc.HoldingTypes(where, take: take) : fdc.HoldingTypes(where, take: take).Select(ht => JObject.Parse(ht.Content)))
+                foreach (var jo in api ? fsc.HoldingTypes(where, orderBy, skip, take) : fdc.HoldingTypes(where, null, orderBy, skip, take).Select(ht => JObject.Parse(ht.Content)))
                 {
                     if (validate)
                     {
@@ -6151,11 +7162,30 @@ namespace FolioConsoleApplication
             traceSource.TraceEvent(TraceEventType.Information, 0, $"{s.Elapsed} elapsed");
         }
 
+        public static void QueryHridSettings(string where = null, string orderBy = null, int? skip = null, int? take = null, string select = null)
+        {
+            using (var fdc = new FolioDapperContext(connectionString))
+            using (var fsc = new FolioServiceClient(connectionString))
+            using (var jtw = new JsonTextWriter(Console.Out))
+            {
+                jtw.WriteStartArray();
+                foreach (var jo in (api ? new[] { fsc.GetHridSetting() } : fdc.HridSettings(where, null, orderBy, skip, take).Select(hs => JObject.Parse(hs.Content))).Select(jo =>
+                {
+                    return select == null ? jo : new JObject(select.Split(",").Select(s =>
+                    {
+                        var m = Regex.Match(s.Trim(), @"(?<Path>\S+)((?i) as (?<Name>.+))?", RegexOptions.Compiled);
+                        return new JProperty(m.Groups["Name"].Success ? m.Groups["Name"].Value : m.Groups["Path"].Value.Split(".").Last(), jo.SelectToken(m.Groups["Path"].Value));
+                    }));
+                })) jsonSerializer.Serialize(jtw, jo);
+                jtw.WriteEndArray();
+            }
+        }
+
         public static void DeleteHridSettings(string where = null)
         {
             traceSource.TraceEvent(TraceEventType.Information, 0, "Deleting hrid settings");
             var s = Stopwatch.StartNew();
-            using (var fbcc = new FolioBulkCopyContext())
+            using (var fbcc = new FolioBulkCopyContext(connectionString))
             {
                 var i = 0;
                 if (api)
@@ -6178,8 +7208,8 @@ namespace FolioConsoleApplication
             using (var sr = new StreamReader(compress || path.EndsWith(".gz") ? (Stream)new GZipStream(File.OpenRead($"{path}{(path.EndsWith(".gz") ? "" : ".gz")}"), CompressionMode.Decompress) : File.OpenRead(path)))
             using (var sr2 = new StreamReader(Assembly.GetAssembly(typeof(FolioContext)).GetManifestResourceStream("FolioLibrary.HridSetting.json")))
             using (var jtr = new JsonTextReader(sr) { SupportMultipleContent = true })
-            using (var fbcc = new FolioBulkCopyContext())
-            using (var fsc = new FolioServiceClient())
+            using (var fbcc = new FolioBulkCopyContext(connectionString))
+            using (var fsc = new FolioServiceClient(connectionString))
             {
                 var s2 = Stopwatch.StartNew();
                 var js4 = JsonSchema.FromJsonAsync(sr2.ReadToEndAsync().Result).Result;
@@ -6234,8 +7264,8 @@ namespace FolioConsoleApplication
         {
             traceSource.TraceEvent(TraceEventType.Information, 0, "Saving hrid settings");
             var s = Stopwatch.StartNew();
-            using (var fdc = new FolioDapperContext())
-            using (var fsc = new FolioServiceClient())
+            using (var fdc = new FolioDapperContext(connectionString))
+            using (var fsc = new FolioServiceClient(connectionString))
             using (var sr = new StreamReader(Assembly.GetAssembly(typeof(FolioContext)).GetManifestResourceStream("FolioLibrary.HridSetting.json")))
             using (var sw = new StreamWriter(whatIf ? new MemoryStream() : compress ? (Stream)new GZipStream(new FileStream($"{path}.gz", FileMode.Create), CompressionMode.Compress) : new FileStream(path, FileMode.Create)))
             using (var jtw = new JsonTextWriter(sw))
@@ -6245,7 +7275,7 @@ namespace FolioConsoleApplication
                 var js = new JsonSerializer { Formatting = Formatting.Indented };
                 jtw.WriteStartArray();
                 var i = 0;
-                foreach (var jo in api ? new[] { fsc.GetHridSetting() } : fdc.HridSettings(where, take: take).Select(hs => JObject.Parse(hs.Content)))
+                foreach (var jo in api ? new[] { fsc.GetHridSetting() } : fdc.HridSettings(where, null, orderBy, skip, take).Select(hs => JObject.Parse(hs.Content)))
                 {
                     if (validate)
                     {
@@ -6266,12 +7296,31 @@ namespace FolioConsoleApplication
             traceSource.TraceEvent(TraceEventType.Information, 0, $"{s.Elapsed} elapsed");
         }
 
+        public static void QueryIdTypes(string where = null, string orderBy = null, int? skip = null, int? take = null, string select = null)
+        {
+            using (var fdc = new FolioDapperContext(connectionString))
+            using (var fsc = new FolioServiceClient(connectionString))
+            using (var jtw = new JsonTextWriter(Console.Out))
+            {
+                jtw.WriteStartArray();
+                foreach (var jo in (api ? fsc.IdTypes(where, orderBy, skip, take) : fdc.IdTypes(where, null, orderBy, skip, take).Select(it => JObject.Parse(it.Content))).Select(jo =>
+                {
+                    return select == null ? jo : new JObject(select.Split(",").Select(s =>
+                    {
+                        var m = Regex.Match(s.Trim(), @"(?<Path>\S+)((?i) as (?<Name>.+))?", RegexOptions.Compiled);
+                        return new JProperty(m.Groups["Name"].Success ? m.Groups["Name"].Value : m.Groups["Path"].Value.Split(".").Last(), jo.SelectToken(m.Groups["Path"].Value));
+                    }));
+                })) jsonSerializer.Serialize(jtw, jo);
+                jtw.WriteEndArray();
+            }
+        }
+
         public static void DeleteIdTypes(string where = null)
         {
             traceSource.TraceEvent(TraceEventType.Information, 0, "Deleting id types");
             var s = Stopwatch.StartNew();
-            using (var fbcc = new FolioBulkCopyContext())
-            using (var fsc = new FolioServiceClient())
+            using (var fbcc = new FolioBulkCopyContext(connectionString))
+            using (var fsc = new FolioServiceClient(connectionString))
             {
                 var i = 0;
                 if (api)
@@ -6304,8 +7353,8 @@ namespace FolioConsoleApplication
             using (var sr = new StreamReader(compress || path.EndsWith(".gz") ? (Stream)new GZipStream(File.OpenRead($"{path}{(path.EndsWith(".gz") ? "" : ".gz")}"), CompressionMode.Decompress) : File.OpenRead(path)))
             using (var sr2 = new StreamReader(Assembly.GetAssembly(typeof(FolioContext)).GetManifestResourceStream("FolioLibrary.IdType.json")))
             using (var jtr = new JsonTextReader(sr) { SupportMultipleContent = true })
-            using (var fbcc = new FolioBulkCopyContext())
-            using (var fsc = new FolioServiceClient())
+            using (var fbcc = new FolioBulkCopyContext(connectionString))
+            using (var fsc = new FolioServiceClient(connectionString))
             {
                 var s2 = Stopwatch.StartNew();
                 var js4 = JsonSchema.FromJsonAsync(sr2.ReadToEndAsync().Result).Result;
@@ -6362,8 +7411,8 @@ namespace FolioConsoleApplication
         {
             traceSource.TraceEvent(TraceEventType.Information, 0, "Saving id types");
             var s = Stopwatch.StartNew();
-            using (var fdc = new FolioDapperContext())
-            using (var fsc = new FolioServiceClient())
+            using (var fdc = new FolioDapperContext(connectionString))
+            using (var fsc = new FolioServiceClient(connectionString))
             using (var sr = new StreamReader(Assembly.GetAssembly(typeof(FolioContext)).GetManifestResourceStream("FolioLibrary.IdType.json")))
             using (var sw = new StreamWriter(whatIf ? new MemoryStream() : compress ? (Stream)new GZipStream(new FileStream($"{path}.gz", FileMode.Create), CompressionMode.Compress) : new FileStream(path, FileMode.Create)))
             using (var jtw = new JsonTextWriter(sw))
@@ -6373,7 +7422,7 @@ namespace FolioConsoleApplication
                 var js = new JsonSerializer { Formatting = Formatting.Indented };
                 jtw.WriteStartArray();
                 var i = 0;
-                foreach (var jo in api ? fsc.IdTypes(where, take: take) : fdc.IdTypes(where, take: take).Select(it => JObject.Parse(it.Content)))
+                foreach (var jo in api ? fsc.IdTypes(where, orderBy, skip, take) : fdc.IdTypes(where, null, orderBy, skip, take).Select(it => JObject.Parse(it.Content)))
                 {
                     if (validate)
                     {
@@ -6394,12 +7443,31 @@ namespace FolioConsoleApplication
             traceSource.TraceEvent(TraceEventType.Information, 0, $"{s.Elapsed} elapsed");
         }
 
+        public static void QueryIllPolicies(string where = null, string orderBy = null, int? skip = null, int? take = null, string select = null)
+        {
+            using (var fdc = new FolioDapperContext(connectionString))
+            using (var fsc = new FolioServiceClient(connectionString))
+            using (var jtw = new JsonTextWriter(Console.Out))
+            {
+                jtw.WriteStartArray();
+                foreach (var jo in (api ? fsc.IllPolicies(where, orderBy, skip, take) : fdc.IllPolicies(where, null, orderBy, skip, take).Select(ip => JObject.Parse(ip.Content))).Select(jo =>
+                {
+                    return select == null ? jo : new JObject(select.Split(",").Select(s =>
+                    {
+                        var m = Regex.Match(s.Trim(), @"(?<Path>\S+)((?i) as (?<Name>.+))?", RegexOptions.Compiled);
+                        return new JProperty(m.Groups["Name"].Success ? m.Groups["Name"].Value : m.Groups["Path"].Value.Split(".").Last(), jo.SelectToken(m.Groups["Path"].Value));
+                    }));
+                })) jsonSerializer.Serialize(jtw, jo);
+                jtw.WriteEndArray();
+            }
+        }
+
         public static void DeleteIllPolicies(string where = null)
         {
             traceSource.TraceEvent(TraceEventType.Information, 0, "Deleting ill policies");
             var s = Stopwatch.StartNew();
-            using (var fbcc = new FolioBulkCopyContext())
-            using (var fsc = new FolioServiceClient())
+            using (var fbcc = new FolioBulkCopyContext(connectionString))
+            using (var fsc = new FolioServiceClient(connectionString))
             {
                 var i = 0;
                 if (api)
@@ -6432,8 +7500,8 @@ namespace FolioConsoleApplication
             using (var sr = new StreamReader(compress || path.EndsWith(".gz") ? (Stream)new GZipStream(File.OpenRead($"{path}{(path.EndsWith(".gz") ? "" : ".gz")}"), CompressionMode.Decompress) : File.OpenRead(path)))
             using (var sr2 = new StreamReader(Assembly.GetAssembly(typeof(FolioContext)).GetManifestResourceStream("FolioLibrary.IllPolicy.json")))
             using (var jtr = new JsonTextReader(sr) { SupportMultipleContent = true })
-            using (var fbcc = new FolioBulkCopyContext())
-            using (var fsc = new FolioServiceClient())
+            using (var fbcc = new FolioBulkCopyContext(connectionString))
+            using (var fsc = new FolioServiceClient(connectionString))
             {
                 var s2 = Stopwatch.StartNew();
                 var js4 = JsonSchema.FromJsonAsync(sr2.ReadToEndAsync().Result).Result;
@@ -6490,8 +7558,8 @@ namespace FolioConsoleApplication
         {
             traceSource.TraceEvent(TraceEventType.Information, 0, "Saving ill policies");
             var s = Stopwatch.StartNew();
-            using (var fdc = new FolioDapperContext())
-            using (var fsc = new FolioServiceClient())
+            using (var fdc = new FolioDapperContext(connectionString))
+            using (var fsc = new FolioServiceClient(connectionString))
             using (var sr = new StreamReader(Assembly.GetAssembly(typeof(FolioContext)).GetManifestResourceStream("FolioLibrary.IllPolicy.json")))
             using (var sw = new StreamWriter(whatIf ? new MemoryStream() : compress ? (Stream)new GZipStream(new FileStream($"{path}.gz", FileMode.Create), CompressionMode.Compress) : new FileStream(path, FileMode.Create)))
             using (var jtw = new JsonTextWriter(sw))
@@ -6501,7 +7569,7 @@ namespace FolioConsoleApplication
                 var js = new JsonSerializer { Formatting = Formatting.Indented };
                 jtw.WriteStartArray();
                 var i = 0;
-                foreach (var jo in api ? fsc.IllPolicies(where, take: take) : fdc.IllPolicies(where, take: take).Select(ip => JObject.Parse(ip.Content)))
+                foreach (var jo in api ? fsc.IllPolicies(where, orderBy, skip, take) : fdc.IllPolicies(where, null, orderBy, skip, take).Select(ip => JObject.Parse(ip.Content)))
                 {
                     if (validate)
                     {
@@ -6522,12 +7590,31 @@ namespace FolioConsoleApplication
             traceSource.TraceEvent(TraceEventType.Information, 0, $"{s.Elapsed} elapsed");
         }
 
+        public static void QueryInstances(string where = null, string orderBy = null, int? skip = null, int? take = null, string select = null)
+        {
+            using (var fdc = new FolioDapperContext(connectionString))
+            using (var fsc = new FolioServiceClient(connectionString))
+            using (var jtw = new JsonTextWriter(Console.Out))
+            {
+                jtw.WriteStartArray();
+                foreach (var jo in (api ? fsc.Instances(where, orderBy, skip, take) : fdc.Instances(where, null, orderBy, skip, take).Select(i2 => JObject.Parse(i2.Content))).Select(jo =>
+                {
+                    return select == null ? jo : new JObject(select.Split(",").Select(s =>
+                    {
+                        var m = Regex.Match(s.Trim(), @"(?<Path>\S+)((?i) as (?<Name>.+))?", RegexOptions.Compiled);
+                        return new JProperty(m.Groups["Name"].Success ? m.Groups["Name"].Value : m.Groups["Path"].Value.Split(".").Last(), jo.SelectToken(m.Groups["Path"].Value));
+                    }));
+                })) jsonSerializer.Serialize(jtw, jo);
+                jtw.WriteEndArray();
+            }
+        }
+
         public static void DeleteInstances(string where = null)
         {
             traceSource.TraceEvent(TraceEventType.Information, 0, "Deleting instances");
             var s = Stopwatch.StartNew();
-            using (var fbcc = new FolioBulkCopyContext())
-            using (var fsc = new FolioServiceClient())
+            using (var fbcc = new FolioBulkCopyContext(connectionString))
+            using (var fsc = new FolioServiceClient(connectionString))
             {
                 var i = 0;
                 if (api)
@@ -6560,8 +7647,8 @@ namespace FolioConsoleApplication
             using (var sr = new StreamReader(compress || path.EndsWith(".gz") ? (Stream)new GZipStream(File.OpenRead($"{path}{(path.EndsWith(".gz") ? "" : ".gz")}"), CompressionMode.Decompress) : File.OpenRead(path)))
             using (var sr2 = new StreamReader(Assembly.GetAssembly(typeof(FolioContext)).GetManifestResourceStream("FolioLibrary.Instance.json")))
             using (var jtr = new JsonTextReader(sr) { SupportMultipleContent = true })
-            using (var fbcc = new FolioBulkCopyContext())
-            using (var fsc = new FolioServiceClient())
+            using (var fbcc = new FolioBulkCopyContext(connectionString))
+            using (var fsc = new FolioServiceClient(connectionString))
             {
                 var s2 = Stopwatch.StartNew();
                 var js4 = JsonSchema.FromJsonAsync(sr2.ReadToEndAsync().Result).Result;
@@ -6625,8 +7712,8 @@ namespace FolioConsoleApplication
         {
             traceSource.TraceEvent(TraceEventType.Information, 0, "Saving instances");
             var s = Stopwatch.StartNew();
-            using (var fdc = new FolioDapperContext())
-            using (var fsc = new FolioServiceClient())
+            using (var fdc = new FolioDapperContext(connectionString))
+            using (var fsc = new FolioServiceClient(connectionString))
             using (var sr = new StreamReader(Assembly.GetAssembly(typeof(FolioContext)).GetManifestResourceStream("FolioLibrary.Instance.json")))
             using (var sw = new StreamWriter(whatIf ? new MemoryStream() : compress ? (Stream)new GZipStream(new FileStream($"{path}.gz", FileMode.Create), CompressionMode.Compress) : new FileStream(path, FileMode.Create)))
             using (var jtw = new JsonTextWriter(sw))
@@ -6636,7 +7723,7 @@ namespace FolioConsoleApplication
                 var js = new JsonSerializer { Formatting = Formatting.Indented };
                 jtw.WriteStartArray();
                 var i = 0;
-                foreach (var jo in api ? fsc.Instances(where, take: take) : fdc.Instances(where, take: take).Select(i2 => JObject.Parse(i2.Content)))
+                foreach (var jo in api ? fsc.Instances(where, orderBy, skip, take) : fdc.Instances(where, null, orderBy, skip, take).Select(i2 => JObject.Parse(i2.Content)))
                 {
                     if (validate)
                     {
@@ -6657,12 +7744,31 @@ namespace FolioConsoleApplication
             traceSource.TraceEvent(TraceEventType.Information, 0, $"{s.Elapsed} elapsed");
         }
 
+        public static void QueryInstanceFormats(string where = null, string orderBy = null, int? skip = null, int? take = null, string select = null)
+        {
+            using (var fdc = new FolioDapperContext(connectionString))
+            using (var fsc = new FolioServiceClient(connectionString))
+            using (var jtw = new JsonTextWriter(Console.Out))
+            {
+                jtw.WriteStartArray();
+                foreach (var jo in (api ? fsc.InstanceFormats(where, orderBy, skip, take) : fdc.InstanceFormats(where, null, orderBy, skip, take).Select(@if => JObject.Parse(@if.Content))).Select(jo =>
+                {
+                    return select == null ? jo : new JObject(select.Split(",").Select(s =>
+                    {
+                        var m = Regex.Match(s.Trim(), @"(?<Path>\S+)((?i) as (?<Name>.+))?", RegexOptions.Compiled);
+                        return new JProperty(m.Groups["Name"].Success ? m.Groups["Name"].Value : m.Groups["Path"].Value.Split(".").Last(), jo.SelectToken(m.Groups["Path"].Value));
+                    }));
+                })) jsonSerializer.Serialize(jtw, jo);
+                jtw.WriteEndArray();
+            }
+        }
+
         public static void DeleteInstanceFormats(string where = null)
         {
             traceSource.TraceEvent(TraceEventType.Information, 0, "Deleting instance formats");
             var s = Stopwatch.StartNew();
-            using (var fbcc = new FolioBulkCopyContext())
-            using (var fsc = new FolioServiceClient())
+            using (var fbcc = new FolioBulkCopyContext(connectionString))
+            using (var fsc = new FolioServiceClient(connectionString))
             {
                 var i = 0;
                 if (api)
@@ -6695,8 +7801,8 @@ namespace FolioConsoleApplication
             using (var sr = new StreamReader(compress || path.EndsWith(".gz") ? (Stream)new GZipStream(File.OpenRead($"{path}{(path.EndsWith(".gz") ? "" : ".gz")}"), CompressionMode.Decompress) : File.OpenRead(path)))
             using (var sr2 = new StreamReader(Assembly.GetAssembly(typeof(FolioContext)).GetManifestResourceStream("FolioLibrary.InstanceFormat.json")))
             using (var jtr = new JsonTextReader(sr) { SupportMultipleContent = true })
-            using (var fbcc = new FolioBulkCopyContext())
-            using (var fsc = new FolioServiceClient())
+            using (var fbcc = new FolioBulkCopyContext(connectionString))
+            using (var fsc = new FolioServiceClient(connectionString))
             {
                 var s2 = Stopwatch.StartNew();
                 var js4 = JsonSchema.FromJsonAsync(sr2.ReadToEndAsync().Result).Result;
@@ -6751,8 +7857,8 @@ namespace FolioConsoleApplication
         {
             traceSource.TraceEvent(TraceEventType.Information, 0, "Saving instance formats");
             var s = Stopwatch.StartNew();
-            using (var fdc = new FolioDapperContext())
-            using (var fsc = new FolioServiceClient())
+            using (var fdc = new FolioDapperContext(connectionString))
+            using (var fsc = new FolioServiceClient(connectionString))
             using (var sr = new StreamReader(Assembly.GetAssembly(typeof(FolioContext)).GetManifestResourceStream("FolioLibrary.InstanceFormat.json")))
             using (var sw = new StreamWriter(whatIf ? new MemoryStream() : compress ? (Stream)new GZipStream(new FileStream($"{path}.gz", FileMode.Create), CompressionMode.Compress) : new FileStream(path, FileMode.Create)))
             using (var jtw = new JsonTextWriter(sw))
@@ -6762,7 +7868,7 @@ namespace FolioConsoleApplication
                 var js = new JsonSerializer { Formatting = Formatting.Indented };
                 jtw.WriteStartArray();
                 var i = 0;
-                foreach (var jo in api ? fsc.InstanceFormats(where, take: take) : fdc.InstanceFormats(where, take: take).Select(@if => JObject.Parse(@if.Content)))
+                foreach (var jo in api ? fsc.InstanceFormats(where, orderBy, skip, take) : fdc.InstanceFormats(where, null, orderBy, skip, take).Select(@if => JObject.Parse(@if.Content)))
                 {
                     if (validate)
                     {
@@ -6783,12 +7889,31 @@ namespace FolioConsoleApplication
             traceSource.TraceEvent(TraceEventType.Information, 0, $"{s.Elapsed} elapsed");
         }
 
+        public static void QueryInstanceNoteTypes(string where = null, string orderBy = null, int? skip = null, int? take = null, string select = null)
+        {
+            using (var fdc = new FolioDapperContext(connectionString))
+            using (var fsc = new FolioServiceClient(connectionString))
+            using (var jtw = new JsonTextWriter(Console.Out))
+            {
+                jtw.WriteStartArray();
+                foreach (var jo in (api ? fsc.InstanceNoteTypes(where, orderBy, skip, take) : fdc.InstanceNoteTypes(where, null, orderBy, skip, take).Select(@int => JObject.Parse(@int.Content))).Select(jo =>
+                {
+                    return select == null ? jo : new JObject(select.Split(",").Select(s =>
+                    {
+                        var m = Regex.Match(s.Trim(), @"(?<Path>\S+)((?i) as (?<Name>.+))?", RegexOptions.Compiled);
+                        return new JProperty(m.Groups["Name"].Success ? m.Groups["Name"].Value : m.Groups["Path"].Value.Split(".").Last(), jo.SelectToken(m.Groups["Path"].Value));
+                    }));
+                })) jsonSerializer.Serialize(jtw, jo);
+                jtw.WriteEndArray();
+            }
+        }
+
         public static void DeleteInstanceNoteTypes(string where = null)
         {
             traceSource.TraceEvent(TraceEventType.Information, 0, "Deleting instance note types");
             var s = Stopwatch.StartNew();
-            using (var fbcc = new FolioBulkCopyContext())
-            using (var fsc = new FolioServiceClient())
+            using (var fbcc = new FolioBulkCopyContext(connectionString))
+            using (var fsc = new FolioServiceClient(connectionString))
             {
                 var i = 0;
                 if (api)
@@ -6821,8 +7946,8 @@ namespace FolioConsoleApplication
             using (var sr = new StreamReader(compress || path.EndsWith(".gz") ? (Stream)new GZipStream(File.OpenRead($"{path}{(path.EndsWith(".gz") ? "" : ".gz")}"), CompressionMode.Decompress) : File.OpenRead(path)))
             using (var sr2 = new StreamReader(Assembly.GetAssembly(typeof(FolioContext)).GetManifestResourceStream("FolioLibrary.InstanceNoteType.json")))
             using (var jtr = new JsonTextReader(sr) { SupportMultipleContent = true })
-            using (var fbcc = new FolioBulkCopyContext())
-            using (var fsc = new FolioServiceClient())
+            using (var fbcc = new FolioBulkCopyContext(connectionString))
+            using (var fsc = new FolioServiceClient(connectionString))
             {
                 var s2 = Stopwatch.StartNew();
                 var js4 = JsonSchema.FromJsonAsync(sr2.ReadToEndAsync().Result).Result;
@@ -6879,8 +8004,8 @@ namespace FolioConsoleApplication
         {
             traceSource.TraceEvent(TraceEventType.Information, 0, "Saving instance note types");
             var s = Stopwatch.StartNew();
-            using (var fdc = new FolioDapperContext())
-            using (var fsc = new FolioServiceClient())
+            using (var fdc = new FolioDapperContext(connectionString))
+            using (var fsc = new FolioServiceClient(connectionString))
             using (var sr = new StreamReader(Assembly.GetAssembly(typeof(FolioContext)).GetManifestResourceStream("FolioLibrary.InstanceNoteType.json")))
             using (var sw = new StreamWriter(whatIf ? new MemoryStream() : compress ? (Stream)new GZipStream(new FileStream($"{path}.gz", FileMode.Create), CompressionMode.Compress) : new FileStream(path, FileMode.Create)))
             using (var jtw = new JsonTextWriter(sw))
@@ -6890,7 +8015,7 @@ namespace FolioConsoleApplication
                 var js = new JsonSerializer { Formatting = Formatting.Indented };
                 jtw.WriteStartArray();
                 var i = 0;
-                foreach (var jo in api ? fsc.InstanceNoteTypes(where, take: take) : fdc.InstanceNoteTypes(where, take: take).Select(@int => JObject.Parse(@int.Content)))
+                foreach (var jo in api ? fsc.InstanceNoteTypes(where, orderBy, skip, take) : fdc.InstanceNoteTypes(where, null, orderBy, skip, take).Select(@int => JObject.Parse(@int.Content)))
                 {
                     if (validate)
                     {
@@ -6911,12 +8036,31 @@ namespace FolioConsoleApplication
             traceSource.TraceEvent(TraceEventType.Information, 0, $"{s.Elapsed} elapsed");
         }
 
+        public static void QueryInstanceRelationships(string where = null, string orderBy = null, int? skip = null, int? take = null, string select = null)
+        {
+            using (var fdc = new FolioDapperContext(connectionString))
+            using (var fsc = new FolioServiceClient(connectionString))
+            using (var jtw = new JsonTextWriter(Console.Out))
+            {
+                jtw.WriteStartArray();
+                foreach (var jo in (api ? fsc.InstanceRelationships(where, orderBy, skip, take) : fdc.InstanceRelationships(where, null, orderBy, skip, take).Select(ir => JObject.Parse(ir.Content))).Select(jo =>
+                {
+                    return select == null ? jo : new JObject(select.Split(",").Select(s =>
+                    {
+                        var m = Regex.Match(s.Trim(), @"(?<Path>\S+)((?i) as (?<Name>.+))?", RegexOptions.Compiled);
+                        return new JProperty(m.Groups["Name"].Success ? m.Groups["Name"].Value : m.Groups["Path"].Value.Split(".").Last(), jo.SelectToken(m.Groups["Path"].Value));
+                    }));
+                })) jsonSerializer.Serialize(jtw, jo);
+                jtw.WriteEndArray();
+            }
+        }
+
         public static void DeleteInstanceRelationships(string where = null)
         {
             traceSource.TraceEvent(TraceEventType.Information, 0, "Deleting instance relationships");
             var s = Stopwatch.StartNew();
-            using (var fbcc = new FolioBulkCopyContext())
-            using (var fsc = new FolioServiceClient())
+            using (var fbcc = new FolioBulkCopyContext(connectionString))
+            using (var fsc = new FolioServiceClient(connectionString))
             {
                 var i = 0;
                 if (api)
@@ -6949,8 +8093,8 @@ namespace FolioConsoleApplication
             using (var sr = new StreamReader(compress || path.EndsWith(".gz") ? (Stream)new GZipStream(File.OpenRead($"{path}{(path.EndsWith(".gz") ? "" : ".gz")}"), CompressionMode.Decompress) : File.OpenRead(path)))
             using (var sr2 = new StreamReader(Assembly.GetAssembly(typeof(FolioContext)).GetManifestResourceStream("FolioLibrary.InstanceRelationship.json")))
             using (var jtr = new JsonTextReader(sr) { SupportMultipleContent = true })
-            using (var fbcc = new FolioBulkCopyContext())
-            using (var fsc = new FolioServiceClient())
+            using (var fbcc = new FolioBulkCopyContext(connectionString))
+            using (var fsc = new FolioServiceClient(connectionString))
             {
                 var s2 = Stopwatch.StartNew();
                 var js4 = JsonSchema.FromJsonAsync(sr2.ReadToEndAsync().Result).Result;
@@ -7010,8 +8154,8 @@ namespace FolioConsoleApplication
         {
             traceSource.TraceEvent(TraceEventType.Information, 0, "Saving instance relationships");
             var s = Stopwatch.StartNew();
-            using (var fdc = new FolioDapperContext())
-            using (var fsc = new FolioServiceClient())
+            using (var fdc = new FolioDapperContext(connectionString))
+            using (var fsc = new FolioServiceClient(connectionString))
             using (var sr = new StreamReader(Assembly.GetAssembly(typeof(FolioContext)).GetManifestResourceStream("FolioLibrary.InstanceRelationship.json")))
             using (var sw = new StreamWriter(whatIf ? new MemoryStream() : compress ? (Stream)new GZipStream(new FileStream($"{path}.gz", FileMode.Create), CompressionMode.Compress) : new FileStream(path, FileMode.Create)))
             using (var jtw = new JsonTextWriter(sw))
@@ -7021,7 +8165,7 @@ namespace FolioConsoleApplication
                 var js = new JsonSerializer { Formatting = Formatting.Indented };
                 jtw.WriteStartArray();
                 var i = 0;
-                foreach (var jo in api ? fsc.InstanceRelationships(where, take: take) : fdc.InstanceRelationships(where, take: take).Select(ir => JObject.Parse(ir.Content)))
+                foreach (var jo in api ? fsc.InstanceRelationships(where, orderBy, skip, take) : fdc.InstanceRelationships(where, null, orderBy, skip, take).Select(ir => JObject.Parse(ir.Content)))
                 {
                     if (validate)
                     {
@@ -7042,12 +8186,31 @@ namespace FolioConsoleApplication
             traceSource.TraceEvent(TraceEventType.Information, 0, $"{s.Elapsed} elapsed");
         }
 
+        public static void QueryInstanceRelationshipTypes(string where = null, string orderBy = null, int? skip = null, int? take = null, string select = null)
+        {
+            using (var fdc = new FolioDapperContext(connectionString))
+            using (var fsc = new FolioServiceClient(connectionString))
+            using (var jtw = new JsonTextWriter(Console.Out))
+            {
+                jtw.WriteStartArray();
+                foreach (var jo in (api ? fsc.InstanceRelationshipTypes(where, orderBy, skip, take) : fdc.InstanceRelationshipTypes(where, null, orderBy, skip, take).Select(irt => JObject.Parse(irt.Content))).Select(jo =>
+                {
+                    return select == null ? jo : new JObject(select.Split(",").Select(s =>
+                    {
+                        var m = Regex.Match(s.Trim(), @"(?<Path>\S+)((?i) as (?<Name>.+))?", RegexOptions.Compiled);
+                        return new JProperty(m.Groups["Name"].Success ? m.Groups["Name"].Value : m.Groups["Path"].Value.Split(".").Last(), jo.SelectToken(m.Groups["Path"].Value));
+                    }));
+                })) jsonSerializer.Serialize(jtw, jo);
+                jtw.WriteEndArray();
+            }
+        }
+
         public static void DeleteInstanceRelationshipTypes(string where = null)
         {
             traceSource.TraceEvent(TraceEventType.Information, 0, "Deleting instance relationship types");
             var s = Stopwatch.StartNew();
-            using (var fbcc = new FolioBulkCopyContext())
-            using (var fsc = new FolioServiceClient())
+            using (var fbcc = new FolioBulkCopyContext(connectionString))
+            using (var fsc = new FolioServiceClient(connectionString))
             {
                 var i = 0;
                 if (api)
@@ -7080,8 +8243,8 @@ namespace FolioConsoleApplication
             using (var sr = new StreamReader(compress || path.EndsWith(".gz") ? (Stream)new GZipStream(File.OpenRead($"{path}{(path.EndsWith(".gz") ? "" : ".gz")}"), CompressionMode.Decompress) : File.OpenRead(path)))
             using (var sr2 = new StreamReader(Assembly.GetAssembly(typeof(FolioContext)).GetManifestResourceStream("FolioLibrary.InstanceRelationshipType.json")))
             using (var jtr = new JsonTextReader(sr) { SupportMultipleContent = true })
-            using (var fbcc = new FolioBulkCopyContext())
-            using (var fsc = new FolioServiceClient())
+            using (var fbcc = new FolioBulkCopyContext(connectionString))
+            using (var fsc = new FolioServiceClient(connectionString))
             {
                 var s2 = Stopwatch.StartNew();
                 var js4 = JsonSchema.FromJsonAsync(sr2.ReadToEndAsync().Result).Result;
@@ -7138,8 +8301,8 @@ namespace FolioConsoleApplication
         {
             traceSource.TraceEvent(TraceEventType.Information, 0, "Saving instance relationship types");
             var s = Stopwatch.StartNew();
-            using (var fdc = new FolioDapperContext())
-            using (var fsc = new FolioServiceClient())
+            using (var fdc = new FolioDapperContext(connectionString))
+            using (var fsc = new FolioServiceClient(connectionString))
             using (var sr = new StreamReader(Assembly.GetAssembly(typeof(FolioContext)).GetManifestResourceStream("FolioLibrary.InstanceRelationshipType.json")))
             using (var sw = new StreamWriter(whatIf ? new MemoryStream() : compress ? (Stream)new GZipStream(new FileStream($"{path}.gz", FileMode.Create), CompressionMode.Compress) : new FileStream(path, FileMode.Create)))
             using (var jtw = new JsonTextWriter(sw))
@@ -7149,7 +8312,7 @@ namespace FolioConsoleApplication
                 var js = new JsonSerializer { Formatting = Formatting.Indented };
                 jtw.WriteStartArray();
                 var i = 0;
-                foreach (var jo in api ? fsc.InstanceRelationshipTypes(where, take: take) : fdc.InstanceRelationshipTypes(where, take: take).Select(irt => JObject.Parse(irt.Content)))
+                foreach (var jo in api ? fsc.InstanceRelationshipTypes(where, orderBy, skip, take) : fdc.InstanceRelationshipTypes(where, null, orderBy, skip, take).Select(irt => JObject.Parse(irt.Content)))
                 {
                     if (validate)
                     {
@@ -7170,12 +8333,31 @@ namespace FolioConsoleApplication
             traceSource.TraceEvent(TraceEventType.Information, 0, $"{s.Elapsed} elapsed");
         }
 
+        public static void QueryInstanceStatuses(string where = null, string orderBy = null, int? skip = null, int? take = null, string select = null)
+        {
+            using (var fdc = new FolioDapperContext(connectionString))
+            using (var fsc = new FolioServiceClient(connectionString))
+            using (var jtw = new JsonTextWriter(Console.Out))
+            {
+                jtw.WriteStartArray();
+                foreach (var jo in (api ? fsc.InstanceStatuses(where, orderBy, skip, take) : fdc.InstanceStatuses(where, null, orderBy, skip, take).Select(@is => JObject.Parse(@is.Content))).Select(jo =>
+                {
+                    return select == null ? jo : new JObject(select.Split(",").Select(s =>
+                    {
+                        var m = Regex.Match(s.Trim(), @"(?<Path>\S+)((?i) as (?<Name>.+))?", RegexOptions.Compiled);
+                        return new JProperty(m.Groups["Name"].Success ? m.Groups["Name"].Value : m.Groups["Path"].Value.Split(".").Last(), jo.SelectToken(m.Groups["Path"].Value));
+                    }));
+                })) jsonSerializer.Serialize(jtw, jo);
+                jtw.WriteEndArray();
+            }
+        }
+
         public static void DeleteInstanceStatuses(string where = null)
         {
             traceSource.TraceEvent(TraceEventType.Information, 0, "Deleting instance statuses");
             var s = Stopwatch.StartNew();
-            using (var fbcc = new FolioBulkCopyContext())
-            using (var fsc = new FolioServiceClient())
+            using (var fbcc = new FolioBulkCopyContext(connectionString))
+            using (var fsc = new FolioServiceClient(connectionString))
             {
                 var i = 0;
                 if (api)
@@ -7208,8 +8390,8 @@ namespace FolioConsoleApplication
             using (var sr = new StreamReader(compress || path.EndsWith(".gz") ? (Stream)new GZipStream(File.OpenRead($"{path}{(path.EndsWith(".gz") ? "" : ".gz")}"), CompressionMode.Decompress) : File.OpenRead(path)))
             using (var sr2 = new StreamReader(Assembly.GetAssembly(typeof(FolioContext)).GetManifestResourceStream("FolioLibrary.InstanceStatus.json")))
             using (var jtr = new JsonTextReader(sr) { SupportMultipleContent = true })
-            using (var fbcc = new FolioBulkCopyContext())
-            using (var fsc = new FolioServiceClient())
+            using (var fbcc = new FolioBulkCopyContext(connectionString))
+            using (var fsc = new FolioServiceClient(connectionString))
             {
                 var s2 = Stopwatch.StartNew();
                 var js4 = JsonSchema.FromJsonAsync(sr2.ReadToEndAsync().Result).Result;
@@ -7266,8 +8448,8 @@ namespace FolioConsoleApplication
         {
             traceSource.TraceEvent(TraceEventType.Information, 0, "Saving instance statuses");
             var s = Stopwatch.StartNew();
-            using (var fdc = new FolioDapperContext())
-            using (var fsc = new FolioServiceClient())
+            using (var fdc = new FolioDapperContext(connectionString))
+            using (var fsc = new FolioServiceClient(connectionString))
             using (var sr = new StreamReader(Assembly.GetAssembly(typeof(FolioContext)).GetManifestResourceStream("FolioLibrary.InstanceStatus.json")))
             using (var sw = new StreamWriter(whatIf ? new MemoryStream() : compress ? (Stream)new GZipStream(new FileStream($"{path}.gz", FileMode.Create), CompressionMode.Compress) : new FileStream(path, FileMode.Create)))
             using (var jtw = new JsonTextWriter(sw))
@@ -7277,7 +8459,7 @@ namespace FolioConsoleApplication
                 var js = new JsonSerializer { Formatting = Formatting.Indented };
                 jtw.WriteStartArray();
                 var i = 0;
-                foreach (var jo in api ? fsc.InstanceStatuses(where, take: take) : fdc.InstanceStatuses(where, take: take).Select(@is => JObject.Parse(@is.Content)))
+                foreach (var jo in api ? fsc.InstanceStatuses(where, orderBy, skip, take) : fdc.InstanceStatuses(where, null, orderBy, skip, take).Select(@is => JObject.Parse(@is.Content)))
                 {
                     if (validate)
                     {
@@ -7298,12 +8480,31 @@ namespace FolioConsoleApplication
             traceSource.TraceEvent(TraceEventType.Information, 0, $"{s.Elapsed} elapsed");
         }
 
+        public static void QueryInstanceTypes(string where = null, string orderBy = null, int? skip = null, int? take = null, string select = null)
+        {
+            using (var fdc = new FolioDapperContext(connectionString))
+            using (var fsc = new FolioServiceClient(connectionString))
+            using (var jtw = new JsonTextWriter(Console.Out))
+            {
+                jtw.WriteStartArray();
+                foreach (var jo in (api ? fsc.InstanceTypes(where, orderBy, skip, take) : fdc.InstanceTypes(where, null, orderBy, skip, take).Select(it => JObject.Parse(it.Content))).Select(jo =>
+                {
+                    return select == null ? jo : new JObject(select.Split(",").Select(s =>
+                    {
+                        var m = Regex.Match(s.Trim(), @"(?<Path>\S+)((?i) as (?<Name>.+))?", RegexOptions.Compiled);
+                        return new JProperty(m.Groups["Name"].Success ? m.Groups["Name"].Value : m.Groups["Path"].Value.Split(".").Last(), jo.SelectToken(m.Groups["Path"].Value));
+                    }));
+                })) jsonSerializer.Serialize(jtw, jo);
+                jtw.WriteEndArray();
+            }
+        }
+
         public static void DeleteInstanceTypes(string where = null)
         {
             traceSource.TraceEvent(TraceEventType.Information, 0, "Deleting instance types");
             var s = Stopwatch.StartNew();
-            using (var fbcc = new FolioBulkCopyContext())
-            using (var fsc = new FolioServiceClient())
+            using (var fbcc = new FolioBulkCopyContext(connectionString))
+            using (var fsc = new FolioServiceClient(connectionString))
             {
                 var i = 0;
                 if (api)
@@ -7336,8 +8537,8 @@ namespace FolioConsoleApplication
             using (var sr = new StreamReader(compress || path.EndsWith(".gz") ? (Stream)new GZipStream(File.OpenRead($"{path}{(path.EndsWith(".gz") ? "" : ".gz")}"), CompressionMode.Decompress) : File.OpenRead(path)))
             using (var sr2 = new StreamReader(Assembly.GetAssembly(typeof(FolioContext)).GetManifestResourceStream("FolioLibrary.InstanceType.json")))
             using (var jtr = new JsonTextReader(sr) { SupportMultipleContent = true })
-            using (var fbcc = new FolioBulkCopyContext())
-            using (var fsc = new FolioServiceClient())
+            using (var fbcc = new FolioBulkCopyContext(connectionString))
+            using (var fsc = new FolioServiceClient(connectionString))
             {
                 var s2 = Stopwatch.StartNew();
                 var js4 = JsonSchema.FromJsonAsync(sr2.ReadToEndAsync().Result).Result;
@@ -7392,8 +8593,8 @@ namespace FolioConsoleApplication
         {
             traceSource.TraceEvent(TraceEventType.Information, 0, "Saving instance types");
             var s = Stopwatch.StartNew();
-            using (var fdc = new FolioDapperContext())
-            using (var fsc = new FolioServiceClient())
+            using (var fdc = new FolioDapperContext(connectionString))
+            using (var fsc = new FolioServiceClient(connectionString))
             using (var sr = new StreamReader(Assembly.GetAssembly(typeof(FolioContext)).GetManifestResourceStream("FolioLibrary.InstanceType.json")))
             using (var sw = new StreamWriter(whatIf ? new MemoryStream() : compress ? (Stream)new GZipStream(new FileStream($"{path}.gz", FileMode.Create), CompressionMode.Compress) : new FileStream(path, FileMode.Create)))
             using (var jtw = new JsonTextWriter(sw))
@@ -7403,7 +8604,7 @@ namespace FolioConsoleApplication
                 var js = new JsonSerializer { Formatting = Formatting.Indented };
                 jtw.WriteStartArray();
                 var i = 0;
-                foreach (var jo in api ? fsc.InstanceTypes(where, take: take) : fdc.InstanceTypes(where, take: take).Select(it => JObject.Parse(it.Content)))
+                foreach (var jo in api ? fsc.InstanceTypes(where, orderBy, skip, take) : fdc.InstanceTypes(where, null, orderBy, skip, take).Select(it => JObject.Parse(it.Content)))
                 {
                     if (validate)
                     {
@@ -7424,12 +8625,31 @@ namespace FolioConsoleApplication
             traceSource.TraceEvent(TraceEventType.Information, 0, $"{s.Elapsed} elapsed");
         }
 
+        public static void QueryInstitutions(string where = null, string orderBy = null, int? skip = null, int? take = null, string select = null)
+        {
+            using (var fdc = new FolioDapperContext(connectionString))
+            using (var fsc = new FolioServiceClient(connectionString))
+            using (var jtw = new JsonTextWriter(Console.Out))
+            {
+                jtw.WriteStartArray();
+                foreach (var jo in (api ? fsc.Institutions(where, orderBy, skip, take) : fdc.Institutions(where, null, orderBy, skip, take).Select(i2 => JObject.Parse(i2.Content))).Select(jo =>
+                {
+                    return select == null ? jo : new JObject(select.Split(",").Select(s =>
+                    {
+                        var m = Regex.Match(s.Trim(), @"(?<Path>\S+)((?i) as (?<Name>.+))?", RegexOptions.Compiled);
+                        return new JProperty(m.Groups["Name"].Success ? m.Groups["Name"].Value : m.Groups["Path"].Value.Split(".").Last(), jo.SelectToken(m.Groups["Path"].Value));
+                    }));
+                })) jsonSerializer.Serialize(jtw, jo);
+                jtw.WriteEndArray();
+            }
+        }
+
         public static void DeleteInstitutions(string where = null)
         {
             traceSource.TraceEvent(TraceEventType.Information, 0, "Deleting institutions");
             var s = Stopwatch.StartNew();
-            using (var fbcc = new FolioBulkCopyContext())
-            using (var fsc = new FolioServiceClient())
+            using (var fbcc = new FolioBulkCopyContext(connectionString))
+            using (var fsc = new FolioServiceClient(connectionString))
             {
                 var i = 0;
                 if (api)
@@ -7462,8 +8682,8 @@ namespace FolioConsoleApplication
             using (var sr = new StreamReader(compress || path.EndsWith(".gz") ? (Stream)new GZipStream(File.OpenRead($"{path}{(path.EndsWith(".gz") ? "" : ".gz")}"), CompressionMode.Decompress) : File.OpenRead(path)))
             using (var sr2 = new StreamReader(Assembly.GetAssembly(typeof(FolioContext)).GetManifestResourceStream("FolioLibrary.Institution.json")))
             using (var jtr = new JsonTextReader(sr) { SupportMultipleContent = true })
-            using (var fbcc = new FolioBulkCopyContext())
-            using (var fsc = new FolioServiceClient())
+            using (var fbcc = new FolioBulkCopyContext(connectionString))
+            using (var fsc = new FolioServiceClient(connectionString))
             {
                 var s2 = Stopwatch.StartNew();
                 var js4 = JsonSchema.FromJsonAsync(sr2.ReadToEndAsync().Result).Result;
@@ -7520,8 +8740,8 @@ namespace FolioConsoleApplication
         {
             traceSource.TraceEvent(TraceEventType.Information, 0, "Saving institutions");
             var s = Stopwatch.StartNew();
-            using (var fdc = new FolioDapperContext())
-            using (var fsc = new FolioServiceClient())
+            using (var fdc = new FolioDapperContext(connectionString))
+            using (var fsc = new FolioServiceClient(connectionString))
             using (var sr = new StreamReader(Assembly.GetAssembly(typeof(FolioContext)).GetManifestResourceStream("FolioLibrary.Institution.json")))
             using (var sw = new StreamWriter(whatIf ? new MemoryStream() : compress ? (Stream)new GZipStream(new FileStream($"{path}.gz", FileMode.Create), CompressionMode.Compress) : new FileStream(path, FileMode.Create)))
             using (var jtw = new JsonTextWriter(sw))
@@ -7531,7 +8751,7 @@ namespace FolioConsoleApplication
                 var js = new JsonSerializer { Formatting = Formatting.Indented };
                 jtw.WriteStartArray();
                 var i = 0;
-                foreach (var jo in api ? fsc.Institutions(where, take: take) : fdc.Institutions(where, take: take).Select(i2 => JObject.Parse(i2.Content)))
+                foreach (var jo in api ? fsc.Institutions(where, orderBy, skip, take) : fdc.Institutions(where, null, orderBy, skip, take).Select(i2 => JObject.Parse(i2.Content)))
                 {
                     if (validate)
                     {
@@ -7552,12 +8772,31 @@ namespace FolioConsoleApplication
             traceSource.TraceEvent(TraceEventType.Information, 0, $"{s.Elapsed} elapsed");
         }
 
+        public static void QueryInterfaces(string where = null, string orderBy = null, int? skip = null, int? take = null, string select = null)
+        {
+            using (var fdc = new FolioDapperContext(connectionString))
+            using (var fsc = new FolioServiceClient(connectionString))
+            using (var jtw = new JsonTextWriter(Console.Out))
+            {
+                jtw.WriteStartArray();
+                foreach (var jo in (api ? fsc.Interfaces(where, orderBy, skip, take) : fdc.Interfaces(where, null, orderBy, skip, take).Select(i2 => JObject.Parse(i2.Content))).Select(jo =>
+                {
+                    return select == null ? jo : new JObject(select.Split(",").Select(s =>
+                    {
+                        var m = Regex.Match(s.Trim(), @"(?<Path>\S+)((?i) as (?<Name>.+))?", RegexOptions.Compiled);
+                        return new JProperty(m.Groups["Name"].Success ? m.Groups["Name"].Value : m.Groups["Path"].Value.Split(".").Last(), jo.SelectToken(m.Groups["Path"].Value));
+                    }));
+                })) jsonSerializer.Serialize(jtw, jo);
+                jtw.WriteEndArray();
+            }
+        }
+
         public static void DeleteInterfaces(string where = null)
         {
             traceSource.TraceEvent(TraceEventType.Information, 0, "Deleting interfaces");
             var s = Stopwatch.StartNew();
-            using (var fbcc = new FolioBulkCopyContext())
-            using (var fsc = new FolioServiceClient())
+            using (var fbcc = new FolioBulkCopyContext(connectionString))
+            using (var fsc = new FolioServiceClient(connectionString))
             {
                 var i = 0;
                 if (api)
@@ -7590,8 +8829,8 @@ namespace FolioConsoleApplication
             using (var sr = new StreamReader(compress || path.EndsWith(".gz") ? (Stream)new GZipStream(File.OpenRead($"{path}{(path.EndsWith(".gz") ? "" : ".gz")}"), CompressionMode.Decompress) : File.OpenRead(path)))
             using (var sr2 = new StreamReader(Assembly.GetAssembly(typeof(FolioContext)).GetManifestResourceStream("FolioLibrary.Interface.json")))
             using (var jtr = new JsonTextReader(sr) { SupportMultipleContent = true })
-            using (var fbcc = new FolioBulkCopyContext())
-            using (var fsc = new FolioServiceClient())
+            using (var fbcc = new FolioBulkCopyContext(connectionString))
+            using (var fsc = new FolioServiceClient(connectionString))
             {
                 var s2 = Stopwatch.StartNew();
                 var js4 = JsonSchema.FromJsonAsync(sr2.ReadToEndAsync().Result).Result;
@@ -7648,8 +8887,8 @@ namespace FolioConsoleApplication
         {
             traceSource.TraceEvent(TraceEventType.Information, 0, "Saving interfaces");
             var s = Stopwatch.StartNew();
-            using (var fdc = new FolioDapperContext())
-            using (var fsc = new FolioServiceClient())
+            using (var fdc = new FolioDapperContext(connectionString))
+            using (var fsc = new FolioServiceClient(connectionString))
             using (var sr = new StreamReader(Assembly.GetAssembly(typeof(FolioContext)).GetManifestResourceStream("FolioLibrary.Interface.json")))
             using (var sw = new StreamWriter(whatIf ? new MemoryStream() : compress ? (Stream)new GZipStream(new FileStream($"{path}.gz", FileMode.Create), CompressionMode.Compress) : new FileStream(path, FileMode.Create)))
             using (var jtw = new JsonTextWriter(sw))
@@ -7659,7 +8898,7 @@ namespace FolioConsoleApplication
                 var js = new JsonSerializer { Formatting = Formatting.Indented };
                 jtw.WriteStartArray();
                 var i = 0;
-                foreach (var jo in api ? fsc.Interfaces(where, take: take) : fdc.Interfaces(where, take: take).Select(i2 => JObject.Parse(i2.Content)))
+                foreach (var jo in api ? fsc.Interfaces(where, orderBy, skip, take) : fdc.Interfaces(where, null, orderBy, skip, take).Select(i2 => JObject.Parse(i2.Content)))
                 {
                     if (validate)
                     {
@@ -7680,11 +8919,29 @@ namespace FolioConsoleApplication
             traceSource.TraceEvent(TraceEventType.Information, 0, $"{s.Elapsed} elapsed");
         }
 
+        public static void QueryInterfaceCredentials(string where = null, string orderBy = null, int? skip = null, int? take = null, string select = null)
+        {
+            using (var fdc = new FolioDapperContext(connectionString))
+            using (var jtw = new JsonTextWriter(Console.Out))
+            {
+                jtw.WriteStartArray();
+                foreach (var jo in (api ? throw new NotSupportedException() : fdc.InterfaceCredentials(where, null, orderBy, skip, take).Select(ic => JObject.Parse(ic.Content))).Select(jo =>
+                {
+                    return select == null ? jo : new JObject(select.Split(",").Select(s =>
+                    {
+                        var m = Regex.Match(s.Trim(), @"(?<Path>\S+)((?i) as (?<Name>.+))?", RegexOptions.Compiled);
+                        return new JProperty(m.Groups["Name"].Success ? m.Groups["Name"].Value : m.Groups["Path"].Value.Split(".").Last(), jo.SelectToken(m.Groups["Path"].Value));
+                    }));
+                })) jsonSerializer.Serialize(jtw, jo);
+                jtw.WriteEndArray();
+            }
+        }
+
         public static void DeleteInterfaceCredentials(string where = null)
         {
             traceSource.TraceEvent(TraceEventType.Information, 0, "Deleting interface credentials");
             var s = Stopwatch.StartNew();
-            using (var fbcc = new FolioBulkCopyContext())
+            using (var fbcc = new FolioBulkCopyContext(connectionString))
             {
                 var i = 0;
                 if (api)
@@ -7707,7 +8964,7 @@ namespace FolioConsoleApplication
             using (var sr = new StreamReader(compress || path.EndsWith(".gz") ? (Stream)new GZipStream(File.OpenRead($"{path}{(path.EndsWith(".gz") ? "" : ".gz")}"), CompressionMode.Decompress) : File.OpenRead(path)))
             using (var sr2 = new StreamReader(Assembly.GetAssembly(typeof(FolioContext)).GetManifestResourceStream("FolioLibrary.InterfaceCredential.json")))
             using (var jtr = new JsonTextReader(sr) { SupportMultipleContent = true })
-            using (var fbcc = new FolioBulkCopyContext())
+            using (var fbcc = new FolioBulkCopyContext(connectionString))
             {
                 var s2 = Stopwatch.StartNew();
                 var js4 = JsonSchema.FromJsonAsync(sr2.ReadToEndAsync().Result).Result;
@@ -7758,7 +9015,7 @@ namespace FolioConsoleApplication
         {
             traceSource.TraceEvent(TraceEventType.Information, 0, "Saving interface credentials");
             var s = Stopwatch.StartNew();
-            using (var fdc = new FolioDapperContext())
+            using (var fdc = new FolioDapperContext(connectionString))
             using (var sr = new StreamReader(Assembly.GetAssembly(typeof(FolioContext)).GetManifestResourceStream("FolioLibrary.InterfaceCredential.json")))
             using (var sw = new StreamWriter(whatIf ? new MemoryStream() : compress ? (Stream)new GZipStream(new FileStream($"{path}.gz", FileMode.Create), CompressionMode.Compress) : new FileStream(path, FileMode.Create)))
             using (var jtw = new JsonTextWriter(sw))
@@ -7768,7 +9025,7 @@ namespace FolioConsoleApplication
                 var js = new JsonSerializer { Formatting = Formatting.Indented };
                 jtw.WriteStartArray();
                 var i = 0;
-                foreach (var jo in api ? throw new NotSupportedException() : fdc.InterfaceCredentials(where, take: take).Select(ic => JObject.Parse(ic.Content)))
+                foreach (var jo in api ? throw new NotSupportedException() : fdc.InterfaceCredentials(where, null, orderBy, skip, take).Select(ic => JObject.Parse(ic.Content)))
                 {
                     if (validate)
                     {
@@ -7789,12 +9046,31 @@ namespace FolioConsoleApplication
             traceSource.TraceEvent(TraceEventType.Information, 0, $"{s.Elapsed} elapsed");
         }
 
+        public static void QueryInvoices(string where = null, string orderBy = null, int? skip = null, int? take = null, string select = null)
+        {
+            using (var fdc = new FolioDapperContext(connectionString))
+            using (var fsc = new FolioServiceClient(connectionString))
+            using (var jtw = new JsonTextWriter(Console.Out))
+            {
+                jtw.WriteStartArray();
+                foreach (var jo in (api ? fsc.Invoices(where, orderBy, skip, take) : fdc.Invoices(where, null, orderBy, skip, take).Select(i2 => JObject.Parse(i2.Content))).Select(jo =>
+                {
+                    return select == null ? jo : new JObject(select.Split(",").Select(s =>
+                    {
+                        var m = Regex.Match(s.Trim(), @"(?<Path>\S+)((?i) as (?<Name>.+))?", RegexOptions.Compiled);
+                        return new JProperty(m.Groups["Name"].Success ? m.Groups["Name"].Value : m.Groups["Path"].Value.Split(".").Last(), jo.SelectToken(m.Groups["Path"].Value));
+                    }));
+                })) jsonSerializer.Serialize(jtw, jo);
+                jtw.WriteEndArray();
+            }
+        }
+
         public static void DeleteInvoices(string where = null)
         {
             traceSource.TraceEvent(TraceEventType.Information, 0, "Deleting invoices");
             var s = Stopwatch.StartNew();
-            using (var fbcc = new FolioBulkCopyContext())
-            using (var fsc = new FolioServiceClient())
+            using (var fbcc = new FolioBulkCopyContext(connectionString))
+            using (var fsc = new FolioServiceClient(connectionString))
             {
                 var i = 0;
                 if (api)
@@ -7827,8 +9103,8 @@ namespace FolioConsoleApplication
             using (var sr = new StreamReader(compress || path.EndsWith(".gz") ? (Stream)new GZipStream(File.OpenRead($"{path}{(path.EndsWith(".gz") ? "" : ".gz")}"), CompressionMode.Decompress) : File.OpenRead(path)))
             using (var sr2 = new StreamReader(Assembly.GetAssembly(typeof(FolioContext)).GetManifestResourceStream("FolioLibrary.Invoice.json")))
             using (var jtr = new JsonTextReader(sr) { SupportMultipleContent = true })
-            using (var fbcc = new FolioBulkCopyContext())
-            using (var fsc = new FolioServiceClient())
+            using (var fbcc = new FolioBulkCopyContext(connectionString))
+            using (var fsc = new FolioServiceClient(connectionString))
             {
                 var s2 = Stopwatch.StartNew();
                 var js4 = JsonSchema.FromJsonAsync(sr2.ReadToEndAsync().Result).Result;
@@ -7886,8 +9162,8 @@ namespace FolioConsoleApplication
         {
             traceSource.TraceEvent(TraceEventType.Information, 0, "Saving invoices");
             var s = Stopwatch.StartNew();
-            using (var fdc = new FolioDapperContext())
-            using (var fsc = new FolioServiceClient())
+            using (var fdc = new FolioDapperContext(connectionString))
+            using (var fsc = new FolioServiceClient(connectionString))
             using (var sr = new StreamReader(Assembly.GetAssembly(typeof(FolioContext)).GetManifestResourceStream("FolioLibrary.Invoice.json")))
             using (var sw = new StreamWriter(whatIf ? new MemoryStream() : compress ? (Stream)new GZipStream(new FileStream($"{path}.gz", FileMode.Create), CompressionMode.Compress) : new FileStream(path, FileMode.Create)))
             using (var jtw = new JsonTextWriter(sw))
@@ -7897,7 +9173,7 @@ namespace FolioConsoleApplication
                 var js = new JsonSerializer { Formatting = Formatting.Indented };
                 jtw.WriteStartArray();
                 var i = 0;
-                foreach (var jo in api ? fsc.Invoices(where, take: take) : fdc.Invoices(where, take: take).Select(i2 => JObject.Parse(i2.Content)))
+                foreach (var jo in api ? fsc.Invoices(where, orderBy, skip, take) : fdc.Invoices(where, null, orderBy, skip, take).Select(i2 => JObject.Parse(i2.Content)))
                 {
                     if (validate)
                     {
@@ -7918,12 +9194,31 @@ namespace FolioConsoleApplication
             traceSource.TraceEvent(TraceEventType.Information, 0, $"{s.Elapsed} elapsed");
         }
 
+        public static void QueryInvoiceItems(string where = null, string orderBy = null, int? skip = null, int? take = null, string select = null)
+        {
+            using (var fdc = new FolioDapperContext(connectionString))
+            using (var fsc = new FolioServiceClient(connectionString))
+            using (var jtw = new JsonTextWriter(Console.Out))
+            {
+                jtw.WriteStartArray();
+                foreach (var jo in (api ? fsc.InvoiceItems(where, orderBy, skip, take) : fdc.InvoiceItems(where, null, orderBy, skip, take).Select(ii => JObject.Parse(ii.Content))).Select(jo =>
+                {
+                    return select == null ? jo : new JObject(select.Split(",").Select(s =>
+                    {
+                        var m = Regex.Match(s.Trim(), @"(?<Path>\S+)((?i) as (?<Name>.+))?", RegexOptions.Compiled);
+                        return new JProperty(m.Groups["Name"].Success ? m.Groups["Name"].Value : m.Groups["Path"].Value.Split(".").Last(), jo.SelectToken(m.Groups["Path"].Value));
+                    }));
+                })) jsonSerializer.Serialize(jtw, jo);
+                jtw.WriteEndArray();
+            }
+        }
+
         public static void DeleteInvoiceItems(string where = null)
         {
             traceSource.TraceEvent(TraceEventType.Information, 0, "Deleting invoice items");
             var s = Stopwatch.StartNew();
-            using (var fbcc = new FolioBulkCopyContext())
-            using (var fsc = new FolioServiceClient())
+            using (var fbcc = new FolioBulkCopyContext(connectionString))
+            using (var fsc = new FolioServiceClient(connectionString))
             {
                 var i = 0;
                 if (api)
@@ -7956,8 +9251,8 @@ namespace FolioConsoleApplication
             using (var sr = new StreamReader(compress || path.EndsWith(".gz") ? (Stream)new GZipStream(File.OpenRead($"{path}{(path.EndsWith(".gz") ? "" : ".gz")}"), CompressionMode.Decompress) : File.OpenRead(path)))
             using (var sr2 = new StreamReader(Assembly.GetAssembly(typeof(FolioContext)).GetManifestResourceStream("FolioLibrary.InvoiceItem.json")))
             using (var jtr = new JsonTextReader(sr) { SupportMultipleContent = true })
-            using (var fbcc = new FolioBulkCopyContext())
-            using (var fsc = new FolioServiceClient())
+            using (var fbcc = new FolioBulkCopyContext(connectionString))
+            using (var fsc = new FolioServiceClient(connectionString))
             {
                 var s2 = Stopwatch.StartNew();
                 var js4 = JsonSchema.FromJsonAsync(sr2.ReadToEndAsync().Result).Result;
@@ -8015,8 +9310,8 @@ namespace FolioConsoleApplication
         {
             traceSource.TraceEvent(TraceEventType.Information, 0, "Saving invoice items");
             var s = Stopwatch.StartNew();
-            using (var fdc = new FolioDapperContext())
-            using (var fsc = new FolioServiceClient())
+            using (var fdc = new FolioDapperContext(connectionString))
+            using (var fsc = new FolioServiceClient(connectionString))
             using (var sr = new StreamReader(Assembly.GetAssembly(typeof(FolioContext)).GetManifestResourceStream("FolioLibrary.InvoiceItem.json")))
             using (var sw = new StreamWriter(whatIf ? new MemoryStream() : compress ? (Stream)new GZipStream(new FileStream($"{path}.gz", FileMode.Create), CompressionMode.Compress) : new FileStream(path, FileMode.Create)))
             using (var jtw = new JsonTextWriter(sw))
@@ -8026,7 +9321,7 @@ namespace FolioConsoleApplication
                 var js = new JsonSerializer { Formatting = Formatting.Indented };
                 jtw.WriteStartArray();
                 var i = 0;
-                foreach (var jo in api ? fsc.InvoiceItems(where, take: take) : fdc.InvoiceItems(where, take: take).Select(ii => JObject.Parse(ii.Content)))
+                foreach (var jo in api ? fsc.InvoiceItems(where, orderBy, skip, take) : fdc.InvoiceItems(where, null, orderBy, skip, take).Select(ii => JObject.Parse(ii.Content)))
                 {
                     if (validate)
                     {
@@ -8047,11 +9342,29 @@ namespace FolioConsoleApplication
             traceSource.TraceEvent(TraceEventType.Information, 0, $"{s.Elapsed} elapsed");
         }
 
+        public static void QueryInvoiceTransactionSummaries(string where = null, string orderBy = null, int? skip = null, int? take = null, string select = null)
+        {
+            using (var fdc = new FolioDapperContext(connectionString))
+            using (var jtw = new JsonTextWriter(Console.Out))
+            {
+                jtw.WriteStartArray();
+                foreach (var jo in (api ? throw new NotSupportedException() : fdc.InvoiceTransactionSummaries(where, null, orderBy, skip, take).Select(its => JObject.Parse(its.Content))).Select(jo =>
+                {
+                    return select == null ? jo : new JObject(select.Split(",").Select(s =>
+                    {
+                        var m = Regex.Match(s.Trim(), @"(?<Path>\S+)((?i) as (?<Name>.+))?", RegexOptions.Compiled);
+                        return new JProperty(m.Groups["Name"].Success ? m.Groups["Name"].Value : m.Groups["Path"].Value.Split(".").Last(), jo.SelectToken(m.Groups["Path"].Value));
+                    }));
+                })) jsonSerializer.Serialize(jtw, jo);
+                jtw.WriteEndArray();
+            }
+        }
+
         public static void DeleteInvoiceTransactionSummaries(string where = null)
         {
             traceSource.TraceEvent(TraceEventType.Information, 0, "Deleting invoice transaction summaries");
             var s = Stopwatch.StartNew();
-            using (var fbcc = new FolioBulkCopyContext())
+            using (var fbcc = new FolioBulkCopyContext(connectionString))
             {
                 var i = 0;
                 if (api)
@@ -8074,7 +9387,7 @@ namespace FolioConsoleApplication
             using (var sr = new StreamReader(compress || path.EndsWith(".gz") ? (Stream)new GZipStream(File.OpenRead($"{path}{(path.EndsWith(".gz") ? "" : ".gz")}"), CompressionMode.Decompress) : File.OpenRead(path)))
             using (var sr2 = new StreamReader(Assembly.GetAssembly(typeof(FolioContext)).GetManifestResourceStream("FolioLibrary.InvoiceTransactionSummary.json")))
             using (var jtr = new JsonTextReader(sr) { SupportMultipleContent = true })
-            using (var fbcc = new FolioBulkCopyContext())
+            using (var fbcc = new FolioBulkCopyContext(connectionString))
             {
                 var s2 = Stopwatch.StartNew();
                 var js4 = JsonSchema.FromJsonAsync(sr2.ReadToEndAsync().Result).Result;
@@ -8124,7 +9437,7 @@ namespace FolioConsoleApplication
         {
             traceSource.TraceEvent(TraceEventType.Information, 0, "Saving invoice transaction summaries");
             var s = Stopwatch.StartNew();
-            using (var fdc = new FolioDapperContext())
+            using (var fdc = new FolioDapperContext(connectionString))
             using (var sr = new StreamReader(Assembly.GetAssembly(typeof(FolioContext)).GetManifestResourceStream("FolioLibrary.InvoiceTransactionSummary.json")))
             using (var sw = new StreamWriter(whatIf ? new MemoryStream() : compress ? (Stream)new GZipStream(new FileStream($"{path}.gz", FileMode.Create), CompressionMode.Compress) : new FileStream(path, FileMode.Create)))
             using (var jtw = new JsonTextWriter(sw))
@@ -8134,7 +9447,7 @@ namespace FolioConsoleApplication
                 var js = new JsonSerializer { Formatting = Formatting.Indented };
                 jtw.WriteStartArray();
                 var i = 0;
-                foreach (var jo in api ? throw new NotSupportedException() : fdc.InvoiceTransactionSummaries(where, take: take).Select(its => JObject.Parse(its.Content)))
+                foreach (var jo in api ? throw new NotSupportedException() : fdc.InvoiceTransactionSummaries(where, null, orderBy, skip, take).Select(its => JObject.Parse(its.Content)))
                 {
                     if (validate)
                     {
@@ -8155,12 +9468,31 @@ namespace FolioConsoleApplication
             traceSource.TraceEvent(TraceEventType.Information, 0, $"{s.Elapsed} elapsed");
         }
 
+        public static void QueryItems(string where = null, string orderBy = null, int? skip = null, int? take = null, string select = null)
+        {
+            using (var fdc = new FolioDapperContext(connectionString))
+            using (var fsc = new FolioServiceClient(connectionString))
+            using (var jtw = new JsonTextWriter(Console.Out))
+            {
+                jtw.WriteStartArray();
+                foreach (var jo in (api ? fsc.Items(where, orderBy, skip, take) : fdc.Items(where, null, orderBy, skip, take).Select(i2 => JObject.Parse(i2.Content))).Select(jo =>
+                {
+                    return select == null ? jo : new JObject(select.Split(",").Select(s =>
+                    {
+                        var m = Regex.Match(s.Trim(), @"(?<Path>\S+)((?i) as (?<Name>.+))?", RegexOptions.Compiled);
+                        return new JProperty(m.Groups["Name"].Success ? m.Groups["Name"].Value : m.Groups["Path"].Value.Split(".").Last(), jo.SelectToken(m.Groups["Path"].Value));
+                    }));
+                })) jsonSerializer.Serialize(jtw, jo);
+                jtw.WriteEndArray();
+            }
+        }
+
         public static void DeleteItems(string where = null)
         {
             traceSource.TraceEvent(TraceEventType.Information, 0, "Deleting items");
             var s = Stopwatch.StartNew();
-            using (var fbcc = new FolioBulkCopyContext())
-            using (var fsc = new FolioServiceClient())
+            using (var fbcc = new FolioBulkCopyContext(connectionString))
+            using (var fsc = new FolioServiceClient(connectionString))
             {
                 var i = 0;
                 if (api)
@@ -8193,8 +9525,8 @@ namespace FolioConsoleApplication
             using (var sr = new StreamReader(compress || path.EndsWith(".gz") ? (Stream)new GZipStream(File.OpenRead($"{path}{(path.EndsWith(".gz") ? "" : ".gz")}"), CompressionMode.Decompress) : File.OpenRead(path)))
             using (var sr2 = new StreamReader(Assembly.GetAssembly(typeof(FolioContext)).GetManifestResourceStream("FolioLibrary.Item.json")))
             using (var jtr = new JsonTextReader(sr) { SupportMultipleContent = true })
-            using (var fbcc = new FolioBulkCopyContext())
-            using (var fsc = new FolioServiceClient())
+            using (var fbcc = new FolioBulkCopyContext(connectionString))
+            using (var fsc = new FolioServiceClient(connectionString))
             {
                 var s2 = Stopwatch.StartNew();
                 var js4 = JsonSchema.FromJsonAsync(sr2.ReadToEndAsync().Result).Result;
@@ -8262,8 +9594,8 @@ namespace FolioConsoleApplication
         {
             traceSource.TraceEvent(TraceEventType.Information, 0, "Saving items");
             var s = Stopwatch.StartNew();
-            using (var fdc = new FolioDapperContext())
-            using (var fsc = new FolioServiceClient())
+            using (var fdc = new FolioDapperContext(connectionString))
+            using (var fsc = new FolioServiceClient(connectionString))
             using (var sr = new StreamReader(Assembly.GetAssembly(typeof(FolioContext)).GetManifestResourceStream("FolioLibrary.Item.json")))
             using (var sw = new StreamWriter(whatIf ? new MemoryStream() : compress ? (Stream)new GZipStream(new FileStream($"{path}.gz", FileMode.Create), CompressionMode.Compress) : new FileStream(path, FileMode.Create)))
             using (var jtw = new JsonTextWriter(sw))
@@ -8273,7 +9605,7 @@ namespace FolioConsoleApplication
                 var js = new JsonSerializer { Formatting = Formatting.Indented };
                 jtw.WriteStartArray();
                 var i = 0;
-                foreach (var jo in api ? fsc.Items(where, take: take) : fdc.Items(where, take: take).Select(i2 => JObject.Parse(i2.Content)))
+                foreach (var jo in api ? fsc.Items(where, orderBy, skip, take) : fdc.Items(where, null, orderBy, skip, take).Select(i2 => JObject.Parse(i2.Content)))
                 {
                     if (validate)
                     {
@@ -8294,12 +9626,31 @@ namespace FolioConsoleApplication
             traceSource.TraceEvent(TraceEventType.Information, 0, $"{s.Elapsed} elapsed");
         }
 
+        public static void QueryItemDamagedStatuses(string where = null, string orderBy = null, int? skip = null, int? take = null, string select = null)
+        {
+            using (var fdc = new FolioDapperContext(connectionString))
+            using (var fsc = new FolioServiceClient(connectionString))
+            using (var jtw = new JsonTextWriter(Console.Out))
+            {
+                jtw.WriteStartArray();
+                foreach (var jo in (api ? fsc.ItemDamagedStatuses(where, orderBy, skip, take) : fdc.ItemDamagedStatuses(where, null, orderBy, skip, take).Select(ids => JObject.Parse(ids.Content))).Select(jo =>
+                {
+                    return select == null ? jo : new JObject(select.Split(",").Select(s =>
+                    {
+                        var m = Regex.Match(s.Trim(), @"(?<Path>\S+)((?i) as (?<Name>.+))?", RegexOptions.Compiled);
+                        return new JProperty(m.Groups["Name"].Success ? m.Groups["Name"].Value : m.Groups["Path"].Value.Split(".").Last(), jo.SelectToken(m.Groups["Path"].Value));
+                    }));
+                })) jsonSerializer.Serialize(jtw, jo);
+                jtw.WriteEndArray();
+            }
+        }
+
         public static void DeleteItemDamagedStatuses(string where = null)
         {
             traceSource.TraceEvent(TraceEventType.Information, 0, "Deleting item damaged statuses");
             var s = Stopwatch.StartNew();
-            using (var fbcc = new FolioBulkCopyContext())
-            using (var fsc = new FolioServiceClient())
+            using (var fbcc = new FolioBulkCopyContext(connectionString))
+            using (var fsc = new FolioServiceClient(connectionString))
             {
                 var i = 0;
                 if (api)
@@ -8332,8 +9683,8 @@ namespace FolioConsoleApplication
             using (var sr = new StreamReader(compress || path.EndsWith(".gz") ? (Stream)new GZipStream(File.OpenRead($"{path}{(path.EndsWith(".gz") ? "" : ".gz")}"), CompressionMode.Decompress) : File.OpenRead(path)))
             using (var sr2 = new StreamReader(Assembly.GetAssembly(typeof(FolioContext)).GetManifestResourceStream("FolioLibrary.ItemDamagedStatus.json")))
             using (var jtr = new JsonTextReader(sr) { SupportMultipleContent = true })
-            using (var fbcc = new FolioBulkCopyContext())
-            using (var fsc = new FolioServiceClient())
+            using (var fbcc = new FolioBulkCopyContext(connectionString))
+            using (var fsc = new FolioServiceClient(connectionString))
             {
                 var s2 = Stopwatch.StartNew();
                 var js4 = JsonSchema.FromJsonAsync(sr2.ReadToEndAsync().Result).Result;
@@ -8390,8 +9741,8 @@ namespace FolioConsoleApplication
         {
             traceSource.TraceEvent(TraceEventType.Information, 0, "Saving item damaged statuses");
             var s = Stopwatch.StartNew();
-            using (var fdc = new FolioDapperContext())
-            using (var fsc = new FolioServiceClient())
+            using (var fdc = new FolioDapperContext(connectionString))
+            using (var fsc = new FolioServiceClient(connectionString))
             using (var sr = new StreamReader(Assembly.GetAssembly(typeof(FolioContext)).GetManifestResourceStream("FolioLibrary.ItemDamagedStatus.json")))
             using (var sw = new StreamWriter(whatIf ? new MemoryStream() : compress ? (Stream)new GZipStream(new FileStream($"{path}.gz", FileMode.Create), CompressionMode.Compress) : new FileStream(path, FileMode.Create)))
             using (var jtw = new JsonTextWriter(sw))
@@ -8401,7 +9752,7 @@ namespace FolioConsoleApplication
                 var js = new JsonSerializer { Formatting = Formatting.Indented };
                 jtw.WriteStartArray();
                 var i = 0;
-                foreach (var jo in api ? fsc.ItemDamagedStatuses(where, take: take) : fdc.ItemDamagedStatuses(where, take: take).Select(ids => JObject.Parse(ids.Content)))
+                foreach (var jo in api ? fsc.ItemDamagedStatuses(where, orderBy, skip, take) : fdc.ItemDamagedStatuses(where, null, orderBy, skip, take).Select(ids => JObject.Parse(ids.Content)))
                 {
                     if (validate)
                     {
@@ -8422,12 +9773,31 @@ namespace FolioConsoleApplication
             traceSource.TraceEvent(TraceEventType.Information, 0, $"{s.Elapsed} elapsed");
         }
 
+        public static void QueryItemNoteTypes(string where = null, string orderBy = null, int? skip = null, int? take = null, string select = null)
+        {
+            using (var fdc = new FolioDapperContext(connectionString))
+            using (var fsc = new FolioServiceClient(connectionString))
+            using (var jtw = new JsonTextWriter(Console.Out))
+            {
+                jtw.WriteStartArray();
+                foreach (var jo in (api ? fsc.ItemNoteTypes(where, orderBy, skip, take) : fdc.ItemNoteTypes(where, null, orderBy, skip, take).Select(@int => JObject.Parse(@int.Content))).Select(jo =>
+                {
+                    return select == null ? jo : new JObject(select.Split(",").Select(s =>
+                    {
+                        var m = Regex.Match(s.Trim(), @"(?<Path>\S+)((?i) as (?<Name>.+))?", RegexOptions.Compiled);
+                        return new JProperty(m.Groups["Name"].Success ? m.Groups["Name"].Value : m.Groups["Path"].Value.Split(".").Last(), jo.SelectToken(m.Groups["Path"].Value));
+                    }));
+                })) jsonSerializer.Serialize(jtw, jo);
+                jtw.WriteEndArray();
+            }
+        }
+
         public static void DeleteItemNoteTypes(string where = null)
         {
             traceSource.TraceEvent(TraceEventType.Information, 0, "Deleting item note types");
             var s = Stopwatch.StartNew();
-            using (var fbcc = new FolioBulkCopyContext())
-            using (var fsc = new FolioServiceClient())
+            using (var fbcc = new FolioBulkCopyContext(connectionString))
+            using (var fsc = new FolioServiceClient(connectionString))
             {
                 var i = 0;
                 if (api)
@@ -8460,8 +9830,8 @@ namespace FolioConsoleApplication
             using (var sr = new StreamReader(compress || path.EndsWith(".gz") ? (Stream)new GZipStream(File.OpenRead($"{path}{(path.EndsWith(".gz") ? "" : ".gz")}"), CompressionMode.Decompress) : File.OpenRead(path)))
             using (var sr2 = new StreamReader(Assembly.GetAssembly(typeof(FolioContext)).GetManifestResourceStream("FolioLibrary.ItemNoteType.json")))
             using (var jtr = new JsonTextReader(sr) { SupportMultipleContent = true })
-            using (var fbcc = new FolioBulkCopyContext())
-            using (var fsc = new FolioServiceClient())
+            using (var fbcc = new FolioBulkCopyContext(connectionString))
+            using (var fsc = new FolioServiceClient(connectionString))
             {
                 var s2 = Stopwatch.StartNew();
                 var js4 = JsonSchema.FromJsonAsync(sr2.ReadToEndAsync().Result).Result;
@@ -8518,8 +9888,8 @@ namespace FolioConsoleApplication
         {
             traceSource.TraceEvent(TraceEventType.Information, 0, "Saving item note types");
             var s = Stopwatch.StartNew();
-            using (var fdc = new FolioDapperContext())
-            using (var fsc = new FolioServiceClient())
+            using (var fdc = new FolioDapperContext(connectionString))
+            using (var fsc = new FolioServiceClient(connectionString))
             using (var sr = new StreamReader(Assembly.GetAssembly(typeof(FolioContext)).GetManifestResourceStream("FolioLibrary.ItemNoteType.json")))
             using (var sw = new StreamWriter(whatIf ? new MemoryStream() : compress ? (Stream)new GZipStream(new FileStream($"{path}.gz", FileMode.Create), CompressionMode.Compress) : new FileStream(path, FileMode.Create)))
             using (var jtw = new JsonTextWriter(sw))
@@ -8529,7 +9899,7 @@ namespace FolioConsoleApplication
                 var js = new JsonSerializer { Formatting = Formatting.Indented };
                 jtw.WriteStartArray();
                 var i = 0;
-                foreach (var jo in api ? fsc.ItemNoteTypes(where, take: take) : fdc.ItemNoteTypes(where, take: take).Select(@int => JObject.Parse(@int.Content)))
+                foreach (var jo in api ? fsc.ItemNoteTypes(where, orderBy, skip, take) : fdc.ItemNoteTypes(where, null, orderBy, skip, take).Select(@int => JObject.Parse(@int.Content)))
                 {
                     if (validate)
                     {
@@ -8550,12 +9920,31 @@ namespace FolioConsoleApplication
             traceSource.TraceEvent(TraceEventType.Information, 0, $"{s.Elapsed} elapsed");
         }
 
+        public static void QueryLedgers(string where = null, string orderBy = null, int? skip = null, int? take = null, string select = null)
+        {
+            using (var fdc = new FolioDapperContext(connectionString))
+            using (var fsc = new FolioServiceClient(connectionString))
+            using (var jtw = new JsonTextWriter(Console.Out))
+            {
+                jtw.WriteStartArray();
+                foreach (var jo in (api ? fsc.Ledgers(where, orderBy, skip, take) : fdc.Ledgers(where, null, orderBy, skip, take).Select(l => JObject.Parse(l.Content))).Select(jo =>
+                {
+                    return select == null ? jo : new JObject(select.Split(",").Select(s =>
+                    {
+                        var m = Regex.Match(s.Trim(), @"(?<Path>\S+)((?i) as (?<Name>.+))?", RegexOptions.Compiled);
+                        return new JProperty(m.Groups["Name"].Success ? m.Groups["Name"].Value : m.Groups["Path"].Value.Split(".").Last(), jo.SelectToken(m.Groups["Path"].Value));
+                    }));
+                })) jsonSerializer.Serialize(jtw, jo);
+                jtw.WriteEndArray();
+            }
+        }
+
         public static void DeleteLedgers(string where = null)
         {
             traceSource.TraceEvent(TraceEventType.Information, 0, "Deleting ledgers");
             var s = Stopwatch.StartNew();
-            using (var fbcc = new FolioBulkCopyContext())
-            using (var fsc = new FolioServiceClient())
+            using (var fbcc = new FolioBulkCopyContext(connectionString))
+            using (var fsc = new FolioServiceClient(connectionString))
             {
                 var i = 0;
                 if (api)
@@ -8588,8 +9977,8 @@ namespace FolioConsoleApplication
             using (var sr = new StreamReader(compress || path.EndsWith(".gz") ? (Stream)new GZipStream(File.OpenRead($"{path}{(path.EndsWith(".gz") ? "" : ".gz")}"), CompressionMode.Decompress) : File.OpenRead(path)))
             using (var sr2 = new StreamReader(Assembly.GetAssembly(typeof(FolioContext)).GetManifestResourceStream("FolioLibrary.Ledger.json")))
             using (var jtr = new JsonTextReader(sr) { SupportMultipleContent = true })
-            using (var fbcc = new FolioBulkCopyContext())
-            using (var fsc = new FolioServiceClient())
+            using (var fbcc = new FolioBulkCopyContext(connectionString))
+            using (var fsc = new FolioServiceClient(connectionString))
             {
                 var s2 = Stopwatch.StartNew();
                 var js4 = JsonSchema.FromJsonAsync(sr2.ReadToEndAsync().Result).Result;
@@ -8647,8 +10036,8 @@ namespace FolioConsoleApplication
         {
             traceSource.TraceEvent(TraceEventType.Information, 0, "Saving ledgers");
             var s = Stopwatch.StartNew();
-            using (var fdc = new FolioDapperContext())
-            using (var fsc = new FolioServiceClient())
+            using (var fdc = new FolioDapperContext(connectionString))
+            using (var fsc = new FolioServiceClient(connectionString))
             using (var sr = new StreamReader(Assembly.GetAssembly(typeof(FolioContext)).GetManifestResourceStream("FolioLibrary.Ledger.json")))
             using (var sw = new StreamWriter(whatIf ? new MemoryStream() : compress ? (Stream)new GZipStream(new FileStream($"{path}.gz", FileMode.Create), CompressionMode.Compress) : new FileStream(path, FileMode.Create)))
             using (var jtw = new JsonTextWriter(sw))
@@ -8658,7 +10047,7 @@ namespace FolioConsoleApplication
                 var js = new JsonSerializer { Formatting = Formatting.Indented };
                 jtw.WriteStartArray();
                 var i = 0;
-                foreach (var jo in api ? fsc.Ledgers(where, take: take) : fdc.Ledgers(where, take: take).Select(l => JObject.Parse(l.Content)))
+                foreach (var jo in api ? fsc.Ledgers(where, orderBy, skip, take) : fdc.Ledgers(where, null, orderBy, skip, take).Select(l => JObject.Parse(l.Content)))
                 {
                     if (validate)
                     {
@@ -8679,11 +10068,29 @@ namespace FolioConsoleApplication
             traceSource.TraceEvent(TraceEventType.Information, 0, $"{s.Elapsed} elapsed");
         }
 
+        public static void QueryLedgerFiscalYears(string where = null, string orderBy = null, int? skip = null, int? take = null, string select = null)
+        {
+            using (var fdc = new FolioDapperContext(connectionString))
+            using (var jtw = new JsonTextWriter(Console.Out))
+            {
+                jtw.WriteStartArray();
+                foreach (var jo in (api ? throw new NotSupportedException() : fdc.LedgerFiscalYears(where, null, orderBy, skip, take).Select(lfy => JObject.Parse(lfy.Content))).Select(jo =>
+                {
+                    return select == null ? jo : new JObject(select.Split(",").Select(s =>
+                    {
+                        var m = Regex.Match(s.Trim(), @"(?<Path>\S+)((?i) as (?<Name>.+))?", RegexOptions.Compiled);
+                        return new JProperty(m.Groups["Name"].Success ? m.Groups["Name"].Value : m.Groups["Path"].Value.Split(".").Last(), jo.SelectToken(m.Groups["Path"].Value));
+                    }));
+                })) jsonSerializer.Serialize(jtw, jo);
+                jtw.WriteEndArray();
+            }
+        }
+
         public static void DeleteLedgerFiscalYears(string where = null)
         {
             traceSource.TraceEvent(TraceEventType.Information, 0, "Deleting ledger fiscal years");
             var s = Stopwatch.StartNew();
-            using (var fbcc = new FolioBulkCopyContext())
+            using (var fbcc = new FolioBulkCopyContext(connectionString))
             {
                 var i = 0;
                 if (api)
@@ -8706,7 +10113,7 @@ namespace FolioConsoleApplication
             using (var sr = new StreamReader(compress || path.EndsWith(".gz") ? (Stream)new GZipStream(File.OpenRead($"{path}{(path.EndsWith(".gz") ? "" : ".gz")}"), CompressionMode.Decompress) : File.OpenRead(path)))
             using (var sr2 = new StreamReader(Assembly.GetAssembly(typeof(FolioContext)).GetManifestResourceStream("FolioLibrary.LedgerFiscalYear.json")))
             using (var jtr = new JsonTextReader(sr) { SupportMultipleContent = true })
-            using (var fbcc = new FolioBulkCopyContext())
+            using (var fbcc = new FolioBulkCopyContext(connectionString))
             {
                 var s2 = Stopwatch.StartNew();
                 var js4 = JsonSchema.FromJsonAsync(sr2.ReadToEndAsync().Result).Result;
@@ -8758,8 +10165,7 @@ namespace FolioConsoleApplication
         {
             traceSource.TraceEvent(TraceEventType.Information, 0, "Saving ledger fiscal years");
             var s = Stopwatch.StartNew();
-            using (var fdc = new FolioDapperContext())
-            using (var fsc = new FolioServiceClient())
+            using (var fdc = new FolioDapperContext(connectionString))
             using (var sr = new StreamReader(Assembly.GetAssembly(typeof(FolioContext)).GetManifestResourceStream("FolioLibrary.LedgerFiscalYear.json")))
             using (var sw = new StreamWriter(whatIf ? new MemoryStream() : compress ? (Stream)new GZipStream(new FileStream($"{path}.gz", FileMode.Create), CompressionMode.Compress) : new FileStream(path, FileMode.Create)))
             using (var jtw = new JsonTextWriter(sw))
@@ -8769,7 +10175,7 @@ namespace FolioConsoleApplication
                 var js = new JsonSerializer { Formatting = Formatting.Indented };
                 jtw.WriteStartArray();
                 var i = 0;
-                foreach (var jo in api ? fsc.LedgerFiscalYears(where, take: take) : fdc.LedgerFiscalYears(where, take: take).Select(lfy => JObject.Parse(lfy.Content)))
+                foreach (var jo in api ? throw new NotSupportedException() : fdc.LedgerFiscalYears(where, null, orderBy, skip, take).Select(lfy => JObject.Parse(lfy.Content)))
                 {
                     if (validate)
                     {
@@ -8790,12 +10196,31 @@ namespace FolioConsoleApplication
             traceSource.TraceEvent(TraceEventType.Information, 0, $"{s.Elapsed} elapsed");
         }
 
+        public static void QueryLibraries(string where = null, string orderBy = null, int? skip = null, int? take = null, string select = null)
+        {
+            using (var fdc = new FolioDapperContext(connectionString))
+            using (var fsc = new FolioServiceClient(connectionString))
+            using (var jtw = new JsonTextWriter(Console.Out))
+            {
+                jtw.WriteStartArray();
+                foreach (var jo in (api ? fsc.Libraries(where, orderBy, skip, take) : fdc.Libraries(where, null, orderBy, skip, take).Select(l => JObject.Parse(l.Content))).Select(jo =>
+                {
+                    return select == null ? jo : new JObject(select.Split(",").Select(s =>
+                    {
+                        var m = Regex.Match(s.Trim(), @"(?<Path>\S+)((?i) as (?<Name>.+))?", RegexOptions.Compiled);
+                        return new JProperty(m.Groups["Name"].Success ? m.Groups["Name"].Value : m.Groups["Path"].Value.Split(".").Last(), jo.SelectToken(m.Groups["Path"].Value));
+                    }));
+                })) jsonSerializer.Serialize(jtw, jo);
+                jtw.WriteEndArray();
+            }
+        }
+
         public static void DeleteLibraries(string where = null)
         {
             traceSource.TraceEvent(TraceEventType.Information, 0, "Deleting libraries");
             var s = Stopwatch.StartNew();
-            using (var fbcc = new FolioBulkCopyContext())
-            using (var fsc = new FolioServiceClient())
+            using (var fbcc = new FolioBulkCopyContext(connectionString))
+            using (var fsc = new FolioServiceClient(connectionString))
             {
                 var i = 0;
                 if (api)
@@ -8828,8 +10253,8 @@ namespace FolioConsoleApplication
             using (var sr = new StreamReader(compress || path.EndsWith(".gz") ? (Stream)new GZipStream(File.OpenRead($"{path}{(path.EndsWith(".gz") ? "" : ".gz")}"), CompressionMode.Decompress) : File.OpenRead(path)))
             using (var sr2 = new StreamReader(Assembly.GetAssembly(typeof(FolioContext)).GetManifestResourceStream("FolioLibrary.Library.json")))
             using (var jtr = new JsonTextReader(sr) { SupportMultipleContent = true })
-            using (var fbcc = new FolioBulkCopyContext())
-            using (var fsc = new FolioServiceClient())
+            using (var fbcc = new FolioBulkCopyContext(connectionString))
+            using (var fsc = new FolioServiceClient(connectionString))
             {
                 var s2 = Stopwatch.StartNew();
                 var js4 = JsonSchema.FromJsonAsync(sr2.ReadToEndAsync().Result).Result;
@@ -8887,8 +10312,8 @@ namespace FolioConsoleApplication
         {
             traceSource.TraceEvent(TraceEventType.Information, 0, "Saving libraries");
             var s = Stopwatch.StartNew();
-            using (var fdc = new FolioDapperContext())
-            using (var fsc = new FolioServiceClient())
+            using (var fdc = new FolioDapperContext(connectionString))
+            using (var fsc = new FolioServiceClient(connectionString))
             using (var sr = new StreamReader(Assembly.GetAssembly(typeof(FolioContext)).GetManifestResourceStream("FolioLibrary.Library.json")))
             using (var sw = new StreamWriter(whatIf ? new MemoryStream() : compress ? (Stream)new GZipStream(new FileStream($"{path}.gz", FileMode.Create), CompressionMode.Compress) : new FileStream(path, FileMode.Create)))
             using (var jtw = new JsonTextWriter(sw))
@@ -8898,7 +10323,7 @@ namespace FolioConsoleApplication
                 var js = new JsonSerializer { Formatting = Formatting.Indented };
                 jtw.WriteStartArray();
                 var i = 0;
-                foreach (var jo in api ? fsc.Libraries(where, take: take) : fdc.Libraries(where, take: take).Select(l => JObject.Parse(l.Content)))
+                foreach (var jo in api ? fsc.Libraries(where, orderBy, skip, take) : fdc.Libraries(where, null, orderBy, skip, take).Select(l => JObject.Parse(l.Content)))
                 {
                     if (validate)
                     {
@@ -8919,12 +10344,31 @@ namespace FolioConsoleApplication
             traceSource.TraceEvent(TraceEventType.Information, 0, $"{s.Elapsed} elapsed");
         }
 
+        public static void QueryLoans(string where = null, string orderBy = null, int? skip = null, int? take = null, string select = null)
+        {
+            using (var fdc = new FolioDapperContext(connectionString))
+            using (var fsc = new FolioServiceClient(connectionString))
+            using (var jtw = new JsonTextWriter(Console.Out))
+            {
+                jtw.WriteStartArray();
+                foreach (var jo in (api ? fsc.Loans(where, orderBy, skip, take) : fdc.Loans(where, null, orderBy, skip, take).Select(l => JObject.Parse(l.Content))).Select(jo =>
+                {
+                    return select == null ? jo : new JObject(select.Split(",").Select(s =>
+                    {
+                        var m = Regex.Match(s.Trim(), @"(?<Path>\S+)((?i) as (?<Name>.+))?", RegexOptions.Compiled);
+                        return new JProperty(m.Groups["Name"].Success ? m.Groups["Name"].Value : m.Groups["Path"].Value.Split(".").Last(), jo.SelectToken(m.Groups["Path"].Value));
+                    }));
+                })) jsonSerializer.Serialize(jtw, jo);
+                jtw.WriteEndArray();
+            }
+        }
+
         public static void DeleteLoans(string where = null)
         {
             traceSource.TraceEvent(TraceEventType.Information, 0, "Deleting loans");
             var s = Stopwatch.StartNew();
-            using (var fbcc = new FolioBulkCopyContext())
-            using (var fsc = new FolioServiceClient())
+            using (var fbcc = new FolioBulkCopyContext(connectionString))
+            using (var fsc = new FolioServiceClient(connectionString))
             {
                 var i = 0;
                 if (api)
@@ -8957,8 +10401,8 @@ namespace FolioConsoleApplication
             using (var sr = new StreamReader(compress || path.EndsWith(".gz") ? (Stream)new GZipStream(File.OpenRead($"{path}{(path.EndsWith(".gz") ? "" : ".gz")}"), CompressionMode.Decompress) : File.OpenRead(path)))
             using (var sr2 = new StreamReader(Assembly.GetAssembly(typeof(FolioContext)).GetManifestResourceStream("FolioLibrary.Loan.json")))
             using (var jtr = new JsonTextReader(sr) { SupportMultipleContent = true })
-            using (var fbcc = new FolioBulkCopyContext())
-            using (var fsc = new FolioServiceClient())
+            using (var fbcc = new FolioBulkCopyContext(connectionString))
+            using (var fsc = new FolioServiceClient(connectionString))
             {
                 var s2 = Stopwatch.StartNew();
                 var js4 = JsonSchema.FromJsonAsync(sr2.ReadToEndAsync().Result).Result;
@@ -9015,8 +10459,8 @@ namespace FolioConsoleApplication
         {
             traceSource.TraceEvent(TraceEventType.Information, 0, "Saving loans");
             var s = Stopwatch.StartNew();
-            using (var fdc = new FolioDapperContext())
-            using (var fsc = new FolioServiceClient())
+            using (var fdc = new FolioDapperContext(connectionString))
+            using (var fsc = new FolioServiceClient(connectionString))
             using (var sr = new StreamReader(Assembly.GetAssembly(typeof(FolioContext)).GetManifestResourceStream("FolioLibrary.Loan.json")))
             using (var sw = new StreamWriter(whatIf ? new MemoryStream() : compress ? (Stream)new GZipStream(new FileStream($"{path}.gz", FileMode.Create), CompressionMode.Compress) : new FileStream(path, FileMode.Create)))
             using (var jtw = new JsonTextWriter(sw))
@@ -9026,7 +10470,7 @@ namespace FolioConsoleApplication
                 var js = new JsonSerializer { Formatting = Formatting.Indented };
                 jtw.WriteStartArray();
                 var i = 0;
-                foreach (var jo in api ? fsc.Loans(where, take: take) : fdc.Loans(where, take: take).Select(l => JObject.Parse(l.Content)))
+                foreach (var jo in api ? fsc.Loans(where, orderBy, skip, take) : fdc.Loans(where, null, orderBy, skip, take).Select(l => JObject.Parse(l.Content)))
                 {
                     if (validate)
                     {
@@ -9047,12 +10491,31 @@ namespace FolioConsoleApplication
             traceSource.TraceEvent(TraceEventType.Information, 0, $"{s.Elapsed} elapsed");
         }
 
+        public static void QueryLoanPolicies(string where = null, string orderBy = null, int? skip = null, int? take = null, string select = null)
+        {
+            using (var fdc = new FolioDapperContext(connectionString))
+            using (var fsc = new FolioServiceClient(connectionString))
+            using (var jtw = new JsonTextWriter(Console.Out))
+            {
+                jtw.WriteStartArray();
+                foreach (var jo in (api ? fsc.LoanPolicies(where, orderBy, skip, take) : fdc.LoanPolicies(where, null, orderBy, skip, take).Select(lp => JObject.Parse(lp.Content))).Select(jo =>
+                {
+                    return select == null ? jo : new JObject(select.Split(",").Select(s =>
+                    {
+                        var m = Regex.Match(s.Trim(), @"(?<Path>\S+)((?i) as (?<Name>.+))?", RegexOptions.Compiled);
+                        return new JProperty(m.Groups["Name"].Success ? m.Groups["Name"].Value : m.Groups["Path"].Value.Split(".").Last(), jo.SelectToken(m.Groups["Path"].Value));
+                    }));
+                })) jsonSerializer.Serialize(jtw, jo);
+                jtw.WriteEndArray();
+            }
+        }
+
         public static void DeleteLoanPolicies(string where = null)
         {
             traceSource.TraceEvent(TraceEventType.Information, 0, "Deleting loan policies");
             var s = Stopwatch.StartNew();
-            using (var fbcc = new FolioBulkCopyContext())
-            using (var fsc = new FolioServiceClient())
+            using (var fbcc = new FolioBulkCopyContext(connectionString))
+            using (var fsc = new FolioServiceClient(connectionString))
             {
                 var i = 0;
                 if (api)
@@ -9085,8 +10548,8 @@ namespace FolioConsoleApplication
             using (var sr = new StreamReader(compress || path.EndsWith(".gz") ? (Stream)new GZipStream(File.OpenRead($"{path}{(path.EndsWith(".gz") ? "" : ".gz")}"), CompressionMode.Decompress) : File.OpenRead(path)))
             using (var sr2 = new StreamReader(Assembly.GetAssembly(typeof(FolioContext)).GetManifestResourceStream("FolioLibrary.LoanPolicy.json")))
             using (var jtr = new JsonTextReader(sr) { SupportMultipleContent = true })
-            using (var fbcc = new FolioBulkCopyContext())
-            using (var fsc = new FolioServiceClient())
+            using (var fbcc = new FolioBulkCopyContext(connectionString))
+            using (var fsc = new FolioServiceClient(connectionString))
             {
                 var s2 = Stopwatch.StartNew();
                 var js4 = JsonSchema.FromJsonAsync(sr2.ReadToEndAsync().Result).Result;
@@ -9145,8 +10608,8 @@ namespace FolioConsoleApplication
         {
             traceSource.TraceEvent(TraceEventType.Information, 0, "Saving loan policies");
             var s = Stopwatch.StartNew();
-            using (var fdc = new FolioDapperContext())
-            using (var fsc = new FolioServiceClient())
+            using (var fdc = new FolioDapperContext(connectionString))
+            using (var fsc = new FolioServiceClient(connectionString))
             using (var sr = new StreamReader(Assembly.GetAssembly(typeof(FolioContext)).GetManifestResourceStream("FolioLibrary.LoanPolicy.json")))
             using (var sw = new StreamWriter(whatIf ? new MemoryStream() : compress ? (Stream)new GZipStream(new FileStream($"{path}.gz", FileMode.Create), CompressionMode.Compress) : new FileStream(path, FileMode.Create)))
             using (var jtw = new JsonTextWriter(sw))
@@ -9156,7 +10619,7 @@ namespace FolioConsoleApplication
                 var js = new JsonSerializer { Formatting = Formatting.Indented };
                 jtw.WriteStartArray();
                 var i = 0;
-                foreach (var jo in api ? fsc.LoanPolicies(where, take: take) : fdc.LoanPolicies(where, take: take).Select(lp => JObject.Parse(lp.Content)))
+                foreach (var jo in api ? fsc.LoanPolicies(where, orderBy, skip, take) : fdc.LoanPolicies(where, null, orderBy, skip, take).Select(lp => JObject.Parse(lp.Content)))
                 {
                     if (validate)
                     {
@@ -9177,12 +10640,31 @@ namespace FolioConsoleApplication
             traceSource.TraceEvent(TraceEventType.Information, 0, $"{s.Elapsed} elapsed");
         }
 
+        public static void QueryLoanTypes(string where = null, string orderBy = null, int? skip = null, int? take = null, string select = null)
+        {
+            using (var fdc = new FolioDapperContext(connectionString))
+            using (var fsc = new FolioServiceClient(connectionString))
+            using (var jtw = new JsonTextWriter(Console.Out))
+            {
+                jtw.WriteStartArray();
+                foreach (var jo in (api ? fsc.LoanTypes(where, orderBy, skip, take) : fdc.LoanTypes(where, null, orderBy, skip, take).Select(lt => JObject.Parse(lt.Content))).Select(jo =>
+                {
+                    return select == null ? jo : new JObject(select.Split(",").Select(s =>
+                    {
+                        var m = Regex.Match(s.Trim(), @"(?<Path>\S+)((?i) as (?<Name>.+))?", RegexOptions.Compiled);
+                        return new JProperty(m.Groups["Name"].Success ? m.Groups["Name"].Value : m.Groups["Path"].Value.Split(".").Last(), jo.SelectToken(m.Groups["Path"].Value));
+                    }));
+                })) jsonSerializer.Serialize(jtw, jo);
+                jtw.WriteEndArray();
+            }
+        }
+
         public static void DeleteLoanTypes(string where = null)
         {
             traceSource.TraceEvent(TraceEventType.Information, 0, "Deleting loan types");
             var s = Stopwatch.StartNew();
-            using (var fbcc = new FolioBulkCopyContext())
-            using (var fsc = new FolioServiceClient())
+            using (var fbcc = new FolioBulkCopyContext(connectionString))
+            using (var fsc = new FolioServiceClient(connectionString))
             {
                 var i = 0;
                 if (api)
@@ -9215,8 +10697,8 @@ namespace FolioConsoleApplication
             using (var sr = new StreamReader(compress || path.EndsWith(".gz") ? (Stream)new GZipStream(File.OpenRead($"{path}{(path.EndsWith(".gz") ? "" : ".gz")}"), CompressionMode.Decompress) : File.OpenRead(path)))
             using (var sr2 = new StreamReader(Assembly.GetAssembly(typeof(FolioContext)).GetManifestResourceStream("FolioLibrary.LoanType.json")))
             using (var jtr = new JsonTextReader(sr) { SupportMultipleContent = true })
-            using (var fbcc = new FolioBulkCopyContext())
-            using (var fsc = new FolioServiceClient())
+            using (var fbcc = new FolioBulkCopyContext(connectionString))
+            using (var fsc = new FolioServiceClient(connectionString))
             {
                 var s2 = Stopwatch.StartNew();
                 var js4 = JsonSchema.FromJsonAsync(sr2.ReadToEndAsync().Result).Result;
@@ -9273,8 +10755,8 @@ namespace FolioConsoleApplication
         {
             traceSource.TraceEvent(TraceEventType.Information, 0, "Saving loan types");
             var s = Stopwatch.StartNew();
-            using (var fdc = new FolioDapperContext())
-            using (var fsc = new FolioServiceClient())
+            using (var fdc = new FolioDapperContext(connectionString))
+            using (var fsc = new FolioServiceClient(connectionString))
             using (var sr = new StreamReader(Assembly.GetAssembly(typeof(FolioContext)).GetManifestResourceStream("FolioLibrary.LoanType.json")))
             using (var sw = new StreamWriter(whatIf ? new MemoryStream() : compress ? (Stream)new GZipStream(new FileStream($"{path}.gz", FileMode.Create), CompressionMode.Compress) : new FileStream(path, FileMode.Create)))
             using (var jtw = new JsonTextWriter(sw))
@@ -9284,7 +10766,7 @@ namespace FolioConsoleApplication
                 var js = new JsonSerializer { Formatting = Formatting.Indented };
                 jtw.WriteStartArray();
                 var i = 0;
-                foreach (var jo in api ? fsc.LoanTypes(where, take: take) : fdc.LoanTypes(where, take: take).Select(lt => JObject.Parse(lt.Content)))
+                foreach (var jo in api ? fsc.LoanTypes(where, orderBy, skip, take) : fdc.LoanTypes(where, null, orderBy, skip, take).Select(lt => JObject.Parse(lt.Content)))
                 {
                     if (validate)
                     {
@@ -9305,12 +10787,31 @@ namespace FolioConsoleApplication
             traceSource.TraceEvent(TraceEventType.Information, 0, $"{s.Elapsed} elapsed");
         }
 
+        public static void QueryLocations(string where = null, string orderBy = null, int? skip = null, int? take = null, string select = null)
+        {
+            using (var fdc = new FolioDapperContext(connectionString))
+            using (var fsc = new FolioServiceClient(connectionString))
+            using (var jtw = new JsonTextWriter(Console.Out))
+            {
+                jtw.WriteStartArray();
+                foreach (var jo in (api ? fsc.Locations(where, orderBy, skip, take) : fdc.Locations(where, null, orderBy, skip, take).Select(l => JObject.Parse(l.Content))).Select(jo =>
+                {
+                    return select == null ? jo : new JObject(select.Split(",").Select(s =>
+                    {
+                        var m = Regex.Match(s.Trim(), @"(?<Path>\S+)((?i) as (?<Name>.+))?", RegexOptions.Compiled);
+                        return new JProperty(m.Groups["Name"].Success ? m.Groups["Name"].Value : m.Groups["Path"].Value.Split(".").Last(), jo.SelectToken(m.Groups["Path"].Value));
+                    }));
+                })) jsonSerializer.Serialize(jtw, jo);
+                jtw.WriteEndArray();
+            }
+        }
+
         public static void DeleteLocations(string where = null)
         {
             traceSource.TraceEvent(TraceEventType.Information, 0, "Deleting locations");
             var s = Stopwatch.StartNew();
-            using (var fbcc = new FolioBulkCopyContext())
-            using (var fsc = new FolioServiceClient())
+            using (var fbcc = new FolioBulkCopyContext(connectionString))
+            using (var fsc = new FolioServiceClient(connectionString))
             {
                 var i = 0;
                 if (api)
@@ -9343,8 +10844,8 @@ namespace FolioConsoleApplication
             using (var sr = new StreamReader(compress || path.EndsWith(".gz") ? (Stream)new GZipStream(File.OpenRead($"{path}{(path.EndsWith(".gz") ? "" : ".gz")}"), CompressionMode.Decompress) : File.OpenRead(path)))
             using (var sr2 = new StreamReader(Assembly.GetAssembly(typeof(FolioContext)).GetManifestResourceStream("FolioLibrary.Location.json")))
             using (var jtr = new JsonTextReader(sr) { SupportMultipleContent = true })
-            using (var fbcc = new FolioBulkCopyContext())
-            using (var fsc = new FolioServiceClient())
+            using (var fbcc = new FolioBulkCopyContext(connectionString))
+            using (var fsc = new FolioServiceClient(connectionString))
             {
                 var s2 = Stopwatch.StartNew();
                 var js4 = JsonSchema.FromJsonAsync(sr2.ReadToEndAsync().Result).Result;
@@ -9404,8 +10905,8 @@ namespace FolioConsoleApplication
         {
             traceSource.TraceEvent(TraceEventType.Information, 0, "Saving locations");
             var s = Stopwatch.StartNew();
-            using (var fdc = new FolioDapperContext())
-            using (var fsc = new FolioServiceClient())
+            using (var fdc = new FolioDapperContext(connectionString))
+            using (var fsc = new FolioServiceClient(connectionString))
             using (var sr = new StreamReader(Assembly.GetAssembly(typeof(FolioContext)).GetManifestResourceStream("FolioLibrary.Location.json")))
             using (var sw = new StreamWriter(whatIf ? new MemoryStream() : compress ? (Stream)new GZipStream(new FileStream($"{path}.gz", FileMode.Create), CompressionMode.Compress) : new FileStream(path, FileMode.Create)))
             using (var jtw = new JsonTextWriter(sw))
@@ -9415,7 +10916,7 @@ namespace FolioConsoleApplication
                 var js = new JsonSerializer { Formatting = Formatting.Indented };
                 jtw.WriteStartArray();
                 var i = 0;
-                foreach (var jo in api ? fsc.Locations(where, take: take) : fdc.Locations(where, take: take).Select(l => JObject.Parse(l.Content)))
+                foreach (var jo in api ? fsc.Locations(where, orderBy, skip, take) : fdc.Locations(where, null, orderBy, skip, take).Select(l => JObject.Parse(l.Content)))
                 {
                     if (validate)
                     {
@@ -9436,12 +10937,31 @@ namespace FolioConsoleApplication
             traceSource.TraceEvent(TraceEventType.Information, 0, $"{s.Elapsed} elapsed");
         }
 
+        public static void QueryLogins(string where = null, string orderBy = null, int? skip = null, int? take = null, string select = null)
+        {
+            using (var fdc = new FolioDapperContext(connectionString))
+            using (var fsc = new FolioServiceClient(connectionString))
+            using (var jtw = new JsonTextWriter(Console.Out))
+            {
+                jtw.WriteStartArray();
+                foreach (var jo in (api ? fsc.Logins(where, orderBy, skip, take) : fdc.Logins(where, null, orderBy, skip, take).Select(l => JObject.Parse(l.Content))).Select(jo =>
+                {
+                    return select == null ? jo : new JObject(select.Split(",").Select(s =>
+                    {
+                        var m = Regex.Match(s.Trim(), @"(?<Path>\S+)((?i) as (?<Name>.+))?", RegexOptions.Compiled);
+                        return new JProperty(m.Groups["Name"].Success ? m.Groups["Name"].Value : m.Groups["Path"].Value.Split(".").Last(), jo.SelectToken(m.Groups["Path"].Value));
+                    }));
+                })) jsonSerializer.Serialize(jtw, jo);
+                jtw.WriteEndArray();
+            }
+        }
+
         public static void DeleteLogins(string where = null)
         {
             traceSource.TraceEvent(TraceEventType.Information, 0, "Deleting logins");
             var s = Stopwatch.StartNew();
-            using (var fbcc = new FolioBulkCopyContext())
-            using (var fsc = new FolioServiceClient())
+            using (var fbcc = new FolioBulkCopyContext(connectionString))
+            using (var fsc = new FolioServiceClient(connectionString))
             {
                 var i = 0;
                 if (api)
@@ -9474,8 +10994,8 @@ namespace FolioConsoleApplication
             using (var sr = new StreamReader(compress || path.EndsWith(".gz") ? (Stream)new GZipStream(File.OpenRead($"{path}{(path.EndsWith(".gz") ? "" : ".gz")}"), CompressionMode.Decompress) : File.OpenRead(path)))
             using (var sr2 = new StreamReader(Assembly.GetAssembly(typeof(FolioContext)).GetManifestResourceStream("FolioLibrary.Login.json")))
             using (var jtr = new JsonTextReader(sr) { SupportMultipleContent = true })
-            using (var fbcc = new FolioBulkCopyContext())
-            using (var fsc = new FolioServiceClient())
+            using (var fbcc = new FolioBulkCopyContext(connectionString))
+            using (var fsc = new FolioServiceClient(connectionString))
             {
                 var s2 = Stopwatch.StartNew();
                 var js4 = JsonSchema.FromJsonAsync(sr2.ReadToEndAsync().Result).Result;
@@ -9532,8 +11052,8 @@ namespace FolioConsoleApplication
         {
             traceSource.TraceEvent(TraceEventType.Information, 0, "Saving logins");
             var s = Stopwatch.StartNew();
-            using (var fdc = new FolioDapperContext())
-            using (var fsc = new FolioServiceClient())
+            using (var fdc = new FolioDapperContext(connectionString))
+            using (var fsc = new FolioServiceClient(connectionString))
             using (var sr = new StreamReader(Assembly.GetAssembly(typeof(FolioContext)).GetManifestResourceStream("FolioLibrary.Login.json")))
             using (var sw = new StreamWriter(whatIf ? new MemoryStream() : compress ? (Stream)new GZipStream(new FileStream($"{path}.gz", FileMode.Create), CompressionMode.Compress) : new FileStream(path, FileMode.Create)))
             using (var jtw = new JsonTextWriter(sw))
@@ -9543,7 +11063,7 @@ namespace FolioConsoleApplication
                 var js = new JsonSerializer { Formatting = Formatting.Indented };
                 jtw.WriteStartArray();
                 var i = 0;
-                foreach (var jo in api ? fsc.Logins(where, take: take) : fdc.Logins(where, take: take).Select(l => JObject.Parse(l.Content)))
+                foreach (var jo in api ? fsc.Logins(where, orderBy, skip, take) : fdc.Logins(where, null, orderBy, skip, take).Select(l => JObject.Parse(l.Content)))
                 {
                     if (validate)
                     {
@@ -9564,12 +11084,31 @@ namespace FolioConsoleApplication
             traceSource.TraceEvent(TraceEventType.Information, 0, $"{s.Elapsed} elapsed");
         }
 
+        public static void QueryLostItemFeePolicies(string where = null, string orderBy = null, int? skip = null, int? take = null, string select = null)
+        {
+            using (var fdc = new FolioDapperContext(connectionString))
+            using (var fsc = new FolioServiceClient(connectionString))
+            using (var jtw = new JsonTextWriter(Console.Out))
+            {
+                jtw.WriteStartArray();
+                foreach (var jo in (api ? fsc.LostItemFeePolicies(where, orderBy, skip, take) : fdc.LostItemFeePolicies(where, null, orderBy, skip, take).Select(lifp => JObject.Parse(lifp.Content))).Select(jo =>
+                {
+                    return select == null ? jo : new JObject(select.Split(",").Select(s =>
+                    {
+                        var m = Regex.Match(s.Trim(), @"(?<Path>\S+)((?i) as (?<Name>.+))?", RegexOptions.Compiled);
+                        return new JProperty(m.Groups["Name"].Success ? m.Groups["Name"].Value : m.Groups["Path"].Value.Split(".").Last(), jo.SelectToken(m.Groups["Path"].Value));
+                    }));
+                })) jsonSerializer.Serialize(jtw, jo);
+                jtw.WriteEndArray();
+            }
+        }
+
         public static void DeleteLostItemFeePolicies(string where = null)
         {
             traceSource.TraceEvent(TraceEventType.Information, 0, "Deleting lost item fee policies");
             var s = Stopwatch.StartNew();
-            using (var fbcc = new FolioBulkCopyContext())
-            using (var fsc = new FolioServiceClient())
+            using (var fbcc = new FolioBulkCopyContext(connectionString))
+            using (var fsc = new FolioServiceClient(connectionString))
             {
                 var i = 0;
                 if (api)
@@ -9602,8 +11141,8 @@ namespace FolioConsoleApplication
             using (var sr = new StreamReader(compress || path.EndsWith(".gz") ? (Stream)new GZipStream(File.OpenRead($"{path}{(path.EndsWith(".gz") ? "" : ".gz")}"), CompressionMode.Decompress) : File.OpenRead(path)))
             using (var sr2 = new StreamReader(Assembly.GetAssembly(typeof(FolioContext)).GetManifestResourceStream("FolioLibrary.LostItemFeePolicy.json")))
             using (var jtr = new JsonTextReader(sr) { SupportMultipleContent = true })
-            using (var fbcc = new FolioBulkCopyContext())
-            using (var fsc = new FolioServiceClient())
+            using (var fbcc = new FolioBulkCopyContext(connectionString))
+            using (var fsc = new FolioServiceClient(connectionString))
             {
                 var s2 = Stopwatch.StartNew();
                 var js4 = JsonSchema.FromJsonAsync(sr2.ReadToEndAsync().Result).Result;
@@ -9660,8 +11199,8 @@ namespace FolioConsoleApplication
         {
             traceSource.TraceEvent(TraceEventType.Information, 0, "Saving lost item fee policies");
             var s = Stopwatch.StartNew();
-            using (var fdc = new FolioDapperContext())
-            using (var fsc = new FolioServiceClient())
+            using (var fdc = new FolioDapperContext(connectionString))
+            using (var fsc = new FolioServiceClient(connectionString))
             using (var sr = new StreamReader(Assembly.GetAssembly(typeof(FolioContext)).GetManifestResourceStream("FolioLibrary.LostItemFeePolicy.json")))
             using (var sw = new StreamWriter(whatIf ? new MemoryStream() : compress ? (Stream)new GZipStream(new FileStream($"{path}.gz", FileMode.Create), CompressionMode.Compress) : new FileStream(path, FileMode.Create)))
             using (var jtw = new JsonTextWriter(sw))
@@ -9671,7 +11210,7 @@ namespace FolioConsoleApplication
                 var js = new JsonSerializer { Formatting = Formatting.Indented };
                 jtw.WriteStartArray();
                 var i = 0;
-                foreach (var jo in api ? fsc.LostItemFeePolicies(where, take: take) : fdc.LostItemFeePolicies(where, take: take).Select(lifp => JObject.Parse(lifp.Content)))
+                foreach (var jo in api ? fsc.LostItemFeePolicies(where, orderBy, skip, take) : fdc.LostItemFeePolicies(where, null, orderBy, skip, take).Select(lifp => JObject.Parse(lifp.Content)))
                 {
                     if (validate)
                     {
@@ -9692,11 +11231,29 @@ namespace FolioConsoleApplication
             traceSource.TraceEvent(TraceEventType.Information, 0, $"{s.Elapsed} elapsed");
         }
 
+        public static void QueryMarcRecords(string where = null, string orderBy = null, int? skip = null, int? take = null, string select = null)
+        {
+            using (var fdc = new FolioDapperContext(connectionString))
+            using (var jtw = new JsonTextWriter(Console.Out))
+            {
+                jtw.WriteStartArray();
+                foreach (var jo in (api ? throw new NotSupportedException() : fdc.MarcRecords(where, null, orderBy, skip, take).Select(mr => JObject.Parse(mr.Content))).Select(jo =>
+                {
+                    return select == null ? jo : new JObject(select.Split(",").Select(s =>
+                    {
+                        var m = Regex.Match(s.Trim(), @"(?<Path>\S+)((?i) as (?<Name>.+))?", RegexOptions.Compiled);
+                        return new JProperty(m.Groups["Name"].Success ? m.Groups["Name"].Value : m.Groups["Path"].Value.Split(".").Last(), jo.SelectToken(m.Groups["Path"].Value));
+                    }));
+                })) jsonSerializer.Serialize(jtw, jo);
+                jtw.WriteEndArray();
+            }
+        }
+
         public static void DeleteMarcRecords(string where = null)
         {
             traceSource.TraceEvent(TraceEventType.Information, 0, "Deleting marc records");
             var s = Stopwatch.StartNew();
-            using (var fbcc = new FolioBulkCopyContext())
+            using (var fbcc = new FolioBulkCopyContext(connectionString))
             {
                 var i = 0;
                 if (api)
@@ -9719,7 +11276,7 @@ namespace FolioConsoleApplication
             using (var sr = new StreamReader(compress || path.EndsWith(".gz") ? (Stream)new GZipStream(File.OpenRead($"{path}{(path.EndsWith(".gz") ? "" : ".gz")}"), CompressionMode.Decompress) : File.OpenRead(path)))
             using (var sr2 = new StreamReader(Assembly.GetAssembly(typeof(FolioContext)).GetManifestResourceStream("FolioLibrary.MarcRecord.json")))
             using (var jtr = new JsonTextReader(sr) { SupportMultipleContent = true })
-            using (var fbcc = new FolioBulkCopyContext())
+            using (var fbcc = new FolioBulkCopyContext(connectionString))
             {
                 var s2 = Stopwatch.StartNew();
                 var js4 = JsonSchema.FromJsonAsync(sr2.ReadToEndAsync().Result).Result;
@@ -9769,7 +11326,7 @@ namespace FolioConsoleApplication
         {
             traceSource.TraceEvent(TraceEventType.Information, 0, "Saving marc records");
             var s = Stopwatch.StartNew();
-            using (var fdc = new FolioDapperContext())
+            using (var fdc = new FolioDapperContext(connectionString))
             using (var sr = new StreamReader(Assembly.GetAssembly(typeof(FolioContext)).GetManifestResourceStream("FolioLibrary.MarcRecord.json")))
             using (var sw = new StreamWriter(whatIf ? new MemoryStream() : compress ? (Stream)new GZipStream(new FileStream($"{path}.gz", FileMode.Create), CompressionMode.Compress) : new FileStream(path, FileMode.Create)))
             using (var jtw = new JsonTextWriter(sw))
@@ -9779,7 +11336,7 @@ namespace FolioConsoleApplication
                 var js = new JsonSerializer { Formatting = Formatting.Indented };
                 jtw.WriteStartArray();
                 var i = 0;
-                foreach (var jo in api ? throw new NotSupportedException() : fdc.MarcRecords(where, take: take).Select(mr => JObject.Parse(mr.Content)))
+                foreach (var jo in api ? throw new NotSupportedException() : fdc.MarcRecords(where, null, orderBy, skip, take).Select(mr => JObject.Parse(mr.Content)))
                 {
                     if (validate)
                     {
@@ -9800,12 +11357,31 @@ namespace FolioConsoleApplication
             traceSource.TraceEvent(TraceEventType.Information, 0, $"{s.Elapsed} elapsed");
         }
 
+        public static void QueryMaterialTypes(string where = null, string orderBy = null, int? skip = null, int? take = null, string select = null)
+        {
+            using (var fdc = new FolioDapperContext(connectionString))
+            using (var fsc = new FolioServiceClient(connectionString))
+            using (var jtw = new JsonTextWriter(Console.Out))
+            {
+                jtw.WriteStartArray();
+                foreach (var jo in (api ? fsc.MaterialTypes(where, orderBy, skip, take) : fdc.MaterialTypes(where, null, orderBy, skip, take).Select(mt => JObject.Parse(mt.Content))).Select(jo =>
+                {
+                    return select == null ? jo : new JObject(select.Split(",").Select(s =>
+                    {
+                        var m = Regex.Match(s.Trim(), @"(?<Path>\S+)((?i) as (?<Name>.+))?", RegexOptions.Compiled);
+                        return new JProperty(m.Groups["Name"].Success ? m.Groups["Name"].Value : m.Groups["Path"].Value.Split(".").Last(), jo.SelectToken(m.Groups["Path"].Value));
+                    }));
+                })) jsonSerializer.Serialize(jtw, jo);
+                jtw.WriteEndArray();
+            }
+        }
+
         public static void DeleteMaterialTypes(string where = null)
         {
             traceSource.TraceEvent(TraceEventType.Information, 0, "Deleting material types");
             var s = Stopwatch.StartNew();
-            using (var fbcc = new FolioBulkCopyContext())
-            using (var fsc = new FolioServiceClient())
+            using (var fbcc = new FolioBulkCopyContext(connectionString))
+            using (var fsc = new FolioServiceClient(connectionString))
             {
                 var i = 0;
                 if (api)
@@ -9838,8 +11414,8 @@ namespace FolioConsoleApplication
             using (var sr = new StreamReader(compress || path.EndsWith(".gz") ? (Stream)new GZipStream(File.OpenRead($"{path}{(path.EndsWith(".gz") ? "" : ".gz")}"), CompressionMode.Decompress) : File.OpenRead(path)))
             using (var sr2 = new StreamReader(Assembly.GetAssembly(typeof(FolioContext)).GetManifestResourceStream("FolioLibrary.MaterialType.json")))
             using (var jtr = new JsonTextReader(sr) { SupportMultipleContent = true })
-            using (var fbcc = new FolioBulkCopyContext())
-            using (var fsc = new FolioServiceClient())
+            using (var fbcc = new FolioBulkCopyContext(connectionString))
+            using (var fsc = new FolioServiceClient(connectionString))
             {
                 var s2 = Stopwatch.StartNew();
                 var js4 = JsonSchema.FromJsonAsync(sr2.ReadToEndAsync().Result).Result;
@@ -9896,8 +11472,8 @@ namespace FolioConsoleApplication
         {
             traceSource.TraceEvent(TraceEventType.Information, 0, "Saving material types");
             var s = Stopwatch.StartNew();
-            using (var fdc = new FolioDapperContext())
-            using (var fsc = new FolioServiceClient())
+            using (var fdc = new FolioDapperContext(connectionString))
+            using (var fsc = new FolioServiceClient(connectionString))
             using (var sr = new StreamReader(Assembly.GetAssembly(typeof(FolioContext)).GetManifestResourceStream("FolioLibrary.MaterialType.json")))
             using (var sw = new StreamWriter(whatIf ? new MemoryStream() : compress ? (Stream)new GZipStream(new FileStream($"{path}.gz", FileMode.Create), CompressionMode.Compress) : new FileStream(path, FileMode.Create)))
             using (var jtw = new JsonTextWriter(sw))
@@ -9907,7 +11483,7 @@ namespace FolioConsoleApplication
                 var js = new JsonSerializer { Formatting = Formatting.Indented };
                 jtw.WriteStartArray();
                 var i = 0;
-                foreach (var jo in api ? fsc.MaterialTypes(where, take: take) : fdc.MaterialTypes(where, take: take).Select(mt => JObject.Parse(mt.Content)))
+                foreach (var jo in api ? fsc.MaterialTypes(where, orderBy, skip, take) : fdc.MaterialTypes(where, null, orderBy, skip, take).Select(mt => JObject.Parse(mt.Content)))
                 {
                     if (validate)
                     {
@@ -9928,12 +11504,31 @@ namespace FolioConsoleApplication
             traceSource.TraceEvent(TraceEventType.Information, 0, $"{s.Elapsed} elapsed");
         }
 
+        public static void QueryModeOfIssuances(string where = null, string orderBy = null, int? skip = null, int? take = null, string select = null)
+        {
+            using (var fdc = new FolioDapperContext(connectionString))
+            using (var fsc = new FolioServiceClient(connectionString))
+            using (var jtw = new JsonTextWriter(Console.Out))
+            {
+                jtw.WriteStartArray();
+                foreach (var jo in (api ? fsc.ModeOfIssuances(where, orderBy, skip, take) : fdc.ModeOfIssuances(where, null, orderBy, skip, take).Select(moi => JObject.Parse(moi.Content))).Select(jo =>
+                {
+                    return select == null ? jo : new JObject(select.Split(",").Select(s =>
+                    {
+                        var m = Regex.Match(s.Trim(), @"(?<Path>\S+)((?i) as (?<Name>.+))?", RegexOptions.Compiled);
+                        return new JProperty(m.Groups["Name"].Success ? m.Groups["Name"].Value : m.Groups["Path"].Value.Split(".").Last(), jo.SelectToken(m.Groups["Path"].Value));
+                    }));
+                })) jsonSerializer.Serialize(jtw, jo);
+                jtw.WriteEndArray();
+            }
+        }
+
         public static void DeleteModeOfIssuances(string where = null)
         {
             traceSource.TraceEvent(TraceEventType.Information, 0, "Deleting mode of issuances");
             var s = Stopwatch.StartNew();
-            using (var fbcc = new FolioBulkCopyContext())
-            using (var fsc = new FolioServiceClient())
+            using (var fbcc = new FolioBulkCopyContext(connectionString))
+            using (var fsc = new FolioServiceClient(connectionString))
             {
                 var i = 0;
                 if (api)
@@ -9966,8 +11561,8 @@ namespace FolioConsoleApplication
             using (var sr = new StreamReader(compress || path.EndsWith(".gz") ? (Stream)new GZipStream(File.OpenRead($"{path}{(path.EndsWith(".gz") ? "" : ".gz")}"), CompressionMode.Decompress) : File.OpenRead(path)))
             using (var sr2 = new StreamReader(Assembly.GetAssembly(typeof(FolioContext)).GetManifestResourceStream("FolioLibrary.ModeOfIssuance.json")))
             using (var jtr = new JsonTextReader(sr) { SupportMultipleContent = true })
-            using (var fbcc = new FolioBulkCopyContext())
-            using (var fsc = new FolioServiceClient())
+            using (var fbcc = new FolioBulkCopyContext(connectionString))
+            using (var fsc = new FolioServiceClient(connectionString))
             {
                 var s2 = Stopwatch.StartNew();
                 var js4 = JsonSchema.FromJsonAsync(sr2.ReadToEndAsync().Result).Result;
@@ -10024,8 +11619,8 @@ namespace FolioConsoleApplication
         {
             traceSource.TraceEvent(TraceEventType.Information, 0, "Saving mode of issuances");
             var s = Stopwatch.StartNew();
-            using (var fdc = new FolioDapperContext())
-            using (var fsc = new FolioServiceClient())
+            using (var fdc = new FolioDapperContext(connectionString))
+            using (var fsc = new FolioServiceClient(connectionString))
             using (var sr = new StreamReader(Assembly.GetAssembly(typeof(FolioContext)).GetManifestResourceStream("FolioLibrary.ModeOfIssuance.json")))
             using (var sw = new StreamWriter(whatIf ? new MemoryStream() : compress ? (Stream)new GZipStream(new FileStream($"{path}.gz", FileMode.Create), CompressionMode.Compress) : new FileStream(path, FileMode.Create)))
             using (var jtw = new JsonTextWriter(sw))
@@ -10035,7 +11630,7 @@ namespace FolioConsoleApplication
                 var js = new JsonSerializer { Formatting = Formatting.Indented };
                 jtw.WriteStartArray();
                 var i = 0;
-                foreach (var jo in api ? fsc.ModeOfIssuances(where, take: take) : fdc.ModeOfIssuances(where, take: take).Select(moi => JObject.Parse(moi.Content)))
+                foreach (var jo in api ? fsc.ModeOfIssuances(where, orderBy, skip, take) : fdc.ModeOfIssuances(where, null, orderBy, skip, take).Select(moi => JObject.Parse(moi.Content)))
                 {
                     if (validate)
                     {
@@ -10056,12 +11651,31 @@ namespace FolioConsoleApplication
             traceSource.TraceEvent(TraceEventType.Information, 0, $"{s.Elapsed} elapsed");
         }
 
+        public static void QueryNatureOfContentTerms(string where = null, string orderBy = null, int? skip = null, int? take = null, string select = null)
+        {
+            using (var fdc = new FolioDapperContext(connectionString))
+            using (var fsc = new FolioServiceClient(connectionString))
+            using (var jtw = new JsonTextWriter(Console.Out))
+            {
+                jtw.WriteStartArray();
+                foreach (var jo in (api ? fsc.NatureOfContentTerms(where, orderBy, skip, take) : fdc.NatureOfContentTerms(where, null, orderBy, skip, take).Select(noct => JObject.Parse(noct.Content))).Select(jo =>
+                {
+                    return select == null ? jo : new JObject(select.Split(",").Select(s =>
+                    {
+                        var m = Regex.Match(s.Trim(), @"(?<Path>\S+)((?i) as (?<Name>.+))?", RegexOptions.Compiled);
+                        return new JProperty(m.Groups["Name"].Success ? m.Groups["Name"].Value : m.Groups["Path"].Value.Split(".").Last(), jo.SelectToken(m.Groups["Path"].Value));
+                    }));
+                })) jsonSerializer.Serialize(jtw, jo);
+                jtw.WriteEndArray();
+            }
+        }
+
         public static void DeleteNatureOfContentTerms(string where = null)
         {
             traceSource.TraceEvent(TraceEventType.Information, 0, "Deleting nature of content terms");
             var s = Stopwatch.StartNew();
-            using (var fbcc = new FolioBulkCopyContext())
-            using (var fsc = new FolioServiceClient())
+            using (var fbcc = new FolioBulkCopyContext(connectionString))
+            using (var fsc = new FolioServiceClient(connectionString))
             {
                 var i = 0;
                 if (api)
@@ -10094,8 +11708,8 @@ namespace FolioConsoleApplication
             using (var sr = new StreamReader(compress || path.EndsWith(".gz") ? (Stream)new GZipStream(File.OpenRead($"{path}{(path.EndsWith(".gz") ? "" : ".gz")}"), CompressionMode.Decompress) : File.OpenRead(path)))
             using (var sr2 = new StreamReader(Assembly.GetAssembly(typeof(FolioContext)).GetManifestResourceStream("FolioLibrary.NatureOfContentTerm.json")))
             using (var jtr = new JsonTextReader(sr) { SupportMultipleContent = true })
-            using (var fbcc = new FolioBulkCopyContext())
-            using (var fsc = new FolioServiceClient())
+            using (var fbcc = new FolioBulkCopyContext(connectionString))
+            using (var fsc = new FolioServiceClient(connectionString))
             {
                 var s2 = Stopwatch.StartNew();
                 var js4 = JsonSchema.FromJsonAsync(sr2.ReadToEndAsync().Result).Result;
@@ -10152,8 +11766,8 @@ namespace FolioConsoleApplication
         {
             traceSource.TraceEvent(TraceEventType.Information, 0, "Saving nature of content terms");
             var s = Stopwatch.StartNew();
-            using (var fdc = new FolioDapperContext())
-            using (var fsc = new FolioServiceClient())
+            using (var fdc = new FolioDapperContext(connectionString))
+            using (var fsc = new FolioServiceClient(connectionString))
             using (var sr = new StreamReader(Assembly.GetAssembly(typeof(FolioContext)).GetManifestResourceStream("FolioLibrary.NatureOfContentTerm.json")))
             using (var sw = new StreamWriter(whatIf ? new MemoryStream() : compress ? (Stream)new GZipStream(new FileStream($"{path}.gz", FileMode.Create), CompressionMode.Compress) : new FileStream(path, FileMode.Create)))
             using (var jtw = new JsonTextWriter(sw))
@@ -10163,7 +11777,7 @@ namespace FolioConsoleApplication
                 var js = new JsonSerializer { Formatting = Formatting.Indented };
                 jtw.WriteStartArray();
                 var i = 0;
-                foreach (var jo in api ? fsc.NatureOfContentTerms(where, take: take) : fdc.NatureOfContentTerms(where, take: take).Select(noct => JObject.Parse(noct.Content)))
+                foreach (var jo in api ? fsc.NatureOfContentTerms(where, orderBy, skip, take) : fdc.NatureOfContentTerms(where, null, orderBy, skip, take).Select(noct => JObject.Parse(noct.Content)))
                 {
                     if (validate)
                     {
@@ -10184,12 +11798,31 @@ namespace FolioConsoleApplication
             traceSource.TraceEvent(TraceEventType.Information, 0, $"{s.Elapsed} elapsed");
         }
 
+        public static void QueryOrders(string where = null, string orderBy = null, int? skip = null, int? take = null, string select = null)
+        {
+            using (var fdc = new FolioDapperContext(connectionString))
+            using (var fsc = new FolioServiceClient(connectionString))
+            using (var jtw = new JsonTextWriter(Console.Out))
+            {
+                jtw.WriteStartArray();
+                foreach (var jo in (api ? fsc.Orders(where, orderBy, skip, take) : fdc.Orders(where, null, orderBy, skip, take).Select(o => JObject.Parse(o.Content))).Select(jo =>
+                {
+                    return select == null ? jo : new JObject(select.Split(",").Select(s =>
+                    {
+                        var m = Regex.Match(s.Trim(), @"(?<Path>\S+)((?i) as (?<Name>.+))?", RegexOptions.Compiled);
+                        return new JProperty(m.Groups["Name"].Success ? m.Groups["Name"].Value : m.Groups["Path"].Value.Split(".").Last(), jo.SelectToken(m.Groups["Path"].Value));
+                    }));
+                })) jsonSerializer.Serialize(jtw, jo);
+                jtw.WriteEndArray();
+            }
+        }
+
         public static void DeleteOrders(string where = null)
         {
             traceSource.TraceEvent(TraceEventType.Information, 0, "Deleting orders");
             var s = Stopwatch.StartNew();
-            using (var fbcc = new FolioBulkCopyContext())
-            using (var fsc = new FolioServiceClient())
+            using (var fbcc = new FolioBulkCopyContext(connectionString))
+            using (var fsc = new FolioServiceClient(connectionString))
             {
                 var i = 0;
                 if (api)
@@ -10222,8 +11855,8 @@ namespace FolioConsoleApplication
             using (var sr = new StreamReader(compress || path.EndsWith(".gz") ? (Stream)new GZipStream(File.OpenRead($"{path}{(path.EndsWith(".gz") ? "" : ".gz")}"), CompressionMode.Decompress) : File.OpenRead(path)))
             using (var sr2 = new StreamReader(Assembly.GetAssembly(typeof(FolioContext)).GetManifestResourceStream("FolioLibrary.Order.json")))
             using (var jtr = new JsonTextReader(sr) { SupportMultipleContent = true })
-            using (var fbcc = new FolioBulkCopyContext())
-            using (var fsc = new FolioServiceClient())
+            using (var fbcc = new FolioBulkCopyContext(connectionString))
+            using (var fsc = new FolioServiceClient(connectionString))
             {
                 var s2 = Stopwatch.StartNew();
                 var js4 = JsonSchema.FromJsonAsync(sr2.ReadToEndAsync().Result).Result;
@@ -10280,8 +11913,8 @@ namespace FolioConsoleApplication
         {
             traceSource.TraceEvent(TraceEventType.Information, 0, "Saving orders");
             var s = Stopwatch.StartNew();
-            using (var fdc = new FolioDapperContext())
-            using (var fsc = new FolioServiceClient())
+            using (var fdc = new FolioDapperContext(connectionString))
+            using (var fsc = new FolioServiceClient(connectionString))
             using (var sr = new StreamReader(Assembly.GetAssembly(typeof(FolioContext)).GetManifestResourceStream("FolioLibrary.Order.json")))
             using (var sw = new StreamWriter(whatIf ? new MemoryStream() : compress ? (Stream)new GZipStream(new FileStream($"{path}.gz", FileMode.Create), CompressionMode.Compress) : new FileStream(path, FileMode.Create)))
             using (var jtw = new JsonTextWriter(sw))
@@ -10291,7 +11924,7 @@ namespace FolioConsoleApplication
                 var js = new JsonSerializer { Formatting = Formatting.Indented };
                 jtw.WriteStartArray();
                 var i = 0;
-                foreach (var jo in api ? fsc.Orders(where, take: take) : fdc.Orders(where, take: take).Select(o => JObject.Parse(o.Content)))
+                foreach (var jo in api ? fsc.Orders(where, orderBy, skip, take) : fdc.Orders(where, null, orderBy, skip, take).Select(o => JObject.Parse(o.Content)))
                 {
                     if (validate)
                     {
@@ -10312,12 +11945,31 @@ namespace FolioConsoleApplication
             traceSource.TraceEvent(TraceEventType.Information, 0, $"{s.Elapsed} elapsed");
         }
 
+        public static void QueryOrderInvoices(string where = null, string orderBy = null, int? skip = null, int? take = null, string select = null)
+        {
+            using (var fdc = new FolioDapperContext(connectionString))
+            using (var fsc = new FolioServiceClient(connectionString))
+            using (var jtw = new JsonTextWriter(Console.Out))
+            {
+                jtw.WriteStartArray();
+                foreach (var jo in (api ? fsc.OrderInvoices(where, orderBy, skip, take) : fdc.OrderInvoices(where, null, orderBy, skip, take).Select(oi => JObject.Parse(oi.Content))).Select(jo =>
+                {
+                    return select == null ? jo : new JObject(select.Split(",").Select(s =>
+                    {
+                        var m = Regex.Match(s.Trim(), @"(?<Path>\S+)((?i) as (?<Name>.+))?", RegexOptions.Compiled);
+                        return new JProperty(m.Groups["Name"].Success ? m.Groups["Name"].Value : m.Groups["Path"].Value.Split(".").Last(), jo.SelectToken(m.Groups["Path"].Value));
+                    }));
+                })) jsonSerializer.Serialize(jtw, jo);
+                jtw.WriteEndArray();
+            }
+        }
+
         public static void DeleteOrderInvoices(string where = null)
         {
             traceSource.TraceEvent(TraceEventType.Information, 0, "Deleting order invoices");
             var s = Stopwatch.StartNew();
-            using (var fbcc = new FolioBulkCopyContext())
-            using (var fsc = new FolioServiceClient())
+            using (var fbcc = new FolioBulkCopyContext(connectionString))
+            using (var fsc = new FolioServiceClient(connectionString))
             {
                 var i = 0;
                 if (api)
@@ -10350,8 +12002,8 @@ namespace FolioConsoleApplication
             using (var sr = new StreamReader(compress || path.EndsWith(".gz") ? (Stream)new GZipStream(File.OpenRead($"{path}{(path.EndsWith(".gz") ? "" : ".gz")}"), CompressionMode.Decompress) : File.OpenRead(path)))
             using (var sr2 = new StreamReader(Assembly.GetAssembly(typeof(FolioContext)).GetManifestResourceStream("FolioLibrary.OrderInvoice.json")))
             using (var jtr = new JsonTextReader(sr) { SupportMultipleContent = true })
-            using (var fbcc = new FolioBulkCopyContext())
-            using (var fsc = new FolioServiceClient())
+            using (var fbcc = new FolioBulkCopyContext(connectionString))
+            using (var fsc = new FolioServiceClient(connectionString))
             {
                 var s2 = Stopwatch.StartNew();
                 var js4 = JsonSchema.FromJsonAsync(sr2.ReadToEndAsync().Result).Result;
@@ -10407,8 +12059,8 @@ namespace FolioConsoleApplication
         {
             traceSource.TraceEvent(TraceEventType.Information, 0, "Saving order invoices");
             var s = Stopwatch.StartNew();
-            using (var fdc = new FolioDapperContext())
-            using (var fsc = new FolioServiceClient())
+            using (var fdc = new FolioDapperContext(connectionString))
+            using (var fsc = new FolioServiceClient(connectionString))
             using (var sr = new StreamReader(Assembly.GetAssembly(typeof(FolioContext)).GetManifestResourceStream("FolioLibrary.OrderInvoice.json")))
             using (var sw = new StreamWriter(whatIf ? new MemoryStream() : compress ? (Stream)new GZipStream(new FileStream($"{path}.gz", FileMode.Create), CompressionMode.Compress) : new FileStream(path, FileMode.Create)))
             using (var jtw = new JsonTextWriter(sw))
@@ -10418,7 +12070,7 @@ namespace FolioConsoleApplication
                 var js = new JsonSerializer { Formatting = Formatting.Indented };
                 jtw.WriteStartArray();
                 var i = 0;
-                foreach (var jo in api ? fsc.OrderInvoices(where, take: take) : fdc.OrderInvoices(where, take: take).Select(oi => JObject.Parse(oi.Content)))
+                foreach (var jo in api ? fsc.OrderInvoices(where, orderBy, skip, take) : fdc.OrderInvoices(where, null, orderBy, skip, take).Select(oi => JObject.Parse(oi.Content)))
                 {
                     if (validate)
                     {
@@ -10439,12 +12091,31 @@ namespace FolioConsoleApplication
             traceSource.TraceEvent(TraceEventType.Information, 0, $"{s.Elapsed} elapsed");
         }
 
+        public static void QueryOrderItems(string where = null, string orderBy = null, int? skip = null, int? take = null, string select = null)
+        {
+            using (var fdc = new FolioDapperContext(connectionString))
+            using (var fsc = new FolioServiceClient(connectionString))
+            using (var jtw = new JsonTextWriter(Console.Out))
+            {
+                jtw.WriteStartArray();
+                foreach (var jo in (api ? fsc.OrderItems(where, orderBy, skip, take) : fdc.OrderItems(where, null, orderBy, skip, take).Select(oi => JObject.Parse(oi.Content))).Select(jo =>
+                {
+                    return select == null ? jo : new JObject(select.Split(",").Select(s =>
+                    {
+                        var m = Regex.Match(s.Trim(), @"(?<Path>\S+)((?i) as (?<Name>.+))?", RegexOptions.Compiled);
+                        return new JProperty(m.Groups["Name"].Success ? m.Groups["Name"].Value : m.Groups["Path"].Value.Split(".").Last(), jo.SelectToken(m.Groups["Path"].Value));
+                    }));
+                })) jsonSerializer.Serialize(jtw, jo);
+                jtw.WriteEndArray();
+            }
+        }
+
         public static void DeleteOrderItems(string where = null)
         {
             traceSource.TraceEvent(TraceEventType.Information, 0, "Deleting order items");
             var s = Stopwatch.StartNew();
-            using (var fbcc = new FolioBulkCopyContext())
-            using (var fsc = new FolioServiceClient())
+            using (var fbcc = new FolioBulkCopyContext(connectionString))
+            using (var fsc = new FolioServiceClient(connectionString))
             {
                 var i = 0;
                 if (api)
@@ -10477,8 +12148,8 @@ namespace FolioConsoleApplication
             using (var sr = new StreamReader(compress || path.EndsWith(".gz") ? (Stream)new GZipStream(File.OpenRead($"{path}{(path.EndsWith(".gz") ? "" : ".gz")}"), CompressionMode.Decompress) : File.OpenRead(path)))
             using (var sr2 = new StreamReader(Assembly.GetAssembly(typeof(FolioContext)).GetManifestResourceStream("FolioLibrary.OrderItem.json")))
             using (var jtr = new JsonTextReader(sr) { SupportMultipleContent = true })
-            using (var fbcc = new FolioBulkCopyContext())
-            using (var fsc = new FolioServiceClient())
+            using (var fbcc = new FolioBulkCopyContext(connectionString))
+            using (var fsc = new FolioServiceClient(connectionString))
             {
                 var s2 = Stopwatch.StartNew();
                 var js4 = JsonSchema.FromJsonAsync(sr2.ReadToEndAsync().Result).Result;
@@ -10536,8 +12207,8 @@ namespace FolioConsoleApplication
         {
             traceSource.TraceEvent(TraceEventType.Information, 0, "Saving order items");
             var s = Stopwatch.StartNew();
-            using (var fdc = new FolioDapperContext())
-            using (var fsc = new FolioServiceClient())
+            using (var fdc = new FolioDapperContext(connectionString))
+            using (var fsc = new FolioServiceClient(connectionString))
             using (var sr = new StreamReader(Assembly.GetAssembly(typeof(FolioContext)).GetManifestResourceStream("FolioLibrary.OrderItem.json")))
             using (var sw = new StreamWriter(whatIf ? new MemoryStream() : compress ? (Stream)new GZipStream(new FileStream($"{path}.gz", FileMode.Create), CompressionMode.Compress) : new FileStream(path, FileMode.Create)))
             using (var jtw = new JsonTextWriter(sw))
@@ -10547,7 +12218,7 @@ namespace FolioConsoleApplication
                 var js = new JsonSerializer { Formatting = Formatting.Indented };
                 jtw.WriteStartArray();
                 var i = 0;
-                foreach (var jo in api ? fsc.OrderItems(where, take: take) : fdc.OrderItems(where, take: take).Select(oi => JObject.Parse(oi.Content)))
+                foreach (var jo in api ? fsc.OrderItems(where, orderBy, skip, take) : fdc.OrderItems(where, null, orderBy, skip, take).Select(oi => JObject.Parse(oi.Content)))
                 {
                     if (validate)
                     {
@@ -10568,12 +12239,31 @@ namespace FolioConsoleApplication
             traceSource.TraceEvent(TraceEventType.Information, 0, $"{s.Elapsed} elapsed");
         }
 
+        public static void QueryOrderTemplates(string where = null, string orderBy = null, int? skip = null, int? take = null, string select = null)
+        {
+            using (var fdc = new FolioDapperContext(connectionString))
+            using (var fsc = new FolioServiceClient(connectionString))
+            using (var jtw = new JsonTextWriter(Console.Out))
+            {
+                jtw.WriteStartArray();
+                foreach (var jo in (api ? fsc.OrderTemplates(where, orderBy, skip, take) : fdc.OrderTemplates(where, null, orderBy, skip, take).Select(ot => JObject.Parse(ot.Content))).Select(jo =>
+                {
+                    return select == null ? jo : new JObject(select.Split(",").Select(s =>
+                    {
+                        var m = Regex.Match(s.Trim(), @"(?<Path>\S+)((?i) as (?<Name>.+))?", RegexOptions.Compiled);
+                        return new JProperty(m.Groups["Name"].Success ? m.Groups["Name"].Value : m.Groups["Path"].Value.Split(".").Last(), jo.SelectToken(m.Groups["Path"].Value));
+                    }));
+                })) jsonSerializer.Serialize(jtw, jo);
+                jtw.WriteEndArray();
+            }
+        }
+
         public static void DeleteOrderTemplates(string where = null)
         {
             traceSource.TraceEvent(TraceEventType.Information, 0, "Deleting order templates");
             var s = Stopwatch.StartNew();
-            using (var fbcc = new FolioBulkCopyContext())
-            using (var fsc = new FolioServiceClient())
+            using (var fbcc = new FolioBulkCopyContext(connectionString))
+            using (var fsc = new FolioServiceClient(connectionString))
             {
                 var i = 0;
                 if (api)
@@ -10606,8 +12296,8 @@ namespace FolioConsoleApplication
             using (var sr = new StreamReader(compress || path.EndsWith(".gz") ? (Stream)new GZipStream(File.OpenRead($"{path}{(path.EndsWith(".gz") ? "" : ".gz")}"), CompressionMode.Decompress) : File.OpenRead(path)))
             using (var sr2 = new StreamReader(Assembly.GetAssembly(typeof(FolioContext)).GetManifestResourceStream("FolioLibrary.OrderTemplate.json")))
             using (var jtr = new JsonTextReader(sr) { SupportMultipleContent = true })
-            using (var fbcc = new FolioBulkCopyContext())
-            using (var fsc = new FolioServiceClient())
+            using (var fbcc = new FolioBulkCopyContext(connectionString))
+            using (var fsc = new FolioServiceClient(connectionString))
             {
                 var s2 = Stopwatch.StartNew();
                 var js4 = JsonSchema.FromJsonAsync(sr2.ReadToEndAsync().Result).Result;
@@ -10662,8 +12352,8 @@ namespace FolioConsoleApplication
         {
             traceSource.TraceEvent(TraceEventType.Information, 0, "Saving order templates");
             var s = Stopwatch.StartNew();
-            using (var fdc = new FolioDapperContext())
-            using (var fsc = new FolioServiceClient())
+            using (var fdc = new FolioDapperContext(connectionString))
+            using (var fsc = new FolioServiceClient(connectionString))
             using (var sr = new StreamReader(Assembly.GetAssembly(typeof(FolioContext)).GetManifestResourceStream("FolioLibrary.OrderTemplate.json")))
             using (var sw = new StreamWriter(whatIf ? new MemoryStream() : compress ? (Stream)new GZipStream(new FileStream($"{path}.gz", FileMode.Create), CompressionMode.Compress) : new FileStream(path, FileMode.Create)))
             using (var jtw = new JsonTextWriter(sw))
@@ -10673,7 +12363,7 @@ namespace FolioConsoleApplication
                 var js = new JsonSerializer { Formatting = Formatting.Indented };
                 jtw.WriteStartArray();
                 var i = 0;
-                foreach (var jo in api ? fsc.OrderTemplates(where, take: take) : fdc.OrderTemplates(where, take: take).Select(ot => JObject.Parse(ot.Content)))
+                foreach (var jo in api ? fsc.OrderTemplates(where, orderBy, skip, take) : fdc.OrderTemplates(where, null, orderBy, skip, take).Select(ot => JObject.Parse(ot.Content)))
                 {
                     if (validate)
                     {
@@ -10694,11 +12384,29 @@ namespace FolioConsoleApplication
             traceSource.TraceEvent(TraceEventType.Information, 0, $"{s.Elapsed} elapsed");
         }
 
+        public static void QueryOrderTransactionSummaries(string where = null, string orderBy = null, int? skip = null, int? take = null, string select = null)
+        {
+            using (var fdc = new FolioDapperContext(connectionString))
+            using (var jtw = new JsonTextWriter(Console.Out))
+            {
+                jtw.WriteStartArray();
+                foreach (var jo in (api ? throw new NotSupportedException() : fdc.OrderTransactionSummaries(where, null, orderBy, skip, take).Select(ots => JObject.Parse(ots.Content))).Select(jo =>
+                {
+                    return select == null ? jo : new JObject(select.Split(",").Select(s =>
+                    {
+                        var m = Regex.Match(s.Trim(), @"(?<Path>\S+)((?i) as (?<Name>.+))?", RegexOptions.Compiled);
+                        return new JProperty(m.Groups["Name"].Success ? m.Groups["Name"].Value : m.Groups["Path"].Value.Split(".").Last(), jo.SelectToken(m.Groups["Path"].Value));
+                    }));
+                })) jsonSerializer.Serialize(jtw, jo);
+                jtw.WriteEndArray();
+            }
+        }
+
         public static void DeleteOrderTransactionSummaries(string where = null)
         {
             traceSource.TraceEvent(TraceEventType.Information, 0, "Deleting order transaction summaries");
             var s = Stopwatch.StartNew();
-            using (var fbcc = new FolioBulkCopyContext())
+            using (var fbcc = new FolioBulkCopyContext(connectionString))
             {
                 var i = 0;
                 if (api)
@@ -10721,7 +12429,7 @@ namespace FolioConsoleApplication
             using (var sr = new StreamReader(compress || path.EndsWith(".gz") ? (Stream)new GZipStream(File.OpenRead($"{path}{(path.EndsWith(".gz") ? "" : ".gz")}"), CompressionMode.Decompress) : File.OpenRead(path)))
             using (var sr2 = new StreamReader(Assembly.GetAssembly(typeof(FolioContext)).GetManifestResourceStream("FolioLibrary.OrderTransactionSummary.json")))
             using (var jtr = new JsonTextReader(sr) { SupportMultipleContent = true })
-            using (var fbcc = new FolioBulkCopyContext())
+            using (var fbcc = new FolioBulkCopyContext(connectionString))
             {
                 var s2 = Stopwatch.StartNew();
                 var js4 = JsonSchema.FromJsonAsync(sr2.ReadToEndAsync().Result).Result;
@@ -10771,7 +12479,7 @@ namespace FolioConsoleApplication
         {
             traceSource.TraceEvent(TraceEventType.Information, 0, "Saving order transaction summaries");
             var s = Stopwatch.StartNew();
-            using (var fdc = new FolioDapperContext())
+            using (var fdc = new FolioDapperContext(connectionString))
             using (var sr = new StreamReader(Assembly.GetAssembly(typeof(FolioContext)).GetManifestResourceStream("FolioLibrary.OrderTransactionSummary.json")))
             using (var sw = new StreamWriter(whatIf ? new MemoryStream() : compress ? (Stream)new GZipStream(new FileStream($"{path}.gz", FileMode.Create), CompressionMode.Compress) : new FileStream(path, FileMode.Create)))
             using (var jtw = new JsonTextWriter(sw))
@@ -10781,7 +12489,7 @@ namespace FolioConsoleApplication
                 var js = new JsonSerializer { Formatting = Formatting.Indented };
                 jtw.WriteStartArray();
                 var i = 0;
-                foreach (var jo in api ? throw new NotSupportedException() : fdc.OrderTransactionSummaries(where, take: take).Select(ots => JObject.Parse(ots.Content)))
+                foreach (var jo in api ? throw new NotSupportedException() : fdc.OrderTransactionSummaries(where, null, orderBy, skip, take).Select(ots => JObject.Parse(ots.Content)))
                 {
                     if (validate)
                     {
@@ -10802,12 +12510,31 @@ namespace FolioConsoleApplication
             traceSource.TraceEvent(TraceEventType.Information, 0, $"{s.Elapsed} elapsed");
         }
 
+        public static void QueryOrganizations(string where = null, string orderBy = null, int? skip = null, int? take = null, string select = null)
+        {
+            using (var fdc = new FolioDapperContext(connectionString))
+            using (var fsc = new FolioServiceClient(connectionString))
+            using (var jtw = new JsonTextWriter(Console.Out))
+            {
+                jtw.WriteStartArray();
+                foreach (var jo in (api ? fsc.Organizations(where, orderBy, skip, take) : fdc.Organizations(where, null, orderBy, skip, take).Select(o => JObject.Parse(o.Content))).Select(jo =>
+                {
+                    return select == null ? jo : new JObject(select.Split(",").Select(s =>
+                    {
+                        var m = Regex.Match(s.Trim(), @"(?<Path>\S+)((?i) as (?<Name>.+))?", RegexOptions.Compiled);
+                        return new JProperty(m.Groups["Name"].Success ? m.Groups["Name"].Value : m.Groups["Path"].Value.Split(".").Last(), jo.SelectToken(m.Groups["Path"].Value));
+                    }));
+                })) jsonSerializer.Serialize(jtw, jo);
+                jtw.WriteEndArray();
+            }
+        }
+
         public static void DeleteOrganizations(string where = null)
         {
             traceSource.TraceEvent(TraceEventType.Information, 0, "Deleting organizations");
             var s = Stopwatch.StartNew();
-            using (var fbcc = new FolioBulkCopyContext())
-            using (var fsc = new FolioServiceClient())
+            using (var fbcc = new FolioBulkCopyContext(connectionString))
+            using (var fsc = new FolioServiceClient(connectionString))
             {
                 var i = 0;
                 if (api)
@@ -10840,8 +12567,8 @@ namespace FolioConsoleApplication
             using (var sr = new StreamReader(compress || path.EndsWith(".gz") ? (Stream)new GZipStream(File.OpenRead($"{path}{(path.EndsWith(".gz") ? "" : ".gz")}"), CompressionMode.Decompress) : File.OpenRead(path)))
             using (var sr2 = new StreamReader(Assembly.GetAssembly(typeof(FolioContext)).GetManifestResourceStream("FolioLibrary.Organization.json")))
             using (var jtr = new JsonTextReader(sr) { SupportMultipleContent = true })
-            using (var fbcc = new FolioBulkCopyContext())
-            using (var fsc = new FolioServiceClient())
+            using (var fbcc = new FolioBulkCopyContext(connectionString))
+            using (var fsc = new FolioServiceClient(connectionString))
             {
                 var s2 = Stopwatch.StartNew();
                 var js4 = JsonSchema.FromJsonAsync(sr2.ReadToEndAsync().Result).Result;
@@ -10898,8 +12625,8 @@ namespace FolioConsoleApplication
         {
             traceSource.TraceEvent(TraceEventType.Information, 0, "Saving organizations");
             var s = Stopwatch.StartNew();
-            using (var fdc = new FolioDapperContext())
-            using (var fsc = new FolioServiceClient())
+            using (var fdc = new FolioDapperContext(connectionString))
+            using (var fsc = new FolioServiceClient(connectionString))
             using (var sr = new StreamReader(Assembly.GetAssembly(typeof(FolioContext)).GetManifestResourceStream("FolioLibrary.Organization.json")))
             using (var sw = new StreamWriter(whatIf ? new MemoryStream() : compress ? (Stream)new GZipStream(new FileStream($"{path}.gz", FileMode.Create), CompressionMode.Compress) : new FileStream(path, FileMode.Create)))
             using (var jtw = new JsonTextWriter(sw))
@@ -10909,7 +12636,7 @@ namespace FolioConsoleApplication
                 var js = new JsonSerializer { Formatting = Formatting.Indented };
                 jtw.WriteStartArray();
                 var i = 0;
-                foreach (var jo in api ? fsc.Organizations(where, take: take) : fdc.Organizations(where, take: take).Select(o => JObject.Parse(o.Content)))
+                foreach (var jo in api ? fsc.Organizations(where, orderBy, skip, take) : fdc.Organizations(where, null, orderBy, skip, take).Select(o => JObject.Parse(o.Content)))
                 {
                     if (validate)
                     {
@@ -10930,12 +12657,31 @@ namespace FolioConsoleApplication
             traceSource.TraceEvent(TraceEventType.Information, 0, $"{s.Elapsed} elapsed");
         }
 
+        public static void QueryOverdueFinePolicies(string where = null, string orderBy = null, int? skip = null, int? take = null, string select = null)
+        {
+            using (var fdc = new FolioDapperContext(connectionString))
+            using (var fsc = new FolioServiceClient(connectionString))
+            using (var jtw = new JsonTextWriter(Console.Out))
+            {
+                jtw.WriteStartArray();
+                foreach (var jo in (api ? fsc.OverdueFinePolicies(where, orderBy, skip, take) : fdc.OverdueFinePolicies(where, null, orderBy, skip, take).Select(ofp => JObject.Parse(ofp.Content))).Select(jo =>
+                {
+                    return select == null ? jo : new JObject(select.Split(",").Select(s =>
+                    {
+                        var m = Regex.Match(s.Trim(), @"(?<Path>\S+)((?i) as (?<Name>.+))?", RegexOptions.Compiled);
+                        return new JProperty(m.Groups["Name"].Success ? m.Groups["Name"].Value : m.Groups["Path"].Value.Split(".").Last(), jo.SelectToken(m.Groups["Path"].Value));
+                    }));
+                })) jsonSerializer.Serialize(jtw, jo);
+                jtw.WriteEndArray();
+            }
+        }
+
         public static void DeleteOverdueFinePolicies(string where = null)
         {
             traceSource.TraceEvent(TraceEventType.Information, 0, "Deleting overdue fine policies");
             var s = Stopwatch.StartNew();
-            using (var fbcc = new FolioBulkCopyContext())
-            using (var fsc = new FolioServiceClient())
+            using (var fbcc = new FolioBulkCopyContext(connectionString))
+            using (var fsc = new FolioServiceClient(connectionString))
             {
                 var i = 0;
                 if (api)
@@ -10968,8 +12714,8 @@ namespace FolioConsoleApplication
             using (var sr = new StreamReader(compress || path.EndsWith(".gz") ? (Stream)new GZipStream(File.OpenRead($"{path}{(path.EndsWith(".gz") ? "" : ".gz")}"), CompressionMode.Decompress) : File.OpenRead(path)))
             using (var sr2 = new StreamReader(Assembly.GetAssembly(typeof(FolioContext)).GetManifestResourceStream("FolioLibrary.OverdueFinePolicy.json")))
             using (var jtr = new JsonTextReader(sr) { SupportMultipleContent = true })
-            using (var fbcc = new FolioBulkCopyContext())
-            using (var fsc = new FolioServiceClient())
+            using (var fbcc = new FolioBulkCopyContext(connectionString))
+            using (var fsc = new FolioServiceClient(connectionString))
             {
                 var s2 = Stopwatch.StartNew();
                 var js4 = JsonSchema.FromJsonAsync(sr2.ReadToEndAsync().Result).Result;
@@ -11026,8 +12772,8 @@ namespace FolioConsoleApplication
         {
             traceSource.TraceEvent(TraceEventType.Information, 0, "Saving overdue fine policies");
             var s = Stopwatch.StartNew();
-            using (var fdc = new FolioDapperContext())
-            using (var fsc = new FolioServiceClient())
+            using (var fdc = new FolioDapperContext(connectionString))
+            using (var fsc = new FolioServiceClient(connectionString))
             using (var sr = new StreamReader(Assembly.GetAssembly(typeof(FolioContext)).GetManifestResourceStream("FolioLibrary.OverdueFinePolicy.json")))
             using (var sw = new StreamWriter(whatIf ? new MemoryStream() : compress ? (Stream)new GZipStream(new FileStream($"{path}.gz", FileMode.Create), CompressionMode.Compress) : new FileStream(path, FileMode.Create)))
             using (var jtw = new JsonTextWriter(sw))
@@ -11037,7 +12783,7 @@ namespace FolioConsoleApplication
                 var js = new JsonSerializer { Formatting = Formatting.Indented };
                 jtw.WriteStartArray();
                 var i = 0;
-                foreach (var jo in api ? fsc.OverdueFinePolicies(where, take: take) : fdc.OverdueFinePolicies(where, take: take).Select(ofp => JObject.Parse(ofp.Content)))
+                foreach (var jo in api ? fsc.OverdueFinePolicies(where, orderBy, skip, take) : fdc.OverdueFinePolicies(where, null, orderBy, skip, take).Select(ofp => JObject.Parse(ofp.Content)))
                 {
                     if (validate)
                     {
@@ -11058,12 +12804,31 @@ namespace FolioConsoleApplication
             traceSource.TraceEvent(TraceEventType.Information, 0, $"{s.Elapsed} elapsed");
         }
 
+        public static void QueryOwners(string where = null, string orderBy = null, int? skip = null, int? take = null, string select = null)
+        {
+            using (var fdc = new FolioDapperContext(connectionString))
+            using (var fsc = new FolioServiceClient(connectionString))
+            using (var jtw = new JsonTextWriter(Console.Out))
+            {
+                jtw.WriteStartArray();
+                foreach (var jo in (api ? fsc.Owners(where, orderBy, skip, take) : fdc.Owners(where, null, orderBy, skip, take).Select(o => JObject.Parse(o.Content))).Select(jo =>
+                {
+                    return select == null ? jo : new JObject(select.Split(",").Select(s =>
+                    {
+                        var m = Regex.Match(s.Trim(), @"(?<Path>\S+)((?i) as (?<Name>.+))?", RegexOptions.Compiled);
+                        return new JProperty(m.Groups["Name"].Success ? m.Groups["Name"].Value : m.Groups["Path"].Value.Split(".").Last(), jo.SelectToken(m.Groups["Path"].Value));
+                    }));
+                })) jsonSerializer.Serialize(jtw, jo);
+                jtw.WriteEndArray();
+            }
+        }
+
         public static void DeleteOwners(string where = null)
         {
             traceSource.TraceEvent(TraceEventType.Information, 0, "Deleting owners");
             var s = Stopwatch.StartNew();
-            using (var fbcc = new FolioBulkCopyContext())
-            using (var fsc = new FolioServiceClient())
+            using (var fbcc = new FolioBulkCopyContext(connectionString))
+            using (var fsc = new FolioServiceClient(connectionString))
             {
                 var i = 0;
                 if (api)
@@ -11096,8 +12861,8 @@ namespace FolioConsoleApplication
             using (var sr = new StreamReader(compress || path.EndsWith(".gz") ? (Stream)new GZipStream(File.OpenRead($"{path}{(path.EndsWith(".gz") ? "" : ".gz")}"), CompressionMode.Decompress) : File.OpenRead(path)))
             using (var sr2 = new StreamReader(Assembly.GetAssembly(typeof(FolioContext)).GetManifestResourceStream("FolioLibrary.Owner.json")))
             using (var jtr = new JsonTextReader(sr) { SupportMultipleContent = true })
-            using (var fbcc = new FolioBulkCopyContext())
-            using (var fsc = new FolioServiceClient())
+            using (var fbcc = new FolioBulkCopyContext(connectionString))
+            using (var fsc = new FolioServiceClient(connectionString))
             {
                 var s2 = Stopwatch.StartNew();
                 var js4 = JsonSchema.FromJsonAsync(sr2.ReadToEndAsync().Result).Result;
@@ -11154,8 +12919,8 @@ namespace FolioConsoleApplication
         {
             traceSource.TraceEvent(TraceEventType.Information, 0, "Saving owners");
             var s = Stopwatch.StartNew();
-            using (var fdc = new FolioDapperContext())
-            using (var fsc = new FolioServiceClient())
+            using (var fdc = new FolioDapperContext(connectionString))
+            using (var fsc = new FolioServiceClient(connectionString))
             using (var sr = new StreamReader(Assembly.GetAssembly(typeof(FolioContext)).GetManifestResourceStream("FolioLibrary.Owner.json")))
             using (var sw = new StreamWriter(whatIf ? new MemoryStream() : compress ? (Stream)new GZipStream(new FileStream($"{path}.gz", FileMode.Create), CompressionMode.Compress) : new FileStream(path, FileMode.Create)))
             using (var jtw = new JsonTextWriter(sw))
@@ -11165,7 +12930,7 @@ namespace FolioConsoleApplication
                 var js = new JsonSerializer { Formatting = Formatting.Indented };
                 jtw.WriteStartArray();
                 var i = 0;
-                foreach (var jo in api ? fsc.Owners(where, take: take) : fdc.Owners(where, take: take).Select(o => JObject.Parse(o.Content)))
+                foreach (var jo in api ? fsc.Owners(where, orderBy, skip, take) : fdc.Owners(where, null, orderBy, skip, take).Select(o => JObject.Parse(o.Content)))
                 {
                     if (validate)
                     {
@@ -11186,12 +12951,31 @@ namespace FolioConsoleApplication
             traceSource.TraceEvent(TraceEventType.Information, 0, $"{s.Elapsed} elapsed");
         }
 
+        public static void QueryPatronActionSessions(string where = null, string orderBy = null, int? skip = null, int? take = null, string select = null)
+        {
+            using (var fdc = new FolioDapperContext(connectionString))
+            using (var fsc = new FolioServiceClient(connectionString))
+            using (var jtw = new JsonTextWriter(Console.Out))
+            {
+                jtw.WriteStartArray();
+                foreach (var jo in (api ? fsc.PatronActionSessions(where, orderBy, skip, take) : fdc.PatronActionSessions(where, null, orderBy, skip, take).Select(pas => JObject.Parse(pas.Content))).Select(jo =>
+                {
+                    return select == null ? jo : new JObject(select.Split(",").Select(s =>
+                    {
+                        var m = Regex.Match(s.Trim(), @"(?<Path>\S+)((?i) as (?<Name>.+))?", RegexOptions.Compiled);
+                        return new JProperty(m.Groups["Name"].Success ? m.Groups["Name"].Value : m.Groups["Path"].Value.Split(".").Last(), jo.SelectToken(m.Groups["Path"].Value));
+                    }));
+                })) jsonSerializer.Serialize(jtw, jo);
+                jtw.WriteEndArray();
+            }
+        }
+
         public static void DeletePatronActionSessions(string where = null)
         {
             traceSource.TraceEvent(TraceEventType.Information, 0, "Deleting patron action sessions");
             var s = Stopwatch.StartNew();
-            using (var fbcc = new FolioBulkCopyContext())
-            using (var fsc = new FolioServiceClient())
+            using (var fbcc = new FolioBulkCopyContext(connectionString))
+            using (var fsc = new FolioServiceClient(connectionString))
             {
                 var i = 0;
                 if (api)
@@ -11224,8 +13008,8 @@ namespace FolioConsoleApplication
             using (var sr = new StreamReader(compress || path.EndsWith(".gz") ? (Stream)new GZipStream(File.OpenRead($"{path}{(path.EndsWith(".gz") ? "" : ".gz")}"), CompressionMode.Decompress) : File.OpenRead(path)))
             using (var sr2 = new StreamReader(Assembly.GetAssembly(typeof(FolioContext)).GetManifestResourceStream("FolioLibrary.PatronActionSession.json")))
             using (var jtr = new JsonTextReader(sr) { SupportMultipleContent = true })
-            using (var fbcc = new FolioBulkCopyContext())
-            using (var fsc = new FolioServiceClient())
+            using (var fbcc = new FolioBulkCopyContext(connectionString))
+            using (var fsc = new FolioServiceClient(connectionString))
             {
                 var s2 = Stopwatch.StartNew();
                 var js4 = JsonSchema.FromJsonAsync(sr2.ReadToEndAsync().Result).Result;
@@ -11282,8 +13066,8 @@ namespace FolioConsoleApplication
         {
             traceSource.TraceEvent(TraceEventType.Information, 0, "Saving patron action sessions");
             var s = Stopwatch.StartNew();
-            using (var fdc = new FolioDapperContext())
-            using (var fsc = new FolioServiceClient())
+            using (var fdc = new FolioDapperContext(connectionString))
+            using (var fsc = new FolioServiceClient(connectionString))
             using (var sr = new StreamReader(Assembly.GetAssembly(typeof(FolioContext)).GetManifestResourceStream("FolioLibrary.PatronActionSession.json")))
             using (var sw = new StreamWriter(whatIf ? new MemoryStream() : compress ? (Stream)new GZipStream(new FileStream($"{path}.gz", FileMode.Create), CompressionMode.Compress) : new FileStream(path, FileMode.Create)))
             using (var jtw = new JsonTextWriter(sw))
@@ -11293,7 +13077,7 @@ namespace FolioConsoleApplication
                 var js = new JsonSerializer { Formatting = Formatting.Indented };
                 jtw.WriteStartArray();
                 var i = 0;
-                foreach (var jo in api ? fsc.PatronActionSessions(where, take: take) : fdc.PatronActionSessions(where, take: take).Select(pas => JObject.Parse(pas.Content)))
+                foreach (var jo in api ? fsc.PatronActionSessions(where, orderBy, skip, take) : fdc.PatronActionSessions(where, null, orderBy, skip, take).Select(pas => JObject.Parse(pas.Content)))
                 {
                     if (validate)
                     {
@@ -11314,12 +13098,31 @@ namespace FolioConsoleApplication
             traceSource.TraceEvent(TraceEventType.Information, 0, $"{s.Elapsed} elapsed");
         }
 
+        public static void QueryPatronBlockConditions(string where = null, string orderBy = null, int? skip = null, int? take = null, string select = null)
+        {
+            using (var fdc = new FolioDapperContext(connectionString))
+            using (var fsc = new FolioServiceClient(connectionString))
+            using (var jtw = new JsonTextWriter(Console.Out))
+            {
+                jtw.WriteStartArray();
+                foreach (var jo in (api ? fsc.PatronBlockConditions(where, orderBy, skip, take) : fdc.PatronBlockConditions(where, null, orderBy, skip, take).Select(pbc => JObject.Parse(pbc.Content))).Select(jo =>
+                {
+                    return select == null ? jo : new JObject(select.Split(",").Select(s =>
+                    {
+                        var m = Regex.Match(s.Trim(), @"(?<Path>\S+)((?i) as (?<Name>.+))?", RegexOptions.Compiled);
+                        return new JProperty(m.Groups["Name"].Success ? m.Groups["Name"].Value : m.Groups["Path"].Value.Split(".").Last(), jo.SelectToken(m.Groups["Path"].Value));
+                    }));
+                })) jsonSerializer.Serialize(jtw, jo);
+                jtw.WriteEndArray();
+            }
+        }
+
         public static void DeletePatronBlockConditions(string where = null)
         {
             traceSource.TraceEvent(TraceEventType.Information, 0, "Deleting patron block conditions");
             var s = Stopwatch.StartNew();
-            using (var fbcc = new FolioBulkCopyContext())
-            using (var fsc = new FolioServiceClient())
+            using (var fbcc = new FolioBulkCopyContext(connectionString))
+            using (var fsc = new FolioServiceClient(connectionString))
             {
                 var i = 0;
                 if (api)
@@ -11352,8 +13155,8 @@ namespace FolioConsoleApplication
             using (var sr = new StreamReader(compress || path.EndsWith(".gz") ? (Stream)new GZipStream(File.OpenRead($"{path}{(path.EndsWith(".gz") ? "" : ".gz")}"), CompressionMode.Decompress) : File.OpenRead(path)))
             using (var sr2 = new StreamReader(Assembly.GetAssembly(typeof(FolioContext)).GetManifestResourceStream("FolioLibrary.PatronBlockCondition.json")))
             using (var jtr = new JsonTextReader(sr) { SupportMultipleContent = true })
-            using (var fbcc = new FolioBulkCopyContext())
-            using (var fsc = new FolioServiceClient())
+            using (var fbcc = new FolioBulkCopyContext(connectionString))
+            using (var fsc = new FolioServiceClient(connectionString))
             {
                 var s2 = Stopwatch.StartNew();
                 var js4 = JsonSchema.FromJsonAsync(sr2.ReadToEndAsync().Result).Result;
@@ -11407,8 +13210,8 @@ namespace FolioConsoleApplication
         {
             traceSource.TraceEvent(TraceEventType.Information, 0, "Saving patron block conditions");
             var s = Stopwatch.StartNew();
-            using (var fdc = new FolioDapperContext())
-            using (var fsc = new FolioServiceClient())
+            using (var fdc = new FolioDapperContext(connectionString))
+            using (var fsc = new FolioServiceClient(connectionString))
             using (var sr = new StreamReader(Assembly.GetAssembly(typeof(FolioContext)).GetManifestResourceStream("FolioLibrary.PatronBlockCondition.json")))
             using (var sw = new StreamWriter(whatIf ? new MemoryStream() : compress ? (Stream)new GZipStream(new FileStream($"{path}.gz", FileMode.Create), CompressionMode.Compress) : new FileStream(path, FileMode.Create)))
             using (var jtw = new JsonTextWriter(sw))
@@ -11418,7 +13221,7 @@ namespace FolioConsoleApplication
                 var js = new JsonSerializer { Formatting = Formatting.Indented };
                 jtw.WriteStartArray();
                 var i = 0;
-                foreach (var jo in api ? fsc.PatronBlockConditions(where, take: take) : fdc.PatronBlockConditions(where, take: take).Select(pbc => JObject.Parse(pbc.Content)))
+                foreach (var jo in api ? fsc.PatronBlockConditions(where, orderBy, skip, take) : fdc.PatronBlockConditions(where, null, orderBy, skip, take).Select(pbc => JObject.Parse(pbc.Content)))
                 {
                     if (validate)
                     {
@@ -11439,12 +13242,31 @@ namespace FolioConsoleApplication
             traceSource.TraceEvent(TraceEventType.Information, 0, $"{s.Elapsed} elapsed");
         }
 
+        public static void QueryPatronBlockLimits(string where = null, string orderBy = null, int? skip = null, int? take = null, string select = null)
+        {
+            using (var fdc = new FolioDapperContext(connectionString))
+            using (var fsc = new FolioServiceClient(connectionString))
+            using (var jtw = new JsonTextWriter(Console.Out))
+            {
+                jtw.WriteStartArray();
+                foreach (var jo in (api ? fsc.PatronBlockLimits(where, orderBy, skip, take) : fdc.PatronBlockLimits(where, null, orderBy, skip, take).Select(pbl => JObject.Parse(pbl.Content))).Select(jo =>
+                {
+                    return select == null ? jo : new JObject(select.Split(",").Select(s =>
+                    {
+                        var m = Regex.Match(s.Trim(), @"(?<Path>\S+)((?i) as (?<Name>.+))?", RegexOptions.Compiled);
+                        return new JProperty(m.Groups["Name"].Success ? m.Groups["Name"].Value : m.Groups["Path"].Value.Split(".").Last(), jo.SelectToken(m.Groups["Path"].Value));
+                    }));
+                })) jsonSerializer.Serialize(jtw, jo);
+                jtw.WriteEndArray();
+            }
+        }
+
         public static void DeletePatronBlockLimits(string where = null)
         {
             traceSource.TraceEvent(TraceEventType.Information, 0, "Deleting patron block limits");
             var s = Stopwatch.StartNew();
-            using (var fbcc = new FolioBulkCopyContext())
-            using (var fsc = new FolioServiceClient())
+            using (var fbcc = new FolioBulkCopyContext(connectionString))
+            using (var fsc = new FolioServiceClient(connectionString))
             {
                 var i = 0;
                 if (api)
@@ -11477,8 +13299,8 @@ namespace FolioConsoleApplication
             using (var sr = new StreamReader(compress || path.EndsWith(".gz") ? (Stream)new GZipStream(File.OpenRead($"{path}{(path.EndsWith(".gz") ? "" : ".gz")}"), CompressionMode.Decompress) : File.OpenRead(path)))
             using (var sr2 = new StreamReader(Assembly.GetAssembly(typeof(FolioContext)).GetManifestResourceStream("FolioLibrary.PatronBlockLimit.json")))
             using (var jtr = new JsonTextReader(sr) { SupportMultipleContent = true })
-            using (var fbcc = new FolioBulkCopyContext())
-            using (var fsc = new FolioServiceClient())
+            using (var fbcc = new FolioBulkCopyContext(connectionString))
+            using (var fsc = new FolioServiceClient(connectionString))
             {
                 var s2 = Stopwatch.StartNew();
                 var js4 = JsonSchema.FromJsonAsync(sr2.ReadToEndAsync().Result).Result;
@@ -11532,8 +13354,8 @@ namespace FolioConsoleApplication
         {
             traceSource.TraceEvent(TraceEventType.Information, 0, "Saving patron block limits");
             var s = Stopwatch.StartNew();
-            using (var fdc = new FolioDapperContext())
-            using (var fsc = new FolioServiceClient())
+            using (var fdc = new FolioDapperContext(connectionString))
+            using (var fsc = new FolioServiceClient(connectionString))
             using (var sr = new StreamReader(Assembly.GetAssembly(typeof(FolioContext)).GetManifestResourceStream("FolioLibrary.PatronBlockLimit.json")))
             using (var sw = new StreamWriter(whatIf ? new MemoryStream() : compress ? (Stream)new GZipStream(new FileStream($"{path}.gz", FileMode.Create), CompressionMode.Compress) : new FileStream(path, FileMode.Create)))
             using (var jtw = new JsonTextWriter(sw))
@@ -11543,7 +13365,7 @@ namespace FolioConsoleApplication
                 var js = new JsonSerializer { Formatting = Formatting.Indented };
                 jtw.WriteStartArray();
                 var i = 0;
-                foreach (var jo in api ? fsc.PatronBlockLimits(where, take: take) : fdc.PatronBlockLimits(where, take: take).Select(pbl => JObject.Parse(pbl.Content)))
+                foreach (var jo in api ? fsc.PatronBlockLimits(where, orderBy, skip, take) : fdc.PatronBlockLimits(where, null, orderBy, skip, take).Select(pbl => JObject.Parse(pbl.Content)))
                 {
                     if (validate)
                     {
@@ -11564,12 +13386,31 @@ namespace FolioConsoleApplication
             traceSource.TraceEvent(TraceEventType.Information, 0, $"{s.Elapsed} elapsed");
         }
 
+        public static void QueryPatronNoticePolicies(string where = null, string orderBy = null, int? skip = null, int? take = null, string select = null)
+        {
+            using (var fdc = new FolioDapperContext(connectionString))
+            using (var fsc = new FolioServiceClient(connectionString))
+            using (var jtw = new JsonTextWriter(Console.Out))
+            {
+                jtw.WriteStartArray();
+                foreach (var jo in (api ? fsc.PatronNoticePolicies(where, orderBy, skip, take) : fdc.PatronNoticePolicies(where, null, orderBy, skip, take).Select(pnp => JObject.Parse(pnp.Content))).Select(jo =>
+                {
+                    return select == null ? jo : new JObject(select.Split(",").Select(s =>
+                    {
+                        var m = Regex.Match(s.Trim(), @"(?<Path>\S+)((?i) as (?<Name>.+))?", RegexOptions.Compiled);
+                        return new JProperty(m.Groups["Name"].Success ? m.Groups["Name"].Value : m.Groups["Path"].Value.Split(".").Last(), jo.SelectToken(m.Groups["Path"].Value));
+                    }));
+                })) jsonSerializer.Serialize(jtw, jo);
+                jtw.WriteEndArray();
+            }
+        }
+
         public static void DeletePatronNoticePolicies(string where = null)
         {
             traceSource.TraceEvent(TraceEventType.Information, 0, "Deleting patron notice policies");
             var s = Stopwatch.StartNew();
-            using (var fbcc = new FolioBulkCopyContext())
-            using (var fsc = new FolioServiceClient())
+            using (var fbcc = new FolioBulkCopyContext(connectionString))
+            using (var fsc = new FolioServiceClient(connectionString))
             {
                 var i = 0;
                 if (api)
@@ -11602,8 +13443,8 @@ namespace FolioConsoleApplication
             using (var sr = new StreamReader(compress || path.EndsWith(".gz") ? (Stream)new GZipStream(File.OpenRead($"{path}{(path.EndsWith(".gz") ? "" : ".gz")}"), CompressionMode.Decompress) : File.OpenRead(path)))
             using (var sr2 = new StreamReader(Assembly.GetAssembly(typeof(FolioContext)).GetManifestResourceStream("FolioLibrary.PatronNoticePolicy.json")))
             using (var jtr = new JsonTextReader(sr) { SupportMultipleContent = true })
-            using (var fbcc = new FolioBulkCopyContext())
-            using (var fsc = new FolioServiceClient())
+            using (var fbcc = new FolioBulkCopyContext(connectionString))
+            using (var fsc = new FolioServiceClient(connectionString))
             {
                 var s2 = Stopwatch.StartNew();
                 var js4 = JsonSchema.FromJsonAsync(sr2.ReadToEndAsync().Result).Result;
@@ -11660,8 +13501,8 @@ namespace FolioConsoleApplication
         {
             traceSource.TraceEvent(TraceEventType.Information, 0, "Saving patron notice policies");
             var s = Stopwatch.StartNew();
-            using (var fdc = new FolioDapperContext())
-            using (var fsc = new FolioServiceClient())
+            using (var fdc = new FolioDapperContext(connectionString))
+            using (var fsc = new FolioServiceClient(connectionString))
             using (var sr = new StreamReader(Assembly.GetAssembly(typeof(FolioContext)).GetManifestResourceStream("FolioLibrary.PatronNoticePolicy.json")))
             using (var sw = new StreamWriter(whatIf ? new MemoryStream() : compress ? (Stream)new GZipStream(new FileStream($"{path}.gz", FileMode.Create), CompressionMode.Compress) : new FileStream(path, FileMode.Create)))
             using (var jtw = new JsonTextWriter(sw))
@@ -11671,7 +13512,7 @@ namespace FolioConsoleApplication
                 var js = new JsonSerializer { Formatting = Formatting.Indented };
                 jtw.WriteStartArray();
                 var i = 0;
-                foreach (var jo in api ? fsc.PatronNoticePolicies(where, take: take) : fdc.PatronNoticePolicies(where, take: take).Select(pnp => JObject.Parse(pnp.Content)))
+                foreach (var jo in api ? fsc.PatronNoticePolicies(where, orderBy, skip, take) : fdc.PatronNoticePolicies(where, null, orderBy, skip, take).Select(pnp => JObject.Parse(pnp.Content)))
                 {
                     if (validate)
                     {
@@ -11692,12 +13533,31 @@ namespace FolioConsoleApplication
             traceSource.TraceEvent(TraceEventType.Information, 0, $"{s.Elapsed} elapsed");
         }
 
+        public static void QueryPayments(string where = null, string orderBy = null, int? skip = null, int? take = null, string select = null)
+        {
+            using (var fdc = new FolioDapperContext(connectionString))
+            using (var fsc = new FolioServiceClient(connectionString))
+            using (var jtw = new JsonTextWriter(Console.Out))
+            {
+                jtw.WriteStartArray();
+                foreach (var jo in (api ? fsc.Payments(where, orderBy, skip, take) : fdc.Payments(where, null, orderBy, skip, take).Select(p => JObject.Parse(p.Content))).Select(jo =>
+                {
+                    return select == null ? jo : new JObject(select.Split(",").Select(s =>
+                    {
+                        var m = Regex.Match(s.Trim(), @"(?<Path>\S+)((?i) as (?<Name>.+))?", RegexOptions.Compiled);
+                        return new JProperty(m.Groups["Name"].Success ? m.Groups["Name"].Value : m.Groups["Path"].Value.Split(".").Last(), jo.SelectToken(m.Groups["Path"].Value));
+                    }));
+                })) jsonSerializer.Serialize(jtw, jo);
+                jtw.WriteEndArray();
+            }
+        }
+
         public static void DeletePayments(string where = null)
         {
             traceSource.TraceEvent(TraceEventType.Information, 0, "Deleting payments");
             var s = Stopwatch.StartNew();
-            using (var fbcc = new FolioBulkCopyContext())
-            using (var fsc = new FolioServiceClient())
+            using (var fbcc = new FolioBulkCopyContext(connectionString))
+            using (var fsc = new FolioServiceClient(connectionString))
             {
                 var i = 0;
                 if (api)
@@ -11730,8 +13590,8 @@ namespace FolioConsoleApplication
             using (var sr = new StreamReader(compress || path.EndsWith(".gz") ? (Stream)new GZipStream(File.OpenRead($"{path}{(path.EndsWith(".gz") ? "" : ".gz")}"), CompressionMode.Decompress) : File.OpenRead(path)))
             using (var sr2 = new StreamReader(Assembly.GetAssembly(typeof(FolioContext)).GetManifestResourceStream("FolioLibrary.Payment.json")))
             using (var jtr = new JsonTextReader(sr) { SupportMultipleContent = true })
-            using (var fbcc = new FolioBulkCopyContext())
-            using (var fsc = new FolioServiceClient())
+            using (var fbcc = new FolioBulkCopyContext(connectionString))
+            using (var fsc = new FolioServiceClient(connectionString))
             {
                 var s2 = Stopwatch.StartNew();
                 var js4 = JsonSchema.FromJsonAsync(sr2.ReadToEndAsync().Result).Result;
@@ -11786,8 +13646,8 @@ namespace FolioConsoleApplication
         {
             traceSource.TraceEvent(TraceEventType.Information, 0, "Saving payments");
             var s = Stopwatch.StartNew();
-            using (var fdc = new FolioDapperContext())
-            using (var fsc = new FolioServiceClient())
+            using (var fdc = new FolioDapperContext(connectionString))
+            using (var fsc = new FolioServiceClient(connectionString))
             using (var sr = new StreamReader(Assembly.GetAssembly(typeof(FolioContext)).GetManifestResourceStream("FolioLibrary.Payment.json")))
             using (var sw = new StreamWriter(whatIf ? new MemoryStream() : compress ? (Stream)new GZipStream(new FileStream($"{path}.gz", FileMode.Create), CompressionMode.Compress) : new FileStream(path, FileMode.Create)))
             using (var jtw = new JsonTextWriter(sw))
@@ -11797,7 +13657,7 @@ namespace FolioConsoleApplication
                 var js = new JsonSerializer { Formatting = Formatting.Indented };
                 jtw.WriteStartArray();
                 var i = 0;
-                foreach (var jo in api ? fsc.Payments(where, take: take) : fdc.Payments(where, take: take).Select(p => JObject.Parse(p.Content)))
+                foreach (var jo in api ? fsc.Payments(where, orderBy, skip, take) : fdc.Payments(where, null, orderBy, skip, take).Select(p => JObject.Parse(p.Content)))
                 {
                     if (validate)
                     {
@@ -11818,12 +13678,31 @@ namespace FolioConsoleApplication
             traceSource.TraceEvent(TraceEventType.Information, 0, $"{s.Elapsed} elapsed");
         }
 
+        public static void QueryPaymentMethods(string where = null, string orderBy = null, int? skip = null, int? take = null, string select = null)
+        {
+            using (var fdc = new FolioDapperContext(connectionString))
+            using (var fsc = new FolioServiceClient(connectionString))
+            using (var jtw = new JsonTextWriter(Console.Out))
+            {
+                jtw.WriteStartArray();
+                foreach (var jo in (api ? fsc.PaymentMethods(where, orderBy, skip, take) : fdc.PaymentMethods(where, null, orderBy, skip, take).Select(pm => JObject.Parse(pm.Content))).Select(jo =>
+                {
+                    return select == null ? jo : new JObject(select.Split(",").Select(s =>
+                    {
+                        var m = Regex.Match(s.Trim(), @"(?<Path>\S+)((?i) as (?<Name>.+))?", RegexOptions.Compiled);
+                        return new JProperty(m.Groups["Name"].Success ? m.Groups["Name"].Value : m.Groups["Path"].Value.Split(".").Last(), jo.SelectToken(m.Groups["Path"].Value));
+                    }));
+                })) jsonSerializer.Serialize(jtw, jo);
+                jtw.WriteEndArray();
+            }
+        }
+
         public static void DeletePaymentMethods(string where = null)
         {
             traceSource.TraceEvent(TraceEventType.Information, 0, "Deleting payment methods");
             var s = Stopwatch.StartNew();
-            using (var fbcc = new FolioBulkCopyContext())
-            using (var fsc = new FolioServiceClient())
+            using (var fbcc = new FolioBulkCopyContext(connectionString))
+            using (var fsc = new FolioServiceClient(connectionString))
             {
                 var i = 0;
                 if (api)
@@ -11856,8 +13735,8 @@ namespace FolioConsoleApplication
             using (var sr = new StreamReader(compress || path.EndsWith(".gz") ? (Stream)new GZipStream(File.OpenRead($"{path}{(path.EndsWith(".gz") ? "" : ".gz")}"), CompressionMode.Decompress) : File.OpenRead(path)))
             using (var sr2 = new StreamReader(Assembly.GetAssembly(typeof(FolioContext)).GetManifestResourceStream("FolioLibrary.PaymentMethod.json")))
             using (var jtr = new JsonTextReader(sr) { SupportMultipleContent = true })
-            using (var fbcc = new FolioBulkCopyContext())
-            using (var fsc = new FolioServiceClient())
+            using (var fbcc = new FolioBulkCopyContext(connectionString))
+            using (var fsc = new FolioServiceClient(connectionString))
             {
                 var s2 = Stopwatch.StartNew();
                 var js4 = JsonSchema.FromJsonAsync(sr2.ReadToEndAsync().Result).Result;
@@ -11914,8 +13793,8 @@ namespace FolioConsoleApplication
         {
             traceSource.TraceEvent(TraceEventType.Information, 0, "Saving payment methods");
             var s = Stopwatch.StartNew();
-            using (var fdc = new FolioDapperContext())
-            using (var fsc = new FolioServiceClient())
+            using (var fdc = new FolioDapperContext(connectionString))
+            using (var fsc = new FolioServiceClient(connectionString))
             using (var sr = new StreamReader(Assembly.GetAssembly(typeof(FolioContext)).GetManifestResourceStream("FolioLibrary.PaymentMethod.json")))
             using (var sw = new StreamWriter(whatIf ? new MemoryStream() : compress ? (Stream)new GZipStream(new FileStream($"{path}.gz", FileMode.Create), CompressionMode.Compress) : new FileStream(path, FileMode.Create)))
             using (var jtw = new JsonTextWriter(sw))
@@ -11925,7 +13804,7 @@ namespace FolioConsoleApplication
                 var js = new JsonSerializer { Formatting = Formatting.Indented };
                 jtw.WriteStartArray();
                 var i = 0;
-                foreach (var jo in api ? fsc.PaymentMethods(where, take: take) : fdc.PaymentMethods(where, take: take).Select(pm => JObject.Parse(pm.Content)))
+                foreach (var jo in api ? fsc.PaymentMethods(where, orderBy, skip, take) : fdc.PaymentMethods(where, null, orderBy, skip, take).Select(pm => JObject.Parse(pm.Content)))
                 {
                     if (validate)
                     {
@@ -11946,12 +13825,31 @@ namespace FolioConsoleApplication
             traceSource.TraceEvent(TraceEventType.Information, 0, $"{s.Elapsed} elapsed");
         }
 
+        public static void QueryPermissions(string where = null, string orderBy = null, int? skip = null, int? take = null, string select = null)
+        {
+            using (var fdc = new FolioDapperContext(connectionString))
+            using (var fsc = new FolioServiceClient(connectionString))
+            using (var jtw = new JsonTextWriter(Console.Out))
+            {
+                jtw.WriteStartArray();
+                foreach (var jo in (api ? fsc.Permissions(where, orderBy, skip, take) : fdc.Permissions(where, null, orderBy, skip, take).Select(p => JObject.Parse(p.Content))).Select(jo =>
+                {
+                    return select == null ? jo : new JObject(select.Split(",").Select(s =>
+                    {
+                        var m = Regex.Match(s.Trim(), @"(?<Path>\S+)((?i) as (?<Name>.+))?", RegexOptions.Compiled);
+                        return new JProperty(m.Groups["Name"].Success ? m.Groups["Name"].Value : m.Groups["Path"].Value.Split(".").Last(), jo.SelectToken(m.Groups["Path"].Value));
+                    }));
+                })) jsonSerializer.Serialize(jtw, jo);
+                jtw.WriteEndArray();
+            }
+        }
+
         public static void DeletePermissions(string where = null)
         {
             traceSource.TraceEvent(TraceEventType.Information, 0, "Deleting permissions");
             var s = Stopwatch.StartNew();
-            using (var fbcc = new FolioBulkCopyContext())
-            using (var fsc = new FolioServiceClient())
+            using (var fbcc = new FolioBulkCopyContext(connectionString))
+            using (var fsc = new FolioServiceClient(connectionString))
             {
                 var i = 0;
                 if (api)
@@ -11984,8 +13882,8 @@ namespace FolioConsoleApplication
             using (var sr = new StreamReader(compress || path.EndsWith(".gz") ? (Stream)new GZipStream(File.OpenRead($"{path}{(path.EndsWith(".gz") ? "" : ".gz")}"), CompressionMode.Decompress) : File.OpenRead(path)))
             using (var sr2 = new StreamReader(Assembly.GetAssembly(typeof(FolioContext)).GetManifestResourceStream("FolioLibrary.Permission.json")))
             using (var jtr = new JsonTextReader(sr) { SupportMultipleContent = true })
-            using (var fbcc = new FolioBulkCopyContext())
-            using (var fsc = new FolioServiceClient())
+            using (var fbcc = new FolioBulkCopyContext(connectionString))
+            using (var fsc = new FolioServiceClient(connectionString))
             {
                 var s2 = Stopwatch.StartNew();
                 var js4 = JsonSchema.FromJsonAsync(sr2.ReadToEndAsync().Result).Result;
@@ -12042,8 +13940,8 @@ namespace FolioConsoleApplication
         {
             traceSource.TraceEvent(TraceEventType.Information, 0, "Saving permissions");
             var s = Stopwatch.StartNew();
-            using (var fdc = new FolioDapperContext())
-            using (var fsc = new FolioServiceClient())
+            using (var fdc = new FolioDapperContext(connectionString))
+            using (var fsc = new FolioServiceClient(connectionString))
             using (var sr = new StreamReader(Assembly.GetAssembly(typeof(FolioContext)).GetManifestResourceStream("FolioLibrary.Permission.json")))
             using (var sw = new StreamWriter(whatIf ? new MemoryStream() : compress ? (Stream)new GZipStream(new FileStream($"{path}.gz", FileMode.Create), CompressionMode.Compress) : new FileStream(path, FileMode.Create)))
             using (var jtw = new JsonTextWriter(sw))
@@ -12053,7 +13951,7 @@ namespace FolioConsoleApplication
                 var js = new JsonSerializer { Formatting = Formatting.Indented };
                 jtw.WriteStartArray();
                 var i = 0;
-                foreach (var jo in api ? fsc.Permissions(where, take: take) : fdc.Permissions(where, take: take).Select(p => JObject.Parse(p.Content)))
+                foreach (var jo in api ? fsc.Permissions(where, orderBy, skip, take) : fdc.Permissions(where, null, orderBy, skip, take).Select(p => JObject.Parse(p.Content)))
                 {
                     if (validate)
                     {
@@ -12074,12 +13972,31 @@ namespace FolioConsoleApplication
             traceSource.TraceEvent(TraceEventType.Information, 0, $"{s.Elapsed} elapsed");
         }
 
+        public static void QueryPermissionsUsers(string where = null, string orderBy = null, int? skip = null, int? take = null, string select = null)
+        {
+            using (var fdc = new FolioDapperContext(connectionString))
+            using (var fsc = new FolioServiceClient(connectionString))
+            using (var jtw = new JsonTextWriter(Console.Out))
+            {
+                jtw.WriteStartArray();
+                foreach (var jo in (api ? fsc.PermissionsUsers(where, orderBy, skip, take) : fdc.PermissionsUsers(where, null, orderBy, skip, take).Select(pu => JObject.Parse(pu.Content))).Select(jo =>
+                {
+                    return select == null ? jo : new JObject(select.Split(",").Select(s =>
+                    {
+                        var m = Regex.Match(s.Trim(), @"(?<Path>\S+)((?i) as (?<Name>.+))?", RegexOptions.Compiled);
+                        return new JProperty(m.Groups["Name"].Success ? m.Groups["Name"].Value : m.Groups["Path"].Value.Split(".").Last(), jo.SelectToken(m.Groups["Path"].Value));
+                    }));
+                })) jsonSerializer.Serialize(jtw, jo);
+                jtw.WriteEndArray();
+            }
+        }
+
         public static void DeletePermissionsUsers(string where = null)
         {
             traceSource.TraceEvent(TraceEventType.Information, 0, "Deleting permissions users");
             var s = Stopwatch.StartNew();
-            using (var fbcc = new FolioBulkCopyContext())
-            using (var fsc = new FolioServiceClient())
+            using (var fbcc = new FolioBulkCopyContext(connectionString))
+            using (var fsc = new FolioServiceClient(connectionString))
             {
                 var i = 0;
                 if (api)
@@ -12112,8 +14029,8 @@ namespace FolioConsoleApplication
             using (var sr = new StreamReader(compress || path.EndsWith(".gz") ? (Stream)new GZipStream(File.OpenRead($"{path}{(path.EndsWith(".gz") ? "" : ".gz")}"), CompressionMode.Decompress) : File.OpenRead(path)))
             using (var sr2 = new StreamReader(Assembly.GetAssembly(typeof(FolioContext)).GetManifestResourceStream("FolioLibrary.PermissionsUser.json")))
             using (var jtr = new JsonTextReader(sr) { SupportMultipleContent = true })
-            using (var fbcc = new FolioBulkCopyContext())
-            using (var fsc = new FolioServiceClient())
+            using (var fbcc = new FolioBulkCopyContext(connectionString))
+            using (var fsc = new FolioServiceClient(connectionString))
             {
                 var s2 = Stopwatch.StartNew();
                 var js4 = JsonSchema.FromJsonAsync(sr2.ReadToEndAsync().Result).Result;
@@ -12170,8 +14087,8 @@ namespace FolioConsoleApplication
         {
             traceSource.TraceEvent(TraceEventType.Information, 0, "Saving permissions users");
             var s = Stopwatch.StartNew();
-            using (var fdc = new FolioDapperContext())
-            using (var fsc = new FolioServiceClient())
+            using (var fdc = new FolioDapperContext(connectionString))
+            using (var fsc = new FolioServiceClient(connectionString))
             using (var sr = new StreamReader(Assembly.GetAssembly(typeof(FolioContext)).GetManifestResourceStream("FolioLibrary.PermissionsUser.json")))
             using (var sw = new StreamWriter(whatIf ? new MemoryStream() : compress ? (Stream)new GZipStream(new FileStream($"{path}.gz", FileMode.Create), CompressionMode.Compress) : new FileStream(path, FileMode.Create)))
             using (var jtw = new JsonTextWriter(sw))
@@ -12181,7 +14098,7 @@ namespace FolioConsoleApplication
                 var js = new JsonSerializer { Formatting = Formatting.Indented };
                 jtw.WriteStartArray();
                 var i = 0;
-                foreach (var jo in api ? fsc.PermissionsUsers(where, take: take) : fdc.PermissionsUsers(where, take: take).Select(pu => JObject.Parse(pu.Content)))
+                foreach (var jo in api ? fsc.PermissionsUsers(where, orderBy, skip, take) : fdc.PermissionsUsers(where, null, orderBy, skip, take).Select(pu => JObject.Parse(pu.Content)))
                 {
                     if (validate)
                     {
@@ -12202,12 +14119,31 @@ namespace FolioConsoleApplication
             traceSource.TraceEvent(TraceEventType.Information, 0, $"{s.Elapsed} elapsed");
         }
 
+        public static void QueryPieces(string where = null, string orderBy = null, int? skip = null, int? take = null, string select = null)
+        {
+            using (var fdc = new FolioDapperContext(connectionString))
+            using (var fsc = new FolioServiceClient(connectionString))
+            using (var jtw = new JsonTextWriter(Console.Out))
+            {
+                jtw.WriteStartArray();
+                foreach (var jo in (api ? fsc.Pieces(where, orderBy, skip, take) : fdc.Pieces(where, null, orderBy, skip, take).Select(p => JObject.Parse(p.Content))).Select(jo =>
+                {
+                    return select == null ? jo : new JObject(select.Split(",").Select(s =>
+                    {
+                        var m = Regex.Match(s.Trim(), @"(?<Path>\S+)((?i) as (?<Name>.+))?", RegexOptions.Compiled);
+                        return new JProperty(m.Groups["Name"].Success ? m.Groups["Name"].Value : m.Groups["Path"].Value.Split(".").Last(), jo.SelectToken(m.Groups["Path"].Value));
+                    }));
+                })) jsonSerializer.Serialize(jtw, jo);
+                jtw.WriteEndArray();
+            }
+        }
+
         public static void DeletePieces(string where = null)
         {
             traceSource.TraceEvent(TraceEventType.Information, 0, "Deleting pieces");
             var s = Stopwatch.StartNew();
-            using (var fbcc = new FolioBulkCopyContext())
-            using (var fsc = new FolioServiceClient())
+            using (var fbcc = new FolioBulkCopyContext(connectionString))
+            using (var fsc = new FolioServiceClient(connectionString))
             {
                 var i = 0;
                 if (api)
@@ -12240,8 +14176,8 @@ namespace FolioConsoleApplication
             using (var sr = new StreamReader(compress || path.EndsWith(".gz") ? (Stream)new GZipStream(File.OpenRead($"{path}{(path.EndsWith(".gz") ? "" : ".gz")}"), CompressionMode.Decompress) : File.OpenRead(path)))
             using (var sr2 = new StreamReader(Assembly.GetAssembly(typeof(FolioContext)).GetManifestResourceStream("FolioLibrary.Piece.json")))
             using (var jtr = new JsonTextReader(sr) { SupportMultipleContent = true })
-            using (var fbcc = new FolioBulkCopyContext())
-            using (var fsc = new FolioServiceClient())
+            using (var fbcc = new FolioBulkCopyContext(connectionString))
+            using (var fsc = new FolioServiceClient(connectionString))
             {
                 var s2 = Stopwatch.StartNew();
                 var js4 = JsonSchema.FromJsonAsync(sr2.ReadToEndAsync().Result).Result;
@@ -12297,8 +14233,8 @@ namespace FolioConsoleApplication
         {
             traceSource.TraceEvent(TraceEventType.Information, 0, "Saving pieces");
             var s = Stopwatch.StartNew();
-            using (var fdc = new FolioDapperContext())
-            using (var fsc = new FolioServiceClient())
+            using (var fdc = new FolioDapperContext(connectionString))
+            using (var fsc = new FolioServiceClient(connectionString))
             using (var sr = new StreamReader(Assembly.GetAssembly(typeof(FolioContext)).GetManifestResourceStream("FolioLibrary.Piece.json")))
             using (var sw = new StreamWriter(whatIf ? new MemoryStream() : compress ? (Stream)new GZipStream(new FileStream($"{path}.gz", FileMode.Create), CompressionMode.Compress) : new FileStream(path, FileMode.Create)))
             using (var jtw = new JsonTextWriter(sw))
@@ -12308,7 +14244,7 @@ namespace FolioConsoleApplication
                 var js = new JsonSerializer { Formatting = Formatting.Indented };
                 jtw.WriteStartArray();
                 var i = 0;
-                foreach (var jo in api ? fsc.Pieces(where, take: take) : fdc.Pieces(where, take: take).Select(p => JObject.Parse(p.Content)))
+                foreach (var jo in api ? fsc.Pieces(where, orderBy, skip, take) : fdc.Pieces(where, null, orderBy, skip, take).Select(p => JObject.Parse(p.Content)))
                 {
                     if (validate)
                     {
@@ -12329,12 +14265,31 @@ namespace FolioConsoleApplication
             traceSource.TraceEvent(TraceEventType.Information, 0, $"{s.Elapsed} elapsed");
         }
 
+        public static void QueryPrecedingSucceedingTitles(string where = null, string orderBy = null, int? skip = null, int? take = null, string select = null)
+        {
+            using (var fdc = new FolioDapperContext(connectionString))
+            using (var fsc = new FolioServiceClient(connectionString))
+            using (var jtw = new JsonTextWriter(Console.Out))
+            {
+                jtw.WriteStartArray();
+                foreach (var jo in (api ? fsc.PrecedingSucceedingTitles(where, orderBy, skip, take) : fdc.PrecedingSucceedingTitles(where, null, orderBy, skip, take).Select(pst => JObject.Parse(pst.Content))).Select(jo =>
+                {
+                    return select == null ? jo : new JObject(select.Split(",").Select(s =>
+                    {
+                        var m = Regex.Match(s.Trim(), @"(?<Path>\S+)((?i) as (?<Name>.+))?", RegexOptions.Compiled);
+                        return new JProperty(m.Groups["Name"].Success ? m.Groups["Name"].Value : m.Groups["Path"].Value.Split(".").Last(), jo.SelectToken(m.Groups["Path"].Value));
+                    }));
+                })) jsonSerializer.Serialize(jtw, jo);
+                jtw.WriteEndArray();
+            }
+        }
+
         public static void DeletePrecedingSucceedingTitles(string where = null)
         {
             traceSource.TraceEvent(TraceEventType.Information, 0, "Deleting preceding succeeding titles");
             var s = Stopwatch.StartNew();
-            using (var fbcc = new FolioBulkCopyContext())
-            using (var fsc = new FolioServiceClient())
+            using (var fbcc = new FolioBulkCopyContext(connectionString))
+            using (var fsc = new FolioServiceClient(connectionString))
             {
                 var i = 0;
                 if (api)
@@ -12367,8 +14322,8 @@ namespace FolioConsoleApplication
             using (var sr = new StreamReader(compress || path.EndsWith(".gz") ? (Stream)new GZipStream(File.OpenRead($"{path}{(path.EndsWith(".gz") ? "" : ".gz")}"), CompressionMode.Decompress) : File.OpenRead(path)))
             using (var sr2 = new StreamReader(Assembly.GetAssembly(typeof(FolioContext)).GetManifestResourceStream("FolioLibrary.PrecedingSucceedingTitle.json")))
             using (var jtr = new JsonTextReader(sr) { SupportMultipleContent = true })
-            using (var fbcc = new FolioBulkCopyContext())
-            using (var fsc = new FolioServiceClient())
+            using (var fbcc = new FolioBulkCopyContext(connectionString))
+            using (var fsc = new FolioServiceClient(connectionString))
             {
                 var s2 = Stopwatch.StartNew();
                 var js4 = JsonSchema.FromJsonAsync(sr2.ReadToEndAsync().Result).Result;
@@ -12427,8 +14382,8 @@ namespace FolioConsoleApplication
         {
             traceSource.TraceEvent(TraceEventType.Information, 0, "Saving preceding succeeding titles");
             var s = Stopwatch.StartNew();
-            using (var fdc = new FolioDapperContext())
-            using (var fsc = new FolioServiceClient())
+            using (var fdc = new FolioDapperContext(connectionString))
+            using (var fsc = new FolioServiceClient(connectionString))
             using (var sr = new StreamReader(Assembly.GetAssembly(typeof(FolioContext)).GetManifestResourceStream("FolioLibrary.PrecedingSucceedingTitle.json")))
             using (var sw = new StreamWriter(whatIf ? new MemoryStream() : compress ? (Stream)new GZipStream(new FileStream($"{path}.gz", FileMode.Create), CompressionMode.Compress) : new FileStream(path, FileMode.Create)))
             using (var jtw = new JsonTextWriter(sw))
@@ -12438,7 +14393,7 @@ namespace FolioConsoleApplication
                 var js = new JsonSerializer { Formatting = Formatting.Indented };
                 jtw.WriteStartArray();
                 var i = 0;
-                foreach (var jo in api ? fsc.PrecedingSucceedingTitles(where, take: take) : fdc.PrecedingSucceedingTitles(where, take: take).Select(pst => JObject.Parse(pst.Content)))
+                foreach (var jo in api ? fsc.PrecedingSucceedingTitles(where, orderBy, skip, take) : fdc.PrecedingSucceedingTitles(where, null, orderBy, skip, take).Select(pst => JObject.Parse(pst.Content)))
                 {
                     if (validate)
                     {
@@ -12459,12 +14414,31 @@ namespace FolioConsoleApplication
             traceSource.TraceEvent(TraceEventType.Information, 0, $"{s.Elapsed} elapsed");
         }
 
+        public static void QueryPrefixes(string where = null, string orderBy = null, int? skip = null, int? take = null, string select = null)
+        {
+            using (var fdc = new FolioDapperContext(connectionString))
+            using (var fsc = new FolioServiceClient(connectionString))
+            using (var jtw = new JsonTextWriter(Console.Out))
+            {
+                jtw.WriteStartArray();
+                foreach (var jo in (api ? fsc.Prefixes(where, orderBy, skip, take) : fdc.Prefixes(where, null, orderBy, skip, take).Select(p => JObject.Parse(p.Content))).Select(jo =>
+                {
+                    return select == null ? jo : new JObject(select.Split(",").Select(s =>
+                    {
+                        var m = Regex.Match(s.Trim(), @"(?<Path>\S+)((?i) as (?<Name>.+))?", RegexOptions.Compiled);
+                        return new JProperty(m.Groups["Name"].Success ? m.Groups["Name"].Value : m.Groups["Path"].Value.Split(".").Last(), jo.SelectToken(m.Groups["Path"].Value));
+                    }));
+                })) jsonSerializer.Serialize(jtw, jo);
+                jtw.WriteEndArray();
+            }
+        }
+
         public static void DeletePrefixes(string where = null)
         {
             traceSource.TraceEvent(TraceEventType.Information, 0, "Deleting prefixes");
             var s = Stopwatch.StartNew();
-            using (var fbcc = new FolioBulkCopyContext())
-            using (var fsc = new FolioServiceClient())
+            using (var fbcc = new FolioBulkCopyContext(connectionString))
+            using (var fsc = new FolioServiceClient(connectionString))
             {
                 var i = 0;
                 if (api)
@@ -12497,8 +14471,8 @@ namespace FolioConsoleApplication
             using (var sr = new StreamReader(compress || path.EndsWith(".gz") ? (Stream)new GZipStream(File.OpenRead($"{path}{(path.EndsWith(".gz") ? "" : ".gz")}"), CompressionMode.Decompress) : File.OpenRead(path)))
             using (var sr2 = new StreamReader(Assembly.GetAssembly(typeof(FolioContext)).GetManifestResourceStream("FolioLibrary.Prefix.json")))
             using (var jtr = new JsonTextReader(sr) { SupportMultipleContent = true })
-            using (var fbcc = new FolioBulkCopyContext())
-            using (var fsc = new FolioServiceClient())
+            using (var fbcc = new FolioBulkCopyContext(connectionString))
+            using (var fsc = new FolioServiceClient(connectionString))
             {
                 var s2 = Stopwatch.StartNew();
                 var js4 = JsonSchema.FromJsonAsync(sr2.ReadToEndAsync().Result).Result;
@@ -12553,8 +14527,8 @@ namespace FolioConsoleApplication
         {
             traceSource.TraceEvent(TraceEventType.Information, 0, "Saving prefixes");
             var s = Stopwatch.StartNew();
-            using (var fdc = new FolioDapperContext())
-            using (var fsc = new FolioServiceClient())
+            using (var fdc = new FolioDapperContext(connectionString))
+            using (var fsc = new FolioServiceClient(connectionString))
             using (var sr = new StreamReader(Assembly.GetAssembly(typeof(FolioContext)).GetManifestResourceStream("FolioLibrary.Prefix.json")))
             using (var sw = new StreamWriter(whatIf ? new MemoryStream() : compress ? (Stream)new GZipStream(new FileStream($"{path}.gz", FileMode.Create), CompressionMode.Compress) : new FileStream(path, FileMode.Create)))
             using (var jtw = new JsonTextWriter(sw))
@@ -12564,7 +14538,7 @@ namespace FolioConsoleApplication
                 var js = new JsonSerializer { Formatting = Formatting.Indented };
                 jtw.WriteStartArray();
                 var i = 0;
-                foreach (var jo in api ? fsc.Prefixes(where, take: take) : fdc.Prefixes(where, take: take).Select(p => JObject.Parse(p.Content)))
+                foreach (var jo in api ? fsc.Prefixes(where, orderBy, skip, take) : fdc.Prefixes(where, null, orderBy, skip, take).Select(p => JObject.Parse(p.Content)))
                 {
                     if (validate)
                     {
@@ -12585,12 +14559,31 @@ namespace FolioConsoleApplication
             traceSource.TraceEvent(TraceEventType.Information, 0, $"{s.Elapsed} elapsed");
         }
 
+        public static void QueryProxies(string where = null, string orderBy = null, int? skip = null, int? take = null, string select = null)
+        {
+            using (var fdc = new FolioDapperContext(connectionString))
+            using (var fsc = new FolioServiceClient(connectionString))
+            using (var jtw = new JsonTextWriter(Console.Out))
+            {
+                jtw.WriteStartArray();
+                foreach (var jo in (api ? fsc.Proxies(where, orderBy, skip, take) : fdc.Proxies(where, null, orderBy, skip, take).Select(p => JObject.Parse(p.Content))).Select(jo =>
+                {
+                    return select == null ? jo : new JObject(select.Split(",").Select(s =>
+                    {
+                        var m = Regex.Match(s.Trim(), @"(?<Path>\S+)((?i) as (?<Name>.+))?", RegexOptions.Compiled);
+                        return new JProperty(m.Groups["Name"].Success ? m.Groups["Name"].Value : m.Groups["Path"].Value.Split(".").Last(), jo.SelectToken(m.Groups["Path"].Value));
+                    }));
+                })) jsonSerializer.Serialize(jtw, jo);
+                jtw.WriteEndArray();
+            }
+        }
+
         public static void DeleteProxies(string where = null)
         {
             traceSource.TraceEvent(TraceEventType.Information, 0, "Deleting proxies");
             var s = Stopwatch.StartNew();
-            using (var fbcc = new FolioBulkCopyContext())
-            using (var fsc = new FolioServiceClient())
+            using (var fbcc = new FolioBulkCopyContext(connectionString))
+            using (var fsc = new FolioServiceClient(connectionString))
             {
                 var i = 0;
                 if (api)
@@ -12623,8 +14616,8 @@ namespace FolioConsoleApplication
             using (var sr = new StreamReader(compress || path.EndsWith(".gz") ? (Stream)new GZipStream(File.OpenRead($"{path}{(path.EndsWith(".gz") ? "" : ".gz")}"), CompressionMode.Decompress) : File.OpenRead(path)))
             using (var sr2 = new StreamReader(Assembly.GetAssembly(typeof(FolioContext)).GetManifestResourceStream("FolioLibrary.Proxy.json")))
             using (var jtr = new JsonTextReader(sr) { SupportMultipleContent = true })
-            using (var fbcc = new FolioBulkCopyContext())
-            using (var fsc = new FolioServiceClient())
+            using (var fbcc = new FolioBulkCopyContext(connectionString))
+            using (var fsc = new FolioServiceClient(connectionString))
             {
                 var s2 = Stopwatch.StartNew();
                 var js4 = JsonSchema.FromJsonAsync(sr2.ReadToEndAsync().Result).Result;
@@ -12681,8 +14674,8 @@ namespace FolioConsoleApplication
         {
             traceSource.TraceEvent(TraceEventType.Information, 0, "Saving proxies");
             var s = Stopwatch.StartNew();
-            using (var fdc = new FolioDapperContext())
-            using (var fsc = new FolioServiceClient())
+            using (var fdc = new FolioDapperContext(connectionString))
+            using (var fsc = new FolioServiceClient(connectionString))
             using (var sr = new StreamReader(Assembly.GetAssembly(typeof(FolioContext)).GetManifestResourceStream("FolioLibrary.Proxy.json")))
             using (var sw = new StreamWriter(whatIf ? new MemoryStream() : compress ? (Stream)new GZipStream(new FileStream($"{path}.gz", FileMode.Create), CompressionMode.Compress) : new FileStream(path, FileMode.Create)))
             using (var jtw = new JsonTextWriter(sw))
@@ -12692,7 +14685,7 @@ namespace FolioConsoleApplication
                 var js = new JsonSerializer { Formatting = Formatting.Indented };
                 jtw.WriteStartArray();
                 var i = 0;
-                foreach (var jo in api ? fsc.Proxies(where, take: take) : fdc.Proxies(where, take: take).Select(p => JObject.Parse(p.Content)))
+                foreach (var jo in api ? fsc.Proxies(where, orderBy, skip, take) : fdc.Proxies(where, null, orderBy, skip, take).Select(p => JObject.Parse(p.Content)))
                 {
                     if (validate)
                     {
@@ -12713,11 +14706,29 @@ namespace FolioConsoleApplication
             traceSource.TraceEvent(TraceEventType.Information, 0, $"{s.Elapsed} elapsed");
         }
 
+        public static void QueryRawRecords(string where = null, string orderBy = null, int? skip = null, int? take = null, string select = null)
+        {
+            using (var fdc = new FolioDapperContext(connectionString))
+            using (var jtw = new JsonTextWriter(Console.Out))
+            {
+                jtw.WriteStartArray();
+                foreach (var jo in (api ? throw new NotSupportedException() : fdc.RawRecords(where, null, orderBy, skip, take).Select(rr => JObject.Parse(rr.Content))).Select(jo =>
+                {
+                    return select == null ? jo : new JObject(select.Split(",").Select(s =>
+                    {
+                        var m = Regex.Match(s.Trim(), @"(?<Path>\S+)((?i) as (?<Name>.+))?", RegexOptions.Compiled);
+                        return new JProperty(m.Groups["Name"].Success ? m.Groups["Name"].Value : m.Groups["Path"].Value.Split(".").Last(), jo.SelectToken(m.Groups["Path"].Value));
+                    }));
+                })) jsonSerializer.Serialize(jtw, jo);
+                jtw.WriteEndArray();
+            }
+        }
+
         public static void DeleteRawRecords(string where = null)
         {
             traceSource.TraceEvent(TraceEventType.Information, 0, "Deleting raw records");
             var s = Stopwatch.StartNew();
-            using (var fbcc = new FolioBulkCopyContext())
+            using (var fbcc = new FolioBulkCopyContext(connectionString))
             {
                 var i = 0;
                 if (api)
@@ -12740,7 +14751,7 @@ namespace FolioConsoleApplication
             using (var sr = new StreamReader(compress || path.EndsWith(".gz") ? (Stream)new GZipStream(File.OpenRead($"{path}{(path.EndsWith(".gz") ? "" : ".gz")}"), CompressionMode.Decompress) : File.OpenRead(path)))
             using (var sr2 = new StreamReader(Assembly.GetAssembly(typeof(FolioContext)).GetManifestResourceStream("FolioLibrary.RawRecord.json")))
             using (var jtr = new JsonTextReader(sr) { SupportMultipleContent = true })
-            using (var fbcc = new FolioBulkCopyContext())
+            using (var fbcc = new FolioBulkCopyContext(connectionString))
             {
                 var s2 = Stopwatch.StartNew();
                 var js4 = JsonSchema.FromJsonAsync(sr2.ReadToEndAsync().Result).Result;
@@ -12790,7 +14801,7 @@ namespace FolioConsoleApplication
         {
             traceSource.TraceEvent(TraceEventType.Information, 0, "Saving raw records");
             var s = Stopwatch.StartNew();
-            using (var fdc = new FolioDapperContext())
+            using (var fdc = new FolioDapperContext(connectionString))
             using (var sr = new StreamReader(Assembly.GetAssembly(typeof(FolioContext)).GetManifestResourceStream("FolioLibrary.RawRecord.json")))
             using (var sw = new StreamWriter(whatIf ? new MemoryStream() : compress ? (Stream)new GZipStream(new FileStream($"{path}.gz", FileMode.Create), CompressionMode.Compress) : new FileStream(path, FileMode.Create)))
             using (var jtw = new JsonTextWriter(sw))
@@ -12800,7 +14811,7 @@ namespace FolioConsoleApplication
                 var js = new JsonSerializer { Formatting = Formatting.Indented };
                 jtw.WriteStartArray();
                 var i = 0;
-                foreach (var jo in api ? throw new NotSupportedException() : fdc.RawRecords(where, take: take).Select(rr => JObject.Parse(rr.Content)))
+                foreach (var jo in api ? throw new NotSupportedException() : fdc.RawRecords(where, null, orderBy, skip, take).Select(rr => JObject.Parse(rr.Content)))
                 {
                     if (validate)
                     {
@@ -12821,12 +14832,31 @@ namespace FolioConsoleApplication
             traceSource.TraceEvent(TraceEventType.Information, 0, $"{s.Elapsed} elapsed");
         }
 
+        public static void QueryRecords(string where = null, string orderBy = null, int? skip = null, int? take = null, string select = null)
+        {
+            using (var fdc = new FolioDapperContext(connectionString))
+            using (var fsc = new FolioServiceClient(connectionString))
+            using (var jtw = new JsonTextWriter(Console.Out))
+            {
+                jtw.WriteStartArray();
+                foreach (var jo in (api ? fsc.Records(where, orderBy, skip, take) : fdc.Records(where, null, orderBy, skip, take).Select(r => JObject.Parse(r.Content))).Select(jo =>
+                {
+                    return select == null ? jo : new JObject(select.Split(",").Select(s =>
+                    {
+                        var m = Regex.Match(s.Trim(), @"(?<Path>\S+)((?i) as (?<Name>.+))?", RegexOptions.Compiled);
+                        return new JProperty(m.Groups["Name"].Success ? m.Groups["Name"].Value : m.Groups["Path"].Value.Split(".").Last(), jo.SelectToken(m.Groups["Path"].Value));
+                    }));
+                })) jsonSerializer.Serialize(jtw, jo);
+                jtw.WriteEndArray();
+            }
+        }
+
         public static void DeleteRecords(string where = null)
         {
             traceSource.TraceEvent(TraceEventType.Information, 0, "Deleting records");
             var s = Stopwatch.StartNew();
-            using (var fbcc = new FolioBulkCopyContext())
-            using (var fsc = new FolioServiceClient())
+            using (var fbcc = new FolioBulkCopyContext(connectionString))
+            using (var fsc = new FolioServiceClient(connectionString))
             {
                 var i = 0;
                 if (api)
@@ -12859,8 +14889,8 @@ namespace FolioConsoleApplication
             using (var sr = new StreamReader(compress || path.EndsWith(".gz") ? (Stream)new GZipStream(File.OpenRead($"{path}{(path.EndsWith(".gz") ? "" : ".gz")}"), CompressionMode.Decompress) : File.OpenRead(path)))
             using (var sr2 = new StreamReader(Assembly.GetAssembly(typeof(FolioContext)).GetManifestResourceStream("FolioLibrary.Record.json")))
             using (var jtr = new JsonTextReader(sr) { SupportMultipleContent = true })
-            using (var fbcc = new FolioBulkCopyContext())
-            using (var fsc = new FolioServiceClient())
+            using (var fbcc = new FolioBulkCopyContext(connectionString))
+            using (var fsc = new FolioServiceClient(connectionString))
             {
                 var s2 = Stopwatch.StartNew();
                 var js4 = JsonSchema.FromJsonAsync(sr2.ReadToEndAsync().Result).Result;
@@ -12921,8 +14951,8 @@ namespace FolioConsoleApplication
         {
             traceSource.TraceEvent(TraceEventType.Information, 0, "Saving records");
             var s = Stopwatch.StartNew();
-            using (var fdc = new FolioDapperContext())
-            using (var fsc = new FolioServiceClient())
+            using (var fdc = new FolioDapperContext(connectionString))
+            using (var fsc = new FolioServiceClient(connectionString))
             using (var sr = new StreamReader(Assembly.GetAssembly(typeof(FolioContext)).GetManifestResourceStream("FolioLibrary.Record.json")))
             using (var sw = new StreamWriter(whatIf ? new MemoryStream() : compress ? (Stream)new GZipStream(new FileStream($"{path}.gz", FileMode.Create), CompressionMode.Compress) : new FileStream(path, FileMode.Create)))
             using (var jtw = new JsonTextWriter(sw))
@@ -12932,7 +14962,7 @@ namespace FolioConsoleApplication
                 var js = new JsonSerializer { Formatting = Formatting.Indented };
                 jtw.WriteStartArray();
                 var i = 0;
-                foreach (var jo in api ? fsc.Records(where, take: take) : fdc.Records(where, take: take).Select(r => JObject.Parse(r.Content)))
+                foreach (var jo in api ? fsc.Records(where, orderBy, skip, take) : fdc.Records(where, null, orderBy, skip, take).Select(r => JObject.Parse(r.Content)))
                 {
                     if (validate)
                     {
@@ -12953,12 +14983,31 @@ namespace FolioConsoleApplication
             traceSource.TraceEvent(TraceEventType.Information, 0, $"{s.Elapsed} elapsed");
         }
 
+        public static void QueryRefundReasons(string where = null, string orderBy = null, int? skip = null, int? take = null, string select = null)
+        {
+            using (var fdc = new FolioDapperContext(connectionString))
+            using (var fsc = new FolioServiceClient(connectionString))
+            using (var jtw = new JsonTextWriter(Console.Out))
+            {
+                jtw.WriteStartArray();
+                foreach (var jo in (api ? fsc.RefundReasons(where, orderBy, skip, take) : fdc.RefundReasons(where, null, orderBy, skip, take).Select(rr => JObject.Parse(rr.Content))).Select(jo =>
+                {
+                    return select == null ? jo : new JObject(select.Split(",").Select(s =>
+                    {
+                        var m = Regex.Match(s.Trim(), @"(?<Path>\S+)((?i) as (?<Name>.+))?", RegexOptions.Compiled);
+                        return new JProperty(m.Groups["Name"].Success ? m.Groups["Name"].Value : m.Groups["Path"].Value.Split(".").Last(), jo.SelectToken(m.Groups["Path"].Value));
+                    }));
+                })) jsonSerializer.Serialize(jtw, jo);
+                jtw.WriteEndArray();
+            }
+        }
+
         public static void DeleteRefundReasons(string where = null)
         {
             traceSource.TraceEvent(TraceEventType.Information, 0, "Deleting refund reasons");
             var s = Stopwatch.StartNew();
-            using (var fbcc = new FolioBulkCopyContext())
-            using (var fsc = new FolioServiceClient())
+            using (var fbcc = new FolioBulkCopyContext(connectionString))
+            using (var fsc = new FolioServiceClient(connectionString))
             {
                 var i = 0;
                 if (api)
@@ -12991,8 +15040,8 @@ namespace FolioConsoleApplication
             using (var sr = new StreamReader(compress || path.EndsWith(".gz") ? (Stream)new GZipStream(File.OpenRead($"{path}{(path.EndsWith(".gz") ? "" : ".gz")}"), CompressionMode.Decompress) : File.OpenRead(path)))
             using (var sr2 = new StreamReader(Assembly.GetAssembly(typeof(FolioContext)).GetManifestResourceStream("FolioLibrary.RefundReason.json")))
             using (var jtr = new JsonTextReader(sr) { SupportMultipleContent = true })
-            using (var fbcc = new FolioBulkCopyContext())
-            using (var fsc = new FolioServiceClient())
+            using (var fbcc = new FolioBulkCopyContext(connectionString))
+            using (var fsc = new FolioServiceClient(connectionString))
             {
                 var s2 = Stopwatch.StartNew();
                 var js4 = JsonSchema.FromJsonAsync(sr2.ReadToEndAsync().Result).Result;
@@ -13049,8 +15098,8 @@ namespace FolioConsoleApplication
         {
             traceSource.TraceEvent(TraceEventType.Information, 0, "Saving refund reasons");
             var s = Stopwatch.StartNew();
-            using (var fdc = new FolioDapperContext())
-            using (var fsc = new FolioServiceClient())
+            using (var fdc = new FolioDapperContext(connectionString))
+            using (var fsc = new FolioServiceClient(connectionString))
             using (var sr = new StreamReader(Assembly.GetAssembly(typeof(FolioContext)).GetManifestResourceStream("FolioLibrary.RefundReason.json")))
             using (var sw = new StreamWriter(whatIf ? new MemoryStream() : compress ? (Stream)new GZipStream(new FileStream($"{path}.gz", FileMode.Create), CompressionMode.Compress) : new FileStream(path, FileMode.Create)))
             using (var jtw = new JsonTextWriter(sw))
@@ -13060,7 +15109,7 @@ namespace FolioConsoleApplication
                 var js = new JsonSerializer { Formatting = Formatting.Indented };
                 jtw.WriteStartArray();
                 var i = 0;
-                foreach (var jo in api ? fsc.RefundReasons(where, take: take) : fdc.RefundReasons(where, take: take).Select(rr => JObject.Parse(rr.Content)))
+                foreach (var jo in api ? fsc.RefundReasons(where, orderBy, skip, take) : fdc.RefundReasons(where, null, orderBy, skip, take).Select(rr => JObject.Parse(rr.Content)))
                 {
                     if (validate)
                     {
@@ -13081,12 +15130,31 @@ namespace FolioConsoleApplication
             traceSource.TraceEvent(TraceEventType.Information, 0, $"{s.Elapsed} elapsed");
         }
 
+        public static void QueryReportingCodes(string where = null, string orderBy = null, int? skip = null, int? take = null, string select = null)
+        {
+            using (var fdc = new FolioDapperContext(connectionString))
+            using (var fsc = new FolioServiceClient(connectionString))
+            using (var jtw = new JsonTextWriter(Console.Out))
+            {
+                jtw.WriteStartArray();
+                foreach (var jo in (api ? fsc.ReportingCodes(where, orderBy, skip, take) : fdc.ReportingCodes(where, null, orderBy, skip, take).Select(rc => JObject.Parse(rc.Content))).Select(jo =>
+                {
+                    return select == null ? jo : new JObject(select.Split(",").Select(s =>
+                    {
+                        var m = Regex.Match(s.Trim(), @"(?<Path>\S+)((?i) as (?<Name>.+))?", RegexOptions.Compiled);
+                        return new JProperty(m.Groups["Name"].Success ? m.Groups["Name"].Value : m.Groups["Path"].Value.Split(".").Last(), jo.SelectToken(m.Groups["Path"].Value));
+                    }));
+                })) jsonSerializer.Serialize(jtw, jo);
+                jtw.WriteEndArray();
+            }
+        }
+
         public static void DeleteReportingCodes(string where = null)
         {
             traceSource.TraceEvent(TraceEventType.Information, 0, "Deleting reporting codes");
             var s = Stopwatch.StartNew();
-            using (var fbcc = new FolioBulkCopyContext())
-            using (var fsc = new FolioServiceClient())
+            using (var fbcc = new FolioBulkCopyContext(connectionString))
+            using (var fsc = new FolioServiceClient(connectionString))
             {
                 var i = 0;
                 if (api)
@@ -13119,8 +15187,8 @@ namespace FolioConsoleApplication
             using (var sr = new StreamReader(compress || path.EndsWith(".gz") ? (Stream)new GZipStream(File.OpenRead($"{path}{(path.EndsWith(".gz") ? "" : ".gz")}"), CompressionMode.Decompress) : File.OpenRead(path)))
             using (var sr2 = new StreamReader(Assembly.GetAssembly(typeof(FolioContext)).GetManifestResourceStream("FolioLibrary.ReportingCode.json")))
             using (var jtr = new JsonTextReader(sr) { SupportMultipleContent = true })
-            using (var fbcc = new FolioBulkCopyContext())
-            using (var fsc = new FolioServiceClient())
+            using (var fbcc = new FolioBulkCopyContext(connectionString))
+            using (var fsc = new FolioServiceClient(connectionString))
             {
                 var s2 = Stopwatch.StartNew();
                 var js4 = JsonSchema.FromJsonAsync(sr2.ReadToEndAsync().Result).Result;
@@ -13175,8 +15243,8 @@ namespace FolioConsoleApplication
         {
             traceSource.TraceEvent(TraceEventType.Information, 0, "Saving reporting codes");
             var s = Stopwatch.StartNew();
-            using (var fdc = new FolioDapperContext())
-            using (var fsc = new FolioServiceClient())
+            using (var fdc = new FolioDapperContext(connectionString))
+            using (var fsc = new FolioServiceClient(connectionString))
             using (var sr = new StreamReader(Assembly.GetAssembly(typeof(FolioContext)).GetManifestResourceStream("FolioLibrary.ReportingCode.json")))
             using (var sw = new StreamWriter(whatIf ? new MemoryStream() : compress ? (Stream)new GZipStream(new FileStream($"{path}.gz", FileMode.Create), CompressionMode.Compress) : new FileStream(path, FileMode.Create)))
             using (var jtw = new JsonTextWriter(sw))
@@ -13186,7 +15254,7 @@ namespace FolioConsoleApplication
                 var js = new JsonSerializer { Formatting = Formatting.Indented };
                 jtw.WriteStartArray();
                 var i = 0;
-                foreach (var jo in api ? fsc.ReportingCodes(where, take: take) : fdc.ReportingCodes(where, take: take).Select(rc => JObject.Parse(rc.Content)))
+                foreach (var jo in api ? fsc.ReportingCodes(where, orderBy, skip, take) : fdc.ReportingCodes(where, null, orderBy, skip, take).Select(rc => JObject.Parse(rc.Content)))
                 {
                     if (validate)
                     {
@@ -13207,12 +15275,31 @@ namespace FolioConsoleApplication
             traceSource.TraceEvent(TraceEventType.Information, 0, $"{s.Elapsed} elapsed");
         }
 
+        public static void QueryRequests(string where = null, string orderBy = null, int? skip = null, int? take = null, string select = null)
+        {
+            using (var fdc = new FolioDapperContext(connectionString))
+            using (var fsc = new FolioServiceClient(connectionString))
+            using (var jtw = new JsonTextWriter(Console.Out))
+            {
+                jtw.WriteStartArray();
+                foreach (var jo in (api ? fsc.Requests(where, orderBy, skip, take) : fdc.Requests(where, null, orderBy, skip, take).Select(r => JObject.Parse(r.Content))).Select(jo =>
+                {
+                    return select == null ? jo : new JObject(select.Split(",").Select(s =>
+                    {
+                        var m = Regex.Match(s.Trim(), @"(?<Path>\S+)((?i) as (?<Name>.+))?", RegexOptions.Compiled);
+                        return new JProperty(m.Groups["Name"].Success ? m.Groups["Name"].Value : m.Groups["Path"].Value.Split(".").Last(), jo.SelectToken(m.Groups["Path"].Value));
+                    }));
+                })) jsonSerializer.Serialize(jtw, jo);
+                jtw.WriteEndArray();
+            }
+        }
+
         public static void DeleteRequests(string where = null)
         {
             traceSource.TraceEvent(TraceEventType.Information, 0, "Deleting requests");
             var s = Stopwatch.StartNew();
-            using (var fbcc = new FolioBulkCopyContext())
-            using (var fsc = new FolioServiceClient())
+            using (var fbcc = new FolioBulkCopyContext(connectionString))
+            using (var fsc = new FolioServiceClient(connectionString))
             {
                 var i = 0;
                 if (api)
@@ -13245,8 +15332,8 @@ namespace FolioConsoleApplication
             using (var sr = new StreamReader(compress || path.EndsWith(".gz") ? (Stream)new GZipStream(File.OpenRead($"{path}{(path.EndsWith(".gz") ? "" : ".gz")}"), CompressionMode.Decompress) : File.OpenRead(path)))
             using (var sr2 = new StreamReader(Assembly.GetAssembly(typeof(FolioContext)).GetManifestResourceStream("FolioLibrary.Request.json")))
             using (var jtr = new JsonTextReader(sr) { SupportMultipleContent = true })
-            using (var fbcc = new FolioBulkCopyContext())
-            using (var fsc = new FolioServiceClient())
+            using (var fbcc = new FolioBulkCopyContext(connectionString))
+            using (var fsc = new FolioServiceClient(connectionString))
             {
                 var s2 = Stopwatch.StartNew();
                 var js4 = JsonSchema.FromJsonAsync(sr2.ReadToEndAsync().Result).Result;
@@ -13304,8 +15391,8 @@ namespace FolioConsoleApplication
         {
             traceSource.TraceEvent(TraceEventType.Information, 0, "Saving requests");
             var s = Stopwatch.StartNew();
-            using (var fdc = new FolioDapperContext())
-            using (var fsc = new FolioServiceClient())
+            using (var fdc = new FolioDapperContext(connectionString))
+            using (var fsc = new FolioServiceClient(connectionString))
             using (var sr = new StreamReader(Assembly.GetAssembly(typeof(FolioContext)).GetManifestResourceStream("FolioLibrary.Request.json")))
             using (var sw = new StreamWriter(whatIf ? new MemoryStream() : compress ? (Stream)new GZipStream(new FileStream($"{path}.gz", FileMode.Create), CompressionMode.Compress) : new FileStream(path, FileMode.Create)))
             using (var jtw = new JsonTextWriter(sw))
@@ -13315,7 +15402,7 @@ namespace FolioConsoleApplication
                 var js = new JsonSerializer { Formatting = Formatting.Indented };
                 jtw.WriteStartArray();
                 var i = 0;
-                foreach (var jo in api ? fsc.Requests(where, take: take) : fdc.Requests(where, take: take).Select(r => JObject.Parse(r.Content)))
+                foreach (var jo in api ? fsc.Requests(where, orderBy, skip, take) : fdc.Requests(where, null, orderBy, skip, take).Select(r => JObject.Parse(r.Content)))
                 {
                     if (validate)
                     {
@@ -13336,12 +15423,31 @@ namespace FolioConsoleApplication
             traceSource.TraceEvent(TraceEventType.Information, 0, $"{s.Elapsed} elapsed");
         }
 
+        public static void QueryRequestPolicies(string where = null, string orderBy = null, int? skip = null, int? take = null, string select = null)
+        {
+            using (var fdc = new FolioDapperContext(connectionString))
+            using (var fsc = new FolioServiceClient(connectionString))
+            using (var jtw = new JsonTextWriter(Console.Out))
+            {
+                jtw.WriteStartArray();
+                foreach (var jo in (api ? fsc.RequestPolicies(where, orderBy, skip, take) : fdc.RequestPolicies(where, null, orderBy, skip, take).Select(rp => JObject.Parse(rp.Content))).Select(jo =>
+                {
+                    return select == null ? jo : new JObject(select.Split(",").Select(s =>
+                    {
+                        var m = Regex.Match(s.Trim(), @"(?<Path>\S+)((?i) as (?<Name>.+))?", RegexOptions.Compiled);
+                        return new JProperty(m.Groups["Name"].Success ? m.Groups["Name"].Value : m.Groups["Path"].Value.Split(".").Last(), jo.SelectToken(m.Groups["Path"].Value));
+                    }));
+                })) jsonSerializer.Serialize(jtw, jo);
+                jtw.WriteEndArray();
+            }
+        }
+
         public static void DeleteRequestPolicies(string where = null)
         {
             traceSource.TraceEvent(TraceEventType.Information, 0, "Deleting request policies");
             var s = Stopwatch.StartNew();
-            using (var fbcc = new FolioBulkCopyContext())
-            using (var fsc = new FolioServiceClient())
+            using (var fbcc = new FolioBulkCopyContext(connectionString))
+            using (var fsc = new FolioServiceClient(connectionString))
             {
                 var i = 0;
                 if (api)
@@ -13374,8 +15480,8 @@ namespace FolioConsoleApplication
             using (var sr = new StreamReader(compress || path.EndsWith(".gz") ? (Stream)new GZipStream(File.OpenRead($"{path}{(path.EndsWith(".gz") ? "" : ".gz")}"), CompressionMode.Decompress) : File.OpenRead(path)))
             using (var sr2 = new StreamReader(Assembly.GetAssembly(typeof(FolioContext)).GetManifestResourceStream("FolioLibrary.RequestPolicy.json")))
             using (var jtr = new JsonTextReader(sr) { SupportMultipleContent = true })
-            using (var fbcc = new FolioBulkCopyContext())
-            using (var fsc = new FolioServiceClient())
+            using (var fbcc = new FolioBulkCopyContext(connectionString))
+            using (var fsc = new FolioServiceClient(connectionString))
             {
                 var s2 = Stopwatch.StartNew();
                 var js4 = JsonSchema.FromJsonAsync(sr2.ReadToEndAsync().Result).Result;
@@ -13432,8 +15538,8 @@ namespace FolioConsoleApplication
         {
             traceSource.TraceEvent(TraceEventType.Information, 0, "Saving request policies");
             var s = Stopwatch.StartNew();
-            using (var fdc = new FolioDapperContext())
-            using (var fsc = new FolioServiceClient())
+            using (var fdc = new FolioDapperContext(connectionString))
+            using (var fsc = new FolioServiceClient(connectionString))
             using (var sr = new StreamReader(Assembly.GetAssembly(typeof(FolioContext)).GetManifestResourceStream("FolioLibrary.RequestPolicy.json")))
             using (var sw = new StreamWriter(whatIf ? new MemoryStream() : compress ? (Stream)new GZipStream(new FileStream($"{path}.gz", FileMode.Create), CompressionMode.Compress) : new FileStream(path, FileMode.Create)))
             using (var jtw = new JsonTextWriter(sw))
@@ -13443,7 +15549,7 @@ namespace FolioConsoleApplication
                 var js = new JsonSerializer { Formatting = Formatting.Indented };
                 jtw.WriteStartArray();
                 var i = 0;
-                foreach (var jo in api ? fsc.RequestPolicies(where, take: take) : fdc.RequestPolicies(where, take: take).Select(rp => JObject.Parse(rp.Content)))
+                foreach (var jo in api ? fsc.RequestPolicies(where, orderBy, skip, take) : fdc.RequestPolicies(where, null, orderBy, skip, take).Select(rp => JObject.Parse(rp.Content)))
                 {
                     if (validate)
                     {
@@ -13464,12 +15570,31 @@ namespace FolioConsoleApplication
             traceSource.TraceEvent(TraceEventType.Information, 0, $"{s.Elapsed} elapsed");
         }
 
+        public static void QueryScheduledNotices(string where = null, string orderBy = null, int? skip = null, int? take = null, string select = null)
+        {
+            using (var fdc = new FolioDapperContext(connectionString))
+            using (var fsc = new FolioServiceClient(connectionString))
+            using (var jtw = new JsonTextWriter(Console.Out))
+            {
+                jtw.WriteStartArray();
+                foreach (var jo in (api ? fsc.ScheduledNotices(where, orderBy, skip, take) : fdc.ScheduledNotices(where, null, orderBy, skip, take).Select(sn => JObject.Parse(sn.Content))).Select(jo =>
+                {
+                    return select == null ? jo : new JObject(select.Split(",").Select(s =>
+                    {
+                        var m = Regex.Match(s.Trim(), @"(?<Path>\S+)((?i) as (?<Name>.+))?", RegexOptions.Compiled);
+                        return new JProperty(m.Groups["Name"].Success ? m.Groups["Name"].Value : m.Groups["Path"].Value.Split(".").Last(), jo.SelectToken(m.Groups["Path"].Value));
+                    }));
+                })) jsonSerializer.Serialize(jtw, jo);
+                jtw.WriteEndArray();
+            }
+        }
+
         public static void DeleteScheduledNotices(string where = null)
         {
             traceSource.TraceEvent(TraceEventType.Information, 0, "Deleting scheduled notices");
             var s = Stopwatch.StartNew();
-            using (var fbcc = new FolioBulkCopyContext())
-            using (var fsc = new FolioServiceClient())
+            using (var fbcc = new FolioBulkCopyContext(connectionString))
+            using (var fsc = new FolioServiceClient(connectionString))
             {
                 var i = 0;
                 if (api)
@@ -13502,8 +15627,8 @@ namespace FolioConsoleApplication
             using (var sr = new StreamReader(compress || path.EndsWith(".gz") ? (Stream)new GZipStream(File.OpenRead($"{path}{(path.EndsWith(".gz") ? "" : ".gz")}"), CompressionMode.Decompress) : File.OpenRead(path)))
             using (var sr2 = new StreamReader(Assembly.GetAssembly(typeof(FolioContext)).GetManifestResourceStream("FolioLibrary.ScheduledNotice.json")))
             using (var jtr = new JsonTextReader(sr) { SupportMultipleContent = true })
-            using (var fbcc = new FolioBulkCopyContext())
-            using (var fsc = new FolioServiceClient())
+            using (var fbcc = new FolioBulkCopyContext(connectionString))
+            using (var fsc = new FolioServiceClient(connectionString))
             {
                 var s2 = Stopwatch.StartNew();
                 var js4 = JsonSchema.FromJsonAsync(sr2.ReadToEndAsync().Result).Result;
@@ -13560,8 +15685,8 @@ namespace FolioConsoleApplication
         {
             traceSource.TraceEvent(TraceEventType.Information, 0, "Saving scheduled notices");
             var s = Stopwatch.StartNew();
-            using (var fdc = new FolioDapperContext())
-            using (var fsc = new FolioServiceClient())
+            using (var fdc = new FolioDapperContext(connectionString))
+            using (var fsc = new FolioServiceClient(connectionString))
             using (var sr = new StreamReader(Assembly.GetAssembly(typeof(FolioContext)).GetManifestResourceStream("FolioLibrary.ScheduledNotice.json")))
             using (var sw = new StreamWriter(whatIf ? new MemoryStream() : compress ? (Stream)new GZipStream(new FileStream($"{path}.gz", FileMode.Create), CompressionMode.Compress) : new FileStream(path, FileMode.Create)))
             using (var jtw = new JsonTextWriter(sw))
@@ -13571,7 +15696,7 @@ namespace FolioConsoleApplication
                 var js = new JsonSerializer { Formatting = Formatting.Indented };
                 jtw.WriteStartArray();
                 var i = 0;
-                foreach (var jo in api ? fsc.ScheduledNotices(where, take: take) : fdc.ScheduledNotices(where, take: take).Select(sn => JObject.Parse(sn.Content)))
+                foreach (var jo in api ? fsc.ScheduledNotices(where, orderBy, skip, take) : fdc.ScheduledNotices(where, null, orderBy, skip, take).Select(sn => JObject.Parse(sn.Content)))
                 {
                     if (validate)
                     {
@@ -13592,12 +15717,31 @@ namespace FolioConsoleApplication
             traceSource.TraceEvent(TraceEventType.Information, 0, $"{s.Elapsed} elapsed");
         }
 
+        public static void QueryServicePoints(string where = null, string orderBy = null, int? skip = null, int? take = null, string select = null)
+        {
+            using (var fdc = new FolioDapperContext(connectionString))
+            using (var fsc = new FolioServiceClient(connectionString))
+            using (var jtw = new JsonTextWriter(Console.Out))
+            {
+                jtw.WriteStartArray();
+                foreach (var jo in (api ? fsc.ServicePoints(where, orderBy, skip, take) : fdc.ServicePoints(where, null, orderBy, skip, take).Select(sp => JObject.Parse(sp.Content))).Select(jo =>
+                {
+                    return select == null ? jo : new JObject(select.Split(",").Select(s =>
+                    {
+                        var m = Regex.Match(s.Trim(), @"(?<Path>\S+)((?i) as (?<Name>.+))?", RegexOptions.Compiled);
+                        return new JProperty(m.Groups["Name"].Success ? m.Groups["Name"].Value : m.Groups["Path"].Value.Split(".").Last(), jo.SelectToken(m.Groups["Path"].Value));
+                    }));
+                })) jsonSerializer.Serialize(jtw, jo);
+                jtw.WriteEndArray();
+            }
+        }
+
         public static void DeleteServicePoints(string where = null)
         {
             traceSource.TraceEvent(TraceEventType.Information, 0, "Deleting service points");
             var s = Stopwatch.StartNew();
-            using (var fbcc = new FolioBulkCopyContext())
-            using (var fsc = new FolioServiceClient())
+            using (var fbcc = new FolioBulkCopyContext(connectionString))
+            using (var fsc = new FolioServiceClient(connectionString))
             {
                 var i = 0;
                 if (api)
@@ -13630,8 +15774,8 @@ namespace FolioConsoleApplication
             using (var sr = new StreamReader(compress || path.EndsWith(".gz") ? (Stream)new GZipStream(File.OpenRead($"{path}{(path.EndsWith(".gz") ? "" : ".gz")}"), CompressionMode.Decompress) : File.OpenRead(path)))
             using (var sr2 = new StreamReader(Assembly.GetAssembly(typeof(FolioContext)).GetManifestResourceStream("FolioLibrary.ServicePoint.json")))
             using (var jtr = new JsonTextReader(sr) { SupportMultipleContent = true })
-            using (var fbcc = new FolioBulkCopyContext())
-            using (var fsc = new FolioServiceClient())
+            using (var fbcc = new FolioBulkCopyContext(connectionString))
+            using (var fsc = new FolioServiceClient(connectionString))
             {
                 var s2 = Stopwatch.StartNew();
                 var js4 = JsonSchema.FromJsonAsync(sr2.ReadToEndAsync().Result).Result;
@@ -13688,8 +15832,8 @@ namespace FolioConsoleApplication
         {
             traceSource.TraceEvent(TraceEventType.Information, 0, "Saving service points");
             var s = Stopwatch.StartNew();
-            using (var fdc = new FolioDapperContext())
-            using (var fsc = new FolioServiceClient())
+            using (var fdc = new FolioDapperContext(connectionString))
+            using (var fsc = new FolioServiceClient(connectionString))
             using (var sr = new StreamReader(Assembly.GetAssembly(typeof(FolioContext)).GetManifestResourceStream("FolioLibrary.ServicePoint.json")))
             using (var sw = new StreamWriter(whatIf ? new MemoryStream() : compress ? (Stream)new GZipStream(new FileStream($"{path}.gz", FileMode.Create), CompressionMode.Compress) : new FileStream(path, FileMode.Create)))
             using (var jtw = new JsonTextWriter(sw))
@@ -13699,7 +15843,7 @@ namespace FolioConsoleApplication
                 var js = new JsonSerializer { Formatting = Formatting.Indented };
                 jtw.WriteStartArray();
                 var i = 0;
-                foreach (var jo in api ? fsc.ServicePoints(where, take: take) : fdc.ServicePoints(where, take: take).Select(sp => JObject.Parse(sp.Content)))
+                foreach (var jo in api ? fsc.ServicePoints(where, orderBy, skip, take) : fdc.ServicePoints(where, null, orderBy, skip, take).Select(sp => JObject.Parse(sp.Content)))
                 {
                     if (validate)
                     {
@@ -13720,12 +15864,31 @@ namespace FolioConsoleApplication
             traceSource.TraceEvent(TraceEventType.Information, 0, $"{s.Elapsed} elapsed");
         }
 
+        public static void QueryServicePointUsers(string where = null, string orderBy = null, int? skip = null, int? take = null, string select = null)
+        {
+            using (var fdc = new FolioDapperContext(connectionString))
+            using (var fsc = new FolioServiceClient(connectionString))
+            using (var jtw = new JsonTextWriter(Console.Out))
+            {
+                jtw.WriteStartArray();
+                foreach (var jo in (api ? fsc.ServicePointUsers(where, orderBy, skip, take) : fdc.ServicePointUsers(where, null, orderBy, skip, take).Select(spu => JObject.Parse(spu.Content))).Select(jo =>
+                {
+                    return select == null ? jo : new JObject(select.Split(",").Select(s =>
+                    {
+                        var m = Regex.Match(s.Trim(), @"(?<Path>\S+)((?i) as (?<Name>.+))?", RegexOptions.Compiled);
+                        return new JProperty(m.Groups["Name"].Success ? m.Groups["Name"].Value : m.Groups["Path"].Value.Split(".").Last(), jo.SelectToken(m.Groups["Path"].Value));
+                    }));
+                })) jsonSerializer.Serialize(jtw, jo);
+                jtw.WriteEndArray();
+            }
+        }
+
         public static void DeleteServicePointUsers(string where = null)
         {
             traceSource.TraceEvent(TraceEventType.Information, 0, "Deleting service point users");
             var s = Stopwatch.StartNew();
-            using (var fbcc = new FolioBulkCopyContext())
-            using (var fsc = new FolioServiceClient())
+            using (var fbcc = new FolioBulkCopyContext(connectionString))
+            using (var fsc = new FolioServiceClient(connectionString))
             {
                 var i = 0;
                 if (api)
@@ -13758,8 +15921,8 @@ namespace FolioConsoleApplication
             using (var sr = new StreamReader(compress || path.EndsWith(".gz") ? (Stream)new GZipStream(File.OpenRead($"{path}{(path.EndsWith(".gz") ? "" : ".gz")}"), CompressionMode.Decompress) : File.OpenRead(path)))
             using (var sr2 = new StreamReader(Assembly.GetAssembly(typeof(FolioContext)).GetManifestResourceStream("FolioLibrary.ServicePointUser.json")))
             using (var jtr = new JsonTextReader(sr) { SupportMultipleContent = true })
-            using (var fbcc = new FolioBulkCopyContext())
-            using (var fsc = new FolioServiceClient())
+            using (var fbcc = new FolioBulkCopyContext(connectionString))
+            using (var fsc = new FolioServiceClient(connectionString))
             {
                 var s2 = Stopwatch.StartNew();
                 var js4 = JsonSchema.FromJsonAsync(sr2.ReadToEndAsync().Result).Result;
@@ -13817,8 +15980,8 @@ namespace FolioConsoleApplication
         {
             traceSource.TraceEvent(TraceEventType.Information, 0, "Saving service point users");
             var s = Stopwatch.StartNew();
-            using (var fdc = new FolioDapperContext())
-            using (var fsc = new FolioServiceClient())
+            using (var fdc = new FolioDapperContext(connectionString))
+            using (var fsc = new FolioServiceClient(connectionString))
             using (var sr = new StreamReader(Assembly.GetAssembly(typeof(FolioContext)).GetManifestResourceStream("FolioLibrary.ServicePointUser.json")))
             using (var sw = new StreamWriter(whatIf ? new MemoryStream() : compress ? (Stream)new GZipStream(new FileStream($"{path}.gz", FileMode.Create), CompressionMode.Compress) : new FileStream(path, FileMode.Create)))
             using (var jtw = new JsonTextWriter(sw))
@@ -13828,7 +15991,7 @@ namespace FolioConsoleApplication
                 var js = new JsonSerializer { Formatting = Formatting.Indented };
                 jtw.WriteStartArray();
                 var i = 0;
-                foreach (var jo in api ? fsc.ServicePointUsers(where, take: take) : fdc.ServicePointUsers(where, take: take).Select(spu => JObject.Parse(spu.Content)))
+                foreach (var jo in api ? fsc.ServicePointUsers(where, orderBy, skip, take) : fdc.ServicePointUsers(where, null, orderBy, skip, take).Select(spu => JObject.Parse(spu.Content)))
                 {
                     if (validate)
                     {
@@ -13849,12 +16012,31 @@ namespace FolioConsoleApplication
             traceSource.TraceEvent(TraceEventType.Information, 0, $"{s.Elapsed} elapsed");
         }
 
+        public static void QuerySnapshots(string where = null, string orderBy = null, int? skip = null, int? take = null, string select = null)
+        {
+            using (var fdc = new FolioDapperContext(connectionString))
+            using (var fsc = new FolioServiceClient(connectionString))
+            using (var jtw = new JsonTextWriter(Console.Out))
+            {
+                jtw.WriteStartArray();
+                foreach (var jo in (api ? fsc.Snapshots(where, orderBy, skip, take) : fdc.Snapshots(where, null, orderBy, skip, take).Select(s3 => JObject.Parse(s3.Content))).Select(jo =>
+                {
+                    return select == null ? jo : new JObject(select.Split(",").Select(s =>
+                    {
+                        var m = Regex.Match(s.Trim(), @"(?<Path>\S+)((?i) as (?<Name>.+))?", RegexOptions.Compiled);
+                        return new JProperty(m.Groups["Name"].Success ? m.Groups["Name"].Value : m.Groups["Path"].Value.Split(".").Last(), jo.SelectToken(m.Groups["Path"].Value));
+                    }));
+                })) jsonSerializer.Serialize(jtw, jo);
+                jtw.WriteEndArray();
+            }
+        }
+
         public static void DeleteSnapshots(string where = null)
         {
             traceSource.TraceEvent(TraceEventType.Information, 0, "Deleting snapshots");
             var s = Stopwatch.StartNew();
-            using (var fbcc = new FolioBulkCopyContext())
-            using (var fsc = new FolioServiceClient())
+            using (var fbcc = new FolioBulkCopyContext(connectionString))
+            using (var fsc = new FolioServiceClient(connectionString))
             {
                 var i = 0;
                 if (api)
@@ -13887,8 +16069,8 @@ namespace FolioConsoleApplication
             using (var sr = new StreamReader(compress || path.EndsWith(".gz") ? (Stream)new GZipStream(File.OpenRead($"{path}{(path.EndsWith(".gz") ? "" : ".gz")}"), CompressionMode.Decompress) : File.OpenRead(path)))
             using (var sr2 = new StreamReader(Assembly.GetAssembly(typeof(FolioContext)).GetManifestResourceStream("FolioLibrary.Snapshot.json")))
             using (var jtr = new JsonTextReader(sr) { SupportMultipleContent = true })
-            using (var fbcc = new FolioBulkCopyContext())
-            using (var fsc = new FolioServiceClient())
+            using (var fbcc = new FolioBulkCopyContext(connectionString))
+            using (var fsc = new FolioServiceClient(connectionString))
             {
                 var s2 = Stopwatch.StartNew();
                 var js4 = JsonSchema.FromJsonAsync(sr2.ReadToEndAsync().Result).Result;
@@ -13945,8 +16127,8 @@ namespace FolioConsoleApplication
         {
             traceSource.TraceEvent(TraceEventType.Information, 0, "Saving snapshots");
             var s = Stopwatch.StartNew();
-            using (var fdc = new FolioDapperContext())
-            using (var fsc = new FolioServiceClient())
+            using (var fdc = new FolioDapperContext(connectionString))
+            using (var fsc = new FolioServiceClient(connectionString))
             using (var sr = new StreamReader(Assembly.GetAssembly(typeof(FolioContext)).GetManifestResourceStream("FolioLibrary.Snapshot.json")))
             using (var sw = new StreamWriter(whatIf ? new MemoryStream() : compress ? (Stream)new GZipStream(new FileStream($"{path}.gz", FileMode.Create), CompressionMode.Compress) : new FileStream(path, FileMode.Create)))
             using (var jtw = new JsonTextWriter(sw))
@@ -13956,7 +16138,7 @@ namespace FolioConsoleApplication
                 var js = new JsonSerializer { Formatting = Formatting.Indented };
                 jtw.WriteStartArray();
                 var i = 0;
-                foreach (var jo in api ? fsc.Snapshots(where, take: take) : fdc.Snapshots(where, take: take).Select(s3 => JObject.Parse(s3.Content)))
+                foreach (var jo in api ? fsc.Snapshots(where, orderBy, skip, take) : fdc.Snapshots(where, null, orderBy, skip, take).Select(s3 => JObject.Parse(s3.Content)))
                 {
                     if (validate)
                     {
@@ -13977,12 +16159,31 @@ namespace FolioConsoleApplication
             traceSource.TraceEvent(TraceEventType.Information, 0, $"{s.Elapsed} elapsed");
         }
 
+        public static void QueryStaffSlips(string where = null, string orderBy = null, int? skip = null, int? take = null, string select = null)
+        {
+            using (var fdc = new FolioDapperContext(connectionString))
+            using (var fsc = new FolioServiceClient(connectionString))
+            using (var jtw = new JsonTextWriter(Console.Out))
+            {
+                jtw.WriteStartArray();
+                foreach (var jo in (api ? fsc.StaffSlips(where, orderBy, skip, take) : fdc.StaffSlips(where, null, orderBy, skip, take).Select(ss => JObject.Parse(ss.Content))).Select(jo =>
+                {
+                    return select == null ? jo : new JObject(select.Split(",").Select(s =>
+                    {
+                        var m = Regex.Match(s.Trim(), @"(?<Path>\S+)((?i) as (?<Name>.+))?", RegexOptions.Compiled);
+                        return new JProperty(m.Groups["Name"].Success ? m.Groups["Name"].Value : m.Groups["Path"].Value.Split(".").Last(), jo.SelectToken(m.Groups["Path"].Value));
+                    }));
+                })) jsonSerializer.Serialize(jtw, jo);
+                jtw.WriteEndArray();
+            }
+        }
+
         public static void DeleteStaffSlips(string where = null)
         {
             traceSource.TraceEvent(TraceEventType.Information, 0, "Deleting staff slips");
             var s = Stopwatch.StartNew();
-            using (var fbcc = new FolioBulkCopyContext())
-            using (var fsc = new FolioServiceClient())
+            using (var fbcc = new FolioBulkCopyContext(connectionString))
+            using (var fsc = new FolioServiceClient(connectionString))
             {
                 var i = 0;
                 if (api)
@@ -14015,8 +16216,8 @@ namespace FolioConsoleApplication
             using (var sr = new StreamReader(compress || path.EndsWith(".gz") ? (Stream)new GZipStream(File.OpenRead($"{path}{(path.EndsWith(".gz") ? "" : ".gz")}"), CompressionMode.Decompress) : File.OpenRead(path)))
             using (var sr2 = new StreamReader(Assembly.GetAssembly(typeof(FolioContext)).GetManifestResourceStream("FolioLibrary.StaffSlip.json")))
             using (var jtr = new JsonTextReader(sr) { SupportMultipleContent = true })
-            using (var fbcc = new FolioBulkCopyContext())
-            using (var fsc = new FolioServiceClient())
+            using (var fbcc = new FolioBulkCopyContext(connectionString))
+            using (var fsc = new FolioServiceClient(connectionString))
             {
                 var s2 = Stopwatch.StartNew();
                 var js4 = JsonSchema.FromJsonAsync(sr2.ReadToEndAsync().Result).Result;
@@ -14073,8 +16274,8 @@ namespace FolioConsoleApplication
         {
             traceSource.TraceEvent(TraceEventType.Information, 0, "Saving staff slips");
             var s = Stopwatch.StartNew();
-            using (var fdc = new FolioDapperContext())
-            using (var fsc = new FolioServiceClient())
+            using (var fdc = new FolioDapperContext(connectionString))
+            using (var fsc = new FolioServiceClient(connectionString))
             using (var sr = new StreamReader(Assembly.GetAssembly(typeof(FolioContext)).GetManifestResourceStream("FolioLibrary.StaffSlip.json")))
             using (var sw = new StreamWriter(whatIf ? new MemoryStream() : compress ? (Stream)new GZipStream(new FileStream($"{path}.gz", FileMode.Create), CompressionMode.Compress) : new FileStream(path, FileMode.Create)))
             using (var jtw = new JsonTextWriter(sw))
@@ -14084,7 +16285,7 @@ namespace FolioConsoleApplication
                 var js = new JsonSerializer { Formatting = Formatting.Indented };
                 jtw.WriteStartArray();
                 var i = 0;
-                foreach (var jo in api ? fsc.StaffSlips(where, take: take) : fdc.StaffSlips(where, take: take).Select(ss => JObject.Parse(ss.Content)))
+                foreach (var jo in api ? fsc.StaffSlips(where, orderBy, skip, take) : fdc.StaffSlips(where, null, orderBy, skip, take).Select(ss => JObject.Parse(ss.Content)))
                 {
                     if (validate)
                     {
@@ -14105,12 +16306,31 @@ namespace FolioConsoleApplication
             traceSource.TraceEvent(TraceEventType.Information, 0, $"{s.Elapsed} elapsed");
         }
 
+        public static void QueryStatisticalCodes(string where = null, string orderBy = null, int? skip = null, int? take = null, string select = null)
+        {
+            using (var fdc = new FolioDapperContext(connectionString))
+            using (var fsc = new FolioServiceClient(connectionString))
+            using (var jtw = new JsonTextWriter(Console.Out))
+            {
+                jtw.WriteStartArray();
+                foreach (var jo in (api ? fsc.StatisticalCodes(where, orderBy, skip, take) : fdc.StatisticalCodes(where, null, orderBy, skip, take).Select(sc => JObject.Parse(sc.Content))).Select(jo =>
+                {
+                    return select == null ? jo : new JObject(select.Split(",").Select(s =>
+                    {
+                        var m = Regex.Match(s.Trim(), @"(?<Path>\S+)((?i) as (?<Name>.+))?", RegexOptions.Compiled);
+                        return new JProperty(m.Groups["Name"].Success ? m.Groups["Name"].Value : m.Groups["Path"].Value.Split(".").Last(), jo.SelectToken(m.Groups["Path"].Value));
+                    }));
+                })) jsonSerializer.Serialize(jtw, jo);
+                jtw.WriteEndArray();
+            }
+        }
+
         public static void DeleteStatisticalCodes(string where = null)
         {
             traceSource.TraceEvent(TraceEventType.Information, 0, "Deleting statistical codes");
             var s = Stopwatch.StartNew();
-            using (var fbcc = new FolioBulkCopyContext())
-            using (var fsc = new FolioServiceClient())
+            using (var fbcc = new FolioBulkCopyContext(connectionString))
+            using (var fsc = new FolioServiceClient(connectionString))
             {
                 var i = 0;
                 if (api)
@@ -14143,8 +16363,8 @@ namespace FolioConsoleApplication
             using (var sr = new StreamReader(compress || path.EndsWith(".gz") ? (Stream)new GZipStream(File.OpenRead($"{path}{(path.EndsWith(".gz") ? "" : ".gz")}"), CompressionMode.Decompress) : File.OpenRead(path)))
             using (var sr2 = new StreamReader(Assembly.GetAssembly(typeof(FolioContext)).GetManifestResourceStream("FolioLibrary.StatisticalCode.json")))
             using (var jtr = new JsonTextReader(sr) { SupportMultipleContent = true })
-            using (var fbcc = new FolioBulkCopyContext())
-            using (var fsc = new FolioServiceClient())
+            using (var fbcc = new FolioBulkCopyContext(connectionString))
+            using (var fsc = new FolioServiceClient(connectionString))
             {
                 var s2 = Stopwatch.StartNew();
                 var js4 = JsonSchema.FromJsonAsync(sr2.ReadToEndAsync().Result).Result;
@@ -14202,8 +16422,8 @@ namespace FolioConsoleApplication
         {
             traceSource.TraceEvent(TraceEventType.Information, 0, "Saving statistical codes");
             var s = Stopwatch.StartNew();
-            using (var fdc = new FolioDapperContext())
-            using (var fsc = new FolioServiceClient())
+            using (var fdc = new FolioDapperContext(connectionString))
+            using (var fsc = new FolioServiceClient(connectionString))
             using (var sr = new StreamReader(Assembly.GetAssembly(typeof(FolioContext)).GetManifestResourceStream("FolioLibrary.StatisticalCode.json")))
             using (var sw = new StreamWriter(whatIf ? new MemoryStream() : compress ? (Stream)new GZipStream(new FileStream($"{path}.gz", FileMode.Create), CompressionMode.Compress) : new FileStream(path, FileMode.Create)))
             using (var jtw = new JsonTextWriter(sw))
@@ -14213,7 +16433,7 @@ namespace FolioConsoleApplication
                 var js = new JsonSerializer { Formatting = Formatting.Indented };
                 jtw.WriteStartArray();
                 var i = 0;
-                foreach (var jo in api ? fsc.StatisticalCodes(where, take: take) : fdc.StatisticalCodes(where, take: take).Select(sc => JObject.Parse(sc.Content)))
+                foreach (var jo in api ? fsc.StatisticalCodes(where, orderBy, skip, take) : fdc.StatisticalCodes(where, null, orderBy, skip, take).Select(sc => JObject.Parse(sc.Content)))
                 {
                     if (validate)
                     {
@@ -14234,12 +16454,31 @@ namespace FolioConsoleApplication
             traceSource.TraceEvent(TraceEventType.Information, 0, $"{s.Elapsed} elapsed");
         }
 
+        public static void QueryStatisticalCodeTypes(string where = null, string orderBy = null, int? skip = null, int? take = null, string select = null)
+        {
+            using (var fdc = new FolioDapperContext(connectionString))
+            using (var fsc = new FolioServiceClient(connectionString))
+            using (var jtw = new JsonTextWriter(Console.Out))
+            {
+                jtw.WriteStartArray();
+                foreach (var jo in (api ? fsc.StatisticalCodeTypes(where, orderBy, skip, take) : fdc.StatisticalCodeTypes(where, null, orderBy, skip, take).Select(sct => JObject.Parse(sct.Content))).Select(jo =>
+                {
+                    return select == null ? jo : new JObject(select.Split(",").Select(s =>
+                    {
+                        var m = Regex.Match(s.Trim(), @"(?<Path>\S+)((?i) as (?<Name>.+))?", RegexOptions.Compiled);
+                        return new JProperty(m.Groups["Name"].Success ? m.Groups["Name"].Value : m.Groups["Path"].Value.Split(".").Last(), jo.SelectToken(m.Groups["Path"].Value));
+                    }));
+                })) jsonSerializer.Serialize(jtw, jo);
+                jtw.WriteEndArray();
+            }
+        }
+
         public static void DeleteStatisticalCodeTypes(string where = null)
         {
             traceSource.TraceEvent(TraceEventType.Information, 0, "Deleting statistical code types");
             var s = Stopwatch.StartNew();
-            using (var fbcc = new FolioBulkCopyContext())
-            using (var fsc = new FolioServiceClient())
+            using (var fbcc = new FolioBulkCopyContext(connectionString))
+            using (var fsc = new FolioServiceClient(connectionString))
             {
                 var i = 0;
                 if (api)
@@ -14272,8 +16511,8 @@ namespace FolioConsoleApplication
             using (var sr = new StreamReader(compress || path.EndsWith(".gz") ? (Stream)new GZipStream(File.OpenRead($"{path}{(path.EndsWith(".gz") ? "" : ".gz")}"), CompressionMode.Decompress) : File.OpenRead(path)))
             using (var sr2 = new StreamReader(Assembly.GetAssembly(typeof(FolioContext)).GetManifestResourceStream("FolioLibrary.StatisticalCodeType.json")))
             using (var jtr = new JsonTextReader(sr) { SupportMultipleContent = true })
-            using (var fbcc = new FolioBulkCopyContext())
-            using (var fsc = new FolioServiceClient())
+            using (var fbcc = new FolioBulkCopyContext(connectionString))
+            using (var fsc = new FolioServiceClient(connectionString))
             {
                 var s2 = Stopwatch.StartNew();
                 var js4 = JsonSchema.FromJsonAsync(sr2.ReadToEndAsync().Result).Result;
@@ -14330,8 +16569,8 @@ namespace FolioConsoleApplication
         {
             traceSource.TraceEvent(TraceEventType.Information, 0, "Saving statistical code types");
             var s = Stopwatch.StartNew();
-            using (var fdc = new FolioDapperContext())
-            using (var fsc = new FolioServiceClient())
+            using (var fdc = new FolioDapperContext(connectionString))
+            using (var fsc = new FolioServiceClient(connectionString))
             using (var sr = new StreamReader(Assembly.GetAssembly(typeof(FolioContext)).GetManifestResourceStream("FolioLibrary.StatisticalCodeType.json")))
             using (var sw = new StreamWriter(whatIf ? new MemoryStream() : compress ? (Stream)new GZipStream(new FileStream($"{path}.gz", FileMode.Create), CompressionMode.Compress) : new FileStream(path, FileMode.Create)))
             using (var jtw = new JsonTextWriter(sw))
@@ -14341,7 +16580,7 @@ namespace FolioConsoleApplication
                 var js = new JsonSerializer { Formatting = Formatting.Indented };
                 jtw.WriteStartArray();
                 var i = 0;
-                foreach (var jo in api ? fsc.StatisticalCodeTypes(where, take: take) : fdc.StatisticalCodeTypes(where, take: take).Select(sct => JObject.Parse(sct.Content)))
+                foreach (var jo in api ? fsc.StatisticalCodeTypes(where, orderBy, skip, take) : fdc.StatisticalCodeTypes(where, null, orderBy, skip, take).Select(sct => JObject.Parse(sct.Content)))
                 {
                     if (validate)
                     {
@@ -14362,12 +16601,31 @@ namespace FolioConsoleApplication
             traceSource.TraceEvent(TraceEventType.Information, 0, $"{s.Elapsed} elapsed");
         }
 
+        public static void QuerySuffixes(string where = null, string orderBy = null, int? skip = null, int? take = null, string select = null)
+        {
+            using (var fdc = new FolioDapperContext(connectionString))
+            using (var fsc = new FolioServiceClient(connectionString))
+            using (var jtw = new JsonTextWriter(Console.Out))
+            {
+                jtw.WriteStartArray();
+                foreach (var jo in (api ? fsc.Suffixes(where, orderBy, skip, take) : fdc.Suffixes(where, null, orderBy, skip, take).Select(s3 => JObject.Parse(s3.Content))).Select(jo =>
+                {
+                    return select == null ? jo : new JObject(select.Split(",").Select(s =>
+                    {
+                        var m = Regex.Match(s.Trim(), @"(?<Path>\S+)((?i) as (?<Name>.+))?", RegexOptions.Compiled);
+                        return new JProperty(m.Groups["Name"].Success ? m.Groups["Name"].Value : m.Groups["Path"].Value.Split(".").Last(), jo.SelectToken(m.Groups["Path"].Value));
+                    }));
+                })) jsonSerializer.Serialize(jtw, jo);
+                jtw.WriteEndArray();
+            }
+        }
+
         public static void DeleteSuffixes(string where = null)
         {
             traceSource.TraceEvent(TraceEventType.Information, 0, "Deleting suffixes");
             var s = Stopwatch.StartNew();
-            using (var fbcc = new FolioBulkCopyContext())
-            using (var fsc = new FolioServiceClient())
+            using (var fbcc = new FolioBulkCopyContext(connectionString))
+            using (var fsc = new FolioServiceClient(connectionString))
             {
                 var i = 0;
                 if (api)
@@ -14400,8 +16658,8 @@ namespace FolioConsoleApplication
             using (var sr = new StreamReader(compress || path.EndsWith(".gz") ? (Stream)new GZipStream(File.OpenRead($"{path}{(path.EndsWith(".gz") ? "" : ".gz")}"), CompressionMode.Decompress) : File.OpenRead(path)))
             using (var sr2 = new StreamReader(Assembly.GetAssembly(typeof(FolioContext)).GetManifestResourceStream("FolioLibrary.Suffix.json")))
             using (var jtr = new JsonTextReader(sr) { SupportMultipleContent = true })
-            using (var fbcc = new FolioBulkCopyContext())
-            using (var fsc = new FolioServiceClient())
+            using (var fbcc = new FolioBulkCopyContext(connectionString))
+            using (var fsc = new FolioServiceClient(connectionString))
             {
                 var s2 = Stopwatch.StartNew();
                 var js4 = JsonSchema.FromJsonAsync(sr2.ReadToEndAsync().Result).Result;
@@ -14456,8 +16714,8 @@ namespace FolioConsoleApplication
         {
             traceSource.TraceEvent(TraceEventType.Information, 0, "Saving suffixes");
             var s = Stopwatch.StartNew();
-            using (var fdc = new FolioDapperContext())
-            using (var fsc = new FolioServiceClient())
+            using (var fdc = new FolioDapperContext(connectionString))
+            using (var fsc = new FolioServiceClient(connectionString))
             using (var sr = new StreamReader(Assembly.GetAssembly(typeof(FolioContext)).GetManifestResourceStream("FolioLibrary.Suffix.json")))
             using (var sw = new StreamWriter(whatIf ? new MemoryStream() : compress ? (Stream)new GZipStream(new FileStream($"{path}.gz", FileMode.Create), CompressionMode.Compress) : new FileStream(path, FileMode.Create)))
             using (var jtw = new JsonTextWriter(sw))
@@ -14467,7 +16725,7 @@ namespace FolioConsoleApplication
                 var js = new JsonSerializer { Formatting = Formatting.Indented };
                 jtw.WriteStartArray();
                 var i = 0;
-                foreach (var jo in api ? fsc.Suffixes(where, take: take) : fdc.Suffixes(where, take: take).Select(s3 => JObject.Parse(s3.Content)))
+                foreach (var jo in api ? fsc.Suffixes(where, orderBy, skip, take) : fdc.Suffixes(where, null, orderBy, skip, take).Select(s3 => JObject.Parse(s3.Content)))
                 {
                     if (validate)
                     {
@@ -14488,12 +16746,31 @@ namespace FolioConsoleApplication
             traceSource.TraceEvent(TraceEventType.Information, 0, $"{s.Elapsed} elapsed");
         }
 
+        public static void QueryTemplates(string where = null, string orderBy = null, int? skip = null, int? take = null, string select = null)
+        {
+            using (var fdc = new FolioDapperContext(connectionString))
+            using (var fsc = new FolioServiceClient(connectionString))
+            using (var jtw = new JsonTextWriter(Console.Out))
+            {
+                jtw.WriteStartArray();
+                foreach (var jo in (api ? fsc.Templates(where, orderBy, skip, take) : fdc.Templates(where, null, orderBy, skip, take).Select(t => JObject.Parse(t.Content))).Select(jo =>
+                {
+                    return select == null ? jo : new JObject(select.Split(",").Select(s =>
+                    {
+                        var m = Regex.Match(s.Trim(), @"(?<Path>\S+)((?i) as (?<Name>.+))?", RegexOptions.Compiled);
+                        return new JProperty(m.Groups["Name"].Success ? m.Groups["Name"].Value : m.Groups["Path"].Value.Split(".").Last(), jo.SelectToken(m.Groups["Path"].Value));
+                    }));
+                })) jsonSerializer.Serialize(jtw, jo);
+                jtw.WriteEndArray();
+            }
+        }
+
         public static void DeleteTemplates(string where = null)
         {
             traceSource.TraceEvent(TraceEventType.Information, 0, "Deleting templates");
             var s = Stopwatch.StartNew();
-            using (var fbcc = new FolioBulkCopyContext())
-            using (var fsc = new FolioServiceClient())
+            using (var fbcc = new FolioBulkCopyContext(connectionString))
+            using (var fsc = new FolioServiceClient(connectionString))
             {
                 var i = 0;
                 if (api)
@@ -14526,8 +16803,8 @@ namespace FolioConsoleApplication
             using (var sr = new StreamReader(compress || path.EndsWith(".gz") ? (Stream)new GZipStream(File.OpenRead($"{path}{(path.EndsWith(".gz") ? "" : ".gz")}"), CompressionMode.Decompress) : File.OpenRead(path)))
             using (var sr2 = new StreamReader(Assembly.GetAssembly(typeof(FolioContext)).GetManifestResourceStream("FolioLibrary.Template.json")))
             using (var jtr = new JsonTextReader(sr) { SupportMultipleContent = true })
-            using (var fbcc = new FolioBulkCopyContext())
-            using (var fsc = new FolioServiceClient())
+            using (var fbcc = new FolioBulkCopyContext(connectionString))
+            using (var fsc = new FolioServiceClient(connectionString))
             {
                 var s2 = Stopwatch.StartNew();
                 var js4 = JsonSchema.FromJsonAsync(sr2.ReadToEndAsync().Result).Result;
@@ -14584,8 +16861,8 @@ namespace FolioConsoleApplication
         {
             traceSource.TraceEvent(TraceEventType.Information, 0, "Saving templates");
             var s = Stopwatch.StartNew();
-            using (var fdc = new FolioDapperContext())
-            using (var fsc = new FolioServiceClient())
+            using (var fdc = new FolioDapperContext(connectionString))
+            using (var fsc = new FolioServiceClient(connectionString))
             using (var sr = new StreamReader(Assembly.GetAssembly(typeof(FolioContext)).GetManifestResourceStream("FolioLibrary.Template.json")))
             using (var sw = new StreamWriter(whatIf ? new MemoryStream() : compress ? (Stream)new GZipStream(new FileStream($"{path}.gz", FileMode.Create), CompressionMode.Compress) : new FileStream(path, FileMode.Create)))
             using (var jtw = new JsonTextWriter(sw))
@@ -14595,7 +16872,7 @@ namespace FolioConsoleApplication
                 var js = new JsonSerializer { Formatting = Formatting.Indented };
                 jtw.WriteStartArray();
                 var i = 0;
-                foreach (var jo in api ? fsc.Templates(where, take: take) : fdc.Templates(where, take: take).Select(t => JObject.Parse(t.Content)))
+                foreach (var jo in api ? fsc.Templates(where, orderBy, skip, take) : fdc.Templates(where, null, orderBy, skip, take).Select(t => JObject.Parse(t.Content)))
                 {
                     if (validate)
                     {
@@ -14616,11 +16893,29 @@ namespace FolioConsoleApplication
             traceSource.TraceEvent(TraceEventType.Information, 0, $"{s.Elapsed} elapsed");
         }
 
+        public static void QueryTemporaryInvoiceTransactions(string where = null, string orderBy = null, int? skip = null, int? take = null, string select = null)
+        {
+            using (var fdc = new FolioDapperContext(connectionString))
+            using (var jtw = new JsonTextWriter(Console.Out))
+            {
+                jtw.WriteStartArray();
+                foreach (var jo in (api ? throw new NotSupportedException() : fdc.TemporaryInvoiceTransactions(where, null, orderBy, skip, take).Select(tit => JObject.Parse(tit.Content))).Select(jo =>
+                {
+                    return select == null ? jo : new JObject(select.Split(",").Select(s =>
+                    {
+                        var m = Regex.Match(s.Trim(), @"(?<Path>\S+)((?i) as (?<Name>.+))?", RegexOptions.Compiled);
+                        return new JProperty(m.Groups["Name"].Success ? m.Groups["Name"].Value : m.Groups["Path"].Value.Split(".").Last(), jo.SelectToken(m.Groups["Path"].Value));
+                    }));
+                })) jsonSerializer.Serialize(jtw, jo);
+                jtw.WriteEndArray();
+            }
+        }
+
         public static void DeleteTemporaryInvoiceTransactions(string where = null)
         {
             traceSource.TraceEvent(TraceEventType.Information, 0, "Deleting temporary invoice transactions");
             var s = Stopwatch.StartNew();
-            using (var fbcc = new FolioBulkCopyContext())
+            using (var fbcc = new FolioBulkCopyContext(connectionString))
             {
                 var i = 0;
                 if (api)
@@ -14643,7 +16938,7 @@ namespace FolioConsoleApplication
             using (var sr = new StreamReader(compress || path.EndsWith(".gz") ? (Stream)new GZipStream(File.OpenRead($"{path}{(path.EndsWith(".gz") ? "" : ".gz")}"), CompressionMode.Decompress) : File.OpenRead(path)))
             using (var sr2 = new StreamReader(Assembly.GetAssembly(typeof(FolioContext)).GetManifestResourceStream("FolioLibrary.TemporaryInvoiceTransaction.json")))
             using (var jtr = new JsonTextReader(sr) { SupportMultipleContent = true })
-            using (var fbcc = new FolioBulkCopyContext())
+            using (var fbcc = new FolioBulkCopyContext(connectionString))
             {
                 var s2 = Stopwatch.StartNew();
                 var js4 = JsonSchema.FromJsonAsync(sr2.ReadToEndAsync().Result).Result;
@@ -14698,7 +16993,7 @@ namespace FolioConsoleApplication
         {
             traceSource.TraceEvent(TraceEventType.Information, 0, "Saving temporary invoice transactions");
             var s = Stopwatch.StartNew();
-            using (var fdc = new FolioDapperContext())
+            using (var fdc = new FolioDapperContext(connectionString))
             using (var sr = new StreamReader(Assembly.GetAssembly(typeof(FolioContext)).GetManifestResourceStream("FolioLibrary.TemporaryInvoiceTransaction.json")))
             using (var sw = new StreamWriter(whatIf ? new MemoryStream() : compress ? (Stream)new GZipStream(new FileStream($"{path}.gz", FileMode.Create), CompressionMode.Compress) : new FileStream(path, FileMode.Create)))
             using (var jtw = new JsonTextWriter(sw))
@@ -14708,7 +17003,7 @@ namespace FolioConsoleApplication
                 var js = new JsonSerializer { Formatting = Formatting.Indented };
                 jtw.WriteStartArray();
                 var i = 0;
-                foreach (var jo in api ? throw new NotSupportedException() : fdc.TemporaryInvoiceTransactions(where, take: take).Select(tit => JObject.Parse(tit.Content)))
+                foreach (var jo in api ? throw new NotSupportedException() : fdc.TemporaryInvoiceTransactions(where, null, orderBy, skip, take).Select(tit => JObject.Parse(tit.Content)))
                 {
                     if (validate)
                     {
@@ -14729,11 +17024,29 @@ namespace FolioConsoleApplication
             traceSource.TraceEvent(TraceEventType.Information, 0, $"{s.Elapsed} elapsed");
         }
 
+        public static void QueryTemporaryOrderTransactions(string where = null, string orderBy = null, int? skip = null, int? take = null, string select = null)
+        {
+            using (var fdc = new FolioDapperContext(connectionString))
+            using (var jtw = new JsonTextWriter(Console.Out))
+            {
+                jtw.WriteStartArray();
+                foreach (var jo in (api ? throw new NotSupportedException() : fdc.TemporaryOrderTransactions(where, null, orderBy, skip, take).Select(tot => JObject.Parse(tot.Content))).Select(jo =>
+                {
+                    return select == null ? jo : new JObject(select.Split(",").Select(s =>
+                    {
+                        var m = Regex.Match(s.Trim(), @"(?<Path>\S+)((?i) as (?<Name>.+))?", RegexOptions.Compiled);
+                        return new JProperty(m.Groups["Name"].Success ? m.Groups["Name"].Value : m.Groups["Path"].Value.Split(".").Last(), jo.SelectToken(m.Groups["Path"].Value));
+                    }));
+                })) jsonSerializer.Serialize(jtw, jo);
+                jtw.WriteEndArray();
+            }
+        }
+
         public static void DeleteTemporaryOrderTransactions(string where = null)
         {
             traceSource.TraceEvent(TraceEventType.Information, 0, "Deleting temporary order transactions");
             var s = Stopwatch.StartNew();
-            using (var fbcc = new FolioBulkCopyContext())
+            using (var fbcc = new FolioBulkCopyContext(connectionString))
             {
                 var i = 0;
                 if (api)
@@ -14756,7 +17069,7 @@ namespace FolioConsoleApplication
             using (var sr = new StreamReader(compress || path.EndsWith(".gz") ? (Stream)new GZipStream(File.OpenRead($"{path}{(path.EndsWith(".gz") ? "" : ".gz")}"), CompressionMode.Decompress) : File.OpenRead(path)))
             using (var sr2 = new StreamReader(Assembly.GetAssembly(typeof(FolioContext)).GetManifestResourceStream("FolioLibrary.TemporaryOrderTransaction.json")))
             using (var jtr = new JsonTextReader(sr) { SupportMultipleContent = true })
-            using (var fbcc = new FolioBulkCopyContext())
+            using (var fbcc = new FolioBulkCopyContext(connectionString))
             {
                 var s2 = Stopwatch.StartNew();
                 var js4 = JsonSchema.FromJsonAsync(sr2.ReadToEndAsync().Result).Result;
@@ -14808,7 +17121,7 @@ namespace FolioConsoleApplication
         {
             traceSource.TraceEvent(TraceEventType.Information, 0, "Saving temporary order transactions");
             var s = Stopwatch.StartNew();
-            using (var fdc = new FolioDapperContext())
+            using (var fdc = new FolioDapperContext(connectionString))
             using (var sr = new StreamReader(Assembly.GetAssembly(typeof(FolioContext)).GetManifestResourceStream("FolioLibrary.TemporaryOrderTransaction.json")))
             using (var sw = new StreamWriter(whatIf ? new MemoryStream() : compress ? (Stream)new GZipStream(new FileStream($"{path}.gz", FileMode.Create), CompressionMode.Compress) : new FileStream(path, FileMode.Create)))
             using (var jtw = new JsonTextWriter(sw))
@@ -14818,7 +17131,7 @@ namespace FolioConsoleApplication
                 var js = new JsonSerializer { Formatting = Formatting.Indented };
                 jtw.WriteStartArray();
                 var i = 0;
-                foreach (var jo in api ? throw new NotSupportedException() : fdc.TemporaryOrderTransactions(where, take: take).Select(tot => JObject.Parse(tot.Content)))
+                foreach (var jo in api ? throw new NotSupportedException() : fdc.TemporaryOrderTransactions(where, null, orderBy, skip, take).Select(tot => JObject.Parse(tot.Content)))
                 {
                     if (validate)
                     {
@@ -14839,12 +17152,31 @@ namespace FolioConsoleApplication
             traceSource.TraceEvent(TraceEventType.Information, 0, $"{s.Elapsed} elapsed");
         }
 
+        public static void QueryTitles(string where = null, string orderBy = null, int? skip = null, int? take = null, string select = null)
+        {
+            using (var fdc = new FolioDapperContext(connectionString))
+            using (var fsc = new FolioServiceClient(connectionString))
+            using (var jtw = new JsonTextWriter(Console.Out))
+            {
+                jtw.WriteStartArray();
+                foreach (var jo in (api ? fsc.Titles(where, orderBy, skip, take) : fdc.Titles(where, null, orderBy, skip, take).Select(t => JObject.Parse(t.Content))).Select(jo =>
+                {
+                    return select == null ? jo : new JObject(select.Split(",").Select(s =>
+                    {
+                        var m = Regex.Match(s.Trim(), @"(?<Path>\S+)((?i) as (?<Name>.+))?", RegexOptions.Compiled);
+                        return new JProperty(m.Groups["Name"].Success ? m.Groups["Name"].Value : m.Groups["Path"].Value.Split(".").Last(), jo.SelectToken(m.Groups["Path"].Value));
+                    }));
+                })) jsonSerializer.Serialize(jtw, jo);
+                jtw.WriteEndArray();
+            }
+        }
+
         public static void DeleteTitles(string where = null)
         {
             traceSource.TraceEvent(TraceEventType.Information, 0, "Deleting titles");
             var s = Stopwatch.StartNew();
-            using (var fbcc = new FolioBulkCopyContext())
-            using (var fsc = new FolioServiceClient())
+            using (var fbcc = new FolioBulkCopyContext(connectionString))
+            using (var fsc = new FolioServiceClient(connectionString))
             {
                 var i = 0;
                 if (api)
@@ -14877,8 +17209,8 @@ namespace FolioConsoleApplication
             using (var sr = new StreamReader(compress || path.EndsWith(".gz") ? (Stream)new GZipStream(File.OpenRead($"{path}{(path.EndsWith(".gz") ? "" : ".gz")}"), CompressionMode.Decompress) : File.OpenRead(path)))
             using (var sr2 = new StreamReader(Assembly.GetAssembly(typeof(FolioContext)).GetManifestResourceStream("FolioLibrary.Title.json")))
             using (var jtr = new JsonTextReader(sr) { SupportMultipleContent = true })
-            using (var fbcc = new FolioBulkCopyContext())
-            using (var fsc = new FolioServiceClient())
+            using (var fbcc = new FolioBulkCopyContext(connectionString))
+            using (var fsc = new FolioServiceClient(connectionString))
             {
                 var s2 = Stopwatch.StartNew();
                 var js4 = JsonSchema.FromJsonAsync(sr2.ReadToEndAsync().Result).Result;
@@ -14934,8 +17266,8 @@ namespace FolioConsoleApplication
         {
             traceSource.TraceEvent(TraceEventType.Information, 0, "Saving titles");
             var s = Stopwatch.StartNew();
-            using (var fdc = new FolioDapperContext())
-            using (var fsc = new FolioServiceClient())
+            using (var fdc = new FolioDapperContext(connectionString))
+            using (var fsc = new FolioServiceClient(connectionString))
             using (var sr = new StreamReader(Assembly.GetAssembly(typeof(FolioContext)).GetManifestResourceStream("FolioLibrary.Title.json")))
             using (var sw = new StreamWriter(whatIf ? new MemoryStream() : compress ? (Stream)new GZipStream(new FileStream($"{path}.gz", FileMode.Create), CompressionMode.Compress) : new FileStream(path, FileMode.Create)))
             using (var jtw = new JsonTextWriter(sw))
@@ -14945,7 +17277,7 @@ namespace FolioConsoleApplication
                 var js = new JsonSerializer { Formatting = Formatting.Indented };
                 jtw.WriteStartArray();
                 var i = 0;
-                foreach (var jo in api ? fsc.Titles(where, take: take) : fdc.Titles(where, take: take).Select(t => JObject.Parse(t.Content)))
+                foreach (var jo in api ? fsc.Titles(where, orderBy, skip, take) : fdc.Titles(where, null, orderBy, skip, take).Select(t => JObject.Parse(t.Content)))
                 {
                     if (validate)
                     {
@@ -14966,12 +17298,31 @@ namespace FolioConsoleApplication
             traceSource.TraceEvent(TraceEventType.Information, 0, $"{s.Elapsed} elapsed");
         }
 
+        public static void QueryTransactions(string where = null, string orderBy = null, int? skip = null, int? take = null, string select = null)
+        {
+            using (var fdc = new FolioDapperContext(connectionString))
+            using (var fsc = new FolioServiceClient(connectionString))
+            using (var jtw = new JsonTextWriter(Console.Out))
+            {
+                jtw.WriteStartArray();
+                foreach (var jo in (api ? fsc.Transactions(where, orderBy, skip, take) : fdc.Transactions(where, null, orderBy, skip, take).Select(t => JObject.Parse(t.Content))).Select(jo =>
+                {
+                    return select == null ? jo : new JObject(select.Split(",").Select(s =>
+                    {
+                        var m = Regex.Match(s.Trim(), @"(?<Path>\S+)((?i) as (?<Name>.+))?", RegexOptions.Compiled);
+                        return new JProperty(m.Groups["Name"].Success ? m.Groups["Name"].Value : m.Groups["Path"].Value.Split(".").Last(), jo.SelectToken(m.Groups["Path"].Value));
+                    }));
+                })) jsonSerializer.Serialize(jtw, jo);
+                jtw.WriteEndArray();
+            }
+        }
+
         public static void DeleteTransactions(string where = null)
         {
             traceSource.TraceEvent(TraceEventType.Information, 0, "Deleting transactions");
             var s = Stopwatch.StartNew();
-            using (var fbcc = new FolioBulkCopyContext())
-            using (var fsc = new FolioServiceClient())
+            using (var fbcc = new FolioBulkCopyContext(connectionString))
+            using (var fsc = new FolioServiceClient(connectionString))
             {
                 var i = 0;
                 if (api)
@@ -15004,8 +17355,8 @@ namespace FolioConsoleApplication
             using (var sr = new StreamReader(compress || path.EndsWith(".gz") ? (Stream)new GZipStream(File.OpenRead($"{path}{(path.EndsWith(".gz") ? "" : ".gz")}"), CompressionMode.Decompress) : File.OpenRead(path)))
             using (var sr2 = new StreamReader(Assembly.GetAssembly(typeof(FolioContext)).GetManifestResourceStream("FolioLibrary.Transaction.json")))
             using (var jtr = new JsonTextReader(sr) { SupportMultipleContent = true })
-            using (var fbcc = new FolioBulkCopyContext())
-            using (var fsc = new FolioServiceClient())
+            using (var fbcc = new FolioBulkCopyContext(connectionString))
+            using (var fsc = new FolioServiceClient(connectionString))
             {
                 var s2 = Stopwatch.StartNew();
                 var js4 = JsonSchema.FromJsonAsync(sr2.ReadToEndAsync().Result).Result;
@@ -15066,8 +17417,8 @@ namespace FolioConsoleApplication
         {
             traceSource.TraceEvent(TraceEventType.Information, 0, "Saving transactions");
             var s = Stopwatch.StartNew();
-            using (var fdc = new FolioDapperContext())
-            using (var fsc = new FolioServiceClient())
+            using (var fdc = new FolioDapperContext(connectionString))
+            using (var fsc = new FolioServiceClient(connectionString))
             using (var sr = new StreamReader(Assembly.GetAssembly(typeof(FolioContext)).GetManifestResourceStream("FolioLibrary.Transaction.json")))
             using (var sw = new StreamWriter(whatIf ? new MemoryStream() : compress ? (Stream)new GZipStream(new FileStream($"{path}.gz", FileMode.Create), CompressionMode.Compress) : new FileStream(path, FileMode.Create)))
             using (var jtw = new JsonTextWriter(sw))
@@ -15077,7 +17428,7 @@ namespace FolioConsoleApplication
                 var js = new JsonSerializer { Formatting = Formatting.Indented };
                 jtw.WriteStartArray();
                 var i = 0;
-                foreach (var jo in api ? fsc.Transactions(where, take: take) : fdc.Transactions(where, take: take).Select(t => JObject.Parse(t.Content)))
+                foreach (var jo in api ? fsc.Transactions(where, orderBy, skip, take) : fdc.Transactions(where, null, orderBy, skip, take).Select(t => JObject.Parse(t.Content)))
                 {
                     if (validate)
                     {
@@ -15098,12 +17449,31 @@ namespace FolioConsoleApplication
             traceSource.TraceEvent(TraceEventType.Information, 0, $"{s.Elapsed} elapsed");
         }
 
+        public static void QueryTransferAccounts(string where = null, string orderBy = null, int? skip = null, int? take = null, string select = null)
+        {
+            using (var fdc = new FolioDapperContext(connectionString))
+            using (var fsc = new FolioServiceClient(connectionString))
+            using (var jtw = new JsonTextWriter(Console.Out))
+            {
+                jtw.WriteStartArray();
+                foreach (var jo in (api ? fsc.TransferAccounts(where, orderBy, skip, take) : fdc.TransferAccounts(where, null, orderBy, skip, take).Select(ta => JObject.Parse(ta.Content))).Select(jo =>
+                {
+                    return select == null ? jo : new JObject(select.Split(",").Select(s =>
+                    {
+                        var m = Regex.Match(s.Trim(), @"(?<Path>\S+)((?i) as (?<Name>.+))?", RegexOptions.Compiled);
+                        return new JProperty(m.Groups["Name"].Success ? m.Groups["Name"].Value : m.Groups["Path"].Value.Split(".").Last(), jo.SelectToken(m.Groups["Path"].Value));
+                    }));
+                })) jsonSerializer.Serialize(jtw, jo);
+                jtw.WriteEndArray();
+            }
+        }
+
         public static void DeleteTransferAccounts(string where = null)
         {
             traceSource.TraceEvent(TraceEventType.Information, 0, "Deleting transfer accounts");
             var s = Stopwatch.StartNew();
-            using (var fbcc = new FolioBulkCopyContext())
-            using (var fsc = new FolioServiceClient())
+            using (var fbcc = new FolioBulkCopyContext(connectionString))
+            using (var fsc = new FolioServiceClient(connectionString))
             {
                 var i = 0;
                 if (api)
@@ -15136,8 +17506,8 @@ namespace FolioConsoleApplication
             using (var sr = new StreamReader(compress || path.EndsWith(".gz") ? (Stream)new GZipStream(File.OpenRead($"{path}{(path.EndsWith(".gz") ? "" : ".gz")}"), CompressionMode.Decompress) : File.OpenRead(path)))
             using (var sr2 = new StreamReader(Assembly.GetAssembly(typeof(FolioContext)).GetManifestResourceStream("FolioLibrary.TransferAccount.json")))
             using (var jtr = new JsonTextReader(sr) { SupportMultipleContent = true })
-            using (var fbcc = new FolioBulkCopyContext())
-            using (var fsc = new FolioServiceClient())
+            using (var fbcc = new FolioBulkCopyContext(connectionString))
+            using (var fsc = new FolioServiceClient(connectionString))
             {
                 var s2 = Stopwatch.StartNew();
                 var js4 = JsonSchema.FromJsonAsync(sr2.ReadToEndAsync().Result).Result;
@@ -15194,8 +17564,8 @@ namespace FolioConsoleApplication
         {
             traceSource.TraceEvent(TraceEventType.Information, 0, "Saving transfer accounts");
             var s = Stopwatch.StartNew();
-            using (var fdc = new FolioDapperContext())
-            using (var fsc = new FolioServiceClient())
+            using (var fdc = new FolioDapperContext(connectionString))
+            using (var fsc = new FolioServiceClient(connectionString))
             using (var sr = new StreamReader(Assembly.GetAssembly(typeof(FolioContext)).GetManifestResourceStream("FolioLibrary.TransferAccount.json")))
             using (var sw = new StreamWriter(whatIf ? new MemoryStream() : compress ? (Stream)new GZipStream(new FileStream($"{path}.gz", FileMode.Create), CompressionMode.Compress) : new FileStream(path, FileMode.Create)))
             using (var jtw = new JsonTextWriter(sw))
@@ -15205,7 +17575,7 @@ namespace FolioConsoleApplication
                 var js = new JsonSerializer { Formatting = Formatting.Indented };
                 jtw.WriteStartArray();
                 var i = 0;
-                foreach (var jo in api ? fsc.TransferAccounts(where, take: take) : fdc.TransferAccounts(where, take: take).Select(ta => JObject.Parse(ta.Content)))
+                foreach (var jo in api ? fsc.TransferAccounts(where, orderBy, skip, take) : fdc.TransferAccounts(where, null, orderBy, skip, take).Select(ta => JObject.Parse(ta.Content)))
                 {
                     if (validate)
                     {
@@ -15226,12 +17596,31 @@ namespace FolioConsoleApplication
             traceSource.TraceEvent(TraceEventType.Information, 0, $"{s.Elapsed} elapsed");
         }
 
+        public static void QueryTransferCriterias(string where = null, string orderBy = null, int? skip = null, int? take = null, string select = null)
+        {
+            using (var fdc = new FolioDapperContext(connectionString))
+            using (var fsc = new FolioServiceClient(connectionString))
+            using (var jtw = new JsonTextWriter(Console.Out))
+            {
+                jtw.WriteStartArray();
+                foreach (var jo in (api ? fsc.TransferCriterias(where, orderBy, skip, take) : fdc.TransferCriterias(where, null, orderBy, skip, take).Select(tc => JObject.Parse(tc.Content))).Select(jo =>
+                {
+                    return select == null ? jo : new JObject(select.Split(",").Select(s =>
+                    {
+                        var m = Regex.Match(s.Trim(), @"(?<Path>\S+)((?i) as (?<Name>.+))?", RegexOptions.Compiled);
+                        return new JProperty(m.Groups["Name"].Success ? m.Groups["Name"].Value : m.Groups["Path"].Value.Split(".").Last(), jo.SelectToken(m.Groups["Path"].Value));
+                    }));
+                })) jsonSerializer.Serialize(jtw, jo);
+                jtw.WriteEndArray();
+            }
+        }
+
         public static void DeleteTransferCriterias(string where = null)
         {
             traceSource.TraceEvent(TraceEventType.Information, 0, "Deleting transfer criterias");
             var s = Stopwatch.StartNew();
-            using (var fbcc = new FolioBulkCopyContext())
-            using (var fsc = new FolioServiceClient())
+            using (var fbcc = new FolioBulkCopyContext(connectionString))
+            using (var fsc = new FolioServiceClient(connectionString))
             {
                 var i = 0;
                 if (api)
@@ -15264,8 +17653,8 @@ namespace FolioConsoleApplication
             using (var sr = new StreamReader(compress || path.EndsWith(".gz") ? (Stream)new GZipStream(File.OpenRead($"{path}{(path.EndsWith(".gz") ? "" : ".gz")}"), CompressionMode.Decompress) : File.OpenRead(path)))
             using (var sr2 = new StreamReader(Assembly.GetAssembly(typeof(FolioContext)).GetManifestResourceStream("FolioLibrary.TransferCriteria.json")))
             using (var jtr = new JsonTextReader(sr) { SupportMultipleContent = true })
-            using (var fbcc = new FolioBulkCopyContext())
-            using (var fsc = new FolioServiceClient())
+            using (var fbcc = new FolioBulkCopyContext(connectionString))
+            using (var fsc = new FolioServiceClient(connectionString))
             {
                 var s2 = Stopwatch.StartNew();
                 var js4 = JsonSchema.FromJsonAsync(sr2.ReadToEndAsync().Result).Result;
@@ -15320,8 +17709,8 @@ namespace FolioConsoleApplication
         {
             traceSource.TraceEvent(TraceEventType.Information, 0, "Saving transfer criterias");
             var s = Stopwatch.StartNew();
-            using (var fdc = new FolioDapperContext())
-            using (var fsc = new FolioServiceClient())
+            using (var fdc = new FolioDapperContext(connectionString))
+            using (var fsc = new FolioServiceClient(connectionString))
             using (var sr = new StreamReader(Assembly.GetAssembly(typeof(FolioContext)).GetManifestResourceStream("FolioLibrary.TransferCriteria.json")))
             using (var sw = new StreamWriter(whatIf ? new MemoryStream() : compress ? (Stream)new GZipStream(new FileStream($"{path}.gz", FileMode.Create), CompressionMode.Compress) : new FileStream(path, FileMode.Create)))
             using (var jtw = new JsonTextWriter(sw))
@@ -15331,7 +17720,7 @@ namespace FolioConsoleApplication
                 var js = new JsonSerializer { Formatting = Formatting.Indented };
                 jtw.WriteStartArray();
                 var i = 0;
-                foreach (var jo in api ? fsc.TransferCriterias(where, take: take) : fdc.TransferCriterias(where, take: take).Select(tc => JObject.Parse(tc.Content)))
+                foreach (var jo in api ? fsc.TransferCriterias(where, orderBy, skip, take) : fdc.TransferCriterias(where, null, orderBy, skip, take).Select(tc => JObject.Parse(tc.Content)))
                 {
                     if (validate)
                     {
@@ -15352,12 +17741,31 @@ namespace FolioConsoleApplication
             traceSource.TraceEvent(TraceEventType.Information, 0, $"{s.Elapsed} elapsed");
         }
 
+        public static void QueryUsers(string where = null, string orderBy = null, int? skip = null, int? take = null, string select = null)
+        {
+            using (var fdc = new FolioDapperContext(connectionString))
+            using (var fsc = new FolioServiceClient(connectionString))
+            using (var jtw = new JsonTextWriter(Console.Out))
+            {
+                jtw.WriteStartArray();
+                foreach (var jo in (api ? fsc.Users(where, orderBy, skip, take) : fdc.Users(where, null, orderBy, skip, take).Select(u => JObject.Parse(u.Content))).Select(jo =>
+                {
+                    return select == null ? jo : new JObject(select.Split(",").Select(s =>
+                    {
+                        var m = Regex.Match(s.Trim(), @"(?<Path>\S+)((?i) as (?<Name>.+))?", RegexOptions.Compiled);
+                        return new JProperty(m.Groups["Name"].Success ? m.Groups["Name"].Value : m.Groups["Path"].Value.Split(".").Last(), jo.SelectToken(m.Groups["Path"].Value));
+                    }));
+                })) jsonSerializer.Serialize(jtw, jo);
+                jtw.WriteEndArray();
+            }
+        }
+
         public static void DeleteUsers(string where = null)
         {
             traceSource.TraceEvent(TraceEventType.Information, 0, "Deleting users");
             var s = Stopwatch.StartNew();
-            using (var fbcc = new FolioBulkCopyContext())
-            using (var fsc = new FolioServiceClient())
+            using (var fbcc = new FolioBulkCopyContext(connectionString))
+            using (var fsc = new FolioServiceClient(connectionString))
             {
                 var i = 0;
                 if (api)
@@ -15390,8 +17798,8 @@ namespace FolioConsoleApplication
             using (var sr = new StreamReader(compress || path.EndsWith(".gz") ? (Stream)new GZipStream(File.OpenRead($"{path}{(path.EndsWith(".gz") ? "" : ".gz")}"), CompressionMode.Decompress) : File.OpenRead(path)))
             using (var sr2 = new StreamReader(Assembly.GetAssembly(typeof(FolioContext)).GetManifestResourceStream("FolioLibrary.User.json")))
             using (var jtr = new JsonTextReader(sr) { SupportMultipleContent = true })
-            using (var fbcc = new FolioBulkCopyContext())
-            using (var fsc = new FolioServiceClient())
+            using (var fbcc = new FolioBulkCopyContext(connectionString))
+            using (var fsc = new FolioServiceClient(connectionString))
             {
                 var s2 = Stopwatch.StartNew();
                 var js4 = JsonSchema.FromJsonAsync(sr2.ReadToEndAsync().Result).Result;
@@ -15452,17 +17860,18 @@ namespace FolioConsoleApplication
             using (var sr = new StreamReader(compress || path.EndsWith(".gz") ? (Stream)new GZipStream(File.OpenRead($"{path}{(path.EndsWith(".gz") ? "" : ".gz")}"), CompressionMode.Decompress) : File.OpenRead(path)))
             using (var sr2 = new StreamReader(Assembly.GetAssembly(typeof(FolioContext)).GetManifestResourceStream("FolioLibrary.User.json")))
             using (var jtr = new JsonTextReader(sr) { SupportMultipleContent = true })
-            using (var fdc = new FolioDapperContext())
-            using (var fsc = new FolioServiceClient())
+            using (var fdc = new FolioDapperContext(connectionString))
+            using (var fsc = new FolioServiceClient(connectionString))
             {
                 var dt = api ? DateTime.UtcNow : fdc.ExecuteScalar<DateTime>("SELECT current_timestamp").ToUniversalTime();
+                dt = dt.AddTicks(-dt.Ticks % TimeSpan.TicksPerMillisecond);
                 var users = api ? fsc.Users().ToArray() : fdc.Query<string>($"SELECT jsonb FROM diku_mod_users.users").Select(s3 => JObject.Parse(s3)).ToArray();
                 var ids = users.ToDictionary(jo => (string)jo["id"]);
                 var externalSystemIds = users.Where(jo => jo.SelectToken("externalSystemId") != null).ToDictionary(jo => (string)jo.SelectToken("externalSystemId"));
                 var usernames = users.Where(jo => jo.SelectToken("username") != null).ToDictionary(jo => (string)jo.SelectToken("username"));
                 var barcodes = users.Where(jo => jo.SelectToken("barcode") != null).ToDictionary(jo => (string)jo.SelectToken("barcode"));
                 var js2 = JsonSchema.FromJsonAsync(sr2.ReadToEndAsync().Result).Result;
-                var js = new JsonSerializer();
+                var js = new JsonSerializer { DateFormatString = "yyyy-MM-ddTHH:mm:ss.FFFK" };
                 var s2 = Stopwatch.StartNew();
                 jtr.Read();
                 int i = 0, j = 0, k = 0;
@@ -15566,7 +17975,7 @@ namespace FolioConsoleApplication
         {
             traceSource.TraceEvent(TraceEventType.Information, 0, "Importing users");
             var s = Stopwatch.StartNew();
-            using (var fsc = new FolioServiceClient())
+            using (var fsc = new FolioServiceClient(connectionString))
             {
                 var l = JToken.Parse(File.ReadAllText(path)).Cast<JObject>();
                 if (take != null) l = l.Take(take.Value);
@@ -15583,8 +17992,8 @@ namespace FolioConsoleApplication
         {
             traceSource.TraceEvent(TraceEventType.Information, 0, "Saving users");
             var s = Stopwatch.StartNew();
-            using (var fdc = new FolioDapperContext())
-            using (var fsc = new FolioServiceClient())
+            using (var fdc = new FolioDapperContext(connectionString))
+            using (var fsc = new FolioServiceClient(connectionString))
             using (var sr = new StreamReader(Assembly.GetAssembly(typeof(FolioContext)).GetManifestResourceStream("FolioLibrary.User.json")))
             using (var sw = new StreamWriter(whatIf ? new MemoryStream() : compress ? (Stream)new GZipStream(new FileStream($"{path}.gz", FileMode.Create), CompressionMode.Compress) : new FileStream(path, FileMode.Create)))
             using (var jtw = new JsonTextWriter(sw))
@@ -15594,7 +18003,7 @@ namespace FolioConsoleApplication
                 var js = new JsonSerializer { Formatting = Formatting.Indented };
                 jtw.WriteStartArray();
                 var i = 0;
-                foreach (var jo in api ? fsc.Users(where, take: take) : fdc.Users(where, take: take).Select(u => JObject.Parse(u.Content)))
+                foreach (var jo in api ? fsc.Users(where, orderBy, skip, take) : fdc.Users(where, null, orderBy, skip, take).Select(u => JObject.Parse(u.Content)))
                 {
                     if (validate)
                     {
@@ -15615,12 +18024,31 @@ namespace FolioConsoleApplication
             traceSource.TraceEvent(TraceEventType.Information, 0, $"{s.Elapsed} elapsed");
         }
 
+        public static void QueryUserAcquisitionsUnits(string where = null, string orderBy = null, int? skip = null, int? take = null, string select = null)
+        {
+            using (var fdc = new FolioDapperContext(connectionString))
+            using (var fsc = new FolioServiceClient(connectionString))
+            using (var jtw = new JsonTextWriter(Console.Out))
+            {
+                jtw.WriteStartArray();
+                foreach (var jo in (api ? fsc.UserAcquisitionsUnits(where, orderBy, skip, take) : fdc.UserAcquisitionsUnits(where, null, orderBy, skip, take).Select(uau => JObject.Parse(uau.Content))).Select(jo =>
+                {
+                    return select == null ? jo : new JObject(select.Split(",").Select(s =>
+                    {
+                        var m = Regex.Match(s.Trim(), @"(?<Path>\S+)((?i) as (?<Name>.+))?", RegexOptions.Compiled);
+                        return new JProperty(m.Groups["Name"].Success ? m.Groups["Name"].Value : m.Groups["Path"].Value.Split(".").Last(), jo.SelectToken(m.Groups["Path"].Value));
+                    }));
+                })) jsonSerializer.Serialize(jtw, jo);
+                jtw.WriteEndArray();
+            }
+        }
+
         public static void DeleteUserAcquisitionsUnits(string where = null)
         {
             traceSource.TraceEvent(TraceEventType.Information, 0, "Deleting user acquisitions units");
             var s = Stopwatch.StartNew();
-            using (var fbcc = new FolioBulkCopyContext())
-            using (var fsc = new FolioServiceClient())
+            using (var fbcc = new FolioBulkCopyContext(connectionString))
+            using (var fsc = new FolioServiceClient(connectionString))
             {
                 var i = 0;
                 if (api)
@@ -15653,8 +18081,8 @@ namespace FolioConsoleApplication
             using (var sr = new StreamReader(compress || path.EndsWith(".gz") ? (Stream)new GZipStream(File.OpenRead($"{path}{(path.EndsWith(".gz") ? "" : ".gz")}"), CompressionMode.Decompress) : File.OpenRead(path)))
             using (var sr2 = new StreamReader(Assembly.GetAssembly(typeof(FolioContext)).GetManifestResourceStream("FolioLibrary.UserAcquisitionsUnit.json")))
             using (var jtr = new JsonTextReader(sr) { SupportMultipleContent = true })
-            using (var fbcc = new FolioBulkCopyContext())
-            using (var fsc = new FolioServiceClient())
+            using (var fbcc = new FolioBulkCopyContext(connectionString))
+            using (var fsc = new FolioServiceClient(connectionString))
             {
                 var s2 = Stopwatch.StartNew();
                 var js4 = JsonSchema.FromJsonAsync(sr2.ReadToEndAsync().Result).Result;
@@ -15712,8 +18140,8 @@ namespace FolioConsoleApplication
         {
             traceSource.TraceEvent(TraceEventType.Information, 0, "Saving user acquisitions units");
             var s = Stopwatch.StartNew();
-            using (var fdc = new FolioDapperContext())
-            using (var fsc = new FolioServiceClient())
+            using (var fdc = new FolioDapperContext(connectionString))
+            using (var fsc = new FolioServiceClient(connectionString))
             using (var sr = new StreamReader(Assembly.GetAssembly(typeof(FolioContext)).GetManifestResourceStream("FolioLibrary.UserAcquisitionsUnit.json")))
             using (var sw = new StreamWriter(whatIf ? new MemoryStream() : compress ? (Stream)new GZipStream(new FileStream($"{path}.gz", FileMode.Create), CompressionMode.Compress) : new FileStream(path, FileMode.Create)))
             using (var jtw = new JsonTextWriter(sw))
@@ -15723,7 +18151,7 @@ namespace FolioConsoleApplication
                 var js = new JsonSerializer { Formatting = Formatting.Indented };
                 jtw.WriteStartArray();
                 var i = 0;
-                foreach (var jo in api ? fsc.UserAcquisitionsUnits(where, take: take) : fdc.UserAcquisitionsUnits(where, take: take).Select(uau => JObject.Parse(uau.Content)))
+                foreach (var jo in api ? fsc.UserAcquisitionsUnits(where, orderBy, skip, take) : fdc.UserAcquisitionsUnits(where, null, orderBy, skip, take).Select(uau => JObject.Parse(uau.Content)))
                 {
                     if (validate)
                     {
@@ -15744,12 +18172,31 @@ namespace FolioConsoleApplication
             traceSource.TraceEvent(TraceEventType.Information, 0, $"{s.Elapsed} elapsed");
         }
 
+        public static void QueryUserRequestPreferences(string where = null, string orderBy = null, int? skip = null, int? take = null, string select = null)
+        {
+            using (var fdc = new FolioDapperContext(connectionString))
+            using (var fsc = new FolioServiceClient(connectionString))
+            using (var jtw = new JsonTextWriter(Console.Out))
+            {
+                jtw.WriteStartArray();
+                foreach (var jo in (api ? fsc.UserRequestPreferences(where, orderBy, skip, take) : fdc.UserRequestPreferences(where, null, orderBy, skip, take).Select(urp => JObject.Parse(urp.Content))).Select(jo =>
+                {
+                    return select == null ? jo : new JObject(select.Split(",").Select(s =>
+                    {
+                        var m = Regex.Match(s.Trim(), @"(?<Path>\S+)((?i) as (?<Name>.+))?", RegexOptions.Compiled);
+                        return new JProperty(m.Groups["Name"].Success ? m.Groups["Name"].Value : m.Groups["Path"].Value.Split(".").Last(), jo.SelectToken(m.Groups["Path"].Value));
+                    }));
+                })) jsonSerializer.Serialize(jtw, jo);
+                jtw.WriteEndArray();
+            }
+        }
+
         public static void DeleteUserRequestPreferences(string where = null)
         {
             traceSource.TraceEvent(TraceEventType.Information, 0, "Deleting user request preferences");
             var s = Stopwatch.StartNew();
-            using (var fbcc = new FolioBulkCopyContext())
-            using (var fsc = new FolioServiceClient())
+            using (var fbcc = new FolioBulkCopyContext(connectionString))
+            using (var fsc = new FolioServiceClient(connectionString))
             {
                 var i = 0;
                 if (api)
@@ -15782,8 +18229,8 @@ namespace FolioConsoleApplication
             using (var sr = new StreamReader(compress || path.EndsWith(".gz") ? (Stream)new GZipStream(File.OpenRead($"{path}{(path.EndsWith(".gz") ? "" : ".gz")}"), CompressionMode.Decompress) : File.OpenRead(path)))
             using (var sr2 = new StreamReader(Assembly.GetAssembly(typeof(FolioContext)).GetManifestResourceStream("FolioLibrary.UserRequestPreference.json")))
             using (var jtr = new JsonTextReader(sr) { SupportMultipleContent = true })
-            using (var fbcc = new FolioBulkCopyContext())
-            using (var fsc = new FolioServiceClient())
+            using (var fbcc = new FolioBulkCopyContext(connectionString))
+            using (var fsc = new FolioServiceClient(connectionString))
             {
                 var s2 = Stopwatch.StartNew();
                 var js4 = JsonSchema.FromJsonAsync(sr2.ReadToEndAsync().Result).Result;
@@ -15840,8 +18287,8 @@ namespace FolioConsoleApplication
         {
             traceSource.TraceEvent(TraceEventType.Information, 0, "Saving user request preferences");
             var s = Stopwatch.StartNew();
-            using (var fdc = new FolioDapperContext())
-            using (var fsc = new FolioServiceClient())
+            using (var fdc = new FolioDapperContext(connectionString))
+            using (var fsc = new FolioServiceClient(connectionString))
             using (var sr = new StreamReader(Assembly.GetAssembly(typeof(FolioContext)).GetManifestResourceStream("FolioLibrary.UserRequestPreference.json")))
             using (var sw = new StreamWriter(whatIf ? new MemoryStream() : compress ? (Stream)new GZipStream(new FileStream($"{path}.gz", FileMode.Create), CompressionMode.Compress) : new FileStream(path, FileMode.Create)))
             using (var jtw = new JsonTextWriter(sw))
@@ -15851,7 +18298,7 @@ namespace FolioConsoleApplication
                 var js = new JsonSerializer { Formatting = Formatting.Indented };
                 jtw.WriteStartArray();
                 var i = 0;
-                foreach (var jo in api ? fsc.UserRequestPreferences(where, take: take) : fdc.UserRequestPreferences(where, take: take).Select(urp => JObject.Parse(urp.Content)))
+                foreach (var jo in api ? fsc.UserRequestPreferences(where, orderBy, skip, take) : fdc.UserRequestPreferences(where, null, orderBy, skip, take).Select(urp => JObject.Parse(urp.Content)))
                 {
                     if (validate)
                     {
@@ -15872,12 +18319,31 @@ namespace FolioConsoleApplication
             traceSource.TraceEvent(TraceEventType.Information, 0, $"{s.Elapsed} elapsed");
         }
 
+        public static void QueryVouchers(string where = null, string orderBy = null, int? skip = null, int? take = null, string select = null)
+        {
+            using (var fdc = new FolioDapperContext(connectionString))
+            using (var fsc = new FolioServiceClient(connectionString))
+            using (var jtw = new JsonTextWriter(Console.Out))
+            {
+                jtw.WriteStartArray();
+                foreach (var jo in (api ? fsc.Vouchers(where, orderBy, skip, take) : fdc.Vouchers(where, null, orderBy, skip, take).Select(v => JObject.Parse(v.Content))).Select(jo =>
+                {
+                    return select == null ? jo : new JObject(select.Split(",").Select(s =>
+                    {
+                        var m = Regex.Match(s.Trim(), @"(?<Path>\S+)((?i) as (?<Name>.+))?", RegexOptions.Compiled);
+                        return new JProperty(m.Groups["Name"].Success ? m.Groups["Name"].Value : m.Groups["Path"].Value.Split(".").Last(), jo.SelectToken(m.Groups["Path"].Value));
+                    }));
+                })) jsonSerializer.Serialize(jtw, jo);
+                jtw.WriteEndArray();
+            }
+        }
+
         public static void DeleteVouchers(string where = null)
         {
             traceSource.TraceEvent(TraceEventType.Information, 0, "Deleting vouchers");
             var s = Stopwatch.StartNew();
-            using (var fbcc = new FolioBulkCopyContext())
-            using (var fsc = new FolioServiceClient())
+            using (var fbcc = new FolioBulkCopyContext(connectionString))
+            using (var fsc = new FolioServiceClient(connectionString))
             {
                 var i = 0;
                 if (api)
@@ -15910,8 +18376,8 @@ namespace FolioConsoleApplication
             using (var sr = new StreamReader(compress || path.EndsWith(".gz") ? (Stream)new GZipStream(File.OpenRead($"{path}{(path.EndsWith(".gz") ? "" : ".gz")}"), CompressionMode.Decompress) : File.OpenRead(path)))
             using (var sr2 = new StreamReader(Assembly.GetAssembly(typeof(FolioContext)).GetManifestResourceStream("FolioLibrary.Voucher.json")))
             using (var jtr = new JsonTextReader(sr) { SupportMultipleContent = true })
-            using (var fbcc = new FolioBulkCopyContext())
-            using (var fsc = new FolioServiceClient())
+            using (var fbcc = new FolioBulkCopyContext(connectionString))
+            using (var fsc = new FolioServiceClient(connectionString))
             {
                 var s2 = Stopwatch.StartNew();
                 var js4 = JsonSchema.FromJsonAsync(sr2.ReadToEndAsync().Result).Result;
@@ -15970,8 +18436,8 @@ namespace FolioConsoleApplication
         {
             traceSource.TraceEvent(TraceEventType.Information, 0, "Saving vouchers");
             var s = Stopwatch.StartNew();
-            using (var fdc = new FolioDapperContext())
-            using (var fsc = new FolioServiceClient())
+            using (var fdc = new FolioDapperContext(connectionString))
+            using (var fsc = new FolioServiceClient(connectionString))
             using (var sr = new StreamReader(Assembly.GetAssembly(typeof(FolioContext)).GetManifestResourceStream("FolioLibrary.Voucher.json")))
             using (var sw = new StreamWriter(whatIf ? new MemoryStream() : compress ? (Stream)new GZipStream(new FileStream($"{path}.gz", FileMode.Create), CompressionMode.Compress) : new FileStream(path, FileMode.Create)))
             using (var jtw = new JsonTextWriter(sw))
@@ -15981,7 +18447,7 @@ namespace FolioConsoleApplication
                 var js = new JsonSerializer { Formatting = Formatting.Indented };
                 jtw.WriteStartArray();
                 var i = 0;
-                foreach (var jo in api ? fsc.Vouchers(where, take: take) : fdc.Vouchers(where, take: take).Select(v => JObject.Parse(v.Content)))
+                foreach (var jo in api ? fsc.Vouchers(where, orderBy, skip, take) : fdc.Vouchers(where, null, orderBy, skip, take).Select(v => JObject.Parse(v.Content)))
                 {
                     if (validate)
                     {
@@ -16002,12 +18468,31 @@ namespace FolioConsoleApplication
             traceSource.TraceEvent(TraceEventType.Information, 0, $"{s.Elapsed} elapsed");
         }
 
+        public static void QueryVoucherItems(string where = null, string orderBy = null, int? skip = null, int? take = null, string select = null)
+        {
+            using (var fdc = new FolioDapperContext(connectionString))
+            using (var fsc = new FolioServiceClient(connectionString))
+            using (var jtw = new JsonTextWriter(Console.Out))
+            {
+                jtw.WriteStartArray();
+                foreach (var jo in (api ? fsc.VoucherItems(where, orderBy, skip, take) : fdc.VoucherItems(where, null, orderBy, skip, take).Select(vi => JObject.Parse(vi.Content))).Select(jo =>
+                {
+                    return select == null ? jo : new JObject(select.Split(",").Select(s =>
+                    {
+                        var m = Regex.Match(s.Trim(), @"(?<Path>\S+)((?i) as (?<Name>.+))?", RegexOptions.Compiled);
+                        return new JProperty(m.Groups["Name"].Success ? m.Groups["Name"].Value : m.Groups["Path"].Value.Split(".").Last(), jo.SelectToken(m.Groups["Path"].Value));
+                    }));
+                })) jsonSerializer.Serialize(jtw, jo);
+                jtw.WriteEndArray();
+            }
+        }
+
         public static void DeleteVoucherItems(string where = null)
         {
             traceSource.TraceEvent(TraceEventType.Information, 0, "Deleting voucher items");
             var s = Stopwatch.StartNew();
-            using (var fbcc = new FolioBulkCopyContext())
-            using (var fsc = new FolioServiceClient())
+            using (var fbcc = new FolioBulkCopyContext(connectionString))
+            using (var fsc = new FolioServiceClient(connectionString))
             {
                 var i = 0;
                 if (api)
@@ -16040,8 +18525,8 @@ namespace FolioConsoleApplication
             using (var sr = new StreamReader(compress || path.EndsWith(".gz") ? (Stream)new GZipStream(File.OpenRead($"{path}{(path.EndsWith(".gz") ? "" : ".gz")}"), CompressionMode.Decompress) : File.OpenRead(path)))
             using (var sr2 = new StreamReader(Assembly.GetAssembly(typeof(FolioContext)).GetManifestResourceStream("FolioLibrary.VoucherItem.json")))
             using (var jtr = new JsonTextReader(sr) { SupportMultipleContent = true })
-            using (var fbcc = new FolioBulkCopyContext())
-            using (var fsc = new FolioServiceClient())
+            using (var fbcc = new FolioBulkCopyContext(connectionString))
+            using (var fsc = new FolioServiceClient(connectionString))
             {
                 var s2 = Stopwatch.StartNew();
                 var js4 = JsonSchema.FromJsonAsync(sr2.ReadToEndAsync().Result).Result;
@@ -16099,8 +18584,8 @@ namespace FolioConsoleApplication
         {
             traceSource.TraceEvent(TraceEventType.Information, 0, "Saving voucher items");
             var s = Stopwatch.StartNew();
-            using (var fdc = new FolioDapperContext())
-            using (var fsc = new FolioServiceClient())
+            using (var fdc = new FolioDapperContext(connectionString))
+            using (var fsc = new FolioServiceClient(connectionString))
             using (var sr = new StreamReader(Assembly.GetAssembly(typeof(FolioContext)).GetManifestResourceStream("FolioLibrary.VoucherItem.json")))
             using (var sw = new StreamWriter(whatIf ? new MemoryStream() : compress ? (Stream)new GZipStream(new FileStream($"{path}.gz", FileMode.Create), CompressionMode.Compress) : new FileStream(path, FileMode.Create)))
             using (var jtw = new JsonTextWriter(sw))
@@ -16110,7 +18595,7 @@ namespace FolioConsoleApplication
                 var js = new JsonSerializer { Formatting = Formatting.Indented };
                 jtw.WriteStartArray();
                 var i = 0;
-                foreach (var jo in api ? fsc.VoucherItems(where, take: take) : fdc.VoucherItems(where, take: take).Select(vi => JObject.Parse(vi.Content)))
+                foreach (var jo in api ? fsc.VoucherItems(where, orderBy, skip, take) : fdc.VoucherItems(where, null, orderBy, skip, take).Select(vi => JObject.Parse(vi.Content)))
                 {
                     if (validate)
                     {
@@ -16131,12 +18616,31 @@ namespace FolioConsoleApplication
             traceSource.TraceEvent(TraceEventType.Information, 0, $"{s.Elapsed} elapsed");
         }
 
+        public static void QueryWaiveReasons(string where = null, string orderBy = null, int? skip = null, int? take = null, string select = null)
+        {
+            using (var fdc = new FolioDapperContext(connectionString))
+            using (var fsc = new FolioServiceClient(connectionString))
+            using (var jtw = new JsonTextWriter(Console.Out))
+            {
+                jtw.WriteStartArray();
+                foreach (var jo in (api ? fsc.WaiveReasons(where, orderBy, skip, take) : fdc.WaiveReasons(where, null, orderBy, skip, take).Select(wr => JObject.Parse(wr.Content))).Select(jo =>
+                {
+                    return select == null ? jo : new JObject(select.Split(",").Select(s =>
+                    {
+                        var m = Regex.Match(s.Trim(), @"(?<Path>\S+)((?i) as (?<Name>.+))?", RegexOptions.Compiled);
+                        return new JProperty(m.Groups["Name"].Success ? m.Groups["Name"].Value : m.Groups["Path"].Value.Split(".").Last(), jo.SelectToken(m.Groups["Path"].Value));
+                    }));
+                })) jsonSerializer.Serialize(jtw, jo);
+                jtw.WriteEndArray();
+            }
+        }
+
         public static void DeleteWaiveReasons(string where = null)
         {
             traceSource.TraceEvent(TraceEventType.Information, 0, "Deleting waive reasons");
             var s = Stopwatch.StartNew();
-            using (var fbcc = new FolioBulkCopyContext())
-            using (var fsc = new FolioServiceClient())
+            using (var fbcc = new FolioBulkCopyContext(connectionString))
+            using (var fsc = new FolioServiceClient(connectionString))
             {
                 var i = 0;
                 if (api)
@@ -16169,8 +18673,8 @@ namespace FolioConsoleApplication
             using (var sr = new StreamReader(compress || path.EndsWith(".gz") ? (Stream)new GZipStream(File.OpenRead($"{path}{(path.EndsWith(".gz") ? "" : ".gz")}"), CompressionMode.Decompress) : File.OpenRead(path)))
             using (var sr2 = new StreamReader(Assembly.GetAssembly(typeof(FolioContext)).GetManifestResourceStream("FolioLibrary.WaiveReason.json")))
             using (var jtr = new JsonTextReader(sr) { SupportMultipleContent = true })
-            using (var fbcc = new FolioBulkCopyContext())
-            using (var fsc = new FolioServiceClient())
+            using (var fbcc = new FolioBulkCopyContext(connectionString))
+            using (var fsc = new FolioServiceClient(connectionString))
             {
                 var s2 = Stopwatch.StartNew();
                 var js4 = JsonSchema.FromJsonAsync(sr2.ReadToEndAsync().Result).Result;
@@ -16227,8 +18731,8 @@ namespace FolioConsoleApplication
         {
             traceSource.TraceEvent(TraceEventType.Information, 0, "Saving waive reasons");
             var s = Stopwatch.StartNew();
-            using (var fdc = new FolioDapperContext())
-            using (var fsc = new FolioServiceClient())
+            using (var fdc = new FolioDapperContext(connectionString))
+            using (var fsc = new FolioServiceClient(connectionString))
             using (var sr = new StreamReader(Assembly.GetAssembly(typeof(FolioContext)).GetManifestResourceStream("FolioLibrary.WaiveReason.json")))
             using (var sw = new StreamWriter(whatIf ? new MemoryStream() : compress ? (Stream)new GZipStream(new FileStream($"{path}.gz", FileMode.Create), CompressionMode.Compress) : new FileStream(path, FileMode.Create)))
             using (var jtw = new JsonTextWriter(sw))
@@ -16238,7 +18742,7 @@ namespace FolioConsoleApplication
                 var js = new JsonSerializer { Formatting = Formatting.Indented };
                 jtw.WriteStartArray();
                 var i = 0;
-                foreach (var jo in api ? fsc.WaiveReasons(where, take: take) : fdc.WaiveReasons(where, take: take).Select(wr => JObject.Parse(wr.Content)))
+                foreach (var jo in api ? fsc.WaiveReasons(where, orderBy, skip, take) : fdc.WaiveReasons(where, null, orderBy, skip, take).Select(wr => JObject.Parse(wr.Content)))
                 {
                     if (validate)
                     {
