@@ -224,19 +224,6 @@ id                                   addressType
 2abe6fe7-519f-40fd-ba24-9c2a14fbf4cb Home
 ```
 
-### Query address types using SQL and pipe it to the PowerShell ConvertFrom-Json cmdlet so that it can be displayed as a formatted table
-
-```
-./folio -query -addresstypes -where "jsonb->>'addressType' IN ('Campus', 'Home')" -select 'id,addressType' | ConvertFrom-Json
-```
-
-```
-id                                   addressType
---                                   -----------
-7e99be3c-ada2-4e88-9303-a2c8a8e2b08e Campus
-2abe6fe7-519f-40fd-ba24-9c2a14fbf4cb Home
-```
-
 ### Query address types using SQL and pipe it to the PowerShell ConvertFrom-Json cmdlet and then to the ConvertTo-Csv cmdlet to convert it to CSV
 
 ```

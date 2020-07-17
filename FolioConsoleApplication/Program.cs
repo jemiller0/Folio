@@ -1375,10 +1375,10 @@ namespace FolioConsoleApplication
                 jtw.WriteStartArray();
                 foreach (var jo in (api ? fsc.AcquisitionsUnits(where, orderBy, skip, take) : fdc.AcquisitionsUnits(where, null, orderBy, skip, take).Select(au => JObject.Parse(au.Content))).Select(jo =>
                 {
-                    return select == null ? jo : new JObject(select.Split(",").Select(s =>
+                    return select == null ? jo : new JObject(select.Split(',').Select(s =>
                     {
                         var m = Regex.Match(s.Trim(), @"(?<Path>\S+)((?i) as (?<Name>.+))?", RegexOptions.Compiled);
-                        return new JProperty(m.Groups["Name"].Success ? m.Groups["Name"].Value : m.Groups["Path"].Value.Split(".").Last(), jo.SelectToken(m.Groups["Path"].Value));
+                        return new JProperty(m.Groups["Name"].Success ? m.Groups["Name"].Value : m.Groups["Path"].Value.Split('.').Last(), jo.SelectToken(m.Groups["Path"].Value));
                     }));
                 })) jsonSerializer.Serialize(jtw, jo);
                 jtw.WriteEndArray();
@@ -1522,10 +1522,10 @@ namespace FolioConsoleApplication
                 jtw.WriteStartArray();
                 foreach (var jo in (api ? fsc.AddressTypes(where, orderBy, skip, take) : fdc.AddressTypes(where, null, orderBy, skip, take).Select(at => JObject.Parse(at.Content))).Select(jo =>
                 {
-                    return select == null ? jo : new JObject(select.Split(",").Select(s =>
+                    return select == null ? jo : new JObject(select.Split(',').Select(s =>
                     {
                         var m = Regex.Match(s.Trim(), @"(?<Path>\S+)((?i) as (?<Name>.+))?", RegexOptions.Compiled);
-                        return new JProperty(m.Groups["Name"].Success ? m.Groups["Name"].Value : m.Groups["Path"].Value.Split(".").Last(), jo.SelectToken(m.Groups["Path"].Value));
+                        return new JProperty(m.Groups["Name"].Success ? m.Groups["Name"].Value : m.Groups["Path"].Value.Split('.').Last(), jo.SelectToken(m.Groups["Path"].Value));
                     }));
                 })) jsonSerializer.Serialize(jtw, jo);
                 jtw.WriteEndArray();
@@ -1669,10 +1669,10 @@ namespace FolioConsoleApplication
                 jtw.WriteStartArray();
                 foreach (var jo in (api ? fsc.Alerts(where, orderBy, skip, take) : fdc.Alerts(where, null, orderBy, skip, take).Select(a => JObject.Parse(a.Content))).Select(jo =>
                 {
-                    return select == null ? jo : new JObject(select.Split(",").Select(s =>
+                    return select == null ? jo : new JObject(select.Split(',').Select(s =>
                     {
                         var m = Regex.Match(s.Trim(), @"(?<Path>\S+)((?i) as (?<Name>.+))?", RegexOptions.Compiled);
-                        return new JProperty(m.Groups["Name"].Success ? m.Groups["Name"].Value : m.Groups["Path"].Value.Split(".").Last(), jo.SelectToken(m.Groups["Path"].Value));
+                        return new JProperty(m.Groups["Name"].Success ? m.Groups["Name"].Value : m.Groups["Path"].Value.Split('.').Last(), jo.SelectToken(m.Groups["Path"].Value));
                     }));
                 })) jsonSerializer.Serialize(jtw, jo);
                 jtw.WriteEndArray();
@@ -1814,10 +1814,10 @@ namespace FolioConsoleApplication
                 jtw.WriteStartArray();
                 foreach (var jo in (api ? fsc.AlternativeTitleTypes(where, orderBy, skip, take) : fdc.AlternativeTitleTypes(where, null, orderBy, skip, take).Select(att => JObject.Parse(att.Content))).Select(jo =>
                 {
-                    return select == null ? jo : new JObject(select.Split(",").Select(s =>
+                    return select == null ? jo : new JObject(select.Split(',').Select(s =>
                     {
                         var m = Regex.Match(s.Trim(), @"(?<Path>\S+)((?i) as (?<Name>.+))?", RegexOptions.Compiled);
-                        return new JProperty(m.Groups["Name"].Success ? m.Groups["Name"].Value : m.Groups["Path"].Value.Split(".").Last(), jo.SelectToken(m.Groups["Path"].Value));
+                        return new JProperty(m.Groups["Name"].Success ? m.Groups["Name"].Value : m.Groups["Path"].Value.Split('.').Last(), jo.SelectToken(m.Groups["Path"].Value));
                     }));
                 })) jsonSerializer.Serialize(jtw, jo);
                 jtw.WriteEndArray();
@@ -1961,10 +1961,10 @@ namespace FolioConsoleApplication
                 jtw.WriteStartArray();
                 foreach (var jo in (api ? fsc.BatchGroups(where, orderBy, skip, take) : fdc.BatchGroups(where, null, orderBy, skip, take).Select(bg => JObject.Parse(bg.Content))).Select(jo =>
                 {
-                    return select == null ? jo : new JObject(select.Split(",").Select(s =>
+                    return select == null ? jo : new JObject(select.Split(',').Select(s =>
                     {
                         var m = Regex.Match(s.Trim(), @"(?<Path>\S+)((?i) as (?<Name>.+))?", RegexOptions.Compiled);
-                        return new JProperty(m.Groups["Name"].Success ? m.Groups["Name"].Value : m.Groups["Path"].Value.Split(".").Last(), jo.SelectToken(m.Groups["Path"].Value));
+                        return new JProperty(m.Groups["Name"].Success ? m.Groups["Name"].Value : m.Groups["Path"].Value.Split('.').Last(), jo.SelectToken(m.Groups["Path"].Value));
                     }));
                 })) jsonSerializer.Serialize(jtw, jo);
                 jtw.WriteEndArray();
@@ -2107,10 +2107,10 @@ namespace FolioConsoleApplication
                 jtw.WriteStartArray();
                 foreach (var jo in (api ? throw new NotSupportedException() : fdc.BatchVouchers(where, null, orderBy, skip, take).Select(bv => JObject.Parse(bv.Content))).Select(jo =>
                 {
-                    return select == null ? jo : new JObject(select.Split(",").Select(s =>
+                    return select == null ? jo : new JObject(select.Split(',').Select(s =>
                     {
                         var m = Regex.Match(s.Trim(), @"(?<Path>\S+)((?i) as (?<Name>.+))?", RegexOptions.Compiled);
-                        return new JProperty(m.Groups["Name"].Success ? m.Groups["Name"].Value : m.Groups["Path"].Value.Split(".").Last(), jo.SelectToken(m.Groups["Path"].Value));
+                        return new JProperty(m.Groups["Name"].Success ? m.Groups["Name"].Value : m.Groups["Path"].Value.Split('.').Last(), jo.SelectToken(m.Groups["Path"].Value));
                     }));
                 })) jsonSerializer.Serialize(jtw, jo);
                 jtw.WriteEndArray();
@@ -2234,10 +2234,10 @@ namespace FolioConsoleApplication
                 jtw.WriteStartArray();
                 foreach (var jo in (api ? fsc.BatchVoucherExports(where, orderBy, skip, take) : fdc.BatchVoucherExports(where, null, orderBy, skip, take).Select(bve => JObject.Parse(bve.Content))).Select(jo =>
                 {
-                    return select == null ? jo : new JObject(select.Split(",").Select(s =>
+                    return select == null ? jo : new JObject(select.Split(',').Select(s =>
                     {
                         var m = Regex.Match(s.Trim(), @"(?<Path>\S+)((?i) as (?<Name>.+))?", RegexOptions.Compiled);
-                        return new JProperty(m.Groups["Name"].Success ? m.Groups["Name"].Value : m.Groups["Path"].Value.Split(".").Last(), jo.SelectToken(m.Groups["Path"].Value));
+                        return new JProperty(m.Groups["Name"].Success ? m.Groups["Name"].Value : m.Groups["Path"].Value.Split('.').Last(), jo.SelectToken(m.Groups["Path"].Value));
                     }));
                 })) jsonSerializer.Serialize(jtw, jo);
                 jtw.WriteEndArray();
@@ -2383,10 +2383,10 @@ namespace FolioConsoleApplication
                 jtw.WriteStartArray();
                 foreach (var jo in (api ? fsc.BatchVoucherExportConfigs(where, orderBy, skip, take) : fdc.BatchVoucherExportConfigs(where, null, orderBy, skip, take).Select(bvec => JObject.Parse(bvec.Content))).Select(jo =>
                 {
-                    return select == null ? jo : new JObject(select.Split(",").Select(s =>
+                    return select == null ? jo : new JObject(select.Split(',').Select(s =>
                     {
                         var m = Regex.Match(s.Trim(), @"(?<Path>\S+)((?i) as (?<Name>.+))?", RegexOptions.Compiled);
-                        return new JProperty(m.Groups["Name"].Success ? m.Groups["Name"].Value : m.Groups["Path"].Value.Split(".").Last(), jo.SelectToken(m.Groups["Path"].Value));
+                        return new JProperty(m.Groups["Name"].Success ? m.Groups["Name"].Value : m.Groups["Path"].Value.Split('.').Last(), jo.SelectToken(m.Groups["Path"].Value));
                     }));
                 })) jsonSerializer.Serialize(jtw, jo);
                 jtw.WriteEndArray();
@@ -2531,10 +2531,10 @@ namespace FolioConsoleApplication
                 jtw.WriteStartArray();
                 foreach (var jo in (api ? fsc.Blocks(where, orderBy, skip, take) : fdc.Blocks(where, null, orderBy, skip, take).Select(b => JObject.Parse(b.Content))).Select(jo =>
                 {
-                    return select == null ? jo : new JObject(select.Split(",").Select(s =>
+                    return select == null ? jo : new JObject(select.Split(',').Select(s =>
                     {
                         var m = Regex.Match(s.Trim(), @"(?<Path>\S+)((?i) as (?<Name>.+))?", RegexOptions.Compiled);
-                        return new JProperty(m.Groups["Name"].Success ? m.Groups["Name"].Value : m.Groups["Path"].Value.Split(".").Last(), jo.SelectToken(m.Groups["Path"].Value));
+                        return new JProperty(m.Groups["Name"].Success ? m.Groups["Name"].Value : m.Groups["Path"].Value.Split('.').Last(), jo.SelectToken(m.Groups["Path"].Value));
                     }));
                 })) jsonSerializer.Serialize(jtw, jo);
                 jtw.WriteEndArray();
@@ -2678,10 +2678,10 @@ namespace FolioConsoleApplication
                 jtw.WriteStartArray();
                 foreach (var jo in (api ? fsc.Budgets(where, orderBy, skip, take) : fdc.Budgets(where, null, orderBy, skip, take).Select(b => JObject.Parse(b.Content))).Select(jo =>
                 {
-                    return select == null ? jo : new JObject(select.Split(",").Select(s =>
+                    return select == null ? jo : new JObject(select.Split(',').Select(s =>
                     {
                         var m = Regex.Match(s.Trim(), @"(?<Path>\S+)((?i) as (?<Name>.+))?", RegexOptions.Compiled);
-                        return new JProperty(m.Groups["Name"].Success ? m.Groups["Name"].Value : m.Groups["Path"].Value.Split(".").Last(), jo.SelectToken(m.Groups["Path"].Value));
+                        return new JProperty(m.Groups["Name"].Success ? m.Groups["Name"].Value : m.Groups["Path"].Value.Split('.').Last(), jo.SelectToken(m.Groups["Path"].Value));
                     }));
                 })) jsonSerializer.Serialize(jtw, jo);
                 jtw.WriteEndArray();
@@ -2827,10 +2827,10 @@ namespace FolioConsoleApplication
                 jtw.WriteStartArray();
                 foreach (var jo in (api ? fsc.CallNumberTypes(where, orderBy, skip, take) : fdc.CallNumberTypes(where, null, orderBy, skip, take).Select(cnt => JObject.Parse(cnt.Content))).Select(jo =>
                 {
-                    return select == null ? jo : new JObject(select.Split(",").Select(s =>
+                    return select == null ? jo : new JObject(select.Split(',').Select(s =>
                     {
                         var m = Regex.Match(s.Trim(), @"(?<Path>\S+)((?i) as (?<Name>.+))?", RegexOptions.Compiled);
-                        return new JProperty(m.Groups["Name"].Success ? m.Groups["Name"].Value : m.Groups["Path"].Value.Split(".").Last(), jo.SelectToken(m.Groups["Path"].Value));
+                        return new JProperty(m.Groups["Name"].Success ? m.Groups["Name"].Value : m.Groups["Path"].Value.Split('.').Last(), jo.SelectToken(m.Groups["Path"].Value));
                     }));
                 })) jsonSerializer.Serialize(jtw, jo);
                 jtw.WriteEndArray();
@@ -2974,10 +2974,10 @@ namespace FolioConsoleApplication
                 jtw.WriteStartArray();
                 foreach (var jo in (api ? fsc.Campuses(where, orderBy, skip, take) : fdc.Campuses(where, null, orderBy, skip, take).Select(c => JObject.Parse(c.Content))).Select(jo =>
                 {
-                    return select == null ? jo : new JObject(select.Split(",").Select(s =>
+                    return select == null ? jo : new JObject(select.Split(',').Select(s =>
                     {
                         var m = Regex.Match(s.Trim(), @"(?<Path>\S+)((?i) as (?<Name>.+))?", RegexOptions.Compiled);
-                        return new JProperty(m.Groups["Name"].Success ? m.Groups["Name"].Value : m.Groups["Path"].Value.Split(".").Last(), jo.SelectToken(m.Groups["Path"].Value));
+                        return new JProperty(m.Groups["Name"].Success ? m.Groups["Name"].Value : m.Groups["Path"].Value.Split('.').Last(), jo.SelectToken(m.Groups["Path"].Value));
                     }));
                 })) jsonSerializer.Serialize(jtw, jo);
                 jtw.WriteEndArray();
@@ -3122,10 +3122,10 @@ namespace FolioConsoleApplication
                 jtw.WriteStartArray();
                 foreach (var jo in (api ? fsc.CancellationReasons(where, orderBy, skip, take) : fdc.CancellationReasons(where, null, orderBy, skip, take).Select(cr => JObject.Parse(cr.Content))).Select(jo =>
                 {
-                    return select == null ? jo : new JObject(select.Split(",").Select(s =>
+                    return select == null ? jo : new JObject(select.Split(',').Select(s =>
                     {
                         var m = Regex.Match(s.Trim(), @"(?<Path>\S+)((?i) as (?<Name>.+))?", RegexOptions.Compiled);
-                        return new JProperty(m.Groups["Name"].Success ? m.Groups["Name"].Value : m.Groups["Path"].Value.Split(".").Last(), jo.SelectToken(m.Groups["Path"].Value));
+                        return new JProperty(m.Groups["Name"].Success ? m.Groups["Name"].Value : m.Groups["Path"].Value.Split('.').Last(), jo.SelectToken(m.Groups["Path"].Value));
                     }));
                 })) jsonSerializer.Serialize(jtw, jo);
                 jtw.WriteEndArray();
@@ -3269,10 +3269,10 @@ namespace FolioConsoleApplication
                 jtw.WriteStartArray();
                 foreach (var jo in (api ? fsc.Categories(where, orderBy, skip, take) : fdc.Categories(where, null, orderBy, skip, take).Select(c => JObject.Parse(c.Content))).Select(jo =>
                 {
-                    return select == null ? jo : new JObject(select.Split(",").Select(s =>
+                    return select == null ? jo : new JObject(select.Split(',').Select(s =>
                     {
                         var m = Regex.Match(s.Trim(), @"(?<Path>\S+)((?i) as (?<Name>.+))?", RegexOptions.Compiled);
-                        return new JProperty(m.Groups["Name"].Success ? m.Groups["Name"].Value : m.Groups["Path"].Value.Split(".").Last(), jo.SelectToken(m.Groups["Path"].Value));
+                        return new JProperty(m.Groups["Name"].Success ? m.Groups["Name"].Value : m.Groups["Path"].Value.Split('.').Last(), jo.SelectToken(m.Groups["Path"].Value));
                     }));
                 })) jsonSerializer.Serialize(jtw, jo);
                 jtw.WriteEndArray();
@@ -3416,10 +3416,10 @@ namespace FolioConsoleApplication
                 jtw.WriteStartArray();
                 foreach (var jo in (api ? fsc.CheckIns(where, orderBy, skip, take) : fdc.CheckIns(where, null, orderBy, skip, take).Select(ci => JObject.Parse(ci.Content))).Select(jo =>
                 {
-                    return select == null ? jo : new JObject(select.Split(",").Select(s =>
+                    return select == null ? jo : new JObject(select.Split(',').Select(s =>
                     {
                         var m = Regex.Match(s.Trim(), @"(?<Path>\S+)((?i) as (?<Name>.+))?", RegexOptions.Compiled);
-                        return new JProperty(m.Groups["Name"].Success ? m.Groups["Name"].Value : m.Groups["Path"].Value.Split(".").Last(), jo.SelectToken(m.Groups["Path"].Value));
+                        return new JProperty(m.Groups["Name"].Success ? m.Groups["Name"].Value : m.Groups["Path"].Value.Split('.').Last(), jo.SelectToken(m.Groups["Path"].Value));
                     }));
                 })) jsonSerializer.Serialize(jtw, jo);
                 jtw.WriteEndArray();
@@ -3561,10 +3561,10 @@ namespace FolioConsoleApplication
                 jtw.WriteStartArray();
                 foreach (var jo in (api ? new[] { fsc.GetCirculationRule() } : fdc.CirculationRules(where, null, orderBy, skip, take).Select(cr => JObject.Parse(cr.Content))).Select(jo =>
                 {
-                    return select == null ? jo : new JObject(select.Split(",").Select(s =>
+                    return select == null ? jo : new JObject(select.Split(',').Select(s =>
                     {
                         var m = Regex.Match(s.Trim(), @"(?<Path>\S+)((?i) as (?<Name>.+))?", RegexOptions.Compiled);
-                        return new JProperty(m.Groups["Name"].Success ? m.Groups["Name"].Value : m.Groups["Path"].Value.Split(".").Last(), jo.SelectToken(m.Groups["Path"].Value));
+                        return new JProperty(m.Groups["Name"].Success ? m.Groups["Name"].Value : m.Groups["Path"].Value.Split('.').Last(), jo.SelectToken(m.Groups["Path"].Value));
                     }));
                 })) jsonSerializer.Serialize(jtw, jo);
                 jtw.WriteEndArray();
@@ -3695,10 +3695,10 @@ namespace FolioConsoleApplication
                 jtw.WriteStartArray();
                 foreach (var jo in (api ? fsc.ClassificationTypes(where, orderBy, skip, take) : fdc.ClassificationTypes(where, null, orderBy, skip, take).Select(ct => JObject.Parse(ct.Content))).Select(jo =>
                 {
-                    return select == null ? jo : new JObject(select.Split(",").Select(s =>
+                    return select == null ? jo : new JObject(select.Split(',').Select(s =>
                     {
                         var m = Regex.Match(s.Trim(), @"(?<Path>\S+)((?i) as (?<Name>.+))?", RegexOptions.Compiled);
-                        return new JProperty(m.Groups["Name"].Success ? m.Groups["Name"].Value : m.Groups["Path"].Value.Split(".").Last(), jo.SelectToken(m.Groups["Path"].Value));
+                        return new JProperty(m.Groups["Name"].Success ? m.Groups["Name"].Value : m.Groups["Path"].Value.Split('.').Last(), jo.SelectToken(m.Groups["Path"].Value));
                     }));
                 })) jsonSerializer.Serialize(jtw, jo);
                 jtw.WriteEndArray();
@@ -3842,10 +3842,10 @@ namespace FolioConsoleApplication
                 jtw.WriteStartArray();
                 foreach (var jo in (api ? fsc.CloseReasons(where, orderBy, skip, take) : fdc.CloseReasons(where, null, orderBy, skip, take).Select(cr => JObject.Parse(cr.Content))).Select(jo =>
                 {
-                    return select == null ? jo : new JObject(select.Split(",").Select(s =>
+                    return select == null ? jo : new JObject(select.Split(',').Select(s =>
                     {
                         var m = Regex.Match(s.Trim(), @"(?<Path>\S+)((?i) as (?<Name>.+))?", RegexOptions.Compiled);
-                        return new JProperty(m.Groups["Name"].Success ? m.Groups["Name"].Value : m.Groups["Path"].Value.Split(".").Last(), jo.SelectToken(m.Groups["Path"].Value));
+                        return new JProperty(m.Groups["Name"].Success ? m.Groups["Name"].Value : m.Groups["Path"].Value.Split('.').Last(), jo.SelectToken(m.Groups["Path"].Value));
                     }));
                 })) jsonSerializer.Serialize(jtw, jo);
                 jtw.WriteEndArray();
@@ -3987,10 +3987,10 @@ namespace FolioConsoleApplication
                 jtw.WriteStartArray();
                 foreach (var jo in (api ? fsc.Comments(where, orderBy, skip, take) : fdc.Comments(where, null, orderBy, skip, take).Select(c => JObject.Parse(c.Content))).Select(jo =>
                 {
-                    return select == null ? jo : new JObject(select.Split(",").Select(s =>
+                    return select == null ? jo : new JObject(select.Split(',').Select(s =>
                     {
                         var m = Regex.Match(s.Trim(), @"(?<Path>\S+)((?i) as (?<Name>.+))?", RegexOptions.Compiled);
-                        return new JProperty(m.Groups["Name"].Success ? m.Groups["Name"].Value : m.Groups["Path"].Value.Split(".").Last(), jo.SelectToken(m.Groups["Path"].Value));
+                        return new JProperty(m.Groups["Name"].Success ? m.Groups["Name"].Value : m.Groups["Path"].Value.Split('.').Last(), jo.SelectToken(m.Groups["Path"].Value));
                     }));
                 })) jsonSerializer.Serialize(jtw, jo);
                 jtw.WriteEndArray();
@@ -4134,10 +4134,10 @@ namespace FolioConsoleApplication
                 jtw.WriteStartArray();
                 foreach (var jo in (api ? fsc.Configurations(where, orderBy, skip, take) : fdc.Configurations(where, null, orderBy, skip, take).Select(c => JObject.Parse(c.Content))).Select(jo =>
                 {
-                    return select == null ? jo : new JObject(select.Split(",").Select(s =>
+                    return select == null ? jo : new JObject(select.Split(',').Select(s =>
                     {
                         var m = Regex.Match(s.Trim(), @"(?<Path>\S+)((?i) as (?<Name>.+))?", RegexOptions.Compiled);
-                        return new JProperty(m.Groups["Name"].Success ? m.Groups["Name"].Value : m.Groups["Path"].Value.Split(".").Last(), jo.SelectToken(m.Groups["Path"].Value));
+                        return new JProperty(m.Groups["Name"].Success ? m.Groups["Name"].Value : m.Groups["Path"].Value.Split('.').Last(), jo.SelectToken(m.Groups["Path"].Value));
                     }));
                 })) jsonSerializer.Serialize(jtw, jo);
                 jtw.WriteEndArray();
@@ -4281,10 +4281,10 @@ namespace FolioConsoleApplication
                 jtw.WriteStartArray();
                 foreach (var jo in (api ? fsc.Contacts(where, orderBy, skip, take) : fdc.Contacts(where, null, orderBy, skip, take).Select(c => JObject.Parse(c.Content))).Select(jo =>
                 {
-                    return select == null ? jo : new JObject(select.Split(",").Select(s =>
+                    return select == null ? jo : new JObject(select.Split(',').Select(s =>
                     {
                         var m = Regex.Match(s.Trim(), @"(?<Path>\S+)((?i) as (?<Name>.+))?", RegexOptions.Compiled);
-                        return new JProperty(m.Groups["Name"].Success ? m.Groups["Name"].Value : m.Groups["Path"].Value.Split(".").Last(), jo.SelectToken(m.Groups["Path"].Value));
+                        return new JProperty(m.Groups["Name"].Success ? m.Groups["Name"].Value : m.Groups["Path"].Value.Split('.').Last(), jo.SelectToken(m.Groups["Path"].Value));
                     }));
                 })) jsonSerializer.Serialize(jtw, jo);
                 jtw.WriteEndArray();
@@ -4428,10 +4428,10 @@ namespace FolioConsoleApplication
                 jtw.WriteStartArray();
                 foreach (var jo in (api ? fsc.ContributorNameTypes(where, orderBy, skip, take) : fdc.ContributorNameTypes(where, null, orderBy, skip, take).Select(cnt => JObject.Parse(cnt.Content))).Select(jo =>
                 {
-                    return select == null ? jo : new JObject(select.Split(",").Select(s =>
+                    return select == null ? jo : new JObject(select.Split(',').Select(s =>
                     {
                         var m = Regex.Match(s.Trim(), @"(?<Path>\S+)((?i) as (?<Name>.+))?", RegexOptions.Compiled);
-                        return new JProperty(m.Groups["Name"].Success ? m.Groups["Name"].Value : m.Groups["Path"].Value.Split(".").Last(), jo.SelectToken(m.Groups["Path"].Value));
+                        return new JProperty(m.Groups["Name"].Success ? m.Groups["Name"].Value : m.Groups["Path"].Value.Split('.').Last(), jo.SelectToken(m.Groups["Path"].Value));
                     }));
                 })) jsonSerializer.Serialize(jtw, jo);
                 jtw.WriteEndArray();
@@ -4575,10 +4575,10 @@ namespace FolioConsoleApplication
                 jtw.WriteStartArray();
                 foreach (var jo in (api ? fsc.ContributorTypes(where, orderBy, skip, take) : fdc.ContributorTypes(where, null, orderBy, skip, take).Select(ct => JObject.Parse(ct.Content))).Select(jo =>
                 {
-                    return select == null ? jo : new JObject(select.Split(",").Select(s =>
+                    return select == null ? jo : new JObject(select.Split(',').Select(s =>
                     {
                         var m = Regex.Match(s.Trim(), @"(?<Path>\S+)((?i) as (?<Name>.+))?", RegexOptions.Compiled);
-                        return new JProperty(m.Groups["Name"].Success ? m.Groups["Name"].Value : m.Groups["Path"].Value.Split(".").Last(), jo.SelectToken(m.Groups["Path"].Value));
+                        return new JProperty(m.Groups["Name"].Success ? m.Groups["Name"].Value : m.Groups["Path"].Value.Split('.').Last(), jo.SelectToken(m.Groups["Path"].Value));
                     }));
                 })) jsonSerializer.Serialize(jtw, jo);
                 jtw.WriteEndArray();
@@ -4720,10 +4720,10 @@ namespace FolioConsoleApplication
                 jtw.WriteStartArray();
                 foreach (var jo in (api ? fsc.CustomFields(where, orderBy, skip, take) : fdc.CustomFields(where, null, orderBy, skip, take).Select(cf => JObject.Parse(cf.Content))).Select(jo =>
                 {
-                    return select == null ? jo : new JObject(select.Split(",").Select(s =>
+                    return select == null ? jo : new JObject(select.Split(',').Select(s =>
                     {
                         var m = Regex.Match(s.Trim(), @"(?<Path>\S+)((?i) as (?<Name>.+))?", RegexOptions.Compiled);
-                        return new JProperty(m.Groups["Name"].Success ? m.Groups["Name"].Value : m.Groups["Path"].Value.Split(".").Last(), jo.SelectToken(m.Groups["Path"].Value));
+                        return new JProperty(m.Groups["Name"].Success ? m.Groups["Name"].Value : m.Groups["Path"].Value.Split('.').Last(), jo.SelectToken(m.Groups["Path"].Value));
                     }));
                 })) jsonSerializer.Serialize(jtw, jo);
                 jtw.WriteEndArray();
@@ -4864,10 +4864,10 @@ namespace FolioConsoleApplication
                 jtw.WriteStartArray();
                 foreach (var jo in (api ? throw new NotSupportedException() : fdc.Documents(where, null, orderBy, skip, take).Select(d => JObject.Parse(d.Content))).Select(jo =>
                 {
-                    return select == null ? jo : new JObject(select.Split(",").Select(s =>
+                    return select == null ? jo : new JObject(select.Split(',').Select(s =>
                     {
                         var m = Regex.Match(s.Trim(), @"(?<Path>\S+)((?i) as (?<Name>.+))?", RegexOptions.Compiled);
-                        return new JProperty(m.Groups["Name"].Success ? m.Groups["Name"].Value : m.Groups["Path"].Value.Split(".").Last(), jo.SelectToken(m.Groups["Path"].Value));
+                        return new JProperty(m.Groups["Name"].Success ? m.Groups["Name"].Value : m.Groups["Path"].Value.Split('.').Last(), jo.SelectToken(m.Groups["Path"].Value));
                     }));
                 })) jsonSerializer.Serialize(jtw, jo);
                 jtw.WriteEndArray();
@@ -4994,10 +4994,10 @@ namespace FolioConsoleApplication
                 jtw.WriteStartArray();
                 foreach (var jo in (api ? fsc.ElectronicAccessRelationships(where, orderBy, skip, take) : fdc.ElectronicAccessRelationships(where, null, orderBy, skip, take).Select(ear => JObject.Parse(ear.Content))).Select(jo =>
                 {
-                    return select == null ? jo : new JObject(select.Split(",").Select(s =>
+                    return select == null ? jo : new JObject(select.Split(',').Select(s =>
                     {
                         var m = Regex.Match(s.Trim(), @"(?<Path>\S+)((?i) as (?<Name>.+))?", RegexOptions.Compiled);
-                        return new JProperty(m.Groups["Name"].Success ? m.Groups["Name"].Value : m.Groups["Path"].Value.Split(".").Last(), jo.SelectToken(m.Groups["Path"].Value));
+                        return new JProperty(m.Groups["Name"].Success ? m.Groups["Name"].Value : m.Groups["Path"].Value.Split('.').Last(), jo.SelectToken(m.Groups["Path"].Value));
                     }));
                 })) jsonSerializer.Serialize(jtw, jo);
                 jtw.WriteEndArray();
@@ -5140,10 +5140,10 @@ namespace FolioConsoleApplication
                 jtw.WriteStartArray();
                 foreach (var jo in (api ? throw new NotSupportedException() : fdc.ErrorRecords(where, null, orderBy, skip, take).Select(er => JObject.Parse(er.Content))).Select(jo =>
                 {
-                    return select == null ? jo : new JObject(select.Split(",").Select(s =>
+                    return select == null ? jo : new JObject(select.Split(',').Select(s =>
                     {
                         var m = Regex.Match(s.Trim(), @"(?<Path>\S+)((?i) as (?<Name>.+))?", RegexOptions.Compiled);
-                        return new JProperty(m.Groups["Name"].Success ? m.Groups["Name"].Value : m.Groups["Path"].Value.Split(".").Last(), jo.SelectToken(m.Groups["Path"].Value));
+                        return new JProperty(m.Groups["Name"].Success ? m.Groups["Name"].Value : m.Groups["Path"].Value.Split('.').Last(), jo.SelectToken(m.Groups["Path"].Value));
                     }));
                 })) jsonSerializer.Serialize(jtw, jo);
                 jtw.WriteEndArray();
@@ -5266,10 +5266,10 @@ namespace FolioConsoleApplication
                 jtw.WriteStartArray();
                 foreach (var jo in (api ? throw new NotSupportedException() : fdc.ExportConfigCredentials(where, null, orderBy, skip, take).Select(ecc => JObject.Parse(ecc.Content))).Select(jo =>
                 {
-                    return select == null ? jo : new JObject(select.Split(",").Select(s =>
+                    return select == null ? jo : new JObject(select.Split(',').Select(s =>
                     {
                         var m = Regex.Match(s.Trim(), @"(?<Path>\S+)((?i) as (?<Name>.+))?", RegexOptions.Compiled);
-                        return new JProperty(m.Groups["Name"].Success ? m.Groups["Name"].Value : m.Groups["Path"].Value.Split(".").Last(), jo.SelectToken(m.Groups["Path"].Value));
+                        return new JProperty(m.Groups["Name"].Success ? m.Groups["Name"].Value : m.Groups["Path"].Value.Split('.').Last(), jo.SelectToken(m.Groups["Path"].Value));
                     }));
                 })) jsonSerializer.Serialize(jtw, jo);
                 jtw.WriteEndArray();
@@ -5396,10 +5396,10 @@ namespace FolioConsoleApplication
                 jtw.WriteStartArray();
                 foreach (var jo in (api ? fsc.Fees(where, orderBy, skip, take) : fdc.Fees(where, null, orderBy, skip, take).Select(f => JObject.Parse(f.Content))).Select(jo =>
                 {
-                    return select == null ? jo : new JObject(select.Split(",").Select(s =>
+                    return select == null ? jo : new JObject(select.Split(',').Select(s =>
                     {
                         var m = Regex.Match(s.Trim(), @"(?<Path>\S+)((?i) as (?<Name>.+))?", RegexOptions.Compiled);
-                        return new JProperty(m.Groups["Name"].Success ? m.Groups["Name"].Value : m.Groups["Path"].Value.Split(".").Last(), jo.SelectToken(m.Groups["Path"].Value));
+                        return new JProperty(m.Groups["Name"].Success ? m.Groups["Name"].Value : m.Groups["Path"].Value.Split('.').Last(), jo.SelectToken(m.Groups["Path"].Value));
                     }));
                 })) jsonSerializer.Serialize(jtw, jo);
                 jtw.WriteEndArray();
@@ -5543,10 +5543,10 @@ namespace FolioConsoleApplication
                 jtw.WriteStartArray();
                 foreach (var jo in (api ? fsc.FeeTypes(where, orderBy, skip, take) : fdc.FeeTypes(where, null, orderBy, skip, take).Select(ft => JObject.Parse(ft.Content))).Select(jo =>
                 {
-                    return select == null ? jo : new JObject(select.Split(",").Select(s =>
+                    return select == null ? jo : new JObject(select.Split(',').Select(s =>
                     {
                         var m = Regex.Match(s.Trim(), @"(?<Path>\S+)((?i) as (?<Name>.+))?", RegexOptions.Compiled);
-                        return new JProperty(m.Groups["Name"].Success ? m.Groups["Name"].Value : m.Groups["Path"].Value.Split(".").Last(), jo.SelectToken(m.Groups["Path"].Value));
+                        return new JProperty(m.Groups["Name"].Success ? m.Groups["Name"].Value : m.Groups["Path"].Value.Split('.').Last(), jo.SelectToken(m.Groups["Path"].Value));
                     }));
                 })) jsonSerializer.Serialize(jtw, jo);
                 jtw.WriteEndArray();
@@ -5691,10 +5691,10 @@ namespace FolioConsoleApplication
                 jtw.WriteStartArray();
                 foreach (var jo in (api ? fsc.FinanceGroups(where, orderBy, skip, take) : fdc.FinanceGroups(where, null, orderBy, skip, take).Select(fg => JObject.Parse(fg.Content))).Select(jo =>
                 {
-                    return select == null ? jo : new JObject(select.Split(",").Select(s =>
+                    return select == null ? jo : new JObject(select.Split(',').Select(s =>
                     {
                         var m = Regex.Match(s.Trim(), @"(?<Path>\S+)((?i) as (?<Name>.+))?", RegexOptions.Compiled);
-                        return new JProperty(m.Groups["Name"].Success ? m.Groups["Name"].Value : m.Groups["Path"].Value.Split(".").Last(), jo.SelectToken(m.Groups["Path"].Value));
+                        return new JProperty(m.Groups["Name"].Success ? m.Groups["Name"].Value : m.Groups["Path"].Value.Split('.').Last(), jo.SelectToken(m.Groups["Path"].Value));
                     }));
                 })) jsonSerializer.Serialize(jtw, jo);
                 jtw.WriteEndArray();
@@ -5838,10 +5838,10 @@ namespace FolioConsoleApplication
                 jtw.WriteStartArray();
                 foreach (var jo in (api ? fsc.FiscalYears(where, orderBy, skip, take) : fdc.FiscalYears(where, null, orderBy, skip, take).Select(fy => JObject.Parse(fy.Content))).Select(jo =>
                 {
-                    return select == null ? jo : new JObject(select.Split(",").Select(s =>
+                    return select == null ? jo : new JObject(select.Split(',').Select(s =>
                     {
                         var m = Regex.Match(s.Trim(), @"(?<Path>\S+)((?i) as (?<Name>.+))?", RegexOptions.Compiled);
-                        return new JProperty(m.Groups["Name"].Success ? m.Groups["Name"].Value : m.Groups["Path"].Value.Split(".").Last(), jo.SelectToken(m.Groups["Path"].Value));
+                        return new JProperty(m.Groups["Name"].Success ? m.Groups["Name"].Value : m.Groups["Path"].Value.Split('.').Last(), jo.SelectToken(m.Groups["Path"].Value));
                     }));
                 })) jsonSerializer.Serialize(jtw, jo);
                 jtw.WriteEndArray();
@@ -5985,10 +5985,10 @@ namespace FolioConsoleApplication
                 jtw.WriteStartArray();
                 foreach (var jo in (api ? fsc.FixedDueDateSchedules(where, orderBy, skip, take) : fdc.FixedDueDateSchedules(where, null, orderBy, skip, take).Select(fdds => JObject.Parse(fdds.Content))).Select(jo =>
                 {
-                    return select == null ? jo : new JObject(select.Split(",").Select(s =>
+                    return select == null ? jo : new JObject(select.Split(',').Select(s =>
                     {
                         var m = Regex.Match(s.Trim(), @"(?<Path>\S+)((?i) as (?<Name>.+))?", RegexOptions.Compiled);
-                        return new JProperty(m.Groups["Name"].Success ? m.Groups["Name"].Value : m.Groups["Path"].Value.Split(".").Last(), jo.SelectToken(m.Groups["Path"].Value));
+                        return new JProperty(m.Groups["Name"].Success ? m.Groups["Name"].Value : m.Groups["Path"].Value.Split('.').Last(), jo.SelectToken(m.Groups["Path"].Value));
                     }));
                 })) jsonSerializer.Serialize(jtw, jo);
                 jtw.WriteEndArray();
@@ -6130,10 +6130,10 @@ namespace FolioConsoleApplication
                 jtw.WriteStartArray();
                 foreach (var jo in (api ? fsc.Funds(where, orderBy, skip, take) : fdc.Funds(where, null, orderBy, skip, take).Select(f => JObject.Parse(f.Content))).Select(jo =>
                 {
-                    return select == null ? jo : new JObject(select.Split(",").Select(s =>
+                    return select == null ? jo : new JObject(select.Split(',').Select(s =>
                     {
                         var m = Regex.Match(s.Trim(), @"(?<Path>\S+)((?i) as (?<Name>.+))?", RegexOptions.Compiled);
-                        return new JProperty(m.Groups["Name"].Success ? m.Groups["Name"].Value : m.Groups["Path"].Value.Split(".").Last(), jo.SelectToken(m.Groups["Path"].Value));
+                        return new JProperty(m.Groups["Name"].Success ? m.Groups["Name"].Value : m.Groups["Path"].Value.Split('.').Last(), jo.SelectToken(m.Groups["Path"].Value));
                     }));
                 })) jsonSerializer.Serialize(jtw, jo);
                 jtw.WriteEndArray();
@@ -6279,10 +6279,10 @@ namespace FolioConsoleApplication
                 jtw.WriteStartArray();
                 foreach (var jo in (api ? fsc.FundTypes(where, orderBy, skip, take) : fdc.FundTypes(where, null, orderBy, skip, take).Select(ft => JObject.Parse(ft.Content))).Select(jo =>
                 {
-                    return select == null ? jo : new JObject(select.Split(",").Select(s =>
+                    return select == null ? jo : new JObject(select.Split(',').Select(s =>
                     {
                         var m = Regex.Match(s.Trim(), @"(?<Path>\S+)((?i) as (?<Name>.+))?", RegexOptions.Compiled);
-                        return new JProperty(m.Groups["Name"].Success ? m.Groups["Name"].Value : m.Groups["Path"].Value.Split(".").Last(), jo.SelectToken(m.Groups["Path"].Value));
+                        return new JProperty(m.Groups["Name"].Success ? m.Groups["Name"].Value : m.Groups["Path"].Value.Split('.').Last(), jo.SelectToken(m.Groups["Path"].Value));
                     }));
                 })) jsonSerializer.Serialize(jtw, jo);
                 jtw.WriteEndArray();
@@ -6424,10 +6424,10 @@ namespace FolioConsoleApplication
                 jtw.WriteStartArray();
                 foreach (var jo in (api ? fsc.Groups(where, orderBy, skip, take) : fdc.Groups(where, null, orderBy, skip, take).Select(g => JObject.Parse(g.Content))).Select(jo =>
                 {
-                    return select == null ? jo : new JObject(select.Split(",").Select(s =>
+                    return select == null ? jo : new JObject(select.Split(',').Select(s =>
                     {
                         var m = Regex.Match(s.Trim(), @"(?<Path>\S+)((?i) as (?<Name>.+))?", RegexOptions.Compiled);
-                        return new JProperty(m.Groups["Name"].Success ? m.Groups["Name"].Value : m.Groups["Path"].Value.Split(".").Last(), jo.SelectToken(m.Groups["Path"].Value));
+                        return new JProperty(m.Groups["Name"].Success ? m.Groups["Name"].Value : m.Groups["Path"].Value.Split('.').Last(), jo.SelectToken(m.Groups["Path"].Value));
                     }));
                 })) jsonSerializer.Serialize(jtw, jo);
                 jtw.WriteEndArray();
@@ -6571,10 +6571,10 @@ namespace FolioConsoleApplication
                 jtw.WriteStartArray();
                 foreach (var jo in (api ? fsc.GroupFundFiscalYears(where, orderBy, skip, take) : fdc.GroupFundFiscalYears(where, null, orderBy, skip, take).Select(gffy => JObject.Parse(gffy.Content))).Select(jo =>
                 {
-                    return select == null ? jo : new JObject(select.Split(",").Select(s =>
+                    return select == null ? jo : new JObject(select.Split(',').Select(s =>
                     {
                         var m = Regex.Match(s.Trim(), @"(?<Path>\S+)((?i) as (?<Name>.+))?", RegexOptions.Compiled);
-                        return new JProperty(m.Groups["Name"].Success ? m.Groups["Name"].Value : m.Groups["Path"].Value.Split(".").Last(), jo.SelectToken(m.Groups["Path"].Value));
+                        return new JProperty(m.Groups["Name"].Success ? m.Groups["Name"].Value : m.Groups["Path"].Value.Split('.').Last(), jo.SelectToken(m.Groups["Path"].Value));
                     }));
                 })) jsonSerializer.Serialize(jtw, jo);
                 jtw.WriteEndArray();
@@ -6720,10 +6720,10 @@ namespace FolioConsoleApplication
                 jtw.WriteStartArray();
                 foreach (var jo in (api ? fsc.Holdings(where, orderBy, skip, take) : fdc.Holdings(where, null, orderBy, skip, take).Select(h => JObject.Parse(h.Content))).Select(jo =>
                 {
-                    return select == null ? jo : new JObject(select.Split(",").Select(s =>
+                    return select == null ? jo : new JObject(select.Split(',').Select(s =>
                     {
                         var m = Regex.Match(s.Trim(), @"(?<Path>\S+)((?i) as (?<Name>.+))?", RegexOptions.Compiled);
-                        return new JProperty(m.Groups["Name"].Success ? m.Groups["Name"].Value : m.Groups["Path"].Value.Split(".").Last(), jo.SelectToken(m.Groups["Path"].Value));
+                        return new JProperty(m.Groups["Name"].Success ? m.Groups["Name"].Value : m.Groups["Path"].Value.Split('.').Last(), jo.SelectToken(m.Groups["Path"].Value));
                     }));
                 })) jsonSerializer.Serialize(jtw, jo);
                 jtw.WriteEndArray();
@@ -6877,10 +6877,10 @@ namespace FolioConsoleApplication
                 jtw.WriteStartArray();
                 foreach (var jo in (api ? fsc.HoldingNoteTypes(where, orderBy, skip, take) : fdc.HoldingNoteTypes(where, null, orderBy, skip, take).Select(hnt => JObject.Parse(hnt.Content))).Select(jo =>
                 {
-                    return select == null ? jo : new JObject(select.Split(",").Select(s =>
+                    return select == null ? jo : new JObject(select.Split(',').Select(s =>
                     {
                         var m = Regex.Match(s.Trim(), @"(?<Path>\S+)((?i) as (?<Name>.+))?", RegexOptions.Compiled);
-                        return new JProperty(m.Groups["Name"].Success ? m.Groups["Name"].Value : m.Groups["Path"].Value.Split(".").Last(), jo.SelectToken(m.Groups["Path"].Value));
+                        return new JProperty(m.Groups["Name"].Success ? m.Groups["Name"].Value : m.Groups["Path"].Value.Split('.').Last(), jo.SelectToken(m.Groups["Path"].Value));
                     }));
                 })) jsonSerializer.Serialize(jtw, jo);
                 jtw.WriteEndArray();
@@ -7024,10 +7024,10 @@ namespace FolioConsoleApplication
                 jtw.WriteStartArray();
                 foreach (var jo in (api ? fsc.HoldingTypes(where, orderBy, skip, take) : fdc.HoldingTypes(where, null, orderBy, skip, take).Select(ht => JObject.Parse(ht.Content))).Select(jo =>
                 {
-                    return select == null ? jo : new JObject(select.Split(",").Select(s =>
+                    return select == null ? jo : new JObject(select.Split(',').Select(s =>
                     {
                         var m = Regex.Match(s.Trim(), @"(?<Path>\S+)((?i) as (?<Name>.+))?", RegexOptions.Compiled);
-                        return new JProperty(m.Groups["Name"].Success ? m.Groups["Name"].Value : m.Groups["Path"].Value.Split(".").Last(), jo.SelectToken(m.Groups["Path"].Value));
+                        return new JProperty(m.Groups["Name"].Success ? m.Groups["Name"].Value : m.Groups["Path"].Value.Split('.').Last(), jo.SelectToken(m.Groups["Path"].Value));
                     }));
                 })) jsonSerializer.Serialize(jtw, jo);
                 jtw.WriteEndArray();
@@ -7171,10 +7171,10 @@ namespace FolioConsoleApplication
                 jtw.WriteStartArray();
                 foreach (var jo in (api ? new[] { fsc.GetHridSetting() } : fdc.HridSettings(where, null, orderBy, skip, take).Select(hs => JObject.Parse(hs.Content))).Select(jo =>
                 {
-                    return select == null ? jo : new JObject(select.Split(",").Select(s =>
+                    return select == null ? jo : new JObject(select.Split(',').Select(s =>
                     {
                         var m = Regex.Match(s.Trim(), @"(?<Path>\S+)((?i) as (?<Name>.+))?", RegexOptions.Compiled);
-                        return new JProperty(m.Groups["Name"].Success ? m.Groups["Name"].Value : m.Groups["Path"].Value.Split(".").Last(), jo.SelectToken(m.Groups["Path"].Value));
+                        return new JProperty(m.Groups["Name"].Success ? m.Groups["Name"].Value : m.Groups["Path"].Value.Split('.').Last(), jo.SelectToken(m.Groups["Path"].Value));
                     }));
                 })) jsonSerializer.Serialize(jtw, jo);
                 jtw.WriteEndArray();
@@ -7305,10 +7305,10 @@ namespace FolioConsoleApplication
                 jtw.WriteStartArray();
                 foreach (var jo in (api ? fsc.IdTypes(where, orderBy, skip, take) : fdc.IdTypes(where, null, orderBy, skip, take).Select(it => JObject.Parse(it.Content))).Select(jo =>
                 {
-                    return select == null ? jo : new JObject(select.Split(",").Select(s =>
+                    return select == null ? jo : new JObject(select.Split(',').Select(s =>
                     {
                         var m = Regex.Match(s.Trim(), @"(?<Path>\S+)((?i) as (?<Name>.+))?", RegexOptions.Compiled);
-                        return new JProperty(m.Groups["Name"].Success ? m.Groups["Name"].Value : m.Groups["Path"].Value.Split(".").Last(), jo.SelectToken(m.Groups["Path"].Value));
+                        return new JProperty(m.Groups["Name"].Success ? m.Groups["Name"].Value : m.Groups["Path"].Value.Split('.').Last(), jo.SelectToken(m.Groups["Path"].Value));
                     }));
                 })) jsonSerializer.Serialize(jtw, jo);
                 jtw.WriteEndArray();
@@ -7452,10 +7452,10 @@ namespace FolioConsoleApplication
                 jtw.WriteStartArray();
                 foreach (var jo in (api ? fsc.IllPolicies(where, orderBy, skip, take) : fdc.IllPolicies(where, null, orderBy, skip, take).Select(ip => JObject.Parse(ip.Content))).Select(jo =>
                 {
-                    return select == null ? jo : new JObject(select.Split(",").Select(s =>
+                    return select == null ? jo : new JObject(select.Split(',').Select(s =>
                     {
                         var m = Regex.Match(s.Trim(), @"(?<Path>\S+)((?i) as (?<Name>.+))?", RegexOptions.Compiled);
-                        return new JProperty(m.Groups["Name"].Success ? m.Groups["Name"].Value : m.Groups["Path"].Value.Split(".").Last(), jo.SelectToken(m.Groups["Path"].Value));
+                        return new JProperty(m.Groups["Name"].Success ? m.Groups["Name"].Value : m.Groups["Path"].Value.Split('.').Last(), jo.SelectToken(m.Groups["Path"].Value));
                     }));
                 })) jsonSerializer.Serialize(jtw, jo);
                 jtw.WriteEndArray();
@@ -7599,10 +7599,10 @@ namespace FolioConsoleApplication
                 jtw.WriteStartArray();
                 foreach (var jo in (api ? fsc.Instances(where, orderBy, skip, take) : fdc.Instances(where, null, orderBy, skip, take).Select(i2 => JObject.Parse(i2.Content))).Select(jo =>
                 {
-                    return select == null ? jo : new JObject(select.Split(",").Select(s =>
+                    return select == null ? jo : new JObject(select.Split(',').Select(s =>
                     {
                         var m = Regex.Match(s.Trim(), @"(?<Path>\S+)((?i) as (?<Name>.+))?", RegexOptions.Compiled);
-                        return new JProperty(m.Groups["Name"].Success ? m.Groups["Name"].Value : m.Groups["Path"].Value.Split(".").Last(), jo.SelectToken(m.Groups["Path"].Value));
+                        return new JProperty(m.Groups["Name"].Success ? m.Groups["Name"].Value : m.Groups["Path"].Value.Split('.').Last(), jo.SelectToken(m.Groups["Path"].Value));
                     }));
                 })) jsonSerializer.Serialize(jtw, jo);
                 jtw.WriteEndArray();
@@ -7753,10 +7753,10 @@ namespace FolioConsoleApplication
                 jtw.WriteStartArray();
                 foreach (var jo in (api ? fsc.InstanceFormats(where, orderBy, skip, take) : fdc.InstanceFormats(where, null, orderBy, skip, take).Select(@if => JObject.Parse(@if.Content))).Select(jo =>
                 {
-                    return select == null ? jo : new JObject(select.Split(",").Select(s =>
+                    return select == null ? jo : new JObject(select.Split(',').Select(s =>
                     {
                         var m = Regex.Match(s.Trim(), @"(?<Path>\S+)((?i) as (?<Name>.+))?", RegexOptions.Compiled);
-                        return new JProperty(m.Groups["Name"].Success ? m.Groups["Name"].Value : m.Groups["Path"].Value.Split(".").Last(), jo.SelectToken(m.Groups["Path"].Value));
+                        return new JProperty(m.Groups["Name"].Success ? m.Groups["Name"].Value : m.Groups["Path"].Value.Split('.').Last(), jo.SelectToken(m.Groups["Path"].Value));
                     }));
                 })) jsonSerializer.Serialize(jtw, jo);
                 jtw.WriteEndArray();
@@ -7898,10 +7898,10 @@ namespace FolioConsoleApplication
                 jtw.WriteStartArray();
                 foreach (var jo in (api ? fsc.InstanceNoteTypes(where, orderBy, skip, take) : fdc.InstanceNoteTypes(where, null, orderBy, skip, take).Select(@int => JObject.Parse(@int.Content))).Select(jo =>
                 {
-                    return select == null ? jo : new JObject(select.Split(",").Select(s =>
+                    return select == null ? jo : new JObject(select.Split(',').Select(s =>
                     {
                         var m = Regex.Match(s.Trim(), @"(?<Path>\S+)((?i) as (?<Name>.+))?", RegexOptions.Compiled);
-                        return new JProperty(m.Groups["Name"].Success ? m.Groups["Name"].Value : m.Groups["Path"].Value.Split(".").Last(), jo.SelectToken(m.Groups["Path"].Value));
+                        return new JProperty(m.Groups["Name"].Success ? m.Groups["Name"].Value : m.Groups["Path"].Value.Split('.').Last(), jo.SelectToken(m.Groups["Path"].Value));
                     }));
                 })) jsonSerializer.Serialize(jtw, jo);
                 jtw.WriteEndArray();
@@ -8045,10 +8045,10 @@ namespace FolioConsoleApplication
                 jtw.WriteStartArray();
                 foreach (var jo in (api ? fsc.InstanceRelationships(where, orderBy, skip, take) : fdc.InstanceRelationships(where, null, orderBy, skip, take).Select(ir => JObject.Parse(ir.Content))).Select(jo =>
                 {
-                    return select == null ? jo : new JObject(select.Split(",").Select(s =>
+                    return select == null ? jo : new JObject(select.Split(',').Select(s =>
                     {
                         var m = Regex.Match(s.Trim(), @"(?<Path>\S+)((?i) as (?<Name>.+))?", RegexOptions.Compiled);
-                        return new JProperty(m.Groups["Name"].Success ? m.Groups["Name"].Value : m.Groups["Path"].Value.Split(".").Last(), jo.SelectToken(m.Groups["Path"].Value));
+                        return new JProperty(m.Groups["Name"].Success ? m.Groups["Name"].Value : m.Groups["Path"].Value.Split('.').Last(), jo.SelectToken(m.Groups["Path"].Value));
                     }));
                 })) jsonSerializer.Serialize(jtw, jo);
                 jtw.WriteEndArray();
@@ -8195,10 +8195,10 @@ namespace FolioConsoleApplication
                 jtw.WriteStartArray();
                 foreach (var jo in (api ? fsc.InstanceRelationshipTypes(where, orderBy, skip, take) : fdc.InstanceRelationshipTypes(where, null, orderBy, skip, take).Select(irt => JObject.Parse(irt.Content))).Select(jo =>
                 {
-                    return select == null ? jo : new JObject(select.Split(",").Select(s =>
+                    return select == null ? jo : new JObject(select.Split(',').Select(s =>
                     {
                         var m = Regex.Match(s.Trim(), @"(?<Path>\S+)((?i) as (?<Name>.+))?", RegexOptions.Compiled);
-                        return new JProperty(m.Groups["Name"].Success ? m.Groups["Name"].Value : m.Groups["Path"].Value.Split(".").Last(), jo.SelectToken(m.Groups["Path"].Value));
+                        return new JProperty(m.Groups["Name"].Success ? m.Groups["Name"].Value : m.Groups["Path"].Value.Split('.').Last(), jo.SelectToken(m.Groups["Path"].Value));
                     }));
                 })) jsonSerializer.Serialize(jtw, jo);
                 jtw.WriteEndArray();
@@ -8342,10 +8342,10 @@ namespace FolioConsoleApplication
                 jtw.WriteStartArray();
                 foreach (var jo in (api ? fsc.InstanceStatuses(where, orderBy, skip, take) : fdc.InstanceStatuses(where, null, orderBy, skip, take).Select(@is => JObject.Parse(@is.Content))).Select(jo =>
                 {
-                    return select == null ? jo : new JObject(select.Split(",").Select(s =>
+                    return select == null ? jo : new JObject(select.Split(',').Select(s =>
                     {
                         var m = Regex.Match(s.Trim(), @"(?<Path>\S+)((?i) as (?<Name>.+))?", RegexOptions.Compiled);
-                        return new JProperty(m.Groups["Name"].Success ? m.Groups["Name"].Value : m.Groups["Path"].Value.Split(".").Last(), jo.SelectToken(m.Groups["Path"].Value));
+                        return new JProperty(m.Groups["Name"].Success ? m.Groups["Name"].Value : m.Groups["Path"].Value.Split('.').Last(), jo.SelectToken(m.Groups["Path"].Value));
                     }));
                 })) jsonSerializer.Serialize(jtw, jo);
                 jtw.WriteEndArray();
@@ -8489,10 +8489,10 @@ namespace FolioConsoleApplication
                 jtw.WriteStartArray();
                 foreach (var jo in (api ? fsc.InstanceTypes(where, orderBy, skip, take) : fdc.InstanceTypes(where, null, orderBy, skip, take).Select(it => JObject.Parse(it.Content))).Select(jo =>
                 {
-                    return select == null ? jo : new JObject(select.Split(",").Select(s =>
+                    return select == null ? jo : new JObject(select.Split(',').Select(s =>
                     {
                         var m = Regex.Match(s.Trim(), @"(?<Path>\S+)((?i) as (?<Name>.+))?", RegexOptions.Compiled);
-                        return new JProperty(m.Groups["Name"].Success ? m.Groups["Name"].Value : m.Groups["Path"].Value.Split(".").Last(), jo.SelectToken(m.Groups["Path"].Value));
+                        return new JProperty(m.Groups["Name"].Success ? m.Groups["Name"].Value : m.Groups["Path"].Value.Split('.').Last(), jo.SelectToken(m.Groups["Path"].Value));
                     }));
                 })) jsonSerializer.Serialize(jtw, jo);
                 jtw.WriteEndArray();
@@ -8634,10 +8634,10 @@ namespace FolioConsoleApplication
                 jtw.WriteStartArray();
                 foreach (var jo in (api ? fsc.Institutions(where, orderBy, skip, take) : fdc.Institutions(where, null, orderBy, skip, take).Select(i2 => JObject.Parse(i2.Content))).Select(jo =>
                 {
-                    return select == null ? jo : new JObject(select.Split(",").Select(s =>
+                    return select == null ? jo : new JObject(select.Split(',').Select(s =>
                     {
                         var m = Regex.Match(s.Trim(), @"(?<Path>\S+)((?i) as (?<Name>.+))?", RegexOptions.Compiled);
-                        return new JProperty(m.Groups["Name"].Success ? m.Groups["Name"].Value : m.Groups["Path"].Value.Split(".").Last(), jo.SelectToken(m.Groups["Path"].Value));
+                        return new JProperty(m.Groups["Name"].Success ? m.Groups["Name"].Value : m.Groups["Path"].Value.Split('.').Last(), jo.SelectToken(m.Groups["Path"].Value));
                     }));
                 })) jsonSerializer.Serialize(jtw, jo);
                 jtw.WriteEndArray();
@@ -8781,10 +8781,10 @@ namespace FolioConsoleApplication
                 jtw.WriteStartArray();
                 foreach (var jo in (api ? fsc.Interfaces(where, orderBy, skip, take) : fdc.Interfaces(where, null, orderBy, skip, take).Select(i2 => JObject.Parse(i2.Content))).Select(jo =>
                 {
-                    return select == null ? jo : new JObject(select.Split(",").Select(s =>
+                    return select == null ? jo : new JObject(select.Split(',').Select(s =>
                     {
                         var m = Regex.Match(s.Trim(), @"(?<Path>\S+)((?i) as (?<Name>.+))?", RegexOptions.Compiled);
-                        return new JProperty(m.Groups["Name"].Success ? m.Groups["Name"].Value : m.Groups["Path"].Value.Split(".").Last(), jo.SelectToken(m.Groups["Path"].Value));
+                        return new JProperty(m.Groups["Name"].Success ? m.Groups["Name"].Value : m.Groups["Path"].Value.Split('.').Last(), jo.SelectToken(m.Groups["Path"].Value));
                     }));
                 })) jsonSerializer.Serialize(jtw, jo);
                 jtw.WriteEndArray();
@@ -8927,10 +8927,10 @@ namespace FolioConsoleApplication
                 jtw.WriteStartArray();
                 foreach (var jo in (api ? throw new NotSupportedException() : fdc.InterfaceCredentials(where, null, orderBy, skip, take).Select(ic => JObject.Parse(ic.Content))).Select(jo =>
                 {
-                    return select == null ? jo : new JObject(select.Split(",").Select(s =>
+                    return select == null ? jo : new JObject(select.Split(',').Select(s =>
                     {
                         var m = Regex.Match(s.Trim(), @"(?<Path>\S+)((?i) as (?<Name>.+))?", RegexOptions.Compiled);
-                        return new JProperty(m.Groups["Name"].Success ? m.Groups["Name"].Value : m.Groups["Path"].Value.Split(".").Last(), jo.SelectToken(m.Groups["Path"].Value));
+                        return new JProperty(m.Groups["Name"].Success ? m.Groups["Name"].Value : m.Groups["Path"].Value.Split('.').Last(), jo.SelectToken(m.Groups["Path"].Value));
                     }));
                 })) jsonSerializer.Serialize(jtw, jo);
                 jtw.WriteEndArray();
@@ -9055,10 +9055,10 @@ namespace FolioConsoleApplication
                 jtw.WriteStartArray();
                 foreach (var jo in (api ? fsc.Invoices(where, orderBy, skip, take) : fdc.Invoices(where, null, orderBy, skip, take).Select(i2 => JObject.Parse(i2.Content))).Select(jo =>
                 {
-                    return select == null ? jo : new JObject(select.Split(",").Select(s =>
+                    return select == null ? jo : new JObject(select.Split(',').Select(s =>
                     {
                         var m = Regex.Match(s.Trim(), @"(?<Path>\S+)((?i) as (?<Name>.+))?", RegexOptions.Compiled);
-                        return new JProperty(m.Groups["Name"].Success ? m.Groups["Name"].Value : m.Groups["Path"].Value.Split(".").Last(), jo.SelectToken(m.Groups["Path"].Value));
+                        return new JProperty(m.Groups["Name"].Success ? m.Groups["Name"].Value : m.Groups["Path"].Value.Split('.').Last(), jo.SelectToken(m.Groups["Path"].Value));
                     }));
                 })) jsonSerializer.Serialize(jtw, jo);
                 jtw.WriteEndArray();
@@ -9203,10 +9203,10 @@ namespace FolioConsoleApplication
                 jtw.WriteStartArray();
                 foreach (var jo in (api ? fsc.InvoiceItems(where, orderBy, skip, take) : fdc.InvoiceItems(where, null, orderBy, skip, take).Select(ii => JObject.Parse(ii.Content))).Select(jo =>
                 {
-                    return select == null ? jo : new JObject(select.Split(",").Select(s =>
+                    return select == null ? jo : new JObject(select.Split(',').Select(s =>
                     {
                         var m = Regex.Match(s.Trim(), @"(?<Path>\S+)((?i) as (?<Name>.+))?", RegexOptions.Compiled);
-                        return new JProperty(m.Groups["Name"].Success ? m.Groups["Name"].Value : m.Groups["Path"].Value.Split(".").Last(), jo.SelectToken(m.Groups["Path"].Value));
+                        return new JProperty(m.Groups["Name"].Success ? m.Groups["Name"].Value : m.Groups["Path"].Value.Split('.').Last(), jo.SelectToken(m.Groups["Path"].Value));
                     }));
                 })) jsonSerializer.Serialize(jtw, jo);
                 jtw.WriteEndArray();
@@ -9350,10 +9350,10 @@ namespace FolioConsoleApplication
                 jtw.WriteStartArray();
                 foreach (var jo in (api ? throw new NotSupportedException() : fdc.InvoiceTransactionSummaries(where, null, orderBy, skip, take).Select(its => JObject.Parse(its.Content))).Select(jo =>
                 {
-                    return select == null ? jo : new JObject(select.Split(",").Select(s =>
+                    return select == null ? jo : new JObject(select.Split(',').Select(s =>
                     {
                         var m = Regex.Match(s.Trim(), @"(?<Path>\S+)((?i) as (?<Name>.+))?", RegexOptions.Compiled);
-                        return new JProperty(m.Groups["Name"].Success ? m.Groups["Name"].Value : m.Groups["Path"].Value.Split(".").Last(), jo.SelectToken(m.Groups["Path"].Value));
+                        return new JProperty(m.Groups["Name"].Success ? m.Groups["Name"].Value : m.Groups["Path"].Value.Split('.').Last(), jo.SelectToken(m.Groups["Path"].Value));
                     }));
                 })) jsonSerializer.Serialize(jtw, jo);
                 jtw.WriteEndArray();
@@ -9477,10 +9477,10 @@ namespace FolioConsoleApplication
                 jtw.WriteStartArray();
                 foreach (var jo in (api ? fsc.Items(where, orderBy, skip, take) : fdc.Items(where, null, orderBy, skip, take).Select(i2 => JObject.Parse(i2.Content))).Select(jo =>
                 {
-                    return select == null ? jo : new JObject(select.Split(",").Select(s =>
+                    return select == null ? jo : new JObject(select.Split(',').Select(s =>
                     {
                         var m = Regex.Match(s.Trim(), @"(?<Path>\S+)((?i) as (?<Name>.+))?", RegexOptions.Compiled);
-                        return new JProperty(m.Groups["Name"].Success ? m.Groups["Name"].Value : m.Groups["Path"].Value.Split(".").Last(), jo.SelectToken(m.Groups["Path"].Value));
+                        return new JProperty(m.Groups["Name"].Success ? m.Groups["Name"].Value : m.Groups["Path"].Value.Split('.').Last(), jo.SelectToken(m.Groups["Path"].Value));
                     }));
                 })) jsonSerializer.Serialize(jtw, jo);
                 jtw.WriteEndArray();
@@ -9635,10 +9635,10 @@ namespace FolioConsoleApplication
                 jtw.WriteStartArray();
                 foreach (var jo in (api ? fsc.ItemDamagedStatuses(where, orderBy, skip, take) : fdc.ItemDamagedStatuses(where, null, orderBy, skip, take).Select(ids => JObject.Parse(ids.Content))).Select(jo =>
                 {
-                    return select == null ? jo : new JObject(select.Split(",").Select(s =>
+                    return select == null ? jo : new JObject(select.Split(',').Select(s =>
                     {
                         var m = Regex.Match(s.Trim(), @"(?<Path>\S+)((?i) as (?<Name>.+))?", RegexOptions.Compiled);
-                        return new JProperty(m.Groups["Name"].Success ? m.Groups["Name"].Value : m.Groups["Path"].Value.Split(".").Last(), jo.SelectToken(m.Groups["Path"].Value));
+                        return new JProperty(m.Groups["Name"].Success ? m.Groups["Name"].Value : m.Groups["Path"].Value.Split('.').Last(), jo.SelectToken(m.Groups["Path"].Value));
                     }));
                 })) jsonSerializer.Serialize(jtw, jo);
                 jtw.WriteEndArray();
@@ -9782,10 +9782,10 @@ namespace FolioConsoleApplication
                 jtw.WriteStartArray();
                 foreach (var jo in (api ? fsc.ItemNoteTypes(where, orderBy, skip, take) : fdc.ItemNoteTypes(where, null, orderBy, skip, take).Select(@int => JObject.Parse(@int.Content))).Select(jo =>
                 {
-                    return select == null ? jo : new JObject(select.Split(",").Select(s =>
+                    return select == null ? jo : new JObject(select.Split(',').Select(s =>
                     {
                         var m = Regex.Match(s.Trim(), @"(?<Path>\S+)((?i) as (?<Name>.+))?", RegexOptions.Compiled);
-                        return new JProperty(m.Groups["Name"].Success ? m.Groups["Name"].Value : m.Groups["Path"].Value.Split(".").Last(), jo.SelectToken(m.Groups["Path"].Value));
+                        return new JProperty(m.Groups["Name"].Success ? m.Groups["Name"].Value : m.Groups["Path"].Value.Split('.').Last(), jo.SelectToken(m.Groups["Path"].Value));
                     }));
                 })) jsonSerializer.Serialize(jtw, jo);
                 jtw.WriteEndArray();
@@ -9929,10 +9929,10 @@ namespace FolioConsoleApplication
                 jtw.WriteStartArray();
                 foreach (var jo in (api ? fsc.Ledgers(where, orderBy, skip, take) : fdc.Ledgers(where, null, orderBy, skip, take).Select(l => JObject.Parse(l.Content))).Select(jo =>
                 {
-                    return select == null ? jo : new JObject(select.Split(",").Select(s =>
+                    return select == null ? jo : new JObject(select.Split(',').Select(s =>
                     {
                         var m = Regex.Match(s.Trim(), @"(?<Path>\S+)((?i) as (?<Name>.+))?", RegexOptions.Compiled);
-                        return new JProperty(m.Groups["Name"].Success ? m.Groups["Name"].Value : m.Groups["Path"].Value.Split(".").Last(), jo.SelectToken(m.Groups["Path"].Value));
+                        return new JProperty(m.Groups["Name"].Success ? m.Groups["Name"].Value : m.Groups["Path"].Value.Split('.').Last(), jo.SelectToken(m.Groups["Path"].Value));
                     }));
                 })) jsonSerializer.Serialize(jtw, jo);
                 jtw.WriteEndArray();
@@ -10076,10 +10076,10 @@ namespace FolioConsoleApplication
                 jtw.WriteStartArray();
                 foreach (var jo in (api ? throw new NotSupportedException() : fdc.LedgerFiscalYears(where, null, orderBy, skip, take).Select(lfy => JObject.Parse(lfy.Content))).Select(jo =>
                 {
-                    return select == null ? jo : new JObject(select.Split(",").Select(s =>
+                    return select == null ? jo : new JObject(select.Split(',').Select(s =>
                     {
                         var m = Regex.Match(s.Trim(), @"(?<Path>\S+)((?i) as (?<Name>.+))?", RegexOptions.Compiled);
-                        return new JProperty(m.Groups["Name"].Success ? m.Groups["Name"].Value : m.Groups["Path"].Value.Split(".").Last(), jo.SelectToken(m.Groups["Path"].Value));
+                        return new JProperty(m.Groups["Name"].Success ? m.Groups["Name"].Value : m.Groups["Path"].Value.Split('.').Last(), jo.SelectToken(m.Groups["Path"].Value));
                     }));
                 })) jsonSerializer.Serialize(jtw, jo);
                 jtw.WriteEndArray();
@@ -10205,10 +10205,10 @@ namespace FolioConsoleApplication
                 jtw.WriteStartArray();
                 foreach (var jo in (api ? fsc.Libraries(where, orderBy, skip, take) : fdc.Libraries(where, null, orderBy, skip, take).Select(l => JObject.Parse(l.Content))).Select(jo =>
                 {
-                    return select == null ? jo : new JObject(select.Split(",").Select(s =>
+                    return select == null ? jo : new JObject(select.Split(',').Select(s =>
                     {
                         var m = Regex.Match(s.Trim(), @"(?<Path>\S+)((?i) as (?<Name>.+))?", RegexOptions.Compiled);
-                        return new JProperty(m.Groups["Name"].Success ? m.Groups["Name"].Value : m.Groups["Path"].Value.Split(".").Last(), jo.SelectToken(m.Groups["Path"].Value));
+                        return new JProperty(m.Groups["Name"].Success ? m.Groups["Name"].Value : m.Groups["Path"].Value.Split('.').Last(), jo.SelectToken(m.Groups["Path"].Value));
                     }));
                 })) jsonSerializer.Serialize(jtw, jo);
                 jtw.WriteEndArray();
@@ -10353,10 +10353,10 @@ namespace FolioConsoleApplication
                 jtw.WriteStartArray();
                 foreach (var jo in (api ? fsc.Loans(where, orderBy, skip, take) : fdc.Loans(where, null, orderBy, skip, take).Select(l => JObject.Parse(l.Content))).Select(jo =>
                 {
-                    return select == null ? jo : new JObject(select.Split(",").Select(s =>
+                    return select == null ? jo : new JObject(select.Split(',').Select(s =>
                     {
                         var m = Regex.Match(s.Trim(), @"(?<Path>\S+)((?i) as (?<Name>.+))?", RegexOptions.Compiled);
-                        return new JProperty(m.Groups["Name"].Success ? m.Groups["Name"].Value : m.Groups["Path"].Value.Split(".").Last(), jo.SelectToken(m.Groups["Path"].Value));
+                        return new JProperty(m.Groups["Name"].Success ? m.Groups["Name"].Value : m.Groups["Path"].Value.Split('.').Last(), jo.SelectToken(m.Groups["Path"].Value));
                     }));
                 })) jsonSerializer.Serialize(jtw, jo);
                 jtw.WriteEndArray();
@@ -10500,10 +10500,10 @@ namespace FolioConsoleApplication
                 jtw.WriteStartArray();
                 foreach (var jo in (api ? fsc.LoanPolicies(where, orderBy, skip, take) : fdc.LoanPolicies(where, null, orderBy, skip, take).Select(lp => JObject.Parse(lp.Content))).Select(jo =>
                 {
-                    return select == null ? jo : new JObject(select.Split(",").Select(s =>
+                    return select == null ? jo : new JObject(select.Split(',').Select(s =>
                     {
                         var m = Regex.Match(s.Trim(), @"(?<Path>\S+)((?i) as (?<Name>.+))?", RegexOptions.Compiled);
-                        return new JProperty(m.Groups["Name"].Success ? m.Groups["Name"].Value : m.Groups["Path"].Value.Split(".").Last(), jo.SelectToken(m.Groups["Path"].Value));
+                        return new JProperty(m.Groups["Name"].Success ? m.Groups["Name"].Value : m.Groups["Path"].Value.Split('.').Last(), jo.SelectToken(m.Groups["Path"].Value));
                     }));
                 })) jsonSerializer.Serialize(jtw, jo);
                 jtw.WriteEndArray();
@@ -10649,10 +10649,10 @@ namespace FolioConsoleApplication
                 jtw.WriteStartArray();
                 foreach (var jo in (api ? fsc.LoanTypes(where, orderBy, skip, take) : fdc.LoanTypes(where, null, orderBy, skip, take).Select(lt => JObject.Parse(lt.Content))).Select(jo =>
                 {
-                    return select == null ? jo : new JObject(select.Split(",").Select(s =>
+                    return select == null ? jo : new JObject(select.Split(',').Select(s =>
                     {
                         var m = Regex.Match(s.Trim(), @"(?<Path>\S+)((?i) as (?<Name>.+))?", RegexOptions.Compiled);
-                        return new JProperty(m.Groups["Name"].Success ? m.Groups["Name"].Value : m.Groups["Path"].Value.Split(".").Last(), jo.SelectToken(m.Groups["Path"].Value));
+                        return new JProperty(m.Groups["Name"].Success ? m.Groups["Name"].Value : m.Groups["Path"].Value.Split('.').Last(), jo.SelectToken(m.Groups["Path"].Value));
                     }));
                 })) jsonSerializer.Serialize(jtw, jo);
                 jtw.WriteEndArray();
@@ -10796,10 +10796,10 @@ namespace FolioConsoleApplication
                 jtw.WriteStartArray();
                 foreach (var jo in (api ? fsc.Locations(where, orderBy, skip, take) : fdc.Locations(where, null, orderBy, skip, take).Select(l => JObject.Parse(l.Content))).Select(jo =>
                 {
-                    return select == null ? jo : new JObject(select.Split(",").Select(s =>
+                    return select == null ? jo : new JObject(select.Split(',').Select(s =>
                     {
                         var m = Regex.Match(s.Trim(), @"(?<Path>\S+)((?i) as (?<Name>.+))?", RegexOptions.Compiled);
-                        return new JProperty(m.Groups["Name"].Success ? m.Groups["Name"].Value : m.Groups["Path"].Value.Split(".").Last(), jo.SelectToken(m.Groups["Path"].Value));
+                        return new JProperty(m.Groups["Name"].Success ? m.Groups["Name"].Value : m.Groups["Path"].Value.Split('.').Last(), jo.SelectToken(m.Groups["Path"].Value));
                     }));
                 })) jsonSerializer.Serialize(jtw, jo);
                 jtw.WriteEndArray();
@@ -10946,10 +10946,10 @@ namespace FolioConsoleApplication
                 jtw.WriteStartArray();
                 foreach (var jo in (api ? fsc.Logins(where, orderBy, skip, take) : fdc.Logins(where, null, orderBy, skip, take).Select(l => JObject.Parse(l.Content))).Select(jo =>
                 {
-                    return select == null ? jo : new JObject(select.Split(",").Select(s =>
+                    return select == null ? jo : new JObject(select.Split(',').Select(s =>
                     {
                         var m = Regex.Match(s.Trim(), @"(?<Path>\S+)((?i) as (?<Name>.+))?", RegexOptions.Compiled);
-                        return new JProperty(m.Groups["Name"].Success ? m.Groups["Name"].Value : m.Groups["Path"].Value.Split(".").Last(), jo.SelectToken(m.Groups["Path"].Value));
+                        return new JProperty(m.Groups["Name"].Success ? m.Groups["Name"].Value : m.Groups["Path"].Value.Split('.').Last(), jo.SelectToken(m.Groups["Path"].Value));
                     }));
                 })) jsonSerializer.Serialize(jtw, jo);
                 jtw.WriteEndArray();
@@ -11093,10 +11093,10 @@ namespace FolioConsoleApplication
                 jtw.WriteStartArray();
                 foreach (var jo in (api ? fsc.LostItemFeePolicies(where, orderBy, skip, take) : fdc.LostItemFeePolicies(where, null, orderBy, skip, take).Select(lifp => JObject.Parse(lifp.Content))).Select(jo =>
                 {
-                    return select == null ? jo : new JObject(select.Split(",").Select(s =>
+                    return select == null ? jo : new JObject(select.Split(',').Select(s =>
                     {
                         var m = Regex.Match(s.Trim(), @"(?<Path>\S+)((?i) as (?<Name>.+))?", RegexOptions.Compiled);
-                        return new JProperty(m.Groups["Name"].Success ? m.Groups["Name"].Value : m.Groups["Path"].Value.Split(".").Last(), jo.SelectToken(m.Groups["Path"].Value));
+                        return new JProperty(m.Groups["Name"].Success ? m.Groups["Name"].Value : m.Groups["Path"].Value.Split('.').Last(), jo.SelectToken(m.Groups["Path"].Value));
                     }));
                 })) jsonSerializer.Serialize(jtw, jo);
                 jtw.WriteEndArray();
@@ -11239,10 +11239,10 @@ namespace FolioConsoleApplication
                 jtw.WriteStartArray();
                 foreach (var jo in (api ? throw new NotSupportedException() : fdc.MarcRecords(where, null, orderBy, skip, take).Select(mr => JObject.Parse(mr.Content))).Select(jo =>
                 {
-                    return select == null ? jo : new JObject(select.Split(",").Select(s =>
+                    return select == null ? jo : new JObject(select.Split(',').Select(s =>
                     {
                         var m = Regex.Match(s.Trim(), @"(?<Path>\S+)((?i) as (?<Name>.+))?", RegexOptions.Compiled);
-                        return new JProperty(m.Groups["Name"].Success ? m.Groups["Name"].Value : m.Groups["Path"].Value.Split(".").Last(), jo.SelectToken(m.Groups["Path"].Value));
+                        return new JProperty(m.Groups["Name"].Success ? m.Groups["Name"].Value : m.Groups["Path"].Value.Split('.').Last(), jo.SelectToken(m.Groups["Path"].Value));
                     }));
                 })) jsonSerializer.Serialize(jtw, jo);
                 jtw.WriteEndArray();
@@ -11366,10 +11366,10 @@ namespace FolioConsoleApplication
                 jtw.WriteStartArray();
                 foreach (var jo in (api ? fsc.MaterialTypes(where, orderBy, skip, take) : fdc.MaterialTypes(where, null, orderBy, skip, take).Select(mt => JObject.Parse(mt.Content))).Select(jo =>
                 {
-                    return select == null ? jo : new JObject(select.Split(",").Select(s =>
+                    return select == null ? jo : new JObject(select.Split(',').Select(s =>
                     {
                         var m = Regex.Match(s.Trim(), @"(?<Path>\S+)((?i) as (?<Name>.+))?", RegexOptions.Compiled);
-                        return new JProperty(m.Groups["Name"].Success ? m.Groups["Name"].Value : m.Groups["Path"].Value.Split(".").Last(), jo.SelectToken(m.Groups["Path"].Value));
+                        return new JProperty(m.Groups["Name"].Success ? m.Groups["Name"].Value : m.Groups["Path"].Value.Split('.').Last(), jo.SelectToken(m.Groups["Path"].Value));
                     }));
                 })) jsonSerializer.Serialize(jtw, jo);
                 jtw.WriteEndArray();
@@ -11513,10 +11513,10 @@ namespace FolioConsoleApplication
                 jtw.WriteStartArray();
                 foreach (var jo in (api ? fsc.ModeOfIssuances(where, orderBy, skip, take) : fdc.ModeOfIssuances(where, null, orderBy, skip, take).Select(moi => JObject.Parse(moi.Content))).Select(jo =>
                 {
-                    return select == null ? jo : new JObject(select.Split(",").Select(s =>
+                    return select == null ? jo : new JObject(select.Split(',').Select(s =>
                     {
                         var m = Regex.Match(s.Trim(), @"(?<Path>\S+)((?i) as (?<Name>.+))?", RegexOptions.Compiled);
-                        return new JProperty(m.Groups["Name"].Success ? m.Groups["Name"].Value : m.Groups["Path"].Value.Split(".").Last(), jo.SelectToken(m.Groups["Path"].Value));
+                        return new JProperty(m.Groups["Name"].Success ? m.Groups["Name"].Value : m.Groups["Path"].Value.Split('.').Last(), jo.SelectToken(m.Groups["Path"].Value));
                     }));
                 })) jsonSerializer.Serialize(jtw, jo);
                 jtw.WriteEndArray();
@@ -11660,10 +11660,10 @@ namespace FolioConsoleApplication
                 jtw.WriteStartArray();
                 foreach (var jo in (api ? fsc.NatureOfContentTerms(where, orderBy, skip, take) : fdc.NatureOfContentTerms(where, null, orderBy, skip, take).Select(noct => JObject.Parse(noct.Content))).Select(jo =>
                 {
-                    return select == null ? jo : new JObject(select.Split(",").Select(s =>
+                    return select == null ? jo : new JObject(select.Split(',').Select(s =>
                     {
                         var m = Regex.Match(s.Trim(), @"(?<Path>\S+)((?i) as (?<Name>.+))?", RegexOptions.Compiled);
-                        return new JProperty(m.Groups["Name"].Success ? m.Groups["Name"].Value : m.Groups["Path"].Value.Split(".").Last(), jo.SelectToken(m.Groups["Path"].Value));
+                        return new JProperty(m.Groups["Name"].Success ? m.Groups["Name"].Value : m.Groups["Path"].Value.Split('.').Last(), jo.SelectToken(m.Groups["Path"].Value));
                     }));
                 })) jsonSerializer.Serialize(jtw, jo);
                 jtw.WriteEndArray();
@@ -11807,10 +11807,10 @@ namespace FolioConsoleApplication
                 jtw.WriteStartArray();
                 foreach (var jo in (api ? fsc.Orders(where, orderBy, skip, take) : fdc.Orders(where, null, orderBy, skip, take).Select(o => JObject.Parse(o.Content))).Select(jo =>
                 {
-                    return select == null ? jo : new JObject(select.Split(",").Select(s =>
+                    return select == null ? jo : new JObject(select.Split(',').Select(s =>
                     {
                         var m = Regex.Match(s.Trim(), @"(?<Path>\S+)((?i) as (?<Name>.+))?", RegexOptions.Compiled);
-                        return new JProperty(m.Groups["Name"].Success ? m.Groups["Name"].Value : m.Groups["Path"].Value.Split(".").Last(), jo.SelectToken(m.Groups["Path"].Value));
+                        return new JProperty(m.Groups["Name"].Success ? m.Groups["Name"].Value : m.Groups["Path"].Value.Split('.').Last(), jo.SelectToken(m.Groups["Path"].Value));
                     }));
                 })) jsonSerializer.Serialize(jtw, jo);
                 jtw.WriteEndArray();
@@ -11954,10 +11954,10 @@ namespace FolioConsoleApplication
                 jtw.WriteStartArray();
                 foreach (var jo in (api ? fsc.OrderInvoices(where, orderBy, skip, take) : fdc.OrderInvoices(where, null, orderBy, skip, take).Select(oi => JObject.Parse(oi.Content))).Select(jo =>
                 {
-                    return select == null ? jo : new JObject(select.Split(",").Select(s =>
+                    return select == null ? jo : new JObject(select.Split(',').Select(s =>
                     {
                         var m = Regex.Match(s.Trim(), @"(?<Path>\S+)((?i) as (?<Name>.+))?", RegexOptions.Compiled);
-                        return new JProperty(m.Groups["Name"].Success ? m.Groups["Name"].Value : m.Groups["Path"].Value.Split(".").Last(), jo.SelectToken(m.Groups["Path"].Value));
+                        return new JProperty(m.Groups["Name"].Success ? m.Groups["Name"].Value : m.Groups["Path"].Value.Split('.').Last(), jo.SelectToken(m.Groups["Path"].Value));
                     }));
                 })) jsonSerializer.Serialize(jtw, jo);
                 jtw.WriteEndArray();
@@ -12100,10 +12100,10 @@ namespace FolioConsoleApplication
                 jtw.WriteStartArray();
                 foreach (var jo in (api ? fsc.OrderItems(where, orderBy, skip, take) : fdc.OrderItems(where, null, orderBy, skip, take).Select(oi => JObject.Parse(oi.Content))).Select(jo =>
                 {
-                    return select == null ? jo : new JObject(select.Split(",").Select(s =>
+                    return select == null ? jo : new JObject(select.Split(',').Select(s =>
                     {
                         var m = Regex.Match(s.Trim(), @"(?<Path>\S+)((?i) as (?<Name>.+))?", RegexOptions.Compiled);
-                        return new JProperty(m.Groups["Name"].Success ? m.Groups["Name"].Value : m.Groups["Path"].Value.Split(".").Last(), jo.SelectToken(m.Groups["Path"].Value));
+                        return new JProperty(m.Groups["Name"].Success ? m.Groups["Name"].Value : m.Groups["Path"].Value.Split('.').Last(), jo.SelectToken(m.Groups["Path"].Value));
                     }));
                 })) jsonSerializer.Serialize(jtw, jo);
                 jtw.WriteEndArray();
@@ -12248,10 +12248,10 @@ namespace FolioConsoleApplication
                 jtw.WriteStartArray();
                 foreach (var jo in (api ? fsc.OrderTemplates(where, orderBy, skip, take) : fdc.OrderTemplates(where, null, orderBy, skip, take).Select(ot => JObject.Parse(ot.Content))).Select(jo =>
                 {
-                    return select == null ? jo : new JObject(select.Split(",").Select(s =>
+                    return select == null ? jo : new JObject(select.Split(',').Select(s =>
                     {
                         var m = Regex.Match(s.Trim(), @"(?<Path>\S+)((?i) as (?<Name>.+))?", RegexOptions.Compiled);
-                        return new JProperty(m.Groups["Name"].Success ? m.Groups["Name"].Value : m.Groups["Path"].Value.Split(".").Last(), jo.SelectToken(m.Groups["Path"].Value));
+                        return new JProperty(m.Groups["Name"].Success ? m.Groups["Name"].Value : m.Groups["Path"].Value.Split('.').Last(), jo.SelectToken(m.Groups["Path"].Value));
                     }));
                 })) jsonSerializer.Serialize(jtw, jo);
                 jtw.WriteEndArray();
@@ -12392,10 +12392,10 @@ namespace FolioConsoleApplication
                 jtw.WriteStartArray();
                 foreach (var jo in (api ? throw new NotSupportedException() : fdc.OrderTransactionSummaries(where, null, orderBy, skip, take).Select(ots => JObject.Parse(ots.Content))).Select(jo =>
                 {
-                    return select == null ? jo : new JObject(select.Split(",").Select(s =>
+                    return select == null ? jo : new JObject(select.Split(',').Select(s =>
                     {
                         var m = Regex.Match(s.Trim(), @"(?<Path>\S+)((?i) as (?<Name>.+))?", RegexOptions.Compiled);
-                        return new JProperty(m.Groups["Name"].Success ? m.Groups["Name"].Value : m.Groups["Path"].Value.Split(".").Last(), jo.SelectToken(m.Groups["Path"].Value));
+                        return new JProperty(m.Groups["Name"].Success ? m.Groups["Name"].Value : m.Groups["Path"].Value.Split('.').Last(), jo.SelectToken(m.Groups["Path"].Value));
                     }));
                 })) jsonSerializer.Serialize(jtw, jo);
                 jtw.WriteEndArray();
@@ -12519,10 +12519,10 @@ namespace FolioConsoleApplication
                 jtw.WriteStartArray();
                 foreach (var jo in (api ? fsc.Organizations(where, orderBy, skip, take) : fdc.Organizations(where, null, orderBy, skip, take).Select(o => JObject.Parse(o.Content))).Select(jo =>
                 {
-                    return select == null ? jo : new JObject(select.Split(",").Select(s =>
+                    return select == null ? jo : new JObject(select.Split(',').Select(s =>
                     {
                         var m = Regex.Match(s.Trim(), @"(?<Path>\S+)((?i) as (?<Name>.+))?", RegexOptions.Compiled);
-                        return new JProperty(m.Groups["Name"].Success ? m.Groups["Name"].Value : m.Groups["Path"].Value.Split(".").Last(), jo.SelectToken(m.Groups["Path"].Value));
+                        return new JProperty(m.Groups["Name"].Success ? m.Groups["Name"].Value : m.Groups["Path"].Value.Split('.').Last(), jo.SelectToken(m.Groups["Path"].Value));
                     }));
                 })) jsonSerializer.Serialize(jtw, jo);
                 jtw.WriteEndArray();
@@ -12666,10 +12666,10 @@ namespace FolioConsoleApplication
                 jtw.WriteStartArray();
                 foreach (var jo in (api ? fsc.OverdueFinePolicies(where, orderBy, skip, take) : fdc.OverdueFinePolicies(where, null, orderBy, skip, take).Select(ofp => JObject.Parse(ofp.Content))).Select(jo =>
                 {
-                    return select == null ? jo : new JObject(select.Split(",").Select(s =>
+                    return select == null ? jo : new JObject(select.Split(',').Select(s =>
                     {
                         var m = Regex.Match(s.Trim(), @"(?<Path>\S+)((?i) as (?<Name>.+))?", RegexOptions.Compiled);
-                        return new JProperty(m.Groups["Name"].Success ? m.Groups["Name"].Value : m.Groups["Path"].Value.Split(".").Last(), jo.SelectToken(m.Groups["Path"].Value));
+                        return new JProperty(m.Groups["Name"].Success ? m.Groups["Name"].Value : m.Groups["Path"].Value.Split('.').Last(), jo.SelectToken(m.Groups["Path"].Value));
                     }));
                 })) jsonSerializer.Serialize(jtw, jo);
                 jtw.WriteEndArray();
@@ -12813,10 +12813,10 @@ namespace FolioConsoleApplication
                 jtw.WriteStartArray();
                 foreach (var jo in (api ? fsc.Owners(where, orderBy, skip, take) : fdc.Owners(where, null, orderBy, skip, take).Select(o => JObject.Parse(o.Content))).Select(jo =>
                 {
-                    return select == null ? jo : new JObject(select.Split(",").Select(s =>
+                    return select == null ? jo : new JObject(select.Split(',').Select(s =>
                     {
                         var m = Regex.Match(s.Trim(), @"(?<Path>\S+)((?i) as (?<Name>.+))?", RegexOptions.Compiled);
-                        return new JProperty(m.Groups["Name"].Success ? m.Groups["Name"].Value : m.Groups["Path"].Value.Split(".").Last(), jo.SelectToken(m.Groups["Path"].Value));
+                        return new JProperty(m.Groups["Name"].Success ? m.Groups["Name"].Value : m.Groups["Path"].Value.Split('.').Last(), jo.SelectToken(m.Groups["Path"].Value));
                     }));
                 })) jsonSerializer.Serialize(jtw, jo);
                 jtw.WriteEndArray();
@@ -12960,10 +12960,10 @@ namespace FolioConsoleApplication
                 jtw.WriteStartArray();
                 foreach (var jo in (api ? fsc.PatronActionSessions(where, orderBy, skip, take) : fdc.PatronActionSessions(where, null, orderBy, skip, take).Select(pas => JObject.Parse(pas.Content))).Select(jo =>
                 {
-                    return select == null ? jo : new JObject(select.Split(",").Select(s =>
+                    return select == null ? jo : new JObject(select.Split(',').Select(s =>
                     {
                         var m = Regex.Match(s.Trim(), @"(?<Path>\S+)((?i) as (?<Name>.+))?", RegexOptions.Compiled);
-                        return new JProperty(m.Groups["Name"].Success ? m.Groups["Name"].Value : m.Groups["Path"].Value.Split(".").Last(), jo.SelectToken(m.Groups["Path"].Value));
+                        return new JProperty(m.Groups["Name"].Success ? m.Groups["Name"].Value : m.Groups["Path"].Value.Split('.').Last(), jo.SelectToken(m.Groups["Path"].Value));
                     }));
                 })) jsonSerializer.Serialize(jtw, jo);
                 jtw.WriteEndArray();
@@ -13107,10 +13107,10 @@ namespace FolioConsoleApplication
                 jtw.WriteStartArray();
                 foreach (var jo in (api ? fsc.PatronBlockConditions(where, orderBy, skip, take) : fdc.PatronBlockConditions(where, null, orderBy, skip, take).Select(pbc => JObject.Parse(pbc.Content))).Select(jo =>
                 {
-                    return select == null ? jo : new JObject(select.Split(",").Select(s =>
+                    return select == null ? jo : new JObject(select.Split(',').Select(s =>
                     {
                         var m = Regex.Match(s.Trim(), @"(?<Path>\S+)((?i) as (?<Name>.+))?", RegexOptions.Compiled);
-                        return new JProperty(m.Groups["Name"].Success ? m.Groups["Name"].Value : m.Groups["Path"].Value.Split(".").Last(), jo.SelectToken(m.Groups["Path"].Value));
+                        return new JProperty(m.Groups["Name"].Success ? m.Groups["Name"].Value : m.Groups["Path"].Value.Split('.').Last(), jo.SelectToken(m.Groups["Path"].Value));
                     }));
                 })) jsonSerializer.Serialize(jtw, jo);
                 jtw.WriteEndArray();
@@ -13251,10 +13251,10 @@ namespace FolioConsoleApplication
                 jtw.WriteStartArray();
                 foreach (var jo in (api ? fsc.PatronBlockLimits(where, orderBy, skip, take) : fdc.PatronBlockLimits(where, null, orderBy, skip, take).Select(pbl => JObject.Parse(pbl.Content))).Select(jo =>
                 {
-                    return select == null ? jo : new JObject(select.Split(",").Select(s =>
+                    return select == null ? jo : new JObject(select.Split(',').Select(s =>
                     {
                         var m = Regex.Match(s.Trim(), @"(?<Path>\S+)((?i) as (?<Name>.+))?", RegexOptions.Compiled);
-                        return new JProperty(m.Groups["Name"].Success ? m.Groups["Name"].Value : m.Groups["Path"].Value.Split(".").Last(), jo.SelectToken(m.Groups["Path"].Value));
+                        return new JProperty(m.Groups["Name"].Success ? m.Groups["Name"].Value : m.Groups["Path"].Value.Split('.').Last(), jo.SelectToken(m.Groups["Path"].Value));
                     }));
                 })) jsonSerializer.Serialize(jtw, jo);
                 jtw.WriteEndArray();
@@ -13395,10 +13395,10 @@ namespace FolioConsoleApplication
                 jtw.WriteStartArray();
                 foreach (var jo in (api ? fsc.PatronNoticePolicies(where, orderBy, skip, take) : fdc.PatronNoticePolicies(where, null, orderBy, skip, take).Select(pnp => JObject.Parse(pnp.Content))).Select(jo =>
                 {
-                    return select == null ? jo : new JObject(select.Split(",").Select(s =>
+                    return select == null ? jo : new JObject(select.Split(',').Select(s =>
                     {
                         var m = Regex.Match(s.Trim(), @"(?<Path>\S+)((?i) as (?<Name>.+))?", RegexOptions.Compiled);
-                        return new JProperty(m.Groups["Name"].Success ? m.Groups["Name"].Value : m.Groups["Path"].Value.Split(".").Last(), jo.SelectToken(m.Groups["Path"].Value));
+                        return new JProperty(m.Groups["Name"].Success ? m.Groups["Name"].Value : m.Groups["Path"].Value.Split('.').Last(), jo.SelectToken(m.Groups["Path"].Value));
                     }));
                 })) jsonSerializer.Serialize(jtw, jo);
                 jtw.WriteEndArray();
@@ -13542,10 +13542,10 @@ namespace FolioConsoleApplication
                 jtw.WriteStartArray();
                 foreach (var jo in (api ? fsc.Payments(where, orderBy, skip, take) : fdc.Payments(where, null, orderBy, skip, take).Select(p => JObject.Parse(p.Content))).Select(jo =>
                 {
-                    return select == null ? jo : new JObject(select.Split(",").Select(s =>
+                    return select == null ? jo : new JObject(select.Split(',').Select(s =>
                     {
                         var m = Regex.Match(s.Trim(), @"(?<Path>\S+)((?i) as (?<Name>.+))?", RegexOptions.Compiled);
-                        return new JProperty(m.Groups["Name"].Success ? m.Groups["Name"].Value : m.Groups["Path"].Value.Split(".").Last(), jo.SelectToken(m.Groups["Path"].Value));
+                        return new JProperty(m.Groups["Name"].Success ? m.Groups["Name"].Value : m.Groups["Path"].Value.Split('.').Last(), jo.SelectToken(m.Groups["Path"].Value));
                     }));
                 })) jsonSerializer.Serialize(jtw, jo);
                 jtw.WriteEndArray();
@@ -13687,10 +13687,10 @@ namespace FolioConsoleApplication
                 jtw.WriteStartArray();
                 foreach (var jo in (api ? fsc.PaymentMethods(where, orderBy, skip, take) : fdc.PaymentMethods(where, null, orderBy, skip, take).Select(pm => JObject.Parse(pm.Content))).Select(jo =>
                 {
-                    return select == null ? jo : new JObject(select.Split(",").Select(s =>
+                    return select == null ? jo : new JObject(select.Split(',').Select(s =>
                     {
                         var m = Regex.Match(s.Trim(), @"(?<Path>\S+)((?i) as (?<Name>.+))?", RegexOptions.Compiled);
-                        return new JProperty(m.Groups["Name"].Success ? m.Groups["Name"].Value : m.Groups["Path"].Value.Split(".").Last(), jo.SelectToken(m.Groups["Path"].Value));
+                        return new JProperty(m.Groups["Name"].Success ? m.Groups["Name"].Value : m.Groups["Path"].Value.Split('.').Last(), jo.SelectToken(m.Groups["Path"].Value));
                     }));
                 })) jsonSerializer.Serialize(jtw, jo);
                 jtw.WriteEndArray();
@@ -13834,10 +13834,10 @@ namespace FolioConsoleApplication
                 jtw.WriteStartArray();
                 foreach (var jo in (api ? fsc.Permissions(where, orderBy, skip, take) : fdc.Permissions(where, null, orderBy, skip, take).Select(p => JObject.Parse(p.Content))).Select(jo =>
                 {
-                    return select == null ? jo : new JObject(select.Split(",").Select(s =>
+                    return select == null ? jo : new JObject(select.Split(',').Select(s =>
                     {
                         var m = Regex.Match(s.Trim(), @"(?<Path>\S+)((?i) as (?<Name>.+))?", RegexOptions.Compiled);
-                        return new JProperty(m.Groups["Name"].Success ? m.Groups["Name"].Value : m.Groups["Path"].Value.Split(".").Last(), jo.SelectToken(m.Groups["Path"].Value));
+                        return new JProperty(m.Groups["Name"].Success ? m.Groups["Name"].Value : m.Groups["Path"].Value.Split('.').Last(), jo.SelectToken(m.Groups["Path"].Value));
                     }));
                 })) jsonSerializer.Serialize(jtw, jo);
                 jtw.WriteEndArray();
@@ -13981,10 +13981,10 @@ namespace FolioConsoleApplication
                 jtw.WriteStartArray();
                 foreach (var jo in (api ? fsc.PermissionsUsers(where, orderBy, skip, take) : fdc.PermissionsUsers(where, null, orderBy, skip, take).Select(pu => JObject.Parse(pu.Content))).Select(jo =>
                 {
-                    return select == null ? jo : new JObject(select.Split(",").Select(s =>
+                    return select == null ? jo : new JObject(select.Split(',').Select(s =>
                     {
                         var m = Regex.Match(s.Trim(), @"(?<Path>\S+)((?i) as (?<Name>.+))?", RegexOptions.Compiled);
-                        return new JProperty(m.Groups["Name"].Success ? m.Groups["Name"].Value : m.Groups["Path"].Value.Split(".").Last(), jo.SelectToken(m.Groups["Path"].Value));
+                        return new JProperty(m.Groups["Name"].Success ? m.Groups["Name"].Value : m.Groups["Path"].Value.Split('.').Last(), jo.SelectToken(m.Groups["Path"].Value));
                     }));
                 })) jsonSerializer.Serialize(jtw, jo);
                 jtw.WriteEndArray();
@@ -14128,10 +14128,10 @@ namespace FolioConsoleApplication
                 jtw.WriteStartArray();
                 foreach (var jo in (api ? fsc.Pieces(where, orderBy, skip, take) : fdc.Pieces(where, null, orderBy, skip, take).Select(p => JObject.Parse(p.Content))).Select(jo =>
                 {
-                    return select == null ? jo : new JObject(select.Split(",").Select(s =>
+                    return select == null ? jo : new JObject(select.Split(',').Select(s =>
                     {
                         var m = Regex.Match(s.Trim(), @"(?<Path>\S+)((?i) as (?<Name>.+))?", RegexOptions.Compiled);
-                        return new JProperty(m.Groups["Name"].Success ? m.Groups["Name"].Value : m.Groups["Path"].Value.Split(".").Last(), jo.SelectToken(m.Groups["Path"].Value));
+                        return new JProperty(m.Groups["Name"].Success ? m.Groups["Name"].Value : m.Groups["Path"].Value.Split('.').Last(), jo.SelectToken(m.Groups["Path"].Value));
                     }));
                 })) jsonSerializer.Serialize(jtw, jo);
                 jtw.WriteEndArray();
@@ -14274,10 +14274,10 @@ namespace FolioConsoleApplication
                 jtw.WriteStartArray();
                 foreach (var jo in (api ? fsc.PrecedingSucceedingTitles(where, orderBy, skip, take) : fdc.PrecedingSucceedingTitles(where, null, orderBy, skip, take).Select(pst => JObject.Parse(pst.Content))).Select(jo =>
                 {
-                    return select == null ? jo : new JObject(select.Split(",").Select(s =>
+                    return select == null ? jo : new JObject(select.Split(',').Select(s =>
                     {
                         var m = Regex.Match(s.Trim(), @"(?<Path>\S+)((?i) as (?<Name>.+))?", RegexOptions.Compiled);
-                        return new JProperty(m.Groups["Name"].Success ? m.Groups["Name"].Value : m.Groups["Path"].Value.Split(".").Last(), jo.SelectToken(m.Groups["Path"].Value));
+                        return new JProperty(m.Groups["Name"].Success ? m.Groups["Name"].Value : m.Groups["Path"].Value.Split('.').Last(), jo.SelectToken(m.Groups["Path"].Value));
                     }));
                 })) jsonSerializer.Serialize(jtw, jo);
                 jtw.WriteEndArray();
@@ -14423,10 +14423,10 @@ namespace FolioConsoleApplication
                 jtw.WriteStartArray();
                 foreach (var jo in (api ? fsc.Prefixes(where, orderBy, skip, take) : fdc.Prefixes(where, null, orderBy, skip, take).Select(p => JObject.Parse(p.Content))).Select(jo =>
                 {
-                    return select == null ? jo : new JObject(select.Split(",").Select(s =>
+                    return select == null ? jo : new JObject(select.Split(',').Select(s =>
                     {
                         var m = Regex.Match(s.Trim(), @"(?<Path>\S+)((?i) as (?<Name>.+))?", RegexOptions.Compiled);
-                        return new JProperty(m.Groups["Name"].Success ? m.Groups["Name"].Value : m.Groups["Path"].Value.Split(".").Last(), jo.SelectToken(m.Groups["Path"].Value));
+                        return new JProperty(m.Groups["Name"].Success ? m.Groups["Name"].Value : m.Groups["Path"].Value.Split('.').Last(), jo.SelectToken(m.Groups["Path"].Value));
                     }));
                 })) jsonSerializer.Serialize(jtw, jo);
                 jtw.WriteEndArray();
@@ -14568,10 +14568,10 @@ namespace FolioConsoleApplication
                 jtw.WriteStartArray();
                 foreach (var jo in (api ? fsc.Proxies(where, orderBy, skip, take) : fdc.Proxies(where, null, orderBy, skip, take).Select(p => JObject.Parse(p.Content))).Select(jo =>
                 {
-                    return select == null ? jo : new JObject(select.Split(",").Select(s =>
+                    return select == null ? jo : new JObject(select.Split(',').Select(s =>
                     {
                         var m = Regex.Match(s.Trim(), @"(?<Path>\S+)((?i) as (?<Name>.+))?", RegexOptions.Compiled);
-                        return new JProperty(m.Groups["Name"].Success ? m.Groups["Name"].Value : m.Groups["Path"].Value.Split(".").Last(), jo.SelectToken(m.Groups["Path"].Value));
+                        return new JProperty(m.Groups["Name"].Success ? m.Groups["Name"].Value : m.Groups["Path"].Value.Split('.').Last(), jo.SelectToken(m.Groups["Path"].Value));
                     }));
                 })) jsonSerializer.Serialize(jtw, jo);
                 jtw.WriteEndArray();
@@ -14714,10 +14714,10 @@ namespace FolioConsoleApplication
                 jtw.WriteStartArray();
                 foreach (var jo in (api ? throw new NotSupportedException() : fdc.RawRecords(where, null, orderBy, skip, take).Select(rr => JObject.Parse(rr.Content))).Select(jo =>
                 {
-                    return select == null ? jo : new JObject(select.Split(",").Select(s =>
+                    return select == null ? jo : new JObject(select.Split(',').Select(s =>
                     {
                         var m = Regex.Match(s.Trim(), @"(?<Path>\S+)((?i) as (?<Name>.+))?", RegexOptions.Compiled);
-                        return new JProperty(m.Groups["Name"].Success ? m.Groups["Name"].Value : m.Groups["Path"].Value.Split(".").Last(), jo.SelectToken(m.Groups["Path"].Value));
+                        return new JProperty(m.Groups["Name"].Success ? m.Groups["Name"].Value : m.Groups["Path"].Value.Split('.').Last(), jo.SelectToken(m.Groups["Path"].Value));
                     }));
                 })) jsonSerializer.Serialize(jtw, jo);
                 jtw.WriteEndArray();
@@ -14841,10 +14841,10 @@ namespace FolioConsoleApplication
                 jtw.WriteStartArray();
                 foreach (var jo in (api ? fsc.Records(where, orderBy, skip, take) : fdc.Records(where, null, orderBy, skip, take).Select(r => JObject.Parse(r.Content))).Select(jo =>
                 {
-                    return select == null ? jo : new JObject(select.Split(",").Select(s =>
+                    return select == null ? jo : new JObject(select.Split(',').Select(s =>
                     {
                         var m = Regex.Match(s.Trim(), @"(?<Path>\S+)((?i) as (?<Name>.+))?", RegexOptions.Compiled);
-                        return new JProperty(m.Groups["Name"].Success ? m.Groups["Name"].Value : m.Groups["Path"].Value.Split(".").Last(), jo.SelectToken(m.Groups["Path"].Value));
+                        return new JProperty(m.Groups["Name"].Success ? m.Groups["Name"].Value : m.Groups["Path"].Value.Split('.').Last(), jo.SelectToken(m.Groups["Path"].Value));
                     }));
                 })) jsonSerializer.Serialize(jtw, jo);
                 jtw.WriteEndArray();
@@ -14992,10 +14992,10 @@ namespace FolioConsoleApplication
                 jtw.WriteStartArray();
                 foreach (var jo in (api ? fsc.RefundReasons(where, orderBy, skip, take) : fdc.RefundReasons(where, null, orderBy, skip, take).Select(rr => JObject.Parse(rr.Content))).Select(jo =>
                 {
-                    return select == null ? jo : new JObject(select.Split(",").Select(s =>
+                    return select == null ? jo : new JObject(select.Split(',').Select(s =>
                     {
                         var m = Regex.Match(s.Trim(), @"(?<Path>\S+)((?i) as (?<Name>.+))?", RegexOptions.Compiled);
-                        return new JProperty(m.Groups["Name"].Success ? m.Groups["Name"].Value : m.Groups["Path"].Value.Split(".").Last(), jo.SelectToken(m.Groups["Path"].Value));
+                        return new JProperty(m.Groups["Name"].Success ? m.Groups["Name"].Value : m.Groups["Path"].Value.Split('.').Last(), jo.SelectToken(m.Groups["Path"].Value));
                     }));
                 })) jsonSerializer.Serialize(jtw, jo);
                 jtw.WriteEndArray();
@@ -15139,10 +15139,10 @@ namespace FolioConsoleApplication
                 jtw.WriteStartArray();
                 foreach (var jo in (api ? fsc.ReportingCodes(where, orderBy, skip, take) : fdc.ReportingCodes(where, null, orderBy, skip, take).Select(rc => JObject.Parse(rc.Content))).Select(jo =>
                 {
-                    return select == null ? jo : new JObject(select.Split(",").Select(s =>
+                    return select == null ? jo : new JObject(select.Split(',').Select(s =>
                     {
                         var m = Regex.Match(s.Trim(), @"(?<Path>\S+)((?i) as (?<Name>.+))?", RegexOptions.Compiled);
-                        return new JProperty(m.Groups["Name"].Success ? m.Groups["Name"].Value : m.Groups["Path"].Value.Split(".").Last(), jo.SelectToken(m.Groups["Path"].Value));
+                        return new JProperty(m.Groups["Name"].Success ? m.Groups["Name"].Value : m.Groups["Path"].Value.Split('.').Last(), jo.SelectToken(m.Groups["Path"].Value));
                     }));
                 })) jsonSerializer.Serialize(jtw, jo);
                 jtw.WriteEndArray();
@@ -15284,10 +15284,10 @@ namespace FolioConsoleApplication
                 jtw.WriteStartArray();
                 foreach (var jo in (api ? fsc.Requests(where, orderBy, skip, take) : fdc.Requests(where, null, orderBy, skip, take).Select(r => JObject.Parse(r.Content))).Select(jo =>
                 {
-                    return select == null ? jo : new JObject(select.Split(",").Select(s =>
+                    return select == null ? jo : new JObject(select.Split(',').Select(s =>
                     {
                         var m = Regex.Match(s.Trim(), @"(?<Path>\S+)((?i) as (?<Name>.+))?", RegexOptions.Compiled);
-                        return new JProperty(m.Groups["Name"].Success ? m.Groups["Name"].Value : m.Groups["Path"].Value.Split(".").Last(), jo.SelectToken(m.Groups["Path"].Value));
+                        return new JProperty(m.Groups["Name"].Success ? m.Groups["Name"].Value : m.Groups["Path"].Value.Split('.').Last(), jo.SelectToken(m.Groups["Path"].Value));
                     }));
                 })) jsonSerializer.Serialize(jtw, jo);
                 jtw.WriteEndArray();
@@ -15432,10 +15432,10 @@ namespace FolioConsoleApplication
                 jtw.WriteStartArray();
                 foreach (var jo in (api ? fsc.RequestPolicies(where, orderBy, skip, take) : fdc.RequestPolicies(where, null, orderBy, skip, take).Select(rp => JObject.Parse(rp.Content))).Select(jo =>
                 {
-                    return select == null ? jo : new JObject(select.Split(",").Select(s =>
+                    return select == null ? jo : new JObject(select.Split(',').Select(s =>
                     {
                         var m = Regex.Match(s.Trim(), @"(?<Path>\S+)((?i) as (?<Name>.+))?", RegexOptions.Compiled);
-                        return new JProperty(m.Groups["Name"].Success ? m.Groups["Name"].Value : m.Groups["Path"].Value.Split(".").Last(), jo.SelectToken(m.Groups["Path"].Value));
+                        return new JProperty(m.Groups["Name"].Success ? m.Groups["Name"].Value : m.Groups["Path"].Value.Split('.').Last(), jo.SelectToken(m.Groups["Path"].Value));
                     }));
                 })) jsonSerializer.Serialize(jtw, jo);
                 jtw.WriteEndArray();
@@ -15579,10 +15579,10 @@ namespace FolioConsoleApplication
                 jtw.WriteStartArray();
                 foreach (var jo in (api ? fsc.ScheduledNotices(where, orderBy, skip, take) : fdc.ScheduledNotices(where, null, orderBy, skip, take).Select(sn => JObject.Parse(sn.Content))).Select(jo =>
                 {
-                    return select == null ? jo : new JObject(select.Split(",").Select(s =>
+                    return select == null ? jo : new JObject(select.Split(',').Select(s =>
                     {
                         var m = Regex.Match(s.Trim(), @"(?<Path>\S+)((?i) as (?<Name>.+))?", RegexOptions.Compiled);
-                        return new JProperty(m.Groups["Name"].Success ? m.Groups["Name"].Value : m.Groups["Path"].Value.Split(".").Last(), jo.SelectToken(m.Groups["Path"].Value));
+                        return new JProperty(m.Groups["Name"].Success ? m.Groups["Name"].Value : m.Groups["Path"].Value.Split('.').Last(), jo.SelectToken(m.Groups["Path"].Value));
                     }));
                 })) jsonSerializer.Serialize(jtw, jo);
                 jtw.WriteEndArray();
@@ -15726,10 +15726,10 @@ namespace FolioConsoleApplication
                 jtw.WriteStartArray();
                 foreach (var jo in (api ? fsc.ServicePoints(where, orderBy, skip, take) : fdc.ServicePoints(where, null, orderBy, skip, take).Select(sp => JObject.Parse(sp.Content))).Select(jo =>
                 {
-                    return select == null ? jo : new JObject(select.Split(",").Select(s =>
+                    return select == null ? jo : new JObject(select.Split(',').Select(s =>
                     {
                         var m = Regex.Match(s.Trim(), @"(?<Path>\S+)((?i) as (?<Name>.+))?", RegexOptions.Compiled);
-                        return new JProperty(m.Groups["Name"].Success ? m.Groups["Name"].Value : m.Groups["Path"].Value.Split(".").Last(), jo.SelectToken(m.Groups["Path"].Value));
+                        return new JProperty(m.Groups["Name"].Success ? m.Groups["Name"].Value : m.Groups["Path"].Value.Split('.').Last(), jo.SelectToken(m.Groups["Path"].Value));
                     }));
                 })) jsonSerializer.Serialize(jtw, jo);
                 jtw.WriteEndArray();
@@ -15873,10 +15873,10 @@ namespace FolioConsoleApplication
                 jtw.WriteStartArray();
                 foreach (var jo in (api ? fsc.ServicePointUsers(where, orderBy, skip, take) : fdc.ServicePointUsers(where, null, orderBy, skip, take).Select(spu => JObject.Parse(spu.Content))).Select(jo =>
                 {
-                    return select == null ? jo : new JObject(select.Split(",").Select(s =>
+                    return select == null ? jo : new JObject(select.Split(',').Select(s =>
                     {
                         var m = Regex.Match(s.Trim(), @"(?<Path>\S+)((?i) as (?<Name>.+))?", RegexOptions.Compiled);
-                        return new JProperty(m.Groups["Name"].Success ? m.Groups["Name"].Value : m.Groups["Path"].Value.Split(".").Last(), jo.SelectToken(m.Groups["Path"].Value));
+                        return new JProperty(m.Groups["Name"].Success ? m.Groups["Name"].Value : m.Groups["Path"].Value.Split('.').Last(), jo.SelectToken(m.Groups["Path"].Value));
                     }));
                 })) jsonSerializer.Serialize(jtw, jo);
                 jtw.WriteEndArray();
@@ -16021,10 +16021,10 @@ namespace FolioConsoleApplication
                 jtw.WriteStartArray();
                 foreach (var jo in (api ? fsc.Snapshots(where, orderBy, skip, take) : fdc.Snapshots(where, null, orderBy, skip, take).Select(s3 => JObject.Parse(s3.Content))).Select(jo =>
                 {
-                    return select == null ? jo : new JObject(select.Split(",").Select(s =>
+                    return select == null ? jo : new JObject(select.Split(',').Select(s =>
                     {
                         var m = Regex.Match(s.Trim(), @"(?<Path>\S+)((?i) as (?<Name>.+))?", RegexOptions.Compiled);
-                        return new JProperty(m.Groups["Name"].Success ? m.Groups["Name"].Value : m.Groups["Path"].Value.Split(".").Last(), jo.SelectToken(m.Groups["Path"].Value));
+                        return new JProperty(m.Groups["Name"].Success ? m.Groups["Name"].Value : m.Groups["Path"].Value.Split('.').Last(), jo.SelectToken(m.Groups["Path"].Value));
                     }));
                 })) jsonSerializer.Serialize(jtw, jo);
                 jtw.WriteEndArray();
@@ -16168,10 +16168,10 @@ namespace FolioConsoleApplication
                 jtw.WriteStartArray();
                 foreach (var jo in (api ? fsc.StaffSlips(where, orderBy, skip, take) : fdc.StaffSlips(where, null, orderBy, skip, take).Select(ss => JObject.Parse(ss.Content))).Select(jo =>
                 {
-                    return select == null ? jo : new JObject(select.Split(",").Select(s =>
+                    return select == null ? jo : new JObject(select.Split(',').Select(s =>
                     {
                         var m = Regex.Match(s.Trim(), @"(?<Path>\S+)((?i) as (?<Name>.+))?", RegexOptions.Compiled);
-                        return new JProperty(m.Groups["Name"].Success ? m.Groups["Name"].Value : m.Groups["Path"].Value.Split(".").Last(), jo.SelectToken(m.Groups["Path"].Value));
+                        return new JProperty(m.Groups["Name"].Success ? m.Groups["Name"].Value : m.Groups["Path"].Value.Split('.').Last(), jo.SelectToken(m.Groups["Path"].Value));
                     }));
                 })) jsonSerializer.Serialize(jtw, jo);
                 jtw.WriteEndArray();
@@ -16315,10 +16315,10 @@ namespace FolioConsoleApplication
                 jtw.WriteStartArray();
                 foreach (var jo in (api ? fsc.StatisticalCodes(where, orderBy, skip, take) : fdc.StatisticalCodes(where, null, orderBy, skip, take).Select(sc => JObject.Parse(sc.Content))).Select(jo =>
                 {
-                    return select == null ? jo : new JObject(select.Split(",").Select(s =>
+                    return select == null ? jo : new JObject(select.Split(',').Select(s =>
                     {
                         var m = Regex.Match(s.Trim(), @"(?<Path>\S+)((?i) as (?<Name>.+))?", RegexOptions.Compiled);
-                        return new JProperty(m.Groups["Name"].Success ? m.Groups["Name"].Value : m.Groups["Path"].Value.Split(".").Last(), jo.SelectToken(m.Groups["Path"].Value));
+                        return new JProperty(m.Groups["Name"].Success ? m.Groups["Name"].Value : m.Groups["Path"].Value.Split('.').Last(), jo.SelectToken(m.Groups["Path"].Value));
                     }));
                 })) jsonSerializer.Serialize(jtw, jo);
                 jtw.WriteEndArray();
@@ -16463,10 +16463,10 @@ namespace FolioConsoleApplication
                 jtw.WriteStartArray();
                 foreach (var jo in (api ? fsc.StatisticalCodeTypes(where, orderBy, skip, take) : fdc.StatisticalCodeTypes(where, null, orderBy, skip, take).Select(sct => JObject.Parse(sct.Content))).Select(jo =>
                 {
-                    return select == null ? jo : new JObject(select.Split(",").Select(s =>
+                    return select == null ? jo : new JObject(select.Split(',').Select(s =>
                     {
                         var m = Regex.Match(s.Trim(), @"(?<Path>\S+)((?i) as (?<Name>.+))?", RegexOptions.Compiled);
-                        return new JProperty(m.Groups["Name"].Success ? m.Groups["Name"].Value : m.Groups["Path"].Value.Split(".").Last(), jo.SelectToken(m.Groups["Path"].Value));
+                        return new JProperty(m.Groups["Name"].Success ? m.Groups["Name"].Value : m.Groups["Path"].Value.Split('.').Last(), jo.SelectToken(m.Groups["Path"].Value));
                     }));
                 })) jsonSerializer.Serialize(jtw, jo);
                 jtw.WriteEndArray();
@@ -16610,10 +16610,10 @@ namespace FolioConsoleApplication
                 jtw.WriteStartArray();
                 foreach (var jo in (api ? fsc.Suffixes(where, orderBy, skip, take) : fdc.Suffixes(where, null, orderBy, skip, take).Select(s3 => JObject.Parse(s3.Content))).Select(jo =>
                 {
-                    return select == null ? jo : new JObject(select.Split(",").Select(s =>
+                    return select == null ? jo : new JObject(select.Split(',').Select(s =>
                     {
                         var m = Regex.Match(s.Trim(), @"(?<Path>\S+)((?i) as (?<Name>.+))?", RegexOptions.Compiled);
-                        return new JProperty(m.Groups["Name"].Success ? m.Groups["Name"].Value : m.Groups["Path"].Value.Split(".").Last(), jo.SelectToken(m.Groups["Path"].Value));
+                        return new JProperty(m.Groups["Name"].Success ? m.Groups["Name"].Value : m.Groups["Path"].Value.Split('.').Last(), jo.SelectToken(m.Groups["Path"].Value));
                     }));
                 })) jsonSerializer.Serialize(jtw, jo);
                 jtw.WriteEndArray();
@@ -16755,10 +16755,10 @@ namespace FolioConsoleApplication
                 jtw.WriteStartArray();
                 foreach (var jo in (api ? fsc.Templates(where, orderBy, skip, take) : fdc.Templates(where, null, orderBy, skip, take).Select(t => JObject.Parse(t.Content))).Select(jo =>
                 {
-                    return select == null ? jo : new JObject(select.Split(",").Select(s =>
+                    return select == null ? jo : new JObject(select.Split(',').Select(s =>
                     {
                         var m = Regex.Match(s.Trim(), @"(?<Path>\S+)((?i) as (?<Name>.+))?", RegexOptions.Compiled);
-                        return new JProperty(m.Groups["Name"].Success ? m.Groups["Name"].Value : m.Groups["Path"].Value.Split(".").Last(), jo.SelectToken(m.Groups["Path"].Value));
+                        return new JProperty(m.Groups["Name"].Success ? m.Groups["Name"].Value : m.Groups["Path"].Value.Split('.').Last(), jo.SelectToken(m.Groups["Path"].Value));
                     }));
                 })) jsonSerializer.Serialize(jtw, jo);
                 jtw.WriteEndArray();
@@ -16901,10 +16901,10 @@ namespace FolioConsoleApplication
                 jtw.WriteStartArray();
                 foreach (var jo in (api ? throw new NotSupportedException() : fdc.TemporaryInvoiceTransactions(where, null, orderBy, skip, take).Select(tit => JObject.Parse(tit.Content))).Select(jo =>
                 {
-                    return select == null ? jo : new JObject(select.Split(",").Select(s =>
+                    return select == null ? jo : new JObject(select.Split(',').Select(s =>
                     {
                         var m = Regex.Match(s.Trim(), @"(?<Path>\S+)((?i) as (?<Name>.+))?", RegexOptions.Compiled);
-                        return new JProperty(m.Groups["Name"].Success ? m.Groups["Name"].Value : m.Groups["Path"].Value.Split(".").Last(), jo.SelectToken(m.Groups["Path"].Value));
+                        return new JProperty(m.Groups["Name"].Success ? m.Groups["Name"].Value : m.Groups["Path"].Value.Split('.').Last(), jo.SelectToken(m.Groups["Path"].Value));
                     }));
                 })) jsonSerializer.Serialize(jtw, jo);
                 jtw.WriteEndArray();
@@ -17032,10 +17032,10 @@ namespace FolioConsoleApplication
                 jtw.WriteStartArray();
                 foreach (var jo in (api ? throw new NotSupportedException() : fdc.TemporaryOrderTransactions(where, null, orderBy, skip, take).Select(tot => JObject.Parse(tot.Content))).Select(jo =>
                 {
-                    return select == null ? jo : new JObject(select.Split(",").Select(s =>
+                    return select == null ? jo : new JObject(select.Split(',').Select(s =>
                     {
                         var m = Regex.Match(s.Trim(), @"(?<Path>\S+)((?i) as (?<Name>.+))?", RegexOptions.Compiled);
-                        return new JProperty(m.Groups["Name"].Success ? m.Groups["Name"].Value : m.Groups["Path"].Value.Split(".").Last(), jo.SelectToken(m.Groups["Path"].Value));
+                        return new JProperty(m.Groups["Name"].Success ? m.Groups["Name"].Value : m.Groups["Path"].Value.Split('.').Last(), jo.SelectToken(m.Groups["Path"].Value));
                     }));
                 })) jsonSerializer.Serialize(jtw, jo);
                 jtw.WriteEndArray();
@@ -17161,10 +17161,10 @@ namespace FolioConsoleApplication
                 jtw.WriteStartArray();
                 foreach (var jo in (api ? fsc.Titles(where, orderBy, skip, take) : fdc.Titles(where, null, orderBy, skip, take).Select(t => JObject.Parse(t.Content))).Select(jo =>
                 {
-                    return select == null ? jo : new JObject(select.Split(",").Select(s =>
+                    return select == null ? jo : new JObject(select.Split(',').Select(s =>
                     {
                         var m = Regex.Match(s.Trim(), @"(?<Path>\S+)((?i) as (?<Name>.+))?", RegexOptions.Compiled);
-                        return new JProperty(m.Groups["Name"].Success ? m.Groups["Name"].Value : m.Groups["Path"].Value.Split(".").Last(), jo.SelectToken(m.Groups["Path"].Value));
+                        return new JProperty(m.Groups["Name"].Success ? m.Groups["Name"].Value : m.Groups["Path"].Value.Split('.').Last(), jo.SelectToken(m.Groups["Path"].Value));
                     }));
                 })) jsonSerializer.Serialize(jtw, jo);
                 jtw.WriteEndArray();
@@ -17307,10 +17307,10 @@ namespace FolioConsoleApplication
                 jtw.WriteStartArray();
                 foreach (var jo in (api ? fsc.Transactions(where, orderBy, skip, take) : fdc.Transactions(where, null, orderBy, skip, take).Select(t => JObject.Parse(t.Content))).Select(jo =>
                 {
-                    return select == null ? jo : new JObject(select.Split(",").Select(s =>
+                    return select == null ? jo : new JObject(select.Split(',').Select(s =>
                     {
                         var m = Regex.Match(s.Trim(), @"(?<Path>\S+)((?i) as (?<Name>.+))?", RegexOptions.Compiled);
-                        return new JProperty(m.Groups["Name"].Success ? m.Groups["Name"].Value : m.Groups["Path"].Value.Split(".").Last(), jo.SelectToken(m.Groups["Path"].Value));
+                        return new JProperty(m.Groups["Name"].Success ? m.Groups["Name"].Value : m.Groups["Path"].Value.Split('.').Last(), jo.SelectToken(m.Groups["Path"].Value));
                     }));
                 })) jsonSerializer.Serialize(jtw, jo);
                 jtw.WriteEndArray();
@@ -17458,10 +17458,10 @@ namespace FolioConsoleApplication
                 jtw.WriteStartArray();
                 foreach (var jo in (api ? fsc.TransferAccounts(where, orderBy, skip, take) : fdc.TransferAccounts(where, null, orderBy, skip, take).Select(ta => JObject.Parse(ta.Content))).Select(jo =>
                 {
-                    return select == null ? jo : new JObject(select.Split(",").Select(s =>
+                    return select == null ? jo : new JObject(select.Split(',').Select(s =>
                     {
                         var m = Regex.Match(s.Trim(), @"(?<Path>\S+)((?i) as (?<Name>.+))?", RegexOptions.Compiled);
-                        return new JProperty(m.Groups["Name"].Success ? m.Groups["Name"].Value : m.Groups["Path"].Value.Split(".").Last(), jo.SelectToken(m.Groups["Path"].Value));
+                        return new JProperty(m.Groups["Name"].Success ? m.Groups["Name"].Value : m.Groups["Path"].Value.Split('.').Last(), jo.SelectToken(m.Groups["Path"].Value));
                     }));
                 })) jsonSerializer.Serialize(jtw, jo);
                 jtw.WriteEndArray();
@@ -17605,10 +17605,10 @@ namespace FolioConsoleApplication
                 jtw.WriteStartArray();
                 foreach (var jo in (api ? fsc.TransferCriterias(where, orderBy, skip, take) : fdc.TransferCriterias(where, null, orderBy, skip, take).Select(tc => JObject.Parse(tc.Content))).Select(jo =>
                 {
-                    return select == null ? jo : new JObject(select.Split(",").Select(s =>
+                    return select == null ? jo : new JObject(select.Split(',').Select(s =>
                     {
                         var m = Regex.Match(s.Trim(), @"(?<Path>\S+)((?i) as (?<Name>.+))?", RegexOptions.Compiled);
-                        return new JProperty(m.Groups["Name"].Success ? m.Groups["Name"].Value : m.Groups["Path"].Value.Split(".").Last(), jo.SelectToken(m.Groups["Path"].Value));
+                        return new JProperty(m.Groups["Name"].Success ? m.Groups["Name"].Value : m.Groups["Path"].Value.Split('.').Last(), jo.SelectToken(m.Groups["Path"].Value));
                     }));
                 })) jsonSerializer.Serialize(jtw, jo);
                 jtw.WriteEndArray();
@@ -17750,10 +17750,10 @@ namespace FolioConsoleApplication
                 jtw.WriteStartArray();
                 foreach (var jo in (api ? fsc.Users(where, orderBy, skip, take) : fdc.Users(where, null, orderBy, skip, take).Select(u => JObject.Parse(u.Content))).Select(jo =>
                 {
-                    return select == null ? jo : new JObject(select.Split(",").Select(s =>
+                    return select == null ? jo : new JObject(select.Split(',').Select(s =>
                     {
                         var m = Regex.Match(s.Trim(), @"(?<Path>\S+)((?i) as (?<Name>.+))?", RegexOptions.Compiled);
-                        return new JProperty(m.Groups["Name"].Success ? m.Groups["Name"].Value : m.Groups["Path"].Value.Split(".").Last(), jo.SelectToken(m.Groups["Path"].Value));
+                        return new JProperty(m.Groups["Name"].Success ? m.Groups["Name"].Value : m.Groups["Path"].Value.Split('.').Last(), jo.SelectToken(m.Groups["Path"].Value));
                     }));
                 })) jsonSerializer.Serialize(jtw, jo);
                 jtw.WriteEndArray();
@@ -18033,10 +18033,10 @@ namespace FolioConsoleApplication
                 jtw.WriteStartArray();
                 foreach (var jo in (api ? fsc.UserAcquisitionsUnits(where, orderBy, skip, take) : fdc.UserAcquisitionsUnits(where, null, orderBy, skip, take).Select(uau => JObject.Parse(uau.Content))).Select(jo =>
                 {
-                    return select == null ? jo : new JObject(select.Split(",").Select(s =>
+                    return select == null ? jo : new JObject(select.Split(',').Select(s =>
                     {
                         var m = Regex.Match(s.Trim(), @"(?<Path>\S+)((?i) as (?<Name>.+))?", RegexOptions.Compiled);
-                        return new JProperty(m.Groups["Name"].Success ? m.Groups["Name"].Value : m.Groups["Path"].Value.Split(".").Last(), jo.SelectToken(m.Groups["Path"].Value));
+                        return new JProperty(m.Groups["Name"].Success ? m.Groups["Name"].Value : m.Groups["Path"].Value.Split('.').Last(), jo.SelectToken(m.Groups["Path"].Value));
                     }));
                 })) jsonSerializer.Serialize(jtw, jo);
                 jtw.WriteEndArray();
@@ -18181,10 +18181,10 @@ namespace FolioConsoleApplication
                 jtw.WriteStartArray();
                 foreach (var jo in (api ? fsc.UserRequestPreferences(where, orderBy, skip, take) : fdc.UserRequestPreferences(where, null, orderBy, skip, take).Select(urp => JObject.Parse(urp.Content))).Select(jo =>
                 {
-                    return select == null ? jo : new JObject(select.Split(",").Select(s =>
+                    return select == null ? jo : new JObject(select.Split(',').Select(s =>
                     {
                         var m = Regex.Match(s.Trim(), @"(?<Path>\S+)((?i) as (?<Name>.+))?", RegexOptions.Compiled);
-                        return new JProperty(m.Groups["Name"].Success ? m.Groups["Name"].Value : m.Groups["Path"].Value.Split(".").Last(), jo.SelectToken(m.Groups["Path"].Value));
+                        return new JProperty(m.Groups["Name"].Success ? m.Groups["Name"].Value : m.Groups["Path"].Value.Split('.').Last(), jo.SelectToken(m.Groups["Path"].Value));
                     }));
                 })) jsonSerializer.Serialize(jtw, jo);
                 jtw.WriteEndArray();
@@ -18328,10 +18328,10 @@ namespace FolioConsoleApplication
                 jtw.WriteStartArray();
                 foreach (var jo in (api ? fsc.Vouchers(where, orderBy, skip, take) : fdc.Vouchers(where, null, orderBy, skip, take).Select(v => JObject.Parse(v.Content))).Select(jo =>
                 {
-                    return select == null ? jo : new JObject(select.Split(",").Select(s =>
+                    return select == null ? jo : new JObject(select.Split(',').Select(s =>
                     {
                         var m = Regex.Match(s.Trim(), @"(?<Path>\S+)((?i) as (?<Name>.+))?", RegexOptions.Compiled);
-                        return new JProperty(m.Groups["Name"].Success ? m.Groups["Name"].Value : m.Groups["Path"].Value.Split(".").Last(), jo.SelectToken(m.Groups["Path"].Value));
+                        return new JProperty(m.Groups["Name"].Success ? m.Groups["Name"].Value : m.Groups["Path"].Value.Split('.').Last(), jo.SelectToken(m.Groups["Path"].Value));
                     }));
                 })) jsonSerializer.Serialize(jtw, jo);
                 jtw.WriteEndArray();
@@ -18477,10 +18477,10 @@ namespace FolioConsoleApplication
                 jtw.WriteStartArray();
                 foreach (var jo in (api ? fsc.VoucherItems(where, orderBy, skip, take) : fdc.VoucherItems(where, null, orderBy, skip, take).Select(vi => JObject.Parse(vi.Content))).Select(jo =>
                 {
-                    return select == null ? jo : new JObject(select.Split(",").Select(s =>
+                    return select == null ? jo : new JObject(select.Split(',').Select(s =>
                     {
                         var m = Regex.Match(s.Trim(), @"(?<Path>\S+)((?i) as (?<Name>.+))?", RegexOptions.Compiled);
-                        return new JProperty(m.Groups["Name"].Success ? m.Groups["Name"].Value : m.Groups["Path"].Value.Split(".").Last(), jo.SelectToken(m.Groups["Path"].Value));
+                        return new JProperty(m.Groups["Name"].Success ? m.Groups["Name"].Value : m.Groups["Path"].Value.Split('.').Last(), jo.SelectToken(m.Groups["Path"].Value));
                     }));
                 })) jsonSerializer.Serialize(jtw, jo);
                 jtw.WriteEndArray();
@@ -18625,10 +18625,10 @@ namespace FolioConsoleApplication
                 jtw.WriteStartArray();
                 foreach (var jo in (api ? fsc.WaiveReasons(where, orderBy, skip, take) : fdc.WaiveReasons(where, null, orderBy, skip, take).Select(wr => JObject.Parse(wr.Content))).Select(jo =>
                 {
-                    return select == null ? jo : new JObject(select.Split(",").Select(s =>
+                    return select == null ? jo : new JObject(select.Split(',').Select(s =>
                     {
                         var m = Regex.Match(s.Trim(), @"(?<Path>\S+)((?i) as (?<Name>.+))?", RegexOptions.Compiled);
-                        return new JProperty(m.Groups["Name"].Success ? m.Groups["Name"].Value : m.Groups["Path"].Value.Split(".").Last(), jo.SelectToken(m.Groups["Path"].Value));
+                        return new JProperty(m.Groups["Name"].Success ? m.Groups["Name"].Value : m.Groups["Path"].Value.Split('.').Last(), jo.SelectToken(m.Groups["Path"].Value));
                     }));
                 })) jsonSerializer.Serialize(jtw, jo);
                 jtw.WriteEndArray();

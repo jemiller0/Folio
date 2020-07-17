@@ -142,11 +142,11 @@ namespace FolioLibrary
                         var jo = (JObject)js.Deserialize(jtr);
                         traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", jo);
                         ++i;
-                        --take;
-                        ++skip;
                         yield return jo;
                     }
-                    if (i == 0) break;
+                    if (i < Math.Min(take.Value, 10000)) break;
+                    skip += i;
+                    take -= i;
                 }
             }
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", s.Elapsed);
@@ -279,11 +279,11 @@ namespace FolioLibrary
                         var jo = (JObject)js.Deserialize(jtr);
                         traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", jo);
                         ++i;
-                        --take;
-                        ++skip;
                         yield return jo;
                     }
-                    if (i == 0) break;
+                    if (i < Math.Min(take.Value, 10000)) break;
+                    skip += i;
+                    take -= i;
                 }
             }
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", s.Elapsed);
@@ -416,11 +416,11 @@ namespace FolioLibrary
                         var jo = (JObject)js.Deserialize(jtr);
                         traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", jo);
                         ++i;
-                        --take;
-                        ++skip;
                         yield return jo;
                     }
-                    if (i == 0) break;
+                    if (i < Math.Min(take.Value, 10000)) break;
+                    skip += i;
+                    take -= i;
                 }
             }
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", s.Elapsed);
@@ -553,11 +553,11 @@ namespace FolioLibrary
                         var jo = (JObject)js.Deserialize(jtr);
                         traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", jo);
                         ++i;
-                        --take;
-                        ++skip;
                         yield return jo;
                     }
-                    if (i == 0) break;
+                    if (i < Math.Min(take.Value, 10000)) break;
+                    skip += i;
+                    take -= i;
                 }
             }
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", s.Elapsed);
@@ -690,11 +690,11 @@ namespace FolioLibrary
                         var jo = (JObject)js.Deserialize(jtr);
                         traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", jo);
                         ++i;
-                        --take;
-                        ++skip;
                         yield return jo;
                     }
-                    if (i == 0) break;
+                    if (i < Math.Min(take.Value, 10000)) break;
+                    skip += i;
+                    take -= i;
                 }
             }
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", s.Elapsed);
@@ -827,11 +827,11 @@ namespace FolioLibrary
                         var jo = (JObject)js.Deserialize(jtr);
                         traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", jo);
                         ++i;
-                        --take;
-                        ++skip;
                         yield return jo;
                     }
-                    if (i == 0) break;
+                    if (i < Math.Min(take.Value, 10000)) break;
+                    skip += i;
+                    take -= i;
                 }
             }
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", s.Elapsed);
@@ -964,11 +964,11 @@ namespace FolioLibrary
                         var jo = (JObject)js.Deserialize(jtr);
                         traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", jo);
                         ++i;
-                        --take;
-                        ++skip;
                         yield return jo;
                     }
-                    if (i == 0) break;
+                    if (i < Math.Min(take.Value, 10000)) break;
+                    skip += i;
+                    take -= i;
                 }
             }
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", s.Elapsed);
@@ -1101,11 +1101,11 @@ namespace FolioLibrary
                         var jo = (JObject)js.Deserialize(jtr);
                         traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", jo);
                         ++i;
-                        --take;
-                        ++skip;
                         yield return jo;
                     }
-                    if (i == 0) break;
+                    if (i < Math.Min(take.Value, 10000)) break;
+                    skip += i;
+                    take -= i;
                 }
             }
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", s.Elapsed);
@@ -1238,11 +1238,11 @@ namespace FolioLibrary
                         var jo = (JObject)js.Deserialize(jtr);
                         traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", jo);
                         ++i;
-                        --take;
-                        ++skip;
                         yield return jo;
                     }
-                    if (i == 0) break;
+                    if (i < Math.Min(take.Value, 10000)) break;
+                    skip += i;
+                    take -= i;
                 }
             }
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", s.Elapsed);
@@ -1375,11 +1375,11 @@ namespace FolioLibrary
                         var jo = (JObject)js.Deserialize(jtr);
                         traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", jo);
                         ++i;
-                        --take;
-                        ++skip;
                         yield return jo;
                     }
-                    if (i == 0) break;
+                    if (i < Math.Min(take.Value, 10000)) break;
+                    skip += i;
+                    take -= i;
                 }
             }
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", s.Elapsed);
@@ -1512,11 +1512,11 @@ namespace FolioLibrary
                         var jo = (JObject)js.Deserialize(jtr);
                         traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", jo);
                         ++i;
-                        --take;
-                        ++skip;
                         yield return jo;
                     }
-                    if (i == 0) break;
+                    if (i < Math.Min(take.Value, 10000)) break;
+                    skip += i;
+                    take -= i;
                 }
             }
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", s.Elapsed);
@@ -1649,11 +1649,11 @@ namespace FolioLibrary
                         var jo = (JObject)js.Deserialize(jtr);
                         traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", jo);
                         ++i;
-                        --take;
-                        ++skip;
                         yield return jo;
                     }
-                    if (i == 0) break;
+                    if (i < Math.Min(take.Value, 10000)) break;
+                    skip += i;
+                    take -= i;
                 }
             }
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", s.Elapsed);
@@ -1786,11 +1786,11 @@ namespace FolioLibrary
                         var jo = (JObject)js.Deserialize(jtr);
                         traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", jo);
                         ++i;
-                        --take;
-                        ++skip;
                         yield return jo;
                     }
-                    if (i == 0) break;
+                    if (i < Math.Min(take.Value, 10000)) break;
+                    skip += i;
+                    take -= i;
                 }
             }
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", s.Elapsed);
@@ -1923,11 +1923,11 @@ namespace FolioLibrary
                         var jo = (JObject)js.Deserialize(jtr);
                         traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", jo);
                         ++i;
-                        --take;
-                        ++skip;
                         yield return jo;
                     }
-                    if (i == 0) break;
+                    if (i < Math.Min(take.Value, 10000)) break;
+                    skip += i;
+                    take -= i;
                 }
             }
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", s.Elapsed);
@@ -2094,11 +2094,11 @@ namespace FolioLibrary
                         var jo = (JObject)js.Deserialize(jtr);
                         traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", jo);
                         ++i;
-                        --take;
-                        ++skip;
                         yield return jo;
                     }
-                    if (i == 0) break;
+                    if (i < Math.Min(take.Value, 10000)) break;
+                    skip += i;
+                    take -= i;
                 }
             }
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", s.Elapsed);
@@ -2231,11 +2231,11 @@ namespace FolioLibrary
                         var jo = (JObject)js.Deserialize(jtr);
                         traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", jo);
                         ++i;
-                        --take;
-                        ++skip;
                         yield return jo;
                     }
-                    if (i == 0) break;
+                    if (i < Math.Min(take.Value, 10000)) break;
+                    skip += i;
+                    take -= i;
                 }
             }
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", s.Elapsed);
@@ -2368,11 +2368,11 @@ namespace FolioLibrary
                         var jo = (JObject)js.Deserialize(jtr);
                         traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", jo);
                         ++i;
-                        --take;
-                        ++skip;
                         yield return jo;
                     }
-                    if (i == 0) break;
+                    if (i < Math.Min(take.Value, 10000)) break;
+                    skip += i;
+                    take -= i;
                 }
             }
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", s.Elapsed);
@@ -2505,11 +2505,11 @@ namespace FolioLibrary
                         var jo = (JObject)js.Deserialize(jtr);
                         traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", jo);
                         ++i;
-                        --take;
-                        ++skip;
                         yield return jo;
                     }
-                    if (i == 0) break;
+                    if (i < Math.Min(take.Value, 10000)) break;
+                    skip += i;
+                    take -= i;
                 }
             }
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", s.Elapsed);
@@ -2642,11 +2642,11 @@ namespace FolioLibrary
                         var jo = (JObject)js.Deserialize(jtr);
                         traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", jo);
                         ++i;
-                        --take;
-                        ++skip;
                         yield return jo;
                     }
-                    if (i == 0) break;
+                    if (i < Math.Min(take.Value, 10000)) break;
+                    skip += i;
+                    take -= i;
                 }
             }
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", s.Elapsed);
@@ -2779,11 +2779,11 @@ namespace FolioLibrary
                         var jo = (JObject)js.Deserialize(jtr);
                         traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", jo);
                         ++i;
-                        --take;
-                        ++skip;
                         yield return jo;
                     }
-                    if (i == 0) break;
+                    if (i < Math.Min(take.Value, 10000)) break;
+                    skip += i;
+                    take -= i;
                 }
             }
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", s.Elapsed);
@@ -2916,11 +2916,11 @@ namespace FolioLibrary
                         var jo = (JObject)js.Deserialize(jtr);
                         traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", jo);
                         ++i;
-                        --take;
-                        ++skip;
                         yield return jo;
                     }
-                    if (i == 0) break;
+                    if (i < Math.Min(take.Value, 10000)) break;
+                    skip += i;
+                    take -= i;
                 }
             }
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", s.Elapsed);
@@ -3057,11 +3057,11 @@ namespace FolioLibrary
                         var jo = (JObject)js.Deserialize(jtr);
                         traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", jo);
                         ++i;
-                        --take;
-                        ++skip;
                         yield return jo;
                     }
-                    if (i == 0) break;
+                    if (i < Math.Min(take.Value, 10000)) break;
+                    skip += i;
+                    take -= i;
                 }
             }
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", s.Elapsed);
@@ -3202,11 +3202,11 @@ namespace FolioLibrary
                         var jo = (JObject)js.Deserialize(jtr);
                         traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", jo);
                         ++i;
-                        --take;
-                        ++skip;
                         yield return jo;
                     }
-                    if (i == 0) break;
+                    if (i < Math.Min(take.Value, 10000)) break;
+                    skip += i;
+                    take -= i;
                 }
             }
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", s.Elapsed);
@@ -3339,11 +3339,11 @@ namespace FolioLibrary
                         var jo = (JObject)js.Deserialize(jtr);
                         traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", jo);
                         ++i;
-                        --take;
-                        ++skip;
                         yield return jo;
                     }
-                    if (i == 0) break;
+                    if (i < Math.Min(take.Value, 10000)) break;
+                    skip += i;
+                    take -= i;
                 }
             }
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", s.Elapsed);
@@ -3476,11 +3476,11 @@ namespace FolioLibrary
                         var jo = (JObject)js.Deserialize(jtr);
                         traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", jo);
                         ++i;
-                        --take;
-                        ++skip;
                         yield return jo;
                     }
-                    if (i == 0) break;
+                    if (i < Math.Min(take.Value, 10000)) break;
+                    skip += i;
+                    take -= i;
                 }
             }
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", s.Elapsed);
@@ -3613,11 +3613,11 @@ namespace FolioLibrary
                         var jo = (JObject)js.Deserialize(jtr);
                         traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", jo);
                         ++i;
-                        --take;
-                        ++skip;
                         yield return jo;
                     }
-                    if (i == 0) break;
+                    if (i < Math.Min(take.Value, 10000)) break;
+                    skip += i;
+                    take -= i;
                 }
             }
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", s.Elapsed);
@@ -3750,11 +3750,11 @@ namespace FolioLibrary
                         var jo = (JObject)js.Deserialize(jtr);
                         traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", jo);
                         ++i;
-                        --take;
-                        ++skip;
                         yield return jo;
                     }
-                    if (i == 0) break;
+                    if (i < Math.Min(take.Value, 10000)) break;
+                    skip += i;
+                    take -= i;
                 }
             }
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", s.Elapsed);
@@ -3887,11 +3887,11 @@ namespace FolioLibrary
                         var jo = (JObject)js.Deserialize(jtr);
                         traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", jo);
                         ++i;
-                        --take;
-                        ++skip;
                         yield return jo;
                     }
-                    if (i == 0) break;
+                    if (i < Math.Min(take.Value, 10000)) break;
+                    skip += i;
+                    take -= i;
                 }
             }
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", s.Elapsed);
@@ -4024,11 +4024,11 @@ namespace FolioLibrary
                         var jo = (JObject)js.Deserialize(jtr);
                         traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", jo);
                         ++i;
-                        --take;
-                        ++skip;
                         yield return jo;
                     }
-                    if (i == 0) break;
+                    if (i < Math.Min(take.Value, 10000)) break;
+                    skip += i;
+                    take -= i;
                 }
             }
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", s.Elapsed);
@@ -4161,11 +4161,11 @@ namespace FolioLibrary
                         var jo = (JObject)js.Deserialize(jtr);
                         traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", jo);
                         ++i;
-                        --take;
-                        ++skip;
                         yield return jo;
                     }
-                    if (i == 0) break;
+                    if (i < Math.Min(take.Value, 10000)) break;
+                    skip += i;
+                    take -= i;
                 }
             }
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", s.Elapsed);
@@ -4298,11 +4298,11 @@ namespace FolioLibrary
                         var jo = (JObject)js.Deserialize(jtr);
                         traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", jo);
                         ++i;
-                        --take;
-                        ++skip;
                         yield return jo;
                     }
-                    if (i == 0) break;
+                    if (i < Math.Min(take.Value, 10000)) break;
+                    skip += i;
+                    take -= i;
                 }
             }
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", s.Elapsed);
@@ -4435,11 +4435,11 @@ namespace FolioLibrary
                         var jo = (JObject)js.Deserialize(jtr);
                         traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", jo);
                         ++i;
-                        --take;
-                        ++skip;
                         yield return jo;
                     }
-                    if (i == 0) break;
+                    if (i < Math.Min(take.Value, 10000)) break;
+                    skip += i;
+                    take -= i;
                 }
             }
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", s.Elapsed);
@@ -4572,11 +4572,11 @@ namespace FolioLibrary
                         var jo = (JObject)js.Deserialize(jtr);
                         traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", jo);
                         ++i;
-                        --take;
-                        ++skip;
                         yield return jo;
                     }
-                    if (i == 0) break;
+                    if (i < Math.Min(take.Value, 10000)) break;
+                    skip += i;
+                    take -= i;
                 }
             }
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", s.Elapsed);
@@ -4729,11 +4729,11 @@ namespace FolioLibrary
                         var jo = (JObject)js.Deserialize(jtr);
                         traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", jo);
                         ++i;
-                        --take;
-                        ++skip;
                         yield return jo;
                     }
-                    if (i == 0) break;
+                    if (i < Math.Min(take.Value, 10000)) break;
+                    skip += i;
+                    take -= i;
                 }
             }
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", s.Elapsed);
@@ -4866,11 +4866,11 @@ namespace FolioLibrary
                         var jo = (JObject)js.Deserialize(jtr);
                         traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", jo);
                         ++i;
-                        --take;
-                        ++skip;
                         yield return jo;
                     }
-                    if (i == 0) break;
+                    if (i < Math.Min(take.Value, 10000)) break;
+                    skip += i;
+                    take -= i;
                 }
             }
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", s.Elapsed);
@@ -5037,11 +5037,11 @@ namespace FolioLibrary
                         var jo = (JObject)js.Deserialize(jtr);
                         traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", jo);
                         ++i;
-                        --take;
-                        ++skip;
                         yield return jo;
                     }
-                    if (i == 0) break;
+                    if (i < Math.Min(take.Value, 10000)) break;
+                    skip += i;
+                    take -= i;
                 }
             }
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", s.Elapsed);
@@ -5174,11 +5174,11 @@ namespace FolioLibrary
                         var jo = (JObject)js.Deserialize(jtr);
                         traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", jo);
                         ++i;
-                        --take;
-                        ++skip;
                         yield return jo;
                     }
-                    if (i == 0) break;
+                    if (i < Math.Min(take.Value, 10000)) break;
+                    skip += i;
+                    take -= i;
                 }
             }
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", s.Elapsed);
@@ -5311,11 +5311,11 @@ namespace FolioLibrary
                         var jo = (JObject)js.Deserialize(jtr);
                         traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", jo);
                         ++i;
-                        --take;
-                        ++skip;
                         yield return jo;
                     }
-                    if (i == 0) break;
+                    if (i < Math.Min(take.Value, 10000)) break;
+                    skip += i;
+                    take -= i;
                 }
             }
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", s.Elapsed);
@@ -5468,11 +5468,11 @@ namespace FolioLibrary
                         var jo = (JObject)js.Deserialize(jtr);
                         traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", jo);
                         ++i;
-                        --take;
-                        ++skip;
                         yield return jo;
                     }
-                    if (i == 0) break;
+                    if (i < Math.Min(take.Value, 10000)) break;
+                    skip += i;
+                    take -= i;
                 }
             }
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", s.Elapsed);
@@ -5605,11 +5605,11 @@ namespace FolioLibrary
                         var jo = (JObject)js.Deserialize(jtr);
                         traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", jo);
                         ++i;
-                        --take;
-                        ++skip;
                         yield return jo;
                     }
-                    if (i == 0) break;
+                    if (i < Math.Min(take.Value, 10000)) break;
+                    skip += i;
+                    take -= i;
                 }
             }
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", s.Elapsed);
@@ -5742,11 +5742,11 @@ namespace FolioLibrary
                         var jo = (JObject)js.Deserialize(jtr);
                         traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", jo);
                         ++i;
-                        --take;
-                        ++skip;
                         yield return jo;
                     }
-                    if (i == 0) break;
+                    if (i < Math.Min(take.Value, 10000)) break;
+                    skip += i;
+                    take -= i;
                 }
             }
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", s.Elapsed);
@@ -5879,11 +5879,11 @@ namespace FolioLibrary
                         var jo = (JObject)js.Deserialize(jtr);
                         traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", jo);
                         ++i;
-                        --take;
-                        ++skip;
                         yield return jo;
                     }
-                    if (i == 0) break;
+                    if (i < Math.Min(take.Value, 10000)) break;
+                    skip += i;
+                    take -= i;
                 }
             }
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", s.Elapsed);
@@ -6016,11 +6016,11 @@ namespace FolioLibrary
                         var jo = (JObject)js.Deserialize(jtr);
                         traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", jo);
                         ++i;
-                        --take;
-                        ++skip;
                         yield return jo;
                     }
-                    if (i == 0) break;
+                    if (i < Math.Min(take.Value, 10000)) break;
+                    skip += i;
+                    take -= i;
                 }
             }
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", s.Elapsed);
@@ -6153,11 +6153,11 @@ namespace FolioLibrary
                         var jo = (JObject)js.Deserialize(jtr);
                         traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", jo);
                         ++i;
-                        --take;
-                        ++skip;
                         yield return jo;
                     }
-                    if (i == 0) break;
+                    if (i < Math.Min(take.Value, 10000)) break;
+                    skip += i;
+                    take -= i;
                 }
             }
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", s.Elapsed);
@@ -6290,11 +6290,11 @@ namespace FolioLibrary
                         var jo = (JObject)js.Deserialize(jtr);
                         traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", jo);
                         ++i;
-                        --take;
-                        ++skip;
                         yield return jo;
                     }
-                    if (i == 0) break;
+                    if (i < Math.Min(take.Value, 10000)) break;
+                    skip += i;
+                    take -= i;
                 }
             }
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", s.Elapsed);
@@ -6427,11 +6427,11 @@ namespace FolioLibrary
                         var jo = (JObject)js.Deserialize(jtr);
                         traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", jo);
                         ++i;
-                        --take;
-                        ++skip;
                         yield return jo;
                     }
-                    if (i == 0) break;
+                    if (i < Math.Min(take.Value, 10000)) break;
+                    skip += i;
+                    take -= i;
                 }
             }
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", s.Elapsed);
@@ -6564,11 +6564,11 @@ namespace FolioLibrary
                         var jo = (JObject)js.Deserialize(jtr);
                         traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", jo);
                         ++i;
-                        --take;
-                        ++skip;
                         yield return jo;
                     }
-                    if (i == 0) break;
+                    if (i < Math.Min(take.Value, 10000)) break;
+                    skip += i;
+                    take -= i;
                 }
             }
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", s.Elapsed);
@@ -6701,11 +6701,11 @@ namespace FolioLibrary
                         var jo = (JObject)js.Deserialize(jtr);
                         traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", jo);
                         ++i;
-                        --take;
-                        ++skip;
                         yield return jo;
                     }
-                    if (i == 0) break;
+                    if (i < Math.Min(take.Value, 10000)) break;
+                    skip += i;
+                    take -= i;
                 }
             }
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", s.Elapsed);
@@ -6838,11 +6838,11 @@ namespace FolioLibrary
                         var jo = (JObject)js.Deserialize(jtr);
                         traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", jo);
                         ++i;
-                        --take;
-                        ++skip;
                         yield return jo;
                     }
-                    if (i == 0) break;
+                    if (i < Math.Min(take.Value, 10000)) break;
+                    skip += i;
+                    take -= i;
                 }
             }
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", s.Elapsed);
@@ -6995,11 +6995,11 @@ namespace FolioLibrary
                         var jo = (JObject)js.Deserialize(jtr);
                         traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", jo);
                         ++i;
-                        --take;
-                        ++skip;
                         yield return jo;
                     }
-                    if (i == 0) break;
+                    if (i < Math.Min(take.Value, 10000)) break;
+                    skip += i;
+                    take -= i;
                 }
             }
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", s.Elapsed);
@@ -7132,11 +7132,11 @@ namespace FolioLibrary
                         var jo = (JObject)js.Deserialize(jtr);
                         traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", jo);
                         ++i;
-                        --take;
-                        ++skip;
                         yield return jo;
                     }
-                    if (i == 0) break;
+                    if (i < Math.Min(take.Value, 10000)) break;
+                    skip += i;
+                    take -= i;
                 }
             }
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", s.Elapsed);
@@ -7269,11 +7269,11 @@ namespace FolioLibrary
                         var jo = (JObject)js.Deserialize(jtr);
                         traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", jo);
                         ++i;
-                        --take;
-                        ++skip;
                         yield return jo;
                     }
-                    if (i == 0) break;
+                    if (i < Math.Min(take.Value, 10000)) break;
+                    skip += i;
+                    take -= i;
                 }
             }
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", s.Elapsed);
@@ -7406,11 +7406,11 @@ namespace FolioLibrary
                         var jo = (JObject)js.Deserialize(jtr);
                         traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", jo);
                         ++i;
-                        --take;
-                        ++skip;
                         yield return jo;
                     }
-                    if (i == 0) break;
+                    if (i < Math.Min(take.Value, 10000)) break;
+                    skip += i;
+                    take -= i;
                 }
             }
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", s.Elapsed);
@@ -7543,11 +7543,11 @@ namespace FolioLibrary
                         var jo = (JObject)js.Deserialize(jtr);
                         traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", jo);
                         ++i;
-                        --take;
-                        ++skip;
                         yield return jo;
                     }
-                    if (i == 0) break;
+                    if (i < Math.Min(take.Value, 10000)) break;
+                    skip += i;
+                    take -= i;
                 }
             }
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", s.Elapsed);
@@ -7680,11 +7680,11 @@ namespace FolioLibrary
                         var jo = (JObject)js.Deserialize(jtr);
                         traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", jo);
                         ++i;
-                        --take;
-                        ++skip;
                         yield return jo;
                     }
-                    if (i == 0) break;
+                    if (i < Math.Min(take.Value, 10000)) break;
+                    skip += i;
+                    take -= i;
                 }
             }
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", s.Elapsed);
@@ -7817,11 +7817,11 @@ namespace FolioLibrary
                         var jo = (JObject)js.Deserialize(jtr);
                         traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", jo);
                         ++i;
-                        --take;
-                        ++skip;
                         yield return jo;
                     }
-                    if (i == 0) break;
+                    if (i < Math.Min(take.Value, 10000)) break;
+                    skip += i;
+                    take -= i;
                 }
             }
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", s.Elapsed);
@@ -7954,11 +7954,11 @@ namespace FolioLibrary
                         var jo = (JObject)js.Deserialize(jtr);
                         traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", jo);
                         ++i;
-                        --take;
-                        ++skip;
                         yield return jo;
                     }
-                    if (i == 0) break;
+                    if (i < Math.Min(take.Value, 10000)) break;
+                    skip += i;
+                    take -= i;
                 }
             }
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", s.Elapsed);
@@ -8091,11 +8091,11 @@ namespace FolioLibrary
                         var jo = (JObject)js.Deserialize(jtr);
                         traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", jo);
                         ++i;
-                        --take;
-                        ++skip;
                         yield return jo;
                     }
-                    if (i == 0) break;
+                    if (i < Math.Min(take.Value, 10000)) break;
+                    skip += i;
+                    take -= i;
                 }
             }
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", s.Elapsed);
@@ -8228,11 +8228,11 @@ namespace FolioLibrary
                         var jo = (JObject)js.Deserialize(jtr);
                         traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", jo);
                         ++i;
-                        --take;
-                        ++skip;
                         yield return jo;
                     }
-                    if (i == 0) break;
+                    if (i < Math.Min(take.Value, 10000)) break;
+                    skip += i;
+                    take -= i;
                 }
             }
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", s.Elapsed);
@@ -8365,11 +8365,11 @@ namespace FolioLibrary
                         var jo = (JObject)js.Deserialize(jtr);
                         traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", jo);
                         ++i;
-                        --take;
-                        ++skip;
                         yield return jo;
                     }
-                    if (i == 0) break;
+                    if (i < Math.Min(take.Value, 10000)) break;
+                    skip += i;
+                    take -= i;
                 }
             }
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", s.Elapsed);
@@ -8502,11 +8502,11 @@ namespace FolioLibrary
                         var jo = (JObject)js.Deserialize(jtr);
                         traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", jo);
                         ++i;
-                        --take;
-                        ++skip;
                         yield return jo;
                     }
-                    if (i == 0) break;
+                    if (i < Math.Min(take.Value, 10000)) break;
+                    skip += i;
+                    take -= i;
                 }
             }
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", s.Elapsed);
@@ -8639,11 +8639,11 @@ namespace FolioLibrary
                         var jo = (JObject)js.Deserialize(jtr);
                         traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", jo);
                         ++i;
-                        --take;
-                        ++skip;
                         yield return jo;
                     }
-                    if (i == 0) break;
+                    if (i < Math.Min(take.Value, 10000)) break;
+                    skip += i;
+                    take -= i;
                 }
             }
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", s.Elapsed);
@@ -8776,11 +8776,11 @@ namespace FolioLibrary
                         var jo = (JObject)js.Deserialize(jtr);
                         traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", jo);
                         ++i;
-                        --take;
-                        ++skip;
                         yield return jo;
                     }
-                    if (i == 0) break;
+                    if (i < Math.Min(take.Value, 10000)) break;
+                    skip += i;
+                    take -= i;
                 }
             }
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", s.Elapsed);
@@ -8913,11 +8913,11 @@ namespace FolioLibrary
                         var jo = (JObject)js.Deserialize(jtr);
                         traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", jo);
                         ++i;
-                        --take;
-                        ++skip;
                         yield return jo;
                     }
-                    if (i == 0) break;
+                    if (i < Math.Min(take.Value, 10000)) break;
+                    skip += i;
+                    take -= i;
                 }
             }
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", s.Elapsed);
@@ -9050,11 +9050,11 @@ namespace FolioLibrary
                         var jo = (JObject)js.Deserialize(jtr);
                         traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", jo);
                         ++i;
-                        --take;
-                        ++skip;
                         yield return jo;
                     }
-                    if (i == 0) break;
+                    if (i < Math.Min(take.Value, 10000)) break;
+                    skip += i;
+                    take -= i;
                 }
             }
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", s.Elapsed);
@@ -9187,11 +9187,11 @@ namespace FolioLibrary
                         var jo = (JObject)js.Deserialize(jtr);
                         traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", jo);
                         ++i;
-                        --take;
-                        ++skip;
                         yield return jo;
                     }
-                    if (i == 0) break;
+                    if (i < Math.Min(take.Value, 10000)) break;
+                    skip += i;
+                    take -= i;
                 }
             }
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", s.Elapsed);
@@ -9324,11 +9324,11 @@ namespace FolioLibrary
                         var jo = (JObject)js.Deserialize(jtr);
                         traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", jo);
                         ++i;
-                        --take;
-                        ++skip;
                         yield return jo;
                     }
-                    if (i == 0) break;
+                    if (i < Math.Min(take.Value, 10000)) break;
+                    skip += i;
+                    take -= i;
                 }
             }
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", s.Elapsed);
@@ -9461,11 +9461,11 @@ namespace FolioLibrary
                         var jo = (JObject)js.Deserialize(jtr);
                         traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", jo);
                         ++i;
-                        --take;
-                        ++skip;
                         yield return jo;
                     }
-                    if (i == 0) break;
+                    if (i < Math.Min(take.Value, 10000)) break;
+                    skip += i;
+                    take -= i;
                 }
             }
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", s.Elapsed);
@@ -9598,11 +9598,11 @@ namespace FolioLibrary
                         var jo = (JObject)js.Deserialize(jtr);
                         traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", jo);
                         ++i;
-                        --take;
-                        ++skip;
                         yield return jo;
                     }
-                    if (i == 0) break;
+                    if (i < Math.Min(take.Value, 10000)) break;
+                    skip += i;
+                    take -= i;
                 }
             }
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", s.Elapsed);
@@ -9735,11 +9735,11 @@ namespace FolioLibrary
                         var jo = (JObject)js.Deserialize(jtr);
                         traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", jo);
                         ++i;
-                        --take;
-                        ++skip;
                         yield return jo;
                     }
-                    if (i == 0) break;
+                    if (i < Math.Min(take.Value, 10000)) break;
+                    skip += i;
+                    take -= i;
                 }
             }
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", s.Elapsed);
@@ -9872,11 +9872,11 @@ namespace FolioLibrary
                         var jo = (JObject)js.Deserialize(jtr);
                         traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", jo);
                         ++i;
-                        --take;
-                        ++skip;
                         yield return jo;
                     }
-                    if (i == 0) break;
+                    if (i < Math.Min(take.Value, 10000)) break;
+                    skip += i;
+                    take -= i;
                 }
             }
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", s.Elapsed);
@@ -10009,11 +10009,11 @@ namespace FolioLibrary
                         var jo = (JObject)js.Deserialize(jtr);
                         traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", jo);
                         ++i;
-                        --take;
-                        ++skip;
                         yield return jo;
                     }
-                    if (i == 0) break;
+                    if (i < Math.Min(take.Value, 10000)) break;
+                    skip += i;
+                    take -= i;
                 }
             }
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", s.Elapsed);
@@ -10146,11 +10146,11 @@ namespace FolioLibrary
                         var jo = (JObject)js.Deserialize(jtr);
                         traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", jo);
                         ++i;
-                        --take;
-                        ++skip;
                         yield return jo;
                     }
-                    if (i == 0) break;
+                    if (i < Math.Min(take.Value, 10000)) break;
+                    skip += i;
+                    take -= i;
                 }
             }
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", s.Elapsed);
@@ -10283,11 +10283,11 @@ namespace FolioLibrary
                         var jo = (JObject)js.Deserialize(jtr);
                         traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", jo);
                         ++i;
-                        --take;
-                        ++skip;
                         yield return jo;
                     }
-                    if (i == 0) break;
+                    if (i < Math.Min(take.Value, 10000)) break;
+                    skip += i;
+                    take -= i;
                 }
             }
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", s.Elapsed);
@@ -10420,11 +10420,11 @@ namespace FolioLibrary
                         var jo = (JObject)js.Deserialize(jtr);
                         traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", jo);
                         ++i;
-                        --take;
-                        ++skip;
                         yield return jo;
                     }
-                    if (i == 0) break;
+                    if (i < Math.Min(take.Value, 10000)) break;
+                    skip += i;
+                    take -= i;
                 }
             }
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", s.Elapsed);
@@ -10557,11 +10557,11 @@ namespace FolioLibrary
                         var jo = (JObject)js.Deserialize(jtr);
                         traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", jo);
                         ++i;
-                        --take;
-                        ++skip;
                         yield return jo;
                     }
-                    if (i == 0) break;
+                    if (i < Math.Min(take.Value, 10000)) break;
+                    skip += i;
+                    take -= i;
                 }
             }
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", s.Elapsed);
@@ -10694,11 +10694,11 @@ namespace FolioLibrary
                         var jo = (JObject)js.Deserialize(jtr);
                         traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", jo);
                         ++i;
-                        --take;
-                        ++skip;
                         yield return jo;
                     }
-                    if (i == 0) break;
+                    if (i < Math.Min(take.Value, 10000)) break;
+                    skip += i;
+                    take -= i;
                 }
             }
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", s.Elapsed);
@@ -10831,11 +10831,11 @@ namespace FolioLibrary
                         var jo = (JObject)js.Deserialize(jtr);
                         traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", jo);
                         ++i;
-                        --take;
-                        ++skip;
                         yield return jo;
                     }
-                    if (i == 0) break;
+                    if (i < Math.Min(take.Value, 10000)) break;
+                    skip += i;
+                    take -= i;
                 }
             }
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", s.Elapsed);
@@ -10968,11 +10968,11 @@ namespace FolioLibrary
                         var jo = (JObject)js.Deserialize(jtr);
                         traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", jo);
                         ++i;
-                        --take;
-                        ++skip;
                         yield return jo;
                     }
-                    if (i == 0) break;
+                    if (i < Math.Min(take.Value, 10000)) break;
+                    skip += i;
+                    take -= i;
                 }
             }
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", s.Elapsed);
@@ -11105,11 +11105,11 @@ namespace FolioLibrary
                         var jo = (JObject)js.Deserialize(jtr);
                         traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", jo);
                         ++i;
-                        --take;
-                        ++skip;
                         yield return jo;
                     }
-                    if (i == 0) break;
+                    if (i < Math.Min(take.Value, 10000)) break;
+                    skip += i;
+                    take -= i;
                 }
             }
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", s.Elapsed);
@@ -11242,11 +11242,11 @@ namespace FolioLibrary
                         var jo = (JObject)js.Deserialize(jtr);
                         traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", jo);
                         ++i;
-                        --take;
-                        ++skip;
                         yield return jo;
                     }
-                    if (i == 0) break;
+                    if (i < Math.Min(take.Value, 10000)) break;
+                    skip += i;
+                    take -= i;
                 }
             }
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", s.Elapsed);
@@ -11379,11 +11379,11 @@ namespace FolioLibrary
                         var jo = (JObject)js.Deserialize(jtr);
                         traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", jo);
                         ++i;
-                        --take;
-                        ++skip;
                         yield return jo;
                     }
-                    if (i == 0) break;
+                    if (i < Math.Min(take.Value, 10000)) break;
+                    skip += i;
+                    take -= i;
                 }
             }
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", s.Elapsed);
@@ -11516,11 +11516,11 @@ namespace FolioLibrary
                         var jo = (JObject)js.Deserialize(jtr);
                         traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", jo);
                         ++i;
-                        --take;
-                        ++skip;
                         yield return jo;
                     }
-                    if (i == 0) break;
+                    if (i < Math.Min(take.Value, 10000)) break;
+                    skip += i;
+                    take -= i;
                 }
             }
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", s.Elapsed);
@@ -11653,11 +11653,11 @@ namespace FolioLibrary
                         var jo = (JObject)js.Deserialize(jtr);
                         traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", jo);
                         ++i;
-                        --take;
-                        ++skip;
                         yield return jo;
                     }
-                    if (i == 0) break;
+                    if (i < Math.Min(take.Value, 10000)) break;
+                    skip += i;
+                    take -= i;
                 }
             }
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", s.Elapsed);
@@ -11810,11 +11810,11 @@ namespace FolioLibrary
                         var jo = (JObject)js.Deserialize(jtr);
                         traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", jo);
                         ++i;
-                        --take;
-                        ++skip;
                         yield return jo;
                     }
-                    if (i == 0) break;
+                    if (i < Math.Min(take.Value, 10000)) break;
+                    skip += i;
+                    take -= i;
                 }
             }
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", s.Elapsed);
@@ -11947,11 +11947,11 @@ namespace FolioLibrary
                         var jo = (JObject)js.Deserialize(jtr);
                         traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", jo);
                         ++i;
-                        --take;
-                        ++skip;
                         yield return jo;
                     }
-                    if (i == 0) break;
+                    if (i < Math.Min(take.Value, 10000)) break;
+                    skip += i;
+                    take -= i;
                 }
             }
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", s.Elapsed);
@@ -12084,11 +12084,11 @@ namespace FolioLibrary
                         var jo = (JObject)js.Deserialize(jtr);
                         traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", jo);
                         ++i;
-                        --take;
-                        ++skip;
                         yield return jo;
                     }
-                    if (i == 0) break;
+                    if (i < Math.Min(take.Value, 10000)) break;
+                    skip += i;
+                    take -= i;
                 }
             }
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", s.Elapsed);
@@ -12221,11 +12221,11 @@ namespace FolioLibrary
                         var jo = (JObject)js.Deserialize(jtr);
                         traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", jo);
                         ++i;
-                        --take;
-                        ++skip;
                         yield return jo;
                     }
-                    if (i == 0) break;
+                    if (i < Math.Min(take.Value, 10000)) break;
+                    skip += i;
+                    take -= i;
                 }
             }
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", s.Elapsed);
@@ -12358,11 +12358,11 @@ namespace FolioLibrary
                         var jo = (JObject)js.Deserialize(jtr);
                         traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", jo);
                         ++i;
-                        --take;
-                        ++skip;
                         yield return jo;
                     }
-                    if (i == 0) break;
+                    if (i < Math.Min(take.Value, 10000)) break;
+                    skip += i;
+                    take -= i;
                 }
             }
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", s.Elapsed);
@@ -12495,11 +12495,11 @@ namespace FolioLibrary
                         var jo = (JObject)js.Deserialize(jtr);
                         traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", jo);
                         ++i;
-                        --take;
-                        ++skip;
                         yield return jo;
                     }
-                    if (i == 0) break;
+                    if (i < Math.Min(take.Value, 10000)) break;
+                    skip += i;
+                    take -= i;
                 }
             }
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", s.Elapsed);
@@ -12632,11 +12632,11 @@ namespace FolioLibrary
                         var jo = (JObject)js.Deserialize(jtr);
                         traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", jo);
                         ++i;
-                        --take;
-                        ++skip;
                         yield return jo;
                     }
-                    if (i == 0) break;
+                    if (i < Math.Min(take.Value, 10000)) break;
+                    skip += i;
+                    take -= i;
                 }
             }
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", s.Elapsed);
@@ -12769,11 +12769,11 @@ namespace FolioLibrary
                         var jo = (JObject)js.Deserialize(jtr);
                         traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", jo);
                         ++i;
-                        --take;
-                        ++skip;
                         yield return jo;
                     }
-                    if (i == 0) break;
+                    if (i < Math.Min(take.Value, 10000)) break;
+                    skip += i;
+                    take -= i;
                 }
             }
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", s.Elapsed);
@@ -12906,11 +12906,11 @@ namespace FolioLibrary
                         var jo = (JObject)js.Deserialize(jtr);
                         traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", jo);
                         ++i;
-                        --take;
-                        ++skip;
                         yield return jo;
                     }
-                    if (i == 0) break;
+                    if (i < Math.Min(take.Value, 10000)) break;
+                    skip += i;
+                    take -= i;
                 }
             }
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", s.Elapsed);
@@ -13043,11 +13043,11 @@ namespace FolioLibrary
                         var jo = (JObject)js.Deserialize(jtr);
                         traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", jo);
                         ++i;
-                        --take;
-                        ++skip;
                         yield return jo;
                     }
-                    if (i == 0) break;
+                    if (i < Math.Min(take.Value, 10000)) break;
+                    skip += i;
+                    take -= i;
                 }
             }
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", s.Elapsed);
@@ -13180,11 +13180,11 @@ namespace FolioLibrary
                         var jo = (JObject)js.Deserialize(jtr);
                         traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", jo);
                         ++i;
-                        --take;
-                        ++skip;
                         yield return jo;
                     }
-                    if (i == 0) break;
+                    if (i < Math.Min(take.Value, 10000)) break;
+                    skip += i;
+                    take -= i;
                 }
             }
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", s.Elapsed);
@@ -13317,11 +13317,11 @@ namespace FolioLibrary
                         var jo = (JObject)js.Deserialize(jtr);
                         traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", jo);
                         ++i;
-                        --take;
-                        ++skip;
                         yield return jo;
                     }
-                    if (i == 0) break;
+                    if (i < Math.Min(take.Value, 10000)) break;
+                    skip += i;
+                    take -= i;
                 }
             }
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", s.Elapsed);
@@ -13454,11 +13454,11 @@ namespace FolioLibrary
                         var jo = (JObject)js.Deserialize(jtr);
                         traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", jo);
                         ++i;
-                        --take;
-                        ++skip;
                         yield return jo;
                     }
-                    if (i == 0) break;
+                    if (i < Math.Min(take.Value, 10000)) break;
+                    skip += i;
+                    take -= i;
                 }
             }
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", s.Elapsed);
@@ -13591,11 +13591,11 @@ namespace FolioLibrary
                         var jo = (JObject)js.Deserialize(jtr);
                         traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", jo);
                         ++i;
-                        --take;
-                        ++skip;
                         yield return jo;
                     }
-                    if (i == 0) break;
+                    if (i < Math.Min(take.Value, 10000)) break;
+                    skip += i;
+                    take -= i;
                 }
             }
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", s.Elapsed);
@@ -13728,11 +13728,11 @@ namespace FolioLibrary
                         var jo = (JObject)js.Deserialize(jtr);
                         traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", jo);
                         ++i;
-                        --take;
-                        ++skip;
                         yield return jo;
                     }
-                    if (i == 0) break;
+                    if (i < Math.Min(take.Value, 10000)) break;
+                    skip += i;
+                    take -= i;
                 }
             }
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", s.Elapsed);
@@ -13865,11 +13865,11 @@ namespace FolioLibrary
                         var jo = (JObject)js.Deserialize(jtr);
                         traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", jo);
                         ++i;
-                        --take;
-                        ++skip;
                         yield return jo;
                     }
-                    if (i == 0) break;
+                    if (i < Math.Min(take.Value, 10000)) break;
+                    skip += i;
+                    take -= i;
                 }
             }
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", s.Elapsed);
@@ -14002,11 +14002,11 @@ namespace FolioLibrary
                         var jo = (JObject)js.Deserialize(jtr);
                         traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", jo);
                         ++i;
-                        --take;
-                        ++skip;
                         yield return jo;
                     }
-                    if (i == 0) break;
+                    if (i < Math.Min(take.Value, 10000)) break;
+                    skip += i;
+                    take -= i;
                 }
             }
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", s.Elapsed);
@@ -14139,11 +14139,11 @@ namespace FolioLibrary
                         var jo = (JObject)js.Deserialize(jtr);
                         traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", jo);
                         ++i;
-                        --take;
-                        ++skip;
                         yield return jo;
                     }
-                    if (i == 0) break;
+                    if (i < Math.Min(take.Value, 10000)) break;
+                    skip += i;
+                    take -= i;
                 }
             }
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", s.Elapsed);
@@ -14276,11 +14276,11 @@ namespace FolioLibrary
                         var jo = (JObject)js.Deserialize(jtr);
                         traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", jo);
                         ++i;
-                        --take;
-                        ++skip;
                         yield return jo;
                     }
-                    if (i == 0) break;
+                    if (i < Math.Min(take.Value, 10000)) break;
+                    skip += i;
+                    take -= i;
                 }
             }
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", s.Elapsed);
@@ -14432,11 +14432,11 @@ namespace FolioLibrary
                         var jo = (JObject)js.Deserialize(jtr);
                         traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", jo);
                         ++i;
-                        --take;
-                        ++skip;
                         yield return jo;
                     }
-                    if (i == 0) break;
+                    if (i < Math.Min(take.Value, 10000)) break;
+                    skip += i;
+                    take -= i;
                 }
             }
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", s.Elapsed);
@@ -14569,11 +14569,11 @@ namespace FolioLibrary
                         var jo = (JObject)js.Deserialize(jtr);
                         traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", jo);
                         ++i;
-                        --take;
-                        ++skip;
                         yield return jo;
                     }
-                    if (i == 0) break;
+                    if (i < Math.Min(take.Value, 10000)) break;
+                    skip += i;
+                    take -= i;
                 }
             }
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", s.Elapsed);
@@ -14706,11 +14706,11 @@ namespace FolioLibrary
                         var jo = (JObject)js.Deserialize(jtr);
                         traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", jo);
                         ++i;
-                        --take;
-                        ++skip;
                         yield return jo;
                     }
-                    if (i == 0) break;
+                    if (i < Math.Min(take.Value, 10000)) break;
+                    skip += i;
+                    take -= i;
                 }
             }
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", s.Elapsed);
@@ -14843,11 +14843,11 @@ namespace FolioLibrary
                         var jo = (JObject)js.Deserialize(jtr);
                         traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", jo);
                         ++i;
-                        --take;
-                        ++skip;
                         yield return jo;
                     }
-                    if (i == 0) break;
+                    if (i < Math.Min(take.Value, 10000)) break;
+                    skip += i;
+                    take -= i;
                 }
             }
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", s.Elapsed);
@@ -14980,11 +14980,11 @@ namespace FolioLibrary
                         var jo = (JObject)js.Deserialize(jtr);
                         traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", jo);
                         ++i;
-                        --take;
-                        ++skip;
                         yield return jo;
                     }
-                    if (i == 0) break;
+                    if (i < Math.Min(take.Value, 10000)) break;
+                    skip += i;
+                    take -= i;
                 }
             }
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", s.Elapsed);
