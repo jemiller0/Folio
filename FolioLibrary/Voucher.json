@@ -131,7 +131,6 @@
     }
   },
   "required": [
-    "accountingCode",
     "amount",
     "batchGroupId",
     "exportToAccounting",

@@ -1,43 +1,37 @@
-using NJsonSchema;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.IO;
-using System.Linq;
-using System.Reflection;
 
 namespace FolioLibrary
 {
-    [Table("snapshots", Schema = "diku_mod_source_record_storage")]
+    [Table("snapshots_lb", Schema = "diku_mod_source_record_storage")]
     public partial class Snapshot
     {
-        public static ValidationResult ValidateContent(string value)
-        {
-            using (var sr = new StreamReader(Assembly.GetExecutingAssembly().GetManifestResourceStream("FolioLibrary.Snapshot.json")))
-            {
-                var js = JsonSchema.FromJsonAsync(sr.ReadToEndAsync().Result).Result;
-                var l = js.Validate(value);
-                if (l.Any()) return new ValidationResult($"The Content field is invalid. {string.Join(" ", l.Select(ve => ve.ToString()))}", new[] { "Content" });
-            }
-            return ValidationResult.Success;
-        }
-
-        [Column("id"), Display(Order = 1), Editable(false)]
+        [Column("id"), ScaffoldColumn(false)]
         public virtual Guid? Id { get; set; }
 
-        [Column("jsonb"), CustomValidation(typeof(Snapshot), nameof(ValidateContent)), DataType(DataType.MultilineText), Display(Order = 2), Required]
-        public virtual string Content { get; set; }
+        [Column("status"), Display(Order = 2), Editable(false), StringLength(1024)]
+        public virtual string Status { get; set; }
 
-        [Column("creation_date"), DataType(DataType.DateTime), Display(Name = "Creation Time", Order = 3), DisplayFormat(DataFormatString = "{0:g}"), Editable(false)]
+        [Column("processing_started_date"), DataType(DataType.Date), Display(Name = "Processing Started Date", Order = 3), DisplayFormat(DataFormatString = "{0:d}"), Editable(false)]
+        public virtual DateTime? ProcessingStartedDate { get; set; }
+
+        [Column("created_by_user_id"), Display(Name = "Creation User Id", Order = 4), Editable(false)]
+        public virtual Guid? CreationUserId { get; set; }
+
+        [Column("created_date"), DataType(DataType.DateTime), Display(Name = "Creation Time", Order = 5), DisplayFormat(DataFormatString = "{0:g}"), Editable(false)]
         public virtual DateTime? CreationTime { get; set; }
 
-        [Column("created_by"), Display(Name = "Creation User Id", Order = 4), Editable(false)]
-        public virtual string CreationUserId { get; set; }
+        [Column("updated_by_user_id"), Display(Name = "Last Write User Id", Order = 6), Editable(false)]
+        public virtual Guid? LastWriteUserId { get; set; }
+
+        [Column("updated_date"), DataType(DataType.DateTime), Display(Name = "Last Write Time", Order = 7), DisplayFormat(DataFormatString = "{0:g}"), Editable(false)]
+        public virtual DateTime? LastWriteTime { get; set; }
 
         [ScaffoldColumn(false)]
         public virtual ICollection<Record> Records { get; set; }
 
-        public override string ToString() => $"{{ {nameof(Id)} = {Id}, {nameof(Content)} = {Content}, {nameof(CreationTime)} = {CreationTime}, {nameof(CreationUserId)} = {CreationUserId} }}";
+        public override string ToString() => $"{{ {nameof(Id)} = {Id}, {nameof(Status)} = {Status}, {nameof(ProcessingStartedDate)} = {ProcessingStartedDate}, {nameof(CreationUserId)} = {CreationUserId}, {nameof(CreationTime)} = {CreationTime}, {nameof(LastWriteUserId)} = {LastWriteUserId}, {nameof(LastWriteTime)} = {LastWriteTime} }}";
     }
 }

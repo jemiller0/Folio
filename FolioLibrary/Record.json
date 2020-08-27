@@ -1,22 +1,24 @@
 {
   "$schema": "http://json-schema.org/draft-04/schema#",
-  "description": "Record Data Model",
+  "description": "Record DTO Schema",
   "type": "object",
   "additionalProperties": false,
   "properties": {
     "id": {
-      "description": "The UUID format string",
-      "type": "string",
-      "pattern": "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-5][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}$"
+      "description": "UUID",
+      "type": "string"
     },
     "snapshotId": {
-      "$ref": "#/properties/id"
+      "description": "Corresponding snapshot id, which is the same as jobExecutionId",
+      "type": "string"
     },
     "matchedProfileId": {
-      "$ref": "#/properties/id"
+      "description": "Id of the matcher profile which is applied for the record",
+      "type": "string"
     },
     "matchedId": {
-      "$ref": "#/properties/id"
+      "description": "Represents relations with another matched records, necessary for saving the history of applying changes for inventory/holding/etc records",
+      "type": "string"
     },
     "generation": {
       "description": "Generation from the last record with the same matchedId incremented by 1. Starts from 0.",
@@ -31,36 +33,81 @@
         "MARC"
       ]
     },
-    "rawRecordId": {
-      "$ref": "#/properties/id"
-    },
-    "parsedRecordId": {
-      "$ref": "#/properties/id"
-    },
-    "errorRecordId": {
-      "$ref": "#/properties/id"
-    },
-    "externalIdsHolder": {
-      "description": "Contains identifiers of external entities (instance, holding)",
+    "rawRecord": {
+      "description": "Raw Record data model",
+      "excludedFromEqualsAndHashCode": [
+        "content"
+      ],
       "type": "object",
       "additionalProperties": false,
       "properties": {
-        "instanceId": {
-          "description": "The UUID format string",
-          "type": "string",
-          "pattern": "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-5][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}$"
+        "id": {
+          "description": "UUID",
+          "type": "string"
+        },
+        "content": {
+          "description": "Raw data",
+          "type": "string"
         }
-      }
+      },
+      "required": [
+        "content"
+      ]
+    },
+    "parsedRecord": {
+      "description": "Parsed Record Schema",
+      "excludedFromEqualsAndHashCode": [
+        "content",
+        "formattedContent"
+      ],
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "description": "UUID",
+          "type": "string"
+        },
+        "content": {
+          "description": "Parsed record content, e.g. MARC record"
+        },
+        "formattedContent": {
+          "description": "Parsed content represented in human readable form",
+          "type": "string"
+        }
+      },
+      "required": [
+        "content"
+      ]
+    },
+    "errorRecord": {
+      "description": "Error Record data model",
+      "excludedFromEqualsAndHashCode": [
+        "content"
+      ],
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "description": "UUID",
+          "type": "string"
+        },
+        "description": {
+          "description": "Error description",
+          "type": "string"
+        },
+        "content": {
+          "description": "Record content"
+        }
+      },
+      "required": [
+        "description",
+        "content"
+      ]
     },
     "deleted": {
       "description": "Flag indicates that the record marked as deleted",
       "type": "boolean",
       "default": false
-    },
-    "order": {
-      "description": "Order of the record in imported file",
-      "type": "integer",
-      "minimum": 0.0
     },
     "additionalInfo": {
       "description": "Auxiliary data which is not related to MARC type record",
@@ -111,23 +158,12 @@
       "required": [
         "createdDate"
       ]
-    },
-    "state": {
-      "description": "This field represents the actual state of a particular SRS record. Can be: ACTUAL, OLD, DRAFT, DELETED. ",
-      "type": "string",
-      "default": "ACTUAL",
-      "enum": [
-        "ACTUAL",
-        "OLD",
-        "DRAFT",
-        "DELETED"
-      ]
     }
   },
   "required": [
     "snapshotId",
     "matchedId",
     "recordType",
-    "rawRecordId"
+    "rawRecord"
   ]
 }

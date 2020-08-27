@@ -49,6 +49,9 @@
               "percentage"
             ]
           },
+          "expenseClassId": {
+            "$ref": "#/properties/fundDistributions/items/properties/encumbrance"
+          },
           "value": {
             "description": "The percentage of the cost to be applied to this fund",
             "type": "number"

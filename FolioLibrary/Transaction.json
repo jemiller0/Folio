@@ -1,6 +1,9 @@
 {
   "$schema": "http://json-schema.org/draft-04/schema#",
   "description": "A financial transaction",
+  "extends": {
+    "$ref": "../../common/schemas/entity.json"
+  },
   "type": "object",
   "additionalProperties": false,
   "properties": {
@@ -12,6 +15,23 @@
     "amount": {
       "description": "The amount of this transaction. For encumbrances: This is initialAmountEncumbered - (amountAwaitingPayment + amountExpended)",
       "type": "number"
+    },
+    "awaitingPayment": {
+      "description": "Awaiting payment schema",
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "encumbranceId": {
+          "description": "The UUID format string",
+          "type": "string",
+          "pattern": "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-5][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}$"
+        },
+        "releaseEncumbrance": {
+          "description": "Whether or not remaining encumbered money should be released",
+          "type": "boolean",
+          "default": false
+        }
+      }
     },
     "currency": {
       "description": "Currency code for this transaction - from the system currency",
@@ -27,7 +47,7 @@
       "additionalProperties": false,
       "properties": {
         "amountAwaitingPayment": {
-          "description": "The amount of awaiting for payment",
+          "description": "Deprecated! Going to be removed in next release. The amount of awaiting for payment",
           "type": "number",
           "default": 0
         },
@@ -47,7 +67,8 @@
           "default": "Unreleased",
           "enum": [
             "Released",
-            "Unreleased"
+            "Unreleased",
+            "Pending"
           ]
         },
         "orderType": {
@@ -67,12 +88,10 @@
           "type": "boolean"
         },
         "sourcePurchaseOrderId": {
-          "description": "The UUID format string",
-          "type": "string",
-          "pattern": "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-5][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}$"
+          "$ref": "#/properties/awaitingPayment/properties/encumbranceId"
         },
         "sourcePoLineId": {
-          "$ref": "#/properties/encumbrance/properties/sourcePurchaseOrderId"
+          "$ref": "#/properties/awaitingPayment/properties/encumbranceId"
         }
       },
       "required": [
@@ -84,6 +103,9 @@
         "sourcePurchaseOrderId",
         "sourcePoLineId"
       ]
+    },
+    "expenseClassId": {
+      "$ref": "#/properties/id"
     },
     "fiscalYearId": {
       "$ref": "#/properties/id"
@@ -99,7 +121,6 @@
       "type": "string",
       "enum": [
         "User",
-        "FiscalYear",
         "PoLine",
         "Invoice"
       ]
@@ -139,6 +160,7 @@
         "Credit",
         "Encumbrance",
         "Payment",
+        "Pending payment",
         "Transfer"
       ]
     },

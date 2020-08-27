@@ -33,6 +33,16 @@
       "description": "A UUID corresponding to the group the user belongs to",
       "type": "string"
     },
+    "departments": {
+      "description": "A UUIDs corresponding to the departments the user belongs to",
+      "type": "array",
+      "items": {
+        "description": "The UUID format string",
+        "type": "string",
+        "pattern": "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-5][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}$"
+      },
+      "uniqueItems": true
+    },
     "meta": {
       "description": "Deprecated",
       "type": "object"
@@ -59,6 +69,10 @@
         },
         "middleName": {
           "description": "The user's middle name (if any)",
+          "type": "string"
+        },
+        "preferredFirstName": {
+          "description": "The user's preferred name",
           "type": "string"
         },
         "email": {

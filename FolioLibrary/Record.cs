@@ -1,45 +1,66 @@
-using NJsonSchema;
 using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.IO;
-using System.Linq;
-using System.Reflection;
 
 namespace FolioLibrary
 {
-    [Table("records", Schema = "diku_mod_source_record_storage")]
+    [Table("records_lb", Schema = "diku_mod_source_record_storage")]
     public partial class Record
     {
-        public static ValidationResult ValidateContent(string value)
-        {
-            using (var sr = new StreamReader(Assembly.GetExecutingAssembly().GetManifestResourceStream("FolioLibrary.Record.json")))
-            {
-                var js = JsonSchema.FromJsonAsync(sr.ReadToEndAsync().Result).Result;
-                var l = js.Validate(value);
-                if (l.Any()) return new ValidationResult($"The Content field is invalid. {string.Join(" ", l.Select(ve => ve.ToString()))}", new[] { "Content" });
-            }
-            return ValidationResult.Success;
-        }
-
-        [Column("id"), Display(Order = 1), Editable(false)]
+        [Column("id"), ScaffoldColumn(false)]
         public virtual Guid? Id { get; set; }
 
-        [Column("jsonb"), CustomValidation(typeof(Record), nameof(ValidateContent)), DataType(DataType.MultilineText), Display(Order = 2), Required]
-        public virtual string Content { get; set; }
-
-        [Column("creation_date"), DataType(DataType.DateTime), Display(Name = "Creation Time", Order = 3), DisplayFormat(DataFormatString = "{0:g}"), Editable(false)]
-        public virtual DateTime? CreationTime { get; set; }
-
-        [Column("created_by"), Display(Name = "Creation User Id", Order = 4), Editable(false)]
-        public virtual string CreationUserId { get; set; }
-
-        [Column("jobexecutionid"), Display(Name = "Snapshot", Order = 5), Editable(false), ForeignKey("Snapshot")]
-        public virtual Guid? Jobexecutionid { get; set; }
-
-        [Display(Order = 6)]
+        [Display(Order = 2)]
         public virtual Snapshot Snapshot { get; set; }
 
-        public override string ToString() => $"{{ {nameof(Id)} = {Id}, {nameof(Content)} = {Content}, {nameof(CreationTime)} = {CreationTime}, {nameof(CreationUserId)} = {CreationUserId}, {nameof(Jobexecutionid)} = {Jobexecutionid} }}";
+        [Column("snapshot_id"), Display(Name = "Snapshot", Order = 3), Editable(false)]
+        public virtual Guid? SnapshotId { get; set; }
+
+        [Column("matched_id"), Display(Name = "Matched Id", Order = 4), Editable(false)]
+        public virtual Guid? MatchedId { get; set; }
+
+        [Column("generation"), Display(Order = 5), Editable(false)]
+        public virtual int? Generation { get; set; }
+
+        [Column("record_type"), Display(Name = "Record Type", Order = 6), Editable(false), StringLength(1024)]
+        public virtual string RecordType { get; set; }
+
+        [Column("instance_id"), Display(Name = "Instance Id", Order = 7), Editable(false)]
+        public virtual Guid? InstanceId { get; set; }
+
+        [Column("state"), Display(Order = 8), Editable(false), StringLength(1024)]
+        public virtual string State { get; set; }
+
+        [Column("leader_record_status"), Display(Name = "Leader Record Status", Order = 9), Editable(false), StringLength(1)]
+        public virtual string LeaderRecordStatus { get; set; }
+
+        [Column("order"), Display(Order = 10), Editable(false)]
+        public virtual int? Order { get; set; }
+
+        [Column("suppress_discovery"), Display(Name = "Suppress Discovery", Order = 11), Editable(false)]
+        public virtual bool? SuppressDiscovery { get; set; }
+
+        [Column("created_by_user_id"), Display(Name = "Creation User Id", Order = 12), Editable(false)]
+        public virtual Guid? CreationUserId { get; set; }
+
+        [Column("created_date"), DataType(DataType.DateTime), Display(Name = "Creation Time", Order = 13), DisplayFormat(DataFormatString = "{0:g}"), Editable(false)]
+        public virtual DateTime? CreationTime { get; set; }
+
+        [Column("updated_by_user_id"), Display(Name = "Last Write User Id", Order = 14), Editable(false)]
+        public virtual Guid? LastWriteUserId { get; set; }
+
+        [Column("updated_date"), DataType(DataType.DateTime), Display(Name = "Last Write Time", Order = 15), DisplayFormat(DataFormatString = "{0:g}"), Editable(false)]
+        public virtual DateTime? LastWriteTime { get; set; }
+
+        [Display(Name = "Error Record", Order = 16)]
+        public virtual ErrorRecord ErrorRecord { get; set; }
+
+        [Display(Name = "Marc Record", Order = 17)]
+        public virtual MarcRecord MarcRecord { get; set; }
+
+        [Display(Name = "Raw Record", Order = 18)]
+        public virtual RawRecord RawRecord { get; set; }
+
+        public override string ToString() => $"{{ {nameof(Id)} = {Id}, {nameof(SnapshotId)} = {SnapshotId}, {nameof(MatchedId)} = {MatchedId}, {nameof(Generation)} = {Generation}, {nameof(RecordType)} = {RecordType}, {nameof(InstanceId)} = {InstanceId}, {nameof(State)} = {State}, {nameof(LeaderRecordStatus)} = {LeaderRecordStatus}, {nameof(Order)} = {Order}, {nameof(SuppressDiscovery)} = {SuppressDiscovery}, {nameof(CreationUserId)} = {CreationUserId}, {nameof(CreationTime)} = {CreationTime}, {nameof(LastWriteUserId)} = {LastWriteUserId}, {nameof(LastWriteTime)} = {LastWriteTime} }}";
     }
 }

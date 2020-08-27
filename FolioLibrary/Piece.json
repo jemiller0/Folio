@@ -35,6 +35,9 @@
     "poLineId": {
       "$ref": "#/properties/id"
     },
+    "titleId": {
+      "$ref": "#/properties/id"
+    },
     "receivingStatus": {
       "description": "the status of this piece",
       "type": "string",
@@ -62,6 +65,7 @@
   "required": [
     "format",
     "poLineId",
+    "titleId",
     "receivingStatus"
   ]
 }

@@ -8,7 +8,7 @@ using System.Reflection;
 
 namespace FolioLibrary
 {
-    [Table("error_records", Schema = "diku_mod_source_record_storage")]
+    [Table("error_records_lb", Schema = "diku_mod_source_record_storage")]
     public partial class ErrorRecord
     {
         public static ValidationResult ValidateContent(string value)
@@ -22,18 +22,18 @@ namespace FolioLibrary
             return ValidationResult.Success;
         }
 
-        [Column("id"), Display(Order = 1), Editable(false)]
+        [Column("id"), Display(Name = "Record", Order = 1), Editable(false), ForeignKey("Record")]
         public virtual Guid? Id { get; set; }
 
-        [Column("jsonb"), CustomValidation(typeof(ErrorRecord), nameof(ValidateContent)), DataType(DataType.MultilineText), Display(Order = 2), Required]
+        [Display(Order = 2)]
+        public virtual Record Record { get; set; }
+
+        [Column("content"), CustomValidation(typeof(ErrorRecord), nameof(ValidateContent)), DataType(DataType.MultilineText), Display(Order = 3), Required]
         public virtual string Content { get; set; }
 
-        [Column("creation_date"), DataType(DataType.DateTime), Display(Name = "Creation Time", Order = 3), DisplayFormat(DataFormatString = "{0:g}"), Editable(false)]
-        public virtual DateTime? CreationTime { get; set; }
+        [Column("description"), Display(Order = 4), Editable(false), StringLength(1024)]
+        public virtual string Description { get; set; }
 
-        [Column("created_by"), Display(Name = "Creation User Id", Order = 4), Editable(false)]
-        public virtual string CreationUserId { get; set; }
-
-        public override string ToString() => $"{{ {nameof(Id)} = {Id}, {nameof(Content)} = {Content}, {nameof(CreationTime)} = {CreationTime}, {nameof(CreationUserId)} = {CreationUserId} }}";
+        public override string ToString() => $"{{ {nameof(Id)} = {Id}, {nameof(Content)} = {Content}, {nameof(Description)} = {Description} }}";
     }
 }

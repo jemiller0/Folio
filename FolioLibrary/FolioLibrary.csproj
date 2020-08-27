@@ -16,6 +16,8 @@
     <None Remove="BatchVoucherExport.json" />
     <None Remove="BatchVoucherExportConfig.json" />
     <None Remove="Block.json" />
+    <None Remove="BlockCondition.json" />
+    <None Remove="BlockLimit.json" />
     <None Remove="Budget.json" />
     <None Remove="CallNumberType.json" />
     <None Remove="Campus.json" />
@@ -70,6 +72,7 @@
     <None Remove="ItemNoteType.json" />
     <None Remove="JobExecution.json" />
     <None Remove="JobExecutionSourceChunk.json" />
+    <None Remove="JournalRecord.json" />
     <None Remove="Ledger.json" />
     <None Remove="LedgerFiscalYear.json" />
     <None Remove="Library.json" />
@@ -94,8 +97,6 @@
     <None Remove="OverdueFinePolicy.json" />
     <None Remove="Owner.json" />
     <None Remove="PatronActionSession.json" />
-    <None Remove="PatronBlockCondition.json" />
-    <None Remove="PatronBlockLimit.json" />
     <None Remove="PatronNoticePolicy.json" />
     <None Remove="Payment.json" />
     <None Remove="PaymentMethod.json" />
@@ -130,6 +131,7 @@
     <None Remove="User.json" />
     <None Remove="UserAcquisitionsUnit.json" />
     <None Remove="UserRequestPreference.json" />
+    <None Remove="UserSummary.json" />
     <None Remove="Voucher.json" />
     <None Remove="VoucherItem.json" />
     <None Remove="WaiveReason.json" />
@@ -146,6 +148,8 @@
     <EmbeddedResource Include="BatchVoucherExport.json" />
     <EmbeddedResource Include="BatchVoucherExportConfig.json" />
     <EmbeddedResource Include="Block.json" />
+    <EmbeddedResource Include="BlockCondition.json" />
+    <EmbeddedResource Include="BlockLimit.json" />
     <EmbeddedResource Include="Budget.json" />
     <EmbeddedResource Include="CallNumberType.json" />
     <EmbeddedResource Include="Campus.json" />
@@ -200,6 +204,7 @@
     <EmbeddedResource Include="ItemNoteType.json" />
     <EmbeddedResource Include="JobExecution.json" />
     <EmbeddedResource Include="JobExecutionSourceChunk.json" />
+    <EmbeddedResource Include="JournalRecord.json" />
     <EmbeddedResource Include="Ledger.json" />
     <EmbeddedResource Include="LedgerFiscalYear.json" />
     <EmbeddedResource Include="Library.json" />
@@ -224,8 +229,6 @@
     <EmbeddedResource Include="OverdueFinePolicy.json" />
     <EmbeddedResource Include="Owner.json" />
     <EmbeddedResource Include="PatronActionSession.json" />
-    <EmbeddedResource Include="PatronBlockCondition.json" />
-    <EmbeddedResource Include="PatronBlockLimit.json" />
     <EmbeddedResource Include="PatronNoticePolicy.json" />
     <EmbeddedResource Include="Payment.json" />
     <EmbeddedResource Include="PaymentMethod.json" />
@@ -260,17 +263,18 @@
     <EmbeddedResource Include="User.json" />
     <EmbeddedResource Include="UserAcquisitionsUnit.json" />
     <EmbeddedResource Include="UserRequestPreference.json" />
+    <EmbeddedResource Include="UserSummary.json" />
     <EmbeddedResource Include="Voucher.json" />
     <EmbeddedResource Include="VoucherItem.json" />
     <EmbeddedResource Include="WaiveReason.json" />
   </ItemGroup>
-  
+
   <ItemGroup>
     <PackageReference Include="Dapper" Version="2.0.35" />
     <PackageReference Include="Microsoft.CSharp" Version="4.7.0" />
     <PackageReference Include="Newtonsoft.Json" Version="12.0.3" />
     <PackageReference Include="Newtonsoft.Json.Schema" Version="3.0.13" />
-    <PackageReference Include="NJsonSchema" Version="10.1.23" />
+    <PackageReference Include="NJsonSchema" Version="10.1.24" />
     <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="3.1.4" />
     <PackageReference Include="System.Configuration.ConfigurationManager" Version="4.7.0" />
   </ItemGroup>

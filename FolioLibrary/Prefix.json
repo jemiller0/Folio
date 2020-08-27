@@ -1,6 +1,9 @@
 {
   "$schema": "http://json-schema.org/draft-04/schema#",
   "description": "Purchase order number prefix",
+  "extends": {
+    "$ref": "../../common/schemas/entity.json"
+  },
   "type": "object",
   "additionalProperties": false,
   "properties": {

@@ -290,6 +290,11 @@
           "description": "UUID of the material Type",
           "type": "string",
           "pattern": "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-5][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}$"
+        },
+        "resourceUrl": {
+          "description": "Electronic resource can be access via this URL",
+          "type": "string",
+          "pattern": "\\b((?:[a-z][\\w-]+:(?:/{1,3}|[a-z0-9%])|www\\d{0,3}[.]|[a-z0-9.\\-]+[.][a-z]{2,4}/)(?:[^\\s()<>]+|\\(([^\\s()<>]+|(\\([^\\s()<>]+\\)))*\\))+(?:\\(([^\\s()<>]+|(\\([^\\s()<>]+\\)))*\\)|[^\\s`!()\\[\\]{};:'\".,<>?]))"
         }
       }
     },
@@ -310,6 +315,9 @@
             "$ref": "#/properties/id"
           },
           "fundId": {
+            "$ref": "#/properties/id"
+          },
+          "expenseClassId": {
             "$ref": "#/properties/id"
           },
           "distributionType": {
@@ -382,6 +390,9 @@
         "Physical Resource",
         "Other"
       ]
+    },
+    "packagePoLineId": {
+      "$ref": "#/properties/id"
     },
     "paymentStatus": {
       "description": "The purchase order line payment status",

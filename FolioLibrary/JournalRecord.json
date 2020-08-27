@@ -1,0 +1,79 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "description": "Journal record data model",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "id": {
+      "description": "The UUID format string",
+      "type": "string",
+      "pattern": "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-5][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}$"
+    },
+    "jobExecutionId": {
+      "$ref": "#/properties/id"
+    },
+    "sourceId": {
+      "$ref": "#/properties/id"
+    },
+    "sourceRecordOrder": {
+      "description": "Order of the record in imported file",
+      "type": "integer",
+      "minimum": 0.0
+    },
+    "entityType": {
+      "description": "Type of entity",
+      "type": "string",
+      "additionalProperties": false,
+      "enum": [
+        "INSTANCE",
+        "HOLDINGS",
+        "ITEM",
+        "ORDER",
+        "INVOICE",
+        "MARC_BIBLIOGRAPHIC",
+        "MARC_HOLDINGS",
+        "MARC_AUTHORITY"
+      ]
+    },
+    "entityId": {
+      "$ref": "#/properties/id"
+    },
+    "entityHrId": {
+      "description": "Entity human readable id",
+      "type": "string"
+    },
+    "actionType": {
+      "description": "Type of action",
+      "type": "string",
+      "additionalProperties": false,
+      "enum": [
+        "CREATE",
+        "COMBINE",
+        "REPLACE",
+        "DELETE",
+        "MODIFY",
+        "ERROR"
+      ]
+    },
+    "actionStatus": {
+      "description": "Type of action",
+      "type": "string",
+      "enum": [
+        "COMPLETED",
+        "ERROR"
+      ]
+    },
+    "error": {
+      "description": "Error message",
+      "type": "string"
+    },
+    "actionDate": {
+      "description": "Date and time when action was performed during record processing",
+      "type": "string",
+      "format": "date-time"
+    }
+  },
+  "required": [
+    "jobExecutionId"
+  ]
+}

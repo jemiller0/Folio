@@ -5,9 +5,9 @@
   "additionalProperties": false,
   "properties": {
     "id": {
-      "description": "Unique generated identifier for the custom field",
-      "example": "62d00c36-a94f-434d-9cd2-c7ea159303da",
-      "type": "string"
+      "description": "The UUID format string",
+      "type": "string",
+      "pattern": "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-5][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}$"
     },
     "name": {
       "description": "The name of the custom field",
@@ -88,55 +88,92 @@
       "type": "object",
       "additionalProperties": false,
       "properties": {
-        "defaults": {
-          "description": "Defines the custom field default value(s)",
-          "example": "[\"Design\"]",
-          "type": "array",
-          "items": {
-            "type": "string"
-          }
-        },
         "multiSelect": {
           "description": "Defines if the custom field is a multi select",
           "example": false,
           "type": "boolean"
         },
         "options": {
-          "description": "Custom Field Options Schema",
+          "description": "Select Field Options Schema",
+          "javaType": "org.folio.rest.jaxrs.model.SelectFieldOptions",
           "type": "object",
           "additionalProperties": false,
           "properties": {
             "values": {
               "description": "Defines the possible values for the custom field",
-              "example": "[\"Engineering\", \"Design\"]",
               "type": "array",
               "items": {
-                "type": "string"
+                "description": "Select Field Option Schema",
+                "javaType": "org.folio.rest.jaxrs.model.SelectFieldOption",
+                "type": "object",
+                "additionalProperties": false,
+                "properties": {
+                  "id": {
+                    "description": "Unique identifier for the option",
+                    "example": "opt_1",
+                    "type": "string",
+                    "pattern": "opt_\\d{1,5}"
+                  },
+                  "value": {
+                    "description": "Possible value of the custom field",
+                    "example": "Engineering",
+                    "type": "string"
+                  },
+                  "default": {
+                    "description": "Indicates that this value is default",
+                    "example": false,
+                    "type": "boolean",
+                    "default": false
+                  }
+                },
+                "required": [
+                  "value"
+                ]
               }
             },
             "sortingOrder": {
               "description": "Defines sorting order for the custom field",
               "example": "ASC",
               "type": "string",
+              "default": "CUSTOM",
               "enum": [
                 "ASC",
                 "DESC",
                 "CUSTOM"
               ]
-            },
-            "sorted": {
-              "description": "Defines sorted array of the custom field",
-              "type": "array",
-              "items": {
-                "type": "string"
-              }
             }
-          }
+          },
+          "required": [
+            "values"
+          ]
         }
       },
       "required": [
         "multiSelect",
         "options"
+      ]
+    },
+    "textField": {
+      "title": "Textbox Field Schema",
+      "description": "Textbox Field Schema",
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "fieldFormat": {
+          "description": "Defines custom field format option",
+          "example": "EMAIL",
+          "type": "string",
+          "default": "TEXT",
+          "enum": [
+            "TEXT",
+            "EMAIL",
+            "URL",
+            "NUMBER"
+          ]
+        }
+      },
+      "required": [
+        "fieldFormat"
       ]
     },
     "metadata": {

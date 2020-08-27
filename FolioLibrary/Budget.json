@@ -1,6 +1,10 @@
 {
   "$schema": "http://json-schema.org/draft-04/schema#",
   "description": "A budget",
+  "javaName": "budget",
+  "extends": {
+    "$ref": "../../common/schemas/entity.json"
+  },
   "type": "object",
   "additionalProperties": false,
   "properties": {
@@ -54,6 +58,11 @@
     },
     "expenditures": {
       "description": "The amount currently expended for this budget",
+      "type": "number",
+      "default": 0
+    },
+    "netTransfers": {
+      "description": "Summing all the transfers on this budget",
       "type": "number",
       "default": 0
     },

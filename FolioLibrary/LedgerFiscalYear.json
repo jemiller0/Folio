@@ -25,6 +25,12 @@
       "type": "number",
       "default": 0
     },
+    "netTransfers": {
+      "description": "Summing all the transfers from/to this ledger. Amount can be negative",
+      "readonly": true,
+      "type": "number",
+      "default": 0
+    },
     "unavailable": {
       "description": "The amount already utilized from the allocated amount",
       "type": "number",

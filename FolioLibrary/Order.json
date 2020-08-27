@@ -1,11 +1,14 @@
 {
   "$schema": "http://json-schema.org/draft-04/schema#",
   "description": "purchase order",
+  "extends": {
+    "$ref": "../../common/schemas/entity.json"
+  },
   "type": "object",
   "additionalProperties": false,
   "properties": {
     "id": {
-      "description": "UUID of this purchase order",
+      "description": "The UUID format string",
       "type": "string",
       "pattern": "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-5][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}$"
     },
@@ -15,9 +18,7 @@
       "default": false
     },
     "approvedById": {
-      "description": "The UUID format string",
-      "type": "string",
-      "pattern": "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-5][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}$"
+      "$ref": "#/properties/id"
     },
     "approvalDate": {
       "description": "Date and time when purchase order was approved",
@@ -159,7 +160,7 @@
       "description": "acquisition unit ids associated with this purchase order",
       "type": "array",
       "items": {
-        "$ref": "#/properties/approvedById"
+        "$ref": "#/properties/id"
       }
     },
     "tags": {

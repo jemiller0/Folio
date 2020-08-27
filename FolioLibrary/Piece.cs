@@ -40,6 +40,12 @@ namespace FolioLibrary
         [Column("polineid"), Display(Name = "Order Item", Order = 6), Editable(false), ForeignKey("OrderItem")]
         public virtual Guid? Polineid { get; set; }
 
-        public override string ToString() => $"{{ {nameof(Id)} = {Id}, {nameof(Content)} = {Content}, {nameof(CreationTime)} = {CreationTime}, {nameof(CreationUserId)} = {CreationUserId}, {nameof(Polineid)} = {Polineid} }}";
+        [Display(Order = 7)]
+        public virtual Title Title { get; set; }
+
+        [Column("titleid"), Display(Name = "Title", Order = 8), Editable(false), ForeignKey("Title")]
+        public virtual Guid? Titleid { get; set; }
+
+        public override string ToString() => $"{{ {nameof(Id)} = {Id}, {nameof(Content)} = {Content}, {nameof(CreationTime)} = {CreationTime}, {nameof(CreationUserId)} = {CreationUserId}, {nameof(Polineid)} = {Polineid}, {nameof(Titleid)} = {Titleid} }}";
     }
 }

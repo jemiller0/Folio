@@ -88,6 +88,8 @@ namespace FolioLibrary
             if (IsPostgreSql) modelBuilder.Entity<BatchVoucherExport>().Property(nameof(BatchVoucherExport.Content)).HasColumnType("jsonb");
             if (IsPostgreSql) modelBuilder.Entity<BatchVoucherExportConfig>().Property(nameof(BatchVoucherExportConfig.Content)).HasColumnType("jsonb");
             if (IsPostgreSql) modelBuilder.Entity<Block>().Property(nameof(Block.Content)).HasColumnType("jsonb");
+            if (IsPostgreSql) modelBuilder.Entity<BlockCondition>().Property(nameof(BlockCondition.Content)).HasColumnType("jsonb");
+            if (IsPostgreSql) modelBuilder.Entity<BlockLimit>().Property(nameof(BlockLimit.Content)).HasColumnType("jsonb");
             if (IsPostgreSql) modelBuilder.Entity<Budget>().Property(nameof(Budget.Content)).HasColumnType("jsonb");
             if (IsPostgreSql) modelBuilder.Entity<CallNumberType>().Property(nameof(CallNumberType.Content)).HasColumnType("jsonb");
             if (IsPostgreSql) modelBuilder.Entity<Campus>().Property(nameof(Campus.Content)).HasColumnType("jsonb");
@@ -105,7 +107,6 @@ namespace FolioLibrary
             if (IsPostgreSql) modelBuilder.Entity<CustomField>().Property(nameof(CustomField.Content)).HasColumnType("jsonb");
             if (IsPostgreSql) modelBuilder.Entity<Document>().Property(nameof(Document.Content)).HasColumnType("jsonb");
             if (IsPostgreSql) modelBuilder.Entity<ElectronicAccessRelationship>().Property(nameof(ElectronicAccessRelationship.Content)).HasColumnType("jsonb");
-            if (IsPostgreSql) modelBuilder.Entity<ErrorRecord>().Property(nameof(ErrorRecord.Content)).HasColumnType("jsonb");
             if (IsPostgreSql) modelBuilder.Entity<EventLog>().Property(nameof(EventLog.Content)).HasColumnType("jsonb");
             if (IsPostgreSql) modelBuilder.Entity<ExportConfigCredential>().Property(nameof(ExportConfigCredential.Content)).HasColumnType("jsonb");
             if (IsPostgreSql) modelBuilder.Entity<Fee>().Property(nameof(Fee.Content)).HasColumnType("jsonb");
@@ -168,8 +169,6 @@ namespace FolioLibrary
             if (IsPostgreSql) modelBuilder.Entity<OverdueFinePolicy>().Property(nameof(OverdueFinePolicy.Content)).HasColumnType("jsonb");
             if (IsPostgreSql) modelBuilder.Entity<Owner>().Property(nameof(Owner.Content)).HasColumnType("jsonb");
             if (IsPostgreSql) modelBuilder.Entity<PatronActionSession>().Property(nameof(PatronActionSession.Content)).HasColumnType("jsonb");
-            if (IsPostgreSql) modelBuilder.Entity<PatronBlockCondition>().Property(nameof(PatronBlockCondition.Content)).HasColumnType("jsonb");
-            if (IsPostgreSql) modelBuilder.Entity<PatronBlockLimit>().Property(nameof(PatronBlockLimit.Content)).HasColumnType("jsonb");
             if (IsPostgreSql) modelBuilder.Entity<PatronNoticePolicy>().Property(nameof(PatronNoticePolicy.Content)).HasColumnType("jsonb");
             if (IsPostgreSql) modelBuilder.Entity<Payment>().Property(nameof(Payment.Content)).HasColumnType("jsonb");
             if (IsPostgreSql) modelBuilder.Entity<PaymentMethod>().Property(nameof(PaymentMethod.Content)).HasColumnType("jsonb");
@@ -179,8 +178,6 @@ namespace FolioLibrary
             if (IsPostgreSql) modelBuilder.Entity<PrecedingSucceedingTitle>().Property(nameof(PrecedingSucceedingTitle.Content)).HasColumnType("jsonb");
             if (IsPostgreSql) modelBuilder.Entity<Prefix>().Property(nameof(Prefix.Content)).HasColumnType("jsonb");
             if (IsPostgreSql) modelBuilder.Entity<Proxy>().Property(nameof(Proxy.Content)).HasColumnType("jsonb");
-            if (IsPostgreSql) modelBuilder.Entity<RawRecord>().Property(nameof(RawRecord.Content)).HasColumnType("jsonb");
-            if (IsPostgreSql) modelBuilder.Entity<Record>().Property(nameof(Record.Content)).HasColumnType("jsonb");
             if (IsPostgreSql) modelBuilder.Entity<RefundReason>().Property(nameof(RefundReason.Content)).HasColumnType("jsonb");
             if (IsPostgreSql) modelBuilder.Entity<ReportingCode>().Property(nameof(ReportingCode.Content)).HasColumnType("jsonb");
             if (IsPostgreSql) modelBuilder.Entity<Request>().Property(nameof(Request.Content)).HasColumnType("jsonb");
@@ -188,7 +185,6 @@ namespace FolioLibrary
             if (IsPostgreSql) modelBuilder.Entity<ScheduledNotice>().Property(nameof(ScheduledNotice.Content)).HasColumnType("jsonb");
             if (IsPostgreSql) modelBuilder.Entity<ServicePoint>().Property(nameof(ServicePoint.Content)).HasColumnType("jsonb");
             if (IsPostgreSql) modelBuilder.Entity<ServicePointUser>().Property(nameof(ServicePointUser.Content)).HasColumnType("jsonb");
-            if (IsPostgreSql) modelBuilder.Entity<Snapshot>().Property(nameof(Snapshot.Content)).HasColumnType("jsonb");
             if (IsPostgreSql) modelBuilder.Entity<StaffSlip>().Property(nameof(StaffSlip.Content)).HasColumnType("jsonb");
             if (IsPostgreSql) modelBuilder.Entity<StatisticalCode>().Property(nameof(StatisticalCode.Content)).HasColumnType("jsonb");
             if (IsPostgreSql) modelBuilder.Entity<StatisticalCodeType>().Property(nameof(StatisticalCodeType.Content)).HasColumnType("jsonb");
@@ -204,16 +200,20 @@ namespace FolioLibrary
             if (IsPostgreSql) modelBuilder.Entity<User>().Property(nameof(User.Content)).HasColumnType("jsonb");
             if (IsPostgreSql) modelBuilder.Entity<UserAcquisitionsUnit>().Property(nameof(UserAcquisitionsUnit.Content)).HasColumnType("jsonb");
             if (IsPostgreSql) modelBuilder.Entity<UserRequestPreference>().Property(nameof(UserRequestPreference.Content)).HasColumnType("jsonb");
+            if (IsPostgreSql) modelBuilder.Entity<UserSummary>().Property(nameof(UserSummary.Content)).HasColumnType("jsonb");
             if (IsPostgreSql) modelBuilder.Entity<Voucher>().Property(nameof(Voucher.Content)).HasColumnType("jsonb");
             if (IsPostgreSql) modelBuilder.Entity<VoucherItem>().Property(nameof(VoucherItem.Content)).HasColumnType("jsonb");
             if (IsPostgreSql) modelBuilder.Entity<WaiveReason>().Property(nameof(WaiveReason.Content)).HasColumnType("jsonb");
+            modelBuilder.Entity<Record>().Property(nameof(Record.SnapshotId)).IsRequired(false);
             modelBuilder.Entity<BatchVoucherExport>().HasOne(typeof(BatchGroup), nameof(BatchVoucherExport.BatchGroup)).WithMany(nameof(BatchGroup.BatchVoucherExports)).HasForeignKey(nameof(BatchVoucherExport.Batchgroupid)).OnDelete(DeleteBehavior.Restrict);
             modelBuilder.Entity<BatchVoucherExport>().HasOne(typeof(BatchVoucher), nameof(BatchVoucherExport.BatchVoucher)).WithMany(nameof(BatchVoucher.BatchVoucherExports)).HasForeignKey(nameof(BatchVoucherExport.Batchvoucherid)).OnDelete(DeleteBehavior.Restrict);
             modelBuilder.Entity<BatchVoucherExportConfig>().HasOne(typeof(BatchGroup), nameof(BatchVoucherExportConfig.BatchGroup)).WithMany(nameof(BatchGroup.BatchVoucherExportConfigs)).HasForeignKey(nameof(BatchVoucherExportConfig.Batchgroupid)).OnDelete(DeleteBehavior.Restrict);
+            modelBuilder.Entity<BlockLimit>().HasOne(typeof(BlockCondition), nameof(BlockLimit.BlockCondition)).WithMany(nameof(BlockCondition.BlockLimits)).HasForeignKey(nameof(BlockLimit.Conditionid)).OnDelete(DeleteBehavior.Restrict);
             modelBuilder.Entity<Budget>().HasOne(typeof(Fund), nameof(Budget.Fund)).WithMany(nameof(Fund.Budgets)).HasForeignKey(nameof(Budget.FundId)).OnDelete(DeleteBehavior.Restrict);
             modelBuilder.Entity<Budget>().HasOne(typeof(FiscalYear), nameof(Budget.FiscalYear)).WithMany(nameof(FiscalYear.Budgets)).HasForeignKey(nameof(Budget.FiscalYearId)).OnDelete(DeleteBehavior.Restrict);
             modelBuilder.Entity<Campus>().HasOne(typeof(Institution), nameof(Campus.Institution)).WithMany(nameof(Institution.Campuses)).HasForeignKey(nameof(Campus.Institutionid)).OnDelete(DeleteBehavior.Restrict);
             modelBuilder.Entity<Document>().HasOne(typeof(Invoice), nameof(Document.Invoice)).WithMany(nameof(Invoice.Documents)).HasForeignKey(nameof(Document.Invoiceid)).OnDelete(DeleteBehavior.Restrict);
+            modelBuilder.Entity<ErrorRecord>().HasOne(typeof(Record), nameof(ErrorRecord.Record)).WithOne(nameof(Record.ErrorRecord)).HasForeignKey(typeof(ErrorRecord), nameof(ErrorRecord.Id)).IsRequired().OnDelete(DeleteBehavior.Restrict);
             modelBuilder.Entity<ExportConfigCredential>().HasOne(typeof(BatchVoucherExportConfig), nameof(ExportConfigCredential.BatchVoucherExportConfig)).WithMany(nameof(BatchVoucherExportConfig.ExportConfigCredentials)).HasForeignKey(nameof(ExportConfigCredential.Exportconfigid)).OnDelete(DeleteBehavior.Restrict);
             modelBuilder.Entity<FeeType>().HasOne(typeof(Owner), nameof(FeeType.Owner)).WithMany(nameof(Owner.FeeTypes)).HasForeignKey(nameof(FeeType.Ownerid)).OnDelete(DeleteBehavior.Restrict);
             modelBuilder.Entity<Fund>().HasOne(typeof(Ledger), nameof(Fund.Ledger)).WithMany(nameof(Ledger.Funds)).HasForeignKey(nameof(Fund.LedgerId)).OnDelete(DeleteBehavior.Restrict);
@@ -257,13 +257,16 @@ namespace FolioLibrary
             modelBuilder.Entity<Location>().HasOne(typeof(Institution), nameof(Location.Institution)).WithMany(nameof(Institution.Locations)).HasForeignKey(nameof(Location.Institutionid)).OnDelete(DeleteBehavior.Restrict);
             modelBuilder.Entity<Location>().HasOne(typeof(Campus), nameof(Location.Campus)).WithMany(nameof(Campus.Locations)).HasForeignKey(nameof(Location.Campusid)).OnDelete(DeleteBehavior.Restrict);
             modelBuilder.Entity<Location>().HasOne(typeof(Library), nameof(Location.Library)).WithMany(nameof(Library.Locations)).HasForeignKey(nameof(Location.Libraryid)).OnDelete(DeleteBehavior.Restrict);
+            modelBuilder.Entity<MarcRecord>().HasOne(typeof(Record), nameof(MarcRecord.Record)).WithOne(nameof(Record.MarcRecord)).HasForeignKey(typeof(MarcRecord), nameof(MarcRecord.Id)).IsRequired().OnDelete(DeleteBehavior.Restrict);
             modelBuilder.Entity<Note>().HasOne(typeof(NoteType), nameof(Note.TemporaryType)).WithMany(nameof(NoteType.Notes)).HasForeignKey(nameof(Note.TemporaryTypeId)).OnDelete(DeleteBehavior.Restrict);
             modelBuilder.Entity<OrderInvoice>().HasOne(typeof(Order), nameof(OrderInvoice.Order)).WithMany(nameof(Order.OrderInvoices)).HasForeignKey(nameof(OrderInvoice.Purchaseorderid)).OnDelete(DeleteBehavior.Restrict);
             modelBuilder.Entity<OrderItem>().HasOne(typeof(Order), nameof(OrderItem.Order)).WithMany(nameof(Order.OrderItems)).HasForeignKey(nameof(OrderItem.Purchaseorderid)).OnDelete(DeleteBehavior.Restrict);
             modelBuilder.Entity<Piece>().HasOne(typeof(OrderItem), nameof(Piece.OrderItem)).WithMany(nameof(OrderItem.Pieces)).HasForeignKey(nameof(Piece.Polineid)).OnDelete(DeleteBehavior.Restrict);
+            modelBuilder.Entity<Piece>().HasOne(typeof(Title), nameof(Piece.Title)).WithMany(nameof(Title.Pieces)).HasForeignKey(nameof(Piece.Titleid)).OnDelete(DeleteBehavior.Restrict);
             modelBuilder.Entity<PrecedingSucceedingTitle>().HasOne(typeof(Instance), nameof(PrecedingSucceedingTitle.Instance)).WithMany(nameof(Instance.PrecedingSucceedingTitles)).HasForeignKey(nameof(PrecedingSucceedingTitle.Precedinginstanceid)).OnDelete(DeleteBehavior.Restrict);
             modelBuilder.Entity<PrecedingSucceedingTitle>().HasOne(typeof(Instance), nameof(PrecedingSucceedingTitle.Instance1)).WithMany(nameof(Instance.PrecedingSucceedingTitles1)).HasForeignKey(nameof(PrecedingSucceedingTitle.Succeedinginstanceid)).OnDelete(DeleteBehavior.Restrict);
-            modelBuilder.Entity<Record>().HasOne(typeof(Snapshot), nameof(Record.Snapshot)).WithMany(nameof(Snapshot.Records)).HasForeignKey(nameof(Record.Jobexecutionid)).OnDelete(DeleteBehavior.Restrict);
+            modelBuilder.Entity<RawRecord>().HasOne(typeof(Record), nameof(RawRecord.Record)).WithOne(nameof(Record.RawRecord)).HasForeignKey(typeof(RawRecord), nameof(RawRecord.Id)).IsRequired().OnDelete(DeleteBehavior.Restrict);
+            modelBuilder.Entity<Record>().HasOne(typeof(Snapshot), nameof(Record.Snapshot)).WithMany(nameof(Snapshot.Records)).HasForeignKey(nameof(Record.SnapshotId)).OnDelete(DeleteBehavior.Restrict);
             modelBuilder.Entity<Request>().HasOne(typeof(CancellationReason), nameof(Request.CancellationReason)).WithMany(nameof(CancellationReason.Requests)).HasForeignKey(nameof(Request.Cancellationreasonid)).OnDelete(DeleteBehavior.Restrict);
             modelBuilder.Entity<ServicePointUser>().HasOne(typeof(ServicePoint), nameof(ServicePointUser.ServicePoint)).WithMany(nameof(ServicePoint.ServicePointUsers)).HasForeignKey(nameof(ServicePointUser.Defaultservicepointid)).OnDelete(DeleteBehavior.Restrict);
             modelBuilder.Entity<StatisticalCode>().HasOne(typeof(StatisticalCodeType), nameof(StatisticalCode.StatisticalCodeType)).WithMany(nameof(StatisticalCodeType.StatisticalCodes)).HasForeignKey(nameof(StatisticalCode.Statisticalcodetypeid)).OnDelete(DeleteBehavior.Restrict);
@@ -304,6 +307,8 @@ namespace FolioLibrary
         public DbSet<BatchVoucherExport> BatchVoucherExports { get; set; }
         public DbSet<BatchVoucherExportConfig> BatchVoucherExportConfigs { get; set; }
         public DbSet<Block> Blocks { get; set; }
+        public DbSet<BlockCondition> BlockConditions { get; set; }
+        public DbSet<BlockLimit> BlockLimits { get; set; }
         public DbSet<Budget> Budgets { get; set; }
         public DbSet<CallNumberType> CallNumberTypes { get; set; }
         public DbSet<Campus> Campuses { get; set; }
@@ -385,8 +390,6 @@ namespace FolioLibrary
         public DbSet<OverdueFinePolicy> OverdueFinePolicies { get; set; }
         public DbSet<Owner> Owners { get; set; }
         public DbSet<PatronActionSession> PatronActionSessions { get; set; }
-        public DbSet<PatronBlockCondition> PatronBlockConditions { get; set; }
-        public DbSet<PatronBlockLimit> PatronBlockLimits { get; set; }
         public DbSet<PatronNoticePolicy> PatronNoticePolicies { get; set; }
         public DbSet<Payment> Payments { get; set; }
         public DbSet<PaymentMethod> PaymentMethods { get; set; }
@@ -421,6 +424,7 @@ namespace FolioLibrary
         public DbSet<User> Users { get; set; }
         public DbSet<UserAcquisitionsUnit> UserAcquisitionsUnits { get; set; }
         public DbSet<UserRequestPreference> UserRequestPreferences { get; set; }
+        public DbSet<UserSummary> UserSummaries { get; set; }
         public DbSet<Voucher> Vouchers { get; set; }
         public DbSet<VoucherItem> VoucherItems { get; set; }
         public DbSet<WaiveReason> WaiveReasons { get; set; }
