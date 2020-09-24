@@ -1,3 +1,4 @@
+using Newtonsoft.Json.Linq;
 using NJsonSchema;
 using System;
 using System.Collections.Generic;
@@ -38,7 +39,7 @@ namespace FolioLibrary
         [Display(Order = 5)]
         public virtual Order Order { get; set; }
 
-        [Column("purchaseorderid"), Display(Name = "Order", Order = 6), Editable(false), ForeignKey("Order")]
+        [Column("purchaseorderid"), Display(Name = "Order", Order = 6), ForeignKey("Order")]
         public virtual Guid? Purchaseorderid { get; set; }
 
         [ScaffoldColumn(false)]
@@ -48,5 +49,16 @@ namespace FolioLibrary
         public virtual ICollection<Title> Titles { get; set; }
 
         public override string ToString() => $"{{ {nameof(Id)} = {Id}, {nameof(Content)} = {Content}, {nameof(CreationTime)} = {CreationTime}, {nameof(CreationUserId)} = {CreationUserId}, {nameof(Purchaseorderid)} = {Purchaseorderid} }}";
+
+        public static OrderItem FromJObject(JObject jObject) => new OrderItem
+        {
+            Id = (Guid?)jObject.SelectToken("id"),
+            Content = jObject.ToString(),
+            CreationTime = (DateTime?)jObject.SelectToken("metadata.createdDate"),
+            CreationUserId = (string)jObject.SelectToken("metadata.createdByUserId"),
+            Purchaseorderid = (Guid?)jObject.SelectToken("purchaseOrderId")
+        };
+
+        public JObject ToJObject() => JObject.Parse(Content);
     }
 }

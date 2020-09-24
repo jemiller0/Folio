@@ -1,3 +1,4 @@
+using Newtonsoft.Json.Linq;
 using NJsonSchema;
 using System;
 using System.ComponentModel.DataAnnotations;
@@ -37,45 +38,62 @@ namespace FolioLibrary
         [Display(Order = 5)]
         public virtual Holding Holding { get; set; }
 
-        [Column("holdingsrecordid"), Display(Name = "Holding", Order = 6), Editable(false), ForeignKey("Holding")]
+        [Column("holdingsrecordid"), Display(Name = "Holding", Order = 6), ForeignKey("Holding")]
         public virtual Guid? Holdingsrecordid { get; set; }
 
         [Display(Name = "Loan Type", Order = 7), InverseProperty("Items")]
         public virtual LoanType LoanType { get; set; }
 
-        [Column("permanentloantypeid"), Display(Name = "Loan Type", Order = 8), Editable(false), ForeignKey("LoanType")]
+        [Column("permanentloantypeid"), Display(Name = "Loan Type", Order = 8), ForeignKey("LoanType")]
         public virtual Guid? Permanentloantypeid { get; set; }
 
         [Display(Name = "Loan Type 1", Order = 9), InverseProperty("Items1")]
         public virtual LoanType LoanType1 { get; set; }
 
-        [Column("temporaryloantypeid"), Display(Name = "Loan Type 1", Order = 10), Editable(false), ForeignKey("LoanType1")]
+        [Column("temporaryloantypeid"), Display(Name = "Loan Type 1", Order = 10), ForeignKey("LoanType1")]
         public virtual Guid? Temporaryloantypeid { get; set; }
 
         [Display(Name = "Material Type", Order = 11)]
         public virtual MaterialType MaterialType { get; set; }
 
-        [Column("materialtypeid"), Display(Name = "Material Type", Order = 12), Editable(false), ForeignKey("MaterialType")]
+        [Column("materialtypeid"), Display(Name = "Material Type", Order = 12), ForeignKey("MaterialType")]
         public virtual Guid? Materialtypeid { get; set; }
 
         [Display(Name = "Location 1", Order = 13), InverseProperty("Items1")]
         public virtual Location Location1 { get; set; }
 
-        [Column("permanentlocationid"), Display(Name = "Location 1", Order = 14), Editable(false), ForeignKey("Location1")]
+        [Column("permanentlocationid"), Display(Name = "Location 1", Order = 14), ForeignKey("Location1")]
         public virtual Guid? Permanentlocationid { get; set; }
 
         [Display(Name = "Location 2", Order = 15), InverseProperty("Items2")]
         public virtual Location Location2 { get; set; }
 
-        [Column("temporarylocationid"), Display(Name = "Location 2", Order = 16), Editable(false), ForeignKey("Location2")]
+        [Column("temporarylocationid"), Display(Name = "Location 2", Order = 16), ForeignKey("Location2")]
         public virtual Guid? Temporarylocationid { get; set; }
 
-        [Column("effectivelocationid"), Display(Name = "Location", Order = 17), Editable(false), ForeignKey("Location")]
+        [Column("effectivelocationid"), Display(Name = "Location", Order = 17), ForeignKey("Location")]
         public virtual Guid? Effectivelocationid { get; set; }
 
         [Display(Order = 18), InverseProperty("Items")]
         public virtual Location Location { get; set; }
 
         public override string ToString() => $"{{ {nameof(Id)} = {Id}, {nameof(Content)} = {Content}, {nameof(CreationTime)} = {CreationTime}, {nameof(CreationUserId)} = {CreationUserId}, {nameof(Holdingsrecordid)} = {Holdingsrecordid}, {nameof(Permanentloantypeid)} = {Permanentloantypeid}, {nameof(Temporaryloantypeid)} = {Temporaryloantypeid}, {nameof(Materialtypeid)} = {Materialtypeid}, {nameof(Permanentlocationid)} = {Permanentlocationid}, {nameof(Temporarylocationid)} = {Temporarylocationid}, {nameof(Effectivelocationid)} = {Effectivelocationid} }}";
+
+        public static Item FromJObject(JObject jObject) => new Item
+        {
+            Id = (Guid?)jObject.SelectToken("id"),
+            Content = jObject.ToString(),
+            CreationTime = (DateTime?)jObject.SelectToken("metadata.createdDate"),
+            CreationUserId = (string)jObject.SelectToken("metadata.createdByUserId"),
+            Holdingsrecordid = (Guid?)jObject.SelectToken("holdingsRecordId"),
+            Permanentloantypeid = (Guid?)jObject.SelectToken("permanentLoanTypeId"),
+            Temporaryloantypeid = (Guid?)jObject.SelectToken("temporaryLoanTypeId"),
+            Materialtypeid = (Guid?)jObject.SelectToken("materialTypeId"),
+            Permanentlocationid = (Guid?)jObject.SelectToken("permanentLocationId"),
+            Temporarylocationid = (Guid?)jObject.SelectToken("temporaryLocationId"),
+            Effectivelocationid = (Guid?)jObject.SelectToken("effectiveLocationId")
+        };
+
+        public JObject ToJObject() => JObject.Parse(Content);
     }
 }

@@ -1,3 +1,4 @@
+using Newtonsoft.Json.Linq;
 using NJsonSchema;
 using System;
 using System.ComponentModel.DataAnnotations;
@@ -31,7 +32,7 @@ namespace FolioLibrary
         [Column("content"), CustomValidation(typeof(ErrorRecord), nameof(ValidateContent)), DataType(DataType.MultilineText), Display(Order = 3), Required]
         public virtual string Content { get; set; }
 
-        [Column("description"), Display(Order = 4), Editable(false), StringLength(1024)]
+        [Column("description"), Display(Order = 4), Required, StringLength(1024)]
         public virtual string Description { get; set; }
 
         public override string ToString() => $"{{ {nameof(Id)} = {Id}, {nameof(Content)} = {Content}, {nameof(Description)} = {Description} }}";

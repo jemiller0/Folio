@@ -1,3 +1,4 @@
+using Newtonsoft.Json.Linq;
 using NJsonSchema;
 using System;
 using System.ComponentModel.DataAnnotations;
@@ -29,5 +30,13 @@ namespace FolioLibrary
         public virtual string Content { get; set; }
 
         public override string ToString() => $"{{ {nameof(Id)} = {Id}, {nameof(Content)} = {Content} }}";
+
+        public static InstanceFormat FromJObject(JObject jObject) => new InstanceFormat
+        {
+            Id = (Guid?)jObject.SelectToken("id"),
+            Content = jObject.ToString()
+        };
+
+        public JObject ToJObject() => JObject.Parse(Content);
     }
 }

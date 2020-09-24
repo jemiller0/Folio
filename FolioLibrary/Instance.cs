@@ -1,3 +1,4 @@
+using Newtonsoft.Json.Linq;
 using NJsonSchema;
 using System;
 using System.Collections.Generic;
@@ -38,19 +39,19 @@ namespace FolioLibrary
         [Display(Name = "Instance Status", Order = 5)]
         public virtual InstanceStatus InstanceStatus { get; set; }
 
-        [Column("instancestatusid"), Display(Name = "Instance Status", Order = 6), Editable(false), ForeignKey("InstanceStatus")]
+        [Column("instancestatusid"), Display(Name = "Instance Status", Order = 6), ForeignKey("InstanceStatus")]
         public virtual Guid? Instancestatusid { get; set; }
 
         [Display(Name = "Mode Of Issuance", Order = 7)]
         public virtual ModeOfIssuance ModeOfIssuance { get; set; }
 
-        [Column("modeofissuanceid"), Display(Name = "Mode Of Issuance", Order = 8), Editable(false), ForeignKey("ModeOfIssuance")]
+        [Column("modeofissuanceid"), Display(Name = "Mode Of Issuance", Order = 8), ForeignKey("ModeOfIssuance")]
         public virtual Guid? Modeofissuanceid { get; set; }
 
         [Display(Name = "Instance Type", Order = 9)]
         public virtual InstanceType InstanceType { get; set; }
 
-        [Column("instancetypeid"), Display(Name = "Instance Type", Order = 10), Editable(false), ForeignKey("InstanceType")]
+        [Column("instancetypeid"), Display(Name = "Instance Type", Order = 10), ForeignKey("InstanceType")]
         public virtual Guid? Instancetypeid { get; set; }
 
         [ScaffoldColumn(false)]
@@ -72,5 +73,18 @@ namespace FolioLibrary
         public virtual ICollection<PrecedingSucceedingTitle> PrecedingSucceedingTitles1 { get; set; }
 
         public override string ToString() => $"{{ {nameof(Id)} = {Id}, {nameof(Content)} = {Content}, {nameof(CreationTime)} = {CreationTime}, {nameof(CreationUserId)} = {CreationUserId}, {nameof(Instancestatusid)} = {Instancestatusid}, {nameof(Modeofissuanceid)} = {Modeofissuanceid}, {nameof(Instancetypeid)} = {Instancetypeid} }}";
+
+        public static Instance FromJObject(JObject jObject) => new Instance
+        {
+            Id = (Guid?)jObject.SelectToken("id"),
+            Content = jObject.ToString(),
+            CreationTime = (DateTime?)jObject.SelectToken("metadata.createdDate"),
+            CreationUserId = (string)jObject.SelectToken("metadata.createdByUserId"),
+            Instancestatusid = (Guid?)jObject.SelectToken("statusId"),
+            Modeofissuanceid = (Guid?)jObject.SelectToken("modeOfIssuanceId"),
+            Instancetypeid = (Guid?)jObject.SelectToken("instanceTypeId")
+        };
+
+        public JObject ToJObject() => JObject.Parse(Content);
     }
 }

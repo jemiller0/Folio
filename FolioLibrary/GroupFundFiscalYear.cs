@@ -1,3 +1,4 @@
+using Newtonsoft.Json.Linq;
 using NJsonSchema;
 using System;
 using System.ComponentModel.DataAnnotations;
@@ -31,27 +32,39 @@ namespace FolioLibrary
         [Display(Order = 3)]
         public virtual Budget Budget { get; set; }
 
-        [Column("budgetid"), Display(Name = "Budget", Order = 4), Editable(false), ForeignKey("Budget")]
+        [Column("budgetid"), Display(Name = "Budget", Order = 4), ForeignKey("Budget")]
         public virtual Guid? Budgetid { get; set; }
 
         [Display(Name = "Finance Group", Order = 5)]
         public virtual FinanceGroup FinanceGroup { get; set; }
 
-        [Column("groupid"), Display(Name = "Finance Group", Order = 6), Editable(false), ForeignKey("FinanceGroup")]
+        [Column("groupid"), Display(Name = "Finance Group", Order = 6), ForeignKey("FinanceGroup")]
         public virtual Guid? Groupid { get; set; }
 
         [Display(Order = 7)]
         public virtual Fund Fund { get; set; }
 
-        [Column("fundid"), Display(Name = "Fund", Order = 8), Editable(false), ForeignKey("Fund")]
+        [Column("fundid"), Display(Name = "Fund", Order = 8), ForeignKey("Fund")]
         public virtual Guid? Fundid { get; set; }
 
         [Display(Name = "Fiscal Year", Order = 9)]
         public virtual FiscalYear FiscalYear { get; set; }
 
-        [Column("fiscalyearid"), Display(Name = "Fiscal Year", Order = 10), Editable(false), ForeignKey("FiscalYear")]
+        [Column("fiscalyearid"), Display(Name = "Fiscal Year", Order = 10), ForeignKey("FiscalYear")]
         public virtual Guid? Fiscalyearid { get; set; }
 
         public override string ToString() => $"{{ {nameof(Id)} = {Id}, {nameof(Content)} = {Content}, {nameof(Budgetid)} = {Budgetid}, {nameof(Groupid)} = {Groupid}, {nameof(Fundid)} = {Fundid}, {nameof(Fiscalyearid)} = {Fiscalyearid} }}";
+
+        public static GroupFundFiscalYear FromJObject(JObject jObject) => new GroupFundFiscalYear
+        {
+            Id = (Guid?)jObject.SelectToken("id"),
+            Content = jObject.ToString(),
+            Budgetid = (Guid?)jObject.SelectToken("budgetId"),
+            Groupid = (Guid?)jObject.SelectToken("groupId"),
+            Fundid = (Guid?)jObject.SelectToken("fundId"),
+            Fiscalyearid = (Guid?)jObject.SelectToken("fiscalYearId")
+        };
+
+        public JObject ToJObject() => JObject.Parse(Content);
     }
 }

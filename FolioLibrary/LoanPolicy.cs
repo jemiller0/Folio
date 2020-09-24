@@ -1,3 +1,4 @@
+using Newtonsoft.Json.Linq;
 using NJsonSchema;
 using System;
 using System.ComponentModel.DataAnnotations;
@@ -37,15 +38,27 @@ namespace FolioLibrary
         [Display(Name = "Fixed Due Date Schedule", Order = 5), InverseProperty("LoanPolicies")]
         public virtual FixedDueDateSchedule FixedDueDateSchedule { get; set; }
 
-        [Column("loanspolicy_fixedduedatescheduleid"), Display(Name = "Fixed Due Date Schedule", Order = 6), Editable(false), ForeignKey("FixedDueDateSchedule")]
+        [Column("loanspolicy_fixedduedatescheduleid"), Display(Name = "Fixed Due Date Schedule", Order = 6), ForeignKey("FixedDueDateSchedule")]
         public virtual Guid? LoanspolicyFixedduedatescheduleid { get; set; }
 
         [Display(Name = "Fixed Due Date Schedule 1", Order = 7), InverseProperty("LoanPolicies1")]
         public virtual FixedDueDateSchedule FixedDueDateSchedule1 { get; set; }
 
-        [Column("renewalspolicy_alternatefixedduedatescheduleid"), Display(Name = "Fixed Due Date Schedule 1", Order = 8), Editable(false), ForeignKey("FixedDueDateSchedule1")]
+        [Column("renewalspolicy_alternatefixedduedatescheduleid"), Display(Name = "Fixed Due Date Schedule 1", Order = 8), ForeignKey("FixedDueDateSchedule1")]
         public virtual Guid? RenewalspolicyAlternatefixedduedatescheduleid { get; set; }
 
         public override string ToString() => $"{{ {nameof(Id)} = {Id}, {nameof(Content)} = {Content}, {nameof(CreationTime)} = {CreationTime}, {nameof(CreationUserId)} = {CreationUserId}, {nameof(LoanspolicyFixedduedatescheduleid)} = {LoanspolicyFixedduedatescheduleid}, {nameof(RenewalspolicyAlternatefixedduedatescheduleid)} = {RenewalspolicyAlternatefixedduedatescheduleid} }}";
+
+        public static LoanPolicy FromJObject(JObject jObject) => new LoanPolicy
+        {
+            Id = (Guid?)jObject.SelectToken("id"),
+            Content = jObject.ToString(),
+            CreationTime = (DateTime?)jObject.SelectToken("metadata.createdDate"),
+            CreationUserId = (string)jObject.SelectToken("metadata.createdByUserId"),
+            LoanspolicyFixedduedatescheduleid = (Guid?)jObject.SelectToken("loansPolicy.fixedDueDateScheduleId"),
+            RenewalspolicyAlternatefixedduedatescheduleid = (Guid?)jObject.SelectToken("renewalsPolicy.alternateFixedDueDateScheduleId")
+        };
+
+        public JObject ToJObject() => JObject.Parse(Content);
     }
 }

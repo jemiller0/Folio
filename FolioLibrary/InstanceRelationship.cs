@@ -1,3 +1,4 @@
+using Newtonsoft.Json.Linq;
 using NJsonSchema;
 using System;
 using System.ComponentModel.DataAnnotations;
@@ -37,21 +38,34 @@ namespace FolioLibrary
         [Display(Name = "Instance 1", Order = 5), InverseProperty("InstanceRelationships1")]
         public virtual Instance Instance1 { get; set; }
 
-        [Column("superinstanceid"), Display(Name = "Instance 1", Order = 6), Editable(false), ForeignKey("Instance1")]
+        [Column("superinstanceid"), Display(Name = "Instance 1", Order = 6), ForeignKey("Instance1")]
         public virtual Guid? Superinstanceid { get; set; }
 
         [Display(Order = 7), InverseProperty("InstanceRelationships")]
         public virtual Instance Instance { get; set; }
 
-        [Column("subinstanceid"), Display(Name = "Instance", Order = 8), Editable(false), ForeignKey("Instance")]
+        [Column("subinstanceid"), Display(Name = "Instance", Order = 8), ForeignKey("Instance")]
         public virtual Guid? Subinstanceid { get; set; }
 
         [Display(Name = "Instance Relationship Type", Order = 9)]
         public virtual InstanceRelationshipType InstanceRelationshipType { get; set; }
 
-        [Column("instancerelationshiptypeid"), Display(Name = "Instance Relationship Type", Order = 10), Editable(false), ForeignKey("InstanceRelationshipType")]
+        [Column("instancerelationshiptypeid"), Display(Name = "Instance Relationship Type", Order = 10), ForeignKey("InstanceRelationshipType")]
         public virtual Guid? Instancerelationshiptypeid { get; set; }
 
         public override string ToString() => $"{{ {nameof(Id)} = {Id}, {nameof(Content)} = {Content}, {nameof(CreationTime)} = {CreationTime}, {nameof(CreationUserId)} = {CreationUserId}, {nameof(Superinstanceid)} = {Superinstanceid}, {nameof(Subinstanceid)} = {Subinstanceid}, {nameof(Instancerelationshiptypeid)} = {Instancerelationshiptypeid} }}";
+
+        public static InstanceRelationship FromJObject(JObject jObject) => new InstanceRelationship
+        {
+            Id = (Guid?)jObject.SelectToken("id"),
+            Content = jObject.ToString(),
+            CreationTime = (DateTime?)jObject.SelectToken("metadata.createdDate"),
+            CreationUserId = (string)jObject.SelectToken("metadata.createdByUserId"),
+            Superinstanceid = (Guid?)jObject.SelectToken("superInstanceId"),
+            Subinstanceid = (Guid?)jObject.SelectToken("subInstanceId"),
+            Instancerelationshiptypeid = (Guid?)jObject.SelectToken("instanceRelationshipTypeId")
+        };
+
+        public JObject ToJObject() => JObject.Parse(Content);
     }
 }

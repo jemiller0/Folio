@@ -1,3 +1,4 @@
+using Newtonsoft.Json.Linq;
 using NJsonSchema;
 using System;
 using System.Collections.Generic;
@@ -33,5 +34,13 @@ namespace FolioLibrary
         public virtual ICollection<BatchVoucherExport> BatchVoucherExports { get; set; }
 
         public override string ToString() => $"{{ {nameof(Id)} = {Id}, {nameof(Content)} = {Content} }}";
+
+        public static BatchVoucher FromJObject(JObject jObject) => new BatchVoucher
+        {
+            Id = (Guid?)jObject.SelectToken("id"),
+            Content = jObject.ToString()
+        };
+
+        public JObject ToJObject() => JObject.Parse(Content);
     }
 }

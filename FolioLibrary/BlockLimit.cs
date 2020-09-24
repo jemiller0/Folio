@@ -1,3 +1,4 @@
+using Newtonsoft.Json.Linq;
 using NJsonSchema;
 using System;
 using System.ComponentModel.DataAnnotations;
@@ -37,9 +38,20 @@ namespace FolioLibrary
         [Display(Name = "Block Condition", Order = 5)]
         public virtual BlockCondition BlockCondition { get; set; }
 
-        [Column("conditionid"), Display(Name = "Block Condition", Order = 6), Editable(false), ForeignKey("BlockCondition")]
+        [Column("conditionid"), Display(Name = "Block Condition", Order = 6), ForeignKey("BlockCondition")]
         public virtual Guid? Conditionid { get; set; }
 
         public override string ToString() => $"{{ {nameof(Id)} = {Id}, {nameof(Content)} = {Content}, {nameof(CreationTime)} = {CreationTime}, {nameof(CreationUserId)} = {CreationUserId}, {nameof(Conditionid)} = {Conditionid} }}";
+
+        public static BlockLimit FromJObject(JObject jObject) => new BlockLimit
+        {
+            Id = (Guid?)jObject.SelectToken("id"),
+            Content = jObject.ToString(),
+            CreationTime = (DateTime?)jObject.SelectToken("metadata.createdDate"),
+            CreationUserId = (string)jObject.SelectToken("metadata.createdByUserId"),
+            Conditionid = (Guid?)jObject.SelectToken("conditionId")
+        };
+
+        public JObject ToJObject() => JObject.Parse(Content);
     }
 }

@@ -9,9 +9,10 @@ using System.IO;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
-using System.Net.Http.Headers;
+using System.Reflection;
 using System.Security.Authentication;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading;
 using System.Web;
 
@@ -71,10 +72,10 @@ namespace FolioLibrary
             var url = $"{Url}/authn/login";
             traceSource.TraceEvent(TraceEventType.Verbose, 0, url);
             var s2 = JsonConvert.SerializeObject(new { Username, Password }, jsonSerializerSettings);
-            traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}{1}", httpClient.DefaultRequestHeaders, s2);
+            traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}{1}", httpClient.DefaultRequestHeaders, Regex.Replace(s2, "(\"password\" *: *)\".*?\"", "$1\"…\"", RegexOptions.Compiled));
             var hrm = httpClient.PostAsync(url, new StringContent(s2, Encoding.UTF8, "application/json")).Result;
             s2 = hrm.Content.ReadAsStringAsync().Result;
-            traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}{1}", hrm.Headers, s2);
+            traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}{1}", hrm.Headers, Regex.Replace(s2, "(\"password\" *: *)\".*?\"", "$1\"…\"", RegexOptions.Compiled));
             if (hrm.StatusCode != HttpStatusCode.Created)
                 if (s2 == "Bad credentials")
                     throw new InvalidCredentialException(s2);
@@ -7810,7 +7811,7 @@ namespace FolioLibrary
             traceSource.TraceEvent(TraceEventType.Verbose, 0, url);
             var s2 = login.ToString(formatting);
             var sc = new StringContent(s2, Encoding.UTF8, "application/json");
-            traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}{1}", httpClient.DefaultRequestHeaders, s2);
+            traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}{1}", httpClient.DefaultRequestHeaders, Regex.Replace(s2, "(\"password\" *: *)\".*?\"", "$1\"…\"", RegexOptions.Compiled));
             var hrm = httpClient.PostAsync(url, sc).Result;
             s2 = hrm.Content.ReadAsStringAsync().Result;
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}{1}", hrm.Headers, s2);
@@ -14201,7 +14202,42 @@ namespace FolioLibrary
 
         public override void WriteJson(JsonWriter writer, T value, JsonSerializer serializer)
         {
-            throw new NotImplementedException();
+            var jo = new JObject();
+            foreach (var pi in value.GetType().GetRuntimeProperties().Where(pi => pi.GetCustomAttributes(true).OfType<JsonPropertyAttribute>().Any()))
+            {
+                var jpa = pi.GetCustomAttributes(true).OfType<JsonPropertyAttribute>().First();
+                var o = pi.GetValue(value);
+                if (o != null) jo[jpa.PropertyName] = JToken.FromObject(o, serializer);
+            }
+            serializer.Serialize(writer, FixNestedProperties(jo));
+        }
+
+        private JObject FixNestedProperties(JObject jo)
+        {
+            var jo2 = new JObject();
+            foreach (var jp in jo.Properties())
+            {
+                var l = jp.Name.Split('.');
+                var jo3 = jo2;
+                foreach (var s in l.Take(l.Length - 1))
+                {
+                    if (jo3[s] == null) jo3[s] = new JObject();
+                    jo3 = (JObject)jo3[s];
+                }
+                jo3[l.Last()] = jp.Value.Type != JTokenType.Array ? jp.Value : new JArray(jp.Value.Select(jt => jt.Type == JTokenType.Object ? FixNestedProperties((JObject)jt) : jt));
+            }
+            return jo2;
+        }
+    }
+
+    public static class JObjectExtensions
+    {
+        public static JObject RemoveNullAndEmptyProperties(this JObject jObject)
+        {
+            while (jObject.Descendants().Any(jt => jt.Type == JTokenType.Property && jt.First().Type != JTokenType.Array && (jt.Values().All(a => a.Type == JTokenType.Null) || !jt.Values().Any())))
+                foreach (var jt in jObject.Descendants().Where(jt => jt.Type == JTokenType.Property && jt.First().Type != JTokenType.Array && (jt.Values().All(a => a.Type == JTokenType.Null) || !jt.Values().Any())).ToArray())
+                    jt.Remove();
+            return jObject;
         }
     }
 }

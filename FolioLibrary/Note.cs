@@ -1,3 +1,4 @@
+using Newtonsoft.Json.Linq;
 using NJsonSchema;
 using System;
 using System.ComponentModel.DataAnnotations;
@@ -31,9 +32,17 @@ namespace FolioLibrary
         [Display(Name = "Temporary Type", Order = 3)]
         public virtual NoteType TemporaryType { get; set; }
 
-        [Column("temporary_type_id"), Display(Name = "Temporary Type", Order = 4), Editable(false)]
+        [Column("temporary_type_id"), Display(Name = "Temporary Type", Order = 4)]
         public virtual Guid? TemporaryTypeId { get; set; }
 
         public override string ToString() => $"{{ {nameof(Id)} = {Id}, {nameof(Content)} = {Content}, {nameof(TemporaryTypeId)} = {TemporaryTypeId} }}";
+
+        public static Note FromJObject(JObject jObject) => new Note
+        {
+            Id = (Guid?)jObject.SelectToken("id"),
+            Content = jObject.ToString()
+        };
+
+        public JObject ToJObject() => JObject.Parse(Content);
     }
 }

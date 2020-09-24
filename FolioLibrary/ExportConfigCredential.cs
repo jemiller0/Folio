@@ -1,3 +1,4 @@
+using Newtonsoft.Json.Linq;
 using NJsonSchema;
 using System;
 using System.ComponentModel.DataAnnotations;
@@ -37,9 +38,20 @@ namespace FolioLibrary
         [Display(Name = "Batch Voucher Export Config", Order = 5)]
         public virtual BatchVoucherExportConfig BatchVoucherExportConfig { get; set; }
 
-        [Column("exportconfigid"), Display(Name = "Batch Voucher Export Config", Order = 6), Editable(false), ForeignKey("BatchVoucherExportConfig")]
+        [Column("exportconfigid"), Display(Name = "Batch Voucher Export Config", Order = 6), ForeignKey("BatchVoucherExportConfig")]
         public virtual Guid? Exportconfigid { get; set; }
 
         public override string ToString() => $"{{ {nameof(Id)} = {Id}, {nameof(Content)} = {Content}, {nameof(CreationTime)} = {CreationTime}, {nameof(CreationUserId)} = {CreationUserId}, {nameof(Exportconfigid)} = {Exportconfigid} }}";
+
+        public static ExportConfigCredential FromJObject(JObject jObject) => new ExportConfigCredential
+        {
+            Id = (Guid?)jObject.SelectToken("id"),
+            Content = jObject.ToString(),
+            CreationTime = (DateTime?)jObject.SelectToken("metadata.createdDate"),
+            CreationUserId = (string)jObject.SelectToken("metadata.createdByUserId"),
+            Exportconfigid = (Guid?)jObject.SelectToken("exportConfigId")
+        };
+
+        public JObject ToJObject() => JObject.Parse(Content);
     }
 }

@@ -1,3 +1,4 @@
+using Newtonsoft.Json.Linq;
 using NJsonSchema;
 using System;
 using System.ComponentModel.DataAnnotations;
@@ -37,9 +38,20 @@ namespace FolioLibrary
         [Display(Order = 5)]
         public virtual Owner Owner { get; set; }
 
-        [Column("ownerid"), Display(Name = "Owner", Order = 6), Editable(false), ForeignKey("Owner")]
+        [Column("ownerid"), Display(Name = "Owner", Order = 6), ForeignKey("Owner")]
         public virtual Guid? Ownerid { get; set; }
 
         public override string ToString() => $"{{ {nameof(Id)} = {Id}, {nameof(Content)} = {Content}, {nameof(CreationTime)} = {CreationTime}, {nameof(CreationUserId)} = {CreationUserId}, {nameof(Ownerid)} = {Ownerid} }}";
+
+        public static FeeType FromJObject(JObject jObject) => new FeeType
+        {
+            Id = (Guid?)jObject.SelectToken("id"),
+            Content = jObject.ToString(),
+            CreationTime = (DateTime?)jObject.SelectToken("metadata.createdDate"),
+            CreationUserId = (string)jObject.SelectToken("metadata.createdByUserId"),
+            Ownerid = (Guid?)jObject.SelectToken("ownerId")
+        };
+
+        public JObject ToJObject() => JObject.Parse(Content);
     }
 }

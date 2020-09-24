@@ -1,3 +1,4 @@
+using Newtonsoft.Json.Linq;
 using NJsonSchema;
 using System;
 using System.ComponentModel.DataAnnotations;
@@ -38,5 +39,13 @@ namespace FolioLibrary
         public virtual string CreationUserId { get; set; }
 
         public override string ToString() => $"{{ {nameof(Id)} = {Id}, {nameof(Content)} = {Content}, {nameof(CreationTime)} = {CreationTime}, {nameof(CreationUserId)} = {CreationUserId} }}";
+
+        public static InstanceSourceMarc FromJObject(JObject jObject) => new InstanceSourceMarc
+        {
+            Id = (Guid?)jObject.SelectToken("id"),
+            Content = jObject.ToString()
+        };
+
+        public JObject ToJObject() => JObject.Parse(Content);
     }
 }

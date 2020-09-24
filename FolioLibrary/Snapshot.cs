@@ -1,3 +1,4 @@
+using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -11,10 +12,10 @@ namespace FolioLibrary
         [Column("id"), ScaffoldColumn(false)]
         public virtual Guid? Id { get; set; }
 
-        [Column("status"), Display(Order = 2), Editable(false), StringLength(1024)]
+        [Column("status"), Display(Order = 2), Required, StringLength(1024)]
         public virtual string Status { get; set; }
 
-        [Column("processing_started_date"), DataType(DataType.Date), Display(Name = "Processing Started Date", Order = 3), DisplayFormat(DataFormatString = "{0:d}"), Editable(false)]
+        [Column("processing_started_date"), DataType(DataType.Date), Display(Name = "Processing Started Date", Order = 3), DisplayFormat(DataFormatString = "{0:d}", ApplyFormatInEditMode = true)]
         public virtual DateTime? ProcessingStartedDate { get; set; }
 
         [Column("created_by_user_id"), Display(Name = "Creation User Id", Order = 4), Editable(false)]

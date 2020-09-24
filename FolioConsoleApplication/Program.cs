@@ -23,7 +23,7 @@ namespace FolioConsoleApplication
     {
         public static bool api;
         private static bool compress;
-        private static string connectionString;
+        public static string connectionString;
         private static string emailAddress = ConfigurationManager.AppSettings["emailAddress"];
         private static string emailName = ConfigurationManager.AppSettings["emailName"];
         private static bool force;
@@ -1432,13 +1432,7 @@ namespace FolioConsoleApplication
                     }
                     else
                     {
-                        if (!whatIf) fbcc.Insert(new AcquisitionsUnit
-                        {
-                            Id = (Guid?)jo.SelectToken("id"),
-                            Content = jo.ToString(),
-                            CreationTime = (DateTime?)jo.SelectToken("metadata.createdDate"),
-                            CreationUserId = (string)jo.SelectToken("metadata.createdByUserId")
-                        });
+                        if (!whatIf) fbcc.Insert(AcquisitionsUnit.FromJObject(jo));
                         if (i % 1000 == 0)
                         {
                             fbcc.Commit();
@@ -1579,13 +1573,7 @@ namespace FolioConsoleApplication
                     }
                     else
                     {
-                        if (!whatIf) fbcc.Insert(new AddressType
-                        {
-                            Id = (Guid?)jo.SelectToken("id"),
-                            Content = jo.ToString(),
-                            CreationTime = (DateTime?)jo.SelectToken("metadata.createdDate"),
-                            CreationUserId = (string)jo.SelectToken("metadata.createdByUserId")
-                        });
+                        if (!whatIf) fbcc.Insert(AddressType.FromJObject(jo));
                         if (i % 1000 == 0)
                         {
                             fbcc.Commit();
@@ -1726,11 +1714,7 @@ namespace FolioConsoleApplication
                     }
                     else
                     {
-                        if (!whatIf) fbcc.Insert(new Alert
-                        {
-                            Id = (Guid?)jo.SelectToken("id"),
-                            Content = jo.ToString()
-                        });
+                        if (!whatIf) fbcc.Insert(Alert.FromJObject(jo));
                         if (i % 1000 == 0)
                         {
                             fbcc.Commit();
@@ -1871,13 +1855,7 @@ namespace FolioConsoleApplication
                     }
                     else
                     {
-                        if (!whatIf) fbcc.Insert(new AlternativeTitleType
-                        {
-                            Id = (Guid?)jo.SelectToken("id"),
-                            Content = jo.ToString(),
-                            CreationTime = (DateTime?)jo.SelectToken("metadata.createdDate"),
-                            CreationUserId = (string)jo.SelectToken("metadata.createdByUserId")
-                        });
+                        if (!whatIf) fbcc.Insert(AlternativeTitleType.FromJObject(jo));
                         if (i % 1000 == 0)
                         {
                             fbcc.Commit();
@@ -2018,13 +1996,7 @@ namespace FolioConsoleApplication
                     }
                     else
                     {
-                        if (!whatIf) fbcc.Insert(new BatchGroup
-                        {
-                            Id = (Guid?)jo.SelectToken("id"),
-                            Content = jo.ToString(),
-                            CreationTime = (DateTime?)jo.SelectToken("metadata.createdDate"),
-                            CreationUserId = (string)jo.SelectToken("metadata.createdByUserId")
-                        });
+                        if (!whatIf) fbcc.Insert(BatchGroup.FromJObject(jo));
                         if (i % 1000 == 0)
                         {
                             fbcc.Commit();
@@ -2147,11 +2119,7 @@ namespace FolioConsoleApplication
                     }
                     else
                     {
-                        if (!whatIf) fbcc.Insert(new BatchVoucher
-                        {
-                            Id = (Guid?)jo.SelectToken("id"),
-                            Content = jo.ToString()
-                        });
+                        if (!whatIf) fbcc.Insert(BatchVoucher.FromJObject(jo));
                         if (i % 1000 == 0)
                         {
                             fbcc.Commit();
@@ -2291,15 +2259,7 @@ namespace FolioConsoleApplication
                     }
                     else
                     {
-                        if (!whatIf) fbcc.Insert(new BatchVoucherExport
-                        {
-                            Id = (Guid?)jo.SelectToken("id"),
-                            Content = jo.ToString(),
-                            CreationTime = (DateTime?)jo.SelectToken("metadata.createdDate"),
-                            CreationUserId = (string)jo.SelectToken("metadata.createdByUserId"),
-                            Batchgroupid = (Guid?)jo.SelectToken("batchGroupId"),
-                            Batchvoucherid = (Guid?)jo.SelectToken("batchVoucherId")
-                        });
+                        if (!whatIf) fbcc.Insert(BatchVoucherExport.FromJObject(jo));
                         if (i % 1000 == 0)
                         {
                             fbcc.Commit();
@@ -2440,14 +2400,7 @@ namespace FolioConsoleApplication
                     }
                     else
                     {
-                        if (!whatIf) fbcc.Insert(new BatchVoucherExportConfig
-                        {
-                            Id = (Guid?)jo.SelectToken("id"),
-                            Content = jo.ToString(),
-                            CreationTime = (DateTime?)jo.SelectToken("metadata.createdDate"),
-                            CreationUserId = (string)jo.SelectToken("metadata.createdByUserId"),
-                            Batchgroupid = (Guid?)jo.SelectToken("batchGroupId")
-                        });
+                        if (!whatIf) fbcc.Insert(BatchVoucherExportConfig.FromJObject(jo));
                         if (i % 1000 == 0)
                         {
                             fbcc.Commit();
@@ -2588,13 +2541,7 @@ namespace FolioConsoleApplication
                     }
                     else
                     {
-                        if (!whatIf) fbcc.Insert(new Block
-                        {
-                            Id = (Guid?)jo.SelectToken("id"),
-                            Content = jo.ToString(),
-                            CreationTime = (DateTime?)jo.SelectToken("metadata.createdDate"),
-                            CreationUserId = (string)jo.SelectToken("metadata.createdByUserId")
-                        });
+                        if (!whatIf) fbcc.Insert(Block.FromJObject(jo));
                         if (i % 1000 == 0)
                         {
                             fbcc.Commit();
@@ -2735,13 +2682,7 @@ namespace FolioConsoleApplication
                     }
                     else
                     {
-                        if (!whatIf) fbcc.Insert(new BlockCondition
-                        {
-                            Id = (Guid?)jo.SelectToken("id"),
-                            Content = jo.ToString(),
-                            CreationTime = (DateTime?)jo.SelectToken("metadata.createdDate"),
-                            CreationUserId = (string)jo.SelectToken("metadata.createdByUserId")
-                        });
+                        if (!whatIf) fbcc.Insert(BlockCondition.FromJObject(jo));
                         if (i % 1000 == 0)
                         {
                             fbcc.Commit();
@@ -2882,14 +2823,7 @@ namespace FolioConsoleApplication
                     }
                     else
                     {
-                        if (!whatIf) fbcc.Insert(new BlockLimit
-                        {
-                            Id = (Guid?)jo.SelectToken("id"),
-                            Content = jo.ToString(),
-                            CreationTime = (DateTime?)jo.SelectToken("metadata.createdDate"),
-                            CreationUserId = (string)jo.SelectToken("metadata.createdByUserId"),
-                            Conditionid = (Guid?)jo.SelectToken("conditionId")
-                        });
+                        if (!whatIf) fbcc.Insert(BlockLimit.FromJObject(jo));
                         if (i % 1000 == 0)
                         {
                             fbcc.Commit();
@@ -3030,15 +2964,7 @@ namespace FolioConsoleApplication
                     }
                     else
                     {
-                        if (!whatIf) fbcc.Insert(new Budget
-                        {
-                            Id = (Guid?)jo.SelectToken("id"),
-                            Content = jo.ToString(),
-                            CreationTime = (DateTime?)jo.SelectToken("metadata.createdDate"),
-                            CreationUserId = (string)jo.SelectToken("metadata.createdByUserId"),
-                            FundId = (Guid?)jo.SelectToken("fundId"),
-                            FiscalYearId = (Guid?)jo.SelectToken("fiscalYearId")
-                        });
+                        if (!whatIf) fbcc.Insert(Budget.FromJObject(jo));
                         if (i % 1000 == 0)
                         {
                             fbcc.Commit();
@@ -3179,13 +3105,7 @@ namespace FolioConsoleApplication
                     }
                     else
                     {
-                        if (!whatIf) fbcc.Insert(new CallNumberType
-                        {
-                            Id = (Guid?)jo.SelectToken("id"),
-                            Content = jo.ToString(),
-                            CreationTime = (DateTime?)jo.SelectToken("metadata.createdDate"),
-                            CreationUserId = (string)jo.SelectToken("metadata.createdByUserId")
-                        });
+                        if (!whatIf) fbcc.Insert(CallNumberType.FromJObject(jo));
                         if (i % 1000 == 0)
                         {
                             fbcc.Commit();
@@ -3326,14 +3246,7 @@ namespace FolioConsoleApplication
                     }
                     else
                     {
-                        if (!whatIf) fbcc.Insert(new Campus
-                        {
-                            Id = (Guid?)jo.SelectToken("id"),
-                            Content = jo.ToString(),
-                            CreationTime = (DateTime?)jo.SelectToken("metadata.createdDate"),
-                            CreationUserId = (string)jo.SelectToken("metadata.createdByUserId"),
-                            Institutionid = (Guid?)jo.SelectToken("institutionId")
-                        });
+                        if (!whatIf) fbcc.Insert(Campus.FromJObject(jo));
                         if (i % 1000 == 0)
                         {
                             fbcc.Commit();
@@ -3474,13 +3387,7 @@ namespace FolioConsoleApplication
                     }
                     else
                     {
-                        if (!whatIf) fbcc.Insert(new CancellationReason
-                        {
-                            Id = (Guid?)jo.SelectToken("id"),
-                            Content = jo.ToString(),
-                            CreationTime = (DateTime?)jo.SelectToken("metadata.createdDate"),
-                            CreationUserId = (string)jo.SelectToken("metadata.createdByUserId")
-                        });
+                        if (!whatIf) fbcc.Insert(CancellationReason.FromJObject(jo));
                         if (i % 1000 == 0)
                         {
                             fbcc.Commit();
@@ -3621,13 +3528,7 @@ namespace FolioConsoleApplication
                     }
                     else
                     {
-                        if (!whatIf) fbcc.Insert(new Category
-                        {
-                            Id = (Guid?)jo.SelectToken("id"),
-                            Content = jo.ToString(),
-                            CreationTime = (DateTime?)jo.SelectToken("metadata.createdDate"),
-                            CreationUserId = (string)jo.SelectToken("metadata.createdByUserId")
-                        });
+                        if (!whatIf) fbcc.Insert(Category.FromJObject(jo));
                         if (i % 1000 == 0)
                         {
                             fbcc.Commit();
@@ -3768,11 +3669,7 @@ namespace FolioConsoleApplication
                     }
                     else
                     {
-                        if (!whatIf) fbcc.Insert(new CheckIn
-                        {
-                            Id = (Guid?)jo.SelectToken("id"),
-                            Content = jo.ToString()
-                        });
+                        if (!whatIf) fbcc.Insert(CheckIn.FromJObject(jo));
                         if (i % 1000 == 0)
                         {
                             fbcc.Commit();
@@ -3902,11 +3799,7 @@ namespace FolioConsoleApplication
                     }
                     else
                     {
-                        if (!whatIf) fbcc.Insert(new CirculationRule
-                        {
-                            Id = (Guid?)jo.SelectToken("id"),
-                            Content = jo.ToString()
-                        });
+                        if (!whatIf) fbcc.Insert(CirculationRule.FromJObject(jo));
                         if (i % 1000 == 0)
                         {
                             fbcc.Commit();
@@ -4047,13 +3940,7 @@ namespace FolioConsoleApplication
                     }
                     else
                     {
-                        if (!whatIf) fbcc.Insert(new ClassificationType
-                        {
-                            Id = (Guid?)jo.SelectToken("id"),
-                            Content = jo.ToString(),
-                            CreationTime = (DateTime?)jo.SelectToken("metadata.createdDate"),
-                            CreationUserId = (string)jo.SelectToken("metadata.createdByUserId")
-                        });
+                        if (!whatIf) fbcc.Insert(ClassificationType.FromJObject(jo));
                         if (i % 1000 == 0)
                         {
                             fbcc.Commit();
@@ -4194,11 +4081,7 @@ namespace FolioConsoleApplication
                     }
                     else
                     {
-                        if (!whatIf) fbcc.Insert(new CloseReason
-                        {
-                            Id = (Guid?)jo.SelectToken("id"),
-                            Content = jo.ToString()
-                        });
+                        if (!whatIf) fbcc.Insert(CloseReason.FromJObject(jo));
                         if (i % 1000 == 0)
                         {
                             fbcc.Commit();
@@ -4339,13 +4222,7 @@ namespace FolioConsoleApplication
                     }
                     else
                     {
-                        if (!whatIf) fbcc.Insert(new Comment
-                        {
-                            Id = (Guid?)jo.SelectToken("id"),
-                            Content = jo.ToString(),
-                            CreationTime = (DateTime?)jo.SelectToken("metadata.createdDate"),
-                            CreationUserId = (string)jo.SelectToken("metadata.createdByUserId")
-                        });
+                        if (!whatIf) fbcc.Insert(Comment.FromJObject(jo));
                         if (i % 1000 == 0)
                         {
                             fbcc.Commit();
@@ -4486,13 +4363,7 @@ namespace FolioConsoleApplication
                     }
                     else
                     {
-                        if (!whatIf) fbcc.Insert(new Configuration
-                        {
-                            Id = (Guid?)jo.SelectToken("id"),
-                            Content = jo.ToString(),
-                            CreationTime = (DateTime?)jo.SelectToken("metadata.createdDate"),
-                            CreationUserId = (string)jo.SelectToken("metadata.createdByUserId")
-                        });
+                        if (!whatIf) fbcc.Insert(Configuration.FromJObject(jo));
                         if (i % 1000 == 0)
                         {
                             fbcc.Commit();
@@ -4633,13 +4504,7 @@ namespace FolioConsoleApplication
                     }
                     else
                     {
-                        if (!whatIf) fbcc.Insert(new Contact
-                        {
-                            Id = (Guid?)jo.SelectToken("id"),
-                            Content = jo.ToString(),
-                            CreationTime = (DateTime?)jo.SelectToken("metadata.createdDate"),
-                            CreationUserId = (string)jo.SelectToken("metadata.createdByUserId")
-                        });
+                        if (!whatIf) fbcc.Insert(Contact.FromJObject(jo));
                         if (i % 1000 == 0)
                         {
                             fbcc.Commit();
@@ -4780,13 +4645,7 @@ namespace FolioConsoleApplication
                     }
                     else
                     {
-                        if (!whatIf) fbcc.Insert(new ContributorNameType
-                        {
-                            Id = (Guid?)jo.SelectToken("id"),
-                            Content = jo.ToString(),
-                            CreationTime = (DateTime?)jo.SelectToken("metadata.createdDate"),
-                            CreationUserId = (string)jo.SelectToken("metadata.createdByUserId")
-                        });
+                        if (!whatIf) fbcc.Insert(ContributorNameType.FromJObject(jo));
                         if (i % 1000 == 0)
                         {
                             fbcc.Commit();
@@ -4927,11 +4786,7 @@ namespace FolioConsoleApplication
                     }
                     else
                     {
-                        if (!whatIf) fbcc.Insert(new ContributorType
-                        {
-                            Id = (Guid?)jo.SelectToken("id"),
-                            Content = jo.ToString()
-                        });
+                        if (!whatIf) fbcc.Insert(ContributorType.FromJObject(jo));
                         if (i % 1000 == 0)
                         {
                             fbcc.Commit();
@@ -5072,11 +4927,7 @@ namespace FolioConsoleApplication
                     }
                     else
                     {
-                        if (!whatIf) fbcc.Insert(new CustomField
-                        {
-                            Id = (Guid?)jo.SelectToken("id"),
-                            Content = jo.ToString()
-                        });
+                        if (!whatIf) fbcc.Insert(CustomField.FromJObject(jo));
                         if (i % 1000 == 0)
                         {
                             fbcc.Commit();
@@ -5199,14 +5050,7 @@ namespace FolioConsoleApplication
                     }
                     else
                     {
-                        if (!whatIf) fbcc.Insert(new Document
-                        {
-                            Id = (Guid?)jo.SelectToken("documentMetadata.id"),
-                            Content = jo.ToString(),
-                            CreationTime = (DateTime?)jo.SelectToken("documentMetadata.metadata.createdDate"),
-                            CreationUserId = (string)jo.SelectToken("documentMetadata.metadata.createdByUserId"),
-                            Invoiceid = (Guid?)jo.SelectToken("documentMetadata.invoiceId")
-                        });
+                        if (!whatIf) fbcc.Insert(Document.FromJObject(jo));
                         if (i % 1000 == 0)
                         {
                             fbcc.Commit();
@@ -5346,13 +5190,7 @@ namespace FolioConsoleApplication
                     }
                     else
                     {
-                        if (!whatIf) fbcc.Insert(new ElectronicAccessRelationship
-                        {
-                            Id = (Guid?)jo.SelectToken("id"),
-                            Content = jo.ToString(),
-                            CreationTime = (DateTime?)jo.SelectToken("metadata.createdDate"),
-                            CreationUserId = (string)jo.SelectToken("metadata.createdByUserId")
-                        });
+                        if (!whatIf) fbcc.Insert(ElectronicAccessRelationship.FromJObject(jo));
                         if (i % 1000 == 0)
                         {
                             fbcc.Commit();
@@ -5475,14 +5313,7 @@ namespace FolioConsoleApplication
                     }
                     else
                     {
-                        if (!whatIf) fbcc.Insert(new ExportConfigCredential
-                        {
-                            Id = (Guid?)jo.SelectToken("id"),
-                            Content = jo.ToString(),
-                            CreationTime = (DateTime?)jo.SelectToken("metadata.createdDate"),
-                            CreationUserId = (string)jo.SelectToken("metadata.createdByUserId"),
-                            Exportconfigid = (Guid?)jo.SelectToken("exportConfigId")
-                        });
+                        if (!whatIf) fbcc.Insert(ExportConfigCredential.FromJObject(jo));
                         if (i % 1000 == 0)
                         {
                             fbcc.Commit();
@@ -5622,13 +5453,7 @@ namespace FolioConsoleApplication
                     }
                     else
                     {
-                        if (!whatIf) fbcc.Insert(new Fee
-                        {
-                            Id = (Guid?)jo.SelectToken("id"),
-                            Content = jo.ToString(),
-                            CreationTime = (DateTime?)jo.SelectToken("metadata.createdDate"),
-                            CreationUserId = (string)jo.SelectToken("metadata.createdByUserId")
-                        });
+                        if (!whatIf) fbcc.Insert(Fee.FromJObject(jo));
                         if (i % 1000 == 0)
                         {
                             fbcc.Commit();
@@ -5769,14 +5594,7 @@ namespace FolioConsoleApplication
                     }
                     else
                     {
-                        if (!whatIf) fbcc.Insert(new FeeType
-                        {
-                            Id = (Guid?)jo.SelectToken("id"),
-                            Content = jo.ToString(),
-                            CreationTime = (DateTime?)jo.SelectToken("metadata.createdDate"),
-                            CreationUserId = (string)jo.SelectToken("metadata.createdByUserId"),
-                            Ownerid = (Guid?)jo.SelectToken("ownerId")
-                        });
+                        if (!whatIf) fbcc.Insert(FeeType.FromJObject(jo));
                         if (i % 1000 == 0)
                         {
                             fbcc.Commit();
@@ -5917,13 +5735,7 @@ namespace FolioConsoleApplication
                     }
                     else
                     {
-                        if (!whatIf) fbcc.Insert(new FinanceGroup
-                        {
-                            Id = (Guid?)jo.SelectToken("id"),
-                            Content = jo.ToString(),
-                            CreationTime = (DateTime?)jo.SelectToken("metadata.createdDate"),
-                            CreationUserId = (string)jo.SelectToken("metadata.createdByUserId")
-                        });
+                        if (!whatIf) fbcc.Insert(FinanceGroup.FromJObject(jo));
                         if (i % 1000 == 0)
                         {
                             fbcc.Commit();
@@ -6064,13 +5876,7 @@ namespace FolioConsoleApplication
                     }
                     else
                     {
-                        if (!whatIf) fbcc.Insert(new FiscalYear
-                        {
-                            Id = (Guid?)jo.SelectToken("id"),
-                            Content = jo.ToString(),
-                            CreationTime = (DateTime?)jo.SelectToken("metadata.createdDate"),
-                            CreationUserId = (string)jo.SelectToken("metadata.createdByUserId")
-                        });
+                        if (!whatIf) fbcc.Insert(FiscalYear.FromJObject(jo));
                         if (i % 1000 == 0)
                         {
                             fbcc.Commit();
@@ -6211,11 +6017,7 @@ namespace FolioConsoleApplication
                     }
                     else
                     {
-                        if (!whatIf) fbcc.Insert(new FixedDueDateSchedule
-                        {
-                            Id = (Guid?)jo.SelectToken("id"),
-                            Content = jo.ToString()
-                        });
+                        if (!whatIf) fbcc.Insert(FixedDueDateSchedule.FromJObject(jo));
                         if (i % 1000 == 0)
                         {
                             fbcc.Commit();
@@ -6356,15 +6158,7 @@ namespace FolioConsoleApplication
                     }
                     else
                     {
-                        if (!whatIf) fbcc.Insert(new Fund
-                        {
-                            Id = (Guid?)jo.SelectToken("id"),
-                            Content = jo.ToString(),
-                            CreationTime = (DateTime?)jo.SelectToken("metadata.createdDate"),
-                            CreationUserId = (string)jo.SelectToken("metadata.createdByUserId"),
-                            LedgerId = (Guid?)jo.SelectToken("ledgerId"),
-                            Fundtypeid = (Guid?)jo.SelectToken("fundTypeId")
-                        });
+                        if (!whatIf) fbcc.Insert(Fund.FromJObject(jo));
                         if (i % 1000 == 0)
                         {
                             fbcc.Commit();
@@ -6505,11 +6299,7 @@ namespace FolioConsoleApplication
                     }
                     else
                     {
-                        if (!whatIf) fbcc.Insert(new FundType
-                        {
-                            Id = (Guid?)jo.SelectToken("id"),
-                            Content = jo.ToString()
-                        });
+                        if (!whatIf) fbcc.Insert(FundType.FromJObject(jo));
                         if (i % 1000 == 0)
                         {
                             fbcc.Commit();
@@ -6650,13 +6440,7 @@ namespace FolioConsoleApplication
                     }
                     else
                     {
-                        if (!whatIf) fbcc.Insert(new Group
-                        {
-                            Id = (Guid?)jo.SelectToken("id"),
-                            Content = jo.ToString(),
-                            CreationTime = (DateTime?)jo.SelectToken("metadata.createdDate"),
-                            CreationUserId = (string)jo.SelectToken("metadata.createdByUserId")
-                        });
+                        if (!whatIf) fbcc.Insert(Group.FromJObject(jo));
                         if (i % 1000 == 0)
                         {
                             fbcc.Commit();
@@ -6797,15 +6581,7 @@ namespace FolioConsoleApplication
                     }
                     else
                     {
-                        if (!whatIf) fbcc.Insert(new GroupFundFiscalYear
-                        {
-                            Id = (Guid?)jo.SelectToken("id"),
-                            Content = jo.ToString(),
-                            Budgetid = (Guid?)jo.SelectToken("budgetId"),
-                            Groupid = (Guid?)jo.SelectToken("groupId"),
-                            Fundid = (Guid?)jo.SelectToken("fundId"),
-                            Fiscalyearid = (Guid?)jo.SelectToken("fiscalYearId")
-                        });
+                        if (!whatIf) fbcc.Insert(GroupFundFiscalYear.FromJObject(jo));
                         if (i % 1000 == 0)
                         {
                             fbcc.Commit();
@@ -6949,19 +6725,7 @@ namespace FolioConsoleApplication
                     }
                     else
                     {
-                        if (!whatIf) fbcc.Insert(new Holding
-                        {
-                            Id = (Guid?)jo.SelectToken("id"),
-                            Content = jo.ToString(),
-                            CreationTime = (DateTime?)jo.SelectToken("metadata.createdDate"),
-                            CreationUserId = (string)jo.SelectToken("metadata.createdByUserId"),
-                            Instanceid = (Guid?)jo.SelectToken("instanceId"),
-                            Permanentlocationid = (Guid?)jo.SelectToken("permanentLocationId"),
-                            Temporarylocationid = (Guid?)jo.SelectToken("temporaryLocationId"),
-                            Holdingstypeid = (Guid?)jo.SelectToken("holdingsTypeId"),
-                            Callnumbertypeid = (Guid?)jo.SelectToken("callNumberTypeId"),
-                            Illpolicyid = (Guid?)jo.SelectToken("illPolicyId")
-                        });
+                        if (!whatIf) fbcc.Insert(Holding.FromJObject(jo));
                         if (i % 1000 == 0)
                         {
                             fbcc.Commit();
@@ -7103,13 +6867,7 @@ namespace FolioConsoleApplication
                     }
                     else
                     {
-                        if (!whatIf) fbcc.Insert(new HoldingNoteType
-                        {
-                            Id = (Guid?)jo.SelectToken("id"),
-                            Content = jo.ToString(),
-                            CreationTime = (DateTime?)jo.SelectToken("metadata.createdDate"),
-                            CreationUserId = (string)jo.SelectToken("metadata.createdByUserId")
-                        });
+                        if (!whatIf) fbcc.Insert(HoldingNoteType.FromJObject(jo));
                         if (i % 1000 == 0)
                         {
                             fbcc.Commit();
@@ -7250,13 +7008,7 @@ namespace FolioConsoleApplication
                     }
                     else
                     {
-                        if (!whatIf) fbcc.Insert(new HoldingType
-                        {
-                            Id = (Guid?)jo.SelectToken("id"),
-                            Content = jo.ToString(),
-                            CreationTime = (DateTime?)jo.SelectToken("metadata.createdDate"),
-                            CreationUserId = (string)jo.SelectToken("metadata.createdByUserId")
-                        });
+                        if (!whatIf) fbcc.Insert(HoldingType.FromJObject(jo));
                         if (i % 1000 == 0)
                         {
                             fbcc.Commit();
@@ -7386,11 +7138,7 @@ namespace FolioConsoleApplication
                     }
                     else
                     {
-                        if (!whatIf) fbcc.Insert(new HridSetting
-                        {
-                            Id = (Guid?)jo.SelectToken("id"),
-                            Content = jo.ToString()
-                        });
+                        if (!whatIf) fbcc.Insert(HridSetting.FromJObject(jo));
                         if (i % 1000 == 0)
                         {
                             fbcc.Commit();
@@ -7531,13 +7279,7 @@ namespace FolioConsoleApplication
                     }
                     else
                     {
-                        if (!whatIf) fbcc.Insert(new IdType
-                        {
-                            Id = (Guid?)jo.SelectToken("id"),
-                            Content = jo.ToString(),
-                            CreationTime = (DateTime?)jo.SelectToken("metadata.createdDate"),
-                            CreationUserId = (string)jo.SelectToken("metadata.createdByUserId")
-                        });
+                        if (!whatIf) fbcc.Insert(IdType.FromJObject(jo));
                         if (i % 1000 == 0)
                         {
                             fbcc.Commit();
@@ -7678,13 +7420,7 @@ namespace FolioConsoleApplication
                     }
                     else
                     {
-                        if (!whatIf) fbcc.Insert(new IllPolicy
-                        {
-                            Id = (Guid?)jo.SelectToken("id"),
-                            Content = jo.ToString(),
-                            CreationTime = (DateTime?)jo.SelectToken("metadata.createdDate"),
-                            CreationUserId = (string)jo.SelectToken("metadata.createdByUserId")
-                        });
+                        if (!whatIf) fbcc.Insert(IllPolicy.FromJObject(jo));
                         if (i % 1000 == 0)
                         {
                             fbcc.Commit();
@@ -7828,16 +7564,7 @@ namespace FolioConsoleApplication
                     }
                     else
                     {
-                        if (!whatIf) fbcc.Insert(new Instance
-                        {
-                            Id = (Guid?)jo.SelectToken("id"),
-                            Content = jo.ToString(),
-                            CreationTime = (DateTime?)jo.SelectToken("metadata.createdDate"),
-                            CreationUserId = (string)jo.SelectToken("metadata.createdByUserId"),
-                            Instancestatusid = (Guid?)jo.SelectToken("statusId"),
-                            Modeofissuanceid = (Guid?)jo.SelectToken("modeOfIssuanceId"),
-                            Instancetypeid = (Guid?)jo.SelectToken("instanceTypeId")
-                        });
+                        if (!whatIf) fbcc.Insert(Instance.FromJObject(jo));
                         if (i % 1000 == 0)
                         {
                             fbcc.Commit();
@@ -7979,11 +7706,7 @@ namespace FolioConsoleApplication
                     }
                     else
                     {
-                        if (!whatIf) fbcc.Insert(new InstanceFormat
-                        {
-                            Id = (Guid?)jo.SelectToken("id"),
-                            Content = jo.ToString()
-                        });
+                        if (!whatIf) fbcc.Insert(InstanceFormat.FromJObject(jo));
                         if (i % 1000 == 0)
                         {
                             fbcc.Commit();
@@ -8124,13 +7847,7 @@ namespace FolioConsoleApplication
                     }
                     else
                     {
-                        if (!whatIf) fbcc.Insert(new InstanceNoteType
-                        {
-                            Id = (Guid?)jo.SelectToken("id"),
-                            Content = jo.ToString(),
-                            CreationTime = (DateTime?)jo.SelectToken("metadata.createdDate"),
-                            CreationUserId = (string)jo.SelectToken("metadata.createdByUserId")
-                        });
+                        if (!whatIf) fbcc.Insert(InstanceNoteType.FromJObject(jo));
                         if (i % 1000 == 0)
                         {
                             fbcc.Commit();
@@ -8271,16 +7988,7 @@ namespace FolioConsoleApplication
                     }
                     else
                     {
-                        if (!whatIf) fbcc.Insert(new InstanceRelationship
-                        {
-                            Id = (Guid?)jo.SelectToken("id"),
-                            Content = jo.ToString(),
-                            CreationTime = (DateTime?)jo.SelectToken("metadata.createdDate"),
-                            CreationUserId = (string)jo.SelectToken("metadata.createdByUserId"),
-                            Superinstanceid = (Guid?)jo.SelectToken("superInstanceId"),
-                            Subinstanceid = (Guid?)jo.SelectToken("subInstanceId"),
-                            Instancerelationshiptypeid = (Guid?)jo.SelectToken("instanceRelationshipTypeId")
-                        });
+                        if (!whatIf) fbcc.Insert(InstanceRelationship.FromJObject(jo));
                         if (i % 1000 == 0)
                         {
                             fbcc.Commit();
@@ -8421,13 +8129,7 @@ namespace FolioConsoleApplication
                     }
                     else
                     {
-                        if (!whatIf) fbcc.Insert(new InstanceRelationshipType
-                        {
-                            Id = (Guid?)jo.SelectToken("id"),
-                            Content = jo.ToString(),
-                            CreationTime = (DateTime?)jo.SelectToken("metadata.createdDate"),
-                            CreationUserId = (string)jo.SelectToken("metadata.createdByUserId")
-                        });
+                        if (!whatIf) fbcc.Insert(InstanceRelationshipType.FromJObject(jo));
                         if (i % 1000 == 0)
                         {
                             fbcc.Commit();
@@ -8568,13 +8270,7 @@ namespace FolioConsoleApplication
                     }
                     else
                     {
-                        if (!whatIf) fbcc.Insert(new InstanceStatus
-                        {
-                            Id = (Guid?)jo.SelectToken("id"),
-                            Content = jo.ToString(),
-                            CreationTime = (DateTime?)jo.SelectToken("metadata.createdDate"),
-                            CreationUserId = (string)jo.SelectToken("metadata.createdByUserId")
-                        });
+                        if (!whatIf) fbcc.Insert(InstanceStatus.FromJObject(jo));
                         if (i % 1000 == 0)
                         {
                             fbcc.Commit();
@@ -8715,11 +8411,7 @@ namespace FolioConsoleApplication
                     }
                     else
                     {
-                        if (!whatIf) fbcc.Insert(new InstanceType
-                        {
-                            Id = (Guid?)jo.SelectToken("id"),
-                            Content = jo.ToString()
-                        });
+                        if (!whatIf) fbcc.Insert(InstanceType.FromJObject(jo));
                         if (i % 1000 == 0)
                         {
                             fbcc.Commit();
@@ -8860,13 +8552,7 @@ namespace FolioConsoleApplication
                     }
                     else
                     {
-                        if (!whatIf) fbcc.Insert(new Institution
-                        {
-                            Id = (Guid?)jo.SelectToken("id"),
-                            Content = jo.ToString(),
-                            CreationTime = (DateTime?)jo.SelectToken("metadata.createdDate"),
-                            CreationUserId = (string)jo.SelectToken("metadata.createdByUserId")
-                        });
+                        if (!whatIf) fbcc.Insert(Institution.FromJObject(jo));
                         if (i % 1000 == 0)
                         {
                             fbcc.Commit();
@@ -9007,13 +8693,7 @@ namespace FolioConsoleApplication
                     }
                     else
                     {
-                        if (!whatIf) fbcc.Insert(new Interface
-                        {
-                            Id = (Guid?)jo.SelectToken("id"),
-                            Content = jo.ToString(),
-                            CreationTime = (DateTime?)jo.SelectToken("metadata.createdDate"),
-                            CreationUserId = (string)jo.SelectToken("metadata.createdByUserId")
-                        });
+                        if (!whatIf) fbcc.Insert(Interface.FromJObject(jo));
                         if (i % 1000 == 0)
                         {
                             fbcc.Commit();
@@ -9136,12 +8816,7 @@ namespace FolioConsoleApplication
                     }
                     else
                     {
-                        if (!whatIf) fbcc.Insert(new InterfaceCredential
-                        {
-                            Id = (Guid?)jo.SelectToken("id"),
-                            Content = jo.ToString(),
-                            Interfaceid = (Guid?)jo.SelectToken("interfaceId")
-                        });
+                        if (!whatIf) fbcc.Insert(InterfaceCredential.FromJObject(jo));
                         if (i % 1000 == 0)
                         {
                             fbcc.Commit();
@@ -9281,14 +8956,7 @@ namespace FolioConsoleApplication
                     }
                     else
                     {
-                        if (!whatIf) fbcc.Insert(new Invoice
-                        {
-                            Id = (Guid?)jo.SelectToken("id"),
-                            Content = jo.ToString(),
-                            CreationTime = (DateTime?)jo.SelectToken("metadata.createdDate"),
-                            CreationUserId = (string)jo.SelectToken("metadata.createdByUserId"),
-                            Batchgroupid = (Guid?)jo.SelectToken("batchGroupId")
-                        });
+                        if (!whatIf) fbcc.Insert(Invoice.FromJObject(jo));
                         if (i % 1000 == 0)
                         {
                             fbcc.Commit();
@@ -9429,14 +9097,7 @@ namespace FolioConsoleApplication
                     }
                     else
                     {
-                        if (!whatIf) fbcc.Insert(new InvoiceItem
-                        {
-                            Id = (Guid?)jo.SelectToken("id"),
-                            Content = jo.ToString(),
-                            CreationTime = (DateTime?)jo.SelectToken("metadata.createdDate"),
-                            CreationUserId = (string)jo.SelectToken("metadata.createdByUserId"),
-                            Invoiceid = (Guid?)jo.SelectToken("invoiceId")
-                        });
+                        if (!whatIf) fbcc.Insert(InvoiceItem.FromJObject(jo));
                         if (i % 1000 == 0)
                         {
                             fbcc.Commit();
@@ -9559,11 +9220,7 @@ namespace FolioConsoleApplication
                     }
                     else
                     {
-                        if (!whatIf) fbcc.Insert(new InvoiceTransactionSummary
-                        {
-                            Id = (Guid?)jo.SelectToken("id"),
-                            Content = jo.ToString()
-                        });
+                        if (!whatIf) fbcc.Insert(InvoiceTransactionSummary.FromJObject(jo));
                         if (i % 1000 == 0)
                         {
                             fbcc.Commit();
@@ -9706,20 +9363,7 @@ namespace FolioConsoleApplication
                     }
                     else
                     {
-                        if (!whatIf) fbcc.Insert(new Item
-                        {
-                            Id = (Guid?)jo.SelectToken("id"),
-                            Content = jo.ToString(),
-                            CreationTime = (DateTime?)jo.SelectToken("metadata.createdDate"),
-                            CreationUserId = (string)jo.SelectToken("metadata.createdByUserId"),
-                            Holdingsrecordid = (Guid?)jo.SelectToken("holdingsRecordId"),
-                            Permanentloantypeid = (Guid?)jo.SelectToken("permanentLoanTypeId"),
-                            Temporaryloantypeid = (Guid?)jo.SelectToken("temporaryLoanTypeId"),
-                            Materialtypeid = (Guid?)jo.SelectToken("materialTypeId"),
-                            Permanentlocationid = (Guid?)jo.SelectToken("permanentLocationId"),
-                            Temporarylocationid = (Guid?)jo.SelectToken("temporaryLocationId"),
-                            Effectivelocationid = (Guid?)jo.SelectToken("effectiveLocationId")
-                        });
+                        if (!whatIf) fbcc.Insert(Item.FromJObject(jo));
                         if (i % 1000 == 0)
                         {
                             fbcc.Commit();
@@ -9861,13 +9505,7 @@ namespace FolioConsoleApplication
                     }
                     else
                     {
-                        if (!whatIf) fbcc.Insert(new ItemDamagedStatus
-                        {
-                            Id = (Guid?)jo.SelectToken("id"),
-                            Content = jo.ToString(),
-                            CreationTime = (DateTime?)jo.SelectToken("metadata.createdDate"),
-                            CreationUserId = (string)jo.SelectToken("metadata.createdByUserId")
-                        });
+                        if (!whatIf) fbcc.Insert(ItemDamagedStatus.FromJObject(jo));
                         if (i % 1000 == 0)
                         {
                             fbcc.Commit();
@@ -10008,13 +9646,7 @@ namespace FolioConsoleApplication
                     }
                     else
                     {
-                        if (!whatIf) fbcc.Insert(new ItemNoteType
-                        {
-                            Id = (Guid?)jo.SelectToken("id"),
-                            Content = jo.ToString(),
-                            CreationTime = (DateTime?)jo.SelectToken("metadata.createdDate"),
-                            CreationUserId = (string)jo.SelectToken("metadata.createdByUserId")
-                        });
+                        if (!whatIf) fbcc.Insert(ItemNoteType.FromJObject(jo));
                         if (i % 1000 == 0)
                         {
                             fbcc.Commit();
@@ -10155,14 +9787,7 @@ namespace FolioConsoleApplication
                     }
                     else
                     {
-                        if (!whatIf) fbcc.Insert(new Ledger
-                        {
-                            Id = (Guid?)jo.SelectToken("id"),
-                            Content = jo.ToString(),
-                            CreationTime = (DateTime?)jo.SelectToken("metadata.createdDate"),
-                            CreationUserId = (string)jo.SelectToken("metadata.createdByUserId"),
-                            Fiscalyearoneid = (Guid?)jo.SelectToken("fiscalYearOneId")
-                        });
+                        if (!whatIf) fbcc.Insert(Ledger.FromJObject(jo));
                         if (i % 1000 == 0)
                         {
                             fbcc.Commit();
@@ -10285,13 +9910,7 @@ namespace FolioConsoleApplication
                     }
                     else
                     {
-                        if (!whatIf) fbcc.Insert(new LedgerFiscalYear
-                        {
-                            Id = (Guid?)jo.SelectToken("id"),
-                            Content = jo.ToString(),
-                            Ledgerid = (Guid?)jo.SelectToken("ledgerId"),
-                            Fiscalyearid = (Guid?)jo.SelectToken("fiscalYearId")
-                        });
+                        if (!whatIf) fbcc.Insert(LedgerFiscalYear.FromJObject(jo));
                         if (i % 1000 == 0)
                         {
                             fbcc.Commit();
@@ -10431,14 +10050,7 @@ namespace FolioConsoleApplication
                     }
                     else
                     {
-                        if (!whatIf) fbcc.Insert(new Library
-                        {
-                            Id = (Guid?)jo.SelectToken("id"),
-                            Content = jo.ToString(),
-                            CreationTime = (DateTime?)jo.SelectToken("metadata.createdDate"),
-                            CreationUserId = (string)jo.SelectToken("metadata.createdByUserId"),
-                            Campusid = (Guid?)jo.SelectToken("campusId")
-                        });
+                        if (!whatIf) fbcc.Insert(Library.FromJObject(jo));
                         if (i % 1000 == 0)
                         {
                             fbcc.Commit();
@@ -10579,13 +10191,7 @@ namespace FolioConsoleApplication
                     }
                     else
                     {
-                        if (!whatIf) fbcc.Insert(new Loan
-                        {
-                            Id = (Guid?)jo.SelectToken("id"),
-                            Content = jo.ToString(),
-                            CreationTime = (DateTime?)jo.SelectToken("metadata.createdDate"),
-                            CreationUserId = (string)jo.SelectToken("metadata.createdByUserId")
-                        });
+                        if (!whatIf) fbcc.Insert(Loan.FromJObject(jo));
                         if (i % 1000 == 0)
                         {
                             fbcc.Commit();
@@ -10726,15 +10332,7 @@ namespace FolioConsoleApplication
                     }
                     else
                     {
-                        if (!whatIf) fbcc.Insert(new LoanPolicy
-                        {
-                            Id = (Guid?)jo.SelectToken("id"),
-                            Content = jo.ToString(),
-                            CreationTime = (DateTime?)jo.SelectToken("metadata.createdDate"),
-                            CreationUserId = (string)jo.SelectToken("metadata.createdByUserId"),
-                            LoanspolicyFixedduedatescheduleid = (Guid?)jo.SelectToken("loansPolicy.fixedDueDateScheduleId"),
-                            RenewalspolicyAlternatefixedduedatescheduleid = (Guid?)jo.SelectToken("renewalsPolicy.alternateFixedDueDateScheduleId")
-                        });
+                        if (!whatIf) fbcc.Insert(LoanPolicy.FromJObject(jo));
                         if (i % 1000 == 0)
                         {
                             fbcc.Commit();
@@ -10875,13 +10473,7 @@ namespace FolioConsoleApplication
                     }
                     else
                     {
-                        if (!whatIf) fbcc.Insert(new LoanType
-                        {
-                            Id = (Guid?)jo.SelectToken("id"),
-                            Content = jo.ToString(),
-                            CreationTime = (DateTime?)jo.SelectToken("metadata.createdDate"),
-                            CreationUserId = (string)jo.SelectToken("metadata.createdByUserId")
-                        });
+                        if (!whatIf) fbcc.Insert(LoanType.FromJObject(jo));
                         if (i % 1000 == 0)
                         {
                             fbcc.Commit();
@@ -11022,16 +10614,7 @@ namespace FolioConsoleApplication
                     }
                     else
                     {
-                        if (!whatIf) fbcc.Insert(new Location
-                        {
-                            Id = (Guid?)jo.SelectToken("id"),
-                            Content = jo.ToString(),
-                            CreationTime = (DateTime?)jo.SelectToken("metadata.createdDate"),
-                            CreationUserId = (string)jo.SelectToken("metadata.createdByUserId"),
-                            Institutionid = (Guid?)jo.SelectToken("institutionId"),
-                            Campusid = (Guid?)jo.SelectToken("campusId"),
-                            Libraryid = (Guid?)jo.SelectToken("libraryId")
-                        });
+                        if (!whatIf) fbcc.Insert(Location.FromJObject(jo));
                         if (i % 1000 == 0)
                         {
                             fbcc.Commit();
@@ -11161,13 +10744,7 @@ namespace FolioConsoleApplication
                     }
                     else
                     {
-                        if (!whatIf) fbcc.Insert(new Login
-                        {
-                            Id = (Guid?)jo.SelectToken("id"),
-                            Content = jo.ToString(),
-                            CreationTime = (DateTime?)jo.SelectToken("metadata.createdDate"),
-                            CreationUserId = (string)jo.SelectToken("metadata.createdByUserId")
-                        });
+                        if (!whatIf) fbcc.Insert(Login.FromJObject(jo));
                         if (i % 1000 == 0)
                         {
                             fbcc.Commit();
@@ -11308,13 +10885,7 @@ namespace FolioConsoleApplication
                     }
                     else
                     {
-                        if (!whatIf) fbcc.Insert(new LostItemFeePolicy
-                        {
-                            Id = (Guid?)jo.SelectToken("id"),
-                            Content = jo.ToString(),
-                            CreationTime = (DateTime?)jo.SelectToken("metadata.createdDate"),
-                            CreationUserId = (string)jo.SelectToken("metadata.createdByUserId")
-                        });
+                        if (!whatIf) fbcc.Insert(LostItemFeePolicy.FromJObject(jo));
                         if (i % 1000 == 0)
                         {
                             fbcc.Commit();
@@ -11455,13 +11026,7 @@ namespace FolioConsoleApplication
                     }
                     else
                     {
-                        if (!whatIf) fbcc.Insert(new MaterialType
-                        {
-                            Id = (Guid?)jo.SelectToken("id"),
-                            Content = jo.ToString(),
-                            CreationTime = (DateTime?)jo.SelectToken("metadata.createdDate"),
-                            CreationUserId = (string)jo.SelectToken("metadata.createdByUserId")
-                        });
+                        if (!whatIf) fbcc.Insert(MaterialType.FromJObject(jo));
                         if (i % 1000 == 0)
                         {
                             fbcc.Commit();
@@ -11602,13 +11167,7 @@ namespace FolioConsoleApplication
                     }
                     else
                     {
-                        if (!whatIf) fbcc.Insert(new ModeOfIssuance
-                        {
-                            Id = (Guid?)jo.SelectToken("id"),
-                            Content = jo.ToString(),
-                            CreationTime = (DateTime?)jo.SelectToken("metadata.createdDate"),
-                            CreationUserId = (string)jo.SelectToken("metadata.createdByUserId")
-                        });
+                        if (!whatIf) fbcc.Insert(ModeOfIssuance.FromJObject(jo));
                         if (i % 1000 == 0)
                         {
                             fbcc.Commit();
@@ -11749,13 +11308,7 @@ namespace FolioConsoleApplication
                     }
                     else
                     {
-                        if (!whatIf) fbcc.Insert(new NatureOfContentTerm
-                        {
-                            Id = (Guid?)jo.SelectToken("id"),
-                            Content = jo.ToString(),
-                            CreationTime = (DateTime?)jo.SelectToken("metadata.createdDate"),
-                            CreationUserId = (string)jo.SelectToken("metadata.createdByUserId")
-                        });
+                        if (!whatIf) fbcc.Insert(NatureOfContentTerm.FromJObject(jo));
                         if (i % 1000 == 0)
                         {
                             fbcc.Commit();
@@ -11896,13 +11449,7 @@ namespace FolioConsoleApplication
                     }
                     else
                     {
-                        if (!whatIf) fbcc.Insert(new Order
-                        {
-                            Id = (Guid?)jo.SelectToken("id"),
-                            Content = jo.ToString(),
-                            CreationTime = (DateTime?)jo.SelectToken("metadata.createdDate"),
-                            CreationUserId = (string)jo.SelectToken("metadata.createdByUserId")
-                        });
+                        if (!whatIf) fbcc.Insert(Order.FromJObject(jo));
                         if (i % 1000 == 0)
                         {
                             fbcc.Commit();
@@ -12043,12 +11590,7 @@ namespace FolioConsoleApplication
                     }
                     else
                     {
-                        if (!whatIf) fbcc.Insert(new OrderInvoice
-                        {
-                            Id = (Guid?)jo.SelectToken("id"),
-                            Content = jo.ToString(),
-                            Purchaseorderid = (Guid?)jo.SelectToken("purchaseOrderId")
-                        });
+                        if (!whatIf) fbcc.Insert(OrderInvoice.FromJObject(jo));
                         if (i % 1000 == 0)
                         {
                             fbcc.Commit();
@@ -12189,14 +11731,7 @@ namespace FolioConsoleApplication
                     }
                     else
                     {
-                        if (!whatIf) fbcc.Insert(new OrderItem
-                        {
-                            Id = (Guid?)jo.SelectToken("id"),
-                            Content = jo.ToString(),
-                            CreationTime = (DateTime?)jo.SelectToken("metadata.createdDate"),
-                            CreationUserId = (string)jo.SelectToken("metadata.createdByUserId"),
-                            Purchaseorderid = (Guid?)jo.SelectToken("purchaseOrderId")
-                        });
+                        if (!whatIf) fbcc.Insert(OrderItem.FromJObject(jo));
                         if (i % 1000 == 0)
                         {
                             fbcc.Commit();
@@ -12337,11 +11872,7 @@ namespace FolioConsoleApplication
                     }
                     else
                     {
-                        if (!whatIf) fbcc.Insert(new OrderTemplate
-                        {
-                            Id = (Guid?)jo.SelectToken("id"),
-                            Content = jo.ToString()
-                        });
+                        if (!whatIf) fbcc.Insert(OrderTemplate.FromJObject(jo));
                         if (i % 1000 == 0)
                         {
                             fbcc.Commit();
@@ -12464,11 +11995,7 @@ namespace FolioConsoleApplication
                     }
                     else
                     {
-                        if (!whatIf) fbcc.Insert(new OrderTransactionSummary
-                        {
-                            Id = (Guid?)jo.SelectToken("id"),
-                            Content = jo.ToString()
-                        });
+                        if (!whatIf) fbcc.Insert(OrderTransactionSummary.FromJObject(jo));
                         if (i % 1000 == 0)
                         {
                             fbcc.Commit();
@@ -12608,13 +12135,7 @@ namespace FolioConsoleApplication
                     }
                     else
                     {
-                        if (!whatIf) fbcc.Insert(new Organization
-                        {
-                            Id = (Guid?)jo.SelectToken("id"),
-                            Content = jo.ToString(),
-                            CreationTime = (DateTime?)jo.SelectToken("metadata.createdDate"),
-                            CreationUserId = (string)jo.SelectToken("metadata.createdByUserId")
-                        });
+                        if (!whatIf) fbcc.Insert(Organization.FromJObject(jo));
                         if (i % 1000 == 0)
                         {
                             fbcc.Commit();
@@ -12755,13 +12276,7 @@ namespace FolioConsoleApplication
                     }
                     else
                     {
-                        if (!whatIf) fbcc.Insert(new OverdueFinePolicy
-                        {
-                            Id = (Guid?)jo.SelectToken("id"),
-                            Content = jo.ToString(),
-                            CreationTime = (DateTime?)jo.SelectToken("metadata.createdDate"),
-                            CreationUserId = (string)jo.SelectToken("metadata.createdByUserId")
-                        });
+                        if (!whatIf) fbcc.Insert(OverdueFinePolicy.FromJObject(jo));
                         if (i % 1000 == 0)
                         {
                             fbcc.Commit();
@@ -12902,13 +12417,7 @@ namespace FolioConsoleApplication
                     }
                     else
                     {
-                        if (!whatIf) fbcc.Insert(new Owner
-                        {
-                            Id = (Guid?)jo.SelectToken("id"),
-                            Content = jo.ToString(),
-                            CreationTime = (DateTime?)jo.SelectToken("metadata.createdDate"),
-                            CreationUserId = (string)jo.SelectToken("metadata.createdByUserId")
-                        });
+                        if (!whatIf) fbcc.Insert(Owner.FromJObject(jo));
                         if (i % 1000 == 0)
                         {
                             fbcc.Commit();
@@ -13049,13 +12558,7 @@ namespace FolioConsoleApplication
                     }
                     else
                     {
-                        if (!whatIf) fbcc.Insert(new PatronActionSession
-                        {
-                            Id = (Guid?)jo.SelectToken("id"),
-                            Content = jo.ToString(),
-                            CreationTime = (DateTime?)jo.SelectToken("metadata.createdDate"),
-                            CreationUserId = (string)jo.SelectToken("metadata.createdByUserId")
-                        });
+                        if (!whatIf) fbcc.Insert(PatronActionSession.FromJObject(jo));
                         if (i % 1000 == 0)
                         {
                             fbcc.Commit();
@@ -13196,13 +12699,7 @@ namespace FolioConsoleApplication
                     }
                     else
                     {
-                        if (!whatIf) fbcc.Insert(new PatronNoticePolicy
-                        {
-                            Id = (Guid?)jo.SelectToken("id"),
-                            Content = jo.ToString(),
-                            CreationTime = (DateTime?)jo.SelectToken("metadata.createdDate"),
-                            CreationUserId = (string)jo.SelectToken("metadata.createdByUserId")
-                        });
+                        if (!whatIf) fbcc.Insert(PatronNoticePolicy.FromJObject(jo));
                         if (i % 1000 == 0)
                         {
                             fbcc.Commit();
@@ -13343,11 +12840,7 @@ namespace FolioConsoleApplication
                     }
                     else
                     {
-                        if (!whatIf) fbcc.Insert(new Payment
-                        {
-                            Id = (Guid?)jo.SelectToken("id"),
-                            Content = jo.ToString()
-                        });
+                        if (!whatIf) fbcc.Insert(Payment.FromJObject(jo));
                         if (i % 1000 == 0)
                         {
                             fbcc.Commit();
@@ -13488,13 +12981,7 @@ namespace FolioConsoleApplication
                     }
                     else
                     {
-                        if (!whatIf) fbcc.Insert(new PaymentMethod
-                        {
-                            Id = (Guid?)jo.SelectToken("id"),
-                            Content = jo.ToString(),
-                            CreationTime = (DateTime?)jo.SelectToken("metadata.createdDate"),
-                            CreationUserId = (string)jo.SelectToken("metadata.createdByUserId")
-                        });
+                        if (!whatIf) fbcc.Insert(PaymentMethod.FromJObject(jo));
                         if (i % 1000 == 0)
                         {
                             fbcc.Commit();
@@ -13635,13 +13122,7 @@ namespace FolioConsoleApplication
                     }
                     else
                     {
-                        if (!whatIf) fbcc.Insert(new Permission
-                        {
-                            Id = (Guid?)jo.SelectToken("id"),
-                            Content = jo.ToString(),
-                            CreationTime = (DateTime?)jo.SelectToken("metadata.createdDate"),
-                            CreationUserId = (string)jo.SelectToken("metadata.createdByUserId")
-                        });
+                        if (!whatIf) fbcc.Insert(Permission.FromJObject(jo));
                         if (i % 1000 == 0)
                         {
                             fbcc.Commit();
@@ -13782,13 +13263,7 @@ namespace FolioConsoleApplication
                     }
                     else
                     {
-                        if (!whatIf) fbcc.Insert(new PermissionsUser
-                        {
-                            Id = (Guid?)jo.SelectToken("id"),
-                            Content = jo.ToString(),
-                            CreationTime = (DateTime?)jo.SelectToken("metadata.createdDate"),
-                            CreationUserId = (string)jo.SelectToken("metadata.createdByUserId")
-                        });
+                        if (!whatIf) fbcc.Insert(PermissionsUser.FromJObject(jo));
                         if (i % 1000 == 0)
                         {
                             fbcc.Commit();
@@ -13929,13 +13404,7 @@ namespace FolioConsoleApplication
                     }
                     else
                     {
-                        if (!whatIf) fbcc.Insert(new Piece
-                        {
-                            Id = (Guid?)jo.SelectToken("id"),
-                            Content = jo.ToString(),
-                            Polineid = (Guid?)jo.SelectToken("poLineId"),
-                            Titleid = (Guid?)jo.SelectToken("titleId")
-                        });
+                        if (!whatIf) fbcc.Insert(Piece.FromJObject(jo));
                         if (i % 1000 == 0)
                         {
                             fbcc.Commit();
@@ -14076,15 +13545,7 @@ namespace FolioConsoleApplication
                     }
                     else
                     {
-                        if (!whatIf) fbcc.Insert(new PrecedingSucceedingTitle
-                        {
-                            Id = (Guid?)jo.SelectToken("id"),
-                            Content = jo.ToString(),
-                            CreationTime = (DateTime?)jo.SelectToken("metadata.createdDate"),
-                            CreationUserId = (string)jo.SelectToken("metadata.createdByUserId"),
-                            Precedinginstanceid = (Guid?)jo.SelectToken("precedingInstanceId"),
-                            Succeedinginstanceid = (Guid?)jo.SelectToken("succeedingInstanceId")
-                        });
+                        if (!whatIf) fbcc.Insert(PrecedingSucceedingTitle.FromJObject(jo));
                         if (i % 1000 == 0)
                         {
                             fbcc.Commit();
@@ -14225,11 +13686,7 @@ namespace FolioConsoleApplication
                     }
                     else
                     {
-                        if (!whatIf) fbcc.Insert(new Prefix
-                        {
-                            Id = (Guid?)jo.SelectToken("id"),
-                            Content = jo.ToString()
-                        });
+                        if (!whatIf) fbcc.Insert(Prefix.FromJObject(jo));
                         if (i % 1000 == 0)
                         {
                             fbcc.Commit();
@@ -14370,13 +13827,7 @@ namespace FolioConsoleApplication
                     }
                     else
                     {
-                        if (!whatIf) fbcc.Insert(new Proxy
-                        {
-                            Id = (Guid?)jo.SelectToken("id"),
-                            Content = jo.ToString(),
-                            CreationTime = (DateTime?)jo.SelectToken("metadata.createdDate"),
-                            CreationUserId = (string)jo.SelectToken("metadata.createdByUserId")
-                        });
+                        if (!whatIf) fbcc.Insert(Proxy.FromJObject(jo));
                         if (i % 1000 == 0)
                         {
                             fbcc.Commit();
@@ -14651,13 +14102,7 @@ namespace FolioConsoleApplication
                     }
                     else
                     {
-                        if (!whatIf) fbcc.Insert(new RefundReason
-                        {
-                            Id = (Guid?)jo.SelectToken("id"),
-                            Content = jo.ToString(),
-                            CreationTime = (DateTime?)jo.SelectToken("metadata.createdDate"),
-                            CreationUserId = (string)jo.SelectToken("metadata.createdByUserId")
-                        });
+                        if (!whatIf) fbcc.Insert(RefundReason.FromJObject(jo));
                         if (i % 1000 == 0)
                         {
                             fbcc.Commit();
@@ -14798,11 +14243,7 @@ namespace FolioConsoleApplication
                     }
                     else
                     {
-                        if (!whatIf) fbcc.Insert(new ReportingCode
-                        {
-                            Id = (Guid?)jo.SelectToken("id"),
-                            Content = jo.ToString()
-                        });
+                        if (!whatIf) fbcc.Insert(ReportingCode.FromJObject(jo));
                         if (i % 1000 == 0)
                         {
                             fbcc.Commit();
@@ -14943,14 +14384,7 @@ namespace FolioConsoleApplication
                     }
                     else
                     {
-                        if (!whatIf) fbcc.Insert(new Request
-                        {
-                            Id = (Guid?)jo.SelectToken("id"),
-                            Content = jo.ToString(),
-                            CreationTime = (DateTime?)jo.SelectToken("metadata.createdDate"),
-                            CreationUserId = (string)jo.SelectToken("metadata.createdByUserId"),
-                            Cancellationreasonid = (Guid?)jo.SelectToken("cancellationReasonId")
-                        });
+                        if (!whatIf) fbcc.Insert(Request.FromJObject(jo));
                         if (i % 1000 == 0)
                         {
                             fbcc.Commit();
@@ -15091,13 +14525,7 @@ namespace FolioConsoleApplication
                     }
                     else
                     {
-                        if (!whatIf) fbcc.Insert(new RequestPolicy
-                        {
-                            Id = (Guid?)jo.SelectToken("id"),
-                            Content = jo.ToString(),
-                            CreationTime = (DateTime?)jo.SelectToken("metadata.createdDate"),
-                            CreationUserId = (string)jo.SelectToken("metadata.createdByUserId")
-                        });
+                        if (!whatIf) fbcc.Insert(RequestPolicy.FromJObject(jo));
                         if (i % 1000 == 0)
                         {
                             fbcc.Commit();
@@ -15238,13 +14666,7 @@ namespace FolioConsoleApplication
                     }
                     else
                     {
-                        if (!whatIf) fbcc.Insert(new ScheduledNotice
-                        {
-                            Id = (Guid?)jo.SelectToken("id"),
-                            Content = jo.ToString(),
-                            CreationTime = (DateTime?)jo.SelectToken("metadata.createdDate"),
-                            CreationUserId = (string)jo.SelectToken("metadata.createdByUserId")
-                        });
+                        if (!whatIf) fbcc.Insert(ScheduledNotice.FromJObject(jo));
                         if (i % 1000 == 0)
                         {
                             fbcc.Commit();
@@ -15385,13 +14807,7 @@ namespace FolioConsoleApplication
                     }
                     else
                     {
-                        if (!whatIf) fbcc.Insert(new ServicePoint
-                        {
-                            Id = (Guid?)jo.SelectToken("id"),
-                            Content = jo.ToString(),
-                            CreationTime = (DateTime?)jo.SelectToken("metadata.createdDate"),
-                            CreationUserId = (string)jo.SelectToken("metadata.createdByUserId")
-                        });
+                        if (!whatIf) fbcc.Insert(ServicePoint.FromJObject(jo));
                         if (i % 1000 == 0)
                         {
                             fbcc.Commit();
@@ -15532,14 +14948,7 @@ namespace FolioConsoleApplication
                     }
                     else
                     {
-                        if (!whatIf) fbcc.Insert(new ServicePointUser
-                        {
-                            Id = (Guid?)jo.SelectToken("id"),
-                            Content = jo.ToString(),
-                            CreationTime = (DateTime?)jo.SelectToken("metadata.createdDate"),
-                            CreationUserId = (string)jo.SelectToken("metadata.createdByUserId"),
-                            Defaultservicepointid = (Guid?)jo.SelectToken("defaultServicePointId")
-                        });
+                        if (!whatIf) fbcc.Insert(ServicePointUser.FromJObject(jo));
                         if (i % 1000 == 0)
                         {
                             fbcc.Commit();
@@ -15810,13 +15219,7 @@ namespace FolioConsoleApplication
                     }
                     else
                     {
-                        if (!whatIf) fbcc.Insert(new StaffSlip
-                        {
-                            Id = (Guid?)jo.SelectToken("id"),
-                            Content = jo.ToString(),
-                            CreationTime = (DateTime?)jo.SelectToken("metadata.createdDate"),
-                            CreationUserId = (string)jo.SelectToken("metadata.createdByUserId")
-                        });
+                        if (!whatIf) fbcc.Insert(StaffSlip.FromJObject(jo));
                         if (i % 1000 == 0)
                         {
                             fbcc.Commit();
@@ -15957,14 +15360,7 @@ namespace FolioConsoleApplication
                     }
                     else
                     {
-                        if (!whatIf) fbcc.Insert(new StatisticalCode
-                        {
-                            Id = (Guid?)jo.SelectToken("id"),
-                            Content = jo.ToString(),
-                            CreationTime = (DateTime?)jo.SelectToken("metadata.createdDate"),
-                            CreationUserId = (string)jo.SelectToken("metadata.createdByUserId"),
-                            Statisticalcodetypeid = (Guid?)jo.SelectToken("statisticalCodeTypeId")
-                        });
+                        if (!whatIf) fbcc.Insert(StatisticalCode.FromJObject(jo));
                         if (i % 1000 == 0)
                         {
                             fbcc.Commit();
@@ -16105,13 +15501,7 @@ namespace FolioConsoleApplication
                     }
                     else
                     {
-                        if (!whatIf) fbcc.Insert(new StatisticalCodeType
-                        {
-                            Id = (Guid?)jo.SelectToken("id"),
-                            Content = jo.ToString(),
-                            CreationTime = (DateTime?)jo.SelectToken("metadata.createdDate"),
-                            CreationUserId = (string)jo.SelectToken("metadata.createdByUserId")
-                        });
+                        if (!whatIf) fbcc.Insert(StatisticalCodeType.FromJObject(jo));
                         if (i % 1000 == 0)
                         {
                             fbcc.Commit();
@@ -16252,11 +15642,7 @@ namespace FolioConsoleApplication
                     }
                     else
                     {
-                        if (!whatIf) fbcc.Insert(new Suffix
-                        {
-                            Id = (Guid?)jo.SelectToken("id"),
-                            Content = jo.ToString()
-                        });
+                        if (!whatIf) fbcc.Insert(Suffix.FromJObject(jo));
                         if (i % 1000 == 0)
                         {
                             fbcc.Commit();
@@ -16397,13 +15783,7 @@ namespace FolioConsoleApplication
                     }
                     else
                     {
-                        if (!whatIf) fbcc.Insert(new Template
-                        {
-                            Id = (Guid?)jo.SelectToken("id"),
-                            Content = jo.ToString(),
-                            CreationTime = (DateTime?)jo.SelectToken("metadata.createdDate"),
-                            CreationUserId = (string)jo.SelectToken("metadata.createdByUserId")
-                        });
+                        if (!whatIf) fbcc.Insert(Template.FromJObject(jo));
                         if (i % 1000 == 0)
                         {
                             fbcc.Commit();
@@ -16526,16 +15906,7 @@ namespace FolioConsoleApplication
                     }
                     else
                     {
-                        if (!whatIf) fbcc.Insert(new TemporaryInvoiceTransaction
-                        {
-                            Id = (Guid?)jo.SelectToken("id"),
-                            Content = jo.ToString(),
-                            Sourceinvoiceid = (Guid?)jo.SelectToken("sourceInvoiceId"),
-                            Paymentencumbranceid = (Guid?)jo.SelectToken("paymentEncumbranceId"),
-                            Fromfundid = (Guid?)jo.SelectToken("fromFundId"),
-                            Tofundid = (Guid?)jo.SelectToken("toFundId"),
-                            Fiscalyearid = (Guid?)jo.SelectToken("fiscalYearId")
-                        });
+                        if (!whatIf) fbcc.Insert(TemporaryInvoiceTransaction.FromJObject(jo));
                         if (i % 1000 == 0)
                         {
                             fbcc.Commit();
@@ -16657,13 +16028,7 @@ namespace FolioConsoleApplication
                     }
                     else
                     {
-                        if (!whatIf) fbcc.Insert(new TemporaryOrderTransaction
-                        {
-                            Id = (Guid?)jo.SelectToken("id"),
-                            Content = jo.ToString(),
-                            Fiscalyearid = (Guid?)jo.SelectToken("fiscalYearId"),
-                            Fromfundid = (Guid?)jo.SelectToken("fromFundId")
-                        });
+                        if (!whatIf) fbcc.Insert(TemporaryOrderTransaction.FromJObject(jo));
                         if (i % 1000 == 0)
                         {
                             fbcc.Commit();
@@ -16803,14 +16168,7 @@ namespace FolioConsoleApplication
                     }
                     else
                     {
-                        if (!whatIf) fbcc.Insert(new Title
-                        {
-                            Id = (Guid?)jo.SelectToken("id"),
-                            Content = jo.ToString(),
-                            CreationTime = (DateTime?)jo.SelectToken("metadata.createdDate"),
-                            CreationUserId = (string)jo.SelectToken("metadata.createdByUserId"),
-                            Polineid = (Guid?)jo.SelectToken("poLineId")
-                        });
+                        if (!whatIf) fbcc.Insert(Title.FromJObject(jo));
                         if (i % 1000 == 0)
                         {
                             fbcc.Commit();
@@ -16951,17 +16309,7 @@ namespace FolioConsoleApplication
                     }
                     else
                     {
-                        if (!whatIf) fbcc.Insert(new Transaction
-                        {
-                            Id = (Guid?)jo.SelectToken("id"),
-                            Content = jo.ToString(),
-                            CreationTime = (DateTime?)jo.SelectToken("metadata.createdDate"),
-                            CreationUserId = (string)jo.SelectToken("metadata.createdByUserId"),
-                            Fiscalyearid = (Guid?)jo.SelectToken("fiscalYearId"),
-                            Fromfundid = (Guid?)jo.SelectToken("fromFundId"),
-                            Sourcefiscalyearid = (Guid?)jo.SelectToken("sourceFiscalYearId"),
-                            Tofundid = (Guid?)jo.SelectToken("toFundId")
-                        });
+                        if (!whatIf) fbcc.Insert(Transaction.FromJObject(jo));
                         if (i % 1000 == 0)
                         {
                             fbcc.Commit();
@@ -17102,13 +16450,7 @@ namespace FolioConsoleApplication
                     }
                     else
                     {
-                        if (!whatIf) fbcc.Insert(new TransferAccount
-                        {
-                            Id = (Guid?)jo.SelectToken("id"),
-                            Content = jo.ToString(),
-                            CreationTime = (DateTime?)jo.SelectToken("metadata.createdDate"),
-                            CreationUserId = (string)jo.SelectToken("metadata.createdByUserId")
-                        });
+                        if (!whatIf) fbcc.Insert(TransferAccount.FromJObject(jo));
                         if (i % 1000 == 0)
                         {
                             fbcc.Commit();
@@ -17249,11 +16591,7 @@ namespace FolioConsoleApplication
                     }
                     else
                     {
-                        if (!whatIf) fbcc.Insert(new TransferCriteria
-                        {
-                            Id = (Guid?)jo.SelectToken("id"),
-                            Content = jo.ToString()
-                        });
+                        if (!whatIf) fbcc.Insert(TransferCriteria.FromJObject(jo));
                         if (i % 1000 == 0)
                         {
                             fbcc.Commit();
@@ -17394,14 +16732,7 @@ namespace FolioConsoleApplication
                     }
                     else
                     {
-                        if (!whatIf) fbcc.Insert(new User
-                        {
-                            Id = (Guid?)jo.SelectToken("id"),
-                            Content = jo.ToString(),
-                            CreationTime = (DateTime?)jo.SelectToken("metadata.createdDate"),
-                            CreationUserId = (string)jo.SelectToken("metadata.createdByUserId"),
-                            Patrongroup = (Guid?)jo.SelectToken("patronGroup")
-                        });
+                        if (!whatIf) fbcc.Insert(User.FromJObject(jo));
                         if (i % 1000 == 0)
                         {
                             fbcc.Commit();
@@ -17471,6 +16802,36 @@ namespace FolioConsoleApplication
                         var l = js2.Validate(jo);
                         if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"User {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"User {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
                     }
+                    if (jo2 != null)
+                    {
+                        var jo4 = (string)jo.SelectToken("externalSystemId") != null && externalSystemIds.ContainsKey((string)jo.SelectToken("externalSystemId")) ? externalSystemIds[(string)jo.SelectToken("externalSystemId")] : null;
+                        if (jo4 != null && jo4 != jo2)
+                        {
+                            if (jo4 != null && jo4 != jo2) jo4["externalSystemId"] = $"{jo4["externalSystemId"]}-{dt:o}";
+                            jo4["metadata"]["updatedDate"] = dt;
+                            jo4["metadata"]["updatedByUserId"] = userId;
+                            traceSource.TraceEvent(TraceEventType.Information, 0, $"Setting externalSystemId to {jo4["externalSystemId"]} for {jo4["id"]}");
+                            if (!whatIf) if (api) fsc.UpdateUser(jo4); else fdc.Update(User.FromJObject(jo4));
+                        }
+                        jo4 = (string)jo.SelectToken("username") != null && usernames.ContainsKey((string)jo.SelectToken("username")) ? usernames[(string)jo.SelectToken("username")] : null;
+                        if (jo4 != null && jo4 != jo2)
+                        {
+                            if (jo4 != null && jo4 != jo2) jo4["username"] = $"{jo4["username"]}-{dt:o}";
+                            jo4["metadata"]["updatedDate"] = dt;
+                            jo4["metadata"]["updatedByUserId"] = userId;
+                            traceSource.TraceEvent(TraceEventType.Information, 0, $"Setting username to {jo4["username"]} for {jo4["id"]}");
+                            if (!whatIf) if (api) fsc.UpdateUser(jo4); else fdc.Update(User.FromJObject(jo4));
+                        }
+                        jo4 = (string)jo.SelectToken("barcode") != null && barcodes.ContainsKey((string)jo.SelectToken("barcode")) ? barcodes[(string)jo.SelectToken("barcode")] : null;
+                        if (jo4 != null && jo4 != jo2)
+                        {
+                            if (jo4 != null && jo4 != jo2) jo4["barcode"] = $"{jo4["barcode"]}-{dt:o}";
+                            jo4["metadata"]["updatedDate"] = dt;
+                            jo4["metadata"]["updatedByUserId"] = userId;
+                            traceSource.TraceEvent(TraceEventType.Information, 0, $"Setting barcode to {jo4["barcode"]} for {jo4["id"]}");
+                            if (!whatIf) if (api) fsc.UpdateUser(jo4); else fdc.Update(User.FromJObject(jo4));
+                        }
+                    }
                     var jo3 = jo2 == null ? JObject.FromObject(new
                     {
                         id = Guid.NewGuid(),
@@ -17496,21 +16857,8 @@ namespace FolioConsoleApplication
                     }
                     else
                     {
-                        var u = new User
-                        {
-                            Id = (Guid?)jo.SelectToken("id"),
-                            Content = jo.ToString(),
-                            CreationTime = (DateTime?)jo.SelectToken("metadata.createdDate"),
-                            CreationUserId = (string)jo.SelectToken("metadata.createdByUserId"),
-                            Patrongroup = (Guid?)jo.SelectToken("patronGroup")
-                        };
-                        var pu = jo2 == null ? new PermissionsUser
-                        {
-                            Id = (Guid?)jo3.SelectToken("id"),
-                            Content = jo3.ToString(),
-                            CreationTime = (DateTime?)jo3.SelectToken("metadata.createdDate"),
-                            CreationUserId = (string)jo3.SelectToken("metadata.createdByUserId")
-                        } : null;
+                        var u = User.FromJObject(jo);
+                        var pu = jo2 == null ? PermissionsUser.FromJObject(jo3) : null;
                         if (!whatIf) if (jo2 == null) { fdc.Insert(u); fdc.Insert(pu); ++j; } else { fdc.Update(u); ++k; }
                         if (i % 1000 == 0)
                         {
@@ -17677,14 +17025,7 @@ namespace FolioConsoleApplication
                     }
                     else
                     {
-                        if (!whatIf) fbcc.Insert(new UserAcquisitionsUnit
-                        {
-                            Id = (Guid?)jo.SelectToken("id"),
-                            Content = jo.ToString(),
-                            CreationTime = (DateTime?)jo.SelectToken("metadata.createdDate"),
-                            CreationUserId = (string)jo.SelectToken("metadata.createdByUserId"),
-                            Acquisitionsunitid = (Guid?)jo.SelectToken("acquisitionsUnitId")
-                        });
+                        if (!whatIf) fbcc.Insert(UserAcquisitionsUnit.FromJObject(jo));
                         if (i % 1000 == 0)
                         {
                             fbcc.Commit();
@@ -17825,13 +17166,7 @@ namespace FolioConsoleApplication
                     }
                     else
                     {
-                        if (!whatIf) fbcc.Insert(new UserRequestPreference
-                        {
-                            Id = (Guid?)jo.SelectToken("id"),
-                            Content = jo.ToString(),
-                            CreationTime = (DateTime?)jo.SelectToken("metadata.createdDate"),
-                            CreationUserId = (string)jo.SelectToken("metadata.createdByUserId")
-                        });
+                        if (!whatIf) fbcc.Insert(UserRequestPreference.FromJObject(jo));
                         if (i % 1000 == 0)
                         {
                             fbcc.Commit();
@@ -17954,13 +17289,7 @@ namespace FolioConsoleApplication
                     }
                     else
                     {
-                        if (!whatIf) fbcc.Insert(new UserSummary
-                        {
-                            Id = (Guid?)jo.SelectToken("id"),
-                            Content = jo.ToString(),
-                            CreationTime = (DateTime?)jo.SelectToken("metadata.createdDate"),
-                            CreationUserId = (string)jo.SelectToken("metadata.createdByUserId")
-                        });
+                        if (!whatIf) fbcc.Insert(UserSummary.FromJObject(jo));
                         if (i % 1000 == 0)
                         {
                             fbcc.Commit();
@@ -18100,15 +17429,7 @@ namespace FolioConsoleApplication
                     }
                     else
                     {
-                        if (!whatIf) fbcc.Insert(new Voucher
-                        {
-                            Id = (Guid?)jo.SelectToken("id"),
-                            Content = jo.ToString(),
-                            CreationTime = (DateTime?)jo.SelectToken("metadata.createdDate"),
-                            CreationUserId = (string)jo.SelectToken("metadata.createdByUserId"),
-                            Invoiceid = (Guid?)jo.SelectToken("invoiceId"),
-                            Batchgroupid = (Guid?)jo.SelectToken("batchGroupId")
-                        });
+                        if (!whatIf) fbcc.Insert(Voucher.FromJObject(jo));
                         if (i % 1000 == 0)
                         {
                             fbcc.Commit();
@@ -18249,14 +17570,7 @@ namespace FolioConsoleApplication
                     }
                     else
                     {
-                        if (!whatIf) fbcc.Insert(new VoucherItem
-                        {
-                            Id = (Guid?)jo.SelectToken("id"),
-                            Content = jo.ToString(),
-                            CreationTime = (DateTime?)jo.SelectToken("metadata.createdDate"),
-                            CreationUserId = (string)jo.SelectToken("metadata.createdByUserId"),
-                            Voucherid = (Guid?)jo.SelectToken("voucherId")
-                        });
+                        if (!whatIf) fbcc.Insert(VoucherItem.FromJObject(jo));
                         if (i % 1000 == 0)
                         {
                             fbcc.Commit();
@@ -18397,13 +17711,7 @@ namespace FolioConsoleApplication
                     }
                     else
                     {
-                        if (!whatIf) fbcc.Insert(new WaiveReason
-                        {
-                            Id = (Guid?)jo.SelectToken("id"),
-                            Content = jo.ToString(),
-                            CreationTime = (DateTime?)jo.SelectToken("metadata.createdDate"),
-                            CreationUserId = (string)jo.SelectToken("metadata.createdByUserId")
-                        });
+                        if (!whatIf) fbcc.Insert(WaiveReason.FromJObject(jo));
                         if (i % 1000 == 0)
                         {
                             fbcc.Commit();
@@ -18456,17 +17764,6 @@ namespace FolioConsoleApplication
                 traceSource.TraceEvent(TraceEventType.Information, 0, $"Saved {i} waive reasons");
             }
             traceSource.TraceEvent(TraceEventType.Information, 0, $"{s.Elapsed} elapsed");
-        }
-    }
-
-    public static class JObjectExtensions
-    {
-        public static JObject RemoveNullAndEmptyProperties(this JObject jObject)
-        {
-            while (jObject.Descendants().Any(jt => jt.Type == JTokenType.Property && jt.First().Type != JTokenType.Array && (jt.Values().All(a => a.Type == JTokenType.Null) || !jt.Values().Any())))
-                foreach (var jt in jObject.Descendants().Where(jt => jt.Type == JTokenType.Property && jt.First().Type != JTokenType.Array && (jt.Values().All(a => a.Type == JTokenType.Null) || !jt.Values().Any())).ToArray())
-                    jt.Remove();
-            return jObject;
         }
     }
 }

@@ -1,3 +1,4 @@
+using Newtonsoft.Json.Linq;
 using NJsonSchema;
 using System;
 using System.Collections.Generic;
@@ -38,18 +39,30 @@ namespace FolioLibrary
         [Display(Order = 5)]
         public virtual Invoice Invoice { get; set; }
 
-        [Column("invoiceid"), Display(Name = "Invoice", Order = 6), Editable(false), ForeignKey("Invoice")]
+        [Column("invoiceid"), Display(Name = "Invoice", Order = 6), ForeignKey("Invoice")]
         public virtual Guid? Invoiceid { get; set; }
 
         [Display(Name = "Batch Group", Order = 7)]
         public virtual BatchGroup BatchGroup { get; set; }
 
-        [Column("batchgroupid"), Display(Name = "Batch Group", Order = 8), Editable(false), ForeignKey("BatchGroup")]
+        [Column("batchgroupid"), Display(Name = "Batch Group", Order = 8), ForeignKey("BatchGroup")]
         public virtual Guid? Batchgroupid { get; set; }
 
         [ScaffoldColumn(false)]
         public virtual ICollection<VoucherItem> VoucherItems { get; set; }
 
         public override string ToString() => $"{{ {nameof(Id)} = {Id}, {nameof(Content)} = {Content}, {nameof(CreationTime)} = {CreationTime}, {nameof(CreationUserId)} = {CreationUserId}, {nameof(Invoiceid)} = {Invoiceid}, {nameof(Batchgroupid)} = {Batchgroupid} }}";
+
+        public static Voucher FromJObject(JObject jObject) => new Voucher
+        {
+            Id = (Guid?)jObject.SelectToken("id"),
+            Content = jObject.ToString(),
+            CreationTime = (DateTime?)jObject.SelectToken("metadata.createdDate"),
+            CreationUserId = (string)jObject.SelectToken("metadata.createdByUserId"),
+            Invoiceid = (Guid?)jObject.SelectToken("invoiceId"),
+            Batchgroupid = (Guid?)jObject.SelectToken("batchGroupId")
+        };
+
+        public JObject ToJObject() => JObject.Parse(Content);
     }
 }

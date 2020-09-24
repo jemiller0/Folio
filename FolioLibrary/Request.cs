@@ -1,3 +1,4 @@
+using Newtonsoft.Json.Linq;
 using NJsonSchema;
 using System;
 using System.ComponentModel.DataAnnotations;
@@ -37,9 +38,20 @@ namespace FolioLibrary
         [Display(Name = "Cancellation Reason", Order = 5)]
         public virtual CancellationReason CancellationReason { get; set; }
 
-        [Column("cancellationreasonid"), Display(Name = "Cancellation Reason", Order = 6), Editable(false), ForeignKey("CancellationReason")]
+        [Column("cancellationreasonid"), Display(Name = "Cancellation Reason", Order = 6), ForeignKey("CancellationReason")]
         public virtual Guid? Cancellationreasonid { get; set; }
 
         public override string ToString() => $"{{ {nameof(Id)} = {Id}, {nameof(Content)} = {Content}, {nameof(CreationTime)} = {CreationTime}, {nameof(CreationUserId)} = {CreationUserId}, {nameof(Cancellationreasonid)} = {Cancellationreasonid} }}";
+
+        public static Request FromJObject(JObject jObject) => new Request
+        {
+            Id = (Guid?)jObject.SelectToken("id"),
+            Content = jObject.ToString(),
+            CreationTime = (DateTime?)jObject.SelectToken("metadata.createdDate"),
+            CreationUserId = (string)jObject.SelectToken("metadata.createdByUserId"),
+            Cancellationreasonid = (Guid?)jObject.SelectToken("cancellationReasonId")
+        };
+
+        public JObject ToJObject() => JObject.Parse(Content);
     }
 }

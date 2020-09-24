@@ -1,3 +1,4 @@
+using Newtonsoft.Json.Linq;
 using NJsonSchema;
 using System;
 using System.Collections.Generic;
@@ -38,7 +39,7 @@ namespace FolioLibrary
         [Display(Name = "Batch Group", Order = 5)]
         public virtual BatchGroup BatchGroup { get; set; }
 
-        [Column("batchgroupid"), Display(Name = "Batch Group", Order = 6), Editable(false), ForeignKey("BatchGroup")]
+        [Column("batchgroupid"), Display(Name = "Batch Group", Order = 6), ForeignKey("BatchGroup")]
         public virtual Guid? Batchgroupid { get; set; }
 
         [ScaffoldColumn(false)]
@@ -51,5 +52,16 @@ namespace FolioLibrary
         public virtual ICollection<Voucher> Vouchers { get; set; }
 
         public override string ToString() => $"{{ {nameof(Id)} = {Id}, {nameof(Content)} = {Content}, {nameof(CreationTime)} = {CreationTime}, {nameof(CreationUserId)} = {CreationUserId}, {nameof(Batchgroupid)} = {Batchgroupid} }}";
+
+        public static Invoice FromJObject(JObject jObject) => new Invoice
+        {
+            Id = (Guid?)jObject.SelectToken("id"),
+            Content = jObject.ToString(),
+            CreationTime = (DateTime?)jObject.SelectToken("metadata.createdDate"),
+            CreationUserId = (string)jObject.SelectToken("metadata.createdByUserId"),
+            Batchgroupid = (Guid?)jObject.SelectToken("batchGroupId")
+        };
+
+        public JObject ToJObject() => JObject.Parse(Content);
     }
 }

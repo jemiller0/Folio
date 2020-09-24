@@ -1,3 +1,4 @@
+using Newtonsoft.Json.Linq;
 using NJsonSchema;
 using System;
 using System.ComponentModel.DataAnnotations;
@@ -34,12 +35,23 @@ namespace FolioLibrary
         [Column("created_by"), Display(Name = "Creation User Id", Order = 4), Editable(false)]
         public virtual string CreationUserId { get; set; }
 
-        [Column("defaultservicepointid"), Display(Name = "Service Point", Order = 5), Editable(false), ForeignKey("ServicePoint")]
+        [Column("defaultservicepointid"), Display(Name = "Service Point", Order = 5), ForeignKey("ServicePoint")]
         public virtual Guid? Defaultservicepointid { get; set; }
 
         [Display(Name = "Service Point", Order = 6)]
         public virtual ServicePoint ServicePoint { get; set; }
 
         public override string ToString() => $"{{ {nameof(Id)} = {Id}, {nameof(Content)} = {Content}, {nameof(CreationTime)} = {CreationTime}, {nameof(CreationUserId)} = {CreationUserId}, {nameof(Defaultservicepointid)} = {Defaultservicepointid} }}";
+
+        public static ServicePointUser FromJObject(JObject jObject) => new ServicePointUser
+        {
+            Id = (Guid?)jObject.SelectToken("id"),
+            Content = jObject.ToString(),
+            CreationTime = (DateTime?)jObject.SelectToken("metadata.createdDate"),
+            CreationUserId = (string)jObject.SelectToken("metadata.createdByUserId"),
+            Defaultservicepointid = (Guid?)jObject.SelectToken("defaultServicePointId")
+        };
+
+        public JObject ToJObject() => JObject.Parse(Content);
     }
 }

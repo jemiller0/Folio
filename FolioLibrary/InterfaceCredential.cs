@@ -1,3 +1,4 @@
+using Newtonsoft.Json.Linq;
 using NJsonSchema;
 using System;
 using System.ComponentModel.DataAnnotations;
@@ -31,9 +32,18 @@ namespace FolioLibrary
         [Display(Order = 3)]
         public virtual Interface Interface { get; set; }
 
-        [Column("interfaceid"), Display(Name = "Interface", Order = 4), Editable(false), ForeignKey("Interface")]
+        [Column("interfaceid"), Display(Name = "Interface", Order = 4), ForeignKey("Interface")]
         public virtual Guid? Interfaceid { get; set; }
 
         public override string ToString() => $"{{ {nameof(Id)} = {Id}, {nameof(Content)} = {Content}, {nameof(Interfaceid)} = {Interfaceid} }}";
+
+        public static InterfaceCredential FromJObject(JObject jObject) => new InterfaceCredential
+        {
+            Id = (Guid?)jObject.SelectToken("id"),
+            Content = jObject.ToString(),
+            Interfaceid = (Guid?)jObject.SelectToken("interfaceId")
+        };
+
+        public JObject ToJObject() => JObject.Parse(Content);
     }
 }

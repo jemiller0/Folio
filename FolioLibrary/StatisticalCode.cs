@@ -1,3 +1,4 @@
+using Newtonsoft.Json.Linq;
 using NJsonSchema;
 using System;
 using System.ComponentModel.DataAnnotations;
@@ -37,9 +38,20 @@ namespace FolioLibrary
         [Display(Name = "Statistical Code Type", Order = 5)]
         public virtual StatisticalCodeType StatisticalCodeType { get; set; }
 
-        [Column("statisticalcodetypeid"), Display(Name = "Statistical Code Type", Order = 6), Editable(false), ForeignKey("StatisticalCodeType")]
+        [Column("statisticalcodetypeid"), Display(Name = "Statistical Code Type", Order = 6), ForeignKey("StatisticalCodeType")]
         public virtual Guid? Statisticalcodetypeid { get; set; }
 
         public override string ToString() => $"{{ {nameof(Id)} = {Id}, {nameof(Content)} = {Content}, {nameof(CreationTime)} = {CreationTime}, {nameof(CreationUserId)} = {CreationUserId}, {nameof(Statisticalcodetypeid)} = {Statisticalcodetypeid} }}";
+
+        public static StatisticalCode FromJObject(JObject jObject) => new StatisticalCode
+        {
+            Id = (Guid?)jObject.SelectToken("id"),
+            Content = jObject.ToString(),
+            CreationTime = (DateTime?)jObject.SelectToken("metadata.createdDate"),
+            CreationUserId = (string)jObject.SelectToken("metadata.createdByUserId"),
+            Statisticalcodetypeid = (Guid?)jObject.SelectToken("statisticalCodeTypeId")
+        };
+
+        public JObject ToJObject() => JObject.Parse(Content);
     }
 }

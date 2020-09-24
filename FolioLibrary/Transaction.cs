@@ -1,3 +1,4 @@
+using Newtonsoft.Json.Linq;
 using NJsonSchema;
 using System;
 using System.Collections.Generic;
@@ -38,10 +39,10 @@ namespace FolioLibrary
         [Display(Name = "Fiscal Year", Order = 5), InverseProperty("Transactions")]
         public virtual FiscalYear FiscalYear { get; set; }
 
-        [Column("fiscalyearid"), Display(Name = "Fiscal Year", Order = 6), Editable(false), ForeignKey("FiscalYear")]
+        [Column("fiscalyearid"), Display(Name = "Fiscal Year", Order = 6), ForeignKey("FiscalYear")]
         public virtual Guid? Fiscalyearid { get; set; }
 
-        [Column("fromfundid"), Display(Name = "Fund", Order = 7), Editable(false), ForeignKey("Fund")]
+        [Column("fromfundid"), Display(Name = "Fund", Order = 7), ForeignKey("Fund")]
         public virtual Guid? Fromfundid { get; set; }
 
         [Display(Order = 8), InverseProperty("Transactions")]
@@ -50,18 +51,32 @@ namespace FolioLibrary
         [Display(Name = "Fiscal Year 1", Order = 9), InverseProperty("Transactions1")]
         public virtual FiscalYear FiscalYear1 { get; set; }
 
-        [Column("sourcefiscalyearid"), Display(Name = "Fiscal Year 1", Order = 10), Editable(false), ForeignKey("FiscalYear1")]
+        [Column("sourcefiscalyearid"), Display(Name = "Fiscal Year 1", Order = 10), ForeignKey("FiscalYear1")]
         public virtual Guid? Sourcefiscalyearid { get; set; }
 
         [Display(Name = "Fund 1", Order = 11), InverseProperty("Transactions1")]
         public virtual Fund Fund1 { get; set; }
 
-        [Column("tofundid"), Display(Name = "Fund 1", Order = 12), Editable(false), ForeignKey("Fund1")]
+        [Column("tofundid"), Display(Name = "Fund 1", Order = 12), ForeignKey("Fund1")]
         public virtual Guid? Tofundid { get; set; }
 
         [ScaffoldColumn(false)]
         public virtual ICollection<TemporaryInvoiceTransaction> TemporaryInvoiceTransactions { get; set; }
 
         public override string ToString() => $"{{ {nameof(Id)} = {Id}, {nameof(Content)} = {Content}, {nameof(CreationTime)} = {CreationTime}, {nameof(CreationUserId)} = {CreationUserId}, {nameof(Fiscalyearid)} = {Fiscalyearid}, {nameof(Fromfundid)} = {Fromfundid}, {nameof(Sourcefiscalyearid)} = {Sourcefiscalyearid}, {nameof(Tofundid)} = {Tofundid} }}";
+
+        public static Transaction FromJObject(JObject jObject) => new Transaction
+        {
+            Id = (Guid?)jObject.SelectToken("id"),
+            Content = jObject.ToString(),
+            CreationTime = (DateTime?)jObject.SelectToken("metadata.createdDate"),
+            CreationUserId = (string)jObject.SelectToken("metadata.createdByUserId"),
+            Fiscalyearid = (Guid?)jObject.SelectToken("fiscalYearId"),
+            Fromfundid = (Guid?)jObject.SelectToken("fromFundId"),
+            Sourcefiscalyearid = (Guid?)jObject.SelectToken("sourceFiscalYearId"),
+            Tofundid = (Guid?)jObject.SelectToken("toFundId")
+        };
+
+        public JObject ToJObject() => JObject.Parse(Content);
     }
 }

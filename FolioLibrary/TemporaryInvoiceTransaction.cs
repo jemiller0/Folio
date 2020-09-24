@@ -1,3 +1,4 @@
+using Newtonsoft.Json.Linq;
 using NJsonSchema;
 using System;
 using System.ComponentModel.DataAnnotations;
@@ -31,16 +32,16 @@ namespace FolioLibrary
         [Display(Name = "Invoice Transaction Summary", Order = 3)]
         public virtual InvoiceTransactionSummary InvoiceTransactionSummary { get; set; }
 
-        [Column("sourceinvoiceid"), Display(Name = "Invoice Transaction Summary", Order = 4), Editable(false), ForeignKey("InvoiceTransactionSummary")]
+        [Column("sourceinvoiceid"), Display(Name = "Invoice Transaction Summary", Order = 4), ForeignKey("InvoiceTransactionSummary")]
         public virtual Guid? Sourceinvoiceid { get; set; }
 
-        [Column("paymentencumbranceid"), Display(Name = "Transaction", Order = 5), Editable(false), ForeignKey("Transaction")]
+        [Column("paymentencumbranceid"), Display(Name = "Transaction", Order = 5), ForeignKey("Transaction")]
         public virtual Guid? Paymentencumbranceid { get; set; }
 
         [Display(Order = 6)]
         public virtual Transaction Transaction { get; set; }
 
-        [Column("fromfundid"), Display(Name = "Fund", Order = 7), Editable(false), ForeignKey("Fund")]
+        [Column("fromfundid"), Display(Name = "Fund", Order = 7), ForeignKey("Fund")]
         public virtual Guid? Fromfundid { get; set; }
 
         [Display(Order = 8), InverseProperty("TemporaryInvoiceTransactions")]
@@ -49,15 +50,28 @@ namespace FolioLibrary
         [Display(Name = "Fund 1", Order = 9), InverseProperty("TemporaryInvoiceTransactions1")]
         public virtual Fund Fund1 { get; set; }
 
-        [Column("tofundid"), Display(Name = "Fund 1", Order = 10), Editable(false), ForeignKey("Fund1")]
+        [Column("tofundid"), Display(Name = "Fund 1", Order = 10), ForeignKey("Fund1")]
         public virtual Guid? Tofundid { get; set; }
 
         [Display(Name = "Fiscal Year", Order = 11)]
         public virtual FiscalYear FiscalYear { get; set; }
 
-        [Column("fiscalyearid"), Display(Name = "Fiscal Year", Order = 12), Editable(false), ForeignKey("FiscalYear")]
+        [Column("fiscalyearid"), Display(Name = "Fiscal Year", Order = 12), ForeignKey("FiscalYear")]
         public virtual Guid? Fiscalyearid { get; set; }
 
         public override string ToString() => $"{{ {nameof(Id)} = {Id}, {nameof(Content)} = {Content}, {nameof(Sourceinvoiceid)} = {Sourceinvoiceid}, {nameof(Paymentencumbranceid)} = {Paymentencumbranceid}, {nameof(Fromfundid)} = {Fromfundid}, {nameof(Tofundid)} = {Tofundid}, {nameof(Fiscalyearid)} = {Fiscalyearid} }}";
+
+        public static TemporaryInvoiceTransaction FromJObject(JObject jObject) => new TemporaryInvoiceTransaction
+        {
+            Id = (Guid?)jObject.SelectToken("id"),
+            Content = jObject.ToString(),
+            Sourceinvoiceid = (Guid?)jObject.SelectToken("sourceInvoiceId"),
+            Paymentencumbranceid = (Guid?)jObject.SelectToken("paymentEncumbranceId"),
+            Fromfundid = (Guid?)jObject.SelectToken("fromFundId"),
+            Tofundid = (Guid?)jObject.SelectToken("toFundId"),
+            Fiscalyearid = (Guid?)jObject.SelectToken("fiscalYearId")
+        };
+
+        public JObject ToJObject() => JObject.Parse(Content);
     }
 }

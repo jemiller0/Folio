@@ -1,3 +1,4 @@
+using Newtonsoft.Json.Linq;
 using NJsonSchema;
 using System;
 using System.ComponentModel.DataAnnotations;
@@ -37,12 +38,23 @@ namespace FolioLibrary
         [Display(Order = 5)]
         public virtual Invoice Invoice { get; set; }
 
-        [Column("invoiceid"), Display(Name = "Invoice", Order = 6), Editable(false), ForeignKey("Invoice")]
+        [Column("invoiceid"), Display(Name = "Invoice", Order = 6), ForeignKey("Invoice")]
         public virtual Guid? Invoiceid { get; set; }
 
-        [Column("document_data"), Display(Name = "Document Data", Order = 7), Editable(false)]
+        [Column("document_data"), Display(Name = "Document Data", Order = 7)]
         public virtual string DocumentData { get; set; }
 
         public override string ToString() => $"{{ {nameof(Id)} = {Id}, {nameof(Content)} = {Content}, {nameof(CreationTime)} = {CreationTime}, {nameof(CreationUserId)} = {CreationUserId}, {nameof(Invoiceid)} = {Invoiceid}, {nameof(DocumentData)} = {DocumentData} }}";
+
+        public static Document FromJObject(JObject jObject) => new Document
+        {
+            Id = (Guid?)jObject.SelectToken("documentMetadata.id"),
+            Content = jObject.ToString(),
+            CreationTime = (DateTime?)jObject.SelectToken("documentMetadata.metadata.createdDate"),
+            CreationUserId = (string)jObject.SelectToken("documentMetadata.metadata.createdByUserId"),
+            Invoiceid = (Guid?)jObject.SelectToken("documentMetadata.invoiceId")
+        };
+
+        public JObject ToJObject() => JObject.Parse(Content);
     }
 }

@@ -1,3 +1,4 @@
+using Newtonsoft.Json.Linq;
 using NJsonSchema;
 using System;
 using System.ComponentModel.DataAnnotations;
@@ -31,15 +32,25 @@ namespace FolioLibrary
         [Display(Order = 3)]
         public virtual Ledger Ledger { get; set; }
 
-        [Column("ledgerid"), Display(Name = "Ledger", Order = 4), Editable(false), ForeignKey("Ledger")]
+        [Column("ledgerid"), Display(Name = "Ledger", Order = 4), ForeignKey("Ledger")]
         public virtual Guid? Ledgerid { get; set; }
 
         [Display(Name = "Fiscal Year", Order = 5)]
         public virtual FiscalYear FiscalYear { get; set; }
 
-        [Column("fiscalyearid"), Display(Name = "Fiscal Year", Order = 6), Editable(false), ForeignKey("FiscalYear")]
+        [Column("fiscalyearid"), Display(Name = "Fiscal Year", Order = 6), ForeignKey("FiscalYear")]
         public virtual Guid? Fiscalyearid { get; set; }
 
         public override string ToString() => $"{{ {nameof(Id)} = {Id}, {nameof(Content)} = {Content}, {nameof(Ledgerid)} = {Ledgerid}, {nameof(Fiscalyearid)} = {Fiscalyearid} }}";
+
+        public static LedgerFiscalYear FromJObject(JObject jObject) => new LedgerFiscalYear
+        {
+            Id = (Guid?)jObject.SelectToken("id"),
+            Content = jObject.ToString(),
+            Ledgerid = (Guid?)jObject.SelectToken("ledgerId"),
+            Fiscalyearid = (Guid?)jObject.SelectToken("fiscalYearId")
+        };
+
+        public JObject ToJObject() => JObject.Parse(Content);
     }
 }

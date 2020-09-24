@@ -1,3 +1,4 @@
+using Newtonsoft.Json.Linq;
 using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -13,31 +14,31 @@ namespace FolioLibrary
         [Display(Order = 2)]
         public virtual Snapshot Snapshot { get; set; }
 
-        [Column("snapshot_id"), Display(Name = "Snapshot", Order = 3), Editable(false)]
+        [Column("snapshot_id"), Display(Name = "Snapshot", Order = 3), Required]
         public virtual Guid? SnapshotId { get; set; }
 
-        [Column("matched_id"), Display(Name = "Matched Id", Order = 4), Editable(false)]
+        [Column("matched_id"), Display(Name = "Matched Id", Order = 4), Required]
         public virtual Guid? MatchedId { get; set; }
 
-        [Column("generation"), Display(Order = 5), Editable(false)]
+        [Column("generation"), Display(Order = 5), Required]
         public virtual int? Generation { get; set; }
 
-        [Column("record_type"), Display(Name = "Record Type", Order = 6), Editable(false), StringLength(1024)]
+        [Column("record_type"), Display(Name = "Record Type", Order = 6), Required, StringLength(1024)]
         public virtual string RecordType { get; set; }
 
-        [Column("instance_id"), Display(Name = "Instance Id", Order = 7), Editable(false)]
+        [Column("instance_id"), Display(Name = "Instance Id", Order = 7)]
         public virtual Guid? InstanceId { get; set; }
 
-        [Column("state"), Display(Order = 8), Editable(false), StringLength(1024)]
+        [Column("state"), Display(Order = 8), Required, StringLength(1024)]
         public virtual string State { get; set; }
 
-        [Column("leader_record_status"), Display(Name = "Leader Record Status", Order = 9), Editable(false), StringLength(1)]
+        [Column("leader_record_status"), Display(Name = "Leader Record Status", Order = 9), StringLength(1)]
         public virtual string LeaderRecordStatus { get; set; }
 
-        [Column("order"), Display(Order = 10), Editable(false)]
+        [Column("order"), Display(Order = 10)]
         public virtual int? Order { get; set; }
 
-        [Column("suppress_discovery"), Display(Name = "Suppress Discovery", Order = 11), Editable(false)]
+        [Column("suppress_discovery"), Display(Name = "Suppress Discovery", Order = 11)]
         public virtual bool? SuppressDiscovery { get; set; }
 
         [Column("created_by_user_id"), Display(Name = "Creation User Id", Order = 12), Editable(false)]

@@ -1,3 +1,4 @@
+using Newtonsoft.Json.Linq;
 using NJsonSchema;
 using System;
 using System.ComponentModel.DataAnnotations;
@@ -37,9 +38,20 @@ namespace FolioLibrary
         [Display(Order = 5)]
         public virtual Voucher Voucher { get; set; }
 
-        [Column("voucherid"), Display(Name = "Voucher", Order = 6), Editable(false), ForeignKey("Voucher")]
+        [Column("voucherid"), Display(Name = "Voucher", Order = 6), ForeignKey("Voucher")]
         public virtual Guid? Voucherid { get; set; }
 
         public override string ToString() => $"{{ {nameof(Id)} = {Id}, {nameof(Content)} = {Content}, {nameof(CreationTime)} = {CreationTime}, {nameof(CreationUserId)} = {CreationUserId}, {nameof(Voucherid)} = {Voucherid} }}";
+
+        public static VoucherItem FromJObject(JObject jObject) => new VoucherItem
+        {
+            Id = (Guid?)jObject.SelectToken("id"),
+            Content = jObject.ToString(),
+            CreationTime = (DateTime?)jObject.SelectToken("metadata.createdDate"),
+            CreationUserId = (string)jObject.SelectToken("metadata.createdByUserId"),
+            Voucherid = (Guid?)jObject.SelectToken("voucherId")
+        };
+
+        public JObject ToJObject() => JObject.Parse(Content);
     }
 }

@@ -1,3 +1,4 @@
+using Newtonsoft.Json.Linq;
 using NJsonSchema;
 using System;
 using System.Collections.Generic;
@@ -38,13 +39,13 @@ namespace FolioLibrary
         [Display(Order = 5)]
         public virtual Ledger Ledger { get; set; }
 
-        [Column("ledgerid"), Display(Name = "Ledger", Order = 6), Editable(false)]
+        [Column("ledgerid"), Display(Name = "Ledger", Order = 6)]
         public virtual Guid? LedgerId { get; set; }
 
         [Display(Name = "Fund Type", Order = 7)]
         public virtual FundType FundType { get; set; }
 
-        [Column("fundtypeid"), Display(Name = "Fund Type", Order = 8), Editable(false), ForeignKey("FundType")]
+        [Column("fundtypeid"), Display(Name = "Fund Type", Order = 8), ForeignKey("FundType")]
         public virtual Guid? Fundtypeid { get; set; }
 
         [ScaffoldColumn(false)]
@@ -69,5 +70,17 @@ namespace FolioLibrary
         public virtual ICollection<Transaction> Transactions1 { get; set; }
 
         public override string ToString() => $"{{ {nameof(Id)} = {Id}, {nameof(Content)} = {Content}, {nameof(CreationTime)} = {CreationTime}, {nameof(CreationUserId)} = {CreationUserId}, {nameof(LedgerId)} = {LedgerId}, {nameof(Fundtypeid)} = {Fundtypeid} }}";
+
+        public static Fund FromJObject(JObject jObject) => new Fund
+        {
+            Id = (Guid?)jObject.SelectToken("id"),
+            Content = jObject.ToString(),
+            CreationTime = (DateTime?)jObject.SelectToken("metadata.createdDate"),
+            CreationUserId = (string)jObject.SelectToken("metadata.createdByUserId"),
+            LedgerId = (Guid?)jObject.SelectToken("ledgerId"),
+            Fundtypeid = (Guid?)jObject.SelectToken("fundTypeId")
+        };
+
+        public JObject ToJObject() => JObject.Parse(Content);
     }
 }

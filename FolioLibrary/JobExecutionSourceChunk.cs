@@ -1,3 +1,4 @@
+using Newtonsoft.Json.Linq;
 using NJsonSchema;
 using System;
 using System.ComponentModel.DataAnnotations;
@@ -31,9 +32,18 @@ namespace FolioLibrary
         [Display(Name = "Job Execution", Order = 3)]
         public virtual JobExecution JobExecution { get; set; }
 
-        [Column("jobexecutionid"), Display(Name = "Job Execution", Order = 4), Editable(false), ForeignKey("JobExecution")]
+        [Column("jobexecutionid"), Display(Name = "Job Execution", Order = 4), ForeignKey("JobExecution")]
         public virtual Guid? Jobexecutionid { get; set; }
 
         public override string ToString() => $"{{ {nameof(Id)} = {Id}, {nameof(Content)} = {Content}, {nameof(Jobexecutionid)} = {Jobexecutionid} }}";
+
+        public static JobExecutionSourceChunk FromJObject(JObject jObject) => new JobExecutionSourceChunk
+        {
+            Id = (Guid?)jObject.SelectToken("id"),
+            Content = jObject.ToString(),
+            Jobexecutionid = (Guid?)jObject.SelectToken("jobExecutionId")
+        };
+
+        public JObject ToJObject() => JObject.Parse(Content);
     }
 }

@@ -1,3 +1,4 @@
+using Newtonsoft.Json.Linq;
 using NJsonSchema;
 using System;
 using System.ComponentModel.DataAnnotations;
@@ -37,9 +38,20 @@ namespace FolioLibrary
         [Display(Order = 5)]
         public virtual Group Group { get; set; }
 
-        [Column("patrongroup"), Display(Name = "Group", Order = 6), Editable(false), ForeignKey("Group")]
+        [Column("patrongroup"), Display(Name = "Group", Order = 6), ForeignKey("Group")]
         public virtual Guid? Patrongroup { get; set; }
 
         public override string ToString() => $"{{ {nameof(Id)} = {Id}, {nameof(Content)} = {Content}, {nameof(CreationTime)} = {CreationTime}, {nameof(CreationUserId)} = {CreationUserId}, {nameof(Patrongroup)} = {Patrongroup} }}";
+
+        public static User FromJObject(JObject jObject) => new User
+        {
+            Id = (Guid?)jObject.SelectToken("id"),
+            Content = jObject.ToString(),
+            CreationTime = (DateTime?)jObject.SelectToken("metadata.createdDate"),
+            CreationUserId = (string)jObject.SelectToken("metadata.createdByUserId"),
+            Patrongroup = (Guid?)jObject.SelectToken("patronGroup")
+        };
+
+        public JObject ToJObject() => JObject.Parse(Content);
     }
 }

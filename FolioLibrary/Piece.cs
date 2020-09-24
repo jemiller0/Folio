@@ -1,3 +1,4 @@
+using Newtonsoft.Json.Linq;
 using NJsonSchema;
 using System;
 using System.ComponentModel.DataAnnotations;
@@ -37,15 +38,25 @@ namespace FolioLibrary
         [Display(Name = "Order Item", Order = 5)]
         public virtual OrderItem OrderItem { get; set; }
 
-        [Column("polineid"), Display(Name = "Order Item", Order = 6), Editable(false), ForeignKey("OrderItem")]
+        [Column("polineid"), Display(Name = "Order Item", Order = 6), ForeignKey("OrderItem")]
         public virtual Guid? Polineid { get; set; }
 
         [Display(Order = 7)]
         public virtual Title Title { get; set; }
 
-        [Column("titleid"), Display(Name = "Title", Order = 8), Editable(false), ForeignKey("Title")]
+        [Column("titleid"), Display(Name = "Title", Order = 8), ForeignKey("Title")]
         public virtual Guid? Titleid { get; set; }
 
         public override string ToString() => $"{{ {nameof(Id)} = {Id}, {nameof(Content)} = {Content}, {nameof(CreationTime)} = {CreationTime}, {nameof(CreationUserId)} = {CreationUserId}, {nameof(Polineid)} = {Polineid}, {nameof(Titleid)} = {Titleid} }}";
+
+        public static Piece FromJObject(JObject jObject) => new Piece
+        {
+            Id = (Guid?)jObject.SelectToken("id"),
+            Content = jObject.ToString(),
+            Polineid = (Guid?)jObject.SelectToken("poLineId"),
+            Titleid = (Guid?)jObject.SelectToken("titleId")
+        };
+
+        public JObject ToJObject() => JObject.Parse(Content);
     }
 }

@@ -1,3 +1,4 @@
+using Newtonsoft.Json.Linq;
 using NJsonSchema;
 using System;
 using System.ComponentModel.DataAnnotations;
@@ -28,7 +29,7 @@ namespace FolioLibrary
         [Column("jsonb"), CustomValidation(typeof(TemporaryOrderTransaction), nameof(ValidateContent)), DataType(DataType.MultilineText), Display(Order = 2), Required]
         public virtual string Content { get; set; }
 
-        [Column("encumbrance_sourcepurchaseorderid"), Display(Name = "Order Transaction Summary", Order = 3), Editable(false), ForeignKey("OrderTransactionSummary")]
+        [Column("encumbrance_sourcepurchaseorderid"), Display(Name = "Order Transaction Summary", Order = 3), ForeignKey("OrderTransactionSummary")]
         public virtual Guid? EncumbranceSourcepurchaseorderid { get; set; }
 
         [Display(Name = "Order Transaction Summary", Order = 4)]
@@ -37,15 +38,25 @@ namespace FolioLibrary
         [Display(Name = "Fiscal Year", Order = 5)]
         public virtual FiscalYear FiscalYear { get; set; }
 
-        [Column("fiscalyearid"), Display(Name = "Fiscal Year", Order = 6), Editable(false), ForeignKey("FiscalYear")]
+        [Column("fiscalyearid"), Display(Name = "Fiscal Year", Order = 6), ForeignKey("FiscalYear")]
         public virtual Guid? Fiscalyearid { get; set; }
 
-        [Column("fromfundid"), Display(Name = "Fund", Order = 7), Editable(false), ForeignKey("Fund")]
+        [Column("fromfundid"), Display(Name = "Fund", Order = 7), ForeignKey("Fund")]
         public virtual Guid? Fromfundid { get; set; }
 
         [Display(Order = 8)]
         public virtual Fund Fund { get; set; }
 
         public override string ToString() => $"{{ {nameof(Id)} = {Id}, {nameof(Content)} = {Content}, {nameof(EncumbranceSourcepurchaseorderid)} = {EncumbranceSourcepurchaseorderid}, {nameof(Fiscalyearid)} = {Fiscalyearid}, {nameof(Fromfundid)} = {Fromfundid} }}";
+
+        public static TemporaryOrderTransaction FromJObject(JObject jObject) => new TemporaryOrderTransaction
+        {
+            Id = (Guid?)jObject.SelectToken("id"),
+            Content = jObject.ToString(),
+            Fiscalyearid = (Guid?)jObject.SelectToken("fiscalYearId"),
+            Fromfundid = (Guid?)jObject.SelectToken("fromFundId")
+        };
+
+        public JObject ToJObject() => JObject.Parse(Content);
     }
 }

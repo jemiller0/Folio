@@ -1,3 +1,4 @@
+using Newtonsoft.Json.Linq;
 using NJsonSchema;
 using System;
 using System.ComponentModel.DataAnnotations;
@@ -37,15 +38,27 @@ namespace FolioLibrary
         [Display(Order = 5), InverseProperty("PrecedingSucceedingTitles")]
         public virtual Instance Instance { get; set; }
 
-        [Column("precedinginstanceid"), Display(Name = "Instance", Order = 6), Editable(false), ForeignKey("Instance")]
+        [Column("precedinginstanceid"), Display(Name = "Instance", Order = 6), ForeignKey("Instance")]
         public virtual Guid? Precedinginstanceid { get; set; }
 
         [Display(Name = "Instance 1", Order = 7), InverseProperty("PrecedingSucceedingTitles1")]
         public virtual Instance Instance1 { get; set; }
 
-        [Column("succeedinginstanceid"), Display(Name = "Instance 1", Order = 8), Editable(false), ForeignKey("Instance1")]
+        [Column("succeedinginstanceid"), Display(Name = "Instance 1", Order = 8), ForeignKey("Instance1")]
         public virtual Guid? Succeedinginstanceid { get; set; }
 
         public override string ToString() => $"{{ {nameof(Id)} = {Id}, {nameof(Content)} = {Content}, {nameof(CreationTime)} = {CreationTime}, {nameof(CreationUserId)} = {CreationUserId}, {nameof(Precedinginstanceid)} = {Precedinginstanceid}, {nameof(Succeedinginstanceid)} = {Succeedinginstanceid} }}";
+
+        public static PrecedingSucceedingTitle FromJObject(JObject jObject) => new PrecedingSucceedingTitle
+        {
+            Id = (Guid?)jObject.SelectToken("id"),
+            Content = jObject.ToString(),
+            CreationTime = (DateTime?)jObject.SelectToken("metadata.createdDate"),
+            CreationUserId = (string)jObject.SelectToken("metadata.createdByUserId"),
+            Precedinginstanceid = (Guid?)jObject.SelectToken("precedingInstanceId"),
+            Succeedinginstanceid = (Guid?)jObject.SelectToken("succeedingInstanceId")
+        };
+
+        public JObject ToJObject() => JObject.Parse(Content);
     }
 }

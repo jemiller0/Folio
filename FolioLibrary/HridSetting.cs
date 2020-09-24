@@ -1,3 +1,4 @@
+using Newtonsoft.Json.Linq;
 using NJsonSchema;
 using System;
 using System.ComponentModel.DataAnnotations;
@@ -28,9 +29,17 @@ namespace FolioLibrary
         [Column("jsonb"), CustomValidation(typeof(HridSetting), nameof(ValidateContent)), DataType(DataType.MultilineText), Display(Order = 2), Required]
         public virtual string Content { get; set; }
 
-        [Column("lock"), Display(Order = 3), Editable(false)]
+        [Column("lock"), Display(Order = 3)]
         public virtual bool? Lock { get; set; }
 
         public override string ToString() => $"{{ {nameof(Id)} = {Id}, {nameof(Content)} = {Content}, {nameof(Lock)} = {Lock} }}";
+
+        public static HridSetting FromJObject(JObject jObject) => new HridSetting
+        {
+            Id = (Guid?)jObject.SelectToken("id"),
+            Content = jObject.ToString()
+        };
+
+        public JObject ToJObject() => JObject.Parse(Content);
     }
 }
