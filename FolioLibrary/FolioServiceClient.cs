@@ -87,6 +87,8 @@ namespace FolioLibrary
             return AccessToken;
         }
 
+        public bool AnyAcquisitionsUnits(string where = null) => AcquisitionsUnits(where, take: 1).Any();
+
         public int CountAcquisitionsUnits(string where = null)
         {
             AcquisitionsUnits(out var i, take: 0);
@@ -214,6 +216,8 @@ namespace FolioLibrary
             if (hrm.StatusCode != HttpStatusCode.NoContent) throw new HttpRequestException($"Response status code does not indicate success: {hrm.StatusCode} ({hrm.ReasonPhrase}).\r\n{s2}");
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", s.Elapsed);
         }
+
+        public bool AnyAddressTypes(string where = null) => AddressTypes(where, take: 1).Any();
 
         public int CountAddressTypes(string where = null)
         {
@@ -343,6 +347,8 @@ namespace FolioLibrary
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", s.Elapsed);
         }
 
+        public bool AnyAlerts(string where = null) => Alerts(where, take: 1).Any();
+
         public int CountAlerts(string where = null)
         {
             Alerts(out var i, take: 0);
@@ -470,6 +476,8 @@ namespace FolioLibrary
             if (hrm.StatusCode != HttpStatusCode.NoContent) throw new HttpRequestException($"Response status code does not indicate success: {hrm.StatusCode} ({hrm.ReasonPhrase}).\r\n{s2}");
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", s.Elapsed);
         }
+
+        public bool AnyAlternativeTitleTypes(string where = null) => AlternativeTitleTypes(where, take: 1).Any();
 
         public int CountAlternativeTitleTypes(string where = null)
         {
@@ -599,6 +607,8 @@ namespace FolioLibrary
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", s.Elapsed);
         }
 
+        public bool AnyBatchGroups(string where = null) => BatchGroups(where, take: 1).Any();
+
         public int CountBatchGroups(string where = null)
         {
             BatchGroups(out var i, take: 0);
@@ -726,6 +736,8 @@ namespace FolioLibrary
             if (hrm.StatusCode != HttpStatusCode.NoContent) throw new HttpRequestException($"Response status code does not indicate success: {hrm.StatusCode} ({hrm.ReasonPhrase}).\r\n{s2}");
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", s.Elapsed);
         }
+
+        public bool AnyBatchVoucherExports(string where = null) => BatchVoucherExports(where, take: 1).Any();
 
         public int CountBatchVoucherExports(string where = null)
         {
@@ -855,6 +867,8 @@ namespace FolioLibrary
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", s.Elapsed);
         }
 
+        public bool AnyBatchVoucherExportConfigs(string where = null) => BatchVoucherExportConfigs(where, take: 1).Any();
+
         public int CountBatchVoucherExportConfigs(string where = null)
         {
             BatchVoucherExportConfigs(out var i, take: 0);
@@ -982,6 +996,8 @@ namespace FolioLibrary
             if (hrm.StatusCode != HttpStatusCode.NoContent) throw new HttpRequestException($"Response status code does not indicate success: {hrm.StatusCode} ({hrm.ReasonPhrase}).\r\n{s2}");
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", s.Elapsed);
         }
+
+        public bool AnyBlocks(string where = null) => Blocks(where, take: 1).Any();
 
         public int CountBlocks(string where = null)
         {
@@ -1111,6 +1127,8 @@ namespace FolioLibrary
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", s.Elapsed);
         }
 
+        public bool AnyBlockConditions(string where = null) => BlockConditions(where, take: 1).Any();
+
         public int CountBlockConditions(string where = null)
         {
             BlockConditions(out var i, take: 0);
@@ -1238,6 +1256,8 @@ namespace FolioLibrary
             if (hrm.StatusCode != HttpStatusCode.NoContent) throw new HttpRequestException($"Response status code does not indicate success: {hrm.StatusCode} ({hrm.ReasonPhrase}).\r\n{s2}");
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", s.Elapsed);
         }
+
+        public bool AnyBlockLimits(string where = null) => BlockLimits(where, take: 1).Any();
 
         public int CountBlockLimits(string where = null)
         {
@@ -1367,6 +1387,8 @@ namespace FolioLibrary
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", s.Elapsed);
         }
 
+        public bool AnyBudgets(string where = null) => Budgets(where, take: 1).Any();
+
         public int CountBudgets(string where = null)
         {
             Budgets(out var i, take: 0);
@@ -1494,6 +1516,8 @@ namespace FolioLibrary
             if (hrm.StatusCode != HttpStatusCode.NoContent) throw new HttpRequestException($"Response status code does not indicate success: {hrm.StatusCode} ({hrm.ReasonPhrase}).\r\n{s2}");
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", s.Elapsed);
         }
+
+        public bool AnyCallNumberTypes(string where = null) => CallNumberTypes(where, take: 1).Any();
 
         public int CountCallNumberTypes(string where = null)
         {
@@ -1623,6 +1647,8 @@ namespace FolioLibrary
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", s.Elapsed);
         }
 
+        public bool AnyCampuses(string where = null) => Campuses(where, take: 1).Any();
+
         public int CountCampuses(string where = null)
         {
             Campuses(out var i, take: 0);
@@ -1750,6 +1776,8 @@ namespace FolioLibrary
             if (hrm.StatusCode != HttpStatusCode.NoContent) throw new HttpRequestException($"Response status code does not indicate success: {hrm.StatusCode} ({hrm.ReasonPhrase}).\r\n{s2}");
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", s.Elapsed);
         }
+
+        public bool AnyCancellationReasons(string where = null) => CancellationReasons(where, take: 1).Any();
 
         public int CountCancellationReasons(string where = null)
         {
@@ -1879,6 +1907,8 @@ namespace FolioLibrary
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", s.Elapsed);
         }
 
+        public bool AnyCategories(string where = null) => Categories(where, take: 1).Any();
+
         public int CountCategories(string where = null)
         {
             Categories(out var i, take: 0);
@@ -2006,6 +2036,8 @@ namespace FolioLibrary
             if (hrm.StatusCode != HttpStatusCode.NoContent) throw new HttpRequestException($"Response status code does not indicate success: {hrm.StatusCode} ({hrm.ReasonPhrase}).\r\n{s2}");
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", s.Elapsed);
         }
+
+        public bool AnyCheckIns(string where = null) => CheckIns(where, take: 1).Any();
 
         public int CountCheckIns(string where = null)
         {
@@ -2169,6 +2201,8 @@ namespace FolioLibrary
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", s.Elapsed);
         }
 
+        public bool AnyClassificationTypes(string where = null) => ClassificationTypes(where, take: 1).Any();
+
         public int CountClassificationTypes(string where = null)
         {
             ClassificationTypes(out var i, take: 0);
@@ -2296,6 +2330,8 @@ namespace FolioLibrary
             if (hrm.StatusCode != HttpStatusCode.NoContent) throw new HttpRequestException($"Response status code does not indicate success: {hrm.StatusCode} ({hrm.ReasonPhrase}).\r\n{s2}");
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", s.Elapsed);
         }
+
+        public bool AnyCloseReasons(string where = null) => CloseReasons(where, take: 1).Any();
 
         public int CountCloseReasons(string where = null)
         {
@@ -2425,6 +2461,8 @@ namespace FolioLibrary
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", s.Elapsed);
         }
 
+        public bool AnyComments(string where = null) => Comments(where, take: 1).Any();
+
         public int CountComments(string where = null)
         {
             Comments(out var i, take: 0);
@@ -2552,6 +2590,8 @@ namespace FolioLibrary
             if (hrm.StatusCode != HttpStatusCode.NoContent) throw new HttpRequestException($"Response status code does not indicate success: {hrm.StatusCode} ({hrm.ReasonPhrase}).\r\n{s2}");
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", s.Elapsed);
         }
+
+        public bool AnyConfigurations(string where = null) => Configurations(where, take: 1).Any();
 
         public int CountConfigurations(string where = null)
         {
@@ -2681,6 +2721,8 @@ namespace FolioLibrary
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", s.Elapsed);
         }
 
+        public bool AnyContacts(string where = null) => Contacts(where, take: 1).Any();
+
         public int CountContacts(string where = null)
         {
             Contacts(out var i, take: 0);
@@ -2808,6 +2850,8 @@ namespace FolioLibrary
             if (hrm.StatusCode != HttpStatusCode.NoContent) throw new HttpRequestException($"Response status code does not indicate success: {hrm.StatusCode} ({hrm.ReasonPhrase}).\r\n{s2}");
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", s.Elapsed);
         }
+
+        public bool AnyContributorNameTypes(string where = null) => ContributorNameTypes(where, take: 1).Any();
 
         public int CountContributorNameTypes(string where = null)
         {
@@ -2937,6 +2981,8 @@ namespace FolioLibrary
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", s.Elapsed);
         }
 
+        public bool AnyContributorTypes(string where = null) => ContributorTypes(where, take: 1).Any();
+
         public int CountContributorTypes(string where = null)
         {
             ContributorTypes(out var i, take: 0);
@@ -3064,6 +3110,8 @@ namespace FolioLibrary
             if (hrm.StatusCode != HttpStatusCode.NoContent) throw new HttpRequestException($"Response status code does not indicate success: {hrm.StatusCode} ({hrm.ReasonPhrase}).\r\n{s2}");
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", s.Elapsed);
         }
+
+        public bool AnyCustomFields(string where = null) => CustomFields(where, take: 1).Any();
 
         public int CountCustomFields(string where = null)
         {
@@ -3205,6 +3253,8 @@ namespace FolioLibrary
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", s.Elapsed);
         }
 
+        public bool AnyElectronicAccessRelationships(string where = null) => ElectronicAccessRelationships(where, take: 1).Any();
+
         public int CountElectronicAccessRelationships(string where = null)
         {
             ElectronicAccessRelationships(out var i, take: 0);
@@ -3332,6 +3382,8 @@ namespace FolioLibrary
             if (hrm.StatusCode != HttpStatusCode.NoContent) throw new HttpRequestException($"Response status code does not indicate success: {hrm.StatusCode} ({hrm.ReasonPhrase}).\r\n{s2}");
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", s.Elapsed);
         }
+
+        public bool AnyFees(string where = null) => Fees(where, take: 1).Any();
 
         public int CountFees(string where = null)
         {
@@ -3472,6 +3524,8 @@ namespace FolioLibrary
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", s.Elapsed);
         }
 
+        public bool AnyFeeTypes(string where = null) => FeeTypes(where, take: 1).Any();
+
         public int CountFeeTypes(string where = null)
         {
             FeeTypes(out var i, take: 0);
@@ -3599,6 +3653,8 @@ namespace FolioLibrary
             if (hrm.StatusCode != HttpStatusCode.NoContent) throw new HttpRequestException($"Response status code does not indicate success: {hrm.StatusCode} ({hrm.ReasonPhrase}).\r\n{s2}");
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", s.Elapsed);
         }
+
+        public bool AnyFinanceGroups(string where = null) => FinanceGroups(where, take: 1).Any();
 
         public int CountFinanceGroups(string where = null)
         {
@@ -3728,6 +3784,8 @@ namespace FolioLibrary
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", s.Elapsed);
         }
 
+        public bool AnyFiscalYears(string where = null) => FiscalYears(where, take: 1).Any();
+
         public int CountFiscalYears(string where = null)
         {
             FiscalYears(out var i, take: 0);
@@ -3855,6 +3913,8 @@ namespace FolioLibrary
             if (hrm.StatusCode != HttpStatusCode.NoContent) throw new HttpRequestException($"Response status code does not indicate success: {hrm.StatusCode} ({hrm.ReasonPhrase}).\r\n{s2}");
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", s.Elapsed);
         }
+
+        public bool AnyFixedDueDateSchedules(string where = null) => FixedDueDateSchedules(where, take: 1).Any();
 
         public int CountFixedDueDateSchedules(string where = null)
         {
@@ -3984,6 +4044,8 @@ namespace FolioLibrary
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", s.Elapsed);
         }
 
+        public bool AnyFunds(string where = null) => Funds(where, take: 1).Any();
+
         public int CountFunds(string where = null)
         {
             Funds(out var i, take: 0);
@@ -4111,6 +4173,8 @@ namespace FolioLibrary
             if (hrm.StatusCode != HttpStatusCode.NoContent) throw new HttpRequestException($"Response status code does not indicate success: {hrm.StatusCode} ({hrm.ReasonPhrase}).\r\n{s2}");
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", s.Elapsed);
         }
+
+        public bool AnyFundTypes(string where = null) => FundTypes(where, take: 1).Any();
 
         public int CountFundTypes(string where = null)
         {
@@ -4240,6 +4304,8 @@ namespace FolioLibrary
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", s.Elapsed);
         }
 
+        public bool AnyGroups(string where = null) => Groups(where, take: 1).Any();
+
         public int CountGroups(string where = null)
         {
             Groups(out var i, take: 0);
@@ -4368,6 +4434,8 @@ namespace FolioLibrary
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", s.Elapsed);
         }
 
+        public bool AnyGroupFundFiscalYears(string where = null) => GroupFundFiscalYears(where, take: 1).Any();
+
         public int CountGroupFundFiscalYears(string where = null)
         {
             GroupFundFiscalYears(out var i, take: 0);
@@ -4495,6 +4563,8 @@ namespace FolioLibrary
             if (hrm.StatusCode != HttpStatusCode.NoContent) throw new HttpRequestException($"Response status code does not indicate success: {hrm.StatusCode} ({hrm.ReasonPhrase}).\r\n{s2}");
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", s.Elapsed);
         }
+
+        public bool AnyHoldings(string where = null) => Holdings(where, take: 1).Any();
 
         public int CountHoldings(string where = null)
         {
@@ -4644,6 +4714,8 @@ namespace FolioLibrary
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", s.Elapsed);
         }
 
+        public bool AnyHoldingNoteTypes(string where = null) => HoldingNoteTypes(where, take: 1).Any();
+
         public int CountHoldingNoteTypes(string where = null)
         {
             HoldingNoteTypes(out var i, take: 0);
@@ -4771,6 +4843,8 @@ namespace FolioLibrary
             if (hrm.StatusCode != HttpStatusCode.NoContent) throw new HttpRequestException($"Response status code does not indicate success: {hrm.StatusCode} ({hrm.ReasonPhrase}).\r\n{s2}");
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", s.Elapsed);
         }
+
+        public bool AnyHoldingTypes(string where = null) => HoldingTypes(where, take: 1).Any();
 
         public int CountHoldingTypes(string where = null)
         {
@@ -4934,6 +5008,8 @@ namespace FolioLibrary
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", s.Elapsed);
         }
 
+        public bool AnyIdTypes(string where = null) => IdTypes(where, take: 1).Any();
+
         public int CountIdTypes(string where = null)
         {
             IdTypes(out var i, take: 0);
@@ -5062,6 +5138,8 @@ namespace FolioLibrary
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", s.Elapsed);
         }
 
+        public bool AnyIllPolicies(string where = null) => IllPolicies(where, take: 1).Any();
+
         public int CountIllPolicies(string where = null)
         {
             IllPolicies(out var i, take: 0);
@@ -5189,6 +5267,8 @@ namespace FolioLibrary
             if (hrm.StatusCode != HttpStatusCode.NoContent) throw new HttpRequestException($"Response status code does not indicate success: {hrm.StatusCode} ({hrm.ReasonPhrase}).\r\n{s2}");
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", s.Elapsed);
         }
+
+        public bool AnyInstances(string where = null) => Instances(where, take: 1).Any();
 
         public int CountInstances(string where = null)
         {
@@ -5338,6 +5418,8 @@ namespace FolioLibrary
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", s.Elapsed);
         }
 
+        public bool AnyInstanceFormats(string where = null) => InstanceFormats(where, take: 1).Any();
+
         public int CountInstanceFormats(string where = null)
         {
             InstanceFormats(out var i, take: 0);
@@ -5465,6 +5547,8 @@ namespace FolioLibrary
             if (hrm.StatusCode != HttpStatusCode.NoContent) throw new HttpRequestException($"Response status code does not indicate success: {hrm.StatusCode} ({hrm.ReasonPhrase}).\r\n{s2}");
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", s.Elapsed);
         }
+
+        public bool AnyInstanceNoteTypes(string where = null) => InstanceNoteTypes(where, take: 1).Any();
 
         public int CountInstanceNoteTypes(string where = null)
         {
@@ -5594,6 +5678,8 @@ namespace FolioLibrary
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", s.Elapsed);
         }
 
+        public bool AnyInstanceRelationships(string where = null) => InstanceRelationships(where, take: 1).Any();
+
         public int CountInstanceRelationships(string where = null)
         {
             InstanceRelationships(out var i, take: 0);
@@ -5721,6 +5807,8 @@ namespace FolioLibrary
             if (hrm.StatusCode != HttpStatusCode.NoContent) throw new HttpRequestException($"Response status code does not indicate success: {hrm.StatusCode} ({hrm.ReasonPhrase}).\r\n{s2}");
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", s.Elapsed);
         }
+
+        public bool AnyInstanceRelationshipTypes(string where = null) => InstanceRelationshipTypes(where, take: 1).Any();
 
         public int CountInstanceRelationshipTypes(string where = null)
         {
@@ -5850,6 +5938,8 @@ namespace FolioLibrary
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", s.Elapsed);
         }
 
+        public bool AnyInstanceStatuses(string where = null) => InstanceStatuses(where, take: 1).Any();
+
         public int CountInstanceStatuses(string where = null)
         {
             InstanceStatuses(out var i, take: 0);
@@ -5977,6 +6067,8 @@ namespace FolioLibrary
             if (hrm.StatusCode != HttpStatusCode.NoContent) throw new HttpRequestException($"Response status code does not indicate success: {hrm.StatusCode} ({hrm.ReasonPhrase}).\r\n{s2}");
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", s.Elapsed);
         }
+
+        public bool AnyInstanceTypes(string where = null) => InstanceTypes(where, take: 1).Any();
 
         public int CountInstanceTypes(string where = null)
         {
@@ -6106,6 +6198,8 @@ namespace FolioLibrary
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", s.Elapsed);
         }
 
+        public bool AnyInstitutions(string where = null) => Institutions(where, take: 1).Any();
+
         public int CountInstitutions(string where = null)
         {
             Institutions(out var i, take: 0);
@@ -6233,6 +6327,8 @@ namespace FolioLibrary
             if (hrm.StatusCode != HttpStatusCode.NoContent) throw new HttpRequestException($"Response status code does not indicate success: {hrm.StatusCode} ({hrm.ReasonPhrase}).\r\n{s2}");
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", s.Elapsed);
         }
+
+        public bool AnyInterfaces(string where = null) => Interfaces(where, take: 1).Any();
 
         public int CountInterfaces(string where = null)
         {
@@ -6362,6 +6458,8 @@ namespace FolioLibrary
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", s.Elapsed);
         }
 
+        public bool AnyInvoices(string where = null) => Invoices(where, take: 1).Any();
+
         public int CountInvoices(string where = null)
         {
             Invoices(out var i, take: 0);
@@ -6490,6 +6588,8 @@ namespace FolioLibrary
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", s.Elapsed);
         }
 
+        public bool AnyInvoiceItems(string where = null) => InvoiceItems(where, take: 1).Any();
+
         public int CountInvoiceItems(string where = null)
         {
             InvoiceItems(out var i, take: 0);
@@ -6617,6 +6717,8 @@ namespace FolioLibrary
             if (hrm.StatusCode != HttpStatusCode.NoContent) throw new HttpRequestException($"Response status code does not indicate success: {hrm.StatusCode} ({hrm.ReasonPhrase}).\r\n{s2}");
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", s.Elapsed);
         }
+
+        public bool AnyItems(string where = null) => Items(where, take: 1).Any();
 
         public int CountItems(string where = null)
         {
@@ -6766,6 +6868,8 @@ namespace FolioLibrary
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", s.Elapsed);
         }
 
+        public bool AnyItemDamagedStatuses(string where = null) => ItemDamagedStatuses(where, take: 1).Any();
+
         public int CountItemDamagedStatuses(string where = null)
         {
             ItemDamagedStatuses(out var i, take: 0);
@@ -6893,6 +6997,8 @@ namespace FolioLibrary
             if (hrm.StatusCode != HttpStatusCode.NoContent) throw new HttpRequestException($"Response status code does not indicate success: {hrm.StatusCode} ({hrm.ReasonPhrase}).\r\n{s2}");
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", s.Elapsed);
         }
+
+        public bool AnyItemNoteTypes(string where = null) => ItemNoteTypes(where, take: 1).Any();
 
         public int CountItemNoteTypes(string where = null)
         {
@@ -7022,6 +7128,8 @@ namespace FolioLibrary
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", s.Elapsed);
         }
 
+        public bool AnyLedgers(string where = null) => Ledgers(where, take: 1).Any();
+
         public int CountLedgers(string where = null)
         {
             Ledgers(out var i, take: 0);
@@ -7150,6 +7258,8 @@ namespace FolioLibrary
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", s.Elapsed);
         }
 
+        public bool AnyLibraries(string where = null) => Libraries(where, take: 1).Any();
+
         public int CountLibraries(string where = null)
         {
             Libraries(out var i, take: 0);
@@ -7277,6 +7387,8 @@ namespace FolioLibrary
             if (hrm.StatusCode != HttpStatusCode.NoContent) throw new HttpRequestException($"Response status code does not indicate success: {hrm.StatusCode} ({hrm.ReasonPhrase}).\r\n{s2}");
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", s.Elapsed);
         }
+
+        public bool AnyLoans(string where = null) => Loans(where, take: 1).Any();
 
         public int CountLoans(string where = null)
         {
@@ -7417,6 +7529,8 @@ namespace FolioLibrary
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", s.Elapsed);
         }
 
+        public bool AnyLoanPolicies(string where = null) => LoanPolicies(where, take: 1).Any();
+
         public int CountLoanPolicies(string where = null)
         {
             LoanPolicies(out var i, take: 0);
@@ -7545,6 +7659,8 @@ namespace FolioLibrary
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", s.Elapsed);
         }
 
+        public bool AnyLoanTypes(string where = null) => LoanTypes(where, take: 1).Any();
+
         public int CountLoanTypes(string where = null)
         {
             LoanTypes(out var i, take: 0);
@@ -7672,6 +7788,8 @@ namespace FolioLibrary
             if (hrm.StatusCode != HttpStatusCode.NoContent) throw new HttpRequestException($"Response status code does not indicate success: {hrm.StatusCode} ({hrm.ReasonPhrase}).\r\n{s2}");
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", s.Elapsed);
         }
+
+        public bool AnyLocations(string where = null) => Locations(where, take: 1).Any();
 
         public int CountLocations(string where = null)
         {
@@ -7821,6 +7939,8 @@ namespace FolioLibrary
             return jo;
         }
 
+        public bool AnyLostItemFeePolicies(string where = null) => LostItemFeePolicies(where, take: 1).Any();
+
         public int CountLostItemFeePolicies(string where = null)
         {
             LostItemFeePolicies(out var i, take: 0);
@@ -7948,6 +8068,8 @@ namespace FolioLibrary
             if (hrm.StatusCode != HttpStatusCode.NoContent) throw new HttpRequestException($"Response status code does not indicate success: {hrm.StatusCode} ({hrm.ReasonPhrase}).\r\n{s2}");
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", s.Elapsed);
         }
+
+        public bool AnyMaterialTypes(string where = null) => MaterialTypes(where, take: 1).Any();
 
         public int CountMaterialTypes(string where = null)
         {
@@ -8077,6 +8199,8 @@ namespace FolioLibrary
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", s.Elapsed);
         }
 
+        public bool AnyModeOfIssuances(string where = null) => ModeOfIssuances(where, take: 1).Any();
+
         public int CountModeOfIssuances(string where = null)
         {
             ModeOfIssuances(out var i, take: 0);
@@ -8204,6 +8328,8 @@ namespace FolioLibrary
             if (hrm.StatusCode != HttpStatusCode.NoContent) throw new HttpRequestException($"Response status code does not indicate success: {hrm.StatusCode} ({hrm.ReasonPhrase}).\r\n{s2}");
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", s.Elapsed);
         }
+
+        public bool AnyNatureOfContentTerms(string where = null) => NatureOfContentTerms(where, take: 1).Any();
 
         public int CountNatureOfContentTerms(string where = null)
         {
@@ -8333,6 +8459,8 @@ namespace FolioLibrary
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", s.Elapsed);
         }
 
+        public bool AnyNotes(string where = null) => Notes(where, take: 1).Any();
+
         public int CountNotes(string where = null)
         {
             Notes(out var i, take: 0);
@@ -8461,6 +8589,8 @@ namespace FolioLibrary
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", s.Elapsed);
         }
 
+        public bool AnyNoteTypes(string where = null) => NoteTypes(where, take: 1).Any();
+
         public int CountNoteTypes(string where = null)
         {
             NoteTypes(out var i, take: 0);
@@ -8588,6 +8718,8 @@ namespace FolioLibrary
             if (hrm.StatusCode != HttpStatusCode.NoContent) throw new HttpRequestException($"Response status code does not indicate success: {hrm.StatusCode} ({hrm.ReasonPhrase}).\r\n{s2}");
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", s.Elapsed);
         }
+
+        public bool AnyOrders(string where = null) => Orders(where, take: 1).Any();
 
         public int CountOrders(string where = null)
         {
@@ -8728,6 +8860,8 @@ namespace FolioLibrary
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", s.Elapsed);
         }
 
+        public bool AnyOrderInvoices(string where = null) => OrderInvoices(where, take: 1).Any();
+
         public int CountOrderInvoices(string where = null)
         {
             OrderInvoices(out var i, take: 0);
@@ -8855,6 +8989,8 @@ namespace FolioLibrary
             if (hrm.StatusCode != HttpStatusCode.NoContent) throw new HttpRequestException($"Response status code does not indicate success: {hrm.StatusCode} ({hrm.ReasonPhrase}).\r\n{s2}");
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", s.Elapsed);
         }
+
+        public bool AnyOrderItems(string where = null) => OrderItems(where, take: 1).Any();
 
         public int CountOrderItems(string where = null)
         {
@@ -8995,6 +9131,8 @@ namespace FolioLibrary
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", s.Elapsed);
         }
 
+        public bool AnyOrderTemplates(string where = null) => OrderTemplates(where, take: 1).Any();
+
         public int CountOrderTemplates(string where = null)
         {
             OrderTemplates(out var i, take: 0);
@@ -9122,6 +9260,8 @@ namespace FolioLibrary
             if (hrm.StatusCode != HttpStatusCode.NoContent) throw new HttpRequestException($"Response status code does not indicate success: {hrm.StatusCode} ({hrm.ReasonPhrase}).\r\n{s2}");
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", s.Elapsed);
         }
+
+        public bool AnyOrganizations(string where = null) => Organizations(where, take: 1).Any();
 
         public int CountOrganizations(string where = null)
         {
@@ -9251,6 +9391,8 @@ namespace FolioLibrary
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", s.Elapsed);
         }
 
+        public bool AnyOverdueFinePolicies(string where = null) => OverdueFinePolicies(where, take: 1).Any();
+
         public int CountOverdueFinePolicies(string where = null)
         {
             OverdueFinePolicies(out var i, take: 0);
@@ -9378,6 +9520,8 @@ namespace FolioLibrary
             if (hrm.StatusCode != HttpStatusCode.NoContent) throw new HttpRequestException($"Response status code does not indicate success: {hrm.StatusCode} ({hrm.ReasonPhrase}).\r\n{s2}");
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", s.Elapsed);
         }
+
+        public bool AnyOwners(string where = null) => Owners(where, take: 1).Any();
 
         public int CountOwners(string where = null)
         {
@@ -9507,6 +9651,8 @@ namespace FolioLibrary
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", s.Elapsed);
         }
 
+        public bool AnyPatronActionSessions(string where = null) => PatronActionSessions(where, take: 1).Any();
+
         public int CountPatronActionSessions(string where = null)
         {
             PatronActionSessions(out var i, take: 0);
@@ -9635,6 +9781,8 @@ namespace FolioLibrary
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", s.Elapsed);
         }
 
+        public bool AnyPatronNoticePolicies(string where = null) => PatronNoticePolicies(where, take: 1).Any();
+
         public int CountPatronNoticePolicies(string where = null)
         {
             PatronNoticePolicies(out var i, take: 0);
@@ -9762,6 +9910,8 @@ namespace FolioLibrary
             if (hrm.StatusCode != HttpStatusCode.NoContent) throw new HttpRequestException($"Response status code does not indicate success: {hrm.StatusCode} ({hrm.ReasonPhrase}).\r\n{s2}");
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", s.Elapsed);
         }
+
+        public bool AnyPayments(string where = null) => Payments(where, take: 1).Any();
 
         public int CountPayments(string where = null)
         {
@@ -9902,6 +10052,8 @@ namespace FolioLibrary
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", s.Elapsed);
         }
 
+        public bool AnyPaymentMethods(string where = null) => PaymentMethods(where, take: 1).Any();
+
         public int CountPaymentMethods(string where = null)
         {
             PaymentMethods(out var i, take: 0);
@@ -10030,6 +10182,8 @@ namespace FolioLibrary
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", s.Elapsed);
         }
 
+        public bool AnyPermissions(string where = null) => Permissions(where, take: 1).Any();
+
         public int CountPermissions(string where = null)
         {
             Permissions(out var i, take: 0);
@@ -10157,6 +10311,8 @@ namespace FolioLibrary
             if (hrm.StatusCode != HttpStatusCode.NoContent) throw new HttpRequestException($"Response status code does not indicate success: {hrm.StatusCode} ({hrm.ReasonPhrase}).\r\n{s2}");
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", s.Elapsed);
         }
+
+        public bool AnyPermissionsUsers(string where = null) => PermissionsUsers(where, take: 1).Any();
 
         public int CountPermissionsUsers(string where = null)
         {
@@ -10297,6 +10453,8 @@ namespace FolioLibrary
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", s.Elapsed);
         }
 
+        public bool AnyPieces(string where = null) => Pieces(where, take: 1).Any();
+
         public int CountPieces(string where = null)
         {
             Pieces(out var i, take: 0);
@@ -10435,6 +10593,8 @@ namespace FolioLibrary
             if (hrm.StatusCode != HttpStatusCode.NoContent) throw new HttpRequestException($"Response status code does not indicate success: {hrm.StatusCode} ({hrm.ReasonPhrase}).\r\n{s2}");
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", s.Elapsed);
         }
+
+        public bool AnyPrecedingSucceedingTitles(string where = null) => PrecedingSucceedingTitles(where, take: 1).Any();
 
         public int CountPrecedingSucceedingTitles(string where = null)
         {
@@ -10575,6 +10735,8 @@ namespace FolioLibrary
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", s.Elapsed);
         }
 
+        public bool AnyPrefixes(string where = null) => Prefixes(where, take: 1).Any();
+
         public int CountPrefixes(string where = null)
         {
             Prefixes(out var i, take: 0);
@@ -10703,6 +10865,8 @@ namespace FolioLibrary
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", s.Elapsed);
         }
 
+        public bool AnyProxies(string where = null) => Proxies(where, take: 1).Any();
+
         public int CountProxies(string where = null)
         {
             Proxies(out var i, take: 0);
@@ -10830,6 +10994,8 @@ namespace FolioLibrary
             if (hrm.StatusCode != HttpStatusCode.NoContent) throw new HttpRequestException($"Response status code does not indicate success: {hrm.StatusCode} ({hrm.ReasonPhrase}).\r\n{s2}");
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", s.Elapsed);
         }
+
+        public bool AnyRecords(string where = null) => Records(where, take: 1).Any();
 
         public int CountRecords(string where = null)
         {
@@ -10992,6 +11158,8 @@ namespace FolioLibrary
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", s.Elapsed);
         }
 
+        public bool AnyRefundReasons(string where = null) => RefundReasons(where, take: 1).Any();
+
         public int CountRefundReasons(string where = null)
         {
             RefundReasons(out var i, take: 0);
@@ -11119,6 +11287,8 @@ namespace FolioLibrary
             if (hrm.StatusCode != HttpStatusCode.NoContent) throw new HttpRequestException($"Response status code does not indicate success: {hrm.StatusCode} ({hrm.ReasonPhrase}).\r\n{s2}");
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", s.Elapsed);
         }
+
+        public bool AnyReportingCodes(string where = null) => ReportingCodes(where, take: 1).Any();
 
         public int CountReportingCodes(string where = null)
         {
@@ -11248,6 +11418,8 @@ namespace FolioLibrary
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", s.Elapsed);
         }
 
+        public bool AnyRequests(string where = null) => Requests(where, take: 1).Any();
+
         public int CountRequests(string where = null)
         {
             Requests(out var i, take: 0);
@@ -11375,6 +11547,8 @@ namespace FolioLibrary
             if (hrm.StatusCode != HttpStatusCode.NoContent) throw new HttpRequestException($"Response status code does not indicate success: {hrm.StatusCode} ({hrm.ReasonPhrase}).\r\n{s2}");
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", s.Elapsed);
         }
+
+        public bool AnyRequestPolicies(string where = null) => RequestPolicies(where, take: 1).Any();
 
         public int CountRequestPolicies(string where = null)
         {
@@ -11504,6 +11678,8 @@ namespace FolioLibrary
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", s.Elapsed);
         }
 
+        public bool AnyScheduledNotices(string where = null) => ScheduledNotices(where, take: 1).Any();
+
         public int CountScheduledNotices(string where = null)
         {
             ScheduledNotices(out var i, take: 0);
@@ -11631,6 +11807,8 @@ namespace FolioLibrary
             if (hrm.StatusCode != HttpStatusCode.NoContent) throw new HttpRequestException($"Response status code does not indicate success: {hrm.StatusCode} ({hrm.ReasonPhrase}).\r\n{s2}");
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", s.Elapsed);
         }
+
+        public bool AnyServicePoints(string where = null) => ServicePoints(where, take: 1).Any();
 
         public int CountServicePoints(string where = null)
         {
@@ -11760,6 +11938,8 @@ namespace FolioLibrary
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", s.Elapsed);
         }
 
+        public bool AnyServicePointUsers(string where = null) => ServicePointUsers(where, take: 1).Any();
+
         public int CountServicePointUsers(string where = null)
         {
             ServicePointUsers(out var i, take: 0);
@@ -11887,6 +12067,8 @@ namespace FolioLibrary
             if (hrm.StatusCode != HttpStatusCode.NoContent) throw new HttpRequestException($"Response status code does not indicate success: {hrm.StatusCode} ({hrm.ReasonPhrase}).\r\n{s2}");
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", s.Elapsed);
         }
+
+        public bool AnySnapshots(string where = null) => Snapshots(where, take: 1).Any();
 
         public int CountSnapshots(string where = null)
         {
@@ -12016,6 +12198,8 @@ namespace FolioLibrary
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", s.Elapsed);
         }
 
+        public bool AnyStaffSlips(string where = null) => StaffSlips(where, take: 1).Any();
+
         public int CountStaffSlips(string where = null)
         {
             StaffSlips(out var i, take: 0);
@@ -12143,6 +12327,8 @@ namespace FolioLibrary
             if (hrm.StatusCode != HttpStatusCode.NoContent) throw new HttpRequestException($"Response status code does not indicate success: {hrm.StatusCode} ({hrm.ReasonPhrase}).\r\n{s2}");
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", s.Elapsed);
         }
+
+        public bool AnyStatisticalCodes(string where = null) => StatisticalCodes(where, take: 1).Any();
 
         public int CountStatisticalCodes(string where = null)
         {
@@ -12272,6 +12458,8 @@ namespace FolioLibrary
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", s.Elapsed);
         }
 
+        public bool AnyStatisticalCodeTypes(string where = null) => StatisticalCodeTypes(where, take: 1).Any();
+
         public int CountStatisticalCodeTypes(string where = null)
         {
             StatisticalCodeTypes(out var i, take: 0);
@@ -12399,6 +12587,8 @@ namespace FolioLibrary
             if (hrm.StatusCode != HttpStatusCode.NoContent) throw new HttpRequestException($"Response status code does not indicate success: {hrm.StatusCode} ({hrm.ReasonPhrase}).\r\n{s2}");
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", s.Elapsed);
         }
+
+        public bool AnySuffixes(string where = null) => Suffixes(where, take: 1).Any();
 
         public int CountSuffixes(string where = null)
         {
@@ -12528,6 +12718,8 @@ namespace FolioLibrary
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", s.Elapsed);
         }
 
+        public bool AnyTags(string where = null) => Tags(where, take: 1).Any();
+
         public int CountTags(string where = null)
         {
             Tags(out var i, take: 0);
@@ -12656,6 +12848,8 @@ namespace FolioLibrary
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", s.Elapsed);
         }
 
+        public bool AnyTemplates(string where = null) => Templates(where, take: 1).Any();
+
         public int CountTemplates(string where = null)
         {
             Templates(out var i, take: 0);
@@ -12783,6 +12977,8 @@ namespace FolioLibrary
             if (hrm.StatusCode != HttpStatusCode.NoContent) throw new HttpRequestException($"Response status code does not indicate success: {hrm.StatusCode} ({hrm.ReasonPhrase}).\r\n{s2}");
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", s.Elapsed);
         }
+
+        public bool AnyTitles(string where = null) => Titles(where, take: 1).Any();
 
         public int CountTitles(string where = null)
         {
@@ -12923,6 +13119,8 @@ namespace FolioLibrary
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", s.Elapsed);
         }
 
+        public bool AnyTransactions(string where = null) => Transactions(where, take: 1).Any();
+
         public int CountTransactions(string where = null)
         {
             Transactions(out var i, take: 0);
@@ -13062,6 +13260,8 @@ namespace FolioLibrary
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", s.Elapsed);
         }
 
+        public bool AnyTransferAccounts(string where = null) => TransferAccounts(where, take: 1).Any();
+
         public int CountTransferAccounts(string where = null)
         {
             TransferAccounts(out var i, take: 0);
@@ -13190,6 +13390,8 @@ namespace FolioLibrary
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", s.Elapsed);
         }
 
+        public bool AnyTransferCriterias(string where = null) => TransferCriterias(where, take: 1).Any();
+
         public int CountTransferCriterias(string where = null)
         {
             TransferCriterias(out var i, take: 0);
@@ -13317,6 +13519,8 @@ namespace FolioLibrary
             if (hrm.StatusCode != HttpStatusCode.NoContent) throw new HttpRequestException($"Response status code does not indicate success: {hrm.StatusCode} ({hrm.ReasonPhrase}).\r\n{s2}");
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", s.Elapsed);
         }
+
+        public bool AnyUsers(string where = null) => Users(where, take: 1).Any();
 
         public int CountUsers(string where = null)
         {
@@ -13465,6 +13669,8 @@ namespace FolioLibrary
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", s.Elapsed);
         }
 
+        public bool AnyUserAcquisitionsUnits(string where = null) => UserAcquisitionsUnits(where, take: 1).Any();
+
         public int CountUserAcquisitionsUnits(string where = null)
         {
             UserAcquisitionsUnits(out var i, take: 0);
@@ -13592,6 +13798,8 @@ namespace FolioLibrary
             if (hrm.StatusCode != HttpStatusCode.NoContent) throw new HttpRequestException($"Response status code does not indicate success: {hrm.StatusCode} ({hrm.ReasonPhrase}).\r\n{s2}");
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", s.Elapsed);
         }
+
+        public bool AnyUserRequestPreferences(string where = null) => UserRequestPreferences(where, take: 1).Any();
 
         public int CountUserRequestPreferences(string where = null)
         {
@@ -13721,6 +13929,8 @@ namespace FolioLibrary
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", s.Elapsed);
         }
 
+        public bool AnyVouchers(string where = null) => Vouchers(where, take: 1).Any();
+
         public int CountVouchers(string where = null)
         {
             Vouchers(out var i, take: 0);
@@ -13849,6 +14059,8 @@ namespace FolioLibrary
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", s.Elapsed);
         }
 
+        public bool AnyVoucherItems(string where = null) => VoucherItems(where, take: 1).Any();
+
         public int CountVoucherItems(string where = null)
         {
             VoucherItems(out var i, take: 0);
@@ -13976,6 +14188,8 @@ namespace FolioLibrary
             if (hrm.StatusCode != HttpStatusCode.NoContent) throw new HttpRequestException($"Response status code does not indicate success: {hrm.StatusCode} ({hrm.ReasonPhrase}).\r\n{s2}");
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", s.Elapsed);
         }
+
+        public bool AnyWaiveReasons(string where = null) => WaiveReasons(where, take: 1).Any();
 
         public int CountWaiveReasons(string where = null)
         {
@@ -14154,7 +14368,6 @@ namespace FolioLibrary
 
         public void Dispose()
         {
-            httpClient.Dispose();
         }
     }
 
@@ -14178,7 +14391,8 @@ namespace FolioLibrary
 
         public override void WriteJson(JsonWriter writer, T value, JsonSerializer serializer)
         {
-            throw new NotImplementedException();
+            var jo = new JArray(value.Select(t2 => t2.GetType().GetProperty(name).GetValue(t2)));
+            serializer.Serialize(writer, jo);
         }
     }
 
@@ -14203,11 +14417,23 @@ namespace FolioLibrary
         public override void WriteJson(JsonWriter writer, T value, JsonSerializer serializer)
         {
             var jo = new JObject();
-            foreach (var pi in value.GetType().GetRuntimeProperties().Where(pi => pi.GetCustomAttributes(true).OfType<JsonPropertyAttribute>().Any()))
+            foreach (var pi in value.GetType().GetRuntimeProperties().Where(pi => pi.GetCustomAttributes(true).OfType<JsonPropertyAttribute>().Any(jpa => !jpa.PropertyName.Contains("["))))
             {
-                var jpa = pi.GetCustomAttributes(true).OfType<JsonPropertyAttribute>().First();
                 var o = pi.GetValue(value);
-                if (o != null) jo[jpa.PropertyName] = JToken.FromObject(o, serializer);
+                if (o != null)
+                {
+                    var jpa = pi.GetCustomAttributes(true).OfType<JsonPropertyAttribute>().First();
+                    var jca = pi.GetCustomAttributes(true).OfType<JsonConverterAttribute>().FirstOrDefault();
+                    if (jca != null)
+                    {
+                        var jc = (JsonConverter)Activator.CreateInstance(jca.ConverterType, jca.ConverterParameters);
+                        serializer.Converters.Add(jc);
+                        jo[jpa.PropertyName] = JToken.FromObject(o, serializer);
+                        serializer.Converters.Remove(jc);
+                    }
+                    else
+                        jo[jpa.PropertyName] = JToken.FromObject(o, serializer);
+                }
             }
             serializer.Serialize(writer, FixNestedProperties(jo));
         }
@@ -14228,6 +14454,13 @@ namespace FolioLibrary
             }
             return jo2;
         }
+    }
+
+    public class StringJsonConverter<T> : JsonConverter<T> where T : new()
+    {
+        public override T ReadJson(JsonReader reader, Type objectType, T existingValue, bool hasExistingValue, JsonSerializer serializer) => JToken.Load(reader).Value<T>();
+
+        public override void WriteJson(JsonWriter writer, T value, JsonSerializer serializer) => serializer.Serialize(writer, value?.ToString());
     }
 
     public static class JObjectExtensions

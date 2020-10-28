@@ -49,7 +49,7 @@ namespace FolioLibrary
 
         public override string ToString() => $"{{ {nameof(Id)} = {Id}, {nameof(Content)} = {Content}, {nameof(CreationTime)} = {CreationTime}, {nameof(CreationUserId)} = {CreationUserId}, {nameof(LoanspolicyFixedduedatescheduleid)} = {LoanspolicyFixedduedatescheduleid}, {nameof(RenewalspolicyAlternatefixedduedatescheduleid)} = {RenewalspolicyAlternatefixedduedatescheduleid} }}";
 
-        public static LoanPolicy FromJObject(JObject jObject) => new LoanPolicy
+        public static LoanPolicy FromJObject(JObject jObject) => jObject != null ? new LoanPolicy
         {
             Id = (Guid?)jObject.SelectToken("id"),
             Content = jObject.ToString(),
@@ -57,7 +57,7 @@ namespace FolioLibrary
             CreationUserId = (string)jObject.SelectToken("metadata.createdByUserId"),
             LoanspolicyFixedduedatescheduleid = (Guid?)jObject.SelectToken("loansPolicy.fixedDueDateScheduleId"),
             RenewalspolicyAlternatefixedduedatescheduleid = (Guid?)jObject.SelectToken("renewalsPolicy.alternateFixedDueDateScheduleId")
-        };
+        } : null;
 
         public JObject ToJObject() => JObject.Parse(Content);
     }

@@ -55,7 +55,7 @@ namespace FolioLibrary
 
         public override string ToString() => $"{{ {nameof(Id)} = {Id}, {nameof(Content)} = {Content}, {nameof(CreationTime)} = {CreationTime}, {nameof(CreationUserId)} = {CreationUserId}, {nameof(Superinstanceid)} = {Superinstanceid}, {nameof(Subinstanceid)} = {Subinstanceid}, {nameof(Instancerelationshiptypeid)} = {Instancerelationshiptypeid} }}";
 
-        public static InstanceRelationship FromJObject(JObject jObject) => new InstanceRelationship
+        public static InstanceRelationship FromJObject(JObject jObject) => jObject != null ? new InstanceRelationship
         {
             Id = (Guid?)jObject.SelectToken("id"),
             Content = jObject.ToString(),
@@ -64,7 +64,7 @@ namespace FolioLibrary
             Superinstanceid = (Guid?)jObject.SelectToken("superInstanceId"),
             Subinstanceid = (Guid?)jObject.SelectToken("subInstanceId"),
             Instancerelationshiptypeid = (Guid?)jObject.SelectToken("instanceRelationshipTypeId")
-        };
+        } : null;
 
         public JObject ToJObject() => JObject.Parse(Content);
     }

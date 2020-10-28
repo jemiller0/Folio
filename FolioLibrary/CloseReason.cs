@@ -31,11 +31,11 @@ namespace FolioLibrary
 
         public override string ToString() => $"{{ {nameof(Id)} = {Id}, {nameof(Content)} = {Content} }}";
 
-        public static CloseReason FromJObject(JObject jObject) => new CloseReason
+        public static CloseReason FromJObject(JObject jObject) => jObject != null ? new CloseReason
         {
             Id = (Guid?)jObject.SelectToken("id"),
             Content = jObject.ToString()
-        };
+        } : null;
 
         public JObject ToJObject() => JObject.Parse(Content);
     }

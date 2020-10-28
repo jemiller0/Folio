@@ -35,11 +35,11 @@ namespace FolioLibrary
 
         public override string ToString() => $"{{ {nameof(Id)} = {Id}, {nameof(Content)} = {Content} }}";
 
-        public static BatchVoucher FromJObject(JObject jObject) => new BatchVoucher
+        public static BatchVoucher FromJObject(JObject jObject) => jObject != null ? new BatchVoucher
         {
             Id = (Guid?)jObject.SelectToken("id"),
             Content = jObject.ToString()
-        };
+        } : null;
 
         public JObject ToJObject() => JObject.Parse(Content);
     }

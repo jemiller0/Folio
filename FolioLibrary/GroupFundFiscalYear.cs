@@ -55,7 +55,7 @@ namespace FolioLibrary
 
         public override string ToString() => $"{{ {nameof(Id)} = {Id}, {nameof(Content)} = {Content}, {nameof(Budgetid)} = {Budgetid}, {nameof(Groupid)} = {Groupid}, {nameof(Fundid)} = {Fundid}, {nameof(Fiscalyearid)} = {Fiscalyearid} }}";
 
-        public static GroupFundFiscalYear FromJObject(JObject jObject) => new GroupFundFiscalYear
+        public static GroupFundFiscalYear FromJObject(JObject jObject) => jObject != null ? new GroupFundFiscalYear
         {
             Id = (Guid?)jObject.SelectToken("id"),
             Content = jObject.ToString(),
@@ -63,7 +63,7 @@ namespace FolioLibrary
             Groupid = (Guid?)jObject.SelectToken("groupId"),
             Fundid = (Guid?)jObject.SelectToken("fundId"),
             Fiscalyearid = (Guid?)jObject.SelectToken("fiscalYearId")
-        };
+        } : null;
 
         public JObject ToJObject() => JObject.Parse(Content);
     }

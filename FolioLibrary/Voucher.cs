@@ -53,7 +53,7 @@ namespace FolioLibrary
 
         public override string ToString() => $"{{ {nameof(Id)} = {Id}, {nameof(Content)} = {Content}, {nameof(CreationTime)} = {CreationTime}, {nameof(CreationUserId)} = {CreationUserId}, {nameof(Invoiceid)} = {Invoiceid}, {nameof(Batchgroupid)} = {Batchgroupid} }}";
 
-        public static Voucher FromJObject(JObject jObject) => new Voucher
+        public static Voucher FromJObject(JObject jObject) => jObject != null ? new Voucher
         {
             Id = (Guid?)jObject.SelectToken("id"),
             Content = jObject.ToString(),
@@ -61,7 +61,7 @@ namespace FolioLibrary
             CreationUserId = (string)jObject.SelectToken("metadata.createdByUserId"),
             Invoiceid = (Guid?)jObject.SelectToken("invoiceId"),
             Batchgroupid = (Guid?)jObject.SelectToken("batchGroupId")
-        };
+        } : null;
 
         public JObject ToJObject() => JObject.Parse(Content);
     }

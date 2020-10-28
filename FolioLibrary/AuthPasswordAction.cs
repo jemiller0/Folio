@@ -22,10 +22,10 @@ namespace FolioLibrary
 
         public override string ToString() => $"{{ {nameof(Id)} = {Id}, {nameof(Content)} = {Content}, {nameof(CreationTime)} = {CreationTime}, {nameof(CreationUserId)} = {CreationUserId} }}";
 
-        public static AuthPasswordAction FromJObject(JObject jObject) => new AuthPasswordAction
+        public static AuthPasswordAction FromJObject(JValue jObject) => jObject != null ? new AuthPasswordAction
         {
             Content = jObject.ToString()
-        };
+        } : null;
 
         public JObject ToJObject() => JObject.Parse(Content);
     }

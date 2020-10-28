@@ -37,11 +37,11 @@ namespace FolioLibrary
 
         public override string ToString() => $"{{ {nameof(Id)} = {Id}, {nameof(Content)} = {Content}, {nameof(TemporaryTypeId)} = {TemporaryTypeId} }}";
 
-        public static Note FromJObject(JObject jObject) => new Note
+        public static Note FromJObject(JObject jObject) => jObject != null ? new Note
         {
             Id = (Guid?)jObject.SelectToken("id"),
             Content = jObject.ToString()
-        };
+        } : null;
 
         public JObject ToJObject() => JObject.Parse(Content);
     }

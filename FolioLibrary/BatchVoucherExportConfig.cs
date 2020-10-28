@@ -47,14 +47,14 @@ namespace FolioLibrary
 
         public override string ToString() => $"{{ {nameof(Id)} = {Id}, {nameof(Content)} = {Content}, {nameof(CreationTime)} = {CreationTime}, {nameof(CreationUserId)} = {CreationUserId}, {nameof(Batchgroupid)} = {Batchgroupid} }}";
 
-        public static BatchVoucherExportConfig FromJObject(JObject jObject) => new BatchVoucherExportConfig
+        public static BatchVoucherExportConfig FromJObject(JObject jObject) => jObject != null ? new BatchVoucherExportConfig
         {
             Id = (Guid?)jObject.SelectToken("id"),
             Content = jObject.ToString(),
             CreationTime = (DateTime?)jObject.SelectToken("metadata.createdDate"),
             CreationUserId = (string)jObject.SelectToken("metadata.createdByUserId"),
             Batchgroupid = (Guid?)jObject.SelectToken("batchGroupId")
-        };
+        } : null;
 
         public JObject ToJObject() => JObject.Parse(Content);
     }

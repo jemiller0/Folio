@@ -37,12 +37,12 @@ namespace FolioLibrary
 
         public override string ToString() => $"{{ {nameof(Id)} = {Id}, {nameof(Content)} = {Content}, {nameof(Purchaseorderid)} = {Purchaseorderid} }}";
 
-        public static OrderInvoice FromJObject(JObject jObject) => new OrderInvoice
+        public static OrderInvoice FromJObject(JObject jObject) => jObject != null ? new OrderInvoice
         {
             Id = (Guid?)jObject.SelectToken("id"),
             Content = jObject.ToString(),
             Purchaseorderid = (Guid?)jObject.SelectToken("purchaseOrderId")
-        };
+        } : null;
 
         public JObject ToJObject() => JObject.Parse(Content);
     }

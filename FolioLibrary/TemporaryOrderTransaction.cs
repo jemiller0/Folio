@@ -49,13 +49,13 @@ namespace FolioLibrary
 
         public override string ToString() => $"{{ {nameof(Id)} = {Id}, {nameof(Content)} = {Content}, {nameof(EncumbranceSourcepurchaseorderid)} = {EncumbranceSourcepurchaseorderid}, {nameof(Fiscalyearid)} = {Fiscalyearid}, {nameof(Fromfundid)} = {Fromfundid} }}";
 
-        public static TemporaryOrderTransaction FromJObject(JObject jObject) => new TemporaryOrderTransaction
+        public static TemporaryOrderTransaction FromJObject(JObject jObject) => jObject != null ? new TemporaryOrderTransaction
         {
             Id = (Guid?)jObject.SelectToken("id"),
             Content = jObject.ToString(),
             Fiscalyearid = (Guid?)jObject.SelectToken("fiscalYearId"),
             Fromfundid = (Guid?)jObject.SelectToken("fromFundId")
-        };
+        } : null;
 
         public JObject ToJObject() => JObject.Parse(Content);
     }

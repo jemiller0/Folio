@@ -49,7 +49,7 @@ namespace FolioLibrary
 
         public override string ToString() => $"{{ {nameof(Id)} = {Id}, {nameof(Content)} = {Content}, {nameof(CreationTime)} = {CreationTime}, {nameof(CreationUserId)} = {CreationUserId}, {nameof(Batchgroupid)} = {Batchgroupid}, {nameof(Batchvoucherid)} = {Batchvoucherid} }}";
 
-        public static BatchVoucherExport FromJObject(JObject jObject) => new BatchVoucherExport
+        public static BatchVoucherExport FromJObject(JObject jObject) => jObject != null ? new BatchVoucherExport
         {
             Id = (Guid?)jObject.SelectToken("id"),
             Content = jObject.ToString(),
@@ -57,7 +57,7 @@ namespace FolioLibrary
             CreationUserId = (string)jObject.SelectToken("metadata.createdByUserId"),
             Batchgroupid = (Guid?)jObject.SelectToken("batchGroupId"),
             Batchvoucherid = (Guid?)jObject.SelectToken("batchVoucherId")
-        };
+        } : null;
 
         public JObject ToJObject() => JObject.Parse(Content);
     }

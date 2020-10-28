@@ -74,7 +74,7 @@ namespace FolioLibrary
 
         public override string ToString() => $"{{ {nameof(Id)} = {Id}, {nameof(Content)} = {Content}, {nameof(CreationTime)} = {CreationTime}, {nameof(CreationUserId)} = {CreationUserId}, {nameof(Instancestatusid)} = {Instancestatusid}, {nameof(Modeofissuanceid)} = {Modeofissuanceid}, {nameof(Instancetypeid)} = {Instancetypeid} }}";
 
-        public static Instance FromJObject(JObject jObject) => new Instance
+        public static Instance FromJObject(JObject jObject) => jObject != null ? new Instance
         {
             Id = (Guid?)jObject.SelectToken("id"),
             Content = jObject.ToString(),
@@ -83,7 +83,7 @@ namespace FolioLibrary
             Instancestatusid = (Guid?)jObject.SelectToken("statusId"),
             Modeofissuanceid = (Guid?)jObject.SelectToken("modeOfIssuanceId"),
             Instancetypeid = (Guid?)jObject.SelectToken("instanceTypeId")
-        };
+        } : null;
 
         public JObject ToJObject() => JObject.Parse(Content);
     }

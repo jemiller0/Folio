@@ -37,12 +37,12 @@ namespace FolioLibrary
 
         public override string ToString() => $"{{ {nameof(Id)} = {Id}, {nameof(Content)} = {Content}, {nameof(Jobexecutionid)} = {Jobexecutionid} }}";
 
-        public static JobExecutionSourceChunk FromJObject(JObject jObject) => new JobExecutionSourceChunk
+        public static JobExecutionSourceChunk FromJObject(JObject jObject) => jObject != null ? new JobExecutionSourceChunk
         {
             Id = (Guid?)jObject.SelectToken("id"),
             Content = jObject.ToString(),
             Jobexecutionid = (Guid?)jObject.SelectToken("jobExecutionId")
-        };
+        } : null;
 
         public JObject ToJObject() => JObject.Parse(Content);
     }

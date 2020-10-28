@@ -16,10 +16,10 @@ namespace FolioLibrary
 
         public override string ToString() => $"{{ {nameof(Id)} = {Id}, {nameof(Content)} = {Content} }}";
 
-        public static AuditLoan FromJObject(JObject jObject) => new AuditLoan
+        public static AuditLoan FromJObject(JValue jObject) => jObject != null ? new AuditLoan
         {
             Content = jObject.ToString()
-        };
+        } : null;
 
         public JObject ToJObject() => JObject.Parse(Content);
     }

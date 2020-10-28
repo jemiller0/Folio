@@ -34,11 +34,11 @@ namespace FolioLibrary
 
         public override string ToString() => $"{{ {nameof(Id)} = {Id}, {nameof(Content)} = {Content}, {nameof(Lock)} = {Lock} }}";
 
-        public static CirculationRule FromJObject(JObject jObject) => new CirculationRule
+        public static CirculationRule FromJObject(JObject jObject) => jObject != null ? new CirculationRule
         {
             Id = (Guid?)jObject.SelectToken("id"),
             Content = jObject.ToString()
-        };
+        } : null;
 
         public JObject ToJObject() => JObject.Parse(Content);
     }

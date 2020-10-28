@@ -49,7 +49,7 @@ namespace FolioLibrary
 
         public override string ToString() => $"{{ {nameof(Id)} = {Id}, {nameof(Content)} = {Content}, {nameof(CreationTime)} = {CreationTime}, {nameof(CreationUserId)} = {CreationUserId}, {nameof(Precedinginstanceid)} = {Precedinginstanceid}, {nameof(Succeedinginstanceid)} = {Succeedinginstanceid} }}";
 
-        public static PrecedingSucceedingTitle FromJObject(JObject jObject) => new PrecedingSucceedingTitle
+        public static PrecedingSucceedingTitle FromJObject(JObject jObject) => jObject != null ? new PrecedingSucceedingTitle
         {
             Id = (Guid?)jObject.SelectToken("id"),
             Content = jObject.ToString(),
@@ -57,7 +57,7 @@ namespace FolioLibrary
             CreationUserId = (string)jObject.SelectToken("metadata.createdByUserId"),
             Precedinginstanceid = (Guid?)jObject.SelectToken("precedingInstanceId"),
             Succeedinginstanceid = (Guid?)jObject.SelectToken("succeedingInstanceId")
-        };
+        } : null;
 
         public JObject ToJObject() => JObject.Parse(Content);
     }

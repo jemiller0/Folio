@@ -31,11 +31,11 @@ namespace FolioLibrary
 
         public override string ToString() => $"{{ {nameof(Id)} = {Id}, {nameof(Content)} = {Content} }}";
 
-        public static CustomField FromJObject(JObject jObject) => new CustomField
+        public static CustomField FromJObject(JObject jObject) => jObject != null ? new CustomField
         {
             Id = (Guid?)jObject.SelectToken("id"),
             Content = jObject.ToString()
-        };
+        } : null;
 
         public JObject ToJObject() => JObject.Parse(Content);
     }

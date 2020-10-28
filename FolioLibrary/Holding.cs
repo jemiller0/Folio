@@ -77,7 +77,7 @@ namespace FolioLibrary
 
         public override string ToString() => $"{{ {nameof(Id)} = {Id}, {nameof(Content)} = {Content}, {nameof(CreationTime)} = {CreationTime}, {nameof(CreationUserId)} = {CreationUserId}, {nameof(Instanceid)} = {Instanceid}, {nameof(Permanentlocationid)} = {Permanentlocationid}, {nameof(Temporarylocationid)} = {Temporarylocationid}, {nameof(Holdingstypeid)} = {Holdingstypeid}, {nameof(Callnumbertypeid)} = {Callnumbertypeid}, {nameof(Illpolicyid)} = {Illpolicyid} }}";
 
-        public static Holding FromJObject(JObject jObject) => new Holding
+        public static Holding FromJObject(JObject jObject) => jObject != null ? new Holding
         {
             Id = (Guid?)jObject.SelectToken("id"),
             Content = jObject.ToString(),
@@ -89,7 +89,7 @@ namespace FolioLibrary
             Holdingstypeid = (Guid?)jObject.SelectToken("holdingsTypeId"),
             Callnumbertypeid = (Guid?)jObject.SelectToken("callNumberTypeId"),
             Illpolicyid = (Guid?)jObject.SelectToken("illPolicyId")
-        };
+        } : null;
 
         public JObject ToJObject() => JObject.Parse(Content);
     }

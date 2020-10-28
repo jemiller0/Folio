@@ -22,10 +22,10 @@ namespace FolioLibrary
 
         public override string ToString() => $"{{ {nameof(Id)} = {Id}, {nameof(Content)} = {Content}, {nameof(Jobexecutionid)} = {Jobexecutionid} }}";
 
-        public static JobExecutionProgress FromJObject(JObject jObject) => new JobExecutionProgress
+        public static JobExecutionProgress FromJObject(JValue jObject) => jObject != null ? new JobExecutionProgress
         {
             Content = jObject.ToString()
-        };
+        } : null;
 
         public JObject ToJObject() => JObject.Parse(Content);
     }

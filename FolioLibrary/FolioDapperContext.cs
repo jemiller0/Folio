@@ -54,140 +54,453 @@ namespace FolioLibrary
             }
         }
 
-        public AcquisitionsUnit FindAcquisitionsUnit(Guid? id) => Query<AcquisitionsUnit>($"SELECT id AS \"Id\", jsonb AS \"Content\", creation_date AS \"CreationTime\", created_by AS \"CreationUserId\" FROM diku_mod_orders_storage{(IsMySql ? "_" : ".")}acquisitions_unit WHERE id = @id", new { id }).SingleOrDefault();
-        public AddressType FindAddressType(Guid? id) => Query<AddressType>($"SELECT id AS \"Id\", jsonb AS \"Content\", creation_date AS \"CreationTime\", created_by AS \"CreationUserId\" FROM diku_mod_users{(IsMySql ? "_" : ".")}addresstype WHERE id = @id", new { id }).SingleOrDefault();
-        public Alert FindAlert(Guid? id) => Query<Alert>($"SELECT id AS \"Id\", jsonb AS \"Content\", creation_date AS \"CreationTime\", created_by AS \"CreationUserId\" FROM diku_mod_orders_storage{(IsMySql ? "_" : ".")}alert WHERE id = @id", new { id }).SingleOrDefault();
-        public AlternativeTitleType FindAlternativeTitleType(Guid? id) => Query<AlternativeTitleType>($"SELECT id AS \"Id\", jsonb AS \"Content\", creation_date AS \"CreationTime\", created_by AS \"CreationUserId\" FROM diku_mod_inventory_storage{(IsMySql ? "_" : ".")}alternative_title_type WHERE id = @id", new { id }).SingleOrDefault();
-        public AuditLoan FindAuditLoan(Guid? id) => Query<AuditLoan>($"SELECT id AS \"Id\", jsonb AS \"Content\" FROM diku_mod_circulation_storage{(IsMySql ? "_" : ".")}audit_loan WHERE id = @id", new { id }).SingleOrDefault();
-        public AuthAttempt FindAuthAttempt(Guid? id) => Query<AuthAttempt>($"SELECT id AS \"Id\", jsonb AS \"Content\", creation_date AS \"CreationTime\", created_by AS \"CreationUserId\" FROM diku_mod_login{(IsMySql ? "_" : ".")}auth_attempts WHERE id = @id", new { id }).SingleOrDefault();
-        public AuthCredentialsHistory FindAuthCredentialsHistory(Guid? id) => Query<AuthCredentialsHistory>($"SELECT id AS \"Id\", jsonb AS \"Content\", creation_date AS \"CreationTime\", created_by AS \"CreationUserId\" FROM diku_mod_login{(IsMySql ? "_" : ".")}auth_credentials_history WHERE id = @id", new { id }).SingleOrDefault();
-        public AuthPasswordAction FindAuthPasswordAction(Guid? id) => Query<AuthPasswordAction>($"SELECT id AS \"Id\", jsonb AS \"Content\", creation_date AS \"CreationTime\", created_by AS \"CreationUserId\" FROM diku_mod_login{(IsMySql ? "_" : ".")}auth_password_action WHERE id = @id", new { id }).SingleOrDefault();
-        public BatchGroup FindBatchGroup(Guid? id) => Query<BatchGroup>($"SELECT id AS \"Id\", jsonb AS \"Content\", creation_date AS \"CreationTime\", created_by AS \"CreationUserId\" FROM diku_mod_invoice_storage{(IsMySql ? "_" : ".")}batch_groups WHERE id = @id", new { id }).SingleOrDefault();
-        public BatchVoucher FindBatchVoucher(Guid? id) => Query<BatchVoucher>($"SELECT id AS \"Id\", jsonb AS \"Content\" FROM diku_mod_invoice_storage{(IsMySql ? "_" : ".")}batch_vouchers WHERE id = @id", new { id }).SingleOrDefault();
-        public BatchVoucherExport FindBatchVoucherExport(Guid? id) => Query<BatchVoucherExport>($"SELECT id AS \"Id\", jsonb AS \"Content\", creation_date AS \"CreationTime\", created_by AS \"CreationUserId\", batchgroupid AS \"Batchgroupid\", batchvoucherid AS \"Batchvoucherid\" FROM diku_mod_invoice_storage{(IsMySql ? "_" : ".")}batch_voucher_exports WHERE id = @id", new { id }).SingleOrDefault();
-        public BatchVoucherExportConfig FindBatchVoucherExportConfig(Guid? id) => Query<BatchVoucherExportConfig>($"SELECT id AS \"Id\", jsonb AS \"Content\", creation_date AS \"CreationTime\", created_by AS \"CreationUserId\", batchgroupid AS \"Batchgroupid\" FROM diku_mod_invoice_storage{(IsMySql ? "_" : ".")}batch_voucher_export_configs WHERE id = @id", new { id }).SingleOrDefault();
-        public Block FindBlock(Guid? id) => Query<Block>($"SELECT id AS \"Id\", jsonb AS \"Content\", creation_date AS \"CreationTime\", created_by AS \"CreationUserId\" FROM diku_mod_feesfines{(IsMySql ? "_" : ".")}manualblocks WHERE id = @id", new { id }).SingleOrDefault();
-        public BlockCondition FindBlockCondition(Guid? id) => Query<BlockCondition>($"SELECT id AS \"Id\", jsonb AS \"Content\", creation_date AS \"CreationTime\", created_by AS \"CreationUserId\" FROM diku_mod_patron_blocks{(IsMySql ? "_" : ".")}patron_block_conditions WHERE id = @id", new { id }).SingleOrDefault();
-        public BlockLimit FindBlockLimit(Guid? id) => Query<BlockLimit>($"SELECT id AS \"Id\", jsonb AS \"Content\", creation_date AS \"CreationTime\", created_by AS \"CreationUserId\", conditionid AS \"Conditionid\" FROM diku_mod_patron_blocks{(IsMySql ? "_" : ".")}patron_block_limits WHERE id = @id", new { id }).SingleOrDefault();
-        public Budget FindBudget(Guid? id) => Query<Budget>($"SELECT id AS \"Id\", jsonb AS \"Content\", creation_date AS \"CreationTime\", created_by AS \"CreationUserId\", fundid AS \"FundId\", fiscalyearid AS \"FiscalYearId\" FROM diku_mod_finance_storage{(IsMySql ? "_" : ".")}budget WHERE id = @id", new { id }).SingleOrDefault();
-        public CallNumberType FindCallNumberType(Guid? id) => Query<CallNumberType>($"SELECT id AS \"Id\", jsonb AS \"Content\", creation_date AS \"CreationTime\", created_by AS \"CreationUserId\" FROM diku_mod_inventory_storage{(IsMySql ? "_" : ".")}call_number_type WHERE id = @id", new { id }).SingleOrDefault();
-        public Campus FindCampus(Guid? id) => Query<Campus>($"SELECT id AS \"Id\", jsonb AS \"Content\", creation_date AS \"CreationTime\", created_by AS \"CreationUserId\", institutionid AS \"Institutionid\" FROM diku_mod_inventory_storage{(IsMySql ? "_" : ".")}loccampus WHERE id = @id", new { id }).SingleOrDefault();
-        public CancellationReason FindCancellationReason(Guid? id) => Query<CancellationReason>($"SELECT id AS \"Id\", jsonb AS \"Content\", creation_date AS \"CreationTime\", created_by AS \"CreationUserId\" FROM diku_mod_circulation_storage{(IsMySql ? "_" : ".")}cancellation_reason WHERE id = @id", new { id }).SingleOrDefault();
-        public Category FindCategory(Guid? id) => Query<Category>($"SELECT id AS \"Id\", jsonb AS \"Content\", creation_date AS \"CreationTime\", created_by AS \"CreationUserId\" FROM diku_mod_organizations_storage{(IsMySql ? "_" : ".")}categories WHERE id = @id", new { id }).SingleOrDefault();
-        public CheckIn FindCheckIn(Guid? id) => Query<CheckIn>($"SELECT id AS \"Id\", jsonb AS \"Content\", creation_date AS \"CreationTime\", created_by AS \"CreationUserId\" FROM diku_mod_circulation_storage{(IsMySql ? "_" : ".")}check_in WHERE id = @id", new { id }).SingleOrDefault();
-        public CirculationRule FindCirculationRule(Guid? id) => Query<CirculationRule>($"SELECT id AS \"Id\", jsonb AS \"Content\", lock AS \"Lock\" FROM diku_mod_circulation_storage{(IsMySql ? "_" : ".")}circulation_rules WHERE id = @id", new { id }).SingleOrDefault();
-        public ClassificationType FindClassificationType(Guid? id) => Query<ClassificationType>($"SELECT id AS \"Id\", jsonb AS \"Content\", creation_date AS \"CreationTime\", created_by AS \"CreationUserId\" FROM diku_mod_inventory_storage{(IsMySql ? "_" : ".")}classification_type WHERE id = @id", new { id }).SingleOrDefault();
-        public CloseReason FindCloseReason(Guid? id) => Query<CloseReason>($"SELECT id AS \"Id\", jsonb AS \"Content\" FROM diku_mod_orders_storage{(IsMySql ? "_" : ".")}reasons_for_closure WHERE id = @id", new { id }).SingleOrDefault();
-        public Comment FindComment(Guid? id) => Query<Comment>($"SELECT id AS \"Id\", jsonb AS \"Content\", creation_date AS \"CreationTime\", created_by AS \"CreationUserId\" FROM diku_mod_feesfines{(IsMySql ? "_" : ".")}comments WHERE id = @id", new { id }).SingleOrDefault();
-        public Configuration FindConfiguration(Guid? id) => Query<Configuration>($"SELECT id AS \"Id\", jsonb AS \"Content\", creation_date AS \"CreationTime\", created_by AS \"CreationUserId\" FROM diku_mod_configuration{(IsMySql ? "_" : ".")}config_data WHERE id = @id", new { id }).SingleOrDefault();
-        public Contact FindContact(Guid? id) => Query<Contact>($"SELECT id AS \"Id\", jsonb AS \"Content\", creation_date AS \"CreationTime\", created_by AS \"CreationUserId\" FROM diku_mod_organizations_storage{(IsMySql ? "_" : ".")}contacts WHERE id = @id", new { id }).SingleOrDefault();
-        public ContributorNameType FindContributorNameType(Guid? id) => Query<ContributorNameType>($"SELECT id AS \"Id\", jsonb AS \"Content\", creation_date AS \"CreationTime\", created_by AS \"CreationUserId\" FROM diku_mod_inventory_storage{(IsMySql ? "_" : ".")}contributor_name_type WHERE id = @id", new { id }).SingleOrDefault();
-        public ContributorType FindContributorType(Guid? id) => Query<ContributorType>($"SELECT id AS \"Id\", jsonb AS \"Content\" FROM diku_mod_inventory_storage{(IsMySql ? "_" : ".")}contributor_type WHERE id = @id", new { id }).SingleOrDefault();
-        public CustomField FindCustomField(Guid? id) => Query<CustomField>($"SELECT id AS \"Id\", jsonb AS \"Content\" FROM diku_mod_users{(IsMySql ? "_" : ".")}custom_fields WHERE id = @id", new { id }).SingleOrDefault();
-        public Document FindDocument(Guid? id) => Query<Document>($"SELECT id AS \"Id\", jsonb AS \"Content\", creation_date AS \"CreationTime\", created_by AS \"CreationUserId\", invoiceid AS \"Invoiceid\", document_data AS \"DocumentData\" FROM diku_mod_invoice_storage{(IsMySql ? "_" : ".")}documents WHERE id = @id", new { id }).SingleOrDefault();
-        public ElectronicAccessRelationship FindElectronicAccessRelationship(Guid? id) => Query<ElectronicAccessRelationship>($"SELECT id AS \"Id\", jsonb AS \"Content\", creation_date AS \"CreationTime\", created_by AS \"CreationUserId\" FROM diku_mod_inventory_storage{(IsMySql ? "_" : ".")}electronic_access_relationship WHERE id = @id", new { id }).SingleOrDefault();
-        public ErrorRecord FindErrorRecord(Guid? id) => Query<ErrorRecord>($"SELECT id AS \"Id\", content AS \"Content\", description AS \"Description\" FROM diku_mod_source_record_storage{(IsMySql ? "_" : ".")}error_records_lb WHERE id = @id", new { id }).SingleOrDefault();
-        public EventLog FindEventLog(Guid? id) => Query<EventLog>($"SELECT id AS \"Id\", jsonb AS \"Content\", creation_date AS \"CreationTime\", created_by AS \"CreationUserId\" FROM diku_mod_login{(IsMySql ? "_" : ".")}event_logs WHERE id = @id", new { id }).SingleOrDefault();
-        public ExportConfigCredential FindExportConfigCredential(Guid? id) => Query<ExportConfigCredential>($"SELECT id AS \"Id\", jsonb AS \"Content\", creation_date AS \"CreationTime\", created_by AS \"CreationUserId\", exportconfigid AS \"Exportconfigid\" FROM diku_mod_invoice_storage{(IsMySql ? "_" : ".")}export_config_credentials WHERE id = @id", new { id }).SingleOrDefault();
-        public Fee FindFee(Guid? id) => Query<Fee>($"SELECT id AS \"Id\", jsonb AS \"Content\", creation_date AS \"CreationTime\", created_by AS \"CreationUserId\" FROM diku_mod_feesfines{(IsMySql ? "_" : ".")}accounts WHERE id = @id", new { id }).SingleOrDefault();
-        public FeeType FindFeeType(Guid? id) => Query<FeeType>($"SELECT id AS \"Id\", jsonb AS \"Content\", creation_date AS \"CreationTime\", created_by AS \"CreationUserId\", ownerid AS \"Ownerid\" FROM diku_mod_feesfines{(IsMySql ? "_" : ".")}feefines WHERE id = @id", new { id }).SingleOrDefault();
-        public FinanceGroup FindFinanceGroup(Guid? id) => Query<FinanceGroup>($"SELECT id AS \"Id\", jsonb AS \"Content\", creation_date AS \"CreationTime\", created_by AS \"CreationUserId\" FROM diku_mod_finance_storage{(IsMySql ? "_" : ".")}groups WHERE id = @id", new { id }).SingleOrDefault();
-        public FiscalYear FindFiscalYear(Guid? id) => Query<FiscalYear>($"SELECT id AS \"Id\", jsonb AS \"Content\", creation_date AS \"CreationTime\", created_by AS \"CreationUserId\" FROM diku_mod_finance_storage{(IsMySql ? "_" : ".")}fiscal_year WHERE id = @id", new { id }).SingleOrDefault();
-        public FixedDueDateSchedule FindFixedDueDateSchedule(Guid? id) => Query<FixedDueDateSchedule>($"SELECT id AS \"Id\", jsonb AS \"Content\" FROM diku_mod_circulation_storage{(IsMySql ? "_" : ".")}fixed_due_date_schedule WHERE id = @id", new { id }).SingleOrDefault();
-        public Fund FindFund(Guid? id) => Query<Fund>($"SELECT id AS \"Id\", jsonb AS \"Content\", creation_date AS \"CreationTime\", created_by AS \"CreationUserId\", ledgerid AS \"LedgerId\", fundtypeid AS \"Fundtypeid\" FROM diku_mod_finance_storage{(IsMySql ? "_" : ".")}fund WHERE id = @id", new { id }).SingleOrDefault();
-        public FundType FindFundType(Guid? id) => Query<FundType>($"SELECT id AS \"Id\", jsonb AS \"Content\" FROM diku_mod_finance_storage{(IsMySql ? "_" : ".")}fund_type WHERE id = @id", new { id }).SingleOrDefault();
-        public Group FindGroup(Guid? id) => Query<Group>($"SELECT id AS \"Id\", jsonb AS \"Content\", creation_date AS \"CreationTime\", created_by AS \"CreationUserId\" FROM diku_mod_users{(IsMySql ? "_" : ".")}groups WHERE id = @id", new { id }).SingleOrDefault();
-        public GroupFundFiscalYear FindGroupFundFiscalYear(Guid? id) => Query<GroupFundFiscalYear>($"SELECT id AS \"Id\", jsonb AS \"Content\", budgetid AS \"Budgetid\", groupid AS \"Groupid\", fundid AS \"Fundid\", fiscalyearid AS \"Fiscalyearid\" FROM diku_mod_finance_storage{(IsMySql ? "_" : ".")}group_fund_fiscal_year WHERE id = @id", new { id }).SingleOrDefault();
-        public Holding FindHolding(Guid? id) => Query<Holding>($"SELECT id AS \"Id\", jsonb AS \"Content\", creation_date AS \"CreationTime\", created_by AS \"CreationUserId\", instanceid AS \"Instanceid\", permanentlocationid AS \"Permanentlocationid\", temporarylocationid AS \"Temporarylocationid\", holdingstypeid AS \"Holdingstypeid\", callnumbertypeid AS \"Callnumbertypeid\", illpolicyid AS \"Illpolicyid\" FROM diku_mod_inventory_storage{(IsMySql ? "_" : ".")}holdings_record WHERE id = @id", new { id }).SingleOrDefault();
-        public HoldingNoteType FindHoldingNoteType(Guid? id) => Query<HoldingNoteType>($"SELECT id AS \"Id\", jsonb AS \"Content\", creation_date AS \"CreationTime\", created_by AS \"CreationUserId\" FROM diku_mod_inventory_storage{(IsMySql ? "_" : ".")}holdings_note_type WHERE id = @id", new { id }).SingleOrDefault();
-        public HoldingType FindHoldingType(Guid? id) => Query<HoldingType>($"SELECT id AS \"Id\", jsonb AS \"Content\", creation_date AS \"CreationTime\", created_by AS \"CreationUserId\" FROM diku_mod_inventory_storage{(IsMySql ? "_" : ".")}holdings_type WHERE id = @id", new { id }).SingleOrDefault();
-        public HridSetting FindHridSetting(Guid? id) => Query<HridSetting>($"SELECT id AS \"Id\", jsonb AS \"Content\", lock AS \"Lock\" FROM diku_mod_inventory_storage{(IsMySql ? "_" : ".")}hrid_settings WHERE id = @id", new { id }).SingleOrDefault();
-        public IdType FindIdType(Guid? id) => Query<IdType>($"SELECT id AS \"Id\", jsonb AS \"Content\", creation_date AS \"CreationTime\", created_by AS \"CreationUserId\" FROM diku_mod_inventory_storage{(IsMySql ? "_" : ".")}identifier_type WHERE id = @id", new { id }).SingleOrDefault();
-        public IllPolicy FindIllPolicy(Guid? id) => Query<IllPolicy>($"SELECT id AS \"Id\", jsonb AS \"Content\", creation_date AS \"CreationTime\", created_by AS \"CreationUserId\" FROM diku_mod_inventory_storage{(IsMySql ? "_" : ".")}ill_policy WHERE id = @id", new { id }).SingleOrDefault();
-        public Instance FindInstance(Guid? id) => Query<Instance>($"SELECT id AS \"Id\", jsonb AS \"Content\", creation_date AS \"CreationTime\", created_by AS \"CreationUserId\", instancestatusid AS \"Instancestatusid\", modeofissuanceid AS \"Modeofissuanceid\", instancetypeid AS \"Instancetypeid\" FROM diku_mod_inventory_storage{(IsMySql ? "_" : ".")}instance WHERE id = @id", new { id }).SingleOrDefault();
-        public InstanceFormat FindInstanceFormat(Guid? id) => Query<InstanceFormat>($"SELECT id AS \"Id\", jsonb AS \"Content\" FROM diku_mod_inventory_storage{(IsMySql ? "_" : ".")}instance_format WHERE id = @id", new { id }).SingleOrDefault();
-        public InstanceNoteType FindInstanceNoteType(Guid? id) => Query<InstanceNoteType>($"SELECT id AS \"Id\", jsonb AS \"Content\", creation_date AS \"CreationTime\", created_by AS \"CreationUserId\" FROM diku_mod_inventory_storage{(IsMySql ? "_" : ".")}instance_note_type WHERE id = @id", new { id }).SingleOrDefault();
-        public InstanceRelationship FindInstanceRelationship(Guid? id) => Query<InstanceRelationship>($"SELECT id AS \"Id\", jsonb AS \"Content\", creation_date AS \"CreationTime\", created_by AS \"CreationUserId\", superinstanceid AS \"Superinstanceid\", subinstanceid AS \"Subinstanceid\", instancerelationshiptypeid AS \"Instancerelationshiptypeid\" FROM diku_mod_inventory_storage{(IsMySql ? "_" : ".")}instance_relationship WHERE id = @id", new { id }).SingleOrDefault();
-        public InstanceRelationshipType FindInstanceRelationshipType(Guid? id) => Query<InstanceRelationshipType>($"SELECT id AS \"Id\", jsonb AS \"Content\", creation_date AS \"CreationTime\", created_by AS \"CreationUserId\" FROM diku_mod_inventory_storage{(IsMySql ? "_" : ".")}instance_relationship_type WHERE id = @id", new { id }).SingleOrDefault();
-        public InstanceSourceMarc FindInstanceSourceMarc(Guid? id) => Query<InstanceSourceMarc>($"SELECT id AS \"Id\", jsonb AS \"Content\", creation_date AS \"CreationTime\", created_by AS \"CreationUserId\" FROM diku_mod_inventory_storage{(IsMySql ? "_" : ".")}instance_source_marc WHERE id = @id", new { id }).SingleOrDefault();
-        public InstanceStatus FindInstanceStatus(Guid? id) => Query<InstanceStatus>($"SELECT id AS \"Id\", jsonb AS \"Content\", creation_date AS \"CreationTime\", created_by AS \"CreationUserId\" FROM diku_mod_inventory_storage{(IsMySql ? "_" : ".")}instance_status WHERE id = @id", new { id }).SingleOrDefault();
-        public InstanceType FindInstanceType(Guid? id) => Query<InstanceType>($"SELECT id AS \"Id\", jsonb AS \"Content\" FROM diku_mod_inventory_storage{(IsMySql ? "_" : ".")}instance_type WHERE id = @id", new { id }).SingleOrDefault();
-        public Institution FindInstitution(Guid? id) => Query<Institution>($"SELECT id AS \"Id\", jsonb AS \"Content\", creation_date AS \"CreationTime\", created_by AS \"CreationUserId\" FROM diku_mod_inventory_storage{(IsMySql ? "_" : ".")}locinstitution WHERE id = @id", new { id }).SingleOrDefault();
-        public Interface FindInterface(Guid? id) => Query<Interface>($"SELECT id AS \"Id\", jsonb AS \"Content\", creation_date AS \"CreationTime\", created_by AS \"CreationUserId\" FROM diku_mod_organizations_storage{(IsMySql ? "_" : ".")}interfaces WHERE id = @id", new { id }).SingleOrDefault();
-        public InterfaceCredential FindInterfaceCredential(Guid? id) => Query<InterfaceCredential>($"SELECT id AS \"Id\", jsonb AS \"Content\", interfaceid AS \"Interfaceid\" FROM diku_mod_organizations_storage{(IsMySql ? "_" : ".")}interface_credentials WHERE id = @id", new { id }).SingleOrDefault();
-        public Invoice FindInvoice(Guid? id) => Query<Invoice>($"SELECT id AS \"Id\", jsonb AS \"Content\", creation_date AS \"CreationTime\", created_by AS \"CreationUserId\", batchgroupid AS \"Batchgroupid\" FROM diku_mod_invoice_storage{(IsMySql ? "_" : ".")}invoices WHERE id = @id", new { id }).SingleOrDefault();
-        public InvoiceItem FindInvoiceItem(Guid? id) => Query<InvoiceItem>($"SELECT id AS \"Id\", jsonb AS \"Content\", creation_date AS \"CreationTime\", created_by AS \"CreationUserId\", invoiceid AS \"Invoiceid\" FROM diku_mod_invoice_storage{(IsMySql ? "_" : ".")}invoice_lines WHERE id = @id", new { id }).SingleOrDefault();
-        public InvoiceTransactionSummary FindInvoiceTransactionSummary(Guid? id) => Query<InvoiceTransactionSummary>($"SELECT id AS \"Id\", jsonb AS \"Content\" FROM diku_mod_finance_storage{(IsMySql ? "_" : ".")}invoice_transaction_summaries WHERE id = @id", new { id }).SingleOrDefault();
-        public Item FindItem(Guid? id) => Query<Item>($"SELECT id AS \"Id\", jsonb AS \"Content\", creation_date AS \"CreationTime\", created_by AS \"CreationUserId\", holdingsrecordid AS \"Holdingsrecordid\", permanentloantypeid AS \"Permanentloantypeid\", temporaryloantypeid AS \"Temporaryloantypeid\", materialtypeid AS \"Materialtypeid\", permanentlocationid AS \"Permanentlocationid\", temporarylocationid AS \"Temporarylocationid\", effectivelocationid AS \"Effectivelocationid\" FROM diku_mod_inventory_storage{(IsMySql ? "_" : ".")}item WHERE id = @id", new { id }).SingleOrDefault();
-        public ItemDamagedStatus FindItemDamagedStatus(Guid? id) => Query<ItemDamagedStatus>($"SELECT id AS \"Id\", jsonb AS \"Content\", creation_date AS \"CreationTime\", created_by AS \"CreationUserId\" FROM diku_mod_inventory_storage{(IsMySql ? "_" : ".")}item_damaged_status WHERE id = @id", new { id }).SingleOrDefault();
-        public ItemNoteType FindItemNoteType(Guid? id) => Query<ItemNoteType>($"SELECT id AS \"Id\", jsonb AS \"Content\", creation_date AS \"CreationTime\", created_by AS \"CreationUserId\" FROM diku_mod_inventory_storage{(IsMySql ? "_" : ".")}item_note_type WHERE id = @id", new { id }).SingleOrDefault();
-        public JobExecution FindJobExecution(Guid? id) => Query<JobExecution>($"SELECT id AS \"Id\", jsonb AS \"Content\" FROM diku_mod_source_record_manager{(IsMySql ? "_" : ".")}job_executions WHERE id = @id", new { id }).SingleOrDefault();
-        public JobExecutionProgress FindJobExecutionProgress(Guid? id) => Query<JobExecutionProgress>($"SELECT id AS \"Id\", jsonb AS \"Content\", jobexecutionid AS \"Jobexecutionid\" FROM diku_mod_source_record_manager{(IsMySql ? "_" : ".")}job_execution_progress WHERE id = @id", new { id }).SingleOrDefault();
-        public JobExecutionSourceChunk FindJobExecutionSourceChunk(Guid? id) => Query<JobExecutionSourceChunk>($"SELECT id AS \"Id\", jsonb AS \"Content\", jobexecutionid AS \"Jobexecutionid\" FROM diku_mod_source_record_manager{(IsMySql ? "_" : ".")}job_execution_source_chunks WHERE id = @id", new { id }).SingleOrDefault();
-        public JournalRecord FindJournalRecord(Guid? id) => Query<JournalRecord>($"SELECT id AS \"Id\", job_execution_id AS \"JobExecutionId\", source_id AS \"SourceId\", entity_type AS \"EntityType\", entity_id AS \"EntityId\", entity_hrid AS \"EntityHrid\", action_type AS \"ActionType\", action_status AS \"ActionStatus\", action_date AS \"ActionDate\", source_record_order AS \"SourceRecordOrder\", error AS \"Error\" FROM diku_mod_source_record_manager{(IsMySql ? "_" : ".")}journal_records WHERE id = @id", new { id }).SingleOrDefault();
-        public Ledger FindLedger(Guid? id) => Query<Ledger>($"SELECT id AS \"Id\", jsonb AS \"Content\", creation_date AS \"CreationTime\", created_by AS \"CreationUserId\", fiscalyearoneid AS \"Fiscalyearoneid\" FROM diku_mod_finance_storage{(IsMySql ? "_" : ".")}ledger WHERE id = @id", new { id }).SingleOrDefault();
-        public LedgerFiscalYear FindLedgerFiscalYear(Guid? id) => Query<LedgerFiscalYear>($"SELECT id AS \"Id\", jsonb AS \"Content\", ledgerid AS \"Ledgerid\", fiscalyearid AS \"Fiscalyearid\" FROM diku_mod_finance_storage{(IsMySql ? "_" : ".")}ledgerfy WHERE id = @id", new { id }).SingleOrDefault();
-        public Library FindLibrary(Guid? id) => Query<Library>($"SELECT id AS \"Id\", jsonb AS \"Content\", creation_date AS \"CreationTime\", created_by AS \"CreationUserId\", campusid AS \"Campusid\" FROM diku_mod_inventory_storage{(IsMySql ? "_" : ".")}loclibrary WHERE id = @id", new { id }).SingleOrDefault();
-        public Loan FindLoan(Guid? id) => Query<Loan>($"SELECT id AS \"Id\", jsonb AS \"Content\", creation_date AS \"CreationTime\", created_by AS \"CreationUserId\" FROM diku_mod_circulation_storage{(IsMySql ? "_" : ".")}loan WHERE id = @id", new { id }).SingleOrDefault();
-        public LoanPolicy FindLoanPolicy(Guid? id) => Query<LoanPolicy>($"SELECT id AS \"Id\", jsonb AS \"Content\", creation_date AS \"CreationTime\", created_by AS \"CreationUserId\", loanspolicy_fixedduedatescheduleid AS \"LoanspolicyFixedduedatescheduleid\", renewalspolicy_alternatefixedduedatescheduleid AS \"RenewalspolicyAlternatefixedduedatescheduleid\" FROM diku_mod_circulation_storage{(IsMySql ? "_" : ".")}loan_policy WHERE id = @id", new { id }).SingleOrDefault();
-        public LoanType FindLoanType(Guid? id) => Query<LoanType>($"SELECT id AS \"Id\", jsonb AS \"Content\", creation_date AS \"CreationTime\", created_by AS \"CreationUserId\" FROM diku_mod_inventory_storage{(IsMySql ? "_" : ".")}loan_type WHERE id = @id", new { id }).SingleOrDefault();
-        public Location FindLocation(Guid? id) => Query<Location>($"SELECT id AS \"Id\", jsonb AS \"Content\", creation_date AS \"CreationTime\", created_by AS \"CreationUserId\", institutionid AS \"Institutionid\", campusid AS \"Campusid\", libraryid AS \"Libraryid\" FROM diku_mod_inventory_storage{(IsMySql ? "_" : ".")}location WHERE id = @id", new { id }).SingleOrDefault();
-        public Login FindLogin(Guid? id) => Query<Login>($"SELECT id AS \"Id\", jsonb AS \"Content\", creation_date AS \"CreationTime\", created_by AS \"CreationUserId\" FROM diku_mod_login{(IsMySql ? "_" : ".")}auth_credentials WHERE id = @id", new { id }).SingleOrDefault();
-        public LostItemFeePolicy FindLostItemFeePolicy(Guid? id) => Query<LostItemFeePolicy>($"SELECT id AS \"Id\", jsonb AS \"Content\", creation_date AS \"CreationTime\", created_by AS \"CreationUserId\" FROM diku_mod_feesfines{(IsMySql ? "_" : ".")}lost_item_fee_policy WHERE id = @id", new { id }).SingleOrDefault();
-        public MappingRule FindMappingRule(Guid? id) => Query<MappingRule>($"SELECT id AS \"Id\", jsonb AS \"Content\" FROM diku_mod_source_record_manager{(IsMySql ? "_" : ".")}mapping_rules WHERE id = @id", new { id }).SingleOrDefault();
-        public MarcRecord FindMarcRecord(Guid? id) => Query<MarcRecord>($"SELECT id AS \"Id\", content AS \"Content\" FROM diku_mod_source_record_storage{(IsMySql ? "_" : ".")}marc_records_lb WHERE id = @id", new { id }).SingleOrDefault();
-        public MaterialType FindMaterialType(Guid? id) => Query<MaterialType>($"SELECT id AS \"Id\", jsonb AS \"Content\", creation_date AS \"CreationTime\", created_by AS \"CreationUserId\" FROM diku_mod_inventory_storage{(IsMySql ? "_" : ".")}material_type WHERE id = @id", new { id }).SingleOrDefault();
-        public ModeOfIssuance FindModeOfIssuance(Guid? id) => Query<ModeOfIssuance>($"SELECT id AS \"Id\", jsonb AS \"Content\", creation_date AS \"CreationTime\", created_by AS \"CreationUserId\" FROM diku_mod_inventory_storage{(IsMySql ? "_" : ".")}mode_of_issuance WHERE id = @id", new { id }).SingleOrDefault();
-        public NatureOfContentTerm FindNatureOfContentTerm(Guid? id) => Query<NatureOfContentTerm>($"SELECT id AS \"Id\", jsonb AS \"Content\", creation_date AS \"CreationTime\", created_by AS \"CreationUserId\" FROM diku_mod_inventory_storage{(IsMySql ? "_" : ".")}nature_of_content_term WHERE id = @id", new { id }).SingleOrDefault();
-        public Note FindNote(Guid? id) => Query<Note>($"SELECT id AS \"Id\", jsonb AS \"Content\", temporary_type_id AS \"TemporaryTypeId\" FROM diku_mod_notes{(IsMySql ? "_" : ".")}note_data WHERE id = @id", new { id }).SingleOrDefault();
-        public NoteType FindNoteType(Guid? id) => Query<NoteType>($"SELECT id AS \"Id\", jsonb AS \"Content\" FROM diku_mod_notes{(IsMySql ? "_" : ".")}note_type WHERE id = @id", new { id }).SingleOrDefault();
-        public Order FindOrder(Guid? id) => Query<Order>($"SELECT id AS \"Id\", jsonb AS \"Content\", creation_date AS \"CreationTime\", created_by AS \"CreationUserId\" FROM diku_mod_orders_storage{(IsMySql ? "_" : ".")}purchase_order WHERE id = @id", new { id }).SingleOrDefault();
-        public OrderInvoice FindOrderInvoice(Guid? id) => Query<OrderInvoice>($"SELECT id AS \"Id\", jsonb AS \"Content\", purchaseorderid AS \"Purchaseorderid\" FROM diku_mod_orders_storage{(IsMySql ? "_" : ".")}order_invoice_relationship WHERE id = @id", new { id }).SingleOrDefault();
-        public OrderItem FindOrderItem(Guid? id) => Query<OrderItem>($"SELECT id AS \"Id\", jsonb AS \"Content\", creation_date AS \"CreationTime\", created_by AS \"CreationUserId\", purchaseorderid AS \"Purchaseorderid\" FROM diku_mod_orders_storage{(IsMySql ? "_" : ".")}po_line WHERE id = @id", new { id }).SingleOrDefault();
-        public OrderTemplate FindOrderTemplate(Guid? id) => Query<OrderTemplate>($"SELECT id AS \"Id\", jsonb AS \"Content\" FROM diku_mod_orders_storage{(IsMySql ? "_" : ".")}order_templates WHERE id = @id", new { id }).SingleOrDefault();
-        public OrderTransactionSummary FindOrderTransactionSummary(Guid? id) => Query<OrderTransactionSummary>($"SELECT id AS \"Id\", jsonb AS \"Content\" FROM diku_mod_finance_storage{(IsMySql ? "_" : ".")}order_transaction_summaries WHERE id = @id", new { id }).SingleOrDefault();
-        public Organization FindOrganization(Guid? id) => Query<Organization>($"SELECT id AS \"Id\", jsonb AS \"Content\", creation_date AS \"CreationTime\", created_by AS \"CreationUserId\" FROM diku_mod_organizations_storage{(IsMySql ? "_" : ".")}organizations WHERE id = @id", new { id }).SingleOrDefault();
-        public OverdueFinePolicy FindOverdueFinePolicy(Guid? id) => Query<OverdueFinePolicy>($"SELECT id AS \"Id\", jsonb AS \"Content\", creation_date AS \"CreationTime\", created_by AS \"CreationUserId\" FROM diku_mod_feesfines{(IsMySql ? "_" : ".")}overdue_fine_policy WHERE id = @id", new { id }).SingleOrDefault();
-        public Owner FindOwner(Guid? id) => Query<Owner>($"SELECT id AS \"Id\", jsonb AS \"Content\", creation_date AS \"CreationTime\", created_by AS \"CreationUserId\" FROM diku_mod_feesfines{(IsMySql ? "_" : ".")}owners WHERE id = @id", new { id }).SingleOrDefault();
-        public PatronActionSession FindPatronActionSession(Guid? id) => Query<PatronActionSession>($"SELECT id AS \"Id\", jsonb AS \"Content\", creation_date AS \"CreationTime\", created_by AS \"CreationUserId\" FROM diku_mod_circulation_storage{(IsMySql ? "_" : ".")}patron_action_session WHERE id = @id", new { id }).SingleOrDefault();
-        public PatronNoticePolicy FindPatronNoticePolicy(Guid? id) => Query<PatronNoticePolicy>($"SELECT id AS \"Id\", jsonb AS \"Content\", creation_date AS \"CreationTime\", created_by AS \"CreationUserId\" FROM diku_mod_circulation_storage{(IsMySql ? "_" : ".")}patron_notice_policy WHERE id = @id", new { id }).SingleOrDefault();
-        public Payment FindPayment(Guid? id) => Query<Payment>($"SELECT id AS \"Id\", jsonb AS \"Content\", creation_date AS \"CreationTime\", created_by AS \"CreationUserId\" FROM diku_mod_feesfines{(IsMySql ? "_" : ".")}feefineactions WHERE id = @id", new { id }).SingleOrDefault();
-        public PaymentMethod FindPaymentMethod(Guid? id) => Query<PaymentMethod>($"SELECT id AS \"Id\", jsonb AS \"Content\", creation_date AS \"CreationTime\", created_by AS \"CreationUserId\" FROM diku_mod_feesfines{(IsMySql ? "_" : ".")}payments WHERE id = @id", new { id }).SingleOrDefault();
-        public Permission FindPermission(Guid? id) => Query<Permission>($"SELECT id AS \"Id\", jsonb AS \"Content\", creation_date AS \"CreationTime\", created_by AS \"CreationUserId\" FROM diku_mod_permissions{(IsMySql ? "_" : ".")}permissions WHERE id = @id", new { id }).SingleOrDefault();
-        public PermissionsUser FindPermissionsUser(Guid? id) => Query<PermissionsUser>($"SELECT id AS \"Id\", jsonb AS \"Content\", creation_date AS \"CreationTime\", created_by AS \"CreationUserId\" FROM diku_mod_permissions{(IsMySql ? "_" : ".")}permissions_users WHERE id = @id", new { id }).SingleOrDefault();
-        public Piece FindPiece(Guid? id) => Query<Piece>($"SELECT id AS \"Id\", jsonb AS \"Content\", creation_date AS \"CreationTime\", created_by AS \"CreationUserId\", polineid AS \"Polineid\", titleid AS \"Titleid\" FROM diku_mod_orders_storage{(IsMySql ? "_" : ".")}pieces WHERE id = @id", new { id }).SingleOrDefault();
-        public PrecedingSucceedingTitle FindPrecedingSucceedingTitle(Guid? id) => Query<PrecedingSucceedingTitle>($"SELECT id AS \"Id\", jsonb AS \"Content\", creation_date AS \"CreationTime\", created_by AS \"CreationUserId\", precedinginstanceid AS \"Precedinginstanceid\", succeedinginstanceid AS \"Succeedinginstanceid\" FROM diku_mod_inventory_storage{(IsMySql ? "_" : ".")}preceding_succeeding_title WHERE id = @id", new { id }).SingleOrDefault();
-        public Prefix FindPrefix(Guid? id) => Query<Prefix>($"SELECT id AS \"Id\", jsonb AS \"Content\" FROM diku_mod_orders_storage{(IsMySql ? "_" : ".")}prefixes WHERE id = @id", new { id }).SingleOrDefault();
-        public Proxy FindProxy(Guid? id) => Query<Proxy>($"SELECT id AS \"Id\", jsonb AS \"Content\", creation_date AS \"CreationTime\", created_by AS \"CreationUserId\" FROM diku_mod_users{(IsMySql ? "_" : ".")}proxyfor WHERE id = @id", new { id }).SingleOrDefault();
-        public RawRecord FindRawRecord(Guid? id) => Query<RawRecord>($"SELECT id AS \"Id\", content AS \"Content\" FROM diku_mod_source_record_storage{(IsMySql ? "_" : ".")}raw_records_lb WHERE id = @id", new { id }).SingleOrDefault();
-        public Record FindRecord(Guid? id) => Query<Record>($"SELECT id AS \"Id\", snapshot_id AS \"SnapshotId\", matched_id AS \"MatchedId\", generation AS \"Generation\", record_type AS \"RecordType\", instance_id AS \"InstanceId\", state AS \"State\", leader_record_status AS \"LeaderRecordStatus\", \"order\" AS \"Order\", suppress_discovery AS \"SuppressDiscovery\", created_by_user_id AS \"CreationUserId\", created_date AS \"CreationTime\", updated_by_user_id AS \"LastWriteUserId\", updated_date AS \"LastWriteTime\" FROM diku_mod_source_record_storage{(IsMySql ? "_" : ".")}records_lb WHERE id = @id", new { id }).SingleOrDefault();
-        public RefundReason FindRefundReason(Guid? id) => Query<RefundReason>($"SELECT id AS \"Id\", jsonb AS \"Content\", creation_date AS \"CreationTime\", created_by AS \"CreationUserId\" FROM diku_mod_feesfines{(IsMySql ? "_" : ".")}refunds WHERE id = @id", new { id }).SingleOrDefault();
-        public ReportingCode FindReportingCode(Guid? id) => Query<ReportingCode>($"SELECT id AS \"Id\", jsonb AS \"Content\", creation_date AS \"CreationTime\", created_by AS \"CreationUserId\" FROM diku_mod_orders_storage{(IsMySql ? "_" : ".")}reporting_code WHERE id = @id", new { id }).SingleOrDefault();
-        public Request FindRequest(Guid? id) => Query<Request>($"SELECT id AS \"Id\", jsonb AS \"Content\", creation_date AS \"CreationTime\", created_by AS \"CreationUserId\", cancellationreasonid AS \"Cancellationreasonid\" FROM diku_mod_circulation_storage{(IsMySql ? "_" : ".")}request WHERE id = @id", new { id }).SingleOrDefault();
-        public RequestPolicy FindRequestPolicy(Guid? id) => Query<RequestPolicy>($"SELECT id AS \"Id\", jsonb AS \"Content\", creation_date AS \"CreationTime\", created_by AS \"CreationUserId\" FROM diku_mod_circulation_storage{(IsMySql ? "_" : ".")}request_policy WHERE id = @id", new { id }).SingleOrDefault();
-        public ScheduledNotice FindScheduledNotice(Guid? id) => Query<ScheduledNotice>($"SELECT id AS \"Id\", jsonb AS \"Content\", creation_date AS \"CreationTime\", created_by AS \"CreationUserId\" FROM diku_mod_circulation_storage{(IsMySql ? "_" : ".")}scheduled_notice WHERE id = @id", new { id }).SingleOrDefault();
-        public ServicePoint FindServicePoint(Guid? id) => Query<ServicePoint>($"SELECT id AS \"Id\", jsonb AS \"Content\", creation_date AS \"CreationTime\", created_by AS \"CreationUserId\" FROM diku_mod_inventory_storage{(IsMySql ? "_" : ".")}service_point WHERE id = @id", new { id }).SingleOrDefault();
-        public ServicePointUser FindServicePointUser(Guid? id) => Query<ServicePointUser>($"SELECT id AS \"Id\", jsonb AS \"Content\", creation_date AS \"CreationTime\", created_by AS \"CreationUserId\", defaultservicepointid AS \"Defaultservicepointid\" FROM diku_mod_inventory_storage{(IsMySql ? "_" : ".")}service_point_user WHERE id = @id", new { id }).SingleOrDefault();
-        public Snapshot FindSnapshot(Guid? id) => Query<Snapshot>($"SELECT id AS \"Id\", status AS \"Status\", processing_started_date AS \"ProcessingStartedDate\", created_by_user_id AS \"CreationUserId\", created_date AS \"CreationTime\", updated_by_user_id AS \"LastWriteUserId\", updated_date AS \"LastWriteTime\" FROM diku_mod_source_record_storage{(IsMySql ? "_" : ".")}snapshots_lb WHERE id = @id", new { id }).SingleOrDefault();
-        public StaffSlip FindStaffSlip(Guid? id) => Query<StaffSlip>($"SELECT id AS \"Id\", jsonb AS \"Content\", creation_date AS \"CreationTime\", created_by AS \"CreationUserId\" FROM diku_mod_circulation_storage{(IsMySql ? "_" : ".")}staff_slips WHERE id = @id", new { id }).SingleOrDefault();
-        public StatisticalCode FindStatisticalCode(Guid? id) => Query<StatisticalCode>($"SELECT id AS \"Id\", jsonb AS \"Content\", creation_date AS \"CreationTime\", created_by AS \"CreationUserId\", statisticalcodetypeid AS \"Statisticalcodetypeid\" FROM diku_mod_inventory_storage{(IsMySql ? "_" : ".")}statistical_code WHERE id = @id", new { id }).SingleOrDefault();
-        public StatisticalCodeType FindStatisticalCodeType(Guid? id) => Query<StatisticalCodeType>($"SELECT id AS \"Id\", jsonb AS \"Content\", creation_date AS \"CreationTime\", created_by AS \"CreationUserId\" FROM diku_mod_inventory_storage{(IsMySql ? "_" : ".")}statistical_code_type WHERE id = @id", new { id }).SingleOrDefault();
-        public Suffix FindSuffix(Guid? id) => Query<Suffix>($"SELECT id AS \"Id\", jsonb AS \"Content\" FROM diku_mod_orders_storage{(IsMySql ? "_" : ".")}suffixes WHERE id = @id", new { id }).SingleOrDefault();
-        public Tag FindTag(Guid? id) => Query<Tag>($"SELECT id AS \"Id\", jsonb AS \"Content\", creation_date AS \"CreationTime\", created_by AS \"CreationUserId\" FROM diku_mod_tags{(IsMySql ? "_" : ".")}tags WHERE id = @id", new { id }).SingleOrDefault();
-        public Template FindTemplate(Guid? id) => Query<Template>($"SELECT id AS \"Id\", jsonb AS \"Content\", creation_date AS \"CreationTime\", created_by AS \"CreationUserId\" FROM diku_mod_template_engine{(IsMySql ? "_" : ".")}template WHERE id = @id", new { id }).SingleOrDefault();
-        public TemporaryInvoiceTransaction FindTemporaryInvoiceTransaction(Guid? id) => Query<TemporaryInvoiceTransaction>($"SELECT id AS \"Id\", jsonb AS \"Content\", sourceinvoiceid AS \"Sourceinvoiceid\", paymentencumbranceid AS \"Paymentencumbranceid\", fromfundid AS \"Fromfundid\", tofundid AS \"Tofundid\", fiscalyearid AS \"Fiscalyearid\" FROM diku_mod_finance_storage{(IsMySql ? "_" : ".")}temporary_invoice_transactions WHERE id = @id", new { id }).SingleOrDefault();
-        public TemporaryOrderTransaction FindTemporaryOrderTransaction(Guid? id) => Query<TemporaryOrderTransaction>($"SELECT id AS \"Id\", jsonb AS \"Content\", encumbrance_sourcepurchaseorderid AS \"EncumbranceSourcepurchaseorderid\", fiscalyearid AS \"Fiscalyearid\", fromfundid AS \"Fromfundid\" FROM diku_mod_finance_storage{(IsMySql ? "_" : ".")}temporary_order_transactions WHERE id = @id", new { id }).SingleOrDefault();
-        public Title FindTitle(Guid? id) => Query<Title>($"SELECT id AS \"Id\", jsonb AS \"Content\", creation_date AS \"CreationTime\", created_by AS \"CreationUserId\", polineid AS \"Polineid\" FROM diku_mod_orders_storage{(IsMySql ? "_" : ".")}titles WHERE id = @id", new { id }).SingleOrDefault();
-        public Transaction FindTransaction(Guid? id) => Query<Transaction>($"SELECT id AS \"Id\", jsonb AS \"Content\", creation_date AS \"CreationTime\", created_by AS \"CreationUserId\", fiscalyearid AS \"Fiscalyearid\", fromfundid AS \"Fromfundid\", sourcefiscalyearid AS \"Sourcefiscalyearid\", tofundid AS \"Tofundid\" FROM diku_mod_finance_storage{(IsMySql ? "_" : ".")}transaction WHERE id = @id", new { id }).SingleOrDefault();
-        public TransferAccount FindTransferAccount(Guid? id) => Query<TransferAccount>($"SELECT id AS \"Id\", jsonb AS \"Content\", creation_date AS \"CreationTime\", created_by AS \"CreationUserId\" FROM diku_mod_feesfines{(IsMySql ? "_" : ".")}transfers WHERE id = @id", new { id }).SingleOrDefault();
-        public TransferCriteria FindTransferCriteria(Guid? id) => Query<TransferCriteria>($"SELECT id AS \"Id\", jsonb AS \"Content\", creation_date AS \"CreationTime\", created_by AS \"CreationUserId\" FROM diku_mod_feesfines{(IsMySql ? "_" : ".")}transfer_criteria WHERE id = @id", new { id }).SingleOrDefault();
-        public User FindUser(Guid? id) => Query<User>($"SELECT id AS \"Id\", jsonb AS \"Content\", creation_date AS \"CreationTime\", created_by AS \"CreationUserId\", patrongroup AS \"Patrongroup\" FROM diku_mod_users{(IsMySql ? "_" : ".")}users WHERE id = @id", new { id }).SingleOrDefault();
-        public UserAcquisitionsUnit FindUserAcquisitionsUnit(Guid? id) => Query<UserAcquisitionsUnit>($"SELECT id AS \"Id\", jsonb AS \"Content\", creation_date AS \"CreationTime\", created_by AS \"CreationUserId\", acquisitionsunitid AS \"Acquisitionsunitid\" FROM diku_mod_orders_storage{(IsMySql ? "_" : ".")}acquisitions_unit_membership WHERE id = @id", new { id }).SingleOrDefault();
-        public UserRequestPreference FindUserRequestPreference(Guid? id) => Query<UserRequestPreference>($"SELECT id AS \"Id\", jsonb AS \"Content\", creation_date AS \"CreationTime\", created_by AS \"CreationUserId\" FROM diku_mod_circulation_storage{(IsMySql ? "_" : ".")}user_request_preference WHERE id = @id", new { id }).SingleOrDefault();
-        public UserSummary FindUserSummary(Guid? id) => Query<UserSummary>($"SELECT id AS \"Id\", jsonb AS \"Content\", creation_date AS \"CreationTime\", created_by AS \"CreationUserId\" FROM diku_mod_patron_blocks{(IsMySql ? "_" : ".")}user_summary WHERE id = @id", new { id }).SingleOrDefault();
-        public Voucher FindVoucher(Guid? id) => Query<Voucher>($"SELECT id AS \"Id\", jsonb AS \"Content\", creation_date AS \"CreationTime\", created_by AS \"CreationUserId\", invoiceid AS \"Invoiceid\", batchgroupid AS \"Batchgroupid\" FROM diku_mod_invoice_storage{(IsMySql ? "_" : ".")}vouchers WHERE id = @id", new { id }).SingleOrDefault();
-        public VoucherItem FindVoucherItem(Guid? id) => Query<VoucherItem>($"SELECT id AS \"Id\", jsonb AS \"Content\", creation_date AS \"CreationTime\", created_by AS \"CreationUserId\", voucherid AS \"Voucherid\" FROM diku_mod_invoice_storage{(IsMySql ? "_" : ".")}voucher_lines WHERE id = @id", new { id }).SingleOrDefault();
-        public WaiveReason FindWaiveReason(Guid? id) => Query<WaiveReason>($"SELECT id AS \"Id\", jsonb AS \"Content\", creation_date AS \"CreationTime\", created_by AS \"CreationUserId\" FROM diku_mod_feesfines{(IsMySql ? "_" : ".")}waives WHERE id = @id", new { id }).SingleOrDefault();
+        public AcquisitionsUnit FindAcquisitionsUnit(Guid? id, bool load = false) => Query<AcquisitionsUnit>($"SELECT id AS \"Id\", jsonb AS \"Content\", creation_date AS \"CreationTime\", created_by AS \"CreationUserId\" FROM diku_mod_orders_storage{(IsMySql ? "_" : ".")}acquisitions_unit WHERE id = @id", new { id }).SingleOrDefault();
+        public AddressType FindAddressType(Guid? id, bool load = false) => Query<AddressType>($"SELECT id AS \"Id\", jsonb AS \"Content\", creation_date AS \"CreationTime\", created_by AS \"CreationUserId\" FROM diku_mod_users{(IsMySql ? "_" : ".")}addresstype WHERE id = @id", new { id }).SingleOrDefault();
+        public Alert FindAlert(Guid? id, bool load = false) => Query<Alert>($"SELECT id AS \"Id\", jsonb AS \"Content\", creation_date AS \"CreationTime\", created_by AS \"CreationUserId\" FROM diku_mod_orders_storage{(IsMySql ? "_" : ".")}alert WHERE id = @id", new { id }).SingleOrDefault();
+        public AlternativeTitleType FindAlternativeTitleType(Guid? id, bool load = false) => Query<AlternativeTitleType>($"SELECT id AS \"Id\", jsonb AS \"Content\", creation_date AS \"CreationTime\", created_by AS \"CreationUserId\" FROM diku_mod_inventory_storage{(IsMySql ? "_" : ".")}alternative_title_type WHERE id = @id", new { id }).SingleOrDefault();
+        public AuditLoan FindAuditLoan(Guid? id, bool load = false) => Query<AuditLoan>($"SELECT id AS \"Id\", jsonb AS \"Content\" FROM diku_mod_circulation_storage{(IsMySql ? "_" : ".")}audit_loan WHERE id = @id", new { id }).SingleOrDefault();
+        public AuthAttempt FindAuthAttempt(Guid? id, bool load = false) => Query<AuthAttempt>($"SELECT id AS \"Id\", jsonb AS \"Content\", creation_date AS \"CreationTime\", created_by AS \"CreationUserId\" FROM diku_mod_login{(IsMySql ? "_" : ".")}auth_attempts WHERE id = @id", new { id }).SingleOrDefault();
+        public AuthCredentialsHistory FindAuthCredentialsHistory(Guid? id, bool load = false) => Query<AuthCredentialsHistory>($"SELECT id AS \"Id\", jsonb AS \"Content\", creation_date AS \"CreationTime\", created_by AS \"CreationUserId\" FROM diku_mod_login{(IsMySql ? "_" : ".")}auth_credentials_history WHERE id = @id", new { id }).SingleOrDefault();
+        public AuthPasswordAction FindAuthPasswordAction(Guid? id, bool load = false) => Query<AuthPasswordAction>($"SELECT id AS \"Id\", jsonb AS \"Content\", creation_date AS \"CreationTime\", created_by AS \"CreationUserId\" FROM diku_mod_login{(IsMySql ? "_" : ".")}auth_password_action WHERE id = @id", new { id }).SingleOrDefault();
+        public BatchGroup FindBatchGroup(Guid? id, bool load = false) => Query<BatchGroup>($"SELECT id AS \"Id\", jsonb AS \"Content\", creation_date AS \"CreationTime\", created_by AS \"CreationUserId\" FROM diku_mod_invoice_storage{(IsMySql ? "_" : ".")}batch_groups WHERE id = @id", new { id }).SingleOrDefault();
+        public BatchVoucher FindBatchVoucher(Guid? id, bool load = false) => Query<BatchVoucher>($"SELECT id AS \"Id\", jsonb AS \"Content\" FROM diku_mod_invoice_storage{(IsMySql ? "_" : ".")}batch_vouchers WHERE id = @id", new { id }).SingleOrDefault();
+        public BatchVoucherExport FindBatchVoucherExport(Guid? id, bool load = false)
+        {
+            var bve = Query<BatchVoucherExport>($"SELECT id AS \"Id\", jsonb AS \"Content\", creation_date AS \"CreationTime\", created_by AS \"CreationUserId\", batchgroupid AS \"Batchgroupid\", batchvoucherid AS \"Batchvoucherid\" FROM diku_mod_invoice_storage{(IsMySql ? "_" : ".")}batch_voucher_exports WHERE id = @id", new { id }).SingleOrDefault();
+            if (bve == null) return null;
+            if (load && bve.Batchgroupid != null) bve.BatchGroup = FindBatchGroup(bve.Batchgroupid);
+            if (load && bve.Batchvoucherid != null) bve.BatchVoucher = FindBatchVoucher(bve.Batchvoucherid);
+            return bve;
+        }
+        public BatchVoucherExportConfig FindBatchVoucherExportConfig(Guid? id, bool load = false)
+        {
+            var bvec = Query<BatchVoucherExportConfig>($"SELECT id AS \"Id\", jsonb AS \"Content\", creation_date AS \"CreationTime\", created_by AS \"CreationUserId\", batchgroupid AS \"Batchgroupid\" FROM diku_mod_invoice_storage{(IsMySql ? "_" : ".")}batch_voucher_export_configs WHERE id = @id", new { id }).SingleOrDefault();
+            if (bvec == null) return null;
+            if (load && bvec.Batchgroupid != null) bvec.BatchGroup = FindBatchGroup(bvec.Batchgroupid);
+            return bvec;
+        }
+        public Block FindBlock(Guid? id, bool load = false) => Query<Block>($"SELECT id AS \"Id\", jsonb AS \"Content\", creation_date AS \"CreationTime\", created_by AS \"CreationUserId\" FROM diku_mod_feesfines{(IsMySql ? "_" : ".")}manualblocks WHERE id = @id", new { id }).SingleOrDefault();
+        public BlockCondition FindBlockCondition(Guid? id, bool load = false) => Query<BlockCondition>($"SELECT id AS \"Id\", jsonb AS \"Content\", creation_date AS \"CreationTime\", created_by AS \"CreationUserId\" FROM diku_mod_patron_blocks{(IsMySql ? "_" : ".")}patron_block_conditions WHERE id = @id", new { id }).SingleOrDefault();
+        public BlockLimit FindBlockLimit(Guid? id, bool load = false)
+        {
+            var bl = Query<BlockLimit>($"SELECT id AS \"Id\", jsonb AS \"Content\", creation_date AS \"CreationTime\", created_by AS \"CreationUserId\", conditionid AS \"Conditionid\" FROM diku_mod_patron_blocks{(IsMySql ? "_" : ".")}patron_block_limits WHERE id = @id", new { id }).SingleOrDefault();
+            if (bl == null) return null;
+            if (load && bl.Conditionid != null) bl.BlockCondition = FindBlockCondition(bl.Conditionid);
+            return bl;
+        }
+        public Budget FindBudget(Guid? id, bool load = false)
+        {
+            var b = Query<Budget>($"SELECT id AS \"Id\", jsonb AS \"Content\", creation_date AS \"CreationTime\", created_by AS \"CreationUserId\", fundid AS \"FundId\", fiscalyearid AS \"FiscalYearId\" FROM diku_mod_finance_storage{(IsMySql ? "_" : ".")}budget WHERE id = @id", new { id }).SingleOrDefault();
+            if (b == null) return null;
+            if (load && b.FundId != null) b.Fund = FindFund(b.FundId);
+            if (load && b.FiscalYearId != null) b.FiscalYear = FindFiscalYear(b.FiscalYearId);
+            return b;
+        }
+        public CallNumberType FindCallNumberType(Guid? id, bool load = false) => Query<CallNumberType>($"SELECT id AS \"Id\", jsonb AS \"Content\", creation_date AS \"CreationTime\", created_by AS \"CreationUserId\" FROM diku_mod_inventory_storage{(IsMySql ? "_" : ".")}call_number_type WHERE id = @id", new { id }).SingleOrDefault();
+        public Campus FindCampus(Guid? id, bool load = false)
+        {
+            var c = Query<Campus>($"SELECT id AS \"Id\", jsonb AS \"Content\", creation_date AS \"CreationTime\", created_by AS \"CreationUserId\", institutionid AS \"Institutionid\" FROM diku_mod_inventory_storage{(IsMySql ? "_" : ".")}loccampus WHERE id = @id", new { id }).SingleOrDefault();
+            if (c == null) return null;
+            if (load && c.Institutionid != null) c.Institution = FindInstitution(c.Institutionid);
+            return c;
+        }
+        public CancellationReason FindCancellationReason(Guid? id, bool load = false) => Query<CancellationReason>($"SELECT id AS \"Id\", jsonb AS \"Content\", creation_date AS \"CreationTime\", created_by AS \"CreationUserId\" FROM diku_mod_circulation_storage{(IsMySql ? "_" : ".")}cancellation_reason WHERE id = @id", new { id }).SingleOrDefault();
+        public Category FindCategory(Guid? id, bool load = false) => Query<Category>($"SELECT id AS \"Id\", jsonb AS \"Content\", creation_date AS \"CreationTime\", created_by AS \"CreationUserId\" FROM diku_mod_organizations_storage{(IsMySql ? "_" : ".")}categories WHERE id = @id", new { id }).SingleOrDefault();
+        public CheckIn FindCheckIn(Guid? id, bool load = false) => Query<CheckIn>($"SELECT id AS \"Id\", jsonb AS \"Content\", creation_date AS \"CreationTime\", created_by AS \"CreationUserId\" FROM diku_mod_circulation_storage{(IsMySql ? "_" : ".")}check_in WHERE id = @id", new { id }).SingleOrDefault();
+        public CirculationRule FindCirculationRule(Guid? id, bool load = false) => Query<CirculationRule>($"SELECT id AS \"Id\", jsonb AS \"Content\", lock AS \"Lock\" FROM diku_mod_circulation_storage{(IsMySql ? "_" : ".")}circulation_rules WHERE id = @id", new { id }).SingleOrDefault();
+        public ClassificationType FindClassificationType(Guid? id, bool load = false) => Query<ClassificationType>($"SELECT id AS \"Id\", jsonb AS \"Content\", creation_date AS \"CreationTime\", created_by AS \"CreationUserId\" FROM diku_mod_inventory_storage{(IsMySql ? "_" : ".")}classification_type WHERE id = @id", new { id }).SingleOrDefault();
+        public CloseReason FindCloseReason(Guid? id, bool load = false) => Query<CloseReason>($"SELECT id AS \"Id\", jsonb AS \"Content\" FROM diku_mod_orders_storage{(IsMySql ? "_" : ".")}reasons_for_closure WHERE id = @id", new { id }).SingleOrDefault();
+        public Comment FindComment(Guid? id, bool load = false) => Query<Comment>($"SELECT id AS \"Id\", jsonb AS \"Content\", creation_date AS \"CreationTime\", created_by AS \"CreationUserId\" FROM diku_mod_feesfines{(IsMySql ? "_" : ".")}comments WHERE id = @id", new { id }).SingleOrDefault();
+        public Configuration FindConfiguration(Guid? id, bool load = false) => Query<Configuration>($"SELECT id AS \"Id\", jsonb AS \"Content\", creation_date AS \"CreationTime\", created_by AS \"CreationUserId\" FROM diku_mod_configuration{(IsMySql ? "_" : ".")}config_data WHERE id = @id", new { id }).SingleOrDefault();
+        public Contact FindContact(Guid? id, bool load = false) => Query<Contact>($"SELECT id AS \"Id\", jsonb AS \"Content\", creation_date AS \"CreationTime\", created_by AS \"CreationUserId\" FROM diku_mod_organizations_storage{(IsMySql ? "_" : ".")}contacts WHERE id = @id", new { id }).SingleOrDefault();
+        public ContributorNameType FindContributorNameType(Guid? id, bool load = false) => Query<ContributorNameType>($"SELECT id AS \"Id\", jsonb AS \"Content\", creation_date AS \"CreationTime\", created_by AS \"CreationUserId\" FROM diku_mod_inventory_storage{(IsMySql ? "_" : ".")}contributor_name_type WHERE id = @id", new { id }).SingleOrDefault();
+        public ContributorType FindContributorType(Guid? id, bool load = false) => Query<ContributorType>($"SELECT id AS \"Id\", jsonb AS \"Content\" FROM diku_mod_inventory_storage{(IsMySql ? "_" : ".")}contributor_type WHERE id = @id", new { id }).SingleOrDefault();
+        public CustomField FindCustomField(Guid? id, bool load = false) => Query<CustomField>($"SELECT id AS \"Id\", jsonb AS \"Content\" FROM diku_mod_users{(IsMySql ? "_" : ".")}custom_fields WHERE id = @id", new { id }).SingleOrDefault();
+        public Document FindDocument(Guid? id, bool load = false)
+        {
+            var d = Query<Document>($"SELECT id AS \"Id\", jsonb AS \"Content\", creation_date AS \"CreationTime\", created_by AS \"CreationUserId\", invoiceid AS \"Invoiceid\", document_data AS \"DocumentData\" FROM diku_mod_invoice_storage{(IsMySql ? "_" : ".")}documents WHERE id = @id", new { id }).SingleOrDefault();
+            if (d == null) return null;
+            if (load && d.Invoiceid != null) d.Invoice = FindInvoice(d.Invoiceid);
+            return d;
+        }
+        public ElectronicAccessRelationship FindElectronicAccessRelationship(Guid? id, bool load = false) => Query<ElectronicAccessRelationship>($"SELECT id AS \"Id\", jsonb AS \"Content\", creation_date AS \"CreationTime\", created_by AS \"CreationUserId\" FROM diku_mod_inventory_storage{(IsMySql ? "_" : ".")}electronic_access_relationship WHERE id = @id", new { id }).SingleOrDefault();
+        public ErrorRecord FindErrorRecord(Guid? id, bool load = false)
+        {
+            var er = Query<ErrorRecord>($"SELECT id AS \"Id\", content AS \"Content\", description AS \"Description\" FROM diku_mod_source_record_storage{(IsMySql ? "_" : ".")}error_records_lb WHERE id = @id", new { id }).SingleOrDefault();
+            if (er == null) return null;
+            if (load && er.Id != null) er.Record = FindRecord(er.Id);
+            return er;
+        }
+        public EventLog FindEventLog(Guid? id, bool load = false) => Query<EventLog>($"SELECT id AS \"Id\", jsonb AS \"Content\", creation_date AS \"CreationTime\", created_by AS \"CreationUserId\" FROM diku_mod_login{(IsMySql ? "_" : ".")}event_logs WHERE id = @id", new { id }).SingleOrDefault();
+        public ExportConfigCredential FindExportConfigCredential(Guid? id, bool load = false)
+        {
+            var ecc = Query<ExportConfigCredential>($"SELECT id AS \"Id\", jsonb AS \"Content\", creation_date AS \"CreationTime\", created_by AS \"CreationUserId\", exportconfigid AS \"Exportconfigid\" FROM diku_mod_invoice_storage{(IsMySql ? "_" : ".")}export_config_credentials WHERE id = @id", new { id }).SingleOrDefault();
+            if (ecc == null) return null;
+            if (load && ecc.Exportconfigid != null) ecc.BatchVoucherExportConfig = FindBatchVoucherExportConfig(ecc.Exportconfigid);
+            return ecc;
+        }
+        public Fee FindFee(Guid? id, bool load = false) => Query<Fee>($"SELECT id AS \"Id\", jsonb AS \"Content\", creation_date AS \"CreationTime\", created_by AS \"CreationUserId\" FROM diku_mod_feesfines{(IsMySql ? "_" : ".")}accounts WHERE id = @id", new { id }).SingleOrDefault();
+        public FeeType FindFeeType(Guid? id, bool load = false)
+        {
+            var ft = Query<FeeType>($"SELECT id AS \"Id\", jsonb AS \"Content\", creation_date AS \"CreationTime\", created_by AS \"CreationUserId\", ownerid AS \"Ownerid\" FROM diku_mod_feesfines{(IsMySql ? "_" : ".")}feefines WHERE id = @id", new { id }).SingleOrDefault();
+            if (ft == null) return null;
+            if (load && ft.Ownerid != null) ft.Owner = FindOwner(ft.Ownerid);
+            return ft;
+        }
+        public FinanceGroup FindFinanceGroup(Guid? id, bool load = false) => Query<FinanceGroup>($"SELECT id AS \"Id\", jsonb AS \"Content\", creation_date AS \"CreationTime\", created_by AS \"CreationUserId\" FROM diku_mod_finance_storage{(IsMySql ? "_" : ".")}groups WHERE id = @id", new { id }).SingleOrDefault();
+        public FiscalYear FindFiscalYear(Guid? id, bool load = false) => Query<FiscalYear>($"SELECT id AS \"Id\", jsonb AS \"Content\", creation_date AS \"CreationTime\", created_by AS \"CreationUserId\" FROM diku_mod_finance_storage{(IsMySql ? "_" : ".")}fiscal_year WHERE id = @id", new { id }).SingleOrDefault();
+        public FixedDueDateSchedule FindFixedDueDateSchedule(Guid? id, bool load = false) => Query<FixedDueDateSchedule>($"SELECT id AS \"Id\", jsonb AS \"Content\" FROM diku_mod_circulation_storage{(IsMySql ? "_" : ".")}fixed_due_date_schedule WHERE id = @id", new { id }).SingleOrDefault();
+        public Fund FindFund(Guid? id, bool load = false)
+        {
+            var f = Query<Fund>($"SELECT id AS \"Id\", jsonb AS \"Content\", creation_date AS \"CreationTime\", created_by AS \"CreationUserId\", ledgerid AS \"LedgerId\", fundtypeid AS \"Fundtypeid\" FROM diku_mod_finance_storage{(IsMySql ? "_" : ".")}fund WHERE id = @id", new { id }).SingleOrDefault();
+            if (f == null) return null;
+            if (load && f.LedgerId != null) f.Ledger = FindLedger(f.LedgerId);
+            if (load && f.Fundtypeid != null) f.FundType = FindFundType(f.Fundtypeid);
+            return f;
+        }
+        public FundType FindFundType(Guid? id, bool load = false) => Query<FundType>($"SELECT id AS \"Id\", jsonb AS \"Content\" FROM diku_mod_finance_storage{(IsMySql ? "_" : ".")}fund_type WHERE id = @id", new { id }).SingleOrDefault();
+        public Group FindGroup(Guid? id, bool load = false) => Query<Group>($"SELECT id AS \"Id\", jsonb AS \"Content\", creation_date AS \"CreationTime\", created_by AS \"CreationUserId\" FROM diku_mod_users{(IsMySql ? "_" : ".")}groups WHERE id = @id", new { id }).SingleOrDefault();
+        public GroupFundFiscalYear FindGroupFundFiscalYear(Guid? id, bool load = false)
+        {
+            var gffy = Query<GroupFundFiscalYear>($"SELECT id AS \"Id\", jsonb AS \"Content\", budgetid AS \"Budgetid\", groupid AS \"Groupid\", fundid AS \"Fundid\", fiscalyearid AS \"Fiscalyearid\" FROM diku_mod_finance_storage{(IsMySql ? "_" : ".")}group_fund_fiscal_year WHERE id = @id", new { id }).SingleOrDefault();
+            if (gffy == null) return null;
+            if (load && gffy.Budgetid != null) gffy.Budget = FindBudget(gffy.Budgetid);
+            if (load && gffy.Groupid != null) gffy.FinanceGroup = FindFinanceGroup(gffy.Groupid);
+            if (load && gffy.Fundid != null) gffy.Fund = FindFund(gffy.Fundid);
+            if (load && gffy.Fiscalyearid != null) gffy.FiscalYear = FindFiscalYear(gffy.Fiscalyearid);
+            return gffy;
+        }
+        public Holding FindHolding(Guid? id, bool load = false)
+        {
+            var h = Query<Holding>($"SELECT id AS \"Id\", jsonb AS \"Content\", creation_date AS \"CreationTime\", created_by AS \"CreationUserId\", instanceid AS \"Instanceid\", permanentlocationid AS \"Permanentlocationid\", temporarylocationid AS \"Temporarylocationid\", holdingstypeid AS \"Holdingstypeid\", callnumbertypeid AS \"Callnumbertypeid\", illpolicyid AS \"Illpolicyid\" FROM diku_mod_inventory_storage{(IsMySql ? "_" : ".")}holdings_record WHERE id = @id", new { id }).SingleOrDefault();
+            if (h == null) return null;
+            if (load && h.Instanceid != null) h.Instance = FindInstance(h.Instanceid);
+            if (load && h.Permanentlocationid != null) h.Location = FindLocation(h.Permanentlocationid);
+            if (load && h.Temporarylocationid != null) h.Location1 = FindLocation(h.Temporarylocationid);
+            if (load && h.Holdingstypeid != null) h.HoldingType = FindHoldingType(h.Holdingstypeid);
+            if (load && h.Callnumbertypeid != null) h.CallNumberType = FindCallNumberType(h.Callnumbertypeid);
+            if (load && h.Illpolicyid != null) h.IllPolicy = FindIllPolicy(h.Illpolicyid);
+            return h;
+        }
+        public HoldingNoteType FindHoldingNoteType(Guid? id, bool load = false) => Query<HoldingNoteType>($"SELECT id AS \"Id\", jsonb AS \"Content\", creation_date AS \"CreationTime\", created_by AS \"CreationUserId\" FROM diku_mod_inventory_storage{(IsMySql ? "_" : ".")}holdings_note_type WHERE id = @id", new { id }).SingleOrDefault();
+        public HoldingType FindHoldingType(Guid? id, bool load = false) => Query<HoldingType>($"SELECT id AS \"Id\", jsonb AS \"Content\", creation_date AS \"CreationTime\", created_by AS \"CreationUserId\" FROM diku_mod_inventory_storage{(IsMySql ? "_" : ".")}holdings_type WHERE id = @id", new { id }).SingleOrDefault();
+        public HridSetting FindHridSetting(Guid? id, bool load = false) => Query<HridSetting>($"SELECT id AS \"Id\", jsonb AS \"Content\", lock AS \"Lock\" FROM diku_mod_inventory_storage{(IsMySql ? "_" : ".")}hrid_settings WHERE id = @id", new { id }).SingleOrDefault();
+        public IdType FindIdType(Guid? id, bool load = false) => Query<IdType>($"SELECT id AS \"Id\", jsonb AS \"Content\", creation_date AS \"CreationTime\", created_by AS \"CreationUserId\" FROM diku_mod_inventory_storage{(IsMySql ? "_" : ".")}identifier_type WHERE id = @id", new { id }).SingleOrDefault();
+        public IllPolicy FindIllPolicy(Guid? id, bool load = false) => Query<IllPolicy>($"SELECT id AS \"Id\", jsonb AS \"Content\", creation_date AS \"CreationTime\", created_by AS \"CreationUserId\" FROM diku_mod_inventory_storage{(IsMySql ? "_" : ".")}ill_policy WHERE id = @id", new { id }).SingleOrDefault();
+        public Instance FindInstance(Guid? id, bool load = false)
+        {
+            var i = Query<Instance>($"SELECT id AS \"Id\", jsonb AS \"Content\", creation_date AS \"CreationTime\", created_by AS \"CreationUserId\", instancestatusid AS \"Instancestatusid\", modeofissuanceid AS \"Modeofissuanceid\", instancetypeid AS \"Instancetypeid\" FROM diku_mod_inventory_storage{(IsMySql ? "_" : ".")}instance WHERE id = @id", new { id }).SingleOrDefault();
+            if (i == null) return null;
+            if (load && i.Instancestatusid != null) i.InstanceStatus = FindInstanceStatus(i.Instancestatusid);
+            if (load && i.Modeofissuanceid != null) i.ModeOfIssuance = FindModeOfIssuance(i.Modeofissuanceid);
+            if (load && i.Instancetypeid != null) i.InstanceType = FindInstanceType(i.Instancetypeid);
+            return i;
+        }
+        public InstanceFormat FindInstanceFormat(Guid? id, bool load = false) => Query<InstanceFormat>($"SELECT id AS \"Id\", jsonb AS \"Content\" FROM diku_mod_inventory_storage{(IsMySql ? "_" : ".")}instance_format WHERE id = @id", new { id }).SingleOrDefault();
+        public InstanceNoteType FindInstanceNoteType(Guid? id, bool load = false) => Query<InstanceNoteType>($"SELECT id AS \"Id\", jsonb AS \"Content\", creation_date AS \"CreationTime\", created_by AS \"CreationUserId\" FROM diku_mod_inventory_storage{(IsMySql ? "_" : ".")}instance_note_type WHERE id = @id", new { id }).SingleOrDefault();
+        public InstanceRelationship FindInstanceRelationship(Guid? id, bool load = false)
+        {
+            var ir = Query<InstanceRelationship>($"SELECT id AS \"Id\", jsonb AS \"Content\", creation_date AS \"CreationTime\", created_by AS \"CreationUserId\", superinstanceid AS \"Superinstanceid\", subinstanceid AS \"Subinstanceid\", instancerelationshiptypeid AS \"Instancerelationshiptypeid\" FROM diku_mod_inventory_storage{(IsMySql ? "_" : ".")}instance_relationship WHERE id = @id", new { id }).SingleOrDefault();
+            if (ir == null) return null;
+            if (load && ir.Superinstanceid != null) ir.Instance1 = FindInstance(ir.Superinstanceid);
+            if (load && ir.Subinstanceid != null) ir.Instance = FindInstance(ir.Subinstanceid);
+            if (load && ir.Instancerelationshiptypeid != null) ir.InstanceRelationshipType = FindInstanceRelationshipType(ir.Instancerelationshiptypeid);
+            return ir;
+        }
+        public InstanceRelationshipType FindInstanceRelationshipType(Guid? id, bool load = false) => Query<InstanceRelationshipType>($"SELECT id AS \"Id\", jsonb AS \"Content\", creation_date AS \"CreationTime\", created_by AS \"CreationUserId\" FROM diku_mod_inventory_storage{(IsMySql ? "_" : ".")}instance_relationship_type WHERE id = @id", new { id }).SingleOrDefault();
+        public InstanceSourceMarc FindInstanceSourceMarc(Guid? id, bool load = false)
+        {
+            var ism = Query<InstanceSourceMarc>($"SELECT id AS \"Id\", jsonb AS \"Content\", creation_date AS \"CreationTime\", created_by AS \"CreationUserId\" FROM diku_mod_inventory_storage{(IsMySql ? "_" : ".")}instance_source_marc WHERE id = @id", new { id }).SingleOrDefault();
+            if (ism == null) return null;
+            if (load && ism.Id != null) ism.Instance = FindInstance(ism.Id);
+            return ism;
+        }
+        public InstanceStatus FindInstanceStatus(Guid? id, bool load = false) => Query<InstanceStatus>($"SELECT id AS \"Id\", jsonb AS \"Content\", creation_date AS \"CreationTime\", created_by AS \"CreationUserId\" FROM diku_mod_inventory_storage{(IsMySql ? "_" : ".")}instance_status WHERE id = @id", new { id }).SingleOrDefault();
+        public InstanceType FindInstanceType(Guid? id, bool load = false) => Query<InstanceType>($"SELECT id AS \"Id\", jsonb AS \"Content\" FROM diku_mod_inventory_storage{(IsMySql ? "_" : ".")}instance_type WHERE id = @id", new { id }).SingleOrDefault();
+        public Institution FindInstitution(Guid? id, bool load = false) => Query<Institution>($"SELECT id AS \"Id\", jsonb AS \"Content\", creation_date AS \"CreationTime\", created_by AS \"CreationUserId\" FROM diku_mod_inventory_storage{(IsMySql ? "_" : ".")}locinstitution WHERE id = @id", new { id }).SingleOrDefault();
+        public Interface FindInterface(Guid? id, bool load = false) => Query<Interface>($"SELECT id AS \"Id\", jsonb AS \"Content\", creation_date AS \"CreationTime\", created_by AS \"CreationUserId\" FROM diku_mod_organizations_storage{(IsMySql ? "_" : ".")}interfaces WHERE id = @id", new { id }).SingleOrDefault();
+        public InterfaceCredential FindInterfaceCredential(Guid? id, bool load = false)
+        {
+            var ic = Query<InterfaceCredential>($"SELECT id AS \"Id\", jsonb AS \"Content\", interfaceid AS \"Interfaceid\" FROM diku_mod_organizations_storage{(IsMySql ? "_" : ".")}interface_credentials WHERE id = @id", new { id }).SingleOrDefault();
+            if (ic == null) return null;
+            if (load && ic.Interfaceid != null) ic.Interface = FindInterface(ic.Interfaceid);
+            return ic;
+        }
+        public Invoice FindInvoice(Guid? id, bool load = false)
+        {
+            var i = Query<Invoice>($"SELECT id AS \"Id\", jsonb AS \"Content\", creation_date AS \"CreationTime\", created_by AS \"CreationUserId\", batchgroupid AS \"Batchgroupid\" FROM diku_mod_invoice_storage{(IsMySql ? "_" : ".")}invoices WHERE id = @id", new { id }).SingleOrDefault();
+            if (i == null) return null;
+            if (load && i.Batchgroupid != null) i.BatchGroup = FindBatchGroup(i.Batchgroupid);
+            return i;
+        }
+        public InvoiceItem FindInvoiceItem(Guid? id, bool load = false)
+        {
+            var ii = Query<InvoiceItem>($"SELECT id AS \"Id\", jsonb AS \"Content\", creation_date AS \"CreationTime\", created_by AS \"CreationUserId\", invoiceid AS \"Invoiceid\" FROM diku_mod_invoice_storage{(IsMySql ? "_" : ".")}invoice_lines WHERE id = @id", new { id }).SingleOrDefault();
+            if (ii == null) return null;
+            if (load && ii.Invoiceid != null) ii.Invoice = FindInvoice(ii.Invoiceid);
+            return ii;
+        }
+        public InvoiceTransactionSummary FindInvoiceTransactionSummary(Guid? id, bool load = false) => Query<InvoiceTransactionSummary>($"SELECT id AS \"Id\", jsonb AS \"Content\" FROM diku_mod_finance_storage{(IsMySql ? "_" : ".")}invoice_transaction_summaries WHERE id = @id", new { id }).SingleOrDefault();
+        public Item FindItem(Guid? id, bool load = false)
+        {
+            var i = Query<Item>($"SELECT id AS \"Id\", jsonb AS \"Content\", creation_date AS \"CreationTime\", created_by AS \"CreationUserId\", holdingsrecordid AS \"Holdingsrecordid\", permanentloantypeid AS \"Permanentloantypeid\", temporaryloantypeid AS \"Temporaryloantypeid\", materialtypeid AS \"Materialtypeid\", permanentlocationid AS \"Permanentlocationid\", temporarylocationid AS \"Temporarylocationid\", effectivelocationid AS \"Effectivelocationid\" FROM diku_mod_inventory_storage{(IsMySql ? "_" : ".")}item WHERE id = @id", new { id }).SingleOrDefault();
+            if (i == null) return null;
+            if (load && i.Holdingsrecordid != null) i.Holding = FindHolding(i.Holdingsrecordid);
+            if (load && i.Permanentloantypeid != null) i.LoanType = FindLoanType(i.Permanentloantypeid);
+            if (load && i.Temporaryloantypeid != null) i.LoanType1 = FindLoanType(i.Temporaryloantypeid);
+            if (load && i.Materialtypeid != null) i.MaterialType = FindMaterialType(i.Materialtypeid);
+            if (load && i.Permanentlocationid != null) i.Location1 = FindLocation(i.Permanentlocationid);
+            if (load && i.Temporarylocationid != null) i.Location2 = FindLocation(i.Temporarylocationid);
+            if (load && i.Effectivelocationid != null) i.Location = FindLocation(i.Effectivelocationid);
+            return i;
+        }
+        public ItemDamagedStatus FindItemDamagedStatus(Guid? id, bool load = false) => Query<ItemDamagedStatus>($"SELECT id AS \"Id\", jsonb AS \"Content\", creation_date AS \"CreationTime\", created_by AS \"CreationUserId\" FROM diku_mod_inventory_storage{(IsMySql ? "_" : ".")}item_damaged_status WHERE id = @id", new { id }).SingleOrDefault();
+        public ItemNoteType FindItemNoteType(Guid? id, bool load = false) => Query<ItemNoteType>($"SELECT id AS \"Id\", jsonb AS \"Content\", creation_date AS \"CreationTime\", created_by AS \"CreationUserId\" FROM diku_mod_inventory_storage{(IsMySql ? "_" : ".")}item_note_type WHERE id = @id", new { id }).SingleOrDefault();
+        public JobExecution FindJobExecution(Guid? id, bool load = false) => Query<JobExecution>($"SELECT id AS \"Id\", jsonb AS \"Content\" FROM diku_mod_source_record_manager{(IsMySql ? "_" : ".")}job_executions WHERE id = @id", new { id }).SingleOrDefault();
+        public JobExecutionProgress FindJobExecutionProgress(Guid? id, bool load = false)
+        {
+            var jep = Query<JobExecutionProgress>($"SELECT id AS \"Id\", jsonb AS \"Content\", jobexecutionid AS \"Jobexecutionid\" FROM diku_mod_source_record_manager{(IsMySql ? "_" : ".")}job_execution_progress WHERE id = @id", new { id }).SingleOrDefault();
+            if (jep == null) return null;
+            if (load && jep.Jobexecutionid != null) jep.JobExecution = FindJobExecution(jep.Jobexecutionid);
+            return jep;
+        }
+        public JobExecutionSourceChunk FindJobExecutionSourceChunk(Guid? id, bool load = false)
+        {
+            var jesc = Query<JobExecutionSourceChunk>($"SELECT id AS \"Id\", jsonb AS \"Content\", jobexecutionid AS \"Jobexecutionid\" FROM diku_mod_source_record_manager{(IsMySql ? "_" : ".")}job_execution_source_chunks WHERE id = @id", new { id }).SingleOrDefault();
+            if (jesc == null) return null;
+            if (load && jesc.Jobexecutionid != null) jesc.JobExecution = FindJobExecution(jesc.Jobexecutionid);
+            return jesc;
+        }
+        public JournalRecord FindJournalRecord(Guid? id, bool load = false)
+        {
+            var jr = Query<JournalRecord>($"SELECT id AS \"Id\", job_execution_id AS \"JobExecutionId\", source_id AS \"SourceId\", entity_type AS \"EntityType\", entity_id AS \"EntityId\", entity_hrid AS \"EntityHrid\", action_type AS \"ActionType\", action_status AS \"ActionStatus\", action_date AS \"ActionDate\", source_record_order AS \"SourceRecordOrder\", error AS \"Error\" FROM diku_mod_source_record_manager{(IsMySql ? "_" : ".")}journal_records WHERE id = @id", new { id }).SingleOrDefault();
+            if (jr == null) return null;
+            if (load && jr.JobExecutionId != null) jr.JobExecution = FindJobExecution(jr.JobExecutionId);
+            return jr;
+        }
+        public Ledger FindLedger(Guid? id, bool load = false)
+        {
+            var l = Query<Ledger>($"SELECT id AS \"Id\", jsonb AS \"Content\", creation_date AS \"CreationTime\", created_by AS \"CreationUserId\", fiscalyearoneid AS \"Fiscalyearoneid\" FROM diku_mod_finance_storage{(IsMySql ? "_" : ".")}ledger WHERE id = @id", new { id }).SingleOrDefault();
+            if (l == null) return null;
+            if (load && l.Fiscalyearoneid != null) l.FiscalYear = FindFiscalYear(l.Fiscalyearoneid);
+            return l;
+        }
+        public LedgerFiscalYear FindLedgerFiscalYear(Guid? id, bool load = false)
+        {
+            var lfy = Query<LedgerFiscalYear>($"SELECT id AS \"Id\", jsonb AS \"Content\", ledgerid AS \"Ledgerid\", fiscalyearid AS \"Fiscalyearid\" FROM diku_mod_finance_storage{(IsMySql ? "_" : ".")}ledgerfy WHERE id = @id", new { id }).SingleOrDefault();
+            if (lfy == null) return null;
+            if (load && lfy.Ledgerid != null) lfy.Ledger = FindLedger(lfy.Ledgerid);
+            if (load && lfy.Fiscalyearid != null) lfy.FiscalYear = FindFiscalYear(lfy.Fiscalyearid);
+            return lfy;
+        }
+        public Library FindLibrary(Guid? id, bool load = false)
+        {
+            var l = Query<Library>($"SELECT id AS \"Id\", jsonb AS \"Content\", creation_date AS \"CreationTime\", created_by AS \"CreationUserId\", campusid AS \"Campusid\" FROM diku_mod_inventory_storage{(IsMySql ? "_" : ".")}loclibrary WHERE id = @id", new { id }).SingleOrDefault();
+            if (l == null) return null;
+            if (load && l.Campusid != null) l.Campus = FindCampus(l.Campusid);
+            return l;
+        }
+        public Loan FindLoan(Guid? id, bool load = false) => Query<Loan>($"SELECT id AS \"Id\", jsonb AS \"Content\", creation_date AS \"CreationTime\", created_by AS \"CreationUserId\" FROM diku_mod_circulation_storage{(IsMySql ? "_" : ".")}loan WHERE id = @id", new { id }).SingleOrDefault();
+        public LoanPolicy FindLoanPolicy(Guid? id, bool load = false)
+        {
+            var lp = Query<LoanPolicy>($"SELECT id AS \"Id\", jsonb AS \"Content\", creation_date AS \"CreationTime\", created_by AS \"CreationUserId\", loanspolicy_fixedduedatescheduleid AS \"LoanspolicyFixedduedatescheduleid\", renewalspolicy_alternatefixedduedatescheduleid AS \"RenewalspolicyAlternatefixedduedatescheduleid\" FROM diku_mod_circulation_storage{(IsMySql ? "_" : ".")}loan_policy WHERE id = @id", new { id }).SingleOrDefault();
+            if (lp == null) return null;
+            if (load && lp.LoanspolicyFixedduedatescheduleid != null) lp.FixedDueDateSchedule = FindFixedDueDateSchedule(lp.LoanspolicyFixedduedatescheduleid);
+            if (load && lp.RenewalspolicyAlternatefixedduedatescheduleid != null) lp.FixedDueDateSchedule1 = FindFixedDueDateSchedule(lp.RenewalspolicyAlternatefixedduedatescheduleid);
+            return lp;
+        }
+        public LoanType FindLoanType(Guid? id, bool load = false) => Query<LoanType>($"SELECT id AS \"Id\", jsonb AS \"Content\", creation_date AS \"CreationTime\", created_by AS \"CreationUserId\" FROM diku_mod_inventory_storage{(IsMySql ? "_" : ".")}loan_type WHERE id = @id", new { id }).SingleOrDefault();
+        public Location FindLocation(Guid? id, bool load = false)
+        {
+            var l = Query<Location>($"SELECT id AS \"Id\", jsonb AS \"Content\", creation_date AS \"CreationTime\", created_by AS \"CreationUserId\", institutionid AS \"Institutionid\", campusid AS \"Campusid\", libraryid AS \"Libraryid\" FROM diku_mod_inventory_storage{(IsMySql ? "_" : ".")}location WHERE id = @id", new { id }).SingleOrDefault();
+            if (l == null) return null;
+            if (load && l.Institutionid != null) l.Institution = FindInstitution(l.Institutionid);
+            if (load && l.Campusid != null) l.Campus = FindCampus(l.Campusid);
+            if (load && l.Libraryid != null) l.Library = FindLibrary(l.Libraryid);
+            return l;
+        }
+        public Login FindLogin(Guid? id, bool load = false) => Query<Login>($"SELECT id AS \"Id\", jsonb AS \"Content\", creation_date AS \"CreationTime\", created_by AS \"CreationUserId\" FROM diku_mod_login{(IsMySql ? "_" : ".")}auth_credentials WHERE id = @id", new { id }).SingleOrDefault();
+        public LostItemFeePolicy FindLostItemFeePolicy(Guid? id, bool load = false) => Query<LostItemFeePolicy>($"SELECT id AS \"Id\", jsonb AS \"Content\", creation_date AS \"CreationTime\", created_by AS \"CreationUserId\" FROM diku_mod_feesfines{(IsMySql ? "_" : ".")}lost_item_fee_policy WHERE id = @id", new { id }).SingleOrDefault();
+        public MappingRule FindMappingRule(Guid? id, bool load = false) => Query<MappingRule>($"SELECT id AS \"Id\", jsonb AS \"Content\" FROM diku_mod_source_record_manager{(IsMySql ? "_" : ".")}mapping_rules WHERE id = @id", new { id }).SingleOrDefault();
+        public MarcRecord FindMarcRecord(Guid? id, bool load = false)
+        {
+            var mr = Query<MarcRecord>($"SELECT id AS \"Id\", content AS \"Content\" FROM diku_mod_source_record_storage{(IsMySql ? "_" : ".")}marc_records_lb WHERE id = @id", new { id }).SingleOrDefault();
+            if (mr == null) return null;
+            if (load && mr.Id != null) mr.Record = FindRecord(mr.Id);
+            return mr;
+        }
+        public MaterialType FindMaterialType(Guid? id, bool load = false) => Query<MaterialType>($"SELECT id AS \"Id\", jsonb AS \"Content\", creation_date AS \"CreationTime\", created_by AS \"CreationUserId\" FROM diku_mod_inventory_storage{(IsMySql ? "_" : ".")}material_type WHERE id = @id", new { id }).SingleOrDefault();
+        public ModeOfIssuance FindModeOfIssuance(Guid? id, bool load = false) => Query<ModeOfIssuance>($"SELECT id AS \"Id\", jsonb AS \"Content\", creation_date AS \"CreationTime\", created_by AS \"CreationUserId\" FROM diku_mod_inventory_storage{(IsMySql ? "_" : ".")}mode_of_issuance WHERE id = @id", new { id }).SingleOrDefault();
+        public NatureOfContentTerm FindNatureOfContentTerm(Guid? id, bool load = false) => Query<NatureOfContentTerm>($"SELECT id AS \"Id\", jsonb AS \"Content\", creation_date AS \"CreationTime\", created_by AS \"CreationUserId\" FROM diku_mod_inventory_storage{(IsMySql ? "_" : ".")}nature_of_content_term WHERE id = @id", new { id }).SingleOrDefault();
+        public Note FindNote(Guid? id, bool load = false)
+        {
+            var n = Query<Note>($"SELECT id AS \"Id\", jsonb AS \"Content\", temporary_type_id AS \"TemporaryTypeId\" FROM diku_mod_notes{(IsMySql ? "_" : ".")}note_data WHERE id = @id", new { id }).SingleOrDefault();
+            if (n == null) return null;
+            if (load && n.TemporaryTypeId != null) n.TemporaryType = FindNoteType(n.TemporaryTypeId);
+            return n;
+        }
+        public NoteType FindNoteType(Guid? id, bool load = false) => Query<NoteType>($"SELECT id AS \"Id\", jsonb AS \"Content\" FROM diku_mod_notes{(IsMySql ? "_" : ".")}note_type WHERE id = @id", new { id }).SingleOrDefault();
+        public Order FindOrder(Guid? id, bool load = false) => Query<Order>($"SELECT id AS \"Id\", jsonb AS \"Content\", creation_date AS \"CreationTime\", created_by AS \"CreationUserId\" FROM diku_mod_orders_storage{(IsMySql ? "_" : ".")}purchase_order WHERE id = @id", new { id }).SingleOrDefault();
+        public OrderInvoice FindOrderInvoice(Guid? id, bool load = false)
+        {
+            var oi = Query<OrderInvoice>($"SELECT id AS \"Id\", jsonb AS \"Content\", purchaseorderid AS \"Purchaseorderid\" FROM diku_mod_orders_storage{(IsMySql ? "_" : ".")}order_invoice_relationship WHERE id = @id", new { id }).SingleOrDefault();
+            if (oi == null) return null;
+            if (load && oi.Purchaseorderid != null) oi.Order = FindOrder(oi.Purchaseorderid);
+            return oi;
+        }
+        public OrderItem FindOrderItem(Guid? id, bool load = false)
+        {
+            var oi = Query<OrderItem>($"SELECT id AS \"Id\", jsonb AS \"Content\", creation_date AS \"CreationTime\", created_by AS \"CreationUserId\", purchaseorderid AS \"Purchaseorderid\" FROM diku_mod_orders_storage{(IsMySql ? "_" : ".")}po_line WHERE id = @id", new { id }).SingleOrDefault();
+            if (oi == null) return null;
+            if (load && oi.Purchaseorderid != null) oi.Order = FindOrder(oi.Purchaseorderid);
+            return oi;
+        }
+        public OrderTemplate FindOrderTemplate(Guid? id, bool load = false) => Query<OrderTemplate>($"SELECT id AS \"Id\", jsonb AS \"Content\" FROM diku_mod_orders_storage{(IsMySql ? "_" : ".")}order_templates WHERE id = @id", new { id }).SingleOrDefault();
+        public OrderTransactionSummary FindOrderTransactionSummary(Guid? id, bool load = false) => Query<OrderTransactionSummary>($"SELECT id AS \"Id\", jsonb AS \"Content\" FROM diku_mod_finance_storage{(IsMySql ? "_" : ".")}order_transaction_summaries WHERE id = @id", new { id }).SingleOrDefault();
+        public Organization FindOrganization(Guid? id, bool load = false) => Query<Organization>($"SELECT id AS \"Id\", jsonb AS \"Content\", creation_date AS \"CreationTime\", created_by AS \"CreationUserId\" FROM diku_mod_organizations_storage{(IsMySql ? "_" : ".")}organizations WHERE id = @id", new { id }).SingleOrDefault();
+        public OverdueFinePolicy FindOverdueFinePolicy(Guid? id, bool load = false) => Query<OverdueFinePolicy>($"SELECT id AS \"Id\", jsonb AS \"Content\", creation_date AS \"CreationTime\", created_by AS \"CreationUserId\" FROM diku_mod_feesfines{(IsMySql ? "_" : ".")}overdue_fine_policy WHERE id = @id", new { id }).SingleOrDefault();
+        public Owner FindOwner(Guid? id, bool load = false) => Query<Owner>($"SELECT id AS \"Id\", jsonb AS \"Content\", creation_date AS \"CreationTime\", created_by AS \"CreationUserId\" FROM diku_mod_feesfines{(IsMySql ? "_" : ".")}owners WHERE id = @id", new { id }).SingleOrDefault();
+        public PatronActionSession FindPatronActionSession(Guid? id, bool load = false) => Query<PatronActionSession>($"SELECT id AS \"Id\", jsonb AS \"Content\", creation_date AS \"CreationTime\", created_by AS \"CreationUserId\" FROM diku_mod_circulation_storage{(IsMySql ? "_" : ".")}patron_action_session WHERE id = @id", new { id }).SingleOrDefault();
+        public PatronNoticePolicy FindPatronNoticePolicy(Guid? id, bool load = false) => Query<PatronNoticePolicy>($"SELECT id AS \"Id\", jsonb AS \"Content\", creation_date AS \"CreationTime\", created_by AS \"CreationUserId\" FROM diku_mod_circulation_storage{(IsMySql ? "_" : ".")}patron_notice_policy WHERE id = @id", new { id }).SingleOrDefault();
+        public Payment FindPayment(Guid? id, bool load = false) => Query<Payment>($"SELECT id AS \"Id\", jsonb AS \"Content\", creation_date AS \"CreationTime\", created_by AS \"CreationUserId\" FROM diku_mod_feesfines{(IsMySql ? "_" : ".")}feefineactions WHERE id = @id", new { id }).SingleOrDefault();
+        public PaymentMethod FindPaymentMethod(Guid? id, bool load = false) => Query<PaymentMethod>($"SELECT id AS \"Id\", jsonb AS \"Content\", creation_date AS \"CreationTime\", created_by AS \"CreationUserId\" FROM diku_mod_feesfines{(IsMySql ? "_" : ".")}payments WHERE id = @id", new { id }).SingleOrDefault();
+        public Permission FindPermission(Guid? id, bool load = false) => Query<Permission>($"SELECT id AS \"Id\", jsonb AS \"Content\", creation_date AS \"CreationTime\", created_by AS \"CreationUserId\" FROM diku_mod_permissions{(IsMySql ? "_" : ".")}permissions WHERE id = @id", new { id }).SingleOrDefault();
+        public PermissionsUser FindPermissionsUser(Guid? id, bool load = false) => Query<PermissionsUser>($"SELECT id AS \"Id\", jsonb AS \"Content\", creation_date AS \"CreationTime\", created_by AS \"CreationUserId\" FROM diku_mod_permissions{(IsMySql ? "_" : ".")}permissions_users WHERE id = @id", new { id }).SingleOrDefault();
+        public Piece FindPiece(Guid? id, bool load = false)
+        {
+            var p = Query<Piece>($"SELECT id AS \"Id\", jsonb AS \"Content\", creation_date AS \"CreationTime\", created_by AS \"CreationUserId\", polineid AS \"Polineid\", titleid AS \"Titleid\" FROM diku_mod_orders_storage{(IsMySql ? "_" : ".")}pieces WHERE id = @id", new { id }).SingleOrDefault();
+            if (p == null) return null;
+            if (load && p.Polineid != null) p.OrderItem = FindOrderItem(p.Polineid);
+            if (load && p.Titleid != null) p.Title = FindTitle(p.Titleid);
+            return p;
+        }
+        public PrecedingSucceedingTitle FindPrecedingSucceedingTitle(Guid? id, bool load = false)
+        {
+            var pst = Query<PrecedingSucceedingTitle>($"SELECT id AS \"Id\", jsonb AS \"Content\", creation_date AS \"CreationTime\", created_by AS \"CreationUserId\", precedinginstanceid AS \"Precedinginstanceid\", succeedinginstanceid AS \"Succeedinginstanceid\" FROM diku_mod_inventory_storage{(IsMySql ? "_" : ".")}preceding_succeeding_title WHERE id = @id", new { id }).SingleOrDefault();
+            if (pst == null) return null;
+            if (load && pst.Precedinginstanceid != null) pst.Instance = FindInstance(pst.Precedinginstanceid);
+            if (load && pst.Succeedinginstanceid != null) pst.Instance1 = FindInstance(pst.Succeedinginstanceid);
+            return pst;
+        }
+        public Prefix FindPrefix(Guid? id, bool load = false) => Query<Prefix>($"SELECT id AS \"Id\", jsonb AS \"Content\" FROM diku_mod_orders_storage{(IsMySql ? "_" : ".")}prefixes WHERE id = @id", new { id }).SingleOrDefault();
+        public Proxy FindProxy(Guid? id, bool load = false) => Query<Proxy>($"SELECT id AS \"Id\", jsonb AS \"Content\", creation_date AS \"CreationTime\", created_by AS \"CreationUserId\" FROM diku_mod_users{(IsMySql ? "_" : ".")}proxyfor WHERE id = @id", new { id }).SingleOrDefault();
+        public RawRecord FindRawRecord(Guid? id, bool load = false)
+        {
+            var rr = Query<RawRecord>($"SELECT id AS \"Id\", content AS \"Content\" FROM diku_mod_source_record_storage{(IsMySql ? "_" : ".")}raw_records_lb WHERE id = @id", new { id }).SingleOrDefault();
+            if (rr == null) return null;
+            if (load && rr.Id != null) rr.Record = FindRecord(rr.Id);
+            return rr;
+        }
+        public Record FindRecord(Guid? id, bool load = false)
+        {
+            var r = Query<Record>($"SELECT id AS \"Id\", snapshot_id AS \"SnapshotId\", matched_id AS \"MatchedId\", generation AS \"Generation\", record_type AS \"RecordType\", instance_id AS \"InstanceId\", state AS \"State\", leader_record_status AS \"LeaderRecordStatus\", \"order\" AS \"Order\", suppress_discovery AS \"SuppressDiscovery\", created_by_user_id AS \"CreationUserId\", created_date AS \"CreationTime\", updated_by_user_id AS \"LastWriteUserId\", updated_date AS \"LastWriteTime\" FROM diku_mod_source_record_storage{(IsMySql ? "_" : ".")}records_lb WHERE id = @id", new { id }).SingleOrDefault();
+            if (r == null) return null;
+            if (load && r.SnapshotId != null) r.Snapshot = FindSnapshot(r.SnapshotId);
+            return r;
+        }
+        public RefundReason FindRefundReason(Guid? id, bool load = false) => Query<RefundReason>($"SELECT id AS \"Id\", jsonb AS \"Content\", creation_date AS \"CreationTime\", created_by AS \"CreationUserId\" FROM diku_mod_feesfines{(IsMySql ? "_" : ".")}refunds WHERE id = @id", new { id }).SingleOrDefault();
+        public ReportingCode FindReportingCode(Guid? id, bool load = false) => Query<ReportingCode>($"SELECT id AS \"Id\", jsonb AS \"Content\", creation_date AS \"CreationTime\", created_by AS \"CreationUserId\" FROM diku_mod_orders_storage{(IsMySql ? "_" : ".")}reporting_code WHERE id = @id", new { id }).SingleOrDefault();
+        public Request FindRequest(Guid? id, bool load = false)
+        {
+            var r = Query<Request>($"SELECT id AS \"Id\", jsonb AS \"Content\", creation_date AS \"CreationTime\", created_by AS \"CreationUserId\", cancellationreasonid AS \"Cancellationreasonid\" FROM diku_mod_circulation_storage{(IsMySql ? "_" : ".")}request WHERE id = @id", new { id }).SingleOrDefault();
+            if (r == null) return null;
+            if (load && r.Cancellationreasonid != null) r.CancellationReason = FindCancellationReason(r.Cancellationreasonid);
+            return r;
+        }
+        public RequestPolicy FindRequestPolicy(Guid? id, bool load = false) => Query<RequestPolicy>($"SELECT id AS \"Id\", jsonb AS \"Content\", creation_date AS \"CreationTime\", created_by AS \"CreationUserId\" FROM diku_mod_circulation_storage{(IsMySql ? "_" : ".")}request_policy WHERE id = @id", new { id }).SingleOrDefault();
+        public ScheduledNotice FindScheduledNotice(Guid? id, bool load = false) => Query<ScheduledNotice>($"SELECT id AS \"Id\", jsonb AS \"Content\", creation_date AS \"CreationTime\", created_by AS \"CreationUserId\" FROM diku_mod_circulation_storage{(IsMySql ? "_" : ".")}scheduled_notice WHERE id = @id", new { id }).SingleOrDefault();
+        public ServicePoint FindServicePoint(Guid? id, bool load = false) => Query<ServicePoint>($"SELECT id AS \"Id\", jsonb AS \"Content\", creation_date AS \"CreationTime\", created_by AS \"CreationUserId\" FROM diku_mod_inventory_storage{(IsMySql ? "_" : ".")}service_point WHERE id = @id", new { id }).SingleOrDefault();
+        public ServicePointUser FindServicePointUser(Guid? id, bool load = false)
+        {
+            var spu = Query<ServicePointUser>($"SELECT id AS \"Id\", jsonb AS \"Content\", creation_date AS \"CreationTime\", created_by AS \"CreationUserId\", defaultservicepointid AS \"Defaultservicepointid\" FROM diku_mod_inventory_storage{(IsMySql ? "_" : ".")}service_point_user WHERE id = @id", new { id }).SingleOrDefault();
+            if (spu == null) return null;
+            if (load && spu.Defaultservicepointid != null) spu.ServicePoint = FindServicePoint(spu.Defaultservicepointid);
+            return spu;
+        }
+        public Snapshot FindSnapshot(Guid? id, bool load = false) => Query<Snapshot>($"SELECT id AS \"Id\", status AS \"Status\", processing_started_date AS \"ProcessingStartedDate\", created_by_user_id AS \"CreationUserId\", created_date AS \"CreationTime\", updated_by_user_id AS \"LastWriteUserId\", updated_date AS \"LastWriteTime\" FROM diku_mod_source_record_storage{(IsMySql ? "_" : ".")}snapshots_lb WHERE id = @id", new { id }).SingleOrDefault();
+        public StaffSlip FindStaffSlip(Guid? id, bool load = false) => Query<StaffSlip>($"SELECT id AS \"Id\", jsonb AS \"Content\", creation_date AS \"CreationTime\", created_by AS \"CreationUserId\" FROM diku_mod_circulation_storage{(IsMySql ? "_" : ".")}staff_slips WHERE id = @id", new { id }).SingleOrDefault();
+        public StatisticalCode FindStatisticalCode(Guid? id, bool load = false)
+        {
+            var sc = Query<StatisticalCode>($"SELECT id AS \"Id\", jsonb AS \"Content\", creation_date AS \"CreationTime\", created_by AS \"CreationUserId\", statisticalcodetypeid AS \"Statisticalcodetypeid\" FROM diku_mod_inventory_storage{(IsMySql ? "_" : ".")}statistical_code WHERE id = @id", new { id }).SingleOrDefault();
+            if (sc == null) return null;
+            if (load && sc.Statisticalcodetypeid != null) sc.StatisticalCodeType = FindStatisticalCodeType(sc.Statisticalcodetypeid);
+            return sc;
+        }
+        public StatisticalCodeType FindStatisticalCodeType(Guid? id, bool load = false) => Query<StatisticalCodeType>($"SELECT id AS \"Id\", jsonb AS \"Content\", creation_date AS \"CreationTime\", created_by AS \"CreationUserId\" FROM diku_mod_inventory_storage{(IsMySql ? "_" : ".")}statistical_code_type WHERE id = @id", new { id }).SingleOrDefault();
+        public Suffix FindSuffix(Guid? id, bool load = false) => Query<Suffix>($"SELECT id AS \"Id\", jsonb AS \"Content\" FROM diku_mod_orders_storage{(IsMySql ? "_" : ".")}suffixes WHERE id = @id", new { id }).SingleOrDefault();
+        public Tag FindTag(Guid? id, bool load = false) => Query<Tag>($"SELECT id AS \"Id\", jsonb AS \"Content\", creation_date AS \"CreationTime\", created_by AS \"CreationUserId\" FROM diku_mod_tags{(IsMySql ? "_" : ".")}tags WHERE id = @id", new { id }).SingleOrDefault();
+        public Template FindTemplate(Guid? id, bool load = false) => Query<Template>($"SELECT id AS \"Id\", jsonb AS \"Content\", creation_date AS \"CreationTime\", created_by AS \"CreationUserId\" FROM diku_mod_template_engine{(IsMySql ? "_" : ".")}template WHERE id = @id", new { id }).SingleOrDefault();
+        public TemporaryInvoiceTransaction FindTemporaryInvoiceTransaction(Guid? id, bool load = false)
+        {
+            var tit = Query<TemporaryInvoiceTransaction>($"SELECT id AS \"Id\", jsonb AS \"Content\", sourceinvoiceid AS \"Sourceinvoiceid\", paymentencumbranceid AS \"Paymentencumbranceid\", fromfundid AS \"Fromfundid\", tofundid AS \"Tofundid\", fiscalyearid AS \"Fiscalyearid\" FROM diku_mod_finance_storage{(IsMySql ? "_" : ".")}temporary_invoice_transactions WHERE id = @id", new { id }).SingleOrDefault();
+            if (tit == null) return null;
+            if (load && tit.Sourceinvoiceid != null) tit.InvoiceTransactionSummary = FindInvoiceTransactionSummary(tit.Sourceinvoiceid);
+            if (load && tit.Paymentencumbranceid != null) tit.Transaction = FindTransaction(tit.Paymentencumbranceid);
+            if (load && tit.Fromfundid != null) tit.Fund = FindFund(tit.Fromfundid);
+            if (load && tit.Tofundid != null) tit.Fund1 = FindFund(tit.Tofundid);
+            if (load && tit.Fiscalyearid != null) tit.FiscalYear = FindFiscalYear(tit.Fiscalyearid);
+            return tit;
+        }
+        public TemporaryOrderTransaction FindTemporaryOrderTransaction(Guid? id, bool load = false)
+        {
+            var tot = Query<TemporaryOrderTransaction>($"SELECT id AS \"Id\", jsonb AS \"Content\", encumbrance_sourcepurchaseorderid AS \"EncumbranceSourcepurchaseorderid\", fiscalyearid AS \"Fiscalyearid\", fromfundid AS \"Fromfundid\" FROM diku_mod_finance_storage{(IsMySql ? "_" : ".")}temporary_order_transactions WHERE id = @id", new { id }).SingleOrDefault();
+            if (tot == null) return null;
+            if (load && tot.EncumbranceSourcepurchaseorderid != null) tot.OrderTransactionSummary = FindOrderTransactionSummary(tot.EncumbranceSourcepurchaseorderid);
+            if (load && tot.Fiscalyearid != null) tot.FiscalYear = FindFiscalYear(tot.Fiscalyearid);
+            if (load && tot.Fromfundid != null) tot.Fund = FindFund(tot.Fromfundid);
+            return tot;
+        }
+        public Title FindTitle(Guid? id, bool load = false)
+        {
+            var t = Query<Title>($"SELECT id AS \"Id\", jsonb AS \"Content\", creation_date AS \"CreationTime\", created_by AS \"CreationUserId\", polineid AS \"Polineid\" FROM diku_mod_orders_storage{(IsMySql ? "_" : ".")}titles WHERE id = @id", new { id }).SingleOrDefault();
+            if (t == null) return null;
+            if (load && t.Polineid != null) t.OrderItem = FindOrderItem(t.Polineid);
+            return t;
+        }
+        public Transaction FindTransaction(Guid? id, bool load = false)
+        {
+            var t = Query<Transaction>($"SELECT id AS \"Id\", jsonb AS \"Content\", creation_date AS \"CreationTime\", created_by AS \"CreationUserId\", fiscalyearid AS \"Fiscalyearid\", fromfundid AS \"Fromfundid\", sourcefiscalyearid AS \"Sourcefiscalyearid\", tofundid AS \"Tofundid\" FROM diku_mod_finance_storage{(IsMySql ? "_" : ".")}transaction WHERE id = @id", new { id }).SingleOrDefault();
+            if (t == null) return null;
+            if (load && t.Fiscalyearid != null) t.FiscalYear = FindFiscalYear(t.Fiscalyearid);
+            if (load && t.Fromfundid != null) t.Fund = FindFund(t.Fromfundid);
+            if (load && t.Sourcefiscalyearid != null) t.FiscalYear1 = FindFiscalYear(t.Sourcefiscalyearid);
+            if (load && t.Tofundid != null) t.Fund1 = FindFund(t.Tofundid);
+            return t;
+        }
+        public TransferAccount FindTransferAccount(Guid? id, bool load = false) => Query<TransferAccount>($"SELECT id AS \"Id\", jsonb AS \"Content\", creation_date AS \"CreationTime\", created_by AS \"CreationUserId\" FROM diku_mod_feesfines{(IsMySql ? "_" : ".")}transfers WHERE id = @id", new { id }).SingleOrDefault();
+        public TransferCriteria FindTransferCriteria(Guid? id, bool load = false) => Query<TransferCriteria>($"SELECT id AS \"Id\", jsonb AS \"Content\", creation_date AS \"CreationTime\", created_by AS \"CreationUserId\" FROM diku_mod_feesfines{(IsMySql ? "_" : ".")}transfer_criteria WHERE id = @id", new { id }).SingleOrDefault();
+        public User FindUser(Guid? id, bool load = false)
+        {
+            var u = Query<User>($"SELECT id AS \"Id\", jsonb AS \"Content\", creation_date AS \"CreationTime\", created_by AS \"CreationUserId\", patrongroup AS \"Patrongroup\" FROM diku_mod_users{(IsMySql ? "_" : ".")}users WHERE id = @id", new { id }).SingleOrDefault();
+            if (u == null) return null;
+            if (load && u.Patrongroup != null) u.Group = FindGroup(u.Patrongroup);
+            return u;
+        }
+        public UserAcquisitionsUnit FindUserAcquisitionsUnit(Guid? id, bool load = false)
+        {
+            var uau = Query<UserAcquisitionsUnit>($"SELECT id AS \"Id\", jsonb AS \"Content\", creation_date AS \"CreationTime\", created_by AS \"CreationUserId\", acquisitionsunitid AS \"Acquisitionsunitid\" FROM diku_mod_orders_storage{(IsMySql ? "_" : ".")}acquisitions_unit_membership WHERE id = @id", new { id }).SingleOrDefault();
+            if (uau == null) return null;
+            if (load && uau.Acquisitionsunitid != null) uau.AcquisitionsUnit = FindAcquisitionsUnit(uau.Acquisitionsunitid);
+            return uau;
+        }
+        public UserRequestPreference FindUserRequestPreference(Guid? id, bool load = false) => Query<UserRequestPreference>($"SELECT id AS \"Id\", jsonb AS \"Content\", creation_date AS \"CreationTime\", created_by AS \"CreationUserId\" FROM diku_mod_circulation_storage{(IsMySql ? "_" : ".")}user_request_preference WHERE id = @id", new { id }).SingleOrDefault();
+        public UserSummary FindUserSummary(Guid? id, bool load = false) => Query<UserSummary>($"SELECT id AS \"Id\", jsonb AS \"Content\", creation_date AS \"CreationTime\", created_by AS \"CreationUserId\" FROM diku_mod_patron_blocks{(IsMySql ? "_" : ".")}user_summary WHERE id = @id", new { id }).SingleOrDefault();
+        public Voucher FindVoucher(Guid? id, bool load = false)
+        {
+            var v = Query<Voucher>($"SELECT id AS \"Id\", jsonb AS \"Content\", creation_date AS \"CreationTime\", created_by AS \"CreationUserId\", invoiceid AS \"Invoiceid\", batchgroupid AS \"Batchgroupid\" FROM diku_mod_invoice_storage{(IsMySql ? "_" : ".")}vouchers WHERE id = @id", new { id }).SingleOrDefault();
+            if (v == null) return null;
+            if (load && v.Invoiceid != null) v.Invoice = FindInvoice(v.Invoiceid);
+            if (load && v.Batchgroupid != null) v.BatchGroup = FindBatchGroup(v.Batchgroupid);
+            return v;
+        }
+        public VoucherItem FindVoucherItem(Guid? id, bool load = false)
+        {
+            var vi = Query<VoucherItem>($"SELECT id AS \"Id\", jsonb AS \"Content\", creation_date AS \"CreationTime\", created_by AS \"CreationUserId\", voucherid AS \"Voucherid\" FROM diku_mod_invoice_storage{(IsMySql ? "_" : ".")}voucher_lines WHERE id = @id", new { id }).SingleOrDefault();
+            if (vi == null) return null;
+            if (load && vi.Voucherid != null) vi.Voucher = FindVoucher(vi.Voucherid);
+            return vi;
+        }
+        public WaiveReason FindWaiveReason(Guid? id, bool load = false) => Query<WaiveReason>($"SELECT id AS \"Id\", jsonb AS \"Content\", creation_date AS \"CreationTime\", created_by AS \"CreationUserId\" FROM diku_mod_feesfines{(IsMySql ? "_" : ".")}waives WHERE id = @id", new { id }).SingleOrDefault();
 
         public IEnumerable<AcquisitionsUnit> AcquisitionsUnits(string where = null, object param = null, string orderBy = null, int? skip = null, int? take = null) => Query<AcquisitionsUnit>($"SELECT id AS \"Id\", jsonb AS \"Content\", creation_date AS \"CreationTime\", created_by AS \"CreationUserId\" FROM diku_mod_orders_storage{(IsMySql ? "_" : ".")}acquisitions_unit{(where != null ? $" WHERE {where}" : "")}{(orderBy != null ? $" ORDER BY {orderBy}" : "")}", param, skip, take);
         public IEnumerable<AddressType> AddressTypes(string where = null, object param = null, string orderBy = null, int? skip = null, int? take = null) => Query<AddressType>($"SELECT id AS \"Id\", jsonb AS \"Content\", creation_date AS \"CreationTime\", created_by AS \"CreationUserId\" FROM diku_mod_users{(IsMySql ? "_" : ".")}addresstype{(where != null ? $" WHERE {where}" : "")}{(orderBy != null ? $" ORDER BY {orderBy}" : "")}", param, skip, take);

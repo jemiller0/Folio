@@ -43,14 +43,14 @@ namespace FolioLibrary
 
         public override string ToString() => $"{{ {nameof(Id)} = {Id}, {nameof(Content)} = {Content}, {nameof(CreationTime)} = {CreationTime}, {nameof(CreationUserId)} = {CreationUserId}, {nameof(Acquisitionsunitid)} = {Acquisitionsunitid} }}";
 
-        public static UserAcquisitionsUnit FromJObject(JObject jObject) => new UserAcquisitionsUnit
+        public static UserAcquisitionsUnit FromJObject(JObject jObject) => jObject != null ? new UserAcquisitionsUnit
         {
             Id = (Guid?)jObject.SelectToken("id"),
             Content = jObject.ToString(),
             CreationTime = (DateTime?)jObject.SelectToken("metadata.createdDate"),
             CreationUserId = (string)jObject.SelectToken("metadata.createdByUserId"),
             Acquisitionsunitid = (Guid?)jObject.SelectToken("acquisitionsUnitId")
-        };
+        } : null;
 
         public JObject ToJObject() => JObject.Parse(Content);
     }

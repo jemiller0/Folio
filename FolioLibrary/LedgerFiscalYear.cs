@@ -43,13 +43,13 @@ namespace FolioLibrary
 
         public override string ToString() => $"{{ {nameof(Id)} = {Id}, {nameof(Content)} = {Content}, {nameof(Ledgerid)} = {Ledgerid}, {nameof(Fiscalyearid)} = {Fiscalyearid} }}";
 
-        public static LedgerFiscalYear FromJObject(JObject jObject) => new LedgerFiscalYear
+        public static LedgerFiscalYear FromJObject(JObject jObject) => jObject != null ? new LedgerFiscalYear
         {
             Id = (Guid?)jObject.SelectToken("id"),
             Content = jObject.ToString(),
             Ledgerid = (Guid?)jObject.SelectToken("ledgerId"),
             Fiscalyearid = (Guid?)jObject.SelectToken("fiscalYearId")
-        };
+        } : null;
 
         public JObject ToJObject() => JObject.Parse(Content);
     }

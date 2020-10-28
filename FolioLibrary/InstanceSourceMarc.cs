@@ -40,11 +40,11 @@ namespace FolioLibrary
 
         public override string ToString() => $"{{ {nameof(Id)} = {Id}, {nameof(Content)} = {Content}, {nameof(CreationTime)} = {CreationTime}, {nameof(CreationUserId)} = {CreationUserId} }}";
 
-        public static InstanceSourceMarc FromJObject(JObject jObject) => new InstanceSourceMarc
+        public static InstanceSourceMarc FromJObject(JObject jObject) => jObject != null ? new InstanceSourceMarc
         {
             Id = (Guid?)jObject.SelectToken("id"),
             Content = jObject.ToString()
-        };
+        } : null;
 
         public JObject ToJObject() => JObject.Parse(Content);
     }

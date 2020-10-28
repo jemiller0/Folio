@@ -41,11 +41,11 @@ namespace FolioLibrary
 
         public override string ToString() => $"{{ {nameof(Id)} = {Id}, {nameof(Content)} = {Content} }}";
 
-        public static JobExecution FromJObject(JObject jObject) => new JobExecution
+        public static JobExecution FromJObject(JObject jObject) => jObject != null ? new JobExecution
         {
             Id = (Guid?)jObject.SelectToken("id"),
             Content = jObject.ToString()
-        };
+        } : null;
 
         public JObject ToJObject() => JObject.Parse(Content);
     }

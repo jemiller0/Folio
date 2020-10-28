@@ -38,11 +38,11 @@ namespace FolioLibrary
 
         public override string ToString() => $"{{ {nameof(Id)} = {Id}, {nameof(Content)} = {Content} }}";
 
-        public static FixedDueDateSchedule FromJObject(JObject jObject) => new FixedDueDateSchedule
+        public static FixedDueDateSchedule FromJObject(JObject jObject) => jObject != null ? new FixedDueDateSchedule
         {
             Id = (Guid?)jObject.SelectToken("id"),
             Content = jObject.ToString()
-        };
+        } : null;
 
         public JObject ToJObject() => JObject.Parse(Content);
     }

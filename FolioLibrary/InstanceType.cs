@@ -35,11 +35,11 @@ namespace FolioLibrary
 
         public override string ToString() => $"{{ {nameof(Id)} = {Id}, {nameof(Content)} = {Content} }}";
 
-        public static InstanceType FromJObject(JObject jObject) => new InstanceType
+        public static InstanceType FromJObject(JObject jObject) => jObject != null ? new InstanceType
         {
             Id = (Guid?)jObject.SelectToken("id"),
             Content = jObject.ToString()
-        };
+        } : null;
 
         public JObject ToJObject() => JObject.Parse(Content);
     }

@@ -61,7 +61,7 @@ namespace FolioLibrary
 
         public override string ToString() => $"{{ {nameof(Id)} = {Id}, {nameof(Content)} = {Content}, {nameof(Sourceinvoiceid)} = {Sourceinvoiceid}, {nameof(Paymentencumbranceid)} = {Paymentencumbranceid}, {nameof(Fromfundid)} = {Fromfundid}, {nameof(Tofundid)} = {Tofundid}, {nameof(Fiscalyearid)} = {Fiscalyearid} }}";
 
-        public static TemporaryInvoiceTransaction FromJObject(JObject jObject) => new TemporaryInvoiceTransaction
+        public static TemporaryInvoiceTransaction FromJObject(JObject jObject) => jObject != null ? new TemporaryInvoiceTransaction
         {
             Id = (Guid?)jObject.SelectToken("id"),
             Content = jObject.ToString(),
@@ -70,7 +70,7 @@ namespace FolioLibrary
             Fromfundid = (Guid?)jObject.SelectToken("fromFundId"),
             Tofundid = (Guid?)jObject.SelectToken("toFundId"),
             Fiscalyearid = (Guid?)jObject.SelectToken("fiscalYearId")
-        };
+        } : null;
 
         public JObject ToJObject() => JObject.Parse(Content);
     }

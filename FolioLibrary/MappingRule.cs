@@ -16,10 +16,10 @@ namespace FolioLibrary
 
         public override string ToString() => $"{{ {nameof(Id)} = {Id}, {nameof(Content)} = {Content} }}";
 
-        public static MappingRule FromJObject(JObject jObject) => new MappingRule
+        public static MappingRule FromJObject(JValue jObject) => jObject != null ? new MappingRule
         {
             Content = jObject.ToString()
-        };
+        } : null;
 
         public JObject ToJObject() => JObject.Parse(Content);
     }

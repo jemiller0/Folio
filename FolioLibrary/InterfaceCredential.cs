@@ -37,12 +37,12 @@ namespace FolioLibrary
 
         public override string ToString() => $"{{ {nameof(Id)} = {Id}, {nameof(Content)} = {Content}, {nameof(Interfaceid)} = {Interfaceid} }}";
 
-        public static InterfaceCredential FromJObject(JObject jObject) => new InterfaceCredential
+        public static InterfaceCredential FromJObject(JObject jObject) => jObject != null ? new InterfaceCredential
         {
             Id = (Guid?)jObject.SelectToken("id"),
             Content = jObject.ToString(),
             Interfaceid = (Guid?)jObject.SelectToken("interfaceId")
-        };
+        } : null;
 
         public JObject ToJObject() => JObject.Parse(Content);
     }
