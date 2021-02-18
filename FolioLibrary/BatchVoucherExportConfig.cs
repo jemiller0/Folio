@@ -51,7 +51,7 @@ namespace FolioLibrary
         {
             Id = (Guid?)jObject.SelectToken("id"),
             Content = jObject.ToString(),
-            CreationTime = (DateTime?)jObject.SelectToken("metadata.createdDate"),
+            CreationTime = ((DateTime?)jObject.SelectToken("metadata.createdDate"))?.ToLocalTime(),
             CreationUserId = (string)jObject.SelectToken("metadata.createdByUserId"),
             Batchgroupid = (Guid?)jObject.SelectToken("batchGroupId")
         } : null;

@@ -19,6 +19,7 @@
     <None Remove="BlockCondition.json" />
     <None Remove="BlockLimit.json" />
     <None Remove="Budget.json" />
+    <None Remove="BudgetExpenseClass.json" />
     <None Remove="CallNumberType.json" />
     <None Remove="Campus.json" />
     <None Remove="CancellationReason.json" />
@@ -33,10 +34,12 @@
     <None Remove="ContributorNameType.json" />
     <None Remove="ContributorType.json" />
     <None Remove="CustomField.json" />
+    <None Remove="Department.json" />
     <None Remove="Document.json" />
     <None Remove="ElectronicAccessRelationship.json" />
     <None Remove="ErrorRecord.json" />
     <None Remove="EventLog.json" />
+    <None Remove="ExpenseClass.json" />
     <None Remove="ExportConfigCredential.json" />
     <None Remove="Fee.json" />
     <None Remove="FeeType.json" />
@@ -74,7 +77,6 @@
     <None Remove="JobExecutionSourceChunk.json" />
     <None Remove="JournalRecord.json" />
     <None Remove="Ledger.json" />
-    <None Remove="LedgerFiscalYear.json" />
     <None Remove="Library.json" />
     <None Remove="Loan.json" />
     <None Remove="LoanPolicy.json" />
@@ -102,11 +104,11 @@
     <None Remove="PaymentMethod.json" />
     <None Remove="Permission.json" />
     <None Remove="PermissionsUser.json" />
-    <None Remove="Piece.json" />
     <None Remove="PrecedingSucceedingTitle.json" />
     <None Remove="Prefix.json" />
     <None Remove="Proxy.json" />
     <None Remove="RawRecord.json" />
+    <None Remove="Receiving.json" />
     <None Remove="Record.json" />
     <None Remove="RefundReason.json" />
     <None Remove="ReportingCode.json" />
@@ -116,14 +118,13 @@
     <None Remove="ServicePoint.json" />
     <None Remove="ServicePointUser.json" />
     <None Remove="Snapshot.json" />
+    <None Remove="Source.json" />
     <None Remove="StaffSlip.json" />
     <None Remove="StatisticalCode.json" />
     <None Remove="StatisticalCodeType.json" />
     <None Remove="Suffix.json" />
     <None Remove="Tag.json" />
     <None Remove="Template.json" />
-    <None Remove="TemporaryInvoiceTransaction.json" />
-    <None Remove="TemporaryOrderTransaction.json" />
     <None Remove="Title.json" />
     <None Remove="Transaction.json" />
     <None Remove="TransferAccount.json" />
@@ -151,6 +152,7 @@
     <EmbeddedResource Include="BlockCondition.json" />
     <EmbeddedResource Include="BlockLimit.json" />
     <EmbeddedResource Include="Budget.json" />
+    <EmbeddedResource Include="BudgetExpenseClass.json" />
     <EmbeddedResource Include="CallNumberType.json" />
     <EmbeddedResource Include="Campus.json" />
     <EmbeddedResource Include="CancellationReason.json" />
@@ -165,10 +167,12 @@
     <EmbeddedResource Include="ContributorNameType.json" />
     <EmbeddedResource Include="ContributorType.json" />
     <EmbeddedResource Include="CustomField.json" />
+    <EmbeddedResource Include="Department.json" />
     <EmbeddedResource Include="Document.json" />
     <EmbeddedResource Include="ElectronicAccessRelationship.json" />
     <EmbeddedResource Include="ErrorRecord.json" />
     <EmbeddedResource Include="EventLog.json" />
+    <EmbeddedResource Include="ExpenseClass.json" />
     <EmbeddedResource Include="ExportConfigCredential.json" />
     <EmbeddedResource Include="Fee.json" />
     <EmbeddedResource Include="FeeType.json" />
@@ -206,7 +210,6 @@
     <EmbeddedResource Include="JobExecutionSourceChunk.json" />
     <EmbeddedResource Include="JournalRecord.json" />
     <EmbeddedResource Include="Ledger.json" />
-    <EmbeddedResource Include="LedgerFiscalYear.json" />
     <EmbeddedResource Include="Library.json" />
     <EmbeddedResource Include="Loan.json" />
     <EmbeddedResource Include="LoanPolicy.json" />
@@ -234,11 +237,11 @@
     <EmbeddedResource Include="PaymentMethod.json" />
     <EmbeddedResource Include="Permission.json" />
     <EmbeddedResource Include="PermissionsUser.json" />
-    <EmbeddedResource Include="Piece.json" />
     <EmbeddedResource Include="PrecedingSucceedingTitle.json" />
     <EmbeddedResource Include="Prefix.json" />
     <EmbeddedResource Include="Proxy.json" />
     <EmbeddedResource Include="RawRecord.json" />
+    <EmbeddedResource Include="Receiving.json" />
     <EmbeddedResource Include="Record.json" />
     <EmbeddedResource Include="RefundReason.json" />
     <EmbeddedResource Include="ReportingCode.json" />
@@ -248,14 +251,13 @@
     <EmbeddedResource Include="ServicePoint.json" />
     <EmbeddedResource Include="ServicePointUser.json" />
     <EmbeddedResource Include="Snapshot.json" />
+    <EmbeddedResource Include="Source.json" />
     <EmbeddedResource Include="StaffSlip.json" />
     <EmbeddedResource Include="StatisticalCode.json" />
     <EmbeddedResource Include="StatisticalCodeType.json" />
     <EmbeddedResource Include="Suffix.json" />
     <EmbeddedResource Include="Tag.json" />
     <EmbeddedResource Include="Template.json" />
-    <EmbeddedResource Include="TemporaryInvoiceTransaction.json" />
-    <EmbeddedResource Include="TemporaryOrderTransaction.json" />
     <EmbeddedResource Include="Title.json" />
     <EmbeddedResource Include="Transaction.json" />
     <EmbeddedResource Include="TransferAccount.json" />
@@ -267,16 +269,13 @@
     <EmbeddedResource Include="Voucher.json" />
     <EmbeddedResource Include="VoucherItem.json" />
     <EmbeddedResource Include="WaiveReason.json" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <PackageReference Include="Dapper" Version="2.0.35" />
-    <PackageReference Include="Microsoft.CSharp" Version="4.7.0" />
+  </ItemGroup>  <ItemGroup>
+    <PackageReference Include="Dapper" Version="2.0.78" />
     <PackageReference Include="Newtonsoft.Json" Version="12.0.3" />
-    <PackageReference Include="Newtonsoft.Json.Schema" Version="3.0.13" />
-    <PackageReference Include="NJsonSchema" Version="10.2.2" />
-    <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="3.1.4" />
-    <PackageReference Include="System.Configuration.ConfigurationManager" Version="4.7.0" />
+    <PackageReference Include="NJsonSchema" Version="10.3.6" />
+    <PackageReference Include="Npgsql" Version="5.0.3" />
+    <PackageReference Include="System.ComponentModel.Annotations" Version="5.0.0" />
+    <PackageReference Include="System.Configuration.ConfigurationManager" Version="5.0.0" />
   </ItemGroup>
 
 </Project>

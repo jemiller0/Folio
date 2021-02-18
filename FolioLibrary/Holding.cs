@@ -72,23 +72,30 @@ namespace FolioLibrary
         [Column("illpolicyid"), Display(Name = "Ill Policy", Order = 16), ForeignKey("IllPolicy")]
         public virtual Guid? Illpolicyid { get; set; }
 
+        [Display(Order = 17)]
+        public virtual Source Source { get; set; }
+
+        [Column("sourceid"), Display(Name = "Source", Order = 18), ForeignKey("Source")]
+        public virtual Guid? Sourceid { get; set; }
+
         [ScaffoldColumn(false)]
         public virtual ICollection<Item> Items { get; set; }
 
-        public override string ToString() => $"{{ {nameof(Id)} = {Id}, {nameof(Content)} = {Content}, {nameof(CreationTime)} = {CreationTime}, {nameof(CreationUserId)} = {CreationUserId}, {nameof(Instanceid)} = {Instanceid}, {nameof(Permanentlocationid)} = {Permanentlocationid}, {nameof(Temporarylocationid)} = {Temporarylocationid}, {nameof(Holdingstypeid)} = {Holdingstypeid}, {nameof(Callnumbertypeid)} = {Callnumbertypeid}, {nameof(Illpolicyid)} = {Illpolicyid} }}";
+        public override string ToString() => $"{{ {nameof(Id)} = {Id}, {nameof(Content)} = {Content}, {nameof(CreationTime)} = {CreationTime}, {nameof(CreationUserId)} = {CreationUserId}, {nameof(Instanceid)} = {Instanceid}, {nameof(Permanentlocationid)} = {Permanentlocationid}, {nameof(Temporarylocationid)} = {Temporarylocationid}, {nameof(Holdingstypeid)} = {Holdingstypeid}, {nameof(Callnumbertypeid)} = {Callnumbertypeid}, {nameof(Illpolicyid)} = {Illpolicyid}, {nameof(Sourceid)} = {Sourceid} }}";
 
         public static Holding FromJObject(JObject jObject) => jObject != null ? new Holding
         {
             Id = (Guid?)jObject.SelectToken("id"),
             Content = jObject.ToString(),
-            CreationTime = (DateTime?)jObject.SelectToken("metadata.createdDate"),
+            CreationTime = ((DateTime?)jObject.SelectToken("metadata.createdDate"))?.ToLocalTime(),
             CreationUserId = (string)jObject.SelectToken("metadata.createdByUserId"),
             Instanceid = (Guid?)jObject.SelectToken("instanceId"),
             Permanentlocationid = (Guid?)jObject.SelectToken("permanentLocationId"),
             Temporarylocationid = (Guid?)jObject.SelectToken("temporaryLocationId"),
             Holdingstypeid = (Guid?)jObject.SelectToken("holdingsTypeId"),
             Callnumbertypeid = (Guid?)jObject.SelectToken("callNumberTypeId"),
-            Illpolicyid = (Guid?)jObject.SelectToken("illPolicyId")
+            Illpolicyid = (Guid?)jObject.SelectToken("illPolicyId"),
+            Sourceid = (Guid?)jObject.SelectToken("sourceId")
         } : null;
 
         public JObject ToJObject() => JObject.Parse(Content);

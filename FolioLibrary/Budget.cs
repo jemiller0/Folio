@@ -49,6 +49,9 @@ namespace FolioLibrary
         public virtual Guid? FiscalYearId { get; set; }
 
         [ScaffoldColumn(false)]
+        public virtual ICollection<BudgetExpenseClass> BudgetExpenseClasses { get; set; }
+
+        [ScaffoldColumn(false)]
         public virtual ICollection<GroupFundFiscalYear> GroupFundFiscalYears { get; set; }
 
         public override string ToString() => $"{{ {nameof(Id)} = {Id}, {nameof(Content)} = {Content}, {nameof(CreationTime)} = {CreationTime}, {nameof(CreationUserId)} = {CreationUserId}, {nameof(FundId)} = {FundId}, {nameof(FiscalYearId)} = {FiscalYearId} }}";
@@ -57,7 +60,7 @@ namespace FolioLibrary
         {
             Id = (Guid?)jObject.SelectToken("id"),
             Content = jObject.ToString(),
-            CreationTime = (DateTime?)jObject.SelectToken("metadata.createdDate"),
+            CreationTime = ((DateTime?)jObject.SelectToken("metadata.createdDate"))?.ToLocalTime(),
             CreationUserId = (string)jObject.SelectToken("metadata.createdByUserId"),
             FundId = (Guid?)jObject.SelectToken("fundId"),
             FiscalYearId = (Guid?)jObject.SelectToken("fiscalYearId")

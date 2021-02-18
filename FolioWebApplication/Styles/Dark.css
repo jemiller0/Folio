@@ -1,0 +1,192 @@
+﻿body {
+    font-family: "Segoe UI", Arial, sans-serif;
+    font-size: 12px;
+    /*margin: 8px;*/
+    /*background-color: black;*/
+    background-color: rgba(34, 34, 34, 1);
+    color: white;
+}
+
+pre {
+    font-family: "Segoe UI", Arial, sans-serif;
+    font-size: 12px;
+    margin: 0px;
+    max-height: 150px;
+    max-width: 600px;
+    overflow: auto;
+}
+
+a {
+    color: white !important;
+}
+
+.rgFilterBox {
+    width: 28px;
+    padding: 4px 1px !important;
+}
+
+fieldset {
+    border-color: #333;
+    border-style: solid;
+    border-width: 1px;
+}
+
+
+#HeaderDiv {
+    /*background-color: silver;*/
+    overflow: hidden;
+    /*margin-bottom: 10px;*/
+}
+
+#MainDiv {
+    clear: both;
+    float: left;
+    width: 100%;
+}
+
+#ContentPlaceHolder1_FindPanel {
+    /*margin-top: 10px;*/
+}
+
+#FooterDiv {
+    clear: both;
+    float: left;
+    text-align: center;
+    width: 100%;
+}
+
+.RadGrid_BlackMetroTouch th.rgSorted {
+    /*background-color: #0082cc;*/
+    background-color: rgba(43, 43, 43, 1) !important;
+}
+
+.RadGrid_BlackMetroTouch .rgFilterActive, .RadGrid_BlackMetroTouch .rgFilterActive:hover, .RadGrid_BlackMetroTouch .rgFilterActive:focus {
+    border-color: rgba(43, 43, 43, 1) !important;
+    background-color: rgba(43, 43, 43, 1) !important;
+    /*border-color: #0082cc;
+    border-color: #0082cc;
+    color: #fff;
+    background-color: #0082cc;
+    box-shadow: inset 0px 0px 6px rgba(165,165,165,0.5);*/
+}
+
+.RadMenu_BlackMetroTouch .rmGroup .rmFocused > .rmLink, .RadMenu_BlackMetroTouch .rmGroup .rmFocused > .rmLink .rmToggle {
+    border-color: red !important;
+    /*border-color: #0082cc;
+    box-shadow: inset 0px 0px 5px #0082cc;*/
+}
+
+.RadGrid_BlackMetroTouch .rgFiltered {
+    /*border-color: #0082cc;
+    color: #fff;
+    background-color: #0082cc;*/
+    background-color: #555 !important;
+    border-color: red !important;
+}
+
+.RadGrid_BlackMetroTouch {
+    /*background-color: red !important;*/
+    background-color: inherit !important;
+    /*border-color: #333;
+    color: #fff;
+    background-color: #000;
+    font-family: "Segoe UI",Arial,Helvetica,sans-serif;*/
+}
+
+    .RadGrid_BlackMetroTouch .rgAltRow {
+        background-color: inherit !important;
+        border-color: inherit !important;
+        /*background: #191919;
+    border-color: #191919;*/
+    }
+
+.RadMenu_BlackMetroTouch .rmRootGroup .rmSelected > .rmRootLink, .RadMenu_BlackMetroTouch .rmRootGroup .rmExpanded > .rmRootLink {
+    background-color: #555 !important;
+    /*border-color: #0082cc;
+    color: #fff;
+    background-color: #0082cc;*/
+}
+
+.RadGrid .rgRow > td, .RadGrid .rgAltRow > td, .RadGrid .rgEditRow > td, .RadGrid .rgFooter > td, .RadGrid .rgFilterRow > td, .RadGrid .rgHeader, .RadGrid .rgResizeCol, .RadGrid .rgGroupHeader td {
+    padding-left: 4px !important;
+    padding-right: 4px !important;
+}
+
+.RadMenu_BlackMetroTouch .rmRootGroup {
+    /*border-color: #555;
+    color: #fff;
+    background-color: #222;*/
+    /*background-color: red !important;*/
+}
+
+.RadMenu_BlackMetroTouch .rmGroup, .RadMenu_BlackMetroTouch .rmMultiColumn, .RadMenu_BlackMetroTouch .rmPopup {
+    background-color: rgba(34, 34, 34, 1) !important;
+    /*border-color: #333;
+    color: #fff;
+    background-color: #000;
+    padding: 0;*/
+}
+
+.RadInput_BlackMetroTouch .riTextBox, .RadInput_BlackMetroTouch .riSelect, .RadInput_BlackMetroTouch .rcSelect, .RadInputMgr_BlackMetroTouch {
+    background-color: rgba(34, 34, 34, 1) !important;
+    /*border-color: #555;
+    color: #fff;
+    background-color: #000;*/
+}
+
+.RadComboBox_BlackMetroTouch .rcbInner {
+    background-color: rgba(34, 34, 34, 1) !important;
+    /*border-color: #555;
+    color: #fff;
+    background-color: #000;*/
+}
+
+.RadComboBoxDropDown_BlackMetroTouch {
+    background-color: rgba(34, 34, 34, 1) !important;
+    /*border-color: #333;
+    color: #fff;
+    background-color: #000;
+    font-family: "Segoe UI",Arial,Helvetica,sans-serif;*/
+}
+
+.RadInput_BlackMetroTouch .riTextBox, .RadInput_BlackMetroTouch .riSelect, .RadInput_BlackMetroTouch .rcSelect, .RadInputMgr_BlackMetroTouch {
+    /*border-color: red !important;*/
+    /*border-color: #555;
+    color: #fff;
+    background-color: #000;*/
+}
+
+.RadInput_BlackMetroTouch.RadInputFocused .riTextBox, .RadInput_BlackMetroTouch.RadInputFocused .riSelect, .RadInput_BlackMetroTouch.RadInputFocused .rcSelect, .RadInput_Focused_BlackMetroTouch {
+    border-color: #555 !important;
+    /*border-color: #555;
+    color: #fff;
+    background-color: #000;*/
+}
+
+.RadGrid_BlackMetroTouch .rgInput:focus, .RadGrid_BlackMetroTouch .rgEditRow > td > [type='text']:focus, .RadGrid_BlackMetroTouch .rgEditForm td > [type='text']:focus, .RadGrid_BlackMetroTouch .rgBatchContainer > [type='text']:focus, .RadGrid_BlackMetroTouch .rgFilterBox:focus {
+    border-color: #555 !important;
+    /*border-color: #555;
+    color: #fff;
+    background-color: #000;*/
+}
+
+.RadGrid_BlackMetroTouch .rgFilterBox {
+    background-color: rgba(34, 34, 34, 1) !important;
+    /*border-color: #555;
+    color: #fff;
+    background-color: #000;*/
+}
+
+.rbCheckBox, .rbRadioButton, .rbToggleButton {
+    /*color: white !important;*/
+    /*padding: 5px 0;
+    border-width: 0;
+    color: inherit;
+    background: 0;*/
+}
+
+.RadButton_BlackMetroTouch .rbToggleCheckboxChecked, .RadButton_BlackMetroTouch .rbToggleCheckboxFilled, .RadButton_BlackMetroTouch .rbToggleRadioChecked {
+    color: inherit !important;
+    /*color: red !important;*/
+    /*color: #0082cc;*/
+}

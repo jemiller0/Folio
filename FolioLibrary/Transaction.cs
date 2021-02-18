@@ -1,7 +1,6 @@
 using Newtonsoft.Json.Linq;
 using NJsonSchema;
 using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.IO;
@@ -60,21 +59,25 @@ namespace FolioLibrary
         [Column("tofundid"), Display(Name = "Fund 1", Order = 12), ForeignKey("Fund1")]
         public virtual Guid? Tofundid { get; set; }
 
-        [ScaffoldColumn(false)]
-        public virtual ICollection<TemporaryInvoiceTransaction> TemporaryInvoiceTransactions { get; set; }
+        [Display(Name = "Expense Class", Order = 13)]
+        public virtual ExpenseClass ExpenseClass { get; set; }
 
-        public override string ToString() => $"{{ {nameof(Id)} = {Id}, {nameof(Content)} = {Content}, {nameof(CreationTime)} = {CreationTime}, {nameof(CreationUserId)} = {CreationUserId}, {nameof(Fiscalyearid)} = {Fiscalyearid}, {nameof(Fromfundid)} = {Fromfundid}, {nameof(Sourcefiscalyearid)} = {Sourcefiscalyearid}, {nameof(Tofundid)} = {Tofundid} }}";
+        [Column("expenseclassid"), Display(Name = "Expense Class", Order = 14), ForeignKey("ExpenseClass")]
+        public virtual Guid? Expenseclassid { get; set; }
+
+        public override string ToString() => $"{{ {nameof(Id)} = {Id}, {nameof(Content)} = {Content}, {nameof(CreationTime)} = {CreationTime}, {nameof(CreationUserId)} = {CreationUserId}, {nameof(Fiscalyearid)} = {Fiscalyearid}, {nameof(Fromfundid)} = {Fromfundid}, {nameof(Sourcefiscalyearid)} = {Sourcefiscalyearid}, {nameof(Tofundid)} = {Tofundid}, {nameof(Expenseclassid)} = {Expenseclassid} }}";
 
         public static Transaction FromJObject(JObject jObject) => jObject != null ? new Transaction
         {
             Id = (Guid?)jObject.SelectToken("id"),
             Content = jObject.ToString(),
-            CreationTime = (DateTime?)jObject.SelectToken("metadata.createdDate"),
+            CreationTime = ((DateTime?)jObject.SelectToken("metadata.createdDate"))?.ToLocalTime(),
             CreationUserId = (string)jObject.SelectToken("metadata.createdByUserId"),
             Fiscalyearid = (Guid?)jObject.SelectToken("fiscalYearId"),
             Fromfundid = (Guid?)jObject.SelectToken("fromFundId"),
             Sourcefiscalyearid = (Guid?)jObject.SelectToken("sourceFiscalYearId"),
-            Tofundid = (Guid?)jObject.SelectToken("toFundId")
+            Tofundid = (Guid?)jObject.SelectToken("toFundId"),
+            Expenseclassid = (Guid?)jObject.SelectToken("expenseClassId")
         } : null;
 
         public JObject ToJObject() => JObject.Parse(Content);

@@ -146,6 +146,7 @@
             "type": "string"
           },
           "itemNoteType": {
+            "description": "Type of item's note",
             "folio:$ref": "itemnotetype.json",
             "javaType": "org.folio.rest.jaxrs.model.itemNoteTypeVirtual",
             "readonly": true,
@@ -248,6 +249,7 @@
             "Declared lost",
             "Order closed",
             "Claimed returned",
+            "Unknown",
             "Withdrawn",
             "Lost and paid",
             "Aged to lost"
@@ -281,6 +283,7 @@
       "type": "string"
     },
     "permanentLocation": {
+      "description": "The permanent shelving location in which an item resides",
       "folio:$ref": "location.json",
       "readonly": true,
       "folio:isVirtual": true,
@@ -295,6 +298,7 @@
       "type": "string"
     },
     "temporaryLocation": {
+      "description": "Temporary location, shelving location, or holding which is a physical place where items are stored, or an Online location",
       "folio:$ref": "location.json",
       "readonly": true,
       "folio:isVirtual": true,

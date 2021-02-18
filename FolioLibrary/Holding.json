@@ -31,6 +31,7 @@
       "$ref": "#/properties/id"
     },
     "permanentLocation": {
+      "description": "The permanent shelving location in which an item resides",
       "folio:$ref": "location.json",
       "readonly": true,
       "folio:isVirtual": true,
@@ -44,6 +45,7 @@
       "$ref": "#/properties/id"
     },
     "electronicAccess": {
+      "description": "List of electronic access items",
       "type": "array",
       "items": {
         "type": "object",
@@ -95,9 +97,11 @@
       "type": "string"
     },
     "acquisitionFormat": {
+      "description": "Format of holdings record acquisition",
       "type": "string"
     },
     "acquisitionMethod": {
+      "description": "Method of holdings record acquisition",
       "type": "string"
     },
     "receiptStatus": {
@@ -112,6 +116,18 @@
         "properties": {
           "holdingsNoteTypeId": {
             "$ref": "#/properties/id"
+          },
+          "holdingsNoteType": {
+            "description": "expanded note-type object corresponding to holdingsNoteTypeId",
+            "javaType": "org.folio.rest.jaxrs.model.HoldingsNoteTypeVirtual",
+            "folio:$ref": "holdingsnotetype.json",
+            "readonly": true,
+            "folio:isVirtual": true,
+            "folio:linkBase": "holdings-note-types",
+            "folio:linkFromField": "holdingsNoteTypeId",
+            "folio:linkToField": "id",
+            "folio:includedElement": "holdingsNoteTypes.0",
+            "type": "object"
           },
           "note": {
             "description": "Text content of the note",
@@ -145,9 +161,11 @@
       "type": "string"
     },
     "digitizationPolicy": {
+      "description": "Records information regarding digitization aspects.",
       "type": "string"
     },
     "holdingsStatements": {
+      "description": "Notes about action, copy, binding etc.",
       "type": "array",
       "items": {
         "type": "object",
@@ -159,11 +177,16 @@
           "note": {
             "description": "Note attached to a holdings statement",
             "type": "string"
+          },
+          "staffNote": {
+            "description": "Private note attached to a holdings statment",
+            "type": "string"
           }
         }
       }
     },
     "holdingsStatementsForIndexes": {
+      "description": "Holdings record indexes statements",
       "type": "array",
       "items": {
         "type": "object",
@@ -175,11 +198,16 @@
           "note": {
             "description": "Note attached to a holdings statement",
             "type": "string"
+          },
+          "staffNote": {
+            "description": "Private note attached to a holdings statment",
+            "type": "string"
           }
         }
       }
     },
     "holdingsStatementsForSupplements": {
+      "description": "Holdings record supplements statements",
       "type": "array",
       "items": {
         "type": "object",
@@ -190,6 +218,10 @@
           },
           "note": {
             "description": "note attached to a holdings statement",
+            "type": "string"
+          },
+          "staffNote": {
+            "description": "Private note attached to a holdings statment",
             "type": "string"
           }
         }
@@ -204,6 +236,7 @@
       "type": "string"
     },
     "receivingHistory": {
+      "description": "Receiving history of holdings record",
       "type": "object",
       "properties": {
         "displayType": {
@@ -211,7 +244,7 @@
           "type": "string"
         },
         "entries": {
-          "description": ".",
+          "description": "Entries of receiving history",
           "type": "array",
           "items": {
             "type": "object",
@@ -246,6 +279,7 @@
       "uniqueItems": true
     },
     "holdingsItems": {
+      "description": "Items related to holdings record",
       "readonly": true,
       "folio:isVirtual": true,
       "folio:linkBase": "inventory/items",
@@ -398,6 +432,7 @@
                   "type": "string"
                 },
                 "itemNoteType": {
+                  "description": "Type of item's note",
                   "folio:$ref": "itemnotetype.json",
                   "javaType": "org.folio.rest.jaxrs.model.itemNoteTypeVirtual",
                   "readonly": true,
@@ -500,6 +535,7 @@
                   "Declared lost",
                   "Order closed",
                   "Claimed returned",
+                  "Unknown",
                   "Withdrawn",
                   "Lost and paid",
                   "Aged to lost"
@@ -533,6 +569,7 @@
             "type": "string"
           },
           "permanentLocation": {
+            "description": "The permanent shelving location in which an item resides",
             "folio:$ref": "location.json",
             "readonly": true,
             "folio:isVirtual": true,
@@ -547,6 +584,7 @@
             "type": "string"
           },
           "temporaryLocation": {
+            "description": "Temporary location, shelving location, or holding which is a physical place where items are stored, or an Online location",
             "folio:$ref": "location.json",
             "readonly": true,
             "folio:isVirtual": true,
@@ -702,6 +740,7 @@
       }
     },
     "bareHoldingsItems": {
+      "description": "Items of bareHoldings",
       "readonly": true,
       "folio:isVirtual": true,
       "folio:linkBase": "item-storage/items",
@@ -714,6 +753,7 @@
       }
     },
     "holdingsInstance": {
+      "description": "Instance of holding record",
       "folio:$ref": "instance.json",
       "readonly": true,
       "folio:isVirtual": true,
@@ -728,6 +768,9 @@
     },
     "metadata": {
       "$ref": "#/properties/holdingsItems/items/properties/metadata"
+    },
+    "sourceId": {
+      "$ref": "#/properties/id"
     }
   },
   "required": [

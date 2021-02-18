@@ -37,6 +37,11 @@
             "description": "Indicates if the item associated with the loan is in status 'Aged to lost' or 'Declared lost'",
             "type": "boolean",
             "default": false
+          },
+          "itemClaimedReturned": {
+            "description": "Indicates if the item associated with the loan is in status 'Claimed returned'",
+            "type": "boolean",
+            "default": false
           }
         },
         "required": [

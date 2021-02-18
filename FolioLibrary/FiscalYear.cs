@@ -43,16 +43,7 @@ namespace FolioLibrary
         public virtual ICollection<GroupFundFiscalYear> GroupFundFiscalYears { get; set; }
 
         [ScaffoldColumn(false)]
-        public virtual ICollection<LedgerFiscalYear> LedgerFiscalYears { get; set; }
-
-        [ScaffoldColumn(false)]
         public virtual ICollection<Ledger> Ledgers { get; set; }
-
-        [ScaffoldColumn(false)]
-        public virtual ICollection<TemporaryInvoiceTransaction> TemporaryInvoiceTransactions { get; set; }
-
-        [ScaffoldColumn(false)]
-        public virtual ICollection<TemporaryOrderTransaction> TemporaryOrderTransactions { get; set; }
 
         [ScaffoldColumn(false)]
         public virtual ICollection<Transaction> Transactions { get; set; }
@@ -66,7 +57,7 @@ namespace FolioLibrary
         {
             Id = (Guid?)jObject.SelectToken("id"),
             Content = jObject.ToString(),
-            CreationTime = (DateTime?)jObject.SelectToken("metadata.createdDate"),
+            CreationTime = ((DateTime?)jObject.SelectToken("metadata.createdDate"))?.ToLocalTime(),
             CreationUserId = (string)jObject.SelectToken("metadata.createdByUserId")
         } : null;
 

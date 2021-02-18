@@ -1,0 +1,1192 @@
+<%@ Page Language="C#" MasterPageFile="~/Default.master" AutoEventWireup="true" CodeBehind="Edit.aspx.cs" Inherits="FolioWebApplication.Item2s.Edit" %>
+
+<asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
+    <asp:Panel ID="Item2Panel" runat="server">
+        <fieldset>
+            <legend>
+                <asp:HyperLink ID="Item2HyperLink" runat="server" Text="Item" NavigateUrl="Default.aspx" /></legend>
+            <asp:FormView ID="Item2FormView" runat="server" DataKeyNames="Id" DefaultMode='<%# (string)Session["Item2sPermission"] == "Edit" ? FormViewMode.Edit : FormViewMode.ReadOnly %>' RenderOuterTable="false" 
+                OnDataBinding="Item2FormView_DataBinding" OnItemUpdating="Item2FormView_ItemUpdating" OnItemDeleting="Item2FormView_ItemDeleting"
+                OnItemCommand="Item2FormView_ItemCommand" Enabled='<%# true || (string)Session["Item2sPermission"] == "Edit" %>'>
+                <ItemTemplate>
+                    <asp:Panel ID="ViewItem2Panel" runat="server">
+                        <table>
+                            <tr runat="server" visible='<%# Eval("Id") != null %>'>
+                                <td>
+                                    <asp:Label ID="IdLabel" runat="server" Text="Id:" AssociatedControlID="IdHyperLink" />
+                                </td>
+                                <td>
+                                    <asp:HyperLink ID="IdHyperLink" runat="server" Text='<%# Eval("Id") %>' NavigateUrl='<%# $"Edit.aspx?Id={Eval("Id")}" %>' />
+                                </td>
+                            </tr>
+                            <tr runat="server" visible='<%# Eval("ShortId") != null %>'>
+                                <td>
+                                    <asp:Label ID="ShortIdLabel" runat="server" Text="Short Id:" AssociatedControlID="ShortIdLiteral" />
+                                </td>
+                                <td>
+                                    <asp:Literal ID="ShortIdLiteral" runat="server" Text='<%#: Eval("ShortId") %>' />
+                                </td>
+                            </tr>
+                            <tr runat="server" visible='<%# Eval("Holding") != null %>'>
+                                <td>
+                                    <asp:Label ID="HoldingLabel" runat="server" Text="Holding:" AssociatedControlID="HoldingHyperLink" />
+                                </td>
+                                <td>
+                                    <asp:HyperLink ID="HoldingHyperLink" runat="server" Text='<%# Eval("Holding.ShortId") %>' NavigateUrl='<%# $"~/Holding2s/Edit.aspx?Id={Eval("HoldingId")}" %>' Enabled='<%# Session["Holding2sPermission"] != null %>' />
+                                </td>
+                            </tr>
+                            <tr runat="server" visible='<%# Eval("DiscoverySuppress") != null %>'>
+                                <td>
+                                    <asp:Label ID="DiscoverySuppressLabel" runat="server" Text="Discovery Suppress:" AssociatedControlID="DiscoverySuppressLiteral" />
+                                </td>
+                                <td>
+                                    <asp:Literal ID="DiscoverySuppressLiteral" runat="server" Text='<%#: Eval("DiscoverySuppress") %>' />
+                                </td>
+                            </tr>
+                            <tr runat="server" visible='<%# Eval("AccessionNumber") != null %>'>
+                                <td>
+                                    <asp:Label ID="AccessionNumberLabel" runat="server" Text="Accession Number:" AssociatedControlID="AccessionNumberLiteral" />
+                                </td>
+                                <td>
+                                    <asp:Literal ID="AccessionNumberLiteral" runat="server" Text='<%#: Eval("AccessionNumber") %>' />
+                                </td>
+                            </tr>
+                            <tr runat="server" visible='<%# Eval("Barcode") != null %>'>
+                                <td>
+                                    <asp:Label ID="BarcodeLabel" runat="server" Text="Barcode:" AssociatedControlID="BarcodeLiteral" />
+                                </td>
+                                <td>
+                                    <asp:Literal ID="BarcodeLiteral" runat="server" Text='<%#: Eval("Barcode") %>' />
+                                </td>
+                            </tr>
+                            <tr runat="server" visible='<%# Eval("CallNumber") != null %>'>
+                                <td>
+                                    <asp:Label ID="CallNumberLabel" runat="server" Text="Call Number:" AssociatedControlID="CallNumberLiteral" />
+                                </td>
+                                <td>
+                                    <asp:Literal ID="CallNumberLiteral" runat="server" Text='<%#: Eval("CallNumber") %>' />
+                                </td>
+                            </tr>
+                            <tr runat="server" visible='<%# Eval("CallNumberPrefix") != null %>'>
+                                <td>
+                                    <asp:Label ID="CallNumberPrefixLabel" runat="server" Text="Call Number Prefix:" AssociatedControlID="CallNumberPrefixLiteral" />
+                                </td>
+                                <td>
+                                    <asp:Literal ID="CallNumberPrefixLiteral" runat="server" Text='<%#: Eval("CallNumberPrefix") %>' />
+                                </td>
+                            </tr>
+                            <tr runat="server" visible='<%# Eval("CallNumberSuffix") != null %>'>
+                                <td>
+                                    <asp:Label ID="CallNumberSuffixLabel" runat="server" Text="Call Number Suffix:" AssociatedControlID="CallNumberSuffixLiteral" />
+                                </td>
+                                <td>
+                                    <asp:Literal ID="CallNumberSuffixLiteral" runat="server" Text='<%#: Eval("CallNumberSuffix") %>' />
+                                </td>
+                            </tr>
+                            <tr runat="server" visible='<%# Eval("CallNumberType") != null %>'>
+                                <td>
+                                    <asp:Label ID="CallNumberTypeLabel" runat="server" Text="Call Number Type:" AssociatedControlID="CallNumberTypeHyperLink" />
+                                </td>
+                                <td>
+                                    <asp:HyperLink ID="CallNumberTypeHyperLink" runat="server" Text='<%#: Eval("CallNumberType.Name") %>' NavigateUrl='<%# $"~/CallNumberType2s/Edit.aspx?Id={Eval("CallNumberTypeId")}" %>' Enabled='<%# Session["CallNumberType2sPermission"] != null %>' />
+                                </td>
+                            </tr>
+                            <tr runat="server" visible='<%# Eval("EffectiveCallNumber") != null %>'>
+                                <td>
+                                    <asp:Label ID="EffectiveCallNumberLabel" runat="server" Text="Effective Call Number:" AssociatedControlID="EffectiveCallNumberLiteral" />
+                                </td>
+                                <td>
+                                    <asp:Literal ID="EffectiveCallNumberLiteral" runat="server" Text='<%#: Eval("EffectiveCallNumber") %>' />
+                                </td>
+                            </tr>
+                            <tr runat="server" visible='<%# Eval("EffectiveCallNumberPrefix") != null %>'>
+                                <td>
+                                    <asp:Label ID="EffectiveCallNumberPrefixLabel" runat="server" Text="Effective Call Number Prefix:" AssociatedControlID="EffectiveCallNumberPrefixLiteral" />
+                                </td>
+                                <td>
+                                    <asp:Literal ID="EffectiveCallNumberPrefixLiteral" runat="server" Text='<%#: Eval("EffectiveCallNumberPrefix") %>' />
+                                </td>
+                            </tr>
+                            <tr runat="server" visible='<%# Eval("EffectiveCallNumberSuffix") != null %>'>
+                                <td>
+                                    <asp:Label ID="EffectiveCallNumberSuffixLabel" runat="server" Text="Effective Call Number Suffix:" AssociatedControlID="EffectiveCallNumberSuffixLiteral" />
+                                </td>
+                                <td>
+                                    <asp:Literal ID="EffectiveCallNumberSuffixLiteral" runat="server" Text='<%#: Eval("EffectiveCallNumberSuffix") %>' />
+                                </td>
+                            </tr>
+                            <tr runat="server" visible='<%# Eval("EffectiveCallNumberType") != null %>'>
+                                <td>
+                                    <asp:Label ID="EffectiveCallNumberTypeLabel" runat="server" Text="Effective Call Number Type:" AssociatedControlID="EffectiveCallNumberTypeHyperLink" />
+                                </td>
+                                <td>
+                                    <asp:HyperLink ID="EffectiveCallNumberTypeHyperLink" runat="server" Text='<%#: Eval("EffectiveCallNumberType.Name") %>' NavigateUrl='<%# $"~/CallNumberType2s/Edit.aspx?Id={Eval("EffectiveCallNumberTypeId")}" %>' Enabled='<%# Session["CallNumberType2sPermission"] != null %>' />
+                                </td>
+                            </tr>
+                            <tr runat="server" visible='<%# Eval("Volume") != null %>'>
+                                <td>
+                                    <asp:Label ID="VolumeLabel" runat="server" Text="Volume:" AssociatedControlID="VolumeLiteral" />
+                                </td>
+                                <td>
+                                    <asp:Literal ID="VolumeLiteral" runat="server" Text='<%#: Eval("Volume") %>' />
+                                </td>
+                            </tr>
+                            <tr runat="server" visible='<%# Eval("Enumeration") != null %>'>
+                                <td>
+                                    <asp:Label ID="EnumerationLabel" runat="server" Text="Enumeration:" AssociatedControlID="EnumerationLiteral" />
+                                </td>
+                                <td>
+                                    <asp:Literal ID="EnumerationLiteral" runat="server" Text='<%#: Eval("Enumeration") %>' />
+                                </td>
+                            </tr>
+                            <tr runat="server" visible='<%# Eval("Chronology") != null %>'>
+                                <td>
+                                    <asp:Label ID="ChronologyLabel" runat="server" Text="Chronology:" AssociatedControlID="ChronologyLiteral" />
+                                </td>
+                                <td>
+                                    <asp:Literal ID="ChronologyLiteral" runat="server" Text='<%#: Eval("Chronology") %>' />
+                                </td>
+                            </tr>
+                            <tr runat="server" visible='<%# Eval("ItemIdentifier") != null %>'>
+                                <td>
+                                    <asp:Label ID="ItemIdentifierLabel" runat="server" Text="Item Identifier:" AssociatedControlID="ItemIdentifierLiteral" />
+                                </td>
+                                <td>
+                                    <asp:Literal ID="ItemIdentifierLiteral" runat="server" Text='<%#: Eval("ItemIdentifier") %>' />
+                                </td>
+                            </tr>
+                            <tr runat="server" visible='<%# Eval("CopyNumber") != null %>'>
+                                <td>
+                                    <asp:Label ID="CopyNumberLabel" runat="server" Text="Copy Number:" AssociatedControlID="CopyNumberLiteral" />
+                                </td>
+                                <td>
+                                    <asp:Literal ID="CopyNumberLiteral" runat="server" Text='<%#: Eval("CopyNumber") %>' />
+                                </td>
+                            </tr>
+                            <tr runat="server" visible='<%# Eval("PiecesCount") != null %>'>
+                                <td>
+                                    <asp:Label ID="PiecesCountLabel" runat="server" Text="Pieces Count:" AssociatedControlID="PiecesCountLiteral" />
+                                </td>
+                                <td>
+                                    <asp:Literal ID="PiecesCountLiteral" runat="server" Text='<%#: Eval("PiecesCount") %>' />
+                                </td>
+                            </tr>
+                            <tr runat="server" visible='<%# Eval("PiecesDescription") != null %>'>
+                                <td>
+                                    <asp:Label ID="PiecesDescriptionLabel" runat="server" Text="Pieces Description:" AssociatedControlID="PiecesDescriptionLiteral" />
+                                </td>
+                                <td>
+                                    <asp:Literal ID="PiecesDescriptionLiteral" runat="server" Text='<%#: Eval("PiecesDescription") %>' />
+                                </td>
+                            </tr>
+                            <tr runat="server" visible='<%# Eval("MissingPiecesCount") != null %>'>
+                                <td>
+                                    <asp:Label ID="MissingPiecesCountLabel" runat="server" Text="Missing Pieces Count:" AssociatedControlID="MissingPiecesCountLiteral" />
+                                </td>
+                                <td>
+                                    <asp:Literal ID="MissingPiecesCountLiteral" runat="server" Text='<%#: Eval("MissingPiecesCount") %>' />
+                                </td>
+                            </tr>
+                            <tr runat="server" visible='<%# Eval("MissingPiecesDescription") != null %>'>
+                                <td>
+                                    <asp:Label ID="MissingPiecesDescriptionLabel" runat="server" Text="Missing Pieces Description:" AssociatedControlID="MissingPiecesDescriptionLiteral" />
+                                </td>
+                                <td>
+                                    <asp:Literal ID="MissingPiecesDescriptionLiteral" runat="server" Text='<%#: Eval("MissingPiecesDescription") %>' />
+                                </td>
+                            </tr>
+                            <tr runat="server" visible='<%# Eval("MissingPiecesTime") != null %>'>
+                                <td>
+                                    <asp:Label ID="MissingPiecesTimeLabel" runat="server" Text="Missing Pieces Time:" AssociatedControlID="MissingPiecesTimeLiteral" />
+                                </td>
+                                <td>
+                                    <asp:Literal ID="MissingPiecesTimeLiteral" runat="server" Text='<%# Eval("MissingPiecesTime", "{0:g}") %>' />
+                                </td>
+                            </tr>
+                            <tr runat="server" visible='<%# Eval("DamagedStatus") != null %>'>
+                                <td>
+                                    <asp:Label ID="DamagedStatusLabel" runat="server" Text="Damaged Status:" AssociatedControlID="DamagedStatusHyperLink" />
+                                </td>
+                                <td>
+                                    <asp:HyperLink ID="DamagedStatusHyperLink" runat="server" Text='<%#: Eval("DamagedStatus.Name") %>' NavigateUrl='<%# $"~/ItemDamagedStatus2s/Edit.aspx?Id={Eval("DamagedStatusId")}" %>' Enabled='<%# Session["ItemDamagedStatus2sPermission"] != null %>' />
+                                </td>
+                            </tr>
+                            <tr runat="server" visible='<%# Eval("DamagedStatusTime") != null %>'>
+                                <td>
+                                    <asp:Label ID="DamagedStatusTimeLabel" runat="server" Text="Damaged Status Time:" AssociatedControlID="DamagedStatusTimeLiteral" />
+                                </td>
+                                <td>
+                                    <asp:Literal ID="DamagedStatusTimeLiteral" runat="server" Text='<%# Eval("DamagedStatusTime", "{0:g}") %>' />
+                                </td>
+                            </tr>
+                            <tr runat="server" visible='<%# Eval("StatusName") != null %>'>
+                                <td>
+                                    <asp:Label ID="StatusNameLabel" runat="server" Text="Status Name:" AssociatedControlID="StatusNameLiteral" />
+                                </td>
+                                <td>
+                                    <asp:Literal ID="StatusNameLiteral" runat="server" Text='<%#: Eval("StatusName") %>' />
+                                </td>
+                            </tr>
+                            <tr runat="server" visible='<%# Eval("StatusDate") != null %>'>
+                                <td>
+                                    <asp:Label ID="StatusDateLabel" runat="server" Text="Status Date:" AssociatedControlID="StatusDateLiteral" />
+                                </td>
+                                <td>
+                                    <asp:Literal ID="StatusDateLiteral" runat="server" Text='<%# Eval("StatusDate", "{0:d}") %>' />
+                                </td>
+                            </tr>
+                            <tr runat="server" visible='<%# Eval("MaterialType") != null %>'>
+                                <td>
+                                    <asp:Label ID="MaterialTypeLabel" runat="server" Text="Material Type:" AssociatedControlID="MaterialTypeHyperLink" />
+                                </td>
+                                <td>
+                                    <asp:HyperLink ID="MaterialTypeHyperLink" runat="server" Text='<%#: Eval("MaterialType.Name") %>' NavigateUrl='<%# $"~/MaterialType2s/Edit.aspx?Id={Eval("MaterialTypeId")}" %>' Enabled='<%# Session["MaterialType2sPermission"] != null %>' />
+                                </td>
+                            </tr>
+                            <tr runat="server" visible='<%# Eval("PermanentLoanType") != null %>'>
+                                <td>
+                                    <asp:Label ID="PermanentLoanTypeLabel" runat="server" Text="Permanent Loan Type:" AssociatedControlID="PermanentLoanTypeHyperLink" />
+                                </td>
+                                <td>
+                                    <asp:HyperLink ID="PermanentLoanTypeHyperLink" runat="server" Text='<%#: Eval("PermanentLoanType.Name") %>' NavigateUrl='<%# $"~/LoanType2s/Edit.aspx?Id={Eval("PermanentLoanTypeId")}" %>' Enabled='<%# Session["LoanType2sPermission"] != null %>' />
+                                </td>
+                            </tr>
+                            <tr runat="server" visible='<%# Eval("TemporaryLoanType") != null %>'>
+                                <td>
+                                    <asp:Label ID="TemporaryLoanTypeLabel" runat="server" Text="Temporary Loan Type:" AssociatedControlID="TemporaryLoanTypeHyperLink" />
+                                </td>
+                                <td>
+                                    <asp:HyperLink ID="TemporaryLoanTypeHyperLink" runat="server" Text='<%#: Eval("TemporaryLoanType.Name") %>' NavigateUrl='<%# $"~/LoanType2s/Edit.aspx?Id={Eval("TemporaryLoanTypeId")}" %>' Enabled='<%# Session["LoanType2sPermission"] != null %>' />
+                                </td>
+                            </tr>
+                            <tr runat="server" visible='<%# Eval("PermanentLocation") != null %>'>
+                                <td>
+                                    <asp:Label ID="PermanentLocationLabel" runat="server" Text="Permanent Location:" AssociatedControlID="PermanentLocationHyperLink" />
+                                </td>
+                                <td>
+                                    <asp:HyperLink ID="PermanentLocationHyperLink" runat="server" Text='<%#: Eval("PermanentLocation.Name") %>' NavigateUrl='<%# $"~/Location2s/Edit.aspx?Id={Eval("PermanentLocationId")}" %>' Enabled='<%# Session["Location2sPermission"] != null %>' />
+                                </td>
+                            </tr>
+                            <tr runat="server" visible='<%# Eval("TemporaryLocation") != null %>'>
+                                <td>
+                                    <asp:Label ID="TemporaryLocationLabel" runat="server" Text="Temporary Location:" AssociatedControlID="TemporaryLocationHyperLink" />
+                                </td>
+                                <td>
+                                    <asp:HyperLink ID="TemporaryLocationHyperLink" runat="server" Text='<%#: Eval("TemporaryLocation.Name") %>' NavigateUrl='<%# $"~/Location2s/Edit.aspx?Id={Eval("TemporaryLocationId")}" %>' Enabled='<%# Session["Location2sPermission"] != null %>' />
+                                </td>
+                            </tr>
+                            <tr runat="server" visible='<%# Eval("EffectiveLocation") != null %>'>
+                                <td>
+                                    <asp:Label ID="EffectiveLocationLabel" runat="server" Text="Effective Location:" AssociatedControlID="EffectiveLocationHyperLink" />
+                                </td>
+                                <td>
+                                    <asp:HyperLink ID="EffectiveLocationHyperLink" runat="server" Text='<%#: Eval("EffectiveLocation.Name") %>' NavigateUrl='<%# $"~/Location2s/Edit.aspx?Id={Eval("EffectiveLocationId")}" %>' Enabled='<%# Session["Location2sPermission"] != null %>' />
+                                </td>
+                            </tr>
+                            <tr runat="server" visible='<%# Eval("InTransitDestinationServicePoint") != null %>'>
+                                <td>
+                                    <asp:Label ID="InTransitDestinationServicePointLabel" runat="server" Text="In Transit Destination Service Point:" AssociatedControlID="InTransitDestinationServicePointHyperLink" />
+                                </td>
+                                <td>
+                                    <asp:HyperLink ID="InTransitDestinationServicePointHyperLink" runat="server" Text='<%#: Eval("InTransitDestinationServicePoint.Name") %>' NavigateUrl='<%# $"~/ServicePoint2s/Edit.aspx?Id={Eval("InTransitDestinationServicePointId")}" %>' Enabled='<%# Session["ServicePoint2sPermission"] != null %>' />
+                                </td>
+                            </tr>
+                            <tr runat="server" visible='<%# Eval("OrderItem") != null %>'>
+                                <td>
+                                    <asp:Label ID="OrderItemLabel" runat="server" Text="Order Item:" AssociatedControlID="OrderItemHyperLink" />
+                                </td>
+                                <td>
+                                    <asp:HyperLink ID="OrderItemHyperLink" runat="server" Text='<%#: Eval("OrderItem.Number") %>' NavigateUrl='<%# $"~/OrderItem2s/Edit.aspx?Id={Eval("OrderItemId")}" %>' Enabled='<%# Session["OrderItem2sPermission"] != null %>' />
+                                </td>
+                            </tr>
+                            <tr runat="server" visible='<%# Eval("CreationTime") != null %>'>
+                                <td>
+                                    <asp:Label ID="CreationTimeLabel" runat="server" Text="Creation Time:" AssociatedControlID="CreationTimeLiteral" />
+                                </td>
+                                <td>
+                                    <asp:Literal ID="CreationTimeLiteral" runat="server" Text='<%# Eval("CreationTime", "{0:g}") %>' />
+                                </td>
+                            </tr>
+                            <tr runat="server" visible='<%# Eval("CreationUser") != null %>'>
+                                <td>
+                                    <asp:Label ID="CreationUserLabel" runat="server" Text="Creation User:" AssociatedControlID="CreationUserHyperLink" />
+                                </td>
+                                <td>
+                                    <asp:HyperLink ID="CreationUserHyperLink" runat="server" Text='<%#: Eval("CreationUser.Username") %>' NavigateUrl='<%# $"~/User2s/Edit.aspx?Id={Eval("CreationUserId")}" %>' Enabled='<%# Session["User2sPermission"] != null %>' />
+                                </td>
+                            </tr>
+                            <tr runat="server" visible='<%# Eval("LastWriteTime") != null %>'>
+                                <td>
+                                    <asp:Label ID="LastWriteTimeLabel" runat="server" Text="Last Write Time:" AssociatedControlID="LastWriteTimeLiteral" />
+                                </td>
+                                <td>
+                                    <asp:Literal ID="LastWriteTimeLiteral" runat="server" Text='<%# Eval("LastWriteTime", "{0:g}") %>' />
+                                </td>
+                            </tr>
+                            <tr runat="server" visible='<%# Eval("LastWriteUser") != null %>'>
+                                <td>
+                                    <asp:Label ID="LastWriteUserLabel" runat="server" Text="Last Write User:" AssociatedControlID="LastWriteUserHyperLink" />
+                                </td>
+                                <td>
+                                    <asp:HyperLink ID="LastWriteUserHyperLink" runat="server" Text='<%#: Eval("LastWriteUser.Username") %>' NavigateUrl='<%# $"~/User2s/Edit.aspx?Id={Eval("LastWriteUserId")}" %>' Enabled='<%# Session["User2sPermission"] != null %>' />
+                                </td>
+                            </tr>
+                            <tr runat="server" visible='<%# Eval("LastCheckInDateTime") != null %>'>
+                                <td>
+                                    <asp:Label ID="LastCheckInDateTimeLabel" runat="server" Text="Last Check In Date Time:" AssociatedControlID="LastCheckInDateTimeLiteral" />
+                                </td>
+                                <td>
+                                    <asp:Literal ID="LastCheckInDateTimeLiteral" runat="server" Text='<%# Eval("LastCheckInDateTime", "{0:g}") %>' />
+                                </td>
+                            </tr>
+                            <tr runat="server" visible='<%# Eval("LastCheckInServicePoint") != null %>'>
+                                <td>
+                                    <asp:Label ID="LastCheckInServicePointLabel" runat="server" Text="Last Check In Service Point:" AssociatedControlID="LastCheckInServicePointHyperLink" />
+                                </td>
+                                <td>
+                                    <asp:HyperLink ID="LastCheckInServicePointHyperLink" runat="server" Text='<%#: Eval("LastCheckInServicePoint.Name") %>' NavigateUrl='<%# $"~/ServicePoint2s/Edit.aspx?Id={Eval("LastCheckInServicePointId")}" %>' Enabled='<%# Session["ServicePoint2sPermission"] != null %>' />
+                                </td>
+                            </tr>
+                            <tr runat="server" visible='<%# Eval("LastCheckInStaffMember") != null %>'>
+                                <td>
+                                    <asp:Label ID="LastCheckInStaffMemberLabel" runat="server" Text="Last Check In Staff Member:" AssociatedControlID="LastCheckInStaffMemberHyperLink" />
+                                </td>
+                                <td>
+                                    <asp:HyperLink ID="LastCheckInStaffMemberHyperLink" runat="server" Text='<%#: Eval("LastCheckInStaffMember.Username") %>' NavigateUrl='<%# $"~/User2s/Edit.aspx?Id={Eval("LastCheckInStaffMemberId")}" %>' Enabled='<%# Session["User2sPermission"] != null %>' />
+                                </td>
+                            </tr>
+                            <tr runat="server" visible='<%# Eval("Content") != null %>'>
+                                <td>
+                                    <asp:Label ID="ContentLabel" runat="server" Text="Content:" AssociatedControlID="ContentLiteral" />
+                                </td>
+                                <td>
+                                    <pre><asp:Literal ID="ContentLiteral" runat="server" Text='<%#: Eval("Content") %>' /></pre>
+                                </td>
+                            </tr>
+                        </table>
+                    </asp:Panel>
+                </ItemTemplate>
+                <EditItemTemplate>
+                    <asp:Panel ID="EditItem2Panel" runat="server" DefaultButton="InsertUpdateRadButton">
+                        <div>
+                            <asp:ValidationSummary ID="Item2ValidationSummary" runat="server" ShowModelStateErrors="true" CssClass="Error" ValidationGroup="Item2" Visible="false" />
+                        </div>
+                        <table>
+                            <tr runat="server" visible='<%# Eval("Id") != null %>'>
+                                <td>
+                                    <asp:Label ID="IdLabel" runat="server" Text="Id:" AssociatedControlID="IdHyperLink" />
+                                </td>
+                                <td>
+                                    <asp:HyperLink ID="IdHyperLink" runat="server" Text='<%# Eval("Id") %>' NavigateUrl='<%# $"~/Item2s/Edit.aspx?Id={Eval("Id")}" %>' />
+                                </td>
+                            </tr>
+                            <tr runat="server" visible='<%# Eval("ShortId") != null %>'>
+                                <td>
+                                    <asp:Label ID="ShortIdLabel" runat="server" Text="Short Id:" AssociatedControlID="ShortIdLiteral" />
+                                </td>
+                                <td>
+                                    <asp:Literal ID="ShortIdLiteral" runat="server" Text='<%# Eval("ShortId") %>' />
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <asp:HyperLink runat="server" Text="Holding:" NavigateUrl="~/Holding2s/Default.aspx" Enabled='<%# Session["Holding2sPermission"] != null %>' />
+                                </td>
+                                <td>
+                                    <telerik:RadComboBox ID="HoldingRadComboBox" runat="server" MaxHeight="500px" Width="500px" EnableLoadOnDemand="true" SelectedValue='<%# Bind("HoldingId") %>' OnDataBinding="HoldingRadComboBox_DataBinding" OnItemsRequested="HoldingRadComboBox_ItemsRequested" />
+                                    <asp:RequiredFieldValidator ID="HoldingRequiredFieldValidator" runat="server" ControlToValidate="HoldingRadComboBox" ErrorMessage="The Holding field is required." Display="Dynamic" CssClass="Error" ValidationGroup="Item2" />
+                                    <asp:CustomValidator ID="HoldingCustomValidator" runat="server" ErrorMessage="The Holding field is invalid." ControlToValidate="HoldingRadComboBox" Display="Dynamic" CssClass="Error" OnServerValidate="HoldingCustomValidator_ServerValidate" ValidationGroup="Item2" />
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                </td>
+                                <td>
+                                    <telerik:RadCheckBox ID="DiscoverySuppressRadCheckBox" runat="server" Text="Discovery Suppress" Checked='<%# Bind("DiscoverySuppress") %>' AutoPostBack="false" />
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <asp:Label ID="AccessionNumberLabel" runat="server" Text="Accession Number:" AssociatedControlID="AccessionNumberRadTextBox" />
+                                </td>
+                                <td>
+                                    <telerik:RadTextBox ID="AccessionNumberRadTextBox" runat="server" Text='<%# Bind("AccessionNumber") %>' MaxLength="1024" Width="500px" />
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <asp:Label ID="BarcodeLabel" runat="server" Text="Barcode:" AssociatedControlID="BarcodeRadTextBox" />
+                                </td>
+                                <td>
+                                    <telerik:RadTextBox ID="BarcodeRadTextBox" runat="server" Text='<%# Bind("Barcode") %>' MaxLength="1024" Width="500px" />
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <asp:Label ID="CallNumberLabel" runat="server" Text="Call Number:" AssociatedControlID="CallNumberRadTextBox" />
+                                </td>
+                                <td>
+                                    <telerik:RadTextBox ID="CallNumberRadTextBox" runat="server" Text='<%# Bind("CallNumber") %>' MaxLength="1024" Width="500px" />
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <asp:Label ID="CallNumberPrefixLabel" runat="server" Text="Call Number Prefix:" AssociatedControlID="CallNumberPrefixRadTextBox" />
+                                </td>
+                                <td>
+                                    <telerik:RadTextBox ID="CallNumberPrefixRadTextBox" runat="server" Text='<%# Bind("CallNumberPrefix") %>' MaxLength="1024" Width="500px" />
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <asp:Label ID="CallNumberSuffixLabel" runat="server" Text="Call Number Suffix:" AssociatedControlID="CallNumberSuffixRadTextBox" />
+                                </td>
+                                <td>
+                                    <telerik:RadTextBox ID="CallNumberSuffixRadTextBox" runat="server" Text='<%# Bind("CallNumberSuffix") %>' MaxLength="1024" Width="500px" />
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <asp:HyperLink runat="server" Text="Call Number Type:" NavigateUrl="~/CallNumberType2s/Default.aspx" Enabled='<%# Session["CallNumberType2sPermission"] != null %>' />
+                                </td>
+                                <td>
+                                    <telerik:RadComboBox ID="CallNumberTypeRadComboBox" runat="server" MarkFirstMatch="true" MaxHeight="500px" Width="500px" AppendDataBoundItems="true" DataTextField="Name" DataValueField="Id" SelectedValue='<%# Bind("CallNumberTypeId") %>' OnDataBinding="CallNumberTypeRadComboBox_DataBinding">
+                                        <Items>
+                                            <telerik:RadComboBoxItem Value="" Text="" />
+                                        </Items>
+                                    </telerik:RadComboBox>
+                                </td>
+                            </tr>
+                            <tr runat="server" visible='<%# Eval("EffectiveCallNumber") != null %>'>
+                                <td>
+                                    <asp:Label ID="EffectiveCallNumberLabel" runat="server" Text="Effective Call Number:" AssociatedControlID="EffectiveCallNumberLiteral" />
+                                </td>
+                                <td>
+                                    <asp:Literal ID="EffectiveCallNumberLiteral" runat="server" Text='<%#: Eval("EffectiveCallNumber") %>' />
+                                </td>
+                            </tr>
+                            <tr runat="server" visible='<%# Eval("EffectiveCallNumberPrefix") != null %>'>
+                                <td>
+                                    <asp:Label ID="EffectiveCallNumberPrefixLabel" runat="server" Text="Effective Call Number Prefix:" AssociatedControlID="EffectiveCallNumberPrefixLiteral" />
+                                </td>
+                                <td>
+                                    <asp:Literal ID="EffectiveCallNumberPrefixLiteral" runat="server" Text='<%#: Eval("EffectiveCallNumberPrefix") %>' />
+                                </td>
+                            </tr>
+                            <tr runat="server" visible='<%# Eval("EffectiveCallNumberSuffix") != null %>'>
+                                <td>
+                                    <asp:Label ID="EffectiveCallNumberSuffixLabel" runat="server" Text="Effective Call Number Suffix:" AssociatedControlID="EffectiveCallNumberSuffixLiteral" />
+                                </td>
+                                <td>
+                                    <asp:Literal ID="EffectiveCallNumberSuffixLiteral" runat="server" Text='<%#: Eval("EffectiveCallNumberSuffix") %>' />
+                                </td>
+                            </tr>
+                            <tr runat="server" visible='<%# Eval("EffectiveCallNumberType") != null %>'>
+                                <td>
+                                    <asp:HyperLink runat="server" Text="Effective Call Number Type:" NavigateUrl="~/CallNumberType2s/Default.aspx" Enabled='<%# Session["CallNumberType2sPermission"] != null %>' />
+                                </td>
+                                <td>
+                                    <asp:HyperLink ID="EffectiveCallNumberTypeHyperLink" runat="server" Text='<%# Eval("EffectiveCallNumberType.Name") %>' NavigateUrl='<%# "~/CallNumberType2s/Edit.aspx?Id=" + Eval("EffectiveCallNumberTypeId") %>' Enabled='<%# Session["CallNumberType2sPermission"] != null %>' />
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <asp:Label ID="VolumeLabel" runat="server" Text="Volume:" AssociatedControlID="VolumeRadTextBox" />
+                                </td>
+                                <td>
+                                    <telerik:RadTextBox ID="VolumeRadTextBox" runat="server" Text='<%# Bind("Volume") %>' MaxLength="1024" Width="500px" />
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <asp:Label ID="EnumerationLabel" runat="server" Text="Enumeration:" AssociatedControlID="EnumerationRadTextBox" />
+                                </td>
+                                <td>
+                                    <telerik:RadTextBox ID="EnumerationRadTextBox" runat="server" Text='<%# Bind("Enumeration") %>' MaxLength="1024" Width="500px" />
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <asp:Label ID="ChronologyLabel" runat="server" Text="Chronology:" AssociatedControlID="ChronologyRadTextBox" />
+                                </td>
+                                <td>
+                                    <telerik:RadTextBox ID="ChronologyRadTextBox" runat="server" Text='<%# Bind("Chronology") %>' MaxLength="1024" Width="500px" />
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <asp:Label ID="ItemIdentifierLabel" runat="server" Text="Item Identifier:" AssociatedControlID="ItemIdentifierRadTextBox" />
+                                </td>
+                                <td>
+                                    <telerik:RadTextBox ID="ItemIdentifierRadTextBox" runat="server" Text='<%# Bind("ItemIdentifier") %>' MaxLength="1024" Width="500px" />
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <asp:Label ID="CopyNumberLabel" runat="server" Text="Copy Number:" AssociatedControlID="CopyNumberRadTextBox" />
+                                </td>
+                                <td>
+                                    <telerik:RadTextBox ID="CopyNumberRadTextBox" runat="server" Text='<%# Bind("CopyNumber") %>' MaxLength="1024" Width="500px" />
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <asp:Label ID="PiecesCountLabel" runat="server" Text="Pieces Count:" AssociatedControlID="PiecesCountRadTextBox" />
+                                </td>
+                                <td>
+                                    <telerik:RadTextBox ID="PiecesCountRadTextBox" runat="server" Text='<%# Bind("PiecesCount") %>' MaxLength="1024" Width="500px" />
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <asp:Label ID="PiecesDescriptionLabel" runat="server" Text="Pieces Description:" AssociatedControlID="PiecesDescriptionRadTextBox" />
+                                </td>
+                                <td>
+                                    <telerik:RadTextBox ID="PiecesDescriptionRadTextBox" runat="server" Text='<%# Bind("PiecesDescription") %>' MaxLength="1024" Width="500px" />
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <asp:Label ID="MissingPiecesCountLabel" runat="server" Text="Missing Pieces Count:" AssociatedControlID="MissingPiecesCountRadTextBox" />
+                                </td>
+                                <td>
+                                    <telerik:RadTextBox ID="MissingPiecesCountRadTextBox" runat="server" Text='<%# Bind("MissingPiecesCount") %>' MaxLength="1024" Width="500px" />
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <asp:Label ID="MissingPiecesDescriptionLabel" runat="server" Text="Missing Pieces Description:" AssociatedControlID="MissingPiecesDescriptionRadTextBox" />
+                                </td>
+                                <td>
+                                    <telerik:RadTextBox ID="MissingPiecesDescriptionRadTextBox" runat="server" Text='<%# Bind("MissingPiecesDescription") %>' MaxLength="1024" Width="500px" />
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <asp:Label ID="MissingPiecesTimeLabel" runat="server" Text="Missing Pieces Time:" AssociatedControlID="MissingPiecesTimeRadDateTimePicker" />
+                                </td>
+                                <td>
+                                    <telerik:RadDateTimePicker ID="MissingPiecesTimeRadDateTimePicker" runat="server" DbSelectedDate='<%# Bind("MissingPiecesTime") %>' Width="500px" MinDate="1/1/1900" />
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <asp:HyperLink runat="server" Text="Damaged Status:" NavigateUrl="~/ItemDamagedStatus2s/Default.aspx" Enabled='<%# Session["ItemDamagedStatus2sPermission"] != null %>' />
+                                </td>
+                                <td>
+                                    <telerik:RadComboBox ID="DamagedStatusRadComboBox" runat="server" MarkFirstMatch="true" MaxHeight="500px" Width="500px" AppendDataBoundItems="true" DataTextField="Name" DataValueField="Id" SelectedValue='<%# Bind("DamagedStatusId") %>' OnDataBinding="DamagedStatusRadComboBox_DataBinding">
+                                        <Items>
+                                            <telerik:RadComboBoxItem Value="" Text="" />
+                                        </Items>
+                                    </telerik:RadComboBox>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <asp:Label ID="DamagedStatusTimeLabel" runat="server" Text="Damaged Status Time:" AssociatedControlID="DamagedStatusTimeRadDateTimePicker" />
+                                </td>
+                                <td>
+                                    <telerik:RadDateTimePicker ID="DamagedStatusTimeRadDateTimePicker" runat="server" DbSelectedDate='<%# Bind("DamagedStatusTime") %>' Width="500px" MinDate="1/1/1900" />
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <asp:Label ID="StatusNameLabel" runat="server" Text="Status Name:" AssociatedControlID="StatusNameRadComboBox" />
+                                </td>
+                                <td>
+                                    <telerik:RadComboBox ID="StatusNameRadComboBox" runat="server" MarkFirstMatch="true" MaxHeight="500px" Width="500px" AppendDataBoundItems="true" SelectedValue='<%# Bind("StatusName") %>' OnDataBinding="StatusNameRadComboBox_DataBinding">
+                                        <Items>
+                                            <telerik:RadComboBoxItem Value="" Text="" />
+                                        </Items>
+                                    </telerik:RadComboBox>
+                                    <asp:RequiredFieldValidator ID="StatusNameRequiredFieldValidator" runat="server" ControlToValidate="StatusNameRadComboBox" ErrorMessage="The Status Name field is required." Display="Dynamic" CssClass="Error" ValidationGroup="Item2" />
+                                    <asp:RegularExpressionValidator ID="StatusNameRegularExpressionValidator" runat="server" ErrorMessage="The Status Name field must match the regular expression '^(Available|Awaiting pickup|Awaiting delivery|Checked out|In process|In transit|Missing|On order|Paged|Declared lost|Order closed|Claimed returned|Unknown|Withdrawn|Lost and paid|Aged to lost)$'." ControlToValidate="StatusNameRadComboBox" Display="Dynamic" CssClass="Error" ValidationExpression="^(Available|Awaiting pickup|Awaiting delivery|Checked out|In process|In transit|Missing|On order|Paged|Declared lost|Order closed|Claimed returned|Unknown|Withdrawn|Lost and paid|Aged to lost)$" ValidationGroup="Item2" />
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <asp:Label ID="StatusDateLabel" runat="server" Text="Status Date:" AssociatedControlID="StatusDateRadDatePicker" />
+                                </td>
+                                <td>
+                                    <telerik:RadDatePicker ID="StatusDateRadDatePicker" runat="server" DbSelectedDate='<%# Bind("StatusDate") %>' Width="500px" MinDate="1/1/1900" />
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <asp:HyperLink runat="server" Text="Material Type:" NavigateUrl="~/MaterialType2s/Default.aspx" Enabled='<%# Session["MaterialType2sPermission"] != null %>' />
+                                </td>
+                                <td>
+                                    <telerik:RadComboBox ID="MaterialTypeRadComboBox" runat="server" MarkFirstMatch="true" MaxHeight="500px" Width="500px" AppendDataBoundItems="true" DataTextField="Name" DataValueField="Id" SelectedValue='<%# Bind("MaterialTypeId") %>' OnDataBinding="MaterialTypeRadComboBox_DataBinding">
+                                        <Items>
+                                            <telerik:RadComboBoxItem Value="" Text="" />
+                                        </Items>
+                                    </telerik:RadComboBox>
+                                    <asp:RequiredFieldValidator ID="MaterialTypeRequiredFieldValidator" runat="server" ControlToValidate="MaterialTypeRadComboBox" ErrorMessage="The Material Type field is required." Display="Dynamic" CssClass="Error" ValidationGroup="Item2" />
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <asp:HyperLink runat="server" Text="Permanent Loan Type:" NavigateUrl="~/LoanType2s/Default.aspx" Enabled='<%# Session["LoanType2sPermission"] != null %>' />
+                                </td>
+                                <td>
+                                    <telerik:RadComboBox ID="PermanentLoanTypeRadComboBox" runat="server" MarkFirstMatch="true" MaxHeight="500px" Width="500px" AppendDataBoundItems="true" DataTextField="Name" DataValueField="Id" SelectedValue='<%# Bind("PermanentLoanTypeId") %>' OnDataBinding="PermanentLoanTypeRadComboBox_DataBinding">
+                                        <Items>
+                                            <telerik:RadComboBoxItem Value="" Text="" />
+                                        </Items>
+                                    </telerik:RadComboBox>
+                                    <asp:RequiredFieldValidator ID="PermanentLoanTypeRequiredFieldValidator" runat="server" ControlToValidate="PermanentLoanTypeRadComboBox" ErrorMessage="The Permanent Loan Type field is required." Display="Dynamic" CssClass="Error" ValidationGroup="Item2" />
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <asp:HyperLink runat="server" Text="Temporary Loan Type:" NavigateUrl="~/LoanType2s/Default.aspx" Enabled='<%# Session["LoanType2sPermission"] != null %>' />
+                                </td>
+                                <td>
+                                    <telerik:RadComboBox ID="TemporaryLoanTypeRadComboBox" runat="server" MarkFirstMatch="true" MaxHeight="500px" Width="500px" AppendDataBoundItems="true" DataTextField="Name" DataValueField="Id" SelectedValue='<%# Bind("TemporaryLoanTypeId") %>' OnDataBinding="TemporaryLoanTypeRadComboBox_DataBinding">
+                                        <Items>
+                                            <telerik:RadComboBoxItem Value="" Text="" />
+                                        </Items>
+                                    </telerik:RadComboBox>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <asp:HyperLink runat="server" Text="Permanent Location:" NavigateUrl="~/Location2s/Default.aspx" Enabled='<%# Session["Location2sPermission"] != null %>' />
+                                </td>
+                                <td>
+                                    <telerik:RadComboBox ID="PermanentLocationRadComboBox" runat="server" MarkFirstMatch="true" MaxHeight="500px" Width="500px" AppendDataBoundItems="true" DataTextField="Name" DataValueField="Id" SelectedValue='<%# Bind("PermanentLocationId") %>' OnDataBinding="PermanentLocationRadComboBox_DataBinding">
+                                        <Items>
+                                            <telerik:RadComboBoxItem Value="" Text="" />
+                                        </Items>
+                                    </telerik:RadComboBox>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <asp:HyperLink runat="server" Text="Temporary Location:" NavigateUrl="~/Location2s/Default.aspx" Enabled='<%# Session["Location2sPermission"] != null %>' />
+                                </td>
+                                <td>
+                                    <telerik:RadComboBox ID="TemporaryLocationRadComboBox" runat="server" MarkFirstMatch="true" MaxHeight="500px" Width="500px" AppendDataBoundItems="true" DataTextField="Name" DataValueField="Id" SelectedValue='<%# Bind("TemporaryLocationId") %>' OnDataBinding="TemporaryLocationRadComboBox_DataBinding">
+                                        <Items>
+                                            <telerik:RadComboBoxItem Value="" Text="" />
+                                        </Items>
+                                    </telerik:RadComboBox>
+                                </td>
+                            </tr>
+                            <tr runat="server" visible='<%# Eval("EffectiveLocation") != null %>'>
+                                <td>
+                                    <asp:HyperLink runat="server" Text="Effective Location:" NavigateUrl="~/Location2s/Default.aspx" Enabled='<%# Session["Location2sPermission"] != null %>' />
+                                </td>
+                                <td>
+                                    <asp:HyperLink ID="EffectiveLocationHyperLink" runat="server" Text='<%# Eval("EffectiveLocation.Name") %>' NavigateUrl='<%# "~/Location2s/Edit.aspx?Id=" + Eval("EffectiveLocationId") %>' Enabled='<%# Session["Location2sPermission"] != null %>' />
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <asp:HyperLink runat="server" Text="In Transit Destination Service Point:" NavigateUrl="~/ServicePoint2s/Default.aspx" Enabled='<%# Session["ServicePoint2sPermission"] != null %>' />
+                                </td>
+                                <td>
+                                    <telerik:RadComboBox ID="InTransitDestinationServicePointRadComboBox" runat="server" MarkFirstMatch="true" MaxHeight="500px" Width="500px" AppendDataBoundItems="true" DataTextField="Name" DataValueField="Id" SelectedValue='<%# Bind("InTransitDestinationServicePointId") %>' OnDataBinding="InTransitDestinationServicePointRadComboBox_DataBinding">
+                                        <Items>
+                                            <telerik:RadComboBoxItem Value="" Text="" />
+                                        </Items>
+                                    </telerik:RadComboBox>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <asp:HyperLink runat="server" Text="Order Item:" NavigateUrl="~/OrderItem2s/Default.aspx" Enabled='<%# Session["OrderItem2sPermission"] != null %>' />
+                                </td>
+                                <td>
+                                    <telerik:RadComboBox ID="OrderItemRadComboBox" runat="server" MaxHeight="500px" Width="500px" EnableLoadOnDemand="true" SelectedValue='<%# Bind("OrderItemId") %>' OnDataBinding="OrderItemRadComboBox_DataBinding" OnItemsRequested="OrderItemRadComboBox_ItemsRequested" />
+                                    <asp:CustomValidator ID="OrderItemCustomValidator" runat="server" ErrorMessage="The Order Item field is invalid." ControlToValidate="OrderItemRadComboBox" Display="Dynamic" CssClass="Error" OnServerValidate="OrderItemCustomValidator_ServerValidate" ValidationGroup="Item2" />
+                                </td>
+                            </tr>
+                            <tr runat="server" visible='<%# Eval("CreationTime") != null %>'>
+                                <td>
+                                    <asp:Label ID="CreationTimeLabel" runat="server" Text="Creation Time:" AssociatedControlID="CreationTimeLiteral" />
+                                </td>
+                                <td>
+                                    <asp:Literal ID="CreationTimeLiteral" runat="server" Text='<%# Eval("CreationTime", "{0:g}") %>' />
+                                </td>
+                            </tr>
+                            <tr runat="server" visible='<%# Eval("CreationUser") != null %>'>
+                                <td>
+                                    <asp:HyperLink runat="server" Text="Creation User:" NavigateUrl="~/User2s/Default.aspx" Enabled='<%# Session["User2sPermission"] != null %>' />
+                                </td>
+                                <td>
+                                    <asp:HyperLink ID="CreationUserHyperLink" runat="server" Text='<%# Eval("CreationUser.Username") %>' NavigateUrl='<%# "~/User2s/Edit.aspx?Id=" + Eval("CreationUserId") %>' Enabled='<%# Session["User2sPermission"] != null %>' />
+                                </td>
+                            </tr>
+                            <tr runat="server" visible='<%# Eval("LastWriteTime") != null %>'>
+                                <td>
+                                    <asp:Label ID="LastWriteTimeLabel" runat="server" Text="Last Write Time:" AssociatedControlID="LastWriteTimeLiteral" />
+                                </td>
+                                <td>
+                                    <asp:Literal ID="LastWriteTimeLiteral" runat="server" Text='<%# Eval("LastWriteTime", "{0:g}") %>' />
+                                </td>
+                            </tr>
+                            <tr runat="server" visible='<%# Eval("LastWriteUser") != null %>'>
+                                <td>
+                                    <asp:HyperLink runat="server" Text="Last Write User:" NavigateUrl="~/User2s/Default.aspx" Enabled='<%# Session["User2sPermission"] != null %>' />
+                                </td>
+                                <td>
+                                    <asp:HyperLink ID="LastWriteUserHyperLink" runat="server" Text='<%# Eval("LastWriteUser.Username") %>' NavigateUrl='<%# "~/User2s/Edit.aspx?Id=" + Eval("LastWriteUserId") %>' Enabled='<%# Session["User2sPermission"] != null %>' />
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <asp:Label ID="LastCheckInDateTimeLabel" runat="server" Text="Last Check In Date Time:" AssociatedControlID="LastCheckInDateTimeRadDateTimePicker" />
+                                </td>
+                                <td>
+                                    <telerik:RadDateTimePicker ID="LastCheckInDateTimeRadDateTimePicker" runat="server" DbSelectedDate='<%# Bind("LastCheckInDateTime") %>' Width="500px" MinDate="1/1/1900" />
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <asp:HyperLink runat="server" Text="Last Check In Service Point:" NavigateUrl="~/ServicePoint2s/Default.aspx" Enabled='<%# Session["ServicePoint2sPermission"] != null %>' />
+                                </td>
+                                <td>
+                                    <telerik:RadComboBox ID="LastCheckInServicePointRadComboBox" runat="server" MarkFirstMatch="true" MaxHeight="500px" Width="500px" AppendDataBoundItems="true" DataTextField="Name" DataValueField="Id" SelectedValue='<%# Bind("LastCheckInServicePointId") %>' OnDataBinding="LastCheckInServicePointRadComboBox_DataBinding">
+                                        <Items>
+                                            <telerik:RadComboBoxItem Value="" Text="" />
+                                        </Items>
+                                    </telerik:RadComboBox>
+                                </td>
+                            </tr>
+                            <tr runat="server" visible='<%# Eval("LastCheckInStaffMember") != null %>'>
+                                <td>
+                                    <asp:HyperLink runat="server" Text="Last Check In Staff Member:" NavigateUrl="~/User2s/Default.aspx" Enabled='<%# Session["User2sPermission"] != null %>' />
+                                </td>
+                                <td>
+                                    <asp:HyperLink ID="LastCheckInStaffMemberHyperLink" runat="server" Text='<%# Eval("LastCheckInStaffMember.Username") %>' NavigateUrl='<%# "~/User2s/Edit.aspx?Id=" + Eval("LastCheckInStaffMemberId") %>' Enabled='<%# Session["User2sPermission"] != null %>' />
+                                </td>
+                            </tr>
+                            <tr runat="server" visible='<%# Eval("Content") != null %>'>
+                                <td>
+                                    <asp:Label ID="ContentLabel" runat="server" Text="Content:" AssociatedControlID="ContentLiteral" />
+                                </td>
+                                <td>
+                                    <pre><asp:Literal ID="ContentLiteral" runat="server" Text='<%#: Eval("Content") %>' /></pre>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                </td>
+                                <td>
+                                    <telerik:RadButton ID="InsertUpdateRadButton" runat="server" Text='<%# Item2FormView.DataKey.Value == null  ? "Insert" : "Update" %>' CommandName="Update" ValidationGroup="Item2" />
+                                    <telerik:RadButton ID="CancelRadButton" runat="server" Text="Cancel" CommandName="Cancel" CausesValidation="false" />
+                                    <script type="text/javascript">
+                                        function DeleteRadButton_OnClientClicked(button, args) {
+                                            button.set_autoPostBack(confirm('Are you sure you want to delete this item?'));
+                                        }
+                                    </script>
+                                    <telerik:RadButton ID="DeleteRadButton" runat="server" Text="Delete" Visible='<%# Item2FormView.DataKey.Value != null %>' OnClientClicked="DeleteRadButton_OnClientClicked" CausesValidation="false" CommandName="Delete" />
+                                    <asp:CustomValidator ID="DeleteCustomValidator" runat="server" ErrorMessage="Item cannot be deleted because it is being referenced" Display="Dynamic" CssClass="Error" ValidationGroup="Item2" />
+                                </td>
+                            </tr>
+                        </table>
+                    </asp:Panel>
+                </EditItemTemplate>
+            </asp:FormView>
+        </fieldset>
+    </asp:Panel>
+    <asp:Panel ID="CheckIn2sPanel" runat="server" Visible='<%# (string)Session["CheckIn2sPermission"] != null && Item2FormView.DataKey.Value != null %>'>
+        <fieldset>
+            <legend>
+                <asp:HyperLink ID="CheckIn2sHyperLink" runat="server" Text="Check Ins" NavigateUrl="~/CheckIn2s/Default.aspx" /></legend>
+            <telerik:RadGrid ID="CheckIn2sRadGrid" runat="server" AutoGenerateColumns="false" AllowSorting="true" AllowFilteringByColumn="false" GroupingSettings-CaseSensitive="false" AllowPaging="true" AllowCustomPaging="true" PageSize="10" EnableLinqExpressions="false" OnNeedDataSource="CheckIn2sRadGrid_NeedDataSource">
+                <MasterTableView DataKeyNames="Id" PagerStyle-Mode="NextPrevNumericAndAdvanced" NoMasterRecordsText="No check ins found">
+                    <SortExpressions>
+                        <telerik:GridSortExpression FieldName="Id" />
+                    </SortExpressions>
+                    <Columns>
+                        <telerik:GridTemplateColumn AllowFiltering="false" ItemStyle-Width="0px">
+                            <ItemTemplate>
+                                <asp:HyperLink ID="ViewHyperLink" Text="View" NavigateUrl='<%# $"~/CheckIn2s/Edit.aspx?Id={Eval("Id")}" %>' runat="server" />
+                            </ItemTemplate>
+                        </telerik:GridTemplateColumn>
+                        <telerik:GridTemplateColumn HeaderText="Id" DataField="Id" SortExpression="Id" AutoPostBackOnFilter="true" CurrentFilterFunction="EqualTo">
+                            <ItemTemplate>
+                                <asp:HyperLink ID="IdHyperLink" runat="server" Text='<%# Eval("Id") %>' NavigateUrl='<%# $"~/CheckIn2s/Edit.aspx?Id={Eval("Id")}" %>' />
+                            </ItemTemplate>
+                        </telerik:GridTemplateColumn>
+                        <telerik:GridBoundColumn HeaderText="Occurred Date Time" DataField="OccurredDateTime" AutoPostBackOnFilter="true" DataFormatString="{0:g}" />
+                        <telerik:GridBoundColumn HeaderText="Item Status Prior To Check In" DataField="ItemStatusPriorToCheckIn" AutoPostBackOnFilter="true" HtmlEncode="true" CurrentFilterFunction="StartsWith" />
+                        <telerik:GridBoundColumn HeaderText="Request Queue Size" DataField="RequestQueueSize" AutoPostBackOnFilter="true" />
+                        <telerik:GridTemplateColumn AllowFiltering="false" AllowSorting="false" HeaderText="Item Location" DataField="ItemLocation.Name" SortExpression="ItemLocation.Name" AutoPostBackOnFilter="true" CurrentFilterFunction="StartsWith">
+                            <ItemTemplate>
+                                <asp:HyperLink ID="ItemLocationHyperLink" runat="server" Text='<%#: Eval("ItemLocation.Name") %>' NavigateUrl='<%# $"~/Location2s/Edit.aspx?Id={Eval("ItemLocationId")}" %>' Enabled='<%# Session["Location2sPermission"] != null %>' />
+                            </ItemTemplate>
+                        </telerik:GridTemplateColumn>
+                        <telerik:GridTemplateColumn AllowFiltering="false" AllowSorting="false" HeaderText="Service Point" DataField="ServicePoint.Name" SortExpression="ServicePoint.Name" AutoPostBackOnFilter="true" CurrentFilterFunction="StartsWith">
+                            <ItemTemplate>
+                                <asp:HyperLink ID="ServicePointHyperLink" runat="server" Text='<%#: Eval("ServicePoint.Name") %>' NavigateUrl='<%# $"~/ServicePoint2s/Edit.aspx?Id={Eval("ServicePointId")}" %>' Enabled='<%# Session["ServicePoint2sPermission"] != null %>' />
+                            </ItemTemplate>
+                        </telerik:GridTemplateColumn>
+                        <telerik:GridTemplateColumn AllowFiltering="false" AllowSorting="false" HeaderText="Performed By User" DataField="PerformedByUser.Username" SortExpression="PerformedByUser.Username" AutoPostBackOnFilter="true" CurrentFilterFunction="StartsWith">
+                            <ItemTemplate>
+                                <asp:HyperLink ID="PerformedByUserHyperLink" runat="server" Text='<%#: Eval("PerformedByUserId") != null ? Eval("PerformedByUser.Username") ?? "&nbsp;" : "" %>' NavigateUrl='<%# $"~/User2s/Edit.aspx?Id={Eval("PerformedByUserId")}" %>' Enabled='<%# Session["User2sPermission"] != null %>' />
+                            </ItemTemplate>
+                        </telerik:GridTemplateColumn>
+                    </Columns>
+                </MasterTableView>
+            </telerik:RadGrid>
+        </fieldset>
+    </asp:Panel>
+    <asp:Panel ID="Fee2sPanel" runat="server" Visible='<%# (string)Session["Fee2sPermission"] != null && Item2FormView.DataKey.Value != null %>'>
+        <fieldset>
+            <legend>
+                <asp:HyperLink ID="Fee2sHyperLink" runat="server" Text="Fees" NavigateUrl="~/Fee2s/Default.aspx" /></legend>
+            <telerik:RadGrid ID="Fee2sRadGrid" runat="server" AutoGenerateColumns="false" AllowSorting="true" AllowFilteringByColumn="false" GroupingSettings-CaseSensitive="false" AllowPaging="true" AllowCustomPaging="true" PageSize="10" EnableLinqExpressions="false" OnNeedDataSource="Fee2sRadGrid_NeedDataSource">
+                <MasterTableView DataKeyNames="Id" PagerStyle-Mode="NextPrevNumericAndAdvanced" NoMasterRecordsText="No fees found">
+                    <SortExpressions>
+                        <telerik:GridSortExpression FieldName="LastWriteTime" SortOrder="Descending" />
+                    </SortExpressions>
+                    <Columns>
+                        <telerik:GridTemplateColumn AllowFiltering="false" ItemStyle-Width="0px">
+                            <ItemTemplate>
+                                <asp:HyperLink ID="ViewHyperLink" Text="View" NavigateUrl='<%# $"~/Fee2s/Edit.aspx?Id={Eval("Id")}" %>' runat="server" />
+                            </ItemTemplate>
+                        </telerik:GridTemplateColumn>
+                        <telerik:GridTemplateColumn HeaderText="Id" DataField="Id" SortExpression="Id" AutoPostBackOnFilter="true" CurrentFilterFunction="EqualTo">
+                            <ItemTemplate>
+                                <asp:HyperLink ID="IdHyperLink" runat="server" Text='<%# Eval("Id") %>' NavigateUrl='<%# $"~/Fee2s/Edit.aspx?Id={Eval("Id")}" %>' />
+                            </ItemTemplate>
+                        </telerik:GridTemplateColumn>
+                        <telerik:GridBoundColumn HeaderText="Amount" DataField="Amount" AutoPostBackOnFilter="true" DataFormatString="{0:c}" />
+                        <telerik:GridBoundColumn HeaderText="Remaining Amount" DataField="RemainingAmount" AutoPostBackOnFilter="true" DataFormatString="{0:c}" />
+                        <telerik:GridBoundColumn HeaderText="Status Name" DataField="StatusName" AutoPostBackOnFilter="true" HtmlEncode="true" CurrentFilterFunction="StartsWith" />
+                        <telerik:GridBoundColumn HeaderText="Payment Status Name" DataField="PaymentStatusName" AutoPostBackOnFilter="true" HtmlEncode="true" CurrentFilterFunction="StartsWith" />
+                        <telerik:GridTemplateColumn HeaderText="Title" DataField="Title" SortExpression="Title" AutoPostBackOnFilter="true" CurrentFilterFunction="StartsWith">
+                            <ItemTemplate>
+                                <asp:HyperLink ID="TitleHyperLink" runat="server" Text='<%#: Eval("Title") ?? "&nbsp;" %>' NavigateUrl='<%# $"~/Fee2s/Edit.aspx?Id={Eval("Id")}" %>' />
+                            </ItemTemplate>
+                        </telerik:GridTemplateColumn>
+                        <telerik:GridBoundColumn HeaderText="Call Number" DataField="CallNumber" AutoPostBackOnFilter="true" HtmlEncode="true" CurrentFilterFunction="StartsWith" />
+                        <telerik:GridBoundColumn HeaderText="Barcode" DataField="Barcode" AutoPostBackOnFilter="true" HtmlEncode="true" CurrentFilterFunction="StartsWith" />
+                        <telerik:GridBoundColumn HeaderText="Material Type" DataField="MaterialType" AutoPostBackOnFilter="true" HtmlEncode="true" CurrentFilterFunction="StartsWith" />
+                        <telerik:GridBoundColumn HeaderText="Item Status Name" DataField="ItemStatusName" AutoPostBackOnFilter="true" HtmlEncode="true" CurrentFilterFunction="StartsWith" />
+                        <telerik:GridBoundColumn HeaderText="Location" DataField="Location" AutoPostBackOnFilter="true" HtmlEncode="true" CurrentFilterFunction="StartsWith" />
+                        <telerik:GridBoundColumn HeaderText="Creation Time" DataField="CreationTime" AutoPostBackOnFilter="true" DataFormatString="{0:g}" />
+                        <telerik:GridTemplateColumn AllowFiltering="false" AllowSorting="false" HeaderText="Creation User" DataField="CreationUser.Username" SortExpression="CreationUser.Username" AutoPostBackOnFilter="true" CurrentFilterFunction="StartsWith">
+                            <ItemTemplate>
+                                <asp:HyperLink ID="CreationUserHyperLink" runat="server" Text='<%#: Eval("CreationUserId") != null ? Eval("CreationUser.Username") ?? "&nbsp;" : "" %>' NavigateUrl='<%# $"~/User2s/Edit.aspx?Id={Eval("CreationUserId")}" %>' Enabled='<%# Session["User2sPermission"] != null %>' />
+                            </ItemTemplate>
+                        </telerik:GridTemplateColumn>
+                        <telerik:GridBoundColumn HeaderText="Last Write Time" DataField="LastWriteTime" AutoPostBackOnFilter="true" DataFormatString="{0:g}" />
+                        <telerik:GridTemplateColumn AllowFiltering="false" AllowSorting="false" HeaderText="Last Write User" DataField="LastWriteUser.Username" SortExpression="LastWriteUser.Username" AutoPostBackOnFilter="true" CurrentFilterFunction="StartsWith">
+                            <ItemTemplate>
+                                <asp:HyperLink ID="LastWriteUserHyperLink" runat="server" Text='<%#: Eval("LastWriteUserId") != null ? Eval("LastWriteUser.Username") ?? "&nbsp;" : "" %>' NavigateUrl='<%# $"~/User2s/Edit.aspx?Id={Eval("LastWriteUserId")}" %>' Enabled='<%# Session["User2sPermission"] != null %>' />
+                            </ItemTemplate>
+                        </telerik:GridTemplateColumn>
+                        <telerik:GridBoundColumn HeaderText="Due Time" DataField="DueTime" AutoPostBackOnFilter="true" DataFormatString="{0:g}" />
+                        <telerik:GridBoundColumn HeaderText="Returned Time" DataField="ReturnedTime" AutoPostBackOnFilter="true" DataFormatString="{0:g}" />
+                        <telerik:GridTemplateColumn AllowFiltering="false" AllowSorting="false" HeaderText="Loan" DataField="Loan.Id" SortExpression="Loan.Id" AutoPostBackOnFilter="true" CurrentFilterFunction="EqualTo">
+                            <ItemTemplate>
+                                <asp:HyperLink ID="LoanHyperLink" runat="server" Text='<%# Eval("Loan.Id") %>' NavigateUrl='<%# $"~/Loan2s/Edit.aspx?Id={Eval("LoanId")}" %>' Enabled='<%# Session["Loan2sPermission"] != null %>' />
+                            </ItemTemplate>
+                        </telerik:GridTemplateColumn>
+                        <telerik:GridTemplateColumn AllowFiltering="false" AllowSorting="false" HeaderText="User" DataField="User.Username" SortExpression="User.Username" AutoPostBackOnFilter="true" CurrentFilterFunction="StartsWith">
+                            <ItemTemplate>
+                                <asp:HyperLink ID="UserHyperLink" runat="server" Text='<%#: Eval("UserId") != null ? Eval("User.Username") ?? "&nbsp;" : "" %>' NavigateUrl='<%# $"~/User2s/Edit.aspx?Id={Eval("UserId")}" %>' Enabled='<%# Session["User2sPermission"] != null %>' />
+                            </ItemTemplate>
+                        </telerik:GridTemplateColumn>
+                        <telerik:GridTemplateColumn AllowFiltering="false" AllowSorting="false" HeaderText="Material Type 1" DataField="MaterialType1.Name" SortExpression="MaterialType1.Name" AutoPostBackOnFilter="true" CurrentFilterFunction="StartsWith">
+                            <ItemTemplate>
+                                <asp:HyperLink ID="MaterialType1HyperLink" runat="server" Text='<%#: Eval("MaterialType1.Name") %>' NavigateUrl='<%# $"~/MaterialType2s/Edit.aspx?Id={Eval("MaterialTypeId")}" %>' Enabled='<%# Session["MaterialType2sPermission"] != null %>' />
+                            </ItemTemplate>
+                        </telerik:GridTemplateColumn>
+                        <telerik:GridTemplateColumn AllowFiltering="false" AllowSorting="false" HeaderText="Fee Type" DataField="FeeType.Name" SortExpression="FeeType.Name" AutoPostBackOnFilter="true" CurrentFilterFunction="StartsWith">
+                            <ItemTemplate>
+                                <asp:HyperLink ID="FeeTypeHyperLink" runat="server" Text='<%#: Eval("FeeType.Name") %>' NavigateUrl='<%# $"~/FeeType2s/Edit.aspx?Id={Eval("FeeTypeId")}" %>' Enabled='<%# Session["FeeType2sPermission"] != null %>' />
+                            </ItemTemplate>
+                        </telerik:GridTemplateColumn>
+                        <telerik:GridTemplateColumn AllowFiltering="false" AllowSorting="false" HeaderText="Owner" DataField="Owner.Name" SortExpression="Owner.Name" AutoPostBackOnFilter="true" CurrentFilterFunction="StartsWith">
+                            <ItemTemplate>
+                                <asp:HyperLink ID="OwnerHyperLink" runat="server" Text='<%#: Eval("OwnerId") != null ? Eval("Owner.Name") ?? "&nbsp;" : "" %>' NavigateUrl='<%# $"~/Owner2s/Edit.aspx?Id={Eval("OwnerId")}" %>' Enabled='<%# Session["Owner2sPermission"] != null %>' />
+                            </ItemTemplate>
+                        </telerik:GridTemplateColumn>
+                        <telerik:GridTemplateColumn AllowFiltering="false" AllowSorting="false" HeaderText="Holding" DataField="Holding.ShortId" SortExpression="Holding.ShortId" AutoPostBackOnFilter="true">
+                            <ItemTemplate>
+                                <asp:HyperLink ID="HoldingHyperLink" runat="server" Text='<%# Eval("HoldingId") != null ? Eval("Holding.ShortId") ?? "&nbsp;" : "" %>' NavigateUrl='<%# $"~/Holding2s/Edit.aspx?Id={Eval("HoldingId")}" %>' Enabled='<%# Session["Holding2sPermission"] != null %>' />
+                            </ItemTemplate>
+                        </telerik:GridTemplateColumn>
+                        <telerik:GridTemplateColumn AllowFiltering="false" AllowSorting="false" HeaderText="Instance" DataField="Instance.Title" SortExpression="Instance.Title" AutoPostBackOnFilter="true" CurrentFilterFunction="StartsWith">
+                            <ItemTemplate>
+                                <asp:HyperLink ID="InstanceHyperLink" runat="server" Text='<%#: Eval("Instance.Title") %>' NavigateUrl='<%# $"~/Instance2s/Edit.aspx?Id={Eval("InstanceId")}" %>' Enabled='<%# Session["Instance2sPermission"] != null %>' />
+                            </ItemTemplate>
+                        </telerik:GridTemplateColumn>
+                    </Columns>
+                </MasterTableView>
+            </telerik:RadGrid>
+        </fieldset>
+    </asp:Panel>
+    <asp:Panel ID="Loan2sPanel" runat="server" Visible='<%# (string)Session["Loan2sPermission"] != null && Item2FormView.DataKey.Value != null %>'>
+        <fieldset>
+            <legend>
+                <asp:HyperLink ID="Loan2sHyperLink" runat="server" Text="Loans" NavigateUrl="~/Loan2s/Default.aspx" /></legend>
+            <telerik:RadGrid ID="Loan2sRadGrid" runat="server" AutoGenerateColumns="false" AllowSorting="true" AllowFilteringByColumn="false" GroupingSettings-CaseSensitive="false" AllowPaging="true" AllowCustomPaging="true" PageSize="10" EnableLinqExpressions="false" OnNeedDataSource="Loan2sRadGrid_NeedDataSource">
+                <MasterTableView DataKeyNames="Id" PagerStyle-Mode="NextPrevNumericAndAdvanced" NoMasterRecordsText="No loans found">
+                    <SortExpressions>
+                        <telerik:GridSortExpression FieldName="LastWriteTime" SortOrder="Descending" />
+                    </SortExpressions>
+                    <Columns>
+                        <telerik:GridTemplateColumn AllowFiltering="false" ItemStyle-Width="0px">
+                            <ItemTemplate>
+                                <asp:HyperLink ID="ViewHyperLink" Text="View" NavigateUrl='<%# $"~/Loan2s/Edit.aspx?Id={Eval("Id")}" %>' runat="server" />
+                            </ItemTemplate>
+                        </telerik:GridTemplateColumn>
+                        <telerik:GridTemplateColumn HeaderText="Id" DataField="Id" SortExpression="Id" AutoPostBackOnFilter="true" CurrentFilterFunction="EqualTo">
+                            <ItemTemplate>
+                                <asp:HyperLink ID="IdHyperLink" runat="server" Text='<%# Eval("Id") %>' NavigateUrl='<%# $"~/Loan2s/Edit.aspx?Id={Eval("Id")}" %>' />
+                            </ItemTemplate>
+                        </telerik:GridTemplateColumn>
+                        <telerik:GridTemplateColumn AllowFiltering="false" AllowSorting="false" HeaderText="User" DataField="User.Username" SortExpression="User.Username" AutoPostBackOnFilter="true" CurrentFilterFunction="StartsWith">
+                            <ItemTemplate>
+                                <asp:HyperLink ID="UserHyperLink" runat="server" Text='<%#: Eval("UserId") != null ? Eval("User.Username") ?? "&nbsp;" : "" %>' NavigateUrl='<%# $"~/User2s/Edit.aspx?Id={Eval("UserId")}" %>' Enabled='<%# Session["User2sPermission"] != null %>' />
+                            </ItemTemplate>
+                        </telerik:GridTemplateColumn>
+                        <telerik:GridTemplateColumn AllowFiltering="false" AllowSorting="false" HeaderText="Proxy User" DataField="ProxyUser.Username" SortExpression="ProxyUser.Username" AutoPostBackOnFilter="true" CurrentFilterFunction="StartsWith">
+                            <ItemTemplate>
+                                <asp:HyperLink ID="ProxyUserHyperLink" runat="server" Text='<%#: Eval("ProxyUserId") != null ? Eval("ProxyUser.Username") ?? "&nbsp;" : "" %>' NavigateUrl='<%# $"~/User2s/Edit.aspx?Id={Eval("ProxyUserId")}" %>' Enabled='<%# Session["User2sPermission"] != null %>' />
+                            </ItemTemplate>
+                        </telerik:GridTemplateColumn>
+                        <telerik:GridTemplateColumn AllowFiltering="false" AllowSorting="false" HeaderText="Item Effective Location At Check Out" DataField="ItemEffectiveLocationAtCheckOut.Name" SortExpression="ItemEffectiveLocationAtCheckOut.Name" AutoPostBackOnFilter="true" CurrentFilterFunction="StartsWith">
+                            <ItemTemplate>
+                                <asp:HyperLink ID="ItemEffectiveLocationAtCheckOutHyperLink" runat="server" Text='<%#: Eval("ItemEffectiveLocationAtCheckOut.Name") %>' NavigateUrl='<%# $"~/Location2s/Edit.aspx?Id={Eval("ItemEffectiveLocationAtCheckOutId")}" %>' Enabled='<%# Session["Location2sPermission"] != null %>' />
+                            </ItemTemplate>
+                        </telerik:GridTemplateColumn>
+                        <telerik:GridBoundColumn HeaderText="Status Name" DataField="StatusName" AutoPostBackOnFilter="true" HtmlEncode="true" CurrentFilterFunction="StartsWith" />
+                        <telerik:GridBoundColumn HeaderText="Loan Time" DataField="LoanTime" AutoPostBackOnFilter="true" DataFormatString="{0:g}" />
+                        <telerik:GridBoundColumn HeaderText="Due Time" DataField="DueTime" AutoPostBackOnFilter="true" DataFormatString="{0:g}" />
+                        <telerik:GridBoundColumn HeaderText="Return Time" DataField="ReturnTime" AutoPostBackOnFilter="true" HtmlEncode="true" CurrentFilterFunction="StartsWith" />
+                        <telerik:GridBoundColumn HeaderText="System Return Time" DataField="SystemReturnTime" AutoPostBackOnFilter="true" DataFormatString="{0:g}" />
+                        <telerik:GridBoundColumn HeaderText="Action" DataField="Action" AutoPostBackOnFilter="true" HtmlEncode="true" CurrentFilterFunction="StartsWith" />
+                        <telerik:GridBoundColumn HeaderText="Action Comment" DataField="ActionComment" AutoPostBackOnFilter="true" HtmlEncode="true" CurrentFilterFunction="StartsWith" />
+                        <telerik:GridBoundColumn HeaderText="Item Status" DataField="ItemStatus" AutoPostBackOnFilter="true" HtmlEncode="true" CurrentFilterFunction="StartsWith" />
+                        <telerik:GridBoundColumn HeaderText="Renewal Count" DataField="RenewalCount" AutoPostBackOnFilter="true" />
+                        <telerik:GridTemplateColumn AllowFiltering="false" AllowSorting="false" HeaderText="Loan Policy" DataField="LoanPolicy.Name" SortExpression="LoanPolicy.Name" AutoPostBackOnFilter="true" CurrentFilterFunction="StartsWith">
+                            <ItemTemplate>
+                                <asp:HyperLink ID="LoanPolicyHyperLink" runat="server" Text='<%#: Eval("LoanPolicy.Name") %>' NavigateUrl='<%# $"~/LoanPolicy2s/Edit.aspx?Id={Eval("LoanPolicyId")}" %>' Enabled='<%# Session["LoanPolicy2sPermission"] != null %>' />
+                            </ItemTemplate>
+                        </telerik:GridTemplateColumn>
+                        <telerik:GridTemplateColumn AllowFiltering="false" AllowSorting="false" HeaderText="Checkout Service Point" DataField="CheckoutServicePoint.Name" SortExpression="CheckoutServicePoint.Name" AutoPostBackOnFilter="true" CurrentFilterFunction="StartsWith">
+                            <ItemTemplate>
+                                <asp:HyperLink ID="CheckoutServicePointHyperLink" runat="server" Text='<%#: Eval("CheckoutServicePoint.Name") %>' NavigateUrl='<%# $"~/ServicePoint2s/Edit.aspx?Id={Eval("CheckoutServicePointId")}" %>' Enabled='<%# Session["ServicePoint2sPermission"] != null %>' />
+                            </ItemTemplate>
+                        </telerik:GridTemplateColumn>
+                        <telerik:GridTemplateColumn AllowFiltering="false" AllowSorting="false" HeaderText="Checkin Service Point" DataField="CheckinServicePoint.Name" SortExpression="CheckinServicePoint.Name" AutoPostBackOnFilter="true" CurrentFilterFunction="StartsWith">
+                            <ItemTemplate>
+                                <asp:HyperLink ID="CheckinServicePointHyperLink" runat="server" Text='<%#: Eval("CheckinServicePoint.Name") %>' NavigateUrl='<%# $"~/ServicePoint2s/Edit.aspx?Id={Eval("CheckinServicePointId")}" %>' Enabled='<%# Session["ServicePoint2sPermission"] != null %>' />
+                            </ItemTemplate>
+                        </telerik:GridTemplateColumn>
+                        <telerik:GridTemplateColumn AllowFiltering="false" AllowSorting="false" HeaderText="Group" DataField="Group.Name" SortExpression="Group.Name" AutoPostBackOnFilter="true" CurrentFilterFunction="StartsWith">
+                            <ItemTemplate>
+                                <asp:HyperLink ID="GroupHyperLink" runat="server" Text='<%#: Eval("Group.Name") %>' NavigateUrl='<%# $"~/Group2s/Edit.aspx?Id={Eval("GroupId")}" %>' Enabled='<%# Session["Group2sPermission"] != null %>' />
+                            </ItemTemplate>
+                        </telerik:GridTemplateColumn>
+                        <telerik:GridBoundColumn HeaderText="Due Date Changed By Recall" DataField="DueDateChangedByRecall" AutoPostBackOnFilter="true" />
+                        <telerik:GridBoundColumn HeaderText="Declared Lost Date" DataField="DeclaredLostDate" AutoPostBackOnFilter="true" DataFormatString="{0:d}" />
+                        <telerik:GridBoundColumn HeaderText="Claimed Returned Date" DataField="ClaimedReturnedDate" AutoPostBackOnFilter="true" DataFormatString="{0:d}" />
+                        <telerik:GridTemplateColumn AllowFiltering="false" AllowSorting="false" HeaderText="Overdue Fine Policy" DataField="OverdueFinePolicy.Name" SortExpression="OverdueFinePolicy.Name" AutoPostBackOnFilter="true" CurrentFilterFunction="StartsWith">
+                            <ItemTemplate>
+                                <asp:HyperLink ID="OverdueFinePolicyHyperLink" runat="server" Text='<%#: Eval("OverdueFinePolicy.Name") %>' NavigateUrl='<%# $"~/OverdueFinePolicy2s/Edit.aspx?Id={Eval("OverdueFinePolicyId")}" %>' Enabled='<%# Session["OverdueFinePolicy2sPermission"] != null %>' />
+                            </ItemTemplate>
+                        </telerik:GridTemplateColumn>
+                        <telerik:GridTemplateColumn AllowFiltering="false" AllowSorting="false" HeaderText="Lost Item Policy" DataField="LostItemPolicy.Name" SortExpression="LostItemPolicy.Name" AutoPostBackOnFilter="true" CurrentFilterFunction="StartsWith">
+                            <ItemTemplate>
+                                <asp:HyperLink ID="LostItemPolicyHyperLink" runat="server" Text='<%#: Eval("LostItemPolicy.Name") %>' NavigateUrl='<%# $"~/LostItemFeePolicy2s/Edit.aspx?Id={Eval("LostItemPolicyId")}" %>' Enabled='<%# Session["LostItemFeePolicy2sPermission"] != null %>' />
+                            </ItemTemplate>
+                        </telerik:GridTemplateColumn>
+                        <telerik:GridBoundColumn HeaderText="Creation Time" DataField="CreationTime" AutoPostBackOnFilter="true" DataFormatString="{0:g}" />
+                        <telerik:GridTemplateColumn AllowFiltering="false" AllowSorting="false" HeaderText="Creation User" DataField="CreationUser.Username" SortExpression="CreationUser.Username" AutoPostBackOnFilter="true" CurrentFilterFunction="StartsWith">
+                            <ItemTemplate>
+                                <asp:HyperLink ID="CreationUserHyperLink" runat="server" Text='<%#: Eval("CreationUserId") != null ? Eval("CreationUser.Username") ?? "&nbsp;" : "" %>' NavigateUrl='<%# $"~/User2s/Edit.aspx?Id={Eval("CreationUserId")}" %>' Enabled='<%# Session["User2sPermission"] != null %>' />
+                            </ItemTemplate>
+                        </telerik:GridTemplateColumn>
+                        <telerik:GridBoundColumn HeaderText="Last Write Time" DataField="LastWriteTime" AutoPostBackOnFilter="true" DataFormatString="{0:g}" />
+                        <telerik:GridTemplateColumn AllowFiltering="false" AllowSorting="false" HeaderText="Last Write User" DataField="LastWriteUser.Username" SortExpression="LastWriteUser.Username" AutoPostBackOnFilter="true" CurrentFilterFunction="StartsWith">
+                            <ItemTemplate>
+                                <asp:HyperLink ID="LastWriteUserHyperLink" runat="server" Text='<%#: Eval("LastWriteUserId") != null ? Eval("LastWriteUser.Username") ?? "&nbsp;" : "" %>' NavigateUrl='<%# $"~/User2s/Edit.aspx?Id={Eval("LastWriteUserId")}" %>' Enabled='<%# Session["User2sPermission"] != null %>' />
+                            </ItemTemplate>
+                        </telerik:GridTemplateColumn>
+                        <telerik:GridBoundColumn HeaderText="Aged To Lost Delayed Billing Lost Item Has Been Billed" DataField="AgedToLostDelayedBillingLostItemHasBeenBilled" AutoPostBackOnFilter="true" />
+                        <telerik:GridBoundColumn HeaderText="Aged To Lost Delayed Billing Date Lost Item Should Be Billed" DataField="AgedToLostDelayedBillingDateLostItemShouldBeBilled" AutoPostBackOnFilter="true" DataFormatString="{0:g}" />
+                        <telerik:GridBoundColumn HeaderText="Aged To Lost Delayed Billing Aged To Lost Date" DataField="AgedToLostDelayedBillingAgedToLostDate" AutoPostBackOnFilter="true" DataFormatString="{0:d}" />
+                    </Columns>
+                </MasterTableView>
+            </telerik:RadGrid>
+        </fieldset>
+    </asp:Panel>
+    <asp:Panel ID="Receiving2sPanel" runat="server" Visible='<%# (string)Session["Receiving2sPermission"] != null && Item2FormView.DataKey.Value != null %>'>
+        <fieldset>
+            <legend>
+                <asp:HyperLink ID="Receiving2sHyperLink" runat="server" Text="Receivings" NavigateUrl="~/Receiving2s/Default.aspx" /></legend>
+            <telerik:RadGrid ID="Receiving2sRadGrid" runat="server" AutoGenerateColumns="false" AllowSorting="true" AllowFilteringByColumn="false" GroupingSettings-CaseSensitive="false" AllowPaging="true" AllowCustomPaging="true" PageSize="10" EnableLinqExpressions="false" OnNeedDataSource="Receiving2sRadGrid_NeedDataSource">
+                <MasterTableView DataKeyNames="Id" PagerStyle-Mode="NextPrevNumericAndAdvanced" NoMasterRecordsText="No receivings found">
+                    <SortExpressions>
+                        <telerik:GridSortExpression FieldName="ReceiveTime" SortOrder="Descending" />
+                    </SortExpressions>
+                    <Columns>
+                        <telerik:GridTemplateColumn AllowFiltering="false" ItemStyle-Width="0px">
+                            <ItemTemplate>
+                                <asp:HyperLink ID="ViewHyperLink" Text="View" NavigateUrl='<%# $"~/Receiving2s/Edit.aspx?Id={Eval("Id")}" %>' runat="server" />
+                            </ItemTemplate>
+                        </telerik:GridTemplateColumn>
+                        <telerik:GridTemplateColumn HeaderText="Id" DataField="Id" SortExpression="Id" AutoPostBackOnFilter="true" CurrentFilterFunction="EqualTo">
+                            <ItemTemplate>
+                                <asp:HyperLink ID="IdHyperLink" runat="server" Text='<%# Eval("Id") %>' NavigateUrl='<%# $"~/Receiving2s/Edit.aspx?Id={Eval("Id")}" %>' />
+                            </ItemTemplate>
+                        </telerik:GridTemplateColumn>
+                        <telerik:GridBoundColumn HeaderText="Caption" DataField="Caption" AutoPostBackOnFilter="true" HtmlEncode="true" CurrentFilterFunction="StartsWith" />
+                        <telerik:GridBoundColumn HeaderText="Comment" DataField="Comment" AutoPostBackOnFilter="true" HtmlEncode="true" CurrentFilterFunction="StartsWith" />
+                        <telerik:GridBoundColumn HeaderText="Format" DataField="Format" AutoPostBackOnFilter="true" HtmlEncode="true" CurrentFilterFunction="StartsWith" />
+                        <telerik:GridTemplateColumn AllowFiltering="false" AllowSorting="false" HeaderText="Location" DataField="Location.Name" SortExpression="Location.Name" AutoPostBackOnFilter="true" CurrentFilterFunction="StartsWith">
+                            <ItemTemplate>
+                                <asp:HyperLink ID="LocationHyperLink" runat="server" Text='<%#: Eval("Location.Name") %>' NavigateUrl='<%# $"~/Location2s/Edit.aspx?Id={Eval("LocationId")}" %>' Enabled='<%# Session["Location2sPermission"] != null %>' />
+                            </ItemTemplate>
+                        </telerik:GridTemplateColumn>
+                        <telerik:GridTemplateColumn AllowFiltering="false" AllowSorting="false" HeaderText="Order Item" DataField="OrderItem.Number" SortExpression="OrderItem.Number" AutoPostBackOnFilter="true" CurrentFilterFunction="EqualTo">
+                            <ItemTemplate>
+                                <asp:HyperLink ID="OrderItemHyperLink" runat="server" Text='<%#: Eval("OrderItemId") != null ? Eval("OrderItem.Number") ?? "&nbsp;" : "" %>' NavigateUrl='<%# $"~/OrderItem2s/Edit.aspx?Id={Eval("OrderItemId")}" %>' Enabled='<%# Session["OrderItem2sPermission"] != null %>' />
+                            </ItemTemplate>
+                        </telerik:GridTemplateColumn>
+                        <telerik:GridTemplateColumn AllowFiltering="false" AllowSorting="false" HeaderText="Title" DataField="Title.Title" SortExpression="Title.Title" AutoPostBackOnFilter="true" CurrentFilterFunction="StartsWith">
+                            <ItemTemplate>
+                                <asp:HyperLink ID="TitleHyperLink" runat="server" Text='<%#: Eval("Title.Title") %>' NavigateUrl='<%# $"~/Title2s/Edit.aspx?Id={Eval("TitleId")}" %>' Enabled='<%# Session["Title2sPermission"] != null %>' />
+                            </ItemTemplate>
+                        </telerik:GridTemplateColumn>
+                        <telerik:GridBoundColumn HeaderText="Receiving Status" DataField="ReceivingStatus" AutoPostBackOnFilter="true" HtmlEncode="true" CurrentFilterFunction="StartsWith" />
+                        <telerik:GridBoundColumn HeaderText="Supplement" DataField="Supplement" AutoPostBackOnFilter="true" />
+                        <telerik:GridBoundColumn HeaderText="Receipt Time" DataField="ReceiptTime" AutoPostBackOnFilter="true" DataFormatString="{0:g}" />
+                        <telerik:GridBoundColumn HeaderText="Receive Time" DataField="ReceiveTime" AutoPostBackOnFilter="true" DataFormatString="{0:g}" />
+                    </Columns>
+                </MasterTableView>
+            </telerik:RadGrid>
+        </fieldset>
+    </asp:Panel>
+    <asp:Panel ID="Request2sPanel" runat="server" Visible='<%# (string)Session["Request2sPermission"] != null && Item2FormView.DataKey.Value != null %>'>
+        <fieldset>
+            <legend>
+                <asp:HyperLink ID="Request2sHyperLink" runat="server" Text="Requests" NavigateUrl="~/Request2s/Default.aspx" /></legend>
+            <telerik:RadGrid ID="Request2sRadGrid" runat="server" AutoGenerateColumns="false" AllowSorting="true" AllowFilteringByColumn="false" GroupingSettings-CaseSensitive="false" AllowPaging="true" AllowCustomPaging="true" PageSize="10" EnableLinqExpressions="false" OnNeedDataSource="Request2sRadGrid_NeedDataSource">
+                <MasterTableView DataKeyNames="Id" PagerStyle-Mode="NextPrevNumericAndAdvanced" NoMasterRecordsText="No requests found">
+                    <SortExpressions>
+                        <telerik:GridSortExpression FieldName="LastWriteTime" SortOrder="Descending" />
+                    </SortExpressions>
+                    <Columns>
+                        <telerik:GridTemplateColumn AllowFiltering="false" ItemStyle-Width="0px">
+                            <ItemTemplate>
+                                <asp:HyperLink ID="ViewHyperLink" Text="View" NavigateUrl='<%# $"~/Request2s/Edit.aspx?Id={Eval("Id")}" %>' runat="server" />
+                            </ItemTemplate>
+                        </telerik:GridTemplateColumn>
+                        <telerik:GridTemplateColumn HeaderText="Id" DataField="Id" SortExpression="Id" AutoPostBackOnFilter="true" CurrentFilterFunction="EqualTo">
+                            <ItemTemplate>
+                                <asp:HyperLink ID="IdHyperLink" runat="server" Text='<%# Eval("Id") %>' NavigateUrl='<%# $"~/Request2s/Edit.aspx?Id={Eval("Id")}" %>' />
+                            </ItemTemplate>
+                        </telerik:GridTemplateColumn>
+                        <telerik:GridBoundColumn HeaderText="Request Type" DataField="RequestType" AutoPostBackOnFilter="true" HtmlEncode="true" CurrentFilterFunction="StartsWith" />
+                        <telerik:GridBoundColumn HeaderText="Request Date" DataField="RequestDate" AutoPostBackOnFilter="true" DataFormatString="{0:d}" />
+                        <telerik:GridTemplateColumn AllowFiltering="false" AllowSorting="false" HeaderText="Requester" DataField="Requester.Username" SortExpression="Requester.Username" AutoPostBackOnFilter="true" CurrentFilterFunction="StartsWith">
+                            <ItemTemplate>
+                                <asp:HyperLink ID="RequesterHyperLink" runat="server" Text='<%#: Eval("RequesterId") != null ? Eval("Requester.Username") ?? "&nbsp;" : "" %>' NavigateUrl='<%# $"~/User2s/Edit.aspx?Id={Eval("RequesterId")}" %>' Enabled='<%# Session["User2sPermission"] != null %>' />
+                            </ItemTemplate>
+                        </telerik:GridTemplateColumn>
+                        <telerik:GridTemplateColumn AllowFiltering="false" AllowSorting="false" HeaderText="Proxy User" DataField="ProxyUser.Username" SortExpression="ProxyUser.Username" AutoPostBackOnFilter="true" CurrentFilterFunction="StartsWith">
+                            <ItemTemplate>
+                                <asp:HyperLink ID="ProxyUserHyperLink" runat="server" Text='<%#: Eval("ProxyUserId") != null ? Eval("ProxyUser.Username") ?? "&nbsp;" : "" %>' NavigateUrl='<%# $"~/User2s/Edit.aspx?Id={Eval("ProxyUserId")}" %>' Enabled='<%# Session["User2sPermission"] != null %>' />
+                            </ItemTemplate>
+                        </telerik:GridTemplateColumn>
+                        <telerik:GridBoundColumn HeaderText="Status" DataField="Status" AutoPostBackOnFilter="true" HtmlEncode="true" CurrentFilterFunction="StartsWith" />
+                        <telerik:GridTemplateColumn AllowFiltering="false" AllowSorting="false" HeaderText="Cancellation Reason" DataField="CancellationReason.Name" SortExpression="CancellationReason.Name" AutoPostBackOnFilter="true" CurrentFilterFunction="StartsWith">
+                            <ItemTemplate>
+                                <asp:HyperLink ID="CancellationReasonHyperLink" runat="server" Text='<%#: Eval("CancellationReason.Name") %>' NavigateUrl='<%# $"~/CancellationReason2s/Edit.aspx?Id={Eval("CancellationReasonId")}" %>' Enabled='<%# Session["CancellationReason2sPermission"] != null %>' />
+                            </ItemTemplate>
+                        </telerik:GridTemplateColumn>
+                        <telerik:GridTemplateColumn AllowFiltering="false" AllowSorting="false" HeaderText="Cancelled By User" DataField="CancelledByUser.Username" SortExpression="CancelledByUser.Username" AutoPostBackOnFilter="true" CurrentFilterFunction="StartsWith">
+                            <ItemTemplate>
+                                <asp:HyperLink ID="CancelledByUserHyperLink" runat="server" Text='<%#: Eval("CancelledByUserId") != null ? Eval("CancelledByUser.Username") ?? "&nbsp;" : "" %>' NavigateUrl='<%# $"~/User2s/Edit.aspx?Id={Eval("CancelledByUserId")}" %>' Enabled='<%# Session["User2sPermission"] != null %>' />
+                            </ItemTemplate>
+                        </telerik:GridTemplateColumn>
+                        <telerik:GridBoundColumn HeaderText="Cancellation Additional Information" DataField="CancellationAdditionalInformation" AutoPostBackOnFilter="true" HtmlEncode="true" CurrentFilterFunction="StartsWith" />
+                        <telerik:GridBoundColumn HeaderText="Cancelled Date" DataField="CancelledDate" AutoPostBackOnFilter="true" DataFormatString="{0:d}" />
+                        <telerik:GridBoundColumn HeaderText="Position" DataField="Position" AutoPostBackOnFilter="true" />
+                        <telerik:GridBoundColumn HeaderText="Item Title" DataField="ItemTitle" AutoPostBackOnFilter="true" HtmlEncode="true" CurrentFilterFunction="StartsWith" />
+                        <telerik:GridBoundColumn HeaderText="Item Barcode" DataField="ItemBarcode" AutoPostBackOnFilter="true" HtmlEncode="true" CurrentFilterFunction="StartsWith" />
+                        <telerik:GridBoundColumn HeaderText="Requester First Name" DataField="RequesterFirstName" AutoPostBackOnFilter="true" HtmlEncode="true" CurrentFilterFunction="StartsWith" />
+                        <telerik:GridBoundColumn HeaderText="Requester Last Name" DataField="RequesterLastName" AutoPostBackOnFilter="true" HtmlEncode="true" CurrentFilterFunction="StartsWith" />
+                        <telerik:GridBoundColumn HeaderText="Requester Middle Name" DataField="RequesterMiddleName" AutoPostBackOnFilter="true" HtmlEncode="true" CurrentFilterFunction="StartsWith" />
+                        <telerik:GridBoundColumn HeaderText="Requester Barcode" DataField="RequesterBarcode" AutoPostBackOnFilter="true" HtmlEncode="true" CurrentFilterFunction="StartsWith" />
+                        <telerik:GridBoundColumn HeaderText="Requester Patron Group" DataField="RequesterPatronGroup" AutoPostBackOnFilter="true" HtmlEncode="true" CurrentFilterFunction="StartsWith" />
+                        <telerik:GridBoundColumn HeaderText="Proxy First Name" DataField="ProxyFirstName" AutoPostBackOnFilter="true" HtmlEncode="true" CurrentFilterFunction="StartsWith" />
+                        <telerik:GridBoundColumn HeaderText="Proxy Last Name" DataField="ProxyLastName" AutoPostBackOnFilter="true" HtmlEncode="true" CurrentFilterFunction="StartsWith" />
+                        <telerik:GridBoundColumn HeaderText="Proxy Middle Name" DataField="ProxyMiddleName" AutoPostBackOnFilter="true" HtmlEncode="true" CurrentFilterFunction="StartsWith" />
+                        <telerik:GridBoundColumn HeaderText="Proxy Barcode" DataField="ProxyBarcode" AutoPostBackOnFilter="true" HtmlEncode="true" CurrentFilterFunction="StartsWith" />
+                        <telerik:GridBoundColumn HeaderText="Proxy Patron Group" DataField="ProxyPatronGroup" AutoPostBackOnFilter="true" HtmlEncode="true" CurrentFilterFunction="StartsWith" />
+                        <telerik:GridBoundColumn HeaderText="Fulfilment Preference" DataField="FulfilmentPreference" AutoPostBackOnFilter="true" HtmlEncode="true" CurrentFilterFunction="StartsWith" />
+                        <telerik:GridTemplateColumn AllowFiltering="false" AllowSorting="false" HeaderText="Delivery Address Type" DataField="DeliveryAddressType.Name" SortExpression="DeliveryAddressType.Name" AutoPostBackOnFilter="true" CurrentFilterFunction="StartsWith">
+                            <ItemTemplate>
+                                <asp:HyperLink ID="DeliveryAddressTypeHyperLink" runat="server" Text='<%#: Eval("DeliveryAddressType.Name") %>' NavigateUrl='<%# $"~/AddressType2s/Edit.aspx?Id={Eval("DeliveryAddressTypeId")}" %>' Enabled='<%# Session["AddressType2sPermission"] != null %>' />
+                            </ItemTemplate>
+                        </telerik:GridTemplateColumn>
+                        <telerik:GridBoundColumn HeaderText="Request Expiration Date" DataField="RequestExpirationDate" AutoPostBackOnFilter="true" DataFormatString="{0:d}" />
+                        <telerik:GridBoundColumn HeaderText="Hold Shelf Expiration Date" DataField="HoldShelfExpirationDate" AutoPostBackOnFilter="true" DataFormatString="{0:d}" />
+                        <telerik:GridTemplateColumn AllowFiltering="false" AllowSorting="false" HeaderText="Pickup Service Point" DataField="PickupServicePoint.Name" SortExpression="PickupServicePoint.Name" AutoPostBackOnFilter="true" CurrentFilterFunction="StartsWith">
+                            <ItemTemplate>
+                                <asp:HyperLink ID="PickupServicePointHyperLink" runat="server" Text='<%#: Eval("PickupServicePoint.Name") %>' NavigateUrl='<%# $"~/ServicePoint2s/Edit.aspx?Id={Eval("PickupServicePointId")}" %>' Enabled='<%# Session["ServicePoint2sPermission"] != null %>' />
+                            </ItemTemplate>
+                        </telerik:GridTemplateColumn>
+                        <telerik:GridBoundColumn HeaderText="Creation Time" DataField="CreationTime" AutoPostBackOnFilter="true" DataFormatString="{0:g}" />
+                        <telerik:GridTemplateColumn AllowFiltering="false" AllowSorting="false" HeaderText="Creation User" DataField="CreationUser.Username" SortExpression="CreationUser.Username" AutoPostBackOnFilter="true" CurrentFilterFunction="StartsWith">
+                            <ItemTemplate>
+                                <asp:HyperLink ID="CreationUserHyperLink" runat="server" Text='<%#: Eval("CreationUserId") != null ? Eval("CreationUser.Username") ?? "&nbsp;" : "" %>' NavigateUrl='<%# $"~/User2s/Edit.aspx?Id={Eval("CreationUserId")}" %>' Enabled='<%# Session["User2sPermission"] != null %>' />
+                            </ItemTemplate>
+                        </telerik:GridTemplateColumn>
+                        <telerik:GridBoundColumn HeaderText="Last Write Time" DataField="LastWriteTime" AutoPostBackOnFilter="true" DataFormatString="{0:g}" />
+                        <telerik:GridTemplateColumn AllowFiltering="false" AllowSorting="false" HeaderText="Last Write User" DataField="LastWriteUser.Username" SortExpression="LastWriteUser.Username" AutoPostBackOnFilter="true" CurrentFilterFunction="StartsWith">
+                            <ItemTemplate>
+                                <asp:HyperLink ID="LastWriteUserHyperLink" runat="server" Text='<%#: Eval("LastWriteUserId") != null ? Eval("LastWriteUser.Username") ?? "&nbsp;" : "" %>' NavigateUrl='<%# $"~/User2s/Edit.aspx?Id={Eval("LastWriteUserId")}" %>' Enabled='<%# Session["User2sPermission"] != null %>' />
+                            </ItemTemplate>
+                        </telerik:GridTemplateColumn>
+                        <telerik:GridBoundColumn HeaderText="Awaiting Pickup Request Closed Date" DataField="AwaitingPickupRequestClosedDate" AutoPostBackOnFilter="true" DataFormatString="{0:d}" />
+                    </Columns>
+                </MasterTableView>
+            </telerik:RadGrid>
+        </fieldset>
+    </asp:Panel>
+    <telerik:RadAjaxManager ID="RadAjaxManager1" runat="server">
+        <AjaxSettings>
+            <telerik:AjaxSetting AjaxControlID="InsertUpdateRadButton">
+                <UpdatedControls>
+                    <telerik:AjaxUpdatedControl ControlID="Item2Panel" LoadingPanelID="RadAjaxLoadingPanel1" />
+                </UpdatedControls>
+            </telerik:AjaxSetting>
+            <telerik:AjaxSetting AjaxControlID="CheckIn2sRadGrid">
+                <UpdatedControls>
+                    <telerik:AjaxUpdatedControl ControlID="CheckIn2sPanel" LoadingPanelID="RadAjaxLoadingPanel1" />
+                </UpdatedControls>
+            </telerik:AjaxSetting>
+            <telerik:AjaxSetting AjaxControlID="Fee2sRadGrid">
+                <UpdatedControls>
+                    <telerik:AjaxUpdatedControl ControlID="Fee2sPanel" LoadingPanelID="RadAjaxLoadingPanel1" />
+                </UpdatedControls>
+            </telerik:AjaxSetting>
+            <telerik:AjaxSetting AjaxControlID="Loan2sRadGrid">
+                <UpdatedControls>
+                    <telerik:AjaxUpdatedControl ControlID="Loan2sPanel" LoadingPanelID="RadAjaxLoadingPanel1" />
+                </UpdatedControls>
+            </telerik:AjaxSetting>
+            <telerik:AjaxSetting AjaxControlID="Receiving2sRadGrid">
+                <UpdatedControls>
+                    <telerik:AjaxUpdatedControl ControlID="Receiving2sPanel" LoadingPanelID="RadAjaxLoadingPanel1" />
+                </UpdatedControls>
+            </telerik:AjaxSetting>
+            <telerik:AjaxSetting AjaxControlID="Request2sRadGrid">
+                <UpdatedControls>
+                    <telerik:AjaxUpdatedControl ControlID="Request2sPanel" LoadingPanelID="RadAjaxLoadingPanel1" />
+                </UpdatedControls>
+            </telerik:AjaxSetting>
+        </AjaxSettings>
+    </telerik:RadAjaxManager>
+</asp:Content>

@@ -1,0 +1,44 @@
+﻿body {
+    font-family: "Segoe UI", Arial, sans-serif;
+    font-size: 12px;
+    /*margin: 8px;*/
+    /*background-color: black;*/
+    /*background-color: rgba(34, 34, 34, 1);*/
+    background-color: black;
+    /*background-color: rgb(70, 70, 70);*/
+    color: white;
+}
+
+a {
+    color: white /*!important*/;
+}
+
+fieldset {
+    border-color: white;
+    /*border-color: #333;*/
+    border-style: solid;
+    border-width: 1px;
+}
+
+.Error {
+    color: red;
+}
+
+.rgFilterBox {
+    width: 28px;
+    padding: 4px 1px !important;
+}
+
+.RadGrid .rgRow > td, .RadGrid .rgAltRow > td, .RadGrid .rgEditRow > td, .RadGrid .rgFooter > td, .RadGrid .rgFilterRow > td, .RadGrid .rgHeader, .RadGrid .rgResizeCol, .RadGrid .rgGroupHeader td {
+    padding-left: 4px !important;
+    padding-right: 4px !important;
+}
+
+pre {
+    font-family: "Segoe UI", Arial, sans-serif;
+    font-size: 12px;
+    margin: 0px;
+    max-height: 150px;
+    max-width: 600px;
+    overflow: auto;
+}

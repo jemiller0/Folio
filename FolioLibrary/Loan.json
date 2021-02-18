@@ -165,6 +165,11 @@
           "description": "Indicates when the aged to lost fee should be billed (for use where delayed billing is set up)",
           "type": "string",
           "format": "date-time"
+        },
+        "agedToLostDate": {
+          "description": "Date and time the item was aged to lost for this loan",
+          "type": "string",
+          "format": "date-time"
         }
       }
     }

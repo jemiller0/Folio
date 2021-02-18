@@ -1,0 +1,18 @@
+using System.Web.UI.WebControls;
+using Telerik.Web.UI;
+
+namespace FolioWebApplication.FundType2s
+{
+    public partial class Edit
+    {
+        protected Panel FundType2Panel;
+
+        protected FormView FundType2FormView;
+
+        protected Panel Fund2sPanel;
+
+        protected RadGrid Fund2sRadGrid;
+
+        protected RadAjaxManager RadAjaxManager1;
+    }
+}

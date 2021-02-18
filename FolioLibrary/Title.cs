@@ -43,7 +43,7 @@ namespace FolioLibrary
         public virtual Guid? Polineid { get; set; }
 
         [ScaffoldColumn(false)]
-        public virtual ICollection<Piece> Pieces { get; set; }
+        public virtual ICollection<Receiving> Receivings { get; set; }
 
         public override string ToString() => $"{{ {nameof(Id)} = {Id}, {nameof(Content)} = {Content}, {nameof(CreationTime)} = {CreationTime}, {nameof(CreationUserId)} = {CreationUserId}, {nameof(Polineid)} = {Polineid} }}";
 
@@ -51,7 +51,7 @@ namespace FolioLibrary
         {
             Id = (Guid?)jObject.SelectToken("id"),
             Content = jObject.ToString(),
-            CreationTime = (DateTime?)jObject.SelectToken("metadata.createdDate"),
+            CreationTime = ((DateTime?)jObject.SelectToken("metadata.createdDate"))?.ToLocalTime(),
             CreationUserId = (string)jObject.SelectToken("metadata.createdByUserId"),
             Polineid = (Guid?)jObject.SelectToken("poLineId")
         } : null;

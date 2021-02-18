@@ -1,0 +1,138 @@
+﻿a {
+    color: black !important;
+}
+
+body {
+    font-family: "Segoe UI", Arial, sans-serif;
+    font-size: 12px;
+    /*margin: 8px;*/
+}
+
+dd {
+    margin-left: 10px;
+}
+
+h1 {
+    color: #8c2431;
+    font-size: 16px;
+}
+
+img {
+    border-style: none;
+}
+
+pre {
+    font-family: "Segoe UI", Arial, sans-serif;
+    font-size: 12px;
+    margin: 0px;
+    max-height: 150px;
+    max-width: 600px;
+    overflow: auto;
+}
+
+/*svg {
+    margin: 0px;
+    padding: 0px;
+    border: 0px;
+    outline-offset: 0px;
+}*/
+
+#HeaderDiv {
+    background-color: silver;
+    overflow: hidden;
+    margin-bottom: 10px;
+}
+
+#MainDiv {
+    clear: both;
+    float: left;
+    width: 100%;
+}
+
+#ContentPlaceHolder1_FindPanel {
+    margin-top: 10px;
+}
+
+#FooterDiv {
+    clear: both;
+    float: left;
+    text-align: center;
+    width: 100%;
+}
+
+.Error {
+    color: red;
+}
+
+.RadMenu {
+    white-space: normal !important;
+}
+
+.rmLink {
+    white-space: nowrap;
+}
+
+/*.rcbList li:first-child {
+    min-height: 16px;
+}*/
+
+.rgFilterBox {
+    width: 28px;
+    padding: 4px 1px !important;
+}
+
+/*.RadGrid, .rgFilterBox {
+    padding: 1px !important;
+}*/
+
+/*html .RadPicker,
+html .RadInput {
+    font-size: 12px;
+}
+
+.RadCalendar, .RadCalendarMonthView, .RadCalendarTimeView, .RadInput, .riTextBox, .riLabel {
+    font-size: 12px !important;
+}*/
+
+/*.RadInput_Default, .RadInputMgr_Default {
+    font-size: 12px;
+}*/
+
+/*input.riTextBox {*/
+/*.riTextBox {
+    font-size: 12px;
+    color: aqua;
+    background-color: azure;
+}*/
+.RadGrid .rgRow > td, .RadGrid .rgAltRow > td, .RadGrid .rgEditRow > td, .RadGrid .rgFooter > td, .RadGrid .rgFilterRow > td, .RadGrid .rgHeader, .RadGrid .rgResizeCol, .RadGrid .rgGroupHeader td {
+    padding-left: 4px !important;
+    padding-right: 4px !important;
+}
+
+.RadGrid .rgRow > td, .RadGrid .rgAltRow > td, .RadGrid .rgEditRow > td, .RadGrid .rgFooter > td, .RadGrid .rgGroupHeader > td {
+    padding-top: 0px;
+    padding-bottom: 0px;
+}
+
+.RadGrid .rgCommandCell {
+    padding: 1px !important;
+}
+
+.RadGrid .rgHeader, .RadGrid th.rgResizeCol {
+    padding-top: 7px !important;
+    padding-bottom: 7px !important;
+}
+
+.RadInput .riTextBox, .RadInputMgr {
+    padding: 4px 4px !important;
+}
+
+.RadComboBox .rcbInner {
+    padding: 4px 2em 4px 4px !important;
+}
+
+fieldset {
+    border-color: silver;
+    border-style: solid;
+    border-width: 1px;
+}

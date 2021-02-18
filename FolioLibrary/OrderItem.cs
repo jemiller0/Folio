@@ -43,7 +43,7 @@ namespace FolioLibrary
         public virtual Guid? Purchaseorderid { get; set; }
 
         [ScaffoldColumn(false)]
-        public virtual ICollection<Piece> Pieces { get; set; }
+        public virtual ICollection<Receiving> Receivings { get; set; }
 
         [ScaffoldColumn(false)]
         public virtual ICollection<Title> Titles { get; set; }
@@ -54,7 +54,7 @@ namespace FolioLibrary
         {
             Id = (Guid?)jObject.SelectToken("id"),
             Content = jObject.ToString(),
-            CreationTime = (DateTime?)jObject.SelectToken("metadata.createdDate"),
+            CreationTime = ((DateTime?)jObject.SelectToken("metadata.createdDate"))?.ToLocalTime(),
             CreationUserId = (string)jObject.SelectToken("metadata.createdByUserId"),
             Purchaseorderid = (Guid?)jObject.SelectToken("purchaseOrderId")
         } : null;

@@ -45,16 +45,13 @@ namespace FolioLibrary
         [ScaffoldColumn(false)]
         public virtual ICollection<Fund> Funds { get; set; }
 
-        [ScaffoldColumn(false)]
-        public virtual ICollection<LedgerFiscalYear> LedgerFiscalYears { get; set; }
-
         public override string ToString() => $"{{ {nameof(Id)} = {Id}, {nameof(Content)} = {Content}, {nameof(CreationTime)} = {CreationTime}, {nameof(CreationUserId)} = {CreationUserId}, {nameof(Fiscalyearoneid)} = {Fiscalyearoneid} }}";
 
         public static Ledger FromJObject(JObject jObject) => jObject != null ? new Ledger
         {
             Id = (Guid?)jObject.SelectToken("id"),
             Content = jObject.ToString(),
-            CreationTime = (DateTime?)jObject.SelectToken("metadata.createdDate"),
+            CreationTime = ((DateTime?)jObject.SelectToken("metadata.createdDate"))?.ToLocalTime(),
             CreationUserId = (string)jObject.SelectToken("metadata.createdByUserId"),
             Fiscalyearoneid = (Guid?)jObject.SelectToken("fiscalYearOneId")
         } : null;

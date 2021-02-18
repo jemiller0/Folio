@@ -50,7 +50,7 @@ namespace FolioLibrary
         {
             Id = (Guid?)jObject.SelectToken("documentMetadata.id"),
             Content = jObject.ToString(),
-            CreationTime = (DateTime?)jObject.SelectToken("documentMetadata.metadata.createdDate"),
+            CreationTime = ((DateTime?)jObject.SelectToken("documentMetadata.metadata.createdDate"))?.ToLocalTime(),
             CreationUserId = (string)jObject.SelectToken("documentMetadata.metadata.createdByUserId"),
             Invoiceid = (Guid?)jObject.SelectToken("documentMetadata.invoiceId")
         } : null;
