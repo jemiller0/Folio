@@ -37,7 +37,7 @@ namespace FolioLibrary
         [Column("code"), Display(Order = 3), JsonProperty("code"), StringLength(1024)]
         public virtual string Code { get; set; }
 
-        [Column("usage_number"), Display(Name = "Usage Number", Order = 4), JsonProperty("usageNumber")]
+        [Column("usage_number"), Display(Name = "Usage Number", Order = 4), Editable(false), JsonProperty("usageNumber")]
         public virtual int? UsageNumber { get; set; }
 
         [Column("created_date"), DataType(DataType.DateTime), Display(Name = "Creation Time", Order = 5), DisplayFormat(DataFormatString = "{0:g}"), Editable(false), JsonProperty("metadata.createdDate")]

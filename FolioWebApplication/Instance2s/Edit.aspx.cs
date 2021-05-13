@@ -266,7 +266,6 @@ namespace FolioWebApplication.Instance2s
             i2.DiscoverySuppress = (bool?)d["DiscoverySuppress"];
             i2.AccessionNumber = Global.Trim((string)d["AccessionNumber"]);
             i2.Barcode = Global.Trim((string)d["Barcode"]);
-            i2.EffectiveShelvingOrder = Global.Trim((string)d["EffectiveShelvingOrder"]);
             i2.CallNumber = Global.Trim((string)d["CallNumber"]);
             i2.CallNumberPrefix = Global.Trim((string)d["CallNumberPrefix"]);
             i2.CallNumberSuffix = Global.Trim((string)d["CallNumberSuffix"]);
@@ -284,7 +283,6 @@ namespace FolioWebApplication.Instance2s
             i2.DamagedStatusId = (string)d["DamagedStatusId"] != "" ? (Guid?)Guid.Parse((string)d["DamagedStatusId"]) : null;
             i2.DamagedStatusTime = (DateTime?)d["DamagedStatusTime"];
             i2.StatusName = Global.Trim((string)d["StatusName"]);
-            i2.StatusDate = (DateTime?)d["StatusDate"];
             i2.MaterialTypeId = (Guid?)Guid.Parse((string)d["MaterialTypeId"]);
             i2.PermanentLoanTypeId = (Guid?)Guid.Parse((string)d["PermanentLoanTypeId"]);
             i2.TemporaryLoanTypeId = (string)d["TemporaryLoanTypeId"] != "" ? (Guid?)Guid.Parse((string)d["TemporaryLoanTypeId"]) : null;

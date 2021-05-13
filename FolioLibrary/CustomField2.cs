@@ -34,7 +34,7 @@ namespace FolioLibrary
         [Column("name"), Display(Order = 2), JsonProperty("name"), Required, StringLength(1024)]
         public virtual string Name { get; set; }
 
-        [Column("ref_id"), Display(Name = "Ref Id", Order = 3), JsonProperty("refId"), StringLength(128)]
+        [Column("ref_id"), Display(Name = "Ref Id", Order = 3), Editable(false), JsonProperty("refId"), StringLength(128)]
         public virtual string RefId { get; set; }
 
         [Column("type"), Display(Order = 4), JsonProperty("type"), RegularExpression(@"^(RADIO_BUTTON|SINGLE_CHECKBOX|SINGLE_SELECT_DROPDOWN|MULTI_SELECT_DROPDOWN|TEXTBOX_SHORT|TEXTBOX_LONG)$"), Required, StringLength(1024)]
@@ -52,7 +52,7 @@ namespace FolioLibrary
         [Column("is_repeatable"), Display(Name = "Is Repeatable", Order = 8), JsonProperty("isRepeatable")]
         public virtual bool? IsRepeatable { get; set; }
 
-        [Column("order"), Display(Order = 9), JsonProperty("order")]
+        [Column("order"), Display(Order = 9), Editable(false), JsonProperty("order")]
         public virtual int? Order { get; set; }
 
         [Column("help_text"), Display(Name = "Help Text", Order = 10), JsonProperty("helpText"), StringLength(1024)]

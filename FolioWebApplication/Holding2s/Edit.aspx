@@ -815,12 +815,12 @@
                                             <telerik:RadTextBox ID="BarcodeRadTextBox" runat="server" Text='<%# Bind("Barcode") %>' MaxLength="1024" Width="500px" />
                                         </td>
                                     </tr>
-                                    <tr>
+                                    <tr runat="server" visible='<%# Eval("EffectiveShelvingOrder") != null %>'>
                                         <td>
-                                            <asp:Label ID="EffectiveShelvingOrderLabel" runat="server" Text="Effective Shelving Order:" AssociatedControlID="EffectiveShelvingOrderRadTextBox" />
+                                            <asp:Label ID="EffectiveShelvingOrderLabel" runat="server" Text="Effective Shelving Order:" AssociatedControlID="EffectiveShelvingOrderLiteral" />
                                         </td>
                                         <td>
-                                            <telerik:RadTextBox ID="EffectiveShelvingOrderRadTextBox" runat="server" Text='<%# Bind("EffectiveShelvingOrder") %>' MaxLength="1024" Width="500px" />
+                                            <asp:Literal ID="EffectiveShelvingOrderLiteral" runat="server" Text='<%#: Eval("EffectiveShelvingOrder") %>' />
                                         </td>
                                     </tr>
                                     <tr>
@@ -1005,12 +1005,12 @@
                                             <asp:RegularExpressionValidator ID="StatusNameRegularExpressionValidator" runat="server" ErrorMessage="The Status Name field must match the regular expression '^(Aged to lost|Available|Awaiting pickup|Awaiting delivery|Checked out|Claimed returned|Declared lost|In process|In process (non-requestable)|In transit|Intellectual item|Long missing|Lost and paid|Missing|On order|Paged|Restricted|Order closed|Unavailable|Unknown|Withdrawn)$'." ControlToValidate="StatusNameRadComboBox" Display="Dynamic" CssClass="Error" ValidationExpression="^(Aged to lost|Available|Awaiting pickup|Awaiting delivery|Checked out|Claimed returned|Declared lost|In process|In process (non-requestable)|In transit|Intellectual item|Long missing|Lost and paid|Missing|On order|Paged|Restricted|Order closed|Unavailable|Unknown|Withdrawn)$" ValidationGroup="Item2s" />
                                         </td>
                                     </tr>
-                                    <tr>
+                                    <tr runat="server" visible='<%# Eval("StatusDate") != null %>'>
                                         <td>
-                                            <asp:Label ID="StatusDateLabel" runat="server" Text="Status Date:" AssociatedControlID="StatusDateRadDatePicker" />
+                                            <asp:Label ID="StatusDateLabel" runat="server" Text="Status Date:" AssociatedControlID="StatusDateLiteral" />
                                         </td>
                                         <td>
-                                            <telerik:RadDatePicker ID="StatusDateRadDatePicker" runat="server" DbSelectedDate='<%# Bind("StatusDate") %>' Width="500px" MinDate="1/1/1900" />
+                                            <asp:Literal ID="StatusDateLiteral" runat="server" Text='<%# Eval("StatusDate", "{0:d}") %>' />
                                         </td>
                                     </tr>
                                     <tr>

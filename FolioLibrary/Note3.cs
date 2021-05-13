@@ -37,7 +37,7 @@ namespace FolioLibrary
         [Column("type_id"), Display(Name = "Type 1", Order = 3), ForeignKey("Type1"), JsonProperty("typeId"), Required]
         public virtual Guid? TypeId { get; set; }
 
-        [Column("type"), Display(Order = 4), JsonProperty("type"), StringLength(1024)]
+        [Column("type"), Display(Order = 4), Editable(false), JsonProperty("type"), StringLength(1024)]
         public virtual string Type { get; set; }
 
         [Column("domain"), Display(Order = 5), JsonProperty("domain"), Required, StringLength(1024)]
@@ -49,25 +49,25 @@ namespace FolioLibrary
         [Column("content2"), Display(Name = "Content 2", Order = 7), JsonProperty("content"), StringLength(1024)]
         public virtual string Content2 { get; set; }
 
-        [Column("status"), Display(Order = 8), JsonProperty("status"), RegularExpression(@"^(ASSIGNED|UNASSIGNED)$"), StringLength(1024)]
+        [Column("status"), Display(Order = 8), Editable(false), JsonProperty("status"), RegularExpression(@"^(ASSIGNED|UNASSIGNED)$"), StringLength(1024)]
         public virtual string Status { get; set; }
 
-        [Column("creator_last_name"), Display(Name = "Creator Last Name", Order = 9), JsonProperty("creator.lastName"), StringLength(1024)]
+        [Column("creator_last_name"), Display(Name = "Creator Last Name", Order = 9), Editable(false), JsonProperty("creator.lastName"), StringLength(1024)]
         public virtual string CreatorLastName { get; set; }
 
-        [Column("creator_first_name"), Display(Name = "Creator First Name", Order = 10), JsonProperty("creator.firstName"), StringLength(1024)]
+        [Column("creator_first_name"), Display(Name = "Creator First Name", Order = 10), Editable(false), JsonProperty("creator.firstName"), StringLength(1024)]
         public virtual string CreatorFirstName { get; set; }
 
-        [Column("creator_middle_name"), Display(Name = "Creator Middle Name", Order = 11), JsonProperty("creator.middleName"), StringLength(1024)]
+        [Column("creator_middle_name"), Display(Name = "Creator Middle Name", Order = 11), Editable(false), JsonProperty("creator.middleName"), StringLength(1024)]
         public virtual string CreatorMiddleName { get; set; }
 
-        [Column("updater_last_name"), Display(Name = "Updater Last Name", Order = 12), JsonProperty("updater.lastName"), StringLength(1024)]
+        [Column("updater_last_name"), Display(Name = "Updater Last Name", Order = 12), Editable(false), JsonProperty("updater.lastName"), StringLength(1024)]
         public virtual string UpdaterLastName { get; set; }
 
-        [Column("updater_first_name"), Display(Name = "Updater First Name", Order = 13), JsonProperty("updater.firstName"), StringLength(1024)]
+        [Column("updater_first_name"), Display(Name = "Updater First Name", Order = 13), Editable(false), JsonProperty("updater.firstName"), StringLength(1024)]
         public virtual string UpdaterFirstName { get; set; }
 
-        [Column("updater_middle_name"), Display(Name = "Updater Middle Name", Order = 14), JsonProperty("updater.middleName"), StringLength(1024)]
+        [Column("updater_middle_name"), Display(Name = "Updater Middle Name", Order = 14), Editable(false), JsonProperty("updater.middleName"), StringLength(1024)]
         public virtual string UpdaterMiddleName { get; set; }
 
         [Column("created_date"), DataType(DataType.DateTime), Display(Name = "Creation Time", Order = 15), DisplayFormat(DataFormatString = "{0:g}"), Editable(false), JsonProperty("metadata.createdDate")]

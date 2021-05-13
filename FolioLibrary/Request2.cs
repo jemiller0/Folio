@@ -163,7 +163,7 @@ namespace FolioLibrary
         [Column("updated_by_username"), JsonProperty("metadata.updatedByUsername"), ScaffoldColumn(false), StringLength(1024)]
         public virtual string LastWriteUserUsername { get; set; }
 
-        [Column("awaiting_pickup_request_closed_date"), DataType(DataType.Date), Display(Name = "Awaiting Pickup Request Closed Date", Order = 46), DisplayFormat(DataFormatString = "{0:d}", ApplyFormatInEditMode = true), JsonProperty("awaitingPickupRequestClosedDate")]
+        [Column("awaiting_pickup_request_closed_date"), DataType(DataType.Date), Display(Name = "Awaiting Pickup Request Closed Date", Order = 46), DisplayFormat(DataFormatString = "{0:d}"), Editable(false), JsonProperty("awaitingPickupRequestClosedDate")]
         public virtual DateTime? AwaitingPickupRequestClosedDate { get; set; }
 
         [Column("content"), CustomValidation(typeof(Request), nameof(ValidateContent)), DataType(DataType.MultilineText), Display(Order = 47), Editable(false)]

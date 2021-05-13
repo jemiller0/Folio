@@ -150,7 +150,7 @@
                                     <asp:Label ID="InitialAllocationLabel" runat="server" Text="Initial Allocation:" AssociatedControlID="InitialAllocationLiteral" />
                                 </td>
                                 <td>
-                                    <asp:Literal ID="InitialAllocationLiteral" runat="server" Text='<%#: Eval("InitialAllocation") %>' />
+                                    <asp:Literal ID="InitialAllocationLiteral" runat="server" Text='<%# Eval("InitialAllocation", "{0:c}") %>' />
                                 </td>
                             </tr>
                             <tr runat="server" visible='<%# Eval("AllocationTo") != null %>'>

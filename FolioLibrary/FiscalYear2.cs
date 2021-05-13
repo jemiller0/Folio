@@ -52,43 +52,43 @@ namespace FolioLibrary
         [Column("series"), Display(Order = 8), JsonProperty("series"), StringLength(1024)]
         public virtual string Series { get; set; }
 
-        [Column("financial_summary_allocated"), DataType(DataType.Currency), Display(Name = "Financial Summary Allocated", Order = 9), DisplayFormat(DataFormatString = "{0:c}", ApplyFormatInEditMode = true), JsonProperty("financialSummary.allocated")]
+        [Column("financial_summary_allocated"), DataType(DataType.Currency), Display(Name = "Financial Summary Allocated", Order = 9), DisplayFormat(DataFormatString = "{0:c}"), Editable(false), JsonProperty("financialSummary.allocated")]
         public virtual decimal? FinancialSummaryAllocated { get; set; }
 
-        [Column("financial_summary_available"), DataType(DataType.Currency), Display(Name = "Financial Summary Available", Order = 10), DisplayFormat(DataFormatString = "{0:c}", ApplyFormatInEditMode = true), JsonProperty("financialSummary.available")]
+        [Column("financial_summary_available"), DataType(DataType.Currency), Display(Name = "Financial Summary Available", Order = 10), DisplayFormat(DataFormatString = "{0:c}"), Editable(false), JsonProperty("financialSummary.available")]
         public virtual decimal? FinancialSummaryAvailable { get; set; }
 
-        [Column("financial_summary_unavailable"), DataType(DataType.Currency), Display(Name = "Financial Summary Unavailable", Order = 11), DisplayFormat(DataFormatString = "{0:c}", ApplyFormatInEditMode = true), JsonProperty("financialSummary.unavailable")]
+        [Column("financial_summary_unavailable"), DataType(DataType.Currency), Display(Name = "Financial Summary Unavailable", Order = 11), DisplayFormat(DataFormatString = "{0:c}"), Editable(false), JsonProperty("financialSummary.unavailable")]
         public virtual decimal? FinancialSummaryUnavailable { get; set; }
 
-        [Column("financial_summary_initial_allocation"), DataType(DataType.Currency), Display(Name = "Financial Summary Initial Allocation", Order = 12), DisplayFormat(DataFormatString = "{0:c}", ApplyFormatInEditMode = true), JsonProperty("financialSummary.initialAllocation")]
+        [Column("financial_summary_initial_allocation"), DataType(DataType.Currency), Display(Name = "Financial Summary Initial Allocation", Order = 12), DisplayFormat(DataFormatString = "{0:c}"), Editable(false), JsonProperty("financialSummary.initialAllocation")]
         public virtual decimal? FinancialSummaryInitialAllocation { get; set; }
 
-        [Column("financial_summary_allocation_to"), DataType(DataType.Currency), Display(Name = "Financial Summary Allocation To", Order = 13), DisplayFormat(DataFormatString = "{0:c}", ApplyFormatInEditMode = true), JsonProperty("financialSummary.allocationTo")]
+        [Column("financial_summary_allocation_to"), DataType(DataType.Currency), Display(Name = "Financial Summary Allocation To", Order = 13), DisplayFormat(DataFormatString = "{0:c}"), Editable(false), JsonProperty("financialSummary.allocationTo")]
         public virtual decimal? FinancialSummaryAllocationTo { get; set; }
 
-        [Column("financial_summary_allocation_from"), DataType(DataType.Currency), Display(Name = "Financial Summary Allocation From", Order = 14), DisplayFormat(DataFormatString = "{0:c}", ApplyFormatInEditMode = true), JsonProperty("financialSummary.allocationFrom")]
+        [Column("financial_summary_allocation_from"), DataType(DataType.Currency), Display(Name = "Financial Summary Allocation From", Order = 14), DisplayFormat(DataFormatString = "{0:c}"), Editable(false), JsonProperty("financialSummary.allocationFrom")]
         public virtual decimal? FinancialSummaryAllocationFrom { get; set; }
 
-        [Column("financial_summary_total_funding"), DataType(DataType.Currency), Display(Name = "Financial Summary Total Funding", Order = 15), DisplayFormat(DataFormatString = "{0:c}", ApplyFormatInEditMode = true), JsonProperty("financialSummary.totalFunding")]
+        [Column("financial_summary_total_funding"), DataType(DataType.Currency), Display(Name = "Financial Summary Total Funding", Order = 15), DisplayFormat(DataFormatString = "{0:c}"), Editable(false), JsonProperty("financialSummary.totalFunding")]
         public virtual decimal? FinancialSummaryTotalFunding { get; set; }
 
-        [Column("financial_summary_cash_balance"), DataType(DataType.Currency), Display(Name = "Financial Summary Cash Balance", Order = 16), DisplayFormat(DataFormatString = "{0:c}", ApplyFormatInEditMode = true), JsonProperty("financialSummary.cashBalance")]
+        [Column("financial_summary_cash_balance"), DataType(DataType.Currency), Display(Name = "Financial Summary Cash Balance", Order = 16), DisplayFormat(DataFormatString = "{0:c}"), Editable(false), JsonProperty("financialSummary.cashBalance")]
         public virtual decimal? FinancialSummaryCashBalance { get; set; }
 
-        [Column("financial_summary_awaiting_payment"), DataType(DataType.Currency), Display(Name = "Financial Summary Awaiting Payment", Order = 17), DisplayFormat(DataFormatString = "{0:c}", ApplyFormatInEditMode = true), JsonProperty("financialSummary.awaitingPayment")]
+        [Column("financial_summary_awaiting_payment"), DataType(DataType.Currency), Display(Name = "Financial Summary Awaiting Payment", Order = 17), DisplayFormat(DataFormatString = "{0:c}"), Editable(false), JsonProperty("financialSummary.awaitingPayment")]
         public virtual decimal? FinancialSummaryAwaitingPayment { get; set; }
 
-        [Column("financial_summary_encumbered"), DataType(DataType.Currency), Display(Name = "Financial Summary Encumbered", Order = 18), DisplayFormat(DataFormatString = "{0:c}", ApplyFormatInEditMode = true), JsonProperty("financialSummary.encumbered")]
+        [Column("financial_summary_encumbered"), DataType(DataType.Currency), Display(Name = "Financial Summary Encumbered", Order = 18), DisplayFormat(DataFormatString = "{0:c}"), Editable(false), JsonProperty("financialSummary.encumbered")]
         public virtual decimal? FinancialSummaryEncumbered { get; set; }
 
-        [Column("financial_summary_expenditures"), DataType(DataType.Currency), Display(Name = "Financial Summary Expenditures", Order = 19), DisplayFormat(DataFormatString = "{0:c}", ApplyFormatInEditMode = true), JsonProperty("financialSummary.expenditures")]
+        [Column("financial_summary_expenditures"), DataType(DataType.Currency), Display(Name = "Financial Summary Expenditures", Order = 19), DisplayFormat(DataFormatString = "{0:c}"), Editable(false), JsonProperty("financialSummary.expenditures")]
         public virtual decimal? FinancialSummaryExpenditures { get; set; }
 
-        [Column("financial_summary_over_encumbrance"), DataType(DataType.Currency), Display(Name = "Financial Summary Over Encumbrance", Order = 20), DisplayFormat(DataFormatString = "{0:c}", ApplyFormatInEditMode = true), JsonProperty("financialSummary.overEncumbrance")]
+        [Column("financial_summary_over_encumbrance"), DataType(DataType.Currency), Display(Name = "Financial Summary Over Encumbrance", Order = 20), DisplayFormat(DataFormatString = "{0:c}"), Editable(false), JsonProperty("financialSummary.overEncumbrance")]
         public virtual decimal? FinancialSummaryOverEncumbrance { get; set; }
 
-        [Column("financial_summary_over_expended"), DataType(DataType.Currency), Display(Name = "Financial Summary Over Expended", Order = 21), DisplayFormat(DataFormatString = "{0:c}", ApplyFormatInEditMode = true), JsonProperty("financialSummary.overExpended")]
+        [Column("financial_summary_over_expended"), DataType(DataType.Currency), Display(Name = "Financial Summary Over Expended", Order = 21), DisplayFormat(DataFormatString = "{0:c}"), Editable(false), JsonProperty("financialSummary.overExpended")]
         public virtual decimal? FinancialSummaryOverExpended { get; set; }
 
         [Column("created_date"), DataType(DataType.DateTime), Display(Name = "Creation Time", Order = 22), DisplayFormat(DataFormatString = "{0:g}"), Editable(false), JsonProperty("metadata.createdDate")]

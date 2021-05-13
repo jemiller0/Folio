@@ -64,7 +64,7 @@ namespace FolioLibrary
         [Column("encumbrance_order_type"), Display(Name = "Order Type", Order = 12), JsonProperty("encumbrance.orderType"), RegularExpression(@"^(One-Time|Ongoing)$"), Required, StringLength(1024)]
         public virtual string OrderType { get; set; }
 
-        [Column("encumbrance_order_status"), Display(Name = "Order Status", Order = 13), JsonProperty("encumbrance.orderStatus"), StringLength(1024)]
+        [Column("encumbrance_order_status"), Display(Name = "Order Status", Order = 13), JsonProperty("encumbrance.orderStatus"), RegularExpression(@"^(Pending|Open|Closed)$"), StringLength(1024)]
         public virtual string OrderStatus { get; set; }
 
         [Column("encumbrance_subscription"), Display(Order = 14), JsonProperty("encumbrance.subscription")]

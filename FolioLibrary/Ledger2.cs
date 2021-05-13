@@ -49,16 +49,16 @@ namespace FolioLibrary
         [Column("ledger_status"), Display(Name = "Ledger Status", Order = 7), JsonProperty("ledgerStatus"), RegularExpression(@"^(Active|Inactive|Frozen)$"), Required, StringLength(1024)]
         public virtual string LedgerStatus { get; set; }
 
-        [Column("allocated"), DataType(DataType.Currency), Display(Order = 8), DisplayFormat(DataFormatString = "{0:c}", ApplyFormatInEditMode = true), JsonProperty("allocated")]
+        [Column("allocated"), DataType(DataType.Currency), Display(Order = 8), DisplayFormat(DataFormatString = "{0:c}"), Editable(false), JsonProperty("allocated")]
         public virtual decimal? Allocated { get; set; }
 
-        [Column("available"), DataType(DataType.Currency), Display(Order = 9), DisplayFormat(DataFormatString = "{0:c}", ApplyFormatInEditMode = true), JsonProperty("available")]
+        [Column("available"), DataType(DataType.Currency), Display(Order = 9), DisplayFormat(DataFormatString = "{0:c}"), Editable(false), JsonProperty("available")]
         public virtual decimal? Available { get; set; }
 
-        [Column("net_transfers"), DataType(DataType.Currency), Display(Name = "Net Transfers", Order = 10), DisplayFormat(DataFormatString = "{0:c}", ApplyFormatInEditMode = true), JsonProperty("netTransfers")]
+        [Column("net_transfers"), DataType(DataType.Currency), Display(Name = "Net Transfers", Order = 10), DisplayFormat(DataFormatString = "{0:c}"), Editable(false), JsonProperty("netTransfers")]
         public virtual decimal? NetTransfers { get; set; }
 
-        [Column("unavailable"), DataType(DataType.Currency), Display(Order = 11), DisplayFormat(DataFormatString = "{0:c}", ApplyFormatInEditMode = true), JsonProperty("unavailable")]
+        [Column("unavailable"), DataType(DataType.Currency), Display(Order = 11), DisplayFormat(DataFormatString = "{0:c}"), Editable(false), JsonProperty("unavailable")]
         public virtual decimal? Unavailable { get; set; }
 
         [Column("currency"), Display(Order = 12), JsonProperty("currency"), StringLength(1024)]
@@ -94,34 +94,34 @@ namespace FolioLibrary
         [Column("updated_by_username"), JsonProperty("metadata.updatedByUsername"), ScaffoldColumn(false), StringLength(1024)]
         public virtual string LastWriteUserUsername { get; set; }
 
-        [Column("initial_allocation"), Display(Name = "Initial Allocation", Order = 23), JsonProperty("initialAllocation")]
+        [Column("initial_allocation"), DataType(DataType.Currency), Display(Name = "Initial Allocation", Order = 23), DisplayFormat(DataFormatString = "{0:c}"), Editable(false), JsonProperty("initialAllocation")]
         public virtual decimal? InitialAllocation { get; set; }
 
-        [Column("allocation_to"), DataType(DataType.Currency), Display(Name = "Allocation To", Order = 24), DisplayFormat(DataFormatString = "{0:c}", ApplyFormatInEditMode = true), JsonProperty("allocationTo")]
+        [Column("allocation_to"), DataType(DataType.Currency), Display(Name = "Allocation To", Order = 24), DisplayFormat(DataFormatString = "{0:c}"), Editable(false), JsonProperty("allocationTo")]
         public virtual decimal? AllocationTo { get; set; }
 
-        [Column("allocation_from"), DataType(DataType.Currency), Display(Name = "Allocation From", Order = 25), DisplayFormat(DataFormatString = "{0:c}", ApplyFormatInEditMode = true), JsonProperty("allocationFrom")]
+        [Column("allocation_from"), DataType(DataType.Currency), Display(Name = "Allocation From", Order = 25), DisplayFormat(DataFormatString = "{0:c}"), Editable(false), JsonProperty("allocationFrom")]
         public virtual decimal? AllocationFrom { get; set; }
 
-        [Column("total_funding"), DataType(DataType.Currency), Display(Name = "Total Funding", Order = 26), DisplayFormat(DataFormatString = "{0:c}", ApplyFormatInEditMode = true), JsonProperty("totalFunding")]
+        [Column("total_funding"), DataType(DataType.Currency), Display(Name = "Total Funding", Order = 26), DisplayFormat(DataFormatString = "{0:c}"), Editable(false), JsonProperty("totalFunding")]
         public virtual decimal? TotalFunding { get; set; }
 
-        [Column("cash_balance"), DataType(DataType.Currency), Display(Name = "Cash Balance", Order = 27), DisplayFormat(DataFormatString = "{0:c}", ApplyFormatInEditMode = true), JsonProperty("cashBalance")]
+        [Column("cash_balance"), DataType(DataType.Currency), Display(Name = "Cash Balance", Order = 27), DisplayFormat(DataFormatString = "{0:c}"), Editable(false), JsonProperty("cashBalance")]
         public virtual decimal? CashBalance { get; set; }
 
-        [Column("awaiting_payment"), DataType(DataType.Currency), Display(Name = "Awaiting Payment", Order = 28), DisplayFormat(DataFormatString = "{0:c}", ApplyFormatInEditMode = true), JsonProperty("awaitingPayment")]
+        [Column("awaiting_payment"), DataType(DataType.Currency), Display(Name = "Awaiting Payment", Order = 28), DisplayFormat(DataFormatString = "{0:c}"), Editable(false), JsonProperty("awaitingPayment")]
         public virtual decimal? AwaitingPayment { get; set; }
 
-        [Column("encumbered"), DataType(DataType.Currency), Display(Order = 29), DisplayFormat(DataFormatString = "{0:c}", ApplyFormatInEditMode = true), JsonProperty("encumbered")]
+        [Column("encumbered"), DataType(DataType.Currency), Display(Order = 29), DisplayFormat(DataFormatString = "{0:c}"), Editable(false), JsonProperty("encumbered")]
         public virtual decimal? Encumbered { get; set; }
 
-        [Column("expenditures"), DataType(DataType.Currency), Display(Order = 30), DisplayFormat(DataFormatString = "{0:c}", ApplyFormatInEditMode = true), JsonProperty("expenditures")]
+        [Column("expenditures"), DataType(DataType.Currency), Display(Order = 30), DisplayFormat(DataFormatString = "{0:c}"), Editable(false), JsonProperty("expenditures")]
         public virtual decimal? Expenditures { get; set; }
 
-        [Column("over_encumbrance"), DataType(DataType.Currency), Display(Name = "Over Encumbrance", Order = 31), DisplayFormat(DataFormatString = "{0:c}", ApplyFormatInEditMode = true), JsonProperty("overEncumbrance")]
+        [Column("over_encumbrance"), DataType(DataType.Currency), Display(Name = "Over Encumbrance", Order = 31), DisplayFormat(DataFormatString = "{0:c}"), Editable(false), JsonProperty("overEncumbrance")]
         public virtual decimal? OverEncumbrance { get; set; }
 
-        [Column("over_expended"), DataType(DataType.Currency), Display(Name = "Over Expended", Order = 32), DisplayFormat(DataFormatString = "{0:c}", ApplyFormatInEditMode = true), JsonProperty("overExpended")]
+        [Column("over_expended"), DataType(DataType.Currency), Display(Name = "Over Expended", Order = 32), DisplayFormat(DataFormatString = "{0:c}"), Editable(false), JsonProperty("overExpended")]
         public virtual decimal? OverExpended { get; set; }
 
         [Column("content"), CustomValidation(typeof(Ledger), nameof(ValidateContent)), DataType(DataType.MultilineText), Display(Order = 33), Editable(false)]

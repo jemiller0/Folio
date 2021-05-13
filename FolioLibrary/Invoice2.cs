@@ -103,10 +103,10 @@ namespace FolioLibrary
         [Column("source"), Display(Order = 25), JsonProperty("source"), RegularExpression(@"^(User|API|EDI)$"), Required, StringLength(1024)]
         public virtual string Source { get; set; }
 
-        [Column("sub_total"), Display(Name = "Sub Total", Order = 26), JsonProperty("subTotal")]
+        [Column("sub_total"), Display(Name = "Sub Total", Order = 26), Editable(false), JsonProperty("subTotal")]
         public virtual decimal? SubTotal { get; set; }
 
-        [Column("total"), Display(Order = 27), JsonProperty("total")]
+        [Column("total"), Display(Order = 27), Editable(false), JsonProperty("total")]
         public virtual decimal? Total { get; set; }
 
         [Column("vendor_invoice_no"), Display(Name = "Vendor Invoice No", Order = 28), JsonProperty("vendorInvoiceNo"), Required, StringLength(1024)]

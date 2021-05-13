@@ -52,7 +52,7 @@ namespace FolioLibrary
         [Column("barcode"), Display(Order = 8), JsonProperty("barcode"), StringLength(1024)]
         public virtual string Barcode { get; set; }
 
-        [Column("effective_shelving_order"), Display(Name = "Effective Shelving Order", Order = 9), JsonProperty("effectiveShelvingOrder"), StringLength(1024)]
+        [Column("effective_shelving_order"), Display(Name = "Effective Shelving Order", Order = 9), Editable(false), JsonProperty("effectiveShelvingOrder"), StringLength(1024)]
         public virtual string EffectiveShelvingOrder { get; set; }
 
         [Column("call_number"), Display(Name = "Call Number", Order = 10), JsonProperty("itemLevelCallNumber"), StringLength(1024)]
@@ -127,7 +127,7 @@ namespace FolioLibrary
         [Column("status_name"), Display(Name = "Status Name", Order = 33), JsonProperty("status.name"), RegularExpression(@"^(Aged to lost|Available|Awaiting pickup|Awaiting delivery|Checked out|Claimed returned|Declared lost|In process|In process (non-requestable)|In transit|Intellectual item|Long missing|Lost and paid|Missing|On order|Paged|Restricted|Order closed|Unavailable|Unknown|Withdrawn)$"), Required, StringLength(1024)]
         public virtual string StatusName { get; set; }
 
-        [Column("status_date"), DataType(DataType.Date), Display(Name = "Status Date", Order = 34), DisplayFormat(DataFormatString = "{0:d}", ApplyFormatInEditMode = true), JsonProperty("status.date")]
+        [Column("status_date"), DataType(DataType.Date), Display(Name = "Status Date", Order = 34), DisplayFormat(DataFormatString = "{0:d}"), Editable(false), JsonProperty("status.date")]
         public virtual DateTime? StatusDate { get; set; }
 
         [Display(Name = "Material Type", Order = 35)]

@@ -58,7 +58,7 @@ namespace FolioLibrary
         [Column("need_close_budgets"), Display(Name = "Need Close Budgets", Order = 10), JsonProperty("needCloseBudgets")]
         public virtual bool? NeedCloseBudgets { get; set; }
 
-        [Column("currency_factor"), Display(Name = "Currency Factor", Order = 11), JsonProperty("currencyFactor")]
+        [Column("currency_factor"), Display(Name = "Currency Factor", Order = 11), Editable(false), JsonProperty("currencyFactor")]
         public virtual int? CurrencyFactor { get; set; }
 
         [Column("created_date"), DataType(DataType.DateTime), Display(Name = "Creation Time", Order = 12), DisplayFormat(DataFormatString = "{0:g}"), Editable(false), JsonProperty("metadata.createdDate")]
