@@ -35,14 +35,14 @@ namespace FolioLibrary
         [Column("city"), Display(Order = 7), JsonProperty("city"), StringLength(1024)]
         public virtual string City { get; set; }
 
-        [Column("state_region"), Display(Name = "State Region", Order = 8), JsonProperty("stateRegion"), StringLength(1024)]
-        public virtual string StateRegion { get; set; }
+        [Column("state_region"), Display(Order = 8), JsonProperty("stateRegion"), StringLength(1024)]
+        public virtual string State { get; set; }
 
-        [Column("zip_code"), Display(Name = "Zip Code", Order = 9), JsonProperty("zipCode"), RegularExpression(@"^\d{5}(-\d{4})?$"), StringLength(1024)]
-        public virtual string ZipCode { get; set; }
+        [Column("zip_code"), Display(Name = "Postal Code", Order = 9), JsonProperty("zipCode"), RegularExpression(@"^\d{5}(-\d{4})?$"), StringLength(1024)]
+        public virtual string PostalCode { get; set; }
 
-        [Column("country"), Display(Order = 10), JsonProperty("country"), StringLength(1024)]
-        public virtual string Country { get; set; }
+        [Column("country"), Display(Name = "Country Code", Order = 10), JsonProperty("country"), StringLength(1024)]
+        public virtual string CountryCode { get; set; }
 
         [Column("is_primary"), Display(Name = "Is Primary", Order = 11), JsonProperty("isPrimary")]
         public virtual bool? IsPrimary { get; set; }
@@ -77,7 +77,7 @@ namespace FolioLibrary
         [Display(Name = "Contact Address Categories", Order = 21), JsonConverter(typeof(ArrayJsonConverter<List<ContactAddressCategory>, ContactAddressCategory>), "CategoryId"), JsonProperty("categories")]
         public virtual ICollection<ContactAddressCategory> ContactAddressCategories { get; set; }
 
-        public override string ToString() => $"{{ {nameof(Id)} = {Id}, {nameof(ContactId)} = {ContactId}, {nameof(Id2)} = {Id2}, {nameof(StreetAddress1)} = {StreetAddress1}, {nameof(StreetAddress2)} = {StreetAddress2}, {nameof(City)} = {City}, {nameof(StateRegion)} = {StateRegion}, {nameof(ZipCode)} = {ZipCode}, {nameof(Country)} = {Country}, {nameof(IsPrimary)} = {IsPrimary}, {nameof(Language)} = {Language}, {nameof(CreationTime)} = {CreationTime}, {nameof(CreationUserId)} = {CreationUserId}, {nameof(CreationUserUsername)} = {CreationUserUsername}, {nameof(LastWriteTime)} = {LastWriteTime}, {nameof(LastWriteUserId)} = {LastWriteUserId}, {nameof(LastWriteUserUsername)} = {LastWriteUserUsername}, {nameof(ContactAddressCategories)} = {(ContactAddressCategories != null ? $"{{ {string.Join(", ", ContactAddressCategories)} }}" : "")} }}";
+        public override string ToString() => $"{{ {nameof(Id)} = {Id}, {nameof(ContactId)} = {ContactId}, {nameof(Id2)} = {Id2}, {nameof(StreetAddress1)} = {StreetAddress1}, {nameof(StreetAddress2)} = {StreetAddress2}, {nameof(City)} = {City}, {nameof(State)} = {State}, {nameof(PostalCode)} = {PostalCode}, {nameof(CountryCode)} = {CountryCode}, {nameof(IsPrimary)} = {IsPrimary}, {nameof(Language)} = {Language}, {nameof(CreationTime)} = {CreationTime}, {nameof(CreationUserId)} = {CreationUserId}, {nameof(CreationUserUsername)} = {CreationUserUsername}, {nameof(LastWriteTime)} = {LastWriteTime}, {nameof(LastWriteUserId)} = {LastWriteUserId}, {nameof(LastWriteUserUsername)} = {LastWriteUserUsername}, {nameof(ContactAddressCategories)} = {(ContactAddressCategories != null ? $"{{ {string.Join(", ", ContactAddressCategories)} }}" : "")} }}";
 
         public static ContactAddress FromJObject(JObject jObject) => jObject != null ? new ContactAddress
         {
@@ -85,9 +85,9 @@ namespace FolioLibrary
             StreetAddress1 = (string)jObject.SelectToken("addressLine1"),
             StreetAddress2 = (string)jObject.SelectToken("addressLine2"),
             City = (string)jObject.SelectToken("city"),
-            StateRegion = (string)jObject.SelectToken("stateRegion"),
-            ZipCode = (string)jObject.SelectToken("zipCode"),
-            Country = (string)jObject.SelectToken("country"),
+            State = (string)jObject.SelectToken("stateRegion"),
+            PostalCode = (string)jObject.SelectToken("zipCode"),
+            CountryCode = (string)jObject.SelectToken("country"),
             IsPrimary = (bool?)jObject.SelectToken("isPrimary"),
             Language = (string)jObject.SelectToken("language"),
             CreationTime = ((DateTime?)jObject.SelectToken("metadata.createdDate"))?.ToLocalTime(),
@@ -104,9 +104,9 @@ namespace FolioLibrary
             new JProperty("addressLine1", StreetAddress1),
             new JProperty("addressLine2", StreetAddress2),
             new JProperty("city", City),
-            new JProperty("stateRegion", StateRegion),
-            new JProperty("zipCode", ZipCode),
-            new JProperty("country", Country),
+            new JProperty("stateRegion", State),
+            new JProperty("zipCode", PostalCode),
+            new JProperty("country", CountryCode),
             new JProperty("isPrimary", IsPrimary),
             new JProperty("language", Language),
             new JProperty("metadata", new JObject(

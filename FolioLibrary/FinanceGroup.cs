@@ -37,7 +37,7 @@ namespace FolioLibrary
         public virtual string CreationUserId { get; set; }
 
         [ScaffoldColumn(false)]
-        public virtual ICollection<GroupFundFiscalYear> GroupFundFiscalYears { get; set; }
+        public virtual ICollection<BudgetGroup> BudgetGroups { get; set; }
 
         public override string ToString() => $"{{ {nameof(Id)} = {Id}, {nameof(Content)} = {Content}, {nameof(CreationTime)} = {CreationTime}, {nameof(CreationUserId)} = {CreationUserId} }}";
 

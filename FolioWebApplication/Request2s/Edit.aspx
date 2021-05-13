@@ -33,6 +33,14 @@
                                     <asp:Literal ID="RequestDateLiteral" runat="server" Text='<%# Eval("RequestDate", "{0:d}") %>' />
                                 </td>
                             </tr>
+                            <tr runat="server" visible='<%# Eval("PatronComments") != null %>'>
+                                <td>
+                                    <asp:Label ID="PatronCommentsLabel" runat="server" Text="Patron Comments:" AssociatedControlID="PatronCommentsLiteral" />
+                                </td>
+                                <td>
+                                    <asp:Literal ID="PatronCommentsLiteral" runat="server" Text='<%#: Eval("PatronComments") %>' />
+                                </td>
+                            </tr>
                             <tr runat="server" visible='<%# Eval("Requester") != null %>'>
                                 <td>
                                     <asp:Label ID="RequesterLabel" runat="server" Text="Requester:" AssociatedControlID="RequesterHyperLink" />

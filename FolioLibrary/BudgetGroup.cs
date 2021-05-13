@@ -10,11 +10,11 @@ using System.Reflection;
 namespace FolioLibrary
 {
     [Table("group_fund_fiscal_year", Schema = "diku_mod_finance_storage")]
-    public partial class GroupFundFiscalYear
+    public partial class BudgetGroup
     {
         public static ValidationResult ValidateContent(string value)
         {
-            using (var sr = new StreamReader(Assembly.GetExecutingAssembly().GetManifestResourceStream("FolioLibrary.GroupFundFiscalYear.json")))
+            using (var sr = new StreamReader(Assembly.GetExecutingAssembly().GetManifestResourceStream("FolioLibrary.BudgetGroup.json")))
             {
                 var js = JsonSchema.FromJsonAsync(sr.ReadToEndAsync().Result).Result;
                 var l = js.Validate(value);
@@ -26,7 +26,7 @@ namespace FolioLibrary
         [Column("id"), Display(Order = 1), Editable(false)]
         public virtual Guid? Id { get; set; }
 
-        [Column("jsonb"), CustomValidation(typeof(GroupFundFiscalYear), nameof(ValidateContent)), DataType(DataType.MultilineText), Display(Order = 2), Required]
+        [Column("jsonb"), CustomValidation(typeof(BudgetGroup), nameof(ValidateContent)), DataType(DataType.MultilineText), Display(Order = 2), Required]
         public virtual string Content { get; set; }
 
         [Display(Order = 3)]
@@ -55,7 +55,7 @@ namespace FolioLibrary
 
         public override string ToString() => $"{{ {nameof(Id)} = {Id}, {nameof(Content)} = {Content}, {nameof(Budgetid)} = {Budgetid}, {nameof(Groupid)} = {Groupid}, {nameof(Fundid)} = {Fundid}, {nameof(Fiscalyearid)} = {Fiscalyearid} }}";
 
-        public static GroupFundFiscalYear FromJObject(JObject jObject) => jObject != null ? new GroupFundFiscalYear
+        public static BudgetGroup FromJObject(JObject jObject) => jObject != null ? new BudgetGroup
         {
             Id = (Guid?)jObject.SelectToken("id"),
             Content = jObject.ToString(),

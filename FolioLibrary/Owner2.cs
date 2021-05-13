@@ -35,7 +35,7 @@ namespace FolioLibrary
         public virtual string Name { get; set; }
 
         [Column("desc"), Display(Order = 3), JsonProperty("desc"), StringLength(1024)]
-        public virtual string Desc { get; set; }
+        public virtual string Description { get; set; }
 
         [Display(Name = "Default Charge Notice", Order = 4), InverseProperty("Owner2s1")]
         public virtual Template2 DefaultChargeNotice { get; set; }
@@ -91,13 +91,13 @@ namespace FolioLibrary
         [Display(Name = "Transfer Accounts", Order = 21)]
         public virtual ICollection<TransferAccount2> TransferAccount2s { get; set; }
 
-        public override string ToString() => $"{{ {nameof(Id)} = {Id}, {nameof(Name)} = {Name}, {nameof(Desc)} = {Desc}, {nameof(DefaultChargeNoticeId)} = {DefaultChargeNoticeId}, {nameof(DefaultActionNoticeId)} = {DefaultActionNoticeId}, {nameof(CreationTime)} = {CreationTime}, {nameof(CreationUserId)} = {CreationUserId}, {nameof(CreationUserUsername)} = {CreationUserUsername}, {nameof(LastWriteTime)} = {LastWriteTime}, {nameof(LastWriteUserId)} = {LastWriteUserId}, {nameof(LastWriteUserUsername)} = {LastWriteUserUsername}, {nameof(Content)} = {Content}, {nameof(ServicePointOwners)} = {(ServicePointOwners != null ? $"{{ {string.Join(", ", ServicePointOwners)} }}" : "")} }}";
+        public override string ToString() => $"{{ {nameof(Id)} = {Id}, {nameof(Name)} = {Name}, {nameof(Description)} = {Description}, {nameof(DefaultChargeNoticeId)} = {DefaultChargeNoticeId}, {nameof(DefaultActionNoticeId)} = {DefaultActionNoticeId}, {nameof(CreationTime)} = {CreationTime}, {nameof(CreationUserId)} = {CreationUserId}, {nameof(CreationUserUsername)} = {CreationUserUsername}, {nameof(LastWriteTime)} = {LastWriteTime}, {nameof(LastWriteUserId)} = {LastWriteUserId}, {nameof(LastWriteUserUsername)} = {LastWriteUserUsername}, {nameof(Content)} = {Content}, {nameof(ServicePointOwners)} = {(ServicePointOwners != null ? $"{{ {string.Join(", ", ServicePointOwners)} }}" : "")} }}";
 
         public static Owner2 FromJObject(JObject jObject) => jObject != null ? new Owner2
         {
             Id = (Guid?)jObject.SelectToken("id"),
             Name = (string)jObject.SelectToken("owner"),
-            Desc = (string)jObject.SelectToken("desc"),
+            Description = (string)jObject.SelectToken("desc"),
             DefaultChargeNoticeId = (Guid?)jObject.SelectToken("defaultChargeNoticeId"),
             DefaultActionNoticeId = (Guid?)jObject.SelectToken("defaultActionNoticeId"),
             CreationTime = ((DateTime?)jObject.SelectToken("metadata.createdDate"))?.ToLocalTime(),
@@ -113,7 +113,7 @@ namespace FolioLibrary
         public JObject ToJObject() => new JObject(
             new JProperty("id", Id),
             new JProperty("owner", Name),
-            new JProperty("desc", Desc),
+            new JProperty("desc", Description),
             new JProperty("defaultChargeNoticeId", DefaultChargeNoticeId),
             new JProperty("defaultActionNoticeId", DefaultActionNoticeId),
             new JProperty("metadata", new JObject(

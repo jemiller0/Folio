@@ -264,6 +264,26 @@ namespace FolioLibraryTest
         }
 
         [TestMethod]
+        public void CountBudgetGroupsTest()
+        {
+            var s = Stopwatch.StartNew();
+            var i = folioServiceClient.CountBudgetGroups();
+            var j = folioDapperContext.CountBudgetGroups();
+            Assert.IsTrue(i == j);
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"CountBudgetGroupsTest()\r\n    ElapsedTime={s.Elapsed}");
+        }
+
+        [TestMethod]
+        public void FinanceBudgetGroupsTest()
+        {
+            var s = Stopwatch.StartNew();
+            var l = folioServiceClient.BudgetGroups(take: take).Select(jo => (string)jo["id"]).ToArray();
+            var l2 = folioDapperContext.BudgetGroups(take: take).Select(u => u.Id.ToString()).ToArray();
+            Assert.IsTrue(l.SequenceEqual(l2));
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"BudgetGroupsTest()\r\n    ElapsedTime={s.Elapsed}");
+        }
+
+        [TestMethod]
         public void CountCallNumberTypesTest()
         {
             var s = Stopwatch.StartNew();
@@ -744,26 +764,6 @@ namespace FolioLibraryTest
         }
 
         [TestMethod]
-        public void CountGroupFundFiscalYearsTest()
-        {
-            var s = Stopwatch.StartNew();
-            var i = folioServiceClient.CountGroupFundFiscalYears();
-            var j = folioDapperContext.CountGroupFundFiscalYears();
-            Assert.IsTrue(i == j);
-            traceSource.TraceEvent(TraceEventType.Information, 0, $"CountGroupFundFiscalYearsTest()\r\n    ElapsedTime={s.Elapsed}");
-        }
-
-        [TestMethod]
-        public void FinanceGroupFundFiscalYearsTest()
-        {
-            var s = Stopwatch.StartNew();
-            var l = folioServiceClient.GroupFundFiscalYears(take: take).Select(jo => (string)jo["id"]).ToArray();
-            var l2 = folioDapperContext.GroupFundFiscalYears(take: take).Select(u => u.Id.ToString()).ToArray();
-            Assert.IsTrue(l.SequenceEqual(l2));
-            traceSource.TraceEvent(TraceEventType.Information, 0, $"GroupFundFiscalYearsTest()\r\n    ElapsedTime={s.Elapsed}");
-        }
-
-        [TestMethod]
         public void CountHoldingsTest()
         {
             var s = Stopwatch.StartNew();
@@ -1164,6 +1164,66 @@ namespace FolioLibraryTest
         }
 
         [TestMethod]
+        public void CountLedgerRolloversTest()
+        {
+            var s = Stopwatch.StartNew();
+            var i = folioServiceClient.CountLedgerRollovers();
+            var j = folioDapperContext.CountLedgerRollovers();
+            Assert.IsTrue(i == j);
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"CountLedgerRolloversTest()\r\n    ElapsedTime={s.Elapsed}");
+        }
+
+        [TestMethod]
+        public void FinanceLedgerRolloversTest()
+        {
+            var s = Stopwatch.StartNew();
+            var l = folioServiceClient.LedgerRollovers(take: take).Select(jo => (string)jo["id"]).ToArray();
+            var l2 = folioDapperContext.LedgerRollovers(take: take).Select(u => u.Id.ToString()).ToArray();
+            Assert.IsTrue(l.SequenceEqual(l2));
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"LedgerRolloversTest()\r\n    ElapsedTime={s.Elapsed}");
+        }
+
+        [TestMethod]
+        public void CountLedgerRolloverErrorsTest()
+        {
+            var s = Stopwatch.StartNew();
+            var i = folioServiceClient.CountLedgerRolloverErrors();
+            var j = folioDapperContext.CountLedgerRolloverErrors();
+            Assert.IsTrue(i == j);
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"CountLedgerRolloverErrorsTest()\r\n    ElapsedTime={s.Elapsed}");
+        }
+
+        [TestMethod]
+        public void FinanceLedgerRolloverErrorsTest()
+        {
+            var s = Stopwatch.StartNew();
+            var l = folioServiceClient.LedgerRolloverErrors(take: take).Select(jo => (string)jo["id"]).ToArray();
+            var l2 = folioDapperContext.LedgerRolloverErrors(take: take).Select(u => u.Id.ToString()).ToArray();
+            Assert.IsTrue(l.SequenceEqual(l2));
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"LedgerRolloverErrorsTest()\r\n    ElapsedTime={s.Elapsed}");
+        }
+
+        [TestMethod]
+        public void CountLedgerRolloverProgressesTest()
+        {
+            var s = Stopwatch.StartNew();
+            var i = folioServiceClient.CountLedgerRolloverProgresses();
+            var j = folioDapperContext.CountLedgerRolloverProgresses();
+            Assert.IsTrue(i == j);
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"CountLedgerRolloverProgressesTest()\r\n    ElapsedTime={s.Elapsed}");
+        }
+
+        [TestMethod]
+        public void FinanceLedgerRolloverProgressesTest()
+        {
+            var s = Stopwatch.StartNew();
+            var l = folioServiceClient.LedgerRolloverProgresses(take: take).Select(jo => (string)jo["id"]).ToArray();
+            var l2 = folioDapperContext.LedgerRolloverProgresses(take: take).Select(u => u.Id.ToString()).ToArray();
+            Assert.IsTrue(l.SequenceEqual(l2));
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"LedgerRolloverProgressesTest()\r\n    ElapsedTime={s.Elapsed}");
+        }
+
+        [TestMethod]
         public void CountLibrariesTest()
         {
             var s = Stopwatch.StartNew();
@@ -1281,6 +1341,26 @@ namespace FolioLibraryTest
             var l2 = folioDapperContext.LostItemFeePolicies(take: take).Select(u => u.Id.ToString()).ToArray();
             Assert.IsTrue(l.SequenceEqual(l2));
             traceSource.TraceEvent(TraceEventType.Information, 0, $"LostItemFeePoliciesTest()\r\n    ElapsedTime={s.Elapsed}");
+        }
+
+        [TestMethod]
+        public void CountManualBlockTemplatesTest()
+        {
+            var s = Stopwatch.StartNew();
+            var i = folioServiceClient.CountManualBlockTemplates();
+            var j = folioDapperContext.CountManualBlockTemplates();
+            Assert.IsTrue(i == j);
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"CountManualBlockTemplatesTest()\r\n    ElapsedTime={s.Elapsed}");
+        }
+
+        [TestMethod]
+        public void FeesManualBlockTemplatesTest()
+        {
+            var s = Stopwatch.StartNew();
+            var l = folioServiceClient.ManualBlockTemplates(take: take).Select(jo => (string)jo["id"]).ToArray();
+            var l2 = folioDapperContext.ManualBlockTemplates(take: take).Select(u => u.Id.ToString()).ToArray();
+            Assert.IsTrue(l.SequenceEqual(l2));
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"ManualBlockTemplatesTest()\r\n    ElapsedTime={s.Elapsed}");
         }
 
         [TestMethod]
@@ -1461,26 +1541,6 @@ namespace FolioLibraryTest
             var l2 = folioDapperContext.OrderTemplates(take: take).Select(u => u.Id.ToString()).ToArray();
             Assert.IsTrue(l.SequenceEqual(l2));
             traceSource.TraceEvent(TraceEventType.Information, 0, $"OrderTemplatesTest()\r\n    ElapsedTime={s.Elapsed}");
-        }
-
-        [TestMethod]
-        public void CountOrderTransactionSummariesTest()
-        {
-            var s = Stopwatch.StartNew();
-            var i = folioServiceClient.CountOrderTransactionSummaries();
-            var j = folioDapperContext.CountOrderTransactionSummaries();
-            Assert.IsTrue(i == j);
-            traceSource.TraceEvent(TraceEventType.Information, 0, $"CountOrderTransactionSummariesTest()\r\n    ElapsedTime={s.Elapsed}");
-        }
-
-        [TestMethod]
-        public void FinanceOrderTransactionSummariesTest()
-        {
-            var s = Stopwatch.StartNew();
-            var l = folioServiceClient.OrderTransactionSummaries(take: take).Select(jo => (string)jo["id"]).ToArray();
-            var l2 = folioDapperContext.OrderTransactionSummaries(take: take).Select(u => u.Id.ToString()).ToArray();
-            Assert.IsTrue(l.SequenceEqual(l2));
-            traceSource.TraceEvent(TraceEventType.Information, 0, $"OrderTransactionSummariesTest()\r\n    ElapsedTime={s.Elapsed}");
         }
 
         [TestMethod]
@@ -2468,6 +2528,18 @@ namespace FolioLibraryTest
         }
 
         [TestMethod]
+        public void DeserializeBudgetGroup2Test()
+        {
+            var s = Stopwatch.StartNew();
+            var jo = folioServiceClient.BudgetGroups(take: 1).SingleOrDefault();
+            if (jo == null) Assert.Inconclusive();
+            var bg2 = JsonConvert.DeserializeObject<BudgetGroup2>(jo.ToString());
+            traceSource.TraceEvent(TraceEventType.Information, 0, bg2.ToString());
+            Assert.IsNotNull(bg2);
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"DeserializeBudgetGroup2Test()\r\n    ElapsedTime={s.Elapsed}");
+        }
+
+        [TestMethod]
         public void DeserializeBudgetTagTest()
         {
             var s = Stopwatch.StartNew();
@@ -3044,18 +3116,6 @@ namespace FolioLibraryTest
         }
 
         [TestMethod]
-        public void DeserializeGroupFundFiscalYear2Test()
-        {
-            var s = Stopwatch.StartNew();
-            var jo = folioServiceClient.GroupFundFiscalYears(take: 1).SingleOrDefault();
-            if (jo == null) Assert.Inconclusive();
-            var gffy2 = JsonConvert.DeserializeObject<GroupFundFiscalYear2>(jo.ToString());
-            traceSource.TraceEvent(TraceEventType.Information, 0, gffy2.ToString());
-            Assert.IsNotNull(gffy2);
-            traceSource.TraceEvent(TraceEventType.Information, 0, $"DeserializeGroupFundFiscalYear2Test()\r\n    ElapsedTime={s.Elapsed}");
-        }
-
-        [TestMethod]
         public void DeserializeHolding2Test()
         {
             var s = Stopwatch.StartNew();
@@ -3428,6 +3488,18 @@ namespace FolioLibraryTest
         }
 
         [TestMethod]
+        public void DeserializeInvoiceItemReferenceNumberTest()
+        {
+            var s = Stopwatch.StartNew();
+            var jo = folioServiceClient.InvoiceItems(take: 1).SingleOrDefault();
+            if (jo == null) Assert.Inconclusive();
+            var iirn = JsonConvert.DeserializeObject<InvoiceItemReferenceNumber>(jo.ToString());
+            traceSource.TraceEvent(TraceEventType.Information, 0, iirn.ToString());
+            Assert.IsNotNull(iirn);
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"DeserializeInvoiceItemReferenceNumberTest()\r\n    ElapsedTime={s.Elapsed}");
+        }
+
+        [TestMethod]
         public void DeserializeInvoiceItemTagTest()
         {
             var s = Stopwatch.StartNew();
@@ -3620,6 +3692,66 @@ namespace FolioLibraryTest
         }
 
         [TestMethod]
+        public void DeserializeLedgerRollover2Test()
+        {
+            var s = Stopwatch.StartNew();
+            var jo = folioServiceClient.LedgerRollovers(take: 1).SingleOrDefault();
+            if (jo == null) Assert.Inconclusive();
+            var lr2 = JsonConvert.DeserializeObject<LedgerRollover2>(jo.ToString());
+            traceSource.TraceEvent(TraceEventType.Information, 0, lr2.ToString());
+            Assert.IsNotNull(lr2);
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"DeserializeLedgerRollover2Test()\r\n    ElapsedTime={s.Elapsed}");
+        }
+
+        [TestMethod]
+        public void DeserializeLedgerRolloverBudgetsRolloverTest()
+        {
+            var s = Stopwatch.StartNew();
+            var jo = folioServiceClient.LedgerRollovers(take: 1).SingleOrDefault();
+            if (jo == null) Assert.Inconclusive();
+            var lrbr = JsonConvert.DeserializeObject<LedgerRolloverBudgetsRollover>(jo.ToString());
+            traceSource.TraceEvent(TraceEventType.Information, 0, lrbr.ToString());
+            Assert.IsNotNull(lrbr);
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"DeserializeLedgerRolloverBudgetsRolloverTest()\r\n    ElapsedTime={s.Elapsed}");
+        }
+
+        [TestMethod]
+        public void DeserializeLedgerRolloverEncumbrancesRolloverTest()
+        {
+            var s = Stopwatch.StartNew();
+            var jo = folioServiceClient.LedgerRollovers(take: 1).SingleOrDefault();
+            if (jo == null) Assert.Inconclusive();
+            var lrer = JsonConvert.DeserializeObject<LedgerRolloverEncumbrancesRollover>(jo.ToString());
+            traceSource.TraceEvent(TraceEventType.Information, 0, lrer.ToString());
+            Assert.IsNotNull(lrer);
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"DeserializeLedgerRolloverEncumbrancesRolloverTest()\r\n    ElapsedTime={s.Elapsed}");
+        }
+
+        [TestMethod]
+        public void DeserializeLedgerRolloverError2Test()
+        {
+            var s = Stopwatch.StartNew();
+            var jo = folioServiceClient.LedgerRolloverErrors(take: 1).SingleOrDefault();
+            if (jo == null) Assert.Inconclusive();
+            var lre2 = JsonConvert.DeserializeObject<LedgerRolloverError2>(jo.ToString());
+            traceSource.TraceEvent(TraceEventType.Information, 0, lre2.ToString());
+            Assert.IsNotNull(lre2);
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"DeserializeLedgerRolloverError2Test()\r\n    ElapsedTime={s.Elapsed}");
+        }
+
+        [TestMethod]
+        public void DeserializeLedgerRolloverProgress2Test()
+        {
+            var s = Stopwatch.StartNew();
+            var jo = folioServiceClient.LedgerRolloverProgresses(take: 1).SingleOrDefault();
+            if (jo == null) Assert.Inconclusive();
+            var lrp2 = JsonConvert.DeserializeObject<LedgerRolloverProgress2>(jo.ToString());
+            traceSource.TraceEvent(TraceEventType.Information, 0, lrp2.ToString());
+            Assert.IsNotNull(lrp2);
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"DeserializeLedgerRolloverProgress2Test()\r\n    ElapsedTime={s.Elapsed}");
+        }
+
+        [TestMethod]
         public void DeserializeLibrary2Test()
         {
             var s = Stopwatch.StartNew();
@@ -3701,6 +3833,18 @@ namespace FolioLibraryTest
             traceSource.TraceEvent(TraceEventType.Information, 0, lifp2.ToString());
             Assert.IsNotNull(lifp2);
             traceSource.TraceEvent(TraceEventType.Information, 0, $"DeserializeLostItemFeePolicy2Test()\r\n    ElapsedTime={s.Elapsed}");
+        }
+
+        [TestMethod]
+        public void DeserializeManualBlockTemplate2Test()
+        {
+            var s = Stopwatch.StartNew();
+            var jo = folioServiceClient.ManualBlockTemplates(take: 1).SingleOrDefault();
+            if (jo == null) Assert.Inconclusive();
+            var mbt2 = JsonConvert.DeserializeObject<ManualBlockTemplate2>(jo.ToString());
+            traceSource.TraceEvent(TraceEventType.Information, 0, mbt2.ToString());
+            Assert.IsNotNull(mbt2);
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"DeserializeManualBlockTemplate2Test()\r\n    ElapsedTime={s.Elapsed}");
         }
 
         [TestMethod]
@@ -3896,6 +4040,18 @@ namespace FolioLibraryTest
         }
 
         [TestMethod]
+        public void DeserializeOrderItemReferenceNumberTest()
+        {
+            var s = Stopwatch.StartNew();
+            var jo = folioServiceClient.OrderItems(take: 1).SingleOrDefault();
+            if (jo == null) Assert.Inconclusive();
+            var oirn = JsonConvert.DeserializeObject<OrderItemReferenceNumber>(jo.ToString());
+            traceSource.TraceEvent(TraceEventType.Information, 0, oirn.ToString());
+            Assert.IsNotNull(oirn);
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"DeserializeOrderItemReferenceNumberTest()\r\n    ElapsedTime={s.Elapsed}");
+        }
+
+        [TestMethod]
         public void DeserializeOrderItemReportingCodeTest()
         {
             var s = Stopwatch.StartNew();
@@ -3965,18 +4121,6 @@ namespace FolioLibraryTest
             traceSource.TraceEvent(TraceEventType.Information, 0, ot2.ToString());
             Assert.IsNotNull(ot2);
             traceSource.TraceEvent(TraceEventType.Information, 0, $"DeserializeOrderTemplate2Test()\r\n    ElapsedTime={s.Elapsed}");
-        }
-
-        [TestMethod]
-        public void DeserializeOrderTransactionSummary2Test()
-        {
-            var s = Stopwatch.StartNew();
-            var jo = folioServiceClient.OrderTransactionSummaries(take: 1).SingleOrDefault();
-            if (jo == null) Assert.Inconclusive();
-            var ots2 = JsonConvert.DeserializeObject<OrderTransactionSummary2>(jo.ToString());
-            traceSource.TraceEvent(TraceEventType.Information, 0, ots2.ToString());
-            Assert.IsNotNull(ots2);
-            traceSource.TraceEvent(TraceEventType.Information, 0, $"DeserializeOrderTransactionSummary2Test()\r\n    ElapsedTime={s.Elapsed}");
         }
 
         [TestMethod]

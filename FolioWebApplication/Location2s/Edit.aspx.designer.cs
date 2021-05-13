@@ -21,6 +21,10 @@ namespace FolioWebApplication.Location2s
 
         protected RadGrid Holding2s1RadGrid;
 
+        protected Panel Holding2s2Panel;
+
+        protected RadGrid Holding2s2RadGrid;
+
         protected Panel Item2sPanel;
 
         protected RadGrid Item2sRadGrid;

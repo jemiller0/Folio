@@ -223,9 +223,51 @@
       "description": "Invoice line total amount which is sum of subTotal and adjustmentsTotal. This amount is always calculated by system.",
       "type": "number"
     },
-    "vendorRefNo": {
-      "description": "This is the number used to match POLs created by import to invoices created by import",
-      "type": "string"
+    "referenceNumbers": {
+      "description": "Reference number items array",
+      "type": "array",
+      "additionalProperties": false,
+      "items": {
+        "description": "Reference number item",
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "refNumber": {
+            "description": "a reference number for this purchase order line",
+            "type": "string"
+          },
+          "refNumberType": {
+            "description": "the reference number type",
+            "javaEnums": [
+              "CONTINUATION_REF_NUMBER",
+              "ORDER_REF_NUMBER",
+              "SUBSCRIPTION_REF_NUMBER",
+              "INTERNAL_NUMBER",
+              "TITLE_NUMBER"
+            ],
+            "type": "string",
+            "enum": [
+              "Vendor continuation reference number",
+              "Vendor order reference number",
+              "Vendor subscription reference number",
+              "Vendor internal number",
+              "Vendor title number"
+            ]
+          },
+          "vendorDetailsSource": {
+            "description": "the reference number type",
+            "javaEnums": [
+              "ORDER_LINE",
+              "INVOICE_LINE"
+            ],
+            "type": "string",
+            "enum": [
+              "OrderLine",
+              "InvoiceLine"
+            ]
+          }
+        }
+      }
     },
     "metadata": {
       "title": "Metadata Schema",

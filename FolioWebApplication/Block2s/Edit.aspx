@@ -25,12 +25,20 @@
                                     <asp:Literal ID="TypeLiteral" runat="server" Text='<%#: Eval("Type") %>' />
                                 </td>
                             </tr>
-                            <tr runat="server" visible='<%# Eval("Desc") != null %>'>
+                            <tr runat="server" visible='<%# Eval("Description") != null %>'>
                                 <td>
-                                    <asp:Label ID="DescLabel" runat="server" Text="Desc:" AssociatedControlID="DescLiteral" />
+                                    <asp:Label ID="DescriptionLabel" runat="server" Text="Description:" AssociatedControlID="DescriptionLiteral" />
                                 </td>
                                 <td>
-                                    <asp:Literal ID="DescLiteral" runat="server" Text='<%#: Eval("Desc") %>' />
+                                    <asp:Literal ID="DescriptionLiteral" runat="server" Text='<%#: Eval("Description") %>' />
+                                </td>
+                            </tr>
+                            <tr runat="server" visible='<%# Eval("Code") != null %>'>
+                                <td>
+                                    <asp:Label ID="CodeLabel" runat="server" Text="Code:" AssociatedControlID="CodeLiteral" />
+                                </td>
+                                <td>
+                                    <asp:Literal ID="CodeLiteral" runat="server" Text='<%#: Eval("Code") %>' />
                                 </td>
                             </tr>
                             <tr runat="server" visible='<%# Eval("StaffInformation") != null %>'>

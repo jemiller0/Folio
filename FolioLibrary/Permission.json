@@ -52,6 +52,21 @@
       "description": "Is this a temporary dummy permission",
       "type": "boolean"
     },
+    "deprecated": {
+      "description": "Indicates whether this permissions has been marked for deletion (soft deleted)",
+      "type": "boolean",
+      "default": "false"
+    },
+    "moduleName": {
+      "description": "The name of the module (not including version) that defined this permission",
+      "readOnly": true,
+      "type": "string"
+    },
+    "moduleVersion": {
+      "description": "The version of the module that defined this permission",
+      "readOnly": true,
+      "type": "string"
+    },
     "metadata": {
       "title": "Metadata Schema",
       "description": "Metadata about creation and changes to records, provided by the server (client should not provide)",

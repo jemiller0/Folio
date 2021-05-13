@@ -13,17 +13,25 @@ namespace FolioWebApplication.FiscalYear2s
 
         protected RadGrid Budget2sRadGrid;
 
+        protected Panel BudgetGroup2sPanel;
+
+        protected RadGrid BudgetGroup2sRadGrid;
+
         protected Panel FiscalYearAcquisitionsUnitsPanel;
 
         protected RadGrid FiscalYearAcquisitionsUnitsRadGrid;
 
-        protected Panel GroupFundFiscalYear2sPanel;
-
-        protected RadGrid GroupFundFiscalYear2sRadGrid;
-
         protected Panel Ledger2sPanel;
 
         protected RadGrid Ledger2sRadGrid;
+
+        protected Panel LedgerRollover2sPanel;
+
+        protected RadGrid LedgerRollover2sRadGrid;
+
+        protected Panel LedgerRollover2s1Panel;
+
+        protected RadGrid LedgerRollover2s1RadGrid;
 
         protected Panel Transaction2sPanel;
 

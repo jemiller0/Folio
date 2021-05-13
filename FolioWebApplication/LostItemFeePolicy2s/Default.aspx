@@ -32,6 +32,10 @@
                         <telerik:GridBoundColumn HeaderText="Item Aged Lost Overdue Interval" DataField="ItemAgedLostOverdueInterval" AutoPostBackOnFilter="true" HtmlEncode="true" CurrentFilterFunction="StartsWith" />
                         <telerik:GridBoundColumn HeaderText="Patron Billed After Aged Lost Duration" DataField="PatronBilledAfterAgedLostDuration" AutoPostBackOnFilter="true" />
                         <telerik:GridBoundColumn HeaderText="Patron Billed After Aged Lost Interval" DataField="PatronBilledAfterAgedLostInterval" AutoPostBackOnFilter="true" HtmlEncode="true" CurrentFilterFunction="StartsWith" />
+                        <telerik:GridBoundColumn HeaderText="Recalled Item Aged Lost Overdue Duration" DataField="RecalledItemAgedLostOverdueDuration" AutoPostBackOnFilter="true" />
+                        <telerik:GridBoundColumn HeaderText="Recalled Item Aged Lost Overdue Interval" DataField="RecalledItemAgedLostOverdueInterval" AutoPostBackOnFilter="true" HtmlEncode="true" CurrentFilterFunction="StartsWith" />
+                        <telerik:GridBoundColumn HeaderText="Patron Billed After Recalled Item Aged Lost Duration" DataField="PatronBilledAfterRecalledItemAgedLostDuration" AutoPostBackOnFilter="true" />
+                        <telerik:GridBoundColumn HeaderText="Patron Billed After Recalled Item Aged Lost Interval" DataField="PatronBilledAfterRecalledItemAgedLostInterval" AutoPostBackOnFilter="true" HtmlEncode="true" CurrentFilterFunction="StartsWith" />
                         <telerik:GridBoundColumn HeaderText="Charge Amount Item Charge Type" DataField="ChargeAmountItemChargeType" AutoPostBackOnFilter="true" HtmlEncode="true" CurrentFilterFunction="StartsWith" />
                         <telerik:GridBoundColumn HeaderText="Charge Amount Item Amount" DataField="ChargeAmountItemAmount" AutoPostBackOnFilter="true" DataFormatString="{0:c}" />
                         <telerik:GridBoundColumn HeaderText="Lost Item Processing Fee" DataField="LostItemProcessingFee" AutoPostBackOnFilter="true" />

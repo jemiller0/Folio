@@ -17,13 +17,13 @@ namespace FolioWebApplication.Budget2s
 
         protected RadGrid BudgetExpenseClass2sRadGrid;
 
+        protected Panel BudgetGroup2sPanel;
+
+        protected RadGrid BudgetGroup2sRadGrid;
+
         protected Panel BudgetTagsPanel;
 
         protected RadGrid BudgetTagsRadGrid;
-
-        protected Panel GroupFundFiscalYear2sPanel;
-
-        protected RadGrid GroupFundFiscalYear2sRadGrid;
 
         protected RadAjaxManager RadAjaxManager1;
     }

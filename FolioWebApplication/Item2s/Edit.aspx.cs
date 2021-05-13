@@ -66,7 +66,7 @@ namespace FolioWebApplication.Item2s
         protected void StatusNameRadComboBox_DataBinding(object sender, EventArgs e)
         {
             var rcb = (RadComboBox)sender;
-            rcb.DataSource = new string[] { "Available", "Awaiting pickup", "Awaiting delivery", "Checked out", "In process", "In transit", "Missing", "On order", "Paged", "Declared lost", "Order closed", "Claimed returned", "Unknown", "Withdrawn", "Lost and paid", "Aged to lost" };
+            rcb.DataSource = new string[] { "Aged to lost", "Available", "Awaiting pickup", "Awaiting delivery", "Checked out", "Claimed returned", "Declared lost", "In process", "In process (non-requestable)", "In transit", "Intellectual item", "Long missing", "Lost and paid", "Missing", "On order", "Paged", "Restricted", "Order closed", "Unavailable", "Unknown", "Withdrawn" };
         }
 
         protected void MaterialTypeRadComboBox_DataBinding(object sender, EventArgs e)
@@ -134,6 +134,7 @@ namespace FolioWebApplication.Item2s
         {
             var id = (Guid?)Item2FormView.DataKey.Value;
             var i2 = id != null ? folioServiceContext.FindItem2(id) : new Item2 { Id = Guid.NewGuid(), CreationTime = DateTime.Now, CreationUserId = (Guid?)Session["UserId"] };
+            i2.Version = (int?)e.NewValues["Version"];
             if ((string)e.NewValues["HoldingId"] == "")
             {
                 var rfv = (RequiredFieldValidator)Item2FormView.FindControl("HoldingRequiredFieldValidator");
@@ -145,6 +146,7 @@ namespace FolioWebApplication.Item2s
             i2.DiscoverySuppress = (bool?)e.NewValues["DiscoverySuppress"];
             i2.AccessionNumber = Global.Trim((string)e.NewValues["AccessionNumber"]);
             i2.Barcode = Global.Trim((string)e.NewValues["Barcode"]);
+            i2.EffectiveShelvingOrder = Global.Trim((string)e.NewValues["EffectiveShelvingOrder"]);
             i2.CallNumber = Global.Trim((string)e.NewValues["CallNumber"]);
             i2.CallNumberPrefix = Global.Trim((string)e.NewValues["CallNumberPrefix"]);
             i2.CallNumberSuffix = Global.Trim((string)e.NewValues["CallNumberSuffix"]);
@@ -268,7 +270,7 @@ namespace FolioWebApplication.Item2s
             if (Session["Request2sPermission"] == null) return;
             var id = (Guid?)Item2FormView.DataKey.Value;
             if (id == null) return;
-            var d = new Dictionary<string, string>() { { "Id", "id" }, { "RequestType", "requestType" }, { "RequestDate", "requestDate" }, { "RequesterId", "requesterId" }, { "ProxyUserId", "proxyUserId" }, { "ItemId", "itemId" }, { "Status", "status" }, { "CancellationReasonId", "cancellationReasonId" }, { "CancelledByUserId", "cancelledByUserId" }, { "CancellationAdditionalInformation", "cancellationAdditionalInformation" }, { "CancelledDate", "cancelledDate" }, { "Position", "position" }, { "ItemTitle", "item.title" }, { "ItemBarcode", "item.barcode" }, { "RequesterFirstName", "requester.firstName" }, { "RequesterLastName", "requester.lastName" }, { "RequesterMiddleName", "requester.middleName" }, { "RequesterBarcode", "requester.barcode" }, { "RequesterPatronGroup", "requester.patronGroup" }, { "ProxyFirstName", "proxy.firstName" }, { "ProxyLastName", "proxy.lastName" }, { "ProxyMiddleName", "proxy.middleName" }, { "ProxyBarcode", "proxy.barcode" }, { "ProxyPatronGroup", "proxy.patronGroup" }, { "FulfilmentPreference", "fulfilmentPreference" }, { "DeliveryAddressTypeId", "deliveryAddressTypeId" }, { "RequestExpirationDate", "requestExpirationDate" }, { "HoldShelfExpirationDate", "holdShelfExpirationDate" }, { "PickupServicePointId", "pickupServicePointId" }, { "CreationTime", "metadata.createdDate" }, { "CreationUserId", "metadata.createdByUserId" }, { "LastWriteTime", "metadata.updatedDate" }, { "LastWriteUserId", "metadata.updatedByUserId" }, { "AwaitingPickupRequestClosedDate", "awaitingPickupRequestClosedDate" } };
+            var d = new Dictionary<string, string>() { { "Id", "id" }, { "RequestType", "requestType" }, { "RequestDate", "requestDate" }, { "PatronComments", "patronComments" }, { "RequesterId", "requesterId" }, { "ProxyUserId", "proxyUserId" }, { "ItemId", "itemId" }, { "Status", "status" }, { "CancellationReasonId", "cancellationReasonId" }, { "CancelledByUserId", "cancelledByUserId" }, { "CancellationAdditionalInformation", "cancellationAdditionalInformation" }, { "CancelledDate", "cancelledDate" }, { "Position", "position" }, { "ItemTitle", "item.title" }, { "ItemBarcode", "item.barcode" }, { "RequesterFirstName", "requester.firstName" }, { "RequesterLastName", "requester.lastName" }, { "RequesterMiddleName", "requester.middleName" }, { "RequesterBarcode", "requester.barcode" }, { "RequesterPatronGroup", "requester.patronGroup" }, { "ProxyFirstName", "proxy.firstName" }, { "ProxyLastName", "proxy.lastName" }, { "ProxyMiddleName", "proxy.middleName" }, { "ProxyBarcode", "proxy.barcode" }, { "ProxyPatronGroup", "proxy.patronGroup" }, { "FulfilmentPreference", "fulfilmentPreference" }, { "DeliveryAddressTypeId", "deliveryAddressTypeId" }, { "RequestExpirationDate", "requestExpirationDate" }, { "HoldShelfExpirationDate", "holdShelfExpirationDate" }, { "PickupServicePointId", "pickupServicePointId" }, { "CreationTime", "metadata.createdDate" }, { "CreationUserId", "metadata.createdByUserId" }, { "LastWriteTime", "metadata.updatedDate" }, { "LastWriteUserId", "metadata.updatedByUserId" }, { "AwaitingPickupRequestClosedDate", "awaitingPickupRequestClosedDate" } };
             Request2sRadGrid.DataSource = folioServiceContext.Request2s(out var i, Global.GetCqlFilter(Request2sRadGrid, d, $"itemId == \"{id}\""), Request2sRadGrid.MasterTableView.SortExpressions.Count > 0 ? $"{d[Request2sRadGrid.MasterTableView.SortExpressions[0].FieldName]}{(Request2sRadGrid.MasterTableView.SortExpressions[0].SortOrder == GridSortOrder.Descending ? "/sort.descending" : "")}" : null, Request2sRadGrid.PageSize * Request2sRadGrid.CurrentPageIndex, Request2sRadGrid.PageSize, true);
             Request2sRadGrid.VirtualItemCount = i;
             if (Request2sRadGrid.MasterTableView.FilterExpression == "")

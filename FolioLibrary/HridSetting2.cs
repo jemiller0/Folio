@@ -48,13 +48,16 @@ namespace FolioLibrary
         [Column("items_start_number"), Display(Name = "Items Start Number", Order = 7), JsonProperty("items.startNumber"), Required]
         public virtual int? ItemsStartNumber { get; set; }
 
-        [Column("content"), CustomValidation(typeof(HridSetting), nameof(ValidateContent)), DataType(DataType.MultilineText), Display(Order = 8), Editable(false)]
+        [Column("common_retain_leading_zeroes"), Display(Name = "Zero Pad", Order = 8), JsonProperty("commonRetainLeadingZeroes")]
+        public virtual bool? ZeroPad { get; set; }
+
+        [Column("content"), CustomValidation(typeof(HridSetting), nameof(ValidateContent)), DataType(DataType.MultilineText), Display(Order = 9), Editable(false)]
         public virtual string Content { get; set; }
 
-        [Column("lock"), Display(Order = 9)]
+        [Column("lock"), Display(Order = 10)]
         public virtual bool? Lock { get; set; }
 
-        public override string ToString() => $"{{ {nameof(Id)} = {Id}, {nameof(InstancesPrefix)} = {InstancesPrefix}, {nameof(InstancesStartNumber)} = {InstancesStartNumber}, {nameof(HoldingsPrefix)} = {HoldingsPrefix}, {nameof(HoldingsStartNumber)} = {HoldingsStartNumber}, {nameof(ItemsPrefix)} = {ItemsPrefix}, {nameof(ItemsStartNumber)} = {ItemsStartNumber}, {nameof(Content)} = {Content}, {nameof(Lock)} = {Lock} }}";
+        public override string ToString() => $"{{ {nameof(Id)} = {Id}, {nameof(InstancesPrefix)} = {InstancesPrefix}, {nameof(InstancesStartNumber)} = {InstancesStartNumber}, {nameof(HoldingsPrefix)} = {HoldingsPrefix}, {nameof(HoldingsStartNumber)} = {HoldingsStartNumber}, {nameof(ItemsPrefix)} = {ItemsPrefix}, {nameof(ItemsStartNumber)} = {ItemsStartNumber}, {nameof(ZeroPad)} = {ZeroPad}, {nameof(Content)} = {Content}, {nameof(Lock)} = {Lock} }}";
 
         public static HridSetting2 FromJObject(JObject jObject) => jObject != null ? new HridSetting2
         {
@@ -65,6 +68,7 @@ namespace FolioLibrary
             HoldingsStartNumber = (int?)jObject.SelectToken("holdings.startNumber"),
             ItemsPrefix = (string)jObject.SelectToken("items.prefix"),
             ItemsStartNumber = (int?)jObject.SelectToken("items.startNumber"),
+            ZeroPad = (bool?)jObject.SelectToken("commonRetainLeadingZeroes"),
             Content = jObject.ToString()
         } : null;
 
@@ -78,6 +82,7 @@ namespace FolioLibrary
                 new JProperty("startNumber", HoldingsStartNumber))),
             new JProperty("items", new JObject(
                 new JProperty("prefix", ItemsPrefix),
-                new JProperty("startNumber", ItemsStartNumber)))).RemoveNullAndEmptyProperties();
+                new JProperty("startNumber", ItemsStartNumber))),
+            new JProperty("commonRetainLeadingZeroes", ZeroPad)).RemoveNullAndEmptyProperties();
     }
 }

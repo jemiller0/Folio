@@ -33,7 +33,11 @@
         "Request expiration",
         "Due date",
         "Overdue fine returned",
-        "Overdue fine renewed"
+        "Overdue fine renewed",
+        "Aged to lost",
+        "Aged to lost - fine charged",
+        "Aged to lost & item returned - fine adjusted",
+        "Aged to lost & item replaced - fine adjusted"
       ]
     },
     "noticeConfig": {

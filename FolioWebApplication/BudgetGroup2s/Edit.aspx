@@ -1,13 +1,13 @@
-<%@ Page Language="C#" MasterPageFile="~/Default.master" AutoEventWireup="true" CodeBehind="Edit.aspx.cs" Inherits="FolioWebApplication.GroupFundFiscalYear2s.Edit" %>
+<%@ Page Language="C#" MasterPageFile="~/Default.master" AutoEventWireup="true" CodeBehind="Edit.aspx.cs" Inherits="FolioWebApplication.BudgetGroup2s.Edit" %>
 
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
-    <asp:Panel ID="GroupFundFiscalYear2Panel" runat="server">
+    <asp:Panel ID="BudgetGroup2Panel" runat="server">
         <fieldset>
             <legend>
-                <asp:HyperLink ID="GroupFundFiscalYear2HyperLink" runat="server" Text="Group Fund Fiscal Year" NavigateUrl="Default.aspx" /></legend>
-            <asp:FormView ID="GroupFundFiscalYear2FormView" runat="server" DataKeyNames="Id" DefaultMode="ReadOnly" RenderOuterTable="false" OnDataBinding="GroupFundFiscalYear2FormView_DataBinding">
+                <asp:HyperLink ID="BudgetGroup2HyperLink" runat="server" Text="Budget Group" NavigateUrl="Default.aspx" /></legend>
+            <asp:FormView ID="BudgetGroup2FormView" runat="server" DataKeyNames="Id" DefaultMode="ReadOnly" RenderOuterTable="false" OnDataBinding="BudgetGroup2FormView_DataBinding">
                 <ItemTemplate>
-                    <asp:Panel ID="ViewGroupFundFiscalYear2Panel" runat="server">
+                    <asp:Panel ID="ViewBudgetGroup2Panel" runat="server">
                         <table>
                             <tr runat="server" visible='<%# Eval("Id") != null %>'>
                                 <td>

@@ -73,6 +73,110 @@
                                     <asp:Literal ID="SeriesLiteral" runat="server" Text='<%#: Eval("Series") %>' />
                                 </td>
                             </tr>
+                            <tr runat="server" visible='<%# Eval("FinancialSummaryAllocated") != null %>'>
+                                <td>
+                                    <asp:Label ID="FinancialSummaryAllocatedLabel" runat="server" Text="Financial Summary Allocated:" AssociatedControlID="FinancialSummaryAllocatedLiteral" />
+                                </td>
+                                <td>
+                                    <asp:Literal ID="FinancialSummaryAllocatedLiteral" runat="server" Text='<%# Eval("FinancialSummaryAllocated", "{0:c}") %>' />
+                                </td>
+                            </tr>
+                            <tr runat="server" visible='<%# Eval("FinancialSummaryAvailable") != null %>'>
+                                <td>
+                                    <asp:Label ID="FinancialSummaryAvailableLabel" runat="server" Text="Financial Summary Available:" AssociatedControlID="FinancialSummaryAvailableLiteral" />
+                                </td>
+                                <td>
+                                    <asp:Literal ID="FinancialSummaryAvailableLiteral" runat="server" Text='<%# Eval("FinancialSummaryAvailable", "{0:c}") %>' />
+                                </td>
+                            </tr>
+                            <tr runat="server" visible='<%# Eval("FinancialSummaryUnavailable") != null %>'>
+                                <td>
+                                    <asp:Label ID="FinancialSummaryUnavailableLabel" runat="server" Text="Financial Summary Unavailable:" AssociatedControlID="FinancialSummaryUnavailableLiteral" />
+                                </td>
+                                <td>
+                                    <asp:Literal ID="FinancialSummaryUnavailableLiteral" runat="server" Text='<%# Eval("FinancialSummaryUnavailable", "{0:c}") %>' />
+                                </td>
+                            </tr>
+                            <tr runat="server" visible='<%# Eval("FinancialSummaryInitialAllocation") != null %>'>
+                                <td>
+                                    <asp:Label ID="FinancialSummaryInitialAllocationLabel" runat="server" Text="Financial Summary Initial Allocation:" AssociatedControlID="FinancialSummaryInitialAllocationLiteral" />
+                                </td>
+                                <td>
+                                    <asp:Literal ID="FinancialSummaryInitialAllocationLiteral" runat="server" Text='<%# Eval("FinancialSummaryInitialAllocation", "{0:c}") %>' />
+                                </td>
+                            </tr>
+                            <tr runat="server" visible='<%# Eval("FinancialSummaryAllocationTo") != null %>'>
+                                <td>
+                                    <asp:Label ID="FinancialSummaryAllocationToLabel" runat="server" Text="Financial Summary Allocation To:" AssociatedControlID="FinancialSummaryAllocationToLiteral" />
+                                </td>
+                                <td>
+                                    <asp:Literal ID="FinancialSummaryAllocationToLiteral" runat="server" Text='<%# Eval("FinancialSummaryAllocationTo", "{0:c}") %>' />
+                                </td>
+                            </tr>
+                            <tr runat="server" visible='<%# Eval("FinancialSummaryAllocationFrom") != null %>'>
+                                <td>
+                                    <asp:Label ID="FinancialSummaryAllocationFromLabel" runat="server" Text="Financial Summary Allocation From:" AssociatedControlID="FinancialSummaryAllocationFromLiteral" />
+                                </td>
+                                <td>
+                                    <asp:Literal ID="FinancialSummaryAllocationFromLiteral" runat="server" Text='<%# Eval("FinancialSummaryAllocationFrom", "{0:c}") %>' />
+                                </td>
+                            </tr>
+                            <tr runat="server" visible='<%# Eval("FinancialSummaryTotalFunding") != null %>'>
+                                <td>
+                                    <asp:Label ID="FinancialSummaryTotalFundingLabel" runat="server" Text="Financial Summary Total Funding:" AssociatedControlID="FinancialSummaryTotalFundingLiteral" />
+                                </td>
+                                <td>
+                                    <asp:Literal ID="FinancialSummaryTotalFundingLiteral" runat="server" Text='<%# Eval("FinancialSummaryTotalFunding", "{0:c}") %>' />
+                                </td>
+                            </tr>
+                            <tr runat="server" visible='<%# Eval("FinancialSummaryCashBalance") != null %>'>
+                                <td>
+                                    <asp:Label ID="FinancialSummaryCashBalanceLabel" runat="server" Text="Financial Summary Cash Balance:" AssociatedControlID="FinancialSummaryCashBalanceLiteral" />
+                                </td>
+                                <td>
+                                    <asp:Literal ID="FinancialSummaryCashBalanceLiteral" runat="server" Text='<%# Eval("FinancialSummaryCashBalance", "{0:c}") %>' />
+                                </td>
+                            </tr>
+                            <tr runat="server" visible='<%# Eval("FinancialSummaryAwaitingPayment") != null %>'>
+                                <td>
+                                    <asp:Label ID="FinancialSummaryAwaitingPaymentLabel" runat="server" Text="Financial Summary Awaiting Payment:" AssociatedControlID="FinancialSummaryAwaitingPaymentLiteral" />
+                                </td>
+                                <td>
+                                    <asp:Literal ID="FinancialSummaryAwaitingPaymentLiteral" runat="server" Text='<%# Eval("FinancialSummaryAwaitingPayment", "{0:c}") %>' />
+                                </td>
+                            </tr>
+                            <tr runat="server" visible='<%# Eval("FinancialSummaryEncumbered") != null %>'>
+                                <td>
+                                    <asp:Label ID="FinancialSummaryEncumberedLabel" runat="server" Text="Financial Summary Encumbered:" AssociatedControlID="FinancialSummaryEncumberedLiteral" />
+                                </td>
+                                <td>
+                                    <asp:Literal ID="FinancialSummaryEncumberedLiteral" runat="server" Text='<%# Eval("FinancialSummaryEncumbered", "{0:c}") %>' />
+                                </td>
+                            </tr>
+                            <tr runat="server" visible='<%# Eval("FinancialSummaryExpenditures") != null %>'>
+                                <td>
+                                    <asp:Label ID="FinancialSummaryExpendituresLabel" runat="server" Text="Financial Summary Expenditures:" AssociatedControlID="FinancialSummaryExpendituresLiteral" />
+                                </td>
+                                <td>
+                                    <asp:Literal ID="FinancialSummaryExpendituresLiteral" runat="server" Text='<%# Eval("FinancialSummaryExpenditures", "{0:c}") %>' />
+                                </td>
+                            </tr>
+                            <tr runat="server" visible='<%# Eval("FinancialSummaryOverEncumbrance") != null %>'>
+                                <td>
+                                    <asp:Label ID="FinancialSummaryOverEncumbranceLabel" runat="server" Text="Financial Summary Over Encumbrance:" AssociatedControlID="FinancialSummaryOverEncumbranceLiteral" />
+                                </td>
+                                <td>
+                                    <asp:Literal ID="FinancialSummaryOverEncumbranceLiteral" runat="server" Text='<%# Eval("FinancialSummaryOverEncumbrance", "{0:c}") %>' />
+                                </td>
+                            </tr>
+                            <tr runat="server" visible='<%# Eval("FinancialSummaryOverExpended") != null %>'>
+                                <td>
+                                    <asp:Label ID="FinancialSummaryOverExpendedLabel" runat="server" Text="Financial Summary Over Expended:" AssociatedControlID="FinancialSummaryOverExpendedLiteral" />
+                                </td>
+                                <td>
+                                    <asp:Literal ID="FinancialSummaryOverExpendedLiteral" runat="server" Text='<%# Eval("FinancialSummaryOverExpended", "{0:c}") %>' />
+                                </td>
+                            </tr>
                             <tr runat="server" visible='<%# Eval("CreationTime") != null %>'>
                                 <td>
                                     <asp:Label ID="CreationTimeLabel" runat="server" Text="Creation Time:" AssociatedControlID="CreationTimeLiteral" />
@@ -152,7 +256,7 @@
                         <telerik:GridBoundColumn HeaderText="Available" DataField="Available" AutoPostBackOnFilter="true" DataFormatString="{0:c}" />
                         <telerik:GridBoundColumn HeaderText="Encumbered" DataField="Encumbered" AutoPostBackOnFilter="true" DataFormatString="{0:c}" />
                         <telerik:GridBoundColumn HeaderText="Expenditures" DataField="Expenditures" AutoPostBackOnFilter="true" DataFormatString="{0:c}" />
-                        <telerik:GridBoundColumn HeaderText="Net Transfers" DataField="NetTransfers" AutoPostBackOnFilter="true" />
+                        <telerik:GridBoundColumn HeaderText="Net Transfers" DataField="NetTransfers" AutoPostBackOnFilter="true" DataFormatString="{0:c}" />
                         <telerik:GridBoundColumn HeaderText="Unavailable" DataField="Unavailable" AutoPostBackOnFilter="true" DataFormatString="{0:c}" />
                         <telerik:GridBoundColumn HeaderText="Over Encumbrance" DataField="OverEncumbrance" AutoPostBackOnFilter="true" DataFormatString="{0:c}" />
                         <telerik:GridBoundColumn HeaderText="Over Expended" DataField="OverExpended" AutoPostBackOnFilter="true" DataFormatString="{0:c}" />
@@ -173,29 +277,34 @@
                                 <asp:HyperLink ID="LastWriteUserHyperLink" runat="server" Text='<%#: Eval("LastWriteUserId") != null ? Eval("LastWriteUser.Username") ?? "&nbsp;" : "" %>' NavigateUrl='<%# $"~/User2s/Edit.aspx?Id={Eval("LastWriteUserId")}" %>' Enabled='<%# Session["User2sPermission"] != null %>' />
                             </ItemTemplate>
                         </telerik:GridTemplateColumn>
+                        <telerik:GridBoundColumn HeaderText="Initial Allocation" DataField="InitialAllocation" AutoPostBackOnFilter="true" DataFormatString="{0:c}" />
+                        <telerik:GridBoundColumn HeaderText="Allocation To" DataField="AllocationTo" AutoPostBackOnFilter="true" DataFormatString="{0:c}" />
+                        <telerik:GridBoundColumn HeaderText="Allocation From" DataField="AllocationFrom" AutoPostBackOnFilter="true" DataFormatString="{0:c}" />
+                        <telerik:GridBoundColumn HeaderText="Total Funding" DataField="TotalFunding" AutoPostBackOnFilter="true" DataFormatString="{0:c}" />
+                        <telerik:GridBoundColumn HeaderText="Cash Balance" DataField="CashBalance" AutoPostBackOnFilter="true" DataFormatString="{0:c}" />
                     </Columns>
                 </MasterTableView>
             </telerik:RadGrid>
         </fieldset>
     </asp:Panel>
-    <asp:Panel ID="GroupFundFiscalYear2sPanel" runat="server" Visible='<%# (string)Session["GroupFundFiscalYear2sPermission"] != null && FiscalYear2FormView.DataKey.Value != null %>'>
+    <asp:Panel ID="BudgetGroup2sPanel" runat="server" Visible='<%# (string)Session["BudgetGroup2sPermission"] != null && FiscalYear2FormView.DataKey.Value != null %>'>
         <fieldset>
             <legend>
-                <asp:HyperLink ID="GroupFundFiscalYear2sHyperLink" runat="server" Text="Group Fund Fiscal Years" NavigateUrl="~/GroupFundFiscalYear2s/Default.aspx" /></legend>
-            <telerik:RadGrid ID="GroupFundFiscalYear2sRadGrid" runat="server" AutoGenerateColumns="false" AllowSorting="true" AllowFilteringByColumn="false" GroupingSettings-CaseSensitive="false" AllowPaging="true" AllowCustomPaging="true" PageSize="10" EnableLinqExpressions="false" OnNeedDataSource="GroupFundFiscalYear2sRadGrid_NeedDataSource">
-                <MasterTableView DataKeyNames="Id" PagerStyle-Mode="NextPrevNumericAndAdvanced" NoMasterRecordsText="No group fund fiscal years found">
+                <asp:HyperLink ID="BudgetGroup2sHyperLink" runat="server" Text="Budget Groups" NavigateUrl="~/BudgetGroup2s/Default.aspx" /></legend>
+            <telerik:RadGrid ID="BudgetGroup2sRadGrid" runat="server" AutoGenerateColumns="false" AllowSorting="true" AllowFilteringByColumn="false" GroupingSettings-CaseSensitive="false" AllowPaging="true" AllowCustomPaging="true" PageSize="10" EnableLinqExpressions="false" OnNeedDataSource="BudgetGroup2sRadGrid_NeedDataSource">
+                <MasterTableView DataKeyNames="Id" PagerStyle-Mode="NextPrevNumericAndAdvanced" NoMasterRecordsText="No budget groups found">
                     <SortExpressions>
                         <telerik:GridSortExpression FieldName="Id" />
                     </SortExpressions>
                     <Columns>
                         <telerik:GridTemplateColumn AllowFiltering="false" ItemStyle-Width="0px">
                             <ItemTemplate>
-                                <asp:HyperLink ID="ViewHyperLink" Text="View" NavigateUrl='<%# $"~/GroupFundFiscalYear2s/Edit.aspx?Id={Eval("Id")}" %>' runat="server" />
+                                <asp:HyperLink ID="ViewHyperLink" Text="View" NavigateUrl='<%# $"~/BudgetGroup2s/Edit.aspx?Id={Eval("Id")}" %>' runat="server" />
                             </ItemTemplate>
                         </telerik:GridTemplateColumn>
                         <telerik:GridTemplateColumn HeaderText="Id" DataField="Id" SortExpression="Id" AutoPostBackOnFilter="true" CurrentFilterFunction="EqualTo">
                             <ItemTemplate>
-                                <asp:HyperLink ID="IdHyperLink" runat="server" Text='<%# Eval("Id") %>' NavigateUrl='<%# $"~/GroupFundFiscalYear2s/Edit.aspx?Id={Eval("Id")}" %>' />
+                                <asp:HyperLink ID="IdHyperLink" runat="server" Text='<%# Eval("Id") %>' NavigateUrl='<%# $"~/BudgetGroup2s/Edit.aspx?Id={Eval("Id")}" %>' />
                             </ItemTemplate>
                         </telerik:GridTemplateColumn>
                         <telerik:GridTemplateColumn AllowFiltering="false" AllowSorting="false" HeaderText="Budget" DataField="Budget.Name" SortExpression="Budget.Name" AutoPostBackOnFilter="true" CurrentFilterFunction="StartsWith">
@@ -246,13 +355,125 @@
                         <telerik:GridBoundColumn HeaderText="Code" DataField="Code" AutoPostBackOnFilter="true" HtmlEncode="true" CurrentFilterFunction="StartsWith" />
                         <telerik:GridBoundColumn HeaderText="Description" DataField="Description" AutoPostBackOnFilter="true" HtmlEncode="true" CurrentFilterFunction="StartsWith" />
                         <telerik:GridBoundColumn HeaderText="Ledger Status" DataField="LedgerStatus" AutoPostBackOnFilter="true" HtmlEncode="true" CurrentFilterFunction="StartsWith" />
-                        <telerik:GridBoundColumn HeaderText="Allocated" DataField="Allocated" AutoPostBackOnFilter="true" />
-                        <telerik:GridBoundColumn HeaderText="Available" DataField="Available" AutoPostBackOnFilter="true" />
-                        <telerik:GridBoundColumn HeaderText="Net Transfers" DataField="NetTransfers" AutoPostBackOnFilter="true" />
-                        <telerik:GridBoundColumn HeaderText="Unavailable" DataField="Unavailable" AutoPostBackOnFilter="true" />
+                        <telerik:GridBoundColumn HeaderText="Allocated" DataField="Allocated" AutoPostBackOnFilter="true" DataFormatString="{0:c}" />
+                        <telerik:GridBoundColumn HeaderText="Available" DataField="Available" AutoPostBackOnFilter="true" DataFormatString="{0:c}" />
+                        <telerik:GridBoundColumn HeaderText="Net Transfers" DataField="NetTransfers" AutoPostBackOnFilter="true" DataFormatString="{0:c}" />
+                        <telerik:GridBoundColumn HeaderText="Unavailable" DataField="Unavailable" AutoPostBackOnFilter="true" DataFormatString="{0:c}" />
                         <telerik:GridBoundColumn HeaderText="Currency" DataField="Currency" AutoPostBackOnFilter="true" HtmlEncode="true" CurrentFilterFunction="StartsWith" />
                         <telerik:GridBoundColumn HeaderText="Restrict Encumbrance" DataField="RestrictEncumbrance" AutoPostBackOnFilter="true" />
                         <telerik:GridBoundColumn HeaderText="Restrict Expenditures" DataField="RestrictExpenditures" AutoPostBackOnFilter="true" />
+                        <telerik:GridBoundColumn HeaderText="Creation Time" DataField="CreationTime" AutoPostBackOnFilter="true" DataFormatString="{0:g}" />
+                        <telerik:GridTemplateColumn AllowFiltering="false" AllowSorting="false" HeaderText="Creation User" DataField="CreationUser.Username" SortExpression="CreationUser.Username" AutoPostBackOnFilter="true" CurrentFilterFunction="StartsWith">
+                            <ItemTemplate>
+                                <asp:HyperLink ID="CreationUserHyperLink" runat="server" Text='<%#: Eval("CreationUserId") != null ? Eval("CreationUser.Username") ?? "&nbsp;" : "" %>' NavigateUrl='<%# $"~/User2s/Edit.aspx?Id={Eval("CreationUserId")}" %>' Enabled='<%# Session["User2sPermission"] != null %>' />
+                            </ItemTemplate>
+                        </telerik:GridTemplateColumn>
+                        <telerik:GridBoundColumn HeaderText="Last Write Time" DataField="LastWriteTime" AutoPostBackOnFilter="true" DataFormatString="{0:g}" />
+                        <telerik:GridTemplateColumn AllowFiltering="false" AllowSorting="false" HeaderText="Last Write User" DataField="LastWriteUser.Username" SortExpression="LastWriteUser.Username" AutoPostBackOnFilter="true" CurrentFilterFunction="StartsWith">
+                            <ItemTemplate>
+                                <asp:HyperLink ID="LastWriteUserHyperLink" runat="server" Text='<%#: Eval("LastWriteUserId") != null ? Eval("LastWriteUser.Username") ?? "&nbsp;" : "" %>' NavigateUrl='<%# $"~/User2s/Edit.aspx?Id={Eval("LastWriteUserId")}" %>' Enabled='<%# Session["User2sPermission"] != null %>' />
+                            </ItemTemplate>
+                        </telerik:GridTemplateColumn>
+                        <telerik:GridBoundColumn HeaderText="Initial Allocation" DataField="InitialAllocation" AutoPostBackOnFilter="true" />
+                        <telerik:GridBoundColumn HeaderText="Allocation To" DataField="AllocationTo" AutoPostBackOnFilter="true" DataFormatString="{0:c}" />
+                        <telerik:GridBoundColumn HeaderText="Allocation From" DataField="AllocationFrom" AutoPostBackOnFilter="true" DataFormatString="{0:c}" />
+                        <telerik:GridBoundColumn HeaderText="Total Funding" DataField="TotalFunding" AutoPostBackOnFilter="true" DataFormatString="{0:c}" />
+                        <telerik:GridBoundColumn HeaderText="Cash Balance" DataField="CashBalance" AutoPostBackOnFilter="true" DataFormatString="{0:c}" />
+                        <telerik:GridBoundColumn HeaderText="Awaiting Payment" DataField="AwaitingPayment" AutoPostBackOnFilter="true" DataFormatString="{0:c}" />
+                        <telerik:GridBoundColumn HeaderText="Encumbered" DataField="Encumbered" AutoPostBackOnFilter="true" DataFormatString="{0:c}" />
+                        <telerik:GridBoundColumn HeaderText="Expenditures" DataField="Expenditures" AutoPostBackOnFilter="true" DataFormatString="{0:c}" />
+                        <telerik:GridBoundColumn HeaderText="Over Encumbrance" DataField="OverEncumbrance" AutoPostBackOnFilter="true" DataFormatString="{0:c}" />
+                        <telerik:GridBoundColumn HeaderText="Over Expended" DataField="OverExpended" AutoPostBackOnFilter="true" DataFormatString="{0:c}" />
+                    </Columns>
+                </MasterTableView>
+            </telerik:RadGrid>
+        </fieldset>
+    </asp:Panel>
+    <asp:Panel ID="LedgerRollover2sPanel" runat="server" Visible='<%# (string)Session["LedgerRollover2sPermission"] != null && FiscalYear2FormView.DataKey.Value != null %>'>
+        <fieldset>
+            <legend>
+                <asp:HyperLink ID="LedgerRollover2sHyperLink" runat="server" Text="Ledger Rollovers" NavigateUrl="~/LedgerRollover2s/Default.aspx" /></legend>
+            <telerik:RadGrid ID="LedgerRollover2sRadGrid" runat="server" AutoGenerateColumns="false" AllowSorting="true" AllowFilteringByColumn="false" GroupingSettings-CaseSensitive="false" AllowPaging="true" AllowCustomPaging="true" PageSize="10" EnableLinqExpressions="false" OnNeedDataSource="LedgerRollover2sRadGrid_NeedDataSource">
+                <MasterTableView DataKeyNames="Id" PagerStyle-Mode="NextPrevNumericAndAdvanced" NoMasterRecordsText="No ledger rollovers found">
+                    <SortExpressions>
+                        <telerik:GridSortExpression FieldName="LastWriteTime" SortOrder="Descending" />
+                    </SortExpressions>
+                    <Columns>
+                        <telerik:GridTemplateColumn AllowFiltering="false" ItemStyle-Width="0px">
+                            <ItemTemplate>
+                                <asp:HyperLink ID="ViewHyperLink" Text="View" NavigateUrl='<%# $"~/LedgerRollover2s/Edit.aspx?Id={Eval("Id")}" %>' runat="server" />
+                            </ItemTemplate>
+                        </telerik:GridTemplateColumn>
+                        <telerik:GridTemplateColumn HeaderText="Id" DataField="Id" SortExpression="Id" AutoPostBackOnFilter="true" CurrentFilterFunction="EqualTo">
+                            <ItemTemplate>
+                                <asp:HyperLink ID="IdHyperLink" runat="server" Text='<%# Eval("Id") ?? "&nbsp;" %>' NavigateUrl='<%# $"~/LedgerRollover2s/Edit.aspx?Id={Eval("Id")}" %>' />
+                            </ItemTemplate>
+                        </telerik:GridTemplateColumn>
+                        <telerik:GridTemplateColumn AllowFiltering="false" AllowSorting="false" HeaderText="Ledger" DataField="Ledger.Name" SortExpression="Ledger.Name" AutoPostBackOnFilter="true" CurrentFilterFunction="StartsWith">
+                            <ItemTemplate>
+                                <asp:HyperLink ID="LedgerHyperLink" runat="server" Text='<%#: Eval("Ledger.Name") %>' NavigateUrl='<%# $"~/Ledger2s/Edit.aspx?Id={Eval("LedgerId")}" %>' Enabled='<%# Session["Ledger2sPermission"] != null %>' />
+                            </ItemTemplate>
+                        </telerik:GridTemplateColumn>
+                        <telerik:GridTemplateColumn AllowFiltering="false" AllowSorting="false" HeaderText="To Fiscal Year" DataField="ToFiscalYear.Name" SortExpression="ToFiscalYear.Name" AutoPostBackOnFilter="true" CurrentFilterFunction="StartsWith">
+                            <ItemTemplate>
+                                <asp:HyperLink ID="ToFiscalYearHyperLink" runat="server" Text='<%#: Eval("ToFiscalYear.Name") %>' NavigateUrl='<%# $"~/FiscalYear2s/Edit.aspx?Id={Eval("ToFiscalYearId")}" %>' Enabled='<%# Session["FiscalYear2sPermission"] != null %>' />
+                            </ItemTemplate>
+                        </telerik:GridTemplateColumn>
+                        <telerik:GridBoundColumn HeaderText="Restrict Encumbrance" DataField="RestrictEncumbrance" AutoPostBackOnFilter="true" />
+                        <telerik:GridBoundColumn HeaderText="Restrict Expenditures" DataField="RestrictExpenditures" AutoPostBackOnFilter="true" />
+                        <telerik:GridBoundColumn HeaderText="Need Close Budgets" DataField="NeedCloseBudgets" AutoPostBackOnFilter="true" />
+                        <telerik:GridBoundColumn HeaderText="Currency Factor" DataField="CurrencyFactor" AutoPostBackOnFilter="true" />
+                        <telerik:GridBoundColumn HeaderText="Creation Time" DataField="CreationTime" AutoPostBackOnFilter="true" DataFormatString="{0:g}" />
+                        <telerik:GridTemplateColumn AllowFiltering="false" AllowSorting="false" HeaderText="Creation User" DataField="CreationUser.Username" SortExpression="CreationUser.Username" AutoPostBackOnFilter="true" CurrentFilterFunction="StartsWith">
+                            <ItemTemplate>
+                                <asp:HyperLink ID="CreationUserHyperLink" runat="server" Text='<%#: Eval("CreationUserId") != null ? Eval("CreationUser.Username") ?? "&nbsp;" : "" %>' NavigateUrl='<%# $"~/User2s/Edit.aspx?Id={Eval("CreationUserId")}" %>' Enabled='<%# Session["User2sPermission"] != null %>' />
+                            </ItemTemplate>
+                        </telerik:GridTemplateColumn>
+                        <telerik:GridBoundColumn HeaderText="Last Write Time" DataField="LastWriteTime" AutoPostBackOnFilter="true" DataFormatString="{0:g}" />
+                        <telerik:GridTemplateColumn AllowFiltering="false" AllowSorting="false" HeaderText="Last Write User" DataField="LastWriteUser.Username" SortExpression="LastWriteUser.Username" AutoPostBackOnFilter="true" CurrentFilterFunction="StartsWith">
+                            <ItemTemplate>
+                                <asp:HyperLink ID="LastWriteUserHyperLink" runat="server" Text='<%#: Eval("LastWriteUserId") != null ? Eval("LastWriteUser.Username") ?? "&nbsp;" : "" %>' NavigateUrl='<%# $"~/User2s/Edit.aspx?Id={Eval("LastWriteUserId")}" %>' Enabled='<%# Session["User2sPermission"] != null %>' />
+                            </ItemTemplate>
+                        </telerik:GridTemplateColumn>
+                    </Columns>
+                </MasterTableView>
+            </telerik:RadGrid>
+        </fieldset>
+    </asp:Panel>
+    <asp:Panel ID="LedgerRollover2s1Panel" runat="server" Visible='<%# (string)Session["LedgerRollover2sPermission"] != null && FiscalYear2FormView.DataKey.Value != null %>'>
+        <fieldset>
+            <legend>
+                <asp:HyperLink ID="LedgerRollover2s1HyperLink" runat="server" Text="Ledger Rollovers 1" NavigateUrl="~/LedgerRollover2s/Default.aspx" /></legend>
+            <telerik:RadGrid ID="LedgerRollover2s1RadGrid" runat="server" AutoGenerateColumns="false" AllowSorting="true" AllowFilteringByColumn="false" GroupingSettings-CaseSensitive="false" AllowPaging="true" AllowCustomPaging="true" PageSize="10" EnableLinqExpressions="false" OnNeedDataSource="LedgerRollover2s1RadGrid_NeedDataSource">
+                <MasterTableView DataKeyNames="Id" PagerStyle-Mode="NextPrevNumericAndAdvanced" NoMasterRecordsText="No ledger rollovers found">
+                    <SortExpressions>
+                        <telerik:GridSortExpression FieldName="LastWriteTime" SortOrder="Descending" />
+                    </SortExpressions>
+                    <Columns>
+                        <telerik:GridTemplateColumn AllowFiltering="false" ItemStyle-Width="0px">
+                            <ItemTemplate>
+                                <asp:HyperLink ID="ViewHyperLink" Text="View" NavigateUrl='<%# $"~/LedgerRollover2s/Edit.aspx?Id={Eval("Id")}" %>' runat="server" />
+                            </ItemTemplate>
+                        </telerik:GridTemplateColumn>
+                        <telerik:GridTemplateColumn HeaderText="Id" DataField="Id" SortExpression="Id" AutoPostBackOnFilter="true" CurrentFilterFunction="EqualTo">
+                            <ItemTemplate>
+                                <asp:HyperLink ID="IdHyperLink" runat="server" Text='<%# Eval("Id") ?? "&nbsp;" %>' NavigateUrl='<%# $"~/LedgerRollover2s/Edit.aspx?Id={Eval("Id")}" %>' />
+                            </ItemTemplate>
+                        </telerik:GridTemplateColumn>
+                        <telerik:GridTemplateColumn AllowFiltering="false" AllowSorting="false" HeaderText="Ledger" DataField="Ledger.Name" SortExpression="Ledger.Name" AutoPostBackOnFilter="true" CurrentFilterFunction="StartsWith">
+                            <ItemTemplate>
+                                <asp:HyperLink ID="LedgerHyperLink" runat="server" Text='<%#: Eval("Ledger.Name") %>' NavigateUrl='<%# $"~/Ledger2s/Edit.aspx?Id={Eval("LedgerId")}" %>' Enabled='<%# Session["Ledger2sPermission"] != null %>' />
+                            </ItemTemplate>
+                        </telerik:GridTemplateColumn>
+                        <telerik:GridTemplateColumn AllowFiltering="false" AllowSorting="false" HeaderText="From Fiscal Year" DataField="FromFiscalYear.Name" SortExpression="FromFiscalYear.Name" AutoPostBackOnFilter="true" CurrentFilterFunction="StartsWith">
+                            <ItemTemplate>
+                                <asp:HyperLink ID="FromFiscalYearHyperLink" runat="server" Text='<%#: Eval("FromFiscalYear.Name") %>' NavigateUrl='<%# $"~/FiscalYear2s/Edit.aspx?Id={Eval("FromFiscalYearId")}" %>' Enabled='<%# Session["FiscalYear2sPermission"] != null %>' />
+                            </ItemTemplate>
+                        </telerik:GridTemplateColumn>
+                        <telerik:GridBoundColumn HeaderText="Restrict Encumbrance" DataField="RestrictEncumbrance" AutoPostBackOnFilter="true" />
+                        <telerik:GridBoundColumn HeaderText="Restrict Expenditures" DataField="RestrictExpenditures" AutoPostBackOnFilter="true" />
+                        <telerik:GridBoundColumn HeaderText="Need Close Budgets" DataField="NeedCloseBudgets" AutoPostBackOnFilter="true" />
+                        <telerik:GridBoundColumn HeaderText="Currency Factor" DataField="CurrencyFactor" AutoPostBackOnFilter="true" />
                         <telerik:GridBoundColumn HeaderText="Creation Time" DataField="CreationTime" AutoPostBackOnFilter="true" DataFormatString="{0:g}" />
                         <telerik:GridTemplateColumn AllowFiltering="false" AllowSorting="false" HeaderText="Creation User" DataField="CreationUser.Username" SortExpression="CreationUser.Username" AutoPostBackOnFilter="true" CurrentFilterFunction="StartsWith">
                             <ItemTemplate>
@@ -308,6 +529,7 @@
                         <telerik:GridBoundColumn HeaderText="Initial Encumbered Amount" DataField="InitialEncumberedAmount" AutoPostBackOnFilter="true" DataFormatString="{0:c}" />
                         <telerik:GridBoundColumn HeaderText="Status" DataField="Status" AutoPostBackOnFilter="true" HtmlEncode="true" CurrentFilterFunction="StartsWith" />
                         <telerik:GridBoundColumn HeaderText="Order Type" DataField="OrderType" AutoPostBackOnFilter="true" HtmlEncode="true" CurrentFilterFunction="StartsWith" />
+                        <telerik:GridBoundColumn HeaderText="Order Status" DataField="OrderStatus" AutoPostBackOnFilter="true" HtmlEncode="true" CurrentFilterFunction="StartsWith" />
                         <telerik:GridBoundColumn HeaderText="Subscription" DataField="Subscription" AutoPostBackOnFilter="true" />
                         <telerik:GridBoundColumn HeaderText="Re Encumber" DataField="ReEncumber" AutoPostBackOnFilter="true" />
                         <telerik:GridTemplateColumn AllowFiltering="false" AllowSorting="false" HeaderText="Order" DataField="Order.Number" SortExpression="Order.Number" AutoPostBackOnFilter="true" CurrentFilterFunction="EqualTo">
@@ -412,6 +634,7 @@
                         <telerik:GridBoundColumn HeaderText="Initial Encumbered Amount" DataField="InitialEncumberedAmount" AutoPostBackOnFilter="true" DataFormatString="{0:c}" />
                         <telerik:GridBoundColumn HeaderText="Status" DataField="Status" AutoPostBackOnFilter="true" HtmlEncode="true" CurrentFilterFunction="StartsWith" />
                         <telerik:GridBoundColumn HeaderText="Order Type" DataField="OrderType" AutoPostBackOnFilter="true" HtmlEncode="true" CurrentFilterFunction="StartsWith" />
+                        <telerik:GridBoundColumn HeaderText="Order Status" DataField="OrderStatus" AutoPostBackOnFilter="true" HtmlEncode="true" CurrentFilterFunction="StartsWith" />
                         <telerik:GridBoundColumn HeaderText="Subscription" DataField="Subscription" AutoPostBackOnFilter="true" />
                         <telerik:GridBoundColumn HeaderText="Re Encumber" DataField="ReEncumber" AutoPostBackOnFilter="true" />
                         <telerik:GridTemplateColumn AllowFiltering="false" AllowSorting="false" HeaderText="Order" DataField="Order.Number" SortExpression="Order.Number" AutoPostBackOnFilter="true" CurrentFilterFunction="EqualTo">
@@ -485,14 +708,24 @@
                     <telerik:AjaxUpdatedControl ControlID="Budget2sPanel" LoadingPanelID="RadAjaxLoadingPanel1" />
                 </UpdatedControls>
             </telerik:AjaxSetting>
-            <telerik:AjaxSetting AjaxControlID="GroupFundFiscalYear2sRadGrid">
+            <telerik:AjaxSetting AjaxControlID="BudgetGroup2sRadGrid">
                 <UpdatedControls>
-                    <telerik:AjaxUpdatedControl ControlID="GroupFundFiscalYear2sPanel" LoadingPanelID="RadAjaxLoadingPanel1" />
+                    <telerik:AjaxUpdatedControl ControlID="BudgetGroup2sPanel" LoadingPanelID="RadAjaxLoadingPanel1" />
                 </UpdatedControls>
             </telerik:AjaxSetting>
             <telerik:AjaxSetting AjaxControlID="Ledger2sRadGrid">
                 <UpdatedControls>
                     <telerik:AjaxUpdatedControl ControlID="Ledger2sPanel" LoadingPanelID="RadAjaxLoadingPanel1" />
+                </UpdatedControls>
+            </telerik:AjaxSetting>
+            <telerik:AjaxSetting AjaxControlID="LedgerRollover2sRadGrid">
+                <UpdatedControls>
+                    <telerik:AjaxUpdatedControl ControlID="LedgerRollover2sPanel" LoadingPanelID="RadAjaxLoadingPanel1" />
+                </UpdatedControls>
+            </telerik:AjaxSetting>
+            <telerik:AjaxSetting AjaxControlID="LedgerRollover2s1RadGrid">
+                <UpdatedControls>
+                    <telerik:AjaxUpdatedControl ControlID="LedgerRollover2s1Panel" LoadingPanelID="RadAjaxLoadingPanel1" />
                 </UpdatedControls>
             </telerik:AjaxSetting>
             <telerik:AjaxSetting AjaxControlID="Transaction2sRadGrid">

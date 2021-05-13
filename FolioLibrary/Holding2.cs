@@ -31,160 +31,171 @@ namespace FolioLibrary
         [Column("id"), Display(Order = 1), Editable(false), JsonProperty("id")]
         public virtual Guid? Id { get; set; }
 
-        [Column("hrid"), Display(Name = "Short Id", Order = 2), Editable(false), JsonConverter(typeof(StringJsonConverter<int?>)), JsonProperty("hrid")]
+        [Column("_version"), Display(Order = 2), JsonProperty("_version")]
+        public virtual int? Version { get; set; }
+
+        [Column("hrid"), Display(Name = "Short Id", Order = 3), Editable(false), JsonConverter(typeof(StringJsonConverter<int?>)), JsonProperty("hrid")]
         public virtual int? ShortId { get; set; }
 
-        [Display(Name = "Holding Type", Order = 3)]
+        [Display(Name = "Holding Type", Order = 4)]
         public virtual HoldingType2 HoldingType { get; set; }
 
-        [Column("holding_type_id"), Display(Name = "Holding Type", Order = 4), JsonProperty("holdingsTypeId")]
+        [Column("holding_type_id"), Display(Name = "Holding Type", Order = 5), JsonProperty("holdingsTypeId")]
         public virtual Guid? HoldingTypeId { get; set; }
 
-        [Display(Order = 5)]
+        [Display(Order = 6)]
         public virtual Instance2 Instance { get; set; }
 
-        [Column("instance_id"), Display(Name = "Instance", Order = 6), JsonProperty("instanceId"), Required]
+        [Column("instance_id"), Display(Name = "Instance", Order = 7), JsonProperty("instanceId"), Required]
         public virtual Guid? InstanceId { get; set; }
 
-        [Display(Order = 7), InverseProperty("Holding2s")]
+        [Display(Order = 8), InverseProperty("Holding2s1")]
         public virtual Location2 Location { get; set; }
 
-        [Column("permanent_location_id"), Display(Name = "Location", Order = 8), JsonProperty("permanentLocationId"), Required]
+        [Column("permanent_location_id"), Display(Name = "Location", Order = 9), JsonProperty("permanentLocationId"), Required]
         public virtual Guid? LocationId { get; set; }
 
-        [Display(Name = "Temporary Location", Order = 9), InverseProperty("Holding2s1")]
+        [Display(Name = "Temporary Location", Order = 10), InverseProperty("Holding2s2")]
         public virtual Location2 TemporaryLocation { get; set; }
 
-        [Column("temporary_location_id"), Display(Name = "Temporary Location", Order = 10), JsonProperty("temporaryLocationId")]
+        [Column("temporary_location_id"), Display(Name = "Temporary Location", Order = 11), JsonProperty("temporaryLocationId")]
         public virtual Guid? TemporaryLocationId { get; set; }
 
-        [Display(Name = "Call Number Type", Order = 11)]
+        [Display(Name = "Effective Location", Order = 12), InverseProperty("Holding2s")]
+        public virtual Location2 EffectiveLocation { get; set; }
+
+        [Column("effective_location_id"), Display(Name = "Effective Location", Order = 13), JsonProperty("effectiveLocationId")]
+        public virtual Guid? EffectiveLocationId { get; set; }
+
+        [Display(Name = "Call Number Type", Order = 14)]
         public virtual CallNumberType2 CallNumberType { get; set; }
 
-        [Column("call_number_type_id"), Display(Name = "Call Number Type", Order = 12), JsonProperty("callNumberTypeId")]
+        [Column("call_number_type_id"), Display(Name = "Call Number Type", Order = 15), JsonProperty("callNumberTypeId")]
         public virtual Guid? CallNumberTypeId { get; set; }
 
-        [Column("call_number_prefix"), Display(Name = "Call Number Prefix", Order = 13), JsonProperty("callNumberPrefix"), StringLength(1024)]
+        [Column("call_number_prefix"), Display(Name = "Call Number Prefix", Order = 16), JsonProperty("callNumberPrefix"), StringLength(1024)]
         public virtual string CallNumberPrefix { get; set; }
 
-        [Column("call_number"), Display(Name = "Call Number", Order = 14), JsonProperty("callNumber"), StringLength(1024)]
+        [Column("call_number"), Display(Name = "Call Number", Order = 17), JsonProperty("callNumber"), StringLength(1024)]
         public virtual string CallNumber { get; set; }
 
-        [Column("call_number_suffix"), Display(Name = "Call Number Suffix", Order = 15), JsonProperty("callNumberSuffix"), StringLength(1024)]
+        [Column("call_number_suffix"), Display(Name = "Call Number Suffix", Order = 18), JsonProperty("callNumberSuffix"), StringLength(1024)]
         public virtual string CallNumberSuffix { get; set; }
 
-        [Column("shelving_title"), Display(Name = "Shelving Title", Order = 16), JsonProperty("shelvingTitle"), StringLength(1024)]
+        [Column("shelving_title"), Display(Name = "Shelving Title", Order = 19), JsonProperty("shelvingTitle"), StringLength(1024)]
         public virtual string ShelvingTitle { get; set; }
 
-        [Column("acquisition_format"), Display(Name = "Acquisition Format", Order = 17), JsonProperty("acquisitionFormat"), StringLength(1024)]
+        [Column("acquisition_format"), Display(Name = "Acquisition Format", Order = 20), JsonProperty("acquisitionFormat"), StringLength(1024)]
         public virtual string AcquisitionFormat { get; set; }
 
-        [Column("acquisition_method"), Display(Name = "Acquisition Method", Order = 18), JsonProperty("acquisitionMethod"), StringLength(1024)]
+        [Column("acquisition_method"), Display(Name = "Acquisition Method", Order = 21), JsonProperty("acquisitionMethod"), StringLength(1024)]
         public virtual string AcquisitionMethod { get; set; }
 
-        [Column("receipt_status"), Display(Name = "Receipt Status", Order = 19), JsonProperty("receiptStatus"), StringLength(1024)]
+        [Column("receipt_status"), Display(Name = "Receipt Status", Order = 22), JsonProperty("receiptStatus"), StringLength(1024)]
         public virtual string ReceiptStatus { get; set; }
 
-        [Display(Name = "Ill Policy", Order = 20)]
+        [Display(Name = "Ill Policy", Order = 23)]
         public virtual IllPolicy2 IllPolicy { get; set; }
 
-        [Column("ill_policy_id"), Display(Name = "Ill Policy", Order = 21), JsonProperty("illPolicyId")]
+        [Column("ill_policy_id"), Display(Name = "Ill Policy", Order = 24), JsonProperty("illPolicyId")]
         public virtual Guid? IllPolicyId { get; set; }
 
-        [Column("retention_policy"), Display(Name = "Retention Policy", Order = 22), JsonProperty("retentionPolicy"), StringLength(1024)]
+        [Column("retention_policy"), Display(Name = "Retention Policy", Order = 25), JsonProperty("retentionPolicy"), StringLength(1024)]
         public virtual string RetentionPolicy { get; set; }
 
-        [Column("digitization_policy"), Display(Name = "Digitization Policy", Order = 23), JsonProperty("digitizationPolicy"), StringLength(1024)]
+        [Column("digitization_policy"), Display(Name = "Digitization Policy", Order = 26), JsonProperty("digitizationPolicy"), StringLength(1024)]
         public virtual string DigitizationPolicy { get; set; }
 
-        [Column("copy_number"), Display(Name = "Copy Number", Order = 24), JsonProperty("copyNumber"), StringLength(1024)]
+        [Column("copy_number"), Display(Name = "Copy Number", Order = 27), JsonProperty("copyNumber"), StringLength(1024)]
         public virtual string CopyNumber { get; set; }
 
-        [Column("number_of_items"), Display(Name = "Item Count", Order = 25), JsonProperty("numberOfItems"), StringLength(1024)]
+        [Column("number_of_items"), Display(Name = "Item Count", Order = 28), JsonProperty("numberOfItems"), StringLength(1024)]
         public virtual string ItemCount { get; set; }
 
-        [Column("receiving_history_display_type"), Display(Name = "Receiving History Display Type", Order = 26), JsonProperty("receivingHistory.displayType"), StringLength(1024)]
+        [Column("receiving_history_display_type"), Display(Name = "Receiving History Display Type", Order = 29), JsonProperty("receivingHistory.displayType"), StringLength(1024)]
         public virtual string ReceivingHistoryDisplayType { get; set; }
 
-        [Column("discovery_suppress"), Display(Name = "Discovery Suppress", Order = 27), JsonProperty("discoverySuppress")]
+        [Column("discovery_suppress"), Display(Name = "Discovery Suppress", Order = 30), JsonProperty("discoverySuppress")]
         public virtual bool? DiscoverySuppress { get; set; }
 
-        [Column("created_date"), DataType(DataType.DateTime), Display(Name = "Creation Time", Order = 28), DisplayFormat(DataFormatString = "{0:g}"), Editable(false), JsonProperty("metadata.createdDate")]
+        [Column("created_date"), DataType(DataType.DateTime), Display(Name = "Creation Time", Order = 31), DisplayFormat(DataFormatString = "{0:g}"), Editable(false), JsonProperty("metadata.createdDate")]
         public virtual DateTime? CreationTime { get; set; }
 
-        [Display(Name = "Creation User", Order = 29), InverseProperty("Holding2s")]
+        [Display(Name = "Creation User", Order = 32), InverseProperty("Holding2s")]
         public virtual User2 CreationUser { get; set; }
 
-        [Column("created_by_user_id"), Display(Name = "Creation User", Order = 30), Editable(false), JsonProperty("metadata.createdByUserId")]
+        [Column("created_by_user_id"), Display(Name = "Creation User", Order = 33), Editable(false), JsonProperty("metadata.createdByUserId")]
         public virtual Guid? CreationUserId { get; set; }
 
         [Column("created_by_username"), JsonProperty("metadata.createdByUsername"), ScaffoldColumn(false), StringLength(1024)]
         public virtual string CreationUserUsername { get; set; }
 
-        [Column("updated_date"), DataType(DataType.DateTime), Display(Name = "Last Write Time", Order = 32), DisplayFormat(DataFormatString = "{0:g}"), Editable(false), JsonProperty("metadata.updatedDate")]
+        [Column("updated_date"), DataType(DataType.DateTime), Display(Name = "Last Write Time", Order = 35), DisplayFormat(DataFormatString = "{0:g}"), Editable(false), JsonProperty("metadata.updatedDate")]
         public virtual DateTime? LastWriteTime { get; set; }
 
-        [Display(Name = "Last Write User", Order = 33), InverseProperty("Holding2s1")]
+        [Display(Name = "Last Write User", Order = 36), InverseProperty("Holding2s1")]
         public virtual User2 LastWriteUser { get; set; }
 
-        [Column("updated_by_user_id"), Display(Name = "Last Write User", Order = 34), Editable(false), JsonProperty("metadata.updatedByUserId")]
+        [Column("updated_by_user_id"), Display(Name = "Last Write User", Order = 37), Editable(false), JsonProperty("metadata.updatedByUserId")]
         public virtual Guid? LastWriteUserId { get; set; }
 
         [Column("updated_by_username"), JsonProperty("metadata.updatedByUsername"), ScaffoldColumn(false), StringLength(1024)]
         public virtual string LastWriteUserUsername { get; set; }
 
-        [Display(Order = 36)]
+        [Display(Order = 39)]
         public virtual Source2 Source { get; set; }
 
-        [Column("source_id"), Display(Name = "Source", Order = 37), JsonProperty("sourceId")]
+        [Column("source_id"), Display(Name = "Source", Order = 40), JsonProperty("sourceId")]
         public virtual Guid? SourceId { get; set; }
 
-        [Column("content"), CustomValidation(typeof(Holding), nameof(ValidateContent)), DataType(DataType.MultilineText), Display(Order = 38), Editable(false)]
+        [Column("content"), CustomValidation(typeof(Holding), nameof(ValidateContent)), DataType(DataType.MultilineText), Display(Order = 41), Editable(false)]
         public virtual string Content { get; set; }
 
-        [Display(Order = 39), JsonProperty("holdingsStatements")]
+        [Display(Order = 42), JsonProperty("holdingsStatements")]
         public virtual ICollection<Extent> Extents { get; set; }
 
-        [Display(Name = "Fees", Order = 40)]
+        [Display(Name = "Fees", Order = 43)]
         public virtual ICollection<Fee2> Fee2s { get; set; }
 
-        [Display(Name = "Holding Electronic Accesses", Order = 41), JsonProperty("electronicAccess")]
+        [Display(Name = "Holding Electronic Accesses", Order = 44), JsonProperty("electronicAccess")]
         public virtual ICollection<HoldingElectronicAccess> HoldingElectronicAccesses { get; set; }
 
-        [Display(Name = "Holding Entries", Order = 42), JsonProperty("receivingHistory.entries")]
+        [Display(Name = "Holding Entries", Order = 45), JsonProperty("receivingHistory.entries")]
         public virtual ICollection<HoldingEntry> HoldingEntries { get; set; }
 
-        [Display(Name = "Holding Former Ids", Order = 43), JsonConverter(typeof(ArrayJsonConverter<List<HoldingFormerId>, HoldingFormerId>), "Content"), JsonProperty("formerIds")]
+        [Display(Name = "Holding Former Ids", Order = 46), JsonConverter(typeof(ArrayJsonConverter<List<HoldingFormerId>, HoldingFormerId>), "Content"), JsonProperty("formerIds")]
         public virtual ICollection<HoldingFormerId> HoldingFormerIds { get; set; }
 
-        [Display(Name = "Holding Notes", Order = 44), JsonProperty("notes")]
+        [Display(Name = "Holding Notes", Order = 47), JsonProperty("notes")]
         public virtual ICollection<HoldingNote> HoldingNotes { get; set; }
 
-        [Display(Name = "Holding Statistical Codes", Order = 45), JsonConverter(typeof(ArrayJsonConverter<List<HoldingStatisticalCode>, HoldingStatisticalCode>), "StatisticalCodeId"), JsonProperty("statisticalCodeIds")]
+        [Display(Name = "Holding Statistical Codes", Order = 48), JsonConverter(typeof(ArrayJsonConverter<List<HoldingStatisticalCode>, HoldingStatisticalCode>), "StatisticalCodeId"), JsonProperty("statisticalCodeIds")]
         public virtual ICollection<HoldingStatisticalCode> HoldingStatisticalCodes { get; set; }
 
-        [Display(Name = "Holding Tags", Order = 46), JsonConverter(typeof(ArrayJsonConverter<List<HoldingTag>, HoldingTag>), "Content"), JsonProperty("tags.tagList")]
+        [Display(Name = "Holding Tags", Order = 49), JsonConverter(typeof(ArrayJsonConverter<List<HoldingTag>, HoldingTag>), "Content"), JsonProperty("tags.tagList")]
         public virtual ICollection<HoldingTag> HoldingTags { get; set; }
 
-        [Display(Name = "Index Statements", Order = 47), JsonProperty("holdingsStatementsForIndexes")]
+        [Display(Name = "Index Statements", Order = 50), JsonProperty("holdingsStatementsForIndexes")]
         public virtual ICollection<IndexStatement> IndexStatements { get; set; }
 
-        [Display(Name = "Items", Order = 48)]
+        [Display(Name = "Items", Order = 51)]
         public virtual ICollection<Item2> Item2s { get; set; }
 
-        [Display(Name = "Supplement Statements", Order = 49), JsonProperty("holdingsStatementsForSupplements")]
+        [Display(Name = "Supplement Statements", Order = 52), JsonProperty("holdingsStatementsForSupplements")]
         public virtual ICollection<SupplementStatement> SupplementStatements { get; set; }
 
-        public override string ToString() => $"{{ {nameof(Id)} = {Id}, {nameof(ShortId)} = {ShortId}, {nameof(HoldingTypeId)} = {HoldingTypeId}, {nameof(InstanceId)} = {InstanceId}, {nameof(LocationId)} = {LocationId}, {nameof(TemporaryLocationId)} = {TemporaryLocationId}, {nameof(CallNumberTypeId)} = {CallNumberTypeId}, {nameof(CallNumberPrefix)} = {CallNumberPrefix}, {nameof(CallNumber)} = {CallNumber}, {nameof(CallNumberSuffix)} = {CallNumberSuffix}, {nameof(ShelvingTitle)} = {ShelvingTitle}, {nameof(AcquisitionFormat)} = {AcquisitionFormat}, {nameof(AcquisitionMethod)} = {AcquisitionMethod}, {nameof(ReceiptStatus)} = {ReceiptStatus}, {nameof(IllPolicyId)} = {IllPolicyId}, {nameof(RetentionPolicy)} = {RetentionPolicy}, {nameof(DigitizationPolicy)} = {DigitizationPolicy}, {nameof(CopyNumber)} = {CopyNumber}, {nameof(ItemCount)} = {ItemCount}, {nameof(ReceivingHistoryDisplayType)} = {ReceivingHistoryDisplayType}, {nameof(DiscoverySuppress)} = {DiscoverySuppress}, {nameof(CreationTime)} = {CreationTime}, {nameof(CreationUserId)} = {CreationUserId}, {nameof(CreationUserUsername)} = {CreationUserUsername}, {nameof(LastWriteTime)} = {LastWriteTime}, {nameof(LastWriteUserId)} = {LastWriteUserId}, {nameof(LastWriteUserUsername)} = {LastWriteUserUsername}, {nameof(SourceId)} = {SourceId}, {nameof(Content)} = {Content}, {nameof(Extents)} = {(Extents != null ? $"{{ {string.Join(", ", Extents)} }}" : "")}, {nameof(HoldingElectronicAccesses)} = {(HoldingElectronicAccesses != null ? $"{{ {string.Join(", ", HoldingElectronicAccesses)} }}" : "")}, {nameof(HoldingEntries)} = {(HoldingEntries != null ? $"{{ {string.Join(", ", HoldingEntries)} }}" : "")}, {nameof(HoldingFormerIds)} = {(HoldingFormerIds != null ? $"{{ {string.Join(", ", HoldingFormerIds)} }}" : "")}, {nameof(HoldingNotes)} = {(HoldingNotes != null ? $"{{ {string.Join(", ", HoldingNotes)} }}" : "")}, {nameof(HoldingStatisticalCodes)} = {(HoldingStatisticalCodes != null ? $"{{ {string.Join(", ", HoldingStatisticalCodes)} }}" : "")}, {nameof(HoldingTags)} = {(HoldingTags != null ? $"{{ {string.Join(", ", HoldingTags)} }}" : "")}, {nameof(IndexStatements)} = {(IndexStatements != null ? $"{{ {string.Join(", ", IndexStatements)} }}" : "")}, {nameof(SupplementStatements)} = {(SupplementStatements != null ? $"{{ {string.Join(", ", SupplementStatements)} }}" : "")} }}";
+        public override string ToString() => $"{{ {nameof(Id)} = {Id}, {nameof(Version)} = {Version}, {nameof(ShortId)} = {ShortId}, {nameof(HoldingTypeId)} = {HoldingTypeId}, {nameof(InstanceId)} = {InstanceId}, {nameof(LocationId)} = {LocationId}, {nameof(TemporaryLocationId)} = {TemporaryLocationId}, {nameof(EffectiveLocationId)} = {EffectiveLocationId}, {nameof(CallNumberTypeId)} = {CallNumberTypeId}, {nameof(CallNumberPrefix)} = {CallNumberPrefix}, {nameof(CallNumber)} = {CallNumber}, {nameof(CallNumberSuffix)} = {CallNumberSuffix}, {nameof(ShelvingTitle)} = {ShelvingTitle}, {nameof(AcquisitionFormat)} = {AcquisitionFormat}, {nameof(AcquisitionMethod)} = {AcquisitionMethod}, {nameof(ReceiptStatus)} = {ReceiptStatus}, {nameof(IllPolicyId)} = {IllPolicyId}, {nameof(RetentionPolicy)} = {RetentionPolicy}, {nameof(DigitizationPolicy)} = {DigitizationPolicy}, {nameof(CopyNumber)} = {CopyNumber}, {nameof(ItemCount)} = {ItemCount}, {nameof(ReceivingHistoryDisplayType)} = {ReceivingHistoryDisplayType}, {nameof(DiscoverySuppress)} = {DiscoverySuppress}, {nameof(CreationTime)} = {CreationTime}, {nameof(CreationUserId)} = {CreationUserId}, {nameof(CreationUserUsername)} = {CreationUserUsername}, {nameof(LastWriteTime)} = {LastWriteTime}, {nameof(LastWriteUserId)} = {LastWriteUserId}, {nameof(LastWriteUserUsername)} = {LastWriteUserUsername}, {nameof(SourceId)} = {SourceId}, {nameof(Content)} = {Content}, {nameof(Extents)} = {(Extents != null ? $"{{ {string.Join(", ", Extents)} }}" : "")}, {nameof(HoldingElectronicAccesses)} = {(HoldingElectronicAccesses != null ? $"{{ {string.Join(", ", HoldingElectronicAccesses)} }}" : "")}, {nameof(HoldingEntries)} = {(HoldingEntries != null ? $"{{ {string.Join(", ", HoldingEntries)} }}" : "")}, {nameof(HoldingFormerIds)} = {(HoldingFormerIds != null ? $"{{ {string.Join(", ", HoldingFormerIds)} }}" : "")}, {nameof(HoldingNotes)} = {(HoldingNotes != null ? $"{{ {string.Join(", ", HoldingNotes)} }}" : "")}, {nameof(HoldingStatisticalCodes)} = {(HoldingStatisticalCodes != null ? $"{{ {string.Join(", ", HoldingStatisticalCodes)} }}" : "")}, {nameof(HoldingTags)} = {(HoldingTags != null ? $"{{ {string.Join(", ", HoldingTags)} }}" : "")}, {nameof(IndexStatements)} = {(IndexStatements != null ? $"{{ {string.Join(", ", IndexStatements)} }}" : "")}, {nameof(SupplementStatements)} = {(SupplementStatements != null ? $"{{ {string.Join(", ", SupplementStatements)} }}" : "")} }}";
 
         public static Holding2 FromJObject(JObject jObject) => jObject != null ? new Holding2
         {
             Id = (Guid?)jObject.SelectToken("id"),
+            Version = (int?)jObject.SelectToken("_version"),
             ShortId = (int?)jObject.SelectToken("hrid"),
             HoldingTypeId = (Guid?)jObject.SelectToken("holdingsTypeId"),
             InstanceId = (Guid?)jObject.SelectToken("instanceId"),
             LocationId = (Guid?)jObject.SelectToken("permanentLocationId"),
             TemporaryLocationId = (Guid?)jObject.SelectToken("temporaryLocationId"),
+            EffectiveLocationId = (Guid?)jObject.SelectToken("effectiveLocationId"),
             CallNumberTypeId = (Guid?)jObject.SelectToken("callNumberTypeId"),
             CallNumberPrefix = (string)jObject.SelectToken("callNumberPrefix"),
             CallNumber = (string)jObject.SelectToken("callNumber"),
@@ -221,11 +232,13 @@ namespace FolioLibrary
 
         public JObject ToJObject() => new JObject(
             new JProperty("id", Id),
+            new JProperty("_version", Version),
             new JProperty("hrid", ShortId?.ToString()),
             new JProperty("holdingsTypeId", HoldingTypeId),
             new JProperty("instanceId", InstanceId),
             new JProperty("permanentLocationId", LocationId),
             new JProperty("temporaryLocationId", TemporaryLocationId),
+            new JProperty("effectiveLocationId", EffectiveLocationId),
             new JProperty("callNumberTypeId", CallNumberTypeId),
             new JProperty("callNumberPrefix", CallNumberPrefix),
             new JProperty("callNumber", CallNumber),

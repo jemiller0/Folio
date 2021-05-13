@@ -80,7 +80,7 @@ namespace FolioWebApplication.Owner2s
             if (Session["TransferAccount2sPermission"] == null) return;
             var id = (Guid?)Owner2FormView.DataKey.Value;
             if (id == null) return;
-            var d = new Dictionary<string, string>() { { "Id", "id" }, { "Name", "accountName" }, { "Desc", "desc" }, { "CreationTime", "metadata.createdDate" }, { "CreationUserId", "metadata.createdByUserId" }, { "LastWriteTime", "metadata.updatedDate" }, { "LastWriteUserId", "metadata.updatedByUserId" }, { "OwnerId", "ownerId" } };
+            var d = new Dictionary<string, string>() { { "Id", "id" }, { "Name", "accountName" }, { "Description", "desc" }, { "CreationTime", "metadata.createdDate" }, { "CreationUserId", "metadata.createdByUserId" }, { "LastWriteTime", "metadata.updatedDate" }, { "LastWriteUserId", "metadata.updatedByUserId" }, { "OwnerId", "ownerId" } };
             TransferAccount2sRadGrid.DataSource = folioServiceContext.TransferAccount2s(out var i, Global.GetCqlFilter(TransferAccount2sRadGrid, d, $"ownerId == \"{id}\""), TransferAccount2sRadGrid.MasterTableView.SortExpressions.Count > 0 ? $"{d[TransferAccount2sRadGrid.MasterTableView.SortExpressions[0].FieldName]}{(TransferAccount2sRadGrid.MasterTableView.SortExpressions[0].SortOrder == GridSortOrder.Descending ? "/sort.descending" : "")}" : null, TransferAccount2sRadGrid.PageSize * TransferAccount2sRadGrid.CurrentPageIndex, TransferAccount2sRadGrid.PageSize, true);
             TransferAccount2sRadGrid.VirtualItemCount = i;
             if (TransferAccount2sRadGrid.MasterTableView.FilterExpression == "")

@@ -13,6 +13,10 @@
       "description": "Patron block description",
       "type": "string"
     },
+    "code": {
+      "description": "Code of the template if block is defined based on a template (optional)",
+      "type": "string"
+    },
     "staffInformation": {
       "description": "Additional information to staff (optional)",
       "type": "string"

@@ -73,12 +73,12 @@
                                     <asp:Literal ID="TransactionInformationLiteral" runat="server" Text='<%#: Eval("TransactionInformation") %>' />
                                 </td>
                             </tr>
-                            <tr runat="server" visible='<%# Eval("CreatedAt") != null %>'>
+                            <tr runat="server" visible='<%# Eval("ServicePoint") != null %>'>
                                 <td>
-                                    <asp:Label ID="CreatedAtLabel" runat="server" Text="Created At:" AssociatedControlID="CreatedAtLiteral" />
+                                    <asp:Label ID="ServicePointLabel" runat="server" Text="Service Point:" AssociatedControlID="ServicePointHyperLink" />
                                 </td>
                                 <td>
-                                    <asp:Literal ID="CreatedAtLiteral" runat="server" Text='<%#: Eval("CreatedAt") %>' />
+                                    <asp:HyperLink ID="ServicePointHyperLink" runat="server" Text='<%#: Eval("ServicePoint.Name") %>' NavigateUrl='<%# $"~/ServicePoint2s/Edit.aspx?Id={Eval("ServicePointId")}" %>' Enabled='<%# Session["ServicePoint2sPermission"] != null %>' />
                                 </td>
                             </tr>
                             <tr runat="server" visible='<%# Eval("Source") != null %>'>

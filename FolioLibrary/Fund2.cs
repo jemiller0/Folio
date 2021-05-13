@@ -37,8 +37,8 @@ namespace FolioLibrary
         [Column("description"), Display(Order = 3), JsonProperty("description"), StringLength(1024)]
         public virtual string Description { get; set; }
 
-        [Column("external_account_no"), Display(Name = "External Account No", Order = 4), JsonProperty("externalAccountNo"), StringLength(1024)]
-        public virtual string ExternalAccountNo { get; set; }
+        [Column("external_account_no"), Display(Name = "Account Number", Order = 4), JsonProperty("externalAccountNo"), StringLength(1024)]
+        public virtual string AccountNumber { get; set; }
 
         [Column("fund_status"), Display(Name = "Fund Status", Order = 5), JsonProperty("fundStatus"), RegularExpression(@"^(Active|Frozen|Inactive)$"), Required, StringLength(1024)]
         public virtual string FundStatus { get; set; }
@@ -100,14 +100,14 @@ namespace FolioLibrary
         [Display(Name = "Budgets", Order = 24)]
         public virtual ICollection<Budget2> Budget2s { get; set; }
 
-        [Display(Name = "Fund Acquisitions Units", Order = 25), JsonConverter(typeof(ArrayJsonConverter<List<FundAcquisitionsUnit>, FundAcquisitionsUnit>), "AcquisitionsUnitId"), JsonProperty("acqUnitIds")]
+        [Display(Name = "Budget Groups", Order = 25)]
+        public virtual ICollection<BudgetGroup2> BudgetGroup2s { get; set; }
+
+        [Display(Name = "Fund Acquisitions Units", Order = 26), JsonConverter(typeof(ArrayJsonConverter<List<FundAcquisitionsUnit>, FundAcquisitionsUnit>), "AcquisitionsUnitId"), JsonProperty("acqUnitIds")]
         public virtual ICollection<FundAcquisitionsUnit> FundAcquisitionsUnits { get; set; }
 
-        [Display(Name = "Fund Tags", Order = 26), JsonConverter(typeof(ArrayJsonConverter<List<FundTag>, FundTag>), "TagId"), JsonProperty("tags.tagList")]
+        [Display(Name = "Fund Tags", Order = 27), JsonConverter(typeof(ArrayJsonConverter<List<FundTag>, FundTag>), "TagId"), JsonProperty("tags.tagList")]
         public virtual ICollection<FundTag> FundTags { get; set; }
-
-        [Display(Name = "Group Fund Fiscal Years", Order = 27)]
-        public virtual ICollection<GroupFundFiscalYear2> GroupFundFiscalYear2s { get; set; }
 
         [Display(Name = "Invoice Adjustment Funds", Order = 28)]
         public virtual ICollection<InvoiceAdjustmentFund> InvoiceAdjustmentFunds { get; set; }
@@ -130,14 +130,14 @@ namespace FolioLibrary
         [Display(Name = "Voucher Item Funds", Order = 34)]
         public virtual ICollection<VoucherItemFund> VoucherItemFunds { get; set; }
 
-        public override string ToString() => $"{{ {nameof(Id)} = {Id}, {nameof(Code)} = {Code}, {nameof(Description)} = {Description}, {nameof(ExternalAccountNo)} = {ExternalAccountNo}, {nameof(FundStatus)} = {FundStatus}, {nameof(FundTypeId)} = {FundTypeId}, {nameof(LedgerId)} = {LedgerId}, {nameof(Name)} = {Name}, {nameof(CreationTime)} = {CreationTime}, {nameof(CreationUserId)} = {CreationUserId}, {nameof(CreationUserUsername)} = {CreationUserUsername}, {nameof(LastWriteTime)} = {LastWriteTime}, {nameof(LastWriteUserId)} = {LastWriteUserId}, {nameof(LastWriteUserUsername)} = {LastWriteUserUsername}, {nameof(Content)} = {Content}, {nameof(AllocatedFromFunds)} = {(AllocatedFromFunds != null ? $"{{ {string.Join(", ", AllocatedFromFunds)} }}" : "")}, {nameof(AllocatedToFunds)} = {(AllocatedToFunds != null ? $"{{ {string.Join(", ", AllocatedToFunds)} }}" : "")}, {nameof(FundAcquisitionsUnits)} = {(FundAcquisitionsUnits != null ? $"{{ {string.Join(", ", FundAcquisitionsUnits)} }}" : "")}, {nameof(FundTags)} = {(FundTags != null ? $"{{ {string.Join(", ", FundTags)} }}" : "")} }}";
+        public override string ToString() => $"{{ {nameof(Id)} = {Id}, {nameof(Code)} = {Code}, {nameof(Description)} = {Description}, {nameof(AccountNumber)} = {AccountNumber}, {nameof(FundStatus)} = {FundStatus}, {nameof(FundTypeId)} = {FundTypeId}, {nameof(LedgerId)} = {LedgerId}, {nameof(Name)} = {Name}, {nameof(CreationTime)} = {CreationTime}, {nameof(CreationUserId)} = {CreationUserId}, {nameof(CreationUserUsername)} = {CreationUserUsername}, {nameof(LastWriteTime)} = {LastWriteTime}, {nameof(LastWriteUserId)} = {LastWriteUserId}, {nameof(LastWriteUserUsername)} = {LastWriteUserUsername}, {nameof(Content)} = {Content}, {nameof(AllocatedFromFunds)} = {(AllocatedFromFunds != null ? $"{{ {string.Join(", ", AllocatedFromFunds)} }}" : "")}, {nameof(AllocatedToFunds)} = {(AllocatedToFunds != null ? $"{{ {string.Join(", ", AllocatedToFunds)} }}" : "")}, {nameof(FundAcquisitionsUnits)} = {(FundAcquisitionsUnits != null ? $"{{ {string.Join(", ", FundAcquisitionsUnits)} }}" : "")}, {nameof(FundTags)} = {(FundTags != null ? $"{{ {string.Join(", ", FundTags)} }}" : "")} }}";
 
         public static Fund2 FromJObject(JObject jObject) => jObject != null ? new Fund2
         {
             Id = (Guid?)jObject.SelectToken("id"),
             Code = (string)jObject.SelectToken("code"),
             Description = (string)jObject.SelectToken("description"),
-            ExternalAccountNo = (string)jObject.SelectToken("externalAccountNo"),
+            AccountNumber = (string)jObject.SelectToken("externalAccountNo"),
             FundStatus = (string)jObject.SelectToken("fundStatus"),
             FundTypeId = (Guid?)jObject.SelectToken("fundTypeId"),
             LedgerId = (Guid?)jObject.SelectToken("ledgerId"),
@@ -159,7 +159,7 @@ namespace FolioLibrary
             new JProperty("id", Id),
             new JProperty("code", Code),
             new JProperty("description", Description),
-            new JProperty("externalAccountNo", ExternalAccountNo),
+            new JProperty("externalAccountNo", AccountNumber),
             new JProperty("fundStatus", FundStatus),
             new JProperty("fundTypeId", FundTypeId),
             new JProperty("ledgerId", LedgerId),

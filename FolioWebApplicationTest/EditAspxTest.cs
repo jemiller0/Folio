@@ -342,6 +342,33 @@ namespace FolioWebApplicationTest
         }
 
         [TestMethod]
+        public void BudgetGroup2sEditAspxTest()
+        {
+            var s = Stopwatch.StartNew();
+            try
+            {
+                var bg2 = folioServiceContext.BudgetGroup2s(take: 1).SingleOrDefault();
+                if (bg2 != null)
+                {
+                    var hrm = httpClient.GetAsync($"{Url}/BudgetGroup2s/Edit.aspx?Id={bg2.Id}").Result;
+                    hrm.EnsureSuccessStatusCode();
+                    Assert.IsTrue(s.Elapsed < timeSpan);
+                }
+                else
+                    Assert.Inconclusive();
+            }
+            catch (Exception e)
+            {
+                traceSource.TraceEvent(TraceEventType.Error, 0, e.ToString());
+                throw;
+            }
+            finally
+            {
+                traceSource.TraceEvent(TraceEventType.Information, 0, $"BudgetGroup2sEditAspxTest()\r\n    ElapsedTime={s.Elapsed}");
+            }
+        }
+
+        [TestMethod]
         public void CallNumberType2sEditAspxTest()
         {
             var s = Stopwatch.StartNew();
@@ -1017,33 +1044,6 @@ namespace FolioWebApplicationTest
         }
 
         [TestMethod]
-        public void GroupFundFiscalYear2sEditAspxTest()
-        {
-            var s = Stopwatch.StartNew();
-            try
-            {
-                var gffy2 = folioServiceContext.GroupFundFiscalYear2s(take: 1).SingleOrDefault();
-                if (gffy2 != null)
-                {
-                    var hrm = httpClient.GetAsync($"{Url}/GroupFundFiscalYear2s/Edit.aspx?Id={gffy2.Id}").Result;
-                    hrm.EnsureSuccessStatusCode();
-                    Assert.IsTrue(s.Elapsed < timeSpan);
-                }
-                else
-                    Assert.Inconclusive();
-            }
-            catch (Exception e)
-            {
-                traceSource.TraceEvent(TraceEventType.Error, 0, e.ToString());
-                throw;
-            }
-            finally
-            {
-                traceSource.TraceEvent(TraceEventType.Information, 0, $"GroupFundFiscalYear2sEditAspxTest()\r\n    ElapsedTime={s.Elapsed}");
-            }
-        }
-
-        [TestMethod]
         public void Holding2sEditAspxTest()
         {
             var s = Stopwatch.StartNew();
@@ -1503,6 +1503,87 @@ namespace FolioWebApplicationTest
         }
 
         [TestMethod]
+        public void LedgerRollover2sEditAspxTest()
+        {
+            var s = Stopwatch.StartNew();
+            try
+            {
+                var lr2 = folioServiceContext.LedgerRollover2s(take: 1).SingleOrDefault();
+                if (lr2 != null)
+                {
+                    var hrm = httpClient.GetAsync($"{Url}/LedgerRollover2s/Edit.aspx?Id={lr2.Id}").Result;
+                    hrm.EnsureSuccessStatusCode();
+                    Assert.IsTrue(s.Elapsed < timeSpan);
+                }
+                else
+                    Assert.Inconclusive();
+            }
+            catch (Exception e)
+            {
+                traceSource.TraceEvent(TraceEventType.Error, 0, e.ToString());
+                throw;
+            }
+            finally
+            {
+                traceSource.TraceEvent(TraceEventType.Information, 0, $"LedgerRollover2sEditAspxTest()\r\n    ElapsedTime={s.Elapsed}");
+            }
+        }
+
+        [TestMethod]
+        public void LedgerRolloverError2sEditAspxTest()
+        {
+            var s = Stopwatch.StartNew();
+            try
+            {
+                var lre2 = folioServiceContext.LedgerRolloverError2s(take: 1).SingleOrDefault();
+                if (lre2 != null)
+                {
+                    var hrm = httpClient.GetAsync($"{Url}/LedgerRolloverError2s/Edit.aspx?Id={lre2.Id}").Result;
+                    hrm.EnsureSuccessStatusCode();
+                    Assert.IsTrue(s.Elapsed < timeSpan);
+                }
+                else
+                    Assert.Inconclusive();
+            }
+            catch (Exception e)
+            {
+                traceSource.TraceEvent(TraceEventType.Error, 0, e.ToString());
+                throw;
+            }
+            finally
+            {
+                traceSource.TraceEvent(TraceEventType.Information, 0, $"LedgerRolloverError2sEditAspxTest()\r\n    ElapsedTime={s.Elapsed}");
+            }
+        }
+
+        [TestMethod]
+        public void LedgerRolloverProgress2sEditAspxTest()
+        {
+            var s = Stopwatch.StartNew();
+            try
+            {
+                var lrp2 = folioServiceContext.LedgerRolloverProgress2s(take: 1).SingleOrDefault();
+                if (lrp2 != null)
+                {
+                    var hrm = httpClient.GetAsync($"{Url}/LedgerRolloverProgress2s/Edit.aspx?Id={lrp2.Id}").Result;
+                    hrm.EnsureSuccessStatusCode();
+                    Assert.IsTrue(s.Elapsed < timeSpan);
+                }
+                else
+                    Assert.Inconclusive();
+            }
+            catch (Exception e)
+            {
+                traceSource.TraceEvent(TraceEventType.Error, 0, e.ToString());
+                throw;
+            }
+            finally
+            {
+                traceSource.TraceEvent(TraceEventType.Information, 0, $"LedgerRolloverProgress2sEditAspxTest()\r\n    ElapsedTime={s.Elapsed}");
+            }
+        }
+
+        [TestMethod]
         public void Library2sEditAspxTest()
         {
             var s = Stopwatch.StartNew();
@@ -1692,6 +1773,33 @@ namespace FolioWebApplicationTest
         }
 
         [TestMethod]
+        public void ManualBlockTemplate2sEditAspxTest()
+        {
+            var s = Stopwatch.StartNew();
+            try
+            {
+                var mbt2 = folioServiceContext.ManualBlockTemplate2s(take: 1).SingleOrDefault();
+                if (mbt2 != null)
+                {
+                    var hrm = httpClient.GetAsync($"{Url}/ManualBlockTemplate2s/Edit.aspx?Id={mbt2.Id}").Result;
+                    hrm.EnsureSuccessStatusCode();
+                    Assert.IsTrue(s.Elapsed < timeSpan);
+                }
+                else
+                    Assert.Inconclusive();
+            }
+            catch (Exception e)
+            {
+                traceSource.TraceEvent(TraceEventType.Error, 0, e.ToString());
+                throw;
+            }
+            finally
+            {
+                traceSource.TraceEvent(TraceEventType.Information, 0, $"ManualBlockTemplate2sEditAspxTest()\r\n    ElapsedTime={s.Elapsed}");
+            }
+        }
+
+        [TestMethod]
         public void MaterialType2sEditAspxTest()
         {
             var s = Stopwatch.StartNew();
@@ -1850,33 +1958,6 @@ namespace FolioWebApplicationTest
             finally
             {
                 traceSource.TraceEvent(TraceEventType.Information, 0, $"OrderTemplate2sEditAspxTest()\r\n    ElapsedTime={s.Elapsed}");
-            }
-        }
-
-        [TestMethod]
-        public void OrderTransactionSummary2sEditAspxTest()
-        {
-            var s = Stopwatch.StartNew();
-            try
-            {
-                var ots2 = folioServiceContext.OrderTransactionSummary2s(take: 1).SingleOrDefault();
-                if (ots2 != null)
-                {
-                    var hrm = httpClient.GetAsync($"{Url}/OrderTransactionSummary2s/Edit.aspx?Id={ots2.Id}").Result;
-                    hrm.EnsureSuccessStatusCode();
-                    Assert.IsTrue(s.Elapsed < timeSpan);
-                }
-                else
-                    Assert.Inconclusive();
-            }
-            catch (Exception e)
-            {
-                traceSource.TraceEvent(TraceEventType.Error, 0, e.ToString());
-                throw;
-            }
-            finally
-            {
-                traceSource.TraceEvent(TraceEventType.Information, 0, $"OrderTransactionSummary2sEditAspxTest()\r\n    ElapsedTime={s.Elapsed}");
             }
         }
 

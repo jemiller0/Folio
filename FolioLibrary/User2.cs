@@ -553,409 +553,433 @@ namespace FolioLibrary
         [Display(Name = "Ledgers 1", Order = 172)]
         public virtual ICollection<Ledger2> Ledger2s1 { get; set; }
 
-        [Display(Name = "Librarys", Order = 173)]
+        [Display(Name = "Ledger Rollovers", Order = 173)]
+        public virtual ICollection<LedgerRollover2> LedgerRollover2s { get; set; }
+
+        [Display(Name = "Ledger Rollovers 1", Order = 174)]
+        public virtual ICollection<LedgerRollover2> LedgerRollover2s1 { get; set; }
+
+        [Display(Name = "Ledger Rollover Errors", Order = 175)]
+        public virtual ICollection<LedgerRolloverError2> LedgerRolloverError2s { get; set; }
+
+        [Display(Name = "Ledger Rollover Errors 1", Order = 176)]
+        public virtual ICollection<LedgerRolloverError2> LedgerRolloverError2s1 { get; set; }
+
+        [Display(Name = "Ledger Rollover Progresss", Order = 177)]
+        public virtual ICollection<LedgerRolloverProgress2> LedgerRolloverProgress2s { get; set; }
+
+        [Display(Name = "Ledger Rollover Progresss 1", Order = 178)]
+        public virtual ICollection<LedgerRolloverProgress2> LedgerRolloverProgress2s1 { get; set; }
+
+        [Display(Name = "Librarys", Order = 179)]
         public virtual ICollection<Library2> Library2s { get; set; }
 
-        [Display(Name = "Librarys 1", Order = 174)]
+        [Display(Name = "Librarys 1", Order = 180)]
         public virtual ICollection<Library2> Library2s1 { get; set; }
 
-        [Display(Name = "Loans", Order = 175)]
+        [Display(Name = "Loans", Order = 181)]
         public virtual ICollection<Loan2> Loan2s { get; set; }
 
-        [Display(Name = "Loans 1", Order = 176)]
+        [Display(Name = "Loans 1", Order = 182)]
         public virtual ICollection<Loan2> Loan2s1 { get; set; }
 
-        [Display(Name = "Loans 2", Order = 177)]
+        [Display(Name = "Loans 2", Order = 183)]
         public virtual ICollection<Loan2> Loan2s2 { get; set; }
 
-        [Display(Name = "Loans 3", Order = 178)]
+        [Display(Name = "Loans 3", Order = 184)]
         public virtual ICollection<Loan2> Loan2s3 { get; set; }
 
-        [Display(Name = "Loan Policys", Order = 179)]
+        [Display(Name = "Loan Policys", Order = 185)]
         public virtual ICollection<LoanPolicy2> LoanPolicy2s { get; set; }
 
-        [Display(Name = "Loan Policys 1", Order = 180)]
+        [Display(Name = "Loan Policys 1", Order = 186)]
         public virtual ICollection<LoanPolicy2> LoanPolicy2s1 { get; set; }
 
-        [Display(Name = "Loan Types", Order = 181)]
+        [Display(Name = "Loan Types", Order = 187)]
         public virtual ICollection<LoanType2> LoanType2s { get; set; }
 
-        [Display(Name = "Loan Types 1", Order = 182)]
+        [Display(Name = "Loan Types 1", Order = 188)]
         public virtual ICollection<LoanType2> LoanType2s1 { get; set; }
 
-        [Display(Name = "Locations", Order = 183)]
+        [Display(Name = "Locations", Order = 189)]
         public virtual ICollection<Location2> Location2s { get; set; }
 
-        [Display(Name = "Locations 1", Order = 184)]
+        [Display(Name = "Locations 1", Order = 190)]
         public virtual ICollection<Location2> Location2s1 { get; set; }
 
-        [Display(Name = "Location Settings", Order = 185)]
+        [Display(Name = "Location Settings", Order = 191)]
         public virtual ICollection<LocationSetting> LocationSettings { get; set; }
 
-        [Display(Name = "Location Settings 1", Order = 186)]
+        [Display(Name = "Location Settings 1", Order = 192)]
         public virtual ICollection<LocationSetting> LocationSettings1 { get; set; }
 
-        [Display(Name = "Logins", Order = 187)]
+        [Display(Name = "Logins", Order = 193)]
         public virtual ICollection<Login2> Login2s { get; set; }
 
-        [Display(Name = "Logins 1", Order = 188)]
+        [Display(Name = "Logins 1", Order = 194)]
         public virtual ICollection<Login2> Login2s1 { get; set; }
 
-        [Display(Name = "Logins 2", Order = 189)]
+        [Display(Name = "Logins 2", Order = 195)]
         public virtual ICollection<Login2> Login2s2 { get; set; }
 
-        [Display(Name = "Lost Item Fee Policys", Order = 190)]
+        [Display(Name = "Lost Item Fee Policys", Order = 196)]
         public virtual ICollection<LostItemFeePolicy2> LostItemFeePolicy2s { get; set; }
 
-        [Display(Name = "Lost Item Fee Policys 1", Order = 191)]
+        [Display(Name = "Lost Item Fee Policys 1", Order = 197)]
         public virtual ICollection<LostItemFeePolicy2> LostItemFeePolicy2s1 { get; set; }
 
-        [Display(Name = "Material Types", Order = 192)]
+        [Display(Name = "Manual Block Templates", Order = 198)]
+        public virtual ICollection<ManualBlockTemplate2> ManualBlockTemplate2s { get; set; }
+
+        [Display(Name = "Manual Block Templates 1", Order = 199)]
+        public virtual ICollection<ManualBlockTemplate2> ManualBlockTemplate2s1 { get; set; }
+
+        [Display(Name = "Material Types", Order = 200)]
         public virtual ICollection<MaterialType2> MaterialType2s { get; set; }
 
-        [Display(Name = "Material Types 1", Order = 193)]
+        [Display(Name = "Material Types 1", Order = 201)]
         public virtual ICollection<MaterialType2> MaterialType2s1 { get; set; }
 
-        [Display(Name = "Nature Of Content Terms", Order = 194)]
+        [Display(Name = "Nature Of Content Terms", Order = 202)]
         public virtual ICollection<NatureOfContentTerm2> NatureOfContentTerm2s { get; set; }
 
-        [Display(Name = "Nature Of Content Terms 1", Order = 195)]
+        [Display(Name = "Nature Of Content Terms 1", Order = 203)]
         public virtual ICollection<NatureOfContentTerm2> NatureOfContentTerm2s1 { get; set; }
 
-        [Display(Name = "Notes", Order = 196)]
+        [Display(Name = "Notes", Order = 204)]
         public virtual ICollection<Note3> Note3s { get; set; }
 
-        [Display(Name = "Notes 1", Order = 197)]
+        [Display(Name = "Notes 1", Order = 205)]
         public virtual ICollection<Note3> Note3s1 { get; set; }
 
-        [Display(Name = "Note Types", Order = 198)]
+        [Display(Name = "Note Types", Order = 206)]
         public virtual ICollection<NoteType2> NoteType2s { get; set; }
 
-        [Display(Name = "Note Types 1", Order = 199)]
+        [Display(Name = "Note Types 1", Order = 207)]
         public virtual ICollection<NoteType2> NoteType2s1 { get; set; }
 
-        [Display(Name = "Orders", Order = 200)]
+        [Display(Name = "Orders", Order = 208)]
         public virtual ICollection<Order2> Order2s { get; set; }
 
-        [Display(Name = "Orders 1", Order = 201)]
+        [Display(Name = "Orders 1", Order = 209)]
         public virtual ICollection<Order2> Order2s1 { get; set; }
 
-        [Display(Name = "Orders 2", Order = 202)]
+        [Display(Name = "Orders 2", Order = 210)]
         public virtual ICollection<Order2> Order2s2 { get; set; }
 
-        [Display(Name = "Orders 3", Order = 203)]
+        [Display(Name = "Orders 3", Order = 211)]
         public virtual ICollection<Order2> Order2s3 { get; set; }
 
-        [Display(Name = "Order Items", Order = 204)]
+        [Display(Name = "Order Items", Order = 212)]
         public virtual ICollection<OrderItem2> OrderItem2s { get; set; }
 
-        [Display(Name = "Order Items 1", Order = 205)]
+        [Display(Name = "Order Items 1", Order = 213)]
         public virtual ICollection<OrderItem2> OrderItem2s1 { get; set; }
 
-        [Display(Name = "Organizations", Order = 206)]
+        [Display(Name = "Organizations", Order = 214)]
         public virtual ICollection<Organization2> Organization2s { get; set; }
 
-        [Display(Name = "Organizations 1", Order = 207)]
+        [Display(Name = "Organizations 1", Order = 215)]
         public virtual ICollection<Organization2> Organization2s1 { get; set; }
 
-        [Display(Name = "Organization Addresses", Order = 208)]
+        [Display(Name = "Organization Addresses", Order = 216)]
         public virtual ICollection<OrganizationAddress> OrganizationAddresses { get; set; }
 
-        [Display(Name = "Organization Addresses 1", Order = 209)]
+        [Display(Name = "Organization Addresses 1", Order = 217)]
         public virtual ICollection<OrganizationAddress> OrganizationAddresses1 { get; set; }
 
-        [Display(Name = "Organization Emails", Order = 210)]
+        [Display(Name = "Organization Emails", Order = 218)]
         public virtual ICollection<OrganizationEmail> OrganizationEmails { get; set; }
 
-        [Display(Name = "Organization Emails 1", Order = 211)]
+        [Display(Name = "Organization Emails 1", Order = 219)]
         public virtual ICollection<OrganizationEmail> OrganizationEmails1 { get; set; }
 
-        [Display(Name = "Organization Phone Numbers", Order = 212)]
+        [Display(Name = "Organization Phone Numbers", Order = 220)]
         public virtual ICollection<OrganizationPhoneNumber> OrganizationPhoneNumbers { get; set; }
 
-        [Display(Name = "Organization Phone Numbers 1", Order = 213)]
+        [Display(Name = "Organization Phone Numbers 1", Order = 221)]
         public virtual ICollection<OrganizationPhoneNumber> OrganizationPhoneNumbers1 { get; set; }
 
-        [Display(Name = "Organization URLs", Order = 214)]
+        [Display(Name = "Organization URLs", Order = 222)]
         public virtual ICollection<OrganizationUrl> OrganizationUrls { get; set; }
 
-        [Display(Name = "Organization URLs 1", Order = 215)]
+        [Display(Name = "Organization URLs 1", Order = 223)]
         public virtual ICollection<OrganizationUrl> OrganizationUrls1 { get; set; }
 
-        [Display(Name = "Overdue Fine Policys", Order = 216)]
+        [Display(Name = "Overdue Fine Policys", Order = 224)]
         public virtual ICollection<OverdueFinePolicy2> OverdueFinePolicy2s { get; set; }
 
-        [Display(Name = "Overdue Fine Policys 1", Order = 217)]
+        [Display(Name = "Overdue Fine Policys 1", Order = 225)]
         public virtual ICollection<OverdueFinePolicy2> OverdueFinePolicy2s1 { get; set; }
 
-        [Display(Name = "Owners", Order = 218)]
+        [Display(Name = "Owners", Order = 226)]
         public virtual ICollection<Owner2> Owner2s { get; set; }
 
-        [Display(Name = "Owners 1", Order = 219)]
+        [Display(Name = "Owners 1", Order = 227)]
         public virtual ICollection<Owner2> Owner2s1 { get; set; }
 
-        [Display(Name = "Patron Action Sessions", Order = 220)]
+        [Display(Name = "Patron Action Sessions", Order = 228)]
         public virtual ICollection<PatronActionSession2> PatronActionSession2s { get; set; }
 
-        [Display(Name = "Patron Action Sessions 1", Order = 221)]
+        [Display(Name = "Patron Action Sessions 1", Order = 229)]
         public virtual ICollection<PatronActionSession2> PatronActionSession2s1 { get; set; }
 
-        [Display(Name = "Patron Action Sessions 2", Order = 222)]
+        [Display(Name = "Patron Action Sessions 2", Order = 230)]
         public virtual ICollection<PatronActionSession2> PatronActionSession2s2 { get; set; }
 
-        [Display(Name = "Patron Notice Policys", Order = 223)]
+        [Display(Name = "Patron Notice Policys", Order = 231)]
         public virtual ICollection<PatronNoticePolicy2> PatronNoticePolicy2s { get; set; }
 
-        [Display(Name = "Patron Notice Policys 1", Order = 224)]
+        [Display(Name = "Patron Notice Policys 1", Order = 232)]
         public virtual ICollection<PatronNoticePolicy2> PatronNoticePolicy2s1 { get; set; }
 
-        [Display(Name = "Payments", Order = 225)]
+        [Display(Name = "Payments", Order = 233)]
         public virtual ICollection<Payment2> Payment2s { get; set; }
 
-        [Display(Name = "Payment Methods", Order = 226)]
+        [Display(Name = "Payment Methods", Order = 234)]
         public virtual ICollection<PaymentMethod2> PaymentMethod2s { get; set; }
 
-        [Display(Name = "Payment Methods 1", Order = 227)]
+        [Display(Name = "Payment Methods 1", Order = 235)]
         public virtual ICollection<PaymentMethod2> PaymentMethod2s1 { get; set; }
 
-        [Display(Name = "Permissions", Order = 228)]
+        [Display(Name = "Permissions", Order = 236)]
         public virtual ICollection<Permission2> Permission2s { get; set; }
 
-        [Display(Name = "Permissions 1", Order = 229)]
+        [Display(Name = "Permissions 1", Order = 237)]
         public virtual ICollection<Permission2> Permission2s1 { get; set; }
 
-        [Display(Name = "Permissions Users", Order = 230)]
+        [Display(Name = "Permissions Users", Order = 238)]
         public virtual ICollection<PermissionsUser2> PermissionsUser2s { get; set; }
 
-        [Display(Name = "Permissions Users 1", Order = 231)]
+        [Display(Name = "Permissions Users 1", Order = 239)]
         public virtual ICollection<PermissionsUser2> PermissionsUser2s1 { get; set; }
 
-        [Display(Name = "Permissions Users 2", Order = 232)]
+        [Display(Name = "Permissions Users 2", Order = 240)]
         public virtual ICollection<PermissionsUser2> PermissionsUser2s2 { get; set; }
 
-        [Display(Name = "Preceding Succeeding Titles", Order = 233)]
+        [Display(Name = "Preceding Succeeding Titles", Order = 241)]
         public virtual ICollection<PrecedingSucceedingTitle2> PrecedingSucceedingTitle2s { get; set; }
 
-        [Display(Name = "Preceding Succeeding Titles 1", Order = 234)]
+        [Display(Name = "Preceding Succeeding Titles 1", Order = 242)]
         public virtual ICollection<PrecedingSucceedingTitle2> PrecedingSucceedingTitle2s1 { get; set; }
 
-        [Display(Order = 235)]
+        [Display(Order = 243)]
         public virtual ICollection<Printer> Printers { get; set; }
 
-        [Display(Name = "Printers 1", Order = 236)]
+        [Display(Name = "Printers 1", Order = 244)]
         public virtual ICollection<Printer> Printers1 { get; set; }
 
-        [Display(Name = "Proxys", Order = 237)]
+        [Display(Name = "Proxys", Order = 245)]
         public virtual ICollection<Proxy2> Proxy2s { get; set; }
 
-        [Display(Name = "Proxys 1", Order = 238)]
+        [Display(Name = "Proxys 1", Order = 246)]
         public virtual ICollection<Proxy2> Proxy2s1 { get; set; }
 
-        [Display(Name = "Proxys 2", Order = 239)]
+        [Display(Name = "Proxys 2", Order = 247)]
         public virtual ICollection<Proxy2> Proxy2s2 { get; set; }
 
-        [Display(Name = "Proxys 3", Order = 240)]
+        [Display(Name = "Proxys 3", Order = 248)]
         public virtual ICollection<Proxy2> Proxy2s3 { get; set; }
 
-        [Display(Name = "Records", Order = 241)]
+        [Display(Name = "Records", Order = 249)]
         public virtual ICollection<Record2> Record2s { get; set; }
 
-        [Display(Name = "Records 1", Order = 242)]
+        [Display(Name = "Records 1", Order = 250)]
         public virtual ICollection<Record2> Record2s1 { get; set; }
 
-        [Display(Name = "Refund Reasons", Order = 243)]
+        [Display(Name = "Refund Reasons", Order = 251)]
         public virtual ICollection<RefundReason2> RefundReason2s { get; set; }
 
-        [Display(Name = "Refund Reasons 1", Order = 244)]
+        [Display(Name = "Refund Reasons 1", Order = 252)]
         public virtual ICollection<RefundReason2> RefundReason2s1 { get; set; }
 
-        [Display(Order = 245)]
+        [Display(Order = 253)]
         public virtual ICollection<Relationship> Relationships { get; set; }
 
-        [Display(Name = "Relationships 1", Order = 246)]
+        [Display(Name = "Relationships 1", Order = 254)]
         public virtual ICollection<Relationship> Relationships1 { get; set; }
 
-        [Display(Name = "Relationship Types", Order = 247)]
+        [Display(Name = "Relationship Types", Order = 255)]
         public virtual ICollection<RelationshipType> RelationshipTypes { get; set; }
 
-        [Display(Name = "Relationship Types 1", Order = 248)]
+        [Display(Name = "Relationship Types 1", Order = 256)]
         public virtual ICollection<RelationshipType> RelationshipTypes1 { get; set; }
 
-        [Display(Name = "Requests", Order = 249)]
+        [Display(Name = "Requests", Order = 257)]
         public virtual ICollection<Request2> Request2s { get; set; }
 
-        [Display(Name = "Requests 1", Order = 250)]
+        [Display(Name = "Requests 1", Order = 258)]
         public virtual ICollection<Request2> Request2s1 { get; set; }
 
-        [Display(Name = "Requests 2", Order = 251)]
+        [Display(Name = "Requests 2", Order = 259)]
         public virtual ICollection<Request2> Request2s2 { get; set; }
 
-        [Display(Name = "Requests 3", Order = 252)]
+        [Display(Name = "Requests 3", Order = 260)]
         public virtual ICollection<Request2> Request2s3 { get; set; }
 
-        [Display(Name = "Requests 4", Order = 253)]
+        [Display(Name = "Requests 4", Order = 261)]
         public virtual ICollection<Request2> Request2s4 { get; set; }
 
-        [Display(Name = "Request Policys", Order = 254)]
+        [Display(Name = "Request Policys", Order = 262)]
         public virtual ICollection<RequestPolicy2> RequestPolicy2s { get; set; }
 
-        [Display(Name = "Request Policys 1", Order = 255)]
+        [Display(Name = "Request Policys 1", Order = 263)]
         public virtual ICollection<RequestPolicy2> RequestPolicy2s1 { get; set; }
 
-        [Display(Name = "Scheduled Notices", Order = 256)]
+        [Display(Name = "Scheduled Notices", Order = 264)]
         public virtual ICollection<ScheduledNotice2> ScheduledNotice2s { get; set; }
 
-        [Display(Name = "Scheduled Notices 1", Order = 257)]
+        [Display(Name = "Scheduled Notices 1", Order = 265)]
         public virtual ICollection<ScheduledNotice2> ScheduledNotice2s1 { get; set; }
 
-        [Display(Name = "Scheduled Notices 2", Order = 258)]
+        [Display(Name = "Scheduled Notices 2", Order = 266)]
         public virtual ICollection<ScheduledNotice2> ScheduledNotice2s2 { get; set; }
 
-        [Display(Name = "Service Points", Order = 259)]
+        [Display(Name = "Service Points", Order = 267)]
         public virtual ICollection<ServicePoint2> ServicePoint2s { get; set; }
 
-        [Display(Name = "Service Points 1", Order = 260)]
+        [Display(Name = "Service Points 1", Order = 268)]
         public virtual ICollection<ServicePoint2> ServicePoint2s1 { get; set; }
 
-        [Display(Name = "Service Point Users", Order = 261)]
+        [Display(Name = "Service Point Users", Order = 269)]
         public virtual ICollection<ServicePointUser2> ServicePointUser2s { get; set; }
 
-        [Display(Name = "Service Point Users 1", Order = 262)]
+        [Display(Name = "Service Point Users 1", Order = 270)]
         public virtual ICollection<ServicePointUser2> ServicePointUser2s1 { get; set; }
 
-        [Display(Name = "Service Point Users 2", Order = 263)]
+        [Display(Name = "Service Point Users 2", Order = 271)]
         public virtual ICollection<ServicePointUser2> ServicePointUser2s2 { get; set; }
 
-        [Display(Order = 264)]
+        [Display(Order = 272)]
         public virtual ICollection<Setting> Settings { get; set; }
 
-        [Display(Name = "Settings 1", Order = 265)]
+        [Display(Name = "Settings 1", Order = 273)]
         public virtual ICollection<Setting> Settings1 { get; set; }
 
-        [Display(Name = "Snapshots", Order = 266)]
+        [Display(Name = "Snapshots", Order = 274)]
         public virtual ICollection<Snapshot2> Snapshot2s { get; set; }
 
-        [Display(Name = "Snapshots 1", Order = 267)]
+        [Display(Name = "Snapshots 1", Order = 275)]
         public virtual ICollection<Snapshot2> Snapshot2s1 { get; set; }
 
-        [Display(Name = "Sources", Order = 268)]
+        [Display(Name = "Sources", Order = 276)]
         public virtual ICollection<Source2> Source2s { get; set; }
 
-        [Display(Name = "Sources 1", Order = 269)]
+        [Display(Name = "Sources 1", Order = 277)]
         public virtual ICollection<Source2> Source2s1 { get; set; }
 
-        [Display(Name = "Staff Slips", Order = 270)]
+        [Display(Name = "Staff Slips", Order = 278)]
         public virtual ICollection<StaffSlip2> StaffSlip2s { get; set; }
 
-        [Display(Name = "Staff Slips 1", Order = 271)]
+        [Display(Name = "Staff Slips 1", Order = 279)]
         public virtual ICollection<StaffSlip2> StaffSlip2s1 { get; set; }
 
-        [Display(Name = "Statistical Codes", Order = 272)]
+        [Display(Name = "Statistical Codes", Order = 280)]
         public virtual ICollection<StatisticalCode2> StatisticalCode2s { get; set; }
 
-        [Display(Name = "Statistical Codes 1", Order = 273)]
+        [Display(Name = "Statistical Codes 1", Order = 281)]
         public virtual ICollection<StatisticalCode2> StatisticalCode2s1 { get; set; }
 
-        [Display(Name = "Statistical Code Types", Order = 274)]
+        [Display(Name = "Statistical Code Types", Order = 282)]
         public virtual ICollection<StatisticalCodeType2> StatisticalCodeType2s { get; set; }
 
-        [Display(Name = "Statistical Code Types 1", Order = 275)]
+        [Display(Name = "Statistical Code Types 1", Order = 283)]
         public virtual ICollection<StatisticalCodeType2> StatisticalCodeType2s1 { get; set; }
 
-        [Display(Name = "Statuses 1", Order = 276)]
+        [Display(Name = "Statuses 1", Order = 284)]
         public virtual ICollection<Status> Statuses1 { get; set; }
 
-        [Display(Name = "Statuses 2", Order = 277)]
+        [Display(Name = "Statuses 2", Order = 285)]
         public virtual ICollection<Status> Statuses2 { get; set; }
 
-        [Display(Name = "Tags", Order = 278)]
+        [Display(Name = "Tags", Order = 286)]
         public virtual ICollection<Tag2> Tag2s { get; set; }
 
-        [Display(Name = "Tags 1", Order = 279)]
+        [Display(Name = "Tags 1", Order = 287)]
         public virtual ICollection<Tag2> Tag2s1 { get; set; }
 
-        [Display(Name = "Templates", Order = 280)]
+        [Display(Name = "Templates", Order = 288)]
         public virtual ICollection<Template2> Template2s { get; set; }
 
-        [Display(Name = "Templates 1", Order = 281)]
+        [Display(Name = "Templates 1", Order = 289)]
         public virtual ICollection<Template2> Template2s1 { get; set; }
 
-        [Display(Name = "Titles", Order = 282)]
+        [Display(Name = "Titles", Order = 290)]
         public virtual ICollection<Title2> Title2s { get; set; }
 
-        [Display(Name = "Titles 1", Order = 283)]
+        [Display(Name = "Titles 1", Order = 291)]
         public virtual ICollection<Title2> Title2s1 { get; set; }
 
-        [Display(Name = "Transactions", Order = 284)]
+        [Display(Name = "Transactions", Order = 292)]
         public virtual ICollection<Transaction2> Transaction2s { get; set; }
 
-        [Display(Name = "Transactions 1", Order = 285)]
+        [Display(Name = "Transactions 1", Order = 293)]
         public virtual ICollection<Transaction2> Transaction2s1 { get; set; }
 
-        [Display(Name = "Transfer Accounts", Order = 286)]
+        [Display(Name = "Transfer Accounts", Order = 294)]
         public virtual ICollection<TransferAccount2> TransferAccount2s { get; set; }
 
-        [Display(Name = "Transfer Accounts 1", Order = 287)]
+        [Display(Name = "Transfer Accounts 1", Order = 295)]
         public virtual ICollection<TransferAccount2> TransferAccount2s1 { get; set; }
 
-        [Display(Name = "Users", Order = 288)]
+        [Display(Name = "Users", Order = 296)]
         public virtual ICollection<User2> User2s { get; set; }
 
-        [Display(Name = "Users 1", Order = 289)]
+        [Display(Name = "Users 1", Order = 297)]
         public virtual ICollection<User2> User2s1 { get; set; }
 
-        [Display(Name = "User Acquisitions Units", Order = 290)]
+        [Display(Name = "User Acquisitions Units", Order = 298)]
         public virtual ICollection<UserAcquisitionsUnit2> UserAcquisitionsUnit2s { get; set; }
 
-        [Display(Name = "User Acquisitions Units 1", Order = 291)]
+        [Display(Name = "User Acquisitions Units 1", Order = 299)]
         public virtual ICollection<UserAcquisitionsUnit2> UserAcquisitionsUnit2s1 { get; set; }
 
-        [Display(Name = "User Acquisitions Units 2", Order = 292)]
+        [Display(Name = "User Acquisitions Units 2", Order = 300)]
         public virtual ICollection<UserAcquisitionsUnit2> UserAcquisitionsUnit2s2 { get; set; }
 
-        [Display(Name = "User Addresses", Order = 293), JsonProperty("personal.addresses")]
+        [Display(Name = "User Addresses", Order = 301), JsonProperty("personal.addresses")]
         public virtual ICollection<UserAddress> UserAddresses { get; set; }
 
-        [Display(Name = "User Departments", Order = 294), JsonConverter(typeof(ArrayJsonConverter<List<UserDepartment>, UserDepartment>), "DepartmentId"), JsonProperty("departments")]
+        [Display(Name = "User Departments", Order = 302), JsonConverter(typeof(ArrayJsonConverter<List<UserDepartment>, UserDepartment>), "DepartmentId"), JsonProperty("departments")]
         public virtual ICollection<UserDepartment> UserDepartments { get; set; }
 
-        [Display(Name = "User Request Preferences", Order = 295)]
+        [Display(Name = "User Request Preferences", Order = 303)]
         public virtual ICollection<UserRequestPreference2> UserRequestPreference2s { get; set; }
 
-        [Display(Name = "User Request Preferences 1", Order = 296)]
+        [Display(Name = "User Request Preferences 1", Order = 304)]
         public virtual ICollection<UserRequestPreference2> UserRequestPreference2s1 { get; set; }
 
-        [Display(Name = "User Request Preferences 2", Order = 297)]
+        [Display(Name = "User Request Preferences 2", Order = 305)]
         public virtual ICollection<UserRequestPreference2> UserRequestPreference2s2 { get; set; }
 
-        [Display(Name = "User Summarys", Order = 298)]
+        [Display(Name = "User Summarys", Order = 306)]
         public virtual ICollection<UserSummary2> UserSummary2s { get; set; }
 
-        [Display(Name = "User Summarys 1", Order = 299)]
+        [Display(Name = "User Summarys 1", Order = 307)]
         public virtual ICollection<UserSummary2> UserSummary2s1 { get; set; }
 
-        [Display(Name = "User Summarys 2", Order = 300)]
+        [Display(Name = "User Summarys 2", Order = 308)]
         public virtual ICollection<UserSummary2> UserSummary2s2 { get; set; }
 
-        [Display(Name = "User Tags", Order = 301), JsonConverter(typeof(ArrayJsonConverter<List<UserTag>, UserTag>), "Content"), JsonProperty("tags.tagList")]
+        [Display(Name = "User Tags", Order = 309), JsonConverter(typeof(ArrayJsonConverter<List<UserTag>, UserTag>), "Content"), JsonProperty("tags.tagList")]
         public virtual ICollection<UserTag> UserTags { get; set; }
 
-        [Display(Name = "Vouchers", Order = 302)]
+        [Display(Name = "Vouchers", Order = 310)]
         public virtual ICollection<Voucher2> Voucher2s { get; set; }
 
-        [Display(Name = "Vouchers 1", Order = 303)]
+        [Display(Name = "Vouchers 1", Order = 311)]
         public virtual ICollection<Voucher2> Voucher2s1 { get; set; }
 
-        [Display(Name = "Voucher Items", Order = 304)]
+        [Display(Name = "Voucher Items", Order = 312)]
         public virtual ICollection<VoucherItem2> VoucherItem2s { get; set; }
 
-        [Display(Name = "Voucher Items 1", Order = 305)]
+        [Display(Name = "Voucher Items 1", Order = 313)]
         public virtual ICollection<VoucherItem2> VoucherItem2s1 { get; set; }
 
-        [Display(Name = "Waive Reasons", Order = 306)]
+        [Display(Name = "Waive Reasons", Order = 314)]
         public virtual ICollection<WaiveReason2> WaiveReason2s { get; set; }
 
-        [Display(Name = "Waive Reasons 1", Order = 307)]
+        [Display(Name = "Waive Reasons 1", Order = 315)]
         public virtual ICollection<WaiveReason2> WaiveReason2s1 { get; set; }
 
         public override string ToString() => $"{{ {nameof(Id)} = {Id}, {nameof(Username)} = {Username}, {nameof(ExternalSystemId)} = {ExternalSystemId}, {nameof(Barcode)} = {Barcode}, {nameof(Active)} = {Active}, {nameof(Type)} = {Type}, {nameof(GroupId)} = {GroupId}, {nameof(Name)} = {Name}, {nameof(LastName)} = {LastName}, {nameof(FirstName)} = {FirstName}, {nameof(MiddleName)} = {MiddleName}, {nameof(PreferredFirstName)} = {PreferredFirstName}, {nameof(EmailAddress)} = {EmailAddress}, {nameof(PhoneNumber)} = {PhoneNumber}, {nameof(MobilePhoneNumber)} = {MobilePhoneNumber}, {nameof(BirthDate)} = {BirthDate}, {nameof(PreferredContactTypeId)} = {PreferredContactTypeId}, {nameof(StartDate)} = {StartDate}, {nameof(EndDate)} = {EndDate}, {nameof(Source)} = {Source}, {nameof(Category)} = {Category}, {nameof(Status)} = {Status}, {nameof(Statuses)} = {Statuses}, {nameof(StaffStatus)} = {StaffStatus}, {nameof(StaffPrivileges)} = {StaffPrivileges}, {nameof(StaffDivision)} = {StaffDivision}, {nameof(StaffDepartment)} = {StaffDepartment}, {nameof(StudentId)} = {StudentId}, {nameof(StudentStatus)} = {StudentStatus}, {nameof(StudentRestriction)} = {StudentRestriction}, {nameof(StudentDivision)} = {StudentDivision}, {nameof(StudentDepartment)} = {StudentDepartment}, {nameof(Deceased)} = {Deceased}, {nameof(Collections)} = {Collections}, {nameof(CreationTime)} = {CreationTime}, {nameof(CreationUserId)} = {CreationUserId}, {nameof(CreationUserUsername)} = {CreationUserUsername}, {nameof(LastWriteTime)} = {LastWriteTime}, {nameof(LastWriteUserId)} = {LastWriteUserId}, {nameof(LastWriteUserUsername)} = {LastWriteUserUsername}, {nameof(Content)} = {Content}, {nameof(UserAddresses)} = {(UserAddresses != null ? $"{{ {string.Join(", ", UserAddresses)} }}" : "")}, {nameof(UserDepartments)} = {(UserDepartments != null ? $"{{ {string.Join(", ", UserDepartments)} }}" : "")}, {nameof(UserTags)} = {(UserTags != null ? $"{{ {string.Join(", ", UserTags)} }}" : "")} }}";

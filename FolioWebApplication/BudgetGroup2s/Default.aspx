@@ -1,12 +1,12 @@
-<%@ Page Title="Group Fund Fiscal Years" Language="C#" MasterPageFile="~/Default.master" AutoEventWireup="true" CodeBehind="Default.aspx.cs" Inherits="FolioWebApplication.GroupFundFiscalYear2s.Default" %>
+<%@ Page Title="Budget Groups" Language="C#" MasterPageFile="~/Default.master" AutoEventWireup="true" CodeBehind="Default.aspx.cs" Inherits="FolioWebApplication.BudgetGroup2s.Default" %>
 
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
-    <asp:Panel ID="GroupFundFiscalYear2sPanel" runat="server">
+    <asp:Panel ID="BudgetGroup2sPanel" runat="server">
         <fieldset>
-            <legend><asp:HyperLink ID="GroupFundFiscalYear2sHyperLink" runat="server" Text="Group Fund Fiscal Years" NavigateUrl="Default.aspx" /></legend>
+            <legend><asp:HyperLink ID="BudgetGroup2sHyperLink" runat="server" Text="Budget Groups" NavigateUrl="Default.aspx" /></legend>
             <asp:LinkButton ID="ExportLinkButton" runat="server" Text="Export" OnClick="ExportLinkButton_Click" />
-            <telerik:RadGrid ID="GroupFundFiscalYear2sRadGrid" runat="server" AutoGenerateColumns="false" AllowSorting="true" AllowFilteringByColumn="true" GroupingSettings-CaseSensitive="false" AllowPaging="true" AllowCustomPaging="true" PageSize="100" EnableLinqExpressions="false" OnNeedDataSource="GroupFundFiscalYear2sRadGrid_NeedDataSource">
-                <MasterTableView DataKeyNames="Id" PagerStyle-Mode="NextPrevNumericAndAdvanced" NoMasterRecordsText="No group fund fiscal years found" CommandItemDisplay="Top">
+            <telerik:RadGrid ID="BudgetGroup2sRadGrid" runat="server" AutoGenerateColumns="false" AllowSorting="true" AllowFilteringByColumn="true" GroupingSettings-CaseSensitive="false" AllowPaging="true" AllowCustomPaging="true" PageSize="100" EnableLinqExpressions="false" OnNeedDataSource="BudgetGroup2sRadGrid_NeedDataSource">
+                <MasterTableView DataKeyNames="Id" PagerStyle-Mode="NextPrevNumericAndAdvanced" NoMasterRecordsText="No budget groups found" CommandItemDisplay="Top">
                     <CommandItemSettings ShowAddNewRecordButton="false" />
                     <SortExpressions>
                         <telerik:GridSortExpression FieldName="Id" />
@@ -58,12 +58,12 @@
         <AjaxSettings>
             <telerik:AjaxSetting AjaxControlID="ExportLinkButton">
                 <UpdatedControls>
-                    <telerik:AjaxUpdatedControl ControlID="GroupFundFiscalYear2sPanel" LoadingPanelID="RadAjaxLoadingPanel1" />
+                    <telerik:AjaxUpdatedControl ControlID="BudgetGroup2sPanel" LoadingPanelID="RadAjaxLoadingPanel1" />
                 </UpdatedControls>
             </telerik:AjaxSetting>
-            <telerik:AjaxSetting AjaxControlID="GroupFundFiscalYear2sRadGrid">
+            <telerik:AjaxSetting AjaxControlID="BudgetGroup2sRadGrid">
                 <UpdatedControls>
-                    <telerik:AjaxUpdatedControl ControlID="GroupFundFiscalYear2sPanel" LoadingPanelID="RadAjaxLoadingPanel1" />
+                    <telerik:AjaxUpdatedControl ControlID="BudgetGroup2sPanel" LoadingPanelID="RadAjaxLoadingPanel1" />
                 </UpdatedControls>
             </telerik:AjaxSetting>
         </AjaxSettings>

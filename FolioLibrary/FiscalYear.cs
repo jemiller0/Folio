@@ -37,10 +37,16 @@ namespace FolioLibrary
         public virtual string CreationUserId { get; set; }
 
         [ScaffoldColumn(false)]
+        public virtual ICollection<BudgetGroup> BudgetGroups { get; set; }
+
+        [ScaffoldColumn(false)]
         public virtual ICollection<Budget> Budgets { get; set; }
 
         [ScaffoldColumn(false)]
-        public virtual ICollection<GroupFundFiscalYear> GroupFundFiscalYears { get; set; }
+        public virtual ICollection<LedgerRollover> LedgerRollovers { get; set; }
+
+        [ScaffoldColumn(false)]
+        public virtual ICollection<LedgerRollover> LedgerRollovers1 { get; set; }
 
         [ScaffoldColumn(false)]
         public virtual ICollection<Ledger> Ledgers { get; set; }

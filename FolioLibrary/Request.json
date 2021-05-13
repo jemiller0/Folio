@@ -23,6 +23,10 @@
       "type": "string",
       "format": "date-time"
     },
+    "patronComments": {
+      "description": "Comments made by the patron",
+      "type": "string"
+    },
     "requesterId": {
       "description": "ID of the requesting patron (user)",
       "type": "string",

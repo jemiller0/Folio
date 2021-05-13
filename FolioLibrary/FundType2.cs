@@ -40,6 +40,9 @@ namespace FolioLibrary
         [Display(Name = "Funds", Order = 4)]
         public virtual ICollection<Fund2> Fund2s { get; set; }
 
+        [Display(Name = "Ledger Rollover Budgets Rollovers", Order = 5)]
+        public virtual ICollection<LedgerRolloverBudgetsRollover> LedgerRolloverBudgetsRollovers { get; set; }
+
         public override string ToString() => $"{{ {nameof(Id)} = {Id}, {nameof(Name)} = {Name}, {nameof(Content)} = {Content} }}";
 
         public static FundType2 FromJObject(JObject jObject) => jObject != null ? new FundType2

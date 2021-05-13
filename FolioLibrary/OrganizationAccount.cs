@@ -26,8 +26,8 @@ namespace FolioLibrary
         [Column("name"), Display(Order = 4), JsonProperty("name"), Required, StringLength(1024)]
         public virtual string Name { get; set; }
 
-        [Column("account_no"), Display(Name = "Account No", Order = 5), JsonProperty("accountNo"), Required, StringLength(1024)]
-        public virtual string AccountNo { get; set; }
+        [Column("account_no"), Display(Name = "Account Number", Order = 5), JsonProperty("accountNo"), Required, StringLength(1024)]
+        public virtual string AccountNumber { get; set; }
 
         [Column("description"), Display(Order = 6), JsonProperty("description"), StringLength(1024)]
         public virtual string Description { get; set; }
@@ -56,12 +56,12 @@ namespace FolioLibrary
         [Display(Name = "Organization Account Acquisitions Units", Order = 14), JsonConverter(typeof(ArrayJsonConverter<List<OrganizationAccountAcquisitionsUnit>, OrganizationAccountAcquisitionsUnit>), "AcquisitionsUnitId"), JsonProperty("acqUnitIds")]
         public virtual ICollection<OrganizationAccountAcquisitionsUnit> OrganizationAccountAcquisitionsUnits { get; set; }
 
-        public override string ToString() => $"{{ {nameof(Id)} = {Id}, {nameof(OrganizationId)} = {OrganizationId}, {nameof(Name)} = {Name}, {nameof(AccountNo)} = {AccountNo}, {nameof(Description)} = {Description}, {nameof(AppSystemNo)} = {AppSystemNo}, {nameof(PaymentMethod)} = {PaymentMethod}, {nameof(AccountStatus)} = {AccountStatus}, {nameof(ContactInfo)} = {ContactInfo}, {nameof(LibraryCode)} = {LibraryCode}, {nameof(LibraryEdiCode)} = {LibraryEdiCode}, {nameof(Notes)} = {Notes}, {nameof(OrganizationAccountAcquisitionsUnits)} = {(OrganizationAccountAcquisitionsUnits != null ? $"{{ {string.Join(", ", OrganizationAccountAcquisitionsUnits)} }}" : "")} }}";
+        public override string ToString() => $"{{ {nameof(Id)} = {Id}, {nameof(OrganizationId)} = {OrganizationId}, {nameof(Name)} = {Name}, {nameof(AccountNumber)} = {AccountNumber}, {nameof(Description)} = {Description}, {nameof(AppSystemNo)} = {AppSystemNo}, {nameof(PaymentMethod)} = {PaymentMethod}, {nameof(AccountStatus)} = {AccountStatus}, {nameof(ContactInfo)} = {ContactInfo}, {nameof(LibraryCode)} = {LibraryCode}, {nameof(LibraryEdiCode)} = {LibraryEdiCode}, {nameof(Notes)} = {Notes}, {nameof(OrganizationAccountAcquisitionsUnits)} = {(OrganizationAccountAcquisitionsUnits != null ? $"{{ {string.Join(", ", OrganizationAccountAcquisitionsUnits)} }}" : "")} }}";
 
         public static OrganizationAccount FromJObject(JObject jObject) => jObject != null ? new OrganizationAccount
         {
             Name = (string)jObject.SelectToken("name"),
-            AccountNo = (string)jObject.SelectToken("accountNo"),
+            AccountNumber = (string)jObject.SelectToken("accountNo"),
             Description = (string)jObject.SelectToken("description"),
             AppSystemNo = (string)jObject.SelectToken("appSystemNo"),
             PaymentMethod = (string)jObject.SelectToken("paymentMethod"),
@@ -75,7 +75,7 @@ namespace FolioLibrary
 
         public JObject ToJObject() => new JObject(
             new JProperty("name", Name),
-            new JProperty("accountNo", AccountNo),
+            new JProperty("accountNo", AccountNumber),
             new JProperty("description", Description),
             new JProperty("appSystemNo", AppSystemNo),
             new JProperty("paymentMethod", PaymentMethod),

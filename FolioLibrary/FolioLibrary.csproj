@@ -3,7 +3,6 @@
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
   </PropertyGroup>
-
   <ItemGroup>
     <None Remove="AcquisitionsUnit.json" />
     <None Remove="AddressType.json" />
@@ -20,6 +19,7 @@
     <None Remove="BlockLimit.json" />
     <None Remove="Budget.json" />
     <None Remove="BudgetExpenseClass.json" />
+    <None Remove="BudgetGroup.json" />
     <None Remove="CallNumberType.json" />
     <None Remove="Campus.json" />
     <None Remove="CancellationReason.json" />
@@ -49,7 +49,6 @@
     <None Remove="Fund.json" />
     <None Remove="FundType.json" />
     <None Remove="Group.json" />
-    <None Remove="GroupFundFiscalYear.json" />
     <None Remove="Holding.json" />
     <None Remove="HoldingNoteType.json" />
     <None Remove="HoldingType.json" />
@@ -77,6 +76,9 @@
     <None Remove="JobExecutionSourceChunk.json" />
     <None Remove="JournalRecord.json" />
     <None Remove="Ledger.json" />
+    <None Remove="LedgerRollover.json" />
+    <None Remove="LedgerRolloverError.json" />
+    <None Remove="LedgerRolloverProgress.json" />
     <None Remove="Library.json" />
     <None Remove="Loan.json" />
     <None Remove="LoanPolicy.json" />
@@ -84,6 +86,7 @@
     <None Remove="Location.json" />
     <None Remove="Login.json" />
     <None Remove="LostItemFeePolicy.json" />
+    <None Remove="ManualBlockTemplate.json" />
     <None Remove="MarcRecord.json" />
     <None Remove="MaterialType.json" />
     <None Remove="ModeOfIssuance.json" />
@@ -153,6 +156,7 @@
     <EmbeddedResource Include="BlockLimit.json" />
     <EmbeddedResource Include="Budget.json" />
     <EmbeddedResource Include="BudgetExpenseClass.json" />
+    <EmbeddedResource Include="BudgetGroup.json" />
     <EmbeddedResource Include="CallNumberType.json" />
     <EmbeddedResource Include="Campus.json" />
     <EmbeddedResource Include="CancellationReason.json" />
@@ -182,7 +186,6 @@
     <EmbeddedResource Include="Fund.json" />
     <EmbeddedResource Include="FundType.json" />
     <EmbeddedResource Include="Group.json" />
-    <EmbeddedResource Include="GroupFundFiscalYear.json" />
     <EmbeddedResource Include="Holding.json" />
     <EmbeddedResource Include="HoldingNoteType.json" />
     <EmbeddedResource Include="HoldingType.json" />
@@ -210,6 +213,9 @@
     <EmbeddedResource Include="JobExecutionSourceChunk.json" />
     <EmbeddedResource Include="JournalRecord.json" />
     <EmbeddedResource Include="Ledger.json" />
+    <EmbeddedResource Include="LedgerRollover.json" />
+    <EmbeddedResource Include="LedgerRolloverError.json" />
+    <EmbeddedResource Include="LedgerRolloverProgress.json" />
     <EmbeddedResource Include="Library.json" />
     <EmbeddedResource Include="Loan.json" />
     <EmbeddedResource Include="LoanPolicy.json" />
@@ -217,6 +223,7 @@
     <EmbeddedResource Include="Location.json" />
     <EmbeddedResource Include="Login.json" />
     <EmbeddedResource Include="LostItemFeePolicy.json" />
+    <EmbeddedResource Include="ManualBlockTemplate.json" />
     <EmbeddedResource Include="MarcRecord.json" />
     <EmbeddedResource Include="MaterialType.json" />
     <EmbeddedResource Include="ModeOfIssuance.json" />
@@ -269,7 +276,8 @@
     <EmbeddedResource Include="Voucher.json" />
     <EmbeddedResource Include="VoucherItem.json" />
     <EmbeddedResource Include="WaiveReason.json" />
-  </ItemGroup>  <ItemGroup>
+  </ItemGroup>
+  <ItemGroup>
     <PackageReference Include="Dapper" Version="2.0.78" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
     <PackageReference Include="NJsonSchema" Version="10.4.1" />

@@ -45,6 +45,10 @@ namespace FolioWebApplication.OrderItem2s
 
         protected RadGrid OrderItemProductIdsRadGrid;
 
+        protected Panel OrderItemReferenceNumbersPanel;
+
+        protected RadGrid OrderItemReferenceNumbersRadGrid;
+
         protected Panel OrderItemReportingCodesPanel;
 
         protected RadGrid OrderItemReportingCodesRadGrid;

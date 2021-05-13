@@ -155,38 +155,16 @@ namespace FolioLibrary
 
         public Label GetLabel(string barcode, Orientation? orientation = null)
         {
-            using (var fsc = new FolioServiceClient())
+            using (var fsc = new FolioServiceContext())
             {
-                //var i = fsc.Item1s.FirstOrDefault/*SingleOrDefault*/(i2 => i2.Barcode == barcode);
-                var i = fsc.Items($"barcode == \"{barcode}\"").Select(jo => new
-                {
-                    Barcode = (string)jo["barcode"],
-                    CallNumberPrefix = (string)jo.SelectToken("effectiveCallNumberComponents.prefix"),
-                    CallNumber = (string)jo.SelectToken("effectiveCallNumberComponents.callNumber"),
-                    CallNumberType = jo.SelectToken("effectiveCallNumberComponents.typeId") != null ? (string)fsc.CallNumberTypes($"id == \"{(string)jo.SelectToken("effectiveCallNumberComponents.typeId")}\"").Single()["name"] : null,
-                    Enumeration = (string)jo["enumeration"],
-                    Chronology = (string)jo["chronology"],
-                    CopyNumber = (string)jo["copyNumber"],
-                    LocationCode = jo["effectiveLocationId"] != null ? Regex.Replace((string)fsc.Locations($"id == \"{(string)jo["effectiveLocationId"]}\"").Single()["code"], ".+/", "") : null,
-                    //LocationCode = (string)jo.SelectToken("permanentLocation.code"),
-                    Notes = jo.SelectToken("notes").Any() ? string.Join(", ", jo.SelectToken("notes").Select(jt => (string)jt["note"])) : null
-                }).FirstOrDefault();
-
+                var i = fsc.Item2s($"barcode == \"{barcode}\""/*, load: true*/).SingleOrDefault();
+                if (i.EffectiveCallNumberTypeId != null) i.EffectiveCallNumberType = fsc.FindCallNumberType2(i.EffectiveCallNumberTypeId);
+                if (i.EffectiveLocationId != null) i.EffectiveLocation = fsc.FindLocation2(i.EffectiveLocationId);
                 if (i == null) return null;
-                //if (i.LocationId == null && i.LocationCode != null)
-                //{
-                //    //var l3 = fsc.Locations.SingleOrDefault(l2 => l2.Code == i.LocationCode);
-                //    dynamic l3 = null;
-                //    if (l3 != null) i.LocationId = long.Parse(l3.Id);
-                //}
-                //var le = i.LocationId != null ? fsc.LocationExts.Include(le2 => le2.Settings).SingleOrDefault(le2 => le2.Id == i.LocationId.ToString()) : null;
-                dynamic le = null;
-
-                //var s = le != null ? le.Settings : new Settings { FontFamily = "Courier New", FontSize = 11, FontWeight = FontWeight.Bold, Orientation = Orientation.Portrait };
-                var s = /*le != null ? le.Settings : new Settings */new { FontFamily = "Courier New", FontSize = 11, FontWeight = FontWeight.Bold, Orientation = orientation ?? Orientation.Portrait };
-                //dynamic s = null;
-
-                //if (orientation != null) s.Orientation = orientation;
+                var ls = fsc.LocationSettings().SingleOrDefault(ls2 => ls2.LocationId == i.EffectiveLocationId);
+                var s = fsc.FindSetting(ls?.SettingsId) ?? new Setting { FontFamily = "Courier New", FontSize = 11, FontWeight = FontWeight.Bold, Orientation = orientation ?? Orientation.Portrait };
+                if (orientation != null) s.Orientation = orientation;
+                var locationCode = i.EffectiveLocation?.Code != null ? GetCollectionCode(Regex.Replace(i.EffectiveLocation?.Code, ".+/", "")) : null;
                 var l = new Label
                 {
                     Id = i.Barcode,
@@ -198,8 +176,7 @@ namespace FolioLibrary
                     },
                     Item = i,
                     Orientation = s.Orientation,
-                    //Text = $"{(i.CallNumberPrefix != null ? i.CallNumberPrefix + "\n" : null)}{(i.CallNumber != null ? FormatCallNumber(i.CallNumberType, i.CallNumber) + "\n" : null)}{(i.Enumeration != null ? FormatEnumeration(i.Enumeration) + "\n" : null)}{(i.Chronology != null ? i.Chronology + "\n" : null)}{(i.CopyNumber != null ? FormatCopyNumber(i.CopyNumber) + "\n" : null)}{(i.LocationCode != null ? GetCollectionCode(i.LocationCode) + "\n" : null)}{(false && i.LocationCode == "Rec" ? string.Join(" ", fsc.ItemNotes.Where(@in => @in.ItemId == i.Id).Select(@in => @in.Content)) + "\n" : null)}"
-                    Text = $"{(i.CallNumberPrefix != null ? i.CallNumberPrefix + "\n" : null)}{(i.CallNumber != null ? FormatCallNumber(i.CallNumberType, i.CallNumber) + "\n" : null)}{(i.Enumeration != null ? FormatEnumeration(i.Enumeration) + "\n" : null)}{(i.Chronology != null ? i.Chronology + "\n" : null)}{(i.CopyNumber != null ? FormatCopyNumber(i.CopyNumber) + "\n" : null)}{(i.LocationCode != null ? GetCollectionCode(i.LocationCode) + "\n" : null)}{(false && i.LocationCode == "Rec" ? i.Notes/*string.Join(" ", fsc.ItemNotes.Where(@in => @in.ItemId == i.Id).Select(@in => @in.Content)) + "\n"*/ : null)}"
+                    Text = $"{(i.EffectiveCallNumberPrefix != null ? i.EffectiveCallNumberPrefix + "\n" : null)}{(i.EffectiveCallNumber != null ? FormatCallNumber(i.EffectiveCallNumberType.Name, i.EffectiveCallNumber) + "\n" : null)}{(i.Enumeration != null ? FormatEnumeration(i.Enumeration) + "\n" : null)}{(i.Chronology != null ? i.Chronology + "\n" : null)}{(i.CopyNumber != null ? FormatCopyNumber(i.CopyNumber) + "\n" : null)}{(locationCode != null ? locationCode + "\n" : null)}{(false && locationCode == "Rec" ? string.Join(" ", i.ItemNotes.Select(@in => @in.Note)) + "\n" : null)}"
                 };
                 if (l.Orientation == Orientation.Landscape)
                 {

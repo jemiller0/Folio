@@ -105,6 +105,7 @@ namespace FolioWebApplication
                         Session["SettingsPermission"] = hs.Contains("uc.settings.edit") ? "Edit" : hs.Contains("all") || hs.Contains("configuration.all") || hs.Contains("uc.settings.view") ? "View" : null;
                     }
                     if (hs.Contains("all") || hs.Contains("uc.labels.edit")) Session["LabelsPermission"] = "Edit";
+                    Session["Configuration2sPermission"] = null;
                 }
                 else
                 {

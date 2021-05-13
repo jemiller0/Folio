@@ -52,6 +52,7 @@ namespace FolioLibrary
 
         public static Address FromJObject(JObject jObject)
         {
+            if (jObject == null) return null;
             var jo = JObject.Parse((string)jObject["value"]);
             return new Address
             {

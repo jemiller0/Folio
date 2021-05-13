@@ -159,6 +159,12 @@ namespace FolioWebApplication.User2s
                 if (folioServiceContext.AnyItemNoteType2s($"metadata.updatedByUserId == \"{id}\"")) throw new Exception("User cannot be deleted because it is being referenced by a item note type");
                 if (folioServiceContext.AnyLedger2s($"metadata.createdByUserId == \"{id}\"")) throw new Exception("User cannot be deleted because it is being referenced by a ledger");
                 if (folioServiceContext.AnyLedger2s($"metadata.updatedByUserId == \"{id}\"")) throw new Exception("User cannot be deleted because it is being referenced by a ledger");
+                if (folioServiceContext.AnyLedgerRollover2s($"metadata.createdByUserId == \"{id}\"")) throw new Exception("User cannot be deleted because it is being referenced by a ledger rollover");
+                if (folioServiceContext.AnyLedgerRollover2s($"metadata.updatedByUserId == \"{id}\"")) throw new Exception("User cannot be deleted because it is being referenced by a ledger rollover");
+                if (folioServiceContext.AnyLedgerRolloverError2s($"metadata.createdByUserId == \"{id}\"")) throw new Exception("User cannot be deleted because it is being referenced by a ledger rollover error");
+                if (folioServiceContext.AnyLedgerRolloverError2s($"metadata.updatedByUserId == \"{id}\"")) throw new Exception("User cannot be deleted because it is being referenced by a ledger rollover error");
+                if (folioServiceContext.AnyLedgerRolloverProgress2s($"metadata.createdByUserId == \"{id}\"")) throw new Exception("User cannot be deleted because it is being referenced by a ledger rollover progress");
+                if (folioServiceContext.AnyLedgerRolloverProgress2s($"metadata.updatedByUserId == \"{id}\"")) throw new Exception("User cannot be deleted because it is being referenced by a ledger rollover progress");
                 if (folioServiceContext.AnyLibrary2s($"metadata.createdByUserId == \"{id}\"")) throw new Exception("User cannot be deleted because it is being referenced by a library");
                 if (folioServiceContext.AnyLibrary2s($"metadata.updatedByUserId == \"{id}\"")) throw new Exception("User cannot be deleted because it is being referenced by a library");
                 if (folioServiceContext.AnyLoan2s($"metadata.createdByUserId == \"{id}\"")) throw new Exception("User cannot be deleted because it is being referenced by a loan");
@@ -175,6 +181,8 @@ namespace FolioWebApplication.User2s
                 if (folioServiceContext.LocationSettings().Any(lwu => lwu.LastWriteUserId == id)) throw new Exception("User cannot be deleted because it is being referenced by a location setting");
                 if (folioServiceContext.AnyLostItemFeePolicy2s($"metadata.createdByUserId == \"{id}\"")) throw new Exception("User cannot be deleted because it is being referenced by a lost item fee policy");
                 if (folioServiceContext.AnyLostItemFeePolicy2s($"metadata.updatedByUserId == \"{id}\"")) throw new Exception("User cannot be deleted because it is being referenced by a lost item fee policy");
+                if (folioServiceContext.AnyManualBlockTemplate2s($"metadata.createdByUserId == \"{id}\"")) throw new Exception("User cannot be deleted because it is being referenced by a manual block template");
+                if (folioServiceContext.AnyManualBlockTemplate2s($"metadata.updatedByUserId == \"{id}\"")) throw new Exception("User cannot be deleted because it is being referenced by a manual block template");
                 if (folioServiceContext.AnyMaterialType2s($"metadata.createdByUserId == \"{id}\"")) throw new Exception("User cannot be deleted because it is being referenced by a material type");
                 if (folioServiceContext.AnyMaterialType2s($"metadata.updatedByUserId == \"{id}\"")) throw new Exception("User cannot be deleted because it is being referenced by a material type");
                 if (folioServiceContext.AnyNatureOfContentTerm2s($"metadata.createdByUserId == \"{id}\"")) throw new Exception("User cannot be deleted because it is being referenced by a nature of content term");

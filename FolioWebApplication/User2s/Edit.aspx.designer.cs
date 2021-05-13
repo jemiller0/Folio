@@ -505,6 +505,30 @@ namespace FolioWebApplication.User2s
 
         protected RadGrid Ledger2s1RadGrid;
 
+        protected Panel LedgerRollover2sPanel;
+
+        protected RadGrid LedgerRollover2sRadGrid;
+
+        protected Panel LedgerRollover2s1Panel;
+
+        protected RadGrid LedgerRollover2s1RadGrid;
+
+        protected Panel LedgerRolloverError2sPanel;
+
+        protected RadGrid LedgerRolloverError2sRadGrid;
+
+        protected Panel LedgerRolloverError2s1Panel;
+
+        protected RadGrid LedgerRolloverError2s1RadGrid;
+
+        protected Panel LedgerRolloverProgress2sPanel;
+
+        protected RadGrid LedgerRolloverProgress2sRadGrid;
+
+        protected Panel LedgerRolloverProgress2s1Panel;
+
+        protected RadGrid LedgerRolloverProgress2s1RadGrid;
+
         protected Panel Library2sPanel;
 
         protected RadGrid Library2sRadGrid;
@@ -580,6 +604,14 @@ namespace FolioWebApplication.User2s
         protected Panel LostItemFeePolicy2s1Panel;
 
         protected RadGrid LostItemFeePolicy2s1RadGrid;
+
+        protected Panel ManualBlockTemplate2sPanel;
+
+        protected RadGrid ManualBlockTemplate2sRadGrid;
+
+        protected Panel ManualBlockTemplate2s1Panel;
+
+        protected RadGrid ManualBlockTemplate2s1RadGrid;
 
         protected Panel MaterialType2sPanel;
 

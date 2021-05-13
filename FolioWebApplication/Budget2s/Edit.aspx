@@ -94,7 +94,7 @@
                                     <asp:Label ID="NetTransfersLabel" runat="server" Text="Net Transfers:" AssociatedControlID="NetTransfersLiteral" />
                                 </td>
                                 <td>
-                                    <asp:Literal ID="NetTransfersLiteral" runat="server" Text='<%#: Eval("NetTransfers") %>' />
+                                    <asp:Literal ID="NetTransfersLiteral" runat="server" Text='<%# Eval("NetTransfers", "{0:c}") %>' />
                                 </td>
                             </tr>
                             <tr runat="server" visible='<%# Eval("Unavailable") != null %>'>
@@ -169,6 +169,46 @@
                                     <asp:HyperLink ID="LastWriteUserHyperLink" runat="server" Text='<%#: Eval("LastWriteUser.Username") %>' NavigateUrl='<%# $"~/User2s/Edit.aspx?Id={Eval("LastWriteUserId")}" %>' Enabled='<%# Session["User2sPermission"] != null %>' />
                                 </td>
                             </tr>
+                            <tr runat="server" visible='<%# Eval("InitialAllocation") != null %>'>
+                                <td>
+                                    <asp:Label ID="InitialAllocationLabel" runat="server" Text="Initial Allocation:" AssociatedControlID="InitialAllocationLiteral" />
+                                </td>
+                                <td>
+                                    <asp:Literal ID="InitialAllocationLiteral" runat="server" Text='<%# Eval("InitialAllocation", "{0:c}") %>' />
+                                </td>
+                            </tr>
+                            <tr runat="server" visible='<%# Eval("AllocationTo") != null %>'>
+                                <td>
+                                    <asp:Label ID="AllocationToLabel" runat="server" Text="Allocation To:" AssociatedControlID="AllocationToLiteral" />
+                                </td>
+                                <td>
+                                    <asp:Literal ID="AllocationToLiteral" runat="server" Text='<%# Eval("AllocationTo", "{0:c}") %>' />
+                                </td>
+                            </tr>
+                            <tr runat="server" visible='<%# Eval("AllocationFrom") != null %>'>
+                                <td>
+                                    <asp:Label ID="AllocationFromLabel" runat="server" Text="Allocation From:" AssociatedControlID="AllocationFromLiteral" />
+                                </td>
+                                <td>
+                                    <asp:Literal ID="AllocationFromLiteral" runat="server" Text='<%# Eval("AllocationFrom", "{0:c}") %>' />
+                                </td>
+                            </tr>
+                            <tr runat="server" visible='<%# Eval("TotalFunding") != null %>'>
+                                <td>
+                                    <asp:Label ID="TotalFundingLabel" runat="server" Text="Total Funding:" AssociatedControlID="TotalFundingLiteral" />
+                                </td>
+                                <td>
+                                    <asp:Literal ID="TotalFundingLiteral" runat="server" Text='<%# Eval("TotalFunding", "{0:c}") %>' />
+                                </td>
+                            </tr>
+                            <tr runat="server" visible='<%# Eval("CashBalance") != null %>'>
+                                <td>
+                                    <asp:Label ID="CashBalanceLabel" runat="server" Text="Cash Balance:" AssociatedControlID="CashBalanceLiteral" />
+                                </td>
+                                <td>
+                                    <asp:Literal ID="CashBalanceLiteral" runat="server" Text='<%# Eval("CashBalance", "{0:c}") %>' />
+                                </td>
+                            </tr>
                             <tr runat="server" visible='<%# Eval("Content") != null %>'>
                                 <td>
                                     <asp:Label ID="ContentLabel" runat="server" Text="Content:" AssociatedControlID="ContentLiteral" />
@@ -214,24 +254,24 @@
             </telerik:RadGrid>
         </fieldset>
     </asp:Panel>
-    <asp:Panel ID="GroupFundFiscalYear2sPanel" runat="server" Visible='<%# (string)Session["GroupFundFiscalYear2sPermission"] != null && Budget2FormView.DataKey.Value != null %>'>
+    <asp:Panel ID="BudgetGroup2sPanel" runat="server" Visible='<%# (string)Session["BudgetGroup2sPermission"] != null && Budget2FormView.DataKey.Value != null %>'>
         <fieldset>
             <legend>
-                <asp:HyperLink ID="GroupFundFiscalYear2sHyperLink" runat="server" Text="Group Fund Fiscal Years" NavigateUrl="~/GroupFundFiscalYear2s/Default.aspx" /></legend>
-            <telerik:RadGrid ID="GroupFundFiscalYear2sRadGrid" runat="server" AutoGenerateColumns="false" AllowSorting="true" AllowFilteringByColumn="false" GroupingSettings-CaseSensitive="false" AllowPaging="true" AllowCustomPaging="true" PageSize="10" EnableLinqExpressions="false" OnNeedDataSource="GroupFundFiscalYear2sRadGrid_NeedDataSource">
-                <MasterTableView DataKeyNames="Id" PagerStyle-Mode="NextPrevNumericAndAdvanced" NoMasterRecordsText="No group fund fiscal years found">
+                <asp:HyperLink ID="BudgetGroup2sHyperLink" runat="server" Text="Budget Groups" NavigateUrl="~/BudgetGroup2s/Default.aspx" /></legend>
+            <telerik:RadGrid ID="BudgetGroup2sRadGrid" runat="server" AutoGenerateColumns="false" AllowSorting="true" AllowFilteringByColumn="false" GroupingSettings-CaseSensitive="false" AllowPaging="true" AllowCustomPaging="true" PageSize="10" EnableLinqExpressions="false" OnNeedDataSource="BudgetGroup2sRadGrid_NeedDataSource">
+                <MasterTableView DataKeyNames="Id" PagerStyle-Mode="NextPrevNumericAndAdvanced" NoMasterRecordsText="No budget groups found">
                     <SortExpressions>
                         <telerik:GridSortExpression FieldName="Id" />
                     </SortExpressions>
                     <Columns>
                         <telerik:GridTemplateColumn AllowFiltering="false" ItemStyle-Width="0px">
                             <ItemTemplate>
-                                <asp:HyperLink ID="ViewHyperLink" Text="View" NavigateUrl='<%# $"~/GroupFundFiscalYear2s/Edit.aspx?Id={Eval("Id")}" %>' runat="server" />
+                                <asp:HyperLink ID="ViewHyperLink" Text="View" NavigateUrl='<%# $"~/BudgetGroup2s/Edit.aspx?Id={Eval("Id")}" %>' runat="server" />
                             </ItemTemplate>
                         </telerik:GridTemplateColumn>
                         <telerik:GridTemplateColumn HeaderText="Id" DataField="Id" SortExpression="Id" AutoPostBackOnFilter="true" CurrentFilterFunction="EqualTo">
                             <ItemTemplate>
-                                <asp:HyperLink ID="IdHyperLink" runat="server" Text='<%# Eval("Id") %>' NavigateUrl='<%# $"~/GroupFundFiscalYear2s/Edit.aspx?Id={Eval("Id")}" %>' />
+                                <asp:HyperLink ID="IdHyperLink" runat="server" Text='<%# Eval("Id") %>' NavigateUrl='<%# $"~/BudgetGroup2s/Edit.aspx?Id={Eval("Id")}" %>' />
                             </ItemTemplate>
                         </telerik:GridTemplateColumn>
                         <telerik:GridTemplateColumn AllowFiltering="false" AllowSorting="false" HeaderText="Group" DataField="Group.Name" SortExpression="Group.Name" AutoPostBackOnFilter="true" CurrentFilterFunction="StartsWith">
@@ -261,9 +301,9 @@
                     <telerik:AjaxUpdatedControl ControlID="BudgetExpenseClass2sPanel" LoadingPanelID="RadAjaxLoadingPanel1" />
                 </UpdatedControls>
             </telerik:AjaxSetting>
-            <telerik:AjaxSetting AjaxControlID="GroupFundFiscalYear2sRadGrid">
+            <telerik:AjaxSetting AjaxControlID="BudgetGroup2sRadGrid">
                 <UpdatedControls>
-                    <telerik:AjaxUpdatedControl ControlID="GroupFundFiscalYear2sPanel" LoadingPanelID="RadAjaxLoadingPanel1" />
+                    <telerik:AjaxUpdatedControl ControlID="BudgetGroup2sPanel" LoadingPanelID="RadAjaxLoadingPanel1" />
                 </UpdatedControls>
             </telerik:AjaxSetting>
         </AjaxSettings>

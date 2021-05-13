@@ -49,79 +49,91 @@ namespace FolioLibrary
         [Column("patron_billed_after_aged_lost_interval_id"), Display(Name = "Patron Billed After Aged Lost Interval", Order = 7), JsonProperty("patronBilledAfterAgedLost.intervalId"), RegularExpression(@"^(Minutes|Hours|Days|Weeks|Months|Years)$"), StringLength(1024)]
         public virtual string PatronBilledAfterAgedLostInterval { get; set; }
 
-        [Column("charge_amount_item_charge_type"), Display(Name = "Charge Amount Item Charge Type", Order = 8), JsonProperty("chargeAmountItem.chargeType"), StringLength(1024)]
+        [Column("recalled_item_aged_lost_overdue_duration"), Display(Name = "Recalled Item Aged Lost Overdue Duration", Order = 8), JsonProperty("recalledItemAgedLostOverdue.duration")]
+        public virtual int? RecalledItemAgedLostOverdueDuration { get; set; }
+
+        [Column("recalled_item_aged_lost_overdue_interval_id"), Display(Name = "Recalled Item Aged Lost Overdue Interval", Order = 9), JsonProperty("recalledItemAgedLostOverdue.intervalId"), RegularExpression(@"^(Minutes|Hours|Days|Weeks|Months|Years)$"), StringLength(1024)]
+        public virtual string RecalledItemAgedLostOverdueInterval { get; set; }
+
+        [Column("patron_billed_after_recalled_item_aged_lost_duration"), Display(Name = "Patron Billed After Recalled Item Aged Lost Duration", Order = 10), JsonProperty("patronBilledAfterRecalledItemAgedLost.duration")]
+        public virtual int? PatronBilledAfterRecalledItemAgedLostDuration { get; set; }
+
+        [Column("patron_billed_after_recalled_item_aged_lost_interval_id"), Display(Name = "Patron Billed After Recalled Item Aged Lost Interval", Order = 11), JsonProperty("patronBilledAfterRecalledItemAgedLost.intervalId"), RegularExpression(@"^(Minutes|Hours|Days|Weeks|Months|Years)$"), StringLength(1024)]
+        public virtual string PatronBilledAfterRecalledItemAgedLostInterval { get; set; }
+
+        [Column("charge_amount_item_charge_type"), Display(Name = "Charge Amount Item Charge Type", Order = 12), JsonProperty("chargeAmountItem.chargeType"), StringLength(1024)]
         public virtual string ChargeAmountItemChargeType { get; set; }
 
-        [Column("charge_amount_item_amount"), DataType(DataType.Currency), Display(Name = "Charge Amount Item Amount", Order = 9), DisplayFormat(DataFormatString = "{0:c}", ApplyFormatInEditMode = true), JsonProperty("chargeAmountItem.amount")]
+        [Column("charge_amount_item_amount"), DataType(DataType.Currency), Display(Name = "Charge Amount Item Amount", Order = 13), DisplayFormat(DataFormatString = "{0:c}", ApplyFormatInEditMode = true), JsonProperty("chargeAmountItem.amount")]
         public virtual decimal? ChargeAmountItemAmount { get; set; }
 
-        [Column("lost_item_processing_fee"), Display(Name = "Lost Item Processing Fee", Order = 10), JsonProperty("lostItemProcessingFee")]
+        [Column("lost_item_processing_fee"), Display(Name = "Lost Item Processing Fee", Order = 14), JsonProperty("lostItemProcessingFee")]
         public virtual decimal? LostItemProcessingFee { get; set; }
 
-        [Column("charge_amount_item_patron"), Display(Name = "Charge Amount Item Patron", Order = 11), JsonProperty("chargeAmountItemPatron")]
+        [Column("charge_amount_item_patron"), Display(Name = "Charge Amount Item Patron", Order = 15), JsonProperty("chargeAmountItemPatron")]
         public virtual bool? ChargeAmountItemPatron { get; set; }
 
-        [Column("charge_amount_item_system"), Display(Name = "Charge Amount Item System", Order = 12), JsonProperty("chargeAmountItemSystem")]
+        [Column("charge_amount_item_system"), Display(Name = "Charge Amount Item System", Order = 16), JsonProperty("chargeAmountItemSystem")]
         public virtual bool? ChargeAmountItemSystem { get; set; }
 
-        [Column("lost_item_charge_fee_fine_duration"), Display(Name = "Lost Item Charge Fee Fine Duration", Order = 13), JsonProperty("lostItemChargeFeeFine.duration")]
+        [Column("lost_item_charge_fee_fine_duration"), Display(Name = "Lost Item Charge Fee Fine Duration", Order = 17), JsonProperty("lostItemChargeFeeFine.duration")]
         public virtual int? LostItemChargeFeeFineDuration { get; set; }
 
-        [Column("lost_item_charge_fee_fine_interval_id"), Display(Name = "Lost Item Charge Fee Fine Interval", Order = 14), JsonProperty("lostItemChargeFeeFine.intervalId"), RegularExpression(@"^(Minutes|Hours|Days|Weeks|Months|Years)$"), StringLength(1024)]
+        [Column("lost_item_charge_fee_fine_interval_id"), Display(Name = "Lost Item Charge Fee Fine Interval", Order = 18), JsonProperty("lostItemChargeFeeFine.intervalId"), RegularExpression(@"^(Minutes|Hours|Days|Weeks|Months|Years)$"), StringLength(1024)]
         public virtual string LostItemChargeFeeFineInterval { get; set; }
 
-        [Column("returned_lost_item_processing_fee"), Display(Name = "Returned Lost Item Processing Fee", Order = 15), JsonProperty("returnedLostItemProcessingFee")]
+        [Column("returned_lost_item_processing_fee"), Display(Name = "Returned Lost Item Processing Fee", Order = 19), JsonProperty("returnedLostItemProcessingFee")]
         public virtual bool? ReturnedLostItemProcessingFee { get; set; }
 
-        [Column("replaced_lost_item_processing_fee"), Display(Name = "Replaced Lost Item Processing Fee", Order = 16), JsonProperty("replacedLostItemProcessingFee")]
+        [Column("replaced_lost_item_processing_fee"), Display(Name = "Replaced Lost Item Processing Fee", Order = 20), JsonProperty("replacedLostItemProcessingFee")]
         public virtual bool? ReplacedLostItemProcessingFee { get; set; }
 
-        [Column("replacement_processing_fee"), Display(Name = "Replacement Processing Fee", Order = 17), JsonProperty("replacementProcessingFee")]
+        [Column("replacement_processing_fee"), Display(Name = "Replacement Processing Fee", Order = 21), JsonProperty("replacementProcessingFee")]
         public virtual decimal? ReplacementProcessingFee { get; set; }
 
-        [Column("replacement_allowed"), Display(Name = "Replacement Allowed", Order = 18), JsonProperty("replacementAllowed")]
+        [Column("replacement_allowed"), Display(Name = "Replacement Allowed", Order = 22), JsonProperty("replacementAllowed")]
         public virtual bool? ReplacementAllowed { get; set; }
 
-        [Column("lost_item_returned"), Display(Name = "Lost Item Returned", Order = 19), JsonProperty("lostItemReturned"), StringLength(1024)]
+        [Column("lost_item_returned"), Display(Name = "Lost Item Returned", Order = 23), JsonProperty("lostItemReturned"), StringLength(1024)]
         public virtual string LostItemReturned { get; set; }
 
-        [Column("fees_fines_shall_refunded_duration"), Display(Name = "Fees Fines Shall Refunded Duration", Order = 20), JsonProperty("feesFinesShallRefunded.duration")]
+        [Column("fees_fines_shall_refunded_duration"), Display(Name = "Fees Fines Shall Refunded Duration", Order = 24), JsonProperty("feesFinesShallRefunded.duration")]
         public virtual int? FeesFinesShallRefundedDuration { get; set; }
 
-        [Column("fees_fines_shall_refunded_interval_id"), Display(Name = "Fees Fines Shall Refunded Interval", Order = 21), JsonProperty("feesFinesShallRefunded.intervalId"), RegularExpression(@"^(Minutes|Hours|Days|Weeks|Months|Years)$"), StringLength(1024)]
+        [Column("fees_fines_shall_refunded_interval_id"), Display(Name = "Fees Fines Shall Refunded Interval", Order = 25), JsonProperty("feesFinesShallRefunded.intervalId"), RegularExpression(@"^(Minutes|Hours|Days|Weeks|Months|Years)$"), StringLength(1024)]
         public virtual string FeesFinesShallRefundedInterval { get; set; }
 
-        [Column("created_date"), DataType(DataType.DateTime), Display(Name = "Creation Time", Order = 22), DisplayFormat(DataFormatString = "{0:g}"), Editable(false), JsonProperty("metadata.createdDate")]
+        [Column("created_date"), DataType(DataType.DateTime), Display(Name = "Creation Time", Order = 26), DisplayFormat(DataFormatString = "{0:g}"), Editable(false), JsonProperty("metadata.createdDate")]
         public virtual DateTime? CreationTime { get; set; }
 
-        [Display(Name = "Creation User", Order = 23), InverseProperty("LostItemFeePolicy2s")]
+        [Display(Name = "Creation User", Order = 27), InverseProperty("LostItemFeePolicy2s")]
         public virtual User2 CreationUser { get; set; }
 
-        [Column("created_by_user_id"), Display(Name = "Creation User", Order = 24), Editable(false), JsonProperty("metadata.createdByUserId")]
+        [Column("created_by_user_id"), Display(Name = "Creation User", Order = 28), Editable(false), JsonProperty("metadata.createdByUserId")]
         public virtual Guid? CreationUserId { get; set; }
 
         [Column("created_by_username"), JsonProperty("metadata.createdByUsername"), ScaffoldColumn(false), StringLength(1024)]
         public virtual string CreationUserUsername { get; set; }
 
-        [Column("updated_date"), DataType(DataType.DateTime), Display(Name = "Last Write Time", Order = 26), DisplayFormat(DataFormatString = "{0:g}"), Editable(false), JsonProperty("metadata.updatedDate")]
+        [Column("updated_date"), DataType(DataType.DateTime), Display(Name = "Last Write Time", Order = 30), DisplayFormat(DataFormatString = "{0:g}"), Editable(false), JsonProperty("metadata.updatedDate")]
         public virtual DateTime? LastWriteTime { get; set; }
 
-        [Display(Name = "Last Write User", Order = 27), InverseProperty("LostItemFeePolicy2s1")]
+        [Display(Name = "Last Write User", Order = 31), InverseProperty("LostItemFeePolicy2s1")]
         public virtual User2 LastWriteUser { get; set; }
 
-        [Column("updated_by_user_id"), Display(Name = "Last Write User", Order = 28), Editable(false), JsonProperty("metadata.updatedByUserId")]
+        [Column("updated_by_user_id"), Display(Name = "Last Write User", Order = 32), Editable(false), JsonProperty("metadata.updatedByUserId")]
         public virtual Guid? LastWriteUserId { get; set; }
 
         [Column("updated_by_username"), JsonProperty("metadata.updatedByUsername"), ScaffoldColumn(false), StringLength(1024)]
         public virtual string LastWriteUserUsername { get; set; }
 
-        [Column("content"), CustomValidation(typeof(LostItemFeePolicy), nameof(ValidateContent)), DataType(DataType.MultilineText), Display(Order = 30), Editable(false)]
+        [Column("content"), CustomValidation(typeof(LostItemFeePolicy), nameof(ValidateContent)), DataType(DataType.MultilineText), Display(Order = 34), Editable(false)]
         public virtual string Content { get; set; }
 
-        [Display(Name = "Loans", Order = 31)]
+        [Display(Name = "Loans", Order = 35)]
         public virtual ICollection<Loan2> Loan2s { get; set; }
 
-        public override string ToString() => $"{{ {nameof(Id)} = {Id}, {nameof(Name)} = {Name}, {nameof(Description)} = {Description}, {nameof(ItemAgedLostOverdueDuration)} = {ItemAgedLostOverdueDuration}, {nameof(ItemAgedLostOverdueInterval)} = {ItemAgedLostOverdueInterval}, {nameof(PatronBilledAfterAgedLostDuration)} = {PatronBilledAfterAgedLostDuration}, {nameof(PatronBilledAfterAgedLostInterval)} = {PatronBilledAfterAgedLostInterval}, {nameof(ChargeAmountItemChargeType)} = {ChargeAmountItemChargeType}, {nameof(ChargeAmountItemAmount)} = {ChargeAmountItemAmount}, {nameof(LostItemProcessingFee)} = {LostItemProcessingFee}, {nameof(ChargeAmountItemPatron)} = {ChargeAmountItemPatron}, {nameof(ChargeAmountItemSystem)} = {ChargeAmountItemSystem}, {nameof(LostItemChargeFeeFineDuration)} = {LostItemChargeFeeFineDuration}, {nameof(LostItemChargeFeeFineInterval)} = {LostItemChargeFeeFineInterval}, {nameof(ReturnedLostItemProcessingFee)} = {ReturnedLostItemProcessingFee}, {nameof(ReplacedLostItemProcessingFee)} = {ReplacedLostItemProcessingFee}, {nameof(ReplacementProcessingFee)} = {ReplacementProcessingFee}, {nameof(ReplacementAllowed)} = {ReplacementAllowed}, {nameof(LostItemReturned)} = {LostItemReturned}, {nameof(FeesFinesShallRefundedDuration)} = {FeesFinesShallRefundedDuration}, {nameof(FeesFinesShallRefundedInterval)} = {FeesFinesShallRefundedInterval}, {nameof(CreationTime)} = {CreationTime}, {nameof(CreationUserId)} = {CreationUserId}, {nameof(CreationUserUsername)} = {CreationUserUsername}, {nameof(LastWriteTime)} = {LastWriteTime}, {nameof(LastWriteUserId)} = {LastWriteUserId}, {nameof(LastWriteUserUsername)} = {LastWriteUserUsername}, {nameof(Content)} = {Content} }}";
+        public override string ToString() => $"{{ {nameof(Id)} = {Id}, {nameof(Name)} = {Name}, {nameof(Description)} = {Description}, {nameof(ItemAgedLostOverdueDuration)} = {ItemAgedLostOverdueDuration}, {nameof(ItemAgedLostOverdueInterval)} = {ItemAgedLostOverdueInterval}, {nameof(PatronBilledAfterAgedLostDuration)} = {PatronBilledAfterAgedLostDuration}, {nameof(PatronBilledAfterAgedLostInterval)} = {PatronBilledAfterAgedLostInterval}, {nameof(RecalledItemAgedLostOverdueDuration)} = {RecalledItemAgedLostOverdueDuration}, {nameof(RecalledItemAgedLostOverdueInterval)} = {RecalledItemAgedLostOverdueInterval}, {nameof(PatronBilledAfterRecalledItemAgedLostDuration)} = {PatronBilledAfterRecalledItemAgedLostDuration}, {nameof(PatronBilledAfterRecalledItemAgedLostInterval)} = {PatronBilledAfterRecalledItemAgedLostInterval}, {nameof(ChargeAmountItemChargeType)} = {ChargeAmountItemChargeType}, {nameof(ChargeAmountItemAmount)} = {ChargeAmountItemAmount}, {nameof(LostItemProcessingFee)} = {LostItemProcessingFee}, {nameof(ChargeAmountItemPatron)} = {ChargeAmountItemPatron}, {nameof(ChargeAmountItemSystem)} = {ChargeAmountItemSystem}, {nameof(LostItemChargeFeeFineDuration)} = {LostItemChargeFeeFineDuration}, {nameof(LostItemChargeFeeFineInterval)} = {LostItemChargeFeeFineInterval}, {nameof(ReturnedLostItemProcessingFee)} = {ReturnedLostItemProcessingFee}, {nameof(ReplacedLostItemProcessingFee)} = {ReplacedLostItemProcessingFee}, {nameof(ReplacementProcessingFee)} = {ReplacementProcessingFee}, {nameof(ReplacementAllowed)} = {ReplacementAllowed}, {nameof(LostItemReturned)} = {LostItemReturned}, {nameof(FeesFinesShallRefundedDuration)} = {FeesFinesShallRefundedDuration}, {nameof(FeesFinesShallRefundedInterval)} = {FeesFinesShallRefundedInterval}, {nameof(CreationTime)} = {CreationTime}, {nameof(CreationUserId)} = {CreationUserId}, {nameof(CreationUserUsername)} = {CreationUserUsername}, {nameof(LastWriteTime)} = {LastWriteTime}, {nameof(LastWriteUserId)} = {LastWriteUserId}, {nameof(LastWriteUserUsername)} = {LastWriteUserUsername}, {nameof(Content)} = {Content} }}";
 
         public static LostItemFeePolicy2 FromJObject(JObject jObject) => jObject != null ? new LostItemFeePolicy2
         {
@@ -132,6 +144,10 @@ namespace FolioLibrary
             ItemAgedLostOverdueInterval = (string)jObject.SelectToken("itemAgedLostOverdue.intervalId"),
             PatronBilledAfterAgedLostDuration = (int?)jObject.SelectToken("patronBilledAfterAgedLost.duration"),
             PatronBilledAfterAgedLostInterval = (string)jObject.SelectToken("patronBilledAfterAgedLost.intervalId"),
+            RecalledItemAgedLostOverdueDuration = (int?)jObject.SelectToken("recalledItemAgedLostOverdue.duration"),
+            RecalledItemAgedLostOverdueInterval = (string)jObject.SelectToken("recalledItemAgedLostOverdue.intervalId"),
+            PatronBilledAfterRecalledItemAgedLostDuration = (int?)jObject.SelectToken("patronBilledAfterRecalledItemAgedLost.duration"),
+            PatronBilledAfterRecalledItemAgedLostInterval = (string)jObject.SelectToken("patronBilledAfterRecalledItemAgedLost.intervalId"),
             ChargeAmountItemChargeType = (string)jObject.SelectToken("chargeAmountItem.chargeType"),
             ChargeAmountItemAmount = (decimal?)jObject.SelectToken("chargeAmountItem.amount"),
             LostItemProcessingFee = (decimal?)jObject.SelectToken("lostItemProcessingFee"),
@@ -165,6 +181,12 @@ namespace FolioLibrary
             new JProperty("patronBilledAfterAgedLost", new JObject(
                 new JProperty("duration", PatronBilledAfterAgedLostDuration),
                 new JProperty("intervalId", PatronBilledAfterAgedLostInterval))),
+            new JProperty("recalledItemAgedLostOverdue", new JObject(
+                new JProperty("duration", RecalledItemAgedLostOverdueDuration),
+                new JProperty("intervalId", RecalledItemAgedLostOverdueInterval))),
+            new JProperty("patronBilledAfterRecalledItemAgedLost", new JObject(
+                new JProperty("duration", PatronBilledAfterRecalledItemAgedLostDuration),
+                new JProperty("intervalId", PatronBilledAfterRecalledItemAgedLostInterval))),
             new JProperty("chargeAmountItem", new JObject(
                 new JProperty("chargeType", ChargeAmountItemChargeType),
                 new JProperty("amount", ChargeAmountItemAmount))),

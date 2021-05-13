@@ -34,7 +34,7 @@ namespace FolioLibrary
         public virtual string Name { get; set; }
 
         [Column("desc"), Display(Order = 3), JsonProperty("desc"), StringLength(1024)]
-        public virtual string Desc { get; set; }
+        public virtual string Description { get; set; }
 
         [Column("created_date"), DataType(DataType.DateTime), Display(Name = "Creation Time", Order = 4), DisplayFormat(DataFormatString = "{0:g}"), Editable(false), JsonProperty("metadata.createdDate")]
         public virtual DateTime? CreationTime { get; set; }
@@ -69,13 +69,13 @@ namespace FolioLibrary
         [Column("content"), CustomValidation(typeof(TransferAccount), nameof(ValidateContent)), DataType(DataType.MultilineText), Display(Order = 14), Editable(false)]
         public virtual string Content { get; set; }
 
-        public override string ToString() => $"{{ {nameof(Id)} = {Id}, {nameof(Name)} = {Name}, {nameof(Desc)} = {Desc}, {nameof(CreationTime)} = {CreationTime}, {nameof(CreationUserId)} = {CreationUserId}, {nameof(CreationUserUsername)} = {CreationUserUsername}, {nameof(LastWriteTime)} = {LastWriteTime}, {nameof(LastWriteUserId)} = {LastWriteUserId}, {nameof(LastWriteUserUsername)} = {LastWriteUserUsername}, {nameof(OwnerId)} = {OwnerId}, {nameof(Content)} = {Content} }}";
+        public override string ToString() => $"{{ {nameof(Id)} = {Id}, {nameof(Name)} = {Name}, {nameof(Description)} = {Description}, {nameof(CreationTime)} = {CreationTime}, {nameof(CreationUserId)} = {CreationUserId}, {nameof(CreationUserUsername)} = {CreationUserUsername}, {nameof(LastWriteTime)} = {LastWriteTime}, {nameof(LastWriteUserId)} = {LastWriteUserId}, {nameof(LastWriteUserUsername)} = {LastWriteUserUsername}, {nameof(OwnerId)} = {OwnerId}, {nameof(Content)} = {Content} }}";
 
         public static TransferAccount2 FromJObject(JObject jObject) => jObject != null ? new TransferAccount2
         {
             Id = (Guid?)jObject.SelectToken("id"),
             Name = (string)jObject.SelectToken("accountName"),
-            Desc = (string)jObject.SelectToken("desc"),
+            Description = (string)jObject.SelectToken("desc"),
             CreationTime = ((DateTime?)jObject.SelectToken("metadata.createdDate"))?.ToLocalTime(),
             CreationUserId = (Guid?)jObject.SelectToken("metadata.createdByUserId"),
             CreationUserUsername = (string)jObject.SelectToken("metadata.createdByUsername"),
@@ -89,7 +89,7 @@ namespace FolioLibrary
         public JObject ToJObject() => new JObject(
             new JProperty("id", Id),
             new JProperty("accountName", Name),
-            new JProperty("desc", Desc),
+            new JProperty("desc", Description),
             new JProperty("metadata", new JObject(
                 new JProperty("createdDate", CreationTime?.ToUniversalTime()),
                 new JProperty("createdByUserId", CreationUserId),

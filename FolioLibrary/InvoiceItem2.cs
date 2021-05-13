@@ -94,47 +94,47 @@ namespace FolioLibrary
         [Column("total"), Display(Order = 22), JsonProperty("total")]
         public virtual decimal? Total { get; set; }
 
-        [Column("vendor_ref_no"), Display(Name = "Vendor Ref No", Order = 23), JsonProperty("vendorRefNo"), StringLength(1024)]
-        public virtual string VendorRefNo { get; set; }
-
-        [Column("created_date"), DataType(DataType.DateTime), Display(Name = "Creation Time", Order = 24), DisplayFormat(DataFormatString = "{0:g}"), Editable(false), JsonProperty("metadata.createdDate")]
+        [Column("created_date"), DataType(DataType.DateTime), Display(Name = "Creation Time", Order = 23), DisplayFormat(DataFormatString = "{0:g}"), Editable(false), JsonProperty("metadata.createdDate")]
         public virtual DateTime? CreationTime { get; set; }
 
-        [Display(Name = "Creation User", Order = 25), InverseProperty("InvoiceItem2s")]
+        [Display(Name = "Creation User", Order = 24), InverseProperty("InvoiceItem2s")]
         public virtual User2 CreationUser { get; set; }
 
-        [Column("created_by_user_id"), Display(Name = "Creation User", Order = 26), Editable(false), JsonProperty("metadata.createdByUserId")]
+        [Column("created_by_user_id"), Display(Name = "Creation User", Order = 25), Editable(false), JsonProperty("metadata.createdByUserId")]
         public virtual Guid? CreationUserId { get; set; }
 
         [Column("created_by_username"), JsonProperty("metadata.createdByUsername"), ScaffoldColumn(false), StringLength(1024)]
         public virtual string CreationUserUsername { get; set; }
 
-        [Column("updated_date"), DataType(DataType.DateTime), Display(Name = "Last Write Time", Order = 28), DisplayFormat(DataFormatString = "{0:g}"), Editable(false), JsonProperty("metadata.updatedDate")]
+        [Column("updated_date"), DataType(DataType.DateTime), Display(Name = "Last Write Time", Order = 27), DisplayFormat(DataFormatString = "{0:g}"), Editable(false), JsonProperty("metadata.updatedDate")]
         public virtual DateTime? LastWriteTime { get; set; }
 
-        [Display(Name = "Last Write User", Order = 29), InverseProperty("InvoiceItem2s1")]
+        [Display(Name = "Last Write User", Order = 28), InverseProperty("InvoiceItem2s1")]
         public virtual User2 LastWriteUser { get; set; }
 
-        [Column("updated_by_user_id"), Display(Name = "Last Write User", Order = 30), Editable(false), JsonProperty("metadata.updatedByUserId")]
+        [Column("updated_by_user_id"), Display(Name = "Last Write User", Order = 29), Editable(false), JsonProperty("metadata.updatedByUserId")]
         public virtual Guid? LastWriteUserId { get; set; }
 
         [Column("updated_by_username"), JsonProperty("metadata.updatedByUsername"), ScaffoldColumn(false), StringLength(1024)]
         public virtual string LastWriteUserUsername { get; set; }
 
-        [Column("content"), CustomValidation(typeof(InvoiceItem), nameof(ValidateContent)), DataType(DataType.MultilineText), Display(Order = 32), Editable(false)]
+        [Column("content"), CustomValidation(typeof(InvoiceItem), nameof(ValidateContent)), DataType(DataType.MultilineText), Display(Order = 31), Editable(false)]
         public virtual string Content { get; set; }
 
-        [Display(Name = "Invoice Adjustment Funds", Order = 33)]
+        [Display(Name = "Invoice Adjustment Funds", Order = 32)]
         public virtual ICollection<InvoiceAdjustmentFund> InvoiceAdjustmentFunds { get; set; }
 
-        [Display(Name = "Invoice Item Adjustment Funds", Order = 34), JsonProperty("fundDistributions")]
+        [Display(Name = "Invoice Item Adjustment Funds", Order = 33), JsonProperty("fundDistributions")]
         public virtual ICollection<InvoiceItemAdjustmentFund> InvoiceItemAdjustmentFunds { get; set; }
 
-        [Display(Name = "Invoice Item Adjustments", Order = 35), JsonProperty("adjustments")]
+        [Display(Name = "Invoice Item Adjustments", Order = 34), JsonProperty("adjustments")]
         public virtual ICollection<InvoiceItemAdjustment> InvoiceItemAdjustments { get; set; }
 
-        [Display(Name = "Invoice Item Funds", Order = 36), JsonProperty("fundDistributions")]
+        [Display(Name = "Invoice Item Funds", Order = 35), JsonProperty("fundDistributions")]
         public virtual ICollection<InvoiceItemFund> InvoiceItemFunds { get; set; }
+
+        [Display(Name = "Invoice Item Reference Numbers", Order = 36), JsonProperty("referenceNumbers")]
+        public virtual ICollection<InvoiceItemReferenceNumber> InvoiceItemReferenceNumbers { get; set; }
 
         [Display(Name = "Invoice Item Tags", Order = 37), JsonConverter(typeof(ArrayJsonConverter<List<InvoiceItemTag>, InvoiceItemTag>), "Content"), JsonProperty("tags.tagList")]
         public virtual ICollection<InvoiceItemTag> InvoiceItemTags { get; set; }
@@ -145,7 +145,7 @@ namespace FolioLibrary
         [Display(Name = "Voucher Item Funds", Order = 39)]
         public virtual ICollection<VoucherItemFund> VoucherItemFunds { get; set; }
 
-        public override string ToString() => $"{{ {nameof(Id)} = {Id}, {nameof(AccountingCode)} = {AccountingCode}, {nameof(AccountNumber)} = {AccountNumber}, {nameof(AdjustmentsTotal)} = {AdjustmentsTotal}, {nameof(Comment)} = {Comment}, {nameof(Description)} = {Description}, {nameof(InvoiceId)} = {InvoiceId}, {nameof(Number)} = {Number}, {nameof(InvoiceLineStatus)} = {InvoiceLineStatus}, {nameof(OrderItemId)} = {OrderItemId}, {nameof(ProductId)} = {ProductId}, {nameof(ProductIdTypeId)} = {ProductIdTypeId}, {nameof(Quantity)} = {Quantity}, {nameof(ReleaseEncumbrance)} = {ReleaseEncumbrance}, {nameof(SubscriptionInfo)} = {SubscriptionInfo}, {nameof(SubscriptionStart)} = {SubscriptionStart}, {nameof(SubscriptionEnd)} = {SubscriptionEnd}, {nameof(SubTotal)} = {SubTotal}, {nameof(Total)} = {Total}, {nameof(VendorRefNo)} = {VendorRefNo}, {nameof(CreationTime)} = {CreationTime}, {nameof(CreationUserId)} = {CreationUserId}, {nameof(CreationUserUsername)} = {CreationUserUsername}, {nameof(LastWriteTime)} = {LastWriteTime}, {nameof(LastWriteUserId)} = {LastWriteUserId}, {nameof(LastWriteUserUsername)} = {LastWriteUserUsername}, {nameof(Content)} = {Content}, {nameof(InvoiceItemAdjustmentFunds)} = {(InvoiceItemAdjustmentFunds != null ? $"{{ {string.Join(", ", InvoiceItemAdjustmentFunds)} }}" : "")}, {nameof(InvoiceItemAdjustments)} = {(InvoiceItemAdjustments != null ? $"{{ {string.Join(", ", InvoiceItemAdjustments)} }}" : "")}, {nameof(InvoiceItemFunds)} = {(InvoiceItemFunds != null ? $"{{ {string.Join(", ", InvoiceItemFunds)} }}" : "")}, {nameof(InvoiceItemTags)} = {(InvoiceItemTags != null ? $"{{ {string.Join(", ", InvoiceItemTags)} }}" : "")} }}";
+        public override string ToString() => $"{{ {nameof(Id)} = {Id}, {nameof(AccountingCode)} = {AccountingCode}, {nameof(AccountNumber)} = {AccountNumber}, {nameof(AdjustmentsTotal)} = {AdjustmentsTotal}, {nameof(Comment)} = {Comment}, {nameof(Description)} = {Description}, {nameof(InvoiceId)} = {InvoiceId}, {nameof(Number)} = {Number}, {nameof(InvoiceLineStatus)} = {InvoiceLineStatus}, {nameof(OrderItemId)} = {OrderItemId}, {nameof(ProductId)} = {ProductId}, {nameof(ProductIdTypeId)} = {ProductIdTypeId}, {nameof(Quantity)} = {Quantity}, {nameof(ReleaseEncumbrance)} = {ReleaseEncumbrance}, {nameof(SubscriptionInfo)} = {SubscriptionInfo}, {nameof(SubscriptionStart)} = {SubscriptionStart}, {nameof(SubscriptionEnd)} = {SubscriptionEnd}, {nameof(SubTotal)} = {SubTotal}, {nameof(Total)} = {Total}, {nameof(CreationTime)} = {CreationTime}, {nameof(CreationUserId)} = {CreationUserId}, {nameof(CreationUserUsername)} = {CreationUserUsername}, {nameof(LastWriteTime)} = {LastWriteTime}, {nameof(LastWriteUserId)} = {LastWriteUserId}, {nameof(LastWriteUserUsername)} = {LastWriteUserUsername}, {nameof(Content)} = {Content}, {nameof(InvoiceItemAdjustmentFunds)} = {(InvoiceItemAdjustmentFunds != null ? $"{{ {string.Join(", ", InvoiceItemAdjustmentFunds)} }}" : "")}, {nameof(InvoiceItemAdjustments)} = {(InvoiceItemAdjustments != null ? $"{{ {string.Join(", ", InvoiceItemAdjustments)} }}" : "")}, {nameof(InvoiceItemFunds)} = {(InvoiceItemFunds != null ? $"{{ {string.Join(", ", InvoiceItemFunds)} }}" : "")}, {nameof(InvoiceItemReferenceNumbers)} = {(InvoiceItemReferenceNumbers != null ? $"{{ {string.Join(", ", InvoiceItemReferenceNumbers)} }}" : "")}, {nameof(InvoiceItemTags)} = {(InvoiceItemTags != null ? $"{{ {string.Join(", ", InvoiceItemTags)} }}" : "")} }}";
 
         public static InvoiceItem2 FromJObject(JObject jObject) => jObject != null ? new InvoiceItem2
         {
@@ -168,7 +168,6 @@ namespace FolioLibrary
             SubscriptionEnd = ((DateTime?)jObject.SelectToken("subscriptionEnd"))?.ToLocalTime(),
             SubTotal = (decimal?)jObject.SelectToken("subTotal"),
             Total = (decimal?)jObject.SelectToken("total"),
-            VendorRefNo = (string)jObject.SelectToken("vendorRefNo"),
             CreationTime = ((DateTime?)jObject.SelectToken("metadata.createdDate"))?.ToLocalTime(),
             CreationUserId = (Guid?)jObject.SelectToken("metadata.createdByUserId"),
             CreationUserUsername = (string)jObject.SelectToken("metadata.createdByUsername"),
@@ -179,6 +178,7 @@ namespace FolioLibrary
             InvoiceItemAdjustmentFunds = jObject.SelectToken("fundDistributions")?.Where(jt => jt.HasValues).Select(jt => InvoiceItemAdjustmentFund.FromJObject((JObject)jt)).ToArray(),
             InvoiceItemAdjustments = jObject.SelectToken("adjustments")?.Where(jt => jt.HasValues).Select(jt => InvoiceItemAdjustment.FromJObject((JObject)jt)).ToArray(),
             InvoiceItemFunds = jObject.SelectToken("fundDistributions")?.Where(jt => jt.HasValues).Select(jt => InvoiceItemFund.FromJObject((JObject)jt)).ToArray(),
+            InvoiceItemReferenceNumbers = jObject.SelectToken("referenceNumbers")?.Where(jt => jt.HasValues).Select(jt => InvoiceItemReferenceNumber.FromJObject((JObject)jt)).ToArray(),
             InvoiceItemTags = jObject.SelectToken("tags.tagList")?.Where(jt => jt.HasValues).Select(jt => InvoiceItemTag.FromJObject((JValue)jt)).ToArray()
         } : null;
 
@@ -202,7 +202,6 @@ namespace FolioLibrary
             new JProperty("subscriptionEnd", SubscriptionEnd?.ToUniversalTime()),
             new JProperty("subTotal", SubTotal),
             new JProperty("total", Total),
-            new JProperty("vendorRefNo", VendorRefNo),
             new JProperty("metadata", new JObject(
                 new JProperty("createdDate", CreationTime?.ToUniversalTime()),
                 new JProperty("createdByUserId", CreationUserId),
@@ -212,6 +211,7 @@ namespace FolioLibrary
                 new JProperty("updatedByUsername", LastWriteUserUsername))),
             new JProperty("fundDistributions", InvoiceItemFunds?.Select(iif => iif.ToJObject())),
             new JProperty("adjustments", InvoiceItemAdjustments?.Select(iia => iia.ToJObject())),
+            new JProperty("referenceNumbers", InvoiceItemReferenceNumbers?.Select(iirn => iirn.ToJObject())),
             new JProperty("tags", new JObject(
                 new JProperty("tagList", InvoiceItemTags?.Select(iit => iit.ToJObject()))))).RemoveNullAndEmptyProperties();
     }

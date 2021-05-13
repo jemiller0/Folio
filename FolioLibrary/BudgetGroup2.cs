@@ -11,14 +11,14 @@ using System.Reflection;
 
 namespace FolioLibrary
 {
-    // uc.group_fund_fiscal_years -> diku_mod_finance_storage.group_fund_fiscal_year
-    // GroupFundFiscalYear2 -> GroupFundFiscalYear
-    [DisplayColumn(nameof(Id)), DisplayName("Group Fund Fiscal Years"), JsonObject(MemberSerialization = MemberSerialization.OptIn), Table("group_fund_fiscal_years", Schema = "uc")]
-    public partial class GroupFundFiscalYear2
+    // uc.budget_groups -> diku_mod_finance_storage.group_fund_fiscal_year
+    // BudgetGroup2 -> BudgetGroup
+    [DisplayColumn(nameof(Id)), DisplayName("Budget Groups"), JsonObject(MemberSerialization = MemberSerialization.OptIn), Table("budget_groups", Schema = "uc")]
+    public partial class BudgetGroup2
     {
         public static ValidationResult ValidateContent(string value)
         {
-            using (var sr = new StreamReader(Assembly.GetExecutingAssembly().GetManifestResourceStream("FolioLibrary.GroupFundFiscalYear.json")))
+            using (var sr = new StreamReader(Assembly.GetExecutingAssembly().GetManifestResourceStream("FolioLibrary.BudgetGroup.json")))
             {
                 var js = JsonSchema.FromJsonAsync(sr.ReadToEndAsync().Result).Result;
                 var l = js.Validate(value);
@@ -54,12 +54,12 @@ namespace FolioLibrary
         [Column("fund_id"), Display(Name = "Fund", Order = 9), JsonProperty("fundId"), Required]
         public virtual Guid? FundId { get; set; }
 
-        [Column("content"), CustomValidation(typeof(GroupFundFiscalYear), nameof(ValidateContent)), DataType(DataType.MultilineText), Display(Order = 10), Editable(false)]
+        [Column("content"), CustomValidation(typeof(BudgetGroup), nameof(ValidateContent)), DataType(DataType.MultilineText), Display(Order = 10), Editable(false)]
         public virtual string Content { get; set; }
 
         public override string ToString() => $"{{ {nameof(Id)} = {Id}, {nameof(BudgetId)} = {BudgetId}, {nameof(GroupId)} = {GroupId}, {nameof(FiscalYearId)} = {FiscalYearId}, {nameof(FundId)} = {FundId}, {nameof(Content)} = {Content} }}";
 
-        public static GroupFundFiscalYear2 FromJObject(JObject jObject) => jObject != null ? new GroupFundFiscalYear2
+        public static BudgetGroup2 FromJObject(JObject jObject) => jObject != null ? new BudgetGroup2
         {
             Id = (Guid?)jObject.SelectToken("id"),
             BudgetId = (Guid?)jObject.SelectToken("budgetId"),

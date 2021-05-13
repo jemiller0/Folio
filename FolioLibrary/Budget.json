@@ -38,8 +38,8 @@
     },
     "allocated": {
       "description": "The amount currently allocated to this budget",
-      "type": "number",
-      "default": 0
+      "readonly": true,
+      "type": "number"
     },
     "awaitingPayment": {
       "description": "The amount currently awaiting payment for this budget",
@@ -48,8 +48,8 @@
     },
     "available": {
       "description": "The amount currently available for this budge",
-      "type": "number",
-      "default": 0
+      "readonly": true,
+      "type": "number"
     },
     "encumbered": {
       "description": "The amount currently encumbered for this budget",
@@ -68,18 +68,18 @@
     },
     "unavailable": {
       "description": "Unavailable amount for this budget",
-      "type": "number",
-      "default": 0
+      "readonly": true,
+      "type": "number"
     },
     "overEncumbrance": {
       "description": "The amount currently over-encumbered for this budget",
-      "type": "number",
-      "default": 0
+      "readonly": true,
+      "type": "number"
     },
     "overExpended": {
       "description": "Amount the budget is over expended.",
-      "type": "number",
-      "default": 0
+      "readonly": true,
+      "type": "number"
     },
     "fundId": {
       "$ref": "#/properties/id"
@@ -147,10 +147,34 @@
       "required": [
         "createdDate"
       ]
+    },
+    "initialAllocation": {
+      "description": "The amount of the first allocation made to this budget",
+      "type": "number",
+      "default": 0
+    },
+    "allocationTo": {
+      "description": "The sum of all allocation transaction amounts made TO this budget not including the Initial allocation",
+      "type": "number",
+      "default": 0
+    },
+    "allocationFrom": {
+      "description": "The sum of all allocation transaction amounts made FROM this budget not including the Initial allocation",
+      "type": "number",
+      "default": 0
+    },
+    "totalFunding": {
+      "description": "budget.allocated + budget.netTransfers",
+      "readonly": true,
+      "type": "number"
+    },
+    "cashBalance": {
+      "description": "Total Funding minus Expended",
+      "readonly": true,
+      "type": "number"
     }
   },
   "required": [
-    "allocated",
     "budgetStatus",
     "name",
     "fundId",

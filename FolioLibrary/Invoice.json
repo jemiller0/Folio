@@ -191,9 +191,8 @@
       "format": "date-time"
     },
     "lockTotal": {
-      "description": "Indicates that the total is keyed in and shouldn't be updated based on calculations. The calculated total must match this before the invoice can be approved",
-      "type": "boolean",
-      "default": false
+      "description": "Total amount which manually set by user. The calculated total must match this before the invoice can be approved",
+      "type": "number"
     },
     "note": {
       "description": "Invoice note",
@@ -201,6 +200,11 @@
     },
     "paymentDue": {
       "description": "When this is required to be paid. Generally governed by the relationship with the Vendor",
+      "type": "string",
+      "format": "date-time"
+    },
+    "paymentDate": {
+      "description": "When the invoice was actually paid",
       "type": "string",
       "format": "date-time"
     },
@@ -234,10 +238,12 @@
     },
     "subTotal": {
       "description": "Invoice amount before adjustments are applied. This is sum of all subTotal amounts of the corresponding invoice lines. This amount is always calculated by system.",
+      "readonly": true,
       "type": "number"
     },
     "total": {
-      "description": "The total amount of this invoice which is sum of subTotal and adjustmentsTotal. If lockTotal is true, then total is persisted and never replaced with a calculated value. Otherwise total is calculated \"on the fly\" and never persisted.",
+      "description": "The total amount is calculated \"on the fly\" of this invoice which is sum of subTotal and adjustmentsTotal. Must be the same with existed \"lockTotal\", when approve invoice.",
+      "readonly": true,
       "type": "number"
     },
     "vendorInvoiceNo": {
@@ -267,11 +273,15 @@
       "items": {
         "description": "A human readable ID assigned to this purchase order",
         "type": "string",
-        "pattern": "^[a-zA-Z0-9]{1,16}$"
+        "pattern": "^[a-zA-Z0-9]{1,22}$"
       }
     },
     "vendorId": {
       "$ref": "#/properties/id"
+    },
+    "accountNo": {
+      "description": "The unique number of the organization account",
+      "type": "string"
     },
     "manualPayment": {
       "description": "This would keep the invoice from being feed into the batch process (Not generate a external voucher/payment) but would still move values in the system. Note: this is ideally defined by the vendor relationship and exposed for override on the invoice.",

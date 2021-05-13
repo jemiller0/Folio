@@ -65,6 +65,38 @@
                                     <asp:Literal ID="PatronBilledAfterAgedLostIntervalLiteral" runat="server" Text='<%#: Eval("PatronBilledAfterAgedLostInterval") %>' />
                                 </td>
                             </tr>
+                            <tr runat="server" visible='<%# Eval("RecalledItemAgedLostOverdueDuration") != null %>'>
+                                <td>
+                                    <asp:Label ID="RecalledItemAgedLostOverdueDurationLabel" runat="server" Text="Recalled Item Aged Lost Overdue Duration:" AssociatedControlID="RecalledItemAgedLostOverdueDurationLiteral" />
+                                </td>
+                                <td>
+                                    <asp:Literal ID="RecalledItemAgedLostOverdueDurationLiteral" runat="server" Text='<%#: Eval("RecalledItemAgedLostOverdueDuration") %>' />
+                                </td>
+                            </tr>
+                            <tr runat="server" visible='<%# Eval("RecalledItemAgedLostOverdueInterval") != null %>'>
+                                <td>
+                                    <asp:Label ID="RecalledItemAgedLostOverdueIntervalLabel" runat="server" Text="Recalled Item Aged Lost Overdue Interval:" AssociatedControlID="RecalledItemAgedLostOverdueIntervalLiteral" />
+                                </td>
+                                <td>
+                                    <asp:Literal ID="RecalledItemAgedLostOverdueIntervalLiteral" runat="server" Text='<%#: Eval("RecalledItemAgedLostOverdueInterval") %>' />
+                                </td>
+                            </tr>
+                            <tr runat="server" visible='<%# Eval("PatronBilledAfterRecalledItemAgedLostDuration") != null %>'>
+                                <td>
+                                    <asp:Label ID="PatronBilledAfterRecalledItemAgedLostDurationLabel" runat="server" Text="Patron Billed After Recalled Item Aged Lost Duration:" AssociatedControlID="PatronBilledAfterRecalledItemAgedLostDurationLiteral" />
+                                </td>
+                                <td>
+                                    <asp:Literal ID="PatronBilledAfterRecalledItemAgedLostDurationLiteral" runat="server" Text='<%#: Eval("PatronBilledAfterRecalledItemAgedLostDuration") %>' />
+                                </td>
+                            </tr>
+                            <tr runat="server" visible='<%# Eval("PatronBilledAfterRecalledItemAgedLostInterval") != null %>'>
+                                <td>
+                                    <asp:Label ID="PatronBilledAfterRecalledItemAgedLostIntervalLabel" runat="server" Text="Patron Billed After Recalled Item Aged Lost Interval:" AssociatedControlID="PatronBilledAfterRecalledItemAgedLostIntervalLiteral" />
+                                </td>
+                                <td>
+                                    <asp:Literal ID="PatronBilledAfterRecalledItemAgedLostIntervalLiteral" runat="server" Text='<%#: Eval("PatronBilledAfterRecalledItemAgedLostInterval") %>' />
+                                </td>
+                            </tr>
                             <tr runat="server" visible='<%# Eval("ChargeAmountItemChargeType") != null %>'>
                                 <td>
                                     <asp:Label ID="ChargeAmountItemChargeTypeLabel" runat="server" Text="Charge Amount Item Charge Type:" AssociatedControlID="ChargeAmountItemChargeTypeLiteral" />

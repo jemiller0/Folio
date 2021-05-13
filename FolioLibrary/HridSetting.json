@@ -37,6 +37,11 @@
     },
     "items": {
       "$ref": "#/properties/instances"
+    },
+    "commonRetainLeadingZeroes": {
+      "description": "If true, leading zeros should be applied for HRIDs",
+      "type": "boolean",
+      "default": true
     }
   },
   "required": [

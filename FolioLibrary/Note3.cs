@@ -103,10 +103,13 @@ namespace FolioLibrary
         [Column("temporary_type_id"), Display(Name = "Temporary Type", Order = 25)]
         public virtual Guid? TemporaryTypeId { get; set; }
 
-        [Display(Name = "Note Links", Order = 26), JsonProperty("links")]
+        [Column("search_content"), Display(Name = "Search Content", Order = 26), StringLength(1024)]
+        public virtual string SearchContent { get; set; }
+
+        [Display(Name = "Note Links", Order = 27), JsonProperty("links")]
         public virtual ICollection<NoteLink> NoteLinks { get; set; }
 
-        public override string ToString() => $"{{ {nameof(Id)} = {Id}, {nameof(TypeId)} = {TypeId}, {nameof(Type)} = {Type}, {nameof(Domain)} = {Domain}, {nameof(Title)} = {Title}, {nameof(Content2)} = {Content2}, {nameof(Status)} = {Status}, {nameof(CreatorLastName)} = {CreatorLastName}, {nameof(CreatorFirstName)} = {CreatorFirstName}, {nameof(CreatorMiddleName)} = {CreatorMiddleName}, {nameof(UpdaterLastName)} = {UpdaterLastName}, {nameof(UpdaterFirstName)} = {UpdaterFirstName}, {nameof(UpdaterMiddleName)} = {UpdaterMiddleName}, {nameof(CreationTime)} = {CreationTime}, {nameof(CreationUserId)} = {CreationUserId}, {nameof(CreationUserUsername)} = {CreationUserUsername}, {nameof(LastWriteTime)} = {LastWriteTime}, {nameof(LastWriteUserId)} = {LastWriteUserId}, {nameof(LastWriteUserUsername)} = {LastWriteUserUsername}, {nameof(Content)} = {Content}, {nameof(TemporaryTypeId)} = {TemporaryTypeId}, {nameof(NoteLinks)} = {(NoteLinks != null ? $"{{ {string.Join(", ", NoteLinks)} }}" : "")} }}";
+        public override string ToString() => $"{{ {nameof(Id)} = {Id}, {nameof(TypeId)} = {TypeId}, {nameof(Type)} = {Type}, {nameof(Domain)} = {Domain}, {nameof(Title)} = {Title}, {nameof(Content2)} = {Content2}, {nameof(Status)} = {Status}, {nameof(CreatorLastName)} = {CreatorLastName}, {nameof(CreatorFirstName)} = {CreatorFirstName}, {nameof(CreatorMiddleName)} = {CreatorMiddleName}, {nameof(UpdaterLastName)} = {UpdaterLastName}, {nameof(UpdaterFirstName)} = {UpdaterFirstName}, {nameof(UpdaterMiddleName)} = {UpdaterMiddleName}, {nameof(CreationTime)} = {CreationTime}, {nameof(CreationUserId)} = {CreationUserId}, {nameof(CreationUserUsername)} = {CreationUserUsername}, {nameof(LastWriteTime)} = {LastWriteTime}, {nameof(LastWriteUserId)} = {LastWriteUserId}, {nameof(LastWriteUserUsername)} = {LastWriteUserUsername}, {nameof(Content)} = {Content}, {nameof(TemporaryTypeId)} = {TemporaryTypeId}, {nameof(SearchContent)} = {SearchContent}, {nameof(NoteLinks)} = {(NoteLinks != null ? $"{{ {string.Join(", ", NoteLinks)} }}" : "")} }}";
 
         public static Note3 FromJObject(JObject jObject) => jObject != null ? new Note3
         {

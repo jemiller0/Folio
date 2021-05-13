@@ -57,7 +57,7 @@ namespace FolioLibrary
         [Column("next_run_time"), DataType(DataType.DateTime), Display(Name = "Next Run Time", Order = 10), DisplayFormat(DataFormatString = "{0:g}", ApplyFormatInEditMode = true), JsonProperty("nextRunTime"), Required]
         public virtual DateTime? NextRunTime { get; set; }
 
-        [Column("triggering_event"), Display(Name = "Triggering Event", Order = 11), JsonProperty("triggeringEvent"), RegularExpression(@"^(Hold expiration|Request expiration|Due date|Overdue fine returned|Overdue fine renewed)$"), StringLength(1024)]
+        [Column("triggering_event"), Display(Name = "Triggering Event", Order = 11), JsonProperty("triggeringEvent"), RegularExpression(@"^(Hold expiration|Request expiration|Due date|Overdue fine returned|Overdue fine renewed|Aged to lost|Aged to lost - fine charged|Aged to lost & item returned - fine adjusted|Aged to lost & item replaced - fine adjusted)$"), StringLength(1024)]
         public virtual string TriggeringEvent { get; set; }
 
         [Column("notice_config_timing"), Display(Name = "Notice Config Timing", Order = 12), JsonProperty("noticeConfig.timing"), RegularExpression(@"^(Upon At|Before|After)$"), Required, StringLength(1024)]

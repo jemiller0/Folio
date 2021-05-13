@@ -9,13 +9,13 @@ namespace FolioWebApplication.FinanceGroup2s
 
         protected FormView FinanceGroup2FormView;
 
+        protected Panel BudgetGroup2sPanel;
+
+        protected RadGrid BudgetGroup2sRadGrid;
+
         protected Panel FinanceGroupAcquisitionsUnitsPanel;
 
         protected RadGrid FinanceGroupAcquisitionsUnitsRadGrid;
-
-        protected Panel GroupFundFiscalYear2sPanel;
-
-        protected RadGrid GroupFundFiscalYear2sRadGrid;
 
         protected RadAjaxManager RadAjaxManager1;
     }

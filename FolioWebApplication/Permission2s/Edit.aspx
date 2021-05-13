@@ -67,6 +67,30 @@
                                     <asp:Literal ID="DummyLiteral" runat="server" Text='<%#: Eval("Dummy") %>' />
                                 </td>
                             </tr>
+                            <tr runat="server" visible='<%# Eval("Deprecated") != null %>'>
+                                <td>
+                                    <asp:Label ID="DeprecatedLabel" runat="server" Text="Deprecated:" AssociatedControlID="DeprecatedLiteral" />
+                                </td>
+                                <td>
+                                    <asp:Literal ID="DeprecatedLiteral" runat="server" Text='<%#: Eval("Deprecated") %>' />
+                                </td>
+                            </tr>
+                            <tr runat="server" visible='<%# Eval("ModuleName") != null %>'>
+                                <td>
+                                    <asp:Label ID="ModuleNameLabel" runat="server" Text="Module Name:" AssociatedControlID="ModuleNameLiteral" />
+                                </td>
+                                <td>
+                                    <asp:Literal ID="ModuleNameLiteral" runat="server" Text='<%#: Eval("ModuleName") %>' />
+                                </td>
+                            </tr>
+                            <tr runat="server" visible='<%# Eval("ModuleVersion") != null %>'>
+                                <td>
+                                    <asp:Label ID="ModuleVersionLabel" runat="server" Text="Module Version:" AssociatedControlID="ModuleVersionLiteral" />
+                                </td>
+                                <td>
+                                    <asp:Literal ID="ModuleVersionLiteral" runat="server" Text='<%#: Eval("ModuleVersion") %>' />
+                                </td>
+                            </tr>
                             <tr runat="server" visible='<%# Eval("CreationTime") != null %>'>
                                 <td>
                                     <asp:Label ID="CreationTimeLabel" runat="server" Text="Creation Time:" AssociatedControlID="CreationTimeLiteral" />
@@ -169,6 +193,29 @@
                                 </td>
                                 <td>
                                     <telerik:RadCheckBox ID="DummyRadCheckBox" runat="server" Text="Dummy" Checked='<%# Bind("Dummy") %>' AutoPostBack="false" />
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                </td>
+                                <td>
+                                    <telerik:RadCheckBox ID="DeprecatedRadCheckBox" runat="server" Text="Deprecated" Checked='<%# Bind("Deprecated") %>' AutoPostBack="false" />
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <asp:Label ID="ModuleNameLabel" runat="server" Text="Module Name:" AssociatedControlID="ModuleNameRadTextBox" />
+                                </td>
+                                <td>
+                                    <telerik:RadTextBox ID="ModuleNameRadTextBox" runat="server" Text='<%# Bind("ModuleName") %>' MaxLength="1024" Width="500px" />
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <asp:Label ID="ModuleVersionLabel" runat="server" Text="Module Version:" AssociatedControlID="ModuleVersionRadTextBox" />
+                                </td>
+                                <td>
+                                    <telerik:RadTextBox ID="ModuleVersionRadTextBox" runat="server" Text='<%# Bind("ModuleVersion") %>' MaxLength="1024" Width="500px" />
                                 </td>
                             </tr>
                             <tr runat="server" visible='<%# Eval("CreationTime") != null %>'>

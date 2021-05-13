@@ -35,7 +35,10 @@ namespace FolioLibrary
         [Column("temporary_type_id"), Display(Name = "Temporary Type", Order = 4)]
         public virtual Guid? TemporaryTypeId { get; set; }
 
-        public override string ToString() => $"{{ {nameof(Id)} = {Id}, {nameof(Content)} = {Content}, {nameof(TemporaryTypeId)} = {TemporaryTypeId} }}";
+        [Column("search_content"), Display(Name = "Search Content", Order = 5), StringLength(1024)]
+        public virtual string SearchContent { get; set; }
+
+        public override string ToString() => $"{{ {nameof(Id)} = {Id}, {nameof(Content)} = {Content}, {nameof(TemporaryTypeId)} = {TemporaryTypeId}, {nameof(SearchContent)} = {SearchContent} }}";
 
         public static Note FromJObject(JObject jObject) => jObject != null ? new Note
         {

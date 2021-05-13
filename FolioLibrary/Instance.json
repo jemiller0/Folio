@@ -9,6 +9,10 @@
       "type": "string",
       "pattern": "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-5][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}$"
     },
+    "_version": {
+      "description": "Record version for optimistic locking",
+      "type": "integer"
+    },
     "hrid": {
       "description": "The human readable ID, also called eye readable ID. A system-assigned sequential ID which maps to the Instance ID",
       "type": "string"
@@ -385,7 +389,8 @@
     },
     "previouslyHeld": {
       "description": "Records the fact that the resource was previously held by the library for things like Hathi access, etc.",
-      "type": "boolean"
+      "type": "boolean",
+      "default": "false"
     },
     "staffSuppress": {
       "description": "Records the fact that the record should not be displayed for others than catalogers",
@@ -454,6 +459,10 @@
           "id": {
             "$ref": "#/properties/id"
           },
+          "_version": {
+            "description": "Record version for optimistic locking",
+            "type": "integer"
+          },
           "hrid": {
             "description": "the human readable ID, also called eye readable ID. A system-assigned sequential ID which maps to the Instance ID",
             "type": "string"
@@ -487,6 +496,9 @@
             "type": "object"
           },
           "temporaryLocationId": {
+            "$ref": "#/properties/id"
+          },
+          "effectiveLocationId": {
             "$ref": "#/properties/id"
           },
           "electronicAccess": {
@@ -741,6 +753,10 @@
                   "description": "Unique ID of the item record",
                   "type": "string"
                 },
+                "_version": {
+                  "description": "Record version for optimistic locking",
+                  "type": "integer"
+                },
                 "hrid": {
                   "description": "The human readable ID, also called eye readable ID. A system-assigned sequential alternate ID",
                   "type": "string"
@@ -767,6 +783,11 @@
                 },
                 "barcode": {
                   "description": "Unique inventory control number for physical resources, used largely for circulation purposes",
+                  "type": "string"
+                },
+                "effectiveShelvingOrder": {
+                  "description": "A system generated normalization of the call number that allows for call number sorting in reports and search results",
+                  "readonly": true,
                   "type": "string"
                 },
                 "itemLevelCallNumber": {
@@ -968,22 +989,27 @@
                       "description": "Name of the status e.g. Available, Checked out, In transit",
                       "type": "string",
                       "enum": [
+                        "Aged to lost",
                         "Available",
                         "Awaiting pickup",
                         "Awaiting delivery",
                         "Checked out",
+                        "Claimed returned",
+                        "Declared lost",
                         "In process",
+                        "In process (non-requestable)",
                         "In transit",
+                        "Intellectual item",
+                        "Long missing",
+                        "Lost and paid",
                         "Missing",
                         "On order",
                         "Paged",
-                        "Declared lost",
+                        "Restricted",
                         "Order closed",
-                        "Claimed returned",
+                        "Unavailable",
                         "Unknown",
-                        "Withdrawn",
-                        "Lost and paid",
-                        "Aged to lost"
+                        "Withdrawn"
                       ]
                     },
                     "date": {
@@ -1000,6 +1026,18 @@
                 "materialTypeId": {
                   "description": "Material type, term. Define what type of thing the item is.",
                   "type": "string"
+                },
+                "materialType": {
+                  "description": "Item's material type",
+                  "folio:$ref": "materialtype.json",
+                  "javaType": "org.folio.rest.jaxrs.model.materialTypeVirtual",
+                  "readonly": true,
+                  "folio:isVirtual": true,
+                  "folio:linkBase": "material-types",
+                  "folio:linkFromField": "materialTypeId",
+                  "folio:linkToField": "id",
+                  "folio:includedElement": "mtypes.0",
+                  "type": "object"
                 },
                 "permanentLoanTypeId": {
                   "description": "The permanent loan type, is the default loan type for a given item. Loan types are tenant-defined.",

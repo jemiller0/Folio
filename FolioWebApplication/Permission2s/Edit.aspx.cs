@@ -42,6 +42,9 @@ namespace FolioWebApplication.Permission2s
             p2.Editable = (bool?)e.NewValues["Editable"];
             p2.Visible = (bool?)e.NewValues["Visible"];
             p2.Dummy = (bool?)e.NewValues["Dummy"];
+            p2.Deprecated = (bool?)e.NewValues["Deprecated"];
+            p2.ModuleName = Global.Trim((string)e.NewValues["ModuleName"]);
+            p2.ModuleVersion = Global.Trim((string)e.NewValues["ModuleVersion"]);
             p2.LastWriteTime = DateTime.Now;
             p2.LastWriteUserId = (Guid?)Session["UserId"];
             var vr = Permission2.ValidatePermission2(p2, new ValidationContext(folioServiceContext));

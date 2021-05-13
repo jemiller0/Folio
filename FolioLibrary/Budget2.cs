@@ -58,7 +58,7 @@ namespace FolioLibrary
         [Column("expenditures"), DataType(DataType.Currency), Display(Order = 10), DisplayFormat(DataFormatString = "{0:c}", ApplyFormatInEditMode = true), JsonProperty("expenditures")]
         public virtual decimal? Expenditures { get; set; }
 
-        [Column("net_transfers"), Display(Name = "Net Transfers", Order = 11), JsonProperty("netTransfers")]
+        [Column("net_transfers"), DataType(DataType.Currency), Display(Name = "Net Transfers", Order = 11), DisplayFormat(DataFormatString = "{0:c}", ApplyFormatInEditMode = true), JsonProperty("netTransfers")]
         public virtual decimal? NetTransfers { get; set; }
 
         [Column("unavailable"), DataType(DataType.Currency), Display(Order = 12), DisplayFormat(DataFormatString = "{0:c}", ApplyFormatInEditMode = true), JsonProperty("unavailable")]
@@ -106,22 +106,37 @@ namespace FolioLibrary
         [Column("updated_by_username"), JsonProperty("metadata.updatedByUsername"), ScaffoldColumn(false), StringLength(1024)]
         public virtual string LastWriteUserUsername { get; set; }
 
-        [Column("content"), CustomValidation(typeof(Budget), nameof(ValidateContent)), DataType(DataType.MultilineText), Display(Order = 27), Editable(false)]
+        [Column("initial_allocation"), DataType(DataType.Currency), Display(Name = "Initial Allocation", Order = 27), DisplayFormat(DataFormatString = "{0:c}", ApplyFormatInEditMode = true), JsonProperty("initialAllocation")]
+        public virtual decimal? InitialAllocation { get; set; }
+
+        [Column("allocation_to"), DataType(DataType.Currency), Display(Name = "Allocation To", Order = 28), DisplayFormat(DataFormatString = "{0:c}", ApplyFormatInEditMode = true), JsonProperty("allocationTo")]
+        public virtual decimal? AllocationTo { get; set; }
+
+        [Column("allocation_from"), DataType(DataType.Currency), Display(Name = "Allocation From", Order = 29), DisplayFormat(DataFormatString = "{0:c}", ApplyFormatInEditMode = true), JsonProperty("allocationFrom")]
+        public virtual decimal? AllocationFrom { get; set; }
+
+        [Column("total_funding"), DataType(DataType.Currency), Display(Name = "Total Funding", Order = 30), DisplayFormat(DataFormatString = "{0:c}", ApplyFormatInEditMode = true), JsonProperty("totalFunding")]
+        public virtual decimal? TotalFunding { get; set; }
+
+        [Column("cash_balance"), DataType(DataType.Currency), Display(Name = "Cash Balance", Order = 31), DisplayFormat(DataFormatString = "{0:c}", ApplyFormatInEditMode = true), JsonProperty("cashBalance")]
+        public virtual decimal? CashBalance { get; set; }
+
+        [Column("content"), CustomValidation(typeof(Budget), nameof(ValidateContent)), DataType(DataType.MultilineText), Display(Order = 32), Editable(false)]
         public virtual string Content { get; set; }
 
-        [Display(Name = "Budget Acquisitions Units", Order = 28), JsonConverter(typeof(ArrayJsonConverter<List<BudgetAcquisitionsUnit>, BudgetAcquisitionsUnit>), "AcquisitionsUnitId"), JsonProperty("acqUnitIds")]
+        [Display(Name = "Budget Acquisitions Units", Order = 33), JsonConverter(typeof(ArrayJsonConverter<List<BudgetAcquisitionsUnit>, BudgetAcquisitionsUnit>), "AcquisitionsUnitId"), JsonProperty("acqUnitIds")]
         public virtual ICollection<BudgetAcquisitionsUnit> BudgetAcquisitionsUnits { get; set; }
 
-        [Display(Name = "Budget Expense Classs", Order = 29)]
+        [Display(Name = "Budget Expense Classs", Order = 34)]
         public virtual ICollection<BudgetExpenseClass2> BudgetExpenseClass2s { get; set; }
 
-        [Display(Name = "Budget Tags", Order = 30), JsonConverter(typeof(ArrayJsonConverter<List<BudgetTag>, BudgetTag>), "TagId"), JsonProperty("tags.tagList")]
+        [Display(Name = "Budget Groups", Order = 35)]
+        public virtual ICollection<BudgetGroup2> BudgetGroup2s { get; set; }
+
+        [Display(Name = "Budget Tags", Order = 36), JsonConverter(typeof(ArrayJsonConverter<List<BudgetTag>, BudgetTag>), "TagId"), JsonProperty("tags.tagList")]
         public virtual ICollection<BudgetTag> BudgetTags { get; set; }
 
-        [Display(Name = "Group Fund Fiscal Years", Order = 31)]
-        public virtual ICollection<GroupFundFiscalYear2> GroupFundFiscalYear2s { get; set; }
-
-        public override string ToString() => $"{{ {nameof(Id)} = {Id}, {nameof(Name)} = {Name}, {nameof(BudgetStatus)} = {BudgetStatus}, {nameof(AllowableEncumbrance)} = {AllowableEncumbrance}, {nameof(AllowableExpenditure)} = {AllowableExpenditure}, {nameof(Allocated)} = {Allocated}, {nameof(AwaitingPayment)} = {AwaitingPayment}, {nameof(Available)} = {Available}, {nameof(Encumbered)} = {Encumbered}, {nameof(Expenditures)} = {Expenditures}, {nameof(NetTransfers)} = {NetTransfers}, {nameof(Unavailable)} = {Unavailable}, {nameof(OverEncumbrance)} = {OverEncumbrance}, {nameof(OverExpended)} = {OverExpended}, {nameof(FundId)} = {FundId}, {nameof(FiscalYearId)} = {FiscalYearId}, {nameof(CreationTime)} = {CreationTime}, {nameof(CreationUserId)} = {CreationUserId}, {nameof(CreationUserUsername)} = {CreationUserUsername}, {nameof(LastWriteTime)} = {LastWriteTime}, {nameof(LastWriteUserId)} = {LastWriteUserId}, {nameof(LastWriteUserUsername)} = {LastWriteUserUsername}, {nameof(Content)} = {Content}, {nameof(BudgetAcquisitionsUnits)} = {(BudgetAcquisitionsUnits != null ? $"{{ {string.Join(", ", BudgetAcquisitionsUnits)} }}" : "")}, {nameof(BudgetTags)} = {(BudgetTags != null ? $"{{ {string.Join(", ", BudgetTags)} }}" : "")} }}";
+        public override string ToString() => $"{{ {nameof(Id)} = {Id}, {nameof(Name)} = {Name}, {nameof(BudgetStatus)} = {BudgetStatus}, {nameof(AllowableEncumbrance)} = {AllowableEncumbrance}, {nameof(AllowableExpenditure)} = {AllowableExpenditure}, {nameof(Allocated)} = {Allocated}, {nameof(AwaitingPayment)} = {AwaitingPayment}, {nameof(Available)} = {Available}, {nameof(Encumbered)} = {Encumbered}, {nameof(Expenditures)} = {Expenditures}, {nameof(NetTransfers)} = {NetTransfers}, {nameof(Unavailable)} = {Unavailable}, {nameof(OverEncumbrance)} = {OverEncumbrance}, {nameof(OverExpended)} = {OverExpended}, {nameof(FundId)} = {FundId}, {nameof(FiscalYearId)} = {FiscalYearId}, {nameof(CreationTime)} = {CreationTime}, {nameof(CreationUserId)} = {CreationUserId}, {nameof(CreationUserUsername)} = {CreationUserUsername}, {nameof(LastWriteTime)} = {LastWriteTime}, {nameof(LastWriteUserId)} = {LastWriteUserId}, {nameof(LastWriteUserUsername)} = {LastWriteUserUsername}, {nameof(InitialAllocation)} = {InitialAllocation}, {nameof(AllocationTo)} = {AllocationTo}, {nameof(AllocationFrom)} = {AllocationFrom}, {nameof(TotalFunding)} = {TotalFunding}, {nameof(CashBalance)} = {CashBalance}, {nameof(Content)} = {Content}, {nameof(BudgetAcquisitionsUnits)} = {(BudgetAcquisitionsUnits != null ? $"{{ {string.Join(", ", BudgetAcquisitionsUnits)} }}" : "")}, {nameof(BudgetTags)} = {(BudgetTags != null ? $"{{ {string.Join(", ", BudgetTags)} }}" : "")} }}";
 
         public static Budget2 FromJObject(JObject jObject) => jObject != null ? new Budget2
         {
@@ -147,6 +162,11 @@ namespace FolioLibrary
             LastWriteTime = ((DateTime?)jObject.SelectToken("metadata.updatedDate"))?.ToLocalTime(),
             LastWriteUserId = (Guid?)jObject.SelectToken("metadata.updatedByUserId"),
             LastWriteUserUsername = (string)jObject.SelectToken("metadata.updatedByUsername"),
+            InitialAllocation = (decimal?)jObject.SelectToken("initialAllocation"),
+            AllocationTo = (decimal?)jObject.SelectToken("allocationTo"),
+            AllocationFrom = (decimal?)jObject.SelectToken("allocationFrom"),
+            TotalFunding = (decimal?)jObject.SelectToken("totalFunding"),
+            CashBalance = (decimal?)jObject.SelectToken("cashBalance"),
             Content = jObject.ToString(),
             BudgetAcquisitionsUnits = jObject.SelectToken("acqUnitIds")?.Where(jt => jt.HasValues).Select(jt => BudgetAcquisitionsUnit.FromJObject((JValue)jt)).ToArray(),
             BudgetTags = jObject.SelectToken("tags.tagList")?.Where(jt => jt.HasValues).Select(jt => BudgetTag.FromJObject((JValue)jt)).ToArray()
@@ -176,6 +196,11 @@ namespace FolioLibrary
                 new JProperty("updatedDate", LastWriteTime?.ToUniversalTime()),
                 new JProperty("updatedByUserId", LastWriteUserId),
                 new JProperty("updatedByUsername", LastWriteUserUsername))),
+            new JProperty("initialAllocation", InitialAllocation),
+            new JProperty("allocationTo", AllocationTo),
+            new JProperty("allocationFrom", AllocationFrom),
+            new JProperty("totalFunding", TotalFunding),
+            new JProperty("cashBalance", CashBalance),
             new JProperty("acqUnitIds", BudgetAcquisitionsUnits?.Select(bau => bau.ToJObject())),
             new JProperty("tags", new JObject(
                 new JProperty("tagList", BudgetTags?.Select(bt => bt.ToJObject()))))).RemoveNullAndEmptyProperties();

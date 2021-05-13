@@ -119,6 +119,14 @@
             },
             "recallReturnInterval": {
               "$ref": "#/properties/loansPolicy/properties/period"
+            },
+            "allowRecallsToExtendOverdueLoans": {
+              "description": "Whether recalls are allowed to extend overdue loans",
+              "type": "boolean",
+              "default": false
+            },
+            "alternateRecallReturnInterval": {
+              "$ref": "#/properties/loansPolicy/properties/period"
             }
           }
         },

@@ -25,12 +25,12 @@
                                     <asp:Literal ID="CodeLiteral" runat="server" Text='<%#: Eval("Code") %>' />
                                 </td>
                             </tr>
-                            <tr runat="server" visible='<%# Eval("ExternalAccountNumberExt") != null %>'>
+                            <tr runat="server" visible='<%# Eval("ExternalAccountNumberExtension") != null %>'>
                                 <td>
-                                    <asp:Label ID="ExternalAccountNumberExtLabel" runat="server" Text="External Account Number Ext:" AssociatedControlID="ExternalAccountNumberExtLiteral" />
+                                    <asp:Label ID="ExternalAccountNumberExtensionLabel" runat="server" Text="External Account Number Extension:" AssociatedControlID="ExternalAccountNumberExtensionLiteral" />
                                 </td>
                                 <td>
-                                    <asp:Literal ID="ExternalAccountNumberExtLiteral" runat="server" Text='<%#: Eval("ExternalAccountNumberExt") %>' />
+                                    <asp:Literal ID="ExternalAccountNumberExtensionLiteral" runat="server" Text='<%#: Eval("ExternalAccountNumberExtension") %>' />
                                 </td>
                             </tr>
                             <tr runat="server" visible='<%# Eval("Name") != null %>'>
@@ -156,6 +156,7 @@
                         <telerik:GridBoundColumn HeaderText="Initial Encumbered Amount" DataField="InitialEncumberedAmount" AutoPostBackOnFilter="true" DataFormatString="{0:c}" />
                         <telerik:GridBoundColumn HeaderText="Status" DataField="Status" AutoPostBackOnFilter="true" HtmlEncode="true" CurrentFilterFunction="StartsWith" />
                         <telerik:GridBoundColumn HeaderText="Order Type" DataField="OrderType" AutoPostBackOnFilter="true" HtmlEncode="true" CurrentFilterFunction="StartsWith" />
+                        <telerik:GridBoundColumn HeaderText="Order Status" DataField="OrderStatus" AutoPostBackOnFilter="true" HtmlEncode="true" CurrentFilterFunction="StartsWith" />
                         <telerik:GridBoundColumn HeaderText="Subscription" DataField="Subscription" AutoPostBackOnFilter="true" />
                         <telerik:GridBoundColumn HeaderText="Re Encumber" DataField="ReEncumber" AutoPostBackOnFilter="true" />
                         <telerik:GridTemplateColumn AllowFiltering="false" AllowSorting="false" HeaderText="Order" DataField="Order.Number" SortExpression="Order.Number" AutoPostBackOnFilter="true" CurrentFilterFunction="EqualTo">

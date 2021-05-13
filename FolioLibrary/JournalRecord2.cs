@@ -9,7 +9,7 @@ namespace FolioLibrary
 {
     // uc.journal_records -> diku_mod_source_record_manager.journal_records
     // JournalRecord2 -> JournalRecord
-    [DisplayColumn(nameof(Id)), DisplayName("Journal Records"), JsonObject(MemberSerialization = MemberSerialization.OptIn), Table("journal_records", Schema = "uc")]
+    [DisplayColumn(nameof(Title)), DisplayName("Journal Records"), JsonObject(MemberSerialization = MemberSerialization.OptIn), Table("journal_records", Schema = "uc")]
     public partial class JournalRecord2
     {
         [Column("id"), JsonProperty("id"), ScaffoldColumn(false)]
@@ -21,34 +21,40 @@ namespace FolioLibrary
         [Column("job_execution_id"), Display(Name = "Job Execution", Order = 3)]
         public virtual Guid? JobExecutionId { get; set; }
 
-        [Column("source_id"), Display(Name = "Source Id", Order = 4)]
+        [Display(Order = 4)]
+        public virtual Source2 Source { get; set; }
+
+        [Column("source_id"), Display(Name = "Source", Order = 5)]
         public virtual Guid? SourceId { get; set; }
 
-        [Column("entity_type"), Display(Name = "Entity Type", Order = 5), StringLength(1024)]
+        [Column("entity_type"), Display(Name = "Entity Type", Order = 6), StringLength(1024)]
         public virtual string EntityType { get; set; }
 
-        [Column("entity_id"), Display(Name = "Entity Id", Order = 6), StringLength(1024)]
+        [Column("entity_id"), Display(Name = "Entity Id", Order = 7), StringLength(1024)]
         public virtual string EntityId { get; set; }
 
-        [Column("entity_hrid"), Display(Name = "Entity Hrid", Order = 7), StringLength(1024)]
+        [Column("entity_hrid"), Display(Name = "Entity Hrid", Order = 8), StringLength(1024)]
         public virtual string EntityHrid { get; set; }
 
-        [Column("action_type"), Display(Name = "Action Type", Order = 8), StringLength(1024)]
+        [Column("action_type"), Display(Name = "Action Type", Order = 9), StringLength(1024)]
         public virtual string ActionType { get; set; }
 
-        [Column("action_status"), Display(Name = "Action Status", Order = 9), StringLength(1024)]
+        [Column("action_status"), Display(Name = "Action Status", Order = 10), StringLength(1024)]
         public virtual string ActionStatus { get; set; }
 
-        [Column("action_date"), DataType(DataType.Date), Display(Name = "Action Date", Order = 10), DisplayFormat(DataFormatString = "{0:d}", ApplyFormatInEditMode = true)]
+        [Column("action_date"), DataType(DataType.Date), Display(Name = "Action Date", Order = 11), DisplayFormat(DataFormatString = "{0:d}", ApplyFormatInEditMode = true)]
         public virtual DateTime? ActionDate { get; set; }
 
-        [Column("source_record_order"), Display(Name = "Source Record Order", Order = 11)]
+        [Column("source_record_order"), Display(Name = "Source Record Order", Order = 12)]
         public virtual int? SourceRecordOrder { get; set; }
 
-        [Column("error"), Display(Order = 12), StringLength(1024)]
+        [Column("error"), Display(Order = 13), StringLength(1024)]
         public virtual string Error { get; set; }
 
-        public override string ToString() => $"{{ {nameof(Id)} = {Id}, {nameof(JobExecutionId)} = {JobExecutionId}, {nameof(SourceId)} = {SourceId}, {nameof(EntityType)} = {EntityType}, {nameof(EntityId)} = {EntityId}, {nameof(EntityHrid)} = {EntityHrid}, {nameof(ActionType)} = {ActionType}, {nameof(ActionStatus)} = {ActionStatus}, {nameof(ActionDate)} = {ActionDate}, {nameof(SourceRecordOrder)} = {SourceRecordOrder}, {nameof(Error)} = {Error} }}";
+        [Column("title"), Display(Order = 14), StringLength(1024)]
+        public virtual string Title { get; set; }
+
+        public override string ToString() => $"{{ {nameof(Id)} = {Id}, {nameof(JobExecutionId)} = {JobExecutionId}, {nameof(SourceId)} = {SourceId}, {nameof(EntityType)} = {EntityType}, {nameof(EntityId)} = {EntityId}, {nameof(EntityHrid)} = {EntityHrid}, {nameof(ActionType)} = {ActionType}, {nameof(ActionStatus)} = {ActionStatus}, {nameof(ActionDate)} = {ActionDate}, {nameof(SourceRecordOrder)} = {SourceRecordOrder}, {nameof(Error)} = {Error}, {nameof(Title)} = {Title} }}";
 
         public static JournalRecord2 FromJObject(JObject jObject) => jObject != null ? new JournalRecord2
         {

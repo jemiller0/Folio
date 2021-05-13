@@ -266,6 +266,27 @@ namespace FolioWebApplicationTest
         }
 
         [TestMethod]
+        public void BudgetGroup2sDefaultAspxTest()
+        {
+            var s = Stopwatch.StartNew();
+            try
+            {
+                var hrm = httpClient.GetAsync($"{Url}/BudgetGroup2s/Default.aspx").Result;
+                hrm.EnsureSuccessStatusCode();
+                Assert.IsTrue(s.Elapsed < TimeSpan.FromSeconds(30));
+            }
+            catch (Exception e)
+            {
+                traceSource.TraceEvent(TraceEventType.Error, 0, e.ToString());
+                throw;
+            }
+            finally
+            {
+                traceSource.TraceEvent(TraceEventType.Information, 0, $"BudgetGroup2sDefaultAspxTest()\r\n    ElapsedTime={s.Elapsed}");
+            }
+        }
+
+        [TestMethod]
         public void CallNumberType2sDefaultAspxTest()
         {
             var s = Stopwatch.StartNew();
@@ -791,27 +812,6 @@ namespace FolioWebApplicationTest
         }
 
         [TestMethod]
-        public void GroupFundFiscalYear2sDefaultAspxTest()
-        {
-            var s = Stopwatch.StartNew();
-            try
-            {
-                var hrm = httpClient.GetAsync($"{Url}/GroupFundFiscalYear2s/Default.aspx").Result;
-                hrm.EnsureSuccessStatusCode();
-                Assert.IsTrue(s.Elapsed < TimeSpan.FromSeconds(30));
-            }
-            catch (Exception e)
-            {
-                traceSource.TraceEvent(TraceEventType.Error, 0, e.ToString());
-                throw;
-            }
-            finally
-            {
-                traceSource.TraceEvent(TraceEventType.Information, 0, $"GroupFundFiscalYear2sDefaultAspxTest()\r\n    ElapsedTime={s.Elapsed}");
-            }
-        }
-
-        [TestMethod]
         public void Holding2sDefaultAspxTest()
         {
             var s = Stopwatch.StartNew();
@@ -1169,6 +1169,69 @@ namespace FolioWebApplicationTest
         }
 
         [TestMethod]
+        public void LedgerRollover2sDefaultAspxTest()
+        {
+            var s = Stopwatch.StartNew();
+            try
+            {
+                var hrm = httpClient.GetAsync($"{Url}/LedgerRollover2s/Default.aspx").Result;
+                hrm.EnsureSuccessStatusCode();
+                Assert.IsTrue(s.Elapsed < TimeSpan.FromSeconds(30));
+            }
+            catch (Exception e)
+            {
+                traceSource.TraceEvent(TraceEventType.Error, 0, e.ToString());
+                throw;
+            }
+            finally
+            {
+                traceSource.TraceEvent(TraceEventType.Information, 0, $"LedgerRollover2sDefaultAspxTest()\r\n    ElapsedTime={s.Elapsed}");
+            }
+        }
+
+        [TestMethod]
+        public void LedgerRolloverError2sDefaultAspxTest()
+        {
+            var s = Stopwatch.StartNew();
+            try
+            {
+                var hrm = httpClient.GetAsync($"{Url}/LedgerRolloverError2s/Default.aspx").Result;
+                hrm.EnsureSuccessStatusCode();
+                Assert.IsTrue(s.Elapsed < TimeSpan.FromSeconds(30));
+            }
+            catch (Exception e)
+            {
+                traceSource.TraceEvent(TraceEventType.Error, 0, e.ToString());
+                throw;
+            }
+            finally
+            {
+                traceSource.TraceEvent(TraceEventType.Information, 0, $"LedgerRolloverError2sDefaultAspxTest()\r\n    ElapsedTime={s.Elapsed}");
+            }
+        }
+
+        [TestMethod]
+        public void LedgerRolloverProgress2sDefaultAspxTest()
+        {
+            var s = Stopwatch.StartNew();
+            try
+            {
+                var hrm = httpClient.GetAsync($"{Url}/LedgerRolloverProgress2s/Default.aspx").Result;
+                hrm.EnsureSuccessStatusCode();
+                Assert.IsTrue(s.Elapsed < TimeSpan.FromSeconds(30));
+            }
+            catch (Exception e)
+            {
+                traceSource.TraceEvent(TraceEventType.Error, 0, e.ToString());
+                throw;
+            }
+            finally
+            {
+                traceSource.TraceEvent(TraceEventType.Information, 0, $"LedgerRolloverProgress2sDefaultAspxTest()\r\n    ElapsedTime={s.Elapsed}");
+            }
+        }
+
+        [TestMethod]
         public void Library2sDefaultAspxTest()
         {
             var s = Stopwatch.StartNew();
@@ -1316,6 +1379,27 @@ namespace FolioWebApplicationTest
         }
 
         [TestMethod]
+        public void ManualBlockTemplate2sDefaultAspxTest()
+        {
+            var s = Stopwatch.StartNew();
+            try
+            {
+                var hrm = httpClient.GetAsync($"{Url}/ManualBlockTemplate2s/Default.aspx").Result;
+                hrm.EnsureSuccessStatusCode();
+                Assert.IsTrue(s.Elapsed < TimeSpan.FromSeconds(30));
+            }
+            catch (Exception e)
+            {
+                traceSource.TraceEvent(TraceEventType.Error, 0, e.ToString());
+                throw;
+            }
+            finally
+            {
+                traceSource.TraceEvent(TraceEventType.Information, 0, $"ManualBlockTemplate2sDefaultAspxTest()\r\n    ElapsedTime={s.Elapsed}");
+            }
+        }
+
+        [TestMethod]
         public void MaterialType2sDefaultAspxTest()
         {
             var s = Stopwatch.StartNew();
@@ -1438,27 +1522,6 @@ namespace FolioWebApplicationTest
             finally
             {
                 traceSource.TraceEvent(TraceEventType.Information, 0, $"OrderTemplate2sDefaultAspxTest()\r\n    ElapsedTime={s.Elapsed}");
-            }
-        }
-
-        [TestMethod]
-        public void OrderTransactionSummary2sDefaultAspxTest()
-        {
-            var s = Stopwatch.StartNew();
-            try
-            {
-                var hrm = httpClient.GetAsync($"{Url}/OrderTransactionSummary2s/Default.aspx").Result;
-                hrm.EnsureSuccessStatusCode();
-                Assert.IsTrue(s.Elapsed < TimeSpan.FromSeconds(30));
-            }
-            catch (Exception e)
-            {
-                traceSource.TraceEvent(TraceEventType.Error, 0, e.ToString());
-                throw;
-            }
-            finally
-            {
-                traceSource.TraceEvent(TraceEventType.Information, 0, $"OrderTransactionSummary2sDefaultAspxTest()\r\n    ElapsedTime={s.Elapsed}");
             }
         }
 

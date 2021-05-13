@@ -40,6 +40,12 @@
     "patronBilledAfterAgedLost": {
       "$ref": "#/properties/itemAgedLostOverdue"
     },
+    "recalledItemAgedLostOverdue": {
+      "$ref": "#/properties/itemAgedLostOverdue"
+    },
+    "patronBilledAfterRecalledItemAgedLost": {
+      "$ref": "#/properties/itemAgedLostOverdue"
+    },
     "chargeAmountItem": {
       "description": "Charge amount for item",
       "type": "object",

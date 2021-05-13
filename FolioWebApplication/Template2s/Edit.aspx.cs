@@ -65,7 +65,7 @@ namespace FolioWebApplication.Template2s
             if (Session["Owner2sPermission"] == null) return;
             var id = (Guid?)Template2FormView.DataKey.Value;
             if (id == null) return;
-            var d = new Dictionary<string, string>() { { "Id", "id" }, { "Name", "owner" }, { "Desc", "desc" }, { "DefaultChargeNoticeId", "defaultChargeNoticeId" }, { "DefaultActionNoticeId", "defaultActionNoticeId" }, { "CreationTime", "metadata.createdDate" }, { "CreationUserId", "metadata.createdByUserId" }, { "LastWriteTime", "metadata.updatedDate" }, { "LastWriteUserId", "metadata.updatedByUserId" } };
+            var d = new Dictionary<string, string>() { { "Id", "id" }, { "Name", "owner" }, { "Description", "desc" }, { "DefaultChargeNoticeId", "defaultChargeNoticeId" }, { "DefaultActionNoticeId", "defaultActionNoticeId" }, { "CreationTime", "metadata.createdDate" }, { "CreationUserId", "metadata.createdByUserId" }, { "LastWriteTime", "metadata.updatedDate" }, { "LastWriteUserId", "metadata.updatedByUserId" } };
             Owner2sRadGrid.DataSource = folioServiceContext.Owner2s(out var i, Global.GetCqlFilter(Owner2sRadGrid, d, $"defaultActionNoticeId == \"{id}\""), Owner2sRadGrid.MasterTableView.SortExpressions.Count > 0 ? $"{d[Owner2sRadGrid.MasterTableView.SortExpressions[0].FieldName]}{(Owner2sRadGrid.MasterTableView.SortExpressions[0].SortOrder == GridSortOrder.Descending ? "/sort.descending" : "")}" : null, Owner2sRadGrid.PageSize * Owner2sRadGrid.CurrentPageIndex, Owner2sRadGrid.PageSize, true);
             Owner2sRadGrid.VirtualItemCount = i;
             if (Owner2sRadGrid.MasterTableView.FilterExpression == "")
@@ -80,7 +80,7 @@ namespace FolioWebApplication.Template2s
             if (Session["Owner2sPermission"] == null) return;
             var id = (Guid?)Template2FormView.DataKey.Value;
             if (id == null) return;
-            var d = new Dictionary<string, string>() { { "Id", "id" }, { "Name", "owner" }, { "Desc", "desc" }, { "DefaultChargeNoticeId", "defaultChargeNoticeId" }, { "DefaultActionNoticeId", "defaultActionNoticeId" }, { "CreationTime", "metadata.createdDate" }, { "CreationUserId", "metadata.createdByUserId" }, { "LastWriteTime", "metadata.updatedDate" }, { "LastWriteUserId", "metadata.updatedByUserId" } };
+            var d = new Dictionary<string, string>() { { "Id", "id" }, { "Name", "owner" }, { "Description", "desc" }, { "DefaultChargeNoticeId", "defaultChargeNoticeId" }, { "DefaultActionNoticeId", "defaultActionNoticeId" }, { "CreationTime", "metadata.createdDate" }, { "CreationUserId", "metadata.createdByUserId" }, { "LastWriteTime", "metadata.updatedDate" }, { "LastWriteUserId", "metadata.updatedByUserId" } };
             Owner2s1RadGrid.DataSource = folioServiceContext.Owner2s(out var i, Global.GetCqlFilter(Owner2s1RadGrid, d, $"defaultChargeNoticeId == \"{id}\""), Owner2s1RadGrid.MasterTableView.SortExpressions.Count > 0 ? $"{d[Owner2s1RadGrid.MasterTableView.SortExpressions[0].FieldName]}{(Owner2s1RadGrid.MasterTableView.SortExpressions[0].SortOrder == GridSortOrder.Descending ? "/sort.descending" : "")}" : null, Owner2s1RadGrid.PageSize * Owner2s1RadGrid.CurrentPageIndex, Owner2s1RadGrid.PageSize, true);
             Owner2s1RadGrid.VirtualItemCount = i;
             if (Owner2s1RadGrid.MasterTableView.FilterExpression == "")

@@ -29,6 +29,10 @@ namespace FolioWebApplication.Fund2s
 
         protected RadGrid Budget2sRadGrid;
 
+        protected Panel BudgetGroup2sPanel;
+
+        protected RadGrid BudgetGroup2sRadGrid;
+
         protected Panel FundAcquisitionsUnitsPanel;
 
         protected RadGrid FundAcquisitionsUnitsRadGrid;
@@ -36,10 +40,6 @@ namespace FolioWebApplication.Fund2s
         protected Panel FundTagsPanel;
 
         protected RadGrid FundTagsRadGrid;
-
-        protected Panel GroupFundFiscalYear2sPanel;
-
-        protected RadGrid GroupFundFiscalYear2sRadGrid;
 
         protected Panel InvoiceAdjustmentFundsPanel;
 

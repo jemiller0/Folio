@@ -77,167 +77,167 @@ namespace FolioLibrary
         [Column("cost_discount_type"), Display(Name = "Discount Type", Order = 14), JsonProperty("cost.discountType"), RegularExpression(@"^(amount|percentage)$"), StringLength(1024)]
         public virtual string DiscountType { get; set; }
 
-        [Column("cost_quantity_physical"), Display(Name = "Physical Quantity", Order = 15), JsonProperty("cost.quantityPhysical")]
+        [Column("cost_exchange_rate"), Display(Name = "Exchange Rate", Order = 15), JsonProperty("cost.exchangeRate")]
+        public virtual decimal? ExchangeRate { get; set; }
+
+        [Column("cost_quantity_physical"), Display(Name = "Physical Quantity", Order = 16), JsonProperty("cost.quantityPhysical")]
         public virtual int? PhysicalQuantity { get; set; }
 
-        [Column("cost_quantity_electronic"), Display(Name = "Electronic Quantity", Order = 16), JsonProperty("cost.quantityElectronic")]
+        [Column("cost_quantity_electronic"), Display(Name = "Electronic Quantity", Order = 17), JsonProperty("cost.quantityElectronic")]
         public virtual int? ElectronicQuantity { get; set; }
 
-        [Column("cost_po_line_estimated_price"), DataType(DataType.Currency), Display(Name = "Estimated Price", Order = 17), DisplayFormat(DataFormatString = "{0:c}", ApplyFormatInEditMode = true), JsonProperty("cost.poLineEstimatedPrice")]
+        [Column("cost_po_line_estimated_price"), DataType(DataType.Currency), Display(Name = "Estimated Price", Order = 18), DisplayFormat(DataFormatString = "{0:c}", ApplyFormatInEditMode = true), JsonProperty("cost.poLineEstimatedPrice")]
         public virtual decimal? EstimatedPrice { get; set; }
 
-        [Column("description"), Display(Order = 18), JsonProperty("description"), StringLength(1024)]
+        [Column("cost_fyro_adjustment_amount"), DataType(DataType.Currency), Display(Name = "Fiscal Year Rollover Adjustment Amount", Order = 19), DisplayFormat(DataFormatString = "{0:c}", ApplyFormatInEditMode = true), JsonProperty("cost.fyroAdjustmentAmount")]
+        public virtual decimal? FiscalYearRolloverAdjustmentAmount { get; set; }
+
+        [Column("description"), Display(Order = 20), JsonProperty("description"), StringLength(1024)]
         public virtual string Description { get; set; }
 
-        [Column("details_receiving_note"), Display(Name = "Receiving Note", Order = 19), JsonProperty("details.receivingNote"), StringLength(1024)]
+        [Column("details_receiving_note"), Display(Name = "Receiving Note", Order = 21), JsonProperty("details.receivingNote"), StringLength(1024)]
         public virtual string ReceivingNote { get; set; }
 
-        [Column("details_subscription_from"), Display(Name = "Subscription From", Order = 20), DisplayFormat(DataFormatString = "{0:g}", ApplyFormatInEditMode = true), JsonProperty("details.subscriptionFrom")]
+        [Column("details_subscription_from"), Display(Name = "Subscription From", Order = 22), DisplayFormat(DataFormatString = "{0:g}", ApplyFormatInEditMode = true), JsonProperty("details.subscriptionFrom")]
         public virtual DateTime? SubscriptionFrom { get; set; }
 
-        [Column("details_subscription_interval"), Display(Name = "Subscription Interval", Order = 21), JsonProperty("details.subscriptionInterval")]
+        [Column("details_subscription_interval"), Display(Name = "Subscription Interval", Order = 23), JsonProperty("details.subscriptionInterval")]
         public virtual int? SubscriptionInterval { get; set; }
 
-        [Column("details_subscription_to"), Display(Name = "Subscription To", Order = 22), DisplayFormat(DataFormatString = "{0:g}", ApplyFormatInEditMode = true), JsonProperty("details.subscriptionTo")]
+        [Column("details_subscription_to"), Display(Name = "Subscription To", Order = 24), DisplayFormat(DataFormatString = "{0:g}", ApplyFormatInEditMode = true), JsonProperty("details.subscriptionTo")]
         public virtual DateTime? SubscriptionTo { get; set; }
 
-        [Column("donor"), Display(Order = 23), JsonProperty("donor"), StringLength(1024)]
+        [Column("donor"), Display(Order = 25), JsonProperty("donor"), StringLength(1024)]
         public virtual string Donor { get; set; }
 
-        [Column("eresource_activated"), Display(Name = "Eresource Activated", Order = 24), JsonProperty("eresource.activated")]
+        [Column("eresource_activated"), Display(Name = "Eresource Activated", Order = 26), JsonProperty("eresource.activated")]
         public virtual bool? EresourceActivated { get; set; }
 
-        [Column("eresource_activation_due"), Display(Name = "Eresource Activation Due", Order = 25), JsonProperty("eresource.activationDue")]
+        [Column("eresource_activation_due"), Display(Name = "Eresource Activation Due", Order = 27), JsonProperty("eresource.activationDue")]
         public virtual int? EresourceActivationDue { get; set; }
 
-        [Column("eresource_create_inventory"), Display(Name = "Eresource Create Inventory", Order = 26), JsonProperty("eresource.createInventory"), RegularExpression(@"^(Instance, Holding, Item|Instance, Holding|Instance|None)$"), StringLength(1024)]
+        [Column("eresource_create_inventory"), Display(Name = "Eresource Create Inventory", Order = 28), JsonProperty("eresource.createInventory"), RegularExpression(@"^(Instance, Holding, Item|Instance, Holding|Instance|None)$"), StringLength(1024)]
         public virtual string EresourceCreateInventory { get; set; }
 
-        [Column("eresource_trial"), Display(Name = "Eresource Trial", Order = 27), JsonProperty("eresource.trial")]
+        [Column("eresource_trial"), Display(Name = "Eresource Trial", Order = 29), JsonProperty("eresource.trial")]
         public virtual bool? EresourceTrial { get; set; }
 
-        [Column("eresource_expected_activation"), DataType(DataType.Date), Display(Name = "Eresource Expected Activation Date", Order = 28), DisplayFormat(DataFormatString = "{0:d}", ApplyFormatInEditMode = true), JsonProperty("eresource.expectedActivation")]
+        [Column("eresource_expected_activation"), DataType(DataType.Date), Display(Name = "Eresource Expected Activation Date", Order = 30), DisplayFormat(DataFormatString = "{0:d}", ApplyFormatInEditMode = true), JsonProperty("eresource.expectedActivation")]
         public virtual DateTime? EresourceExpectedActivationDate { get; set; }
 
-        [Column("eresource_user_limit"), Display(Name = "Eresource User Limit", Order = 29), JsonProperty("eresource.userLimit")]
+        [Column("eresource_user_limit"), Display(Name = "Eresource User Limit", Order = 31), JsonProperty("eresource.userLimit")]
         public virtual int? EresourceUserLimit { get; set; }
 
-        [Display(Name = "Eresource Access Provider", Order = 30), InverseProperty("OrderItem2s")]
+        [Display(Name = "Eresource Access Provider", Order = 32), InverseProperty("OrderItem2s")]
         public virtual Organization2 EresourceAccessProvider { get; set; }
 
-        [Column("eresource_access_provider_id"), Display(Name = "Eresource Access Provider", Order = 31), JsonProperty("eresource.accessProvider")]
+        [Column("eresource_access_provider_id"), Display(Name = "Eresource Access Provider", Order = 33), JsonProperty("eresource.accessProvider")]
         public virtual Guid? EresourceAccessProviderId { get; set; }
 
-        [Column("eresource_license_code"), Display(Name = "Eresource License Code", Order = 32), JsonProperty("eresource.license.code"), StringLength(1024)]
+        [Column("eresource_license_code"), Display(Name = "Eresource License Code", Order = 34), JsonProperty("eresource.license.code"), StringLength(1024)]
         public virtual string EresourceLicenseCode { get; set; }
 
-        [Column("eresource_license_description"), Display(Name = "Eresource License Description", Order = 33), JsonProperty("eresource.license.description"), StringLength(1024)]
+        [Column("eresource_license_description"), Display(Name = "Eresource License Description", Order = 35), JsonProperty("eresource.license.description"), StringLength(1024)]
         public virtual string EresourceLicenseDescription { get; set; }
 
-        [Column("eresource_license_reference"), Display(Name = "Eresource License Reference", Order = 34), JsonProperty("eresource.license.reference"), StringLength(1024)]
+        [Column("eresource_license_reference"), Display(Name = "Eresource License Reference", Order = 36), JsonProperty("eresource.license.reference"), StringLength(1024)]
         public virtual string EresourceLicenseReference { get; set; }
 
-        [Display(Name = "Eresource Material Type", Order = 35), InverseProperty("OrderItem2s")]
+        [Display(Name = "Eresource Material Type", Order = 37), InverseProperty("OrderItem2s")]
         public virtual MaterialType2 EresourceMaterialType { get; set; }
 
-        [Column("eresource_material_type_id"), Display(Name = "Eresource Material Type", Order = 36), JsonProperty("eresource.materialType")]
+        [Column("eresource_material_type_id"), Display(Name = "Eresource Material Type", Order = 38), JsonProperty("eresource.materialType")]
         public virtual Guid? EresourceMaterialTypeId { get; set; }
 
-        [Column("eresource_resource_url"), DataType(DataType.Url), Display(Name = "Eresource Resource URL", Order = 37), JsonProperty("eresource.resourceUrl"), StringLength(1024)]
+        [Column("eresource_resource_url"), DataType(DataType.Url), Display(Name = "Eresource Resource URL", Order = 39), JsonProperty("eresource.resourceUrl"), StringLength(1024)]
         public virtual string EresourceResourceUrl { get; set; }
 
-        [Display(Order = 38)]
+        [Display(Order = 40)]
         public virtual Instance2 Instance { get; set; }
 
-        [Column("instance_id"), Display(Name = "Instance", Order = 39), JsonProperty("instanceId")]
+        [Column("instance_id"), Display(Name = "Instance", Order = 41), JsonProperty("instanceId")]
         public virtual Guid? InstanceId { get; set; }
 
-        [Column("is_package"), Display(Name = "Is Package", Order = 40), JsonProperty("isPackage")]
+        [Column("is_package"), Display(Name = "Is Package", Order = 42), JsonProperty("isPackage")]
         public virtual bool? IsPackage { get; set; }
 
-        [Column("order_format"), Display(Name = "Order Format", Order = 41), JsonProperty("orderFormat"), RegularExpression(@"^(Electronic Resource|P/E Mix|Physical Resource|Other)$"), Required, StringLength(1024)]
+        [Column("order_format"), Display(Name = "Order Format", Order = 43), JsonProperty("orderFormat"), RegularExpression(@"^(Electronic Resource|P/E Mix|Physical Resource|Other)$"), Required, StringLength(1024)]
         public virtual string OrderFormat { get; set; }
 
-        [Display(Name = "Package Order Item", Order = 42)]
+        [Display(Name = "Package Order Item", Order = 44)]
         public virtual OrderItem2 PackageOrderItem { get; set; }
 
-        [Column("package_po_line_id"), Display(Name = "Package Order Item", Order = 43), JsonProperty("packagePoLineId")]
+        [Column("package_po_line_id"), Display(Name = "Package Order Item", Order = 45), JsonProperty("packagePoLineId")]
         public virtual Guid? PackageOrderItemId { get; set; }
 
-        [Column("payment_status"), Display(Name = "Payment Status", Order = 44), JsonProperty("paymentStatus"), RegularExpression(@"^(Awaiting Payment|Cancelled|Fully Paid|Partially Paid|Payment Not Required|Pending)$"), StringLength(1024)]
+        [Column("payment_status"), Display(Name = "Payment Status", Order = 46), JsonProperty("paymentStatus"), RegularExpression(@"^(Awaiting Payment|Cancelled|Fully Paid|Partially Paid|Payment Not Required|Pending|Ongoing)$"), StringLength(1024)]
         public virtual string PaymentStatus { get; set; }
 
-        [Column("physical_create_inventory"), Display(Name = "Physical Create Inventory", Order = 45), JsonProperty("physical.createInventory"), RegularExpression(@"^(Instance, Holding, Item|Instance, Holding|Instance|None)$"), StringLength(1024)]
+        [Column("physical_create_inventory"), Display(Name = "Physical Create Inventory", Order = 47), JsonProperty("physical.createInventory"), RegularExpression(@"^(Instance, Holding, Item|Instance, Holding|Instance|None)$"), StringLength(1024)]
         public virtual string PhysicalCreateInventory { get; set; }
 
-        [Display(Name = "Physical Material Type", Order = 46), InverseProperty("OrderItem2s1")]
+        [Display(Name = "Physical Material Type", Order = 48), InverseProperty("OrderItem2s1")]
         public virtual MaterialType2 PhysicalMaterialType { get; set; }
 
-        [Column("physical_material_type_id"), Display(Name = "Physical Material Type", Order = 47), JsonProperty("physical.materialType")]
+        [Column("physical_material_type_id"), Display(Name = "Physical Material Type", Order = 49), JsonProperty("physical.materialType")]
         public virtual Guid? PhysicalMaterialTypeId { get; set; }
 
-        [Display(Name = "Physical Material Supplier", Order = 48), InverseProperty("OrderItem2s1")]
+        [Display(Name = "Physical Material Supplier", Order = 50), InverseProperty("OrderItem2s1")]
         public virtual Organization2 PhysicalMaterialSupplier { get; set; }
 
-        [Column("physical_material_supplier_id"), Display(Name = "Physical Material Supplier", Order = 49), JsonProperty("physical.materialSupplier")]
+        [Column("physical_material_supplier_id"), Display(Name = "Physical Material Supplier", Order = 51), JsonProperty("physical.materialSupplier")]
         public virtual Guid? PhysicalMaterialSupplierId { get; set; }
 
-        [Column("physical_expected_receipt_date"), DataType(DataType.Date), Display(Name = "Physical Expected Receipt Date", Order = 50), DisplayFormat(DataFormatString = "{0:d}", ApplyFormatInEditMode = true), JsonProperty("physical.expectedReceiptDate")]
+        [Column("physical_expected_receipt_date"), DataType(DataType.Date), Display(Name = "Physical Expected Receipt Date", Order = 52), DisplayFormat(DataFormatString = "{0:d}", ApplyFormatInEditMode = true), JsonProperty("physical.expectedReceiptDate")]
         public virtual DateTime? PhysicalExpectedReceiptDate { get; set; }
 
-        [Column("physical_receipt_due"), Display(Name = "Physical Receipt Due", Order = 51), DisplayFormat(DataFormatString = "{0:g}", ApplyFormatInEditMode = true), JsonProperty("physical.receiptDue")]
+        [Column("physical_receipt_due"), Display(Name = "Physical Receipt Due", Order = 53), DisplayFormat(DataFormatString = "{0:g}", ApplyFormatInEditMode = true), JsonProperty("physical.receiptDue")]
         public virtual DateTime? PhysicalReceiptDue { get; set; }
 
-        [Column("po_line_description"), Display(Name = "Description 2", Order = 52), JsonProperty("poLineDescription"), StringLength(1024)]
+        [Column("po_line_description"), Display(Name = "Description 2", Order = 54), JsonProperty("poLineDescription"), StringLength(1024)]
         public virtual string Description2 { get; set; }
 
-        [Column("po_line_number"), Display(Order = 53), JsonProperty("poLineNumber"), StringLength(1024)]
+        [Column("po_line_number"), Display(Order = 55), JsonProperty("poLineNumber"), StringLength(1024)]
         public virtual string Number { get; set; }
 
-        [Column("publication_year"), Display(Name = "Publication Year", Order = 54), JsonProperty("publicationDate"), StringLength(1024)]
+        [Column("publication_year"), Display(Name = "Publication Year", Order = 56), JsonProperty("publicationDate"), StringLength(1024)]
         public virtual string PublicationYear { get; set; }
 
-        [Column("publisher"), Display(Order = 55), JsonProperty("publisher"), StringLength(1024)]
+        [Column("publisher"), Display(Order = 57), JsonProperty("publisher"), StringLength(1024)]
         public virtual string Publisher { get; set; }
 
-        [Display(Order = 56)]
+        [Display(Order = 58)]
         public virtual Order2 Order { get; set; }
 
-        [Column("order_id"), Display(Name = "Order", Order = 57), JsonProperty("purchaseOrderId"), Required]
+        [Column("order_id"), Display(Name = "Order", Order = 59), JsonProperty("purchaseOrderId"), Required]
         public virtual Guid? OrderId { get; set; }
 
-        [Column("receipt_date"), DataType(DataType.Date), Display(Name = "Receipt Date", Order = 58), DisplayFormat(DataFormatString = "{0:d}", ApplyFormatInEditMode = true), JsonProperty("receiptDate")]
+        [Column("receipt_date"), DataType(DataType.Date), Display(Name = "Receipt Date", Order = 60), DisplayFormat(DataFormatString = "{0:d}", ApplyFormatInEditMode = true), JsonProperty("receiptDate")]
         public virtual DateTime? ReceiptDate { get; set; }
 
-        [Column("receipt_status"), Display(Name = "Receipt Status", Order = 59), JsonProperty("receiptStatus"), RegularExpression(@"^(Awaiting Receipt|Cancelled|Fully Received|Partially Received|Pending|Receipt Not Required)$"), StringLength(1024)]
+        [Column("receipt_status"), Display(Name = "Receipt Status", Order = 61), JsonProperty("receiptStatus"), RegularExpression(@"^(Awaiting Receipt|Cancelled|Fully Received|Partially Received|Pending|Receipt Not Required|Ongoing)$"), StringLength(1024)]
         public virtual string ReceiptStatus { get; set; }
 
-        [Column("requester"), Display(Order = 60), JsonProperty("requester"), StringLength(1024)]
+        [Column("requester"), Display(Order = 62), JsonProperty("requester"), StringLength(1024)]
         public virtual string Requester { get; set; }
 
-        [Column("rush"), Display(Order = 61), JsonProperty("rush")]
+        [Column("rush"), Display(Order = 63), JsonProperty("rush")]
         public virtual bool? Rush { get; set; }
 
-        [Column("selector"), Display(Order = 62), JsonProperty("selector"), StringLength(1024)]
+        [Column("selector"), Display(Order = 64), JsonProperty("selector"), StringLength(1024)]
         public virtual string Selector { get; set; }
 
-        [Column("source"), Display(Order = 63), JsonProperty("source"), RegularExpression(@"^(User|API|EDI|MARC)$"), Required, StringLength(1024)]
+        [Column("source"), Display(Order = 65), JsonProperty("source"), RegularExpression(@"^(User|API|EDI|MARC)$"), Required, StringLength(1024)]
         public virtual string Source { get; set; }
 
-        [Column("title_or_package"), Display(Name = "Title Or Package", Order = 64), JsonProperty("titleOrPackage"), Required, StringLength(1024)]
+        [Column("title_or_package"), Display(Name = "Title Or Package", Order = 66), JsonProperty("titleOrPackage"), Required, StringLength(1024)]
         public virtual string TitleOrPackage { get; set; }
 
-        [Column("vendor_detail_instructions"), Display(Name = "Vendor Instructions", Order = 65), JsonProperty("vendorDetail.instructions"), Required, StringLength(1024)]
+        [Column("vendor_detail_instructions"), Display(Name = "Vendor Instructions", Order = 67), JsonProperty("vendorDetail.instructions"), Required, StringLength(1024)]
         public virtual string VendorInstructions { get; set; }
 
-        [Column("vendor_detail_note_from_vendor"), Display(Name = "Vendor Note", Order = 66), JsonProperty("vendorDetail.noteFromVendor"), StringLength(1024)]
+        [Column("vendor_detail_note_from_vendor"), Display(Name = "Vendor Note", Order = 68), JsonProperty("vendorDetail.noteFromVendor"), StringLength(1024)]
         public virtual string VendorNote { get; set; }
-
-        [Column("vendor_detail_ref_number"), Display(Name = "Vendor Reference Number", Order = 67), JsonProperty("vendorDetail.refNumber"), StringLength(1024)]
-        public virtual string VendorReferenceNumber { get; set; }
-
-        [Column("vendor_detail_ref_number_type"), Display(Name = "Vendor Reference Number Type", Order = 68), JsonProperty("vendorDetail.refNumberType"), RegularExpression(@"^(Supplier's continuation order|Supplier's unique order line reference number|Agent's unique subscription reference number|Library's continuation order number|Internal vendor number)$"), StringLength(1024)]
-        public virtual string VendorReferenceNumberType { get; set; }
 
         [Column("vendor_detail_vendor_account"), Display(Name = "Vendor Account", Order = 69), JsonProperty("vendorDetail.vendorAccount"), StringLength(1024)]
         public virtual string VendorAccount { get; set; }
@@ -296,25 +296,28 @@ namespace FolioLibrary
         [Display(Name = "Order Item Product Ids", Order = 87), JsonProperty("details.productIds")]
         public virtual ICollection<OrderItemProductId> OrderItemProductIds { get; set; }
 
-        [Display(Name = "Order Item Reporting Codes", Order = 88), JsonConverter(typeof(ArrayJsonConverter<List<OrderItemReportingCode>, OrderItemReportingCode>), "ReportingCodeId"), JsonProperty("reportingCodes")]
+        [Display(Name = "Order Item Reference Numbers", Order = 88), JsonProperty("vendorDetail.referenceNumbers")]
+        public virtual ICollection<OrderItemReferenceNumber> OrderItemReferenceNumbers { get; set; }
+
+        [Display(Name = "Order Item Reporting Codes", Order = 89), JsonConverter(typeof(ArrayJsonConverter<List<OrderItemReportingCode>, OrderItemReportingCode>), "ReportingCodeId"), JsonProperty("reportingCodes")]
         public virtual ICollection<OrderItemReportingCode> OrderItemReportingCodes { get; set; }
 
-        [Display(Name = "Order Item Tags", Order = 89), JsonConverter(typeof(ArrayJsonConverter<List<OrderItemTag>, OrderItemTag>), "Content"), JsonProperty("tags.tagList")]
+        [Display(Name = "Order Item Tags", Order = 90), JsonConverter(typeof(ArrayJsonConverter<List<OrderItemTag>, OrderItemTag>), "Content"), JsonProperty("tags.tagList")]
         public virtual ICollection<OrderItemTag> OrderItemTags { get; set; }
 
-        [Display(Name = "Order Item Volumes", Order = 90), JsonConverter(typeof(ArrayJsonConverter<List<OrderItemVolume>, OrderItemVolume>), "Content"), JsonProperty("physical.volumes")]
+        [Display(Name = "Order Item Volumes", Order = 91), JsonConverter(typeof(ArrayJsonConverter<List<OrderItemVolume>, OrderItemVolume>), "Content"), JsonProperty("physical.volumes")]
         public virtual ICollection<OrderItemVolume> OrderItemVolumes { get; set; }
 
-        [Display(Name = "Receivings", Order = 91)]
+        [Display(Name = "Receivings", Order = 92)]
         public virtual ICollection<Receiving2> Receiving2s { get; set; }
 
-        [Display(Name = "Titles", Order = 92)]
+        [Display(Name = "Titles", Order = 93)]
         public virtual ICollection<Title2> Title2s { get; set; }
 
-        [Display(Name = "Transactions", Order = 93)]
+        [Display(Name = "Transactions", Order = 94)]
         public virtual ICollection<Transaction2> Transaction2s { get; set; }
 
-        public override string ToString() => $"{{ {nameof(Id)} = {Id}, {nameof(Edition)} = {Edition}, {nameof(CheckinItems)} = {CheckinItems}, {nameof(AgreementId)} = {AgreementId}, {nameof(AcquisitionMethod)} = {AcquisitionMethod}, {nameof(CancellationRestriction)} = {CancellationRestriction}, {nameof(CancellationRestrictionNote)} = {CancellationRestrictionNote}, {nameof(Collection)} = {Collection}, {nameof(PhysicalUnitListPrice)} = {PhysicalUnitListPrice}, {nameof(ElectronicUnitListPrice)} = {ElectronicUnitListPrice}, {nameof(Currency)} = {Currency}, {nameof(AdditionalCost)} = {AdditionalCost}, {nameof(Discount)} = {Discount}, {nameof(DiscountType)} = {DiscountType}, {nameof(PhysicalQuantity)} = {PhysicalQuantity}, {nameof(ElectronicQuantity)} = {ElectronicQuantity}, {nameof(EstimatedPrice)} = {EstimatedPrice}, {nameof(Description)} = {Description}, {nameof(ReceivingNote)} = {ReceivingNote}, {nameof(SubscriptionFrom)} = {SubscriptionFrom}, {nameof(SubscriptionInterval)} = {SubscriptionInterval}, {nameof(SubscriptionTo)} = {SubscriptionTo}, {nameof(Donor)} = {Donor}, {nameof(EresourceActivated)} = {EresourceActivated}, {nameof(EresourceActivationDue)} = {EresourceActivationDue}, {nameof(EresourceCreateInventory)} = {EresourceCreateInventory}, {nameof(EresourceTrial)} = {EresourceTrial}, {nameof(EresourceExpectedActivationDate)} = {EresourceExpectedActivationDate}, {nameof(EresourceUserLimit)} = {EresourceUserLimit}, {nameof(EresourceAccessProviderId)} = {EresourceAccessProviderId}, {nameof(EresourceLicenseCode)} = {EresourceLicenseCode}, {nameof(EresourceLicenseDescription)} = {EresourceLicenseDescription}, {nameof(EresourceLicenseReference)} = {EresourceLicenseReference}, {nameof(EresourceMaterialTypeId)} = {EresourceMaterialTypeId}, {nameof(EresourceResourceUrl)} = {EresourceResourceUrl}, {nameof(InstanceId)} = {InstanceId}, {nameof(IsPackage)} = {IsPackage}, {nameof(OrderFormat)} = {OrderFormat}, {nameof(PackageOrderItemId)} = {PackageOrderItemId}, {nameof(PaymentStatus)} = {PaymentStatus}, {nameof(PhysicalCreateInventory)} = {PhysicalCreateInventory}, {nameof(PhysicalMaterialTypeId)} = {PhysicalMaterialTypeId}, {nameof(PhysicalMaterialSupplierId)} = {PhysicalMaterialSupplierId}, {nameof(PhysicalExpectedReceiptDate)} = {PhysicalExpectedReceiptDate}, {nameof(PhysicalReceiptDue)} = {PhysicalReceiptDue}, {nameof(Description2)} = {Description2}, {nameof(Number)} = {Number}, {nameof(PublicationYear)} = {PublicationYear}, {nameof(Publisher)} = {Publisher}, {nameof(OrderId)} = {OrderId}, {nameof(ReceiptDate)} = {ReceiptDate}, {nameof(ReceiptStatus)} = {ReceiptStatus}, {nameof(Requester)} = {Requester}, {nameof(Rush)} = {Rush}, {nameof(Selector)} = {Selector}, {nameof(Source)} = {Source}, {nameof(TitleOrPackage)} = {TitleOrPackage}, {nameof(VendorInstructions)} = {VendorInstructions}, {nameof(VendorNote)} = {VendorNote}, {nameof(VendorReferenceNumber)} = {VendorReferenceNumber}, {nameof(VendorReferenceNumberType)} = {VendorReferenceNumberType}, {nameof(VendorAccount)} = {VendorAccount}, {nameof(CreationTime)} = {CreationTime}, {nameof(CreationUserId)} = {CreationUserId}, {nameof(CreationUserUsername)} = {CreationUserUsername}, {nameof(LastWriteTime)} = {LastWriteTime}, {nameof(LastWriteUserId)} = {LastWriteUserId}, {nameof(LastWriteUserUsername)} = {LastWriteUserUsername}, {nameof(Content)} = {Content}, {nameof(OrderItemAlerts)} = {(OrderItemAlerts != null ? $"{{ {string.Join(", ", OrderItemAlerts)} }}" : "")}, {nameof(OrderItemClaims)} = {(OrderItemClaims != null ? $"{{ {string.Join(", ", OrderItemClaims)} }}" : "")}, {nameof(OrderItemContributors)} = {(OrderItemContributors != null ? $"{{ {string.Join(", ", OrderItemContributors)} }}" : "")}, {nameof(OrderItemFunds)} = {(OrderItemFunds != null ? $"{{ {string.Join(", ", OrderItemFunds)} }}" : "")}, {nameof(OrderItemLocation2s)} = {(OrderItemLocation2s != null ? $"{{ {string.Join(", ", OrderItemLocation2s)} }}" : "")}, {nameof(OrderItemProductIds)} = {(OrderItemProductIds != null ? $"{{ {string.Join(", ", OrderItemProductIds)} }}" : "")}, {nameof(OrderItemReportingCodes)} = {(OrderItemReportingCodes != null ? $"{{ {string.Join(", ", OrderItemReportingCodes)} }}" : "")}, {nameof(OrderItemTags)} = {(OrderItemTags != null ? $"{{ {string.Join(", ", OrderItemTags)} }}" : "")}, {nameof(OrderItemVolumes)} = {(OrderItemVolumes != null ? $"{{ {string.Join(", ", OrderItemVolumes)} }}" : "")} }}";
+        public override string ToString() => $"{{ {nameof(Id)} = {Id}, {nameof(Edition)} = {Edition}, {nameof(CheckinItems)} = {CheckinItems}, {nameof(AgreementId)} = {AgreementId}, {nameof(AcquisitionMethod)} = {AcquisitionMethod}, {nameof(CancellationRestriction)} = {CancellationRestriction}, {nameof(CancellationRestrictionNote)} = {CancellationRestrictionNote}, {nameof(Collection)} = {Collection}, {nameof(PhysicalUnitListPrice)} = {PhysicalUnitListPrice}, {nameof(ElectronicUnitListPrice)} = {ElectronicUnitListPrice}, {nameof(Currency)} = {Currency}, {nameof(AdditionalCost)} = {AdditionalCost}, {nameof(Discount)} = {Discount}, {nameof(DiscountType)} = {DiscountType}, {nameof(ExchangeRate)} = {ExchangeRate}, {nameof(PhysicalQuantity)} = {PhysicalQuantity}, {nameof(ElectronicQuantity)} = {ElectronicQuantity}, {nameof(EstimatedPrice)} = {EstimatedPrice}, {nameof(FiscalYearRolloverAdjustmentAmount)} = {FiscalYearRolloverAdjustmentAmount}, {nameof(Description)} = {Description}, {nameof(ReceivingNote)} = {ReceivingNote}, {nameof(SubscriptionFrom)} = {SubscriptionFrom}, {nameof(SubscriptionInterval)} = {SubscriptionInterval}, {nameof(SubscriptionTo)} = {SubscriptionTo}, {nameof(Donor)} = {Donor}, {nameof(EresourceActivated)} = {EresourceActivated}, {nameof(EresourceActivationDue)} = {EresourceActivationDue}, {nameof(EresourceCreateInventory)} = {EresourceCreateInventory}, {nameof(EresourceTrial)} = {EresourceTrial}, {nameof(EresourceExpectedActivationDate)} = {EresourceExpectedActivationDate}, {nameof(EresourceUserLimit)} = {EresourceUserLimit}, {nameof(EresourceAccessProviderId)} = {EresourceAccessProviderId}, {nameof(EresourceLicenseCode)} = {EresourceLicenseCode}, {nameof(EresourceLicenseDescription)} = {EresourceLicenseDescription}, {nameof(EresourceLicenseReference)} = {EresourceLicenseReference}, {nameof(EresourceMaterialTypeId)} = {EresourceMaterialTypeId}, {nameof(EresourceResourceUrl)} = {EresourceResourceUrl}, {nameof(InstanceId)} = {InstanceId}, {nameof(IsPackage)} = {IsPackage}, {nameof(OrderFormat)} = {OrderFormat}, {nameof(PackageOrderItemId)} = {PackageOrderItemId}, {nameof(PaymentStatus)} = {PaymentStatus}, {nameof(PhysicalCreateInventory)} = {PhysicalCreateInventory}, {nameof(PhysicalMaterialTypeId)} = {PhysicalMaterialTypeId}, {nameof(PhysicalMaterialSupplierId)} = {PhysicalMaterialSupplierId}, {nameof(PhysicalExpectedReceiptDate)} = {PhysicalExpectedReceiptDate}, {nameof(PhysicalReceiptDue)} = {PhysicalReceiptDue}, {nameof(Description2)} = {Description2}, {nameof(Number)} = {Number}, {nameof(PublicationYear)} = {PublicationYear}, {nameof(Publisher)} = {Publisher}, {nameof(OrderId)} = {OrderId}, {nameof(ReceiptDate)} = {ReceiptDate}, {nameof(ReceiptStatus)} = {ReceiptStatus}, {nameof(Requester)} = {Requester}, {nameof(Rush)} = {Rush}, {nameof(Selector)} = {Selector}, {nameof(Source)} = {Source}, {nameof(TitleOrPackage)} = {TitleOrPackage}, {nameof(VendorInstructions)} = {VendorInstructions}, {nameof(VendorNote)} = {VendorNote}, {nameof(VendorAccount)} = {VendorAccount}, {nameof(CreationTime)} = {CreationTime}, {nameof(CreationUserId)} = {CreationUserId}, {nameof(CreationUserUsername)} = {CreationUserUsername}, {nameof(LastWriteTime)} = {LastWriteTime}, {nameof(LastWriteUserId)} = {LastWriteUserId}, {nameof(LastWriteUserUsername)} = {LastWriteUserUsername}, {nameof(Content)} = {Content}, {nameof(OrderItemAlerts)} = {(OrderItemAlerts != null ? $"{{ {string.Join(", ", OrderItemAlerts)} }}" : "")}, {nameof(OrderItemClaims)} = {(OrderItemClaims != null ? $"{{ {string.Join(", ", OrderItemClaims)} }}" : "")}, {nameof(OrderItemContributors)} = {(OrderItemContributors != null ? $"{{ {string.Join(", ", OrderItemContributors)} }}" : "")}, {nameof(OrderItemFunds)} = {(OrderItemFunds != null ? $"{{ {string.Join(", ", OrderItemFunds)} }}" : "")}, {nameof(OrderItemLocation2s)} = {(OrderItemLocation2s != null ? $"{{ {string.Join(", ", OrderItemLocation2s)} }}" : "")}, {nameof(OrderItemProductIds)} = {(OrderItemProductIds != null ? $"{{ {string.Join(", ", OrderItemProductIds)} }}" : "")}, {nameof(OrderItemReferenceNumbers)} = {(OrderItemReferenceNumbers != null ? $"{{ {string.Join(", ", OrderItemReferenceNumbers)} }}" : "")}, {nameof(OrderItemReportingCodes)} = {(OrderItemReportingCodes != null ? $"{{ {string.Join(", ", OrderItemReportingCodes)} }}" : "")}, {nameof(OrderItemTags)} = {(OrderItemTags != null ? $"{{ {string.Join(", ", OrderItemTags)} }}" : "")}, {nameof(OrderItemVolumes)} = {(OrderItemVolumes != null ? $"{{ {string.Join(", ", OrderItemVolumes)} }}" : "")} }}";
 
         public static OrderItem2 FromJObject(JObject jObject) => jObject != null ? new OrderItem2
         {
@@ -332,9 +335,11 @@ namespace FolioLibrary
             AdditionalCost = (decimal?)jObject.SelectToken("cost.additionalCost"),
             Discount = (decimal?)jObject.SelectToken("cost.discount"),
             DiscountType = (string)jObject.SelectToken("cost.discountType"),
+            ExchangeRate = (decimal?)jObject.SelectToken("cost.exchangeRate"),
             PhysicalQuantity = (int?)jObject.SelectToken("cost.quantityPhysical"),
             ElectronicQuantity = (int?)jObject.SelectToken("cost.quantityElectronic"),
             EstimatedPrice = (decimal?)jObject.SelectToken("cost.poLineEstimatedPrice"),
+            FiscalYearRolloverAdjustmentAmount = (decimal?)jObject.SelectToken("cost.fyroAdjustmentAmount"),
             Description = (string)jObject.SelectToken("description"),
             ReceivingNote = (string)jObject.SelectToken("details.receivingNote"),
             SubscriptionFrom = ((DateTime?)jObject.SelectToken("details.subscriptionFrom"))?.ToLocalTime(),
@@ -377,8 +382,6 @@ namespace FolioLibrary
             TitleOrPackage = (string)jObject.SelectToken("titleOrPackage"),
             VendorInstructions = (string)jObject.SelectToken("vendorDetail.instructions"),
             VendorNote = (string)jObject.SelectToken("vendorDetail.noteFromVendor"),
-            VendorReferenceNumber = (string)jObject.SelectToken("vendorDetail.refNumber"),
-            VendorReferenceNumberType = (string)jObject.SelectToken("vendorDetail.refNumberType"),
             VendorAccount = (string)jObject.SelectToken("vendorDetail.vendorAccount"),
             CreationTime = ((DateTime?)jObject.SelectToken("metadata.createdDate"))?.ToLocalTime(),
             CreationUserId = (Guid?)jObject.SelectToken("metadata.createdByUserId"),
@@ -393,6 +396,7 @@ namespace FolioLibrary
             OrderItemFunds = jObject.SelectToken("fundDistribution")?.Where(jt => jt.HasValues).Select(jt => OrderItemFund.FromJObject((JObject)jt)).ToArray(),
             OrderItemLocation2s = jObject.SelectToken("locations")?.Where(jt => jt.HasValues).Select(jt => OrderItemLocation2.FromJObject((JObject)jt)).ToArray(),
             OrderItemProductIds = jObject.SelectToken("details.productIds")?.Where(jt => jt.HasValues).Select(jt => OrderItemProductId.FromJObject((JObject)jt)).ToArray(),
+            OrderItemReferenceNumbers = jObject.SelectToken("vendorDetail.referenceNumbers")?.Where(jt => jt.HasValues).Select(jt => OrderItemReferenceNumber.FromJObject((JObject)jt)).ToArray(),
             OrderItemReportingCodes = jObject.SelectToken("reportingCodes")?.Where(jt => jt.HasValues).Select(jt => OrderItemReportingCode.FromJObject((JValue)jt)).ToArray(),
             OrderItemTags = jObject.SelectToken("tags.tagList")?.Where(jt => jt.HasValues).Select(jt => OrderItemTag.FromJObject((JValue)jt)).ToArray(),
             OrderItemVolumes = jObject.SelectToken("physical.volumes")?.Where(jt => jt.HasValues).Select(jt => OrderItemVolume.FromJObject((JValue)jt)).ToArray()
@@ -414,9 +418,11 @@ namespace FolioLibrary
                 new JProperty("additionalCost", AdditionalCost),
                 new JProperty("discount", Discount),
                 new JProperty("discountType", DiscountType),
+                new JProperty("exchangeRate", ExchangeRate),
                 new JProperty("quantityPhysical", PhysicalQuantity),
                 new JProperty("quantityElectronic", ElectronicQuantity),
-                new JProperty("poLineEstimatedPrice", EstimatedPrice))),
+                new JProperty("poLineEstimatedPrice", EstimatedPrice),
+                new JProperty("fyroAdjustmentAmount", FiscalYearRolloverAdjustmentAmount))),
             new JProperty("description", Description),
             new JProperty("details", new JObject(
                 new JProperty("receivingNote", ReceivingNote),
@@ -466,9 +472,8 @@ namespace FolioLibrary
             new JProperty("vendorDetail", new JObject(
                 new JProperty("instructions", VendorInstructions),
                 new JProperty("noteFromVendor", VendorNote),
-                new JProperty("refNumber", VendorReferenceNumber),
-                new JProperty("refNumberType", VendorReferenceNumberType),
-                new JProperty("vendorAccount", VendorAccount))),
+                new JProperty("vendorAccount", VendorAccount),
+                new JProperty("referenceNumbers", OrderItemReferenceNumbers?.Select(oirn => oirn.ToJObject())))),
             new JProperty("metadata", new JObject(
                 new JProperty("createdDate", CreationTime?.ToUniversalTime()),
                 new JProperty("createdByUserId", CreationUserId),

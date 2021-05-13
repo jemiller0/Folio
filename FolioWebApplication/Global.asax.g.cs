@@ -70,6 +70,7 @@ namespace FolioWebApplication
             Session["Fee2sPermission"] = roles.Contains("all") || roles.Contains("uc.fees.view") ? "View" : null;
             Session["FeeType2sPermission"] = roles.Contains("all") || roles.Contains("uc.feetypes.view") ? "View" : null;
             Session["LostItemFeePolicy2sPermission"] = roles.Contains("all") || roles.Contains("uc.lostitemfeepolicies.view") ? "View" : null;
+            Session["ManualBlockTemplate2sPermission"] = roles.Contains("all") || roles.Contains("uc.manualblocktemplates.view") ? "View" : null;
             Session["OverdueFinePolicy2sPermission"] = roles.Contains("all") || roles.Contains("uc.overduefinepolicies.view") ? "View" : null;
             Session["Owner2sPermission"] = roles.Contains("all") || roles.Contains("uc.owners.view") ? "View" : null;
             Session["Payment2sPermission"] = roles.Contains("all") || roles.Contains("uc.payments.view") ? "View" : null;
@@ -84,14 +85,16 @@ namespace FolioWebApplication
         {
             Session["Budget2sPermission"] = roles.Contains("all") || roles.Contains("finance.all") || roles.Contains("uc.budgets.view") ? "View" : null;
             Session["BudgetExpenseClass2sPermission"] = roles.Contains("all") || roles.Contains("finance.all") || roles.Contains("uc.budgetexpenseclasses.view") ? "View" : null;
+            Session["BudgetGroup2sPermission"] = roles.Contains("all") || roles.Contains("finance.all") || roles.Contains("uc.budgetgroups.view") ? "View" : null;
             Session["ExpenseClass2sPermission"] = roles.Contains("all") || roles.Contains("finance.all") || roles.Contains("uc.expenseclasses.view") ? "View" : null;
             Session["FinanceGroup2sPermission"] = roles.Contains("all") || roles.Contains("finance.all") || roles.Contains("uc.financegroups.view") ? "View" : null;
             Session["FiscalYear2sPermission"] = roles.Contains("all") || roles.Contains("finance.all") || roles.Contains("uc.fiscalyears.view") ? "View" : null;
             Session["Fund2sPermission"] = roles.Contains("all") || roles.Contains("finance.all") || roles.Contains("uc.funds.view") ? "View" : null;
             Session["FundType2sPermission"] = roles.Contains("all") || roles.Contains("finance.all") || roles.Contains("uc.fundtypes.view") ? "View" : null;
-            Session["GroupFundFiscalYear2sPermission"] = roles.Contains("all") || roles.Contains("finance.all") || roles.Contains("uc.groupfundfiscalyears.view") ? "View" : null;
             Session["Ledger2sPermission"] = roles.Contains("all") || roles.Contains("finance.all") || roles.Contains("uc.ledgers.view") ? "View" : null;
-            Session["OrderTransactionSummary2sPermission"] = roles.Contains("all") || roles.Contains("finance.all") || roles.Contains("uc.ordertransactionsummaries.view") ? "View" : null;
+            Session["LedgerRollover2sPermission"] = roles.Contains("all") || roles.Contains("finance.all") || roles.Contains("uc.ledgerrollovers.view") ? "View" : null;
+            Session["LedgerRolloverError2sPermission"] = roles.Contains("all") || roles.Contains("finance.all") || roles.Contains("uc.ledgerrollovererrors.view") ? "View" : null;
+            Session["LedgerRolloverProgress2sPermission"] = roles.Contains("all") || roles.Contains("finance.all") || roles.Contains("uc.ledgerrolloverprogresses.view") ? "View" : null;
             Session["Transaction2sPermission"] = roles.Contains("all") || roles.Contains("finance.all") || roles.Contains("uc.transactions.view") ? "View" : null;
         }
 
@@ -246,6 +249,7 @@ namespace FolioWebApplication
             Session["Fee2sPermission"] = permission;
             Session["FeeType2sPermission"] = permission;
             Session["LostItemFeePolicy2sPermission"] = permission;
+            Session["ManualBlockTemplate2sPermission"] = permission;
             Session["OverdueFinePolicy2sPermission"] = permission;
             Session["Owner2sPermission"] = permission;
             Session["Payment2sPermission"] = permission;
@@ -260,14 +264,16 @@ namespace FolioWebApplication
         {
             Session["Budget2sPermission"] = permission;
             Session["BudgetExpenseClass2sPermission"] = permission;
+            Session["BudgetGroup2sPermission"] = permission;
             Session["ExpenseClass2sPermission"] = permission;
             Session["FinanceGroup2sPermission"] = permission;
             Session["FiscalYear2sPermission"] = permission;
             Session["Fund2sPermission"] = permission;
             Session["FundType2sPermission"] = permission;
-            Session["GroupFundFiscalYear2sPermission"] = permission;
             Session["Ledger2sPermission"] = permission;
-            Session["OrderTransactionSummary2sPermission"] = permission;
+            Session["LedgerRollover2sPermission"] = permission;
+            Session["LedgerRolloverError2sPermission"] = permission;
+            Session["LedgerRolloverProgress2sPermission"] = permission;
             Session["Transaction2sPermission"] = permission;
         }
 

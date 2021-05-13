@@ -46,8 +46,7 @@
     "netTransfers": {
       "description": "Summing all the transfers from/to this ledger. Amount can be negative",
       "readonly": true,
-      "type": "number",
-      "default": 0
+      "type": "number"
     },
     "unavailable": {
       "description": "The amount already utilized from the allocated amount",
@@ -113,6 +112,56 @@
       "required": [
         "createdDate"
       ]
+    },
+    "initialAllocation": {
+      "description": "Summary of all related to this ledger budgets initialAllocation",
+      "readonly": true,
+      "type": "number"
+    },
+    "allocationTo": {
+      "description": "Summary of all related to this ledger budgets allocationTo",
+      "readonly": true,
+      "type": "number"
+    },
+    "allocationFrom": {
+      "description": "Summary of all related to this ledger budgets allocationFrom",
+      "readonly": true,
+      "type": "number"
+    },
+    "totalFunding": {
+      "description": "Summary of all related to this ledger budgets totalFunding",
+      "readonly": true,
+      "type": "number"
+    },
+    "cashBalance": {
+      "description": "Summary of all related to this ledger budgets cashBalance",
+      "readonly": true,
+      "type": "number"
+    },
+    "awaitingPayment": {
+      "description": "Summary of all related to this ledger budgets awaitingPayment",
+      "readonly": true,
+      "type": "number"
+    },
+    "encumbered": {
+      "description": "Summary of all related to this ledger budgets encumbered",
+      "readonly": true,
+      "type": "number"
+    },
+    "expenditures": {
+      "description": "Summary of all related to this ledger budgets expenditures",
+      "readonly": true,
+      "type": "number"
+    },
+    "overEncumbrance": {
+      "description": "Summary of all related to this ledger budgets overEncumbrance",
+      "readonly": true,
+      "type": "number"
+    },
+    "overExpended": {
+      "description": "Summary of all related to this ledger budgets overExpended",
+      "readonly": true,
+      "type": "number"
     }
   },
   "required": [

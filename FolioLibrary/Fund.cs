@@ -49,10 +49,10 @@ namespace FolioLibrary
         public virtual Guid? Fundtypeid { get; set; }
 
         [ScaffoldColumn(false)]
-        public virtual ICollection<Budget> Budgets { get; set; }
+        public virtual ICollection<BudgetGroup> BudgetGroups { get; set; }
 
         [ScaffoldColumn(false)]
-        public virtual ICollection<GroupFundFiscalYear> GroupFundFiscalYears { get; set; }
+        public virtual ICollection<Budget> Budgets { get; set; }
 
         [ScaffoldColumn(false)]
         public virtual ICollection<Transaction> Transactions { get; set; }

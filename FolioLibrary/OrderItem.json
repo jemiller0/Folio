@@ -143,6 +143,10 @@
             "percentage"
           ]
         },
+        "exchangeRate": {
+          "description": "Exchange rate",
+          "type": "number"
+        },
         "quantityPhysical": {
           "description": "Quantity of physical items or resources of 'Other' order format in this purchase order line",
           "type": "integer"
@@ -153,6 +157,10 @@
         },
         "poLineEstimatedPrice": {
           "description": "The calculated total estimated price for this purchase order line: list price time quantities minus discount amount plus additional cost",
+          "type": "number"
+        },
+        "fyroAdjustmentAmount": {
+          "description": "Adjustment amount if rollover was happen",
           "type": "number"
         }
       },
@@ -395,7 +403,7 @@
       "$ref": "#/properties/id"
     },
     "paymentStatus": {
-      "description": "The purchase order line payment status",
+      "description": "Payment/Receipt status",
       "type": "string",
       "default": "Pending",
       "enum": [
@@ -404,7 +412,8 @@
         "Fully Paid",
         "Partially Paid",
         "Payment Not Required",
-        "Pending"
+        "Pending",
+        "Ongoing"
       ]
     },
     "physical": {
@@ -468,7 +477,7 @@
     "poLineNumber": {
       "description": "A human readable number assigned to this PO line",
       "type": "string",
-      "pattern": "^[a-zA-Z0-9]{1,16}-[0-9]{1,3}$"
+      "pattern": "^[a-zA-Z0-9]{1,22}-[0-9]{1,3}$"
     },
     "publicationDate": {
       "description": "date (year) of the material's publication",
@@ -500,7 +509,8 @@
         "Fully Received",
         "Partially Received",
         "Pending",
-        "Receipt Not Required"
+        "Receipt Not Required",
+        "Ongoing"
       ]
     },
     "reportingCodes": {
@@ -566,24 +576,55 @@
           "description": "free-form notes from the vendor",
           "type": "string"
         },
-        "refNumber": {
-          "description": "a reference number for this purchase order line",
-          "type": "string"
-        },
-        "refNumberType": {
-          "description": "the reference number type",
-          "type": "string",
-          "enum": [
-            "Supplier's continuation order",
-            "Supplier's unique order line reference number",
-            "Agent's unique subscription reference number",
-            "Library's continuation order number",
-            "Internal vendor number"
-          ]
-        },
         "vendorAccount": {
           "description": "the accound number on the vendor's end associated with this purchase order line",
           "type": "string"
+        },
+        "referenceNumbers": {
+          "description": "Reference number items array",
+          "type": "array",
+          "additionalProperties": false,
+          "items": {
+            "description": "Reference number item",
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "refNumber": {
+                "description": "a reference number for this purchase order line",
+                "type": "string"
+              },
+              "refNumberType": {
+                "description": "the reference number type",
+                "javaEnums": [
+                  "CONTINUATION_REF_NUMBER",
+                  "ORDER_REF_NUMBER",
+                  "SUBSCRIPTION_REF_NUMBER",
+                  "INTERNAL_NUMBER",
+                  "TITLE_NUMBER"
+                ],
+                "type": "string",
+                "enum": [
+                  "Vendor continuation reference number",
+                  "Vendor order reference number",
+                  "Vendor subscription reference number",
+                  "Vendor internal number",
+                  "Vendor title number"
+                ]
+              },
+              "vendorDetailsSource": {
+                "description": "the reference number type",
+                "javaEnums": [
+                  "ORDER_LINE",
+                  "INVOICE_LINE"
+                ],
+                "type": "string",
+                "enum": [
+                  "OrderLine",
+                  "InvoiceLine"
+                ]
+              }
+            }
+          }
         }
       },
       "required": [

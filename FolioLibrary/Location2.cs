@@ -106,28 +106,31 @@ namespace FolioLibrary
         [Display(Name = "Holdings 1", Order = 26)]
         public virtual ICollection<Holding2> Holding2s1 { get; set; }
 
-        [Display(Name = "Items", Order = 27)]
+        [Display(Name = "Holdings 2", Order = 27)]
+        public virtual ICollection<Holding2> Holding2s2 { get; set; }
+
+        [Display(Name = "Items", Order = 28)]
         public virtual ICollection<Item2> Item2s { get; set; }
 
-        [Display(Name = "Items 1", Order = 28)]
+        [Display(Name = "Items 1", Order = 29)]
         public virtual ICollection<Item2> Item2s1 { get; set; }
 
-        [Display(Name = "Items 2", Order = 29)]
+        [Display(Name = "Items 2", Order = 30)]
         public virtual ICollection<Item2> Item2s2 { get; set; }
 
-        [Display(Name = "Loans", Order = 30)]
+        [Display(Name = "Loans", Order = 31)]
         public virtual ICollection<Loan2> Loan2s { get; set; }
 
-        [Display(Name = "Location Service Points", Order = 31), JsonConverter(typeof(ArrayJsonConverter<List<LocationServicePoint>, LocationServicePoint>), "ServicePointId"), JsonProperty("servicePointIds")]
+        [Display(Name = "Location Service Points", Order = 32), JsonConverter(typeof(ArrayJsonConverter<List<LocationServicePoint>, LocationServicePoint>), "ServicePointId"), JsonProperty("servicePointIds")]
         public virtual ICollection<LocationServicePoint> LocationServicePoints { get; set; }
 
-        [Display(Name = "Location Settings", Order = 32)]
+        [Display(Name = "Location Settings", Order = 33)]
         public virtual ICollection<LocationSetting> LocationSettings { get; set; }
 
-        [Display(Name = "Order Item Locations", Order = 33)]
+        [Display(Name = "Order Item Locations", Order = 34)]
         public virtual ICollection<OrderItemLocation2> OrderItemLocation2s { get; set; }
 
-        [Display(Name = "Receivings", Order = 34)]
+        [Display(Name = "Receivings", Order = 35)]
         public virtual ICollection<Receiving2> Receiving2s { get; set; }
 
         public override string ToString() => $"{{ {nameof(Id)} = {Id}, {nameof(Name)} = {Name}, {nameof(Code)} = {Code}, {nameof(Description)} = {Description}, {nameof(DiscoveryDisplayName)} = {DiscoveryDisplayName}, {nameof(IsActive)} = {IsActive}, {nameof(InstitutionId)} = {InstitutionId}, {nameof(CampusId)} = {CampusId}, {nameof(LibraryId)} = {LibraryId}, {nameof(PrimaryServicePointId)} = {PrimaryServicePointId}, {nameof(CreationTime)} = {CreationTime}, {nameof(CreationUserId)} = {CreationUserId}, {nameof(CreationUserUsername)} = {CreationUserUsername}, {nameof(LastWriteTime)} = {LastWriteTime}, {nameof(LastWriteUserId)} = {LastWriteUserId}, {nameof(LastWriteUserUsername)} = {LastWriteUserUsername}, {nameof(Content)} = {Content}, {nameof(LocationServicePoints)} = {(LocationServicePoints != null ? $"{{ {string.Join(", ", LocationServicePoints)} }}" : "")} }}";

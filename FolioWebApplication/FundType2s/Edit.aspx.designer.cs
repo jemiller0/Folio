@@ -13,6 +13,10 @@ namespace FolioWebApplication.FundType2s
 
         protected RadGrid Fund2sRadGrid;
 
+        protected Panel LedgerRolloverBudgetsRolloversPanel;
+
+        protected RadGrid LedgerRolloverBudgetsRolloversRadGrid;
+
         protected RadAjaxManager RadAjaxManager1;
     }
 }

@@ -25,6 +25,10 @@ namespace FolioWebApplication.InvoiceItem2s
 
         protected RadGrid InvoiceItemFundsRadGrid;
 
+        protected Panel InvoiceItemReferenceNumbersPanel;
+
+        protected RadGrid InvoiceItemReferenceNumbersRadGrid;
+
         protected Panel InvoiceItemTagsPanel;
 
         protected RadGrid InvoiceItemTagsRadGrid;

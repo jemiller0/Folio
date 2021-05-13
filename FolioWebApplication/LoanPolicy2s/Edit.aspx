@@ -233,6 +233,30 @@
                                     <asp:Literal ID="RecallsRecallReturnIntervalIntervalLiteral" runat="server" Text='<%#: Eval("RecallsRecallReturnIntervalInterval") %>' />
                                 </td>
                             </tr>
+                            <tr runat="server" visible='<%# Eval("RecallsAllowRecallsToExtendOverdueLoans") != null %>'>
+                                <td>
+                                    <asp:Label ID="RecallsAllowRecallsToExtendOverdueLoansLabel" runat="server" Text="Recalls Allow Recalls To Extend Overdue Loans:" AssociatedControlID="RecallsAllowRecallsToExtendOverdueLoansLiteral" />
+                                </td>
+                                <td>
+                                    <asp:Literal ID="RecallsAllowRecallsToExtendOverdueLoansLiteral" runat="server" Text='<%#: Eval("RecallsAllowRecallsToExtendOverdueLoans") %>' />
+                                </td>
+                            </tr>
+                            <tr runat="server" visible='<%# Eval("RecallsAlternateRecallReturnIntervalDuration") != null %>'>
+                                <td>
+                                    <asp:Label ID="RecallsAlternateRecallReturnIntervalDurationLabel" runat="server" Text="Recalls Alternate Recall Return Interval Duration:" AssociatedControlID="RecallsAlternateRecallReturnIntervalDurationLiteral" />
+                                </td>
+                                <td>
+                                    <asp:Literal ID="RecallsAlternateRecallReturnIntervalDurationLiteral" runat="server" Text='<%#: Eval("RecallsAlternateRecallReturnIntervalDuration") %>' />
+                                </td>
+                            </tr>
+                            <tr runat="server" visible='<%# Eval("RecallsAlternateRecallReturnIntervalInterval") != null %>'>
+                                <td>
+                                    <asp:Label ID="RecallsAlternateRecallReturnIntervalIntervalLabel" runat="server" Text="Recalls Alternate Recall Return Interval Interval:" AssociatedControlID="RecallsAlternateRecallReturnIntervalIntervalLiteral" />
+                                </td>
+                                <td>
+                                    <asp:Literal ID="RecallsAlternateRecallReturnIntervalIntervalLiteral" runat="server" Text='<%#: Eval("RecallsAlternateRecallReturnIntervalInterval") %>' />
+                                </td>
+                            </tr>
                             <tr runat="server" visible='<%# Eval("HoldsAlternateCheckoutLoanPeriodDuration") != null %>'>
                                 <td>
                                     <asp:Label ID="HoldsAlternateCheckoutLoanPeriodDurationLabel" runat="server" Text="Holds Alternate Checkout Loan Period Duration:" AssociatedControlID="HoldsAlternateCheckoutLoanPeriodDurationLiteral" />

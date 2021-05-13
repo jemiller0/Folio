@@ -48,7 +48,7 @@ namespace FolioWebApplication
             using (var fsc = new FolioServiceClient(accessToken: accessToken))
             {
                 var u = fsc.Users($"username == \"{Regex.Replace(userName, @"^.+\\", "", RegexOptions.Compiled)}\"").SingleOrDefault();
-                return u != null ? fsc.PermissionsUsers($"userId == \"{u["id"]}\"").Single()["permissions"].Select(jt => jt.ToString()).ToArray() : new string[] { };
+                return u != null ? fsc.PermissionsUsers($"userId == \"{u["id"]}\"").Single()["permissions"].Select(jt => jt.ToString().Replace("honeysuckle_administrator", "all")).ToArray() : new string[] { };
             }
         }
 

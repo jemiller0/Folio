@@ -44,6 +44,9 @@ namespace FolioLibrary
         [Column("error"), Display(Order = 12), StringLength(1024)]
         public virtual string Error { get; set; }
 
-        public override string ToString() => $"{{ {nameof(Id)} = {Id}, {nameof(JobExecutionId)} = {JobExecutionId}, {nameof(SourceId)} = {SourceId}, {nameof(EntityType)} = {EntityType}, {nameof(EntityId)} = {EntityId}, {nameof(EntityHrid)} = {EntityHrid}, {nameof(ActionType)} = {ActionType}, {nameof(ActionStatus)} = {ActionStatus}, {nameof(ActionDate)} = {ActionDate}, {nameof(SourceRecordOrder)} = {SourceRecordOrder}, {nameof(Error)} = {Error} }}";
+        [Column("title"), Display(Order = 13), StringLength(1024)]
+        public virtual string Title { get; set; }
+
+        public override string ToString() => $"{{ {nameof(Id)} = {Id}, {nameof(JobExecutionId)} = {JobExecutionId}, {nameof(SourceId)} = {SourceId}, {nameof(EntityType)} = {EntityType}, {nameof(EntityId)} = {EntityId}, {nameof(EntityHrid)} = {EntityHrid}, {nameof(ActionType)} = {ActionType}, {nameof(ActionStatus)} = {ActionStatus}, {nameof(ActionDate)} = {ActionDate}, {nameof(SourceRecordOrder)} = {SourceRecordOrder}, {nameof(Error)} = {Error}, {nameof(Title)} = {Title} }}";
     }
 }

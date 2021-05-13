@@ -47,6 +47,78 @@
       "description": "The fiscal year series",
       "type": "string"
     },
+    "financialSummary": {
+      "description": "Funding information and Financial activity",
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "allocated": {
+          "description": "Summary of all related to this fiscal year budgets allocated",
+          "readonly": true,
+          "type": "number"
+        },
+        "available": {
+          "description": "Summary of all related to this fiscal year budgets available",
+          "readonly": true,
+          "type": "number"
+        },
+        "unavailable": {
+          "description": "Summary of all related to this fiscal year budgets unavailable",
+          "readonly": true,
+          "type": "number"
+        },
+        "initialAllocation": {
+          "description": "Summary of all related to this fiscal year budgets initialAllocation",
+          "readonly": true,
+          "type": "number"
+        },
+        "allocationTo": {
+          "description": "Summary of all related to this fiscal year budgets allocationTo",
+          "readonly": true,
+          "type": "number"
+        },
+        "allocationFrom": {
+          "description": "Summary of all related to this fiscal year budgets allocationFrom",
+          "readonly": true,
+          "type": "number"
+        },
+        "totalFunding": {
+          "description": "Summary of all related to this fiscal year budgets totalFunding",
+          "readonly": true,
+          "type": "number"
+        },
+        "cashBalance": {
+          "description": "Summary of all related to this fiscal year budgets cashBalance",
+          "readonly": true,
+          "type": "number"
+        },
+        "awaitingPayment": {
+          "description": "Summary of all related to this fiscal year budgets awaitingPayment",
+          "readonly": true,
+          "type": "number"
+        },
+        "encumbered": {
+          "description": "Summary of all related to this fiscal year budgets encumbered",
+          "readonly": true,
+          "type": "number"
+        },
+        "expenditures": {
+          "description": "Summary of all related to this ledger budgets expenditures",
+          "readonly": true,
+          "type": "number"
+        },
+        "overEncumbrance": {
+          "description": "Summary of all related to this ledger budgets overEncumbrance",
+          "readonly": true,
+          "type": "number"
+        },
+        "overExpended": {
+          "description": "Summary of all related to this ledger budgets overExpended",
+          "readonly": true,
+          "type": "number"
+        }
+      }
+    },
     "metadata": {
       "title": "Metadata Schema",
       "description": "Metadata about creation and changes to records, provided by the server (client should not provide)",

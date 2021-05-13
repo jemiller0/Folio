@@ -162,6 +162,18 @@ namespace FolioLibraryTest
         }
 
         [TestMethod]
+        public void Finance_DeserializeBudgetGroup2Test()
+        {
+            var s = Stopwatch.StartNew();
+            var bg2 = folioServiceContext.BudgetGroup2s(take: 1).SingleOrDefault();
+            if (bg2 == null) Assert.Inconclusive();
+            var bg3 = folioDapperContext.BudgetGroup2s(take: 1).SingleOrDefault();
+            bg3.Content = null;
+            Assert.AreEqual(bg2.ToString(), bg3.ToString());
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"Finance_DeserializeBudgetGroup2Test()\r\n    ElapsedTime={s.Elapsed}");
+        }
+
+        [TestMethod]
         public void Inventory_DeserializeCallNumberType2Test()
         {
             var s = Stopwatch.StartNew();
@@ -475,18 +487,6 @@ namespace FolioLibraryTest
         }
 
         [TestMethod]
-        public void Finance_DeserializeGroupFundFiscalYear2Test()
-        {
-            var s = Stopwatch.StartNew();
-            var gffy2 = folioServiceContext.GroupFundFiscalYear2s(take: 1).SingleOrDefault();
-            if (gffy2 == null) Assert.Inconclusive();
-            var gffy3 = folioDapperContext.GroupFundFiscalYear2s(take: 1).SingleOrDefault();
-            gffy3.Content = null;
-            Assert.AreEqual(gffy2.ToString(), gffy3.ToString());
-            traceSource.TraceEvent(TraceEventType.Information, 0, $"Finance_DeserializeGroupFundFiscalYear2Test()\r\n    ElapsedTime={s.Elapsed}");
-        }
-
-        [TestMethod]
         public void Inventory_DeserializeHolding2Test()
         {
             var s = Stopwatch.StartNew();
@@ -659,6 +659,7 @@ namespace FolioLibraryTest
             ii2.InvoiceItemAdjustmentFunds = null;
             ii2.InvoiceItemAdjustments = null;
             ii2.InvoiceItemFunds = null;
+            ii2.InvoiceItemReferenceNumbers = null;
             ii2.InvoiceItemTags = null;
             var ii3 = folioDapperContext.InvoiceItem2s(take: 1).SingleOrDefault();
             ii3.Content = null;
@@ -732,6 +733,44 @@ namespace FolioLibraryTest
             l3.Content = null;
             Assert.AreEqual(l2.ToString(), l3.ToString());
             traceSource.TraceEvent(TraceEventType.Information, 0, $"Finance_DeserializeLedger2Test()\r\n    ElapsedTime={s.Elapsed}");
+        }
+
+        [TestMethod]
+        public void Finance_DeserializeLedgerRollover2Test()
+        {
+            var s = Stopwatch.StartNew();
+            var lr2 = folioServiceContext.LedgerRollover2s(take: 1).SingleOrDefault();
+            if (lr2 == null) Assert.Inconclusive();
+            lr2.LedgerRolloverBudgetsRollovers = null;
+            lr2.LedgerRolloverEncumbrancesRollovers = null;
+            var lr3 = folioDapperContext.LedgerRollover2s(take: 1).SingleOrDefault();
+            lr3.Content = null;
+            Assert.AreEqual(lr2.ToString(), lr3.ToString());
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"Finance_DeserializeLedgerRollover2Test()\r\n    ElapsedTime={s.Elapsed}");
+        }
+
+        [TestMethod]
+        public void Finance_DeserializeLedgerRolloverError2Test()
+        {
+            var s = Stopwatch.StartNew();
+            var lre2 = folioServiceContext.LedgerRolloverError2s(take: 1).SingleOrDefault();
+            if (lre2 == null) Assert.Inconclusive();
+            var lre3 = folioDapperContext.LedgerRolloverError2s(take: 1).SingleOrDefault();
+            lre3.Content = null;
+            Assert.AreEqual(lre2.ToString(), lre3.ToString());
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"Finance_DeserializeLedgerRolloverError2Test()\r\n    ElapsedTime={s.Elapsed}");
+        }
+
+        [TestMethod]
+        public void Finance_DeserializeLedgerRolloverProgress2Test()
+        {
+            var s = Stopwatch.StartNew();
+            var lrp2 = folioServiceContext.LedgerRolloverProgress2s(take: 1).SingleOrDefault();
+            if (lrp2 == null) Assert.Inconclusive();
+            var lrp3 = folioDapperContext.LedgerRolloverProgress2s(take: 1).SingleOrDefault();
+            lrp3.Content = null;
+            Assert.AreEqual(lrp2.ToString(), lrp3.ToString());
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"Finance_DeserializeLedgerRolloverProgress2Test()\r\n    ElapsedTime={s.Elapsed}");
         }
 
         [TestMethod]
@@ -816,6 +855,18 @@ namespace FolioLibraryTest
             lifp3.Content = null;
             Assert.AreEqual(lifp2.ToString(), lifp3.ToString());
             traceSource.TraceEvent(TraceEventType.Information, 0, $"Fees_DeserializeLostItemFeePolicy2Test()\r\n    ElapsedTime={s.Elapsed}");
+        }
+
+        [TestMethod]
+        public void Fees_DeserializeManualBlockTemplate2Test()
+        {
+            var s = Stopwatch.StartNew();
+            var mbt2 = folioServiceContext.ManualBlockTemplate2s(take: 1).SingleOrDefault();
+            if (mbt2 == null) Assert.Inconclusive();
+            var mbt3 = folioDapperContext.ManualBlockTemplate2s(take: 1).SingleOrDefault();
+            mbt3.Content = null;
+            Assert.AreEqual(mbt2.ToString(), mbt3.ToString());
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"Fees_DeserializeManualBlockTemplate2Test()\r\n    ElapsedTime={s.Elapsed}");
         }
 
         [TestMethod]
@@ -906,6 +957,7 @@ namespace FolioLibraryTest
             oi2.OrderItemFunds = null;
             oi2.OrderItemLocation2s = null;
             oi2.OrderItemProductIds = null;
+            oi2.OrderItemReferenceNumbers = null;
             oi2.OrderItemReportingCodes = null;
             oi2.OrderItemTags = null;
             oi2.OrderItemVolumes = null;
@@ -925,18 +977,6 @@ namespace FolioLibraryTest
             ot3.Content = null;
             Assert.AreEqual(ot2.ToString(), ot3.ToString());
             traceSource.TraceEvent(TraceEventType.Information, 0, $"Orders_DeserializeOrderTemplate2Test()\r\n    ElapsedTime={s.Elapsed}");
-        }
-
-        [TestMethod]
-        public void Finance_DeserializeOrderTransactionSummary2Test()
-        {
-            var s = Stopwatch.StartNew();
-            var ots2 = folioServiceContext.OrderTransactionSummary2s(take: 1).SingleOrDefault();
-            if (ots2 == null) Assert.Inconclusive();
-            var ots3 = folioDapperContext.OrderTransactionSummary2s(take: 1).SingleOrDefault();
-            ots3.Content = null;
-            Assert.AreEqual(ots2.ToString(), ots3.ToString());
-            traceSource.TraceEvent(TraceEventType.Information, 0, $"Finance_DeserializeOrderTransactionSummary2Test()\r\n    ElapsedTime={s.Elapsed}");
         }
 
         [TestMethod]

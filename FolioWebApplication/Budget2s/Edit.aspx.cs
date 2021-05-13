@@ -45,18 +45,18 @@ namespace FolioWebApplication.Budget2s
             }
         }
 
-        protected void GroupFundFiscalYear2sRadGrid_NeedDataSource(object sender, GridNeedDataSourceEventArgs e)
+        protected void BudgetGroup2sRadGrid_NeedDataSource(object sender, GridNeedDataSourceEventArgs e)
         {
-            if (Session["GroupFundFiscalYear2sPermission"] == null) return;
+            if (Session["BudgetGroup2sPermission"] == null) return;
             var id = (Guid?)Budget2FormView.DataKey.Value;
             if (id == null) return;
             var d = new Dictionary<string, string>() { { "Id", "id" }, { "BudgetId", "budgetId" }, { "GroupId", "groupId" }, { "FiscalYearId", "fiscalYearId" }, { "FundId", "fundId" } };
-            GroupFundFiscalYear2sRadGrid.DataSource = folioServiceContext.GroupFundFiscalYear2s(out var i, Global.GetCqlFilter(GroupFundFiscalYear2sRadGrid, d, $"budgetId == \"{id}\""), GroupFundFiscalYear2sRadGrid.MasterTableView.SortExpressions.Count > 0 ? $"{d[GroupFundFiscalYear2sRadGrid.MasterTableView.SortExpressions[0].FieldName]}{(GroupFundFiscalYear2sRadGrid.MasterTableView.SortExpressions[0].SortOrder == GridSortOrder.Descending ? "/sort.descending" : "")}" : null, GroupFundFiscalYear2sRadGrid.PageSize * GroupFundFiscalYear2sRadGrid.CurrentPageIndex, GroupFundFiscalYear2sRadGrid.PageSize, true);
-            GroupFundFiscalYear2sRadGrid.VirtualItemCount = i;
-            if (GroupFundFiscalYear2sRadGrid.MasterTableView.FilterExpression == "")
+            BudgetGroup2sRadGrid.DataSource = folioServiceContext.BudgetGroup2s(out var i, Global.GetCqlFilter(BudgetGroup2sRadGrid, d, $"budgetId == \"{id}\""), BudgetGroup2sRadGrid.MasterTableView.SortExpressions.Count > 0 ? $"{d[BudgetGroup2sRadGrid.MasterTableView.SortExpressions[0].FieldName]}{(BudgetGroup2sRadGrid.MasterTableView.SortExpressions[0].SortOrder == GridSortOrder.Descending ? "/sort.descending" : "")}" : null, BudgetGroup2sRadGrid.PageSize * BudgetGroup2sRadGrid.CurrentPageIndex, BudgetGroup2sRadGrid.PageSize, true);
+            BudgetGroup2sRadGrid.VirtualItemCount = i;
+            if (BudgetGroup2sRadGrid.MasterTableView.FilterExpression == "")
             {
-                GroupFundFiscalYear2sRadGrid.AllowFilteringByColumn = GroupFundFiscalYear2sRadGrid.VirtualItemCount > 10;
-                GroupFundFiscalYear2sPanel.Visible = Budget2FormView.DataKey.Value != null && Session["GroupFundFiscalYear2sPermission"] != null && GroupFundFiscalYear2sRadGrid.VirtualItemCount > 0;
+                BudgetGroup2sRadGrid.AllowFilteringByColumn = BudgetGroup2sRadGrid.VirtualItemCount > 10;
+                BudgetGroup2sPanel.Visible = Budget2FormView.DataKey.Value != null && Session["BudgetGroup2sPermission"] != null && BudgetGroup2sRadGrid.VirtualItemCount > 0;
             }
         }
 

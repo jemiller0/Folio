@@ -70,11 +70,11 @@ namespace FolioLibrary
         [Column("content"), CustomValidation(typeof(FinanceGroup), nameof(ValidateContent)), DataType(DataType.MultilineText), Display(Order = 14), Editable(false)]
         public virtual string Content { get; set; }
 
-        [Display(Name = "Finance Group Acquisitions Units", Order = 15), JsonConverter(typeof(ArrayJsonConverter<List<FinanceGroupAcquisitionsUnit>, FinanceGroupAcquisitionsUnit>), "AcquisitionsUnitId"), JsonProperty("acqUnitIds")]
-        public virtual ICollection<FinanceGroupAcquisitionsUnit> FinanceGroupAcquisitionsUnits { get; set; }
+        [Display(Name = "Budget Groups", Order = 15)]
+        public virtual ICollection<BudgetGroup2> BudgetGroup2s { get; set; }
 
-        [Display(Name = "Group Fund Fiscal Years", Order = 16)]
-        public virtual ICollection<GroupFundFiscalYear2> GroupFundFiscalYear2s { get; set; }
+        [Display(Name = "Finance Group Acquisitions Units", Order = 16), JsonConverter(typeof(ArrayJsonConverter<List<FinanceGroupAcquisitionsUnit>, FinanceGroupAcquisitionsUnit>), "AcquisitionsUnitId"), JsonProperty("acqUnitIds")]
+        public virtual ICollection<FinanceGroupAcquisitionsUnit> FinanceGroupAcquisitionsUnits { get; set; }
 
         public override string ToString() => $"{{ {nameof(Id)} = {Id}, {nameof(Code)} = {Code}, {nameof(Description)} = {Description}, {nameof(Name)} = {Name}, {nameof(Status)} = {Status}, {nameof(CreationTime)} = {CreationTime}, {nameof(CreationUserId)} = {CreationUserId}, {nameof(CreationUserUsername)} = {CreationUserUsername}, {nameof(LastWriteTime)} = {LastWriteTime}, {nameof(LastWriteUserId)} = {LastWriteUserId}, {nameof(LastWriteUserUsername)} = {LastWriteUserUsername}, {nameof(Content)} = {Content}, {nameof(FinanceGroupAcquisitionsUnits)} = {(FinanceGroupAcquisitionsUnits != null ? $"{{ {string.Join(", ", FinanceGroupAcquisitionsUnits)} }}" : "")} }}";
 

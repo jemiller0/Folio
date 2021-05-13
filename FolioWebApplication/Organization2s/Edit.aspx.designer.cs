@@ -77,6 +77,10 @@ namespace FolioWebApplication.Organization2s
 
         protected RadGrid OrganizationUrlsRadGrid;
 
+        protected Panel Voucher2sPanel;
+
+        protected RadGrid Voucher2sRadGrid;
+
         protected RadAjaxManager RadAjaxManager1;
     }
 }

@@ -69,6 +69,12 @@ namespace FolioWebApplication.Holding2s
             rcb.DataSource = folioServiceContext.Location2s(orderBy: "name").ToArray();
         }
 
+        protected void EffectiveLocationRadComboBox_DataBinding(object sender, EventArgs e)
+        {
+            var rcb = (RadComboBox)sender;
+            rcb.DataSource = folioServiceContext.Location2s(orderBy: "name").ToArray();
+        }
+
         protected void CallNumberTypeRadComboBox_DataBinding(object sender, EventArgs e)
         {
             var rcb = (RadComboBox)sender;
@@ -91,6 +97,7 @@ namespace FolioWebApplication.Holding2s
         {
             var id = (Guid?)Holding2FormView.DataKey.Value;
             var h2 = id != null ? folioServiceContext.FindHolding2(id) : new Holding2 { Id = Guid.NewGuid(), CreationTime = DateTime.Now, CreationUserId = (Guid?)Session["UserId"] };
+            h2.Version = (int?)e.NewValues["Version"];
             h2.HoldingTypeId = (string)e.NewValues["HoldingTypeId"] != "" ? (Guid?)Guid.Parse((string)e.NewValues["HoldingTypeId"]) : null;
             if ((string)e.NewValues["InstanceId"] == "")
             {
@@ -102,6 +109,7 @@ namespace FolioWebApplication.Holding2s
             h2.InstanceId = (Guid?)Guid.Parse((string)e.NewValues["InstanceId"]);
             h2.LocationId = (Guid?)Guid.Parse((string)e.NewValues["LocationId"]);
             h2.TemporaryLocationId = (string)e.NewValues["TemporaryLocationId"] != "" ? (Guid?)Guid.Parse((string)e.NewValues["TemporaryLocationId"]) : null;
+            h2.EffectiveLocationId = (string)e.NewValues["EffectiveLocationId"] != "" ? (Guid?)Guid.Parse((string)e.NewValues["EffectiveLocationId"]) : null;
             h2.CallNumberTypeId = (string)e.NewValues["CallNumberTypeId"] != "" ? (Guid?)Guid.Parse((string)e.NewValues["CallNumberTypeId"]) : null;
             h2.CallNumberPrefix = Global.Trim((string)e.NewValues["CallNumberPrefix"]);
             h2.CallNumber = Global.Trim((string)e.NewValues["CallNumber"]);
@@ -175,7 +183,7 @@ namespace FolioWebApplication.Holding2s
             if (Session["Item2sPermission"] == null) return;
             var id = (Guid?)Holding2FormView.DataKey.Value;
             if (id == null) return;
-            var d = new Dictionary<string, string>() { { "Id", "id" }, { "ShortId", "hrid" }, { "HoldingId", "holdingsRecordId" }, { "DiscoverySuppress", "discoverySuppress" }, { "AccessionNumber", "accessionNumber" }, { "Barcode", "barcode" }, { "CallNumber", "itemLevelCallNumber" }, { "CallNumberPrefix", "itemLevelCallNumberPrefix" }, { "CallNumberSuffix", "itemLevelCallNumberSuffix" }, { "CallNumberTypeId", "itemLevelCallNumberTypeId" }, { "EffectiveCallNumber", "effectiveCallNumberComponents.callNumber" }, { "EffectiveCallNumberPrefix", "effectiveCallNumberComponents.prefix" }, { "EffectiveCallNumberSuffix", "effectiveCallNumberComponents.suffix" }, { "EffectiveCallNumberTypeId", "effectiveCallNumberComponents.typeId" }, { "Volume", "volume" }, { "Enumeration", "enumeration" }, { "Chronology", "chronology" }, { "ItemIdentifier", "itemIdentifier" }, { "CopyNumber", "copyNumber" }, { "PiecesCount", "numberOfPieces" }, { "PiecesDescription", "descriptionOfPieces" }, { "MissingPiecesCount", "numberOfMissingPieces" }, { "MissingPiecesDescription", "missingPieces" }, { "MissingPiecesTime", "missingPiecesDate" }, { "DamagedStatusId", "itemDamagedStatusId" }, { "DamagedStatusTime", "itemDamagedStatusDate" }, { "StatusName", "status.name" }, { "StatusDate", "status.date" }, { "MaterialTypeId", "materialTypeId" }, { "PermanentLoanTypeId", "permanentLoanTypeId" }, { "TemporaryLoanTypeId", "temporaryLoanTypeId" }, { "PermanentLocationId", "permanentLocationId" }, { "TemporaryLocationId", "temporaryLocationId" }, { "EffectiveLocationId", "effectiveLocationId" }, { "InTransitDestinationServicePointId", "inTransitDestinationServicePointId" }, { "OrderItemId", "purchaseOrderLineIdentifier" }, { "CreationTime", "metadata.createdDate" }, { "CreationUserId", "metadata.createdByUserId" }, { "LastWriteTime", "metadata.updatedDate" }, { "LastWriteUserId", "metadata.updatedByUserId" }, { "LastCheckInDateTime", "lastCheckIn.dateTime" }, { "LastCheckInServicePointId", "lastCheckIn.servicePointId" }, { "LastCheckInStaffMemberId", "lastCheckIn.staffMemberId" } };
+            var d = new Dictionary<string, string>() { { "Id", "id" }, { "Version", "_version" }, { "ShortId", "hrid" }, { "HoldingId", "holdingsRecordId" }, { "DiscoverySuppress", "discoverySuppress" }, { "AccessionNumber", "accessionNumber" }, { "Barcode", "barcode" }, { "EffectiveShelvingOrder", "effectiveShelvingOrder" }, { "CallNumber", "itemLevelCallNumber" }, { "CallNumberPrefix", "itemLevelCallNumberPrefix" }, { "CallNumberSuffix", "itemLevelCallNumberSuffix" }, { "CallNumberTypeId", "itemLevelCallNumberTypeId" }, { "EffectiveCallNumber", "effectiveCallNumberComponents.callNumber" }, { "EffectiveCallNumberPrefix", "effectiveCallNumberComponents.prefix" }, { "EffectiveCallNumberSuffix", "effectiveCallNumberComponents.suffix" }, { "EffectiveCallNumberTypeId", "effectiveCallNumberComponents.typeId" }, { "Volume", "volume" }, { "Enumeration", "enumeration" }, { "Chronology", "chronology" }, { "ItemIdentifier", "itemIdentifier" }, { "CopyNumber", "copyNumber" }, { "PiecesCount", "numberOfPieces" }, { "PiecesDescription", "descriptionOfPieces" }, { "MissingPiecesCount", "numberOfMissingPieces" }, { "MissingPiecesDescription", "missingPieces" }, { "MissingPiecesTime", "missingPiecesDate" }, { "DamagedStatusId", "itemDamagedStatusId" }, { "DamagedStatusTime", "itemDamagedStatusDate" }, { "StatusName", "status.name" }, { "StatusDate", "status.date" }, { "MaterialTypeId", "materialTypeId" }, { "PermanentLoanTypeId", "permanentLoanTypeId" }, { "TemporaryLoanTypeId", "temporaryLoanTypeId" }, { "PermanentLocationId", "permanentLocationId" }, { "TemporaryLocationId", "temporaryLocationId" }, { "EffectiveLocationId", "effectiveLocationId" }, { "InTransitDestinationServicePointId", "inTransitDestinationServicePointId" }, { "OrderItemId", "purchaseOrderLineIdentifier" }, { "CreationTime", "metadata.createdDate" }, { "CreationUserId", "metadata.createdByUserId" }, { "LastWriteTime", "metadata.updatedDate" }, { "LastWriteUserId", "metadata.updatedByUserId" }, { "LastCheckInDateTime", "lastCheckIn.dateTime" }, { "LastCheckInServicePointId", "lastCheckIn.servicePointId" }, { "LastCheckInStaffMemberId", "lastCheckIn.staffMemberId" } };
             Item2sRadGrid.DataSource = folioServiceContext.Item2s(out var i, Global.GetCqlFilter(Item2sRadGrid, d, $"holdingsRecordId == \"{id}\""), Item2sRadGrid.MasterTableView.SortExpressions.Count > 0 ? $"{d[Item2sRadGrid.MasterTableView.SortExpressions[0].FieldName]}{(Item2sRadGrid.MasterTableView.SortExpressions[0].SortOrder == GridSortOrder.Descending ? "/sort.descending" : "")}" : null, Item2sRadGrid.PageSize * Item2sRadGrid.CurrentPageIndex, Item2sRadGrid.PageSize, true);
             Item2sRadGrid.VirtualItemCount = i;
             if (Item2sRadGrid.MasterTableView.FilterExpression == "")
@@ -192,9 +200,11 @@ namespace FolioWebApplication.Holding2s
             var d = new Dictionary<string, object>();
             gei.ExtractValues(d);
             var i2 = id != null ? folioServiceContext.FindItem2(id) : new Item2 { Id = Guid.NewGuid(), CreationTime = DateTime.Now, CreationUserId = (Guid?)Session["UserId"] };
+            i2.Version = (int?)d["Version"];
             i2.DiscoverySuppress = (bool?)d["DiscoverySuppress"];
             i2.AccessionNumber = Global.Trim((string)d["AccessionNumber"]);
             i2.Barcode = Global.Trim((string)d["Barcode"]);
+            i2.EffectiveShelvingOrder = Global.Trim((string)d["EffectiveShelvingOrder"]);
             i2.CallNumber = Global.Trim((string)d["CallNumber"]);
             i2.CallNumberPrefix = Global.Trim((string)d["CallNumberPrefix"]);
             i2.CallNumberSuffix = Global.Trim((string)d["CallNumberSuffix"]);
@@ -264,7 +274,7 @@ namespace FolioWebApplication.Holding2s
         protected void Item2sStatusNameRadComboBox_DataBinding(object sender, EventArgs e)
         {
             var rcb = (RadComboBox)sender;
-            rcb.DataSource = new string[] { "Available", "Awaiting pickup", "Awaiting delivery", "Checked out", "In process", "In transit", "Missing", "On order", "Paged", "Declared lost", "Order closed", "Claimed returned", "Unknown", "Withdrawn", "Lost and paid", "Aged to lost" };
+            rcb.DataSource = new string[] { "Aged to lost", "Available", "Awaiting pickup", "Awaiting delivery", "Checked out", "Claimed returned", "Declared lost", "In process", "In process (non-requestable)", "In transit", "Intellectual item", "Long missing", "Lost and paid", "Missing", "On order", "Paged", "Restricted", "Order closed", "Unavailable", "Unknown", "Withdrawn" };
         }
 
         protected void Item2sMaterialTypeRadComboBox_DataBinding(object sender, EventArgs e)

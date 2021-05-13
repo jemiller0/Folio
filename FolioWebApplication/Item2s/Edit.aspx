@@ -19,6 +19,14 @@
                                     <asp:HyperLink ID="IdHyperLink" runat="server" Text='<%# Eval("Id") %>' NavigateUrl='<%# $"Edit.aspx?Id={Eval("Id")}" %>' />
                                 </td>
                             </tr>
+                            <tr runat="server" visible='<%# Eval("Version") != null %>'>
+                                <td>
+                                    <asp:Label ID="VersionLabel" runat="server" Text="Version:" AssociatedControlID="VersionLiteral" />
+                                </td>
+                                <td>
+                                    <asp:Literal ID="VersionLiteral" runat="server" Text='<%#: Eval("Version") %>' />
+                                </td>
+                            </tr>
                             <tr runat="server" visible='<%# Eval("ShortId") != null %>'>
                                 <td>
                                     <asp:Label ID="ShortIdLabel" runat="server" Text="Short Id:" AssociatedControlID="ShortIdLiteral" />
@@ -57,6 +65,14 @@
                                 </td>
                                 <td>
                                     <asp:Literal ID="BarcodeLiteral" runat="server" Text='<%#: Eval("Barcode") %>' />
+                                </td>
+                            </tr>
+                            <tr runat="server" visible='<%# Eval("EffectiveShelvingOrder") != null %>'>
+                                <td>
+                                    <asp:Label ID="EffectiveShelvingOrderLabel" runat="server" Text="Effective Shelving Order:" AssociatedControlID="EffectiveShelvingOrderLiteral" />
+                                </td>
+                                <td>
+                                    <asp:Literal ID="EffectiveShelvingOrderLiteral" runat="server" Text='<%#: Eval("EffectiveShelvingOrder") %>' />
                                 </td>
                             </tr>
                             <tr runat="server" visible='<%# Eval("CallNumber") != null %>'>
@@ -380,6 +396,14 @@
                                     <asp:HyperLink ID="IdHyperLink" runat="server" Text='<%# Eval("Id") %>' NavigateUrl='<%# $"~/Item2s/Edit.aspx?Id={Eval("Id")}" %>' />
                                 </td>
                             </tr>
+                            <tr>
+                                <td>
+                                    <asp:Label ID="VersionLabel" runat="server" Text="Version:" AssociatedControlID="VersionRadNumericTextBox" />
+                                </td>
+                                <td>
+                                    <telerik:RadNumericTextBox ID="VersionRadNumericTextBox" runat="server" DbValue='<%# Bind("Version") %>' Width="500px" DataType="System.Int32" NumberFormat-DecimalDigits="0" NumberFormat-GroupSeparator="" MaxValue="2147483647" />
+                                </td>
+                            </tr>
                             <tr runat="server" visible='<%# Eval("ShortId") != null %>'>
                                 <td>
                                     <asp:Label ID="ShortIdLabel" runat="server" Text="Short Id:" AssociatedControlID="ShortIdLiteral" />
@@ -419,6 +443,14 @@
                                 </td>
                                 <td>
                                     <telerik:RadTextBox ID="BarcodeRadTextBox" runat="server" Text='<%# Bind("Barcode") %>' MaxLength="1024" Width="500px" />
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <asp:Label ID="EffectiveShelvingOrderLabel" runat="server" Text="Effective Shelving Order:" AssociatedControlID="EffectiveShelvingOrderRadTextBox" />
+                                </td>
+                                <td>
+                                    <telerik:RadTextBox ID="EffectiveShelvingOrderRadTextBox" runat="server" Text='<%# Bind("EffectiveShelvingOrder") %>' MaxLength="1024" Width="500px" />
                                 </td>
                             </tr>
                             <tr>
@@ -600,7 +632,7 @@
                                         </Items>
                                     </telerik:RadComboBox>
                                     <asp:RequiredFieldValidator ID="StatusNameRequiredFieldValidator" runat="server" ControlToValidate="StatusNameRadComboBox" ErrorMessage="The Status Name field is required." Display="Dynamic" CssClass="Error" ValidationGroup="Item2" />
-                                    <asp:RegularExpressionValidator ID="StatusNameRegularExpressionValidator" runat="server" ErrorMessage="The Status Name field must match the regular expression '^(Available|Awaiting pickup|Awaiting delivery|Checked out|In process|In transit|Missing|On order|Paged|Declared lost|Order closed|Claimed returned|Unknown|Withdrawn|Lost and paid|Aged to lost)$'." ControlToValidate="StatusNameRadComboBox" Display="Dynamic" CssClass="Error" ValidationExpression="^(Available|Awaiting pickup|Awaiting delivery|Checked out|In process|In transit|Missing|On order|Paged|Declared lost|Order closed|Claimed returned|Unknown|Withdrawn|Lost and paid|Aged to lost)$" ValidationGroup="Item2" />
+                                    <asp:RegularExpressionValidator ID="StatusNameRegularExpressionValidator" runat="server" ErrorMessage="The Status Name field must match the regular expression '^(Aged to lost|Available|Awaiting pickup|Awaiting delivery|Checked out|Claimed returned|Declared lost|In process|In process (non-requestable)|In transit|Intellectual item|Long missing|Lost and paid|Missing|On order|Paged|Restricted|Order closed|Unavailable|Unknown|Withdrawn)$'." ControlToValidate="StatusNameRadComboBox" Display="Dynamic" CssClass="Error" ValidationExpression="^(Aged to lost|Available|Awaiting pickup|Awaiting delivery|Checked out|Claimed returned|Declared lost|In process|In process (non-requestable)|In transit|Intellectual item|Long missing|Lost and paid|Missing|On order|Paged|Restricted|Order closed|Unavailable|Unknown|Withdrawn)$" ValidationGroup="Item2" />
                                 </td>
                             </tr>
                             <tr>
@@ -1088,6 +1120,7 @@
                         </telerik:GridTemplateColumn>
                         <telerik:GridBoundColumn HeaderText="Request Type" DataField="RequestType" AutoPostBackOnFilter="true" HtmlEncode="true" CurrentFilterFunction="StartsWith" />
                         <telerik:GridBoundColumn HeaderText="Request Date" DataField="RequestDate" AutoPostBackOnFilter="true" DataFormatString="{0:d}" />
+                        <telerik:GridBoundColumn HeaderText="Patron Comments" DataField="PatronComments" AutoPostBackOnFilter="true" HtmlEncode="true" CurrentFilterFunction="StartsWith" />
                         <telerik:GridTemplateColumn AllowFiltering="false" AllowSorting="false" HeaderText="Requester" DataField="Requester.Username" SortExpression="Requester.Username" AutoPostBackOnFilter="true" CurrentFilterFunction="StartsWith">
                             <ItemTemplate>
                                 <asp:HyperLink ID="RequesterHyperLink" runat="server" Text='<%#: Eval("RequesterId") != null ? Eval("Requester.Username") ?? "&nbsp;" : "" %>' NavigateUrl='<%# $"~/User2s/Edit.aspx?Id={Eval("RequesterId")}" %>' Enabled='<%# Session["User2sPermission"] != null %>' />

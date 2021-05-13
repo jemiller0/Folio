@@ -25,6 +25,14 @@
                                     <asp:Literal ID="AccountingCodeLiteral" runat="server" Text='<%#: Eval("AccountingCode") %>' />
                                 </td>
                             </tr>
+                            <tr runat="server" visible='<%# Eval("AccountNumber") != null %>'>
+                                <td>
+                                    <asp:Label ID="AccountNumberLabel" runat="server" Text="Account Number:" AssociatedControlID="AccountNumberLiteral" />
+                                </td>
+                                <td>
+                                    <asp:Literal ID="AccountNumberLiteral" runat="server" Text='<%#: Eval("AccountNumber") %>' />
+                                </td>
+                            </tr>
                             <tr runat="server" visible='<%# Eval("Amount") != null %>'>
                                 <td>
                                     <asp:Label ID="AmountLabel" runat="server" Text="Amount:" AssociatedControlID="AmountLiteral" />
@@ -63,6 +71,14 @@
                                 </td>
                                 <td>
                                     <asp:Literal ID="DisbursementAmountLiteral" runat="server" Text='<%# Eval("DisbursementAmount", "{0:c}") %>' />
+                                </td>
+                            </tr>
+                            <tr runat="server" visible='<%# Eval("EnclosureNeeded") != null %>'>
+                                <td>
+                                    <asp:Label ID="EnclosureNeededLabel" runat="server" Text="Enclosure Needed:" AssociatedControlID="EnclosureNeededLiteral" />
+                                </td>
+                                <td>
+                                    <asp:Literal ID="EnclosureNeededLiteral" runat="server" Text='<%#: Eval("EnclosureNeeded") %>' />
                                 </td>
                             </tr>
                             <tr runat="server" visible='<%# Eval("InvoiceCurrency") != null %>'>
@@ -135,6 +151,62 @@
                                 </td>
                                 <td>
                                     <asp:Literal ID="VoucherNumberLiteral" runat="server" Text='<%#: Eval("VoucherNumber") %>' />
+                                </td>
+                            </tr>
+                            <tr runat="server" visible='<%# Eval("Vendor") != null %>'>
+                                <td>
+                                    <asp:Label ID="VendorLabel" runat="server" Text="Vendor:" AssociatedControlID="VendorHyperLink" />
+                                </td>
+                                <td>
+                                    <asp:HyperLink ID="VendorHyperLink" runat="server" Text='<%#: Eval("Vendor.Name") %>' NavigateUrl='<%# $"~/Organization2s/Edit.aspx?Id={Eval("VendorId")}" %>' Enabled='<%# Session["Organization2sPermission"] != null %>' />
+                                </td>
+                            </tr>
+                            <tr runat="server" visible='<%# Eval("VendorStreetAddress1") != null %>'>
+                                <td>
+                                    <asp:Label ID="VendorStreetAddress1Label" runat="server" Text="Vendor Street Address 1:" AssociatedControlID="VendorStreetAddress1Literal" />
+                                </td>
+                                <td>
+                                    <asp:Literal ID="VendorStreetAddress1Literal" runat="server" Text='<%#: Eval("VendorStreetAddress1") %>' />
+                                </td>
+                            </tr>
+                            <tr runat="server" visible='<%# Eval("VendorStreetAddress2") != null %>'>
+                                <td>
+                                    <asp:Label ID="VendorStreetAddress2Label" runat="server" Text="Vendor Street Address 2:" AssociatedControlID="VendorStreetAddress2Literal" />
+                                </td>
+                                <td>
+                                    <asp:Literal ID="VendorStreetAddress2Literal" runat="server" Text='<%#: Eval("VendorStreetAddress2") %>' />
+                                </td>
+                            </tr>
+                            <tr runat="server" visible='<%# Eval("VendorCity") != null %>'>
+                                <td>
+                                    <asp:Label ID="VendorCityLabel" runat="server" Text="Vendor City:" AssociatedControlID="VendorCityLiteral" />
+                                </td>
+                                <td>
+                                    <asp:Literal ID="VendorCityLiteral" runat="server" Text='<%#: Eval("VendorCity") %>' />
+                                </td>
+                            </tr>
+                            <tr runat="server" visible='<%# Eval("VendorState") != null %>'>
+                                <td>
+                                    <asp:Label ID="VendorStateLabel" runat="server" Text="Vendor State:" AssociatedControlID="VendorStateLiteral" />
+                                </td>
+                                <td>
+                                    <asp:Literal ID="VendorStateLiteral" runat="server" Text='<%#: Eval("VendorState") %>' />
+                                </td>
+                            </tr>
+                            <tr runat="server" visible='<%# Eval("VendorPostalCode") != null %>'>
+                                <td>
+                                    <asp:Label ID="VendorPostalCodeLabel" runat="server" Text="Vendor Postal Code:" AssociatedControlID="VendorPostalCodeLiteral" />
+                                </td>
+                                <td>
+                                    <asp:Literal ID="VendorPostalCodeLiteral" runat="server" Text='<%#: Eval("VendorPostalCode") %>' />
+                                </td>
+                            </tr>
+                            <tr runat="server" visible='<%# Eval("VendorCountryCode") != null %>'>
+                                <td>
+                                    <asp:Label ID="VendorCountryCodeLabel" runat="server" Text="Vendor Country Code:" AssociatedControlID="VendorCountryCodeLiteral" />
+                                </td>
+                                <td>
+                                    <asp:Literal ID="VendorCountryCodeLiteral" runat="server" Text='<%#: Eval("VendorCountryCode") %>' />
                                 </td>
                             </tr>
                             <tr runat="server" visible='<%# Eval("CreationTime") != null %>'>

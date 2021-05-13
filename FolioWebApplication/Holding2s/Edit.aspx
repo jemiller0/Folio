@@ -19,6 +19,14 @@
                                     <asp:HyperLink ID="IdHyperLink" runat="server" Text='<%# Eval("Id") %>' NavigateUrl='<%# $"Edit.aspx?Id={Eval("Id")}" %>' />
                                 </td>
                             </tr>
+                            <tr runat="server" visible='<%# Eval("Version") != null %>'>
+                                <td>
+                                    <asp:Label ID="VersionLabel" runat="server" Text="Version:" AssociatedControlID="VersionLiteral" />
+                                </td>
+                                <td>
+                                    <asp:Literal ID="VersionLiteral" runat="server" Text='<%#: Eval("Version") %>' />
+                                </td>
+                            </tr>
                             <tr runat="server" visible='<%# Eval("ShortId") != null %>'>
                                 <td>
                                     <asp:Label ID="ShortIdLabel" runat="server" Text="Short Id:" AssociatedControlID="ShortIdLiteral" />
@@ -57,6 +65,14 @@
                                 </td>
                                 <td>
                                     <asp:HyperLink ID="TemporaryLocationHyperLink" runat="server" Text='<%#: Eval("TemporaryLocation.Name") %>' NavigateUrl='<%# $"~/Location2s/Edit.aspx?Id={Eval("TemporaryLocationId")}" %>' Enabled='<%# Session["Location2sPermission"] != null %>' />
+                                </td>
+                            </tr>
+                            <tr runat="server" visible='<%# Eval("EffectiveLocation") != null %>'>
+                                <td>
+                                    <asp:Label ID="EffectiveLocationLabel" runat="server" Text="Effective Location:" AssociatedControlID="EffectiveLocationHyperLink" />
+                                </td>
+                                <td>
+                                    <asp:HyperLink ID="EffectiveLocationHyperLink" runat="server" Text='<%#: Eval("EffectiveLocation.Name") %>' NavigateUrl='<%# $"~/Location2s/Edit.aspx?Id={Eval("EffectiveLocationId")}" %>' Enabled='<%# Session["Location2sPermission"] != null %>' />
                                 </td>
                             </tr>
                             <tr runat="server" visible='<%# Eval("CallNumberType") != null %>'>
@@ -244,6 +260,14 @@
                                     <asp:HyperLink ID="IdHyperLink" runat="server" Text='<%# Eval("Id") %>' NavigateUrl='<%# $"~/Holding2s/Edit.aspx?Id={Eval("Id")}" %>' />
                                 </td>
                             </tr>
+                            <tr>
+                                <td>
+                                    <asp:Label ID="VersionLabel" runat="server" Text="Version:" AssociatedControlID="VersionRadNumericTextBox" />
+                                </td>
+                                <td>
+                                    <telerik:RadNumericTextBox ID="VersionRadNumericTextBox" runat="server" DbValue='<%# Bind("Version") %>' Width="500px" DataType="System.Int32" NumberFormat-DecimalDigits="0" NumberFormat-GroupSeparator="" MaxValue="2147483647" />
+                                </td>
+                            </tr>
                             <tr runat="server" visible='<%# Eval("ShortId") != null %>'>
                                 <td>
                                     <asp:Label ID="ShortIdLabel" runat="server" Text="Short Id:" AssociatedControlID="ShortIdLiteral" />
@@ -293,6 +317,18 @@
                                 </td>
                                 <td>
                                     <telerik:RadComboBox ID="TemporaryLocationRadComboBox" runat="server" MarkFirstMatch="true" MaxHeight="500px" Width="500px" AppendDataBoundItems="true" DataTextField="Name" DataValueField="Id" SelectedValue='<%# Bind("TemporaryLocationId") %>' OnDataBinding="TemporaryLocationRadComboBox_DataBinding">
+                                        <Items>
+                                            <telerik:RadComboBoxItem Value="" Text="" />
+                                        </Items>
+                                    </telerik:RadComboBox>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <asp:HyperLink runat="server" Text="Effective Location:" NavigateUrl="~/Location2s/Default.aspx" Enabled='<%# Session["Location2sPermission"] != null %>' />
+                                </td>
+                                <td>
+                                    <telerik:RadComboBox ID="EffectiveLocationRadComboBox" runat="server" MarkFirstMatch="true" MaxHeight="500px" Width="500px" AppendDataBoundItems="true" DataTextField="Name" DataValueField="Id" SelectedValue='<%# Bind("EffectiveLocationId") %>' OnDataBinding="EffectiveLocationRadComboBox_DataBinding">
                                         <Items>
                                             <telerik:RadComboBoxItem Value="" Text="" />
                                         </Items>
@@ -617,6 +653,7 @@
                                 <asp:HyperLink ID="IdHyperLink" runat="server" Text='<%# Eval("Id") %>' NavigateUrl='<%# $"~/Item2s/Edit.aspx?Id={Eval("Id")}" %>' />
                             </ItemTemplate>
                         </telerik:GridTemplateColumn>
+                        <telerik:GridBoundColumn HeaderText="Version" DataField="Version" AutoPostBackOnFilter="true" />
                         <telerik:GridTemplateColumn HeaderText="Short Id" DataField="ShortId" SortExpression="ShortId" AutoPostBackOnFilter="true">
                             <ItemTemplate>
                                 <asp:HyperLink ID="ShortIdHyperLink" runat="server" Text='<%# Eval("ShortId") ?? "&nbsp;" %>' NavigateUrl='<%# $"~/Item2s/Edit.aspx?Id={Eval("Id")}" %>' />
@@ -625,6 +662,7 @@
                         <telerik:GridBoundColumn HeaderText="Discovery Suppress" DataField="DiscoverySuppress" AutoPostBackOnFilter="true" />
                         <telerik:GridBoundColumn HeaderText="Accession Number" DataField="AccessionNumber" AutoPostBackOnFilter="true" HtmlEncode="true" CurrentFilterFunction="StartsWith" />
                         <telerik:GridBoundColumn HeaderText="Barcode" DataField="Barcode" AutoPostBackOnFilter="true" HtmlEncode="true" CurrentFilterFunction="StartsWith" />
+                        <telerik:GridBoundColumn HeaderText="Effective Shelving Order" DataField="EffectiveShelvingOrder" AutoPostBackOnFilter="true" HtmlEncode="true" CurrentFilterFunction="StartsWith" />
                         <telerik:GridBoundColumn HeaderText="Call Number" DataField="CallNumber" AutoPostBackOnFilter="true" HtmlEncode="true" CurrentFilterFunction="StartsWith" />
                         <telerik:GridBoundColumn HeaderText="Call Number Prefix" DataField="CallNumberPrefix" AutoPostBackOnFilter="true" HtmlEncode="true" CurrentFilterFunction="StartsWith" />
                         <telerik:GridBoundColumn HeaderText="Call Number Suffix" DataField="CallNumberSuffix" AutoPostBackOnFilter="true" HtmlEncode="true" CurrentFilterFunction="StartsWith" />
@@ -738,6 +776,14 @@
                                             <asp:HyperLink ID="IdHyperLink" runat="server" Text='<%# Eval("Id") %>' NavigateUrl='<%# $"~/Item2s/Edit.aspx?Id={Eval("Id")}" %>' />
                                         </td>
                                     </tr>
+                                    <tr>
+                                        <td>
+                                            <asp:Label ID="VersionLabel" runat="server" Text="Version:" AssociatedControlID="VersionRadNumericTextBox" />
+                                        </td>
+                                        <td>
+                                            <telerik:RadNumericTextBox ID="VersionRadNumericTextBox" runat="server" DbValue='<%# Bind("Version") %>' Width="500px" DataType="System.Int32" NumberFormat-DecimalDigits="0" NumberFormat-GroupSeparator="" MaxValue="2147483647" />
+                                        </td>
+                                    </tr>
                                     <tr runat="server" visible='<%# Eval("ShortId") != null %>'>
                                         <td>
                                             <asp:Label ID="ShortIdLabel" runat="server" Text="Short Id:" AssociatedControlID="ShortIdLiteral" />
@@ -767,6 +813,14 @@
                                         </td>
                                         <td>
                                             <telerik:RadTextBox ID="BarcodeRadTextBox" runat="server" Text='<%# Bind("Barcode") %>' MaxLength="1024" Width="500px" />
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <asp:Label ID="EffectiveShelvingOrderLabel" runat="server" Text="Effective Shelving Order:" AssociatedControlID="EffectiveShelvingOrderRadTextBox" />
+                                        </td>
+                                        <td>
+                                            <telerik:RadTextBox ID="EffectiveShelvingOrderRadTextBox" runat="server" Text='<%# Bind("EffectiveShelvingOrder") %>' MaxLength="1024" Width="500px" />
                                         </td>
                                     </tr>
                                     <tr>
@@ -948,7 +1002,7 @@
                                                 </Items>
                                             </telerik:RadComboBox>
                                             <asp:RequiredFieldValidator ID="StatusNameRequiredFieldValidator" runat="server" ControlToValidate="StatusNameRadComboBox" ErrorMessage="The Status Name field is required." Display="Dynamic" CssClass="Error" ValidationGroup="Item2s" />
-                                            <asp:RegularExpressionValidator ID="StatusNameRegularExpressionValidator" runat="server" ErrorMessage="The Status Name field must match the regular expression '^(Available|Awaiting pickup|Awaiting delivery|Checked out|In process|In transit|Missing|On order|Paged|Declared lost|Order closed|Claimed returned|Unknown|Withdrawn|Lost and paid|Aged to lost)$'." ControlToValidate="StatusNameRadComboBox" Display="Dynamic" CssClass="Error" ValidationExpression="^(Available|Awaiting pickup|Awaiting delivery|Checked out|In process|In transit|Missing|On order|Paged|Declared lost|Order closed|Claimed returned|Unknown|Withdrawn|Lost and paid|Aged to lost)$" ValidationGroup="Item2s" />
+                                            <asp:RegularExpressionValidator ID="StatusNameRegularExpressionValidator" runat="server" ErrorMessage="The Status Name field must match the regular expression '^(Aged to lost|Available|Awaiting pickup|Awaiting delivery|Checked out|Claimed returned|Declared lost|In process|In process (non-requestable)|In transit|Intellectual item|Long missing|Lost and paid|Missing|On order|Paged|Restricted|Order closed|Unavailable|Unknown|Withdrawn)$'." ControlToValidate="StatusNameRadComboBox" Display="Dynamic" CssClass="Error" ValidationExpression="^(Aged to lost|Available|Awaiting pickup|Awaiting delivery|Checked out|Claimed returned|Declared lost|In process|In process (non-requestable)|In transit|Intellectual item|Long missing|Lost and paid|Missing|On order|Paged|Restricted|Order closed|Unavailable|Unknown|Withdrawn)$" ValidationGroup="Item2s" />
                                         </td>
                                     </tr>
                                     <tr>

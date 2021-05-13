@@ -61,6 +61,9 @@
                         <telerik:GridBoundColumn HeaderText="Recalls Minimum Guaranteed Loan Period Interval" DataField="RecallsMinimumGuaranteedLoanPeriodInterval" AutoPostBackOnFilter="true" HtmlEncode="true" CurrentFilterFunction="StartsWith" />
                         <telerik:GridBoundColumn HeaderText="Recalls Recall Return Interval Duration" DataField="RecallsRecallReturnIntervalDuration" AutoPostBackOnFilter="true" />
                         <telerik:GridBoundColumn HeaderText="Recalls Recall Return Interval Interval" DataField="RecallsRecallReturnIntervalInterval" AutoPostBackOnFilter="true" HtmlEncode="true" CurrentFilterFunction="StartsWith" />
+                        <telerik:GridBoundColumn HeaderText="Recalls Allow Recalls To Extend Overdue Loans" DataField="RecallsAllowRecallsToExtendOverdueLoans" AutoPostBackOnFilter="true" />
+                        <telerik:GridBoundColumn HeaderText="Recalls Alternate Recall Return Interval Duration" DataField="RecallsAlternateRecallReturnIntervalDuration" AutoPostBackOnFilter="true" />
+                        <telerik:GridBoundColumn HeaderText="Recalls Alternate Recall Return Interval Interval" DataField="RecallsAlternateRecallReturnIntervalInterval" AutoPostBackOnFilter="true" HtmlEncode="true" CurrentFilterFunction="StartsWith" />
                         <telerik:GridBoundColumn HeaderText="Holds Alternate Checkout Loan Period Duration" DataField="HoldsAlternateCheckoutLoanPeriodDuration" AutoPostBackOnFilter="true" />
                         <telerik:GridBoundColumn HeaderText="Holds Alternate Checkout Loan Period Interval" DataField="HoldsAlternateCheckoutLoanPeriodInterval" AutoPostBackOnFilter="true" HtmlEncode="true" CurrentFilterFunction="StartsWith" />
                         <telerik:GridBoundColumn HeaderText="Holds Renew Items With Request" DataField="HoldsRenewItemsWithRequest" AutoPostBackOnFilter="true" />
