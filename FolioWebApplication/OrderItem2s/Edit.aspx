@@ -497,12 +497,12 @@
                                     <asp:Literal ID="VendorNoteLiteral" runat="server" Text='<%#: Eval("VendorNote") %>' />
                                 </td>
                             </tr>
-                            <tr runat="server" visible='<%# Eval("VendorAccount") != null %>'>
+                            <tr runat="server" visible='<%# Eval("VendorCustomerId") != null %>'>
                                 <td>
-                                    <asp:Label ID="VendorAccountLabel" runat="server" Text="Vendor Account:" AssociatedControlID="VendorAccountLiteral" />
+                                    <asp:Label ID="VendorCustomerIdLabel" runat="server" Text="Vendor Customer Id:" AssociatedControlID="VendorCustomerIdLiteral" />
                                 </td>
                                 <td>
-                                    <asp:Literal ID="VendorAccountLiteral" runat="server" Text='<%#: Eval("VendorAccount") %>' />
+                                    <asp:Literal ID="VendorCustomerIdLiteral" runat="server" Text='<%#: Eval("VendorCustomerId") %>' />
                                 </td>
                             </tr>
                             <tr runat="server" visible='<%# Eval("CreationTime") != null %>'>
@@ -858,7 +858,7 @@
                         <telerik:GridBoundColumn HeaderText="Title Or Package" DataField="TitleOrPackage" AutoPostBackOnFilter="true" HtmlEncode="true" CurrentFilterFunction="StartsWith" />
                         <telerik:GridBoundColumn HeaderText="Vendor Instructions" DataField="VendorInstructions" AutoPostBackOnFilter="true" HtmlEncode="true" CurrentFilterFunction="StartsWith" />
                         <telerik:GridBoundColumn HeaderText="Vendor Note" DataField="VendorNote" AutoPostBackOnFilter="true" HtmlEncode="true" CurrentFilterFunction="StartsWith" />
-                        <telerik:GridBoundColumn HeaderText="Vendor Account" DataField="VendorAccount" AutoPostBackOnFilter="true" HtmlEncode="true" CurrentFilterFunction="StartsWith" />
+                        <telerik:GridBoundColumn HeaderText="Vendor Customer Id" DataField="VendorCustomerId" AutoPostBackOnFilter="true" HtmlEncode="true" CurrentFilterFunction="StartsWith" />
                         <telerik:GridBoundColumn HeaderText="Creation Time" DataField="CreationTime" AutoPostBackOnFilter="true" DataFormatString="{0:g}" />
                         <telerik:GridTemplateColumn AllowFiltering="false" AllowSorting="false" HeaderText="Creation User" DataField="CreationUser.Username" SortExpression="CreationUser.Username" AutoPostBackOnFilter="true" CurrentFilterFunction="StartsWith">
                             <ItemTemplate>
