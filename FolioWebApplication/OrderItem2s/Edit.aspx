@@ -161,12 +161,12 @@
                                     <asp:Literal ID="FiscalYearRolloverAdjustmentAmountLiteral" runat="server" Text='<%# Eval("FiscalYearRolloverAdjustmentAmount", "{0:c}") %>' />
                                 </td>
                             </tr>
-                            <tr runat="server" visible='<%# Eval("Description") != null %>'>
+                            <tr runat="server" visible='<%# Eval("InternalNote") != null %>'>
                                 <td>
-                                    <asp:Label ID="DescriptionLabel" runat="server" Text="Description:" AssociatedControlID="DescriptionLiteral" />
+                                    <asp:Label ID="InternalNoteLabel" runat="server" Text="Internal Note:" AssociatedControlID="InternalNoteLiteral" />
                                 </td>
                                 <td>
-                                    <asp:Literal ID="DescriptionLiteral" runat="server" Text='<%#: Eval("Description") %>' />
+                                    <asp:Literal ID="InternalNoteLiteral" runat="server" Text='<%#: Eval("InternalNote") %>' />
                                 </td>
                             </tr>
                             <tr runat="server" visible='<%# Eval("ReceivingNote") != null %>'>
@@ -385,12 +385,12 @@
                                     <asp:Literal ID="PhysicalReceiptDueLiteral" runat="server" Text='<%# Eval("PhysicalReceiptDue", "{0:g}") %>' />
                                 </td>
                             </tr>
-                            <tr runat="server" visible='<%# Eval("Description2") != null %>'>
+                            <tr runat="server" visible='<%# Eval("Description") != null %>'>
                                 <td>
-                                    <asp:Label ID="Description2Label" runat="server" Text="Description 2:" AssociatedControlID="Description2Literal" />
+                                    <asp:Label ID="DescriptionLabel" runat="server" Text="Description:" AssociatedControlID="DescriptionLiteral" />
                                 </td>
                                 <td>
-                                    <asp:Literal ID="Description2Literal" runat="server" Text='<%#: Eval("Description2") %>' />
+                                    <asp:Literal ID="DescriptionLiteral" runat="server" Text='<%#: Eval("Description") %>' />
                                 </td>
                             </tr>
                             <tr runat="server" visible='<%# Eval("Number") != null %>'>
@@ -789,7 +789,7 @@
                         <telerik:GridBoundColumn HeaderText="Electronic Quantity" DataField="ElectronicQuantity" AutoPostBackOnFilter="true" />
                         <telerik:GridBoundColumn HeaderText="Estimated Price" DataField="EstimatedPrice" AutoPostBackOnFilter="true" DataFormatString="{0:c}" />
                         <telerik:GridBoundColumn HeaderText="Fiscal Year Rollover Adjustment Amount" DataField="FiscalYearRolloverAdjustmentAmount" AutoPostBackOnFilter="true" DataFormatString="{0:c}" />
-                        <telerik:GridBoundColumn HeaderText="Description" DataField="Description" AutoPostBackOnFilter="true" HtmlEncode="true" CurrentFilterFunction="StartsWith" />
+                        <telerik:GridBoundColumn HeaderText="Internal Note" DataField="InternalNote" AutoPostBackOnFilter="true" HtmlEncode="true" CurrentFilterFunction="StartsWith" />
                         <telerik:GridBoundColumn HeaderText="Receiving Note" DataField="ReceivingNote" AutoPostBackOnFilter="true" HtmlEncode="true" CurrentFilterFunction="StartsWith" />
                         <telerik:GridBoundColumn HeaderText="Subscription From" DataField="SubscriptionFrom" AutoPostBackOnFilter="true" DataFormatString="{0:g}" />
                         <telerik:GridBoundColumn HeaderText="Subscription Interval" DataField="SubscriptionInterval" AutoPostBackOnFilter="true" />
@@ -836,7 +836,7 @@
                         </telerik:GridTemplateColumn>
                         <telerik:GridBoundColumn HeaderText="Physical Expected Receipt Date" DataField="PhysicalExpectedReceiptDate" AutoPostBackOnFilter="true" DataFormatString="{0:d}" />
                         <telerik:GridBoundColumn HeaderText="Physical Receipt Due" DataField="PhysicalReceiptDue" AutoPostBackOnFilter="true" DataFormatString="{0:g}" />
-                        <telerik:GridBoundColumn HeaderText="Description 2" DataField="Description2" AutoPostBackOnFilter="true" HtmlEncode="true" CurrentFilterFunction="StartsWith" />
+                        <telerik:GridBoundColumn HeaderText="Description" DataField="Description" AutoPostBackOnFilter="true" HtmlEncode="true" CurrentFilterFunction="StartsWith" />
                         <telerik:GridTemplateColumn HeaderText="Number" DataField="Number" SortExpression="Number" AutoPostBackOnFilter="true" CurrentFilterFunction="EqualTo">
                             <ItemTemplate>
                                 <asp:HyperLink ID="NumberHyperLink" runat="server" Text='<%#: Eval("Number") ?? "&nbsp;" %>' NavigateUrl='<%# $"~/OrderItem2s/Edit.aspx?Id={Eval("Id")}" %>' />
