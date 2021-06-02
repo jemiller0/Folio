@@ -14920,8 +14920,56 @@ namespace FolioConsoleApplication
                 var js = new JsonSerializer { Formatting = Formatting.Indented };
                 jtw.WriteStartArray();
                 var i = 0;
-                foreach (var jo in api ? fsc.Records(where, orderBy, skip, take) : throw new NotSupportedException())
+                foreach (var jo in api ? fsc.Records(where, orderBy, skip, take) : fdc.Query($"SELECT r.id::text AS id, r.snapshot_id::text AS \"snapshotId\", NULL AS \"matchedProfileId\", r.matched_id::text AS \"matchedId\", r.generation AS generation, r.record_type AS \"recordType\", rr.id::text AS id2, rr.content AS content, mr.id::text AS id3, mr.content AS content2, NULL AS \"formattedContent\", er.id::text AS id4, er.description AS description, er.content AS content3, false AS deleted, r.suppress_discovery AS \"suppressDiscovery\", r.created_date AS \"createdDate\", r.created_by_user_id::text AS \"createdByUserId\", NULL AS \"createdByUsername\", r.updated_date AS \"updatedDate\", r.updated_by_user_id::text AS \"updatedByUserId\", NULL AS \"updatedByUsername\", r.order AS order, r.instance_id::text AS \"instanceId\", r.instance_hrid AS \"instanceHrid\", r.state AS state, r.leader_record_status AS \"leaderRecordStatus\" FROM diku_mod_source_record_storage.records_lb r LEFT JOIN diku_mod_source_record_storage.raw_records_lb rr ON rr.id = r.id LEFT JOIN diku_mod_source_record_storage.marc_records_lb mr ON mr.id = r.id LEFT JOIN diku_mod_source_record_storage.error_records_lb er ON er.id = r.id{(where != null ? $" WHERE {where}" : "")}{(orderBy != null ? $" ORDER BY {orderBy}" : "")}", null, skip, take, 5 * 60).Select(d => JObject.FromObject(new
                 {
+                    d.id,
+                    d.snapshotId,
+                    d.matchedProfileId,
+                    d.matchedId,
+                    d.generation,
+                    d.recordType,
+                    rawRecord = new
+                    {
+                        id = d.id2,
+                        d.content
+                    },
+                    parsedRecord = new
+                    {
+                        id = d.id3,
+                        content = JObject.Parse(d.content2),
+                        d.formattedContent
+                    },
+                    errorRecord = new
+                    {
+                        id = d.id4,
+                        d.description,
+                        content = d.content3
+                    },
+                    d.deleted,
+                    d.order,
+                    externalIdsHolder = new
+                    {
+                        d.instanceId,
+                        d.instanceHrid
+                    },
+                    additionalInfo = new
+                    {
+                        d.suppressDiscovery
+                    },
+                    d.state,
+                    d.leaderRecordStatus,
+                    metadata = new
+                    {
+                        createdDate = d.createdDate?.ToUniversalTime(),
+                        d.createdByUserId,
+                        d.createdByUsername,
+                        updatedDate = d.updatedDate?.ToUniversalTime(),
+                        d.updatedByUserId,
+                        d.updatedByUsername
+                    }
+                }, jsonSerializer)))
+                {
+                    jo.RemoveNullAndEmptyProperties();
                     if (validate)
                     {
                         var l = js4.Validate(jo);
