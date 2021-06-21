@@ -37,7 +37,7 @@ namespace FolioLibrary
         [Column("account_number"), Display(Name = "Account Number", Order = 3), JsonProperty("accountNumber"), StringLength(1024)]
         public virtual string AccountNumber { get; set; }
 
-        [Column("adjustments_total"), Display(Name = "Adjustments Total", Order = 4), JsonProperty("adjustmentsTotal")]
+        [Column("adjustments_total"), DataType(DataType.Currency), Display(Name = "Adjustments Total", Order = 4), DisplayFormat(DataFormatString = "{0:c}", ApplyFormatInEditMode = true), JsonProperty("adjustmentsTotal")]
         public virtual decimal? AdjustmentsTotal { get; set; }
 
         [Column("comment"), Display(Order = 5), JsonProperty("comment"), StringLength(1024)]
@@ -88,10 +88,10 @@ namespace FolioLibrary
         [Column("subscription_end"), Display(Name = "Subscription End", Order = 20), DisplayFormat(DataFormatString = "{0:g}", ApplyFormatInEditMode = true), JsonProperty("subscriptionEnd")]
         public virtual DateTime? SubscriptionEnd { get; set; }
 
-        [Column("sub_total"), Display(Name = "Sub Total", Order = 21), JsonProperty("subTotal"), Required]
+        [Column("sub_total"), DataType(DataType.Currency), Display(Name = "Sub Total", Order = 21), DisplayFormat(DataFormatString = "{0:c}", ApplyFormatInEditMode = true), JsonProperty("subTotal"), Required]
         public virtual decimal? SubTotal { get; set; }
 
-        [Column("total"), Display(Order = 22), JsonProperty("total")]
+        [Column("total"), DataType(DataType.Currency), Display(Order = 22), DisplayFormat(DataFormatString = "{0:c}", ApplyFormatInEditMode = true), JsonProperty("total")]
         public virtual decimal? Total { get; set; }
 
         [Column("created_date"), DataType(DataType.DateTime), Display(Name = "Creation Time", Order = 23), DisplayFormat(DataFormatString = "{0:g}"), Editable(false), JsonProperty("metadata.createdDate")]
@@ -144,6 +144,9 @@ namespace FolioLibrary
 
         [Display(Name = "Voucher Item Funds", Order = 39)]
         public virtual ICollection<VoucherItemFund> VoucherItemFunds { get; set; }
+
+        [Display(Name = "Voucher Item Invoice Items", Order = 40)]
+        public virtual ICollection<VoucherItemInvoiceItem> VoucherItemInvoiceItems { get; set; }
 
         public override string ToString() => $"{{ {nameof(Id)} = {Id}, {nameof(AccountingCode)} = {AccountingCode}, {nameof(AccountNumber)} = {AccountNumber}, {nameof(AdjustmentsTotal)} = {AdjustmentsTotal}, {nameof(Comment)} = {Comment}, {nameof(Description)} = {Description}, {nameof(InvoiceId)} = {InvoiceId}, {nameof(Number)} = {Number}, {nameof(InvoiceLineStatus)} = {InvoiceLineStatus}, {nameof(OrderItemId)} = {OrderItemId}, {nameof(ProductId)} = {ProductId}, {nameof(ProductIdTypeId)} = {ProductIdTypeId}, {nameof(Quantity)} = {Quantity}, {nameof(ReleaseEncumbrance)} = {ReleaseEncumbrance}, {nameof(SubscriptionInfo)} = {SubscriptionInfo}, {nameof(SubscriptionStart)} = {SubscriptionStart}, {nameof(SubscriptionEnd)} = {SubscriptionEnd}, {nameof(SubTotal)} = {SubTotal}, {nameof(Total)} = {Total}, {nameof(CreationTime)} = {CreationTime}, {nameof(CreationUserId)} = {CreationUserId}, {nameof(CreationUserUsername)} = {CreationUserUsername}, {nameof(LastWriteTime)} = {LastWriteTime}, {nameof(LastWriteUserId)} = {LastWriteUserId}, {nameof(LastWriteUserUsername)} = {LastWriteUserUsername}, {nameof(Content)} = {Content}, {nameof(InvoiceItemAdjustmentFunds)} = {(InvoiceItemAdjustmentFunds != null ? $"{{ {string.Join(", ", InvoiceItemAdjustmentFunds)} }}" : "")}, {nameof(InvoiceItemAdjustments)} = {(InvoiceItemAdjustments != null ? $"{{ {string.Join(", ", InvoiceItemAdjustments)} }}" : "")}, {nameof(InvoiceItemFunds)} = {(InvoiceItemFunds != null ? $"{{ {string.Join(", ", InvoiceItemFunds)} }}" : "")}, {nameof(InvoiceItemReferenceNumbers)} = {(InvoiceItemReferenceNumbers != null ? $"{{ {string.Join(", ", InvoiceItemReferenceNumbers)} }}" : "")}, {nameof(InvoiceItemTags)} = {(InvoiceItemTags != null ? $"{{ {string.Join(", ", InvoiceItemTags)} }}" : "")} }}";
 

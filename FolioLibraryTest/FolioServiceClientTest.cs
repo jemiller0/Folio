@@ -5192,15 +5192,15 @@ namespace FolioLibraryTest
         }
 
         [TestMethod]
-        public void DeserializeVoucherItemSourceIdTest()
+        public void DeserializeVoucherItemInvoiceItemTest()
         {
             var s = Stopwatch.StartNew();
             var jo = folioServiceClient.VoucherItems(take: 1).SingleOrDefault();
             if (jo == null) Assert.Inconclusive();
-            var visi = JsonConvert.DeserializeObject<VoucherItemSourceId>(jo.ToString());
-            traceSource.TraceEvent(TraceEventType.Information, 0, visi.ToString());
-            Assert.IsNotNull(visi);
-            traceSource.TraceEvent(TraceEventType.Information, 0, $"DeserializeVoucherItemSourceIdTest()\r\n    ElapsedTime={s.Elapsed}");
+            var viii = JsonConvert.DeserializeObject<VoucherItemInvoiceItem>(jo.ToString());
+            traceSource.TraceEvent(TraceEventType.Information, 0, viii.ToString());
+            Assert.IsNotNull(viii);
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"DeserializeVoucherItemInvoiceItemTest()\r\n    ElapsedTime={s.Elapsed}");
         }
 
         [TestMethod]

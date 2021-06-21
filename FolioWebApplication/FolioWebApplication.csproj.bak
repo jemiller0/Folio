@@ -94,13 +94,13 @@
     <Reference Include="System.Web.Services" />
     <Reference Include="System.EnterpriseServices" />
     <Reference Include="System.Xml.Linq" />
-    <Reference Include="Telerik.Web.UI, Version=2020.3.1021.45, Culture=neutral, PublicKeyToken=121fae78165ba3d4, processorArchitecture=MSIL">
+    <Reference Include="Telerik.Web.UI, Version=2021.1.330.45, Culture=neutral, PublicKeyToken=121fae78165ba3d4, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\..\..\..\Program Files (x86)\Progress\Telerik UI for ASP.NET AJAX R1 2021\Bin45\Telerik.Web.UI.dll</HintPath>
+      <HintPath>..\..\..\..\..\..\..\Program Files (x86)\Progress\Telerik UI for ASP.NET AJAX R2 2021\Bin45\Telerik.Web.UI.dll</HintPath>
     </Reference>
-    <Reference Include="Telerik.Web.UI.Skins, Version=2020.3.1021.45, Culture=neutral, PublicKeyToken=121fae78165ba3d4, processorArchitecture=MSIL">
+    <Reference Include="Telerik.Web.UI.Skins, Version=2021.1.330.45, Culture=neutral, PublicKeyToken=121fae78165ba3d4, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\..\..\..\Program Files (x86)\Progress\Telerik UI for ASP.NET AJAX R1 2021\Bin45\Telerik.Web.UI.Skins.dll</HintPath>
+      <HintPath>..\..\..\..\..\..\..\Program Files (x86)\Progress\Telerik UI for ASP.NET AJAX R2 2021\Bin45\Telerik.Web.UI.Skins.dll</HintPath>
     </Reference>
     <Reference Include="WindowsBase" />
   </ItemGroup>
@@ -1173,6 +1173,22 @@
     <Compile Include="Loan2s\Edit.aspx.designer.cs">
       <DependentUpon>Edit.aspx</DependentUpon>
     </Compile>
+    <Content Include="LoanEvent2s\Default.aspx" />
+    <Compile Include="LoanEvent2s\Default.aspx.cs">
+      <DependentUpon>Default.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="LoanEvent2s\Default.aspx.designer.cs">
+      <DependentUpon>Default.aspx</DependentUpon>
+    </Compile>
+    <Content Include="LoanEvent2s\Edit.aspx" />
+    <Compile Include="LoanEvent2s\Edit.aspx.cs">
+      <DependentUpon>Edit.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="LoanEvent2s\Edit.aspx.designer.cs">
+      <DependentUpon>Edit.aspx</DependentUpon>
+    </Compile>
     <Content Include="LoanPolicy2s\Default.aspx" />
     <Compile Include="LoanPolicy2s\Default.aspx.cs">
       <DependentUpon>Default.aspx</DependentUpon>
@@ -1363,22 +1379,6 @@
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="OrderTemplate2s\Edit.aspx.designer.cs">
-      <DependentUpon>Edit.aspx</DependentUpon>
-    </Compile>
-    <Content Include="OrderTransactionSummary2s\Default.aspx" />
-    <Compile Include="OrderTransactionSummary2s\Default.aspx.cs">
-      <DependentUpon>Default.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="OrderTransactionSummary2s\Default.aspx.designer.cs">
-      <DependentUpon>Default.aspx</DependentUpon>
-    </Compile>
-    <Content Include="OrderTransactionSummary2s\Edit.aspx" />
-    <Compile Include="OrderTransactionSummary2s\Edit.aspx.cs">
-      <DependentUpon>Edit.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="OrderTransactionSummary2s\Edit.aspx.designer.cs">
       <DependentUpon>Edit.aspx</DependentUpon>
     </Compile>
     <Content Include="Organization2s\Default.aspx" />

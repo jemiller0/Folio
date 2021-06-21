@@ -145,12 +145,12 @@
                                     <asp:Literal ID="VoucherDateLiteral" runat="server" Text='<%# Eval("VoucherDate", "{0:d}") %>' />
                                 </td>
                             </tr>
-                            <tr runat="server" visible='<%# Eval("VoucherNumber") != null %>'>
+                            <tr runat="server" visible='<%# Eval("Number") != null %>'>
                                 <td>
-                                    <asp:Label ID="VoucherNumberLabel" runat="server" Text="Voucher Number:" AssociatedControlID="VoucherNumberLiteral" />
+                                    <asp:Label ID="NumberLabel" runat="server" Text="Number:" AssociatedControlID="NumberLiteral" />
                                 </td>
                                 <td>
-                                    <asp:Literal ID="VoucherNumberLiteral" runat="server" Text='<%#: Eval("VoucherNumber") %>' />
+                                    <asp:Literal ID="NumberLiteral" runat="server" Text='<%#: Eval("Number") %>' />
                                 </td>
                             </tr>
                             <tr runat="server" visible='<%# Eval("Vendor") != null %>'>
@@ -259,7 +259,7 @@
         <fieldset>
             <legend>
                 <asp:HyperLink ID="VoucherItem2sHyperLink" runat="server" Text="Voucher Items" NavigateUrl="~/VoucherItem2s/Default.aspx" /></legend>
-            <telerik:RadGrid ID="VoucherItem2sRadGrid" runat="server" AutoGenerateColumns="false" AllowSorting="true" AllowFilteringByColumn="false" GroupingSettings-CaseSensitive="false" AllowPaging="true" AllowCustomPaging="true" PageSize="10" EnableLinqExpressions="false" OnNeedDataSource="VoucherItem2sRadGrid_NeedDataSource">
+            <telerik:RadGrid ID="VoucherItem2sRadGrid" runat="server" AutoGenerateColumns="false" AllowSorting="true" AllowFilteringByColumn="false" GroupingSettings-CaseSensitive="false" AllowPaging="true" AllowCustomPaging="true" PageSize="10" ShowFooter="true" EnableLinqExpressions="false" OnNeedDataSource="VoucherItem2sRadGrid_NeedDataSource">
                 <MasterTableView DataKeyNames="Id" PagerStyle-Mode="NextPrevNumericAndAdvanced" NoMasterRecordsText="No voucher items found">
                     <SortExpressions>
                         <telerik:GridSortExpression FieldName="LastWriteTime" SortOrder="Descending" />
@@ -275,8 +275,12 @@
                                 <asp:HyperLink ID="IdHyperLink" runat="server" Text='<%# Eval("Id") %>' NavigateUrl='<%# $"~/VoucherItem2s/Edit.aspx?Id={Eval("Id")}" %>' />
                             </ItemTemplate>
                         </telerik:GridTemplateColumn>
-                        <telerik:GridBoundColumn HeaderText="Amount" DataField="Amount" AutoPostBackOnFilter="true" DataFormatString="{0:c}" />
-                        <telerik:GridBoundColumn HeaderText="External Account Number" DataField="ExternalAccountNumber" AutoPostBackOnFilter="true" HtmlEncode="true" CurrentFilterFunction="StartsWith" />
+                        <telerik:GridBoundColumn HeaderText="Amount" DataField="Amount" AutoPostBackOnFilter="true" DataFormatString="{0:c}" Aggregate="Sum" />
+                        <telerik:GridTemplateColumn HeaderText="Account Number" DataField="AccountNumber" SortExpression="AccountNumber" AutoPostBackOnFilter="true" CurrentFilterFunction="StartsWith">
+                            <ItemTemplate>
+                                <asp:HyperLink ID="AccountNumberHyperLink" runat="server" Text='<%#: Eval("AccountNumber") %>' NavigateUrl='<%# $"~/VoucherItem2s/Edit.aspx?Id={Eval("Id")}" %>' />
+                            </ItemTemplate>
+                        </telerik:GridTemplateColumn>
                         <telerik:GridTemplateColumn AllowFiltering="false" AllowSorting="false" HeaderText="Sub Transaction" DataField="SubTransaction.Amount" SortExpression="SubTransaction.Amount" AutoPostBackOnFilter="true">
                             <ItemTemplate>
                                 <asp:HyperLink ID="SubTransactionHyperLink" runat="server" Text='<%# $"{Eval("SubTransaction.Amount"):c}" %>' NavigateUrl='<%# $"~/Transaction2s/Edit.aspx?Id={Eval("SubTransactionId")}" %>' Enabled='<%# Session["Transaction2sPermission"] != null %>' />

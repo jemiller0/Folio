@@ -38,7 +38,7 @@
                                     <asp:Label ID="AdjustmentsTotalLabel" runat="server" Text="Adjustments Total:" AssociatedControlID="AdjustmentsTotalLiteral" />
                                 </td>
                                 <td>
-                                    <asp:Literal ID="AdjustmentsTotalLiteral" runat="server" Text='<%#: Eval("AdjustmentsTotal") %>' />
+                                    <asp:Literal ID="AdjustmentsTotalLiteral" runat="server" Text='<%# Eval("AdjustmentsTotal", "{0:c}") %>' />
                                 </td>
                             </tr>
                             <tr runat="server" visible='<%# Eval("Comment") != null %>'>
@@ -150,7 +150,7 @@
                                     <asp:Label ID="SubTotalLabel" runat="server" Text="Sub Total:" AssociatedControlID="SubTotalLiteral" />
                                 </td>
                                 <td>
-                                    <asp:Literal ID="SubTotalLiteral" runat="server" Text='<%#: Eval("SubTotal") %>' />
+                                    <asp:Literal ID="SubTotalLiteral" runat="server" Text='<%# Eval("SubTotal", "{0:c}") %>' />
                                 </td>
                             </tr>
                             <tr runat="server" visible='<%# Eval("Total") != null %>'>
@@ -158,7 +158,7 @@
                                     <asp:Label ID="TotalLabel" runat="server" Text="Total:" AssociatedControlID="TotalLiteral" />
                                 </td>
                                 <td>
-                                    <asp:Literal ID="TotalLiteral" runat="server" Text='<%#: Eval("Total") %>' />
+                                    <asp:Literal ID="TotalLiteral" runat="server" Text='<%# Eval("Total", "{0:c}") %>' />
                                 </td>
                             </tr>
                             <tr runat="server" visible='<%# Eval("CreationTime") != null %>'>

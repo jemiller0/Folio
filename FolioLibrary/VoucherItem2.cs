@@ -14,7 +14,7 @@ namespace FolioLibrary
 {
     // uc.voucher_items -> diku_mod_invoice_storage.voucher_lines
     // VoucherItem2 -> VoucherItem
-    [DisplayColumn(nameof(Id)), DisplayName("Voucher Items"), JsonConverter(typeof(JsonPathJsonConverter<VoucherItem2>)), JsonObject(MemberSerialization = MemberSerialization.OptIn), Table("voucher_items", Schema = "uc")]
+    [DisplayColumn(nameof(AccountNumber)), DisplayName("Voucher Items"), JsonConverter(typeof(JsonPathJsonConverter<VoucherItem2>)), JsonObject(MemberSerialization = MemberSerialization.OptIn), Table("voucher_items", Schema = "uc")]
     public partial class VoucherItem2
     {
         public static ValidationResult ValidateContent(string value)
@@ -34,8 +34,8 @@ namespace FolioLibrary
         [Column("amount"), DataType(DataType.Currency), Display(Order = 2), DisplayFormat(DataFormatString = "{0:c}", ApplyFormatInEditMode = true), JsonProperty("amount"), Required]
         public virtual decimal? Amount { get; set; }
 
-        [Column("external_account_number"), Display(Name = "External Account Number", Order = 3), JsonProperty("externalAccountNumber"), Required, StringLength(1024)]
-        public virtual string ExternalAccountNumber { get; set; }
+        [Column("external_account_number"), Display(Name = "Account Number", Order = 3), JsonProperty("externalAccountNumber"), Required, StringLength(1024)]
+        public virtual string AccountNumber { get; set; }
 
         [Display(Name = "Sub Transaction", Order = 4)]
         public virtual Transaction2 SubTransaction { get; set; }
@@ -79,16 +79,16 @@ namespace FolioLibrary
         [Display(Name = "Voucher Item Funds", Order = 17), JsonProperty("fundDistributions")]
         public virtual ICollection<VoucherItemFund> VoucherItemFunds { get; set; }
 
-        [Display(Name = "Voucher Item Source Ids", Order = 18), JsonConverter(typeof(ArrayJsonConverter<List<VoucherItemSourceId>, VoucherItemSourceId>), "Content"), JsonProperty("sourceIds")]
-        public virtual ICollection<VoucherItemSourceId> VoucherItemSourceIds { get; set; }
+        [Display(Name = "Voucher Item Invoice Items", Order = 18), JsonConverter(typeof(ArrayJsonConverter<List<VoucherItemInvoiceItem>, VoucherItemInvoiceItem>), "InvoiceItemId"), JsonProperty("sourceIds")]
+        public virtual ICollection<VoucherItemInvoiceItem> VoucherItemInvoiceItems { get; set; }
 
-        public override string ToString() => $"{{ {nameof(Id)} = {Id}, {nameof(Amount)} = {Amount}, {nameof(ExternalAccountNumber)} = {ExternalAccountNumber}, {nameof(SubTransactionId)} = {SubTransactionId}, {nameof(VoucherId)} = {VoucherId}, {nameof(CreationTime)} = {CreationTime}, {nameof(CreationUserId)} = {CreationUserId}, {nameof(CreationUserUsername)} = {CreationUserUsername}, {nameof(LastWriteTime)} = {LastWriteTime}, {nameof(LastWriteUserId)} = {LastWriteUserId}, {nameof(LastWriteUserUsername)} = {LastWriteUserUsername}, {nameof(Content)} = {Content}, {nameof(VoucherItemFunds)} = {(VoucherItemFunds != null ? $"{{ {string.Join(", ", VoucherItemFunds)} }}" : "")}, {nameof(VoucherItemSourceIds)} = {(VoucherItemSourceIds != null ? $"{{ {string.Join(", ", VoucherItemSourceIds)} }}" : "")} }}";
+        public override string ToString() => $"{{ {nameof(Id)} = {Id}, {nameof(Amount)} = {Amount}, {nameof(AccountNumber)} = {AccountNumber}, {nameof(SubTransactionId)} = {SubTransactionId}, {nameof(VoucherId)} = {VoucherId}, {nameof(CreationTime)} = {CreationTime}, {nameof(CreationUserId)} = {CreationUserId}, {nameof(CreationUserUsername)} = {CreationUserUsername}, {nameof(LastWriteTime)} = {LastWriteTime}, {nameof(LastWriteUserId)} = {LastWriteUserId}, {nameof(LastWriteUserUsername)} = {LastWriteUserUsername}, {nameof(Content)} = {Content}, {nameof(VoucherItemFunds)} = {(VoucherItemFunds != null ? $"{{ {string.Join(", ", VoucherItemFunds)} }}" : "")}, {nameof(VoucherItemInvoiceItems)} = {(VoucherItemInvoiceItems != null ? $"{{ {string.Join(", ", VoucherItemInvoiceItems)} }}" : "")} }}";
 
         public static VoucherItem2 FromJObject(JObject jObject) => jObject != null ? new VoucherItem2
         {
             Id = (Guid?)jObject.SelectToken("id"),
             Amount = (decimal?)jObject.SelectToken("amount"),
-            ExternalAccountNumber = (string)jObject.SelectToken("externalAccountNumber"),
+            AccountNumber = (string)jObject.SelectToken("externalAccountNumber"),
             SubTransactionId = (Guid?)jObject.SelectToken("subTransactionId"),
             VoucherId = (Guid?)jObject.SelectToken("voucherId"),
             CreationTime = ((DateTime?)jObject.SelectToken("metadata.createdDate"))?.ToLocalTime(),
@@ -99,13 +99,13 @@ namespace FolioLibrary
             LastWriteUserUsername = (string)jObject.SelectToken("metadata.updatedByUsername"),
             Content = jObject.ToString(),
             VoucherItemFunds = jObject.SelectToken("fundDistributions")?.Where(jt => jt.HasValues).Select(jt => VoucherItemFund.FromJObject((JObject)jt)).ToArray(),
-            VoucherItemSourceIds = jObject.SelectToken("sourceIds")?.Where(jt => jt.HasValues).Select(jt => VoucherItemSourceId.FromJObject((JValue)jt)).ToArray()
+            VoucherItemInvoiceItems = jObject.SelectToken("sourceIds")?.Where(jt => jt.HasValues).Select(jt => VoucherItemInvoiceItem.FromJObject((JValue)jt)).ToArray()
         } : null;
 
         public JObject ToJObject() => new JObject(
             new JProperty("id", Id),
             new JProperty("amount", Amount),
-            new JProperty("externalAccountNumber", ExternalAccountNumber),
+            new JProperty("externalAccountNumber", AccountNumber),
             new JProperty("subTransactionId", SubTransactionId),
             new JProperty("voucherId", VoucherId),
             new JProperty("metadata", new JObject(
@@ -116,6 +116,6 @@ namespace FolioLibrary
                 new JProperty("updatedByUserId", LastWriteUserId),
                 new JProperty("updatedByUsername", LastWriteUserUsername))),
             new JProperty("fundDistributions", VoucherItemFunds?.Select(vif => vif.ToJObject())),
-            new JProperty("sourceIds", VoucherItemSourceIds?.Select(visi => visi.ToJObject()))).RemoveNullAndEmptyProperties();
+            new JProperty("sourceIds", VoucherItemInvoiceItems?.Select(viii => viii.ToJObject()))).RemoveNullAndEmptyProperties();
     }
 }

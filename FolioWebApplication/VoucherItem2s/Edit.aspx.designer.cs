@@ -13,9 +13,9 @@ namespace FolioWebApplication.VoucherItem2s
 
         protected RadGrid VoucherItemFundsRadGrid;
 
-        protected Panel VoucherItemSourceIdsPanel;
+        protected Panel VoucherItemInvoiceItemsPanel;
 
-        protected RadGrid VoucherItemSourceIdsRadGrid;
+        protected RadGrid VoucherItemInvoiceItemsRadGrid;
 
         protected RadAjaxManager RadAjaxManager1;
     }

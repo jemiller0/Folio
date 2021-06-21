@@ -34,8 +34,8 @@ namespace FolioLibrary
         [Column("code"), Display(Order = 2), JsonProperty("code"), StringLength(1024)]
         public virtual string Code { get; set; }
 
-        [Column("external_account_number_ext"), Display(Name = "External Account Number Extension", Order = 3), JsonProperty("externalAccountNumberExt"), StringLength(1024)]
-        public virtual string ExternalAccountNumberExtension { get; set; }
+        [Column("external_account_number_ext"), Display(Name = "Account Number Extension", Order = 3), JsonProperty("externalAccountNumberExt"), StringLength(1024)]
+        public virtual string AccountNumberExtension { get; set; }
 
         [Column("name"), Display(Order = 4), JsonProperty("name"), StringLength(1024)]
         public virtual string Name { get; set; }
@@ -88,13 +88,13 @@ namespace FolioLibrary
         [Display(Name = "Voucher Item Funds", Order = 20)]
         public virtual ICollection<VoucherItemFund> VoucherItemFunds { get; set; }
 
-        public override string ToString() => $"{{ {nameof(Id)} = {Id}, {nameof(Code)} = {Code}, {nameof(ExternalAccountNumberExtension)} = {ExternalAccountNumberExtension}, {nameof(Name)} = {Name}, {nameof(CreationTime)} = {CreationTime}, {nameof(CreationUserId)} = {CreationUserId}, {nameof(CreationUserUsername)} = {CreationUserUsername}, {nameof(LastWriteTime)} = {LastWriteTime}, {nameof(LastWriteUserId)} = {LastWriteUserId}, {nameof(LastWriteUserUsername)} = {LastWriteUserUsername}, {nameof(Content)} = {Content} }}";
+        public override string ToString() => $"{{ {nameof(Id)} = {Id}, {nameof(Code)} = {Code}, {nameof(AccountNumberExtension)} = {AccountNumberExtension}, {nameof(Name)} = {Name}, {nameof(CreationTime)} = {CreationTime}, {nameof(CreationUserId)} = {CreationUserId}, {nameof(CreationUserUsername)} = {CreationUserUsername}, {nameof(LastWriteTime)} = {LastWriteTime}, {nameof(LastWriteUserId)} = {LastWriteUserId}, {nameof(LastWriteUserUsername)} = {LastWriteUserUsername}, {nameof(Content)} = {Content} }}";
 
         public static ExpenseClass2 FromJObject(JObject jObject) => jObject != null ? new ExpenseClass2
         {
             Id = (Guid?)jObject.SelectToken("id"),
             Code = (string)jObject.SelectToken("code"),
-            ExternalAccountNumberExtension = (string)jObject.SelectToken("externalAccountNumberExt"),
+            AccountNumberExtension = (string)jObject.SelectToken("externalAccountNumberExt"),
             Name = (string)jObject.SelectToken("name"),
             CreationTime = ((DateTime?)jObject.SelectToken("metadata.createdDate"))?.ToLocalTime(),
             CreationUserId = (Guid?)jObject.SelectToken("metadata.createdByUserId"),
@@ -108,7 +108,7 @@ namespace FolioLibrary
         public JObject ToJObject() => new JObject(
             new JProperty("id", Id),
             new JProperty("code", Code),
-            new JProperty("externalAccountNumberExt", ExternalAccountNumberExtension),
+            new JProperty("externalAccountNumberExt", AccountNumberExtension),
             new JProperty("name", Name),
             new JProperty("metadata", new JObject(
                 new JProperty("createdDate", CreationTime?.ToUniversalTime()),

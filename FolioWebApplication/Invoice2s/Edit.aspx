@@ -30,7 +30,7 @@
                                     <asp:Label ID="AdjustmentsTotalLabel" runat="server" Text="Adjustments Total:" AssociatedControlID="AdjustmentsTotalLiteral" />
                                 </td>
                                 <td>
-                                    <asp:Literal ID="AdjustmentsTotalLiteral" runat="server" Text='<%#: Eval("AdjustmentsTotal") %>' />
+                                    <asp:Literal ID="AdjustmentsTotalLiteral" runat="server" Text='<%# Eval("AdjustmentsTotal", "{0:c}") %>' />
                                 </td>
                             </tr>
                             <tr runat="server" visible='<%# Eval("ApprovedBy") != null %>'>
@@ -65,12 +65,12 @@
                                     <asp:HyperLink ID="BillToHyperLink" runat="server" Text='<%# Eval("BillTo.Id") %>' NavigateUrl='<%# $"~/Configuration2s/Edit.aspx?Id={Eval("BillToId")}" %>' Enabled='<%# Session["Configuration2sPermission"] != null %>' />
                                 </td>
                             </tr>
-                            <tr runat="server" visible='<%# Eval("ChkSubscriptionOverlap") != null %>'>
+                            <tr runat="server" visible='<%# Eval("CheckSubscriptionOverlap") != null %>'>
                                 <td>
-                                    <asp:Label ID="ChkSubscriptionOverlapLabel" runat="server" Text="Chk Subscription Overlap:" AssociatedControlID="ChkSubscriptionOverlapLiteral" />
+                                    <asp:Label ID="CheckSubscriptionOverlapLabel" runat="server" Text="Check Subscription Overlap:" AssociatedControlID="CheckSubscriptionOverlapLiteral" />
                                 </td>
                                 <td>
-                                    <asp:Literal ID="ChkSubscriptionOverlapLiteral" runat="server" Text='<%#: Eval("ChkSubscriptionOverlap") %>' />
+                                    <asp:Literal ID="CheckSubscriptionOverlapLiteral" runat="server" Text='<%#: Eval("CheckSubscriptionOverlap") %>' />
                                 </td>
                             </tr>
                             <tr runat="server" visible='<%# Eval("Currency") != null %>'>
@@ -126,7 +126,7 @@
                                     <asp:Label ID="LockTotalLabel" runat="server" Text="Lock Total:" AssociatedControlID="LockTotalLiteral" />
                                 </td>
                                 <td>
-                                    <asp:Literal ID="LockTotalLiteral" runat="server" Text='<%#: Eval("LockTotal") %>' />
+                                    <asp:Literal ID="LockTotalLiteral" runat="server" Text='<%# Eval("LockTotal", "{0:c}") %>' />
                                 </td>
                             </tr>
                             <tr runat="server" visible='<%# Eval("Note") != null %>'>
@@ -137,12 +137,12 @@
                                     <asp:Literal ID="NoteLiteral" runat="server" Text='<%#: Eval("Note") %>' />
                                 </td>
                             </tr>
-                            <tr runat="server" visible='<%# Eval("PaymentDue") != null %>'>
+                            <tr runat="server" visible='<%# Eval("PaymentDueDate") != null %>'>
                                 <td>
-                                    <asp:Label ID="PaymentDueLabel" runat="server" Text="Payment Due:" AssociatedControlID="PaymentDueLiteral" />
+                                    <asp:Label ID="PaymentDueDateLabel" runat="server" Text="Payment Due Date:" AssociatedControlID="PaymentDueDateLiteral" />
                                 </td>
                                 <td>
-                                    <asp:Literal ID="PaymentDueLiteral" runat="server" Text='<%# Eval("PaymentDue", "{0:g}") %>' />
+                                    <asp:Literal ID="PaymentDueDateLiteral" runat="server" Text='<%# Eval("PaymentDueDate", "{0:d}") %>' />
                                 </td>
                             </tr>
                             <tr runat="server" visible='<%# Eval("PaymentDate") != null %>'>
@@ -190,7 +190,7 @@
                                     <asp:Label ID="SubTotalLabel" runat="server" Text="Sub Total:" AssociatedControlID="SubTotalLiteral" />
                                 </td>
                                 <td>
-                                    <asp:Literal ID="SubTotalLiteral" runat="server" Text='<%#: Eval("SubTotal") %>' />
+                                    <asp:Literal ID="SubTotalLiteral" runat="server" Text='<%# Eval("SubTotal", "{0:c}") %>' />
                                 </td>
                             </tr>
                             <tr runat="server" visible='<%# Eval("Total") != null %>'>
@@ -198,7 +198,7 @@
                                     <asp:Label ID="TotalLabel" runat="server" Text="Total:" AssociatedControlID="TotalLiteral" />
                                 </td>
                                 <td>
-                                    <asp:Literal ID="TotalLiteral" runat="server" Text='<%#: Eval("Total") %>' />
+                                    <asp:Literal ID="TotalLiteral" runat="server" Text='<%# Eval("Total", "{0:c}") %>' />
                                 </td>
                             </tr>
                             <tr runat="server" visible='<%# Eval("VendorInvoiceNo") != null %>'>
@@ -341,7 +341,7 @@
                         </telerik:GridTemplateColumn>
                         <telerik:GridBoundColumn HeaderText="Accounting Code" DataField="AccountingCode" AutoPostBackOnFilter="true" HtmlEncode="true" CurrentFilterFunction="StartsWith" />
                         <telerik:GridBoundColumn HeaderText="Account Number" DataField="AccountNumber" AutoPostBackOnFilter="true" HtmlEncode="true" CurrentFilterFunction="StartsWith" />
-                        <telerik:GridBoundColumn HeaderText="Adjustments Total" DataField="AdjustmentsTotal" AutoPostBackOnFilter="true" />
+                        <telerik:GridBoundColumn HeaderText="Adjustments Total" DataField="AdjustmentsTotal" AutoPostBackOnFilter="true" DataFormatString="{0:c}" />
                         <telerik:GridBoundColumn HeaderText="Comment" DataField="Comment" AutoPostBackOnFilter="true" HtmlEncode="true" CurrentFilterFunction="StartsWith" />
                         <telerik:GridBoundColumn HeaderText="Description" DataField="Description" AutoPostBackOnFilter="true" HtmlEncode="true" CurrentFilterFunction="StartsWith" />
                         <telerik:GridTemplateColumn HeaderText="Number" DataField="Number" SortExpression="Number" AutoPostBackOnFilter="true" CurrentFilterFunction="StartsWith">
@@ -366,8 +366,8 @@
                         <telerik:GridBoundColumn HeaderText="Subscription Info" DataField="SubscriptionInfo" AutoPostBackOnFilter="true" HtmlEncode="true" CurrentFilterFunction="StartsWith" />
                         <telerik:GridBoundColumn HeaderText="Subscription Start" DataField="SubscriptionStart" AutoPostBackOnFilter="true" DataFormatString="{0:g}" />
                         <telerik:GridBoundColumn HeaderText="Subscription End" DataField="SubscriptionEnd" AutoPostBackOnFilter="true" DataFormatString="{0:g}" />
-                        <telerik:GridBoundColumn HeaderText="Sub Total" DataField="SubTotal" AutoPostBackOnFilter="true" />
-                        <telerik:GridBoundColumn HeaderText="Total" DataField="Total" AutoPostBackOnFilter="true" />
+                        <telerik:GridBoundColumn HeaderText="Sub Total" DataField="SubTotal" AutoPostBackOnFilter="true" DataFormatString="{0:c}" />
+                        <telerik:GridBoundColumn HeaderText="Total" DataField="Total" AutoPostBackOnFilter="true" DataFormatString="{0:c}" />
                         <telerik:GridBoundColumn HeaderText="Creation Time" DataField="CreationTime" AutoPostBackOnFilter="true" DataFormatString="{0:g}" />
                         <telerik:GridTemplateColumn AllowFiltering="false" AllowSorting="false" HeaderText="Creation User" DataField="CreationUser.Username" SortExpression="CreationUser.Username" AutoPostBackOnFilter="true" CurrentFilterFunction="StartsWith">
                             <ItemTemplate>
@@ -559,7 +559,11 @@
                         <telerik:GridBoundColumn HeaderText="System Currency" DataField="SystemCurrency" AutoPostBackOnFilter="true" HtmlEncode="true" CurrentFilterFunction="StartsWith" />
                         <telerik:GridBoundColumn HeaderText="Type" DataField="Type" AutoPostBackOnFilter="true" HtmlEncode="true" CurrentFilterFunction="StartsWith" />
                         <telerik:GridBoundColumn HeaderText="Voucher Date" DataField="VoucherDate" AutoPostBackOnFilter="true" DataFormatString="{0:d}" />
-                        <telerik:GridBoundColumn HeaderText="Voucher Number" DataField="VoucherNumber" AutoPostBackOnFilter="true" HtmlEncode="true" CurrentFilterFunction="StartsWith" />
+                        <telerik:GridTemplateColumn HeaderText="Number" DataField="Number" SortExpression="Number" AutoPostBackOnFilter="true" CurrentFilterFunction="StartsWith">
+                            <ItemTemplate>
+                                <asp:HyperLink ID="NumberHyperLink" runat="server" Text='<%#: Eval("Number") %>' NavigateUrl='<%# $"~/Voucher2s/Edit.aspx?Id={Eval("Id")}" %>' />
+                            </ItemTemplate>
+                        </telerik:GridTemplateColumn>
                         <telerik:GridTemplateColumn AllowFiltering="false" AllowSorting="false" HeaderText="Vendor" DataField="Vendor.Name" SortExpression="Vendor.Name" AutoPostBackOnFilter="true" CurrentFilterFunction="StartsWith">
                             <ItemTemplate>
                                 <asp:HyperLink ID="VendorHyperLink" runat="server" Text='<%#: Eval("Vendor.Name") %>' NavigateUrl='<%# $"~/Organization2s/Edit.aspx?Id={Eval("VendorId")}" %>' Enabled='<%# Session["Organization2sPermission"] != null %>' />

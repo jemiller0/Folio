@@ -25,12 +25,12 @@
                                     <asp:Literal ID="AmountLiteral" runat="server" Text='<%# Eval("Amount", "{0:c}") %>' />
                                 </td>
                             </tr>
-                            <tr runat="server" visible='<%# Eval("ExternalAccountNumber") != null %>'>
+                            <tr runat="server" visible='<%# Eval("AccountNumber") != null %>'>
                                 <td>
-                                    <asp:Label ID="ExternalAccountNumberLabel" runat="server" Text="External Account Number:" AssociatedControlID="ExternalAccountNumberLiteral" />
+                                    <asp:Label ID="AccountNumberLabel" runat="server" Text="Account Number:" AssociatedControlID="AccountNumberLiteral" />
                                 </td>
                                 <td>
-                                    <asp:Literal ID="ExternalAccountNumberLiteral" runat="server" Text='<%#: Eval("ExternalAccountNumber") %>' />
+                                    <asp:Literal ID="AccountNumberLiteral" runat="server" Text='<%#: Eval("AccountNumber") %>' />
                                 </td>
                             </tr>
                             <tr runat="server" visible='<%# Eval("SubTransaction") != null %>'>
@@ -46,7 +46,7 @@
                                     <asp:Label ID="VoucherLabel" runat="server" Text="Voucher:" AssociatedControlID="VoucherHyperLink" />
                                 </td>
                                 <td>
-                                    <asp:HyperLink ID="VoucherHyperLink" runat="server" Text='<%# Eval("Voucher.Id") %>' NavigateUrl='<%# $"~/Voucher2s/Edit.aspx?Id={Eval("VoucherId")}" %>' Enabled='<%# Session["Voucher2sPermission"] != null %>' />
+                                    <asp:HyperLink ID="VoucherHyperLink" runat="server" Text='<%#: Eval("Voucher.Number") %>' NavigateUrl='<%# $"~/Voucher2s/Edit.aspx?Id={Eval("VoucherId")}" %>' Enabled='<%# Session["Voucher2sPermission"] != null %>' />
                                 </td>
                             </tr>
                             <tr runat="server" visible='<%# Eval("CreationTime") != null %>'>

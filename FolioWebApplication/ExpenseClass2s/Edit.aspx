@@ -25,12 +25,12 @@
                                     <asp:Literal ID="CodeLiteral" runat="server" Text='<%#: Eval("Code") %>' />
                                 </td>
                             </tr>
-                            <tr runat="server" visible='<%# Eval("ExternalAccountNumberExtension") != null %>'>
+                            <tr runat="server" visible='<%# Eval("AccountNumberExtension") != null %>'>
                                 <td>
-                                    <asp:Label ID="ExternalAccountNumberExtensionLabel" runat="server" Text="External Account Number Extension:" AssociatedControlID="ExternalAccountNumberExtensionLiteral" />
+                                    <asp:Label ID="AccountNumberExtensionLabel" runat="server" Text="Account Number Extension:" AssociatedControlID="AccountNumberExtensionLiteral" />
                                 </td>
                                 <td>
-                                    <asp:Literal ID="ExternalAccountNumberExtensionLiteral" runat="server" Text='<%#: Eval("ExternalAccountNumberExtension") %>' />
+                                    <asp:Literal ID="AccountNumberExtensionLiteral" runat="server" Text='<%#: Eval("AccountNumberExtension") %>' />
                                 </td>
                             </tr>
                             <tr runat="server" visible='<%# Eval("Name") != null %>'>

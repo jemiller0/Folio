@@ -27,7 +27,7 @@ namespace FolioWebApplication.Voucher2s
             var v2 = folioServiceContext.FindVoucher2(id, true);
             if (v2 == null) Response.Redirect("Default.aspx");
             Voucher2FormView.DataSource = new[] { v2 };
-            Title = $"Voucher {v2.Id}";
+            Title = $"Voucher {v2.Number}";
         }
 
         protected void VoucherItem2sRadGrid_NeedDataSource(object sender, GridNeedDataSourceEventArgs e)
@@ -35,7 +35,7 @@ namespace FolioWebApplication.Voucher2s
             if (Session["VoucherItem2sPermission"] == null) return;
             var id = (Guid?)Voucher2FormView.DataKey.Value;
             if (id == null) return;
-            var d = new Dictionary<string, string>() { { "Id", "id" }, { "Amount", "amount" }, { "ExternalAccountNumber", "externalAccountNumber" }, { "SubTransactionId", "subTransactionId" }, { "VoucherId", "voucherId" }, { "CreationTime", "metadata.createdDate" }, { "CreationUserId", "metadata.createdByUserId" }, { "LastWriteTime", "metadata.updatedDate" }, { "LastWriteUserId", "metadata.updatedByUserId" } };
+            var d = new Dictionary<string, string>() { { "Id", "id" }, { "Amount", "amount" }, { "AccountNumber", "externalAccountNumber" }, { "SubTransactionId", "subTransactionId" }, { "VoucherId", "voucherId" }, { "CreationTime", "metadata.createdDate" }, { "CreationUserId", "metadata.createdByUserId" }, { "LastWriteTime", "metadata.updatedDate" }, { "LastWriteUserId", "metadata.updatedByUserId" } };
             VoucherItem2sRadGrid.DataSource = folioServiceContext.VoucherItem2s(out var i, Global.GetCqlFilter(VoucherItem2sRadGrid, d, $"voucherId == \"{id}\""), VoucherItem2sRadGrid.MasterTableView.SortExpressions.Count > 0 ? $"{d[VoucherItem2sRadGrid.MasterTableView.SortExpressions[0].FieldName]}{(VoucherItem2sRadGrid.MasterTableView.SortExpressions[0].SortOrder == GridSortOrder.Descending ? "/sort.descending" : "")}" : null, VoucherItem2sRadGrid.PageSize * VoucherItem2sRadGrid.CurrentPageIndex, VoucherItem2sRadGrid.PageSize, true);
             VoucherItem2sRadGrid.VirtualItemCount = i;
             if (VoucherItem2sRadGrid.MasterTableView.FilterExpression == "")

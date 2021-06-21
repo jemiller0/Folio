@@ -24,7 +24,7 @@ namespace FolioWebApplication.VoucherItem2s
 
         protected void VoucherItem2sRadGrid_NeedDataSource(object sender, GridNeedDataSourceEventArgs e)
         {
-            var d = new Dictionary<string, string>() { { "Id", "id" }, { "Amount", "amount" }, { "ExternalAccountNumber", "externalAccountNumber" }, { "SubTransactionId", "subTransactionId" }, { "VoucherId", "voucherId" }, { "CreationTime", "metadata.createdDate" }, { "CreationUserId", "metadata.createdByUserId" }, { "LastWriteTime", "metadata.updatedDate" }, { "LastWriteUserId", "metadata.updatedByUserId" } };
+            var d = new Dictionary<string, string>() { { "Id", "id" }, { "Amount", "amount" }, { "AccountNumber", "externalAccountNumber" }, { "SubTransactionId", "subTransactionId" }, { "VoucherId", "voucherId" }, { "CreationTime", "metadata.createdDate" }, { "CreationUserId", "metadata.createdByUserId" }, { "LastWriteTime", "metadata.updatedDate" }, { "LastWriteUserId", "metadata.updatedByUserId" } };
             VoucherItem2sRadGrid.DataSource = folioServiceContext.VoucherItem2s(out var i, Global.GetCqlFilter(VoucherItem2sRadGrid, d), VoucherItem2sRadGrid.MasterTableView.SortExpressions.Count > 0 ? $"{d[VoucherItem2sRadGrid.MasterTableView.SortExpressions[0].FieldName]}{(VoucherItem2sRadGrid.MasterTableView.SortExpressions[0].SortOrder == GridSortOrder.Descending ? "/sort.descending" : "")}" : null, VoucherItem2sRadGrid.PageSize * VoucherItem2sRadGrid.CurrentPageIndex, VoucherItem2sRadGrid.PageSize, true);
             VoucherItem2sRadGrid.VirtualItemCount = i;
         }
@@ -37,10 +37,10 @@ namespace FolioWebApplication.VoucherItem2s
             Response.Charset = "utf-8";
             Response.AppendHeader("Content-Disposition", "attachment; filename=\"VoucherItem2s.txt\"");
             Response.BufferOutput = false;
-            var d = new Dictionary<string, string>() { { "Id", "id" }, { "Amount", "amount" }, { "ExternalAccountNumber", "externalAccountNumber" }, { "SubTransactionId", "subTransactionId" }, { "VoucherId", "voucherId" }, { "CreationTime", "metadata.createdDate" }, { "CreationUserId", "metadata.createdByUserId" }, { "LastWriteTime", "metadata.updatedDate" }, { "LastWriteUserId", "metadata.updatedByUserId" } };
-            Response.Write("Id\tAmount\tExternalAccountNumber\tSubTransaction\tSubTransactionId\tVoucher\tVoucherId\tCreationTime\tCreationUser\tCreationUserId\tLastWriteTime\tLastWriteUser\tLastWriteUserId\r\n");
+            var d = new Dictionary<string, string>() { { "Id", "id" }, { "Amount", "amount" }, { "AccountNumber", "externalAccountNumber" }, { "SubTransactionId", "subTransactionId" }, { "VoucherId", "voucherId" }, { "CreationTime", "metadata.createdDate" }, { "CreationUserId", "metadata.createdByUserId" }, { "LastWriteTime", "metadata.updatedDate" }, { "LastWriteUserId", "metadata.updatedByUserId" } };
+            Response.Write("Id\tAmount\tAccountNumber\tSubTransaction\tSubTransactionId\tVoucher\tVoucherId\tCreationTime\tCreationUser\tCreationUserId\tLastWriteTime\tLastWriteUser\tLastWriteUserId\r\n");
             foreach (var vi2 in folioServiceContext.VoucherItem2s(Global.GetCqlFilter(VoucherItem2sRadGrid, d), VoucherItem2sRadGrid.MasterTableView.SortExpressions.Count > 0 ? $"{d[VoucherItem2sRadGrid.MasterTableView.SortExpressions[0].FieldName]}{(VoucherItem2sRadGrid.MasterTableView.SortExpressions[0].SortOrder == GridSortOrder.Descending ? "/sort.descending" : "")}" : null, load: true))
-                Response.Write($"{vi2.Id}\t{vi2.Amount}\t{Global.TextEncode(vi2.ExternalAccountNumber)}\t{vi2.SubTransaction?.Amount}\t{vi2.SubTransactionId}\t{vi2.Voucher?.Id}\t{vi2.VoucherId}\t{vi2.CreationTime:M/d/yyyy HH:mm:ss}\t{Global.TextEncode(vi2.CreationUser?.Username)}\t{vi2.CreationUserId}\t{vi2.LastWriteTime:M/d/yyyy HH:mm:ss}\t{Global.TextEncode(vi2.LastWriteUser?.Username)}\t{vi2.LastWriteUserId}\r\n");
+                Response.Write($"{vi2.Id}\t{vi2.Amount}\t{Global.TextEncode(vi2.AccountNumber)}\t{vi2.SubTransaction?.Amount}\t{vi2.SubTransactionId}\t{Global.TextEncode(vi2.Voucher?.Number)}\t{vi2.VoucherId}\t{vi2.CreationTime:M/d/yyyy HH:mm:ss}\t{Global.TextEncode(vi2.CreationUser?.Username)}\t{vi2.CreationUserId}\t{vi2.LastWriteTime:M/d/yyyy HH:mm:ss}\t{Global.TextEncode(vi2.LastWriteUser?.Username)}\t{vi2.LastWriteUserId}\r\n");
             Response.End();
         }
 

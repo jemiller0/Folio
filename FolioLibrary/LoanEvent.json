@@ -1,0 +1,206 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "description": "A snapshot of a loan record",
+  "type": "object",
+  "properties": {
+    "id": {
+      "description": "Unique ID (generated UUID) of the snapshot of the loan record",
+      "type": "string"
+    },
+    "operation": {
+      "description": "Type of change that triggered this loan record snapshot: I for insert, U for update, D for delete",
+      "type": "string"
+    },
+    "creationDate": {
+      "description": "When this snapshot was created",
+      "type": "string"
+    },
+    "loan": {
+      "title": "Loan",
+      "description": "Links the item with the patron and applies certain conditions based on policies",
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "description": "Unique ID (generated UUID) of the loan",
+          "type": "string"
+        },
+        "userId": {
+          "description": "ID of the patron the item was lent to. Required for open loans, not required for closed loans (for anonymization).",
+          "type": "string"
+        },
+        "proxyUserId": {
+          "description": "ID of the user representing a proxy for the patron",
+          "type": "string",
+          "pattern": "^[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12}$"
+        },
+        "itemId": {
+          "description": "ID of the item lent to the patron",
+          "type": "string"
+        },
+        "itemEffectiveLocationIdAtCheckOut": {
+          "description": "The UUID format string",
+          "type": "string",
+          "pattern": "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-5][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}$"
+        },
+        "status": {
+          "description": "Overall status of the loan",
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "name": {
+              "description": "Name of the status (currently can be any value, values commonly used are Open and Closed)",
+              "type": "string"
+            }
+          }
+        },
+        "loanDate": {
+          "description": "Date time when the loan began (typically represented according to rfc3339 section-5.6. Has not had the date-time format validation applied as was not supported at point of introduction and would now be a breaking change)",
+          "type": "string"
+        },
+        "dueDate": {
+          "description": "Date time when the item is due to be returned",
+          "type": "string",
+          "format": "date-time"
+        },
+        "returnDate": {
+          "description": "Date time when the item is returned and the loan ends (typically represented according to rfc3339 section-5.6. Has not had the date-time format validation applied as was not supported at point of introduction and would now be a breaking change)",
+          "type": "string"
+        },
+        "systemReturnDate": {
+          "description": "Date time when the returned item is actually processed",
+          "type": "string",
+          "format": "date-time"
+        },
+        "action": {
+          "description": "Last action performed on a loan (currently can be any value, values commonly used are checkedout and checkedin)",
+          "type": "string"
+        },
+        "actionComment": {
+          "description": "Comment to last action performed on a loan",
+          "type": "string"
+        },
+        "itemStatus": {
+          "description": "Last item status used in relation to this loan (currently can be any value, values commonly used are Checked out and Available)",
+          "type": "string"
+        },
+        "renewalCount": {
+          "description": "Count of how many times a loan has been renewed (incremented by the client)",
+          "type": "integer"
+        },
+        "loanPolicyId": {
+          "description": "ID of last policy used in relation to this loan",
+          "type": "string"
+        },
+        "checkoutServicePointId": {
+          "description": "ID of the Service Point where the last checkout occured",
+          "type": "string",
+          "pattern": "^[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12}$"
+        },
+        "checkinServicePointId": {
+          "description": "ID of the Service Point where the last checkin occured",
+          "type": "string",
+          "pattern": "^[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12}$"
+        },
+        "patronGroupIdAtCheckout": {
+          "description": "Patron Group Id at checkout",
+          "type": "string"
+        },
+        "dueDateChangedByRecall": {
+          "description": "Indicates whether or not this loan had its due date modified by a recall on the loaned item",
+          "type": "boolean"
+        },
+        "declaredLostDate": {
+          "description": "Date and time the item was declared lost during this loan",
+          "type": "string",
+          "format": "date-time"
+        },
+        "claimedReturnedDate": {
+          "description": "Date and time the item was claimed returned for this loan",
+          "type": "string",
+          "format": "date-time"
+        },
+        "overdueFinePolicyId": {
+          "description": "ID of overdue fines policy at the time the item is check-in or renewed",
+          "type": "string",
+          "pattern": "^[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12}$"
+        },
+        "lostItemPolicyId": {
+          "description": "ID of lost item policy which determines when the item ages to lost and the associated fees or the associated fees if the patron declares the item lost.",
+          "type": "string",
+          "pattern": "^[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12}$"
+        },
+        "metadata": {
+          "title": "Metadata Schema",
+          "description": "Metadata about creation and changes to records, provided by the server (client should not provide)",
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "createdDate": {
+              "description": "Date and time when the record was created",
+              "type": "string",
+              "format": "date-time"
+            },
+            "createdByUserId": {
+              "description": "ID of the user who created the record (when available)",
+              "type": "string",
+              "pattern": "^[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12}$"
+            },
+            "createdByUsername": {
+              "description": "Username of the user who created the record (when available)",
+              "type": "string"
+            },
+            "updatedDate": {
+              "description": "Date and time when the record was last updated",
+              "type": "string",
+              "format": "date-time"
+            },
+            "updatedByUserId": {
+              "description": "ID of the user who last updated the record (when available)",
+              "type": "string",
+              "pattern": "^[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12}$"
+            },
+            "updatedByUsername": {
+              "description": "Username of the user who last updated the record (when available)",
+              "type": "string"
+            }
+          },
+          "required": [
+            "createdDate"
+          ]
+        },
+        "agedToLostDelayedBilling": {
+          "description": "Aged to Lost Delayed Billing processing",
+          "type": "object",
+          "properties": {
+            "lostItemHasBeenBilled": {
+              "description": "Indicates if the aged to lost fee has been billed (for use where delayed billing is set up)",
+              "type": "boolean"
+            },
+            "dateLostItemShouldBeBilled": {
+              "description": "Indicates when the aged to lost fee should be billed (for use where delayed billing is set up)",
+              "type": "string",
+              "format": "date-time"
+            },
+            "agedToLostDate": {
+              "description": "Date and time the item was aged to lost for this loan",
+              "type": "string",
+              "format": "date-time"
+            }
+          }
+        }
+      },
+      "required": [
+        "itemId",
+        "loanDate",
+        "action"
+      ]
+    }
+  },
+  "required": [
+    "id",
+    "operation",
+    "creationDate",
+    "loan"
+  ]
+}

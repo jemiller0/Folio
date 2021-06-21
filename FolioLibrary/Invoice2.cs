@@ -34,7 +34,7 @@ namespace FolioLibrary
         [Column("accounting_code"), Display(Name = "Accounting Code", Order = 2), JsonProperty("accountingCode"), StringLength(1024)]
         public virtual string AccountingCode { get; set; }
 
-        [Column("adjustments_total"), Display(Name = "Adjustments Total", Order = 3), JsonProperty("adjustmentsTotal")]
+        [Column("adjustments_total"), DataType(DataType.Currency), Display(Name = "Adjustments Total", Order = 3), DisplayFormat(DataFormatString = "{0:c}", ApplyFormatInEditMode = true), JsonProperty("adjustmentsTotal")]
         public virtual decimal? AdjustmentsTotal { get; set; }
 
         [Display(Name = "Approved By", Order = 4), InverseProperty("Invoice2s")]
@@ -58,8 +58,8 @@ namespace FolioLibrary
         [Column("bill_to_id"), Display(Name = "Bill To", Order = 10), JsonProperty("billTo")]
         public virtual Guid? BillToId { get; set; }
 
-        [Column("chk_subscription_overlap"), Display(Name = "Chk Subscription Overlap", Order = 11), JsonProperty("chkSubscriptionOverlap")]
-        public virtual bool? ChkSubscriptionOverlap { get; set; }
+        [Column("chk_subscription_overlap"), Display(Name = "Check Subscription Overlap", Order = 11), JsonProperty("chkSubscriptionOverlap")]
+        public virtual bool? CheckSubscriptionOverlap { get; set; }
 
         [Column("currency"), Display(Order = 12), JsonProperty("currency"), Required, StringLength(1024)]
         public virtual string Currency { get; set; }
@@ -79,14 +79,14 @@ namespace FolioLibrary
         [Column("invoice_date"), DataType(DataType.Date), Display(Name = "Invoice Date", Order = 17), DisplayFormat(DataFormatString = "{0:d}", ApplyFormatInEditMode = true), JsonProperty("invoiceDate"), Required]
         public virtual DateTime? InvoiceDate { get; set; }
 
-        [Column("lock_total"), Display(Name = "Lock Total", Order = 18), JsonProperty("lockTotal")]
+        [Column("lock_total"), DataType(DataType.Currency), Display(Name = "Lock Total", Order = 18), DisplayFormat(DataFormatString = "{0:c}", ApplyFormatInEditMode = true), JsonProperty("lockTotal")]
         public virtual decimal? LockTotal { get; set; }
 
         [Column("note"), Display(Order = 19), JsonProperty("note"), StringLength(1024)]
         public virtual string Note { get; set; }
 
-        [Column("payment_due"), Display(Name = "Payment Due", Order = 20), DisplayFormat(DataFormatString = "{0:g}", ApplyFormatInEditMode = true), JsonProperty("paymentDue")]
-        public virtual DateTime? PaymentDue { get; set; }
+        [Column("payment_due"), DataType(DataType.Date), Display(Name = "Payment Due Date", Order = 20), DisplayFormat(DataFormatString = "{0:d}", ApplyFormatInEditMode = true), JsonProperty("paymentDue")]
+        public virtual DateTime? PaymentDueDate { get; set; }
 
         [Column("payment_date"), DataType(DataType.Date), Display(Name = "Payment Date", Order = 21), DisplayFormat(DataFormatString = "{0:d}", ApplyFormatInEditMode = true), JsonProperty("paymentDate")]
         public virtual DateTime? PaymentDate { get; set; }
@@ -103,10 +103,10 @@ namespace FolioLibrary
         [Column("source"), Display(Order = 25), JsonProperty("source"), RegularExpression(@"^(User|API|EDI)$"), Required, StringLength(1024)]
         public virtual string Source { get; set; }
 
-        [Column("sub_total"), Display(Name = "Sub Total", Order = 26), Editable(false), JsonProperty("subTotal")]
+        [Column("sub_total"), DataType(DataType.Currency), Display(Name = "Sub Total", Order = 26), DisplayFormat(DataFormatString = "{0:c}"), Editable(false), JsonProperty("subTotal")]
         public virtual decimal? SubTotal { get; set; }
 
-        [Column("total"), Display(Order = 27), Editable(false), JsonProperty("total")]
+        [Column("total"), DataType(DataType.Currency), Display(Order = 27), DisplayFormat(DataFormatString = "{0:c}"), Editable(false), JsonProperty("total")]
         public virtual decimal? Total { get; set; }
 
         [Column("vendor_invoice_no"), Display(Name = "Vendor Invoice No", Order = 28), JsonProperty("vendorInvoiceNo"), Required, StringLength(1024)]
@@ -196,7 +196,7 @@ namespace FolioLibrary
         [Display(Name = "Vouchers", Order = 56)]
         public virtual ICollection<Voucher2> Voucher2s { get; set; }
 
-        public override string ToString() => $"{{ {nameof(Id)} = {Id}, {nameof(AccountingCode)} = {AccountingCode}, {nameof(AdjustmentsTotal)} = {AdjustmentsTotal}, {nameof(ApprovedById)} = {ApprovedById}, {nameof(ApprovalDate)} = {ApprovalDate}, {nameof(BatchGroupId)} = {BatchGroupId}, {nameof(BillToId)} = {BillToId}, {nameof(ChkSubscriptionOverlap)} = {ChkSubscriptionOverlap}, {nameof(Currency)} = {Currency}, {nameof(EnclosureNeeded)} = {EnclosureNeeded}, {nameof(ExchangeRate)} = {ExchangeRate}, {nameof(ExportToAccounting)} = {ExportToAccounting}, {nameof(Number)} = {Number}, {nameof(InvoiceDate)} = {InvoiceDate}, {nameof(LockTotal)} = {LockTotal}, {nameof(Note)} = {Note}, {nameof(PaymentDue)} = {PaymentDue}, {nameof(PaymentDate)} = {PaymentDate}, {nameof(PaymentTerms)} = {PaymentTerms}, {nameof(PaymentMethod)} = {PaymentMethod}, {nameof(Status)} = {Status}, {nameof(Source)} = {Source}, {nameof(SubTotal)} = {SubTotal}, {nameof(Total)} = {Total}, {nameof(VendorInvoiceNo)} = {VendorInvoiceNo}, {nameof(DisbursementNumber)} = {DisbursementNumber}, {nameof(VoucherNumber)} = {VoucherNumber}, {nameof(PaymentId)} = {PaymentId}, {nameof(DisbursementDate)} = {DisbursementDate}, {nameof(VendorId)} = {VendorId}, {nameof(AccountNumber)} = {AccountNumber}, {nameof(ManualPayment)} = {ManualPayment}, {nameof(CreationTime)} = {CreationTime}, {nameof(CreationUserId)} = {CreationUserId}, {nameof(CreationUserUsername)} = {CreationUserUsername}, {nameof(LastWriteTime)} = {LastWriteTime}, {nameof(LastWriteUserId)} = {LastWriteUserId}, {nameof(LastWriteUserUsername)} = {LastWriteUserUsername}, {nameof(Content)} = {Content}, {nameof(InvoiceAcquisitionsUnits)} = {(InvoiceAcquisitionsUnits != null ? $"{{ {string.Join(", ", InvoiceAcquisitionsUnits)} }}" : "")}, {nameof(InvoiceAdjustments)} = {(InvoiceAdjustments != null ? $"{{ {string.Join(", ", InvoiceAdjustments)} }}" : "")}, {nameof(InvoiceOrderNumbers)} = {(InvoiceOrderNumbers != null ? $"{{ {string.Join(", ", InvoiceOrderNumbers)} }}" : "")}, {nameof(InvoiceTags)} = {(InvoiceTags != null ? $"{{ {string.Join(", ", InvoiceTags)} }}" : "")} }}";
+        public override string ToString() => $"{{ {nameof(Id)} = {Id}, {nameof(AccountingCode)} = {AccountingCode}, {nameof(AdjustmentsTotal)} = {AdjustmentsTotal}, {nameof(ApprovedById)} = {ApprovedById}, {nameof(ApprovalDate)} = {ApprovalDate}, {nameof(BatchGroupId)} = {BatchGroupId}, {nameof(BillToId)} = {BillToId}, {nameof(CheckSubscriptionOverlap)} = {CheckSubscriptionOverlap}, {nameof(Currency)} = {Currency}, {nameof(EnclosureNeeded)} = {EnclosureNeeded}, {nameof(ExchangeRate)} = {ExchangeRate}, {nameof(ExportToAccounting)} = {ExportToAccounting}, {nameof(Number)} = {Number}, {nameof(InvoiceDate)} = {InvoiceDate}, {nameof(LockTotal)} = {LockTotal}, {nameof(Note)} = {Note}, {nameof(PaymentDueDate)} = {PaymentDueDate}, {nameof(PaymentDate)} = {PaymentDate}, {nameof(PaymentTerms)} = {PaymentTerms}, {nameof(PaymentMethod)} = {PaymentMethod}, {nameof(Status)} = {Status}, {nameof(Source)} = {Source}, {nameof(SubTotal)} = {SubTotal}, {nameof(Total)} = {Total}, {nameof(VendorInvoiceNo)} = {VendorInvoiceNo}, {nameof(DisbursementNumber)} = {DisbursementNumber}, {nameof(VoucherNumber)} = {VoucherNumber}, {nameof(PaymentId)} = {PaymentId}, {nameof(DisbursementDate)} = {DisbursementDate}, {nameof(VendorId)} = {VendorId}, {nameof(AccountNumber)} = {AccountNumber}, {nameof(ManualPayment)} = {ManualPayment}, {nameof(CreationTime)} = {CreationTime}, {nameof(CreationUserId)} = {CreationUserId}, {nameof(CreationUserUsername)} = {CreationUserUsername}, {nameof(LastWriteTime)} = {LastWriteTime}, {nameof(LastWriteUserId)} = {LastWriteUserId}, {nameof(LastWriteUserUsername)} = {LastWriteUserUsername}, {nameof(Content)} = {Content}, {nameof(InvoiceAcquisitionsUnits)} = {(InvoiceAcquisitionsUnits != null ? $"{{ {string.Join(", ", InvoiceAcquisitionsUnits)} }}" : "")}, {nameof(InvoiceAdjustments)} = {(InvoiceAdjustments != null ? $"{{ {string.Join(", ", InvoiceAdjustments)} }}" : "")}, {nameof(InvoiceOrderNumbers)} = {(InvoiceOrderNumbers != null ? $"{{ {string.Join(", ", InvoiceOrderNumbers)} }}" : "")}, {nameof(InvoiceTags)} = {(InvoiceTags != null ? $"{{ {string.Join(", ", InvoiceTags)} }}" : "")} }}";
 
         public static Invoice2 FromJObject(JObject jObject) => jObject != null ? new Invoice2
         {
@@ -207,7 +207,7 @@ namespace FolioLibrary
             ApprovalDate = ((DateTime?)jObject.SelectToken("approvalDate"))?.ToLocalTime(),
             BatchGroupId = (Guid?)jObject.SelectToken("batchGroupId"),
             BillToId = (Guid?)jObject.SelectToken("billTo"),
-            ChkSubscriptionOverlap = (bool?)jObject.SelectToken("chkSubscriptionOverlap"),
+            CheckSubscriptionOverlap = (bool?)jObject.SelectToken("chkSubscriptionOverlap"),
             Currency = (string)jObject.SelectToken("currency"),
             EnclosureNeeded = (bool?)jObject.SelectToken("enclosureNeeded"),
             ExchangeRate = (decimal?)jObject.SelectToken("exchangeRate"),
@@ -216,7 +216,7 @@ namespace FolioLibrary
             InvoiceDate = ((DateTime?)jObject.SelectToken("invoiceDate"))?.ToLocalTime(),
             LockTotal = (decimal?)jObject.SelectToken("lockTotal"),
             Note = (string)jObject.SelectToken("note"),
-            PaymentDue = ((DateTime?)jObject.SelectToken("paymentDue"))?.ToLocalTime(),
+            PaymentDueDate = ((DateTime?)jObject.SelectToken("paymentDue"))?.ToLocalTime(),
             PaymentDate = ((DateTime?)jObject.SelectToken("paymentDate"))?.ToLocalTime(),
             PaymentTerms = (string)jObject.SelectToken("paymentTerms"),
             PaymentMethod = (string)jObject.SelectToken("paymentMethod"),
@@ -253,7 +253,7 @@ namespace FolioLibrary
             new JProperty("approvalDate", ApprovalDate?.ToUniversalTime()),
             new JProperty("batchGroupId", BatchGroupId),
             new JProperty("billTo", BillToId),
-            new JProperty("chkSubscriptionOverlap", ChkSubscriptionOverlap),
+            new JProperty("chkSubscriptionOverlap", CheckSubscriptionOverlap),
             new JProperty("currency", Currency),
             new JProperty("enclosureNeeded", EnclosureNeeded),
             new JProperty("exchangeRate", ExchangeRate),
@@ -262,7 +262,7 @@ namespace FolioLibrary
             new JProperty("invoiceDate", InvoiceDate?.ToUniversalTime()),
             new JProperty("lockTotal", LockTotal),
             new JProperty("note", Note),
-            new JProperty("paymentDue", PaymentDue?.ToUniversalTime()),
+            new JProperty("paymentDue", PaymentDueDate?.ToUniversalTime()),
             new JProperty("paymentDate", PaymentDate?.ToUniversalTime()),
             new JProperty("paymentTerms", PaymentTerms),
             new JProperty("paymentMethod", PaymentMethod),

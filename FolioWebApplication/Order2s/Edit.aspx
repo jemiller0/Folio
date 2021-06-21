@@ -97,22 +97,6 @@
                                     <asp:Literal ID="NumberLiteral" runat="server" Text='<%#: Eval("Number") %>' />
                                 </td>
                             </tr>
-                            <tr runat="server" visible='<%# Eval("NumberPrefix") != null %>'>
-                                <td>
-                                    <asp:Label ID="NumberPrefixLabel" runat="server" Text="Number Prefix:" AssociatedControlID="NumberPrefixLiteral" />
-                                </td>
-                                <td>
-                                    <asp:Literal ID="NumberPrefixLiteral" runat="server" Text='<%#: Eval("NumberPrefix") %>' />
-                                </td>
-                            </tr>
-                            <tr runat="server" visible='<%# Eval("NumberSuffix") != null %>'>
-                                <td>
-                                    <asp:Label ID="NumberSuffixLabel" runat="server" Text="Number Suffix:" AssociatedControlID="NumberSuffixLiteral" />
-                                </td>
-                                <td>
-                                    <asp:Literal ID="NumberSuffixLiteral" runat="server" Text='<%#: Eval("NumberSuffix") %>' />
-                                </td>
-                            </tr>
                             <tr runat="server" visible='<%# Eval("OrderType") != null %>'>
                                 <td>
                                     <asp:Label ID="OrderTypeLabel" runat="server" Text="Order Type:" AssociatedControlID="OrderTypeLiteral" />
@@ -209,12 +193,12 @@
                                     <asp:HyperLink ID="VendorHyperLink" runat="server" Text='<%#: Eval("Vendor.Name") %>' NavigateUrl='<%# $"~/Organization2s/Edit.aspx?Id={Eval("VendorId")}" %>' Enabled='<%# Session["Organization2sPermission"] != null %>' />
                                 </td>
                             </tr>
-                            <tr runat="server" visible='<%# Eval("WorkflowStatus") != null %>'>
+                            <tr runat="server" visible='<%# Eval("Status") != null %>'>
                                 <td>
-                                    <asp:Label ID="WorkflowStatusLabel" runat="server" Text="Workflow Status:" AssociatedControlID="WorkflowStatusLiteral" />
+                                    <asp:Label ID="StatusLabel" runat="server" Text="Status:" AssociatedControlID="StatusLiteral" />
                                 </td>
                                 <td>
-                                    <asp:Literal ID="WorkflowStatusLiteral" runat="server" Text='<%#: Eval("WorkflowStatus") %>' />
+                                    <asp:Literal ID="StatusLiteral" runat="server" Text='<%#: Eval("Status") %>' />
                                 </td>
                             </tr>
                             <tr runat="server" visible='<%# Eval("CreationTime") != null %>'>

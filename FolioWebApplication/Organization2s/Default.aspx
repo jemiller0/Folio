@@ -32,7 +32,7 @@
                         <telerik:GridBoundColumn HeaderText="Export To Accounting" DataField="ExportToAccounting" AutoPostBackOnFilter="true" />
                         <telerik:GridBoundColumn HeaderText="Status" DataField="Status" AutoPostBackOnFilter="true" HtmlEncode="true" CurrentFilterFunction="StartsWith" />
                         <telerik:GridBoundColumn HeaderText="Language" DataField="Language" AutoPostBackOnFilter="true" HtmlEncode="true" CurrentFilterFunction="StartsWith" />
-                        <telerik:GridBoundColumn HeaderText="ERP Code" DataField="ErpCode" AutoPostBackOnFilter="true" HtmlEncode="true" CurrentFilterFunction="StartsWith" />
+                        <telerik:GridBoundColumn HeaderText="Accounting Code" DataField="AccountingCode" AutoPostBackOnFilter="true" HtmlEncode="true" CurrentFilterFunction="StartsWith" />
                         <telerik:GridBoundColumn HeaderText="Payment Method" DataField="PaymentMethod" AutoPostBackOnFilter="true" HtmlEncode="true" CurrentFilterFunction="StartsWith" />
                         <telerik:GridBoundColumn HeaderText="Access Provider" DataField="AccessProvider" AutoPostBackOnFilter="true" />
                         <telerik:GridBoundColumn HeaderText="Governmental" DataField="Governmental" AutoPostBackOnFilter="true" />

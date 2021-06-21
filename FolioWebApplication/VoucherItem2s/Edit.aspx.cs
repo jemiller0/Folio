@@ -27,7 +27,7 @@ namespace FolioWebApplication.VoucherItem2s
             var vi2 = folioServiceContext.FindVoucherItem2(id, true);
             if (vi2 == null) Response.Redirect("Default.aspx");
             VoucherItem2FormView.DataSource = new[] { vi2 };
-            Title = $"Voucher Item {vi2.Id}";
+            Title = $"Voucher Item {vi2.AccountNumber}";
         }
 
         public override void Dispose()

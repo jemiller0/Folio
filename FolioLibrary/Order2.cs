@@ -77,10 +77,10 @@ namespace FolioLibrary
         [Column("po_number"), Display(Order = 14), JsonProperty("poNumber"), Required, StringLength(1024)]
         public virtual string Number { get; set; }
 
-        [Column("po_number_prefix"), Display(Name = "Number Prefix", Order = 15), JsonProperty("poNumberPrefix"), StringLength(1024)]
+        [Column("po_number_prefix"), JsonProperty("poNumberPrefix"), ScaffoldColumn(false), StringLength(1024)]
         public virtual string NumberPrefix { get; set; }
 
-        [Column("po_number_suffix"), Display(Name = "Number Suffix", Order = 16), JsonProperty("poNumberSuffix"), StringLength(1024)]
+        [Column("po_number_suffix"), JsonProperty("poNumberSuffix"), ScaffoldColumn(false), StringLength(1024)]
         public virtual string NumberSuffix { get; set; }
 
         [Column("order_type"), Display(Name = "Order Type", Order = 17), JsonProperty("orderType"), RegularExpression(@"^(One-Time|Ongoing)$"), StringLength(1024)]
@@ -128,8 +128,8 @@ namespace FolioLibrary
         [Column("vendor_id"), Display(Name = "Vendor", Order = 31), JsonProperty("vendor")]
         public virtual Guid? VendorId { get; set; }
 
-        [Column("workflow_status"), Display(Name = "Workflow Status", Order = 32), JsonProperty("workflowStatus"), RegularExpression(@"^(Pending|Open|Closed)$"), StringLength(1024)]
-        public virtual string WorkflowStatus { get; set; }
+        [Column("status"), Display(Order = 32), JsonProperty("workflowStatus"), RegularExpression(@"^(Pending|Open|Closed)$"), StringLength(1024)]
+        public virtual string Status { get; set; }
 
         [Column("created_date"), DataType(DataType.DateTime), Display(Name = "Creation Time", Order = 33), DisplayFormat(DataFormatString = "{0:g}"), Editable(false), JsonProperty("metadata.createdDate")]
         public virtual DateTime? CreationTime { get; set; }
@@ -179,7 +179,7 @@ namespace FolioLibrary
         [Display(Name = "Transactions", Order = 48)]
         public virtual ICollection<Transaction2> Transaction2s { get; set; }
 
-        public override string ToString() => $"{{ {nameof(Id)} = {Id}, {nameof(Approved)} = {Approved}, {nameof(ApprovedById)} = {ApprovedById}, {nameof(ApprovalDate)} = {ApprovalDate}, {nameof(AssignedToId)} = {AssignedToId}, {nameof(BillToId)} = {BillToId}, {nameof(CloseReasonReason)} = {CloseReasonReason}, {nameof(CloseReasonNote)} = {CloseReasonNote}, {nameof(OrderDate)} = {OrderDate}, {nameof(Manual)} = {Manual}, {nameof(Number)} = {Number}, {nameof(NumberPrefix)} = {NumberPrefix}, {nameof(NumberSuffix)} = {NumberSuffix}, {nameof(OrderType)} = {OrderType}, {nameof(Reencumber)} = {Reencumber}, {nameof(OngoingInterval)} = {OngoingInterval}, {nameof(OngoingIsSubscription)} = {OngoingIsSubscription}, {nameof(OngoingManualRenewal)} = {OngoingManualRenewal}, {nameof(OngoingNotes)} = {OngoingNotes}, {nameof(OngoingReviewPeriod)} = {OngoingReviewPeriod}, {nameof(OngoingRenewalDate)} = {OngoingRenewalDate}, {nameof(OngoingReviewDate)} = {OngoingReviewDate}, {nameof(ShipToId)} = {ShipToId}, {nameof(TemplateId)} = {TemplateId}, {nameof(VendorId)} = {VendorId}, {nameof(WorkflowStatus)} = {WorkflowStatus}, {nameof(CreationTime)} = {CreationTime}, {nameof(CreationUserId)} = {CreationUserId}, {nameof(CreationUserUsername)} = {CreationUserUsername}, {nameof(LastWriteTime)} = {LastWriteTime}, {nameof(LastWriteUserId)} = {LastWriteUserId}, {nameof(LastWriteUserUsername)} = {LastWriteUserUsername}, {nameof(Content)} = {Content}, {nameof(OrderAcquisitionsUnits)} = {(OrderAcquisitionsUnits != null ? $"{{ {string.Join(", ", OrderAcquisitionsUnits)} }}" : "")}, {nameof(OrderNotes)} = {(OrderNotes != null ? $"{{ {string.Join(", ", OrderNotes)} }}" : "")}, {nameof(OrderTags)} = {(OrderTags != null ? $"{{ {string.Join(", ", OrderTags)} }}" : "")} }}";
+        public override string ToString() => $"{{ {nameof(Id)} = {Id}, {nameof(Approved)} = {Approved}, {nameof(ApprovedById)} = {ApprovedById}, {nameof(ApprovalDate)} = {ApprovalDate}, {nameof(AssignedToId)} = {AssignedToId}, {nameof(BillToId)} = {BillToId}, {nameof(CloseReasonReason)} = {CloseReasonReason}, {nameof(CloseReasonNote)} = {CloseReasonNote}, {nameof(OrderDate)} = {OrderDate}, {nameof(Manual)} = {Manual}, {nameof(Number)} = {Number}, {nameof(NumberPrefix)} = {NumberPrefix}, {nameof(NumberSuffix)} = {NumberSuffix}, {nameof(OrderType)} = {OrderType}, {nameof(Reencumber)} = {Reencumber}, {nameof(OngoingInterval)} = {OngoingInterval}, {nameof(OngoingIsSubscription)} = {OngoingIsSubscription}, {nameof(OngoingManualRenewal)} = {OngoingManualRenewal}, {nameof(OngoingNotes)} = {OngoingNotes}, {nameof(OngoingReviewPeriod)} = {OngoingReviewPeriod}, {nameof(OngoingRenewalDate)} = {OngoingRenewalDate}, {nameof(OngoingReviewDate)} = {OngoingReviewDate}, {nameof(ShipToId)} = {ShipToId}, {nameof(TemplateId)} = {TemplateId}, {nameof(VendorId)} = {VendorId}, {nameof(Status)} = {Status}, {nameof(CreationTime)} = {CreationTime}, {nameof(CreationUserId)} = {CreationUserId}, {nameof(CreationUserUsername)} = {CreationUserUsername}, {nameof(LastWriteTime)} = {LastWriteTime}, {nameof(LastWriteUserId)} = {LastWriteUserId}, {nameof(LastWriteUserUsername)} = {LastWriteUserUsername}, {nameof(Content)} = {Content}, {nameof(OrderAcquisitionsUnits)} = {(OrderAcquisitionsUnits != null ? $"{{ {string.Join(", ", OrderAcquisitionsUnits)} }}" : "")}, {nameof(OrderNotes)} = {(OrderNotes != null ? $"{{ {string.Join(", ", OrderNotes)} }}" : "")}, {nameof(OrderTags)} = {(OrderTags != null ? $"{{ {string.Join(", ", OrderTags)} }}" : "")} }}";
 
         public static Order2 FromJObject(JObject jObject) => jObject != null ? new Order2
         {
@@ -208,7 +208,7 @@ namespace FolioLibrary
             ShipToId = (Guid?)jObject.SelectToken("shipTo"),
             TemplateId = (Guid?)jObject.SelectToken("template"),
             VendorId = (Guid?)jObject.SelectToken("vendor"),
-            WorkflowStatus = (string)jObject.SelectToken("workflowStatus"),
+            Status = (string)jObject.SelectToken("workflowStatus"),
             CreationTime = ((DateTime?)jObject.SelectToken("metadata.createdDate"))?.ToLocalTime(),
             CreationUserId = (Guid?)jObject.SelectToken("metadata.createdByUserId"),
             CreationUserUsername = (string)jObject.SelectToken("metadata.createdByUsername"),
@@ -249,7 +249,7 @@ namespace FolioLibrary
             new JProperty("shipTo", ShipToId),
             new JProperty("template", TemplateId),
             new JProperty("vendor", VendorId),
-            new JProperty("workflowStatus", WorkflowStatus),
+            new JProperty("workflowStatus", Status),
             new JProperty("metadata", new JObject(
                 new JProperty("createdDate", CreationTime?.ToUniversalTime()),
                 new JProperty("createdByUserId", CreationUserId),

@@ -1522,7 +1522,7 @@ namespace FolioLibraryTest
             var vi2 = folioServiceContext.VoucherItem2s(take: 1).SingleOrDefault();
             if (vi2 == null) Assert.Inconclusive();
             vi2.VoucherItemFunds = null;
-            vi2.VoucherItemSourceIds = null;
+            vi2.VoucherItemInvoiceItems = null;
             var vi3 = folioDapperContext.VoucherItem2s(take: 1).SingleOrDefault();
             vi3.Content = null;
             Assert.AreEqual(vi2.ToString(), vi3.ToString());

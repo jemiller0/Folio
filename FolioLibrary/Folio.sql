@@ -1858,6 +1858,44 @@ uc.TIMESTAMP_CAST(jsonb#>>'{agedToLostDelayedBilling,dateLostItemShouldBeBilled}
 uc.TIMESTAMP_CAST(jsonb#>>'{agedToLostDelayedBilling,agedToLostDate}') AS aged_to_lost_delayed_billing_aged_to_lost_date,
 jsonb_pretty(jsonb) AS content
 FROM diku_mod_circulation_storage.loan;
+CREATE VIEW uc.loan_events AS
+SELECT
+id AS id,
+jsonb->>'operation' AS operation,
+jsonb->>'creationDate' AS creation_date,
+CAST(jsonb#>>'{loan,userId}' AS UUID) AS loan_user_id,
+CAST(jsonb#>>'{loan,proxyUserId}' AS UUID) AS loan_proxy_user_id,
+CAST(jsonb#>>'{loan,itemId}' AS UUID) AS loan_item_id,
+CAST(jsonb#>>'{loan,itemEffectiveLocationIdAtCheckOut}' AS UUID) AS loan_item_effective_location_id_at_check_out_id,
+jsonb#>>'{loan,status,name}' AS loan_status_name,
+jsonb#>>'{loan,loanDate}' AS loan_loan_date,
+uc.TIMESTAMP_CAST(jsonb#>>'{loan,dueDate}') AS loan_due_date,
+jsonb#>>'{loan,returnDate}' AS loan_return_date,
+uc.TIMESTAMP_CAST(jsonb#>>'{loan,systemReturnDate}') AS loan_system_return_date,
+jsonb#>>'{loan,action}' AS loan_action,
+jsonb#>>'{loan,actionComment}' AS loan_action_comment,
+jsonb#>>'{loan,itemStatus}' AS loan_item_status,
+CAST(jsonb#>>'{loan,renewalCount}' AS INTEGER) AS loan_renewal_count,
+CAST(jsonb#>>'{loan,loanPolicyId}' AS UUID) AS loan_loan_policy_id,
+CAST(jsonb#>>'{loan,checkoutServicePointId}' AS UUID) AS loan_checkout_service_point_id,
+CAST(jsonb#>>'{loan,checkinServicePointId}' AS UUID) AS loan_checkin_service_point_id,
+jsonb#>>'{loan,patronGroupIdAtCheckout}' AS loan_patron_group_id_at_checkout,
+CAST(jsonb#>>'{loan,dueDateChangedByRecall}' AS BOOLEAN) AS loan_due_date_changed_by_recall,
+uc.TIMESTAMP_CAST(jsonb#>>'{loan,declaredLostDate}') AS loan_declared_lost_date,
+uc.TIMESTAMP_CAST(jsonb#>>'{loan,claimedReturnedDate}') AS loan_claimed_returned_date,
+CAST(jsonb#>>'{loan,overdueFinePolicyId}' AS UUID) AS loan_overdue_fine_policy_id,
+CAST(jsonb#>>'{loan,lostItemPolicyId}' AS UUID) AS loan_lost_item_policy_id,
+uc.TIMESTAMP_CAST(jsonb#>>'{loan,metadata,createdDate}') AS loan_metadata_created_date,
+CAST(jsonb#>>'{loan,metadata,createdByUserId}' AS UUID) AS loan_metadata_created_by_user_id,
+jsonb#>>'{loan,metadata,createdByUsername}' AS loan_metadata_created_by_username,
+uc.TIMESTAMP_CAST(jsonb#>>'{loan,metadata,updatedDate}') AS loan_metadata_updated_date,
+CAST(jsonb#>>'{loan,metadata,updatedByUserId}' AS UUID) AS loan_metadata_updated_by_user_id,
+jsonb#>>'{loan,metadata,updatedByUsername}' AS loan_metadata_updated_by_username,
+CAST(jsonb#>>'{loan,agedToLostDelayedBilling,lostItemHasBeenBilled}' AS BOOLEAN) AS loan_aged_to_lost_delayed_billing_lost_item_has_been_billed,
+uc.TIMESTAMP_CAST(jsonb#>>'{loan,agedToLostDelayedBilling,dateLostItemShouldBeBilled}') AS loan_aged_to_lost_delayed_billing_date_lost_item_should_be_billed,
+uc.TIMESTAMP_CAST(jsonb#>>'{loan,agedToLostDelayedBilling,agedToLostDate}') AS loan_aged_to_lost_delayed_billing_aged_to_lost_date,
+jsonb_pretty(jsonb) AS content
+FROM diku_mod_circulation_storage.audit_loan;
 CREATE VIEW uc.loan_policies AS
 SELECT
 id AS id,
@@ -2149,7 +2187,7 @@ uc.TIMESTAMP_CAST(jsonb#>>'{ongoing,reviewDate}') AS ongoing_review_date,
 CAST(jsonb->>'shipTo' AS UUID) AS ship_to_id,
 CAST(jsonb->>'template' AS UUID) AS template_id,
 CAST(jsonb->>'vendor' AS UUID) AS vendor_id,
-jsonb->>'workflowStatus' AS workflow_status,
+jsonb->>'workflowStatus' AS status,
 uc.TIMESTAMP_CAST(jsonb#>>'{metadata,createdDate}') AS created_date,
 CAST(jsonb#>>'{metadata,createdByUserId}' AS UUID) AS created_by_user_id,
 jsonb#>>'{metadata,createdByUsername}' AS created_by_username,
@@ -3424,11 +3462,11 @@ jsonb->>'distributionType' AS distribution_type,
 CAST(jsonb->>'expenseClassId' AS UUID) AS expense_class_id,
 CAST(jsonb->>'value' AS DECIMAL(19,2)) AS value
 FROM (SELECT id::text || ordinality::text AS id, id AS voucher_item_id, value AS jsonb FROM diku_mod_invoice_storage.voucher_lines, jsonb_array_elements((jsonb->>'fundDistributions')::jsonb) WITH ORDINALITY) a;
-CREATE VIEW uc.voucher_item_source_ids AS
+CREATE VIEW uc.voucher_item_invoice_items AS
 SELECT
 id AS id,
 voucher_item_id AS voucher_item_id,
-CAST(jsonb AS VARCHAR(1024)) AS content
+CAST(jsonb AS UUID) AS invoice_item_id
 FROM (SELECT id::text || ordinality::text AS id, id AS voucher_item_id, value AS jsonb FROM diku_mod_invoice_storage.voucher_lines, jsonb_array_elements_text((jsonb->>'sourceIds')::jsonb) WITH ORDINALITY) a;
 CREATE VIEW uc.voucher_items AS
 SELECT

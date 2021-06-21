@@ -25,24 +25,24 @@ namespace FolioLibrary
         [Column("amount"), DataType(DataType.Currency), Display(Order = 4), DisplayFormat(DataFormatString = "{0:c}", ApplyFormatInEditMode = true), JsonProperty("amount"), Required]
         public virtual decimal? Amount { get; set; }
 
-        [Column("external_account_number"), Display(Name = "External Account Number", Order = 5), JsonProperty("externalAccountNumber"), Required, StringLength(1024)]
-        public virtual string ExternalAccountNumber { get; set; }
+        [Column("external_account_number"), Display(Name = "Account Number", Order = 5), JsonProperty("externalAccountNumber"), Required, StringLength(1024)]
+        public virtual string AccountNumber { get; set; }
 
         [Display(Name = "Batch Voucher Batched Voucher Batched Voucher Line Fund Codes", Order = 6), JsonConverter(typeof(ArrayJsonConverter<List<BatchVoucherBatchedVoucherBatchedVoucherLineFundCode>, BatchVoucherBatchedVoucherBatchedVoucherLineFundCode>), "Content"), JsonProperty("fundCodes")]
         public virtual ICollection<BatchVoucherBatchedVoucherBatchedVoucherLineFundCode> BatchVoucherBatchedVoucherBatchedVoucherLineFundCodes { get; set; }
 
-        public override string ToString() => $"{{ {nameof(Id)} = {Id}, {nameof(BatchVoucherBatchedVoucherId)} = {BatchVoucherBatchedVoucherId}, {nameof(Amount)} = {Amount}, {nameof(ExternalAccountNumber)} = {ExternalAccountNumber}, {nameof(BatchVoucherBatchedVoucherBatchedVoucherLineFundCodes)} = {(BatchVoucherBatchedVoucherBatchedVoucherLineFundCodes != null ? $"{{ {string.Join(", ", BatchVoucherBatchedVoucherBatchedVoucherLineFundCodes)} }}" : "")} }}";
+        public override string ToString() => $"{{ {nameof(Id)} = {Id}, {nameof(BatchVoucherBatchedVoucherId)} = {BatchVoucherBatchedVoucherId}, {nameof(Amount)} = {Amount}, {nameof(AccountNumber)} = {AccountNumber}, {nameof(BatchVoucherBatchedVoucherBatchedVoucherLineFundCodes)} = {(BatchVoucherBatchedVoucherBatchedVoucherLineFundCodes != null ? $"{{ {string.Join(", ", BatchVoucherBatchedVoucherBatchedVoucherLineFundCodes)} }}" : "")} }}";
 
         public static BatchVoucherBatchedVoucherBatchedVoucherLine FromJObject(JObject jObject) => jObject != null ? new BatchVoucherBatchedVoucherBatchedVoucherLine
         {
             Amount = (decimal?)jObject.SelectToken("amount"),
-            ExternalAccountNumber = (string)jObject.SelectToken("externalAccountNumber"),
+            AccountNumber = (string)jObject.SelectToken("externalAccountNumber"),
             BatchVoucherBatchedVoucherBatchedVoucherLineFundCodes = jObject.SelectToken("fundCodes")?.Where(jt => jt.HasValues).Select(jt => BatchVoucherBatchedVoucherBatchedVoucherLineFundCode.FromJObject((JValue)jt)).ToArray()
         } : null;
 
         public JObject ToJObject() => new JObject(
             new JProperty("amount", Amount),
-            new JProperty("externalAccountNumber", ExternalAccountNumber),
+            new JProperty("externalAccountNumber", AccountNumber),
             new JProperty("fundCodes", BatchVoucherBatchedVoucherBatchedVoucherLineFundCodes?.Select(bvbvbvlfc => bvbvbvlfc.ToJObject()))).RemoveNullAndEmptyProperties();
     }
 }

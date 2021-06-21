@@ -1004,7 +1004,7 @@ LEFT JOIN uc.users AS lwu ON lwu.id = ear2.updated_by_user_id
 SELECT
 ec2.id AS ""Id"",
 ec2.code AS ""Code"",
-ec2.external_account_number_ext AS ""ExternalAccountNumberExtension"",
+ec2.external_account_number_ext AS ""AccountNumberExtension"",
 ec2.name AS ""Name"",
 ec2.created_date AS ""CreationTime"",
 cu.username AS ""CreationUser"",
@@ -1783,7 +1783,7 @@ bg.name AS ""BatchGroup"",
 i2.batch_group_id AS ""BatchGroupId"",
 bt.id AS ""BillTo"",
 i2.bill_to_id AS ""BillToId"",
-i2.chk_subscription_overlap AS ""ChkSubscriptionOverlap"",
+i2.chk_subscription_overlap AS ""CheckSubscriptionOverlap"",
 i2.currency AS ""Currency"",
 i2.enclosure_needed AS ""EnclosureNeeded"",
 i2.exchange_rate AS ""ExchangeRate"",
@@ -1792,7 +1792,7 @@ i2.folio_invoice_no AS ""Number"",
 i2.invoice_date AS ""InvoiceDate"",
 i2.lock_total AS ""LockTotal"",
 i2.note AS ""Note"",
-i2.payment_due AS ""PaymentDue"",
+i2.payment_due AS ""PaymentDueDate"",
 i2.payment_date AS ""PaymentDate"",
 i2.payment_terms AS ""PaymentTerms"",
 i2.payment_method AS ""PaymentMethod"",
@@ -2731,8 +2731,6 @@ o2.close_reason_note AS ""CloseReasonNote"",
 o2.date_ordered AS ""OrderDate"",
 o2.manual_po AS ""Manual"",
 o2.po_number AS ""Number"",
-o2.po_number_prefix AS ""NumberPrefix"",
-o2.po_number_suffix AS ""NumberSuffix"",
 o2.order_type AS ""OrderType"",
 o2.re_encumber AS ""Reencumber"",
 o2.ongoing_interval AS ""OngoingInterval"",
@@ -2748,7 +2746,7 @@ t.id AS ""Template"",
 o2.template_id AS ""TemplateId"",
 v.name AS ""Vendor"",
 o2.vendor_id AS ""VendorId"",
-o2.workflow_status AS ""WorkflowStatus"",
+o2.status AS ""Status"",
 o2.created_date AS ""CreationTime"",
 cu.username AS ""CreationUser"",
 o2.created_by_user_id AS ""CreationUserId"",
@@ -2951,7 +2949,7 @@ o2.description AS ""Description"",
 o2.export_to_accounting AS ""ExportToAccounting"",
 o2.status AS ""Status"",
 o2.language AS ""Language"",
-o2.erp_code AS ""ErpCode"",
+o2.erp_code AS ""AccountingCode"",
 o2.payment_method AS ""PaymentMethod"",
 o2.access_provider AS ""AccessProvider"",
 o2.governmental AS ""Governmental"",
@@ -4557,7 +4555,7 @@ v2.status AS ""Status"",
 v2.system_currency AS ""SystemCurrency"",
 v2.type AS ""Type"",
 v2.voucher_date AS ""VoucherDate"",
-v2.voucher_number AS ""VoucherNumber"",
+v2.voucher_number AS ""Number"",
 v.name AS ""Vendor"",
 v2.vendor_id AS ""VendorId"",
 v2.vendor_address_address_line1 AS ""VendorStreetAddress1"",
@@ -4579,7 +4577,7 @@ LEFT JOIN uc.invoices AS i ON i.id = v2.invoice_id
 LEFT JOIN uc.organizations AS v ON v.id = v2.vendor_id
 LEFT JOIN uc.users AS cu ON cu.id = v2.created_by_user_id
 LEFT JOIN uc.users AS lwu ON lwu.id = v2.updated_by_user_id
- ORDER BY v2.id
+ ORDER BY v2.voucher_number
 ", take: 1);
             traceSource.TraceEvent(TraceEventType.Information, 0, $"Voucher2sQueryTest()\r\n    ElapsedTime={s.Elapsed}");
         }
@@ -4600,10 +4598,10 @@ LEFT JOIN uc.users AS lwu ON lwu.id = v2.updated_by_user_id
 SELECT
 vi2.id AS ""Id"",
 vi2.amount AS ""Amount"",
-vi2.external_account_number AS ""ExternalAccountNumber"",
+vi2.external_account_number AS ""AccountNumber"",
 st.amount AS ""SubTransaction"",
 vi2.sub_transaction_id AS ""SubTransactionId"",
-v.id AS ""Voucher"",
+v.voucher_number AS ""Voucher"",
 vi2.voucher_id AS ""VoucherId"",
 vi2.created_date AS ""CreationTime"",
 cu.username AS ""CreationUser"",
@@ -4617,7 +4615,7 @@ LEFT JOIN uc.transactions AS st ON st.id = vi2.sub_transaction_id
 LEFT JOIN uc.vouchers AS v ON v.id = vi2.voucher_id
 LEFT JOIN uc.users AS cu ON cu.id = vi2.created_by_user_id
 LEFT JOIN uc.users AS lwu ON lwu.id = vi2.updated_by_user_id
- ORDER BY vi2.id
+ ORDER BY vi2.external_account_number
 ", take: 1);
             traceSource.TraceEvent(TraceEventType.Information, 0, $"VoucherItem2sQueryTest()\r\n    ElapsedTime={s.Elapsed}");
         }

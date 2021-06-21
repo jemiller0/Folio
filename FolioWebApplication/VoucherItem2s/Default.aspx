@@ -23,15 +23,19 @@
                             </ItemTemplate>
                         </telerik:GridTemplateColumn>
                         <telerik:GridBoundColumn HeaderText="Amount" DataField="Amount" AutoPostBackOnFilter="true" DataFormatString="{0:c}" />
-                        <telerik:GridBoundColumn HeaderText="External Account Number" DataField="ExternalAccountNumber" AutoPostBackOnFilter="true" HtmlEncode="true" CurrentFilterFunction="StartsWith" />
+                        <telerik:GridTemplateColumn HeaderText="Account Number" DataField="AccountNumber" SortExpression="AccountNumber" AutoPostBackOnFilter="true" CurrentFilterFunction="StartsWith">
+                            <ItemTemplate>
+                                <asp:HyperLink ID="AccountNumberHyperLink" runat="server" Text='<%#: Eval("AccountNumber") %>' NavigateUrl='<%# $"Edit.aspx?Id={Eval("Id")}" %>' />
+                            </ItemTemplate>
+                        </telerik:GridTemplateColumn>
                         <telerik:GridTemplateColumn AllowFiltering="false" AllowSorting="false" HeaderText="Sub Transaction" DataField="SubTransaction.Amount" SortExpression="SubTransaction.Amount" AutoPostBackOnFilter="true">
                             <ItemTemplate>
                                 <asp:HyperLink ID="SubTransactionHyperLink" runat="server" Text='<%# $"{Eval("SubTransaction.Amount"):c}" %>' NavigateUrl='<%# $"~/Transaction2s/Edit.aspx?Id={Eval("SubTransactionId")}" %>' Enabled='<%# Session["Transaction2sPermission"] != null %>' />
                             </ItemTemplate>
                         </telerik:GridTemplateColumn>
-                        <telerik:GridTemplateColumn AllowFiltering="false" AllowSorting="false" HeaderText="Voucher" DataField="Voucher.Id" SortExpression="Voucher.Id" AutoPostBackOnFilter="true" CurrentFilterFunction="EqualTo">
+                        <telerik:GridTemplateColumn AllowFiltering="false" AllowSorting="false" HeaderText="Voucher" DataField="Voucher.Number" SortExpression="Voucher.Number" AutoPostBackOnFilter="true" CurrentFilterFunction="StartsWith">
                             <ItemTemplate>
-                                <asp:HyperLink ID="VoucherHyperLink" runat="server" Text='<%# Eval("Voucher.Id") %>' NavigateUrl='<%# $"~/Voucher2s/Edit.aspx?Id={Eval("VoucherId")}" %>' Enabled='<%# Session["Voucher2sPermission"] != null %>' />
+                                <asp:HyperLink ID="VoucherHyperLink" runat="server" Text='<%#: Eval("Voucher.Number") %>' NavigateUrl='<%# $"~/Voucher2s/Edit.aspx?Id={Eval("VoucherId")}" %>' Enabled='<%# Session["Voucher2sPermission"] != null %>' />
                             </ItemTemplate>
                         </telerik:GridTemplateColumn>
                         <telerik:GridBoundColumn HeaderText="Creation Time" DataField="CreationTime" AutoPostBackOnFilter="true" DataFormatString="{0:g}" />
