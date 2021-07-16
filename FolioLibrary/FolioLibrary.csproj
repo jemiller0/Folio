@@ -81,6 +81,7 @@
     <None Remove="LedgerRolloverProgress.json" />
     <None Remove="Library.json" />
     <None Remove="Loan.json" />
+    <None Remove="LoanEvent.json" />
     <None Remove="LoanPolicy.json" />
     <None Remove="LoanType.json" />
     <None Remove="Location.json" />
@@ -218,6 +219,7 @@
     <EmbeddedResource Include="LedgerRolloverProgress.json" />
     <EmbeddedResource Include="Library.json" />
     <EmbeddedResource Include="Loan.json" />
+    <EmbeddedResource Include="LoanEvent.json" />
     <EmbeddedResource Include="LoanPolicy.json" />
     <EmbeddedResource Include="LoanType.json" />
     <EmbeddedResource Include="Location.json" />

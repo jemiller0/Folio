@@ -43,7 +43,7 @@ dotnet build
 Run the application without specifying any arguments for the first time to generate default configuration files and see the command-line options.
 
 ```
-cd FolioConsoleApplication/bin/Debug/netcoreapp3.1
+cd FolioConsoleApplication/bin/Debug/net5.0
 ./folio
 ```
 

@@ -37,6 +37,9 @@ namespace FolioLibrary
         public virtual ICollection<JobExecutionSourceChunk> JobExecutionSourceChunks { get; set; }
 
         [ScaffoldColumn(false)]
+        public virtual ICollection<JobMonitoring> JobMonitorings { get; set; }
+
+        [ScaffoldColumn(false)]
         public virtual ICollection<JournalRecord> JournalRecords { get; set; }
 
         public override string ToString() => $"{{ {nameof(Id)} = {Id}, {nameof(Content)} = {Content} }}";
