@@ -15906,6 +15906,14 @@ namespace FolioLibrary
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", s.Elapsed);
         }
 
+        public DateTime GetCurrentTime()
+        {
+            var u = Users($"username==\"{Username}\"").Single();
+            UpdateUser(u);
+            u = GetUser((string)u["id"]);
+            return ((DateTime)u.SelectToken("metadata.updatedDate")).ToUniversalTime();
+        }
+
         public JObject[] Modules()
         {
             var s = Stopwatch.StartNew();
