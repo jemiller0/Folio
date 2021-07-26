@@ -69,7 +69,7 @@ namespace FolioLibrary
             ItemsPrefix = (string)jObject.SelectToken("items.prefix"),
             ItemsStartNumber = (int?)jObject.SelectToken("items.startNumber"),
             ZeroPad = (bool?)jObject.SelectToken("commonRetainLeadingZeroes"),
-            Content = jObject.ToString()
+            Content = JsonConvert.SerializeObject(jObject, FolioDapperContext.UniversalTimeJsonSerializationSettings)
         } : null;
 
         public JObject ToJObject() => new JObject(

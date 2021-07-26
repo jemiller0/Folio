@@ -87,7 +87,7 @@ namespace FolioLibrary
         public static Payment2 FromJObject(JObject jObject) => jObject != null ? new Payment2
         {
             Id = (Guid?)jObject.SelectToken("id"),
-            CreationTime = ((DateTime?)jObject.SelectToken("dateAction"))?.ToLocalTime(),
+            CreationTime = (DateTime?)jObject.SelectToken("dateAction"),
             TypeAction = (string)jObject.SelectToken("typeAction"),
             Comments = (string)jObject.SelectToken("comments"),
             Notify = (bool?)jObject.SelectToken("notify"),
@@ -99,12 +99,12 @@ namespace FolioLibrary
             PaymentMethod = (string)jObject.SelectToken("paymentMethod"),
             FeeId = (Guid?)jObject.SelectToken("accountId"),
             UserId = (Guid?)jObject.SelectToken("userId"),
-            Content = jObject.ToString()
+            Content = JsonConvert.SerializeObject(jObject, FolioDapperContext.UniversalTimeJsonSerializationSettings)
         } : null;
 
         public JObject ToJObject() => new JObject(
             new JProperty("id", Id),
-            new JProperty("dateAction", CreationTime?.ToUniversalTime()),
+            new JProperty("dateAction", CreationTime),
             new JProperty("typeAction", TypeAction),
             new JProperty("comments", Comments),
             new JProperty("notify", Notify),

@@ -53,7 +53,7 @@ namespace FolioLibrary
         public static Address FromJObject(JObject jObject)
         {
             if (jObject == null) return null;
-            var jo = JObject.Parse((string)jObject["value"]);
+            var jo = JsonConvert.DeserializeObject<JObject>((string)jObject["value"]);
             return new Address
             {
                 Id = (Guid?)jObject.SelectToken("id"),

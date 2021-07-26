@@ -61,20 +61,20 @@ namespace FolioLibrary
         {
             Id = (Guid?)jObject.SelectToken("id"),
             BatchGroup = (string)jObject.SelectToken("batchGroup"),
-            Created = ((DateTime?)jObject.SelectToken("created"))?.ToLocalTime(),
-            Start = ((DateTime?)jObject.SelectToken("start"))?.ToLocalTime(),
-            End = ((DateTime?)jObject.SelectToken("end"))?.ToLocalTime(),
+            Created = (DateTime?)jObject.SelectToken("created"),
+            Start = (DateTime?)jObject.SelectToken("start"),
+            End = (DateTime?)jObject.SelectToken("end"),
             TotalRecords = (int?)jObject.SelectToken("totalRecords"),
-            Content = jObject.ToString(),
+            Content = JsonConvert.SerializeObject(jObject, FolioDapperContext.UniversalTimeJsonSerializationSettings),
             BatchVoucherBatchedVouchers = jObject.SelectToken("batchedVouchers")?.Where(jt => jt.HasValues).Select(jt => BatchVoucherBatchedVoucher.FromJObject((JObject)jt)).ToArray()
         } : null;
 
         public JObject ToJObject() => new JObject(
             new JProperty("id", Id),
             new JProperty("batchGroup", BatchGroup),
-            new JProperty("created", Created?.ToUniversalTime()),
-            new JProperty("start", Start?.ToUniversalTime()),
-            new JProperty("end", End?.ToUniversalTime()),
+            new JProperty("created", Created),
+            new JProperty("start", Start),
+            new JProperty("end", End),
             new JProperty("totalRecords", TotalRecords),
             new JProperty("batchedVouchers", BatchVoucherBatchedVouchers?.Select(bvbv => bvbv.ToJObject()))).RemoveNullAndEmptyProperties();
     }

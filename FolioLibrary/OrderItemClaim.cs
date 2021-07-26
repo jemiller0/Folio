@@ -35,13 +35,13 @@ namespace FolioLibrary
         public static OrderItemClaim FromJObject(JObject jObject) => jObject != null ? new OrderItemClaim
         {
             Claimed = (bool?)jObject.SelectToken("claimed"),
-            Sent = ((DateTime?)jObject.SelectToken("sent"))?.ToLocalTime(),
+            Sent = (DateTime?)jObject.SelectToken("sent"),
             Grace = (int?)jObject.SelectToken("grace")
         } : null;
 
         public JObject ToJObject() => new JObject(
             new JProperty("claimed", Claimed),
-            new JProperty("sent", Sent?.ToUniversalTime()),
+            new JProperty("sent", Sent),
             new JProperty("grace", Grace)).RemoveNullAndEmptyProperties();
     }
 }

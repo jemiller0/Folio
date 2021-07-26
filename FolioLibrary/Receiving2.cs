@@ -92,9 +92,9 @@ namespace FolioLibrary
             TitleId = (Guid?)jObject.SelectToken("titleId"),
             ReceivingStatus = (string)jObject.SelectToken("receivingStatus"),
             Supplement = (bool?)jObject.SelectToken("supplement"),
-            ReceiptTime = ((DateTime?)jObject.SelectToken("receiptDate"))?.ToLocalTime(),
-            ReceiveTime = ((DateTime?)jObject.SelectToken("receivedDate"))?.ToLocalTime(),
-            Content = jObject.ToString()
+            ReceiptTime = (DateTime?)jObject.SelectToken("receiptDate"),
+            ReceiveTime = (DateTime?)jObject.SelectToken("receivedDate"),
+            Content = JsonConvert.SerializeObject(jObject, FolioDapperContext.UniversalTimeJsonSerializationSettings)
         } : null;
 
         public JObject ToJObject() => new JObject(
@@ -108,7 +108,7 @@ namespace FolioLibrary
             new JProperty("titleId", TitleId),
             new JProperty("receivingStatus", ReceivingStatus),
             new JProperty("supplement", Supplement),
-            new JProperty("receiptDate", ReceiptTime?.ToUniversalTime()),
-            new JProperty("receivedDate", ReceiveTime?.ToUniversalTime())).RemoveNullAndEmptyProperties();
+            new JProperty("receiptDate", ReceiptTime),
+            new JProperty("receivedDate", ReceiveTime)).RemoveNullAndEmptyProperties();
     }
 }

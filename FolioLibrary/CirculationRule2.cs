@@ -45,7 +45,7 @@ namespace FolioLibrary
         {
             Id = (Guid?)jObject.SelectToken("id"),
             RulesAsText = (string)jObject.SelectToken("rulesAsText"),
-            Content = jObject.ToString()
+            Content = JsonConvert.SerializeObject(jObject, FolioDapperContext.UniversalTimeJsonSerializationSettings)
         } : null;
 
         public JObject ToJObject() => new JObject(

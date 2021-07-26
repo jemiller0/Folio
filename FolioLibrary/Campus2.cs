@@ -84,13 +84,13 @@ namespace FolioLibrary
             Name = (string)jObject.SelectToken("name"),
             Code = (string)jObject.SelectToken("code"),
             InstitutionId = (Guid?)jObject.SelectToken("institutionId"),
-            CreationTime = ((DateTime?)jObject.SelectToken("metadata.createdDate"))?.ToLocalTime(),
+            CreationTime = (DateTime?)jObject.SelectToken("metadata.createdDate"),
             CreationUserId = (Guid?)jObject.SelectToken("metadata.createdByUserId"),
             CreationUserUsername = (string)jObject.SelectToken("metadata.createdByUsername"),
-            LastWriteTime = ((DateTime?)jObject.SelectToken("metadata.updatedDate"))?.ToLocalTime(),
+            LastWriteTime = (DateTime?)jObject.SelectToken("metadata.updatedDate"),
             LastWriteUserId = (Guid?)jObject.SelectToken("metadata.updatedByUserId"),
             LastWriteUserUsername = (string)jObject.SelectToken("metadata.updatedByUsername"),
-            Content = jObject.ToString()
+            Content = JsonConvert.SerializeObject(jObject, FolioDapperContext.UniversalTimeJsonSerializationSettings)
         } : null;
 
         public JObject ToJObject() => new JObject(
@@ -99,10 +99,10 @@ namespace FolioLibrary
             new JProperty("code", Code),
             new JProperty("institutionId", InstitutionId),
             new JProperty("metadata", new JObject(
-                new JProperty("createdDate", CreationTime?.ToUniversalTime()),
+                new JProperty("createdDate", CreationTime),
                 new JProperty("createdByUserId", CreationUserId),
                 new JProperty("createdByUsername", CreationUserUsername),
-                new JProperty("updatedDate", LastWriteTime?.ToUniversalTime()),
+                new JProperty("updatedDate", LastWriteTime),
                 new JProperty("updatedByUserId", LastWriteUserId),
                 new JProperty("updatedByUsername", LastWriteUserUsername)))).RemoveNullAndEmptyProperties();
     }

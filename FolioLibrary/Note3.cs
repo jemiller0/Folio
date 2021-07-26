@@ -126,13 +126,13 @@ namespace FolioLibrary
             UpdaterLastName = (string)jObject.SelectToken("updater.lastName"),
             UpdaterFirstName = (string)jObject.SelectToken("updater.firstName"),
             UpdaterMiddleName = (string)jObject.SelectToken("updater.middleName"),
-            CreationTime = ((DateTime?)jObject.SelectToken("metadata.createdDate"))?.ToLocalTime(),
+            CreationTime = (DateTime?)jObject.SelectToken("metadata.createdDate"),
             CreationUserId = (Guid?)jObject.SelectToken("metadata.createdByUserId"),
             CreationUserUsername = (string)jObject.SelectToken("metadata.createdByUsername"),
-            LastWriteTime = ((DateTime?)jObject.SelectToken("metadata.updatedDate"))?.ToLocalTime(),
+            LastWriteTime = (DateTime?)jObject.SelectToken("metadata.updatedDate"),
             LastWriteUserId = (Guid?)jObject.SelectToken("metadata.updatedByUserId"),
             LastWriteUserUsername = (string)jObject.SelectToken("metadata.updatedByUsername"),
-            Content = jObject.ToString(),
+            Content = JsonConvert.SerializeObject(jObject, FolioDapperContext.UniversalTimeJsonSerializationSettings),
             NoteLinks = jObject.SelectToken("links")?.Where(jt => jt.HasValues).Select(jt => NoteLink.FromJObject((JObject)jt)).ToArray()
         } : null;
 
@@ -153,10 +153,10 @@ namespace FolioLibrary
                 new JProperty("firstName", UpdaterFirstName),
                 new JProperty("middleName", UpdaterMiddleName))),
             new JProperty("metadata", new JObject(
-                new JProperty("createdDate", CreationTime?.ToUniversalTime()),
+                new JProperty("createdDate", CreationTime),
                 new JProperty("createdByUserId", CreationUserId),
                 new JProperty("createdByUsername", CreationUserUsername),
-                new JProperty("updatedDate", LastWriteTime?.ToUniversalTime()),
+                new JProperty("updatedDate", LastWriteTime),
                 new JProperty("updatedByUserId", LastWriteUserId),
                 new JProperty("updatedByUsername", LastWriteUserUsername))),
             new JProperty("links", NoteLinks?.Select(nl => nl.ToJObject()))).RemoveNullAndEmptyProperties();

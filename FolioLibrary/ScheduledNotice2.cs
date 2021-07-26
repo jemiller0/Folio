@@ -117,7 +117,7 @@ namespace FolioLibrary
             RequestId = (Guid?)jObject.SelectToken("requestId"),
             PaymentId = (Guid?)jObject.SelectToken("feeFineActionId"),
             RecipientUserId = (Guid?)jObject.SelectToken("recipientUserId"),
-            NextRunTime = ((DateTime?)jObject.SelectToken("nextRunTime"))?.ToLocalTime(),
+            NextRunTime = (DateTime?)jObject.SelectToken("nextRunTime"),
             TriggeringEvent = (string)jObject.SelectToken("triggeringEvent"),
             NoticeConfigTiming = (string)jObject.SelectToken("noticeConfig.timing"),
             NoticeConfigRecurringPeriodDuration = (int?)jObject.SelectToken("noticeConfig.recurringPeriod.duration"),
@@ -125,13 +125,13 @@ namespace FolioLibrary
             NoticeConfigTemplateId = (Guid?)jObject.SelectToken("noticeConfig.templateId"),
             NoticeConfigFormat = (string)jObject.SelectToken("noticeConfig.format"),
             NoticeConfigSendInRealTime = (bool?)jObject.SelectToken("noticeConfig.sendInRealTime"),
-            CreationTime = ((DateTime?)jObject.SelectToken("metadata.createdDate"))?.ToLocalTime(),
+            CreationTime = (DateTime?)jObject.SelectToken("metadata.createdDate"),
             CreationUserId = (Guid?)jObject.SelectToken("metadata.createdByUserId"),
             CreationUserUsername = (string)jObject.SelectToken("metadata.createdByUsername"),
-            LastWriteTime = ((DateTime?)jObject.SelectToken("metadata.updatedDate"))?.ToLocalTime(),
+            LastWriteTime = (DateTime?)jObject.SelectToken("metadata.updatedDate"),
             LastWriteUserId = (Guid?)jObject.SelectToken("metadata.updatedByUserId"),
             LastWriteUserUsername = (string)jObject.SelectToken("metadata.updatedByUsername"),
-            Content = jObject.ToString()
+            Content = JsonConvert.SerializeObject(jObject, FolioDapperContext.UniversalTimeJsonSerializationSettings)
         } : null;
 
         public JObject ToJObject() => new JObject(
@@ -140,7 +140,7 @@ namespace FolioLibrary
             new JProperty("requestId", RequestId),
             new JProperty("feeFineActionId", PaymentId),
             new JProperty("recipientUserId", RecipientUserId),
-            new JProperty("nextRunTime", NextRunTime?.ToUniversalTime()),
+            new JProperty("nextRunTime", NextRunTime),
             new JProperty("triggeringEvent", TriggeringEvent),
             new JProperty("noticeConfig", new JObject(
                 new JProperty("timing", NoticeConfigTiming),
@@ -151,10 +151,10 @@ namespace FolioLibrary
                 new JProperty("format", NoticeConfigFormat),
                 new JProperty("sendInRealTime", NoticeConfigSendInRealTime))),
             new JProperty("metadata", new JObject(
-                new JProperty("createdDate", CreationTime?.ToUniversalTime()),
+                new JProperty("createdDate", CreationTime),
                 new JProperty("createdByUserId", CreationUserId),
                 new JProperty("createdByUsername", CreationUserUsername),
-                new JProperty("updatedDate", LastWriteTime?.ToUniversalTime()),
+                new JProperty("updatedDate", LastWriteTime),
                 new JProperty("updatedByUserId", LastWriteUserId),
                 new JProperty("updatedByUsername", LastWriteUserUsername)))).RemoveNullAndEmptyProperties();
     }

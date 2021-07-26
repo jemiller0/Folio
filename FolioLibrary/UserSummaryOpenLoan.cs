@@ -44,7 +44,7 @@ namespace FolioLibrary
         public static UserSummaryOpenLoan FromJObject(JObject jObject) => jObject != null ? new UserSummaryOpenLoan
         {
             LoanId = (Guid?)jObject.SelectToken("loanId"),
-            DueDate = ((DateTime?)jObject.SelectToken("dueDate"))?.ToLocalTime(),
+            DueDate = (DateTime?)jObject.SelectToken("dueDate"),
             Recall = (bool?)jObject.SelectToken("recall"),
             ItemLost = (bool?)jObject.SelectToken("itemLost"),
             ItemClaimedReturned = (bool?)jObject.SelectToken("itemClaimedReturned")
@@ -52,7 +52,7 @@ namespace FolioLibrary
 
         public JObject ToJObject() => new JObject(
             new JProperty("loanId", LoanId),
-            new JProperty("dueDate", DueDate?.ToUniversalTime()),
+            new JProperty("dueDate", DueDate),
             new JProperty("recall", Recall),
             new JProperty("itemLost", ItemLost),
             new JProperty("itemClaimedReturned", ItemClaimedReturned)).RemoveNullAndEmptyProperties();

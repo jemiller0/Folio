@@ -80,13 +80,13 @@ namespace FolioLibrary
             Id = (Guid?)jObject.SelectToken("id"),
             UserId = (Guid?)jObject.SelectToken("userId"),
             DefaultServicePointId = (Guid?)jObject.SelectToken("defaultServicePointId"),
-            CreationTime = ((DateTime?)jObject.SelectToken("metadata.createdDate"))?.ToLocalTime(),
+            CreationTime = (DateTime?)jObject.SelectToken("metadata.createdDate"),
             CreationUserId = (Guid?)jObject.SelectToken("metadata.createdByUserId"),
             CreationUserUsername = (string)jObject.SelectToken("metadata.createdByUsername"),
-            LastWriteTime = ((DateTime?)jObject.SelectToken("metadata.updatedDate"))?.ToLocalTime(),
+            LastWriteTime = (DateTime?)jObject.SelectToken("metadata.updatedDate"),
             LastWriteUserId = (Guid?)jObject.SelectToken("metadata.updatedByUserId"),
             LastWriteUserUsername = (string)jObject.SelectToken("metadata.updatedByUsername"),
-            Content = jObject.ToString(),
+            Content = JsonConvert.SerializeObject(jObject, FolioDapperContext.UniversalTimeJsonSerializationSettings),
             ServicePointUserServicePoints = jObject.SelectToken("servicePointsIds")?.Where(jt => jt.HasValues).Select(jt => ServicePointUserServicePoint.FromJObject((JValue)jt)).ToArray()
         } : null;
 
@@ -95,10 +95,10 @@ namespace FolioLibrary
             new JProperty("userId", UserId),
             new JProperty("defaultServicePointId", DefaultServicePointId),
             new JProperty("metadata", new JObject(
-                new JProperty("createdDate", CreationTime?.ToUniversalTime()),
+                new JProperty("createdDate", CreationTime),
                 new JProperty("createdByUserId", CreationUserId),
                 new JProperty("createdByUsername", CreationUserUsername),
-                new JProperty("updatedDate", LastWriteTime?.ToUniversalTime()),
+                new JProperty("updatedDate", LastWriteTime),
                 new JProperty("updatedByUserId", LastWriteUserId),
                 new JProperty("updatedByUsername", LastWriteUserUsername))),
             new JProperty("servicePointsIds", ServicePointUserServicePoints?.Select(spusp => spusp.ToJObject()))).RemoveNullAndEmptyProperties();

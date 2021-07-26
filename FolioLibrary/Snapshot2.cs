@@ -49,21 +49,21 @@ namespace FolioLibrary
         {
             Id = (Guid?)jObject.SelectToken("jobExecutionId"),
             Status = (string)jObject.SelectToken("status"),
-            ProcessingStartedDate = ((DateTime?)jObject.SelectToken("processingStartedDate"))?.ToLocalTime(),
+            ProcessingStartedDate = (DateTime?)jObject.SelectToken("processingStartedDate"),
             CreationUserId = (Guid?)jObject.SelectToken("metadata.createdByUserId"),
-            CreationTime = ((DateTime?)jObject.SelectToken("metadata.createdDate"))?.ToLocalTime(),
+            CreationTime = (DateTime?)jObject.SelectToken("metadata.createdDate"),
             LastWriteUserId = (Guid?)jObject.SelectToken("metadata.updatedByUserId"),
-            LastWriteTime = ((DateTime?)jObject.SelectToken("metadata.updatedDate"))?.ToLocalTime()
+            LastWriteTime = (DateTime?)jObject.SelectToken("metadata.updatedDate")
         } : null;
 
         public JObject ToJObject() => new JObject(
             new JProperty("jobExecutionId", Id),
             new JProperty("status", Status),
-            new JProperty("processingStartedDate", ProcessingStartedDate?.ToUniversalTime()),
+            new JProperty("processingStartedDate", ProcessingStartedDate),
             new JProperty("metadata", new JObject(
                 new JProperty("createdByUserId", CreationUserId),
-                new JProperty("createdDate", CreationTime?.ToUniversalTime()),
+                new JProperty("createdDate", CreationTime),
                 new JProperty("updatedByUserId", LastWriteUserId),
-                new JProperty("updatedDate", LastWriteTime?.ToUniversalTime())))).RemoveNullAndEmptyProperties();
+                new JProperty("updatedDate", LastWriteTime)))).RemoveNullAndEmptyProperties();
     }
 }

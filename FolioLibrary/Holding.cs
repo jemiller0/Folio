@@ -1,3 +1,4 @@
+using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using NJsonSchema;
 using System;
@@ -86,8 +87,8 @@ namespace FolioLibrary
         public static Holding FromJObject(JObject jObject) => jObject != null ? new Holding
         {
             Id = (Guid?)jObject.SelectToken("id"),
-            Content = jObject.ToString(),
-            CreationTime = ((DateTime?)jObject.SelectToken("metadata.createdDate"))?.ToLocalTime(),
+            Content = JsonConvert.SerializeObject(jObject, FolioDapperContext.UniversalTimeJsonSerializationSettings),
+            CreationTime = ((DateTime?)jObject.SelectToken("metadata.createdDate"))?.ToUniversalTime(),
             CreationUserId = (string)jObject.SelectToken("metadata.createdByUserId"),
             Instanceid = (Guid?)jObject.SelectToken("instanceId"),
             Permanentlocationid = (Guid?)jObject.SelectToken("permanentLocationId"),
@@ -98,6 +99,6 @@ namespace FolioLibrary
             Sourceid = (Guid?)jObject.SelectToken("sourceId")
         } : null;
 
-        public JObject ToJObject() => JObject.Parse(Content);
+        public JObject ToJObject() => JsonConvert.DeserializeObject<JObject>(Content, FolioDapperContext.LocalTimeJsonSerializationSettings);
     }
 }

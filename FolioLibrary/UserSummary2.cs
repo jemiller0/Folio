@@ -76,13 +76,13 @@ namespace FolioLibrary
         {
             Id = (Guid?)jObject.SelectToken("id"),
             UserId = (Guid?)jObject.SelectToken("userId"),
-            CreationTime = ((DateTime?)jObject.SelectToken("metadata.createdDate"))?.ToLocalTime(),
+            CreationTime = (DateTime?)jObject.SelectToken("metadata.createdDate"),
             CreationUserId = (Guid?)jObject.SelectToken("metadata.createdByUserId"),
             CreationUserUsername = (string)jObject.SelectToken("metadata.createdByUsername"),
-            LastWriteTime = ((DateTime?)jObject.SelectToken("metadata.updatedDate"))?.ToLocalTime(),
+            LastWriteTime = (DateTime?)jObject.SelectToken("metadata.updatedDate"),
             LastWriteUserId = (Guid?)jObject.SelectToken("metadata.updatedByUserId"),
             LastWriteUserUsername = (string)jObject.SelectToken("metadata.updatedByUsername"),
-            Content = jObject.ToString(),
+            Content = JsonConvert.SerializeObject(jObject, FolioDapperContext.UniversalTimeJsonSerializationSettings),
             UserSummaryOpenFeesFines = jObject.SelectToken("openFeesFines")?.Where(jt => jt.HasValues).Select(jt => UserSummaryOpenFeesFine.FromJObject((JObject)jt)).ToArray(),
             UserSummaryOpenLoans = jObject.SelectToken("openLoans")?.Where(jt => jt.HasValues).Select(jt => UserSummaryOpenLoan.FromJObject((JObject)jt)).ToArray()
         } : null;
@@ -91,10 +91,10 @@ namespace FolioLibrary
             new JProperty("id", Id),
             new JProperty("userId", UserId),
             new JProperty("metadata", new JObject(
-                new JProperty("createdDate", CreationTime?.ToUniversalTime()),
+                new JProperty("createdDate", CreationTime),
                 new JProperty("createdByUserId", CreationUserId),
                 new JProperty("createdByUsername", CreationUserUsername),
-                new JProperty("updatedDate", LastWriteTime?.ToUniversalTime()),
+                new JProperty("updatedDate", LastWriteTime),
                 new JProperty("updatedByUserId", LastWriteUserId),
                 new JProperty("updatedByUsername", LastWriteUserUsername))),
             new JProperty("openFeesFines", UserSummaryOpenFeesFines?.Select(usoff => usoff.ToJObject())),

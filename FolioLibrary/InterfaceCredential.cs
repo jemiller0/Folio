@@ -1,3 +1,4 @@
+using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using NJsonSchema;
 using System;
@@ -40,10 +41,10 @@ namespace FolioLibrary
         public static InterfaceCredential FromJObject(JObject jObject) => jObject != null ? new InterfaceCredential
         {
             Id = (Guid?)jObject.SelectToken("id"),
-            Content = jObject.ToString(),
+            Content = JsonConvert.SerializeObject(jObject, FolioDapperContext.UniversalTimeJsonSerializationSettings),
             Interfaceid = (Guid?)jObject.SelectToken("interfaceId")
         } : null;
 
-        public JObject ToJObject() => JObject.Parse(Content);
+        public JObject ToJObject() => JsonConvert.DeserializeObject<JObject>(Content, FolioDapperContext.LocalTimeJsonSerializationSettings);
     }
 }

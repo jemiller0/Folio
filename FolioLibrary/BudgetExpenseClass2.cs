@@ -56,7 +56,7 @@ namespace FolioLibrary
             BudgetId = (Guid?)jObject.SelectToken("budgetId"),
             ExpenseClassId = (Guid?)jObject.SelectToken("expenseClassId"),
             Status = (string)jObject.SelectToken("status"),
-            Content = jObject.ToString()
+            Content = JsonConvert.SerializeObject(jObject, FolioDapperContext.UniversalTimeJsonSerializationSettings)
         } : null;
 
         public JObject ToJObject() => new JObject(

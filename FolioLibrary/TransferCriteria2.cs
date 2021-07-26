@@ -54,7 +54,7 @@ namespace FolioLibrary
             Type = (string)jObject.SelectToken("type"),
             Value = (decimal?)jObject.SelectToken("value"),
             Interval = (string)jObject.SelectToken("interval"),
-            Content = jObject.ToString()
+            Content = JsonConvert.SerializeObject(jObject, FolioDapperContext.UniversalTimeJsonSerializationSettings)
         } : null;
 
         public JObject ToJObject() => new JObject(

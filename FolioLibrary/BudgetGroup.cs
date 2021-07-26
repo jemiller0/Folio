@@ -1,3 +1,4 @@
+using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using NJsonSchema;
 using System;
@@ -58,13 +59,13 @@ namespace FolioLibrary
         public static BudgetGroup FromJObject(JObject jObject) => jObject != null ? new BudgetGroup
         {
             Id = (Guid?)jObject.SelectToken("id"),
-            Content = jObject.ToString(),
+            Content = JsonConvert.SerializeObject(jObject, FolioDapperContext.UniversalTimeJsonSerializationSettings),
             Budgetid = (Guid?)jObject.SelectToken("budgetId"),
             Groupid = (Guid?)jObject.SelectToken("groupId"),
             Fundid = (Guid?)jObject.SelectToken("fundId"),
             Fiscalyearid = (Guid?)jObject.SelectToken("fiscalYearId")
         } : null;
 
-        public JObject ToJObject() => JObject.Parse(Content);
+        public JObject ToJObject() => JsonConvert.DeserializeObject<JObject>(Content, FolioDapperContext.LocalTimeJsonSerializationSettings);
     }
 }

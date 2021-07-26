@@ -67,9 +67,9 @@ namespace FolioLibrary
             State = (string)jObject.SelectToken("state"),
             ChunkSize = (int?)jObject.SelectToken("chunkSize"),
             ProcessedAmount = (int?)jObject.SelectToken("processedAmount"),
-            CompletedDate = ((DateTime?)jObject.SelectToken("completedDate"))?.ToLocalTime(),
+            CompletedDate = (DateTime?)jObject.SelectToken("completedDate"),
             Error = (string)jObject.SelectToken("error"),
-            Content = jObject.ToString()
+            Content = JsonConvert.SerializeObject(jObject, FolioDapperContext.UniversalTimeJsonSerializationSettings)
         } : null;
 
         public JObject ToJObject() => new JObject(
@@ -79,7 +79,7 @@ namespace FolioLibrary
             new JProperty("state", State),
             new JProperty("chunkSize", ChunkSize),
             new JProperty("processedAmount", ProcessedAmount),
-            new JProperty("completedDate", CompletedDate?.ToUniversalTime()),
+            new JProperty("completedDate", CompletedDate),
             new JProperty("error", Error)).RemoveNullAndEmptyProperties();
     }
 }

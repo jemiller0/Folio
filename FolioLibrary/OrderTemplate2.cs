@@ -54,7 +54,7 @@ namespace FolioLibrary
             TemplateName = (string)jObject.SelectToken("templateName"),
             TemplateCode = (string)jObject.SelectToken("templateCode"),
             TemplateDescription = (string)jObject.SelectToken("templateDescription"),
-            Content = jObject.ToString()
+            Content = JsonConvert.SerializeObject(jObject, FolioDapperContext.UniversalTimeJsonSerializationSettings)
         } : null;
 
         public JObject ToJObject() => new JObject(

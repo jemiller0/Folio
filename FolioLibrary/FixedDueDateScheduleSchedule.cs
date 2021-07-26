@@ -34,14 +34,14 @@ namespace FolioLibrary
 
         public static FixedDueDateScheduleSchedule FromJObject(JObject jObject) => jObject != null ? new FixedDueDateScheduleSchedule
         {
-            From = ((DateTime?)jObject.SelectToken("from"))?.ToLocalTime(),
-            To = ((DateTime?)jObject.SelectToken("to"))?.ToLocalTime(),
-            Due = ((DateTime?)jObject.SelectToken("due"))?.ToLocalTime()
+            From = (DateTime?)jObject.SelectToken("from"),
+            To = (DateTime?)jObject.SelectToken("to"),
+            Due = (DateTime?)jObject.SelectToken("due")
         } : null;
 
         public JObject ToJObject() => new JObject(
-            new JProperty("from", From?.ToUniversalTime()),
-            new JProperty("to", To?.ToUniversalTime()),
-            new JProperty("due", Due?.ToUniversalTime())).RemoveNullAndEmptyProperties();
+            new JProperty("from", From),
+            new JProperty("to", To),
+            new JProperty("due", Due)).RemoveNullAndEmptyProperties();
     }
 }

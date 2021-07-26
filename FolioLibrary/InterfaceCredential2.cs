@@ -53,7 +53,7 @@ namespace FolioLibrary
             Username = (string)jObject.SelectToken("username"),
             Password = (string)jObject.SelectToken("password"),
             InterfaceId = (Guid?)jObject.SelectToken("interfaceId"),
-            Content = jObject.ToString()
+            Content = JsonConvert.SerializeObject(jObject, FolioDapperContext.UniversalTimeJsonSerializationSettings)
         } : null;
 
         public JObject ToJObject() => new JObject(

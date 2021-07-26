@@ -1,3 +1,4 @@
+using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using NJsonSchema;
 using System;
@@ -65,14 +66,14 @@ namespace FolioLibrary
         public static LedgerRollover FromJObject(JObject jObject) => jObject != null ? new LedgerRollover
         {
             Id = (Guid?)jObject.SelectToken("id"),
-            Content = jObject.ToString(),
-            CreationTime = ((DateTime?)jObject.SelectToken("metadata.createdDate"))?.ToLocalTime(),
+            Content = JsonConvert.SerializeObject(jObject, FolioDapperContext.UniversalTimeJsonSerializationSettings),
+            CreationTime = ((DateTime?)jObject.SelectToken("metadata.createdDate"))?.ToUniversalTime(),
             CreationUserId = (string)jObject.SelectToken("metadata.createdByUserId"),
             Ledgerid = (Guid?)jObject.SelectToken("ledgerId"),
             Fromfiscalyearid = (Guid?)jObject.SelectToken("fromFiscalYearId"),
             Tofiscalyearid = (Guid?)jObject.SelectToken("toFiscalYearId")
         } : null;
 
-        public JObject ToJObject() => JObject.Parse(Content);
+        public JObject ToJObject() => JsonConvert.DeserializeObject<JObject>(Content, FolioDapperContext.LocalTimeJsonSerializationSettings);
     }
 }

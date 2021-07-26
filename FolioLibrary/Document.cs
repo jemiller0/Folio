@@ -1,3 +1,4 @@
+using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using NJsonSchema;
 using System;
@@ -49,12 +50,12 @@ namespace FolioLibrary
         public static Document FromJObject(JObject jObject) => jObject != null ? new Document
         {
             Id = (Guid?)jObject.SelectToken("documentMetadata.id"),
-            Content = jObject.ToString(),
-            CreationTime = ((DateTime?)jObject.SelectToken("documentMetadata.metadata.createdDate"))?.ToLocalTime(),
+            Content = JsonConvert.SerializeObject(jObject, FolioDapperContext.UniversalTimeJsonSerializationSettings),
+            CreationTime = ((DateTime?)jObject.SelectToken("documentMetadata.metadata.createdDate"))?.ToUniversalTime(),
             CreationUserId = (string)jObject.SelectToken("documentMetadata.metadata.createdByUserId"),
             Invoiceid = (Guid?)jObject.SelectToken("documentMetadata.invoiceId")
         } : null;
 
-        public JObject ToJObject() => JObject.Parse(Content);
+        public JObject ToJObject() => JsonConvert.DeserializeObject<JObject>(Content, FolioDapperContext.LocalTimeJsonSerializationSettings);
     }
 }

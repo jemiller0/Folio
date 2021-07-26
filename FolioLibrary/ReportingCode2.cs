@@ -50,7 +50,7 @@ namespace FolioLibrary
             Id = (Guid?)jObject.SelectToken("id"),
             Code = (string)jObject.SelectToken("code"),
             Description = (string)jObject.SelectToken("description"),
-            Content = jObject.ToString()
+            Content = JsonConvert.SerializeObject(jObject, FolioDapperContext.UniversalTimeJsonSerializationSettings)
         } : null;
 
         public JObject ToJObject() => new JObject(

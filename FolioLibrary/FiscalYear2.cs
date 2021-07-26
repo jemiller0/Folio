@@ -151,8 +151,8 @@ namespace FolioLibrary
             Code = (string)jObject.SelectToken("code"),
             Currency = (string)jObject.SelectToken("currency"),
             Description = (string)jObject.SelectToken("description"),
-            StartDate = ((DateTime?)jObject.SelectToken("periodStart"))?.ToLocalTime(),
-            EndDate = ((DateTime?)jObject.SelectToken("periodEnd"))?.ToLocalTime(),
+            StartDate = (DateTime?)jObject.SelectToken("periodStart"),
+            EndDate = (DateTime?)jObject.SelectToken("periodEnd"),
             Series = (string)jObject.SelectToken("series"),
             FinancialSummaryAllocated = (decimal?)jObject.SelectToken("financialSummary.allocated"),
             FinancialSummaryAvailable = (decimal?)jObject.SelectToken("financialSummary.available"),
@@ -167,13 +167,13 @@ namespace FolioLibrary
             FinancialSummaryExpenditures = (decimal?)jObject.SelectToken("financialSummary.expenditures"),
             FinancialSummaryOverEncumbrance = (decimal?)jObject.SelectToken("financialSummary.overEncumbrance"),
             FinancialSummaryOverExpended = (decimal?)jObject.SelectToken("financialSummary.overExpended"),
-            CreationTime = ((DateTime?)jObject.SelectToken("metadata.createdDate"))?.ToLocalTime(),
+            CreationTime = (DateTime?)jObject.SelectToken("metadata.createdDate"),
             CreationUserId = (Guid?)jObject.SelectToken("metadata.createdByUserId"),
             CreationUserUsername = (string)jObject.SelectToken("metadata.createdByUsername"),
-            LastWriteTime = ((DateTime?)jObject.SelectToken("metadata.updatedDate"))?.ToLocalTime(),
+            LastWriteTime = (DateTime?)jObject.SelectToken("metadata.updatedDate"),
             LastWriteUserId = (Guid?)jObject.SelectToken("metadata.updatedByUserId"),
             LastWriteUserUsername = (string)jObject.SelectToken("metadata.updatedByUsername"),
-            Content = jObject.ToString(),
+            Content = JsonConvert.SerializeObject(jObject, FolioDapperContext.UniversalTimeJsonSerializationSettings),
             FiscalYearAcquisitionsUnits = jObject.SelectToken("acqUnitIds")?.Where(jt => jt.HasValues).Select(jt => FiscalYearAcquisitionsUnit.FromJObject((JValue)jt)).ToArray()
         } : null;
 
@@ -183,8 +183,8 @@ namespace FolioLibrary
             new JProperty("code", Code),
             new JProperty("currency", Currency),
             new JProperty("description", Description),
-            new JProperty("periodStart", StartDate?.ToUniversalTime()),
-            new JProperty("periodEnd", EndDate?.ToUniversalTime()),
+            new JProperty("periodStart", StartDate),
+            new JProperty("periodEnd", EndDate),
             new JProperty("series", Series),
             new JProperty("financialSummary", new JObject(
                 new JProperty("allocated", FinancialSummaryAllocated),
@@ -201,10 +201,10 @@ namespace FolioLibrary
                 new JProperty("overEncumbrance", FinancialSummaryOverEncumbrance),
                 new JProperty("overExpended", FinancialSummaryOverExpended))),
             new JProperty("metadata", new JObject(
-                new JProperty("createdDate", CreationTime?.ToUniversalTime()),
+                new JProperty("createdDate", CreationTime),
                 new JProperty("createdByUserId", CreationUserId),
                 new JProperty("createdByUsername", CreationUserUsername),
-                new JProperty("updatedDate", LastWriteTime?.ToUniversalTime()),
+                new JProperty("updatedDate", LastWriteTime),
                 new JProperty("updatedByUserId", LastWriteUserId),
                 new JProperty("updatedByUsername", LastWriteUserUsername))),
             new JProperty("acqUnitIds", FiscalYearAcquisitionsUnits?.Select(fyau => fyau.ToJObject()))).RemoveNullAndEmptyProperties();

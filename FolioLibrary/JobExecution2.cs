@@ -142,13 +142,13 @@ namespace FolioLibrary
             ProgressJobExecutionId = (Guid?)jObject.SelectToken("progress.jobExecutionId"),
             ProgressCurrent = (int?)jObject.SelectToken("progress.current"),
             ProgressTotal = (int?)jObject.SelectToken("progress.total"),
-            StartedDate = ((DateTime?)jObject.SelectToken("startedDate"))?.ToLocalTime(),
-            CompletedDate = ((DateTime?)jObject.SelectToken("completedDate"))?.ToLocalTime(),
+            StartedDate = (DateTime?)jObject.SelectToken("startedDate"),
+            CompletedDate = (DateTime?)jObject.SelectToken("completedDate"),
             Status = (string)jObject.SelectToken("status"),
             UiStatus = (string)jObject.SelectToken("uiStatus"),
             ErrorStatus = (string)jObject.SelectToken("errorStatus"),
             UserId = (Guid?)jObject.SelectToken("userId"),
-            Content = jObject.ToString()
+            Content = JsonConvert.SerializeObject(jObject, FolioDapperContext.UniversalTimeJsonSerializationSettings)
         } : null;
 
         public JObject ToJObject() => new JObject(
@@ -173,8 +173,8 @@ namespace FolioLibrary
                 new JProperty("jobExecutionId", ProgressJobExecutionId),
                 new JProperty("current", ProgressCurrent),
                 new JProperty("total", ProgressTotal))),
-            new JProperty("startedDate", StartedDate?.ToUniversalTime()),
-            new JProperty("completedDate", CompletedDate?.ToUniversalTime()),
+            new JProperty("startedDate", StartedDate),
+            new JProperty("completedDate", CompletedDate),
             new JProperty("status", Status),
             new JProperty("uiStatus", UiStatus),
             new JProperty("errorStatus", ErrorStatus),

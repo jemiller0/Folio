@@ -51,15 +51,15 @@ namespace FolioLibrary
         {
             Id = (Guid?)jObject.SelectToken("id"),
             UserId = (Guid?)jObject.SelectToken("userId"),
-            LastAttempt = ((DateTime?)jObject.SelectToken("lastAttempt"))?.ToLocalTime(),
+            LastAttempt = (DateTime?)jObject.SelectToken("lastAttempt"),
             AttemptCount = (int?)jObject.SelectToken("attemptCount"),
-            Content = jObject.ToString()
+            Content = JsonConvert.SerializeObject(jObject, FolioDapperContext.UniversalTimeJsonSerializationSettings)
         } : null;
 
         public JObject ToJObject() => new JObject(
             new JProperty("id", Id),
             new JProperty("userId", UserId),
-            new JProperty("lastAttempt", LastAttempt?.ToUniversalTime()),
+            new JProperty("lastAttempt", LastAttempt),
             new JProperty("attemptCount", AttemptCount)).RemoveNullAndEmptyProperties();
     }
 }

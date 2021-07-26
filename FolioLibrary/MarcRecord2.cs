@@ -41,7 +41,7 @@ namespace FolioLibrary
         public static MarcRecord2 FromJObject(JObject jObject) => jObject != null ? new MarcRecord2
         {
             Id = (Guid?)jObject.SelectToken("id"),
-            Content = jObject.ToString()
+            Content = JsonConvert.SerializeObject(jObject, FolioDapperContext.UniversalTimeJsonSerializationSettings)
         } : null;
 
         public JObject ToJObject() => new JObject(

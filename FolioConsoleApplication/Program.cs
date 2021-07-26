@@ -28,13 +28,15 @@ namespace FolioConsoleApplication
         private static string emailAddress = ConfigurationManager.AppSettings["emailAddress"];
         private static string emailName = ConfigurationManager.AppSettings["emailName"];
         private static bool force;
-        private static JsonSerializer jsonSerializer = new JsonSerializer { Formatting = Formatting.Indented };
+        private static JsonSerializer localTimeJsonSerializer = new JsonSerializer { Formatting = Formatting.Indented, DateTimeZoneHandling = DateTimeZoneHandling.Local };
+        private static JsonSerializer universalTimeJsonSerializer = new JsonSerializer { Formatting = Formatting.Indented, DateTimeZoneHandling = DateTimeZoneHandling.Utc, DateFormatString = "yyyy-MM-ddTHH:mm:ss.fff+00:00" };
         public static string orderBy;
         private static int? skip;
         private static string smtpHost = ConfigurationManager.AppSettings["smtpHost"];
         private static int? take;
         public readonly static TraceSource traceSource = new TraceSource("FolioConsoleApplication", SourceLevels.Information);
         public static string userId;
+        public static bool universalTime;
         public static bool validate;
         public static bool whatIf;
 
@@ -83,6 +85,7 @@ namespace FolioConsoleApplication
                 var source = args.SkipWhile(s3 => !s3.Equals("-Source", StringComparison.OrdinalIgnoreCase)).Skip(1).FirstOrDefault();
                 take = int.TryParse(args.SkipWhile(s3 => !s3.Equals("-Take", StringComparison.OrdinalIgnoreCase)).Skip(1).FirstOrDefault(), out i) ? (int?)i : null;
                 var threads = int.TryParse(args.SkipWhile(s3 => !s3.Equals("-Threads", StringComparison.OrdinalIgnoreCase)).Skip(1).FirstOrDefault(), out i) ? (int?)i : null;
+                universalTime = args.Any(s3 => s3.Equals("-UniversalTime", StringComparison.OrdinalIgnoreCase) || s3.Equals("-Utc", StringComparison.OrdinalIgnoreCase));
                 var update = args.Any(s3 => s3.Equals("-Update", StringComparison.OrdinalIgnoreCase));
                 validate = args.Any(s3 => s3.Equals("-Validate", StringComparison.OrdinalIgnoreCase));
                 whatIf = args.Any(s3 => s3.Equals("-WhatIf", StringComparison.OrdinalIgnoreCase));
@@ -1005,129 +1008,129 @@ namespace FolioConsoleApplication
                 if (query && vouchers) QueryVouchers(where, orderBy, skip, take, select);
                 if (query && waiveReasons) QueryWaiveReasons(where, orderBy, skip, take, select);
                 var l = new List<Action>();
-                if (save && ledgerRolloversPath != null) l.Add(() => SaveLedgerRollovers(ledgerRolloversPath, ledgerRolloversWhere));
-                if (save && ledgerRolloverErrorsPath != null) l.Add(() => SaveLedgerRolloverErrors(ledgerRolloverErrorsPath, ledgerRolloverErrorsWhere));
-                if (save && ledgerRolloverProgressesPath != null) l.Add(() => SaveLedgerRolloverProgresses(ledgerRolloverProgressesPath, ledgerRolloverProgressesWhere));
-                if (save && manualBlockTemplatesPath != null) l.Add(() => SaveManualBlockTemplates(manualBlockTemplatesPath, manualBlockTemplatesWhere));
-                if (save && configurationsPath != null) l.Add(() => SaveConfigurations(configurationsPath, configurationsWhere));
-                if (save && templatesPath != null) l.Add(() => SaveTemplates(templatesPath, templatesWhere));
-                if (save && customFieldsPath != null) l.Add(() => SaveCustomFields(customFieldsPath, customFieldsWhere));
-                if (save && addressTypesPath != null) l.Add(() => SaveAddressTypes(addressTypesPath, addressTypesWhere));
-                if (save && groupsPath != null) l.Add(() => SaveGroups(groupsPath, groupsWhere));
-                if (save && departmentsPath != null) l.Add(() => SaveDepartments(departmentsPath, departmentsWhere));
-                if (save && usersPath != null) l.Add(() => SaveUsers(usersPath, usersWhere));
-                if (save && proxiesPath != null) l.Add(() => SaveProxies(proxiesPath, proxiesWhere));
-                if (save && blockConditionsPath != null) l.Add(() => SaveBlockConditions(blockConditionsPath, blockConditionsWhere));
-                if (save && blockLimitsPath != null) l.Add(() => SaveBlockLimits(blockLimitsPath, blockLimitsWhere));
-                if (save && userSummariesPath != null) l.Add(() => SaveUserSummaries(userSummariesPath, userSummariesWhere));
-                if (save && loginsPath != null) l.Add(() => SaveLogins(loginsPath, loginsWhere));
-                if (save && permissionsPath != null) l.Add(() => SavePermissions(permissionsPath, permissionsWhere));
-                if (save && permissionsUsersPath != null) l.Add(() => SavePermissionsUsers(permissionsUsersPath, permissionsUsersWhere));
-                if (save && hridSettingsPath != null) l.Add(() => SaveHridSettings(hridSettingsPath, hridSettingsWhere));
-                if (save && instanceNoteTypesPath != null) l.Add(() => SaveInstanceNoteTypes(instanceNoteTypesPath, instanceNoteTypesWhere));
-                if (save && itemDamagedStatusesPath != null) l.Add(() => SaveItemDamagedStatuses(itemDamagedStatusesPath, itemDamagedStatusesWhere));
-                if (save && natureOfContentTermsPath != null) l.Add(() => SaveNatureOfContentTerms(natureOfContentTermsPath, natureOfContentTermsWhere));
-                if (save && sourcesPath != null) l.Add(() => SaveSources(sourcesPath, sourcesWhere));
-                if (save && institutionsPath != null) l.Add(() => SaveInstitutions(institutionsPath, institutionsWhere));
-                if (save && campusesPath != null) l.Add(() => SaveCampuses(campusesPath, campusesWhere));
-                if (save && librariesPath != null) l.Add(() => SaveLibraries(librariesPath, librariesWhere));
-                if (save && servicePointsPath != null) l.Add(() => SaveServicePoints(servicePointsPath, servicePointsWhere));
-                if (save && servicePointUsersPath != null) l.Add(() => SaveServicePointUsers(servicePointUsersPath, servicePointUsersWhere));
-                if (save && locationsPath != null) l.Add(() => SaveLocations(locationsPath, locationsWhere));
-                if (save && alternativeTitleTypesPath != null) l.Add(() => SaveAlternativeTitleTypes(alternativeTitleTypesPath, alternativeTitleTypesWhere));
-                if (save && callNumberTypesPath != null) l.Add(() => SaveCallNumberTypes(callNumberTypesPath, callNumberTypesWhere));
-                if (save && classificationTypesPath != null) l.Add(() => SaveClassificationTypes(classificationTypesPath, classificationTypesWhere));
-                if (save && contributorNameTypesPath != null) l.Add(() => SaveContributorNameTypes(contributorNameTypesPath, contributorNameTypesWhere));
-                if (save && contributorTypesPath != null) l.Add(() => SaveContributorTypes(contributorTypesPath, contributorTypesWhere));
-                if (save && electronicAccessRelationshipsPath != null) l.Add(() => SaveElectronicAccessRelationships(electronicAccessRelationshipsPath, electronicAccessRelationshipsWhere));
-                if (save && holdingNoteTypesPath != null) l.Add(() => SaveHoldingNoteTypes(holdingNoteTypesPath, holdingNoteTypesWhere));
-                if (save && holdingTypesPath != null) l.Add(() => SaveHoldingTypes(holdingTypesPath, holdingTypesWhere));
-                if (save && idTypesPath != null) l.Add(() => SaveIdTypes(idTypesPath, idTypesWhere));
-                if (save && illPoliciesPath != null) l.Add(() => SaveIllPolicies(illPoliciesPath, illPoliciesWhere));
-                if (save && instanceFormatsPath != null) l.Add(() => SaveInstanceFormats(instanceFormatsPath, instanceFormatsWhere));
-                if (save && instanceRelationshipTypesPath != null) l.Add(() => SaveInstanceRelationshipTypes(instanceRelationshipTypesPath, instanceRelationshipTypesWhere));
-                if (save && instanceRelationshipsPath != null) l.Add(() => SaveInstanceRelationships(instanceRelationshipsPath, instanceRelationshipsWhere));
-                if (save && instanceStatusesPath != null) l.Add(() => SaveInstanceStatuses(instanceStatusesPath, instanceStatusesWhere));
-                if (save && instanceTypesPath != null) l.Add(() => SaveInstanceTypes(instanceTypesPath, instanceTypesWhere));
-                if (save && itemNoteTypesPath != null) l.Add(() => SaveItemNoteTypes(itemNoteTypesPath, itemNoteTypesWhere));
-                if (save && loanTypesPath != null) l.Add(() => SaveLoanTypes(loanTypesPath, loanTypesWhere));
-                if (save && materialTypesPath != null) l.Add(() => SaveMaterialTypes(materialTypesPath, materialTypesWhere));
-                if (save && modeOfIssuancesPath != null) l.Add(() => SaveModeOfIssuances(modeOfIssuancesPath, modeOfIssuancesWhere));
-                if (save && statisticalCodeTypesPath != null) l.Add(() => SaveStatisticalCodeTypes(statisticalCodeTypesPath, statisticalCodeTypesWhere));
-                if (save && statisticalCodesPath != null) l.Add(() => SaveStatisticalCodes(statisticalCodesPath, statisticalCodesWhere));
-                if (save && instancesPath != null) l.Add(() => SaveInstances(instancesPath, instancesWhere));
-                if (save && holdingsPath != null) l.Add(() => SaveHoldings(holdingsPath, holdingsWhere));
-                if (save && itemsPath != null) l.Add(() => SaveItems(itemsPath, itemsWhere));
-                if (save && precedingSucceedingTitlesPath != null) l.Add(() => SavePrecedingSucceedingTitles(precedingSucceedingTitlesPath, precedingSucceedingTitlesWhere));
-                if (save && snapshotsPath != null) l.Add(() => SaveSnapshots(snapshotsPath, snapshotsWhere));
-                if (save && recordsPath != null) l.Add(() => SaveRecords(recordsPath, recordsWhere));
-                if (save && categoriesPath != null) l.Add(() => SaveCategories(categoriesPath, categoriesWhere));
-                if (save && contactsPath != null) l.Add(() => SaveContacts(contactsPath, contactsWhere));
-                if (save && interfacesPath != null) l.Add(() => SaveInterfaces(interfacesPath, interfacesWhere));
-                if (save && interfaceCredentialsPath != null) l.Add(() => SaveInterfaceCredentials(interfaceCredentialsPath, interfaceCredentialsWhere));
-                if (save && organizationsPath != null) l.Add(() => SaveOrganizations(organizationsPath, organizationsWhere));
-                if (save && financeGroupsPath != null) l.Add(() => SaveFinanceGroups(financeGroupsPath, financeGroupsWhere));
-                if (save && fiscalYearsPath != null) l.Add(() => SaveFiscalYears(fiscalYearsPath, fiscalYearsWhere));
-                if (save && ledgersPath != null) l.Add(() => SaveLedgers(ledgersPath, ledgersWhere));
-                if (save && fundTypesPath != null) l.Add(() => SaveFundTypes(fundTypesPath, fundTypesWhere));
-                if (save && fundsPath != null) l.Add(() => SaveFunds(fundsPath, fundsWhere));
-                if (save && budgetsPath != null) l.Add(() => SaveBudgets(budgetsPath, budgetsWhere));
-                if (save && expenseClassesPath != null) l.Add(() => SaveExpenseClasses(expenseClassesPath, expenseClassesWhere));
-                if (save && budgetExpenseClassesPath != null) l.Add(() => SaveBudgetExpenseClasses(budgetExpenseClassesPath, budgetExpenseClassesWhere));
-                if (save && budgetGroupsPath != null) l.Add(() => SaveBudgetGroups(budgetGroupsPath, budgetGroupsWhere));
-                if (save && prefixesPath != null) l.Add(() => SavePrefixes(prefixesPath, prefixesWhere));
-                if (save && suffixesPath != null) l.Add(() => SaveSuffixes(suffixesPath, suffixesWhere));
-                if (save && closeReasonsPath != null) l.Add(() => SaveCloseReasons(closeReasonsPath, closeReasonsWhere));
-                if (save && acquisitionsUnitsPath != null) l.Add(() => SaveAcquisitionsUnits(acquisitionsUnitsPath, acquisitionsUnitsWhere));
-                if (save && userAcquisitionsUnitsPath != null) l.Add(() => SaveUserAcquisitionsUnits(userAcquisitionsUnitsPath, userAcquisitionsUnitsWhere));
-                if (save && reportingCodesPath != null) l.Add(() => SaveReportingCodes(reportingCodesPath, reportingCodesWhere));
-                if (save && alertsPath != null) l.Add(() => SaveAlerts(alertsPath, alertsWhere));
-                if (save && orderTemplatesPath != null) l.Add(() => SaveOrderTemplates(orderTemplatesPath, orderTemplatesWhere));
-                if (save && ordersPath != null) l.Add(() => SaveOrders(ordersPath, ordersWhere));
-                if (save && orderItemsPath != null) l.Add(() => SaveOrderItems(orderItemsPath, orderItemsWhere));
-                if (save && titlesPath != null) l.Add(() => SaveTitles(titlesPath, titlesWhere));
-                if (save && receivingsPath != null) l.Add(() => SaveReceivings(receivingsPath, receivingsWhere));
-                if (save && orderTransactionSummariesPath != null) l.Add(() => SaveOrderTransactionSummaries(orderTransactionSummariesPath, orderTransactionSummariesWhere));
-                if (save && invoicesPath != null) l.Add(() => SaveInvoices(invoicesPath, invoicesWhere));
-                if (save && documentsPath != null) l.Add(() => SaveDocuments(documentsPath, documentsWhere));
-                if (save && invoiceItemsPath != null) l.Add(() => SaveInvoiceItems(invoiceItemsPath, invoiceItemsWhere));
-                if (save && vouchersPath != null) l.Add(() => SaveVouchers(vouchersPath, vouchersWhere));
-                if (save && voucherItemsPath != null) l.Add(() => SaveVoucherItems(voucherItemsPath, voucherItemsWhere));
-                if (save && batchGroupsPath != null) l.Add(() => SaveBatchGroups(batchGroupsPath, batchGroupsWhere));
-                if (save && batchVouchersPath != null) l.Add(() => SaveBatchVouchers(batchVouchersPath, batchVouchersWhere));
-                if (save && batchVoucherExportsPath != null) l.Add(() => SaveBatchVoucherExports(batchVoucherExportsPath, batchVoucherExportsWhere));
-                if (save && batchVoucherExportConfigsPath != null) l.Add(() => SaveBatchVoucherExportConfigs(batchVoucherExportConfigsPath, batchVoucherExportConfigsWhere));
-                if (save && exportConfigCredentialsPath != null) l.Add(() => SaveExportConfigCredentials(exportConfigCredentialsPath, exportConfigCredentialsWhere));
-                if (save && invoiceTransactionSummariesPath != null) l.Add(() => SaveInvoiceTransactionSummaries(invoiceTransactionSummariesPath, invoiceTransactionSummariesWhere));
-                if (save && orderInvoicesPath != null) l.Add(() => SaveOrderInvoices(orderInvoicesPath, orderInvoicesWhere));
-                if (save && cancellationReasonsPath != null) l.Add(() => SaveCancellationReasons(cancellationReasonsPath, cancellationReasonsWhere));
-                if (save && transactionsPath != null) l.Add(() => SaveTransactions(transactionsPath, transactionsWhere));
-                if (save && circulationRulesPath != null) l.Add(() => SaveCirculationRules(circulationRulesPath, circulationRulesWhere));
-                if (save && fixedDueDateSchedulesPath != null) l.Add(() => SaveFixedDueDateSchedules(fixedDueDateSchedulesPath, fixedDueDateSchedulesWhere));
-                if (save && loanPoliciesPath != null) l.Add(() => SaveLoanPolicies(loanPoliciesPath, loanPoliciesWhere));
-                if (save && patronNoticePoliciesPath != null) l.Add(() => SavePatronNoticePolicies(patronNoticePoliciesPath, patronNoticePoliciesWhere));
-                if (save && requestPoliciesPath != null) l.Add(() => SaveRequestPolicies(requestPoliciesPath, requestPoliciesWhere));
-                if (save && loansPath != null) l.Add(() => SaveLoans(loansPath, loansWhere));
-                if (save && loanEventsPath != null) l.Add(() => SaveLoanEvents(loanEventsPath, loanEventsWhere));
-                if (save && requestsPath != null) l.Add(() => SaveRequests(requestsPath, requestsWhere));
-                if (save && scheduledNoticesPath != null) l.Add(() => SaveScheduledNotices(scheduledNoticesPath, scheduledNoticesWhere));
-                if (save && staffSlipsPath != null) l.Add(() => SaveStaffSlips(staffSlipsPath, staffSlipsWhere));
-                if (save && patronActionSessionsPath != null) l.Add(() => SavePatronActionSessions(patronActionSessionsPath, patronActionSessionsWhere));
-                if (save && userRequestPreferencesPath != null) l.Add(() => SaveUserRequestPreferences(userRequestPreferencesPath, userRequestPreferencesWhere));
-                if (save && checkInsPath != null) l.Add(() => SaveCheckIns(checkInsPath, checkInsWhere));
-                if (save && blocksPath != null) l.Add(() => SaveBlocks(blocksPath, blocksWhere));
-                if (save && commentsPath != null) l.Add(() => SaveComments(commentsPath, commentsWhere));
-                if (save && lostItemFeePoliciesPath != null) l.Add(() => SaveLostItemFeePolicies(lostItemFeePoliciesPath, lostItemFeePoliciesWhere));
-                if (save && overdueFinePoliciesPath != null) l.Add(() => SaveOverdueFinePolicies(overdueFinePoliciesPath, overdueFinePoliciesWhere));
-                if (save && ownersPath != null) l.Add(() => SaveOwners(ownersPath, ownersWhere));
-                if (save && paymentMethodsPath != null) l.Add(() => SavePaymentMethods(paymentMethodsPath, paymentMethodsWhere));
-                if (save && refundReasonsPath != null) l.Add(() => SaveRefundReasons(refundReasonsPath, refundReasonsWhere));
-                if (save && transferAccountsPath != null) l.Add(() => SaveTransferAccounts(transferAccountsPath, transferAccountsWhere));
-                if (save && transferCriteriasPath != null) l.Add(() => SaveTransferCriterias(transferCriteriasPath, transferCriteriasWhere));
-                if (save && waiveReasonsPath != null) l.Add(() => SaveWaiveReasons(waiveReasonsPath, waiveReasonsWhere));
-                if (save && feeTypesPath != null) l.Add(() => SaveFeeTypes(feeTypesPath, feeTypesWhere));
-                if (save && feesPath != null) l.Add(() => SaveFees(feesPath, feesWhere));
-                if (save && paymentsPath != null) l.Add(() => SavePayments(paymentsPath, paymentsWhere));
+                if (save && ledgerRolloversPath != null) l.Add(() => SaveLedgerRollovers(ledgerRolloversPath, ledgerRolloversWhere ?? where));
+                if (save && ledgerRolloverErrorsPath != null) l.Add(() => SaveLedgerRolloverErrors(ledgerRolloverErrorsPath, ledgerRolloverErrorsWhere ?? where));
+                if (save && ledgerRolloverProgressesPath != null) l.Add(() => SaveLedgerRolloverProgresses(ledgerRolloverProgressesPath, ledgerRolloverProgressesWhere ?? where));
+                if (save && manualBlockTemplatesPath != null) l.Add(() => SaveManualBlockTemplates(manualBlockTemplatesPath, manualBlockTemplatesWhere ?? where));
+                if (save && configurationsPath != null) l.Add(() => SaveConfigurations(configurationsPath, configurationsWhere ?? where));
+                if (save && templatesPath != null) l.Add(() => SaveTemplates(templatesPath, templatesWhere ?? where));
+                if (save && customFieldsPath != null) l.Add(() => SaveCustomFields(customFieldsPath, customFieldsWhere ?? where));
+                if (save && addressTypesPath != null) l.Add(() => SaveAddressTypes(addressTypesPath, addressTypesWhere ?? where));
+                if (save && groupsPath != null) l.Add(() => SaveGroups(groupsPath, groupsWhere ?? where));
+                if (save && departmentsPath != null) l.Add(() => SaveDepartments(departmentsPath, departmentsWhere ?? where));
+                if (save && usersPath != null) l.Add(() => SaveUsers(usersPath, usersWhere ?? where));
+                if (save && proxiesPath != null) l.Add(() => SaveProxies(proxiesPath, proxiesWhere ?? where));
+                if (save && blockConditionsPath != null) l.Add(() => SaveBlockConditions(blockConditionsPath, blockConditionsWhere ?? where));
+                if (save && blockLimitsPath != null) l.Add(() => SaveBlockLimits(blockLimitsPath, blockLimitsWhere ?? where));
+                if (save && userSummariesPath != null) l.Add(() => SaveUserSummaries(userSummariesPath, userSummariesWhere ?? where));
+                if (save && loginsPath != null) l.Add(() => SaveLogins(loginsPath, loginsWhere ?? where));
+                if (save && permissionsPath != null) l.Add(() => SavePermissions(permissionsPath, permissionsWhere ?? where));
+                if (save && permissionsUsersPath != null) l.Add(() => SavePermissionsUsers(permissionsUsersPath, permissionsUsersWhere ?? where));
+                if (save && hridSettingsPath != null) l.Add(() => SaveHridSettings(hridSettingsPath, hridSettingsWhere ?? where));
+                if (save && instanceNoteTypesPath != null) l.Add(() => SaveInstanceNoteTypes(instanceNoteTypesPath, instanceNoteTypesWhere ?? where));
+                if (save && itemDamagedStatusesPath != null) l.Add(() => SaveItemDamagedStatuses(itemDamagedStatusesPath, itemDamagedStatusesWhere ?? where));
+                if (save && natureOfContentTermsPath != null) l.Add(() => SaveNatureOfContentTerms(natureOfContentTermsPath, natureOfContentTermsWhere ?? where));
+                if (save && sourcesPath != null) l.Add(() => SaveSources(sourcesPath, sourcesWhere ?? where));
+                if (save && institutionsPath != null) l.Add(() => SaveInstitutions(institutionsPath, institutionsWhere ?? where));
+                if (save && campusesPath != null) l.Add(() => SaveCampuses(campusesPath, campusesWhere ?? where));
+                if (save && librariesPath != null) l.Add(() => SaveLibraries(librariesPath, librariesWhere ?? where));
+                if (save && servicePointsPath != null) l.Add(() => SaveServicePoints(servicePointsPath, servicePointsWhere ?? where));
+                if (save && servicePointUsersPath != null) l.Add(() => SaveServicePointUsers(servicePointUsersPath, servicePointUsersWhere ?? where));
+                if (save && locationsPath != null) l.Add(() => SaveLocations(locationsPath, locationsWhere ?? where));
+                if (save && alternativeTitleTypesPath != null) l.Add(() => SaveAlternativeTitleTypes(alternativeTitleTypesPath, alternativeTitleTypesWhere ?? where));
+                if (save && callNumberTypesPath != null) l.Add(() => SaveCallNumberTypes(callNumberTypesPath, callNumberTypesWhere ?? where));
+                if (save && classificationTypesPath != null) l.Add(() => SaveClassificationTypes(classificationTypesPath, classificationTypesWhere ?? where));
+                if (save && contributorNameTypesPath != null) l.Add(() => SaveContributorNameTypes(contributorNameTypesPath, contributorNameTypesWhere ?? where));
+                if (save && contributorTypesPath != null) l.Add(() => SaveContributorTypes(contributorTypesPath, contributorTypesWhere ?? where));
+                if (save && electronicAccessRelationshipsPath != null) l.Add(() => SaveElectronicAccessRelationships(electronicAccessRelationshipsPath, electronicAccessRelationshipsWhere ?? where));
+                if (save && holdingNoteTypesPath != null) l.Add(() => SaveHoldingNoteTypes(holdingNoteTypesPath, holdingNoteTypesWhere ?? where));
+                if (save && holdingTypesPath != null) l.Add(() => SaveHoldingTypes(holdingTypesPath, holdingTypesWhere ?? where));
+                if (save && idTypesPath != null) l.Add(() => SaveIdTypes(idTypesPath, idTypesWhere ?? where));
+                if (save && illPoliciesPath != null) l.Add(() => SaveIllPolicies(illPoliciesPath, illPoliciesWhere ?? where));
+                if (save && instanceFormatsPath != null) l.Add(() => SaveInstanceFormats(instanceFormatsPath, instanceFormatsWhere ?? where));
+                if (save && instanceRelationshipTypesPath != null) l.Add(() => SaveInstanceRelationshipTypes(instanceRelationshipTypesPath, instanceRelationshipTypesWhere ?? where));
+                if (save && instanceRelationshipsPath != null) l.Add(() => SaveInstanceRelationships(instanceRelationshipsPath, instanceRelationshipsWhere ?? where));
+                if (save && instanceStatusesPath != null) l.Add(() => SaveInstanceStatuses(instanceStatusesPath, instanceStatusesWhere ?? where));
+                if (save && instanceTypesPath != null) l.Add(() => SaveInstanceTypes(instanceTypesPath, instanceTypesWhere ?? where));
+                if (save && itemNoteTypesPath != null) l.Add(() => SaveItemNoteTypes(itemNoteTypesPath, itemNoteTypesWhere ?? where));
+                if (save && loanTypesPath != null) l.Add(() => SaveLoanTypes(loanTypesPath, loanTypesWhere ?? where));
+                if (save && materialTypesPath != null) l.Add(() => SaveMaterialTypes(materialTypesPath, materialTypesWhere ?? where));
+                if (save && modeOfIssuancesPath != null) l.Add(() => SaveModeOfIssuances(modeOfIssuancesPath, modeOfIssuancesWhere ?? where));
+                if (save && statisticalCodeTypesPath != null) l.Add(() => SaveStatisticalCodeTypes(statisticalCodeTypesPath, statisticalCodeTypesWhere ?? where));
+                if (save && statisticalCodesPath != null) l.Add(() => SaveStatisticalCodes(statisticalCodesPath, statisticalCodesWhere ?? where));
+                if (save && instancesPath != null) l.Add(() => SaveInstances(instancesPath, instancesWhere ?? where));
+                if (save && holdingsPath != null) l.Add(() => SaveHoldings(holdingsPath, holdingsWhere ?? where));
+                if (save && itemsPath != null) l.Add(() => SaveItems(itemsPath, itemsWhere ?? where));
+                if (save && precedingSucceedingTitlesPath != null) l.Add(() => SavePrecedingSucceedingTitles(precedingSucceedingTitlesPath, precedingSucceedingTitlesWhere ?? where));
+                if (save && snapshotsPath != null) l.Add(() => SaveSnapshots(snapshotsPath, snapshotsWhere ?? where));
+                if (save && recordsPath != null) l.Add(() => SaveRecords(recordsPath, recordsWhere ?? where));
+                if (save && categoriesPath != null) l.Add(() => SaveCategories(categoriesPath, categoriesWhere ?? where));
+                if (save && contactsPath != null) l.Add(() => SaveContacts(contactsPath, contactsWhere ?? where));
+                if (save && interfacesPath != null) l.Add(() => SaveInterfaces(interfacesPath, interfacesWhere ?? where));
+                if (save && interfaceCredentialsPath != null) l.Add(() => SaveInterfaceCredentials(interfaceCredentialsPath, interfaceCredentialsWhere ?? where));
+                if (save && organizationsPath != null) l.Add(() => SaveOrganizations(organizationsPath, organizationsWhere ?? where));
+                if (save && financeGroupsPath != null) l.Add(() => SaveFinanceGroups(financeGroupsPath, financeGroupsWhere ?? where));
+                if (save && fiscalYearsPath != null) l.Add(() => SaveFiscalYears(fiscalYearsPath, fiscalYearsWhere ?? where));
+                if (save && ledgersPath != null) l.Add(() => SaveLedgers(ledgersPath, ledgersWhere ?? where));
+                if (save && fundTypesPath != null) l.Add(() => SaveFundTypes(fundTypesPath, fundTypesWhere ?? where));
+                if (save && fundsPath != null) l.Add(() => SaveFunds(fundsPath, fundsWhere ?? where));
+                if (save && budgetsPath != null) l.Add(() => SaveBudgets(budgetsPath, budgetsWhere ?? where));
+                if (save && expenseClassesPath != null) l.Add(() => SaveExpenseClasses(expenseClassesPath, expenseClassesWhere ?? where));
+                if (save && budgetExpenseClassesPath != null) l.Add(() => SaveBudgetExpenseClasses(budgetExpenseClassesPath, budgetExpenseClassesWhere ?? where));
+                if (save && budgetGroupsPath != null) l.Add(() => SaveBudgetGroups(budgetGroupsPath, budgetGroupsWhere ?? where));
+                if (save && prefixesPath != null) l.Add(() => SavePrefixes(prefixesPath, prefixesWhere ?? where));
+                if (save && suffixesPath != null) l.Add(() => SaveSuffixes(suffixesPath, suffixesWhere ?? where));
+                if (save && closeReasonsPath != null) l.Add(() => SaveCloseReasons(closeReasonsPath, closeReasonsWhere ?? where));
+                if (save && acquisitionsUnitsPath != null) l.Add(() => SaveAcquisitionsUnits(acquisitionsUnitsPath, acquisitionsUnitsWhere ?? where));
+                if (save && userAcquisitionsUnitsPath != null) l.Add(() => SaveUserAcquisitionsUnits(userAcquisitionsUnitsPath, userAcquisitionsUnitsWhere ?? where));
+                if (save && reportingCodesPath != null) l.Add(() => SaveReportingCodes(reportingCodesPath, reportingCodesWhere ?? where));
+                if (save && alertsPath != null) l.Add(() => SaveAlerts(alertsPath, alertsWhere ?? where));
+                if (save && orderTemplatesPath != null) l.Add(() => SaveOrderTemplates(orderTemplatesPath, orderTemplatesWhere ?? where));
+                if (save && ordersPath != null) l.Add(() => SaveOrders(ordersPath, ordersWhere ?? where));
+                if (save && orderItemsPath != null) l.Add(() => SaveOrderItems(orderItemsPath, orderItemsWhere ?? where));
+                if (save && titlesPath != null) l.Add(() => SaveTitles(titlesPath, titlesWhere ?? where));
+                if (save && receivingsPath != null) l.Add(() => SaveReceivings(receivingsPath, receivingsWhere ?? where));
+                if (save && orderTransactionSummariesPath != null) l.Add(() => SaveOrderTransactionSummaries(orderTransactionSummariesPath, orderTransactionSummariesWhere ?? where));
+                if (save && invoicesPath != null) l.Add(() => SaveInvoices(invoicesPath, invoicesWhere ?? where));
+                if (save && documentsPath != null) l.Add(() => SaveDocuments(documentsPath, documentsWhere ?? where));
+                if (save && invoiceItemsPath != null) l.Add(() => SaveInvoiceItems(invoiceItemsPath, invoiceItemsWhere ?? where));
+                if (save && vouchersPath != null) l.Add(() => SaveVouchers(vouchersPath, vouchersWhere ?? where));
+                if (save && voucherItemsPath != null) l.Add(() => SaveVoucherItems(voucherItemsPath, voucherItemsWhere ?? where));
+                if (save && batchGroupsPath != null) l.Add(() => SaveBatchGroups(batchGroupsPath, batchGroupsWhere ?? where));
+                if (save && batchVouchersPath != null) l.Add(() => SaveBatchVouchers(batchVouchersPath, batchVouchersWhere ?? where));
+                if (save && batchVoucherExportsPath != null) l.Add(() => SaveBatchVoucherExports(batchVoucherExportsPath, batchVoucherExportsWhere ?? where));
+                if (save && batchVoucherExportConfigsPath != null) l.Add(() => SaveBatchVoucherExportConfigs(batchVoucherExportConfigsPath, batchVoucherExportConfigsWhere ?? where));
+                if (save && exportConfigCredentialsPath != null) l.Add(() => SaveExportConfigCredentials(exportConfigCredentialsPath, exportConfigCredentialsWhere ?? where));
+                if (save && invoiceTransactionSummariesPath != null) l.Add(() => SaveInvoiceTransactionSummaries(invoiceTransactionSummariesPath, invoiceTransactionSummariesWhere ?? where));
+                if (save && orderInvoicesPath != null) l.Add(() => SaveOrderInvoices(orderInvoicesPath, orderInvoicesWhere ?? where));
+                if (save && cancellationReasonsPath != null) l.Add(() => SaveCancellationReasons(cancellationReasonsPath, cancellationReasonsWhere ?? where));
+                if (save && transactionsPath != null) l.Add(() => SaveTransactions(transactionsPath, transactionsWhere ?? where));
+                if (save && circulationRulesPath != null) l.Add(() => SaveCirculationRules(circulationRulesPath, circulationRulesWhere ?? where));
+                if (save && fixedDueDateSchedulesPath != null) l.Add(() => SaveFixedDueDateSchedules(fixedDueDateSchedulesPath, fixedDueDateSchedulesWhere ?? where));
+                if (save && loanPoliciesPath != null) l.Add(() => SaveLoanPolicies(loanPoliciesPath, loanPoliciesWhere ?? where));
+                if (save && patronNoticePoliciesPath != null) l.Add(() => SavePatronNoticePolicies(patronNoticePoliciesPath, patronNoticePoliciesWhere ?? where));
+                if (save && requestPoliciesPath != null) l.Add(() => SaveRequestPolicies(requestPoliciesPath, requestPoliciesWhere ?? where));
+                if (save && loansPath != null) l.Add(() => SaveLoans(loansPath, loansWhere ?? where));
+                if (save && loanEventsPath != null) l.Add(() => SaveLoanEvents(loanEventsPath, loanEventsWhere ?? where));
+                if (save && requestsPath != null) l.Add(() => SaveRequests(requestsPath, requestsWhere ?? where));
+                if (save && scheduledNoticesPath != null) l.Add(() => SaveScheduledNotices(scheduledNoticesPath, scheduledNoticesWhere ?? where));
+                if (save && staffSlipsPath != null) l.Add(() => SaveStaffSlips(staffSlipsPath, staffSlipsWhere ?? where));
+                if (save && patronActionSessionsPath != null) l.Add(() => SavePatronActionSessions(patronActionSessionsPath, patronActionSessionsWhere ?? where));
+                if (save && userRequestPreferencesPath != null) l.Add(() => SaveUserRequestPreferences(userRequestPreferencesPath, userRequestPreferencesWhere ?? where));
+                if (save && checkInsPath != null) l.Add(() => SaveCheckIns(checkInsPath, checkInsWhere ?? where));
+                if (save && blocksPath != null) l.Add(() => SaveBlocks(blocksPath, blocksWhere ?? where));
+                if (save && commentsPath != null) l.Add(() => SaveComments(commentsPath, commentsWhere ?? where));
+                if (save && lostItemFeePoliciesPath != null) l.Add(() => SaveLostItemFeePolicies(lostItemFeePoliciesPath, lostItemFeePoliciesWhere ?? where));
+                if (save && overdueFinePoliciesPath != null) l.Add(() => SaveOverdueFinePolicies(overdueFinePoliciesPath, overdueFinePoliciesWhere ?? where));
+                if (save && ownersPath != null) l.Add(() => SaveOwners(ownersPath, ownersWhere ?? where));
+                if (save && paymentMethodsPath != null) l.Add(() => SavePaymentMethods(paymentMethodsPath, paymentMethodsWhere ?? where));
+                if (save && refundReasonsPath != null) l.Add(() => SaveRefundReasons(refundReasonsPath, refundReasonsWhere ?? where));
+                if (save && transferAccountsPath != null) l.Add(() => SaveTransferAccounts(transferAccountsPath, transferAccountsWhere ?? where));
+                if (save && transferCriteriasPath != null) l.Add(() => SaveTransferCriterias(transferCriteriasPath, transferCriteriasWhere ?? where));
+                if (save && waiveReasonsPath != null) l.Add(() => SaveWaiveReasons(waiveReasonsPath, waiveReasonsWhere ?? where));
+                if (save && feeTypesPath != null) l.Add(() => SaveFeeTypes(feeTypesPath, feeTypesWhere ?? where));
+                if (save && feesPath != null) l.Add(() => SaveFees(feesPath, feesWhere ?? where));
+                if (save && paymentsPath != null) l.Add(() => SavePayments(paymentsPath, paymentsWhere ?? where));
                 if (threads == 1) foreach (var a in l) a(); else l.AsParallel().WithDegreeOfParallelism(threads ?? Environment.ProcessorCount).ForAll(a => a());
                 if (delete && (payments || paymentsPath != null)) DeletePayments(paymentsWhere ?? where);
                 if (delete && (fees || feesPath != null)) DeleteFees(feesWhere ?? where);
@@ -1415,14 +1418,14 @@ namespace FolioConsoleApplication
             using (var jtw = new JsonTextWriter(Console.Out))
             {
                 jtw.WriteStartArray();
-                foreach (var jo in (api ? fsc.AcquisitionsUnits(where, orderBy, skip, take) : fdc.AcquisitionsUnits(where, null, orderBy, skip, take).Select(au => JObject.Parse(au.Content))).Select(jo =>
+                foreach (var jo in (api ? fsc.AcquisitionsUnits(where, orderBy, skip, take) : fdc.AcquisitionsUnits(where, null, orderBy, skip, take).Select(au => au.ToJObject())).Select(jo =>
                 {
                     return select == null ? jo : new JObject(select.Split(',').Select(s =>
                     {
                         var m = Regex.Match(s.Trim(), @"(?<Path>\S+)((?i) as (?<Name>.+))?", RegexOptions.Compiled);
                         return new JProperty(m.Groups["Name"].Success ? m.Groups["Name"].Value : m.Groups["Path"].Value.Split('.').Last(), jo.SelectToken(m.Groups["Path"].Value));
                     }));
-                })) jsonSerializer.Serialize(jtw, jo);
+                })) (universalTime ? universalTimeJsonSerializer : localTimeJsonSerializer).Serialize(jtw, jo);
                 jtw.WriteEndArray();
             }
         }
@@ -1469,18 +1472,17 @@ namespace FolioConsoleApplication
             using (var fsc = new FolioServiceClient(connectionString))
             {
                 var s2 = Stopwatch.StartNew();
-                var js4 = JsonSchema.FromJsonAsync(sr2.ReadToEndAsync().Result).Result;
-                var js = new JsonSerializer();
+                var js = JsonSchema.FromJsonAsync(sr2.ReadToEndAsync().Result).Result;
                 jtr.Read();
                 var i = 0;
                 while (jtr.Read() && jtr.TokenType != JsonToken.EndArray)
                 {
                     if (take != null && take <= i) break;
                     ++i;
-                    var jo = (JObject)js.Deserialize(jtr);
+                    var jo = (JObject)localTimeJsonSerializer.Deserialize(jtr);
                     if (validate)
                     {
-                        var l = js4.Validate(jo);
+                        var l = js.Validate(jo);
                         if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"AcquisitionsUnit {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"AcquisitionsUnit {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
                     }
                     if (api)
@@ -1524,18 +1526,17 @@ namespace FolioConsoleApplication
             using (var jtw = new JsonTextWriter(sw))
             {
                 var s2 = Stopwatch.StartNew();
-                var js4 = JsonSchema.FromJsonAsync(sr.ReadToEndAsync().Result).Result;
-                var js = new JsonSerializer { Formatting = Formatting.Indented };
+                var js = JsonSchema.FromJsonAsync(sr.ReadToEndAsync().Result).Result;
                 jtw.WriteStartArray();
                 var i = 0;
-                foreach (var jo in api ? fsc.AcquisitionsUnits(where, orderBy, skip, take) : fdc.AcquisitionsUnits(where, null, orderBy, skip, take).Select(au => JObject.Parse(au.Content)))
+                foreach (var jo in api ? fsc.AcquisitionsUnits(where, orderBy, skip, take) : fdc.AcquisitionsUnits(where, null, orderBy, skip, take).Select(au => au.ToJObject()))
                 {
                     if (validate)
                     {
-                        var l = js4.Validate(jo);
+                        var l = js.Validate(jo);
                         if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"AcquisitionsUnit {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"AcquisitionsUnit {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
                     }
-                    if (!whatIf) js.Serialize(jtw, jo);
+                    if (!whatIf) (universalTime ? universalTimeJsonSerializer : localTimeJsonSerializer).Serialize(jtw, jo);
                     if (++i % 10000 == 0)
                     {
                         traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
@@ -1556,14 +1557,14 @@ namespace FolioConsoleApplication
             using (var jtw = new JsonTextWriter(Console.Out))
             {
                 jtw.WriteStartArray();
-                foreach (var jo in (api ? fsc.AddressTypes(where, orderBy, skip, take) : fdc.AddressTypes(where, null, orderBy, skip, take).Select(at => JObject.Parse(at.Content))).Select(jo =>
+                foreach (var jo in (api ? fsc.AddressTypes(where, orderBy, skip, take) : fdc.AddressTypes(where, null, orderBy, skip, take).Select(at => at.ToJObject())).Select(jo =>
                 {
                     return select == null ? jo : new JObject(select.Split(',').Select(s =>
                     {
                         var m = Regex.Match(s.Trim(), @"(?<Path>\S+)((?i) as (?<Name>.+))?", RegexOptions.Compiled);
                         return new JProperty(m.Groups["Name"].Success ? m.Groups["Name"].Value : m.Groups["Path"].Value.Split('.').Last(), jo.SelectToken(m.Groups["Path"].Value));
                     }));
-                })) jsonSerializer.Serialize(jtw, jo);
+                })) (universalTime ? universalTimeJsonSerializer : localTimeJsonSerializer).Serialize(jtw, jo);
                 jtw.WriteEndArray();
             }
         }
@@ -1610,18 +1611,17 @@ namespace FolioConsoleApplication
             using (var fsc = new FolioServiceClient(connectionString))
             {
                 var s2 = Stopwatch.StartNew();
-                var js4 = JsonSchema.FromJsonAsync(sr2.ReadToEndAsync().Result).Result;
-                var js = new JsonSerializer();
+                var js = JsonSchema.FromJsonAsync(sr2.ReadToEndAsync().Result).Result;
                 jtr.Read();
                 var i = 0;
                 while (jtr.Read() && jtr.TokenType != JsonToken.EndArray)
                 {
                     if (take != null && take <= i) break;
                     ++i;
-                    var jo = (JObject)js.Deserialize(jtr);
+                    var jo = (JObject)localTimeJsonSerializer.Deserialize(jtr);
                     if (validate)
                     {
-                        var l = js4.Validate(jo);
+                        var l = js.Validate(jo);
                         if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"AddressType {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"AddressType {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
                     }
                     if (api)
@@ -1665,18 +1665,17 @@ namespace FolioConsoleApplication
             using (var jtw = new JsonTextWriter(sw))
             {
                 var s2 = Stopwatch.StartNew();
-                var js4 = JsonSchema.FromJsonAsync(sr.ReadToEndAsync().Result).Result;
-                var js = new JsonSerializer { Formatting = Formatting.Indented };
+                var js = JsonSchema.FromJsonAsync(sr.ReadToEndAsync().Result).Result;
                 jtw.WriteStartArray();
                 var i = 0;
-                foreach (var jo in api ? fsc.AddressTypes(where, orderBy, skip, take) : fdc.AddressTypes(where, null, orderBy, skip, take).Select(at => JObject.Parse(at.Content)))
+                foreach (var jo in api ? fsc.AddressTypes(where, orderBy, skip, take) : fdc.AddressTypes(where, null, orderBy, skip, take).Select(at => at.ToJObject()))
                 {
                     if (validate)
                     {
-                        var l = js4.Validate(jo);
+                        var l = js.Validate(jo);
                         if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"AddressType {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"AddressType {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
                     }
-                    if (!whatIf) js.Serialize(jtw, jo);
+                    if (!whatIf) (universalTime ? universalTimeJsonSerializer : localTimeJsonSerializer).Serialize(jtw, jo);
                     if (++i % 10000 == 0)
                     {
                         traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
@@ -1697,14 +1696,14 @@ namespace FolioConsoleApplication
             using (var jtw = new JsonTextWriter(Console.Out))
             {
                 jtw.WriteStartArray();
-                foreach (var jo in (api ? fsc.Alerts(where, orderBy, skip, take) : fdc.Alerts(where, null, orderBy, skip, take).Select(a => JObject.Parse(a.Content))).Select(jo =>
+                foreach (var jo in (api ? fsc.Alerts(where, orderBy, skip, take) : fdc.Alerts(where, null, orderBy, skip, take).Select(a => a.ToJObject())).Select(jo =>
                 {
                     return select == null ? jo : new JObject(select.Split(',').Select(s =>
                     {
                         var m = Regex.Match(s.Trim(), @"(?<Path>\S+)((?i) as (?<Name>.+))?", RegexOptions.Compiled);
                         return new JProperty(m.Groups["Name"].Success ? m.Groups["Name"].Value : m.Groups["Path"].Value.Split('.').Last(), jo.SelectToken(m.Groups["Path"].Value));
                     }));
-                })) jsonSerializer.Serialize(jtw, jo);
+                })) (universalTime ? universalTimeJsonSerializer : localTimeJsonSerializer).Serialize(jtw, jo);
                 jtw.WriteEndArray();
             }
         }
@@ -1751,18 +1750,17 @@ namespace FolioConsoleApplication
             using (var fsc = new FolioServiceClient(connectionString))
             {
                 var s2 = Stopwatch.StartNew();
-                var js4 = JsonSchema.FromJsonAsync(sr2.ReadToEndAsync().Result).Result;
-                var js = new JsonSerializer();
+                var js = JsonSchema.FromJsonAsync(sr2.ReadToEndAsync().Result).Result;
                 jtr.Read();
                 var i = 0;
                 while (jtr.Read() && jtr.TokenType != JsonToken.EndArray)
                 {
                     if (take != null && take <= i) break;
                     ++i;
-                    var jo = (JObject)js.Deserialize(jtr);
+                    var jo = (JObject)localTimeJsonSerializer.Deserialize(jtr);
                     if (validate)
                     {
-                        var l = js4.Validate(jo);
+                        var l = js.Validate(jo);
                         if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"Alert {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"Alert {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
                     }
                     if (api)
@@ -1806,18 +1804,17 @@ namespace FolioConsoleApplication
             using (var jtw = new JsonTextWriter(sw))
             {
                 var s2 = Stopwatch.StartNew();
-                var js4 = JsonSchema.FromJsonAsync(sr.ReadToEndAsync().Result).Result;
-                var js = new JsonSerializer { Formatting = Formatting.Indented };
+                var js = JsonSchema.FromJsonAsync(sr.ReadToEndAsync().Result).Result;
                 jtw.WriteStartArray();
                 var i = 0;
-                foreach (var jo in api ? fsc.Alerts(where, orderBy, skip, take) : fdc.Alerts(where, null, orderBy, skip, take).Select(a => JObject.Parse(a.Content)))
+                foreach (var jo in api ? fsc.Alerts(where, orderBy, skip, take) : fdc.Alerts(where, null, orderBy, skip, take).Select(a => a.ToJObject()))
                 {
                     if (validate)
                     {
-                        var l = js4.Validate(jo);
+                        var l = js.Validate(jo);
                         if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"Alert {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"Alert {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
                     }
-                    if (!whatIf) js.Serialize(jtw, jo);
+                    if (!whatIf) (universalTime ? universalTimeJsonSerializer : localTimeJsonSerializer).Serialize(jtw, jo);
                     if (++i % 10000 == 0)
                     {
                         traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
@@ -1838,14 +1835,14 @@ namespace FolioConsoleApplication
             using (var jtw = new JsonTextWriter(Console.Out))
             {
                 jtw.WriteStartArray();
-                foreach (var jo in (api ? fsc.AlternativeTitleTypes(where, orderBy, skip, take) : fdc.AlternativeTitleTypes(where, null, orderBy, skip, take).Select(att => JObject.Parse(att.Content))).Select(jo =>
+                foreach (var jo in (api ? fsc.AlternativeTitleTypes(where, orderBy, skip, take) : fdc.AlternativeTitleTypes(where, null, orderBy, skip, take).Select(att => att.ToJObject())).Select(jo =>
                 {
                     return select == null ? jo : new JObject(select.Split(',').Select(s =>
                     {
                         var m = Regex.Match(s.Trim(), @"(?<Path>\S+)((?i) as (?<Name>.+))?", RegexOptions.Compiled);
                         return new JProperty(m.Groups["Name"].Success ? m.Groups["Name"].Value : m.Groups["Path"].Value.Split('.').Last(), jo.SelectToken(m.Groups["Path"].Value));
                     }));
-                })) jsonSerializer.Serialize(jtw, jo);
+                })) (universalTime ? universalTimeJsonSerializer : localTimeJsonSerializer).Serialize(jtw, jo);
                 jtw.WriteEndArray();
             }
         }
@@ -1892,18 +1889,17 @@ namespace FolioConsoleApplication
             using (var fsc = new FolioServiceClient(connectionString))
             {
                 var s2 = Stopwatch.StartNew();
-                var js4 = JsonSchema.FromJsonAsync(sr2.ReadToEndAsync().Result).Result;
-                var js = new JsonSerializer();
+                var js = JsonSchema.FromJsonAsync(sr2.ReadToEndAsync().Result).Result;
                 jtr.Read();
                 var i = 0;
                 while (jtr.Read() && jtr.TokenType != JsonToken.EndArray)
                 {
                     if (take != null && take <= i) break;
                     ++i;
-                    var jo = (JObject)js.Deserialize(jtr);
+                    var jo = (JObject)localTimeJsonSerializer.Deserialize(jtr);
                     if (validate)
                     {
-                        var l = js4.Validate(jo);
+                        var l = js.Validate(jo);
                         if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"AlternativeTitleType {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"AlternativeTitleType {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
                     }
                     if (api)
@@ -1947,18 +1943,17 @@ namespace FolioConsoleApplication
             using (var jtw = new JsonTextWriter(sw))
             {
                 var s2 = Stopwatch.StartNew();
-                var js4 = JsonSchema.FromJsonAsync(sr.ReadToEndAsync().Result).Result;
-                var js = new JsonSerializer { Formatting = Formatting.Indented };
+                var js = JsonSchema.FromJsonAsync(sr.ReadToEndAsync().Result).Result;
                 jtw.WriteStartArray();
                 var i = 0;
-                foreach (var jo in api ? fsc.AlternativeTitleTypes(where, orderBy, skip, take) : fdc.AlternativeTitleTypes(where, null, orderBy, skip, take).Select(att => JObject.Parse(att.Content)))
+                foreach (var jo in api ? fsc.AlternativeTitleTypes(where, orderBy, skip, take) : fdc.AlternativeTitleTypes(where, null, orderBy, skip, take).Select(att => att.ToJObject()))
                 {
                     if (validate)
                     {
-                        var l = js4.Validate(jo);
+                        var l = js.Validate(jo);
                         if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"AlternativeTitleType {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"AlternativeTitleType {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
                     }
-                    if (!whatIf) js.Serialize(jtw, jo);
+                    if (!whatIf) (universalTime ? universalTimeJsonSerializer : localTimeJsonSerializer).Serialize(jtw, jo);
                     if (++i % 10000 == 0)
                     {
                         traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
@@ -1979,14 +1974,14 @@ namespace FolioConsoleApplication
             using (var jtw = new JsonTextWriter(Console.Out))
             {
                 jtw.WriteStartArray();
-                foreach (var jo in (api ? fsc.BatchGroups(where, orderBy, skip, take) : fdc.BatchGroups(where, null, orderBy, skip, take).Select(bg => JObject.Parse(bg.Content))).Select(jo =>
+                foreach (var jo in (api ? fsc.BatchGroups(where, orderBy, skip, take) : fdc.BatchGroups(where, null, orderBy, skip, take).Select(bg => bg.ToJObject())).Select(jo =>
                 {
                     return select == null ? jo : new JObject(select.Split(',').Select(s =>
                     {
                         var m = Regex.Match(s.Trim(), @"(?<Path>\S+)((?i) as (?<Name>.+))?", RegexOptions.Compiled);
                         return new JProperty(m.Groups["Name"].Success ? m.Groups["Name"].Value : m.Groups["Path"].Value.Split('.').Last(), jo.SelectToken(m.Groups["Path"].Value));
                     }));
-                })) jsonSerializer.Serialize(jtw, jo);
+                })) (universalTime ? universalTimeJsonSerializer : localTimeJsonSerializer).Serialize(jtw, jo);
                 jtw.WriteEndArray();
             }
         }
@@ -2033,18 +2028,17 @@ namespace FolioConsoleApplication
             using (var fsc = new FolioServiceClient(connectionString))
             {
                 var s2 = Stopwatch.StartNew();
-                var js4 = JsonSchema.FromJsonAsync(sr2.ReadToEndAsync().Result).Result;
-                var js = new JsonSerializer();
+                var js = JsonSchema.FromJsonAsync(sr2.ReadToEndAsync().Result).Result;
                 jtr.Read();
                 var i = 0;
                 while (jtr.Read() && jtr.TokenType != JsonToken.EndArray)
                 {
                     if (take != null && take <= i) break;
                     ++i;
-                    var jo = (JObject)js.Deserialize(jtr);
+                    var jo = (JObject)localTimeJsonSerializer.Deserialize(jtr);
                     if (validate)
                     {
-                        var l = js4.Validate(jo);
+                        var l = js.Validate(jo);
                         if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"BatchGroup {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"BatchGroup {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
                     }
                     if (api)
@@ -2088,18 +2082,17 @@ namespace FolioConsoleApplication
             using (var jtw = new JsonTextWriter(sw))
             {
                 var s2 = Stopwatch.StartNew();
-                var js4 = JsonSchema.FromJsonAsync(sr.ReadToEndAsync().Result).Result;
-                var js = new JsonSerializer { Formatting = Formatting.Indented };
+                var js = JsonSchema.FromJsonAsync(sr.ReadToEndAsync().Result).Result;
                 jtw.WriteStartArray();
                 var i = 0;
-                foreach (var jo in api ? fsc.BatchGroups(where, orderBy, skip, take) : fdc.BatchGroups(where, null, orderBy, skip, take).Select(bg => JObject.Parse(bg.Content)))
+                foreach (var jo in api ? fsc.BatchGroups(where, orderBy, skip, take) : fdc.BatchGroups(where, null, orderBy, skip, take).Select(bg => bg.ToJObject()))
                 {
                     if (validate)
                     {
-                        var l = js4.Validate(jo);
+                        var l = js.Validate(jo);
                         if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"BatchGroup {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"BatchGroup {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
                     }
-                    if (!whatIf) js.Serialize(jtw, jo);
+                    if (!whatIf) (universalTime ? universalTimeJsonSerializer : localTimeJsonSerializer).Serialize(jtw, jo);
                     if (++i % 10000 == 0)
                     {
                         traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
@@ -2119,14 +2112,14 @@ namespace FolioConsoleApplication
             using (var jtw = new JsonTextWriter(Console.Out))
             {
                 jtw.WriteStartArray();
-                foreach (var jo in (api ? throw new NotSupportedException() : fdc.BatchVouchers(where, null, orderBy, skip, take).Select(bv => JObject.Parse(bv.Content))).Select(jo =>
+                foreach (var jo in (api ? throw new NotSupportedException() : fdc.BatchVouchers(where, null, orderBy, skip, take).Select(bv => bv.ToJObject())).Select(jo =>
                 {
                     return select == null ? jo : new JObject(select.Split(',').Select(s =>
                     {
                         var m = Regex.Match(s.Trim(), @"(?<Path>\S+)((?i) as (?<Name>.+))?", RegexOptions.Compiled);
                         return new JProperty(m.Groups["Name"].Success ? m.Groups["Name"].Value : m.Groups["Path"].Value.Split('.').Last(), jo.SelectToken(m.Groups["Path"].Value));
                     }));
-                })) jsonSerializer.Serialize(jtw, jo);
+                })) (universalTime ? universalTimeJsonSerializer : localTimeJsonSerializer).Serialize(jtw, jo);
                 jtw.WriteEndArray();
             }
         }
@@ -2161,18 +2154,17 @@ namespace FolioConsoleApplication
             using (var fbcc = new FolioBulkCopyContext(connectionString))
             {
                 var s2 = Stopwatch.StartNew();
-                var js4 = JsonSchema.FromJsonAsync(sr2.ReadToEndAsync().Result).Result;
-                var js = new JsonSerializer();
+                var js = JsonSchema.FromJsonAsync(sr2.ReadToEndAsync().Result).Result;
                 jtr.Read();
                 var i = 0;
                 while (jtr.Read() && jtr.TokenType != JsonToken.EndArray)
                 {
                     if (take != null && take <= i) break;
                     ++i;
-                    var jo = (JObject)js.Deserialize(jtr);
+                    var jo = (JObject)localTimeJsonSerializer.Deserialize(jtr);
                     if (validate)
                     {
-                        var l = js4.Validate(jo);
+                        var l = js.Validate(jo);
                         if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"BatchVoucher {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"BatchVoucher {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
                     }
                     if (api)
@@ -2210,18 +2202,17 @@ namespace FolioConsoleApplication
             using (var jtw = new JsonTextWriter(sw))
             {
                 var s2 = Stopwatch.StartNew();
-                var js4 = JsonSchema.FromJsonAsync(sr.ReadToEndAsync().Result).Result;
-                var js = new JsonSerializer { Formatting = Formatting.Indented };
+                var js = JsonSchema.FromJsonAsync(sr.ReadToEndAsync().Result).Result;
                 jtw.WriteStartArray();
                 var i = 0;
-                foreach (var jo in api ? throw new NotSupportedException() : fdc.BatchVouchers(where, null, orderBy, skip, take).Select(bv => JObject.Parse(bv.Content)))
+                foreach (var jo in api ? throw new NotSupportedException() : fdc.BatchVouchers(where, null, orderBy, skip, take).Select(bv => bv.ToJObject()))
                 {
                     if (validate)
                     {
-                        var l = js4.Validate(jo);
+                        var l = js.Validate(jo);
                         if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"BatchVoucher {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"BatchVoucher {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
                     }
-                    if (!whatIf) js.Serialize(jtw, jo);
+                    if (!whatIf) (universalTime ? universalTimeJsonSerializer : localTimeJsonSerializer).Serialize(jtw, jo);
                     if (++i % 10000 == 0)
                     {
                         traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
@@ -2242,14 +2233,14 @@ namespace FolioConsoleApplication
             using (var jtw = new JsonTextWriter(Console.Out))
             {
                 jtw.WriteStartArray();
-                foreach (var jo in (api ? fsc.BatchVoucherExports(where, orderBy, skip, take) : fdc.BatchVoucherExports(where, null, orderBy, skip, take).Select(bve => JObject.Parse(bve.Content))).Select(jo =>
+                foreach (var jo in (api ? fsc.BatchVoucherExports(where, orderBy, skip, take) : fdc.BatchVoucherExports(where, null, orderBy, skip, take).Select(bve => bve.ToJObject())).Select(jo =>
                 {
                     return select == null ? jo : new JObject(select.Split(',').Select(s =>
                     {
                         var m = Regex.Match(s.Trim(), @"(?<Path>\S+)((?i) as (?<Name>.+))?", RegexOptions.Compiled);
                         return new JProperty(m.Groups["Name"].Success ? m.Groups["Name"].Value : m.Groups["Path"].Value.Split('.').Last(), jo.SelectToken(m.Groups["Path"].Value));
                     }));
-                })) jsonSerializer.Serialize(jtw, jo);
+                })) (universalTime ? universalTimeJsonSerializer : localTimeJsonSerializer).Serialize(jtw, jo);
                 jtw.WriteEndArray();
             }
         }
@@ -2296,18 +2287,17 @@ namespace FolioConsoleApplication
             using (var fsc = new FolioServiceClient(connectionString))
             {
                 var s2 = Stopwatch.StartNew();
-                var js4 = JsonSchema.FromJsonAsync(sr2.ReadToEndAsync().Result).Result;
-                var js = new JsonSerializer();
+                var js = JsonSchema.FromJsonAsync(sr2.ReadToEndAsync().Result).Result;
                 jtr.Read();
                 var i = 0;
                 while (jtr.Read() && jtr.TokenType != JsonToken.EndArray)
                 {
                     if (take != null && take <= i) break;
                     ++i;
-                    var jo = (JObject)js.Deserialize(jtr);
+                    var jo = (JObject)localTimeJsonSerializer.Deserialize(jtr);
                     if (validate)
                     {
-                        var l = js4.Validate(jo);
+                        var l = js.Validate(jo);
                         if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"BatchVoucherExport {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"BatchVoucherExport {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
                     }
                     if (api)
@@ -2351,18 +2341,17 @@ namespace FolioConsoleApplication
             using (var jtw = new JsonTextWriter(sw))
             {
                 var s2 = Stopwatch.StartNew();
-                var js4 = JsonSchema.FromJsonAsync(sr.ReadToEndAsync().Result).Result;
-                var js = new JsonSerializer { Formatting = Formatting.Indented };
+                var js = JsonSchema.FromJsonAsync(sr.ReadToEndAsync().Result).Result;
                 jtw.WriteStartArray();
                 var i = 0;
-                foreach (var jo in api ? fsc.BatchVoucherExports(where, orderBy, skip, take) : fdc.BatchVoucherExports(where, null, orderBy, skip, take).Select(bve => JObject.Parse(bve.Content)))
+                foreach (var jo in api ? fsc.BatchVoucherExports(where, orderBy, skip, take) : fdc.BatchVoucherExports(where, null, orderBy, skip, take).Select(bve => bve.ToJObject()))
                 {
                     if (validate)
                     {
-                        var l = js4.Validate(jo);
+                        var l = js.Validate(jo);
                         if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"BatchVoucherExport {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"BatchVoucherExport {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
                     }
-                    if (!whatIf) js.Serialize(jtw, jo);
+                    if (!whatIf) (universalTime ? universalTimeJsonSerializer : localTimeJsonSerializer).Serialize(jtw, jo);
                     if (++i % 10000 == 0)
                     {
                         traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
@@ -2383,14 +2372,14 @@ namespace FolioConsoleApplication
             using (var jtw = new JsonTextWriter(Console.Out))
             {
                 jtw.WriteStartArray();
-                foreach (var jo in (api ? fsc.BatchVoucherExportConfigs(where, orderBy, skip, take) : fdc.BatchVoucherExportConfigs(where, null, orderBy, skip, take).Select(bvec => JObject.Parse(bvec.Content))).Select(jo =>
+                foreach (var jo in (api ? fsc.BatchVoucherExportConfigs(where, orderBy, skip, take) : fdc.BatchVoucherExportConfigs(where, null, orderBy, skip, take).Select(bvec => bvec.ToJObject())).Select(jo =>
                 {
                     return select == null ? jo : new JObject(select.Split(',').Select(s =>
                     {
                         var m = Regex.Match(s.Trim(), @"(?<Path>\S+)((?i) as (?<Name>.+))?", RegexOptions.Compiled);
                         return new JProperty(m.Groups["Name"].Success ? m.Groups["Name"].Value : m.Groups["Path"].Value.Split('.').Last(), jo.SelectToken(m.Groups["Path"].Value));
                     }));
-                })) jsonSerializer.Serialize(jtw, jo);
+                })) (universalTime ? universalTimeJsonSerializer : localTimeJsonSerializer).Serialize(jtw, jo);
                 jtw.WriteEndArray();
             }
         }
@@ -2437,18 +2426,17 @@ namespace FolioConsoleApplication
             using (var fsc = new FolioServiceClient(connectionString))
             {
                 var s2 = Stopwatch.StartNew();
-                var js4 = JsonSchema.FromJsonAsync(sr2.ReadToEndAsync().Result).Result;
-                var js = new JsonSerializer();
+                var js = JsonSchema.FromJsonAsync(sr2.ReadToEndAsync().Result).Result;
                 jtr.Read();
                 var i = 0;
                 while (jtr.Read() && jtr.TokenType != JsonToken.EndArray)
                 {
                     if (take != null && take <= i) break;
                     ++i;
-                    var jo = (JObject)js.Deserialize(jtr);
+                    var jo = (JObject)localTimeJsonSerializer.Deserialize(jtr);
                     if (validate)
                     {
-                        var l = js4.Validate(jo);
+                        var l = js.Validate(jo);
                         if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"BatchVoucherExportConfig {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"BatchVoucherExportConfig {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
                     }
                     if (api)
@@ -2492,18 +2480,17 @@ namespace FolioConsoleApplication
             using (var jtw = new JsonTextWriter(sw))
             {
                 var s2 = Stopwatch.StartNew();
-                var js4 = JsonSchema.FromJsonAsync(sr.ReadToEndAsync().Result).Result;
-                var js = new JsonSerializer { Formatting = Formatting.Indented };
+                var js = JsonSchema.FromJsonAsync(sr.ReadToEndAsync().Result).Result;
                 jtw.WriteStartArray();
                 var i = 0;
-                foreach (var jo in api ? fsc.BatchVoucherExportConfigs(where, orderBy, skip, take) : fdc.BatchVoucherExportConfigs(where, null, orderBy, skip, take).Select(bvec => JObject.Parse(bvec.Content)))
+                foreach (var jo in api ? fsc.BatchVoucherExportConfigs(where, orderBy, skip, take) : fdc.BatchVoucherExportConfigs(where, null, orderBy, skip, take).Select(bvec => bvec.ToJObject()))
                 {
                     if (validate)
                     {
-                        var l = js4.Validate(jo);
+                        var l = js.Validate(jo);
                         if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"BatchVoucherExportConfig {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"BatchVoucherExportConfig {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
                     }
-                    if (!whatIf) js.Serialize(jtw, jo);
+                    if (!whatIf) (universalTime ? universalTimeJsonSerializer : localTimeJsonSerializer).Serialize(jtw, jo);
                     if (++i % 10000 == 0)
                     {
                         traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
@@ -2524,14 +2511,14 @@ namespace FolioConsoleApplication
             using (var jtw = new JsonTextWriter(Console.Out))
             {
                 jtw.WriteStartArray();
-                foreach (var jo in (api ? fsc.Blocks(where, orderBy, skip, take) : fdc.Blocks(where, null, orderBy, skip, take).Select(b => JObject.Parse(b.Content))).Select(jo =>
+                foreach (var jo in (api ? fsc.Blocks(where, orderBy, skip, take) : fdc.Blocks(where, null, orderBy, skip, take).Select(b => b.ToJObject())).Select(jo =>
                 {
                     return select == null ? jo : new JObject(select.Split(',').Select(s =>
                     {
                         var m = Regex.Match(s.Trim(), @"(?<Path>\S+)((?i) as (?<Name>.+))?", RegexOptions.Compiled);
                         return new JProperty(m.Groups["Name"].Success ? m.Groups["Name"].Value : m.Groups["Path"].Value.Split('.').Last(), jo.SelectToken(m.Groups["Path"].Value));
                     }));
-                })) jsonSerializer.Serialize(jtw, jo);
+                })) (universalTime ? universalTimeJsonSerializer : localTimeJsonSerializer).Serialize(jtw, jo);
                 jtw.WriteEndArray();
             }
         }
@@ -2578,18 +2565,17 @@ namespace FolioConsoleApplication
             using (var fsc = new FolioServiceClient(connectionString))
             {
                 var s2 = Stopwatch.StartNew();
-                var js4 = JsonSchema.FromJsonAsync(sr2.ReadToEndAsync().Result).Result;
-                var js = new JsonSerializer();
+                var js = JsonSchema.FromJsonAsync(sr2.ReadToEndAsync().Result).Result;
                 jtr.Read();
                 var i = 0;
                 while (jtr.Read() && jtr.TokenType != JsonToken.EndArray)
                 {
                     if (take != null && take <= i) break;
                     ++i;
-                    var jo = (JObject)js.Deserialize(jtr);
+                    var jo = (JObject)localTimeJsonSerializer.Deserialize(jtr);
                     if (validate)
                     {
-                        var l = js4.Validate(jo);
+                        var l = js.Validate(jo);
                         if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"Block {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"Block {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
                     }
                     if (api)
@@ -2633,18 +2619,17 @@ namespace FolioConsoleApplication
             using (var jtw = new JsonTextWriter(sw))
             {
                 var s2 = Stopwatch.StartNew();
-                var js4 = JsonSchema.FromJsonAsync(sr.ReadToEndAsync().Result).Result;
-                var js = new JsonSerializer { Formatting = Formatting.Indented };
+                var js = JsonSchema.FromJsonAsync(sr.ReadToEndAsync().Result).Result;
                 jtw.WriteStartArray();
                 var i = 0;
-                foreach (var jo in api ? fsc.Blocks(where, orderBy, skip, take) : fdc.Blocks(where, null, orderBy, skip, take).Select(b => JObject.Parse(b.Content)))
+                foreach (var jo in api ? fsc.Blocks(where, orderBy, skip, take) : fdc.Blocks(where, null, orderBy, skip, take).Select(b => b.ToJObject()))
                 {
                     if (validate)
                     {
-                        var l = js4.Validate(jo);
+                        var l = js.Validate(jo);
                         if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"Block {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"Block {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
                     }
-                    if (!whatIf) js.Serialize(jtw, jo);
+                    if (!whatIf) (universalTime ? universalTimeJsonSerializer : localTimeJsonSerializer).Serialize(jtw, jo);
                     if (++i % 10000 == 0)
                     {
                         traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
@@ -2665,14 +2650,14 @@ namespace FolioConsoleApplication
             using (var jtw = new JsonTextWriter(Console.Out))
             {
                 jtw.WriteStartArray();
-                foreach (var jo in (api ? fsc.BlockConditions(where, orderBy, skip, take) : fdc.BlockConditions(where, null, orderBy, skip, take).Select(bc => JObject.Parse(bc.Content))).Select(jo =>
+                foreach (var jo in (api ? fsc.BlockConditions(where, orderBy, skip, take) : fdc.BlockConditions(where, null, orderBy, skip, take).Select(bc => bc.ToJObject())).Select(jo =>
                 {
                     return select == null ? jo : new JObject(select.Split(',').Select(s =>
                     {
                         var m = Regex.Match(s.Trim(), @"(?<Path>\S+)((?i) as (?<Name>.+))?", RegexOptions.Compiled);
                         return new JProperty(m.Groups["Name"].Success ? m.Groups["Name"].Value : m.Groups["Path"].Value.Split('.').Last(), jo.SelectToken(m.Groups["Path"].Value));
                     }));
-                })) jsonSerializer.Serialize(jtw, jo);
+                })) (universalTime ? universalTimeJsonSerializer : localTimeJsonSerializer).Serialize(jtw, jo);
                 jtw.WriteEndArray();
             }
         }
@@ -2719,18 +2704,17 @@ namespace FolioConsoleApplication
             using (var fsc = new FolioServiceClient(connectionString))
             {
                 var s2 = Stopwatch.StartNew();
-                var js4 = JsonSchema.FromJsonAsync(sr2.ReadToEndAsync().Result).Result;
-                var js = new JsonSerializer();
+                var js = JsonSchema.FromJsonAsync(sr2.ReadToEndAsync().Result).Result;
                 jtr.Read();
                 var i = 0;
                 while (jtr.Read() && jtr.TokenType != JsonToken.EndArray)
                 {
                     if (take != null && take <= i) break;
                     ++i;
-                    var jo = (JObject)js.Deserialize(jtr);
+                    var jo = (JObject)localTimeJsonSerializer.Deserialize(jtr);
                     if (validate)
                     {
-                        var l = js4.Validate(jo);
+                        var l = js.Validate(jo);
                         if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"BlockCondition {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"BlockCondition {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
                     }
                     if (api)
@@ -2774,18 +2758,17 @@ namespace FolioConsoleApplication
             using (var jtw = new JsonTextWriter(sw))
             {
                 var s2 = Stopwatch.StartNew();
-                var js4 = JsonSchema.FromJsonAsync(sr.ReadToEndAsync().Result).Result;
-                var js = new JsonSerializer { Formatting = Formatting.Indented };
+                var js = JsonSchema.FromJsonAsync(sr.ReadToEndAsync().Result).Result;
                 jtw.WriteStartArray();
                 var i = 0;
-                foreach (var jo in api ? fsc.BlockConditions(where, orderBy, skip, take) : fdc.BlockConditions(where, null, orderBy, skip, take).Select(bc => JObject.Parse(bc.Content)))
+                foreach (var jo in api ? fsc.BlockConditions(where, orderBy, skip, take) : fdc.BlockConditions(where, null, orderBy, skip, take).Select(bc => bc.ToJObject()))
                 {
                     if (validate)
                     {
-                        var l = js4.Validate(jo);
+                        var l = js.Validate(jo);
                         if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"BlockCondition {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"BlockCondition {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
                     }
-                    if (!whatIf) js.Serialize(jtw, jo);
+                    if (!whatIf) (universalTime ? universalTimeJsonSerializer : localTimeJsonSerializer).Serialize(jtw, jo);
                     if (++i % 10000 == 0)
                     {
                         traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
@@ -2806,14 +2789,14 @@ namespace FolioConsoleApplication
             using (var jtw = new JsonTextWriter(Console.Out))
             {
                 jtw.WriteStartArray();
-                foreach (var jo in (api ? fsc.BlockLimits(where, orderBy, skip, take) : fdc.BlockLimits(where, null, orderBy, skip, take).Select(bl => JObject.Parse(bl.Content))).Select(jo =>
+                foreach (var jo in (api ? fsc.BlockLimits(where, orderBy, skip, take) : fdc.BlockLimits(where, null, orderBy, skip, take).Select(bl => bl.ToJObject())).Select(jo =>
                 {
                     return select == null ? jo : new JObject(select.Split(',').Select(s =>
                     {
                         var m = Regex.Match(s.Trim(), @"(?<Path>\S+)((?i) as (?<Name>.+))?", RegexOptions.Compiled);
                         return new JProperty(m.Groups["Name"].Success ? m.Groups["Name"].Value : m.Groups["Path"].Value.Split('.').Last(), jo.SelectToken(m.Groups["Path"].Value));
                     }));
-                })) jsonSerializer.Serialize(jtw, jo);
+                })) (universalTime ? universalTimeJsonSerializer : localTimeJsonSerializer).Serialize(jtw, jo);
                 jtw.WriteEndArray();
             }
         }
@@ -2860,18 +2843,17 @@ namespace FolioConsoleApplication
             using (var fsc = new FolioServiceClient(connectionString))
             {
                 var s2 = Stopwatch.StartNew();
-                var js4 = JsonSchema.FromJsonAsync(sr2.ReadToEndAsync().Result).Result;
-                var js = new JsonSerializer();
+                var js = JsonSchema.FromJsonAsync(sr2.ReadToEndAsync().Result).Result;
                 jtr.Read();
                 var i = 0;
                 while (jtr.Read() && jtr.TokenType != JsonToken.EndArray)
                 {
                     if (take != null && take <= i) break;
                     ++i;
-                    var jo = (JObject)js.Deserialize(jtr);
+                    var jo = (JObject)localTimeJsonSerializer.Deserialize(jtr);
                     if (validate)
                     {
-                        var l = js4.Validate(jo);
+                        var l = js.Validate(jo);
                         if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"BlockLimit {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"BlockLimit {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
                     }
                     if (api)
@@ -2915,18 +2897,17 @@ namespace FolioConsoleApplication
             using (var jtw = new JsonTextWriter(sw))
             {
                 var s2 = Stopwatch.StartNew();
-                var js4 = JsonSchema.FromJsonAsync(sr.ReadToEndAsync().Result).Result;
-                var js = new JsonSerializer { Formatting = Formatting.Indented };
+                var js = JsonSchema.FromJsonAsync(sr.ReadToEndAsync().Result).Result;
                 jtw.WriteStartArray();
                 var i = 0;
-                foreach (var jo in api ? fsc.BlockLimits(where, orderBy, skip, take) : fdc.BlockLimits(where, null, orderBy, skip, take).Select(bl => JObject.Parse(bl.Content)))
+                foreach (var jo in api ? fsc.BlockLimits(where, orderBy, skip, take) : fdc.BlockLimits(where, null, orderBy, skip, take).Select(bl => bl.ToJObject()))
                 {
                     if (validate)
                     {
-                        var l = js4.Validate(jo);
+                        var l = js.Validate(jo);
                         if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"BlockLimit {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"BlockLimit {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
                     }
-                    if (!whatIf) js.Serialize(jtw, jo);
+                    if (!whatIf) (universalTime ? universalTimeJsonSerializer : localTimeJsonSerializer).Serialize(jtw, jo);
                     if (++i % 10000 == 0)
                     {
                         traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
@@ -2947,14 +2928,14 @@ namespace FolioConsoleApplication
             using (var jtw = new JsonTextWriter(Console.Out))
             {
                 jtw.WriteStartArray();
-                foreach (var jo in (api ? fsc.Budgets(where, orderBy, skip, take) : fdc.Budgets(where, null, orderBy, skip, take).Select(b => JObject.Parse(b.Content))).Select(jo =>
+                foreach (var jo in (api ? fsc.Budgets(where, orderBy, skip, take) : fdc.Budgets(where, null, orderBy, skip, take).Select(b => b.ToJObject())).Select(jo =>
                 {
                     return select == null ? jo : new JObject(select.Split(',').Select(s =>
                     {
                         var m = Regex.Match(s.Trim(), @"(?<Path>\S+)((?i) as (?<Name>.+))?", RegexOptions.Compiled);
                         return new JProperty(m.Groups["Name"].Success ? m.Groups["Name"].Value : m.Groups["Path"].Value.Split('.').Last(), jo.SelectToken(m.Groups["Path"].Value));
                     }));
-                })) jsonSerializer.Serialize(jtw, jo);
+                })) (universalTime ? universalTimeJsonSerializer : localTimeJsonSerializer).Serialize(jtw, jo);
                 jtw.WriteEndArray();
             }
         }
@@ -3001,18 +2982,17 @@ namespace FolioConsoleApplication
             using (var fsc = new FolioServiceClient(connectionString))
             {
                 var s2 = Stopwatch.StartNew();
-                var js4 = JsonSchema.FromJsonAsync(sr2.ReadToEndAsync().Result).Result;
-                var js = new JsonSerializer();
+                var js = JsonSchema.FromJsonAsync(sr2.ReadToEndAsync().Result).Result;
                 jtr.Read();
                 var i = 0;
                 while (jtr.Read() && jtr.TokenType != JsonToken.EndArray)
                 {
                     if (take != null && take <= i) break;
                     ++i;
-                    var jo = (JObject)js.Deserialize(jtr);
+                    var jo = (JObject)localTimeJsonSerializer.Deserialize(jtr);
                     if (validate)
                     {
-                        var l = js4.Validate(jo);
+                        var l = js.Validate(jo);
                         if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"Budget {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"Budget {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
                     }
                     if (api)
@@ -3056,18 +3036,17 @@ namespace FolioConsoleApplication
             using (var jtw = new JsonTextWriter(sw))
             {
                 var s2 = Stopwatch.StartNew();
-                var js4 = JsonSchema.FromJsonAsync(sr.ReadToEndAsync().Result).Result;
-                var js = new JsonSerializer { Formatting = Formatting.Indented };
+                var js = JsonSchema.FromJsonAsync(sr.ReadToEndAsync().Result).Result;
                 jtw.WriteStartArray();
                 var i = 0;
-                foreach (var jo in api ? fsc.Budgets(where, orderBy, skip, take) : fdc.Budgets(where, null, orderBy, skip, take).Select(b => JObject.Parse(b.Content)))
+                foreach (var jo in api ? fsc.Budgets(where, orderBy, skip, take) : fdc.Budgets(where, null, orderBy, skip, take).Select(b => b.ToJObject()))
                 {
                     if (validate)
                     {
-                        var l = js4.Validate(jo);
+                        var l = js.Validate(jo);
                         if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"Budget {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"Budget {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
                     }
-                    if (!whatIf) js.Serialize(jtw, jo);
+                    if (!whatIf) (universalTime ? universalTimeJsonSerializer : localTimeJsonSerializer).Serialize(jtw, jo);
                     if (++i % 10000 == 0)
                     {
                         traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
@@ -3088,14 +3067,14 @@ namespace FolioConsoleApplication
             using (var jtw = new JsonTextWriter(Console.Out))
             {
                 jtw.WriteStartArray();
-                foreach (var jo in (api ? fsc.BudgetExpenseClasses(where, orderBy, skip, take) : fdc.BudgetExpenseClasses(where, null, orderBy, skip, take).Select(bec => JObject.Parse(bec.Content))).Select(jo =>
+                foreach (var jo in (api ? fsc.BudgetExpenseClasses(where, orderBy, skip, take) : fdc.BudgetExpenseClasses(where, null, orderBy, skip, take).Select(bec => bec.ToJObject())).Select(jo =>
                 {
                     return select == null ? jo : new JObject(select.Split(',').Select(s =>
                     {
                         var m = Regex.Match(s.Trim(), @"(?<Path>\S+)((?i) as (?<Name>.+))?", RegexOptions.Compiled);
                         return new JProperty(m.Groups["Name"].Success ? m.Groups["Name"].Value : m.Groups["Path"].Value.Split('.').Last(), jo.SelectToken(m.Groups["Path"].Value));
                     }));
-                })) jsonSerializer.Serialize(jtw, jo);
+                })) (universalTime ? universalTimeJsonSerializer : localTimeJsonSerializer).Serialize(jtw, jo);
                 jtw.WriteEndArray();
             }
         }
@@ -3142,18 +3121,17 @@ namespace FolioConsoleApplication
             using (var fsc = new FolioServiceClient(connectionString))
             {
                 var s2 = Stopwatch.StartNew();
-                var js4 = JsonSchema.FromJsonAsync(sr2.ReadToEndAsync().Result).Result;
-                var js = new JsonSerializer();
+                var js = JsonSchema.FromJsonAsync(sr2.ReadToEndAsync().Result).Result;
                 jtr.Read();
                 var i = 0;
                 while (jtr.Read() && jtr.TokenType != JsonToken.EndArray)
                 {
                     if (take != null && take <= i) break;
                     ++i;
-                    var jo = (JObject)js.Deserialize(jtr);
+                    var jo = (JObject)localTimeJsonSerializer.Deserialize(jtr);
                     if (validate)
                     {
-                        var l = js4.Validate(jo);
+                        var l = js.Validate(jo);
                         if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"BudgetExpenseClass {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"BudgetExpenseClass {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
                     }
                     if (api)
@@ -3197,18 +3175,17 @@ namespace FolioConsoleApplication
             using (var jtw = new JsonTextWriter(sw))
             {
                 var s2 = Stopwatch.StartNew();
-                var js4 = JsonSchema.FromJsonAsync(sr.ReadToEndAsync().Result).Result;
-                var js = new JsonSerializer { Formatting = Formatting.Indented };
+                var js = JsonSchema.FromJsonAsync(sr.ReadToEndAsync().Result).Result;
                 jtw.WriteStartArray();
                 var i = 0;
-                foreach (var jo in api ? fsc.BudgetExpenseClasses(where, orderBy, skip, take) : fdc.BudgetExpenseClasses(where, null, orderBy, skip, take).Select(bec => JObject.Parse(bec.Content)))
+                foreach (var jo in api ? fsc.BudgetExpenseClasses(where, orderBy, skip, take) : fdc.BudgetExpenseClasses(where, null, orderBy, skip, take).Select(bec => bec.ToJObject()))
                 {
                     if (validate)
                     {
-                        var l = js4.Validate(jo);
+                        var l = js.Validate(jo);
                         if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"BudgetExpenseClass {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"BudgetExpenseClass {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
                     }
-                    if (!whatIf) js.Serialize(jtw, jo);
+                    if (!whatIf) (universalTime ? universalTimeJsonSerializer : localTimeJsonSerializer).Serialize(jtw, jo);
                     if (++i % 10000 == 0)
                     {
                         traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
@@ -3229,14 +3206,14 @@ namespace FolioConsoleApplication
             using (var jtw = new JsonTextWriter(Console.Out))
             {
                 jtw.WriteStartArray();
-                foreach (var jo in (api ? fsc.BudgetGroups(where, orderBy, skip, take) : fdc.BudgetGroups(where, null, orderBy, skip, take).Select(bg => JObject.Parse(bg.Content))).Select(jo =>
+                foreach (var jo in (api ? fsc.BudgetGroups(where, orderBy, skip, take) : fdc.BudgetGroups(where, null, orderBy, skip, take).Select(bg => bg.ToJObject())).Select(jo =>
                 {
                     return select == null ? jo : new JObject(select.Split(',').Select(s =>
                     {
                         var m = Regex.Match(s.Trim(), @"(?<Path>\S+)((?i) as (?<Name>.+))?", RegexOptions.Compiled);
                         return new JProperty(m.Groups["Name"].Success ? m.Groups["Name"].Value : m.Groups["Path"].Value.Split('.').Last(), jo.SelectToken(m.Groups["Path"].Value));
                     }));
-                })) jsonSerializer.Serialize(jtw, jo);
+                })) (universalTime ? universalTimeJsonSerializer : localTimeJsonSerializer).Serialize(jtw, jo);
                 jtw.WriteEndArray();
             }
         }
@@ -3283,18 +3260,17 @@ namespace FolioConsoleApplication
             using (var fsc = new FolioServiceClient(connectionString))
             {
                 var s2 = Stopwatch.StartNew();
-                var js4 = JsonSchema.FromJsonAsync(sr2.ReadToEndAsync().Result).Result;
-                var js = new JsonSerializer();
+                var js = JsonSchema.FromJsonAsync(sr2.ReadToEndAsync().Result).Result;
                 jtr.Read();
                 var i = 0;
                 while (jtr.Read() && jtr.TokenType != JsonToken.EndArray)
                 {
                     if (take != null && take <= i) break;
                     ++i;
-                    var jo = (JObject)js.Deserialize(jtr);
+                    var jo = (JObject)localTimeJsonSerializer.Deserialize(jtr);
                     if (validate)
                     {
-                        var l = js4.Validate(jo);
+                        var l = js.Validate(jo);
                         if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"BudgetGroup {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"BudgetGroup {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
                     }
                     if (api)
@@ -3338,18 +3314,17 @@ namespace FolioConsoleApplication
             using (var jtw = new JsonTextWriter(sw))
             {
                 var s2 = Stopwatch.StartNew();
-                var js4 = JsonSchema.FromJsonAsync(sr.ReadToEndAsync().Result).Result;
-                var js = new JsonSerializer { Formatting = Formatting.Indented };
+                var js = JsonSchema.FromJsonAsync(sr.ReadToEndAsync().Result).Result;
                 jtw.WriteStartArray();
                 var i = 0;
-                foreach (var jo in api ? fsc.BudgetGroups(where, orderBy, skip, take) : fdc.BudgetGroups(where, null, orderBy, skip, take).Select(bg => JObject.Parse(bg.Content)))
+                foreach (var jo in api ? fsc.BudgetGroups(where, orderBy, skip, take) : fdc.BudgetGroups(where, null, orderBy, skip, take).Select(bg => bg.ToJObject()))
                 {
                     if (validate)
                     {
-                        var l = js4.Validate(jo);
+                        var l = js.Validate(jo);
                         if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"BudgetGroup {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"BudgetGroup {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
                     }
-                    if (!whatIf) js.Serialize(jtw, jo);
+                    if (!whatIf) (universalTime ? universalTimeJsonSerializer : localTimeJsonSerializer).Serialize(jtw, jo);
                     if (++i % 10000 == 0)
                     {
                         traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
@@ -3370,14 +3345,14 @@ namespace FolioConsoleApplication
             using (var jtw = new JsonTextWriter(Console.Out))
             {
                 jtw.WriteStartArray();
-                foreach (var jo in (api ? fsc.CallNumberTypes(where, orderBy, skip, take) : fdc.CallNumberTypes(where, null, orderBy, skip, take).Select(cnt => JObject.Parse(cnt.Content))).Select(jo =>
+                foreach (var jo in (api ? fsc.CallNumberTypes(where, orderBy, skip, take) : fdc.CallNumberTypes(where, null, orderBy, skip, take).Select(cnt => cnt.ToJObject())).Select(jo =>
                 {
                     return select == null ? jo : new JObject(select.Split(',').Select(s =>
                     {
                         var m = Regex.Match(s.Trim(), @"(?<Path>\S+)((?i) as (?<Name>.+))?", RegexOptions.Compiled);
                         return new JProperty(m.Groups["Name"].Success ? m.Groups["Name"].Value : m.Groups["Path"].Value.Split('.').Last(), jo.SelectToken(m.Groups["Path"].Value));
                     }));
-                })) jsonSerializer.Serialize(jtw, jo);
+                })) (universalTime ? universalTimeJsonSerializer : localTimeJsonSerializer).Serialize(jtw, jo);
                 jtw.WriteEndArray();
             }
         }
@@ -3424,18 +3399,17 @@ namespace FolioConsoleApplication
             using (var fsc = new FolioServiceClient(connectionString))
             {
                 var s2 = Stopwatch.StartNew();
-                var js4 = JsonSchema.FromJsonAsync(sr2.ReadToEndAsync().Result).Result;
-                var js = new JsonSerializer();
+                var js = JsonSchema.FromJsonAsync(sr2.ReadToEndAsync().Result).Result;
                 jtr.Read();
                 var i = 0;
                 while (jtr.Read() && jtr.TokenType != JsonToken.EndArray)
                 {
                     if (take != null && take <= i) break;
                     ++i;
-                    var jo = (JObject)js.Deserialize(jtr);
+                    var jo = (JObject)localTimeJsonSerializer.Deserialize(jtr);
                     if (validate)
                     {
-                        var l = js4.Validate(jo);
+                        var l = js.Validate(jo);
                         if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"CallNumberType {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"CallNumberType {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
                     }
                     if (api)
@@ -3479,18 +3453,17 @@ namespace FolioConsoleApplication
             using (var jtw = new JsonTextWriter(sw))
             {
                 var s2 = Stopwatch.StartNew();
-                var js4 = JsonSchema.FromJsonAsync(sr.ReadToEndAsync().Result).Result;
-                var js = new JsonSerializer { Formatting = Formatting.Indented };
+                var js = JsonSchema.FromJsonAsync(sr.ReadToEndAsync().Result).Result;
                 jtw.WriteStartArray();
                 var i = 0;
-                foreach (var jo in api ? fsc.CallNumberTypes(where, orderBy, skip, take) : fdc.CallNumberTypes(where, null, orderBy, skip, take).Select(cnt => JObject.Parse(cnt.Content)))
+                foreach (var jo in api ? fsc.CallNumberTypes(where, orderBy, skip, take) : fdc.CallNumberTypes(where, null, orderBy, skip, take).Select(cnt => cnt.ToJObject()))
                 {
                     if (validate)
                     {
-                        var l = js4.Validate(jo);
+                        var l = js.Validate(jo);
                         if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"CallNumberType {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"CallNumberType {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
                     }
-                    if (!whatIf) js.Serialize(jtw, jo);
+                    if (!whatIf) (universalTime ? universalTimeJsonSerializer : localTimeJsonSerializer).Serialize(jtw, jo);
                     if (++i % 10000 == 0)
                     {
                         traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
@@ -3511,14 +3484,14 @@ namespace FolioConsoleApplication
             using (var jtw = new JsonTextWriter(Console.Out))
             {
                 jtw.WriteStartArray();
-                foreach (var jo in (api ? fsc.Campuses(where, orderBy, skip, take) : fdc.Campuses(where, null, orderBy, skip, take).Select(c => JObject.Parse(c.Content))).Select(jo =>
+                foreach (var jo in (api ? fsc.Campuses(where, orderBy, skip, take) : fdc.Campuses(where, null, orderBy, skip, take).Select(c => c.ToJObject())).Select(jo =>
                 {
                     return select == null ? jo : new JObject(select.Split(',').Select(s =>
                     {
                         var m = Regex.Match(s.Trim(), @"(?<Path>\S+)((?i) as (?<Name>.+))?", RegexOptions.Compiled);
                         return new JProperty(m.Groups["Name"].Success ? m.Groups["Name"].Value : m.Groups["Path"].Value.Split('.').Last(), jo.SelectToken(m.Groups["Path"].Value));
                     }));
-                })) jsonSerializer.Serialize(jtw, jo);
+                })) (universalTime ? universalTimeJsonSerializer : localTimeJsonSerializer).Serialize(jtw, jo);
                 jtw.WriteEndArray();
             }
         }
@@ -3565,18 +3538,17 @@ namespace FolioConsoleApplication
             using (var fsc = new FolioServiceClient(connectionString))
             {
                 var s2 = Stopwatch.StartNew();
-                var js4 = JsonSchema.FromJsonAsync(sr2.ReadToEndAsync().Result).Result;
-                var js = new JsonSerializer();
+                var js = JsonSchema.FromJsonAsync(sr2.ReadToEndAsync().Result).Result;
                 jtr.Read();
                 var i = 0;
                 while (jtr.Read() && jtr.TokenType != JsonToken.EndArray)
                 {
                     if (take != null && take <= i) break;
                     ++i;
-                    var jo = (JObject)js.Deserialize(jtr);
+                    var jo = (JObject)localTimeJsonSerializer.Deserialize(jtr);
                     if (validate)
                     {
-                        var l = js4.Validate(jo);
+                        var l = js.Validate(jo);
                         if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"Campus {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"Campus {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
                     }
                     if (api)
@@ -3620,18 +3592,17 @@ namespace FolioConsoleApplication
             using (var jtw = new JsonTextWriter(sw))
             {
                 var s2 = Stopwatch.StartNew();
-                var js4 = JsonSchema.FromJsonAsync(sr.ReadToEndAsync().Result).Result;
-                var js = new JsonSerializer { Formatting = Formatting.Indented };
+                var js = JsonSchema.FromJsonAsync(sr.ReadToEndAsync().Result).Result;
                 jtw.WriteStartArray();
                 var i = 0;
-                foreach (var jo in api ? fsc.Campuses(where, orderBy, skip, take) : fdc.Campuses(where, null, orderBy, skip, take).Select(c => JObject.Parse(c.Content)))
+                foreach (var jo in api ? fsc.Campuses(where, orderBy, skip, take) : fdc.Campuses(where, null, orderBy, skip, take).Select(c => c.ToJObject()))
                 {
                     if (validate)
                     {
-                        var l = js4.Validate(jo);
+                        var l = js.Validate(jo);
                         if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"Campus {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"Campus {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
                     }
-                    if (!whatIf) js.Serialize(jtw, jo);
+                    if (!whatIf) (universalTime ? universalTimeJsonSerializer : localTimeJsonSerializer).Serialize(jtw, jo);
                     if (++i % 10000 == 0)
                     {
                         traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
@@ -3652,14 +3623,14 @@ namespace FolioConsoleApplication
             using (var jtw = new JsonTextWriter(Console.Out))
             {
                 jtw.WriteStartArray();
-                foreach (var jo in (api ? fsc.CancellationReasons(where, orderBy, skip, take) : fdc.CancellationReasons(where, null, orderBy, skip, take).Select(cr => JObject.Parse(cr.Content))).Select(jo =>
+                foreach (var jo in (api ? fsc.CancellationReasons(where, orderBy, skip, take) : fdc.CancellationReasons(where, null, orderBy, skip, take).Select(cr => cr.ToJObject())).Select(jo =>
                 {
                     return select == null ? jo : new JObject(select.Split(',').Select(s =>
                     {
                         var m = Regex.Match(s.Trim(), @"(?<Path>\S+)((?i) as (?<Name>.+))?", RegexOptions.Compiled);
                         return new JProperty(m.Groups["Name"].Success ? m.Groups["Name"].Value : m.Groups["Path"].Value.Split('.').Last(), jo.SelectToken(m.Groups["Path"].Value));
                     }));
-                })) jsonSerializer.Serialize(jtw, jo);
+                })) (universalTime ? universalTimeJsonSerializer : localTimeJsonSerializer).Serialize(jtw, jo);
                 jtw.WriteEndArray();
             }
         }
@@ -3706,18 +3677,17 @@ namespace FolioConsoleApplication
             using (var fsc = new FolioServiceClient(connectionString))
             {
                 var s2 = Stopwatch.StartNew();
-                var js4 = JsonSchema.FromJsonAsync(sr2.ReadToEndAsync().Result).Result;
-                var js = new JsonSerializer();
+                var js = JsonSchema.FromJsonAsync(sr2.ReadToEndAsync().Result).Result;
                 jtr.Read();
                 var i = 0;
                 while (jtr.Read() && jtr.TokenType != JsonToken.EndArray)
                 {
                     if (take != null && take <= i) break;
                     ++i;
-                    var jo = (JObject)js.Deserialize(jtr);
+                    var jo = (JObject)localTimeJsonSerializer.Deserialize(jtr);
                     if (validate)
                     {
-                        var l = js4.Validate(jo);
+                        var l = js.Validate(jo);
                         if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"CancellationReason {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"CancellationReason {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
                     }
                     if (api)
@@ -3761,18 +3731,17 @@ namespace FolioConsoleApplication
             using (var jtw = new JsonTextWriter(sw))
             {
                 var s2 = Stopwatch.StartNew();
-                var js4 = JsonSchema.FromJsonAsync(sr.ReadToEndAsync().Result).Result;
-                var js = new JsonSerializer { Formatting = Formatting.Indented };
+                var js = JsonSchema.FromJsonAsync(sr.ReadToEndAsync().Result).Result;
                 jtw.WriteStartArray();
                 var i = 0;
-                foreach (var jo in api ? fsc.CancellationReasons(where, orderBy, skip, take) : fdc.CancellationReasons(where, null, orderBy, skip, take).Select(cr => JObject.Parse(cr.Content)))
+                foreach (var jo in api ? fsc.CancellationReasons(where, orderBy, skip, take) : fdc.CancellationReasons(where, null, orderBy, skip, take).Select(cr => cr.ToJObject()))
                 {
                     if (validate)
                     {
-                        var l = js4.Validate(jo);
+                        var l = js.Validate(jo);
                         if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"CancellationReason {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"CancellationReason {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
                     }
-                    if (!whatIf) js.Serialize(jtw, jo);
+                    if (!whatIf) (universalTime ? universalTimeJsonSerializer : localTimeJsonSerializer).Serialize(jtw, jo);
                     if (++i % 10000 == 0)
                     {
                         traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
@@ -3793,14 +3762,14 @@ namespace FolioConsoleApplication
             using (var jtw = new JsonTextWriter(Console.Out))
             {
                 jtw.WriteStartArray();
-                foreach (var jo in (api ? fsc.Categories(where, orderBy, skip, take) : fdc.Categories(where, null, orderBy, skip, take).Select(c => JObject.Parse(c.Content))).Select(jo =>
+                foreach (var jo in (api ? fsc.Categories(where, orderBy, skip, take) : fdc.Categories(where, null, orderBy, skip, take).Select(c => c.ToJObject())).Select(jo =>
                 {
                     return select == null ? jo : new JObject(select.Split(',').Select(s =>
                     {
                         var m = Regex.Match(s.Trim(), @"(?<Path>\S+)((?i) as (?<Name>.+))?", RegexOptions.Compiled);
                         return new JProperty(m.Groups["Name"].Success ? m.Groups["Name"].Value : m.Groups["Path"].Value.Split('.').Last(), jo.SelectToken(m.Groups["Path"].Value));
                     }));
-                })) jsonSerializer.Serialize(jtw, jo);
+                })) (universalTime ? universalTimeJsonSerializer : localTimeJsonSerializer).Serialize(jtw, jo);
                 jtw.WriteEndArray();
             }
         }
@@ -3847,18 +3816,17 @@ namespace FolioConsoleApplication
             using (var fsc = new FolioServiceClient(connectionString))
             {
                 var s2 = Stopwatch.StartNew();
-                var js4 = JsonSchema.FromJsonAsync(sr2.ReadToEndAsync().Result).Result;
-                var js = new JsonSerializer();
+                var js = JsonSchema.FromJsonAsync(sr2.ReadToEndAsync().Result).Result;
                 jtr.Read();
                 var i = 0;
                 while (jtr.Read() && jtr.TokenType != JsonToken.EndArray)
                 {
                     if (take != null && take <= i) break;
                     ++i;
-                    var jo = (JObject)js.Deserialize(jtr);
+                    var jo = (JObject)localTimeJsonSerializer.Deserialize(jtr);
                     if (validate)
                     {
-                        var l = js4.Validate(jo);
+                        var l = js.Validate(jo);
                         if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"Category {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"Category {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
                     }
                     if (api)
@@ -3902,18 +3870,17 @@ namespace FolioConsoleApplication
             using (var jtw = new JsonTextWriter(sw))
             {
                 var s2 = Stopwatch.StartNew();
-                var js4 = JsonSchema.FromJsonAsync(sr.ReadToEndAsync().Result).Result;
-                var js = new JsonSerializer { Formatting = Formatting.Indented };
+                var js = JsonSchema.FromJsonAsync(sr.ReadToEndAsync().Result).Result;
                 jtw.WriteStartArray();
                 var i = 0;
-                foreach (var jo in api ? fsc.Categories(where, orderBy, skip, take) : fdc.Categories(where, null, orderBy, skip, take).Select(c => JObject.Parse(c.Content)))
+                foreach (var jo in api ? fsc.Categories(where, orderBy, skip, take) : fdc.Categories(where, null, orderBy, skip, take).Select(c => c.ToJObject()))
                 {
                     if (validate)
                     {
-                        var l = js4.Validate(jo);
+                        var l = js.Validate(jo);
                         if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"Category {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"Category {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
                     }
-                    if (!whatIf) js.Serialize(jtw, jo);
+                    if (!whatIf) (universalTime ? universalTimeJsonSerializer : localTimeJsonSerializer).Serialize(jtw, jo);
                     if (++i % 10000 == 0)
                     {
                         traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
@@ -3934,14 +3901,14 @@ namespace FolioConsoleApplication
             using (var jtw = new JsonTextWriter(Console.Out))
             {
                 jtw.WriteStartArray();
-                foreach (var jo in (api ? fsc.CheckIns(where, orderBy, skip, take) : fdc.CheckIns(where, null, orderBy, skip, take).Select(ci => JObject.Parse(ci.Content))).Select(jo =>
+                foreach (var jo in (api ? fsc.CheckIns(where, orderBy, skip, take) : fdc.CheckIns(where, null, orderBy, skip, take).Select(ci => ci.ToJObject())).Select(jo =>
                 {
                     return select == null ? jo : new JObject(select.Split(',').Select(s =>
                     {
                         var m = Regex.Match(s.Trim(), @"(?<Path>\S+)((?i) as (?<Name>.+))?", RegexOptions.Compiled);
                         return new JProperty(m.Groups["Name"].Success ? m.Groups["Name"].Value : m.Groups["Path"].Value.Split('.').Last(), jo.SelectToken(m.Groups["Path"].Value));
                     }));
-                })) jsonSerializer.Serialize(jtw, jo);
+                })) (universalTime ? universalTimeJsonSerializer : localTimeJsonSerializer).Serialize(jtw, jo);
                 jtw.WriteEndArray();
             }
         }
@@ -3988,18 +3955,17 @@ namespace FolioConsoleApplication
             using (var fsc = new FolioServiceClient(connectionString))
             {
                 var s2 = Stopwatch.StartNew();
-                var js4 = JsonSchema.FromJsonAsync(sr2.ReadToEndAsync().Result).Result;
-                var js = new JsonSerializer();
+                var js = JsonSchema.FromJsonAsync(sr2.ReadToEndAsync().Result).Result;
                 jtr.Read();
                 var i = 0;
                 while (jtr.Read() && jtr.TokenType != JsonToken.EndArray)
                 {
                     if (take != null && take <= i) break;
                     ++i;
-                    var jo = (JObject)js.Deserialize(jtr);
+                    var jo = (JObject)localTimeJsonSerializer.Deserialize(jtr);
                     if (validate)
                     {
-                        var l = js4.Validate(jo);
+                        var l = js.Validate(jo);
                         if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"CheckIn {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"CheckIn {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
                     }
                     if (api)
@@ -4043,18 +4009,17 @@ namespace FolioConsoleApplication
             using (var jtw = new JsonTextWriter(sw))
             {
                 var s2 = Stopwatch.StartNew();
-                var js4 = JsonSchema.FromJsonAsync(sr.ReadToEndAsync().Result).Result;
-                var js = new JsonSerializer { Formatting = Formatting.Indented };
+                var js = JsonSchema.FromJsonAsync(sr.ReadToEndAsync().Result).Result;
                 jtw.WriteStartArray();
                 var i = 0;
-                foreach (var jo in api ? fsc.CheckIns(where, orderBy, skip, take) : fdc.CheckIns(where, null, orderBy, skip, take).Select(ci => JObject.Parse(ci.Content)))
+                foreach (var jo in api ? fsc.CheckIns(where, orderBy, skip, take) : fdc.CheckIns(where, null, orderBy, skip, take).Select(ci => ci.ToJObject()))
                 {
                     if (validate)
                     {
-                        var l = js4.Validate(jo);
+                        var l = js.Validate(jo);
                         if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"CheckIn {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"CheckIn {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
                     }
-                    if (!whatIf) js.Serialize(jtw, jo);
+                    if (!whatIf) (universalTime ? universalTimeJsonSerializer : localTimeJsonSerializer).Serialize(jtw, jo);
                     if (++i % 10000 == 0)
                     {
                         traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
@@ -4075,14 +4040,14 @@ namespace FolioConsoleApplication
             using (var jtw = new JsonTextWriter(Console.Out))
             {
                 jtw.WriteStartArray();
-                foreach (var jo in (api ? new[] { fsc.GetCirculationRule() } : fdc.CirculationRules(where, null, orderBy, skip, take).Select(cr => JObject.Parse(cr.Content))).Select(jo =>
+                foreach (var jo in (api ? new[] { fsc.GetCirculationRule() } : fdc.CirculationRules(where, null, orderBy, skip, take).Select(cr => cr.ToJObject())).Select(jo =>
                 {
                     return select == null ? jo : new JObject(select.Split(',').Select(s =>
                     {
                         var m = Regex.Match(s.Trim(), @"(?<Path>\S+)((?i) as (?<Name>.+))?", RegexOptions.Compiled);
                         return new JProperty(m.Groups["Name"].Success ? m.Groups["Name"].Value : m.Groups["Path"].Value.Split('.').Last(), jo.SelectToken(m.Groups["Path"].Value));
                     }));
-                })) jsonSerializer.Serialize(jtw, jo);
+                })) (universalTime ? universalTimeJsonSerializer : localTimeJsonSerializer).Serialize(jtw, jo);
                 jtw.WriteEndArray();
             }
         }
@@ -4118,18 +4083,17 @@ namespace FolioConsoleApplication
             using (var fsc = new FolioServiceClient(connectionString))
             {
                 var s2 = Stopwatch.StartNew();
-                var js4 = JsonSchema.FromJsonAsync(sr2.ReadToEndAsync().Result).Result;
-                var js = new JsonSerializer();
+                var js = JsonSchema.FromJsonAsync(sr2.ReadToEndAsync().Result).Result;
                 jtr.Read();
                 var i = 0;
                 while (jtr.Read() && jtr.TokenType != JsonToken.EndArray)
                 {
                     if (take != null && take <= i) break;
                     ++i;
-                    var jo = (JObject)js.Deserialize(jtr);
+                    var jo = (JObject)localTimeJsonSerializer.Deserialize(jtr);
                     if (validate)
                     {
-                        var l = js4.Validate(jo);
+                        var l = js.Validate(jo);
                         if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"CirculationRule {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"CirculationRule {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
                     }
                     if (api)
@@ -4173,18 +4137,17 @@ namespace FolioConsoleApplication
             using (var jtw = new JsonTextWriter(sw))
             {
                 var s2 = Stopwatch.StartNew();
-                var js4 = JsonSchema.FromJsonAsync(sr.ReadToEndAsync().Result).Result;
-                var js = new JsonSerializer { Formatting = Formatting.Indented };
+                var js = JsonSchema.FromJsonAsync(sr.ReadToEndAsync().Result).Result;
                 jtw.WriteStartArray();
                 var i = 0;
-                foreach (var jo in api ? new[] { fsc.GetCirculationRule() } : fdc.CirculationRules(where, null, orderBy, skip, take).Select(cr => JObject.Parse(cr.Content)))
+                foreach (var jo in api ? new[] { fsc.GetCirculationRule() } : fdc.CirculationRules(where, null, orderBy, skip, take).Select(cr => cr.ToJObject()))
                 {
                     if (validate)
                     {
-                        var l = js4.Validate(jo);
+                        var l = js.Validate(jo);
                         if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"CirculationRule {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"CirculationRule {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
                     }
-                    if (!whatIf) js.Serialize(jtw, jo);
+                    if (!whatIf) (universalTime ? universalTimeJsonSerializer : localTimeJsonSerializer).Serialize(jtw, jo);
                     if (++i % 10000 == 0)
                     {
                         traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
@@ -4205,14 +4168,14 @@ namespace FolioConsoleApplication
             using (var jtw = new JsonTextWriter(Console.Out))
             {
                 jtw.WriteStartArray();
-                foreach (var jo in (api ? fsc.ClassificationTypes(where, orderBy, skip, take) : fdc.ClassificationTypes(where, null, orderBy, skip, take).Select(ct => JObject.Parse(ct.Content))).Select(jo =>
+                foreach (var jo in (api ? fsc.ClassificationTypes(where, orderBy, skip, take) : fdc.ClassificationTypes(where, null, orderBy, skip, take).Select(ct => ct.ToJObject())).Select(jo =>
                 {
                     return select == null ? jo : new JObject(select.Split(',').Select(s =>
                     {
                         var m = Regex.Match(s.Trim(), @"(?<Path>\S+)((?i) as (?<Name>.+))?", RegexOptions.Compiled);
                         return new JProperty(m.Groups["Name"].Success ? m.Groups["Name"].Value : m.Groups["Path"].Value.Split('.').Last(), jo.SelectToken(m.Groups["Path"].Value));
                     }));
-                })) jsonSerializer.Serialize(jtw, jo);
+                })) (universalTime ? universalTimeJsonSerializer : localTimeJsonSerializer).Serialize(jtw, jo);
                 jtw.WriteEndArray();
             }
         }
@@ -4259,18 +4222,17 @@ namespace FolioConsoleApplication
             using (var fsc = new FolioServiceClient(connectionString))
             {
                 var s2 = Stopwatch.StartNew();
-                var js4 = JsonSchema.FromJsonAsync(sr2.ReadToEndAsync().Result).Result;
-                var js = new JsonSerializer();
+                var js = JsonSchema.FromJsonAsync(sr2.ReadToEndAsync().Result).Result;
                 jtr.Read();
                 var i = 0;
                 while (jtr.Read() && jtr.TokenType != JsonToken.EndArray)
                 {
                     if (take != null && take <= i) break;
                     ++i;
-                    var jo = (JObject)js.Deserialize(jtr);
+                    var jo = (JObject)localTimeJsonSerializer.Deserialize(jtr);
                     if (validate)
                     {
-                        var l = js4.Validate(jo);
+                        var l = js.Validate(jo);
                         if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"ClassificationType {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"ClassificationType {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
                     }
                     if (api)
@@ -4314,18 +4276,17 @@ namespace FolioConsoleApplication
             using (var jtw = new JsonTextWriter(sw))
             {
                 var s2 = Stopwatch.StartNew();
-                var js4 = JsonSchema.FromJsonAsync(sr.ReadToEndAsync().Result).Result;
-                var js = new JsonSerializer { Formatting = Formatting.Indented };
+                var js = JsonSchema.FromJsonAsync(sr.ReadToEndAsync().Result).Result;
                 jtw.WriteStartArray();
                 var i = 0;
-                foreach (var jo in api ? fsc.ClassificationTypes(where, orderBy, skip, take) : fdc.ClassificationTypes(where, null, orderBy, skip, take).Select(ct => JObject.Parse(ct.Content)))
+                foreach (var jo in api ? fsc.ClassificationTypes(where, orderBy, skip, take) : fdc.ClassificationTypes(where, null, orderBy, skip, take).Select(ct => ct.ToJObject()))
                 {
                     if (validate)
                     {
-                        var l = js4.Validate(jo);
+                        var l = js.Validate(jo);
                         if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"ClassificationType {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"ClassificationType {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
                     }
-                    if (!whatIf) js.Serialize(jtw, jo);
+                    if (!whatIf) (universalTime ? universalTimeJsonSerializer : localTimeJsonSerializer).Serialize(jtw, jo);
                     if (++i % 10000 == 0)
                     {
                         traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
@@ -4346,14 +4307,14 @@ namespace FolioConsoleApplication
             using (var jtw = new JsonTextWriter(Console.Out))
             {
                 jtw.WriteStartArray();
-                foreach (var jo in (api ? fsc.CloseReasons(where, orderBy, skip, take) : fdc.CloseReasons(where, null, orderBy, skip, take).Select(cr => JObject.Parse(cr.Content))).Select(jo =>
+                foreach (var jo in (api ? fsc.CloseReasons(where, orderBy, skip, take) : fdc.CloseReasons(where, null, orderBy, skip, take).Select(cr => cr.ToJObject())).Select(jo =>
                 {
                     return select == null ? jo : new JObject(select.Split(',').Select(s =>
                     {
                         var m = Regex.Match(s.Trim(), @"(?<Path>\S+)((?i) as (?<Name>.+))?", RegexOptions.Compiled);
                         return new JProperty(m.Groups["Name"].Success ? m.Groups["Name"].Value : m.Groups["Path"].Value.Split('.').Last(), jo.SelectToken(m.Groups["Path"].Value));
                     }));
-                })) jsonSerializer.Serialize(jtw, jo);
+                })) (universalTime ? universalTimeJsonSerializer : localTimeJsonSerializer).Serialize(jtw, jo);
                 jtw.WriteEndArray();
             }
         }
@@ -4400,18 +4361,17 @@ namespace FolioConsoleApplication
             using (var fsc = new FolioServiceClient(connectionString))
             {
                 var s2 = Stopwatch.StartNew();
-                var js4 = JsonSchema.FromJsonAsync(sr2.ReadToEndAsync().Result).Result;
-                var js = new JsonSerializer();
+                var js = JsonSchema.FromJsonAsync(sr2.ReadToEndAsync().Result).Result;
                 jtr.Read();
                 var i = 0;
                 while (jtr.Read() && jtr.TokenType != JsonToken.EndArray)
                 {
                     if (take != null && take <= i) break;
                     ++i;
-                    var jo = (JObject)js.Deserialize(jtr);
+                    var jo = (JObject)localTimeJsonSerializer.Deserialize(jtr);
                     if (validate)
                     {
-                        var l = js4.Validate(jo);
+                        var l = js.Validate(jo);
                         if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"CloseReason {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"CloseReason {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
                     }
                     if (api)
@@ -4455,18 +4415,17 @@ namespace FolioConsoleApplication
             using (var jtw = new JsonTextWriter(sw))
             {
                 var s2 = Stopwatch.StartNew();
-                var js4 = JsonSchema.FromJsonAsync(sr.ReadToEndAsync().Result).Result;
-                var js = new JsonSerializer { Formatting = Formatting.Indented };
+                var js = JsonSchema.FromJsonAsync(sr.ReadToEndAsync().Result).Result;
                 jtw.WriteStartArray();
                 var i = 0;
-                foreach (var jo in api ? fsc.CloseReasons(where, orderBy, skip, take) : fdc.CloseReasons(where, null, orderBy, skip, take).Select(cr => JObject.Parse(cr.Content)))
+                foreach (var jo in api ? fsc.CloseReasons(where, orderBy, skip, take) : fdc.CloseReasons(where, null, orderBy, skip, take).Select(cr => cr.ToJObject()))
                 {
                     if (validate)
                     {
-                        var l = js4.Validate(jo);
+                        var l = js.Validate(jo);
                         if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"CloseReason {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"CloseReason {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
                     }
-                    if (!whatIf) js.Serialize(jtw, jo);
+                    if (!whatIf) (universalTime ? universalTimeJsonSerializer : localTimeJsonSerializer).Serialize(jtw, jo);
                     if (++i % 10000 == 0)
                     {
                         traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
@@ -4487,14 +4446,14 @@ namespace FolioConsoleApplication
             using (var jtw = new JsonTextWriter(Console.Out))
             {
                 jtw.WriteStartArray();
-                foreach (var jo in (api ? fsc.Comments(where, orderBy, skip, take) : fdc.Comments(where, null, orderBy, skip, take).Select(c => JObject.Parse(c.Content))).Select(jo =>
+                foreach (var jo in (api ? fsc.Comments(where, orderBy, skip, take) : fdc.Comments(where, null, orderBy, skip, take).Select(c => c.ToJObject())).Select(jo =>
                 {
                     return select == null ? jo : new JObject(select.Split(',').Select(s =>
                     {
                         var m = Regex.Match(s.Trim(), @"(?<Path>\S+)((?i) as (?<Name>.+))?", RegexOptions.Compiled);
                         return new JProperty(m.Groups["Name"].Success ? m.Groups["Name"].Value : m.Groups["Path"].Value.Split('.').Last(), jo.SelectToken(m.Groups["Path"].Value));
                     }));
-                })) jsonSerializer.Serialize(jtw, jo);
+                })) (universalTime ? universalTimeJsonSerializer : localTimeJsonSerializer).Serialize(jtw, jo);
                 jtw.WriteEndArray();
             }
         }
@@ -4541,18 +4500,17 @@ namespace FolioConsoleApplication
             using (var fsc = new FolioServiceClient(connectionString))
             {
                 var s2 = Stopwatch.StartNew();
-                var js4 = JsonSchema.FromJsonAsync(sr2.ReadToEndAsync().Result).Result;
-                var js = new JsonSerializer();
+                var js = JsonSchema.FromJsonAsync(sr2.ReadToEndAsync().Result).Result;
                 jtr.Read();
                 var i = 0;
                 while (jtr.Read() && jtr.TokenType != JsonToken.EndArray)
                 {
                     if (take != null && take <= i) break;
                     ++i;
-                    var jo = (JObject)js.Deserialize(jtr);
+                    var jo = (JObject)localTimeJsonSerializer.Deserialize(jtr);
                     if (validate)
                     {
-                        var l = js4.Validate(jo);
+                        var l = js.Validate(jo);
                         if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"Comment {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"Comment {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
                     }
                     if (api)
@@ -4596,18 +4554,17 @@ namespace FolioConsoleApplication
             using (var jtw = new JsonTextWriter(sw))
             {
                 var s2 = Stopwatch.StartNew();
-                var js4 = JsonSchema.FromJsonAsync(sr.ReadToEndAsync().Result).Result;
-                var js = new JsonSerializer { Formatting = Formatting.Indented };
+                var js = JsonSchema.FromJsonAsync(sr.ReadToEndAsync().Result).Result;
                 jtw.WriteStartArray();
                 var i = 0;
-                foreach (var jo in api ? fsc.Comments(where, orderBy, skip, take) : fdc.Comments(where, null, orderBy, skip, take).Select(c => JObject.Parse(c.Content)))
+                foreach (var jo in api ? fsc.Comments(where, orderBy, skip, take) : fdc.Comments(where, null, orderBy, skip, take).Select(c => c.ToJObject()))
                 {
                     if (validate)
                     {
-                        var l = js4.Validate(jo);
+                        var l = js.Validate(jo);
                         if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"Comment {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"Comment {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
                     }
-                    if (!whatIf) js.Serialize(jtw, jo);
+                    if (!whatIf) (universalTime ? universalTimeJsonSerializer : localTimeJsonSerializer).Serialize(jtw, jo);
                     if (++i % 10000 == 0)
                     {
                         traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
@@ -4628,14 +4585,14 @@ namespace FolioConsoleApplication
             using (var jtw = new JsonTextWriter(Console.Out))
             {
                 jtw.WriteStartArray();
-                foreach (var jo in (api ? fsc.Configurations(where, orderBy, skip, take) : fdc.Configurations(where, null, orderBy, skip, take).Select(c => JObject.Parse(c.Content))).Select(jo =>
+                foreach (var jo in (api ? fsc.Configurations(where, orderBy, skip, take) : fdc.Configurations(where, null, orderBy, skip, take).Select(c => c.ToJObject())).Select(jo =>
                 {
                     return select == null ? jo : new JObject(select.Split(',').Select(s =>
                     {
                         var m = Regex.Match(s.Trim(), @"(?<Path>\S+)((?i) as (?<Name>.+))?", RegexOptions.Compiled);
                         return new JProperty(m.Groups["Name"].Success ? m.Groups["Name"].Value : m.Groups["Path"].Value.Split('.').Last(), jo.SelectToken(m.Groups["Path"].Value));
                     }));
-                })) jsonSerializer.Serialize(jtw, jo);
+                })) (universalTime ? universalTimeJsonSerializer : localTimeJsonSerializer).Serialize(jtw, jo);
                 jtw.WriteEndArray();
             }
         }
@@ -4682,18 +4639,17 @@ namespace FolioConsoleApplication
             using (var fsc = new FolioServiceClient(connectionString))
             {
                 var s2 = Stopwatch.StartNew();
-                var js4 = JsonSchema.FromJsonAsync(sr2.ReadToEndAsync().Result).Result;
-                var js = new JsonSerializer();
+                var js = JsonSchema.FromJsonAsync(sr2.ReadToEndAsync().Result).Result;
                 jtr.Read();
                 var i = 0;
                 while (jtr.Read() && jtr.TokenType != JsonToken.EndArray)
                 {
                     if (take != null && take <= i) break;
                     ++i;
-                    var jo = (JObject)js.Deserialize(jtr);
+                    var jo = (JObject)localTimeJsonSerializer.Deserialize(jtr);
                     if (validate)
                     {
-                        var l = js4.Validate(jo);
+                        var l = js.Validate(jo);
                         if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"Configuration {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"Configuration {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
                     }
                     if (api)
@@ -4737,18 +4693,17 @@ namespace FolioConsoleApplication
             using (var jtw = new JsonTextWriter(sw))
             {
                 var s2 = Stopwatch.StartNew();
-                var js4 = JsonSchema.FromJsonAsync(sr.ReadToEndAsync().Result).Result;
-                var js = new JsonSerializer { Formatting = Formatting.Indented };
+                var js = JsonSchema.FromJsonAsync(sr.ReadToEndAsync().Result).Result;
                 jtw.WriteStartArray();
                 var i = 0;
-                foreach (var jo in api ? fsc.Configurations(where, orderBy, skip, take) : fdc.Configurations(where, null, orderBy, skip, take).Select(c => JObject.Parse(c.Content)))
+                foreach (var jo in api ? fsc.Configurations(where, orderBy, skip, take) : fdc.Configurations(where, null, orderBy, skip, take).Select(c => c.ToJObject()))
                 {
                     if (validate)
                     {
-                        var l = js4.Validate(jo);
+                        var l = js.Validate(jo);
                         if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"Configuration {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"Configuration {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
                     }
-                    if (!whatIf) js.Serialize(jtw, jo);
+                    if (!whatIf) (universalTime ? universalTimeJsonSerializer : localTimeJsonSerializer).Serialize(jtw, jo);
                     if (++i % 10000 == 0)
                     {
                         traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
@@ -4769,14 +4724,14 @@ namespace FolioConsoleApplication
             using (var jtw = new JsonTextWriter(Console.Out))
             {
                 jtw.WriteStartArray();
-                foreach (var jo in (api ? fsc.Contacts(where, orderBy, skip, take) : fdc.Contacts(where, null, orderBy, skip, take).Select(c => JObject.Parse(c.Content))).Select(jo =>
+                foreach (var jo in (api ? fsc.Contacts(where, orderBy, skip, take) : fdc.Contacts(where, null, orderBy, skip, take).Select(c => c.ToJObject())).Select(jo =>
                 {
                     return select == null ? jo : new JObject(select.Split(',').Select(s =>
                     {
                         var m = Regex.Match(s.Trim(), @"(?<Path>\S+)((?i) as (?<Name>.+))?", RegexOptions.Compiled);
                         return new JProperty(m.Groups["Name"].Success ? m.Groups["Name"].Value : m.Groups["Path"].Value.Split('.').Last(), jo.SelectToken(m.Groups["Path"].Value));
                     }));
-                })) jsonSerializer.Serialize(jtw, jo);
+                })) (universalTime ? universalTimeJsonSerializer : localTimeJsonSerializer).Serialize(jtw, jo);
                 jtw.WriteEndArray();
             }
         }
@@ -4823,18 +4778,17 @@ namespace FolioConsoleApplication
             using (var fsc = new FolioServiceClient(connectionString))
             {
                 var s2 = Stopwatch.StartNew();
-                var js4 = JsonSchema.FromJsonAsync(sr2.ReadToEndAsync().Result).Result;
-                var js = new JsonSerializer();
+                var js = JsonSchema.FromJsonAsync(sr2.ReadToEndAsync().Result).Result;
                 jtr.Read();
                 var i = 0;
                 while (jtr.Read() && jtr.TokenType != JsonToken.EndArray)
                 {
                     if (take != null && take <= i) break;
                     ++i;
-                    var jo = (JObject)js.Deserialize(jtr);
+                    var jo = (JObject)localTimeJsonSerializer.Deserialize(jtr);
                     if (validate)
                     {
-                        var l = js4.Validate(jo);
+                        var l = js.Validate(jo);
                         if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"Contact {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"Contact {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
                     }
                     if (api)
@@ -4878,18 +4832,17 @@ namespace FolioConsoleApplication
             using (var jtw = new JsonTextWriter(sw))
             {
                 var s2 = Stopwatch.StartNew();
-                var js4 = JsonSchema.FromJsonAsync(sr.ReadToEndAsync().Result).Result;
-                var js = new JsonSerializer { Formatting = Formatting.Indented };
+                var js = JsonSchema.FromJsonAsync(sr.ReadToEndAsync().Result).Result;
                 jtw.WriteStartArray();
                 var i = 0;
-                foreach (var jo in api ? fsc.Contacts(where, orderBy, skip, take) : fdc.Contacts(where, null, orderBy, skip, take).Select(c => JObject.Parse(c.Content)))
+                foreach (var jo in api ? fsc.Contacts(where, orderBy, skip, take) : fdc.Contacts(where, null, orderBy, skip, take).Select(c => c.ToJObject()))
                 {
                     if (validate)
                     {
-                        var l = js4.Validate(jo);
+                        var l = js.Validate(jo);
                         if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"Contact {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"Contact {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
                     }
-                    if (!whatIf) js.Serialize(jtw, jo);
+                    if (!whatIf) (universalTime ? universalTimeJsonSerializer : localTimeJsonSerializer).Serialize(jtw, jo);
                     if (++i % 10000 == 0)
                     {
                         traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
@@ -4910,14 +4863,14 @@ namespace FolioConsoleApplication
             using (var jtw = new JsonTextWriter(Console.Out))
             {
                 jtw.WriteStartArray();
-                foreach (var jo in (api ? fsc.ContributorNameTypes(where, orderBy, skip, take) : fdc.ContributorNameTypes(where, null, orderBy, skip, take).Select(cnt => JObject.Parse(cnt.Content))).Select(jo =>
+                foreach (var jo in (api ? fsc.ContributorNameTypes(where, orderBy, skip, take) : fdc.ContributorNameTypes(where, null, orderBy, skip, take).Select(cnt => cnt.ToJObject())).Select(jo =>
                 {
                     return select == null ? jo : new JObject(select.Split(',').Select(s =>
                     {
                         var m = Regex.Match(s.Trim(), @"(?<Path>\S+)((?i) as (?<Name>.+))?", RegexOptions.Compiled);
                         return new JProperty(m.Groups["Name"].Success ? m.Groups["Name"].Value : m.Groups["Path"].Value.Split('.').Last(), jo.SelectToken(m.Groups["Path"].Value));
                     }));
-                })) jsonSerializer.Serialize(jtw, jo);
+                })) (universalTime ? universalTimeJsonSerializer : localTimeJsonSerializer).Serialize(jtw, jo);
                 jtw.WriteEndArray();
             }
         }
@@ -4964,18 +4917,17 @@ namespace FolioConsoleApplication
             using (var fsc = new FolioServiceClient(connectionString))
             {
                 var s2 = Stopwatch.StartNew();
-                var js4 = JsonSchema.FromJsonAsync(sr2.ReadToEndAsync().Result).Result;
-                var js = new JsonSerializer();
+                var js = JsonSchema.FromJsonAsync(sr2.ReadToEndAsync().Result).Result;
                 jtr.Read();
                 var i = 0;
                 while (jtr.Read() && jtr.TokenType != JsonToken.EndArray)
                 {
                     if (take != null && take <= i) break;
                     ++i;
-                    var jo = (JObject)js.Deserialize(jtr);
+                    var jo = (JObject)localTimeJsonSerializer.Deserialize(jtr);
                     if (validate)
                     {
-                        var l = js4.Validate(jo);
+                        var l = js.Validate(jo);
                         if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"ContributorNameType {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"ContributorNameType {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
                     }
                     if (api)
@@ -5019,18 +4971,17 @@ namespace FolioConsoleApplication
             using (var jtw = new JsonTextWriter(sw))
             {
                 var s2 = Stopwatch.StartNew();
-                var js4 = JsonSchema.FromJsonAsync(sr.ReadToEndAsync().Result).Result;
-                var js = new JsonSerializer { Formatting = Formatting.Indented };
+                var js = JsonSchema.FromJsonAsync(sr.ReadToEndAsync().Result).Result;
                 jtw.WriteStartArray();
                 var i = 0;
-                foreach (var jo in api ? fsc.ContributorNameTypes(where, orderBy, skip, take) : fdc.ContributorNameTypes(where, null, orderBy, skip, take).Select(cnt => JObject.Parse(cnt.Content)))
+                foreach (var jo in api ? fsc.ContributorNameTypes(where, orderBy, skip, take) : fdc.ContributorNameTypes(where, null, orderBy, skip, take).Select(cnt => cnt.ToJObject()))
                 {
                     if (validate)
                     {
-                        var l = js4.Validate(jo);
+                        var l = js.Validate(jo);
                         if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"ContributorNameType {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"ContributorNameType {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
                     }
-                    if (!whatIf) js.Serialize(jtw, jo);
+                    if (!whatIf) (universalTime ? universalTimeJsonSerializer : localTimeJsonSerializer).Serialize(jtw, jo);
                     if (++i % 10000 == 0)
                     {
                         traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
@@ -5051,14 +5002,14 @@ namespace FolioConsoleApplication
             using (var jtw = new JsonTextWriter(Console.Out))
             {
                 jtw.WriteStartArray();
-                foreach (var jo in (api ? fsc.ContributorTypes(where, orderBy, skip, take) : fdc.ContributorTypes(where, null, orderBy, skip, take).Select(ct => JObject.Parse(ct.Content))).Select(jo =>
+                foreach (var jo in (api ? fsc.ContributorTypes(where, orderBy, skip, take) : fdc.ContributorTypes(where, null, orderBy, skip, take).Select(ct => ct.ToJObject())).Select(jo =>
                 {
                     return select == null ? jo : new JObject(select.Split(',').Select(s =>
                     {
                         var m = Regex.Match(s.Trim(), @"(?<Path>\S+)((?i) as (?<Name>.+))?", RegexOptions.Compiled);
                         return new JProperty(m.Groups["Name"].Success ? m.Groups["Name"].Value : m.Groups["Path"].Value.Split('.').Last(), jo.SelectToken(m.Groups["Path"].Value));
                     }));
-                })) jsonSerializer.Serialize(jtw, jo);
+                })) (universalTime ? universalTimeJsonSerializer : localTimeJsonSerializer).Serialize(jtw, jo);
                 jtw.WriteEndArray();
             }
         }
@@ -5105,18 +5056,17 @@ namespace FolioConsoleApplication
             using (var fsc = new FolioServiceClient(connectionString))
             {
                 var s2 = Stopwatch.StartNew();
-                var js4 = JsonSchema.FromJsonAsync(sr2.ReadToEndAsync().Result).Result;
-                var js = new JsonSerializer();
+                var js = JsonSchema.FromJsonAsync(sr2.ReadToEndAsync().Result).Result;
                 jtr.Read();
                 var i = 0;
                 while (jtr.Read() && jtr.TokenType != JsonToken.EndArray)
                 {
                     if (take != null && take <= i) break;
                     ++i;
-                    var jo = (JObject)js.Deserialize(jtr);
+                    var jo = (JObject)localTimeJsonSerializer.Deserialize(jtr);
                     if (validate)
                     {
-                        var l = js4.Validate(jo);
+                        var l = js.Validate(jo);
                         if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"ContributorType {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"ContributorType {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
                     }
                     if (api)
@@ -5160,18 +5110,17 @@ namespace FolioConsoleApplication
             using (var jtw = new JsonTextWriter(sw))
             {
                 var s2 = Stopwatch.StartNew();
-                var js4 = JsonSchema.FromJsonAsync(sr.ReadToEndAsync().Result).Result;
-                var js = new JsonSerializer { Formatting = Formatting.Indented };
+                var js = JsonSchema.FromJsonAsync(sr.ReadToEndAsync().Result).Result;
                 jtw.WriteStartArray();
                 var i = 0;
-                foreach (var jo in api ? fsc.ContributorTypes(where, orderBy, skip, take) : fdc.ContributorTypes(where, null, orderBy, skip, take).Select(ct => JObject.Parse(ct.Content)))
+                foreach (var jo in api ? fsc.ContributorTypes(where, orderBy, skip, take) : fdc.ContributorTypes(where, null, orderBy, skip, take).Select(ct => ct.ToJObject()))
                 {
                     if (validate)
                     {
-                        var l = js4.Validate(jo);
+                        var l = js.Validate(jo);
                         if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"ContributorType {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"ContributorType {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
                     }
-                    if (!whatIf) js.Serialize(jtw, jo);
+                    if (!whatIf) (universalTime ? universalTimeJsonSerializer : localTimeJsonSerializer).Serialize(jtw, jo);
                     if (++i % 10000 == 0)
                     {
                         traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
@@ -5192,14 +5141,14 @@ namespace FolioConsoleApplication
             using (var jtw = new JsonTextWriter(Console.Out))
             {
                 jtw.WriteStartArray();
-                foreach (var jo in (api ? fsc.CustomFields(where, orderBy, skip, take) : fdc.CustomFields(where, null, orderBy, skip, take).Select(cf => JObject.Parse(cf.Content))).Select(jo =>
+                foreach (var jo in (api ? fsc.CustomFields(where, orderBy, skip, take) : fdc.CustomFields(where, null, orderBy, skip, take).Select(cf => cf.ToJObject())).Select(jo =>
                 {
                     return select == null ? jo : new JObject(select.Split(',').Select(s =>
                     {
                         var m = Regex.Match(s.Trim(), @"(?<Path>\S+)((?i) as (?<Name>.+))?", RegexOptions.Compiled);
                         return new JProperty(m.Groups["Name"].Success ? m.Groups["Name"].Value : m.Groups["Path"].Value.Split('.').Last(), jo.SelectToken(m.Groups["Path"].Value));
                     }));
-                })) jsonSerializer.Serialize(jtw, jo);
+                })) (universalTime ? universalTimeJsonSerializer : localTimeJsonSerializer).Serialize(jtw, jo);
                 jtw.WriteEndArray();
             }
         }
@@ -5246,18 +5195,17 @@ namespace FolioConsoleApplication
             using (var fsc = new FolioServiceClient(connectionString))
             {
                 var s2 = Stopwatch.StartNew();
-                var js4 = JsonSchema.FromJsonAsync(sr2.ReadToEndAsync().Result).Result;
-                var js = new JsonSerializer();
+                var js = JsonSchema.FromJsonAsync(sr2.ReadToEndAsync().Result).Result;
                 jtr.Read();
                 var i = 0;
                 while (jtr.Read() && jtr.TokenType != JsonToken.EndArray)
                 {
                     if (take != null && take <= i) break;
                     ++i;
-                    var jo = (JObject)js.Deserialize(jtr);
+                    var jo = (JObject)localTimeJsonSerializer.Deserialize(jtr);
                     if (validate)
                     {
-                        var l = js4.Validate(jo);
+                        var l = js.Validate(jo);
                         if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"CustomField {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"CustomField {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
                     }
                     if (api)
@@ -5301,18 +5249,17 @@ namespace FolioConsoleApplication
             using (var jtw = new JsonTextWriter(sw))
             {
                 var s2 = Stopwatch.StartNew();
-                var js4 = JsonSchema.FromJsonAsync(sr.ReadToEndAsync().Result).Result;
-                var js = new JsonSerializer { Formatting = Formatting.Indented };
+                var js = JsonSchema.FromJsonAsync(sr.ReadToEndAsync().Result).Result;
                 jtw.WriteStartArray();
                 var i = 0;
-                foreach (var jo in api ? fsc.CustomFields(where, orderBy, skip, take) : fdc.CustomFields(where, null, orderBy, skip, take).Select(cf => JObject.Parse(cf.Content)))
+                foreach (var jo in api ? fsc.CustomFields(where, orderBy, skip, take) : fdc.CustomFields(where, null, orderBy, skip, take).Select(cf => cf.ToJObject()))
                 {
                     if (validate)
                     {
-                        var l = js4.Validate(jo);
+                        var l = js.Validate(jo);
                         if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"CustomField {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"CustomField {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
                     }
-                    if (!whatIf) js.Serialize(jtw, jo);
+                    if (!whatIf) (universalTime ? universalTimeJsonSerializer : localTimeJsonSerializer).Serialize(jtw, jo);
                     if (++i % 10000 == 0)
                     {
                         traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
@@ -5333,14 +5280,14 @@ namespace FolioConsoleApplication
             using (var jtw = new JsonTextWriter(Console.Out))
             {
                 jtw.WriteStartArray();
-                foreach (var jo in (api ? fsc.Departments(where, orderBy, skip, take) : fdc.Departments(where, null, orderBy, skip, take).Select(d => JObject.Parse(d.Content))).Select(jo =>
+                foreach (var jo in (api ? fsc.Departments(where, orderBy, skip, take) : fdc.Departments(where, null, orderBy, skip, take).Select(d => d.ToJObject())).Select(jo =>
                 {
                     return select == null ? jo : new JObject(select.Split(',').Select(s =>
                     {
                         var m = Regex.Match(s.Trim(), @"(?<Path>\S+)((?i) as (?<Name>.+))?", RegexOptions.Compiled);
                         return new JProperty(m.Groups["Name"].Success ? m.Groups["Name"].Value : m.Groups["Path"].Value.Split('.').Last(), jo.SelectToken(m.Groups["Path"].Value));
                     }));
-                })) jsonSerializer.Serialize(jtw, jo);
+                })) (universalTime ? universalTimeJsonSerializer : localTimeJsonSerializer).Serialize(jtw, jo);
                 jtw.WriteEndArray();
             }
         }
@@ -5387,18 +5334,17 @@ namespace FolioConsoleApplication
             using (var fsc = new FolioServiceClient(connectionString))
             {
                 var s2 = Stopwatch.StartNew();
-                var js4 = JsonSchema.FromJsonAsync(sr2.ReadToEndAsync().Result).Result;
-                var js = new JsonSerializer();
+                var js = JsonSchema.FromJsonAsync(sr2.ReadToEndAsync().Result).Result;
                 jtr.Read();
                 var i = 0;
                 while (jtr.Read() && jtr.TokenType != JsonToken.EndArray)
                 {
                     if (take != null && take <= i) break;
                     ++i;
-                    var jo = (JObject)js.Deserialize(jtr);
+                    var jo = (JObject)localTimeJsonSerializer.Deserialize(jtr);
                     if (validate)
                     {
-                        var l = js4.Validate(jo);
+                        var l = js.Validate(jo);
                         if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"Department {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"Department {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
                     }
                     if (api)
@@ -5442,18 +5388,17 @@ namespace FolioConsoleApplication
             using (var jtw = new JsonTextWriter(sw))
             {
                 var s2 = Stopwatch.StartNew();
-                var js4 = JsonSchema.FromJsonAsync(sr.ReadToEndAsync().Result).Result;
-                var js = new JsonSerializer { Formatting = Formatting.Indented };
+                var js = JsonSchema.FromJsonAsync(sr.ReadToEndAsync().Result).Result;
                 jtw.WriteStartArray();
                 var i = 0;
-                foreach (var jo in api ? fsc.Departments(where, orderBy, skip, take) : fdc.Departments(where, null, orderBy, skip, take).Select(d => JObject.Parse(d.Content)))
+                foreach (var jo in api ? fsc.Departments(where, orderBy, skip, take) : fdc.Departments(where, null, orderBy, skip, take).Select(d => d.ToJObject()))
                 {
                     if (validate)
                     {
-                        var l = js4.Validate(jo);
+                        var l = js.Validate(jo);
                         if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"Department {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"Department {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
                     }
-                    if (!whatIf) js.Serialize(jtw, jo);
+                    if (!whatIf) (universalTime ? universalTimeJsonSerializer : localTimeJsonSerializer).Serialize(jtw, jo);
                     if (++i % 10000 == 0)
                     {
                         traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
@@ -5473,14 +5418,14 @@ namespace FolioConsoleApplication
             using (var jtw = new JsonTextWriter(Console.Out))
             {
                 jtw.WriteStartArray();
-                foreach (var jo in (api ? throw new NotSupportedException() : fdc.Documents(where, null, orderBy, skip, take).Select(d => JObject.Parse(d.Content))).Select(jo =>
+                foreach (var jo in (api ? throw new NotSupportedException() : fdc.Documents(where, null, orderBy, skip, take).Select(d => d.ToJObject())).Select(jo =>
                 {
                     return select == null ? jo : new JObject(select.Split(',').Select(s =>
                     {
                         var m = Regex.Match(s.Trim(), @"(?<Path>\S+)((?i) as (?<Name>.+))?", RegexOptions.Compiled);
                         return new JProperty(m.Groups["Name"].Success ? m.Groups["Name"].Value : m.Groups["Path"].Value.Split('.').Last(), jo.SelectToken(m.Groups["Path"].Value));
                     }));
-                })) jsonSerializer.Serialize(jtw, jo);
+                })) (universalTime ? universalTimeJsonSerializer : localTimeJsonSerializer).Serialize(jtw, jo);
                 jtw.WriteEndArray();
             }
         }
@@ -5515,18 +5460,17 @@ namespace FolioConsoleApplication
             using (var fbcc = new FolioBulkCopyContext(connectionString))
             {
                 var s2 = Stopwatch.StartNew();
-                var js4 = JsonSchema.FromJsonAsync(sr2.ReadToEndAsync().Result).Result;
-                var js = new JsonSerializer();
+                var js = JsonSchema.FromJsonAsync(sr2.ReadToEndAsync().Result).Result;
                 jtr.Read();
                 var i = 0;
                 while (jtr.Read() && jtr.TokenType != JsonToken.EndArray)
                 {
                     if (take != null && take <= i) break;
                     ++i;
-                    var jo = (JObject)js.Deserialize(jtr);
+                    var jo = (JObject)localTimeJsonSerializer.Deserialize(jtr);
                     if (validate)
                     {
-                        var l = js4.Validate(jo);
+                        var l = js.Validate(jo);
                         if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"Document {jo["documentMetadata.id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"Document {jo["documentMetadata.id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
                     }
                     if (api)
@@ -5564,18 +5508,17 @@ namespace FolioConsoleApplication
             using (var jtw = new JsonTextWriter(sw))
             {
                 var s2 = Stopwatch.StartNew();
-                var js4 = JsonSchema.FromJsonAsync(sr.ReadToEndAsync().Result).Result;
-                var js = new JsonSerializer { Formatting = Formatting.Indented };
+                var js = JsonSchema.FromJsonAsync(sr.ReadToEndAsync().Result).Result;
                 jtw.WriteStartArray();
                 var i = 0;
-                foreach (var jo in api ? throw new NotSupportedException() : fdc.Documents(where, null, orderBy, skip, take).Select(d => JObject.Parse(d.Content)))
+                foreach (var jo in api ? throw new NotSupportedException() : fdc.Documents(where, null, orderBy, skip, take).Select(d => d.ToJObject()))
                 {
                     if (validate)
                     {
-                        var l = js4.Validate(jo);
+                        var l = js.Validate(jo);
                         if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"Document {jo["documentMetadata.id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"Document {jo["documentMetadata.id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
                     }
-                    if (!whatIf) js.Serialize(jtw, jo);
+                    if (!whatIf) (universalTime ? universalTimeJsonSerializer : localTimeJsonSerializer).Serialize(jtw, jo);
                     if (++i % 10000 == 0)
                     {
                         traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
@@ -5596,14 +5539,14 @@ namespace FolioConsoleApplication
             using (var jtw = new JsonTextWriter(Console.Out))
             {
                 jtw.WriteStartArray();
-                foreach (var jo in (api ? fsc.ElectronicAccessRelationships(where, orderBy, skip, take) : fdc.ElectronicAccessRelationships(where, null, orderBy, skip, take).Select(ear => JObject.Parse(ear.Content))).Select(jo =>
+                foreach (var jo in (api ? fsc.ElectronicAccessRelationships(where, orderBy, skip, take) : fdc.ElectronicAccessRelationships(where, null, orderBy, skip, take).Select(ear => ear.ToJObject())).Select(jo =>
                 {
                     return select == null ? jo : new JObject(select.Split(',').Select(s =>
                     {
                         var m = Regex.Match(s.Trim(), @"(?<Path>\S+)((?i) as (?<Name>.+))?", RegexOptions.Compiled);
                         return new JProperty(m.Groups["Name"].Success ? m.Groups["Name"].Value : m.Groups["Path"].Value.Split('.').Last(), jo.SelectToken(m.Groups["Path"].Value));
                     }));
-                })) jsonSerializer.Serialize(jtw, jo);
+                })) (universalTime ? universalTimeJsonSerializer : localTimeJsonSerializer).Serialize(jtw, jo);
                 jtw.WriteEndArray();
             }
         }
@@ -5650,18 +5593,17 @@ namespace FolioConsoleApplication
             using (var fsc = new FolioServiceClient(connectionString))
             {
                 var s2 = Stopwatch.StartNew();
-                var js4 = JsonSchema.FromJsonAsync(sr2.ReadToEndAsync().Result).Result;
-                var js = new JsonSerializer();
+                var js = JsonSchema.FromJsonAsync(sr2.ReadToEndAsync().Result).Result;
                 jtr.Read();
                 var i = 0;
                 while (jtr.Read() && jtr.TokenType != JsonToken.EndArray)
                 {
                     if (take != null && take <= i) break;
                     ++i;
-                    var jo = (JObject)js.Deserialize(jtr);
+                    var jo = (JObject)localTimeJsonSerializer.Deserialize(jtr);
                     if (validate)
                     {
-                        var l = js4.Validate(jo);
+                        var l = js.Validate(jo);
                         if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"ElectronicAccessRelationship {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"ElectronicAccessRelationship {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
                     }
                     if (api)
@@ -5705,18 +5647,17 @@ namespace FolioConsoleApplication
             using (var jtw = new JsonTextWriter(sw))
             {
                 var s2 = Stopwatch.StartNew();
-                var js4 = JsonSchema.FromJsonAsync(sr.ReadToEndAsync().Result).Result;
-                var js = new JsonSerializer { Formatting = Formatting.Indented };
+                var js = JsonSchema.FromJsonAsync(sr.ReadToEndAsync().Result).Result;
                 jtw.WriteStartArray();
                 var i = 0;
-                foreach (var jo in api ? fsc.ElectronicAccessRelationships(where, orderBy, skip, take) : fdc.ElectronicAccessRelationships(where, null, orderBy, skip, take).Select(ear => JObject.Parse(ear.Content)))
+                foreach (var jo in api ? fsc.ElectronicAccessRelationships(where, orderBy, skip, take) : fdc.ElectronicAccessRelationships(where, null, orderBy, skip, take).Select(ear => ear.ToJObject()))
                 {
                     if (validate)
                     {
-                        var l = js4.Validate(jo);
+                        var l = js.Validate(jo);
                         if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"ElectronicAccessRelationship {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"ElectronicAccessRelationship {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
                     }
-                    if (!whatIf) js.Serialize(jtw, jo);
+                    if (!whatIf) (universalTime ? universalTimeJsonSerializer : localTimeJsonSerializer).Serialize(jtw, jo);
                     if (++i % 10000 == 0)
                     {
                         traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
@@ -5737,14 +5678,14 @@ namespace FolioConsoleApplication
             using (var jtw = new JsonTextWriter(Console.Out))
             {
                 jtw.WriteStartArray();
-                foreach (var jo in (api ? fsc.ExpenseClasses(where, orderBy, skip, take) : fdc.ExpenseClasses(where, null, orderBy, skip, take).Select(ec => JObject.Parse(ec.Content))).Select(jo =>
+                foreach (var jo in (api ? fsc.ExpenseClasses(where, orderBy, skip, take) : fdc.ExpenseClasses(where, null, orderBy, skip, take).Select(ec => ec.ToJObject())).Select(jo =>
                 {
                     return select == null ? jo : new JObject(select.Split(',').Select(s =>
                     {
                         var m = Regex.Match(s.Trim(), @"(?<Path>\S+)((?i) as (?<Name>.+))?", RegexOptions.Compiled);
                         return new JProperty(m.Groups["Name"].Success ? m.Groups["Name"].Value : m.Groups["Path"].Value.Split('.').Last(), jo.SelectToken(m.Groups["Path"].Value));
                     }));
-                })) jsonSerializer.Serialize(jtw, jo);
+                })) (universalTime ? universalTimeJsonSerializer : localTimeJsonSerializer).Serialize(jtw, jo);
                 jtw.WriteEndArray();
             }
         }
@@ -5791,18 +5732,17 @@ namespace FolioConsoleApplication
             using (var fsc = new FolioServiceClient(connectionString))
             {
                 var s2 = Stopwatch.StartNew();
-                var js4 = JsonSchema.FromJsonAsync(sr2.ReadToEndAsync().Result).Result;
-                var js = new JsonSerializer();
+                var js = JsonSchema.FromJsonAsync(sr2.ReadToEndAsync().Result).Result;
                 jtr.Read();
                 var i = 0;
                 while (jtr.Read() && jtr.TokenType != JsonToken.EndArray)
                 {
                     if (take != null && take <= i) break;
                     ++i;
-                    var jo = (JObject)js.Deserialize(jtr);
+                    var jo = (JObject)localTimeJsonSerializer.Deserialize(jtr);
                     if (validate)
                     {
-                        var l = js4.Validate(jo);
+                        var l = js.Validate(jo);
                         if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"ExpenseClass {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"ExpenseClass {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
                     }
                     if (api)
@@ -5846,18 +5786,17 @@ namespace FolioConsoleApplication
             using (var jtw = new JsonTextWriter(sw))
             {
                 var s2 = Stopwatch.StartNew();
-                var js4 = JsonSchema.FromJsonAsync(sr.ReadToEndAsync().Result).Result;
-                var js = new JsonSerializer { Formatting = Formatting.Indented };
+                var js = JsonSchema.FromJsonAsync(sr.ReadToEndAsync().Result).Result;
                 jtw.WriteStartArray();
                 var i = 0;
-                foreach (var jo in api ? fsc.ExpenseClasses(where, orderBy, skip, take) : fdc.ExpenseClasses(where, null, orderBy, skip, take).Select(ec => JObject.Parse(ec.Content)))
+                foreach (var jo in api ? fsc.ExpenseClasses(where, orderBy, skip, take) : fdc.ExpenseClasses(where, null, orderBy, skip, take).Select(ec => ec.ToJObject()))
                 {
                     if (validate)
                     {
-                        var l = js4.Validate(jo);
+                        var l = js.Validate(jo);
                         if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"ExpenseClass {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"ExpenseClass {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
                     }
-                    if (!whatIf) js.Serialize(jtw, jo);
+                    if (!whatIf) (universalTime ? universalTimeJsonSerializer : localTimeJsonSerializer).Serialize(jtw, jo);
                     if (++i % 10000 == 0)
                     {
                         traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
@@ -5877,14 +5816,14 @@ namespace FolioConsoleApplication
             using (var jtw = new JsonTextWriter(Console.Out))
             {
                 jtw.WriteStartArray();
-                foreach (var jo in (api ? throw new NotSupportedException() : fdc.ExportConfigCredentials(where, null, orderBy, skip, take).Select(ecc => JObject.Parse(ecc.Content))).Select(jo =>
+                foreach (var jo in (api ? throw new NotSupportedException() : fdc.ExportConfigCredentials(where, null, orderBy, skip, take).Select(ecc => ecc.ToJObject())).Select(jo =>
                 {
                     return select == null ? jo : new JObject(select.Split(',').Select(s =>
                     {
                         var m = Regex.Match(s.Trim(), @"(?<Path>\S+)((?i) as (?<Name>.+))?", RegexOptions.Compiled);
                         return new JProperty(m.Groups["Name"].Success ? m.Groups["Name"].Value : m.Groups["Path"].Value.Split('.').Last(), jo.SelectToken(m.Groups["Path"].Value));
                     }));
-                })) jsonSerializer.Serialize(jtw, jo);
+                })) (universalTime ? universalTimeJsonSerializer : localTimeJsonSerializer).Serialize(jtw, jo);
                 jtw.WriteEndArray();
             }
         }
@@ -5919,18 +5858,17 @@ namespace FolioConsoleApplication
             using (var fbcc = new FolioBulkCopyContext(connectionString))
             {
                 var s2 = Stopwatch.StartNew();
-                var js4 = JsonSchema.FromJsonAsync(sr2.ReadToEndAsync().Result).Result;
-                var js = new JsonSerializer();
+                var js = JsonSchema.FromJsonAsync(sr2.ReadToEndAsync().Result).Result;
                 jtr.Read();
                 var i = 0;
                 while (jtr.Read() && jtr.TokenType != JsonToken.EndArray)
                 {
                     if (take != null && take <= i) break;
                     ++i;
-                    var jo = (JObject)js.Deserialize(jtr);
+                    var jo = (JObject)localTimeJsonSerializer.Deserialize(jtr);
                     if (validate)
                     {
-                        var l = js4.Validate(jo);
+                        var l = js.Validate(jo);
                         if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"ExportConfigCredential {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"ExportConfigCredential {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
                     }
                     if (api)
@@ -5968,18 +5906,17 @@ namespace FolioConsoleApplication
             using (var jtw = new JsonTextWriter(sw))
             {
                 var s2 = Stopwatch.StartNew();
-                var js4 = JsonSchema.FromJsonAsync(sr.ReadToEndAsync().Result).Result;
-                var js = new JsonSerializer { Formatting = Formatting.Indented };
+                var js = JsonSchema.FromJsonAsync(sr.ReadToEndAsync().Result).Result;
                 jtw.WriteStartArray();
                 var i = 0;
-                foreach (var jo in api ? throw new NotSupportedException() : fdc.ExportConfigCredentials(where, null, orderBy, skip, take).Select(ecc => JObject.Parse(ecc.Content)))
+                foreach (var jo in api ? throw new NotSupportedException() : fdc.ExportConfigCredentials(where, null, orderBy, skip, take).Select(ecc => ecc.ToJObject()))
                 {
                     if (validate)
                     {
-                        var l = js4.Validate(jo);
+                        var l = js.Validate(jo);
                         if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"ExportConfigCredential {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"ExportConfigCredential {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
                     }
-                    if (!whatIf) js.Serialize(jtw, jo);
+                    if (!whatIf) (universalTime ? universalTimeJsonSerializer : localTimeJsonSerializer).Serialize(jtw, jo);
                     if (++i % 10000 == 0)
                     {
                         traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
@@ -6000,14 +5937,14 @@ namespace FolioConsoleApplication
             using (var jtw = new JsonTextWriter(Console.Out))
             {
                 jtw.WriteStartArray();
-                foreach (var jo in (api ? fsc.Fees(where, orderBy, skip, take) : fdc.Fees(where, null, orderBy, skip, take).Select(f => JObject.Parse(f.Content))).Select(jo =>
+                foreach (var jo in (api ? fsc.Fees(where, orderBy, skip, take) : fdc.Fees(where, null, orderBy, skip, take).Select(f => f.ToJObject())).Select(jo =>
                 {
                     return select == null ? jo : new JObject(select.Split(',').Select(s =>
                     {
                         var m = Regex.Match(s.Trim(), @"(?<Path>\S+)((?i) as (?<Name>.+))?", RegexOptions.Compiled);
                         return new JProperty(m.Groups["Name"].Success ? m.Groups["Name"].Value : m.Groups["Path"].Value.Split('.').Last(), jo.SelectToken(m.Groups["Path"].Value));
                     }));
-                })) jsonSerializer.Serialize(jtw, jo);
+                })) (universalTime ? universalTimeJsonSerializer : localTimeJsonSerializer).Serialize(jtw, jo);
                 jtw.WriteEndArray();
             }
         }
@@ -6054,18 +5991,17 @@ namespace FolioConsoleApplication
             using (var fsc = new FolioServiceClient(connectionString))
             {
                 var s2 = Stopwatch.StartNew();
-                var js4 = JsonSchema.FromJsonAsync(sr2.ReadToEndAsync().Result).Result;
-                var js = new JsonSerializer();
+                var js = JsonSchema.FromJsonAsync(sr2.ReadToEndAsync().Result).Result;
                 jtr.Read();
                 var i = 0;
                 while (jtr.Read() && jtr.TokenType != JsonToken.EndArray)
                 {
                     if (take != null && take <= i) break;
                     ++i;
-                    var jo = (JObject)js.Deserialize(jtr);
+                    var jo = (JObject)localTimeJsonSerializer.Deserialize(jtr);
                     if (validate)
                     {
-                        var l = js4.Validate(jo);
+                        var l = js.Validate(jo);
                         if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"Fee {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"Fee {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
                     }
                     if (api)
@@ -6109,18 +6045,17 @@ namespace FolioConsoleApplication
             using (var jtw = new JsonTextWriter(sw))
             {
                 var s2 = Stopwatch.StartNew();
-                var js4 = JsonSchema.FromJsonAsync(sr.ReadToEndAsync().Result).Result;
-                var js = new JsonSerializer { Formatting = Formatting.Indented };
+                var js = JsonSchema.FromJsonAsync(sr.ReadToEndAsync().Result).Result;
                 jtw.WriteStartArray();
                 var i = 0;
-                foreach (var jo in api ? fsc.Fees(where, orderBy, skip, take) : fdc.Fees(where, null, orderBy, skip, take).Select(f => JObject.Parse(f.Content)))
+                foreach (var jo in api ? fsc.Fees(where, orderBy, skip, take) : fdc.Fees(where, null, orderBy, skip, take).Select(f => f.ToJObject()))
                 {
                     if (validate)
                     {
-                        var l = js4.Validate(jo);
+                        var l = js.Validate(jo);
                         if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"Fee {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"Fee {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
                     }
-                    if (!whatIf) js.Serialize(jtw, jo);
+                    if (!whatIf) (universalTime ? universalTimeJsonSerializer : localTimeJsonSerializer).Serialize(jtw, jo);
                     if (++i % 10000 == 0)
                     {
                         traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
@@ -6141,14 +6076,14 @@ namespace FolioConsoleApplication
             using (var jtw = new JsonTextWriter(Console.Out))
             {
                 jtw.WriteStartArray();
-                foreach (var jo in (api ? fsc.FeeTypes(where, orderBy, skip, take) : fdc.FeeTypes(where, null, orderBy, skip, take).Select(ft => JObject.Parse(ft.Content))).Select(jo =>
+                foreach (var jo in (api ? fsc.FeeTypes(where, orderBy, skip, take) : fdc.FeeTypes(where, null, orderBy, skip, take).Select(ft => ft.ToJObject())).Select(jo =>
                 {
                     return select == null ? jo : new JObject(select.Split(',').Select(s =>
                     {
                         var m = Regex.Match(s.Trim(), @"(?<Path>\S+)((?i) as (?<Name>.+))?", RegexOptions.Compiled);
                         return new JProperty(m.Groups["Name"].Success ? m.Groups["Name"].Value : m.Groups["Path"].Value.Split('.').Last(), jo.SelectToken(m.Groups["Path"].Value));
                     }));
-                })) jsonSerializer.Serialize(jtw, jo);
+                })) (universalTime ? universalTimeJsonSerializer : localTimeJsonSerializer).Serialize(jtw, jo);
                 jtw.WriteEndArray();
             }
         }
@@ -6195,18 +6130,17 @@ namespace FolioConsoleApplication
             using (var fsc = new FolioServiceClient(connectionString))
             {
                 var s2 = Stopwatch.StartNew();
-                var js4 = JsonSchema.FromJsonAsync(sr2.ReadToEndAsync().Result).Result;
-                var js = new JsonSerializer();
+                var js = JsonSchema.FromJsonAsync(sr2.ReadToEndAsync().Result).Result;
                 jtr.Read();
                 var i = 0;
                 while (jtr.Read() && jtr.TokenType != JsonToken.EndArray)
                 {
                     if (take != null && take <= i) break;
                     ++i;
-                    var jo = (JObject)js.Deserialize(jtr);
+                    var jo = (JObject)localTimeJsonSerializer.Deserialize(jtr);
                     if (validate)
                     {
-                        var l = js4.Validate(jo);
+                        var l = js.Validate(jo);
                         if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"FeeType {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"FeeType {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
                     }
                     if (api)
@@ -6250,18 +6184,17 @@ namespace FolioConsoleApplication
             using (var jtw = new JsonTextWriter(sw))
             {
                 var s2 = Stopwatch.StartNew();
-                var js4 = JsonSchema.FromJsonAsync(sr.ReadToEndAsync().Result).Result;
-                var js = new JsonSerializer { Formatting = Formatting.Indented };
+                var js = JsonSchema.FromJsonAsync(sr.ReadToEndAsync().Result).Result;
                 jtw.WriteStartArray();
                 var i = 0;
-                foreach (var jo in api ? fsc.FeeTypes(where, orderBy, skip, take) : fdc.FeeTypes(where, null, orderBy, skip, take).Select(ft => JObject.Parse(ft.Content)))
+                foreach (var jo in api ? fsc.FeeTypes(where, orderBy, skip, take) : fdc.FeeTypes(where, null, orderBy, skip, take).Select(ft => ft.ToJObject()))
                 {
                     if (validate)
                     {
-                        var l = js4.Validate(jo);
+                        var l = js.Validate(jo);
                         if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"FeeType {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"FeeType {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
                     }
-                    if (!whatIf) js.Serialize(jtw, jo);
+                    if (!whatIf) (universalTime ? universalTimeJsonSerializer : localTimeJsonSerializer).Serialize(jtw, jo);
                     if (++i % 10000 == 0)
                     {
                         traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
@@ -6282,14 +6215,14 @@ namespace FolioConsoleApplication
             using (var jtw = new JsonTextWriter(Console.Out))
             {
                 jtw.WriteStartArray();
-                foreach (var jo in (api ? fsc.FinanceGroups(where, orderBy, skip, take) : fdc.FinanceGroups(where, null, orderBy, skip, take).Select(fg => JObject.Parse(fg.Content))).Select(jo =>
+                foreach (var jo in (api ? fsc.FinanceGroups(where, orderBy, skip, take) : fdc.FinanceGroups(where, null, orderBy, skip, take).Select(fg => fg.ToJObject())).Select(jo =>
                 {
                     return select == null ? jo : new JObject(select.Split(',').Select(s =>
                     {
                         var m = Regex.Match(s.Trim(), @"(?<Path>\S+)((?i) as (?<Name>.+))?", RegexOptions.Compiled);
                         return new JProperty(m.Groups["Name"].Success ? m.Groups["Name"].Value : m.Groups["Path"].Value.Split('.').Last(), jo.SelectToken(m.Groups["Path"].Value));
                     }));
-                })) jsonSerializer.Serialize(jtw, jo);
+                })) (universalTime ? universalTimeJsonSerializer : localTimeJsonSerializer).Serialize(jtw, jo);
                 jtw.WriteEndArray();
             }
         }
@@ -6336,18 +6269,17 @@ namespace FolioConsoleApplication
             using (var fsc = new FolioServiceClient(connectionString))
             {
                 var s2 = Stopwatch.StartNew();
-                var js4 = JsonSchema.FromJsonAsync(sr2.ReadToEndAsync().Result).Result;
-                var js = new JsonSerializer();
+                var js = JsonSchema.FromJsonAsync(sr2.ReadToEndAsync().Result).Result;
                 jtr.Read();
                 var i = 0;
                 while (jtr.Read() && jtr.TokenType != JsonToken.EndArray)
                 {
                     if (take != null && take <= i) break;
                     ++i;
-                    var jo = (JObject)js.Deserialize(jtr);
+                    var jo = (JObject)localTimeJsonSerializer.Deserialize(jtr);
                     if (validate)
                     {
-                        var l = js4.Validate(jo);
+                        var l = js.Validate(jo);
                         if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"FinanceGroup {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"FinanceGroup {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
                     }
                     if (api)
@@ -6391,18 +6323,17 @@ namespace FolioConsoleApplication
             using (var jtw = new JsonTextWriter(sw))
             {
                 var s2 = Stopwatch.StartNew();
-                var js4 = JsonSchema.FromJsonAsync(sr.ReadToEndAsync().Result).Result;
-                var js = new JsonSerializer { Formatting = Formatting.Indented };
+                var js = JsonSchema.FromJsonAsync(sr.ReadToEndAsync().Result).Result;
                 jtw.WriteStartArray();
                 var i = 0;
-                foreach (var jo in api ? fsc.FinanceGroups(where, orderBy, skip, take) : fdc.FinanceGroups(where, null, orderBy, skip, take).Select(fg => JObject.Parse(fg.Content)))
+                foreach (var jo in api ? fsc.FinanceGroups(where, orderBy, skip, take) : fdc.FinanceGroups(where, null, orderBy, skip, take).Select(fg => fg.ToJObject()))
                 {
                     if (validate)
                     {
-                        var l = js4.Validate(jo);
+                        var l = js.Validate(jo);
                         if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"FinanceGroup {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"FinanceGroup {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
                     }
-                    if (!whatIf) js.Serialize(jtw, jo);
+                    if (!whatIf) (universalTime ? universalTimeJsonSerializer : localTimeJsonSerializer).Serialize(jtw, jo);
                     if (++i % 10000 == 0)
                     {
                         traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
@@ -6423,14 +6354,14 @@ namespace FolioConsoleApplication
             using (var jtw = new JsonTextWriter(Console.Out))
             {
                 jtw.WriteStartArray();
-                foreach (var jo in (api ? fsc.FiscalYears(where, orderBy, skip, take) : fdc.FiscalYears(where, null, orderBy, skip, take).Select(fy => JObject.Parse(fy.Content))).Select(jo =>
+                foreach (var jo in (api ? fsc.FiscalYears(where, orderBy, skip, take) : fdc.FiscalYears(where, null, orderBy, skip, take).Select(fy => fy.ToJObject())).Select(jo =>
                 {
                     return select == null ? jo : new JObject(select.Split(',').Select(s =>
                     {
                         var m = Regex.Match(s.Trim(), @"(?<Path>\S+)((?i) as (?<Name>.+))?", RegexOptions.Compiled);
                         return new JProperty(m.Groups["Name"].Success ? m.Groups["Name"].Value : m.Groups["Path"].Value.Split('.').Last(), jo.SelectToken(m.Groups["Path"].Value));
                     }));
-                })) jsonSerializer.Serialize(jtw, jo);
+                })) (universalTime ? universalTimeJsonSerializer : localTimeJsonSerializer).Serialize(jtw, jo);
                 jtw.WriteEndArray();
             }
         }
@@ -6477,18 +6408,17 @@ namespace FolioConsoleApplication
             using (var fsc = new FolioServiceClient(connectionString))
             {
                 var s2 = Stopwatch.StartNew();
-                var js4 = JsonSchema.FromJsonAsync(sr2.ReadToEndAsync().Result).Result;
-                var js = new JsonSerializer();
+                var js = JsonSchema.FromJsonAsync(sr2.ReadToEndAsync().Result).Result;
                 jtr.Read();
                 var i = 0;
                 while (jtr.Read() && jtr.TokenType != JsonToken.EndArray)
                 {
                     if (take != null && take <= i) break;
                     ++i;
-                    var jo = (JObject)js.Deserialize(jtr);
+                    var jo = (JObject)localTimeJsonSerializer.Deserialize(jtr);
                     if (validate)
                     {
-                        var l = js4.Validate(jo);
+                        var l = js.Validate(jo);
                         if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"FiscalYear {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"FiscalYear {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
                     }
                     if (api)
@@ -6532,18 +6462,17 @@ namespace FolioConsoleApplication
             using (var jtw = new JsonTextWriter(sw))
             {
                 var s2 = Stopwatch.StartNew();
-                var js4 = JsonSchema.FromJsonAsync(sr.ReadToEndAsync().Result).Result;
-                var js = new JsonSerializer { Formatting = Formatting.Indented };
+                var js = JsonSchema.FromJsonAsync(sr.ReadToEndAsync().Result).Result;
                 jtw.WriteStartArray();
                 var i = 0;
-                foreach (var jo in api ? fsc.FiscalYears(where, orderBy, skip, take) : fdc.FiscalYears(where, null, orderBy, skip, take).Select(fy => JObject.Parse(fy.Content)))
+                foreach (var jo in api ? fsc.FiscalYears(where, orderBy, skip, take) : fdc.FiscalYears(where, null, orderBy, skip, take).Select(fy => fy.ToJObject()))
                 {
                     if (validate)
                     {
-                        var l = js4.Validate(jo);
+                        var l = js.Validate(jo);
                         if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"FiscalYear {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"FiscalYear {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
                     }
-                    if (!whatIf) js.Serialize(jtw, jo);
+                    if (!whatIf) (universalTime ? universalTimeJsonSerializer : localTimeJsonSerializer).Serialize(jtw, jo);
                     if (++i % 10000 == 0)
                     {
                         traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
@@ -6564,14 +6493,14 @@ namespace FolioConsoleApplication
             using (var jtw = new JsonTextWriter(Console.Out))
             {
                 jtw.WriteStartArray();
-                foreach (var jo in (api ? fsc.FixedDueDateSchedules(where, orderBy, skip, take) : fdc.FixedDueDateSchedules(where, null, orderBy, skip, take).Select(fdds => JObject.Parse(fdds.Content))).Select(jo =>
+                foreach (var jo in (api ? fsc.FixedDueDateSchedules(where, orderBy, skip, take) : fdc.FixedDueDateSchedules(where, null, orderBy, skip, take).Select(fdds => fdds.ToJObject())).Select(jo =>
                 {
                     return select == null ? jo : new JObject(select.Split(',').Select(s =>
                     {
                         var m = Regex.Match(s.Trim(), @"(?<Path>\S+)((?i) as (?<Name>.+))?", RegexOptions.Compiled);
                         return new JProperty(m.Groups["Name"].Success ? m.Groups["Name"].Value : m.Groups["Path"].Value.Split('.').Last(), jo.SelectToken(m.Groups["Path"].Value));
                     }));
-                })) jsonSerializer.Serialize(jtw, jo);
+                })) (universalTime ? universalTimeJsonSerializer : localTimeJsonSerializer).Serialize(jtw, jo);
                 jtw.WriteEndArray();
             }
         }
@@ -6618,18 +6547,17 @@ namespace FolioConsoleApplication
             using (var fsc = new FolioServiceClient(connectionString))
             {
                 var s2 = Stopwatch.StartNew();
-                var js4 = JsonSchema.FromJsonAsync(sr2.ReadToEndAsync().Result).Result;
-                var js = new JsonSerializer();
+                var js = JsonSchema.FromJsonAsync(sr2.ReadToEndAsync().Result).Result;
                 jtr.Read();
                 var i = 0;
                 while (jtr.Read() && jtr.TokenType != JsonToken.EndArray)
                 {
                     if (take != null && take <= i) break;
                     ++i;
-                    var jo = (JObject)js.Deserialize(jtr);
+                    var jo = (JObject)localTimeJsonSerializer.Deserialize(jtr);
                     if (validate)
                     {
-                        var l = js4.Validate(jo);
+                        var l = js.Validate(jo);
                         if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"FixedDueDateSchedule {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"FixedDueDateSchedule {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
                     }
                     if (api)
@@ -6673,18 +6601,17 @@ namespace FolioConsoleApplication
             using (var jtw = new JsonTextWriter(sw))
             {
                 var s2 = Stopwatch.StartNew();
-                var js4 = JsonSchema.FromJsonAsync(sr.ReadToEndAsync().Result).Result;
-                var js = new JsonSerializer { Formatting = Formatting.Indented };
+                var js = JsonSchema.FromJsonAsync(sr.ReadToEndAsync().Result).Result;
                 jtw.WriteStartArray();
                 var i = 0;
-                foreach (var jo in api ? fsc.FixedDueDateSchedules(where, orderBy, skip, take) : fdc.FixedDueDateSchedules(where, null, orderBy, skip, take).Select(fdds => JObject.Parse(fdds.Content)))
+                foreach (var jo in api ? fsc.FixedDueDateSchedules(where, orderBy, skip, take) : fdc.FixedDueDateSchedules(where, null, orderBy, skip, take).Select(fdds => fdds.ToJObject()))
                 {
                     if (validate)
                     {
-                        var l = js4.Validate(jo);
+                        var l = js.Validate(jo);
                         if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"FixedDueDateSchedule {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"FixedDueDateSchedule {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
                     }
-                    if (!whatIf) js.Serialize(jtw, jo);
+                    if (!whatIf) (universalTime ? universalTimeJsonSerializer : localTimeJsonSerializer).Serialize(jtw, jo);
                     if (++i % 10000 == 0)
                     {
                         traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
@@ -6705,14 +6632,14 @@ namespace FolioConsoleApplication
             using (var jtw = new JsonTextWriter(Console.Out))
             {
                 jtw.WriteStartArray();
-                foreach (var jo in (api ? fsc.Funds(where, orderBy, skip, take) : fdc.Funds(where, null, orderBy, skip, take).Select(f => JObject.Parse(f.Content))).Select(jo =>
+                foreach (var jo in (api ? fsc.Funds(where, orderBy, skip, take) : fdc.Funds(where, null, orderBy, skip, take).Select(f => f.ToJObject())).Select(jo =>
                 {
                     return select == null ? jo : new JObject(select.Split(',').Select(s =>
                     {
                         var m = Regex.Match(s.Trim(), @"(?<Path>\S+)((?i) as (?<Name>.+))?", RegexOptions.Compiled);
                         return new JProperty(m.Groups["Name"].Success ? m.Groups["Name"].Value : m.Groups["Path"].Value.Split('.').Last(), jo.SelectToken(m.Groups["Path"].Value));
                     }));
-                })) jsonSerializer.Serialize(jtw, jo);
+                })) (universalTime ? universalTimeJsonSerializer : localTimeJsonSerializer).Serialize(jtw, jo);
                 jtw.WriteEndArray();
             }
         }
@@ -6759,18 +6686,17 @@ namespace FolioConsoleApplication
             using (var fsc = new FolioServiceClient(connectionString))
             {
                 var s2 = Stopwatch.StartNew();
-                var js4 = JsonSchema.FromJsonAsync(sr2.ReadToEndAsync().Result).Result;
-                var js = new JsonSerializer();
+                var js = JsonSchema.FromJsonAsync(sr2.ReadToEndAsync().Result).Result;
                 jtr.Read();
                 var i = 0;
                 while (jtr.Read() && jtr.TokenType != JsonToken.EndArray)
                 {
                     if (take != null && take <= i) break;
                     ++i;
-                    var jo = (JObject)js.Deserialize(jtr);
+                    var jo = (JObject)localTimeJsonSerializer.Deserialize(jtr);
                     if (validate)
                     {
-                        var l = js4.Validate(jo);
+                        var l = js.Validate(jo);
                         if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"Fund {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"Fund {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
                     }
                     if (api)
@@ -6814,18 +6740,17 @@ namespace FolioConsoleApplication
             using (var jtw = new JsonTextWriter(sw))
             {
                 var s2 = Stopwatch.StartNew();
-                var js4 = JsonSchema.FromJsonAsync(sr.ReadToEndAsync().Result).Result;
-                var js = new JsonSerializer { Formatting = Formatting.Indented };
+                var js = JsonSchema.FromJsonAsync(sr.ReadToEndAsync().Result).Result;
                 jtw.WriteStartArray();
                 var i = 0;
-                foreach (var jo in api ? fsc.Funds(where, orderBy, skip, take) : fdc.Funds(where, null, orderBy, skip, take).Select(f => JObject.Parse(f.Content)))
+                foreach (var jo in api ? fsc.Funds(where, orderBy, skip, take) : fdc.Funds(where, null, orderBy, skip, take).Select(f => f.ToJObject()))
                 {
                     if (validate)
                     {
-                        var l = js4.Validate(jo);
+                        var l = js.Validate(jo);
                         if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"Fund {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"Fund {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
                     }
-                    if (!whatIf) js.Serialize(jtw, jo);
+                    if (!whatIf) (universalTime ? universalTimeJsonSerializer : localTimeJsonSerializer).Serialize(jtw, jo);
                     if (++i % 10000 == 0)
                     {
                         traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
@@ -6846,14 +6771,14 @@ namespace FolioConsoleApplication
             using (var jtw = new JsonTextWriter(Console.Out))
             {
                 jtw.WriteStartArray();
-                foreach (var jo in (api ? fsc.FundTypes(where, orderBy, skip, take) : fdc.FundTypes(where, null, orderBy, skip, take).Select(ft => JObject.Parse(ft.Content))).Select(jo =>
+                foreach (var jo in (api ? fsc.FundTypes(where, orderBy, skip, take) : fdc.FundTypes(where, null, orderBy, skip, take).Select(ft => ft.ToJObject())).Select(jo =>
                 {
                     return select == null ? jo : new JObject(select.Split(',').Select(s =>
                     {
                         var m = Regex.Match(s.Trim(), @"(?<Path>\S+)((?i) as (?<Name>.+))?", RegexOptions.Compiled);
                         return new JProperty(m.Groups["Name"].Success ? m.Groups["Name"].Value : m.Groups["Path"].Value.Split('.').Last(), jo.SelectToken(m.Groups["Path"].Value));
                     }));
-                })) jsonSerializer.Serialize(jtw, jo);
+                })) (universalTime ? universalTimeJsonSerializer : localTimeJsonSerializer).Serialize(jtw, jo);
                 jtw.WriteEndArray();
             }
         }
@@ -6900,18 +6825,17 @@ namespace FolioConsoleApplication
             using (var fsc = new FolioServiceClient(connectionString))
             {
                 var s2 = Stopwatch.StartNew();
-                var js4 = JsonSchema.FromJsonAsync(sr2.ReadToEndAsync().Result).Result;
-                var js = new JsonSerializer();
+                var js = JsonSchema.FromJsonAsync(sr2.ReadToEndAsync().Result).Result;
                 jtr.Read();
                 var i = 0;
                 while (jtr.Read() && jtr.TokenType != JsonToken.EndArray)
                 {
                     if (take != null && take <= i) break;
                     ++i;
-                    var jo = (JObject)js.Deserialize(jtr);
+                    var jo = (JObject)localTimeJsonSerializer.Deserialize(jtr);
                     if (validate)
                     {
-                        var l = js4.Validate(jo);
+                        var l = js.Validate(jo);
                         if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"FundType {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"FundType {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
                     }
                     if (api)
@@ -6955,18 +6879,17 @@ namespace FolioConsoleApplication
             using (var jtw = new JsonTextWriter(sw))
             {
                 var s2 = Stopwatch.StartNew();
-                var js4 = JsonSchema.FromJsonAsync(sr.ReadToEndAsync().Result).Result;
-                var js = new JsonSerializer { Formatting = Formatting.Indented };
+                var js = JsonSchema.FromJsonAsync(sr.ReadToEndAsync().Result).Result;
                 jtw.WriteStartArray();
                 var i = 0;
-                foreach (var jo in api ? fsc.FundTypes(where, orderBy, skip, take) : fdc.FundTypes(where, null, orderBy, skip, take).Select(ft => JObject.Parse(ft.Content)))
+                foreach (var jo in api ? fsc.FundTypes(where, orderBy, skip, take) : fdc.FundTypes(where, null, orderBy, skip, take).Select(ft => ft.ToJObject()))
                 {
                     if (validate)
                     {
-                        var l = js4.Validate(jo);
+                        var l = js.Validate(jo);
                         if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"FundType {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"FundType {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
                     }
-                    if (!whatIf) js.Serialize(jtw, jo);
+                    if (!whatIf) (universalTime ? universalTimeJsonSerializer : localTimeJsonSerializer).Serialize(jtw, jo);
                     if (++i % 10000 == 0)
                     {
                         traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
@@ -6987,14 +6910,14 @@ namespace FolioConsoleApplication
             using (var jtw = new JsonTextWriter(Console.Out))
             {
                 jtw.WriteStartArray();
-                foreach (var jo in (api ? fsc.Groups(where, orderBy, skip, take) : fdc.Groups(where, null, orderBy, skip, take).Select(g => JObject.Parse(g.Content))).Select(jo =>
+                foreach (var jo in (api ? fsc.Groups(where, orderBy, skip, take) : fdc.Groups(where, null, orderBy, skip, take).Select(g => g.ToJObject())).Select(jo =>
                 {
                     return select == null ? jo : new JObject(select.Split(',').Select(s =>
                     {
                         var m = Regex.Match(s.Trim(), @"(?<Path>\S+)((?i) as (?<Name>.+))?", RegexOptions.Compiled);
                         return new JProperty(m.Groups["Name"].Success ? m.Groups["Name"].Value : m.Groups["Path"].Value.Split('.').Last(), jo.SelectToken(m.Groups["Path"].Value));
                     }));
-                })) jsonSerializer.Serialize(jtw, jo);
+                })) (universalTime ? universalTimeJsonSerializer : localTimeJsonSerializer).Serialize(jtw, jo);
                 jtw.WriteEndArray();
             }
         }
@@ -7041,18 +6964,17 @@ namespace FolioConsoleApplication
             using (var fsc = new FolioServiceClient(connectionString))
             {
                 var s2 = Stopwatch.StartNew();
-                var js4 = JsonSchema.FromJsonAsync(sr2.ReadToEndAsync().Result).Result;
-                var js = new JsonSerializer();
+                var js = JsonSchema.FromJsonAsync(sr2.ReadToEndAsync().Result).Result;
                 jtr.Read();
                 var i = 0;
                 while (jtr.Read() && jtr.TokenType != JsonToken.EndArray)
                 {
                     if (take != null && take <= i) break;
                     ++i;
-                    var jo = (JObject)js.Deserialize(jtr);
+                    var jo = (JObject)localTimeJsonSerializer.Deserialize(jtr);
                     if (validate)
                     {
-                        var l = js4.Validate(jo);
+                        var l = js.Validate(jo);
                         if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"Group {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"Group {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
                     }
                     if (api)
@@ -7096,18 +7018,17 @@ namespace FolioConsoleApplication
             using (var jtw = new JsonTextWriter(sw))
             {
                 var s2 = Stopwatch.StartNew();
-                var js4 = JsonSchema.FromJsonAsync(sr.ReadToEndAsync().Result).Result;
-                var js = new JsonSerializer { Formatting = Formatting.Indented };
+                var js = JsonSchema.FromJsonAsync(sr.ReadToEndAsync().Result).Result;
                 jtw.WriteStartArray();
                 var i = 0;
-                foreach (var jo in api ? fsc.Groups(where, orderBy, skip, take) : fdc.Groups(where, null, orderBy, skip, take).Select(g => JObject.Parse(g.Content)))
+                foreach (var jo in api ? fsc.Groups(where, orderBy, skip, take) : fdc.Groups(where, null, orderBy, skip, take).Select(g => g.ToJObject()))
                 {
                     if (validate)
                     {
-                        var l = js4.Validate(jo);
+                        var l = js.Validate(jo);
                         if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"Group {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"Group {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
                     }
-                    if (!whatIf) js.Serialize(jtw, jo);
+                    if (!whatIf) (universalTime ? universalTimeJsonSerializer : localTimeJsonSerializer).Serialize(jtw, jo);
                     if (++i % 10000 == 0)
                     {
                         traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
@@ -7128,14 +7049,14 @@ namespace FolioConsoleApplication
             using (var jtw = new JsonTextWriter(Console.Out))
             {
                 jtw.WriteStartArray();
-                foreach (var jo in (api ? fsc.Holdings(where, orderBy, skip, take) : fdc.Holdings(where, null, orderBy, skip, take).Select(h => JObject.Parse(h.Content))).Select(jo =>
+                foreach (var jo in (api ? fsc.Holdings(where, orderBy, skip, take) : fdc.Holdings(where, null, orderBy, skip, take).Select(h => h.ToJObject())).Select(jo =>
                 {
                     return select == null ? jo : new JObject(select.Split(',').Select(s =>
                     {
                         var m = Regex.Match(s.Trim(), @"(?<Path>\S+)((?i) as (?<Name>.+))?", RegexOptions.Compiled);
                         return new JProperty(m.Groups["Name"].Success ? m.Groups["Name"].Value : m.Groups["Path"].Value.Split('.').Last(), jo.SelectToken(m.Groups["Path"].Value));
                     }));
-                })) jsonSerializer.Serialize(jtw, jo);
+                })) (universalTime ? universalTimeJsonSerializer : localTimeJsonSerializer).Serialize(jtw, jo);
                 jtw.WriteEndArray();
             }
         }
@@ -7182,8 +7103,7 @@ namespace FolioConsoleApplication
             using (var fsc = new FolioServiceClient(connectionString))
             {
                 var s2 = Stopwatch.StartNew();
-                var js4 = JsonSchema.FromJsonAsync(sr2.ReadToEndAsync().Result).Result;
-                var js = new JsonSerializer();
+                var js = JsonSchema.FromJsonAsync(sr2.ReadToEndAsync().Result).Result;
                 jtr.Read();
                 var i = 0;
                 var l2 = new List<JObject>(1000);
@@ -7191,10 +7111,10 @@ namespace FolioConsoleApplication
                 {
                     if (take != null && take <= i) break;
                     ++i;
-                    var jo = (JObject)js.Deserialize(jtr);
+                    var jo = (JObject)localTimeJsonSerializer.Deserialize(jtr);
                     if (validate)
                     {
-                        var l = js4.Validate(jo);
+                        var l = js.Validate(jo);
                         if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"Holding {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"Holding {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
                     }
                     if (api)
@@ -7241,18 +7161,17 @@ namespace FolioConsoleApplication
             using (var jtw = new JsonTextWriter(sw))
             {
                 var s2 = Stopwatch.StartNew();
-                var js4 = JsonSchema.FromJsonAsync(sr.ReadToEndAsync().Result).Result;
-                var js = new JsonSerializer { Formatting = Formatting.Indented };
+                var js = JsonSchema.FromJsonAsync(sr.ReadToEndAsync().Result).Result;
                 jtw.WriteStartArray();
                 var i = 0;
-                foreach (var jo in api ? fsc.Holdings(where, orderBy, skip, take) : fdc.Holdings(where, null, orderBy, skip, take).Select(h => JObject.Parse(h.Content)))
+                foreach (var jo in api ? fsc.Holdings(where, orderBy, skip, take) : fdc.Holdings(where, null, orderBy, skip, take).Select(h => h.ToJObject()))
                 {
                     if (validate)
                     {
-                        var l = js4.Validate(jo);
+                        var l = js.Validate(jo);
                         if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"Holding {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"Holding {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
                     }
-                    if (!whatIf) js.Serialize(jtw, jo);
+                    if (!whatIf) (universalTime ? universalTimeJsonSerializer : localTimeJsonSerializer).Serialize(jtw, jo);
                     if (++i % 10000 == 0)
                     {
                         traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
@@ -7273,14 +7192,14 @@ namespace FolioConsoleApplication
             using (var jtw = new JsonTextWriter(Console.Out))
             {
                 jtw.WriteStartArray();
-                foreach (var jo in (api ? fsc.HoldingNoteTypes(where, orderBy, skip, take) : fdc.HoldingNoteTypes(where, null, orderBy, skip, take).Select(hnt => JObject.Parse(hnt.Content))).Select(jo =>
+                foreach (var jo in (api ? fsc.HoldingNoteTypes(where, orderBy, skip, take) : fdc.HoldingNoteTypes(where, null, orderBy, skip, take).Select(hnt => hnt.ToJObject())).Select(jo =>
                 {
                     return select == null ? jo : new JObject(select.Split(',').Select(s =>
                     {
                         var m = Regex.Match(s.Trim(), @"(?<Path>\S+)((?i) as (?<Name>.+))?", RegexOptions.Compiled);
                         return new JProperty(m.Groups["Name"].Success ? m.Groups["Name"].Value : m.Groups["Path"].Value.Split('.').Last(), jo.SelectToken(m.Groups["Path"].Value));
                     }));
-                })) jsonSerializer.Serialize(jtw, jo);
+                })) (universalTime ? universalTimeJsonSerializer : localTimeJsonSerializer).Serialize(jtw, jo);
                 jtw.WriteEndArray();
             }
         }
@@ -7327,18 +7246,17 @@ namespace FolioConsoleApplication
             using (var fsc = new FolioServiceClient(connectionString))
             {
                 var s2 = Stopwatch.StartNew();
-                var js4 = JsonSchema.FromJsonAsync(sr2.ReadToEndAsync().Result).Result;
-                var js = new JsonSerializer();
+                var js = JsonSchema.FromJsonAsync(sr2.ReadToEndAsync().Result).Result;
                 jtr.Read();
                 var i = 0;
                 while (jtr.Read() && jtr.TokenType != JsonToken.EndArray)
                 {
                     if (take != null && take <= i) break;
                     ++i;
-                    var jo = (JObject)js.Deserialize(jtr);
+                    var jo = (JObject)localTimeJsonSerializer.Deserialize(jtr);
                     if (validate)
                     {
-                        var l = js4.Validate(jo);
+                        var l = js.Validate(jo);
                         if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"HoldingNoteType {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"HoldingNoteType {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
                     }
                     if (api)
@@ -7382,18 +7300,17 @@ namespace FolioConsoleApplication
             using (var jtw = new JsonTextWriter(sw))
             {
                 var s2 = Stopwatch.StartNew();
-                var js4 = JsonSchema.FromJsonAsync(sr.ReadToEndAsync().Result).Result;
-                var js = new JsonSerializer { Formatting = Formatting.Indented };
+                var js = JsonSchema.FromJsonAsync(sr.ReadToEndAsync().Result).Result;
                 jtw.WriteStartArray();
                 var i = 0;
-                foreach (var jo in api ? fsc.HoldingNoteTypes(where, orderBy, skip, take) : fdc.HoldingNoteTypes(where, null, orderBy, skip, take).Select(hnt => JObject.Parse(hnt.Content)))
+                foreach (var jo in api ? fsc.HoldingNoteTypes(where, orderBy, skip, take) : fdc.HoldingNoteTypes(where, null, orderBy, skip, take).Select(hnt => hnt.ToJObject()))
                 {
                     if (validate)
                     {
-                        var l = js4.Validate(jo);
+                        var l = js.Validate(jo);
                         if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"HoldingNoteType {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"HoldingNoteType {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
                     }
-                    if (!whatIf) js.Serialize(jtw, jo);
+                    if (!whatIf) (universalTime ? universalTimeJsonSerializer : localTimeJsonSerializer).Serialize(jtw, jo);
                     if (++i % 10000 == 0)
                     {
                         traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
@@ -7414,14 +7331,14 @@ namespace FolioConsoleApplication
             using (var jtw = new JsonTextWriter(Console.Out))
             {
                 jtw.WriteStartArray();
-                foreach (var jo in (api ? fsc.HoldingTypes(where, orderBy, skip, take) : fdc.HoldingTypes(where, null, orderBy, skip, take).Select(ht => JObject.Parse(ht.Content))).Select(jo =>
+                foreach (var jo in (api ? fsc.HoldingTypes(where, orderBy, skip, take) : fdc.HoldingTypes(where, null, orderBy, skip, take).Select(ht => ht.ToJObject())).Select(jo =>
                 {
                     return select == null ? jo : new JObject(select.Split(',').Select(s =>
                     {
                         var m = Regex.Match(s.Trim(), @"(?<Path>\S+)((?i) as (?<Name>.+))?", RegexOptions.Compiled);
                         return new JProperty(m.Groups["Name"].Success ? m.Groups["Name"].Value : m.Groups["Path"].Value.Split('.').Last(), jo.SelectToken(m.Groups["Path"].Value));
                     }));
-                })) jsonSerializer.Serialize(jtw, jo);
+                })) (universalTime ? universalTimeJsonSerializer : localTimeJsonSerializer).Serialize(jtw, jo);
                 jtw.WriteEndArray();
             }
         }
@@ -7468,18 +7385,17 @@ namespace FolioConsoleApplication
             using (var fsc = new FolioServiceClient(connectionString))
             {
                 var s2 = Stopwatch.StartNew();
-                var js4 = JsonSchema.FromJsonAsync(sr2.ReadToEndAsync().Result).Result;
-                var js = new JsonSerializer();
+                var js = JsonSchema.FromJsonAsync(sr2.ReadToEndAsync().Result).Result;
                 jtr.Read();
                 var i = 0;
                 while (jtr.Read() && jtr.TokenType != JsonToken.EndArray)
                 {
                     if (take != null && take <= i) break;
                     ++i;
-                    var jo = (JObject)js.Deserialize(jtr);
+                    var jo = (JObject)localTimeJsonSerializer.Deserialize(jtr);
                     if (validate)
                     {
-                        var l = js4.Validate(jo);
+                        var l = js.Validate(jo);
                         if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"HoldingType {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"HoldingType {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
                     }
                     if (api)
@@ -7523,18 +7439,17 @@ namespace FolioConsoleApplication
             using (var jtw = new JsonTextWriter(sw))
             {
                 var s2 = Stopwatch.StartNew();
-                var js4 = JsonSchema.FromJsonAsync(sr.ReadToEndAsync().Result).Result;
-                var js = new JsonSerializer { Formatting = Formatting.Indented };
+                var js = JsonSchema.FromJsonAsync(sr.ReadToEndAsync().Result).Result;
                 jtw.WriteStartArray();
                 var i = 0;
-                foreach (var jo in api ? fsc.HoldingTypes(where, orderBy, skip, take) : fdc.HoldingTypes(where, null, orderBy, skip, take).Select(ht => JObject.Parse(ht.Content)))
+                foreach (var jo in api ? fsc.HoldingTypes(where, orderBy, skip, take) : fdc.HoldingTypes(where, null, orderBy, skip, take).Select(ht => ht.ToJObject()))
                 {
                     if (validate)
                     {
-                        var l = js4.Validate(jo);
+                        var l = js.Validate(jo);
                         if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"HoldingType {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"HoldingType {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
                     }
-                    if (!whatIf) js.Serialize(jtw, jo);
+                    if (!whatIf) (universalTime ? universalTimeJsonSerializer : localTimeJsonSerializer).Serialize(jtw, jo);
                     if (++i % 10000 == 0)
                     {
                         traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
@@ -7555,14 +7470,14 @@ namespace FolioConsoleApplication
             using (var jtw = new JsonTextWriter(Console.Out))
             {
                 jtw.WriteStartArray();
-                foreach (var jo in (api ? new[] { fsc.GetHridSetting() } : fdc.HridSettings(where, null, orderBy, skip, take).Select(hs => JObject.Parse(hs.Content))).Select(jo =>
+                foreach (var jo in (api ? new[] { fsc.GetHridSetting() } : fdc.HridSettings(where, null, orderBy, skip, take).Select(hs => hs.ToJObject())).Select(jo =>
                 {
                     return select == null ? jo : new JObject(select.Split(',').Select(s =>
                     {
                         var m = Regex.Match(s.Trim(), @"(?<Path>\S+)((?i) as (?<Name>.+))?", RegexOptions.Compiled);
                         return new JProperty(m.Groups["Name"].Success ? m.Groups["Name"].Value : m.Groups["Path"].Value.Split('.').Last(), jo.SelectToken(m.Groups["Path"].Value));
                     }));
-                })) jsonSerializer.Serialize(jtw, jo);
+                })) (universalTime ? universalTimeJsonSerializer : localTimeJsonSerializer).Serialize(jtw, jo);
                 jtw.WriteEndArray();
             }
         }
@@ -7598,18 +7513,17 @@ namespace FolioConsoleApplication
             using (var fsc = new FolioServiceClient(connectionString))
             {
                 var s2 = Stopwatch.StartNew();
-                var js4 = JsonSchema.FromJsonAsync(sr2.ReadToEndAsync().Result).Result;
-                var js = new JsonSerializer();
+                var js = JsonSchema.FromJsonAsync(sr2.ReadToEndAsync().Result).Result;
                 jtr.Read();
                 var i = 0;
                 while (jtr.Read() && jtr.TokenType != JsonToken.EndArray)
                 {
                     if (take != null && take <= i) break;
                     ++i;
-                    var jo = (JObject)js.Deserialize(jtr);
+                    var jo = (JObject)localTimeJsonSerializer.Deserialize(jtr);
                     if (validate)
                     {
-                        var l = js4.Validate(jo);
+                        var l = js.Validate(jo);
                         if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"HridSetting {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"HridSetting {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
                     }
                     if (api)
@@ -7653,18 +7567,17 @@ namespace FolioConsoleApplication
             using (var jtw = new JsonTextWriter(sw))
             {
                 var s2 = Stopwatch.StartNew();
-                var js4 = JsonSchema.FromJsonAsync(sr.ReadToEndAsync().Result).Result;
-                var js = new JsonSerializer { Formatting = Formatting.Indented };
+                var js = JsonSchema.FromJsonAsync(sr.ReadToEndAsync().Result).Result;
                 jtw.WriteStartArray();
                 var i = 0;
-                foreach (var jo in api ? new[] { fsc.GetHridSetting() } : fdc.HridSettings(where, null, orderBy, skip, take).Select(hs => JObject.Parse(hs.Content)))
+                foreach (var jo in api ? new[] { fsc.GetHridSetting() } : fdc.HridSettings(where, null, orderBy, skip, take).Select(hs => hs.ToJObject()))
                 {
                     if (validate)
                     {
-                        var l = js4.Validate(jo);
+                        var l = js.Validate(jo);
                         if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"HridSetting {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"HridSetting {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
                     }
-                    if (!whatIf) js.Serialize(jtw, jo);
+                    if (!whatIf) (universalTime ? universalTimeJsonSerializer : localTimeJsonSerializer).Serialize(jtw, jo);
                     if (++i % 10000 == 0)
                     {
                         traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
@@ -7685,14 +7598,14 @@ namespace FolioConsoleApplication
             using (var jtw = new JsonTextWriter(Console.Out))
             {
                 jtw.WriteStartArray();
-                foreach (var jo in (api ? fsc.IdTypes(where, orderBy, skip, take) : fdc.IdTypes(where, null, orderBy, skip, take).Select(it => JObject.Parse(it.Content))).Select(jo =>
+                foreach (var jo in (api ? fsc.IdTypes(where, orderBy, skip, take) : fdc.IdTypes(where, null, orderBy, skip, take).Select(it => it.ToJObject())).Select(jo =>
                 {
                     return select == null ? jo : new JObject(select.Split(',').Select(s =>
                     {
                         var m = Regex.Match(s.Trim(), @"(?<Path>\S+)((?i) as (?<Name>.+))?", RegexOptions.Compiled);
                         return new JProperty(m.Groups["Name"].Success ? m.Groups["Name"].Value : m.Groups["Path"].Value.Split('.').Last(), jo.SelectToken(m.Groups["Path"].Value));
                     }));
-                })) jsonSerializer.Serialize(jtw, jo);
+                })) (universalTime ? universalTimeJsonSerializer : localTimeJsonSerializer).Serialize(jtw, jo);
                 jtw.WriteEndArray();
             }
         }
@@ -7739,18 +7652,17 @@ namespace FolioConsoleApplication
             using (var fsc = new FolioServiceClient(connectionString))
             {
                 var s2 = Stopwatch.StartNew();
-                var js4 = JsonSchema.FromJsonAsync(sr2.ReadToEndAsync().Result).Result;
-                var js = new JsonSerializer();
+                var js = JsonSchema.FromJsonAsync(sr2.ReadToEndAsync().Result).Result;
                 jtr.Read();
                 var i = 0;
                 while (jtr.Read() && jtr.TokenType != JsonToken.EndArray)
                 {
                     if (take != null && take <= i) break;
                     ++i;
-                    var jo = (JObject)js.Deserialize(jtr);
+                    var jo = (JObject)localTimeJsonSerializer.Deserialize(jtr);
                     if (validate)
                     {
-                        var l = js4.Validate(jo);
+                        var l = js.Validate(jo);
                         if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"IdType {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"IdType {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
                     }
                     if (api)
@@ -7794,18 +7706,17 @@ namespace FolioConsoleApplication
             using (var jtw = new JsonTextWriter(sw))
             {
                 var s2 = Stopwatch.StartNew();
-                var js4 = JsonSchema.FromJsonAsync(sr.ReadToEndAsync().Result).Result;
-                var js = new JsonSerializer { Formatting = Formatting.Indented };
+                var js = JsonSchema.FromJsonAsync(sr.ReadToEndAsync().Result).Result;
                 jtw.WriteStartArray();
                 var i = 0;
-                foreach (var jo in api ? fsc.IdTypes(where, orderBy, skip, take) : fdc.IdTypes(where, null, orderBy, skip, take).Select(it => JObject.Parse(it.Content)))
+                foreach (var jo in api ? fsc.IdTypes(where, orderBy, skip, take) : fdc.IdTypes(where, null, orderBy, skip, take).Select(it => it.ToJObject()))
                 {
                     if (validate)
                     {
-                        var l = js4.Validate(jo);
+                        var l = js.Validate(jo);
                         if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"IdType {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"IdType {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
                     }
-                    if (!whatIf) js.Serialize(jtw, jo);
+                    if (!whatIf) (universalTime ? universalTimeJsonSerializer : localTimeJsonSerializer).Serialize(jtw, jo);
                     if (++i % 10000 == 0)
                     {
                         traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
@@ -7826,14 +7737,14 @@ namespace FolioConsoleApplication
             using (var jtw = new JsonTextWriter(Console.Out))
             {
                 jtw.WriteStartArray();
-                foreach (var jo in (api ? fsc.IllPolicies(where, orderBy, skip, take) : fdc.IllPolicies(where, null, orderBy, skip, take).Select(ip => JObject.Parse(ip.Content))).Select(jo =>
+                foreach (var jo in (api ? fsc.IllPolicies(where, orderBy, skip, take) : fdc.IllPolicies(where, null, orderBy, skip, take).Select(ip => ip.ToJObject())).Select(jo =>
                 {
                     return select == null ? jo : new JObject(select.Split(',').Select(s =>
                     {
                         var m = Regex.Match(s.Trim(), @"(?<Path>\S+)((?i) as (?<Name>.+))?", RegexOptions.Compiled);
                         return new JProperty(m.Groups["Name"].Success ? m.Groups["Name"].Value : m.Groups["Path"].Value.Split('.').Last(), jo.SelectToken(m.Groups["Path"].Value));
                     }));
-                })) jsonSerializer.Serialize(jtw, jo);
+                })) (universalTime ? universalTimeJsonSerializer : localTimeJsonSerializer).Serialize(jtw, jo);
                 jtw.WriteEndArray();
             }
         }
@@ -7880,18 +7791,17 @@ namespace FolioConsoleApplication
             using (var fsc = new FolioServiceClient(connectionString))
             {
                 var s2 = Stopwatch.StartNew();
-                var js4 = JsonSchema.FromJsonAsync(sr2.ReadToEndAsync().Result).Result;
-                var js = new JsonSerializer();
+                var js = JsonSchema.FromJsonAsync(sr2.ReadToEndAsync().Result).Result;
                 jtr.Read();
                 var i = 0;
                 while (jtr.Read() && jtr.TokenType != JsonToken.EndArray)
                 {
                     if (take != null && take <= i) break;
                     ++i;
-                    var jo = (JObject)js.Deserialize(jtr);
+                    var jo = (JObject)localTimeJsonSerializer.Deserialize(jtr);
                     if (validate)
                     {
-                        var l = js4.Validate(jo);
+                        var l = js.Validate(jo);
                         if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"IllPolicy {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"IllPolicy {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
                     }
                     if (api)
@@ -7935,18 +7845,17 @@ namespace FolioConsoleApplication
             using (var jtw = new JsonTextWriter(sw))
             {
                 var s2 = Stopwatch.StartNew();
-                var js4 = JsonSchema.FromJsonAsync(sr.ReadToEndAsync().Result).Result;
-                var js = new JsonSerializer { Formatting = Formatting.Indented };
+                var js = JsonSchema.FromJsonAsync(sr.ReadToEndAsync().Result).Result;
                 jtw.WriteStartArray();
                 var i = 0;
-                foreach (var jo in api ? fsc.IllPolicies(where, orderBy, skip, take) : fdc.IllPolicies(where, null, orderBy, skip, take).Select(ip => JObject.Parse(ip.Content)))
+                foreach (var jo in api ? fsc.IllPolicies(where, orderBy, skip, take) : fdc.IllPolicies(where, null, orderBy, skip, take).Select(ip => ip.ToJObject()))
                 {
                     if (validate)
                     {
-                        var l = js4.Validate(jo);
+                        var l = js.Validate(jo);
                         if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"IllPolicy {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"IllPolicy {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
                     }
-                    if (!whatIf) js.Serialize(jtw, jo);
+                    if (!whatIf) (universalTime ? universalTimeJsonSerializer : localTimeJsonSerializer).Serialize(jtw, jo);
                     if (++i % 10000 == 0)
                     {
                         traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
@@ -7967,14 +7876,14 @@ namespace FolioConsoleApplication
             using (var jtw = new JsonTextWriter(Console.Out))
             {
                 jtw.WriteStartArray();
-                foreach (var jo in (api ? fsc.Instances(where, orderBy, skip, take) : fdc.Instances(where, null, orderBy, skip, take).Select(i2 => JObject.Parse(i2.Content))).Select(jo =>
+                foreach (var jo in (api ? fsc.Instances(where, orderBy, skip, take) : fdc.Instances(where, null, orderBy, skip, take).Select(i2 => i2.ToJObject())).Select(jo =>
                 {
                     return select == null ? jo : new JObject(select.Split(',').Select(s =>
                     {
                         var m = Regex.Match(s.Trim(), @"(?<Path>\S+)((?i) as (?<Name>.+))?", RegexOptions.Compiled);
                         return new JProperty(m.Groups["Name"].Success ? m.Groups["Name"].Value : m.Groups["Path"].Value.Split('.').Last(), jo.SelectToken(m.Groups["Path"].Value));
                     }));
-                })) jsonSerializer.Serialize(jtw, jo);
+                })) (universalTime ? universalTimeJsonSerializer : localTimeJsonSerializer).Serialize(jtw, jo);
                 jtw.WriteEndArray();
             }
         }
@@ -8021,8 +7930,7 @@ namespace FolioConsoleApplication
             using (var fsc = new FolioServiceClient(connectionString))
             {
                 var s2 = Stopwatch.StartNew();
-                var js4 = JsonSchema.FromJsonAsync(sr2.ReadToEndAsync().Result).Result;
-                var js = new JsonSerializer();
+                var js = JsonSchema.FromJsonAsync(sr2.ReadToEndAsync().Result).Result;
                 jtr.Read();
                 var i = 0;
                 var l2 = new List<JObject>(1000);
@@ -8030,10 +7938,10 @@ namespace FolioConsoleApplication
                 {
                     if (take != null && take <= i) break;
                     ++i;
-                    var jo = (JObject)js.Deserialize(jtr);
+                    var jo = (JObject)localTimeJsonSerializer.Deserialize(jtr);
                     if (validate)
                     {
-                        var l = js4.Validate(jo);
+                        var l = js.Validate(jo);
                         if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"Instance {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"Instance {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
                     }
                     if (api)
@@ -8080,18 +7988,17 @@ namespace FolioConsoleApplication
             using (var jtw = new JsonTextWriter(sw))
             {
                 var s2 = Stopwatch.StartNew();
-                var js4 = JsonSchema.FromJsonAsync(sr.ReadToEndAsync().Result).Result;
-                var js = new JsonSerializer { Formatting = Formatting.Indented };
+                var js = JsonSchema.FromJsonAsync(sr.ReadToEndAsync().Result).Result;
                 jtw.WriteStartArray();
                 var i = 0;
-                foreach (var jo in api ? fsc.Instances(where, orderBy, skip, take) : fdc.Instances(where, null, orderBy, skip, take).Select(i2 => JObject.Parse(i2.Content)))
+                foreach (var jo in api ? fsc.Instances(where, orderBy, skip, take) : fdc.Instances(where, null, orderBy, skip, take).Select(i2 => i2.ToJObject()))
                 {
                     if (validate)
                     {
-                        var l = js4.Validate(jo);
+                        var l = js.Validate(jo);
                         if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"Instance {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"Instance {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
                     }
-                    if (!whatIf) js.Serialize(jtw, jo);
+                    if (!whatIf) (universalTime ? universalTimeJsonSerializer : localTimeJsonSerializer).Serialize(jtw, jo);
                     if (++i % 10000 == 0)
                     {
                         traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
@@ -8112,14 +8019,14 @@ namespace FolioConsoleApplication
             using (var jtw = new JsonTextWriter(Console.Out))
             {
                 jtw.WriteStartArray();
-                foreach (var jo in (api ? fsc.InstanceFormats(where, orderBy, skip, take) : fdc.InstanceFormats(where, null, orderBy, skip, take).Select(@if => JObject.Parse(@if.Content))).Select(jo =>
+                foreach (var jo in (api ? fsc.InstanceFormats(where, orderBy, skip, take) : fdc.InstanceFormats(where, null, orderBy, skip, take).Select(@if => @if.ToJObject())).Select(jo =>
                 {
                     return select == null ? jo : new JObject(select.Split(',').Select(s =>
                     {
                         var m = Regex.Match(s.Trim(), @"(?<Path>\S+)((?i) as (?<Name>.+))?", RegexOptions.Compiled);
                         return new JProperty(m.Groups["Name"].Success ? m.Groups["Name"].Value : m.Groups["Path"].Value.Split('.').Last(), jo.SelectToken(m.Groups["Path"].Value));
                     }));
-                })) jsonSerializer.Serialize(jtw, jo);
+                })) (universalTime ? universalTimeJsonSerializer : localTimeJsonSerializer).Serialize(jtw, jo);
                 jtw.WriteEndArray();
             }
         }
@@ -8166,18 +8073,17 @@ namespace FolioConsoleApplication
             using (var fsc = new FolioServiceClient(connectionString))
             {
                 var s2 = Stopwatch.StartNew();
-                var js4 = JsonSchema.FromJsonAsync(sr2.ReadToEndAsync().Result).Result;
-                var js = new JsonSerializer();
+                var js = JsonSchema.FromJsonAsync(sr2.ReadToEndAsync().Result).Result;
                 jtr.Read();
                 var i = 0;
                 while (jtr.Read() && jtr.TokenType != JsonToken.EndArray)
                 {
                     if (take != null && take <= i) break;
                     ++i;
-                    var jo = (JObject)js.Deserialize(jtr);
+                    var jo = (JObject)localTimeJsonSerializer.Deserialize(jtr);
                     if (validate)
                     {
-                        var l = js4.Validate(jo);
+                        var l = js.Validate(jo);
                         if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"InstanceFormat {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"InstanceFormat {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
                     }
                     if (api)
@@ -8221,18 +8127,17 @@ namespace FolioConsoleApplication
             using (var jtw = new JsonTextWriter(sw))
             {
                 var s2 = Stopwatch.StartNew();
-                var js4 = JsonSchema.FromJsonAsync(sr.ReadToEndAsync().Result).Result;
-                var js = new JsonSerializer { Formatting = Formatting.Indented };
+                var js = JsonSchema.FromJsonAsync(sr.ReadToEndAsync().Result).Result;
                 jtw.WriteStartArray();
                 var i = 0;
-                foreach (var jo in api ? fsc.InstanceFormats(where, orderBy, skip, take) : fdc.InstanceFormats(where, null, orderBy, skip, take).Select(@if => JObject.Parse(@if.Content)))
+                foreach (var jo in api ? fsc.InstanceFormats(where, orderBy, skip, take) : fdc.InstanceFormats(where, null, orderBy, skip, take).Select(@if => @if.ToJObject()))
                 {
                     if (validate)
                     {
-                        var l = js4.Validate(jo);
+                        var l = js.Validate(jo);
                         if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"InstanceFormat {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"InstanceFormat {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
                     }
-                    if (!whatIf) js.Serialize(jtw, jo);
+                    if (!whatIf) (universalTime ? universalTimeJsonSerializer : localTimeJsonSerializer).Serialize(jtw, jo);
                     if (++i % 10000 == 0)
                     {
                         traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
@@ -8253,14 +8158,14 @@ namespace FolioConsoleApplication
             using (var jtw = new JsonTextWriter(Console.Out))
             {
                 jtw.WriteStartArray();
-                foreach (var jo in (api ? fsc.InstanceNoteTypes(where, orderBy, skip, take) : fdc.InstanceNoteTypes(where, null, orderBy, skip, take).Select(@int => JObject.Parse(@int.Content))).Select(jo =>
+                foreach (var jo in (api ? fsc.InstanceNoteTypes(where, orderBy, skip, take) : fdc.InstanceNoteTypes(where, null, orderBy, skip, take).Select(@int => @int.ToJObject())).Select(jo =>
                 {
                     return select == null ? jo : new JObject(select.Split(',').Select(s =>
                     {
                         var m = Regex.Match(s.Trim(), @"(?<Path>\S+)((?i) as (?<Name>.+))?", RegexOptions.Compiled);
                         return new JProperty(m.Groups["Name"].Success ? m.Groups["Name"].Value : m.Groups["Path"].Value.Split('.').Last(), jo.SelectToken(m.Groups["Path"].Value));
                     }));
-                })) jsonSerializer.Serialize(jtw, jo);
+                })) (universalTime ? universalTimeJsonSerializer : localTimeJsonSerializer).Serialize(jtw, jo);
                 jtw.WriteEndArray();
             }
         }
@@ -8307,18 +8212,17 @@ namespace FolioConsoleApplication
             using (var fsc = new FolioServiceClient(connectionString))
             {
                 var s2 = Stopwatch.StartNew();
-                var js4 = JsonSchema.FromJsonAsync(sr2.ReadToEndAsync().Result).Result;
-                var js = new JsonSerializer();
+                var js = JsonSchema.FromJsonAsync(sr2.ReadToEndAsync().Result).Result;
                 jtr.Read();
                 var i = 0;
                 while (jtr.Read() && jtr.TokenType != JsonToken.EndArray)
                 {
                     if (take != null && take <= i) break;
                     ++i;
-                    var jo = (JObject)js.Deserialize(jtr);
+                    var jo = (JObject)localTimeJsonSerializer.Deserialize(jtr);
                     if (validate)
                     {
-                        var l = js4.Validate(jo);
+                        var l = js.Validate(jo);
                         if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"InstanceNoteType {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"InstanceNoteType {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
                     }
                     if (api)
@@ -8362,18 +8266,17 @@ namespace FolioConsoleApplication
             using (var jtw = new JsonTextWriter(sw))
             {
                 var s2 = Stopwatch.StartNew();
-                var js4 = JsonSchema.FromJsonAsync(sr.ReadToEndAsync().Result).Result;
-                var js = new JsonSerializer { Formatting = Formatting.Indented };
+                var js = JsonSchema.FromJsonAsync(sr.ReadToEndAsync().Result).Result;
                 jtw.WriteStartArray();
                 var i = 0;
-                foreach (var jo in api ? fsc.InstanceNoteTypes(where, orderBy, skip, take) : fdc.InstanceNoteTypes(where, null, orderBy, skip, take).Select(@int => JObject.Parse(@int.Content)))
+                foreach (var jo in api ? fsc.InstanceNoteTypes(where, orderBy, skip, take) : fdc.InstanceNoteTypes(where, null, orderBy, skip, take).Select(@int => @int.ToJObject()))
                 {
                     if (validate)
                     {
-                        var l = js4.Validate(jo);
+                        var l = js.Validate(jo);
                         if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"InstanceNoteType {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"InstanceNoteType {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
                     }
-                    if (!whatIf) js.Serialize(jtw, jo);
+                    if (!whatIf) (universalTime ? universalTimeJsonSerializer : localTimeJsonSerializer).Serialize(jtw, jo);
                     if (++i % 10000 == 0)
                     {
                         traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
@@ -8394,14 +8297,14 @@ namespace FolioConsoleApplication
             using (var jtw = new JsonTextWriter(Console.Out))
             {
                 jtw.WriteStartArray();
-                foreach (var jo in (api ? fsc.InstanceRelationships(where, orderBy, skip, take) : fdc.InstanceRelationships(where, null, orderBy, skip, take).Select(ir => JObject.Parse(ir.Content))).Select(jo =>
+                foreach (var jo in (api ? fsc.InstanceRelationships(where, orderBy, skip, take) : fdc.InstanceRelationships(where, null, orderBy, skip, take).Select(ir => ir.ToJObject())).Select(jo =>
                 {
                     return select == null ? jo : new JObject(select.Split(',').Select(s =>
                     {
                         var m = Regex.Match(s.Trim(), @"(?<Path>\S+)((?i) as (?<Name>.+))?", RegexOptions.Compiled);
                         return new JProperty(m.Groups["Name"].Success ? m.Groups["Name"].Value : m.Groups["Path"].Value.Split('.').Last(), jo.SelectToken(m.Groups["Path"].Value));
                     }));
-                })) jsonSerializer.Serialize(jtw, jo);
+                })) (universalTime ? universalTimeJsonSerializer : localTimeJsonSerializer).Serialize(jtw, jo);
                 jtw.WriteEndArray();
             }
         }
@@ -8448,18 +8351,17 @@ namespace FolioConsoleApplication
             using (var fsc = new FolioServiceClient(connectionString))
             {
                 var s2 = Stopwatch.StartNew();
-                var js4 = JsonSchema.FromJsonAsync(sr2.ReadToEndAsync().Result).Result;
-                var js = new JsonSerializer();
+                var js = JsonSchema.FromJsonAsync(sr2.ReadToEndAsync().Result).Result;
                 jtr.Read();
                 var i = 0;
                 while (jtr.Read() && jtr.TokenType != JsonToken.EndArray)
                 {
                     if (take != null && take <= i) break;
                     ++i;
-                    var jo = (JObject)js.Deserialize(jtr);
+                    var jo = (JObject)localTimeJsonSerializer.Deserialize(jtr);
                     if (validate)
                     {
-                        var l = js4.Validate(jo);
+                        var l = js.Validate(jo);
                         if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"InstanceRelationship {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"InstanceRelationship {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
                     }
                     if (api)
@@ -8503,18 +8405,17 @@ namespace FolioConsoleApplication
             using (var jtw = new JsonTextWriter(sw))
             {
                 var s2 = Stopwatch.StartNew();
-                var js4 = JsonSchema.FromJsonAsync(sr.ReadToEndAsync().Result).Result;
-                var js = new JsonSerializer { Formatting = Formatting.Indented };
+                var js = JsonSchema.FromJsonAsync(sr.ReadToEndAsync().Result).Result;
                 jtw.WriteStartArray();
                 var i = 0;
-                foreach (var jo in api ? fsc.InstanceRelationships(where, orderBy, skip, take) : fdc.InstanceRelationships(where, null, orderBy, skip, take).Select(ir => JObject.Parse(ir.Content)))
+                foreach (var jo in api ? fsc.InstanceRelationships(where, orderBy, skip, take) : fdc.InstanceRelationships(where, null, orderBy, skip, take).Select(ir => ir.ToJObject()))
                 {
                     if (validate)
                     {
-                        var l = js4.Validate(jo);
+                        var l = js.Validate(jo);
                         if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"InstanceRelationship {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"InstanceRelationship {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
                     }
-                    if (!whatIf) js.Serialize(jtw, jo);
+                    if (!whatIf) (universalTime ? universalTimeJsonSerializer : localTimeJsonSerializer).Serialize(jtw, jo);
                     if (++i % 10000 == 0)
                     {
                         traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
@@ -8535,14 +8436,14 @@ namespace FolioConsoleApplication
             using (var jtw = new JsonTextWriter(Console.Out))
             {
                 jtw.WriteStartArray();
-                foreach (var jo in (api ? fsc.InstanceRelationshipTypes(where, orderBy, skip, take) : fdc.InstanceRelationshipTypes(where, null, orderBy, skip, take).Select(irt => JObject.Parse(irt.Content))).Select(jo =>
+                foreach (var jo in (api ? fsc.InstanceRelationshipTypes(where, orderBy, skip, take) : fdc.InstanceRelationshipTypes(where, null, orderBy, skip, take).Select(irt => irt.ToJObject())).Select(jo =>
                 {
                     return select == null ? jo : new JObject(select.Split(',').Select(s =>
                     {
                         var m = Regex.Match(s.Trim(), @"(?<Path>\S+)((?i) as (?<Name>.+))?", RegexOptions.Compiled);
                         return new JProperty(m.Groups["Name"].Success ? m.Groups["Name"].Value : m.Groups["Path"].Value.Split('.').Last(), jo.SelectToken(m.Groups["Path"].Value));
                     }));
-                })) jsonSerializer.Serialize(jtw, jo);
+                })) (universalTime ? universalTimeJsonSerializer : localTimeJsonSerializer).Serialize(jtw, jo);
                 jtw.WriteEndArray();
             }
         }
@@ -8589,18 +8490,17 @@ namespace FolioConsoleApplication
             using (var fsc = new FolioServiceClient(connectionString))
             {
                 var s2 = Stopwatch.StartNew();
-                var js4 = JsonSchema.FromJsonAsync(sr2.ReadToEndAsync().Result).Result;
-                var js = new JsonSerializer();
+                var js = JsonSchema.FromJsonAsync(sr2.ReadToEndAsync().Result).Result;
                 jtr.Read();
                 var i = 0;
                 while (jtr.Read() && jtr.TokenType != JsonToken.EndArray)
                 {
                     if (take != null && take <= i) break;
                     ++i;
-                    var jo = (JObject)js.Deserialize(jtr);
+                    var jo = (JObject)localTimeJsonSerializer.Deserialize(jtr);
                     if (validate)
                     {
-                        var l = js4.Validate(jo);
+                        var l = js.Validate(jo);
                         if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"InstanceRelationshipType {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"InstanceRelationshipType {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
                     }
                     if (api)
@@ -8644,18 +8544,17 @@ namespace FolioConsoleApplication
             using (var jtw = new JsonTextWriter(sw))
             {
                 var s2 = Stopwatch.StartNew();
-                var js4 = JsonSchema.FromJsonAsync(sr.ReadToEndAsync().Result).Result;
-                var js = new JsonSerializer { Formatting = Formatting.Indented };
+                var js = JsonSchema.FromJsonAsync(sr.ReadToEndAsync().Result).Result;
                 jtw.WriteStartArray();
                 var i = 0;
-                foreach (var jo in api ? fsc.InstanceRelationshipTypes(where, orderBy, skip, take) : fdc.InstanceRelationshipTypes(where, null, orderBy, skip, take).Select(irt => JObject.Parse(irt.Content)))
+                foreach (var jo in api ? fsc.InstanceRelationshipTypes(where, orderBy, skip, take) : fdc.InstanceRelationshipTypes(where, null, orderBy, skip, take).Select(irt => irt.ToJObject()))
                 {
                     if (validate)
                     {
-                        var l = js4.Validate(jo);
+                        var l = js.Validate(jo);
                         if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"InstanceRelationshipType {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"InstanceRelationshipType {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
                     }
-                    if (!whatIf) js.Serialize(jtw, jo);
+                    if (!whatIf) (universalTime ? universalTimeJsonSerializer : localTimeJsonSerializer).Serialize(jtw, jo);
                     if (++i % 10000 == 0)
                     {
                         traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
@@ -8676,14 +8575,14 @@ namespace FolioConsoleApplication
             using (var jtw = new JsonTextWriter(Console.Out))
             {
                 jtw.WriteStartArray();
-                foreach (var jo in (api ? fsc.InstanceStatuses(where, orderBy, skip, take) : fdc.InstanceStatuses(where, null, orderBy, skip, take).Select(@is => JObject.Parse(@is.Content))).Select(jo =>
+                foreach (var jo in (api ? fsc.InstanceStatuses(where, orderBy, skip, take) : fdc.InstanceStatuses(where, null, orderBy, skip, take).Select(@is => @is.ToJObject())).Select(jo =>
                 {
                     return select == null ? jo : new JObject(select.Split(',').Select(s =>
                     {
                         var m = Regex.Match(s.Trim(), @"(?<Path>\S+)((?i) as (?<Name>.+))?", RegexOptions.Compiled);
                         return new JProperty(m.Groups["Name"].Success ? m.Groups["Name"].Value : m.Groups["Path"].Value.Split('.').Last(), jo.SelectToken(m.Groups["Path"].Value));
                     }));
-                })) jsonSerializer.Serialize(jtw, jo);
+                })) (universalTime ? universalTimeJsonSerializer : localTimeJsonSerializer).Serialize(jtw, jo);
                 jtw.WriteEndArray();
             }
         }
@@ -8730,18 +8629,17 @@ namespace FolioConsoleApplication
             using (var fsc = new FolioServiceClient(connectionString))
             {
                 var s2 = Stopwatch.StartNew();
-                var js4 = JsonSchema.FromJsonAsync(sr2.ReadToEndAsync().Result).Result;
-                var js = new JsonSerializer();
+                var js = JsonSchema.FromJsonAsync(sr2.ReadToEndAsync().Result).Result;
                 jtr.Read();
                 var i = 0;
                 while (jtr.Read() && jtr.TokenType != JsonToken.EndArray)
                 {
                     if (take != null && take <= i) break;
                     ++i;
-                    var jo = (JObject)js.Deserialize(jtr);
+                    var jo = (JObject)localTimeJsonSerializer.Deserialize(jtr);
                     if (validate)
                     {
-                        var l = js4.Validate(jo);
+                        var l = js.Validate(jo);
                         if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"InstanceStatus {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"InstanceStatus {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
                     }
                     if (api)
@@ -8785,18 +8683,17 @@ namespace FolioConsoleApplication
             using (var jtw = new JsonTextWriter(sw))
             {
                 var s2 = Stopwatch.StartNew();
-                var js4 = JsonSchema.FromJsonAsync(sr.ReadToEndAsync().Result).Result;
-                var js = new JsonSerializer { Formatting = Formatting.Indented };
+                var js = JsonSchema.FromJsonAsync(sr.ReadToEndAsync().Result).Result;
                 jtw.WriteStartArray();
                 var i = 0;
-                foreach (var jo in api ? fsc.InstanceStatuses(where, orderBy, skip, take) : fdc.InstanceStatuses(where, null, orderBy, skip, take).Select(@is => JObject.Parse(@is.Content)))
+                foreach (var jo in api ? fsc.InstanceStatuses(where, orderBy, skip, take) : fdc.InstanceStatuses(where, null, orderBy, skip, take).Select(@is => @is.ToJObject()))
                 {
                     if (validate)
                     {
-                        var l = js4.Validate(jo);
+                        var l = js.Validate(jo);
                         if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"InstanceStatus {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"InstanceStatus {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
                     }
-                    if (!whatIf) js.Serialize(jtw, jo);
+                    if (!whatIf) (universalTime ? universalTimeJsonSerializer : localTimeJsonSerializer).Serialize(jtw, jo);
                     if (++i % 10000 == 0)
                     {
                         traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
@@ -8817,14 +8714,14 @@ namespace FolioConsoleApplication
             using (var jtw = new JsonTextWriter(Console.Out))
             {
                 jtw.WriteStartArray();
-                foreach (var jo in (api ? fsc.InstanceTypes(where, orderBy, skip, take) : fdc.InstanceTypes(where, null, orderBy, skip, take).Select(it => JObject.Parse(it.Content))).Select(jo =>
+                foreach (var jo in (api ? fsc.InstanceTypes(where, orderBy, skip, take) : fdc.InstanceTypes(where, null, orderBy, skip, take).Select(it => it.ToJObject())).Select(jo =>
                 {
                     return select == null ? jo : new JObject(select.Split(',').Select(s =>
                     {
                         var m = Regex.Match(s.Trim(), @"(?<Path>\S+)((?i) as (?<Name>.+))?", RegexOptions.Compiled);
                         return new JProperty(m.Groups["Name"].Success ? m.Groups["Name"].Value : m.Groups["Path"].Value.Split('.').Last(), jo.SelectToken(m.Groups["Path"].Value));
                     }));
-                })) jsonSerializer.Serialize(jtw, jo);
+                })) (universalTime ? universalTimeJsonSerializer : localTimeJsonSerializer).Serialize(jtw, jo);
                 jtw.WriteEndArray();
             }
         }
@@ -8871,18 +8768,17 @@ namespace FolioConsoleApplication
             using (var fsc = new FolioServiceClient(connectionString))
             {
                 var s2 = Stopwatch.StartNew();
-                var js4 = JsonSchema.FromJsonAsync(sr2.ReadToEndAsync().Result).Result;
-                var js = new JsonSerializer();
+                var js = JsonSchema.FromJsonAsync(sr2.ReadToEndAsync().Result).Result;
                 jtr.Read();
                 var i = 0;
                 while (jtr.Read() && jtr.TokenType != JsonToken.EndArray)
                 {
                     if (take != null && take <= i) break;
                     ++i;
-                    var jo = (JObject)js.Deserialize(jtr);
+                    var jo = (JObject)localTimeJsonSerializer.Deserialize(jtr);
                     if (validate)
                     {
-                        var l = js4.Validate(jo);
+                        var l = js.Validate(jo);
                         if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"InstanceType {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"InstanceType {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
                     }
                     if (api)
@@ -8926,18 +8822,17 @@ namespace FolioConsoleApplication
             using (var jtw = new JsonTextWriter(sw))
             {
                 var s2 = Stopwatch.StartNew();
-                var js4 = JsonSchema.FromJsonAsync(sr.ReadToEndAsync().Result).Result;
-                var js = new JsonSerializer { Formatting = Formatting.Indented };
+                var js = JsonSchema.FromJsonAsync(sr.ReadToEndAsync().Result).Result;
                 jtw.WriteStartArray();
                 var i = 0;
-                foreach (var jo in api ? fsc.InstanceTypes(where, orderBy, skip, take) : fdc.InstanceTypes(where, null, orderBy, skip, take).Select(it => JObject.Parse(it.Content)))
+                foreach (var jo in api ? fsc.InstanceTypes(where, orderBy, skip, take) : fdc.InstanceTypes(where, null, orderBy, skip, take).Select(it => it.ToJObject()))
                 {
                     if (validate)
                     {
-                        var l = js4.Validate(jo);
+                        var l = js.Validate(jo);
                         if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"InstanceType {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"InstanceType {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
                     }
-                    if (!whatIf) js.Serialize(jtw, jo);
+                    if (!whatIf) (universalTime ? universalTimeJsonSerializer : localTimeJsonSerializer).Serialize(jtw, jo);
                     if (++i % 10000 == 0)
                     {
                         traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
@@ -8958,14 +8853,14 @@ namespace FolioConsoleApplication
             using (var jtw = new JsonTextWriter(Console.Out))
             {
                 jtw.WriteStartArray();
-                foreach (var jo in (api ? fsc.Institutions(where, orderBy, skip, take) : fdc.Institutions(where, null, orderBy, skip, take).Select(i2 => JObject.Parse(i2.Content))).Select(jo =>
+                foreach (var jo in (api ? fsc.Institutions(where, orderBy, skip, take) : fdc.Institutions(where, null, orderBy, skip, take).Select(i2 => i2.ToJObject())).Select(jo =>
                 {
                     return select == null ? jo : new JObject(select.Split(',').Select(s =>
                     {
                         var m = Regex.Match(s.Trim(), @"(?<Path>\S+)((?i) as (?<Name>.+))?", RegexOptions.Compiled);
                         return new JProperty(m.Groups["Name"].Success ? m.Groups["Name"].Value : m.Groups["Path"].Value.Split('.').Last(), jo.SelectToken(m.Groups["Path"].Value));
                     }));
-                })) jsonSerializer.Serialize(jtw, jo);
+                })) (universalTime ? universalTimeJsonSerializer : localTimeJsonSerializer).Serialize(jtw, jo);
                 jtw.WriteEndArray();
             }
         }
@@ -9012,18 +8907,17 @@ namespace FolioConsoleApplication
             using (var fsc = new FolioServiceClient(connectionString))
             {
                 var s2 = Stopwatch.StartNew();
-                var js4 = JsonSchema.FromJsonAsync(sr2.ReadToEndAsync().Result).Result;
-                var js = new JsonSerializer();
+                var js = JsonSchema.FromJsonAsync(sr2.ReadToEndAsync().Result).Result;
                 jtr.Read();
                 var i = 0;
                 while (jtr.Read() && jtr.TokenType != JsonToken.EndArray)
                 {
                     if (take != null && take <= i) break;
                     ++i;
-                    var jo = (JObject)js.Deserialize(jtr);
+                    var jo = (JObject)localTimeJsonSerializer.Deserialize(jtr);
                     if (validate)
                     {
-                        var l = js4.Validate(jo);
+                        var l = js.Validate(jo);
                         if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"Institution {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"Institution {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
                     }
                     if (api)
@@ -9067,18 +8961,17 @@ namespace FolioConsoleApplication
             using (var jtw = new JsonTextWriter(sw))
             {
                 var s2 = Stopwatch.StartNew();
-                var js4 = JsonSchema.FromJsonAsync(sr.ReadToEndAsync().Result).Result;
-                var js = new JsonSerializer { Formatting = Formatting.Indented };
+                var js = JsonSchema.FromJsonAsync(sr.ReadToEndAsync().Result).Result;
                 jtw.WriteStartArray();
                 var i = 0;
-                foreach (var jo in api ? fsc.Institutions(where, orderBy, skip, take) : fdc.Institutions(where, null, orderBy, skip, take).Select(i2 => JObject.Parse(i2.Content)))
+                foreach (var jo in api ? fsc.Institutions(where, orderBy, skip, take) : fdc.Institutions(where, null, orderBy, skip, take).Select(i2 => i2.ToJObject()))
                 {
                     if (validate)
                     {
-                        var l = js4.Validate(jo);
+                        var l = js.Validate(jo);
                         if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"Institution {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"Institution {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
                     }
-                    if (!whatIf) js.Serialize(jtw, jo);
+                    if (!whatIf) (universalTime ? universalTimeJsonSerializer : localTimeJsonSerializer).Serialize(jtw, jo);
                     if (++i % 10000 == 0)
                     {
                         traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
@@ -9099,14 +8992,14 @@ namespace FolioConsoleApplication
             using (var jtw = new JsonTextWriter(Console.Out))
             {
                 jtw.WriteStartArray();
-                foreach (var jo in (api ? fsc.Interfaces(where, orderBy, skip, take) : fdc.Interfaces(where, null, orderBy, skip, take).Select(i2 => JObject.Parse(i2.Content))).Select(jo =>
+                foreach (var jo in (api ? fsc.Interfaces(where, orderBy, skip, take) : fdc.Interfaces(where, null, orderBy, skip, take).Select(i2 => i2.ToJObject())).Select(jo =>
                 {
                     return select == null ? jo : new JObject(select.Split(',').Select(s =>
                     {
                         var m = Regex.Match(s.Trim(), @"(?<Path>\S+)((?i) as (?<Name>.+))?", RegexOptions.Compiled);
                         return new JProperty(m.Groups["Name"].Success ? m.Groups["Name"].Value : m.Groups["Path"].Value.Split('.').Last(), jo.SelectToken(m.Groups["Path"].Value));
                     }));
-                })) jsonSerializer.Serialize(jtw, jo);
+                })) (universalTime ? universalTimeJsonSerializer : localTimeJsonSerializer).Serialize(jtw, jo);
                 jtw.WriteEndArray();
             }
         }
@@ -9153,18 +9046,17 @@ namespace FolioConsoleApplication
             using (var fsc = new FolioServiceClient(connectionString))
             {
                 var s2 = Stopwatch.StartNew();
-                var js4 = JsonSchema.FromJsonAsync(sr2.ReadToEndAsync().Result).Result;
-                var js = new JsonSerializer();
+                var js = JsonSchema.FromJsonAsync(sr2.ReadToEndAsync().Result).Result;
                 jtr.Read();
                 var i = 0;
                 while (jtr.Read() && jtr.TokenType != JsonToken.EndArray)
                 {
                     if (take != null && take <= i) break;
                     ++i;
-                    var jo = (JObject)js.Deserialize(jtr);
+                    var jo = (JObject)localTimeJsonSerializer.Deserialize(jtr);
                     if (validate)
                     {
-                        var l = js4.Validate(jo);
+                        var l = js.Validate(jo);
                         if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"Interface {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"Interface {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
                     }
                     if (api)
@@ -9208,18 +9100,17 @@ namespace FolioConsoleApplication
             using (var jtw = new JsonTextWriter(sw))
             {
                 var s2 = Stopwatch.StartNew();
-                var js4 = JsonSchema.FromJsonAsync(sr.ReadToEndAsync().Result).Result;
-                var js = new JsonSerializer { Formatting = Formatting.Indented };
+                var js = JsonSchema.FromJsonAsync(sr.ReadToEndAsync().Result).Result;
                 jtw.WriteStartArray();
                 var i = 0;
-                foreach (var jo in api ? fsc.Interfaces(where, orderBy, skip, take) : fdc.Interfaces(where, null, orderBy, skip, take).Select(i2 => JObject.Parse(i2.Content)))
+                foreach (var jo in api ? fsc.Interfaces(where, orderBy, skip, take) : fdc.Interfaces(where, null, orderBy, skip, take).Select(i2 => i2.ToJObject()))
                 {
                     if (validate)
                     {
-                        var l = js4.Validate(jo);
+                        var l = js.Validate(jo);
                         if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"Interface {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"Interface {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
                     }
-                    if (!whatIf) js.Serialize(jtw, jo);
+                    if (!whatIf) (universalTime ? universalTimeJsonSerializer : localTimeJsonSerializer).Serialize(jtw, jo);
                     if (++i % 10000 == 0)
                     {
                         traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
@@ -9239,14 +9130,14 @@ namespace FolioConsoleApplication
             using (var jtw = new JsonTextWriter(Console.Out))
             {
                 jtw.WriteStartArray();
-                foreach (var jo in (api ? throw new NotSupportedException() : fdc.InterfaceCredentials(where, null, orderBy, skip, take).Select(ic => JObject.Parse(ic.Content))).Select(jo =>
+                foreach (var jo in (api ? throw new NotSupportedException() : fdc.InterfaceCredentials(where, null, orderBy, skip, take).Select(ic => ic.ToJObject())).Select(jo =>
                 {
                     return select == null ? jo : new JObject(select.Split(',').Select(s =>
                     {
                         var m = Regex.Match(s.Trim(), @"(?<Path>\S+)((?i) as (?<Name>.+))?", RegexOptions.Compiled);
                         return new JProperty(m.Groups["Name"].Success ? m.Groups["Name"].Value : m.Groups["Path"].Value.Split('.').Last(), jo.SelectToken(m.Groups["Path"].Value));
                     }));
-                })) jsonSerializer.Serialize(jtw, jo);
+                })) (universalTime ? universalTimeJsonSerializer : localTimeJsonSerializer).Serialize(jtw, jo);
                 jtw.WriteEndArray();
             }
         }
@@ -9281,18 +9172,17 @@ namespace FolioConsoleApplication
             using (var fbcc = new FolioBulkCopyContext(connectionString))
             {
                 var s2 = Stopwatch.StartNew();
-                var js4 = JsonSchema.FromJsonAsync(sr2.ReadToEndAsync().Result).Result;
-                var js = new JsonSerializer();
+                var js = JsonSchema.FromJsonAsync(sr2.ReadToEndAsync().Result).Result;
                 jtr.Read();
                 var i = 0;
                 while (jtr.Read() && jtr.TokenType != JsonToken.EndArray)
                 {
                     if (take != null && take <= i) break;
                     ++i;
-                    var jo = (JObject)js.Deserialize(jtr);
+                    var jo = (JObject)localTimeJsonSerializer.Deserialize(jtr);
                     if (validate)
                     {
-                        var l = js4.Validate(jo);
+                        var l = js.Validate(jo);
                         if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"InterfaceCredential {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"InterfaceCredential {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
                     }
                     if (api)
@@ -9330,18 +9220,17 @@ namespace FolioConsoleApplication
             using (var jtw = new JsonTextWriter(sw))
             {
                 var s2 = Stopwatch.StartNew();
-                var js4 = JsonSchema.FromJsonAsync(sr.ReadToEndAsync().Result).Result;
-                var js = new JsonSerializer { Formatting = Formatting.Indented };
+                var js = JsonSchema.FromJsonAsync(sr.ReadToEndAsync().Result).Result;
                 jtw.WriteStartArray();
                 var i = 0;
-                foreach (var jo in api ? throw new NotSupportedException() : fdc.InterfaceCredentials(where, null, orderBy, skip, take).Select(ic => JObject.Parse(ic.Content)))
+                foreach (var jo in api ? throw new NotSupportedException() : fdc.InterfaceCredentials(where, null, orderBy, skip, take).Select(ic => ic.ToJObject()))
                 {
                     if (validate)
                     {
-                        var l = js4.Validate(jo);
+                        var l = js.Validate(jo);
                         if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"InterfaceCredential {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"InterfaceCredential {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
                     }
-                    if (!whatIf) js.Serialize(jtw, jo);
+                    if (!whatIf) (universalTime ? universalTimeJsonSerializer : localTimeJsonSerializer).Serialize(jtw, jo);
                     if (++i % 10000 == 0)
                     {
                         traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
@@ -9362,14 +9251,14 @@ namespace FolioConsoleApplication
             using (var jtw = new JsonTextWriter(Console.Out))
             {
                 jtw.WriteStartArray();
-                foreach (var jo in (api ? fsc.Invoices(where, orderBy, skip, take) : fdc.Invoices(where, null, orderBy, skip, take).Select(i2 => JObject.Parse(i2.Content))).Select(jo =>
+                foreach (var jo in (api ? fsc.Invoices(where, orderBy, skip, take) : fdc.Invoices(where, null, orderBy, skip, take).Select(i2 => i2.ToJObject())).Select(jo =>
                 {
                     return select == null ? jo : new JObject(select.Split(',').Select(s =>
                     {
                         var m = Regex.Match(s.Trim(), @"(?<Path>\S+)((?i) as (?<Name>.+))?", RegexOptions.Compiled);
                         return new JProperty(m.Groups["Name"].Success ? m.Groups["Name"].Value : m.Groups["Path"].Value.Split('.').Last(), jo.SelectToken(m.Groups["Path"].Value));
                     }));
-                })) jsonSerializer.Serialize(jtw, jo);
+                })) (universalTime ? universalTimeJsonSerializer : localTimeJsonSerializer).Serialize(jtw, jo);
                 jtw.WriteEndArray();
             }
         }
@@ -9416,18 +9305,17 @@ namespace FolioConsoleApplication
             using (var fsc = new FolioServiceClient(connectionString))
             {
                 var s2 = Stopwatch.StartNew();
-                var js4 = JsonSchema.FromJsonAsync(sr2.ReadToEndAsync().Result).Result;
-                var js = new JsonSerializer();
+                var js = JsonSchema.FromJsonAsync(sr2.ReadToEndAsync().Result).Result;
                 jtr.Read();
                 var i = 0;
                 while (jtr.Read() && jtr.TokenType != JsonToken.EndArray)
                 {
                     if (take != null && take <= i) break;
                     ++i;
-                    var jo = (JObject)js.Deserialize(jtr);
+                    var jo = (JObject)localTimeJsonSerializer.Deserialize(jtr);
                     if (validate)
                     {
-                        var l = js4.Validate(jo);
+                        var l = js.Validate(jo);
                         if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"Invoice {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"Invoice {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
                     }
                     if (api)
@@ -9471,18 +9359,17 @@ namespace FolioConsoleApplication
             using (var jtw = new JsonTextWriter(sw))
             {
                 var s2 = Stopwatch.StartNew();
-                var js4 = JsonSchema.FromJsonAsync(sr.ReadToEndAsync().Result).Result;
-                var js = new JsonSerializer { Formatting = Formatting.Indented };
+                var js = JsonSchema.FromJsonAsync(sr.ReadToEndAsync().Result).Result;
                 jtw.WriteStartArray();
                 var i = 0;
-                foreach (var jo in api ? fsc.Invoices(where, orderBy, skip, take) : fdc.Invoices(where, null, orderBy, skip, take).Select(i2 => JObject.Parse(i2.Content)))
+                foreach (var jo in api ? fsc.Invoices(where, orderBy, skip, take) : fdc.Invoices(where, null, orderBy, skip, take).Select(i2 => i2.ToJObject()))
                 {
                     if (validate)
                     {
-                        var l = js4.Validate(jo);
+                        var l = js.Validate(jo);
                         if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"Invoice {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"Invoice {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
                     }
-                    if (!whatIf) js.Serialize(jtw, jo);
+                    if (!whatIf) (universalTime ? universalTimeJsonSerializer : localTimeJsonSerializer).Serialize(jtw, jo);
                     if (++i % 10000 == 0)
                     {
                         traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
@@ -9503,14 +9390,14 @@ namespace FolioConsoleApplication
             using (var jtw = new JsonTextWriter(Console.Out))
             {
                 jtw.WriteStartArray();
-                foreach (var jo in (api ? fsc.InvoiceItems(where, orderBy, skip, take) : fdc.InvoiceItems(where, null, orderBy, skip, take).Select(ii => JObject.Parse(ii.Content))).Select(jo =>
+                foreach (var jo in (api ? fsc.InvoiceItems(where, orderBy, skip, take) : fdc.InvoiceItems(where, null, orderBy, skip, take).Select(ii => ii.ToJObject())).Select(jo =>
                 {
                     return select == null ? jo : new JObject(select.Split(',').Select(s =>
                     {
                         var m = Regex.Match(s.Trim(), @"(?<Path>\S+)((?i) as (?<Name>.+))?", RegexOptions.Compiled);
                         return new JProperty(m.Groups["Name"].Success ? m.Groups["Name"].Value : m.Groups["Path"].Value.Split('.').Last(), jo.SelectToken(m.Groups["Path"].Value));
                     }));
-                })) jsonSerializer.Serialize(jtw, jo);
+                })) (universalTime ? universalTimeJsonSerializer : localTimeJsonSerializer).Serialize(jtw, jo);
                 jtw.WriteEndArray();
             }
         }
@@ -9557,18 +9444,17 @@ namespace FolioConsoleApplication
             using (var fsc = new FolioServiceClient(connectionString))
             {
                 var s2 = Stopwatch.StartNew();
-                var js4 = JsonSchema.FromJsonAsync(sr2.ReadToEndAsync().Result).Result;
-                var js = new JsonSerializer();
+                var js = JsonSchema.FromJsonAsync(sr2.ReadToEndAsync().Result).Result;
                 jtr.Read();
                 var i = 0;
                 while (jtr.Read() && jtr.TokenType != JsonToken.EndArray)
                 {
                     if (take != null && take <= i) break;
                     ++i;
-                    var jo = (JObject)js.Deserialize(jtr);
+                    var jo = (JObject)localTimeJsonSerializer.Deserialize(jtr);
                     if (validate)
                     {
-                        var l = js4.Validate(jo);
+                        var l = js.Validate(jo);
                         if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"InvoiceItem {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"InvoiceItem {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
                     }
                     if (api)
@@ -9612,18 +9498,17 @@ namespace FolioConsoleApplication
             using (var jtw = new JsonTextWriter(sw))
             {
                 var s2 = Stopwatch.StartNew();
-                var js4 = JsonSchema.FromJsonAsync(sr.ReadToEndAsync().Result).Result;
-                var js = new JsonSerializer { Formatting = Formatting.Indented };
+                var js = JsonSchema.FromJsonAsync(sr.ReadToEndAsync().Result).Result;
                 jtw.WriteStartArray();
                 var i = 0;
-                foreach (var jo in api ? fsc.InvoiceItems(where, orderBy, skip, take) : fdc.InvoiceItems(where, null, orderBy, skip, take).Select(ii => JObject.Parse(ii.Content)))
+                foreach (var jo in api ? fsc.InvoiceItems(where, orderBy, skip, take) : fdc.InvoiceItems(where, null, orderBy, skip, take).Select(ii => ii.ToJObject()))
                 {
                     if (validate)
                     {
-                        var l = js4.Validate(jo);
+                        var l = js.Validate(jo);
                         if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"InvoiceItem {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"InvoiceItem {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
                     }
-                    if (!whatIf) js.Serialize(jtw, jo);
+                    if (!whatIf) (universalTime ? universalTimeJsonSerializer : localTimeJsonSerializer).Serialize(jtw, jo);
                     if (++i % 10000 == 0)
                     {
                         traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
@@ -9643,14 +9528,14 @@ namespace FolioConsoleApplication
             using (var jtw = new JsonTextWriter(Console.Out))
             {
                 jtw.WriteStartArray();
-                foreach (var jo in (api ? throw new NotSupportedException() : fdc.InvoiceTransactionSummaries(where, null, orderBy, skip, take).Select(its => JObject.Parse(its.Content))).Select(jo =>
+                foreach (var jo in (api ? throw new NotSupportedException() : fdc.InvoiceTransactionSummaries(where, null, orderBy, skip, take).Select(its => its.ToJObject())).Select(jo =>
                 {
                     return select == null ? jo : new JObject(select.Split(',').Select(s =>
                     {
                         var m = Regex.Match(s.Trim(), @"(?<Path>\S+)((?i) as (?<Name>.+))?", RegexOptions.Compiled);
                         return new JProperty(m.Groups["Name"].Success ? m.Groups["Name"].Value : m.Groups["Path"].Value.Split('.').Last(), jo.SelectToken(m.Groups["Path"].Value));
                     }));
-                })) jsonSerializer.Serialize(jtw, jo);
+                })) (universalTime ? universalTimeJsonSerializer : localTimeJsonSerializer).Serialize(jtw, jo);
                 jtw.WriteEndArray();
             }
         }
@@ -9685,18 +9570,17 @@ namespace FolioConsoleApplication
             using (var fbcc = new FolioBulkCopyContext(connectionString))
             {
                 var s2 = Stopwatch.StartNew();
-                var js4 = JsonSchema.FromJsonAsync(sr2.ReadToEndAsync().Result).Result;
-                var js = new JsonSerializer();
+                var js = JsonSchema.FromJsonAsync(sr2.ReadToEndAsync().Result).Result;
                 jtr.Read();
                 var i = 0;
                 while (jtr.Read() && jtr.TokenType != JsonToken.EndArray)
                 {
                     if (take != null && take <= i) break;
                     ++i;
-                    var jo = (JObject)js.Deserialize(jtr);
+                    var jo = (JObject)localTimeJsonSerializer.Deserialize(jtr);
                     if (validate)
                     {
-                        var l = js4.Validate(jo);
+                        var l = js.Validate(jo);
                         if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"InvoiceTransactionSummary {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"InvoiceTransactionSummary {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
                     }
                     if (api)
@@ -9734,18 +9618,17 @@ namespace FolioConsoleApplication
             using (var jtw = new JsonTextWriter(sw))
             {
                 var s2 = Stopwatch.StartNew();
-                var js4 = JsonSchema.FromJsonAsync(sr.ReadToEndAsync().Result).Result;
-                var js = new JsonSerializer { Formatting = Formatting.Indented };
+                var js = JsonSchema.FromJsonAsync(sr.ReadToEndAsync().Result).Result;
                 jtw.WriteStartArray();
                 var i = 0;
-                foreach (var jo in api ? throw new NotSupportedException() : fdc.InvoiceTransactionSummaries(where, null, orderBy, skip, take).Select(its => JObject.Parse(its.Content)))
+                foreach (var jo in api ? throw new NotSupportedException() : fdc.InvoiceTransactionSummaries(where, null, orderBy, skip, take).Select(its => its.ToJObject()))
                 {
                     if (validate)
                     {
-                        var l = js4.Validate(jo);
+                        var l = js.Validate(jo);
                         if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"InvoiceTransactionSummary {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"InvoiceTransactionSummary {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
                     }
-                    if (!whatIf) js.Serialize(jtw, jo);
+                    if (!whatIf) (universalTime ? universalTimeJsonSerializer : localTimeJsonSerializer).Serialize(jtw, jo);
                     if (++i % 10000 == 0)
                     {
                         traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
@@ -9766,14 +9649,14 @@ namespace FolioConsoleApplication
             using (var jtw = new JsonTextWriter(Console.Out))
             {
                 jtw.WriteStartArray();
-                foreach (var jo in (api ? fsc.Items(where, orderBy, skip, take) : fdc.Items(where, null, orderBy, skip, take).Select(i2 => JObject.Parse(i2.Content))).Select(jo =>
+                foreach (var jo in (api ? fsc.Items(where, orderBy, skip, take) : fdc.Items(where, null, orderBy, skip, take).Select(i2 => i2.ToJObject())).Select(jo =>
                 {
                     return select == null ? jo : new JObject(select.Split(',').Select(s =>
                     {
                         var m = Regex.Match(s.Trim(), @"(?<Path>\S+)((?i) as (?<Name>.+))?", RegexOptions.Compiled);
                         return new JProperty(m.Groups["Name"].Success ? m.Groups["Name"].Value : m.Groups["Path"].Value.Split('.').Last(), jo.SelectToken(m.Groups["Path"].Value));
                     }));
-                })) jsonSerializer.Serialize(jtw, jo);
+                })) (universalTime ? universalTimeJsonSerializer : localTimeJsonSerializer).Serialize(jtw, jo);
                 jtw.WriteEndArray();
             }
         }
@@ -9820,8 +9703,7 @@ namespace FolioConsoleApplication
             using (var fsc = new FolioServiceClient(connectionString))
             {
                 var s2 = Stopwatch.StartNew();
-                var js4 = JsonSchema.FromJsonAsync(sr2.ReadToEndAsync().Result).Result;
-                var js = new JsonSerializer();
+                var js = JsonSchema.FromJsonAsync(sr2.ReadToEndAsync().Result).Result;
                 jtr.Read();
                 var i = 0;
                 var l2 = new List<JObject>(1000);
@@ -9829,10 +9711,10 @@ namespace FolioConsoleApplication
                 {
                     if (take != null && take <= i) break;
                     ++i;
-                    var jo = (JObject)js.Deserialize(jtr);
+                    var jo = (JObject)localTimeJsonSerializer.Deserialize(jtr);
                     if (validate)
                     {
-                        var l = js4.Validate(jo);
+                        var l = js.Validate(jo);
                         if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"Item {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"Item {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
                     }
                     if (api)
@@ -9879,18 +9761,17 @@ namespace FolioConsoleApplication
             using (var jtw = new JsonTextWriter(sw))
             {
                 var s2 = Stopwatch.StartNew();
-                var js4 = JsonSchema.FromJsonAsync(sr.ReadToEndAsync().Result).Result;
-                var js = new JsonSerializer { Formatting = Formatting.Indented };
+                var js = JsonSchema.FromJsonAsync(sr.ReadToEndAsync().Result).Result;
                 jtw.WriteStartArray();
                 var i = 0;
-                foreach (var jo in api ? fsc.Items(where, orderBy, skip, take) : fdc.Items(where, null, orderBy, skip, take).Select(i2 => JObject.Parse(i2.Content)))
+                foreach (var jo in api ? fsc.Items(where, orderBy, skip, take) : fdc.Items(where, null, orderBy, skip, take).Select(i2 => i2.ToJObject()))
                 {
                     if (validate)
                     {
-                        var l = js4.Validate(jo);
+                        var l = js.Validate(jo);
                         if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"Item {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"Item {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
                     }
-                    if (!whatIf) js.Serialize(jtw, jo);
+                    if (!whatIf) (universalTime ? universalTimeJsonSerializer : localTimeJsonSerializer).Serialize(jtw, jo);
                     if (++i % 10000 == 0)
                     {
                         traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
@@ -9911,14 +9792,14 @@ namespace FolioConsoleApplication
             using (var jtw = new JsonTextWriter(Console.Out))
             {
                 jtw.WriteStartArray();
-                foreach (var jo in (api ? fsc.ItemDamagedStatuses(where, orderBy, skip, take) : fdc.ItemDamagedStatuses(where, null, orderBy, skip, take).Select(ids => JObject.Parse(ids.Content))).Select(jo =>
+                foreach (var jo in (api ? fsc.ItemDamagedStatuses(where, orderBy, skip, take) : fdc.ItemDamagedStatuses(where, null, orderBy, skip, take).Select(ids => ids.ToJObject())).Select(jo =>
                 {
                     return select == null ? jo : new JObject(select.Split(',').Select(s =>
                     {
                         var m = Regex.Match(s.Trim(), @"(?<Path>\S+)((?i) as (?<Name>.+))?", RegexOptions.Compiled);
                         return new JProperty(m.Groups["Name"].Success ? m.Groups["Name"].Value : m.Groups["Path"].Value.Split('.').Last(), jo.SelectToken(m.Groups["Path"].Value));
                     }));
-                })) jsonSerializer.Serialize(jtw, jo);
+                })) (universalTime ? universalTimeJsonSerializer : localTimeJsonSerializer).Serialize(jtw, jo);
                 jtw.WriteEndArray();
             }
         }
@@ -9965,18 +9846,17 @@ namespace FolioConsoleApplication
             using (var fsc = new FolioServiceClient(connectionString))
             {
                 var s2 = Stopwatch.StartNew();
-                var js4 = JsonSchema.FromJsonAsync(sr2.ReadToEndAsync().Result).Result;
-                var js = new JsonSerializer();
+                var js = JsonSchema.FromJsonAsync(sr2.ReadToEndAsync().Result).Result;
                 jtr.Read();
                 var i = 0;
                 while (jtr.Read() && jtr.TokenType != JsonToken.EndArray)
                 {
                     if (take != null && take <= i) break;
                     ++i;
-                    var jo = (JObject)js.Deserialize(jtr);
+                    var jo = (JObject)localTimeJsonSerializer.Deserialize(jtr);
                     if (validate)
                     {
-                        var l = js4.Validate(jo);
+                        var l = js.Validate(jo);
                         if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"ItemDamagedStatus {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"ItemDamagedStatus {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
                     }
                     if (api)
@@ -10020,18 +9900,17 @@ namespace FolioConsoleApplication
             using (var jtw = new JsonTextWriter(sw))
             {
                 var s2 = Stopwatch.StartNew();
-                var js4 = JsonSchema.FromJsonAsync(sr.ReadToEndAsync().Result).Result;
-                var js = new JsonSerializer { Formatting = Formatting.Indented };
+                var js = JsonSchema.FromJsonAsync(sr.ReadToEndAsync().Result).Result;
                 jtw.WriteStartArray();
                 var i = 0;
-                foreach (var jo in api ? fsc.ItemDamagedStatuses(where, orderBy, skip, take) : fdc.ItemDamagedStatuses(where, null, orderBy, skip, take).Select(ids => JObject.Parse(ids.Content)))
+                foreach (var jo in api ? fsc.ItemDamagedStatuses(where, orderBy, skip, take) : fdc.ItemDamagedStatuses(where, null, orderBy, skip, take).Select(ids => ids.ToJObject()))
                 {
                     if (validate)
                     {
-                        var l = js4.Validate(jo);
+                        var l = js.Validate(jo);
                         if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"ItemDamagedStatus {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"ItemDamagedStatus {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
                     }
-                    if (!whatIf) js.Serialize(jtw, jo);
+                    if (!whatIf) (universalTime ? universalTimeJsonSerializer : localTimeJsonSerializer).Serialize(jtw, jo);
                     if (++i % 10000 == 0)
                     {
                         traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
@@ -10052,14 +9931,14 @@ namespace FolioConsoleApplication
             using (var jtw = new JsonTextWriter(Console.Out))
             {
                 jtw.WriteStartArray();
-                foreach (var jo in (api ? fsc.ItemNoteTypes(where, orderBy, skip, take) : fdc.ItemNoteTypes(where, null, orderBy, skip, take).Select(@int => JObject.Parse(@int.Content))).Select(jo =>
+                foreach (var jo in (api ? fsc.ItemNoteTypes(where, orderBy, skip, take) : fdc.ItemNoteTypes(where, null, orderBy, skip, take).Select(@int => @int.ToJObject())).Select(jo =>
                 {
                     return select == null ? jo : new JObject(select.Split(',').Select(s =>
                     {
                         var m = Regex.Match(s.Trim(), @"(?<Path>\S+)((?i) as (?<Name>.+))?", RegexOptions.Compiled);
                         return new JProperty(m.Groups["Name"].Success ? m.Groups["Name"].Value : m.Groups["Path"].Value.Split('.').Last(), jo.SelectToken(m.Groups["Path"].Value));
                     }));
-                })) jsonSerializer.Serialize(jtw, jo);
+                })) (universalTime ? universalTimeJsonSerializer : localTimeJsonSerializer).Serialize(jtw, jo);
                 jtw.WriteEndArray();
             }
         }
@@ -10106,18 +9985,17 @@ namespace FolioConsoleApplication
             using (var fsc = new FolioServiceClient(connectionString))
             {
                 var s2 = Stopwatch.StartNew();
-                var js4 = JsonSchema.FromJsonAsync(sr2.ReadToEndAsync().Result).Result;
-                var js = new JsonSerializer();
+                var js = JsonSchema.FromJsonAsync(sr2.ReadToEndAsync().Result).Result;
                 jtr.Read();
                 var i = 0;
                 while (jtr.Read() && jtr.TokenType != JsonToken.EndArray)
                 {
                     if (take != null && take <= i) break;
                     ++i;
-                    var jo = (JObject)js.Deserialize(jtr);
+                    var jo = (JObject)localTimeJsonSerializer.Deserialize(jtr);
                     if (validate)
                     {
-                        var l = js4.Validate(jo);
+                        var l = js.Validate(jo);
                         if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"ItemNoteType {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"ItemNoteType {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
                     }
                     if (api)
@@ -10161,18 +10039,17 @@ namespace FolioConsoleApplication
             using (var jtw = new JsonTextWriter(sw))
             {
                 var s2 = Stopwatch.StartNew();
-                var js4 = JsonSchema.FromJsonAsync(sr.ReadToEndAsync().Result).Result;
-                var js = new JsonSerializer { Formatting = Formatting.Indented };
+                var js = JsonSchema.FromJsonAsync(sr.ReadToEndAsync().Result).Result;
                 jtw.WriteStartArray();
                 var i = 0;
-                foreach (var jo in api ? fsc.ItemNoteTypes(where, orderBy, skip, take) : fdc.ItemNoteTypes(where, null, orderBy, skip, take).Select(@int => JObject.Parse(@int.Content)))
+                foreach (var jo in api ? fsc.ItemNoteTypes(where, orderBy, skip, take) : fdc.ItemNoteTypes(where, null, orderBy, skip, take).Select(@int => @int.ToJObject()))
                 {
                     if (validate)
                     {
-                        var l = js4.Validate(jo);
+                        var l = js.Validate(jo);
                         if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"ItemNoteType {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"ItemNoteType {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
                     }
-                    if (!whatIf) js.Serialize(jtw, jo);
+                    if (!whatIf) (universalTime ? universalTimeJsonSerializer : localTimeJsonSerializer).Serialize(jtw, jo);
                     if (++i % 10000 == 0)
                     {
                         traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
@@ -10193,14 +10070,14 @@ namespace FolioConsoleApplication
             using (var jtw = new JsonTextWriter(Console.Out))
             {
                 jtw.WriteStartArray();
-                foreach (var jo in (api ? fsc.Ledgers(where, orderBy, skip, take) : fdc.Ledgers(where, null, orderBy, skip, take).Select(l => JObject.Parse(l.Content))).Select(jo =>
+                foreach (var jo in (api ? fsc.Ledgers(where, orderBy, skip, take) : fdc.Ledgers(where, null, orderBy, skip, take).Select(l => l.ToJObject())).Select(jo =>
                 {
                     return select == null ? jo : new JObject(select.Split(',').Select(s =>
                     {
                         var m = Regex.Match(s.Trim(), @"(?<Path>\S+)((?i) as (?<Name>.+))?", RegexOptions.Compiled);
                         return new JProperty(m.Groups["Name"].Success ? m.Groups["Name"].Value : m.Groups["Path"].Value.Split('.').Last(), jo.SelectToken(m.Groups["Path"].Value));
                     }));
-                })) jsonSerializer.Serialize(jtw, jo);
+                })) (universalTime ? universalTimeJsonSerializer : localTimeJsonSerializer).Serialize(jtw, jo);
                 jtw.WriteEndArray();
             }
         }
@@ -10247,18 +10124,17 @@ namespace FolioConsoleApplication
             using (var fsc = new FolioServiceClient(connectionString))
             {
                 var s2 = Stopwatch.StartNew();
-                var js4 = JsonSchema.FromJsonAsync(sr2.ReadToEndAsync().Result).Result;
-                var js = new JsonSerializer();
+                var js = JsonSchema.FromJsonAsync(sr2.ReadToEndAsync().Result).Result;
                 jtr.Read();
                 var i = 0;
                 while (jtr.Read() && jtr.TokenType != JsonToken.EndArray)
                 {
                     if (take != null && take <= i) break;
                     ++i;
-                    var jo = (JObject)js.Deserialize(jtr);
+                    var jo = (JObject)localTimeJsonSerializer.Deserialize(jtr);
                     if (validate)
                     {
-                        var l = js4.Validate(jo);
+                        var l = js.Validate(jo);
                         if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"Ledger {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"Ledger {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
                     }
                     if (api)
@@ -10302,18 +10178,17 @@ namespace FolioConsoleApplication
             using (var jtw = new JsonTextWriter(sw))
             {
                 var s2 = Stopwatch.StartNew();
-                var js4 = JsonSchema.FromJsonAsync(sr.ReadToEndAsync().Result).Result;
-                var js = new JsonSerializer { Formatting = Formatting.Indented };
+                var js = JsonSchema.FromJsonAsync(sr.ReadToEndAsync().Result).Result;
                 jtw.WriteStartArray();
                 var i = 0;
-                foreach (var jo in api ? fsc.Ledgers(where, orderBy, skip, take) : fdc.Ledgers(where, null, orderBy, skip, take).Select(l => JObject.Parse(l.Content)))
+                foreach (var jo in api ? fsc.Ledgers(where, orderBy, skip, take) : fdc.Ledgers(where, null, orderBy, skip, take).Select(l => l.ToJObject()))
                 {
                     if (validate)
                     {
-                        var l = js4.Validate(jo);
+                        var l = js.Validate(jo);
                         if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"Ledger {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"Ledger {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
                     }
-                    if (!whatIf) js.Serialize(jtw, jo);
+                    if (!whatIf) (universalTime ? universalTimeJsonSerializer : localTimeJsonSerializer).Serialize(jtw, jo);
                     if (++i % 10000 == 0)
                     {
                         traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
@@ -10334,14 +10209,14 @@ namespace FolioConsoleApplication
             using (var jtw = new JsonTextWriter(Console.Out))
             {
                 jtw.WriteStartArray();
-                foreach (var jo in (api ? fsc.LedgerRollovers(where, orderBy, skip, take) : fdc.LedgerRollovers(where, null, orderBy, skip, take).Select(lr => JObject.Parse(lr.Content))).Select(jo =>
+                foreach (var jo in (api ? fsc.LedgerRollovers(where, orderBy, skip, take) : fdc.LedgerRollovers(where, null, orderBy, skip, take).Select(lr => lr.ToJObject())).Select(jo =>
                 {
                     return select == null ? jo : new JObject(select.Split(',').Select(s =>
                     {
                         var m = Regex.Match(s.Trim(), @"(?<Path>\S+)((?i) as (?<Name>.+))?", RegexOptions.Compiled);
                         return new JProperty(m.Groups["Name"].Success ? m.Groups["Name"].Value : m.Groups["Path"].Value.Split('.').Last(), jo.SelectToken(m.Groups["Path"].Value));
                     }));
-                })) jsonSerializer.Serialize(jtw, jo);
+                })) (universalTime ? universalTimeJsonSerializer : localTimeJsonSerializer).Serialize(jtw, jo);
                 jtw.WriteEndArray();
             }
         }
@@ -10388,18 +10263,17 @@ namespace FolioConsoleApplication
             using (var fsc = new FolioServiceClient(connectionString))
             {
                 var s2 = Stopwatch.StartNew();
-                var js4 = JsonSchema.FromJsonAsync(sr2.ReadToEndAsync().Result).Result;
-                var js = new JsonSerializer();
+                var js = JsonSchema.FromJsonAsync(sr2.ReadToEndAsync().Result).Result;
                 jtr.Read();
                 var i = 0;
                 while (jtr.Read() && jtr.TokenType != JsonToken.EndArray)
                 {
                     if (take != null && take <= i) break;
                     ++i;
-                    var jo = (JObject)js.Deserialize(jtr);
+                    var jo = (JObject)localTimeJsonSerializer.Deserialize(jtr);
                     if (validate)
                     {
-                        var l = js4.Validate(jo);
+                        var l = js.Validate(jo);
                         if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"LedgerRollover {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"LedgerRollover {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
                     }
                     if (api)
@@ -10443,18 +10317,17 @@ namespace FolioConsoleApplication
             using (var jtw = new JsonTextWriter(sw))
             {
                 var s2 = Stopwatch.StartNew();
-                var js4 = JsonSchema.FromJsonAsync(sr.ReadToEndAsync().Result).Result;
-                var js = new JsonSerializer { Formatting = Formatting.Indented };
+                var js = JsonSchema.FromJsonAsync(sr.ReadToEndAsync().Result).Result;
                 jtw.WriteStartArray();
                 var i = 0;
-                foreach (var jo in api ? fsc.LedgerRollovers(where, orderBy, skip, take) : fdc.LedgerRollovers(where, null, orderBy, skip, take).Select(lr => JObject.Parse(lr.Content)))
+                foreach (var jo in api ? fsc.LedgerRollovers(where, orderBy, skip, take) : fdc.LedgerRollovers(where, null, orderBy, skip, take).Select(lr => lr.ToJObject()))
                 {
                     if (validate)
                     {
-                        var l = js4.Validate(jo);
+                        var l = js.Validate(jo);
                         if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"LedgerRollover {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"LedgerRollover {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
                     }
-                    if (!whatIf) js.Serialize(jtw, jo);
+                    if (!whatIf) (universalTime ? universalTimeJsonSerializer : localTimeJsonSerializer).Serialize(jtw, jo);
                     if (++i % 10000 == 0)
                     {
                         traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
@@ -10475,14 +10348,14 @@ namespace FolioConsoleApplication
             using (var jtw = new JsonTextWriter(Console.Out))
             {
                 jtw.WriteStartArray();
-                foreach (var jo in (api ? fsc.LedgerRolloverErrors(where, orderBy, skip, take) : fdc.LedgerRolloverErrors(where, null, orderBy, skip, take).Select(lre => JObject.Parse(lre.Content))).Select(jo =>
+                foreach (var jo in (api ? fsc.LedgerRolloverErrors(where, orderBy, skip, take) : fdc.LedgerRolloverErrors(where, null, orderBy, skip, take).Select(lre => lre.ToJObject())).Select(jo =>
                 {
                     return select == null ? jo : new JObject(select.Split(',').Select(s =>
                     {
                         var m = Regex.Match(s.Trim(), @"(?<Path>\S+)((?i) as (?<Name>.+))?", RegexOptions.Compiled);
                         return new JProperty(m.Groups["Name"].Success ? m.Groups["Name"].Value : m.Groups["Path"].Value.Split('.').Last(), jo.SelectToken(m.Groups["Path"].Value));
                     }));
-                })) jsonSerializer.Serialize(jtw, jo);
+                })) (universalTime ? universalTimeJsonSerializer : localTimeJsonSerializer).Serialize(jtw, jo);
                 jtw.WriteEndArray();
             }
         }
@@ -10529,18 +10402,17 @@ namespace FolioConsoleApplication
             using (var fsc = new FolioServiceClient(connectionString))
             {
                 var s2 = Stopwatch.StartNew();
-                var js4 = JsonSchema.FromJsonAsync(sr2.ReadToEndAsync().Result).Result;
-                var js = new JsonSerializer();
+                var js = JsonSchema.FromJsonAsync(sr2.ReadToEndAsync().Result).Result;
                 jtr.Read();
                 var i = 0;
                 while (jtr.Read() && jtr.TokenType != JsonToken.EndArray)
                 {
                     if (take != null && take <= i) break;
                     ++i;
-                    var jo = (JObject)js.Deserialize(jtr);
+                    var jo = (JObject)localTimeJsonSerializer.Deserialize(jtr);
                     if (validate)
                     {
-                        var l = js4.Validate(jo);
+                        var l = js.Validate(jo);
                         if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"LedgerRolloverError {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"LedgerRolloverError {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
                     }
                     if (api)
@@ -10584,18 +10456,17 @@ namespace FolioConsoleApplication
             using (var jtw = new JsonTextWriter(sw))
             {
                 var s2 = Stopwatch.StartNew();
-                var js4 = JsonSchema.FromJsonAsync(sr.ReadToEndAsync().Result).Result;
-                var js = new JsonSerializer { Formatting = Formatting.Indented };
+                var js = JsonSchema.FromJsonAsync(sr.ReadToEndAsync().Result).Result;
                 jtw.WriteStartArray();
                 var i = 0;
-                foreach (var jo in api ? fsc.LedgerRolloverErrors(where, orderBy, skip, take) : fdc.LedgerRolloverErrors(where, null, orderBy, skip, take).Select(lre => JObject.Parse(lre.Content)))
+                foreach (var jo in api ? fsc.LedgerRolloverErrors(where, orderBy, skip, take) : fdc.LedgerRolloverErrors(where, null, orderBy, skip, take).Select(lre => lre.ToJObject()))
                 {
                     if (validate)
                     {
-                        var l = js4.Validate(jo);
+                        var l = js.Validate(jo);
                         if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"LedgerRolloverError {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"LedgerRolloverError {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
                     }
-                    if (!whatIf) js.Serialize(jtw, jo);
+                    if (!whatIf) (universalTime ? universalTimeJsonSerializer : localTimeJsonSerializer).Serialize(jtw, jo);
                     if (++i % 10000 == 0)
                     {
                         traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
@@ -10616,14 +10487,14 @@ namespace FolioConsoleApplication
             using (var jtw = new JsonTextWriter(Console.Out))
             {
                 jtw.WriteStartArray();
-                foreach (var jo in (api ? fsc.LedgerRolloverProgresses(where, orderBy, skip, take) : fdc.LedgerRolloverProgresses(where, null, orderBy, skip, take).Select(lrp => JObject.Parse(lrp.Content))).Select(jo =>
+                foreach (var jo in (api ? fsc.LedgerRolloverProgresses(where, orderBy, skip, take) : fdc.LedgerRolloverProgresses(where, null, orderBy, skip, take).Select(lrp => lrp.ToJObject())).Select(jo =>
                 {
                     return select == null ? jo : new JObject(select.Split(',').Select(s =>
                     {
                         var m = Regex.Match(s.Trim(), @"(?<Path>\S+)((?i) as (?<Name>.+))?", RegexOptions.Compiled);
                         return new JProperty(m.Groups["Name"].Success ? m.Groups["Name"].Value : m.Groups["Path"].Value.Split('.').Last(), jo.SelectToken(m.Groups["Path"].Value));
                     }));
-                })) jsonSerializer.Serialize(jtw, jo);
+                })) (universalTime ? universalTimeJsonSerializer : localTimeJsonSerializer).Serialize(jtw, jo);
                 jtw.WriteEndArray();
             }
         }
@@ -10670,18 +10541,17 @@ namespace FolioConsoleApplication
             using (var fsc = new FolioServiceClient(connectionString))
             {
                 var s2 = Stopwatch.StartNew();
-                var js4 = JsonSchema.FromJsonAsync(sr2.ReadToEndAsync().Result).Result;
-                var js = new JsonSerializer();
+                var js = JsonSchema.FromJsonAsync(sr2.ReadToEndAsync().Result).Result;
                 jtr.Read();
                 var i = 0;
                 while (jtr.Read() && jtr.TokenType != JsonToken.EndArray)
                 {
                     if (take != null && take <= i) break;
                     ++i;
-                    var jo = (JObject)js.Deserialize(jtr);
+                    var jo = (JObject)localTimeJsonSerializer.Deserialize(jtr);
                     if (validate)
                     {
-                        var l = js4.Validate(jo);
+                        var l = js.Validate(jo);
                         if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"LedgerRolloverProgress {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"LedgerRolloverProgress {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
                     }
                     if (api)
@@ -10725,18 +10595,17 @@ namespace FolioConsoleApplication
             using (var jtw = new JsonTextWriter(sw))
             {
                 var s2 = Stopwatch.StartNew();
-                var js4 = JsonSchema.FromJsonAsync(sr.ReadToEndAsync().Result).Result;
-                var js = new JsonSerializer { Formatting = Formatting.Indented };
+                var js = JsonSchema.FromJsonAsync(sr.ReadToEndAsync().Result).Result;
                 jtw.WriteStartArray();
                 var i = 0;
-                foreach (var jo in api ? fsc.LedgerRolloverProgresses(where, orderBy, skip, take) : fdc.LedgerRolloverProgresses(where, null, orderBy, skip, take).Select(lrp => JObject.Parse(lrp.Content)))
+                foreach (var jo in api ? fsc.LedgerRolloverProgresses(where, orderBy, skip, take) : fdc.LedgerRolloverProgresses(where, null, orderBy, skip, take).Select(lrp => lrp.ToJObject()))
                 {
                     if (validate)
                     {
-                        var l = js4.Validate(jo);
+                        var l = js.Validate(jo);
                         if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"LedgerRolloverProgress {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"LedgerRolloverProgress {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
                     }
-                    if (!whatIf) js.Serialize(jtw, jo);
+                    if (!whatIf) (universalTime ? universalTimeJsonSerializer : localTimeJsonSerializer).Serialize(jtw, jo);
                     if (++i % 10000 == 0)
                     {
                         traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
@@ -10757,14 +10626,14 @@ namespace FolioConsoleApplication
             using (var jtw = new JsonTextWriter(Console.Out))
             {
                 jtw.WriteStartArray();
-                foreach (var jo in (api ? fsc.Libraries(where, orderBy, skip, take) : fdc.Libraries(where, null, orderBy, skip, take).Select(l => JObject.Parse(l.Content))).Select(jo =>
+                foreach (var jo in (api ? fsc.Libraries(where, orderBy, skip, take) : fdc.Libraries(where, null, orderBy, skip, take).Select(l => l.ToJObject())).Select(jo =>
                 {
                     return select == null ? jo : new JObject(select.Split(',').Select(s =>
                     {
                         var m = Regex.Match(s.Trim(), @"(?<Path>\S+)((?i) as (?<Name>.+))?", RegexOptions.Compiled);
                         return new JProperty(m.Groups["Name"].Success ? m.Groups["Name"].Value : m.Groups["Path"].Value.Split('.').Last(), jo.SelectToken(m.Groups["Path"].Value));
                     }));
-                })) jsonSerializer.Serialize(jtw, jo);
+                })) (universalTime ? universalTimeJsonSerializer : localTimeJsonSerializer).Serialize(jtw, jo);
                 jtw.WriteEndArray();
             }
         }
@@ -10811,18 +10680,17 @@ namespace FolioConsoleApplication
             using (var fsc = new FolioServiceClient(connectionString))
             {
                 var s2 = Stopwatch.StartNew();
-                var js4 = JsonSchema.FromJsonAsync(sr2.ReadToEndAsync().Result).Result;
-                var js = new JsonSerializer();
+                var js = JsonSchema.FromJsonAsync(sr2.ReadToEndAsync().Result).Result;
                 jtr.Read();
                 var i = 0;
                 while (jtr.Read() && jtr.TokenType != JsonToken.EndArray)
                 {
                     if (take != null && take <= i) break;
                     ++i;
-                    var jo = (JObject)js.Deserialize(jtr);
+                    var jo = (JObject)localTimeJsonSerializer.Deserialize(jtr);
                     if (validate)
                     {
-                        var l = js4.Validate(jo);
+                        var l = js.Validate(jo);
                         if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"Library {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"Library {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
                     }
                     if (api)
@@ -10866,18 +10734,17 @@ namespace FolioConsoleApplication
             using (var jtw = new JsonTextWriter(sw))
             {
                 var s2 = Stopwatch.StartNew();
-                var js4 = JsonSchema.FromJsonAsync(sr.ReadToEndAsync().Result).Result;
-                var js = new JsonSerializer { Formatting = Formatting.Indented };
+                var js = JsonSchema.FromJsonAsync(sr.ReadToEndAsync().Result).Result;
                 jtw.WriteStartArray();
                 var i = 0;
-                foreach (var jo in api ? fsc.Libraries(where, orderBy, skip, take) : fdc.Libraries(where, null, orderBy, skip, take).Select(l => JObject.Parse(l.Content)))
+                foreach (var jo in api ? fsc.Libraries(where, orderBy, skip, take) : fdc.Libraries(where, null, orderBy, skip, take).Select(l => l.ToJObject()))
                 {
                     if (validate)
                     {
-                        var l = js4.Validate(jo);
+                        var l = js.Validate(jo);
                         if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"Library {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"Library {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
                     }
-                    if (!whatIf) js.Serialize(jtw, jo);
+                    if (!whatIf) (universalTime ? universalTimeJsonSerializer : localTimeJsonSerializer).Serialize(jtw, jo);
                     if (++i % 10000 == 0)
                     {
                         traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
@@ -10898,14 +10765,14 @@ namespace FolioConsoleApplication
             using (var jtw = new JsonTextWriter(Console.Out))
             {
                 jtw.WriteStartArray();
-                foreach (var jo in (api ? fsc.Loans(where, orderBy, skip, take) : fdc.Loans(where, null, orderBy, skip, take).Select(l => JObject.Parse(l.Content))).Select(jo =>
+                foreach (var jo in (api ? fsc.Loans(where, orderBy, skip, take) : fdc.Loans(where, null, orderBy, skip, take).Select(l => l.ToJObject())).Select(jo =>
                 {
                     return select == null ? jo : new JObject(select.Split(',').Select(s =>
                     {
                         var m = Regex.Match(s.Trim(), @"(?<Path>\S+)((?i) as (?<Name>.+))?", RegexOptions.Compiled);
                         return new JProperty(m.Groups["Name"].Success ? m.Groups["Name"].Value : m.Groups["Path"].Value.Split('.').Last(), jo.SelectToken(m.Groups["Path"].Value));
                     }));
-                })) jsonSerializer.Serialize(jtw, jo);
+                })) (universalTime ? universalTimeJsonSerializer : localTimeJsonSerializer).Serialize(jtw, jo);
                 jtw.WriteEndArray();
             }
         }
@@ -10952,18 +10819,17 @@ namespace FolioConsoleApplication
             using (var fsc = new FolioServiceClient(connectionString))
             {
                 var s2 = Stopwatch.StartNew();
-                var js4 = JsonSchema.FromJsonAsync(sr2.ReadToEndAsync().Result).Result;
-                var js = new JsonSerializer();
+                var js = JsonSchema.FromJsonAsync(sr2.ReadToEndAsync().Result).Result;
                 jtr.Read();
                 var i = 0;
                 while (jtr.Read() && jtr.TokenType != JsonToken.EndArray)
                 {
                     if (take != null && take <= i) break;
                     ++i;
-                    var jo = (JObject)js.Deserialize(jtr);
+                    var jo = (JObject)localTimeJsonSerializer.Deserialize(jtr);
                     if (validate)
                     {
-                        var l = js4.Validate(jo);
+                        var l = js.Validate(jo);
                         if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"Loan {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"Loan {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
                     }
                     if (api)
@@ -11007,18 +10873,17 @@ namespace FolioConsoleApplication
             using (var jtw = new JsonTextWriter(sw))
             {
                 var s2 = Stopwatch.StartNew();
-                var js4 = JsonSchema.FromJsonAsync(sr.ReadToEndAsync().Result).Result;
-                var js = new JsonSerializer { Formatting = Formatting.Indented };
+                var js = JsonSchema.FromJsonAsync(sr.ReadToEndAsync().Result).Result;
                 jtw.WriteStartArray();
                 var i = 0;
-                foreach (var jo in api ? fsc.Loans(where, orderBy, skip, take) : fdc.Loans(where, null, orderBy, skip, take).Select(l => JObject.Parse(l.Content)))
+                foreach (var jo in api ? fsc.Loans(where, orderBy, skip, take) : fdc.Loans(where, null, orderBy, skip, take).Select(l => l.ToJObject()))
                 {
                     if (validate)
                     {
-                        var l = js4.Validate(jo);
+                        var l = js.Validate(jo);
                         if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"Loan {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"Loan {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
                     }
-                    if (!whatIf) js.Serialize(jtw, jo);
+                    if (!whatIf) (universalTime ? universalTimeJsonSerializer : localTimeJsonSerializer).Serialize(jtw, jo);
                     if (++i % 10000 == 0)
                     {
                         traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
@@ -11038,14 +10903,14 @@ namespace FolioConsoleApplication
             using (var jtw = new JsonTextWriter(Console.Out))
             {
                 jtw.WriteStartArray();
-                foreach (var jo in (api ? throw new NotSupportedException() : fdc.LoanEvents(where, null, orderBy, skip, take).Select(le => JObject.Parse(le.Content))).Select(jo =>
+                foreach (var jo in (api ? throw new NotSupportedException() : fdc.LoanEvents(where, null, orderBy, skip, take).Select(le => le.ToJObject())).Select(jo =>
                 {
                     return select == null ? jo : new JObject(select.Split(',').Select(s =>
                     {
                         var m = Regex.Match(s.Trim(), @"(?<Path>\S+)((?i) as (?<Name>.+))?", RegexOptions.Compiled);
                         return new JProperty(m.Groups["Name"].Success ? m.Groups["Name"].Value : m.Groups["Path"].Value.Split('.').Last(), jo.SelectToken(m.Groups["Path"].Value));
                     }));
-                })) jsonSerializer.Serialize(jtw, jo);
+                })) (universalTime ? universalTimeJsonSerializer : localTimeJsonSerializer).Serialize(jtw, jo);
                 jtw.WriteEndArray();
             }
         }
@@ -11080,18 +10945,17 @@ namespace FolioConsoleApplication
             using (var fbcc = new FolioBulkCopyContext(connectionString))
             {
                 var s2 = Stopwatch.StartNew();
-                var js4 = JsonSchema.FromJsonAsync(sr2.ReadToEndAsync().Result).Result;
-                var js = new JsonSerializer();
+                var js = JsonSchema.FromJsonAsync(sr2.ReadToEndAsync().Result).Result;
                 jtr.Read();
                 var i = 0;
                 while (jtr.Read() && jtr.TokenType != JsonToken.EndArray)
                 {
                     if (take != null && take <= i) break;
                     ++i;
-                    var jo = (JObject)js.Deserialize(jtr);
+                    var jo = (JObject)localTimeJsonSerializer.Deserialize(jtr);
                     if (validate)
                     {
-                        var l = js4.Validate(jo);
+                        var l = js.Validate(jo);
                         if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"LoanEvent {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"LoanEvent {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
                     }
                     if (api)
@@ -11129,18 +10993,17 @@ namespace FolioConsoleApplication
             using (var jtw = new JsonTextWriter(sw))
             {
                 var s2 = Stopwatch.StartNew();
-                var js4 = JsonSchema.FromJsonAsync(sr.ReadToEndAsync().Result).Result;
-                var js = new JsonSerializer { Formatting = Formatting.Indented };
+                var js = JsonSchema.FromJsonAsync(sr.ReadToEndAsync().Result).Result;
                 jtw.WriteStartArray();
                 var i = 0;
-                foreach (var jo in api ? throw new NotSupportedException() : fdc.LoanEvents(where, null, orderBy, skip, take).Select(le => JObject.Parse(le.Content)))
+                foreach (var jo in api ? throw new NotSupportedException() : fdc.LoanEvents(where, null, orderBy, skip, take).Select(le => le.ToJObject()))
                 {
                     if (validate)
                     {
-                        var l = js4.Validate(jo);
+                        var l = js.Validate(jo);
                         if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"LoanEvent {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"LoanEvent {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
                     }
-                    if (!whatIf) js.Serialize(jtw, jo);
+                    if (!whatIf) (universalTime ? universalTimeJsonSerializer : localTimeJsonSerializer).Serialize(jtw, jo);
                     if (++i % 10000 == 0)
                     {
                         traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
@@ -11161,14 +11024,14 @@ namespace FolioConsoleApplication
             using (var jtw = new JsonTextWriter(Console.Out))
             {
                 jtw.WriteStartArray();
-                foreach (var jo in (api ? fsc.LoanPolicies(where, orderBy, skip, take) : fdc.LoanPolicies(where, null, orderBy, skip, take).Select(lp => JObject.Parse(lp.Content))).Select(jo =>
+                foreach (var jo in (api ? fsc.LoanPolicies(where, orderBy, skip, take) : fdc.LoanPolicies(where, null, orderBy, skip, take).Select(lp => lp.ToJObject())).Select(jo =>
                 {
                     return select == null ? jo : new JObject(select.Split(',').Select(s =>
                     {
                         var m = Regex.Match(s.Trim(), @"(?<Path>\S+)((?i) as (?<Name>.+))?", RegexOptions.Compiled);
                         return new JProperty(m.Groups["Name"].Success ? m.Groups["Name"].Value : m.Groups["Path"].Value.Split('.').Last(), jo.SelectToken(m.Groups["Path"].Value));
                     }));
-                })) jsonSerializer.Serialize(jtw, jo);
+                })) (universalTime ? universalTimeJsonSerializer : localTimeJsonSerializer).Serialize(jtw, jo);
                 jtw.WriteEndArray();
             }
         }
@@ -11215,18 +11078,17 @@ namespace FolioConsoleApplication
             using (var fsc = new FolioServiceClient(connectionString))
             {
                 var s2 = Stopwatch.StartNew();
-                var js4 = JsonSchema.FromJsonAsync(sr2.ReadToEndAsync().Result).Result;
-                var js = new JsonSerializer();
+                var js = JsonSchema.FromJsonAsync(sr2.ReadToEndAsync().Result).Result;
                 jtr.Read();
                 var i = 0;
                 while (jtr.Read() && jtr.TokenType != JsonToken.EndArray)
                 {
                     if (take != null && take <= i) break;
                     ++i;
-                    var jo = (JObject)js.Deserialize(jtr);
+                    var jo = (JObject)localTimeJsonSerializer.Deserialize(jtr);
                     if (validate)
                     {
-                        var l = js4.Validate(jo);
+                        var l = js.Validate(jo);
                         if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"LoanPolicy {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"LoanPolicy {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
                     }
                     if (api)
@@ -11270,18 +11132,17 @@ namespace FolioConsoleApplication
             using (var jtw = new JsonTextWriter(sw))
             {
                 var s2 = Stopwatch.StartNew();
-                var js4 = JsonSchema.FromJsonAsync(sr.ReadToEndAsync().Result).Result;
-                var js = new JsonSerializer { Formatting = Formatting.Indented };
+                var js = JsonSchema.FromJsonAsync(sr.ReadToEndAsync().Result).Result;
                 jtw.WriteStartArray();
                 var i = 0;
-                foreach (var jo in api ? fsc.LoanPolicies(where, orderBy, skip, take) : fdc.LoanPolicies(where, null, orderBy, skip, take).Select(lp => JObject.Parse(lp.Content)))
+                foreach (var jo in api ? fsc.LoanPolicies(where, orderBy, skip, take) : fdc.LoanPolicies(where, null, orderBy, skip, take).Select(lp => lp.ToJObject()))
                 {
                     if (validate)
                     {
-                        var l = js4.Validate(jo);
+                        var l = js.Validate(jo);
                         if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"LoanPolicy {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"LoanPolicy {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
                     }
-                    if (!whatIf) js.Serialize(jtw, jo);
+                    if (!whatIf) (universalTime ? universalTimeJsonSerializer : localTimeJsonSerializer).Serialize(jtw, jo);
                     if (++i % 10000 == 0)
                     {
                         traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
@@ -11302,14 +11163,14 @@ namespace FolioConsoleApplication
             using (var jtw = new JsonTextWriter(Console.Out))
             {
                 jtw.WriteStartArray();
-                foreach (var jo in (api ? fsc.LoanTypes(where, orderBy, skip, take) : fdc.LoanTypes(where, null, orderBy, skip, take).Select(lt => JObject.Parse(lt.Content))).Select(jo =>
+                foreach (var jo in (api ? fsc.LoanTypes(where, orderBy, skip, take) : fdc.LoanTypes(where, null, orderBy, skip, take).Select(lt => lt.ToJObject())).Select(jo =>
                 {
                     return select == null ? jo : new JObject(select.Split(',').Select(s =>
                     {
                         var m = Regex.Match(s.Trim(), @"(?<Path>\S+)((?i) as (?<Name>.+))?", RegexOptions.Compiled);
                         return new JProperty(m.Groups["Name"].Success ? m.Groups["Name"].Value : m.Groups["Path"].Value.Split('.').Last(), jo.SelectToken(m.Groups["Path"].Value));
                     }));
-                })) jsonSerializer.Serialize(jtw, jo);
+                })) (universalTime ? universalTimeJsonSerializer : localTimeJsonSerializer).Serialize(jtw, jo);
                 jtw.WriteEndArray();
             }
         }
@@ -11356,18 +11217,17 @@ namespace FolioConsoleApplication
             using (var fsc = new FolioServiceClient(connectionString))
             {
                 var s2 = Stopwatch.StartNew();
-                var js4 = JsonSchema.FromJsonAsync(sr2.ReadToEndAsync().Result).Result;
-                var js = new JsonSerializer();
+                var js = JsonSchema.FromJsonAsync(sr2.ReadToEndAsync().Result).Result;
                 jtr.Read();
                 var i = 0;
                 while (jtr.Read() && jtr.TokenType != JsonToken.EndArray)
                 {
                     if (take != null && take <= i) break;
                     ++i;
-                    var jo = (JObject)js.Deserialize(jtr);
+                    var jo = (JObject)localTimeJsonSerializer.Deserialize(jtr);
                     if (validate)
                     {
-                        var l = js4.Validate(jo);
+                        var l = js.Validate(jo);
                         if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"LoanType {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"LoanType {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
                     }
                     if (api)
@@ -11411,18 +11271,17 @@ namespace FolioConsoleApplication
             using (var jtw = new JsonTextWriter(sw))
             {
                 var s2 = Stopwatch.StartNew();
-                var js4 = JsonSchema.FromJsonAsync(sr.ReadToEndAsync().Result).Result;
-                var js = new JsonSerializer { Formatting = Formatting.Indented };
+                var js = JsonSchema.FromJsonAsync(sr.ReadToEndAsync().Result).Result;
                 jtw.WriteStartArray();
                 var i = 0;
-                foreach (var jo in api ? fsc.LoanTypes(where, orderBy, skip, take) : fdc.LoanTypes(where, null, orderBy, skip, take).Select(lt => JObject.Parse(lt.Content)))
+                foreach (var jo in api ? fsc.LoanTypes(where, orderBy, skip, take) : fdc.LoanTypes(where, null, orderBy, skip, take).Select(lt => lt.ToJObject()))
                 {
                     if (validate)
                     {
-                        var l = js4.Validate(jo);
+                        var l = js.Validate(jo);
                         if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"LoanType {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"LoanType {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
                     }
-                    if (!whatIf) js.Serialize(jtw, jo);
+                    if (!whatIf) (universalTime ? universalTimeJsonSerializer : localTimeJsonSerializer).Serialize(jtw, jo);
                     if (++i % 10000 == 0)
                     {
                         traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
@@ -11443,14 +11302,14 @@ namespace FolioConsoleApplication
             using (var jtw = new JsonTextWriter(Console.Out))
             {
                 jtw.WriteStartArray();
-                foreach (var jo in (api ? fsc.Locations(where, orderBy, skip, take) : fdc.Locations(where, null, orderBy, skip, take).Select(l => JObject.Parse(l.Content))).Select(jo =>
+                foreach (var jo in (api ? fsc.Locations(where, orderBy, skip, take) : fdc.Locations(where, null, orderBy, skip, take).Select(l => l.ToJObject())).Select(jo =>
                 {
                     return select == null ? jo : new JObject(select.Split(',').Select(s =>
                     {
                         var m = Regex.Match(s.Trim(), @"(?<Path>\S+)((?i) as (?<Name>.+))?", RegexOptions.Compiled);
                         return new JProperty(m.Groups["Name"].Success ? m.Groups["Name"].Value : m.Groups["Path"].Value.Split('.').Last(), jo.SelectToken(m.Groups["Path"].Value));
                     }));
-                })) jsonSerializer.Serialize(jtw, jo);
+                })) (universalTime ? universalTimeJsonSerializer : localTimeJsonSerializer).Serialize(jtw, jo);
                 jtw.WriteEndArray();
             }
         }
@@ -11497,18 +11356,17 @@ namespace FolioConsoleApplication
             using (var fsc = new FolioServiceClient(connectionString))
             {
                 var s2 = Stopwatch.StartNew();
-                var js4 = JsonSchema.FromJsonAsync(sr2.ReadToEndAsync().Result).Result;
-                var js = new JsonSerializer();
+                var js = JsonSchema.FromJsonAsync(sr2.ReadToEndAsync().Result).Result;
                 jtr.Read();
                 var i = 0;
                 while (jtr.Read() && jtr.TokenType != JsonToken.EndArray)
                 {
                     if (take != null && take <= i) break;
                     ++i;
-                    var jo = (JObject)js.Deserialize(jtr);
+                    var jo = (JObject)localTimeJsonSerializer.Deserialize(jtr);
                     if (validate)
                     {
-                        var l = js4.Validate(jo);
+                        var l = js.Validate(jo);
                         if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"Location {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"Location {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
                     }
                     if (api)
@@ -11552,18 +11410,17 @@ namespace FolioConsoleApplication
             using (var jtw = new JsonTextWriter(sw))
             {
                 var s2 = Stopwatch.StartNew();
-                var js4 = JsonSchema.FromJsonAsync(sr.ReadToEndAsync().Result).Result;
-                var js = new JsonSerializer { Formatting = Formatting.Indented };
+                var js = JsonSchema.FromJsonAsync(sr.ReadToEndAsync().Result).Result;
                 jtw.WriteStartArray();
                 var i = 0;
-                foreach (var jo in api ? fsc.Locations(where, orderBy, skip, take) : fdc.Locations(where, null, orderBy, skip, take).Select(l => JObject.Parse(l.Content)))
+                foreach (var jo in api ? fsc.Locations(where, orderBy, skip, take) : fdc.Locations(where, null, orderBy, skip, take).Select(l => l.ToJObject()))
                 {
                     if (validate)
                     {
-                        var l = js4.Validate(jo);
+                        var l = js.Validate(jo);
                         if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"Location {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"Location {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
                     }
-                    if (!whatIf) js.Serialize(jtw, jo);
+                    if (!whatIf) (universalTime ? universalTimeJsonSerializer : localTimeJsonSerializer).Serialize(jtw, jo);
                     if (++i % 10000 == 0)
                     {
                         traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
@@ -11584,14 +11441,14 @@ namespace FolioConsoleApplication
             using (var jtw = new JsonTextWriter(Console.Out))
             {
                 jtw.WriteStartArray();
-                foreach (var jo in (api ? throw new NotSupportedException() : fdc.Logins(where, null, orderBy, skip, take).Select(l => JObject.Parse(l.Content))).Select(jo =>
+                foreach (var jo in (api ? throw new NotSupportedException() : fdc.Logins(where, null, orderBy, skip, take).Select(l => l.ToJObject())).Select(jo =>
                 {
                     return select == null ? jo : new JObject(select.Split(',').Select(s =>
                     {
                         var m = Regex.Match(s.Trim(), @"(?<Path>\S+)((?i) as (?<Name>.+))?", RegexOptions.Compiled);
                         return new JProperty(m.Groups["Name"].Success ? m.Groups["Name"].Value : m.Groups["Path"].Value.Split('.').Last(), jo.SelectToken(m.Groups["Path"].Value));
                     }));
-                })) jsonSerializer.Serialize(jtw, jo);
+                })) (universalTime ? universalTimeJsonSerializer : localTimeJsonSerializer).Serialize(jtw, jo);
                 jtw.WriteEndArray();
             }
         }
@@ -11627,18 +11484,17 @@ namespace FolioConsoleApplication
             using (var fsc = new FolioServiceClient(connectionString))
             {
                 var s2 = Stopwatch.StartNew();
-                var js4 = JsonSchema.FromJsonAsync(sr2.ReadToEndAsync().Result).Result;
-                var js = new JsonSerializer();
+                var js = JsonSchema.FromJsonAsync(sr2.ReadToEndAsync().Result).Result;
                 jtr.Read();
                 var i = 0;
                 while (jtr.Read() && jtr.TokenType != JsonToken.EndArray)
                 {
                     if (take != null && take <= i) break;
                     ++i;
-                    var jo = (JObject)js.Deserialize(jtr);
+                    var jo = (JObject)localTimeJsonSerializer.Deserialize(jtr);
                     if (validate)
                     {
-                        var l = js4.Validate(jo);
+                        var l = js.Validate(jo);
                         if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"Login {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"Login {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
                     }
                     if (api)
@@ -11682,18 +11538,17 @@ namespace FolioConsoleApplication
             using (var jtw = new JsonTextWriter(sw))
             {
                 var s2 = Stopwatch.StartNew();
-                var js4 = JsonSchema.FromJsonAsync(sr.ReadToEndAsync().Result).Result;
-                var js = new JsonSerializer { Formatting = Formatting.Indented };
+                var js = JsonSchema.FromJsonAsync(sr.ReadToEndAsync().Result).Result;
                 jtw.WriteStartArray();
                 var i = 0;
-                foreach (var jo in api ? throw new NotSupportedException() : fdc.Logins(where, null, orderBy, skip, take).Select(l => JObject.Parse(l.Content)))
+                foreach (var jo in api ? throw new NotSupportedException() : fdc.Logins(where, null, orderBy, skip, take).Select(l => l.ToJObject()))
                 {
                     if (validate)
                     {
-                        var l = js4.Validate(jo);
+                        var l = js.Validate(jo);
                         if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"Login {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"Login {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
                     }
-                    if (!whatIf) js.Serialize(jtw, jo);
+                    if (!whatIf) (universalTime ? universalTimeJsonSerializer : localTimeJsonSerializer).Serialize(jtw, jo);
                     if (++i % 10000 == 0)
                     {
                         traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
@@ -11714,14 +11569,14 @@ namespace FolioConsoleApplication
             using (var jtw = new JsonTextWriter(Console.Out))
             {
                 jtw.WriteStartArray();
-                foreach (var jo in (api ? fsc.LostItemFeePolicies(where, orderBy, skip, take) : fdc.LostItemFeePolicies(where, null, orderBy, skip, take).Select(lifp => JObject.Parse(lifp.Content))).Select(jo =>
+                foreach (var jo in (api ? fsc.LostItemFeePolicies(where, orderBy, skip, take) : fdc.LostItemFeePolicies(where, null, orderBy, skip, take).Select(lifp => lifp.ToJObject())).Select(jo =>
                 {
                     return select == null ? jo : new JObject(select.Split(',').Select(s =>
                     {
                         var m = Regex.Match(s.Trim(), @"(?<Path>\S+)((?i) as (?<Name>.+))?", RegexOptions.Compiled);
                         return new JProperty(m.Groups["Name"].Success ? m.Groups["Name"].Value : m.Groups["Path"].Value.Split('.').Last(), jo.SelectToken(m.Groups["Path"].Value));
                     }));
-                })) jsonSerializer.Serialize(jtw, jo);
+                })) (universalTime ? universalTimeJsonSerializer : localTimeJsonSerializer).Serialize(jtw, jo);
                 jtw.WriteEndArray();
             }
         }
@@ -11768,18 +11623,17 @@ namespace FolioConsoleApplication
             using (var fsc = new FolioServiceClient(connectionString))
             {
                 var s2 = Stopwatch.StartNew();
-                var js4 = JsonSchema.FromJsonAsync(sr2.ReadToEndAsync().Result).Result;
-                var js = new JsonSerializer();
+                var js = JsonSchema.FromJsonAsync(sr2.ReadToEndAsync().Result).Result;
                 jtr.Read();
                 var i = 0;
                 while (jtr.Read() && jtr.TokenType != JsonToken.EndArray)
                 {
                     if (take != null && take <= i) break;
                     ++i;
-                    var jo = (JObject)js.Deserialize(jtr);
+                    var jo = (JObject)localTimeJsonSerializer.Deserialize(jtr);
                     if (validate)
                     {
-                        var l = js4.Validate(jo);
+                        var l = js.Validate(jo);
                         if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"LostItemFeePolicy {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"LostItemFeePolicy {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
                     }
                     if (api)
@@ -11823,18 +11677,17 @@ namespace FolioConsoleApplication
             using (var jtw = new JsonTextWriter(sw))
             {
                 var s2 = Stopwatch.StartNew();
-                var js4 = JsonSchema.FromJsonAsync(sr.ReadToEndAsync().Result).Result;
-                var js = new JsonSerializer { Formatting = Formatting.Indented };
+                var js = JsonSchema.FromJsonAsync(sr.ReadToEndAsync().Result).Result;
                 jtw.WriteStartArray();
                 var i = 0;
-                foreach (var jo in api ? fsc.LostItemFeePolicies(where, orderBy, skip, take) : fdc.LostItemFeePolicies(where, null, orderBy, skip, take).Select(lifp => JObject.Parse(lifp.Content)))
+                foreach (var jo in api ? fsc.LostItemFeePolicies(where, orderBy, skip, take) : fdc.LostItemFeePolicies(where, null, orderBy, skip, take).Select(lifp => lifp.ToJObject()))
                 {
                     if (validate)
                     {
-                        var l = js4.Validate(jo);
+                        var l = js.Validate(jo);
                         if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"LostItemFeePolicy {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"LostItemFeePolicy {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
                     }
-                    if (!whatIf) js.Serialize(jtw, jo);
+                    if (!whatIf) (universalTime ? universalTimeJsonSerializer : localTimeJsonSerializer).Serialize(jtw, jo);
                     if (++i % 10000 == 0)
                     {
                         traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
@@ -11855,14 +11708,14 @@ namespace FolioConsoleApplication
             using (var jtw = new JsonTextWriter(Console.Out))
             {
                 jtw.WriteStartArray();
-                foreach (var jo in (api ? fsc.ManualBlockTemplates(where, orderBy, skip, take) : fdc.ManualBlockTemplates(where, null, orderBy, skip, take).Select(mbt => JObject.Parse(mbt.Content))).Select(jo =>
+                foreach (var jo in (api ? fsc.ManualBlockTemplates(where, orderBy, skip, take) : fdc.ManualBlockTemplates(where, null, orderBy, skip, take).Select(mbt => mbt.ToJObject())).Select(jo =>
                 {
                     return select == null ? jo : new JObject(select.Split(',').Select(s =>
                     {
                         var m = Regex.Match(s.Trim(), @"(?<Path>\S+)((?i) as (?<Name>.+))?", RegexOptions.Compiled);
                         return new JProperty(m.Groups["Name"].Success ? m.Groups["Name"].Value : m.Groups["Path"].Value.Split('.').Last(), jo.SelectToken(m.Groups["Path"].Value));
                     }));
-                })) jsonSerializer.Serialize(jtw, jo);
+                })) (universalTime ? universalTimeJsonSerializer : localTimeJsonSerializer).Serialize(jtw, jo);
                 jtw.WriteEndArray();
             }
         }
@@ -11909,18 +11762,17 @@ namespace FolioConsoleApplication
             using (var fsc = new FolioServiceClient(connectionString))
             {
                 var s2 = Stopwatch.StartNew();
-                var js4 = JsonSchema.FromJsonAsync(sr2.ReadToEndAsync().Result).Result;
-                var js = new JsonSerializer();
+                var js = JsonSchema.FromJsonAsync(sr2.ReadToEndAsync().Result).Result;
                 jtr.Read();
                 var i = 0;
                 while (jtr.Read() && jtr.TokenType != JsonToken.EndArray)
                 {
                     if (take != null && take <= i) break;
                     ++i;
-                    var jo = (JObject)js.Deserialize(jtr);
+                    var jo = (JObject)localTimeJsonSerializer.Deserialize(jtr);
                     if (validate)
                     {
-                        var l = js4.Validate(jo);
+                        var l = js.Validate(jo);
                         if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"ManualBlockTemplate {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"ManualBlockTemplate {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
                     }
                     if (api)
@@ -11964,18 +11816,17 @@ namespace FolioConsoleApplication
             using (var jtw = new JsonTextWriter(sw))
             {
                 var s2 = Stopwatch.StartNew();
-                var js4 = JsonSchema.FromJsonAsync(sr.ReadToEndAsync().Result).Result;
-                var js = new JsonSerializer { Formatting = Formatting.Indented };
+                var js = JsonSchema.FromJsonAsync(sr.ReadToEndAsync().Result).Result;
                 jtw.WriteStartArray();
                 var i = 0;
-                foreach (var jo in api ? fsc.ManualBlockTemplates(where, orderBy, skip, take) : fdc.ManualBlockTemplates(where, null, orderBy, skip, take).Select(mbt => JObject.Parse(mbt.Content)))
+                foreach (var jo in api ? fsc.ManualBlockTemplates(where, orderBy, skip, take) : fdc.ManualBlockTemplates(where, null, orderBy, skip, take).Select(mbt => mbt.ToJObject()))
                 {
                     if (validate)
                     {
-                        var l = js4.Validate(jo);
+                        var l = js.Validate(jo);
                         if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"ManualBlockTemplate {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"ManualBlockTemplate {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
                     }
-                    if (!whatIf) js.Serialize(jtw, jo);
+                    if (!whatIf) (universalTime ? universalTimeJsonSerializer : localTimeJsonSerializer).Serialize(jtw, jo);
                     if (++i % 10000 == 0)
                     {
                         traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
@@ -11996,14 +11847,14 @@ namespace FolioConsoleApplication
             using (var jtw = new JsonTextWriter(Console.Out))
             {
                 jtw.WriteStartArray();
-                foreach (var jo in (api ? fsc.MaterialTypes(where, orderBy, skip, take) : fdc.MaterialTypes(where, null, orderBy, skip, take).Select(mt => JObject.Parse(mt.Content))).Select(jo =>
+                foreach (var jo in (api ? fsc.MaterialTypes(where, orderBy, skip, take) : fdc.MaterialTypes(where, null, orderBy, skip, take).Select(mt => mt.ToJObject())).Select(jo =>
                 {
                     return select == null ? jo : new JObject(select.Split(',').Select(s =>
                     {
                         var m = Regex.Match(s.Trim(), @"(?<Path>\S+)((?i) as (?<Name>.+))?", RegexOptions.Compiled);
                         return new JProperty(m.Groups["Name"].Success ? m.Groups["Name"].Value : m.Groups["Path"].Value.Split('.').Last(), jo.SelectToken(m.Groups["Path"].Value));
                     }));
-                })) jsonSerializer.Serialize(jtw, jo);
+                })) (universalTime ? universalTimeJsonSerializer : localTimeJsonSerializer).Serialize(jtw, jo);
                 jtw.WriteEndArray();
             }
         }
@@ -12050,18 +11901,17 @@ namespace FolioConsoleApplication
             using (var fsc = new FolioServiceClient(connectionString))
             {
                 var s2 = Stopwatch.StartNew();
-                var js4 = JsonSchema.FromJsonAsync(sr2.ReadToEndAsync().Result).Result;
-                var js = new JsonSerializer();
+                var js = JsonSchema.FromJsonAsync(sr2.ReadToEndAsync().Result).Result;
                 jtr.Read();
                 var i = 0;
                 while (jtr.Read() && jtr.TokenType != JsonToken.EndArray)
                 {
                     if (take != null && take <= i) break;
                     ++i;
-                    var jo = (JObject)js.Deserialize(jtr);
+                    var jo = (JObject)localTimeJsonSerializer.Deserialize(jtr);
                     if (validate)
                     {
-                        var l = js4.Validate(jo);
+                        var l = js.Validate(jo);
                         if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"MaterialType {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"MaterialType {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
                     }
                     if (api)
@@ -12105,18 +11955,17 @@ namespace FolioConsoleApplication
             using (var jtw = new JsonTextWriter(sw))
             {
                 var s2 = Stopwatch.StartNew();
-                var js4 = JsonSchema.FromJsonAsync(sr.ReadToEndAsync().Result).Result;
-                var js = new JsonSerializer { Formatting = Formatting.Indented };
+                var js = JsonSchema.FromJsonAsync(sr.ReadToEndAsync().Result).Result;
                 jtw.WriteStartArray();
                 var i = 0;
-                foreach (var jo in api ? fsc.MaterialTypes(where, orderBy, skip, take) : fdc.MaterialTypes(where, null, orderBy, skip, take).Select(mt => JObject.Parse(mt.Content)))
+                foreach (var jo in api ? fsc.MaterialTypes(where, orderBy, skip, take) : fdc.MaterialTypes(where, null, orderBy, skip, take).Select(mt => mt.ToJObject()))
                 {
                     if (validate)
                     {
-                        var l = js4.Validate(jo);
+                        var l = js.Validate(jo);
                         if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"MaterialType {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"MaterialType {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
                     }
-                    if (!whatIf) js.Serialize(jtw, jo);
+                    if (!whatIf) (universalTime ? universalTimeJsonSerializer : localTimeJsonSerializer).Serialize(jtw, jo);
                     if (++i % 10000 == 0)
                     {
                         traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
@@ -12137,14 +11986,14 @@ namespace FolioConsoleApplication
             using (var jtw = new JsonTextWriter(Console.Out))
             {
                 jtw.WriteStartArray();
-                foreach (var jo in (api ? fsc.ModeOfIssuances(where, orderBy, skip, take) : fdc.ModeOfIssuances(where, null, orderBy, skip, take).Select(moi => JObject.Parse(moi.Content))).Select(jo =>
+                foreach (var jo in (api ? fsc.ModeOfIssuances(where, orderBy, skip, take) : fdc.ModeOfIssuances(where, null, orderBy, skip, take).Select(moi => moi.ToJObject())).Select(jo =>
                 {
                     return select == null ? jo : new JObject(select.Split(',').Select(s =>
                     {
                         var m = Regex.Match(s.Trim(), @"(?<Path>\S+)((?i) as (?<Name>.+))?", RegexOptions.Compiled);
                         return new JProperty(m.Groups["Name"].Success ? m.Groups["Name"].Value : m.Groups["Path"].Value.Split('.').Last(), jo.SelectToken(m.Groups["Path"].Value));
                     }));
-                })) jsonSerializer.Serialize(jtw, jo);
+                })) (universalTime ? universalTimeJsonSerializer : localTimeJsonSerializer).Serialize(jtw, jo);
                 jtw.WriteEndArray();
             }
         }
@@ -12191,18 +12040,17 @@ namespace FolioConsoleApplication
             using (var fsc = new FolioServiceClient(connectionString))
             {
                 var s2 = Stopwatch.StartNew();
-                var js4 = JsonSchema.FromJsonAsync(sr2.ReadToEndAsync().Result).Result;
-                var js = new JsonSerializer();
+                var js = JsonSchema.FromJsonAsync(sr2.ReadToEndAsync().Result).Result;
                 jtr.Read();
                 var i = 0;
                 while (jtr.Read() && jtr.TokenType != JsonToken.EndArray)
                 {
                     if (take != null && take <= i) break;
                     ++i;
-                    var jo = (JObject)js.Deserialize(jtr);
+                    var jo = (JObject)localTimeJsonSerializer.Deserialize(jtr);
                     if (validate)
                     {
-                        var l = js4.Validate(jo);
+                        var l = js.Validate(jo);
                         if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"ModeOfIssuance {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"ModeOfIssuance {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
                     }
                     if (api)
@@ -12246,18 +12094,17 @@ namespace FolioConsoleApplication
             using (var jtw = new JsonTextWriter(sw))
             {
                 var s2 = Stopwatch.StartNew();
-                var js4 = JsonSchema.FromJsonAsync(sr.ReadToEndAsync().Result).Result;
-                var js = new JsonSerializer { Formatting = Formatting.Indented };
+                var js = JsonSchema.FromJsonAsync(sr.ReadToEndAsync().Result).Result;
                 jtw.WriteStartArray();
                 var i = 0;
-                foreach (var jo in api ? fsc.ModeOfIssuances(where, orderBy, skip, take) : fdc.ModeOfIssuances(where, null, orderBy, skip, take).Select(moi => JObject.Parse(moi.Content)))
+                foreach (var jo in api ? fsc.ModeOfIssuances(where, orderBy, skip, take) : fdc.ModeOfIssuances(where, null, orderBy, skip, take).Select(moi => moi.ToJObject()))
                 {
                     if (validate)
                     {
-                        var l = js4.Validate(jo);
+                        var l = js.Validate(jo);
                         if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"ModeOfIssuance {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"ModeOfIssuance {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
                     }
-                    if (!whatIf) js.Serialize(jtw, jo);
+                    if (!whatIf) (universalTime ? universalTimeJsonSerializer : localTimeJsonSerializer).Serialize(jtw, jo);
                     if (++i % 10000 == 0)
                     {
                         traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
@@ -12278,14 +12125,14 @@ namespace FolioConsoleApplication
             using (var jtw = new JsonTextWriter(Console.Out))
             {
                 jtw.WriteStartArray();
-                foreach (var jo in (api ? fsc.NatureOfContentTerms(where, orderBy, skip, take) : fdc.NatureOfContentTerms(where, null, orderBy, skip, take).Select(noct => JObject.Parse(noct.Content))).Select(jo =>
+                foreach (var jo in (api ? fsc.NatureOfContentTerms(where, orderBy, skip, take) : fdc.NatureOfContentTerms(where, null, orderBy, skip, take).Select(noct => noct.ToJObject())).Select(jo =>
                 {
                     return select == null ? jo : new JObject(select.Split(',').Select(s =>
                     {
                         var m = Regex.Match(s.Trim(), @"(?<Path>\S+)((?i) as (?<Name>.+))?", RegexOptions.Compiled);
                         return new JProperty(m.Groups["Name"].Success ? m.Groups["Name"].Value : m.Groups["Path"].Value.Split('.').Last(), jo.SelectToken(m.Groups["Path"].Value));
                     }));
-                })) jsonSerializer.Serialize(jtw, jo);
+                })) (universalTime ? universalTimeJsonSerializer : localTimeJsonSerializer).Serialize(jtw, jo);
                 jtw.WriteEndArray();
             }
         }
@@ -12332,18 +12179,17 @@ namespace FolioConsoleApplication
             using (var fsc = new FolioServiceClient(connectionString))
             {
                 var s2 = Stopwatch.StartNew();
-                var js4 = JsonSchema.FromJsonAsync(sr2.ReadToEndAsync().Result).Result;
-                var js = new JsonSerializer();
+                var js = JsonSchema.FromJsonAsync(sr2.ReadToEndAsync().Result).Result;
                 jtr.Read();
                 var i = 0;
                 while (jtr.Read() && jtr.TokenType != JsonToken.EndArray)
                 {
                     if (take != null && take <= i) break;
                     ++i;
-                    var jo = (JObject)js.Deserialize(jtr);
+                    var jo = (JObject)localTimeJsonSerializer.Deserialize(jtr);
                     if (validate)
                     {
-                        var l = js4.Validate(jo);
+                        var l = js.Validate(jo);
                         if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"NatureOfContentTerm {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"NatureOfContentTerm {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
                     }
                     if (api)
@@ -12387,18 +12233,17 @@ namespace FolioConsoleApplication
             using (var jtw = new JsonTextWriter(sw))
             {
                 var s2 = Stopwatch.StartNew();
-                var js4 = JsonSchema.FromJsonAsync(sr.ReadToEndAsync().Result).Result;
-                var js = new JsonSerializer { Formatting = Formatting.Indented };
+                var js = JsonSchema.FromJsonAsync(sr.ReadToEndAsync().Result).Result;
                 jtw.WriteStartArray();
                 var i = 0;
-                foreach (var jo in api ? fsc.NatureOfContentTerms(where, orderBy, skip, take) : fdc.NatureOfContentTerms(where, null, orderBy, skip, take).Select(noct => JObject.Parse(noct.Content)))
+                foreach (var jo in api ? fsc.NatureOfContentTerms(where, orderBy, skip, take) : fdc.NatureOfContentTerms(where, null, orderBy, skip, take).Select(noct => noct.ToJObject()))
                 {
                     if (validate)
                     {
-                        var l = js4.Validate(jo);
+                        var l = js.Validate(jo);
                         if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"NatureOfContentTerm {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"NatureOfContentTerm {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
                     }
-                    if (!whatIf) js.Serialize(jtw, jo);
+                    if (!whatIf) (universalTime ? universalTimeJsonSerializer : localTimeJsonSerializer).Serialize(jtw, jo);
                     if (++i % 10000 == 0)
                     {
                         traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
@@ -12419,14 +12264,14 @@ namespace FolioConsoleApplication
             using (var jtw = new JsonTextWriter(Console.Out))
             {
                 jtw.WriteStartArray();
-                foreach (var jo in (api ? fsc.Orders(where, orderBy, skip, take) : fdc.Orders(where, null, orderBy, skip, take).Select(o => JObject.Parse(o.Content))).Select(jo =>
+                foreach (var jo in (api ? fsc.Orders(where, orderBy, skip, take) : fdc.Orders(where, null, orderBy, skip, take).Select(o => o.ToJObject())).Select(jo =>
                 {
                     return select == null ? jo : new JObject(select.Split(',').Select(s =>
                     {
                         var m = Regex.Match(s.Trim(), @"(?<Path>\S+)((?i) as (?<Name>.+))?", RegexOptions.Compiled);
                         return new JProperty(m.Groups["Name"].Success ? m.Groups["Name"].Value : m.Groups["Path"].Value.Split('.').Last(), jo.SelectToken(m.Groups["Path"].Value));
                     }));
-                })) jsonSerializer.Serialize(jtw, jo);
+                })) (universalTime ? universalTimeJsonSerializer : localTimeJsonSerializer).Serialize(jtw, jo);
                 jtw.WriteEndArray();
             }
         }
@@ -12473,18 +12318,17 @@ namespace FolioConsoleApplication
             using (var fsc = new FolioServiceClient(connectionString))
             {
                 var s2 = Stopwatch.StartNew();
-                var js4 = JsonSchema.FromJsonAsync(sr2.ReadToEndAsync().Result).Result;
-                var js = new JsonSerializer();
+                var js = JsonSchema.FromJsonAsync(sr2.ReadToEndAsync().Result).Result;
                 jtr.Read();
                 var i = 0;
                 while (jtr.Read() && jtr.TokenType != JsonToken.EndArray)
                 {
                     if (take != null && take <= i) break;
                     ++i;
-                    var jo = (JObject)js.Deserialize(jtr);
+                    var jo = (JObject)localTimeJsonSerializer.Deserialize(jtr);
                     if (validate)
                     {
-                        var l = js4.Validate(jo);
+                        var l = js.Validate(jo);
                         if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"Order {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"Order {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
                     }
                     if (api)
@@ -12528,18 +12372,17 @@ namespace FolioConsoleApplication
             using (var jtw = new JsonTextWriter(sw))
             {
                 var s2 = Stopwatch.StartNew();
-                var js4 = JsonSchema.FromJsonAsync(sr.ReadToEndAsync().Result).Result;
-                var js = new JsonSerializer { Formatting = Formatting.Indented };
+                var js = JsonSchema.FromJsonAsync(sr.ReadToEndAsync().Result).Result;
                 jtw.WriteStartArray();
                 var i = 0;
-                foreach (var jo in api ? fsc.Orders(where, orderBy, skip, take) : fdc.Orders(where, null, orderBy, skip, take).Select(o => JObject.Parse(o.Content)))
+                foreach (var jo in api ? fsc.Orders(where, orderBy, skip, take) : fdc.Orders(where, null, orderBy, skip, take).Select(o => o.ToJObject()))
                 {
                     if (validate)
                     {
-                        var l = js4.Validate(jo);
+                        var l = js.Validate(jo);
                         if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"Order {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"Order {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
                     }
-                    if (!whatIf) js.Serialize(jtw, jo);
+                    if (!whatIf) (universalTime ? universalTimeJsonSerializer : localTimeJsonSerializer).Serialize(jtw, jo);
                     if (++i % 10000 == 0)
                     {
                         traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
@@ -12560,14 +12403,14 @@ namespace FolioConsoleApplication
             using (var jtw = new JsonTextWriter(Console.Out))
             {
                 jtw.WriteStartArray();
-                foreach (var jo in (api ? fsc.OrderInvoices(where, orderBy, skip, take) : fdc.OrderInvoices(where, null, orderBy, skip, take).Select(oi => JObject.Parse(oi.Content))).Select(jo =>
+                foreach (var jo in (api ? fsc.OrderInvoices(where, orderBy, skip, take) : fdc.OrderInvoices(where, null, orderBy, skip, take).Select(oi => oi.ToJObject())).Select(jo =>
                 {
                     return select == null ? jo : new JObject(select.Split(',').Select(s =>
                     {
                         var m = Regex.Match(s.Trim(), @"(?<Path>\S+)((?i) as (?<Name>.+))?", RegexOptions.Compiled);
                         return new JProperty(m.Groups["Name"].Success ? m.Groups["Name"].Value : m.Groups["Path"].Value.Split('.').Last(), jo.SelectToken(m.Groups["Path"].Value));
                     }));
-                })) jsonSerializer.Serialize(jtw, jo);
+                })) (universalTime ? universalTimeJsonSerializer : localTimeJsonSerializer).Serialize(jtw, jo);
                 jtw.WriteEndArray();
             }
         }
@@ -12614,18 +12457,17 @@ namespace FolioConsoleApplication
             using (var fsc = new FolioServiceClient(connectionString))
             {
                 var s2 = Stopwatch.StartNew();
-                var js4 = JsonSchema.FromJsonAsync(sr2.ReadToEndAsync().Result).Result;
-                var js = new JsonSerializer();
+                var js = JsonSchema.FromJsonAsync(sr2.ReadToEndAsync().Result).Result;
                 jtr.Read();
                 var i = 0;
                 while (jtr.Read() && jtr.TokenType != JsonToken.EndArray)
                 {
                     if (take != null && take <= i) break;
                     ++i;
-                    var jo = (JObject)js.Deserialize(jtr);
+                    var jo = (JObject)localTimeJsonSerializer.Deserialize(jtr);
                     if (validate)
                     {
-                        var l = js4.Validate(jo);
+                        var l = js.Validate(jo);
                         if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"OrderInvoice {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"OrderInvoice {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
                     }
                     if (api)
@@ -12669,18 +12511,17 @@ namespace FolioConsoleApplication
             using (var jtw = new JsonTextWriter(sw))
             {
                 var s2 = Stopwatch.StartNew();
-                var js4 = JsonSchema.FromJsonAsync(sr.ReadToEndAsync().Result).Result;
-                var js = new JsonSerializer { Formatting = Formatting.Indented };
+                var js = JsonSchema.FromJsonAsync(sr.ReadToEndAsync().Result).Result;
                 jtw.WriteStartArray();
                 var i = 0;
-                foreach (var jo in api ? fsc.OrderInvoices(where, orderBy, skip, take) : fdc.OrderInvoices(where, null, orderBy, skip, take).Select(oi => JObject.Parse(oi.Content)))
+                foreach (var jo in api ? fsc.OrderInvoices(where, orderBy, skip, take) : fdc.OrderInvoices(where, null, orderBy, skip, take).Select(oi => oi.ToJObject()))
                 {
                     if (validate)
                     {
-                        var l = js4.Validate(jo);
+                        var l = js.Validate(jo);
                         if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"OrderInvoice {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"OrderInvoice {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
                     }
-                    if (!whatIf) js.Serialize(jtw, jo);
+                    if (!whatIf) (universalTime ? universalTimeJsonSerializer : localTimeJsonSerializer).Serialize(jtw, jo);
                     if (++i % 10000 == 0)
                     {
                         traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
@@ -12701,14 +12542,14 @@ namespace FolioConsoleApplication
             using (var jtw = new JsonTextWriter(Console.Out))
             {
                 jtw.WriteStartArray();
-                foreach (var jo in (api ? fsc.OrderItems(where, orderBy, skip, take) : fdc.OrderItems(where, null, orderBy, skip, take).Select(oi => JObject.Parse(oi.Content))).Select(jo =>
+                foreach (var jo in (api ? fsc.OrderItems(where, orderBy, skip, take) : fdc.OrderItems(where, null, orderBy, skip, take).Select(oi => oi.ToJObject())).Select(jo =>
                 {
                     return select == null ? jo : new JObject(select.Split(',').Select(s =>
                     {
                         var m = Regex.Match(s.Trim(), @"(?<Path>\S+)((?i) as (?<Name>.+))?", RegexOptions.Compiled);
                         return new JProperty(m.Groups["Name"].Success ? m.Groups["Name"].Value : m.Groups["Path"].Value.Split('.').Last(), jo.SelectToken(m.Groups["Path"].Value));
                     }));
-                })) jsonSerializer.Serialize(jtw, jo);
+                })) (universalTime ? universalTimeJsonSerializer : localTimeJsonSerializer).Serialize(jtw, jo);
                 jtw.WriteEndArray();
             }
         }
@@ -12755,18 +12596,17 @@ namespace FolioConsoleApplication
             using (var fsc = new FolioServiceClient(connectionString))
             {
                 var s2 = Stopwatch.StartNew();
-                var js4 = JsonSchema.FromJsonAsync(sr2.ReadToEndAsync().Result).Result;
-                var js = new JsonSerializer();
+                var js = JsonSchema.FromJsonAsync(sr2.ReadToEndAsync().Result).Result;
                 jtr.Read();
                 var i = 0;
                 while (jtr.Read() && jtr.TokenType != JsonToken.EndArray)
                 {
                     if (take != null && take <= i) break;
                     ++i;
-                    var jo = (JObject)js.Deserialize(jtr);
+                    var jo = (JObject)localTimeJsonSerializer.Deserialize(jtr);
                     if (validate)
                     {
-                        var l = js4.Validate(jo);
+                        var l = js.Validate(jo);
                         if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"OrderItem {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"OrderItem {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
                     }
                     if (api)
@@ -12810,18 +12650,17 @@ namespace FolioConsoleApplication
             using (var jtw = new JsonTextWriter(sw))
             {
                 var s2 = Stopwatch.StartNew();
-                var js4 = JsonSchema.FromJsonAsync(sr.ReadToEndAsync().Result).Result;
-                var js = new JsonSerializer { Formatting = Formatting.Indented };
+                var js = JsonSchema.FromJsonAsync(sr.ReadToEndAsync().Result).Result;
                 jtw.WriteStartArray();
                 var i = 0;
-                foreach (var jo in api ? fsc.OrderItems(where, orderBy, skip, take) : fdc.OrderItems(where, null, orderBy, skip, take).Select(oi => JObject.Parse(oi.Content)))
+                foreach (var jo in api ? fsc.OrderItems(where, orderBy, skip, take) : fdc.OrderItems(where, null, orderBy, skip, take).Select(oi => oi.ToJObject()))
                 {
                     if (validate)
                     {
-                        var l = js4.Validate(jo);
+                        var l = js.Validate(jo);
                         if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"OrderItem {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"OrderItem {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
                     }
-                    if (!whatIf) js.Serialize(jtw, jo);
+                    if (!whatIf) (universalTime ? universalTimeJsonSerializer : localTimeJsonSerializer).Serialize(jtw, jo);
                     if (++i % 10000 == 0)
                     {
                         traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
@@ -12842,14 +12681,14 @@ namespace FolioConsoleApplication
             using (var jtw = new JsonTextWriter(Console.Out))
             {
                 jtw.WriteStartArray();
-                foreach (var jo in (api ? fsc.OrderTemplates(where, orderBy, skip, take) : fdc.OrderTemplates(where, null, orderBy, skip, take).Select(ot => JObject.Parse(ot.Content))).Select(jo =>
+                foreach (var jo in (api ? fsc.OrderTemplates(where, orderBy, skip, take) : fdc.OrderTemplates(where, null, orderBy, skip, take).Select(ot => ot.ToJObject())).Select(jo =>
                 {
                     return select == null ? jo : new JObject(select.Split(',').Select(s =>
                     {
                         var m = Regex.Match(s.Trim(), @"(?<Path>\S+)((?i) as (?<Name>.+))?", RegexOptions.Compiled);
                         return new JProperty(m.Groups["Name"].Success ? m.Groups["Name"].Value : m.Groups["Path"].Value.Split('.').Last(), jo.SelectToken(m.Groups["Path"].Value));
                     }));
-                })) jsonSerializer.Serialize(jtw, jo);
+                })) (universalTime ? universalTimeJsonSerializer : localTimeJsonSerializer).Serialize(jtw, jo);
                 jtw.WriteEndArray();
             }
         }
@@ -12896,18 +12735,17 @@ namespace FolioConsoleApplication
             using (var fsc = new FolioServiceClient(connectionString))
             {
                 var s2 = Stopwatch.StartNew();
-                var js4 = JsonSchema.FromJsonAsync(sr2.ReadToEndAsync().Result).Result;
-                var js = new JsonSerializer();
+                var js = JsonSchema.FromJsonAsync(sr2.ReadToEndAsync().Result).Result;
                 jtr.Read();
                 var i = 0;
                 while (jtr.Read() && jtr.TokenType != JsonToken.EndArray)
                 {
                     if (take != null && take <= i) break;
                     ++i;
-                    var jo = (JObject)js.Deserialize(jtr);
+                    var jo = (JObject)localTimeJsonSerializer.Deserialize(jtr);
                     if (validate)
                     {
-                        var l = js4.Validate(jo);
+                        var l = js.Validate(jo);
                         if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"OrderTemplate {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"OrderTemplate {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
                     }
                     if (api)
@@ -12951,18 +12789,17 @@ namespace FolioConsoleApplication
             using (var jtw = new JsonTextWriter(sw))
             {
                 var s2 = Stopwatch.StartNew();
-                var js4 = JsonSchema.FromJsonAsync(sr.ReadToEndAsync().Result).Result;
-                var js = new JsonSerializer { Formatting = Formatting.Indented };
+                var js = JsonSchema.FromJsonAsync(sr.ReadToEndAsync().Result).Result;
                 jtw.WriteStartArray();
                 var i = 0;
-                foreach (var jo in api ? fsc.OrderTemplates(where, orderBy, skip, take) : fdc.OrderTemplates(where, null, orderBy, skip, take).Select(ot => JObject.Parse(ot.Content)))
+                foreach (var jo in api ? fsc.OrderTemplates(where, orderBy, skip, take) : fdc.OrderTemplates(where, null, orderBy, skip, take).Select(ot => ot.ToJObject()))
                 {
                     if (validate)
                     {
-                        var l = js4.Validate(jo);
+                        var l = js.Validate(jo);
                         if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"OrderTemplate {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"OrderTemplate {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
                     }
-                    if (!whatIf) js.Serialize(jtw, jo);
+                    if (!whatIf) (universalTime ? universalTimeJsonSerializer : localTimeJsonSerializer).Serialize(jtw, jo);
                     if (++i % 10000 == 0)
                     {
                         traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
@@ -12983,14 +12820,14 @@ namespace FolioConsoleApplication
             using (var jtw = new JsonTextWriter(Console.Out))
             {
                 jtw.WriteStartArray();
-                foreach (var jo in (api ? new[] { fsc.GetOrderTransactionSummary() } : fdc.OrderTransactionSummaries(where, null, orderBy, skip, take).Select(ots => JObject.Parse(ots.Content))).Select(jo =>
+                foreach (var jo in (api ? new[] { fsc.GetOrderTransactionSummary() } : fdc.OrderTransactionSummaries(where, null, orderBy, skip, take).Select(ots => ots.ToJObject())).Select(jo =>
                 {
                     return select == null ? jo : new JObject(select.Split(',').Select(s =>
                     {
                         var m = Regex.Match(s.Trim(), @"(?<Path>\S+)((?i) as (?<Name>.+))?", RegexOptions.Compiled);
                         return new JProperty(m.Groups["Name"].Success ? m.Groups["Name"].Value : m.Groups["Path"].Value.Split('.').Last(), jo.SelectToken(m.Groups["Path"].Value));
                     }));
-                })) jsonSerializer.Serialize(jtw, jo);
+                })) (universalTime ? universalTimeJsonSerializer : localTimeJsonSerializer).Serialize(jtw, jo);
                 jtw.WriteEndArray();
             }
         }
@@ -13026,18 +12863,17 @@ namespace FolioConsoleApplication
             using (var fsc = new FolioServiceClient(connectionString))
             {
                 var s2 = Stopwatch.StartNew();
-                var js4 = JsonSchema.FromJsonAsync(sr2.ReadToEndAsync().Result).Result;
-                var js = new JsonSerializer();
+                var js = JsonSchema.FromJsonAsync(sr2.ReadToEndAsync().Result).Result;
                 jtr.Read();
                 var i = 0;
                 while (jtr.Read() && jtr.TokenType != JsonToken.EndArray)
                 {
                     if (take != null && take <= i) break;
                     ++i;
-                    var jo = (JObject)js.Deserialize(jtr);
+                    var jo = (JObject)localTimeJsonSerializer.Deserialize(jtr);
                     if (validate)
                     {
-                        var l = js4.Validate(jo);
+                        var l = js.Validate(jo);
                         if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"OrderTransactionSummary {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"OrderTransactionSummary {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
                     }
                     if (api)
@@ -13081,18 +12917,17 @@ namespace FolioConsoleApplication
             using (var jtw = new JsonTextWriter(sw))
             {
                 var s2 = Stopwatch.StartNew();
-                var js4 = JsonSchema.FromJsonAsync(sr.ReadToEndAsync().Result).Result;
-                var js = new JsonSerializer { Formatting = Formatting.Indented };
+                var js = JsonSchema.FromJsonAsync(sr.ReadToEndAsync().Result).Result;
                 jtw.WriteStartArray();
                 var i = 0;
-                foreach (var jo in api ? new[] { fsc.GetOrderTransactionSummary() } : fdc.OrderTransactionSummaries(where, null, orderBy, skip, take).Select(ots => JObject.Parse(ots.Content)))
+                foreach (var jo in api ? new[] { fsc.GetOrderTransactionSummary() } : fdc.OrderTransactionSummaries(where, null, orderBy, skip, take).Select(ots => ots.ToJObject()))
                 {
                     if (validate)
                     {
-                        var l = js4.Validate(jo);
+                        var l = js.Validate(jo);
                         if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"OrderTransactionSummary {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"OrderTransactionSummary {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
                     }
-                    if (!whatIf) js.Serialize(jtw, jo);
+                    if (!whatIf) (universalTime ? universalTimeJsonSerializer : localTimeJsonSerializer).Serialize(jtw, jo);
                     if (++i % 10000 == 0)
                     {
                         traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
@@ -13113,14 +12948,14 @@ namespace FolioConsoleApplication
             using (var jtw = new JsonTextWriter(Console.Out))
             {
                 jtw.WriteStartArray();
-                foreach (var jo in (api ? fsc.Organizations(where, orderBy, skip, take) : fdc.Organizations(where, null, orderBy, skip, take).Select(o => JObject.Parse(o.Content))).Select(jo =>
+                foreach (var jo in (api ? fsc.Organizations(where, orderBy, skip, take) : fdc.Organizations(where, null, orderBy, skip, take).Select(o => o.ToJObject())).Select(jo =>
                 {
                     return select == null ? jo : new JObject(select.Split(',').Select(s =>
                     {
                         var m = Regex.Match(s.Trim(), @"(?<Path>\S+)((?i) as (?<Name>.+))?", RegexOptions.Compiled);
                         return new JProperty(m.Groups["Name"].Success ? m.Groups["Name"].Value : m.Groups["Path"].Value.Split('.').Last(), jo.SelectToken(m.Groups["Path"].Value));
                     }));
-                })) jsonSerializer.Serialize(jtw, jo);
+                })) (universalTime ? universalTimeJsonSerializer : localTimeJsonSerializer).Serialize(jtw, jo);
                 jtw.WriteEndArray();
             }
         }
@@ -13167,18 +13002,17 @@ namespace FolioConsoleApplication
             using (var fsc = new FolioServiceClient(connectionString))
             {
                 var s2 = Stopwatch.StartNew();
-                var js4 = JsonSchema.FromJsonAsync(sr2.ReadToEndAsync().Result).Result;
-                var js = new JsonSerializer();
+                var js = JsonSchema.FromJsonAsync(sr2.ReadToEndAsync().Result).Result;
                 jtr.Read();
                 var i = 0;
                 while (jtr.Read() && jtr.TokenType != JsonToken.EndArray)
                 {
                     if (take != null && take <= i) break;
                     ++i;
-                    var jo = (JObject)js.Deserialize(jtr);
+                    var jo = (JObject)localTimeJsonSerializer.Deserialize(jtr);
                     if (validate)
                     {
-                        var l = js4.Validate(jo);
+                        var l = js.Validate(jo);
                         if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"Organization {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"Organization {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
                     }
                     if (api)
@@ -13222,18 +13056,17 @@ namespace FolioConsoleApplication
             using (var jtw = new JsonTextWriter(sw))
             {
                 var s2 = Stopwatch.StartNew();
-                var js4 = JsonSchema.FromJsonAsync(sr.ReadToEndAsync().Result).Result;
-                var js = new JsonSerializer { Formatting = Formatting.Indented };
+                var js = JsonSchema.FromJsonAsync(sr.ReadToEndAsync().Result).Result;
                 jtw.WriteStartArray();
                 var i = 0;
-                foreach (var jo in api ? fsc.Organizations(where, orderBy, skip, take) : fdc.Organizations(where, null, orderBy, skip, take).Select(o => JObject.Parse(o.Content)))
+                foreach (var jo in api ? fsc.Organizations(where, orderBy, skip, take) : fdc.Organizations(where, null, orderBy, skip, take).Select(o => o.ToJObject()))
                 {
                     if (validate)
                     {
-                        var l = js4.Validate(jo);
+                        var l = js.Validate(jo);
                         if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"Organization {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"Organization {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
                     }
-                    if (!whatIf) js.Serialize(jtw, jo);
+                    if (!whatIf) (universalTime ? universalTimeJsonSerializer : localTimeJsonSerializer).Serialize(jtw, jo);
                     if (++i % 10000 == 0)
                     {
                         traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
@@ -13254,14 +13087,14 @@ namespace FolioConsoleApplication
             using (var jtw = new JsonTextWriter(Console.Out))
             {
                 jtw.WriteStartArray();
-                foreach (var jo in (api ? fsc.OverdueFinePolicies(where, orderBy, skip, take) : fdc.OverdueFinePolicies(where, null, orderBy, skip, take).Select(ofp => JObject.Parse(ofp.Content))).Select(jo =>
+                foreach (var jo in (api ? fsc.OverdueFinePolicies(where, orderBy, skip, take) : fdc.OverdueFinePolicies(where, null, orderBy, skip, take).Select(ofp => ofp.ToJObject())).Select(jo =>
                 {
                     return select == null ? jo : new JObject(select.Split(',').Select(s =>
                     {
                         var m = Regex.Match(s.Trim(), @"(?<Path>\S+)((?i) as (?<Name>.+))?", RegexOptions.Compiled);
                         return new JProperty(m.Groups["Name"].Success ? m.Groups["Name"].Value : m.Groups["Path"].Value.Split('.').Last(), jo.SelectToken(m.Groups["Path"].Value));
                     }));
-                })) jsonSerializer.Serialize(jtw, jo);
+                })) (universalTime ? universalTimeJsonSerializer : localTimeJsonSerializer).Serialize(jtw, jo);
                 jtw.WriteEndArray();
             }
         }
@@ -13308,18 +13141,17 @@ namespace FolioConsoleApplication
             using (var fsc = new FolioServiceClient(connectionString))
             {
                 var s2 = Stopwatch.StartNew();
-                var js4 = JsonSchema.FromJsonAsync(sr2.ReadToEndAsync().Result).Result;
-                var js = new JsonSerializer();
+                var js = JsonSchema.FromJsonAsync(sr2.ReadToEndAsync().Result).Result;
                 jtr.Read();
                 var i = 0;
                 while (jtr.Read() && jtr.TokenType != JsonToken.EndArray)
                 {
                     if (take != null && take <= i) break;
                     ++i;
-                    var jo = (JObject)js.Deserialize(jtr);
+                    var jo = (JObject)localTimeJsonSerializer.Deserialize(jtr);
                     if (validate)
                     {
-                        var l = js4.Validate(jo);
+                        var l = js.Validate(jo);
                         if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"OverdueFinePolicy {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"OverdueFinePolicy {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
                     }
                     if (api)
@@ -13363,18 +13195,17 @@ namespace FolioConsoleApplication
             using (var jtw = new JsonTextWriter(sw))
             {
                 var s2 = Stopwatch.StartNew();
-                var js4 = JsonSchema.FromJsonAsync(sr.ReadToEndAsync().Result).Result;
-                var js = new JsonSerializer { Formatting = Formatting.Indented };
+                var js = JsonSchema.FromJsonAsync(sr.ReadToEndAsync().Result).Result;
                 jtw.WriteStartArray();
                 var i = 0;
-                foreach (var jo in api ? fsc.OverdueFinePolicies(where, orderBy, skip, take) : fdc.OverdueFinePolicies(where, null, orderBy, skip, take).Select(ofp => JObject.Parse(ofp.Content)))
+                foreach (var jo in api ? fsc.OverdueFinePolicies(where, orderBy, skip, take) : fdc.OverdueFinePolicies(where, null, orderBy, skip, take).Select(ofp => ofp.ToJObject()))
                 {
                     if (validate)
                     {
-                        var l = js4.Validate(jo);
+                        var l = js.Validate(jo);
                         if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"OverdueFinePolicy {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"OverdueFinePolicy {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
                     }
-                    if (!whatIf) js.Serialize(jtw, jo);
+                    if (!whatIf) (universalTime ? universalTimeJsonSerializer : localTimeJsonSerializer).Serialize(jtw, jo);
                     if (++i % 10000 == 0)
                     {
                         traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
@@ -13395,14 +13226,14 @@ namespace FolioConsoleApplication
             using (var jtw = new JsonTextWriter(Console.Out))
             {
                 jtw.WriteStartArray();
-                foreach (var jo in (api ? fsc.Owners(where, orderBy, skip, take) : fdc.Owners(where, null, orderBy, skip, take).Select(o => JObject.Parse(o.Content))).Select(jo =>
+                foreach (var jo in (api ? fsc.Owners(where, orderBy, skip, take) : fdc.Owners(where, null, orderBy, skip, take).Select(o => o.ToJObject())).Select(jo =>
                 {
                     return select == null ? jo : new JObject(select.Split(',').Select(s =>
                     {
                         var m = Regex.Match(s.Trim(), @"(?<Path>\S+)((?i) as (?<Name>.+))?", RegexOptions.Compiled);
                         return new JProperty(m.Groups["Name"].Success ? m.Groups["Name"].Value : m.Groups["Path"].Value.Split('.').Last(), jo.SelectToken(m.Groups["Path"].Value));
                     }));
-                })) jsonSerializer.Serialize(jtw, jo);
+                })) (universalTime ? universalTimeJsonSerializer : localTimeJsonSerializer).Serialize(jtw, jo);
                 jtw.WriteEndArray();
             }
         }
@@ -13449,18 +13280,17 @@ namespace FolioConsoleApplication
             using (var fsc = new FolioServiceClient(connectionString))
             {
                 var s2 = Stopwatch.StartNew();
-                var js4 = JsonSchema.FromJsonAsync(sr2.ReadToEndAsync().Result).Result;
-                var js = new JsonSerializer();
+                var js = JsonSchema.FromJsonAsync(sr2.ReadToEndAsync().Result).Result;
                 jtr.Read();
                 var i = 0;
                 while (jtr.Read() && jtr.TokenType != JsonToken.EndArray)
                 {
                     if (take != null && take <= i) break;
                     ++i;
-                    var jo = (JObject)js.Deserialize(jtr);
+                    var jo = (JObject)localTimeJsonSerializer.Deserialize(jtr);
                     if (validate)
                     {
-                        var l = js4.Validate(jo);
+                        var l = js.Validate(jo);
                         if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"Owner {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"Owner {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
                     }
                     if (api)
@@ -13504,18 +13334,17 @@ namespace FolioConsoleApplication
             using (var jtw = new JsonTextWriter(sw))
             {
                 var s2 = Stopwatch.StartNew();
-                var js4 = JsonSchema.FromJsonAsync(sr.ReadToEndAsync().Result).Result;
-                var js = new JsonSerializer { Formatting = Formatting.Indented };
+                var js = JsonSchema.FromJsonAsync(sr.ReadToEndAsync().Result).Result;
                 jtw.WriteStartArray();
                 var i = 0;
-                foreach (var jo in api ? fsc.Owners(where, orderBy, skip, take) : fdc.Owners(where, null, orderBy, skip, take).Select(o => JObject.Parse(o.Content)))
+                foreach (var jo in api ? fsc.Owners(where, orderBy, skip, take) : fdc.Owners(where, null, orderBy, skip, take).Select(o => o.ToJObject()))
                 {
                     if (validate)
                     {
-                        var l = js4.Validate(jo);
+                        var l = js.Validate(jo);
                         if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"Owner {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"Owner {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
                     }
-                    if (!whatIf) js.Serialize(jtw, jo);
+                    if (!whatIf) (universalTime ? universalTimeJsonSerializer : localTimeJsonSerializer).Serialize(jtw, jo);
                     if (++i % 10000 == 0)
                     {
                         traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
@@ -13536,14 +13365,14 @@ namespace FolioConsoleApplication
             using (var jtw = new JsonTextWriter(Console.Out))
             {
                 jtw.WriteStartArray();
-                foreach (var jo in (api ? fsc.PatronActionSessions(where, orderBy, skip, take) : fdc.PatronActionSessions(where, null, orderBy, skip, take).Select(pas => JObject.Parse(pas.Content))).Select(jo =>
+                foreach (var jo in (api ? fsc.PatronActionSessions(where, orderBy, skip, take) : fdc.PatronActionSessions(where, null, orderBy, skip, take).Select(pas => pas.ToJObject())).Select(jo =>
                 {
                     return select == null ? jo : new JObject(select.Split(',').Select(s =>
                     {
                         var m = Regex.Match(s.Trim(), @"(?<Path>\S+)((?i) as (?<Name>.+))?", RegexOptions.Compiled);
                         return new JProperty(m.Groups["Name"].Success ? m.Groups["Name"].Value : m.Groups["Path"].Value.Split('.').Last(), jo.SelectToken(m.Groups["Path"].Value));
                     }));
-                })) jsonSerializer.Serialize(jtw, jo);
+                })) (universalTime ? universalTimeJsonSerializer : localTimeJsonSerializer).Serialize(jtw, jo);
                 jtw.WriteEndArray();
             }
         }
@@ -13590,18 +13419,17 @@ namespace FolioConsoleApplication
             using (var fsc = new FolioServiceClient(connectionString))
             {
                 var s2 = Stopwatch.StartNew();
-                var js4 = JsonSchema.FromJsonAsync(sr2.ReadToEndAsync().Result).Result;
-                var js = new JsonSerializer();
+                var js = JsonSchema.FromJsonAsync(sr2.ReadToEndAsync().Result).Result;
                 jtr.Read();
                 var i = 0;
                 while (jtr.Read() && jtr.TokenType != JsonToken.EndArray)
                 {
                     if (take != null && take <= i) break;
                     ++i;
-                    var jo = (JObject)js.Deserialize(jtr);
+                    var jo = (JObject)localTimeJsonSerializer.Deserialize(jtr);
                     if (validate)
                     {
-                        var l = js4.Validate(jo);
+                        var l = js.Validate(jo);
                         if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"PatronActionSession {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"PatronActionSession {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
                     }
                     if (api)
@@ -13645,18 +13473,17 @@ namespace FolioConsoleApplication
             using (var jtw = new JsonTextWriter(sw))
             {
                 var s2 = Stopwatch.StartNew();
-                var js4 = JsonSchema.FromJsonAsync(sr.ReadToEndAsync().Result).Result;
-                var js = new JsonSerializer { Formatting = Formatting.Indented };
+                var js = JsonSchema.FromJsonAsync(sr.ReadToEndAsync().Result).Result;
                 jtw.WriteStartArray();
                 var i = 0;
-                foreach (var jo in api ? fsc.PatronActionSessions(where, orderBy, skip, take) : fdc.PatronActionSessions(where, null, orderBy, skip, take).Select(pas => JObject.Parse(pas.Content)))
+                foreach (var jo in api ? fsc.PatronActionSessions(where, orderBy, skip, take) : fdc.PatronActionSessions(where, null, orderBy, skip, take).Select(pas => pas.ToJObject()))
                 {
                     if (validate)
                     {
-                        var l = js4.Validate(jo);
+                        var l = js.Validate(jo);
                         if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"PatronActionSession {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"PatronActionSession {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
                     }
-                    if (!whatIf) js.Serialize(jtw, jo);
+                    if (!whatIf) (universalTime ? universalTimeJsonSerializer : localTimeJsonSerializer).Serialize(jtw, jo);
                     if (++i % 10000 == 0)
                     {
                         traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
@@ -13677,14 +13504,14 @@ namespace FolioConsoleApplication
             using (var jtw = new JsonTextWriter(Console.Out))
             {
                 jtw.WriteStartArray();
-                foreach (var jo in (api ? fsc.PatronNoticePolicies(where, orderBy, skip, take) : fdc.PatronNoticePolicies(where, null, orderBy, skip, take).Select(pnp => JObject.Parse(pnp.Content))).Select(jo =>
+                foreach (var jo in (api ? fsc.PatronNoticePolicies(where, orderBy, skip, take) : fdc.PatronNoticePolicies(where, null, orderBy, skip, take).Select(pnp => pnp.ToJObject())).Select(jo =>
                 {
                     return select == null ? jo : new JObject(select.Split(',').Select(s =>
                     {
                         var m = Regex.Match(s.Trim(), @"(?<Path>\S+)((?i) as (?<Name>.+))?", RegexOptions.Compiled);
                         return new JProperty(m.Groups["Name"].Success ? m.Groups["Name"].Value : m.Groups["Path"].Value.Split('.').Last(), jo.SelectToken(m.Groups["Path"].Value));
                     }));
-                })) jsonSerializer.Serialize(jtw, jo);
+                })) (universalTime ? universalTimeJsonSerializer : localTimeJsonSerializer).Serialize(jtw, jo);
                 jtw.WriteEndArray();
             }
         }
@@ -13731,18 +13558,17 @@ namespace FolioConsoleApplication
             using (var fsc = new FolioServiceClient(connectionString))
             {
                 var s2 = Stopwatch.StartNew();
-                var js4 = JsonSchema.FromJsonAsync(sr2.ReadToEndAsync().Result).Result;
-                var js = new JsonSerializer();
+                var js = JsonSchema.FromJsonAsync(sr2.ReadToEndAsync().Result).Result;
                 jtr.Read();
                 var i = 0;
                 while (jtr.Read() && jtr.TokenType != JsonToken.EndArray)
                 {
                     if (take != null && take <= i) break;
                     ++i;
-                    var jo = (JObject)js.Deserialize(jtr);
+                    var jo = (JObject)localTimeJsonSerializer.Deserialize(jtr);
                     if (validate)
                     {
-                        var l = js4.Validate(jo);
+                        var l = js.Validate(jo);
                         if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"PatronNoticePolicy {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"PatronNoticePolicy {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
                     }
                     if (api)
@@ -13786,18 +13612,17 @@ namespace FolioConsoleApplication
             using (var jtw = new JsonTextWriter(sw))
             {
                 var s2 = Stopwatch.StartNew();
-                var js4 = JsonSchema.FromJsonAsync(sr.ReadToEndAsync().Result).Result;
-                var js = new JsonSerializer { Formatting = Formatting.Indented };
+                var js = JsonSchema.FromJsonAsync(sr.ReadToEndAsync().Result).Result;
                 jtw.WriteStartArray();
                 var i = 0;
-                foreach (var jo in api ? fsc.PatronNoticePolicies(where, orderBy, skip, take) : fdc.PatronNoticePolicies(where, null, orderBy, skip, take).Select(pnp => JObject.Parse(pnp.Content)))
+                foreach (var jo in api ? fsc.PatronNoticePolicies(where, orderBy, skip, take) : fdc.PatronNoticePolicies(where, null, orderBy, skip, take).Select(pnp => pnp.ToJObject()))
                 {
                     if (validate)
                     {
-                        var l = js4.Validate(jo);
+                        var l = js.Validate(jo);
                         if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"PatronNoticePolicy {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"PatronNoticePolicy {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
                     }
-                    if (!whatIf) js.Serialize(jtw, jo);
+                    if (!whatIf) (universalTime ? universalTimeJsonSerializer : localTimeJsonSerializer).Serialize(jtw, jo);
                     if (++i % 10000 == 0)
                     {
                         traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
@@ -13818,14 +13643,14 @@ namespace FolioConsoleApplication
             using (var jtw = new JsonTextWriter(Console.Out))
             {
                 jtw.WriteStartArray();
-                foreach (var jo in (api ? fsc.Payments(where, orderBy, skip, take) : fdc.Payments(where, null, orderBy, skip, take).Select(p => JObject.Parse(p.Content))).Select(jo =>
+                foreach (var jo in (api ? fsc.Payments(where, orderBy, skip, take) : fdc.Payments(where, null, orderBy, skip, take).Select(p => p.ToJObject())).Select(jo =>
                 {
                     return select == null ? jo : new JObject(select.Split(',').Select(s =>
                     {
                         var m = Regex.Match(s.Trim(), @"(?<Path>\S+)((?i) as (?<Name>.+))?", RegexOptions.Compiled);
                         return new JProperty(m.Groups["Name"].Success ? m.Groups["Name"].Value : m.Groups["Path"].Value.Split('.').Last(), jo.SelectToken(m.Groups["Path"].Value));
                     }));
-                })) jsonSerializer.Serialize(jtw, jo);
+                })) (universalTime ? universalTimeJsonSerializer : localTimeJsonSerializer).Serialize(jtw, jo);
                 jtw.WriteEndArray();
             }
         }
@@ -13872,18 +13697,17 @@ namespace FolioConsoleApplication
             using (var fsc = new FolioServiceClient(connectionString))
             {
                 var s2 = Stopwatch.StartNew();
-                var js4 = JsonSchema.FromJsonAsync(sr2.ReadToEndAsync().Result).Result;
-                var js = new JsonSerializer();
+                var js = JsonSchema.FromJsonAsync(sr2.ReadToEndAsync().Result).Result;
                 jtr.Read();
                 var i = 0;
                 while (jtr.Read() && jtr.TokenType != JsonToken.EndArray)
                 {
                     if (take != null && take <= i) break;
                     ++i;
-                    var jo = (JObject)js.Deserialize(jtr);
+                    var jo = (JObject)localTimeJsonSerializer.Deserialize(jtr);
                     if (validate)
                     {
-                        var l = js4.Validate(jo);
+                        var l = js.Validate(jo);
                         if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"Payment {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"Payment {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
                     }
                     if (api)
@@ -13927,18 +13751,17 @@ namespace FolioConsoleApplication
             using (var jtw = new JsonTextWriter(sw))
             {
                 var s2 = Stopwatch.StartNew();
-                var js4 = JsonSchema.FromJsonAsync(sr.ReadToEndAsync().Result).Result;
-                var js = new JsonSerializer { Formatting = Formatting.Indented };
+                var js = JsonSchema.FromJsonAsync(sr.ReadToEndAsync().Result).Result;
                 jtw.WriteStartArray();
                 var i = 0;
-                foreach (var jo in api ? fsc.Payments(where, orderBy, skip, take) : fdc.Payments(where, null, orderBy, skip, take).Select(p => JObject.Parse(p.Content)))
+                foreach (var jo in api ? fsc.Payments(where, orderBy, skip, take) : fdc.Payments(where, null, orderBy, skip, take).Select(p => p.ToJObject()))
                 {
                     if (validate)
                     {
-                        var l = js4.Validate(jo);
+                        var l = js.Validate(jo);
                         if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"Payment {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"Payment {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
                     }
-                    if (!whatIf) js.Serialize(jtw, jo);
+                    if (!whatIf) (universalTime ? universalTimeJsonSerializer : localTimeJsonSerializer).Serialize(jtw, jo);
                     if (++i % 10000 == 0)
                     {
                         traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
@@ -13959,14 +13782,14 @@ namespace FolioConsoleApplication
             using (var jtw = new JsonTextWriter(Console.Out))
             {
                 jtw.WriteStartArray();
-                foreach (var jo in (api ? fsc.PaymentMethods(where, orderBy, skip, take) : fdc.PaymentMethods(where, null, orderBy, skip, take).Select(pm => JObject.Parse(pm.Content))).Select(jo =>
+                foreach (var jo in (api ? fsc.PaymentMethods(where, orderBy, skip, take) : fdc.PaymentMethods(where, null, orderBy, skip, take).Select(pm => pm.ToJObject())).Select(jo =>
                 {
                     return select == null ? jo : new JObject(select.Split(',').Select(s =>
                     {
                         var m = Regex.Match(s.Trim(), @"(?<Path>\S+)((?i) as (?<Name>.+))?", RegexOptions.Compiled);
                         return new JProperty(m.Groups["Name"].Success ? m.Groups["Name"].Value : m.Groups["Path"].Value.Split('.').Last(), jo.SelectToken(m.Groups["Path"].Value));
                     }));
-                })) jsonSerializer.Serialize(jtw, jo);
+                })) (universalTime ? universalTimeJsonSerializer : localTimeJsonSerializer).Serialize(jtw, jo);
                 jtw.WriteEndArray();
             }
         }
@@ -14013,18 +13836,17 @@ namespace FolioConsoleApplication
             using (var fsc = new FolioServiceClient(connectionString))
             {
                 var s2 = Stopwatch.StartNew();
-                var js4 = JsonSchema.FromJsonAsync(sr2.ReadToEndAsync().Result).Result;
-                var js = new JsonSerializer();
+                var js = JsonSchema.FromJsonAsync(sr2.ReadToEndAsync().Result).Result;
                 jtr.Read();
                 var i = 0;
                 while (jtr.Read() && jtr.TokenType != JsonToken.EndArray)
                 {
                     if (take != null && take <= i) break;
                     ++i;
-                    var jo = (JObject)js.Deserialize(jtr);
+                    var jo = (JObject)localTimeJsonSerializer.Deserialize(jtr);
                     if (validate)
                     {
-                        var l = js4.Validate(jo);
+                        var l = js.Validate(jo);
                         if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"PaymentMethod {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"PaymentMethod {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
                     }
                     if (api)
@@ -14068,18 +13890,17 @@ namespace FolioConsoleApplication
             using (var jtw = new JsonTextWriter(sw))
             {
                 var s2 = Stopwatch.StartNew();
-                var js4 = JsonSchema.FromJsonAsync(sr.ReadToEndAsync().Result).Result;
-                var js = new JsonSerializer { Formatting = Formatting.Indented };
+                var js = JsonSchema.FromJsonAsync(sr.ReadToEndAsync().Result).Result;
                 jtw.WriteStartArray();
                 var i = 0;
-                foreach (var jo in api ? fsc.PaymentMethods(where, orderBy, skip, take) : fdc.PaymentMethods(where, null, orderBy, skip, take).Select(pm => JObject.Parse(pm.Content)))
+                foreach (var jo in api ? fsc.PaymentMethods(where, orderBy, skip, take) : fdc.PaymentMethods(where, null, orderBy, skip, take).Select(pm => pm.ToJObject()))
                 {
                     if (validate)
                     {
-                        var l = js4.Validate(jo);
+                        var l = js.Validate(jo);
                         if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"PaymentMethod {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"PaymentMethod {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
                     }
-                    if (!whatIf) js.Serialize(jtw, jo);
+                    if (!whatIf) (universalTime ? universalTimeJsonSerializer : localTimeJsonSerializer).Serialize(jtw, jo);
                     if (++i % 10000 == 0)
                     {
                         traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
@@ -14100,14 +13921,14 @@ namespace FolioConsoleApplication
             using (var jtw = new JsonTextWriter(Console.Out))
             {
                 jtw.WriteStartArray();
-                foreach (var jo in (api ? fsc.Permissions(where, orderBy, skip, take) : fdc.Permissions(where, null, orderBy, skip, take).Select(p => JObject.Parse(p.Content))).Select(jo =>
+                foreach (var jo in (api ? fsc.Permissions(where, orderBy, skip, take) : fdc.Permissions(where, null, orderBy, skip, take).Select(p => p.ToJObject())).Select(jo =>
                 {
                     return select == null ? jo : new JObject(select.Split(',').Select(s =>
                     {
                         var m = Regex.Match(s.Trim(), @"(?<Path>\S+)((?i) as (?<Name>.+))?", RegexOptions.Compiled);
                         return new JProperty(m.Groups["Name"].Success ? m.Groups["Name"].Value : m.Groups["Path"].Value.Split('.').Last(), jo.SelectToken(m.Groups["Path"].Value));
                     }));
-                })) jsonSerializer.Serialize(jtw, jo);
+                })) (universalTime ? universalTimeJsonSerializer : localTimeJsonSerializer).Serialize(jtw, jo);
                 jtw.WriteEndArray();
             }
         }
@@ -14154,18 +13975,17 @@ namespace FolioConsoleApplication
             using (var fsc = new FolioServiceClient(connectionString))
             {
                 var s2 = Stopwatch.StartNew();
-                var js4 = JsonSchema.FromJsonAsync(sr2.ReadToEndAsync().Result).Result;
-                var js = new JsonSerializer();
+                var js = JsonSchema.FromJsonAsync(sr2.ReadToEndAsync().Result).Result;
                 jtr.Read();
                 var i = 0;
                 while (jtr.Read() && jtr.TokenType != JsonToken.EndArray)
                 {
                     if (take != null && take <= i) break;
                     ++i;
-                    var jo = (JObject)js.Deserialize(jtr);
+                    var jo = (JObject)localTimeJsonSerializer.Deserialize(jtr);
                     if (validate)
                     {
-                        var l = js4.Validate(jo);
+                        var l = js.Validate(jo);
                         if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"Permission {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"Permission {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
                     }
                     if (api)
@@ -14209,18 +14029,17 @@ namespace FolioConsoleApplication
             using (var jtw = new JsonTextWriter(sw))
             {
                 var s2 = Stopwatch.StartNew();
-                var js4 = JsonSchema.FromJsonAsync(sr.ReadToEndAsync().Result).Result;
-                var js = new JsonSerializer { Formatting = Formatting.Indented };
+                var js = JsonSchema.FromJsonAsync(sr.ReadToEndAsync().Result).Result;
                 jtw.WriteStartArray();
                 var i = 0;
-                foreach (var jo in api ? fsc.Permissions(where, orderBy, skip, take) : fdc.Permissions(where, null, orderBy, skip, take).Select(p => JObject.Parse(p.Content)))
+                foreach (var jo in api ? fsc.Permissions(where, orderBy, skip, take) : fdc.Permissions(where, null, orderBy, skip, take).Select(p => p.ToJObject()))
                 {
                     if (validate)
                     {
-                        var l = js4.Validate(jo);
+                        var l = js.Validate(jo);
                         if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"Permission {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"Permission {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
                     }
-                    if (!whatIf) js.Serialize(jtw, jo);
+                    if (!whatIf) (universalTime ? universalTimeJsonSerializer : localTimeJsonSerializer).Serialize(jtw, jo);
                     if (++i % 10000 == 0)
                     {
                         traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
@@ -14241,14 +14060,14 @@ namespace FolioConsoleApplication
             using (var jtw = new JsonTextWriter(Console.Out))
             {
                 jtw.WriteStartArray();
-                foreach (var jo in (api ? fsc.PermissionsUsers(where, orderBy, skip, take) : fdc.PermissionsUsers(where, null, orderBy, skip, take).Select(pu => JObject.Parse(pu.Content))).Select(jo =>
+                foreach (var jo in (api ? fsc.PermissionsUsers(where, orderBy, skip, take) : fdc.PermissionsUsers(where, null, orderBy, skip, take).Select(pu => pu.ToJObject())).Select(jo =>
                 {
                     return select == null ? jo : new JObject(select.Split(',').Select(s =>
                     {
                         var m = Regex.Match(s.Trim(), @"(?<Path>\S+)((?i) as (?<Name>.+))?", RegexOptions.Compiled);
                         return new JProperty(m.Groups["Name"].Success ? m.Groups["Name"].Value : m.Groups["Path"].Value.Split('.').Last(), jo.SelectToken(m.Groups["Path"].Value));
                     }));
-                })) jsonSerializer.Serialize(jtw, jo);
+                })) (universalTime ? universalTimeJsonSerializer : localTimeJsonSerializer).Serialize(jtw, jo);
                 jtw.WriteEndArray();
             }
         }
@@ -14295,18 +14114,17 @@ namespace FolioConsoleApplication
             using (var fsc = new FolioServiceClient(connectionString))
             {
                 var s2 = Stopwatch.StartNew();
-                var js4 = JsonSchema.FromJsonAsync(sr2.ReadToEndAsync().Result).Result;
-                var js = new JsonSerializer();
+                var js = JsonSchema.FromJsonAsync(sr2.ReadToEndAsync().Result).Result;
                 jtr.Read();
                 var i = 0;
                 while (jtr.Read() && jtr.TokenType != JsonToken.EndArray)
                 {
                     if (take != null && take <= i) break;
                     ++i;
-                    var jo = (JObject)js.Deserialize(jtr);
+                    var jo = (JObject)localTimeJsonSerializer.Deserialize(jtr);
                     if (validate)
                     {
-                        var l = js4.Validate(jo);
+                        var l = js.Validate(jo);
                         if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"PermissionsUser {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"PermissionsUser {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
                     }
                     if (api)
@@ -14350,18 +14168,17 @@ namespace FolioConsoleApplication
             using (var jtw = new JsonTextWriter(sw))
             {
                 var s2 = Stopwatch.StartNew();
-                var js4 = JsonSchema.FromJsonAsync(sr.ReadToEndAsync().Result).Result;
-                var js = new JsonSerializer { Formatting = Formatting.Indented };
+                var js = JsonSchema.FromJsonAsync(sr.ReadToEndAsync().Result).Result;
                 jtw.WriteStartArray();
                 var i = 0;
-                foreach (var jo in api ? fsc.PermissionsUsers(where, orderBy, skip, take) : fdc.PermissionsUsers(where, null, orderBy, skip, take).Select(pu => JObject.Parse(pu.Content)))
+                foreach (var jo in api ? fsc.PermissionsUsers(where, orderBy, skip, take) : fdc.PermissionsUsers(where, null, orderBy, skip, take).Select(pu => pu.ToJObject()))
                 {
                     if (validate)
                     {
-                        var l = js4.Validate(jo);
+                        var l = js.Validate(jo);
                         if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"PermissionsUser {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"PermissionsUser {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
                     }
-                    if (!whatIf) js.Serialize(jtw, jo);
+                    if (!whatIf) (universalTime ? universalTimeJsonSerializer : localTimeJsonSerializer).Serialize(jtw, jo);
                     if (++i % 10000 == 0)
                     {
                         traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
@@ -14382,14 +14199,14 @@ namespace FolioConsoleApplication
             using (var jtw = new JsonTextWriter(Console.Out))
             {
                 jtw.WriteStartArray();
-                foreach (var jo in (api ? fsc.PrecedingSucceedingTitles(where, orderBy, skip, take) : fdc.PrecedingSucceedingTitles(where, null, orderBy, skip, take).Select(pst => JObject.Parse(pst.Content))).Select(jo =>
+                foreach (var jo in (api ? fsc.PrecedingSucceedingTitles(where, orderBy, skip, take) : fdc.PrecedingSucceedingTitles(where, null, orderBy, skip, take).Select(pst => pst.ToJObject())).Select(jo =>
                 {
                     return select == null ? jo : new JObject(select.Split(',').Select(s =>
                     {
                         var m = Regex.Match(s.Trim(), @"(?<Path>\S+)((?i) as (?<Name>.+))?", RegexOptions.Compiled);
                         return new JProperty(m.Groups["Name"].Success ? m.Groups["Name"].Value : m.Groups["Path"].Value.Split('.').Last(), jo.SelectToken(m.Groups["Path"].Value));
                     }));
-                })) jsonSerializer.Serialize(jtw, jo);
+                })) (universalTime ? universalTimeJsonSerializer : localTimeJsonSerializer).Serialize(jtw, jo);
                 jtw.WriteEndArray();
             }
         }
@@ -14436,18 +14253,17 @@ namespace FolioConsoleApplication
             using (var fsc = new FolioServiceClient(connectionString))
             {
                 var s2 = Stopwatch.StartNew();
-                var js4 = JsonSchema.FromJsonAsync(sr2.ReadToEndAsync().Result).Result;
-                var js = new JsonSerializer();
+                var js = JsonSchema.FromJsonAsync(sr2.ReadToEndAsync().Result).Result;
                 jtr.Read();
                 var i = 0;
                 while (jtr.Read() && jtr.TokenType != JsonToken.EndArray)
                 {
                     if (take != null && take <= i) break;
                     ++i;
-                    var jo = (JObject)js.Deserialize(jtr);
+                    var jo = (JObject)localTimeJsonSerializer.Deserialize(jtr);
                     if (validate)
                     {
-                        var l = js4.Validate(jo);
+                        var l = js.Validate(jo);
                         if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"PrecedingSucceedingTitle {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"PrecedingSucceedingTitle {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
                     }
                     if (api)
@@ -14491,18 +14307,17 @@ namespace FolioConsoleApplication
             using (var jtw = new JsonTextWriter(sw))
             {
                 var s2 = Stopwatch.StartNew();
-                var js4 = JsonSchema.FromJsonAsync(sr.ReadToEndAsync().Result).Result;
-                var js = new JsonSerializer { Formatting = Formatting.Indented };
+                var js = JsonSchema.FromJsonAsync(sr.ReadToEndAsync().Result).Result;
                 jtw.WriteStartArray();
                 var i = 0;
-                foreach (var jo in api ? fsc.PrecedingSucceedingTitles(where, orderBy, skip, take) : fdc.PrecedingSucceedingTitles(where, null, orderBy, skip, take).Select(pst => JObject.Parse(pst.Content)))
+                foreach (var jo in api ? fsc.PrecedingSucceedingTitles(where, orderBy, skip, take) : fdc.PrecedingSucceedingTitles(where, null, orderBy, skip, take).Select(pst => pst.ToJObject()))
                 {
                     if (validate)
                     {
-                        var l = js4.Validate(jo);
+                        var l = js.Validate(jo);
                         if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"PrecedingSucceedingTitle {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"PrecedingSucceedingTitle {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
                     }
-                    if (!whatIf) js.Serialize(jtw, jo);
+                    if (!whatIf) (universalTime ? universalTimeJsonSerializer : localTimeJsonSerializer).Serialize(jtw, jo);
                     if (++i % 10000 == 0)
                     {
                         traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
@@ -14523,14 +14338,14 @@ namespace FolioConsoleApplication
             using (var jtw = new JsonTextWriter(Console.Out))
             {
                 jtw.WriteStartArray();
-                foreach (var jo in (api ? fsc.Prefixes(where, orderBy, skip, take) : fdc.Prefixes(where, null, orderBy, skip, take).Select(p => JObject.Parse(p.Content))).Select(jo =>
+                foreach (var jo in (api ? fsc.Prefixes(where, orderBy, skip, take) : fdc.Prefixes(where, null, orderBy, skip, take).Select(p => p.ToJObject())).Select(jo =>
                 {
                     return select == null ? jo : new JObject(select.Split(',').Select(s =>
                     {
                         var m = Regex.Match(s.Trim(), @"(?<Path>\S+)((?i) as (?<Name>.+))?", RegexOptions.Compiled);
                         return new JProperty(m.Groups["Name"].Success ? m.Groups["Name"].Value : m.Groups["Path"].Value.Split('.').Last(), jo.SelectToken(m.Groups["Path"].Value));
                     }));
-                })) jsonSerializer.Serialize(jtw, jo);
+                })) (universalTime ? universalTimeJsonSerializer : localTimeJsonSerializer).Serialize(jtw, jo);
                 jtw.WriteEndArray();
             }
         }
@@ -14577,18 +14392,17 @@ namespace FolioConsoleApplication
             using (var fsc = new FolioServiceClient(connectionString))
             {
                 var s2 = Stopwatch.StartNew();
-                var js4 = JsonSchema.FromJsonAsync(sr2.ReadToEndAsync().Result).Result;
-                var js = new JsonSerializer();
+                var js = JsonSchema.FromJsonAsync(sr2.ReadToEndAsync().Result).Result;
                 jtr.Read();
                 var i = 0;
                 while (jtr.Read() && jtr.TokenType != JsonToken.EndArray)
                 {
                     if (take != null && take <= i) break;
                     ++i;
-                    var jo = (JObject)js.Deserialize(jtr);
+                    var jo = (JObject)localTimeJsonSerializer.Deserialize(jtr);
                     if (validate)
                     {
-                        var l = js4.Validate(jo);
+                        var l = js.Validate(jo);
                         if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"Prefix {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"Prefix {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
                     }
                     if (api)
@@ -14632,18 +14446,17 @@ namespace FolioConsoleApplication
             using (var jtw = new JsonTextWriter(sw))
             {
                 var s2 = Stopwatch.StartNew();
-                var js4 = JsonSchema.FromJsonAsync(sr.ReadToEndAsync().Result).Result;
-                var js = new JsonSerializer { Formatting = Formatting.Indented };
+                var js = JsonSchema.FromJsonAsync(sr.ReadToEndAsync().Result).Result;
                 jtw.WriteStartArray();
                 var i = 0;
-                foreach (var jo in api ? fsc.Prefixes(where, orderBy, skip, take) : fdc.Prefixes(where, null, orderBy, skip, take).Select(p => JObject.Parse(p.Content)))
+                foreach (var jo in api ? fsc.Prefixes(where, orderBy, skip, take) : fdc.Prefixes(where, null, orderBy, skip, take).Select(p => p.ToJObject()))
                 {
                     if (validate)
                     {
-                        var l = js4.Validate(jo);
+                        var l = js.Validate(jo);
                         if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"Prefix {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"Prefix {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
                     }
-                    if (!whatIf) js.Serialize(jtw, jo);
+                    if (!whatIf) (universalTime ? universalTimeJsonSerializer : localTimeJsonSerializer).Serialize(jtw, jo);
                     if (++i % 10000 == 0)
                     {
                         traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
@@ -14664,14 +14477,14 @@ namespace FolioConsoleApplication
             using (var jtw = new JsonTextWriter(Console.Out))
             {
                 jtw.WriteStartArray();
-                foreach (var jo in (api ? fsc.Proxies(where, orderBy, skip, take) : fdc.Proxies(where, null, orderBy, skip, take).Select(p => JObject.Parse(p.Content))).Select(jo =>
+                foreach (var jo in (api ? fsc.Proxies(where, orderBy, skip, take) : fdc.Proxies(where, null, orderBy, skip, take).Select(p => p.ToJObject())).Select(jo =>
                 {
                     return select == null ? jo : new JObject(select.Split(',').Select(s =>
                     {
                         var m = Regex.Match(s.Trim(), @"(?<Path>\S+)((?i) as (?<Name>.+))?", RegexOptions.Compiled);
                         return new JProperty(m.Groups["Name"].Success ? m.Groups["Name"].Value : m.Groups["Path"].Value.Split('.').Last(), jo.SelectToken(m.Groups["Path"].Value));
                     }));
-                })) jsonSerializer.Serialize(jtw, jo);
+                })) (universalTime ? universalTimeJsonSerializer : localTimeJsonSerializer).Serialize(jtw, jo);
                 jtw.WriteEndArray();
             }
         }
@@ -14718,18 +14531,17 @@ namespace FolioConsoleApplication
             using (var fsc = new FolioServiceClient(connectionString))
             {
                 var s2 = Stopwatch.StartNew();
-                var js4 = JsonSchema.FromJsonAsync(sr2.ReadToEndAsync().Result).Result;
-                var js = new JsonSerializer();
+                var js = JsonSchema.FromJsonAsync(sr2.ReadToEndAsync().Result).Result;
                 jtr.Read();
                 var i = 0;
                 while (jtr.Read() && jtr.TokenType != JsonToken.EndArray)
                 {
                     if (take != null && take <= i) break;
                     ++i;
-                    var jo = (JObject)js.Deserialize(jtr);
+                    var jo = (JObject)localTimeJsonSerializer.Deserialize(jtr);
                     if (validate)
                     {
-                        var l = js4.Validate(jo);
+                        var l = js.Validate(jo);
                         if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"Proxy {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"Proxy {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
                     }
                     if (api)
@@ -14773,18 +14585,17 @@ namespace FolioConsoleApplication
             using (var jtw = new JsonTextWriter(sw))
             {
                 var s2 = Stopwatch.StartNew();
-                var js4 = JsonSchema.FromJsonAsync(sr.ReadToEndAsync().Result).Result;
-                var js = new JsonSerializer { Formatting = Formatting.Indented };
+                var js = JsonSchema.FromJsonAsync(sr.ReadToEndAsync().Result).Result;
                 jtw.WriteStartArray();
                 var i = 0;
-                foreach (var jo in api ? fsc.Proxies(where, orderBy, skip, take) : fdc.Proxies(where, null, orderBy, skip, take).Select(p => JObject.Parse(p.Content)))
+                foreach (var jo in api ? fsc.Proxies(where, orderBy, skip, take) : fdc.Proxies(where, null, orderBy, skip, take).Select(p => p.ToJObject()))
                 {
                     if (validate)
                     {
-                        var l = js4.Validate(jo);
+                        var l = js.Validate(jo);
                         if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"Proxy {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"Proxy {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
                     }
-                    if (!whatIf) js.Serialize(jtw, jo);
+                    if (!whatIf) (universalTime ? universalTimeJsonSerializer : localTimeJsonSerializer).Serialize(jtw, jo);
                     if (++i % 10000 == 0)
                     {
                         traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
@@ -14805,14 +14616,14 @@ namespace FolioConsoleApplication
             using (var jtw = new JsonTextWriter(Console.Out))
             {
                 jtw.WriteStartArray();
-                foreach (var jo in (api ? fsc.Receivings(where, orderBy, skip, take) : fdc.Receivings(where, null, orderBy, skip, take).Select(r => JObject.Parse(r.Content))).Select(jo =>
+                foreach (var jo in (api ? fsc.Receivings(where, orderBy, skip, take) : fdc.Receivings(where, null, orderBy, skip, take).Select(r => r.ToJObject())).Select(jo =>
                 {
                     return select == null ? jo : new JObject(select.Split(',').Select(s =>
                     {
                         var m = Regex.Match(s.Trim(), @"(?<Path>\S+)((?i) as (?<Name>.+))?", RegexOptions.Compiled);
                         return new JProperty(m.Groups["Name"].Success ? m.Groups["Name"].Value : m.Groups["Path"].Value.Split('.').Last(), jo.SelectToken(m.Groups["Path"].Value));
                     }));
-                })) jsonSerializer.Serialize(jtw, jo);
+                })) (universalTime ? universalTimeJsonSerializer : localTimeJsonSerializer).Serialize(jtw, jo);
                 jtw.WriteEndArray();
             }
         }
@@ -14859,18 +14670,17 @@ namespace FolioConsoleApplication
             using (var fsc = new FolioServiceClient(connectionString))
             {
                 var s2 = Stopwatch.StartNew();
-                var js4 = JsonSchema.FromJsonAsync(sr2.ReadToEndAsync().Result).Result;
-                var js = new JsonSerializer();
+                var js = JsonSchema.FromJsonAsync(sr2.ReadToEndAsync().Result).Result;
                 jtr.Read();
                 var i = 0;
                 while (jtr.Read() && jtr.TokenType != JsonToken.EndArray)
                 {
                     if (take != null && take <= i) break;
                     ++i;
-                    var jo = (JObject)js.Deserialize(jtr);
+                    var jo = (JObject)localTimeJsonSerializer.Deserialize(jtr);
                     if (validate)
                     {
-                        var l = js4.Validate(jo);
+                        var l = js.Validate(jo);
                         if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"Receiving {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"Receiving {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
                     }
                     if (api)
@@ -14914,18 +14724,17 @@ namespace FolioConsoleApplication
             using (var jtw = new JsonTextWriter(sw))
             {
                 var s2 = Stopwatch.StartNew();
-                var js4 = JsonSchema.FromJsonAsync(sr.ReadToEndAsync().Result).Result;
-                var js = new JsonSerializer { Formatting = Formatting.Indented };
+                var js = JsonSchema.FromJsonAsync(sr.ReadToEndAsync().Result).Result;
                 jtw.WriteStartArray();
                 var i = 0;
-                foreach (var jo in api ? fsc.Receivings(where, orderBy, skip, take) : fdc.Receivings(where, null, orderBy, skip, take).Select(r => JObject.Parse(r.Content)))
+                foreach (var jo in api ? fsc.Receivings(where, orderBy, skip, take) : fdc.Receivings(where, null, orderBy, skip, take).Select(r => r.ToJObject()))
                 {
                     if (validate)
                     {
-                        var l = js4.Validate(jo);
+                        var l = js.Validate(jo);
                         if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"Receiving {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"Receiving {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
                     }
-                    if (!whatIf) js.Serialize(jtw, jo);
+                    if (!whatIf) (universalTime ? universalTimeJsonSerializer : localTimeJsonSerializer).Serialize(jtw, jo);
                     if (++i % 10000 == 0)
                     {
                         traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
@@ -14953,7 +14762,7 @@ namespace FolioConsoleApplication
                         var m = Regex.Match(s.Trim(), @"(?<Path>\S+)((?i) as (?<Name>.+))?", RegexOptions.Compiled);
                         return new JProperty(m.Groups["Name"].Success ? m.Groups["Name"].Value : m.Groups["Path"].Value.Split('.').Last(), jo.SelectToken(m.Groups["Path"].Value));
                     }));
-                })) jsonSerializer.Serialize(jtw, jo);
+                })) (universalTime ? universalTimeJsonSerializer : localTimeJsonSerializer).Serialize(jtw, jo);
                 jtw.WriteEndArray();
             }
         }
@@ -15000,8 +14809,7 @@ namespace FolioConsoleApplication
             using (var fsc = new FolioServiceClient(connectionString))
             {
                 var s2 = Stopwatch.StartNew();
-                var js4 = JsonSchema.FromJsonAsync(sr2.ReadToEndAsync().Result).Result;
-                var js = new JsonSerializer();
+                var js = JsonSchema.FromJsonAsync(sr2.ReadToEndAsync().Result).Result;
                 jtr.Read();
                 var i = 0;
                 var l2 = new List<JObject>(1000);
@@ -15009,10 +14817,10 @@ namespace FolioConsoleApplication
                 {
                     if (take != null && take <= i) break;
                     ++i;
-                    var jo = (JObject)js.Deserialize(jtr);
+                    var jo = (JObject)localTimeJsonSerializer.Deserialize(jtr);
                     if (validate)
                     {
-                        var l = js4.Validate(jo);
+                        var l = js.Validate(jo);
                         if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"Record {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"Record {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
                     }
                     if (api)
@@ -15048,8 +14856,7 @@ namespace FolioConsoleApplication
             using (var jtw = new JsonTextWriter(sw))
             {
                 var s2 = Stopwatch.StartNew();
-                var js4 = JsonSchema.FromJsonAsync(sr.ReadToEndAsync().Result).Result;
-                var js = new JsonSerializer { Formatting = Formatting.Indented };
+                var js = JsonSchema.FromJsonAsync(sr.ReadToEndAsync().Result).Result;
                 jtw.WriteStartArray();
                 var i = 0;
                 foreach (var jo in api ? fsc.Records(where, orderBy, skip, take) : fdc.Query($"SELECT r.id::text AS id, r.snapshot_id::text AS \"snapshotId\", NULL AS \"matchedProfileId\", r.matched_id::text AS \"matchedId\", r.generation AS generation, r.record_type AS \"recordType\", rr.id::text AS id2, rr.content AS content, mr.id::text AS id3, mr.content AS content2, NULL AS \"formattedContent\", er.id::text AS id4, er.description AS description, er.content AS content3, false AS deleted, r.suppress_discovery AS \"suppressDiscovery\", r.created_date AS \"createdDate\", r.created_by_user_id::text AS \"createdByUserId\", NULL AS \"createdByUsername\", r.updated_date AS \"updatedDate\", r.updated_by_user_id::text AS \"updatedByUserId\", NULL AS \"updatedByUsername\", r.order AS order, r.instance_id::text AS \"instanceId\", r.instance_hrid AS \"instanceHrid\", r.state AS state, r.leader_record_status AS \"leaderRecordStatus\" FROM diku_mod_source_record_storage.records_lb r LEFT JOIN diku_mod_source_record_storage.raw_records_lb rr ON rr.id = r.id LEFT JOIN diku_mod_source_record_storage.marc_records_lb mr ON mr.id = r.id LEFT JOIN diku_mod_source_record_storage.error_records_lb er ON er.id = r.id{(where != null ? $" WHERE {where}" : "")}{(orderBy != null ? $" ORDER BY {orderBy}" : "")}", null, skip, take, 5 * 60).Select(d => JObject.FromObject(new
@@ -15068,7 +14875,7 @@ namespace FolioConsoleApplication
                     parsedRecord = new
                     {
                         id = d.id3,
-                        content = JObject.Parse(d.content2),
+                        content = JsonConvert.DeserializeObject<JObject>(d.content2),
                         d.formattedContent
                     },
                     errorRecord = new
@@ -15099,15 +14906,15 @@ namespace FolioConsoleApplication
                         d.updatedByUserId,
                         d.updatedByUsername
                     }
-                }, jsonSerializer)))
+                }, localTimeJsonSerializer)))
                 {
                     jo.RemoveNullAndEmptyProperties();
                     if (validate)
                     {
-                        var l = js4.Validate(jo);
+                        var l = js.Validate(jo);
                         if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"Record {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"Record {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
                     }
-                    if (!whatIf) js.Serialize(jtw, jo);
+                    if (!whatIf) (universalTime ? universalTimeJsonSerializer : localTimeJsonSerializer).Serialize(jtw, jo);
                     if (++i % 10000 == 0)
                     {
                         traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
@@ -15128,14 +14935,14 @@ namespace FolioConsoleApplication
             using (var jtw = new JsonTextWriter(Console.Out))
             {
                 jtw.WriteStartArray();
-                foreach (var jo in (api ? fsc.RefundReasons(where, orderBy, skip, take) : fdc.RefundReasons(where, null, orderBy, skip, take).Select(rr => JObject.Parse(rr.Content))).Select(jo =>
+                foreach (var jo in (api ? fsc.RefundReasons(where, orderBy, skip, take) : fdc.RefundReasons(where, null, orderBy, skip, take).Select(rr => rr.ToJObject())).Select(jo =>
                 {
                     return select == null ? jo : new JObject(select.Split(',').Select(s =>
                     {
                         var m = Regex.Match(s.Trim(), @"(?<Path>\S+)((?i) as (?<Name>.+))?", RegexOptions.Compiled);
                         return new JProperty(m.Groups["Name"].Success ? m.Groups["Name"].Value : m.Groups["Path"].Value.Split('.').Last(), jo.SelectToken(m.Groups["Path"].Value));
                     }));
-                })) jsonSerializer.Serialize(jtw, jo);
+                })) (universalTime ? universalTimeJsonSerializer : localTimeJsonSerializer).Serialize(jtw, jo);
                 jtw.WriteEndArray();
             }
         }
@@ -15182,18 +14989,17 @@ namespace FolioConsoleApplication
             using (var fsc = new FolioServiceClient(connectionString))
             {
                 var s2 = Stopwatch.StartNew();
-                var js4 = JsonSchema.FromJsonAsync(sr2.ReadToEndAsync().Result).Result;
-                var js = new JsonSerializer();
+                var js = JsonSchema.FromJsonAsync(sr2.ReadToEndAsync().Result).Result;
                 jtr.Read();
                 var i = 0;
                 while (jtr.Read() && jtr.TokenType != JsonToken.EndArray)
                 {
                     if (take != null && take <= i) break;
                     ++i;
-                    var jo = (JObject)js.Deserialize(jtr);
+                    var jo = (JObject)localTimeJsonSerializer.Deserialize(jtr);
                     if (validate)
                     {
-                        var l = js4.Validate(jo);
+                        var l = js.Validate(jo);
                         if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"RefundReason {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"RefundReason {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
                     }
                     if (api)
@@ -15237,18 +15043,17 @@ namespace FolioConsoleApplication
             using (var jtw = new JsonTextWriter(sw))
             {
                 var s2 = Stopwatch.StartNew();
-                var js4 = JsonSchema.FromJsonAsync(sr.ReadToEndAsync().Result).Result;
-                var js = new JsonSerializer { Formatting = Formatting.Indented };
+                var js = JsonSchema.FromJsonAsync(sr.ReadToEndAsync().Result).Result;
                 jtw.WriteStartArray();
                 var i = 0;
-                foreach (var jo in api ? fsc.RefundReasons(where, orderBy, skip, take) : fdc.RefundReasons(where, null, orderBy, skip, take).Select(rr => JObject.Parse(rr.Content)))
+                foreach (var jo in api ? fsc.RefundReasons(where, orderBy, skip, take) : fdc.RefundReasons(where, null, orderBy, skip, take).Select(rr => rr.ToJObject()))
                 {
                     if (validate)
                     {
-                        var l = js4.Validate(jo);
+                        var l = js.Validate(jo);
                         if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"RefundReason {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"RefundReason {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
                     }
-                    if (!whatIf) js.Serialize(jtw, jo);
+                    if (!whatIf) (universalTime ? universalTimeJsonSerializer : localTimeJsonSerializer).Serialize(jtw, jo);
                     if (++i % 10000 == 0)
                     {
                         traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
@@ -15269,14 +15074,14 @@ namespace FolioConsoleApplication
             using (var jtw = new JsonTextWriter(Console.Out))
             {
                 jtw.WriteStartArray();
-                foreach (var jo in (api ? fsc.ReportingCodes(where, orderBy, skip, take) : fdc.ReportingCodes(where, null, orderBy, skip, take).Select(rc => JObject.Parse(rc.Content))).Select(jo =>
+                foreach (var jo in (api ? fsc.ReportingCodes(where, orderBy, skip, take) : fdc.ReportingCodes(where, null, orderBy, skip, take).Select(rc => rc.ToJObject())).Select(jo =>
                 {
                     return select == null ? jo : new JObject(select.Split(',').Select(s =>
                     {
                         var m = Regex.Match(s.Trim(), @"(?<Path>\S+)((?i) as (?<Name>.+))?", RegexOptions.Compiled);
                         return new JProperty(m.Groups["Name"].Success ? m.Groups["Name"].Value : m.Groups["Path"].Value.Split('.').Last(), jo.SelectToken(m.Groups["Path"].Value));
                     }));
-                })) jsonSerializer.Serialize(jtw, jo);
+                })) (universalTime ? universalTimeJsonSerializer : localTimeJsonSerializer).Serialize(jtw, jo);
                 jtw.WriteEndArray();
             }
         }
@@ -15323,18 +15128,17 @@ namespace FolioConsoleApplication
             using (var fsc = new FolioServiceClient(connectionString))
             {
                 var s2 = Stopwatch.StartNew();
-                var js4 = JsonSchema.FromJsonAsync(sr2.ReadToEndAsync().Result).Result;
-                var js = new JsonSerializer();
+                var js = JsonSchema.FromJsonAsync(sr2.ReadToEndAsync().Result).Result;
                 jtr.Read();
                 var i = 0;
                 while (jtr.Read() && jtr.TokenType != JsonToken.EndArray)
                 {
                     if (take != null && take <= i) break;
                     ++i;
-                    var jo = (JObject)js.Deserialize(jtr);
+                    var jo = (JObject)localTimeJsonSerializer.Deserialize(jtr);
                     if (validate)
                     {
-                        var l = js4.Validate(jo);
+                        var l = js.Validate(jo);
                         if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"ReportingCode {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"ReportingCode {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
                     }
                     if (api)
@@ -15378,18 +15182,17 @@ namespace FolioConsoleApplication
             using (var jtw = new JsonTextWriter(sw))
             {
                 var s2 = Stopwatch.StartNew();
-                var js4 = JsonSchema.FromJsonAsync(sr.ReadToEndAsync().Result).Result;
-                var js = new JsonSerializer { Formatting = Formatting.Indented };
+                var js = JsonSchema.FromJsonAsync(sr.ReadToEndAsync().Result).Result;
                 jtw.WriteStartArray();
                 var i = 0;
-                foreach (var jo in api ? fsc.ReportingCodes(where, orderBy, skip, take) : fdc.ReportingCodes(where, null, orderBy, skip, take).Select(rc => JObject.Parse(rc.Content)))
+                foreach (var jo in api ? fsc.ReportingCodes(where, orderBy, skip, take) : fdc.ReportingCodes(where, null, orderBy, skip, take).Select(rc => rc.ToJObject()))
                 {
                     if (validate)
                     {
-                        var l = js4.Validate(jo);
+                        var l = js.Validate(jo);
                         if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"ReportingCode {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"ReportingCode {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
                     }
-                    if (!whatIf) js.Serialize(jtw, jo);
+                    if (!whatIf) (universalTime ? universalTimeJsonSerializer : localTimeJsonSerializer).Serialize(jtw, jo);
                     if (++i % 10000 == 0)
                     {
                         traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
@@ -15410,14 +15213,14 @@ namespace FolioConsoleApplication
             using (var jtw = new JsonTextWriter(Console.Out))
             {
                 jtw.WriteStartArray();
-                foreach (var jo in (api ? fsc.Requests(where, orderBy, skip, take) : fdc.Requests(where, null, orderBy, skip, take).Select(r => JObject.Parse(r.Content))).Select(jo =>
+                foreach (var jo in (api ? fsc.Requests(where, orderBy, skip, take) : fdc.Requests(where, null, orderBy, skip, take).Select(r => r.ToJObject())).Select(jo =>
                 {
                     return select == null ? jo : new JObject(select.Split(',').Select(s =>
                     {
                         var m = Regex.Match(s.Trim(), @"(?<Path>\S+)((?i) as (?<Name>.+))?", RegexOptions.Compiled);
                         return new JProperty(m.Groups["Name"].Success ? m.Groups["Name"].Value : m.Groups["Path"].Value.Split('.').Last(), jo.SelectToken(m.Groups["Path"].Value));
                     }));
-                })) jsonSerializer.Serialize(jtw, jo);
+                })) (universalTime ? universalTimeJsonSerializer : localTimeJsonSerializer).Serialize(jtw, jo);
                 jtw.WriteEndArray();
             }
         }
@@ -15464,18 +15267,17 @@ namespace FolioConsoleApplication
             using (var fsc = new FolioServiceClient(connectionString))
             {
                 var s2 = Stopwatch.StartNew();
-                var js4 = JsonSchema.FromJsonAsync(sr2.ReadToEndAsync().Result).Result;
-                var js = new JsonSerializer();
+                var js = JsonSchema.FromJsonAsync(sr2.ReadToEndAsync().Result).Result;
                 jtr.Read();
                 var i = 0;
                 while (jtr.Read() && jtr.TokenType != JsonToken.EndArray)
                 {
                     if (take != null && take <= i) break;
                     ++i;
-                    var jo = (JObject)js.Deserialize(jtr);
+                    var jo = (JObject)localTimeJsonSerializer.Deserialize(jtr);
                     if (validate)
                     {
-                        var l = js4.Validate(jo);
+                        var l = js.Validate(jo);
                         if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"Request {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"Request {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
                     }
                     if (api)
@@ -15519,18 +15321,17 @@ namespace FolioConsoleApplication
             using (var jtw = new JsonTextWriter(sw))
             {
                 var s2 = Stopwatch.StartNew();
-                var js4 = JsonSchema.FromJsonAsync(sr.ReadToEndAsync().Result).Result;
-                var js = new JsonSerializer { Formatting = Formatting.Indented };
+                var js = JsonSchema.FromJsonAsync(sr.ReadToEndAsync().Result).Result;
                 jtw.WriteStartArray();
                 var i = 0;
-                foreach (var jo in api ? fsc.Requests(where, orderBy, skip, take) : fdc.Requests(where, null, orderBy, skip, take).Select(r => JObject.Parse(r.Content)))
+                foreach (var jo in api ? fsc.Requests(where, orderBy, skip, take) : fdc.Requests(where, null, orderBy, skip, take).Select(r => r.ToJObject()))
                 {
                     if (validate)
                     {
-                        var l = js4.Validate(jo);
+                        var l = js.Validate(jo);
                         if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"Request {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"Request {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
                     }
-                    if (!whatIf) js.Serialize(jtw, jo);
+                    if (!whatIf) (universalTime ? universalTimeJsonSerializer : localTimeJsonSerializer).Serialize(jtw, jo);
                     if (++i % 10000 == 0)
                     {
                         traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
@@ -15551,14 +15352,14 @@ namespace FolioConsoleApplication
             using (var jtw = new JsonTextWriter(Console.Out))
             {
                 jtw.WriteStartArray();
-                foreach (var jo in (api ? fsc.RequestPolicies(where, orderBy, skip, take) : fdc.RequestPolicies(where, null, orderBy, skip, take).Select(rp => JObject.Parse(rp.Content))).Select(jo =>
+                foreach (var jo in (api ? fsc.RequestPolicies(where, orderBy, skip, take) : fdc.RequestPolicies(where, null, orderBy, skip, take).Select(rp => rp.ToJObject())).Select(jo =>
                 {
                     return select == null ? jo : new JObject(select.Split(',').Select(s =>
                     {
                         var m = Regex.Match(s.Trim(), @"(?<Path>\S+)((?i) as (?<Name>.+))?", RegexOptions.Compiled);
                         return new JProperty(m.Groups["Name"].Success ? m.Groups["Name"].Value : m.Groups["Path"].Value.Split('.').Last(), jo.SelectToken(m.Groups["Path"].Value));
                     }));
-                })) jsonSerializer.Serialize(jtw, jo);
+                })) (universalTime ? universalTimeJsonSerializer : localTimeJsonSerializer).Serialize(jtw, jo);
                 jtw.WriteEndArray();
             }
         }
@@ -15605,18 +15406,17 @@ namespace FolioConsoleApplication
             using (var fsc = new FolioServiceClient(connectionString))
             {
                 var s2 = Stopwatch.StartNew();
-                var js4 = JsonSchema.FromJsonAsync(sr2.ReadToEndAsync().Result).Result;
-                var js = new JsonSerializer();
+                var js = JsonSchema.FromJsonAsync(sr2.ReadToEndAsync().Result).Result;
                 jtr.Read();
                 var i = 0;
                 while (jtr.Read() && jtr.TokenType != JsonToken.EndArray)
                 {
                     if (take != null && take <= i) break;
                     ++i;
-                    var jo = (JObject)js.Deserialize(jtr);
+                    var jo = (JObject)localTimeJsonSerializer.Deserialize(jtr);
                     if (validate)
                     {
-                        var l = js4.Validate(jo);
+                        var l = js.Validate(jo);
                         if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"RequestPolicy {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"RequestPolicy {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
                     }
                     if (api)
@@ -15660,18 +15460,17 @@ namespace FolioConsoleApplication
             using (var jtw = new JsonTextWriter(sw))
             {
                 var s2 = Stopwatch.StartNew();
-                var js4 = JsonSchema.FromJsonAsync(sr.ReadToEndAsync().Result).Result;
-                var js = new JsonSerializer { Formatting = Formatting.Indented };
+                var js = JsonSchema.FromJsonAsync(sr.ReadToEndAsync().Result).Result;
                 jtw.WriteStartArray();
                 var i = 0;
-                foreach (var jo in api ? fsc.RequestPolicies(where, orderBy, skip, take) : fdc.RequestPolicies(where, null, orderBy, skip, take).Select(rp => JObject.Parse(rp.Content)))
+                foreach (var jo in api ? fsc.RequestPolicies(where, orderBy, skip, take) : fdc.RequestPolicies(where, null, orderBy, skip, take).Select(rp => rp.ToJObject()))
                 {
                     if (validate)
                     {
-                        var l = js4.Validate(jo);
+                        var l = js.Validate(jo);
                         if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"RequestPolicy {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"RequestPolicy {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
                     }
-                    if (!whatIf) js.Serialize(jtw, jo);
+                    if (!whatIf) (universalTime ? universalTimeJsonSerializer : localTimeJsonSerializer).Serialize(jtw, jo);
                     if (++i % 10000 == 0)
                     {
                         traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
@@ -15692,14 +15491,14 @@ namespace FolioConsoleApplication
             using (var jtw = new JsonTextWriter(Console.Out))
             {
                 jtw.WriteStartArray();
-                foreach (var jo in (api ? fsc.ScheduledNotices(where, orderBy, skip, take) : fdc.ScheduledNotices(where, null, orderBy, skip, take).Select(sn => JObject.Parse(sn.Content))).Select(jo =>
+                foreach (var jo in (api ? fsc.ScheduledNotices(where, orderBy, skip, take) : fdc.ScheduledNotices(where, null, orderBy, skip, take).Select(sn => sn.ToJObject())).Select(jo =>
                 {
                     return select == null ? jo : new JObject(select.Split(',').Select(s =>
                     {
                         var m = Regex.Match(s.Trim(), @"(?<Path>\S+)((?i) as (?<Name>.+))?", RegexOptions.Compiled);
                         return new JProperty(m.Groups["Name"].Success ? m.Groups["Name"].Value : m.Groups["Path"].Value.Split('.').Last(), jo.SelectToken(m.Groups["Path"].Value));
                     }));
-                })) jsonSerializer.Serialize(jtw, jo);
+                })) (universalTime ? universalTimeJsonSerializer : localTimeJsonSerializer).Serialize(jtw, jo);
                 jtw.WriteEndArray();
             }
         }
@@ -15746,18 +15545,17 @@ namespace FolioConsoleApplication
             using (var fsc = new FolioServiceClient(connectionString))
             {
                 var s2 = Stopwatch.StartNew();
-                var js4 = JsonSchema.FromJsonAsync(sr2.ReadToEndAsync().Result).Result;
-                var js = new JsonSerializer();
+                var js = JsonSchema.FromJsonAsync(sr2.ReadToEndAsync().Result).Result;
                 jtr.Read();
                 var i = 0;
                 while (jtr.Read() && jtr.TokenType != JsonToken.EndArray)
                 {
                     if (take != null && take <= i) break;
                     ++i;
-                    var jo = (JObject)js.Deserialize(jtr);
+                    var jo = (JObject)localTimeJsonSerializer.Deserialize(jtr);
                     if (validate)
                     {
-                        var l = js4.Validate(jo);
+                        var l = js.Validate(jo);
                         if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"ScheduledNotice {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"ScheduledNotice {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
                     }
                     if (api)
@@ -15801,18 +15599,17 @@ namespace FolioConsoleApplication
             using (var jtw = new JsonTextWriter(sw))
             {
                 var s2 = Stopwatch.StartNew();
-                var js4 = JsonSchema.FromJsonAsync(sr.ReadToEndAsync().Result).Result;
-                var js = new JsonSerializer { Formatting = Formatting.Indented };
+                var js = JsonSchema.FromJsonAsync(sr.ReadToEndAsync().Result).Result;
                 jtw.WriteStartArray();
                 var i = 0;
-                foreach (var jo in api ? fsc.ScheduledNotices(where, orderBy, skip, take) : fdc.ScheduledNotices(where, null, orderBy, skip, take).Select(sn => JObject.Parse(sn.Content)))
+                foreach (var jo in api ? fsc.ScheduledNotices(where, orderBy, skip, take) : fdc.ScheduledNotices(where, null, orderBy, skip, take).Select(sn => sn.ToJObject()))
                 {
                     if (validate)
                     {
-                        var l = js4.Validate(jo);
+                        var l = js.Validate(jo);
                         if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"ScheduledNotice {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"ScheduledNotice {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
                     }
-                    if (!whatIf) js.Serialize(jtw, jo);
+                    if (!whatIf) (universalTime ? universalTimeJsonSerializer : localTimeJsonSerializer).Serialize(jtw, jo);
                     if (++i % 10000 == 0)
                     {
                         traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
@@ -15833,14 +15630,14 @@ namespace FolioConsoleApplication
             using (var jtw = new JsonTextWriter(Console.Out))
             {
                 jtw.WriteStartArray();
-                foreach (var jo in (api ? fsc.ServicePoints(where, orderBy, skip, take) : fdc.ServicePoints(where, null, orderBy, skip, take).Select(sp => JObject.Parse(sp.Content))).Select(jo =>
+                foreach (var jo in (api ? fsc.ServicePoints(where, orderBy, skip, take) : fdc.ServicePoints(where, null, orderBy, skip, take).Select(sp => sp.ToJObject())).Select(jo =>
                 {
                     return select == null ? jo : new JObject(select.Split(',').Select(s =>
                     {
                         var m = Regex.Match(s.Trim(), @"(?<Path>\S+)((?i) as (?<Name>.+))?", RegexOptions.Compiled);
                         return new JProperty(m.Groups["Name"].Success ? m.Groups["Name"].Value : m.Groups["Path"].Value.Split('.').Last(), jo.SelectToken(m.Groups["Path"].Value));
                     }));
-                })) jsonSerializer.Serialize(jtw, jo);
+                })) (universalTime ? universalTimeJsonSerializer : localTimeJsonSerializer).Serialize(jtw, jo);
                 jtw.WriteEndArray();
             }
         }
@@ -15887,18 +15684,17 @@ namespace FolioConsoleApplication
             using (var fsc = new FolioServiceClient(connectionString))
             {
                 var s2 = Stopwatch.StartNew();
-                var js4 = JsonSchema.FromJsonAsync(sr2.ReadToEndAsync().Result).Result;
-                var js = new JsonSerializer();
+                var js = JsonSchema.FromJsonAsync(sr2.ReadToEndAsync().Result).Result;
                 jtr.Read();
                 var i = 0;
                 while (jtr.Read() && jtr.TokenType != JsonToken.EndArray)
                 {
                     if (take != null && take <= i) break;
                     ++i;
-                    var jo = (JObject)js.Deserialize(jtr);
+                    var jo = (JObject)localTimeJsonSerializer.Deserialize(jtr);
                     if (validate)
                     {
-                        var l = js4.Validate(jo);
+                        var l = js.Validate(jo);
                         if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"ServicePoint {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"ServicePoint {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
                     }
                     if (api)
@@ -15942,18 +15738,17 @@ namespace FolioConsoleApplication
             using (var jtw = new JsonTextWriter(sw))
             {
                 var s2 = Stopwatch.StartNew();
-                var js4 = JsonSchema.FromJsonAsync(sr.ReadToEndAsync().Result).Result;
-                var js = new JsonSerializer { Formatting = Formatting.Indented };
+                var js = JsonSchema.FromJsonAsync(sr.ReadToEndAsync().Result).Result;
                 jtw.WriteStartArray();
                 var i = 0;
-                foreach (var jo in api ? fsc.ServicePoints(where, orderBy, skip, take) : fdc.ServicePoints(where, null, orderBy, skip, take).Select(sp => JObject.Parse(sp.Content)))
+                foreach (var jo in api ? fsc.ServicePoints(where, orderBy, skip, take) : fdc.ServicePoints(where, null, orderBy, skip, take).Select(sp => sp.ToJObject()))
                 {
                     if (validate)
                     {
-                        var l = js4.Validate(jo);
+                        var l = js.Validate(jo);
                         if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"ServicePoint {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"ServicePoint {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
                     }
-                    if (!whatIf) js.Serialize(jtw, jo);
+                    if (!whatIf) (universalTime ? universalTimeJsonSerializer : localTimeJsonSerializer).Serialize(jtw, jo);
                     if (++i % 10000 == 0)
                     {
                         traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
@@ -15974,14 +15769,14 @@ namespace FolioConsoleApplication
             using (var jtw = new JsonTextWriter(Console.Out))
             {
                 jtw.WriteStartArray();
-                foreach (var jo in (api ? fsc.ServicePointUsers(where, orderBy, skip, take) : fdc.ServicePointUsers(where, null, orderBy, skip, take).Select(spu => JObject.Parse(spu.Content))).Select(jo =>
+                foreach (var jo in (api ? fsc.ServicePointUsers(where, orderBy, skip, take) : fdc.ServicePointUsers(where, null, orderBy, skip, take).Select(spu => spu.ToJObject())).Select(jo =>
                 {
                     return select == null ? jo : new JObject(select.Split(',').Select(s =>
                     {
                         var m = Regex.Match(s.Trim(), @"(?<Path>\S+)((?i) as (?<Name>.+))?", RegexOptions.Compiled);
                         return new JProperty(m.Groups["Name"].Success ? m.Groups["Name"].Value : m.Groups["Path"].Value.Split('.').Last(), jo.SelectToken(m.Groups["Path"].Value));
                     }));
-                })) jsonSerializer.Serialize(jtw, jo);
+                })) (universalTime ? universalTimeJsonSerializer : localTimeJsonSerializer).Serialize(jtw, jo);
                 jtw.WriteEndArray();
             }
         }
@@ -16028,18 +15823,17 @@ namespace FolioConsoleApplication
             using (var fsc = new FolioServiceClient(connectionString))
             {
                 var s2 = Stopwatch.StartNew();
-                var js4 = JsonSchema.FromJsonAsync(sr2.ReadToEndAsync().Result).Result;
-                var js = new JsonSerializer();
+                var js = JsonSchema.FromJsonAsync(sr2.ReadToEndAsync().Result).Result;
                 jtr.Read();
                 var i = 0;
                 while (jtr.Read() && jtr.TokenType != JsonToken.EndArray)
                 {
                     if (take != null && take <= i) break;
                     ++i;
-                    var jo = (JObject)js.Deserialize(jtr);
+                    var jo = (JObject)localTimeJsonSerializer.Deserialize(jtr);
                     if (validate)
                     {
-                        var l = js4.Validate(jo);
+                        var l = js.Validate(jo);
                         if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"ServicePointUser {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"ServicePointUser {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
                     }
                     if (api)
@@ -16083,18 +15877,17 @@ namespace FolioConsoleApplication
             using (var jtw = new JsonTextWriter(sw))
             {
                 var s2 = Stopwatch.StartNew();
-                var js4 = JsonSchema.FromJsonAsync(sr.ReadToEndAsync().Result).Result;
-                var js = new JsonSerializer { Formatting = Formatting.Indented };
+                var js = JsonSchema.FromJsonAsync(sr.ReadToEndAsync().Result).Result;
                 jtw.WriteStartArray();
                 var i = 0;
-                foreach (var jo in api ? fsc.ServicePointUsers(where, orderBy, skip, take) : fdc.ServicePointUsers(where, null, orderBy, skip, take).Select(spu => JObject.Parse(spu.Content)))
+                foreach (var jo in api ? fsc.ServicePointUsers(where, orderBy, skip, take) : fdc.ServicePointUsers(where, null, orderBy, skip, take).Select(spu => spu.ToJObject()))
                 {
                     if (validate)
                     {
-                        var l = js4.Validate(jo);
+                        var l = js.Validate(jo);
                         if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"ServicePointUser {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"ServicePointUser {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
                     }
-                    if (!whatIf) js.Serialize(jtw, jo);
+                    if (!whatIf) (universalTime ? universalTimeJsonSerializer : localTimeJsonSerializer).Serialize(jtw, jo);
                     if (++i % 10000 == 0)
                     {
                         traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
@@ -16122,7 +15915,7 @@ namespace FolioConsoleApplication
                         var m = Regex.Match(s.Trim(), @"(?<Path>\S+)((?i) as (?<Name>.+))?", RegexOptions.Compiled);
                         return new JProperty(m.Groups["Name"].Success ? m.Groups["Name"].Value : m.Groups["Path"].Value.Split('.').Last(), jo.SelectToken(m.Groups["Path"].Value));
                     }));
-                })) jsonSerializer.Serialize(jtw, jo);
+                })) (universalTime ? universalTimeJsonSerializer : localTimeJsonSerializer).Serialize(jtw, jo);
                 jtw.WriteEndArray();
             }
         }
@@ -16169,18 +15962,17 @@ namespace FolioConsoleApplication
             using (var fsc = new FolioServiceClient(connectionString))
             {
                 var s2 = Stopwatch.StartNew();
-                var js4 = JsonSchema.FromJsonAsync(sr2.ReadToEndAsync().Result).Result;
-                var js = new JsonSerializer();
+                var js = JsonSchema.FromJsonAsync(sr2.ReadToEndAsync().Result).Result;
                 jtr.Read();
                 var i = 0;
                 while (jtr.Read() && jtr.TokenType != JsonToken.EndArray)
                 {
                     if (take != null && take <= i) break;
                     ++i;
-                    var jo = (JObject)js.Deserialize(jtr);
+                    var jo = (JObject)localTimeJsonSerializer.Deserialize(jtr);
                     if (validate)
                     {
-                        var l = js4.Validate(jo);
+                        var l = js.Validate(jo);
                         if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"Snapshot {jo["jobExecutionId"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"Snapshot {jo["jobExecutionId"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
                     }
                     if (api)
@@ -16213,18 +16005,17 @@ namespace FolioConsoleApplication
             using (var jtw = new JsonTextWriter(sw))
             {
                 var s2 = Stopwatch.StartNew();
-                var js4 = JsonSchema.FromJsonAsync(sr.ReadToEndAsync().Result).Result;
-                var js = new JsonSerializer { Formatting = Formatting.Indented };
+                var js = JsonSchema.FromJsonAsync(sr.ReadToEndAsync().Result).Result;
                 jtw.WriteStartArray();
                 var i = 0;
                 foreach (var jo in api ? fsc.Snapshots(where, orderBy, skip, take) : throw new NotSupportedException())
                 {
                     if (validate)
                     {
-                        var l = js4.Validate(jo);
+                        var l = js.Validate(jo);
                         if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"Snapshot {jo["jobExecutionId"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"Snapshot {jo["jobExecutionId"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
                     }
-                    if (!whatIf) js.Serialize(jtw, jo);
+                    if (!whatIf) (universalTime ? universalTimeJsonSerializer : localTimeJsonSerializer).Serialize(jtw, jo);
                     if (++i % 10000 == 0)
                     {
                         traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
@@ -16245,14 +16036,14 @@ namespace FolioConsoleApplication
             using (var jtw = new JsonTextWriter(Console.Out))
             {
                 jtw.WriteStartArray();
-                foreach (var jo in (api ? fsc.Sources(where, orderBy, skip, take) : fdc.Sources(where, null, orderBy, skip, take).Select(s3 => JObject.Parse(s3.Content))).Select(jo =>
+                foreach (var jo in (api ? fsc.Sources(where, orderBy, skip, take) : fdc.Sources(where, null, orderBy, skip, take).Select(s3 => s3.ToJObject())).Select(jo =>
                 {
                     return select == null ? jo : new JObject(select.Split(',').Select(s =>
                     {
                         var m = Regex.Match(s.Trim(), @"(?<Path>\S+)((?i) as (?<Name>.+))?", RegexOptions.Compiled);
                         return new JProperty(m.Groups["Name"].Success ? m.Groups["Name"].Value : m.Groups["Path"].Value.Split('.').Last(), jo.SelectToken(m.Groups["Path"].Value));
                     }));
-                })) jsonSerializer.Serialize(jtw, jo);
+                })) (universalTime ? universalTimeJsonSerializer : localTimeJsonSerializer).Serialize(jtw, jo);
                 jtw.WriteEndArray();
             }
         }
@@ -16299,18 +16090,17 @@ namespace FolioConsoleApplication
             using (var fsc = new FolioServiceClient(connectionString))
             {
                 var s2 = Stopwatch.StartNew();
-                var js4 = JsonSchema.FromJsonAsync(sr2.ReadToEndAsync().Result).Result;
-                var js = new JsonSerializer();
+                var js = JsonSchema.FromJsonAsync(sr2.ReadToEndAsync().Result).Result;
                 jtr.Read();
                 var i = 0;
                 while (jtr.Read() && jtr.TokenType != JsonToken.EndArray)
                 {
                     if (take != null && take <= i) break;
                     ++i;
-                    var jo = (JObject)js.Deserialize(jtr);
+                    var jo = (JObject)localTimeJsonSerializer.Deserialize(jtr);
                     if (validate)
                     {
-                        var l = js4.Validate(jo);
+                        var l = js.Validate(jo);
                         if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"Source {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"Source {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
                     }
                     if (api)
@@ -16354,18 +16144,17 @@ namespace FolioConsoleApplication
             using (var jtw = new JsonTextWriter(sw))
             {
                 var s2 = Stopwatch.StartNew();
-                var js4 = JsonSchema.FromJsonAsync(sr.ReadToEndAsync().Result).Result;
-                var js = new JsonSerializer { Formatting = Formatting.Indented };
+                var js = JsonSchema.FromJsonAsync(sr.ReadToEndAsync().Result).Result;
                 jtw.WriteStartArray();
                 var i = 0;
-                foreach (var jo in api ? fsc.Sources(where, orderBy, skip, take) : fdc.Sources(where, null, orderBy, skip, take).Select(s3 => JObject.Parse(s3.Content)))
+                foreach (var jo in api ? fsc.Sources(where, orderBy, skip, take) : fdc.Sources(where, null, orderBy, skip, take).Select(s3 => s3.ToJObject()))
                 {
                     if (validate)
                     {
-                        var l = js4.Validate(jo);
+                        var l = js.Validate(jo);
                         if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"Source {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"Source {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
                     }
-                    if (!whatIf) js.Serialize(jtw, jo);
+                    if (!whatIf) (universalTime ? universalTimeJsonSerializer : localTimeJsonSerializer).Serialize(jtw, jo);
                     if (++i % 10000 == 0)
                     {
                         traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
@@ -16386,14 +16175,14 @@ namespace FolioConsoleApplication
             using (var jtw = new JsonTextWriter(Console.Out))
             {
                 jtw.WriteStartArray();
-                foreach (var jo in (api ? fsc.StaffSlips(where, orderBy, skip, take) : fdc.StaffSlips(where, null, orderBy, skip, take).Select(ss => JObject.Parse(ss.Content))).Select(jo =>
+                foreach (var jo in (api ? fsc.StaffSlips(where, orderBy, skip, take) : fdc.StaffSlips(where, null, orderBy, skip, take).Select(ss => ss.ToJObject())).Select(jo =>
                 {
                     return select == null ? jo : new JObject(select.Split(',').Select(s =>
                     {
                         var m = Regex.Match(s.Trim(), @"(?<Path>\S+)((?i) as (?<Name>.+))?", RegexOptions.Compiled);
                         return new JProperty(m.Groups["Name"].Success ? m.Groups["Name"].Value : m.Groups["Path"].Value.Split('.').Last(), jo.SelectToken(m.Groups["Path"].Value));
                     }));
-                })) jsonSerializer.Serialize(jtw, jo);
+                })) (universalTime ? universalTimeJsonSerializer : localTimeJsonSerializer).Serialize(jtw, jo);
                 jtw.WriteEndArray();
             }
         }
@@ -16440,18 +16229,17 @@ namespace FolioConsoleApplication
             using (var fsc = new FolioServiceClient(connectionString))
             {
                 var s2 = Stopwatch.StartNew();
-                var js4 = JsonSchema.FromJsonAsync(sr2.ReadToEndAsync().Result).Result;
-                var js = new JsonSerializer();
+                var js = JsonSchema.FromJsonAsync(sr2.ReadToEndAsync().Result).Result;
                 jtr.Read();
                 var i = 0;
                 while (jtr.Read() && jtr.TokenType != JsonToken.EndArray)
                 {
                     if (take != null && take <= i) break;
                     ++i;
-                    var jo = (JObject)js.Deserialize(jtr);
+                    var jo = (JObject)localTimeJsonSerializer.Deserialize(jtr);
                     if (validate)
                     {
-                        var l = js4.Validate(jo);
+                        var l = js.Validate(jo);
                         if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"StaffSlip {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"StaffSlip {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
                     }
                     if (api)
@@ -16495,18 +16283,17 @@ namespace FolioConsoleApplication
             using (var jtw = new JsonTextWriter(sw))
             {
                 var s2 = Stopwatch.StartNew();
-                var js4 = JsonSchema.FromJsonAsync(sr.ReadToEndAsync().Result).Result;
-                var js = new JsonSerializer { Formatting = Formatting.Indented };
+                var js = JsonSchema.FromJsonAsync(sr.ReadToEndAsync().Result).Result;
                 jtw.WriteStartArray();
                 var i = 0;
-                foreach (var jo in api ? fsc.StaffSlips(where, orderBy, skip, take) : fdc.StaffSlips(where, null, orderBy, skip, take).Select(ss => JObject.Parse(ss.Content)))
+                foreach (var jo in api ? fsc.StaffSlips(where, orderBy, skip, take) : fdc.StaffSlips(where, null, orderBy, skip, take).Select(ss => ss.ToJObject()))
                 {
                     if (validate)
                     {
-                        var l = js4.Validate(jo);
+                        var l = js.Validate(jo);
                         if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"StaffSlip {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"StaffSlip {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
                     }
-                    if (!whatIf) js.Serialize(jtw, jo);
+                    if (!whatIf) (universalTime ? universalTimeJsonSerializer : localTimeJsonSerializer).Serialize(jtw, jo);
                     if (++i % 10000 == 0)
                     {
                         traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
@@ -16527,14 +16314,14 @@ namespace FolioConsoleApplication
             using (var jtw = new JsonTextWriter(Console.Out))
             {
                 jtw.WriteStartArray();
-                foreach (var jo in (api ? fsc.StatisticalCodes(where, orderBy, skip, take) : fdc.StatisticalCodes(where, null, orderBy, skip, take).Select(sc => JObject.Parse(sc.Content))).Select(jo =>
+                foreach (var jo in (api ? fsc.StatisticalCodes(where, orderBy, skip, take) : fdc.StatisticalCodes(where, null, orderBy, skip, take).Select(sc => sc.ToJObject())).Select(jo =>
                 {
                     return select == null ? jo : new JObject(select.Split(',').Select(s =>
                     {
                         var m = Regex.Match(s.Trim(), @"(?<Path>\S+)((?i) as (?<Name>.+))?", RegexOptions.Compiled);
                         return new JProperty(m.Groups["Name"].Success ? m.Groups["Name"].Value : m.Groups["Path"].Value.Split('.').Last(), jo.SelectToken(m.Groups["Path"].Value));
                     }));
-                })) jsonSerializer.Serialize(jtw, jo);
+                })) (universalTime ? universalTimeJsonSerializer : localTimeJsonSerializer).Serialize(jtw, jo);
                 jtw.WriteEndArray();
             }
         }
@@ -16581,18 +16368,17 @@ namespace FolioConsoleApplication
             using (var fsc = new FolioServiceClient(connectionString))
             {
                 var s2 = Stopwatch.StartNew();
-                var js4 = JsonSchema.FromJsonAsync(sr2.ReadToEndAsync().Result).Result;
-                var js = new JsonSerializer();
+                var js = JsonSchema.FromJsonAsync(sr2.ReadToEndAsync().Result).Result;
                 jtr.Read();
                 var i = 0;
                 while (jtr.Read() && jtr.TokenType != JsonToken.EndArray)
                 {
                     if (take != null && take <= i) break;
                     ++i;
-                    var jo = (JObject)js.Deserialize(jtr);
+                    var jo = (JObject)localTimeJsonSerializer.Deserialize(jtr);
                     if (validate)
                     {
-                        var l = js4.Validate(jo);
+                        var l = js.Validate(jo);
                         if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"StatisticalCode {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"StatisticalCode {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
                     }
                     if (api)
@@ -16636,18 +16422,17 @@ namespace FolioConsoleApplication
             using (var jtw = new JsonTextWriter(sw))
             {
                 var s2 = Stopwatch.StartNew();
-                var js4 = JsonSchema.FromJsonAsync(sr.ReadToEndAsync().Result).Result;
-                var js = new JsonSerializer { Formatting = Formatting.Indented };
+                var js = JsonSchema.FromJsonAsync(sr.ReadToEndAsync().Result).Result;
                 jtw.WriteStartArray();
                 var i = 0;
-                foreach (var jo in api ? fsc.StatisticalCodes(where, orderBy, skip, take) : fdc.StatisticalCodes(where, null, orderBy, skip, take).Select(sc => JObject.Parse(sc.Content)))
+                foreach (var jo in api ? fsc.StatisticalCodes(where, orderBy, skip, take) : fdc.StatisticalCodes(where, null, orderBy, skip, take).Select(sc => sc.ToJObject()))
                 {
                     if (validate)
                     {
-                        var l = js4.Validate(jo);
+                        var l = js.Validate(jo);
                         if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"StatisticalCode {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"StatisticalCode {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
                     }
-                    if (!whatIf) js.Serialize(jtw, jo);
+                    if (!whatIf) (universalTime ? universalTimeJsonSerializer : localTimeJsonSerializer).Serialize(jtw, jo);
                     if (++i % 10000 == 0)
                     {
                         traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
@@ -16668,14 +16453,14 @@ namespace FolioConsoleApplication
             using (var jtw = new JsonTextWriter(Console.Out))
             {
                 jtw.WriteStartArray();
-                foreach (var jo in (api ? fsc.StatisticalCodeTypes(where, orderBy, skip, take) : fdc.StatisticalCodeTypes(where, null, orderBy, skip, take).Select(sct => JObject.Parse(sct.Content))).Select(jo =>
+                foreach (var jo in (api ? fsc.StatisticalCodeTypes(where, orderBy, skip, take) : fdc.StatisticalCodeTypes(where, null, orderBy, skip, take).Select(sct => sct.ToJObject())).Select(jo =>
                 {
                     return select == null ? jo : new JObject(select.Split(',').Select(s =>
                     {
                         var m = Regex.Match(s.Trim(), @"(?<Path>\S+)((?i) as (?<Name>.+))?", RegexOptions.Compiled);
                         return new JProperty(m.Groups["Name"].Success ? m.Groups["Name"].Value : m.Groups["Path"].Value.Split('.').Last(), jo.SelectToken(m.Groups["Path"].Value));
                     }));
-                })) jsonSerializer.Serialize(jtw, jo);
+                })) (universalTime ? universalTimeJsonSerializer : localTimeJsonSerializer).Serialize(jtw, jo);
                 jtw.WriteEndArray();
             }
         }
@@ -16722,18 +16507,17 @@ namespace FolioConsoleApplication
             using (var fsc = new FolioServiceClient(connectionString))
             {
                 var s2 = Stopwatch.StartNew();
-                var js4 = JsonSchema.FromJsonAsync(sr2.ReadToEndAsync().Result).Result;
-                var js = new JsonSerializer();
+                var js = JsonSchema.FromJsonAsync(sr2.ReadToEndAsync().Result).Result;
                 jtr.Read();
                 var i = 0;
                 while (jtr.Read() && jtr.TokenType != JsonToken.EndArray)
                 {
                     if (take != null && take <= i) break;
                     ++i;
-                    var jo = (JObject)js.Deserialize(jtr);
+                    var jo = (JObject)localTimeJsonSerializer.Deserialize(jtr);
                     if (validate)
                     {
-                        var l = js4.Validate(jo);
+                        var l = js.Validate(jo);
                         if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"StatisticalCodeType {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"StatisticalCodeType {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
                     }
                     if (api)
@@ -16777,18 +16561,17 @@ namespace FolioConsoleApplication
             using (var jtw = new JsonTextWriter(sw))
             {
                 var s2 = Stopwatch.StartNew();
-                var js4 = JsonSchema.FromJsonAsync(sr.ReadToEndAsync().Result).Result;
-                var js = new JsonSerializer { Formatting = Formatting.Indented };
+                var js = JsonSchema.FromJsonAsync(sr.ReadToEndAsync().Result).Result;
                 jtw.WriteStartArray();
                 var i = 0;
-                foreach (var jo in api ? fsc.StatisticalCodeTypes(where, orderBy, skip, take) : fdc.StatisticalCodeTypes(where, null, orderBy, skip, take).Select(sct => JObject.Parse(sct.Content)))
+                foreach (var jo in api ? fsc.StatisticalCodeTypes(where, orderBy, skip, take) : fdc.StatisticalCodeTypes(where, null, orderBy, skip, take).Select(sct => sct.ToJObject()))
                 {
                     if (validate)
                     {
-                        var l = js4.Validate(jo);
+                        var l = js.Validate(jo);
                         if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"StatisticalCodeType {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"StatisticalCodeType {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
                     }
-                    if (!whatIf) js.Serialize(jtw, jo);
+                    if (!whatIf) (universalTime ? universalTimeJsonSerializer : localTimeJsonSerializer).Serialize(jtw, jo);
                     if (++i % 10000 == 0)
                     {
                         traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
@@ -16809,14 +16592,14 @@ namespace FolioConsoleApplication
             using (var jtw = new JsonTextWriter(Console.Out))
             {
                 jtw.WriteStartArray();
-                foreach (var jo in (api ? fsc.Suffixes(where, orderBy, skip, take) : fdc.Suffixes(where, null, orderBy, skip, take).Select(s3 => JObject.Parse(s3.Content))).Select(jo =>
+                foreach (var jo in (api ? fsc.Suffixes(where, orderBy, skip, take) : fdc.Suffixes(where, null, orderBy, skip, take).Select(s3 => s3.ToJObject())).Select(jo =>
                 {
                     return select == null ? jo : new JObject(select.Split(',').Select(s =>
                     {
                         var m = Regex.Match(s.Trim(), @"(?<Path>\S+)((?i) as (?<Name>.+))?", RegexOptions.Compiled);
                         return new JProperty(m.Groups["Name"].Success ? m.Groups["Name"].Value : m.Groups["Path"].Value.Split('.').Last(), jo.SelectToken(m.Groups["Path"].Value));
                     }));
-                })) jsonSerializer.Serialize(jtw, jo);
+                })) (universalTime ? universalTimeJsonSerializer : localTimeJsonSerializer).Serialize(jtw, jo);
                 jtw.WriteEndArray();
             }
         }
@@ -16863,18 +16646,17 @@ namespace FolioConsoleApplication
             using (var fsc = new FolioServiceClient(connectionString))
             {
                 var s2 = Stopwatch.StartNew();
-                var js4 = JsonSchema.FromJsonAsync(sr2.ReadToEndAsync().Result).Result;
-                var js = new JsonSerializer();
+                var js = JsonSchema.FromJsonAsync(sr2.ReadToEndAsync().Result).Result;
                 jtr.Read();
                 var i = 0;
                 while (jtr.Read() && jtr.TokenType != JsonToken.EndArray)
                 {
                     if (take != null && take <= i) break;
                     ++i;
-                    var jo = (JObject)js.Deserialize(jtr);
+                    var jo = (JObject)localTimeJsonSerializer.Deserialize(jtr);
                     if (validate)
                     {
-                        var l = js4.Validate(jo);
+                        var l = js.Validate(jo);
                         if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"Suffix {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"Suffix {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
                     }
                     if (api)
@@ -16918,18 +16700,17 @@ namespace FolioConsoleApplication
             using (var jtw = new JsonTextWriter(sw))
             {
                 var s2 = Stopwatch.StartNew();
-                var js4 = JsonSchema.FromJsonAsync(sr.ReadToEndAsync().Result).Result;
-                var js = new JsonSerializer { Formatting = Formatting.Indented };
+                var js = JsonSchema.FromJsonAsync(sr.ReadToEndAsync().Result).Result;
                 jtw.WriteStartArray();
                 var i = 0;
-                foreach (var jo in api ? fsc.Suffixes(where, orderBy, skip, take) : fdc.Suffixes(where, null, orderBy, skip, take).Select(s3 => JObject.Parse(s3.Content)))
+                foreach (var jo in api ? fsc.Suffixes(where, orderBy, skip, take) : fdc.Suffixes(where, null, orderBy, skip, take).Select(s3 => s3.ToJObject()))
                 {
                     if (validate)
                     {
-                        var l = js4.Validate(jo);
+                        var l = js.Validate(jo);
                         if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"Suffix {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"Suffix {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
                     }
-                    if (!whatIf) js.Serialize(jtw, jo);
+                    if (!whatIf) (universalTime ? universalTimeJsonSerializer : localTimeJsonSerializer).Serialize(jtw, jo);
                     if (++i % 10000 == 0)
                     {
                         traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
@@ -16950,14 +16731,14 @@ namespace FolioConsoleApplication
             using (var jtw = new JsonTextWriter(Console.Out))
             {
                 jtw.WriteStartArray();
-                foreach (var jo in (api ? fsc.Templates(where, orderBy, skip, take) : fdc.Templates(where, null, orderBy, skip, take).Select(t => JObject.Parse(t.Content))).Select(jo =>
+                foreach (var jo in (api ? fsc.Templates(where, orderBy, skip, take) : fdc.Templates(where, null, orderBy, skip, take).Select(t => t.ToJObject())).Select(jo =>
                 {
                     return select == null ? jo : new JObject(select.Split(',').Select(s =>
                     {
                         var m = Regex.Match(s.Trim(), @"(?<Path>\S+)((?i) as (?<Name>.+))?", RegexOptions.Compiled);
                         return new JProperty(m.Groups["Name"].Success ? m.Groups["Name"].Value : m.Groups["Path"].Value.Split('.').Last(), jo.SelectToken(m.Groups["Path"].Value));
                     }));
-                })) jsonSerializer.Serialize(jtw, jo);
+                })) (universalTime ? universalTimeJsonSerializer : localTimeJsonSerializer).Serialize(jtw, jo);
                 jtw.WriteEndArray();
             }
         }
@@ -17004,18 +16785,17 @@ namespace FolioConsoleApplication
             using (var fsc = new FolioServiceClient(connectionString))
             {
                 var s2 = Stopwatch.StartNew();
-                var js4 = JsonSchema.FromJsonAsync(sr2.ReadToEndAsync().Result).Result;
-                var js = new JsonSerializer();
+                var js = JsonSchema.FromJsonAsync(sr2.ReadToEndAsync().Result).Result;
                 jtr.Read();
                 var i = 0;
                 while (jtr.Read() && jtr.TokenType != JsonToken.EndArray)
                 {
                     if (take != null && take <= i) break;
                     ++i;
-                    var jo = (JObject)js.Deserialize(jtr);
+                    var jo = (JObject)localTimeJsonSerializer.Deserialize(jtr);
                     if (validate)
                     {
-                        var l = js4.Validate(jo);
+                        var l = js.Validate(jo);
                         if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"Template {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"Template {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
                     }
                     if (api)
@@ -17059,18 +16839,17 @@ namespace FolioConsoleApplication
             using (var jtw = new JsonTextWriter(sw))
             {
                 var s2 = Stopwatch.StartNew();
-                var js4 = JsonSchema.FromJsonAsync(sr.ReadToEndAsync().Result).Result;
-                var js = new JsonSerializer { Formatting = Formatting.Indented };
+                var js = JsonSchema.FromJsonAsync(sr.ReadToEndAsync().Result).Result;
                 jtw.WriteStartArray();
                 var i = 0;
-                foreach (var jo in api ? fsc.Templates(where, orderBy, skip, take) : fdc.Templates(where, null, orderBy, skip, take).Select(t => JObject.Parse(t.Content)))
+                foreach (var jo in api ? fsc.Templates(where, orderBy, skip, take) : fdc.Templates(where, null, orderBy, skip, take).Select(t => t.ToJObject()))
                 {
                     if (validate)
                     {
-                        var l = js4.Validate(jo);
+                        var l = js.Validate(jo);
                         if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"Template {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"Template {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
                     }
-                    if (!whatIf) js.Serialize(jtw, jo);
+                    if (!whatIf) (universalTime ? universalTimeJsonSerializer : localTimeJsonSerializer).Serialize(jtw, jo);
                     if (++i % 10000 == 0)
                     {
                         traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
@@ -17091,14 +16870,14 @@ namespace FolioConsoleApplication
             using (var jtw = new JsonTextWriter(Console.Out))
             {
                 jtw.WriteStartArray();
-                foreach (var jo in (api ? fsc.Titles(where, orderBy, skip, take) : fdc.Titles(where, null, orderBy, skip, take).Select(t => JObject.Parse(t.Content))).Select(jo =>
+                foreach (var jo in (api ? fsc.Titles(where, orderBy, skip, take) : fdc.Titles(where, null, orderBy, skip, take).Select(t => t.ToJObject())).Select(jo =>
                 {
                     return select == null ? jo : new JObject(select.Split(',').Select(s =>
                     {
                         var m = Regex.Match(s.Trim(), @"(?<Path>\S+)((?i) as (?<Name>.+))?", RegexOptions.Compiled);
                         return new JProperty(m.Groups["Name"].Success ? m.Groups["Name"].Value : m.Groups["Path"].Value.Split('.').Last(), jo.SelectToken(m.Groups["Path"].Value));
                     }));
-                })) jsonSerializer.Serialize(jtw, jo);
+                })) (universalTime ? universalTimeJsonSerializer : localTimeJsonSerializer).Serialize(jtw, jo);
                 jtw.WriteEndArray();
             }
         }
@@ -17145,18 +16924,17 @@ namespace FolioConsoleApplication
             using (var fsc = new FolioServiceClient(connectionString))
             {
                 var s2 = Stopwatch.StartNew();
-                var js4 = JsonSchema.FromJsonAsync(sr2.ReadToEndAsync().Result).Result;
-                var js = new JsonSerializer();
+                var js = JsonSchema.FromJsonAsync(sr2.ReadToEndAsync().Result).Result;
                 jtr.Read();
                 var i = 0;
                 while (jtr.Read() && jtr.TokenType != JsonToken.EndArray)
                 {
                     if (take != null && take <= i) break;
                     ++i;
-                    var jo = (JObject)js.Deserialize(jtr);
+                    var jo = (JObject)localTimeJsonSerializer.Deserialize(jtr);
                     if (validate)
                     {
-                        var l = js4.Validate(jo);
+                        var l = js.Validate(jo);
                         if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"Title {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"Title {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
                     }
                     if (api)
@@ -17200,18 +16978,17 @@ namespace FolioConsoleApplication
             using (var jtw = new JsonTextWriter(sw))
             {
                 var s2 = Stopwatch.StartNew();
-                var js4 = JsonSchema.FromJsonAsync(sr.ReadToEndAsync().Result).Result;
-                var js = new JsonSerializer { Formatting = Formatting.Indented };
+                var js = JsonSchema.FromJsonAsync(sr.ReadToEndAsync().Result).Result;
                 jtw.WriteStartArray();
                 var i = 0;
-                foreach (var jo in api ? fsc.Titles(where, orderBy, skip, take) : fdc.Titles(where, null, orderBy, skip, take).Select(t => JObject.Parse(t.Content)))
+                foreach (var jo in api ? fsc.Titles(where, orderBy, skip, take) : fdc.Titles(where, null, orderBy, skip, take).Select(t => t.ToJObject()))
                 {
                     if (validate)
                     {
-                        var l = js4.Validate(jo);
+                        var l = js.Validate(jo);
                         if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"Title {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"Title {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
                     }
-                    if (!whatIf) js.Serialize(jtw, jo);
+                    if (!whatIf) (universalTime ? universalTimeJsonSerializer : localTimeJsonSerializer).Serialize(jtw, jo);
                     if (++i % 10000 == 0)
                     {
                         traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
@@ -17232,14 +17009,14 @@ namespace FolioConsoleApplication
             using (var jtw = new JsonTextWriter(Console.Out))
             {
                 jtw.WriteStartArray();
-                foreach (var jo in (api ? fsc.Transactions(where, orderBy, skip, take) : fdc.Transactions(where, null, orderBy, skip, take).Select(t => JObject.Parse(t.Content))).Select(jo =>
+                foreach (var jo in (api ? fsc.Transactions(where, orderBy, skip, take) : fdc.Transactions(where, null, orderBy, skip, take).Select(t => t.ToJObject())).Select(jo =>
                 {
                     return select == null ? jo : new JObject(select.Split(',').Select(s =>
                     {
                         var m = Regex.Match(s.Trim(), @"(?<Path>\S+)((?i) as (?<Name>.+))?", RegexOptions.Compiled);
                         return new JProperty(m.Groups["Name"].Success ? m.Groups["Name"].Value : m.Groups["Path"].Value.Split('.').Last(), jo.SelectToken(m.Groups["Path"].Value));
                     }));
-                })) jsonSerializer.Serialize(jtw, jo);
+                })) (universalTime ? universalTimeJsonSerializer : localTimeJsonSerializer).Serialize(jtw, jo);
                 jtw.WriteEndArray();
             }
         }
@@ -17286,18 +17063,17 @@ namespace FolioConsoleApplication
             using (var fsc = new FolioServiceClient(connectionString))
             {
                 var s2 = Stopwatch.StartNew();
-                var js4 = JsonSchema.FromJsonAsync(sr2.ReadToEndAsync().Result).Result;
-                var js = new JsonSerializer();
+                var js = JsonSchema.FromJsonAsync(sr2.ReadToEndAsync().Result).Result;
                 jtr.Read();
                 var i = 0;
                 while (jtr.Read() && jtr.TokenType != JsonToken.EndArray)
                 {
                     if (take != null && take <= i) break;
                     ++i;
-                    var jo = (JObject)js.Deserialize(jtr);
+                    var jo = (JObject)localTimeJsonSerializer.Deserialize(jtr);
                     if (validate)
                     {
-                        var l = js4.Validate(jo);
+                        var l = js.Validate(jo);
                         if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"Transaction {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"Transaction {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
                     }
                     if (api)
@@ -17341,18 +17117,17 @@ namespace FolioConsoleApplication
             using (var jtw = new JsonTextWriter(sw))
             {
                 var s2 = Stopwatch.StartNew();
-                var js4 = JsonSchema.FromJsonAsync(sr.ReadToEndAsync().Result).Result;
-                var js = new JsonSerializer { Formatting = Formatting.Indented };
+                var js = JsonSchema.FromJsonAsync(sr.ReadToEndAsync().Result).Result;
                 jtw.WriteStartArray();
                 var i = 0;
-                foreach (var jo in api ? fsc.Transactions(where, orderBy, skip, take) : fdc.Transactions(where, null, orderBy, skip, take).Select(t => JObject.Parse(t.Content)))
+                foreach (var jo in api ? fsc.Transactions(where, orderBy, skip, take) : fdc.Transactions(where, null, orderBy, skip, take).Select(t => t.ToJObject()))
                 {
                     if (validate)
                     {
-                        var l = js4.Validate(jo);
+                        var l = js.Validate(jo);
                         if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"Transaction {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"Transaction {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
                     }
-                    if (!whatIf) js.Serialize(jtw, jo);
+                    if (!whatIf) (universalTime ? universalTimeJsonSerializer : localTimeJsonSerializer).Serialize(jtw, jo);
                     if (++i % 10000 == 0)
                     {
                         traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
@@ -17373,14 +17148,14 @@ namespace FolioConsoleApplication
             using (var jtw = new JsonTextWriter(Console.Out))
             {
                 jtw.WriteStartArray();
-                foreach (var jo in (api ? fsc.TransferAccounts(where, orderBy, skip, take) : fdc.TransferAccounts(where, null, orderBy, skip, take).Select(ta => JObject.Parse(ta.Content))).Select(jo =>
+                foreach (var jo in (api ? fsc.TransferAccounts(where, orderBy, skip, take) : fdc.TransferAccounts(where, null, orderBy, skip, take).Select(ta => ta.ToJObject())).Select(jo =>
                 {
                     return select == null ? jo : new JObject(select.Split(',').Select(s =>
                     {
                         var m = Regex.Match(s.Trim(), @"(?<Path>\S+)((?i) as (?<Name>.+))?", RegexOptions.Compiled);
                         return new JProperty(m.Groups["Name"].Success ? m.Groups["Name"].Value : m.Groups["Path"].Value.Split('.').Last(), jo.SelectToken(m.Groups["Path"].Value));
                     }));
-                })) jsonSerializer.Serialize(jtw, jo);
+                })) (universalTime ? universalTimeJsonSerializer : localTimeJsonSerializer).Serialize(jtw, jo);
                 jtw.WriteEndArray();
             }
         }
@@ -17427,18 +17202,17 @@ namespace FolioConsoleApplication
             using (var fsc = new FolioServiceClient(connectionString))
             {
                 var s2 = Stopwatch.StartNew();
-                var js4 = JsonSchema.FromJsonAsync(sr2.ReadToEndAsync().Result).Result;
-                var js = new JsonSerializer();
+                var js = JsonSchema.FromJsonAsync(sr2.ReadToEndAsync().Result).Result;
                 jtr.Read();
                 var i = 0;
                 while (jtr.Read() && jtr.TokenType != JsonToken.EndArray)
                 {
                     if (take != null && take <= i) break;
                     ++i;
-                    var jo = (JObject)js.Deserialize(jtr);
+                    var jo = (JObject)localTimeJsonSerializer.Deserialize(jtr);
                     if (validate)
                     {
-                        var l = js4.Validate(jo);
+                        var l = js.Validate(jo);
                         if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"TransferAccount {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"TransferAccount {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
                     }
                     if (api)
@@ -17482,18 +17256,17 @@ namespace FolioConsoleApplication
             using (var jtw = new JsonTextWriter(sw))
             {
                 var s2 = Stopwatch.StartNew();
-                var js4 = JsonSchema.FromJsonAsync(sr.ReadToEndAsync().Result).Result;
-                var js = new JsonSerializer { Formatting = Formatting.Indented };
+                var js = JsonSchema.FromJsonAsync(sr.ReadToEndAsync().Result).Result;
                 jtw.WriteStartArray();
                 var i = 0;
-                foreach (var jo in api ? fsc.TransferAccounts(where, orderBy, skip, take) : fdc.TransferAccounts(where, null, orderBy, skip, take).Select(ta => JObject.Parse(ta.Content)))
+                foreach (var jo in api ? fsc.TransferAccounts(where, orderBy, skip, take) : fdc.TransferAccounts(where, null, orderBy, skip, take).Select(ta => ta.ToJObject()))
                 {
                     if (validate)
                     {
-                        var l = js4.Validate(jo);
+                        var l = js.Validate(jo);
                         if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"TransferAccount {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"TransferAccount {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
                     }
-                    if (!whatIf) js.Serialize(jtw, jo);
+                    if (!whatIf) (universalTime ? universalTimeJsonSerializer : localTimeJsonSerializer).Serialize(jtw, jo);
                     if (++i % 10000 == 0)
                     {
                         traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
@@ -17514,14 +17287,14 @@ namespace FolioConsoleApplication
             using (var jtw = new JsonTextWriter(Console.Out))
             {
                 jtw.WriteStartArray();
-                foreach (var jo in (api ? fsc.TransferCriterias(where, orderBy, skip, take) : fdc.TransferCriterias(where, null, orderBy, skip, take).Select(tc => JObject.Parse(tc.Content))).Select(jo =>
+                foreach (var jo in (api ? fsc.TransferCriterias(where, orderBy, skip, take) : fdc.TransferCriterias(where, null, orderBy, skip, take).Select(tc => tc.ToJObject())).Select(jo =>
                 {
                     return select == null ? jo : new JObject(select.Split(',').Select(s =>
                     {
                         var m = Regex.Match(s.Trim(), @"(?<Path>\S+)((?i) as (?<Name>.+))?", RegexOptions.Compiled);
                         return new JProperty(m.Groups["Name"].Success ? m.Groups["Name"].Value : m.Groups["Path"].Value.Split('.').Last(), jo.SelectToken(m.Groups["Path"].Value));
                     }));
-                })) jsonSerializer.Serialize(jtw, jo);
+                })) (universalTime ? universalTimeJsonSerializer : localTimeJsonSerializer).Serialize(jtw, jo);
                 jtw.WriteEndArray();
             }
         }
@@ -17568,18 +17341,17 @@ namespace FolioConsoleApplication
             using (var fsc = new FolioServiceClient(connectionString))
             {
                 var s2 = Stopwatch.StartNew();
-                var js4 = JsonSchema.FromJsonAsync(sr2.ReadToEndAsync().Result).Result;
-                var js = new JsonSerializer();
+                var js = JsonSchema.FromJsonAsync(sr2.ReadToEndAsync().Result).Result;
                 jtr.Read();
                 var i = 0;
                 while (jtr.Read() && jtr.TokenType != JsonToken.EndArray)
                 {
                     if (take != null && take <= i) break;
                     ++i;
-                    var jo = (JObject)js.Deserialize(jtr);
+                    var jo = (JObject)localTimeJsonSerializer.Deserialize(jtr);
                     if (validate)
                     {
-                        var l = js4.Validate(jo);
+                        var l = js.Validate(jo);
                         if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"TransferCriteria {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"TransferCriteria {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
                     }
                     if (api)
@@ -17623,18 +17395,17 @@ namespace FolioConsoleApplication
             using (var jtw = new JsonTextWriter(sw))
             {
                 var s2 = Stopwatch.StartNew();
-                var js4 = JsonSchema.FromJsonAsync(sr.ReadToEndAsync().Result).Result;
-                var js = new JsonSerializer { Formatting = Formatting.Indented };
+                var js = JsonSchema.FromJsonAsync(sr.ReadToEndAsync().Result).Result;
                 jtw.WriteStartArray();
                 var i = 0;
-                foreach (var jo in api ? fsc.TransferCriterias(where, orderBy, skip, take) : fdc.TransferCriterias(where, null, orderBy, skip, take).Select(tc => JObject.Parse(tc.Content)))
+                foreach (var jo in api ? fsc.TransferCriterias(where, orderBy, skip, take) : fdc.TransferCriterias(where, null, orderBy, skip, take).Select(tc => tc.ToJObject()))
                 {
                     if (validate)
                     {
-                        var l = js4.Validate(jo);
+                        var l = js.Validate(jo);
                         if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"TransferCriteria {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"TransferCriteria {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
                     }
-                    if (!whatIf) js.Serialize(jtw, jo);
+                    if (!whatIf) (universalTime ? universalTimeJsonSerializer : localTimeJsonSerializer).Serialize(jtw, jo);
                     if (++i % 10000 == 0)
                     {
                         traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
@@ -17655,14 +17426,14 @@ namespace FolioConsoleApplication
             using (var jtw = new JsonTextWriter(Console.Out))
             {
                 jtw.WriteStartArray();
-                foreach (var jo in (api ? fsc.Users(where, orderBy, skip, take) : fdc.Users(where, null, orderBy, skip, take).Select(u => JObject.Parse(u.Content))).Select(jo =>
+                foreach (var jo in (api ? fsc.Users(where, orderBy, skip, take) : fdc.Users(where, null, orderBy, skip, take).Select(u => u.ToJObject())).Select(jo =>
                 {
                     return select == null ? jo : new JObject(select.Split(',').Select(s =>
                     {
                         var m = Regex.Match(s.Trim(), @"(?<Path>\S+)((?i) as (?<Name>.+))?", RegexOptions.Compiled);
                         return new JProperty(m.Groups["Name"].Success ? m.Groups["Name"].Value : m.Groups["Path"].Value.Split('.').Last(), jo.SelectToken(m.Groups["Path"].Value));
                     }));
-                })) jsonSerializer.Serialize(jtw, jo);
+                })) (universalTime ? universalTimeJsonSerializer : localTimeJsonSerializer).Serialize(jtw, jo);
                 jtw.WriteEndArray();
             }
         }
@@ -17709,18 +17480,17 @@ namespace FolioConsoleApplication
             using (var fsc = new FolioServiceClient(connectionString))
             {
                 var s2 = Stopwatch.StartNew();
-                var js4 = JsonSchema.FromJsonAsync(sr2.ReadToEndAsync().Result).Result;
-                var js = new JsonSerializer();
+                var js = JsonSchema.FromJsonAsync(sr2.ReadToEndAsync().Result).Result;
                 jtr.Read();
                 var i = 0;
                 while (jtr.Read() && jtr.TokenType != JsonToken.EndArray)
                 {
                     if (take != null && take <= i) break;
                     ++i;
-                    var jo = (JObject)js.Deserialize(jtr);
+                    var jo = (JObject)localTimeJsonSerializer.Deserialize(jtr);
                     if (validate)
                     {
-                        var l = js4.Validate(jo);
+                        var l = js.Validate(jo);
                         if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"User {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"User {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
                     }
                     if (api)
@@ -17765,13 +17535,12 @@ namespace FolioConsoleApplication
             {
                 var dt = api ? fsc.GetCurrentTime() : fdc.ExecuteScalar<DateTime>("SELECT current_timestamp").ToUniversalTime();
                 dt = dt.AddTicks(-dt.Ticks % TimeSpan.TicksPerMillisecond);
-                var users = api ? fsc.Users().ToArray() : fdc.Query<string>($"SELECT jsonb FROM diku_mod_users.users").Select(s3 => JObject.Parse(s3)).ToArray();
+                var users = api ? fsc.Users().ToArray() : fdc.Query<string>($"SELECT jsonb FROM diku_mod_users.users").Select(s3 => JsonConvert.DeserializeObject<JObject>(s3)).ToArray();
                 var ids = users.ToDictionary(jo => (string)jo["id"]);
                 var externalSystemIds = users.Where(jo => jo.SelectToken("externalSystemId") != null).ToDictionary(jo => (string)jo.SelectToken("externalSystemId"));
                 var usernames = users.Where(jo => jo.SelectToken("username") != null).ToDictionary(jo => (string)jo.SelectToken("username"));
                 var barcodes = users.Where(jo => jo.SelectToken("barcode") != null).ToDictionary(jo => (string)jo.SelectToken("barcode"));
-                var js2 = JsonSchema.FromJsonAsync(sr2.ReadToEndAsync().Result).Result;
-                var js = new JsonSerializer { DateFormatString = "yyyy-MM-ddTHH:mm:ss.FFFK" };
+                var js = JsonSchema.FromJsonAsync(sr2.ReadToEndAsync().Result).Result;
                 var s2 = Stopwatch.StartNew();
                 jtr.Read();
                 int i = 0, j = 0, k = 0;
@@ -17779,7 +17548,7 @@ namespace FolioConsoleApplication
                 {
                     if (take != null && take <= i) break;
                     ++i;
-                    var jo = (JObject)js.Deserialize(jtr);
+                    var jo = (JObject)localTimeJsonSerializer.Deserialize(jtr);
                     if ((string)jo.SelectToken("id") == null && (string)jo.SelectToken("externalSystemId") == null && (string)jo.SelectToken("username") == null && (string)jo.SelectToken("barcode") == null) throw new Exception("No keys found");
                     var jo2 = (string)jo.SelectToken("id") != null && ids.ContainsKey((string)jo.SelectToken("id")) ? ids[(string)jo.SelectToken("id")] : null;
                     if (jo2 == null) jo2 = (string)jo.SelectToken("externalSystemId") != null && externalSystemIds.ContainsKey((string)jo.SelectToken("externalSystemId")) ? externalSystemIds[(string)jo.SelectToken("externalSystemId")] : null;
@@ -17801,7 +17570,7 @@ namespace FolioConsoleApplication
                     jo.RemoveNullAndEmptyProperties();
                     if (validate)
                     {
-                        var l = js2.Validate(jo);
+                        var l = js.Validate(jo);
                         if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"User {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"User {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
                     }
                     if (jo2 != null)
@@ -17846,7 +17615,7 @@ namespace FolioConsoleApplication
                             updatedDate = (DateTime?)jo.SelectToken("metadata.updatedDate"),
                             updatedByUserId = (string)jo.SelectToken("metadata.updatedByUserId")
                         }
-                    }, js) : null;
+                    }, localTimeJsonSerializer) : null;
                     jo3?.RemoveNullAndEmptyProperties();
                     if (api)
                     {
@@ -17916,18 +17685,17 @@ namespace FolioConsoleApplication
             using (var jtw = new JsonTextWriter(sw))
             {
                 var s2 = Stopwatch.StartNew();
-                var js4 = JsonSchema.FromJsonAsync(sr.ReadToEndAsync().Result).Result;
-                var js = new JsonSerializer { Formatting = Formatting.Indented };
+                var js = JsonSchema.FromJsonAsync(sr.ReadToEndAsync().Result).Result;
                 jtw.WriteStartArray();
                 var i = 0;
-                foreach (var jo in api ? fsc.Users(where, orderBy, skip, take) : fdc.Users(where, null, orderBy, skip, take).Select(u => JObject.Parse(u.Content)))
+                foreach (var jo in api ? fsc.Users(where, orderBy, skip, take) : fdc.Users(where, null, orderBy, skip, take).Select(u => u.ToJObject()))
                 {
                     if (validate)
                     {
-                        var l = js4.Validate(jo);
+                        var l = js.Validate(jo);
                         if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"User {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"User {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
                     }
-                    if (!whatIf) js.Serialize(jtw, jo);
+                    if (!whatIf) (universalTime ? universalTimeJsonSerializer : localTimeJsonSerializer).Serialize(jtw, jo);
                     if (++i % 10000 == 0)
                     {
                         traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
@@ -17948,14 +17716,14 @@ namespace FolioConsoleApplication
             using (var jtw = new JsonTextWriter(Console.Out))
             {
                 jtw.WriteStartArray();
-                foreach (var jo in (api ? fsc.UserAcquisitionsUnits(where, orderBy, skip, take) : fdc.UserAcquisitionsUnits(where, null, orderBy, skip, take).Select(uau => JObject.Parse(uau.Content))).Select(jo =>
+                foreach (var jo in (api ? fsc.UserAcquisitionsUnits(where, orderBy, skip, take) : fdc.UserAcquisitionsUnits(where, null, orderBy, skip, take).Select(uau => uau.ToJObject())).Select(jo =>
                 {
                     return select == null ? jo : new JObject(select.Split(',').Select(s =>
                     {
                         var m = Regex.Match(s.Trim(), @"(?<Path>\S+)((?i) as (?<Name>.+))?", RegexOptions.Compiled);
                         return new JProperty(m.Groups["Name"].Success ? m.Groups["Name"].Value : m.Groups["Path"].Value.Split('.').Last(), jo.SelectToken(m.Groups["Path"].Value));
                     }));
-                })) jsonSerializer.Serialize(jtw, jo);
+                })) (universalTime ? universalTimeJsonSerializer : localTimeJsonSerializer).Serialize(jtw, jo);
                 jtw.WriteEndArray();
             }
         }
@@ -18002,18 +17770,17 @@ namespace FolioConsoleApplication
             using (var fsc = new FolioServiceClient(connectionString))
             {
                 var s2 = Stopwatch.StartNew();
-                var js4 = JsonSchema.FromJsonAsync(sr2.ReadToEndAsync().Result).Result;
-                var js = new JsonSerializer();
+                var js = JsonSchema.FromJsonAsync(sr2.ReadToEndAsync().Result).Result;
                 jtr.Read();
                 var i = 0;
                 while (jtr.Read() && jtr.TokenType != JsonToken.EndArray)
                 {
                     if (take != null && take <= i) break;
                     ++i;
-                    var jo = (JObject)js.Deserialize(jtr);
+                    var jo = (JObject)localTimeJsonSerializer.Deserialize(jtr);
                     if (validate)
                     {
-                        var l = js4.Validate(jo);
+                        var l = js.Validate(jo);
                         if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"UserAcquisitionsUnit {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"UserAcquisitionsUnit {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
                     }
                     if (api)
@@ -18057,18 +17824,17 @@ namespace FolioConsoleApplication
             using (var jtw = new JsonTextWriter(sw))
             {
                 var s2 = Stopwatch.StartNew();
-                var js4 = JsonSchema.FromJsonAsync(sr.ReadToEndAsync().Result).Result;
-                var js = new JsonSerializer { Formatting = Formatting.Indented };
+                var js = JsonSchema.FromJsonAsync(sr.ReadToEndAsync().Result).Result;
                 jtw.WriteStartArray();
                 var i = 0;
-                foreach (var jo in api ? fsc.UserAcquisitionsUnits(where, orderBy, skip, take) : fdc.UserAcquisitionsUnits(where, null, orderBy, skip, take).Select(uau => JObject.Parse(uau.Content)))
+                foreach (var jo in api ? fsc.UserAcquisitionsUnits(where, orderBy, skip, take) : fdc.UserAcquisitionsUnits(where, null, orderBy, skip, take).Select(uau => uau.ToJObject()))
                 {
                     if (validate)
                     {
-                        var l = js4.Validate(jo);
+                        var l = js.Validate(jo);
                         if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"UserAcquisitionsUnit {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"UserAcquisitionsUnit {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
                     }
-                    if (!whatIf) js.Serialize(jtw, jo);
+                    if (!whatIf) (universalTime ? universalTimeJsonSerializer : localTimeJsonSerializer).Serialize(jtw, jo);
                     if (++i % 10000 == 0)
                     {
                         traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
@@ -18089,14 +17855,14 @@ namespace FolioConsoleApplication
             using (var jtw = new JsonTextWriter(Console.Out))
             {
                 jtw.WriteStartArray();
-                foreach (var jo in (api ? fsc.UserRequestPreferences(where, orderBy, skip, take) : fdc.UserRequestPreferences(where, null, orderBy, skip, take).Select(urp => JObject.Parse(urp.Content))).Select(jo =>
+                foreach (var jo in (api ? fsc.UserRequestPreferences(where, orderBy, skip, take) : fdc.UserRequestPreferences(where, null, orderBy, skip, take).Select(urp => urp.ToJObject())).Select(jo =>
                 {
                     return select == null ? jo : new JObject(select.Split(',').Select(s =>
                     {
                         var m = Regex.Match(s.Trim(), @"(?<Path>\S+)((?i) as (?<Name>.+))?", RegexOptions.Compiled);
                         return new JProperty(m.Groups["Name"].Success ? m.Groups["Name"].Value : m.Groups["Path"].Value.Split('.').Last(), jo.SelectToken(m.Groups["Path"].Value));
                     }));
-                })) jsonSerializer.Serialize(jtw, jo);
+                })) (universalTime ? universalTimeJsonSerializer : localTimeJsonSerializer).Serialize(jtw, jo);
                 jtw.WriteEndArray();
             }
         }
@@ -18143,18 +17909,17 @@ namespace FolioConsoleApplication
             using (var fsc = new FolioServiceClient(connectionString))
             {
                 var s2 = Stopwatch.StartNew();
-                var js4 = JsonSchema.FromJsonAsync(sr2.ReadToEndAsync().Result).Result;
-                var js = new JsonSerializer();
+                var js = JsonSchema.FromJsonAsync(sr2.ReadToEndAsync().Result).Result;
                 jtr.Read();
                 var i = 0;
                 while (jtr.Read() && jtr.TokenType != JsonToken.EndArray)
                 {
                     if (take != null && take <= i) break;
                     ++i;
-                    var jo = (JObject)js.Deserialize(jtr);
+                    var jo = (JObject)localTimeJsonSerializer.Deserialize(jtr);
                     if (validate)
                     {
-                        var l = js4.Validate(jo);
+                        var l = js.Validate(jo);
                         if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"UserRequestPreference {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"UserRequestPreference {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
                     }
                     if (api)
@@ -18198,18 +17963,17 @@ namespace FolioConsoleApplication
             using (var jtw = new JsonTextWriter(sw))
             {
                 var s2 = Stopwatch.StartNew();
-                var js4 = JsonSchema.FromJsonAsync(sr.ReadToEndAsync().Result).Result;
-                var js = new JsonSerializer { Formatting = Formatting.Indented };
+                var js = JsonSchema.FromJsonAsync(sr.ReadToEndAsync().Result).Result;
                 jtw.WriteStartArray();
                 var i = 0;
-                foreach (var jo in api ? fsc.UserRequestPreferences(where, orderBy, skip, take) : fdc.UserRequestPreferences(where, null, orderBy, skip, take).Select(urp => JObject.Parse(urp.Content)))
+                foreach (var jo in api ? fsc.UserRequestPreferences(where, orderBy, skip, take) : fdc.UserRequestPreferences(where, null, orderBy, skip, take).Select(urp => urp.ToJObject()))
                 {
                     if (validate)
                     {
-                        var l = js4.Validate(jo);
+                        var l = js.Validate(jo);
                         if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"UserRequestPreference {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"UserRequestPreference {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
                     }
-                    if (!whatIf) js.Serialize(jtw, jo);
+                    if (!whatIf) (universalTime ? universalTimeJsonSerializer : localTimeJsonSerializer).Serialize(jtw, jo);
                     if (++i % 10000 == 0)
                     {
                         traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
@@ -18229,14 +17993,14 @@ namespace FolioConsoleApplication
             using (var jtw = new JsonTextWriter(Console.Out))
             {
                 jtw.WriteStartArray();
-                foreach (var jo in (api ? throw new NotSupportedException() : fdc.UserSummaries(where, null, orderBy, skip, take).Select(us => JObject.Parse(us.Content))).Select(jo =>
+                foreach (var jo in (api ? throw new NotSupportedException() : fdc.UserSummaries(where, null, orderBy, skip, take).Select(us => us.ToJObject())).Select(jo =>
                 {
                     return select == null ? jo : new JObject(select.Split(',').Select(s =>
                     {
                         var m = Regex.Match(s.Trim(), @"(?<Path>\S+)((?i) as (?<Name>.+))?", RegexOptions.Compiled);
                         return new JProperty(m.Groups["Name"].Success ? m.Groups["Name"].Value : m.Groups["Path"].Value.Split('.').Last(), jo.SelectToken(m.Groups["Path"].Value));
                     }));
-                })) jsonSerializer.Serialize(jtw, jo);
+                })) (universalTime ? universalTimeJsonSerializer : localTimeJsonSerializer).Serialize(jtw, jo);
                 jtw.WriteEndArray();
             }
         }
@@ -18271,18 +18035,17 @@ namespace FolioConsoleApplication
             using (var fbcc = new FolioBulkCopyContext(connectionString))
             {
                 var s2 = Stopwatch.StartNew();
-                var js4 = JsonSchema.FromJsonAsync(sr2.ReadToEndAsync().Result).Result;
-                var js = new JsonSerializer();
+                var js = JsonSchema.FromJsonAsync(sr2.ReadToEndAsync().Result).Result;
                 jtr.Read();
                 var i = 0;
                 while (jtr.Read() && jtr.TokenType != JsonToken.EndArray)
                 {
                     if (take != null && take <= i) break;
                     ++i;
-                    var jo = (JObject)js.Deserialize(jtr);
+                    var jo = (JObject)localTimeJsonSerializer.Deserialize(jtr);
                     if (validate)
                     {
-                        var l = js4.Validate(jo);
+                        var l = js.Validate(jo);
                         if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"UserSummary {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"UserSummary {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
                     }
                     if (api)
@@ -18320,18 +18083,17 @@ namespace FolioConsoleApplication
             using (var jtw = new JsonTextWriter(sw))
             {
                 var s2 = Stopwatch.StartNew();
-                var js4 = JsonSchema.FromJsonAsync(sr.ReadToEndAsync().Result).Result;
-                var js = new JsonSerializer { Formatting = Formatting.Indented };
+                var js = JsonSchema.FromJsonAsync(sr.ReadToEndAsync().Result).Result;
                 jtw.WriteStartArray();
                 var i = 0;
-                foreach (var jo in api ? throw new NotSupportedException() : fdc.UserSummaries(where, null, orderBy, skip, take).Select(us => JObject.Parse(us.Content)))
+                foreach (var jo in api ? throw new NotSupportedException() : fdc.UserSummaries(where, null, orderBy, skip, take).Select(us => us.ToJObject()))
                 {
                     if (validate)
                     {
-                        var l = js4.Validate(jo);
+                        var l = js.Validate(jo);
                         if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"UserSummary {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"UserSummary {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
                     }
-                    if (!whatIf) js.Serialize(jtw, jo);
+                    if (!whatIf) (universalTime ? universalTimeJsonSerializer : localTimeJsonSerializer).Serialize(jtw, jo);
                     if (++i % 10000 == 0)
                     {
                         traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
@@ -18352,14 +18114,14 @@ namespace FolioConsoleApplication
             using (var jtw = new JsonTextWriter(Console.Out))
             {
                 jtw.WriteStartArray();
-                foreach (var jo in (api ? fsc.Vouchers(where, orderBy, skip, take) : fdc.Vouchers(where, null, orderBy, skip, take).Select(v => JObject.Parse(v.Content))).Select(jo =>
+                foreach (var jo in (api ? fsc.Vouchers(where, orderBy, skip, take) : fdc.Vouchers(where, null, orderBy, skip, take).Select(v => v.ToJObject())).Select(jo =>
                 {
                     return select == null ? jo : new JObject(select.Split(',').Select(s =>
                     {
                         var m = Regex.Match(s.Trim(), @"(?<Path>\S+)((?i) as (?<Name>.+))?", RegexOptions.Compiled);
                         return new JProperty(m.Groups["Name"].Success ? m.Groups["Name"].Value : m.Groups["Path"].Value.Split('.').Last(), jo.SelectToken(m.Groups["Path"].Value));
                     }));
-                })) jsonSerializer.Serialize(jtw, jo);
+                })) (universalTime ? universalTimeJsonSerializer : localTimeJsonSerializer).Serialize(jtw, jo);
                 jtw.WriteEndArray();
             }
         }
@@ -18406,18 +18168,17 @@ namespace FolioConsoleApplication
             using (var fsc = new FolioServiceClient(connectionString))
             {
                 var s2 = Stopwatch.StartNew();
-                var js4 = JsonSchema.FromJsonAsync(sr2.ReadToEndAsync().Result).Result;
-                var js = new JsonSerializer();
+                var js = JsonSchema.FromJsonAsync(sr2.ReadToEndAsync().Result).Result;
                 jtr.Read();
                 var i = 0;
                 while (jtr.Read() && jtr.TokenType != JsonToken.EndArray)
                 {
                     if (take != null && take <= i) break;
                     ++i;
-                    var jo = (JObject)js.Deserialize(jtr);
+                    var jo = (JObject)localTimeJsonSerializer.Deserialize(jtr);
                     if (validate)
                     {
-                        var l = js4.Validate(jo);
+                        var l = js.Validate(jo);
                         if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"Voucher {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"Voucher {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
                     }
                     if (api)
@@ -18461,18 +18222,17 @@ namespace FolioConsoleApplication
             using (var jtw = new JsonTextWriter(sw))
             {
                 var s2 = Stopwatch.StartNew();
-                var js4 = JsonSchema.FromJsonAsync(sr.ReadToEndAsync().Result).Result;
-                var js = new JsonSerializer { Formatting = Formatting.Indented };
+                var js = JsonSchema.FromJsonAsync(sr.ReadToEndAsync().Result).Result;
                 jtw.WriteStartArray();
                 var i = 0;
-                foreach (var jo in api ? fsc.Vouchers(where, orderBy, skip, take) : fdc.Vouchers(where, null, orderBy, skip, take).Select(v => JObject.Parse(v.Content)))
+                foreach (var jo in api ? fsc.Vouchers(where, orderBy, skip, take) : fdc.Vouchers(where, null, orderBy, skip, take).Select(v => v.ToJObject()))
                 {
                     if (validate)
                     {
-                        var l = js4.Validate(jo);
+                        var l = js.Validate(jo);
                         if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"Voucher {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"Voucher {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
                     }
-                    if (!whatIf) js.Serialize(jtw, jo);
+                    if (!whatIf) (universalTime ? universalTimeJsonSerializer : localTimeJsonSerializer).Serialize(jtw, jo);
                     if (++i % 10000 == 0)
                     {
                         traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
@@ -18493,14 +18253,14 @@ namespace FolioConsoleApplication
             using (var jtw = new JsonTextWriter(Console.Out))
             {
                 jtw.WriteStartArray();
-                foreach (var jo in (api ? fsc.VoucherItems(where, orderBy, skip, take) : fdc.VoucherItems(where, null, orderBy, skip, take).Select(vi => JObject.Parse(vi.Content))).Select(jo =>
+                foreach (var jo in (api ? fsc.VoucherItems(where, orderBy, skip, take) : fdc.VoucherItems(where, null, orderBy, skip, take).Select(vi => vi.ToJObject())).Select(jo =>
                 {
                     return select == null ? jo : new JObject(select.Split(',').Select(s =>
                     {
                         var m = Regex.Match(s.Trim(), @"(?<Path>\S+)((?i) as (?<Name>.+))?", RegexOptions.Compiled);
                         return new JProperty(m.Groups["Name"].Success ? m.Groups["Name"].Value : m.Groups["Path"].Value.Split('.').Last(), jo.SelectToken(m.Groups["Path"].Value));
                     }));
-                })) jsonSerializer.Serialize(jtw, jo);
+                })) (universalTime ? universalTimeJsonSerializer : localTimeJsonSerializer).Serialize(jtw, jo);
                 jtw.WriteEndArray();
             }
         }
@@ -18547,18 +18307,17 @@ namespace FolioConsoleApplication
             using (var fsc = new FolioServiceClient(connectionString))
             {
                 var s2 = Stopwatch.StartNew();
-                var js4 = JsonSchema.FromJsonAsync(sr2.ReadToEndAsync().Result).Result;
-                var js = new JsonSerializer();
+                var js = JsonSchema.FromJsonAsync(sr2.ReadToEndAsync().Result).Result;
                 jtr.Read();
                 var i = 0;
                 while (jtr.Read() && jtr.TokenType != JsonToken.EndArray)
                 {
                     if (take != null && take <= i) break;
                     ++i;
-                    var jo = (JObject)js.Deserialize(jtr);
+                    var jo = (JObject)localTimeJsonSerializer.Deserialize(jtr);
                     if (validate)
                     {
-                        var l = js4.Validate(jo);
+                        var l = js.Validate(jo);
                         if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"VoucherItem {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"VoucherItem {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
                     }
                     if (api)
@@ -18602,18 +18361,17 @@ namespace FolioConsoleApplication
             using (var jtw = new JsonTextWriter(sw))
             {
                 var s2 = Stopwatch.StartNew();
-                var js4 = JsonSchema.FromJsonAsync(sr.ReadToEndAsync().Result).Result;
-                var js = new JsonSerializer { Formatting = Formatting.Indented };
+                var js = JsonSchema.FromJsonAsync(sr.ReadToEndAsync().Result).Result;
                 jtw.WriteStartArray();
                 var i = 0;
-                foreach (var jo in api ? fsc.VoucherItems(where, orderBy, skip, take) : fdc.VoucherItems(where, null, orderBy, skip, take).Select(vi => JObject.Parse(vi.Content)))
+                foreach (var jo in api ? fsc.VoucherItems(where, orderBy, skip, take) : fdc.VoucherItems(where, null, orderBy, skip, take).Select(vi => vi.ToJObject()))
                 {
                     if (validate)
                     {
-                        var l = js4.Validate(jo);
+                        var l = js.Validate(jo);
                         if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"VoucherItem {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"VoucherItem {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
                     }
-                    if (!whatIf) js.Serialize(jtw, jo);
+                    if (!whatIf) (universalTime ? universalTimeJsonSerializer : localTimeJsonSerializer).Serialize(jtw, jo);
                     if (++i % 10000 == 0)
                     {
                         traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
@@ -18634,14 +18392,14 @@ namespace FolioConsoleApplication
             using (var jtw = new JsonTextWriter(Console.Out))
             {
                 jtw.WriteStartArray();
-                foreach (var jo in (api ? fsc.WaiveReasons(where, orderBy, skip, take) : fdc.WaiveReasons(where, null, orderBy, skip, take).Select(wr => JObject.Parse(wr.Content))).Select(jo =>
+                foreach (var jo in (api ? fsc.WaiveReasons(where, orderBy, skip, take) : fdc.WaiveReasons(where, null, orderBy, skip, take).Select(wr => wr.ToJObject())).Select(jo =>
                 {
                     return select == null ? jo : new JObject(select.Split(',').Select(s =>
                     {
                         var m = Regex.Match(s.Trim(), @"(?<Path>\S+)((?i) as (?<Name>.+))?", RegexOptions.Compiled);
                         return new JProperty(m.Groups["Name"].Success ? m.Groups["Name"].Value : m.Groups["Path"].Value.Split('.').Last(), jo.SelectToken(m.Groups["Path"].Value));
                     }));
-                })) jsonSerializer.Serialize(jtw, jo);
+                })) (universalTime ? universalTimeJsonSerializer : localTimeJsonSerializer).Serialize(jtw, jo);
                 jtw.WriteEndArray();
             }
         }
@@ -18688,18 +18446,17 @@ namespace FolioConsoleApplication
             using (var fsc = new FolioServiceClient(connectionString))
             {
                 var s2 = Stopwatch.StartNew();
-                var js4 = JsonSchema.FromJsonAsync(sr2.ReadToEndAsync().Result).Result;
-                var js = new JsonSerializer();
+                var js = JsonSchema.FromJsonAsync(sr2.ReadToEndAsync().Result).Result;
                 jtr.Read();
                 var i = 0;
                 while (jtr.Read() && jtr.TokenType != JsonToken.EndArray)
                 {
                     if (take != null && take <= i) break;
                     ++i;
-                    var jo = (JObject)js.Deserialize(jtr);
+                    var jo = (JObject)localTimeJsonSerializer.Deserialize(jtr);
                     if (validate)
                     {
-                        var l = js4.Validate(jo);
+                        var l = js.Validate(jo);
                         if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"WaiveReason {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"WaiveReason {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
                     }
                     if (api)
@@ -18743,18 +18500,17 @@ namespace FolioConsoleApplication
             using (var jtw = new JsonTextWriter(sw))
             {
                 var s2 = Stopwatch.StartNew();
-                var js4 = JsonSchema.FromJsonAsync(sr.ReadToEndAsync().Result).Result;
-                var js = new JsonSerializer { Formatting = Formatting.Indented };
+                var js = JsonSchema.FromJsonAsync(sr.ReadToEndAsync().Result).Result;
                 jtw.WriteStartArray();
                 var i = 0;
-                foreach (var jo in api ? fsc.WaiveReasons(where, orderBy, skip, take) : fdc.WaiveReasons(where, null, orderBy, skip, take).Select(wr => JObject.Parse(wr.Content)))
+                foreach (var jo in api ? fsc.WaiveReasons(where, orderBy, skip, take) : fdc.WaiveReasons(where, null, orderBy, skip, take).Select(wr => wr.ToJObject()))
                 {
                     if (validate)
                     {
-                        var l = js4.Validate(jo);
+                        var l = js.Validate(jo);
                         if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"WaiveReason {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"WaiveReason {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
                     }
-                    if (!whatIf) js.Serialize(jtw, jo);
+                    if (!whatIf) (universalTime ? universalTimeJsonSerializer : localTimeJsonSerializer).Serialize(jtw, jo);
                     if (++i % 10000 == 0)
                     {
                         traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");

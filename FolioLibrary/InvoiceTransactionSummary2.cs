@@ -49,7 +49,7 @@ namespace FolioLibrary
             Id = (Guid?)jObject.SelectToken("id"),
             NumPendingPayments = (int?)jObject.SelectToken("numPendingPayments"),
             NumPaymentsCredits = (int?)jObject.SelectToken("numPaymentsCredits"),
-            Content = jObject.ToString()
+            Content = JsonConvert.SerializeObject(jObject, FolioDapperContext.UniversalTimeJsonSerializationSettings)
         } : null;
 
         public JObject ToJObject() => new JObject(

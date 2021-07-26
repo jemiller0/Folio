@@ -153,10 +153,10 @@ namespace FolioLibrary
             Currency = (string)jObject.SelectToken("currency"),
             RestrictEncumbrance = (bool?)jObject.SelectToken("restrictEncumbrance"),
             RestrictExpenditures = (bool?)jObject.SelectToken("restrictExpenditures"),
-            CreationTime = ((DateTime?)jObject.SelectToken("metadata.createdDate"))?.ToLocalTime(),
+            CreationTime = (DateTime?)jObject.SelectToken("metadata.createdDate"),
             CreationUserId = (Guid?)jObject.SelectToken("metadata.createdByUserId"),
             CreationUserUsername = (string)jObject.SelectToken("metadata.createdByUsername"),
-            LastWriteTime = ((DateTime?)jObject.SelectToken("metadata.updatedDate"))?.ToLocalTime(),
+            LastWriteTime = (DateTime?)jObject.SelectToken("metadata.updatedDate"),
             LastWriteUserId = (Guid?)jObject.SelectToken("metadata.updatedByUserId"),
             LastWriteUserUsername = (string)jObject.SelectToken("metadata.updatedByUsername"),
             InitialAllocation = (decimal?)jObject.SelectToken("initialAllocation"),
@@ -169,7 +169,7 @@ namespace FolioLibrary
             Expenditures = (decimal?)jObject.SelectToken("expenditures"),
             OverEncumbrance = (decimal?)jObject.SelectToken("overEncumbrance"),
             OverExpended = (decimal?)jObject.SelectToken("overExpended"),
-            Content = jObject.ToString(),
+            Content = JsonConvert.SerializeObject(jObject, FolioDapperContext.UniversalTimeJsonSerializationSettings),
             LedgerAcquisitionsUnits = jObject.SelectToken("acqUnitIds")?.Where(jt => jt.HasValues).Select(jt => LedgerAcquisitionsUnit.FromJObject((JValue)jt)).ToArray()
         } : null;
 
@@ -188,10 +188,10 @@ namespace FolioLibrary
             new JProperty("restrictEncumbrance", RestrictEncumbrance),
             new JProperty("restrictExpenditures", RestrictExpenditures),
             new JProperty("metadata", new JObject(
-                new JProperty("createdDate", CreationTime?.ToUniversalTime()),
+                new JProperty("createdDate", CreationTime),
                 new JProperty("createdByUserId", CreationUserId),
                 new JProperty("createdByUsername", CreationUserUsername),
-                new JProperty("updatedDate", LastWriteTime?.ToUniversalTime()),
+                new JProperty("updatedDate", LastWriteTime),
                 new JProperty("updatedByUserId", LastWriteUserId),
                 new JProperty("updatedByUsername", LastWriteUserUsername))),
             new JProperty("initialAllocation", InitialAllocation),

@@ -1,3 +1,4 @@
+using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using NJsonSchema;
 using System;
@@ -40,10 +41,10 @@ namespace FolioLibrary
         public static OrderInvoice FromJObject(JObject jObject) => jObject != null ? new OrderInvoice
         {
             Id = (Guid?)jObject.SelectToken("id"),
-            Content = jObject.ToString(),
+            Content = JsonConvert.SerializeObject(jObject, FolioDapperContext.UniversalTimeJsonSerializationSettings),
             Purchaseorderid = (Guid?)jObject.SelectToken("purchaseOrderId")
         } : null;
 
-        public JObject ToJObject() => JObject.Parse(Content);
+        public JObject ToJObject() => JsonConvert.DeserializeObject<JObject>(Content, FolioDapperContext.LocalTimeJsonSerializationSettings);
     }
 }

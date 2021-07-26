@@ -93,9 +93,9 @@ namespace FolioLibrary
             Order = (int?)jObject.SelectToken("order"),
             SuppressDiscovery = (bool?)jObject.SelectToken("additionalInfo.suppressDiscovery"),
             CreationUserId = (Guid?)jObject.SelectToken("metadata.createdByUserId"),
-            CreationTime = ((DateTime?)jObject.SelectToken("metadata.createdDate"))?.ToLocalTime(),
+            CreationTime = (DateTime?)jObject.SelectToken("metadata.createdDate"),
             LastWriteUserId = (Guid?)jObject.SelectToken("metadata.updatedByUserId"),
-            LastWriteTime = ((DateTime?)jObject.SelectToken("metadata.updatedDate"))?.ToLocalTime()
+            LastWriteTime = (DateTime?)jObject.SelectToken("metadata.updatedDate")
         } : null;
 
         public JObject ToJObject() => new JObject(
@@ -113,8 +113,8 @@ namespace FolioLibrary
                 new JProperty("suppressDiscovery", SuppressDiscovery))),
             new JProperty("metadata", new JObject(
                 new JProperty("createdByUserId", CreationUserId),
-                new JProperty("createdDate", CreationTime?.ToUniversalTime()),
+                new JProperty("createdDate", CreationTime),
                 new JProperty("updatedByUserId", LastWriteUserId),
-                new JProperty("updatedDate", LastWriteTime?.ToUniversalTime())))).RemoveNullAndEmptyProperties();
+                new JProperty("updatedDate", LastWriteTime)))).RemoveNullAndEmptyProperties();
     }
 }

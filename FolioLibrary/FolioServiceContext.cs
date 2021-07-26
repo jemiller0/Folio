@@ -9,11 +9,6 @@ namespace FolioLibrary
     public class FolioServiceContext : IDisposable
     {
         public FolioServiceClient FolioServiceClient { get; set; } = new FolioServiceClient();
-        private readonly static JsonSerializerSettings jsonSerializerSettings = new JsonSerializerSettings
-        {
-            ContractResolver = new CamelCasePropertyNamesContractResolver(),
-            DateFormatString = "yyyy-MM-ddTHH:mm:ss.FFFK"
-        };
         Dictionary<Guid, object> objects = new Dictionary<Guid, object>();
 
         public bool AnyAcquisitionsUnit2s(string where = null) => FolioServiceClient.AnyAcquisitionsUnits(where);

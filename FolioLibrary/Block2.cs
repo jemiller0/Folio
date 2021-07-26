@@ -100,18 +100,18 @@ namespace FolioLibrary
             Code = (string)jObject.SelectToken("code"),
             StaffInformation = (string)jObject.SelectToken("staffInformation"),
             PatronMessage = (string)jObject.SelectToken("patronMessage"),
-            ExpirationDate = ((DateTime?)jObject.SelectToken("expirationDate"))?.ToLocalTime(),
+            ExpirationDate = (DateTime?)jObject.SelectToken("expirationDate"),
             Borrowing = (bool?)jObject.SelectToken("borrowing"),
             Renewals = (bool?)jObject.SelectToken("renewals"),
             Requests = (bool?)jObject.SelectToken("requests"),
             UserId = (Guid?)jObject.SelectToken("userId"),
-            CreationTime = ((DateTime?)jObject.SelectToken("metadata.createdDate"))?.ToLocalTime(),
+            CreationTime = (DateTime?)jObject.SelectToken("metadata.createdDate"),
             CreationUserId = (Guid?)jObject.SelectToken("metadata.createdByUserId"),
             CreationUserUsername = (string)jObject.SelectToken("metadata.createdByUsername"),
-            LastWriteTime = ((DateTime?)jObject.SelectToken("metadata.updatedDate"))?.ToLocalTime(),
+            LastWriteTime = (DateTime?)jObject.SelectToken("metadata.updatedDate"),
             LastWriteUserId = (Guid?)jObject.SelectToken("metadata.updatedByUserId"),
             LastWriteUserUsername = (string)jObject.SelectToken("metadata.updatedByUsername"),
-            Content = jObject.ToString()
+            Content = JsonConvert.SerializeObject(jObject, FolioDapperContext.UniversalTimeJsonSerializationSettings)
         } : null;
 
         public JObject ToJObject() => new JObject(
@@ -121,16 +121,16 @@ namespace FolioLibrary
             new JProperty("code", Code),
             new JProperty("staffInformation", StaffInformation),
             new JProperty("patronMessage", PatronMessage),
-            new JProperty("expirationDate", ExpirationDate?.ToUniversalTime()),
+            new JProperty("expirationDate", ExpirationDate),
             new JProperty("borrowing", Borrowing),
             new JProperty("renewals", Renewals),
             new JProperty("requests", Requests),
             new JProperty("userId", UserId),
             new JProperty("metadata", new JObject(
-                new JProperty("createdDate", CreationTime?.ToUniversalTime()),
+                new JProperty("createdDate", CreationTime),
                 new JProperty("createdByUserId", CreationUserId),
                 new JProperty("createdByUsername", CreationUserUsername),
-                new JProperty("updatedDate", LastWriteTime?.ToUniversalTime()),
+                new JProperty("updatedDate", LastWriteTime),
                 new JProperty("updatedByUserId", LastWriteUserId),
                 new JProperty("updatedByUsername", LastWriteUserUsername)))).RemoveNullAndEmptyProperties();
     }

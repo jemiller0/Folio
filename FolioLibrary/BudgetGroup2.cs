@@ -66,7 +66,7 @@ namespace FolioLibrary
             GroupId = (Guid?)jObject.SelectToken("groupId"),
             FiscalYearId = (Guid?)jObject.SelectToken("fiscalYearId"),
             FundId = (Guid?)jObject.SelectToken("fundId"),
-            Content = jObject.ToString()
+            Content = JsonConvert.SerializeObject(jObject, FolioDapperContext.UniversalTimeJsonSerializationSettings)
         } : null;
 
         public JObject ToJObject() => new JObject(

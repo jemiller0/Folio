@@ -71,19 +71,19 @@ namespace FolioLibrary
         public static CheckIn2 FromJObject(JObject jObject) => jObject != null ? new CheckIn2
         {
             Id = (Guid?)jObject.SelectToken("id"),
-            OccurredDateTime = ((DateTime?)jObject.SelectToken("occurredDateTime"))?.ToLocalTime(),
+            OccurredDateTime = (DateTime?)jObject.SelectToken("occurredDateTime"),
             ItemId = (Guid?)jObject.SelectToken("itemId"),
             ItemStatusPriorToCheckIn = (string)jObject.SelectToken("itemStatusPriorToCheckIn"),
             RequestQueueSize = (int?)jObject.SelectToken("requestQueueSize"),
             ItemLocationId = (Guid?)jObject.SelectToken("itemLocationId"),
             ServicePointId = (Guid?)jObject.SelectToken("servicePointId"),
             PerformedByUserId = (Guid?)jObject.SelectToken("performedByUserId"),
-            Content = jObject.ToString()
+            Content = JsonConvert.SerializeObject(jObject, FolioDapperContext.UniversalTimeJsonSerializationSettings)
         } : null;
 
         public JObject ToJObject() => new JObject(
             new JProperty("id", Id),
-            new JProperty("occurredDateTime", OccurredDateTime?.ToUniversalTime()),
+            new JProperty("occurredDateTime", OccurredDateTime),
             new JProperty("itemId", ItemId),
             new JProperty("itemStatusPriorToCheckIn", ItemStatusPriorToCheckIn),
             new JProperty("requestQueueSize", RequestQueueSize),

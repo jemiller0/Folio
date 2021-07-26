@@ -32,11 +32,11 @@ namespace FolioLibrary
         public static OrganizationChangelog FromJObject(JObject jObject) => jObject != null ? new OrganizationChangelog
         {
             Description = (string)jObject.SelectToken("description"),
-            Timestamp = ((DateTime?)jObject.SelectToken("timestamp"))?.ToLocalTime()
+            Timestamp = (DateTime?)jObject.SelectToken("timestamp")
         } : null;
 
         public JObject ToJObject() => new JObject(
             new JProperty("description", Description),
-            new JProperty("timestamp", Timestamp?.ToUniversalTime())).RemoveNullAndEmptyProperties();
+            new JProperty("timestamp", Timestamp)).RemoveNullAndEmptyProperties();
     }
 }
