@@ -1379,7 +1379,7 @@ namespace FolioConsoleApplication
                 if (load && feeTypesPath != null) LoadFeeTypes(feeTypesPath);
                 if (load && feesPath != null) LoadFees(feesPath);
                 if (load && paymentsPath != null) LoadPayments(paymentsPath);
-                if (update && usersPath != null) UpdateUsers(usersPath, usersWhere, disable);
+                if (update && usersPath != null) UpdateUsers(usersPath, usersWhere ?? where, disable);
             }
             catch (Exception e)
             {
@@ -17533,7 +17533,7 @@ namespace FolioConsoleApplication
             using (var fdc = new FolioDapperContext(connectionString))
             using (var fsc = new FolioServiceClient(connectionString))
             {
-                var dt = api ? fsc.GetCurrentTime() : fdc.ExecuteScalar<DateTime>("SELECT current_timestamp").ToUniversalTime();
+                var dt = api ? fsc.GetCurrentTime() : fdc.ExecuteScalar<DateTime>("SELECT current_timestamp");
                 dt = dt.AddTicks(-dt.Ticks % TimeSpan.TicksPerMillisecond);
                 var users = api ? fsc.Users().ToArray() : fdc.Query<string>($"SELECT jsonb FROM diku_mod_users.users").Select(s3 => JsonConvert.DeserializeObject<JObject>(s3)).ToArray();
                 var ids = users.ToDictionary(jo => (string)jo["id"]);
@@ -17645,10 +17645,19 @@ namespace FolioConsoleApplication
                 traceSource.TraceEvent(TraceEventType.Information, 0, $"Updated {k} users");
                 if (disable)
                 {
-                    if (api) throw new NotImplementedException();
+                    if (api)
+                    {
+                        k = 0;
+                        foreach (var u in fsc.Users($"{(where != null ? $"{where} and " : "")}active == true and metadata.updatedDate <= \"{dt.ToUniversalTime():yyyy-MM-ddTHH:mm:ss.fff+00:00}\""))
+                        {
+                            u["active"] = false;
+                            fsc.UpdateUser(u);
+                            ++k;
+                        }
+                    }
                     else
                     {
-                        k = fdc.Execute($"UPDATE diku_mod_users.users SET jsonb = jsonb_set(jsonb, '{{active}}', 'false') WHERE (jsonb->>'active')::BOOLEAN = true AND (jsonb#>>'{{metadata,updatedDate}}')::timestamptz < @dt::timestamptz AND id != '{userId}'{(where != null ? $" AND {where}" : "")}", new { dt = dt.ToLocalTime() });
+                        k = fdc.Execute($"UPDATE diku_mod_users.users SET jsonb = jsonb_set(jsonb_set(jsonb_set(jsonb, '{{active}}', 'false'), '{{metadata,updatedDate}}', '\"{dt.ToUniversalTime():yyyy-MM-ddTHH:mm:ss.fff+00:00}\"'), '{{metadata,updatedByUserId}}', '\"{userId}\"') WHERE (jsonb->>'active')::BOOLEAN = true AND (jsonb#>>'{{metadata,updatedDate}}')::timestamptz < @dt::timestamptz AND id != '{userId}'{(where != null ? $" AND {where}" : "")}", new { dt });
                         fdc.Commit();
                     }
                     traceSource.TraceEvent(TraceEventType.Information, 0, $"Disabled {k} users");
