@@ -52,7 +52,7 @@ namespace FolioLibrary
 
         public JObject ToJObject() => new JObject(
             new JProperty("loanId", LoanId),
-            new JProperty("dueDate", DueDate),
+            new JProperty("dueDate", DueDate?.ToLocalTime()),
             new JProperty("recall", Recall),
             new JProperty("itemLost", ItemLost),
             new JProperty("itemClaimedReturned", ItemClaimedReturned)).RemoveNullAndEmptyProperties();

@@ -140,7 +140,7 @@ namespace FolioLibrary
             new JProperty("requestId", RequestId),
             new JProperty("feeFineActionId", PaymentId),
             new JProperty("recipientUserId", RecipientUserId),
-            new JProperty("nextRunTime", NextRunTime),
+            new JProperty("nextRunTime", NextRunTime?.ToLocalTime()),
             new JProperty("triggeringEvent", TriggeringEvent),
             new JProperty("noticeConfig", new JObject(
                 new JProperty("timing", NoticeConfigTiming),
@@ -151,10 +151,10 @@ namespace FolioLibrary
                 new JProperty("format", NoticeConfigFormat),
                 new JProperty("sendInRealTime", NoticeConfigSendInRealTime))),
             new JProperty("metadata", new JObject(
-                new JProperty("createdDate", CreationTime),
+                new JProperty("createdDate", CreationTime?.ToLocalTime()),
                 new JProperty("createdByUserId", CreationUserId),
                 new JProperty("createdByUsername", CreationUserUsername),
-                new JProperty("updatedDate", LastWriteTime),
+                new JProperty("updatedDate", LastWriteTime?.ToLocalTime()),
                 new JProperty("updatedByUserId", LastWriteUserId),
                 new JProperty("updatedByUsername", LastWriteUserUsername)))).RemoveNullAndEmptyProperties();
     }

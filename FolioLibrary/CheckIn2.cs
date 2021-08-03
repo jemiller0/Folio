@@ -83,7 +83,7 @@ namespace FolioLibrary
 
         public JObject ToJObject() => new JObject(
             new JProperty("id", Id),
-            new JProperty("occurredDateTime", OccurredDateTime),
+            new JProperty("occurredDateTime", OccurredDateTime?.ToLocalTime()),
             new JProperty("itemId", ItemId),
             new JProperty("itemStatusPriorToCheckIn", ItemStatusPriorToCheckIn),
             new JProperty("requestQueueSize", RequestQueueSize),

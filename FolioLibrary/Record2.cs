@@ -113,8 +113,8 @@ namespace FolioLibrary
                 new JProperty("suppressDiscovery", SuppressDiscovery))),
             new JProperty("metadata", new JObject(
                 new JProperty("createdByUserId", CreationUserId),
-                new JProperty("createdDate", CreationTime),
+                new JProperty("createdDate", CreationTime?.ToLocalTime()),
                 new JProperty("updatedByUserId", LastWriteUserId),
-                new JProperty("updatedDate", LastWriteTime)))).RemoveNullAndEmptyProperties();
+                new JProperty("updatedDate", LastWriteTime?.ToLocalTime())))).RemoveNullAndEmptyProperties();
     }
 }

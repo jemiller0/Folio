@@ -94,10 +94,10 @@ namespace FolioLibrary
             new JProperty("addressType", Name),
             new JProperty("desc", Description),
             new JProperty("metadata", new JObject(
-                new JProperty("createdDate", CreationTime),
+                new JProperty("createdDate", CreationTime?.ToLocalTime()),
                 new JProperty("createdByUserId", CreationUserId),
                 new JProperty("createdByUsername", CreationUserUsername),
-                new JProperty("updatedDate", LastWriteTime),
+                new JProperty("updatedDate", LastWriteTime?.ToLocalTime()),
                 new JProperty("updatedByUserId", LastWriteUserId),
                 new JProperty("updatedByUsername", LastWriteUserUsername)))).RemoveNullAndEmptyProperties();
     }

@@ -90,10 +90,10 @@ namespace FolioLibrary
             new JProperty("isPrimary", IsPrimary),
             new JProperty("language", Language),
             new JProperty("metadata", new JObject(
-                new JProperty("createdDate", CreationTime),
+                new JProperty("createdDate", CreationTime?.ToLocalTime()),
                 new JProperty("createdByUserId", CreationUserId),
                 new JProperty("createdByUsername", CreationUserUsername),
-                new JProperty("updatedDate", LastWriteTime),
+                new JProperty("updatedDate", LastWriteTime?.ToLocalTime()),
                 new JProperty("updatedByUserId", LastWriteUserId),
                 new JProperty("updatedByUsername", LastWriteUserUsername))),
             new JProperty("categories", ContactPhoneNumberCategories?.Select(cpnc => cpnc.ToJObject()))).RemoveNullAndEmptyProperties();

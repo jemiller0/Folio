@@ -428,7 +428,7 @@ namespace FolioLibrary
                     new JProperty("notes", EdiFtpNotes))),
                 new JProperty("ediJob", new JObject(
                     new JProperty("scheduleEdi", EdiJobScheduleEdi),
-                    new JProperty("schedulingDate", EdiJobSchedulingDate),
+                    new JProperty("schedulingDate", EdiJobSchedulingDate?.ToLocalTime()),
                     new JProperty("time", EdiJobTime),
                     new JProperty("isMonday", EdiJobIsMonday),
                     new JProperty("isTuesday", EdiJobIsTuesday),
@@ -445,10 +445,10 @@ namespace FolioLibrary
             new JProperty("isVendor", IsVendor),
             new JProperty("sanCode", SanCode),
             new JProperty("metadata", new JObject(
-                new JProperty("createdDate", CreationTime),
+                new JProperty("createdDate", CreationTime?.ToLocalTime()),
                 new JProperty("createdByUserId", CreationUserId),
                 new JProperty("createdByUsername", CreationUserUsername),
-                new JProperty("updatedDate", LastWriteTime),
+                new JProperty("updatedDate", LastWriteTime?.ToLocalTime()),
                 new JProperty("updatedByUserId", LastWriteUserId),
                 new JProperty("updatedByUsername", LastWriteUserUsername))),
             new JProperty("vendorCurrencies", Currencies?.Select(c => c.ToJObject())),

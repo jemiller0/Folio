@@ -121,16 +121,16 @@ namespace FolioLibrary
             new JProperty("code", Code),
             new JProperty("staffInformation", StaffInformation),
             new JProperty("patronMessage", PatronMessage),
-            new JProperty("expirationDate", ExpirationDate),
+            new JProperty("expirationDate", ExpirationDate?.ToLocalTime()),
             new JProperty("borrowing", Borrowing),
             new JProperty("renewals", Renewals),
             new JProperty("requests", Requests),
             new JProperty("userId", UserId),
             new JProperty("metadata", new JObject(
-                new JProperty("createdDate", CreationTime),
+                new JProperty("createdDate", CreationTime?.ToLocalTime()),
                 new JProperty("createdByUserId", CreationUserId),
                 new JProperty("createdByUsername", CreationUserUsername),
-                new JProperty("updatedDate", LastWriteTime),
+                new JProperty("updatedDate", LastWriteTime?.ToLocalTime()),
                 new JProperty("updatedByUserId", LastWriteUserId),
                 new JProperty("updatedByUsername", LastWriteUserUsername)))).RemoveNullAndEmptyProperties();
     }

@@ -153,10 +153,10 @@ namespace FolioLibrary
                 new JProperty("firstName", UpdaterFirstName),
                 new JProperty("middleName", UpdaterMiddleName))),
             new JProperty("metadata", new JObject(
-                new JProperty("createdDate", CreationTime),
+                new JProperty("createdDate", CreationTime?.ToLocalTime()),
                 new JProperty("createdByUserId", CreationUserId),
                 new JProperty("createdByUsername", CreationUserUsername),
-                new JProperty("updatedDate", LastWriteTime),
+                new JProperty("updatedDate", LastWriteTime?.ToLocalTime()),
                 new JProperty("updatedByUserId", LastWriteUserId),
                 new JProperty("updatedByUsername", LastWriteUserUsername))),
             new JProperty("links", NoteLinks?.Select(nl => nl.ToJObject()))).RemoveNullAndEmptyProperties();

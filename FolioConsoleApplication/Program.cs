@@ -28,8 +28,8 @@ namespace FolioConsoleApplication
         private static string emailAddress = ConfigurationManager.AppSettings["emailAddress"];
         private static string emailName = ConfigurationManager.AppSettings["emailName"];
         private static bool force;
-        private static JsonSerializer localTimeJsonSerializer = new JsonSerializer { Formatting = Formatting.Indented, DateTimeZoneHandling = DateTimeZoneHandling.Local };
-        private static JsonSerializer universalTimeJsonSerializer = new JsonSerializer { Formatting = Formatting.Indented, DateTimeZoneHandling = DateTimeZoneHandling.Utc, DateFormatString = "yyyy-MM-ddTHH:mm:ss.fff+00:00" };
+        private readonly static JsonSerializer localTimeJsonSerializer = new JsonSerializer { Formatting = Formatting.Indented, DateTimeZoneHandling = DateTimeZoneHandling.Local };
+        private readonly static JsonSerializer universalTimeJsonSerializer = new JsonSerializer { Formatting = Formatting.Indented, DateTimeZoneHandling = DateTimeZoneHandling.Utc, DateFormatString = "yyyy-MM-ddTHH:mm:ss.fff+00:00" };
         public static string orderBy;
         private static int? skip;
         private static string smtpHost = ConfigurationManager.AppSettings["smtpHost"];
@@ -14899,10 +14899,10 @@ namespace FolioConsoleApplication
                     d.leaderRecordStatus,
                     metadata = new
                     {
-                        createdDate = d.createdDate?.ToUniversalTime(),
+                        d.createdDate,
                         d.createdByUserId,
                         d.createdByUsername,
-                        updatedDate = d.updatedDate?.ToUniversalTime(),
+                        d.updatedDate,
                         d.updatedByUserId,
                         d.updatedByUsername
                     }

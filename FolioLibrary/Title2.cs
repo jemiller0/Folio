@@ -147,7 +147,7 @@ namespace FolioLibrary
 
         public JObject ToJObject() => new JObject(
             new JProperty("id", Id),
-            new JProperty("expectedReceiptDate", ExpectedReceiptDate),
+            new JProperty("expectedReceiptDate", ExpectedReceiptDate?.ToLocalTime()),
             new JProperty("title", Title),
             new JProperty("poLineId", OrderItemId),
             new JProperty("instanceId", InstanceId),
@@ -157,15 +157,15 @@ namespace FolioLibrary
             new JProperty("poLineNumber", OrderItemNumber),
             new JProperty("publishedDate", PublishedDate),
             new JProperty("receivingNote", ReceivingNote),
-            new JProperty("subscriptionFrom", SubscriptionFrom),
-            new JProperty("subscriptionTo", SubscriptionTo),
+            new JProperty("subscriptionFrom", SubscriptionFrom?.ToLocalTime()),
+            new JProperty("subscriptionTo", SubscriptionTo?.ToLocalTime()),
             new JProperty("subscriptionInterval", SubscriptionInterval),
             new JProperty("isAcknowledged", IsAcknowledged),
             new JProperty("metadata", new JObject(
-                new JProperty("createdDate", CreationTime),
+                new JProperty("createdDate", CreationTime?.ToLocalTime()),
                 new JProperty("createdByUserId", CreationUserId),
                 new JProperty("createdByUsername", CreationUserUsername),
-                new JProperty("updatedDate", LastWriteTime),
+                new JProperty("updatedDate", LastWriteTime?.ToLocalTime()),
                 new JProperty("updatedByUserId", LastWriteUserId),
                 new JProperty("updatedByUsername", LastWriteUserUsername))),
             new JProperty("contributors", TitleContributors?.Select(tc => tc.ToJObject())),

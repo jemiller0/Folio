@@ -59,7 +59,7 @@ namespace FolioLibrary
         public JObject ToJObject() => new JObject(
             new JProperty("id", Id),
             new JProperty("userId", UserId),
-            new JProperty("lastAttempt", LastAttempt),
+            new JProperty("lastAttempt", LastAttempt?.ToLocalTime()),
             new JProperty("attemptCount", AttemptCount)).RemoveNullAndEmptyProperties();
     }
 }

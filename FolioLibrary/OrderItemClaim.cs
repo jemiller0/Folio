@@ -41,7 +41,7 @@ namespace FolioLibrary
 
         public JObject ToJObject() => new JObject(
             new JProperty("claimed", Claimed),
-            new JProperty("sent", Sent),
+            new JProperty("sent", Sent?.ToLocalTime()),
             new JProperty("grace", Grace)).RemoveNullAndEmptyProperties();
     }
 }

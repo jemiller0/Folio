@@ -105,10 +105,10 @@ namespace FolioLibrary
             new JProperty("title", Title),
             new JProperty("hrid", Hrid),
             new JProperty("metadata", new JObject(
-                new JProperty("createdDate", CreationTime),
+                new JProperty("createdDate", CreationTime?.ToLocalTime()),
                 new JProperty("createdByUserId", CreationUserId),
                 new JProperty("createdByUsername", CreationUserUsername),
-                new JProperty("updatedDate", LastWriteTime),
+                new JProperty("updatedDate", LastWriteTime?.ToLocalTime()),
                 new JProperty("updatedByUserId", LastWriteUserId),
                 new JProperty("updatedByUsername", LastWriteUserUsername))),
             new JProperty("identifiers", PrecedingSucceedingTitleIdentifiers?.Select(psti => psti.ToJObject()))).RemoveNullAndEmptyProperties();

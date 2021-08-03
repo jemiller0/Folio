@@ -79,7 +79,7 @@ namespace FolioLibrary
             new JProperty("state", State),
             new JProperty("chunkSize", ChunkSize),
             new JProperty("processedAmount", ProcessedAmount),
-            new JProperty("completedDate", CompletedDate),
+            new JProperty("completedDate", CompletedDate?.ToLocalTime()),
             new JProperty("error", Error)).RemoveNullAndEmptyProperties();
     }
 }

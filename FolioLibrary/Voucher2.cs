@@ -191,7 +191,7 @@ namespace FolioLibrary
             new JProperty("amount", Amount),
             new JProperty("batchGroupId", BatchGroupId),
             new JProperty("disbursementNumber", DisbursementNumber),
-            new JProperty("disbursementDate", DisbursementDate),
+            new JProperty("disbursementDate", DisbursementDate?.ToLocalTime()),
             new JProperty("disbursementAmount", DisbursementAmount),
             new JProperty("enclosureNeeded", EnclosureNeeded),
             new JProperty("invoiceCurrency", InvoiceCurrency),
@@ -201,7 +201,7 @@ namespace FolioLibrary
             new JProperty("status", Status),
             new JProperty("systemCurrency", SystemCurrency),
             new JProperty("type", Type),
-            new JProperty("voucherDate", VoucherDate),
+            new JProperty("voucherDate", VoucherDate?.ToLocalTime()),
             new JProperty("voucherNumber", Number),
             new JProperty("vendorId", VendorId),
             new JProperty("vendorAddress", new JObject(
@@ -212,10 +212,10 @@ namespace FolioLibrary
                 new JProperty("zipCode", VendorPostalCode),
                 new JProperty("country", VendorCountryCode))),
             new JProperty("metadata", new JObject(
-                new JProperty("createdDate", CreationTime),
+                new JProperty("createdDate", CreationTime?.ToLocalTime()),
                 new JProperty("createdByUserId", CreationUserId),
                 new JProperty("createdByUsername", CreationUserUsername),
-                new JProperty("updatedDate", LastWriteTime),
+                new JProperty("updatedDate", LastWriteTime?.ToLocalTime()),
                 new JProperty("updatedByUserId", LastWriteUserId),
                 new JProperty("updatedByUsername", LastWriteUserUsername))),
             new JProperty("acqUnitIds", VoucherAcquisitionsUnits?.Select(vau => vau.ToJObject()))).RemoveNullAndEmptyProperties();

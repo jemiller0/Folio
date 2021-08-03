@@ -183,8 +183,8 @@ namespace FolioLibrary
             new JProperty("code", Code),
             new JProperty("currency", Currency),
             new JProperty("description", Description),
-            new JProperty("periodStart", StartDate),
-            new JProperty("periodEnd", EndDate),
+            new JProperty("periodStart", StartDate?.ToLocalTime()),
+            new JProperty("periodEnd", EndDate?.ToLocalTime()),
             new JProperty("series", Series),
             new JProperty("financialSummary", new JObject(
                 new JProperty("allocated", FinancialSummaryAllocated),
@@ -201,10 +201,10 @@ namespace FolioLibrary
                 new JProperty("overEncumbrance", FinancialSummaryOverEncumbrance),
                 new JProperty("overExpended", FinancialSummaryOverExpended))),
             new JProperty("metadata", new JObject(
-                new JProperty("createdDate", CreationTime),
+                new JProperty("createdDate", CreationTime?.ToLocalTime()),
                 new JProperty("createdByUserId", CreationUserId),
                 new JProperty("createdByUsername", CreationUserUsername),
-                new JProperty("updatedDate", LastWriteTime),
+                new JProperty("updatedDate", LastWriteTime?.ToLocalTime()),
                 new JProperty("updatedByUserId", LastWriteUserId),
                 new JProperty("updatedByUsername", LastWriteUserUsername))),
             new JProperty("acqUnitIds", FiscalYearAcquisitionsUnits?.Select(fyau => fyau.ToJObject()))).RemoveNullAndEmptyProperties();

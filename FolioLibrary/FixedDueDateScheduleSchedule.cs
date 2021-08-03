@@ -40,8 +40,8 @@ namespace FolioLibrary
         } : null;
 
         public JObject ToJObject() => new JObject(
-            new JProperty("from", From),
-            new JProperty("to", To),
-            new JProperty("due", Due)).RemoveNullAndEmptyProperties();
+            new JProperty("from", From?.ToLocalTime()),
+            new JProperty("to", To?.ToLocalTime()),
+            new JProperty("due", Due?.ToLocalTime())).RemoveNullAndEmptyProperties();
     }
 }

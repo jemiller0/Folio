@@ -59,11 +59,11 @@ namespace FolioLibrary
         public JObject ToJObject() => new JObject(
             new JProperty("jobExecutionId", Id),
             new JProperty("status", Status),
-            new JProperty("processingStartedDate", ProcessingStartedDate),
+            new JProperty("processingStartedDate", ProcessingStartedDate?.ToLocalTime()),
             new JProperty("metadata", new JObject(
                 new JProperty("createdByUserId", CreationUserId),
-                new JProperty("createdDate", CreationTime),
+                new JProperty("createdDate", CreationTime?.ToLocalTime()),
                 new JProperty("updatedByUserId", LastWriteUserId),
-                new JProperty("updatedDate", LastWriteTime)))).RemoveNullAndEmptyProperties();
+                new JProperty("updatedDate", LastWriteTime?.ToLocalTime())))).RemoveNullAndEmptyProperties();
     }
 }

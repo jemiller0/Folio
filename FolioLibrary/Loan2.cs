@@ -225,10 +225,10 @@ namespace FolioLibrary
             new JProperty("itemEffectiveLocationIdAtCheckOut", ItemEffectiveLocationAtCheckOutId),
             new JProperty("status", new JObject(
                 new JProperty("name", StatusName))),
-            new JProperty("loanDate", LoanTime),
-            new JProperty("dueDate", DueTime),
+            new JProperty("loanDate", LoanTime?.ToLocalTime()),
+            new JProperty("dueDate", DueTime?.ToLocalTime()),
             new JProperty("returnDate", ReturnTime),
-            new JProperty("systemReturnDate", SystemReturnTime),
+            new JProperty("systemReturnDate", SystemReturnTime?.ToLocalTime()),
             new JProperty("action", Action),
             new JProperty("actionComment", ActionComment),
             new JProperty("itemStatus", ItemStatus),
@@ -238,20 +238,20 @@ namespace FolioLibrary
             new JProperty("checkinServicePointId", CheckinServicePointId),
             new JProperty("patronGroupIdAtCheckout", GroupId),
             new JProperty("dueDateChangedByRecall", DueDateChangedByRecall),
-            new JProperty("declaredLostDate", DeclaredLostDate),
-            new JProperty("claimedReturnedDate", ClaimedReturnedDate),
+            new JProperty("declaredLostDate", DeclaredLostDate?.ToLocalTime()),
+            new JProperty("claimedReturnedDate", ClaimedReturnedDate?.ToLocalTime()),
             new JProperty("overdueFinePolicyId", OverdueFinePolicyId),
             new JProperty("lostItemPolicyId", LostItemPolicyId),
             new JProperty("metadata", new JObject(
-                new JProperty("createdDate", CreationTime),
+                new JProperty("createdDate", CreationTime?.ToLocalTime()),
                 new JProperty("createdByUserId", CreationUserId),
                 new JProperty("createdByUsername", CreationUserUsername),
-                new JProperty("updatedDate", LastWriteTime),
+                new JProperty("updatedDate", LastWriteTime?.ToLocalTime()),
                 new JProperty("updatedByUserId", LastWriteUserId),
                 new JProperty("updatedByUsername", LastWriteUserUsername))),
             new JProperty("agedToLostDelayedBilling", new JObject(
                 new JProperty("lostItemHasBeenBilled", AgedToLostDelayedBillingLostItemHasBeenBilled),
-                new JProperty("dateLostItemShouldBeBilled", AgedToLostDelayedBillingDateLostItemShouldBeBilled),
-                new JProperty("agedToLostDate", AgedToLostDelayedBillingAgedToLostDate)))).RemoveNullAndEmptyProperties();
+                new JProperty("dateLostItemShouldBeBilled", AgedToLostDelayedBillingDateLostItemShouldBeBilled?.ToLocalTime()),
+                new JProperty("agedToLostDate", AgedToLostDelayedBillingAgedToLostDate?.ToLocalTime())))).RemoveNullAndEmptyProperties();
     }
 }

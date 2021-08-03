@@ -104,7 +104,7 @@ namespace FolioLibrary
 
         public JObject ToJObject() => new JObject(
             new JProperty("id", Id),
-            new JProperty("dateAction", CreationTime),
+            new JProperty("dateAction", CreationTime?.ToLocalTime()),
             new JProperty("typeAction", TypeAction),
             new JProperty("comments", Comments),
             new JProperty("notify", Notify),

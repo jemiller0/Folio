@@ -134,7 +134,7 @@ namespace FolioLibrary
             new JProperty("accountNo", AccountNumber),
             new JProperty("amount", Amount),
             new JProperty("disbursementNumber", DisbursementNumber),
-            new JProperty("disbursementDate", DisbursementDate),
+            new JProperty("disbursementDate", DisbursementDate?.ToLocalTime()),
             new JProperty("disbursementAmount", DisbursementAmount),
             new JProperty("enclosureNeeded", EnclosureNeeded),
             new JProperty("exchangeRate", ExchangeRate),
@@ -146,7 +146,7 @@ namespace FolioLibrary
             new JProperty("type", Type),
             new JProperty("vendorInvoiceNo", VendorInvoiceNo),
             new JProperty("vendorName", VendorName),
-            new JProperty("voucherDate", VoucherDate),
+            new JProperty("voucherDate", VoucherDate?.ToLocalTime()),
             new JProperty("voucherNumber", VoucherNumber),
             new JProperty("vendorAddress", new JObject(
                 new JProperty("addressLine1", VendorStreetAddress1),

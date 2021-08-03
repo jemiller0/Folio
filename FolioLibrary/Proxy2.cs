@@ -113,12 +113,12 @@ namespace FolioLibrary
             new JProperty("notificationsTo", NotificationsTo),
             new JProperty("accrueTo", AccrueTo),
             new JProperty("status", Status),
-            new JProperty("expirationDate", ExpirationDate),
+            new JProperty("expirationDate", ExpirationDate?.ToLocalTime()),
             new JProperty("metadata", new JObject(
-                new JProperty("createdDate", CreationTime),
+                new JProperty("createdDate", CreationTime?.ToLocalTime()),
                 new JProperty("createdByUserId", CreationUserId),
                 new JProperty("createdByUsername", CreationUserUsername),
-                new JProperty("updatedDate", LastWriteTime),
+                new JProperty("updatedDate", LastWriteTime?.ToLocalTime()),
                 new JProperty("updatedByUserId", LastWriteUserId),
                 new JProperty("updatedByUsername", LastWriteUserUsername)))).RemoveNullAndEmptyProperties();
     }

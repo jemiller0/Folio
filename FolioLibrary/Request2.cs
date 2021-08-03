@@ -227,7 +227,7 @@ namespace FolioLibrary
         public JObject ToJObject() => new JObject(
             new JProperty("id", Id),
             new JProperty("requestType", RequestType),
-            new JProperty("requestDate", RequestDate),
+            new JProperty("requestDate", RequestDate?.ToLocalTime()),
             new JProperty("patronComments", PatronComments),
             new JProperty("requesterId", RequesterId),
             new JProperty("proxyUserId", ProxyUserId),
@@ -236,7 +236,7 @@ namespace FolioLibrary
             new JProperty("cancellationReasonId", CancellationReasonId),
             new JProperty("cancelledByUserId", CancelledByUserId),
             new JProperty("cancellationAdditionalInformation", CancellationAdditionalInformation),
-            new JProperty("cancelledDate", CancelledDate),
+            new JProperty("cancelledDate", CancelledDate?.ToLocalTime()),
             new JProperty("position", Position),
             new JProperty("item", new JObject(
                 new JProperty("title", ItemTitle),
@@ -256,17 +256,17 @@ namespace FolioLibrary
                 new JProperty("patronGroup", ProxyPatronGroup))),
             new JProperty("fulfilmentPreference", FulfilmentPreference),
             new JProperty("deliveryAddressTypeId", DeliveryAddressTypeId),
-            new JProperty("requestExpirationDate", RequestExpirationDate),
-            new JProperty("holdShelfExpirationDate", HoldShelfExpirationDate),
+            new JProperty("requestExpirationDate", RequestExpirationDate?.ToLocalTime()),
+            new JProperty("holdShelfExpirationDate", HoldShelfExpirationDate?.ToLocalTime()),
             new JProperty("pickupServicePointId", PickupServicePointId),
             new JProperty("metadata", new JObject(
-                new JProperty("createdDate", CreationTime),
+                new JProperty("createdDate", CreationTime?.ToLocalTime()),
                 new JProperty("createdByUserId", CreationUserId),
                 new JProperty("createdByUsername", CreationUserUsername),
-                new JProperty("updatedDate", LastWriteTime),
+                new JProperty("updatedDate", LastWriteTime?.ToLocalTime()),
                 new JProperty("updatedByUserId", LastWriteUserId),
                 new JProperty("updatedByUsername", LastWriteUserUsername))),
-            new JProperty("awaitingPickupRequestClosedDate", AwaitingPickupRequestClosedDate),
+            new JProperty("awaitingPickupRequestClosedDate", AwaitingPickupRequestClosedDate?.ToLocalTime()),
             new JProperty("tags", new JObject(
                 new JProperty("tagList", RequestTags?.Select(rt => rt.ToJObject()))))).RemoveNullAndEmptyProperties();
     }

@@ -117,10 +117,10 @@ namespace FolioLibrary
             new JProperty("defaultChargeNoticeId", DefaultChargeNoticeId),
             new JProperty("defaultActionNoticeId", DefaultActionNoticeId),
             new JProperty("metadata", new JObject(
-                new JProperty("createdDate", CreationTime),
+                new JProperty("createdDate", CreationTime?.ToLocalTime()),
                 new JProperty("createdByUserId", CreationUserId),
                 new JProperty("createdByUsername", CreationUserUsername),
-                new JProperty("updatedDate", LastWriteTime),
+                new JProperty("updatedDate", LastWriteTime?.ToLocalTime()),
                 new JProperty("updatedByUserId", LastWriteUserId),
                 new JProperty("updatedByUsername", LastWriteUserUsername))),
             new JProperty("servicePointOwner", ServicePointOwners?.Select(spo => spo.ToJObject()))).RemoveNullAndEmptyProperties();

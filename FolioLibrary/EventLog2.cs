@@ -100,12 +100,12 @@ namespace FolioLibrary
             new JProperty("userId", UserId),
             new JProperty("ip", Ip),
             new JProperty("browserInformation", BrowserInformation),
-            new JProperty("timestamp", Timestamp),
+            new JProperty("timestamp", Timestamp?.ToLocalTime()),
             new JProperty("metadata", new JObject(
-                new JProperty("createdDate", CreationTime),
+                new JProperty("createdDate", CreationTime?.ToLocalTime()),
                 new JProperty("createdByUserId", CreationUserId),
                 new JProperty("createdByUsername", CreationUserUsername),
-                new JProperty("updatedDate", LastWriteTime),
+                new JProperty("updatedDate", LastWriteTime?.ToLocalTime()),
                 new JProperty("updatedByUserId", LastWriteUserId),
                 new JProperty("updatedByUsername", LastWriteUserUsername)))).RemoveNullAndEmptyProperties();
     }

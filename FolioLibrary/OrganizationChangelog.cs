@@ -37,6 +37,6 @@ namespace FolioLibrary
 
         public JObject ToJObject() => new JObject(
             new JProperty("description", Description),
-            new JProperty("timestamp", Timestamp)).RemoveNullAndEmptyProperties();
+            new JProperty("timestamp", Timestamp?.ToLocalTime())).RemoveNullAndEmptyProperties();
     }
 }

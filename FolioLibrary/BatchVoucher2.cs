@@ -72,9 +72,9 @@ namespace FolioLibrary
         public JObject ToJObject() => new JObject(
             new JProperty("id", Id),
             new JProperty("batchGroup", BatchGroup),
-            new JProperty("created", Created),
-            new JProperty("start", Start),
-            new JProperty("end", End),
+            new JProperty("created", Created?.ToLocalTime()),
+            new JProperty("start", Start?.ToLocalTime()),
+            new JProperty("end", End?.ToLocalTime()),
             new JProperty("totalRecords", TotalRecords),
             new JProperty("batchedVouchers", BatchVoucherBatchedVouchers?.Select(bvbv => bvbv.ToJObject()))).RemoveNullAndEmptyProperties();
     }

@@ -108,7 +108,7 @@ namespace FolioLibrary
             new JProperty("titleId", TitleId),
             new JProperty("receivingStatus", ReceivingStatus),
             new JProperty("supplement", Supplement),
-            new JProperty("receiptDate", ReceiptTime),
-            new JProperty("receivedDate", ReceiveTime)).RemoveNullAndEmptyProperties();
+            new JProperty("receiptDate", ReceiptTime?.ToLocalTime()),
+            new JProperty("receivedDate", ReceiveTime?.ToLocalTime())).RemoveNullAndEmptyProperties();
     }
 }

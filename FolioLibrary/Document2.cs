@@ -133,19 +133,19 @@ namespace FolioLibrary
                 new JProperty("invoiceId", DocumentMetadataInvoiceId),
                 new JProperty("url", DocumentMetadataUrl),
                 new JProperty("metadata", new JObject(
-                    new JProperty("createdDate", DocumentMetadataMetadataCreatedDate),
+                    new JProperty("createdDate", DocumentMetadataMetadataCreatedDate?.ToLocalTime()),
                     new JProperty("createdByUserId", DocumentMetadataMetadataCreatedByUserId),
                     new JProperty("createdByUsername", DocumentMetadataMetadataCreatedByUsername),
-                    new JProperty("updatedDate", DocumentMetadataMetadataUpdatedDate),
+                    new JProperty("updatedDate", DocumentMetadataMetadataUpdatedDate?.ToLocalTime()),
                     new JProperty("updatedByUserId", DocumentMetadataMetadataUpdatedByUserId),
                     new JProperty("updatedByUsername", DocumentMetadataMetadataUpdatedByUsername))))),
             new JProperty("contents", new JObject(
                 new JProperty("data", ContentsData))),
             new JProperty("metadata", new JObject(
-                new JProperty("createdDate", CreationTime),
+                new JProperty("createdDate", CreationTime?.ToLocalTime()),
                 new JProperty("createdByUserId", CreationUserId),
                 new JProperty("createdByUsername", CreationUserUsername),
-                new JProperty("updatedDate", LastWriteTime),
+                new JProperty("updatedDate", LastWriteTime?.ToLocalTime()),
                 new JProperty("updatedByUserId", LastWriteUserId),
                 new JProperty("updatedByUsername", LastWriteUserUsername)))).RemoveNullAndEmptyProperties();
     }
