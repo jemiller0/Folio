@@ -1173,22 +1173,6 @@
     <Compile Include="Loan2s\Edit.aspx.designer.cs">
       <DependentUpon>Edit.aspx</DependentUpon>
     </Compile>
-    <Content Include="LoanEvent2s\Default.aspx" />
-    <Compile Include="LoanEvent2s\Default.aspx.cs">
-      <DependentUpon>Default.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="LoanEvent2s\Default.aspx.designer.cs">
-      <DependentUpon>Default.aspx</DependentUpon>
-    </Compile>
-    <Content Include="LoanEvent2s\Edit.aspx" />
-    <Compile Include="LoanEvent2s\Edit.aspx.cs">
-      <DependentUpon>Edit.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="LoanEvent2s\Edit.aspx.designer.cs">
-      <DependentUpon>Edit.aspx</DependentUpon>
-    </Compile>
     <Content Include="LoanPolicy2s\Default.aspx" />
     <Compile Include="LoanPolicy2s\Default.aspx.cs">
       <DependentUpon>Default.aspx</DependentUpon>

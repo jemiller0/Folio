@@ -288,6 +288,33 @@ namespace FolioWebApplicationTest
         }
 
         [TestMethod]
+        public void BoundWithPart2sEditAspxTest()
+        {
+            var s = Stopwatch.StartNew();
+            try
+            {
+                var bwp2 = folioServiceContext.BoundWithPart2s(take: 1).SingleOrDefault();
+                if (bwp2 != null)
+                {
+                    var hrm = httpClient.GetAsync($"{Url}/BoundWithPart2s/Edit.aspx?Id={bwp2.Id}").Result;
+                    hrm.EnsureSuccessStatusCode();
+                    Assert.IsTrue(s.Elapsed < timeSpan);
+                }
+                else
+                    Assert.Inconclusive();
+            }
+            catch (Exception e)
+            {
+                traceSource.TraceEvent(TraceEventType.Error, 0, e.ToString());
+                throw;
+            }
+            finally
+            {
+                traceSource.TraceEvent(TraceEventType.Information, 0, $"BoundWithPart2sEditAspxTest()\r\n    ElapsedTime={s.Elapsed}");
+            }
+        }
+
+        [TestMethod]
         public void Budget2sEditAspxTest()
         {
             var s = Stopwatch.StartNew();

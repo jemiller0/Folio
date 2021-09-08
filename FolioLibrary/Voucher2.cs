@@ -73,7 +73,7 @@ namespace FolioLibrary
         [Column("export_to_accounting"), Display(Name = "Export To Accounting", Order = 15), JsonProperty("exportToAccounting")]
         public virtual bool? ExportToAccounting { get; set; }
 
-        [Column("status"), Display(Order = 16), JsonProperty("status"), RegularExpression(@"^(Awaiting payment|Paid)$"), Required, StringLength(1024)]
+        [Column("status"), Display(Order = 16), JsonProperty("status"), RegularExpression(@"^(Awaiting payment|Paid|Cancelled)$"), Required, StringLength(1024)]
         public virtual string Status { get; set; }
 
         [Column("system_currency"), Display(Name = "System Currency", Order = 17), JsonProperty("systemCurrency"), Required, StringLength(1024)]

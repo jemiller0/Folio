@@ -373,6 +373,22 @@
     <Compile Include="BlockLimit2s\Edit.aspx.designer.cs">
       <DependentUpon>Edit.aspx</DependentUpon>
     </Compile>
+    <Content Include="BoundWithPart2s\Default.aspx" />
+    <Compile Include="BoundWithPart2s\Default.aspx.cs">
+      <DependentUpon>Default.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="BoundWithPart2s\Default.aspx.designer.cs">
+      <DependentUpon>Default.aspx</DependentUpon>
+    </Compile>
+    <Content Include="BoundWithPart2s\Edit.aspx" />
+    <Compile Include="BoundWithPart2s\Edit.aspx.cs">
+      <DependentUpon>Edit.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="BoundWithPart2s\Edit.aspx.designer.cs">
+      <DependentUpon>Edit.aspx</DependentUpon>
+    </Compile>
     <Content Include="Budget2s\Default.aspx" />
     <Compile Include="Budget2s\Default.aspx.cs">
       <DependentUpon>Default.aspx</DependentUpon>

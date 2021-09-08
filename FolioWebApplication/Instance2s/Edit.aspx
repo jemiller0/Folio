@@ -75,6 +75,22 @@
                                     <asp:Literal ID="PublicationYearLiteral" runat="server" Text='<%#: Eval("PublicationYear") %>' />
                                 </td>
                             </tr>
+                            <tr runat="server" visible='<%# Eval("PublicationPeriodStart") != null %>'>
+                                <td>
+                                    <asp:Label ID="PublicationPeriodStartLabel" runat="server" Text="Publication Period Start:" AssociatedControlID="PublicationPeriodStartLiteral" />
+                                </td>
+                                <td>
+                                    <asp:Literal ID="PublicationPeriodStartLiteral" runat="server" Text='<%#: Eval("PublicationPeriodStart") %>' />
+                                </td>
+                            </tr>
+                            <tr runat="server" visible='<%# Eval("PublicationPeriodEnd") != null %>'>
+                                <td>
+                                    <asp:Label ID="PublicationPeriodEndLabel" runat="server" Text="Publication Period End:" AssociatedControlID="PublicationPeriodEndLiteral" />
+                                </td>
+                                <td>
+                                    <asp:Literal ID="PublicationPeriodEndLiteral" runat="server" Text='<%#: Eval("PublicationPeriodEnd") %>' />
+                                </td>
+                            </tr>
                             <tr runat="server" visible='<%# Eval("InstanceType") != null %>'>
                                 <td>
                                     <asp:Label ID="InstanceTypeLabel" runat="server" Text="Instance Type:" AssociatedControlID="InstanceTypeHyperLink" />
@@ -259,6 +275,22 @@
                                 </td>
                                 <td>
                                     <asp:Literal ID="PublicationYearLiteral" runat="server" Text='<%#: Eval("PublicationYear") %>' />
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <asp:Label ID="PublicationPeriodStartLabel" runat="server" Text="Publication Period Start:" AssociatedControlID="PublicationPeriodStartRadNumericTextBox" />
+                                </td>
+                                <td>
+                                    <telerik:RadNumericTextBox ID="PublicationPeriodStartRadNumericTextBox" runat="server" DbValue='<%# Bind("PublicationPeriodStart") %>' Width="500px" DataType="System.Int32" NumberFormat-DecimalDigits="0" NumberFormat-GroupSeparator="" MaxValue="2147483647" />
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <asp:Label ID="PublicationPeriodEndLabel" runat="server" Text="Publication Period End:" AssociatedControlID="PublicationPeriodEndRadNumericTextBox" />
+                                </td>
+                                <td>
+                                    <telerik:RadNumericTextBox ID="PublicationPeriodEndRadNumericTextBox" runat="server" DbValue='<%# Bind("PublicationPeriodEnd") %>' Width="500px" DataType="System.Int32" NumberFormat-DecimalDigits="0" NumberFormat-GroupSeparator="" MaxValue="2147483647" />
                                 </td>
                             </tr>
                             <tr>

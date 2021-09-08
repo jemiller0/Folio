@@ -73,6 +73,14 @@
                                     <asp:Literal ID="CheckSubscriptionOverlapLiteral" runat="server" Text='<%#: Eval("CheckSubscriptionOverlap") %>' />
                                 </td>
                             </tr>
+                            <tr runat="server" visible='<%# Eval("CancellationNote") != null %>'>
+                                <td>
+                                    <asp:Label ID="CancellationNoteLabel" runat="server" Text="Cancellation Note:" AssociatedControlID="CancellationNoteLiteral" />
+                                </td>
+                                <td>
+                                    <asp:Literal ID="CancellationNoteLiteral" runat="server" Text='<%#: Eval("CancellationNote") %>' />
+                                </td>
+                            </tr>
                             <tr runat="server" visible='<%# Eval("Currency") != null %>'>
                                 <td>
                                     <asp:Label ID="CurrencyLabel" runat="server" Text="Currency:" AssociatedControlID="CurrencyLiteral" />
@@ -481,6 +489,7 @@
                                 <asp:HyperLink ID="FromFundHyperLink" runat="server" Text='<%#: Eval("FromFund.Name") %>' NavigateUrl='<%# $"~/Fund2s/Edit.aspx?Id={Eval("FromFundId")}" %>' Enabled='<%# Session["Fund2sPermission"] != null %>' />
                             </ItemTemplate>
                         </telerik:GridTemplateColumn>
+                        <telerik:GridBoundColumn HeaderText="Invoice Cancelled" DataField="InvoiceCancelled" AutoPostBackOnFilter="true" />
                         <telerik:GridTemplateColumn AllowFiltering="false" AllowSorting="false" HeaderText="Payment Encumbrance" DataField="PaymentEncumbrance.Amount" SortExpression="PaymentEncumbrance.Amount" AutoPostBackOnFilter="true">
                             <ItemTemplate>
                                 <asp:HyperLink ID="PaymentEncumbranceHyperLink" runat="server" Text='<%# $"{Eval("PaymentEncumbrance.Amount"):c}" %>' NavigateUrl='<%# $"~/Transaction2s/Edit.aspx?Id={Eval("PaymentEncumbranceId")}" %>' Enabled='<%# Session["Transaction2sPermission"] != null %>' />

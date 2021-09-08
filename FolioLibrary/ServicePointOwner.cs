@@ -21,22 +21,25 @@ namespace FolioLibrary
         [Column("owner_id"), Display(Name = "Owner", Order = 3), Required]
         public virtual Guid? OwnerId { get; set; }
 
-        [Column("value"), Display(Order = 4), JsonProperty("value"), Required, StringLength(1024)]
-        public virtual string Value { get; set; }
+        [Display(Name = "Service Point", Order = 4)]
+        public virtual ServicePoint2 ServicePoint { get; set; }
 
-        [Column("label"), Display(Order = 5), JsonProperty("label"), StringLength(1024)]
+        [Column("service_point_id"), Display(Name = "Service Point", Order = 5), JsonProperty("value")]
+        public virtual Guid? ServicePointId { get; set; }
+
+        [Column("label"), Display(Order = 6), JsonProperty("label"), StringLength(1024)]
         public virtual string Label { get; set; }
 
-        public override string ToString() => $"{{ {nameof(Id)} = {Id}, {nameof(OwnerId)} = {OwnerId}, {nameof(Value)} = {Value}, {nameof(Label)} = {Label} }}";
+        public override string ToString() => $"{{ {nameof(Id)} = {Id}, {nameof(OwnerId)} = {OwnerId}, {nameof(ServicePointId)} = {ServicePointId}, {nameof(Label)} = {Label} }}";
 
         public static ServicePointOwner FromJObject(JObject jObject) => jObject != null ? new ServicePointOwner
         {
-            Value = (string)jObject.SelectToken("value"),
+            ServicePointId = (Guid?)jObject.SelectToken("value"),
             Label = (string)jObject.SelectToken("label")
         } : null;
 
         public JObject ToJObject() => new JObject(
-            new JProperty("value", Value),
+            new JProperty("value", ServicePointId),
             new JProperty("label", Label)).RemoveNullAndEmptyProperties();
     }
 }

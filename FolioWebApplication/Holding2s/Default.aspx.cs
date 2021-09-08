@@ -56,8 +56,10 @@ namespace FolioWebApplication.Holding2s
             var id = (Guid?)gei.GetDataKeyValue("Id");
             try
             {
+                if (folioServiceContext.AnyBoundWithPart2s($"holdingsRecordId == \"{id}\"")) throw new Exception("Holding cannot be deleted because it is being referenced by a bound with part");
                 if (folioServiceContext.AnyFee2s($"holdingsRecordId == \"{id}\"")) throw new Exception("Holding cannot be deleted because it is being referenced by a fee");
                 if (folioServiceContext.AnyItem2s($"holdingsRecordId == \"{id}\"")) throw new Exception("Holding cannot be deleted because it is being referenced by a item");
+                if (folioServiceContext.AnyReceiving2s($"holdingId == \"{id}\"")) throw new Exception("Holding cannot be deleted because it is being referenced by a receiving");
                 folioServiceContext.DeleteHolding2(id);
                 Response.Redirect("Default.aspx");
             }

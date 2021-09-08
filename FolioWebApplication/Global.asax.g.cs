@@ -101,6 +101,7 @@ namespace FolioWebApplication
         private void SetInventoryPermissions(HashSet<string> roles)
         {
             Session["AlternativeTitleType2sPermission"] = roles.Contains("all") || roles.Contains("inventory.all") || roles.Contains("uc.alternativetitletypes.view") ? "View" : null;
+            Session["BoundWithPart2sPermission"] = roles.Contains("all") || roles.Contains("inventory.all") || roles.Contains("uc.boundwithparts.view") ? "View" : null;
             Session["CallNumberType2sPermission"] = roles.Contains("all") || roles.Contains("inventory.all") || roles.Contains("uc.callnumbertypes.view") ? "View" : null;
             Session["Campus2sPermission"] = roles.Contains("all") || roles.Contains("inventory.all") || roles.Contains("uc.campuses.view") ? "View" : null;
             Session["ClassificationType2sPermission"] = roles.Contains("all") || roles.Contains("inventory.all") || roles.Contains("uc.classificationtypes.view") ? "View" : null;
@@ -280,6 +281,7 @@ namespace FolioWebApplication
         private void SetInventoryPermissions(string permission = null)
         {
             Session["AlternativeTitleType2sPermission"] = permission;
+            Session["BoundWithPart2sPermission"] = permission;
             Session["CallNumberType2sPermission"] = permission;
             Session["Campus2sPermission"] = permission;
             Session["ClassificationType2sPermission"] = permission;

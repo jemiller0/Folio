@@ -9,6 +9,10 @@ namespace FolioWebApplication.Item2s
 
         protected FormView Item2FormView;
 
+        protected Panel BoundWithPart2sPanel;
+
+        protected RadGrid BoundWithPart2sRadGrid;
+
         protected Panel CheckIn2sPanel;
 
         protected RadGrid CheckIn2sRadGrid;

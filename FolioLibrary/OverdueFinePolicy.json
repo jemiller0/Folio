@@ -20,7 +20,7 @@
       "properties": {
         "quantity": {
           "description": "Fine amount per interval",
-          "type": "number"
+          "javaType": "org.folio.rest.domain.MonetaryValue"
         },
         "intervalId": {
           "description": "Interval for the period, e.g. hour, day, week, month or year",
@@ -42,7 +42,7 @@
     },
     "maxOverdueFine": {
       "description": "Maximum overdue fine",
-      "type": "number"
+      "javaType": "org.folio.rest.domain.MonetaryValue"
     },
     "forgiveOverdueFine": {
       "description": "A flag to determine forgive overdue fine if item renewed",
@@ -57,7 +57,7 @@
     },
     "maxOverdueRecallFine": {
       "description": "Maximum overdue recall fine",
-      "type": "number"
+      "javaType": "org.folio.rest.domain.MonetaryValue"
     },
     "metadata": {
       "title": "Metadata Schema",
@@ -99,8 +99,9 @@
       ]
     },
     "id": {
-      "description": "Overdue fine policy id, UUID",
-      "type": "string"
+      "description": "The UUID format string",
+      "type": "string",
+      "pattern": "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-5][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}$"
     }
   },
   "required": [

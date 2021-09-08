@@ -163,6 +163,10 @@
       "description": "IF TRUE the system will check if there is another invoice for this subscription and whether the dates overlap. IF the dates overlap, the system should issue an alert.",
       "type": "boolean"
     },
+    "cancellationNote": {
+      "description": "The reason of the invoice cancellation.",
+      "type": "string"
+    },
     "currency": {
       "description": "Ideally this is the ISO code and not something the user defines",
       "type": "string"

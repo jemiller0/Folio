@@ -57,13 +57,13 @@
         },
         "amount": {
           "description": "Charge amount for item may be Actual cost or an amount",
-          "type": "number"
+          "javaType": "org.folio.rest.domain.MonetaryValue"
         }
       }
     },
     "lostItemProcessingFee": {
       "description": "Lost item processing fee, must be = 0 or > 0",
-      "type": "number"
+      "javaType": "org.folio.rest.domain.MonetaryValue"
     },
     "chargeAmountItemPatron": {
       "description": "A flag to determine charge lost item processing fee if item declared lost by patron must be Yes or No, with default set to Yes",
@@ -86,7 +86,7 @@
     },
     "replacementProcessingFee": {
       "description": "Amount for replacement process fee",
-      "type": "number"
+      "javaType": "org.folio.rest.domain.MonetaryValue"
     },
     "replacementAllowed": {
       "description": "A flag to determine replacement allowed",
@@ -139,8 +139,9 @@
       ]
     },
     "id": {
-      "description": "Lost item fee policy id, UUID",
-      "type": "string"
+      "description": "The UUID format string",
+      "type": "string",
+      "pattern": "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-5][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}$"
     }
   },
   "required": [

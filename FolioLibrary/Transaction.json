@@ -123,6 +123,10 @@
     "fromFundId": {
       "$ref": "#/properties/id"
     },
+    "invoiceCancelled": {
+      "description": "Indicates that related invoice was cancelled",
+      "type": "boolean"
+    },
     "paymentEncumbranceId": {
       "$ref": "#/properties/id"
     },

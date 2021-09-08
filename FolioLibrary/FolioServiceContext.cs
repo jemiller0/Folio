@@ -425,6 +425,53 @@ namespace FolioLibrary
 
         public void DeleteBlockLimit2(Guid? id) => FolioServiceClient.DeleteBlockLimit(id?.ToString());
 
+        public bool AnyBoundWithPart2s(string where = null) => FolioServiceClient.AnyBoundWithParts(where);
+
+        public int CountBoundWithPart2s(string where = null) => FolioServiceClient.CountBoundWithParts(where);
+
+        public BoundWithPart2[] BoundWithPart2s(out int count, string where = null, string orderBy = null, int? skip = null, int? take = null, bool load = false, bool cache = true)
+        {
+            return FolioServiceClient.BoundWithParts(out count, where, orderBy, skip, take).Select(jo =>
+            {
+                var bwp2 = BoundWithPart2.FromJObject(jo);
+                if (load && bwp2.HoldingId != null) bwp2.Holding = (Holding2)(cache && objects.ContainsKey(bwp2.HoldingId.Value) ? objects[bwp2.HoldingId.Value] : objects[bwp2.HoldingId.Value] = FindHolding2(bwp2.HoldingId));
+                if (load && bwp2.ItemId != null) bwp2.Item = (Item2)(cache && objects.ContainsKey(bwp2.ItemId.Value) ? objects[bwp2.ItemId.Value] : objects[bwp2.ItemId.Value] = FindItem2(bwp2.ItemId));
+                if (load && bwp2.CreationUserId != null) bwp2.CreationUser = (User2)(cache && objects.ContainsKey(bwp2.CreationUserId.Value) ? objects[bwp2.CreationUserId.Value] : objects[bwp2.CreationUserId.Value] = FindUser2(bwp2.CreationUserId));
+                if (load && bwp2.LastWriteUserId != null) bwp2.LastWriteUser = (User2)(cache && objects.ContainsKey(bwp2.LastWriteUserId.Value) ? objects[bwp2.LastWriteUserId.Value] : objects[bwp2.LastWriteUserId.Value] = FindUser2(bwp2.LastWriteUserId));
+                return bwp2;
+            }).ToArray();
+        }
+
+        public IEnumerable<BoundWithPart2> BoundWithPart2s(string where = null, string orderBy = null, int? skip = null, int? take = null, bool load = false, bool cache = true)
+        {
+            foreach (var jo in FolioServiceClient.BoundWithParts(where, orderBy, skip, take))
+            {
+                var bwp2 = BoundWithPart2.FromJObject(jo);
+                if (load && bwp2.HoldingId != null) bwp2.Holding = (Holding2)(cache && objects.ContainsKey(bwp2.HoldingId.Value) ? objects[bwp2.HoldingId.Value] : objects[bwp2.HoldingId.Value] = FindHolding2(bwp2.HoldingId));
+                if (load && bwp2.ItemId != null) bwp2.Item = (Item2)(cache && objects.ContainsKey(bwp2.ItemId.Value) ? objects[bwp2.ItemId.Value] : objects[bwp2.ItemId.Value] = FindItem2(bwp2.ItemId));
+                if (load && bwp2.CreationUserId != null) bwp2.CreationUser = (User2)(cache && objects.ContainsKey(bwp2.CreationUserId.Value) ? objects[bwp2.CreationUserId.Value] : objects[bwp2.CreationUserId.Value] = FindUser2(bwp2.CreationUserId));
+                if (load && bwp2.LastWriteUserId != null) bwp2.LastWriteUser = (User2)(cache && objects.ContainsKey(bwp2.LastWriteUserId.Value) ? objects[bwp2.LastWriteUserId.Value] : objects[bwp2.LastWriteUserId.Value] = FindUser2(bwp2.LastWriteUserId));
+                yield return bwp2;
+            }
+        }
+
+        public BoundWithPart2 FindBoundWithPart2(Guid? id, bool load = false, bool cache = true)
+        {
+            var bwp2 = BoundWithPart2.FromJObject(FolioServiceClient.GetBoundWithPart(id?.ToString()));
+            if (bwp2 == null) return null;
+            if (load && bwp2.HoldingId != null) bwp2.Holding = (Holding2)(cache && objects.ContainsKey(bwp2.HoldingId.Value) ? objects[bwp2.HoldingId.Value] : objects[bwp2.HoldingId.Value] = FindHolding2(bwp2.HoldingId));
+            if (load && bwp2.ItemId != null) bwp2.Item = (Item2)(cache && objects.ContainsKey(bwp2.ItemId.Value) ? objects[bwp2.ItemId.Value] : objects[bwp2.ItemId.Value] = FindItem2(bwp2.ItemId));
+            if (load && bwp2.CreationUserId != null) bwp2.CreationUser = (User2)(cache && objects.ContainsKey(bwp2.CreationUserId.Value) ? objects[bwp2.CreationUserId.Value] : objects[bwp2.CreationUserId.Value] = FindUser2(bwp2.CreationUserId));
+            if (load && bwp2.LastWriteUserId != null) bwp2.LastWriteUser = (User2)(cache && objects.ContainsKey(bwp2.LastWriteUserId.Value) ? objects[bwp2.LastWriteUserId.Value] : objects[bwp2.LastWriteUserId.Value] = FindUser2(bwp2.LastWriteUserId));
+            return bwp2;
+        }
+
+        public void Insert(BoundWithPart2 boundWithPart2) => FolioServiceClient.InsertBoundWithPart(boundWithPart2.ToJObject());
+
+        public void Update(BoundWithPart2 boundWithPart2) => FolioServiceClient.UpdateBoundWithPart(boundWithPart2.ToJObject());
+
+        public void DeleteBoundWithPart2(Guid? id) => FolioServiceClient.DeleteBoundWithPart(id?.ToString());
+
         public bool AnyBudget2s(string where = null) => FolioServiceClient.AnyBudgets(where);
 
         public int CountBudget2s(string where = null) => FolioServiceClient.CountBudgets(where);
@@ -3879,6 +3926,7 @@ namespace FolioLibrary
                 if (load && r2.LocationId != null) r2.Location = (Location2)(cache && objects.ContainsKey(r2.LocationId.Value) ? objects[r2.LocationId.Value] : objects[r2.LocationId.Value] = FindLocation2(r2.LocationId));
                 if (load && r2.OrderItemId != null) r2.OrderItem = (OrderItem2)(cache && objects.ContainsKey(r2.OrderItemId.Value) ? objects[r2.OrderItemId.Value] : objects[r2.OrderItemId.Value] = FindOrderItem2(r2.OrderItemId));
                 if (load && r2.TitleId != null) r2.Title = (Title2)(cache && objects.ContainsKey(r2.TitleId.Value) ? objects[r2.TitleId.Value] : objects[r2.TitleId.Value] = FindTitle2(r2.TitleId));
+                if (load && r2.HoldingId != null) r2.Holding = (Holding2)(cache && objects.ContainsKey(r2.HoldingId.Value) ? objects[r2.HoldingId.Value] : objects[r2.HoldingId.Value] = FindHolding2(r2.HoldingId));
                 return r2;
             }).ToArray();
         }
@@ -3892,6 +3940,7 @@ namespace FolioLibrary
                 if (load && r2.LocationId != null) r2.Location = (Location2)(cache && objects.ContainsKey(r2.LocationId.Value) ? objects[r2.LocationId.Value] : objects[r2.LocationId.Value] = FindLocation2(r2.LocationId));
                 if (load && r2.OrderItemId != null) r2.OrderItem = (OrderItem2)(cache && objects.ContainsKey(r2.OrderItemId.Value) ? objects[r2.OrderItemId.Value] : objects[r2.OrderItemId.Value] = FindOrderItem2(r2.OrderItemId));
                 if (load && r2.TitleId != null) r2.Title = (Title2)(cache && objects.ContainsKey(r2.TitleId.Value) ? objects[r2.TitleId.Value] : objects[r2.TitleId.Value] = FindTitle2(r2.TitleId));
+                if (load && r2.HoldingId != null) r2.Holding = (Holding2)(cache && objects.ContainsKey(r2.HoldingId.Value) ? objects[r2.HoldingId.Value] : objects[r2.HoldingId.Value] = FindHolding2(r2.HoldingId));
                 yield return r2;
             }
         }
@@ -3904,6 +3953,7 @@ namespace FolioLibrary
             if (load && r2.LocationId != null) r2.Location = (Location2)(cache && objects.ContainsKey(r2.LocationId.Value) ? objects[r2.LocationId.Value] : objects[r2.LocationId.Value] = FindLocation2(r2.LocationId));
             if (load && r2.OrderItemId != null) r2.OrderItem = (OrderItem2)(cache && objects.ContainsKey(r2.OrderItemId.Value) ? objects[r2.OrderItemId.Value] : objects[r2.OrderItemId.Value] = FindOrderItem2(r2.OrderItemId));
             if (load && r2.TitleId != null) r2.Title = (Title2)(cache && objects.ContainsKey(r2.TitleId.Value) ? objects[r2.TitleId.Value] : objects[r2.TitleId.Value] = FindTitle2(r2.TitleId));
+            if (load && r2.HoldingId != null) r2.Holding = (Holding2)(cache && objects.ContainsKey(r2.HoldingId.Value) ? objects[r2.HoldingId.Value] : objects[r2.HoldingId.Value] = FindHolding2(r2.HoldingId));
             return r2;
         }
 

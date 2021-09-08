@@ -109,6 +109,14 @@ namespace FolioWebApplication.User2s
 
         protected RadGrid BlockLimit2s1RadGrid;
 
+        protected Panel BoundWithPart2sPanel;
+
+        protected RadGrid BoundWithPart2sRadGrid;
+
+        protected Panel BoundWithPart2s1Panel;
+
+        protected RadGrid BoundWithPart2s1RadGrid;
+
         protected Panel Budget2sPanel;
 
         protected RadGrid Budget2sRadGrid;

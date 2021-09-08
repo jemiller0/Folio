@@ -73,6 +73,46 @@
                                     <asp:HyperLink ID="TitleHyperLink" runat="server" Text='<%#: Eval("Title.Title") %>' NavigateUrl='<%# $"~/Title2s/Edit.aspx?Id={Eval("TitleId")}" %>' Enabled='<%# Session["Title2sPermission"] != null %>' />
                                 </td>
                             </tr>
+                            <tr runat="server" visible='<%# Eval("Holding") != null %>'>
+                                <td>
+                                    <asp:Label ID="HoldingLabel" runat="server" Text="Holding:" AssociatedControlID="HoldingHyperLink" />
+                                </td>
+                                <td>
+                                    <asp:HyperLink ID="HoldingHyperLink" runat="server" Text='<%# Eval("Holding.ShortId") %>' NavigateUrl='<%# $"~/Holding2s/Edit.aspx?Id={Eval("HoldingId")}" %>' Enabled='<%# Session["Holding2sPermission"] != null %>' />
+                                </td>
+                            </tr>
+                            <tr runat="server" visible='<%# Eval("DisplayOnHolding") != null %>'>
+                                <td>
+                                    <asp:Label ID="DisplayOnHoldingLabel" runat="server" Text="Display On Holding:" AssociatedControlID="DisplayOnHoldingLiteral" />
+                                </td>
+                                <td>
+                                    <asp:Literal ID="DisplayOnHoldingLiteral" runat="server" Text='<%#: Eval("DisplayOnHolding") %>' />
+                                </td>
+                            </tr>
+                            <tr runat="server" visible='<%# Eval("Enumeration") != null %>'>
+                                <td>
+                                    <asp:Label ID="EnumerationLabel" runat="server" Text="Enumeration:" AssociatedControlID="EnumerationLiteral" />
+                                </td>
+                                <td>
+                                    <asp:Literal ID="EnumerationLiteral" runat="server" Text='<%#: Eval("Enumeration") %>' />
+                                </td>
+                            </tr>
+                            <tr runat="server" visible='<%# Eval("Chronology") != null %>'>
+                                <td>
+                                    <asp:Label ID="ChronologyLabel" runat="server" Text="Chronology:" AssociatedControlID="ChronologyLiteral" />
+                                </td>
+                                <td>
+                                    <asp:Literal ID="ChronologyLiteral" runat="server" Text='<%#: Eval("Chronology") %>' />
+                                </td>
+                            </tr>
+                            <tr runat="server" visible='<%# Eval("DiscoverySuppress") != null %>'>
+                                <td>
+                                    <asp:Label ID="DiscoverySuppressLabel" runat="server" Text="Discovery Suppress:" AssociatedControlID="DiscoverySuppressLiteral" />
+                                </td>
+                                <td>
+                                    <asp:Literal ID="DiscoverySuppressLiteral" runat="server" Text='<%#: Eval("DiscoverySuppress") %>' />
+                                </td>
+                            </tr>
                             <tr runat="server" visible='<%# Eval("ReceivingStatus") != null %>'>
                                 <td>
                                     <asp:Label ID="ReceivingStatusLabel" runat="server" Text="Receiving Status:" AssociatedControlID="ReceivingStatusLiteral" />

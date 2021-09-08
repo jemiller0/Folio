@@ -115,10 +115,16 @@ namespace FolioLibrary
         [Display(Name = "Job Executions 1", Order = 29)]
         public virtual ICollection<JobExecution2> JobExecution2s1 { get; set; }
 
-        [Display(Name = "Job Execution Source Chunks", Order = 30)]
+        [Display(Name = "Job Execution Progresss", Order = 30)]
+        public virtual ICollection<JobExecutionProgress2> JobExecutionProgress2s { get; set; }
+
+        [Display(Name = "Job Execution Source Chunks", Order = 31)]
         public virtual ICollection<JobExecutionSourceChunk2> JobExecutionSourceChunk2s { get; set; }
 
-        [Display(Name = "Journal Records", Order = 31)]
+        [Display(Name = "Job Monitorings", Order = 32)]
+        public virtual ICollection<JobMonitoring2> JobMonitoring2s { get; set; }
+
+        [Display(Name = "Journal Records", Order = 33)]
         public virtual ICollection<JournalRecord2> JournalRecord2s { get; set; }
 
         public override string ToString() => $"{{ {nameof(Id)} = {Id}, {nameof(HrId)} = {HrId}, {nameof(ParentJobId)} = {ParentJobId}, {nameof(SubordinationType)} = {SubordinationType}, {nameof(JobProfileInfoName)} = {JobProfileInfoName}, {nameof(JobProfileInfoDataType)} = {JobProfileInfoDataType}, {nameof(JobProfileSnapshotWrapperProfileId)} = {JobProfileSnapshotWrapperProfileId}, {nameof(JobProfileSnapshotWrapperContentType)} = {JobProfileSnapshotWrapperContentType}, {nameof(JobProfileSnapshotWrapperReactTo)} = {JobProfileSnapshotWrapperReactTo}, {nameof(JobProfileSnapshotWrapperOrder)} = {JobProfileSnapshotWrapperOrder}, {nameof(SourcePath)} = {SourcePath}, {nameof(FileName)} = {FileName}, {nameof(RunByFirstName)} = {RunByFirstName}, {nameof(RunByLastName)} = {RunByLastName}, {nameof(ProgressJobExecutionId)} = {ProgressJobExecutionId}, {nameof(ProgressCurrent)} = {ProgressCurrent}, {nameof(ProgressTotal)} = {ProgressTotal}, {nameof(StartedDate)} = {StartedDate}, {nameof(CompletedDate)} = {CompletedDate}, {nameof(Status)} = {Status}, {nameof(UiStatus)} = {UiStatus}, {nameof(ErrorStatus)} = {ErrorStatus}, {nameof(UserId)} = {UserId}, {nameof(Content)} = {Content} }}";

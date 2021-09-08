@@ -224,6 +224,27 @@ namespace FolioWebApplicationTest
         }
 
         [TestMethod]
+        public void BoundWithPart2sDefaultAspxTest()
+        {
+            var s = Stopwatch.StartNew();
+            try
+            {
+                var hrm = httpClient.GetAsync($"{Url}/BoundWithPart2s/Default.aspx").Result;
+                hrm.EnsureSuccessStatusCode();
+                Assert.IsTrue(s.Elapsed < TimeSpan.FromSeconds(30));
+            }
+            catch (Exception e)
+            {
+                traceSource.TraceEvent(TraceEventType.Error, 0, e.ToString());
+                throw;
+            }
+            finally
+            {
+                traceSource.TraceEvent(TraceEventType.Information, 0, $"BoundWithPart2sDefaultAspxTest()\r\n    ElapsedTime={s.Elapsed}");
+            }
+        }
+
+        [TestMethod]
         public void Budget2sDefaultAspxTest()
         {
             var s = Stopwatch.StartNew();

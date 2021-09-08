@@ -17,6 +17,7 @@
     <None Remove="Block.json" />
     <None Remove="BlockCondition.json" />
     <None Remove="BlockLimit.json" />
+    <None Remove="BoundWithPart.json" />
     <None Remove="Budget.json" />
     <None Remove="BudgetExpenseClass.json" />
     <None Remove="BudgetGroup.json" />
@@ -73,7 +74,9 @@
     <None Remove="ItemDamagedStatus.json" />
     <None Remove="ItemNoteType.json" />
     <None Remove="JobExecution.json" />
+    <None Remove="JobExecutionProgress.json" />
     <None Remove="JobExecutionSourceChunk.json" />
+    <None Remove="JobMonitoring.json" />
     <None Remove="JournalRecord.json" />
     <None Remove="Ledger.json" />
     <None Remove="LedgerRollover.json" />
@@ -155,6 +158,7 @@
     <EmbeddedResource Include="Block.json" />
     <EmbeddedResource Include="BlockCondition.json" />
     <EmbeddedResource Include="BlockLimit.json" />
+    <EmbeddedResource Include="BoundWithPart.json" />
     <EmbeddedResource Include="Budget.json" />
     <EmbeddedResource Include="BudgetExpenseClass.json" />
     <EmbeddedResource Include="BudgetGroup.json" />
@@ -211,7 +215,9 @@
     <EmbeddedResource Include="ItemDamagedStatus.json" />
     <EmbeddedResource Include="ItemNoteType.json" />
     <EmbeddedResource Include="JobExecution.json" />
+    <EmbeddedResource Include="JobExecutionProgress.json" />
     <EmbeddedResource Include="JobExecutionSourceChunk.json" />
+    <EmbeddedResource Include="JobMonitoring.json" />
     <EmbeddedResource Include="JournalRecord.json" />
     <EmbeddedResource Include="Ledger.json" />
     <EmbeddedResource Include="LedgerRollover.json" />

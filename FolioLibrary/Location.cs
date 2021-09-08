@@ -62,6 +62,9 @@ namespace FolioLibrary
         public virtual ICollection<Holding> Holdings1 { get; set; }
 
         [ScaffoldColumn(false)]
+        public virtual ICollection<Holding> Holdings2 { get; set; }
+
+        [ScaffoldColumn(false)]
         public virtual ICollection<Item> Items { get; set; }
 
         [ScaffoldColumn(false)]

@@ -56,6 +56,7 @@ namespace FolioWebApplication.Item2s
             var id = (Guid?)gei.GetDataKeyValue("Id");
             try
             {
+                if (folioServiceContext.AnyBoundWithPart2s($"itemId == \"{id}\"")) throw new Exception("Item cannot be deleted because it is being referenced by a bound with part");
                 if (folioServiceContext.AnyCheckIn2s($"itemId == \"{id}\"")) throw new Exception("Item cannot be deleted because it is being referenced by a check in");
                 if (folioServiceContext.AnyFee2s($"itemId == \"{id}\"")) throw new Exception("Item cannot be deleted because it is being referenced by a fee");
                 if (folioServiceContext.AnyLoan2s($"itemId == \"{id}\"")) throw new Exception("Item cannot be deleted because it is being referenced by a loan");

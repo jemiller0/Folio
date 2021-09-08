@@ -12,7 +12,7 @@ namespace FolioLibrary
 {
     public partial class FolioBulkCopyContext : IDisposable
     {
-        private DataTable acquisitionsUnitsDataTable, addressTypesDataTable, alertsDataTable, alternativeTitleTypesDataTable, authAttemptsDataTable, authCredentialsHistoriesDataTable, authPasswordActionsDataTable, batchGroupsDataTable, batchVouchersDataTable, batchVoucherExportsDataTable, batchVoucherExportConfigsDataTable, blocksDataTable, blockConditionsDataTable, blockLimitsDataTable, budgetsDataTable, budgetExpenseClassesDataTable, budgetGroupsDataTable, callNumberTypesDataTable, campusesDataTable, cancellationReasonsDataTable, categoriesDataTable, checkInsDataTable, circulationRulesDataTable, classificationTypesDataTable, closeReasonsDataTable, commentsDataTable, configurationsDataTable, contactsDataTable, contactTypesDataTable, contributorNameTypesDataTable, contributorTypesDataTable, countriesDataTable, customFieldsDataTable, departmentsDataTable, documentsDataTable, electronicAccessRelationshipsDataTable, errorRecordsDataTable, eventLogsDataTable, expenseClassesDataTable, exportConfigCredentialsDataTable, feesDataTable, feeTypesDataTable, financeGroupsDataTable, fiscalYearsDataTable, fixedDueDateSchedulesDataTable, fundsDataTable, fundTypesDataTable, groupsDataTable, holdingsDataTable, holdingNoteTypesDataTable, holdingTypesDataTable, hridSettingsDataTable, idTypesDataTable, illPoliciesDataTable, instancesDataTable, instanceFormatsDataTable, instanceNoteTypesDataTable, instanceRelationshipsDataTable, instanceRelationshipTypesDataTable, instanceSourceMarcsDataTable, instanceStatusesDataTable, instanceTypesDataTable, institutionsDataTable, interfacesDataTable, interfaceCredentialsDataTable, invoicesDataTable, invoiceItemsDataTable, invoiceTransactionSummariesDataTable, itemsDataTable, itemDamagedStatusesDataTable, itemNoteTypesDataTable, jobExecutionsDataTable, jobExecutionProgressesDataTable, jobExecutionSourceChunksDataTable, jobMonitoringsDataTable, journalRecordsDataTable, ledgersDataTable, ledgerRolloversDataTable, ledgerRolloverErrorsDataTable, ledgerRolloverProgressesDataTable, librariesDataTable, loansDataTable, loanEventsDataTable, loanPoliciesDataTable, loanTypesDataTable, locationsDataTable, loginsDataTable, lostItemFeePoliciesDataTable, manualBlockTemplatesDataTable, mappingRulesDataTable, marcRecordsDataTable, materialTypesDataTable, modeOfIssuancesDataTable, natureOfContentTermsDataTable, notesDataTable, noteTypesDataTable, ordersDataTable, orderInvoicesDataTable, orderItemsDataTable, orderTemplatesDataTable, orderTransactionSummariesDataTable, organizationsDataTable, overdueFinePoliciesDataTable, ownersDataTable, patronActionSessionsDataTable, patronNoticePoliciesDataTable, paymentsDataTable, paymentMethodsDataTable, permissionsDataTable, permissionsUsersDataTable, precedingSucceedingTitlesDataTable, prefixesDataTable, proxiesDataTable, rawRecordsDataTable, receivingsDataTable, recordsDataTable, refundReasonsDataTable, reportingCodesDataTable, requestsDataTable, requestPoliciesDataTable, scheduledNoticesDataTable, servicePointsDataTable, servicePointUsersDataTable, snapshotsDataTable, sourcesDataTable, staffSlipsDataTable, statisticalCodesDataTable, statisticalCodeTypesDataTable, suffixesDataTable, tagsDataTable, templatesDataTable, titlesDataTable, transactionsDataTable, transferAccountsDataTable, transferCriteriasDataTable, usersDataTable, userAcquisitionsUnitsDataTable, userRequestPreferencesDataTable, userSummariesDataTable, vouchersDataTable, voucherItemsDataTable, waiveReasonsDataTable;
+        private DataTable acquisitionsUnitsDataTable, addressTypesDataTable, alertsDataTable, alternativeTitleTypesDataTable, authAttemptsDataTable, authCredentialsHistoriesDataTable, authPasswordActionsDataTable, batchGroupsDataTable, batchVouchersDataTable, batchVoucherExportsDataTable, batchVoucherExportConfigsDataTable, blocksDataTable, blockConditionsDataTable, blockLimitsDataTable, boundWithPartsDataTable, budgetsDataTable, budgetExpenseClassesDataTable, budgetGroupsDataTable, callNumberTypesDataTable, campusesDataTable, cancellationReasonsDataTable, categoriesDataTable, checkInsDataTable, circulationRulesDataTable, classificationTypesDataTable, closeReasonsDataTable, commentsDataTable, configurationsDataTable, contactsDataTable, contactTypesDataTable, contributorNameTypesDataTable, contributorTypesDataTable, countriesDataTable, customFieldsDataTable, departmentsDataTable, documentsDataTable, electronicAccessRelationshipsDataTable, errorRecordsDataTable, eventLogsDataTable, expenseClassesDataTable, exportConfigCredentialsDataTable, feesDataTable, feeTypesDataTable, financeGroupsDataTable, fiscalYearsDataTable, fixedDueDateSchedulesDataTable, fundsDataTable, fundTypesDataTable, groupsDataTable, holdingsDataTable, holdingNoteTypesDataTable, holdingTypesDataTable, hridSettingsDataTable, idTypesDataTable, illPoliciesDataTable, instancesDataTable, instanceFormatsDataTable, instanceNoteTypesDataTable, instanceRelationshipsDataTable, instanceRelationshipTypesDataTable, instanceSourceMarcsDataTable, instanceStatusesDataTable, instanceTypesDataTable, institutionsDataTable, interfacesDataTable, interfaceCredentialsDataTable, invoicesDataTable, invoiceItemsDataTable, invoiceTransactionSummariesDataTable, itemsDataTable, itemDamagedStatusesDataTable, itemNoteTypesDataTable, jobExecutionsDataTable, jobExecutionProgressesDataTable, jobExecutionSourceChunksDataTable, jobMonitoringsDataTable, journalRecordsDataTable, ledgersDataTable, ledgerRolloversDataTable, ledgerRolloverErrorsDataTable, ledgerRolloverProgressesDataTable, librariesDataTable, loansDataTable, loanEventsDataTable, loanPoliciesDataTable, loanTypesDataTable, locationsDataTable, loginsDataTable, lostItemFeePoliciesDataTable, manualBlockTemplatesDataTable, mappingRulesDataTable, marcRecordsDataTable, materialTypesDataTable, modeOfIssuancesDataTable, natureOfContentTermsDataTable, notesDataTable, noteTypesDataTable, ordersDataTable, orderInvoicesDataTable, orderItemsDataTable, orderTemplatesDataTable, orderTransactionSummariesDataTable, organizationsDataTable, overdueFinePoliciesDataTable, ownersDataTable, patronActionSessionsDataTable, patronNoticePoliciesDataTable, paymentsDataTable, paymentMethodsDataTable, permissionsDataTable, permissionsUsersDataTable, precedingSucceedingTitlesDataTable, prefixesDataTable, proxiesDataTable, rawRecordsDataTable, receivingsDataTable, recordsDataTable, refundReasonsDataTable, reportingCodesDataTable, requestsDataTable, requestPoliciesDataTable, scheduledNoticesDataTable, servicePointsDataTable, servicePointUsersDataTable, snapshotsDataTable, sourcesDataTable, staffSlipsDataTable, statisticalCodesDataTable, statisticalCodeTypesDataTable, suffixesDataTable, tagsDataTable, templatesDataTable, titlesDataTable, transactionsDataTable, transferAccountsDataTable, transferCriteriasDataTable, usersDataTable, userAcquisitionsUnitsDataTable, userRequestPreferencesDataTable, userSummariesDataTable, vouchersDataTable, voucherItemsDataTable, waiveReasonsDataTable;
         private bool checkConstraints;
         private string connectionString;
         private bool identityInsert;
@@ -311,6 +311,29 @@ namespace FolioLibrary
             dr["created_by"] = (object)blockLimit.CreationUserId ?? DBNull.Value;
             dr["conditionid"] = (object)blockLimit.Conditionid ?? DBNull.Value;
             blockLimitsDataTable.Rows.Add(dr);
+        }
+
+        public void Insert(BoundWithPart boundWithPart)
+        {
+            if (boundWithPartsDataTable == null)
+            {
+                boundWithPartsDataTable = new DataTable();
+                boundWithPartsDataTable.Columns.Add(new DataColumn { ColumnName = "id", DataType = typeof(Guid) });
+                boundWithPartsDataTable.Columns.Add(new DataColumn { ColumnName = "jsonb", DataType = typeof(string) });
+                boundWithPartsDataTable.Columns.Add(new DataColumn { ColumnName = "creation_date", DataType = typeof(DateTime) });
+                boundWithPartsDataTable.Columns.Add(new DataColumn { ColumnName = "created_by", DataType = typeof(string) });
+                boundWithPartsDataTable.Columns.Add(new DataColumn { ColumnName = "itemid", DataType = typeof(Guid) });
+                boundWithPartsDataTable.Columns.Add(new DataColumn { ColumnName = "holdingsrecordid", DataType = typeof(Guid) });
+                boundWithPartsDataTable.Columns["jsonb"].ExtendedProperties["NpgsqlDbType"] = NpgsqlDbType.Jsonb;
+            }
+            var dr = boundWithPartsDataTable.NewRow();
+            dr["id"] = (object)boundWithPart.Id ?? DBNull.Value;
+            dr["jsonb"] = (object)boundWithPart.Content ?? DBNull.Value;
+            dr["creation_date"] = (object)boundWithPart.CreationTime ?? DBNull.Value;
+            dr["created_by"] = (object)boundWithPart.CreationUserId ?? DBNull.Value;
+            dr["itemid"] = (object)boundWithPart.Itemid ?? DBNull.Value;
+            dr["holdingsrecordid"] = (object)boundWithPart.Holdingsrecordid ?? DBNull.Value;
+            boundWithPartsDataTable.Rows.Add(dr);
         }
 
         public void Insert(Budget budget)
@@ -959,6 +982,7 @@ namespace FolioLibrary
                 holdingsDataTable.Columns.Add(new DataColumn { ColumnName = "instanceid", DataType = typeof(Guid) });
                 holdingsDataTable.Columns.Add(new DataColumn { ColumnName = "permanentlocationid", DataType = typeof(Guid) });
                 holdingsDataTable.Columns.Add(new DataColumn { ColumnName = "temporarylocationid", DataType = typeof(Guid) });
+                holdingsDataTable.Columns.Add(new DataColumn { ColumnName = "effectivelocationid", DataType = typeof(Guid) });
                 holdingsDataTable.Columns.Add(new DataColumn { ColumnName = "holdingstypeid", DataType = typeof(Guid) });
                 holdingsDataTable.Columns.Add(new DataColumn { ColumnName = "callnumbertypeid", DataType = typeof(Guid) });
                 holdingsDataTable.Columns.Add(new DataColumn { ColumnName = "illpolicyid", DataType = typeof(Guid) });
@@ -973,6 +997,7 @@ namespace FolioLibrary
             dr["instanceid"] = (object)holding.Instanceid ?? DBNull.Value;
             dr["permanentlocationid"] = (object)holding.Permanentlocationid ?? DBNull.Value;
             dr["temporarylocationid"] = (object)holding.Temporarylocationid ?? DBNull.Value;
+            dr["effectivelocationid"] = (object)holding.Effectivelocationid ?? DBNull.Value;
             dr["holdingstypeid"] = (object)holding.Holdingstypeid ?? DBNull.Value;
             dr["callnumbertypeid"] = (object)holding.Callnumbertypeid ?? DBNull.Value;
             dr["illpolicyid"] = (object)holding.Illpolicyid ?? DBNull.Value;
@@ -2979,6 +3004,19 @@ namespace FolioLibrary
                 sqlBulkCopy.WriteToServer(blockLimitsDataTable);
                 blockLimitsDataTable.Clear();
             }
+            if (boundWithPartsDataTable != null && boundWithPartsDataTable.Rows.Count > 0)
+            {
+                sqlBulkCopy.DestinationTableName = $"diku_mod_inventory_storage{(IsMySql ? "_" : ".")}bound_with_part";
+                sqlBulkCopy.ColumnMappings.Clear();
+                sqlBulkCopy.ColumnMappings.Add("id", "id");
+                sqlBulkCopy.ColumnMappings.Add("jsonb", "jsonb");
+                sqlBulkCopy.ColumnMappings.Add("creation_date", "creation_date");
+                sqlBulkCopy.ColumnMappings.Add("created_by", "created_by");
+                sqlBulkCopy.ColumnMappings.Add("itemid", "itemid");
+                sqlBulkCopy.ColumnMappings.Add("holdingsrecordid", "holdingsrecordid");
+                sqlBulkCopy.WriteToServer(boundWithPartsDataTable);
+                boundWithPartsDataTable.Clear();
+            }
             if (budgetsDataTable != null && budgetsDataTable.Rows.Count > 0)
             {
                 sqlBulkCopy.DestinationTableName = $"diku_mod_finance_storage{(IsMySql ? "_" : ".")}budget";
@@ -3358,6 +3396,7 @@ namespace FolioLibrary
                 sqlBulkCopy.ColumnMappings.Add("instanceid", "instanceid");
                 sqlBulkCopy.ColumnMappings.Add("permanentlocationid", "permanentlocationid");
                 sqlBulkCopy.ColumnMappings.Add("temporarylocationid", "temporarylocationid");
+                sqlBulkCopy.ColumnMappings.Add("effectivelocationid", "effectivelocationid");
                 sqlBulkCopy.ColumnMappings.Add("holdingstypeid", "holdingstypeid");
                 sqlBulkCopy.ColumnMappings.Add("callnumbertypeid", "callnumbertypeid");
                 sqlBulkCopy.ColumnMappings.Add("illpolicyid", "illpolicyid");
@@ -4444,6 +4483,7 @@ namespace FolioLibrary
             if (blocksDataTable != null) blocksDataTable.Dispose();
             if (blockConditionsDataTable != null) blockConditionsDataTable.Dispose();
             if (blockLimitsDataTable != null) blockLimitsDataTable.Dispose();
+            if (boundWithPartsDataTable != null) boundWithPartsDataTable.Dispose();
             if (budgetsDataTable != null) budgetsDataTable.Dispose();
             if (budgetExpenseClassesDataTable != null) budgetExpenseClassesDataTable.Dispose();
             if (budgetGroupsDataTable != null) budgetGroupsDataTable.Dispose();

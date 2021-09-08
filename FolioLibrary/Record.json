@@ -5,32 +5,29 @@
   "additionalProperties": false,
   "properties": {
     "id": {
-      "description": "UUID",
-      "type": "string"
+      "description": "The UUID format string",
+      "type": "string",
+      "pattern": "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-5][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}$"
     },
     "snapshotId": {
-      "description": "Corresponding snapshot id, which is the same as jobExecutionId",
-      "type": "string"
-    },
-    "matchedProfileId": {
-      "description": "Id of the matcher profile which is applied for the record",
-      "type": "string"
+      "$ref": "#/properties/id"
     },
     "matchedId": {
-      "description": "Represents relations with another matched records, necessary for saving the history of applying changes for inventory/holding/etc records",
-      "type": "string"
+      "$ref": "#/properties/id"
     },
     "generation": {
       "description": "Generation from the last record with the same matchedId incremented by 1. Starts from 0.",
-      "type": "integer",
-      "default": 0
+      "type": "integer"
     },
     "recordType": {
       "description": "Record Type Enum",
       "type": "string",
       "additionalProperties": false,
       "enum": [
-        "MARC"
+        "MARC_BIB",
+        "MARC_AUTHORITY",
+        "MARC_HOLDING",
+        "EDIFACT"
       ]
     },
     "rawRecord": {
@@ -42,8 +39,9 @@
       "additionalProperties": false,
       "properties": {
         "id": {
-          "description": "UUID",
-          "type": "string"
+          "description": "The UUID format string",
+          "type": "string",
+          "pattern": "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-5][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}$"
         },
         "content": {
           "description": "Raw data",
@@ -64,8 +62,9 @@
       "additionalProperties": false,
       "properties": {
         "id": {
-          "description": "UUID",
-          "type": "string"
+          "description": "The UUID format string",
+          "type": "string",
+          "pattern": "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-5][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}$"
         },
         "content": {
           "description": "Parsed record content, e.g. MARC record"
@@ -88,8 +87,9 @@
       "additionalProperties": false,
       "properties": {
         "id": {
-          "description": "UUID",
-          "type": "string"
+          "description": "The UUID format string",
+          "type": "string",
+          "pattern": "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-5][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}$"
         },
         "description": {
           "description": "Error description",
@@ -110,16 +110,29 @@
       "default": false
     },
     "order": {
-      "type": "integer"
+      "description": "Order of the record in imported file",
+      "type": "integer",
+      "minimum": 0.0
     },
     "externalIdsHolder": {
+      "description": "Contains identifiers of external entities (instance, holdings)",
       "type": "object",
+      "additionalProperties": false,
       "properties": {
         "instanceId": {
+          "description": "The UUID format string",
           "type": "string",
-          "pattern": "^[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12}$"
+          "pattern": "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-5][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}$"
         },
         "instanceHrid": {
+          "description": "instance hrid",
+          "type": "string"
+        },
+        "holdingsId": {
+          "$ref": "#/properties/externalIdsHolder/properties/instanceId"
+        },
+        "holdingsHrid": {
+          "description": "holdings hrid",
           "type": "string"
         }
       }
@@ -136,10 +149,20 @@
       }
     },
     "state": {
-      "type": "string"
+      "description": "This field represents the actual state of a particular SRS record. Can be: ACTUAL, OLD, DRAFT, DELETED. ",
+      "type": "string",
+      "default": "ACTUAL",
+      "enum": [
+        "ACTUAL",
+        "OLD",
+        "DRAFT",
+        "DELETED"
+      ]
     },
     "leaderRecordStatus": {
-      "type": "string"
+      "description": "Single character representing MARC leader 05",
+      "type": "string",
+      "pattern": "^[a|c|d|n|p|o|s|x]{1}$"
     },
     "metadata": {
       "title": "Metadata Schema",

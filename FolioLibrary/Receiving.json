@@ -38,6 +38,26 @@
     "titleId": {
       "$ref": "#/properties/id"
     },
+    "holdingId": {
+      "$ref": "#/properties/id"
+    },
+    "displayOnHolding": {
+      "description": "Whether or not receiving history should be displayed in holding record view",
+      "type": "boolean",
+      "default": "false"
+    },
+    "enumeration": {
+      "description": "Enumeration is the descriptive information for the numbering scheme of a serial. Synchronized with inventory item.",
+      "type": "string"
+    },
+    "chronology": {
+      "description": "Chronology is the descriptive information for the dating scheme of a serial. Synchronized with inventory item.",
+      "type": "string"
+    },
+    "discoverySuppress": {
+      "description": "Records the fact that the record should not be displayed in a discovery system",
+      "type": "boolean"
+    },
     "receivingStatus": {
       "description": "the status of this piece",
       "type": "string",

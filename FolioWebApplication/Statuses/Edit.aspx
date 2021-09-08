@@ -115,6 +115,8 @@
                         </telerik:GridTemplateColumn>
                         <telerik:GridBoundColumn HeaderText="Author" DataField="Author" AllowFiltering="false" AllowSorting="false" HtmlEncode="true" />
                         <telerik:GridBoundColumn HeaderText="Publication Year" DataField="PublicationYear" AllowFiltering="false" AllowSorting="false" HtmlEncode="true" />
+                        <telerik:GridBoundColumn HeaderText="Publication Period Start" DataField="PublicationPeriodStart" AutoPostBackOnFilter="true" />
+                        <telerik:GridBoundColumn HeaderText="Publication Period End" DataField="PublicationPeriodEnd" AutoPostBackOnFilter="true" />
                         <telerik:GridTemplateColumn AllowFiltering="false" AllowSorting="false" HeaderText="Instance Type" DataField="InstanceType.Name" SortExpression="InstanceType.Name" AutoPostBackOnFilter="true" CurrentFilterFunction="StartsWith">
                             <ItemTemplate>
                                 <asp:HyperLink ID="InstanceTypeHyperLink" runat="server" Text='<%#: Eval("InstanceType.Name") %>' NavigateUrl='<%# $"~/InstanceType2s/Edit.aspx?Id={Eval("InstanceTypeId")}" %>' Enabled='<%# Session["InstanceType2sPermission"] != null %>' />

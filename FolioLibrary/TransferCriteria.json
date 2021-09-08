@@ -15,15 +15,16 @@
     },
     "value": {
       "description": "Not implemented yet",
-      "type": "number"
+      "javaType": "org.folio.rest.domain.MonetaryValue"
     },
     "interval": {
       "description": "Not implemented yet",
       "type": "string"
     },
     "id": {
-      "description": "Transfer criteria id, UUID",
-      "type": "string"
+      "description": "The UUID format string",
+      "type": "string",
+      "pattern": "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-5][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}$"
     }
   }
 }

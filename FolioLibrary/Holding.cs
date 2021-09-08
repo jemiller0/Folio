@@ -43,46 +43,55 @@ namespace FolioLibrary
         [Column("instanceid"), Display(Name = "Instance", Order = 6), ForeignKey("Instance")]
         public virtual Guid? Instanceid { get; set; }
 
-        [Display(Order = 7), InverseProperty("Holdings")]
-        public virtual Location Location { get; set; }
-
-        [Column("permanentlocationid"), Display(Name = "Location", Order = 8), ForeignKey("Location")]
-        public virtual Guid? Permanentlocationid { get; set; }
-
-        [Display(Name = "Location 1", Order = 9), InverseProperty("Holdings1")]
+        [Display(Name = "Location 1", Order = 7), InverseProperty("Holdings1")]
         public virtual Location Location1 { get; set; }
 
-        [Column("temporarylocationid"), Display(Name = "Location 1", Order = 10), ForeignKey("Location1")]
+        [Column("permanentlocationid"), Display(Name = "Location 1", Order = 8), ForeignKey("Location1")]
+        public virtual Guid? Permanentlocationid { get; set; }
+
+        [Display(Name = "Location 2", Order = 9), InverseProperty("Holdings2")]
+        public virtual Location Location2 { get; set; }
+
+        [Column("temporarylocationid"), Display(Name = "Location 2", Order = 10), ForeignKey("Location2")]
         public virtual Guid? Temporarylocationid { get; set; }
 
-        [Column("holdingstypeid"), Display(Name = "Holding Type", Order = 11), ForeignKey("HoldingType")]
+        [Column("effectivelocationid"), Display(Name = "Location", Order = 11), ForeignKey("Location")]
+        public virtual Guid? Effectivelocationid { get; set; }
+
+        [Display(Order = 12), InverseProperty("Holdings")]
+        public virtual Location Location { get; set; }
+
+        [Column("holdingstypeid"), Display(Name = "Holding Type", Order = 13), ForeignKey("HoldingType")]
         public virtual Guid? Holdingstypeid { get; set; }
 
-        [Display(Name = "Holding Type", Order = 12)]
+        [Display(Name = "Holding Type", Order = 14)]
         public virtual HoldingType HoldingType { get; set; }
 
-        [Display(Name = "Call Number Type", Order = 13)]
+        [Display(Name = "Call Number Type", Order = 15)]
         public virtual CallNumberType CallNumberType { get; set; }
 
-        [Column("callnumbertypeid"), Display(Name = "Call Number Type", Order = 14), ForeignKey("CallNumberType")]
+        [Column("callnumbertypeid"), Display(Name = "Call Number Type", Order = 16), ForeignKey("CallNumberType")]
         public virtual Guid? Callnumbertypeid { get; set; }
 
-        [Display(Name = "Ill Policy", Order = 15)]
+        [Display(Name = "Ill Policy", Order = 17)]
         public virtual IllPolicy IllPolicy { get; set; }
 
-        [Column("illpolicyid"), Display(Name = "Ill Policy", Order = 16), ForeignKey("IllPolicy")]
+        [Column("illpolicyid"), Display(Name = "Ill Policy", Order = 18), ForeignKey("IllPolicy")]
         public virtual Guid? Illpolicyid { get; set; }
 
-        [Display(Order = 17)]
+        [Display(Order = 19)]
         public virtual Source Source { get; set; }
 
-        [Column("sourceid"), Display(Name = "Source", Order = 18), ForeignKey("Source")]
+        [Column("sourceid"), Display(Name = "Source", Order = 20), ForeignKey("Source")]
         public virtual Guid? Sourceid { get; set; }
+
+        [ScaffoldColumn(false)]
+        public virtual ICollection<BoundWithPart> BoundWithParts { get; set; }
 
         [ScaffoldColumn(false)]
         public virtual ICollection<Item> Items { get; set; }
 
-        public override string ToString() => $"{{ {nameof(Id)} = {Id}, {nameof(Content)} = {Content}, {nameof(CreationTime)} = {CreationTime}, {nameof(CreationUserId)} = {CreationUserId}, {nameof(Instanceid)} = {Instanceid}, {nameof(Permanentlocationid)} = {Permanentlocationid}, {nameof(Temporarylocationid)} = {Temporarylocationid}, {nameof(Holdingstypeid)} = {Holdingstypeid}, {nameof(Callnumbertypeid)} = {Callnumbertypeid}, {nameof(Illpolicyid)} = {Illpolicyid}, {nameof(Sourceid)} = {Sourceid} }}";
+        public override string ToString() => $"{{ {nameof(Id)} = {Id}, {nameof(Content)} = {Content}, {nameof(CreationTime)} = {CreationTime}, {nameof(CreationUserId)} = {CreationUserId}, {nameof(Instanceid)} = {Instanceid}, {nameof(Permanentlocationid)} = {Permanentlocationid}, {nameof(Temporarylocationid)} = {Temporarylocationid}, {nameof(Effectivelocationid)} = {Effectivelocationid}, {nameof(Holdingstypeid)} = {Holdingstypeid}, {nameof(Callnumbertypeid)} = {Callnumbertypeid}, {nameof(Illpolicyid)} = {Illpolicyid}, {nameof(Sourceid)} = {Sourceid} }}";
 
         public static Holding FromJObject(JObject jObject) => jObject != null ? new Holding
         {
@@ -93,6 +102,7 @@ namespace FolioLibrary
             Instanceid = (Guid?)jObject.SelectToken("instanceId"),
             Permanentlocationid = (Guid?)jObject.SelectToken("permanentLocationId"),
             Temporarylocationid = (Guid?)jObject.SelectToken("temporaryLocationId"),
+            Effectivelocationid = (Guid?)jObject.SelectToken("effectiveLocationId"),
             Holdingstypeid = (Guid?)jObject.SelectToken("holdingsTypeId"),
             Callnumbertypeid = (Guid?)jObject.SelectToken("callNumberTypeId"),
             Illpolicyid = (Guid?)jObject.SelectToken("illPolicyId"),

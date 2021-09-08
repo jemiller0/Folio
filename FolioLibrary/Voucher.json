@@ -65,7 +65,8 @@
       "type": "string",
       "enum": [
         "Awaiting payment",
-        "Paid"
+        "Paid",
+        "Cancelled"
       ]
     },
     "systemCurrency": {

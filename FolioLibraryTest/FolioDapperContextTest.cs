@@ -367,6 +367,42 @@ LEFT JOIN uc.users AS lwu ON lwu.id = bl2.updated_by_user_id
         }
 
         [TestMethod]
+        public void QueryBoundWithPart2sTest()
+        {
+            var s = Stopwatch.StartNew();
+            folioDapperContext.BoundWithPart2s(take: 1).ToArray();
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"BoundWithPart2sTest()\r\n    ElapsedTime={s.Elapsed}");
+        }
+
+        [TestMethod]
+        public void BoundWithPart2sQueryTest()
+        {
+            var s = Stopwatch.StartNew();
+            folioDapperContext.Query(@"
+SELECT
+bwp2.id AS ""Id"",
+h.hrid AS ""Holding"",
+bwp2.holding_id AS ""HoldingId"",
+i.hrid AS ""Item"",
+bwp2.item_id AS ""ItemId"",
+bwp2.created_date AS ""CreationTime"",
+cu.username AS ""CreationUser"",
+bwp2.created_by_user_id AS ""CreationUserId"",
+bwp2.updated_date AS ""LastWriteTime"",
+lwu.username AS ""LastWriteUser"",
+bwp2.updated_by_user_id AS ""LastWriteUserId"",
+bwp2.content AS ""Content"" 
+FROM uc.bound_with_parts AS bwp2
+LEFT JOIN uc.holdings AS h ON h.id = bwp2.holding_id
+LEFT JOIN uc.items AS i ON i.id = bwp2.item_id
+LEFT JOIN uc.users AS cu ON cu.id = bwp2.created_by_user_id
+LEFT JOIN uc.users AS lwu ON lwu.id = bwp2.updated_by_user_id
+ ORDER BY bwp2.id
+", take: 1);
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"BoundWithPart2sQueryTest()\r\n    ElapsedTime={s.Elapsed}");
+        }
+
+        [TestMethod]
         public void QueryBudget2sTest()
         {
             var s = Stopwatch.StartNew();
@@ -1594,6 +1630,8 @@ i2.source AS ""Source"",
 i2.title AS ""Title"",
 i2.author AS ""Author"",
 i2.publication_year AS ""PublicationYear"",
+i2.publication_period_start AS ""PublicationPeriodStart"",
+i2.publication_period_end AS ""PublicationPeriodEnd"",
 it.name AS ""InstanceType"",
 i2.instance_type_id AS ""InstanceTypeId"",
 im.name AS ""IssuanceMode"",
@@ -1784,6 +1822,7 @@ i2.batch_group_id AS ""BatchGroupId"",
 bt.id AS ""BillTo"",
 i2.bill_to_id AS ""BillToId"",
 i2.chk_subscription_overlap AS ""CheckSubscriptionOverlap"",
+i2.cancellation_note AS ""CancellationNote"",
 i2.currency AS ""Currency"",
 i2.enclosure_needed AS ""EnclosureNeeded"",
 i2.exchange_rate AS ""ExchangeRate"",
@@ -3478,6 +3517,12 @@ oi.po_line_number AS ""OrderItem"",
 r2.po_line_id AS ""OrderItemId"",
 t.title AS ""Title"",
 r2.title_id AS ""TitleId"",
+h.hrid AS ""Holding"",
+r2.holding_id AS ""HoldingId"",
+r2.display_on_holding AS ""DisplayOnHolding"",
+r2.enumeration AS ""Enumeration"",
+r2.chronology AS ""Chronology"",
+r2.discovery_suppress AS ""DiscoverySuppress"",
 r2.receiving_status AS ""ReceivingStatus"",
 r2.supplement AS ""Supplement"",
 r2.receipt_date AS ""ReceiptTime"",
@@ -3488,6 +3533,7 @@ LEFT JOIN uc.items AS i ON i.id = r2.item_id
 LEFT JOIN uc.locations AS l ON l.id = r2.location_id
 LEFT JOIN uc.order_items AS oi ON oi.id = r2.po_line_id
 LEFT JOIN uc.titles AS t ON t.id = r2.title_id
+LEFT JOIN uc.holdings AS h ON h.id = r2.holding_id
  ORDER BY r2.id
 ", take: 1);
             traceSource.TraceEvent(TraceEventType.Information, 0, $"Receiving2sQueryTest()\r\n    ElapsedTime={s.Elapsed}");
@@ -4279,6 +4325,7 @@ fy.name AS ""FiscalYear"",
 t2.fiscal_year_id AS ""FiscalYearId"",
 ff.name AS ""FromFund"",
 t2.from_fund_id AS ""FromFundId"",
+t2.invoice_cancelled AS ""InvoiceCancelled"",
 pe.amount AS ""PaymentEncumbrance"",
 t2.payment_encumbrance_id AS ""PaymentEncumbranceId"",
 t2.source AS ""Source"",

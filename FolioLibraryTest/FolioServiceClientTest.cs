@@ -224,6 +224,26 @@ namespace FolioLibraryTest
         }
 
         [TestMethod]
+        public void CountBoundWithPartsTest()
+        {
+            var s = Stopwatch.StartNew();
+            var i = folioServiceClient.CountBoundWithParts();
+            var j = folioDapperContext.CountBoundWithParts();
+            Assert.IsTrue(i == j);
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"CountBoundWithPartsTest()\r\n    ElapsedTime={s.Elapsed}");
+        }
+
+        [TestMethod]
+        public void InventoryBoundWithPartsTest()
+        {
+            var s = Stopwatch.StartNew();
+            var l = folioServiceClient.BoundWithParts(take: take).Select(jo => (string)jo["id"]).ToArray();
+            var l2 = folioDapperContext.BoundWithParts(take: take).Select(u => u.Id.ToString()).ToArray();
+            Assert.IsTrue(l.SequenceEqual(l2));
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"BoundWithPartsTest()\r\n    ElapsedTime={s.Elapsed}");
+        }
+
+        [TestMethod]
         public void CountBudgetsTest()
         {
             var s = Stopwatch.StartNew();
@@ -2489,6 +2509,18 @@ namespace FolioLibraryTest
             traceSource.TraceEvent(TraceEventType.Information, 0, bl2.ToString());
             Assert.IsNotNull(bl2);
             traceSource.TraceEvent(TraceEventType.Information, 0, $"DeserializeBlockLimit2Test()\r\n    ElapsedTime={s.Elapsed}");
+        }
+
+        [TestMethod]
+        public void DeserializeBoundWithPart2Test()
+        {
+            var s = Stopwatch.StartNew();
+            var jo = folioServiceClient.BoundWithParts(take: 1).SingleOrDefault();
+            if (jo == null) Assert.Inconclusive();
+            var bwp2 = JsonConvert.DeserializeObject<BoundWithPart2>(jo.ToString());
+            traceSource.TraceEvent(TraceEventType.Information, 0, bwp2.ToString());
+            Assert.IsNotNull(bwp2);
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"DeserializeBoundWithPart2Test()\r\n    ElapsedTime={s.Elapsed}");
         }
 
         [TestMethod]

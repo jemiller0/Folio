@@ -2,6 +2,7 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using NJsonSchema;
 using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.IO;
@@ -77,6 +78,9 @@ namespace FolioLibrary
 
         [Display(Order = 18), InverseProperty("Items")]
         public virtual Location Location { get; set; }
+
+        [ScaffoldColumn(false)]
+        public virtual ICollection<BoundWithPart> BoundWithParts { get; set; }
 
         public override string ToString() => $"{{ {nameof(Id)} = {Id}, {nameof(Content)} = {Content}, {nameof(CreationTime)} = {CreationTime}, {nameof(CreationUserId)} = {CreationUserId}, {nameof(Holdingsrecordid)} = {Holdingsrecordid}, {nameof(Permanentloantypeid)} = {Permanentloantypeid}, {nameof(Temporaryloantypeid)} = {Temporaryloantypeid}, {nameof(Materialtypeid)} = {Materialtypeid}, {nameof(Permanentlocationid)} = {Permanentlocationid}, {nameof(Temporarylocationid)} = {Temporarylocationid}, {nameof(Effectivelocationid)} = {Effectivelocationid} }}";
 

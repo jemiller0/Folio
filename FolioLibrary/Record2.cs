@@ -27,7 +27,7 @@ namespace FolioLibrary
         [Column("generation"), Display(Order = 5), JsonProperty("generation"), Required]
         public virtual int? Generation { get; set; }
 
-        [Column("record_type"), Display(Name = "Record Type", Order = 6), JsonProperty("recordType"), RegularExpression(@"^(MARC)$"), Required, StringLength(1024)]
+        [Column("record_type"), Display(Name = "Record Type", Order = 6), JsonProperty("recordType"), RegularExpression(@"^(MARC_BIB|MARC_AUTHORITY|MARC_HOLDING|EDIFACT)$"), Required, StringLength(1024)]
         public virtual string RecordType { get; set; }
 
         [Display(Order = 7)]
@@ -36,7 +36,7 @@ namespace FolioLibrary
         [Column("instance_id"), Display(Name = "Instance", Order = 8), JsonProperty("externalIdsHolder.instanceId")]
         public virtual Guid? InstanceId { get; set; }
 
-        [Column("state"), Display(Order = 9), JsonProperty("state"), Required, StringLength(1024)]
+        [Column("state"), Display(Order = 9), JsonProperty("state"), RegularExpression(@"^(ACTUAL|OLD|DRAFT|DELETED)$"), Required, StringLength(1024)]
         public virtual string State { get; set; }
 
         [Column("leader_record_status"), Display(Name = "Leader Record Status", Order = 10), JsonProperty("leaderRecordStatus"), StringLength(1)]

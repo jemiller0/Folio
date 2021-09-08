@@ -136,6 +136,18 @@ namespace FolioLibraryTest
         }
 
         [TestMethod]
+        public void Inventory_DeserializeBoundWithPart2Test()
+        {
+            var s = Stopwatch.StartNew();
+            var bwp2 = folioServiceContext.BoundWithPart2s(take: 1).SingleOrDefault();
+            if (bwp2 == null) Assert.Inconclusive();
+            var bwp3 = folioDapperContext.BoundWithPart2s(take: 1).SingleOrDefault();
+            bwp3.Content = null;
+            Assert.AreEqual(bwp2.ToString(), bwp3.ToString());
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"Inventory_DeserializeBoundWithPart2Test()\r\n    ElapsedTime={s.Elapsed}");
+        }
+
+        [TestMethod]
         public void Finance_DeserializeBudget2Test()
         {
             var s = Stopwatch.StartNew();

@@ -57,6 +57,8 @@ namespace FolioWebApplication.Instance2s
             i2.Version = (int?)e.NewValues["Version"];
             i2.MatchKey = Global.Trim((string)e.NewValues["MatchKey"]);
             i2.Title = Global.Trim((string)e.NewValues["Title"]);
+            i2.PublicationPeriodStart = (int?)e.NewValues["PublicationPeriodStart"];
+            i2.PublicationPeriodEnd = (int?)e.NewValues["PublicationPeriodEnd"];
             i2.InstanceTypeId = (Guid?)Guid.Parse((string)e.NewValues["InstanceTypeId"]);
             i2.IssuanceModeId = (string)e.NewValues["IssuanceModeId"] != "" ? (Guid?)Guid.Parse((string)e.NewValues["IssuanceModeId"]) : null;
             i2.CatalogedDate = (DateTime?)e.NewValues["CatalogedDate"];
@@ -177,8 +179,10 @@ namespace FolioWebApplication.Instance2s
             var id = (Guid?)gei.GetDataKeyValue("Id");
             try
             {
+                if (folioServiceContext.AnyBoundWithPart2s($"holdingsRecordId == \"{id}\"")) throw new Exception("Holding cannot be deleted because it is being referenced by a bound with part");
                 if (folioServiceContext.AnyFee2s($"holdingsRecordId == \"{id}\"")) throw new Exception("Holding cannot be deleted because it is being referenced by a fee");
                 if (folioServiceContext.AnyItem2s($"holdingsRecordId == \"{id}\"")) throw new Exception("Holding cannot be deleted because it is being referenced by a item");
+                if (folioServiceContext.AnyReceiving2s($"holdingId == \"{id}\"")) throw new Exception("Holding cannot be deleted because it is being referenced by a receiving");
                 folioServiceContext.DeleteHolding2(id);
                 Response.Redirect("Default.aspx");
             }
@@ -303,6 +307,7 @@ namespace FolioWebApplication.Instance2s
             var id = (Guid?)gei.GetDataKeyValue("Id");
             try
             {
+                if (folioServiceContext.AnyBoundWithPart2s($"itemId == \"{id}\"")) throw new Exception("Item cannot be deleted because it is being referenced by a bound with part");
                 if (folioServiceContext.AnyCheckIn2s($"itemId == \"{id}\"")) throw new Exception("Item cannot be deleted because it is being referenced by a check in");
                 if (folioServiceContext.AnyFee2s($"itemId == \"{id}\"")) throw new Exception("Item cannot be deleted because it is being referenced by a fee");
                 if (folioServiceContext.AnyLoan2s($"itemId == \"{id}\"")) throw new Exception("Item cannot be deleted because it is being referenced by a loan");

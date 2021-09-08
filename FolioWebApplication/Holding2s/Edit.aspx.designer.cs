@@ -9,6 +9,10 @@ namespace FolioWebApplication.Holding2s
 
         protected FormView Holding2FormView;
 
+        protected Panel BoundWithPart2sPanel;
+
+        protected RadGrid BoundWithPart2sRadGrid;
+
         protected Panel ExtentsPanel;
 
         protected RadGrid ExtentsRadGrid;
@@ -48,6 +52,14 @@ namespace FolioWebApplication.Holding2s
         protected Panel Item2sPanel;
 
         protected RadGrid Item2sRadGrid;
+
+        protected Panel OrderItemLocation2sPanel;
+
+        protected RadGrid OrderItemLocation2sRadGrid;
+
+        protected Panel Receiving2sPanel;
+
+        protected RadGrid Receiving2sRadGrid;
 
         protected Panel SupplementStatementsPanel;
 

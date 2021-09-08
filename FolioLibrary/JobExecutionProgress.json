@@ -1,0 +1,31 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "description": "Execution progress of the job",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "id": {
+      "description": "The UUID format string",
+      "type": "string",
+      "pattern": "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-5][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}$"
+    },
+    "jobExecutionId": {
+      "description": "Corresponding jobExecution id",
+      "type": "string"
+    },
+    "currentlySucceeded": {
+      "description": "Current number of successfully processed records",
+      "type": "integer",
+      "default": 0
+    },
+    "currentlyFailed": {
+      "description": "Current number of failed processed records",
+      "type": "integer",
+      "default": 0
+    },
+    "total": {
+      "description": "Total number of records to be processed",
+      "type": "integer"
+    }
+  }
+}

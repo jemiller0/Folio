@@ -27,20 +27,27 @@ namespace FolioLibrary
         [Column("location_id"), Display(Name = "Location", Order = 5), JsonProperty("locationId"), Required]
         public virtual Guid? LocationId { get; set; }
 
-        [Column("quantity"), Display(Order = 6), JsonProperty("quantity")]
+        [Display(Order = 6)]
+        public virtual Holding2 Holding { get; set; }
+
+        [Column("holding_id"), Display(Name = "Holding", Order = 7), JsonProperty("holdingId")]
+        public virtual Guid? HoldingId { get; set; }
+
+        [Column("quantity"), Display(Order = 8), JsonProperty("quantity")]
         public virtual int? Quantity { get; set; }
 
-        [Column("quantity_electronic"), Display(Name = "Electronic Quantity", Order = 7), JsonProperty("quantityElectronic")]
+        [Column("quantity_electronic"), Display(Name = "Electronic Quantity", Order = 9), JsonProperty("quantityElectronic")]
         public virtual int? ElectronicQuantity { get; set; }
 
-        [Column("quantity_physical"), Display(Name = "Physical Quantity", Order = 8), JsonProperty("quantityPhysical")]
+        [Column("quantity_physical"), Display(Name = "Physical Quantity", Order = 10), JsonProperty("quantityPhysical")]
         public virtual int? PhysicalQuantity { get; set; }
 
-        public override string ToString() => $"{{ {nameof(Id)} = {Id}, {nameof(OrderItemId)} = {OrderItemId}, {nameof(LocationId)} = {LocationId}, {nameof(Quantity)} = {Quantity}, {nameof(ElectronicQuantity)} = {ElectronicQuantity}, {nameof(PhysicalQuantity)} = {PhysicalQuantity} }}";
+        public override string ToString() => $"{{ {nameof(Id)} = {Id}, {nameof(OrderItemId)} = {OrderItemId}, {nameof(LocationId)} = {LocationId}, {nameof(HoldingId)} = {HoldingId}, {nameof(Quantity)} = {Quantity}, {nameof(ElectronicQuantity)} = {ElectronicQuantity}, {nameof(PhysicalQuantity)} = {PhysicalQuantity} }}";
 
         public static OrderItemLocation2 FromJObject(JObject jObject) => jObject != null ? new OrderItemLocation2
         {
             LocationId = (Guid?)jObject.SelectToken("locationId"),
+            HoldingId = (Guid?)jObject.SelectToken("holdingId"),
             Quantity = (int?)jObject.SelectToken("quantity"),
             ElectronicQuantity = (int?)jObject.SelectToken("quantityElectronic"),
             PhysicalQuantity = (int?)jObject.SelectToken("quantityPhysical")
@@ -48,6 +55,7 @@ namespace FolioLibrary
 
         public JObject ToJObject() => new JObject(
             new JProperty("locationId", LocationId),
+            new JProperty("holdingId", HoldingId),
             new JProperty("quantity", Quantity),
             new JProperty("quantityElectronic", ElectronicQuantity),
             new JProperty("quantityPhysical", PhysicalQuantity)).RemoveNullAndEmptyProperties();

@@ -227,7 +227,7 @@ namespace FolioLibrary
         [Column("selector"), Display(Order = 64), JsonProperty("selector"), StringLength(1024)]
         public virtual string Selector { get; set; }
 
-        [Column("source"), Display(Order = 65), JsonProperty("source"), RegularExpression(@"^(User|API|EDI|MARC)$"), Required, StringLength(1024)]
+        [Column("source"), Display(Order = 65), JsonProperty("source"), RegularExpression(@"^(User|API|EDI|MARC|EBSCONET)$"), Required, StringLength(1024)]
         public virtual string Source { get; set; }
 
         [Column("title_or_package"), Display(Name = "Title Or Package", Order = 66), JsonProperty("titleOrPackage"), Required, StringLength(1024)]

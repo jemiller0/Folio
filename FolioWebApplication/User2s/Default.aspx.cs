@@ -75,6 +75,8 @@ namespace FolioWebApplication.User2s
                 if (folioServiceContext.AnyBlockCondition2s($"metadata.updatedByUserId == \"{id}\"")) throw new Exception("User cannot be deleted because it is being referenced by a block condition");
                 if (folioServiceContext.AnyBlockLimit2s($"metadata.createdByUserId == \"{id}\"")) throw new Exception("User cannot be deleted because it is being referenced by a block limit");
                 if (folioServiceContext.AnyBlockLimit2s($"metadata.updatedByUserId == \"{id}\"")) throw new Exception("User cannot be deleted because it is being referenced by a block limit");
+                if (folioServiceContext.AnyBoundWithPart2s($"metadata.createdByUserId == \"{id}\"")) throw new Exception("User cannot be deleted because it is being referenced by a bound with part");
+                if (folioServiceContext.AnyBoundWithPart2s($"metadata.updatedByUserId == \"{id}\"")) throw new Exception("User cannot be deleted because it is being referenced by a bound with part");
                 if (folioServiceContext.AnyBudget2s($"metadata.createdByUserId == \"{id}\"")) throw new Exception("User cannot be deleted because it is being referenced by a budget");
                 if (folioServiceContext.AnyBudget2s($"metadata.updatedByUserId == \"{id}\"")) throw new Exception("User cannot be deleted because it is being referenced by a budget");
                 if (folioServiceContext.AnyCallNumberType2s($"metadata.createdByUserId == \"{id}\"")) throw new Exception("User cannot be deleted because it is being referenced by a call number type");
