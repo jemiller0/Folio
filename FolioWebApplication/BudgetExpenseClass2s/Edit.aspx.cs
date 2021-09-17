@@ -1,4 +1,6 @@
 using FolioLibrary;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -25,6 +27,7 @@ namespace FolioWebApplication.BudgetExpenseClass2s
             var id = Request.QueryString["Id"] != null ? (Guid?)Guid.Parse(Request.QueryString["Id"]) : null;
             var bec2 = folioServiceContext.FindBudgetExpenseClass2(id, true);
             if (bec2 == null) Response.Redirect("Default.aspx");
+            bec2.Content = bec2.Content != null ? JsonConvert.DeserializeObject<JToken>(bec2.Content, new JsonSerializerSettings { DateTimeZoneHandling = DateTimeZoneHandling.Local }).ToString() : null;
             BudgetExpenseClass2FormView.DataSource = new[] { bec2 };
             Title = $"Budget Expense Class {bec2.Id}";
         }

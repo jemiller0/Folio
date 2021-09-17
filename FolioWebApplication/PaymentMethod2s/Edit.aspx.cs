@@ -1,4 +1,6 @@
 using FolioLibrary;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -25,6 +27,7 @@ namespace FolioWebApplication.PaymentMethod2s
             var id = Request.QueryString["Id"] != null ? (Guid?)Guid.Parse(Request.QueryString["Id"]) : null;
             var pm2 = folioServiceContext.FindPaymentMethod2(id, true);
             if (pm2 == null) Response.Redirect("Default.aspx");
+            pm2.Content = pm2.Content != null ? JsonConvert.DeserializeObject<JToken>(pm2.Content, new JsonSerializerSettings { DateTimeZoneHandling = DateTimeZoneHandling.Local }).ToString() : null;
             PaymentMethod2FormView.DataSource = new[] { pm2 };
             Title = $"Payment Method {pm2.Name}";
         }

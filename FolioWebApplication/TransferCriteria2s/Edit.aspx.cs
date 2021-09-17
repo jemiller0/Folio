@@ -1,4 +1,6 @@
 using FolioLibrary;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -25,6 +27,7 @@ namespace FolioWebApplication.TransferCriteria2s
             var id = Request.QueryString["Id"] != null ? (Guid?)Guid.Parse(Request.QueryString["Id"]) : null;
             var tc2 = folioServiceContext.FindTransferCriteria2(id, true);
             if (tc2 == null) Response.Redirect("Default.aspx");
+            tc2.Content = tc2.Content != null ? JsonConvert.DeserializeObject<JToken>(tc2.Content, new JsonSerializerSettings { DateTimeZoneHandling = DateTimeZoneHandling.Local }).ToString() : null;
             TransferCriteria2FormView.DataSource = new[] { tc2 };
             Title = $"Transfer Criteria {tc2.Id}";
         }

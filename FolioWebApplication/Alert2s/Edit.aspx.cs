@@ -1,4 +1,6 @@
 using FolioLibrary;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -26,6 +28,7 @@ namespace FolioWebApplication.Alert2s
             var id = Request.QueryString["Id"] != null ? (Guid?)Guid.Parse(Request.QueryString["Id"]) : null;
             var a2 = folioServiceContext.FindAlert2(id, true);
             if (a2 == null) Response.Redirect("Default.aspx");
+            a2.Content = a2.Content != null ? JsonConvert.DeserializeObject<JToken>(a2.Content, new JsonSerializerSettings { DateTimeZoneHandling = DateTimeZoneHandling.Local }).ToString() : null;
             Alert2FormView.DataSource = new[] { a2 };
             Title = $"Alert {a2.Id}";
         }

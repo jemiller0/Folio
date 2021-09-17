@@ -1,4 +1,6 @@
 using FolioLibrary;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -26,6 +28,7 @@ namespace FolioWebApplication.AddressType2s
             var id = Request.QueryString["Id"] != null ? (Guid?)Guid.Parse(Request.QueryString["Id"]) : null;
             var at2 = folioServiceContext.FindAddressType2(id, true);
             if (at2 == null) Response.Redirect("Default.aspx");
+            at2.Content = at2.Content != null ? JsonConvert.DeserializeObject<JToken>(at2.Content, new JsonSerializerSettings { DateTimeZoneHandling = DateTimeZoneHandling.Local }).ToString() : null;
             AddressType2FormView.DataSource = new[] { at2 };
             Title = $"Address Type {at2.Name}";
         }

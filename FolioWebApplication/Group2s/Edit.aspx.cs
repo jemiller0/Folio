@@ -1,4 +1,6 @@
 using FolioLibrary;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -28,6 +30,7 @@ namespace FolioWebApplication.Group2s
             var id = Request.QueryString["Id"] != null ? (Guid?)Guid.Parse(Request.QueryString["Id"]) : null;
             var g2 = id == null && (string)Session["Group2sPermission"] == "Edit" ? new Group2() : folioServiceContext.FindGroup2(id, true);
             if (g2 == null) Response.Redirect("Default.aspx");
+            g2.Content = g2.Content != null ? JsonConvert.DeserializeObject<JToken>(g2.Content, new JsonSerializerSettings { DateTimeZoneHandling = DateTimeZoneHandling.Local }).ToString() : null;
             Group2FormView.DataSource = new[] { g2 };
             Title = $"Group {g2.Name}";
         }

@@ -1,4 +1,6 @@
 using FolioLibrary;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -26,6 +28,7 @@ namespace FolioWebApplication.FixedDueDateSchedule2s
             var id = Request.QueryString["Id"] != null ? (Guid?)Guid.Parse(Request.QueryString["Id"]) : null;
             var fdds2 = folioServiceContext.FindFixedDueDateSchedule2(id, true);
             if (fdds2 == null) Response.Redirect("Default.aspx");
+            fdds2.Content = fdds2.Content != null ? JsonConvert.DeserializeObject<JToken>(fdds2.Content, new JsonSerializerSettings { DateTimeZoneHandling = DateTimeZoneHandling.Local }).ToString() : null;
             FixedDueDateSchedule2FormView.DataSource = new[] { fdds2 };
             Title = $"Fixed Due Date Schedule {fdds2.Name}";
         }

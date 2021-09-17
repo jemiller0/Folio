@@ -1,4 +1,6 @@
 using FolioLibrary;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -26,6 +28,7 @@ namespace FolioWebApplication.ContributorType2s
             var id = Request.QueryString["Id"] != null ? (Guid?)Guid.Parse(Request.QueryString["Id"]) : null;
             var ct2 = folioServiceContext.FindContributorType2(id, true);
             if (ct2 == null) Response.Redirect("Default.aspx");
+            ct2.Content = ct2.Content != null ? JsonConvert.DeserializeObject<JToken>(ct2.Content, new JsonSerializerSettings { DateTimeZoneHandling = DateTimeZoneHandling.Local }).ToString() : null;
             ContributorType2FormView.DataSource = new[] { ct2 };
             Title = $"Contributor Type {ct2.Name}";
         }

@@ -1,4 +1,6 @@
 using FolioLibrary;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -26,6 +28,7 @@ namespace FolioWebApplication.ItemDamagedStatus2s
             var id = Request.QueryString["Id"] != null ? (Guid?)Guid.Parse(Request.QueryString["Id"]) : null;
             var ids2 = folioServiceContext.FindItemDamagedStatus2(id, true);
             if (ids2 == null) Response.Redirect("Default.aspx");
+            ids2.Content = ids2.Content != null ? JsonConvert.DeserializeObject<JToken>(ids2.Content, new JsonSerializerSettings { DateTimeZoneHandling = DateTimeZoneHandling.Local }).ToString() : null;
             ItemDamagedStatus2FormView.DataSource = new[] { ids2 };
             Title = $"Item Damaged Status {ids2.Name}";
         }

@@ -1,4 +1,6 @@
 using FolioLibrary;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -25,6 +27,7 @@ namespace FolioWebApplication.CheckIn2s
             var id = Request.QueryString["Id"] != null ? (Guid?)Guid.Parse(Request.QueryString["Id"]) : null;
             var ci2 = folioServiceContext.FindCheckIn2(id, true);
             if (ci2 == null) Response.Redirect("Default.aspx");
+            ci2.Content = ci2.Content != null ? JsonConvert.DeserializeObject<JToken>(ci2.Content, new JsonSerializerSettings { DateTimeZoneHandling = DateTimeZoneHandling.Local }).ToString() : null;
             CheckIn2FormView.DataSource = new[] { ci2 };
             Title = $"Check In {ci2.Id}";
         }

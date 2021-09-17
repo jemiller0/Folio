@@ -1,4 +1,6 @@
 using FolioLibrary;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -26,6 +28,7 @@ namespace FolioWebApplication.OverdueFinePolicy2s
             var id = Request.QueryString["Id"] != null ? (Guid?)Guid.Parse(Request.QueryString["Id"]) : null;
             var ofp2 = folioServiceContext.FindOverdueFinePolicy2(id, true);
             if (ofp2 == null) Response.Redirect("Default.aspx");
+            ofp2.Content = ofp2.Content != null ? JsonConvert.DeserializeObject<JToken>(ofp2.Content, new JsonSerializerSettings { DateTimeZoneHandling = DateTimeZoneHandling.Local }).ToString() : null;
             OverdueFinePolicy2FormView.DataSource = new[] { ofp2 };
             Title = $"Overdue Fine Policy {ofp2.Name}";
         }

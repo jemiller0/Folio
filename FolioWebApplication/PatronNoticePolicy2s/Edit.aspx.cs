@@ -1,4 +1,6 @@
 using FolioLibrary;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -26,6 +28,7 @@ namespace FolioWebApplication.PatronNoticePolicy2s
             var id = Request.QueryString["Id"] != null ? (Guid?)Guid.Parse(Request.QueryString["Id"]) : null;
             var pnp2 = folioServiceContext.FindPatronNoticePolicy2(id, true);
             if (pnp2 == null) Response.Redirect("Default.aspx");
+            pnp2.Content = pnp2.Content != null ? JsonConvert.DeserializeObject<JToken>(pnp2.Content, new JsonSerializerSettings { DateTimeZoneHandling = DateTimeZoneHandling.Local }).ToString() : null;
             PatronNoticePolicy2FormView.DataSource = new[] { pnp2 };
             Title = $"Patron Notice Policy {pnp2.Name}";
         }

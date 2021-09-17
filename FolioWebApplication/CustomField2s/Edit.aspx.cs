@@ -1,4 +1,6 @@
 using FolioLibrary;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -26,6 +28,7 @@ namespace FolioWebApplication.CustomField2s
             var id = Request.QueryString["Id"] != null ? (Guid?)Guid.Parse(Request.QueryString["Id"]) : null;
             var cf2 = folioServiceContext.FindCustomField2(id, true);
             if (cf2 == null) Response.Redirect("Default.aspx");
+            cf2.Content = cf2.Content != null ? JsonConvert.DeserializeObject<JToken>(cf2.Content, new JsonSerializerSettings { DateTimeZoneHandling = DateTimeZoneHandling.Local }).ToString() : null;
             CustomField2FormView.DataSource = new[] { cf2 };
             Title = $"Custom Field {cf2.Name}";
         }

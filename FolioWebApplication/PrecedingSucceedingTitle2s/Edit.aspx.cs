@@ -1,4 +1,6 @@
 using FolioLibrary;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -26,6 +28,7 @@ namespace FolioWebApplication.PrecedingSucceedingTitle2s
             var id = Request.QueryString["Id"] != null ? (Guid?)Guid.Parse(Request.QueryString["Id"]) : null;
             var pst2 = folioServiceContext.FindPrecedingSucceedingTitle2(id, true);
             if (pst2 == null) Response.Redirect("Default.aspx");
+            pst2.Content = pst2.Content != null ? JsonConvert.DeserializeObject<JToken>(pst2.Content, new JsonSerializerSettings { DateTimeZoneHandling = DateTimeZoneHandling.Local }).ToString() : null;
             PrecedingSucceedingTitle2FormView.DataSource = new[] { pst2 };
             Title = $"Preceding Succeeding Title {pst2.Title}";
         }

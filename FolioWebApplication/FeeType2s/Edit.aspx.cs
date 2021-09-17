@@ -1,4 +1,6 @@
 using FolioLibrary;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -26,6 +28,7 @@ namespace FolioWebApplication.FeeType2s
             var id = Request.QueryString["Id"] != null ? (Guid?)Guid.Parse(Request.QueryString["Id"]) : null;
             var ft2 = folioServiceContext.FindFeeType2(id, true);
             if (ft2 == null) Response.Redirect("Default.aspx");
+            ft2.Content = ft2.Content != null ? JsonConvert.DeserializeObject<JToken>(ft2.Content, new JsonSerializerSettings { DateTimeZoneHandling = DateTimeZoneHandling.Local }).ToString() : null;
             FeeType2FormView.DataSource = new[] { ft2 };
             Title = $"Fee Type {ft2.Name}";
         }

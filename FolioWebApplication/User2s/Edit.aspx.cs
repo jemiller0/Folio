@@ -1,4 +1,6 @@
 using FolioLibrary;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -29,6 +31,7 @@ namespace FolioWebApplication.User2s
             var id = Request.QueryString["Id"] != null ? (Guid?)Guid.Parse(Request.QueryString["Id"]) : null;
             var u2 = id == null && (string)Session["User2sPermission"] == "Edit" ? new User2 { Active = true, PreferredContactTypeId = "002", StartDate = DateTime.Now.Date, Source = "Library" } : folioServiceContext.FindUser2(id, true);
             if (u2 == null) Response.Redirect("Default.aspx");
+            u2.Content = u2.Content != null ? JsonConvert.DeserializeObject<JToken>(u2.Content, new JsonSerializerSettings { DateTimeZoneHandling = DateTimeZoneHandling.Local }).ToString() : null;
             User2FormView.DataSource = new[] { u2 };
             Title = $"User {u2.Username}";
         }

@@ -1,4 +1,6 @@
 using FolioLibrary;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -26,6 +28,7 @@ namespace FolioWebApplication.OrderTemplate2s
             var id = Request.QueryString["Id"] != null ? (Guid?)Guid.Parse(Request.QueryString["Id"]) : null;
             var ot2 = folioServiceContext.FindOrderTemplate2(id, true);
             if (ot2 == null) Response.Redirect("Default.aspx");
+            ot2.Content = ot2.Content != null ? JsonConvert.DeserializeObject<JToken>(ot2.Content, new JsonSerializerSettings { DateTimeZoneHandling = DateTimeZoneHandling.Local }).ToString() : null;
             OrderTemplate2FormView.DataSource = new[] { ot2 };
             Title = $"Order Template {ot2.Id}";
         }

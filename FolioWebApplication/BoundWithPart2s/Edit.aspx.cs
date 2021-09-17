@@ -1,4 +1,6 @@
 using FolioLibrary;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -25,6 +27,7 @@ namespace FolioWebApplication.BoundWithPart2s
             var id = Request.QueryString["Id"] != null ? (Guid?)Guid.Parse(Request.QueryString["Id"]) : null;
             var bwp2 = folioServiceContext.FindBoundWithPart2(id, true);
             if (bwp2 == null) Response.Redirect("Default.aspx");
+            bwp2.Content = bwp2.Content != null ? JsonConvert.DeserializeObject<JToken>(bwp2.Content, new JsonSerializerSettings { DateTimeZoneHandling = DateTimeZoneHandling.Local }).ToString() : null;
             BoundWithPart2FormView.DataSource = new[] { bwp2 };
             Title = $"Bound With Part {bwp2.Id}";
         }

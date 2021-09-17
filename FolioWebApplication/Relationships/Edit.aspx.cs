@@ -1,4 +1,6 @@
 using FolioLibrary;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -26,6 +28,7 @@ namespace FolioWebApplication.Relationships
             var id = Request.QueryString["Id"] != null ? (Guid?)Guid.Parse(Request.QueryString["Id"]) : null;
             var r = folioServiceContext.FindRelationship(id, true);
             if (r == null) Response.Redirect("Default.aspx");
+            r.Content = r.Content != null ? JsonConvert.DeserializeObject<JToken>(r.Content, new JsonSerializerSettings { DateTimeZoneHandling = DateTimeZoneHandling.Local }).ToString() : null;
             RelationshipFormView.DataSource = new[] { r };
             Title = $"Relationship {r.Id}";
         }

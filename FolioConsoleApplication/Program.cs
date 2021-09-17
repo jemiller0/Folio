@@ -77,6 +77,7 @@ namespace FolioConsoleApplication
                 var import = args.Any(s3 => s3.Equals("-Import", StringComparison.OrdinalIgnoreCase));
                 var load = args.Any(s3 => s3.Equals("-Load", StringComparison.OrdinalIgnoreCase));
                 var merge = args.Any(s3 => s3.Equals("-Merge", StringComparison.OrdinalIgnoreCase));
+                if (args.Any(s3 => s3.Equals("-NoDateTimeParse", StringComparison.OrdinalIgnoreCase))) FolioDapperContext.LocalTimeJsonSerializationSettings.DateParseHandling = DateParseHandling.None;
                 orderBy = args.SkipWhile(s3 => !s3.Equals("-OrderBy", StringComparison.OrdinalIgnoreCase)).Skip(1).FirstOrDefault();
                 var path = args.SkipWhile(s3 => !s3.Equals("-Path", StringComparison.OrdinalIgnoreCase)).Skip(1).FirstOrDefault() ?? ".";
                 var save = args.Any(s3 => s3.Equals("-Save", StringComparison.OrdinalIgnoreCase));

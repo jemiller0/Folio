@@ -1,4 +1,6 @@
 using FolioLibrary;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -25,6 +27,7 @@ namespace FolioWebApplication.UserRequestPreference2s
             var id = Request.QueryString["Id"] != null ? (Guid?)Guid.Parse(Request.QueryString["Id"]) : null;
             var urp2 = folioServiceContext.FindUserRequestPreference2(id, true);
             if (urp2 == null) Response.Redirect("Default.aspx");
+            urp2.Content = urp2.Content != null ? JsonConvert.DeserializeObject<JToken>(urp2.Content, new JsonSerializerSettings { DateTimeZoneHandling = DateTimeZoneHandling.Local }).ToString() : null;
             UserRequestPreference2FormView.DataSource = new[] { urp2 };
             Title = $"User Request Preference {urp2.Id}";
         }

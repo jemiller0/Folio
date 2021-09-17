@@ -1,4 +1,6 @@
 using FolioLibrary;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -25,6 +27,7 @@ namespace FolioWebApplication.ScheduledNotice2s
             var id = Request.QueryString["Id"] != null ? (Guid?)Guid.Parse(Request.QueryString["Id"]) : null;
             var sn2 = folioServiceContext.FindScheduledNotice2(id, true);
             if (sn2 == null) Response.Redirect("Default.aspx");
+            sn2.Content = sn2.Content != null ? JsonConvert.DeserializeObject<JToken>(sn2.Content, new JsonSerializerSettings { DateTimeZoneHandling = DateTimeZoneHandling.Local }).ToString() : null;
             ScheduledNotice2FormView.DataSource = new[] { sn2 };
             Title = $"Scheduled Notice {sn2.Id}";
         }

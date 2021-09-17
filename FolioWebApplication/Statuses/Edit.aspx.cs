@@ -1,4 +1,6 @@
 using FolioLibrary;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -26,6 +28,7 @@ namespace FolioWebApplication.Statuses
             var id = Request.QueryString["Id"] != null ? (Guid?)Guid.Parse(Request.QueryString["Id"]) : null;
             var s = folioServiceContext.FindStatus(id, true);
             if (s == null) Response.Redirect("Default.aspx");
+            s.Content = s.Content != null ? JsonConvert.DeserializeObject<JToken>(s.Content, new JsonSerializerSettings { DateTimeZoneHandling = DateTimeZoneHandling.Local }).ToString() : null;
             StatusFormView.DataSource = new[] { s };
             Title = $"Status {s.Name}";
         }

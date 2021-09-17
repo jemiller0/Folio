@@ -1,4 +1,6 @@
 using FolioLibrary;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -26,6 +28,7 @@ namespace FolioWebApplication.LoanType2s
             var id = Request.QueryString["Id"] != null ? (Guid?)Guid.Parse(Request.QueryString["Id"]) : null;
             var lt2 = folioServiceContext.FindLoanType2(id, true);
             if (lt2 == null) Response.Redirect("Default.aspx");
+            lt2.Content = lt2.Content != null ? JsonConvert.DeserializeObject<JToken>(lt2.Content, new JsonSerializerSettings { DateTimeZoneHandling = DateTimeZoneHandling.Local }).ToString() : null;
             LoanType2FormView.DataSource = new[] { lt2 };
             Title = $"Loan Type {lt2.Name}";
         }

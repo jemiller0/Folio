@@ -1,4 +1,6 @@
 using FolioLibrary;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -26,6 +28,7 @@ namespace FolioWebApplication.BatchVoucherExportConfig2s
             var id = Request.QueryString["Id"] != null ? (Guid?)Guid.Parse(Request.QueryString["Id"]) : null;
             var bvec2 = folioServiceContext.FindBatchVoucherExportConfig2(id, true);
             if (bvec2 == null) Response.Redirect("Default.aspx");
+            bvec2.Content = bvec2.Content != null ? JsonConvert.DeserializeObject<JToken>(bvec2.Content, new JsonSerializerSettings { DateTimeZoneHandling = DateTimeZoneHandling.Local }).ToString() : null;
             BatchVoucherExportConfig2FormView.DataSource = new[] { bvec2 };
             Title = $"Batch Voucher Export Config {bvec2.Id}";
         }

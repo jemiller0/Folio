@@ -1,4 +1,6 @@
 using FolioLibrary;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -26,6 +28,7 @@ namespace FolioWebApplication.BlockCondition2s
             var id = Request.QueryString["Id"] != null ? (Guid?)Guid.Parse(Request.QueryString["Id"]) : null;
             var bc2 = folioServiceContext.FindBlockCondition2(id, true);
             if (bc2 == null) Response.Redirect("Default.aspx");
+            bc2.Content = bc2.Content != null ? JsonConvert.DeserializeObject<JToken>(bc2.Content, new JsonSerializerSettings { DateTimeZoneHandling = DateTimeZoneHandling.Local }).ToString() : null;
             BlockCondition2FormView.DataSource = new[] { bc2 };
             Title = $"Block Condition {bc2.Name}";
         }

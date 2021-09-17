@@ -1,4 +1,6 @@
 using FolioLibrary;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -25,6 +27,7 @@ namespace FolioWebApplication.ManualBlockTemplate2s
             var id = Request.QueryString["Id"] != null ? (Guid?)Guid.Parse(Request.QueryString["Id"]) : null;
             var mbt2 = folioServiceContext.FindManualBlockTemplate2(id, true);
             if (mbt2 == null) Response.Redirect("Default.aspx");
+            mbt2.Content = mbt2.Content != null ? JsonConvert.DeserializeObject<JToken>(mbt2.Content, new JsonSerializerSettings { DateTimeZoneHandling = DateTimeZoneHandling.Local }).ToString() : null;
             ManualBlockTemplate2FormView.DataSource = new[] { mbt2 };
             Title = $"Manual Block Template {mbt2.Name}";
         }

@@ -1,4 +1,6 @@
 using FolioLibrary;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -26,6 +28,7 @@ namespace FolioWebApplication.FiscalYear2s
             var id = Request.QueryString["Id"] != null ? (Guid?)Guid.Parse(Request.QueryString["Id"]) : null;
             var fy2 = folioServiceContext.FindFiscalYear2(id, true);
             if (fy2 == null) Response.Redirect("Default.aspx");
+            fy2.Content = fy2.Content != null ? JsonConvert.DeserializeObject<JToken>(fy2.Content, new JsonSerializerSettings { DateTimeZoneHandling = DateTimeZoneHandling.Local }).ToString() : null;
             FiscalYear2FormView.DataSource = new[] { fy2 };
             Title = $"Fiscal Year {fy2.Name}";
         }

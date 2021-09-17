@@ -1,4 +1,6 @@
 using FolioLibrary;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -25,6 +27,7 @@ namespace FolioWebApplication.WaiveReason2s
             var id = Request.QueryString["Id"] != null ? (Guid?)Guid.Parse(Request.QueryString["Id"]) : null;
             var wr2 = folioServiceContext.FindWaiveReason2(id, true);
             if (wr2 == null) Response.Redirect("Default.aspx");
+            wr2.Content = wr2.Content != null ? JsonConvert.DeserializeObject<JToken>(wr2.Content, new JsonSerializerSettings { DateTimeZoneHandling = DateTimeZoneHandling.Local }).ToString() : null;
             WaiveReason2FormView.DataSource = new[] { wr2 };
             Title = $"Waive Reason {wr2.Name}";
         }

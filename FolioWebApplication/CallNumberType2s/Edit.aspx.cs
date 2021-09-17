@@ -1,4 +1,6 @@
 using FolioLibrary;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -26,6 +28,7 @@ namespace FolioWebApplication.CallNumberType2s
             var id = Request.QueryString["Id"] != null ? (Guid?)Guid.Parse(Request.QueryString["Id"]) : null;
             var cnt2 = folioServiceContext.FindCallNumberType2(id, true);
             if (cnt2 == null) Response.Redirect("Default.aspx");
+            cnt2.Content = cnt2.Content != null ? JsonConvert.DeserializeObject<JToken>(cnt2.Content, new JsonSerializerSettings { DateTimeZoneHandling = DateTimeZoneHandling.Local }).ToString() : null;
             CallNumberType2FormView.DataSource = new[] { cnt2 };
             Title = $"Call Number Type {cnt2.Name}";
         }

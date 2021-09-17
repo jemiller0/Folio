@@ -1,4 +1,6 @@
 using FolioLibrary;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -25,6 +27,7 @@ namespace FolioWebApplication.RefundReason2s
             var id = Request.QueryString["Id"] != null ? (Guid?)Guid.Parse(Request.QueryString["Id"]) : null;
             var rr2 = folioServiceContext.FindRefundReason2(id, true);
             if (rr2 == null) Response.Redirect("Default.aspx");
+            rr2.Content = rr2.Content != null ? JsonConvert.DeserializeObject<JToken>(rr2.Content, new JsonSerializerSettings { DateTimeZoneHandling = DateTimeZoneHandling.Local }).ToString() : null;
             RefundReason2FormView.DataSource = new[] { rr2 };
             Title = $"Refund Reason {rr2.Name}";
         }

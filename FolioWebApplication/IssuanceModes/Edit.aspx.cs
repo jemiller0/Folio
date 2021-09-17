@@ -1,4 +1,6 @@
 using FolioLibrary;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -26,6 +28,7 @@ namespace FolioWebApplication.IssuanceModes
             var id = Request.QueryString["Id"] != null ? (Guid?)Guid.Parse(Request.QueryString["Id"]) : null;
             var im = folioServiceContext.FindIssuanceMode(id, true);
             if (im == null) Response.Redirect("Default.aspx");
+            im.Content = im.Content != null ? JsonConvert.DeserializeObject<JToken>(im.Content, new JsonSerializerSettings { DateTimeZoneHandling = DateTimeZoneHandling.Local }).ToString() : null;
             IssuanceModeFormView.DataSource = new[] { im };
             Title = $"Issuance Mode {im.Name}";
         }

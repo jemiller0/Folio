@@ -1,4 +1,6 @@
 using FolioLibrary;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -26,6 +28,7 @@ namespace FolioWebApplication.AcquisitionsUnit2s
             var id = Request.QueryString["Id"] != null ? (Guid?)Guid.Parse(Request.QueryString["Id"]) : null;
             var au2 = folioServiceContext.FindAcquisitionsUnit2(id, true);
             if (au2 == null) Response.Redirect("Default.aspx");
+            au2.Content = au2.Content != null ? JsonConvert.DeserializeObject<JToken>(au2.Content, new JsonSerializerSettings { DateTimeZoneHandling = DateTimeZoneHandling.Local }).ToString() : null;
             AcquisitionsUnit2FormView.DataSource = new[] { au2 };
             Title = $"Acquisitions Unit {au2.Name}";
         }

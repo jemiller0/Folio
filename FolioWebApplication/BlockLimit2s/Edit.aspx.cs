@@ -1,4 +1,6 @@
 using FolioLibrary;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -25,6 +27,7 @@ namespace FolioWebApplication.BlockLimit2s
             var id = Request.QueryString["Id"] != null ? (Guid?)Guid.Parse(Request.QueryString["Id"]) : null;
             var bl2 = folioServiceContext.FindBlockLimit2(id, true);
             if (bl2 == null) Response.Redirect("Default.aspx");
+            bl2.Content = bl2.Content != null ? JsonConvert.DeserializeObject<JToken>(bl2.Content, new JsonSerializerSettings { DateTimeZoneHandling = DateTimeZoneHandling.Local }).ToString() : null;
             BlockLimit2FormView.DataSource = new[] { bl2 };
             Title = $"Block Limit {bl2.Id}";
         }

@@ -1,4 +1,6 @@
 using FolioLibrary;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -25,6 +27,7 @@ namespace FolioWebApplication.Comment2s
             var id = Request.QueryString["Id"] != null ? (Guid?)Guid.Parse(Request.QueryString["Id"]) : null;
             var c2 = folioServiceContext.FindComment2(id, true);
             if (c2 == null) Response.Redirect("Default.aspx");
+            c2.Content = c2.Content != null ? JsonConvert.DeserializeObject<JToken>(c2.Content, new JsonSerializerSettings { DateTimeZoneHandling = DateTimeZoneHandling.Local }).ToString() : null;
             Comment2FormView.DataSource = new[] { c2 };
             Title = $"Comment {c2.Id}";
         }

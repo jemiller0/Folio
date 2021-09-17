@@ -1,4 +1,6 @@
 using FolioLibrary;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -26,6 +28,7 @@ namespace FolioWebApplication.LedgerRollover2s
             var id = Request.QueryString["Id"] != null ? (Guid?)Guid.Parse(Request.QueryString["Id"]) : null;
             var lr2 = folioServiceContext.FindLedgerRollover2(id, true);
             if (lr2 == null) Response.Redirect("Default.aspx");
+            lr2.Content = lr2.Content != null ? JsonConvert.DeserializeObject<JToken>(lr2.Content, new JsonSerializerSettings { DateTimeZoneHandling = DateTimeZoneHandling.Local }).ToString() : null;
             LedgerRollover2FormView.DataSource = new[] { lr2 };
             Title = $"Ledger Rollover {lr2.Id}";
         }

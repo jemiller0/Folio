@@ -1,4 +1,6 @@
 using FolioLibrary;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -26,6 +28,7 @@ namespace FolioWebApplication.StatisticalCode2s
             var id = Request.QueryString["Id"] != null ? (Guid?)Guid.Parse(Request.QueryString["Id"]) : null;
             var sc2 = folioServiceContext.FindStatisticalCode2(id, true);
             if (sc2 == null) Response.Redirect("Default.aspx");
+            sc2.Content = sc2.Content != null ? JsonConvert.DeserializeObject<JToken>(sc2.Content, new JsonSerializerSettings { DateTimeZoneHandling = DateTimeZoneHandling.Local }).ToString() : null;
             StatisticalCode2FormView.DataSource = new[] { sc2 };
             Title = $"Statistical Code {sc2.Name}";
         }

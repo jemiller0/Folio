@@ -1,4 +1,6 @@
 using FolioLibrary;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -25,6 +27,7 @@ namespace FolioWebApplication.TransferAccount2s
             var id = Request.QueryString["Id"] != null ? (Guid?)Guid.Parse(Request.QueryString["Id"]) : null;
             var ta2 = folioServiceContext.FindTransferAccount2(id, true);
             if (ta2 == null) Response.Redirect("Default.aspx");
+            ta2.Content = ta2.Content != null ? JsonConvert.DeserializeObject<JToken>(ta2.Content, new JsonSerializerSettings { DateTimeZoneHandling = DateTimeZoneHandling.Local }).ToString() : null;
             TransferAccount2FormView.DataSource = new[] { ta2 };
             Title = $"Transfer Account {ta2.Name}";
         }

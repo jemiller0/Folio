@@ -1,4 +1,6 @@
 using FolioLibrary;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -28,6 +30,7 @@ namespace FolioWebApplication.Holding2s
             var id = Request.QueryString["Id"] != null ? (Guid?)Guid.Parse(Request.QueryString["Id"]) : null;
             var h2 = id == null && (string)Session["Holding2sPermission"] == "Edit" ? new Holding2() : folioServiceContext.FindHolding2(id, true);
             if (h2 == null) Response.Redirect("Default.aspx");
+            h2.Content = h2.Content != null ? JsonConvert.DeserializeObject<JToken>(h2.Content, new JsonSerializerSettings { DateTimeZoneHandling = DateTimeZoneHandling.Local }).ToString() : null;
             Holding2FormView.DataSource = new[] { h2 };
             Title = $"Holding {h2.ShortId}";
         }

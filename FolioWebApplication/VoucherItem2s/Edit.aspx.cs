@@ -1,4 +1,6 @@
 using FolioLibrary;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -26,6 +28,7 @@ namespace FolioWebApplication.VoucherItem2s
             var id = Request.QueryString["Id"] != null ? (Guid?)Guid.Parse(Request.QueryString["Id"]) : null;
             var vi2 = folioServiceContext.FindVoucherItem2(id, true);
             if (vi2 == null) Response.Redirect("Default.aspx");
+            vi2.Content = vi2.Content != null ? JsonConvert.DeserializeObject<JToken>(vi2.Content, new JsonSerializerSettings { DateTimeZoneHandling = DateTimeZoneHandling.Local }).ToString() : null;
             VoucherItem2FormView.DataSource = new[] { vi2 };
             Title = $"Voucher Item {vi2.AccountNumber}";
         }

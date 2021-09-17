@@ -1,4 +1,6 @@
 using FolioLibrary;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -26,6 +28,7 @@ namespace FolioWebApplication.HoldingNoteType2s
             var id = Request.QueryString["Id"] != null ? (Guid?)Guid.Parse(Request.QueryString["Id"]) : null;
             var hnt2 = folioServiceContext.FindHoldingNoteType2(id, true);
             if (hnt2 == null) Response.Redirect("Default.aspx");
+            hnt2.Content = hnt2.Content != null ? JsonConvert.DeserializeObject<JToken>(hnt2.Content, new JsonSerializerSettings { DateTimeZoneHandling = DateTimeZoneHandling.Local }).ToString() : null;
             HoldingNoteType2FormView.DataSource = new[] { hnt2 };
             Title = $"Holding Note Type {hnt2.Name}";
         }

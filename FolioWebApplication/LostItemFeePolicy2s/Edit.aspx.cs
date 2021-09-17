@@ -1,4 +1,6 @@
 using FolioLibrary;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -26,6 +28,7 @@ namespace FolioWebApplication.LostItemFeePolicy2s
             var id = Request.QueryString["Id"] != null ? (Guid?)Guid.Parse(Request.QueryString["Id"]) : null;
             var lifp2 = folioServiceContext.FindLostItemFeePolicy2(id, true);
             if (lifp2 == null) Response.Redirect("Default.aspx");
+            lifp2.Content = lifp2.Content != null ? JsonConvert.DeserializeObject<JToken>(lifp2.Content, new JsonSerializerSettings { DateTimeZoneHandling = DateTimeZoneHandling.Local }).ToString() : null;
             LostItemFeePolicy2FormView.DataSource = new[] { lifp2 };
             Title = $"Lost Item Fee Policy {lifp2.Name}";
         }

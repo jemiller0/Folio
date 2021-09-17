@@ -1,4 +1,6 @@
 using FolioLibrary;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -27,6 +29,7 @@ namespace FolioWebApplication.Location2s
             var id = Request.QueryString["Id"] != null ? (Guid?)Guid.Parse(Request.QueryString["Id"]) : null;
             var l2 = folioServiceContext.FindLocation2(id, true);
             if (l2 == null) Response.Redirect("Default.aspx");
+            l2.Content = l2.Content != null ? JsonConvert.DeserializeObject<JToken>(l2.Content, new JsonSerializerSettings { DateTimeZoneHandling = DateTimeZoneHandling.Local }).ToString() : null;
             Location2FormView.DataSource = new[] { l2 };
             Title = $"Location {l2.Name}";
         }

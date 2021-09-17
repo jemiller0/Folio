@@ -1,4 +1,6 @@
 using FolioLibrary;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -26,6 +28,7 @@ namespace FolioWebApplication.PermissionsUser2s
             var id = Request.QueryString["Id"] != null ? (Guid?)Guid.Parse(Request.QueryString["Id"]) : null;
             var pu2 = folioServiceContext.FindPermissionsUser2(id, true);
             if (pu2 == null) Response.Redirect("Default.aspx");
+            pu2.Content = pu2.Content != null ? JsonConvert.DeserializeObject<JToken>(pu2.Content, new JsonSerializerSettings { DateTimeZoneHandling = DateTimeZoneHandling.Local }).ToString() : null;
             PermissionsUser2FormView.DataSource = new[] { pu2 };
             Title = $"Permissions User {pu2.Id}";
         }

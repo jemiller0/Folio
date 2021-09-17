@@ -1,4 +1,6 @@
 using FolioLibrary;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -25,6 +27,7 @@ namespace FolioWebApplication.LedgerRolloverError2s
             var id = Request.QueryString["Id"] != null ? (Guid?)Guid.Parse(Request.QueryString["Id"]) : null;
             var lre2 = folioServiceContext.FindLedgerRolloverError2(id, true);
             if (lre2 == null) Response.Redirect("Default.aspx");
+            lre2.Content = lre2.Content != null ? JsonConvert.DeserializeObject<JToken>(lre2.Content, new JsonSerializerSettings { DateTimeZoneHandling = DateTimeZoneHandling.Local }).ToString() : null;
             LedgerRolloverError2FormView.DataSource = new[] { lre2 };
             Title = $"Ledger Rollover Error {lre2.Id}";
         }

@@ -1,4 +1,6 @@
 using FolioLibrary;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -26,6 +28,7 @@ namespace FolioWebApplication.InstanceNoteType2s
             var id = Request.QueryString["Id"] != null ? (Guid?)Guid.Parse(Request.QueryString["Id"]) : null;
             var int2 = folioServiceContext.FindInstanceNoteType2(id, true);
             if (int2 == null) Response.Redirect("Default.aspx");
+            int2.Content = int2.Content != null ? JsonConvert.DeserializeObject<JToken>(int2.Content, new JsonSerializerSettings { DateTimeZoneHandling = DateTimeZoneHandling.Local }).ToString() : null;
             InstanceNoteType2FormView.DataSource = new[] { int2 };
             Title = $"Instance Note Type {int2.Name}";
         }

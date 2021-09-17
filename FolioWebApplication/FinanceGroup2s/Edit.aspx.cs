@@ -1,4 +1,6 @@
 using FolioLibrary;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -26,6 +28,7 @@ namespace FolioWebApplication.FinanceGroup2s
             var id = Request.QueryString["Id"] != null ? (Guid?)Guid.Parse(Request.QueryString["Id"]) : null;
             var fg2 = folioServiceContext.FindFinanceGroup2(id, true);
             if (fg2 == null) Response.Redirect("Default.aspx");
+            fg2.Content = fg2.Content != null ? JsonConvert.DeserializeObject<JToken>(fg2.Content, new JsonSerializerSettings { DateTimeZoneHandling = DateTimeZoneHandling.Local }).ToString() : null;
             FinanceGroup2FormView.DataSource = new[] { fg2 };
             Title = $"Finance Group {fg2.Name}";
         }

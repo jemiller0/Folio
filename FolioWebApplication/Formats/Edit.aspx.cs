@@ -1,4 +1,6 @@
 using FolioLibrary;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -26,6 +28,7 @@ namespace FolioWebApplication.Formats
             var id = Request.QueryString["Id"] != null ? (Guid?)Guid.Parse(Request.QueryString["Id"]) : null;
             var f = folioServiceContext.FindFormat(id, true);
             if (f == null) Response.Redirect("Default.aspx");
+            f.Content = f.Content != null ? JsonConvert.DeserializeObject<JToken>(f.Content, new JsonSerializerSettings { DateTimeZoneHandling = DateTimeZoneHandling.Local }).ToString() : null;
             FormatFormView.DataSource = new[] { f };
             Title = $"Format {f.Name}";
         }

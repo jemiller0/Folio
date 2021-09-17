@@ -1,4 +1,6 @@
 using FolioLibrary;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -25,6 +27,7 @@ namespace FolioWebApplication.OrderInvoice2s
             var id = Request.QueryString["Id"] != null ? (Guid?)Guid.Parse(Request.QueryString["Id"]) : null;
             var oi2 = folioServiceContext.FindOrderInvoice2(id, true);
             if (oi2 == null) Response.Redirect("Default.aspx");
+            oi2.Content = oi2.Content != null ? JsonConvert.DeserializeObject<JToken>(oi2.Content, new JsonSerializerSettings { DateTimeZoneHandling = DateTimeZoneHandling.Local }).ToString() : null;
             OrderInvoice2FormView.DataSource = new[] { oi2 };
             Title = $"Order Invoice {oi2.Id}";
         }

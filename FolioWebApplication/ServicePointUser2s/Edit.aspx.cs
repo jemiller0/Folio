@@ -1,4 +1,6 @@
 using FolioLibrary;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -26,6 +28,7 @@ namespace FolioWebApplication.ServicePointUser2s
             var id = Request.QueryString["Id"] != null ? (Guid?)Guid.Parse(Request.QueryString["Id"]) : null;
             var spu2 = folioServiceContext.FindServicePointUser2(id, true);
             if (spu2 == null) Response.Redirect("Default.aspx");
+            spu2.Content = spu2.Content != null ? JsonConvert.DeserializeObject<JToken>(spu2.Content, new JsonSerializerSettings { DateTimeZoneHandling = DateTimeZoneHandling.Local }).ToString() : null;
             ServicePointUser2FormView.DataSource = new[] { spu2 };
             Title = $"Service Point User {spu2.Id}";
         }

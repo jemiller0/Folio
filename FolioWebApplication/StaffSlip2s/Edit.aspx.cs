@@ -1,4 +1,6 @@
 using FolioLibrary;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -26,6 +28,7 @@ namespace FolioWebApplication.StaffSlip2s
             var id = Request.QueryString["Id"] != null ? (Guid?)Guid.Parse(Request.QueryString["Id"]) : null;
             var ss2 = folioServiceContext.FindStaffSlip2(id, true);
             if (ss2 == null) Response.Redirect("Default.aspx");
+            ss2.Content = ss2.Content != null ? JsonConvert.DeserializeObject<JToken>(ss2.Content, new JsonSerializerSettings { DateTimeZoneHandling = DateTimeZoneHandling.Local }).ToString() : null;
             StaffSlip2FormView.DataSource = new[] { ss2 };
             Title = $"Staff Slip {ss2.Name}";
         }
