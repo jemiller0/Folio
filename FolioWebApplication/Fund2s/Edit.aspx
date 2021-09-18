@@ -248,7 +248,7 @@
                                 <asp:HyperLink ID="AmountHyperLink" runat="server" Text='<%# $"{Eval("Amount"):c}" %>' NavigateUrl='<%# $"~/Transaction2s/Edit.aspx?Id={Eval("Id")}" %>' />
                             </ItemTemplate>
                         </telerik:GridTemplateColumn>
-                        <telerik:GridTemplateColumn AllowFiltering="false" AllowSorting="false" HeaderText="Awaiting Payment Encumbrance" DataField="AwaitingPaymentEncumbrance.Amount" SortExpression="AwaitingPaymentEncumbrance.Amount" AutoPostBackOnFilter="true" Aggregate="Sum" FooterAggregateFormatString="{0:c}">
+                        <telerik:GridTemplateColumn AllowFiltering="false" AllowSorting="false" HeaderText="Awaiting Payment Encumbrance" DataField="AwaitingPaymentEncumbrance.Amount" SortExpression="AwaitingPaymentEncumbrance.Amount" AutoPostBackOnFilter="true">
                             <ItemTemplate>
                                 <asp:HyperLink ID="AwaitingPaymentEncumbranceHyperLink" runat="server" Text='<%# $"{Eval("AwaitingPaymentEncumbrance.Amount"):c}" %>' NavigateUrl='<%# $"~/Transaction2s/Edit.aspx?Id={Eval("AwaitingPaymentEncumbranceId")}" %>' Enabled='<%# Session["Transaction2sPermission"] != null %>' />
                             </ItemTemplate>
@@ -285,7 +285,7 @@
                             </ItemTemplate>
                         </telerik:GridTemplateColumn>
                         <telerik:GridBoundColumn HeaderText="Invoice Cancelled" DataField="InvoiceCancelled" AutoPostBackOnFilter="true" />
-                        <telerik:GridTemplateColumn AllowFiltering="false" AllowSorting="false" HeaderText="Payment Encumbrance" DataField="PaymentEncumbrance.Amount" SortExpression="PaymentEncumbrance.Amount" AutoPostBackOnFilter="true" Aggregate="Sum" FooterAggregateFormatString="{0:c}">
+                        <telerik:GridTemplateColumn AllowFiltering="false" AllowSorting="false" HeaderText="Payment Encumbrance" DataField="PaymentEncumbrance.Amount" SortExpression="PaymentEncumbrance.Amount" AutoPostBackOnFilter="true">
                             <ItemTemplate>
                                 <asp:HyperLink ID="PaymentEncumbranceHyperLink" runat="server" Text='<%# $"{Eval("PaymentEncumbrance.Amount"):c}" %>' NavigateUrl='<%# $"~/Transaction2s/Edit.aspx?Id={Eval("PaymentEncumbranceId")}" %>' Enabled='<%# Session["Transaction2sPermission"] != null %>' />
                             </ItemTemplate>
@@ -354,7 +354,7 @@
                                 <asp:HyperLink ID="AmountHyperLink" runat="server" Text='<%# $"{Eval("Amount"):c}" %>' NavigateUrl='<%# $"~/Transaction2s/Edit.aspx?Id={Eval("Id")}" %>' />
                             </ItemTemplate>
                         </telerik:GridTemplateColumn>
-                        <telerik:GridTemplateColumn AllowFiltering="false" AllowSorting="false" HeaderText="Awaiting Payment Encumbrance" DataField="AwaitingPaymentEncumbrance.Amount" SortExpression="AwaitingPaymentEncumbrance.Amount" AutoPostBackOnFilter="true" Aggregate="Sum" FooterAggregateFormatString="{0:c}">
+                        <telerik:GridTemplateColumn AllowFiltering="false" AllowSorting="false" HeaderText="Awaiting Payment Encumbrance" DataField="AwaitingPaymentEncumbrance.Amount" SortExpression="AwaitingPaymentEncumbrance.Amount" AutoPostBackOnFilter="true">
                             <ItemTemplate>
                                 <asp:HyperLink ID="AwaitingPaymentEncumbranceHyperLink" runat="server" Text='<%# $"{Eval("AwaitingPaymentEncumbrance.Amount"):c}" %>' NavigateUrl='<%# $"~/Transaction2s/Edit.aspx?Id={Eval("AwaitingPaymentEncumbranceId")}" %>' Enabled='<%# Session["Transaction2sPermission"] != null %>' />
                             </ItemTemplate>
@@ -396,7 +396,7 @@
                             </ItemTemplate>
                         </telerik:GridTemplateColumn>
                         <telerik:GridBoundColumn HeaderText="Invoice Cancelled" DataField="InvoiceCancelled" AutoPostBackOnFilter="true" />
-                        <telerik:GridTemplateColumn AllowFiltering="false" AllowSorting="false" HeaderText="Payment Encumbrance" DataField="PaymentEncumbrance.Amount" SortExpression="PaymentEncumbrance.Amount" AutoPostBackOnFilter="true" Aggregate="Sum" FooterAggregateFormatString="{0:c}">
+                        <telerik:GridTemplateColumn AllowFiltering="false" AllowSorting="false" HeaderText="Payment Encumbrance" DataField="PaymentEncumbrance.Amount" SortExpression="PaymentEncumbrance.Amount" AutoPostBackOnFilter="true">
                             <ItemTemplate>
                                 <asp:HyperLink ID="PaymentEncumbranceHyperLink" runat="server" Text='<%# $"{Eval("PaymentEncumbrance.Amount"):c}" %>' NavigateUrl='<%# $"~/Transaction2s/Edit.aspx?Id={Eval("PaymentEncumbranceId")}" %>' Enabled='<%# Session["Transaction2sPermission"] != null %>' />
                             </ItemTemplate>

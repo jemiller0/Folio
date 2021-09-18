@@ -281,7 +281,7 @@
                                 <asp:HyperLink ID="AccountNumberHyperLink" runat="server" Text='<%#: Eval("AccountNumber") %>' NavigateUrl='<%# $"~/VoucherItem2s/Edit.aspx?Id={Eval("Id")}" %>' />
                             </ItemTemplate>
                         </telerik:GridTemplateColumn>
-                        <telerik:GridTemplateColumn AllowFiltering="false" AllowSorting="false" HeaderText="Sub Transaction" DataField="SubTransaction.Amount" SortExpression="SubTransaction.Amount" AutoPostBackOnFilter="true" Aggregate="Sum" FooterAggregateFormatString="{0:c}">
+                        <telerik:GridTemplateColumn AllowFiltering="false" AllowSorting="false" HeaderText="Sub Transaction" DataField="SubTransaction.Amount" SortExpression="SubTransaction.Amount" AutoPostBackOnFilter="true">
                             <ItemTemplate>
                                 <asp:HyperLink ID="SubTransactionHyperLink" runat="server" Text='<%# $"{Eval("SubTransaction.Amount"):c}" %>' NavigateUrl='<%# $"~/Transaction2s/Edit.aspx?Id={Eval("SubTransactionId")}" %>' Enabled='<%# Session["Transaction2sPermission"] != null %>' />
                             </ItemTemplate>
