@@ -209,12 +209,12 @@
                                     <asp:Literal ID="TotalLiteral" runat="server" Text='<%# Eval("Total", "{0:c}") %>' />
                                 </td>
                             </tr>
-                            <tr runat="server" visible='<%# Eval("VendorInvoiceNo") != null %>'>
+                            <tr runat="server" visible='<%# Eval("VendorInvoiceNumber") != null %>'>
                                 <td>
-                                    <asp:Label ID="VendorInvoiceNoLabel" runat="server" Text="Vendor Invoice No:" AssociatedControlID="VendorInvoiceNoLiteral" />
+                                    <asp:Label ID="VendorInvoiceNumberLabel" runat="server" Text="Vendor Invoice Number:" AssociatedControlID="VendorInvoiceNumberLiteral" />
                                 </td>
                                 <td>
-                                    <asp:Literal ID="VendorInvoiceNoLiteral" runat="server" Text='<%#: Eval("VendorInvoiceNo") %>' />
+                                    <asp:Literal ID="VendorInvoiceNumberLiteral" runat="server" Text='<%#: Eval("VendorInvoiceNumber") %>' />
                                 </td>
                             </tr>
                             <tr runat="server" visible='<%# Eval("DisbursementNumber") != null %>'>
@@ -456,9 +456,9 @@
                         <telerik:GridBoundColumn HeaderText="Awaiting Payment Release Encumbrance" DataField="AwaitingPaymentReleaseEncumbrance" AutoPostBackOnFilter="true" />
                         <telerik:GridBoundColumn HeaderText="Currency" DataField="Currency" AutoPostBackOnFilter="true" HtmlEncode="true" CurrentFilterFunction="StartsWith" />
                         <telerik:GridBoundColumn HeaderText="Description" DataField="Description" AutoPostBackOnFilter="true" HtmlEncode="true" CurrentFilterFunction="StartsWith" />
-                        <telerik:GridBoundColumn HeaderText="Awaiting Payment Amount" DataField="AwaitingPaymentAmount" AutoPostBackOnFilter="true" DataFormatString="{0:c}" />
-                        <telerik:GridBoundColumn HeaderText="Expended Amount" DataField="ExpendedAmount" AutoPostBackOnFilter="true" DataFormatString="{0:c}" />
-                        <telerik:GridBoundColumn HeaderText="Initial Encumbered Amount" DataField="InitialEncumberedAmount" AutoPostBackOnFilter="true" DataFormatString="{0:c}" />
+                        <telerik:GridBoundColumn HeaderText="Awaiting Payment Amount" DataField="AwaitingPaymentAmount" AutoPostBackOnFilter="true" DataFormatString="{0:c}" Aggregate="Sum" />
+                        <telerik:GridBoundColumn HeaderText="Expended Amount" DataField="ExpendedAmount" AutoPostBackOnFilter="true" DataFormatString="{0:c}" Aggregate="Sum" />
+                        <telerik:GridBoundColumn HeaderText="Initial Encumbered Amount" DataField="InitialEncumberedAmount" AutoPostBackOnFilter="true" DataFormatString="{0:c}" Aggregate="Sum" />
                         <telerik:GridBoundColumn HeaderText="Status" DataField="Status" AutoPostBackOnFilter="true" HtmlEncode="true" CurrentFilterFunction="StartsWith" />
                         <telerik:GridBoundColumn HeaderText="Order Type" DataField="OrderType" AutoPostBackOnFilter="true" HtmlEncode="true" CurrentFilterFunction="StartsWith" />
                         <telerik:GridBoundColumn HeaderText="Order Status" DataField="OrderStatus" AutoPostBackOnFilter="true" HtmlEncode="true" CurrentFilterFunction="StartsWith" />

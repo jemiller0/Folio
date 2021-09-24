@@ -47,8 +47,8 @@ namespace FolioLibrary
         [Column("exchange_rate"), Display(Name = "Exchange Rate", Order = 11), JsonProperty("exchangeRate")]
         public virtual decimal? ExchangeRate { get; set; }
 
-        [Column("folio_invoice_no"), Display(Name = "Folio Invoice No", Order = 12), JsonProperty("folioInvoiceNo"), Required, StringLength(1024)]
-        public virtual string FolioInvoiceNo { get; set; }
+        [Column("folio_invoice_no"), Display(Name = "Folio Invoice Number", Order = 12), JsonProperty("folioInvoiceNo"), Required, StringLength(1024)]
+        public virtual string FolioInvoiceNumber { get; set; }
 
         [Column("invoice_currency"), Display(Name = "Invoice Currency", Order = 13), JsonProperty("invoiceCurrency"), Required, StringLength(1024)]
         public virtual string InvoiceCurrency { get; set; }
@@ -65,8 +65,8 @@ namespace FolioLibrary
         [Column("type"), Display(Order = 17), JsonProperty("type"), Required, StringLength(1024)]
         public virtual string Type { get; set; }
 
-        [Column("vendor_invoice_no"), Display(Name = "Vendor Invoice No", Order = 18), JsonProperty("vendorInvoiceNo"), Required, StringLength(1024)]
-        public virtual string VendorInvoiceNo { get; set; }
+        [Column("vendor_invoice_no"), Display(Name = "Vendor Invoice Number", Order = 18), JsonProperty("vendorInvoiceNo"), Required, StringLength(1024)]
+        public virtual string VendorInvoiceNumber { get; set; }
 
         [Column("vendor_name"), Display(Name = "Vendor Name", Order = 19), JsonProperty("vendorName"), Required, StringLength(1024)]
         public virtual string VendorName { get; set; }
@@ -98,7 +98,7 @@ namespace FolioLibrary
         [Display(Name = "Batch Voucher Batched Voucher Batched Voucher Lines", Order = 28), JsonProperty("batchedVoucherLines")]
         public virtual ICollection<BatchVoucherBatchedVoucherBatchedVoucherLine> BatchVoucherBatchedVoucherBatchedVoucherLines { get; set; }
 
-        public override string ToString() => $"{{ {nameof(Id)} = {Id}, {nameof(BatchVoucherId)} = {BatchVoucherId}, {nameof(AccountingCode)} = {AccountingCode}, {nameof(AccountNumber)} = {AccountNumber}, {nameof(Amount)} = {Amount}, {nameof(DisbursementNumber)} = {DisbursementNumber}, {nameof(DisbursementDate)} = {DisbursementDate}, {nameof(DisbursementAmount)} = {DisbursementAmount}, {nameof(EnclosureNeeded)} = {EnclosureNeeded}, {nameof(ExchangeRate)} = {ExchangeRate}, {nameof(FolioInvoiceNo)} = {FolioInvoiceNo}, {nameof(InvoiceCurrency)} = {InvoiceCurrency}, {nameof(InvoiceNote)} = {InvoiceNote}, {nameof(Status)} = {Status}, {nameof(SystemCurrency)} = {SystemCurrency}, {nameof(Type)} = {Type}, {nameof(VendorInvoiceNo)} = {VendorInvoiceNo}, {nameof(VendorName)} = {VendorName}, {nameof(VoucherDate)} = {VoucherDate}, {nameof(VoucherNumber)} = {VoucherNumber}, {nameof(VendorStreetAddress1)} = {VendorStreetAddress1}, {nameof(VendorStreetAddress2)} = {VendorStreetAddress2}, {nameof(VendorCity)} = {VendorCity}, {nameof(VendorState)} = {VendorState}, {nameof(VendorPostalCode)} = {VendorPostalCode}, {nameof(VendorCountryCode)} = {VendorCountryCode}, {nameof(BatchVoucherBatchedVoucherBatchedVoucherLines)} = {(BatchVoucherBatchedVoucherBatchedVoucherLines != null ? $"{{ {string.Join(", ", BatchVoucherBatchedVoucherBatchedVoucherLines)} }}" : "")} }}";
+        public override string ToString() => $"{{ {nameof(Id)} = {Id}, {nameof(BatchVoucherId)} = {BatchVoucherId}, {nameof(AccountingCode)} = {AccountingCode}, {nameof(AccountNumber)} = {AccountNumber}, {nameof(Amount)} = {Amount}, {nameof(DisbursementNumber)} = {DisbursementNumber}, {nameof(DisbursementDate)} = {DisbursementDate}, {nameof(DisbursementAmount)} = {DisbursementAmount}, {nameof(EnclosureNeeded)} = {EnclosureNeeded}, {nameof(ExchangeRate)} = {ExchangeRate}, {nameof(FolioInvoiceNumber)} = {FolioInvoiceNumber}, {nameof(InvoiceCurrency)} = {InvoiceCurrency}, {nameof(InvoiceNote)} = {InvoiceNote}, {nameof(Status)} = {Status}, {nameof(SystemCurrency)} = {SystemCurrency}, {nameof(Type)} = {Type}, {nameof(VendorInvoiceNumber)} = {VendorInvoiceNumber}, {nameof(VendorName)} = {VendorName}, {nameof(VoucherDate)} = {VoucherDate}, {nameof(VoucherNumber)} = {VoucherNumber}, {nameof(VendorStreetAddress1)} = {VendorStreetAddress1}, {nameof(VendorStreetAddress2)} = {VendorStreetAddress2}, {nameof(VendorCity)} = {VendorCity}, {nameof(VendorState)} = {VendorState}, {nameof(VendorPostalCode)} = {VendorPostalCode}, {nameof(VendorCountryCode)} = {VendorCountryCode}, {nameof(BatchVoucherBatchedVoucherBatchedVoucherLines)} = {(BatchVoucherBatchedVoucherBatchedVoucherLines != null ? $"{{ {string.Join(", ", BatchVoucherBatchedVoucherBatchedVoucherLines)} }}" : "")} }}";
 
         public static BatchVoucherBatchedVoucher FromJObject(JObject jObject) => jObject != null ? new BatchVoucherBatchedVoucher
         {
@@ -110,13 +110,13 @@ namespace FolioLibrary
             DisbursementAmount = (decimal?)jObject.SelectToken("disbursementAmount"),
             EnclosureNeeded = (bool?)jObject.SelectToken("enclosureNeeded"),
             ExchangeRate = (decimal?)jObject.SelectToken("exchangeRate"),
-            FolioInvoiceNo = (string)jObject.SelectToken("folioInvoiceNo"),
+            FolioInvoiceNumber = (string)jObject.SelectToken("folioInvoiceNo"),
             InvoiceCurrency = (string)jObject.SelectToken("invoiceCurrency"),
             InvoiceNote = (string)jObject.SelectToken("invoiceNote"),
             Status = (string)jObject.SelectToken("status"),
             SystemCurrency = (string)jObject.SelectToken("systemCurrency"),
             Type = (string)jObject.SelectToken("type"),
-            VendorInvoiceNo = (string)jObject.SelectToken("vendorInvoiceNo"),
+            VendorInvoiceNumber = (string)jObject.SelectToken("vendorInvoiceNo"),
             VendorName = (string)jObject.SelectToken("vendorName"),
             VoucherDate = (DateTime?)jObject.SelectToken("voucherDate"),
             VoucherNumber = (string)jObject.SelectToken("voucherNumber"),
@@ -138,13 +138,13 @@ namespace FolioLibrary
             new JProperty("disbursementAmount", DisbursementAmount),
             new JProperty("enclosureNeeded", EnclosureNeeded),
             new JProperty("exchangeRate", ExchangeRate),
-            new JProperty("folioInvoiceNo", FolioInvoiceNo),
+            new JProperty("folioInvoiceNo", FolioInvoiceNumber),
             new JProperty("invoiceCurrency", InvoiceCurrency),
             new JProperty("invoiceNote", InvoiceNote),
             new JProperty("status", Status),
             new JProperty("systemCurrency", SystemCurrency),
             new JProperty("type", Type),
-            new JProperty("vendorInvoiceNo", VendorInvoiceNo),
+            new JProperty("vendorInvoiceNo", VendorInvoiceNumber),
             new JProperty("vendorName", VendorName),
             new JProperty("voucherDate", VoucherDate?.ToLocalTime()),
             new JProperty("voucherNumber", VoucherNumber),

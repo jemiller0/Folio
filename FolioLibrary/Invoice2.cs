@@ -112,8 +112,8 @@ namespace FolioLibrary
         [Column("total"), DataType(DataType.Currency), Display(Order = 28), DisplayFormat(DataFormatString = "{0:c}"), Editable(false), JsonProperty("total")]
         public virtual decimal? Total { get; set; }
 
-        [Column("vendor_invoice_no"), Display(Name = "Vendor Invoice No", Order = 29), JsonProperty("vendorInvoiceNo"), Required, StringLength(1024)]
-        public virtual string VendorInvoiceNo { get; set; }
+        [Column("vendor_invoice_no"), Display(Name = "Vendor Invoice Number", Order = 29), JsonProperty("vendorInvoiceNo"), Required, StringLength(1024)]
+        public virtual string VendorInvoiceNumber { get; set; }
 
         [Column("disbursement_number"), Display(Name = "Disbursement Number", Order = 30), JsonProperty("disbursementNumber"), StringLength(1024)]
         public virtual string DisbursementNumber { get; set; }
@@ -199,7 +199,7 @@ namespace FolioLibrary
         [Display(Name = "Vouchers", Order = 57)]
         public virtual ICollection<Voucher2> Voucher2s { get; set; }
 
-        public override string ToString() => $"{{ {nameof(Id)} = {Id}, {nameof(AccountingCode)} = {AccountingCode}, {nameof(AdjustmentsTotal)} = {AdjustmentsTotal}, {nameof(ApprovedById)} = {ApprovedById}, {nameof(ApprovalDate)} = {ApprovalDate}, {nameof(BatchGroupId)} = {BatchGroupId}, {nameof(BillToId)} = {BillToId}, {nameof(CheckSubscriptionOverlap)} = {CheckSubscriptionOverlap}, {nameof(CancellationNote)} = {CancellationNote}, {nameof(Currency)} = {Currency}, {nameof(EnclosureNeeded)} = {EnclosureNeeded}, {nameof(ExchangeRate)} = {ExchangeRate}, {nameof(ExportToAccounting)} = {ExportToAccounting}, {nameof(Number)} = {Number}, {nameof(InvoiceDate)} = {InvoiceDate}, {nameof(LockTotal)} = {LockTotal}, {nameof(Note)} = {Note}, {nameof(PaymentDueDate)} = {PaymentDueDate}, {nameof(PaymentDate)} = {PaymentDate}, {nameof(PaymentTerms)} = {PaymentTerms}, {nameof(PaymentMethod)} = {PaymentMethod}, {nameof(Status)} = {Status}, {nameof(Source)} = {Source}, {nameof(SubTotal)} = {SubTotal}, {nameof(Total)} = {Total}, {nameof(VendorInvoiceNo)} = {VendorInvoiceNo}, {nameof(DisbursementNumber)} = {DisbursementNumber}, {nameof(VoucherNumber)} = {VoucherNumber}, {nameof(PaymentId)} = {PaymentId}, {nameof(DisbursementDate)} = {DisbursementDate}, {nameof(VendorId)} = {VendorId}, {nameof(AccountNumber)} = {AccountNumber}, {nameof(ManualPayment)} = {ManualPayment}, {nameof(CreationTime)} = {CreationTime}, {nameof(CreationUserId)} = {CreationUserId}, {nameof(CreationUserUsername)} = {CreationUserUsername}, {nameof(LastWriteTime)} = {LastWriteTime}, {nameof(LastWriteUserId)} = {LastWriteUserId}, {nameof(LastWriteUserUsername)} = {LastWriteUserUsername}, {nameof(Content)} = {Content}, {nameof(InvoiceAcquisitionsUnits)} = {(InvoiceAcquisitionsUnits != null ? $"{{ {string.Join(", ", InvoiceAcquisitionsUnits)} }}" : "")}, {nameof(InvoiceAdjustments)} = {(InvoiceAdjustments != null ? $"{{ {string.Join(", ", InvoiceAdjustments)} }}" : "")}, {nameof(InvoiceOrderNumbers)} = {(InvoiceOrderNumbers != null ? $"{{ {string.Join(", ", InvoiceOrderNumbers)} }}" : "")}, {nameof(InvoiceTags)} = {(InvoiceTags != null ? $"{{ {string.Join(", ", InvoiceTags)} }}" : "")} }}";
+        public override string ToString() => $"{{ {nameof(Id)} = {Id}, {nameof(AccountingCode)} = {AccountingCode}, {nameof(AdjustmentsTotal)} = {AdjustmentsTotal}, {nameof(ApprovedById)} = {ApprovedById}, {nameof(ApprovalDate)} = {ApprovalDate}, {nameof(BatchGroupId)} = {BatchGroupId}, {nameof(BillToId)} = {BillToId}, {nameof(CheckSubscriptionOverlap)} = {CheckSubscriptionOverlap}, {nameof(CancellationNote)} = {CancellationNote}, {nameof(Currency)} = {Currency}, {nameof(EnclosureNeeded)} = {EnclosureNeeded}, {nameof(ExchangeRate)} = {ExchangeRate}, {nameof(ExportToAccounting)} = {ExportToAccounting}, {nameof(Number)} = {Number}, {nameof(InvoiceDate)} = {InvoiceDate}, {nameof(LockTotal)} = {LockTotal}, {nameof(Note)} = {Note}, {nameof(PaymentDueDate)} = {PaymentDueDate}, {nameof(PaymentDate)} = {PaymentDate}, {nameof(PaymentTerms)} = {PaymentTerms}, {nameof(PaymentMethod)} = {PaymentMethod}, {nameof(Status)} = {Status}, {nameof(Source)} = {Source}, {nameof(SubTotal)} = {SubTotal}, {nameof(Total)} = {Total}, {nameof(VendorInvoiceNumber)} = {VendorInvoiceNumber}, {nameof(DisbursementNumber)} = {DisbursementNumber}, {nameof(VoucherNumber)} = {VoucherNumber}, {nameof(PaymentId)} = {PaymentId}, {nameof(DisbursementDate)} = {DisbursementDate}, {nameof(VendorId)} = {VendorId}, {nameof(AccountNumber)} = {AccountNumber}, {nameof(ManualPayment)} = {ManualPayment}, {nameof(CreationTime)} = {CreationTime}, {nameof(CreationUserId)} = {CreationUserId}, {nameof(CreationUserUsername)} = {CreationUserUsername}, {nameof(LastWriteTime)} = {LastWriteTime}, {nameof(LastWriteUserId)} = {LastWriteUserId}, {nameof(LastWriteUserUsername)} = {LastWriteUserUsername}, {nameof(Content)} = {Content}, {nameof(InvoiceAcquisitionsUnits)} = {(InvoiceAcquisitionsUnits != null ? $"{{ {string.Join(", ", InvoiceAcquisitionsUnits)} }}" : "")}, {nameof(InvoiceAdjustments)} = {(InvoiceAdjustments != null ? $"{{ {string.Join(", ", InvoiceAdjustments)} }}" : "")}, {nameof(InvoiceOrderNumbers)} = {(InvoiceOrderNumbers != null ? $"{{ {string.Join(", ", InvoiceOrderNumbers)} }}" : "")}, {nameof(InvoiceTags)} = {(InvoiceTags != null ? $"{{ {string.Join(", ", InvoiceTags)} }}" : "")} }}";
 
         public static Invoice2 FromJObject(JObject jObject) => jObject != null ? new Invoice2
         {
@@ -228,7 +228,7 @@ namespace FolioLibrary
             Source = (string)jObject.SelectToken("source"),
             SubTotal = (decimal?)jObject.SelectToken("subTotal"),
             Total = (decimal?)jObject.SelectToken("total"),
-            VendorInvoiceNo = (string)jObject.SelectToken("vendorInvoiceNo"),
+            VendorInvoiceNumber = (string)jObject.SelectToken("vendorInvoiceNo"),
             DisbursementNumber = (string)jObject.SelectToken("disbursementNumber"),
             VoucherNumber = (string)jObject.SelectToken("voucherNumber"),
             PaymentId = (Guid?)jObject.SelectToken("paymentId"),
@@ -275,7 +275,7 @@ namespace FolioLibrary
             new JProperty("source", Source),
             new JProperty("subTotal", SubTotal),
             new JProperty("total", Total),
-            new JProperty("vendorInvoiceNo", VendorInvoiceNo),
+            new JProperty("vendorInvoiceNo", VendorInvoiceNumber),
             new JProperty("disbursementNumber", DisbursementNumber),
             new JProperty("voucherNumber", VoucherNumber),
             new JProperty("paymentId", PaymentId),
