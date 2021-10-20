@@ -82,11 +82,11 @@ namespace FolioLibrary
         [Column("subscription_info"), Display(Name = "Subscription Info", Order = 18), JsonProperty("subscriptionInfo"), StringLength(1024)]
         public virtual string SubscriptionInfo { get; set; }
 
-        [Column("subscription_start"), Display(Name = "Subscription Start", Order = 19), DisplayFormat(DataFormatString = "{0:g}", ApplyFormatInEditMode = true), JsonProperty("subscriptionStart")]
-        public virtual DateTime? SubscriptionStart { get; set; }
+        [Column("subscription_start"), DataType(DataType.Date), Display(Name = "Subscription Start Date", Order = 19), DisplayFormat(DataFormatString = "{0:d}", ApplyFormatInEditMode = true), JsonProperty("subscriptionStart")]
+        public virtual DateTime? SubscriptionStartDate { get; set; }
 
-        [Column("subscription_end"), Display(Name = "Subscription End", Order = 20), DisplayFormat(DataFormatString = "{0:g}", ApplyFormatInEditMode = true), JsonProperty("subscriptionEnd")]
-        public virtual DateTime? SubscriptionEnd { get; set; }
+        [Column("subscription_end"), DataType(DataType.Date), Display(Name = "Subscription End Date", Order = 20), DisplayFormat(DataFormatString = "{0:d}", ApplyFormatInEditMode = true), JsonProperty("subscriptionEnd")]
+        public virtual DateTime? SubscriptionEndDate { get; set; }
 
         [Column("sub_total"), DataType(DataType.Currency), Display(Name = "Sub Total", Order = 21), DisplayFormat(DataFormatString = "{0:c}", ApplyFormatInEditMode = true), JsonProperty("subTotal"), Required]
         public virtual decimal? SubTotal { get; set; }
@@ -148,7 +148,7 @@ namespace FolioLibrary
         [Display(Name = "Voucher Item Invoice Items", Order = 40)]
         public virtual ICollection<VoucherItemInvoiceItem> VoucherItemInvoiceItems { get; set; }
 
-        public override string ToString() => $"{{ {nameof(Id)} = {Id}, {nameof(AccountingCode)} = {AccountingCode}, {nameof(AccountNumber)} = {AccountNumber}, {nameof(AdjustmentsTotal)} = {AdjustmentsTotal}, {nameof(Comment)} = {Comment}, {nameof(Description)} = {Description}, {nameof(InvoiceId)} = {InvoiceId}, {nameof(Number)} = {Number}, {nameof(InvoiceLineStatus)} = {InvoiceLineStatus}, {nameof(OrderItemId)} = {OrderItemId}, {nameof(ProductId)} = {ProductId}, {nameof(ProductIdTypeId)} = {ProductIdTypeId}, {nameof(Quantity)} = {Quantity}, {nameof(ReleaseEncumbrance)} = {ReleaseEncumbrance}, {nameof(SubscriptionInfo)} = {SubscriptionInfo}, {nameof(SubscriptionStart)} = {SubscriptionStart}, {nameof(SubscriptionEnd)} = {SubscriptionEnd}, {nameof(SubTotal)} = {SubTotal}, {nameof(Total)} = {Total}, {nameof(CreationTime)} = {CreationTime}, {nameof(CreationUserId)} = {CreationUserId}, {nameof(CreationUserUsername)} = {CreationUserUsername}, {nameof(LastWriteTime)} = {LastWriteTime}, {nameof(LastWriteUserId)} = {LastWriteUserId}, {nameof(LastWriteUserUsername)} = {LastWriteUserUsername}, {nameof(Content)} = {Content}, {nameof(InvoiceItemAdjustmentFunds)} = {(InvoiceItemAdjustmentFunds != null ? $"{{ {string.Join(", ", InvoiceItemAdjustmentFunds)} }}" : "")}, {nameof(InvoiceItemAdjustments)} = {(InvoiceItemAdjustments != null ? $"{{ {string.Join(", ", InvoiceItemAdjustments)} }}" : "")}, {nameof(InvoiceItemFunds)} = {(InvoiceItemFunds != null ? $"{{ {string.Join(", ", InvoiceItemFunds)} }}" : "")}, {nameof(InvoiceItemReferenceNumbers)} = {(InvoiceItemReferenceNumbers != null ? $"{{ {string.Join(", ", InvoiceItemReferenceNumbers)} }}" : "")}, {nameof(InvoiceItemTags)} = {(InvoiceItemTags != null ? $"{{ {string.Join(", ", InvoiceItemTags)} }}" : "")} }}";
+        public override string ToString() => $"{{ {nameof(Id)} = {Id}, {nameof(AccountingCode)} = {AccountingCode}, {nameof(AccountNumber)} = {AccountNumber}, {nameof(AdjustmentsTotal)} = {AdjustmentsTotal}, {nameof(Comment)} = {Comment}, {nameof(Description)} = {Description}, {nameof(InvoiceId)} = {InvoiceId}, {nameof(Number)} = {Number}, {nameof(InvoiceLineStatus)} = {InvoiceLineStatus}, {nameof(OrderItemId)} = {OrderItemId}, {nameof(ProductId)} = {ProductId}, {nameof(ProductIdTypeId)} = {ProductIdTypeId}, {nameof(Quantity)} = {Quantity}, {nameof(ReleaseEncumbrance)} = {ReleaseEncumbrance}, {nameof(SubscriptionInfo)} = {SubscriptionInfo}, {nameof(SubscriptionStartDate)} = {SubscriptionStartDate}, {nameof(SubscriptionEndDate)} = {SubscriptionEndDate}, {nameof(SubTotal)} = {SubTotal}, {nameof(Total)} = {Total}, {nameof(CreationTime)} = {CreationTime}, {nameof(CreationUserId)} = {CreationUserId}, {nameof(CreationUserUsername)} = {CreationUserUsername}, {nameof(LastWriteTime)} = {LastWriteTime}, {nameof(LastWriteUserId)} = {LastWriteUserId}, {nameof(LastWriteUserUsername)} = {LastWriteUserUsername}, {nameof(Content)} = {Content}, {nameof(InvoiceItemAdjustmentFunds)} = {(InvoiceItemAdjustmentFunds != null ? $"{{ {string.Join(", ", InvoiceItemAdjustmentFunds)} }}" : "")}, {nameof(InvoiceItemAdjustments)} = {(InvoiceItemAdjustments != null ? $"{{ {string.Join(", ", InvoiceItemAdjustments)} }}" : "")}, {nameof(InvoiceItemFunds)} = {(InvoiceItemFunds != null ? $"{{ {string.Join(", ", InvoiceItemFunds)} }}" : "")}, {nameof(InvoiceItemReferenceNumbers)} = {(InvoiceItemReferenceNumbers != null ? $"{{ {string.Join(", ", InvoiceItemReferenceNumbers)} }}" : "")}, {nameof(InvoiceItemTags)} = {(InvoiceItemTags != null ? $"{{ {string.Join(", ", InvoiceItemTags)} }}" : "")} }}";
 
         public static InvoiceItem2 FromJObject(JObject jObject) => jObject != null ? new InvoiceItem2
         {
@@ -167,8 +167,8 @@ namespace FolioLibrary
             Quantity = (int?)jObject.SelectToken("quantity"),
             ReleaseEncumbrance = (bool?)jObject.SelectToken("releaseEncumbrance"),
             SubscriptionInfo = (string)jObject.SelectToken("subscriptionInfo"),
-            SubscriptionStart = (DateTime?)jObject.SelectToken("subscriptionStart"),
-            SubscriptionEnd = (DateTime?)jObject.SelectToken("subscriptionEnd"),
+            SubscriptionStartDate = (DateTime?)jObject.SelectToken("subscriptionStart"),
+            SubscriptionEndDate = (DateTime?)jObject.SelectToken("subscriptionEnd"),
             SubTotal = (decimal?)jObject.SelectToken("subTotal"),
             Total = (decimal?)jObject.SelectToken("total"),
             CreationTime = (DateTime?)jObject.SelectToken("metadata.createdDate"),
@@ -201,8 +201,8 @@ namespace FolioLibrary
             new JProperty("quantity", Quantity),
             new JProperty("releaseEncumbrance", ReleaseEncumbrance),
             new JProperty("subscriptionInfo", SubscriptionInfo),
-            new JProperty("subscriptionStart", SubscriptionStart?.ToLocalTime()),
-            new JProperty("subscriptionEnd", SubscriptionEnd?.ToLocalTime()),
+            new JProperty("subscriptionStart", SubscriptionStartDate?.ToLocalTime()),
+            new JProperty("subscriptionEnd", SubscriptionEndDate?.ToLocalTime()),
             new JProperty("subTotal", SubTotal),
             new JProperty("total", Total),
             new JProperty("metadata", new JObject(

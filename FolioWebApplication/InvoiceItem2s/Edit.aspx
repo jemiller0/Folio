@@ -129,20 +129,20 @@
                                     <asp:Literal ID="SubscriptionInfoLiteral" runat="server" Text='<%#: Eval("SubscriptionInfo") %>' />
                                 </td>
                             </tr>
-                            <tr runat="server" visible='<%# Eval("SubscriptionStart") != null %>'>
+                            <tr runat="server" visible='<%# Eval("SubscriptionStartDate") != null %>'>
                                 <td>
-                                    <asp:Label ID="SubscriptionStartLabel" runat="server" Text="Subscription Start:" AssociatedControlID="SubscriptionStartLiteral" />
+                                    <asp:Label ID="SubscriptionStartDateLabel" runat="server" Text="Subscription Start Date:" AssociatedControlID="SubscriptionStartDateLiteral" />
                                 </td>
                                 <td>
-                                    <asp:Literal ID="SubscriptionStartLiteral" runat="server" Text='<%# Eval("SubscriptionStart", "{0:g}") %>' />
+                                    <asp:Literal ID="SubscriptionStartDateLiteral" runat="server" Text='<%# Eval("SubscriptionStartDate", "{0:d}") %>' />
                                 </td>
                             </tr>
-                            <tr runat="server" visible='<%# Eval("SubscriptionEnd") != null %>'>
+                            <tr runat="server" visible='<%# Eval("SubscriptionEndDate") != null %>'>
                                 <td>
-                                    <asp:Label ID="SubscriptionEndLabel" runat="server" Text="Subscription End:" AssociatedControlID="SubscriptionEndLiteral" />
+                                    <asp:Label ID="SubscriptionEndDateLabel" runat="server" Text="Subscription End Date:" AssociatedControlID="SubscriptionEndDateLiteral" />
                                 </td>
                                 <td>
-                                    <asp:Literal ID="SubscriptionEndLiteral" runat="server" Text='<%# Eval("SubscriptionEnd", "{0:g}") %>' />
+                                    <asp:Literal ID="SubscriptionEndDateLiteral" runat="server" Text='<%# Eval("SubscriptionEndDate", "{0:d}") %>' />
                                 </td>
                             </tr>
                             <tr runat="server" visible='<%# Eval("SubTotal") != null %>'>

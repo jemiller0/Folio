@@ -1494,7 +1494,7 @@ namespace FolioConsoleApplication
                     if (validate)
                     {
                         var l = js.Validate(jo);
-                        if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"AcquisitionsUnit {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"AcquisitionsUnit {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
+                        if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"AcquisitionsUnit {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"AcquisitionsUnit {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}: {jo}");
                     }
                     if (api)
                     {
@@ -1545,7 +1545,7 @@ namespace FolioConsoleApplication
                     if (validate)
                     {
                         var l = js.Validate(jo);
-                        if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"AcquisitionsUnit {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"AcquisitionsUnit {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
+                        if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"AcquisitionsUnit {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"AcquisitionsUnit {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}: {jo}");
                     }
                     if (!whatIf) (universalTime ? universalTimeJsonSerializer : localTimeJsonSerializer).Serialize(jtw, jo);
                     if (++i % 10000 == 0)
@@ -1633,7 +1633,7 @@ namespace FolioConsoleApplication
                     if (validate)
                     {
                         var l = js.Validate(jo);
-                        if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"AddressType {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"AddressType {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
+                        if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"AddressType {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"AddressType {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}: {jo}");
                     }
                     if (api)
                     {
@@ -1684,7 +1684,7 @@ namespace FolioConsoleApplication
                     if (validate)
                     {
                         var l = js.Validate(jo);
-                        if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"AddressType {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"AddressType {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
+                        if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"AddressType {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"AddressType {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}: {jo}");
                     }
                     if (!whatIf) (universalTime ? universalTimeJsonSerializer : localTimeJsonSerializer).Serialize(jtw, jo);
                     if (++i % 10000 == 0)
@@ -1772,7 +1772,7 @@ namespace FolioConsoleApplication
                     if (validate)
                     {
                         var l = js.Validate(jo);
-                        if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"Alert {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"Alert {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
+                        if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"Alert {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"Alert {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}: {jo}");
                     }
                     if (api)
                     {
@@ -1823,7 +1823,7 @@ namespace FolioConsoleApplication
                     if (validate)
                     {
                         var l = js.Validate(jo);
-                        if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"Alert {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"Alert {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
+                        if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"Alert {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"Alert {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}: {jo}");
                     }
                     if (!whatIf) (universalTime ? universalTimeJsonSerializer : localTimeJsonSerializer).Serialize(jtw, jo);
                     if (++i % 10000 == 0)
@@ -1911,7 +1911,7 @@ namespace FolioConsoleApplication
                     if (validate)
                     {
                         var l = js.Validate(jo);
-                        if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"AlternativeTitleType {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"AlternativeTitleType {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
+                        if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"AlternativeTitleType {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"AlternativeTitleType {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}: {jo}");
                     }
                     if (api)
                     {
@@ -1962,7 +1962,7 @@ namespace FolioConsoleApplication
                     if (validate)
                     {
                         var l = js.Validate(jo);
-                        if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"AlternativeTitleType {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"AlternativeTitleType {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
+                        if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"AlternativeTitleType {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"AlternativeTitleType {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}: {jo}");
                     }
                     if (!whatIf) (universalTime ? universalTimeJsonSerializer : localTimeJsonSerializer).Serialize(jtw, jo);
                     if (++i % 10000 == 0)
@@ -2050,7 +2050,7 @@ namespace FolioConsoleApplication
                     if (validate)
                     {
                         var l = js.Validate(jo);
-                        if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"BatchGroup {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"BatchGroup {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
+                        if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"BatchGroup {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"BatchGroup {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}: {jo}");
                     }
                     if (api)
                     {
@@ -2101,7 +2101,7 @@ namespace FolioConsoleApplication
                     if (validate)
                     {
                         var l = js.Validate(jo);
-                        if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"BatchGroup {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"BatchGroup {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
+                        if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"BatchGroup {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"BatchGroup {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}: {jo}");
                     }
                     if (!whatIf) (universalTime ? universalTimeJsonSerializer : localTimeJsonSerializer).Serialize(jtw, jo);
                     if (++i % 10000 == 0)
@@ -2176,7 +2176,7 @@ namespace FolioConsoleApplication
                     if (validate)
                     {
                         var l = js.Validate(jo);
-                        if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"BatchVoucher {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"BatchVoucher {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
+                        if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"BatchVoucher {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"BatchVoucher {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}: {jo}");
                     }
                     if (api)
                     {
@@ -2221,7 +2221,7 @@ namespace FolioConsoleApplication
                     if (validate)
                     {
                         var l = js.Validate(jo);
-                        if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"BatchVoucher {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"BatchVoucher {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
+                        if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"BatchVoucher {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"BatchVoucher {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}: {jo}");
                     }
                     if (!whatIf) (universalTime ? universalTimeJsonSerializer : localTimeJsonSerializer).Serialize(jtw, jo);
                     if (++i % 10000 == 0)
@@ -2309,7 +2309,7 @@ namespace FolioConsoleApplication
                     if (validate)
                     {
                         var l = js.Validate(jo);
-                        if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"BatchVoucherExport {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"BatchVoucherExport {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
+                        if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"BatchVoucherExport {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"BatchVoucherExport {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}: {jo}");
                     }
                     if (api)
                     {
@@ -2360,7 +2360,7 @@ namespace FolioConsoleApplication
                     if (validate)
                     {
                         var l = js.Validate(jo);
-                        if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"BatchVoucherExport {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"BatchVoucherExport {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
+                        if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"BatchVoucherExport {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"BatchVoucherExport {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}: {jo}");
                     }
                     if (!whatIf) (universalTime ? universalTimeJsonSerializer : localTimeJsonSerializer).Serialize(jtw, jo);
                     if (++i % 10000 == 0)
@@ -2448,7 +2448,7 @@ namespace FolioConsoleApplication
                     if (validate)
                     {
                         var l = js.Validate(jo);
-                        if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"BatchVoucherExportConfig {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"BatchVoucherExportConfig {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
+                        if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"BatchVoucherExportConfig {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"BatchVoucherExportConfig {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}: {jo}");
                     }
                     if (api)
                     {
@@ -2499,7 +2499,7 @@ namespace FolioConsoleApplication
                     if (validate)
                     {
                         var l = js.Validate(jo);
-                        if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"BatchVoucherExportConfig {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"BatchVoucherExportConfig {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
+                        if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"BatchVoucherExportConfig {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"BatchVoucherExportConfig {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}: {jo}");
                     }
                     if (!whatIf) (universalTime ? universalTimeJsonSerializer : localTimeJsonSerializer).Serialize(jtw, jo);
                     if (++i % 10000 == 0)
@@ -2587,7 +2587,7 @@ namespace FolioConsoleApplication
                     if (validate)
                     {
                         var l = js.Validate(jo);
-                        if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"Block {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"Block {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
+                        if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"Block {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"Block {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}: {jo}");
                     }
                     if (api)
                     {
@@ -2638,7 +2638,7 @@ namespace FolioConsoleApplication
                     if (validate)
                     {
                         var l = js.Validate(jo);
-                        if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"Block {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"Block {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
+                        if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"Block {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"Block {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}: {jo}");
                     }
                     if (!whatIf) (universalTime ? universalTimeJsonSerializer : localTimeJsonSerializer).Serialize(jtw, jo);
                     if (++i % 10000 == 0)
@@ -2726,7 +2726,7 @@ namespace FolioConsoleApplication
                     if (validate)
                     {
                         var l = js.Validate(jo);
-                        if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"BlockCondition {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"BlockCondition {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
+                        if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"BlockCondition {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"BlockCondition {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}: {jo}");
                     }
                     if (api)
                     {
@@ -2777,7 +2777,7 @@ namespace FolioConsoleApplication
                     if (validate)
                     {
                         var l = js.Validate(jo);
-                        if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"BlockCondition {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"BlockCondition {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
+                        if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"BlockCondition {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"BlockCondition {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}: {jo}");
                     }
                     if (!whatIf) (universalTime ? universalTimeJsonSerializer : localTimeJsonSerializer).Serialize(jtw, jo);
                     if (++i % 10000 == 0)
@@ -2865,7 +2865,7 @@ namespace FolioConsoleApplication
                     if (validate)
                     {
                         var l = js.Validate(jo);
-                        if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"BlockLimit {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"BlockLimit {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
+                        if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"BlockLimit {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"BlockLimit {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}: {jo}");
                     }
                     if (api)
                     {
@@ -2916,7 +2916,7 @@ namespace FolioConsoleApplication
                     if (validate)
                     {
                         var l = js.Validate(jo);
-                        if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"BlockLimit {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"BlockLimit {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
+                        if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"BlockLimit {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"BlockLimit {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}: {jo}");
                     }
                     if (!whatIf) (universalTime ? universalTimeJsonSerializer : localTimeJsonSerializer).Serialize(jtw, jo);
                     if (++i % 10000 == 0)
@@ -3004,7 +3004,7 @@ namespace FolioConsoleApplication
                     if (validate)
                     {
                         var l = js.Validate(jo);
-                        if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"BoundWithPart {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"BoundWithPart {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
+                        if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"BoundWithPart {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"BoundWithPart {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}: {jo}");
                     }
                     if (api)
                     {
@@ -3055,7 +3055,7 @@ namespace FolioConsoleApplication
                     if (validate)
                     {
                         var l = js.Validate(jo);
-                        if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"BoundWithPart {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"BoundWithPart {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
+                        if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"BoundWithPart {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"BoundWithPart {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}: {jo}");
                     }
                     if (!whatIf) (universalTime ? universalTimeJsonSerializer : localTimeJsonSerializer).Serialize(jtw, jo);
                     if (++i % 10000 == 0)
@@ -3143,7 +3143,7 @@ namespace FolioConsoleApplication
                     if (validate)
                     {
                         var l = js.Validate(jo);
-                        if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"Budget {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"Budget {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
+                        if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"Budget {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"Budget {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}: {jo}");
                     }
                     if (api)
                     {
@@ -3194,7 +3194,7 @@ namespace FolioConsoleApplication
                     if (validate)
                     {
                         var l = js.Validate(jo);
-                        if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"Budget {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"Budget {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
+                        if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"Budget {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"Budget {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}: {jo}");
                     }
                     if (!whatIf) (universalTime ? universalTimeJsonSerializer : localTimeJsonSerializer).Serialize(jtw, jo);
                     if (++i % 10000 == 0)
@@ -3282,7 +3282,7 @@ namespace FolioConsoleApplication
                     if (validate)
                     {
                         var l = js.Validate(jo);
-                        if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"BudgetExpenseClass {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"BudgetExpenseClass {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
+                        if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"BudgetExpenseClass {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"BudgetExpenseClass {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}: {jo}");
                     }
                     if (api)
                     {
@@ -3333,7 +3333,7 @@ namespace FolioConsoleApplication
                     if (validate)
                     {
                         var l = js.Validate(jo);
-                        if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"BudgetExpenseClass {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"BudgetExpenseClass {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
+                        if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"BudgetExpenseClass {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"BudgetExpenseClass {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}: {jo}");
                     }
                     if (!whatIf) (universalTime ? universalTimeJsonSerializer : localTimeJsonSerializer).Serialize(jtw, jo);
                     if (++i % 10000 == 0)
@@ -3421,7 +3421,7 @@ namespace FolioConsoleApplication
                     if (validate)
                     {
                         var l = js.Validate(jo);
-                        if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"BudgetGroup {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"BudgetGroup {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
+                        if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"BudgetGroup {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"BudgetGroup {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}: {jo}");
                     }
                     if (api)
                     {
@@ -3472,7 +3472,7 @@ namespace FolioConsoleApplication
                     if (validate)
                     {
                         var l = js.Validate(jo);
-                        if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"BudgetGroup {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"BudgetGroup {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
+                        if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"BudgetGroup {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"BudgetGroup {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}: {jo}");
                     }
                     if (!whatIf) (universalTime ? universalTimeJsonSerializer : localTimeJsonSerializer).Serialize(jtw, jo);
                     if (++i % 10000 == 0)
@@ -3560,7 +3560,7 @@ namespace FolioConsoleApplication
                     if (validate)
                     {
                         var l = js.Validate(jo);
-                        if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"CallNumberType {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"CallNumberType {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
+                        if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"CallNumberType {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"CallNumberType {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}: {jo}");
                     }
                     if (api)
                     {
@@ -3611,7 +3611,7 @@ namespace FolioConsoleApplication
                     if (validate)
                     {
                         var l = js.Validate(jo);
-                        if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"CallNumberType {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"CallNumberType {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
+                        if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"CallNumberType {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"CallNumberType {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}: {jo}");
                     }
                     if (!whatIf) (universalTime ? universalTimeJsonSerializer : localTimeJsonSerializer).Serialize(jtw, jo);
                     if (++i % 10000 == 0)
@@ -3699,7 +3699,7 @@ namespace FolioConsoleApplication
                     if (validate)
                     {
                         var l = js.Validate(jo);
-                        if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"Campus {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"Campus {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
+                        if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"Campus {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"Campus {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}: {jo}");
                     }
                     if (api)
                     {
@@ -3750,7 +3750,7 @@ namespace FolioConsoleApplication
                     if (validate)
                     {
                         var l = js.Validate(jo);
-                        if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"Campus {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"Campus {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
+                        if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"Campus {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"Campus {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}: {jo}");
                     }
                     if (!whatIf) (universalTime ? universalTimeJsonSerializer : localTimeJsonSerializer).Serialize(jtw, jo);
                     if (++i % 10000 == 0)
@@ -3838,7 +3838,7 @@ namespace FolioConsoleApplication
                     if (validate)
                     {
                         var l = js.Validate(jo);
-                        if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"CancellationReason {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"CancellationReason {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
+                        if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"CancellationReason {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"CancellationReason {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}: {jo}");
                     }
                     if (api)
                     {
@@ -3889,7 +3889,7 @@ namespace FolioConsoleApplication
                     if (validate)
                     {
                         var l = js.Validate(jo);
-                        if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"CancellationReason {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"CancellationReason {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
+                        if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"CancellationReason {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"CancellationReason {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}: {jo}");
                     }
                     if (!whatIf) (universalTime ? universalTimeJsonSerializer : localTimeJsonSerializer).Serialize(jtw, jo);
                     if (++i % 10000 == 0)
@@ -3977,7 +3977,7 @@ namespace FolioConsoleApplication
                     if (validate)
                     {
                         var l = js.Validate(jo);
-                        if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"Category {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"Category {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
+                        if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"Category {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"Category {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}: {jo}");
                     }
                     if (api)
                     {
@@ -4028,7 +4028,7 @@ namespace FolioConsoleApplication
                     if (validate)
                     {
                         var l = js.Validate(jo);
-                        if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"Category {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"Category {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
+                        if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"Category {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"Category {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}: {jo}");
                     }
                     if (!whatIf) (universalTime ? universalTimeJsonSerializer : localTimeJsonSerializer).Serialize(jtw, jo);
                     if (++i % 10000 == 0)
@@ -4116,7 +4116,7 @@ namespace FolioConsoleApplication
                     if (validate)
                     {
                         var l = js.Validate(jo);
-                        if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"CheckIn {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"CheckIn {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
+                        if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"CheckIn {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"CheckIn {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}: {jo}");
                     }
                     if (api)
                     {
@@ -4167,7 +4167,7 @@ namespace FolioConsoleApplication
                     if (validate)
                     {
                         var l = js.Validate(jo);
-                        if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"CheckIn {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"CheckIn {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
+                        if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"CheckIn {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"CheckIn {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}: {jo}");
                     }
                     if (!whatIf) (universalTime ? universalTimeJsonSerializer : localTimeJsonSerializer).Serialize(jtw, jo);
                     if (++i % 10000 == 0)
@@ -4244,7 +4244,7 @@ namespace FolioConsoleApplication
                     if (validate)
                     {
                         var l = js.Validate(jo);
-                        if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"CirculationRule {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"CirculationRule {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
+                        if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"CirculationRule {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"CirculationRule {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}: {jo}");
                     }
                     if (api)
                     {
@@ -4295,7 +4295,7 @@ namespace FolioConsoleApplication
                     if (validate)
                     {
                         var l = js.Validate(jo);
-                        if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"CirculationRule {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"CirculationRule {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
+                        if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"CirculationRule {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"CirculationRule {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}: {jo}");
                     }
                     if (!whatIf) (universalTime ? universalTimeJsonSerializer : localTimeJsonSerializer).Serialize(jtw, jo);
                     if (++i % 10000 == 0)
@@ -4383,7 +4383,7 @@ namespace FolioConsoleApplication
                     if (validate)
                     {
                         var l = js.Validate(jo);
-                        if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"ClassificationType {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"ClassificationType {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
+                        if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"ClassificationType {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"ClassificationType {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}: {jo}");
                     }
                     if (api)
                     {
@@ -4434,7 +4434,7 @@ namespace FolioConsoleApplication
                     if (validate)
                     {
                         var l = js.Validate(jo);
-                        if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"ClassificationType {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"ClassificationType {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
+                        if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"ClassificationType {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"ClassificationType {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}: {jo}");
                     }
                     if (!whatIf) (universalTime ? universalTimeJsonSerializer : localTimeJsonSerializer).Serialize(jtw, jo);
                     if (++i % 10000 == 0)
@@ -4522,7 +4522,7 @@ namespace FolioConsoleApplication
                     if (validate)
                     {
                         var l = js.Validate(jo);
-                        if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"CloseReason {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"CloseReason {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
+                        if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"CloseReason {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"CloseReason {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}: {jo}");
                     }
                     if (api)
                     {
@@ -4573,7 +4573,7 @@ namespace FolioConsoleApplication
                     if (validate)
                     {
                         var l = js.Validate(jo);
-                        if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"CloseReason {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"CloseReason {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
+                        if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"CloseReason {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"CloseReason {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}: {jo}");
                     }
                     if (!whatIf) (universalTime ? universalTimeJsonSerializer : localTimeJsonSerializer).Serialize(jtw, jo);
                     if (++i % 10000 == 0)
@@ -4661,7 +4661,7 @@ namespace FolioConsoleApplication
                     if (validate)
                     {
                         var l = js.Validate(jo);
-                        if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"Comment {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"Comment {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
+                        if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"Comment {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"Comment {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}: {jo}");
                     }
                     if (api)
                     {
@@ -4712,7 +4712,7 @@ namespace FolioConsoleApplication
                     if (validate)
                     {
                         var l = js.Validate(jo);
-                        if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"Comment {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"Comment {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
+                        if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"Comment {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"Comment {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}: {jo}");
                     }
                     if (!whatIf) (universalTime ? universalTimeJsonSerializer : localTimeJsonSerializer).Serialize(jtw, jo);
                     if (++i % 10000 == 0)
@@ -4800,7 +4800,7 @@ namespace FolioConsoleApplication
                     if (validate)
                     {
                         var l = js.Validate(jo);
-                        if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"Configuration {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"Configuration {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
+                        if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"Configuration {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"Configuration {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}: {jo}");
                     }
                     if (api)
                     {
@@ -4851,7 +4851,7 @@ namespace FolioConsoleApplication
                     if (validate)
                     {
                         var l = js.Validate(jo);
-                        if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"Configuration {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"Configuration {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
+                        if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"Configuration {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"Configuration {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}: {jo}");
                     }
                     if (!whatIf) (universalTime ? universalTimeJsonSerializer : localTimeJsonSerializer).Serialize(jtw, jo);
                     if (++i % 10000 == 0)
@@ -4939,7 +4939,7 @@ namespace FolioConsoleApplication
                     if (validate)
                     {
                         var l = js.Validate(jo);
-                        if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"Contact {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"Contact {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
+                        if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"Contact {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"Contact {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}: {jo}");
                     }
                     if (api)
                     {
@@ -4990,7 +4990,7 @@ namespace FolioConsoleApplication
                     if (validate)
                     {
                         var l = js.Validate(jo);
-                        if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"Contact {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"Contact {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
+                        if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"Contact {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"Contact {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}: {jo}");
                     }
                     if (!whatIf) (universalTime ? universalTimeJsonSerializer : localTimeJsonSerializer).Serialize(jtw, jo);
                     if (++i % 10000 == 0)
@@ -5078,7 +5078,7 @@ namespace FolioConsoleApplication
                     if (validate)
                     {
                         var l = js.Validate(jo);
-                        if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"ContributorNameType {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"ContributorNameType {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
+                        if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"ContributorNameType {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"ContributorNameType {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}: {jo}");
                     }
                     if (api)
                     {
@@ -5129,7 +5129,7 @@ namespace FolioConsoleApplication
                     if (validate)
                     {
                         var l = js.Validate(jo);
-                        if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"ContributorNameType {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"ContributorNameType {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
+                        if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"ContributorNameType {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"ContributorNameType {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}: {jo}");
                     }
                     if (!whatIf) (universalTime ? universalTimeJsonSerializer : localTimeJsonSerializer).Serialize(jtw, jo);
                     if (++i % 10000 == 0)
@@ -5217,7 +5217,7 @@ namespace FolioConsoleApplication
                     if (validate)
                     {
                         var l = js.Validate(jo);
-                        if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"ContributorType {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"ContributorType {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
+                        if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"ContributorType {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"ContributorType {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}: {jo}");
                     }
                     if (api)
                     {
@@ -5268,7 +5268,7 @@ namespace FolioConsoleApplication
                     if (validate)
                     {
                         var l = js.Validate(jo);
-                        if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"ContributorType {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"ContributorType {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
+                        if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"ContributorType {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"ContributorType {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}: {jo}");
                     }
                     if (!whatIf) (universalTime ? universalTimeJsonSerializer : localTimeJsonSerializer).Serialize(jtw, jo);
                     if (++i % 10000 == 0)
@@ -5356,7 +5356,7 @@ namespace FolioConsoleApplication
                     if (validate)
                     {
                         var l = js.Validate(jo);
-                        if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"CustomField {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"CustomField {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
+                        if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"CustomField {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"CustomField {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}: {jo}");
                     }
                     if (api)
                     {
@@ -5407,7 +5407,7 @@ namespace FolioConsoleApplication
                     if (validate)
                     {
                         var l = js.Validate(jo);
-                        if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"CustomField {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"CustomField {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
+                        if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"CustomField {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"CustomField {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}: {jo}");
                     }
                     if (!whatIf) (universalTime ? universalTimeJsonSerializer : localTimeJsonSerializer).Serialize(jtw, jo);
                     if (++i % 10000 == 0)
@@ -5495,7 +5495,7 @@ namespace FolioConsoleApplication
                     if (validate)
                     {
                         var l = js.Validate(jo);
-                        if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"Department {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"Department {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
+                        if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"Department {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"Department {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}: {jo}");
                     }
                     if (api)
                     {
@@ -5546,7 +5546,7 @@ namespace FolioConsoleApplication
                     if (validate)
                     {
                         var l = js.Validate(jo);
-                        if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"Department {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"Department {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
+                        if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"Department {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"Department {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}: {jo}");
                     }
                     if (!whatIf) (universalTime ? universalTimeJsonSerializer : localTimeJsonSerializer).Serialize(jtw, jo);
                     if (++i % 10000 == 0)
@@ -5621,7 +5621,7 @@ namespace FolioConsoleApplication
                     if (validate)
                     {
                         var l = js.Validate(jo);
-                        if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"Document {jo["documentMetadata.id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"Document {jo["documentMetadata.id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
+                        if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"Document {jo["documentMetadata.id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"Document {jo["documentMetadata.id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}: {jo}");
                     }
                     if (api)
                     {
@@ -5666,7 +5666,7 @@ namespace FolioConsoleApplication
                     if (validate)
                     {
                         var l = js.Validate(jo);
-                        if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"Document {jo["documentMetadata.id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"Document {jo["documentMetadata.id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
+                        if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"Document {jo["documentMetadata.id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"Document {jo["documentMetadata.id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}: {jo}");
                     }
                     if (!whatIf) (universalTime ? universalTimeJsonSerializer : localTimeJsonSerializer).Serialize(jtw, jo);
                     if (++i % 10000 == 0)
@@ -5754,7 +5754,7 @@ namespace FolioConsoleApplication
                     if (validate)
                     {
                         var l = js.Validate(jo);
-                        if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"ElectronicAccessRelationship {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"ElectronicAccessRelationship {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
+                        if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"ElectronicAccessRelationship {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"ElectronicAccessRelationship {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}: {jo}");
                     }
                     if (api)
                     {
@@ -5805,7 +5805,7 @@ namespace FolioConsoleApplication
                     if (validate)
                     {
                         var l = js.Validate(jo);
-                        if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"ElectronicAccessRelationship {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"ElectronicAccessRelationship {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
+                        if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"ElectronicAccessRelationship {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"ElectronicAccessRelationship {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}: {jo}");
                     }
                     if (!whatIf) (universalTime ? universalTimeJsonSerializer : localTimeJsonSerializer).Serialize(jtw, jo);
                     if (++i % 10000 == 0)
@@ -5893,7 +5893,7 @@ namespace FolioConsoleApplication
                     if (validate)
                     {
                         var l = js.Validate(jo);
-                        if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"ExpenseClass {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"ExpenseClass {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
+                        if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"ExpenseClass {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"ExpenseClass {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}: {jo}");
                     }
                     if (api)
                     {
@@ -5944,7 +5944,7 @@ namespace FolioConsoleApplication
                     if (validate)
                     {
                         var l = js.Validate(jo);
-                        if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"ExpenseClass {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"ExpenseClass {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
+                        if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"ExpenseClass {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"ExpenseClass {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}: {jo}");
                     }
                     if (!whatIf) (universalTime ? universalTimeJsonSerializer : localTimeJsonSerializer).Serialize(jtw, jo);
                     if (++i % 10000 == 0)
@@ -6019,7 +6019,7 @@ namespace FolioConsoleApplication
                     if (validate)
                     {
                         var l = js.Validate(jo);
-                        if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"ExportConfigCredential {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"ExportConfigCredential {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
+                        if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"ExportConfigCredential {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"ExportConfigCredential {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}: {jo}");
                     }
                     if (api)
                     {
@@ -6064,7 +6064,7 @@ namespace FolioConsoleApplication
                     if (validate)
                     {
                         var l = js.Validate(jo);
-                        if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"ExportConfigCredential {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"ExportConfigCredential {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
+                        if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"ExportConfigCredential {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"ExportConfigCredential {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}: {jo}");
                     }
                     if (!whatIf) (universalTime ? universalTimeJsonSerializer : localTimeJsonSerializer).Serialize(jtw, jo);
                     if (++i % 10000 == 0)
@@ -6152,7 +6152,7 @@ namespace FolioConsoleApplication
                     if (validate)
                     {
                         var l = js.Validate(jo);
-                        if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"Fee {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"Fee {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
+                        if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"Fee {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"Fee {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}: {jo}");
                     }
                     if (api)
                     {
@@ -6203,7 +6203,7 @@ namespace FolioConsoleApplication
                     if (validate)
                     {
                         var l = js.Validate(jo);
-                        if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"Fee {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"Fee {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
+                        if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"Fee {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"Fee {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}: {jo}");
                     }
                     if (!whatIf) (universalTime ? universalTimeJsonSerializer : localTimeJsonSerializer).Serialize(jtw, jo);
                     if (++i % 10000 == 0)
@@ -6291,7 +6291,7 @@ namespace FolioConsoleApplication
                     if (validate)
                     {
                         var l = js.Validate(jo);
-                        if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"FeeType {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"FeeType {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
+                        if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"FeeType {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"FeeType {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}: {jo}");
                     }
                     if (api)
                     {
@@ -6342,7 +6342,7 @@ namespace FolioConsoleApplication
                     if (validate)
                     {
                         var l = js.Validate(jo);
-                        if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"FeeType {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"FeeType {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
+                        if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"FeeType {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"FeeType {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}: {jo}");
                     }
                     if (!whatIf) (universalTime ? universalTimeJsonSerializer : localTimeJsonSerializer).Serialize(jtw, jo);
                     if (++i % 10000 == 0)
@@ -6430,7 +6430,7 @@ namespace FolioConsoleApplication
                     if (validate)
                     {
                         var l = js.Validate(jo);
-                        if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"FinanceGroup {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"FinanceGroup {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
+                        if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"FinanceGroup {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"FinanceGroup {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}: {jo}");
                     }
                     if (api)
                     {
@@ -6481,7 +6481,7 @@ namespace FolioConsoleApplication
                     if (validate)
                     {
                         var l = js.Validate(jo);
-                        if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"FinanceGroup {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"FinanceGroup {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
+                        if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"FinanceGroup {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"FinanceGroup {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}: {jo}");
                     }
                     if (!whatIf) (universalTime ? universalTimeJsonSerializer : localTimeJsonSerializer).Serialize(jtw, jo);
                     if (++i % 10000 == 0)
@@ -6569,7 +6569,7 @@ namespace FolioConsoleApplication
                     if (validate)
                     {
                         var l = js.Validate(jo);
-                        if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"FiscalYear {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"FiscalYear {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
+                        if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"FiscalYear {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"FiscalYear {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}: {jo}");
                     }
                     if (api)
                     {
@@ -6620,7 +6620,7 @@ namespace FolioConsoleApplication
                     if (validate)
                     {
                         var l = js.Validate(jo);
-                        if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"FiscalYear {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"FiscalYear {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
+                        if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"FiscalYear {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"FiscalYear {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}: {jo}");
                     }
                     if (!whatIf) (universalTime ? universalTimeJsonSerializer : localTimeJsonSerializer).Serialize(jtw, jo);
                     if (++i % 10000 == 0)
@@ -6708,7 +6708,7 @@ namespace FolioConsoleApplication
                     if (validate)
                     {
                         var l = js.Validate(jo);
-                        if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"FixedDueDateSchedule {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"FixedDueDateSchedule {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
+                        if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"FixedDueDateSchedule {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"FixedDueDateSchedule {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}: {jo}");
                     }
                     if (api)
                     {
@@ -6759,7 +6759,7 @@ namespace FolioConsoleApplication
                     if (validate)
                     {
                         var l = js.Validate(jo);
-                        if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"FixedDueDateSchedule {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"FixedDueDateSchedule {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
+                        if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"FixedDueDateSchedule {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"FixedDueDateSchedule {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}: {jo}");
                     }
                     if (!whatIf) (universalTime ? universalTimeJsonSerializer : localTimeJsonSerializer).Serialize(jtw, jo);
                     if (++i % 10000 == 0)
@@ -6847,7 +6847,7 @@ namespace FolioConsoleApplication
                     if (validate)
                     {
                         var l = js.Validate(jo);
-                        if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"Fund {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"Fund {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
+                        if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"Fund {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"Fund {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}: {jo}");
                     }
                     if (api)
                     {
@@ -6898,7 +6898,7 @@ namespace FolioConsoleApplication
                     if (validate)
                     {
                         var l = js.Validate(jo);
-                        if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"Fund {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"Fund {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
+                        if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"Fund {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"Fund {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}: {jo}");
                     }
                     if (!whatIf) (universalTime ? universalTimeJsonSerializer : localTimeJsonSerializer).Serialize(jtw, jo);
                     if (++i % 10000 == 0)
@@ -6986,7 +6986,7 @@ namespace FolioConsoleApplication
                     if (validate)
                     {
                         var l = js.Validate(jo);
-                        if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"FundType {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"FundType {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
+                        if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"FundType {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"FundType {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}: {jo}");
                     }
                     if (api)
                     {
@@ -7037,7 +7037,7 @@ namespace FolioConsoleApplication
                     if (validate)
                     {
                         var l = js.Validate(jo);
-                        if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"FundType {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"FundType {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
+                        if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"FundType {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"FundType {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}: {jo}");
                     }
                     if (!whatIf) (universalTime ? universalTimeJsonSerializer : localTimeJsonSerializer).Serialize(jtw, jo);
                     if (++i % 10000 == 0)
@@ -7125,7 +7125,7 @@ namespace FolioConsoleApplication
                     if (validate)
                     {
                         var l = js.Validate(jo);
-                        if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"Group {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"Group {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
+                        if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"Group {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"Group {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}: {jo}");
                     }
                     if (api)
                     {
@@ -7176,7 +7176,7 @@ namespace FolioConsoleApplication
                     if (validate)
                     {
                         var l = js.Validate(jo);
-                        if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"Group {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"Group {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
+                        if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"Group {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"Group {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}: {jo}");
                     }
                     if (!whatIf) (universalTime ? universalTimeJsonSerializer : localTimeJsonSerializer).Serialize(jtw, jo);
                     if (++i % 10000 == 0)
@@ -7265,7 +7265,7 @@ namespace FolioConsoleApplication
                     if (validate)
                     {
                         var l = js.Validate(jo);
-                        if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"Holding {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"Holding {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
+                        if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"Holding {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"Holding {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}: {jo}");
                     }
                     if (api)
                     {
@@ -7319,7 +7319,7 @@ namespace FolioConsoleApplication
                     if (validate)
                     {
                         var l = js.Validate(jo);
-                        if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"Holding {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"Holding {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
+                        if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"Holding {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"Holding {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}: {jo}");
                     }
                     if (!whatIf) (universalTime ? universalTimeJsonSerializer : localTimeJsonSerializer).Serialize(jtw, jo);
                     if (++i % 10000 == 0)
@@ -7407,7 +7407,7 @@ namespace FolioConsoleApplication
                     if (validate)
                     {
                         var l = js.Validate(jo);
-                        if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"HoldingNoteType {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"HoldingNoteType {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
+                        if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"HoldingNoteType {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"HoldingNoteType {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}: {jo}");
                     }
                     if (api)
                     {
@@ -7458,7 +7458,7 @@ namespace FolioConsoleApplication
                     if (validate)
                     {
                         var l = js.Validate(jo);
-                        if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"HoldingNoteType {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"HoldingNoteType {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
+                        if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"HoldingNoteType {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"HoldingNoteType {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}: {jo}");
                     }
                     if (!whatIf) (universalTime ? universalTimeJsonSerializer : localTimeJsonSerializer).Serialize(jtw, jo);
                     if (++i % 10000 == 0)
@@ -7546,7 +7546,7 @@ namespace FolioConsoleApplication
                     if (validate)
                     {
                         var l = js.Validate(jo);
-                        if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"HoldingType {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"HoldingType {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
+                        if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"HoldingType {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"HoldingType {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}: {jo}");
                     }
                     if (api)
                     {
@@ -7597,7 +7597,7 @@ namespace FolioConsoleApplication
                     if (validate)
                     {
                         var l = js.Validate(jo);
-                        if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"HoldingType {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"HoldingType {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
+                        if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"HoldingType {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"HoldingType {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}: {jo}");
                     }
                     if (!whatIf) (universalTime ? universalTimeJsonSerializer : localTimeJsonSerializer).Serialize(jtw, jo);
                     if (++i % 10000 == 0)
@@ -7674,7 +7674,7 @@ namespace FolioConsoleApplication
                     if (validate)
                     {
                         var l = js.Validate(jo);
-                        if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"HridSetting {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"HridSetting {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
+                        if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"HridSetting {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"HridSetting {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}: {jo}");
                     }
                     if (api)
                     {
@@ -7725,7 +7725,7 @@ namespace FolioConsoleApplication
                     if (validate)
                     {
                         var l = js.Validate(jo);
-                        if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"HridSetting {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"HridSetting {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
+                        if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"HridSetting {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"HridSetting {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}: {jo}");
                     }
                     if (!whatIf) (universalTime ? universalTimeJsonSerializer : localTimeJsonSerializer).Serialize(jtw, jo);
                     if (++i % 10000 == 0)
@@ -7813,7 +7813,7 @@ namespace FolioConsoleApplication
                     if (validate)
                     {
                         var l = js.Validate(jo);
-                        if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"IdType {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"IdType {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
+                        if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"IdType {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"IdType {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}: {jo}");
                     }
                     if (api)
                     {
@@ -7864,7 +7864,7 @@ namespace FolioConsoleApplication
                     if (validate)
                     {
                         var l = js.Validate(jo);
-                        if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"IdType {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"IdType {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
+                        if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"IdType {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"IdType {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}: {jo}");
                     }
                     if (!whatIf) (universalTime ? universalTimeJsonSerializer : localTimeJsonSerializer).Serialize(jtw, jo);
                     if (++i % 10000 == 0)
@@ -7952,7 +7952,7 @@ namespace FolioConsoleApplication
                     if (validate)
                     {
                         var l = js.Validate(jo);
-                        if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"IllPolicy {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"IllPolicy {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
+                        if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"IllPolicy {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"IllPolicy {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}: {jo}");
                     }
                     if (api)
                     {
@@ -8003,7 +8003,7 @@ namespace FolioConsoleApplication
                     if (validate)
                     {
                         var l = js.Validate(jo);
-                        if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"IllPolicy {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"IllPolicy {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
+                        if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"IllPolicy {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"IllPolicy {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}: {jo}");
                     }
                     if (!whatIf) (universalTime ? universalTimeJsonSerializer : localTimeJsonSerializer).Serialize(jtw, jo);
                     if (++i % 10000 == 0)
@@ -8092,7 +8092,7 @@ namespace FolioConsoleApplication
                     if (validate)
                     {
                         var l = js.Validate(jo);
-                        if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"Instance {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"Instance {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
+                        if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"Instance {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"Instance {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}: {jo}");
                     }
                     if (api)
                     {
@@ -8146,7 +8146,7 @@ namespace FolioConsoleApplication
                     if (validate)
                     {
                         var l = js.Validate(jo);
-                        if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"Instance {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"Instance {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
+                        if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"Instance {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"Instance {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}: {jo}");
                     }
                     if (!whatIf) (universalTime ? universalTimeJsonSerializer : localTimeJsonSerializer).Serialize(jtw, jo);
                     if (++i % 10000 == 0)
@@ -8234,7 +8234,7 @@ namespace FolioConsoleApplication
                     if (validate)
                     {
                         var l = js.Validate(jo);
-                        if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"InstanceFormat {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"InstanceFormat {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
+                        if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"InstanceFormat {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"InstanceFormat {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}: {jo}");
                     }
                     if (api)
                     {
@@ -8285,7 +8285,7 @@ namespace FolioConsoleApplication
                     if (validate)
                     {
                         var l = js.Validate(jo);
-                        if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"InstanceFormat {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"InstanceFormat {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
+                        if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"InstanceFormat {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"InstanceFormat {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}: {jo}");
                     }
                     if (!whatIf) (universalTime ? universalTimeJsonSerializer : localTimeJsonSerializer).Serialize(jtw, jo);
                     if (++i % 10000 == 0)
@@ -8373,7 +8373,7 @@ namespace FolioConsoleApplication
                     if (validate)
                     {
                         var l = js.Validate(jo);
-                        if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"InstanceNoteType {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"InstanceNoteType {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
+                        if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"InstanceNoteType {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"InstanceNoteType {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}: {jo}");
                     }
                     if (api)
                     {
@@ -8424,7 +8424,7 @@ namespace FolioConsoleApplication
                     if (validate)
                     {
                         var l = js.Validate(jo);
-                        if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"InstanceNoteType {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"InstanceNoteType {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
+                        if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"InstanceNoteType {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"InstanceNoteType {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}: {jo}");
                     }
                     if (!whatIf) (universalTime ? universalTimeJsonSerializer : localTimeJsonSerializer).Serialize(jtw, jo);
                     if (++i % 10000 == 0)
@@ -8512,7 +8512,7 @@ namespace FolioConsoleApplication
                     if (validate)
                     {
                         var l = js.Validate(jo);
-                        if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"InstanceRelationship {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"InstanceRelationship {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
+                        if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"InstanceRelationship {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"InstanceRelationship {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}: {jo}");
                     }
                     if (api)
                     {
@@ -8563,7 +8563,7 @@ namespace FolioConsoleApplication
                     if (validate)
                     {
                         var l = js.Validate(jo);
-                        if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"InstanceRelationship {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"InstanceRelationship {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
+                        if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"InstanceRelationship {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"InstanceRelationship {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}: {jo}");
                     }
                     if (!whatIf) (universalTime ? universalTimeJsonSerializer : localTimeJsonSerializer).Serialize(jtw, jo);
                     if (++i % 10000 == 0)
@@ -8651,7 +8651,7 @@ namespace FolioConsoleApplication
                     if (validate)
                     {
                         var l = js.Validate(jo);
-                        if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"InstanceRelationshipType {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"InstanceRelationshipType {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
+                        if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"InstanceRelationshipType {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"InstanceRelationshipType {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}: {jo}");
                     }
                     if (api)
                     {
@@ -8702,7 +8702,7 @@ namespace FolioConsoleApplication
                     if (validate)
                     {
                         var l = js.Validate(jo);
-                        if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"InstanceRelationshipType {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"InstanceRelationshipType {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
+                        if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"InstanceRelationshipType {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"InstanceRelationshipType {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}: {jo}");
                     }
                     if (!whatIf) (universalTime ? universalTimeJsonSerializer : localTimeJsonSerializer).Serialize(jtw, jo);
                     if (++i % 10000 == 0)
@@ -8790,7 +8790,7 @@ namespace FolioConsoleApplication
                     if (validate)
                     {
                         var l = js.Validate(jo);
-                        if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"InstanceStatus {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"InstanceStatus {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
+                        if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"InstanceStatus {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"InstanceStatus {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}: {jo}");
                     }
                     if (api)
                     {
@@ -8841,7 +8841,7 @@ namespace FolioConsoleApplication
                     if (validate)
                     {
                         var l = js.Validate(jo);
-                        if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"InstanceStatus {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"InstanceStatus {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
+                        if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"InstanceStatus {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"InstanceStatus {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}: {jo}");
                     }
                     if (!whatIf) (universalTime ? universalTimeJsonSerializer : localTimeJsonSerializer).Serialize(jtw, jo);
                     if (++i % 10000 == 0)
@@ -8929,7 +8929,7 @@ namespace FolioConsoleApplication
                     if (validate)
                     {
                         var l = js.Validate(jo);
-                        if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"InstanceType {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"InstanceType {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
+                        if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"InstanceType {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"InstanceType {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}: {jo}");
                     }
                     if (api)
                     {
@@ -8980,7 +8980,7 @@ namespace FolioConsoleApplication
                     if (validate)
                     {
                         var l = js.Validate(jo);
-                        if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"InstanceType {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"InstanceType {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
+                        if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"InstanceType {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"InstanceType {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}: {jo}");
                     }
                     if (!whatIf) (universalTime ? universalTimeJsonSerializer : localTimeJsonSerializer).Serialize(jtw, jo);
                     if (++i % 10000 == 0)
@@ -9068,7 +9068,7 @@ namespace FolioConsoleApplication
                     if (validate)
                     {
                         var l = js.Validate(jo);
-                        if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"Institution {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"Institution {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
+                        if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"Institution {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"Institution {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}: {jo}");
                     }
                     if (api)
                     {
@@ -9119,7 +9119,7 @@ namespace FolioConsoleApplication
                     if (validate)
                     {
                         var l = js.Validate(jo);
-                        if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"Institution {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"Institution {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
+                        if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"Institution {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"Institution {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}: {jo}");
                     }
                     if (!whatIf) (universalTime ? universalTimeJsonSerializer : localTimeJsonSerializer).Serialize(jtw, jo);
                     if (++i % 10000 == 0)
@@ -9207,7 +9207,7 @@ namespace FolioConsoleApplication
                     if (validate)
                     {
                         var l = js.Validate(jo);
-                        if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"Interface {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"Interface {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
+                        if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"Interface {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"Interface {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}: {jo}");
                     }
                     if (api)
                     {
@@ -9258,7 +9258,7 @@ namespace FolioConsoleApplication
                     if (validate)
                     {
                         var l = js.Validate(jo);
-                        if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"Interface {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"Interface {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
+                        if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"Interface {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"Interface {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}: {jo}");
                     }
                     if (!whatIf) (universalTime ? universalTimeJsonSerializer : localTimeJsonSerializer).Serialize(jtw, jo);
                     if (++i % 10000 == 0)
@@ -9333,7 +9333,7 @@ namespace FolioConsoleApplication
                     if (validate)
                     {
                         var l = js.Validate(jo);
-                        if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"InterfaceCredential {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"InterfaceCredential {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
+                        if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"InterfaceCredential {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"InterfaceCredential {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}: {jo}");
                     }
                     if (api)
                     {
@@ -9378,7 +9378,7 @@ namespace FolioConsoleApplication
                     if (validate)
                     {
                         var l = js.Validate(jo);
-                        if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"InterfaceCredential {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"InterfaceCredential {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
+                        if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"InterfaceCredential {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"InterfaceCredential {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}: {jo}");
                     }
                     if (!whatIf) (universalTime ? universalTimeJsonSerializer : localTimeJsonSerializer).Serialize(jtw, jo);
                     if (++i % 10000 == 0)
@@ -9466,7 +9466,7 @@ namespace FolioConsoleApplication
                     if (validate)
                     {
                         var l = js.Validate(jo);
-                        if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"Invoice {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"Invoice {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
+                        if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"Invoice {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"Invoice {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}: {jo}");
                     }
                     if (api)
                     {
@@ -9517,7 +9517,7 @@ namespace FolioConsoleApplication
                     if (validate)
                     {
                         var l = js.Validate(jo);
-                        if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"Invoice {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"Invoice {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
+                        if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"Invoice {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"Invoice {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}: {jo}");
                     }
                     if (!whatIf) (universalTime ? universalTimeJsonSerializer : localTimeJsonSerializer).Serialize(jtw, jo);
                     if (++i % 10000 == 0)
@@ -9605,7 +9605,7 @@ namespace FolioConsoleApplication
                     if (validate)
                     {
                         var l = js.Validate(jo);
-                        if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"InvoiceItem {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"InvoiceItem {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
+                        if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"InvoiceItem {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"InvoiceItem {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}: {jo}");
                     }
                     if (api)
                     {
@@ -9656,7 +9656,7 @@ namespace FolioConsoleApplication
                     if (validate)
                     {
                         var l = js.Validate(jo);
-                        if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"InvoiceItem {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"InvoiceItem {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
+                        if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"InvoiceItem {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"InvoiceItem {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}: {jo}");
                     }
                     if (!whatIf) (universalTime ? universalTimeJsonSerializer : localTimeJsonSerializer).Serialize(jtw, jo);
                     if (++i % 10000 == 0)
@@ -9731,7 +9731,7 @@ namespace FolioConsoleApplication
                     if (validate)
                     {
                         var l = js.Validate(jo);
-                        if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"InvoiceTransactionSummary {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"InvoiceTransactionSummary {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
+                        if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"InvoiceTransactionSummary {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"InvoiceTransactionSummary {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}: {jo}");
                     }
                     if (api)
                     {
@@ -9776,7 +9776,7 @@ namespace FolioConsoleApplication
                     if (validate)
                     {
                         var l = js.Validate(jo);
-                        if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"InvoiceTransactionSummary {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"InvoiceTransactionSummary {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
+                        if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"InvoiceTransactionSummary {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"InvoiceTransactionSummary {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}: {jo}");
                     }
                     if (!whatIf) (universalTime ? universalTimeJsonSerializer : localTimeJsonSerializer).Serialize(jtw, jo);
                     if (++i % 10000 == 0)
@@ -9865,7 +9865,7 @@ namespace FolioConsoleApplication
                     if (validate)
                     {
                         var l = js.Validate(jo);
-                        if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"Item {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"Item {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
+                        if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"Item {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"Item {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}: {jo}");
                     }
                     if (api)
                     {
@@ -9919,7 +9919,7 @@ namespace FolioConsoleApplication
                     if (validate)
                     {
                         var l = js.Validate(jo);
-                        if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"Item {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"Item {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
+                        if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"Item {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"Item {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}: {jo}");
                     }
                     if (!whatIf) (universalTime ? universalTimeJsonSerializer : localTimeJsonSerializer).Serialize(jtw, jo);
                     if (++i % 10000 == 0)
@@ -10007,7 +10007,7 @@ namespace FolioConsoleApplication
                     if (validate)
                     {
                         var l = js.Validate(jo);
-                        if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"ItemDamagedStatus {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"ItemDamagedStatus {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
+                        if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"ItemDamagedStatus {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"ItemDamagedStatus {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}: {jo}");
                     }
                     if (api)
                     {
@@ -10058,7 +10058,7 @@ namespace FolioConsoleApplication
                     if (validate)
                     {
                         var l = js.Validate(jo);
-                        if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"ItemDamagedStatus {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"ItemDamagedStatus {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
+                        if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"ItemDamagedStatus {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"ItemDamagedStatus {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}: {jo}");
                     }
                     if (!whatIf) (universalTime ? universalTimeJsonSerializer : localTimeJsonSerializer).Serialize(jtw, jo);
                     if (++i % 10000 == 0)
@@ -10146,7 +10146,7 @@ namespace FolioConsoleApplication
                     if (validate)
                     {
                         var l = js.Validate(jo);
-                        if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"ItemNoteType {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"ItemNoteType {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
+                        if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"ItemNoteType {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"ItemNoteType {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}: {jo}");
                     }
                     if (api)
                     {
@@ -10197,7 +10197,7 @@ namespace FolioConsoleApplication
                     if (validate)
                     {
                         var l = js.Validate(jo);
-                        if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"ItemNoteType {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"ItemNoteType {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
+                        if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"ItemNoteType {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"ItemNoteType {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}: {jo}");
                     }
                     if (!whatIf) (universalTime ? universalTimeJsonSerializer : localTimeJsonSerializer).Serialize(jtw, jo);
                     if (++i % 10000 == 0)
@@ -10285,7 +10285,7 @@ namespace FolioConsoleApplication
                     if (validate)
                     {
                         var l = js.Validate(jo);
-                        if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"Ledger {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"Ledger {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
+                        if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"Ledger {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"Ledger {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}: {jo}");
                     }
                     if (api)
                     {
@@ -10336,7 +10336,7 @@ namespace FolioConsoleApplication
                     if (validate)
                     {
                         var l = js.Validate(jo);
-                        if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"Ledger {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"Ledger {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
+                        if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"Ledger {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"Ledger {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}: {jo}");
                     }
                     if (!whatIf) (universalTime ? universalTimeJsonSerializer : localTimeJsonSerializer).Serialize(jtw, jo);
                     if (++i % 10000 == 0)
@@ -10424,7 +10424,7 @@ namespace FolioConsoleApplication
                     if (validate)
                     {
                         var l = js.Validate(jo);
-                        if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"LedgerRollover {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"LedgerRollover {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
+                        if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"LedgerRollover {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"LedgerRollover {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}: {jo}");
                     }
                     if (api)
                     {
@@ -10475,7 +10475,7 @@ namespace FolioConsoleApplication
                     if (validate)
                     {
                         var l = js.Validate(jo);
-                        if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"LedgerRollover {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"LedgerRollover {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
+                        if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"LedgerRollover {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"LedgerRollover {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}: {jo}");
                     }
                     if (!whatIf) (universalTime ? universalTimeJsonSerializer : localTimeJsonSerializer).Serialize(jtw, jo);
                     if (++i % 10000 == 0)
@@ -10563,7 +10563,7 @@ namespace FolioConsoleApplication
                     if (validate)
                     {
                         var l = js.Validate(jo);
-                        if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"LedgerRolloverError {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"LedgerRolloverError {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
+                        if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"LedgerRolloverError {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"LedgerRolloverError {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}: {jo}");
                     }
                     if (api)
                     {
@@ -10614,7 +10614,7 @@ namespace FolioConsoleApplication
                     if (validate)
                     {
                         var l = js.Validate(jo);
-                        if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"LedgerRolloverError {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"LedgerRolloverError {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
+                        if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"LedgerRolloverError {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"LedgerRolloverError {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}: {jo}");
                     }
                     if (!whatIf) (universalTime ? universalTimeJsonSerializer : localTimeJsonSerializer).Serialize(jtw, jo);
                     if (++i % 10000 == 0)
@@ -10702,7 +10702,7 @@ namespace FolioConsoleApplication
                     if (validate)
                     {
                         var l = js.Validate(jo);
-                        if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"LedgerRolloverProgress {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"LedgerRolloverProgress {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
+                        if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"LedgerRolloverProgress {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"LedgerRolloverProgress {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}: {jo}");
                     }
                     if (api)
                     {
@@ -10753,7 +10753,7 @@ namespace FolioConsoleApplication
                     if (validate)
                     {
                         var l = js.Validate(jo);
-                        if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"LedgerRolloverProgress {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"LedgerRolloverProgress {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
+                        if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"LedgerRolloverProgress {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"LedgerRolloverProgress {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}: {jo}");
                     }
                     if (!whatIf) (universalTime ? universalTimeJsonSerializer : localTimeJsonSerializer).Serialize(jtw, jo);
                     if (++i % 10000 == 0)
@@ -10841,7 +10841,7 @@ namespace FolioConsoleApplication
                     if (validate)
                     {
                         var l = js.Validate(jo);
-                        if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"Library {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"Library {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
+                        if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"Library {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"Library {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}: {jo}");
                     }
                     if (api)
                     {
@@ -10892,7 +10892,7 @@ namespace FolioConsoleApplication
                     if (validate)
                     {
                         var l = js.Validate(jo);
-                        if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"Library {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"Library {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
+                        if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"Library {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"Library {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}: {jo}");
                     }
                     if (!whatIf) (universalTime ? universalTimeJsonSerializer : localTimeJsonSerializer).Serialize(jtw, jo);
                     if (++i % 10000 == 0)
@@ -10980,7 +10980,7 @@ namespace FolioConsoleApplication
                     if (validate)
                     {
                         var l = js.Validate(jo);
-                        if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"Loan {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"Loan {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
+                        if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"Loan {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"Loan {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}: {jo}");
                     }
                     if (api)
                     {
@@ -11031,7 +11031,7 @@ namespace FolioConsoleApplication
                     if (validate)
                     {
                         var l = js.Validate(jo);
-                        if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"Loan {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"Loan {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
+                        if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"Loan {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"Loan {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}: {jo}");
                     }
                     if (!whatIf) (universalTime ? universalTimeJsonSerializer : localTimeJsonSerializer).Serialize(jtw, jo);
                     if (++i % 10000 == 0)
@@ -11106,7 +11106,7 @@ namespace FolioConsoleApplication
                     if (validate)
                     {
                         var l = js.Validate(jo);
-                        if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"LoanEvent {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"LoanEvent {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
+                        if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"LoanEvent {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"LoanEvent {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}: {jo}");
                     }
                     if (api)
                     {
@@ -11151,7 +11151,7 @@ namespace FolioConsoleApplication
                     if (validate)
                     {
                         var l = js.Validate(jo);
-                        if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"LoanEvent {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"LoanEvent {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
+                        if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"LoanEvent {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"LoanEvent {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}: {jo}");
                     }
                     if (!whatIf) (universalTime ? universalTimeJsonSerializer : localTimeJsonSerializer).Serialize(jtw, jo);
                     if (++i % 10000 == 0)
@@ -11239,7 +11239,7 @@ namespace FolioConsoleApplication
                     if (validate)
                     {
                         var l = js.Validate(jo);
-                        if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"LoanPolicy {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"LoanPolicy {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
+                        if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"LoanPolicy {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"LoanPolicy {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}: {jo}");
                     }
                     if (api)
                     {
@@ -11290,7 +11290,7 @@ namespace FolioConsoleApplication
                     if (validate)
                     {
                         var l = js.Validate(jo);
-                        if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"LoanPolicy {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"LoanPolicy {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
+                        if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"LoanPolicy {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"LoanPolicy {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}: {jo}");
                     }
                     if (!whatIf) (universalTime ? universalTimeJsonSerializer : localTimeJsonSerializer).Serialize(jtw, jo);
                     if (++i % 10000 == 0)
@@ -11378,7 +11378,7 @@ namespace FolioConsoleApplication
                     if (validate)
                     {
                         var l = js.Validate(jo);
-                        if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"LoanType {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"LoanType {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
+                        if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"LoanType {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"LoanType {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}: {jo}");
                     }
                     if (api)
                     {
@@ -11429,7 +11429,7 @@ namespace FolioConsoleApplication
                     if (validate)
                     {
                         var l = js.Validate(jo);
-                        if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"LoanType {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"LoanType {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
+                        if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"LoanType {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"LoanType {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}: {jo}");
                     }
                     if (!whatIf) (universalTime ? universalTimeJsonSerializer : localTimeJsonSerializer).Serialize(jtw, jo);
                     if (++i % 10000 == 0)
@@ -11517,7 +11517,7 @@ namespace FolioConsoleApplication
                     if (validate)
                     {
                         var l = js.Validate(jo);
-                        if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"Location {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"Location {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
+                        if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"Location {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"Location {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}: {jo}");
                     }
                     if (api)
                     {
@@ -11568,7 +11568,7 @@ namespace FolioConsoleApplication
                     if (validate)
                     {
                         var l = js.Validate(jo);
-                        if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"Location {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"Location {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
+                        if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"Location {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"Location {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}: {jo}");
                     }
                     if (!whatIf) (universalTime ? universalTimeJsonSerializer : localTimeJsonSerializer).Serialize(jtw, jo);
                     if (++i % 10000 == 0)
@@ -11645,7 +11645,7 @@ namespace FolioConsoleApplication
                     if (validate)
                     {
                         var l = js.Validate(jo);
-                        if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"Login {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"Login {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
+                        if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"Login {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"Login {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}: {jo}");
                     }
                     if (api)
                     {
@@ -11696,7 +11696,7 @@ namespace FolioConsoleApplication
                     if (validate)
                     {
                         var l = js.Validate(jo);
-                        if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"Login {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"Login {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
+                        if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"Login {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"Login {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}: {jo}");
                     }
                     if (!whatIf) (universalTime ? universalTimeJsonSerializer : localTimeJsonSerializer).Serialize(jtw, jo);
                     if (++i % 10000 == 0)
@@ -11784,7 +11784,7 @@ namespace FolioConsoleApplication
                     if (validate)
                     {
                         var l = js.Validate(jo);
-                        if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"LostItemFeePolicy {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"LostItemFeePolicy {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
+                        if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"LostItemFeePolicy {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"LostItemFeePolicy {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}: {jo}");
                     }
                     if (api)
                     {
@@ -11835,7 +11835,7 @@ namespace FolioConsoleApplication
                     if (validate)
                     {
                         var l = js.Validate(jo);
-                        if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"LostItemFeePolicy {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"LostItemFeePolicy {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
+                        if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"LostItemFeePolicy {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"LostItemFeePolicy {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}: {jo}");
                     }
                     if (!whatIf) (universalTime ? universalTimeJsonSerializer : localTimeJsonSerializer).Serialize(jtw, jo);
                     if (++i % 10000 == 0)
@@ -11923,7 +11923,7 @@ namespace FolioConsoleApplication
                     if (validate)
                     {
                         var l = js.Validate(jo);
-                        if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"ManualBlockTemplate {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"ManualBlockTemplate {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
+                        if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"ManualBlockTemplate {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"ManualBlockTemplate {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}: {jo}");
                     }
                     if (api)
                     {
@@ -11974,7 +11974,7 @@ namespace FolioConsoleApplication
                     if (validate)
                     {
                         var l = js.Validate(jo);
-                        if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"ManualBlockTemplate {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"ManualBlockTemplate {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
+                        if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"ManualBlockTemplate {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"ManualBlockTemplate {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}: {jo}");
                     }
                     if (!whatIf) (universalTime ? universalTimeJsonSerializer : localTimeJsonSerializer).Serialize(jtw, jo);
                     if (++i % 10000 == 0)
@@ -12062,7 +12062,7 @@ namespace FolioConsoleApplication
                     if (validate)
                     {
                         var l = js.Validate(jo);
-                        if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"MaterialType {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"MaterialType {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
+                        if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"MaterialType {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"MaterialType {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}: {jo}");
                     }
                     if (api)
                     {
@@ -12113,7 +12113,7 @@ namespace FolioConsoleApplication
                     if (validate)
                     {
                         var l = js.Validate(jo);
-                        if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"MaterialType {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"MaterialType {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
+                        if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"MaterialType {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"MaterialType {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}: {jo}");
                     }
                     if (!whatIf) (universalTime ? universalTimeJsonSerializer : localTimeJsonSerializer).Serialize(jtw, jo);
                     if (++i % 10000 == 0)
@@ -12201,7 +12201,7 @@ namespace FolioConsoleApplication
                     if (validate)
                     {
                         var l = js.Validate(jo);
-                        if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"ModeOfIssuance {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"ModeOfIssuance {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
+                        if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"ModeOfIssuance {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"ModeOfIssuance {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}: {jo}");
                     }
                     if (api)
                     {
@@ -12252,7 +12252,7 @@ namespace FolioConsoleApplication
                     if (validate)
                     {
                         var l = js.Validate(jo);
-                        if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"ModeOfIssuance {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"ModeOfIssuance {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
+                        if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"ModeOfIssuance {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"ModeOfIssuance {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}: {jo}");
                     }
                     if (!whatIf) (universalTime ? universalTimeJsonSerializer : localTimeJsonSerializer).Serialize(jtw, jo);
                     if (++i % 10000 == 0)
@@ -12340,7 +12340,7 @@ namespace FolioConsoleApplication
                     if (validate)
                     {
                         var l = js.Validate(jo);
-                        if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"NatureOfContentTerm {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"NatureOfContentTerm {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
+                        if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"NatureOfContentTerm {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"NatureOfContentTerm {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}: {jo}");
                     }
                     if (api)
                     {
@@ -12391,7 +12391,7 @@ namespace FolioConsoleApplication
                     if (validate)
                     {
                         var l = js.Validate(jo);
-                        if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"NatureOfContentTerm {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"NatureOfContentTerm {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
+                        if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"NatureOfContentTerm {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"NatureOfContentTerm {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}: {jo}");
                     }
                     if (!whatIf) (universalTime ? universalTimeJsonSerializer : localTimeJsonSerializer).Serialize(jtw, jo);
                     if (++i % 10000 == 0)
@@ -12479,7 +12479,7 @@ namespace FolioConsoleApplication
                     if (validate)
                     {
                         var l = js.Validate(jo);
-                        if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"Order {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"Order {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
+                        if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"Order {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"Order {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}: {jo}");
                     }
                     if (api)
                     {
@@ -12530,7 +12530,7 @@ namespace FolioConsoleApplication
                     if (validate)
                     {
                         var l = js.Validate(jo);
-                        if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"Order {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"Order {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
+                        if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"Order {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"Order {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}: {jo}");
                     }
                     if (!whatIf) (universalTime ? universalTimeJsonSerializer : localTimeJsonSerializer).Serialize(jtw, jo);
                     if (++i % 10000 == 0)
@@ -12618,7 +12618,7 @@ namespace FolioConsoleApplication
                     if (validate)
                     {
                         var l = js.Validate(jo);
-                        if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"OrderInvoice {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"OrderInvoice {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
+                        if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"OrderInvoice {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"OrderInvoice {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}: {jo}");
                     }
                     if (api)
                     {
@@ -12669,7 +12669,7 @@ namespace FolioConsoleApplication
                     if (validate)
                     {
                         var l = js.Validate(jo);
-                        if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"OrderInvoice {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"OrderInvoice {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
+                        if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"OrderInvoice {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"OrderInvoice {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}: {jo}");
                     }
                     if (!whatIf) (universalTime ? universalTimeJsonSerializer : localTimeJsonSerializer).Serialize(jtw, jo);
                     if (++i % 10000 == 0)
@@ -12757,7 +12757,7 @@ namespace FolioConsoleApplication
                     if (validate)
                     {
                         var l = js.Validate(jo);
-                        if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"OrderItem {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"OrderItem {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
+                        if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"OrderItem {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"OrderItem {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}: {jo}");
                     }
                     if (api)
                     {
@@ -12808,7 +12808,7 @@ namespace FolioConsoleApplication
                     if (validate)
                     {
                         var l = js.Validate(jo);
-                        if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"OrderItem {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"OrderItem {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
+                        if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"OrderItem {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"OrderItem {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}: {jo}");
                     }
                     if (!whatIf) (universalTime ? universalTimeJsonSerializer : localTimeJsonSerializer).Serialize(jtw, jo);
                     if (++i % 10000 == 0)
@@ -12896,7 +12896,7 @@ namespace FolioConsoleApplication
                     if (validate)
                     {
                         var l = js.Validate(jo);
-                        if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"OrderTemplate {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"OrderTemplate {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
+                        if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"OrderTemplate {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"OrderTemplate {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}: {jo}");
                     }
                     if (api)
                     {
@@ -12947,7 +12947,7 @@ namespace FolioConsoleApplication
                     if (validate)
                     {
                         var l = js.Validate(jo);
-                        if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"OrderTemplate {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"OrderTemplate {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
+                        if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"OrderTemplate {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"OrderTemplate {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}: {jo}");
                     }
                     if (!whatIf) (universalTime ? universalTimeJsonSerializer : localTimeJsonSerializer).Serialize(jtw, jo);
                     if (++i % 10000 == 0)
@@ -13024,7 +13024,7 @@ namespace FolioConsoleApplication
                     if (validate)
                     {
                         var l = js.Validate(jo);
-                        if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"OrderTransactionSummary {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"OrderTransactionSummary {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
+                        if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"OrderTransactionSummary {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"OrderTransactionSummary {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}: {jo}");
                     }
                     if (api)
                     {
@@ -13075,7 +13075,7 @@ namespace FolioConsoleApplication
                     if (validate)
                     {
                         var l = js.Validate(jo);
-                        if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"OrderTransactionSummary {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"OrderTransactionSummary {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
+                        if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"OrderTransactionSummary {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"OrderTransactionSummary {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}: {jo}");
                     }
                     if (!whatIf) (universalTime ? universalTimeJsonSerializer : localTimeJsonSerializer).Serialize(jtw, jo);
                     if (++i % 10000 == 0)
@@ -13163,7 +13163,7 @@ namespace FolioConsoleApplication
                     if (validate)
                     {
                         var l = js.Validate(jo);
-                        if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"Organization {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"Organization {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
+                        if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"Organization {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"Organization {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}: {jo}");
                     }
                     if (api)
                     {
@@ -13214,7 +13214,7 @@ namespace FolioConsoleApplication
                     if (validate)
                     {
                         var l = js.Validate(jo);
-                        if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"Organization {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"Organization {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
+                        if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"Organization {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"Organization {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}: {jo}");
                     }
                     if (!whatIf) (universalTime ? universalTimeJsonSerializer : localTimeJsonSerializer).Serialize(jtw, jo);
                     if (++i % 10000 == 0)
@@ -13302,7 +13302,7 @@ namespace FolioConsoleApplication
                     if (validate)
                     {
                         var l = js.Validate(jo);
-                        if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"OverdueFinePolicy {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"OverdueFinePolicy {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
+                        if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"OverdueFinePolicy {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"OverdueFinePolicy {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}: {jo}");
                     }
                     if (api)
                     {
@@ -13353,7 +13353,7 @@ namespace FolioConsoleApplication
                     if (validate)
                     {
                         var l = js.Validate(jo);
-                        if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"OverdueFinePolicy {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"OverdueFinePolicy {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
+                        if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"OverdueFinePolicy {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"OverdueFinePolicy {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}: {jo}");
                     }
                     if (!whatIf) (universalTime ? universalTimeJsonSerializer : localTimeJsonSerializer).Serialize(jtw, jo);
                     if (++i % 10000 == 0)
@@ -13441,7 +13441,7 @@ namespace FolioConsoleApplication
                     if (validate)
                     {
                         var l = js.Validate(jo);
-                        if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"Owner {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"Owner {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
+                        if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"Owner {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"Owner {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}: {jo}");
                     }
                     if (api)
                     {
@@ -13492,7 +13492,7 @@ namespace FolioConsoleApplication
                     if (validate)
                     {
                         var l = js.Validate(jo);
-                        if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"Owner {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"Owner {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
+                        if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"Owner {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"Owner {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}: {jo}");
                     }
                     if (!whatIf) (universalTime ? universalTimeJsonSerializer : localTimeJsonSerializer).Serialize(jtw, jo);
                     if (++i % 10000 == 0)
@@ -13580,7 +13580,7 @@ namespace FolioConsoleApplication
                     if (validate)
                     {
                         var l = js.Validate(jo);
-                        if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"PatronActionSession {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"PatronActionSession {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
+                        if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"PatronActionSession {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"PatronActionSession {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}: {jo}");
                     }
                     if (api)
                     {
@@ -13631,7 +13631,7 @@ namespace FolioConsoleApplication
                     if (validate)
                     {
                         var l = js.Validate(jo);
-                        if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"PatronActionSession {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"PatronActionSession {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
+                        if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"PatronActionSession {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"PatronActionSession {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}: {jo}");
                     }
                     if (!whatIf) (universalTime ? universalTimeJsonSerializer : localTimeJsonSerializer).Serialize(jtw, jo);
                     if (++i % 10000 == 0)
@@ -13719,7 +13719,7 @@ namespace FolioConsoleApplication
                     if (validate)
                     {
                         var l = js.Validate(jo);
-                        if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"PatronNoticePolicy {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"PatronNoticePolicy {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
+                        if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"PatronNoticePolicy {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"PatronNoticePolicy {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}: {jo}");
                     }
                     if (api)
                     {
@@ -13770,7 +13770,7 @@ namespace FolioConsoleApplication
                     if (validate)
                     {
                         var l = js.Validate(jo);
-                        if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"PatronNoticePolicy {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"PatronNoticePolicy {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
+                        if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"PatronNoticePolicy {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"PatronNoticePolicy {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}: {jo}");
                     }
                     if (!whatIf) (universalTime ? universalTimeJsonSerializer : localTimeJsonSerializer).Serialize(jtw, jo);
                     if (++i % 10000 == 0)
@@ -13858,7 +13858,7 @@ namespace FolioConsoleApplication
                     if (validate)
                     {
                         var l = js.Validate(jo);
-                        if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"Payment {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"Payment {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
+                        if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"Payment {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"Payment {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}: {jo}");
                     }
                     if (api)
                     {
@@ -13909,7 +13909,7 @@ namespace FolioConsoleApplication
                     if (validate)
                     {
                         var l = js.Validate(jo);
-                        if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"Payment {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"Payment {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
+                        if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"Payment {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"Payment {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}: {jo}");
                     }
                     if (!whatIf) (universalTime ? universalTimeJsonSerializer : localTimeJsonSerializer).Serialize(jtw, jo);
                     if (++i % 10000 == 0)
@@ -13997,7 +13997,7 @@ namespace FolioConsoleApplication
                     if (validate)
                     {
                         var l = js.Validate(jo);
-                        if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"PaymentMethod {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"PaymentMethod {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
+                        if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"PaymentMethod {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"PaymentMethod {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}: {jo}");
                     }
                     if (api)
                     {
@@ -14048,7 +14048,7 @@ namespace FolioConsoleApplication
                     if (validate)
                     {
                         var l = js.Validate(jo);
-                        if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"PaymentMethod {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"PaymentMethod {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
+                        if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"PaymentMethod {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"PaymentMethod {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}: {jo}");
                     }
                     if (!whatIf) (universalTime ? universalTimeJsonSerializer : localTimeJsonSerializer).Serialize(jtw, jo);
                     if (++i % 10000 == 0)
@@ -14136,7 +14136,7 @@ namespace FolioConsoleApplication
                     if (validate)
                     {
                         var l = js.Validate(jo);
-                        if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"Permission {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"Permission {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
+                        if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"Permission {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"Permission {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}: {jo}");
                     }
                     if (api)
                     {
@@ -14187,7 +14187,7 @@ namespace FolioConsoleApplication
                     if (validate)
                     {
                         var l = js.Validate(jo);
-                        if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"Permission {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"Permission {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
+                        if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"Permission {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"Permission {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}: {jo}");
                     }
                     if (!whatIf) (universalTime ? universalTimeJsonSerializer : localTimeJsonSerializer).Serialize(jtw, jo);
                     if (++i % 10000 == 0)
@@ -14275,7 +14275,7 @@ namespace FolioConsoleApplication
                     if (validate)
                     {
                         var l = js.Validate(jo);
-                        if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"PermissionsUser {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"PermissionsUser {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
+                        if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"PermissionsUser {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"PermissionsUser {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}: {jo}");
                     }
                     if (api)
                     {
@@ -14326,7 +14326,7 @@ namespace FolioConsoleApplication
                     if (validate)
                     {
                         var l = js.Validate(jo);
-                        if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"PermissionsUser {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"PermissionsUser {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
+                        if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"PermissionsUser {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"PermissionsUser {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}: {jo}");
                     }
                     if (!whatIf) (universalTime ? universalTimeJsonSerializer : localTimeJsonSerializer).Serialize(jtw, jo);
                     if (++i % 10000 == 0)
@@ -14414,7 +14414,7 @@ namespace FolioConsoleApplication
                     if (validate)
                     {
                         var l = js.Validate(jo);
-                        if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"PrecedingSucceedingTitle {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"PrecedingSucceedingTitle {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
+                        if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"PrecedingSucceedingTitle {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"PrecedingSucceedingTitle {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}: {jo}");
                     }
                     if (api)
                     {
@@ -14465,7 +14465,7 @@ namespace FolioConsoleApplication
                     if (validate)
                     {
                         var l = js.Validate(jo);
-                        if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"PrecedingSucceedingTitle {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"PrecedingSucceedingTitle {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
+                        if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"PrecedingSucceedingTitle {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"PrecedingSucceedingTitle {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}: {jo}");
                     }
                     if (!whatIf) (universalTime ? universalTimeJsonSerializer : localTimeJsonSerializer).Serialize(jtw, jo);
                     if (++i % 10000 == 0)
@@ -14553,7 +14553,7 @@ namespace FolioConsoleApplication
                     if (validate)
                     {
                         var l = js.Validate(jo);
-                        if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"Prefix {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"Prefix {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
+                        if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"Prefix {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"Prefix {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}: {jo}");
                     }
                     if (api)
                     {
@@ -14604,7 +14604,7 @@ namespace FolioConsoleApplication
                     if (validate)
                     {
                         var l = js.Validate(jo);
-                        if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"Prefix {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"Prefix {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
+                        if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"Prefix {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"Prefix {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}: {jo}");
                     }
                     if (!whatIf) (universalTime ? universalTimeJsonSerializer : localTimeJsonSerializer).Serialize(jtw, jo);
                     if (++i % 10000 == 0)
@@ -14692,7 +14692,7 @@ namespace FolioConsoleApplication
                     if (validate)
                     {
                         var l = js.Validate(jo);
-                        if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"Proxy {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"Proxy {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
+                        if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"Proxy {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"Proxy {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}: {jo}");
                     }
                     if (api)
                     {
@@ -14743,7 +14743,7 @@ namespace FolioConsoleApplication
                     if (validate)
                     {
                         var l = js.Validate(jo);
-                        if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"Proxy {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"Proxy {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
+                        if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"Proxy {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"Proxy {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}: {jo}");
                     }
                     if (!whatIf) (universalTime ? universalTimeJsonSerializer : localTimeJsonSerializer).Serialize(jtw, jo);
                     if (++i % 10000 == 0)
@@ -14831,7 +14831,7 @@ namespace FolioConsoleApplication
                     if (validate)
                     {
                         var l = js.Validate(jo);
-                        if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"Receiving {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"Receiving {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
+                        if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"Receiving {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"Receiving {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}: {jo}");
                     }
                     if (api)
                     {
@@ -14882,7 +14882,7 @@ namespace FolioConsoleApplication
                     if (validate)
                     {
                         var l = js.Validate(jo);
-                        if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"Receiving {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"Receiving {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
+                        if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"Receiving {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"Receiving {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}: {jo}");
                     }
                     if (!whatIf) (universalTime ? universalTimeJsonSerializer : localTimeJsonSerializer).Serialize(jtw, jo);
                     if (++i % 10000 == 0)
@@ -14971,7 +14971,7 @@ namespace FolioConsoleApplication
                     if (validate)
                     {
                         var l = js.Validate(jo);
-                        if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"Record {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"Record {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
+                        if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"Record {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"Record {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}: {jo}");
                     }
                     if (api)
                     {
@@ -15063,7 +15063,7 @@ namespace FolioConsoleApplication
                     if (validate)
                     {
                         var l = js.Validate(jo);
-                        if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"Record {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"Record {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
+                        if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"Record {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"Record {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}: {jo}");
                     }
                     if (!whatIf) (universalTime ? universalTimeJsonSerializer : localTimeJsonSerializer).Serialize(jtw, jo);
                     if (++i % 10000 == 0)
@@ -15151,7 +15151,7 @@ namespace FolioConsoleApplication
                     if (validate)
                     {
                         var l = js.Validate(jo);
-                        if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"RefundReason {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"RefundReason {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
+                        if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"RefundReason {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"RefundReason {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}: {jo}");
                     }
                     if (api)
                     {
@@ -15202,7 +15202,7 @@ namespace FolioConsoleApplication
                     if (validate)
                     {
                         var l = js.Validate(jo);
-                        if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"RefundReason {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"RefundReason {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
+                        if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"RefundReason {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"RefundReason {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}: {jo}");
                     }
                     if (!whatIf) (universalTime ? universalTimeJsonSerializer : localTimeJsonSerializer).Serialize(jtw, jo);
                     if (++i % 10000 == 0)
@@ -15290,7 +15290,7 @@ namespace FolioConsoleApplication
                     if (validate)
                     {
                         var l = js.Validate(jo);
-                        if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"ReportingCode {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"ReportingCode {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
+                        if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"ReportingCode {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"ReportingCode {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}: {jo}");
                     }
                     if (api)
                     {
@@ -15341,7 +15341,7 @@ namespace FolioConsoleApplication
                     if (validate)
                     {
                         var l = js.Validate(jo);
-                        if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"ReportingCode {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"ReportingCode {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
+                        if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"ReportingCode {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"ReportingCode {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}: {jo}");
                     }
                     if (!whatIf) (universalTime ? universalTimeJsonSerializer : localTimeJsonSerializer).Serialize(jtw, jo);
                     if (++i % 10000 == 0)
@@ -15429,7 +15429,7 @@ namespace FolioConsoleApplication
                     if (validate)
                     {
                         var l = js.Validate(jo);
-                        if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"Request {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"Request {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
+                        if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"Request {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"Request {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}: {jo}");
                     }
                     if (api)
                     {
@@ -15480,7 +15480,7 @@ namespace FolioConsoleApplication
                     if (validate)
                     {
                         var l = js.Validate(jo);
-                        if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"Request {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"Request {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
+                        if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"Request {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"Request {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}: {jo}");
                     }
                     if (!whatIf) (universalTime ? universalTimeJsonSerializer : localTimeJsonSerializer).Serialize(jtw, jo);
                     if (++i % 10000 == 0)
@@ -15568,7 +15568,7 @@ namespace FolioConsoleApplication
                     if (validate)
                     {
                         var l = js.Validate(jo);
-                        if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"RequestPolicy {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"RequestPolicy {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
+                        if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"RequestPolicy {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"RequestPolicy {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}: {jo}");
                     }
                     if (api)
                     {
@@ -15619,7 +15619,7 @@ namespace FolioConsoleApplication
                     if (validate)
                     {
                         var l = js.Validate(jo);
-                        if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"RequestPolicy {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"RequestPolicy {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
+                        if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"RequestPolicy {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"RequestPolicy {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}: {jo}");
                     }
                     if (!whatIf) (universalTime ? universalTimeJsonSerializer : localTimeJsonSerializer).Serialize(jtw, jo);
                     if (++i % 10000 == 0)
@@ -15707,7 +15707,7 @@ namespace FolioConsoleApplication
                     if (validate)
                     {
                         var l = js.Validate(jo);
-                        if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"ScheduledNotice {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"ScheduledNotice {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
+                        if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"ScheduledNotice {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"ScheduledNotice {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}: {jo}");
                     }
                     if (api)
                     {
@@ -15758,7 +15758,7 @@ namespace FolioConsoleApplication
                     if (validate)
                     {
                         var l = js.Validate(jo);
-                        if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"ScheduledNotice {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"ScheduledNotice {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
+                        if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"ScheduledNotice {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"ScheduledNotice {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}: {jo}");
                     }
                     if (!whatIf) (universalTime ? universalTimeJsonSerializer : localTimeJsonSerializer).Serialize(jtw, jo);
                     if (++i % 10000 == 0)
@@ -15846,7 +15846,7 @@ namespace FolioConsoleApplication
                     if (validate)
                     {
                         var l = js.Validate(jo);
-                        if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"ServicePoint {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"ServicePoint {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
+                        if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"ServicePoint {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"ServicePoint {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}: {jo}");
                     }
                     if (api)
                     {
@@ -15897,7 +15897,7 @@ namespace FolioConsoleApplication
                     if (validate)
                     {
                         var l = js.Validate(jo);
-                        if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"ServicePoint {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"ServicePoint {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
+                        if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"ServicePoint {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"ServicePoint {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}: {jo}");
                     }
                     if (!whatIf) (universalTime ? universalTimeJsonSerializer : localTimeJsonSerializer).Serialize(jtw, jo);
                     if (++i % 10000 == 0)
@@ -15985,7 +15985,7 @@ namespace FolioConsoleApplication
                     if (validate)
                     {
                         var l = js.Validate(jo);
-                        if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"ServicePointUser {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"ServicePointUser {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
+                        if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"ServicePointUser {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"ServicePointUser {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}: {jo}");
                     }
                     if (api)
                     {
@@ -16036,7 +16036,7 @@ namespace FolioConsoleApplication
                     if (validate)
                     {
                         var l = js.Validate(jo);
-                        if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"ServicePointUser {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"ServicePointUser {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
+                        if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"ServicePointUser {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"ServicePointUser {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}: {jo}");
                     }
                     if (!whatIf) (universalTime ? universalTimeJsonSerializer : localTimeJsonSerializer).Serialize(jtw, jo);
                     if (++i % 10000 == 0)
@@ -16124,7 +16124,7 @@ namespace FolioConsoleApplication
                     if (validate)
                     {
                         var l = js.Validate(jo);
-                        if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"Snapshot {jo["jobExecutionId"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"Snapshot {jo["jobExecutionId"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
+                        if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"Snapshot {jo["jobExecutionId"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"Snapshot {jo["jobExecutionId"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}: {jo}");
                     }
                     if (api)
                     {
@@ -16164,7 +16164,7 @@ namespace FolioConsoleApplication
                     if (validate)
                     {
                         var l = js.Validate(jo);
-                        if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"Snapshot {jo["jobExecutionId"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"Snapshot {jo["jobExecutionId"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
+                        if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"Snapshot {jo["jobExecutionId"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"Snapshot {jo["jobExecutionId"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}: {jo}");
                     }
                     if (!whatIf) (universalTime ? universalTimeJsonSerializer : localTimeJsonSerializer).Serialize(jtw, jo);
                     if (++i % 10000 == 0)
@@ -16252,7 +16252,7 @@ namespace FolioConsoleApplication
                     if (validate)
                     {
                         var l = js.Validate(jo);
-                        if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"Source {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"Source {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
+                        if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"Source {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"Source {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}: {jo}");
                     }
                     if (api)
                     {
@@ -16303,7 +16303,7 @@ namespace FolioConsoleApplication
                     if (validate)
                     {
                         var l = js.Validate(jo);
-                        if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"Source {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"Source {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
+                        if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"Source {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"Source {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}: {jo}");
                     }
                     if (!whatIf) (universalTime ? universalTimeJsonSerializer : localTimeJsonSerializer).Serialize(jtw, jo);
                     if (++i % 10000 == 0)
@@ -16391,7 +16391,7 @@ namespace FolioConsoleApplication
                     if (validate)
                     {
                         var l = js.Validate(jo);
-                        if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"StaffSlip {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"StaffSlip {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
+                        if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"StaffSlip {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"StaffSlip {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}: {jo}");
                     }
                     if (api)
                     {
@@ -16442,7 +16442,7 @@ namespace FolioConsoleApplication
                     if (validate)
                     {
                         var l = js.Validate(jo);
-                        if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"StaffSlip {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"StaffSlip {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
+                        if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"StaffSlip {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"StaffSlip {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}: {jo}");
                     }
                     if (!whatIf) (universalTime ? universalTimeJsonSerializer : localTimeJsonSerializer).Serialize(jtw, jo);
                     if (++i % 10000 == 0)
@@ -16530,7 +16530,7 @@ namespace FolioConsoleApplication
                     if (validate)
                     {
                         var l = js.Validate(jo);
-                        if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"StatisticalCode {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"StatisticalCode {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
+                        if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"StatisticalCode {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"StatisticalCode {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}: {jo}");
                     }
                     if (api)
                     {
@@ -16581,7 +16581,7 @@ namespace FolioConsoleApplication
                     if (validate)
                     {
                         var l = js.Validate(jo);
-                        if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"StatisticalCode {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"StatisticalCode {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
+                        if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"StatisticalCode {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"StatisticalCode {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}: {jo}");
                     }
                     if (!whatIf) (universalTime ? universalTimeJsonSerializer : localTimeJsonSerializer).Serialize(jtw, jo);
                     if (++i % 10000 == 0)
@@ -16669,7 +16669,7 @@ namespace FolioConsoleApplication
                     if (validate)
                     {
                         var l = js.Validate(jo);
-                        if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"StatisticalCodeType {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"StatisticalCodeType {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
+                        if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"StatisticalCodeType {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"StatisticalCodeType {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}: {jo}");
                     }
                     if (api)
                     {
@@ -16720,7 +16720,7 @@ namespace FolioConsoleApplication
                     if (validate)
                     {
                         var l = js.Validate(jo);
-                        if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"StatisticalCodeType {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"StatisticalCodeType {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
+                        if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"StatisticalCodeType {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"StatisticalCodeType {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}: {jo}");
                     }
                     if (!whatIf) (universalTime ? universalTimeJsonSerializer : localTimeJsonSerializer).Serialize(jtw, jo);
                     if (++i % 10000 == 0)
@@ -16808,7 +16808,7 @@ namespace FolioConsoleApplication
                     if (validate)
                     {
                         var l = js.Validate(jo);
-                        if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"Suffix {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"Suffix {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
+                        if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"Suffix {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"Suffix {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}: {jo}");
                     }
                     if (api)
                     {
@@ -16859,7 +16859,7 @@ namespace FolioConsoleApplication
                     if (validate)
                     {
                         var l = js.Validate(jo);
-                        if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"Suffix {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"Suffix {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
+                        if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"Suffix {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"Suffix {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}: {jo}");
                     }
                     if (!whatIf) (universalTime ? universalTimeJsonSerializer : localTimeJsonSerializer).Serialize(jtw, jo);
                     if (++i % 10000 == 0)
@@ -16947,7 +16947,7 @@ namespace FolioConsoleApplication
                     if (validate)
                     {
                         var l = js.Validate(jo);
-                        if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"Template {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"Template {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
+                        if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"Template {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"Template {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}: {jo}");
                     }
                     if (api)
                     {
@@ -16998,7 +16998,7 @@ namespace FolioConsoleApplication
                     if (validate)
                     {
                         var l = js.Validate(jo);
-                        if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"Template {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"Template {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
+                        if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"Template {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"Template {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}: {jo}");
                     }
                     if (!whatIf) (universalTime ? universalTimeJsonSerializer : localTimeJsonSerializer).Serialize(jtw, jo);
                     if (++i % 10000 == 0)
@@ -17086,7 +17086,7 @@ namespace FolioConsoleApplication
                     if (validate)
                     {
                         var l = js.Validate(jo);
-                        if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"Title {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"Title {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
+                        if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"Title {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"Title {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}: {jo}");
                     }
                     if (api)
                     {
@@ -17137,7 +17137,7 @@ namespace FolioConsoleApplication
                     if (validate)
                     {
                         var l = js.Validate(jo);
-                        if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"Title {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"Title {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
+                        if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"Title {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"Title {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}: {jo}");
                     }
                     if (!whatIf) (universalTime ? universalTimeJsonSerializer : localTimeJsonSerializer).Serialize(jtw, jo);
                     if (++i % 10000 == 0)
@@ -17225,7 +17225,7 @@ namespace FolioConsoleApplication
                     if (validate)
                     {
                         var l = js.Validate(jo);
-                        if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"Transaction {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"Transaction {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
+                        if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"Transaction {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"Transaction {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}: {jo}");
                     }
                     if (api)
                     {
@@ -17276,7 +17276,7 @@ namespace FolioConsoleApplication
                     if (validate)
                     {
                         var l = js.Validate(jo);
-                        if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"Transaction {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"Transaction {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
+                        if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"Transaction {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"Transaction {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}: {jo}");
                     }
                     if (!whatIf) (universalTime ? universalTimeJsonSerializer : localTimeJsonSerializer).Serialize(jtw, jo);
                     if (++i % 10000 == 0)
@@ -17364,7 +17364,7 @@ namespace FolioConsoleApplication
                     if (validate)
                     {
                         var l = js.Validate(jo);
-                        if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"TransferAccount {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"TransferAccount {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
+                        if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"TransferAccount {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"TransferAccount {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}: {jo}");
                     }
                     if (api)
                     {
@@ -17415,7 +17415,7 @@ namespace FolioConsoleApplication
                     if (validate)
                     {
                         var l = js.Validate(jo);
-                        if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"TransferAccount {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"TransferAccount {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
+                        if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"TransferAccount {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"TransferAccount {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}: {jo}");
                     }
                     if (!whatIf) (universalTime ? universalTimeJsonSerializer : localTimeJsonSerializer).Serialize(jtw, jo);
                     if (++i % 10000 == 0)
@@ -17503,7 +17503,7 @@ namespace FolioConsoleApplication
                     if (validate)
                     {
                         var l = js.Validate(jo);
-                        if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"TransferCriteria {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"TransferCriteria {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
+                        if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"TransferCriteria {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"TransferCriteria {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}: {jo}");
                     }
                     if (api)
                     {
@@ -17554,7 +17554,7 @@ namespace FolioConsoleApplication
                     if (validate)
                     {
                         var l = js.Validate(jo);
-                        if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"TransferCriteria {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"TransferCriteria {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
+                        if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"TransferCriteria {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"TransferCriteria {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}: {jo}");
                     }
                     if (!whatIf) (universalTime ? universalTimeJsonSerializer : localTimeJsonSerializer).Serialize(jtw, jo);
                     if (++i % 10000 == 0)
@@ -17642,7 +17642,7 @@ namespace FolioConsoleApplication
                     if (validate)
                     {
                         var l = js.Validate(jo);
-                        if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"User {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"User {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
+                        if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"User {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"User {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}: {jo}");
                     }
                     if (api)
                     {
@@ -17722,7 +17722,7 @@ namespace FolioConsoleApplication
                     if (validate)
                     {
                         var l = js.Validate(jo);
-                        if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"User {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"User {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
+                        if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"User {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"User {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}: {jo}");
                     }
                     if (jo2 != null)
                     {
@@ -17853,7 +17853,7 @@ namespace FolioConsoleApplication
                     if (validate)
                     {
                         var l = js.Validate(jo);
-                        if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"User {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"User {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
+                        if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"User {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"User {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}: {jo}");
                     }
                     if (!whatIf) (universalTime ? universalTimeJsonSerializer : localTimeJsonSerializer).Serialize(jtw, jo);
                     if (++i % 10000 == 0)
@@ -17941,7 +17941,7 @@ namespace FolioConsoleApplication
                     if (validate)
                     {
                         var l = js.Validate(jo);
-                        if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"UserAcquisitionsUnit {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"UserAcquisitionsUnit {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
+                        if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"UserAcquisitionsUnit {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"UserAcquisitionsUnit {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}: {jo}");
                     }
                     if (api)
                     {
@@ -17992,7 +17992,7 @@ namespace FolioConsoleApplication
                     if (validate)
                     {
                         var l = js.Validate(jo);
-                        if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"UserAcquisitionsUnit {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"UserAcquisitionsUnit {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
+                        if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"UserAcquisitionsUnit {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"UserAcquisitionsUnit {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}: {jo}");
                     }
                     if (!whatIf) (universalTime ? universalTimeJsonSerializer : localTimeJsonSerializer).Serialize(jtw, jo);
                     if (++i % 10000 == 0)
@@ -18080,7 +18080,7 @@ namespace FolioConsoleApplication
                     if (validate)
                     {
                         var l = js.Validate(jo);
-                        if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"UserRequestPreference {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"UserRequestPreference {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
+                        if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"UserRequestPreference {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"UserRequestPreference {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}: {jo}");
                     }
                     if (api)
                     {
@@ -18131,7 +18131,7 @@ namespace FolioConsoleApplication
                     if (validate)
                     {
                         var l = js.Validate(jo);
-                        if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"UserRequestPreference {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"UserRequestPreference {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
+                        if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"UserRequestPreference {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"UserRequestPreference {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}: {jo}");
                     }
                     if (!whatIf) (universalTime ? universalTimeJsonSerializer : localTimeJsonSerializer).Serialize(jtw, jo);
                     if (++i % 10000 == 0)
@@ -18206,7 +18206,7 @@ namespace FolioConsoleApplication
                     if (validate)
                     {
                         var l = js.Validate(jo);
-                        if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"UserSummary {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"UserSummary {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
+                        if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"UserSummary {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"UserSummary {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}: {jo}");
                     }
                     if (api)
                     {
@@ -18251,7 +18251,7 @@ namespace FolioConsoleApplication
                     if (validate)
                     {
                         var l = js.Validate(jo);
-                        if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"UserSummary {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"UserSummary {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
+                        if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"UserSummary {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"UserSummary {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}: {jo}");
                     }
                     if (!whatIf) (universalTime ? universalTimeJsonSerializer : localTimeJsonSerializer).Serialize(jtw, jo);
                     if (++i % 10000 == 0)
@@ -18339,7 +18339,7 @@ namespace FolioConsoleApplication
                     if (validate)
                     {
                         var l = js.Validate(jo);
-                        if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"Voucher {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"Voucher {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
+                        if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"Voucher {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"Voucher {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}: {jo}");
                     }
                     if (api)
                     {
@@ -18390,7 +18390,7 @@ namespace FolioConsoleApplication
                     if (validate)
                     {
                         var l = js.Validate(jo);
-                        if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"Voucher {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"Voucher {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
+                        if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"Voucher {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"Voucher {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}: {jo}");
                     }
                     if (!whatIf) (universalTime ? universalTimeJsonSerializer : localTimeJsonSerializer).Serialize(jtw, jo);
                     if (++i % 10000 == 0)
@@ -18478,7 +18478,7 @@ namespace FolioConsoleApplication
                     if (validate)
                     {
                         var l = js.Validate(jo);
-                        if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"VoucherItem {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"VoucherItem {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
+                        if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"VoucherItem {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"VoucherItem {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}: {jo}");
                     }
                     if (api)
                     {
@@ -18529,7 +18529,7 @@ namespace FolioConsoleApplication
                     if (validate)
                     {
                         var l = js.Validate(jo);
-                        if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"VoucherItem {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"VoucherItem {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
+                        if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"VoucherItem {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"VoucherItem {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}: {jo}");
                     }
                     if (!whatIf) (universalTime ? universalTimeJsonSerializer : localTimeJsonSerializer).Serialize(jtw, jo);
                     if (++i % 10000 == 0)
@@ -18617,7 +18617,7 @@ namespace FolioConsoleApplication
                     if (validate)
                     {
                         var l = js.Validate(jo);
-                        if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"WaiveReason {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"WaiveReason {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
+                        if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"WaiveReason {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"WaiveReason {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}: {jo}");
                     }
                     if (api)
                     {
@@ -18668,7 +18668,7 @@ namespace FolioConsoleApplication
                     if (validate)
                     {
                         var l = js.Validate(jo);
-                        if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"WaiveReason {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"WaiveReason {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}");
+                        if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"WaiveReason {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"WaiveReason {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}: {jo}");
                     }
                     if (!whatIf) (universalTime ? universalTimeJsonSerializer : localTimeJsonSerializer).Serialize(jtw, jo);
                     if (++i % 10000 == 0)
