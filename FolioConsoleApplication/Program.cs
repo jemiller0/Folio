@@ -663,7 +663,7 @@ namespace FolioConsoleApplication
                     if (!api) interfaceCredentialsPath = $"{path}/interfacecredentials.json";
                     invoicesPath = $"{path}/invoices.json";
                     invoiceItemsPath = $"{path}/invoiceitems.json";
-                    if (!api) invoiceTransactionSummariesPath = $"{path}/invoicetransactionsummaries.json";
+                    invoiceTransactionSummariesPath = $"{path}/invoicetransactionsummaries.json";
                     itemsPath = $"{path}/items.json";
                     itemDamagedStatusesPath = $"{path}/itemdamagedstatuses.json";
                     itemNoteTypesPath = $"{path}/itemnotetypes.json";
@@ -776,7 +776,7 @@ namespace FolioConsoleApplication
                     fiscalYearsPath = $"{path}/fiscalyears.json";
                     fundsPath = $"{path}/funds.json";
                     fundTypesPath = $"{path}/fundtypes.json";
-                    if (!api) invoiceTransactionSummariesPath = $"{path}/invoicetransactionsummaries.json";
+                    invoiceTransactionSummariesPath = $"{path}/invoicetransactionsummaries.json";
                     ledgersPath = $"{path}/ledgers.json";
                     ledgerRolloversPath = $"{path}/ledgerrollovers.json";
                     ledgerRolloverErrorsPath = $"{path}/ledgerrollovererrors.json";
@@ -1099,12 +1099,12 @@ namespace FolioConsoleApplication
                 if (save && titlesPath != null) l.Add(() => SaveTitles(titlesPath, titlesWhere ?? where));
                 if (save && receivingsPath != null) l.Add(() => SaveReceivings(receivingsPath, receivingsWhere ?? where));
                 if (save && orderTransactionSummariesPath != null) l.Add(() => SaveOrderTransactionSummaries(orderTransactionSummariesPath, orderTransactionSummariesWhere ?? where));
+                if (save && batchGroupsPath != null) l.Add(() => SaveBatchGroups(batchGroupsPath, batchGroupsWhere ?? where));
                 if (save && invoicesPath != null) l.Add(() => SaveInvoices(invoicesPath, invoicesWhere ?? where));
                 if (save && documentsPath != null) l.Add(() => SaveDocuments(documentsPath, documentsWhere ?? where));
                 if (save && invoiceItemsPath != null) l.Add(() => SaveInvoiceItems(invoiceItemsPath, invoiceItemsWhere ?? where));
                 if (save && vouchersPath != null) l.Add(() => SaveVouchers(vouchersPath, vouchersWhere ?? where));
                 if (save && voucherItemsPath != null) l.Add(() => SaveVoucherItems(voucherItemsPath, voucherItemsWhere ?? where));
-                if (save && batchGroupsPath != null) l.Add(() => SaveBatchGroups(batchGroupsPath, batchGroupsWhere ?? where));
                 if (save && batchVouchersPath != null) l.Add(() => SaveBatchVouchers(batchVouchersPath, batchVouchersWhere ?? where));
                 if (save && batchVoucherExportsPath != null) l.Add(() => SaveBatchVoucherExports(batchVoucherExportsPath, batchVoucherExportsWhere ?? where));
                 if (save && batchVoucherExportConfigsPath != null) l.Add(() => SaveBatchVoucherExportConfigs(batchVoucherExportConfigsPath, batchVoucherExportConfigsWhere ?? where));
@@ -1176,12 +1176,12 @@ namespace FolioConsoleApplication
                 if (delete && (batchVoucherExportConfigs || batchVoucherExportConfigsPath != null)) DeleteBatchVoucherExportConfigs(batchVoucherExportConfigsWhere ?? where);
                 if (delete && (batchVoucherExports || batchVoucherExportsPath != null)) DeleteBatchVoucherExports(batchVoucherExportsWhere ?? where);
                 if (delete && (batchVouchers || batchVouchersPath != null)) DeleteBatchVouchers(batchVouchersWhere ?? where);
-                if (delete && (batchGroups || batchGroupsPath != null)) DeleteBatchGroups(batchGroupsWhere ?? where);
                 if (delete && (voucherItems || voucherItemsPath != null)) DeleteVoucherItems(voucherItemsWhere ?? where);
                 if (delete && (vouchers || vouchersPath != null)) DeleteVouchers(vouchersWhere ?? where);
                 if (delete && (invoiceItems || invoiceItemsPath != null)) DeleteInvoiceItems(invoiceItemsWhere ?? where);
                 if (delete && (documents || documentsPath != null)) DeleteDocuments(documentsWhere ?? where);
                 if (delete && (invoices || invoicesPath != null)) DeleteInvoices(invoicesWhere ?? where);
+                if (delete && (batchGroups || batchGroupsPath != null)) DeleteBatchGroups(batchGroupsWhere ?? where);
                 if (delete && (orderTransactionSummaries || orderTransactionSummariesPath != null)) DeleteOrderTransactionSummaries(orderTransactionSummariesWhere ?? where);
                 if (delete && (receivings || receivingsPath != null)) DeleteReceivings(receivingsWhere ?? where);
                 if (delete && (titles || titlesPath != null)) DeleteTitles(titlesWhere ?? where);
@@ -1349,12 +1349,12 @@ namespace FolioConsoleApplication
                 if (load && titlesPath != null) LoadTitles(titlesPath);
                 if (load && receivingsPath != null) LoadReceivings(receivingsPath);
                 if (load && orderTransactionSummariesPath != null) LoadOrderTransactionSummaries(orderTransactionSummariesPath);
+                if (load && batchGroupsPath != null) LoadBatchGroups(batchGroupsPath);
                 if (load && invoicesPath != null) LoadInvoices(invoicesPath);
                 if (load && documentsPath != null) LoadDocuments(documentsPath);
                 if (load && invoiceItemsPath != null) LoadInvoiceItems(invoiceItemsPath);
                 if (load && vouchersPath != null) LoadVouchers(vouchersPath);
                 if (load && voucherItemsPath != null) LoadVoucherItems(voucherItemsPath);
-                if (load && batchGroupsPath != null) LoadBatchGroups(batchGroupsPath);
                 if (load && batchVouchersPath != null) LoadBatchVouchers(batchVouchersPath);
                 if (load && batchVoucherExportsPath != null) LoadBatchVoucherExports(batchVoucherExportsPath);
                 if (load && batchVoucherExportConfigsPath != null) LoadBatchVoucherExportConfigs(batchVoucherExportConfigsPath);
@@ -9675,10 +9675,11 @@ namespace FolioConsoleApplication
         public static void QueryInvoiceTransactionSummaries(string where = null, string orderBy = null, int? skip = null, int? take = null, string select = null)
         {
             using (var fdc = new FolioDapperContext(connectionString))
+            using (var fsc = new FolioServiceClient(connectionString))
             using (var jtw = new JsonTextWriter(Console.Out))
             {
                 jtw.WriteStartArray();
-                foreach (var jo in (api ? throw new NotSupportedException() : fdc.InvoiceTransactionSummaries(where, null, orderBy, skip, take).Select(its => its.ToJObject())).Select(jo =>
+                foreach (var jo in (api ? fsc.InvoiceTransactionSummaries(where, orderBy, skip, take) : fdc.InvoiceTransactionSummaries(where, null, orderBy, skip, take).Select(its => its.ToJObject())).Select(jo =>
                 {
                     return select == null ? jo : new JObject(select.Split(',').Select(s =>
                     {
@@ -9695,11 +9696,22 @@ namespace FolioConsoleApplication
             traceSource.TraceEvent(TraceEventType.Information, 0, "Deleting invoice transaction summaries");
             var s = Stopwatch.StartNew();
             using (var fbcc = new FolioBulkCopyContext(connectionString, checkConstraints: !force))
+            using (var fsc = new FolioServiceClient(connectionString))
             {
                 var i = 0;
                 if (api)
                 {
-                    throw new NotSupportedException();
+                    var s2 = Stopwatch.StartNew();
+                    foreach (var jo in fsc.InvoiceTransactionSummaries(where))
+                    {
+                        if (!whatIf) fsc.DeleteInvoiceTransactionSummary((string)jo["id"]);
+                        if (++i % 100 == 0)
+                        {
+                            traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
+                            s2.Restart();
+                        }
+                    }
+                    traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
                 }
                 else
                 {
@@ -9718,6 +9730,7 @@ namespace FolioConsoleApplication
             using (var sr2 = new StreamReader(Assembly.GetAssembly(typeof(FolioDapperContext)).GetManifestResourceStream("FolioLibrary.InvoiceTransactionSummary.json")))
             using (var jtr = new JsonTextReader(sr) { SupportMultipleContent = true })
             using (var fbcc = new FolioBulkCopyContext(connectionString))
+            using (var fsc = new FolioServiceClient(connectionString))
             {
                 var s2 = Stopwatch.StartNew();
                 var js = JsonSchema.FromJsonAsync(sr2.ReadToEndAsync().Result).Result;
@@ -9735,7 +9748,12 @@ namespace FolioConsoleApplication
                     }
                     if (api)
                     {
-                        throw new NotSupportedException();
+                        if (!whatIf) fsc.InsertInvoiceTransactionSummary(jo);
+                        if (i % 100 == 0)
+                        {
+                            traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
+                            s2.Restart();
+                        }
                     }
                     else
                     {
@@ -9763,6 +9781,7 @@ namespace FolioConsoleApplication
             traceSource.TraceEvent(TraceEventType.Information, 0, "Saving invoice transaction summaries");
             var s = Stopwatch.StartNew();
             using (var fdc = new FolioDapperContext(connectionString))
+            using (var fsc = new FolioServiceClient(connectionString))
             using (var sr = new StreamReader(Assembly.GetAssembly(typeof(FolioDapperContext)).GetManifestResourceStream("FolioLibrary.InvoiceTransactionSummary.json")))
             using (var sw = new StreamWriter(whatIf ? new MemoryStream() : compress ? (Stream)new GZipStream(new FileStream($"{path}.gz", FileMode.Create), CompressionMode.Compress) : new FileStream(path, FileMode.Create)))
             using (var jtw = new JsonTextWriter(sw))
@@ -9771,7 +9790,7 @@ namespace FolioConsoleApplication
                 var js = JsonSchema.FromJsonAsync(sr.ReadToEndAsync().Result).Result;
                 jtw.WriteStartArray();
                 var i = 0;
-                foreach (var jo in api ? throw new NotSupportedException() : fdc.InvoiceTransactionSummaries(where, null, orderBy, skip, take).Select(its => its.ToJObject()))
+                foreach (var jo in api ? fsc.InvoiceTransactionSummaries(where, orderBy, skip, take) : fdc.InvoiceTransactionSummaries(where, null, orderBy, skip, take).Select(its => its.ToJObject()))
                 {
                     if (validate)
                     {

@@ -680,6 +680,18 @@ namespace FolioLibraryTest
         }
 
         [TestMethod]
+        public void Finance_DeserializeInvoiceTransactionSummary2Test()
+        {
+            var s = Stopwatch.StartNew();
+            var its2 = folioServiceContext.InvoiceTransactionSummary2s(take: 1).SingleOrDefault();
+            if (its2 == null) Assert.Inconclusive();
+            var its3 = folioDapperContext.InvoiceTransactionSummary2s(take: 1).SingleOrDefault();
+            its3.Content = null;
+            Assert.AreEqual(its2.ToString(), its3.ToString());
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"Finance_DeserializeInvoiceTransactionSummary2Test()\r\n    ElapsedTime={s.Elapsed}");
+        }
+
+        [TestMethod]
         public void Inventory_DeserializeIssuanceModeTest()
         {
             var s = Stopwatch.StartNew();

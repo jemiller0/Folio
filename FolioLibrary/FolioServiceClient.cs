@@ -7240,6 +7240,136 @@ namespace FolioLibrary
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", s.Elapsed);
         }
 
+        public bool AnyInvoiceTransactionSummaries(string where = null) => InvoiceTransactionSummaries(where, take: 1).Any();
+
+        public int CountInvoiceTransactionSummaries(string where = null)
+        {
+            InvoiceTransactionSummaries(out var i, take: 0);
+            return i;
+        }
+
+        public JObject[] InvoiceTransactionSummaries(out int count, string where = null, string orderBy = null, int? skip = null, int? take = 100)
+        {
+            var s = Stopwatch.StartNew();
+            traceSource.TraceEvent(TraceEventType.Verbose, 0, "Querying invoice transaction summaries");
+            AuthenticateIfNecessary();
+            if ((skip != null || take != null) && take != 0) orderBy = orderBy ?? "id";
+            var url = $"{Url}/finance-storage/invoice-transaction-summaries{(where != null || orderBy != null ? $"?query={WebUtility.UrlEncode(where)}{(orderBy != null ? $"{(where != null ? " " : "cql.allrecords=1 ")}sortby {WebUtility.UrlEncode(orderBy)}" : "")}" : "")}{(skip != null ? $"{(where != null || orderBy != null ? "&" : "?")}offset={skip}" : "")}{(where != null || orderBy != null || skip != null ? "&" : "?")}limit={take ?? int.MaxValue}";
+            traceSource.TraceEvent(TraceEventType.Verbose, 0, url);
+            traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", httpClient.DefaultRequestHeaders);
+            var hrm = httpClient.GetAsync(url).Result;
+            var s2 = hrm.Content.ReadAsStringAsync().Result;
+            traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}{1}", hrm.Headers, s2);
+            var jo = hrm.Content.Headers.ContentType.MediaType == "application/json" ? JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings) : null;
+            if (hrm.StatusCode != HttpStatusCode.OK) throw new HttpRequestException($"Response status code does not indicate success: {hrm.StatusCode} ({hrm.ReasonPhrase}).\r\n{s2}");
+            traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", s.Elapsed);
+            count = (int)jo["totalRecords"];
+            return jo.Properties().SkipWhile(jp => jp.Name == "totalRecords").First().Value.Cast<JObject>().ToArray();
+        }
+
+        public IEnumerable<JObject> InvoiceTransactionSummaries(string where = null, string orderBy = null, int? skip = null, int? take = null)
+        {
+            var s = Stopwatch.StartNew();
+            traceSource.TraceEvent(TraceEventType.Verbose, 0, "Querying invoice transaction summaries");
+            AuthenticateIfNecessary();
+            if ((skip != null || take != null) && take != 0) orderBy = orderBy ?? "id";
+            var url = $"{Url}/finance-storage/invoice-transaction-summaries{(where != null || orderBy != null ? $"?query={WebUtility.UrlEncode(where)}{(orderBy != null ? $"{(where != null ? " " : "cql.allrecords=1 ")}sortby {WebUtility.UrlEncode(orderBy)}" : "")}" : "")}{(skip != null ? $"{(where != null || orderBy != null ? "&" : "?")}offset={skip}" : "")}{(where != null || orderBy != null || skip != null ? "&" : "?")}limit={take ?? int.MaxValue}";
+            traceSource.TraceEvent(TraceEventType.Verbose, 0, url);
+            traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", httpClient.DefaultRequestHeaders);
+            var hrm = httpClient.GetAsync(url, HttpCompletionOption.ResponseHeadersRead).Result;
+            traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", hrm.Headers);
+            if (hrm.StatusCode != HttpStatusCode.OK)
+            {
+                var s2 = hrm.Content.ReadAsStringAsync().Result;
+                if (hrm.Content.Headers.ContentType.MediaType == "application/json") s2 = JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings).ToString();
+                traceSource.TraceEvent(TraceEventType.Verbose, 0, s2);
+                throw new HttpRequestException($"Response status code does not indicate success: {hrm.StatusCode} ({hrm.ReasonPhrase}).\r\n{s2}");
+            }
+            using (var sr = new StreamReader(hrm.Content.ReadAsStreamAsync().Result))
+            using (var jtr = new JsonTextReader(sr) { SupportMultipleContent = true })
+            {
+                if (!jtr.Read()) throw new InvalidDataException();
+                while (jtr.Read() && jtr.TokenType != JsonToken.StartArray) ;
+                while (jtr.Read() && jtr.TokenType != JsonToken.EndArray)
+                {
+                    var jo = (JObject)localTimeJsonSerializer.Deserialize(jtr);
+                    traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", jo);
+                    yield return jo;
+                }
+            }
+            traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", s.Elapsed);
+        }
+
+        public JObject GetInvoiceTransactionSummary(string id)
+        {
+            var s = Stopwatch.StartNew();
+            traceSource.TraceEvent(TraceEventType.Verbose, 0, "Getting invoice transaction summary {0}", id);
+            if (id == null) return null;
+            AuthenticateIfNecessary();
+            var url = $"{Url}/finance-storage/invoice-transaction-summaries/{id}";
+            traceSource.TraceEvent(TraceEventType.Verbose, 0, url);
+            traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", httpClient.DefaultRequestHeaders);
+            var hrm = httpClient.GetAsync(url).Result;
+            var s2 = hrm.Content.ReadAsStringAsync().Result;
+            traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}{1}", hrm.Headers, s2);
+            var jo = hrm.Content.Headers.ContentType.MediaType == "application/json" ? JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings) : null;
+            if (hrm.StatusCode != HttpStatusCode.OK && hrm.StatusCode != HttpStatusCode.NotFound) throw new HttpRequestException($"Response status code does not indicate success: {hrm.StatusCode} ({hrm.ReasonPhrase}).\r\n{s2}");
+            traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", s.Elapsed);
+            return jo;
+        }
+
+        public JObject InsertInvoiceTransactionSummary(JObject invoiceTransactionSummary)
+        {
+            var s = Stopwatch.StartNew();
+            if (invoiceTransactionSummary["id"] == null) invoiceTransactionSummary["id"] = Guid.NewGuid();
+            traceSource.TraceEvent(TraceEventType.Verbose, 0, "Inserting invoice transaction summary {0}", invoiceTransactionSummary["id"]);
+            AuthenticateIfNecessary();
+            var url = $"{Url}/finance-storage/invoice-transaction-summaries";
+            traceSource.TraceEvent(TraceEventType.Verbose, 0, url);
+            var s2 = JsonConvert.SerializeObject(invoiceTransactionSummary, universalTimeJsonSerializationSettings);
+            var sc = new StringContent(s2, Encoding.UTF8, "application/json");
+            traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}{1}", httpClient.DefaultRequestHeaders, s2);
+            var hrm = httpClient.PostAsync(url, sc).Result;
+            s2 = hrm.Content.ReadAsStringAsync().Result;
+            traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}{1}", hrm.Headers, s2);
+            var jo = hrm.Content.Headers.ContentType?.MediaType == "application/json" ? JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings) : null;
+            if (hrm.StatusCode != HttpStatusCode.Created) throw new HttpRequestException($"Response status code does not indicate success: {hrm.StatusCode} ({hrm.ReasonPhrase}).\r\n{s2}");
+            traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", s.Elapsed);
+            return jo;
+        }
+
+        public void UpdateInvoiceTransactionSummary(JObject invoiceTransactionSummary)
+        {
+            var s = Stopwatch.StartNew();
+            traceSource.TraceEvent(TraceEventType.Verbose, 0, $"Updating invoice transaction summary {invoiceTransactionSummary["id"]}");
+            AuthenticateIfNecessary();
+            var url = $"{Url}/finance-storage/invoice-transaction-summaries/{invoiceTransactionSummary["id"]}";
+            traceSource.TraceEvent(TraceEventType.Verbose, 0, url);
+            var s2 = JsonConvert.SerializeObject(invoiceTransactionSummary, universalTimeJsonSerializationSettings);
+            var sc = new StringContent(s2, Encoding.UTF8, "application/json");
+            traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}{1}", httpClient.DefaultRequestHeaders, s2);
+            var hrm = httpClient.PutAsync(url, sc).Result;
+            s2 = hrm.Content.ReadAsStringAsync().Result;
+            traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}{1}", hrm.Headers, s2);
+            if (hrm.StatusCode != HttpStatusCode.NoContent) throw new HttpRequestException($"Response status code does not indicate success: {hrm.StatusCode} ({hrm.ReasonPhrase}).\r\n{s2}");
+            traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", s.Elapsed);
+        }
+
+        public void DeleteInvoiceTransactionSummary(string id)
+        {
+            var s = Stopwatch.StartNew();
+            traceSource.TraceEvent(TraceEventType.Verbose, 0, $"Deleting invoice transaction summary {id}");
+            AuthenticateIfNecessary();
+            var url = $"{Url}/finance-storage/invoice-transaction-summaries/{id}";
+            traceSource.TraceEvent(TraceEventType.Verbose, 0, url);
+            traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", httpClient.DefaultRequestHeaders);
+            var hrm = httpClient.DeleteAsync(url).Result;
+            var s2 = hrm.Content.ReadAsStringAsync().Result;
+            traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}{1}", hrm.Headers, s2);
+            if (hrm.StatusCode != HttpStatusCode.NoContent) throw new HttpRequestException($"Response status code does not indicate success: {hrm.StatusCode} ({hrm.ReasonPhrase}).\r\n{s2}");
+            traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", s.Elapsed);
+        }
+
         public bool AnyItems(string where = null) => Items(where, take: 1).Any();
 
         public int CountItems(string where = null)

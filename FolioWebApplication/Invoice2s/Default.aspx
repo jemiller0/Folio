@@ -90,7 +90,11 @@
                                 <asp:HyperLink ID="LastWriteUserHyperLink" runat="server" Text='<%#: Eval("LastWriteUserId") != null ? Eval("LastWriteUser.Username") ?? "&nbsp;" : "" %>' NavigateUrl='<%# $"~/User2s/Edit.aspx?Id={Eval("LastWriteUserId")}" %>' Enabled='<%# Session["User2sPermission"] != null %>' />
                             </ItemTemplate>
                         </telerik:GridTemplateColumn>
-                        <telerik:GridBoundColumn HeaderText="Invoice Transaction Summary 2" DataField="InvoiceTransactionSummary2" AutoPostBackOnFilter="true" />
+                        <telerik:GridTemplateColumn AllowFiltering="false" AllowSorting="false" HeaderText="Invoice Transaction Summary 2" DataField="InvoiceTransactionSummary2.Id" SortExpression="InvoiceTransactionSummary2.Id" AutoPostBackOnFilter="true" CurrentFilterFunction="EqualTo">
+                            <ItemTemplate>
+                                <asp:HyperLink ID="InvoiceTransactionSummary2HyperLink" runat="server" Text='<%# Eval("InvoiceTransactionSummary2.Id") %>' NavigateUrl='<%# $"~/InvoiceTransactionSummary2s/Edit.aspx?Id={Eval("Id")}" %>' Enabled='<%# Session["InvoiceTransactionSummary2sPermission"] != null %>' />
+                            </ItemTemplate>
+                        </telerik:GridTemplateColumn>
                     </Columns>
                 </MasterTableView>
             </telerik:RadGrid>
