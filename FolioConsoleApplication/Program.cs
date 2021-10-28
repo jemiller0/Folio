@@ -1496,27 +1496,35 @@ namespace FolioConsoleApplication
                         var l = js.Validate(jo);
                         if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"AcquisitionsUnit {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"AcquisitionsUnit {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}: {jo}");
                     }
-                    if (api)
+                    try
                     {
-                        if (!whatIf) fsc.InsertAcquisitionsUnit(jo);
-                        if (i % 100 == 0)
+                        if (api)
                         {
-                            traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
-                            s2.Restart();
-                        }
-                    }
-                    else
-                    {
-                        if (!whatIf) fbcc.Insert(AcquisitionsUnit.FromJObject(jo));
-                        if (i % 1000 == 0)
-                        {
-                            fbcc.Commit();
-                            if (i % 10000 == 0)
+                            if (!whatIf) fsc.InsertAcquisitionsUnit(jo);
+                            if (i % 100 == 0)
                             {
                                 traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
                                 s2.Restart();
                             }
                         }
+                        else
+                        {
+                            if (!whatIf) fbcc.Insert(AcquisitionsUnit.FromJObject(jo));
+                            if (i % 1000 == 0)
+                            {
+                                fbcc.Commit();
+                                if (i % 10000 == 0)
+                                {
+                                    traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
+                                    s2.Restart();
+                                }
+                            }
+                        }
+                    }
+                    catch (Exception e)
+                    {
+                        traceSource.TraceEvent(TraceEventType.Error, 0, $"{e}\r\n{jo}");
+                        if (!force || e.Message.Contains("Connection was closed")) throw;
                     }
                 }
                 fbcc.Commit();
@@ -1635,27 +1643,35 @@ namespace FolioConsoleApplication
                         var l = js.Validate(jo);
                         if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"AddressType {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"AddressType {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}: {jo}");
                     }
-                    if (api)
+                    try
                     {
-                        if (!whatIf) fsc.InsertAddressType(jo);
-                        if (i % 100 == 0)
+                        if (api)
                         {
-                            traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
-                            s2.Restart();
-                        }
-                    }
-                    else
-                    {
-                        if (!whatIf) fbcc.Insert(AddressType.FromJObject(jo));
-                        if (i % 1000 == 0)
-                        {
-                            fbcc.Commit();
-                            if (i % 10000 == 0)
+                            if (!whatIf) fsc.InsertAddressType(jo);
+                            if (i % 100 == 0)
                             {
                                 traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
                                 s2.Restart();
                             }
                         }
+                        else
+                        {
+                            if (!whatIf) fbcc.Insert(AddressType.FromJObject(jo));
+                            if (i % 1000 == 0)
+                            {
+                                fbcc.Commit();
+                                if (i % 10000 == 0)
+                                {
+                                    traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
+                                    s2.Restart();
+                                }
+                            }
+                        }
+                    }
+                    catch (Exception e)
+                    {
+                        traceSource.TraceEvent(TraceEventType.Error, 0, $"{e}\r\n{jo}");
+                        if (!force || e.Message.Contains("Connection was closed")) throw;
                     }
                 }
                 fbcc.Commit();
@@ -1774,27 +1790,35 @@ namespace FolioConsoleApplication
                         var l = js.Validate(jo);
                         if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"Alert {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"Alert {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}: {jo}");
                     }
-                    if (api)
+                    try
                     {
-                        if (!whatIf) fsc.InsertAlert(jo);
-                        if (i % 100 == 0)
+                        if (api)
                         {
-                            traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
-                            s2.Restart();
-                        }
-                    }
-                    else
-                    {
-                        if (!whatIf) fbcc.Insert(Alert.FromJObject(jo));
-                        if (i % 1000 == 0)
-                        {
-                            fbcc.Commit();
-                            if (i % 10000 == 0)
+                            if (!whatIf) fsc.InsertAlert(jo);
+                            if (i % 100 == 0)
                             {
                                 traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
                                 s2.Restart();
                             }
                         }
+                        else
+                        {
+                            if (!whatIf) fbcc.Insert(Alert.FromJObject(jo));
+                            if (i % 1000 == 0)
+                            {
+                                fbcc.Commit();
+                                if (i % 10000 == 0)
+                                {
+                                    traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
+                                    s2.Restart();
+                                }
+                            }
+                        }
+                    }
+                    catch (Exception e)
+                    {
+                        traceSource.TraceEvent(TraceEventType.Error, 0, $"{e}\r\n{jo}");
+                        if (!force || e.Message.Contains("Connection was closed")) throw;
                     }
                 }
                 fbcc.Commit();
@@ -1913,27 +1937,35 @@ namespace FolioConsoleApplication
                         var l = js.Validate(jo);
                         if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"AlternativeTitleType {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"AlternativeTitleType {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}: {jo}");
                     }
-                    if (api)
+                    try
                     {
-                        if (!whatIf) fsc.InsertAlternativeTitleType(jo);
-                        if (i % 100 == 0)
+                        if (api)
                         {
-                            traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
-                            s2.Restart();
-                        }
-                    }
-                    else
-                    {
-                        if (!whatIf) fbcc.Insert(AlternativeTitleType.FromJObject(jo));
-                        if (i % 1000 == 0)
-                        {
-                            fbcc.Commit();
-                            if (i % 10000 == 0)
+                            if (!whatIf) fsc.InsertAlternativeTitleType(jo);
+                            if (i % 100 == 0)
                             {
                                 traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
                                 s2.Restart();
                             }
                         }
+                        else
+                        {
+                            if (!whatIf) fbcc.Insert(AlternativeTitleType.FromJObject(jo));
+                            if (i % 1000 == 0)
+                            {
+                                fbcc.Commit();
+                                if (i % 10000 == 0)
+                                {
+                                    traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
+                                    s2.Restart();
+                                }
+                            }
+                        }
+                    }
+                    catch (Exception e)
+                    {
+                        traceSource.TraceEvent(TraceEventType.Error, 0, $"{e}\r\n{jo}");
+                        if (!force || e.Message.Contains("Connection was closed")) throw;
                     }
                 }
                 fbcc.Commit();
@@ -2052,27 +2084,35 @@ namespace FolioConsoleApplication
                         var l = js.Validate(jo);
                         if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"BatchGroup {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"BatchGroup {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}: {jo}");
                     }
-                    if (api)
+                    try
                     {
-                        if (!whatIf) fsc.InsertBatchGroup(jo);
-                        if (i % 100 == 0)
+                        if (api)
                         {
-                            traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
-                            s2.Restart();
-                        }
-                    }
-                    else
-                    {
-                        if (!whatIf) fbcc.Insert(BatchGroup.FromJObject(jo));
-                        if (i % 1000 == 0)
-                        {
-                            fbcc.Commit();
-                            if (i % 10000 == 0)
+                            if (!whatIf) fsc.InsertBatchGroup(jo);
+                            if (i % 100 == 0)
                             {
                                 traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
                                 s2.Restart();
                             }
                         }
+                        else
+                        {
+                            if (!whatIf) fbcc.Insert(BatchGroup.FromJObject(jo));
+                            if (i % 1000 == 0)
+                            {
+                                fbcc.Commit();
+                                if (i % 10000 == 0)
+                                {
+                                    traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
+                                    s2.Restart();
+                                }
+                            }
+                        }
+                    }
+                    catch (Exception e)
+                    {
+                        traceSource.TraceEvent(TraceEventType.Error, 0, $"{e}\r\n{jo}");
+                        if (!force || e.Message.Contains("Connection was closed")) throw;
                     }
                 }
                 fbcc.Commit();
@@ -2178,22 +2218,30 @@ namespace FolioConsoleApplication
                         var l = js.Validate(jo);
                         if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"BatchVoucher {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"BatchVoucher {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}: {jo}");
                     }
-                    if (api)
+                    try
                     {
-                        throw new NotSupportedException();
-                    }
-                    else
-                    {
-                        if (!whatIf) fbcc.Insert(BatchVoucher.FromJObject(jo));
-                        if (i % 1000 == 0)
+                        if (api)
                         {
-                            fbcc.Commit();
-                            if (i % 10000 == 0)
+                            throw new NotSupportedException();
+                        }
+                        else
+                        {
+                            if (!whatIf) fbcc.Insert(BatchVoucher.FromJObject(jo));
+                            if (i % 1000 == 0)
                             {
-                                traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
-                                s2.Restart();
+                                fbcc.Commit();
+                                if (i % 10000 == 0)
+                                {
+                                    traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
+                                    s2.Restart();
+                                }
                             }
                         }
+                    }
+                    catch (Exception e)
+                    {
+                        traceSource.TraceEvent(TraceEventType.Error, 0, $"{e}\r\n{jo}");
+                        if (!force || e.Message.Contains("Connection was closed")) throw;
                     }
                 }
                 fbcc.Commit();
@@ -2311,27 +2359,35 @@ namespace FolioConsoleApplication
                         var l = js.Validate(jo);
                         if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"BatchVoucherExport {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"BatchVoucherExport {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}: {jo}");
                     }
-                    if (api)
+                    try
                     {
-                        if (!whatIf) fsc.InsertBatchVoucherExport(jo);
-                        if (i % 100 == 0)
+                        if (api)
                         {
-                            traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
-                            s2.Restart();
-                        }
-                    }
-                    else
-                    {
-                        if (!whatIf) fbcc.Insert(BatchVoucherExport.FromJObject(jo));
-                        if (i % 1000 == 0)
-                        {
-                            fbcc.Commit();
-                            if (i % 10000 == 0)
+                            if (!whatIf) fsc.InsertBatchVoucherExport(jo);
+                            if (i % 100 == 0)
                             {
                                 traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
                                 s2.Restart();
                             }
                         }
+                        else
+                        {
+                            if (!whatIf) fbcc.Insert(BatchVoucherExport.FromJObject(jo));
+                            if (i % 1000 == 0)
+                            {
+                                fbcc.Commit();
+                                if (i % 10000 == 0)
+                                {
+                                    traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
+                                    s2.Restart();
+                                }
+                            }
+                        }
+                    }
+                    catch (Exception e)
+                    {
+                        traceSource.TraceEvent(TraceEventType.Error, 0, $"{e}\r\n{jo}");
+                        if (!force || e.Message.Contains("Connection was closed")) throw;
                     }
                 }
                 fbcc.Commit();
@@ -2450,27 +2506,35 @@ namespace FolioConsoleApplication
                         var l = js.Validate(jo);
                         if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"BatchVoucherExportConfig {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"BatchVoucherExportConfig {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}: {jo}");
                     }
-                    if (api)
+                    try
                     {
-                        if (!whatIf) fsc.InsertBatchVoucherExportConfig(jo);
-                        if (i % 100 == 0)
+                        if (api)
                         {
-                            traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
-                            s2.Restart();
-                        }
-                    }
-                    else
-                    {
-                        if (!whatIf) fbcc.Insert(BatchVoucherExportConfig.FromJObject(jo));
-                        if (i % 1000 == 0)
-                        {
-                            fbcc.Commit();
-                            if (i % 10000 == 0)
+                            if (!whatIf) fsc.InsertBatchVoucherExportConfig(jo);
+                            if (i % 100 == 0)
                             {
                                 traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
                                 s2.Restart();
                             }
                         }
+                        else
+                        {
+                            if (!whatIf) fbcc.Insert(BatchVoucherExportConfig.FromJObject(jo));
+                            if (i % 1000 == 0)
+                            {
+                                fbcc.Commit();
+                                if (i % 10000 == 0)
+                                {
+                                    traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
+                                    s2.Restart();
+                                }
+                            }
+                        }
+                    }
+                    catch (Exception e)
+                    {
+                        traceSource.TraceEvent(TraceEventType.Error, 0, $"{e}\r\n{jo}");
+                        if (!force || e.Message.Contains("Connection was closed")) throw;
                     }
                 }
                 fbcc.Commit();
@@ -2589,27 +2653,35 @@ namespace FolioConsoleApplication
                         var l = js.Validate(jo);
                         if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"Block {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"Block {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}: {jo}");
                     }
-                    if (api)
+                    try
                     {
-                        if (!whatIf) fsc.InsertBlock(jo);
-                        if (i % 100 == 0)
+                        if (api)
                         {
-                            traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
-                            s2.Restart();
-                        }
-                    }
-                    else
-                    {
-                        if (!whatIf) fbcc.Insert(Block.FromJObject(jo));
-                        if (i % 1000 == 0)
-                        {
-                            fbcc.Commit();
-                            if (i % 10000 == 0)
+                            if (!whatIf) fsc.InsertBlock(jo);
+                            if (i % 100 == 0)
                             {
                                 traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
                                 s2.Restart();
                             }
                         }
+                        else
+                        {
+                            if (!whatIf) fbcc.Insert(Block.FromJObject(jo));
+                            if (i % 1000 == 0)
+                            {
+                                fbcc.Commit();
+                                if (i % 10000 == 0)
+                                {
+                                    traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
+                                    s2.Restart();
+                                }
+                            }
+                        }
+                    }
+                    catch (Exception e)
+                    {
+                        traceSource.TraceEvent(TraceEventType.Error, 0, $"{e}\r\n{jo}");
+                        if (!force || e.Message.Contains("Connection was closed")) throw;
                     }
                 }
                 fbcc.Commit();
@@ -2728,27 +2800,35 @@ namespace FolioConsoleApplication
                         var l = js.Validate(jo);
                         if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"BlockCondition {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"BlockCondition {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}: {jo}");
                     }
-                    if (api)
+                    try
                     {
-                        if (!whatIf) fsc.InsertBlockCondition(jo);
-                        if (i % 100 == 0)
+                        if (api)
                         {
-                            traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
-                            s2.Restart();
-                        }
-                    }
-                    else
-                    {
-                        if (!whatIf) fbcc.Insert(BlockCondition.FromJObject(jo));
-                        if (i % 1000 == 0)
-                        {
-                            fbcc.Commit();
-                            if (i % 10000 == 0)
+                            if (!whatIf) fsc.InsertBlockCondition(jo);
+                            if (i % 100 == 0)
                             {
                                 traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
                                 s2.Restart();
                             }
                         }
+                        else
+                        {
+                            if (!whatIf) fbcc.Insert(BlockCondition.FromJObject(jo));
+                            if (i % 1000 == 0)
+                            {
+                                fbcc.Commit();
+                                if (i % 10000 == 0)
+                                {
+                                    traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
+                                    s2.Restart();
+                                }
+                            }
+                        }
+                    }
+                    catch (Exception e)
+                    {
+                        traceSource.TraceEvent(TraceEventType.Error, 0, $"{e}\r\n{jo}");
+                        if (!force || e.Message.Contains("Connection was closed")) throw;
                     }
                 }
                 fbcc.Commit();
@@ -2867,27 +2947,35 @@ namespace FolioConsoleApplication
                         var l = js.Validate(jo);
                         if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"BlockLimit {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"BlockLimit {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}: {jo}");
                     }
-                    if (api)
+                    try
                     {
-                        if (!whatIf) fsc.InsertBlockLimit(jo);
-                        if (i % 100 == 0)
+                        if (api)
                         {
-                            traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
-                            s2.Restart();
-                        }
-                    }
-                    else
-                    {
-                        if (!whatIf) fbcc.Insert(BlockLimit.FromJObject(jo));
-                        if (i % 1000 == 0)
-                        {
-                            fbcc.Commit();
-                            if (i % 10000 == 0)
+                            if (!whatIf) fsc.InsertBlockLimit(jo);
+                            if (i % 100 == 0)
                             {
                                 traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
                                 s2.Restart();
                             }
                         }
+                        else
+                        {
+                            if (!whatIf) fbcc.Insert(BlockLimit.FromJObject(jo));
+                            if (i % 1000 == 0)
+                            {
+                                fbcc.Commit();
+                                if (i % 10000 == 0)
+                                {
+                                    traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
+                                    s2.Restart();
+                                }
+                            }
+                        }
+                    }
+                    catch (Exception e)
+                    {
+                        traceSource.TraceEvent(TraceEventType.Error, 0, $"{e}\r\n{jo}");
+                        if (!force || e.Message.Contains("Connection was closed")) throw;
                     }
                 }
                 fbcc.Commit();
@@ -3006,27 +3094,35 @@ namespace FolioConsoleApplication
                         var l = js.Validate(jo);
                         if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"BoundWithPart {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"BoundWithPart {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}: {jo}");
                     }
-                    if (api)
+                    try
                     {
-                        if (!whatIf) fsc.InsertBoundWithPart(jo);
-                        if (i % 100 == 0)
+                        if (api)
                         {
-                            traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
-                            s2.Restart();
-                        }
-                    }
-                    else
-                    {
-                        if (!whatIf) fbcc.Insert(BoundWithPart.FromJObject(jo));
-                        if (i % 1000 == 0)
-                        {
-                            fbcc.Commit();
-                            if (i % 10000 == 0)
+                            if (!whatIf) fsc.InsertBoundWithPart(jo);
+                            if (i % 100 == 0)
                             {
                                 traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
                                 s2.Restart();
                             }
                         }
+                        else
+                        {
+                            if (!whatIf) fbcc.Insert(BoundWithPart.FromJObject(jo));
+                            if (i % 1000 == 0)
+                            {
+                                fbcc.Commit();
+                                if (i % 10000 == 0)
+                                {
+                                    traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
+                                    s2.Restart();
+                                }
+                            }
+                        }
+                    }
+                    catch (Exception e)
+                    {
+                        traceSource.TraceEvent(TraceEventType.Error, 0, $"{e}\r\n{jo}");
+                        if (!force || e.Message.Contains("Connection was closed")) throw;
                     }
                 }
                 fbcc.Commit();
@@ -3145,27 +3241,35 @@ namespace FolioConsoleApplication
                         var l = js.Validate(jo);
                         if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"Budget {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"Budget {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}: {jo}");
                     }
-                    if (api)
+                    try
                     {
-                        if (!whatIf) fsc.InsertBudget(jo);
-                        if (i % 100 == 0)
+                        if (api)
                         {
-                            traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
-                            s2.Restart();
-                        }
-                    }
-                    else
-                    {
-                        if (!whatIf) fbcc.Insert(Budget.FromJObject(jo));
-                        if (i % 1000 == 0)
-                        {
-                            fbcc.Commit();
-                            if (i % 10000 == 0)
+                            if (!whatIf) fsc.InsertBudget(jo);
+                            if (i % 100 == 0)
                             {
                                 traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
                                 s2.Restart();
                             }
                         }
+                        else
+                        {
+                            if (!whatIf) fbcc.Insert(Budget.FromJObject(jo));
+                            if (i % 1000 == 0)
+                            {
+                                fbcc.Commit();
+                                if (i % 10000 == 0)
+                                {
+                                    traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
+                                    s2.Restart();
+                                }
+                            }
+                        }
+                    }
+                    catch (Exception e)
+                    {
+                        traceSource.TraceEvent(TraceEventType.Error, 0, $"{e}\r\n{jo}");
+                        if (!force || e.Message.Contains("Connection was closed")) throw;
                     }
                 }
                 fbcc.Commit();
@@ -3284,27 +3388,35 @@ namespace FolioConsoleApplication
                         var l = js.Validate(jo);
                         if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"BudgetExpenseClass {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"BudgetExpenseClass {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}: {jo}");
                     }
-                    if (api)
+                    try
                     {
-                        if (!whatIf) fsc.InsertBudgetExpenseClass(jo);
-                        if (i % 100 == 0)
+                        if (api)
                         {
-                            traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
-                            s2.Restart();
-                        }
-                    }
-                    else
-                    {
-                        if (!whatIf) fbcc.Insert(BudgetExpenseClass.FromJObject(jo));
-                        if (i % 1000 == 0)
-                        {
-                            fbcc.Commit();
-                            if (i % 10000 == 0)
+                            if (!whatIf) fsc.InsertBudgetExpenseClass(jo);
+                            if (i % 100 == 0)
                             {
                                 traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
                                 s2.Restart();
                             }
                         }
+                        else
+                        {
+                            if (!whatIf) fbcc.Insert(BudgetExpenseClass.FromJObject(jo));
+                            if (i % 1000 == 0)
+                            {
+                                fbcc.Commit();
+                                if (i % 10000 == 0)
+                                {
+                                    traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
+                                    s2.Restart();
+                                }
+                            }
+                        }
+                    }
+                    catch (Exception e)
+                    {
+                        traceSource.TraceEvent(TraceEventType.Error, 0, $"{e}\r\n{jo}");
+                        if (!force || e.Message.Contains("Connection was closed")) throw;
                     }
                 }
                 fbcc.Commit();
@@ -3423,27 +3535,35 @@ namespace FolioConsoleApplication
                         var l = js.Validate(jo);
                         if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"BudgetGroup {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"BudgetGroup {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}: {jo}");
                     }
-                    if (api)
+                    try
                     {
-                        if (!whatIf) fsc.InsertBudgetGroup(jo);
-                        if (i % 100 == 0)
+                        if (api)
                         {
-                            traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
-                            s2.Restart();
-                        }
-                    }
-                    else
-                    {
-                        if (!whatIf) fbcc.Insert(BudgetGroup.FromJObject(jo));
-                        if (i % 1000 == 0)
-                        {
-                            fbcc.Commit();
-                            if (i % 10000 == 0)
+                            if (!whatIf) fsc.InsertBudgetGroup(jo);
+                            if (i % 100 == 0)
                             {
                                 traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
                                 s2.Restart();
                             }
                         }
+                        else
+                        {
+                            if (!whatIf) fbcc.Insert(BudgetGroup.FromJObject(jo));
+                            if (i % 1000 == 0)
+                            {
+                                fbcc.Commit();
+                                if (i % 10000 == 0)
+                                {
+                                    traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
+                                    s2.Restart();
+                                }
+                            }
+                        }
+                    }
+                    catch (Exception e)
+                    {
+                        traceSource.TraceEvent(TraceEventType.Error, 0, $"{e}\r\n{jo}");
+                        if (!force || e.Message.Contains("Connection was closed")) throw;
                     }
                 }
                 fbcc.Commit();
@@ -3562,27 +3682,35 @@ namespace FolioConsoleApplication
                         var l = js.Validate(jo);
                         if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"CallNumberType {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"CallNumberType {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}: {jo}");
                     }
-                    if (api)
+                    try
                     {
-                        if (!whatIf) fsc.InsertCallNumberType(jo);
-                        if (i % 100 == 0)
+                        if (api)
                         {
-                            traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
-                            s2.Restart();
-                        }
-                    }
-                    else
-                    {
-                        if (!whatIf) fbcc.Insert(CallNumberType.FromJObject(jo));
-                        if (i % 1000 == 0)
-                        {
-                            fbcc.Commit();
-                            if (i % 10000 == 0)
+                            if (!whatIf) fsc.InsertCallNumberType(jo);
+                            if (i % 100 == 0)
                             {
                                 traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
                                 s2.Restart();
                             }
                         }
+                        else
+                        {
+                            if (!whatIf) fbcc.Insert(CallNumberType.FromJObject(jo));
+                            if (i % 1000 == 0)
+                            {
+                                fbcc.Commit();
+                                if (i % 10000 == 0)
+                                {
+                                    traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
+                                    s2.Restart();
+                                }
+                            }
+                        }
+                    }
+                    catch (Exception e)
+                    {
+                        traceSource.TraceEvent(TraceEventType.Error, 0, $"{e}\r\n{jo}");
+                        if (!force || e.Message.Contains("Connection was closed")) throw;
                     }
                 }
                 fbcc.Commit();
@@ -3701,27 +3829,35 @@ namespace FolioConsoleApplication
                         var l = js.Validate(jo);
                         if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"Campus {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"Campus {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}: {jo}");
                     }
-                    if (api)
+                    try
                     {
-                        if (!whatIf) fsc.InsertCampus(jo);
-                        if (i % 100 == 0)
+                        if (api)
                         {
-                            traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
-                            s2.Restart();
-                        }
-                    }
-                    else
-                    {
-                        if (!whatIf) fbcc.Insert(Campus.FromJObject(jo));
-                        if (i % 1000 == 0)
-                        {
-                            fbcc.Commit();
-                            if (i % 10000 == 0)
+                            if (!whatIf) fsc.InsertCampus(jo);
+                            if (i % 100 == 0)
                             {
                                 traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
                                 s2.Restart();
                             }
                         }
+                        else
+                        {
+                            if (!whatIf) fbcc.Insert(Campus.FromJObject(jo));
+                            if (i % 1000 == 0)
+                            {
+                                fbcc.Commit();
+                                if (i % 10000 == 0)
+                                {
+                                    traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
+                                    s2.Restart();
+                                }
+                            }
+                        }
+                    }
+                    catch (Exception e)
+                    {
+                        traceSource.TraceEvent(TraceEventType.Error, 0, $"{e}\r\n{jo}");
+                        if (!force || e.Message.Contains("Connection was closed")) throw;
                     }
                 }
                 fbcc.Commit();
@@ -3840,27 +3976,35 @@ namespace FolioConsoleApplication
                         var l = js.Validate(jo);
                         if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"CancellationReason {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"CancellationReason {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}: {jo}");
                     }
-                    if (api)
+                    try
                     {
-                        if (!whatIf) fsc.InsertCancellationReason(jo);
-                        if (i % 100 == 0)
+                        if (api)
                         {
-                            traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
-                            s2.Restart();
-                        }
-                    }
-                    else
-                    {
-                        if (!whatIf) fbcc.Insert(CancellationReason.FromJObject(jo));
-                        if (i % 1000 == 0)
-                        {
-                            fbcc.Commit();
-                            if (i % 10000 == 0)
+                            if (!whatIf) fsc.InsertCancellationReason(jo);
+                            if (i % 100 == 0)
                             {
                                 traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
                                 s2.Restart();
                             }
                         }
+                        else
+                        {
+                            if (!whatIf) fbcc.Insert(CancellationReason.FromJObject(jo));
+                            if (i % 1000 == 0)
+                            {
+                                fbcc.Commit();
+                                if (i % 10000 == 0)
+                                {
+                                    traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
+                                    s2.Restart();
+                                }
+                            }
+                        }
+                    }
+                    catch (Exception e)
+                    {
+                        traceSource.TraceEvent(TraceEventType.Error, 0, $"{e}\r\n{jo}");
+                        if (!force || e.Message.Contains("Connection was closed")) throw;
                     }
                 }
                 fbcc.Commit();
@@ -3979,27 +4123,35 @@ namespace FolioConsoleApplication
                         var l = js.Validate(jo);
                         if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"Category {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"Category {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}: {jo}");
                     }
-                    if (api)
+                    try
                     {
-                        if (!whatIf) fsc.InsertCategory(jo);
-                        if (i % 100 == 0)
+                        if (api)
                         {
-                            traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
-                            s2.Restart();
-                        }
-                    }
-                    else
-                    {
-                        if (!whatIf) fbcc.Insert(Category.FromJObject(jo));
-                        if (i % 1000 == 0)
-                        {
-                            fbcc.Commit();
-                            if (i % 10000 == 0)
+                            if (!whatIf) fsc.InsertCategory(jo);
+                            if (i % 100 == 0)
                             {
                                 traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
                                 s2.Restart();
                             }
                         }
+                        else
+                        {
+                            if (!whatIf) fbcc.Insert(Category.FromJObject(jo));
+                            if (i % 1000 == 0)
+                            {
+                                fbcc.Commit();
+                                if (i % 10000 == 0)
+                                {
+                                    traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
+                                    s2.Restart();
+                                }
+                            }
+                        }
+                    }
+                    catch (Exception e)
+                    {
+                        traceSource.TraceEvent(TraceEventType.Error, 0, $"{e}\r\n{jo}");
+                        if (!force || e.Message.Contains("Connection was closed")) throw;
                     }
                 }
                 fbcc.Commit();
@@ -4118,27 +4270,35 @@ namespace FolioConsoleApplication
                         var l = js.Validate(jo);
                         if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"CheckIn {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"CheckIn {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}: {jo}");
                     }
-                    if (api)
+                    try
                     {
-                        if (!whatIf) fsc.InsertCheckIn(jo);
-                        if (i % 100 == 0)
+                        if (api)
                         {
-                            traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
-                            s2.Restart();
-                        }
-                    }
-                    else
-                    {
-                        if (!whatIf) fbcc.Insert(CheckIn.FromJObject(jo));
-                        if (i % 1000 == 0)
-                        {
-                            fbcc.Commit();
-                            if (i % 10000 == 0)
+                            if (!whatIf) fsc.InsertCheckIn(jo);
+                            if (i % 100 == 0)
                             {
                                 traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
                                 s2.Restart();
                             }
                         }
+                        else
+                        {
+                            if (!whatIf) fbcc.Insert(CheckIn.FromJObject(jo));
+                            if (i % 1000 == 0)
+                            {
+                                fbcc.Commit();
+                                if (i % 10000 == 0)
+                                {
+                                    traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
+                                    s2.Restart();
+                                }
+                            }
+                        }
+                    }
+                    catch (Exception e)
+                    {
+                        traceSource.TraceEvent(TraceEventType.Error, 0, $"{e}\r\n{jo}");
+                        if (!force || e.Message.Contains("Connection was closed")) throw;
                     }
                 }
                 fbcc.Commit();
@@ -4246,27 +4406,35 @@ namespace FolioConsoleApplication
                         var l = js.Validate(jo);
                         if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"CirculationRule {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"CirculationRule {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}: {jo}");
                     }
-                    if (api)
+                    try
                     {
-                        if (!whatIf) fsc.UpdateCirculationRule(jo);
-                        if (i % 100 == 0)
+                        if (api)
                         {
-                            traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
-                            s2.Restart();
-                        }
-                    }
-                    else
-                    {
-                        if (!whatIf) fbcc.Insert(CirculationRule.FromJObject(jo));
-                        if (i % 1000 == 0)
-                        {
-                            fbcc.Commit();
-                            if (i % 10000 == 0)
+                            if (!whatIf) fsc.UpdateCirculationRule(jo);
+                            if (i % 100 == 0)
                             {
                                 traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
                                 s2.Restart();
                             }
                         }
+                        else
+                        {
+                            if (!whatIf) fbcc.Insert(CirculationRule.FromJObject(jo));
+                            if (i % 1000 == 0)
+                            {
+                                fbcc.Commit();
+                                if (i % 10000 == 0)
+                                {
+                                    traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
+                                    s2.Restart();
+                                }
+                            }
+                        }
+                    }
+                    catch (Exception e)
+                    {
+                        traceSource.TraceEvent(TraceEventType.Error, 0, $"{e}\r\n{jo}");
+                        if (!force || e.Message.Contains("Connection was closed")) throw;
                     }
                 }
                 fbcc.Commit();
@@ -4385,27 +4553,35 @@ namespace FolioConsoleApplication
                         var l = js.Validate(jo);
                         if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"ClassificationType {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"ClassificationType {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}: {jo}");
                     }
-                    if (api)
+                    try
                     {
-                        if (!whatIf) fsc.InsertClassificationType(jo);
-                        if (i % 100 == 0)
+                        if (api)
                         {
-                            traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
-                            s2.Restart();
-                        }
-                    }
-                    else
-                    {
-                        if (!whatIf) fbcc.Insert(ClassificationType.FromJObject(jo));
-                        if (i % 1000 == 0)
-                        {
-                            fbcc.Commit();
-                            if (i % 10000 == 0)
+                            if (!whatIf) fsc.InsertClassificationType(jo);
+                            if (i % 100 == 0)
                             {
                                 traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
                                 s2.Restart();
                             }
                         }
+                        else
+                        {
+                            if (!whatIf) fbcc.Insert(ClassificationType.FromJObject(jo));
+                            if (i % 1000 == 0)
+                            {
+                                fbcc.Commit();
+                                if (i % 10000 == 0)
+                                {
+                                    traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
+                                    s2.Restart();
+                                }
+                            }
+                        }
+                    }
+                    catch (Exception e)
+                    {
+                        traceSource.TraceEvent(TraceEventType.Error, 0, $"{e}\r\n{jo}");
+                        if (!force || e.Message.Contains("Connection was closed")) throw;
                     }
                 }
                 fbcc.Commit();
@@ -4524,27 +4700,35 @@ namespace FolioConsoleApplication
                         var l = js.Validate(jo);
                         if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"CloseReason {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"CloseReason {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}: {jo}");
                     }
-                    if (api)
+                    try
                     {
-                        if (!whatIf) fsc.InsertCloseReason(jo);
-                        if (i % 100 == 0)
+                        if (api)
                         {
-                            traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
-                            s2.Restart();
-                        }
-                    }
-                    else
-                    {
-                        if (!whatIf) fbcc.Insert(CloseReason.FromJObject(jo));
-                        if (i % 1000 == 0)
-                        {
-                            fbcc.Commit();
-                            if (i % 10000 == 0)
+                            if (!whatIf) fsc.InsertCloseReason(jo);
+                            if (i % 100 == 0)
                             {
                                 traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
                                 s2.Restart();
                             }
                         }
+                        else
+                        {
+                            if (!whatIf) fbcc.Insert(CloseReason.FromJObject(jo));
+                            if (i % 1000 == 0)
+                            {
+                                fbcc.Commit();
+                                if (i % 10000 == 0)
+                                {
+                                    traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
+                                    s2.Restart();
+                                }
+                            }
+                        }
+                    }
+                    catch (Exception e)
+                    {
+                        traceSource.TraceEvent(TraceEventType.Error, 0, $"{e}\r\n{jo}");
+                        if (!force || e.Message.Contains("Connection was closed")) throw;
                     }
                 }
                 fbcc.Commit();
@@ -4663,27 +4847,35 @@ namespace FolioConsoleApplication
                         var l = js.Validate(jo);
                         if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"Comment {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"Comment {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}: {jo}");
                     }
-                    if (api)
+                    try
                     {
-                        if (!whatIf) fsc.InsertComment(jo);
-                        if (i % 100 == 0)
+                        if (api)
                         {
-                            traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
-                            s2.Restart();
-                        }
-                    }
-                    else
-                    {
-                        if (!whatIf) fbcc.Insert(Comment.FromJObject(jo));
-                        if (i % 1000 == 0)
-                        {
-                            fbcc.Commit();
-                            if (i % 10000 == 0)
+                            if (!whatIf) fsc.InsertComment(jo);
+                            if (i % 100 == 0)
                             {
                                 traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
                                 s2.Restart();
                             }
                         }
+                        else
+                        {
+                            if (!whatIf) fbcc.Insert(Comment.FromJObject(jo));
+                            if (i % 1000 == 0)
+                            {
+                                fbcc.Commit();
+                                if (i % 10000 == 0)
+                                {
+                                    traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
+                                    s2.Restart();
+                                }
+                            }
+                        }
+                    }
+                    catch (Exception e)
+                    {
+                        traceSource.TraceEvent(TraceEventType.Error, 0, $"{e}\r\n{jo}");
+                        if (!force || e.Message.Contains("Connection was closed")) throw;
                     }
                 }
                 fbcc.Commit();
@@ -4802,27 +4994,35 @@ namespace FolioConsoleApplication
                         var l = js.Validate(jo);
                         if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"Configuration {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"Configuration {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}: {jo}");
                     }
-                    if (api)
+                    try
                     {
-                        if (!whatIf) fsc.InsertConfiguration(jo);
-                        if (i % 100 == 0)
+                        if (api)
                         {
-                            traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
-                            s2.Restart();
-                        }
-                    }
-                    else
-                    {
-                        if (!whatIf) fbcc.Insert(Configuration.FromJObject(jo));
-                        if (i % 1000 == 0)
-                        {
-                            fbcc.Commit();
-                            if (i % 10000 == 0)
+                            if (!whatIf) fsc.InsertConfiguration(jo);
+                            if (i % 100 == 0)
                             {
                                 traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
                                 s2.Restart();
                             }
                         }
+                        else
+                        {
+                            if (!whatIf) fbcc.Insert(Configuration.FromJObject(jo));
+                            if (i % 1000 == 0)
+                            {
+                                fbcc.Commit();
+                                if (i % 10000 == 0)
+                                {
+                                    traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
+                                    s2.Restart();
+                                }
+                            }
+                        }
+                    }
+                    catch (Exception e)
+                    {
+                        traceSource.TraceEvent(TraceEventType.Error, 0, $"{e}\r\n{jo}");
+                        if (!force || e.Message.Contains("Connection was closed")) throw;
                     }
                 }
                 fbcc.Commit();
@@ -4941,27 +5141,35 @@ namespace FolioConsoleApplication
                         var l = js.Validate(jo);
                         if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"Contact {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"Contact {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}: {jo}");
                     }
-                    if (api)
+                    try
                     {
-                        if (!whatIf) fsc.InsertContact(jo);
-                        if (i % 100 == 0)
+                        if (api)
                         {
-                            traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
-                            s2.Restart();
-                        }
-                    }
-                    else
-                    {
-                        if (!whatIf) fbcc.Insert(Contact.FromJObject(jo));
-                        if (i % 1000 == 0)
-                        {
-                            fbcc.Commit();
-                            if (i % 10000 == 0)
+                            if (!whatIf) fsc.InsertContact(jo);
+                            if (i % 100 == 0)
                             {
                                 traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
                                 s2.Restart();
                             }
                         }
+                        else
+                        {
+                            if (!whatIf) fbcc.Insert(Contact.FromJObject(jo));
+                            if (i % 1000 == 0)
+                            {
+                                fbcc.Commit();
+                                if (i % 10000 == 0)
+                                {
+                                    traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
+                                    s2.Restart();
+                                }
+                            }
+                        }
+                    }
+                    catch (Exception e)
+                    {
+                        traceSource.TraceEvent(TraceEventType.Error, 0, $"{e}\r\n{jo}");
+                        if (!force || e.Message.Contains("Connection was closed")) throw;
                     }
                 }
                 fbcc.Commit();
@@ -5080,27 +5288,35 @@ namespace FolioConsoleApplication
                         var l = js.Validate(jo);
                         if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"ContributorNameType {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"ContributorNameType {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}: {jo}");
                     }
-                    if (api)
+                    try
                     {
-                        if (!whatIf) fsc.InsertContributorNameType(jo);
-                        if (i % 100 == 0)
+                        if (api)
                         {
-                            traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
-                            s2.Restart();
-                        }
-                    }
-                    else
-                    {
-                        if (!whatIf) fbcc.Insert(ContributorNameType.FromJObject(jo));
-                        if (i % 1000 == 0)
-                        {
-                            fbcc.Commit();
-                            if (i % 10000 == 0)
+                            if (!whatIf) fsc.InsertContributorNameType(jo);
+                            if (i % 100 == 0)
                             {
                                 traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
                                 s2.Restart();
                             }
                         }
+                        else
+                        {
+                            if (!whatIf) fbcc.Insert(ContributorNameType.FromJObject(jo));
+                            if (i % 1000 == 0)
+                            {
+                                fbcc.Commit();
+                                if (i % 10000 == 0)
+                                {
+                                    traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
+                                    s2.Restart();
+                                }
+                            }
+                        }
+                    }
+                    catch (Exception e)
+                    {
+                        traceSource.TraceEvent(TraceEventType.Error, 0, $"{e}\r\n{jo}");
+                        if (!force || e.Message.Contains("Connection was closed")) throw;
                     }
                 }
                 fbcc.Commit();
@@ -5219,27 +5435,35 @@ namespace FolioConsoleApplication
                         var l = js.Validate(jo);
                         if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"ContributorType {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"ContributorType {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}: {jo}");
                     }
-                    if (api)
+                    try
                     {
-                        if (!whatIf) fsc.InsertContributorType(jo);
-                        if (i % 100 == 0)
+                        if (api)
                         {
-                            traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
-                            s2.Restart();
-                        }
-                    }
-                    else
-                    {
-                        if (!whatIf) fbcc.Insert(ContributorType.FromJObject(jo));
-                        if (i % 1000 == 0)
-                        {
-                            fbcc.Commit();
-                            if (i % 10000 == 0)
+                            if (!whatIf) fsc.InsertContributorType(jo);
+                            if (i % 100 == 0)
                             {
                                 traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
                                 s2.Restart();
                             }
                         }
+                        else
+                        {
+                            if (!whatIf) fbcc.Insert(ContributorType.FromJObject(jo));
+                            if (i % 1000 == 0)
+                            {
+                                fbcc.Commit();
+                                if (i % 10000 == 0)
+                                {
+                                    traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
+                                    s2.Restart();
+                                }
+                            }
+                        }
+                    }
+                    catch (Exception e)
+                    {
+                        traceSource.TraceEvent(TraceEventType.Error, 0, $"{e}\r\n{jo}");
+                        if (!force || e.Message.Contains("Connection was closed")) throw;
                     }
                 }
                 fbcc.Commit();
@@ -5358,27 +5582,35 @@ namespace FolioConsoleApplication
                         var l = js.Validate(jo);
                         if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"CustomField {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"CustomField {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}: {jo}");
                     }
-                    if (api)
+                    try
                     {
-                        if (!whatIf) fsc.InsertCustomField(jo);
-                        if (i % 100 == 0)
+                        if (api)
                         {
-                            traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
-                            s2.Restart();
-                        }
-                    }
-                    else
-                    {
-                        if (!whatIf) fbcc.Insert(CustomField.FromJObject(jo));
-                        if (i % 1000 == 0)
-                        {
-                            fbcc.Commit();
-                            if (i % 10000 == 0)
+                            if (!whatIf) fsc.InsertCustomField(jo);
+                            if (i % 100 == 0)
                             {
                                 traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
                                 s2.Restart();
                             }
                         }
+                        else
+                        {
+                            if (!whatIf) fbcc.Insert(CustomField.FromJObject(jo));
+                            if (i % 1000 == 0)
+                            {
+                                fbcc.Commit();
+                                if (i % 10000 == 0)
+                                {
+                                    traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
+                                    s2.Restart();
+                                }
+                            }
+                        }
+                    }
+                    catch (Exception e)
+                    {
+                        traceSource.TraceEvent(TraceEventType.Error, 0, $"{e}\r\n{jo}");
+                        if (!force || e.Message.Contains("Connection was closed")) throw;
                     }
                 }
                 fbcc.Commit();
@@ -5497,27 +5729,35 @@ namespace FolioConsoleApplication
                         var l = js.Validate(jo);
                         if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"Department {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"Department {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}: {jo}");
                     }
-                    if (api)
+                    try
                     {
-                        if (!whatIf) fsc.InsertDepartment(jo);
-                        if (i % 100 == 0)
+                        if (api)
                         {
-                            traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
-                            s2.Restart();
-                        }
-                    }
-                    else
-                    {
-                        if (!whatIf) fbcc.Insert(Department.FromJObject(jo));
-                        if (i % 1000 == 0)
-                        {
-                            fbcc.Commit();
-                            if (i % 10000 == 0)
+                            if (!whatIf) fsc.InsertDepartment(jo);
+                            if (i % 100 == 0)
                             {
                                 traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
                                 s2.Restart();
                             }
                         }
+                        else
+                        {
+                            if (!whatIf) fbcc.Insert(Department.FromJObject(jo));
+                            if (i % 1000 == 0)
+                            {
+                                fbcc.Commit();
+                                if (i % 10000 == 0)
+                                {
+                                    traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
+                                    s2.Restart();
+                                }
+                            }
+                        }
+                    }
+                    catch (Exception e)
+                    {
+                        traceSource.TraceEvent(TraceEventType.Error, 0, $"{e}\r\n{jo}");
+                        if (!force || e.Message.Contains("Connection was closed")) throw;
                     }
                 }
                 fbcc.Commit();
@@ -5623,22 +5863,30 @@ namespace FolioConsoleApplication
                         var l = js.Validate(jo);
                         if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"Document {jo["documentMetadata.id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"Document {jo["documentMetadata.id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}: {jo}");
                     }
-                    if (api)
+                    try
                     {
-                        throw new NotSupportedException();
-                    }
-                    else
-                    {
-                        if (!whatIf) fbcc.Insert(Document.FromJObject(jo));
-                        if (i % 1000 == 0)
+                        if (api)
                         {
-                            fbcc.Commit();
-                            if (i % 10000 == 0)
+                            throw new NotSupportedException();
+                        }
+                        else
+                        {
+                            if (!whatIf) fbcc.Insert(Document.FromJObject(jo));
+                            if (i % 1000 == 0)
                             {
-                                traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
-                                s2.Restart();
+                                fbcc.Commit();
+                                if (i % 10000 == 0)
+                                {
+                                    traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
+                                    s2.Restart();
+                                }
                             }
                         }
+                    }
+                    catch (Exception e)
+                    {
+                        traceSource.TraceEvent(TraceEventType.Error, 0, $"{e}\r\n{jo}");
+                        if (!force || e.Message.Contains("Connection was closed")) throw;
                     }
                 }
                 fbcc.Commit();
@@ -5756,27 +6004,35 @@ namespace FolioConsoleApplication
                         var l = js.Validate(jo);
                         if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"ElectronicAccessRelationship {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"ElectronicAccessRelationship {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}: {jo}");
                     }
-                    if (api)
+                    try
                     {
-                        if (!whatIf) fsc.InsertElectronicAccessRelationship(jo);
-                        if (i % 100 == 0)
+                        if (api)
                         {
-                            traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
-                            s2.Restart();
-                        }
-                    }
-                    else
-                    {
-                        if (!whatIf) fbcc.Insert(ElectronicAccessRelationship.FromJObject(jo));
-                        if (i % 1000 == 0)
-                        {
-                            fbcc.Commit();
-                            if (i % 10000 == 0)
+                            if (!whatIf) fsc.InsertElectronicAccessRelationship(jo);
+                            if (i % 100 == 0)
                             {
                                 traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
                                 s2.Restart();
                             }
                         }
+                        else
+                        {
+                            if (!whatIf) fbcc.Insert(ElectronicAccessRelationship.FromJObject(jo));
+                            if (i % 1000 == 0)
+                            {
+                                fbcc.Commit();
+                                if (i % 10000 == 0)
+                                {
+                                    traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
+                                    s2.Restart();
+                                }
+                            }
+                        }
+                    }
+                    catch (Exception e)
+                    {
+                        traceSource.TraceEvent(TraceEventType.Error, 0, $"{e}\r\n{jo}");
+                        if (!force || e.Message.Contains("Connection was closed")) throw;
                     }
                 }
                 fbcc.Commit();
@@ -5895,27 +6151,35 @@ namespace FolioConsoleApplication
                         var l = js.Validate(jo);
                         if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"ExpenseClass {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"ExpenseClass {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}: {jo}");
                     }
-                    if (api)
+                    try
                     {
-                        if (!whatIf) fsc.InsertExpenseClass(jo);
-                        if (i % 100 == 0)
+                        if (api)
                         {
-                            traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
-                            s2.Restart();
-                        }
-                    }
-                    else
-                    {
-                        if (!whatIf) fbcc.Insert(ExpenseClass.FromJObject(jo));
-                        if (i % 1000 == 0)
-                        {
-                            fbcc.Commit();
-                            if (i % 10000 == 0)
+                            if (!whatIf) fsc.InsertExpenseClass(jo);
+                            if (i % 100 == 0)
                             {
                                 traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
                                 s2.Restart();
                             }
                         }
+                        else
+                        {
+                            if (!whatIf) fbcc.Insert(ExpenseClass.FromJObject(jo));
+                            if (i % 1000 == 0)
+                            {
+                                fbcc.Commit();
+                                if (i % 10000 == 0)
+                                {
+                                    traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
+                                    s2.Restart();
+                                }
+                            }
+                        }
+                    }
+                    catch (Exception e)
+                    {
+                        traceSource.TraceEvent(TraceEventType.Error, 0, $"{e}\r\n{jo}");
+                        if (!force || e.Message.Contains("Connection was closed")) throw;
                     }
                 }
                 fbcc.Commit();
@@ -6021,22 +6285,30 @@ namespace FolioConsoleApplication
                         var l = js.Validate(jo);
                         if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"ExportConfigCredential {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"ExportConfigCredential {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}: {jo}");
                     }
-                    if (api)
+                    try
                     {
-                        throw new NotSupportedException();
-                    }
-                    else
-                    {
-                        if (!whatIf) fbcc.Insert(ExportConfigCredential.FromJObject(jo));
-                        if (i % 1000 == 0)
+                        if (api)
                         {
-                            fbcc.Commit();
-                            if (i % 10000 == 0)
+                            throw new NotSupportedException();
+                        }
+                        else
+                        {
+                            if (!whatIf) fbcc.Insert(ExportConfigCredential.FromJObject(jo));
+                            if (i % 1000 == 0)
                             {
-                                traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
-                                s2.Restart();
+                                fbcc.Commit();
+                                if (i % 10000 == 0)
+                                {
+                                    traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
+                                    s2.Restart();
+                                }
                             }
                         }
+                    }
+                    catch (Exception e)
+                    {
+                        traceSource.TraceEvent(TraceEventType.Error, 0, $"{e}\r\n{jo}");
+                        if (!force || e.Message.Contains("Connection was closed")) throw;
                     }
                 }
                 fbcc.Commit();
@@ -6154,27 +6426,35 @@ namespace FolioConsoleApplication
                         var l = js.Validate(jo);
                         if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"Fee {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"Fee {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}: {jo}");
                     }
-                    if (api)
+                    try
                     {
-                        if (!whatIf) fsc.InsertFee(jo);
-                        if (i % 100 == 0)
+                        if (api)
                         {
-                            traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
-                            s2.Restart();
-                        }
-                    }
-                    else
-                    {
-                        if (!whatIf) fbcc.Insert(Fee.FromJObject(jo));
-                        if (i % 1000 == 0)
-                        {
-                            fbcc.Commit();
-                            if (i % 10000 == 0)
+                            if (!whatIf) fsc.InsertFee(jo);
+                            if (i % 100 == 0)
                             {
                                 traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
                                 s2.Restart();
                             }
                         }
+                        else
+                        {
+                            if (!whatIf) fbcc.Insert(Fee.FromJObject(jo));
+                            if (i % 1000 == 0)
+                            {
+                                fbcc.Commit();
+                                if (i % 10000 == 0)
+                                {
+                                    traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
+                                    s2.Restart();
+                                }
+                            }
+                        }
+                    }
+                    catch (Exception e)
+                    {
+                        traceSource.TraceEvent(TraceEventType.Error, 0, $"{e}\r\n{jo}");
+                        if (!force || e.Message.Contains("Connection was closed")) throw;
                     }
                 }
                 fbcc.Commit();
@@ -6293,27 +6573,35 @@ namespace FolioConsoleApplication
                         var l = js.Validate(jo);
                         if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"FeeType {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"FeeType {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}: {jo}");
                     }
-                    if (api)
+                    try
                     {
-                        if (!whatIf) fsc.InsertFeeType(jo);
-                        if (i % 100 == 0)
+                        if (api)
                         {
-                            traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
-                            s2.Restart();
-                        }
-                    }
-                    else
-                    {
-                        if (!whatIf) fbcc.Insert(FeeType.FromJObject(jo));
-                        if (i % 1000 == 0)
-                        {
-                            fbcc.Commit();
-                            if (i % 10000 == 0)
+                            if (!whatIf) fsc.InsertFeeType(jo);
+                            if (i % 100 == 0)
                             {
                                 traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
                                 s2.Restart();
                             }
                         }
+                        else
+                        {
+                            if (!whatIf) fbcc.Insert(FeeType.FromJObject(jo));
+                            if (i % 1000 == 0)
+                            {
+                                fbcc.Commit();
+                                if (i % 10000 == 0)
+                                {
+                                    traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
+                                    s2.Restart();
+                                }
+                            }
+                        }
+                    }
+                    catch (Exception e)
+                    {
+                        traceSource.TraceEvent(TraceEventType.Error, 0, $"{e}\r\n{jo}");
+                        if (!force || e.Message.Contains("Connection was closed")) throw;
                     }
                 }
                 fbcc.Commit();
@@ -6432,27 +6720,35 @@ namespace FolioConsoleApplication
                         var l = js.Validate(jo);
                         if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"FinanceGroup {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"FinanceGroup {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}: {jo}");
                     }
-                    if (api)
+                    try
                     {
-                        if (!whatIf) fsc.InsertFinanceGroup(jo);
-                        if (i % 100 == 0)
+                        if (api)
                         {
-                            traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
-                            s2.Restart();
-                        }
-                    }
-                    else
-                    {
-                        if (!whatIf) fbcc.Insert(FinanceGroup.FromJObject(jo));
-                        if (i % 1000 == 0)
-                        {
-                            fbcc.Commit();
-                            if (i % 10000 == 0)
+                            if (!whatIf) fsc.InsertFinanceGroup(jo);
+                            if (i % 100 == 0)
                             {
                                 traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
                                 s2.Restart();
                             }
                         }
+                        else
+                        {
+                            if (!whatIf) fbcc.Insert(FinanceGroup.FromJObject(jo));
+                            if (i % 1000 == 0)
+                            {
+                                fbcc.Commit();
+                                if (i % 10000 == 0)
+                                {
+                                    traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
+                                    s2.Restart();
+                                }
+                            }
+                        }
+                    }
+                    catch (Exception e)
+                    {
+                        traceSource.TraceEvent(TraceEventType.Error, 0, $"{e}\r\n{jo}");
+                        if (!force || e.Message.Contains("Connection was closed")) throw;
                     }
                 }
                 fbcc.Commit();
@@ -6571,27 +6867,35 @@ namespace FolioConsoleApplication
                         var l = js.Validate(jo);
                         if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"FiscalYear {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"FiscalYear {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}: {jo}");
                     }
-                    if (api)
+                    try
                     {
-                        if (!whatIf) fsc.InsertFiscalYear(jo);
-                        if (i % 100 == 0)
+                        if (api)
                         {
-                            traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
-                            s2.Restart();
-                        }
-                    }
-                    else
-                    {
-                        if (!whatIf) fbcc.Insert(FiscalYear.FromJObject(jo));
-                        if (i % 1000 == 0)
-                        {
-                            fbcc.Commit();
-                            if (i % 10000 == 0)
+                            if (!whatIf) fsc.InsertFiscalYear(jo);
+                            if (i % 100 == 0)
                             {
                                 traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
                                 s2.Restart();
                             }
                         }
+                        else
+                        {
+                            if (!whatIf) fbcc.Insert(FiscalYear.FromJObject(jo));
+                            if (i % 1000 == 0)
+                            {
+                                fbcc.Commit();
+                                if (i % 10000 == 0)
+                                {
+                                    traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
+                                    s2.Restart();
+                                }
+                            }
+                        }
+                    }
+                    catch (Exception e)
+                    {
+                        traceSource.TraceEvent(TraceEventType.Error, 0, $"{e}\r\n{jo}");
+                        if (!force || e.Message.Contains("Connection was closed")) throw;
                     }
                 }
                 fbcc.Commit();
@@ -6710,27 +7014,35 @@ namespace FolioConsoleApplication
                         var l = js.Validate(jo);
                         if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"FixedDueDateSchedule {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"FixedDueDateSchedule {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}: {jo}");
                     }
-                    if (api)
+                    try
                     {
-                        if (!whatIf) fsc.InsertFixedDueDateSchedule(jo);
-                        if (i % 100 == 0)
+                        if (api)
                         {
-                            traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
-                            s2.Restart();
-                        }
-                    }
-                    else
-                    {
-                        if (!whatIf) fbcc.Insert(FixedDueDateSchedule.FromJObject(jo));
-                        if (i % 1000 == 0)
-                        {
-                            fbcc.Commit();
-                            if (i % 10000 == 0)
+                            if (!whatIf) fsc.InsertFixedDueDateSchedule(jo);
+                            if (i % 100 == 0)
                             {
                                 traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
                                 s2.Restart();
                             }
                         }
+                        else
+                        {
+                            if (!whatIf) fbcc.Insert(FixedDueDateSchedule.FromJObject(jo));
+                            if (i % 1000 == 0)
+                            {
+                                fbcc.Commit();
+                                if (i % 10000 == 0)
+                                {
+                                    traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
+                                    s2.Restart();
+                                }
+                            }
+                        }
+                    }
+                    catch (Exception e)
+                    {
+                        traceSource.TraceEvent(TraceEventType.Error, 0, $"{e}\r\n{jo}");
+                        if (!force || e.Message.Contains("Connection was closed")) throw;
                     }
                 }
                 fbcc.Commit();
@@ -6849,27 +7161,35 @@ namespace FolioConsoleApplication
                         var l = js.Validate(jo);
                         if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"Fund {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"Fund {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}: {jo}");
                     }
-                    if (api)
+                    try
                     {
-                        if (!whatIf) fsc.InsertFund(jo);
-                        if (i % 100 == 0)
+                        if (api)
                         {
-                            traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
-                            s2.Restart();
-                        }
-                    }
-                    else
-                    {
-                        if (!whatIf) fbcc.Insert(Fund.FromJObject(jo));
-                        if (i % 1000 == 0)
-                        {
-                            fbcc.Commit();
-                            if (i % 10000 == 0)
+                            if (!whatIf) fsc.InsertFund(jo);
+                            if (i % 100 == 0)
                             {
                                 traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
                                 s2.Restart();
                             }
                         }
+                        else
+                        {
+                            if (!whatIf) fbcc.Insert(Fund.FromJObject(jo));
+                            if (i % 1000 == 0)
+                            {
+                                fbcc.Commit();
+                                if (i % 10000 == 0)
+                                {
+                                    traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
+                                    s2.Restart();
+                                }
+                            }
+                        }
+                    }
+                    catch (Exception e)
+                    {
+                        traceSource.TraceEvent(TraceEventType.Error, 0, $"{e}\r\n{jo}");
+                        if (!force || e.Message.Contains("Connection was closed")) throw;
                     }
                 }
                 fbcc.Commit();
@@ -6988,27 +7308,35 @@ namespace FolioConsoleApplication
                         var l = js.Validate(jo);
                         if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"FundType {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"FundType {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}: {jo}");
                     }
-                    if (api)
+                    try
                     {
-                        if (!whatIf) fsc.InsertFundType(jo);
-                        if (i % 100 == 0)
+                        if (api)
                         {
-                            traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
-                            s2.Restart();
-                        }
-                    }
-                    else
-                    {
-                        if (!whatIf) fbcc.Insert(FundType.FromJObject(jo));
-                        if (i % 1000 == 0)
-                        {
-                            fbcc.Commit();
-                            if (i % 10000 == 0)
+                            if (!whatIf) fsc.InsertFundType(jo);
+                            if (i % 100 == 0)
                             {
                                 traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
                                 s2.Restart();
                             }
                         }
+                        else
+                        {
+                            if (!whatIf) fbcc.Insert(FundType.FromJObject(jo));
+                            if (i % 1000 == 0)
+                            {
+                                fbcc.Commit();
+                                if (i % 10000 == 0)
+                                {
+                                    traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
+                                    s2.Restart();
+                                }
+                            }
+                        }
+                    }
+                    catch (Exception e)
+                    {
+                        traceSource.TraceEvent(TraceEventType.Error, 0, $"{e}\r\n{jo}");
+                        if (!force || e.Message.Contains("Connection was closed")) throw;
                     }
                 }
                 fbcc.Commit();
@@ -7127,27 +7455,35 @@ namespace FolioConsoleApplication
                         var l = js.Validate(jo);
                         if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"Group {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"Group {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}: {jo}");
                     }
-                    if (api)
+                    try
                     {
-                        if (!whatIf) fsc.InsertGroup(jo);
-                        if (i % 100 == 0)
+                        if (api)
                         {
-                            traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
-                            s2.Restart();
-                        }
-                    }
-                    else
-                    {
-                        if (!whatIf) fbcc.Insert(Group.FromJObject(jo));
-                        if (i % 1000 == 0)
-                        {
-                            fbcc.Commit();
-                            if (i % 10000 == 0)
+                            if (!whatIf) fsc.InsertGroup(jo);
+                            if (i % 100 == 0)
                             {
                                 traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
                                 s2.Restart();
                             }
                         }
+                        else
+                        {
+                            if (!whatIf) fbcc.Insert(Group.FromJObject(jo));
+                            if (i % 1000 == 0)
+                            {
+                                fbcc.Commit();
+                                if (i % 10000 == 0)
+                                {
+                                    traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
+                                    s2.Restart();
+                                }
+                            }
+                        }
+                    }
+                    catch (Exception e)
+                    {
+                        traceSource.TraceEvent(TraceEventType.Error, 0, $"{e}\r\n{jo}");
+                        if (!force || e.Message.Contains("Connection was closed")) throw;
                     }
                 }
                 fbcc.Commit();
@@ -7267,29 +7603,37 @@ namespace FolioConsoleApplication
                         var l = js.Validate(jo);
                         if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"Holding {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"Holding {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}: {jo}");
                     }
-                    if (api)
+                    try
                     {
-                        l2.Add(jo);
-                        if (i % 1000 == 0)
+                        if (api)
                         {
-                            if (!whatIf) fsc.InsertHoldings(l2);
-                            l2.Clear();
-                            traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
-                            s2.Restart();
-                        }
-                    }
-                    else
-                    {
-                        if (!whatIf) fbcc.Insert(Holding.FromJObject(jo));
-                        if (i % 1000 == 0)
-                        {
-                            fbcc.Commit();
-                            if (i % 10000 == 0)
+                            l2.Add(jo);
+                            if (i % 1000 == 0)
                             {
+                                if (!whatIf) fsc.InsertHoldings(l2);
+                                l2.Clear();
                                 traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
                                 s2.Restart();
                             }
                         }
+                        else
+                        {
+                            if (!whatIf) fbcc.Insert(Holding.FromJObject(jo));
+                            if (i % 1000 == 0)
+                            {
+                                fbcc.Commit();
+                                if (i % 10000 == 0)
+                                {
+                                    traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
+                                    s2.Restart();
+                                }
+                            }
+                        }
+                    }
+                    catch (Exception e)
+                    {
+                        traceSource.TraceEvent(TraceEventType.Error, 0, $"{e}\r\n{jo}");
+                        if (!force || e.Message.Contains("Connection was closed")) throw;
                     }
                 }
                 if (api && !whatIf && l2.Any()) fsc.InsertHoldings(l2);
@@ -7409,27 +7753,35 @@ namespace FolioConsoleApplication
                         var l = js.Validate(jo);
                         if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"HoldingNoteType {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"HoldingNoteType {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}: {jo}");
                     }
-                    if (api)
+                    try
                     {
-                        if (!whatIf) fsc.InsertHoldingNoteType(jo);
-                        if (i % 100 == 0)
+                        if (api)
                         {
-                            traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
-                            s2.Restart();
-                        }
-                    }
-                    else
-                    {
-                        if (!whatIf) fbcc.Insert(HoldingNoteType.FromJObject(jo));
-                        if (i % 1000 == 0)
-                        {
-                            fbcc.Commit();
-                            if (i % 10000 == 0)
+                            if (!whatIf) fsc.InsertHoldingNoteType(jo);
+                            if (i % 100 == 0)
                             {
                                 traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
                                 s2.Restart();
                             }
                         }
+                        else
+                        {
+                            if (!whatIf) fbcc.Insert(HoldingNoteType.FromJObject(jo));
+                            if (i % 1000 == 0)
+                            {
+                                fbcc.Commit();
+                                if (i % 10000 == 0)
+                                {
+                                    traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
+                                    s2.Restart();
+                                }
+                            }
+                        }
+                    }
+                    catch (Exception e)
+                    {
+                        traceSource.TraceEvent(TraceEventType.Error, 0, $"{e}\r\n{jo}");
+                        if (!force || e.Message.Contains("Connection was closed")) throw;
                     }
                 }
                 fbcc.Commit();
@@ -7548,27 +7900,35 @@ namespace FolioConsoleApplication
                         var l = js.Validate(jo);
                         if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"HoldingType {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"HoldingType {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}: {jo}");
                     }
-                    if (api)
+                    try
                     {
-                        if (!whatIf) fsc.InsertHoldingType(jo);
-                        if (i % 100 == 0)
+                        if (api)
                         {
-                            traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
-                            s2.Restart();
-                        }
-                    }
-                    else
-                    {
-                        if (!whatIf) fbcc.Insert(HoldingType.FromJObject(jo));
-                        if (i % 1000 == 0)
-                        {
-                            fbcc.Commit();
-                            if (i % 10000 == 0)
+                            if (!whatIf) fsc.InsertHoldingType(jo);
+                            if (i % 100 == 0)
                             {
                                 traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
                                 s2.Restart();
                             }
                         }
+                        else
+                        {
+                            if (!whatIf) fbcc.Insert(HoldingType.FromJObject(jo));
+                            if (i % 1000 == 0)
+                            {
+                                fbcc.Commit();
+                                if (i % 10000 == 0)
+                                {
+                                    traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
+                                    s2.Restart();
+                                }
+                            }
+                        }
+                    }
+                    catch (Exception e)
+                    {
+                        traceSource.TraceEvent(TraceEventType.Error, 0, $"{e}\r\n{jo}");
+                        if (!force || e.Message.Contains("Connection was closed")) throw;
                     }
                 }
                 fbcc.Commit();
@@ -7676,27 +8036,35 @@ namespace FolioConsoleApplication
                         var l = js.Validate(jo);
                         if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"HridSetting {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"HridSetting {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}: {jo}");
                     }
-                    if (api)
+                    try
                     {
-                        if (!whatIf) fsc.UpdateHridSetting(jo);
-                        if (i % 100 == 0)
+                        if (api)
                         {
-                            traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
-                            s2.Restart();
-                        }
-                    }
-                    else
-                    {
-                        if (!whatIf) fbcc.Insert(HridSetting.FromJObject(jo));
-                        if (i % 1000 == 0)
-                        {
-                            fbcc.Commit();
-                            if (i % 10000 == 0)
+                            if (!whatIf) fsc.UpdateHridSetting(jo);
+                            if (i % 100 == 0)
                             {
                                 traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
                                 s2.Restart();
                             }
                         }
+                        else
+                        {
+                            if (!whatIf) fbcc.Insert(HridSetting.FromJObject(jo));
+                            if (i % 1000 == 0)
+                            {
+                                fbcc.Commit();
+                                if (i % 10000 == 0)
+                                {
+                                    traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
+                                    s2.Restart();
+                                }
+                            }
+                        }
+                    }
+                    catch (Exception e)
+                    {
+                        traceSource.TraceEvent(TraceEventType.Error, 0, $"{e}\r\n{jo}");
+                        if (!force || e.Message.Contains("Connection was closed")) throw;
                     }
                 }
                 fbcc.Commit();
@@ -7815,27 +8183,35 @@ namespace FolioConsoleApplication
                         var l = js.Validate(jo);
                         if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"IdType {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"IdType {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}: {jo}");
                     }
-                    if (api)
+                    try
                     {
-                        if (!whatIf) fsc.InsertIdType(jo);
-                        if (i % 100 == 0)
+                        if (api)
                         {
-                            traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
-                            s2.Restart();
-                        }
-                    }
-                    else
-                    {
-                        if (!whatIf) fbcc.Insert(IdType.FromJObject(jo));
-                        if (i % 1000 == 0)
-                        {
-                            fbcc.Commit();
-                            if (i % 10000 == 0)
+                            if (!whatIf) fsc.InsertIdType(jo);
+                            if (i % 100 == 0)
                             {
                                 traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
                                 s2.Restart();
                             }
                         }
+                        else
+                        {
+                            if (!whatIf) fbcc.Insert(IdType.FromJObject(jo));
+                            if (i % 1000 == 0)
+                            {
+                                fbcc.Commit();
+                                if (i % 10000 == 0)
+                                {
+                                    traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
+                                    s2.Restart();
+                                }
+                            }
+                        }
+                    }
+                    catch (Exception e)
+                    {
+                        traceSource.TraceEvent(TraceEventType.Error, 0, $"{e}\r\n{jo}");
+                        if (!force || e.Message.Contains("Connection was closed")) throw;
                     }
                 }
                 fbcc.Commit();
@@ -7954,27 +8330,35 @@ namespace FolioConsoleApplication
                         var l = js.Validate(jo);
                         if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"IllPolicy {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"IllPolicy {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}: {jo}");
                     }
-                    if (api)
+                    try
                     {
-                        if (!whatIf) fsc.InsertIllPolicy(jo);
-                        if (i % 100 == 0)
+                        if (api)
                         {
-                            traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
-                            s2.Restart();
-                        }
-                    }
-                    else
-                    {
-                        if (!whatIf) fbcc.Insert(IllPolicy.FromJObject(jo));
-                        if (i % 1000 == 0)
-                        {
-                            fbcc.Commit();
-                            if (i % 10000 == 0)
+                            if (!whatIf) fsc.InsertIllPolicy(jo);
+                            if (i % 100 == 0)
                             {
                                 traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
                                 s2.Restart();
                             }
                         }
+                        else
+                        {
+                            if (!whatIf) fbcc.Insert(IllPolicy.FromJObject(jo));
+                            if (i % 1000 == 0)
+                            {
+                                fbcc.Commit();
+                                if (i % 10000 == 0)
+                                {
+                                    traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
+                                    s2.Restart();
+                                }
+                            }
+                        }
+                    }
+                    catch (Exception e)
+                    {
+                        traceSource.TraceEvent(TraceEventType.Error, 0, $"{e}\r\n{jo}");
+                        if (!force || e.Message.Contains("Connection was closed")) throw;
                     }
                 }
                 fbcc.Commit();
@@ -8094,29 +8478,37 @@ namespace FolioConsoleApplication
                         var l = js.Validate(jo);
                         if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"Instance {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"Instance {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}: {jo}");
                     }
-                    if (api)
+                    try
                     {
-                        l2.Add(jo);
-                        if (i % 1000 == 0)
+                        if (api)
                         {
-                            if (!whatIf) fsc.InsertInstances(l2);
-                            l2.Clear();
-                            traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
-                            s2.Restart();
-                        }
-                    }
-                    else
-                    {
-                        if (!whatIf) fbcc.Insert(Instance.FromJObject(jo));
-                        if (i % 1000 == 0)
-                        {
-                            fbcc.Commit();
-                            if (i % 10000 == 0)
+                            l2.Add(jo);
+                            if (i % 1000 == 0)
                             {
+                                if (!whatIf) fsc.InsertInstances(l2);
+                                l2.Clear();
                                 traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
                                 s2.Restart();
                             }
                         }
+                        else
+                        {
+                            if (!whatIf) fbcc.Insert(Instance.FromJObject(jo));
+                            if (i % 1000 == 0)
+                            {
+                                fbcc.Commit();
+                                if (i % 10000 == 0)
+                                {
+                                    traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
+                                    s2.Restart();
+                                }
+                            }
+                        }
+                    }
+                    catch (Exception e)
+                    {
+                        traceSource.TraceEvent(TraceEventType.Error, 0, $"{e}\r\n{jo}");
+                        if (!force || e.Message.Contains("Connection was closed")) throw;
                     }
                 }
                 if (api && !whatIf && l2.Any()) fsc.InsertInstances(l2);
@@ -8236,27 +8628,35 @@ namespace FolioConsoleApplication
                         var l = js.Validate(jo);
                         if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"InstanceFormat {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"InstanceFormat {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}: {jo}");
                     }
-                    if (api)
+                    try
                     {
-                        if (!whatIf) fsc.InsertInstanceFormat(jo);
-                        if (i % 100 == 0)
+                        if (api)
                         {
-                            traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
-                            s2.Restart();
-                        }
-                    }
-                    else
-                    {
-                        if (!whatIf) fbcc.Insert(InstanceFormat.FromJObject(jo));
-                        if (i % 1000 == 0)
-                        {
-                            fbcc.Commit();
-                            if (i % 10000 == 0)
+                            if (!whatIf) fsc.InsertInstanceFormat(jo);
+                            if (i % 100 == 0)
                             {
                                 traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
                                 s2.Restart();
                             }
                         }
+                        else
+                        {
+                            if (!whatIf) fbcc.Insert(InstanceFormat.FromJObject(jo));
+                            if (i % 1000 == 0)
+                            {
+                                fbcc.Commit();
+                                if (i % 10000 == 0)
+                                {
+                                    traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
+                                    s2.Restart();
+                                }
+                            }
+                        }
+                    }
+                    catch (Exception e)
+                    {
+                        traceSource.TraceEvent(TraceEventType.Error, 0, $"{e}\r\n{jo}");
+                        if (!force || e.Message.Contains("Connection was closed")) throw;
                     }
                 }
                 fbcc.Commit();
@@ -8375,27 +8775,35 @@ namespace FolioConsoleApplication
                         var l = js.Validate(jo);
                         if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"InstanceNoteType {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"InstanceNoteType {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}: {jo}");
                     }
-                    if (api)
+                    try
                     {
-                        if (!whatIf) fsc.InsertInstanceNoteType(jo);
-                        if (i % 100 == 0)
+                        if (api)
                         {
-                            traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
-                            s2.Restart();
-                        }
-                    }
-                    else
-                    {
-                        if (!whatIf) fbcc.Insert(InstanceNoteType.FromJObject(jo));
-                        if (i % 1000 == 0)
-                        {
-                            fbcc.Commit();
-                            if (i % 10000 == 0)
+                            if (!whatIf) fsc.InsertInstanceNoteType(jo);
+                            if (i % 100 == 0)
                             {
                                 traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
                                 s2.Restart();
                             }
                         }
+                        else
+                        {
+                            if (!whatIf) fbcc.Insert(InstanceNoteType.FromJObject(jo));
+                            if (i % 1000 == 0)
+                            {
+                                fbcc.Commit();
+                                if (i % 10000 == 0)
+                                {
+                                    traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
+                                    s2.Restart();
+                                }
+                            }
+                        }
+                    }
+                    catch (Exception e)
+                    {
+                        traceSource.TraceEvent(TraceEventType.Error, 0, $"{e}\r\n{jo}");
+                        if (!force || e.Message.Contains("Connection was closed")) throw;
                     }
                 }
                 fbcc.Commit();
@@ -8514,27 +8922,35 @@ namespace FolioConsoleApplication
                         var l = js.Validate(jo);
                         if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"InstanceRelationship {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"InstanceRelationship {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}: {jo}");
                     }
-                    if (api)
+                    try
                     {
-                        if (!whatIf) fsc.InsertInstanceRelationship(jo);
-                        if (i % 100 == 0)
+                        if (api)
                         {
-                            traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
-                            s2.Restart();
-                        }
-                    }
-                    else
-                    {
-                        if (!whatIf) fbcc.Insert(InstanceRelationship.FromJObject(jo));
-                        if (i % 1000 == 0)
-                        {
-                            fbcc.Commit();
-                            if (i % 10000 == 0)
+                            if (!whatIf) fsc.InsertInstanceRelationship(jo);
+                            if (i % 100 == 0)
                             {
                                 traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
                                 s2.Restart();
                             }
                         }
+                        else
+                        {
+                            if (!whatIf) fbcc.Insert(InstanceRelationship.FromJObject(jo));
+                            if (i % 1000 == 0)
+                            {
+                                fbcc.Commit();
+                                if (i % 10000 == 0)
+                                {
+                                    traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
+                                    s2.Restart();
+                                }
+                            }
+                        }
+                    }
+                    catch (Exception e)
+                    {
+                        traceSource.TraceEvent(TraceEventType.Error, 0, $"{e}\r\n{jo}");
+                        if (!force || e.Message.Contains("Connection was closed")) throw;
                     }
                 }
                 fbcc.Commit();
@@ -8653,27 +9069,35 @@ namespace FolioConsoleApplication
                         var l = js.Validate(jo);
                         if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"InstanceRelationshipType {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"InstanceRelationshipType {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}: {jo}");
                     }
-                    if (api)
+                    try
                     {
-                        if (!whatIf) fsc.InsertInstanceRelationshipType(jo);
-                        if (i % 100 == 0)
+                        if (api)
                         {
-                            traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
-                            s2.Restart();
-                        }
-                    }
-                    else
-                    {
-                        if (!whatIf) fbcc.Insert(InstanceRelationshipType.FromJObject(jo));
-                        if (i % 1000 == 0)
-                        {
-                            fbcc.Commit();
-                            if (i % 10000 == 0)
+                            if (!whatIf) fsc.InsertInstanceRelationshipType(jo);
+                            if (i % 100 == 0)
                             {
                                 traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
                                 s2.Restart();
                             }
                         }
+                        else
+                        {
+                            if (!whatIf) fbcc.Insert(InstanceRelationshipType.FromJObject(jo));
+                            if (i % 1000 == 0)
+                            {
+                                fbcc.Commit();
+                                if (i % 10000 == 0)
+                                {
+                                    traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
+                                    s2.Restart();
+                                }
+                            }
+                        }
+                    }
+                    catch (Exception e)
+                    {
+                        traceSource.TraceEvent(TraceEventType.Error, 0, $"{e}\r\n{jo}");
+                        if (!force || e.Message.Contains("Connection was closed")) throw;
                     }
                 }
                 fbcc.Commit();
@@ -8792,27 +9216,35 @@ namespace FolioConsoleApplication
                         var l = js.Validate(jo);
                         if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"InstanceStatus {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"InstanceStatus {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}: {jo}");
                     }
-                    if (api)
+                    try
                     {
-                        if (!whatIf) fsc.InsertInstanceStatus(jo);
-                        if (i % 100 == 0)
+                        if (api)
                         {
-                            traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
-                            s2.Restart();
-                        }
-                    }
-                    else
-                    {
-                        if (!whatIf) fbcc.Insert(InstanceStatus.FromJObject(jo));
-                        if (i % 1000 == 0)
-                        {
-                            fbcc.Commit();
-                            if (i % 10000 == 0)
+                            if (!whatIf) fsc.InsertInstanceStatus(jo);
+                            if (i % 100 == 0)
                             {
                                 traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
                                 s2.Restart();
                             }
                         }
+                        else
+                        {
+                            if (!whatIf) fbcc.Insert(InstanceStatus.FromJObject(jo));
+                            if (i % 1000 == 0)
+                            {
+                                fbcc.Commit();
+                                if (i % 10000 == 0)
+                                {
+                                    traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
+                                    s2.Restart();
+                                }
+                            }
+                        }
+                    }
+                    catch (Exception e)
+                    {
+                        traceSource.TraceEvent(TraceEventType.Error, 0, $"{e}\r\n{jo}");
+                        if (!force || e.Message.Contains("Connection was closed")) throw;
                     }
                 }
                 fbcc.Commit();
@@ -8931,27 +9363,35 @@ namespace FolioConsoleApplication
                         var l = js.Validate(jo);
                         if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"InstanceType {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"InstanceType {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}: {jo}");
                     }
-                    if (api)
+                    try
                     {
-                        if (!whatIf) fsc.InsertInstanceType(jo);
-                        if (i % 100 == 0)
+                        if (api)
                         {
-                            traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
-                            s2.Restart();
-                        }
-                    }
-                    else
-                    {
-                        if (!whatIf) fbcc.Insert(InstanceType.FromJObject(jo));
-                        if (i % 1000 == 0)
-                        {
-                            fbcc.Commit();
-                            if (i % 10000 == 0)
+                            if (!whatIf) fsc.InsertInstanceType(jo);
+                            if (i % 100 == 0)
                             {
                                 traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
                                 s2.Restart();
                             }
                         }
+                        else
+                        {
+                            if (!whatIf) fbcc.Insert(InstanceType.FromJObject(jo));
+                            if (i % 1000 == 0)
+                            {
+                                fbcc.Commit();
+                                if (i % 10000 == 0)
+                                {
+                                    traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
+                                    s2.Restart();
+                                }
+                            }
+                        }
+                    }
+                    catch (Exception e)
+                    {
+                        traceSource.TraceEvent(TraceEventType.Error, 0, $"{e}\r\n{jo}");
+                        if (!force || e.Message.Contains("Connection was closed")) throw;
                     }
                 }
                 fbcc.Commit();
@@ -9070,27 +9510,35 @@ namespace FolioConsoleApplication
                         var l = js.Validate(jo);
                         if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"Institution {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"Institution {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}: {jo}");
                     }
-                    if (api)
+                    try
                     {
-                        if (!whatIf) fsc.InsertInstitution(jo);
-                        if (i % 100 == 0)
+                        if (api)
                         {
-                            traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
-                            s2.Restart();
-                        }
-                    }
-                    else
-                    {
-                        if (!whatIf) fbcc.Insert(Institution.FromJObject(jo));
-                        if (i % 1000 == 0)
-                        {
-                            fbcc.Commit();
-                            if (i % 10000 == 0)
+                            if (!whatIf) fsc.InsertInstitution(jo);
+                            if (i % 100 == 0)
                             {
                                 traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
                                 s2.Restart();
                             }
                         }
+                        else
+                        {
+                            if (!whatIf) fbcc.Insert(Institution.FromJObject(jo));
+                            if (i % 1000 == 0)
+                            {
+                                fbcc.Commit();
+                                if (i % 10000 == 0)
+                                {
+                                    traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
+                                    s2.Restart();
+                                }
+                            }
+                        }
+                    }
+                    catch (Exception e)
+                    {
+                        traceSource.TraceEvent(TraceEventType.Error, 0, $"{e}\r\n{jo}");
+                        if (!force || e.Message.Contains("Connection was closed")) throw;
                     }
                 }
                 fbcc.Commit();
@@ -9209,27 +9657,35 @@ namespace FolioConsoleApplication
                         var l = js.Validate(jo);
                         if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"Interface {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"Interface {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}: {jo}");
                     }
-                    if (api)
+                    try
                     {
-                        if (!whatIf) fsc.InsertInterface(jo);
-                        if (i % 100 == 0)
+                        if (api)
                         {
-                            traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
-                            s2.Restart();
-                        }
-                    }
-                    else
-                    {
-                        if (!whatIf) fbcc.Insert(Interface.FromJObject(jo));
-                        if (i % 1000 == 0)
-                        {
-                            fbcc.Commit();
-                            if (i % 10000 == 0)
+                            if (!whatIf) fsc.InsertInterface(jo);
+                            if (i % 100 == 0)
                             {
                                 traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
                                 s2.Restart();
                             }
                         }
+                        else
+                        {
+                            if (!whatIf) fbcc.Insert(Interface.FromJObject(jo));
+                            if (i % 1000 == 0)
+                            {
+                                fbcc.Commit();
+                                if (i % 10000 == 0)
+                                {
+                                    traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
+                                    s2.Restart();
+                                }
+                            }
+                        }
+                    }
+                    catch (Exception e)
+                    {
+                        traceSource.TraceEvent(TraceEventType.Error, 0, $"{e}\r\n{jo}");
+                        if (!force || e.Message.Contains("Connection was closed")) throw;
                     }
                 }
                 fbcc.Commit();
@@ -9335,22 +9791,30 @@ namespace FolioConsoleApplication
                         var l = js.Validate(jo);
                         if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"InterfaceCredential {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"InterfaceCredential {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}: {jo}");
                     }
-                    if (api)
+                    try
                     {
-                        throw new NotSupportedException();
-                    }
-                    else
-                    {
-                        if (!whatIf) fbcc.Insert(InterfaceCredential.FromJObject(jo));
-                        if (i % 1000 == 0)
+                        if (api)
                         {
-                            fbcc.Commit();
-                            if (i % 10000 == 0)
+                            throw new NotSupportedException();
+                        }
+                        else
+                        {
+                            if (!whatIf) fbcc.Insert(InterfaceCredential.FromJObject(jo));
+                            if (i % 1000 == 0)
                             {
-                                traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
-                                s2.Restart();
+                                fbcc.Commit();
+                                if (i % 10000 == 0)
+                                {
+                                    traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
+                                    s2.Restart();
+                                }
                             }
                         }
+                    }
+                    catch (Exception e)
+                    {
+                        traceSource.TraceEvent(TraceEventType.Error, 0, $"{e}\r\n{jo}");
+                        if (!force || e.Message.Contains("Connection was closed")) throw;
                     }
                 }
                 fbcc.Commit();
@@ -9468,27 +9932,35 @@ namespace FolioConsoleApplication
                         var l = js.Validate(jo);
                         if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"Invoice {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"Invoice {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}: {jo}");
                     }
-                    if (api)
+                    try
                     {
-                        if (!whatIf) fsc.InsertInvoice(jo);
-                        if (i % 100 == 0)
+                        if (api)
                         {
-                            traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
-                            s2.Restart();
-                        }
-                    }
-                    else
-                    {
-                        if (!whatIf) fbcc.Insert(Invoice.FromJObject(jo));
-                        if (i % 1000 == 0)
-                        {
-                            fbcc.Commit();
-                            if (i % 10000 == 0)
+                            if (!whatIf) fsc.InsertInvoice(jo);
+                            if (i % 100 == 0)
                             {
                                 traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
                                 s2.Restart();
                             }
                         }
+                        else
+                        {
+                            if (!whatIf) fbcc.Insert(Invoice.FromJObject(jo));
+                            if (i % 1000 == 0)
+                            {
+                                fbcc.Commit();
+                                if (i % 10000 == 0)
+                                {
+                                    traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
+                                    s2.Restart();
+                                }
+                            }
+                        }
+                    }
+                    catch (Exception e)
+                    {
+                        traceSource.TraceEvent(TraceEventType.Error, 0, $"{e}\r\n{jo}");
+                        if (!force || e.Message.Contains("Connection was closed")) throw;
                     }
                 }
                 fbcc.Commit();
@@ -9607,27 +10079,35 @@ namespace FolioConsoleApplication
                         var l = js.Validate(jo);
                         if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"InvoiceItem {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"InvoiceItem {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}: {jo}");
                     }
-                    if (api)
+                    try
                     {
-                        if (!whatIf) fsc.InsertInvoiceItem(jo);
-                        if (i % 100 == 0)
+                        if (api)
                         {
-                            traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
-                            s2.Restart();
-                        }
-                    }
-                    else
-                    {
-                        if (!whatIf) fbcc.Insert(InvoiceItem.FromJObject(jo));
-                        if (i % 1000 == 0)
-                        {
-                            fbcc.Commit();
-                            if (i % 10000 == 0)
+                            if (!whatIf) fsc.InsertInvoiceItem(jo);
+                            if (i % 100 == 0)
                             {
                                 traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
                                 s2.Restart();
                             }
                         }
+                        else
+                        {
+                            if (!whatIf) fbcc.Insert(InvoiceItem.FromJObject(jo));
+                            if (i % 1000 == 0)
+                            {
+                                fbcc.Commit();
+                                if (i % 10000 == 0)
+                                {
+                                    traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
+                                    s2.Restart();
+                                }
+                            }
+                        }
+                    }
+                    catch (Exception e)
+                    {
+                        traceSource.TraceEvent(TraceEventType.Error, 0, $"{e}\r\n{jo}");
+                        if (!force || e.Message.Contains("Connection was closed")) throw;
                     }
                 }
                 fbcc.Commit();
@@ -9746,27 +10226,35 @@ namespace FolioConsoleApplication
                         var l = js.Validate(jo);
                         if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"InvoiceTransactionSummary {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"InvoiceTransactionSummary {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}: {jo}");
                     }
-                    if (api)
+                    try
                     {
-                        if (!whatIf) fsc.InsertInvoiceTransactionSummary(jo);
-                        if (i % 100 == 0)
+                        if (api)
                         {
-                            traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
-                            s2.Restart();
-                        }
-                    }
-                    else
-                    {
-                        if (!whatIf) fbcc.Insert(InvoiceTransactionSummary.FromJObject(jo));
-                        if (i % 1000 == 0)
-                        {
-                            fbcc.Commit();
-                            if (i % 10000 == 0)
+                            if (!whatIf) fsc.InsertInvoiceTransactionSummary(jo);
+                            if (i % 100 == 0)
                             {
                                 traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
                                 s2.Restart();
                             }
                         }
+                        else
+                        {
+                            if (!whatIf) fbcc.Insert(InvoiceTransactionSummary.FromJObject(jo));
+                            if (i % 1000 == 0)
+                            {
+                                fbcc.Commit();
+                                if (i % 10000 == 0)
+                                {
+                                    traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
+                                    s2.Restart();
+                                }
+                            }
+                        }
+                    }
+                    catch (Exception e)
+                    {
+                        traceSource.TraceEvent(TraceEventType.Error, 0, $"{e}\r\n{jo}");
+                        if (!force || e.Message.Contains("Connection was closed")) throw;
                     }
                 }
                 fbcc.Commit();
@@ -9886,29 +10374,37 @@ namespace FolioConsoleApplication
                         var l = js.Validate(jo);
                         if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"Item {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"Item {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}: {jo}");
                     }
-                    if (api)
+                    try
                     {
-                        l2.Add(jo);
-                        if (i % 1000 == 0)
+                        if (api)
                         {
-                            if (!whatIf) fsc.InsertItems(l2);
-                            l2.Clear();
-                            traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
-                            s2.Restart();
-                        }
-                    }
-                    else
-                    {
-                        if (!whatIf) fbcc.Insert(Item.FromJObject(jo));
-                        if (i % 1000 == 0)
-                        {
-                            fbcc.Commit();
-                            if (i % 10000 == 0)
+                            l2.Add(jo);
+                            if (i % 1000 == 0)
                             {
+                                if (!whatIf) fsc.InsertItems(l2);
+                                l2.Clear();
                                 traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
                                 s2.Restart();
                             }
                         }
+                        else
+                        {
+                            if (!whatIf) fbcc.Insert(Item.FromJObject(jo));
+                            if (i % 1000 == 0)
+                            {
+                                fbcc.Commit();
+                                if (i % 10000 == 0)
+                                {
+                                    traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
+                                    s2.Restart();
+                                }
+                            }
+                        }
+                    }
+                    catch (Exception e)
+                    {
+                        traceSource.TraceEvent(TraceEventType.Error, 0, $"{e}\r\n{jo}");
+                        if (!force || e.Message.Contains("Connection was closed")) throw;
                     }
                 }
                 if (api && !whatIf && l2.Any()) fsc.InsertItems(l2);
@@ -10028,27 +10524,35 @@ namespace FolioConsoleApplication
                         var l = js.Validate(jo);
                         if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"ItemDamagedStatus {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"ItemDamagedStatus {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}: {jo}");
                     }
-                    if (api)
+                    try
                     {
-                        if (!whatIf) fsc.InsertItemDamagedStatus(jo);
-                        if (i % 100 == 0)
+                        if (api)
                         {
-                            traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
-                            s2.Restart();
-                        }
-                    }
-                    else
-                    {
-                        if (!whatIf) fbcc.Insert(ItemDamagedStatus.FromJObject(jo));
-                        if (i % 1000 == 0)
-                        {
-                            fbcc.Commit();
-                            if (i % 10000 == 0)
+                            if (!whatIf) fsc.InsertItemDamagedStatus(jo);
+                            if (i % 100 == 0)
                             {
                                 traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
                                 s2.Restart();
                             }
                         }
+                        else
+                        {
+                            if (!whatIf) fbcc.Insert(ItemDamagedStatus.FromJObject(jo));
+                            if (i % 1000 == 0)
+                            {
+                                fbcc.Commit();
+                                if (i % 10000 == 0)
+                                {
+                                    traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
+                                    s2.Restart();
+                                }
+                            }
+                        }
+                    }
+                    catch (Exception e)
+                    {
+                        traceSource.TraceEvent(TraceEventType.Error, 0, $"{e}\r\n{jo}");
+                        if (!force || e.Message.Contains("Connection was closed")) throw;
                     }
                 }
                 fbcc.Commit();
@@ -10167,27 +10671,35 @@ namespace FolioConsoleApplication
                         var l = js.Validate(jo);
                         if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"ItemNoteType {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"ItemNoteType {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}: {jo}");
                     }
-                    if (api)
+                    try
                     {
-                        if (!whatIf) fsc.InsertItemNoteType(jo);
-                        if (i % 100 == 0)
+                        if (api)
                         {
-                            traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
-                            s2.Restart();
-                        }
-                    }
-                    else
-                    {
-                        if (!whatIf) fbcc.Insert(ItemNoteType.FromJObject(jo));
-                        if (i % 1000 == 0)
-                        {
-                            fbcc.Commit();
-                            if (i % 10000 == 0)
+                            if (!whatIf) fsc.InsertItemNoteType(jo);
+                            if (i % 100 == 0)
                             {
                                 traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
                                 s2.Restart();
                             }
                         }
+                        else
+                        {
+                            if (!whatIf) fbcc.Insert(ItemNoteType.FromJObject(jo));
+                            if (i % 1000 == 0)
+                            {
+                                fbcc.Commit();
+                                if (i % 10000 == 0)
+                                {
+                                    traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
+                                    s2.Restart();
+                                }
+                            }
+                        }
+                    }
+                    catch (Exception e)
+                    {
+                        traceSource.TraceEvent(TraceEventType.Error, 0, $"{e}\r\n{jo}");
+                        if (!force || e.Message.Contains("Connection was closed")) throw;
                     }
                 }
                 fbcc.Commit();
@@ -10306,27 +10818,35 @@ namespace FolioConsoleApplication
                         var l = js.Validate(jo);
                         if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"Ledger {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"Ledger {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}: {jo}");
                     }
-                    if (api)
+                    try
                     {
-                        if (!whatIf) fsc.InsertLedger(jo);
-                        if (i % 100 == 0)
+                        if (api)
                         {
-                            traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
-                            s2.Restart();
-                        }
-                    }
-                    else
-                    {
-                        if (!whatIf) fbcc.Insert(Ledger.FromJObject(jo));
-                        if (i % 1000 == 0)
-                        {
-                            fbcc.Commit();
-                            if (i % 10000 == 0)
+                            if (!whatIf) fsc.InsertLedger(jo);
+                            if (i % 100 == 0)
                             {
                                 traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
                                 s2.Restart();
                             }
                         }
+                        else
+                        {
+                            if (!whatIf) fbcc.Insert(Ledger.FromJObject(jo));
+                            if (i % 1000 == 0)
+                            {
+                                fbcc.Commit();
+                                if (i % 10000 == 0)
+                                {
+                                    traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
+                                    s2.Restart();
+                                }
+                            }
+                        }
+                    }
+                    catch (Exception e)
+                    {
+                        traceSource.TraceEvent(TraceEventType.Error, 0, $"{e}\r\n{jo}");
+                        if (!force || e.Message.Contains("Connection was closed")) throw;
                     }
                 }
                 fbcc.Commit();
@@ -10445,27 +10965,35 @@ namespace FolioConsoleApplication
                         var l = js.Validate(jo);
                         if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"LedgerRollover {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"LedgerRollover {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}: {jo}");
                     }
-                    if (api)
+                    try
                     {
-                        if (!whatIf) fsc.InsertLedgerRollover(jo);
-                        if (i % 100 == 0)
+                        if (api)
                         {
-                            traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
-                            s2.Restart();
-                        }
-                    }
-                    else
-                    {
-                        if (!whatIf) fbcc.Insert(LedgerRollover.FromJObject(jo));
-                        if (i % 1000 == 0)
-                        {
-                            fbcc.Commit();
-                            if (i % 10000 == 0)
+                            if (!whatIf) fsc.InsertLedgerRollover(jo);
+                            if (i % 100 == 0)
                             {
                                 traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
                                 s2.Restart();
                             }
                         }
+                        else
+                        {
+                            if (!whatIf) fbcc.Insert(LedgerRollover.FromJObject(jo));
+                            if (i % 1000 == 0)
+                            {
+                                fbcc.Commit();
+                                if (i % 10000 == 0)
+                                {
+                                    traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
+                                    s2.Restart();
+                                }
+                            }
+                        }
+                    }
+                    catch (Exception e)
+                    {
+                        traceSource.TraceEvent(TraceEventType.Error, 0, $"{e}\r\n{jo}");
+                        if (!force || e.Message.Contains("Connection was closed")) throw;
                     }
                 }
                 fbcc.Commit();
@@ -10584,27 +11112,35 @@ namespace FolioConsoleApplication
                         var l = js.Validate(jo);
                         if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"LedgerRolloverError {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"LedgerRolloverError {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}: {jo}");
                     }
-                    if (api)
+                    try
                     {
-                        if (!whatIf) fsc.InsertLedgerRolloverError(jo);
-                        if (i % 100 == 0)
+                        if (api)
                         {
-                            traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
-                            s2.Restart();
-                        }
-                    }
-                    else
-                    {
-                        if (!whatIf) fbcc.Insert(LedgerRolloverError.FromJObject(jo));
-                        if (i % 1000 == 0)
-                        {
-                            fbcc.Commit();
-                            if (i % 10000 == 0)
+                            if (!whatIf) fsc.InsertLedgerRolloverError(jo);
+                            if (i % 100 == 0)
                             {
                                 traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
                                 s2.Restart();
                             }
                         }
+                        else
+                        {
+                            if (!whatIf) fbcc.Insert(LedgerRolloverError.FromJObject(jo));
+                            if (i % 1000 == 0)
+                            {
+                                fbcc.Commit();
+                                if (i % 10000 == 0)
+                                {
+                                    traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
+                                    s2.Restart();
+                                }
+                            }
+                        }
+                    }
+                    catch (Exception e)
+                    {
+                        traceSource.TraceEvent(TraceEventType.Error, 0, $"{e}\r\n{jo}");
+                        if (!force || e.Message.Contains("Connection was closed")) throw;
                     }
                 }
                 fbcc.Commit();
@@ -10723,27 +11259,35 @@ namespace FolioConsoleApplication
                         var l = js.Validate(jo);
                         if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"LedgerRolloverProgress {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"LedgerRolloverProgress {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}: {jo}");
                     }
-                    if (api)
+                    try
                     {
-                        if (!whatIf) fsc.InsertLedgerRolloverProgress(jo);
-                        if (i % 100 == 0)
+                        if (api)
                         {
-                            traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
-                            s2.Restart();
-                        }
-                    }
-                    else
-                    {
-                        if (!whatIf) fbcc.Insert(LedgerRolloverProgress.FromJObject(jo));
-                        if (i % 1000 == 0)
-                        {
-                            fbcc.Commit();
-                            if (i % 10000 == 0)
+                            if (!whatIf) fsc.InsertLedgerRolloverProgress(jo);
+                            if (i % 100 == 0)
                             {
                                 traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
                                 s2.Restart();
                             }
                         }
+                        else
+                        {
+                            if (!whatIf) fbcc.Insert(LedgerRolloverProgress.FromJObject(jo));
+                            if (i % 1000 == 0)
+                            {
+                                fbcc.Commit();
+                                if (i % 10000 == 0)
+                                {
+                                    traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
+                                    s2.Restart();
+                                }
+                            }
+                        }
+                    }
+                    catch (Exception e)
+                    {
+                        traceSource.TraceEvent(TraceEventType.Error, 0, $"{e}\r\n{jo}");
+                        if (!force || e.Message.Contains("Connection was closed")) throw;
                     }
                 }
                 fbcc.Commit();
@@ -10862,27 +11406,35 @@ namespace FolioConsoleApplication
                         var l = js.Validate(jo);
                         if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"Library {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"Library {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}: {jo}");
                     }
-                    if (api)
+                    try
                     {
-                        if (!whatIf) fsc.InsertLibrary(jo);
-                        if (i % 100 == 0)
+                        if (api)
                         {
-                            traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
-                            s2.Restart();
-                        }
-                    }
-                    else
-                    {
-                        if (!whatIf) fbcc.Insert(Library.FromJObject(jo));
-                        if (i % 1000 == 0)
-                        {
-                            fbcc.Commit();
-                            if (i % 10000 == 0)
+                            if (!whatIf) fsc.InsertLibrary(jo);
+                            if (i % 100 == 0)
                             {
                                 traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
                                 s2.Restart();
                             }
                         }
+                        else
+                        {
+                            if (!whatIf) fbcc.Insert(Library.FromJObject(jo));
+                            if (i % 1000 == 0)
+                            {
+                                fbcc.Commit();
+                                if (i % 10000 == 0)
+                                {
+                                    traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
+                                    s2.Restart();
+                                }
+                            }
+                        }
+                    }
+                    catch (Exception e)
+                    {
+                        traceSource.TraceEvent(TraceEventType.Error, 0, $"{e}\r\n{jo}");
+                        if (!force || e.Message.Contains("Connection was closed")) throw;
                     }
                 }
                 fbcc.Commit();
@@ -11001,27 +11553,35 @@ namespace FolioConsoleApplication
                         var l = js.Validate(jo);
                         if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"Loan {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"Loan {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}: {jo}");
                     }
-                    if (api)
+                    try
                     {
-                        if (!whatIf) fsc.InsertLoan(jo);
-                        if (i % 100 == 0)
+                        if (api)
                         {
-                            traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
-                            s2.Restart();
-                        }
-                    }
-                    else
-                    {
-                        if (!whatIf) fbcc.Insert(Loan.FromJObject(jo));
-                        if (i % 1000 == 0)
-                        {
-                            fbcc.Commit();
-                            if (i % 10000 == 0)
+                            if (!whatIf) fsc.InsertLoan(jo);
+                            if (i % 100 == 0)
                             {
                                 traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
                                 s2.Restart();
                             }
                         }
+                        else
+                        {
+                            if (!whatIf) fbcc.Insert(Loan.FromJObject(jo));
+                            if (i % 1000 == 0)
+                            {
+                                fbcc.Commit();
+                                if (i % 10000 == 0)
+                                {
+                                    traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
+                                    s2.Restart();
+                                }
+                            }
+                        }
+                    }
+                    catch (Exception e)
+                    {
+                        traceSource.TraceEvent(TraceEventType.Error, 0, $"{e}\r\n{jo}");
+                        if (!force || e.Message.Contains("Connection was closed")) throw;
                     }
                 }
                 fbcc.Commit();
@@ -11127,22 +11687,30 @@ namespace FolioConsoleApplication
                         var l = js.Validate(jo);
                         if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"LoanEvent {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"LoanEvent {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}: {jo}");
                     }
-                    if (api)
+                    try
                     {
-                        throw new NotSupportedException();
-                    }
-                    else
-                    {
-                        if (!whatIf) fbcc.Insert(LoanEvent.FromJObject(jo));
-                        if (i % 1000 == 0)
+                        if (api)
                         {
-                            fbcc.Commit();
-                            if (i % 10000 == 0)
+                            throw new NotSupportedException();
+                        }
+                        else
+                        {
+                            if (!whatIf) fbcc.Insert(LoanEvent.FromJObject(jo));
+                            if (i % 1000 == 0)
                             {
-                                traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
-                                s2.Restart();
+                                fbcc.Commit();
+                                if (i % 10000 == 0)
+                                {
+                                    traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
+                                    s2.Restart();
+                                }
                             }
                         }
+                    }
+                    catch (Exception e)
+                    {
+                        traceSource.TraceEvent(TraceEventType.Error, 0, $"{e}\r\n{jo}");
+                        if (!force || e.Message.Contains("Connection was closed")) throw;
                     }
                 }
                 fbcc.Commit();
@@ -11260,27 +11828,35 @@ namespace FolioConsoleApplication
                         var l = js.Validate(jo);
                         if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"LoanPolicy {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"LoanPolicy {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}: {jo}");
                     }
-                    if (api)
+                    try
                     {
-                        if (!whatIf) fsc.InsertLoanPolicy(jo);
-                        if (i % 100 == 0)
+                        if (api)
                         {
-                            traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
-                            s2.Restart();
-                        }
-                    }
-                    else
-                    {
-                        if (!whatIf) fbcc.Insert(LoanPolicy.FromJObject(jo));
-                        if (i % 1000 == 0)
-                        {
-                            fbcc.Commit();
-                            if (i % 10000 == 0)
+                            if (!whatIf) fsc.InsertLoanPolicy(jo);
+                            if (i % 100 == 0)
                             {
                                 traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
                                 s2.Restart();
                             }
                         }
+                        else
+                        {
+                            if (!whatIf) fbcc.Insert(LoanPolicy.FromJObject(jo));
+                            if (i % 1000 == 0)
+                            {
+                                fbcc.Commit();
+                                if (i % 10000 == 0)
+                                {
+                                    traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
+                                    s2.Restart();
+                                }
+                            }
+                        }
+                    }
+                    catch (Exception e)
+                    {
+                        traceSource.TraceEvent(TraceEventType.Error, 0, $"{e}\r\n{jo}");
+                        if (!force || e.Message.Contains("Connection was closed")) throw;
                     }
                 }
                 fbcc.Commit();
@@ -11399,27 +11975,35 @@ namespace FolioConsoleApplication
                         var l = js.Validate(jo);
                         if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"LoanType {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"LoanType {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}: {jo}");
                     }
-                    if (api)
+                    try
                     {
-                        if (!whatIf) fsc.InsertLoanType(jo);
-                        if (i % 100 == 0)
+                        if (api)
                         {
-                            traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
-                            s2.Restart();
-                        }
-                    }
-                    else
-                    {
-                        if (!whatIf) fbcc.Insert(LoanType.FromJObject(jo));
-                        if (i % 1000 == 0)
-                        {
-                            fbcc.Commit();
-                            if (i % 10000 == 0)
+                            if (!whatIf) fsc.InsertLoanType(jo);
+                            if (i % 100 == 0)
                             {
                                 traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
                                 s2.Restart();
                             }
                         }
+                        else
+                        {
+                            if (!whatIf) fbcc.Insert(LoanType.FromJObject(jo));
+                            if (i % 1000 == 0)
+                            {
+                                fbcc.Commit();
+                                if (i % 10000 == 0)
+                                {
+                                    traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
+                                    s2.Restart();
+                                }
+                            }
+                        }
+                    }
+                    catch (Exception e)
+                    {
+                        traceSource.TraceEvent(TraceEventType.Error, 0, $"{e}\r\n{jo}");
+                        if (!force || e.Message.Contains("Connection was closed")) throw;
                     }
                 }
                 fbcc.Commit();
@@ -11538,27 +12122,35 @@ namespace FolioConsoleApplication
                         var l = js.Validate(jo);
                         if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"Location {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"Location {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}: {jo}");
                     }
-                    if (api)
+                    try
                     {
-                        if (!whatIf) fsc.InsertLocation(jo);
-                        if (i % 100 == 0)
+                        if (api)
                         {
-                            traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
-                            s2.Restart();
-                        }
-                    }
-                    else
-                    {
-                        if (!whatIf) fbcc.Insert(Location.FromJObject(jo));
-                        if (i % 1000 == 0)
-                        {
-                            fbcc.Commit();
-                            if (i % 10000 == 0)
+                            if (!whatIf) fsc.InsertLocation(jo);
+                            if (i % 100 == 0)
                             {
                                 traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
                                 s2.Restart();
                             }
                         }
+                        else
+                        {
+                            if (!whatIf) fbcc.Insert(Location.FromJObject(jo));
+                            if (i % 1000 == 0)
+                            {
+                                fbcc.Commit();
+                                if (i % 10000 == 0)
+                                {
+                                    traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
+                                    s2.Restart();
+                                }
+                            }
+                        }
+                    }
+                    catch (Exception e)
+                    {
+                        traceSource.TraceEvent(TraceEventType.Error, 0, $"{e}\r\n{jo}");
+                        if (!force || e.Message.Contains("Connection was closed")) throw;
                     }
                 }
                 fbcc.Commit();
@@ -11666,27 +12258,35 @@ namespace FolioConsoleApplication
                         var l = js.Validate(jo);
                         if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"Login {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"Login {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}: {jo}");
                     }
-                    if (api)
+                    try
                     {
-                        if (!whatIf) fsc.InsertLogin(jo);
-                        if (i % 100 == 0)
+                        if (api)
                         {
-                            traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
-                            s2.Restart();
-                        }
-                    }
-                    else
-                    {
-                        if (!whatIf) fbcc.Insert(Login.FromJObject(jo));
-                        if (i % 1000 == 0)
-                        {
-                            fbcc.Commit();
-                            if (i % 10000 == 0)
+                            if (!whatIf) fsc.InsertLogin(jo);
+                            if (i % 100 == 0)
                             {
                                 traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
                                 s2.Restart();
                             }
                         }
+                        else
+                        {
+                            if (!whatIf) fbcc.Insert(Login.FromJObject(jo));
+                            if (i % 1000 == 0)
+                            {
+                                fbcc.Commit();
+                                if (i % 10000 == 0)
+                                {
+                                    traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
+                                    s2.Restart();
+                                }
+                            }
+                        }
+                    }
+                    catch (Exception e)
+                    {
+                        traceSource.TraceEvent(TraceEventType.Error, 0, $"{e}\r\n{jo}");
+                        if (!force || e.Message.Contains("Connection was closed")) throw;
                     }
                 }
                 fbcc.Commit();
@@ -11805,27 +12405,35 @@ namespace FolioConsoleApplication
                         var l = js.Validate(jo);
                         if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"LostItemFeePolicy {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"LostItemFeePolicy {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}: {jo}");
                     }
-                    if (api)
+                    try
                     {
-                        if (!whatIf) fsc.InsertLostItemFeePolicy(jo);
-                        if (i % 100 == 0)
+                        if (api)
                         {
-                            traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
-                            s2.Restart();
-                        }
-                    }
-                    else
-                    {
-                        if (!whatIf) fbcc.Insert(LostItemFeePolicy.FromJObject(jo));
-                        if (i % 1000 == 0)
-                        {
-                            fbcc.Commit();
-                            if (i % 10000 == 0)
+                            if (!whatIf) fsc.InsertLostItemFeePolicy(jo);
+                            if (i % 100 == 0)
                             {
                                 traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
                                 s2.Restart();
                             }
                         }
+                        else
+                        {
+                            if (!whatIf) fbcc.Insert(LostItemFeePolicy.FromJObject(jo));
+                            if (i % 1000 == 0)
+                            {
+                                fbcc.Commit();
+                                if (i % 10000 == 0)
+                                {
+                                    traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
+                                    s2.Restart();
+                                }
+                            }
+                        }
+                    }
+                    catch (Exception e)
+                    {
+                        traceSource.TraceEvent(TraceEventType.Error, 0, $"{e}\r\n{jo}");
+                        if (!force || e.Message.Contains("Connection was closed")) throw;
                     }
                 }
                 fbcc.Commit();
@@ -11944,27 +12552,35 @@ namespace FolioConsoleApplication
                         var l = js.Validate(jo);
                         if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"ManualBlockTemplate {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"ManualBlockTemplate {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}: {jo}");
                     }
-                    if (api)
+                    try
                     {
-                        if (!whatIf) fsc.InsertManualBlockTemplate(jo);
-                        if (i % 100 == 0)
+                        if (api)
                         {
-                            traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
-                            s2.Restart();
-                        }
-                    }
-                    else
-                    {
-                        if (!whatIf) fbcc.Insert(ManualBlockTemplate.FromJObject(jo));
-                        if (i % 1000 == 0)
-                        {
-                            fbcc.Commit();
-                            if (i % 10000 == 0)
+                            if (!whatIf) fsc.InsertManualBlockTemplate(jo);
+                            if (i % 100 == 0)
                             {
                                 traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
                                 s2.Restart();
                             }
                         }
+                        else
+                        {
+                            if (!whatIf) fbcc.Insert(ManualBlockTemplate.FromJObject(jo));
+                            if (i % 1000 == 0)
+                            {
+                                fbcc.Commit();
+                                if (i % 10000 == 0)
+                                {
+                                    traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
+                                    s2.Restart();
+                                }
+                            }
+                        }
+                    }
+                    catch (Exception e)
+                    {
+                        traceSource.TraceEvent(TraceEventType.Error, 0, $"{e}\r\n{jo}");
+                        if (!force || e.Message.Contains("Connection was closed")) throw;
                     }
                 }
                 fbcc.Commit();
@@ -12083,27 +12699,35 @@ namespace FolioConsoleApplication
                         var l = js.Validate(jo);
                         if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"MaterialType {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"MaterialType {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}: {jo}");
                     }
-                    if (api)
+                    try
                     {
-                        if (!whatIf) fsc.InsertMaterialType(jo);
-                        if (i % 100 == 0)
+                        if (api)
                         {
-                            traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
-                            s2.Restart();
-                        }
-                    }
-                    else
-                    {
-                        if (!whatIf) fbcc.Insert(MaterialType.FromJObject(jo));
-                        if (i % 1000 == 0)
-                        {
-                            fbcc.Commit();
-                            if (i % 10000 == 0)
+                            if (!whatIf) fsc.InsertMaterialType(jo);
+                            if (i % 100 == 0)
                             {
                                 traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
                                 s2.Restart();
                             }
                         }
+                        else
+                        {
+                            if (!whatIf) fbcc.Insert(MaterialType.FromJObject(jo));
+                            if (i % 1000 == 0)
+                            {
+                                fbcc.Commit();
+                                if (i % 10000 == 0)
+                                {
+                                    traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
+                                    s2.Restart();
+                                }
+                            }
+                        }
+                    }
+                    catch (Exception e)
+                    {
+                        traceSource.TraceEvent(TraceEventType.Error, 0, $"{e}\r\n{jo}");
+                        if (!force || e.Message.Contains("Connection was closed")) throw;
                     }
                 }
                 fbcc.Commit();
@@ -12222,27 +12846,35 @@ namespace FolioConsoleApplication
                         var l = js.Validate(jo);
                         if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"ModeOfIssuance {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"ModeOfIssuance {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}: {jo}");
                     }
-                    if (api)
+                    try
                     {
-                        if (!whatIf) fsc.InsertModeOfIssuance(jo);
-                        if (i % 100 == 0)
+                        if (api)
                         {
-                            traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
-                            s2.Restart();
-                        }
-                    }
-                    else
-                    {
-                        if (!whatIf) fbcc.Insert(ModeOfIssuance.FromJObject(jo));
-                        if (i % 1000 == 0)
-                        {
-                            fbcc.Commit();
-                            if (i % 10000 == 0)
+                            if (!whatIf) fsc.InsertModeOfIssuance(jo);
+                            if (i % 100 == 0)
                             {
                                 traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
                                 s2.Restart();
                             }
                         }
+                        else
+                        {
+                            if (!whatIf) fbcc.Insert(ModeOfIssuance.FromJObject(jo));
+                            if (i % 1000 == 0)
+                            {
+                                fbcc.Commit();
+                                if (i % 10000 == 0)
+                                {
+                                    traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
+                                    s2.Restart();
+                                }
+                            }
+                        }
+                    }
+                    catch (Exception e)
+                    {
+                        traceSource.TraceEvent(TraceEventType.Error, 0, $"{e}\r\n{jo}");
+                        if (!force || e.Message.Contains("Connection was closed")) throw;
                     }
                 }
                 fbcc.Commit();
@@ -12361,27 +12993,35 @@ namespace FolioConsoleApplication
                         var l = js.Validate(jo);
                         if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"NatureOfContentTerm {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"NatureOfContentTerm {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}: {jo}");
                     }
-                    if (api)
+                    try
                     {
-                        if (!whatIf) fsc.InsertNatureOfContentTerm(jo);
-                        if (i % 100 == 0)
+                        if (api)
                         {
-                            traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
-                            s2.Restart();
-                        }
-                    }
-                    else
-                    {
-                        if (!whatIf) fbcc.Insert(NatureOfContentTerm.FromJObject(jo));
-                        if (i % 1000 == 0)
-                        {
-                            fbcc.Commit();
-                            if (i % 10000 == 0)
+                            if (!whatIf) fsc.InsertNatureOfContentTerm(jo);
+                            if (i % 100 == 0)
                             {
                                 traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
                                 s2.Restart();
                             }
                         }
+                        else
+                        {
+                            if (!whatIf) fbcc.Insert(NatureOfContentTerm.FromJObject(jo));
+                            if (i % 1000 == 0)
+                            {
+                                fbcc.Commit();
+                                if (i % 10000 == 0)
+                                {
+                                    traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
+                                    s2.Restart();
+                                }
+                            }
+                        }
+                    }
+                    catch (Exception e)
+                    {
+                        traceSource.TraceEvent(TraceEventType.Error, 0, $"{e}\r\n{jo}");
+                        if (!force || e.Message.Contains("Connection was closed")) throw;
                     }
                 }
                 fbcc.Commit();
@@ -12500,27 +13140,35 @@ namespace FolioConsoleApplication
                         var l = js.Validate(jo);
                         if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"Order {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"Order {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}: {jo}");
                     }
-                    if (api)
+                    try
                     {
-                        if (!whatIf) fsc.InsertOrder(jo);
-                        if (i % 100 == 0)
+                        if (api)
                         {
-                            traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
-                            s2.Restart();
-                        }
-                    }
-                    else
-                    {
-                        if (!whatIf) fbcc.Insert(Order.FromJObject(jo));
-                        if (i % 1000 == 0)
-                        {
-                            fbcc.Commit();
-                            if (i % 10000 == 0)
+                            if (!whatIf) fsc.InsertOrder(jo);
+                            if (i % 100 == 0)
                             {
                                 traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
                                 s2.Restart();
                             }
                         }
+                        else
+                        {
+                            if (!whatIf) fbcc.Insert(Order.FromJObject(jo));
+                            if (i % 1000 == 0)
+                            {
+                                fbcc.Commit();
+                                if (i % 10000 == 0)
+                                {
+                                    traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
+                                    s2.Restart();
+                                }
+                            }
+                        }
+                    }
+                    catch (Exception e)
+                    {
+                        traceSource.TraceEvent(TraceEventType.Error, 0, $"{e}\r\n{jo}");
+                        if (!force || e.Message.Contains("Connection was closed")) throw;
                     }
                 }
                 fbcc.Commit();
@@ -12639,27 +13287,35 @@ namespace FolioConsoleApplication
                         var l = js.Validate(jo);
                         if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"OrderInvoice {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"OrderInvoice {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}: {jo}");
                     }
-                    if (api)
+                    try
                     {
-                        if (!whatIf) fsc.InsertOrderInvoice(jo);
-                        if (i % 100 == 0)
+                        if (api)
                         {
-                            traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
-                            s2.Restart();
-                        }
-                    }
-                    else
-                    {
-                        if (!whatIf) fbcc.Insert(OrderInvoice.FromJObject(jo));
-                        if (i % 1000 == 0)
-                        {
-                            fbcc.Commit();
-                            if (i % 10000 == 0)
+                            if (!whatIf) fsc.InsertOrderInvoice(jo);
+                            if (i % 100 == 0)
                             {
                                 traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
                                 s2.Restart();
                             }
                         }
+                        else
+                        {
+                            if (!whatIf) fbcc.Insert(OrderInvoice.FromJObject(jo));
+                            if (i % 1000 == 0)
+                            {
+                                fbcc.Commit();
+                                if (i % 10000 == 0)
+                                {
+                                    traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
+                                    s2.Restart();
+                                }
+                            }
+                        }
+                    }
+                    catch (Exception e)
+                    {
+                        traceSource.TraceEvent(TraceEventType.Error, 0, $"{e}\r\n{jo}");
+                        if (!force || e.Message.Contains("Connection was closed")) throw;
                     }
                 }
                 fbcc.Commit();
@@ -12778,27 +13434,35 @@ namespace FolioConsoleApplication
                         var l = js.Validate(jo);
                         if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"OrderItem {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"OrderItem {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}: {jo}");
                     }
-                    if (api)
+                    try
                     {
-                        if (!whatIf) fsc.InsertOrderItem(jo);
-                        if (i % 100 == 0)
+                        if (api)
                         {
-                            traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
-                            s2.Restart();
-                        }
-                    }
-                    else
-                    {
-                        if (!whatIf) fbcc.Insert(OrderItem.FromJObject(jo));
-                        if (i % 1000 == 0)
-                        {
-                            fbcc.Commit();
-                            if (i % 10000 == 0)
+                            if (!whatIf) fsc.InsertOrderItem(jo);
+                            if (i % 100 == 0)
                             {
                                 traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
                                 s2.Restart();
                             }
                         }
+                        else
+                        {
+                            if (!whatIf) fbcc.Insert(OrderItem.FromJObject(jo));
+                            if (i % 1000 == 0)
+                            {
+                                fbcc.Commit();
+                                if (i % 10000 == 0)
+                                {
+                                    traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
+                                    s2.Restart();
+                                }
+                            }
+                        }
+                    }
+                    catch (Exception e)
+                    {
+                        traceSource.TraceEvent(TraceEventType.Error, 0, $"{e}\r\n{jo}");
+                        if (!force || e.Message.Contains("Connection was closed")) throw;
                     }
                 }
                 fbcc.Commit();
@@ -12917,27 +13581,35 @@ namespace FolioConsoleApplication
                         var l = js.Validate(jo);
                         if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"OrderTemplate {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"OrderTemplate {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}: {jo}");
                     }
-                    if (api)
+                    try
                     {
-                        if (!whatIf) fsc.InsertOrderTemplate(jo);
-                        if (i % 100 == 0)
+                        if (api)
                         {
-                            traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
-                            s2.Restart();
-                        }
-                    }
-                    else
-                    {
-                        if (!whatIf) fbcc.Insert(OrderTemplate.FromJObject(jo));
-                        if (i % 1000 == 0)
-                        {
-                            fbcc.Commit();
-                            if (i % 10000 == 0)
+                            if (!whatIf) fsc.InsertOrderTemplate(jo);
+                            if (i % 100 == 0)
                             {
                                 traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
                                 s2.Restart();
                             }
                         }
+                        else
+                        {
+                            if (!whatIf) fbcc.Insert(OrderTemplate.FromJObject(jo));
+                            if (i % 1000 == 0)
+                            {
+                                fbcc.Commit();
+                                if (i % 10000 == 0)
+                                {
+                                    traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
+                                    s2.Restart();
+                                }
+                            }
+                        }
+                    }
+                    catch (Exception e)
+                    {
+                        traceSource.TraceEvent(TraceEventType.Error, 0, $"{e}\r\n{jo}");
+                        if (!force || e.Message.Contains("Connection was closed")) throw;
                     }
                 }
                 fbcc.Commit();
@@ -13045,27 +13717,35 @@ namespace FolioConsoleApplication
                         var l = js.Validate(jo);
                         if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"OrderTransactionSummary {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"OrderTransactionSummary {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}: {jo}");
                     }
-                    if (api)
+                    try
                     {
-                        if (!whatIf) fsc.InsertOrderTransactionSummary(jo);
-                        if (i % 100 == 0)
+                        if (api)
                         {
-                            traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
-                            s2.Restart();
-                        }
-                    }
-                    else
-                    {
-                        if (!whatIf) fbcc.Insert(OrderTransactionSummary.FromJObject(jo));
-                        if (i % 1000 == 0)
-                        {
-                            fbcc.Commit();
-                            if (i % 10000 == 0)
+                            if (!whatIf) fsc.InsertOrderTransactionSummary(jo);
+                            if (i % 100 == 0)
                             {
                                 traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
                                 s2.Restart();
                             }
                         }
+                        else
+                        {
+                            if (!whatIf) fbcc.Insert(OrderTransactionSummary.FromJObject(jo));
+                            if (i % 1000 == 0)
+                            {
+                                fbcc.Commit();
+                                if (i % 10000 == 0)
+                                {
+                                    traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
+                                    s2.Restart();
+                                }
+                            }
+                        }
+                    }
+                    catch (Exception e)
+                    {
+                        traceSource.TraceEvent(TraceEventType.Error, 0, $"{e}\r\n{jo}");
+                        if (!force || e.Message.Contains("Connection was closed")) throw;
                     }
                 }
                 fbcc.Commit();
@@ -13184,27 +13864,35 @@ namespace FolioConsoleApplication
                         var l = js.Validate(jo);
                         if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"Organization {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"Organization {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}: {jo}");
                     }
-                    if (api)
+                    try
                     {
-                        if (!whatIf) fsc.InsertOrganization(jo);
-                        if (i % 100 == 0)
+                        if (api)
                         {
-                            traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
-                            s2.Restart();
-                        }
-                    }
-                    else
-                    {
-                        if (!whatIf) fbcc.Insert(Organization.FromJObject(jo));
-                        if (i % 1000 == 0)
-                        {
-                            fbcc.Commit();
-                            if (i % 10000 == 0)
+                            if (!whatIf) fsc.InsertOrganization(jo);
+                            if (i % 100 == 0)
                             {
                                 traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
                                 s2.Restart();
                             }
                         }
+                        else
+                        {
+                            if (!whatIf) fbcc.Insert(Organization.FromJObject(jo));
+                            if (i % 1000 == 0)
+                            {
+                                fbcc.Commit();
+                                if (i % 10000 == 0)
+                                {
+                                    traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
+                                    s2.Restart();
+                                }
+                            }
+                        }
+                    }
+                    catch (Exception e)
+                    {
+                        traceSource.TraceEvent(TraceEventType.Error, 0, $"{e}\r\n{jo}");
+                        if (!force || e.Message.Contains("Connection was closed")) throw;
                     }
                 }
                 fbcc.Commit();
@@ -13323,27 +14011,35 @@ namespace FolioConsoleApplication
                         var l = js.Validate(jo);
                         if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"OverdueFinePolicy {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"OverdueFinePolicy {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}: {jo}");
                     }
-                    if (api)
+                    try
                     {
-                        if (!whatIf) fsc.InsertOverdueFinePolicy(jo);
-                        if (i % 100 == 0)
+                        if (api)
                         {
-                            traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
-                            s2.Restart();
-                        }
-                    }
-                    else
-                    {
-                        if (!whatIf) fbcc.Insert(OverdueFinePolicy.FromJObject(jo));
-                        if (i % 1000 == 0)
-                        {
-                            fbcc.Commit();
-                            if (i % 10000 == 0)
+                            if (!whatIf) fsc.InsertOverdueFinePolicy(jo);
+                            if (i % 100 == 0)
                             {
                                 traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
                                 s2.Restart();
                             }
                         }
+                        else
+                        {
+                            if (!whatIf) fbcc.Insert(OverdueFinePolicy.FromJObject(jo));
+                            if (i % 1000 == 0)
+                            {
+                                fbcc.Commit();
+                                if (i % 10000 == 0)
+                                {
+                                    traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
+                                    s2.Restart();
+                                }
+                            }
+                        }
+                    }
+                    catch (Exception e)
+                    {
+                        traceSource.TraceEvent(TraceEventType.Error, 0, $"{e}\r\n{jo}");
+                        if (!force || e.Message.Contains("Connection was closed")) throw;
                     }
                 }
                 fbcc.Commit();
@@ -13462,27 +14158,35 @@ namespace FolioConsoleApplication
                         var l = js.Validate(jo);
                         if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"Owner {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"Owner {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}: {jo}");
                     }
-                    if (api)
+                    try
                     {
-                        if (!whatIf) fsc.InsertOwner(jo);
-                        if (i % 100 == 0)
+                        if (api)
                         {
-                            traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
-                            s2.Restart();
-                        }
-                    }
-                    else
-                    {
-                        if (!whatIf) fbcc.Insert(Owner.FromJObject(jo));
-                        if (i % 1000 == 0)
-                        {
-                            fbcc.Commit();
-                            if (i % 10000 == 0)
+                            if (!whatIf) fsc.InsertOwner(jo);
+                            if (i % 100 == 0)
                             {
                                 traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
                                 s2.Restart();
                             }
                         }
+                        else
+                        {
+                            if (!whatIf) fbcc.Insert(Owner.FromJObject(jo));
+                            if (i % 1000 == 0)
+                            {
+                                fbcc.Commit();
+                                if (i % 10000 == 0)
+                                {
+                                    traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
+                                    s2.Restart();
+                                }
+                            }
+                        }
+                    }
+                    catch (Exception e)
+                    {
+                        traceSource.TraceEvent(TraceEventType.Error, 0, $"{e}\r\n{jo}");
+                        if (!force || e.Message.Contains("Connection was closed")) throw;
                     }
                 }
                 fbcc.Commit();
@@ -13601,27 +14305,35 @@ namespace FolioConsoleApplication
                         var l = js.Validate(jo);
                         if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"PatronActionSession {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"PatronActionSession {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}: {jo}");
                     }
-                    if (api)
+                    try
                     {
-                        if (!whatIf) fsc.InsertPatronActionSession(jo);
-                        if (i % 100 == 0)
+                        if (api)
                         {
-                            traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
-                            s2.Restart();
-                        }
-                    }
-                    else
-                    {
-                        if (!whatIf) fbcc.Insert(PatronActionSession.FromJObject(jo));
-                        if (i % 1000 == 0)
-                        {
-                            fbcc.Commit();
-                            if (i % 10000 == 0)
+                            if (!whatIf) fsc.InsertPatronActionSession(jo);
+                            if (i % 100 == 0)
                             {
                                 traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
                                 s2.Restart();
                             }
                         }
+                        else
+                        {
+                            if (!whatIf) fbcc.Insert(PatronActionSession.FromJObject(jo));
+                            if (i % 1000 == 0)
+                            {
+                                fbcc.Commit();
+                                if (i % 10000 == 0)
+                                {
+                                    traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
+                                    s2.Restart();
+                                }
+                            }
+                        }
+                    }
+                    catch (Exception e)
+                    {
+                        traceSource.TraceEvent(TraceEventType.Error, 0, $"{e}\r\n{jo}");
+                        if (!force || e.Message.Contains("Connection was closed")) throw;
                     }
                 }
                 fbcc.Commit();
@@ -13740,27 +14452,35 @@ namespace FolioConsoleApplication
                         var l = js.Validate(jo);
                         if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"PatronNoticePolicy {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"PatronNoticePolicy {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}: {jo}");
                     }
-                    if (api)
+                    try
                     {
-                        if (!whatIf) fsc.InsertPatronNoticePolicy(jo);
-                        if (i % 100 == 0)
+                        if (api)
                         {
-                            traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
-                            s2.Restart();
-                        }
-                    }
-                    else
-                    {
-                        if (!whatIf) fbcc.Insert(PatronNoticePolicy.FromJObject(jo));
-                        if (i % 1000 == 0)
-                        {
-                            fbcc.Commit();
-                            if (i % 10000 == 0)
+                            if (!whatIf) fsc.InsertPatronNoticePolicy(jo);
+                            if (i % 100 == 0)
                             {
                                 traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
                                 s2.Restart();
                             }
                         }
+                        else
+                        {
+                            if (!whatIf) fbcc.Insert(PatronNoticePolicy.FromJObject(jo));
+                            if (i % 1000 == 0)
+                            {
+                                fbcc.Commit();
+                                if (i % 10000 == 0)
+                                {
+                                    traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
+                                    s2.Restart();
+                                }
+                            }
+                        }
+                    }
+                    catch (Exception e)
+                    {
+                        traceSource.TraceEvent(TraceEventType.Error, 0, $"{e}\r\n{jo}");
+                        if (!force || e.Message.Contains("Connection was closed")) throw;
                     }
                 }
                 fbcc.Commit();
@@ -13879,27 +14599,35 @@ namespace FolioConsoleApplication
                         var l = js.Validate(jo);
                         if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"Payment {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"Payment {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}: {jo}");
                     }
-                    if (api)
+                    try
                     {
-                        if (!whatIf) fsc.InsertPayment(jo);
-                        if (i % 100 == 0)
+                        if (api)
                         {
-                            traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
-                            s2.Restart();
-                        }
-                    }
-                    else
-                    {
-                        if (!whatIf) fbcc.Insert(Payment.FromJObject(jo));
-                        if (i % 1000 == 0)
-                        {
-                            fbcc.Commit();
-                            if (i % 10000 == 0)
+                            if (!whatIf) fsc.InsertPayment(jo);
+                            if (i % 100 == 0)
                             {
                                 traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
                                 s2.Restart();
                             }
                         }
+                        else
+                        {
+                            if (!whatIf) fbcc.Insert(Payment.FromJObject(jo));
+                            if (i % 1000 == 0)
+                            {
+                                fbcc.Commit();
+                                if (i % 10000 == 0)
+                                {
+                                    traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
+                                    s2.Restart();
+                                }
+                            }
+                        }
+                    }
+                    catch (Exception e)
+                    {
+                        traceSource.TraceEvent(TraceEventType.Error, 0, $"{e}\r\n{jo}");
+                        if (!force || e.Message.Contains("Connection was closed")) throw;
                     }
                 }
                 fbcc.Commit();
@@ -14018,27 +14746,35 @@ namespace FolioConsoleApplication
                         var l = js.Validate(jo);
                         if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"PaymentMethod {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"PaymentMethod {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}: {jo}");
                     }
-                    if (api)
+                    try
                     {
-                        if (!whatIf) fsc.InsertPaymentMethod(jo);
-                        if (i % 100 == 0)
+                        if (api)
                         {
-                            traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
-                            s2.Restart();
-                        }
-                    }
-                    else
-                    {
-                        if (!whatIf) fbcc.Insert(PaymentMethod.FromJObject(jo));
-                        if (i % 1000 == 0)
-                        {
-                            fbcc.Commit();
-                            if (i % 10000 == 0)
+                            if (!whatIf) fsc.InsertPaymentMethod(jo);
+                            if (i % 100 == 0)
                             {
                                 traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
                                 s2.Restart();
                             }
                         }
+                        else
+                        {
+                            if (!whatIf) fbcc.Insert(PaymentMethod.FromJObject(jo));
+                            if (i % 1000 == 0)
+                            {
+                                fbcc.Commit();
+                                if (i % 10000 == 0)
+                                {
+                                    traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
+                                    s2.Restart();
+                                }
+                            }
+                        }
+                    }
+                    catch (Exception e)
+                    {
+                        traceSource.TraceEvent(TraceEventType.Error, 0, $"{e}\r\n{jo}");
+                        if (!force || e.Message.Contains("Connection was closed")) throw;
                     }
                 }
                 fbcc.Commit();
@@ -14157,27 +14893,35 @@ namespace FolioConsoleApplication
                         var l = js.Validate(jo);
                         if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"Permission {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"Permission {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}: {jo}");
                     }
-                    if (api)
+                    try
                     {
-                        if (!whatIf) fsc.InsertPermission(jo);
-                        if (i % 100 == 0)
+                        if (api)
                         {
-                            traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
-                            s2.Restart();
-                        }
-                    }
-                    else
-                    {
-                        if (!whatIf) fbcc.Insert(Permission.FromJObject(jo));
-                        if (i % 1000 == 0)
-                        {
-                            fbcc.Commit();
-                            if (i % 10000 == 0)
+                            if (!whatIf) fsc.InsertPermission(jo);
+                            if (i % 100 == 0)
                             {
                                 traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
                                 s2.Restart();
                             }
                         }
+                        else
+                        {
+                            if (!whatIf) fbcc.Insert(Permission.FromJObject(jo));
+                            if (i % 1000 == 0)
+                            {
+                                fbcc.Commit();
+                                if (i % 10000 == 0)
+                                {
+                                    traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
+                                    s2.Restart();
+                                }
+                            }
+                        }
+                    }
+                    catch (Exception e)
+                    {
+                        traceSource.TraceEvent(TraceEventType.Error, 0, $"{e}\r\n{jo}");
+                        if (!force || e.Message.Contains("Connection was closed")) throw;
                     }
                 }
                 fbcc.Commit();
@@ -14296,27 +15040,35 @@ namespace FolioConsoleApplication
                         var l = js.Validate(jo);
                         if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"PermissionsUser {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"PermissionsUser {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}: {jo}");
                     }
-                    if (api)
+                    try
                     {
-                        if (!whatIf) fsc.InsertPermissionsUser(jo);
-                        if (i % 100 == 0)
+                        if (api)
                         {
-                            traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
-                            s2.Restart();
-                        }
-                    }
-                    else
-                    {
-                        if (!whatIf) fbcc.Insert(PermissionsUser.FromJObject(jo));
-                        if (i % 1000 == 0)
-                        {
-                            fbcc.Commit();
-                            if (i % 10000 == 0)
+                            if (!whatIf) fsc.InsertPermissionsUser(jo);
+                            if (i % 100 == 0)
                             {
                                 traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
                                 s2.Restart();
                             }
                         }
+                        else
+                        {
+                            if (!whatIf) fbcc.Insert(PermissionsUser.FromJObject(jo));
+                            if (i % 1000 == 0)
+                            {
+                                fbcc.Commit();
+                                if (i % 10000 == 0)
+                                {
+                                    traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
+                                    s2.Restart();
+                                }
+                            }
+                        }
+                    }
+                    catch (Exception e)
+                    {
+                        traceSource.TraceEvent(TraceEventType.Error, 0, $"{e}\r\n{jo}");
+                        if (!force || e.Message.Contains("Connection was closed")) throw;
                     }
                 }
                 fbcc.Commit();
@@ -14435,27 +15187,35 @@ namespace FolioConsoleApplication
                         var l = js.Validate(jo);
                         if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"PrecedingSucceedingTitle {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"PrecedingSucceedingTitle {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}: {jo}");
                     }
-                    if (api)
+                    try
                     {
-                        if (!whatIf) fsc.InsertPrecedingSucceedingTitle(jo);
-                        if (i % 100 == 0)
+                        if (api)
                         {
-                            traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
-                            s2.Restart();
-                        }
-                    }
-                    else
-                    {
-                        if (!whatIf) fbcc.Insert(PrecedingSucceedingTitle.FromJObject(jo));
-                        if (i % 1000 == 0)
-                        {
-                            fbcc.Commit();
-                            if (i % 10000 == 0)
+                            if (!whatIf) fsc.InsertPrecedingSucceedingTitle(jo);
+                            if (i % 100 == 0)
                             {
                                 traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
                                 s2.Restart();
                             }
                         }
+                        else
+                        {
+                            if (!whatIf) fbcc.Insert(PrecedingSucceedingTitle.FromJObject(jo));
+                            if (i % 1000 == 0)
+                            {
+                                fbcc.Commit();
+                                if (i % 10000 == 0)
+                                {
+                                    traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
+                                    s2.Restart();
+                                }
+                            }
+                        }
+                    }
+                    catch (Exception e)
+                    {
+                        traceSource.TraceEvent(TraceEventType.Error, 0, $"{e}\r\n{jo}");
+                        if (!force || e.Message.Contains("Connection was closed")) throw;
                     }
                 }
                 fbcc.Commit();
@@ -14574,27 +15334,35 @@ namespace FolioConsoleApplication
                         var l = js.Validate(jo);
                         if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"Prefix {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"Prefix {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}: {jo}");
                     }
-                    if (api)
+                    try
                     {
-                        if (!whatIf) fsc.InsertPrefix(jo);
-                        if (i % 100 == 0)
+                        if (api)
                         {
-                            traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
-                            s2.Restart();
-                        }
-                    }
-                    else
-                    {
-                        if (!whatIf) fbcc.Insert(Prefix.FromJObject(jo));
-                        if (i % 1000 == 0)
-                        {
-                            fbcc.Commit();
-                            if (i % 10000 == 0)
+                            if (!whatIf) fsc.InsertPrefix(jo);
+                            if (i % 100 == 0)
                             {
                                 traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
                                 s2.Restart();
                             }
                         }
+                        else
+                        {
+                            if (!whatIf) fbcc.Insert(Prefix.FromJObject(jo));
+                            if (i % 1000 == 0)
+                            {
+                                fbcc.Commit();
+                                if (i % 10000 == 0)
+                                {
+                                    traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
+                                    s2.Restart();
+                                }
+                            }
+                        }
+                    }
+                    catch (Exception e)
+                    {
+                        traceSource.TraceEvent(TraceEventType.Error, 0, $"{e}\r\n{jo}");
+                        if (!force || e.Message.Contains("Connection was closed")) throw;
                     }
                 }
                 fbcc.Commit();
@@ -14713,27 +15481,35 @@ namespace FolioConsoleApplication
                         var l = js.Validate(jo);
                         if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"Proxy {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"Proxy {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}: {jo}");
                     }
-                    if (api)
+                    try
                     {
-                        if (!whatIf) fsc.InsertProxy(jo);
-                        if (i % 100 == 0)
+                        if (api)
                         {
-                            traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
-                            s2.Restart();
-                        }
-                    }
-                    else
-                    {
-                        if (!whatIf) fbcc.Insert(Proxy.FromJObject(jo));
-                        if (i % 1000 == 0)
-                        {
-                            fbcc.Commit();
-                            if (i % 10000 == 0)
+                            if (!whatIf) fsc.InsertProxy(jo);
+                            if (i % 100 == 0)
                             {
                                 traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
                                 s2.Restart();
                             }
                         }
+                        else
+                        {
+                            if (!whatIf) fbcc.Insert(Proxy.FromJObject(jo));
+                            if (i % 1000 == 0)
+                            {
+                                fbcc.Commit();
+                                if (i % 10000 == 0)
+                                {
+                                    traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
+                                    s2.Restart();
+                                }
+                            }
+                        }
+                    }
+                    catch (Exception e)
+                    {
+                        traceSource.TraceEvent(TraceEventType.Error, 0, $"{e}\r\n{jo}");
+                        if (!force || e.Message.Contains("Connection was closed")) throw;
                     }
                 }
                 fbcc.Commit();
@@ -14852,27 +15628,35 @@ namespace FolioConsoleApplication
                         var l = js.Validate(jo);
                         if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"Receiving {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"Receiving {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}: {jo}");
                     }
-                    if (api)
+                    try
                     {
-                        if (!whatIf) fsc.InsertReceiving(jo);
-                        if (i % 100 == 0)
+                        if (api)
                         {
-                            traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
-                            s2.Restart();
-                        }
-                    }
-                    else
-                    {
-                        if (!whatIf) fbcc.Insert(Receiving.FromJObject(jo));
-                        if (i % 1000 == 0)
-                        {
-                            fbcc.Commit();
-                            if (i % 10000 == 0)
+                            if (!whatIf) fsc.InsertReceiving(jo);
+                            if (i % 100 == 0)
                             {
                                 traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
                                 s2.Restart();
                             }
                         }
+                        else
+                        {
+                            if (!whatIf) fbcc.Insert(Receiving.FromJObject(jo));
+                            if (i % 1000 == 0)
+                            {
+                                fbcc.Commit();
+                                if (i % 10000 == 0)
+                                {
+                                    traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
+                                    s2.Restart();
+                                }
+                            }
+                        }
+                    }
+                    catch (Exception e)
+                    {
+                        traceSource.TraceEvent(TraceEventType.Error, 0, $"{e}\r\n{jo}");
+                        if (!force || e.Message.Contains("Connection was closed")) throw;
                     }
                 }
                 fbcc.Commit();
@@ -14992,19 +15776,27 @@ namespace FolioConsoleApplication
                         var l = js.Validate(jo);
                         if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"Record {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"Record {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}: {jo}");
                     }
-                    if (api)
+                    try
                     {
-                        l2.Add(jo);
-                        if (i % 1000 == 0)
+                        if (api)
                         {
-                            if (!whatIf) fsc.InsertRecords(l2);
-                            l2.Clear();
-                            traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
-                            s2.Restart();
+                            l2.Add(jo);
+                            if (i % 1000 == 0)
+                            {
+                                if (!whatIf) fsc.InsertRecords(l2);
+                                l2.Clear();
+                                traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
+                                s2.Restart();
+                            }
                         }
+                        else
+                            throw new NotSupportedException();
                     }
-                    else
-                        throw new NotSupportedException();
+                    catch (Exception e)
+                    {
+                        traceSource.TraceEvent(TraceEventType.Error, 0, $"{e}\r\n{jo}");
+                        if (!force || e.Message.Contains("Connection was closed")) throw;
+                    }
                 }
                 if (api && !whatIf && l2.Any()) fsc.InsertRecords(l2);
                 fbcc.Commit();
@@ -15172,27 +15964,35 @@ namespace FolioConsoleApplication
                         var l = js.Validate(jo);
                         if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"RefundReason {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"RefundReason {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}: {jo}");
                     }
-                    if (api)
+                    try
                     {
-                        if (!whatIf) fsc.InsertRefundReason(jo);
-                        if (i % 100 == 0)
+                        if (api)
                         {
-                            traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
-                            s2.Restart();
-                        }
-                    }
-                    else
-                    {
-                        if (!whatIf) fbcc.Insert(RefundReason.FromJObject(jo));
-                        if (i % 1000 == 0)
-                        {
-                            fbcc.Commit();
-                            if (i % 10000 == 0)
+                            if (!whatIf) fsc.InsertRefundReason(jo);
+                            if (i % 100 == 0)
                             {
                                 traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
                                 s2.Restart();
                             }
                         }
+                        else
+                        {
+                            if (!whatIf) fbcc.Insert(RefundReason.FromJObject(jo));
+                            if (i % 1000 == 0)
+                            {
+                                fbcc.Commit();
+                                if (i % 10000 == 0)
+                                {
+                                    traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
+                                    s2.Restart();
+                                }
+                            }
+                        }
+                    }
+                    catch (Exception e)
+                    {
+                        traceSource.TraceEvent(TraceEventType.Error, 0, $"{e}\r\n{jo}");
+                        if (!force || e.Message.Contains("Connection was closed")) throw;
                     }
                 }
                 fbcc.Commit();
@@ -15311,27 +16111,35 @@ namespace FolioConsoleApplication
                         var l = js.Validate(jo);
                         if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"ReportingCode {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"ReportingCode {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}: {jo}");
                     }
-                    if (api)
+                    try
                     {
-                        if (!whatIf) fsc.InsertReportingCode(jo);
-                        if (i % 100 == 0)
+                        if (api)
                         {
-                            traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
-                            s2.Restart();
-                        }
-                    }
-                    else
-                    {
-                        if (!whatIf) fbcc.Insert(ReportingCode.FromJObject(jo));
-                        if (i % 1000 == 0)
-                        {
-                            fbcc.Commit();
-                            if (i % 10000 == 0)
+                            if (!whatIf) fsc.InsertReportingCode(jo);
+                            if (i % 100 == 0)
                             {
                                 traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
                                 s2.Restart();
                             }
                         }
+                        else
+                        {
+                            if (!whatIf) fbcc.Insert(ReportingCode.FromJObject(jo));
+                            if (i % 1000 == 0)
+                            {
+                                fbcc.Commit();
+                                if (i % 10000 == 0)
+                                {
+                                    traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
+                                    s2.Restart();
+                                }
+                            }
+                        }
+                    }
+                    catch (Exception e)
+                    {
+                        traceSource.TraceEvent(TraceEventType.Error, 0, $"{e}\r\n{jo}");
+                        if (!force || e.Message.Contains("Connection was closed")) throw;
                     }
                 }
                 fbcc.Commit();
@@ -15450,27 +16258,35 @@ namespace FolioConsoleApplication
                         var l = js.Validate(jo);
                         if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"Request {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"Request {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}: {jo}");
                     }
-                    if (api)
+                    try
                     {
-                        if (!whatIf) fsc.InsertRequest(jo);
-                        if (i % 100 == 0)
+                        if (api)
                         {
-                            traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
-                            s2.Restart();
-                        }
-                    }
-                    else
-                    {
-                        if (!whatIf) fbcc.Insert(Request.FromJObject(jo));
-                        if (i % 1000 == 0)
-                        {
-                            fbcc.Commit();
-                            if (i % 10000 == 0)
+                            if (!whatIf) fsc.InsertRequest(jo);
+                            if (i % 100 == 0)
                             {
                                 traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
                                 s2.Restart();
                             }
                         }
+                        else
+                        {
+                            if (!whatIf) fbcc.Insert(Request.FromJObject(jo));
+                            if (i % 1000 == 0)
+                            {
+                                fbcc.Commit();
+                                if (i % 10000 == 0)
+                                {
+                                    traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
+                                    s2.Restart();
+                                }
+                            }
+                        }
+                    }
+                    catch (Exception e)
+                    {
+                        traceSource.TraceEvent(TraceEventType.Error, 0, $"{e}\r\n{jo}");
+                        if (!force || e.Message.Contains("Connection was closed")) throw;
                     }
                 }
                 fbcc.Commit();
@@ -15589,27 +16405,35 @@ namespace FolioConsoleApplication
                         var l = js.Validate(jo);
                         if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"RequestPolicy {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"RequestPolicy {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}: {jo}");
                     }
-                    if (api)
+                    try
                     {
-                        if (!whatIf) fsc.InsertRequestPolicy(jo);
-                        if (i % 100 == 0)
+                        if (api)
                         {
-                            traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
-                            s2.Restart();
-                        }
-                    }
-                    else
-                    {
-                        if (!whatIf) fbcc.Insert(RequestPolicy.FromJObject(jo));
-                        if (i % 1000 == 0)
-                        {
-                            fbcc.Commit();
-                            if (i % 10000 == 0)
+                            if (!whatIf) fsc.InsertRequestPolicy(jo);
+                            if (i % 100 == 0)
                             {
                                 traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
                                 s2.Restart();
                             }
                         }
+                        else
+                        {
+                            if (!whatIf) fbcc.Insert(RequestPolicy.FromJObject(jo));
+                            if (i % 1000 == 0)
+                            {
+                                fbcc.Commit();
+                                if (i % 10000 == 0)
+                                {
+                                    traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
+                                    s2.Restart();
+                                }
+                            }
+                        }
+                    }
+                    catch (Exception e)
+                    {
+                        traceSource.TraceEvent(TraceEventType.Error, 0, $"{e}\r\n{jo}");
+                        if (!force || e.Message.Contains("Connection was closed")) throw;
                     }
                 }
                 fbcc.Commit();
@@ -15728,27 +16552,35 @@ namespace FolioConsoleApplication
                         var l = js.Validate(jo);
                         if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"ScheduledNotice {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"ScheduledNotice {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}: {jo}");
                     }
-                    if (api)
+                    try
                     {
-                        if (!whatIf) fsc.InsertScheduledNotice(jo);
-                        if (i % 100 == 0)
+                        if (api)
                         {
-                            traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
-                            s2.Restart();
-                        }
-                    }
-                    else
-                    {
-                        if (!whatIf) fbcc.Insert(ScheduledNotice.FromJObject(jo));
-                        if (i % 1000 == 0)
-                        {
-                            fbcc.Commit();
-                            if (i % 10000 == 0)
+                            if (!whatIf) fsc.InsertScheduledNotice(jo);
+                            if (i % 100 == 0)
                             {
                                 traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
                                 s2.Restart();
                             }
                         }
+                        else
+                        {
+                            if (!whatIf) fbcc.Insert(ScheduledNotice.FromJObject(jo));
+                            if (i % 1000 == 0)
+                            {
+                                fbcc.Commit();
+                                if (i % 10000 == 0)
+                                {
+                                    traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
+                                    s2.Restart();
+                                }
+                            }
+                        }
+                    }
+                    catch (Exception e)
+                    {
+                        traceSource.TraceEvent(TraceEventType.Error, 0, $"{e}\r\n{jo}");
+                        if (!force || e.Message.Contains("Connection was closed")) throw;
                     }
                 }
                 fbcc.Commit();
@@ -15867,27 +16699,35 @@ namespace FolioConsoleApplication
                         var l = js.Validate(jo);
                         if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"ServicePoint {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"ServicePoint {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}: {jo}");
                     }
-                    if (api)
+                    try
                     {
-                        if (!whatIf) fsc.InsertServicePoint(jo);
-                        if (i % 100 == 0)
+                        if (api)
                         {
-                            traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
-                            s2.Restart();
-                        }
-                    }
-                    else
-                    {
-                        if (!whatIf) fbcc.Insert(ServicePoint.FromJObject(jo));
-                        if (i % 1000 == 0)
-                        {
-                            fbcc.Commit();
-                            if (i % 10000 == 0)
+                            if (!whatIf) fsc.InsertServicePoint(jo);
+                            if (i % 100 == 0)
                             {
                                 traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
                                 s2.Restart();
                             }
                         }
+                        else
+                        {
+                            if (!whatIf) fbcc.Insert(ServicePoint.FromJObject(jo));
+                            if (i % 1000 == 0)
+                            {
+                                fbcc.Commit();
+                                if (i % 10000 == 0)
+                                {
+                                    traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
+                                    s2.Restart();
+                                }
+                            }
+                        }
+                    }
+                    catch (Exception e)
+                    {
+                        traceSource.TraceEvent(TraceEventType.Error, 0, $"{e}\r\n{jo}");
+                        if (!force || e.Message.Contains("Connection was closed")) throw;
                     }
                 }
                 fbcc.Commit();
@@ -16006,27 +16846,35 @@ namespace FolioConsoleApplication
                         var l = js.Validate(jo);
                         if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"ServicePointUser {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"ServicePointUser {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}: {jo}");
                     }
-                    if (api)
+                    try
                     {
-                        if (!whatIf) fsc.InsertServicePointUser(jo);
-                        if (i % 100 == 0)
+                        if (api)
                         {
-                            traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
-                            s2.Restart();
-                        }
-                    }
-                    else
-                    {
-                        if (!whatIf) fbcc.Insert(ServicePointUser.FromJObject(jo));
-                        if (i % 1000 == 0)
-                        {
-                            fbcc.Commit();
-                            if (i % 10000 == 0)
+                            if (!whatIf) fsc.InsertServicePointUser(jo);
+                            if (i % 100 == 0)
                             {
                                 traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
                                 s2.Restart();
                             }
                         }
+                        else
+                        {
+                            if (!whatIf) fbcc.Insert(ServicePointUser.FromJObject(jo));
+                            if (i % 1000 == 0)
+                            {
+                                fbcc.Commit();
+                                if (i % 10000 == 0)
+                                {
+                                    traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
+                                    s2.Restart();
+                                }
+                            }
+                        }
+                    }
+                    catch (Exception e)
+                    {
+                        traceSource.TraceEvent(TraceEventType.Error, 0, $"{e}\r\n{jo}");
+                        if (!force || e.Message.Contains("Connection was closed")) throw;
                     }
                 }
                 fbcc.Commit();
@@ -16145,17 +16993,25 @@ namespace FolioConsoleApplication
                         var l = js.Validate(jo);
                         if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"Snapshot {jo["jobExecutionId"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"Snapshot {jo["jobExecutionId"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}: {jo}");
                     }
-                    if (api)
+                    try
                     {
-                        if (!whatIf) fsc.InsertSnapshot(jo);
-                        if (i % 100 == 0)
+                        if (api)
                         {
-                            traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
-                            s2.Restart();
+                            if (!whatIf) fsc.InsertSnapshot(jo);
+                            if (i % 100 == 0)
+                            {
+                                traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
+                                s2.Restart();
+                            }
                         }
+                        else
+                            throw new NotSupportedException();
                     }
-                    else
-                        throw new NotSupportedException();
+                    catch (Exception e)
+                    {
+                        traceSource.TraceEvent(TraceEventType.Error, 0, $"{e}\r\n{jo}");
+                        if (!force || e.Message.Contains("Connection was closed")) throw;
+                    }
                 }
                 fbcc.Commit();
                 traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
@@ -16273,27 +17129,35 @@ namespace FolioConsoleApplication
                         var l = js.Validate(jo);
                         if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"Source {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"Source {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}: {jo}");
                     }
-                    if (api)
+                    try
                     {
-                        if (!whatIf) fsc.InsertSource(jo);
-                        if (i % 100 == 0)
+                        if (api)
                         {
-                            traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
-                            s2.Restart();
-                        }
-                    }
-                    else
-                    {
-                        if (!whatIf) fbcc.Insert(Source.FromJObject(jo));
-                        if (i % 1000 == 0)
-                        {
-                            fbcc.Commit();
-                            if (i % 10000 == 0)
+                            if (!whatIf) fsc.InsertSource(jo);
+                            if (i % 100 == 0)
                             {
                                 traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
                                 s2.Restart();
                             }
                         }
+                        else
+                        {
+                            if (!whatIf) fbcc.Insert(Source.FromJObject(jo));
+                            if (i % 1000 == 0)
+                            {
+                                fbcc.Commit();
+                                if (i % 10000 == 0)
+                                {
+                                    traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
+                                    s2.Restart();
+                                }
+                            }
+                        }
+                    }
+                    catch (Exception e)
+                    {
+                        traceSource.TraceEvent(TraceEventType.Error, 0, $"{e}\r\n{jo}");
+                        if (!force || e.Message.Contains("Connection was closed")) throw;
                     }
                 }
                 fbcc.Commit();
@@ -16412,27 +17276,35 @@ namespace FolioConsoleApplication
                         var l = js.Validate(jo);
                         if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"StaffSlip {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"StaffSlip {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}: {jo}");
                     }
-                    if (api)
+                    try
                     {
-                        if (!whatIf) fsc.InsertStaffSlip(jo);
-                        if (i % 100 == 0)
+                        if (api)
                         {
-                            traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
-                            s2.Restart();
-                        }
-                    }
-                    else
-                    {
-                        if (!whatIf) fbcc.Insert(StaffSlip.FromJObject(jo));
-                        if (i % 1000 == 0)
-                        {
-                            fbcc.Commit();
-                            if (i % 10000 == 0)
+                            if (!whatIf) fsc.InsertStaffSlip(jo);
+                            if (i % 100 == 0)
                             {
                                 traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
                                 s2.Restart();
                             }
                         }
+                        else
+                        {
+                            if (!whatIf) fbcc.Insert(StaffSlip.FromJObject(jo));
+                            if (i % 1000 == 0)
+                            {
+                                fbcc.Commit();
+                                if (i % 10000 == 0)
+                                {
+                                    traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
+                                    s2.Restart();
+                                }
+                            }
+                        }
+                    }
+                    catch (Exception e)
+                    {
+                        traceSource.TraceEvent(TraceEventType.Error, 0, $"{e}\r\n{jo}");
+                        if (!force || e.Message.Contains("Connection was closed")) throw;
                     }
                 }
                 fbcc.Commit();
@@ -16551,27 +17423,35 @@ namespace FolioConsoleApplication
                         var l = js.Validate(jo);
                         if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"StatisticalCode {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"StatisticalCode {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}: {jo}");
                     }
-                    if (api)
+                    try
                     {
-                        if (!whatIf) fsc.InsertStatisticalCode(jo);
-                        if (i % 100 == 0)
+                        if (api)
                         {
-                            traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
-                            s2.Restart();
-                        }
-                    }
-                    else
-                    {
-                        if (!whatIf) fbcc.Insert(StatisticalCode.FromJObject(jo));
-                        if (i % 1000 == 0)
-                        {
-                            fbcc.Commit();
-                            if (i % 10000 == 0)
+                            if (!whatIf) fsc.InsertStatisticalCode(jo);
+                            if (i % 100 == 0)
                             {
                                 traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
                                 s2.Restart();
                             }
                         }
+                        else
+                        {
+                            if (!whatIf) fbcc.Insert(StatisticalCode.FromJObject(jo));
+                            if (i % 1000 == 0)
+                            {
+                                fbcc.Commit();
+                                if (i % 10000 == 0)
+                                {
+                                    traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
+                                    s2.Restart();
+                                }
+                            }
+                        }
+                    }
+                    catch (Exception e)
+                    {
+                        traceSource.TraceEvent(TraceEventType.Error, 0, $"{e}\r\n{jo}");
+                        if (!force || e.Message.Contains("Connection was closed")) throw;
                     }
                 }
                 fbcc.Commit();
@@ -16690,27 +17570,35 @@ namespace FolioConsoleApplication
                         var l = js.Validate(jo);
                         if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"StatisticalCodeType {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"StatisticalCodeType {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}: {jo}");
                     }
-                    if (api)
+                    try
                     {
-                        if (!whatIf) fsc.InsertStatisticalCodeType(jo);
-                        if (i % 100 == 0)
+                        if (api)
                         {
-                            traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
-                            s2.Restart();
-                        }
-                    }
-                    else
-                    {
-                        if (!whatIf) fbcc.Insert(StatisticalCodeType.FromJObject(jo));
-                        if (i % 1000 == 0)
-                        {
-                            fbcc.Commit();
-                            if (i % 10000 == 0)
+                            if (!whatIf) fsc.InsertStatisticalCodeType(jo);
+                            if (i % 100 == 0)
                             {
                                 traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
                                 s2.Restart();
                             }
                         }
+                        else
+                        {
+                            if (!whatIf) fbcc.Insert(StatisticalCodeType.FromJObject(jo));
+                            if (i % 1000 == 0)
+                            {
+                                fbcc.Commit();
+                                if (i % 10000 == 0)
+                                {
+                                    traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
+                                    s2.Restart();
+                                }
+                            }
+                        }
+                    }
+                    catch (Exception e)
+                    {
+                        traceSource.TraceEvent(TraceEventType.Error, 0, $"{e}\r\n{jo}");
+                        if (!force || e.Message.Contains("Connection was closed")) throw;
                     }
                 }
                 fbcc.Commit();
@@ -16829,27 +17717,35 @@ namespace FolioConsoleApplication
                         var l = js.Validate(jo);
                         if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"Suffix {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"Suffix {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}: {jo}");
                     }
-                    if (api)
+                    try
                     {
-                        if (!whatIf) fsc.InsertSuffix(jo);
-                        if (i % 100 == 0)
+                        if (api)
                         {
-                            traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
-                            s2.Restart();
-                        }
-                    }
-                    else
-                    {
-                        if (!whatIf) fbcc.Insert(Suffix.FromJObject(jo));
-                        if (i % 1000 == 0)
-                        {
-                            fbcc.Commit();
-                            if (i % 10000 == 0)
+                            if (!whatIf) fsc.InsertSuffix(jo);
+                            if (i % 100 == 0)
                             {
                                 traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
                                 s2.Restart();
                             }
                         }
+                        else
+                        {
+                            if (!whatIf) fbcc.Insert(Suffix.FromJObject(jo));
+                            if (i % 1000 == 0)
+                            {
+                                fbcc.Commit();
+                                if (i % 10000 == 0)
+                                {
+                                    traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
+                                    s2.Restart();
+                                }
+                            }
+                        }
+                    }
+                    catch (Exception e)
+                    {
+                        traceSource.TraceEvent(TraceEventType.Error, 0, $"{e}\r\n{jo}");
+                        if (!force || e.Message.Contains("Connection was closed")) throw;
                     }
                 }
                 fbcc.Commit();
@@ -16968,27 +17864,35 @@ namespace FolioConsoleApplication
                         var l = js.Validate(jo);
                         if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"Template {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"Template {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}: {jo}");
                     }
-                    if (api)
+                    try
                     {
-                        if (!whatIf) fsc.InsertTemplate(jo);
-                        if (i % 100 == 0)
+                        if (api)
                         {
-                            traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
-                            s2.Restart();
-                        }
-                    }
-                    else
-                    {
-                        if (!whatIf) fbcc.Insert(Template.FromJObject(jo));
-                        if (i % 1000 == 0)
-                        {
-                            fbcc.Commit();
-                            if (i % 10000 == 0)
+                            if (!whatIf) fsc.InsertTemplate(jo);
+                            if (i % 100 == 0)
                             {
                                 traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
                                 s2.Restart();
                             }
                         }
+                        else
+                        {
+                            if (!whatIf) fbcc.Insert(Template.FromJObject(jo));
+                            if (i % 1000 == 0)
+                            {
+                                fbcc.Commit();
+                                if (i % 10000 == 0)
+                                {
+                                    traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
+                                    s2.Restart();
+                                }
+                            }
+                        }
+                    }
+                    catch (Exception e)
+                    {
+                        traceSource.TraceEvent(TraceEventType.Error, 0, $"{e}\r\n{jo}");
+                        if (!force || e.Message.Contains("Connection was closed")) throw;
                     }
                 }
                 fbcc.Commit();
@@ -17107,27 +18011,35 @@ namespace FolioConsoleApplication
                         var l = js.Validate(jo);
                         if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"Title {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"Title {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}: {jo}");
                     }
-                    if (api)
+                    try
                     {
-                        if (!whatIf) fsc.InsertTitle(jo);
-                        if (i % 100 == 0)
+                        if (api)
                         {
-                            traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
-                            s2.Restart();
-                        }
-                    }
-                    else
-                    {
-                        if (!whatIf) fbcc.Insert(Title.FromJObject(jo));
-                        if (i % 1000 == 0)
-                        {
-                            fbcc.Commit();
-                            if (i % 10000 == 0)
+                            if (!whatIf) fsc.InsertTitle(jo);
+                            if (i % 100 == 0)
                             {
                                 traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
                                 s2.Restart();
                             }
                         }
+                        else
+                        {
+                            if (!whatIf) fbcc.Insert(Title.FromJObject(jo));
+                            if (i % 1000 == 0)
+                            {
+                                fbcc.Commit();
+                                if (i % 10000 == 0)
+                                {
+                                    traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
+                                    s2.Restart();
+                                }
+                            }
+                        }
+                    }
+                    catch (Exception e)
+                    {
+                        traceSource.TraceEvent(TraceEventType.Error, 0, $"{e}\r\n{jo}");
+                        if (!force || e.Message.Contains("Connection was closed")) throw;
                     }
                 }
                 fbcc.Commit();
@@ -17246,27 +18158,35 @@ namespace FolioConsoleApplication
                         var l = js.Validate(jo);
                         if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"Transaction {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"Transaction {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}: {jo}");
                     }
-                    if (api)
+                    try
                     {
-                        if (!whatIf) fsc.InsertTransaction(jo);
-                        if (i % 100 == 0)
+                        if (api)
                         {
-                            traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
-                            s2.Restart();
-                        }
-                    }
-                    else
-                    {
-                        if (!whatIf) fbcc.Insert(Transaction.FromJObject(jo));
-                        if (i % 1000 == 0)
-                        {
-                            fbcc.Commit();
-                            if (i % 10000 == 0)
+                            if (!whatIf) fsc.InsertTransaction(jo);
+                            if (i % 100 == 0)
                             {
                                 traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
                                 s2.Restart();
                             }
                         }
+                        else
+                        {
+                            if (!whatIf) fbcc.Insert(Transaction.FromJObject(jo));
+                            if (i % 1000 == 0)
+                            {
+                                fbcc.Commit();
+                                if (i % 10000 == 0)
+                                {
+                                    traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
+                                    s2.Restart();
+                                }
+                            }
+                        }
+                    }
+                    catch (Exception e)
+                    {
+                        traceSource.TraceEvent(TraceEventType.Error, 0, $"{e}\r\n{jo}");
+                        if (!force || e.Message.Contains("Connection was closed")) throw;
                     }
                 }
                 fbcc.Commit();
@@ -17385,27 +18305,35 @@ namespace FolioConsoleApplication
                         var l = js.Validate(jo);
                         if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"TransferAccount {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"TransferAccount {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}: {jo}");
                     }
-                    if (api)
+                    try
                     {
-                        if (!whatIf) fsc.InsertTransferAccount(jo);
-                        if (i % 100 == 0)
+                        if (api)
                         {
-                            traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
-                            s2.Restart();
-                        }
-                    }
-                    else
-                    {
-                        if (!whatIf) fbcc.Insert(TransferAccount.FromJObject(jo));
-                        if (i % 1000 == 0)
-                        {
-                            fbcc.Commit();
-                            if (i % 10000 == 0)
+                            if (!whatIf) fsc.InsertTransferAccount(jo);
+                            if (i % 100 == 0)
                             {
                                 traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
                                 s2.Restart();
                             }
                         }
+                        else
+                        {
+                            if (!whatIf) fbcc.Insert(TransferAccount.FromJObject(jo));
+                            if (i % 1000 == 0)
+                            {
+                                fbcc.Commit();
+                                if (i % 10000 == 0)
+                                {
+                                    traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
+                                    s2.Restart();
+                                }
+                            }
+                        }
+                    }
+                    catch (Exception e)
+                    {
+                        traceSource.TraceEvent(TraceEventType.Error, 0, $"{e}\r\n{jo}");
+                        if (!force || e.Message.Contains("Connection was closed")) throw;
                     }
                 }
                 fbcc.Commit();
@@ -17524,27 +18452,35 @@ namespace FolioConsoleApplication
                         var l = js.Validate(jo);
                         if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"TransferCriteria {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"TransferCriteria {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}: {jo}");
                     }
-                    if (api)
+                    try
                     {
-                        if (!whatIf) fsc.InsertTransferCriteria(jo);
-                        if (i % 100 == 0)
+                        if (api)
                         {
-                            traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
-                            s2.Restart();
-                        }
-                    }
-                    else
-                    {
-                        if (!whatIf) fbcc.Insert(TransferCriteria.FromJObject(jo));
-                        if (i % 1000 == 0)
-                        {
-                            fbcc.Commit();
-                            if (i % 10000 == 0)
+                            if (!whatIf) fsc.InsertTransferCriteria(jo);
+                            if (i % 100 == 0)
                             {
                                 traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
                                 s2.Restart();
                             }
                         }
+                        else
+                        {
+                            if (!whatIf) fbcc.Insert(TransferCriteria.FromJObject(jo));
+                            if (i % 1000 == 0)
+                            {
+                                fbcc.Commit();
+                                if (i % 10000 == 0)
+                                {
+                                    traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
+                                    s2.Restart();
+                                }
+                            }
+                        }
+                    }
+                    catch (Exception e)
+                    {
+                        traceSource.TraceEvent(TraceEventType.Error, 0, $"{e}\r\n{jo}");
+                        if (!force || e.Message.Contains("Connection was closed")) throw;
                     }
                 }
                 fbcc.Commit();
@@ -17663,27 +18599,35 @@ namespace FolioConsoleApplication
                         var l = js.Validate(jo);
                         if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"User {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"User {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}: {jo}");
                     }
-                    if (api)
+                    try
                     {
-                        if (!whatIf) fsc.InsertUser(jo);
-                        if (i % 100 == 0)
+                        if (api)
                         {
-                            traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
-                            s2.Restart();
-                        }
-                    }
-                    else
-                    {
-                        if (!whatIf) fbcc.Insert(User.FromJObject(jo));
-                        if (i % 1000 == 0)
-                        {
-                            fbcc.Commit();
-                            if (i % 10000 == 0)
+                            if (!whatIf) fsc.InsertUser(jo);
+                            if (i % 100 == 0)
                             {
                                 traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
                                 s2.Restart();
                             }
                         }
+                        else
+                        {
+                            if (!whatIf) fbcc.Insert(User.FromJObject(jo));
+                            if (i % 1000 == 0)
+                            {
+                                fbcc.Commit();
+                                if (i % 10000 == 0)
+                                {
+                                    traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
+                                    s2.Restart();
+                                }
+                            }
+                        }
+                    }
+                    catch (Exception e)
+                    {
+                        traceSource.TraceEvent(TraceEventType.Error, 0, $"{e}\r\n{jo}");
+                        if (!force || e.Message.Contains("Connection was closed")) throw;
                     }
                 }
                 fbcc.Commit();
@@ -17962,27 +18906,35 @@ namespace FolioConsoleApplication
                         var l = js.Validate(jo);
                         if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"UserAcquisitionsUnit {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"UserAcquisitionsUnit {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}: {jo}");
                     }
-                    if (api)
+                    try
                     {
-                        if (!whatIf) fsc.InsertUserAcquisitionsUnit(jo);
-                        if (i % 100 == 0)
+                        if (api)
                         {
-                            traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
-                            s2.Restart();
-                        }
-                    }
-                    else
-                    {
-                        if (!whatIf) fbcc.Insert(UserAcquisitionsUnit.FromJObject(jo));
-                        if (i % 1000 == 0)
-                        {
-                            fbcc.Commit();
-                            if (i % 10000 == 0)
+                            if (!whatIf) fsc.InsertUserAcquisitionsUnit(jo);
+                            if (i % 100 == 0)
                             {
                                 traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
                                 s2.Restart();
                             }
                         }
+                        else
+                        {
+                            if (!whatIf) fbcc.Insert(UserAcquisitionsUnit.FromJObject(jo));
+                            if (i % 1000 == 0)
+                            {
+                                fbcc.Commit();
+                                if (i % 10000 == 0)
+                                {
+                                    traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
+                                    s2.Restart();
+                                }
+                            }
+                        }
+                    }
+                    catch (Exception e)
+                    {
+                        traceSource.TraceEvent(TraceEventType.Error, 0, $"{e}\r\n{jo}");
+                        if (!force || e.Message.Contains("Connection was closed")) throw;
                     }
                 }
                 fbcc.Commit();
@@ -18101,27 +19053,35 @@ namespace FolioConsoleApplication
                         var l = js.Validate(jo);
                         if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"UserRequestPreference {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"UserRequestPreference {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}: {jo}");
                     }
-                    if (api)
+                    try
                     {
-                        if (!whatIf) fsc.InsertUserRequestPreference(jo);
-                        if (i % 100 == 0)
+                        if (api)
                         {
-                            traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
-                            s2.Restart();
-                        }
-                    }
-                    else
-                    {
-                        if (!whatIf) fbcc.Insert(UserRequestPreference.FromJObject(jo));
-                        if (i % 1000 == 0)
-                        {
-                            fbcc.Commit();
-                            if (i % 10000 == 0)
+                            if (!whatIf) fsc.InsertUserRequestPreference(jo);
+                            if (i % 100 == 0)
                             {
                                 traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
                                 s2.Restart();
                             }
                         }
+                        else
+                        {
+                            if (!whatIf) fbcc.Insert(UserRequestPreference.FromJObject(jo));
+                            if (i % 1000 == 0)
+                            {
+                                fbcc.Commit();
+                                if (i % 10000 == 0)
+                                {
+                                    traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
+                                    s2.Restart();
+                                }
+                            }
+                        }
+                    }
+                    catch (Exception e)
+                    {
+                        traceSource.TraceEvent(TraceEventType.Error, 0, $"{e}\r\n{jo}");
+                        if (!force || e.Message.Contains("Connection was closed")) throw;
                     }
                 }
                 fbcc.Commit();
@@ -18227,22 +19187,30 @@ namespace FolioConsoleApplication
                         var l = js.Validate(jo);
                         if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"UserSummary {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"UserSummary {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}: {jo}");
                     }
-                    if (api)
+                    try
                     {
-                        throw new NotSupportedException();
-                    }
-                    else
-                    {
-                        if (!whatIf) fbcc.Insert(UserSummary.FromJObject(jo));
-                        if (i % 1000 == 0)
+                        if (api)
                         {
-                            fbcc.Commit();
-                            if (i % 10000 == 0)
+                            throw new NotSupportedException();
+                        }
+                        else
+                        {
+                            if (!whatIf) fbcc.Insert(UserSummary.FromJObject(jo));
+                            if (i % 1000 == 0)
                             {
-                                traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
-                                s2.Restart();
+                                fbcc.Commit();
+                                if (i % 10000 == 0)
+                                {
+                                    traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
+                                    s2.Restart();
+                                }
                             }
                         }
+                    }
+                    catch (Exception e)
+                    {
+                        traceSource.TraceEvent(TraceEventType.Error, 0, $"{e}\r\n{jo}");
+                        if (!force || e.Message.Contains("Connection was closed")) throw;
                     }
                 }
                 fbcc.Commit();
@@ -18360,27 +19328,35 @@ namespace FolioConsoleApplication
                         var l = js.Validate(jo);
                         if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"Voucher {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"Voucher {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}: {jo}");
                     }
-                    if (api)
+                    try
                     {
-                        if (!whatIf) fsc.InsertVoucher(jo);
-                        if (i % 100 == 0)
+                        if (api)
                         {
-                            traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
-                            s2.Restart();
-                        }
-                    }
-                    else
-                    {
-                        if (!whatIf) fbcc.Insert(Voucher.FromJObject(jo));
-                        if (i % 1000 == 0)
-                        {
-                            fbcc.Commit();
-                            if (i % 10000 == 0)
+                            if (!whatIf) fsc.InsertVoucher(jo);
+                            if (i % 100 == 0)
                             {
                                 traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
                                 s2.Restart();
                             }
                         }
+                        else
+                        {
+                            if (!whatIf) fbcc.Insert(Voucher.FromJObject(jo));
+                            if (i % 1000 == 0)
+                            {
+                                fbcc.Commit();
+                                if (i % 10000 == 0)
+                                {
+                                    traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
+                                    s2.Restart();
+                                }
+                            }
+                        }
+                    }
+                    catch (Exception e)
+                    {
+                        traceSource.TraceEvent(TraceEventType.Error, 0, $"{e}\r\n{jo}");
+                        if (!force || e.Message.Contains("Connection was closed")) throw;
                     }
                 }
                 fbcc.Commit();
@@ -18499,27 +19475,35 @@ namespace FolioConsoleApplication
                         var l = js.Validate(jo);
                         if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"VoucherItem {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"VoucherItem {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}: {jo}");
                     }
-                    if (api)
+                    try
                     {
-                        if (!whatIf) fsc.InsertVoucherItem(jo);
-                        if (i % 100 == 0)
+                        if (api)
                         {
-                            traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
-                            s2.Restart();
-                        }
-                    }
-                    else
-                    {
-                        if (!whatIf) fbcc.Insert(VoucherItem.FromJObject(jo));
-                        if (i % 1000 == 0)
-                        {
-                            fbcc.Commit();
-                            if (i % 10000 == 0)
+                            if (!whatIf) fsc.InsertVoucherItem(jo);
+                            if (i % 100 == 0)
                             {
                                 traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
                                 s2.Restart();
                             }
                         }
+                        else
+                        {
+                            if (!whatIf) fbcc.Insert(VoucherItem.FromJObject(jo));
+                            if (i % 1000 == 0)
+                            {
+                                fbcc.Commit();
+                                if (i % 10000 == 0)
+                                {
+                                    traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
+                                    s2.Restart();
+                                }
+                            }
+                        }
+                    }
+                    catch (Exception e)
+                    {
+                        traceSource.TraceEvent(TraceEventType.Error, 0, $"{e}\r\n{jo}");
+                        if (!force || e.Message.Contains("Connection was closed")) throw;
                     }
                 }
                 fbcc.Commit();
@@ -18638,27 +19622,35 @@ namespace FolioConsoleApplication
                         var l = js.Validate(jo);
                         if (l.Any()) if (force) traceSource.TraceEvent(TraceEventType.Error, 0, $"WaiveReason {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}"); else throw new ValidationException($"WaiveReason {jo["id"]}: {string.Join(" ", l.Select(ve => ve.ToString()))}: {jo}");
                     }
-                    if (api)
+                    try
                     {
-                        if (!whatIf) fsc.InsertWaiveReason(jo);
-                        if (i % 100 == 0)
+                        if (api)
                         {
-                            traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
-                            s2.Restart();
-                        }
-                    }
-                    else
-                    {
-                        if (!whatIf) fbcc.Insert(WaiveReason.FromJObject(jo));
-                        if (i % 1000 == 0)
-                        {
-                            fbcc.Commit();
-                            if (i % 10000 == 0)
+                            if (!whatIf) fsc.InsertWaiveReason(jo);
+                            if (i % 100 == 0)
                             {
                                 traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
                                 s2.Restart();
                             }
                         }
+                        else
+                        {
+                            if (!whatIf) fbcc.Insert(WaiveReason.FromJObject(jo));
+                            if (i % 1000 == 0)
+                            {
+                                fbcc.Commit();
+                                if (i % 10000 == 0)
+                                {
+                                    traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
+                                    s2.Restart();
+                                }
+                            }
+                        }
+                    }
+                    catch (Exception e)
+                    {
+                        traceSource.TraceEvent(TraceEventType.Error, 0, $"{e}\r\n{jo}");
+                        if (!force || e.Message.Contains("Connection was closed")) throw;
                     }
                 }
                 fbcc.Commit();
