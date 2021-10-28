@@ -7,7 +7,7 @@ This project includes a console application that can be used to load and save da
 ## Requirements
 
 * Git https://git-scm.com/
-* .NET Core 3.1 SDK https://dotnet.microsoft.com/download
+* .NET 5 SDK https://dotnet.microsoft.com/download
 
 ## Optional
 
