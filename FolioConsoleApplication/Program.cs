@@ -18210,7 +18210,7 @@ namespace FolioConsoleApplication
                 var js = JsonSchema.FromJsonAsync(sr.ReadToEndAsync().Result).Result;
                 jtw.WriteStartArray();
                 var i = 0;
-                foreach (var jo in api ? fsc.Transactions(where, orderBy, skip, take) : fdc.Transactions(where, null, orderBy, skip, take).Select(t => t.ToJObject()))
+                foreach (var jo in api ? fsc.Transactions(where, orderBy, skip, take) : fdc.Transactions(where, null, orderBy ?? "CASE jsonb->>'transactionType' WHEN 'Allocation' THEN 1 WHEN 'Encumbrance' THEN 2 ELSE 3 END", skip, take).Select(t => t.ToJObject()))
                 {
                     if (validate)
                     {
