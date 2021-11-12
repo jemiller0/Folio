@@ -7585,6 +7585,7 @@ namespace FolioConsoleApplication
             using (var sr = new StreamReader(compress || path.EndsWith(".gz") ? (Stream)new GZipStream(File.OpenRead($"{path}{(path.EndsWith(".gz") ? "" : ".gz")}"), CompressionMode.Decompress) : File.OpenRead(path)))
             using (var sr2 = new StreamReader(Assembly.GetAssembly(typeof(FolioDapperContext)).GetManifestResourceStream("FolioLibrary.Holding.json")))
             using (var jtr = new JsonTextReader(sr) { SupportMultipleContent = true })
+            using (var fdc = new FolioDapperContext(connectionString))
             using (var fbcc = new FolioBulkCopyContext(connectionString))
             using (var fsc = new FolioServiceClient(connectionString))
             {
@@ -7638,6 +7639,8 @@ namespace FolioConsoleApplication
                 }
                 if (api && !whatIf && l2.Any()) fsc.InsertHoldings(l2);
                 fbcc.Commit();
+                fdc.Execute($"ALTER SEQUENCE diku_mod_inventory_storage.hrid_holdings_seq RESTART {fdc.ExecuteScalar<int>("SELECT MAX((jsonb->>'hrid')::int) + 1 FROM diku_mod_inventory_storage.holdings_record")}");
+                fdc.Commit();
                 traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
                 traceSource.TraceEvent(TraceEventType.Information, 0, $"Added {i} holdings");
             }
@@ -8460,6 +8463,7 @@ namespace FolioConsoleApplication
             using (var sr = new StreamReader(compress || path.EndsWith(".gz") ? (Stream)new GZipStream(File.OpenRead($"{path}{(path.EndsWith(".gz") ? "" : ".gz")}"), CompressionMode.Decompress) : File.OpenRead(path)))
             using (var sr2 = new StreamReader(Assembly.GetAssembly(typeof(FolioDapperContext)).GetManifestResourceStream("FolioLibrary.Instance.json")))
             using (var jtr = new JsonTextReader(sr) { SupportMultipleContent = true })
+            using (var fdc = new FolioDapperContext(connectionString))
             using (var fbcc = new FolioBulkCopyContext(connectionString))
             using (var fsc = new FolioServiceClient(connectionString))
             {
@@ -8513,6 +8517,8 @@ namespace FolioConsoleApplication
                 }
                 if (api && !whatIf && l2.Any()) fsc.InsertInstances(l2);
                 fbcc.Commit();
+                fdc.Execute($"ALTER SEQUENCE diku_mod_inventory_storage.hrid_instances_seq RESTART {fdc.ExecuteScalar<int>("SELECT MAX((jsonb->>'hrid')::int) + 1 FROM diku_mod_inventory_storage.instance")}");
+                fdc.Commit();
                 traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
                 traceSource.TraceEvent(TraceEventType.Information, 0, $"Added {i} instances");
             }
@@ -9915,6 +9921,7 @@ namespace FolioConsoleApplication
             using (var sr = new StreamReader(compress || path.EndsWith(".gz") ? (Stream)new GZipStream(File.OpenRead($"{path}{(path.EndsWith(".gz") ? "" : ".gz")}"), CompressionMode.Decompress) : File.OpenRead(path)))
             using (var sr2 = new StreamReader(Assembly.GetAssembly(typeof(FolioDapperContext)).GetManifestResourceStream("FolioLibrary.Invoice.json")))
             using (var jtr = new JsonTextReader(sr) { SupportMultipleContent = true })
+            using (var fdc = new FolioDapperContext(connectionString))
             using (var fbcc = new FolioBulkCopyContext(connectionString))
             using (var fsc = new FolioServiceClient(connectionString))
             {
@@ -9964,6 +9971,8 @@ namespace FolioConsoleApplication
                     }
                 }
                 fbcc.Commit();
+                fdc.Execute($"ALTER SEQUENCE diku_mod_invoice_storage.invoice_number RESTART {fdc.ExecuteScalar<int>("SELECT MAX((jsonb->>'folioInvoiceNo')::int) + 1 FROM diku_mod_invoice_storage.invoices")}");
+                fdc.Commit();
                 traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
                 traceSource.TraceEvent(TraceEventType.Information, 0, $"Added {i} invoices");
             }
@@ -10356,6 +10365,7 @@ namespace FolioConsoleApplication
             using (var sr = new StreamReader(compress || path.EndsWith(".gz") ? (Stream)new GZipStream(File.OpenRead($"{path}{(path.EndsWith(".gz") ? "" : ".gz")}"), CompressionMode.Decompress) : File.OpenRead(path)))
             using (var sr2 = new StreamReader(Assembly.GetAssembly(typeof(FolioDapperContext)).GetManifestResourceStream("FolioLibrary.Item.json")))
             using (var jtr = new JsonTextReader(sr) { SupportMultipleContent = true })
+            using (var fdc = new FolioDapperContext(connectionString))
             using (var fbcc = new FolioBulkCopyContext(connectionString))
             using (var fsc = new FolioServiceClient(connectionString))
             {
@@ -10409,6 +10419,8 @@ namespace FolioConsoleApplication
                 }
                 if (api && !whatIf && l2.Any()) fsc.InsertItems(l2);
                 fbcc.Commit();
+                fdc.Execute($"ALTER SEQUENCE diku_mod_inventory_storage.hrid_items_seq RESTART {fdc.ExecuteScalar<int>("SELECT MAX((jsonb->>'hrid')::int) + 1 FROM diku_mod_inventory_storage.item")}");
+                fdc.Commit();
                 traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
                 traceSource.TraceEvent(TraceEventType.Information, 0, $"Added {i} items");
             }
@@ -13123,6 +13135,7 @@ namespace FolioConsoleApplication
             using (var sr = new StreamReader(compress || path.EndsWith(".gz") ? (Stream)new GZipStream(File.OpenRead($"{path}{(path.EndsWith(".gz") ? "" : ".gz")}"), CompressionMode.Decompress) : File.OpenRead(path)))
             using (var sr2 = new StreamReader(Assembly.GetAssembly(typeof(FolioDapperContext)).GetManifestResourceStream("FolioLibrary.Order.json")))
             using (var jtr = new JsonTextReader(sr) { SupportMultipleContent = true })
+            using (var fdc = new FolioDapperContext(connectionString))
             using (var fbcc = new FolioBulkCopyContext(connectionString))
             using (var fsc = new FolioServiceClient(connectionString))
             {
@@ -13172,6 +13185,8 @@ namespace FolioConsoleApplication
                     }
                 }
                 fbcc.Commit();
+                fdc.Execute($"ALTER SEQUENCE diku_mod_orders_storage.po_number RESTART {fdc.ExecuteScalar<int>("SELECT MAX(CASE WHEN (jsonb->>'poNumber')::int < 500000 THEN (jsonb->>'poNumber')::int ELSE 0 END) + 1 FROM diku_mod_orders_storage.purchase_order")}");
+                fdc.Commit();
                 traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
                 traceSource.TraceEvent(TraceEventType.Information, 0, $"Added {i} orders");
             }
@@ -19311,6 +19326,7 @@ namespace FolioConsoleApplication
             using (var sr = new StreamReader(compress || path.EndsWith(".gz") ? (Stream)new GZipStream(File.OpenRead($"{path}{(path.EndsWith(".gz") ? "" : ".gz")}"), CompressionMode.Decompress) : File.OpenRead(path)))
             using (var sr2 = new StreamReader(Assembly.GetAssembly(typeof(FolioDapperContext)).GetManifestResourceStream("FolioLibrary.Voucher.json")))
             using (var jtr = new JsonTextReader(sr) { SupportMultipleContent = true })
+            using (var fdc = new FolioDapperContext(connectionString))
             using (var fbcc = new FolioBulkCopyContext(connectionString))
             using (var fsc = new FolioServiceClient(connectionString))
             {
@@ -19360,6 +19376,8 @@ namespace FolioConsoleApplication
                     }
                 }
                 fbcc.Commit();
+                fdc.Execute($"ALTER SEQUENCE diku_mod_invoice_storage.voucher_number START 360000 RESTART {fdc.ExecuteScalar<int>("SELECT MAX(CASE WHEN LEFT(jsonb->> 'voucherNumber', 1) = 'R' THEN SUBSTRING(jsonb->>'voucherNumber', 2)::int ELSE 0 END) + 1 FROM diku_mod_invoice_storage.vouchers")}");
+                fdc.Commit();
                 traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
                 traceSource.TraceEvent(TraceEventType.Information, 0, $"Added {i} vouchers");
             }
