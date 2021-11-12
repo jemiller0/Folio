@@ -7,11 +7,11 @@ This project includes a console application that can be used to load and save da
 ## Requirements
 
 * Git https://git-scm.com/
-* .NET 5 SDK https://dotnet.microsoft.com/download
+* .NET 6 SDK https://dotnet.microsoft.com/download
 
 ## Optional
 
-* Visual Studio 2019 https://visualstudio.microsoft.com/vs/community/
+* Visual Studio 2022 https://visualstudio.microsoft.com/vs/community/
 * Visual Studio Code https://code.visualstudio.com/?wt.mc_id=vscom_downloads
 
 ## Installation
@@ -43,7 +43,7 @@ dotnet build
 Run the application without specifying any arguments for the first time to generate default configuration files and see the command-line options.
 
 ```
-cd FolioConsoleApplication/bin/Debug/net5.0
+cd FolioConsoleApplication/bin/Debug/net6.0
 ./folio
 ```
 
@@ -257,6 +257,7 @@ id                                   addressType
 -Take <int>
 -Threads <int>
 -TracePath <string>
+-UniversalTime
 -Validate
 -Verbose
 -Warning
