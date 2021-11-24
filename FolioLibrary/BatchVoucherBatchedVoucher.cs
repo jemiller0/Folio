@@ -41,8 +41,8 @@ namespace FolioLibrary
         [Column("disbursement_amount"), DataType(DataType.Currency), Display(Name = "Disbursement Amount", Order = 9), DisplayFormat(DataFormatString = "{0:c}", ApplyFormatInEditMode = true), JsonProperty("disbursementAmount")]
         public virtual decimal? DisbursementAmount { get; set; }
 
-        [Column("enclosure_needed"), Display(Name = "Enclosure Needed", Order = 10), JsonProperty("enclosureNeeded")]
-        public virtual bool? EnclosureNeeded { get; set; }
+        [Column("enclosure_needed"), Display(Order = 10), JsonProperty("enclosureNeeded")]
+        public virtual bool? Enclosure { get; set; }
 
         [Column("exchange_rate"), Display(Name = "Exchange Rate", Order = 11), JsonProperty("exchangeRate")]
         public virtual decimal? ExchangeRate { get; set; }
@@ -98,7 +98,7 @@ namespace FolioLibrary
         [Display(Name = "Batch Voucher Batched Voucher Batched Voucher Lines", Order = 28), JsonProperty("batchedVoucherLines")]
         public virtual ICollection<BatchVoucherBatchedVoucherBatchedVoucherLine> BatchVoucherBatchedVoucherBatchedVoucherLines { get; set; }
 
-        public override string ToString() => $"{{ {nameof(Id)} = {Id}, {nameof(BatchVoucherId)} = {BatchVoucherId}, {nameof(AccountingCode)} = {AccountingCode}, {nameof(AccountNumber)} = {AccountNumber}, {nameof(Amount)} = {Amount}, {nameof(DisbursementNumber)} = {DisbursementNumber}, {nameof(DisbursementDate)} = {DisbursementDate}, {nameof(DisbursementAmount)} = {DisbursementAmount}, {nameof(EnclosureNeeded)} = {EnclosureNeeded}, {nameof(ExchangeRate)} = {ExchangeRate}, {nameof(FolioInvoiceNumber)} = {FolioInvoiceNumber}, {nameof(InvoiceCurrency)} = {InvoiceCurrency}, {nameof(InvoiceNote)} = {InvoiceNote}, {nameof(Status)} = {Status}, {nameof(SystemCurrency)} = {SystemCurrency}, {nameof(Type)} = {Type}, {nameof(VendorInvoiceNumber)} = {VendorInvoiceNumber}, {nameof(VendorName)} = {VendorName}, {nameof(VoucherDate)} = {VoucherDate}, {nameof(VoucherNumber)} = {VoucherNumber}, {nameof(VendorStreetAddress1)} = {VendorStreetAddress1}, {nameof(VendorStreetAddress2)} = {VendorStreetAddress2}, {nameof(VendorCity)} = {VendorCity}, {nameof(VendorState)} = {VendorState}, {nameof(VendorPostalCode)} = {VendorPostalCode}, {nameof(VendorCountryCode)} = {VendorCountryCode}, {nameof(BatchVoucherBatchedVoucherBatchedVoucherLines)} = {(BatchVoucherBatchedVoucherBatchedVoucherLines != null ? $"{{ {string.Join(", ", BatchVoucherBatchedVoucherBatchedVoucherLines)} }}" : "")} }}";
+        public override string ToString() => $"{{ {nameof(Id)} = {Id}, {nameof(BatchVoucherId)} = {BatchVoucherId}, {nameof(AccountingCode)} = {AccountingCode}, {nameof(AccountNumber)} = {AccountNumber}, {nameof(Amount)} = {Amount}, {nameof(DisbursementNumber)} = {DisbursementNumber}, {nameof(DisbursementDate)} = {DisbursementDate}, {nameof(DisbursementAmount)} = {DisbursementAmount}, {nameof(Enclosure)} = {Enclosure}, {nameof(ExchangeRate)} = {ExchangeRate}, {nameof(FolioInvoiceNumber)} = {FolioInvoiceNumber}, {nameof(InvoiceCurrency)} = {InvoiceCurrency}, {nameof(InvoiceNote)} = {InvoiceNote}, {nameof(Status)} = {Status}, {nameof(SystemCurrency)} = {SystemCurrency}, {nameof(Type)} = {Type}, {nameof(VendorInvoiceNumber)} = {VendorInvoiceNumber}, {nameof(VendorName)} = {VendorName}, {nameof(VoucherDate)} = {VoucherDate}, {nameof(VoucherNumber)} = {VoucherNumber}, {nameof(VendorStreetAddress1)} = {VendorStreetAddress1}, {nameof(VendorStreetAddress2)} = {VendorStreetAddress2}, {nameof(VendorCity)} = {VendorCity}, {nameof(VendorState)} = {VendorState}, {nameof(VendorPostalCode)} = {VendorPostalCode}, {nameof(VendorCountryCode)} = {VendorCountryCode}, {nameof(BatchVoucherBatchedVoucherBatchedVoucherLines)} = {(BatchVoucherBatchedVoucherBatchedVoucherLines != null ? $"{{ {string.Join(", ", BatchVoucherBatchedVoucherBatchedVoucherLines)} }}" : "")} }}";
 
         public static BatchVoucherBatchedVoucher FromJObject(JObject jObject) => jObject != null ? new BatchVoucherBatchedVoucher
         {
@@ -108,7 +108,7 @@ namespace FolioLibrary
             DisbursementNumber = (string)jObject.SelectToken("disbursementNumber"),
             DisbursementDate = (DateTime?)jObject.SelectToken("disbursementDate"),
             DisbursementAmount = (decimal?)jObject.SelectToken("disbursementAmount"),
-            EnclosureNeeded = (bool?)jObject.SelectToken("enclosureNeeded"),
+            Enclosure = (bool?)jObject.SelectToken("enclosureNeeded"),
             ExchangeRate = (decimal?)jObject.SelectToken("exchangeRate"),
             FolioInvoiceNumber = (string)jObject.SelectToken("folioInvoiceNo"),
             InvoiceCurrency = (string)jObject.SelectToken("invoiceCurrency"),
@@ -136,7 +136,7 @@ namespace FolioLibrary
             new JProperty("disbursementNumber", DisbursementNumber),
             new JProperty("disbursementDate", DisbursementDate?.ToLocalTime()),
             new JProperty("disbursementAmount", DisbursementAmount),
-            new JProperty("enclosureNeeded", EnclosureNeeded),
+            new JProperty("enclosureNeeded", Enclosure),
             new JProperty("exchangeRate", ExchangeRate),
             new JProperty("folioInvoiceNo", FolioInvoiceNumber),
             new JProperty("invoiceCurrency", InvoiceCurrency),

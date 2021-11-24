@@ -55,8 +55,8 @@ namespace FolioLibrary
         [Column("disbursement_amount"), DataType(DataType.Currency), Display(Name = "Disbursement Amount", Order = 9), DisplayFormat(DataFormatString = "{0:c}", ApplyFormatInEditMode = true), JsonProperty("disbursementAmount")]
         public virtual decimal? DisbursementAmount { get; set; }
 
-        [Column("enclosure_needed"), Display(Name = "Enclosure Needed", Order = 10), JsonProperty("enclosureNeeded")]
-        public virtual bool? EnclosureNeeded { get; set; }
+        [Column("enclosure_needed"), Display(Order = 10), JsonProperty("enclosureNeeded")]
+        public virtual bool? Enclosure { get; set; }
 
         [Column("invoice_currency"), Display(Name = "Invoice Currency", Order = 11), JsonProperty("invoiceCurrency"), Required, StringLength(1024)]
         public virtual string InvoiceCurrency { get; set; }
@@ -145,7 +145,7 @@ namespace FolioLibrary
         [Display(Name = "Voucher Items", Order = 39)]
         public virtual ICollection<VoucherItem2> VoucherItem2s { get; set; }
 
-        public override string ToString() => $"{{ {nameof(Id)} = {Id}, {nameof(AccountingCode)} = {AccountingCode}, {nameof(AccountNumber)} = {AccountNumber}, {nameof(Amount)} = {Amount}, {nameof(BatchGroupId)} = {BatchGroupId}, {nameof(DisbursementNumber)} = {DisbursementNumber}, {nameof(DisbursementDate)} = {DisbursementDate}, {nameof(DisbursementAmount)} = {DisbursementAmount}, {nameof(EnclosureNeeded)} = {EnclosureNeeded}, {nameof(InvoiceCurrency)} = {InvoiceCurrency}, {nameof(InvoiceId)} = {InvoiceId}, {nameof(ExchangeRate)} = {ExchangeRate}, {nameof(ExportToAccounting)} = {ExportToAccounting}, {nameof(Status)} = {Status}, {nameof(SystemCurrency)} = {SystemCurrency}, {nameof(Type)} = {Type}, {nameof(VoucherDate)} = {VoucherDate}, {nameof(Number)} = {Number}, {nameof(VendorId)} = {VendorId}, {nameof(VendorStreetAddress1)} = {VendorStreetAddress1}, {nameof(VendorStreetAddress2)} = {VendorStreetAddress2}, {nameof(VendorCity)} = {VendorCity}, {nameof(VendorState)} = {VendorState}, {nameof(VendorPostalCode)} = {VendorPostalCode}, {nameof(VendorCountryCode)} = {VendorCountryCode}, {nameof(CreationTime)} = {CreationTime}, {nameof(CreationUserId)} = {CreationUserId}, {nameof(CreationUserUsername)} = {CreationUserUsername}, {nameof(LastWriteTime)} = {LastWriteTime}, {nameof(LastWriteUserId)} = {LastWriteUserId}, {nameof(LastWriteUserUsername)} = {LastWriteUserUsername}, {nameof(Content)} = {Content}, {nameof(VoucherAcquisitionsUnits)} = {(VoucherAcquisitionsUnits != null ? $"{{ {string.Join(", ", VoucherAcquisitionsUnits)} }}" : "")} }}";
+        public override string ToString() => $"{{ {nameof(Id)} = {Id}, {nameof(AccountingCode)} = {AccountingCode}, {nameof(AccountNumber)} = {AccountNumber}, {nameof(Amount)} = {Amount}, {nameof(BatchGroupId)} = {BatchGroupId}, {nameof(DisbursementNumber)} = {DisbursementNumber}, {nameof(DisbursementDate)} = {DisbursementDate}, {nameof(DisbursementAmount)} = {DisbursementAmount}, {nameof(Enclosure)} = {Enclosure}, {nameof(InvoiceCurrency)} = {InvoiceCurrency}, {nameof(InvoiceId)} = {InvoiceId}, {nameof(ExchangeRate)} = {ExchangeRate}, {nameof(ExportToAccounting)} = {ExportToAccounting}, {nameof(Status)} = {Status}, {nameof(SystemCurrency)} = {SystemCurrency}, {nameof(Type)} = {Type}, {nameof(VoucherDate)} = {VoucherDate}, {nameof(Number)} = {Number}, {nameof(VendorId)} = {VendorId}, {nameof(VendorStreetAddress1)} = {VendorStreetAddress1}, {nameof(VendorStreetAddress2)} = {VendorStreetAddress2}, {nameof(VendorCity)} = {VendorCity}, {nameof(VendorState)} = {VendorState}, {nameof(VendorPostalCode)} = {VendorPostalCode}, {nameof(VendorCountryCode)} = {VendorCountryCode}, {nameof(CreationTime)} = {CreationTime}, {nameof(CreationUserId)} = {CreationUserId}, {nameof(CreationUserUsername)} = {CreationUserUsername}, {nameof(LastWriteTime)} = {LastWriteTime}, {nameof(LastWriteUserId)} = {LastWriteUserId}, {nameof(LastWriteUserUsername)} = {LastWriteUserUsername}, {nameof(Content)} = {Content}, {nameof(VoucherAcquisitionsUnits)} = {(VoucherAcquisitionsUnits != null ? $"{{ {string.Join(", ", VoucherAcquisitionsUnits)} }}" : "")} }}";
 
         public static Voucher2 FromJObject(JObject jObject) => jObject != null ? new Voucher2
         {
@@ -157,7 +157,7 @@ namespace FolioLibrary
             DisbursementNumber = (string)jObject.SelectToken("disbursementNumber"),
             DisbursementDate = (DateTime?)jObject.SelectToken("disbursementDate"),
             DisbursementAmount = (decimal?)jObject.SelectToken("disbursementAmount"),
-            EnclosureNeeded = (bool?)jObject.SelectToken("enclosureNeeded"),
+            Enclosure = (bool?)jObject.SelectToken("enclosureNeeded"),
             InvoiceCurrency = (string)jObject.SelectToken("invoiceCurrency"),
             InvoiceId = (Guid?)jObject.SelectToken("invoiceId"),
             ExchangeRate = (decimal?)jObject.SelectToken("exchangeRate"),
@@ -193,7 +193,7 @@ namespace FolioLibrary
             new JProperty("disbursementNumber", DisbursementNumber),
             new JProperty("disbursementDate", DisbursementDate?.ToLocalTime()),
             new JProperty("disbursementAmount", DisbursementAmount),
-            new JProperty("enclosureNeeded", EnclosureNeeded),
+            new JProperty("enclosureNeeded", Enclosure),
             new JProperty("invoiceCurrency", InvoiceCurrency),
             new JProperty("invoiceId", InvoiceId),
             new JProperty("exchangeRate", ExchangeRate),

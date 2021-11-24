@@ -73,12 +73,12 @@
                                     <asp:Literal ID="DisbursementAmountLiteral" runat="server" Text='<%# Eval("DisbursementAmount", "{0:c}") %>' />
                                 </td>
                             </tr>
-                            <tr runat="server" visible='<%# Eval("EnclosureNeeded") != null %>'>
+                            <tr runat="server" visible='<%# Eval("Enclosure") != null %>'>
                                 <td>
-                                    <asp:Label ID="EnclosureNeededLabel" runat="server" Text="Enclosure Needed:" AssociatedControlID="EnclosureNeededLiteral" />
+                                    <asp:Label ID="EnclosureLabel" runat="server" Text="Enclosure:" AssociatedControlID="EnclosureLiteral" />
                                 </td>
                                 <td>
-                                    <asp:Literal ID="EnclosureNeededLiteral" runat="server" Text='<%#: Eval("EnclosureNeeded") %>' />
+                                    <asp:Literal ID="EnclosureLiteral" runat="server" Text='<%#: Eval("Enclosure") %>' />
                                 </td>
                             </tr>
                             <tr runat="server" visible='<%# Eval("InvoiceCurrency") != null %>'>
