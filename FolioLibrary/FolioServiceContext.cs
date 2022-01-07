@@ -48,7 +48,11 @@ namespace FolioLibrary
             return au2;
         }
 
-        public void Insert(AcquisitionsUnit2 acquisitionsUnit2) => FolioServiceClient.InsertAcquisitionsUnit(acquisitionsUnit2.ToJObject());
+        public void Insert(AcquisitionsUnit2 acquisitionsUnit2)
+        {
+            if (acquisitionsUnit2.Id == null) acquisitionsUnit2.Id = Guid.NewGuid();
+            FolioServiceClient.InsertAcquisitionsUnit(acquisitionsUnit2.ToJObject());
+        }
 
         public void Update(AcquisitionsUnit2 acquisitionsUnit2) => FolioServiceClient.UpdateAcquisitionsUnit(acquisitionsUnit2.ToJObject());
 
@@ -89,7 +93,11 @@ namespace FolioLibrary
             return at2;
         }
 
-        public void Insert(AddressType2 addressType2) => FolioServiceClient.InsertAddressType(addressType2.ToJObject());
+        public void Insert(AddressType2 addressType2)
+        {
+            if (addressType2.Id == null) addressType2.Id = Guid.NewGuid();
+            FolioServiceClient.InsertAddressType(addressType2.ToJObject());
+        }
 
         public void Update(AddressType2 addressType2) => FolioServiceClient.UpdateAddressType(addressType2.ToJObject());
 
@@ -119,7 +127,11 @@ namespace FolioLibrary
 
         public Alert2 FindAlert2(Guid? id, bool load = false, bool cache = true) => Alert2.FromJObject(FolioServiceClient.GetAlert(id?.ToString()));
 
-        public void Insert(Alert2 alert2) => FolioServiceClient.InsertAlert(alert2.ToJObject());
+        public void Insert(Alert2 alert2)
+        {
+            if (alert2.Id == null) alert2.Id = Guid.NewGuid();
+            FolioServiceClient.InsertAlert(alert2.ToJObject());
+        }
 
         public void Update(Alert2 alert2) => FolioServiceClient.UpdateAlert(alert2.ToJObject());
 
@@ -160,7 +172,11 @@ namespace FolioLibrary
             return att2;
         }
 
-        public void Insert(AlternativeTitleType2 alternativeTitleType2) => FolioServiceClient.InsertAlternativeTitleType(alternativeTitleType2.ToJObject());
+        public void Insert(AlternativeTitleType2 alternativeTitleType2)
+        {
+            if (alternativeTitleType2.Id == null) alternativeTitleType2.Id = Guid.NewGuid();
+            FolioServiceClient.InsertAlternativeTitleType(alternativeTitleType2.ToJObject());
+        }
 
         public void Update(AlternativeTitleType2 alternativeTitleType2) => FolioServiceClient.UpdateAlternativeTitleType(alternativeTitleType2.ToJObject());
 
@@ -201,7 +217,11 @@ namespace FolioLibrary
             return bg2;
         }
 
-        public void Insert(BatchGroup2 batchGroup2) => FolioServiceClient.InsertBatchGroup(batchGroup2.ToJObject());
+        public void Insert(BatchGroup2 batchGroup2)
+        {
+            if (batchGroup2.Id == null) batchGroup2.Id = Guid.NewGuid();
+            FolioServiceClient.InsertBatchGroup(batchGroup2.ToJObject());
+        }
 
         public void Update(BatchGroup2 batchGroup2) => FolioServiceClient.UpdateBatchGroup(batchGroup2.ToJObject());
 
@@ -245,7 +265,11 @@ namespace FolioLibrary
             return bve2;
         }
 
-        public void Insert(BatchVoucherExport2 batchVoucherExport2) => FolioServiceClient.InsertBatchVoucherExport(batchVoucherExport2.ToJObject());
+        public void Insert(BatchVoucherExport2 batchVoucherExport2)
+        {
+            if (batchVoucherExport2.Id == null) batchVoucherExport2.Id = Guid.NewGuid();
+            FolioServiceClient.InsertBatchVoucherExport(batchVoucherExport2.ToJObject());
+        }
 
         public void Update(BatchVoucherExport2 batchVoucherExport2) => FolioServiceClient.UpdateBatchVoucherExport(batchVoucherExport2.ToJObject());
 
@@ -289,7 +313,11 @@ namespace FolioLibrary
             return bvec2;
         }
 
-        public void Insert(BatchVoucherExportConfig2 batchVoucherExportConfig2) => FolioServiceClient.InsertBatchVoucherExportConfig(batchVoucherExportConfig2.ToJObject());
+        public void Insert(BatchVoucherExportConfig2 batchVoucherExportConfig2)
+        {
+            if (batchVoucherExportConfig2.Id == null) batchVoucherExportConfig2.Id = Guid.NewGuid();
+            FolioServiceClient.InsertBatchVoucherExportConfig(batchVoucherExportConfig2.ToJObject());
+        }
 
         public void Update(BatchVoucherExportConfig2 batchVoucherExportConfig2) => FolioServiceClient.UpdateBatchVoucherExportConfig(batchVoucherExportConfig2.ToJObject());
 
@@ -333,7 +361,11 @@ namespace FolioLibrary
             return b2;
         }
 
-        public void Insert(Block2 block2) => FolioServiceClient.InsertBlock(block2.ToJObject());
+        public void Insert(Block2 block2)
+        {
+            if (block2.Id == null) block2.Id = Guid.NewGuid();
+            FolioServiceClient.InsertBlock(block2.ToJObject());
+        }
 
         public void Update(Block2 block2) => FolioServiceClient.UpdateBlock(block2.ToJObject());
 
@@ -374,7 +406,11 @@ namespace FolioLibrary
             return bc2;
         }
 
-        public void Insert(BlockCondition2 blockCondition2) => FolioServiceClient.InsertBlockCondition(blockCondition2.ToJObject());
+        public void Insert(BlockCondition2 blockCondition2)
+        {
+            if (blockCondition2.Id == null) blockCondition2.Id = Guid.NewGuid();
+            FolioServiceClient.InsertBlockCondition(blockCondition2.ToJObject());
+        }
 
         public void Update(BlockCondition2 blockCondition2) => FolioServiceClient.UpdateBlockCondition(blockCondition2.ToJObject());
 
@@ -421,7 +457,11 @@ namespace FolioLibrary
             return bl2;
         }
 
-        public void Insert(BlockLimit2 blockLimit2) => FolioServiceClient.InsertBlockLimit(blockLimit2.ToJObject());
+        public void Insert(BlockLimit2 blockLimit2)
+        {
+            if (blockLimit2.Id == null) blockLimit2.Id = Guid.NewGuid();
+            FolioServiceClient.InsertBlockLimit(blockLimit2.ToJObject());
+        }
 
         public void Update(BlockLimit2 blockLimit2) => FolioServiceClient.UpdateBlockLimit(blockLimit2.ToJObject());
 
@@ -468,7 +508,11 @@ namespace FolioLibrary
             return bwp2;
         }
 
-        public void Insert(BoundWithPart2 boundWithPart2) => FolioServiceClient.InsertBoundWithPart(boundWithPart2.ToJObject());
+        public void Insert(BoundWithPart2 boundWithPart2)
+        {
+            if (boundWithPart2.Id == null) boundWithPart2.Id = Guid.NewGuid();
+            FolioServiceClient.InsertBoundWithPart(boundWithPart2.ToJObject());
+        }
 
         public void Update(BoundWithPart2 boundWithPart2) => FolioServiceClient.UpdateBoundWithPart(boundWithPart2.ToJObject());
 
@@ -515,7 +559,11 @@ namespace FolioLibrary
             return b2;
         }
 
-        public void Insert(Budget2 budget2) => FolioServiceClient.InsertBudget(budget2.ToJObject());
+        public void Insert(Budget2 budget2)
+        {
+            if (budget2.Id == null) budget2.Id = Guid.NewGuid();
+            FolioServiceClient.InsertBudget(budget2.ToJObject());
+        }
 
         public void Update(Budget2 budget2) => FolioServiceClient.UpdateBudget(budget2.ToJObject());
 
@@ -556,7 +604,11 @@ namespace FolioLibrary
             return bec2;
         }
 
-        public void Insert(BudgetExpenseClass2 budgetExpenseClass2) => FolioServiceClient.InsertBudgetExpenseClass(budgetExpenseClass2.ToJObject());
+        public void Insert(BudgetExpenseClass2 budgetExpenseClass2)
+        {
+            if (budgetExpenseClass2.Id == null) budgetExpenseClass2.Id = Guid.NewGuid();
+            FolioServiceClient.InsertBudgetExpenseClass(budgetExpenseClass2.ToJObject());
+        }
 
         public void Update(BudgetExpenseClass2 budgetExpenseClass2) => FolioServiceClient.UpdateBudgetExpenseClass(budgetExpenseClass2.ToJObject());
 
@@ -603,7 +655,11 @@ namespace FolioLibrary
             return bg2;
         }
 
-        public void Insert(BudgetGroup2 budgetGroup2) => FolioServiceClient.InsertBudgetGroup(budgetGroup2.ToJObject());
+        public void Insert(BudgetGroup2 budgetGroup2)
+        {
+            if (budgetGroup2.Id == null) budgetGroup2.Id = Guid.NewGuid();
+            FolioServiceClient.InsertBudgetGroup(budgetGroup2.ToJObject());
+        }
 
         public void Update(BudgetGroup2 budgetGroup2) => FolioServiceClient.UpdateBudgetGroup(budgetGroup2.ToJObject());
 
@@ -644,7 +700,11 @@ namespace FolioLibrary
             return cnt2;
         }
 
-        public void Insert(CallNumberType2 callNumberType2) => FolioServiceClient.InsertCallNumberType(callNumberType2.ToJObject());
+        public void Insert(CallNumberType2 callNumberType2)
+        {
+            if (callNumberType2.Id == null) callNumberType2.Id = Guid.NewGuid();
+            FolioServiceClient.InsertCallNumberType(callNumberType2.ToJObject());
+        }
 
         public void Update(CallNumberType2 callNumberType2) => FolioServiceClient.UpdateCallNumberType(callNumberType2.ToJObject());
 
@@ -688,7 +748,11 @@ namespace FolioLibrary
             return c2;
         }
 
-        public void Insert(Campus2 campus2) => FolioServiceClient.InsertCampus(campus2.ToJObject());
+        public void Insert(Campus2 campus2)
+        {
+            if (campus2.Id == null) campus2.Id = Guid.NewGuid();
+            FolioServiceClient.InsertCampus(campus2.ToJObject());
+        }
 
         public void Update(Campus2 campus2) => FolioServiceClient.UpdateCampus(campus2.ToJObject());
 
@@ -729,7 +793,11 @@ namespace FolioLibrary
             return cr2;
         }
 
-        public void Insert(CancellationReason2 cancellationReason2) => FolioServiceClient.InsertCancellationReason(cancellationReason2.ToJObject());
+        public void Insert(CancellationReason2 cancellationReason2)
+        {
+            if (cancellationReason2.Id == null) cancellationReason2.Id = Guid.NewGuid();
+            FolioServiceClient.InsertCancellationReason(cancellationReason2.ToJObject());
+        }
 
         public void Update(CancellationReason2 cancellationReason2) => FolioServiceClient.UpdateCancellationReason(cancellationReason2.ToJObject());
 
@@ -770,7 +838,11 @@ namespace FolioLibrary
             return c2;
         }
 
-        public void Insert(Category2 category2) => FolioServiceClient.InsertCategory(category2.ToJObject());
+        public void Insert(Category2 category2)
+        {
+            if (category2.Id == null) category2.Id = Guid.NewGuid();
+            FolioServiceClient.InsertCategory(category2.ToJObject());
+        }
 
         public void Update(Category2 category2) => FolioServiceClient.UpdateCategory(category2.ToJObject());
 
@@ -817,7 +889,11 @@ namespace FolioLibrary
             return ci2;
         }
 
-        public void Insert(CheckIn2 checkIn2) => FolioServiceClient.InsertCheckIn(checkIn2.ToJObject());
+        public void Insert(CheckIn2 checkIn2)
+        {
+            if (checkIn2.Id == null) checkIn2.Id = Guid.NewGuid();
+            FolioServiceClient.InsertCheckIn(checkIn2.ToJObject());
+        }
 
         public void Update(CheckIn2 checkIn2) => FolioServiceClient.UpdateCheckIn(checkIn2.ToJObject());
 
@@ -862,7 +938,11 @@ namespace FolioLibrary
             return ct2;
         }
 
-        public void Insert(ClassificationType2 classificationType2) => FolioServiceClient.InsertClassificationType(classificationType2.ToJObject());
+        public void Insert(ClassificationType2 classificationType2)
+        {
+            if (classificationType2.Id == null) classificationType2.Id = Guid.NewGuid();
+            FolioServiceClient.InsertClassificationType(classificationType2.ToJObject());
+        }
 
         public void Update(ClassificationType2 classificationType2) => FolioServiceClient.UpdateClassificationType(classificationType2.ToJObject());
 
@@ -892,7 +972,11 @@ namespace FolioLibrary
 
         public CloseReason2 FindCloseReason2(Guid? id, bool load = false, bool cache = true) => CloseReason2.FromJObject(FolioServiceClient.GetCloseReason(id?.ToString()));
 
-        public void Insert(CloseReason2 closeReason2) => FolioServiceClient.InsertCloseReason(closeReason2.ToJObject());
+        public void Insert(CloseReason2 closeReason2)
+        {
+            if (closeReason2.Id == null) closeReason2.Id = Guid.NewGuid();
+            FolioServiceClient.InsertCloseReason(closeReason2.ToJObject());
+        }
 
         public void Update(CloseReason2 closeReason2) => FolioServiceClient.UpdateCloseReason(closeReason2.ToJObject());
 
@@ -933,7 +1017,11 @@ namespace FolioLibrary
             return c2;
         }
 
-        public void Insert(Comment2 comment2) => FolioServiceClient.InsertComment(comment2.ToJObject());
+        public void Insert(Comment2 comment2)
+        {
+            if (comment2.Id == null) comment2.Id = Guid.NewGuid();
+            FolioServiceClient.InsertComment(comment2.ToJObject());
+        }
 
         public void Update(Comment2 comment2) => FolioServiceClient.UpdateComment(comment2.ToJObject());
 
@@ -974,7 +1062,11 @@ namespace FolioLibrary
             return c2;
         }
 
-        public void Insert(Configuration2 configuration2) => FolioServiceClient.InsertConfiguration(configuration2.ToJObject());
+        public void Insert(Configuration2 configuration2)
+        {
+            if (configuration2.Id == null) configuration2.Id = Guid.NewGuid();
+            FolioServiceClient.InsertConfiguration(configuration2.ToJObject());
+        }
 
         public void Update(Configuration2 configuration2) => FolioServiceClient.UpdateConfiguration(configuration2.ToJObject());
 
@@ -1015,7 +1107,11 @@ namespace FolioLibrary
             return c2;
         }
 
-        public void Insert(Contact2 contact2) => FolioServiceClient.InsertContact(contact2.ToJObject());
+        public void Insert(Contact2 contact2)
+        {
+            if (contact2.Id == null) contact2.Id = Guid.NewGuid();
+            FolioServiceClient.InsertContact(contact2.ToJObject());
+        }
 
         public void Update(Contact2 contact2) => FolioServiceClient.UpdateContact(contact2.ToJObject());
 
@@ -1056,7 +1152,11 @@ namespace FolioLibrary
             return cnt2;
         }
 
-        public void Insert(ContributorNameType2 contributorNameType2) => FolioServiceClient.InsertContributorNameType(contributorNameType2.ToJObject());
+        public void Insert(ContributorNameType2 contributorNameType2)
+        {
+            if (contributorNameType2.Id == null) contributorNameType2.Id = Guid.NewGuid();
+            FolioServiceClient.InsertContributorNameType(contributorNameType2.ToJObject());
+        }
 
         public void Update(ContributorNameType2 contributorNameType2) => FolioServiceClient.UpdateContributorNameType(contributorNameType2.ToJObject());
 
@@ -1097,7 +1197,11 @@ namespace FolioLibrary
             return ct2;
         }
 
-        public void Insert(ContributorType2 contributorType2) => FolioServiceClient.InsertContributorType(contributorType2.ToJObject());
+        public void Insert(ContributorType2 contributorType2)
+        {
+            if (contributorType2.Id == null) contributorType2.Id = Guid.NewGuid();
+            FolioServiceClient.InsertContributorType(contributorType2.ToJObject());
+        }
 
         public void Update(ContributorType2 contributorType2) => FolioServiceClient.UpdateContributorType(contributorType2.ToJObject());
 
@@ -1138,7 +1242,11 @@ namespace FolioLibrary
             return cf2;
         }
 
-        public void Insert(CustomField2 customField2) => FolioServiceClient.InsertCustomField(customField2.ToJObject());
+        public void Insert(CustomField2 customField2)
+        {
+            if (customField2.Id == null) customField2.Id = Guid.NewGuid();
+            FolioServiceClient.InsertCustomField(customField2.ToJObject());
+        }
 
         public void Update(CustomField2 customField2) => FolioServiceClient.UpdateCustomField(customField2.ToJObject());
 
@@ -1179,7 +1287,11 @@ namespace FolioLibrary
             return d2;
         }
 
-        public void Insert(Department2 department2) => FolioServiceClient.InsertDepartment(department2.ToJObject());
+        public void Insert(Department2 department2)
+        {
+            if (department2.Id == null) department2.Id = Guid.NewGuid();
+            FolioServiceClient.InsertDepartment(department2.ToJObject());
+        }
 
         public void Update(Department2 department2) => FolioServiceClient.UpdateDepartment(department2.ToJObject());
 
@@ -1220,7 +1332,11 @@ namespace FolioLibrary
             return ear2;
         }
 
-        public void Insert(ElectronicAccessRelationship2 electronicAccessRelationship2) => FolioServiceClient.InsertElectronicAccessRelationship(electronicAccessRelationship2.ToJObject());
+        public void Insert(ElectronicAccessRelationship2 electronicAccessRelationship2)
+        {
+            if (electronicAccessRelationship2.Id == null) electronicAccessRelationship2.Id = Guid.NewGuid();
+            FolioServiceClient.InsertElectronicAccessRelationship(electronicAccessRelationship2.ToJObject());
+        }
 
         public void Update(ElectronicAccessRelationship2 electronicAccessRelationship2) => FolioServiceClient.UpdateElectronicAccessRelationship(electronicAccessRelationship2.ToJObject());
 
@@ -1261,7 +1377,11 @@ namespace FolioLibrary
             return ec2;
         }
 
-        public void Insert(ExpenseClass2 expenseClass2) => FolioServiceClient.InsertExpenseClass(expenseClass2.ToJObject());
+        public void Insert(ExpenseClass2 expenseClass2)
+        {
+            if (expenseClass2.Id == null) expenseClass2.Id = Guid.NewGuid();
+            FolioServiceClient.InsertExpenseClass(expenseClass2.ToJObject());
+        }
 
         public void Update(ExpenseClass2 expenseClass2) => FolioServiceClient.UpdateExpenseClass(expenseClass2.ToJObject());
 
@@ -1326,7 +1446,11 @@ namespace FolioLibrary
             return f2;
         }
 
-        public void Insert(Fee2 fee2) => FolioServiceClient.InsertFee(fee2.ToJObject());
+        public void Insert(Fee2 fee2)
+        {
+            if (fee2.Id == null) fee2.Id = Guid.NewGuid();
+            FolioServiceClient.InsertFee(fee2.ToJObject());
+        }
 
         public void Update(Fee2 fee2) => FolioServiceClient.UpdateFee(fee2.ToJObject());
 
@@ -1376,7 +1500,11 @@ namespace FolioLibrary
             return ft2;
         }
 
-        public void Insert(FeeType2 feeType2) => FolioServiceClient.InsertFeeType(feeType2.ToJObject());
+        public void Insert(FeeType2 feeType2)
+        {
+            if (feeType2.Id == null) feeType2.Id = Guid.NewGuid();
+            FolioServiceClient.InsertFeeType(feeType2.ToJObject());
+        }
 
         public void Update(FeeType2 feeType2) => FolioServiceClient.UpdateFeeType(feeType2.ToJObject());
 
@@ -1417,7 +1545,11 @@ namespace FolioLibrary
             return fg2;
         }
 
-        public void Insert(FinanceGroup2 financeGroup2) => FolioServiceClient.InsertFinanceGroup(financeGroup2.ToJObject());
+        public void Insert(FinanceGroup2 financeGroup2)
+        {
+            if (financeGroup2.Id == null) financeGroup2.Id = Guid.NewGuid();
+            FolioServiceClient.InsertFinanceGroup(financeGroup2.ToJObject());
+        }
 
         public void Update(FinanceGroup2 financeGroup2) => FolioServiceClient.UpdateFinanceGroup(financeGroup2.ToJObject());
 
@@ -1458,7 +1590,11 @@ namespace FolioLibrary
             return fy2;
         }
 
-        public void Insert(FiscalYear2 fiscalYear2) => FolioServiceClient.InsertFiscalYear(fiscalYear2.ToJObject());
+        public void Insert(FiscalYear2 fiscalYear2)
+        {
+            if (fiscalYear2.Id == null) fiscalYear2.Id = Guid.NewGuid();
+            FolioServiceClient.InsertFiscalYear(fiscalYear2.ToJObject());
+        }
 
         public void Update(FiscalYear2 fiscalYear2) => FolioServiceClient.UpdateFiscalYear(fiscalYear2.ToJObject());
 
@@ -1499,7 +1635,11 @@ namespace FolioLibrary
             return fdds2;
         }
 
-        public void Insert(FixedDueDateSchedule2 fixedDueDateSchedule2) => FolioServiceClient.InsertFixedDueDateSchedule(fixedDueDateSchedule2.ToJObject());
+        public void Insert(FixedDueDateSchedule2 fixedDueDateSchedule2)
+        {
+            if (fixedDueDateSchedule2.Id == null) fixedDueDateSchedule2.Id = Guid.NewGuid();
+            FolioServiceClient.InsertFixedDueDateSchedule(fixedDueDateSchedule2.ToJObject());
+        }
 
         public void Update(FixedDueDateSchedule2 fixedDueDateSchedule2) => FolioServiceClient.UpdateFixedDueDateSchedule(fixedDueDateSchedule2.ToJObject());
 
@@ -1540,7 +1680,11 @@ namespace FolioLibrary
             return f;
         }
 
-        public void Insert(Format format) => FolioServiceClient.InsertInstanceFormat(format.ToJObject());
+        public void Insert(Format format)
+        {
+            if (format.Id == null) format.Id = Guid.NewGuid();
+            FolioServiceClient.InsertInstanceFormat(format.ToJObject());
+        }
 
         public void Update(Format format) => FolioServiceClient.UpdateInstanceFormat(format.ToJObject());
 
@@ -1587,7 +1731,11 @@ namespace FolioLibrary
             return f2;
         }
 
-        public void Insert(Fund2 fund2) => FolioServiceClient.InsertFund(fund2.ToJObject());
+        public void Insert(Fund2 fund2)
+        {
+            if (fund2.Id == null) fund2.Id = Guid.NewGuid();
+            FolioServiceClient.InsertFund(fund2.ToJObject());
+        }
 
         public void Update(Fund2 fund2) => FolioServiceClient.UpdateFund(fund2.ToJObject());
 
@@ -1617,7 +1765,11 @@ namespace FolioLibrary
 
         public FundType2 FindFundType2(Guid? id, bool load = false, bool cache = true) => FundType2.FromJObject(FolioServiceClient.GetFundType(id?.ToString()));
 
-        public void Insert(FundType2 fundType2) => FolioServiceClient.InsertFundType(fundType2.ToJObject());
+        public void Insert(FundType2 fundType2)
+        {
+            if (fundType2.Id == null) fundType2.Id = Guid.NewGuid();
+            FolioServiceClient.InsertFundType(fundType2.ToJObject());
+        }
 
         public void Update(FundType2 fundType2) => FolioServiceClient.UpdateFundType(fundType2.ToJObject());
 
@@ -1658,7 +1810,11 @@ namespace FolioLibrary
             return g2;
         }
 
-        public void Insert(Group2 group2) => FolioServiceClient.InsertGroup(group2.ToJObject());
+        public void Insert(Group2 group2)
+        {
+            if (group2.Id == null) group2.Id = Guid.NewGuid();
+            FolioServiceClient.InsertGroup(group2.ToJObject());
+        }
 
         public void Update(Group2 group2) => FolioServiceClient.UpdateGroup(group2.ToJObject());
 
@@ -1723,7 +1879,11 @@ namespace FolioLibrary
             return h2;
         }
 
-        public void Insert(Holding2 holding2) => FolioServiceClient.InsertHolding(holding2.ToJObject());
+        public void Insert(Holding2 holding2)
+        {
+            if (holding2.Id == null) holding2.Id = Guid.NewGuid();
+            FolioServiceClient.InsertHolding(holding2.ToJObject());
+        }
 
         public void Update(Holding2 holding2) => FolioServiceClient.UpdateHolding(holding2.ToJObject());
 
@@ -1764,7 +1924,11 @@ namespace FolioLibrary
             return hnt2;
         }
 
-        public void Insert(HoldingNoteType2 holdingNoteType2) => FolioServiceClient.InsertHoldingNoteType(holdingNoteType2.ToJObject());
+        public void Insert(HoldingNoteType2 holdingNoteType2)
+        {
+            if (holdingNoteType2.Id == null) holdingNoteType2.Id = Guid.NewGuid();
+            FolioServiceClient.InsertHoldingNoteType(holdingNoteType2.ToJObject());
+        }
 
         public void Update(HoldingNoteType2 holdingNoteType2) => FolioServiceClient.UpdateHoldingNoteType(holdingNoteType2.ToJObject());
 
@@ -1805,7 +1969,11 @@ namespace FolioLibrary
             return ht2;
         }
 
-        public void Insert(HoldingType2 holdingType2) => FolioServiceClient.InsertHoldingType(holdingType2.ToJObject());
+        public void Insert(HoldingType2 holdingType2)
+        {
+            if (holdingType2.Id == null) holdingType2.Id = Guid.NewGuid();
+            FolioServiceClient.InsertHoldingType(holdingType2.ToJObject());
+        }
 
         public void Update(HoldingType2 holdingType2) => FolioServiceClient.UpdateHoldingType(holdingType2.ToJObject());
 
@@ -1850,7 +2018,11 @@ namespace FolioLibrary
             return it2;
         }
 
-        public void Insert(IdType2 idType2) => FolioServiceClient.InsertIdType(idType2.ToJObject());
+        public void Insert(IdType2 idType2)
+        {
+            if (idType2.Id == null) idType2.Id = Guid.NewGuid();
+            FolioServiceClient.InsertIdType(idType2.ToJObject());
+        }
 
         public void Update(IdType2 idType2) => FolioServiceClient.UpdateIdType(idType2.ToJObject());
 
@@ -1891,7 +2063,11 @@ namespace FolioLibrary
             return ip2;
         }
 
-        public void Insert(IllPolicy2 illPolicy2) => FolioServiceClient.InsertIllPolicy(illPolicy2.ToJObject());
+        public void Insert(IllPolicy2 illPolicy2)
+        {
+            if (illPolicy2.Id == null) illPolicy2.Id = Guid.NewGuid();
+            FolioServiceClient.InsertIllPolicy(illPolicy2.ToJObject());
+        }
 
         public void Update(IllPolicy2 illPolicy2) => FolioServiceClient.UpdateIllPolicy(illPolicy2.ToJObject());
 
@@ -1941,7 +2117,11 @@ namespace FolioLibrary
             return i2;
         }
 
-        public void Insert(Instance2 instance2) => FolioServiceClient.InsertInstance(instance2.ToJObject());
+        public void Insert(Instance2 instance2)
+        {
+            if (instance2.Id == null) instance2.Id = Guid.NewGuid();
+            FolioServiceClient.InsertInstance(instance2.ToJObject());
+        }
 
         public void Update(Instance2 instance2) => FolioServiceClient.UpdateInstance(instance2.ToJObject());
 
@@ -1982,7 +2162,11 @@ namespace FolioLibrary
             return int2;
         }
 
-        public void Insert(InstanceNoteType2 instanceNoteType2) => FolioServiceClient.InsertInstanceNoteType(instanceNoteType2.ToJObject());
+        public void Insert(InstanceNoteType2 instanceNoteType2)
+        {
+            if (instanceNoteType2.Id == null) instanceNoteType2.Id = Guid.NewGuid();
+            FolioServiceClient.InsertInstanceNoteType(instanceNoteType2.ToJObject());
+        }
 
         public void Update(InstanceNoteType2 instanceNoteType2) => FolioServiceClient.UpdateInstanceNoteType(instanceNoteType2.ToJObject());
 
@@ -2023,7 +2207,11 @@ namespace FolioLibrary
             return it2;
         }
 
-        public void Insert(InstanceType2 instanceType2) => FolioServiceClient.InsertInstanceType(instanceType2.ToJObject());
+        public void Insert(InstanceType2 instanceType2)
+        {
+            if (instanceType2.Id == null) instanceType2.Id = Guid.NewGuid();
+            FolioServiceClient.InsertInstanceType(instanceType2.ToJObject());
+        }
 
         public void Update(InstanceType2 instanceType2) => FolioServiceClient.UpdateInstanceType(instanceType2.ToJObject());
 
@@ -2064,7 +2252,11 @@ namespace FolioLibrary
             return i2;
         }
 
-        public void Insert(Institution2 institution2) => FolioServiceClient.InsertInstitution(institution2.ToJObject());
+        public void Insert(Institution2 institution2)
+        {
+            if (institution2.Id == null) institution2.Id = Guid.NewGuid();
+            FolioServiceClient.InsertInstitution(institution2.ToJObject());
+        }
 
         public void Update(Institution2 institution2) => FolioServiceClient.UpdateInstitution(institution2.ToJObject());
 
@@ -2105,7 +2297,11 @@ namespace FolioLibrary
             return i2;
         }
 
-        public void Insert(Interface2 interface2) => FolioServiceClient.InsertInterface(interface2.ToJObject());
+        public void Insert(Interface2 interface2)
+        {
+            if (interface2.Id == null) interface2.Id = Guid.NewGuid();
+            FolioServiceClient.InsertInterface(interface2.ToJObject());
+        }
 
         public void Update(Interface2 interface2) => FolioServiceClient.UpdateInterface(interface2.ToJObject());
 
@@ -2161,7 +2357,11 @@ namespace FolioLibrary
             return i2;
         }
 
-        public void Insert(Invoice2 invoice2) => FolioServiceClient.InsertInvoice(invoice2.ToJObject());
+        public void Insert(Invoice2 invoice2)
+        {
+            if (invoice2.Id == null) invoice2.Id = Guid.NewGuid();
+            FolioServiceClient.InsertInvoice(invoice2.ToJObject());
+        }
 
         public void Update(Invoice2 invoice2) => FolioServiceClient.UpdateInvoice(invoice2.ToJObject());
 
@@ -2211,7 +2411,11 @@ namespace FolioLibrary
             return ii2;
         }
 
-        public void Insert(InvoiceItem2 invoiceItem2) => FolioServiceClient.InsertInvoiceItem(invoiceItem2.ToJObject());
+        public void Insert(InvoiceItem2 invoiceItem2)
+        {
+            if (invoiceItem2.Id == null) invoiceItem2.Id = Guid.NewGuid();
+            FolioServiceClient.InsertInvoiceItem(invoiceItem2.ToJObject());
+        }
 
         public void Update(InvoiceItem2 invoiceItem2) => FolioServiceClient.UpdateInvoiceItem(invoiceItem2.ToJObject());
 
@@ -2249,7 +2453,11 @@ namespace FolioLibrary
             return its2;
         }
 
-        public void Insert(InvoiceTransactionSummary2 invoiceTransactionSummary2) => FolioServiceClient.InsertInvoiceTransactionSummary(invoiceTransactionSummary2.ToJObject());
+        public void Insert(InvoiceTransactionSummary2 invoiceTransactionSummary2)
+        {
+            if (invoiceTransactionSummary2.Id == null) invoiceTransactionSummary2.Id = Guid.NewGuid();
+            FolioServiceClient.InsertInvoiceTransactionSummary(invoiceTransactionSummary2.ToJObject());
+        }
 
         public void Update(InvoiceTransactionSummary2 invoiceTransactionSummary2) => FolioServiceClient.UpdateInvoiceTransactionSummary(invoiceTransactionSummary2.ToJObject());
 
@@ -2290,7 +2498,11 @@ namespace FolioLibrary
             return im;
         }
 
-        public void Insert(IssuanceMode issuanceMode) => FolioServiceClient.InsertModeOfIssuance(issuanceMode.ToJObject());
+        public void Insert(IssuanceMode issuanceMode)
+        {
+            if (issuanceMode.Id == null) issuanceMode.Id = Guid.NewGuid();
+            FolioServiceClient.InsertModeOfIssuance(issuanceMode.ToJObject());
+        }
 
         public void Update(IssuanceMode issuanceMode) => FolioServiceClient.UpdateModeOfIssuance(issuanceMode.ToJObject());
 
@@ -2373,7 +2585,11 @@ namespace FolioLibrary
             return i2;
         }
 
-        public void Insert(Item2 item2) => FolioServiceClient.InsertItem(item2.ToJObject());
+        public void Insert(Item2 item2)
+        {
+            if (item2.Id == null) item2.Id = Guid.NewGuid();
+            FolioServiceClient.InsertItem(item2.ToJObject());
+        }
 
         public void Update(Item2 item2) => FolioServiceClient.UpdateItem(item2.ToJObject());
 
@@ -2414,7 +2630,11 @@ namespace FolioLibrary
             return ids2;
         }
 
-        public void Insert(ItemDamagedStatus2 itemDamagedStatus2) => FolioServiceClient.InsertItemDamagedStatus(itemDamagedStatus2.ToJObject());
+        public void Insert(ItemDamagedStatus2 itemDamagedStatus2)
+        {
+            if (itemDamagedStatus2.Id == null) itemDamagedStatus2.Id = Guid.NewGuid();
+            FolioServiceClient.InsertItemDamagedStatus(itemDamagedStatus2.ToJObject());
+        }
 
         public void Update(ItemDamagedStatus2 itemDamagedStatus2) => FolioServiceClient.UpdateItemDamagedStatus(itemDamagedStatus2.ToJObject());
 
@@ -2455,7 +2675,11 @@ namespace FolioLibrary
             return int2;
         }
 
-        public void Insert(ItemNoteType2 itemNoteType2) => FolioServiceClient.InsertItemNoteType(itemNoteType2.ToJObject());
+        public void Insert(ItemNoteType2 itemNoteType2)
+        {
+            if (itemNoteType2.Id == null) itemNoteType2.Id = Guid.NewGuid();
+            FolioServiceClient.InsertItemNoteType(itemNoteType2.ToJObject());
+        }
 
         public void Update(ItemNoteType2 itemNoteType2) => FolioServiceClient.UpdateItemNoteType(itemNoteType2.ToJObject());
 
@@ -2499,7 +2723,11 @@ namespace FolioLibrary
             return l2;
         }
 
-        public void Insert(Ledger2 ledger2) => FolioServiceClient.InsertLedger(ledger2.ToJObject());
+        public void Insert(Ledger2 ledger2)
+        {
+            if (ledger2.Id == null) ledger2.Id = Guid.NewGuid();
+            FolioServiceClient.InsertLedger(ledger2.ToJObject());
+        }
 
         public void Update(Ledger2 ledger2) => FolioServiceClient.UpdateLedger(ledger2.ToJObject());
 
@@ -2549,7 +2777,11 @@ namespace FolioLibrary
             return lr2;
         }
 
-        public void Insert(LedgerRollover2 ledgerRollover2) => FolioServiceClient.InsertLedgerRollover(ledgerRollover2.ToJObject());
+        public void Insert(LedgerRollover2 ledgerRollover2)
+        {
+            if (ledgerRollover2.Id == null) ledgerRollover2.Id = Guid.NewGuid();
+            FolioServiceClient.InsertLedgerRollover(ledgerRollover2.ToJObject());
+        }
 
         public void Update(LedgerRollover2 ledgerRollover2) => FolioServiceClient.UpdateLedgerRollover(ledgerRollover2.ToJObject());
 
@@ -2593,7 +2825,11 @@ namespace FolioLibrary
             return lre2;
         }
 
-        public void Insert(LedgerRolloverError2 ledgerRolloverError2) => FolioServiceClient.InsertLedgerRolloverError(ledgerRolloverError2.ToJObject());
+        public void Insert(LedgerRolloverError2 ledgerRolloverError2)
+        {
+            if (ledgerRolloverError2.Id == null) ledgerRolloverError2.Id = Guid.NewGuid();
+            FolioServiceClient.InsertLedgerRolloverError(ledgerRolloverError2.ToJObject());
+        }
 
         public void Update(LedgerRolloverError2 ledgerRolloverError2) => FolioServiceClient.UpdateLedgerRolloverError(ledgerRolloverError2.ToJObject());
 
@@ -2637,7 +2873,11 @@ namespace FolioLibrary
             return lrp2;
         }
 
-        public void Insert(LedgerRolloverProgress2 ledgerRolloverProgress2) => FolioServiceClient.InsertLedgerRolloverProgress(ledgerRolloverProgress2.ToJObject());
+        public void Insert(LedgerRolloverProgress2 ledgerRolloverProgress2)
+        {
+            if (ledgerRolloverProgress2.Id == null) ledgerRolloverProgress2.Id = Guid.NewGuid();
+            FolioServiceClient.InsertLedgerRolloverProgress(ledgerRolloverProgress2.ToJObject());
+        }
 
         public void Update(LedgerRolloverProgress2 ledgerRolloverProgress2) => FolioServiceClient.UpdateLedgerRolloverProgress(ledgerRolloverProgress2.ToJObject());
 
@@ -2681,7 +2921,11 @@ namespace FolioLibrary
             return l2;
         }
 
-        public void Insert(Library2 library2) => FolioServiceClient.InsertLibrary(library2.ToJObject());
+        public void Insert(Library2 library2)
+        {
+            if (library2.Id == null) library2.Id = Guid.NewGuid();
+            FolioServiceClient.InsertLibrary(library2.ToJObject());
+        }
 
         public void Update(Library2 library2) => FolioServiceClient.UpdateLibrary(library2.ToJObject());
 
@@ -2752,7 +2996,11 @@ namespace FolioLibrary
             return l2;
         }
 
-        public void Insert(Loan2 loan2) => FolioServiceClient.InsertLoan(loan2.ToJObject());
+        public void Insert(Loan2 loan2)
+        {
+            if (loan2.Id == null) loan2.Id = Guid.NewGuid();
+            FolioServiceClient.InsertLoan(loan2.ToJObject());
+        }
 
         public void Update(Loan2 loan2) => FolioServiceClient.UpdateLoan(loan2.ToJObject());
 
@@ -2799,7 +3047,11 @@ namespace FolioLibrary
             return lp2;
         }
 
-        public void Insert(LoanPolicy2 loanPolicy2) => FolioServiceClient.InsertLoanPolicy(loanPolicy2.ToJObject());
+        public void Insert(LoanPolicy2 loanPolicy2)
+        {
+            if (loanPolicy2.Id == null) loanPolicy2.Id = Guid.NewGuid();
+            FolioServiceClient.InsertLoanPolicy(loanPolicy2.ToJObject());
+        }
 
         public void Update(LoanPolicy2 loanPolicy2) => FolioServiceClient.UpdateLoanPolicy(loanPolicy2.ToJObject());
 
@@ -2840,7 +3092,11 @@ namespace FolioLibrary
             return lt2;
         }
 
-        public void Insert(LoanType2 loanType2) => FolioServiceClient.InsertLoanType(loanType2.ToJObject());
+        public void Insert(LoanType2 loanType2)
+        {
+            if (loanType2.Id == null) loanType2.Id = Guid.NewGuid();
+            FolioServiceClient.InsertLoanType(loanType2.ToJObject());
+        }
 
         public void Update(LoanType2 loanType2) => FolioServiceClient.UpdateLoanType(loanType2.ToJObject());
 
@@ -2893,7 +3149,11 @@ namespace FolioLibrary
             return l2;
         }
 
-        public void Insert(Location2 location2) => FolioServiceClient.InsertLocation(location2.ToJObject());
+        public void Insert(Location2 location2)
+        {
+            if (location2.Id == null) location2.Id = Guid.NewGuid();
+            FolioServiceClient.InsertLocation(location2.ToJObject());
+        }
 
         public void Update(Location2 location2) => FolioServiceClient.UpdateLocation(location2.ToJObject());
 
@@ -2940,13 +3200,21 @@ namespace FolioLibrary
             return ls;
         }
 
-        public void Insert(LocationSetting locationSetting) => FolioServiceClient.InsertLocationSetting(locationSetting.ToJObject());
+        public void Insert(LocationSetting locationSetting)
+        {
+            if (locationSetting.Id == null) locationSetting.Id = Guid.NewGuid();
+            FolioServiceClient.InsertLocationSetting(locationSetting.ToJObject());
+        }
 
         public void Update(LocationSetting locationSetting) => FolioServiceClient.UpdateLocationSetting(locationSetting.ToJObject());
 
         public void DeleteLocationSetting(Guid? id) => FolioServiceClient.DeleteLocationSetting(id?.ToString());
 
-        public void Insert(Login2 login2) => FolioServiceClient.InsertLogin(login2.ToJObject());
+        public void Insert(Login2 login2)
+        {
+            if (login2.Id == null) login2.Id = Guid.NewGuid();
+            FolioServiceClient.InsertLogin(login2.ToJObject());
+        }
 
         public bool AnyLostItemFeePolicy2s(string where = null) => FolioServiceClient.AnyLostItemFeePolicies(where);
 
@@ -2983,7 +3251,11 @@ namespace FolioLibrary
             return lifp2;
         }
 
-        public void Insert(LostItemFeePolicy2 lostItemFeePolicy2) => FolioServiceClient.InsertLostItemFeePolicy(lostItemFeePolicy2.ToJObject());
+        public void Insert(LostItemFeePolicy2 lostItemFeePolicy2)
+        {
+            if (lostItemFeePolicy2.Id == null) lostItemFeePolicy2.Id = Guid.NewGuid();
+            FolioServiceClient.InsertLostItemFeePolicy(lostItemFeePolicy2.ToJObject());
+        }
 
         public void Update(LostItemFeePolicy2 lostItemFeePolicy2) => FolioServiceClient.UpdateLostItemFeePolicy(lostItemFeePolicy2.ToJObject());
 
@@ -3024,7 +3296,11 @@ namespace FolioLibrary
             return mbt2;
         }
 
-        public void Insert(ManualBlockTemplate2 manualBlockTemplate2) => FolioServiceClient.InsertManualBlockTemplate(manualBlockTemplate2.ToJObject());
+        public void Insert(ManualBlockTemplate2 manualBlockTemplate2)
+        {
+            if (manualBlockTemplate2.Id == null) manualBlockTemplate2.Id = Guid.NewGuid();
+            FolioServiceClient.InsertManualBlockTemplate(manualBlockTemplate2.ToJObject());
+        }
 
         public void Update(ManualBlockTemplate2 manualBlockTemplate2) => FolioServiceClient.UpdateManualBlockTemplate(manualBlockTemplate2.ToJObject());
 
@@ -3065,7 +3341,11 @@ namespace FolioLibrary
             return mt2;
         }
 
-        public void Insert(MaterialType2 materialType2) => FolioServiceClient.InsertMaterialType(materialType2.ToJObject());
+        public void Insert(MaterialType2 materialType2)
+        {
+            if (materialType2.Id == null) materialType2.Id = Guid.NewGuid();
+            FolioServiceClient.InsertMaterialType(materialType2.ToJObject());
+        }
 
         public void Update(MaterialType2 materialType2) => FolioServiceClient.UpdateMaterialType(materialType2.ToJObject());
 
@@ -3106,7 +3386,11 @@ namespace FolioLibrary
             return noct2;
         }
 
-        public void Insert(NatureOfContentTerm2 natureOfContentTerm2) => FolioServiceClient.InsertNatureOfContentTerm(natureOfContentTerm2.ToJObject());
+        public void Insert(NatureOfContentTerm2 natureOfContentTerm2)
+        {
+            if (natureOfContentTerm2.Id == null) natureOfContentTerm2.Id = Guid.NewGuid();
+            FolioServiceClient.InsertNatureOfContentTerm(natureOfContentTerm2.ToJObject());
+        }
 
         public void Update(NatureOfContentTerm2 natureOfContentTerm2) => FolioServiceClient.UpdateNatureOfContentTerm(natureOfContentTerm2.ToJObject());
 
@@ -3153,7 +3437,11 @@ namespace FolioLibrary
             return n3;
         }
 
-        public void Insert(Note3 note3) => FolioServiceClient.InsertNote(note3.ToJObject());
+        public void Insert(Note3 note3)
+        {
+            if (note3.Id == null) note3.Id = Guid.NewGuid();
+            FolioServiceClient.InsertNote(note3.ToJObject());
+        }
 
         public void Update(Note3 note3) => FolioServiceClient.UpdateNote(note3.ToJObject());
 
@@ -3194,7 +3482,11 @@ namespace FolioLibrary
             return nt2;
         }
 
-        public void Insert(NoteType2 noteType2) => FolioServiceClient.InsertNoteType(noteType2.ToJObject());
+        public void Insert(NoteType2 noteType2)
+        {
+            if (noteType2.Id == null) noteType2.Id = Guid.NewGuid();
+            FolioServiceClient.InsertNoteType(noteType2.ToJObject());
+        }
 
         public void Update(NoteType2 noteType2) => FolioServiceClient.UpdateNoteType(noteType2.ToJObject());
 
@@ -3247,7 +3539,11 @@ namespace FolioLibrary
             return o2;
         }
 
-        public void Insert(Order2 order2) => FolioServiceClient.InsertOrder(order2.ToJObject());
+        public void Insert(Order2 order2)
+        {
+            if (order2.Id == null) order2.Id = Guid.NewGuid();
+            FolioServiceClient.InsertOrder(order2.ToJObject());
+        }
 
         public void Update(Order2 order2) => FolioServiceClient.UpdateOrder(order2.ToJObject());
 
@@ -3288,7 +3584,11 @@ namespace FolioLibrary
             return oi2;
         }
 
-        public void Insert(OrderInvoice2 orderInvoice2) => FolioServiceClient.InsertOrderInvoice(orderInvoice2.ToJObject());
+        public void Insert(OrderInvoice2 orderInvoice2)
+        {
+            if (orderInvoice2.Id == null) orderInvoice2.Id = Guid.NewGuid();
+            FolioServiceClient.InsertOrderInvoice(orderInvoice2.ToJObject());
+        }
 
         public void Update(OrderInvoice2 orderInvoice2) => FolioServiceClient.UpdateOrderInvoice(orderInvoice2.ToJObject());
 
@@ -3350,7 +3650,11 @@ namespace FolioLibrary
             return oi2;
         }
 
-        public void Insert(OrderItem2 orderItem2) => FolioServiceClient.InsertOrderItem(orderItem2.ToJObject());
+        public void Insert(OrderItem2 orderItem2)
+        {
+            if (orderItem2.Id == null) orderItem2.Id = Guid.NewGuid();
+            FolioServiceClient.InsertOrderItem(orderItem2.ToJObject());
+        }
 
         public void Update(OrderItem2 orderItem2) => FolioServiceClient.UpdateOrderItem(orderItem2.ToJObject());
 
@@ -3380,7 +3684,11 @@ namespace FolioLibrary
 
         public OrderTemplate2 FindOrderTemplate2(Guid? id, bool load = false, bool cache = true) => OrderTemplate2.FromJObject(FolioServiceClient.GetOrderTemplate(id?.ToString()));
 
-        public void Insert(OrderTemplate2 orderTemplate2) => FolioServiceClient.InsertOrderTemplate(orderTemplate2.ToJObject());
+        public void Insert(OrderTemplate2 orderTemplate2)
+        {
+            if (orderTemplate2.Id == null) orderTemplate2.Id = Guid.NewGuid();
+            FolioServiceClient.InsertOrderTemplate(orderTemplate2.ToJObject());
+        }
 
         public void Update(OrderTemplate2 orderTemplate2) => FolioServiceClient.UpdateOrderTemplate(orderTemplate2.ToJObject());
 
@@ -3394,7 +3702,11 @@ namespace FolioLibrary
             return ots2;
         }
 
-        public void Insert(OrderTransactionSummary2 orderTransactionSummary2) => FolioServiceClient.InsertOrderTransactionSummary(orderTransactionSummary2.ToJObject());
+        public void Insert(OrderTransactionSummary2 orderTransactionSummary2)
+        {
+            if (orderTransactionSummary2.Id == null) orderTransactionSummary2.Id = Guid.NewGuid();
+            FolioServiceClient.InsertOrderTransactionSummary(orderTransactionSummary2.ToJObject());
+        }
 
         public void Update(OrderTransactionSummary2 orderTransactionSummary2) => FolioServiceClient.UpdateOrderTransactionSummary(orderTransactionSummary2.ToJObject());
 
@@ -3433,7 +3745,11 @@ namespace FolioLibrary
             return o2;
         }
 
-        public void Insert(Organization2 organization2) => FolioServiceClient.InsertOrganization(organization2.ToJObject());
+        public void Insert(Organization2 organization2)
+        {
+            if (organization2.Id == null) organization2.Id = Guid.NewGuid();
+            FolioServiceClient.InsertOrganization(organization2.ToJObject());
+        }
 
         public void Update(Organization2 organization2) => FolioServiceClient.UpdateOrganization(organization2.ToJObject());
 
@@ -3474,7 +3790,11 @@ namespace FolioLibrary
             return ofp2;
         }
 
-        public void Insert(OverdueFinePolicy2 overdueFinePolicy2) => FolioServiceClient.InsertOverdueFinePolicy(overdueFinePolicy2.ToJObject());
+        public void Insert(OverdueFinePolicy2 overdueFinePolicy2)
+        {
+            if (overdueFinePolicy2.Id == null) overdueFinePolicy2.Id = Guid.NewGuid();
+            FolioServiceClient.InsertOverdueFinePolicy(overdueFinePolicy2.ToJObject());
+        }
 
         public void Update(OverdueFinePolicy2 overdueFinePolicy2) => FolioServiceClient.UpdateOverdueFinePolicy(overdueFinePolicy2.ToJObject());
 
@@ -3521,7 +3841,11 @@ namespace FolioLibrary
             return o2;
         }
 
-        public void Insert(Owner2 owner2) => FolioServiceClient.InsertOwner(owner2.ToJObject());
+        public void Insert(Owner2 owner2)
+        {
+            if (owner2.Id == null) owner2.Id = Guid.NewGuid();
+            FolioServiceClient.InsertOwner(owner2.ToJObject());
+        }
 
         public void Update(Owner2 owner2) => FolioServiceClient.UpdateOwner(owner2.ToJObject());
 
@@ -3568,7 +3892,11 @@ namespace FolioLibrary
             return pas2;
         }
 
-        public void Insert(PatronActionSession2 patronActionSession2) => FolioServiceClient.InsertPatronActionSession(patronActionSession2.ToJObject());
+        public void Insert(PatronActionSession2 patronActionSession2)
+        {
+            if (patronActionSession2.Id == null) patronActionSession2.Id = Guid.NewGuid();
+            FolioServiceClient.InsertPatronActionSession(patronActionSession2.ToJObject());
+        }
 
         public void Update(PatronActionSession2 patronActionSession2) => FolioServiceClient.UpdatePatronActionSession(patronActionSession2.ToJObject());
 
@@ -3609,7 +3937,11 @@ namespace FolioLibrary
             return pnp2;
         }
 
-        public void Insert(PatronNoticePolicy2 patronNoticePolicy2) => FolioServiceClient.InsertPatronNoticePolicy(patronNoticePolicy2.ToJObject());
+        public void Insert(PatronNoticePolicy2 patronNoticePolicy2)
+        {
+            if (patronNoticePolicy2.Id == null) patronNoticePolicy2.Id = Guid.NewGuid();
+            FolioServiceClient.InsertPatronNoticePolicy(patronNoticePolicy2.ToJObject());
+        }
 
         public void Update(PatronNoticePolicy2 patronNoticePolicy2) => FolioServiceClient.UpdatePatronNoticePolicy(patronNoticePolicy2.ToJObject());
 
@@ -3653,7 +3985,11 @@ namespace FolioLibrary
             return p2;
         }
 
-        public void Insert(Payment2 payment2) => FolioServiceClient.InsertPayment(payment2.ToJObject());
+        public void Insert(Payment2 payment2)
+        {
+            if (payment2.Id == null) payment2.Id = Guid.NewGuid();
+            FolioServiceClient.InsertPayment(payment2.ToJObject());
+        }
 
         public void Update(Payment2 payment2) => FolioServiceClient.UpdatePayment(payment2.ToJObject());
 
@@ -3697,7 +4033,11 @@ namespace FolioLibrary
             return pm2;
         }
 
-        public void Insert(PaymentMethod2 paymentMethod2) => FolioServiceClient.InsertPaymentMethod(paymentMethod2.ToJObject());
+        public void Insert(PaymentMethod2 paymentMethod2)
+        {
+            if (paymentMethod2.Id == null) paymentMethod2.Id = Guid.NewGuid();
+            FolioServiceClient.InsertPaymentMethod(paymentMethod2.ToJObject());
+        }
 
         public void Update(PaymentMethod2 paymentMethod2) => FolioServiceClient.UpdatePaymentMethod(paymentMethod2.ToJObject());
 
@@ -3738,7 +4078,11 @@ namespace FolioLibrary
             return p2;
         }
 
-        public void Insert(Permission2 permission2) => FolioServiceClient.InsertPermission(permission2.ToJObject());
+        public void Insert(Permission2 permission2)
+        {
+            if (permission2.Id == null) permission2.Id = Guid.NewGuid();
+            FolioServiceClient.InsertPermission(permission2.ToJObject());
+        }
 
         public void Update(Permission2 permission2) => FolioServiceClient.UpdatePermission(permission2.ToJObject());
 
@@ -3782,7 +4126,11 @@ namespace FolioLibrary
             return pu2;
         }
 
-        public void Insert(PermissionsUser2 permissionsUser2) => FolioServiceClient.InsertPermissionsUser(permissionsUser2.ToJObject());
+        public void Insert(PermissionsUser2 permissionsUser2)
+        {
+            if (permissionsUser2.Id == null) permissionsUser2.Id = Guid.NewGuid();
+            FolioServiceClient.InsertPermissionsUser(permissionsUser2.ToJObject());
+        }
 
         public void Update(PermissionsUser2 permissionsUser2) => FolioServiceClient.UpdatePermissionsUser(permissionsUser2.ToJObject());
 
@@ -3829,7 +4177,11 @@ namespace FolioLibrary
             return pst2;
         }
 
-        public void Insert(PrecedingSucceedingTitle2 precedingSucceedingTitle2) => FolioServiceClient.InsertPrecedingSucceedingTitle(precedingSucceedingTitle2.ToJObject());
+        public void Insert(PrecedingSucceedingTitle2 precedingSucceedingTitle2)
+        {
+            if (precedingSucceedingTitle2.Id == null) precedingSucceedingTitle2.Id = Guid.NewGuid();
+            FolioServiceClient.InsertPrecedingSucceedingTitle(precedingSucceedingTitle2.ToJObject());
+        }
 
         public void Update(PrecedingSucceedingTitle2 precedingSucceedingTitle2) => FolioServiceClient.UpdatePrecedingSucceedingTitle(precedingSucceedingTitle2.ToJObject());
 
@@ -3859,7 +4211,11 @@ namespace FolioLibrary
 
         public Prefix2 FindPrefix2(Guid? id, bool load = false, bool cache = true) => Prefix2.FromJObject(FolioServiceClient.GetPrefix(id?.ToString()));
 
-        public void Insert(Prefix2 prefix2) => FolioServiceClient.InsertPrefix(prefix2.ToJObject());
+        public void Insert(Prefix2 prefix2)
+        {
+            if (prefix2.Id == null) prefix2.Id = Guid.NewGuid();
+            FolioServiceClient.InsertPrefix(prefix2.ToJObject());
+        }
 
         public void Update(Prefix2 prefix2) => FolioServiceClient.UpdatePrefix(prefix2.ToJObject());
 
@@ -3900,7 +4256,11 @@ namespace FolioLibrary
             return p;
         }
 
-        public void Insert(Printer printer) => FolioServiceClient.InsertPrinter(printer.ToJObject());
+        public void Insert(Printer printer)
+        {
+            if (printer.Id == null) printer.Id = Guid.NewGuid();
+            FolioServiceClient.InsertPrinter(printer.ToJObject());
+        }
 
         public void Update(Printer printer) => FolioServiceClient.UpdatePrinter(printer.ToJObject());
 
@@ -3947,7 +4307,11 @@ namespace FolioLibrary
             return p2;
         }
 
-        public void Insert(Proxy2 proxy2) => FolioServiceClient.InsertProxy(proxy2.ToJObject());
+        public void Insert(Proxy2 proxy2)
+        {
+            if (proxy2.Id == null) proxy2.Id = Guid.NewGuid();
+            FolioServiceClient.InsertProxy(proxy2.ToJObject());
+        }
 
         public void Update(Proxy2 proxy2) => FolioServiceClient.UpdateProxy(proxy2.ToJObject());
 
@@ -3997,7 +4361,11 @@ namespace FolioLibrary
             return r2;
         }
 
-        public void Insert(Receiving2 receiving2) => FolioServiceClient.InsertReceiving(receiving2.ToJObject());
+        public void Insert(Receiving2 receiving2)
+        {
+            if (receiving2.Id == null) receiving2.Id = Guid.NewGuid();
+            FolioServiceClient.InsertReceiving(receiving2.ToJObject());
+        }
 
         public void Update(Receiving2 receiving2) => FolioServiceClient.UpdateReceiving(receiving2.ToJObject());
 
@@ -4044,7 +4412,11 @@ namespace FolioLibrary
             return r2;
         }
 
-        public void Insert(Record2 record2) => FolioServiceClient.InsertRecord(record2.ToJObject());
+        public void Insert(Record2 record2)
+        {
+            if (record2.Id == null) record2.Id = Guid.NewGuid();
+            FolioServiceClient.InsertRecord(record2.ToJObject());
+        }
 
         public void Update(Record2 record2) => FolioServiceClient.UpdateRecord(record2.ToJObject());
 
@@ -4088,7 +4460,11 @@ namespace FolioLibrary
             return rr2;
         }
 
-        public void Insert(RefundReason2 refundReason2) => FolioServiceClient.InsertRefundReason(refundReason2.ToJObject());
+        public void Insert(RefundReason2 refundReason2)
+        {
+            if (refundReason2.Id == null) refundReason2.Id = Guid.NewGuid();
+            FolioServiceClient.InsertRefundReason(refundReason2.ToJObject());
+        }
 
         public void Update(RefundReason2 refundReason2) => FolioServiceClient.UpdateRefundReason(refundReason2.ToJObject());
 
@@ -4138,7 +4514,11 @@ namespace FolioLibrary
             return r;
         }
 
-        public void Insert(Relationship relationship) => FolioServiceClient.InsertInstanceRelationship(relationship.ToJObject());
+        public void Insert(Relationship relationship)
+        {
+            if (relationship.Id == null) relationship.Id = Guid.NewGuid();
+            FolioServiceClient.InsertInstanceRelationship(relationship.ToJObject());
+        }
 
         public void Update(Relationship relationship) => FolioServiceClient.UpdateInstanceRelationship(relationship.ToJObject());
 
@@ -4179,7 +4559,11 @@ namespace FolioLibrary
             return rt;
         }
 
-        public void Insert(RelationshipType relationshipType) => FolioServiceClient.InsertInstanceRelationshipType(relationshipType.ToJObject());
+        public void Insert(RelationshipType relationshipType)
+        {
+            if (relationshipType.Id == null) relationshipType.Id = Guid.NewGuid();
+            FolioServiceClient.InsertInstanceRelationshipType(relationshipType.ToJObject());
+        }
 
         public void Update(RelationshipType relationshipType) => FolioServiceClient.UpdateInstanceRelationshipType(relationshipType.ToJObject());
 
@@ -4209,7 +4593,11 @@ namespace FolioLibrary
 
         public ReportingCode2 FindReportingCode2(Guid? id, bool load = false, bool cache = true) => ReportingCode2.FromJObject(FolioServiceClient.GetReportingCode(id?.ToString()));
 
-        public void Insert(ReportingCode2 reportingCode2) => FolioServiceClient.InsertReportingCode(reportingCode2.ToJObject());
+        public void Insert(ReportingCode2 reportingCode2)
+        {
+            if (reportingCode2.Id == null) reportingCode2.Id = Guid.NewGuid();
+            FolioServiceClient.InsertReportingCode(reportingCode2.ToJObject());
+        }
 
         public void Update(ReportingCode2 reportingCode2) => FolioServiceClient.UpdateReportingCode(reportingCode2.ToJObject());
 
@@ -4271,7 +4659,11 @@ namespace FolioLibrary
             return r2;
         }
 
-        public void Insert(Request2 request2) => FolioServiceClient.InsertRequest(request2.ToJObject());
+        public void Insert(Request2 request2)
+        {
+            if (request2.Id == null) request2.Id = Guid.NewGuid();
+            FolioServiceClient.InsertRequest(request2.ToJObject());
+        }
 
         public void Update(Request2 request2) => FolioServiceClient.UpdateRequest(request2.ToJObject());
 
@@ -4312,7 +4704,11 @@ namespace FolioLibrary
             return rp2;
         }
 
-        public void Insert(RequestPolicy2 requestPolicy2) => FolioServiceClient.InsertRequestPolicy(requestPolicy2.ToJObject());
+        public void Insert(RequestPolicy2 requestPolicy2)
+        {
+            if (requestPolicy2.Id == null) requestPolicy2.Id = Guid.NewGuid();
+            FolioServiceClient.InsertRequestPolicy(requestPolicy2.ToJObject());
+        }
 
         public void Update(RequestPolicy2 requestPolicy2) => FolioServiceClient.UpdateRequestPolicy(requestPolicy2.ToJObject());
 
@@ -4368,7 +4764,11 @@ namespace FolioLibrary
             return sn2;
         }
 
-        public void Insert(ScheduledNotice2 scheduledNotice2) => FolioServiceClient.InsertScheduledNotice(scheduledNotice2.ToJObject());
+        public void Insert(ScheduledNotice2 scheduledNotice2)
+        {
+            if (scheduledNotice2.Id == null) scheduledNotice2.Id = Guid.NewGuid();
+            FolioServiceClient.InsertScheduledNotice(scheduledNotice2.ToJObject());
+        }
 
         public void Update(ScheduledNotice2 scheduledNotice2) => FolioServiceClient.UpdateScheduledNotice(scheduledNotice2.ToJObject());
 
@@ -4409,7 +4809,11 @@ namespace FolioLibrary
             return sp2;
         }
 
-        public void Insert(ServicePoint2 servicePoint2) => FolioServiceClient.InsertServicePoint(servicePoint2.ToJObject());
+        public void Insert(ServicePoint2 servicePoint2)
+        {
+            if (servicePoint2.Id == null) servicePoint2.Id = Guid.NewGuid();
+            FolioServiceClient.InsertServicePoint(servicePoint2.ToJObject());
+        }
 
         public void Update(ServicePoint2 servicePoint2) => FolioServiceClient.UpdateServicePoint(servicePoint2.ToJObject());
 
@@ -4456,7 +4860,11 @@ namespace FolioLibrary
             return spu2;
         }
 
-        public void Insert(ServicePointUser2 servicePointUser2) => FolioServiceClient.InsertServicePointUser(servicePointUser2.ToJObject());
+        public void Insert(ServicePointUser2 servicePointUser2)
+        {
+            if (servicePointUser2.Id == null) servicePointUser2.Id = Guid.NewGuid();
+            FolioServiceClient.InsertServicePointUser(servicePointUser2.ToJObject());
+        }
 
         public void Update(ServicePointUser2 servicePointUser2) => FolioServiceClient.UpdateServicePointUser(servicePointUser2.ToJObject());
 
@@ -4497,7 +4905,11 @@ namespace FolioLibrary
             return s;
         }
 
-        public void Insert(Setting setting) => FolioServiceClient.InsertSetting(setting.ToJObject());
+        public void Insert(Setting setting)
+        {
+            if (setting.Id == null) setting.Id = Guid.NewGuid();
+            FolioServiceClient.InsertSetting(setting.ToJObject());
+        }
 
         public void Update(Setting setting) => FolioServiceClient.UpdateSetting(setting.ToJObject());
 
@@ -4538,7 +4950,11 @@ namespace FolioLibrary
             return s2;
         }
 
-        public void Insert(Snapshot2 snapshot2) => FolioServiceClient.InsertSnapshot(snapshot2.ToJObject());
+        public void Insert(Snapshot2 snapshot2)
+        {
+            if (snapshot2.Id == null) snapshot2.Id = Guid.NewGuid();
+            FolioServiceClient.InsertSnapshot(snapshot2.ToJObject());
+        }
 
         public void Update(Snapshot2 snapshot2) => FolioServiceClient.UpdateSnapshot(snapshot2.ToJObject());
 
@@ -4579,7 +4995,11 @@ namespace FolioLibrary
             return s2;
         }
 
-        public void Insert(Source2 source2) => FolioServiceClient.InsertSource(source2.ToJObject());
+        public void Insert(Source2 source2)
+        {
+            if (source2.Id == null) source2.Id = Guid.NewGuid();
+            FolioServiceClient.InsertSource(source2.ToJObject());
+        }
 
         public void Update(Source2 source2) => FolioServiceClient.UpdateSource(source2.ToJObject());
 
@@ -4620,7 +5040,11 @@ namespace FolioLibrary
             return ss2;
         }
 
-        public void Insert(StaffSlip2 staffSlip2) => FolioServiceClient.InsertStaffSlip(staffSlip2.ToJObject());
+        public void Insert(StaffSlip2 staffSlip2)
+        {
+            if (staffSlip2.Id == null) staffSlip2.Id = Guid.NewGuid();
+            FolioServiceClient.InsertStaffSlip(staffSlip2.ToJObject());
+        }
 
         public void Update(StaffSlip2 staffSlip2) => FolioServiceClient.UpdateStaffSlip(staffSlip2.ToJObject());
 
@@ -4664,7 +5088,11 @@ namespace FolioLibrary
             return sc2;
         }
 
-        public void Insert(StatisticalCode2 statisticalCode2) => FolioServiceClient.InsertStatisticalCode(statisticalCode2.ToJObject());
+        public void Insert(StatisticalCode2 statisticalCode2)
+        {
+            if (statisticalCode2.Id == null) statisticalCode2.Id = Guid.NewGuid();
+            FolioServiceClient.InsertStatisticalCode(statisticalCode2.ToJObject());
+        }
 
         public void Update(StatisticalCode2 statisticalCode2) => FolioServiceClient.UpdateStatisticalCode(statisticalCode2.ToJObject());
 
@@ -4705,7 +5133,11 @@ namespace FolioLibrary
             return sct2;
         }
 
-        public void Insert(StatisticalCodeType2 statisticalCodeType2) => FolioServiceClient.InsertStatisticalCodeType(statisticalCodeType2.ToJObject());
+        public void Insert(StatisticalCodeType2 statisticalCodeType2)
+        {
+            if (statisticalCodeType2.Id == null) statisticalCodeType2.Id = Guid.NewGuid();
+            FolioServiceClient.InsertStatisticalCodeType(statisticalCodeType2.ToJObject());
+        }
 
         public void Update(StatisticalCodeType2 statisticalCodeType2) => FolioServiceClient.UpdateStatisticalCodeType(statisticalCodeType2.ToJObject());
 
@@ -4746,7 +5178,11 @@ namespace FolioLibrary
             return s;
         }
 
-        public void Insert(Status status) => FolioServiceClient.InsertInstanceStatus(status.ToJObject());
+        public void Insert(Status status)
+        {
+            if (status.Id == null) status.Id = Guid.NewGuid();
+            FolioServiceClient.InsertInstanceStatus(status.ToJObject());
+        }
 
         public void Update(Status status) => FolioServiceClient.UpdateInstanceStatus(status.ToJObject());
 
@@ -4776,7 +5212,11 @@ namespace FolioLibrary
 
         public Suffix2 FindSuffix2(Guid? id, bool load = false, bool cache = true) => Suffix2.FromJObject(FolioServiceClient.GetSuffix(id?.ToString()));
 
-        public void Insert(Suffix2 suffix2) => FolioServiceClient.InsertSuffix(suffix2.ToJObject());
+        public void Insert(Suffix2 suffix2)
+        {
+            if (suffix2.Id == null) suffix2.Id = Guid.NewGuid();
+            FolioServiceClient.InsertSuffix(suffix2.ToJObject());
+        }
 
         public void Update(Suffix2 suffix2) => FolioServiceClient.UpdateSuffix(suffix2.ToJObject());
 
@@ -4817,7 +5257,11 @@ namespace FolioLibrary
             return t2;
         }
 
-        public void Insert(Tag2 tag2) => FolioServiceClient.InsertTag(tag2.ToJObject());
+        public void Insert(Tag2 tag2)
+        {
+            if (tag2.Id == null) tag2.Id = Guid.NewGuid();
+            FolioServiceClient.InsertTag(tag2.ToJObject());
+        }
 
         public void Update(Tag2 tag2) => FolioServiceClient.UpdateTag(tag2.ToJObject());
 
@@ -4858,7 +5302,11 @@ namespace FolioLibrary
             return t2;
         }
 
-        public void Insert(Template2 template2) => FolioServiceClient.InsertTemplate(template2.ToJObject());
+        public void Insert(Template2 template2)
+        {
+            if (template2.Id == null) template2.Id = Guid.NewGuid();
+            FolioServiceClient.InsertTemplate(template2.ToJObject());
+        }
 
         public void Update(Template2 template2) => FolioServiceClient.UpdateTemplate(template2.ToJObject());
 
@@ -4905,7 +5353,11 @@ namespace FolioLibrary
             return t2;
         }
 
-        public void Insert(Title2 title2) => FolioServiceClient.InsertTitle(title2.ToJObject());
+        public void Insert(Title2 title2)
+        {
+            if (title2.Id == null) title2.Id = Guid.NewGuid();
+            FolioServiceClient.InsertTitle(title2.ToJObject());
+        }
 
         public void Update(Title2 title2) => FolioServiceClient.UpdateTitle(title2.ToJObject());
 
@@ -4979,7 +5431,11 @@ namespace FolioLibrary
             return t2;
         }
 
-        public void Insert(Transaction2 transaction2) => FolioServiceClient.InsertTransaction(transaction2.ToJObject());
+        public void Insert(Transaction2 transaction2)
+        {
+            if (transaction2.Id == null) transaction2.Id = Guid.NewGuid();
+            FolioServiceClient.InsertTransaction(transaction2.ToJObject());
+        }
 
         public void Update(Transaction2 transaction2) => FolioServiceClient.UpdateTransaction(transaction2.ToJObject());
 
@@ -5023,7 +5479,11 @@ namespace FolioLibrary
             return ta2;
         }
 
-        public void Insert(TransferAccount2 transferAccount2) => FolioServiceClient.InsertTransferAccount(transferAccount2.ToJObject());
+        public void Insert(TransferAccount2 transferAccount2)
+        {
+            if (transferAccount2.Id == null) transferAccount2.Id = Guid.NewGuid();
+            FolioServiceClient.InsertTransferAccount(transferAccount2.ToJObject());
+        }
 
         public void Update(TransferAccount2 transferAccount2) => FolioServiceClient.UpdateTransferAccount(transferAccount2.ToJObject());
 
@@ -5053,7 +5513,11 @@ namespace FolioLibrary
 
         public TransferCriteria2 FindTransferCriteria2(Guid? id, bool load = false, bool cache = true) => TransferCriteria2.FromJObject(FolioServiceClient.GetTransferCriteria(id?.ToString()));
 
-        public void Insert(TransferCriteria2 transferCriteria2) => FolioServiceClient.InsertTransferCriteria(transferCriteria2.ToJObject());
+        public void Insert(TransferCriteria2 transferCriteria2)
+        {
+            if (transferCriteria2.Id == null) transferCriteria2.Id = Guid.NewGuid();
+            FolioServiceClient.InsertTransferCriteria(transferCriteria2.ToJObject());
+        }
 
         public void Update(TransferCriteria2 transferCriteria2) => FolioServiceClient.UpdateTransferCriteria(transferCriteria2.ToJObject());
 
@@ -5097,7 +5561,11 @@ namespace FolioLibrary
             return u2;
         }
 
-        public void Insert(User2 user2) => FolioServiceClient.InsertUser(user2.ToJObject());
+        public void Insert(User2 user2)
+        {
+            if (user2.Id == null) user2.Id = Guid.NewGuid();
+            FolioServiceClient.InsertUser(user2.ToJObject());
+        }
 
         public void Update(User2 user2) => FolioServiceClient.UpdateUser(user2.ToJObject());
 
@@ -5144,7 +5612,11 @@ namespace FolioLibrary
             return uau2;
         }
 
-        public void Insert(UserAcquisitionsUnit2 userAcquisitionsUnit2) => FolioServiceClient.InsertUserAcquisitionsUnit(userAcquisitionsUnit2.ToJObject());
+        public void Insert(UserAcquisitionsUnit2 userAcquisitionsUnit2)
+        {
+            if (userAcquisitionsUnit2.Id == null) userAcquisitionsUnit2.Id = Guid.NewGuid();
+            FolioServiceClient.InsertUserAcquisitionsUnit(userAcquisitionsUnit2.ToJObject());
+        }
 
         public void Update(UserAcquisitionsUnit2 userAcquisitionsUnit2) => FolioServiceClient.UpdateUserAcquisitionsUnit(userAcquisitionsUnit2.ToJObject());
 
@@ -5194,7 +5666,11 @@ namespace FolioLibrary
             return urp2;
         }
 
-        public void Insert(UserRequestPreference2 userRequestPreference2) => FolioServiceClient.InsertUserRequestPreference(userRequestPreference2.ToJObject());
+        public void Insert(UserRequestPreference2 userRequestPreference2)
+        {
+            if (userRequestPreference2.Id == null) userRequestPreference2.Id = Guid.NewGuid();
+            FolioServiceClient.InsertUserRequestPreference(userRequestPreference2.ToJObject());
+        }
 
         public void Update(UserRequestPreference2 userRequestPreference2) => FolioServiceClient.UpdateUserRequestPreference(userRequestPreference2.ToJObject());
 
@@ -5244,7 +5720,11 @@ namespace FolioLibrary
             return v2;
         }
 
-        public void Insert(Voucher2 voucher2) => FolioServiceClient.InsertVoucher(voucher2.ToJObject());
+        public void Insert(Voucher2 voucher2)
+        {
+            if (voucher2.Id == null) voucher2.Id = Guid.NewGuid();
+            FolioServiceClient.InsertVoucher(voucher2.ToJObject());
+        }
 
         public void Update(Voucher2 voucher2) => FolioServiceClient.UpdateVoucher(voucher2.ToJObject());
 
@@ -5291,7 +5771,11 @@ namespace FolioLibrary
             return vi2;
         }
 
-        public void Insert(VoucherItem2 voucherItem2) => FolioServiceClient.InsertVoucherItem(voucherItem2.ToJObject());
+        public void Insert(VoucherItem2 voucherItem2)
+        {
+            if (voucherItem2.Id == null) voucherItem2.Id = Guid.NewGuid();
+            FolioServiceClient.InsertVoucherItem(voucherItem2.ToJObject());
+        }
 
         public void Update(VoucherItem2 voucherItem2) => FolioServiceClient.UpdateVoucherItem(voucherItem2.ToJObject());
 
@@ -5335,7 +5819,11 @@ namespace FolioLibrary
             return wr2;
         }
 
-        public void Insert(WaiveReason2 waiveReason2) => FolioServiceClient.InsertWaiveReason(waiveReason2.ToJObject());
+        public void Insert(WaiveReason2 waiveReason2)
+        {
+            if (waiveReason2.Id == null) waiveReason2.Id = Guid.NewGuid();
+            FolioServiceClient.InsertWaiveReason(waiveReason2.ToJObject());
+        }
 
         public void Update(WaiveReason2 waiveReason2) => FolioServiceClient.UpdateWaiveReason(waiveReason2.ToJObject());
 
