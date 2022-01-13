@@ -1395,33 +1395,6 @@ namespace FolioWebApplicationTest
         }
 
         [TestMethod]
-        public void InvoiceTransactionSummary2sEditAspxTest()
-        {
-            var s = Stopwatch.StartNew();
-            try
-            {
-                var its2 = folioServiceContext.InvoiceTransactionSummary2s(take: 1).SingleOrDefault();
-                if (its2 != null)
-                {
-                    var hrm = httpClient.GetAsync($"{Url}/InvoiceTransactionSummary2s/Edit.aspx?Id={its2.Id}").Result;
-                    hrm.EnsureSuccessStatusCode();
-                    Assert.IsTrue(s.Elapsed < timeSpan);
-                }
-                else
-                    Assert.Inconclusive();
-            }
-            catch (Exception e)
-            {
-                traceSource.TraceEvent(TraceEventType.Error, 0, e.ToString());
-                throw;
-            }
-            finally
-            {
-                traceSource.TraceEvent(TraceEventType.Information, 0, $"InvoiceTransactionSummary2sEditAspxTest()\r\n    ElapsedTime={s.Elapsed}");
-            }
-        }
-
-        [TestMethod]
         public void IssuanceModesEditAspxTest()
         {
             var s = Stopwatch.StartNew();

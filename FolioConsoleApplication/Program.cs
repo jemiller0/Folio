@@ -10164,11 +10164,10 @@ namespace FolioConsoleApplication
         public static void QueryInvoiceTransactionSummaries(string where = null, string orderBy = null, int? skip = null, int? take = null, string select = null)
         {
             using (var fdc = new FolioDapperContext(connectionString))
-            using (var fsc = new FolioServiceClient(connectionString))
             using (var jtw = new JsonTextWriter(Console.Out))
             {
                 jtw.WriteStartArray();
-                foreach (var jo in (api ? fsc.InvoiceTransactionSummaries(where, orderBy, skip, take) : fdc.InvoiceTransactionSummaries(where, null, orderBy, skip, take).Select(its => its.ToJObject())).Select(jo =>
+                foreach (var jo in (api ? throw new NotSupportedException() : fdc.InvoiceTransactionSummaries(where, null, orderBy, skip, take).Select(its => its.ToJObject())).Select(jo =>
                 {
                     return select == null ? jo : new JObject(select.Split(',').Select(s =>
                     {
@@ -10185,22 +10184,11 @@ namespace FolioConsoleApplication
             traceSource.TraceEvent(TraceEventType.Information, 0, "Deleting invoice transaction summaries");
             var s = Stopwatch.StartNew();
             using (var fbcc = new FolioBulkCopyContext(connectionString, checkConstraints: !force))
-            using (var fsc = new FolioServiceClient(connectionString))
             {
                 var i = 0;
                 if (api)
                 {
-                    var s2 = Stopwatch.StartNew();
-                    foreach (var jo in fsc.InvoiceTransactionSummaries(where))
-                    {
-                        if (!whatIf) fsc.DeleteInvoiceTransactionSummary((string)jo["id"]);
-                        if (++i % 100 == 0)
-                        {
-                            traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
-                            s2.Restart();
-                        }
-                    }
-                    traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
+                    throw new NotSupportedException();
                 }
                 else
                 {
@@ -10278,7 +10266,6 @@ namespace FolioConsoleApplication
             traceSource.TraceEvent(TraceEventType.Information, 0, "Saving invoice transaction summaries");
             var s = Stopwatch.StartNew();
             using (var fdc = new FolioDapperContext(connectionString))
-            using (var fsc = new FolioServiceClient(connectionString))
             using (var sr = new StreamReader(Assembly.GetAssembly(typeof(FolioDapperContext)).GetManifestResourceStream("FolioLibrary.InvoiceTransactionSummary.json")))
             using (var sw = new StreamWriter(whatIf ? new MemoryStream() : compress ? (Stream)new GZipStream(new FileStream($"{path}.gz", FileMode.Create), CompressionMode.Compress) : new FileStream(path, FileMode.Create)))
             using (var jtw = new JsonTextWriter(sw))
@@ -10287,7 +10274,7 @@ namespace FolioConsoleApplication
                 var js = JsonSchema.FromJsonAsync(sr.ReadToEndAsync().Result).Result;
                 jtw.WriteStartArray();
                 var i = 0;
-                foreach (var jo in api ? fsc.InvoiceTransactionSummaries(where, orderBy, skip, take) : fdc.InvoiceTransactionSummaries(where, null, orderBy, skip, take).Select(its => its.ToJObject()))
+                foreach (var jo in api ? throw new NotSupportedException() : fdc.InvoiceTransactionSummaries(where, null, orderBy, skip, take).Select(its => its.ToJObject()))
                 {
                     if (validate)
                     {
@@ -12210,7 +12197,6 @@ namespace FolioConsoleApplication
         public static void QueryLogins(string where = null, string orderBy = null, int? skip = null, int? take = null, string select = null)
         {
             using (var fdc = new FolioDapperContext(connectionString))
-            using (var fsc = new FolioServiceClient(connectionString))
             using (var jtw = new JsonTextWriter(Console.Out))
             {
                 jtw.WriteStartArray();
@@ -12313,7 +12299,6 @@ namespace FolioConsoleApplication
             traceSource.TraceEvent(TraceEventType.Information, 0, "Saving logins");
             var s = Stopwatch.StartNew();
             using (var fdc = new FolioDapperContext(connectionString))
-            using (var fsc = new FolioServiceClient(connectionString))
             using (var sr = new StreamReader(Assembly.GetAssembly(typeof(FolioDapperContext)).GetManifestResourceStream("FolioLibrary.Login.json")))
             using (var sw = new StreamWriter(whatIf ? new MemoryStream() : compress ? (Stream)new GZipStream(new FileStream($"{path}.gz", FileMode.Create), CompressionMode.Compress) : new FileStream(path, FileMode.Create)))
             using (var jtw = new JsonTextWriter(sw))
@@ -13672,11 +13657,10 @@ namespace FolioConsoleApplication
         public static void QueryOrderTransactionSummaries(string where = null, string orderBy = null, int? skip = null, int? take = null, string select = null)
         {
             using (var fdc = new FolioDapperContext(connectionString))
-            using (var fsc = new FolioServiceClient(connectionString))
             using (var jtw = new JsonTextWriter(Console.Out))
             {
                 jtw.WriteStartArray();
-                foreach (var jo in (api ? new[] { fsc.GetOrderTransactionSummary() } : fdc.OrderTransactionSummaries(where, null, orderBy, skip, take).Select(ots => ots.ToJObject())).Select(jo =>
+                foreach (var jo in (api ? throw new NotSupportedException() : fdc.OrderTransactionSummaries(where, null, orderBy, skip, take).Select(ots => ots.ToJObject())).Select(jo =>
                 {
                     return select == null ? jo : new JObject(select.Split(',').Select(s =>
                     {
@@ -13775,7 +13759,6 @@ namespace FolioConsoleApplication
             traceSource.TraceEvent(TraceEventType.Information, 0, "Saving order transaction summaries");
             var s = Stopwatch.StartNew();
             using (var fdc = new FolioDapperContext(connectionString))
-            using (var fsc = new FolioServiceClient(connectionString))
             using (var sr = new StreamReader(Assembly.GetAssembly(typeof(FolioDapperContext)).GetManifestResourceStream("FolioLibrary.OrderTransactionSummary.json")))
             using (var sw = new StreamWriter(whatIf ? new MemoryStream() : compress ? (Stream)new GZipStream(new FileStream($"{path}.gz", FileMode.Create), CompressionMode.Compress) : new FileStream(path, FileMode.Create)))
             using (var jtw = new JsonTextWriter(sw))
@@ -13784,7 +13767,7 @@ namespace FolioConsoleApplication
                 var js = JsonSchema.FromJsonAsync(sr.ReadToEndAsync().Result).Result;
                 jtw.WriteStartArray();
                 var i = 0;
-                foreach (var jo in api ? new[] { fsc.GetOrderTransactionSummary() } : fdc.OrderTransactionSummaries(where, null, orderBy, skip, take).Select(ots => ots.ToJObject()))
+                foreach (var jo in api ? throw new NotSupportedException() : fdc.OrderTransactionSummaries(where, null, orderBy, skip, take).Select(ots => ots.ToJObject()))
                 {
                     if (validate)
                     {

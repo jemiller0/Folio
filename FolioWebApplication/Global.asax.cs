@@ -8,6 +8,7 @@ using System.Drawing.Printing;
 using System.Linq;
 using System.Net;
 using System.Net.Mail;
+using System.Security.Principal;
 using System.Text.RegularExpressions;
 using System.Web;
 using System.Web.Security;
@@ -83,6 +84,13 @@ namespace FolioWebApplication
         {
             if (Request.CurrentExecutionFilePathExtension.Equals(".aspx", StringComparison.OrdinalIgnoreCase))
             {
+                //ImpersonateUser("clthomas");
+                //ImpersonateUser("dbottorff");
+                //ImpersonateUser("lar1");
+                //ImpersonateUser("stp0");
+                ImpersonateUser("gatt");
+                //ImpersonateUser("mantrone");
+
                 traceSource.TraceEvent(TraceEventType.Verbose, 0, $"{Request.Url}\n    UserName={User?.Identity?.Name}\n    LocalDateTime={DateTime.Now:G}");
                 if (Session["UserName"] == null)
                 {
@@ -93,13 +101,64 @@ namespace FolioWebApplication
                 if (hs.Any())
                 {
                     if (ConfigurationManager.AppSettings["labelsOnly"] != "true")
-                        SetPermissions(hs);
+                    {
+                        //SetPermissions(hs);
+                        if (hs.Contains("department:Library Systems - Ils"))
+                        {
+                            SetCirculationPermissions("View");
+                            SetConfigurationPermissions("View");
+                            SetFeesPermissions("View");
+                            SetFinancePermissions("View");
+                            SetInventoryPermissions("View");
+                            SetInvoicesPermissions("View");
+                            SetOrdersPermissions("View");
+                            SetOrganizationsPermissions("View");
+                            SetPermissionsPermissions("View");
+                            SetSourcePermissions("View");
+                            SetTemplatesPermissions("View");
+                            SetUsersPermissions("View");
+                        }
+                        else if (hs.Contains("department:Coll Servc Budg & Report") || hs.Contains("department:Tech Srvc-Cat Admin") || hs.Contains("department:Law Cataloging") || hs.Contains("department:Law Library Administration"))
+                        {
+                            SetFinancePermissions("View");
+                            SetInvoicesPermissions("View");
+                            SetOrdersPermissions("View");
+                            SetOrganizationsPermissions("View");
+                            SetInventoryPermissions("View");
+                            SetSourcePermissions("View");
+                        }
+                        else if (hs.Contains("department:Preserv Binding & Shelf Prpe"))
+                        {
+                            SetInventoryPermissions("View");
+                            Session["LabelsPermission"] = "Edit";
+                            Session["LocationSettingsPermission"] = "View";
+                            Session["SettingsPermission"] = "View";
+                            Session["PrintersPermission"] = "Edit";
+                        }
+                        else if (hs.Contains("department:Access Serv-Privileges And Ids"))
+                        {
+                            SetFeesPermissions("View");
+                            SetUsersPermissions("View");
+                        }
+                        else if (hs.Contains("department:User Services Admin") || hs.Contains("department:Stacks Mgmt-Reg Stacks"))
+                        {
+                            SetCirculationPermissions("View");
+                            SetFeesPermissions("View");
+                            SetInventoryPermissions("View");
+                            SetUsersPermissions("View");
+                        }
+                        if (hs.Contains("department:Library Systems - Ils") || (string)Session["UserName"] == "mantrone")
+                        {
+                            Session["LabelsPermission"] = Session["LocationSettingsPermission"] = Session["PrintersPermission"] = Session["SettingsPermission"] = "Edit";
+                        }
+                    }
                     else
                     {
-                        SetInventoryPermissions(hs);
-                        //Session["Holding2sPermission"] = hs.Contains("uc.holdings.edit") ? "Edit" : hs.Contains("all") || hs.Contains("inventory.all") || hs.Contains("uc.holdings.view") ? "View" : null;
-                        //Session["Instance2sPermission"] = hs.Contains("uc.instances.edit") ? "Edit" : hs.Contains("all") || hs.Contains("inventory.all") || hs.Contains("uc.instances.view") ? "View" : null;
-                        //Session["Item2sPermission"] = hs.Contains("uc.items.edit") ? "Edit" : hs.Contains("all") || hs.Contains("inventory.all") || hs.Contains("uc.items.view") ? "View" : null;
+                        //SetInventoryPermissions(hs);
+                        ////Session["Holding2sPermission"] = hs.Contains("uc.holdings.edit") ? "Edit" : hs.Contains("all") || hs.Contains("inventory.all") || hs.Contains("uc.holdings.view") ? "View" : null;
+                        ////Session["Instance2sPermission"] = hs.Contains("uc.instances.edit") ? "Edit" : hs.Contains("all") || hs.Contains("inventory.all") || hs.Contains("uc.instances.view") ? "View" : null;
+                        ////Session["Item2sPermission"] = hs.Contains("uc.items.edit") ? "Edit" : hs.Contains("all") || hs.Contains("inventory.all") || hs.Contains("uc.items.view") ? "View" : null;
+                        
                         Session["LocationSettingsPermission"] = hs.Contains("uc.locationsettings.edit") ? "Edit" : hs.Contains("all") || hs.Contains("configuration.all") || hs.Contains("uc.locationsettings.view") ? "View" : null;
                         Session["PrintersPermission"] = hs.Contains("uc.printers.edit") ? "Edit" : hs.Contains("all") || hs.Contains("configuration.all") || hs.Contains("uc.printers.view") ? "View" : null;
                         Session["SettingsPermission"] = hs.Contains("uc.settings.edit") ? "Edit" : hs.Contains("all") || hs.Contains("configuration.all") || hs.Contains("uc.settings.view") ? "View" : null;
@@ -156,6 +215,13 @@ namespace FolioWebApplication
                 return string.Format(formats[gc.CurrentFilterFunction], properties[gc.GetType() == typeof(GridHyperLinkColumn) ? ((GridHyperLinkColumn)gc).DataTextField : ((dynamic)gc).DataField], FolioServiceClient.EncodeCql(gc.CurrentFilterValue));
             })));
             return Trim($"{where}{(where != null && s != null ? " and " : "")}{s}");
+        }
+
+        private void ImpersonateUser(string userName)
+        {
+            Session["UserName"] = userName;
+            HttpContext.Current.User = new GenericPrincipal(new GenericIdentity($@"ADLOCAL\{userName}"), System.Web.Security.Roles.GetRolesForUser($@"ADLOCAL\{userName}"));
+            using (var fsc = new FolioServiceContext()) Session["UserId"] = fsc.User2s($"username == \"{Session["UserName"]}\"").Single().Id;
         }
 
         public static string Trim(string value)

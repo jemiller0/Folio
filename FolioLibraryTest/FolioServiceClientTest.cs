@@ -1104,26 +1104,6 @@ namespace FolioLibraryTest
         }
 
         [TestMethod]
-        public void CountInvoiceTransactionSummariesTest()
-        {
-            var s = Stopwatch.StartNew();
-            var i = folioServiceClient.CountInvoiceTransactionSummaries();
-            var j = folioDapperContext.CountInvoiceTransactionSummaries();
-            Assert.IsTrue(i == j);
-            traceSource.TraceEvent(TraceEventType.Information, 0, $"CountInvoiceTransactionSummariesTest()\r\n    ElapsedTime={s.Elapsed}");
-        }
-
-        [TestMethod]
-        public void FinanceInvoiceTransactionSummariesTest()
-        {
-            var s = Stopwatch.StartNew();
-            var l = folioServiceClient.InvoiceTransactionSummaries(take: take).Select(jo => (string)jo["id"]).ToArray();
-            var l2 = folioDapperContext.InvoiceTransactionSummaries(take: take).Select(u => u.Id.ToString()).ToArray();
-            Assert.IsTrue(l.SequenceEqual(l2));
-            traceSource.TraceEvent(TraceEventType.Information, 0, $"InvoiceTransactionSummariesTest()\r\n    ElapsedTime={s.Elapsed}");
-        }
-
-        [TestMethod]
         public void CountItemsTest()
         {
             var s = Stopwatch.StartNew();
@@ -3585,18 +3565,6 @@ namespace FolioLibraryTest
             traceSource.TraceEvent(TraceEventType.Information, 0, it.ToString());
             Assert.IsNotNull(it);
             traceSource.TraceEvent(TraceEventType.Information, 0, $"DeserializeInvoiceTagTest()\r\n    ElapsedTime={s.Elapsed}");
-        }
-
-        [TestMethod]
-        public void DeserializeInvoiceTransactionSummary2Test()
-        {
-            var s = Stopwatch.StartNew();
-            var jo = folioServiceClient.InvoiceTransactionSummaries(take: 1).SingleOrDefault();
-            if (jo == null) Assert.Inconclusive();
-            var its2 = JsonConvert.DeserializeObject<InvoiceTransactionSummary2>(jo.ToString());
-            traceSource.TraceEvent(TraceEventType.Information, 0, its2.ToString());
-            Assert.IsNotNull(its2);
-            traceSource.TraceEvent(TraceEventType.Information, 0, $"DeserializeInvoiceTransactionSummary2Test()\r\n    ElapsedTime={s.Elapsed}");
         }
 
         [TestMethod]

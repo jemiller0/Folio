@@ -1926,32 +1926,6 @@ LEFT JOIN uc.users AS lwu ON lwu.id = ii2.updated_by_user_id
         }
 
         [TestMethod]
-        public void QueryInvoiceTransactionSummary2sTest()
-        {
-            var s = Stopwatch.StartNew();
-            folioDapperContext.InvoiceTransactionSummary2s(take: 1).ToArray();
-            traceSource.TraceEvent(TraceEventType.Information, 0, $"InvoiceTransactionSummary2sTest()\r\n    ElapsedTime={s.Elapsed}");
-        }
-
-        [TestMethod]
-        public void InvoiceTransactionSummary2sQueryTest()
-        {
-            var s = Stopwatch.StartNew();
-            folioDapperContext.Query(@"
-SELECT
-its2.id AS ""Id"",
-i2.folio_invoice_no AS ""Invoice2"",
-its2.num_pending_payments AS ""NumPendingPayments"",
-its2.num_payments_credits AS ""NumPaymentsCredits"",
-its2.content AS ""Content"" 
-FROM uc.invoice_transaction_summaries AS its2
-LEFT JOIN uc.invoices AS i2 ON i2.id = its2.id
- ORDER BY its2.id
-", take: 1);
-            traceSource.TraceEvent(TraceEventType.Information, 0, $"InvoiceTransactionSummary2sQueryTest()\r\n    ElapsedTime={s.Elapsed}");
-        }
-
-        [TestMethod]
         public void QueryIssuanceModesTest()
         {
             var s = Stopwatch.StartNew();

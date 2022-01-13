@@ -1085,27 +1085,6 @@ namespace FolioWebApplicationTest
         }
 
         [TestMethod]
-        public void InvoiceTransactionSummary2sDefaultAspxTest()
-        {
-            var s = Stopwatch.StartNew();
-            try
-            {
-                var hrm = httpClient.GetAsync($"{Url}/InvoiceTransactionSummary2s/Default.aspx").Result;
-                hrm.EnsureSuccessStatusCode();
-                Assert.IsTrue(s.Elapsed < TimeSpan.FromSeconds(30));
-            }
-            catch (Exception e)
-            {
-                traceSource.TraceEvent(TraceEventType.Error, 0, e.ToString());
-                throw;
-            }
-            finally
-            {
-                traceSource.TraceEvent(TraceEventType.Information, 0, $"InvoiceTransactionSummary2sDefaultAspxTest()\r\n    ElapsedTime={s.Elapsed}");
-            }
-        }
-
-        [TestMethod]
         public void IssuanceModesDefaultAspxTest()
         {
             var s = Stopwatch.StartNew();

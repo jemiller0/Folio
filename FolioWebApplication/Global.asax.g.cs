@@ -91,7 +91,6 @@ namespace FolioWebApplication
             Session["FiscalYear2sPermission"] = roles.Contains("all") || roles.Contains("finance.all") || roles.Contains("uc.fiscalyears.view") ? "View" : null;
             Session["Fund2sPermission"] = roles.Contains("all") || roles.Contains("finance.all") || roles.Contains("uc.funds.view") ? "View" : null;
             Session["FundType2sPermission"] = roles.Contains("all") || roles.Contains("finance.all") || roles.Contains("uc.fundtypes.view") ? "View" : null;
-            Session["InvoiceTransactionSummary2sPermission"] = roles.Contains("all") || roles.Contains("finance.all") || roles.Contains("uc.invoicetransactionsummaries.view") ? "View" : null;
             Session["Ledger2sPermission"] = roles.Contains("all") || roles.Contains("finance.all") || roles.Contains("uc.ledgers.view") ? "View" : null;
             Session["LedgerRollover2sPermission"] = roles.Contains("all") || roles.Contains("finance.all") || roles.Contains("uc.ledgerrollovers.view") ? "View" : null;
             Session["LedgerRolloverError2sPermission"] = roles.Contains("all") || roles.Contains("finance.all") || roles.Contains("uc.ledgerrollovererrors.view") ? "View" : null;
@@ -272,7 +271,6 @@ namespace FolioWebApplication
             Session["FiscalYear2sPermission"] = permission;
             Session["Fund2sPermission"] = permission;
             Session["FundType2sPermission"] = permission;
-            Session["InvoiceTransactionSummary2sPermission"] = permission;
             Session["Ledger2sPermission"] = permission;
             Session["LedgerRollover2sPermission"] = permission;
             Session["LedgerRolloverError2sPermission"] = permission;

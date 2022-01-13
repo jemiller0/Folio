@@ -45,10 +45,17 @@ namespace FolioWebApplication
             //    var u = folioServiceClient.Users($"username == \"{Regex.Replace(userName, @"^.+\\", "", RegexOptions.Compiled)}\"").SingleOrDefault();
             //    return u != null ? folioServiceClient.PermissionsUsers($"userId == \"{u["id"]}\"").Single()["permissions"].Select(jt => jt.ToString()).ToArray() : new string[] { };
             //}
-            using (var fsc = new FolioServiceClient(accessToken: accessToken))
+
+            //using (var fsc = new FolioServiceClient(accessToken: accessToken))
+            //{
+            //    var u = fsc.Users($"username == \"{Regex.Replace(userName, @"^.+\\", "", RegexOptions.Compiled)}\"").SingleOrDefault();
+            //    return u != null ? fsc.PermissionsUsers($"userId == \"{u["id"]}\"").Single()["permissions"].Select(jt => jt.ToString()/*.Replace("juniper-basic", "all")*/.Replace("juniper-admin-perms-sorted", "all").Replace("administrator", "all")).ToArray() : new string[] { };
+            //}
+
+            using (var fsc = new FolioServiceContext(accessToken: accessToken))
             {
-                var u = fsc.Users($"username == \"{Regex.Replace(userName, @"^.+\\", "", RegexOptions.Compiled)}\"").SingleOrDefault();
-                return u != null ? fsc.PermissionsUsers($"userId == \"{u["id"]}\"").Single()["permissions"].Select(jt => jt.ToString().Replace("administrator", "all")).ToArray() : new string[] { };
+                var u = fsc.User2s($"username == \"{Regex.Replace(userName, @"^.+\\", "", RegexOptions.Compiled)}\"").SingleOrDefault();
+                return u != null ? new[] { $"department:{u.StaffDepartment}" } : new string[] { };
             }
         }
 

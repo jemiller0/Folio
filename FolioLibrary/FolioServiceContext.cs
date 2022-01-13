@@ -11,7 +11,7 @@ namespace FolioLibrary
         public FolioServiceClient FolioServiceClient { get; set; }
         Dictionary<Guid, object> objects = new Dictionary<Guid, object>();
 
-        public FolioServiceContext(string nameOrConnectionString = "FolioServiceClient") => FolioServiceClient = new FolioServiceClient(nameOrConnectionString);
+        public FolioServiceContext(string nameOrConnectionString = "FolioServiceClient", string accessToken = null) => FolioServiceClient = new FolioServiceClient(nameOrConnectionString, accessToken);
 
         public bool AnyAcquisitionsUnit2s(string where = null) => FolioServiceClient.AnyAcquisitionsUnits(where);
 
@@ -2421,30 +2421,6 @@ namespace FolioLibrary
 
         public void DeleteInvoiceItem2(Guid? id) => FolioServiceClient.DeleteInvoiceItem(id?.ToString());
 
-        public bool AnyInvoiceTransactionSummary2s(string where = null) => FolioServiceClient.AnyInvoiceTransactionSummaries(where);
-
-        public int CountInvoiceTransactionSummary2s(string where = null) => FolioServiceClient.CountInvoiceTransactionSummaries(where);
-
-        public InvoiceTransactionSummary2[] InvoiceTransactionSummary2s(out int count, string where = null, string orderBy = null, int? skip = null, int? take = null, bool load = false, bool cache = true)
-        {
-            return FolioServiceClient.InvoiceTransactionSummaries(out count, where, orderBy, skip, take).Select(jo =>
-            {
-                var its2 = InvoiceTransactionSummary2.FromJObject(jo);
-                if (load && its2.Id != null) its2.Invoice2 = (Invoice2)(cache && objects.ContainsKey(its2.Id.Value) ? objects[its2.Id.Value] : objects[its2.Id.Value] = FindInvoice2(its2.Id));
-                return its2;
-            }).ToArray();
-        }
-
-        public IEnumerable<InvoiceTransactionSummary2> InvoiceTransactionSummary2s(string where = null, string orderBy = null, int? skip = null, int? take = null, bool load = false, bool cache = true)
-        {
-            foreach (var jo in FolioServiceClient.InvoiceTransactionSummaries(where, orderBy, skip, take))
-            {
-                var its2 = InvoiceTransactionSummary2.FromJObject(jo);
-                if (load && its2.Id != null) its2.Invoice2 = (Invoice2)(cache && objects.ContainsKey(its2.Id.Value) ? objects[its2.Id.Value] : objects[its2.Id.Value] = FindInvoice2(its2.Id));
-                yield return its2;
-            }
-        }
-
         public InvoiceTransactionSummary2 FindInvoiceTransactionSummary2(Guid? id, bool load = false, bool cache = true)
         {
             var its2 = InvoiceTransactionSummary2.FromJObject(FolioServiceClient.GetInvoiceTransactionSummary(id?.ToString()));
@@ -3694,9 +3670,9 @@ namespace FolioLibrary
 
         public void DeleteOrderTemplate2(Guid? id) => FolioServiceClient.DeleteOrderTemplate(id?.ToString());
 
-        public OrderTransactionSummary2 FindOrderTransactionSummary2(bool load = false, bool cache = true)
+        public OrderTransactionSummary2 FindOrderTransactionSummary2(Guid? id, bool load = false, bool cache = true)
         {
-            var ots2 = OrderTransactionSummary2.FromJObject(FolioServiceClient.GetOrderTransactionSummary());
+            var ots2 = OrderTransactionSummary2.FromJObject(FolioServiceClient.GetOrderTransactionSummary(id?.ToString()));
             if (ots2 == null) return null;
             if (load && ots2.Id != null) ots2.Order2 = (Order2)(cache && objects.ContainsKey(ots2.Id.Value) ? objects[ots2.Id.Value] : objects[ots2.Id.Value] = FindOrder2(ots2.Id));
             return ots2;
@@ -3709,6 +3685,8 @@ namespace FolioLibrary
         }
 
         public void Update(OrderTransactionSummary2 orderTransactionSummary2) => FolioServiceClient.UpdateOrderTransactionSummary(orderTransactionSummary2.ToJObject());
+
+        public void DeleteOrderTransactionSummary2(Guid? id) => FolioServiceClient.DeleteOrderTransactionSummary(id?.ToString());
 
         public bool AnyOrganization2s(string where = null) => FolioServiceClient.AnyOrganizations(where);
 
