@@ -187,7 +187,7 @@
                     <Columns>
                         <telerik:GridTemplateColumn AllowFiltering="false" ItemStyle-Width="0px">
                             <ItemTemplate>
-                                <asp:HyperLink ID="EditViewHyperLink" Text='<%# Session["Holding2sPermission"] %>' NavigateUrl='<%# $"~/Holding2s/Edit.aspx?Id={Eval("Id")}" %>' runat="server" />
+                                <asp:HyperLink ID="ViewHyperLink" Text="View" NavigateUrl='<%# $"~/Holding2s/Edit.aspx?Id={Eval("Id")}" %>' runat="server" />
                             </ItemTemplate>
                         </telerik:GridTemplateColumn>
                         <telerik:GridTemplateColumn HeaderText="Id" DataField="Id" SortExpression="Id" AutoPostBackOnFilter="true" CurrentFilterFunction="EqualTo">
@@ -275,7 +275,7 @@
                     <Columns>
                         <telerik:GridTemplateColumn AllowFiltering="false" ItemStyle-Width="0px">
                             <ItemTemplate>
-                                <asp:HyperLink ID="EditViewHyperLink" Text='<%# Session["Holding2sPermission"] %>' NavigateUrl='<%# $"~/Holding2s/Edit.aspx?Id={Eval("Id")}" %>' runat="server" />
+                                <asp:HyperLink ID="ViewHyperLink" Text="View" NavigateUrl='<%# $"~/Holding2s/Edit.aspx?Id={Eval("Id")}" %>' runat="server" />
                             </ItemTemplate>
                         </telerik:GridTemplateColumn>
                         <telerik:GridTemplateColumn HeaderText="Id" DataField="Id" SortExpression="Id" AutoPostBackOnFilter="true" CurrentFilterFunction="EqualTo">
@@ -363,7 +363,7 @@
                     <Columns>
                         <telerik:GridTemplateColumn AllowFiltering="false" ItemStyle-Width="0px">
                             <ItemTemplate>
-                                <asp:HyperLink ID="EditViewHyperLink" Text='<%# Session["Holding2sPermission"] %>' NavigateUrl='<%# $"~/Holding2s/Edit.aspx?Id={Eval("Id")}" %>' runat="server" />
+                                <asp:HyperLink ID="ViewHyperLink" Text="View" NavigateUrl='<%# $"~/Holding2s/Edit.aspx?Id={Eval("Id")}" %>' runat="server" />
                             </ItemTemplate>
                         </telerik:GridTemplateColumn>
                         <telerik:GridTemplateColumn HeaderText="Id" DataField="Id" SortExpression="Id" AutoPostBackOnFilter="true" CurrentFilterFunction="EqualTo">
@@ -451,7 +451,7 @@
                     <Columns>
                         <telerik:GridTemplateColumn AllowFiltering="false" ItemStyle-Width="0px">
                             <ItemTemplate>
-                                <asp:HyperLink ID="EditViewHyperLink" Text='<%# Session["Item2sPermission"] %>' NavigateUrl='<%# $"~/Item2s/Edit.aspx?Id={Eval("Id")}" %>' runat="server" />
+                                <asp:HyperLink ID="ViewHyperLink" Text="View" NavigateUrl='<%# $"~/Item2s/Edit.aspx?Id={Eval("Id")}" %>' runat="server" />
                             </ItemTemplate>
                         </telerik:GridTemplateColumn>
                         <telerik:GridTemplateColumn AllowFiltering="false" ItemStyle-Width="0px">
@@ -585,7 +585,7 @@
                     <Columns>
                         <telerik:GridTemplateColumn AllowFiltering="false" ItemStyle-Width="0px">
                             <ItemTemplate>
-                                <asp:HyperLink ID="EditViewHyperLink" Text='<%# Session["Item2sPermission"] %>' NavigateUrl='<%# $"~/Item2s/Edit.aspx?Id={Eval("Id")}" %>' runat="server" />
+                                <asp:HyperLink ID="ViewHyperLink" Text="View" NavigateUrl='<%# $"~/Item2s/Edit.aspx?Id={Eval("Id")}" %>' runat="server" />
                             </ItemTemplate>
                         </telerik:GridTemplateColumn>
                         <telerik:GridTemplateColumn AllowFiltering="false" ItemStyle-Width="0px">
@@ -719,7 +719,7 @@
                     <Columns>
                         <telerik:GridTemplateColumn AllowFiltering="false" ItemStyle-Width="0px">
                             <ItemTemplate>
-                                <asp:HyperLink ID="EditViewHyperLink" Text='<%# Session["Item2sPermission"] %>' NavigateUrl='<%# $"~/Item2s/Edit.aspx?Id={Eval("Id")}" %>' runat="server" />
+                                <asp:HyperLink ID="ViewHyperLink" Text="View" NavigateUrl='<%# $"~/Item2s/Edit.aspx?Id={Eval("Id")}" %>' runat="server" />
                             </ItemTemplate>
                         </telerik:GridTemplateColumn>
                         <telerik:GridTemplateColumn AllowFiltering="false" ItemStyle-Width="0px">

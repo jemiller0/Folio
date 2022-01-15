@@ -74,7 +74,7 @@ namespace FolioWebApplication.ServicePoint2s
             if (Item2sRadGrid.MasterTableView.FilterExpression == "")
             {
                 Item2sRadGrid.AllowFilteringByColumn = Item2sRadGrid.VirtualItemCount > 10;
-                Item2sPanel.Visible = ServicePoint2FormView.DataKey.Value != null && ((string)Session["Item2sPermission"] == "Edit" || Session["Item2sPermission"] != null && Item2sRadGrid.VirtualItemCount > 0);
+                Item2sPanel.Visible = ServicePoint2FormView.DataKey.Value != null && Session["Item2sPermission"] != null && Item2sRadGrid.VirtualItemCount > 0;
             }
         }
 
@@ -89,7 +89,7 @@ namespace FolioWebApplication.ServicePoint2s
             if (Item2s1RadGrid.MasterTableView.FilterExpression == "")
             {
                 Item2s1RadGrid.AllowFilteringByColumn = Item2s1RadGrid.VirtualItemCount > 10;
-                Item2s1Panel.Visible = ServicePoint2FormView.DataKey.Value != null && ((string)Session["Item2sPermission"] == "Edit" || Session["Item2sPermission"] != null && Item2s1RadGrid.VirtualItemCount > 0);
+                Item2s1Panel.Visible = ServicePoint2FormView.DataKey.Value != null && Session["Item2sPermission"] != null && Item2s1RadGrid.VirtualItemCount > 0;
             }
         }
 

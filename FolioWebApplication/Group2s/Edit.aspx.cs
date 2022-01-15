@@ -3,9 +3,7 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
 using System.Diagnostics;
-using System.Web.UI.WebControls;
 using Telerik.Web.UI;
 
 namespace FolioWebApplication.Group2s
@@ -28,56 +26,11 @@ namespace FolioWebApplication.Group2s
         protected void Group2FormView_DataBinding(object sender, EventArgs e)
         {
             var id = Request.QueryString["Id"] != null ? (Guid?)Guid.Parse(Request.QueryString["Id"]) : null;
-            var g2 = id == null && (string)Session["Group2sPermission"] == "Edit" ? new Group2() : folioServiceContext.FindGroup2(id, true);
+            var g2 = folioServiceContext.FindGroup2(id, true);
             if (g2 == null) Response.Redirect("Default.aspx");
             g2.Content = g2.Content != null ? JsonConvert.DeserializeObject<JToken>(g2.Content, new JsonSerializerSettings { DateTimeZoneHandling = DateTimeZoneHandling.Local }).ToString() : null;
             Group2FormView.DataSource = new[] { g2 };
             Title = $"Group {g2.Name}";
-        }
-
-        protected void Group2FormView_ItemUpdating(object sender, FormViewUpdateEventArgs e)
-        {
-            var id = (Guid?)Group2FormView.DataKey.Value;
-            var g2 = id != null ? folioServiceContext.FindGroup2(id) : new Group2 { Id = Guid.NewGuid(), CreationTime = DateTime.Now, CreationUserId = (Guid?)Session["UserId"] };
-            g2.Name = Global.Trim((string)e.NewValues["Name"]);
-            g2.Description = Global.Trim((string)e.NewValues["Description"]);
-            g2.ExpirationOffsetInDays = (int?)e.NewValues["ExpirationOffsetInDays"];
-            g2.LastWriteTime = DateTime.Now;
-            g2.LastWriteUserId = (Guid?)Session["UserId"];
-            var vr = Group2.ValidateGroup2(g2, new ValidationContext(folioServiceContext));
-            if (vr != null)
-            {
-                var cv = (CustomValidator)Group2FormView.FindControl("Group2CustomValidator");
-                cv.IsValid = false;
-                cv.ErrorMessage = vr.ErrorMessage;
-                e.Cancel = true;
-                return;
-            }
-            if (id == null) folioServiceContext.Insert(g2); else folioServiceContext.Update(g2);
-            if (id == null) Response.Redirect($"Edit.aspx?Id={g2.Id}"); else Response.Redirect("Default.aspx");
-        }
-
-        protected void Group2FormView_ItemCommand(object sender, FormViewCommandEventArgs e)
-        {
-            if (e.CommandName == "Cancel") Response.Redirect("Default.aspx");
-        }
-
-        protected void Group2FormView_ItemDeleting(object sender, FormViewDeleteEventArgs e)
-        {
-            var id = (Guid?)Group2FormView.DataKey.Value;
-            try
-            {
-                if (folioServiceContext.AnyBlockLimit2s($"patronGroupId == \"{id}\"")) throw new Exception("Group cannot be deleted because it is being referenced by a block limit");
-                if (folioServiceContext.AnyLoan2s($"patronGroupIdAtCheckout == \"{id}\"")) throw new Exception("Group cannot be deleted because it is being referenced by a loan");
-                if (folioServiceContext.AnyUser2s($"patronGroup == \"{id}\"")) throw new Exception("Group cannot be deleted because it is being referenced by a user");
-                folioServiceContext.DeleteGroup2(id);
-                Response.Redirect("Default.aspx");
-            }
-            catch (Exception)
-            {
-                var cv = (CustomValidator)((FormView)sender).FindControl("DeleteCustomValidator");
-                cv.IsValid = false;
-            }
         }
 
         protected void BlockLimit2sRadGrid_NeedDataSource(object sender, GridNeedDataSourceEventArgs e)

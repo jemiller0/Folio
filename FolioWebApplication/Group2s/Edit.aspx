@@ -5,9 +5,7 @@
         <fieldset>
             <legend>
                 <asp:HyperLink ID="Group2HyperLink" runat="server" Text="Group" NavigateUrl="Default.aspx" /></legend>
-            <asp:FormView ID="Group2FormView" runat="server" DataKeyNames="Id" DefaultMode='<%# (string)Session["Group2sPermission"] == "Edit" ? FormViewMode.Edit : FormViewMode.ReadOnly %>' RenderOuterTable="false" 
-                OnDataBinding="Group2FormView_DataBinding" OnItemUpdating="Group2FormView_ItemUpdating" OnItemDeleting="Group2FormView_ItemDeleting"
-                OnItemCommand="Group2FormView_ItemCommand" Enabled='<%# true || (string)Session["Group2sPermission"] == "Edit" %>'>
+            <asp:FormView ID="Group2FormView" runat="server" DataKeyNames="Id" DefaultMode="ReadOnly" RenderOuterTable="false" OnDataBinding="Group2FormView_DataBinding">
                 <ItemTemplate>
                     <asp:Panel ID="ViewGroup2Panel" runat="server">
                         <table>
@@ -86,104 +84,6 @@
                         </table>
                     </asp:Panel>
                 </ItemTemplate>
-                <EditItemTemplate>
-                    <asp:Panel ID="EditGroup2Panel" runat="server" DefaultButton="InsertUpdateRadButton">
-                        <div>
-                            <asp:ValidationSummary ID="Group2ValidationSummary" runat="server" ShowModelStateErrors="true" CssClass="Error" ValidationGroup="Group2" Visible="false" />
-                        </div>
-                        <table>
-                            <tr runat="server" visible='<%# Eval("Id") != null %>'>
-                                <td>
-                                    <asp:Label ID="IdLabel" runat="server" Text="Id:" AssociatedControlID="IdHyperLink" />
-                                </td>
-                                <td>
-                                    <asp:HyperLink ID="IdHyperLink" runat="server" Text='<%# Eval("Id") %>' NavigateUrl='<%# $"~/Group2s/Edit.aspx?Id={Eval("Id")}" %>' />
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <asp:Label ID="NameLabel" runat="server" Text="Name:" AssociatedControlID="NameRadTextBox" />
-                                </td>
-                                <td>
-                                    <telerik:RadTextBox ID="NameRadTextBox" runat="server" Text='<%# Bind("Name") %>' MaxLength="1024" Width="500px" />
-                                    <asp:RequiredFieldValidator ID="NameRequiredFieldValidator" runat="server" ControlToValidate="NameRadTextBox" ErrorMessage="The Name field is required." Display="Dynamic" CssClass="Error" ValidationGroup="Group2" />
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <asp:Label ID="DescriptionLabel" runat="server" Text="Description:" AssociatedControlID="DescriptionRadTextBox" />
-                                </td>
-                                <td>
-                                    <telerik:RadTextBox ID="DescriptionRadTextBox" runat="server" Text='<%# Bind("Description") %>' MaxLength="1024" Width="500px" />
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <asp:Label ID="ExpirationOffsetInDaysLabel" runat="server" Text="Expiration Offset In Days:" AssociatedControlID="ExpirationOffsetInDaysRadNumericTextBox" />
-                                </td>
-                                <td>
-                                    <telerik:RadNumericTextBox ID="ExpirationOffsetInDaysRadNumericTextBox" runat="server" DbValue='<%# Bind("ExpirationOffsetInDays") %>' Width="500px" DataType="System.Int32" NumberFormat-DecimalDigits="0" NumberFormat-GroupSeparator="" MaxValue="2147483647" />
-                                </td>
-                            </tr>
-                            <tr runat="server" visible='<%# Eval("CreationTime") != null %>'>
-                                <td>
-                                    <asp:Label ID="CreationTimeLabel" runat="server" Text="Creation Time:" AssociatedControlID="CreationTimeLiteral" />
-                                </td>
-                                <td>
-                                    <asp:Literal ID="CreationTimeLiteral" runat="server" Text='<%# Eval("CreationTime", "{0:g}") %>' />
-                                </td>
-                            </tr>
-                            <tr runat="server" visible='<%# Eval("CreationUser") != null %>'>
-                                <td>
-                                    <asp:HyperLink runat="server" Text="Creation User:" NavigateUrl="~/User2s/Default.aspx" Enabled='<%# Session["User2sPermission"] != null %>' />
-                                </td>
-                                <td>
-                                    <asp:HyperLink ID="CreationUserHyperLink" runat="server" Text='<%# Eval("CreationUser.Username") %>' NavigateUrl='<%# "~/User2s/Edit.aspx?Id=" + Eval("CreationUserId") %>' Enabled='<%# Session["User2sPermission"] != null %>' />
-                                </td>
-                            </tr>
-                            <tr runat="server" visible='<%# Eval("LastWriteTime") != null %>'>
-                                <td>
-                                    <asp:Label ID="LastWriteTimeLabel" runat="server" Text="Last Write Time:" AssociatedControlID="LastWriteTimeLiteral" />
-                                </td>
-                                <td>
-                                    <asp:Literal ID="LastWriteTimeLiteral" runat="server" Text='<%# Eval("LastWriteTime", "{0:g}") %>' />
-                                </td>
-                            </tr>
-                            <tr runat="server" visible='<%# Eval("LastWriteUser") != null %>'>
-                                <td>
-                                    <asp:HyperLink runat="server" Text="Last Write User:" NavigateUrl="~/User2s/Default.aspx" Enabled='<%# Session["User2sPermission"] != null %>' />
-                                </td>
-                                <td>
-                                    <asp:HyperLink ID="LastWriteUserHyperLink" runat="server" Text='<%# Eval("LastWriteUser.Username") %>' NavigateUrl='<%# "~/User2s/Edit.aspx?Id=" + Eval("LastWriteUserId") %>' Enabled='<%# Session["User2sPermission"] != null %>' />
-                                </td>
-                            </tr>
-                            <tr runat="server" visible='<%# Eval("Content") != null %>'>
-                                <td>
-                                    <asp:Label ID="ContentLabel" runat="server" Text="Content:" AssociatedControlID="ContentLiteral" />
-                                </td>
-                                <td>
-                                    <pre><asp:Literal ID="ContentLiteral" runat="server" Text='<%#: Eval("Content") %>' /></pre>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                </td>
-                                <td>
-                                    <telerik:RadButton ID="InsertUpdateRadButton" runat="server" Text='<%# Group2FormView.DataKey.Value == null  ? "Insert" : "Update" %>' CommandName="Update" ValidationGroup="Group2" />
-                                    <telerik:RadButton ID="CancelRadButton" runat="server" Text="Cancel" CommandName="Cancel" CausesValidation="false" />
-                                    <script type="text/javascript">
-                                        function DeleteRadButton_OnClientClicked(button, args) {
-                                            button.set_autoPostBack(confirm('Are you sure you want to delete this group?'));
-                                        }
-                                    </script>
-                                    <telerik:RadButton ID="DeleteRadButton" runat="server" Text="Delete" Visible='<%# Group2FormView.DataKey.Value != null %>' OnClientClicked="DeleteRadButton_OnClientClicked" CausesValidation="false" CommandName="Delete" />
-                                    <asp:CustomValidator ID="DeleteCustomValidator" runat="server" ErrorMessage="Group cannot be deleted because it is being referenced" Display="Dynamic" CssClass="Error" ValidationGroup="Group2" />
-                                    <asp:CustomValidator ID="Group2CustomValidator" runat="server" Display="Dynamic" CssClass="Error" ValidationGroup="Group2" />
-                                </td>
-                            </tr>
-                        </table>
-                    </asp:Panel>
-                </EditItemTemplate>
             </asp:FormView>
         </fieldset>
     </asp:Panel>
@@ -401,11 +301,6 @@
     </asp:Panel>
     <telerik:RadAjaxManager ID="RadAjaxManager1" runat="server">
         <AjaxSettings>
-            <telerik:AjaxSetting AjaxControlID="InsertUpdateRadButton">
-                <UpdatedControls>
-                    <telerik:AjaxUpdatedControl ControlID="Group2Panel" LoadingPanelID="RadAjaxLoadingPanel1" />
-                </UpdatedControls>
-            </telerik:AjaxSetting>
             <telerik:AjaxSetting AjaxControlID="BlockLimit2sRadGrid">
                 <UpdatedControls>
                     <telerik:AjaxUpdatedControl ControlID="BlockLimit2sPanel" LoadingPanelID="RadAjaxLoadingPanel1" />

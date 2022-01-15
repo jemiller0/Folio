@@ -10,10 +10,6 @@ namespace FolioWebApplication
         {
             using (var fsc = new FolioServiceContext())
             {
-                if (!fsc.AnyPermission2s("permissionName == \"uc.groups.edit\"")) fsc.Insert(new Permission2 { Code = "uc.groups.edit", Name = "uc.groups.edit" });
-                if (!fsc.AnyPermission2s("permissionName == \"uc.holdings.edit\"")) fsc.Insert(new Permission2 { Code = "uc.holdings.edit", Name = "uc.holdings.edit" });
-                if (!fsc.AnyPermission2s("permissionName == \"uc.instances.edit\"")) fsc.Insert(new Permission2 { Code = "uc.instances.edit", Name = "uc.instances.edit" });
-                if (!fsc.AnyPermission2s("permissionName == \"uc.items.edit\"")) fsc.Insert(new Permission2 { Code = "uc.items.edit", Name = "uc.items.edit" });
                 if (!fsc.AnyPermission2s("permissionName == \"uc.locationsettings.edit\"")) fsc.Insert(new Permission2 { Code = "uc.locationsettings.edit", Name = "uc.locationsettings.edit" });
                 if (!fsc.AnyPermission2s("permissionName == \"uc.permissions.edit\"")) fsc.Insert(new Permission2 { Code = "uc.permissions.edit", Name = "uc.permissions.edit" });
                 if (!fsc.AnyPermission2s("permissionName == \"uc.printers.edit\"")) fsc.Insert(new Permission2 { Code = "uc.printers.edit", Name = "uc.printers.edit" });
@@ -109,17 +105,17 @@ namespace FolioWebApplication
             Session["ContributorType2sPermission"] = roles.Contains("all") || roles.Contains("inventory.all") || roles.Contains("uc.contributortypes.view") ? "View" : null;
             Session["ElectronicAccessRelationship2sPermission"] = roles.Contains("all") || roles.Contains("inventory.all") || roles.Contains("uc.electronicaccessrelationships.view") ? "View" : null;
             Session["FormatsPermission"] = roles.Contains("all") || roles.Contains("inventory.all") || roles.Contains("uc.formats.view") ? "View" : null;
-            Session["Holding2sPermission"] = roles.Contains("uc.holdings.edit") ? "Edit" : roles.Contains("all") || roles.Contains("inventory.all") || roles.Contains("uc.holdings.view") ? "View" : null;
+            Session["Holding2sPermission"] = roles.Contains("all") || roles.Contains("inventory.all") || roles.Contains("uc.holdings.view") ? "View" : null;
             Session["HoldingNoteType2sPermission"] = roles.Contains("all") || roles.Contains("inventory.all") || roles.Contains("uc.holdingnotetypes.view") ? "View" : null;
             Session["HoldingType2sPermission"] = roles.Contains("all") || roles.Contains("inventory.all") || roles.Contains("uc.holdingtypes.view") ? "View" : null;
             Session["IdType2sPermission"] = roles.Contains("all") || roles.Contains("inventory.all") || roles.Contains("uc.idtypes.view") ? "View" : null;
             Session["IllPolicy2sPermission"] = roles.Contains("all") || roles.Contains("inventory.all") || roles.Contains("uc.illpolicies.view") ? "View" : null;
-            Session["Instance2sPermission"] = roles.Contains("uc.instances.edit") ? "Edit" : roles.Contains("all") || roles.Contains("inventory.all") || roles.Contains("uc.instances.view") ? "View" : null;
+            Session["Instance2sPermission"] = roles.Contains("all") || roles.Contains("inventory.all") || roles.Contains("uc.instances.view") ? "View" : null;
             Session["InstanceNoteType2sPermission"] = roles.Contains("all") || roles.Contains("inventory.all") || roles.Contains("uc.instancenotetypes.view") ? "View" : null;
             Session["InstanceType2sPermission"] = roles.Contains("all") || roles.Contains("inventory.all") || roles.Contains("uc.instancetypes.view") ? "View" : null;
             Session["Institution2sPermission"] = roles.Contains("all") || roles.Contains("inventory.all") || roles.Contains("uc.institutions.view") ? "View" : null;
             Session["IssuanceModesPermission"] = roles.Contains("all") || roles.Contains("inventory.all") || roles.Contains("uc.issuancemodes.view") ? "View" : null;
-            Session["Item2sPermission"] = roles.Contains("uc.items.edit") ? "Edit" : roles.Contains("all") || roles.Contains("inventory.all") || roles.Contains("uc.items.view") ? "View" : null;
+            Session["Item2sPermission"] = roles.Contains("all") || roles.Contains("inventory.all") || roles.Contains("uc.items.view") ? "View" : null;
             Session["ItemDamagedStatus2sPermission"] = roles.Contains("all") || roles.Contains("inventory.all") || roles.Contains("uc.itemdamagedstatuses.view") ? "View" : null;
             Session["ItemNoteType2sPermission"] = roles.Contains("all") || roles.Contains("inventory.all") || roles.Contains("uc.itemnotetypes.view") ? "View" : null;
             Session["Library2sPermission"] = roles.Contains("all") || roles.Contains("inventory.all") || roles.Contains("uc.libraries.view") ? "View" : null;
@@ -198,7 +194,7 @@ namespace FolioWebApplication
             Session["BlockLimit2sPermission"] = roles.Contains("all") || roles.Contains("uc.blocklimits.view") || roles.Contains("users.all") ? "View" : null;
             Session["CustomField2sPermission"] = roles.Contains("all") || roles.Contains("uc.customfields.view") || roles.Contains("users.all") ? "View" : null;
             Session["Department2sPermission"] = roles.Contains("all") || roles.Contains("uc.departments.view") || roles.Contains("users.all") ? "View" : null;
-            Session["Group2sPermission"] = roles.Contains("uc.groups.edit") ? "Edit" : roles.Contains("all") || roles.Contains("uc.groups.view") || roles.Contains("users.all") ? "View" : null;
+            Session["Group2sPermission"] = roles.Contains("all") || roles.Contains("uc.groups.view") || roles.Contains("users.all") ? "View" : null;
             Session["Proxy2sPermission"] = roles.Contains("all") || roles.Contains("uc.proxies.view") || roles.Contains("users.all") ? "View" : null;
             Session["User2sPermission"] = roles.Contains("uc.users.edit") ? "Edit" : roles.Contains("all") || roles.Contains("uc.users.view") || roles.Contains("users.all") ? "View" : null;
         }

@@ -4,8 +4,6 @@ using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.Linq;
-using System.Web.UI.WebControls;
 using Telerik.Web.UI;
 
 namespace FolioWebApplication.Holding2s
@@ -28,135 +26,11 @@ namespace FolioWebApplication.Holding2s
         protected void Holding2FormView_DataBinding(object sender, EventArgs e)
         {
             var id = Request.QueryString["Id"] != null ? (Guid?)Guid.Parse(Request.QueryString["Id"]) : null;
-            var h2 = id == null && (string)Session["Holding2sPermission"] == "Edit" ? new Holding2() : folioServiceContext.FindHolding2(id, true);
+            var h2 = folioServiceContext.FindHolding2(id, true);
             if (h2 == null) Response.Redirect("Default.aspx");
             h2.Content = h2.Content != null ? JsonConvert.DeserializeObject<JToken>(h2.Content, new JsonSerializerSettings { DateTimeZoneHandling = DateTimeZoneHandling.Local }).ToString() : null;
             Holding2FormView.DataSource = new[] { h2 };
             Title = $"Holding {h2.ShortId}";
-        }
-
-        protected void HoldingTypeRadComboBox_DataBinding(object sender, EventArgs e)
-        {
-            var rcb = (RadComboBox)sender;
-            rcb.DataSource = folioServiceContext.HoldingType2s(orderBy: "name").ToArray();
-        }
-
-        protected void InstanceRadComboBox_DataBinding(object sender, EventArgs e)
-        {
-            var rcb = (RadComboBox)sender;
-            if (rcb.SelectedValue != "")
-            {
-                var id = Guid.Parse(rcb.SelectedValue);
-                var i2 = folioServiceContext.FindInstance2(id);
-                rcb.Items.Add(new RadComboBoxItem(i2.Title, i2.Id.ToString()));
-            }
-        }
-
-        protected void InstanceRadComboBox_ItemsRequested(object sender, RadComboBoxItemsRequestedEventArgs e)
-        {
-            var rcb = (RadComboBox)sender;
-            foreach (var i2 in folioServiceContext.Instance2s($"title == \"{FolioServiceClient.EncodeCql(e.Text)}*\"", take: 100).OrderBy(i2 => i2.Title)) rcb.Items.Add(new RadComboBoxItem(i2.Title, i2.Id.ToString()));
-        }
-
-        protected void InstanceCustomValidator_ServerValidate(object sender, ServerValidateEventArgs args) => args.IsValid = folioServiceContext.AnyInstance2s($"title = \"{FolioServiceClient.EncodeCql(args.Value)}\"");
-
-        protected void LocationRadComboBox_DataBinding(object sender, EventArgs e)
-        {
-            var rcb = (RadComboBox)sender;
-            rcb.DataSource = folioServiceContext.Location2s(orderBy: "name").ToArray();
-        }
-
-        protected void TemporaryLocationRadComboBox_DataBinding(object sender, EventArgs e)
-        {
-            var rcb = (RadComboBox)sender;
-            rcb.DataSource = folioServiceContext.Location2s(orderBy: "name").ToArray();
-        }
-
-        protected void EffectiveLocationRadComboBox_DataBinding(object sender, EventArgs e)
-        {
-            var rcb = (RadComboBox)sender;
-            rcb.DataSource = folioServiceContext.Location2s(orderBy: "name").ToArray();
-        }
-
-        protected void CallNumberTypeRadComboBox_DataBinding(object sender, EventArgs e)
-        {
-            var rcb = (RadComboBox)sender;
-            rcb.DataSource = folioServiceContext.CallNumberType2s(orderBy: "name").ToArray();
-        }
-
-        protected void IllPolicyRadComboBox_DataBinding(object sender, EventArgs e)
-        {
-            var rcb = (RadComboBox)sender;
-            rcb.DataSource = folioServiceContext.IllPolicy2s(orderBy: "name").ToArray();
-        }
-
-        protected void SourceRadComboBox_DataBinding(object sender, EventArgs e)
-        {
-            var rcb = (RadComboBox)sender;
-            rcb.DataSource = folioServiceContext.Source2s(orderBy: "name").ToArray();
-        }
-
-        protected void Holding2FormView_ItemUpdating(object sender, FormViewUpdateEventArgs e)
-        {
-            var id = (Guid?)Holding2FormView.DataKey.Value;
-            var h2 = id != null ? folioServiceContext.FindHolding2(id) : new Holding2 { Id = Guid.NewGuid(), CreationTime = DateTime.Now, CreationUserId = (Guid?)Session["UserId"] };
-            h2.Version = (int?)e.NewValues["Version"];
-            h2.HoldingTypeId = (string)e.NewValues["HoldingTypeId"] != "" ? (Guid?)Guid.Parse((string)e.NewValues["HoldingTypeId"]) : null;
-            if ((string)e.NewValues["InstanceId"] == "")
-            {
-                var rfv = (RequiredFieldValidator)Holding2FormView.FindControl("InstanceRequiredFieldValidator");
-                rfv.IsValid = false;
-                e.Cancel = true;
-                return;
-            }
-            h2.InstanceId = (Guid?)Guid.Parse((string)e.NewValues["InstanceId"]);
-            h2.LocationId = (Guid?)Guid.Parse((string)e.NewValues["LocationId"]);
-            h2.TemporaryLocationId = (string)e.NewValues["TemporaryLocationId"] != "" ? (Guid?)Guid.Parse((string)e.NewValues["TemporaryLocationId"]) : null;
-            h2.EffectiveLocationId = (string)e.NewValues["EffectiveLocationId"] != "" ? (Guid?)Guid.Parse((string)e.NewValues["EffectiveLocationId"]) : null;
-            h2.CallNumberTypeId = (string)e.NewValues["CallNumberTypeId"] != "" ? (Guid?)Guid.Parse((string)e.NewValues["CallNumberTypeId"]) : null;
-            h2.CallNumberPrefix = Global.Trim((string)e.NewValues["CallNumberPrefix"]);
-            h2.CallNumber = Global.Trim((string)e.NewValues["CallNumber"]);
-            h2.CallNumberSuffix = Global.Trim((string)e.NewValues["CallNumberSuffix"]);
-            h2.ShelvingTitle = Global.Trim((string)e.NewValues["ShelvingTitle"]);
-            h2.AcquisitionFormat = Global.Trim((string)e.NewValues["AcquisitionFormat"]);
-            h2.AcquisitionMethod = Global.Trim((string)e.NewValues["AcquisitionMethod"]);
-            h2.ReceiptStatus = Global.Trim((string)e.NewValues["ReceiptStatus"]);
-            h2.IllPolicyId = (string)e.NewValues["IllPolicyId"] != "" ? (Guid?)Guid.Parse((string)e.NewValues["IllPolicyId"]) : null;
-            h2.RetentionPolicy = Global.Trim((string)e.NewValues["RetentionPolicy"]);
-            h2.DigitizationPolicy = Global.Trim((string)e.NewValues["DigitizationPolicy"]);
-            h2.CopyNumber = Global.Trim((string)e.NewValues["CopyNumber"]);
-            h2.ItemCount = Global.Trim((string)e.NewValues["ItemCount"]);
-            h2.ReceivingHistoryDisplayType = Global.Trim((string)e.NewValues["ReceivingHistoryDisplayType"]);
-            h2.DiscoverySuppress = (bool?)e.NewValues["DiscoverySuppress"];
-            h2.SourceId = (string)e.NewValues["SourceId"] != "" ? (Guid?)Guid.Parse((string)e.NewValues["SourceId"]) : null;
-            h2.LastWriteTime = DateTime.Now;
-            h2.LastWriteUserId = (Guid?)Session["UserId"];
-            if (id == null) folioServiceContext.Insert(h2); else folioServiceContext.Update(h2);
-            if (id == null) Response.Redirect($"Edit.aspx?Id={h2.Id}"); else Response.Redirect("Default.aspx");
-        }
-
-        protected void Holding2FormView_ItemCommand(object sender, FormViewCommandEventArgs e)
-        {
-            if (e.CommandName == "Cancel") Response.Redirect("Default.aspx");
-        }
-
-        protected void Holding2FormView_ItemDeleting(object sender, FormViewDeleteEventArgs e)
-        {
-            var id = (Guid?)Holding2FormView.DataKey.Value;
-            try
-            {
-                if (folioServiceContext.AnyBoundWithPart2s($"holdingsRecordId == \"{id}\"")) throw new Exception("Holding cannot be deleted because it is being referenced by a bound with part");
-                if (folioServiceContext.AnyFee2s($"holdingsRecordId == \"{id}\"")) throw new Exception("Holding cannot be deleted because it is being referenced by a fee");
-                if (folioServiceContext.AnyItem2s($"holdingsRecordId == \"{id}\"")) throw new Exception("Holding cannot be deleted because it is being referenced by a item");
-                if (folioServiceContext.AnyReceiving2s($"holdingId == \"{id}\"")) throw new Exception("Holding cannot be deleted because it is being referenced by a receiving");
-                folioServiceContext.DeleteHolding2(id);
-                Response.Redirect("Default.aspx");
-            }
-            catch (Exception)
-            {
-                var cv = (CustomValidator)((FormView)sender).FindControl("DeleteCustomValidator");
-                cv.IsValid = false;
-            }
         }
 
         protected void BoundWithPart2sRadGrid_NeedDataSource(object sender, GridNeedDataSourceEventArgs e)
@@ -189,15 +63,6 @@ namespace FolioWebApplication.Holding2s
             }
         }
 
-        protected void Item2sRadGrid_ItemCommand(object sender, GridCommandEventArgs e)
-        {
-            if (e.CommandName == "InitInsert")
-            {
-                e.Item.OwnerTableView.InsertItem(new Item2());
-                e.Canceled = true;
-            }
-        }
-
         protected void Item2sRadGrid_NeedDataSource(object sender, GridNeedDataSourceEventArgs e)
         {
             if (Session["Item2sPermission"] == null) return;
@@ -209,152 +74,8 @@ namespace FolioWebApplication.Holding2s
             if (Item2sRadGrid.MasterTableView.FilterExpression == "")
             {
                 Item2sRadGrid.AllowFilteringByColumn = Item2sRadGrid.VirtualItemCount > 10;
-                Item2sPanel.Visible = Holding2FormView.DataKey.Value != null && ((string)Session["Item2sPermission"] == "Edit" || Session["Item2sPermission"] != null && Item2sRadGrid.VirtualItemCount > 0);
+                Item2sPanel.Visible = Holding2FormView.DataKey.Value != null && Session["Item2sPermission"] != null && Item2sRadGrid.VirtualItemCount > 0;
             }
-        }
-
-        protected void Item2sRadGrid_UpdateCommand(object sender, GridCommandEventArgs e)
-        {
-            var gei = (GridEditableItem)e.Item;
-            var id = gei is GridEditFormInsertItem ? null : (Guid?)gei.GetDataKeyValue("Id");
-            var d = new Dictionary<string, object>();
-            gei.ExtractValues(d);
-            var i2 = id != null ? folioServiceContext.FindItem2(id) : new Item2 { Id = Guid.NewGuid(), CreationTime = DateTime.Now, CreationUserId = (Guid?)Session["UserId"] };
-            i2.Version = (int?)d["Version"];
-            i2.DiscoverySuppress = (bool?)d["DiscoverySuppress"];
-            i2.AccessionNumber = Global.Trim((string)d["AccessionNumber"]);
-            i2.Barcode = Global.Trim((string)d["Barcode"]);
-            i2.CallNumber = Global.Trim((string)d["CallNumber"]);
-            i2.CallNumberPrefix = Global.Trim((string)d["CallNumberPrefix"]);
-            i2.CallNumberSuffix = Global.Trim((string)d["CallNumberSuffix"]);
-            i2.CallNumberTypeId = (string)d["CallNumberTypeId"] != "" ? (Guid?)Guid.Parse((string)d["CallNumberTypeId"]) : null;
-            i2.Volume = Global.Trim((string)d["Volume"]);
-            i2.Enumeration = Global.Trim((string)d["Enumeration"]);
-            i2.Chronology = Global.Trim((string)d["Chronology"]);
-            i2.ItemIdentifier = Global.Trim((string)d["ItemIdentifier"]);
-            i2.CopyNumber = Global.Trim((string)d["CopyNumber"]);
-            i2.PiecesCount = Global.Trim((string)d["PiecesCount"]);
-            i2.PiecesDescription = Global.Trim((string)d["PiecesDescription"]);
-            i2.MissingPiecesCount = Global.Trim((string)d["MissingPiecesCount"]);
-            i2.MissingPiecesDescription = Global.Trim((string)d["MissingPiecesDescription"]);
-            i2.MissingPiecesTime = (DateTime?)d["MissingPiecesTime"];
-            i2.DamagedStatusId = (string)d["DamagedStatusId"] != "" ? (Guid?)Guid.Parse((string)d["DamagedStatusId"]) : null;
-            i2.DamagedStatusTime = (DateTime?)d["DamagedStatusTime"];
-            i2.StatusName = Global.Trim((string)d["StatusName"]);
-            i2.MaterialTypeId = (Guid?)Guid.Parse((string)d["MaterialTypeId"]);
-            i2.PermanentLoanTypeId = (Guid?)Guid.Parse((string)d["PermanentLoanTypeId"]);
-            i2.TemporaryLoanTypeId = (string)d["TemporaryLoanTypeId"] != "" ? (Guid?)Guid.Parse((string)d["TemporaryLoanTypeId"]) : null;
-            i2.PermanentLocationId = (string)d["PermanentLocationId"] != "" ? (Guid?)Guid.Parse((string)d["PermanentLocationId"]) : null;
-            i2.TemporaryLocationId = (string)d["TemporaryLocationId"] != "" ? (Guid?)Guid.Parse((string)d["TemporaryLocationId"]) : null;
-            i2.InTransitDestinationServicePointId = (string)d["InTransitDestinationServicePointId"] != "" ? (Guid?)Guid.Parse((string)d["InTransitDestinationServicePointId"]) : null;
-            i2.OrderItemId = (string)d["OrderItemId"] != "" ? (Guid?)Guid.Parse((string)d["OrderItemId"]) : null;
-            i2.LastCheckInDateTime = (DateTime?)d["LastCheckInDateTime"];
-            i2.LastCheckInServicePointId = (string)d["LastCheckInServicePointId"] != "" ? (Guid?)Guid.Parse((string)d["LastCheckInServicePointId"]) : null;
-            i2.LastWriteTime = DateTime.Now;
-            i2.LastWriteUserId = (Guid?)Session["UserId"];
-            if (id == null) folioServiceContext.Insert(i2); else folioServiceContext.Update(i2);
-        }
-
-        protected void Item2sRadGrid_DeleteCommand(object sender, GridCommandEventArgs e)
-        {
-            var gei = (GridEditableItem)e.Item;
-            var id = (Guid?)gei.GetDataKeyValue("Id");
-            try
-            {
-                if (folioServiceContext.AnyBoundWithPart2s($"itemId == \"{id}\"")) throw new Exception("Item cannot be deleted because it is being referenced by a bound with part");
-                if (folioServiceContext.AnyCheckIn2s($"itemId == \"{id}\"")) throw new Exception("Item cannot be deleted because it is being referenced by a check in");
-                if (folioServiceContext.AnyFee2s($"itemId == \"{id}\"")) throw new Exception("Item cannot be deleted because it is being referenced by a fee");
-                if (folioServiceContext.AnyLoan2s($"itemId == \"{id}\"")) throw new Exception("Item cannot be deleted because it is being referenced by a loan");
-                if (folioServiceContext.AnyReceiving2s($"itemId == \"{id}\"")) throw new Exception("Item cannot be deleted because it is being referenced by a receiving");
-                if (folioServiceContext.AnyRequest2s($"itemId == \"{id}\"")) throw new Exception("Item cannot be deleted because it is being referenced by a request");
-                folioServiceContext.DeleteItem2(id);
-                Response.Redirect("Default.aspx");
-            }
-            catch (Exception)
-            {
-                var cv = (CustomValidator)gei.FindControl("DeleteCustomValidator");
-                cv.IsValid = false;
-                e.Canceled = true;
-            }
-        }
-
-        protected void Item2sCallNumberTypeRadComboBox_DataBinding(object sender, EventArgs e)
-        {
-            var rcb = (RadComboBox)sender;
-            rcb.DataSource = folioServiceContext.CallNumberType2s(orderBy: "name").ToArray();
-        }
-
-        protected void Item2sDamagedStatusRadComboBox_DataBinding(object sender, EventArgs e)
-        {
-            var rcb = (RadComboBox)sender;
-            rcb.DataSource = folioServiceContext.ItemDamagedStatus2s(orderBy: "name").ToArray();
-        }
-
-        protected void Item2sStatusNameRadComboBox_DataBinding(object sender, EventArgs e)
-        {
-            var rcb = (RadComboBox)sender;
-            rcb.DataSource = new string[] { "Aged to lost", "Available", "Awaiting pickup", "Awaiting delivery", "Checked out", "Claimed returned", "Declared lost", "In process", "In process (non-requestable)", "In transit", "Intellectual item", "Long missing", "Lost and paid", "Missing", "On order", "Paged", "Restricted", "Order closed", "Unavailable", "Unknown", "Withdrawn" };
-        }
-
-        protected void Item2sMaterialTypeRadComboBox_DataBinding(object sender, EventArgs e)
-        {
-            var rcb = (RadComboBox)sender;
-            rcb.DataSource = folioServiceContext.MaterialType2s(orderBy: "name").ToArray();
-        }
-
-        protected void Item2sPermanentLoanTypeRadComboBox_DataBinding(object sender, EventArgs e)
-        {
-            var rcb = (RadComboBox)sender;
-            rcb.DataSource = folioServiceContext.LoanType2s(orderBy: "name").ToArray();
-        }
-
-        protected void Item2sTemporaryLoanTypeRadComboBox_DataBinding(object sender, EventArgs e)
-        {
-            var rcb = (RadComboBox)sender;
-            rcb.DataSource = folioServiceContext.LoanType2s(orderBy: "name").ToArray();
-        }
-
-        protected void Item2sPermanentLocationRadComboBox_DataBinding(object sender, EventArgs e)
-        {
-            var rcb = (RadComboBox)sender;
-            rcb.DataSource = folioServiceContext.Location2s(orderBy: "name").ToArray();
-        }
-
-        protected void Item2sTemporaryLocationRadComboBox_DataBinding(object sender, EventArgs e)
-        {
-            var rcb = (RadComboBox)sender;
-            rcb.DataSource = folioServiceContext.Location2s(orderBy: "name").ToArray();
-        }
-
-        protected void Item2sInTransitDestinationServicePointRadComboBox_DataBinding(object sender, EventArgs e)
-        {
-            var rcb = (RadComboBox)sender;
-            rcb.DataSource = folioServiceContext.ServicePoint2s(orderBy: "name").ToArray();
-        }
-
-        protected void Item2sOrderItemRadComboBox_DataBinding(object sender, EventArgs e)
-        {
-            var rcb = (RadComboBox)sender;
-            if (rcb.SelectedValue != "")
-            {
-                var id = Guid.Parse(rcb.SelectedValue);
-                var oi2 = folioServiceContext.FindOrderItem2(id);
-                rcb.Items.Add(new RadComboBoxItem(oi2.Number, oi2.Id.ToString()));
-            }
-        }
-
-        protected void Item2sOrderItemRadComboBox_ItemsRequested(object sender, RadComboBoxItemsRequestedEventArgs e)
-        {
-            var rcb = (RadComboBox)sender;
-            foreach (var oi2 in folioServiceContext.OrderItem2s($"poLineNumber == \"{FolioServiceClient.EncodeCql(e.Text)}*\"", take: 100).OrderBy(oi2 => oi2.Number)) rcb.Items.Add(new RadComboBoxItem(oi2.Number, oi2.Id.ToString()));
-        }
-
-        protected void Item2sOrderItemCustomValidator_ServerValidate(object sender, ServerValidateEventArgs args) => args.IsValid = folioServiceContext.AnyOrderItem2s($"poLineNumber = \"{FolioServiceClient.EncodeCql(args.Value)}\"");
-
-        protected void Item2sLastCheckInServicePointRadComboBox_DataBinding(object sender, EventArgs e)
-        {
-            var rcb = (RadComboBox)sender;
-            rcb.DataSource = folioServiceContext.ServicePoint2s(orderBy: "name").ToArray();
         }
 
         protected void Receiving2sRadGrid_NeedDataSource(object sender, GridNeedDataSourceEventArgs e)

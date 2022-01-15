@@ -5,19 +5,13 @@
         <fieldset>
             <legend><asp:HyperLink ID="Holding2sHyperLink" runat="server" Text="Holdings" NavigateUrl="Default.aspx" /></legend>
             <asp:LinkButton ID="ExportLinkButton" runat="server" Text="Export" OnClick="ExportLinkButton_Click" />
-            <telerik:RadGrid ID="Holding2sRadGrid" runat="server" AutoGenerateColumns="false" AllowSorting="true" AllowFilteringByColumn="true" GroupingSettings-CaseSensitive="false" AllowPaging="true" AllowCustomPaging="true" PageSize="100" EnableLinqExpressions="false" OnNeedDataSource="Holding2sRadGrid_NeedDataSource" OnItemCommand="Holding2sRadGrid_ItemCommand" OnDeleteCommand="Holding2sRadGrid_DeleteCommand">
-                <MasterTableView DataKeyNames="Id" PagerStyle-Mode="NextPrevNumericAndAdvanced" NoMasterRecordsText="No holdings found" CommandItemDisplay="Top" CommandItemSettings-ShowAddNewRecordButton='<%# (string)Session["Holding2sPermission"] == "Edit" %>'>
-                    <CommandItemSettings AddNewRecordText="New Holding" />
+            <telerik:RadGrid ID="Holding2sRadGrid" runat="server" AutoGenerateColumns="false" AllowSorting="true" AllowFilteringByColumn="true" GroupingSettings-CaseSensitive="false" AllowPaging="true" AllowCustomPaging="true" PageSize="100" EnableLinqExpressions="false" OnNeedDataSource="Holding2sRadGrid_NeedDataSource">
+                <MasterTableView DataKeyNames="Id" PagerStyle-Mode="NextPrevNumericAndAdvanced" NoMasterRecordsText="No holdings found" CommandItemDisplay="Top">
+                    <CommandItemSettings ShowAddNewRecordButton="false" />
                     <Columns>
                         <telerik:GridTemplateColumn AllowFiltering="false" ItemStyle-Width="0px">
                             <ItemTemplate>
-                                <asp:HyperLink ID="EditViewHyperLink" Text='<%# Session["Holding2sPermission"] %>' NavigateUrl='<%# $"Edit.aspx?Id={Eval("Id")}" %>' runat="server" />
-                            </ItemTemplate>
-                        </telerik:GridTemplateColumn>
-                        <telerik:GridTemplateColumn AllowFiltering="false" ItemStyle-Width="0px">
-                            <ItemTemplate>
-                                <asp:LinkButton ID="DeleteLinkButton" runat="server" Text="Delete" CommandName="Delete" CausesValidation="false" OnClientClick='return confirm("Are you sure you want to delete this holding?")' Visible='<%# (string)Session["Holding2sPermission"] == "Edit" %>' />
-                                <asp:CustomValidator ID="DeleteCustomValidator" runat="server" ErrorMessage="Holding cannot be deleted because it is being referenced" Display="Dynamic" CssClass="Error" />
+                                <asp:HyperLink ID="ViewHyperLink" Text="View" NavigateUrl='<%# $"Edit.aspx?Id={Eval("Id")}" %>' runat="server" />
                             </ItemTemplate>
                         </telerik:GridTemplateColumn>
                         <telerik:GridTemplateColumn HeaderText="Id" DataField="Id" SortExpression="Id" AutoPostBackOnFilter="true" CurrentFilterFunction="EqualTo">

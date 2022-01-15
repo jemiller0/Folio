@@ -5,22 +5,16 @@
         <fieldset>
             <legend><asp:HyperLink ID="Group2sHyperLink" runat="server" Text="Groups" NavigateUrl="Default.aspx" /></legend>
             <asp:LinkButton ID="ExportLinkButton" runat="server" Text="Export" OnClick="ExportLinkButton_Click" />
-            <telerik:RadGrid ID="Group2sRadGrid" runat="server" AutoGenerateColumns="false" AllowSorting="true" AllowFilteringByColumn="true" GroupingSettings-CaseSensitive="false" AllowPaging="true" AllowCustomPaging="true" PageSize="100" EnableLinqExpressions="false" OnNeedDataSource="Group2sRadGrid_NeedDataSource" OnItemCommand="Group2sRadGrid_ItemCommand" OnDeleteCommand="Group2sRadGrid_DeleteCommand">
-                <MasterTableView DataKeyNames="Id" PagerStyle-Mode="NextPrevNumericAndAdvanced" NoMasterRecordsText="No groups found" CommandItemDisplay="Top" CommandItemSettings-ShowAddNewRecordButton='<%# (string)Session["Group2sPermission"] == "Edit" %>'>
-                    <CommandItemSettings AddNewRecordText="New Group" />
+            <telerik:RadGrid ID="Group2sRadGrid" runat="server" AutoGenerateColumns="false" AllowSorting="true" AllowFilteringByColumn="true" GroupingSettings-CaseSensitive="false" AllowPaging="true" AllowCustomPaging="true" PageSize="100" EnableLinqExpressions="false" OnNeedDataSource="Group2sRadGrid_NeedDataSource">
+                <MasterTableView DataKeyNames="Id" PagerStyle-Mode="NextPrevNumericAndAdvanced" NoMasterRecordsText="No groups found" CommandItemDisplay="Top">
+                    <CommandItemSettings ShowAddNewRecordButton="false" />
                     <SortExpressions>
                         <telerik:GridSortExpression FieldName="LastWriteTime" SortOrder="Descending" />
                     </SortExpressions>
                     <Columns>
                         <telerik:GridTemplateColumn AllowFiltering="false" ItemStyle-Width="0px">
                             <ItemTemplate>
-                                <asp:HyperLink ID="EditViewHyperLink" Text='<%# Session["Group2sPermission"] %>' NavigateUrl='<%# $"Edit.aspx?Id={Eval("Id")}" %>' runat="server" />
-                            </ItemTemplate>
-                        </telerik:GridTemplateColumn>
-                        <telerik:GridTemplateColumn AllowFiltering="false" ItemStyle-Width="0px">
-                            <ItemTemplate>
-                                <asp:LinkButton ID="DeleteLinkButton" runat="server" Text="Delete" CommandName="Delete" CausesValidation="false" OnClientClick='return confirm("Are you sure you want to delete this group?")' Visible='<%# (string)Session["Group2sPermission"] == "Edit" %>' />
-                                <asp:CustomValidator ID="DeleteCustomValidator" runat="server" ErrorMessage="Group cannot be deleted because it is being referenced" Display="Dynamic" CssClass="Error" />
+                                <asp:HyperLink ID="ViewHyperLink" Text="View" NavigateUrl='<%# $"Edit.aspx?Id={Eval("Id")}" %>' runat="server" />
                             </ItemTemplate>
                         </telerik:GridTemplateColumn>
                         <telerik:GridTemplateColumn HeaderText="Id" DataField="Id" SortExpression="Id" AutoPostBackOnFilter="true" CurrentFilterFunction="EqualTo">

@@ -44,7 +44,7 @@ namespace FolioWebApplication.Statuses
             if (Instance2sRadGrid.MasterTableView.FilterExpression == "")
             {
                 Instance2sRadGrid.AllowFilteringByColumn = Instance2sRadGrid.VirtualItemCount > 10;
-                Instance2sPanel.Visible = StatusFormView.DataKey.Value != null && ((string)Session["Instance2sPermission"] == "Edit" || Session["Instance2sPermission"] != null && Instance2sRadGrid.VirtualItemCount > 0);
+                Instance2sPanel.Visible = StatusFormView.DataKey.Value != null && Session["Instance2sPermission"] != null && Instance2sRadGrid.VirtualItemCount > 0;
             }
         }
 

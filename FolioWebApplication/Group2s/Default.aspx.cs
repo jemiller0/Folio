@@ -3,7 +3,6 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
-using System.Web.UI.WebControls;
 using Telerik.Web.UI;
 
 namespace FolioWebApplication.Group2s
@@ -21,11 +20,6 @@ namespace FolioWebApplication.Group2s
                 Response.End();
             }
             if (!IsPostBack) DataBind();
-        }
-
-        protected void Group2sRadGrid_ItemCommand(object sender, GridCommandEventArgs e)
-        {
-            if (e.CommandName == "InitInsert") Response.Redirect("Edit.aspx");
         }
 
         protected void Group2sRadGrid_NeedDataSource(object sender, GridNeedDataSourceEventArgs e)
@@ -48,26 +42,6 @@ namespace FolioWebApplication.Group2s
             foreach (var g2 in folioServiceContext.Group2s(Global.GetCqlFilter(Group2sRadGrid, d), Group2sRadGrid.MasterTableView.SortExpressions.Count > 0 ? $"{d[Group2sRadGrid.MasterTableView.SortExpressions[0].FieldName]}{(Group2sRadGrid.MasterTableView.SortExpressions[0].SortOrder == GridSortOrder.Descending ? "/sort.descending" : "")}" : null, load: true))
                 Response.Write($"{g2.Id}\t{Global.TextEncode(g2.Name)}\t{Global.TextEncode(g2.Description)}\t{g2.ExpirationOffsetInDays}\t{g2.CreationTime:M/d/yyyy HH:mm:ss}\t{Global.TextEncode(g2.CreationUser?.Username)}\t{g2.CreationUserId}\t{g2.LastWriteTime:M/d/yyyy HH:mm:ss}\t{Global.TextEncode(g2.LastWriteUser?.Username)}\t{g2.LastWriteUserId}\r\n");
             Response.End();
-        }
-
-        protected void Group2sRadGrid_DeleteCommand(object sender, GridCommandEventArgs e)
-        {
-            var gei = (GridEditableItem)e.Item;
-            var id = (Guid?)gei.GetDataKeyValue("Id");
-            try
-            {
-                if (folioServiceContext.AnyBlockLimit2s($"patronGroupId == \"{id}\"")) throw new Exception("Group cannot be deleted because it is being referenced by a block limit");
-                if (folioServiceContext.AnyLoan2s($"patronGroupIdAtCheckout == \"{id}\"")) throw new Exception("Group cannot be deleted because it is being referenced by a loan");
-                if (folioServiceContext.AnyUser2s($"patronGroup == \"{id}\"")) throw new Exception("Group cannot be deleted because it is being referenced by a user");
-                folioServiceContext.DeleteGroup2(id);
-                Response.Redirect("Default.aspx");
-            }
-            catch (Exception)
-            {
-                var cv = (CustomValidator)gei.FindControl("DeleteCustomValidator");
-                cv.IsValid = false;
-                e.Canceled = true;
-            }
         }
 
         public override void Dispose()

@@ -59,7 +59,7 @@ namespace FolioWebApplication.OrderItem2s
             if (Item2sRadGrid.MasterTableView.FilterExpression == "")
             {
                 Item2sRadGrid.AllowFilteringByColumn = Item2sRadGrid.VirtualItemCount > 10;
-                Item2sPanel.Visible = OrderItem2FormView.DataKey.Value != null && ((string)Session["Item2sPermission"] == "Edit" || Session["Item2sPermission"] != null && Item2sRadGrid.VirtualItemCount > 0);
+                Item2sPanel.Visible = OrderItem2FormView.DataKey.Value != null && Session["Item2sPermission"] != null && Item2sRadGrid.VirtualItemCount > 0;
             }
         }
 

@@ -44,7 +44,7 @@ namespace FolioWebApplication.Source2s
             if (Holding2sRadGrid.MasterTableView.FilterExpression == "")
             {
                 Holding2sRadGrid.AllowFilteringByColumn = Holding2sRadGrid.VirtualItemCount > 10;
-                Holding2sPanel.Visible = Source2FormView.DataKey.Value != null && ((string)Session["Holding2sPermission"] == "Edit" || Session["Holding2sPermission"] != null && Holding2sRadGrid.VirtualItemCount > 0);
+                Holding2sPanel.Visible = Source2FormView.DataKey.Value != null && Session["Holding2sPermission"] != null && Holding2sRadGrid.VirtualItemCount > 0;
             }
         }
 
