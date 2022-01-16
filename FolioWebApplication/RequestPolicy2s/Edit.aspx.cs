@@ -39,7 +39,7 @@ namespace FolioWebApplication.RequestPolicy2s
             if (Session["RequestPolicyRequestTypesPermission"] == null) return;
             var id = (Guid?)RequestPolicy2FormView.DataKey.Value;
             if (id == null) return;
-            var l = folioServiceContext.FindRequestPolicy2(id).RequestPolicyRequestTypes ?? new RequestPolicyRequestType[] { };
+            var l = folioServiceContext.FindRequestPolicy2(id, true).RequestPolicyRequestTypes ?? new RequestPolicyRequestType[] { };
             RequestPolicyRequestTypesRadGrid.DataSource = l;
             RequestPolicyRequestTypesRadGrid.AllowFilteringByColumn = l.Count() > 10;
             RequestPolicyRequestTypesPanel.Visible = RequestPolicy2FormView.DataKey.Value != null && ((string)Session["RequestPolicyRequestTypesPermission"] == "Edit" || Session["RequestPolicyRequestTypesPermission"] != null && l.Any());

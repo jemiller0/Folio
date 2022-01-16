@@ -39,7 +39,7 @@ namespace FolioWebApplication.FixedDueDateSchedule2s
             if (Session["FixedDueDateScheduleSchedulesPermission"] == null) return;
             var id = (Guid?)FixedDueDateSchedule2FormView.DataKey.Value;
             if (id == null) return;
-            var l = folioServiceContext.FindFixedDueDateSchedule2(id).FixedDueDateScheduleSchedules ?? new FixedDueDateScheduleSchedule[] { };
+            var l = folioServiceContext.FindFixedDueDateSchedule2(id, true).FixedDueDateScheduleSchedules ?? new FixedDueDateScheduleSchedule[] { };
             FixedDueDateScheduleSchedulesRadGrid.DataSource = l;
             FixedDueDateScheduleSchedulesRadGrid.AllowFilteringByColumn = l.Count() > 10;
             FixedDueDateScheduleSchedulesPanel.Visible = FixedDueDateSchedule2FormView.DataKey.Value != null && ((string)Session["FixedDueDateScheduleSchedulesPermission"] == "Edit" || Session["FixedDueDateScheduleSchedulesPermission"] != null && l.Any());

@@ -69,7 +69,7 @@ namespace FolioWebApplication.FiscalYear2s
             if (Session["FiscalYearAcquisitionsUnitsPermission"] == null) return;
             var id = (Guid?)FiscalYear2FormView.DataKey.Value;
             if (id == null) return;
-            var l = folioServiceContext.FindFiscalYear2(id).FiscalYearAcquisitionsUnits ?? new FiscalYearAcquisitionsUnit[] { };
+            var l = folioServiceContext.FindFiscalYear2(id, true).FiscalYearAcquisitionsUnits ?? new FiscalYearAcquisitionsUnit[] { };
             FiscalYearAcquisitionsUnitsRadGrid.DataSource = l;
             FiscalYearAcquisitionsUnitsRadGrid.AllowFilteringByColumn = l.Count() > 10;
             FiscalYearAcquisitionsUnitsPanel.Visible = FiscalYear2FormView.DataKey.Value != null && ((string)Session["FiscalYearAcquisitionsUnitsPermission"] == "Edit" || Session["FiscalYearAcquisitionsUnitsPermission"] != null && l.Any());

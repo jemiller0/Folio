@@ -39,7 +39,7 @@ namespace FolioWebApplication.Instance2s
             if (Session["AlternativeTitlesPermission"] == null) return;
             var id = (Guid?)Instance2FormView.DataKey.Value;
             if (id == null) return;
-            var l = folioServiceContext.FindInstance2(id).AlternativeTitles ?? new AlternativeTitle[] { };
+            var l = folioServiceContext.FindInstance2(id, true).AlternativeTitles ?? new AlternativeTitle[] { };
             AlternativeTitlesRadGrid.DataSource = l;
             AlternativeTitlesRadGrid.AllowFilteringByColumn = l.Count() > 10;
             AlternativeTitlesPanel.Visible = Instance2FormView.DataKey.Value != null && ((string)Session["AlternativeTitlesPermission"] == "Edit" || Session["AlternativeTitlesPermission"] != null && l.Any());
@@ -50,7 +50,7 @@ namespace FolioWebApplication.Instance2s
             if (Session["ClassificationsPermission"] == null) return;
             var id = (Guid?)Instance2FormView.DataKey.Value;
             if (id == null) return;
-            var l = folioServiceContext.FindInstance2(id).Classifications ?? new Classification[] { };
+            var l = folioServiceContext.FindInstance2(id, true).Classifications ?? new Classification[] { };
             ClassificationsRadGrid.DataSource = l;
             ClassificationsRadGrid.AllowFilteringByColumn = l.Count() > 10;
             ClassificationsPanel.Visible = Instance2FormView.DataKey.Value != null && ((string)Session["ClassificationsPermission"] == "Edit" || Session["ClassificationsPermission"] != null && l.Any());
@@ -61,7 +61,7 @@ namespace FolioWebApplication.Instance2s
             if (Session["ContributorsPermission"] == null) return;
             var id = (Guid?)Instance2FormView.DataKey.Value;
             if (id == null) return;
-            var l = folioServiceContext.FindInstance2(id).Contributors ?? new Contributor[] { };
+            var l = folioServiceContext.FindInstance2(id, true).Contributors ?? new Contributor[] { };
             ContributorsRadGrid.DataSource = l;
             ContributorsRadGrid.AllowFilteringByColumn = l.Count() > 10;
             ContributorsPanel.Visible = Instance2FormView.DataKey.Value != null && ((string)Session["ContributorsPermission"] == "Edit" || Session["ContributorsPermission"] != null && l.Any());
@@ -72,7 +72,7 @@ namespace FolioWebApplication.Instance2s
             if (Session["EditionsPermission"] == null) return;
             var id = (Guid?)Instance2FormView.DataKey.Value;
             if (id == null) return;
-            var l = folioServiceContext.FindInstance2(id).Editions ?? new Edition[] { };
+            var l = folioServiceContext.FindInstance2(id, true).Editions ?? new Edition[] { };
             EditionsRadGrid.DataSource = l;
             EditionsRadGrid.AllowFilteringByColumn = l.Count() > 10;
             EditionsPanel.Visible = Instance2FormView.DataKey.Value != null && ((string)Session["EditionsPermission"] == "Edit" || Session["EditionsPermission"] != null && l.Any());
@@ -83,7 +83,7 @@ namespace FolioWebApplication.Instance2s
             if (Session["ElectronicAccessesPermission"] == null) return;
             var id = (Guid?)Instance2FormView.DataKey.Value;
             if (id == null) return;
-            var l = folioServiceContext.FindInstance2(id).ElectronicAccesses ?? new ElectronicAccess[] { };
+            var l = folioServiceContext.FindInstance2(id, true).ElectronicAccesses ?? new ElectronicAccess[] { };
             ElectronicAccessesRadGrid.DataSource = l;
             ElectronicAccessesRadGrid.AllowFilteringByColumn = l.Count() > 10;
             ElectronicAccessesPanel.Visible = Instance2FormView.DataKey.Value != null && ((string)Session["ElectronicAccessesPermission"] == "Edit" || Session["ElectronicAccessesPermission"] != null && l.Any());
@@ -138,7 +138,7 @@ namespace FolioWebApplication.Instance2s
             if (Session["IdentifiersPermission"] == null) return;
             var id = (Guid?)Instance2FormView.DataKey.Value;
             if (id == null) return;
-            var l = folioServiceContext.FindInstance2(id).Identifiers ?? new Identifier[] { };
+            var l = folioServiceContext.FindInstance2(id, true).Identifiers ?? new Identifier[] { };
             IdentifiersRadGrid.DataSource = l;
             IdentifiersRadGrid.AllowFilteringByColumn = l.Count() > 10;
             IdentifiersPanel.Visible = Instance2FormView.DataKey.Value != null && ((string)Session["IdentifiersPermission"] == "Edit" || Session["IdentifiersPermission"] != null && l.Any());
@@ -149,7 +149,7 @@ namespace FolioWebApplication.Instance2s
             if (Session["InstanceFormat2sPermission"] == null) return;
             var id = (Guid?)Instance2FormView.DataKey.Value;
             if (id == null) return;
-            var l = folioServiceContext.FindInstance2(id).InstanceFormat2s ?? new InstanceFormat2[] { };
+            var l = folioServiceContext.FindInstance2(id, true).InstanceFormat2s ?? new InstanceFormat2[] { };
             InstanceFormat2sRadGrid.DataSource = l;
             InstanceFormat2sRadGrid.AllowFilteringByColumn = l.Count() > 10;
             InstanceFormat2sPanel.Visible = Instance2FormView.DataKey.Value != null && ((string)Session["InstanceFormat2sPermission"] == "Edit" || Session["InstanceFormat2sPermission"] != null && l.Any());
@@ -160,7 +160,7 @@ namespace FolioWebApplication.Instance2s
             if (Session["InstanceNatureOfContentTermsPermission"] == null) return;
             var id = (Guid?)Instance2FormView.DataKey.Value;
             if (id == null) return;
-            var l = folioServiceContext.FindInstance2(id).InstanceNatureOfContentTerms ?? new InstanceNatureOfContentTerm[] { };
+            var l = folioServiceContext.FindInstance2(id, true).InstanceNatureOfContentTerms ?? new InstanceNatureOfContentTerm[] { };
             InstanceNatureOfContentTermsRadGrid.DataSource = l;
             InstanceNatureOfContentTermsRadGrid.AllowFilteringByColumn = l.Count() > 10;
             InstanceNatureOfContentTermsPanel.Visible = Instance2FormView.DataKey.Value != null && ((string)Session["InstanceNatureOfContentTermsPermission"] == "Edit" || Session["InstanceNatureOfContentTermsPermission"] != null && l.Any());
@@ -171,7 +171,7 @@ namespace FolioWebApplication.Instance2s
             if (Session["InstanceStatisticalCodesPermission"] == null) return;
             var id = (Guid?)Instance2FormView.DataKey.Value;
             if (id == null) return;
-            var l = folioServiceContext.FindInstance2(id).InstanceStatisticalCodes ?? new InstanceStatisticalCode[] { };
+            var l = folioServiceContext.FindInstance2(id, true).InstanceStatisticalCodes ?? new InstanceStatisticalCode[] { };
             InstanceStatisticalCodesRadGrid.DataSource = l;
             InstanceStatisticalCodesRadGrid.AllowFilteringByColumn = l.Count() > 10;
             InstanceStatisticalCodesPanel.Visible = Instance2FormView.DataKey.Value != null && ((string)Session["InstanceStatisticalCodesPermission"] == "Edit" || Session["InstanceStatisticalCodesPermission"] != null && l.Any());
@@ -182,7 +182,7 @@ namespace FolioWebApplication.Instance2s
             if (Session["InstanceTagsPermission"] == null) return;
             var id = (Guid?)Instance2FormView.DataKey.Value;
             if (id == null) return;
-            var l = folioServiceContext.FindInstance2(id).InstanceTags ?? new InstanceTag[] { };
+            var l = folioServiceContext.FindInstance2(id, true).InstanceTags ?? new InstanceTag[] { };
             InstanceTagsRadGrid.DataSource = l;
             InstanceTagsRadGrid.AllowFilteringByColumn = l.Count() > 10;
             InstanceTagsPanel.Visible = Instance2FormView.DataKey.Value != null && ((string)Session["InstanceTagsPermission"] == "Edit" || Session["InstanceTagsPermission"] != null && l.Any());
@@ -193,7 +193,7 @@ namespace FolioWebApplication.Instance2s
             if (Session["LanguagesPermission"] == null) return;
             var id = (Guid?)Instance2FormView.DataKey.Value;
             if (id == null) return;
-            var l = folioServiceContext.FindInstance2(id).Languages ?? new Language[] { };
+            var l = folioServiceContext.FindInstance2(id, true).Languages ?? new Language[] { };
             LanguagesRadGrid.DataSource = l;
             LanguagesRadGrid.AllowFilteringByColumn = l.Count() > 10;
             LanguagesPanel.Visible = Instance2FormView.DataKey.Value != null && ((string)Session["LanguagesPermission"] == "Edit" || Session["LanguagesPermission"] != null && l.Any());
@@ -204,7 +204,7 @@ namespace FolioWebApplication.Instance2s
             if (Session["Note2sPermission"] == null) return;
             var id = (Guid?)Instance2FormView.DataKey.Value;
             if (id == null) return;
-            var l = folioServiceContext.FindInstance2(id).Note2s ?? new Note2[] { };
+            var l = folioServiceContext.FindInstance2(id, true).Note2s ?? new Note2[] { };
             Note2sRadGrid.DataSource = l;
             Note2sRadGrid.AllowFilteringByColumn = l.Count() > 10;
             Note2sPanel.Visible = Instance2FormView.DataKey.Value != null && ((string)Session["Note2sPermission"] == "Edit" || Session["Note2sPermission"] != null && l.Any());
@@ -230,7 +230,7 @@ namespace FolioWebApplication.Instance2s
             if (Session["PhysicalDescriptionsPermission"] == null) return;
             var id = (Guid?)Instance2FormView.DataKey.Value;
             if (id == null) return;
-            var l = folioServiceContext.FindInstance2(id).PhysicalDescriptions ?? new PhysicalDescription[] { };
+            var l = folioServiceContext.FindInstance2(id, true).PhysicalDescriptions ?? new PhysicalDescription[] { };
             PhysicalDescriptionsRadGrid.DataSource = l;
             PhysicalDescriptionsRadGrid.AllowFilteringByColumn = l.Count() > 10;
             PhysicalDescriptionsPanel.Visible = Instance2FormView.DataKey.Value != null && ((string)Session["PhysicalDescriptionsPermission"] == "Edit" || Session["PhysicalDescriptionsPermission"] != null && l.Any());
@@ -271,7 +271,7 @@ namespace FolioWebApplication.Instance2s
             if (Session["PublicationFrequenciesPermission"] == null) return;
             var id = (Guid?)Instance2FormView.DataKey.Value;
             if (id == null) return;
-            var l = folioServiceContext.FindInstance2(id).PublicationFrequencies ?? new PublicationFrequency[] { };
+            var l = folioServiceContext.FindInstance2(id, true).PublicationFrequencies ?? new PublicationFrequency[] { };
             PublicationFrequenciesRadGrid.DataSource = l;
             PublicationFrequenciesRadGrid.AllowFilteringByColumn = l.Count() > 10;
             PublicationFrequenciesPanel.Visible = Instance2FormView.DataKey.Value != null && ((string)Session["PublicationFrequenciesPermission"] == "Edit" || Session["PublicationFrequenciesPermission"] != null && l.Any());
@@ -282,7 +282,7 @@ namespace FolioWebApplication.Instance2s
             if (Session["PublicationRangesPermission"] == null) return;
             var id = (Guid?)Instance2FormView.DataKey.Value;
             if (id == null) return;
-            var l = folioServiceContext.FindInstance2(id).PublicationRanges ?? new PublicationRange[] { };
+            var l = folioServiceContext.FindInstance2(id, true).PublicationRanges ?? new PublicationRange[] { };
             PublicationRangesRadGrid.DataSource = l;
             PublicationRangesRadGrid.AllowFilteringByColumn = l.Count() > 10;
             PublicationRangesPanel.Visible = Instance2FormView.DataKey.Value != null && ((string)Session["PublicationRangesPermission"] == "Edit" || Session["PublicationRangesPermission"] != null && l.Any());
@@ -293,7 +293,7 @@ namespace FolioWebApplication.Instance2s
             if (Session["PublicationsPermission"] == null) return;
             var id = (Guid?)Instance2FormView.DataKey.Value;
             if (id == null) return;
-            var l = folioServiceContext.FindInstance2(id).Publications ?? new Publication[] { };
+            var l = folioServiceContext.FindInstance2(id, true).Publications ?? new Publication[] { };
             PublicationsRadGrid.DataSource = l;
             PublicationsRadGrid.AllowFilteringByColumn = l.Count() > 10;
             PublicationsPanel.Visible = Instance2FormView.DataKey.Value != null && ((string)Session["PublicationsPermission"] == "Edit" || Session["PublicationsPermission"] != null && l.Any());
@@ -334,7 +334,7 @@ namespace FolioWebApplication.Instance2s
             if (Session["SeriesPermission"] == null) return;
             var id = (Guid?)Instance2FormView.DataKey.Value;
             if (id == null) return;
-            var l = folioServiceContext.FindInstance2(id).Series ?? new Series[] { };
+            var l = folioServiceContext.FindInstance2(id, true).Series ?? new Series[] { };
             SeriesRadGrid.DataSource = l;
             SeriesRadGrid.AllowFilteringByColumn = l.Count() > 10;
             SeriesPanel.Visible = Instance2FormView.DataKey.Value != null && ((string)Session["SeriesPermission"] == "Edit" || Session["SeriesPermission"] != null && l.Any());
@@ -345,7 +345,7 @@ namespace FolioWebApplication.Instance2s
             if (Session["SubjectsPermission"] == null) return;
             var id = (Guid?)Instance2FormView.DataKey.Value;
             if (id == null) return;
-            var l = folioServiceContext.FindInstance2(id).Subjects ?? new Subject[] { };
+            var l = folioServiceContext.FindInstance2(id, true).Subjects ?? new Subject[] { };
             SubjectsRadGrid.DataSource = l;
             SubjectsRadGrid.AllowFilteringByColumn = l.Count() > 10;
             SubjectsPanel.Visible = Instance2FormView.DataKey.Value != null && ((string)Session["SubjectsPermission"] == "Edit" || Session["SubjectsPermission"] != null && l.Any());

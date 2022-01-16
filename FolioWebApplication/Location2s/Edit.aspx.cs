@@ -159,7 +159,7 @@ namespace FolioWebApplication.Location2s
             if (Session["LocationServicePointsPermission"] == null) return;
             var id = (Guid?)Location2FormView.DataKey.Value;
             if (id == null) return;
-            var l = folioServiceContext.FindLocation2(id).LocationServicePoints ?? new LocationServicePoint[] { };
+            var l = folioServiceContext.FindLocation2(id, true).LocationServicePoints ?? new LocationServicePoint[] { };
             LocationServicePointsRadGrid.DataSource = l;
             LocationServicePointsRadGrid.AllowFilteringByColumn = l.Count() > 10;
             LocationServicePointsPanel.Visible = Location2FormView.DataKey.Value != null && ((string)Session["LocationServicePointsPermission"] == "Edit" || Session["LocationServicePointsPermission"] != null && l.Any());

@@ -54,7 +54,7 @@ namespace FolioWebApplication.Ledger2s
             if (Session["LedgerAcquisitionsUnitsPermission"] == null) return;
             var id = (Guid?)Ledger2FormView.DataKey.Value;
             if (id == null) return;
-            var l = folioServiceContext.FindLedger2(id).LedgerAcquisitionsUnits ?? new LedgerAcquisitionsUnit[] { };
+            var l = folioServiceContext.FindLedger2(id, true).LedgerAcquisitionsUnits ?? new LedgerAcquisitionsUnit[] { };
             LedgerAcquisitionsUnitsRadGrid.DataSource = l;
             LedgerAcquisitionsUnitsRadGrid.AllowFilteringByColumn = l.Count() > 10;
             LedgerAcquisitionsUnitsPanel.Visible = Ledger2FormView.DataKey.Value != null && ((string)Session["LedgerAcquisitionsUnitsPermission"] == "Edit" || Session["LedgerAcquisitionsUnitsPermission"] != null && l.Any());

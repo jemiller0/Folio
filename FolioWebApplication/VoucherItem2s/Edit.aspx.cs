@@ -39,7 +39,7 @@ namespace FolioWebApplication.VoucherItem2s
             if (Session["VoucherItemFundsPermission"] == null) return;
             var id = (Guid?)VoucherItem2FormView.DataKey.Value;
             if (id == null) return;
-            var l = folioServiceContext.FindVoucherItem2(id).VoucherItemFunds ?? new VoucherItemFund[] { };
+            var l = folioServiceContext.FindVoucherItem2(id, true).VoucherItemFunds ?? new VoucherItemFund[] { };
             VoucherItemFundsRadGrid.DataSource = l;
             VoucherItemFundsRadGrid.AllowFilteringByColumn = l.Count() > 10;
             VoucherItemFundsPanel.Visible = VoucherItem2FormView.DataKey.Value != null && ((string)Session["VoucherItemFundsPermission"] == "Edit" || Session["VoucherItemFundsPermission"] != null && l.Any());
@@ -50,7 +50,7 @@ namespace FolioWebApplication.VoucherItem2s
             if (Session["VoucherItemInvoiceItemsPermission"] == null) return;
             var id = (Guid?)VoucherItem2FormView.DataKey.Value;
             if (id == null) return;
-            var l = folioServiceContext.FindVoucherItem2(id).VoucherItemInvoiceItems ?? new VoucherItemInvoiceItem[] { };
+            var l = folioServiceContext.FindVoucherItem2(id, true).VoucherItemInvoiceItems ?? new VoucherItemInvoiceItem[] { };
             VoucherItemInvoiceItemsRadGrid.DataSource = l;
             VoucherItemInvoiceItemsRadGrid.AllowFilteringByColumn = l.Count() > 10;
             VoucherItemInvoiceItemsPanel.Visible = VoucherItem2FormView.DataKey.Value != null && ((string)Session["VoucherItemInvoiceItemsPermission"] == "Edit" || Session["VoucherItemInvoiceItemsPermission"] != null && l.Any());

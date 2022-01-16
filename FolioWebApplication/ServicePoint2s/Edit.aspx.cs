@@ -174,7 +174,7 @@ namespace FolioWebApplication.ServicePoint2s
             if (Session["ServicePointStaffSlipsPermission"] == null) return;
             var id = (Guid?)ServicePoint2FormView.DataKey.Value;
             if (id == null) return;
-            var l = folioServiceContext.FindServicePoint2(id).ServicePointStaffSlips ?? new ServicePointStaffSlip[] { };
+            var l = folioServiceContext.FindServicePoint2(id, true).ServicePointStaffSlips ?? new ServicePointStaffSlip[] { };
             ServicePointStaffSlipsRadGrid.DataSource = l;
             ServicePointStaffSlipsRadGrid.AllowFilteringByColumn = l.Count() > 10;
             ServicePointStaffSlipsPanel.Visible = ServicePoint2FormView.DataKey.Value != null && ((string)Session["ServicePointStaffSlipsPermission"] == "Edit" || Session["ServicePointStaffSlipsPermission"] != null && l.Any());

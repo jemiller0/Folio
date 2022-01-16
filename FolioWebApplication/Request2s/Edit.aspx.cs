@@ -39,7 +39,7 @@ namespace FolioWebApplication.Request2s
             if (Session["RequestIdentifiersPermission"] == null) return;
             var id = (Guid?)Request2FormView.DataKey.Value;
             if (id == null) return;
-            var l = folioServiceContext.FindRequest2(id).RequestIdentifiers ?? new RequestIdentifier[] { };
+            var l = folioServiceContext.FindRequest2(id, true).RequestIdentifiers ?? new RequestIdentifier[] { };
             RequestIdentifiersRadGrid.DataSource = l;
             RequestIdentifiersRadGrid.AllowFilteringByColumn = l.Count() > 10;
             RequestIdentifiersPanel.Visible = Request2FormView.DataKey.Value != null && ((string)Session["RequestIdentifiersPermission"] == "Edit" || Session["RequestIdentifiersPermission"] != null && l.Any());
@@ -50,7 +50,7 @@ namespace FolioWebApplication.Request2s
             if (Session["RequestTagsPermission"] == null) return;
             var id = (Guid?)Request2FormView.DataKey.Value;
             if (id == null) return;
-            var l = folioServiceContext.FindRequest2(id).RequestTags ?? new RequestTag[] { };
+            var l = folioServiceContext.FindRequest2(id, true).RequestTags ?? new RequestTag[] { };
             RequestTagsRadGrid.DataSource = l;
             RequestTagsRadGrid.AllowFilteringByColumn = l.Count() > 10;
             RequestTagsPanel.Visible = Request2FormView.DataKey.Value != null && ((string)Session["RequestTagsPermission"] == "Edit" || Session["RequestTagsPermission"] != null && l.Any());

@@ -39,7 +39,7 @@ namespace FolioWebApplication.Voucher2s
             if (Session["VoucherAcquisitionsUnitsPermission"] == null) return;
             var id = (Guid?)Voucher2FormView.DataKey.Value;
             if (id == null) return;
-            var l = folioServiceContext.FindVoucher2(id).VoucherAcquisitionsUnits ?? new VoucherAcquisitionsUnit[] { };
+            var l = folioServiceContext.FindVoucher2(id, true).VoucherAcquisitionsUnits ?? new VoucherAcquisitionsUnit[] { };
             VoucherAcquisitionsUnitsRadGrid.DataSource = l;
             VoucherAcquisitionsUnitsRadGrid.AllowFilteringByColumn = l.Count() > 10;
             VoucherAcquisitionsUnitsPanel.Visible = Voucher2FormView.DataKey.Value != null && ((string)Session["VoucherAcquisitionsUnitsPermission"] == "Edit" || Session["VoucherAcquisitionsUnitsPermission"] != null && l.Any());

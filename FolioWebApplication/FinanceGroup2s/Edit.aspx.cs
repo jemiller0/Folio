@@ -54,7 +54,7 @@ namespace FolioWebApplication.FinanceGroup2s
             if (Session["FinanceGroupAcquisitionsUnitsPermission"] == null) return;
             var id = (Guid?)FinanceGroup2FormView.DataKey.Value;
             if (id == null) return;
-            var l = folioServiceContext.FindFinanceGroup2(id).FinanceGroupAcquisitionsUnits ?? new FinanceGroupAcquisitionsUnit[] { };
+            var l = folioServiceContext.FindFinanceGroup2(id, true).FinanceGroupAcquisitionsUnits ?? new FinanceGroupAcquisitionsUnit[] { };
             FinanceGroupAcquisitionsUnitsRadGrid.DataSource = l;
             FinanceGroupAcquisitionsUnitsRadGrid.AllowFilteringByColumn = l.Count() > 10;
             FinanceGroupAcquisitionsUnitsPanel.Visible = FinanceGroup2FormView.DataKey.Value != null && ((string)Session["FinanceGroupAcquisitionsUnitsPermission"] == "Edit" || Session["FinanceGroupAcquisitionsUnitsPermission"] != null && l.Any());

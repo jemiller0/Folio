@@ -39,7 +39,7 @@ namespace FolioWebApplication.BatchVoucherExportConfig2s
             if (Session["BatchVoucherExportConfigWeekdaysPermission"] == null) return;
             var id = (Guid?)BatchVoucherExportConfig2FormView.DataKey.Value;
             if (id == null) return;
-            var l = folioServiceContext.FindBatchVoucherExportConfig2(id).BatchVoucherExportConfigWeekdays ?? new BatchVoucherExportConfigWeekday[] { };
+            var l = folioServiceContext.FindBatchVoucherExportConfig2(id, true).BatchVoucherExportConfigWeekdays ?? new BatchVoucherExportConfigWeekday[] { };
             BatchVoucherExportConfigWeekdaysRadGrid.DataSource = l;
             BatchVoucherExportConfigWeekdaysRadGrid.AllowFilteringByColumn = l.Count() > 10;
             BatchVoucherExportConfigWeekdaysPanel.Visible = BatchVoucherExportConfig2FormView.DataKey.Value != null && ((string)Session["BatchVoucherExportConfigWeekdaysPermission"] == "Edit" || Session["BatchVoucherExportConfigWeekdaysPermission"] != null && l.Any());

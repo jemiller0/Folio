@@ -647,7 +647,7 @@ namespace FolioWebApplication.User2s
             if (Session["UserAddressesPermission"] == null) return;
             var id = (Guid?)User2FormView.DataKey.Value;
             if (id == null) return;
-            var l = folioServiceContext.FindUser2(id).UserAddresses ?? new UserAddress[] { };
+            var l = folioServiceContext.FindUser2(id, true).UserAddresses ?? new UserAddress[] { };
             UserAddressesRadGrid.DataSource = l;
             UserAddressesRadGrid.AllowFilteringByColumn = l.Count() > 10;
             UserAddressesPanel.Visible = User2FormView.DataKey.Value != null && ((string)Session["UserAddressesPermission"] == "Edit" || Session["UserAddressesPermission"] != null && l.Any());
@@ -658,7 +658,7 @@ namespace FolioWebApplication.User2s
             if (Session["UserDepartmentsPermission"] == null) return;
             var id = (Guid?)User2FormView.DataKey.Value;
             if (id == null) return;
-            var l = folioServiceContext.FindUser2(id).UserDepartments ?? new UserDepartment[] { };
+            var l = folioServiceContext.FindUser2(id, true).UserDepartments ?? new UserDepartment[] { };
             UserDepartmentsRadGrid.DataSource = l;
             UserDepartmentsRadGrid.AllowFilteringByColumn = l.Count() > 10;
             UserDepartmentsPanel.Visible = User2FormView.DataKey.Value != null && ((string)Session["UserDepartmentsPermission"] == "Edit" || Session["UserDepartmentsPermission"] != null && l.Any());
@@ -684,7 +684,7 @@ namespace FolioWebApplication.User2s
             if (Session["UserTagsPermission"] == null) return;
             var id = (Guid?)User2FormView.DataKey.Value;
             if (id == null) return;
-            var l = folioServiceContext.FindUser2(id).UserTags ?? new UserTag[] { };
+            var l = folioServiceContext.FindUser2(id, true).UserTags ?? new UserTag[] { };
             UserTagsRadGrid.DataSource = l;
             UserTagsRadGrid.AllowFilteringByColumn = l.Count() > 10;
             UserTagsPanel.Visible = User2FormView.DataKey.Value != null && ((string)Session["UserTagsPermission"] == "Edit" || Session["UserTagsPermission"] != null && l.Any());

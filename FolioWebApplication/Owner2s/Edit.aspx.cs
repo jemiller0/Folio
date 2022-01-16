@@ -84,7 +84,7 @@ namespace FolioWebApplication.Owner2s
             if (Session["ServicePointOwnersPermission"] == null) return;
             var id = (Guid?)Owner2FormView.DataKey.Value;
             if (id == null) return;
-            var l = folioServiceContext.FindOwner2(id).ServicePointOwners ?? new ServicePointOwner[] { };
+            var l = folioServiceContext.FindOwner2(id, true).ServicePointOwners ?? new ServicePointOwner[] { };
             ServicePointOwnersRadGrid.DataSource = l;
             ServicePointOwnersRadGrid.AllowFilteringByColumn = l.Count() > 10;
             ServicePointOwnersPanel.Visible = Owner2FormView.DataKey.Value != null && ((string)Session["ServicePointOwnersPermission"] == "Edit" || Session["ServicePointOwnersPermission"] != null && l.Any());

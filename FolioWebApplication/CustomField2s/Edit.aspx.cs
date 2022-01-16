@@ -39,7 +39,7 @@ namespace FolioWebApplication.CustomField2s
             if (Session["CustomFieldValuesPermission"] == null) return;
             var id = (Guid?)CustomField2FormView.DataKey.Value;
             if (id == null) return;
-            var l = folioServiceContext.FindCustomField2(id).CustomFieldValues ?? new CustomFieldValue[] { };
+            var l = folioServiceContext.FindCustomField2(id, true).CustomFieldValues ?? new CustomFieldValue[] { };
             CustomFieldValuesRadGrid.DataSource = l;
             CustomFieldValuesRadGrid.AllowFilteringByColumn = l.Count() > 10;
             CustomFieldValuesPanel.Visible = CustomField2FormView.DataKey.Value != null && ((string)Session["CustomFieldValuesPermission"] == "Edit" || Session["CustomFieldValuesPermission"] != null && l.Any());

@@ -114,7 +114,7 @@ namespace FolioWebApplication.Template2s
             if (Session["TemplateOutputFormatsPermission"] == null) return;
             var id = (Guid?)Template2FormView.DataKey.Value;
             if (id == null) return;
-            var l = folioServiceContext.FindTemplate2(id).TemplateOutputFormats ?? new TemplateOutputFormat[] { };
+            var l = folioServiceContext.FindTemplate2(id, true).TemplateOutputFormats ?? new TemplateOutputFormat[] { };
             TemplateOutputFormatsRadGrid.DataSource = l;
             TemplateOutputFormatsRadGrid.AllowFilteringByColumn = l.Count() > 10;
             TemplateOutputFormatsPanel.Visible = Template2FormView.DataKey.Value != null && ((string)Session["TemplateOutputFormatsPermission"] == "Edit" || Session["TemplateOutputFormatsPermission"] != null && l.Any());

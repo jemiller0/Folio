@@ -84,7 +84,7 @@ namespace FolioWebApplication.Transaction2s
             if (Session["TransactionTagsPermission"] == null) return;
             var id = (Guid?)Transaction2FormView.DataKey.Value;
             if (id == null) return;
-            var l = folioServiceContext.FindTransaction2(id).TransactionTags ?? new TransactionTag[] { };
+            var l = folioServiceContext.FindTransaction2(id, true).TransactionTags ?? new TransactionTag[] { };
             TransactionTagsRadGrid.DataSource = l;
             TransactionTagsRadGrid.AllowFilteringByColumn = l.Count() > 10;
             TransactionTagsPanel.Visible = Transaction2FormView.DataKey.Value != null && ((string)Session["TransactionTagsPermission"] == "Edit" || Session["TransactionTagsPermission"] != null && l.Any());

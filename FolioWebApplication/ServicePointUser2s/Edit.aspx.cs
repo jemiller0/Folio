@@ -39,7 +39,7 @@ namespace FolioWebApplication.ServicePointUser2s
             if (Session["ServicePointUserServicePointsPermission"] == null) return;
             var id = (Guid?)ServicePointUser2FormView.DataKey.Value;
             if (id == null) return;
-            var l = folioServiceContext.FindServicePointUser2(id).ServicePointUserServicePoints ?? new ServicePointUserServicePoint[] { };
+            var l = folioServiceContext.FindServicePointUser2(id, true).ServicePointUserServicePoints ?? new ServicePointUserServicePoint[] { };
             ServicePointUserServicePointsRadGrid.DataSource = l;
             ServicePointUserServicePointsRadGrid.AllowFilteringByColumn = l.Count() > 10;
             ServicePointUserServicePointsPanel.Visible = ServicePointUser2FormView.DataKey.Value != null && ((string)Session["ServicePointUserServicePointsPermission"] == "Edit" || Session["ServicePointUserServicePointsPermission"] != null && l.Any());

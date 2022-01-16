@@ -39,7 +39,7 @@ namespace FolioWebApplication.PrecedingSucceedingTitle2s
             if (Session["PrecedingSucceedingTitleIdentifiersPermission"] == null) return;
             var id = (Guid?)PrecedingSucceedingTitle2FormView.DataKey.Value;
             if (id == null) return;
-            var l = folioServiceContext.FindPrecedingSucceedingTitle2(id).PrecedingSucceedingTitleIdentifiers ?? new PrecedingSucceedingTitleIdentifier[] { };
+            var l = folioServiceContext.FindPrecedingSucceedingTitle2(id, true).PrecedingSucceedingTitleIdentifiers ?? new PrecedingSucceedingTitleIdentifier[] { };
             PrecedingSucceedingTitleIdentifiersRadGrid.DataSource = l;
             PrecedingSucceedingTitleIdentifiersRadGrid.AllowFilteringByColumn = l.Count() > 10;
             PrecedingSucceedingTitleIdentifiersPanel.Visible = PrecedingSucceedingTitle2FormView.DataKey.Value != null && ((string)Session["PrecedingSucceedingTitleIdentifiersPermission"] == "Edit" || Session["PrecedingSucceedingTitleIdentifiersPermission"] != null && l.Any());

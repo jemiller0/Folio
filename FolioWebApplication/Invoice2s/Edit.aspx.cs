@@ -39,7 +39,7 @@ namespace FolioWebApplication.Invoice2s
             if (Session["InvoiceAcquisitionsUnitsPermission"] == null) return;
             var id = (Guid?)Invoice2FormView.DataKey.Value;
             if (id == null) return;
-            var l = folioServiceContext.FindInvoice2(id).InvoiceAcquisitionsUnits ?? new InvoiceAcquisitionsUnit[] { };
+            var l = folioServiceContext.FindInvoice2(id, true).InvoiceAcquisitionsUnits ?? new InvoiceAcquisitionsUnit[] { };
             InvoiceAcquisitionsUnitsRadGrid.DataSource = l;
             InvoiceAcquisitionsUnitsRadGrid.AllowFilteringByColumn = l.Count() > 10;
             InvoiceAcquisitionsUnitsPanel.Visible = Invoice2FormView.DataKey.Value != null && ((string)Session["InvoiceAcquisitionsUnitsPermission"] == "Edit" || Session["InvoiceAcquisitionsUnitsPermission"] != null && l.Any());
@@ -50,7 +50,7 @@ namespace FolioWebApplication.Invoice2s
             if (Session["InvoiceAdjustmentsPermission"] == null) return;
             var id = (Guid?)Invoice2FormView.DataKey.Value;
             if (id == null) return;
-            var l = folioServiceContext.FindInvoice2(id).InvoiceAdjustments ?? new InvoiceAdjustment[] { };
+            var l = folioServiceContext.FindInvoice2(id, true).InvoiceAdjustments ?? new InvoiceAdjustment[] { };
             InvoiceAdjustmentsRadGrid.DataSource = l;
             InvoiceAdjustmentsRadGrid.AllowFilteringByColumn = l.Count() > 10;
             InvoiceAdjustmentsPanel.Visible = Invoice2FormView.DataKey.Value != null && ((string)Session["InvoiceAdjustmentsPermission"] == "Edit" || Session["InvoiceAdjustmentsPermission"] != null && l.Any());
@@ -76,7 +76,7 @@ namespace FolioWebApplication.Invoice2s
             if (Session["InvoiceOrderNumbersPermission"] == null) return;
             var id = (Guid?)Invoice2FormView.DataKey.Value;
             if (id == null) return;
-            var l = folioServiceContext.FindInvoice2(id).InvoiceOrderNumbers ?? new InvoiceOrderNumber[] { };
+            var l = folioServiceContext.FindInvoice2(id, true).InvoiceOrderNumbers ?? new InvoiceOrderNumber[] { };
             InvoiceOrderNumbersRadGrid.DataSource = l;
             InvoiceOrderNumbersRadGrid.AllowFilteringByColumn = l.Count() > 10;
             InvoiceOrderNumbersPanel.Visible = Invoice2FormView.DataKey.Value != null && ((string)Session["InvoiceOrderNumbersPermission"] == "Edit" || Session["InvoiceOrderNumbersPermission"] != null && l.Any());
@@ -87,7 +87,7 @@ namespace FolioWebApplication.Invoice2s
             if (Session["InvoiceTagsPermission"] == null) return;
             var id = (Guid?)Invoice2FormView.DataKey.Value;
             if (id == null) return;
-            var l = folioServiceContext.FindInvoice2(id).InvoiceTags ?? new InvoiceTag[] { };
+            var l = folioServiceContext.FindInvoice2(id, true).InvoiceTags ?? new InvoiceTag[] { };
             InvoiceTagsRadGrid.DataSource = l;
             InvoiceTagsRadGrid.AllowFilteringByColumn = l.Count() > 10;
             InvoiceTagsPanel.Visible = Invoice2FormView.DataKey.Value != null && ((string)Session["InvoiceTagsPermission"] == "Edit" || Session["InvoiceTagsPermission"] != null && l.Any());

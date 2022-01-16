@@ -39,7 +39,7 @@ namespace FolioWebApplication.Order2s
             if (Session["OrderAcquisitionsUnitsPermission"] == null) return;
             var id = (Guid?)Order2FormView.DataKey.Value;
             if (id == null) return;
-            var l = folioServiceContext.FindOrder2(id).OrderAcquisitionsUnits ?? new OrderAcquisitionsUnit[] { };
+            var l = folioServiceContext.FindOrder2(id, true).OrderAcquisitionsUnits ?? new OrderAcquisitionsUnit[] { };
             OrderAcquisitionsUnitsRadGrid.DataSource = l;
             OrderAcquisitionsUnitsRadGrid.AllowFilteringByColumn = l.Count() > 10;
             OrderAcquisitionsUnitsPanel.Visible = Order2FormView.DataKey.Value != null && ((string)Session["OrderAcquisitionsUnitsPermission"] == "Edit" || Session["OrderAcquisitionsUnitsPermission"] != null && l.Any());
@@ -80,7 +80,7 @@ namespace FolioWebApplication.Order2s
             if (Session["OrderNotesPermission"] == null) return;
             var id = (Guid?)Order2FormView.DataKey.Value;
             if (id == null) return;
-            var l = folioServiceContext.FindOrder2(id).OrderNotes ?? new OrderNote[] { };
+            var l = folioServiceContext.FindOrder2(id, true).OrderNotes ?? new OrderNote[] { };
             OrderNotesRadGrid.DataSource = l;
             OrderNotesRadGrid.AllowFilteringByColumn = l.Count() > 10;
             OrderNotesPanel.Visible = Order2FormView.DataKey.Value != null && ((string)Session["OrderNotesPermission"] == "Edit" || Session["OrderNotesPermission"] != null && l.Any());
@@ -91,7 +91,7 @@ namespace FolioWebApplication.Order2s
             if (Session["OrderTagsPermission"] == null) return;
             var id = (Guid?)Order2FormView.DataKey.Value;
             if (id == null) return;
-            var l = folioServiceContext.FindOrder2(id).OrderTags ?? new OrderTag[] { };
+            var l = folioServiceContext.FindOrder2(id, true).OrderTags ?? new OrderTag[] { };
             OrderTagsRadGrid.DataSource = l;
             OrderTagsRadGrid.AllowFilteringByColumn = l.Count() > 10;
             OrderTagsPanel.Visible = Order2FormView.DataKey.Value != null && ((string)Session["OrderTagsPermission"] == "Edit" || Session["OrderTagsPermission"] != null && l.Any());

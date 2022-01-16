@@ -39,7 +39,7 @@ namespace FolioWebApplication.Contact2s
             if (Session["ContactAddressesPermission"] == null) return;
             var id = (Guid?)Contact2FormView.DataKey.Value;
             if (id == null) return;
-            var l = folioServiceContext.FindContact2(id).ContactAddresses ?? new ContactAddress[] { };
+            var l = folioServiceContext.FindContact2(id, true).ContactAddresses ?? new ContactAddress[] { };
             ContactAddressesRadGrid.DataSource = l;
             ContactAddressesRadGrid.AllowFilteringByColumn = l.Count() > 10;
             ContactAddressesPanel.Visible = Contact2FormView.DataKey.Value != null && ((string)Session["ContactAddressesPermission"] == "Edit" || Session["ContactAddressesPermission"] != null && l.Any());
@@ -50,7 +50,7 @@ namespace FolioWebApplication.Contact2s
             if (Session["ContactCategoriesPermission"] == null) return;
             var id = (Guid?)Contact2FormView.DataKey.Value;
             if (id == null) return;
-            var l = folioServiceContext.FindContact2(id).ContactCategories ?? new ContactCategory[] { };
+            var l = folioServiceContext.FindContact2(id, true).ContactCategories ?? new ContactCategory[] { };
             ContactCategoriesRadGrid.DataSource = l;
             ContactCategoriesRadGrid.AllowFilteringByColumn = l.Count() > 10;
             ContactCategoriesPanel.Visible = Contact2FormView.DataKey.Value != null && ((string)Session["ContactCategoriesPermission"] == "Edit" || Session["ContactCategoriesPermission"] != null && l.Any());
@@ -61,7 +61,7 @@ namespace FolioWebApplication.Contact2s
             if (Session["ContactEmailsPermission"] == null) return;
             var id = (Guid?)Contact2FormView.DataKey.Value;
             if (id == null) return;
-            var l = folioServiceContext.FindContact2(id).ContactEmails ?? new ContactEmail[] { };
+            var l = folioServiceContext.FindContact2(id, true).ContactEmails ?? new ContactEmail[] { };
             ContactEmailsRadGrid.DataSource = l;
             ContactEmailsRadGrid.AllowFilteringByColumn = l.Count() > 10;
             ContactEmailsPanel.Visible = Contact2FormView.DataKey.Value != null && ((string)Session["ContactEmailsPermission"] == "Edit" || Session["ContactEmailsPermission"] != null && l.Any());
@@ -72,7 +72,7 @@ namespace FolioWebApplication.Contact2s
             if (Session["ContactPhoneNumbersPermission"] == null) return;
             var id = (Guid?)Contact2FormView.DataKey.Value;
             if (id == null) return;
-            var l = folioServiceContext.FindContact2(id).ContactPhoneNumbers ?? new ContactPhoneNumber[] { };
+            var l = folioServiceContext.FindContact2(id, true).ContactPhoneNumbers ?? new ContactPhoneNumber[] { };
             ContactPhoneNumbersRadGrid.DataSource = l;
             ContactPhoneNumbersRadGrid.AllowFilteringByColumn = l.Count() > 10;
             ContactPhoneNumbersPanel.Visible = Contact2FormView.DataKey.Value != null && ((string)Session["ContactPhoneNumbersPermission"] == "Edit" || Session["ContactPhoneNumbersPermission"] != null && l.Any());
@@ -83,7 +83,7 @@ namespace FolioWebApplication.Contact2s
             if (Session["ContactUrlsPermission"] == null) return;
             var id = (Guid?)Contact2FormView.DataKey.Value;
             if (id == null) return;
-            var l = folioServiceContext.FindContact2(id).ContactUrls ?? new ContactUrl[] { };
+            var l = folioServiceContext.FindContact2(id, true).ContactUrls ?? new ContactUrl[] { };
             ContactUrlsRadGrid.DataSource = l;
             ContactUrlsRadGrid.AllowFilteringByColumn = l.Count() > 10;
             ContactUrlsPanel.Visible = Contact2FormView.DataKey.Value != null && ((string)Session["ContactUrlsPermission"] == "Edit" || Session["ContactUrlsPermission"] != null && l.Any());

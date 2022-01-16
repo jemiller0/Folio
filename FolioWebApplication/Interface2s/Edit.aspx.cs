@@ -39,7 +39,7 @@ namespace FolioWebApplication.Interface2s
             if (Session["InterfaceTypesPermission"] == null) return;
             var id = (Guid?)Interface2FormView.DataKey.Value;
             if (id == null) return;
-            var l = folioServiceContext.FindInterface2(id).InterfaceTypes ?? new InterfaceType[] { };
+            var l = folioServiceContext.FindInterface2(id, true).InterfaceTypes ?? new InterfaceType[] { };
             InterfaceTypesRadGrid.DataSource = l;
             InterfaceTypesRadGrid.AllowFilteringByColumn = l.Count() > 10;
             InterfaceTypesPanel.Visible = Interface2FormView.DataKey.Value != null && ((string)Session["InterfaceTypesPermission"] == "Edit" || Session["InterfaceTypesPermission"] != null && l.Any());

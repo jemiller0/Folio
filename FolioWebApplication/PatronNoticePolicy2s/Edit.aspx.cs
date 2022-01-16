@@ -39,7 +39,7 @@ namespace FolioWebApplication.PatronNoticePolicy2s
             if (Session["PatronNoticePolicyFeeFineNoticesPermission"] == null) return;
             var id = (Guid?)PatronNoticePolicy2FormView.DataKey.Value;
             if (id == null) return;
-            var l = folioServiceContext.FindPatronNoticePolicy2(id).PatronNoticePolicyFeeFineNotices ?? new PatronNoticePolicyFeeFineNotice[] { };
+            var l = folioServiceContext.FindPatronNoticePolicy2(id, true).PatronNoticePolicyFeeFineNotices ?? new PatronNoticePolicyFeeFineNotice[] { };
             PatronNoticePolicyFeeFineNoticesRadGrid.DataSource = l;
             PatronNoticePolicyFeeFineNoticesRadGrid.AllowFilteringByColumn = l.Count() > 10;
             PatronNoticePolicyFeeFineNoticesPanel.Visible = PatronNoticePolicy2FormView.DataKey.Value != null && ((string)Session["PatronNoticePolicyFeeFineNoticesPermission"] == "Edit" || Session["PatronNoticePolicyFeeFineNoticesPermission"] != null && l.Any());
@@ -50,7 +50,7 @@ namespace FolioWebApplication.PatronNoticePolicy2s
             if (Session["PatronNoticePolicyLoanNoticesPermission"] == null) return;
             var id = (Guid?)PatronNoticePolicy2FormView.DataKey.Value;
             if (id == null) return;
-            var l = folioServiceContext.FindPatronNoticePolicy2(id).PatronNoticePolicyLoanNotices ?? new PatronNoticePolicyLoanNotice[] { };
+            var l = folioServiceContext.FindPatronNoticePolicy2(id, true).PatronNoticePolicyLoanNotices ?? new PatronNoticePolicyLoanNotice[] { };
             PatronNoticePolicyLoanNoticesRadGrid.DataSource = l;
             PatronNoticePolicyLoanNoticesRadGrid.AllowFilteringByColumn = l.Count() > 10;
             PatronNoticePolicyLoanNoticesPanel.Visible = PatronNoticePolicy2FormView.DataKey.Value != null && ((string)Session["PatronNoticePolicyLoanNoticesPermission"] == "Edit" || Session["PatronNoticePolicyLoanNoticesPermission"] != null && l.Any());
@@ -61,7 +61,7 @@ namespace FolioWebApplication.PatronNoticePolicy2s
             if (Session["PatronNoticePolicyRequestNoticesPermission"] == null) return;
             var id = (Guid?)PatronNoticePolicy2FormView.DataKey.Value;
             if (id == null) return;
-            var l = folioServiceContext.FindPatronNoticePolicy2(id).PatronNoticePolicyRequestNotices ?? new PatronNoticePolicyRequestNotice[] { };
+            var l = folioServiceContext.FindPatronNoticePolicy2(id, true).PatronNoticePolicyRequestNotices ?? new PatronNoticePolicyRequestNotice[] { };
             PatronNoticePolicyRequestNoticesRadGrid.DataSource = l;
             PatronNoticePolicyRequestNoticesRadGrid.AllowFilteringByColumn = l.Count() > 10;
             PatronNoticePolicyRequestNoticesPanel.Visible = PatronNoticePolicy2FormView.DataKey.Value != null && ((string)Session["PatronNoticePolicyRequestNoticesPermission"] == "Edit" || Session["PatronNoticePolicyRequestNoticesPermission"] != null && l.Any());
