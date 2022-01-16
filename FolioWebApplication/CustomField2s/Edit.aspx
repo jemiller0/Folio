@@ -167,4 +167,33 @@
             </asp:FormView>
         </fieldset>
     </asp:Panel>
+    <asp:Panel ID="CustomFieldValuesPanel" runat="server" Visible='<%# (string)Session["CustomFieldValuesPermission"] != null && CustomField2FormView.DataKey.Value != null %>'>
+        <fieldset>
+            <legend>
+                <asp:HyperLink ID="CustomFieldValuesHyperLink" runat="server" Text="Custom Field Values" NavigateUrl="~/CustomFieldValues/Default.aspx" /></legend>
+            <telerik:RadGrid ID="CustomFieldValuesRadGrid" runat="server" AutoGenerateColumns="false" AllowSorting="true" AllowFilteringByColumn="false" GroupingSettings-CaseSensitive="false" AllowPaging="true" PageSize="10" EnableLinqExpressions="false" OnNeedDataSource="CustomFieldValuesRadGrid_NeedDataSource">
+                <MasterTableView DataKeyNames="Id" PagerStyle-Mode="NextPrevNumericAndAdvanced" NoMasterRecordsText="No custom field values found">
+                    <Columns>
+                        <telerik:GridTemplateColumn AllowFiltering="false" ItemStyle-Width="0px">
+                            <ItemTemplate>
+                                <asp:HyperLink ID="ViewHyperLink" Text="View" NavigateUrl='<%# $"~/CustomFieldValues/Edit.aspx?Id={Eval("Id")}" %>' runat="server" />
+                            </ItemTemplate>
+                        </telerik:GridTemplateColumn>
+                        <telerik:GridBoundColumn HeaderText="Id 2" DataField="Id2" AutoPostBackOnFilter="true" HtmlEncode="true" CurrentFilterFunction="StartsWith" />
+                        <telerik:GridBoundColumn HeaderText="Value" DataField="Value" AutoPostBackOnFilter="true" HtmlEncode="true" CurrentFilterFunction="StartsWith" />
+                        <telerik:GridBoundColumn HeaderText="Default" DataField="Default" AutoPostBackOnFilter="true" />
+                    </Columns>
+                </MasterTableView>
+            </telerik:RadGrid>
+        </fieldset>
+    </asp:Panel>
+    <telerik:RadAjaxManager ID="RadAjaxManager1" runat="server">
+        <AjaxSettings>
+            <telerik:AjaxSetting AjaxControlID="CustomFieldValuesRadGrid">
+                <UpdatedControls>
+                    <telerik:AjaxUpdatedControl ControlID="CustomFieldValuesPanel" LoadingPanelID="RadAjaxLoadingPanel1" />
+                </UpdatedControls>
+            </telerik:AjaxSetting>
+        </AjaxSettings>
+    </telerik:RadAjaxManager>
 </asp:Content>

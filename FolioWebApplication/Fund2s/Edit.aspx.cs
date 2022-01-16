@@ -4,6 +4,7 @@ using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Linq;
 using Telerik.Web.UI;
 
 namespace FolioWebApplication.Fund2s
@@ -31,6 +32,28 @@ namespace FolioWebApplication.Fund2s
             f2.Content = f2.Content != null ? JsonConvert.DeserializeObject<JToken>(f2.Content, new JsonSerializerSettings { DateTimeZoneHandling = DateTimeZoneHandling.Local }).ToString() : null;
             Fund2FormView.DataSource = new[] { f2 };
             Title = $"Fund {f2.Name}";
+        }
+
+        protected void AllocatedFromFundsRadGrid_NeedDataSource(object sender, GridNeedDataSourceEventArgs e)
+        {
+            if (Session["AllocatedFromFundsPermission"] == null) return;
+            var id = (Guid?)Fund2FormView.DataKey.Value;
+            if (id == null) return;
+            var l = folioServiceContext.FindFund2(id).AllocatedFromFunds ?? new AllocatedFromFund[] { };
+            AllocatedFromFundsRadGrid.DataSource = l;
+            AllocatedFromFundsRadGrid.AllowFilteringByColumn = l.Count() > 10;
+            AllocatedFromFundsPanel.Visible = Fund2FormView.DataKey.Value != null && ((string)Session["AllocatedFromFundsPermission"] == "Edit" || Session["AllocatedFromFundsPermission"] != null && l.Any());
+        }
+
+        protected void AllocatedToFundsRadGrid_NeedDataSource(object sender, GridNeedDataSourceEventArgs e)
+        {
+            if (Session["AllocatedToFundsPermission"] == null) return;
+            var id = (Guid?)Fund2FormView.DataKey.Value;
+            if (id == null) return;
+            var l = folioServiceContext.FindFund2(id).AllocatedToFunds ?? new AllocatedToFund[] { };
+            AllocatedToFundsRadGrid.DataSource = l;
+            AllocatedToFundsRadGrid.AllowFilteringByColumn = l.Count() > 10;
+            AllocatedToFundsPanel.Visible = Fund2FormView.DataKey.Value != null && ((string)Session["AllocatedToFundsPermission"] == "Edit" || Session["AllocatedToFundsPermission"] != null && l.Any());
         }
 
         protected void Budget2sRadGrid_NeedDataSource(object sender, GridNeedDataSourceEventArgs e)
@@ -61,6 +84,28 @@ namespace FolioWebApplication.Fund2s
                 BudgetGroup2sRadGrid.AllowFilteringByColumn = BudgetGroup2sRadGrid.VirtualItemCount > 10;
                 BudgetGroup2sPanel.Visible = Fund2FormView.DataKey.Value != null && Session["BudgetGroup2sPermission"] != null && BudgetGroup2sRadGrid.VirtualItemCount > 0;
             }
+        }
+
+        protected void FundAcquisitionsUnitsRadGrid_NeedDataSource(object sender, GridNeedDataSourceEventArgs e)
+        {
+            if (Session["FundAcquisitionsUnitsPermission"] == null) return;
+            var id = (Guid?)Fund2FormView.DataKey.Value;
+            if (id == null) return;
+            var l = folioServiceContext.FindFund2(id).FundAcquisitionsUnits ?? new FundAcquisitionsUnit[] { };
+            FundAcquisitionsUnitsRadGrid.DataSource = l;
+            FundAcquisitionsUnitsRadGrid.AllowFilteringByColumn = l.Count() > 10;
+            FundAcquisitionsUnitsPanel.Visible = Fund2FormView.DataKey.Value != null && ((string)Session["FundAcquisitionsUnitsPermission"] == "Edit" || Session["FundAcquisitionsUnitsPermission"] != null && l.Any());
+        }
+
+        protected void FundTagsRadGrid_NeedDataSource(object sender, GridNeedDataSourceEventArgs e)
+        {
+            if (Session["FundTagsPermission"] == null) return;
+            var id = (Guid?)Fund2FormView.DataKey.Value;
+            if (id == null) return;
+            var l = folioServiceContext.FindFund2(id).FundTags ?? new FundTag[] { };
+            FundTagsRadGrid.DataSource = l;
+            FundTagsRadGrid.AllowFilteringByColumn = l.Count() > 10;
+            FundTagsPanel.Visible = Fund2FormView.DataKey.Value != null && ((string)Session["FundTagsPermission"] == "Edit" || Session["FundTagsPermission"] != null && l.Any());
         }
 
         protected void Transaction2sRadGrid_NeedDataSource(object sender, GridNeedDataSourceEventArgs e)

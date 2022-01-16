@@ -4,6 +4,7 @@ using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Linq;
 using Telerik.Web.UI;
 
 namespace FolioWebApplication.RequestPolicy2s
@@ -31,6 +32,17 @@ namespace FolioWebApplication.RequestPolicy2s
             rp2.Content = rp2.Content != null ? JsonConvert.DeserializeObject<JToken>(rp2.Content, new JsonSerializerSettings { DateTimeZoneHandling = DateTimeZoneHandling.Local }).ToString() : null;
             RequestPolicy2FormView.DataSource = new[] { rp2 };
             Title = $"Request Policy {rp2.Name}";
+        }
+
+        protected void RequestPolicyRequestTypesRadGrid_NeedDataSource(object sender, GridNeedDataSourceEventArgs e)
+        {
+            if (Session["RequestPolicyRequestTypesPermission"] == null) return;
+            var id = (Guid?)RequestPolicy2FormView.DataKey.Value;
+            if (id == null) return;
+            var l = folioServiceContext.FindRequestPolicy2(id).RequestPolicyRequestTypes ?? new RequestPolicyRequestType[] { };
+            RequestPolicyRequestTypesRadGrid.DataSource = l;
+            RequestPolicyRequestTypesRadGrid.AllowFilteringByColumn = l.Count() > 10;
+            RequestPolicyRequestTypesPanel.Visible = RequestPolicy2FormView.DataKey.Value != null && ((string)Session["RequestPolicyRequestTypesPermission"] == "Edit" || Session["RequestPolicyRequestTypesPermission"] != null && l.Any());
         }
 
         public override void Dispose()

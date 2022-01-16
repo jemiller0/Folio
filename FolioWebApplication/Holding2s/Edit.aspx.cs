@@ -4,6 +4,7 @@ using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Linq;
 using Telerik.Web.UI;
 
 namespace FolioWebApplication.Holding2s
@@ -48,6 +49,17 @@ namespace FolioWebApplication.Holding2s
             }
         }
 
+        protected void ExtentsRadGrid_NeedDataSource(object sender, GridNeedDataSourceEventArgs e)
+        {
+            if (Session["ExtentsPermission"] == null) return;
+            var id = (Guid?)Holding2FormView.DataKey.Value;
+            if (id == null) return;
+            var l = folioServiceContext.FindHolding2(id).Extents ?? new Extent[] { };
+            ExtentsRadGrid.DataSource = l;
+            ExtentsRadGrid.AllowFilteringByColumn = l.Count() > 10;
+            ExtentsPanel.Visible = Holding2FormView.DataKey.Value != null && ((string)Session["ExtentsPermission"] == "Edit" || Session["ExtentsPermission"] != null && l.Any());
+        }
+
         protected void Fee2sRadGrid_NeedDataSource(object sender, GridNeedDataSourceEventArgs e)
         {
             if (Session["Fee2sPermission"] == null) return;
@@ -61,6 +73,83 @@ namespace FolioWebApplication.Holding2s
                 Fee2sRadGrid.AllowFilteringByColumn = Fee2sRadGrid.VirtualItemCount > 10;
                 Fee2sPanel.Visible = Holding2FormView.DataKey.Value != null && Session["Fee2sPermission"] != null && Fee2sRadGrid.VirtualItemCount > 0;
             }
+        }
+
+        protected void HoldingElectronicAccessesRadGrid_NeedDataSource(object sender, GridNeedDataSourceEventArgs e)
+        {
+            if (Session["HoldingElectronicAccessesPermission"] == null) return;
+            var id = (Guid?)Holding2FormView.DataKey.Value;
+            if (id == null) return;
+            var l = folioServiceContext.FindHolding2(id).HoldingElectronicAccesses ?? new HoldingElectronicAccess[] { };
+            HoldingElectronicAccessesRadGrid.DataSource = l;
+            HoldingElectronicAccessesRadGrid.AllowFilteringByColumn = l.Count() > 10;
+            HoldingElectronicAccessesPanel.Visible = Holding2FormView.DataKey.Value != null && ((string)Session["HoldingElectronicAccessesPermission"] == "Edit" || Session["HoldingElectronicAccessesPermission"] != null && l.Any());
+        }
+
+        protected void HoldingEntriesRadGrid_NeedDataSource(object sender, GridNeedDataSourceEventArgs e)
+        {
+            if (Session["HoldingEntriesPermission"] == null) return;
+            var id = (Guid?)Holding2FormView.DataKey.Value;
+            if (id == null) return;
+            var l = folioServiceContext.FindHolding2(id).HoldingEntries ?? new HoldingEntry[] { };
+            HoldingEntriesRadGrid.DataSource = l;
+            HoldingEntriesRadGrid.AllowFilteringByColumn = l.Count() > 10;
+            HoldingEntriesPanel.Visible = Holding2FormView.DataKey.Value != null && ((string)Session["HoldingEntriesPermission"] == "Edit" || Session["HoldingEntriesPermission"] != null && l.Any());
+        }
+
+        protected void HoldingFormerIdsRadGrid_NeedDataSource(object sender, GridNeedDataSourceEventArgs e)
+        {
+            if (Session["HoldingFormerIdsPermission"] == null) return;
+            var id = (Guid?)Holding2FormView.DataKey.Value;
+            if (id == null) return;
+            var l = folioServiceContext.FindHolding2(id).HoldingFormerIds ?? new HoldingFormerId[] { };
+            HoldingFormerIdsRadGrid.DataSource = l;
+            HoldingFormerIdsRadGrid.AllowFilteringByColumn = l.Count() > 10;
+            HoldingFormerIdsPanel.Visible = Holding2FormView.DataKey.Value != null && ((string)Session["HoldingFormerIdsPermission"] == "Edit" || Session["HoldingFormerIdsPermission"] != null && l.Any());
+        }
+
+        protected void HoldingNotesRadGrid_NeedDataSource(object sender, GridNeedDataSourceEventArgs e)
+        {
+            if (Session["HoldingNotesPermission"] == null) return;
+            var id = (Guid?)Holding2FormView.DataKey.Value;
+            if (id == null) return;
+            var l = folioServiceContext.FindHolding2(id).HoldingNotes ?? new HoldingNote[] { };
+            HoldingNotesRadGrid.DataSource = l;
+            HoldingNotesRadGrid.AllowFilteringByColumn = l.Count() > 10;
+            HoldingNotesPanel.Visible = Holding2FormView.DataKey.Value != null && ((string)Session["HoldingNotesPermission"] == "Edit" || Session["HoldingNotesPermission"] != null && l.Any());
+        }
+
+        protected void HoldingStatisticalCodesRadGrid_NeedDataSource(object sender, GridNeedDataSourceEventArgs e)
+        {
+            if (Session["HoldingStatisticalCodesPermission"] == null) return;
+            var id = (Guid?)Holding2FormView.DataKey.Value;
+            if (id == null) return;
+            var l = folioServiceContext.FindHolding2(id).HoldingStatisticalCodes ?? new HoldingStatisticalCode[] { };
+            HoldingStatisticalCodesRadGrid.DataSource = l;
+            HoldingStatisticalCodesRadGrid.AllowFilteringByColumn = l.Count() > 10;
+            HoldingStatisticalCodesPanel.Visible = Holding2FormView.DataKey.Value != null && ((string)Session["HoldingStatisticalCodesPermission"] == "Edit" || Session["HoldingStatisticalCodesPermission"] != null && l.Any());
+        }
+
+        protected void HoldingTagsRadGrid_NeedDataSource(object sender, GridNeedDataSourceEventArgs e)
+        {
+            if (Session["HoldingTagsPermission"] == null) return;
+            var id = (Guid?)Holding2FormView.DataKey.Value;
+            if (id == null) return;
+            var l = folioServiceContext.FindHolding2(id).HoldingTags ?? new HoldingTag[] { };
+            HoldingTagsRadGrid.DataSource = l;
+            HoldingTagsRadGrid.AllowFilteringByColumn = l.Count() > 10;
+            HoldingTagsPanel.Visible = Holding2FormView.DataKey.Value != null && ((string)Session["HoldingTagsPermission"] == "Edit" || Session["HoldingTagsPermission"] != null && l.Any());
+        }
+
+        protected void IndexStatementsRadGrid_NeedDataSource(object sender, GridNeedDataSourceEventArgs e)
+        {
+            if (Session["IndexStatementsPermission"] == null) return;
+            var id = (Guid?)Holding2FormView.DataKey.Value;
+            if (id == null) return;
+            var l = folioServiceContext.FindHolding2(id).IndexStatements ?? new IndexStatement[] { };
+            IndexStatementsRadGrid.DataSource = l;
+            IndexStatementsRadGrid.AllowFilteringByColumn = l.Count() > 10;
+            IndexStatementsPanel.Visible = Holding2FormView.DataKey.Value != null && ((string)Session["IndexStatementsPermission"] == "Edit" || Session["IndexStatementsPermission"] != null && l.Any());
         }
 
         protected void Item2sRadGrid_NeedDataSource(object sender, GridNeedDataSourceEventArgs e)
@@ -91,6 +180,17 @@ namespace FolioWebApplication.Holding2s
                 Receiving2sRadGrid.AllowFilteringByColumn = Receiving2sRadGrid.VirtualItemCount > 10;
                 Receiving2sPanel.Visible = Holding2FormView.DataKey.Value != null && Session["Receiving2sPermission"] != null && Receiving2sRadGrid.VirtualItemCount > 0;
             }
+        }
+
+        protected void SupplementStatementsRadGrid_NeedDataSource(object sender, GridNeedDataSourceEventArgs e)
+        {
+            if (Session["SupplementStatementsPermission"] == null) return;
+            var id = (Guid?)Holding2FormView.DataKey.Value;
+            if (id == null) return;
+            var l = folioServiceContext.FindHolding2(id).SupplementStatements ?? new SupplementStatement[] { };
+            SupplementStatementsRadGrid.DataSource = l;
+            SupplementStatementsRadGrid.AllowFilteringByColumn = l.Count() > 10;
+            SupplementStatementsPanel.Visible = Holding2FormView.DataKey.Value != null && ((string)Session["SupplementStatementsPermission"] == "Edit" || Session["SupplementStatementsPermission"] != null && l.Any());
         }
 
         public override void Dispose()

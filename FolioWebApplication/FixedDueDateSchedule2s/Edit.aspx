@@ -79,6 +79,26 @@
             </asp:FormView>
         </fieldset>
     </asp:Panel>
+    <asp:Panel ID="FixedDueDateScheduleSchedulesPanel" runat="server" Visible='<%# (string)Session["FixedDueDateScheduleSchedulesPermission"] != null && FixedDueDateSchedule2FormView.DataKey.Value != null %>'>
+        <fieldset>
+            <legend>
+                <asp:HyperLink ID="FixedDueDateScheduleSchedulesHyperLink" runat="server" Text="Fixed Due Date Schedule Schedules" NavigateUrl="~/FixedDueDateScheduleSchedules/Default.aspx" /></legend>
+            <telerik:RadGrid ID="FixedDueDateScheduleSchedulesRadGrid" runat="server" AutoGenerateColumns="false" AllowSorting="true" AllowFilteringByColumn="false" GroupingSettings-CaseSensitive="false" AllowPaging="true" PageSize="10" EnableLinqExpressions="false" OnNeedDataSource="FixedDueDateScheduleSchedulesRadGrid_NeedDataSource">
+                <MasterTableView DataKeyNames="Id" PagerStyle-Mode="NextPrevNumericAndAdvanced" NoMasterRecordsText="No fixed due date schedule schedules found">
+                    <Columns>
+                        <telerik:GridTemplateColumn AllowFiltering="false" ItemStyle-Width="0px">
+                            <ItemTemplate>
+                                <asp:HyperLink ID="ViewHyperLink" Text="View" NavigateUrl='<%# $"~/FixedDueDateScheduleSchedules/Edit.aspx?Id={Eval("Id")}" %>' runat="server" />
+                            </ItemTemplate>
+                        </telerik:GridTemplateColumn>
+                        <telerik:GridBoundColumn HeaderText="From" DataField="From" AutoPostBackOnFilter="true" DataFormatString="{0:g}" />
+                        <telerik:GridBoundColumn HeaderText="To" DataField="To" AutoPostBackOnFilter="true" DataFormatString="{0:g}" />
+                        <telerik:GridBoundColumn HeaderText="Due" DataField="Due" AutoPostBackOnFilter="true" DataFormatString="{0:g}" />
+                    </Columns>
+                </MasterTableView>
+            </telerik:RadGrid>
+        </fieldset>
+    </asp:Panel>
     <asp:Panel ID="LoanPolicy2sPanel" runat="server" Visible='<%# (string)Session["LoanPolicy2sPermission"] != null && FixedDueDateSchedule2FormView.DataKey.Value != null %>'>
         <fieldset>
             <legend>
@@ -249,6 +269,11 @@
     </asp:Panel>
     <telerik:RadAjaxManager ID="RadAjaxManager1" runat="server">
         <AjaxSettings>
+            <telerik:AjaxSetting AjaxControlID="FixedDueDateScheduleSchedulesRadGrid">
+                <UpdatedControls>
+                    <telerik:AjaxUpdatedControl ControlID="FixedDueDateScheduleSchedulesPanel" LoadingPanelID="RadAjaxLoadingPanel1" />
+                </UpdatedControls>
+            </telerik:AjaxSetting>
             <telerik:AjaxSetting AjaxControlID="LoanPolicy2sRadGrid">
                 <UpdatedControls>
                     <telerik:AjaxUpdatedControl ControlID="LoanPolicy2sPanel" LoadingPanelID="RadAjaxLoadingPanel1" />

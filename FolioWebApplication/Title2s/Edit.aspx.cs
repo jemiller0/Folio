@@ -4,6 +4,7 @@ using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Linq;
 using Telerik.Web.UI;
 
 namespace FolioWebApplication.Title2s
@@ -46,6 +47,28 @@ namespace FolioWebApplication.Title2s
                 Receiving2sRadGrid.AllowFilteringByColumn = Receiving2sRadGrid.VirtualItemCount > 10;
                 Receiving2sPanel.Visible = Title2FormView.DataKey.Value != null && Session["Receiving2sPermission"] != null && Receiving2sRadGrid.VirtualItemCount > 0;
             }
+        }
+
+        protected void TitleContributorsRadGrid_NeedDataSource(object sender, GridNeedDataSourceEventArgs e)
+        {
+            if (Session["TitleContributorsPermission"] == null) return;
+            var id = (Guid?)Title2FormView.DataKey.Value;
+            if (id == null) return;
+            var l = folioServiceContext.FindTitle2(id).TitleContributors ?? new TitleContributor[] { };
+            TitleContributorsRadGrid.DataSource = l;
+            TitleContributorsRadGrid.AllowFilteringByColumn = l.Count() > 10;
+            TitleContributorsPanel.Visible = Title2FormView.DataKey.Value != null && ((string)Session["TitleContributorsPermission"] == "Edit" || Session["TitleContributorsPermission"] != null && l.Any());
+        }
+
+        protected void TitleProductIdsRadGrid_NeedDataSource(object sender, GridNeedDataSourceEventArgs e)
+        {
+            if (Session["TitleProductIdsPermission"] == null) return;
+            var id = (Guid?)Title2FormView.DataKey.Value;
+            if (id == null) return;
+            var l = folioServiceContext.FindTitle2(id).TitleProductIds ?? new TitleProductId[] { };
+            TitleProductIdsRadGrid.DataSource = l;
+            TitleProductIdsRadGrid.AllowFilteringByColumn = l.Count() > 10;
+            TitleProductIdsPanel.Visible = Title2FormView.DataKey.Value != null && ((string)Session["TitleProductIdsPermission"] == "Edit" || Session["TitleProductIdsPermission"] != null && l.Any());
         }
 
         public override void Dispose()

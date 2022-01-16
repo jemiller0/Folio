@@ -310,6 +310,12 @@ namespace FolioLibrary
             if (load && bvec2.BatchGroupId != null) bvec2.BatchGroup = (BatchGroup2)(cache && objects.ContainsKey(bvec2.BatchGroupId.Value) ? objects[bvec2.BatchGroupId.Value] : objects[bvec2.BatchGroupId.Value] = FindBatchGroup2(bvec2.BatchGroupId));
             if (load && bvec2.CreationUserId != null) bvec2.CreationUser = (User2)(cache && objects.ContainsKey(bvec2.CreationUserId.Value) ? objects[bvec2.CreationUserId.Value] : objects[bvec2.CreationUserId.Value] = FindUser2(bvec2.CreationUserId));
             if (load && bvec2.LastWriteUserId != null) bvec2.LastWriteUser = (User2)(cache && objects.ContainsKey(bvec2.LastWriteUserId.Value) ? objects[bvec2.LastWriteUserId.Value] : objects[bvec2.LastWriteUserId.Value] = FindUser2(bvec2.LastWriteUserId));
+            var i = 0;
+            if (bvec2.BatchVoucherExportConfigWeekdays != null) foreach (var bvecw in bvec2.BatchVoucherExportConfigWeekdays)
+                {
+                    bvecw.Id = (++i).ToString();
+                    bvecw.BatchVoucherExportConfigId = bvec2.Id;
+                }
             return bvec2;
         }
 
@@ -556,6 +562,18 @@ namespace FolioLibrary
             if (load && b2.FiscalYearId != null) b2.FiscalYear = (FiscalYear2)(cache && objects.ContainsKey(b2.FiscalYearId.Value) ? objects[b2.FiscalYearId.Value] : objects[b2.FiscalYearId.Value] = FindFiscalYear2(b2.FiscalYearId));
             if (load && b2.CreationUserId != null) b2.CreationUser = (User2)(cache && objects.ContainsKey(b2.CreationUserId.Value) ? objects[b2.CreationUserId.Value] : objects[b2.CreationUserId.Value] = FindUser2(b2.CreationUserId));
             if (load && b2.LastWriteUserId != null) b2.LastWriteUser = (User2)(cache && objects.ContainsKey(b2.LastWriteUserId.Value) ? objects[b2.LastWriteUserId.Value] : objects[b2.LastWriteUserId.Value] = FindUser2(b2.LastWriteUserId));
+            var i = 0;
+            if (b2.BudgetAcquisitionsUnits != null) foreach (var bau in b2.BudgetAcquisitionsUnits)
+                {
+                    bau.Id = (++i).ToString();
+                    bau.BudgetId = b2.Id;
+                }
+            i = 0;
+            if (b2.BudgetTags != null) foreach (var bt in b2.BudgetTags)
+                {
+                    bt.Id = (++i).ToString();
+                    bt.BudgetId = b2.Id;
+                }
             return b2;
         }
 
@@ -1104,6 +1122,36 @@ namespace FolioLibrary
             if (c2 == null) return null;
             if (load && c2.CreationUserId != null) c2.CreationUser = (User2)(cache && objects.ContainsKey(c2.CreationUserId.Value) ? objects[c2.CreationUserId.Value] : objects[c2.CreationUserId.Value] = FindUser2(c2.CreationUserId));
             if (load && c2.LastWriteUserId != null) c2.LastWriteUser = (User2)(cache && objects.ContainsKey(c2.LastWriteUserId.Value) ? objects[c2.LastWriteUserId.Value] : objects[c2.LastWriteUserId.Value] = FindUser2(c2.LastWriteUserId));
+            var i = 0;
+            if (c2.ContactAddresses != null) foreach (var ca in c2.ContactAddresses)
+                {
+                    ca.Id = (++i).ToString();
+                    ca.ContactId = c2.Id;
+                }
+            i = 0;
+            if (c2.ContactCategories != null) foreach (var cc in c2.ContactCategories)
+                {
+                    cc.Id = (++i).ToString();
+                    cc.ContactId = c2.Id;
+                }
+            i = 0;
+            if (c2.ContactEmails != null) foreach (var ce in c2.ContactEmails)
+                {
+                    ce.Id = (++i).ToString();
+                    ce.ContactId = c2.Id;
+                }
+            i = 0;
+            if (c2.ContactPhoneNumbers != null) foreach (var cpn in c2.ContactPhoneNumbers)
+                {
+                    cpn.Id = (++i).ToString();
+                    cpn.ContactId = c2.Id;
+                }
+            i = 0;
+            if (c2.ContactUrls != null) foreach (var cu in c2.ContactUrls)
+                {
+                    cu.Id = (++i).ToString();
+                    cu.ContactId = c2.Id;
+                }
             return c2;
         }
 
@@ -1239,6 +1287,12 @@ namespace FolioLibrary
             if (cf2 == null) return null;
             if (load && cf2.CreationUserId != null) cf2.CreationUser = (User2)(cache && objects.ContainsKey(cf2.CreationUserId.Value) ? objects[cf2.CreationUserId.Value] : objects[cf2.CreationUserId.Value] = FindUser2(cf2.CreationUserId));
             if (load && cf2.LastWriteUserId != null) cf2.LastWriteUser = (User2)(cache && objects.ContainsKey(cf2.LastWriteUserId.Value) ? objects[cf2.LastWriteUserId.Value] : objects[cf2.LastWriteUserId.Value] = FindUser2(cf2.LastWriteUserId));
+            var i = 0;
+            if (cf2.CustomFieldValues != null) foreach (var cfv in cf2.CustomFieldValues)
+                {
+                    cfv.Id = (++i).ToString();
+                    cfv.CustomFieldId = cf2.Id;
+                }
             return cf2;
         }
 
@@ -1542,6 +1596,12 @@ namespace FolioLibrary
             if (fg2 == null) return null;
             if (load && fg2.CreationUserId != null) fg2.CreationUser = (User2)(cache && objects.ContainsKey(fg2.CreationUserId.Value) ? objects[fg2.CreationUserId.Value] : objects[fg2.CreationUserId.Value] = FindUser2(fg2.CreationUserId));
             if (load && fg2.LastWriteUserId != null) fg2.LastWriteUser = (User2)(cache && objects.ContainsKey(fg2.LastWriteUserId.Value) ? objects[fg2.LastWriteUserId.Value] : objects[fg2.LastWriteUserId.Value] = FindUser2(fg2.LastWriteUserId));
+            var i = 0;
+            if (fg2.FinanceGroupAcquisitionsUnits != null) foreach (var fgau in fg2.FinanceGroupAcquisitionsUnits)
+                {
+                    fgau.Id = (++i).ToString();
+                    fgau.FinanceGroupId = fg2.Id;
+                }
             return fg2;
         }
 
@@ -1587,6 +1647,12 @@ namespace FolioLibrary
             if (fy2 == null) return null;
             if (load && fy2.CreationUserId != null) fy2.CreationUser = (User2)(cache && objects.ContainsKey(fy2.CreationUserId.Value) ? objects[fy2.CreationUserId.Value] : objects[fy2.CreationUserId.Value] = FindUser2(fy2.CreationUserId));
             if (load && fy2.LastWriteUserId != null) fy2.LastWriteUser = (User2)(cache && objects.ContainsKey(fy2.LastWriteUserId.Value) ? objects[fy2.LastWriteUserId.Value] : objects[fy2.LastWriteUserId.Value] = FindUser2(fy2.LastWriteUserId));
+            var i = 0;
+            if (fy2.FiscalYearAcquisitionsUnits != null) foreach (var fyau in fy2.FiscalYearAcquisitionsUnits)
+                {
+                    fyau.Id = (++i).ToString();
+                    fyau.FiscalYearId = fy2.Id;
+                }
             return fy2;
         }
 
@@ -1632,6 +1698,12 @@ namespace FolioLibrary
             if (fdds2 == null) return null;
             if (load && fdds2.CreationUserId != null) fdds2.CreationUser = (User2)(cache && objects.ContainsKey(fdds2.CreationUserId.Value) ? objects[fdds2.CreationUserId.Value] : objects[fdds2.CreationUserId.Value] = FindUser2(fdds2.CreationUserId));
             if (load && fdds2.LastWriteUserId != null) fdds2.LastWriteUser = (User2)(cache && objects.ContainsKey(fdds2.LastWriteUserId.Value) ? objects[fdds2.LastWriteUserId.Value] : objects[fdds2.LastWriteUserId.Value] = FindUser2(fdds2.LastWriteUserId));
+            var i = 0;
+            if (fdds2.FixedDueDateScheduleSchedules != null) foreach (var fddss in fdds2.FixedDueDateScheduleSchedules)
+                {
+                    fddss.Id = (++i).ToString();
+                    fddss.FixedDueDateScheduleId = fdds2.Id;
+                }
             return fdds2;
         }
 
@@ -1728,6 +1800,30 @@ namespace FolioLibrary
             if (load && f2.LedgerId != null) f2.Ledger = (Ledger2)(cache && objects.ContainsKey(f2.LedgerId.Value) ? objects[f2.LedgerId.Value] : objects[f2.LedgerId.Value] = FindLedger2(f2.LedgerId));
             if (load && f2.CreationUserId != null) f2.CreationUser = (User2)(cache && objects.ContainsKey(f2.CreationUserId.Value) ? objects[f2.CreationUserId.Value] : objects[f2.CreationUserId.Value] = FindUser2(f2.CreationUserId));
             if (load && f2.LastWriteUserId != null) f2.LastWriteUser = (User2)(cache && objects.ContainsKey(f2.LastWriteUserId.Value) ? objects[f2.LastWriteUserId.Value] : objects[f2.LastWriteUserId.Value] = FindUser2(f2.LastWriteUserId));
+            var i = 0;
+            if (f2.AllocatedFromFunds != null) foreach (var aff in f2.AllocatedFromFunds)
+                {
+                    aff.Id = (++i).ToString();
+                    aff.FromFundId = f2.Id;
+                }
+            i = 0;
+            if (f2.AllocatedToFunds != null) foreach (var atf in f2.AllocatedToFunds)
+                {
+                    atf.Id = (++i).ToString();
+                    atf.ToFundId = f2.Id;
+                }
+            i = 0;
+            if (f2.FundAcquisitionsUnits != null) foreach (var fau in f2.FundAcquisitionsUnits)
+                {
+                    fau.Id = (++i).ToString();
+                    fau.FundId = f2.Id;
+                }
+            i = 0;
+            if (f2.FundTags != null) foreach (var ft in f2.FundTags)
+                {
+                    ft.Id = (++i).ToString();
+                    ft.FundId = f2.Id;
+                }
             return f2;
         }
 
@@ -1876,6 +1972,60 @@ namespace FolioLibrary
             if (load && h2.CreationUserId != null) h2.CreationUser = (User2)(cache && objects.ContainsKey(h2.CreationUserId.Value) ? objects[h2.CreationUserId.Value] : objects[h2.CreationUserId.Value] = FindUser2(h2.CreationUserId));
             if (load && h2.LastWriteUserId != null) h2.LastWriteUser = (User2)(cache && objects.ContainsKey(h2.LastWriteUserId.Value) ? objects[h2.LastWriteUserId.Value] : objects[h2.LastWriteUserId.Value] = FindUser2(h2.LastWriteUserId));
             if (load && h2.SourceId != null) h2.Source = (Source2)(cache && objects.ContainsKey(h2.SourceId.Value) ? objects[h2.SourceId.Value] : objects[h2.SourceId.Value] = FindSource2(h2.SourceId));
+            var i = 0;
+            if (h2.Extents != null) foreach (var e2 in h2.Extents)
+                {
+                    e2.Id = (++i).ToString();
+                    e2.HoldingId = h2.Id;
+                }
+            i = 0;
+            if (h2.HoldingElectronicAccesses != null) foreach (var hea in h2.HoldingElectronicAccesses)
+                {
+                    hea.Id = (++i).ToString();
+                    hea.HoldingId = h2.Id;
+                }
+            i = 0;
+            if (h2.HoldingEntries != null) foreach (var he in h2.HoldingEntries)
+                {
+                    he.Id = (++i).ToString();
+                    he.HoldingId = h2.Id;
+                }
+            i = 0;
+            if (h2.HoldingFormerIds != null) foreach (var hfi in h2.HoldingFormerIds)
+                {
+                    hfi.Id = (++i).ToString();
+                    hfi.HoldingId = h2.Id;
+                }
+            i = 0;
+            if (h2.HoldingNotes != null) foreach (var hn in h2.HoldingNotes)
+                {
+                    hn.Id = (++i).ToString();
+                    hn.HoldingId = h2.Id;
+                }
+            i = 0;
+            if (h2.HoldingStatisticalCodes != null) foreach (var hsc in h2.HoldingStatisticalCodes)
+                {
+                    hsc.Id = (++i).ToString();
+                    hsc.HoldingId = h2.Id;
+                }
+            i = 0;
+            if (h2.HoldingTags != null) foreach (var ht in h2.HoldingTags)
+                {
+                    ht.Id = (++i).ToString();
+                    ht.HoldingId = h2.Id;
+                }
+            i = 0;
+            if (h2.IndexStatements != null) foreach (var @is in h2.IndexStatements)
+                {
+                    @is.Id = (++i).ToString();
+                    @is.HoldingId = h2.Id;
+                }
+            i = 0;
+            if (h2.SupplementStatements != null) foreach (var ss in h2.SupplementStatements)
+                {
+                    ss.Id = (++i).ToString();
+                    ss.HoldingId = h2.Id;
+                }
             return h2;
         }
 
@@ -2114,6 +2264,116 @@ namespace FolioLibrary
             if (load && i2.StatusId != null) i2.Status = (Status)(cache && objects.ContainsKey(i2.StatusId.Value) ? objects[i2.StatusId.Value] : objects[i2.StatusId.Value] = FindStatus(i2.StatusId));
             if (load && i2.CreationUserId != null) i2.CreationUser = (User2)(cache && objects.ContainsKey(i2.CreationUserId.Value) ? objects[i2.CreationUserId.Value] : objects[i2.CreationUserId.Value] = FindUser2(i2.CreationUserId));
             if (load && i2.LastWriteUserId != null) i2.LastWriteUser = (User2)(cache && objects.ContainsKey(i2.LastWriteUserId.Value) ? objects[i2.LastWriteUserId.Value] : objects[i2.LastWriteUserId.Value] = FindUser2(i2.LastWriteUserId));
+            var i = 0;
+            if (i2.AlternativeTitles != null) foreach (var at in i2.AlternativeTitles)
+                {
+                    at.Id = (++i).ToString();
+                    at.InstanceId = i2.Id;
+                }
+            i = 0;
+            if (i2.Classifications != null) foreach (var c in i2.Classifications)
+                {
+                    c.Id = (++i).ToString();
+                    c.InstanceId = i2.Id;
+                }
+            i = 0;
+            if (i2.Contributors != null) foreach (var c2 in i2.Contributors)
+                {
+                    c2.Id = (++i).ToString();
+                    c2.InstanceId = i2.Id;
+                }
+            i = 0;
+            if (i2.Editions != null) foreach (var e2 in i2.Editions)
+                {
+                    e2.Id = (++i).ToString();
+                    e2.InstanceId = i2.Id;
+                }
+            i = 0;
+            if (i2.ElectronicAccesses != null) foreach (var ea in i2.ElectronicAccesses)
+                {
+                    ea.Id = (++i).ToString();
+                    ea.InstanceId = i2.Id;
+                }
+            i = 0;
+
+            if (i2.Identifiers != null) foreach (var i3 in i2.Identifiers)
+                {
+                    i3.Id = (++i).ToString();
+                    i3.InstanceId = i2.Id;
+                    i3.IdentifierType = FindIdType2(i3.IdentifierTypeId);
+                }
+            i = 0;
+            if (i2.InstanceFormat2s != null) foreach (var if2 in i2.InstanceFormat2s)
+                {
+                    if2.Id = (++i).ToString();
+                    if2.InstanceId = i2.Id;
+                }
+            i = 0;
+            if (i2.InstanceNatureOfContentTerms != null) foreach (var inoct in i2.InstanceNatureOfContentTerms)
+                {
+                    inoct.Id = (++i).ToString();
+                    inoct.InstanceId = i2.Id;
+                }
+            i = 0;
+            if (i2.InstanceStatisticalCodes != null) foreach (var isc in i2.InstanceStatisticalCodes)
+                {
+                    isc.Id = (++i).ToString();
+                    isc.InstanceId = i2.Id;
+                }
+            i = 0;
+            if (i2.InstanceTags != null) foreach (var it in i2.InstanceTags)
+                {
+                    it.Id = (++i).ToString();
+                    it.InstanceId = i2.Id;
+                }
+            i = 0;
+            if (i2.Languages != null) foreach (var l in i2.Languages)
+                {
+                    l.Id = (++i).ToString();
+                    l.InstanceId = i2.Id;
+                }
+            i = 0;
+            if (i2.Note2s != null) foreach (var n2 in i2.Note2s)
+                {
+                    n2.Id = (++i).ToString();
+                    n2.InstanceId = i2.Id;
+                }
+            i = 0;
+            if (i2.PhysicalDescriptions != null) foreach (var pd in i2.PhysicalDescriptions)
+                {
+                    pd.Id = (++i).ToString();
+                    pd.InstanceId = i2.Id;
+                }
+            i = 0;
+            if (i2.PublicationFrequencies != null) foreach (var pf in i2.PublicationFrequencies)
+                {
+                    pf.Id = (++i).ToString();
+                    pf.InstanceId = i2.Id;
+                }
+            i = 0;
+            if (i2.PublicationRanges != null) foreach (var pr in i2.PublicationRanges)
+                {
+                    pr.Id = (++i).ToString();
+                    pr.InstanceId = i2.Id;
+                }
+            i = 0;
+            if (i2.Publications != null) foreach (var p in i2.Publications)
+                {
+                    p.Id = (++i).ToString();
+                    p.InstanceId = i2.Id;
+                }
+            i = 0;
+            if (i2.Series != null) foreach (var s in i2.Series)
+                {
+                    s.Id = (++i).ToString();
+                    s.InstanceId = i2.Id;
+                }
+            i = 0;
+            if (i2.Subjects != null) foreach (var s2 in i2.Subjects)
+                {
+                    s2.Id = (++i).ToString();
+                    s2.InstanceId = i2.Id;
+                }
             return i2;
         }
 
@@ -2294,6 +2554,12 @@ namespace FolioLibrary
             if (i2 == null) return null;
             if (load && i2.CreationUserId != null) i2.CreationUser = (User2)(cache && objects.ContainsKey(i2.CreationUserId.Value) ? objects[i2.CreationUserId.Value] : objects[i2.CreationUserId.Value] = FindUser2(i2.CreationUserId));
             if (load && i2.LastWriteUserId != null) i2.LastWriteUser = (User2)(cache && objects.ContainsKey(i2.LastWriteUserId.Value) ? objects[i2.LastWriteUserId.Value] : objects[i2.LastWriteUserId.Value] = FindUser2(i2.LastWriteUserId));
+            var i = 0;
+            if (i2.InterfaceTypes != null) foreach (var it in i2.InterfaceTypes)
+                {
+                    it.Id = (++i).ToString();
+                    it.InterfaceId = i2.Id;
+                }
             return i2;
         }
 
@@ -2354,6 +2620,30 @@ namespace FolioLibrary
             if (load && i2.VendorId != null) i2.Vendor = (Organization2)(cache && objects.ContainsKey(i2.VendorId.Value) ? objects[i2.VendorId.Value] : objects[i2.VendorId.Value] = FindOrganization2(i2.VendorId));
             if (load && i2.CreationUserId != null) i2.CreationUser = (User2)(cache && objects.ContainsKey(i2.CreationUserId.Value) ? objects[i2.CreationUserId.Value] : objects[i2.CreationUserId.Value] = FindUser2(i2.CreationUserId));
             if (load && i2.LastWriteUserId != null) i2.LastWriteUser = (User2)(cache && objects.ContainsKey(i2.LastWriteUserId.Value) ? objects[i2.LastWriteUserId.Value] : objects[i2.LastWriteUserId.Value] = FindUser2(i2.LastWriteUserId));
+            var i = 0;
+            if (i2.InvoiceAcquisitionsUnits != null) foreach (var iau in i2.InvoiceAcquisitionsUnits)
+                {
+                    iau.Id = (++i).ToString();
+                    iau.InvoiceId = i2.Id;
+                }
+            i = 0;
+            if (i2.InvoiceAdjustments != null) foreach (var ia in i2.InvoiceAdjustments)
+                {
+                    ia.Id = (++i).ToString();
+                    ia.InvoiceId = i2.Id;
+                }
+            i = 0;
+            if (i2.InvoiceOrderNumbers != null) foreach (var ion in i2.InvoiceOrderNumbers)
+                {
+                    ion.Id = (++i).ToString();
+                    ion.InvoiceId = i2.Id;
+                }
+            i = 0;
+            if (i2.InvoiceTags != null) foreach (var it in i2.InvoiceTags)
+                {
+                    it.Id = (++i).ToString();
+                    it.InvoiceId = i2.Id;
+                }
             return i2;
         }
 
@@ -2408,6 +2698,36 @@ namespace FolioLibrary
             if (load && ii2.ProductIdTypeId != null) ii2.ProductIdType = (IdType2)(cache && objects.ContainsKey(ii2.ProductIdTypeId.Value) ? objects[ii2.ProductIdTypeId.Value] : objects[ii2.ProductIdTypeId.Value] = FindIdType2(ii2.ProductIdTypeId));
             if (load && ii2.CreationUserId != null) ii2.CreationUser = (User2)(cache && objects.ContainsKey(ii2.CreationUserId.Value) ? objects[ii2.CreationUserId.Value] : objects[ii2.CreationUserId.Value] = FindUser2(ii2.CreationUserId));
             if (load && ii2.LastWriteUserId != null) ii2.LastWriteUser = (User2)(cache && objects.ContainsKey(ii2.LastWriteUserId.Value) ? objects[ii2.LastWriteUserId.Value] : objects[ii2.LastWriteUserId.Value] = FindUser2(ii2.LastWriteUserId));
+            var i = 0;
+            if (ii2.InvoiceItemAdjustmentFunds != null) foreach (var iiaf in ii2.InvoiceItemAdjustmentFunds)
+                {
+                    iiaf.Id = (++i).ToString();
+                    iiaf.InvoiceItemId = ii2.Id;
+                }
+            i = 0;
+            if (ii2.InvoiceItemAdjustments != null) foreach (var iia in ii2.InvoiceItemAdjustments)
+                {
+                    iia.Id = (++i).ToString();
+                    iia.InvoiceItemId = ii2.Id;
+                }
+            i = 0;
+            if (ii2.InvoiceItemFunds != null) foreach (var iif in ii2.InvoiceItemFunds)
+                {
+                    iif.Id = (++i).ToString();
+                    iif.InvoiceItemId = ii2.Id;
+                }
+            i = 0;
+            if (ii2.InvoiceItemReferenceNumbers != null) foreach (var iirn in ii2.InvoiceItemReferenceNumbers)
+                {
+                    iirn.Id = (++i).ToString();
+                    iirn.InvoiceItemId = ii2.Id;
+                }
+            i = 0;
+            if (ii2.InvoiceItemTags != null) foreach (var iit in ii2.InvoiceItemTags)
+                {
+                    iit.Id = (++i).ToString();
+                    iit.InvoiceItemId = ii2.Id;
+                }
             return ii2;
         }
 
@@ -2558,6 +2878,48 @@ namespace FolioLibrary
             if (load && i2.LastWriteUserId != null) i2.LastWriteUser = (User2)(cache && objects.ContainsKey(i2.LastWriteUserId.Value) ? objects[i2.LastWriteUserId.Value] : objects[i2.LastWriteUserId.Value] = FindUser2(i2.LastWriteUserId));
             if (load && i2.LastCheckInServicePointId != null) i2.LastCheckInServicePoint = (ServicePoint2)(cache && objects.ContainsKey(i2.LastCheckInServicePointId.Value) ? objects[i2.LastCheckInServicePointId.Value] : objects[i2.LastCheckInServicePointId.Value] = FindServicePoint2(i2.LastCheckInServicePointId));
             if (load && i2.LastCheckInStaffMemberId != null) i2.LastCheckInStaffMember = (User2)(cache && objects.ContainsKey(i2.LastCheckInStaffMemberId.Value) ? objects[i2.LastCheckInStaffMemberId.Value] : objects[i2.LastCheckInStaffMemberId.Value] = FindUser2(i2.LastCheckInStaffMemberId));
+            var i = 0;
+            if (i2.CirculationNotes != null) foreach (var cn in i2.CirculationNotes)
+                {
+                    cn.Id = (++i).ToString();
+                    cn.ItemId = i2.Id;
+                }
+            i = 0;
+            if (i2.ItemElectronicAccesses != null) foreach (var iea in i2.ItemElectronicAccesses)
+                {
+                    iea.Id = (++i).ToString();
+                    iea.ItemId = i2.Id;
+                }
+            i = 0;
+            if (i2.ItemFormerIds != null) foreach (var ifi in i2.ItemFormerIds)
+                {
+                    ifi.Id = (++i).ToString();
+                    ifi.ItemId = i2.Id;
+                }
+            i = 0;
+            if (i2.ItemNotes != null) foreach (var @in in i2.ItemNotes)
+                {
+                    @in.Id = (++i).ToString();
+                    @in.ItemId = i2.Id;
+                }
+            i = 0;
+            if (i2.ItemStatisticalCodes != null) foreach (var isc in i2.ItemStatisticalCodes)
+                {
+                    isc.Id = (++i).ToString();
+                    isc.ItemId = i2.Id;
+                }
+            i = 0;
+            if (i2.ItemTags != null) foreach (var it in i2.ItemTags)
+                {
+                    it.Id = (++i).ToString();
+                    it.ItemId = i2.Id;
+                }
+            i = 0;
+            if (i2.ItemYearCaptions != null) foreach (var iyc in i2.ItemYearCaptions)
+                {
+                    iyc.Id = (++i).ToString();
+                    iyc.ItemId = i2.Id;
+                }
             return i2;
         }
 
@@ -2696,6 +3058,12 @@ namespace FolioLibrary
             if (load && l2.FiscalYearOneId != null) l2.FiscalYearOne = (FiscalYear2)(cache && objects.ContainsKey(l2.FiscalYearOneId.Value) ? objects[l2.FiscalYearOneId.Value] : objects[l2.FiscalYearOneId.Value] = FindFiscalYear2(l2.FiscalYearOneId));
             if (load && l2.CreationUserId != null) l2.CreationUser = (User2)(cache && objects.ContainsKey(l2.CreationUserId.Value) ? objects[l2.CreationUserId.Value] : objects[l2.CreationUserId.Value] = FindUser2(l2.CreationUserId));
             if (load && l2.LastWriteUserId != null) l2.LastWriteUser = (User2)(cache && objects.ContainsKey(l2.LastWriteUserId.Value) ? objects[l2.LastWriteUserId.Value] : objects[l2.LastWriteUserId.Value] = FindUser2(l2.LastWriteUserId));
+            var i = 0;
+            if (l2.LedgerAcquisitionsUnits != null) foreach (var lau in l2.LedgerAcquisitionsUnits)
+                {
+                    lau.Id = (++i).ToString();
+                    lau.LedgerId = l2.Id;
+                }
             return l2;
         }
 
@@ -2750,6 +3118,18 @@ namespace FolioLibrary
             if (load && lr2.ToFiscalYearId != null) lr2.ToFiscalYear = (FiscalYear2)(cache && objects.ContainsKey(lr2.ToFiscalYearId.Value) ? objects[lr2.ToFiscalYearId.Value] : objects[lr2.ToFiscalYearId.Value] = FindFiscalYear2(lr2.ToFiscalYearId));
             if (load && lr2.CreationUserId != null) lr2.CreationUser = (User2)(cache && objects.ContainsKey(lr2.CreationUserId.Value) ? objects[lr2.CreationUserId.Value] : objects[lr2.CreationUserId.Value] = FindUser2(lr2.CreationUserId));
             if (load && lr2.LastWriteUserId != null) lr2.LastWriteUser = (User2)(cache && objects.ContainsKey(lr2.LastWriteUserId.Value) ? objects[lr2.LastWriteUserId.Value] : objects[lr2.LastWriteUserId.Value] = FindUser2(lr2.LastWriteUserId));
+            var i = 0;
+            if (lr2.LedgerRolloverBudgetsRollovers != null) foreach (var lrbr in lr2.LedgerRolloverBudgetsRollovers)
+                {
+                    lrbr.Id = (++i).ToString();
+                    lrbr.LedgerRolloverId = lr2.Id;
+                }
+            i = 0;
+            if (lr2.LedgerRolloverEncumbrancesRollovers != null) foreach (var lrer in lr2.LedgerRolloverEncumbrancesRollovers)
+                {
+                    lrer.Id = (++i).ToString();
+                    lrer.LedgerRolloverId = lr2.Id;
+                }
             return lr2;
         }
 
@@ -3122,6 +3502,12 @@ namespace FolioLibrary
             if (load && l2.PrimaryServicePointId != null) l2.PrimaryServicePoint = (ServicePoint2)(cache && objects.ContainsKey(l2.PrimaryServicePointId.Value) ? objects[l2.PrimaryServicePointId.Value] : objects[l2.PrimaryServicePointId.Value] = FindServicePoint2(l2.PrimaryServicePointId));
             if (load && l2.CreationUserId != null) l2.CreationUser = (User2)(cache && objects.ContainsKey(l2.CreationUserId.Value) ? objects[l2.CreationUserId.Value] : objects[l2.CreationUserId.Value] = FindUser2(l2.CreationUserId));
             if (load && l2.LastWriteUserId != null) l2.LastWriteUser = (User2)(cache && objects.ContainsKey(l2.LastWriteUserId.Value) ? objects[l2.LastWriteUserId.Value] : objects[l2.LastWriteUserId.Value] = FindUser2(l2.LastWriteUserId));
+            var i = 0;
+            if (l2.LocationServicePoints != null) foreach (var lsp in l2.LocationServicePoints)
+                {
+                    lsp.Id = (++i).ToString();
+                    lsp.LocationId = l2.Id;
+                }
             return l2;
         }
 
@@ -3410,6 +3796,12 @@ namespace FolioLibrary
             if (load && n3.CreationUserId != null) n3.CreationUser = (User2)(cache && objects.ContainsKey(n3.CreationUserId.Value) ? objects[n3.CreationUserId.Value] : objects[n3.CreationUserId.Value] = FindUser2(n3.CreationUserId));
             if (load && n3.LastWriteUserId != null) n3.LastWriteUser = (User2)(cache && objects.ContainsKey(n3.LastWriteUserId.Value) ? objects[n3.LastWriteUserId.Value] : objects[n3.LastWriteUserId.Value] = FindUser2(n3.LastWriteUserId));
             if (load && n3.TemporaryTypeId != null) n3.TemporaryType = (NoteType2)(cache && objects.ContainsKey(n3.TemporaryTypeId.Value) ? objects[n3.TemporaryTypeId.Value] : objects[n3.TemporaryTypeId.Value] = FindNoteType2(n3.TemporaryTypeId));
+            var i = 0;
+            if (n3.NoteLinks != null) foreach (var nl in n3.NoteLinks)
+                {
+                    nl.Id = (++i).ToString();
+                    nl.NoteId = n3.Id;
+                }
             return n3;
         }
 
@@ -3512,6 +3904,24 @@ namespace FolioLibrary
             if (load && o2.VendorId != null) o2.Vendor = (Organization2)(cache && objects.ContainsKey(o2.VendorId.Value) ? objects[o2.VendorId.Value] : objects[o2.VendorId.Value] = FindOrganization2(o2.VendorId));
             if (load && o2.CreationUserId != null) o2.CreationUser = (User2)(cache && objects.ContainsKey(o2.CreationUserId.Value) ? objects[o2.CreationUserId.Value] : objects[o2.CreationUserId.Value] = FindUser2(o2.CreationUserId));
             if (load && o2.LastWriteUserId != null) o2.LastWriteUser = (User2)(cache && objects.ContainsKey(o2.LastWriteUserId.Value) ? objects[o2.LastWriteUserId.Value] : objects[o2.LastWriteUserId.Value] = FindUser2(o2.LastWriteUserId));
+            var i = 0;
+            if (o2.OrderAcquisitionsUnits != null) foreach (var oau in o2.OrderAcquisitionsUnits)
+                {
+                    oau.Id = (++i).ToString();
+                    oau.OrderId = o2.Id;
+                }
+            i = 0;
+            if (o2.OrderNotes != null) foreach (var @on in o2.OrderNotes)
+                {
+                    @on.Id = (++i).ToString();
+                    @on.OrderId = o2.Id;
+                }
+            i = 0;
+            if (o2.OrderTags != null) foreach (var ot in o2.OrderTags)
+                {
+                    ot.Id = (++i).ToString();
+                    ot.OrderId = o2.Id;
+                }
             return o2;
         }
 
@@ -3623,6 +4033,66 @@ namespace FolioLibrary
             if (load && oi2.OrderId != null) oi2.Order = (Order2)(cache && objects.ContainsKey(oi2.OrderId.Value) ? objects[oi2.OrderId.Value] : objects[oi2.OrderId.Value] = FindOrder2(oi2.OrderId));
             if (load && oi2.CreationUserId != null) oi2.CreationUser = (User2)(cache && objects.ContainsKey(oi2.CreationUserId.Value) ? objects[oi2.CreationUserId.Value] : objects[oi2.CreationUserId.Value] = FindUser2(oi2.CreationUserId));
             if (load && oi2.LastWriteUserId != null) oi2.LastWriteUser = (User2)(cache && objects.ContainsKey(oi2.LastWriteUserId.Value) ? objects[oi2.LastWriteUserId.Value] : objects[oi2.LastWriteUserId.Value] = FindUser2(oi2.LastWriteUserId));
+            var i = 0;
+            if (oi2.OrderItemAlerts != null) foreach (var oia in oi2.OrderItemAlerts)
+                {
+                    oia.Id = (++i).ToString();
+                    oia.OrderItemId = oi2.Id;
+                }
+            i = 0;
+            if (oi2.OrderItemClaims != null) foreach (var oic in oi2.OrderItemClaims)
+                {
+                    oic.Id = (++i).ToString();
+                    oic.OrderItemId = oi2.Id;
+                }
+            i = 0;
+            if (oi2.OrderItemContributors != null) foreach (var oic2 in oi2.OrderItemContributors)
+                {
+                    oic2.Id = (++i).ToString();
+                    oic2.OrderItemId = oi2.Id;
+                }
+            i = 0;
+            if (oi2.OrderItemFunds != null) foreach (var oif in oi2.OrderItemFunds)
+                {
+                    oif.Id = (++i).ToString();
+                    oif.OrderItemId = oi2.Id;
+                }
+            i = 0;
+            if (oi2.OrderItemLocation2s != null) foreach (var oil2 in oi2.OrderItemLocation2s)
+                {
+                    oil2.Id = (++i).ToString();
+                    oil2.OrderItemId = oi2.Id;
+                }
+            i = 0;
+            if (oi2.OrderItemProductIds != null) foreach (var oipi in oi2.OrderItemProductIds)
+                {
+                    oipi.Id = (++i).ToString();
+                    oipi.OrderItemId = oi2.Id;
+                }
+            i = 0;
+            if (oi2.OrderItemReferenceNumbers != null) foreach (var oirn in oi2.OrderItemReferenceNumbers)
+                {
+                    oirn.Id = (++i).ToString();
+                    oirn.OrderItemId = oi2.Id;
+                }
+            i = 0;
+            if (oi2.OrderItemReportingCodes != null) foreach (var oirc in oi2.OrderItemReportingCodes)
+                {
+                    oirc.Id = (++i).ToString();
+                    oirc.OrderItemId = oi2.Id;
+                }
+            i = 0;
+            if (oi2.OrderItemTags != null) foreach (var oit in oi2.OrderItemTags)
+                {
+                    oit.Id = (++i).ToString();
+                    oit.OrderItemId = oi2.Id;
+                }
+            i = 0;
+            if (oi2.OrderItemVolumes != null) foreach (var oiv in oi2.OrderItemVolumes)
+                {
+                    oiv.Id = (++i).ToString();
+                    oiv.OrderItemId = oi2.Id;
+                }
             return oi2;
         }
 
@@ -3720,6 +4190,84 @@ namespace FolioLibrary
             if (o2 == null) return null;
             if (load && o2.CreationUserId != null) o2.CreationUser = (User2)(cache && objects.ContainsKey(o2.CreationUserId.Value) ? objects[o2.CreationUserId.Value] : objects[o2.CreationUserId.Value] = FindUser2(o2.CreationUserId));
             if (load && o2.LastWriteUserId != null) o2.LastWriteUser = (User2)(cache && objects.ContainsKey(o2.LastWriteUserId.Value) ? objects[o2.LastWriteUserId.Value] : objects[o2.LastWriteUserId.Value] = FindUser2(o2.LastWriteUserId));
+            var i = 0;
+            if (o2.Currencies != null) foreach (var c in o2.Currencies)
+                {
+                    c.Id = (++i).ToString();
+                    c.OrganizationId = o2.Id;
+                }
+            i = 0;
+            if (o2.OrganizationAccounts != null) foreach (var oa in o2.OrganizationAccounts)
+                {
+                    oa.Id = (++i).ToString();
+                    oa.OrganizationId = o2.Id;
+                }
+            i = 0;
+            if (o2.OrganizationAcquisitionsUnits != null) foreach (var oau in o2.OrganizationAcquisitionsUnits)
+                {
+                    oau.Id = (++i).ToString();
+                    oau.OrganizationId = o2.Id;
+                }
+            i = 0;
+            if (o2.OrganizationAddresses != null) foreach (var oa2 in o2.OrganizationAddresses)
+                {
+                    oa2.Id = (++i).ToString();
+                    oa2.OrganizationId = o2.Id;
+                }
+            i = 0;
+            if (o2.OrganizationAgreements != null) foreach (var oa3 in o2.OrganizationAgreements)
+                {
+                    oa3.Id = (++i).ToString();
+                    oa3.OrganizationId = o2.Id;
+                }
+            i = 0;
+            if (o2.OrganizationAliases != null) foreach (var oa4 in o2.OrganizationAliases)
+                {
+                    oa4.Id = (++i).ToString();
+                    oa4.OrganizationId = o2.Id;
+                }
+            i = 0;
+            if (o2.OrganizationChangelogs != null) foreach (var oc in o2.OrganizationChangelogs)
+                {
+                    oc.Id = (++i).ToString();
+                    oc.OrganizationId = o2.Id;
+                }
+            i = 0;
+            if (o2.OrganizationContacts != null) foreach (var oc2 in o2.OrganizationContacts)
+                {
+                    oc2.Id = (++i).ToString();
+                    oc2.OrganizationId = o2.Id;
+                }
+            i = 0;
+            if (o2.OrganizationEmails != null) foreach (var oe in o2.OrganizationEmails)
+                {
+                    oe.Id = (++i).ToString();
+                    oe.OrganizationId = o2.Id;
+                }
+            i = 0;
+            if (o2.OrganizationInterfaces != null) foreach (var oi in o2.OrganizationInterfaces)
+                {
+                    oi.Id = (++i).ToString();
+                    oi.OrganizationId = o2.Id;
+                }
+            i = 0;
+            if (o2.OrganizationPhoneNumbers != null) foreach (var opn in o2.OrganizationPhoneNumbers)
+                {
+                    opn.Id = (++i).ToString();
+                    opn.OrganizationId = o2.Id;
+                }
+            i = 0;
+            if (o2.OrganizationTags != null) foreach (var ot in o2.OrganizationTags)
+                {
+                    ot.Id = (++i).ToString();
+                    ot.OrganizationId = o2.Id;
+                }
+            i = 0;
+            if (o2.OrganizationUrls != null) foreach (var ou in o2.OrganizationUrls)
+                {
+                    ou.Id = (++i).ToString();
+                    ou.OrganizationId = o2.Id;
+                }
             return o2;
         }
 
@@ -3816,6 +4364,12 @@ namespace FolioLibrary
             if (load && o2.DefaultActionNoticeId != null) o2.DefaultActionNotice = (Template2)(cache && objects.ContainsKey(o2.DefaultActionNoticeId.Value) ? objects[o2.DefaultActionNoticeId.Value] : objects[o2.DefaultActionNoticeId.Value] = FindTemplate2(o2.DefaultActionNoticeId));
             if (load && o2.CreationUserId != null) o2.CreationUser = (User2)(cache && objects.ContainsKey(o2.CreationUserId.Value) ? objects[o2.CreationUserId.Value] : objects[o2.CreationUserId.Value] = FindUser2(o2.CreationUserId));
             if (load && o2.LastWriteUserId != null) o2.LastWriteUser = (User2)(cache && objects.ContainsKey(o2.LastWriteUserId.Value) ? objects[o2.LastWriteUserId.Value] : objects[o2.LastWriteUserId.Value] = FindUser2(o2.LastWriteUserId));
+            var i = 0;
+            if (o2.ServicePointOwners != null) foreach (var spo in o2.ServicePointOwners)
+                {
+                    spo.Id = (++i).ToString();
+                    spo.OwnerId = o2.Id;
+                }
             return o2;
         }
 
@@ -3912,6 +4466,24 @@ namespace FolioLibrary
             if (pnp2 == null) return null;
             if (load && pnp2.CreationUserId != null) pnp2.CreationUser = (User2)(cache && objects.ContainsKey(pnp2.CreationUserId.Value) ? objects[pnp2.CreationUserId.Value] : objects[pnp2.CreationUserId.Value] = FindUser2(pnp2.CreationUserId));
             if (load && pnp2.LastWriteUserId != null) pnp2.LastWriteUser = (User2)(cache && objects.ContainsKey(pnp2.LastWriteUserId.Value) ? objects[pnp2.LastWriteUserId.Value] : objects[pnp2.LastWriteUserId.Value] = FindUser2(pnp2.LastWriteUserId));
+            var i = 0;
+            if (pnp2.PatronNoticePolicyFeeFineNotices != null) foreach (var pnpffn in pnp2.PatronNoticePolicyFeeFineNotices)
+                {
+                    pnpffn.Id = (++i).ToString();
+                    pnpffn.PatronNoticePolicyId = pnp2.Id;
+                }
+            i = 0;
+            if (pnp2.PatronNoticePolicyLoanNotices != null) foreach (var pnpln in pnp2.PatronNoticePolicyLoanNotices)
+                {
+                    pnpln.Id = (++i).ToString();
+                    pnpln.PatronNoticePolicyId = pnp2.Id;
+                }
+            i = 0;
+            if (pnp2.PatronNoticePolicyRequestNotices != null) foreach (var pnprn in pnp2.PatronNoticePolicyRequestNotices)
+                {
+                    pnprn.Id = (++i).ToString();
+                    pnprn.PatronNoticePolicyId = pnp2.Id;
+                }
             return pnp2;
         }
 
@@ -4053,6 +4625,30 @@ namespace FolioLibrary
             if (p2 == null) return null;
             if (load && p2.CreationUserId != null) p2.CreationUser = (User2)(cache && objects.ContainsKey(p2.CreationUserId.Value) ? objects[p2.CreationUserId.Value] : objects[p2.CreationUserId.Value] = FindUser2(p2.CreationUserId));
             if (load && p2.LastWriteUserId != null) p2.LastWriteUser = (User2)(cache && objects.ContainsKey(p2.LastWriteUserId.Value) ? objects[p2.LastWriteUserId.Value] : objects[p2.LastWriteUserId.Value] = FindUser2(p2.LastWriteUserId));
+            var i = 0;
+            if (p2.PermissionChildOfs != null) foreach (var pco in p2.PermissionChildOfs)
+                {
+                    pco.Id = (++i).ToString();
+                    pco.PermissionId = p2.Id;
+                }
+            i = 0;
+            if (p2.PermissionGrantedTos != null) foreach (var pgt in p2.PermissionGrantedTos)
+                {
+                    pgt.Id = (++i).ToString();
+                    pgt.PermissionId = p2.Id;
+                }
+            i = 0;
+            if (p2.PermissionSubPermissions != null) foreach (var psp in p2.PermissionSubPermissions)
+                {
+                    psp.Id = (++i).ToString();
+                    psp.PermissionId = p2.Id;
+                }
+            i = 0;
+            if (p2.PermissionTags != null) foreach (var pt in p2.PermissionTags)
+                {
+                    pt.Id = (++i).ToString();
+                    pt.PermissionId = p2.Id;
+                }
             return p2;
         }
 
@@ -4101,6 +4697,12 @@ namespace FolioLibrary
             if (load && pu2.UserId != null) pu2.User = (User2)(cache && objects.ContainsKey(pu2.UserId.Value) ? objects[pu2.UserId.Value] : objects[pu2.UserId.Value] = FindUser2(pu2.UserId));
             if (load && pu2.CreationUserId != null) pu2.CreationUser = (User2)(cache && objects.ContainsKey(pu2.CreationUserId.Value) ? objects[pu2.CreationUserId.Value] : objects[pu2.CreationUserId.Value] = FindUser2(pu2.CreationUserId));
             if (load && pu2.LastWriteUserId != null) pu2.LastWriteUser = (User2)(cache && objects.ContainsKey(pu2.LastWriteUserId.Value) ? objects[pu2.LastWriteUserId.Value] : objects[pu2.LastWriteUserId.Value] = FindUser2(pu2.LastWriteUserId));
+            var i = 0;
+            if (pu2.PermissionsUserPermissions != null) foreach (var pup in pu2.PermissionsUserPermissions)
+                {
+                    pup.Id = (++i).ToString();
+                    pup.PermissionsUserId = pu2.Id;
+                }
             return pu2;
         }
 
@@ -4152,6 +4754,12 @@ namespace FolioLibrary
             if (load && pst2.SucceedingInstanceId != null) pst2.SucceedingInstance = (Instance2)(cache && objects.ContainsKey(pst2.SucceedingInstanceId.Value) ? objects[pst2.SucceedingInstanceId.Value] : objects[pst2.SucceedingInstanceId.Value] = FindInstance2(pst2.SucceedingInstanceId));
             if (load && pst2.CreationUserId != null) pst2.CreationUser = (User2)(cache && objects.ContainsKey(pst2.CreationUserId.Value) ? objects[pst2.CreationUserId.Value] : objects[pst2.CreationUserId.Value] = FindUser2(pst2.CreationUserId));
             if (load && pst2.LastWriteUserId != null) pst2.LastWriteUser = (User2)(cache && objects.ContainsKey(pst2.LastWriteUserId.Value) ? objects[pst2.LastWriteUserId.Value] : objects[pst2.LastWriteUserId.Value] = FindUser2(pst2.LastWriteUserId));
+            var i = 0;
+            if (pst2.PrecedingSucceedingTitleIdentifiers != null) foreach (var psti in pst2.PrecedingSucceedingTitleIdentifiers)
+                {
+                    psti.Id = (++i).ToString();
+                    psti.PrecedingSucceedingTitleId = pst2.Id;
+                }
             return pst2;
         }
 
@@ -4634,6 +5242,18 @@ namespace FolioLibrary
             if (load && r2.PickupServicePointId != null) r2.PickupServicePoint = (ServicePoint2)(cache && objects.ContainsKey(r2.PickupServicePointId.Value) ? objects[r2.PickupServicePointId.Value] : objects[r2.PickupServicePointId.Value] = FindServicePoint2(r2.PickupServicePointId));
             if (load && r2.CreationUserId != null) r2.CreationUser = (User2)(cache && objects.ContainsKey(r2.CreationUserId.Value) ? objects[r2.CreationUserId.Value] : objects[r2.CreationUserId.Value] = FindUser2(r2.CreationUserId));
             if (load && r2.LastWriteUserId != null) r2.LastWriteUser = (User2)(cache && objects.ContainsKey(r2.LastWriteUserId.Value) ? objects[r2.LastWriteUserId.Value] : objects[r2.LastWriteUserId.Value] = FindUser2(r2.LastWriteUserId));
+            var i = 0;
+            if (r2.RequestIdentifiers != null) foreach (var ri in r2.RequestIdentifiers)
+                {
+                    ri.Id = (++i).ToString();
+                    ri.RequestId = r2.Id;
+                }
+            i = 0;
+            if (r2.RequestTags != null) foreach (var rt in r2.RequestTags)
+                {
+                    rt.Id = (++i).ToString();
+                    rt.RequestId = r2.Id;
+                }
             return r2;
         }
 
@@ -4679,6 +5299,12 @@ namespace FolioLibrary
             if (rp2 == null) return null;
             if (load && rp2.CreationUserId != null) rp2.CreationUser = (User2)(cache && objects.ContainsKey(rp2.CreationUserId.Value) ? objects[rp2.CreationUserId.Value] : objects[rp2.CreationUserId.Value] = FindUser2(rp2.CreationUserId));
             if (load && rp2.LastWriteUserId != null) rp2.LastWriteUser = (User2)(cache && objects.ContainsKey(rp2.LastWriteUserId.Value) ? objects[rp2.LastWriteUserId.Value] : objects[rp2.LastWriteUserId.Value] = FindUser2(rp2.LastWriteUserId));
+            var i = 0;
+            if (rp2.RequestPolicyRequestTypes != null) foreach (var rprt in rp2.RequestPolicyRequestTypes)
+                {
+                    rprt.Id = (++i).ToString();
+                    rprt.RequestPolicyId = rp2.Id;
+                }
             return rp2;
         }
 
@@ -4784,6 +5410,12 @@ namespace FolioLibrary
             if (sp2 == null) return null;
             if (load && sp2.CreationUserId != null) sp2.CreationUser = (User2)(cache && objects.ContainsKey(sp2.CreationUserId.Value) ? objects[sp2.CreationUserId.Value] : objects[sp2.CreationUserId.Value] = FindUser2(sp2.CreationUserId));
             if (load && sp2.LastWriteUserId != null) sp2.LastWriteUser = (User2)(cache && objects.ContainsKey(sp2.LastWriteUserId.Value) ? objects[sp2.LastWriteUserId.Value] : objects[sp2.LastWriteUserId.Value] = FindUser2(sp2.LastWriteUserId));
+            var i = 0;
+            if (sp2.ServicePointStaffSlips != null) foreach (var spss in sp2.ServicePointStaffSlips)
+                {
+                    spss.Id = (++i).ToString();
+                    spss.ServicePointId = sp2.Id;
+                }
             return sp2;
         }
 
@@ -4835,6 +5467,12 @@ namespace FolioLibrary
             if (load && spu2.DefaultServicePointId != null) spu2.DefaultServicePoint = (ServicePoint2)(cache && objects.ContainsKey(spu2.DefaultServicePointId.Value) ? objects[spu2.DefaultServicePointId.Value] : objects[spu2.DefaultServicePointId.Value] = FindServicePoint2(spu2.DefaultServicePointId));
             if (load && spu2.CreationUserId != null) spu2.CreationUser = (User2)(cache && objects.ContainsKey(spu2.CreationUserId.Value) ? objects[spu2.CreationUserId.Value] : objects[spu2.CreationUserId.Value] = FindUser2(spu2.CreationUserId));
             if (load && spu2.LastWriteUserId != null) spu2.LastWriteUser = (User2)(cache && objects.ContainsKey(spu2.LastWriteUserId.Value) ? objects[spu2.LastWriteUserId.Value] : objects[spu2.LastWriteUserId.Value] = FindUser2(spu2.LastWriteUserId));
+            var i = 0;
+            if (spu2.ServicePointUserServicePoints != null) foreach (var spusp in spu2.ServicePointUserServicePoints)
+                {
+                    spusp.Id = (++i).ToString();
+                    spusp.ServicePointUserId = spu2.Id;
+                }
             return spu2;
         }
 
@@ -5277,6 +5915,12 @@ namespace FolioLibrary
             if (t2 == null) return null;
             if (load && t2.CreationUserId != null) t2.CreationUser = (User2)(cache && objects.ContainsKey(t2.CreationUserId.Value) ? objects[t2.CreationUserId.Value] : objects[t2.CreationUserId.Value] = FindUser2(t2.CreationUserId));
             if (load && t2.LastWriteUserId != null) t2.LastWriteUser = (User2)(cache && objects.ContainsKey(t2.LastWriteUserId.Value) ? objects[t2.LastWriteUserId.Value] : objects[t2.LastWriteUserId.Value] = FindUser2(t2.LastWriteUserId));
+            var i = 0;
+            if (t2.TemplateOutputFormats != null) foreach (var tof in t2.TemplateOutputFormats)
+                {
+                    tof.Id = (++i).ToString();
+                    tof.TemplateId = t2.Id;
+                }
             return t2;
         }
 
@@ -5328,6 +5972,18 @@ namespace FolioLibrary
             if (load && t2.InstanceId != null) t2.Instance = (Instance2)(cache && objects.ContainsKey(t2.InstanceId.Value) ? objects[t2.InstanceId.Value] : objects[t2.InstanceId.Value] = FindInstance2(t2.InstanceId));
             if (load && t2.CreationUserId != null) t2.CreationUser = (User2)(cache && objects.ContainsKey(t2.CreationUserId.Value) ? objects[t2.CreationUserId.Value] : objects[t2.CreationUserId.Value] = FindUser2(t2.CreationUserId));
             if (load && t2.LastWriteUserId != null) t2.LastWriteUser = (User2)(cache && objects.ContainsKey(t2.LastWriteUserId.Value) ? objects[t2.LastWriteUserId.Value] : objects[t2.LastWriteUserId.Value] = FindUser2(t2.LastWriteUserId));
+            var i = 0;
+            if (t2.TitleContributors != null) foreach (var tc in t2.TitleContributors)
+                {
+                    tc.Id = (++i).ToString();
+                    tc.TitleId = t2.Id;
+                }
+            i = 0;
+            if (t2.TitleProductIds != null) foreach (var tpi in t2.TitleProductIds)
+                {
+                    tpi.Id = (++i).ToString();
+                    tpi.TitleId = t2.Id;
+                }
             return t2;
         }
 
@@ -5406,6 +6062,12 @@ namespace FolioLibrary
             if (load && t2.ToFundId != null) t2.ToFund = (Fund2)(cache && objects.ContainsKey(t2.ToFundId.Value) ? objects[t2.ToFundId.Value] : objects[t2.ToFundId.Value] = FindFund2(t2.ToFundId));
             if (load && t2.CreationUserId != null) t2.CreationUser = (User2)(cache && objects.ContainsKey(t2.CreationUserId.Value) ? objects[t2.CreationUserId.Value] : objects[t2.CreationUserId.Value] = FindUser2(t2.CreationUserId));
             if (load && t2.LastWriteUserId != null) t2.LastWriteUser = (User2)(cache && objects.ContainsKey(t2.LastWriteUserId.Value) ? objects[t2.LastWriteUserId.Value] : objects[t2.LastWriteUserId.Value] = FindUser2(t2.LastWriteUserId));
+            var i = 0;
+            if (t2.TransactionTags != null) foreach (var tt in t2.TransactionTags)
+                {
+                    tt.Id = (++i).ToString();
+                    tt.TransactionId = t2.Id;
+                }
             return t2;
         }
 
@@ -5536,6 +6198,24 @@ namespace FolioLibrary
             if (load && u2.GroupId != null) u2.Group = (Group2)(cache && objects.ContainsKey(u2.GroupId.Value) ? objects[u2.GroupId.Value] : objects[u2.GroupId.Value] = FindGroup2(u2.GroupId));
             if (load && u2.CreationUserId != null) u2.CreationUser = (User2)(cache && objects.ContainsKey(u2.CreationUserId.Value) ? objects[u2.CreationUserId.Value] : objects[u2.CreationUserId.Value] = FindUser2(u2.CreationUserId));
             if (load && u2.LastWriteUserId != null) u2.LastWriteUser = (User2)(cache && objects.ContainsKey(u2.LastWriteUserId.Value) ? objects[u2.LastWriteUserId.Value] : objects[u2.LastWriteUserId.Value] = FindUser2(u2.LastWriteUserId));
+            var i = 0;
+            if (u2.UserAddresses != null) foreach (var ua in u2.UserAddresses)
+                {
+                    ua.Id = (++i).ToString();
+                    ua.UserId = u2.Id;
+                }
+            i = 0;
+            if (u2.UserDepartments != null) foreach (var ud in u2.UserDepartments)
+                {
+                    ud.Id = (++i).ToString();
+                    ud.UserId = u2.Id;
+                }
+            i = 0;
+            if (u2.UserTags != null) foreach (var ut in u2.UserTags)
+                {
+                    ut.Id = (++i).ToString();
+                    ut.UserId = u2.Id;
+                }
             return u2;
         }
 
@@ -5695,6 +6375,12 @@ namespace FolioLibrary
             if (load && v2.VendorId != null) v2.Vendor = (Organization2)(cache && objects.ContainsKey(v2.VendorId.Value) ? objects[v2.VendorId.Value] : objects[v2.VendorId.Value] = FindOrganization2(v2.VendorId));
             if (load && v2.CreationUserId != null) v2.CreationUser = (User2)(cache && objects.ContainsKey(v2.CreationUserId.Value) ? objects[v2.CreationUserId.Value] : objects[v2.CreationUserId.Value] = FindUser2(v2.CreationUserId));
             if (load && v2.LastWriteUserId != null) v2.LastWriteUser = (User2)(cache && objects.ContainsKey(v2.LastWriteUserId.Value) ? objects[v2.LastWriteUserId.Value] : objects[v2.LastWriteUserId.Value] = FindUser2(v2.LastWriteUserId));
+            var i = 0;
+            if (v2.VoucherAcquisitionsUnits != null) foreach (var vau in v2.VoucherAcquisitionsUnits)
+                {
+                    vau.Id = (++i).ToString();
+                    vau.VoucherId = v2.Id;
+                }
             return v2;
         }
 
@@ -5746,6 +6432,18 @@ namespace FolioLibrary
             if (load && vi2.VoucherId != null) vi2.Voucher = (Voucher2)(cache && objects.ContainsKey(vi2.VoucherId.Value) ? objects[vi2.VoucherId.Value] : objects[vi2.VoucherId.Value] = FindVoucher2(vi2.VoucherId));
             if (load && vi2.CreationUserId != null) vi2.CreationUser = (User2)(cache && objects.ContainsKey(vi2.CreationUserId.Value) ? objects[vi2.CreationUserId.Value] : objects[vi2.CreationUserId.Value] = FindUser2(vi2.CreationUserId));
             if (load && vi2.LastWriteUserId != null) vi2.LastWriteUser = (User2)(cache && objects.ContainsKey(vi2.LastWriteUserId.Value) ? objects[vi2.LastWriteUserId.Value] : objects[vi2.LastWriteUserId.Value] = FindUser2(vi2.LastWriteUserId));
+            var i = 0;
+            if (vi2.VoucherItemFunds != null) foreach (var vif in vi2.VoucherItemFunds)
+                {
+                    vif.Id = (++i).ToString();
+                    vif.VoucherItemId = vi2.Id;
+                }
+            i = 0;
+            if (vi2.VoucherItemInvoiceItems != null) foreach (var viii in vi2.VoucherItemInvoiceItems)
+                {
+                    viii.Id = (++i).ToString();
+                    viii.VoucherItemId = vi2.Id;
+                }
             return vi2;
         }
 

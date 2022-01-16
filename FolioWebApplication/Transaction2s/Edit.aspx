@@ -572,6 +572,28 @@
             </telerik:RadGrid>
         </fieldset>
     </asp:Panel>
+    <asp:Panel ID="TransactionTagsPanel" runat="server" Visible='<%# (string)Session["TransactionTagsPermission"] != null && Transaction2FormView.DataKey.Value != null %>'>
+        <fieldset>
+            <legend>
+                <asp:HyperLink ID="TransactionTagsHyperLink" runat="server" Text="Transaction Tags" NavigateUrl="~/TransactionTags/Default.aspx" /></legend>
+            <telerik:RadGrid ID="TransactionTagsRadGrid" runat="server" AutoGenerateColumns="false" AllowSorting="true" AllowFilteringByColumn="false" GroupingSettings-CaseSensitive="false" AllowPaging="true" PageSize="10" EnableLinqExpressions="false" OnNeedDataSource="TransactionTagsRadGrid_NeedDataSource">
+                <MasterTableView DataKeyNames="Id" PagerStyle-Mode="NextPrevNumericAndAdvanced" NoMasterRecordsText="No transaction tags found">
+                    <Columns>
+                        <telerik:GridTemplateColumn AllowFiltering="false" ItemStyle-Width="0px">
+                            <ItemTemplate>
+                                <asp:HyperLink ID="ViewHyperLink" Text="View" NavigateUrl='<%# $"~/TransactionTags/Edit.aspx?Id={Eval("Id")}" %>' runat="server" />
+                            </ItemTemplate>
+                        </telerik:GridTemplateColumn>
+                        <telerik:GridTemplateColumn HeaderText="Content" DataField="Content" SortExpression="Content" AutoPostBackOnFilter="true" CurrentFilterFunction="StartsWith">
+                            <ItemTemplate>
+                                <asp:HyperLink ID="ContentHyperLink" runat="server" Text='<%#: Eval("Content") %>' NavigateUrl='<%# $"~/TransactionTags/Edit.aspx?Id={Eval("Id")}" %>' />
+                            </ItemTemplate>
+                        </telerik:GridTemplateColumn>
+                    </Columns>
+                </MasterTableView>
+            </telerik:RadGrid>
+        </fieldset>
+    </asp:Panel>
     <asp:Panel ID="VoucherItem2sPanel" runat="server" Visible='<%# (string)Session["VoucherItem2sPermission"] != null && Transaction2FormView.DataKey.Value != null %>'>
         <fieldset>
             <legend>
@@ -635,6 +657,11 @@
             <telerik:AjaxSetting AjaxControlID="Transaction2s1RadGrid">
                 <UpdatedControls>
                     <telerik:AjaxUpdatedControl ControlID="Transaction2s1Panel" LoadingPanelID="RadAjaxLoadingPanel1" />
+                </UpdatedControls>
+            </telerik:AjaxSetting>
+            <telerik:AjaxSetting AjaxControlID="TransactionTagsRadGrid">
+                <UpdatedControls>
+                    <telerik:AjaxUpdatedControl ControlID="TransactionTagsPanel" LoadingPanelID="RadAjaxLoadingPanel1" />
                 </UpdatedControls>
             </telerik:AjaxSetting>
             <telerik:AjaxSetting AjaxControlID="VoucherItem2sRadGrid">

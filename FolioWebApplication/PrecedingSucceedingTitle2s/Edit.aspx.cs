@@ -4,6 +4,7 @@ using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Linq;
 using Telerik.Web.UI;
 
 namespace FolioWebApplication.PrecedingSucceedingTitle2s
@@ -31,6 +32,17 @@ namespace FolioWebApplication.PrecedingSucceedingTitle2s
             pst2.Content = pst2.Content != null ? JsonConvert.DeserializeObject<JToken>(pst2.Content, new JsonSerializerSettings { DateTimeZoneHandling = DateTimeZoneHandling.Local }).ToString() : null;
             PrecedingSucceedingTitle2FormView.DataSource = new[] { pst2 };
             Title = $"Preceding Succeeding Title {pst2.Title}";
+        }
+
+        protected void PrecedingSucceedingTitleIdentifiersRadGrid_NeedDataSource(object sender, GridNeedDataSourceEventArgs e)
+        {
+            if (Session["PrecedingSucceedingTitleIdentifiersPermission"] == null) return;
+            var id = (Guid?)PrecedingSucceedingTitle2FormView.DataKey.Value;
+            if (id == null) return;
+            var l = folioServiceContext.FindPrecedingSucceedingTitle2(id).PrecedingSucceedingTitleIdentifiers ?? new PrecedingSucceedingTitleIdentifier[] { };
+            PrecedingSucceedingTitleIdentifiersRadGrid.DataSource = l;
+            PrecedingSucceedingTitleIdentifiersRadGrid.AllowFilteringByColumn = l.Count() > 10;
+            PrecedingSucceedingTitleIdentifiersPanel.Visible = PrecedingSucceedingTitle2FormView.DataKey.Value != null && ((string)Session["PrecedingSucceedingTitleIdentifiersPermission"] == "Edit" || Session["PrecedingSucceedingTitleIdentifiersPermission"] != null && l.Any());
         }
 
         public override void Dispose()

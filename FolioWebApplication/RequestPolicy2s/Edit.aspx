@@ -79,4 +79,35 @@
             </asp:FormView>
         </fieldset>
     </asp:Panel>
+    <asp:Panel ID="RequestPolicyRequestTypesPanel" runat="server" Visible='<%# (string)Session["RequestPolicyRequestTypesPermission"] != null && RequestPolicy2FormView.DataKey.Value != null %>'>
+        <fieldset>
+            <legend>
+                <asp:HyperLink ID="RequestPolicyRequestTypesHyperLink" runat="server" Text="Request Policy Request Types" NavigateUrl="~/RequestPolicyRequestTypes/Default.aspx" /></legend>
+            <telerik:RadGrid ID="RequestPolicyRequestTypesRadGrid" runat="server" AutoGenerateColumns="false" AllowSorting="true" AllowFilteringByColumn="false" GroupingSettings-CaseSensitive="false" AllowPaging="true" PageSize="10" EnableLinqExpressions="false" OnNeedDataSource="RequestPolicyRequestTypesRadGrid_NeedDataSource">
+                <MasterTableView DataKeyNames="Id" PagerStyle-Mode="NextPrevNumericAndAdvanced" NoMasterRecordsText="No request policy request types found">
+                    <Columns>
+                        <telerik:GridTemplateColumn AllowFiltering="false" ItemStyle-Width="0px">
+                            <ItemTemplate>
+                                <asp:HyperLink ID="ViewHyperLink" Text="View" NavigateUrl='<%# $"~/RequestPolicyRequestTypes/Edit.aspx?Id={Eval("Id")}" %>' runat="server" />
+                            </ItemTemplate>
+                        </telerik:GridTemplateColumn>
+                        <telerik:GridTemplateColumn HeaderText="Content" DataField="Content" SortExpression="Content" AutoPostBackOnFilter="true" CurrentFilterFunction="StartsWith">
+                            <ItemTemplate>
+                                <asp:HyperLink ID="ContentHyperLink" runat="server" Text='<%#: Eval("Content") %>' NavigateUrl='<%# $"~/RequestPolicyRequestTypes/Edit.aspx?Id={Eval("Id")}" %>' />
+                            </ItemTemplate>
+                        </telerik:GridTemplateColumn>
+                    </Columns>
+                </MasterTableView>
+            </telerik:RadGrid>
+        </fieldset>
+    </asp:Panel>
+    <telerik:RadAjaxManager ID="RadAjaxManager1" runat="server">
+        <AjaxSettings>
+            <telerik:AjaxSetting AjaxControlID="RequestPolicyRequestTypesRadGrid">
+                <UpdatedControls>
+                    <telerik:AjaxUpdatedControl ControlID="RequestPolicyRequestTypesPanel" LoadingPanelID="RadAjaxLoadingPanel1" />
+                </UpdatedControls>
+            </telerik:AjaxSetting>
+        </AjaxSettings>
+    </telerik:RadAjaxManager>
 </asp:Content>

@@ -876,6 +876,246 @@
             </telerik:RadGrid>
         </fieldset>
     </asp:Panel>
+    <asp:Panel ID="OrderItemAlertsPanel" runat="server" Visible='<%# (string)Session["OrderItemAlertsPermission"] != null && OrderItem2FormView.DataKey.Value != null %>'>
+        <fieldset>
+            <legend>
+                <asp:HyperLink ID="OrderItemAlertsHyperLink" runat="server" Text="Order Item Alerts" NavigateUrl="~/OrderItemAlerts/Default.aspx" /></legend>
+            <telerik:RadGrid ID="OrderItemAlertsRadGrid" runat="server" AutoGenerateColumns="false" AllowSorting="true" AllowFilteringByColumn="false" GroupingSettings-CaseSensitive="false" AllowPaging="true" PageSize="10" EnableLinqExpressions="false" OnNeedDataSource="OrderItemAlertsRadGrid_NeedDataSource">
+                <MasterTableView DataKeyNames="Id" PagerStyle-Mode="NextPrevNumericAndAdvanced" NoMasterRecordsText="No order item alerts found">
+                    <Columns>
+                        <telerik:GridTemplateColumn AllowFiltering="false" ItemStyle-Width="0px">
+                            <ItemTemplate>
+                                <asp:HyperLink ID="ViewHyperLink" Text="View" NavigateUrl='<%# $"~/OrderItemAlerts/Edit.aspx?Id={Eval("Id")}" %>' runat="server" />
+                            </ItemTemplate>
+                        </telerik:GridTemplateColumn>
+                        <telerik:GridTemplateColumn AllowFiltering="false" AllowSorting="false" HeaderText="Alert" DataField="Alert.Id" SortExpression="Alert.Id" AutoPostBackOnFilter="true" CurrentFilterFunction="EqualTo">
+                            <ItemTemplate>
+                                <asp:HyperLink ID="AlertHyperLink" runat="server" Text='<%# Eval("Alert.Id") %>' NavigateUrl='<%# $"~/Alert2s/Edit.aspx?Id={Eval("AlertId")}" %>' Enabled='<%# Session["Alert2sPermission"] != null %>' />
+                            </ItemTemplate>
+                        </telerik:GridTemplateColumn>
+                    </Columns>
+                </MasterTableView>
+            </telerik:RadGrid>
+        </fieldset>
+    </asp:Panel>
+    <asp:Panel ID="OrderItemClaimsPanel" runat="server" Visible='<%# (string)Session["OrderItemClaimsPermission"] != null && OrderItem2FormView.DataKey.Value != null %>'>
+        <fieldset>
+            <legend>
+                <asp:HyperLink ID="OrderItemClaimsHyperLink" runat="server" Text="Order Item Claims" NavigateUrl="~/OrderItemClaims/Default.aspx" /></legend>
+            <telerik:RadGrid ID="OrderItemClaimsRadGrid" runat="server" AutoGenerateColumns="false" AllowSorting="true" AllowFilteringByColumn="false" GroupingSettings-CaseSensitive="false" AllowPaging="true" PageSize="10" EnableLinqExpressions="false" OnNeedDataSource="OrderItemClaimsRadGrid_NeedDataSource">
+                <MasterTableView DataKeyNames="Id" PagerStyle-Mode="NextPrevNumericAndAdvanced" NoMasterRecordsText="No order item claims found">
+                    <Columns>
+                        <telerik:GridTemplateColumn AllowFiltering="false" ItemStyle-Width="0px">
+                            <ItemTemplate>
+                                <asp:HyperLink ID="ViewHyperLink" Text="View" NavigateUrl='<%# $"~/OrderItemClaims/Edit.aspx?Id={Eval("Id")}" %>' runat="server" />
+                            </ItemTemplate>
+                        </telerik:GridTemplateColumn>
+                        <telerik:GridBoundColumn HeaderText="Claimed" DataField="Claimed" AutoPostBackOnFilter="true" />
+                        <telerik:GridBoundColumn HeaderText="Sent" DataField="Sent" AutoPostBackOnFilter="true" DataFormatString="{0:g}" />
+                        <telerik:GridBoundColumn HeaderText="Grace" DataField="Grace" AutoPostBackOnFilter="true" />
+                    </Columns>
+                </MasterTableView>
+            </telerik:RadGrid>
+        </fieldset>
+    </asp:Panel>
+    <asp:Panel ID="OrderItemContributorsPanel" runat="server" Visible='<%# (string)Session["OrderItemContributorsPermission"] != null && OrderItem2FormView.DataKey.Value != null %>'>
+        <fieldset>
+            <legend>
+                <asp:HyperLink ID="OrderItemContributorsHyperLink" runat="server" Text="Order Item Contributors" NavigateUrl="~/OrderItemContributors/Default.aspx" /></legend>
+            <telerik:RadGrid ID="OrderItemContributorsRadGrid" runat="server" AutoGenerateColumns="false" AllowSorting="true" AllowFilteringByColumn="false" GroupingSettings-CaseSensitive="false" AllowPaging="true" PageSize="10" EnableLinqExpressions="false" OnNeedDataSource="OrderItemContributorsRadGrid_NeedDataSource">
+                <MasterTableView DataKeyNames="Id" PagerStyle-Mode="NextPrevNumericAndAdvanced" NoMasterRecordsText="No order item contributors found">
+                    <Columns>
+                        <telerik:GridTemplateColumn AllowFiltering="false" ItemStyle-Width="0px">
+                            <ItemTemplate>
+                                <asp:HyperLink ID="ViewHyperLink" Text="View" NavigateUrl='<%# $"~/OrderItemContributors/Edit.aspx?Id={Eval("Id")}" %>' runat="server" />
+                            </ItemTemplate>
+                        </telerik:GridTemplateColumn>
+                        <telerik:GridBoundColumn HeaderText="Contributor" DataField="Contributor" AutoPostBackOnFilter="true" HtmlEncode="true" CurrentFilterFunction="StartsWith" />
+                        <telerik:GridTemplateColumn AllowFiltering="false" AllowSorting="false" HeaderText="Contributor Name Type" DataField="ContributorNameType.Name" SortExpression="ContributorNameType.Name" AutoPostBackOnFilter="true" CurrentFilterFunction="StartsWith">
+                            <ItemTemplate>
+                                <asp:HyperLink ID="ContributorNameTypeHyperLink" runat="server" Text='<%#: Eval("ContributorNameType.Name") %>' NavigateUrl='<%# $"~/ContributorNameType2s/Edit.aspx?Id={Eval("ContributorNameTypeId")}" %>' Enabled='<%# Session["ContributorNameType2sPermission"] != null %>' />
+                            </ItemTemplate>
+                        </telerik:GridTemplateColumn>
+                    </Columns>
+                </MasterTableView>
+            </telerik:RadGrid>
+        </fieldset>
+    </asp:Panel>
+    <asp:Panel ID="OrderItemFundsPanel" runat="server" Visible='<%# (string)Session["OrderItemFundsPermission"] != null && OrderItem2FormView.DataKey.Value != null %>'>
+        <fieldset>
+            <legend>
+                <asp:HyperLink ID="OrderItemFundsHyperLink" runat="server" Text="Order Item Funds" NavigateUrl="~/OrderItemFunds/Default.aspx" /></legend>
+            <telerik:RadGrid ID="OrderItemFundsRadGrid" runat="server" AutoGenerateColumns="false" AllowSorting="true" AllowFilteringByColumn="false" GroupingSettings-CaseSensitive="false" AllowPaging="true" PageSize="10" EnableLinqExpressions="false" OnNeedDataSource="OrderItemFundsRadGrid_NeedDataSource">
+                <MasterTableView DataKeyNames="Id" PagerStyle-Mode="NextPrevNumericAndAdvanced" NoMasterRecordsText="No order item funds found">
+                    <Columns>
+                        <telerik:GridTemplateColumn AllowFiltering="false" ItemStyle-Width="0px">
+                            <ItemTemplate>
+                                <asp:HyperLink ID="ViewHyperLink" Text="View" NavigateUrl='<%# $"~/OrderItemFunds/Edit.aspx?Id={Eval("Id")}" %>' runat="server" />
+                            </ItemTemplate>
+                        </telerik:GridTemplateColumn>
+                        <telerik:GridBoundColumn HeaderText="Fund Code" DataField="FundCode" AutoPostBackOnFilter="true" HtmlEncode="true" CurrentFilterFunction="StartsWith" />
+                        <telerik:GridTemplateColumn AllowFiltering="false" AllowSorting="false" HeaderText="Encumbrance" DataField="Encumbrance.Amount" SortExpression="Encumbrance.Amount" AutoPostBackOnFilter="true">
+                            <ItemTemplate>
+                                <asp:HyperLink ID="EncumbranceHyperLink" runat="server" Text='<%# $"{Eval("Encumbrance.Amount"):c}" %>' NavigateUrl='<%# $"~/Transaction2s/Edit.aspx?Id={Eval("EncumbranceId")}" %>' Enabled='<%# Session["Transaction2sPermission"] != null %>' />
+                            </ItemTemplate>
+                        </telerik:GridTemplateColumn>
+                        <telerik:GridTemplateColumn AllowFiltering="false" AllowSorting="false" HeaderText="Fund" DataField="Fund.Name" SortExpression="Fund.Name" AutoPostBackOnFilter="true" CurrentFilterFunction="StartsWith">
+                            <ItemTemplate>
+                                <asp:HyperLink ID="FundHyperLink" runat="server" Text='<%#: Eval("Fund.Name") %>' NavigateUrl='<%# $"~/Fund2s/Edit.aspx?Id={Eval("FundId")}" %>' Enabled='<%# Session["Fund2sPermission"] != null %>' />
+                            </ItemTemplate>
+                        </telerik:GridTemplateColumn>
+                        <telerik:GridTemplateColumn AllowFiltering="false" AllowSorting="false" HeaderText="Expense Class" DataField="ExpenseClass.Name" SortExpression="ExpenseClass.Name" AutoPostBackOnFilter="true" CurrentFilterFunction="StartsWith">
+                            <ItemTemplate>
+                                <asp:HyperLink ID="ExpenseClassHyperLink" runat="server" Text='<%#: Eval("ExpenseClassId") != null ? Eval("ExpenseClass.Name") ?? "&nbsp;" : "" %>' NavigateUrl='<%# $"~/ExpenseClass2s/Edit.aspx?Id={Eval("ExpenseClassId")}" %>' Enabled='<%# Session["ExpenseClass2sPermission"] != null %>' />
+                            </ItemTemplate>
+                        </telerik:GridTemplateColumn>
+                        <telerik:GridBoundColumn HeaderText="Distribution Type" DataField="DistributionType" AutoPostBackOnFilter="true" HtmlEncode="true" CurrentFilterFunction="StartsWith" />
+                        <telerik:GridBoundColumn HeaderText="Value" DataField="Value" AutoPostBackOnFilter="true" />
+                    </Columns>
+                </MasterTableView>
+            </telerik:RadGrid>
+        </fieldset>
+    </asp:Panel>
+    <asp:Panel ID="OrderItemLocation2sPanel" runat="server" Visible='<%# (string)Session["OrderItemLocation2sPermission"] != null && OrderItem2FormView.DataKey.Value != null %>'>
+        <fieldset>
+            <legend>
+                <asp:HyperLink ID="OrderItemLocation2sHyperLink" runat="server" Text="Order Item Locations" NavigateUrl="~/OrderItemLocation2s/Default.aspx" /></legend>
+            <telerik:RadGrid ID="OrderItemLocation2sRadGrid" runat="server" AutoGenerateColumns="false" AllowSorting="true" AllowFilteringByColumn="false" GroupingSettings-CaseSensitive="false" AllowPaging="true" PageSize="10" EnableLinqExpressions="false" OnNeedDataSource="OrderItemLocation2sRadGrid_NeedDataSource">
+                <MasterTableView DataKeyNames="Id" PagerStyle-Mode="NextPrevNumericAndAdvanced" NoMasterRecordsText="No order item locations found">
+                    <Columns>
+                        <telerik:GridTemplateColumn AllowFiltering="false" ItemStyle-Width="0px">
+                            <ItemTemplate>
+                                <asp:HyperLink ID="ViewHyperLink" Text="View" NavigateUrl='<%# $"~/OrderItemLocation2s/Edit.aspx?Id={Eval("Id")}" %>' runat="server" />
+                            </ItemTemplate>
+                        </telerik:GridTemplateColumn>
+                        <telerik:GridTemplateColumn AllowFiltering="false" AllowSorting="false" HeaderText="Location" DataField="Location.Name" SortExpression="Location.Name" AutoPostBackOnFilter="true" CurrentFilterFunction="StartsWith">
+                            <ItemTemplate>
+                                <asp:HyperLink ID="LocationHyperLink" runat="server" Text='<%#: Eval("Location.Name") %>' NavigateUrl='<%# $"~/Location2s/Edit.aspx?Id={Eval("LocationId")}" %>' Enabled='<%# Session["Location2sPermission"] != null %>' />
+                            </ItemTemplate>
+                        </telerik:GridTemplateColumn>
+                        <telerik:GridTemplateColumn AllowFiltering="false" AllowSorting="false" HeaderText="Holding" DataField="Holding.ShortId" SortExpression="Holding.ShortId" AutoPostBackOnFilter="true">
+                            <ItemTemplate>
+                                <asp:HyperLink ID="HoldingHyperLink" runat="server" Text='<%# Eval("HoldingId") != null ? Eval("Holding.ShortId") ?? "&nbsp;" : "" %>' NavigateUrl='<%# $"~/Holding2s/Edit.aspx?Id={Eval("HoldingId")}" %>' Enabled='<%# Session["Holding2sPermission"] != null %>' />
+                            </ItemTemplate>
+                        </telerik:GridTemplateColumn>
+                        <telerik:GridBoundColumn HeaderText="Quantity" DataField="Quantity" AutoPostBackOnFilter="true" />
+                        <telerik:GridBoundColumn HeaderText="Electronic Quantity" DataField="ElectronicQuantity" AutoPostBackOnFilter="true" />
+                        <telerik:GridBoundColumn HeaderText="Physical Quantity" DataField="PhysicalQuantity" AutoPostBackOnFilter="true" />
+                    </Columns>
+                </MasterTableView>
+            </telerik:RadGrid>
+        </fieldset>
+    </asp:Panel>
+    <asp:Panel ID="OrderItemProductIdsPanel" runat="server" Visible='<%# (string)Session["OrderItemProductIdsPermission"] != null && OrderItem2FormView.DataKey.Value != null %>'>
+        <fieldset>
+            <legend>
+                <asp:HyperLink ID="OrderItemProductIdsHyperLink" runat="server" Text="Order Item Product Ids" NavigateUrl="~/OrderItemProductIds/Default.aspx" /></legend>
+            <telerik:RadGrid ID="OrderItemProductIdsRadGrid" runat="server" AutoGenerateColumns="false" AllowSorting="true" AllowFilteringByColumn="false" GroupingSettings-CaseSensitive="false" AllowPaging="true" PageSize="10" EnableLinqExpressions="false" OnNeedDataSource="OrderItemProductIdsRadGrid_NeedDataSource">
+                <MasterTableView DataKeyNames="Id" PagerStyle-Mode="NextPrevNumericAndAdvanced" NoMasterRecordsText="No order item product ids found">
+                    <Columns>
+                        <telerik:GridTemplateColumn AllowFiltering="false" ItemStyle-Width="0px">
+                            <ItemTemplate>
+                                <asp:HyperLink ID="ViewHyperLink" Text="View" NavigateUrl='<%# $"~/OrderItemProductIds/Edit.aspx?Id={Eval("Id")}" %>' runat="server" />
+                            </ItemTemplate>
+                        </telerik:GridTemplateColumn>
+                        <telerik:GridBoundColumn HeaderText="Product Id" DataField="ProductId" AutoPostBackOnFilter="true" HtmlEncode="true" CurrentFilterFunction="StartsWith" />
+                        <telerik:GridTemplateColumn AllowFiltering="false" AllowSorting="false" HeaderText="Product Id Type" DataField="ProductIdType.Name" SortExpression="ProductIdType.Name" AutoPostBackOnFilter="true" CurrentFilterFunction="StartsWith">
+                            <ItemTemplate>
+                                <asp:HyperLink ID="ProductIdTypeHyperLink" runat="server" Text='<%#: Eval("ProductIdType.Name") %>' NavigateUrl='<%# $"~/IdType2s/Edit.aspx?Id={Eval("ProductIdTypeId")}" %>' Enabled='<%# Session["IdType2sPermission"] != null %>' />
+                            </ItemTemplate>
+                        </telerik:GridTemplateColumn>
+                        <telerik:GridBoundColumn HeaderText="Qualifier" DataField="Qualifier" AutoPostBackOnFilter="true" HtmlEncode="true" CurrentFilterFunction="StartsWith" />
+                    </Columns>
+                </MasterTableView>
+            </telerik:RadGrid>
+        </fieldset>
+    </asp:Panel>
+    <asp:Panel ID="OrderItemReferenceNumbersPanel" runat="server" Visible='<%# (string)Session["OrderItemReferenceNumbersPermission"] != null && OrderItem2FormView.DataKey.Value != null %>'>
+        <fieldset>
+            <legend>
+                <asp:HyperLink ID="OrderItemReferenceNumbersHyperLink" runat="server" Text="Order Item Reference Numbers" NavigateUrl="~/OrderItemReferenceNumbers/Default.aspx" /></legend>
+            <telerik:RadGrid ID="OrderItemReferenceNumbersRadGrid" runat="server" AutoGenerateColumns="false" AllowSorting="true" AllowFilteringByColumn="false" GroupingSettings-CaseSensitive="false" AllowPaging="true" PageSize="10" EnableLinqExpressions="false" OnNeedDataSource="OrderItemReferenceNumbersRadGrid_NeedDataSource">
+                <MasterTableView DataKeyNames="Id" PagerStyle-Mode="NextPrevNumericAndAdvanced" NoMasterRecordsText="No order item reference numbers found">
+                    <Columns>
+                        <telerik:GridTemplateColumn AllowFiltering="false" ItemStyle-Width="0px">
+                            <ItemTemplate>
+                                <asp:HyperLink ID="ViewHyperLink" Text="View" NavigateUrl='<%# $"~/OrderItemReferenceNumbers/Edit.aspx?Id={Eval("Id")}" %>' runat="server" />
+                            </ItemTemplate>
+                        </telerik:GridTemplateColumn>
+                        <telerik:GridBoundColumn HeaderText="Reference Number" DataField="ReferenceNumber" AutoPostBackOnFilter="true" HtmlEncode="true" CurrentFilterFunction="StartsWith" />
+                        <telerik:GridBoundColumn HeaderText="Reference Number Type" DataField="ReferenceNumberType" AutoPostBackOnFilter="true" HtmlEncode="true" CurrentFilterFunction="StartsWith" />
+                        <telerik:GridBoundColumn HeaderText="Vendor Details Source" DataField="VendorDetailsSource" AutoPostBackOnFilter="true" HtmlEncode="true" CurrentFilterFunction="StartsWith" />
+                    </Columns>
+                </MasterTableView>
+            </telerik:RadGrid>
+        </fieldset>
+    </asp:Panel>
+    <asp:Panel ID="OrderItemReportingCodesPanel" runat="server" Visible='<%# (string)Session["OrderItemReportingCodesPermission"] != null && OrderItem2FormView.DataKey.Value != null %>'>
+        <fieldset>
+            <legend>
+                <asp:HyperLink ID="OrderItemReportingCodesHyperLink" runat="server" Text="Order Item Reporting Codes" NavigateUrl="~/OrderItemReportingCodes/Default.aspx" /></legend>
+            <telerik:RadGrid ID="OrderItemReportingCodesRadGrid" runat="server" AutoGenerateColumns="false" AllowSorting="true" AllowFilteringByColumn="false" GroupingSettings-CaseSensitive="false" AllowPaging="true" PageSize="10" EnableLinqExpressions="false" OnNeedDataSource="OrderItemReportingCodesRadGrid_NeedDataSource">
+                <MasterTableView DataKeyNames="Id" PagerStyle-Mode="NextPrevNumericAndAdvanced" NoMasterRecordsText="No order item reporting codes found">
+                    <Columns>
+                        <telerik:GridTemplateColumn AllowFiltering="false" ItemStyle-Width="0px">
+                            <ItemTemplate>
+                                <asp:HyperLink ID="ViewHyperLink" Text="View" NavigateUrl='<%# $"~/OrderItemReportingCodes/Edit.aspx?Id={Eval("Id")}" %>' runat="server" />
+                            </ItemTemplate>
+                        </telerik:GridTemplateColumn>
+                        <telerik:GridTemplateColumn AllowFiltering="false" AllowSorting="false" HeaderText="Reporting Code" DataField="ReportingCode.Id" SortExpression="ReportingCode.Id" AutoPostBackOnFilter="true" CurrentFilterFunction="EqualTo">
+                            <ItemTemplate>
+                                <asp:HyperLink ID="ReportingCodeHyperLink" runat="server" Text='<%# Eval("ReportingCode.Id") %>' NavigateUrl='<%# $"~/ReportingCode2s/Edit.aspx?Id={Eval("ReportingCodeId")}" %>' Enabled='<%# Session["ReportingCode2sPermission"] != null %>' />
+                            </ItemTemplate>
+                        </telerik:GridTemplateColumn>
+                    </Columns>
+                </MasterTableView>
+            </telerik:RadGrid>
+        </fieldset>
+    </asp:Panel>
+    <asp:Panel ID="OrderItemTagsPanel" runat="server" Visible='<%# (string)Session["OrderItemTagsPermission"] != null && OrderItem2FormView.DataKey.Value != null %>'>
+        <fieldset>
+            <legend>
+                <asp:HyperLink ID="OrderItemTagsHyperLink" runat="server" Text="Order Item Tags" NavigateUrl="~/OrderItemTags/Default.aspx" /></legend>
+            <telerik:RadGrid ID="OrderItemTagsRadGrid" runat="server" AutoGenerateColumns="false" AllowSorting="true" AllowFilteringByColumn="false" GroupingSettings-CaseSensitive="false" AllowPaging="true" PageSize="10" EnableLinqExpressions="false" OnNeedDataSource="OrderItemTagsRadGrid_NeedDataSource">
+                <MasterTableView DataKeyNames="Id" PagerStyle-Mode="NextPrevNumericAndAdvanced" NoMasterRecordsText="No order item tags found">
+                    <Columns>
+                        <telerik:GridTemplateColumn AllowFiltering="false" ItemStyle-Width="0px">
+                            <ItemTemplate>
+                                <asp:HyperLink ID="ViewHyperLink" Text="View" NavigateUrl='<%# $"~/OrderItemTags/Edit.aspx?Id={Eval("Id")}" %>' runat="server" />
+                            </ItemTemplate>
+                        </telerik:GridTemplateColumn>
+                        <telerik:GridTemplateColumn HeaderText="Content" DataField="Content" SortExpression="Content" AutoPostBackOnFilter="true" CurrentFilterFunction="StartsWith">
+                            <ItemTemplate>
+                                <asp:HyperLink ID="ContentHyperLink" runat="server" Text='<%#: Eval("Content") %>' NavigateUrl='<%# $"~/OrderItemTags/Edit.aspx?Id={Eval("Id")}" %>' />
+                            </ItemTemplate>
+                        </telerik:GridTemplateColumn>
+                    </Columns>
+                </MasterTableView>
+            </telerik:RadGrid>
+        </fieldset>
+    </asp:Panel>
+    <asp:Panel ID="OrderItemVolumesPanel" runat="server" Visible='<%# (string)Session["OrderItemVolumesPermission"] != null && OrderItem2FormView.DataKey.Value != null %>'>
+        <fieldset>
+            <legend>
+                <asp:HyperLink ID="OrderItemVolumesHyperLink" runat="server" Text="Order Item Volumes" NavigateUrl="~/OrderItemVolumes/Default.aspx" /></legend>
+            <telerik:RadGrid ID="OrderItemVolumesRadGrid" runat="server" AutoGenerateColumns="false" AllowSorting="true" AllowFilteringByColumn="false" GroupingSettings-CaseSensitive="false" AllowPaging="true" PageSize="10" EnableLinqExpressions="false" OnNeedDataSource="OrderItemVolumesRadGrid_NeedDataSource">
+                <MasterTableView DataKeyNames="Id" PagerStyle-Mode="NextPrevNumericAndAdvanced" NoMasterRecordsText="No order item volumes found">
+                    <Columns>
+                        <telerik:GridTemplateColumn AllowFiltering="false" ItemStyle-Width="0px">
+                            <ItemTemplate>
+                                <asp:HyperLink ID="ViewHyperLink" Text="View" NavigateUrl='<%# $"~/OrderItemVolumes/Edit.aspx?Id={Eval("Id")}" %>' runat="server" />
+                            </ItemTemplate>
+                        </telerik:GridTemplateColumn>
+                        <telerik:GridTemplateColumn HeaderText="Content" DataField="Content" SortExpression="Content" AutoPostBackOnFilter="true" CurrentFilterFunction="StartsWith">
+                            <ItemTemplate>
+                                <asp:HyperLink ID="ContentHyperLink" runat="server" Text='<%#: Eval("Content") %>' NavigateUrl='<%# $"~/OrderItemVolumes/Edit.aspx?Id={Eval("Id")}" %>' />
+                            </ItemTemplate>
+                        </telerik:GridTemplateColumn>
+                    </Columns>
+                </MasterTableView>
+            </telerik:RadGrid>
+        </fieldset>
+    </asp:Panel>
     <asp:Panel ID="Receiving2sPanel" runat="server" Visible='<%# (string)Session["Receiving2sPermission"] != null && OrderItem2FormView.DataKey.Value != null %>'>
         <fieldset>
             <legend>
@@ -1111,6 +1351,56 @@
             <telerik:AjaxSetting AjaxControlID="OrderItem2sRadGrid">
                 <UpdatedControls>
                     <telerik:AjaxUpdatedControl ControlID="OrderItem2sPanel" LoadingPanelID="RadAjaxLoadingPanel1" />
+                </UpdatedControls>
+            </telerik:AjaxSetting>
+            <telerik:AjaxSetting AjaxControlID="OrderItemAlertsRadGrid">
+                <UpdatedControls>
+                    <telerik:AjaxUpdatedControl ControlID="OrderItemAlertsPanel" LoadingPanelID="RadAjaxLoadingPanel1" />
+                </UpdatedControls>
+            </telerik:AjaxSetting>
+            <telerik:AjaxSetting AjaxControlID="OrderItemClaimsRadGrid">
+                <UpdatedControls>
+                    <telerik:AjaxUpdatedControl ControlID="OrderItemClaimsPanel" LoadingPanelID="RadAjaxLoadingPanel1" />
+                </UpdatedControls>
+            </telerik:AjaxSetting>
+            <telerik:AjaxSetting AjaxControlID="OrderItemContributorsRadGrid">
+                <UpdatedControls>
+                    <telerik:AjaxUpdatedControl ControlID="OrderItemContributorsPanel" LoadingPanelID="RadAjaxLoadingPanel1" />
+                </UpdatedControls>
+            </telerik:AjaxSetting>
+            <telerik:AjaxSetting AjaxControlID="OrderItemFundsRadGrid">
+                <UpdatedControls>
+                    <telerik:AjaxUpdatedControl ControlID="OrderItemFundsPanel" LoadingPanelID="RadAjaxLoadingPanel1" />
+                </UpdatedControls>
+            </telerik:AjaxSetting>
+            <telerik:AjaxSetting AjaxControlID="OrderItemLocation2sRadGrid">
+                <UpdatedControls>
+                    <telerik:AjaxUpdatedControl ControlID="OrderItemLocation2sPanel" LoadingPanelID="RadAjaxLoadingPanel1" />
+                </UpdatedControls>
+            </telerik:AjaxSetting>
+            <telerik:AjaxSetting AjaxControlID="OrderItemProductIdsRadGrid">
+                <UpdatedControls>
+                    <telerik:AjaxUpdatedControl ControlID="OrderItemProductIdsPanel" LoadingPanelID="RadAjaxLoadingPanel1" />
+                </UpdatedControls>
+            </telerik:AjaxSetting>
+            <telerik:AjaxSetting AjaxControlID="OrderItemReferenceNumbersRadGrid">
+                <UpdatedControls>
+                    <telerik:AjaxUpdatedControl ControlID="OrderItemReferenceNumbersPanel" LoadingPanelID="RadAjaxLoadingPanel1" />
+                </UpdatedControls>
+            </telerik:AjaxSetting>
+            <telerik:AjaxSetting AjaxControlID="OrderItemReportingCodesRadGrid">
+                <UpdatedControls>
+                    <telerik:AjaxUpdatedControl ControlID="OrderItemReportingCodesPanel" LoadingPanelID="RadAjaxLoadingPanel1" />
+                </UpdatedControls>
+            </telerik:AjaxSetting>
+            <telerik:AjaxSetting AjaxControlID="OrderItemTagsRadGrid">
+                <UpdatedControls>
+                    <telerik:AjaxUpdatedControl ControlID="OrderItemTagsPanel" LoadingPanelID="RadAjaxLoadingPanel1" />
+                </UpdatedControls>
+            </telerik:AjaxSetting>
+            <telerik:AjaxSetting AjaxControlID="OrderItemVolumesRadGrid">
+                <UpdatedControls>
+                    <telerik:AjaxUpdatedControl ControlID="OrderItemVolumesPanel" LoadingPanelID="RadAjaxLoadingPanel1" />
                 </UpdatedControls>
             </telerik:AjaxSetting>
             <telerik:AjaxSetting AjaxControlID="Receiving2sRadGrid">

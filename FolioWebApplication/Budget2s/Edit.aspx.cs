@@ -4,6 +4,7 @@ using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Linq;
 using Telerik.Web.UI;
 
 namespace FolioWebApplication.Budget2s
@@ -31,6 +32,17 @@ namespace FolioWebApplication.Budget2s
             b2.Content = b2.Content != null ? JsonConvert.DeserializeObject<JToken>(b2.Content, new JsonSerializerSettings { DateTimeZoneHandling = DateTimeZoneHandling.Local }).ToString() : null;
             Budget2FormView.DataSource = new[] { b2 };
             Title = $"Budget {b2.Name}";
+        }
+
+        protected void BudgetAcquisitionsUnitsRadGrid_NeedDataSource(object sender, GridNeedDataSourceEventArgs e)
+        {
+            if (Session["BudgetAcquisitionsUnitsPermission"] == null) return;
+            var id = (Guid?)Budget2FormView.DataKey.Value;
+            if (id == null) return;
+            var l = folioServiceContext.FindBudget2(id).BudgetAcquisitionsUnits ?? new BudgetAcquisitionsUnit[] { };
+            BudgetAcquisitionsUnitsRadGrid.DataSource = l;
+            BudgetAcquisitionsUnitsRadGrid.AllowFilteringByColumn = l.Count() > 10;
+            BudgetAcquisitionsUnitsPanel.Visible = Budget2FormView.DataKey.Value != null && ((string)Session["BudgetAcquisitionsUnitsPermission"] == "Edit" || Session["BudgetAcquisitionsUnitsPermission"] != null && l.Any());
         }
 
         protected void BudgetExpenseClass2sRadGrid_NeedDataSource(object sender, GridNeedDataSourceEventArgs e)
@@ -61,6 +73,17 @@ namespace FolioWebApplication.Budget2s
                 BudgetGroup2sRadGrid.AllowFilteringByColumn = BudgetGroup2sRadGrid.VirtualItemCount > 10;
                 BudgetGroup2sPanel.Visible = Budget2FormView.DataKey.Value != null && Session["BudgetGroup2sPermission"] != null && BudgetGroup2sRadGrid.VirtualItemCount > 0;
             }
+        }
+
+        protected void BudgetTagsRadGrid_NeedDataSource(object sender, GridNeedDataSourceEventArgs e)
+        {
+            if (Session["BudgetTagsPermission"] == null) return;
+            var id = (Guid?)Budget2FormView.DataKey.Value;
+            if (id == null) return;
+            var l = folioServiceContext.FindBudget2(id).BudgetTags ?? new BudgetTag[] { };
+            BudgetTagsRadGrid.DataSource = l;
+            BudgetTagsRadGrid.AllowFilteringByColumn = l.Count() > 10;
+            BudgetTagsPanel.Visible = Budget2FormView.DataKey.Value != null && ((string)Session["BudgetTagsPermission"] == "Edit" || Session["BudgetTagsPermission"] != null && l.Any());
         }
 
         public override void Dispose()

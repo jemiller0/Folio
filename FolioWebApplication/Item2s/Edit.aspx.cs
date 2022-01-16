@@ -4,6 +4,7 @@ using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Linq;
 using Telerik.Web.UI;
 
 namespace FolioWebApplication.Item2s
@@ -63,6 +64,17 @@ namespace FolioWebApplication.Item2s
             }
         }
 
+        protected void CirculationNotesRadGrid_NeedDataSource(object sender, GridNeedDataSourceEventArgs e)
+        {
+            if (Session["CirculationNotesPermission"] == null) return;
+            var id = (Guid?)Item2FormView.DataKey.Value;
+            if (id == null) return;
+            var l = folioServiceContext.FindItem2(id).CirculationNotes ?? new CirculationNote[] { };
+            CirculationNotesRadGrid.DataSource = l;
+            CirculationNotesRadGrid.AllowFilteringByColumn = l.Count() > 10;
+            CirculationNotesPanel.Visible = Item2FormView.DataKey.Value != null && ((string)Session["CirculationNotesPermission"] == "Edit" || Session["CirculationNotesPermission"] != null && l.Any());
+        }
+
         protected void Fee2sRadGrid_NeedDataSource(object sender, GridNeedDataSourceEventArgs e)
         {
             if (Session["Fee2sPermission"] == null) return;
@@ -76,6 +88,72 @@ namespace FolioWebApplication.Item2s
                 Fee2sRadGrid.AllowFilteringByColumn = Fee2sRadGrid.VirtualItemCount > 10;
                 Fee2sPanel.Visible = Item2FormView.DataKey.Value != null && Session["Fee2sPermission"] != null && Fee2sRadGrid.VirtualItemCount > 0;
             }
+        }
+
+        protected void ItemElectronicAccessesRadGrid_NeedDataSource(object sender, GridNeedDataSourceEventArgs e)
+        {
+            if (Session["ItemElectronicAccessesPermission"] == null) return;
+            var id = (Guid?)Item2FormView.DataKey.Value;
+            if (id == null) return;
+            var l = folioServiceContext.FindItem2(id).ItemElectronicAccesses ?? new ItemElectronicAccess[] { };
+            ItemElectronicAccessesRadGrid.DataSource = l;
+            ItemElectronicAccessesRadGrid.AllowFilteringByColumn = l.Count() > 10;
+            ItemElectronicAccessesPanel.Visible = Item2FormView.DataKey.Value != null && ((string)Session["ItemElectronicAccessesPermission"] == "Edit" || Session["ItemElectronicAccessesPermission"] != null && l.Any());
+        }
+
+        protected void ItemFormerIdsRadGrid_NeedDataSource(object sender, GridNeedDataSourceEventArgs e)
+        {
+            if (Session["ItemFormerIdsPermission"] == null) return;
+            var id = (Guid?)Item2FormView.DataKey.Value;
+            if (id == null) return;
+            var l = folioServiceContext.FindItem2(id).ItemFormerIds ?? new ItemFormerId[] { };
+            ItemFormerIdsRadGrid.DataSource = l;
+            ItemFormerIdsRadGrid.AllowFilteringByColumn = l.Count() > 10;
+            ItemFormerIdsPanel.Visible = Item2FormView.DataKey.Value != null && ((string)Session["ItemFormerIdsPermission"] == "Edit" || Session["ItemFormerIdsPermission"] != null && l.Any());
+        }
+
+        protected void ItemNotesRadGrid_NeedDataSource(object sender, GridNeedDataSourceEventArgs e)
+        {
+            if (Session["ItemNotesPermission"] == null) return;
+            var id = (Guid?)Item2FormView.DataKey.Value;
+            if (id == null) return;
+            var l = folioServiceContext.FindItem2(id).ItemNotes ?? new ItemNote[] { };
+            ItemNotesRadGrid.DataSource = l;
+            ItemNotesRadGrid.AllowFilteringByColumn = l.Count() > 10;
+            ItemNotesPanel.Visible = Item2FormView.DataKey.Value != null && ((string)Session["ItemNotesPermission"] == "Edit" || Session["ItemNotesPermission"] != null && l.Any());
+        }
+
+        protected void ItemStatisticalCodesRadGrid_NeedDataSource(object sender, GridNeedDataSourceEventArgs e)
+        {
+            if (Session["ItemStatisticalCodesPermission"] == null) return;
+            var id = (Guid?)Item2FormView.DataKey.Value;
+            if (id == null) return;
+            var l = folioServiceContext.FindItem2(id).ItemStatisticalCodes ?? new ItemStatisticalCode[] { };
+            ItemStatisticalCodesRadGrid.DataSource = l;
+            ItemStatisticalCodesRadGrid.AllowFilteringByColumn = l.Count() > 10;
+            ItemStatisticalCodesPanel.Visible = Item2FormView.DataKey.Value != null && ((string)Session["ItemStatisticalCodesPermission"] == "Edit" || Session["ItemStatisticalCodesPermission"] != null && l.Any());
+        }
+
+        protected void ItemTagsRadGrid_NeedDataSource(object sender, GridNeedDataSourceEventArgs e)
+        {
+            if (Session["ItemTagsPermission"] == null) return;
+            var id = (Guid?)Item2FormView.DataKey.Value;
+            if (id == null) return;
+            var l = folioServiceContext.FindItem2(id).ItemTags ?? new ItemTag[] { };
+            ItemTagsRadGrid.DataSource = l;
+            ItemTagsRadGrid.AllowFilteringByColumn = l.Count() > 10;
+            ItemTagsPanel.Visible = Item2FormView.DataKey.Value != null && ((string)Session["ItemTagsPermission"] == "Edit" || Session["ItemTagsPermission"] != null && l.Any());
+        }
+
+        protected void ItemYearCaptionsRadGrid_NeedDataSource(object sender, GridNeedDataSourceEventArgs e)
+        {
+            if (Session["ItemYearCaptionsPermission"] == null) return;
+            var id = (Guid?)Item2FormView.DataKey.Value;
+            if (id == null) return;
+            var l = folioServiceContext.FindItem2(id).ItemYearCaptions ?? new ItemYearCaption[] { };
+            ItemYearCaptionsRadGrid.DataSource = l;
+            ItemYearCaptionsRadGrid.AllowFilteringByColumn = l.Count() > 10;
+            ItemYearCaptionsPanel.Visible = Item2FormView.DataKey.Value != null && ((string)Session["ItemYearCaptionsPermission"] == "Edit" || Session["ItemYearCaptionsPermission"] != null && l.Any());
         }
 
         protected void Loan2sRadGrid_NeedDataSource(object sender, GridNeedDataSourceEventArgs e)

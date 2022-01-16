@@ -4,6 +4,7 @@ using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Linq;
 using Telerik.Web.UI;
 
 namespace FolioWebApplication.Owner2s
@@ -76,6 +77,17 @@ namespace FolioWebApplication.Owner2s
                 PaymentMethod2sRadGrid.AllowFilteringByColumn = PaymentMethod2sRadGrid.VirtualItemCount > 10;
                 PaymentMethod2sPanel.Visible = Owner2FormView.DataKey.Value != null && Session["PaymentMethod2sPermission"] != null && PaymentMethod2sRadGrid.VirtualItemCount > 0;
             }
+        }
+
+        protected void ServicePointOwnersRadGrid_NeedDataSource(object sender, GridNeedDataSourceEventArgs e)
+        {
+            if (Session["ServicePointOwnersPermission"] == null) return;
+            var id = (Guid?)Owner2FormView.DataKey.Value;
+            if (id == null) return;
+            var l = folioServiceContext.FindOwner2(id).ServicePointOwners ?? new ServicePointOwner[] { };
+            ServicePointOwnersRadGrid.DataSource = l;
+            ServicePointOwnersRadGrid.AllowFilteringByColumn = l.Count() > 10;
+            ServicePointOwnersPanel.Visible = Owner2FormView.DataKey.Value != null && ((string)Session["ServicePointOwnersPermission"] == "Edit" || Session["ServicePointOwnersPermission"] != null && l.Any());
         }
 
         protected void TransferAccount2sRadGrid_NeedDataSource(object sender, GridNeedDataSourceEventArgs e)

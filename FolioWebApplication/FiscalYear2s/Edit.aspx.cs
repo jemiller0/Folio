@@ -4,6 +4,7 @@ using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Linq;
 using Telerik.Web.UI;
 
 namespace FolioWebApplication.FiscalYear2s
@@ -61,6 +62,17 @@ namespace FolioWebApplication.FiscalYear2s
                 BudgetGroup2sRadGrid.AllowFilteringByColumn = BudgetGroup2sRadGrid.VirtualItemCount > 10;
                 BudgetGroup2sPanel.Visible = FiscalYear2FormView.DataKey.Value != null && Session["BudgetGroup2sPermission"] != null && BudgetGroup2sRadGrid.VirtualItemCount > 0;
             }
+        }
+
+        protected void FiscalYearAcquisitionsUnitsRadGrid_NeedDataSource(object sender, GridNeedDataSourceEventArgs e)
+        {
+            if (Session["FiscalYearAcquisitionsUnitsPermission"] == null) return;
+            var id = (Guid?)FiscalYear2FormView.DataKey.Value;
+            if (id == null) return;
+            var l = folioServiceContext.FindFiscalYear2(id).FiscalYearAcquisitionsUnits ?? new FiscalYearAcquisitionsUnit[] { };
+            FiscalYearAcquisitionsUnitsRadGrid.DataSource = l;
+            FiscalYearAcquisitionsUnitsRadGrid.AllowFilteringByColumn = l.Count() > 10;
+            FiscalYearAcquisitionsUnitsPanel.Visible = FiscalYear2FormView.DataKey.Value != null && ((string)Session["FiscalYearAcquisitionsUnitsPermission"] == "Edit" || Session["FiscalYearAcquisitionsUnitsPermission"] != null && l.Any());
         }
 
         protected void Ledger2sRadGrid_NeedDataSource(object sender, GridNeedDataSourceEventArgs e)

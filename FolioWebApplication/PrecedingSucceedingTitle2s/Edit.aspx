@@ -95,4 +95,36 @@
             </asp:FormView>
         </fieldset>
     </asp:Panel>
+    <asp:Panel ID="PrecedingSucceedingTitleIdentifiersPanel" runat="server" Visible='<%# (string)Session["PrecedingSucceedingTitleIdentifiersPermission"] != null && PrecedingSucceedingTitle2FormView.DataKey.Value != null %>'>
+        <fieldset>
+            <legend>
+                <asp:HyperLink ID="PrecedingSucceedingTitleIdentifiersHyperLink" runat="server" Text="Preceding Succeeding Title Identifiers" NavigateUrl="~/PrecedingSucceedingTitleIdentifiers/Default.aspx" /></legend>
+            <telerik:RadGrid ID="PrecedingSucceedingTitleIdentifiersRadGrid" runat="server" AutoGenerateColumns="false" AllowSorting="true" AllowFilteringByColumn="false" GroupingSettings-CaseSensitive="false" AllowPaging="true" PageSize="10" EnableLinqExpressions="false" OnNeedDataSource="PrecedingSucceedingTitleIdentifiersRadGrid_NeedDataSource">
+                <MasterTableView DataKeyNames="Id" PagerStyle-Mode="NextPrevNumericAndAdvanced" NoMasterRecordsText="No preceding succeeding title identifiers found">
+                    <Columns>
+                        <telerik:GridTemplateColumn AllowFiltering="false" ItemStyle-Width="0px">
+                            <ItemTemplate>
+                                <asp:HyperLink ID="ViewHyperLink" Text="View" NavigateUrl='<%# $"~/PrecedingSucceedingTitleIdentifiers/Edit.aspx?Id={Eval("Id")}" %>' runat="server" />
+                            </ItemTemplate>
+                        </telerik:GridTemplateColumn>
+                        <telerik:GridBoundColumn HeaderText="Value" DataField="Value" AutoPostBackOnFilter="true" HtmlEncode="true" CurrentFilterFunction="StartsWith" />
+                        <telerik:GridTemplateColumn AllowFiltering="false" AllowSorting="false" HeaderText="Identifier Type" DataField="IdentifierType.Name" SortExpression="IdentifierType.Name" AutoPostBackOnFilter="true" CurrentFilterFunction="StartsWith">
+                            <ItemTemplate>
+                                <asp:HyperLink ID="IdentifierTypeHyperLink" runat="server" Text='<%#: Eval("IdentifierType.Name") %>' NavigateUrl='<%# $"~/IdType2s/Edit.aspx?Id={Eval("IdentifierTypeId")}" %>' Enabled='<%# Session["IdType2sPermission"] != null %>' />
+                            </ItemTemplate>
+                        </telerik:GridTemplateColumn>
+                    </Columns>
+                </MasterTableView>
+            </telerik:RadGrid>
+        </fieldset>
+    </asp:Panel>
+    <telerik:RadAjaxManager ID="RadAjaxManager1" runat="server">
+        <AjaxSettings>
+            <telerik:AjaxSetting AjaxControlID="PrecedingSucceedingTitleIdentifiersRadGrid">
+                <UpdatedControls>
+                    <telerik:AjaxUpdatedControl ControlID="PrecedingSucceedingTitleIdentifiersPanel" LoadingPanelID="RadAjaxLoadingPanel1" />
+                </UpdatedControls>
+            </telerik:AjaxSetting>
+        </AjaxSettings>
+    </telerik:RadAjaxManager>
 </asp:Content>

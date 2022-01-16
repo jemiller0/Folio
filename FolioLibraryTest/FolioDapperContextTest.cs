@@ -56,6 +56,37 @@ LEFT JOIN uc.users AS lwu ON lwu.id = au2.updated_by_user_id
         }
 
         [TestMethod]
+        public void QueryAddressesTest()
+        {
+            var s = Stopwatch.StartNew();
+            folioDapperContext.Addresses(take: 1).ToArray();
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"AddressesTest()\r\n    ElapsedTime={s.Elapsed}");
+        }
+
+        [TestMethod]
+        public void AddressesQueryTest()
+        {
+            var s = Stopwatch.StartNew();
+            folioDapperContext.Query(@"
+SELECT
+a.name AS ""Name"",
+a.content AS ""Content"",
+a.enabled AS ""Enabled"",
+a.created_date AS ""CreationTime"",
+cu.username AS ""CreationUser"",
+a.created_by_user_id AS ""CreationUserId"",
+a.updated_date AS ""LastWriteTime"",
+lwu.username AS ""LastWriteUser"",
+a.updated_by_user_id AS ""LastWriteUserId"" 
+FROM uc.addresses AS a
+LEFT JOIN uc.users AS cu ON cu.id = a.created_by_user_id
+LEFT JOIN uc.users AS lwu ON lwu.id = a.updated_by_user_id
+ ORDER BY a.name
+", take: 1);
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"AddressesQueryTest()\r\n    ElapsedTime={s.Elapsed}");
+        }
+
+        [TestMethod]
         public void QueryAddressType2sTest()
         {
             var s = Stopwatch.StartNew();
@@ -111,6 +142,85 @@ FROM uc.alerts AS a2
         }
 
         [TestMethod]
+        public void QueryAllocatedFromFundsTest()
+        {
+            var s = Stopwatch.StartNew();
+            folioDapperContext.AllocatedFromFunds(take: 1).ToArray();
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"AllocatedFromFundsTest()\r\n    ElapsedTime={s.Elapsed}");
+        }
+
+        [TestMethod]
+        public void AllocatedFromFundsQueryTest()
+        {
+            var s = Stopwatch.StartNew();
+            folioDapperContext.Query(@"
+SELECT
+f.name AS ""Fund"",
+aff.fund_id AS ""FundId"",
+ff.name AS ""FromFund"",
+aff.from_fund_id AS ""FromFundId"" 
+FROM uc.allocated_from_funds AS aff
+LEFT JOIN uc.funds AS f ON f.id = aff.fund_id
+LEFT JOIN uc.funds AS ff ON ff.id = aff.from_fund_id
+ ORDER BY aff.id
+", take: 1);
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"AllocatedFromFundsQueryTest()\r\n    ElapsedTime={s.Elapsed}");
+        }
+
+        [TestMethod]
+        public void QueryAllocatedToFundsTest()
+        {
+            var s = Stopwatch.StartNew();
+            folioDapperContext.AllocatedToFunds(take: 1).ToArray();
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"AllocatedToFundsTest()\r\n    ElapsedTime={s.Elapsed}");
+        }
+
+        [TestMethod]
+        public void AllocatedToFundsQueryTest()
+        {
+            var s = Stopwatch.StartNew();
+            folioDapperContext.Query(@"
+SELECT
+f.name AS ""Fund"",
+atf.fund_id AS ""FundId"",
+tf.name AS ""ToFund"",
+atf.to_fund_id AS ""ToFundId"" 
+FROM uc.allocated_to_funds AS atf
+LEFT JOIN uc.funds AS f ON f.id = atf.fund_id
+LEFT JOIN uc.funds AS tf ON tf.id = atf.to_fund_id
+ ORDER BY atf.id
+", take: 1);
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"AllocatedToFundsQueryTest()\r\n    ElapsedTime={s.Elapsed}");
+        }
+
+        [TestMethod]
+        public void QueryAlternativeTitlesTest()
+        {
+            var s = Stopwatch.StartNew();
+            folioDapperContext.AlternativeTitles(take: 1).ToArray();
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"AlternativeTitlesTest()\r\n    ElapsedTime={s.Elapsed}");
+        }
+
+        [TestMethod]
+        public void AlternativeTitlesQueryTest()
+        {
+            var s = Stopwatch.StartNew();
+            folioDapperContext.Query(@"
+SELECT
+i.title AS ""Instance"",
+at.instance_id AS ""InstanceId"",
+att.name AS ""AlternativeTitleType"",
+at.alternative_title_type_id AS ""AlternativeTitleTypeId"",
+at.alternative_title AS ""Content"" 
+FROM uc.alternative_titles AS at
+LEFT JOIN uc.instances AS i ON i.id = at.instance_id
+LEFT JOIN uc.alternative_title_types AS att ON att.id = at.alternative_title_type_id
+ ORDER BY at.alternative_title
+", take: 1);
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"AlternativeTitlesQueryTest()\r\n    ElapsedTime={s.Elapsed}");
+        }
+
+        [TestMethod]
         public void QueryAlternativeTitleType2sTest()
         {
             var s = Stopwatch.StartNew();
@@ -143,6 +253,69 @@ LEFT JOIN uc.users AS lwu ON lwu.id = att2.updated_by_user_id
         }
 
         [TestMethod]
+        public void QueryAuthAttempt2sTest()
+        {
+            var s = Stopwatch.StartNew();
+            folioDapperContext.AuthAttempt2s(take: 1).ToArray();
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"AuthAttempt2sTest()\r\n    ElapsedTime={s.Elapsed}");
+        }
+
+        [TestMethod]
+        public void AuthAttempt2sQueryTest()
+        {
+            var s = Stopwatch.StartNew();
+            folioDapperContext.Query(@"
+SELECT
+aa2.id AS ""Id"",
+u.username AS ""User"",
+aa2.user_id AS ""UserId"",
+aa2.last_attempt AS ""LastAttempt"",
+aa2.attempt_count AS ""AttemptCount"",
+aa2.content AS ""Content"" 
+FROM uc.auth_attempts AS aa2
+LEFT JOIN uc.users AS u ON u.id = aa2.user_id
+ ORDER BY aa2.id
+", take: 1);
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"AuthAttempt2sQueryTest()\r\n    ElapsedTime={s.Elapsed}");
+        }
+
+        [TestMethod]
+        public void QueryAuthCredentialsHistory2sTest()
+        {
+            var s = Stopwatch.StartNew();
+            folioDapperContext.AuthCredentialsHistory2s(take: 1).ToArray();
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"AuthCredentialsHistory2sTest()\r\n    ElapsedTime={s.Elapsed}");
+        }
+
+        [TestMethod]
+        public void AuthCredentialsHistory2sQueryTest()
+        {
+            var s = Stopwatch.StartNew();
+            folioDapperContext.Query(@"
+SELECT
+ach2.id AS ""Id"",
+u.username AS ""User"",
+ach2.user_id AS ""UserId"",
+ach2.hash AS ""Hash"",
+ach2.salt AS ""Salt"",
+ach2.date AS ""Date"",
+ach2.created_date AS ""CreationTime"",
+cu.username AS ""CreationUser"",
+ach2.created_by_user_id AS ""CreationUserId"",
+ach2.updated_date AS ""LastWriteTime"",
+lwu.username AS ""LastWriteUser"",
+ach2.updated_by_user_id AS ""LastWriteUserId"",
+ach2.content AS ""Content"" 
+FROM uc.auth_credentials_histories AS ach2
+LEFT JOIN uc.users AS u ON u.id = ach2.user_id
+LEFT JOIN uc.users AS cu ON cu.id = ach2.created_by_user_id
+LEFT JOIN uc.users AS lwu ON lwu.id = ach2.updated_by_user_id
+ ORDER BY ach2.id
+", take: 1);
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"AuthCredentialsHistory2sQueryTest()\r\n    ElapsedTime={s.Elapsed}");
+        }
+
+        [TestMethod]
         public void QueryBatchGroup2sTest()
         {
             var s = Stopwatch.StartNew();
@@ -172,6 +345,129 @@ LEFT JOIN uc.users AS lwu ON lwu.id = bg2.updated_by_user_id
  ORDER BY bg2.name
 ", take: 1);
             traceSource.TraceEvent(TraceEventType.Information, 0, $"BatchGroup2sQueryTest()\r\n    ElapsedTime={s.Elapsed}");
+        }
+
+        [TestMethod]
+        public void QueryBatchVoucher2sTest()
+        {
+            var s = Stopwatch.StartNew();
+            folioDapperContext.BatchVoucher2s(take: 1).ToArray();
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"BatchVoucher2sTest()\r\n    ElapsedTime={s.Elapsed}");
+        }
+
+        [TestMethod]
+        public void BatchVoucher2sQueryTest()
+        {
+            var s = Stopwatch.StartNew();
+            folioDapperContext.Query(@"
+SELECT
+bv2.id AS ""Id"",
+bv2.batch_group AS ""BatchGroup"",
+bv2.created AS ""Created"",
+bv2.start AS ""Start"",
+bv2.end AS ""End"",
+bv2.total_records AS ""TotalRecords"",
+bv2.content AS ""Content"" 
+FROM uc.batch_vouchers AS bv2
+ ORDER BY bv2.id
+", take: 1);
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"BatchVoucher2sQueryTest()\r\n    ElapsedTime={s.Elapsed}");
+        }
+
+        [TestMethod]
+        public void QueryBatchVoucherBatchedVouchersTest()
+        {
+            var s = Stopwatch.StartNew();
+            folioDapperContext.BatchVoucherBatchedVouchers(take: 1).ToArray();
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"BatchVoucherBatchedVouchersTest()\r\n    ElapsedTime={s.Elapsed}");
+        }
+
+        [TestMethod]
+        public void BatchVoucherBatchedVouchersQueryTest()
+        {
+            var s = Stopwatch.StartNew();
+            folioDapperContext.Query(@"
+SELECT
+bv.id AS ""BatchVoucher"",
+bvbv.batch_voucher_id AS ""BatchVoucherId"",
+bvbv.accounting_code AS ""AccountingCode"",
+bvbv.account_no AS ""AccountNumber"",
+bvbv.amount AS ""Amount"",
+bvbv.disbursement_number AS ""DisbursementNumber"",
+bvbv.disbursement_date AS ""DisbursementDate"",
+bvbv.disbursement_amount AS ""DisbursementAmount"",
+bvbv.enclosure_needed AS ""Enclosure"",
+bvbv.exchange_rate AS ""ExchangeRate"",
+bvbv.folio_invoice_no AS ""FolioInvoiceNumber"",
+bvbv.invoice_currency AS ""InvoiceCurrency"",
+bvbv.invoice_note AS ""InvoiceNote"",
+bvbv.status AS ""Status"",
+bvbv.system_currency AS ""SystemCurrency"",
+bvbv.type AS ""Type"",
+bvbv.vendor_invoice_no AS ""VendorInvoiceNumber"",
+bvbv.vendor_name AS ""VendorName"",
+bvbv.voucher_date AS ""VoucherDate"",
+bvbv.voucher_number AS ""VoucherNumber"",
+bvbv.vendor_address_address_line1 AS ""VendorStreetAddress1"",
+bvbv.vendor_address_address_line2 AS ""VendorStreetAddress2"",
+bvbv.vendor_address_city AS ""VendorCity"",
+bvbv.vendor_address_state_region AS ""VendorState"",
+bvbv.vendor_address_zip_code AS ""VendorPostalCode"",
+bvbv.vendor_address_country AS ""VendorCountryCode"" 
+FROM uc.batch_voucher_batched_vouchers AS bvbv
+LEFT JOIN uc.batch_vouchers AS bv ON bv.id = bvbv.batch_voucher_id
+ ORDER BY bvbv.id
+", take: 1);
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"BatchVoucherBatchedVouchersQueryTest()\r\n    ElapsedTime={s.Elapsed}");
+        }
+
+        [TestMethod]
+        public void QueryBatchVoucherBatchedVoucherBatchedVoucherLinesTest()
+        {
+            var s = Stopwatch.StartNew();
+            folioDapperContext.BatchVoucherBatchedVoucherBatchedVoucherLines(take: 1).ToArray();
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"BatchVoucherBatchedVoucherBatchedVoucherLinesTest()\r\n    ElapsedTime={s.Elapsed}");
+        }
+
+        [TestMethod]
+        public void BatchVoucherBatchedVoucherBatchedVoucherLinesQueryTest()
+        {
+            var s = Stopwatch.StartNew();
+            folioDapperContext.Query(@"
+SELECT
+bvbv.id AS ""BatchVoucherBatchedVoucher"",
+bvbvbvl.batch_voucher_batched_voucher_id AS ""BatchVoucherBatchedVoucherId"",
+bvbvbvl.amount AS ""Amount"",
+bvbvbvl.external_account_number AS ""AccountNumber"" 
+FROM uc.batch_voucher_batched_voucher_batched_voucher_lines AS bvbvbvl
+LEFT JOIN uc.batch_voucher_batched_vouchers AS bvbv ON bvbv.id = bvbvbvl.batch_voucher_batched_voucher_id
+ ORDER BY bvbvbvl.id
+", take: 1);
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"BatchVoucherBatchedVoucherBatchedVoucherLinesQueryTest()\r\n    ElapsedTime={s.Elapsed}");
+        }
+
+        [TestMethod]
+        public void QueryBatchVoucherBatchedVoucherBatchedVoucherLineFundCodesTest()
+        {
+            var s = Stopwatch.StartNew();
+            folioDapperContext.BatchVoucherBatchedVoucherBatchedVoucherLineFundCodes(take: 1).ToArray();
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"BatchVoucherBatchedVoucherBatchedVoucherLineFundCodesTest()\r\n    ElapsedTime={s.Elapsed}");
+        }
+
+        [TestMethod]
+        public void BatchVoucherBatchedVoucherBatchedVoucherLineFundCodesQueryTest()
+        {
+            var s = Stopwatch.StartNew();
+            folioDapperContext.Query(@"
+SELECT
+bvbvbvl.id AS ""BatchVoucherBatchedVoucherBatchedVoucherLine"",
+bvbvbvlfc.batch_voucher_batched_voucher_batched_voucher_line_id AS ""BatchVoucherBatchedVoucherBatchedVoucherLineId"",
+bvbvbvlfc.content AS ""Content"" 
+FROM uc.batch_voucher_batched_voucher_batched_voucher_line_fund_codes AS bvbvbvlfc
+LEFT JOIN uc.batch_voucher_batched_voucher_batched_voucher_lines AS bvbvbvl ON bvbvbvl.id = bvbvbvlfc.batch_voucher_batched_voucher_batched_voucher_line_id
+ ORDER BY bvbvbvlfc.content
+", take: 1);
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"BatchVoucherBatchedVoucherBatchedVoucherLineFundCodesQueryTest()\r\n    ElapsedTime={s.Elapsed}");
         }
 
         [TestMethod]
@@ -249,6 +545,30 @@ LEFT JOIN uc.users AS lwu ON lwu.id = bvec2.updated_by_user_id
  ORDER BY bvec2.id
 ", take: 1);
             traceSource.TraceEvent(TraceEventType.Information, 0, $"BatchVoucherExportConfig2sQueryTest()\r\n    ElapsedTime={s.Elapsed}");
+        }
+
+        [TestMethod]
+        public void QueryBatchVoucherExportConfigWeekdaysTest()
+        {
+            var s = Stopwatch.StartNew();
+            folioDapperContext.BatchVoucherExportConfigWeekdays(take: 1).ToArray();
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"BatchVoucherExportConfigWeekdaysTest()\r\n    ElapsedTime={s.Elapsed}");
+        }
+
+        [TestMethod]
+        public void BatchVoucherExportConfigWeekdaysQueryTest()
+        {
+            var s = Stopwatch.StartNew();
+            folioDapperContext.Query(@"
+SELECT
+bvec.id AS ""BatchVoucherExportConfig"",
+bvecw.batch_voucher_export_config_id AS ""BatchVoucherExportConfigId"",
+bvecw.content AS ""Content"" 
+FROM uc.batch_voucher_export_config_weekdays AS bvecw
+LEFT JOIN uc.batch_voucher_export_configs AS bvec ON bvec.id = bvecw.batch_voucher_export_config_id
+ ORDER BY bvecw.content
+", take: 1);
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"BatchVoucherExportConfigWeekdaysQueryTest()\r\n    ElapsedTime={s.Elapsed}");
         }
 
         [TestMethod]
@@ -457,6 +777,32 @@ LEFT JOIN uc.users AS lwu ON lwu.id = b2.updated_by_user_id
         }
 
         [TestMethod]
+        public void QueryBudgetAcquisitionsUnitsTest()
+        {
+            var s = Stopwatch.StartNew();
+            folioDapperContext.BudgetAcquisitionsUnits(take: 1).ToArray();
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"BudgetAcquisitionsUnitsTest()\r\n    ElapsedTime={s.Elapsed}");
+        }
+
+        [TestMethod]
+        public void BudgetAcquisitionsUnitsQueryTest()
+        {
+            var s = Stopwatch.StartNew();
+            folioDapperContext.Query(@"
+SELECT
+b.name AS ""Budget"",
+bau.budget_id AS ""BudgetId"",
+au.name AS ""AcquisitionsUnit"",
+bau.acquisitions_unit_id AS ""AcquisitionsUnitId"" 
+FROM uc.budget_acquisitions_units AS bau
+LEFT JOIN uc.budgets AS b ON b.id = bau.budget_id
+LEFT JOIN uc.acquisitions_units AS au ON au.id = bau.acquisitions_unit_id
+ ORDER BY bau.id
+", take: 1);
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"BudgetAcquisitionsUnitsQueryTest()\r\n    ElapsedTime={s.Elapsed}");
+        }
+
+        [TestMethod]
         public void QueryBudgetExpenseClass2sTest()
         {
             var s = Stopwatch.StartNew();
@@ -517,6 +863,32 @@ LEFT JOIN uc.funds AS f ON f.id = bg2.fund_id
  ORDER BY bg2.id
 ", take: 1);
             traceSource.TraceEvent(TraceEventType.Information, 0, $"BudgetGroup2sQueryTest()\r\n    ElapsedTime={s.Elapsed}");
+        }
+
+        [TestMethod]
+        public void QueryBudgetTagsTest()
+        {
+            var s = Stopwatch.StartNew();
+            folioDapperContext.BudgetTags(take: 1).ToArray();
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"BudgetTagsTest()\r\n    ElapsedTime={s.Elapsed}");
+        }
+
+        [TestMethod]
+        public void BudgetTagsQueryTest()
+        {
+            var s = Stopwatch.StartNew();
+            folioDapperContext.Query(@"
+SELECT
+b.name AS ""Budget"",
+bt.budget_id AS ""BudgetId"",
+t.id AS ""Tag"",
+bt.tag_id AS ""TagId"" 
+FROM uc.budget_tags AS bt
+LEFT JOIN uc.budgets AS b ON b.id = bt.budget_id
+LEFT JOIN uc.tags AS t ON t.id = bt.tag_id
+ ORDER BY bt.id
+", take: 1);
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"BudgetTagsQueryTest()\r\n    ElapsedTime={s.Elapsed}");
         }
 
         [TestMethod]
@@ -689,6 +1061,86 @@ LEFT JOIN uc.users AS pbu ON pbu.id = ci2.performed_by_user_id
         }
 
         [TestMethod]
+        public void QueryCirculationNotesTest()
+        {
+            var s = Stopwatch.StartNew();
+            folioDapperContext.CirculationNotes(take: 1).ToArray();
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"CirculationNotesTest()\r\n    ElapsedTime={s.Elapsed}");
+        }
+
+        [TestMethod]
+        public void CirculationNotesQueryTest()
+        {
+            var s = Stopwatch.StartNew();
+            folioDapperContext.Query(@"
+SELECT
+i.hrid AS ""Item"",
+cn.id2 AS ""Id2"",
+cn.note_type AS ""NoteType"",
+cn.note AS ""Note"",
+cn.source_id AS ""SourceId"",
+cn.source_personal_last_name AS ""SourcePersonalLastName"",
+cn.source_personal_first_name AS ""SourcePersonalFirstName"",
+cn.date AS ""Date"",
+cn.staff_only AS ""StaffOnly"" 
+FROM uc.circulation_notes AS cn
+LEFT JOIN uc.items AS i ON i.id = cn.item_id
+ ORDER BY cn.id
+", take: 1);
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"CirculationNotesQueryTest()\r\n    ElapsedTime={s.Elapsed}");
+        }
+
+        [TestMethod]
+        public void QueryCirculationRule2sTest()
+        {
+            var s = Stopwatch.StartNew();
+            folioDapperContext.CirculationRule2s(take: 1).ToArray();
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"CirculationRule2sTest()\r\n    ElapsedTime={s.Elapsed}");
+        }
+
+        [TestMethod]
+        public void CirculationRule2sQueryTest()
+        {
+            var s = Stopwatch.StartNew();
+            folioDapperContext.Query(@"
+SELECT
+cr2.id AS ""Id"",
+cr2.rules_as_text AS ""RulesAsText"",
+cr2.content AS ""Content"",
+cr2.lock AS ""Lock"" 
+FROM uc.circulation_rules AS cr2
+ ORDER BY cr2.id
+", take: 1);
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"CirculationRule2sQueryTest()\r\n    ElapsedTime={s.Elapsed}");
+        }
+
+        [TestMethod]
+        public void QueryClassificationsTest()
+        {
+            var s = Stopwatch.StartNew();
+            folioDapperContext.Classifications(take: 1).ToArray();
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"ClassificationsTest()\r\n    ElapsedTime={s.Elapsed}");
+        }
+
+        [TestMethod]
+        public void ClassificationsQueryTest()
+        {
+            var s = Stopwatch.StartNew();
+            folioDapperContext.Query(@"
+SELECT
+i.title AS ""Instance"",
+c.classification_number AS ""Number"",
+ct.name AS ""ClassificationType"",
+c.classification_type_id AS ""ClassificationTypeId"" 
+FROM uc.classifications AS c
+LEFT JOIN uc.instances AS i ON i.id = c.instance_id
+LEFT JOIN uc.classification_types AS ct ON ct.id = c.classification_type_id
+ ORDER BY c.classification_number
+", take: 1);
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"ClassificationsQueryTest()\r\n    ElapsedTime={s.Elapsed}");
+        }
+
+        [TestMethod]
         public void QueryClassificationType2sTest()
         {
             var s = Stopwatch.StartNew();
@@ -854,6 +1306,334 @@ LEFT JOIN uc.users AS lwu ON lwu.id = c2.updated_by_user_id
         }
 
         [TestMethod]
+        public void QueryContactAddressesTest()
+        {
+            var s = Stopwatch.StartNew();
+            folioDapperContext.ContactAddresses(take: 1).ToArray();
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"ContactAddressesTest()\r\n    ElapsedTime={s.Elapsed}");
+        }
+
+        [TestMethod]
+        public void ContactAddressesQueryTest()
+        {
+            var s = Stopwatch.StartNew();
+            folioDapperContext.Query(@"
+SELECT
+c.name AS ""Contact"",
+ca.contact_id AS ""ContactId"",
+ca.address_line1 AS ""StreetAddress1"",
+ca.address_line2 AS ""StreetAddress2"",
+ca.city AS ""City"",
+ca.state_region AS ""State"",
+ca.zip_code AS ""PostalCode"",
+ca.country AS ""CountryCode"",
+ca.is_primary AS ""IsPrimary"",
+ca.language AS ""Language"",
+ca.created_date AS ""CreationTime"",
+cu.username AS ""CreationUser"",
+ca.created_by_user_id AS ""CreationUserId"",
+ca.updated_date AS ""LastWriteTime"",
+lwu.username AS ""LastWriteUser"",
+ca.updated_by_user_id AS ""LastWriteUserId"" 
+FROM uc.contact_addresses AS ca
+LEFT JOIN uc.contacts AS c ON c.id = ca.contact_id
+LEFT JOIN uc.users AS cu ON cu.id = ca.created_by_user_id
+LEFT JOIN uc.users AS lwu ON lwu.id = ca.updated_by_user_id
+ ORDER BY ca.address_line1
+", take: 1);
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"ContactAddressesQueryTest()\r\n    ElapsedTime={s.Elapsed}");
+        }
+
+        [TestMethod]
+        public void QueryContactAddressCategoriesTest()
+        {
+            var s = Stopwatch.StartNew();
+            folioDapperContext.ContactAddressCategories(take: 1).ToArray();
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"ContactAddressCategoriesTest()\r\n    ElapsedTime={s.Elapsed}");
+        }
+
+        [TestMethod]
+        public void ContactAddressCategoriesQueryTest()
+        {
+            var s = Stopwatch.StartNew();
+            folioDapperContext.Query(@"
+SELECT
+ca.address_line1 AS ""ContactAddress"",
+cac.contact_address_id AS ""ContactAddressId"",
+c.value AS ""Category"",
+cac.category_id AS ""CategoryId"" 
+FROM uc.contact_address_categories AS cac
+LEFT JOIN uc.contact_addresses AS ca ON ca.id = cac.contact_address_id
+LEFT JOIN uc.categories AS c ON c.id = cac.category_id
+ ORDER BY cac.id
+", take: 1);
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"ContactAddressCategoriesQueryTest()\r\n    ElapsedTime={s.Elapsed}");
+        }
+
+        [TestMethod]
+        public void QueryContactCategoriesTest()
+        {
+            var s = Stopwatch.StartNew();
+            folioDapperContext.ContactCategories(take: 1).ToArray();
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"ContactCategoriesTest()\r\n    ElapsedTime={s.Elapsed}");
+        }
+
+        [TestMethod]
+        public void ContactCategoriesQueryTest()
+        {
+            var s = Stopwatch.StartNew();
+            folioDapperContext.Query(@"
+SELECT
+c.name AS ""Contact"",
+cc.contact_id AS ""ContactId"",
+c2.value AS ""Category"",
+cc.category_id AS ""CategoryId"" 
+FROM uc.contact_categories AS cc
+LEFT JOIN uc.contacts AS c ON c.id = cc.contact_id
+LEFT JOIN uc.categories AS c2 ON c2.id = cc.category_id
+ ORDER BY cc.id
+", take: 1);
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"ContactCategoriesQueryTest()\r\n    ElapsedTime={s.Elapsed}");
+        }
+
+        [TestMethod]
+        public void QueryContactEmailsTest()
+        {
+            var s = Stopwatch.StartNew();
+            folioDapperContext.ContactEmails(take: 1).ToArray();
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"ContactEmailsTest()\r\n    ElapsedTime={s.Elapsed}");
+        }
+
+        [TestMethod]
+        public void ContactEmailsQueryTest()
+        {
+            var s = Stopwatch.StartNew();
+            folioDapperContext.Query(@"
+SELECT
+c.name AS ""Contact"",
+ce.contact_id AS ""ContactId"",
+ce.value AS ""Value"",
+ce.description AS ""Description"",
+ce.is_primary AS ""IsPrimary"",
+ce.language AS ""Language"",
+ce.created_date AS ""CreationTime"",
+cu.username AS ""CreationUser"",
+ce.created_by_user_id AS ""CreationUserId"",
+ce.updated_date AS ""LastWriteTime"",
+lwu.username AS ""LastWriteUser"",
+ce.updated_by_user_id AS ""LastWriteUserId"" 
+FROM uc.contact_emails AS ce
+LEFT JOIN uc.contacts AS c ON c.id = ce.contact_id
+LEFT JOIN uc.users AS cu ON cu.id = ce.created_by_user_id
+LEFT JOIN uc.users AS lwu ON lwu.id = ce.updated_by_user_id
+ ORDER BY ce.value
+", take: 1);
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"ContactEmailsQueryTest()\r\n    ElapsedTime={s.Elapsed}");
+        }
+
+        [TestMethod]
+        public void QueryContactEmailCategoriesTest()
+        {
+            var s = Stopwatch.StartNew();
+            folioDapperContext.ContactEmailCategories(take: 1).ToArray();
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"ContactEmailCategoriesTest()\r\n    ElapsedTime={s.Elapsed}");
+        }
+
+        [TestMethod]
+        public void ContactEmailCategoriesQueryTest()
+        {
+            var s = Stopwatch.StartNew();
+            folioDapperContext.Query(@"
+SELECT
+ce.value AS ""ContactEmail"",
+cec.contact_email_id AS ""ContactEmailId"",
+c.value AS ""Category"",
+cec.category_id AS ""CategoryId"" 
+FROM uc.contact_email_categories AS cec
+LEFT JOIN uc.contact_emails AS ce ON ce.id = cec.contact_email_id
+LEFT JOIN uc.categories AS c ON c.id = cec.category_id
+ ORDER BY cec.id
+", take: 1);
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"ContactEmailCategoriesQueryTest()\r\n    ElapsedTime={s.Elapsed}");
+        }
+
+        [TestMethod]
+        public void QueryContactPhoneNumbersTest()
+        {
+            var s = Stopwatch.StartNew();
+            folioDapperContext.ContactPhoneNumbers(take: 1).ToArray();
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"ContactPhoneNumbersTest()\r\n    ElapsedTime={s.Elapsed}");
+        }
+
+        [TestMethod]
+        public void ContactPhoneNumbersQueryTest()
+        {
+            var s = Stopwatch.StartNew();
+            folioDapperContext.Query(@"
+SELECT
+c.name AS ""Contact"",
+cpn.contact_id AS ""ContactId"",
+cpn.phone_number AS ""PhoneNumber"",
+cpn.type AS ""Type"",
+cpn.is_primary AS ""IsPrimary"",
+cpn.language AS ""Language"",
+cpn.created_date AS ""CreationTime"",
+cu.username AS ""CreationUser"",
+cpn.created_by_user_id AS ""CreationUserId"",
+cpn.updated_date AS ""LastWriteTime"",
+lwu.username AS ""LastWriteUser"",
+cpn.updated_by_user_id AS ""LastWriteUserId"" 
+FROM uc.contact_phone_numbers AS cpn
+LEFT JOIN uc.contacts AS c ON c.id = cpn.contact_id
+LEFT JOIN uc.users AS cu ON cu.id = cpn.created_by_user_id
+LEFT JOIN uc.users AS lwu ON lwu.id = cpn.updated_by_user_id
+ ORDER BY cpn.phone_number
+", take: 1);
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"ContactPhoneNumbersQueryTest()\r\n    ElapsedTime={s.Elapsed}");
+        }
+
+        [TestMethod]
+        public void QueryContactPhoneNumberCategoriesTest()
+        {
+            var s = Stopwatch.StartNew();
+            folioDapperContext.ContactPhoneNumberCategories(take: 1).ToArray();
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"ContactPhoneNumberCategoriesTest()\r\n    ElapsedTime={s.Elapsed}");
+        }
+
+        [TestMethod]
+        public void ContactPhoneNumberCategoriesQueryTest()
+        {
+            var s = Stopwatch.StartNew();
+            folioDapperContext.Query(@"
+SELECT
+cpn.phone_number AS ""ContactPhoneNumber"",
+cpnc.contact_phone_number_id AS ""ContactPhoneNumberId"",
+c.value AS ""Category"",
+cpnc.category_id AS ""CategoryId"" 
+FROM uc.contact_phone_number_categories AS cpnc
+LEFT JOIN uc.contact_phone_numbers AS cpn ON cpn.id = cpnc.contact_phone_number_id
+LEFT JOIN uc.categories AS c ON c.id = cpnc.category_id
+ ORDER BY cpnc.id
+", take: 1);
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"ContactPhoneNumberCategoriesQueryTest()\r\n    ElapsedTime={s.Elapsed}");
+        }
+
+        [TestMethod]
+        public void QueryContactTypesTest()
+        {
+            var s = Stopwatch.StartNew();
+            folioDapperContext.ContactTypes(take: 1).ToArray();
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"ContactTypesTest()\r\n    ElapsedTime={s.Elapsed}");
+        }
+
+        [TestMethod]
+        public void ContactTypesQueryTest()
+        {
+            var s = Stopwatch.StartNew();
+            folioDapperContext.Query(@"
+SELECT
+ct.name AS ""Name"" 
+FROM uc.contact_types AS ct
+ ORDER BY ct.name
+", take: 1);
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"ContactTypesQueryTest()\r\n    ElapsedTime={s.Elapsed}");
+        }
+
+        [TestMethod]
+        public void QueryContactUrlsTest()
+        {
+            var s = Stopwatch.StartNew();
+            folioDapperContext.ContactUrls(take: 1).ToArray();
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"ContactUrlsTest()\r\n    ElapsedTime={s.Elapsed}");
+        }
+
+        [TestMethod]
+        public void ContactUrlsQueryTest()
+        {
+            var s = Stopwatch.StartNew();
+            folioDapperContext.Query(@"
+SELECT
+c.name AS ""Contact"",
+cu.contact_id AS ""ContactId"",
+cu.id2 AS ""Id2"",
+cu.value AS ""Value"",
+cu.description AS ""Description"",
+cu.language AS ""Language"",
+cu.is_primary AS ""IsPrimary"",
+cu.notes AS ""Notes"",
+cu.created_date AS ""CreationTime"",
+cu2.username AS ""CreationUser"",
+cu.created_by_user_id AS ""CreationUserId"",
+cu.updated_date AS ""LastWriteTime"",
+lwu.username AS ""LastWriteUser"",
+cu.updated_by_user_id AS ""LastWriteUserId"" 
+FROM uc.contact_urls AS cu
+LEFT JOIN uc.contacts AS c ON c.id = cu.contact_id
+LEFT JOIN uc.users AS cu2 ON cu2.id = cu.created_by_user_id
+LEFT JOIN uc.users AS lwu ON lwu.id = cu.updated_by_user_id
+ ORDER BY cu.value
+", take: 1);
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"ContactUrlsQueryTest()\r\n    ElapsedTime={s.Elapsed}");
+        }
+
+        [TestMethod]
+        public void QueryContactUrlCategoriesTest()
+        {
+            var s = Stopwatch.StartNew();
+            folioDapperContext.ContactUrlCategories(take: 1).ToArray();
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"ContactUrlCategoriesTest()\r\n    ElapsedTime={s.Elapsed}");
+        }
+
+        [TestMethod]
+        public void ContactUrlCategoriesQueryTest()
+        {
+            var s = Stopwatch.StartNew();
+            folioDapperContext.Query(@"
+SELECT
+cu.value AS ""ContactUrl"",
+cuc.contact_url_id AS ""ContactUrlId"",
+c.value AS ""Category"",
+cuc.category_id AS ""CategoryId"" 
+FROM uc.contact_url_categories AS cuc
+LEFT JOIN uc.contact_urls AS cu ON cu.id = cuc.contact_url_id
+LEFT JOIN uc.categories AS c ON c.id = cuc.category_id
+ ORDER BY cuc.id
+", take: 1);
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"ContactUrlCategoriesQueryTest()\r\n    ElapsedTime={s.Elapsed}");
+        }
+
+        [TestMethod]
+        public void QueryContributorsTest()
+        {
+            var s = Stopwatch.StartNew();
+            folioDapperContext.Contributors(take: 1).ToArray();
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"ContributorsTest()\r\n    ElapsedTime={s.Elapsed}");
+        }
+
+        [TestMethod]
+        public void ContributorsQueryTest()
+        {
+            var s = Stopwatch.StartNew();
+            folioDapperContext.Query(@"
+SELECT
+i.title AS ""Instance"",
+c.name AS ""Name"",
+ct.name AS ""ContributorType"",
+c.contributor_type_id AS ""ContributorTypeId"",
+c.contributor_type_text AS ""ContributorTypeText"",
+cnt.name AS ""ContributorNameType"",
+c.contributor_name_type_id AS ""ContributorNameTypeId"",
+c.primary AS ""Primary"" 
+FROM uc.contributors AS c
+LEFT JOIN uc.instances AS i ON i.id = c.instance_id
+LEFT JOIN uc.contributor_types AS ct ON ct.id = c.contributor_type_id
+LEFT JOIN uc.contributor_name_types AS cnt ON cnt.id = c.contributor_name_type_id
+ ORDER BY c.name
+", take: 1);
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"ContributorsQueryTest()\r\n    ElapsedTime={s.Elapsed}");
+        }
+
+        [TestMethod]
         public void QueryContributorNameType2sTest()
         {
             var s = Stopwatch.StartNew();
@@ -918,6 +1698,53 @@ LEFT JOIN uc.users AS lwu ON lwu.id = ct2.updated_by_user_id
         }
 
         [TestMethod]
+        public void QueryCountriesTest()
+        {
+            var s = Stopwatch.StartNew();
+            folioDapperContext.Countries(take: 1).ToArray();
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"CountriesTest()\r\n    ElapsedTime={s.Elapsed}");
+        }
+
+        [TestMethod]
+        public void CountriesQueryTest()
+        {
+            var s = Stopwatch.StartNew();
+            folioDapperContext.Query(@"
+SELECT
+c.alpha2_code AS ""Alpha2Code"",
+c.alpha3_code AS ""Alpha3Code"",
+c.name AS ""Name"" 
+FROM uc.countries AS c
+ ORDER BY c.name
+", take: 1);
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"CountriesQueryTest()\r\n    ElapsedTime={s.Elapsed}");
+        }
+
+        [TestMethod]
+        public void QueryCurrenciesTest()
+        {
+            var s = Stopwatch.StartNew();
+            folioDapperContext.Currencies(take: 1).ToArray();
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"CurrenciesTest()\r\n    ElapsedTime={s.Elapsed}");
+        }
+
+        [TestMethod]
+        public void CurrenciesQueryTest()
+        {
+            var s = Stopwatch.StartNew();
+            folioDapperContext.Query(@"
+SELECT
+o.name AS ""Organization"",
+c.organization_id AS ""OrganizationId"",
+c.content AS ""Content"" 
+FROM uc.currencies AS c
+LEFT JOIN uc.organizations AS o ON o.id = c.organization_id
+ ORDER BY c.content
+", take: 1);
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"CurrenciesQueryTest()\r\n    ElapsedTime={s.Elapsed}");
+        }
+
+        [TestMethod]
         public void QueryCustomField2sTest()
         {
             var s = Stopwatch.StartNew();
@@ -961,6 +1788,32 @@ LEFT JOIN uc.users AS lwu ON lwu.id = cf2.updated_by_user_id
         }
 
         [TestMethod]
+        public void QueryCustomFieldValuesTest()
+        {
+            var s = Stopwatch.StartNew();
+            folioDapperContext.CustomFieldValues(take: 1).ToArray();
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"CustomFieldValuesTest()\r\n    ElapsedTime={s.Elapsed}");
+        }
+
+        [TestMethod]
+        public void CustomFieldValuesQueryTest()
+        {
+            var s = Stopwatch.StartNew();
+            folioDapperContext.Query(@"
+SELECT
+cf.name AS ""CustomField"",
+cfv.custom_field_id AS ""CustomFieldId"",
+cfv.id2 AS ""Id2"",
+cfv.value AS ""Value"",
+cfv.default AS ""Default"" 
+FROM uc.custom_field_values AS cfv
+LEFT JOIN uc.custom_fields AS cf ON cf.id = cfv.custom_field_id
+ ORDER BY cfv.id
+", take: 1);
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"CustomFieldValuesQueryTest()\r\n    ElapsedTime={s.Elapsed}");
+        }
+
+        [TestMethod]
         public void QueryDepartment2sTest()
         {
             var s = Stopwatch.StartNew();
@@ -991,6 +1844,106 @@ LEFT JOIN uc.users AS lwu ON lwu.id = d2.updated_by_user_id
  ORDER BY d2.name
 ", take: 1);
             traceSource.TraceEvent(TraceEventType.Information, 0, $"Department2sQueryTest()\r\n    ElapsedTime={s.Elapsed}");
+        }
+
+        [TestMethod]
+        public void QueryDocument2sTest()
+        {
+            var s = Stopwatch.StartNew();
+            folioDapperContext.Document2s(take: 1).ToArray();
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"Document2sTest()\r\n    ElapsedTime={s.Elapsed}");
+        }
+
+        [TestMethod]
+        public void Document2sQueryTest()
+        {
+            var s = Stopwatch.StartNew();
+            folioDapperContext.Query(@"
+SELECT
+d2.id AS ""Id"",
+d2.document_metadata_name AS ""DocumentMetadataName"",
+dmi.folio_invoice_no AS ""DocumentMetadataInvoice"",
+d2.document_metadata_invoice_id AS ""DocumentMetadataInvoiceId"",
+d2.document_metadata_url AS ""DocumentMetadataUrl"",
+d2.document_metadata_metadata_created_date AS ""DocumentMetadataMetadataCreatedDate"",
+dmmcbu.username AS ""DocumentMetadataMetadataCreatedByUser"",
+d2.document_metadata_metadata_created_by_user_id AS ""DocumentMetadataMetadataCreatedByUserId"",
+d2.document_metadata_metadata_created_by_username AS ""DocumentMetadataMetadataCreatedByUsername"",
+d2.document_metadata_metadata_updated_date AS ""DocumentMetadataMetadataUpdatedDate"",
+dmmubu.username AS ""DocumentMetadataMetadataUpdatedByUser"",
+d2.document_metadata_metadata_updated_by_user_id AS ""DocumentMetadataMetadataUpdatedByUserId"",
+d2.document_metadata_metadata_updated_by_username AS ""DocumentMetadataMetadataUpdatedByUsername"",
+d2.contents_data AS ""ContentsData"",
+d2.created_date AS ""CreationTime"",
+cu.username AS ""CreationUser"",
+d2.created_by_user_id AS ""CreationUserId"",
+d2.updated_date AS ""LastWriteTime"",
+lwu.username AS ""LastWriteUser"",
+d2.updated_by_user_id AS ""LastWriteUserId"",
+d2.content AS ""Content"",
+d2.invoiceid AS ""Invoiceid"",
+d2.document_data AS ""DocumentData"" 
+FROM uc.documents AS d2
+LEFT JOIN uc.invoices AS dmi ON dmi.id = d2.document_metadata_invoice_id
+LEFT JOIN uc.users AS dmmcbu ON dmmcbu.id = d2.document_metadata_metadata_created_by_user_id
+LEFT JOIN uc.users AS dmmubu ON dmmubu.id = d2.document_metadata_metadata_updated_by_user_id
+LEFT JOIN uc.users AS cu ON cu.id = d2.created_by_user_id
+LEFT JOIN uc.users AS lwu ON lwu.id = d2.updated_by_user_id
+ ORDER BY d2.id
+", take: 1);
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"Document2sQueryTest()\r\n    ElapsedTime={s.Elapsed}");
+        }
+
+        [TestMethod]
+        public void QueryEditionsTest()
+        {
+            var s = Stopwatch.StartNew();
+            folioDapperContext.Editions(take: 1).ToArray();
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"EditionsTest()\r\n    ElapsedTime={s.Elapsed}");
+        }
+
+        [TestMethod]
+        public void EditionsQueryTest()
+        {
+            var s = Stopwatch.StartNew();
+            folioDapperContext.Query(@"
+SELECT
+i.title AS ""Instance"",
+e2.content AS ""Content"" 
+FROM uc.editions AS e2
+LEFT JOIN uc.instances AS i ON i.id = e2.instance_id
+ ORDER BY e2.content
+", take: 1);
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"EditionsQueryTest()\r\n    ElapsedTime={s.Elapsed}");
+        }
+
+        [TestMethod]
+        public void QueryElectronicAccessesTest()
+        {
+            var s = Stopwatch.StartNew();
+            folioDapperContext.ElectronicAccesses(take: 1).ToArray();
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"ElectronicAccessesTest()\r\n    ElapsedTime={s.Elapsed}");
+        }
+
+        [TestMethod]
+        public void ElectronicAccessesQueryTest()
+        {
+            var s = Stopwatch.StartNew();
+            folioDapperContext.Query(@"
+SELECT
+i.title AS ""Instance"",
+ea.uri AS ""Uri"",
+ea.link_text AS ""LinkText"",
+ea.materials_specification AS ""MaterialsSpecification"",
+ea.public_note AS ""PublicNote"",
+r.id AS ""Relationship"",
+ea.relationship_id AS ""RelationshipId"" 
+FROM uc.electronic_accesses AS ea
+LEFT JOIN uc.instances AS i ON i.id = ea.instance_id
+LEFT JOIN uc.relationships AS r ON r.id = ea.relationship_id
+ ORDER BY ea.id
+", take: 1);
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"ElectronicAccessesQueryTest()\r\n    ElapsedTime={s.Elapsed}");
         }
 
         [TestMethod]
@@ -1025,6 +1978,68 @@ LEFT JOIN uc.users AS lwu ON lwu.id = ear2.updated_by_user_id
         }
 
         [TestMethod]
+        public void QueryErrorRecord2sTest()
+        {
+            var s = Stopwatch.StartNew();
+            folioDapperContext.ErrorRecord2s(take: 1).ToArray();
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"ErrorRecord2sTest()\r\n    ElapsedTime={s.Elapsed}");
+        }
+
+        [TestMethod]
+        public void ErrorRecord2sQueryTest()
+        {
+            var s = Stopwatch.StartNew();
+            folioDapperContext.Query(@"
+SELECT
+er2.id AS ""Id"",
+r2.id AS ""Record2"",
+er2.content AS ""Content"",
+er2.description AS ""Description"" 
+FROM uc.error_records AS er2
+LEFT JOIN uc.records AS r2 ON r2.id = er2.id
+ ORDER BY er2.id
+", take: 1);
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"ErrorRecord2sQueryTest()\r\n    ElapsedTime={s.Elapsed}");
+        }
+
+        [TestMethod]
+        public void QueryEventLog2sTest()
+        {
+            var s = Stopwatch.StartNew();
+            folioDapperContext.EventLog2s(take: 1).ToArray();
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"EventLog2sTest()\r\n    ElapsedTime={s.Elapsed}");
+        }
+
+        [TestMethod]
+        public void EventLog2sQueryTest()
+        {
+            var s = Stopwatch.StartNew();
+            folioDapperContext.Query(@"
+SELECT
+el2.id AS ""Id"",
+el2.tenant AS ""Tenant"",
+u.username AS ""User"",
+el2.user_id AS ""UserId"",
+el2.ip AS ""Ip"",
+el2.browser_information AS ""BrowserInformation"",
+el2.timestamp AS ""Timestamp"",
+el2.created_date AS ""CreationTime"",
+cu.username AS ""CreationUser"",
+el2.created_by_user_id AS ""CreationUserId"",
+el2.updated_date AS ""LastWriteTime"",
+lwu.username AS ""LastWriteUser"",
+el2.updated_by_user_id AS ""LastWriteUserId"",
+el2.content AS ""Content"" 
+FROM uc.event_logs AS el2
+LEFT JOIN uc.users AS u ON u.id = el2.user_id
+LEFT JOIN uc.users AS cu ON cu.id = el2.created_by_user_id
+LEFT JOIN uc.users AS lwu ON lwu.id = el2.updated_by_user_id
+ ORDER BY el2.id
+", take: 1);
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"EventLog2sQueryTest()\r\n    ElapsedTime={s.Elapsed}");
+        }
+
+        [TestMethod]
         public void QueryExpenseClass2sTest()
         {
             var s = Stopwatch.StartNew();
@@ -1055,6 +2070,67 @@ LEFT JOIN uc.users AS lwu ON lwu.id = ec2.updated_by_user_id
  ORDER BY ec2.name
 ", take: 1);
             traceSource.TraceEvent(TraceEventType.Information, 0, $"ExpenseClass2sQueryTest()\r\n    ElapsedTime={s.Elapsed}");
+        }
+
+        [TestMethod]
+        public void QueryExportConfigCredential2sTest()
+        {
+            var s = Stopwatch.StartNew();
+            folioDapperContext.ExportConfigCredential2s(take: 1).ToArray();
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"ExportConfigCredential2sTest()\r\n    ElapsedTime={s.Elapsed}");
+        }
+
+        [TestMethod]
+        public void ExportConfigCredential2sQueryTest()
+        {
+            var s = Stopwatch.StartNew();
+            folioDapperContext.Query(@"
+SELECT
+ecc2.id AS ""Id"",
+ecc2.username AS ""Username"",
+ecc2.password AS ""Password"",
+ec.id AS ""ExportConfig"",
+ecc2.export_config_id AS ""ExportConfigId"",
+ecc2.created_date AS ""CreationTime"",
+cu.username AS ""CreationUser"",
+ecc2.created_by_user_id AS ""CreationUserId"",
+ecc2.updated_date AS ""LastWriteTime"",
+lwu.username AS ""LastWriteUser"",
+ecc2.updated_by_user_id AS ""LastWriteUserId"",
+ecc2.content AS ""Content"" 
+FROM uc.export_config_credentials AS ecc2
+LEFT JOIN uc.batch_voucher_export_configs AS ec ON ec.id = ecc2.export_config_id
+LEFT JOIN uc.users AS cu ON cu.id = ecc2.created_by_user_id
+LEFT JOIN uc.users AS lwu ON lwu.id = ecc2.updated_by_user_id
+ ORDER BY ecc2.id
+", take: 1);
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"ExportConfigCredential2sQueryTest()\r\n    ElapsedTime={s.Elapsed}");
+        }
+
+        [TestMethod]
+        public void QueryExtentsTest()
+        {
+            var s = Stopwatch.StartNew();
+            folioDapperContext.Extents(take: 1).ToArray();
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"ExtentsTest()\r\n    ElapsedTime={s.Elapsed}");
+        }
+
+        [TestMethod]
+        public void ExtentsQueryTest()
+        {
+            var s = Stopwatch.StartNew();
+            folioDapperContext.Query(@"
+SELECT
+h.hrid AS ""Holding"",
+e2.holding_id AS ""HoldingId"",
+e2.statement AS ""Content"",
+e2.note AS ""Note"",
+e2.staff_note AS ""StaffNote"" 
+FROM uc.extents AS e2
+LEFT JOIN uc.holdings AS h ON h.id = e2.holding_id
+ ORDER BY e2.statement
+", take: 1);
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"ExtentsQueryTest()\r\n    ElapsedTime={s.Elapsed}");
         }
 
         [TestMethod]
@@ -1200,6 +2276,32 @@ LEFT JOIN uc.users AS lwu ON lwu.id = fg2.updated_by_user_id
         }
 
         [TestMethod]
+        public void QueryFinanceGroupAcquisitionsUnitsTest()
+        {
+            var s = Stopwatch.StartNew();
+            folioDapperContext.FinanceGroupAcquisitionsUnits(take: 1).ToArray();
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"FinanceGroupAcquisitionsUnitsTest()\r\n    ElapsedTime={s.Elapsed}");
+        }
+
+        [TestMethod]
+        public void FinanceGroupAcquisitionsUnitsQueryTest()
+        {
+            var s = Stopwatch.StartNew();
+            folioDapperContext.Query(@"
+SELECT
+fg.name AS ""FinanceGroup"",
+fgau.finance_group_id AS ""FinanceGroupId"",
+au.name AS ""AcquisitionsUnit"",
+fgau.acquisitions_unit_id AS ""AcquisitionsUnitId"" 
+FROM uc.finance_group_acquisitions_units AS fgau
+LEFT JOIN uc.finance_groups AS fg ON fg.id = fgau.finance_group_id
+LEFT JOIN uc.acquisitions_units AS au ON au.id = fgau.acquisitions_unit_id
+ ORDER BY fgau.id
+", take: 1);
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"FinanceGroupAcquisitionsUnitsQueryTest()\r\n    ElapsedTime={s.Elapsed}");
+        }
+
+        [TestMethod]
         public void QueryFiscalYear2sTest()
         {
             var s = Stopwatch.StartNew();
@@ -1250,6 +2352,32 @@ LEFT JOIN uc.users AS lwu ON lwu.id = fy2.updated_by_user_id
         }
 
         [TestMethod]
+        public void QueryFiscalYearAcquisitionsUnitsTest()
+        {
+            var s = Stopwatch.StartNew();
+            folioDapperContext.FiscalYearAcquisitionsUnits(take: 1).ToArray();
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"FiscalYearAcquisitionsUnitsTest()\r\n    ElapsedTime={s.Elapsed}");
+        }
+
+        [TestMethod]
+        public void FiscalYearAcquisitionsUnitsQueryTest()
+        {
+            var s = Stopwatch.StartNew();
+            folioDapperContext.Query(@"
+SELECT
+fy.name AS ""FiscalYear"",
+fyau.fiscal_year_id AS ""FiscalYearId"",
+au.name AS ""AcquisitionsUnit"",
+fyau.acquisitions_unit_id AS ""AcquisitionsUnitId"" 
+FROM uc.fiscal_year_acquisitions_units AS fyau
+LEFT JOIN uc.fiscal_years AS fy ON fy.id = fyau.fiscal_year_id
+LEFT JOIN uc.acquisitions_units AS au ON au.id = fyau.acquisitions_unit_id
+ ORDER BY fyau.id
+", take: 1);
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"FiscalYearAcquisitionsUnitsQueryTest()\r\n    ElapsedTime={s.Elapsed}");
+        }
+
+        [TestMethod]
         public void QueryFixedDueDateSchedule2sTest()
         {
             var s = Stopwatch.StartNew();
@@ -1279,6 +2407,32 @@ LEFT JOIN uc.users AS lwu ON lwu.id = fdds2.updated_by_user_id
  ORDER BY fdds2.name
 ", take: 1);
             traceSource.TraceEvent(TraceEventType.Information, 0, $"FixedDueDateSchedule2sQueryTest()\r\n    ElapsedTime={s.Elapsed}");
+        }
+
+        [TestMethod]
+        public void QueryFixedDueDateScheduleSchedulesTest()
+        {
+            var s = Stopwatch.StartNew();
+            folioDapperContext.FixedDueDateScheduleSchedules(take: 1).ToArray();
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"FixedDueDateScheduleSchedulesTest()\r\n    ElapsedTime={s.Elapsed}");
+        }
+
+        [TestMethod]
+        public void FixedDueDateScheduleSchedulesQueryTest()
+        {
+            var s = Stopwatch.StartNew();
+            folioDapperContext.Query(@"
+SELECT
+fdds.name AS ""FixedDueDateSchedule"",
+fddss.fixed_due_date_schedule_id AS ""FixedDueDateScheduleId"",
+fddss.from AS ""From"",
+fddss.to AS ""To"",
+fddss.due AS ""Due"" 
+FROM uc.fixed_due_date_schedule_schedules AS fddss
+LEFT JOIN uc.fixed_due_date_schedules AS fdds ON fdds.id = fddss.fixed_due_date_schedule_id
+ ORDER BY fddss.id
+", take: 1);
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"FixedDueDateScheduleSchedulesQueryTest()\r\n    ElapsedTime={s.Elapsed}");
         }
 
         [TestMethod]
@@ -1353,6 +2507,58 @@ LEFT JOIN uc.users AS lwu ON lwu.id = f2.updated_by_user_id
  ORDER BY f2.name
 ", take: 1);
             traceSource.TraceEvent(TraceEventType.Information, 0, $"Fund2sQueryTest()\r\n    ElapsedTime={s.Elapsed}");
+        }
+
+        [TestMethod]
+        public void QueryFundAcquisitionsUnitsTest()
+        {
+            var s = Stopwatch.StartNew();
+            folioDapperContext.FundAcquisitionsUnits(take: 1).ToArray();
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"FundAcquisitionsUnitsTest()\r\n    ElapsedTime={s.Elapsed}");
+        }
+
+        [TestMethod]
+        public void FundAcquisitionsUnitsQueryTest()
+        {
+            var s = Stopwatch.StartNew();
+            folioDapperContext.Query(@"
+SELECT
+f.name AS ""Fund"",
+fau.fund_id AS ""FundId"",
+au.name AS ""AcquisitionsUnit"",
+fau.acquisitions_unit_id AS ""AcquisitionsUnitId"" 
+FROM uc.fund_acquisitions_units AS fau
+LEFT JOIN uc.funds AS f ON f.id = fau.fund_id
+LEFT JOIN uc.acquisitions_units AS au ON au.id = fau.acquisitions_unit_id
+ ORDER BY fau.id
+", take: 1);
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"FundAcquisitionsUnitsQueryTest()\r\n    ElapsedTime={s.Elapsed}");
+        }
+
+        [TestMethod]
+        public void QueryFundTagsTest()
+        {
+            var s = Stopwatch.StartNew();
+            folioDapperContext.FundTags(take: 1).ToArray();
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"FundTagsTest()\r\n    ElapsedTime={s.Elapsed}");
+        }
+
+        [TestMethod]
+        public void FundTagsQueryTest()
+        {
+            var s = Stopwatch.StartNew();
+            folioDapperContext.Query(@"
+SELECT
+f.name AS ""Fund"",
+ft.fund_id AS ""FundId"",
+t.id AS ""Tag"",
+ft.tag_id AS ""TagId"" 
+FROM uc.fund_tags AS ft
+LEFT JOIN uc.funds AS f ON f.id = ft.fund_id
+LEFT JOIN uc.tags AS t ON t.id = ft.tag_id
+ ORDER BY ft.id
+", take: 1);
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"FundTagsQueryTest()\r\n    ElapsedTime={s.Elapsed}");
         }
 
         [TestMethod]
@@ -1481,6 +2687,110 @@ LEFT JOIN uc.sources AS s ON s.id = h2.source_id
         }
 
         [TestMethod]
+        public void QueryHoldingElectronicAccessesTest()
+        {
+            var s = Stopwatch.StartNew();
+            folioDapperContext.HoldingElectronicAccesses(take: 1).ToArray();
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"HoldingElectronicAccessesTest()\r\n    ElapsedTime={s.Elapsed}");
+        }
+
+        [TestMethod]
+        public void HoldingElectronicAccessesQueryTest()
+        {
+            var s = Stopwatch.StartNew();
+            folioDapperContext.Query(@"
+SELECT
+h.hrid AS ""Holding"",
+hea.uri AS ""Uri"",
+hea.link_text AS ""LinkText"",
+hea.materials_specification AS ""MaterialsSpecification"",
+hea.public_note AS ""PublicNote"",
+r.id AS ""Relationship"",
+hea.relationship_id AS ""RelationshipId"" 
+FROM uc.holding_electronic_accesses AS hea
+LEFT JOIN uc.holdings AS h ON h.id = hea.holding_id
+LEFT JOIN uc.relationships AS r ON r.id = hea.relationship_id
+ ORDER BY hea.id
+", take: 1);
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"HoldingElectronicAccessesQueryTest()\r\n    ElapsedTime={s.Elapsed}");
+        }
+
+        [TestMethod]
+        public void QueryHoldingEntriesTest()
+        {
+            var s = Stopwatch.StartNew();
+            folioDapperContext.HoldingEntries(take: 1).ToArray();
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"HoldingEntriesTest()\r\n    ElapsedTime={s.Elapsed}");
+        }
+
+        [TestMethod]
+        public void HoldingEntriesQueryTest()
+        {
+            var s = Stopwatch.StartNew();
+            folioDapperContext.Query(@"
+SELECT
+h.hrid AS ""Holding"",
+he.public_display AS ""PublicDisplay"",
+he.enumeration AS ""Enumeration"",
+he.chronology AS ""Chronology"" 
+FROM uc.holding_entries AS he
+LEFT JOIN uc.holdings AS h ON h.id = he.holding_id
+ ORDER BY he.id
+", take: 1);
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"HoldingEntriesQueryTest()\r\n    ElapsedTime={s.Elapsed}");
+        }
+
+        [TestMethod]
+        public void QueryHoldingFormerIdsTest()
+        {
+            var s = Stopwatch.StartNew();
+            folioDapperContext.HoldingFormerIds(take: 1).ToArray();
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"HoldingFormerIdsTest()\r\n    ElapsedTime={s.Elapsed}");
+        }
+
+        [TestMethod]
+        public void HoldingFormerIdsQueryTest()
+        {
+            var s = Stopwatch.StartNew();
+            folioDapperContext.Query(@"
+SELECT
+h.hrid AS ""Holding"",
+hfi.content AS ""Content"" 
+FROM uc.holding_former_ids AS hfi
+LEFT JOIN uc.holdings AS h ON h.id = hfi.holding_id
+ ORDER BY hfi.content
+", take: 1);
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"HoldingFormerIdsQueryTest()\r\n    ElapsedTime={s.Elapsed}");
+        }
+
+        [TestMethod]
+        public void QueryHoldingNotesTest()
+        {
+            var s = Stopwatch.StartNew();
+            folioDapperContext.HoldingNotes(take: 1).ToArray();
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"HoldingNotesTest()\r\n    ElapsedTime={s.Elapsed}");
+        }
+
+        [TestMethod]
+        public void HoldingNotesQueryTest()
+        {
+            var s = Stopwatch.StartNew();
+            folioDapperContext.Query(@"
+SELECT
+h.hrid AS ""Holding"",
+hnt.name AS ""HoldingNoteType"",
+hn.holding_note_type_id AS ""HoldingNoteTypeId"",
+hn.note AS ""Note"",
+hn.staff_only AS ""StaffOnly"" 
+FROM uc.holding_notes AS hn
+LEFT JOIN uc.holdings AS h ON h.id = hn.holding_id
+LEFT JOIN uc.holding_note_types AS hnt ON hnt.id = hn.holding_note_type_id
+ ORDER BY hn.id
+", take: 1);
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"HoldingNotesQueryTest()\r\n    ElapsedTime={s.Elapsed}");
+        }
+
+        [TestMethod]
         public void QueryHoldingNoteType2sTest()
         {
             var s = Stopwatch.StartNew();
@@ -1513,6 +2823,54 @@ LEFT JOIN uc.users AS lwu ON lwu.id = hnt2.updated_by_user_id
         }
 
         [TestMethod]
+        public void QueryHoldingStatisticalCodesTest()
+        {
+            var s = Stopwatch.StartNew();
+            folioDapperContext.HoldingStatisticalCodes(take: 1).ToArray();
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"HoldingStatisticalCodesTest()\r\n    ElapsedTime={s.Elapsed}");
+        }
+
+        [TestMethod]
+        public void HoldingStatisticalCodesQueryTest()
+        {
+            var s = Stopwatch.StartNew();
+            folioDapperContext.Query(@"
+SELECT
+h.hrid AS ""Holding"",
+sc.name AS ""StatisticalCode"",
+hsc.statistical_code_id AS ""StatisticalCodeId"" 
+FROM uc.holding_statistical_codes AS hsc
+LEFT JOIN uc.holdings AS h ON h.id = hsc.holding_id
+LEFT JOIN uc.statistical_codes AS sc ON sc.id = hsc.statistical_code_id
+ ORDER BY hsc.id
+", take: 1);
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"HoldingStatisticalCodesQueryTest()\r\n    ElapsedTime={s.Elapsed}");
+        }
+
+        [TestMethod]
+        public void QueryHoldingTagsTest()
+        {
+            var s = Stopwatch.StartNew();
+            folioDapperContext.HoldingTags(take: 1).ToArray();
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"HoldingTagsTest()\r\n    ElapsedTime={s.Elapsed}");
+        }
+
+        [TestMethod]
+        public void HoldingTagsQueryTest()
+        {
+            var s = Stopwatch.StartNew();
+            folioDapperContext.Query(@"
+SELECT
+h.hrid AS ""Holding"",
+ht.content AS ""Content"" 
+FROM uc.holding_tags AS ht
+LEFT JOIN uc.holdings AS h ON h.id = ht.holding_id
+ ORDER BY ht.content
+", take: 1);
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"HoldingTagsQueryTest()\r\n    ElapsedTime={s.Elapsed}");
+        }
+
+        [TestMethod]
         public void QueryHoldingType2sTest()
         {
             var s = Stopwatch.StartNew();
@@ -1542,6 +2900,63 @@ LEFT JOIN uc.users AS lwu ON lwu.id = ht2.updated_by_user_id
  ORDER BY ht2.name
 ", take: 1);
             traceSource.TraceEvent(TraceEventType.Information, 0, $"HoldingType2sQueryTest()\r\n    ElapsedTime={s.Elapsed}");
+        }
+
+        [TestMethod]
+        public void QueryHridSetting2sTest()
+        {
+            var s = Stopwatch.StartNew();
+            folioDapperContext.HridSetting2s(take: 1).ToArray();
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"HridSetting2sTest()\r\n    ElapsedTime={s.Elapsed}");
+        }
+
+        [TestMethod]
+        public void HridSetting2sQueryTest()
+        {
+            var s = Stopwatch.StartNew();
+            folioDapperContext.Query(@"
+SELECT
+hs2.id AS ""Id"",
+hs2.instances_prefix AS ""InstancesPrefix"",
+hs2.instances_start_number AS ""InstancesStartNumber"",
+hs2.holdings_prefix AS ""HoldingsPrefix"",
+hs2.holdings_start_number AS ""HoldingsStartNumber"",
+hs2.items_prefix AS ""ItemsPrefix"",
+hs2.items_start_number AS ""ItemsStartNumber"",
+hs2.common_retain_leading_zeroes AS ""ZeroPad"",
+hs2.content AS ""Content"",
+hs2.lock AS ""Lock"" 
+FROM uc.hrid_settings AS hs2
+ ORDER BY hs2.id
+", take: 1);
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"HridSetting2sQueryTest()\r\n    ElapsedTime={s.Elapsed}");
+        }
+
+        [TestMethod]
+        public void QueryIdentifiersTest()
+        {
+            var s = Stopwatch.StartNew();
+            folioDapperContext.Identifiers(take: 1).ToArray();
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"IdentifiersTest()\r\n    ElapsedTime={s.Elapsed}");
+        }
+
+        [TestMethod]
+        public void IdentifiersQueryTest()
+        {
+            var s = Stopwatch.StartNew();
+            folioDapperContext.Query(@"
+SELECT
+i2.title AS ""Instance"",
+i.instance_id AS ""InstanceId"",
+i.value AS ""Content"",
+it.name AS ""IdentifierType"",
+i.identifier_type_id AS ""IdentifierTypeId"" 
+FROM uc.identifiers AS i
+LEFT JOIN uc.instances AS i2 ON i2.id = i.instance_id
+LEFT JOIN uc.id_types AS it ON it.id = i.identifier_type_id
+ ORDER BY i.value
+", take: 1);
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"IdentifiersQueryTest()\r\n    ElapsedTime={s.Elapsed}");
         }
 
         [TestMethod]
@@ -1609,6 +3024,31 @@ LEFT JOIN uc.users AS lwu ON lwu.id = ip2.updated_by_user_id
         }
 
         [TestMethod]
+        public void QueryIndexStatementsTest()
+        {
+            var s = Stopwatch.StartNew();
+            folioDapperContext.IndexStatements(take: 1).ToArray();
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"IndexStatementsTest()\r\n    ElapsedTime={s.Elapsed}");
+        }
+
+        [TestMethod]
+        public void IndexStatementsQueryTest()
+        {
+            var s = Stopwatch.StartNew();
+            folioDapperContext.Query(@"
+SELECT
+h.hrid AS ""Holding"",
+@is.statement AS ""Statement"",
+@is.note AS ""Note"",
+@is.staff_note AS ""StaffNote"" 
+FROM uc.index_statements AS @is
+LEFT JOIN uc.holdings AS h ON h.id = @is.holding_id
+ ORDER BY @is.id
+", take: 1);
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"IndexStatementsQueryTest()\r\n    ElapsedTime={s.Elapsed}");
+        }
+
+        [TestMethod]
         public void QueryInstance2sTest()
         {
             var s = Stopwatch.StartNew();
@@ -1663,6 +3103,56 @@ LEFT JOIN uc.users AS lwu ON lwu.id = i2.updated_by_user_id
         }
 
         [TestMethod]
+        public void QueryInstanceFormat2sTest()
+        {
+            var s = Stopwatch.StartNew();
+            folioDapperContext.InstanceFormat2s(take: 1).ToArray();
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"InstanceFormat2sTest()\r\n    ElapsedTime={s.Elapsed}");
+        }
+
+        [TestMethod]
+        public void InstanceFormat2sQueryTest()
+        {
+            var s = Stopwatch.StartNew();
+            folioDapperContext.Query(@"
+SELECT
+i.title AS ""Instance"",
+f.name AS ""Format"",
+if2.format_id AS ""FormatId"" 
+FROM uc.instance_formats AS if2
+LEFT JOIN uc.instances AS i ON i.id = if2.instance_id
+LEFT JOIN uc.formats AS f ON f.id = if2.format_id
+ ORDER BY if2.id
+", take: 1);
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"InstanceFormat2sQueryTest()\r\n    ElapsedTime={s.Elapsed}");
+        }
+
+        [TestMethod]
+        public void QueryInstanceNatureOfContentTermsTest()
+        {
+            var s = Stopwatch.StartNew();
+            folioDapperContext.InstanceNatureOfContentTerms(take: 1).ToArray();
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"InstanceNatureOfContentTermsTest()\r\n    ElapsedTime={s.Elapsed}");
+        }
+
+        [TestMethod]
+        public void InstanceNatureOfContentTermsQueryTest()
+        {
+            var s = Stopwatch.StartNew();
+            folioDapperContext.Query(@"
+SELECT
+i.title AS ""Instance"",
+noct.name AS ""NatureOfContentTerm"",
+inoct.nature_of_content_term_id AS ""NatureOfContentTermId"" 
+FROM uc.instance_nature_of_content_terms AS inoct
+LEFT JOIN uc.instances AS i ON i.id = inoct.instance_id
+LEFT JOIN uc.nature_of_content_terms AS noct ON noct.id = inoct.nature_of_content_term_id
+ ORDER BY inoct.id
+", take: 1);
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"InstanceNatureOfContentTermsQueryTest()\r\n    ElapsedTime={s.Elapsed}");
+        }
+
+        [TestMethod]
         public void QueryInstanceNoteType2sTest()
         {
             var s = Stopwatch.StartNew();
@@ -1692,6 +3182,54 @@ LEFT JOIN uc.users AS lwu ON lwu.id = int2.updated_by_user_id
  ORDER BY int2.name
 ", take: 1);
             traceSource.TraceEvent(TraceEventType.Information, 0, $"InstanceNoteType2sQueryTest()\r\n    ElapsedTime={s.Elapsed}");
+        }
+
+        [TestMethod]
+        public void QueryInstanceStatisticalCodesTest()
+        {
+            var s = Stopwatch.StartNew();
+            folioDapperContext.InstanceStatisticalCodes(take: 1).ToArray();
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"InstanceStatisticalCodesTest()\r\n    ElapsedTime={s.Elapsed}");
+        }
+
+        [TestMethod]
+        public void InstanceStatisticalCodesQueryTest()
+        {
+            var s = Stopwatch.StartNew();
+            folioDapperContext.Query(@"
+SELECT
+i.title AS ""Instance"",
+sc.name AS ""StatisticalCode"",
+isc.statistical_code_id AS ""StatisticalCodeId"" 
+FROM uc.instance_statistical_codes AS isc
+LEFT JOIN uc.instances AS i ON i.id = isc.instance_id
+LEFT JOIN uc.statistical_codes AS sc ON sc.id = isc.statistical_code_id
+ ORDER BY isc.id
+", take: 1);
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"InstanceStatisticalCodesQueryTest()\r\n    ElapsedTime={s.Elapsed}");
+        }
+
+        [TestMethod]
+        public void QueryInstanceTagsTest()
+        {
+            var s = Stopwatch.StartNew();
+            folioDapperContext.InstanceTags(take: 1).ToArray();
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"InstanceTagsTest()\r\n    ElapsedTime={s.Elapsed}");
+        }
+
+        [TestMethod]
+        public void InstanceTagsQueryTest()
+        {
+            var s = Stopwatch.StartNew();
+            folioDapperContext.Query(@"
+SELECT
+i.title AS ""Instance"",
+it.content AS ""Content"" 
+FROM uc.instance_tags AS it
+LEFT JOIN uc.instances AS i ON i.id = it.instance_id
+ ORDER BY it.content
+", take: 1);
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"InstanceTagsQueryTest()\r\n    ElapsedTime={s.Elapsed}");
         }
 
         [TestMethod]
@@ -1798,6 +3336,57 @@ LEFT JOIN uc.users AS lwu ON lwu.id = i2.updated_by_user_id
         }
 
         [TestMethod]
+        public void QueryInterfaceCredential2sTest()
+        {
+            var s = Stopwatch.StartNew();
+            folioDapperContext.InterfaceCredential2s(take: 1).ToArray();
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"InterfaceCredential2sTest()\r\n    ElapsedTime={s.Elapsed}");
+        }
+
+        [TestMethod]
+        public void InterfaceCredential2sQueryTest()
+        {
+            var s = Stopwatch.StartNew();
+            folioDapperContext.Query(@"
+SELECT
+ic2.id AS ""Id"",
+ic2.username AS ""Username"",
+ic2.password AS ""Password"",
+i.name AS ""Interface"",
+ic2.interface_id AS ""InterfaceId"",
+ic2.content AS ""Content"" 
+FROM uc.interface_credentials AS ic2
+LEFT JOIN uc.interfaces AS i ON i.id = ic2.interface_id
+ ORDER BY ic2.id
+", take: 1);
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"InterfaceCredential2sQueryTest()\r\n    ElapsedTime={s.Elapsed}");
+        }
+
+        [TestMethod]
+        public void QueryInterfaceTypesTest()
+        {
+            var s = Stopwatch.StartNew();
+            folioDapperContext.InterfaceTypes(take: 1).ToArray();
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"InterfaceTypesTest()\r\n    ElapsedTime={s.Elapsed}");
+        }
+
+        [TestMethod]
+        public void InterfaceTypesQueryTest()
+        {
+            var s = Stopwatch.StartNew();
+            folioDapperContext.Query(@"
+SELECT
+i.name AS ""Interface"",
+it.interface_id AS ""InterfaceId"",
+it.content AS ""Content"" 
+FROM uc.interface_type AS it
+LEFT JOIN uc.interfaces AS i ON i.id = it.interface_id
+ ORDER BY it.content
+", take: 1);
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"InterfaceTypesQueryTest()\r\n    ElapsedTime={s.Elapsed}");
+        }
+
+        [TestMethod]
         public void QueryInvoice2sTest()
         {
             var s = Stopwatch.StartNew();
@@ -1872,6 +3461,99 @@ LEFT JOIN uc.invoice_transaction_summaries AS its2 ON its2.id = i2.id
         }
 
         [TestMethod]
+        public void QueryInvoiceAcquisitionsUnitsTest()
+        {
+            var s = Stopwatch.StartNew();
+            folioDapperContext.InvoiceAcquisitionsUnits(take: 1).ToArray();
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"InvoiceAcquisitionsUnitsTest()\r\n    ElapsedTime={s.Elapsed}");
+        }
+
+        [TestMethod]
+        public void InvoiceAcquisitionsUnitsQueryTest()
+        {
+            var s = Stopwatch.StartNew();
+            folioDapperContext.Query(@"
+SELECT
+i.folio_invoice_no AS ""Invoice"",
+iau.invoice_id AS ""InvoiceId"",
+au.name AS ""AcquisitionsUnit"",
+iau.acquisitions_unit_id AS ""AcquisitionsUnitId"" 
+FROM uc.invoice_acquisitions_units AS iau
+LEFT JOIN uc.invoices AS i ON i.id = iau.invoice_id
+LEFT JOIN uc.acquisitions_units AS au ON au.id = iau.acquisitions_unit_id
+ ORDER BY iau.id
+", take: 1);
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"InvoiceAcquisitionsUnitsQueryTest()\r\n    ElapsedTime={s.Elapsed}");
+        }
+
+        [TestMethod]
+        public void QueryInvoiceAdjustmentsTest()
+        {
+            var s = Stopwatch.StartNew();
+            folioDapperContext.InvoiceAdjustments(take: 1).ToArray();
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"InvoiceAdjustmentsTest()\r\n    ElapsedTime={s.Elapsed}");
+        }
+
+        [TestMethod]
+        public void InvoiceAdjustmentsQueryTest()
+        {
+            var s = Stopwatch.StartNew();
+            folioDapperContext.Query(@"
+SELECT
+i.folio_invoice_no AS ""Invoice"",
+ia.invoice_id AS ""InvoiceId"",
+ia.id2 AS ""Id2"",
+ia.adjustment_id AS ""AdjustmentId"",
+ia.description AS ""Description"",
+ia.export_to_accounting AS ""ExportToAccounting"",
+ia.prorate AS ""Prorate"",
+ia.relation_to_total AS ""RelationToTotal"",
+ia.type AS ""Type"",
+ia.value AS ""Value"" 
+FROM uc.invoice_adjustments AS ia
+LEFT JOIN uc.invoices AS i ON i.id = ia.invoice_id
+ ORDER BY ia.id
+", take: 1);
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"InvoiceAdjustmentsQueryTest()\r\n    ElapsedTime={s.Elapsed}");
+        }
+
+        [TestMethod]
+        public void QueryInvoiceAdjustmentFundsTest()
+        {
+            var s = Stopwatch.StartNew();
+            folioDapperContext.InvoiceAdjustmentFunds(take: 1).ToArray();
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"InvoiceAdjustmentFundsTest()\r\n    ElapsedTime={s.Elapsed}");
+        }
+
+        [TestMethod]
+        public void InvoiceAdjustmentFundsQueryTest()
+        {
+            var s = Stopwatch.StartNew();
+            folioDapperContext.Query(@"
+SELECT
+iaf.invoice_adjustment_id AS ""InvoiceAdjustmentId"",
+iaf.code AS ""FundCode"",
+e2.amount AS ""Encumbrance"",
+iaf.encumbrance_id AS ""EncumbranceId"",
+f.name AS ""Fund"",
+iaf.fund_id AS ""FundId"",
+ii.invoice_line_number AS ""InvoiceItem"",
+iaf.invoice_item_id AS ""InvoiceItemId"",
+iaf.distribution_type AS ""DistributionType"",
+ec.name AS ""ExpenseClass"",
+iaf.expense_class_id AS ""ExpenseClassId"",
+iaf.value AS ""Value"" 
+FROM uc.invoice_adjustment_fund_distributions AS iaf
+LEFT JOIN uc.transactions AS e2 ON e2.id = iaf.encumbrance_id
+LEFT JOIN uc.funds AS f ON f.id = iaf.fund_id
+LEFT JOIN uc.invoice_items AS ii ON ii.id = iaf.invoice_item_id
+LEFT JOIN uc.expense_classes AS ec ON ec.id = iaf.expense_class_id
+ ORDER BY iaf.id
+", take: 1);
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"InvoiceAdjustmentFundsQueryTest()\r\n    ElapsedTime={s.Elapsed}");
+        }
+
+        [TestMethod]
         public void QueryInvoiceItem2sTest()
         {
             var s = Stopwatch.StartNew();
@@ -1923,6 +3605,232 @@ LEFT JOIN uc.users AS lwu ON lwu.id = ii2.updated_by_user_id
  ORDER BY ii2.invoice_line_number
 ", take: 1);
             traceSource.TraceEvent(TraceEventType.Information, 0, $"InvoiceItem2sQueryTest()\r\n    ElapsedTime={s.Elapsed}");
+        }
+
+        [TestMethod]
+        public void QueryInvoiceItemAdjustmentsTest()
+        {
+            var s = Stopwatch.StartNew();
+            folioDapperContext.InvoiceItemAdjustments(take: 1).ToArray();
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"InvoiceItemAdjustmentsTest()\r\n    ElapsedTime={s.Elapsed}");
+        }
+
+        [TestMethod]
+        public void InvoiceItemAdjustmentsQueryTest()
+        {
+            var s = Stopwatch.StartNew();
+            folioDapperContext.Query(@"
+SELECT
+ii.invoice_line_number AS ""InvoiceItem"",
+iia.invoice_item_id AS ""InvoiceItemId"",
+iia.id2 AS ""Id2"",
+iia.adjustment_id AS ""AdjustmentId"",
+iia.description AS ""Description"",
+iia.export_to_accounting AS ""ExportToAccounting"",
+iia.prorate AS ""Prorate"",
+iia.relation_to_total AS ""RelationToTotal"",
+iia.type AS ""Type"",
+iia.value AS ""Value"" 
+FROM uc.invoice_item_adjustments AS iia
+LEFT JOIN uc.invoice_items AS ii ON ii.id = iia.invoice_item_id
+ ORDER BY iia.id
+", take: 1);
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"InvoiceItemAdjustmentsQueryTest()\r\n    ElapsedTime={s.Elapsed}");
+        }
+
+        [TestMethod]
+        public void QueryInvoiceItemAdjustmentFundsTest()
+        {
+            var s = Stopwatch.StartNew();
+            folioDapperContext.InvoiceItemAdjustmentFunds(take: 1).ToArray();
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"InvoiceItemAdjustmentFundsTest()\r\n    ElapsedTime={s.Elapsed}");
+        }
+
+        [TestMethod]
+        public void InvoiceItemAdjustmentFundsQueryTest()
+        {
+            var s = Stopwatch.StartNew();
+            folioDapperContext.Query(@"
+SELECT
+iiaf.invoice_item_adjustment_id AS ""InvoiceItemAdjustmentId"",
+iiaf.code AS ""FundCode"",
+e2.amount AS ""Encumbrance"",
+iiaf.encumbrance_id AS ""EncumbranceId"",
+f.name AS ""Fund"",
+iiaf.fund_id AS ""FundId"",
+ii.invoice_line_number AS ""InvoiceItem"",
+iiaf.invoice_item_id AS ""InvoiceItemId"",
+iiaf.distribution_type AS ""DistributionType"",
+ec.name AS ""ExpenseClass"",
+iiaf.expense_class_id AS ""ExpenseClassId"",
+iiaf.value AS ""Value"" 
+FROM uc.invoice_item_adjustment_fund_distributions AS iiaf
+LEFT JOIN uc.transactions AS e2 ON e2.id = iiaf.encumbrance_id
+LEFT JOIN uc.funds AS f ON f.id = iiaf.fund_id
+LEFT JOIN uc.invoice_items AS ii ON ii.id = iiaf.invoice_item_id
+LEFT JOIN uc.expense_classes AS ec ON ec.id = iiaf.expense_class_id
+ ORDER BY iiaf.id
+", take: 1);
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"InvoiceItemAdjustmentFundsQueryTest()\r\n    ElapsedTime={s.Elapsed}");
+        }
+
+        [TestMethod]
+        public void QueryInvoiceItemFundsTest()
+        {
+            var s = Stopwatch.StartNew();
+            folioDapperContext.InvoiceItemFunds(take: 1).ToArray();
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"InvoiceItemFundsTest()\r\n    ElapsedTime={s.Elapsed}");
+        }
+
+        [TestMethod]
+        public void InvoiceItemFundsQueryTest()
+        {
+            var s = Stopwatch.StartNew();
+            folioDapperContext.Query(@"
+SELECT
+ii.invoice_line_number AS ""InvoiceItem"",
+iif.invoice_item_id AS ""InvoiceItemId"",
+iif.code AS ""FundCode"",
+e2.amount AS ""Encumbrance"",
+iif.encumbrance_id AS ""EncumbranceId"",
+f.name AS ""Fund"",
+iif.fund_id AS ""FundId"",
+iif.distribution_type AS ""DistributionType"",
+ec.name AS ""ExpenseClass"",
+iif.expense_class_id AS ""ExpenseClassId"",
+iif.value AS ""Value"" 
+FROM uc.invoice_item_fund_distributions AS iif
+LEFT JOIN uc.invoice_items AS ii ON ii.id = iif.invoice_item_id
+LEFT JOIN uc.transactions AS e2 ON e2.id = iif.encumbrance_id
+LEFT JOIN uc.funds AS f ON f.id = iif.fund_id
+LEFT JOIN uc.expense_classes AS ec ON ec.id = iif.expense_class_id
+ ORDER BY iif.id
+", take: 1);
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"InvoiceItemFundsQueryTest()\r\n    ElapsedTime={s.Elapsed}");
+        }
+
+        [TestMethod]
+        public void QueryInvoiceItemReferenceNumbersTest()
+        {
+            var s = Stopwatch.StartNew();
+            folioDapperContext.InvoiceItemReferenceNumbers(take: 1).ToArray();
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"InvoiceItemReferenceNumbersTest()\r\n    ElapsedTime={s.Elapsed}");
+        }
+
+        [TestMethod]
+        public void InvoiceItemReferenceNumbersQueryTest()
+        {
+            var s = Stopwatch.StartNew();
+            folioDapperContext.Query(@"
+SELECT
+ii.invoice_line_number AS ""InvoiceItem"",
+iirn.invoice_item_id AS ""InvoiceItemId"",
+iirn.ref_number AS ""ReferenceNumber"",
+iirn.ref_number_type AS ""ReferenceNumberType"",
+iirn.vendor_details_source AS ""VendorDetailsSource"" 
+FROM uc.invoice_item_reference_numbers AS iirn
+LEFT JOIN uc.invoice_items AS ii ON ii.id = iirn.invoice_item_id
+ ORDER BY iirn.id
+", take: 1);
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"InvoiceItemReferenceNumbersQueryTest()\r\n    ElapsedTime={s.Elapsed}");
+        }
+
+        [TestMethod]
+        public void QueryInvoiceItemTagsTest()
+        {
+            var s = Stopwatch.StartNew();
+            folioDapperContext.InvoiceItemTags(take: 1).ToArray();
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"InvoiceItemTagsTest()\r\n    ElapsedTime={s.Elapsed}");
+        }
+
+        [TestMethod]
+        public void InvoiceItemTagsQueryTest()
+        {
+            var s = Stopwatch.StartNew();
+            folioDapperContext.Query(@"
+SELECT
+ii.invoice_line_number AS ""InvoiceItem"",
+iit.invoice_item_id AS ""InvoiceItemId"",
+iit.content AS ""Content"" 
+FROM uc.invoice_item_tags AS iit
+LEFT JOIN uc.invoice_items AS ii ON ii.id = iit.invoice_item_id
+ ORDER BY iit.content
+", take: 1);
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"InvoiceItemTagsQueryTest()\r\n    ElapsedTime={s.Elapsed}");
+        }
+
+        [TestMethod]
+        public void QueryInvoiceOrderNumbersTest()
+        {
+            var s = Stopwatch.StartNew();
+            folioDapperContext.InvoiceOrderNumbers(take: 1).ToArray();
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"InvoiceOrderNumbersTest()\r\n    ElapsedTime={s.Elapsed}");
+        }
+
+        [TestMethod]
+        public void InvoiceOrderNumbersQueryTest()
+        {
+            var s = Stopwatch.StartNew();
+            folioDapperContext.Query(@"
+SELECT
+i.folio_invoice_no AS ""Invoice"",
+ion.invoice_id AS ""InvoiceId"",
+ion.content AS ""Content"" 
+FROM uc.invoice_order_numbers AS ion
+LEFT JOIN uc.invoices AS i ON i.id = ion.invoice_id
+ ORDER BY ion.content
+", take: 1);
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"InvoiceOrderNumbersQueryTest()\r\n    ElapsedTime={s.Elapsed}");
+        }
+
+        [TestMethod]
+        public void QueryInvoiceTagsTest()
+        {
+            var s = Stopwatch.StartNew();
+            folioDapperContext.InvoiceTags(take: 1).ToArray();
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"InvoiceTagsTest()\r\n    ElapsedTime={s.Elapsed}");
+        }
+
+        [TestMethod]
+        public void InvoiceTagsQueryTest()
+        {
+            var s = Stopwatch.StartNew();
+            folioDapperContext.Query(@"
+SELECT
+i.folio_invoice_no AS ""Invoice"",
+it.invoice_id AS ""InvoiceId"",
+it.content AS ""Content"" 
+FROM uc.invoice_tags AS it
+LEFT JOIN uc.invoices AS i ON i.id = it.invoice_id
+ ORDER BY it.content
+", take: 1);
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"InvoiceTagsQueryTest()\r\n    ElapsedTime={s.Elapsed}");
+        }
+
+        [TestMethod]
+        public void QueryInvoiceTransactionSummary2sTest()
+        {
+            var s = Stopwatch.StartNew();
+            folioDapperContext.InvoiceTransactionSummary2s(take: 1).ToArray();
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"InvoiceTransactionSummary2sTest()\r\n    ElapsedTime={s.Elapsed}");
+        }
+
+        [TestMethod]
+        public void InvoiceTransactionSummary2sQueryTest()
+        {
+            var s = Stopwatch.StartNew();
+            folioDapperContext.Query(@"
+SELECT
+its2.id AS ""Id"",
+i2.folio_invoice_no AS ""Invoice2"",
+its2.num_pending_payments AS ""NumPendingPayments"",
+its2.num_payments_credits AS ""NumPaymentsCredits"",
+its2.content AS ""Content"" 
+FROM uc.invoice_transaction_summaries AS its2
+LEFT JOIN uc.invoices AS i2 ON i2.id = its2.id
+ ORDER BY its2.id
+", take: 1);
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"InvoiceTransactionSummary2sQueryTest()\r\n    ElapsedTime={s.Elapsed}");
         }
 
         [TestMethod]
@@ -2088,6 +3996,85 @@ LEFT JOIN uc.users AS lwu ON lwu.id = ids2.updated_by_user_id
         }
 
         [TestMethod]
+        public void QueryItemElectronicAccessesTest()
+        {
+            var s = Stopwatch.StartNew();
+            folioDapperContext.ItemElectronicAccesses(take: 1).ToArray();
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"ItemElectronicAccessesTest()\r\n    ElapsedTime={s.Elapsed}");
+        }
+
+        [TestMethod]
+        public void ItemElectronicAccessesQueryTest()
+        {
+            var s = Stopwatch.StartNew();
+            folioDapperContext.Query(@"
+SELECT
+i.hrid AS ""Item"",
+iea.uri AS ""Uri"",
+iea.link_text AS ""LinkText"",
+iea.materials_specification AS ""MaterialsSpecification"",
+iea.public_note AS ""PublicNote"",
+r.id AS ""Relationship"",
+iea.relationship_id AS ""RelationshipId"" 
+FROM uc.item_electronic_accesses AS iea
+LEFT JOIN uc.items AS i ON i.id = iea.item_id
+LEFT JOIN uc.relationships AS r ON r.id = iea.relationship_id
+ ORDER BY iea.id
+", take: 1);
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"ItemElectronicAccessesQueryTest()\r\n    ElapsedTime={s.Elapsed}");
+        }
+
+        [TestMethod]
+        public void QueryItemFormerIdsTest()
+        {
+            var s = Stopwatch.StartNew();
+            folioDapperContext.ItemFormerIds(take: 1).ToArray();
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"ItemFormerIdsTest()\r\n    ElapsedTime={s.Elapsed}");
+        }
+
+        [TestMethod]
+        public void ItemFormerIdsQueryTest()
+        {
+            var s = Stopwatch.StartNew();
+            folioDapperContext.Query(@"
+SELECT
+i.hrid AS ""Item"",
+ifi.content AS ""Content"" 
+FROM uc.item_former_ids AS ifi
+LEFT JOIN uc.items AS i ON i.id = ifi.item_id
+ ORDER BY ifi.content
+", take: 1);
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"ItemFormerIdsQueryTest()\r\n    ElapsedTime={s.Elapsed}");
+        }
+
+        [TestMethod]
+        public void QueryItemNotesTest()
+        {
+            var s = Stopwatch.StartNew();
+            folioDapperContext.ItemNotes(take: 1).ToArray();
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"ItemNotesTest()\r\n    ElapsedTime={s.Elapsed}");
+        }
+
+        [TestMethod]
+        public void ItemNotesQueryTest()
+        {
+            var s = Stopwatch.StartNew();
+            folioDapperContext.Query(@"
+SELECT
+i.hrid AS ""Item"",
+@int.name AS ""ItemNoteType"",
+@in.item_note_type_id AS ""ItemNoteTypeId"",
+@in.note AS ""Note"",
+@in.staff_only AS ""StaffOnly"" 
+FROM uc.item_notes AS @in
+LEFT JOIN uc.items AS i ON i.id = @in.item_id
+LEFT JOIN uc.item_note_types AS @int ON @int.id = @in.item_note_type_id
+ ORDER BY @in.id
+", take: 1);
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"ItemNotesQueryTest()\r\n    ElapsedTime={s.Elapsed}");
+        }
+
+        [TestMethod]
         public void QueryItemNoteType2sTest()
         {
             var s = Stopwatch.StartNew();
@@ -2117,6 +4104,269 @@ LEFT JOIN uc.users AS lwu ON lwu.id = int2.updated_by_user_id
  ORDER BY int2.name
 ", take: 1);
             traceSource.TraceEvent(TraceEventType.Information, 0, $"ItemNoteType2sQueryTest()\r\n    ElapsedTime={s.Elapsed}");
+        }
+
+        [TestMethod]
+        public void QueryItemStatisticalCodesTest()
+        {
+            var s = Stopwatch.StartNew();
+            folioDapperContext.ItemStatisticalCodes(take: 1).ToArray();
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"ItemStatisticalCodesTest()\r\n    ElapsedTime={s.Elapsed}");
+        }
+
+        [TestMethod]
+        public void ItemStatisticalCodesQueryTest()
+        {
+            var s = Stopwatch.StartNew();
+            folioDapperContext.Query(@"
+SELECT
+i.hrid AS ""Item"",
+sc.name AS ""StatisticalCode"",
+isc.statistical_code_id AS ""StatisticalCodeId"" 
+FROM uc.item_statistical_codes AS isc
+LEFT JOIN uc.items AS i ON i.id = isc.item_id
+LEFT JOIN uc.statistical_codes AS sc ON sc.id = isc.statistical_code_id
+ ORDER BY isc.id
+", take: 1);
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"ItemStatisticalCodesQueryTest()\r\n    ElapsedTime={s.Elapsed}");
+        }
+
+        [TestMethod]
+        public void QueryItemTagsTest()
+        {
+            var s = Stopwatch.StartNew();
+            folioDapperContext.ItemTags(take: 1).ToArray();
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"ItemTagsTest()\r\n    ElapsedTime={s.Elapsed}");
+        }
+
+        [TestMethod]
+        public void ItemTagsQueryTest()
+        {
+            var s = Stopwatch.StartNew();
+            folioDapperContext.Query(@"
+SELECT
+i.hrid AS ""Item"",
+it.content AS ""Content"" 
+FROM uc.item_tags AS it
+LEFT JOIN uc.items AS i ON i.id = it.item_id
+ ORDER BY it.content
+", take: 1);
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"ItemTagsQueryTest()\r\n    ElapsedTime={s.Elapsed}");
+        }
+
+        [TestMethod]
+        public void QueryItemYearCaptionsTest()
+        {
+            var s = Stopwatch.StartNew();
+            folioDapperContext.ItemYearCaptions(take: 1).ToArray();
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"ItemYearCaptionsTest()\r\n    ElapsedTime={s.Elapsed}");
+        }
+
+        [TestMethod]
+        public void ItemYearCaptionsQueryTest()
+        {
+            var s = Stopwatch.StartNew();
+            folioDapperContext.Query(@"
+SELECT
+i.hrid AS ""Item"",
+iyc.content AS ""Content"" 
+FROM uc.item_year_caption AS iyc
+LEFT JOIN uc.items AS i ON i.id = iyc.item_id
+ ORDER BY iyc.content
+", take: 1);
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"ItemYearCaptionsQueryTest()\r\n    ElapsedTime={s.Elapsed}");
+        }
+
+        [TestMethod]
+        public void QueryJobExecution2sTest()
+        {
+            var s = Stopwatch.StartNew();
+            folioDapperContext.JobExecution2s(take: 1).ToArray();
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"JobExecution2sTest()\r\n    ElapsedTime={s.Elapsed}");
+        }
+
+        [TestMethod]
+        public void JobExecution2sQueryTest()
+        {
+            var s = Stopwatch.StartNew();
+            folioDapperContext.Query(@"
+SELECT
+je2.id AS ""Id"",
+je2.hr_id AS ""HrId"",
+pj.id AS ""ParentJob"",
+je2.parent_job_id AS ""ParentJobId"",
+je2.subordination_type AS ""SubordinationType"",
+je2.job_profile_info_name AS ""JobProfileInfoName"",
+je2.job_profile_info_data_type AS ""JobProfileInfoDataType"",
+je2.job_profile_snapshot_wrapper_profile_id AS ""JobProfileSnapshotWrapperProfileId"",
+je2.job_profile_snapshot_wrapper_content_type AS ""JobProfileSnapshotWrapperContentType"",
+je2.job_profile_snapshot_wrapper_react_to AS ""JobProfileSnapshotWrapperReactTo"",
+je2.job_profile_snapshot_wrapper_order AS ""JobProfileSnapshotWrapperOrder"",
+je2.source_path AS ""SourcePath"",
+je2.file_name AS ""FileName"",
+je2.run_by_first_name AS ""RunByFirstName"",
+je2.run_by_last_name AS ""RunByLastName"",
+pje.id AS ""ProgressJobExecution"",
+je2.progress_job_execution_id AS ""ProgressJobExecutionId"",
+je2.progress_current AS ""ProgressCurrent"",
+je2.progress_total AS ""ProgressTotal"",
+je2.started_date AS ""StartedDate"",
+je2.completed_date AS ""CompletedDate"",
+je2.status AS ""Status"",
+je2.ui_status AS ""UiStatus"",
+je2.error_status AS ""ErrorStatus"",
+u.username AS ""User"",
+je2.user_id AS ""UserId"",
+je2.content AS ""Content"" 
+FROM uc.job_executions AS je2
+LEFT JOIN uc.job_executions AS pj ON pj.id = je2.parent_job_id
+LEFT JOIN uc.job_executions AS pje ON pje.id = je2.progress_job_execution_id
+LEFT JOIN uc.users AS u ON u.id = je2.user_id
+ ORDER BY je2.id
+", take: 1);
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"JobExecution2sQueryTest()\r\n    ElapsedTime={s.Elapsed}");
+        }
+
+        [TestMethod]
+        public void QueryJobExecutionProgress2sTest()
+        {
+            var s = Stopwatch.StartNew();
+            folioDapperContext.JobExecutionProgress2s(take: 1).ToArray();
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"JobExecutionProgress2sTest()\r\n    ElapsedTime={s.Elapsed}");
+        }
+
+        [TestMethod]
+        public void JobExecutionProgress2sQueryTest()
+        {
+            var s = Stopwatch.StartNew();
+            folioDapperContext.Query(@"
+SELECT
+jep2.id AS ""Id"",
+je.id AS ""JobExecution"",
+jep2.job_execution_id AS ""JobExecutionId"",
+jep2.currently_succeeded AS ""CurrentlySucceeded"",
+jep2.currently_failed AS ""CurrentlyFailed"",
+jep2.total AS ""Total"",
+jep2.content AS ""Content"" 
+FROM uc.job_execution_progresses AS jep2
+LEFT JOIN uc.job_executions AS je ON je.id = jep2.job_execution_id
+ ORDER BY jep2.id
+", take: 1);
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"JobExecutionProgress2sQueryTest()\r\n    ElapsedTime={s.Elapsed}");
+        }
+
+        [TestMethod]
+        public void QueryJobExecutionSourceChunk2sTest()
+        {
+            var s = Stopwatch.StartNew();
+            folioDapperContext.JobExecutionSourceChunk2s(take: 1).ToArray();
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"JobExecutionSourceChunk2sTest()\r\n    ElapsedTime={s.Elapsed}");
+        }
+
+        [TestMethod]
+        public void JobExecutionSourceChunk2sQueryTest()
+        {
+            var s = Stopwatch.StartNew();
+            folioDapperContext.Query(@"
+SELECT
+jesc2.id AS ""Id"",
+je.id AS ""JobExecution"",
+jesc2.job_execution_id AS ""JobExecutionId"",
+jesc2.last AS ""Last"",
+jesc2.state AS ""State"",
+jesc2.chunk_size AS ""ChunkSize"",
+jesc2.processed_amount AS ""ProcessedAmount"",
+jesc2.completed_date AS ""CompletedDate"",
+jesc2.error AS ""Error"",
+jesc2.content AS ""Content"" 
+FROM uc.job_execution_source_chunks AS jesc2
+LEFT JOIN uc.job_executions AS je ON je.id = jesc2.job_execution_id
+ ORDER BY jesc2.id
+", take: 1);
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"JobExecutionSourceChunk2sQueryTest()\r\n    ElapsedTime={s.Elapsed}");
+        }
+
+        [TestMethod]
+        public void QueryJobMonitoring2sTest()
+        {
+            var s = Stopwatch.StartNew();
+            folioDapperContext.JobMonitoring2s(take: 1).ToArray();
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"JobMonitoring2sTest()\r\n    ElapsedTime={s.Elapsed}");
+        }
+
+        [TestMethod]
+        public void JobMonitoring2sQueryTest()
+        {
+            var s = Stopwatch.StartNew();
+            folioDapperContext.Query(@"
+SELECT
+je.id AS ""JobExecution"",
+jm2.job_execution_id AS ""JobExecutionId"",
+jm2.last_event_timestamp AS ""LastEventTimestamp"",
+jm2.notification_sent AS ""NotificationSent"" 
+FROM uc.job_monitorings AS jm2
+LEFT JOIN uc.job_executions AS je ON je.id = jm2.job_execution_id
+ ORDER BY jm2.id
+", take: 1);
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"JobMonitoring2sQueryTest()\r\n    ElapsedTime={s.Elapsed}");
+        }
+
+        [TestMethod]
+        public void QueryJournalRecord2sTest()
+        {
+            var s = Stopwatch.StartNew();
+            folioDapperContext.JournalRecord2s(take: 1).ToArray();
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"JournalRecord2sTest()\r\n    ElapsedTime={s.Elapsed}");
+        }
+
+        [TestMethod]
+        public void JournalRecord2sQueryTest()
+        {
+            var s = Stopwatch.StartNew();
+            folioDapperContext.Query(@"
+SELECT
+je.id AS ""JobExecution"",
+jr2.job_execution_id AS ""JobExecutionId"",
+s.name AS ""Source"",
+jr2.source_id AS ""SourceId"",
+jr2.entity_type AS ""EntityType"",
+jr2.entity_id AS ""EntityId"",
+jr2.entity_hrid AS ""EntityHrid"",
+jr2.action_type AS ""ActionType"",
+jr2.action_status AS ""ActionStatus"",
+jr2.action_date AS ""ActionDate"",
+jr2.source_record_order AS ""SourceRecordOrder"",
+jr2.error AS ""Error"",
+jr2.title AS ""Title"" 
+FROM uc.journal_records AS jr2
+LEFT JOIN uc.job_executions AS je ON je.id = jr2.job_execution_id
+LEFT JOIN uc.sources AS s ON s.id = jr2.source_id
+ ORDER BY jr2.title
+", take: 1);
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"JournalRecord2sQueryTest()\r\n    ElapsedTime={s.Elapsed}");
+        }
+
+        [TestMethod]
+        public void QueryLanguagesTest()
+        {
+            var s = Stopwatch.StartNew();
+            folioDapperContext.Languages(take: 1).ToArray();
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"LanguagesTest()\r\n    ElapsedTime={s.Elapsed}");
+        }
+
+        [TestMethod]
+        public void LanguagesQueryTest()
+        {
+            var s = Stopwatch.StartNew();
+            folioDapperContext.Query(@"
+SELECT
+i.title AS ""Instance"",
+l.content AS ""Content"" 
+FROM uc.languages AS l
+LEFT JOIN uc.instances AS i ON i.id = l.instance_id
+ ORDER BY l.content
+", take: 1);
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"LanguagesQueryTest()\r\n    ElapsedTime={s.Elapsed}");
         }
 
         [TestMethod]
@@ -2174,6 +4424,32 @@ LEFT JOIN uc.users AS lwu ON lwu.id = l2.updated_by_user_id
         }
 
         [TestMethod]
+        public void QueryLedgerAcquisitionsUnitsTest()
+        {
+            var s = Stopwatch.StartNew();
+            folioDapperContext.LedgerAcquisitionsUnits(take: 1).ToArray();
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"LedgerAcquisitionsUnitsTest()\r\n    ElapsedTime={s.Elapsed}");
+        }
+
+        [TestMethod]
+        public void LedgerAcquisitionsUnitsQueryTest()
+        {
+            var s = Stopwatch.StartNew();
+            folioDapperContext.Query(@"
+SELECT
+l.name AS ""Ledger"",
+lau.ledger_id AS ""LedgerId"",
+au.name AS ""AcquisitionsUnit"",
+lau.acquisitions_unit_id AS ""AcquisitionsUnitId"" 
+FROM uc.ledger_acquisitions_units AS lau
+LEFT JOIN uc.ledgers AS l ON l.id = lau.ledger_id
+LEFT JOIN uc.acquisitions_units AS au ON au.id = lau.acquisitions_unit_id
+ ORDER BY lau.id
+", take: 1);
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"LedgerAcquisitionsUnitsQueryTest()\r\n    ElapsedTime={s.Elapsed}");
+        }
+
+        [TestMethod]
         public void QueryLedgerRollover2sTest()
         {
             var s = Stopwatch.StartNew();
@@ -2214,6 +4490,65 @@ LEFT JOIN uc.users AS lwu ON lwu.id = lr2.updated_by_user_id
  ORDER BY lr2.id
 ", take: 1);
             traceSource.TraceEvent(TraceEventType.Information, 0, $"LedgerRollover2sQueryTest()\r\n    ElapsedTime={s.Elapsed}");
+        }
+
+        [TestMethod]
+        public void QueryLedgerRolloverBudgetsRolloversTest()
+        {
+            var s = Stopwatch.StartNew();
+            folioDapperContext.LedgerRolloverBudgetsRollovers(take: 1).ToArray();
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"LedgerRolloverBudgetsRolloversTest()\r\n    ElapsedTime={s.Elapsed}");
+        }
+
+        [TestMethod]
+        public void LedgerRolloverBudgetsRolloversQueryTest()
+        {
+            var s = Stopwatch.StartNew();
+            folioDapperContext.Query(@"
+SELECT
+lr.id AS ""LedgerRollover"",
+lrbr.ledger_rollover_id AS ""LedgerRolloverId"",
+ft.name AS ""FundType"",
+lrbr.fund_type_id AS ""FundTypeId"",
+lrbr.rollover_allocation AS ""RolloverAllocation"",
+lrbr.rollover_available AS ""RolloverAvailable"",
+lrbr.set_allowances AS ""SetAllowances"",
+lrbr.adjust_allocation AS ""AdjustAllocation"",
+lrbr.add_available_to AS ""AddAvailableTo"",
+lrbr.allowable_encumbrance AS ""AllowableEncumbrance"",
+lrbr.allowable_expenditure AS ""AllowableExpenditure"" 
+FROM uc.ledger_rollover_budgets_rollover AS lrbr
+LEFT JOIN uc.ledger_rollovers AS lr ON lr.id = lrbr.ledger_rollover_id
+LEFT JOIN uc.fund_types AS ft ON ft.id = lrbr.fund_type_id
+ ORDER BY lrbr.id
+", take: 1);
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"LedgerRolloverBudgetsRolloversQueryTest()\r\n    ElapsedTime={s.Elapsed}");
+        }
+
+        [TestMethod]
+        public void QueryLedgerRolloverEncumbrancesRolloversTest()
+        {
+            var s = Stopwatch.StartNew();
+            folioDapperContext.LedgerRolloverEncumbrancesRollovers(take: 1).ToArray();
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"LedgerRolloverEncumbrancesRolloversTest()\r\n    ElapsedTime={s.Elapsed}");
+        }
+
+        [TestMethod]
+        public void LedgerRolloverEncumbrancesRolloversQueryTest()
+        {
+            var s = Stopwatch.StartNew();
+            folioDapperContext.Query(@"
+SELECT
+lr.id AS ""LedgerRollover"",
+lrer.ledger_rollover_id AS ""LedgerRolloverId"",
+lrer.order_type AS ""OrderType"",
+lrer.based_on AS ""BasedOn"",
+lrer.increase_by AS ""IncreaseBy"" 
+FROM uc.ledger_rollover_encumbrances_rollover AS lrer
+LEFT JOIN uc.ledger_rollovers AS lr ON lr.id = lrer.ledger_rollover_id
+ ORDER BY lrer.id
+", take: 1);
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"LedgerRolloverEncumbrancesRolloversQueryTest()\r\n    ElapsedTime={s.Elapsed}");
         }
 
         [TestMethod]
@@ -2400,6 +4735,61 @@ LEFT JOIN uc.users AS lwu ON lwu.id = l2.updated_by_user_id
         }
 
         [TestMethod]
+        public void QueryLoanEvent2sTest()
+        {
+            var s = Stopwatch.StartNew();
+            folioDapperContext.LoanEvent2s(take: 1).ToArray();
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"LoanEvent2sTest()\r\n    ElapsedTime={s.Elapsed}");
+        }
+
+        [TestMethod]
+        public void LoanEvent2sQueryTest()
+        {
+            var s = Stopwatch.StartNew();
+            folioDapperContext.Query(@"
+SELECT
+le2.id AS ""Id"",
+le2.operation AS ""Operation"",
+le2.creation_date AS ""CreationTime"",
+le2.loan_user_id AS ""LoanUserId"",
+le2.loan_proxy_user_id AS ""LoanProxyUserId"",
+le2.loan_item_id AS ""LoanItemId"",
+le2.loan_item_effective_location_id_at_check_out_id AS ""LoanItemEffectiveLocationIdAtCheckOutId"",
+le2.loan_status_name AS ""LoanStatusName"",
+le2.loan_loan_date AS ""LoanLoanDate"",
+le2.loan_due_date AS ""LoanDueDate"",
+le2.loan_return_date AS ""LoanReturnDate"",
+le2.loan_system_return_date AS ""LoanSystemReturnDate"",
+le2.loan_action AS ""LoanAction"",
+le2.loan_action_comment AS ""LoanActionComment"",
+le2.loan_item_status AS ""LoanItemStatus"",
+le2.loan_renewal_count AS ""LoanRenewalCount"",
+le2.loan_loan_policy_id AS ""LoanLoanPolicyId"",
+le2.loan_checkout_service_point_id AS ""LoanCheckoutServicePointId"",
+le2.loan_checkin_service_point_id AS ""LoanCheckinServicePointId"",
+le2.loan_patron_group_id_at_checkout AS ""LoanPatronGroupIdAtCheckout"",
+le2.loan_due_date_changed_by_recall AS ""LoanDueDateChangedByRecall"",
+le2.loan_declared_lost_date AS ""LoanDeclaredLostDate"",
+le2.loan_claimed_returned_date AS ""LoanClaimedReturnedDate"",
+le2.loan_overdue_fine_policy_id AS ""LoanOverdueFinePolicyId"",
+le2.loan_lost_item_policy_id AS ""LoanLostItemPolicyId"",
+le2.loan_metadata_created_date AS ""LoanMetadataCreatedDate"",
+le2.loan_metadata_created_by_user_id AS ""LoanMetadataCreatedByUserId"",
+le2.loan_metadata_created_by_username AS ""LoanMetadataCreatedByUsername"",
+le2.loan_metadata_updated_date AS ""LoanMetadataUpdatedDate"",
+le2.loan_metadata_updated_by_user_id AS ""LoanMetadataUpdatedByUserId"",
+le2.loan_metadata_updated_by_username AS ""LoanMetadataUpdatedByUsername"",
+le2.loan_aged_to_lost_delayed_billing_lost_item_has_been_billed AS ""LoanAgedToLostDelayedBillingLostItemHasBeenBilled"",
+le2.loan_aged_to_lost_delayed_billing_date_lost_item_should_be_bill AS ""LoanAgedToLostDelayedBillingDateLostItemShouldBeBill"",
+le2.loan_aged_to_lost_delayed_billing_aged_to_lost_date AS ""LoanAgedToLostDelayedBillingAgedToLostDate"",
+le2.content AS ""Content"" 
+FROM uc.loan_events AS le2
+ ORDER BY le2.id
+", take: 1);
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"LoanEvent2sQueryTest()\r\n    ElapsedTime={s.Elapsed}");
+        }
+
+        [TestMethod]
         public void QueryLoanPolicy2sTest()
         {
             var s = Stopwatch.StartNew();
@@ -2552,6 +4942,32 @@ LEFT JOIN uc.users AS lwu ON lwu.id = l2.updated_by_user_id
         }
 
         [TestMethod]
+        public void QueryLocationServicePointsTest()
+        {
+            var s = Stopwatch.StartNew();
+            folioDapperContext.LocationServicePoints(take: 1).ToArray();
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"LocationServicePointsTest()\r\n    ElapsedTime={s.Elapsed}");
+        }
+
+        [TestMethod]
+        public void LocationServicePointsQueryTest()
+        {
+            var s = Stopwatch.StartNew();
+            folioDapperContext.Query(@"
+SELECT
+l.name AS ""Location"",
+lsp.location_id AS ""LocationId"",
+sp.name AS ""ServicePoint"",
+lsp.service_point_id AS ""ServicePointId"" 
+FROM uc.location_service_points AS lsp
+LEFT JOIN uc.locations AS l ON l.id = lsp.location_id
+LEFT JOIN uc.service_points AS sp ON sp.id = lsp.service_point_id
+ ORDER BY lsp.id
+", take: 1);
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"LocationServicePointsQueryTest()\r\n    ElapsedTime={s.Elapsed}");
+        }
+
+        [TestMethod]
         public void QueryLocationSettingsTest()
         {
             var s = Stopwatch.StartNew();
@@ -2584,6 +5000,41 @@ LEFT JOIN uc.users AS lwu ON lwu.id = ls.updated_by_user_id
  ORDER BY ls.id
 ", take: 1);
             traceSource.TraceEvent(TraceEventType.Information, 0, $"LocationSettingsQueryTest()\r\n    ElapsedTime={s.Elapsed}");
+        }
+
+        [TestMethod]
+        public void QueryLogin2sTest()
+        {
+            var s = Stopwatch.StartNew();
+            folioDapperContext.Login2s(take: 1).ToArray();
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"Login2sTest()\r\n    ElapsedTime={s.Elapsed}");
+        }
+
+        [TestMethod]
+        public void Login2sQueryTest()
+        {
+            var s = Stopwatch.StartNew();
+            folioDapperContext.Query(@"
+SELECT
+l2.id AS ""Id"",
+u.username AS ""User"",
+l2.user_id AS ""UserId"",
+l2.hash AS ""Hash"",
+l2.salt AS ""Salt"",
+l2.created_date AS ""CreationTime"",
+cu.username AS ""CreationUser"",
+l2.created_by_user_id AS ""CreationUserId"",
+l2.updated_date AS ""LastWriteTime"",
+lwu.username AS ""LastWriteUser"",
+l2.updated_by_user_id AS ""LastWriteUserId"",
+l2.content AS ""Content"" 
+FROM uc.logins AS l2
+LEFT JOIN uc.users AS u ON u.id = l2.user_id
+LEFT JOIN uc.users AS cu ON cu.id = l2.created_by_user_id
+LEFT JOIN uc.users AS lwu ON lwu.id = l2.updated_by_user_id
+ ORDER BY l2.id
+", take: 1);
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"Login2sQueryTest()\r\n    ElapsedTime={s.Elapsed}");
         }
 
         [TestMethod]
@@ -2679,6 +5130,30 @@ LEFT JOIN uc.users AS lwu ON lwu.id = mbt2.updated_by_user_id
         }
 
         [TestMethod]
+        public void QueryMarcRecord2sTest()
+        {
+            var s = Stopwatch.StartNew();
+            folioDapperContext.MarcRecord2s(take: 1).ToArray();
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"MarcRecord2sTest()\r\n    ElapsedTime={s.Elapsed}");
+        }
+
+        [TestMethod]
+        public void MarcRecord2sQueryTest()
+        {
+            var s = Stopwatch.StartNew();
+            folioDapperContext.Query(@"
+SELECT
+mr2.id AS ""Id"",
+r2.id AS ""Record2"",
+mr2.content AS ""Content"" 
+FROM uc.marc_records AS mr2
+LEFT JOIN uc.records AS r2 ON r2.id = mr2.id
+ ORDER BY mr2.id
+", take: 1);
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"MarcRecord2sQueryTest()\r\n    ElapsedTime={s.Elapsed}");
+        }
+
+        [TestMethod]
         public void QueryMaterialType2sTest()
         {
             var s = Stopwatch.StartNew();
@@ -2740,6 +5215,33 @@ LEFT JOIN uc.users AS lwu ON lwu.id = noct2.updated_by_user_id
  ORDER BY noct2.name
 ", take: 1);
             traceSource.TraceEvent(TraceEventType.Information, 0, $"NatureOfContentTerm2sQueryTest()\r\n    ElapsedTime={s.Elapsed}");
+        }
+
+        [TestMethod]
+        public void QueryNote2sTest()
+        {
+            var s = Stopwatch.StartNew();
+            folioDapperContext.Note2s(take: 1).ToArray();
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"Note2sTest()\r\n    ElapsedTime={s.Elapsed}");
+        }
+
+        [TestMethod]
+        public void Note2sQueryTest()
+        {
+            var s = Stopwatch.StartNew();
+            folioDapperContext.Query(@"
+SELECT
+i.title AS ""Instance"",
+@int.name AS ""InstanceNoteType"",
+n2.instance_note_type_id AS ""InstanceNoteTypeId"",
+n2.note AS ""Note"",
+n2.staff_only AS ""StaffOnly"" 
+FROM uc.notes AS n2
+LEFT JOIN uc.instances AS i ON i.id = n2.instance_id
+LEFT JOIN uc.instance_note_types AS @int ON @int.id = n2.instance_note_type_id
+ ORDER BY n2.id
+", take: 1);
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"Note2sQueryTest()\r\n    ElapsedTime={s.Elapsed}");
         }
 
         [TestMethod]
@@ -2807,6 +5309,32 @@ LEFT JOIN uc.order_transaction_summaries AS ots2 ON ots2.id = o2.id
  ORDER BY o2.po_number
 ", take: 1);
             traceSource.TraceEvent(TraceEventType.Information, 0, $"Order2sQueryTest()\r\n    ElapsedTime={s.Elapsed}");
+        }
+
+        [TestMethod]
+        public void QueryOrderAcquisitionsUnitsTest()
+        {
+            var s = Stopwatch.StartNew();
+            folioDapperContext.OrderAcquisitionsUnits(take: 1).ToArray();
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"OrderAcquisitionsUnitsTest()\r\n    ElapsedTime={s.Elapsed}");
+        }
+
+        [TestMethod]
+        public void OrderAcquisitionsUnitsQueryTest()
+        {
+            var s = Stopwatch.StartNew();
+            folioDapperContext.Query(@"
+SELECT
+o.po_number AS ""Order"",
+oau.order_id AS ""OrderId"",
+au.name AS ""AcquisitionsUnit"",
+oau.acquisitions_unit_id AS ""AcquisitionsUnitId"" 
+FROM uc.order_acquisitions_units AS oau
+LEFT JOIN uc.orders AS o ON o.id = oau.order_id
+LEFT JOIN uc.acquisitions_units AS au ON au.id = oau.acquisitions_unit_id
+ ORDER BY oau.id
+", take: 1);
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"OrderAcquisitionsUnitsQueryTest()\r\n    ElapsedTime={s.Elapsed}");
         }
 
         [TestMethod]
@@ -2943,6 +5471,328 @@ LEFT JOIN uc.users AS lwu ON lwu.id = oi2.updated_by_user_id
         }
 
         [TestMethod]
+        public void QueryOrderItemAlertsTest()
+        {
+            var s = Stopwatch.StartNew();
+            folioDapperContext.OrderItemAlerts(take: 1).ToArray();
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"OrderItemAlertsTest()\r\n    ElapsedTime={s.Elapsed}");
+        }
+
+        [TestMethod]
+        public void OrderItemAlertsQueryTest()
+        {
+            var s = Stopwatch.StartNew();
+            folioDapperContext.Query(@"
+SELECT
+oi.po_line_number AS ""OrderItem"",
+oia.order_item_id AS ""OrderItemId"",
+a.id AS ""Alert"",
+oia.alert_id AS ""AlertId"" 
+FROM uc.order_item_alerts AS oia
+LEFT JOIN uc.order_items AS oi ON oi.id = oia.order_item_id
+LEFT JOIN uc.alerts AS a ON a.id = oia.alert_id
+ ORDER BY oia.id
+", take: 1);
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"OrderItemAlertsQueryTest()\r\n    ElapsedTime={s.Elapsed}");
+        }
+
+        [TestMethod]
+        public void QueryOrderItemClaimsTest()
+        {
+            var s = Stopwatch.StartNew();
+            folioDapperContext.OrderItemClaims(take: 1).ToArray();
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"OrderItemClaimsTest()\r\n    ElapsedTime={s.Elapsed}");
+        }
+
+        [TestMethod]
+        public void OrderItemClaimsQueryTest()
+        {
+            var s = Stopwatch.StartNew();
+            folioDapperContext.Query(@"
+SELECT
+oi.po_line_number AS ""OrderItem"",
+oic.order_item_id AS ""OrderItemId"",
+oic.claimed AS ""Claimed"",
+oic.sent AS ""Sent"",
+oic.grace AS ""Grace"" 
+FROM uc.order_item_claims AS oic
+LEFT JOIN uc.order_items AS oi ON oi.id = oic.order_item_id
+ ORDER BY oic.id
+", take: 1);
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"OrderItemClaimsQueryTest()\r\n    ElapsedTime={s.Elapsed}");
+        }
+
+        [TestMethod]
+        public void QueryOrderItemContributorsTest()
+        {
+            var s = Stopwatch.StartNew();
+            folioDapperContext.OrderItemContributors(take: 1).ToArray();
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"OrderItemContributorsTest()\r\n    ElapsedTime={s.Elapsed}");
+        }
+
+        [TestMethod]
+        public void OrderItemContributorsQueryTest()
+        {
+            var s = Stopwatch.StartNew();
+            folioDapperContext.Query(@"
+SELECT
+oi.po_line_number AS ""OrderItem"",
+oic.order_item_id AS ""OrderItemId"",
+oic.contributor AS ""Contributor"",
+cnt.name AS ""ContributorNameType"",
+oic.contributor_name_type_id AS ""ContributorNameTypeId"" 
+FROM uc.order_item_contributors AS oic
+LEFT JOIN uc.order_items AS oi ON oi.id = oic.order_item_id
+LEFT JOIN uc.contributor_name_types AS cnt ON cnt.id = oic.contributor_name_type_id
+ ORDER BY oic.id
+", take: 1);
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"OrderItemContributorsQueryTest()\r\n    ElapsedTime={s.Elapsed}");
+        }
+
+        [TestMethod]
+        public void QueryOrderItemFundsTest()
+        {
+            var s = Stopwatch.StartNew();
+            folioDapperContext.OrderItemFunds(take: 1).ToArray();
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"OrderItemFundsTest()\r\n    ElapsedTime={s.Elapsed}");
+        }
+
+        [TestMethod]
+        public void OrderItemFundsQueryTest()
+        {
+            var s = Stopwatch.StartNew();
+            folioDapperContext.Query(@"
+SELECT
+oi.po_line_number AS ""OrderItem"",
+oif.order_item_id AS ""OrderItemId"",
+oif.code AS ""FundCode"",
+e2.amount AS ""Encumbrance"",
+oif.encumbrance_id AS ""EncumbranceId"",
+f.name AS ""Fund"",
+oif.fund_id AS ""FundId"",
+ec.name AS ""ExpenseClass"",
+oif.expense_class_id AS ""ExpenseClassId"",
+oif.distribution_type AS ""DistributionType"",
+oif.value AS ""Value"" 
+FROM uc.order_item_fund_distributions AS oif
+LEFT JOIN uc.order_items AS oi ON oi.id = oif.order_item_id
+LEFT JOIN uc.transactions AS e2 ON e2.id = oif.encumbrance_id
+LEFT JOIN uc.funds AS f ON f.id = oif.fund_id
+LEFT JOIN uc.expense_classes AS ec ON ec.id = oif.expense_class_id
+ ORDER BY oif.id
+", take: 1);
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"OrderItemFundsQueryTest()\r\n    ElapsedTime={s.Elapsed}");
+        }
+
+        [TestMethod]
+        public void QueryOrderItemLocation2sTest()
+        {
+            var s = Stopwatch.StartNew();
+            folioDapperContext.OrderItemLocation2s(take: 1).ToArray();
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"OrderItemLocation2sTest()\r\n    ElapsedTime={s.Elapsed}");
+        }
+
+        [TestMethod]
+        public void OrderItemLocation2sQueryTest()
+        {
+            var s = Stopwatch.StartNew();
+            folioDapperContext.Query(@"
+SELECT
+oi.po_line_number AS ""OrderItem"",
+oil2.order_item_id AS ""OrderItemId"",
+l.name AS ""Location"",
+oil2.location_id AS ""LocationId"",
+h.hrid AS ""Holding"",
+oil2.holding_id AS ""HoldingId"",
+oil2.quantity AS ""Quantity"",
+oil2.quantity_electronic AS ""ElectronicQuantity"",
+oil2.quantity_physical AS ""PhysicalQuantity"" 
+FROM uc.order_item_locations AS oil2
+LEFT JOIN uc.order_items AS oi ON oi.id = oil2.order_item_id
+LEFT JOIN uc.locations AS l ON l.id = oil2.location_id
+LEFT JOIN uc.holdings AS h ON h.id = oil2.holding_id
+ ORDER BY oil2.id
+", take: 1);
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"OrderItemLocation2sQueryTest()\r\n    ElapsedTime={s.Elapsed}");
+        }
+
+        [TestMethod]
+        public void QueryOrderItemProductIdsTest()
+        {
+            var s = Stopwatch.StartNew();
+            folioDapperContext.OrderItemProductIds(take: 1).ToArray();
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"OrderItemProductIdsTest()\r\n    ElapsedTime={s.Elapsed}");
+        }
+
+        [TestMethod]
+        public void OrderItemProductIdsQueryTest()
+        {
+            var s = Stopwatch.StartNew();
+            folioDapperContext.Query(@"
+SELECT
+oi.po_line_number AS ""OrderItem"",
+oipi.order_item_id AS ""OrderItemId"",
+oipi.product_id AS ""ProductId"",
+pit.name AS ""ProductIdType"",
+oipi.product_id_type_id AS ""ProductIdTypeId"",
+oipi.qualifier AS ""Qualifier"" 
+FROM uc.order_item_product_ids AS oipi
+LEFT JOIN uc.order_items AS oi ON oi.id = oipi.order_item_id
+LEFT JOIN uc.id_types AS pit ON pit.id = oipi.product_id_type_id
+ ORDER BY oipi.id
+", take: 1);
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"OrderItemProductIdsQueryTest()\r\n    ElapsedTime={s.Elapsed}");
+        }
+
+        [TestMethod]
+        public void QueryOrderItemReferenceNumbersTest()
+        {
+            var s = Stopwatch.StartNew();
+            folioDapperContext.OrderItemReferenceNumbers(take: 1).ToArray();
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"OrderItemReferenceNumbersTest()\r\n    ElapsedTime={s.Elapsed}");
+        }
+
+        [TestMethod]
+        public void OrderItemReferenceNumbersQueryTest()
+        {
+            var s = Stopwatch.StartNew();
+            folioDapperContext.Query(@"
+SELECT
+oi.po_line_number AS ""OrderItem"",
+oirn.order_item_id AS ""OrderItemId"",
+oirn.ref_number AS ""ReferenceNumber"",
+oirn.ref_number_type AS ""ReferenceNumberType"",
+oirn.vendor_details_source AS ""VendorDetailsSource"" 
+FROM uc.order_item_reference_numbers AS oirn
+LEFT JOIN uc.order_items AS oi ON oi.id = oirn.order_item_id
+ ORDER BY oirn.id
+", take: 1);
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"OrderItemReferenceNumbersQueryTest()\r\n    ElapsedTime={s.Elapsed}");
+        }
+
+        [TestMethod]
+        public void QueryOrderItemReportingCodesTest()
+        {
+            var s = Stopwatch.StartNew();
+            folioDapperContext.OrderItemReportingCodes(take: 1).ToArray();
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"OrderItemReportingCodesTest()\r\n    ElapsedTime={s.Elapsed}");
+        }
+
+        [TestMethod]
+        public void OrderItemReportingCodesQueryTest()
+        {
+            var s = Stopwatch.StartNew();
+            folioDapperContext.Query(@"
+SELECT
+oi.po_line_number AS ""OrderItem"",
+oirc.order_item_id AS ""OrderItemId"",
+rc.id AS ""ReportingCode"",
+oirc.reporting_code_id AS ""ReportingCodeId"" 
+FROM uc.order_item_reporting_codes AS oirc
+LEFT JOIN uc.order_items AS oi ON oi.id = oirc.order_item_id
+LEFT JOIN uc.reporting_codes AS rc ON rc.id = oirc.reporting_code_id
+ ORDER BY oirc.id
+", take: 1);
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"OrderItemReportingCodesQueryTest()\r\n    ElapsedTime={s.Elapsed}");
+        }
+
+        [TestMethod]
+        public void QueryOrderItemTagsTest()
+        {
+            var s = Stopwatch.StartNew();
+            folioDapperContext.OrderItemTags(take: 1).ToArray();
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"OrderItemTagsTest()\r\n    ElapsedTime={s.Elapsed}");
+        }
+
+        [TestMethod]
+        public void OrderItemTagsQueryTest()
+        {
+            var s = Stopwatch.StartNew();
+            folioDapperContext.Query(@"
+SELECT
+oi.po_line_number AS ""OrderItem"",
+oit.order_item_id AS ""OrderItemId"",
+oit.content AS ""Content"" 
+FROM uc.order_item_tags AS oit
+LEFT JOIN uc.order_items AS oi ON oi.id = oit.order_item_id
+ ORDER BY oit.content
+", take: 1);
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"OrderItemTagsQueryTest()\r\n    ElapsedTime={s.Elapsed}");
+        }
+
+        [TestMethod]
+        public void QueryOrderItemVolumesTest()
+        {
+            var s = Stopwatch.StartNew();
+            folioDapperContext.OrderItemVolumes(take: 1).ToArray();
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"OrderItemVolumesTest()\r\n    ElapsedTime={s.Elapsed}");
+        }
+
+        [TestMethod]
+        public void OrderItemVolumesQueryTest()
+        {
+            var s = Stopwatch.StartNew();
+            folioDapperContext.Query(@"
+SELECT
+oi.po_line_number AS ""OrderItem"",
+oiv.order_item_id AS ""OrderItemId"",
+oiv.content AS ""Content"" 
+FROM uc.order_item_volumes AS oiv
+LEFT JOIN uc.order_items AS oi ON oi.id = oiv.order_item_id
+ ORDER BY oiv.content
+", take: 1);
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"OrderItemVolumesQueryTest()\r\n    ElapsedTime={s.Elapsed}");
+        }
+
+        [TestMethod]
+        public void QueryOrderNotesTest()
+        {
+            var s = Stopwatch.StartNew();
+            folioDapperContext.OrderNotes(take: 1).ToArray();
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"OrderNotesTest()\r\n    ElapsedTime={s.Elapsed}");
+        }
+
+        [TestMethod]
+        public void OrderNotesQueryTest()
+        {
+            var s = Stopwatch.StartNew();
+            folioDapperContext.Query(@"
+SELECT
+o.po_number AS ""Order"",
+@on.order_id AS ""OrderId"",
+@on.content AS ""Content"" 
+FROM uc.order_notes AS @on
+LEFT JOIN uc.orders AS o ON o.id = @on.order_id
+ ORDER BY @on.content
+", take: 1);
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"OrderNotesQueryTest()\r\n    ElapsedTime={s.Elapsed}");
+        }
+
+        [TestMethod]
+        public void QueryOrderTagsTest()
+        {
+            var s = Stopwatch.StartNew();
+            folioDapperContext.OrderTags(take: 1).ToArray();
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"OrderTagsTest()\r\n    ElapsedTime={s.Elapsed}");
+        }
+
+        [TestMethod]
+        public void OrderTagsQueryTest()
+        {
+            var s = Stopwatch.StartNew();
+            folioDapperContext.Query(@"
+SELECT
+o.po_number AS ""Order"",
+ot.order_id AS ""OrderId"",
+ot.content AS ""Content"" 
+FROM uc.order_tags AS ot
+LEFT JOIN uc.orders AS o ON o.id = ot.order_id
+ ORDER BY ot.content
+", take: 1);
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"OrderTagsQueryTest()\r\n    ElapsedTime={s.Elapsed}");
+        }
+
+        [TestMethod]
         public void QueryOrderTemplate2sTest()
         {
             var s = Stopwatch.StartNew();
@@ -2965,6 +5815,31 @@ FROM uc.order_templates AS ot2
  ORDER BY ot2.id
 ", take: 1);
             traceSource.TraceEvent(TraceEventType.Information, 0, $"OrderTemplate2sQueryTest()\r\n    ElapsedTime={s.Elapsed}");
+        }
+
+        [TestMethod]
+        public void QueryOrderTransactionSummary2sTest()
+        {
+            var s = Stopwatch.StartNew();
+            folioDapperContext.OrderTransactionSummary2s(take: 1).ToArray();
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"OrderTransactionSummary2sTest()\r\n    ElapsedTime={s.Elapsed}");
+        }
+
+        [TestMethod]
+        public void OrderTransactionSummary2sQueryTest()
+        {
+            var s = Stopwatch.StartNew();
+            folioDapperContext.Query(@"
+SELECT
+ots2.id AS ""Id"",
+o2.po_number AS ""Order2"",
+ots2.num_transactions AS ""NumTransactions"",
+ots2.content AS ""Content"" 
+FROM uc.order_transaction_summaries AS ots2
+LEFT JOIN uc.orders AS o2 ON o2.id = ots2.id
+ ORDER BY ots2.id
+", take: 1);
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"OrderTransactionSummary2sQueryTest()\r\n    ElapsedTime={s.Elapsed}");
         }
 
         [TestMethod]
@@ -3055,6 +5930,493 @@ LEFT JOIN uc.users AS lwu ON lwu.id = o2.updated_by_user_id
  ORDER BY o2.name
 ", take: 1);
             traceSource.TraceEvent(TraceEventType.Information, 0, $"Organization2sQueryTest()\r\n    ElapsedTime={s.Elapsed}");
+        }
+
+        [TestMethod]
+        public void QueryOrganizationAccountsTest()
+        {
+            var s = Stopwatch.StartNew();
+            folioDapperContext.OrganizationAccounts(take: 1).ToArray();
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"OrganizationAccountsTest()\r\n    ElapsedTime={s.Elapsed}");
+        }
+
+        [TestMethod]
+        public void OrganizationAccountsQueryTest()
+        {
+            var s = Stopwatch.StartNew();
+            folioDapperContext.Query(@"
+SELECT
+o.name AS ""Organization"",
+oa.organization_id AS ""OrganizationId"",
+oa.name AS ""Name"",
+oa.account_no AS ""AccountNumber"",
+oa.description AS ""Description"",
+oa.app_system_no AS ""AppSystemNumber"",
+oa.payment_method AS ""PaymentMethod"",
+oa.account_status AS ""AccountStatus"",
+oa.contact_info AS ""ContactInfo"",
+oa.library_code AS ""LibraryCode"",
+oa.library_edi_code AS ""LibraryEdiCode"",
+oa.notes AS ""Notes"" 
+FROM uc.organization_accounts AS oa
+LEFT JOIN uc.organizations AS o ON o.id = oa.organization_id
+ ORDER BY oa.name
+", take: 1);
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"OrganizationAccountsQueryTest()\r\n    ElapsedTime={s.Elapsed}");
+        }
+
+        [TestMethod]
+        public void QueryOrganizationAccountAcquisitionsUnitsTest()
+        {
+            var s = Stopwatch.StartNew();
+            folioDapperContext.OrganizationAccountAcquisitionsUnits(take: 1).ToArray();
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"OrganizationAccountAcquisitionsUnitsTest()\r\n    ElapsedTime={s.Elapsed}");
+        }
+
+        [TestMethod]
+        public void OrganizationAccountAcquisitionsUnitsQueryTest()
+        {
+            var s = Stopwatch.StartNew();
+            folioDapperContext.Query(@"
+SELECT
+oa.name AS ""OrganizationAccount"",
+oaau.organization_account_id AS ""OrganizationAccountId"",
+au.name AS ""AcquisitionsUnit"",
+oaau.acquisitions_unit_id AS ""AcquisitionsUnitId"" 
+FROM uc.organization_account_acquisitions_units AS oaau
+LEFT JOIN uc.organization_accounts AS oa ON oa.id = oaau.organization_account_id
+LEFT JOIN uc.acquisitions_units AS au ON au.id = oaau.acquisitions_unit_id
+ ORDER BY oaau.id
+", take: 1);
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"OrganizationAccountAcquisitionsUnitsQueryTest()\r\n    ElapsedTime={s.Elapsed}");
+        }
+
+        [TestMethod]
+        public void QueryOrganizationAcquisitionsUnitsTest()
+        {
+            var s = Stopwatch.StartNew();
+            folioDapperContext.OrganizationAcquisitionsUnits(take: 1).ToArray();
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"OrganizationAcquisitionsUnitsTest()\r\n    ElapsedTime={s.Elapsed}");
+        }
+
+        [TestMethod]
+        public void OrganizationAcquisitionsUnitsQueryTest()
+        {
+            var s = Stopwatch.StartNew();
+            folioDapperContext.Query(@"
+SELECT
+o.name AS ""Organization"",
+oau.organization_id AS ""OrganizationId"",
+au.name AS ""AcquisitionsUnit"",
+oau.acquisitions_unit_id AS ""AcquisitionsUnitId"" 
+FROM uc.organization_acquisitions_units AS oau
+LEFT JOIN uc.organizations AS o ON o.id = oau.organization_id
+LEFT JOIN uc.acquisitions_units AS au ON au.id = oau.acquisitions_unit_id
+ ORDER BY oau.id
+", take: 1);
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"OrganizationAcquisitionsUnitsQueryTest()\r\n    ElapsedTime={s.Elapsed}");
+        }
+
+        [TestMethod]
+        public void QueryOrganizationAddressesTest()
+        {
+            var s = Stopwatch.StartNew();
+            folioDapperContext.OrganizationAddresses(take: 1).ToArray();
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"OrganizationAddressesTest()\r\n    ElapsedTime={s.Elapsed}");
+        }
+
+        [TestMethod]
+        public void OrganizationAddressesQueryTest()
+        {
+            var s = Stopwatch.StartNew();
+            folioDapperContext.Query(@"
+SELECT
+o.name AS ""Organization"",
+oa.organization_id AS ""OrganizationId"",
+oa.address_line1 AS ""StreetAddress1"",
+oa.address_line2 AS ""StreetAddress2"",
+oa.city AS ""City"",
+oa.state_region AS ""State"",
+oa.zip_code AS ""PostalCode"",
+oa.country AS ""CountryCode"",
+oa.is_primary AS ""IsPrimary"",
+oa.language AS ""Language"",
+oa.created_date AS ""CreationTime"",
+cu.username AS ""CreationUser"",
+oa.created_by_user_id AS ""CreationUserId"",
+oa.updated_date AS ""LastWriteTime"",
+lwu.username AS ""LastWriteUser"",
+oa.updated_by_user_id AS ""LastWriteUserId"" 
+FROM uc.organization_addresses AS oa
+LEFT JOIN uc.organizations AS o ON o.id = oa.organization_id
+LEFT JOIN uc.users AS cu ON cu.id = oa.created_by_user_id
+LEFT JOIN uc.users AS lwu ON lwu.id = oa.updated_by_user_id
+ ORDER BY oa.address_line1
+", take: 1);
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"OrganizationAddressesQueryTest()\r\n    ElapsedTime={s.Elapsed}");
+        }
+
+        [TestMethod]
+        public void QueryOrganizationAddressCategoriesTest()
+        {
+            var s = Stopwatch.StartNew();
+            folioDapperContext.OrganizationAddressCategories(take: 1).ToArray();
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"OrganizationAddressCategoriesTest()\r\n    ElapsedTime={s.Elapsed}");
+        }
+
+        [TestMethod]
+        public void OrganizationAddressCategoriesQueryTest()
+        {
+            var s = Stopwatch.StartNew();
+            folioDapperContext.Query(@"
+SELECT
+oa.address_line1 AS ""OrganizationAddress"",
+oac.organization_address_id AS ""OrganizationAddressId"",
+c.value AS ""Category"",
+oac.category_id AS ""CategoryId"" 
+FROM uc.organization_address_categories AS oac
+LEFT JOIN uc.organization_addresses AS oa ON oa.id = oac.organization_address_id
+LEFT JOIN uc.categories AS c ON c.id = oac.category_id
+ ORDER BY oac.id
+", take: 1);
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"OrganizationAddressCategoriesQueryTest()\r\n    ElapsedTime={s.Elapsed}");
+        }
+
+        [TestMethod]
+        public void QueryOrganizationAgreementsTest()
+        {
+            var s = Stopwatch.StartNew();
+            folioDapperContext.OrganizationAgreements(take: 1).ToArray();
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"OrganizationAgreementsTest()\r\n    ElapsedTime={s.Elapsed}");
+        }
+
+        [TestMethod]
+        public void OrganizationAgreementsQueryTest()
+        {
+            var s = Stopwatch.StartNew();
+            folioDapperContext.Query(@"
+SELECT
+o.name AS ""Organization"",
+oa.organization_id AS ""OrganizationId"",
+oa.name AS ""Name"",
+oa.discount AS ""Discount"",
+oa.reference_url AS ""ReferenceUrl"",
+oa.notes AS ""Notes"" 
+FROM uc.organization_agreements AS oa
+LEFT JOIN uc.organizations AS o ON o.id = oa.organization_id
+ ORDER BY oa.name
+", take: 1);
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"OrganizationAgreementsQueryTest()\r\n    ElapsedTime={s.Elapsed}");
+        }
+
+        [TestMethod]
+        public void QueryOrganizationAliasesTest()
+        {
+            var s = Stopwatch.StartNew();
+            folioDapperContext.OrganizationAliases(take: 1).ToArray();
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"OrganizationAliasesTest()\r\n    ElapsedTime={s.Elapsed}");
+        }
+
+        [TestMethod]
+        public void OrganizationAliasesQueryTest()
+        {
+            var s = Stopwatch.StartNew();
+            folioDapperContext.Query(@"
+SELECT
+o.name AS ""Organization"",
+oa.organization_id AS ""OrganizationId"",
+oa.value AS ""Value"",
+oa.description AS ""Description"" 
+FROM uc.organization_aliases AS oa
+LEFT JOIN uc.organizations AS o ON o.id = oa.organization_id
+ ORDER BY oa.value
+", take: 1);
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"OrganizationAliasesQueryTest()\r\n    ElapsedTime={s.Elapsed}");
+        }
+
+        [TestMethod]
+        public void QueryOrganizationChangelogsTest()
+        {
+            var s = Stopwatch.StartNew();
+            folioDapperContext.OrganizationChangelogs(take: 1).ToArray();
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"OrganizationChangelogsTest()\r\n    ElapsedTime={s.Elapsed}");
+        }
+
+        [TestMethod]
+        public void OrganizationChangelogsQueryTest()
+        {
+            var s = Stopwatch.StartNew();
+            folioDapperContext.Query(@"
+SELECT
+o.name AS ""Organization"",
+oc.organization_id AS ""OrganizationId"",
+oc.description AS ""Description"",
+oc.timestamp AS ""Timestamp"" 
+FROM uc.organization_changelogs AS oc
+LEFT JOIN uc.organizations AS o ON o.id = oc.organization_id
+ ORDER BY oc.id
+", take: 1);
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"OrganizationChangelogsQueryTest()\r\n    ElapsedTime={s.Elapsed}");
+        }
+
+        [TestMethod]
+        public void QueryOrganizationContactsTest()
+        {
+            var s = Stopwatch.StartNew();
+            folioDapperContext.OrganizationContacts(take: 1).ToArray();
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"OrganizationContactsTest()\r\n    ElapsedTime={s.Elapsed}");
+        }
+
+        [TestMethod]
+        public void OrganizationContactsQueryTest()
+        {
+            var s = Stopwatch.StartNew();
+            folioDapperContext.Query(@"
+SELECT
+o.name AS ""Organization"",
+oc.organization_id AS ""OrganizationId"",
+c.name AS ""Contact"",
+oc.contact_id AS ""ContactId"" 
+FROM uc.organization_contacts AS oc
+LEFT JOIN uc.organizations AS o ON o.id = oc.organization_id
+LEFT JOIN uc.contacts AS c ON c.id = oc.contact_id
+ ORDER BY oc.id
+", take: 1);
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"OrganizationContactsQueryTest()\r\n    ElapsedTime={s.Elapsed}");
+        }
+
+        [TestMethod]
+        public void QueryOrganizationEmailsTest()
+        {
+            var s = Stopwatch.StartNew();
+            folioDapperContext.OrganizationEmails(take: 1).ToArray();
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"OrganizationEmailsTest()\r\n    ElapsedTime={s.Elapsed}");
+        }
+
+        [TestMethod]
+        public void OrganizationEmailsQueryTest()
+        {
+            var s = Stopwatch.StartNew();
+            folioDapperContext.Query(@"
+SELECT
+o.name AS ""Organization"",
+oe.organization_id AS ""OrganizationId"",
+oe.value AS ""Value"",
+oe.description AS ""Description"",
+oe.is_primary AS ""IsPrimary"",
+oe.language AS ""Language"",
+oe.created_date AS ""CreationTime"",
+cu.username AS ""CreationUser"",
+oe.created_by_user_id AS ""CreationUserId"",
+oe.updated_date AS ""LastWriteTime"",
+lwu.username AS ""LastWriteUser"",
+oe.updated_by_user_id AS ""LastWriteUserId"" 
+FROM uc.organization_emails AS oe
+LEFT JOIN uc.organizations AS o ON o.id = oe.organization_id
+LEFT JOIN uc.users AS cu ON cu.id = oe.created_by_user_id
+LEFT JOIN uc.users AS lwu ON lwu.id = oe.updated_by_user_id
+ ORDER BY oe.value
+", take: 1);
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"OrganizationEmailsQueryTest()\r\n    ElapsedTime={s.Elapsed}");
+        }
+
+        [TestMethod]
+        public void QueryOrganizationEmailCategoriesTest()
+        {
+            var s = Stopwatch.StartNew();
+            folioDapperContext.OrganizationEmailCategories(take: 1).ToArray();
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"OrganizationEmailCategoriesTest()\r\n    ElapsedTime={s.Elapsed}");
+        }
+
+        [TestMethod]
+        public void OrganizationEmailCategoriesQueryTest()
+        {
+            var s = Stopwatch.StartNew();
+            folioDapperContext.Query(@"
+SELECT
+oe.value AS ""OrganizationEmail"",
+oec.organization_email_id AS ""OrganizationEmailId"",
+c.value AS ""Category"",
+oec.category_id AS ""CategoryId"" 
+FROM uc.organization_email_categories AS oec
+LEFT JOIN uc.organization_emails AS oe ON oe.id = oec.organization_email_id
+LEFT JOIN uc.categories AS c ON c.id = oec.category_id
+ ORDER BY oec.id
+", take: 1);
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"OrganizationEmailCategoriesQueryTest()\r\n    ElapsedTime={s.Elapsed}");
+        }
+
+        [TestMethod]
+        public void QueryOrganizationInterfacesTest()
+        {
+            var s = Stopwatch.StartNew();
+            folioDapperContext.OrganizationInterfaces(take: 1).ToArray();
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"OrganizationInterfacesTest()\r\n    ElapsedTime={s.Elapsed}");
+        }
+
+        [TestMethod]
+        public void OrganizationInterfacesQueryTest()
+        {
+            var s = Stopwatch.StartNew();
+            folioDapperContext.Query(@"
+SELECT
+o.name AS ""Organization"",
+oi.organization_id AS ""OrganizationId"",
+i.name AS ""Interface"",
+oi.interface_id AS ""InterfaceId"" 
+FROM uc.organization_interfaces AS oi
+LEFT JOIN uc.organizations AS o ON o.id = oi.organization_id
+LEFT JOIN uc.interfaces AS i ON i.id = oi.interface_id
+ ORDER BY oi.id
+", take: 1);
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"OrganizationInterfacesQueryTest()\r\n    ElapsedTime={s.Elapsed}");
+        }
+
+        [TestMethod]
+        public void QueryOrganizationPhoneNumbersTest()
+        {
+            var s = Stopwatch.StartNew();
+            folioDapperContext.OrganizationPhoneNumbers(take: 1).ToArray();
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"OrganizationPhoneNumbersTest()\r\n    ElapsedTime={s.Elapsed}");
+        }
+
+        [TestMethod]
+        public void OrganizationPhoneNumbersQueryTest()
+        {
+            var s = Stopwatch.StartNew();
+            folioDapperContext.Query(@"
+SELECT
+o.name AS ""Organization"",
+opn.organization_id AS ""OrganizationId"",
+opn.phone_number AS ""PhoneNumber"",
+opn.type AS ""Type"",
+opn.is_primary AS ""IsPrimary"",
+opn.language AS ""Language"",
+opn.created_date AS ""CreationTime"",
+cu.username AS ""CreationUser"",
+opn.created_by_user_id AS ""CreationUserId"",
+opn.updated_date AS ""LastWriteTime"",
+lwu.username AS ""LastWriteUser"",
+opn.updated_by_user_id AS ""LastWriteUserId"" 
+FROM uc.organization_phone_numbers AS opn
+LEFT JOIN uc.organizations AS o ON o.id = opn.organization_id
+LEFT JOIN uc.users AS cu ON cu.id = opn.created_by_user_id
+LEFT JOIN uc.users AS lwu ON lwu.id = opn.updated_by_user_id
+ ORDER BY opn.phone_number
+", take: 1);
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"OrganizationPhoneNumbersQueryTest()\r\n    ElapsedTime={s.Elapsed}");
+        }
+
+        [TestMethod]
+        public void QueryOrganizationPhoneNumberCategoriesTest()
+        {
+            var s = Stopwatch.StartNew();
+            folioDapperContext.OrganizationPhoneNumberCategories(take: 1).ToArray();
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"OrganizationPhoneNumberCategoriesTest()\r\n    ElapsedTime={s.Elapsed}");
+        }
+
+        [TestMethod]
+        public void OrganizationPhoneNumberCategoriesQueryTest()
+        {
+            var s = Stopwatch.StartNew();
+            folioDapperContext.Query(@"
+SELECT
+opn.phone_number AS ""OrganizationPhoneNumber"",
+opnc.organization_phone_number_id AS ""OrganizationPhoneNumberId"",
+c.value AS ""Category"",
+opnc.category_id AS ""CategoryId"" 
+FROM uc.organization_phone_number_categories AS opnc
+LEFT JOIN uc.organization_phone_numbers AS opn ON opn.id = opnc.organization_phone_number_id
+LEFT JOIN uc.categories AS c ON c.id = opnc.category_id
+ ORDER BY opnc.id
+", take: 1);
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"OrganizationPhoneNumberCategoriesQueryTest()\r\n    ElapsedTime={s.Elapsed}");
+        }
+
+        [TestMethod]
+        public void QueryOrganizationTagsTest()
+        {
+            var s = Stopwatch.StartNew();
+            folioDapperContext.OrganizationTags(take: 1).ToArray();
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"OrganizationTagsTest()\r\n    ElapsedTime={s.Elapsed}");
+        }
+
+        [TestMethod]
+        public void OrganizationTagsQueryTest()
+        {
+            var s = Stopwatch.StartNew();
+            folioDapperContext.Query(@"
+SELECT
+o.name AS ""Organization"",
+ot.organization_id AS ""OrganizationId"",
+ot.content AS ""Content"" 
+FROM uc.organization_tags AS ot
+LEFT JOIN uc.organizations AS o ON o.id = ot.organization_id
+ ORDER BY ot.content
+", take: 1);
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"OrganizationTagsQueryTest()\r\n    ElapsedTime={s.Elapsed}");
+        }
+
+        [TestMethod]
+        public void QueryOrganizationUrlsTest()
+        {
+            var s = Stopwatch.StartNew();
+            folioDapperContext.OrganizationUrls(take: 1).ToArray();
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"OrganizationUrlsTest()\r\n    ElapsedTime={s.Elapsed}");
+        }
+
+        [TestMethod]
+        public void OrganizationUrlsQueryTest()
+        {
+            var s = Stopwatch.StartNew();
+            folioDapperContext.Query(@"
+SELECT
+o.name AS ""Organization"",
+ou.organization_id AS ""OrganizationId"",
+ou.value AS ""Value"",
+ou.description AS ""Description"",
+ou.language AS ""Language"",
+ou.is_primary AS ""IsPrimary"",
+ou.notes AS ""Notes"",
+ou.created_date AS ""CreationTime"",
+cu.username AS ""CreationUser"",
+ou.created_by_user_id AS ""CreationUserId"",
+ou.updated_date AS ""LastWriteTime"",
+lwu.username AS ""LastWriteUser"",
+ou.updated_by_user_id AS ""LastWriteUserId"" 
+FROM uc.organization_urls AS ou
+LEFT JOIN uc.organizations AS o ON o.id = ou.organization_id
+LEFT JOIN uc.users AS cu ON cu.id = ou.created_by_user_id
+LEFT JOIN uc.users AS lwu ON lwu.id = ou.updated_by_user_id
+ ORDER BY ou.value
+", take: 1);
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"OrganizationUrlsQueryTest()\r\n    ElapsedTime={s.Elapsed}");
+        }
+
+        [TestMethod]
+        public void QueryOrganizationUrlCategoriesTest()
+        {
+            var s = Stopwatch.StartNew();
+            folioDapperContext.OrganizationUrlCategories(take: 1).ToArray();
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"OrganizationUrlCategoriesTest()\r\n    ElapsedTime={s.Elapsed}");
+        }
+
+        [TestMethod]
+        public void OrganizationUrlCategoriesQueryTest()
+        {
+            var s = Stopwatch.StartNew();
+            folioDapperContext.Query(@"
+SELECT
+ou.value AS ""OrganizationUrl"",
+ouc.organization_url_id AS ""OrganizationUrlId"",
+c.value AS ""Category"",
+ouc.category_id AS ""CategoryId"" 
+FROM uc.organization_url_categories AS ouc
+LEFT JOIN uc.organization_urls AS ou ON ou.id = ouc.organization_url_id
+LEFT JOIN uc.categories AS c ON c.id = ouc.category_id
+ ORDER BY ouc.id
+", take: 1);
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"OrganizationUrlCategoriesQueryTest()\r\n    ElapsedTime={s.Elapsed}");
         }
 
         [TestMethod]
@@ -3207,6 +6569,117 @@ LEFT JOIN uc.users AS lwu ON lwu.id = pnp2.updated_by_user_id
         }
 
         [TestMethod]
+        public void QueryPatronNoticePolicyFeeFineNoticesTest()
+        {
+            var s = Stopwatch.StartNew();
+            folioDapperContext.PatronNoticePolicyFeeFineNotices(take: 1).ToArray();
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"PatronNoticePolicyFeeFineNoticesTest()\r\n    ElapsedTime={s.Elapsed}");
+        }
+
+        [TestMethod]
+        public void PatronNoticePolicyFeeFineNoticesQueryTest()
+        {
+            var s = Stopwatch.StartNew();
+            folioDapperContext.Query(@"
+SELECT
+pnp.name AS ""PatronNoticePolicy"",
+pnpffn.patron_notice_policy_id AS ""PatronNoticePolicyId"",
+pnpffn.name AS ""Name"",
+t.name AS ""Template"",
+pnpffn.template_id AS ""TemplateId"",
+pnpffn.template_name AS ""TemplateName"",
+pnpffn.format AS ""Format"",
+pnpffn.frequency AS ""Frequency"",
+pnpffn.real_time AS ""RealTime"",
+pnpffn.send_options_send_how AS ""SendOptionsSendHow"",
+pnpffn.send_options_send_when AS ""SendOptionsSendWhen"",
+pnpffn.send_options_send_by_duration AS ""SendOptionsSendByDuration"",
+pnpffn.send_options_send_by_interval_id AS ""SendOptionsSendByInterval"",
+pnpffn.send_options_send_every_duration AS ""SendOptionsSendEveryDuration"",
+pnpffn.send_options_send_every_interval_id AS ""SendOptionsSendEveryInterval"" 
+FROM uc.patron_notice_policy_fee_fine_notices AS pnpffn
+LEFT JOIN uc.patron_notice_policies AS pnp ON pnp.id = pnpffn.patron_notice_policy_id
+LEFT JOIN uc.templates AS t ON t.id = pnpffn.template_id
+ ORDER BY pnpffn.name
+", take: 1);
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"PatronNoticePolicyFeeFineNoticesQueryTest()\r\n    ElapsedTime={s.Elapsed}");
+        }
+
+        [TestMethod]
+        public void QueryPatronNoticePolicyLoanNoticesTest()
+        {
+            var s = Stopwatch.StartNew();
+            folioDapperContext.PatronNoticePolicyLoanNotices(take: 1).ToArray();
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"PatronNoticePolicyLoanNoticesTest()\r\n    ElapsedTime={s.Elapsed}");
+        }
+
+        [TestMethod]
+        public void PatronNoticePolicyLoanNoticesQueryTest()
+        {
+            var s = Stopwatch.StartNew();
+            folioDapperContext.Query(@"
+SELECT
+pnp.name AS ""PatronNoticePolicy"",
+pnpln.patron_notice_policy_id AS ""PatronNoticePolicyId"",
+pnpln.name AS ""Name"",
+t.name AS ""Template"",
+pnpln.template_id AS ""TemplateId"",
+pnpln.template_name AS ""TemplateName"",
+pnpln.format AS ""Format"",
+pnpln.frequency AS ""Frequency"",
+pnpln.real_time AS ""RealTime"",
+pnpln.send_options_send_how AS ""SendOptionsSendHow"",
+pnpln.send_options_send_when AS ""SendOptionsSendWhen"",
+pnpln.send_options_send_by_duration AS ""SendOptionsSendByDuration"",
+pnpln.send_options_send_by_interval_id AS ""SendOptionsSendByInterval"",
+pnpln.send_options_send_every_duration AS ""SendOptionsSendEveryDuration"",
+pnpln.send_options_send_every_interval_id AS ""SendOptionsSendEveryInterval"" 
+FROM uc.patron_notice_policy_loan_notices AS pnpln
+LEFT JOIN uc.patron_notice_policies AS pnp ON pnp.id = pnpln.patron_notice_policy_id
+LEFT JOIN uc.templates AS t ON t.id = pnpln.template_id
+ ORDER BY pnpln.name
+", take: 1);
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"PatronNoticePolicyLoanNoticesQueryTest()\r\n    ElapsedTime={s.Elapsed}");
+        }
+
+        [TestMethod]
+        public void QueryPatronNoticePolicyRequestNoticesTest()
+        {
+            var s = Stopwatch.StartNew();
+            folioDapperContext.PatronNoticePolicyRequestNotices(take: 1).ToArray();
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"PatronNoticePolicyRequestNoticesTest()\r\n    ElapsedTime={s.Elapsed}");
+        }
+
+        [TestMethod]
+        public void PatronNoticePolicyRequestNoticesQueryTest()
+        {
+            var s = Stopwatch.StartNew();
+            folioDapperContext.Query(@"
+SELECT
+pnp.name AS ""PatronNoticePolicy"",
+pnprn.patron_notice_policy_id AS ""PatronNoticePolicyId"",
+pnprn.name AS ""Name"",
+t.name AS ""Template"",
+pnprn.template_id AS ""TemplateId"",
+pnprn.template_name AS ""TemplateName"",
+pnprn.format AS ""Format"",
+pnprn.frequency AS ""Frequency"",
+pnprn.real_time AS ""RealTime"",
+pnprn.send_options_send_how AS ""SendOptionsSendHow"",
+pnprn.send_options_send_when AS ""SendOptionsSendWhen"",
+pnprn.send_options_send_by_duration AS ""SendOptionsSendByDuration"",
+pnprn.send_options_send_by_interval_id AS ""SendOptionsSendByInterval"",
+pnprn.send_options_send_every_duration AS ""SendOptionsSendEveryDuration"",
+pnprn.send_options_send_every_interval_id AS ""SendOptionsSendEveryInterval"" 
+FROM uc.patron_notice_policy_request_notices AS pnprn
+LEFT JOIN uc.patron_notice_policies AS pnp ON pnp.id = pnprn.patron_notice_policy_id
+LEFT JOIN uc.templates AS t ON t.id = pnprn.template_id
+ ORDER BY pnprn.name
+", take: 1);
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"PatronNoticePolicyRequestNoticesQueryTest()\r\n    ElapsedTime={s.Elapsed}");
+        }
+
+        [TestMethod]
         public void QueryPayment2sTest()
         {
             var s = Stopwatch.StartNew();
@@ -3321,6 +6794,80 @@ LEFT JOIN uc.users AS lwu ON lwu.id = p2.updated_by_user_id
         }
 
         [TestMethod]
+        public void QueryPermissionChildOfsTest()
+        {
+            var s = Stopwatch.StartNew();
+            folioDapperContext.PermissionChildOfs(take: 1).ToArray();
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"PermissionChildOfsTest()\r\n    ElapsedTime={s.Elapsed}");
+        }
+
+        [TestMethod]
+        public void PermissionChildOfsQueryTest()
+        {
+            var s = Stopwatch.StartNew();
+            folioDapperContext.Query(@"
+SELECT
+p.display_name AS ""Permission"",
+pco.permission_id AS ""PermissionId"",
+pco.content AS ""Content"" 
+FROM uc.permission_child_of AS pco
+LEFT JOIN uc.permissions AS p ON p.id = pco.permission_id
+ ORDER BY pco.content
+", take: 1);
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"PermissionChildOfsQueryTest()\r\n    ElapsedTime={s.Elapsed}");
+        }
+
+        [TestMethod]
+        public void QueryPermissionGrantedTosTest()
+        {
+            var s = Stopwatch.StartNew();
+            folioDapperContext.PermissionGrantedTos(take: 1).ToArray();
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"PermissionGrantedTosTest()\r\n    ElapsedTime={s.Elapsed}");
+        }
+
+        [TestMethod]
+        public void PermissionGrantedTosQueryTest()
+        {
+            var s = Stopwatch.StartNew();
+            folioDapperContext.Query(@"
+SELECT
+p.display_name AS ""Permission"",
+pgt.permission_id AS ""PermissionId"",
+pu.id AS ""PermissionsUser"",
+pgt.permissions_user_id AS ""PermissionsUserId"" 
+FROM uc.permission_granted_to AS pgt
+LEFT JOIN uc.permissions AS p ON p.id = pgt.permission_id
+LEFT JOIN uc.permissions_users AS pu ON pu.id = pgt.permissions_user_id
+ ORDER BY pgt.id
+", take: 1);
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"PermissionGrantedTosQueryTest()\r\n    ElapsedTime={s.Elapsed}");
+        }
+
+        [TestMethod]
+        public void QueryPermissionSubPermissionsTest()
+        {
+            var s = Stopwatch.StartNew();
+            folioDapperContext.PermissionSubPermissions(take: 1).ToArray();
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"PermissionSubPermissionsTest()\r\n    ElapsedTime={s.Elapsed}");
+        }
+
+        [TestMethod]
+        public void PermissionSubPermissionsQueryTest()
+        {
+            var s = Stopwatch.StartNew();
+            folioDapperContext.Query(@"
+SELECT
+p.display_name AS ""Permission"",
+psp.permission_id AS ""PermissionId"",
+psp.content AS ""Content"" 
+FROM uc.permission_sub_permissions AS psp
+LEFT JOIN uc.permissions AS p ON p.id = psp.permission_id
+ ORDER BY psp.content
+", take: 1);
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"PermissionSubPermissionsQueryTest()\r\n    ElapsedTime={s.Elapsed}");
+        }
+
+        [TestMethod]
         public void QueryPermissionsUser2sTest()
         {
             var s = Stopwatch.StartNew();
@@ -3351,6 +6898,77 @@ LEFT JOIN uc.users AS lwu ON lwu.id = pu2.updated_by_user_id
  ORDER BY pu2.id
 ", take: 1);
             traceSource.TraceEvent(TraceEventType.Information, 0, $"PermissionsUser2sQueryTest()\r\n    ElapsedTime={s.Elapsed}");
+        }
+
+        [TestMethod]
+        public void QueryPermissionsUserPermissionsTest()
+        {
+            var s = Stopwatch.StartNew();
+            folioDapperContext.PermissionsUserPermissions(take: 1).ToArray();
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"PermissionsUserPermissionsTest()\r\n    ElapsedTime={s.Elapsed}");
+        }
+
+        [TestMethod]
+        public void PermissionsUserPermissionsQueryTest()
+        {
+            var s = Stopwatch.StartNew();
+            folioDapperContext.Query(@"
+SELECT
+pu.id AS ""PermissionsUser"",
+pup.permissions_user_id AS ""PermissionsUserId"",
+pup.content AS ""Content"" 
+FROM uc.permissions_user_permissions AS pup
+LEFT JOIN uc.permissions_users AS pu ON pu.id = pup.permissions_user_id
+ ORDER BY pup.content
+", take: 1);
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"PermissionsUserPermissionsQueryTest()\r\n    ElapsedTime={s.Elapsed}");
+        }
+
+        [TestMethod]
+        public void QueryPermissionTagsTest()
+        {
+            var s = Stopwatch.StartNew();
+            folioDapperContext.PermissionTags(take: 1).ToArray();
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"PermissionTagsTest()\r\n    ElapsedTime={s.Elapsed}");
+        }
+
+        [TestMethod]
+        public void PermissionTagsQueryTest()
+        {
+            var s = Stopwatch.StartNew();
+            folioDapperContext.Query(@"
+SELECT
+p.display_name AS ""Permission"",
+pt.permission_id AS ""PermissionId"",
+pt.content AS ""Content"" 
+FROM uc.permission_tags AS pt
+LEFT JOIN uc.permissions AS p ON p.id = pt.permission_id
+ ORDER BY pt.content
+", take: 1);
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"PermissionTagsQueryTest()\r\n    ElapsedTime={s.Elapsed}");
+        }
+
+        [TestMethod]
+        public void QueryPhysicalDescriptionsTest()
+        {
+            var s = Stopwatch.StartNew();
+            folioDapperContext.PhysicalDescriptions(take: 1).ToArray();
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"PhysicalDescriptionsTest()\r\n    ElapsedTime={s.Elapsed}");
+        }
+
+        [TestMethod]
+        public void PhysicalDescriptionsQueryTest()
+        {
+            var s = Stopwatch.StartNew();
+            folioDapperContext.Query(@"
+SELECT
+i.title AS ""Instance"",
+pd.content AS ""Content"" 
+FROM uc.physical_descriptions AS pd
+LEFT JOIN uc.instances AS i ON i.id = pd.instance_id
+ ORDER BY pd.content
+", take: 1);
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"PhysicalDescriptionsQueryTest()\r\n    ElapsedTime={s.Elapsed}");
         }
 
         [TestMethod]
@@ -3389,6 +7007,33 @@ LEFT JOIN uc.users AS lwu ON lwu.id = pst2.updated_by_user_id
  ORDER BY pst2.title
 ", take: 1);
             traceSource.TraceEvent(TraceEventType.Information, 0, $"PrecedingSucceedingTitle2sQueryTest()\r\n    ElapsedTime={s.Elapsed}");
+        }
+
+        [TestMethod]
+        public void QueryPrecedingSucceedingTitleIdentifiersTest()
+        {
+            var s = Stopwatch.StartNew();
+            folioDapperContext.PrecedingSucceedingTitleIdentifiers(take: 1).ToArray();
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"PrecedingSucceedingTitleIdentifiersTest()\r\n    ElapsedTime={s.Elapsed}");
+        }
+
+        [TestMethod]
+        public void PrecedingSucceedingTitleIdentifiersQueryTest()
+        {
+            var s = Stopwatch.StartNew();
+            folioDapperContext.Query(@"
+SELECT
+pst.title AS ""PrecedingSucceedingTitle"",
+psti.preceding_succeeding_title_id AS ""PrecedingSucceedingTitleId"",
+psti.value AS ""Value"",
+it.name AS ""IdentifierType"",
+psti.identifier_type_id AS ""IdentifierTypeId"" 
+FROM uc.preceding_succeeding_title_identifiers AS psti
+LEFT JOIN uc.preceding_succeeding_titles AS pst ON pst.id = psti.preceding_succeeding_title_id
+LEFT JOIN uc.id_types AS it ON it.id = psti.identifier_type_id
+ ORDER BY psti.id
+", take: 1);
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"PrecedingSucceedingTitleIdentifiersQueryTest()\r\n    ElapsedTime={s.Elapsed}");
         }
 
         [TestMethod]
@@ -3489,6 +7134,102 @@ LEFT JOIN uc.users AS lwu ON lwu.id = p2.updated_by_user_id
  ORDER BY p2.id
 ", take: 1);
             traceSource.TraceEvent(TraceEventType.Information, 0, $"Proxy2sQueryTest()\r\n    ElapsedTime={s.Elapsed}");
+        }
+
+        [TestMethod]
+        public void QueryPublicationsTest()
+        {
+            var s = Stopwatch.StartNew();
+            folioDapperContext.Publications(take: 1).ToArray();
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"PublicationsTest()\r\n    ElapsedTime={s.Elapsed}");
+        }
+
+        [TestMethod]
+        public void PublicationsQueryTest()
+        {
+            var s = Stopwatch.StartNew();
+            folioDapperContext.Query(@"
+SELECT
+i.title AS ""Instance"",
+p.publisher AS ""Publisher"",
+p.place AS ""Place"",
+p.date_of_publication AS ""PublicationYear"",
+p.role AS ""Role"" 
+FROM uc.publications AS p
+LEFT JOIN uc.instances AS i ON i.id = p.instance_id
+ ORDER BY p.id
+", take: 1);
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"PublicationsQueryTest()\r\n    ElapsedTime={s.Elapsed}");
+        }
+
+        [TestMethod]
+        public void QueryPublicationFrequenciesTest()
+        {
+            var s = Stopwatch.StartNew();
+            folioDapperContext.PublicationFrequencies(take: 1).ToArray();
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"PublicationFrequenciesTest()\r\n    ElapsedTime={s.Elapsed}");
+        }
+
+        [TestMethod]
+        public void PublicationFrequenciesQueryTest()
+        {
+            var s = Stopwatch.StartNew();
+            folioDapperContext.Query(@"
+SELECT
+i.title AS ""Instance"",
+pf.content AS ""Content"" 
+FROM uc.publication_frequency AS pf
+LEFT JOIN uc.instances AS i ON i.id = pf.instance_id
+ ORDER BY pf.content
+", take: 1);
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"PublicationFrequenciesQueryTest()\r\n    ElapsedTime={s.Elapsed}");
+        }
+
+        [TestMethod]
+        public void QueryPublicationRangesTest()
+        {
+            var s = Stopwatch.StartNew();
+            folioDapperContext.PublicationRanges(take: 1).ToArray();
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"PublicationRangesTest()\r\n    ElapsedTime={s.Elapsed}");
+        }
+
+        [TestMethod]
+        public void PublicationRangesQueryTest()
+        {
+            var s = Stopwatch.StartNew();
+            folioDapperContext.Query(@"
+SELECT
+i.title AS ""Instance"",
+pr.content AS ""Content"" 
+FROM uc.publication_range AS pr
+LEFT JOIN uc.instances AS i ON i.id = pr.instance_id
+ ORDER BY pr.content
+", take: 1);
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"PublicationRangesQueryTest()\r\n    ElapsedTime={s.Elapsed}");
+        }
+
+        [TestMethod]
+        public void QueryRawRecord2sTest()
+        {
+            var s = Stopwatch.StartNew();
+            folioDapperContext.RawRecord2s(take: 1).ToArray();
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"RawRecord2sTest()\r\n    ElapsedTime={s.Elapsed}");
+        }
+
+        [TestMethod]
+        public void RawRecord2sQueryTest()
+        {
+            var s = Stopwatch.StartNew();
+            folioDapperContext.Query(@"
+SELECT
+rr2.id AS ""Id"",
+r2.id AS ""Record2"",
+rr2.content AS ""Content"" 
+FROM uc.raw_records AS rr2
+LEFT JOIN uc.records AS r2 ON r2.id = rr2.id
+ ORDER BY rr2.id
+", take: 1);
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"RawRecord2sQueryTest()\r\n    ElapsedTime={s.Elapsed}");
         }
 
         [TestMethod]
@@ -3792,6 +7533,33 @@ LEFT JOIN uc.users AS lwu ON lwu.id = r2.updated_by_user_id
         }
 
         [TestMethod]
+        public void QueryRequestIdentifiersTest()
+        {
+            var s = Stopwatch.StartNew();
+            folioDapperContext.RequestIdentifiers(take: 1).ToArray();
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"RequestIdentifiersTest()\r\n    ElapsedTime={s.Elapsed}");
+        }
+
+        [TestMethod]
+        public void RequestIdentifiersQueryTest()
+        {
+            var s = Stopwatch.StartNew();
+            folioDapperContext.Query(@"
+SELECT
+r.id AS ""Request"",
+ri.request_id AS ""RequestId"",
+ri.value AS ""Value"",
+it.name AS ""IdentifierType"",
+ri.identifier_type_id AS ""IdentifierTypeId"" 
+FROM uc.request_identifiers AS ri
+LEFT JOIN uc.requests AS r ON r.id = ri.request_id
+LEFT JOIN uc.id_types AS it ON it.id = ri.identifier_type_id
+ ORDER BY ri.id
+", take: 1);
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"RequestIdentifiersQueryTest()\r\n    ElapsedTime={s.Elapsed}");
+        }
+
+        [TestMethod]
         public void QueryRequestPolicy2sTest()
         {
             var s = Stopwatch.StartNew();
@@ -3821,6 +7589,54 @@ LEFT JOIN uc.users AS lwu ON lwu.id = rp2.updated_by_user_id
  ORDER BY rp2.name
 ", take: 1);
             traceSource.TraceEvent(TraceEventType.Information, 0, $"RequestPolicy2sQueryTest()\r\n    ElapsedTime={s.Elapsed}");
+        }
+
+        [TestMethod]
+        public void QueryRequestPolicyRequestTypesTest()
+        {
+            var s = Stopwatch.StartNew();
+            folioDapperContext.RequestPolicyRequestTypes(take: 1).ToArray();
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"RequestPolicyRequestTypesTest()\r\n    ElapsedTime={s.Elapsed}");
+        }
+
+        [TestMethod]
+        public void RequestPolicyRequestTypesQueryTest()
+        {
+            var s = Stopwatch.StartNew();
+            folioDapperContext.Query(@"
+SELECT
+rp.name AS ""RequestPolicy"",
+rprt.request_policy_id AS ""RequestPolicyId"",
+rprt.content AS ""Content"" 
+FROM uc.request_policy_request_types AS rprt
+LEFT JOIN uc.request_policies AS rp ON rp.id = rprt.request_policy_id
+ ORDER BY rprt.content
+", take: 1);
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"RequestPolicyRequestTypesQueryTest()\r\n    ElapsedTime={s.Elapsed}");
+        }
+
+        [TestMethod]
+        public void QueryRequestTagsTest()
+        {
+            var s = Stopwatch.StartNew();
+            folioDapperContext.RequestTags(take: 1).ToArray();
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"RequestTagsTest()\r\n    ElapsedTime={s.Elapsed}");
+        }
+
+        [TestMethod]
+        public void RequestTagsQueryTest()
+        {
+            var s = Stopwatch.StartNew();
+            folioDapperContext.Query(@"
+SELECT
+r.id AS ""Request"",
+rt.request_id AS ""RequestId"",
+rt.content AS ""Content"" 
+FROM uc.request_tags AS rt
+LEFT JOIN uc.requests AS r ON r.id = rt.request_id
+ ORDER BY rt.content
+", take: 1);
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"RequestTagsQueryTest()\r\n    ElapsedTime={s.Elapsed}");
         }
 
         [TestMethod]
@@ -3876,6 +7692,29 @@ LEFT JOIN uc.users AS lwu ON lwu.id = sn2.updated_by_user_id
         }
 
         [TestMethod]
+        public void QuerySeriesTest()
+        {
+            var s = Stopwatch.StartNew();
+            folioDapperContext.Series(take: 1).ToArray();
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"SeriesTest()\r\n    ElapsedTime={s.Elapsed}");
+        }
+
+        [TestMethod]
+        public void SeriesQueryTest()
+        {
+            var s = Stopwatch.StartNew();
+            folioDapperContext.Query(@"
+SELECT
+i.title AS ""Instance"",
+s.content AS ""Content"" 
+FROM uc.series AS s
+LEFT JOIN uc.instances AS i ON i.id = s.instance_id
+ ORDER BY s.content
+", take: 1);
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"SeriesQueryTest()\r\n    ElapsedTime={s.Elapsed}");
+        }
+
+        [TestMethod]
         public void QueryServicePoint2sTest()
         {
             var s = Stopwatch.StartNew();
@@ -3914,6 +7753,60 @@ LEFT JOIN uc.users AS lwu ON lwu.id = sp2.updated_by_user_id
         }
 
         [TestMethod]
+        public void QueryServicePointOwnersTest()
+        {
+            var s = Stopwatch.StartNew();
+            folioDapperContext.ServicePointOwners(take: 1).ToArray();
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"ServicePointOwnersTest()\r\n    ElapsedTime={s.Elapsed}");
+        }
+
+        [TestMethod]
+        public void ServicePointOwnersQueryTest()
+        {
+            var s = Stopwatch.StartNew();
+            folioDapperContext.Query(@"
+SELECT
+o.owner AS ""Owner"",
+spo.owner_id AS ""OwnerId"",
+sp.name AS ""ServicePoint"",
+spo.service_point_id AS ""ServicePointId"",
+spo.label AS ""Label"" 
+FROM uc.service_point_owners AS spo
+LEFT JOIN uc.owners AS o ON o.id = spo.owner_id
+LEFT JOIN uc.service_points AS sp ON sp.id = spo.service_point_id
+ ORDER BY spo.id
+", take: 1);
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"ServicePointOwnersQueryTest()\r\n    ElapsedTime={s.Elapsed}");
+        }
+
+        [TestMethod]
+        public void QueryServicePointStaffSlipsTest()
+        {
+            var s = Stopwatch.StartNew();
+            folioDapperContext.ServicePointStaffSlips(take: 1).ToArray();
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"ServicePointStaffSlipsTest()\r\n    ElapsedTime={s.Elapsed}");
+        }
+
+        [TestMethod]
+        public void ServicePointStaffSlipsQueryTest()
+        {
+            var s = Stopwatch.StartNew();
+            folioDapperContext.Query(@"
+SELECT
+sp.name AS ""ServicePoint"",
+spss.service_point_id AS ""ServicePointId"",
+ss.name AS ""StaffSlip"",
+spss.staff_slip_id AS ""StaffSlipId"",
+spss.print_by_default AS ""PrintByDefault"" 
+FROM uc.service_point_staff_slips AS spss
+LEFT JOIN uc.service_points AS sp ON sp.id = spss.service_point_id
+LEFT JOIN uc.staff_slips AS ss ON ss.id = spss.staff_slip_id
+ ORDER BY spss.id
+", take: 1);
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"ServicePointStaffSlipsQueryTest()\r\n    ElapsedTime={s.Elapsed}");
+        }
+
+        [TestMethod]
         public void QueryServicePointUser2sTest()
         {
             var s = Stopwatch.StartNew();
@@ -3947,6 +7840,32 @@ LEFT JOIN uc.users AS lwu ON lwu.id = spu2.updated_by_user_id
  ORDER BY spu2.id
 ", take: 1);
             traceSource.TraceEvent(TraceEventType.Information, 0, $"ServicePointUser2sQueryTest()\r\n    ElapsedTime={s.Elapsed}");
+        }
+
+        [TestMethod]
+        public void QueryServicePointUserServicePointsTest()
+        {
+            var s = Stopwatch.StartNew();
+            folioDapperContext.ServicePointUserServicePoints(take: 1).ToArray();
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"ServicePointUserServicePointsTest()\r\n    ElapsedTime={s.Elapsed}");
+        }
+
+        [TestMethod]
+        public void ServicePointUserServicePointsQueryTest()
+        {
+            var s = Stopwatch.StartNew();
+            folioDapperContext.Query(@"
+SELECT
+spu.id AS ""ServicePointUser"",
+spusp.service_point_user_id AS ""ServicePointUserId"",
+sp.name AS ""ServicePoint"",
+spusp.service_point_id AS ""ServicePointId"" 
+FROM uc.service_point_user_service_points AS spusp
+LEFT JOIN uc.service_point_users AS spu ON spu.id = spusp.service_point_user_id
+LEFT JOIN uc.service_points AS sp ON sp.id = spusp.service_point_id
+ ORDER BY spusp.id
+", take: 1);
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"ServicePointUserServicePointsQueryTest()\r\n    ElapsedTime={s.Elapsed}");
         }
 
         [TestMethod]
@@ -4043,6 +7962,53 @@ LEFT JOIN uc.users AS lwu ON lwu.id = s2.updated_by_user_id
  ORDER BY s2.name
 ", take: 1);
             traceSource.TraceEvent(TraceEventType.Information, 0, $"Source2sQueryTest()\r\n    ElapsedTime={s.Elapsed}");
+        }
+
+        [TestMethod]
+        public void QuerySourceMarcsTest()
+        {
+            var s = Stopwatch.StartNew();
+            folioDapperContext.SourceMarcs(take: 1).ToArray();
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"SourceMarcsTest()\r\n    ElapsedTime={s.Elapsed}");
+        }
+
+        [TestMethod]
+        public void SourceMarcsQueryTest()
+        {
+            var s = Stopwatch.StartNew();
+            folioDapperContext.Query(@"
+SELECT
+sm.id AS ""Id"",
+sm.leader AS ""Leader"",
+sm.content AS ""Content"" 
+FROM uc.source_marcs AS sm
+ ORDER BY sm.id
+", take: 1);
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"SourceMarcsQueryTest()\r\n    ElapsedTime={s.Elapsed}");
+        }
+
+        [TestMethod]
+        public void QuerySourceMarcFieldsTest()
+        {
+            var s = Stopwatch.StartNew();
+            folioDapperContext.SourceMarcFields(take: 1).ToArray();
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"SourceMarcFieldsTest()\r\n    ElapsedTime={s.Elapsed}");
+        }
+
+        [TestMethod]
+        public void SourceMarcFieldsQueryTest()
+        {
+            var s = Stopwatch.StartNew();
+            folioDapperContext.Query(@"
+SELECT
+sm.id AS ""SourceMarc"",
+smf.source_marc_id AS ""SourceMarcId"",
+smf.content AS ""Content"" 
+FROM uc.source_marc_fields AS smf
+LEFT JOIN uc.source_marcs AS sm ON sm.id = smf.source_marc_id
+ ORDER BY smf.content
+", take: 1);
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"SourceMarcFieldsQueryTest()\r\n    ElapsedTime={s.Elapsed}");
         }
 
         [TestMethod]
@@ -4180,6 +8146,29 @@ LEFT JOIN uc.users AS lwu ON lwu.id = s.updated_by_user_id
         }
 
         [TestMethod]
+        public void QuerySubjectsTest()
+        {
+            var s = Stopwatch.StartNew();
+            folioDapperContext.Subjects(take: 1).ToArray();
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"SubjectsTest()\r\n    ElapsedTime={s.Elapsed}");
+        }
+
+        [TestMethod]
+        public void SubjectsQueryTest()
+        {
+            var s = Stopwatch.StartNew();
+            folioDapperContext.Query(@"
+SELECT
+i.title AS ""Instance"",
+s.content AS ""Content"" 
+FROM uc.subjects AS s
+LEFT JOIN uc.instances AS i ON i.id = s.instance_id
+ ORDER BY s.content
+", take: 1);
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"SubjectsQueryTest()\r\n    ElapsedTime={s.Elapsed}");
+        }
+
+        [TestMethod]
         public void QuerySuffix2sTest()
         {
             var s = Stopwatch.StartNew();
@@ -4201,6 +8190,31 @@ FROM uc.suffixes AS s2
  ORDER BY s2.name
 ", take: 1);
             traceSource.TraceEvent(TraceEventType.Information, 0, $"Suffix2sQueryTest()\r\n    ElapsedTime={s.Elapsed}");
+        }
+
+        [TestMethod]
+        public void QuerySupplementStatementsTest()
+        {
+            var s = Stopwatch.StartNew();
+            folioDapperContext.SupplementStatements(take: 1).ToArray();
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"SupplementStatementsTest()\r\n    ElapsedTime={s.Elapsed}");
+        }
+
+        [TestMethod]
+        public void SupplementStatementsQueryTest()
+        {
+            var s = Stopwatch.StartNew();
+            folioDapperContext.Query(@"
+SELECT
+h.hrid AS ""Holding"",
+ss.statement AS ""Statement"",
+ss.note AS ""Note"",
+ss.staff_note AS ""StaffNote"" 
+FROM uc.supplement_statements AS ss
+LEFT JOIN uc.holdings AS h ON h.id = ss.holding_id
+ ORDER BY ss.id
+", take: 1);
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"SupplementStatementsQueryTest()\r\n    ElapsedTime={s.Elapsed}");
         }
 
         [TestMethod]
@@ -4236,6 +8250,30 @@ LEFT JOIN uc.users AS lwu ON lwu.id = t2.updated_by_user_id
  ORDER BY t2.name
 ", take: 1);
             traceSource.TraceEvent(TraceEventType.Information, 0, $"Template2sQueryTest()\r\n    ElapsedTime={s.Elapsed}");
+        }
+
+        [TestMethod]
+        public void QueryTemplateOutputFormatsTest()
+        {
+            var s = Stopwatch.StartNew();
+            folioDapperContext.TemplateOutputFormats(take: 1).ToArray();
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"TemplateOutputFormatsTest()\r\n    ElapsedTime={s.Elapsed}");
+        }
+
+        [TestMethod]
+        public void TemplateOutputFormatsQueryTest()
+        {
+            var s = Stopwatch.StartNew();
+            folioDapperContext.Query(@"
+SELECT
+t.name AS ""Template"",
+tof.template_id AS ""TemplateId"",
+tof.content AS ""Content"" 
+FROM uc.template_output_formats AS tof
+LEFT JOIN uc.templates AS t ON t.id = tof.template_id
+ ORDER BY tof.content
+", take: 1);
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"TemplateOutputFormatsQueryTest()\r\n    ElapsedTime={s.Elapsed}");
         }
 
         [TestMethod]
@@ -4284,6 +8322,61 @@ LEFT JOIN uc.users AS lwu ON lwu.id = t2.updated_by_user_id
  ORDER BY t2.title
 ", take: 1);
             traceSource.TraceEvent(TraceEventType.Information, 0, $"Title2sQueryTest()\r\n    ElapsedTime={s.Elapsed}");
+        }
+
+        [TestMethod]
+        public void QueryTitleContributorsTest()
+        {
+            var s = Stopwatch.StartNew();
+            folioDapperContext.TitleContributors(take: 1).ToArray();
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"TitleContributorsTest()\r\n    ElapsedTime={s.Elapsed}");
+        }
+
+        [TestMethod]
+        public void TitleContributorsQueryTest()
+        {
+            var s = Stopwatch.StartNew();
+            folioDapperContext.Query(@"
+SELECT
+t.title AS ""Title"",
+tc.title_id AS ""TitleId"",
+tc.contributor AS ""Contributor"",
+cnt.name AS ""ContributorNameType"",
+tc.contributor_name_type_id AS ""ContributorNameTypeId"" 
+FROM uc.title_contributors AS tc
+LEFT JOIN uc.titles AS t ON t.id = tc.title_id
+LEFT JOIN uc.contributor_name_types AS cnt ON cnt.id = tc.contributor_name_type_id
+ ORDER BY tc.id
+", take: 1);
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"TitleContributorsQueryTest()\r\n    ElapsedTime={s.Elapsed}");
+        }
+
+        [TestMethod]
+        public void QueryTitleProductIdsTest()
+        {
+            var s = Stopwatch.StartNew();
+            folioDapperContext.TitleProductIds(take: 1).ToArray();
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"TitleProductIdsTest()\r\n    ElapsedTime={s.Elapsed}");
+        }
+
+        [TestMethod]
+        public void TitleProductIdsQueryTest()
+        {
+            var s = Stopwatch.StartNew();
+            folioDapperContext.Query(@"
+SELECT
+t.title AS ""Title"",
+tpi.title_id AS ""TitleId"",
+tpi.product_id AS ""ProductId"",
+pit.name AS ""ProductIdType"",
+tpi.product_id_type_id AS ""ProductIdTypeId"",
+tpi.qualifier AS ""Qualifier"" 
+FROM uc.title_product_ids AS tpi
+LEFT JOIN uc.titles AS t ON t.id = tpi.title_id
+LEFT JOIN uc.id_types AS pit ON pit.id = tpi.product_id_type_id
+ ORDER BY tpi.id
+", take: 1);
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"TitleProductIdsQueryTest()\r\n    ElapsedTime={s.Elapsed}");
         }
 
         [TestMethod]
@@ -4362,6 +8455,30 @@ LEFT JOIN uc.users AS lwu ON lwu.id = t2.updated_by_user_id
  ORDER BY t2.amount
 ", take: 1);
             traceSource.TraceEvent(TraceEventType.Information, 0, $"Transaction2sQueryTest()\r\n    ElapsedTime={s.Elapsed}");
+        }
+
+        [TestMethod]
+        public void QueryTransactionTagsTest()
+        {
+            var s = Stopwatch.StartNew();
+            folioDapperContext.TransactionTags(take: 1).ToArray();
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"TransactionTagsTest()\r\n    ElapsedTime={s.Elapsed}");
+        }
+
+        [TestMethod]
+        public void TransactionTagsQueryTest()
+        {
+            var s = Stopwatch.StartNew();
+            folioDapperContext.Query(@"
+SELECT
+t.amount AS ""Transaction"",
+tt.transaction_id AS ""TransactionId"",
+tt.content AS ""Content"" 
+FROM uc.transaction_tags AS tt
+LEFT JOIN uc.transactions AS t ON t.id = tt.transaction_id
+ ORDER BY tt.content
+", take: 1);
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"TransactionTagsQueryTest()\r\n    ElapsedTime={s.Elapsed}");
         }
 
         [TestMethod]
@@ -4528,6 +8645,65 @@ LEFT JOIN uc.users AS lwu ON lwu.id = uau2.updated_by_user_id
         }
 
         [TestMethod]
+        public void QueryUserAddressesTest()
+        {
+            var s = Stopwatch.StartNew();
+            folioDapperContext.UserAddresses(take: 1).ToArray();
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"UserAddressesTest()\r\n    ElapsedTime={s.Elapsed}");
+        }
+
+        [TestMethod]
+        public void UserAddressesQueryTest()
+        {
+            var s = Stopwatch.StartNew();
+            folioDapperContext.Query(@"
+SELECT
+u.username AS ""User"",
+ua.user_id AS ""UserId"",
+ua.country_id AS ""CountryCode"",
+ua.address_line1 AS ""StreetAddress1"",
+ua.address_line2 AS ""StreetAddress2"",
+ua.city AS ""City"",
+ua.region AS ""State"",
+ua.postal_code AS ""PostalCode"",
+at.address_type AS ""AddressType"",
+ua.address_type_id AS ""AddressTypeId"",
+ua.primary_address AS ""Default"" 
+FROM uc.user_addresses AS ua
+LEFT JOIN uc.users AS u ON u.id = ua.user_id
+LEFT JOIN uc.address_types AS at ON at.id = ua.address_type_id
+ ORDER BY ua.address_line1
+", take: 1);
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"UserAddressesQueryTest()\r\n    ElapsedTime={s.Elapsed}");
+        }
+
+        [TestMethod]
+        public void QueryUserDepartmentsTest()
+        {
+            var s = Stopwatch.StartNew();
+            folioDapperContext.UserDepartments(take: 1).ToArray();
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"UserDepartmentsTest()\r\n    ElapsedTime={s.Elapsed}");
+        }
+
+        [TestMethod]
+        public void UserDepartmentsQueryTest()
+        {
+            var s = Stopwatch.StartNew();
+            folioDapperContext.Query(@"
+SELECT
+u.username AS ""User"",
+ud.user_id AS ""UserId"",
+d.name AS ""Department"",
+ud.department_id AS ""DepartmentId"" 
+FROM uc.user_departments AS ud
+LEFT JOIN uc.users AS u ON u.id = ud.user_id
+LEFT JOIN uc.departments AS d ON d.id = ud.department_id
+ ORDER BY ud.id
+", take: 1);
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"UserDepartmentsQueryTest()\r\n    ElapsedTime={s.Elapsed}");
+        }
+
+        [TestMethod]
         public void QueryUserRequestPreference2sTest()
         {
             var s = Stopwatch.StartNew();
@@ -4567,6 +8743,129 @@ LEFT JOIN uc.users AS lwu ON lwu.id = urp2.updated_by_user_id
  ORDER BY urp2.id
 ", take: 1);
             traceSource.TraceEvent(TraceEventType.Information, 0, $"UserRequestPreference2sQueryTest()\r\n    ElapsedTime={s.Elapsed}");
+        }
+
+        [TestMethod]
+        public void QueryUserSummary2sTest()
+        {
+            var s = Stopwatch.StartNew();
+            folioDapperContext.UserSummary2s(take: 1).ToArray();
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"UserSummary2sTest()\r\n    ElapsedTime={s.Elapsed}");
+        }
+
+        [TestMethod]
+        public void UserSummary2sQueryTest()
+        {
+            var s = Stopwatch.StartNew();
+            folioDapperContext.Query(@"
+SELECT
+us2.id AS ""Id"",
+us2._version AS ""Version"",
+u.username AS ""User"",
+us2.user_id AS ""UserId"",
+us2.created_date AS ""CreationTime"",
+cu.username AS ""CreationUser"",
+us2.created_by_user_id AS ""CreationUserId"",
+us2.updated_date AS ""LastWriteTime"",
+lwu.username AS ""LastWriteUser"",
+us2.updated_by_user_id AS ""LastWriteUserId"",
+us2.content AS ""Content"" 
+FROM uc.user_summaries AS us2
+LEFT JOIN uc.users AS u ON u.id = us2.user_id
+LEFT JOIN uc.users AS cu ON cu.id = us2.created_by_user_id
+LEFT JOIN uc.users AS lwu ON lwu.id = us2.updated_by_user_id
+ ORDER BY us2.id
+", take: 1);
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"UserSummary2sQueryTest()\r\n    ElapsedTime={s.Elapsed}");
+        }
+
+        [TestMethod]
+        public void QueryUserSummaryOpenFeesFinesTest()
+        {
+            var s = Stopwatch.StartNew();
+            folioDapperContext.UserSummaryOpenFeesFines(take: 1).ToArray();
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"UserSummaryOpenFeesFinesTest()\r\n    ElapsedTime={s.Elapsed}");
+        }
+
+        [TestMethod]
+        public void UserSummaryOpenFeesFinesQueryTest()
+        {
+            var s = Stopwatch.StartNew();
+            folioDapperContext.Query(@"
+SELECT
+us.id AS ""UserSummary"",
+usoff.user_summary_id AS ""UserSummaryId"",
+ff.title AS ""FeeFine"",
+usoff.fee_fine_id AS ""FeeFineId"",
+fft.fee_fine_type AS ""FeeFineType"",
+usoff.fee_fine_type_id AS ""FeeFineTypeId"",
+l.id AS ""Loan"",
+usoff.loan_id AS ""LoanId"",
+usoff.balance AS ""Balance"" 
+FROM uc.user_summary_open_fees_fines AS usoff
+LEFT JOIN uc.user_summaries AS us ON us.id = usoff.user_summary_id
+LEFT JOIN uc.fees AS ff ON ff.id = usoff.fee_fine_id
+LEFT JOIN uc.fee_types AS fft ON fft.id = usoff.fee_fine_type_id
+LEFT JOIN uc.loans AS l ON l.id = usoff.loan_id
+ ORDER BY usoff.id
+", take: 1);
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"UserSummaryOpenFeesFinesQueryTest()\r\n    ElapsedTime={s.Elapsed}");
+        }
+
+        [TestMethod]
+        public void QueryUserSummaryOpenLoansTest()
+        {
+            var s = Stopwatch.StartNew();
+            folioDapperContext.UserSummaryOpenLoans(take: 1).ToArray();
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"UserSummaryOpenLoansTest()\r\n    ElapsedTime={s.Elapsed}");
+        }
+
+        [TestMethod]
+        public void UserSummaryOpenLoansQueryTest()
+        {
+            var s = Stopwatch.StartNew();
+            folioDapperContext.Query(@"
+SELECT
+us.id AS ""UserSummary"",
+usol.user_summary_id AS ""UserSummaryId"",
+l.id AS ""Loan"",
+usol.loan_id AS ""LoanId"",
+usol.due_date AS ""DueDate"",
+usol.recall AS ""Recall"",
+usol.item_lost AS ""ItemLost"",
+usol.item_claimed_returned AS ""ItemClaimedReturned"",
+usol.grace_period_duration AS ""GracePeriodDuration"",
+usol.grace_period_interval_id AS ""GracePeriodInterval"" 
+FROM uc.user_summary_open_loans AS usol
+LEFT JOIN uc.user_summaries AS us ON us.id = usol.user_summary_id
+LEFT JOIN uc.loans AS l ON l.id = usol.loan_id
+ ORDER BY usol.id
+", take: 1);
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"UserSummaryOpenLoansQueryTest()\r\n    ElapsedTime={s.Elapsed}");
+        }
+
+        [TestMethod]
+        public void QueryUserTagsTest()
+        {
+            var s = Stopwatch.StartNew();
+            folioDapperContext.UserTags(take: 1).ToArray();
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"UserTagsTest()\r\n    ElapsedTime={s.Elapsed}");
+        }
+
+        [TestMethod]
+        public void UserTagsQueryTest()
+        {
+            var s = Stopwatch.StartNew();
+            folioDapperContext.Query(@"
+SELECT
+u.username AS ""User"",
+ut.user_id AS ""UserId"",
+ut.content AS ""Content"" 
+FROM uc.user_tags AS ut
+LEFT JOIN uc.users AS u ON u.id = ut.user_id
+ ORDER BY ut.content
+", take: 1);
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"UserTagsQueryTest()\r\n    ElapsedTime={s.Elapsed}");
         }
 
         [TestMethod]
@@ -4630,6 +8929,32 @@ LEFT JOIN uc.users AS lwu ON lwu.id = v2.updated_by_user_id
         }
 
         [TestMethod]
+        public void QueryVoucherAcquisitionsUnitsTest()
+        {
+            var s = Stopwatch.StartNew();
+            folioDapperContext.VoucherAcquisitionsUnits(take: 1).ToArray();
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"VoucherAcquisitionsUnitsTest()\r\n    ElapsedTime={s.Elapsed}");
+        }
+
+        [TestMethod]
+        public void VoucherAcquisitionsUnitsQueryTest()
+        {
+            var s = Stopwatch.StartNew();
+            folioDapperContext.Query(@"
+SELECT
+v.voucher_number AS ""Voucher"",
+vau.voucher_id AS ""VoucherId"",
+au.name AS ""AcquisitionsUnit"",
+vau.acquisitions_unit_id AS ""AcquisitionsUnitId"" 
+FROM uc.voucher_acquisitions_units AS vau
+LEFT JOIN uc.vouchers AS v ON v.id = vau.voucher_id
+LEFT JOIN uc.acquisitions_units AS au ON au.id = vau.acquisitions_unit_id
+ ORDER BY vau.id
+", take: 1);
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"VoucherAcquisitionsUnitsQueryTest()\r\n    ElapsedTime={s.Elapsed}");
+        }
+
+        [TestMethod]
         public void QueryVoucherItem2sTest()
         {
             var s = Stopwatch.StartNew();
@@ -4665,6 +8990,70 @@ LEFT JOIN uc.users AS lwu ON lwu.id = vi2.updated_by_user_id
  ORDER BY vi2.external_account_number
 ", take: 1);
             traceSource.TraceEvent(TraceEventType.Information, 0, $"VoucherItem2sQueryTest()\r\n    ElapsedTime={s.Elapsed}");
+        }
+
+        [TestMethod]
+        public void QueryVoucherItemFundsTest()
+        {
+            var s = Stopwatch.StartNew();
+            folioDapperContext.VoucherItemFunds(take: 1).ToArray();
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"VoucherItemFundsTest()\r\n    ElapsedTime={s.Elapsed}");
+        }
+
+        [TestMethod]
+        public void VoucherItemFundsQueryTest()
+        {
+            var s = Stopwatch.StartNew();
+            folioDapperContext.Query(@"
+SELECT
+vi.external_account_number AS ""VoucherItem"",
+vif.voucher_item_id AS ""VoucherItemId"",
+vif.code AS ""FundCode"",
+e2.amount AS ""Encumbrance"",
+vif.encumbrance_id AS ""EncumbranceId"",
+f.name AS ""Fund"",
+vif.fund_id AS ""FundId"",
+ii.invoice_line_number AS ""InvoiceItem"",
+vif.invoice_item_id AS ""InvoiceItemId"",
+vif.distribution_type AS ""DistributionType"",
+ec.name AS ""ExpenseClass"",
+vif.expense_class_id AS ""ExpenseClassId"",
+vif.value AS ""Value"" 
+FROM uc.voucher_item_fund_distributions AS vif
+LEFT JOIN uc.voucher_items AS vi ON vi.id = vif.voucher_item_id
+LEFT JOIN uc.transactions AS e2 ON e2.id = vif.encumbrance_id
+LEFT JOIN uc.funds AS f ON f.id = vif.fund_id
+LEFT JOIN uc.invoice_items AS ii ON ii.id = vif.invoice_item_id
+LEFT JOIN uc.expense_classes AS ec ON ec.id = vif.expense_class_id
+ ORDER BY vif.id
+", take: 1);
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"VoucherItemFundsQueryTest()\r\n    ElapsedTime={s.Elapsed}");
+        }
+
+        [TestMethod]
+        public void QueryVoucherItemInvoiceItemsTest()
+        {
+            var s = Stopwatch.StartNew();
+            folioDapperContext.VoucherItemInvoiceItems(take: 1).ToArray();
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"VoucherItemInvoiceItemsTest()\r\n    ElapsedTime={s.Elapsed}");
+        }
+
+        [TestMethod]
+        public void VoucherItemInvoiceItemsQueryTest()
+        {
+            var s = Stopwatch.StartNew();
+            folioDapperContext.Query(@"
+SELECT
+vi.external_account_number AS ""VoucherItem"",
+viii.voucher_item_id AS ""VoucherItemId"",
+ii.invoice_line_number AS ""InvoiceItem"",
+viii.invoice_item_id AS ""InvoiceItemId"" 
+FROM uc.voucher_item_invoice_items AS viii
+LEFT JOIN uc.voucher_items AS vi ON vi.id = viii.voucher_item_id
+LEFT JOIN uc.invoice_items AS ii ON ii.id = viii.invoice_item_id
+ ORDER BY viii.id
+", take: 1);
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"VoucherItemInvoiceItemsQueryTest()\r\n    ElapsedTime={s.Elapsed}");
         }
 
         [TestMethod]

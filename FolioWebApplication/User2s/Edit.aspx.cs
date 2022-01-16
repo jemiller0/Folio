@@ -642,6 +642,28 @@ namespace FolioWebApplication.User2s
             }
         }
 
+        protected void UserAddressesRadGrid_NeedDataSource(object sender, GridNeedDataSourceEventArgs e)
+        {
+            if (Session["UserAddressesPermission"] == null) return;
+            var id = (Guid?)User2FormView.DataKey.Value;
+            if (id == null) return;
+            var l = folioServiceContext.FindUser2(id).UserAddresses ?? new UserAddress[] { };
+            UserAddressesRadGrid.DataSource = l;
+            UserAddressesRadGrid.AllowFilteringByColumn = l.Count() > 10;
+            UserAddressesPanel.Visible = User2FormView.DataKey.Value != null && ((string)Session["UserAddressesPermission"] == "Edit" || Session["UserAddressesPermission"] != null && l.Any());
+        }
+
+        protected void UserDepartmentsRadGrid_NeedDataSource(object sender, GridNeedDataSourceEventArgs e)
+        {
+            if (Session["UserDepartmentsPermission"] == null) return;
+            var id = (Guid?)User2FormView.DataKey.Value;
+            if (id == null) return;
+            var l = folioServiceContext.FindUser2(id).UserDepartments ?? new UserDepartment[] { };
+            UserDepartmentsRadGrid.DataSource = l;
+            UserDepartmentsRadGrid.AllowFilteringByColumn = l.Count() > 10;
+            UserDepartmentsPanel.Visible = User2FormView.DataKey.Value != null && ((string)Session["UserDepartmentsPermission"] == "Edit" || Session["UserDepartmentsPermission"] != null && l.Any());
+        }
+
         protected void UserRequestPreference2s2RadGrid_NeedDataSource(object sender, GridNeedDataSourceEventArgs e)
         {
             if (Session["UserRequestPreference2sPermission"] == null) return;
@@ -655,6 +677,17 @@ namespace FolioWebApplication.User2s
                 UserRequestPreference2s2RadGrid.AllowFilteringByColumn = UserRequestPreference2s2RadGrid.VirtualItemCount > 10;
                 UserRequestPreference2s2Panel.Visible = User2FormView.DataKey.Value != null && Session["UserRequestPreference2sPermission"] != null && UserRequestPreference2s2RadGrid.VirtualItemCount > 0;
             }
+        }
+
+        protected void UserTagsRadGrid_NeedDataSource(object sender, GridNeedDataSourceEventArgs e)
+        {
+            if (Session["UserTagsPermission"] == null) return;
+            var id = (Guid?)User2FormView.DataKey.Value;
+            if (id == null) return;
+            var l = folioServiceContext.FindUser2(id).UserTags ?? new UserTag[] { };
+            UserTagsRadGrid.DataSource = l;
+            UserTagsRadGrid.AllowFilteringByColumn = l.Count() > 10;
+            UserTagsPanel.Visible = User2FormView.DataKey.Value != null && ((string)Session["UserTagsPermission"] == "Edit" || Session["UserTagsPermission"] != null && l.Any());
         }
 
         public override void Dispose()

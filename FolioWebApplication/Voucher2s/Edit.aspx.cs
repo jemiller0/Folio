@@ -4,6 +4,7 @@ using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Linq;
 using Telerik.Web.UI;
 
 namespace FolioWebApplication.Voucher2s
@@ -31,6 +32,17 @@ namespace FolioWebApplication.Voucher2s
             v2.Content = v2.Content != null ? JsonConvert.DeserializeObject<JToken>(v2.Content, new JsonSerializerSettings { DateTimeZoneHandling = DateTimeZoneHandling.Local }).ToString() : null;
             Voucher2FormView.DataSource = new[] { v2 };
             Title = $"Voucher {v2.Number}";
+        }
+
+        protected void VoucherAcquisitionsUnitsRadGrid_NeedDataSource(object sender, GridNeedDataSourceEventArgs e)
+        {
+            if (Session["VoucherAcquisitionsUnitsPermission"] == null) return;
+            var id = (Guid?)Voucher2FormView.DataKey.Value;
+            if (id == null) return;
+            var l = folioServiceContext.FindVoucher2(id).VoucherAcquisitionsUnits ?? new VoucherAcquisitionsUnit[] { };
+            VoucherAcquisitionsUnitsRadGrid.DataSource = l;
+            VoucherAcquisitionsUnitsRadGrid.AllowFilteringByColumn = l.Count() > 10;
+            VoucherAcquisitionsUnitsPanel.Visible = Voucher2FormView.DataKey.Value != null && ((string)Session["VoucherAcquisitionsUnitsPermission"] == "Edit" || Session["VoucherAcquisitionsUnitsPermission"] != null && l.Any());
         }
 
         protected void VoucherItem2sRadGrid_NeedDataSource(object sender, GridNeedDataSourceEventArgs e)

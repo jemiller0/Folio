@@ -4,6 +4,7 @@ using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Linq;
 using Telerik.Web.UI;
 
 namespace FolioWebApplication.PermissionsUser2s
@@ -31,6 +32,17 @@ namespace FolioWebApplication.PermissionsUser2s
             pu2.Content = pu2.Content != null ? JsonConvert.DeserializeObject<JToken>(pu2.Content, new JsonSerializerSettings { DateTimeZoneHandling = DateTimeZoneHandling.Local }).ToString() : null;
             PermissionsUser2FormView.DataSource = new[] { pu2 };
             Title = $"Permissions User {pu2.Id}";
+        }
+
+        protected void PermissionsUserPermissionsRadGrid_NeedDataSource(object sender, GridNeedDataSourceEventArgs e)
+        {
+            if (Session["PermissionsUserPermissionsPermission"] == null) return;
+            var id = (Guid?)PermissionsUser2FormView.DataKey.Value;
+            if (id == null) return;
+            var l = folioServiceContext.FindPermissionsUser2(id).PermissionsUserPermissions ?? new PermissionsUserPermission[] { };
+            PermissionsUserPermissionsRadGrid.DataSource = l;
+            PermissionsUserPermissionsRadGrid.AllowFilteringByColumn = l.Count() > 10;
+            PermissionsUserPermissionsPanel.Visible = PermissionsUser2FormView.DataKey.Value != null && ((string)Session["PermissionsUserPermissionsPermission"] == "Edit" || Session["PermissionsUserPermissionsPermission"] != null && l.Any());
         }
 
         public override void Dispose()

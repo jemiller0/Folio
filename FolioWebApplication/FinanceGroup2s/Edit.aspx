@@ -135,11 +135,38 @@
             </telerik:RadGrid>
         </fieldset>
     </asp:Panel>
+    <asp:Panel ID="FinanceGroupAcquisitionsUnitsPanel" runat="server" Visible='<%# (string)Session["FinanceGroupAcquisitionsUnitsPermission"] != null && FinanceGroup2FormView.DataKey.Value != null %>'>
+        <fieldset>
+            <legend>
+                <asp:HyperLink ID="FinanceGroupAcquisitionsUnitsHyperLink" runat="server" Text="Finance Group Acquisitions Units" NavigateUrl="~/FinanceGroupAcquisitionsUnits/Default.aspx" /></legend>
+            <telerik:RadGrid ID="FinanceGroupAcquisitionsUnitsRadGrid" runat="server" AutoGenerateColumns="false" AllowSorting="true" AllowFilteringByColumn="false" GroupingSettings-CaseSensitive="false" AllowPaging="true" PageSize="10" EnableLinqExpressions="false" OnNeedDataSource="FinanceGroupAcquisitionsUnitsRadGrid_NeedDataSource">
+                <MasterTableView DataKeyNames="Id" PagerStyle-Mode="NextPrevNumericAndAdvanced" NoMasterRecordsText="No finance group acquisitions units found">
+                    <Columns>
+                        <telerik:GridTemplateColumn AllowFiltering="false" ItemStyle-Width="0px">
+                            <ItemTemplate>
+                                <asp:HyperLink ID="ViewHyperLink" Text="View" NavigateUrl='<%# $"~/FinanceGroupAcquisitionsUnits/Edit.aspx?Id={Eval("Id")}" %>' runat="server" />
+                            </ItemTemplate>
+                        </telerik:GridTemplateColumn>
+                        <telerik:GridTemplateColumn AllowFiltering="false" AllowSorting="false" HeaderText="Acquisitions Unit" DataField="AcquisitionsUnit.Name" SortExpression="AcquisitionsUnit.Name" AutoPostBackOnFilter="true" CurrentFilterFunction="StartsWith">
+                            <ItemTemplate>
+                                <asp:HyperLink ID="AcquisitionsUnitHyperLink" runat="server" Text='<%#: Eval("AcquisitionsUnit.Name") %>' NavigateUrl='<%# $"~/AcquisitionsUnit2s/Edit.aspx?Id={Eval("AcquisitionsUnitId")}" %>' Enabled='<%# Session["AcquisitionsUnit2sPermission"] != null %>' />
+                            </ItemTemplate>
+                        </telerik:GridTemplateColumn>
+                    </Columns>
+                </MasterTableView>
+            </telerik:RadGrid>
+        </fieldset>
+    </asp:Panel>
     <telerik:RadAjaxManager ID="RadAjaxManager1" runat="server">
         <AjaxSettings>
             <telerik:AjaxSetting AjaxControlID="BudgetGroup2sRadGrid">
                 <UpdatedControls>
                     <telerik:AjaxUpdatedControl ControlID="BudgetGroup2sPanel" LoadingPanelID="RadAjaxLoadingPanel1" />
+                </UpdatedControls>
+            </telerik:AjaxSetting>
+            <telerik:AjaxSetting AjaxControlID="FinanceGroupAcquisitionsUnitsRadGrid">
+                <UpdatedControls>
+                    <telerik:AjaxUpdatedControl ControlID="FinanceGroupAcquisitionsUnitsPanel" LoadingPanelID="RadAjaxLoadingPanel1" />
                 </UpdatedControls>
             </telerik:AjaxSetting>
         </AjaxSettings>

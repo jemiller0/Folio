@@ -327,6 +327,28 @@
             </telerik:RadGrid>
         </fieldset>
     </asp:Panel>
+    <asp:Panel ID="FiscalYearAcquisitionsUnitsPanel" runat="server" Visible='<%# (string)Session["FiscalYearAcquisitionsUnitsPermission"] != null && FiscalYear2FormView.DataKey.Value != null %>'>
+        <fieldset>
+            <legend>
+                <asp:HyperLink ID="FiscalYearAcquisitionsUnitsHyperLink" runat="server" Text="Fiscal Year Acquisitions Units" NavigateUrl="~/FiscalYearAcquisitionsUnits/Default.aspx" /></legend>
+            <telerik:RadGrid ID="FiscalYearAcquisitionsUnitsRadGrid" runat="server" AutoGenerateColumns="false" AllowSorting="true" AllowFilteringByColumn="false" GroupingSettings-CaseSensitive="false" AllowPaging="true" PageSize="10" EnableLinqExpressions="false" OnNeedDataSource="FiscalYearAcquisitionsUnitsRadGrid_NeedDataSource">
+                <MasterTableView DataKeyNames="Id" PagerStyle-Mode="NextPrevNumericAndAdvanced" NoMasterRecordsText="No fiscal year acquisitions units found">
+                    <Columns>
+                        <telerik:GridTemplateColumn AllowFiltering="false" ItemStyle-Width="0px">
+                            <ItemTemplate>
+                                <asp:HyperLink ID="ViewHyperLink" Text="View" NavigateUrl='<%# $"~/FiscalYearAcquisitionsUnits/Edit.aspx?Id={Eval("Id")}" %>' runat="server" />
+                            </ItemTemplate>
+                        </telerik:GridTemplateColumn>
+                        <telerik:GridTemplateColumn AllowFiltering="false" AllowSorting="false" HeaderText="Acquisitions Unit" DataField="AcquisitionsUnit.Name" SortExpression="AcquisitionsUnit.Name" AutoPostBackOnFilter="true" CurrentFilterFunction="StartsWith">
+                            <ItemTemplate>
+                                <asp:HyperLink ID="AcquisitionsUnitHyperLink" runat="server" Text='<%#: Eval("AcquisitionsUnit.Name") %>' NavigateUrl='<%# $"~/AcquisitionsUnit2s/Edit.aspx?Id={Eval("AcquisitionsUnitId")}" %>' Enabled='<%# Session["AcquisitionsUnit2sPermission"] != null %>' />
+                            </ItemTemplate>
+                        </telerik:GridTemplateColumn>
+                    </Columns>
+                </MasterTableView>
+            </telerik:RadGrid>
+        </fieldset>
+    </asp:Panel>
     <asp:Panel ID="Ledger2sPanel" runat="server" Visible='<%# (string)Session["Ledger2sPermission"] != null && FiscalYear2FormView.DataKey.Value != null %>'>
         <fieldset>
             <legend>
@@ -713,6 +735,11 @@
             <telerik:AjaxSetting AjaxControlID="BudgetGroup2sRadGrid">
                 <UpdatedControls>
                     <telerik:AjaxUpdatedControl ControlID="BudgetGroup2sPanel" LoadingPanelID="RadAjaxLoadingPanel1" />
+                </UpdatedControls>
+            </telerik:AjaxSetting>
+            <telerik:AjaxSetting AjaxControlID="FiscalYearAcquisitionsUnitsRadGrid">
+                <UpdatedControls>
+                    <telerik:AjaxUpdatedControl ControlID="FiscalYearAcquisitionsUnitsPanel" LoadingPanelID="RadAjaxLoadingPanel1" />
                 </UpdatedControls>
             </telerik:AjaxSetting>
             <telerik:AjaxSetting AjaxControlID="Ledger2sRadGrid">

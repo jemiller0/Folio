@@ -4,6 +4,7 @@ using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Linq;
 using Telerik.Web.UI;
 
 namespace FolioWebApplication.BatchVoucherExportConfig2s
@@ -31,6 +32,17 @@ namespace FolioWebApplication.BatchVoucherExportConfig2s
             bvec2.Content = bvec2.Content != null ? JsonConvert.DeserializeObject<JToken>(bvec2.Content, new JsonSerializerSettings { DateTimeZoneHandling = DateTimeZoneHandling.Local }).ToString() : null;
             BatchVoucherExportConfig2FormView.DataSource = new[] { bvec2 };
             Title = $"Batch Voucher Export Config {bvec2.Id}";
+        }
+
+        protected void BatchVoucherExportConfigWeekdaysRadGrid_NeedDataSource(object sender, GridNeedDataSourceEventArgs e)
+        {
+            if (Session["BatchVoucherExportConfigWeekdaysPermission"] == null) return;
+            var id = (Guid?)BatchVoucherExportConfig2FormView.DataKey.Value;
+            if (id == null) return;
+            var l = folioServiceContext.FindBatchVoucherExportConfig2(id).BatchVoucherExportConfigWeekdays ?? new BatchVoucherExportConfigWeekday[] { };
+            BatchVoucherExportConfigWeekdaysRadGrid.DataSource = l;
+            BatchVoucherExportConfigWeekdaysRadGrid.AllowFilteringByColumn = l.Count() > 10;
+            BatchVoucherExportConfigWeekdaysPanel.Visible = BatchVoucherExportConfig2FormView.DataKey.Value != null && ((string)Session["BatchVoucherExportConfigWeekdaysPermission"] == "Edit" || Session["BatchVoucherExportConfigWeekdaysPermission"] != null && l.Any());
         }
 
         public override void Dispose()

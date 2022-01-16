@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Diagnostics;
+using System.Linq;
 using System.Web.UI.WebControls;
 using Telerik.Web.UI;
 
@@ -81,6 +82,50 @@ namespace FolioWebApplication.Permission2s
                 var cv = (CustomValidator)((FormView)sender).FindControl("DeleteCustomValidator");
                 cv.IsValid = false;
             }
+        }
+
+        protected void PermissionChildOfsRadGrid_NeedDataSource(object sender, GridNeedDataSourceEventArgs e)
+        {
+            if (Session["PermissionChildOfsPermission"] == null) return;
+            var id = (Guid?)Permission2FormView.DataKey.Value;
+            if (id == null) return;
+            var l = folioServiceContext.FindPermission2(id).PermissionChildOfs ?? new PermissionChildOf[] { };
+            PermissionChildOfsRadGrid.DataSource = l;
+            PermissionChildOfsRadGrid.AllowFilteringByColumn = l.Count() > 10;
+            PermissionChildOfsPanel.Visible = Permission2FormView.DataKey.Value != null && ((string)Session["PermissionChildOfsPermission"] == "Edit" || Session["PermissionChildOfsPermission"] != null && l.Any());
+        }
+
+        protected void PermissionGrantedTosRadGrid_NeedDataSource(object sender, GridNeedDataSourceEventArgs e)
+        {
+            if (Session["PermissionGrantedTosPermission"] == null) return;
+            var id = (Guid?)Permission2FormView.DataKey.Value;
+            if (id == null) return;
+            var l = folioServiceContext.FindPermission2(id).PermissionGrantedTos ?? new PermissionGrantedTo[] { };
+            PermissionGrantedTosRadGrid.DataSource = l;
+            PermissionGrantedTosRadGrid.AllowFilteringByColumn = l.Count() > 10;
+            PermissionGrantedTosPanel.Visible = Permission2FormView.DataKey.Value != null && ((string)Session["PermissionGrantedTosPermission"] == "Edit" || Session["PermissionGrantedTosPermission"] != null && l.Any());
+        }
+
+        protected void PermissionSubPermissionsRadGrid_NeedDataSource(object sender, GridNeedDataSourceEventArgs e)
+        {
+            if (Session["PermissionSubPermissionsPermission"] == null) return;
+            var id = (Guid?)Permission2FormView.DataKey.Value;
+            if (id == null) return;
+            var l = folioServiceContext.FindPermission2(id).PermissionSubPermissions ?? new PermissionSubPermission[] { };
+            PermissionSubPermissionsRadGrid.DataSource = l;
+            PermissionSubPermissionsRadGrid.AllowFilteringByColumn = l.Count() > 10;
+            PermissionSubPermissionsPanel.Visible = Permission2FormView.DataKey.Value != null && ((string)Session["PermissionSubPermissionsPermission"] == "Edit" || Session["PermissionSubPermissionsPermission"] != null && l.Any());
+        }
+
+        protected void PermissionTagsRadGrid_NeedDataSource(object sender, GridNeedDataSourceEventArgs e)
+        {
+            if (Session["PermissionTagsPermission"] == null) return;
+            var id = (Guid?)Permission2FormView.DataKey.Value;
+            if (id == null) return;
+            var l = folioServiceContext.FindPermission2(id).PermissionTags ?? new PermissionTag[] { };
+            PermissionTagsRadGrid.DataSource = l;
+            PermissionTagsRadGrid.AllowFilteringByColumn = l.Count() > 10;
+            PermissionTagsPanel.Visible = Permission2FormView.DataKey.Value != null && ((string)Session["PermissionTagsPermission"] == "Edit" || Session["PermissionTagsPermission"] != null && l.Any());
         }
 
         public override void Dispose()

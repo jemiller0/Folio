@@ -88,7 +88,7 @@ namespace FolioWebApplication
                 //ImpersonateUser("dbottorff");
                 //ImpersonateUser("lar1");
                 //ImpersonateUser("stp0");
-                ImpersonateUser("gatt");
+                //ImpersonateUser("gatt");
                 //ImpersonateUser("mantrone");
 
                 traceSource.TraceEvent(TraceEventType.Verbose, 0, $"{Request.Url}\n    UserName={User?.Identity?.Name}\n    LocalDateTime={DateTime.Now:G}");

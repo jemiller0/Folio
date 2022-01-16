@@ -87,4 +87,134 @@
             </asp:FormView>
         </fieldset>
     </asp:Panel>
+    <asp:Panel ID="PatronNoticePolicyFeeFineNoticesPanel" runat="server" Visible='<%# (string)Session["PatronNoticePolicyFeeFineNoticesPermission"] != null && PatronNoticePolicy2FormView.DataKey.Value != null %>'>
+        <fieldset>
+            <legend>
+                <asp:HyperLink ID="PatronNoticePolicyFeeFineNoticesHyperLink" runat="server" Text="Patron Notice Policy Fee Fine Notices" NavigateUrl="~/PatronNoticePolicyFeeFineNotices/Default.aspx" /></legend>
+            <telerik:RadGrid ID="PatronNoticePolicyFeeFineNoticesRadGrid" runat="server" AutoGenerateColumns="false" AllowSorting="true" AllowFilteringByColumn="false" GroupingSettings-CaseSensitive="false" AllowPaging="true" PageSize="10" EnableLinqExpressions="false" OnNeedDataSource="PatronNoticePolicyFeeFineNoticesRadGrid_NeedDataSource">
+                <MasterTableView DataKeyNames="Id" PagerStyle-Mode="NextPrevNumericAndAdvanced" NoMasterRecordsText="No patron notice policy fee fine notices found">
+                    <Columns>
+                        <telerik:GridTemplateColumn AllowFiltering="false" ItemStyle-Width="0px">
+                            <ItemTemplate>
+                                <asp:HyperLink ID="ViewHyperLink" Text="View" NavigateUrl='<%# $"~/PatronNoticePolicyFeeFineNotices/Edit.aspx?Id={Eval("Id")}" %>' runat="server" />
+                            </ItemTemplate>
+                        </telerik:GridTemplateColumn>
+                        <telerik:GridTemplateColumn HeaderText="Name" DataField="Name" SortExpression="Name" AutoPostBackOnFilter="true" CurrentFilterFunction="StartsWith">
+                            <ItemTemplate>
+                                <asp:HyperLink ID="NameHyperLink" runat="server" Text='<%#: Eval("Name") ?? "&nbsp;" %>' NavigateUrl='<%# $"~/PatronNoticePolicyFeeFineNotices/Edit.aspx?Id={Eval("Id")}" %>' />
+                            </ItemTemplate>
+                        </telerik:GridTemplateColumn>
+                        <telerik:GridTemplateColumn AllowFiltering="false" AllowSorting="false" HeaderText="Template" DataField="Template.Name" SortExpression="Template.Name" AutoPostBackOnFilter="true" CurrentFilterFunction="StartsWith">
+                            <ItemTemplate>
+                                <asp:HyperLink ID="TemplateHyperLink" runat="server" Text='<%#: Eval("TemplateId") != null ? Eval("Template.Name") ?? "&nbsp;" : "" %>' NavigateUrl='<%# $"~/Template2s/Edit.aspx?Id={Eval("TemplateId")}" %>' Enabled='<%# Session["Template2sPermission"] != null %>' />
+                            </ItemTemplate>
+                        </telerik:GridTemplateColumn>
+                        <telerik:GridBoundColumn HeaderText="Template Name" DataField="TemplateName" AutoPostBackOnFilter="true" HtmlEncode="true" CurrentFilterFunction="StartsWith" />
+                        <telerik:GridBoundColumn HeaderText="Format" DataField="Format" AutoPostBackOnFilter="true" HtmlEncode="true" CurrentFilterFunction="StartsWith" />
+                        <telerik:GridBoundColumn HeaderText="Frequency" DataField="Frequency" AutoPostBackOnFilter="true" HtmlEncode="true" CurrentFilterFunction="StartsWith" />
+                        <telerik:GridBoundColumn HeaderText="Real Time" DataField="RealTime" AutoPostBackOnFilter="true" />
+                        <telerik:GridBoundColumn HeaderText="Send Options Send How" DataField="SendOptionsSendHow" AutoPostBackOnFilter="true" HtmlEncode="true" CurrentFilterFunction="StartsWith" />
+                        <telerik:GridBoundColumn HeaderText="Send Options Send When" DataField="SendOptionsSendWhen" AutoPostBackOnFilter="true" HtmlEncode="true" CurrentFilterFunction="StartsWith" />
+                        <telerik:GridBoundColumn HeaderText="Send Options Send By Duration" DataField="SendOptionsSendByDuration" AutoPostBackOnFilter="true" />
+                        <telerik:GridBoundColumn HeaderText="Send Options Send By Interval" DataField="SendOptionsSendByInterval" AutoPostBackOnFilter="true" HtmlEncode="true" CurrentFilterFunction="StartsWith" />
+                        <telerik:GridBoundColumn HeaderText="Send Options Send Every Duration" DataField="SendOptionsSendEveryDuration" AutoPostBackOnFilter="true" />
+                        <telerik:GridBoundColumn HeaderText="Send Options Send Every Interval" DataField="SendOptionsSendEveryInterval" AutoPostBackOnFilter="true" HtmlEncode="true" CurrentFilterFunction="StartsWith" />
+                    </Columns>
+                </MasterTableView>
+            </telerik:RadGrid>
+        </fieldset>
+    </asp:Panel>
+    <asp:Panel ID="PatronNoticePolicyLoanNoticesPanel" runat="server" Visible='<%# (string)Session["PatronNoticePolicyLoanNoticesPermission"] != null && PatronNoticePolicy2FormView.DataKey.Value != null %>'>
+        <fieldset>
+            <legend>
+                <asp:HyperLink ID="PatronNoticePolicyLoanNoticesHyperLink" runat="server" Text="Patron Notice Policy Loan Notices" NavigateUrl="~/PatronNoticePolicyLoanNotices/Default.aspx" /></legend>
+            <telerik:RadGrid ID="PatronNoticePolicyLoanNoticesRadGrid" runat="server" AutoGenerateColumns="false" AllowSorting="true" AllowFilteringByColumn="false" GroupingSettings-CaseSensitive="false" AllowPaging="true" PageSize="10" EnableLinqExpressions="false" OnNeedDataSource="PatronNoticePolicyLoanNoticesRadGrid_NeedDataSource">
+                <MasterTableView DataKeyNames="Id" PagerStyle-Mode="NextPrevNumericAndAdvanced" NoMasterRecordsText="No patron notice policy loan notices found">
+                    <Columns>
+                        <telerik:GridTemplateColumn AllowFiltering="false" ItemStyle-Width="0px">
+                            <ItemTemplate>
+                                <asp:HyperLink ID="ViewHyperLink" Text="View" NavigateUrl='<%# $"~/PatronNoticePolicyLoanNotices/Edit.aspx?Id={Eval("Id")}" %>' runat="server" />
+                            </ItemTemplate>
+                        </telerik:GridTemplateColumn>
+                        <telerik:GridTemplateColumn HeaderText="Name" DataField="Name" SortExpression="Name" AutoPostBackOnFilter="true" CurrentFilterFunction="StartsWith">
+                            <ItemTemplate>
+                                <asp:HyperLink ID="NameHyperLink" runat="server" Text='<%#: Eval("Name") ?? "&nbsp;" %>' NavigateUrl='<%# $"~/PatronNoticePolicyLoanNotices/Edit.aspx?Id={Eval("Id")}" %>' />
+                            </ItemTemplate>
+                        </telerik:GridTemplateColumn>
+                        <telerik:GridTemplateColumn AllowFiltering="false" AllowSorting="false" HeaderText="Template" DataField="Template.Name" SortExpression="Template.Name" AutoPostBackOnFilter="true" CurrentFilterFunction="StartsWith">
+                            <ItemTemplate>
+                                <asp:HyperLink ID="TemplateHyperLink" runat="server" Text='<%#: Eval("TemplateId") != null ? Eval("Template.Name") ?? "&nbsp;" : "" %>' NavigateUrl='<%# $"~/Template2s/Edit.aspx?Id={Eval("TemplateId")}" %>' Enabled='<%# Session["Template2sPermission"] != null %>' />
+                            </ItemTemplate>
+                        </telerik:GridTemplateColumn>
+                        <telerik:GridBoundColumn HeaderText="Template Name" DataField="TemplateName" AutoPostBackOnFilter="true" HtmlEncode="true" CurrentFilterFunction="StartsWith" />
+                        <telerik:GridBoundColumn HeaderText="Format" DataField="Format" AutoPostBackOnFilter="true" HtmlEncode="true" CurrentFilterFunction="StartsWith" />
+                        <telerik:GridBoundColumn HeaderText="Frequency" DataField="Frequency" AutoPostBackOnFilter="true" HtmlEncode="true" CurrentFilterFunction="StartsWith" />
+                        <telerik:GridBoundColumn HeaderText="Real Time" DataField="RealTime" AutoPostBackOnFilter="true" />
+                        <telerik:GridBoundColumn HeaderText="Send Options Send How" DataField="SendOptionsSendHow" AutoPostBackOnFilter="true" HtmlEncode="true" CurrentFilterFunction="StartsWith" />
+                        <telerik:GridBoundColumn HeaderText="Send Options Send When" DataField="SendOptionsSendWhen" AutoPostBackOnFilter="true" HtmlEncode="true" CurrentFilterFunction="StartsWith" />
+                        <telerik:GridBoundColumn HeaderText="Send Options Send By Duration" DataField="SendOptionsSendByDuration" AutoPostBackOnFilter="true" />
+                        <telerik:GridBoundColumn HeaderText="Send Options Send By Interval" DataField="SendOptionsSendByInterval" AutoPostBackOnFilter="true" HtmlEncode="true" CurrentFilterFunction="StartsWith" />
+                        <telerik:GridBoundColumn HeaderText="Send Options Send Every Duration" DataField="SendOptionsSendEveryDuration" AutoPostBackOnFilter="true" />
+                        <telerik:GridBoundColumn HeaderText="Send Options Send Every Interval" DataField="SendOptionsSendEveryInterval" AutoPostBackOnFilter="true" HtmlEncode="true" CurrentFilterFunction="StartsWith" />
+                    </Columns>
+                </MasterTableView>
+            </telerik:RadGrid>
+        </fieldset>
+    </asp:Panel>
+    <asp:Panel ID="PatronNoticePolicyRequestNoticesPanel" runat="server" Visible='<%# (string)Session["PatronNoticePolicyRequestNoticesPermission"] != null && PatronNoticePolicy2FormView.DataKey.Value != null %>'>
+        <fieldset>
+            <legend>
+                <asp:HyperLink ID="PatronNoticePolicyRequestNoticesHyperLink" runat="server" Text="Patron Notice Policy Request Notices" NavigateUrl="~/PatronNoticePolicyRequestNotices/Default.aspx" /></legend>
+            <telerik:RadGrid ID="PatronNoticePolicyRequestNoticesRadGrid" runat="server" AutoGenerateColumns="false" AllowSorting="true" AllowFilteringByColumn="false" GroupingSettings-CaseSensitive="false" AllowPaging="true" PageSize="10" EnableLinqExpressions="false" OnNeedDataSource="PatronNoticePolicyRequestNoticesRadGrid_NeedDataSource">
+                <MasterTableView DataKeyNames="Id" PagerStyle-Mode="NextPrevNumericAndAdvanced" NoMasterRecordsText="No patron notice policy request notices found">
+                    <Columns>
+                        <telerik:GridTemplateColumn AllowFiltering="false" ItemStyle-Width="0px">
+                            <ItemTemplate>
+                                <asp:HyperLink ID="ViewHyperLink" Text="View" NavigateUrl='<%# $"~/PatronNoticePolicyRequestNotices/Edit.aspx?Id={Eval("Id")}" %>' runat="server" />
+                            </ItemTemplate>
+                        </telerik:GridTemplateColumn>
+                        <telerik:GridTemplateColumn HeaderText="Name" DataField="Name" SortExpression="Name" AutoPostBackOnFilter="true" CurrentFilterFunction="StartsWith">
+                            <ItemTemplate>
+                                <asp:HyperLink ID="NameHyperLink" runat="server" Text='<%#: Eval("Name") ?? "&nbsp;" %>' NavigateUrl='<%# $"~/PatronNoticePolicyRequestNotices/Edit.aspx?Id={Eval("Id")}" %>' />
+                            </ItemTemplate>
+                        </telerik:GridTemplateColumn>
+                        <telerik:GridTemplateColumn AllowFiltering="false" AllowSorting="false" HeaderText="Template" DataField="Template.Name" SortExpression="Template.Name" AutoPostBackOnFilter="true" CurrentFilterFunction="StartsWith">
+                            <ItemTemplate>
+                                <asp:HyperLink ID="TemplateHyperLink" runat="server" Text='<%#: Eval("TemplateId") != null ? Eval("Template.Name") ?? "&nbsp;" : "" %>' NavigateUrl='<%# $"~/Template2s/Edit.aspx?Id={Eval("TemplateId")}" %>' Enabled='<%# Session["Template2sPermission"] != null %>' />
+                            </ItemTemplate>
+                        </telerik:GridTemplateColumn>
+                        <telerik:GridBoundColumn HeaderText="Template Name" DataField="TemplateName" AutoPostBackOnFilter="true" HtmlEncode="true" CurrentFilterFunction="StartsWith" />
+                        <telerik:GridBoundColumn HeaderText="Format" DataField="Format" AutoPostBackOnFilter="true" HtmlEncode="true" CurrentFilterFunction="StartsWith" />
+                        <telerik:GridBoundColumn HeaderText="Frequency" DataField="Frequency" AutoPostBackOnFilter="true" HtmlEncode="true" CurrentFilterFunction="StartsWith" />
+                        <telerik:GridBoundColumn HeaderText="Real Time" DataField="RealTime" AutoPostBackOnFilter="true" />
+                        <telerik:GridBoundColumn HeaderText="Send Options Send How" DataField="SendOptionsSendHow" AutoPostBackOnFilter="true" HtmlEncode="true" CurrentFilterFunction="StartsWith" />
+                        <telerik:GridBoundColumn HeaderText="Send Options Send When" DataField="SendOptionsSendWhen" AutoPostBackOnFilter="true" HtmlEncode="true" CurrentFilterFunction="StartsWith" />
+                        <telerik:GridBoundColumn HeaderText="Send Options Send By Duration" DataField="SendOptionsSendByDuration" AutoPostBackOnFilter="true" />
+                        <telerik:GridBoundColumn HeaderText="Send Options Send By Interval" DataField="SendOptionsSendByInterval" AutoPostBackOnFilter="true" HtmlEncode="true" CurrentFilterFunction="StartsWith" />
+                        <telerik:GridBoundColumn HeaderText="Send Options Send Every Duration" DataField="SendOptionsSendEveryDuration" AutoPostBackOnFilter="true" />
+                        <telerik:GridBoundColumn HeaderText="Send Options Send Every Interval" DataField="SendOptionsSendEveryInterval" AutoPostBackOnFilter="true" HtmlEncode="true" CurrentFilterFunction="StartsWith" />
+                    </Columns>
+                </MasterTableView>
+            </telerik:RadGrid>
+        </fieldset>
+    </asp:Panel>
+    <telerik:RadAjaxManager ID="RadAjaxManager1" runat="server">
+        <AjaxSettings>
+            <telerik:AjaxSetting AjaxControlID="PatronNoticePolicyFeeFineNoticesRadGrid">
+                <UpdatedControls>
+                    <telerik:AjaxUpdatedControl ControlID="PatronNoticePolicyFeeFineNoticesPanel" LoadingPanelID="RadAjaxLoadingPanel1" />
+                </UpdatedControls>
+            </telerik:AjaxSetting>
+            <telerik:AjaxSetting AjaxControlID="PatronNoticePolicyLoanNoticesRadGrid">
+                <UpdatedControls>
+                    <telerik:AjaxUpdatedControl ControlID="PatronNoticePolicyLoanNoticesPanel" LoadingPanelID="RadAjaxLoadingPanel1" />
+                </UpdatedControls>
+            </telerik:AjaxSetting>
+            <telerik:AjaxSetting AjaxControlID="PatronNoticePolicyRequestNoticesRadGrid">
+                <UpdatedControls>
+                    <telerik:AjaxUpdatedControl ControlID="PatronNoticePolicyRequestNoticesPanel" LoadingPanelID="RadAjaxLoadingPanel1" />
+                </UpdatedControls>
+            </telerik:AjaxSetting>
+        </AjaxSettings>
+    </telerik:RadAjaxManager>
 </asp:Content>

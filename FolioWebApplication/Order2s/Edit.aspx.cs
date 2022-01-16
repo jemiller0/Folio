@@ -4,6 +4,7 @@ using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Linq;
 using Telerik.Web.UI;
 
 namespace FolioWebApplication.Order2s
@@ -31,6 +32,17 @@ namespace FolioWebApplication.Order2s
             o2.Content = o2.Content != null ? JsonConvert.DeserializeObject<JToken>(o2.Content, new JsonSerializerSettings { DateTimeZoneHandling = DateTimeZoneHandling.Local }).ToString() : null;
             Order2FormView.DataSource = new[] { o2 };
             Title = $"Order {o2.Number}";
+        }
+
+        protected void OrderAcquisitionsUnitsRadGrid_NeedDataSource(object sender, GridNeedDataSourceEventArgs e)
+        {
+            if (Session["OrderAcquisitionsUnitsPermission"] == null) return;
+            var id = (Guid?)Order2FormView.DataKey.Value;
+            if (id == null) return;
+            var l = folioServiceContext.FindOrder2(id).OrderAcquisitionsUnits ?? new OrderAcquisitionsUnit[] { };
+            OrderAcquisitionsUnitsRadGrid.DataSource = l;
+            OrderAcquisitionsUnitsRadGrid.AllowFilteringByColumn = l.Count() > 10;
+            OrderAcquisitionsUnitsPanel.Visible = Order2FormView.DataKey.Value != null && ((string)Session["OrderAcquisitionsUnitsPermission"] == "Edit" || Session["OrderAcquisitionsUnitsPermission"] != null && l.Any());
         }
 
         protected void OrderInvoice2sRadGrid_NeedDataSource(object sender, GridNeedDataSourceEventArgs e)
@@ -61,6 +73,28 @@ namespace FolioWebApplication.Order2s
                 OrderItem2sRadGrid.AllowFilteringByColumn = OrderItem2sRadGrid.VirtualItemCount > 10;
                 OrderItem2sPanel.Visible = Order2FormView.DataKey.Value != null && Session["OrderItem2sPermission"] != null && OrderItem2sRadGrid.VirtualItemCount > 0;
             }
+        }
+
+        protected void OrderNotesRadGrid_NeedDataSource(object sender, GridNeedDataSourceEventArgs e)
+        {
+            if (Session["OrderNotesPermission"] == null) return;
+            var id = (Guid?)Order2FormView.DataKey.Value;
+            if (id == null) return;
+            var l = folioServiceContext.FindOrder2(id).OrderNotes ?? new OrderNote[] { };
+            OrderNotesRadGrid.DataSource = l;
+            OrderNotesRadGrid.AllowFilteringByColumn = l.Count() > 10;
+            OrderNotesPanel.Visible = Order2FormView.DataKey.Value != null && ((string)Session["OrderNotesPermission"] == "Edit" || Session["OrderNotesPermission"] != null && l.Any());
+        }
+
+        protected void OrderTagsRadGrid_NeedDataSource(object sender, GridNeedDataSourceEventArgs e)
+        {
+            if (Session["OrderTagsPermission"] == null) return;
+            var id = (Guid?)Order2FormView.DataKey.Value;
+            if (id == null) return;
+            var l = folioServiceContext.FindOrder2(id).OrderTags ?? new OrderTag[] { };
+            OrderTagsRadGrid.DataSource = l;
+            OrderTagsRadGrid.AllowFilteringByColumn = l.Count() > 10;
+            OrderTagsPanel.Visible = Order2FormView.DataKey.Value != null && ((string)Session["OrderTagsPermission"] == "Edit" || Session["OrderTagsPermission"] != null && l.Any());
         }
 
         protected void Transaction2sRadGrid_NeedDataSource(object sender, GridNeedDataSourceEventArgs e)

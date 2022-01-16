@@ -255,6 +255,28 @@
             </asp:FormView>
         </fieldset>
     </asp:Panel>
+    <asp:Panel ID="VoucherAcquisitionsUnitsPanel" runat="server" Visible='<%# (string)Session["VoucherAcquisitionsUnitsPermission"] != null && Voucher2FormView.DataKey.Value != null %>'>
+        <fieldset>
+            <legend>
+                <asp:HyperLink ID="VoucherAcquisitionsUnitsHyperLink" runat="server" Text="Voucher Acquisitions Units" NavigateUrl="~/VoucherAcquisitionsUnits/Default.aspx" /></legend>
+            <telerik:RadGrid ID="VoucherAcquisitionsUnitsRadGrid" runat="server" AutoGenerateColumns="false" AllowSorting="true" AllowFilteringByColumn="false" GroupingSettings-CaseSensitive="false" AllowPaging="true" PageSize="10" EnableLinqExpressions="false" OnNeedDataSource="VoucherAcquisitionsUnitsRadGrid_NeedDataSource">
+                <MasterTableView DataKeyNames="Id" PagerStyle-Mode="NextPrevNumericAndAdvanced" NoMasterRecordsText="No voucher acquisitions units found">
+                    <Columns>
+                        <telerik:GridTemplateColumn AllowFiltering="false" ItemStyle-Width="0px">
+                            <ItemTemplate>
+                                <asp:HyperLink ID="ViewHyperLink" Text="View" NavigateUrl='<%# $"~/VoucherAcquisitionsUnits/Edit.aspx?Id={Eval("Id")}" %>' runat="server" />
+                            </ItemTemplate>
+                        </telerik:GridTemplateColumn>
+                        <telerik:GridTemplateColumn AllowFiltering="false" AllowSorting="false" HeaderText="Acquisitions Unit" DataField="AcquisitionsUnit.Name" SortExpression="AcquisitionsUnit.Name" AutoPostBackOnFilter="true" CurrentFilterFunction="StartsWith">
+                            <ItemTemplate>
+                                <asp:HyperLink ID="AcquisitionsUnitHyperLink" runat="server" Text='<%#: Eval("AcquisitionsUnit.Name") %>' NavigateUrl='<%# $"~/AcquisitionsUnit2s/Edit.aspx?Id={Eval("AcquisitionsUnitId")}" %>' Enabled='<%# Session["AcquisitionsUnit2sPermission"] != null %>' />
+                            </ItemTemplate>
+                        </telerik:GridTemplateColumn>
+                    </Columns>
+                </MasterTableView>
+            </telerik:RadGrid>
+        </fieldset>
+    </asp:Panel>
     <asp:Panel ID="VoucherItem2sPanel" runat="server" Visible='<%# (string)Session["VoucherItem2sPermission"] != null && Voucher2FormView.DataKey.Value != null %>'>
         <fieldset>
             <legend>
@@ -305,6 +327,11 @@
     </asp:Panel>
     <telerik:RadAjaxManager ID="RadAjaxManager1" runat="server">
         <AjaxSettings>
+            <telerik:AjaxSetting AjaxControlID="VoucherAcquisitionsUnitsRadGrid">
+                <UpdatedControls>
+                    <telerik:AjaxUpdatedControl ControlID="VoucherAcquisitionsUnitsPanel" LoadingPanelID="RadAjaxLoadingPanel1" />
+                </UpdatedControls>
+            </telerik:AjaxSetting>
             <telerik:AjaxSetting AjaxControlID="VoucherItem2sRadGrid">
                 <UpdatedControls>
                     <telerik:AjaxUpdatedControl ControlID="VoucherItem2sPanel" LoadingPanelID="RadAjaxLoadingPanel1" />

@@ -869,6 +869,29 @@
             </telerik:RadGrid>
         </fieldset>
     </asp:Panel>
+    <asp:Panel ID="ServicePointStaffSlipsPanel" runat="server" Visible='<%# (string)Session["ServicePointStaffSlipsPermission"] != null && ServicePoint2FormView.DataKey.Value != null %>'>
+        <fieldset>
+            <legend>
+                <asp:HyperLink ID="ServicePointStaffSlipsHyperLink" runat="server" Text="Service Point Staff Slips" NavigateUrl="~/ServicePointStaffSlips/Default.aspx" /></legend>
+            <telerik:RadGrid ID="ServicePointStaffSlipsRadGrid" runat="server" AutoGenerateColumns="false" AllowSorting="true" AllowFilteringByColumn="false" GroupingSettings-CaseSensitive="false" AllowPaging="true" PageSize="10" EnableLinqExpressions="false" OnNeedDataSource="ServicePointStaffSlipsRadGrid_NeedDataSource">
+                <MasterTableView DataKeyNames="Id" PagerStyle-Mode="NextPrevNumericAndAdvanced" NoMasterRecordsText="No service point staff slips found">
+                    <Columns>
+                        <telerik:GridTemplateColumn AllowFiltering="false" ItemStyle-Width="0px">
+                            <ItemTemplate>
+                                <asp:HyperLink ID="ViewHyperLink" Text="View" NavigateUrl='<%# $"~/ServicePointStaffSlips/Edit.aspx?Id={Eval("Id")}" %>' runat="server" />
+                            </ItemTemplate>
+                        </telerik:GridTemplateColumn>
+                        <telerik:GridTemplateColumn AllowFiltering="false" AllowSorting="false" HeaderText="Staff Slip" DataField="StaffSlip.Name" SortExpression="StaffSlip.Name" AutoPostBackOnFilter="true" CurrentFilterFunction="StartsWith">
+                            <ItemTemplate>
+                                <asp:HyperLink ID="StaffSlipHyperLink" runat="server" Text='<%#: Eval("StaffSlip.Name") %>' NavigateUrl='<%# $"~/StaffSlip2s/Edit.aspx?Id={Eval("StaffSlipId")}" %>' Enabled='<%# Session["StaffSlip2sPermission"] != null %>' />
+                            </ItemTemplate>
+                        </telerik:GridTemplateColumn>
+                        <telerik:GridBoundColumn HeaderText="Print By Default" DataField="PrintByDefault" AutoPostBackOnFilter="true" />
+                    </Columns>
+                </MasterTableView>
+            </telerik:RadGrid>
+        </fieldset>
+    </asp:Panel>
     <asp:Panel ID="UserRequestPreference2sPanel" runat="server" Visible='<%# (string)Session["UserRequestPreference2sPermission"] != null && ServicePoint2FormView.DataKey.Value != null %>'>
         <fieldset>
             <legend>
@@ -964,6 +987,11 @@
             <telerik:AjaxSetting AjaxControlID="Request2sRadGrid">
                 <UpdatedControls>
                     <telerik:AjaxUpdatedControl ControlID="Request2sPanel" LoadingPanelID="RadAjaxLoadingPanel1" />
+                </UpdatedControls>
+            </telerik:AjaxSetting>
+            <telerik:AjaxSetting AjaxControlID="ServicePointStaffSlipsRadGrid">
+                <UpdatedControls>
+                    <telerik:AjaxUpdatedControl ControlID="ServicePointStaffSlipsPanel" LoadingPanelID="RadAjaxLoadingPanel1" />
                 </UpdatedControls>
             </telerik:AjaxSetting>
             <telerik:AjaxSetting AjaxControlID="UserRequestPreference2sRadGrid">

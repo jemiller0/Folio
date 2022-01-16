@@ -154,6 +154,17 @@ namespace FolioWebApplication.Location2s
             }
         }
 
+        protected void LocationServicePointsRadGrid_NeedDataSource(object sender, GridNeedDataSourceEventArgs e)
+        {
+            if (Session["LocationServicePointsPermission"] == null) return;
+            var id = (Guid?)Location2FormView.DataKey.Value;
+            if (id == null) return;
+            var l = folioServiceContext.FindLocation2(id).LocationServicePoints ?? new LocationServicePoint[] { };
+            LocationServicePointsRadGrid.DataSource = l;
+            LocationServicePointsRadGrid.AllowFilteringByColumn = l.Count() > 10;
+            LocationServicePointsPanel.Visible = Location2FormView.DataKey.Value != null && ((string)Session["LocationServicePointsPermission"] == "Edit" || Session["LocationServicePointsPermission"] != null && l.Any());
+        }
+
         protected void LocationSettingsRadGrid_NeedDataSource(object sender, GridNeedDataSourceEventArgs e)
         {
             if (Session["LocationSettingsPermission"] == null) return;

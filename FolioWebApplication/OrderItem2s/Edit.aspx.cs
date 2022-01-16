@@ -4,6 +4,7 @@ using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Linq;
 using Telerik.Web.UI;
 
 namespace FolioWebApplication.OrderItem2s
@@ -76,6 +77,116 @@ namespace FolioWebApplication.OrderItem2s
                 OrderItem2sRadGrid.AllowFilteringByColumn = OrderItem2sRadGrid.VirtualItemCount > 10;
                 OrderItem2sPanel.Visible = OrderItem2FormView.DataKey.Value != null && Session["OrderItem2sPermission"] != null && OrderItem2sRadGrid.VirtualItemCount > 0;
             }
+        }
+
+        protected void OrderItemAlertsRadGrid_NeedDataSource(object sender, GridNeedDataSourceEventArgs e)
+        {
+            if (Session["OrderItemAlertsPermission"] == null) return;
+            var id = (Guid?)OrderItem2FormView.DataKey.Value;
+            if (id == null) return;
+            var l = folioServiceContext.FindOrderItem2(id).OrderItemAlerts ?? new OrderItemAlert[] { };
+            OrderItemAlertsRadGrid.DataSource = l;
+            OrderItemAlertsRadGrid.AllowFilteringByColumn = l.Count() > 10;
+            OrderItemAlertsPanel.Visible = OrderItem2FormView.DataKey.Value != null && ((string)Session["OrderItemAlertsPermission"] == "Edit" || Session["OrderItemAlertsPermission"] != null && l.Any());
+        }
+
+        protected void OrderItemClaimsRadGrid_NeedDataSource(object sender, GridNeedDataSourceEventArgs e)
+        {
+            if (Session["OrderItemClaimsPermission"] == null) return;
+            var id = (Guid?)OrderItem2FormView.DataKey.Value;
+            if (id == null) return;
+            var l = folioServiceContext.FindOrderItem2(id).OrderItemClaims ?? new OrderItemClaim[] { };
+            OrderItemClaimsRadGrid.DataSource = l;
+            OrderItemClaimsRadGrid.AllowFilteringByColumn = l.Count() > 10;
+            OrderItemClaimsPanel.Visible = OrderItem2FormView.DataKey.Value != null && ((string)Session["OrderItemClaimsPermission"] == "Edit" || Session["OrderItemClaimsPermission"] != null && l.Any());
+        }
+
+        protected void OrderItemContributorsRadGrid_NeedDataSource(object sender, GridNeedDataSourceEventArgs e)
+        {
+            if (Session["OrderItemContributorsPermission"] == null) return;
+            var id = (Guid?)OrderItem2FormView.DataKey.Value;
+            if (id == null) return;
+            var l = folioServiceContext.FindOrderItem2(id).OrderItemContributors ?? new OrderItemContributor[] { };
+            OrderItemContributorsRadGrid.DataSource = l;
+            OrderItemContributorsRadGrid.AllowFilteringByColumn = l.Count() > 10;
+            OrderItemContributorsPanel.Visible = OrderItem2FormView.DataKey.Value != null && ((string)Session["OrderItemContributorsPermission"] == "Edit" || Session["OrderItemContributorsPermission"] != null && l.Any());
+        }
+
+        protected void OrderItemFundsRadGrid_NeedDataSource(object sender, GridNeedDataSourceEventArgs e)
+        {
+            if (Session["OrderItemFundsPermission"] == null) return;
+            var id = (Guid?)OrderItem2FormView.DataKey.Value;
+            if (id == null) return;
+            var l = folioServiceContext.FindOrderItem2(id).OrderItemFunds ?? new OrderItemFund[] { };
+            OrderItemFundsRadGrid.DataSource = l;
+            OrderItemFundsRadGrid.AllowFilteringByColumn = l.Count() > 10;
+            OrderItemFundsPanel.Visible = OrderItem2FormView.DataKey.Value != null && ((string)Session["OrderItemFundsPermission"] == "Edit" || Session["OrderItemFundsPermission"] != null && l.Any());
+        }
+
+        protected void OrderItemLocation2sRadGrid_NeedDataSource(object sender, GridNeedDataSourceEventArgs e)
+        {
+            if (Session["OrderItemLocation2sPermission"] == null) return;
+            var id = (Guid?)OrderItem2FormView.DataKey.Value;
+            if (id == null) return;
+            var l = folioServiceContext.FindOrderItem2(id).OrderItemLocation2s ?? new OrderItemLocation2[] { };
+            OrderItemLocation2sRadGrid.DataSource = l;
+            OrderItemLocation2sRadGrid.AllowFilteringByColumn = l.Count() > 10;
+            OrderItemLocation2sPanel.Visible = OrderItem2FormView.DataKey.Value != null && ((string)Session["OrderItemLocation2sPermission"] == "Edit" || Session["OrderItemLocation2sPermission"] != null && l.Any());
+        }
+
+        protected void OrderItemProductIdsRadGrid_NeedDataSource(object sender, GridNeedDataSourceEventArgs e)
+        {
+            if (Session["OrderItemProductIdsPermission"] == null) return;
+            var id = (Guid?)OrderItem2FormView.DataKey.Value;
+            if (id == null) return;
+            var l = folioServiceContext.FindOrderItem2(id).OrderItemProductIds ?? new OrderItemProductId[] { };
+            OrderItemProductIdsRadGrid.DataSource = l;
+            OrderItemProductIdsRadGrid.AllowFilteringByColumn = l.Count() > 10;
+            OrderItemProductIdsPanel.Visible = OrderItem2FormView.DataKey.Value != null && ((string)Session["OrderItemProductIdsPermission"] == "Edit" || Session["OrderItemProductIdsPermission"] != null && l.Any());
+        }
+
+        protected void OrderItemReferenceNumbersRadGrid_NeedDataSource(object sender, GridNeedDataSourceEventArgs e)
+        {
+            if (Session["OrderItemReferenceNumbersPermission"] == null) return;
+            var id = (Guid?)OrderItem2FormView.DataKey.Value;
+            if (id == null) return;
+            var l = folioServiceContext.FindOrderItem2(id).OrderItemReferenceNumbers ?? new OrderItemReferenceNumber[] { };
+            OrderItemReferenceNumbersRadGrid.DataSource = l;
+            OrderItemReferenceNumbersRadGrid.AllowFilteringByColumn = l.Count() > 10;
+            OrderItemReferenceNumbersPanel.Visible = OrderItem2FormView.DataKey.Value != null && ((string)Session["OrderItemReferenceNumbersPermission"] == "Edit" || Session["OrderItemReferenceNumbersPermission"] != null && l.Any());
+        }
+
+        protected void OrderItemReportingCodesRadGrid_NeedDataSource(object sender, GridNeedDataSourceEventArgs e)
+        {
+            if (Session["OrderItemReportingCodesPermission"] == null) return;
+            var id = (Guid?)OrderItem2FormView.DataKey.Value;
+            if (id == null) return;
+            var l = folioServiceContext.FindOrderItem2(id).OrderItemReportingCodes ?? new OrderItemReportingCode[] { };
+            OrderItemReportingCodesRadGrid.DataSource = l;
+            OrderItemReportingCodesRadGrid.AllowFilteringByColumn = l.Count() > 10;
+            OrderItemReportingCodesPanel.Visible = OrderItem2FormView.DataKey.Value != null && ((string)Session["OrderItemReportingCodesPermission"] == "Edit" || Session["OrderItemReportingCodesPermission"] != null && l.Any());
+        }
+
+        protected void OrderItemTagsRadGrid_NeedDataSource(object sender, GridNeedDataSourceEventArgs e)
+        {
+            if (Session["OrderItemTagsPermission"] == null) return;
+            var id = (Guid?)OrderItem2FormView.DataKey.Value;
+            if (id == null) return;
+            var l = folioServiceContext.FindOrderItem2(id).OrderItemTags ?? new OrderItemTag[] { };
+            OrderItemTagsRadGrid.DataSource = l;
+            OrderItemTagsRadGrid.AllowFilteringByColumn = l.Count() > 10;
+            OrderItemTagsPanel.Visible = OrderItem2FormView.DataKey.Value != null && ((string)Session["OrderItemTagsPermission"] == "Edit" || Session["OrderItemTagsPermission"] != null && l.Any());
+        }
+
+        protected void OrderItemVolumesRadGrid_NeedDataSource(object sender, GridNeedDataSourceEventArgs e)
+        {
+            if (Session["OrderItemVolumesPermission"] == null) return;
+            var id = (Guid?)OrderItem2FormView.DataKey.Value;
+            if (id == null) return;
+            var l = folioServiceContext.FindOrderItem2(id).OrderItemVolumes ?? new OrderItemVolume[] { };
+            OrderItemVolumesRadGrid.DataSource = l;
+            OrderItemVolumesRadGrid.AllowFilteringByColumn = l.Count() > 10;
+            OrderItemVolumesPanel.Visible = OrderItem2FormView.DataKey.Value != null && ((string)Session["OrderItemVolumesPermission"] == "Edit" || Session["OrderItemVolumesPermission"] != null && l.Any());
         }
 
         protected void Receiving2sRadGrid_NeedDataSource(object sender, GridNeedDataSourceEventArgs e)

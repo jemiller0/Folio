@@ -4,6 +4,7 @@ using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Linq;
 using Telerik.Web.UI;
 
 namespace FolioWebApplication.Template2s
@@ -106,6 +107,17 @@ namespace FolioWebApplication.Template2s
                 ScheduledNotice2sRadGrid.AllowFilteringByColumn = ScheduledNotice2sRadGrid.VirtualItemCount > 10;
                 ScheduledNotice2sPanel.Visible = Template2FormView.DataKey.Value != null && Session["ScheduledNotice2sPermission"] != null && ScheduledNotice2sRadGrid.VirtualItemCount > 0;
             }
+        }
+
+        protected void TemplateOutputFormatsRadGrid_NeedDataSource(object sender, GridNeedDataSourceEventArgs e)
+        {
+            if (Session["TemplateOutputFormatsPermission"] == null) return;
+            var id = (Guid?)Template2FormView.DataKey.Value;
+            if (id == null) return;
+            var l = folioServiceContext.FindTemplate2(id).TemplateOutputFormats ?? new TemplateOutputFormat[] { };
+            TemplateOutputFormatsRadGrid.DataSource = l;
+            TemplateOutputFormatsRadGrid.AllowFilteringByColumn = l.Count() > 10;
+            TemplateOutputFormatsPanel.Visible = Template2FormView.DataKey.Value != null && ((string)Session["TemplateOutputFormatsPermission"] == "Edit" || Session["TemplateOutputFormatsPermission"] != null && l.Any());
         }
 
         public override void Dispose()

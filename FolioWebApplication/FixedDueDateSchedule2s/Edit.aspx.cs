@@ -4,6 +4,7 @@ using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Linq;
 using Telerik.Web.UI;
 
 namespace FolioWebApplication.FixedDueDateSchedule2s
@@ -31,6 +32,17 @@ namespace FolioWebApplication.FixedDueDateSchedule2s
             fdds2.Content = fdds2.Content != null ? JsonConvert.DeserializeObject<JToken>(fdds2.Content, new JsonSerializerSettings { DateTimeZoneHandling = DateTimeZoneHandling.Local }).ToString() : null;
             FixedDueDateSchedule2FormView.DataSource = new[] { fdds2 };
             Title = $"Fixed Due Date Schedule {fdds2.Name}";
+        }
+
+        protected void FixedDueDateScheduleSchedulesRadGrid_NeedDataSource(object sender, GridNeedDataSourceEventArgs e)
+        {
+            if (Session["FixedDueDateScheduleSchedulesPermission"] == null) return;
+            var id = (Guid?)FixedDueDateSchedule2FormView.DataKey.Value;
+            if (id == null) return;
+            var l = folioServiceContext.FindFixedDueDateSchedule2(id).FixedDueDateScheduleSchedules ?? new FixedDueDateScheduleSchedule[] { };
+            FixedDueDateScheduleSchedulesRadGrid.DataSource = l;
+            FixedDueDateScheduleSchedulesRadGrid.AllowFilteringByColumn = l.Count() > 10;
+            FixedDueDateScheduleSchedulesPanel.Visible = FixedDueDateSchedule2FormView.DataKey.Value != null && ((string)Session["FixedDueDateScheduleSchedulesPermission"] == "Edit" || Session["FixedDueDateScheduleSchedulesPermission"] != null && l.Any());
         }
 
         protected void LoanPolicy2sRadGrid_NeedDataSource(object sender, GridNeedDataSourceEventArgs e)

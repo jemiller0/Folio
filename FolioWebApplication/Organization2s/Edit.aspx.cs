@@ -4,6 +4,7 @@ using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Linq;
 using Telerik.Web.UI;
 
 namespace FolioWebApplication.Organization2s
@@ -31,6 +32,17 @@ namespace FolioWebApplication.Organization2s
             o2.Content = o2.Content != null ? JsonConvert.DeserializeObject<JToken>(o2.Content, new JsonSerializerSettings { DateTimeZoneHandling = DateTimeZoneHandling.Local }).ToString() : null;
             Organization2FormView.DataSource = new[] { o2 };
             Title = $"Organization {o2.Name}";
+        }
+
+        protected void CurrenciesRadGrid_NeedDataSource(object sender, GridNeedDataSourceEventArgs e)
+        {
+            if (Session["CurrenciesPermission"] == null) return;
+            var id = (Guid?)Organization2FormView.DataKey.Value;
+            if (id == null) return;
+            var l = folioServiceContext.FindOrganization2(id).Currencies ?? new Currency[] { };
+            CurrenciesRadGrid.DataSource = l;
+            CurrenciesRadGrid.AllowFilteringByColumn = l.Count() > 10;
+            CurrenciesPanel.Visible = Organization2FormView.DataKey.Value != null && ((string)Session["CurrenciesPermission"] == "Edit" || Session["CurrenciesPermission"] != null && l.Any());
         }
 
         protected void Invoice2sRadGrid_NeedDataSource(object sender, GridNeedDataSourceEventArgs e)
@@ -91,6 +103,138 @@ namespace FolioWebApplication.Organization2s
                 OrderItem2s1RadGrid.AllowFilteringByColumn = OrderItem2s1RadGrid.VirtualItemCount > 10;
                 OrderItem2s1Panel.Visible = Organization2FormView.DataKey.Value != null && Session["OrderItem2sPermission"] != null && OrderItem2s1RadGrid.VirtualItemCount > 0;
             }
+        }
+
+        protected void OrganizationAccountsRadGrid_NeedDataSource(object sender, GridNeedDataSourceEventArgs e)
+        {
+            if (Session["OrganizationAccountsPermission"] == null) return;
+            var id = (Guid?)Organization2FormView.DataKey.Value;
+            if (id == null) return;
+            var l = folioServiceContext.FindOrganization2(id).OrganizationAccounts ?? new OrganizationAccount[] { };
+            OrganizationAccountsRadGrid.DataSource = l;
+            OrganizationAccountsRadGrid.AllowFilteringByColumn = l.Count() > 10;
+            OrganizationAccountsPanel.Visible = Organization2FormView.DataKey.Value != null && ((string)Session["OrganizationAccountsPermission"] == "Edit" || Session["OrganizationAccountsPermission"] != null && l.Any());
+        }
+
+        protected void OrganizationAcquisitionsUnitsRadGrid_NeedDataSource(object sender, GridNeedDataSourceEventArgs e)
+        {
+            if (Session["OrganizationAcquisitionsUnitsPermission"] == null) return;
+            var id = (Guid?)Organization2FormView.DataKey.Value;
+            if (id == null) return;
+            var l = folioServiceContext.FindOrganization2(id).OrganizationAcquisitionsUnits ?? new OrganizationAcquisitionsUnit[] { };
+            OrganizationAcquisitionsUnitsRadGrid.DataSource = l;
+            OrganizationAcquisitionsUnitsRadGrid.AllowFilteringByColumn = l.Count() > 10;
+            OrganizationAcquisitionsUnitsPanel.Visible = Organization2FormView.DataKey.Value != null && ((string)Session["OrganizationAcquisitionsUnitsPermission"] == "Edit" || Session["OrganizationAcquisitionsUnitsPermission"] != null && l.Any());
+        }
+
+        protected void OrganizationAddressesRadGrid_NeedDataSource(object sender, GridNeedDataSourceEventArgs e)
+        {
+            if (Session["OrganizationAddressesPermission"] == null) return;
+            var id = (Guid?)Organization2FormView.DataKey.Value;
+            if (id == null) return;
+            var l = folioServiceContext.FindOrganization2(id).OrganizationAddresses ?? new OrganizationAddress[] { };
+            OrganizationAddressesRadGrid.DataSource = l;
+            OrganizationAddressesRadGrid.AllowFilteringByColumn = l.Count() > 10;
+            OrganizationAddressesPanel.Visible = Organization2FormView.DataKey.Value != null && ((string)Session["OrganizationAddressesPermission"] == "Edit" || Session["OrganizationAddressesPermission"] != null && l.Any());
+        }
+
+        protected void OrganizationAgreementsRadGrid_NeedDataSource(object sender, GridNeedDataSourceEventArgs e)
+        {
+            if (Session["OrganizationAgreementsPermission"] == null) return;
+            var id = (Guid?)Organization2FormView.DataKey.Value;
+            if (id == null) return;
+            var l = folioServiceContext.FindOrganization2(id).OrganizationAgreements ?? new OrganizationAgreement[] { };
+            OrganizationAgreementsRadGrid.DataSource = l;
+            OrganizationAgreementsRadGrid.AllowFilteringByColumn = l.Count() > 10;
+            OrganizationAgreementsPanel.Visible = Organization2FormView.DataKey.Value != null && ((string)Session["OrganizationAgreementsPermission"] == "Edit" || Session["OrganizationAgreementsPermission"] != null && l.Any());
+        }
+
+        protected void OrganizationAliasesRadGrid_NeedDataSource(object sender, GridNeedDataSourceEventArgs e)
+        {
+            if (Session["OrganizationAliasesPermission"] == null) return;
+            var id = (Guid?)Organization2FormView.DataKey.Value;
+            if (id == null) return;
+            var l = folioServiceContext.FindOrganization2(id).OrganizationAliases ?? new OrganizationAlias[] { };
+            OrganizationAliasesRadGrid.DataSource = l;
+            OrganizationAliasesRadGrid.AllowFilteringByColumn = l.Count() > 10;
+            OrganizationAliasesPanel.Visible = Organization2FormView.DataKey.Value != null && ((string)Session["OrganizationAliasesPermission"] == "Edit" || Session["OrganizationAliasesPermission"] != null && l.Any());
+        }
+
+        protected void OrganizationChangelogsRadGrid_NeedDataSource(object sender, GridNeedDataSourceEventArgs e)
+        {
+            if (Session["OrganizationChangelogsPermission"] == null) return;
+            var id = (Guid?)Organization2FormView.DataKey.Value;
+            if (id == null) return;
+            var l = folioServiceContext.FindOrganization2(id).OrganizationChangelogs ?? new OrganizationChangelog[] { };
+            OrganizationChangelogsRadGrid.DataSource = l;
+            OrganizationChangelogsRadGrid.AllowFilteringByColumn = l.Count() > 10;
+            OrganizationChangelogsPanel.Visible = Organization2FormView.DataKey.Value != null && ((string)Session["OrganizationChangelogsPermission"] == "Edit" || Session["OrganizationChangelogsPermission"] != null && l.Any());
+        }
+
+        protected void OrganizationContactsRadGrid_NeedDataSource(object sender, GridNeedDataSourceEventArgs e)
+        {
+            if (Session["OrganizationContactsPermission"] == null) return;
+            var id = (Guid?)Organization2FormView.DataKey.Value;
+            if (id == null) return;
+            var l = folioServiceContext.FindOrganization2(id).OrganizationContacts ?? new OrganizationContact[] { };
+            OrganizationContactsRadGrid.DataSource = l;
+            OrganizationContactsRadGrid.AllowFilteringByColumn = l.Count() > 10;
+            OrganizationContactsPanel.Visible = Organization2FormView.DataKey.Value != null && ((string)Session["OrganizationContactsPermission"] == "Edit" || Session["OrganizationContactsPermission"] != null && l.Any());
+        }
+
+        protected void OrganizationEmailsRadGrid_NeedDataSource(object sender, GridNeedDataSourceEventArgs e)
+        {
+            if (Session["OrganizationEmailsPermission"] == null) return;
+            var id = (Guid?)Organization2FormView.DataKey.Value;
+            if (id == null) return;
+            var l = folioServiceContext.FindOrganization2(id).OrganizationEmails ?? new OrganizationEmail[] { };
+            OrganizationEmailsRadGrid.DataSource = l;
+            OrganizationEmailsRadGrid.AllowFilteringByColumn = l.Count() > 10;
+            OrganizationEmailsPanel.Visible = Organization2FormView.DataKey.Value != null && ((string)Session["OrganizationEmailsPermission"] == "Edit" || Session["OrganizationEmailsPermission"] != null && l.Any());
+        }
+
+        protected void OrganizationInterfacesRadGrid_NeedDataSource(object sender, GridNeedDataSourceEventArgs e)
+        {
+            if (Session["OrganizationInterfacesPermission"] == null) return;
+            var id = (Guid?)Organization2FormView.DataKey.Value;
+            if (id == null) return;
+            var l = folioServiceContext.FindOrganization2(id).OrganizationInterfaces ?? new OrganizationInterface[] { };
+            OrganizationInterfacesRadGrid.DataSource = l;
+            OrganizationInterfacesRadGrid.AllowFilteringByColumn = l.Count() > 10;
+            OrganizationInterfacesPanel.Visible = Organization2FormView.DataKey.Value != null && ((string)Session["OrganizationInterfacesPermission"] == "Edit" || Session["OrganizationInterfacesPermission"] != null && l.Any());
+        }
+
+        protected void OrganizationPhoneNumbersRadGrid_NeedDataSource(object sender, GridNeedDataSourceEventArgs e)
+        {
+            if (Session["OrganizationPhoneNumbersPermission"] == null) return;
+            var id = (Guid?)Organization2FormView.DataKey.Value;
+            if (id == null) return;
+            var l = folioServiceContext.FindOrganization2(id).OrganizationPhoneNumbers ?? new OrganizationPhoneNumber[] { };
+            OrganizationPhoneNumbersRadGrid.DataSource = l;
+            OrganizationPhoneNumbersRadGrid.AllowFilteringByColumn = l.Count() > 10;
+            OrganizationPhoneNumbersPanel.Visible = Organization2FormView.DataKey.Value != null && ((string)Session["OrganizationPhoneNumbersPermission"] == "Edit" || Session["OrganizationPhoneNumbersPermission"] != null && l.Any());
+        }
+
+        protected void OrganizationTagsRadGrid_NeedDataSource(object sender, GridNeedDataSourceEventArgs e)
+        {
+            if (Session["OrganizationTagsPermission"] == null) return;
+            var id = (Guid?)Organization2FormView.DataKey.Value;
+            if (id == null) return;
+            var l = folioServiceContext.FindOrganization2(id).OrganizationTags ?? new OrganizationTag[] { };
+            OrganizationTagsRadGrid.DataSource = l;
+            OrganizationTagsRadGrid.AllowFilteringByColumn = l.Count() > 10;
+            OrganizationTagsPanel.Visible = Organization2FormView.DataKey.Value != null && ((string)Session["OrganizationTagsPermission"] == "Edit" || Session["OrganizationTagsPermission"] != null && l.Any());
+        }
+
+        protected void OrganizationUrlsRadGrid_NeedDataSource(object sender, GridNeedDataSourceEventArgs e)
+        {
+            if (Session["OrganizationUrlsPermission"] == null) return;
+            var id = (Guid?)Organization2FormView.DataKey.Value;
+            if (id == null) return;
+            var l = folioServiceContext.FindOrganization2(id).OrganizationUrls ?? new OrganizationUrl[] { };
+            OrganizationUrlsRadGrid.DataSource = l;
+            OrganizationUrlsRadGrid.AllowFilteringByColumn = l.Count() > 10;
+            OrganizationUrlsPanel.Visible = Organization2FormView.DataKey.Value != null && ((string)Session["OrganizationUrlsPermission"] == "Edit" || Session["OrganizationUrlsPermission"] != null && l.Any());
         }
 
         protected void Voucher2sRadGrid_NeedDataSource(object sender, GridNeedDataSourceEventArgs e)

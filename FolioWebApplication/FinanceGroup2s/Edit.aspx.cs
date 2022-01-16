@@ -4,6 +4,7 @@ using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Linq;
 using Telerik.Web.UI;
 
 namespace FolioWebApplication.FinanceGroup2s
@@ -46,6 +47,17 @@ namespace FolioWebApplication.FinanceGroup2s
                 BudgetGroup2sRadGrid.AllowFilteringByColumn = BudgetGroup2sRadGrid.VirtualItemCount > 10;
                 BudgetGroup2sPanel.Visible = FinanceGroup2FormView.DataKey.Value != null && Session["BudgetGroup2sPermission"] != null && BudgetGroup2sRadGrid.VirtualItemCount > 0;
             }
+        }
+
+        protected void FinanceGroupAcquisitionsUnitsRadGrid_NeedDataSource(object sender, GridNeedDataSourceEventArgs e)
+        {
+            if (Session["FinanceGroupAcquisitionsUnitsPermission"] == null) return;
+            var id = (Guid?)FinanceGroup2FormView.DataKey.Value;
+            if (id == null) return;
+            var l = folioServiceContext.FindFinanceGroup2(id).FinanceGroupAcquisitionsUnits ?? new FinanceGroupAcquisitionsUnit[] { };
+            FinanceGroupAcquisitionsUnitsRadGrid.DataSource = l;
+            FinanceGroupAcquisitionsUnitsRadGrid.AllowFilteringByColumn = l.Count() > 10;
+            FinanceGroupAcquisitionsUnitsPanel.Visible = FinanceGroup2FormView.DataKey.Value != null && ((string)Session["FinanceGroupAcquisitionsUnitsPermission"] == "Edit" || Session["FinanceGroupAcquisitionsUnitsPermission"] != null && l.Any());
         }
 
         public override void Dispose()

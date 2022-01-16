@@ -4,6 +4,7 @@ using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Linq;
 using Telerik.Web.UI;
 
 namespace FolioWebApplication.Transaction2s
@@ -76,6 +77,17 @@ namespace FolioWebApplication.Transaction2s
                 Transaction2s1RadGrid.AllowFilteringByColumn = Transaction2s1RadGrid.VirtualItemCount > 10;
                 Transaction2s1Panel.Visible = Transaction2FormView.DataKey.Value != null && Session["Transaction2sPermission"] != null && Transaction2s1RadGrid.VirtualItemCount > 0;
             }
+        }
+
+        protected void TransactionTagsRadGrid_NeedDataSource(object sender, GridNeedDataSourceEventArgs e)
+        {
+            if (Session["TransactionTagsPermission"] == null) return;
+            var id = (Guid?)Transaction2FormView.DataKey.Value;
+            if (id == null) return;
+            var l = folioServiceContext.FindTransaction2(id).TransactionTags ?? new TransactionTag[] { };
+            TransactionTagsRadGrid.DataSource = l;
+            TransactionTagsRadGrid.AllowFilteringByColumn = l.Count() > 10;
+            TransactionTagsPanel.Visible = Transaction2FormView.DataKey.Value != null && ((string)Session["TransactionTagsPermission"] == "Edit" || Session["TransactionTagsPermission"] != null && l.Any());
         }
 
         protected void VoucherItem2sRadGrid_NeedDataSource(object sender, GridNeedDataSourceEventArgs e)

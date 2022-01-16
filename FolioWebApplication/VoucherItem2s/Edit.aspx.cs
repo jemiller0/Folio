@@ -4,6 +4,7 @@ using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Linq;
 using Telerik.Web.UI;
 
 namespace FolioWebApplication.VoucherItem2s
@@ -31,6 +32,28 @@ namespace FolioWebApplication.VoucherItem2s
             vi2.Content = vi2.Content != null ? JsonConvert.DeserializeObject<JToken>(vi2.Content, new JsonSerializerSettings { DateTimeZoneHandling = DateTimeZoneHandling.Local }).ToString() : null;
             VoucherItem2FormView.DataSource = new[] { vi2 };
             Title = $"Voucher Item {vi2.AccountNumber}";
+        }
+
+        protected void VoucherItemFundsRadGrid_NeedDataSource(object sender, GridNeedDataSourceEventArgs e)
+        {
+            if (Session["VoucherItemFundsPermission"] == null) return;
+            var id = (Guid?)VoucherItem2FormView.DataKey.Value;
+            if (id == null) return;
+            var l = folioServiceContext.FindVoucherItem2(id).VoucherItemFunds ?? new VoucherItemFund[] { };
+            VoucherItemFundsRadGrid.DataSource = l;
+            VoucherItemFundsRadGrid.AllowFilteringByColumn = l.Count() > 10;
+            VoucherItemFundsPanel.Visible = VoucherItem2FormView.DataKey.Value != null && ((string)Session["VoucherItemFundsPermission"] == "Edit" || Session["VoucherItemFundsPermission"] != null && l.Any());
+        }
+
+        protected void VoucherItemInvoiceItemsRadGrid_NeedDataSource(object sender, GridNeedDataSourceEventArgs e)
+        {
+            if (Session["VoucherItemInvoiceItemsPermission"] == null) return;
+            var id = (Guid?)VoucherItem2FormView.DataKey.Value;
+            if (id == null) return;
+            var l = folioServiceContext.FindVoucherItem2(id).VoucherItemInvoiceItems ?? new VoucherItemInvoiceItem[] { };
+            VoucherItemInvoiceItemsRadGrid.DataSource = l;
+            VoucherItemInvoiceItemsRadGrid.AllowFilteringByColumn = l.Count() > 10;
+            VoucherItemInvoiceItemsPanel.Visible = VoucherItem2FormView.DataKey.Value != null && ((string)Session["VoucherItemInvoiceItemsPermission"] == "Edit" || Session["VoucherItemInvoiceItemsPermission"] != null && l.Any());
         }
 
         public override void Dispose()

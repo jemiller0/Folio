@@ -280,6 +280,29 @@
             </telerik:RadGrid>
         </fieldset>
     </asp:Panel>
+    <asp:Panel ID="ServicePointOwnersPanel" runat="server" Visible='<%# (string)Session["ServicePointOwnersPermission"] != null && Owner2FormView.DataKey.Value != null %>'>
+        <fieldset>
+            <legend>
+                <asp:HyperLink ID="ServicePointOwnersHyperLink" runat="server" Text="Service Point Owners" NavigateUrl="~/ServicePointOwners/Default.aspx" /></legend>
+            <telerik:RadGrid ID="ServicePointOwnersRadGrid" runat="server" AutoGenerateColumns="false" AllowSorting="true" AllowFilteringByColumn="false" GroupingSettings-CaseSensitive="false" AllowPaging="true" PageSize="10" EnableLinqExpressions="false" OnNeedDataSource="ServicePointOwnersRadGrid_NeedDataSource">
+                <MasterTableView DataKeyNames="Id" PagerStyle-Mode="NextPrevNumericAndAdvanced" NoMasterRecordsText="No service point owners found">
+                    <Columns>
+                        <telerik:GridTemplateColumn AllowFiltering="false" ItemStyle-Width="0px">
+                            <ItemTemplate>
+                                <asp:HyperLink ID="ViewHyperLink" Text="View" NavigateUrl='<%# $"~/ServicePointOwners/Edit.aspx?Id={Eval("Id")}" %>' runat="server" />
+                            </ItemTemplate>
+                        </telerik:GridTemplateColumn>
+                        <telerik:GridTemplateColumn AllowFiltering="false" AllowSorting="false" HeaderText="Service Point" DataField="ServicePoint.Name" SortExpression="ServicePoint.Name" AutoPostBackOnFilter="true" CurrentFilterFunction="StartsWith">
+                            <ItemTemplate>
+                                <asp:HyperLink ID="ServicePointHyperLink" runat="server" Text='<%#: Eval("ServicePoint.Name") %>' NavigateUrl='<%# $"~/ServicePoint2s/Edit.aspx?Id={Eval("ServicePointId")}" %>' Enabled='<%# Session["ServicePoint2sPermission"] != null %>' />
+                            </ItemTemplate>
+                        </telerik:GridTemplateColumn>
+                        <telerik:GridBoundColumn HeaderText="Label" DataField="Label" AutoPostBackOnFilter="true" HtmlEncode="true" CurrentFilterFunction="StartsWith" />
+                    </Columns>
+                </MasterTableView>
+            </telerik:RadGrid>
+        </fieldset>
+    </asp:Panel>
     <asp:Panel ID="TransferAccount2sPanel" runat="server" Visible='<%# (string)Session["TransferAccount2sPermission"] != null && Owner2FormView.DataKey.Value != null %>'>
         <fieldset>
             <legend>
@@ -338,6 +361,11 @@
             <telerik:AjaxSetting AjaxControlID="PaymentMethod2sRadGrid">
                 <UpdatedControls>
                     <telerik:AjaxUpdatedControl ControlID="PaymentMethod2sPanel" LoadingPanelID="RadAjaxLoadingPanel1" />
+                </UpdatedControls>
+            </telerik:AjaxSetting>
+            <telerik:AjaxSetting AjaxControlID="ServicePointOwnersRadGrid">
+                <UpdatedControls>
+                    <telerik:AjaxUpdatedControl ControlID="ServicePointOwnersPanel" LoadingPanelID="RadAjaxLoadingPanel1" />
                 </UpdatedControls>
             </telerik:AjaxSetting>
             <telerik:AjaxSetting AjaxControlID="TransferAccount2sRadGrid">

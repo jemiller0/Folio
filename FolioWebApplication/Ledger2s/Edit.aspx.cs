@@ -4,6 +4,7 @@ using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Linq;
 using Telerik.Web.UI;
 
 namespace FolioWebApplication.Ledger2s
@@ -46,6 +47,17 @@ namespace FolioWebApplication.Ledger2s
                 Fund2sRadGrid.AllowFilteringByColumn = Fund2sRadGrid.VirtualItemCount > 10;
                 Fund2sPanel.Visible = Ledger2FormView.DataKey.Value != null && Session["Fund2sPermission"] != null && Fund2sRadGrid.VirtualItemCount > 0;
             }
+        }
+
+        protected void LedgerAcquisitionsUnitsRadGrid_NeedDataSource(object sender, GridNeedDataSourceEventArgs e)
+        {
+            if (Session["LedgerAcquisitionsUnitsPermission"] == null) return;
+            var id = (Guid?)Ledger2FormView.DataKey.Value;
+            if (id == null) return;
+            var l = folioServiceContext.FindLedger2(id).LedgerAcquisitionsUnits ?? new LedgerAcquisitionsUnit[] { };
+            LedgerAcquisitionsUnitsRadGrid.DataSource = l;
+            LedgerAcquisitionsUnitsRadGrid.AllowFilteringByColumn = l.Count() > 10;
+            LedgerAcquisitionsUnitsPanel.Visible = Ledger2FormView.DataKey.Value != null && ((string)Session["LedgerAcquisitionsUnitsPermission"] == "Edit" || Session["LedgerAcquisitionsUnitsPermission"] != null && l.Any());
         }
 
         protected void LedgerRollover2sRadGrid_NeedDataSource(object sender, GridNeedDataSourceEventArgs e)

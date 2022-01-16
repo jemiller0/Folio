@@ -119,6 +119,55 @@
             </asp:FormView>
         </fieldset>
     </asp:Panel>
+    <asp:Panel ID="LedgerRolloverBudgetsRolloversPanel" runat="server" Visible='<%# (string)Session["LedgerRolloverBudgetsRolloversPermission"] != null && LedgerRollover2FormView.DataKey.Value != null %>'>
+        <fieldset>
+            <legend>
+                <asp:HyperLink ID="LedgerRolloverBudgetsRolloversHyperLink" runat="server" Text="Ledger Rollover Budgets Rollovers" NavigateUrl="~/LedgerRolloverBudgetsRollovers/Default.aspx" /></legend>
+            <telerik:RadGrid ID="LedgerRolloverBudgetsRolloversRadGrid" runat="server" AutoGenerateColumns="false" AllowSorting="true" AllowFilteringByColumn="false" GroupingSettings-CaseSensitive="false" AllowPaging="true" PageSize="10" EnableLinqExpressions="false" OnNeedDataSource="LedgerRolloverBudgetsRolloversRadGrid_NeedDataSource">
+                <MasterTableView DataKeyNames="Id" PagerStyle-Mode="NextPrevNumericAndAdvanced" NoMasterRecordsText="No ledger rollover budgets rollovers found">
+                    <Columns>
+                        <telerik:GridTemplateColumn AllowFiltering="false" ItemStyle-Width="0px">
+                            <ItemTemplate>
+                                <asp:HyperLink ID="ViewHyperLink" Text="View" NavigateUrl='<%# $"~/LedgerRolloverBudgetsRollovers/Edit.aspx?Id={Eval("Id")}" %>' runat="server" />
+                            </ItemTemplate>
+                        </telerik:GridTemplateColumn>
+                        <telerik:GridTemplateColumn AllowFiltering="false" AllowSorting="false" HeaderText="Fund Type" DataField="FundType.Name" SortExpression="FundType.Name" AutoPostBackOnFilter="true" CurrentFilterFunction="StartsWith">
+                            <ItemTemplate>
+                                <asp:HyperLink ID="FundTypeHyperLink" runat="server" Text='<%#: Eval("FundType.Name") %>' NavigateUrl='<%# $"~/FundType2s/Edit.aspx?Id={Eval("FundTypeId")}" %>' Enabled='<%# Session["FundType2sPermission"] != null %>' />
+                            </ItemTemplate>
+                        </telerik:GridTemplateColumn>
+                        <telerik:GridBoundColumn HeaderText="Rollover Allocation" DataField="RolloverAllocation" AutoPostBackOnFilter="true" />
+                        <telerik:GridBoundColumn HeaderText="Rollover Available" DataField="RolloverAvailable" AutoPostBackOnFilter="true" />
+                        <telerik:GridBoundColumn HeaderText="Set Allowances" DataField="SetAllowances" AutoPostBackOnFilter="true" />
+                        <telerik:GridBoundColumn HeaderText="Adjust Allocation" DataField="AdjustAllocation" AutoPostBackOnFilter="true" DataFormatString="{0:c}" />
+                        <telerik:GridBoundColumn HeaderText="Add Available To" DataField="AddAvailableTo" AutoPostBackOnFilter="true" HtmlEncode="true" CurrentFilterFunction="StartsWith" />
+                        <telerik:GridBoundColumn HeaderText="Allowable Encumbrance" DataField="AllowableEncumbrance" AutoPostBackOnFilter="true" DataFormatString="{0:c}" />
+                        <telerik:GridBoundColumn HeaderText="Allowable Expenditure" DataField="AllowableExpenditure" AutoPostBackOnFilter="true" DataFormatString="{0:c}" />
+                    </Columns>
+                </MasterTableView>
+            </telerik:RadGrid>
+        </fieldset>
+    </asp:Panel>
+    <asp:Panel ID="LedgerRolloverEncumbrancesRolloversPanel" runat="server" Visible='<%# (string)Session["LedgerRolloverEncumbrancesRolloversPermission"] != null && LedgerRollover2FormView.DataKey.Value != null %>'>
+        <fieldset>
+            <legend>
+                <asp:HyperLink ID="LedgerRolloverEncumbrancesRolloversHyperLink" runat="server" Text="Ledger Rollover Encumbrances Rollovers" NavigateUrl="~/LedgerRolloverEncumbrancesRollovers/Default.aspx" /></legend>
+            <telerik:RadGrid ID="LedgerRolloverEncumbrancesRolloversRadGrid" runat="server" AutoGenerateColumns="false" AllowSorting="true" AllowFilteringByColumn="false" GroupingSettings-CaseSensitive="false" AllowPaging="true" PageSize="10" EnableLinqExpressions="false" OnNeedDataSource="LedgerRolloverEncumbrancesRolloversRadGrid_NeedDataSource">
+                <MasterTableView DataKeyNames="Id" PagerStyle-Mode="NextPrevNumericAndAdvanced" NoMasterRecordsText="No ledger rollover encumbrances rollovers found">
+                    <Columns>
+                        <telerik:GridTemplateColumn AllowFiltering="false" ItemStyle-Width="0px">
+                            <ItemTemplate>
+                                <asp:HyperLink ID="ViewHyperLink" Text="View" NavigateUrl='<%# $"~/LedgerRolloverEncumbrancesRollovers/Edit.aspx?Id={Eval("Id")}" %>' runat="server" />
+                            </ItemTemplate>
+                        </telerik:GridTemplateColumn>
+                        <telerik:GridBoundColumn HeaderText="Order Type" DataField="OrderType" AutoPostBackOnFilter="true" HtmlEncode="true" CurrentFilterFunction="StartsWith" />
+                        <telerik:GridBoundColumn HeaderText="Based On" DataField="BasedOn" AutoPostBackOnFilter="true" HtmlEncode="true" CurrentFilterFunction="StartsWith" />
+                        <telerik:GridBoundColumn HeaderText="Increase By" DataField="IncreaseBy" AutoPostBackOnFilter="true" DataFormatString="{0:c}" />
+                    </Columns>
+                </MasterTableView>
+            </telerik:RadGrid>
+        </fieldset>
+    </asp:Panel>
     <asp:Panel ID="LedgerRolloverError2sPanel" runat="server" Visible='<%# (string)Session["LedgerRolloverError2sPermission"] != null && LedgerRollover2FormView.DataKey.Value != null %>'>
         <fieldset>
             <legend>
@@ -202,6 +251,16 @@
     </asp:Panel>
     <telerik:RadAjaxManager ID="RadAjaxManager1" runat="server">
         <AjaxSettings>
+            <telerik:AjaxSetting AjaxControlID="LedgerRolloverBudgetsRolloversRadGrid">
+                <UpdatedControls>
+                    <telerik:AjaxUpdatedControl ControlID="LedgerRolloverBudgetsRolloversPanel" LoadingPanelID="RadAjaxLoadingPanel1" />
+                </UpdatedControls>
+            </telerik:AjaxSetting>
+            <telerik:AjaxSetting AjaxControlID="LedgerRolloverEncumbrancesRolloversRadGrid">
+                <UpdatedControls>
+                    <telerik:AjaxUpdatedControl ControlID="LedgerRolloverEncumbrancesRolloversPanel" LoadingPanelID="RadAjaxLoadingPanel1" />
+                </UpdatedControls>
+            </telerik:AjaxSetting>
             <telerik:AjaxSetting AjaxControlID="LedgerRolloverError2sRadGrid">
                 <UpdatedControls>
                     <telerik:AjaxUpdatedControl ControlID="LedgerRolloverError2sPanel" LoadingPanelID="RadAjaxLoadingPanel1" />

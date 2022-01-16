@@ -4,6 +4,7 @@ using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Linq;
 using Telerik.Web.UI;
 
 namespace FolioWebApplication.Request2s
@@ -31,6 +32,28 @@ namespace FolioWebApplication.Request2s
             r2.Content = r2.Content != null ? JsonConvert.DeserializeObject<JToken>(r2.Content, new JsonSerializerSettings { DateTimeZoneHandling = DateTimeZoneHandling.Local }).ToString() : null;
             Request2FormView.DataSource = new[] { r2 };
             Title = $"Request {r2.Id}";
+        }
+
+        protected void RequestIdentifiersRadGrid_NeedDataSource(object sender, GridNeedDataSourceEventArgs e)
+        {
+            if (Session["RequestIdentifiersPermission"] == null) return;
+            var id = (Guid?)Request2FormView.DataKey.Value;
+            if (id == null) return;
+            var l = folioServiceContext.FindRequest2(id).RequestIdentifiers ?? new RequestIdentifier[] { };
+            RequestIdentifiersRadGrid.DataSource = l;
+            RequestIdentifiersRadGrid.AllowFilteringByColumn = l.Count() > 10;
+            RequestIdentifiersPanel.Visible = Request2FormView.DataKey.Value != null && ((string)Session["RequestIdentifiersPermission"] == "Edit" || Session["RequestIdentifiersPermission"] != null && l.Any());
+        }
+
+        protected void RequestTagsRadGrid_NeedDataSource(object sender, GridNeedDataSourceEventArgs e)
+        {
+            if (Session["RequestTagsPermission"] == null) return;
+            var id = (Guid?)Request2FormView.DataKey.Value;
+            if (id == null) return;
+            var l = folioServiceContext.FindRequest2(id).RequestTags ?? new RequestTag[] { };
+            RequestTagsRadGrid.DataSource = l;
+            RequestTagsRadGrid.AllowFilteringByColumn = l.Count() > 10;
+            RequestTagsPanel.Visible = Request2FormView.DataKey.Value != null && ((string)Session["RequestTagsPermission"] == "Edit" || Session["RequestTagsPermission"] != null && l.Any());
         }
 
         protected void ScheduledNotice2sRadGrid_NeedDataSource(object sender, GridNeedDataSourceEventArgs e)

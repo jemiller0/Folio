@@ -4,6 +4,7 @@ using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Linq;
 using Telerik.Web.UI;
 
 namespace FolioWebApplication.ServicePoint2s
@@ -166,6 +167,17 @@ namespace FolioWebApplication.ServicePoint2s
                 Request2sRadGrid.AllowFilteringByColumn = Request2sRadGrid.VirtualItemCount > 10;
                 Request2sPanel.Visible = ServicePoint2FormView.DataKey.Value != null && Session["Request2sPermission"] != null && Request2sRadGrid.VirtualItemCount > 0;
             }
+        }
+
+        protected void ServicePointStaffSlipsRadGrid_NeedDataSource(object sender, GridNeedDataSourceEventArgs e)
+        {
+            if (Session["ServicePointStaffSlipsPermission"] == null) return;
+            var id = (Guid?)ServicePoint2FormView.DataKey.Value;
+            if (id == null) return;
+            var l = folioServiceContext.FindServicePoint2(id).ServicePointStaffSlips ?? new ServicePointStaffSlip[] { };
+            ServicePointStaffSlipsRadGrid.DataSource = l;
+            ServicePointStaffSlipsRadGrid.AllowFilteringByColumn = l.Count() > 10;
+            ServicePointStaffSlipsPanel.Visible = ServicePoint2FormView.DataKey.Value != null && ((string)Session["ServicePointStaffSlipsPermission"] == "Edit" || Session["ServicePointStaffSlipsPermission"] != null && l.Any());
         }
 
         protected void UserRequestPreference2sRadGrid_NeedDataSource(object sender, GridNeedDataSourceEventArgs e)
