@@ -2018,7 +2018,7 @@ namespace FolioLibrary
                     hea.Id = (++i).ToString();
                     hea.HoldingId = h2.Id;
                     hea.Holding = h2;
-                    if (load && hea.RelationshipId != null) hea.Relationship = (Relationship)(cache && objects.ContainsKey(hea.RelationshipId.Value) ? objects[hea.RelationshipId.Value] : objects[hea.RelationshipId.Value] = FindRelationship(hea.RelationshipId));
+                    if (load && hea.RelationshipId != null) hea.Relationship = (ElectronicAccessRelationship2)(cache && objects.ContainsKey(hea.RelationshipId.Value) ? objects[hea.RelationshipId.Value] : objects[hea.RelationshipId.Value] = FindElectronicAccessRelationship2(hea.RelationshipId));
                 }
             i = 0;
             if (h2.HoldingEntries != null) foreach (var he in h2.HoldingEntries)
@@ -2347,7 +2347,7 @@ namespace FolioLibrary
                     ea.Id = (++i).ToString();
                     ea.InstanceId = i2.Id;
                     ea.Instance = i2;
-                    if (load && ea.RelationshipId != null) ea.Relationship = (Relationship)(cache && objects.ContainsKey(ea.RelationshipId.Value) ? objects[ea.RelationshipId.Value] : objects[ea.RelationshipId.Value] = FindRelationship(ea.RelationshipId));
+                    if (load && ea.RelationshipId != null) ea.Relationship = (ElectronicAccessRelationship2)(cache && objects.ContainsKey(ea.RelationshipId.Value) ? objects[ea.RelationshipId.Value] : objects[ea.RelationshipId.Value] = FindElectronicAccessRelationship2(ea.RelationshipId));
                 }
             i = 0;
             if (i2.Identifiers != null) foreach (var i3 in i2.Identifiers)
@@ -2979,7 +2979,7 @@ namespace FolioLibrary
                     iea.Id = (++i).ToString();
                     iea.ItemId = i2.Id;
                     iea.Item = i2;
-                    if (load && iea.RelationshipId != null) iea.Relationship = (Relationship)(cache && objects.ContainsKey(iea.RelationshipId.Value) ? objects[iea.RelationshipId.Value] : objects[iea.RelationshipId.Value] = FindRelationship(iea.RelationshipId));
+                    if (load && iea.RelationshipId != null) iea.Relationship = (ElectronicAccessRelationship2)(cache && objects.ContainsKey(iea.RelationshipId.Value) ? objects[iea.RelationshipId.Value] : objects[iea.RelationshipId.Value] = FindElectronicAccessRelationship2(iea.RelationshipId));
                 }
             i = 0;
             if (i2.ItemFormerIds != null) foreach (var ifi in i2.ItemFormerIds)

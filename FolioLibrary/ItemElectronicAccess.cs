@@ -46,7 +46,7 @@ namespace FolioLibrary
         public virtual string PublicNote { get; set; }
 
         [Display(Order = 8)]
-        public virtual Relationship Relationship { get; set; }
+        public virtual ElectronicAccessRelationship2 Relationship { get; set; }
 
         [Column("relationship_id"), Display(Name = "Relationship", Order = 9), JsonProperty("relationshipId")]
         public virtual Guid? RelationshipId { get; set; }

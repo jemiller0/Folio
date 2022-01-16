@@ -597,9 +597,9 @@
                         <telerik:GridBoundColumn HeaderText="Link Text" DataField="LinkText" AutoPostBackOnFilter="true" HtmlEncode="true" CurrentFilterFunction="StartsWith" />
                         <telerik:GridBoundColumn HeaderText="Materials Specification" DataField="MaterialsSpecification" AutoPostBackOnFilter="true" HtmlEncode="true" CurrentFilterFunction="StartsWith" />
                         <telerik:GridBoundColumn HeaderText="Public Note" DataField="PublicNote" AutoPostBackOnFilter="true" HtmlEncode="true" CurrentFilterFunction="StartsWith" />
-                        <telerik:GridTemplateColumn AllowFiltering="false" AllowSorting="false" HeaderText="Relationship" DataField="Relationship.Id" SortExpression="Relationship.Id" AutoPostBackOnFilter="true" CurrentFilterFunction="EqualTo">
+                        <telerik:GridTemplateColumn AllowFiltering="false" AllowSorting="false" HeaderText="Relationship" DataField="Relationship.Name" SortExpression="Relationship.Name" AutoPostBackOnFilter="true" CurrentFilterFunction="StartsWith">
                             <ItemTemplate>
-                                <asp:HyperLink ID="RelationshipHyperLink" runat="server" Text='<%# Eval("Relationship.Id") %>' NavigateUrl='<%# $"~/Relationships/Edit.aspx?Id={Eval("RelationshipId")}" %>' Enabled='<%# Session["RelationshipsPermission"] != null %>' />
+                                <asp:HyperLink ID="RelationshipHyperLink" runat="server" Text='<%#: Eval("Relationship.Name") %>' NavigateUrl='<%# $"~/ElectronicAccessRelationship2s/Edit.aspx?Id={Eval("RelationshipId")}" %>' Enabled='<%# Session["ElectronicAccessRelationship2sPermission"] != null %>' />
                             </ItemTemplate>
                         </telerik:GridTemplateColumn>
                     </Columns>

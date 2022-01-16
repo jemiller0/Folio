@@ -9,6 +9,18 @@ namespace FolioWebApplication.ElectronicAccessRelationship2s
 
         protected FormView ElectronicAccessRelationship2FormView;
 
+        protected Panel ElectronicAccessesPanel;
+
+        protected RadGrid ElectronicAccessesRadGrid;
+
+        protected Panel HoldingElectronicAccessesPanel;
+
+        protected RadGrid HoldingElectronicAccessesRadGrid;
+
+        protected Panel ItemElectronicAccessesPanel;
+
+        protected RadGrid ItemElectronicAccessesRadGrid;
+
         protected RadAjaxManager RadAjaxManager1;
     }
 }

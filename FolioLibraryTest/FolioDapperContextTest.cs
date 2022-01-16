@@ -1936,11 +1936,11 @@ ea.uri AS ""Uri"",
 ea.link_text AS ""LinkText"",
 ea.materials_specification AS ""MaterialsSpecification"",
 ea.public_note AS ""PublicNote"",
-r.id AS ""Relationship"",
+r.name AS ""Relationship"",
 ea.relationship_id AS ""RelationshipId"" 
 FROM uc.electronic_accesses AS ea
 LEFT JOIN uc.instances AS i ON i.id = ea.instance_id
-LEFT JOIN uc.relationships AS r ON r.id = ea.relationship_id
+LEFT JOIN uc.electronic_access_relationships AS r ON r.id = ea.relationship_id
  ORDER BY ea.id
 ", take: 1);
             traceSource.TraceEvent(TraceEventType.Information, 0, $"ElectronicAccessesQueryTest()\r\n    ElapsedTime={s.Elapsed}");
@@ -2705,11 +2705,11 @@ hea.uri AS ""Uri"",
 hea.link_text AS ""LinkText"",
 hea.materials_specification AS ""MaterialsSpecification"",
 hea.public_note AS ""PublicNote"",
-r.id AS ""Relationship"",
+r.name AS ""Relationship"",
 hea.relationship_id AS ""RelationshipId"" 
 FROM uc.holding_electronic_accesses AS hea
 LEFT JOIN uc.holdings AS h ON h.id = hea.holding_id
-LEFT JOIN uc.relationships AS r ON r.id = hea.relationship_id
+LEFT JOIN uc.electronic_access_relationships AS r ON r.id = hea.relationship_id
  ORDER BY hea.id
 ", take: 1);
             traceSource.TraceEvent(TraceEventType.Information, 0, $"HoldingElectronicAccessesQueryTest()\r\n    ElapsedTime={s.Elapsed}");
@@ -4014,11 +4014,11 @@ iea.uri AS ""Uri"",
 iea.link_text AS ""LinkText"",
 iea.materials_specification AS ""MaterialsSpecification"",
 iea.public_note AS ""PublicNote"",
-r.id AS ""Relationship"",
+r.name AS ""Relationship"",
 iea.relationship_id AS ""RelationshipId"" 
 FROM uc.item_electronic_accesses AS iea
 LEFT JOIN uc.items AS i ON i.id = iea.item_id
-LEFT JOIN uc.relationships AS r ON r.id = iea.relationship_id
+LEFT JOIN uc.electronic_access_relationships AS r ON r.id = iea.relationship_id
  ORDER BY iea.id
 ", take: 1);
             traceSource.TraceEvent(TraceEventType.Information, 0, $"ItemElectronicAccessesQueryTest()\r\n    ElapsedTime={s.Elapsed}");

@@ -2,6 +2,7 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using NJsonSchema;
 using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -59,6 +60,15 @@ namespace FolioLibrary
 
         [Column("content"), CustomValidation(typeof(ElectronicAccessRelationship), nameof(ValidateContent)), DataType(DataType.MultilineText), Display(Order = 11), Editable(false)]
         public virtual string Content { get; set; }
+
+        [Display(Name = "Electronic Accesses", Order = 12)]
+        public virtual ICollection<ElectronicAccess> ElectronicAccesses { get; set; }
+
+        [Display(Name = "Holding Electronic Accesses", Order = 13)]
+        public virtual ICollection<HoldingElectronicAccess> HoldingElectronicAccesses { get; set; }
+
+        [Display(Name = "Item Electronic Accesses", Order = 14)]
+        public virtual ICollection<ItemElectronicAccess> ItemElectronicAccesses { get; set; }
 
         public override string ToString() => $"{{ {nameof(Id)} = {Id}, {nameof(Name)} = {Name}, {nameof(CreationTime)} = {CreationTime}, {nameof(CreationUserId)} = {CreationUserId}, {nameof(CreationUserUsername)} = {CreationUserUsername}, {nameof(LastWriteTime)} = {LastWriteTime}, {nameof(LastWriteUserId)} = {LastWriteUserId}, {nameof(LastWriteUserUsername)} = {LastWriteUserUsername}, {nameof(Content)} = {Content} }}";
 

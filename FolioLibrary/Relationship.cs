@@ -2,7 +2,6 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using NJsonSchema;
 using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.IO;
@@ -74,15 +73,6 @@ namespace FolioLibrary
 
         [Column("content"), CustomValidation(typeof(InstanceRelationship), nameof(ValidateContent)), DataType(DataType.MultilineText), Display(Order = 16), Editable(false)]
         public virtual string Content { get; set; }
-
-        [Display(Name = "Electronic Accesses", Order = 17)]
-        public virtual ICollection<ElectronicAccess> ElectronicAccesses { get; set; }
-
-        [Display(Name = "Holding Electronic Accesses", Order = 18)]
-        public virtual ICollection<HoldingElectronicAccess> HoldingElectronicAccesses { get; set; }
-
-        [Display(Name = "Item Electronic Accesses", Order = 19)]
-        public virtual ICollection<ItemElectronicAccess> ItemElectronicAccesses { get; set; }
 
         public override string ToString() => $"{{ {nameof(Id)} = {Id}, {nameof(SuperInstanceId)} = {SuperInstanceId}, {nameof(SubInstanceId)} = {SubInstanceId}, {nameof(InstanceRelationshipTypeId)} = {InstanceRelationshipTypeId}, {nameof(CreationTime)} = {CreationTime}, {nameof(CreationUserId)} = {CreationUserId}, {nameof(CreationUserUsername)} = {CreationUserUsername}, {nameof(LastWriteTime)} = {LastWriteTime}, {nameof(LastWriteUserId)} = {LastWriteUserId}, {nameof(LastWriteUserUsername)} = {LastWriteUserUsername}, {nameof(Content)} = {Content} }}";
 

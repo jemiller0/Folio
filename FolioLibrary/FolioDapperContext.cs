@@ -610,7 +610,7 @@ namespace FolioLibrary
             var ea = Query<ElectronicAccess>($"SELECT id AS \"Id\", instance_id AS \"InstanceId\", uri AS \"Uri\", link_text AS \"LinkText\", materials_specification AS \"MaterialsSpecification\", public_note AS \"PublicNote\", relationship_id AS \"RelationshipId\" FROM uc{(IsMySql ? "_" : ".")}electronic_accesses WHERE id = @id AND instance_id = @instanceId", new { id, instanceId }).SingleOrDefault();
             if (ea == null) return null;
             if (load && ea.InstanceId != null) ea.Instance = FindInstance2(ea.InstanceId);
-            if (load && ea.RelationshipId != null) ea.Relationship = FindRelationship(ea.RelationshipId);
+            if (load && ea.RelationshipId != null) ea.Relationship = FindElectronicAccessRelationship2(ea.RelationshipId);
             return ea;
         }
         public ElectronicAccessRelationship FindElectronicAccessRelationship(Guid? id, bool load = false) => Query<ElectronicAccessRelationship>($"SELECT id AS \"Id\", jsonb AS \"Content\", creation_date AS \"CreationTime\", created_by AS \"CreationUserId\" FROM diku_mod_inventory_storage{(IsMySql ? "_" : ".")}electronic_access_relationship WHERE id = @id", new { id }).SingleOrDefault();
@@ -851,7 +851,7 @@ namespace FolioLibrary
             var hea = Query<HoldingElectronicAccess>($"SELECT id AS \"Id\", holding_id AS \"HoldingId\", uri AS \"Uri\", link_text AS \"LinkText\", materials_specification AS \"MaterialsSpecification\", public_note AS \"PublicNote\", relationship_id AS \"RelationshipId\" FROM uc{(IsMySql ? "_" : ".")}holding_electronic_accesses WHERE id = @id AND holding_id = @holdingId", new { id, holdingId }).SingleOrDefault();
             if (hea == null) return null;
             if (load && hea.HoldingId != null) hea.Holding = FindHolding2(hea.HoldingId);
-            if (load && hea.RelationshipId != null) hea.Relationship = FindRelationship(hea.RelationshipId);
+            if (load && hea.RelationshipId != null) hea.Relationship = FindElectronicAccessRelationship2(hea.RelationshipId);
             return hea;
         }
         public HoldingEntry FindHoldingEntry(string id, Guid? holdingId, bool load = false)
@@ -1254,7 +1254,7 @@ namespace FolioLibrary
             var iea = Query<ItemElectronicAccess>($"SELECT id AS \"Id\", item_id AS \"ItemId\", uri AS \"Uri\", link_text AS \"LinkText\", materials_specification AS \"MaterialsSpecification\", public_note AS \"PublicNote\", relationship_id AS \"RelationshipId\" FROM uc{(IsMySql ? "_" : ".")}item_electronic_accesses WHERE id = @id AND item_id = @itemId", new { id, itemId }).SingleOrDefault();
             if (iea == null) return null;
             if (load && iea.ItemId != null) iea.Item = FindItem2(iea.ItemId);
-            if (load && iea.RelationshipId != null) iea.Relationship = FindRelationship(iea.RelationshipId);
+            if (load && iea.RelationshipId != null) iea.Relationship = FindElectronicAccessRelationship2(iea.RelationshipId);
             return iea;
         }
         public ItemFormerId FindItemFormerId(string id, Guid? itemId, bool load = false)
