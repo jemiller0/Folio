@@ -99,7 +99,7 @@ namespace FolioLibrary
             LastWriteUserId = (Guid?)jObject.SelectToken("metadata.updatedByUserId"),
             LastWriteUserUsername = (string)jObject.SelectToken("metadata.updatedByUsername"),
             Content = JsonConvert.SerializeObject(jObject, FolioDapperContext.UniversalTimeJsonSerializationSettings),
-            BatchVoucherExportConfigWeekdays = jObject.SelectToken("weekdays")?.Where(jt => jt.HasValues).Select(jt => BatchVoucherExportConfigWeekday.FromJObject((JValue)jt)).ToArray()
+            BatchVoucherExportConfigWeekdays = jObject.SelectToken("weekdays")?.Select(jt => BatchVoucherExportConfigWeekday.FromJObject((JValue)jt)).ToArray()
         } : null;
 
         public JObject ToJObject() => new JObject(

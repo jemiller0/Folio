@@ -170,7 +170,7 @@ namespace FolioLibrary
             OverEncumbrance = (decimal?)jObject.SelectToken("overEncumbrance"),
             OverExpended = (decimal?)jObject.SelectToken("overExpended"),
             Content = JsonConvert.SerializeObject(jObject, FolioDapperContext.UniversalTimeJsonSerializationSettings),
-            LedgerAcquisitionsUnits = jObject.SelectToken("acqUnitIds")?.Where(jt => jt.HasValues).Select(jt => LedgerAcquisitionsUnit.FromJObject((JValue)jt)).ToArray()
+            LedgerAcquisitionsUnits = jObject.SelectToken("acqUnitIds")?.Select(jt => LedgerAcquisitionsUnit.FromJObject((JValue)jt)).ToArray()
         } : null;
 
         public JObject ToJObject() => new JObject(

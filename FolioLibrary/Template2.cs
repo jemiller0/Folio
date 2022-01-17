@@ -117,7 +117,7 @@ namespace FolioLibrary
             LastWriteUserId = (Guid?)jObject.SelectToken("metadata.updatedByUserId"),
             LastWriteUserUsername = (string)jObject.SelectToken("metadata.updatedByUsername"),
             Content = JsonConvert.SerializeObject(jObject, FolioDapperContext.UniversalTimeJsonSerializationSettings),
-            TemplateOutputFormats = jObject.SelectToken("outputFormats")?.Where(jt => jt.HasValues).Select(jt => TemplateOutputFormat.FromJObject((JValue)jt)).ToArray()
+            TemplateOutputFormats = jObject.SelectToken("outputFormats")?.Select(jt => TemplateOutputFormat.FromJObject((JValue)jt)).ToArray()
         } : null;
 
         public JObject ToJObject() => new JObject(

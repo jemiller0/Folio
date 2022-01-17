@@ -154,7 +154,7 @@ namespace FolioLibrary
             LastWriteUserId = (Guid?)jObject.SelectToken("metadata.updatedByUserId"),
             LastWriteUserUsername = (string)jObject.SelectToken("metadata.updatedByUsername"),
             Content = JsonConvert.SerializeObject(jObject, FolioDapperContext.UniversalTimeJsonSerializationSettings),
-            LocationServicePoints = jObject.SelectToken("servicePointIds")?.Where(jt => jt.HasValues).Select(jt => LocationServicePoint.FromJObject((JValue)jt)).ToArray()
+            LocationServicePoints = jObject.SelectToken("servicePointIds")?.Select(jt => LocationServicePoint.FromJObject((JValue)jt)).ToArray()
         } : null;
 
         public JObject ToJObject() => new JObject(

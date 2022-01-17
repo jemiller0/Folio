@@ -149,10 +149,10 @@ namespace FolioLibrary
             LastWriteUserId = (Guid?)jObject.SelectToken("metadata.updatedByUserId"),
             LastWriteUserUsername = (string)jObject.SelectToken("metadata.updatedByUsername"),
             Content = JsonConvert.SerializeObject(jObject, FolioDapperContext.UniversalTimeJsonSerializationSettings),
-            AllocatedFromFunds = jObject.SelectToken("allocatedFromIds")?.Where(jt => jt.HasValues).Select(jt => AllocatedFromFund.FromJObject((JValue)jt)).ToArray(),
-            AllocatedToFunds = jObject.SelectToken("allocatedToIds")?.Where(jt => jt.HasValues).Select(jt => AllocatedToFund.FromJObject((JValue)jt)).ToArray(),
-            FundAcquisitionsUnits = jObject.SelectToken("acqUnitIds")?.Where(jt => jt.HasValues).Select(jt => FundAcquisitionsUnit.FromJObject((JValue)jt)).ToArray(),
-            FundTags = jObject.SelectToken("tags.tagList")?.Where(jt => jt.HasValues).Select(jt => FundTag.FromJObject((JValue)jt)).ToArray()
+            AllocatedFromFunds = jObject.SelectToken("allocatedFromIds")?.Select(jt => AllocatedFromFund.FromJObject((JValue)jt)).ToArray(),
+            AllocatedToFunds = jObject.SelectToken("allocatedToIds")?.Select(jt => AllocatedToFund.FromJObject((JValue)jt)).ToArray(),
+            FundAcquisitionsUnits = jObject.SelectToken("acqUnitIds")?.Select(jt => FundAcquisitionsUnit.FromJObject((JValue)jt)).ToArray(),
+            FundTags = jObject.SelectToken("tags.tagList")?.Select(jt => FundTag.FromJObject((JValue)jt)).ToArray()
         } : null;
 
         public JObject ToJObject() => new JObject(

@@ -243,10 +243,10 @@ namespace FolioLibrary
             LastWriteUserId = (Guid?)jObject.SelectToken("metadata.updatedByUserId"),
             LastWriteUserUsername = (string)jObject.SelectToken("metadata.updatedByUsername"),
             Content = JsonConvert.SerializeObject(jObject, FolioDapperContext.UniversalTimeJsonSerializationSettings),
-            InvoiceAcquisitionsUnits = jObject.SelectToken("acqUnitIds")?.Where(jt => jt.HasValues).Select(jt => InvoiceAcquisitionsUnit.FromJObject((JValue)jt)).ToArray(),
-            InvoiceAdjustments = jObject.SelectToken("adjustments")?.Where(jt => jt.HasValues).Select(jt => InvoiceAdjustment.FromJObject((JObject)jt)).ToArray(),
-            InvoiceOrderNumbers = jObject.SelectToken("poNumbers")?.Where(jt => jt.HasValues).Select(jt => InvoiceOrderNumber.FromJObject((JValue)jt)).ToArray(),
-            InvoiceTags = jObject.SelectToken("tags.tagList")?.Where(jt => jt.HasValues).Select(jt => InvoiceTag.FromJObject((JValue)jt)).ToArray()
+            InvoiceAcquisitionsUnits = jObject.SelectToken("acqUnitIds")?.Select(jt => InvoiceAcquisitionsUnit.FromJObject((JValue)jt)).ToArray(),
+            InvoiceAdjustments = jObject.SelectToken("adjustments")?.Select(jt => InvoiceAdjustment.FromJObject((JObject)jt)).ToArray(),
+            InvoiceOrderNumbers = jObject.SelectToken("poNumbers")?.Select(jt => InvoiceOrderNumber.FromJObject((JValue)jt)).ToArray(),
+            InvoiceTags = jObject.SelectToken("tags.tagList")?.Select(jt => InvoiceTag.FromJObject((JValue)jt)).ToArray()
         } : null;
 
         public JObject ToJObject() => new JObject(

@@ -47,7 +47,7 @@ namespace FolioLibrary
             Id = (Guid?)jObject.SelectToken("id"),
             Leader = (string)jObject.SelectToken("leader"),
             Content = JsonConvert.SerializeObject(jObject, FolioDapperContext.UniversalTimeJsonSerializationSettings),
-            SourceMarcFields = jObject.SelectToken("fields")?.Where(jt => jt.HasValues).Select(jt => SourceMarcField.FromJObject((JValue)jt)).ToArray()
+            SourceMarcFields = jObject.SelectToken("fields")?.Select(jt => SourceMarcField.FromJObject((JValue)jt)).ToArray()
         } : null;
 
         public JObject ToJObject() => new JObject(

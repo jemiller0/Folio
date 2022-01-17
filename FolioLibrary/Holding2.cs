@@ -228,15 +228,15 @@ namespace FolioLibrary
             LastWriteUserUsername = (string)jObject.SelectToken("metadata.updatedByUsername"),
             SourceId = (Guid?)jObject.SelectToken("sourceId"),
             Content = JsonConvert.SerializeObject(jObject, FolioDapperContext.UniversalTimeJsonSerializationSettings),
-            Extents = jObject.SelectToken("holdingsStatements")?.Where(jt => jt.HasValues).Select(jt => Extent.FromJObject((JObject)jt)).ToArray(),
-            HoldingElectronicAccesses = jObject.SelectToken("electronicAccess")?.Where(jt => jt.HasValues).Select(jt => HoldingElectronicAccess.FromJObject((JObject)jt)).ToArray(),
-            HoldingEntries = jObject.SelectToken("receivingHistory.entries")?.Where(jt => jt.HasValues).Select(jt => HoldingEntry.FromJObject((JObject)jt)).ToArray(),
-            HoldingFormerIds = jObject.SelectToken("formerIds")?.Where(jt => jt.HasValues).Select(jt => HoldingFormerId.FromJObject((JValue)jt)).ToArray(),
-            HoldingNotes = jObject.SelectToken("notes")?.Where(jt => jt.HasValues).Select(jt => HoldingNote.FromJObject((JObject)jt)).ToArray(),
-            HoldingStatisticalCodes = jObject.SelectToken("statisticalCodeIds")?.Where(jt => jt.HasValues).Select(jt => HoldingStatisticalCode.FromJObject((JValue)jt)).ToArray(),
-            HoldingTags = jObject.SelectToken("tags.tagList")?.Where(jt => jt.HasValues).Select(jt => HoldingTag.FromJObject((JValue)jt)).ToArray(),
-            IndexStatements = jObject.SelectToken("holdingsStatementsForIndexes")?.Where(jt => jt.HasValues).Select(jt => IndexStatement.FromJObject((JObject)jt)).ToArray(),
-            SupplementStatements = jObject.SelectToken("holdingsStatementsForSupplements")?.Where(jt => jt.HasValues).Select(jt => SupplementStatement.FromJObject((JObject)jt)).ToArray()
+            Extents = jObject.SelectToken("holdingsStatements")?.Select(jt => Extent.FromJObject((JObject)jt)).ToArray(),
+            HoldingElectronicAccesses = jObject.SelectToken("electronicAccess")?.Select(jt => HoldingElectronicAccess.FromJObject((JObject)jt)).ToArray(),
+            HoldingEntries = jObject.SelectToken("receivingHistory.entries")?.Select(jt => HoldingEntry.FromJObject((JObject)jt)).ToArray(),
+            HoldingFormerIds = jObject.SelectToken("formerIds")?.Select(jt => HoldingFormerId.FromJObject((JValue)jt)).ToArray(),
+            HoldingNotes = jObject.SelectToken("notes")?.Select(jt => HoldingNote.FromJObject((JObject)jt)).ToArray(),
+            HoldingStatisticalCodes = jObject.SelectToken("statisticalCodeIds")?.Select(jt => HoldingStatisticalCode.FromJObject((JValue)jt)).ToArray(),
+            HoldingTags = jObject.SelectToken("tags.tagList")?.Select(jt => HoldingTag.FromJObject((JValue)jt)).ToArray(),
+            IndexStatements = jObject.SelectToken("holdingsStatementsForIndexes")?.Select(jt => IndexStatement.FromJObject((JObject)jt)).ToArray(),
+            SupplementStatements = jObject.SelectToken("holdingsStatementsForSupplements")?.Select(jt => SupplementStatement.FromJObject((JObject)jt)).ToArray()
         } : null;
 
         public JObject ToJObject() => new JObject(

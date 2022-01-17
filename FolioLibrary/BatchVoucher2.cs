@@ -66,7 +66,7 @@ namespace FolioLibrary
             End = (DateTime?)jObject.SelectToken("end"),
             TotalRecords = (int?)jObject.SelectToken("totalRecords"),
             Content = JsonConvert.SerializeObject(jObject, FolioDapperContext.UniversalTimeJsonSerializationSettings),
-            BatchVoucherBatchedVouchers = jObject.SelectToken("batchedVouchers")?.Where(jt => jt.HasValues).Select(jt => BatchVoucherBatchedVoucher.FromJObject((JObject)jt)).ToArray()
+            BatchVoucherBatchedVouchers = jObject.SelectToken("batchedVouchers")?.Select(jt => BatchVoucherBatchedVoucher.FromJObject((JObject)jt)).ToArray()
         } : null;
 
         public JObject ToJObject() => new JObject(

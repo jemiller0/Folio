@@ -83,7 +83,7 @@ namespace FolioLibrary
             LastWriteUserId = (Guid?)jObject.SelectToken("metadata.updatedByUserId"),
             LastWriteUserUsername = (string)jObject.SelectToken("metadata.updatedByUsername"),
             Content = JsonConvert.SerializeObject(jObject, FolioDapperContext.UniversalTimeJsonSerializationSettings),
-            PermissionsUserPermissions = jObject.SelectToken("permissions")?.Where(jt => jt.HasValues).Select(jt => PermissionsUserPermission.FromJObject((JValue)jt)).ToArray()
+            PermissionsUserPermissions = jObject.SelectToken("permissions")?.Select(jt => PermissionsUserPermission.FromJObject((JValue)jt)).ToArray()
         } : null;
 
         public JObject ToJObject() => new JObject(

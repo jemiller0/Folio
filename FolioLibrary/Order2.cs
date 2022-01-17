@@ -216,9 +216,9 @@ namespace FolioLibrary
             LastWriteUserId = (Guid?)jObject.SelectToken("metadata.updatedByUserId"),
             LastWriteUserUsername = (string)jObject.SelectToken("metadata.updatedByUsername"),
             Content = JsonConvert.SerializeObject(jObject, FolioDapperContext.UniversalTimeJsonSerializationSettings),
-            OrderAcquisitionsUnits = jObject.SelectToken("acqUnitIds")?.Where(jt => jt.HasValues).Select(jt => OrderAcquisitionsUnit.FromJObject((JValue)jt)).ToArray(),
-            OrderNotes = jObject.SelectToken("notes")?.Where(jt => jt.HasValues).Select(jt => OrderNote.FromJObject((JValue)jt)).ToArray(),
-            OrderTags = jObject.SelectToken("tags.tagList")?.Where(jt => jt.HasValues).Select(jt => OrderTag.FromJObject((JValue)jt)).ToArray()
+            OrderAcquisitionsUnits = jObject.SelectToken("acqUnitIds")?.Select(jt => OrderAcquisitionsUnit.FromJObject((JValue)jt)).ToArray(),
+            OrderNotes = jObject.SelectToken("notes")?.Select(jt => OrderNote.FromJObject((JValue)jt)).ToArray(),
+            OrderTags = jObject.SelectToken("tags.tagList")?.Select(jt => OrderTag.FromJObject((JValue)jt)).ToArray()
         } : null;
 
         public JObject ToJObject() => new JObject(

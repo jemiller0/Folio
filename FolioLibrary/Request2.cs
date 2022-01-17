@@ -220,8 +220,8 @@ namespace FolioLibrary
             LastWriteUserUsername = (string)jObject.SelectToken("metadata.updatedByUsername"),
             AwaitingPickupRequestClosedDate = (DateTime?)jObject.SelectToken("awaitingPickupRequestClosedDate"),
             Content = JsonConvert.SerializeObject(jObject, FolioDapperContext.UniversalTimeJsonSerializationSettings),
-            RequestIdentifiers = jObject.SelectToken("item.identifiers")?.Where(jt => jt.HasValues).Select(jt => RequestIdentifier.FromJObject((JObject)jt)).ToArray(),
-            RequestTags = jObject.SelectToken("tags.tagList")?.Where(jt => jt.HasValues).Select(jt => RequestTag.FromJObject((JValue)jt)).ToArray()
+            RequestIdentifiers = jObject.SelectToken("item.identifiers")?.Select(jt => RequestIdentifier.FromJObject((JObject)jt)).ToArray(),
+            RequestTags = jObject.SelectToken("tags.tagList")?.Select(jt => RequestTag.FromJObject((JValue)jt)).ToArray()
         } : null;
 
         public JObject ToJObject() => new JObject(

@@ -37,7 +37,7 @@ namespace FolioLibrary
         {
             Amount = (decimal?)jObject.SelectToken("amount"),
             AccountNumber = (string)jObject.SelectToken("externalAccountNumber"),
-            BatchVoucherBatchedVoucherBatchedVoucherLineFundCodes = jObject.SelectToken("fundCodes")?.Where(jt => jt.HasValues).Select(jt => BatchVoucherBatchedVoucherBatchedVoucherLineFundCode.FromJObject((JValue)jt)).ToArray()
+            BatchVoucherBatchedVoucherBatchedVoucherLineFundCodes = jObject.SelectToken("fundCodes")?.Select(jt => BatchVoucherBatchedVoucherBatchedVoucherLineFundCode.FromJObject((JValue)jt)).ToArray()
         } : null;
 
         public JObject ToJObject() => new JObject(

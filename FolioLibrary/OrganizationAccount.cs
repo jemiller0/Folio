@@ -70,7 +70,7 @@ namespace FolioLibrary
             LibraryCode = (string)jObject.SelectToken("libraryCode"),
             LibraryEdiCode = (string)jObject.SelectToken("libraryEdiCode"),
             Notes = (string)jObject.SelectToken("notes"),
-            OrganizationAccountAcquisitionsUnits = jObject.SelectToken("acqUnitIds")?.Where(jt => jt.HasValues).Select(jt => OrganizationAccountAcquisitionsUnit.FromJObject((JValue)jt)).ToArray()
+            OrganizationAccountAcquisitionsUnits = jObject.SelectToken("acqUnitIds")?.Select(jt => OrganizationAccountAcquisitionsUnit.FromJObject((JValue)jt)).ToArray()
         } : null;
 
         public JObject ToJObject() => new JObject(

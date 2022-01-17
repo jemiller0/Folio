@@ -96,7 +96,7 @@ namespace FolioLibrary
             LastWriteTime = (DateTime?)jObject.SelectToken("metadata.updatedDate"),
             LastWriteUserId = (Guid?)jObject.SelectToken("metadata.updatedByUserId"),
             LastWriteUserUsername = (string)jObject.SelectToken("metadata.updatedByUsername"),
-            ContactAddressCategories = jObject.SelectToken("categories")?.Where(jt => jt.HasValues).Select(jt => ContactAddressCategory.FromJObject((JValue)jt)).ToArray()
+            ContactAddressCategories = jObject.SelectToken("categories")?.Select(jt => ContactAddressCategory.FromJObject((JValue)jt)).ToArray()
         } : null;
 
         public JObject ToJObject() => new JObject(

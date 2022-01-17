@@ -87,7 +87,7 @@ namespace FolioLibrary
             LastWriteUserId = (Guid?)jObject.SelectToken("metadata.updatedByUserId"),
             LastWriteUserUsername = (string)jObject.SelectToken("metadata.updatedByUsername"),
             Content = JsonConvert.SerializeObject(jObject, FolioDapperContext.UniversalTimeJsonSerializationSettings),
-            FixedDueDateScheduleSchedules = jObject.SelectToken("schedules")?.Where(jt => jt.HasValues).Select(jt => FixedDueDateScheduleSchedule.FromJObject((JObject)jt)).ToArray()
+            FixedDueDateScheduleSchedules = jObject.SelectToken("schedules")?.Select(jt => FixedDueDateScheduleSchedule.FromJObject((JObject)jt)).ToArray()
         } : null;
 
         public JObject ToJObject() => new JObject(

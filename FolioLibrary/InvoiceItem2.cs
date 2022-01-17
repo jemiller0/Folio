@@ -178,11 +178,11 @@ namespace FolioLibrary
             LastWriteUserId = (Guid?)jObject.SelectToken("metadata.updatedByUserId"),
             LastWriteUserUsername = (string)jObject.SelectToken("metadata.updatedByUsername"),
             Content = JsonConvert.SerializeObject(jObject, FolioDapperContext.UniversalTimeJsonSerializationSettings),
-            InvoiceItemAdjustmentFunds = jObject.SelectToken("fundDistributions")?.Where(jt => jt.HasValues).Select(jt => InvoiceItemAdjustmentFund.FromJObject((JObject)jt)).ToArray(),
-            InvoiceItemAdjustments = jObject.SelectToken("adjustments")?.Where(jt => jt.HasValues).Select(jt => InvoiceItemAdjustment.FromJObject((JObject)jt)).ToArray(),
-            InvoiceItemFunds = jObject.SelectToken("fundDistributions")?.Where(jt => jt.HasValues).Select(jt => InvoiceItemFund.FromJObject((JObject)jt)).ToArray(),
-            InvoiceItemReferenceNumbers = jObject.SelectToken("referenceNumbers")?.Where(jt => jt.HasValues).Select(jt => InvoiceItemReferenceNumber.FromJObject((JObject)jt)).ToArray(),
-            InvoiceItemTags = jObject.SelectToken("tags.tagList")?.Where(jt => jt.HasValues).Select(jt => InvoiceItemTag.FromJObject((JValue)jt)).ToArray()
+            InvoiceItemAdjustmentFunds = jObject.SelectToken("fundDistributions")?.Select(jt => InvoiceItemAdjustmentFund.FromJObject((JObject)jt)).ToArray(),
+            InvoiceItemAdjustments = jObject.SelectToken("adjustments")?.Select(jt => InvoiceItemAdjustment.FromJObject((JObject)jt)).ToArray(),
+            InvoiceItemFunds = jObject.SelectToken("fundDistributions")?.Select(jt => InvoiceItemFund.FromJObject((JObject)jt)).ToArray(),
+            InvoiceItemReferenceNumbers = jObject.SelectToken("referenceNumbers")?.Select(jt => InvoiceItemReferenceNumber.FromJObject((JObject)jt)).ToArray(),
+            InvoiceItemTags = jObject.SelectToken("tags.tagList")?.Select(jt => InvoiceItemTag.FromJObject((JValue)jt)).ToArray()
         } : null;
 
         public JObject ToJObject() => new JObject(

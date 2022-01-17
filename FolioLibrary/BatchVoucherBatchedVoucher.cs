@@ -126,7 +126,7 @@ namespace FolioLibrary
             VendorState = (string)jObject.SelectToken("vendorAddress.stateRegion"),
             VendorPostalCode = (string)jObject.SelectToken("vendorAddress.zipCode"),
             VendorCountryCode = (string)jObject.SelectToken("vendorAddress.country"),
-            BatchVoucherBatchedVoucherBatchedVoucherLines = jObject.SelectToken("batchedVoucherLines")?.Where(jt => jt.HasValues).Select(jt => BatchVoucherBatchedVoucherBatchedVoucherLine.FromJObject((JObject)jt)).ToArray()
+            BatchVoucherBatchedVoucherBatchedVoucherLines = jObject.SelectToken("batchedVoucherLines")?.Select(jt => BatchVoucherBatchedVoucherBatchedVoucherLine.FromJObject((JObject)jt)).ToArray()
         } : null;
 
         public JObject ToJObject() => new JObject(

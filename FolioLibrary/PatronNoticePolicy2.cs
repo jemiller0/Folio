@@ -91,9 +91,9 @@ namespace FolioLibrary
             LastWriteUserId = (Guid?)jObject.SelectToken("metadata.updatedByUserId"),
             LastWriteUserUsername = (string)jObject.SelectToken("metadata.updatedByUsername"),
             Content = JsonConvert.SerializeObject(jObject, FolioDapperContext.UniversalTimeJsonSerializationSettings),
-            PatronNoticePolicyFeeFineNotices = jObject.SelectToken("feeFineNotices")?.Where(jt => jt.HasValues).Select(jt => PatronNoticePolicyFeeFineNotice.FromJObject((JObject)jt)).ToArray(),
-            PatronNoticePolicyLoanNotices = jObject.SelectToken("loanNotices")?.Where(jt => jt.HasValues).Select(jt => PatronNoticePolicyLoanNotice.FromJObject((JObject)jt)).ToArray(),
-            PatronNoticePolicyRequestNotices = jObject.SelectToken("requestNotices")?.Where(jt => jt.HasValues).Select(jt => PatronNoticePolicyRequestNotice.FromJObject((JObject)jt)).ToArray()
+            PatronNoticePolicyFeeFineNotices = jObject.SelectToken("feeFineNotices")?.Select(jt => PatronNoticePolicyFeeFineNotice.FromJObject((JObject)jt)).ToArray(),
+            PatronNoticePolicyLoanNotices = jObject.SelectToken("loanNotices")?.Select(jt => PatronNoticePolicyLoanNotice.FromJObject((JObject)jt)).ToArray(),
+            PatronNoticePolicyRequestNotices = jObject.SelectToken("requestNotices")?.Select(jt => PatronNoticePolicyRequestNotice.FromJObject((JObject)jt)).ToArray()
         } : null;
 
         public JObject ToJObject() => new JObject(

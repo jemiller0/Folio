@@ -390,16 +390,16 @@ namespace FolioLibrary
             LastWriteUserId = (Guid?)jObject.SelectToken("metadata.updatedByUserId"),
             LastWriteUserUsername = (string)jObject.SelectToken("metadata.updatedByUsername"),
             Content = JsonConvert.SerializeObject(jObject, FolioDapperContext.UniversalTimeJsonSerializationSettings),
-            OrderItemAlerts = jObject.SelectToken("alerts")?.Where(jt => jt.HasValues).Select(jt => OrderItemAlert.FromJObject((JValue)jt)).ToArray(),
-            OrderItemClaims = jObject.SelectToken("claims")?.Where(jt => jt.HasValues).Select(jt => OrderItemClaim.FromJObject((JObject)jt)).ToArray(),
-            OrderItemContributors = jObject.SelectToken("contributors")?.Where(jt => jt.HasValues).Select(jt => OrderItemContributor.FromJObject((JObject)jt)).ToArray(),
-            OrderItemFunds = jObject.SelectToken("fundDistribution")?.Where(jt => jt.HasValues).Select(jt => OrderItemFund.FromJObject((JObject)jt)).ToArray(),
-            OrderItemLocation2s = jObject.SelectToken("locations")?.Where(jt => jt.HasValues).Select(jt => OrderItemLocation2.FromJObject((JObject)jt)).ToArray(),
-            OrderItemProductIds = jObject.SelectToken("details.productIds")?.Where(jt => jt.HasValues).Select(jt => OrderItemProductId.FromJObject((JObject)jt)).ToArray(),
-            OrderItemReferenceNumbers = jObject.SelectToken("vendorDetail.referenceNumbers")?.Where(jt => jt.HasValues).Select(jt => OrderItemReferenceNumber.FromJObject((JObject)jt)).ToArray(),
-            OrderItemReportingCodes = jObject.SelectToken("reportingCodes")?.Where(jt => jt.HasValues).Select(jt => OrderItemReportingCode.FromJObject((JValue)jt)).ToArray(),
-            OrderItemTags = jObject.SelectToken("tags.tagList")?.Where(jt => jt.HasValues).Select(jt => OrderItemTag.FromJObject((JValue)jt)).ToArray(),
-            OrderItemVolumes = jObject.SelectToken("physical.volumes")?.Where(jt => jt.HasValues).Select(jt => OrderItemVolume.FromJObject((JValue)jt)).ToArray()
+            OrderItemAlerts = jObject.SelectToken("alerts")?.Select(jt => OrderItemAlert.FromJObject((JValue)jt)).ToArray(),
+            OrderItemClaims = jObject.SelectToken("claims")?.Select(jt => OrderItemClaim.FromJObject((JObject)jt)).ToArray(),
+            OrderItemContributors = jObject.SelectToken("contributors")?.Select(jt => OrderItemContributor.FromJObject((JObject)jt)).ToArray(),
+            OrderItemFunds = jObject.SelectToken("fundDistribution")?.Select(jt => OrderItemFund.FromJObject((JObject)jt)).ToArray(),
+            OrderItemLocation2s = jObject.SelectToken("locations")?.Select(jt => OrderItemLocation2.FromJObject((JObject)jt)).ToArray(),
+            OrderItemProductIds = jObject.SelectToken("details.productIds")?.Select(jt => OrderItemProductId.FromJObject((JObject)jt)).ToArray(),
+            OrderItemReferenceNumbers = jObject.SelectToken("vendorDetail.referenceNumbers")?.Select(jt => OrderItemReferenceNumber.FromJObject((JObject)jt)).ToArray(),
+            OrderItemReportingCodes = jObject.SelectToken("reportingCodes")?.Select(jt => OrderItemReportingCode.FromJObject((JValue)jt)).ToArray(),
+            OrderItemTags = jObject.SelectToken("tags.tagList")?.Select(jt => OrderItemTag.FromJObject((JValue)jt)).ToArray(),
+            OrderItemVolumes = jObject.SelectToken("physical.volumes")?.Select(jt => OrderItemVolume.FromJObject((JValue)jt)).ToArray()
         } : null;
 
         public JObject ToJObject() => new JObject(

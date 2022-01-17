@@ -126,10 +126,10 @@ namespace FolioLibrary
             LastWriteUserId = (Guid?)jObject.SelectToken("metadata.updatedByUserId"),
             LastWriteUserUsername = (string)jObject.SelectToken("metadata.updatedByUsername"),
             Content = JsonConvert.SerializeObject(jObject, FolioDapperContext.UniversalTimeJsonSerializationSettings),
-            PermissionChildOfs = jObject.SelectToken("childOf")?.Where(jt => jt.HasValues).Select(jt => PermissionChildOf.FromJObject((JValue)jt)).ToArray(),
-            PermissionGrantedTos = jObject.SelectToken("grantedTo")?.Where(jt => jt.HasValues).Select(jt => PermissionGrantedTo.FromJObject((JValue)jt)).ToArray(),
-            PermissionSubPermissions = jObject.SelectToken("subPermissions")?.Where(jt => jt.HasValues).Select(jt => PermissionSubPermission.FromJObject((JValue)jt)).ToArray(),
-            PermissionTags = jObject.SelectToken("tags")?.Where(jt => jt.HasValues).Select(jt => PermissionTag.FromJObject((JValue)jt)).ToArray()
+            PermissionChildOfs = jObject.SelectToken("childOf")?.Select(jt => PermissionChildOf.FromJObject((JValue)jt)).ToArray(),
+            PermissionGrantedTos = jObject.SelectToken("grantedTo")?.Select(jt => PermissionGrantedTo.FromJObject((JValue)jt)).ToArray(),
+            PermissionSubPermissions = jObject.SelectToken("subPermissions")?.Select(jt => PermissionSubPermission.FromJObject((JValue)jt)).ToArray(),
+            PermissionTags = jObject.SelectToken("tags")?.Select(jt => PermissionTag.FromJObject((JValue)jt)).ToArray()
         } : null;
 
         public JObject ToJObject() => new JObject(

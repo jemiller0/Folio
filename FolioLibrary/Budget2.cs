@@ -168,8 +168,8 @@ namespace FolioLibrary
             TotalFunding = (decimal?)jObject.SelectToken("totalFunding"),
             CashBalance = (decimal?)jObject.SelectToken("cashBalance"),
             Content = JsonConvert.SerializeObject(jObject, FolioDapperContext.UniversalTimeJsonSerializationSettings),
-            BudgetAcquisitionsUnits = jObject.SelectToken("acqUnitIds")?.Where(jt => jt.HasValues).Select(jt => BudgetAcquisitionsUnit.FromJObject((JValue)jt)).ToArray(),
-            BudgetTags = jObject.SelectToken("tags.tagList")?.Where(jt => jt.HasValues).Select(jt => BudgetTag.FromJObject((JValue)jt)).ToArray()
+            BudgetAcquisitionsUnits = jObject.SelectToken("acqUnitIds")?.Select(jt => BudgetAcquisitionsUnit.FromJObject((JValue)jt)).ToArray(),
+            BudgetTags = jObject.SelectToken("tags.tagList")?.Select(jt => BudgetTag.FromJObject((JValue)jt)).ToArray()
         } : null;
 
         public JObject ToJObject() => new JObject(
