@@ -3520,7 +3520,7 @@ namespace FolioLibrary
             if ((skip != null || take != null) && take != 0) orderBy = orderBy ?? "id";
             var url = $"{Url}/custom-fields{(where != null || orderBy != null ? $"?query={WebUtility.UrlEncode(where)}{(orderBy != null ? $"{(where != null ? " " : "cql.allrecords=1 ")}sortby {WebUtility.UrlEncode(orderBy)}" : "")}" : "")}{(skip != null ? $"{(where != null || orderBy != null ? "&" : "?")}offset={skip}" : "")}{(where != null || orderBy != null || skip != null ? "&" : "?")}limit={take ?? int.MaxValue}";
             traceSource.TraceEvent(TraceEventType.Verbose, 0, url);
-            httpClient.DefaultRequestHeaders.TryAddWithoutValidation("x-okapi-module-id", "mod-users-17.2.2");
+            httpClient.DefaultRequestHeaders.TryAddWithoutValidation("x-okapi-module-id", "mod-users-18.0.2");
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", httpClient.DefaultRequestHeaders);
             var hrm = httpClient.GetAsync(url).Result;
             httpClient.DefaultRequestHeaders.Remove("x-okapi-module-id");
@@ -3541,7 +3541,7 @@ namespace FolioLibrary
             if ((skip != null || take != null) && take != 0) orderBy = orderBy ?? "id";
             var url = $"{Url}/custom-fields{(where != null || orderBy != null ? $"?query={WebUtility.UrlEncode(where)}{(orderBy != null ? $"{(where != null ? " " : "cql.allrecords=1 ")}sortby {WebUtility.UrlEncode(orderBy)}" : "")}" : "")}{(skip != null ? $"{(where != null || orderBy != null ? "&" : "?")}offset={skip}" : "")}{(where != null || orderBy != null || skip != null ? "&" : "?")}limit={take ?? int.MaxValue}";
             traceSource.TraceEvent(TraceEventType.Verbose, 0, url);
-            httpClient.DefaultRequestHeaders.TryAddWithoutValidation("x-okapi-module-id", "mod-users-17.2.2");
+            httpClient.DefaultRequestHeaders.TryAddWithoutValidation("x-okapi-module-id", "mod-users-18.0.2");
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", httpClient.DefaultRequestHeaders);
             var hrm = httpClient.GetAsync(url, HttpCompletionOption.ResponseHeadersRead).Result;
             httpClient.DefaultRequestHeaders.Remove("x-okapi-module-id");
@@ -3576,7 +3576,7 @@ namespace FolioLibrary
             AuthenticateIfNecessary();
             var url = $"{Url}/custom-fields/{id}";
             traceSource.TraceEvent(TraceEventType.Verbose, 0, url);
-            httpClient.DefaultRequestHeaders.TryAddWithoutValidation("x-okapi-module-id", "mod-users-17.2.2");
+            httpClient.DefaultRequestHeaders.TryAddWithoutValidation("x-okapi-module-id", "mod-users-18.0.2");
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", httpClient.DefaultRequestHeaders);
             var hrm = httpClient.GetAsync(url).Result;
             httpClient.DefaultRequestHeaders.Remove("x-okapi-module-id");
@@ -3598,7 +3598,7 @@ namespace FolioLibrary
             traceSource.TraceEvent(TraceEventType.Verbose, 0, url);
             var s2 = JsonConvert.SerializeObject(customField, universalTimeJsonSerializationSettings);
             var sc = new StringContent(s2, Encoding.UTF8, "application/json");
-            httpClient.DefaultRequestHeaders.TryAddWithoutValidation("x-okapi-module-id", "mod-users-17.2.2");
+            httpClient.DefaultRequestHeaders.TryAddWithoutValidation("x-okapi-module-id", "mod-users-18.0.2");
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}{1}", httpClient.DefaultRequestHeaders, s2);
             var hrm = httpClient.PostAsync(url, sc).Result;
             httpClient.DefaultRequestHeaders.Remove("x-okapi-module-id");
@@ -3619,7 +3619,7 @@ namespace FolioLibrary
             traceSource.TraceEvent(TraceEventType.Verbose, 0, url);
             var s2 = JsonConvert.SerializeObject(customField, universalTimeJsonSerializationSettings);
             var sc = new StringContent(s2, Encoding.UTF8, "application/json");
-            httpClient.DefaultRequestHeaders.TryAddWithoutValidation("x-okapi-module-id", "mod-users-17.2.2");
+            httpClient.DefaultRequestHeaders.TryAddWithoutValidation("x-okapi-module-id", "mod-users-18.0.2");
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}{1}", httpClient.DefaultRequestHeaders, s2);
             var hrm = httpClient.PutAsync(url, sc).Result;
             httpClient.DefaultRequestHeaders.Remove("x-okapi-module-id");
@@ -3636,7 +3636,7 @@ namespace FolioLibrary
             AuthenticateIfNecessary();
             var url = $"{Url}/custom-fields/{id}";
             traceSource.TraceEvent(TraceEventType.Verbose, 0, url);
-            httpClient.DefaultRequestHeaders.TryAddWithoutValidation("x-okapi-module-id", "mod-users-17.2.2");
+            httpClient.DefaultRequestHeaders.TryAddWithoutValidation("x-okapi-module-id", "mod-users-18.0.2");
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", httpClient.DefaultRequestHeaders);
             var hrm = httpClient.DeleteAsync(url).Result;
             httpClient.DefaultRequestHeaders.Remove("x-okapi-module-id");

@@ -98,12 +98,16 @@ namespace FolioWebApplication
                     using (var fsc = new FolioServiceContext()) Session["UserId"] = fsc.User2s($"username == \"{Session["UserName"]}\"").Single().Id;
                 }
                 var hs = Roles.GetRolesForUser().ToHashSet();
+                var userName = (string)Session["UserName"];
                 if (hs.Any())
                 {
                     if (ConfigurationManager.AppSettings["labelsOnly"] != "true")
                     {
                         //SetPermissions(hs);
-                        if (hs.Contains("department:Library Systems - Ils"))
+                        if (hs.Contains("department:Library Systems - Ils")
+                            || userName == "stp0"
+                            || userName == "kmarti"
+                            )
                         {
                             SetCirculationPermissions("View");
                             SetConfigurationPermissions("View");
@@ -118,7 +122,15 @@ namespace FolioWebApplication
                             SetTemplatesPermissions("View");
                             SetUsersPermissions("View");
                         }
-                        else if (hs.Contains("department:Coll Servc Budg & Report") || hs.Contains("department:Tech Srvc-Cat Admin") || hs.Contains("department:Law Cataloging") || hs.Contains("department:Law Library Administration"))
+                        else if (
+                            hs.Contains("department:Coll Servc Budg & Report") 
+                            || hs.Contains("department:Tech Srvc-Cat Admin") 
+                            || hs.Contains("department:Tech Srvc-Cont Resources") 
+                            || hs.Contains("department:Law Cataloging") 
+                            || hs.Contains("department:Law Library Administration")
+                            || hs.Contains("department:Scrc-Pres")
+                            || userName == "burnstein"
+                            )
                         {
                             SetFinancePermissions("View");
                             SetInvoicesPermissions("View");
@@ -126,6 +138,7 @@ namespace FolioWebApplication
                             SetOrganizationsPermissions("View");
                             SetInventoryPermissions("View");
                             SetSourcePermissions("View");
+                            Session["LabelsPermission"] = "Edit";
                         }
                         else if (hs.Contains("department:Preserv Binding & Shelf Prpe"))
                         {

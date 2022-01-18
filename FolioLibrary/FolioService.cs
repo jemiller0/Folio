@@ -158,9 +158,9 @@ namespace FolioLibrary
             using (var fsc = new FolioServiceContext())
             {
                 var i = fsc.Item2s($"barcode == \"{barcode}\""/*, load: true*/).SingleOrDefault();
+                if (i == null) return null;
                 if (i.EffectiveCallNumberTypeId != null) i.EffectiveCallNumberType = fsc.FindCallNumberType2(i.EffectiveCallNumberTypeId);
                 if (i.EffectiveLocationId != null) i.EffectiveLocation = fsc.FindLocation2(i.EffectiveLocationId);
-                if (i == null) return null;
                 var ls = fsc.LocationSettings().SingleOrDefault(ls2 => ls2.LocationId == i.EffectiveLocationId);
                 var s = fsc.FindSetting(ls?.SettingsId) ?? new Setting { FontFamily = "Courier New", FontSize = 11, FontWeight = FontWeight.Bold, Orientation = orientation ?? Orientation.Portrait };
                 if (orientation != null) s.Orientation = orientation;
