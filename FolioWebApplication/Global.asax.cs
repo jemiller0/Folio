@@ -88,8 +88,13 @@ namespace FolioWebApplication
                 //ImpersonateUser("dbottorff");
                 //ImpersonateUser("lar1");
                 //ImpersonateUser("stp0");
-                //ImpersonateUser("gatt");
                 //ImpersonateUser("mantrone");
+                //ImpersonateUser("gatt");
+                //ImpersonateUser("psm1");
+                //ImpersonateUser("denelson");
+                //ImpersonateUser("mcdial");
+                //ImpersonateUser("igrundseth");
+                //ImpersonateUser("cecillegraham");
 
                 traceSource.TraceEvent(TraceEventType.Verbose, 0, $"{Request.Url}\n    UserName={User?.Identity?.Name}\n    LocalDateTime={DateTime.Now:G}");
                 if (Session["UserName"] == null)
@@ -129,6 +134,8 @@ namespace FolioWebApplication
                             || hs.Contains("department:Law Cataloging") 
                             || hs.Contains("department:Law Library Administration")
                             || hs.Contains("department:Scrc-Pres")
+                            || hs.Contains("department:Area Studies - East Asia")
+                            || hs.Contains("department:Law Acquisitions & Erm")
                             || userName == "burnstein"
                             )
                         {
