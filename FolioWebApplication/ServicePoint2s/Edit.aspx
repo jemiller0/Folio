@@ -876,11 +876,6 @@
             <telerik:RadGrid ID="ServicePointStaffSlipsRadGrid" runat="server" AutoGenerateColumns="false" AllowSorting="true" AllowFilteringByColumn="false" GroupingSettings-CaseSensitive="false" AllowPaging="true" PageSize="10" EnableLinqExpressions="false" OnNeedDataSource="ServicePointStaffSlipsRadGrid_NeedDataSource">
                 <MasterTableView DataKeyNames="Id" PagerStyle-Mode="NextPrevNumericAndAdvanced" NoMasterRecordsText="No service point staff slips found">
                     <Columns>
-                        <telerik:GridTemplateColumn AllowFiltering="false" ItemStyle-Width="0px">
-                            <ItemTemplate>
-                                <asp:HyperLink ID="ViewHyperLink" Text="View" NavigateUrl='<%# $"~/ServicePointStaffSlips/Edit.aspx?Id={Eval("Id")}" %>' runat="server" />
-                            </ItemTemplate>
-                        </telerik:GridTemplateColumn>
                         <telerik:GridTemplateColumn AllowFiltering="false" AllowSorting="false" HeaderText="Staff Slip" DataField="StaffSlip.Name" SortExpression="StaffSlip.Name" AutoPostBackOnFilter="true" CurrentFilterFunction="StartsWith">
                             <ItemTemplate>
                                 <asp:HyperLink ID="StaffSlipHyperLink" runat="server" Text='<%#: Eval("StaffSlip.Name") %>' NavigateUrl='<%# $"~/StaffSlip2s/Edit.aspx?Id={Eval("StaffSlipId")}" %>' Enabled='<%# Session["StaffSlip2sPermission"] != null %>' />

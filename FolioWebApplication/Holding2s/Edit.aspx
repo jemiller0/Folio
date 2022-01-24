@@ -296,11 +296,6 @@
             <telerik:RadGrid ID="ExtentsRadGrid" runat="server" AutoGenerateColumns="false" AllowSorting="true" AllowFilteringByColumn="false" GroupingSettings-CaseSensitive="false" AllowPaging="true" PageSize="10" EnableLinqExpressions="false" OnNeedDataSource="ExtentsRadGrid_NeedDataSource">
                 <MasterTableView DataKeyNames="Id, HoldingId" PagerStyle-Mode="NextPrevNumericAndAdvanced" NoMasterRecordsText="No extents found">
                     <Columns>
-                        <telerik:GridTemplateColumn AllowFiltering="false" ItemStyle-Width="0px">
-                            <ItemTemplate>
-                                <asp:HyperLink ID="ViewHyperLink" Text="View" NavigateUrl='<%# $"~/Extents/Edit.aspx?Id={Eval("Id")}&HoldingId={Eval("HoldingId")}" %>' runat="server" />
-                            </ItemTemplate>
-                        </telerik:GridTemplateColumn>
                         <telerik:GridTemplateColumn HeaderText="Content" DataField="Content" SortExpression="Content" AutoPostBackOnFilter="true" CurrentFilterFunction="StartsWith">
                             <ItemTemplate>
                                 <asp:HyperLink ID="ContentHyperLink" runat="server" Text='<%#: Eval("Content") ?? "&nbsp;" %>' NavigateUrl='<%# $"~/Extents/Edit.aspx?Id={Eval("Id")}&HoldingId={Eval("HoldingId")}" %>' />
@@ -408,11 +403,6 @@
             <telerik:RadGrid ID="HoldingElectronicAccessesRadGrid" runat="server" AutoGenerateColumns="false" AllowSorting="true" AllowFilteringByColumn="false" GroupingSettings-CaseSensitive="false" AllowPaging="true" PageSize="10" EnableLinqExpressions="false" OnNeedDataSource="HoldingElectronicAccessesRadGrid_NeedDataSource">
                 <MasterTableView DataKeyNames="Id, HoldingId" PagerStyle-Mode="NextPrevNumericAndAdvanced" NoMasterRecordsText="No holding electronic accesses found">
                     <Columns>
-                        <telerik:GridTemplateColumn AllowFiltering="false" ItemStyle-Width="0px">
-                            <ItemTemplate>
-                                <asp:HyperLink ID="ViewHyperLink" Text="View" NavigateUrl='<%# $"~/HoldingElectronicAccesses/Edit.aspx?Id={Eval("Id")}&HoldingId={Eval("HoldingId")}" %>' runat="server" />
-                            </ItemTemplate>
-                        </telerik:GridTemplateColumn>
                         <telerik:GridHyperLinkColumn HeaderText="URI" DataTextField="Uri" DataNavigateUrlFields="Uri" Target="_blank" SortExpression="Uri" AutoPostBackOnFilter="true" CurrentFilterFunction="StartsWith" />
                         <telerik:GridBoundColumn HeaderText="Link Text" DataField="LinkText" AutoPostBackOnFilter="true" HtmlEncode="true" CurrentFilterFunction="StartsWith" />
                         <telerik:GridBoundColumn HeaderText="Materials Specification" DataField="MaterialsSpecification" AutoPostBackOnFilter="true" HtmlEncode="true" CurrentFilterFunction="StartsWith" />
@@ -436,11 +426,6 @@
                     <Columns>
                         <telerik:GridTemplateColumn AllowFiltering="false" ItemStyle-Width="0px">
                             <ItemTemplate>
-                                <asp:HyperLink ID="ViewHyperLink" Text="View" NavigateUrl='<%# $"~/HoldingEntries/Edit.aspx?Id={Eval("Id")}&HoldingId={Eval("HoldingId")}" %>' runat="server" />
-                            </ItemTemplate>
-                        </telerik:GridTemplateColumn>
-                        <telerik:GridTemplateColumn AllowFiltering="false" ItemStyle-Width="0px">
-                            <ItemTemplate>
                                 <asp:LinkButton ID="PrintLinkButton" runat="server" CommandName="Print">Print Label</asp:LinkButton>
                             </ItemTemplate>
                         </telerik:GridTemplateColumn>
@@ -459,11 +444,6 @@
             <telerik:RadGrid ID="HoldingFormerIdsRadGrid" runat="server" AutoGenerateColumns="false" AllowSorting="true" AllowFilteringByColumn="false" GroupingSettings-CaseSensitive="false" AllowPaging="true" PageSize="10" EnableLinqExpressions="false" OnNeedDataSource="HoldingFormerIdsRadGrid_NeedDataSource">
                 <MasterTableView DataKeyNames="Id, HoldingId" PagerStyle-Mode="NextPrevNumericAndAdvanced" NoMasterRecordsText="No holding former ids found">
                     <Columns>
-                        <telerik:GridTemplateColumn AllowFiltering="false" ItemStyle-Width="0px">
-                            <ItemTemplate>
-                                <asp:HyperLink ID="ViewHyperLink" Text="View" NavigateUrl='<%# $"~/HoldingFormerIds/Edit.aspx?Id={Eval("Id")}&HoldingId={Eval("HoldingId")}" %>' runat="server" />
-                            </ItemTemplate>
-                        </telerik:GridTemplateColumn>
                         <telerik:GridTemplateColumn HeaderText="Content" DataField="Content" SortExpression="Content" AutoPostBackOnFilter="true" CurrentFilterFunction="StartsWith">
                             <ItemTemplate>
                                 <asp:HyperLink ID="ContentHyperLink" runat="server" Text='<%#: Eval("Content") %>' NavigateUrl='<%# $"~/HoldingFormerIds/Edit.aspx?Id={Eval("Id")}&HoldingId={Eval("HoldingId")}" %>' />
@@ -481,11 +461,6 @@
             <telerik:RadGrid ID="HoldingNotesRadGrid" runat="server" AutoGenerateColumns="false" AllowSorting="true" AllowFilteringByColumn="false" GroupingSettings-CaseSensitive="false" AllowPaging="true" PageSize="10" EnableLinqExpressions="false" OnNeedDataSource="HoldingNotesRadGrid_NeedDataSource">
                 <MasterTableView DataKeyNames="Id, HoldingId" PagerStyle-Mode="NextPrevNumericAndAdvanced" NoMasterRecordsText="No holding notes found">
                     <Columns>
-                        <telerik:GridTemplateColumn AllowFiltering="false" ItemStyle-Width="0px">
-                            <ItemTemplate>
-                                <asp:HyperLink ID="ViewHyperLink" Text="View" NavigateUrl='<%# $"~/HoldingNotes/Edit.aspx?Id={Eval("Id")}&HoldingId={Eval("HoldingId")}" %>' runat="server" />
-                            </ItemTemplate>
-                        </telerik:GridTemplateColumn>
                         <telerik:GridTemplateColumn AllowFiltering="false" AllowSorting="false" HeaderText="Holding Note Type" DataField="HoldingNoteType.Name" SortExpression="HoldingNoteType.Name" AutoPostBackOnFilter="true" CurrentFilterFunction="StartsWith">
                             <ItemTemplate>
                                 <asp:HyperLink ID="HoldingNoteTypeHyperLink" runat="server" Text='<%#: Eval("HoldingNoteType.Name") %>' NavigateUrl='<%# $"~/HoldingNoteType2s/Edit.aspx?Id={Eval("HoldingNoteTypeId")}" %>' Enabled='<%# Session["HoldingNoteType2sPermission"] != null %>' />
@@ -505,11 +480,6 @@
             <telerik:RadGrid ID="HoldingStatisticalCodesRadGrid" runat="server" AutoGenerateColumns="false" AllowSorting="true" AllowFilteringByColumn="false" GroupingSettings-CaseSensitive="false" AllowPaging="true" PageSize="10" EnableLinqExpressions="false" OnNeedDataSource="HoldingStatisticalCodesRadGrid_NeedDataSource">
                 <MasterTableView DataKeyNames="Id, HoldingId" PagerStyle-Mode="NextPrevNumericAndAdvanced" NoMasterRecordsText="No holding statistical codes found">
                     <Columns>
-                        <telerik:GridTemplateColumn AllowFiltering="false" ItemStyle-Width="0px">
-                            <ItemTemplate>
-                                <asp:HyperLink ID="ViewHyperLink" Text="View" NavigateUrl='<%# $"~/HoldingStatisticalCodes/Edit.aspx?Id={Eval("Id")}&HoldingId={Eval("HoldingId")}" %>' runat="server" />
-                            </ItemTemplate>
-                        </telerik:GridTemplateColumn>
                         <telerik:GridTemplateColumn AllowFiltering="false" AllowSorting="false" HeaderText="Statistical Code" DataField="StatisticalCode.Name" SortExpression="StatisticalCode.Name" AutoPostBackOnFilter="true" CurrentFilterFunction="StartsWith">
                             <ItemTemplate>
                                 <asp:HyperLink ID="StatisticalCodeHyperLink" runat="server" Text='<%#: Eval("StatisticalCode.Name") %>' NavigateUrl='<%# $"~/StatisticalCode2s/Edit.aspx?Id={Eval("StatisticalCodeId")}" %>' Enabled='<%# Session["StatisticalCode2sPermission"] != null %>' />
@@ -527,11 +497,6 @@
             <telerik:RadGrid ID="HoldingTagsRadGrid" runat="server" AutoGenerateColumns="false" AllowSorting="true" AllowFilteringByColumn="false" GroupingSettings-CaseSensitive="false" AllowPaging="true" PageSize="10" EnableLinqExpressions="false" OnNeedDataSource="HoldingTagsRadGrid_NeedDataSource">
                 <MasterTableView DataKeyNames="Id, HoldingId" PagerStyle-Mode="NextPrevNumericAndAdvanced" NoMasterRecordsText="No holding tags found">
                     <Columns>
-                        <telerik:GridTemplateColumn AllowFiltering="false" ItemStyle-Width="0px">
-                            <ItemTemplate>
-                                <asp:HyperLink ID="ViewHyperLink" Text="View" NavigateUrl='<%# $"~/HoldingTags/Edit.aspx?Id={Eval("Id")}&HoldingId={Eval("HoldingId")}" %>' runat="server" />
-                            </ItemTemplate>
-                        </telerik:GridTemplateColumn>
                         <telerik:GridTemplateColumn HeaderText="Content" DataField="Content" SortExpression="Content" AutoPostBackOnFilter="true" CurrentFilterFunction="StartsWith">
                             <ItemTemplate>
                                 <asp:HyperLink ID="ContentHyperLink" runat="server" Text='<%#: Eval("Content") %>' NavigateUrl='<%# $"~/HoldingTags/Edit.aspx?Id={Eval("Id")}&HoldingId={Eval("HoldingId")}" %>' />
@@ -549,11 +514,6 @@
             <telerik:RadGrid ID="IndexStatementsRadGrid" runat="server" AutoGenerateColumns="false" AllowSorting="true" AllowFilteringByColumn="false" GroupingSettings-CaseSensitive="false" AllowPaging="true" PageSize="10" EnableLinqExpressions="false" OnNeedDataSource="IndexStatementsRadGrid_NeedDataSource">
                 <MasterTableView DataKeyNames="Id, HoldingId" PagerStyle-Mode="NextPrevNumericAndAdvanced" NoMasterRecordsText="No index statements found">
                     <Columns>
-                        <telerik:GridTemplateColumn AllowFiltering="false" ItemStyle-Width="0px">
-                            <ItemTemplate>
-                                <asp:HyperLink ID="ViewHyperLink" Text="View" NavigateUrl='<%# $"~/IndexStatements/Edit.aspx?Id={Eval("Id")}&HoldingId={Eval("HoldingId")}" %>' runat="server" />
-                            </ItemTemplate>
-                        </telerik:GridTemplateColumn>
                         <telerik:GridBoundColumn HeaderText="Statement" DataField="Statement" AutoPostBackOnFilter="true" HtmlEncode="true" CurrentFilterFunction="StartsWith" />
                         <telerik:GridBoundColumn HeaderText="Note" DataField="Note" AutoPostBackOnFilter="true" HtmlEncode="true" CurrentFilterFunction="StartsWith" />
                         <telerik:GridBoundColumn HeaderText="Staff Note" DataField="StaffNote" AutoPostBackOnFilter="true" HtmlEncode="true" CurrentFilterFunction="StartsWith" />
@@ -759,11 +719,6 @@
             <telerik:RadGrid ID="SupplementStatementsRadGrid" runat="server" AutoGenerateColumns="false" AllowSorting="true" AllowFilteringByColumn="false" GroupingSettings-CaseSensitive="false" AllowPaging="true" PageSize="10" EnableLinqExpressions="false" OnNeedDataSource="SupplementStatementsRadGrid_NeedDataSource">
                 <MasterTableView DataKeyNames="Id, HoldingId" PagerStyle-Mode="NextPrevNumericAndAdvanced" NoMasterRecordsText="No supplement statements found">
                     <Columns>
-                        <telerik:GridTemplateColumn AllowFiltering="false" ItemStyle-Width="0px">
-                            <ItemTemplate>
-                                <asp:HyperLink ID="ViewHyperLink" Text="View" NavigateUrl='<%# $"~/SupplementStatements/Edit.aspx?Id={Eval("Id")}&HoldingId={Eval("HoldingId")}" %>' runat="server" />
-                            </ItemTemplate>
-                        </telerik:GridTemplateColumn>
                         <telerik:GridBoundColumn HeaderText="Statement" DataField="Statement" AutoPostBackOnFilter="true" HtmlEncode="true" CurrentFilterFunction="StartsWith" />
                         <telerik:GridBoundColumn HeaderText="Note" DataField="Note" AutoPostBackOnFilter="true" HtmlEncode="true" CurrentFilterFunction="StartsWith" />
                         <telerik:GridBoundColumn HeaderText="Staff Note" DataField="StaffNote" AutoPostBackOnFilter="true" HtmlEncode="true" CurrentFilterFunction="StartsWith" />
