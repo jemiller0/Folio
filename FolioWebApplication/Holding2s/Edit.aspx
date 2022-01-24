@@ -296,7 +296,7 @@
             <telerik:RadGrid ID="ExtentsRadGrid" runat="server" AutoGenerateColumns="false" AllowSorting="true" AllowFilteringByColumn="false" GroupingSettings-CaseSensitive="false" AllowPaging="true" PageSize="10" EnableLinqExpressions="false" OnNeedDataSource="ExtentsRadGrid_NeedDataSource">
                 <MasterTableView DataKeyNames="Id, HoldingId" PagerStyle-Mode="NextPrevNumericAndAdvanced" NoMasterRecordsText="No extents found">
                     <SortExpressions>
-                        <telerik:GridSortExpression FieldName="Content" />
+                        <telerik:GridSortExpression FieldName="Content" SortOrder="Descending" />
                     </SortExpressions>
                     <Columns>
                         <telerik:GridBoundColumn HeaderText="Content" DataField="Content" AutoPostBackOnFilter="true" HtmlEncode="true" CurrentFilterFunction="StartsWith" />
