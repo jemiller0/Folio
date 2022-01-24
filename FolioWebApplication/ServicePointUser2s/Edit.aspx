@@ -82,7 +82,7 @@
     <asp:Panel ID="ServicePointUserServicePointsPanel" runat="server" Visible='<%# (string)Session["ServicePointUserServicePointsPermission"] != null && ServicePointUser2FormView.DataKey.Value != null %>'>
         <fieldset>
             <legend>
-                <asp:HyperLink ID="ServicePointUserServicePointsHyperLink" runat="server" Text="Service Point User Service Points" NavigateUrl="~/ServicePointUserServicePoints/Default.aspx" /></legend>
+                <asp:HyperLink ID="ServicePointUserServicePointsHyperLink" runat="server" Text="Service Point User Service Points" NavigateUrl="~/ServicePointUserServicePoints/Default.aspx" Enabled="false" /></legend>
             <telerik:RadGrid ID="ServicePointUserServicePointsRadGrid" runat="server" AutoGenerateColumns="false" AllowSorting="true" AllowFilteringByColumn="false" GroupingSettings-CaseSensitive="false" AllowPaging="true" PageSize="10" EnableLinqExpressions="false" OnNeedDataSource="ServicePointUserServicePointsRadGrid_NeedDataSource">
                 <MasterTableView DataKeyNames="Id" PagerStyle-Mode="NextPrevNumericAndAdvanced" NoMasterRecordsText="No service point user service points found">
                     <Columns>

@@ -122,7 +122,7 @@
     <asp:Panel ID="LedgerRolloverBudgetsRolloversPanel" runat="server" Visible='<%# (string)Session["LedgerRolloverBudgetsRolloversPermission"] != null && LedgerRollover2FormView.DataKey.Value != null %>'>
         <fieldset>
             <legend>
-                <asp:HyperLink ID="LedgerRolloverBudgetsRolloversHyperLink" runat="server" Text="Ledger Rollover Budgets Rollovers" NavigateUrl="~/LedgerRolloverBudgetsRollovers/Default.aspx" /></legend>
+                <asp:HyperLink ID="LedgerRolloverBudgetsRolloversHyperLink" runat="server" Text="Ledger Rollover Budgets Rollovers" NavigateUrl="~/LedgerRolloverBudgetsRollovers/Default.aspx" Enabled="false" /></legend>
             <telerik:RadGrid ID="LedgerRolloverBudgetsRolloversRadGrid" runat="server" AutoGenerateColumns="false" AllowSorting="true" AllowFilteringByColumn="false" GroupingSettings-CaseSensitive="false" AllowPaging="true" PageSize="10" EnableLinqExpressions="false" OnNeedDataSource="LedgerRolloverBudgetsRolloversRadGrid_NeedDataSource">
                 <MasterTableView DataKeyNames="Id" PagerStyle-Mode="NextPrevNumericAndAdvanced" NoMasterRecordsText="No ledger rollover budgets rollovers found">
                     <Columns>
@@ -146,7 +146,7 @@
     <asp:Panel ID="LedgerRolloverEncumbrancesRolloversPanel" runat="server" Visible='<%# (string)Session["LedgerRolloverEncumbrancesRolloversPermission"] != null && LedgerRollover2FormView.DataKey.Value != null %>'>
         <fieldset>
             <legend>
-                <asp:HyperLink ID="LedgerRolloverEncumbrancesRolloversHyperLink" runat="server" Text="Ledger Rollover Encumbrances Rollovers" NavigateUrl="~/LedgerRolloverEncumbrancesRollovers/Default.aspx" /></legend>
+                <asp:HyperLink ID="LedgerRolloverEncumbrancesRolloversHyperLink" runat="server" Text="Ledger Rollover Encumbrances Rollovers" NavigateUrl="~/LedgerRolloverEncumbrancesRollovers/Default.aspx" Enabled="false" /></legend>
             <telerik:RadGrid ID="LedgerRolloverEncumbrancesRolloversRadGrid" runat="server" AutoGenerateColumns="false" AllowSorting="true" AllowFilteringByColumn="false" GroupingSettings-CaseSensitive="false" AllowPaging="true" PageSize="10" EnableLinqExpressions="false" OnNeedDataSource="LedgerRolloverEncumbrancesRolloversRadGrid_NeedDataSource">
                 <MasterTableView DataKeyNames="Id" PagerStyle-Mode="NextPrevNumericAndAdvanced" NoMasterRecordsText="No ledger rollover encumbrances rollovers found">
                     <Columns>

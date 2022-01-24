@@ -98,7 +98,7 @@
     <asp:Panel ID="PrecedingSucceedingTitleIdentifiersPanel" runat="server" Visible='<%# (string)Session["PrecedingSucceedingTitleIdentifiersPermission"] != null && PrecedingSucceedingTitle2FormView.DataKey.Value != null %>'>
         <fieldset>
             <legend>
-                <asp:HyperLink ID="PrecedingSucceedingTitleIdentifiersHyperLink" runat="server" Text="Preceding Succeeding Title Identifiers" NavigateUrl="~/PrecedingSucceedingTitleIdentifiers/Default.aspx" /></legend>
+                <asp:HyperLink ID="PrecedingSucceedingTitleIdentifiersHyperLink" runat="server" Text="Preceding Succeeding Title Identifiers" NavigateUrl="~/PrecedingSucceedingTitleIdentifiers/Default.aspx" Enabled="false" /></legend>
             <telerik:RadGrid ID="PrecedingSucceedingTitleIdentifiersRadGrid" runat="server" AutoGenerateColumns="false" AllowSorting="true" AllowFilteringByColumn="false" GroupingSettings-CaseSensitive="false" AllowPaging="true" PageSize="10" EnableLinqExpressions="false" OnNeedDataSource="PrecedingSucceedingTitleIdentifiersRadGrid_NeedDataSource">
                 <MasterTableView DataKeyNames="Id" PagerStyle-Mode="NextPrevNumericAndAdvanced" NoMasterRecordsText="No preceding succeeding title identifiers found">
                     <Columns>

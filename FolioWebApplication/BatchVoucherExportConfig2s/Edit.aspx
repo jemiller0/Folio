@@ -106,15 +106,11 @@
     <asp:Panel ID="BatchVoucherExportConfigWeekdaysPanel" runat="server" Visible='<%# (string)Session["BatchVoucherExportConfigWeekdaysPermission"] != null && BatchVoucherExportConfig2FormView.DataKey.Value != null %>'>
         <fieldset>
             <legend>
-                <asp:HyperLink ID="BatchVoucherExportConfigWeekdaysHyperLink" runat="server" Text="Batch Voucher Export Config Weekdays" NavigateUrl="~/BatchVoucherExportConfigWeekdays/Default.aspx" /></legend>
+                <asp:HyperLink ID="BatchVoucherExportConfigWeekdaysHyperLink" runat="server" Text="Batch Voucher Export Config Weekdays" NavigateUrl="~/BatchVoucherExportConfigWeekdays/Default.aspx" Enabled="false" /></legend>
             <telerik:RadGrid ID="BatchVoucherExportConfigWeekdaysRadGrid" runat="server" AutoGenerateColumns="false" AllowSorting="true" AllowFilteringByColumn="false" GroupingSettings-CaseSensitive="false" AllowPaging="true" PageSize="10" EnableLinqExpressions="false" OnNeedDataSource="BatchVoucherExportConfigWeekdaysRadGrid_NeedDataSource">
                 <MasterTableView DataKeyNames="Id" PagerStyle-Mode="NextPrevNumericAndAdvanced" NoMasterRecordsText="No batch voucher export config weekdays found">
                     <Columns>
-                        <telerik:GridTemplateColumn HeaderText="Content" DataField="Content" SortExpression="Content" AutoPostBackOnFilter="true" CurrentFilterFunction="StartsWith">
-                            <ItemTemplate>
-                                <asp:HyperLink ID="ContentHyperLink" runat="server" Text='<%#: Eval("Content") %>' NavigateUrl='<%# $"~/BatchVoucherExportConfigWeekdays/Edit.aspx?Id={Eval("Id")}" %>' />
-                            </ItemTemplate>
-                        </telerik:GridTemplateColumn>
+                        <telerik:GridBoundColumn HeaderText="Content" DataField="Content" AutoPostBackOnFilter="true" HtmlEncode="true" CurrentFilterFunction="StartsWith" />
                     </Columns>
                 </MasterTableView>
             </telerik:RadGrid>

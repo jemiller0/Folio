@@ -283,7 +283,7 @@
     <asp:Panel ID="ServicePointOwnersPanel" runat="server" Visible='<%# (string)Session["ServicePointOwnersPermission"] != null && Owner2FormView.DataKey.Value != null %>'>
         <fieldset>
             <legend>
-                <asp:HyperLink ID="ServicePointOwnersHyperLink" runat="server" Text="Service Point Owners" NavigateUrl="~/ServicePointOwners/Default.aspx" /></legend>
+                <asp:HyperLink ID="ServicePointOwnersHyperLink" runat="server" Text="Service Point Owners" NavigateUrl="~/ServicePointOwners/Default.aspx" Enabled="false" /></legend>
             <telerik:RadGrid ID="ServicePointOwnersRadGrid" runat="server" AutoGenerateColumns="false" AllowSorting="true" AllowFilteringByColumn="false" GroupingSettings-CaseSensitive="false" AllowPaging="true" PageSize="10" EnableLinqExpressions="false" OnNeedDataSource="ServicePointOwnersRadGrid_NeedDataSource">
                 <MasterTableView DataKeyNames="Id" PagerStyle-Mode="NextPrevNumericAndAdvanced" NoMasterRecordsText="No service point owners found">
                     <Columns>

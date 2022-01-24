@@ -330,7 +330,7 @@
     <asp:Panel ID="InvoiceAcquisitionsUnitsPanel" runat="server" Visible='<%# (string)Session["InvoiceAcquisitionsUnitsPermission"] != null && Invoice2FormView.DataKey.Value != null %>'>
         <fieldset>
             <legend>
-                <asp:HyperLink ID="InvoiceAcquisitionsUnitsHyperLink" runat="server" Text="Invoice Acquisitions Units" NavigateUrl="~/InvoiceAcquisitionsUnits/Default.aspx" /></legend>
+                <asp:HyperLink ID="InvoiceAcquisitionsUnitsHyperLink" runat="server" Text="Invoice Acquisitions Units" NavigateUrl="~/InvoiceAcquisitionsUnits/Default.aspx" Enabled="false" /></legend>
             <telerik:RadGrid ID="InvoiceAcquisitionsUnitsRadGrid" runat="server" AutoGenerateColumns="false" AllowSorting="true" AllowFilteringByColumn="false" GroupingSettings-CaseSensitive="false" AllowPaging="true" PageSize="10" EnableLinqExpressions="false" OnNeedDataSource="InvoiceAcquisitionsUnitsRadGrid_NeedDataSource">
                 <MasterTableView DataKeyNames="Id" PagerStyle-Mode="NextPrevNumericAndAdvanced" NoMasterRecordsText="No invoice acquisitions units found">
                     <Columns>
@@ -347,7 +347,7 @@
     <asp:Panel ID="InvoiceAdjustmentsPanel" runat="server" Visible='<%# (string)Session["InvoiceAdjustmentsPermission"] != null && Invoice2FormView.DataKey.Value != null %>'>
         <fieldset>
             <legend>
-                <asp:HyperLink ID="InvoiceAdjustmentsHyperLink" runat="server" Text="Invoice Adjustments" NavigateUrl="~/InvoiceAdjustments/Default.aspx" /></legend>
+                <asp:HyperLink ID="InvoiceAdjustmentsHyperLink" runat="server" Text="Invoice Adjustments" NavigateUrl="~/InvoiceAdjustments/Default.aspx" Enabled="false" /></legend>
             <telerik:RadGrid ID="InvoiceAdjustmentsRadGrid" runat="server" AutoGenerateColumns="false" AllowSorting="true" AllowFilteringByColumn="false" GroupingSettings-CaseSensitive="false" AllowPaging="true" PageSize="10" EnableLinqExpressions="false" OnNeedDataSource="InvoiceAdjustmentsRadGrid_NeedDataSource">
                 <MasterTableView DataKeyNames="Id" PagerStyle-Mode="NextPrevNumericAndAdvanced" NoMasterRecordsText="No invoice adjustments found">
                     <Columns>
@@ -433,15 +433,11 @@
     <asp:Panel ID="InvoiceOrderNumbersPanel" runat="server" Visible='<%# (string)Session["InvoiceOrderNumbersPermission"] != null && Invoice2FormView.DataKey.Value != null %>'>
         <fieldset>
             <legend>
-                <asp:HyperLink ID="InvoiceOrderNumbersHyperLink" runat="server" Text="Invoice Order Numbers" NavigateUrl="~/InvoiceOrderNumbers/Default.aspx" /></legend>
+                <asp:HyperLink ID="InvoiceOrderNumbersHyperLink" runat="server" Text="Invoice Order Numbers" NavigateUrl="~/InvoiceOrderNumbers/Default.aspx" Enabled="false" /></legend>
             <telerik:RadGrid ID="InvoiceOrderNumbersRadGrid" runat="server" AutoGenerateColumns="false" AllowSorting="true" AllowFilteringByColumn="false" GroupingSettings-CaseSensitive="false" AllowPaging="true" PageSize="10" EnableLinqExpressions="false" OnNeedDataSource="InvoiceOrderNumbersRadGrid_NeedDataSource">
                 <MasterTableView DataKeyNames="Id" PagerStyle-Mode="NextPrevNumericAndAdvanced" NoMasterRecordsText="No invoice order numbers found">
                     <Columns>
-                        <telerik:GridTemplateColumn HeaderText="Content" DataField="Content" SortExpression="Content" AutoPostBackOnFilter="true" CurrentFilterFunction="StartsWith">
-                            <ItemTemplate>
-                                <asp:HyperLink ID="ContentHyperLink" runat="server" Text='<%#: Eval("Content") %>' NavigateUrl='<%# $"~/InvoiceOrderNumbers/Edit.aspx?Id={Eval("Id")}" %>' />
-                            </ItemTemplate>
-                        </telerik:GridTemplateColumn>
+                        <telerik:GridBoundColumn HeaderText="Content" DataField="Content" AutoPostBackOnFilter="true" HtmlEncode="true" CurrentFilterFunction="StartsWith" />
                     </Columns>
                 </MasterTableView>
             </telerik:RadGrid>
@@ -450,15 +446,11 @@
     <asp:Panel ID="InvoiceTagsPanel" runat="server" Visible='<%# (string)Session["InvoiceTagsPermission"] != null && Invoice2FormView.DataKey.Value != null %>'>
         <fieldset>
             <legend>
-                <asp:HyperLink ID="InvoiceTagsHyperLink" runat="server" Text="Invoice Tags" NavigateUrl="~/InvoiceTags/Default.aspx" /></legend>
+                <asp:HyperLink ID="InvoiceTagsHyperLink" runat="server" Text="Invoice Tags" NavigateUrl="~/InvoiceTags/Default.aspx" Enabled="false" /></legend>
             <telerik:RadGrid ID="InvoiceTagsRadGrid" runat="server" AutoGenerateColumns="false" AllowSorting="true" AllowFilteringByColumn="false" GroupingSettings-CaseSensitive="false" AllowPaging="true" PageSize="10" EnableLinqExpressions="false" OnNeedDataSource="InvoiceTagsRadGrid_NeedDataSource">
                 <MasterTableView DataKeyNames="Id" PagerStyle-Mode="NextPrevNumericAndAdvanced" NoMasterRecordsText="No invoice tags found">
                     <Columns>
-                        <telerik:GridTemplateColumn HeaderText="Content" DataField="Content" SortExpression="Content" AutoPostBackOnFilter="true" CurrentFilterFunction="StartsWith">
-                            <ItemTemplate>
-                                <asp:HyperLink ID="ContentHyperLink" runat="server" Text='<%#: Eval("Content") %>' NavigateUrl='<%# $"~/InvoiceTags/Edit.aspx?Id={Eval("Id")}" %>' />
-                            </ItemTemplate>
-                        </telerik:GridTemplateColumn>
+                        <telerik:GridBoundColumn HeaderText="Content" DataField="Content" AutoPostBackOnFilter="true" HtmlEncode="true" CurrentFilterFunction="StartsWith" />
                     </Columns>
                 </MasterTableView>
             </telerik:RadGrid>

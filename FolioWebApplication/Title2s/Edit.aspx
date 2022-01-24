@@ -234,7 +234,7 @@
     <asp:Panel ID="TitleContributorsPanel" runat="server" Visible='<%# (string)Session["TitleContributorsPermission"] != null && Title2FormView.DataKey.Value != null %>'>
         <fieldset>
             <legend>
-                <asp:HyperLink ID="TitleContributorsHyperLink" runat="server" Text="Title Contributors" NavigateUrl="~/TitleContributors/Default.aspx" /></legend>
+                <asp:HyperLink ID="TitleContributorsHyperLink" runat="server" Text="Title Contributors" NavigateUrl="~/TitleContributors/Default.aspx" Enabled="false" /></legend>
             <telerik:RadGrid ID="TitleContributorsRadGrid" runat="server" AutoGenerateColumns="false" AllowSorting="true" AllowFilteringByColumn="false" GroupingSettings-CaseSensitive="false" AllowPaging="true" PageSize="10" EnableLinqExpressions="false" OnNeedDataSource="TitleContributorsRadGrid_NeedDataSource">
                 <MasterTableView DataKeyNames="Id" PagerStyle-Mode="NextPrevNumericAndAdvanced" NoMasterRecordsText="No title contributors found">
                     <Columns>
@@ -252,7 +252,7 @@
     <asp:Panel ID="TitleProductIdsPanel" runat="server" Visible='<%# (string)Session["TitleProductIdsPermission"] != null && Title2FormView.DataKey.Value != null %>'>
         <fieldset>
             <legend>
-                <asp:HyperLink ID="TitleProductIdsHyperLink" runat="server" Text="Title Product Ids" NavigateUrl="~/TitleProductIds/Default.aspx" /></legend>
+                <asp:HyperLink ID="TitleProductIdsHyperLink" runat="server" Text="Title Product Ids" NavigateUrl="~/TitleProductIds/Default.aspx" Enabled="false" /></legend>
             <telerik:RadGrid ID="TitleProductIdsRadGrid" runat="server" AutoGenerateColumns="false" AllowSorting="true" AllowFilteringByColumn="false" GroupingSettings-CaseSensitive="false" AllowPaging="true" PageSize="10" EnableLinqExpressions="false" OnNeedDataSource="TitleProductIdsRadGrid_NeedDataSource">
                 <MasterTableView DataKeyNames="Id" PagerStyle-Mode="NextPrevNumericAndAdvanced" NoMasterRecordsText="No title product ids found">
                     <Columns>

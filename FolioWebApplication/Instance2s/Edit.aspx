@@ -210,7 +210,7 @@
     <asp:Panel ID="AlternativeTitlesPanel" runat="server" Visible='<%# (string)Session["AlternativeTitlesPermission"] != null && Instance2FormView.DataKey.Value != null %>'>
         <fieldset>
             <legend>
-                <asp:HyperLink ID="AlternativeTitlesHyperLink" runat="server" Text="Alternative Titles" NavigateUrl="~/AlternativeTitles/Default.aspx" /></legend>
+                <asp:HyperLink ID="AlternativeTitlesHyperLink" runat="server" Text="Alternative Titles" NavigateUrl="~/AlternativeTitles/Default.aspx" Enabled="false" /></legend>
             <telerik:RadGrid ID="AlternativeTitlesRadGrid" runat="server" AutoGenerateColumns="false" AllowSorting="true" AllowFilteringByColumn="false" GroupingSettings-CaseSensitive="false" AllowPaging="true" PageSize="10" EnableLinqExpressions="false" OnNeedDataSource="AlternativeTitlesRadGrid_NeedDataSource">
                 <MasterTableView DataKeyNames="Id, InstanceId" PagerStyle-Mode="NextPrevNumericAndAdvanced" NoMasterRecordsText="No alternative titles found">
                     <Columns>
@@ -219,11 +219,7 @@
                                 <asp:HyperLink ID="AlternativeTitleTypeHyperLink" runat="server" Text='<%#: Eval("AlternativeTitleType.Name") %>' NavigateUrl='<%# $"~/AlternativeTitleType2s/Edit.aspx?Id={Eval("AlternativeTitleTypeId")}" %>' Enabled='<%# Session["AlternativeTitleType2sPermission"] != null %>' />
                             </ItemTemplate>
                         </telerik:GridTemplateColumn>
-                        <telerik:GridTemplateColumn HeaderText="Content" DataField="Content" SortExpression="Content" AutoPostBackOnFilter="true" CurrentFilterFunction="StartsWith">
-                            <ItemTemplate>
-                                <asp:HyperLink ID="ContentHyperLink" runat="server" Text='<%#: Eval("Content") ?? "&nbsp;" %>' NavigateUrl='<%# $"~/AlternativeTitles/Edit.aspx?Id={Eval("Id")}&InstanceId={Eval("InstanceId")}" %>' />
-                            </ItemTemplate>
-                        </telerik:GridTemplateColumn>
+                        <telerik:GridBoundColumn HeaderText="Content" DataField="Content" AutoPostBackOnFilter="true" HtmlEncode="true" CurrentFilterFunction="StartsWith" />
                     </Columns>
                 </MasterTableView>
             </telerik:RadGrid>
@@ -232,15 +228,11 @@
     <asp:Panel ID="ClassificationsPanel" runat="server" Visible='<%# (string)Session["ClassificationsPermission"] != null && Instance2FormView.DataKey.Value != null %>'>
         <fieldset>
             <legend>
-                <asp:HyperLink ID="ClassificationsHyperLink" runat="server" Text="Classifications" NavigateUrl="~/Classifications/Default.aspx" /></legend>
+                <asp:HyperLink ID="ClassificationsHyperLink" runat="server" Text="Classifications" NavigateUrl="~/Classifications/Default.aspx" Enabled="false" /></legend>
             <telerik:RadGrid ID="ClassificationsRadGrid" runat="server" AutoGenerateColumns="false" AllowSorting="true" AllowFilteringByColumn="false" GroupingSettings-CaseSensitive="false" AllowPaging="true" PageSize="10" EnableLinqExpressions="false" OnNeedDataSource="ClassificationsRadGrid_NeedDataSource">
                 <MasterTableView DataKeyNames="Id, InstanceId" PagerStyle-Mode="NextPrevNumericAndAdvanced" NoMasterRecordsText="No classifications found">
                     <Columns>
-                        <telerik:GridTemplateColumn HeaderText="Number" DataField="Number" SortExpression="Number" AutoPostBackOnFilter="true" CurrentFilterFunction="StartsWith">
-                            <ItemTemplate>
-                                <asp:HyperLink ID="NumberHyperLink" runat="server" Text='<%#: Eval("Number") %>' NavigateUrl='<%# $"~/Classifications/Edit.aspx?Id={Eval("Id")}&InstanceId={Eval("InstanceId")}" %>' />
-                            </ItemTemplate>
-                        </telerik:GridTemplateColumn>
+                        <telerik:GridBoundColumn HeaderText="Number" DataField="Number" AutoPostBackOnFilter="true" HtmlEncode="true" CurrentFilterFunction="StartsWith" />
                         <telerik:GridTemplateColumn AllowFiltering="false" AllowSorting="false" HeaderText="Classification Type" DataField="ClassificationType.Name" SortExpression="ClassificationType.Name" AutoPostBackOnFilter="true" CurrentFilterFunction="StartsWith">
                             <ItemTemplate>
                                 <asp:HyperLink ID="ClassificationTypeHyperLink" runat="server" Text='<%#: Eval("ClassificationType.Name") %>' NavigateUrl='<%# $"~/ClassificationType2s/Edit.aspx?Id={Eval("ClassificationTypeId")}" %>' Enabled='<%# Session["ClassificationType2sPermission"] != null %>' />
@@ -254,15 +246,11 @@
     <asp:Panel ID="ContributorsPanel" runat="server" Visible='<%# (string)Session["ContributorsPermission"] != null && Instance2FormView.DataKey.Value != null %>'>
         <fieldset>
             <legend>
-                <asp:HyperLink ID="ContributorsHyperLink" runat="server" Text="Contributors" NavigateUrl="~/Contributors/Default.aspx" /></legend>
+                <asp:HyperLink ID="ContributorsHyperLink" runat="server" Text="Contributors" NavigateUrl="~/Contributors/Default.aspx" Enabled="false" /></legend>
             <telerik:RadGrid ID="ContributorsRadGrid" runat="server" AutoGenerateColumns="false" AllowSorting="true" AllowFilteringByColumn="false" GroupingSettings-CaseSensitive="false" AllowPaging="true" PageSize="10" EnableLinqExpressions="false" OnNeedDataSource="ContributorsRadGrid_NeedDataSource">
                 <MasterTableView DataKeyNames="Id, InstanceId" PagerStyle-Mode="NextPrevNumericAndAdvanced" NoMasterRecordsText="No contributors found">
                     <Columns>
-                        <telerik:GridTemplateColumn HeaderText="Name" DataField="Name" SortExpression="Name" AutoPostBackOnFilter="true" CurrentFilterFunction="StartsWith">
-                            <ItemTemplate>
-                                <asp:HyperLink ID="NameHyperLink" runat="server" Text='<%#: Eval("Name") %>' NavigateUrl='<%# $"~/Contributors/Edit.aspx?Id={Eval("Id")}&InstanceId={Eval("InstanceId")}" %>' />
-                            </ItemTemplate>
-                        </telerik:GridTemplateColumn>
+                        <telerik:GridBoundColumn HeaderText="Name" DataField="Name" AutoPostBackOnFilter="true" HtmlEncode="true" CurrentFilterFunction="StartsWith" />
                         <telerik:GridTemplateColumn AllowFiltering="false" AllowSorting="false" HeaderText="Contributor Type" DataField="ContributorType.Name" SortExpression="ContributorType.Name" AutoPostBackOnFilter="true" CurrentFilterFunction="StartsWith">
                             <ItemTemplate>
                                 <asp:HyperLink ID="ContributorTypeHyperLink" runat="server" Text='<%#: Eval("ContributorType.Name") %>' NavigateUrl='<%# $"~/ContributorType2s/Edit.aspx?Id={Eval("ContributorTypeId")}" %>' Enabled='<%# Session["ContributorType2sPermission"] != null %>' />
@@ -283,15 +271,11 @@
     <asp:Panel ID="EditionsPanel" runat="server" Visible='<%# (string)Session["EditionsPermission"] != null && Instance2FormView.DataKey.Value != null %>'>
         <fieldset>
             <legend>
-                <asp:HyperLink ID="EditionsHyperLink" runat="server" Text="Editions" NavigateUrl="~/Editions/Default.aspx" /></legend>
+                <asp:HyperLink ID="EditionsHyperLink" runat="server" Text="Editions" NavigateUrl="~/Editions/Default.aspx" Enabled="false" /></legend>
             <telerik:RadGrid ID="EditionsRadGrid" runat="server" AutoGenerateColumns="false" AllowSorting="true" AllowFilteringByColumn="false" GroupingSettings-CaseSensitive="false" AllowPaging="true" PageSize="10" EnableLinqExpressions="false" OnNeedDataSource="EditionsRadGrid_NeedDataSource">
                 <MasterTableView DataKeyNames="Id, InstanceId" PagerStyle-Mode="NextPrevNumericAndAdvanced" NoMasterRecordsText="No editions found">
                     <Columns>
-                        <telerik:GridTemplateColumn HeaderText="Content" DataField="Content" SortExpression="Content" AutoPostBackOnFilter="true" CurrentFilterFunction="StartsWith">
-                            <ItemTemplate>
-                                <asp:HyperLink ID="ContentHyperLink" runat="server" Text='<%#: Eval("Content") %>' NavigateUrl='<%# $"~/Editions/Edit.aspx?Id={Eval("Id")}&InstanceId={Eval("InstanceId")}" %>' />
-                            </ItemTemplate>
-                        </telerik:GridTemplateColumn>
+                        <telerik:GridBoundColumn HeaderText="Content" DataField="Content" AutoPostBackOnFilter="true" HtmlEncode="true" CurrentFilterFunction="StartsWith" />
                     </Columns>
                 </MasterTableView>
             </telerik:RadGrid>
@@ -300,7 +284,7 @@
     <asp:Panel ID="ElectronicAccessesPanel" runat="server" Visible='<%# (string)Session["ElectronicAccessesPermission"] != null && Instance2FormView.DataKey.Value != null %>'>
         <fieldset>
             <legend>
-                <asp:HyperLink ID="ElectronicAccessesHyperLink" runat="server" Text="Electronic Accesses" NavigateUrl="~/ElectronicAccesses/Default.aspx" /></legend>
+                <asp:HyperLink ID="ElectronicAccessesHyperLink" runat="server" Text="Electronic Accesses" NavigateUrl="~/ElectronicAccesses/Default.aspx" Enabled="false" /></legend>
             <telerik:RadGrid ID="ElectronicAccessesRadGrid" runat="server" AutoGenerateColumns="false" AllowSorting="true" AllowFilteringByColumn="false" GroupingSettings-CaseSensitive="false" AllowPaging="true" PageSize="10" EnableLinqExpressions="false" OnNeedDataSource="ElectronicAccessesRadGrid_NeedDataSource">
                 <MasterTableView DataKeyNames="Id, InstanceId" PagerStyle-Mode="NextPrevNumericAndAdvanced" NoMasterRecordsText="No electronic accesses found">
                     <Columns>
@@ -629,15 +613,11 @@
     <asp:Panel ID="IdentifiersPanel" runat="server" Visible='<%# (string)Session["IdentifiersPermission"] != null && Instance2FormView.DataKey.Value != null %>'>
         <fieldset>
             <legend>
-                <asp:HyperLink ID="IdentifiersHyperLink" runat="server" Text="Identifiers" NavigateUrl="~/Identifiers/Default.aspx" /></legend>
+                <asp:HyperLink ID="IdentifiersHyperLink" runat="server" Text="Identifiers" NavigateUrl="~/Identifiers/Default.aspx" Enabled="false" /></legend>
             <telerik:RadGrid ID="IdentifiersRadGrid" runat="server" AutoGenerateColumns="false" AllowSorting="true" AllowFilteringByColumn="false" GroupingSettings-CaseSensitive="false" AllowPaging="true" PageSize="10" EnableLinqExpressions="false" OnNeedDataSource="IdentifiersRadGrid_NeedDataSource">
                 <MasterTableView DataKeyNames="Id, InstanceId" PagerStyle-Mode="NextPrevNumericAndAdvanced" NoMasterRecordsText="No identifiers found">
                     <Columns>
-                        <telerik:GridTemplateColumn HeaderText="Content" DataField="Content" SortExpression="Content" AutoPostBackOnFilter="true" CurrentFilterFunction="StartsWith">
-                            <ItemTemplate>
-                                <asp:HyperLink ID="ContentHyperLink" runat="server" Text='<%#: Eval("Content") %>' NavigateUrl='<%# $"~/Identifiers/Edit.aspx?Id={Eval("Id")}&InstanceId={Eval("InstanceId")}" %>' />
-                            </ItemTemplate>
-                        </telerik:GridTemplateColumn>
+                        <telerik:GridBoundColumn HeaderText="Content" DataField="Content" AutoPostBackOnFilter="true" HtmlEncode="true" CurrentFilterFunction="StartsWith" />
                         <telerik:GridTemplateColumn AllowFiltering="false" AllowSorting="false" HeaderText="Identifier Type" DataField="IdentifierType.Name" SortExpression="IdentifierType.Name" AutoPostBackOnFilter="true" CurrentFilterFunction="StartsWith">
                             <ItemTemplate>
                                 <asp:HyperLink ID="IdentifierTypeHyperLink" runat="server" Text='<%#: Eval("IdentifierType.Name") %>' NavigateUrl='<%# $"~/IdType2s/Edit.aspx?Id={Eval("IdentifierTypeId")}" %>' Enabled='<%# Session["IdType2sPermission"] != null %>' />
@@ -651,7 +631,7 @@
     <asp:Panel ID="InstanceFormat2sPanel" runat="server" Visible='<%# (string)Session["InstanceFormat2sPermission"] != null && Instance2FormView.DataKey.Value != null %>'>
         <fieldset>
             <legend>
-                <asp:HyperLink ID="InstanceFormat2sHyperLink" runat="server" Text="Instance Formats" NavigateUrl="~/InstanceFormat2s/Default.aspx" /></legend>
+                <asp:HyperLink ID="InstanceFormat2sHyperLink" runat="server" Text="Instance Formats" NavigateUrl="~/InstanceFormat2s/Default.aspx" Enabled="false" /></legend>
             <telerik:RadGrid ID="InstanceFormat2sRadGrid" runat="server" AutoGenerateColumns="false" AllowSorting="true" AllowFilteringByColumn="false" GroupingSettings-CaseSensitive="false" AllowPaging="true" PageSize="10" EnableLinqExpressions="false" OnNeedDataSource="InstanceFormat2sRadGrid_NeedDataSource">
                 <MasterTableView DataKeyNames="Id, InstanceId" PagerStyle-Mode="NextPrevNumericAndAdvanced" NoMasterRecordsText="No instance formats found">
                     <Columns>
@@ -668,7 +648,7 @@
     <asp:Panel ID="InstanceNatureOfContentTermsPanel" runat="server" Visible='<%# (string)Session["InstanceNatureOfContentTermsPermission"] != null && Instance2FormView.DataKey.Value != null %>'>
         <fieldset>
             <legend>
-                <asp:HyperLink ID="InstanceNatureOfContentTermsHyperLink" runat="server" Text="Instance Nature Of Content Terms" NavigateUrl="~/InstanceNatureOfContentTerms/Default.aspx" /></legend>
+                <asp:HyperLink ID="InstanceNatureOfContentTermsHyperLink" runat="server" Text="Instance Nature Of Content Terms" NavigateUrl="~/InstanceNatureOfContentTerms/Default.aspx" Enabled="false" /></legend>
             <telerik:RadGrid ID="InstanceNatureOfContentTermsRadGrid" runat="server" AutoGenerateColumns="false" AllowSorting="true" AllowFilteringByColumn="false" GroupingSettings-CaseSensitive="false" AllowPaging="true" PageSize="10" EnableLinqExpressions="false" OnNeedDataSource="InstanceNatureOfContentTermsRadGrid_NeedDataSource">
                 <MasterTableView DataKeyNames="Id, InstanceId" PagerStyle-Mode="NextPrevNumericAndAdvanced" NoMasterRecordsText="No instance nature of content terms found">
                     <Columns>
@@ -685,7 +665,7 @@
     <asp:Panel ID="InstanceStatisticalCodesPanel" runat="server" Visible='<%# (string)Session["InstanceStatisticalCodesPermission"] != null && Instance2FormView.DataKey.Value != null %>'>
         <fieldset>
             <legend>
-                <asp:HyperLink ID="InstanceStatisticalCodesHyperLink" runat="server" Text="Instance Statistical Codes" NavigateUrl="~/InstanceStatisticalCodes/Default.aspx" /></legend>
+                <asp:HyperLink ID="InstanceStatisticalCodesHyperLink" runat="server" Text="Instance Statistical Codes" NavigateUrl="~/InstanceStatisticalCodes/Default.aspx" Enabled="false" /></legend>
             <telerik:RadGrid ID="InstanceStatisticalCodesRadGrid" runat="server" AutoGenerateColumns="false" AllowSorting="true" AllowFilteringByColumn="false" GroupingSettings-CaseSensitive="false" AllowPaging="true" PageSize="10" EnableLinqExpressions="false" OnNeedDataSource="InstanceStatisticalCodesRadGrid_NeedDataSource">
                 <MasterTableView DataKeyNames="Id, InstanceId" PagerStyle-Mode="NextPrevNumericAndAdvanced" NoMasterRecordsText="No instance statistical codes found">
                     <Columns>
@@ -702,15 +682,11 @@
     <asp:Panel ID="InstanceTagsPanel" runat="server" Visible='<%# (string)Session["InstanceTagsPermission"] != null && Instance2FormView.DataKey.Value != null %>'>
         <fieldset>
             <legend>
-                <asp:HyperLink ID="InstanceTagsHyperLink" runat="server" Text="Instance Tags" NavigateUrl="~/InstanceTags/Default.aspx" /></legend>
+                <asp:HyperLink ID="InstanceTagsHyperLink" runat="server" Text="Instance Tags" NavigateUrl="~/InstanceTags/Default.aspx" Enabled="false" /></legend>
             <telerik:RadGrid ID="InstanceTagsRadGrid" runat="server" AutoGenerateColumns="false" AllowSorting="true" AllowFilteringByColumn="false" GroupingSettings-CaseSensitive="false" AllowPaging="true" PageSize="10" EnableLinqExpressions="false" OnNeedDataSource="InstanceTagsRadGrid_NeedDataSource">
                 <MasterTableView DataKeyNames="Id, InstanceId" PagerStyle-Mode="NextPrevNumericAndAdvanced" NoMasterRecordsText="No instance tags found">
                     <Columns>
-                        <telerik:GridTemplateColumn HeaderText="Content" DataField="Content" SortExpression="Content" AutoPostBackOnFilter="true" CurrentFilterFunction="StartsWith">
-                            <ItemTemplate>
-                                <asp:HyperLink ID="ContentHyperLink" runat="server" Text='<%#: Eval("Content") %>' NavigateUrl='<%# $"~/InstanceTags/Edit.aspx?Id={Eval("Id")}&InstanceId={Eval("InstanceId")}" %>' />
-                            </ItemTemplate>
-                        </telerik:GridTemplateColumn>
+                        <telerik:GridBoundColumn HeaderText="Content" DataField="Content" AutoPostBackOnFilter="true" HtmlEncode="true" CurrentFilterFunction="StartsWith" />
                     </Columns>
                 </MasterTableView>
             </telerik:RadGrid>
@@ -719,15 +695,11 @@
     <asp:Panel ID="LanguagesPanel" runat="server" Visible='<%# (string)Session["LanguagesPermission"] != null && Instance2FormView.DataKey.Value != null %>'>
         <fieldset>
             <legend>
-                <asp:HyperLink ID="LanguagesHyperLink" runat="server" Text="Languages" NavigateUrl="~/Languages/Default.aspx" /></legend>
+                <asp:HyperLink ID="LanguagesHyperLink" runat="server" Text="Languages" NavigateUrl="~/Languages/Default.aspx" Enabled="false" /></legend>
             <telerik:RadGrid ID="LanguagesRadGrid" runat="server" AutoGenerateColumns="false" AllowSorting="true" AllowFilteringByColumn="false" GroupingSettings-CaseSensitive="false" AllowPaging="true" PageSize="10" EnableLinqExpressions="false" OnNeedDataSource="LanguagesRadGrid_NeedDataSource">
                 <MasterTableView DataKeyNames="Id, InstanceId" PagerStyle-Mode="NextPrevNumericAndAdvanced" NoMasterRecordsText="No languages found">
                     <Columns>
-                        <telerik:GridTemplateColumn HeaderText="Content" DataField="Content" SortExpression="Content" AutoPostBackOnFilter="true" CurrentFilterFunction="StartsWith">
-                            <ItemTemplate>
-                                <asp:HyperLink ID="ContentHyperLink" runat="server" Text='<%#: Eval("Content") %>' NavigateUrl='<%# $"~/Languages/Edit.aspx?Id={Eval("Id")}&InstanceId={Eval("InstanceId")}" %>' />
-                            </ItemTemplate>
-                        </telerik:GridTemplateColumn>
+                        <telerik:GridBoundColumn HeaderText="Content" DataField="Content" AutoPostBackOnFilter="true" HtmlEncode="true" CurrentFilterFunction="StartsWith" />
                     </Columns>
                 </MasterTableView>
             </telerik:RadGrid>
@@ -736,7 +708,7 @@
     <asp:Panel ID="Note2sPanel" runat="server" Visible='<%# (string)Session["Note2sPermission"] != null && Instance2FormView.DataKey.Value != null %>'>
         <fieldset>
             <legend>
-                <asp:HyperLink ID="Note2sHyperLink" runat="server" Text="Notes" NavigateUrl="~/Note2s/Default.aspx" /></legend>
+                <asp:HyperLink ID="Note2sHyperLink" runat="server" Text="Notes" NavigateUrl="~/Note2s/Default.aspx" Enabled="false" /></legend>
             <telerik:RadGrid ID="Note2sRadGrid" runat="server" AutoGenerateColumns="false" AllowSorting="true" AllowFilteringByColumn="false" GroupingSettings-CaseSensitive="false" AllowPaging="true" PageSize="10" EnableLinqExpressions="false" OnNeedDataSource="Note2sRadGrid_NeedDataSource">
                 <MasterTableView DataKeyNames="Id, InstanceId" PagerStyle-Mode="NextPrevNumericAndAdvanced" NoMasterRecordsText="No notes found">
                     <Columns>
@@ -880,15 +852,11 @@
     <asp:Panel ID="PhysicalDescriptionsPanel" runat="server" Visible='<%# (string)Session["PhysicalDescriptionsPermission"] != null && Instance2FormView.DataKey.Value != null %>'>
         <fieldset>
             <legend>
-                <asp:HyperLink ID="PhysicalDescriptionsHyperLink" runat="server" Text="Physical Descriptions" NavigateUrl="~/PhysicalDescriptions/Default.aspx" /></legend>
+                <asp:HyperLink ID="PhysicalDescriptionsHyperLink" runat="server" Text="Physical Descriptions" NavigateUrl="~/PhysicalDescriptions/Default.aspx" Enabled="false" /></legend>
             <telerik:RadGrid ID="PhysicalDescriptionsRadGrid" runat="server" AutoGenerateColumns="false" AllowSorting="true" AllowFilteringByColumn="false" GroupingSettings-CaseSensitive="false" AllowPaging="true" PageSize="10" EnableLinqExpressions="false" OnNeedDataSource="PhysicalDescriptionsRadGrid_NeedDataSource">
                 <MasterTableView DataKeyNames="Id, InstanceId" PagerStyle-Mode="NextPrevNumericAndAdvanced" NoMasterRecordsText="No physical descriptions found">
                     <Columns>
-                        <telerik:GridTemplateColumn HeaderText="Content" DataField="Content" SortExpression="Content" AutoPostBackOnFilter="true" CurrentFilterFunction="StartsWith">
-                            <ItemTemplate>
-                                <asp:HyperLink ID="ContentHyperLink" runat="server" Text='<%#: Eval("Content") %>' NavigateUrl='<%# $"~/PhysicalDescriptions/Edit.aspx?Id={Eval("Id")}&InstanceId={Eval("InstanceId")}" %>' />
-                            </ItemTemplate>
-                        </telerik:GridTemplateColumn>
+                        <telerik:GridBoundColumn HeaderText="Content" DataField="Content" AutoPostBackOnFilter="true" HtmlEncode="true" CurrentFilterFunction="StartsWith" />
                     </Columns>
                 </MasterTableView>
             </telerik:RadGrid>
@@ -993,15 +961,11 @@
     <asp:Panel ID="PublicationFrequenciesPanel" runat="server" Visible='<%# (string)Session["PublicationFrequenciesPermission"] != null && Instance2FormView.DataKey.Value != null %>'>
         <fieldset>
             <legend>
-                <asp:HyperLink ID="PublicationFrequenciesHyperLink" runat="server" Text="Publication Frequencies" NavigateUrl="~/PublicationFrequencies/Default.aspx" /></legend>
+                <asp:HyperLink ID="PublicationFrequenciesHyperLink" runat="server" Text="Publication Frequencies" NavigateUrl="~/PublicationFrequencies/Default.aspx" Enabled="false" /></legend>
             <telerik:RadGrid ID="PublicationFrequenciesRadGrid" runat="server" AutoGenerateColumns="false" AllowSorting="true" AllowFilteringByColumn="false" GroupingSettings-CaseSensitive="false" AllowPaging="true" PageSize="10" EnableLinqExpressions="false" OnNeedDataSource="PublicationFrequenciesRadGrid_NeedDataSource">
                 <MasterTableView DataKeyNames="Id, InstanceId" PagerStyle-Mode="NextPrevNumericAndAdvanced" NoMasterRecordsText="No publication frequencies found">
                     <Columns>
-                        <telerik:GridTemplateColumn HeaderText="Content" DataField="Content" SortExpression="Content" AutoPostBackOnFilter="true" CurrentFilterFunction="StartsWith">
-                            <ItemTemplate>
-                                <asp:HyperLink ID="ContentHyperLink" runat="server" Text='<%#: Eval("Content") %>' NavigateUrl='<%# $"~/PublicationFrequencies/Edit.aspx?Id={Eval("Id")}&InstanceId={Eval("InstanceId")}" %>' />
-                            </ItemTemplate>
-                        </telerik:GridTemplateColumn>
+                        <telerik:GridBoundColumn HeaderText="Content" DataField="Content" AutoPostBackOnFilter="true" HtmlEncode="true" CurrentFilterFunction="StartsWith" />
                     </Columns>
                 </MasterTableView>
             </telerik:RadGrid>
@@ -1010,15 +974,11 @@
     <asp:Panel ID="PublicationRangesPanel" runat="server" Visible='<%# (string)Session["PublicationRangesPermission"] != null && Instance2FormView.DataKey.Value != null %>'>
         <fieldset>
             <legend>
-                <asp:HyperLink ID="PublicationRangesHyperLink" runat="server" Text="Publication Ranges" NavigateUrl="~/PublicationRanges/Default.aspx" /></legend>
+                <asp:HyperLink ID="PublicationRangesHyperLink" runat="server" Text="Publication Ranges" NavigateUrl="~/PublicationRanges/Default.aspx" Enabled="false" /></legend>
             <telerik:RadGrid ID="PublicationRangesRadGrid" runat="server" AutoGenerateColumns="false" AllowSorting="true" AllowFilteringByColumn="false" GroupingSettings-CaseSensitive="false" AllowPaging="true" PageSize="10" EnableLinqExpressions="false" OnNeedDataSource="PublicationRangesRadGrid_NeedDataSource">
                 <MasterTableView DataKeyNames="Id, InstanceId" PagerStyle-Mode="NextPrevNumericAndAdvanced" NoMasterRecordsText="No publication ranges found">
                     <Columns>
-                        <telerik:GridTemplateColumn HeaderText="Content" DataField="Content" SortExpression="Content" AutoPostBackOnFilter="true" CurrentFilterFunction="StartsWith">
-                            <ItemTemplate>
-                                <asp:HyperLink ID="ContentHyperLink" runat="server" Text='<%#: Eval("Content") %>' NavigateUrl='<%# $"~/PublicationRanges/Edit.aspx?Id={Eval("Id")}&InstanceId={Eval("InstanceId")}" %>' />
-                            </ItemTemplate>
-                        </telerik:GridTemplateColumn>
+                        <telerik:GridBoundColumn HeaderText="Content" DataField="Content" AutoPostBackOnFilter="true" HtmlEncode="true" CurrentFilterFunction="StartsWith" />
                     </Columns>
                 </MasterTableView>
             </telerik:RadGrid>
@@ -1027,7 +987,7 @@
     <asp:Panel ID="PublicationsPanel" runat="server" Visible='<%# (string)Session["PublicationsPermission"] != null && Instance2FormView.DataKey.Value != null %>'>
         <fieldset>
             <legend>
-                <asp:HyperLink ID="PublicationsHyperLink" runat="server" Text="Publications" NavigateUrl="~/Publications/Default.aspx" /></legend>
+                <asp:HyperLink ID="PublicationsHyperLink" runat="server" Text="Publications" NavigateUrl="~/Publications/Default.aspx" Enabled="false" /></legend>
             <telerik:RadGrid ID="PublicationsRadGrid" runat="server" AutoGenerateColumns="false" AllowSorting="true" AllowFilteringByColumn="false" GroupingSettings-CaseSensitive="false" AllowPaging="true" PageSize="10" EnableLinqExpressions="false" OnNeedDataSource="PublicationsRadGrid_NeedDataSource">
                 <MasterTableView DataKeyNames="Id, InstanceId" PagerStyle-Mode="NextPrevNumericAndAdvanced" NoMasterRecordsText="No publications found">
                     <Columns>
@@ -1137,15 +1097,11 @@
     <asp:Panel ID="SeriesPanel" runat="server" Visible='<%# (string)Session["SeriesPermission"] != null && Instance2FormView.DataKey.Value != null %>'>
         <fieldset>
             <legend>
-                <asp:HyperLink ID="SeriesHyperLink" runat="server" Text="Series" NavigateUrl="~/Series/Default.aspx" /></legend>
+                <asp:HyperLink ID="SeriesHyperLink" runat="server" Text="Series" NavigateUrl="~/Series/Default.aspx" Enabled="false" /></legend>
             <telerik:RadGrid ID="SeriesRadGrid" runat="server" AutoGenerateColumns="false" AllowSorting="true" AllowFilteringByColumn="false" GroupingSettings-CaseSensitive="false" AllowPaging="true" PageSize="10" EnableLinqExpressions="false" OnNeedDataSource="SeriesRadGrid_NeedDataSource">
                 <MasterTableView DataKeyNames="Id, InstanceId" PagerStyle-Mode="NextPrevNumericAndAdvanced" NoMasterRecordsText="No series found">
                     <Columns>
-                        <telerik:GridTemplateColumn HeaderText="Content" DataField="Content" SortExpression="Content" AutoPostBackOnFilter="true" CurrentFilterFunction="StartsWith">
-                            <ItemTemplate>
-                                <asp:HyperLink ID="ContentHyperLink" runat="server" Text='<%#: Eval("Content") %>' NavigateUrl='<%# $"~/Series/Edit.aspx?Id={Eval("Id")}&InstanceId={Eval("InstanceId")}" %>' />
-                            </ItemTemplate>
-                        </telerik:GridTemplateColumn>
+                        <telerik:GridBoundColumn HeaderText="Content" DataField="Content" AutoPostBackOnFilter="true" HtmlEncode="true" CurrentFilterFunction="StartsWith" />
                     </Columns>
                 </MasterTableView>
             </telerik:RadGrid>
@@ -1154,15 +1110,11 @@
     <asp:Panel ID="SubjectsPanel" runat="server" Visible='<%# (string)Session["SubjectsPermission"] != null && Instance2FormView.DataKey.Value != null %>'>
         <fieldset>
             <legend>
-                <asp:HyperLink ID="SubjectsHyperLink" runat="server" Text="Subjects" NavigateUrl="~/Subjects/Default.aspx" /></legend>
+                <asp:HyperLink ID="SubjectsHyperLink" runat="server" Text="Subjects" NavigateUrl="~/Subjects/Default.aspx" Enabled="false" /></legend>
             <telerik:RadGrid ID="SubjectsRadGrid" runat="server" AutoGenerateColumns="false" AllowSorting="true" AllowFilteringByColumn="false" GroupingSettings-CaseSensitive="false" AllowPaging="true" PageSize="10" EnableLinqExpressions="false" OnNeedDataSource="SubjectsRadGrid_NeedDataSource">
                 <MasterTableView DataKeyNames="Id, InstanceId" PagerStyle-Mode="NextPrevNumericAndAdvanced" NoMasterRecordsText="No subjects found">
                     <Columns>
-                        <telerik:GridTemplateColumn HeaderText="Content" DataField="Content" SortExpression="Content" AutoPostBackOnFilter="true" CurrentFilterFunction="StartsWith">
-                            <ItemTemplate>
-                                <asp:HyperLink ID="ContentHyperLink" runat="server" Text='<%#: Eval("Content") %>' NavigateUrl='<%# $"~/Subjects/Edit.aspx?Id={Eval("Id")}&InstanceId={Eval("InstanceId")}" %>' />
-                            </ItemTemplate>
-                        </telerik:GridTemplateColumn>
+                        <telerik:GridBoundColumn HeaderText="Content" DataField="Content" AutoPostBackOnFilter="true" HtmlEncode="true" CurrentFilterFunction="StartsWith" />
                     </Columns>
                 </MasterTableView>
             </telerik:RadGrid>

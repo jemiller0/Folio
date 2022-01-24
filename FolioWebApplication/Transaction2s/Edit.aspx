@@ -575,15 +575,11 @@
     <asp:Panel ID="TransactionTagsPanel" runat="server" Visible='<%# (string)Session["TransactionTagsPermission"] != null && Transaction2FormView.DataKey.Value != null %>'>
         <fieldset>
             <legend>
-                <asp:HyperLink ID="TransactionTagsHyperLink" runat="server" Text="Transaction Tags" NavigateUrl="~/TransactionTags/Default.aspx" /></legend>
+                <asp:HyperLink ID="TransactionTagsHyperLink" runat="server" Text="Transaction Tags" NavigateUrl="~/TransactionTags/Default.aspx" Enabled="false" /></legend>
             <telerik:RadGrid ID="TransactionTagsRadGrid" runat="server" AutoGenerateColumns="false" AllowSorting="true" AllowFilteringByColumn="false" GroupingSettings-CaseSensitive="false" AllowPaging="true" PageSize="10" EnableLinqExpressions="false" OnNeedDataSource="TransactionTagsRadGrid_NeedDataSource">
                 <MasterTableView DataKeyNames="Id" PagerStyle-Mode="NextPrevNumericAndAdvanced" NoMasterRecordsText="No transaction tags found">
                     <Columns>
-                        <telerik:GridTemplateColumn HeaderText="Content" DataField="Content" SortExpression="Content" AutoPostBackOnFilter="true" CurrentFilterFunction="StartsWith">
-                            <ItemTemplate>
-                                <asp:HyperLink ID="ContentHyperLink" runat="server" Text='<%#: Eval("Content") %>' NavigateUrl='<%# $"~/TransactionTags/Edit.aspx?Id={Eval("Id")}" %>' />
-                            </ItemTemplate>
-                        </telerik:GridTemplateColumn>
+                        <telerik:GridBoundColumn HeaderText="Content" DataField="Content" AutoPostBackOnFilter="true" HtmlEncode="true" CurrentFilterFunction="StartsWith" />
                     </Columns>
                 </MasterTableView>
             </telerik:RadGrid>

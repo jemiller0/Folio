@@ -293,7 +293,7 @@
     <asp:Panel ID="LedgerAcquisitionsUnitsPanel" runat="server" Visible='<%# (string)Session["LedgerAcquisitionsUnitsPermission"] != null && Ledger2FormView.DataKey.Value != null %>'>
         <fieldset>
             <legend>
-                <asp:HyperLink ID="LedgerAcquisitionsUnitsHyperLink" runat="server" Text="Ledger Acquisitions Units" NavigateUrl="~/LedgerAcquisitionsUnits/Default.aspx" /></legend>
+                <asp:HyperLink ID="LedgerAcquisitionsUnitsHyperLink" runat="server" Text="Ledger Acquisitions Units" NavigateUrl="~/LedgerAcquisitionsUnits/Default.aspx" Enabled="false" /></legend>
             <telerik:RadGrid ID="LedgerAcquisitionsUnitsRadGrid" runat="server" AutoGenerateColumns="false" AllowSorting="true" AllowFilteringByColumn="false" GroupingSettings-CaseSensitive="false" AllowPaging="true" PageSize="10" EnableLinqExpressions="false" OnNeedDataSource="LedgerAcquisitionsUnitsRadGrid_NeedDataSource">
                 <MasterTableView DataKeyNames="Id" PagerStyle-Mode="NextPrevNumericAndAdvanced" NoMasterRecordsText="No ledger acquisitions units found">
                     <Columns>

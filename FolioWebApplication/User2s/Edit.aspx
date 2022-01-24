@@ -1962,16 +1962,12 @@
     <asp:Panel ID="UserAddressesPanel" runat="server" Visible='<%# (string)Session["UserAddressesPermission"] != null && User2FormView.DataKey.Value != null %>'>
         <fieldset>
             <legend>
-                <asp:HyperLink ID="UserAddressesHyperLink" runat="server" Text="User Addresses" NavigateUrl="~/UserAddresses/Default.aspx" /></legend>
+                <asp:HyperLink ID="UserAddressesHyperLink" runat="server" Text="User Addresses" NavigateUrl="~/UserAddresses/Default.aspx" Enabled="false" /></legend>
             <telerik:RadGrid ID="UserAddressesRadGrid" runat="server" AutoGenerateColumns="false" AllowSorting="true" AllowFilteringByColumn="false" GroupingSettings-CaseSensitive="false" AllowPaging="true" PageSize="10" EnableLinqExpressions="false" OnNeedDataSource="UserAddressesRadGrid_NeedDataSource">
                 <MasterTableView DataKeyNames="Id" PagerStyle-Mode="NextPrevNumericAndAdvanced" NoMasterRecordsText="No user addresses found">
                     <Columns>
                         <telerik:GridBoundColumn HeaderText="Country Code" DataField="CountryCode" AutoPostBackOnFilter="true" HtmlEncode="true" CurrentFilterFunction="StartsWith" />
-                        <telerik:GridTemplateColumn HeaderText="Street Address 1" DataField="StreetAddress1" SortExpression="StreetAddress1" AutoPostBackOnFilter="true" CurrentFilterFunction="StartsWith">
-                            <ItemTemplate>
-                                <asp:HyperLink ID="StreetAddress1HyperLink" runat="server" Text='<%#: Eval("StreetAddress1") ?? "&nbsp;" %>' NavigateUrl='<%# $"~/UserAddresses/Edit.aspx?Id={Eval("Id")}" %>' />
-                            </ItemTemplate>
-                        </telerik:GridTemplateColumn>
+                        <telerik:GridBoundColumn HeaderText="Street Address 1" DataField="StreetAddress1" AutoPostBackOnFilter="true" HtmlEncode="true" CurrentFilterFunction="StartsWith" />
                         <telerik:GridBoundColumn HeaderText="Street Address 2" DataField="StreetAddress2" AutoPostBackOnFilter="true" HtmlEncode="true" CurrentFilterFunction="StartsWith" />
                         <telerik:GridBoundColumn HeaderText="City" DataField="City" AutoPostBackOnFilter="true" HtmlEncode="true" CurrentFilterFunction="StartsWith" />
                         <telerik:GridBoundColumn HeaderText="State" DataField="State" AutoPostBackOnFilter="true" HtmlEncode="true" CurrentFilterFunction="StartsWith" />
@@ -1990,7 +1986,7 @@
     <asp:Panel ID="UserDepartmentsPanel" runat="server" Visible='<%# (string)Session["UserDepartmentsPermission"] != null && User2FormView.DataKey.Value != null %>'>
         <fieldset>
             <legend>
-                <asp:HyperLink ID="UserDepartmentsHyperLink" runat="server" Text="User Departments" NavigateUrl="~/UserDepartments/Default.aspx" /></legend>
+                <asp:HyperLink ID="UserDepartmentsHyperLink" runat="server" Text="User Departments" NavigateUrl="~/UserDepartments/Default.aspx" Enabled="false" /></legend>
             <telerik:RadGrid ID="UserDepartmentsRadGrid" runat="server" AutoGenerateColumns="false" AllowSorting="true" AllowFilteringByColumn="false" GroupingSettings-CaseSensitive="false" AllowPaging="true" PageSize="10" EnableLinqExpressions="false" OnNeedDataSource="UserDepartmentsRadGrid_NeedDataSource">
                 <MasterTableView DataKeyNames="Id" PagerStyle-Mode="NextPrevNumericAndAdvanced" NoMasterRecordsText="No user departments found">
                     <Columns>
@@ -2057,15 +2053,11 @@
     <asp:Panel ID="UserTagsPanel" runat="server" Visible='<%# (string)Session["UserTagsPermission"] != null && User2FormView.DataKey.Value != null %>'>
         <fieldset>
             <legend>
-                <asp:HyperLink ID="UserTagsHyperLink" runat="server" Text="User Tags" NavigateUrl="~/UserTags/Default.aspx" /></legend>
+                <asp:HyperLink ID="UserTagsHyperLink" runat="server" Text="User Tags" NavigateUrl="~/UserTags/Default.aspx" Enabled="false" /></legend>
             <telerik:RadGrid ID="UserTagsRadGrid" runat="server" AutoGenerateColumns="false" AllowSorting="true" AllowFilteringByColumn="false" GroupingSettings-CaseSensitive="false" AllowPaging="true" PageSize="10" EnableLinqExpressions="false" OnNeedDataSource="UserTagsRadGrid_NeedDataSource">
                 <MasterTableView DataKeyNames="Id" PagerStyle-Mode="NextPrevNumericAndAdvanced" NoMasterRecordsText="No user tags found">
                     <Columns>
-                        <telerik:GridTemplateColumn HeaderText="Content" DataField="Content" SortExpression="Content" AutoPostBackOnFilter="true" CurrentFilterFunction="StartsWith">
-                            <ItemTemplate>
-                                <asp:HyperLink ID="ContentHyperLink" runat="server" Text='<%#: Eval("Content") %>' NavigateUrl='<%# $"~/UserTags/Edit.aspx?Id={Eval("Id")}" %>' />
-                            </ItemTemplate>
-                        </telerik:GridTemplateColumn>
+                        <telerik:GridBoundColumn HeaderText="Content" DataField="Content" AutoPostBackOnFilter="true" HtmlEncode="true" CurrentFilterFunction="StartsWith" />
                     </Columns>
                 </MasterTableView>
             </telerik:RadGrid>

@@ -122,15 +122,11 @@
     <asp:Panel ID="ContactAddressesPanel" runat="server" Visible='<%# (string)Session["ContactAddressesPermission"] != null && Contact2FormView.DataKey.Value != null %>'>
         <fieldset>
             <legend>
-                <asp:HyperLink ID="ContactAddressesHyperLink" runat="server" Text="Contact Addresses" NavigateUrl="~/ContactAddresses/Default.aspx" /></legend>
+                <asp:HyperLink ID="ContactAddressesHyperLink" runat="server" Text="Contact Addresses" NavigateUrl="~/ContactAddresses/Default.aspx" Enabled="false" /></legend>
             <telerik:RadGrid ID="ContactAddressesRadGrid" runat="server" AutoGenerateColumns="false" AllowSorting="true" AllowFilteringByColumn="false" GroupingSettings-CaseSensitive="false" AllowPaging="true" PageSize="10" EnableLinqExpressions="false" OnNeedDataSource="ContactAddressesRadGrid_NeedDataSource">
                 <MasterTableView DataKeyNames="Id" PagerStyle-Mode="NextPrevNumericAndAdvanced" NoMasterRecordsText="No contact addresses found">
                     <Columns>
-                        <telerik:GridTemplateColumn HeaderText="Street Address 1" DataField="StreetAddress1" SortExpression="StreetAddress1" AutoPostBackOnFilter="true" CurrentFilterFunction="StartsWith">
-                            <ItemTemplate>
-                                <asp:HyperLink ID="StreetAddress1HyperLink" runat="server" Text='<%#: Eval("StreetAddress1") ?? "&nbsp;" %>' NavigateUrl='<%# $"~/ContactAddresses/Edit.aspx?Id={Eval("Id")}" %>' />
-                            </ItemTemplate>
-                        </telerik:GridTemplateColumn>
+                        <telerik:GridBoundColumn HeaderText="Street Address 1" DataField="StreetAddress1" AutoPostBackOnFilter="true" HtmlEncode="true" CurrentFilterFunction="StartsWith" />
                         <telerik:GridBoundColumn HeaderText="Street Address 2" DataField="StreetAddress2" AutoPostBackOnFilter="true" HtmlEncode="true" CurrentFilterFunction="StartsWith" />
                         <telerik:GridBoundColumn HeaderText="City" DataField="City" AutoPostBackOnFilter="true" HtmlEncode="true" CurrentFilterFunction="StartsWith" />
                         <telerik:GridBoundColumn HeaderText="State" DataField="State" AutoPostBackOnFilter="true" HtmlEncode="true" CurrentFilterFunction="StartsWith" />
@@ -158,7 +154,7 @@
     <asp:Panel ID="ContactCategoriesPanel" runat="server" Visible='<%# (string)Session["ContactCategoriesPermission"] != null && Contact2FormView.DataKey.Value != null %>'>
         <fieldset>
             <legend>
-                <asp:HyperLink ID="ContactCategoriesHyperLink" runat="server" Text="Contact Categories" NavigateUrl="~/ContactCategories/Default.aspx" /></legend>
+                <asp:HyperLink ID="ContactCategoriesHyperLink" runat="server" Text="Contact Categories" NavigateUrl="~/ContactCategories/Default.aspx" Enabled="false" /></legend>
             <telerik:RadGrid ID="ContactCategoriesRadGrid" runat="server" AutoGenerateColumns="false" AllowSorting="true" AllowFilteringByColumn="false" GroupingSettings-CaseSensitive="false" AllowPaging="true" PageSize="10" EnableLinqExpressions="false" OnNeedDataSource="ContactCategoriesRadGrid_NeedDataSource">
                 <MasterTableView DataKeyNames="Id" PagerStyle-Mode="NextPrevNumericAndAdvanced" NoMasterRecordsText="No contact categories found">
                     <Columns>
@@ -175,15 +171,11 @@
     <asp:Panel ID="ContactEmailsPanel" runat="server" Visible='<%# (string)Session["ContactEmailsPermission"] != null && Contact2FormView.DataKey.Value != null %>'>
         <fieldset>
             <legend>
-                <asp:HyperLink ID="ContactEmailsHyperLink" runat="server" Text="Contact Emails" NavigateUrl="~/ContactEmails/Default.aspx" /></legend>
+                <asp:HyperLink ID="ContactEmailsHyperLink" runat="server" Text="Contact Emails" NavigateUrl="~/ContactEmails/Default.aspx" Enabled="false" /></legend>
             <telerik:RadGrid ID="ContactEmailsRadGrid" runat="server" AutoGenerateColumns="false" AllowSorting="true" AllowFilteringByColumn="false" GroupingSettings-CaseSensitive="false" AllowPaging="true" PageSize="10" EnableLinqExpressions="false" OnNeedDataSource="ContactEmailsRadGrid_NeedDataSource">
                 <MasterTableView DataKeyNames="Id" PagerStyle-Mode="NextPrevNumericAndAdvanced" NoMasterRecordsText="No contact emails found">
                     <Columns>
-                        <telerik:GridTemplateColumn HeaderText="Value" DataField="Value" SortExpression="Value" AutoPostBackOnFilter="true" CurrentFilterFunction="StartsWith">
-                            <ItemTemplate>
-                                <asp:HyperLink ID="ValueHyperLink" runat="server" Text='<%#: Eval("Value") %>' NavigateUrl='<%# $"~/ContactEmails/Edit.aspx?Id={Eval("Id")}" %>' />
-                            </ItemTemplate>
-                        </telerik:GridTemplateColumn>
+                        <telerik:GridHyperLinkColumn HeaderText="Value" DataTextField="Value" DataNavigateUrlFormatString="mailto:{0}" DataNavigateUrlFields="Value" SortExpression="Value" AutoPostBackOnFilter="true" CurrentFilterFunction="StartsWith" />
                         <telerik:GridBoundColumn HeaderText="Description" DataField="Description" AutoPostBackOnFilter="true" HtmlEncode="true" CurrentFilterFunction="StartsWith" />
                         <telerik:GridBoundColumn HeaderText="Is Primary" DataField="IsPrimary" AutoPostBackOnFilter="true" />
                         <telerik:GridBoundColumn HeaderText="Language" DataField="Language" AutoPostBackOnFilter="true" HtmlEncode="true" CurrentFilterFunction="StartsWith" />
@@ -207,15 +199,11 @@
     <asp:Panel ID="ContactPhoneNumbersPanel" runat="server" Visible='<%# (string)Session["ContactPhoneNumbersPermission"] != null && Contact2FormView.DataKey.Value != null %>'>
         <fieldset>
             <legend>
-                <asp:HyperLink ID="ContactPhoneNumbersHyperLink" runat="server" Text="Contact Phone Numbers" NavigateUrl="~/ContactPhoneNumbers/Default.aspx" /></legend>
+                <asp:HyperLink ID="ContactPhoneNumbersHyperLink" runat="server" Text="Contact Phone Numbers" NavigateUrl="~/ContactPhoneNumbers/Default.aspx" Enabled="false" /></legend>
             <telerik:RadGrid ID="ContactPhoneNumbersRadGrid" runat="server" AutoGenerateColumns="false" AllowSorting="true" AllowFilteringByColumn="false" GroupingSettings-CaseSensitive="false" AllowPaging="true" PageSize="10" EnableLinqExpressions="false" OnNeedDataSource="ContactPhoneNumbersRadGrid_NeedDataSource">
                 <MasterTableView DataKeyNames="Id" PagerStyle-Mode="NextPrevNumericAndAdvanced" NoMasterRecordsText="No contact phone numbers found">
                     <Columns>
-                        <telerik:GridTemplateColumn HeaderText="Phone Number" DataField="PhoneNumber" SortExpression="PhoneNumber" AutoPostBackOnFilter="true" CurrentFilterFunction="StartsWith">
-                            <ItemTemplate>
-                                <asp:HyperLink ID="PhoneNumberHyperLink" runat="server" Text='<%#: Eval("PhoneNumber") %>' NavigateUrl='<%# $"~/ContactPhoneNumbers/Edit.aspx?Id={Eval("Id")}" %>' />
-                            </ItemTemplate>
-                        </telerik:GridTemplateColumn>
+                        <telerik:GridHyperLinkColumn HeaderText="Phone Number" DataTextField="PhoneNumber" DataNavigateUrlFormatString="tel:{0}" DataNavigateUrlFields="PhoneNumber" SortExpression="PhoneNumber" AutoPostBackOnFilter="true" CurrentFilterFunction="StartsWith" />
                         <telerik:GridBoundColumn HeaderText="Type" DataField="Type" AutoPostBackOnFilter="true" HtmlEncode="true" CurrentFilterFunction="StartsWith" />
                         <telerik:GridBoundColumn HeaderText="Is Primary" DataField="IsPrimary" AutoPostBackOnFilter="true" />
                         <telerik:GridBoundColumn HeaderText="Language" DataField="Language" AutoPostBackOnFilter="true" HtmlEncode="true" CurrentFilterFunction="StartsWith" />
@@ -239,16 +227,12 @@
     <asp:Panel ID="ContactUrlsPanel" runat="server" Visible='<%# (string)Session["ContactUrlsPermission"] != null && Contact2FormView.DataKey.Value != null %>'>
         <fieldset>
             <legend>
-                <asp:HyperLink ID="ContactUrlsHyperLink" runat="server" Text="Contact URLs" NavigateUrl="~/ContactUrls/Default.aspx" /></legend>
+                <asp:HyperLink ID="ContactUrlsHyperLink" runat="server" Text="Contact URLs" NavigateUrl="~/ContactUrls/Default.aspx" Enabled="false" /></legend>
             <telerik:RadGrid ID="ContactUrlsRadGrid" runat="server" AutoGenerateColumns="false" AllowSorting="true" AllowFilteringByColumn="false" GroupingSettings-CaseSensitive="false" AllowPaging="true" PageSize="10" EnableLinqExpressions="false" OnNeedDataSource="ContactUrlsRadGrid_NeedDataSource">
                 <MasterTableView DataKeyNames="Id" PagerStyle-Mode="NextPrevNumericAndAdvanced" NoMasterRecordsText="No contact urls found">
                     <Columns>
                         <telerik:GridBoundColumn HeaderText="Id 2" DataField="Id2" AutoPostBackOnFilter="true" CurrentFilterFunction="EqualTo" />
-                        <telerik:GridTemplateColumn HeaderText="Value" DataField="Value" SortExpression="Value" AutoPostBackOnFilter="true" CurrentFilterFunction="StartsWith">
-                            <ItemTemplate>
-                                <asp:HyperLink ID="ValueHyperLink" runat="server" Text='<%#: Eval("Value") %>' NavigateUrl='<%# $"~/ContactUrls/Edit.aspx?Id={Eval("Id")}" %>' />
-                            </ItemTemplate>
-                        </telerik:GridTemplateColumn>
+                        <telerik:GridHyperLinkColumn HeaderText="Value" DataTextField="Value" DataNavigateUrlFields="Value" Target="_blank" SortExpression="Value" AutoPostBackOnFilter="true" CurrentFilterFunction="StartsWith" />
                         <telerik:GridBoundColumn HeaderText="Description" DataField="Description" AutoPostBackOnFilter="true" HtmlEncode="true" CurrentFilterFunction="StartsWith" />
                         <telerik:GridBoundColumn HeaderText="Language" DataField="Language" AutoPostBackOnFilter="true" HtmlEncode="true" CurrentFilterFunction="StartsWith" />
                         <telerik:GridBoundColumn HeaderText="Is Primary" DataField="IsPrimary" AutoPostBackOnFilter="true" />

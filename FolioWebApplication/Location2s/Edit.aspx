@@ -944,7 +944,7 @@
     <asp:Panel ID="LocationServicePointsPanel" runat="server" Visible='<%# (string)Session["LocationServicePointsPermission"] != null && Location2FormView.DataKey.Value != null %>'>
         <fieldset>
             <legend>
-                <asp:HyperLink ID="LocationServicePointsHyperLink" runat="server" Text="Location Service Points" NavigateUrl="~/LocationServicePoints/Default.aspx" /></legend>
+                <asp:HyperLink ID="LocationServicePointsHyperLink" runat="server" Text="Location Service Points" NavigateUrl="~/LocationServicePoints/Default.aspx" Enabled="false" /></legend>
             <telerik:RadGrid ID="LocationServicePointsRadGrid" runat="server" AutoGenerateColumns="false" AllowSorting="true" AllowFilteringByColumn="false" GroupingSettings-CaseSensitive="false" AllowPaging="true" PageSize="10" EnableLinqExpressions="false" OnNeedDataSource="LocationServicePointsRadGrid_NeedDataSource">
                 <MasterTableView DataKeyNames="Id" PagerStyle-Mode="NextPrevNumericAndAdvanced" NoMasterRecordsText="No location service points found">
                     <Columns>

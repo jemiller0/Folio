@@ -90,15 +90,11 @@
     <asp:Panel ID="PatronNoticePolicyFeeFineNoticesPanel" runat="server" Visible='<%# (string)Session["PatronNoticePolicyFeeFineNoticesPermission"] != null && PatronNoticePolicy2FormView.DataKey.Value != null %>'>
         <fieldset>
             <legend>
-                <asp:HyperLink ID="PatronNoticePolicyFeeFineNoticesHyperLink" runat="server" Text="Patron Notice Policy Fee Fine Notices" NavigateUrl="~/PatronNoticePolicyFeeFineNotices/Default.aspx" /></legend>
+                <asp:HyperLink ID="PatronNoticePolicyFeeFineNoticesHyperLink" runat="server" Text="Patron Notice Policy Fee Fine Notices" NavigateUrl="~/PatronNoticePolicyFeeFineNotices/Default.aspx" Enabled="false" /></legend>
             <telerik:RadGrid ID="PatronNoticePolicyFeeFineNoticesRadGrid" runat="server" AutoGenerateColumns="false" AllowSorting="true" AllowFilteringByColumn="false" GroupingSettings-CaseSensitive="false" AllowPaging="true" PageSize="10" EnableLinqExpressions="false" OnNeedDataSource="PatronNoticePolicyFeeFineNoticesRadGrid_NeedDataSource">
                 <MasterTableView DataKeyNames="Id" PagerStyle-Mode="NextPrevNumericAndAdvanced" NoMasterRecordsText="No patron notice policy fee fine notices found">
                     <Columns>
-                        <telerik:GridTemplateColumn HeaderText="Name" DataField="Name" SortExpression="Name" AutoPostBackOnFilter="true" CurrentFilterFunction="StartsWith">
-                            <ItemTemplate>
-                                <asp:HyperLink ID="NameHyperLink" runat="server" Text='<%#: Eval("Name") ?? "&nbsp;" %>' NavigateUrl='<%# $"~/PatronNoticePolicyFeeFineNotices/Edit.aspx?Id={Eval("Id")}" %>' />
-                            </ItemTemplate>
-                        </telerik:GridTemplateColumn>
+                        <telerik:GridBoundColumn HeaderText="Name" DataField="Name" AutoPostBackOnFilter="true" HtmlEncode="true" CurrentFilterFunction="StartsWith" />
                         <telerik:GridTemplateColumn AllowFiltering="false" AllowSorting="false" HeaderText="Template" DataField="Template.Name" SortExpression="Template.Name" AutoPostBackOnFilter="true" CurrentFilterFunction="StartsWith">
                             <ItemTemplate>
                                 <asp:HyperLink ID="TemplateHyperLink" runat="server" Text='<%#: Eval("TemplateId") != null ? Eval("Template.Name") ?? "&nbsp;" : "" %>' NavigateUrl='<%# $"~/Template2s/Edit.aspx?Id={Eval("TemplateId")}" %>' Enabled='<%# Session["Template2sPermission"] != null %>' />
@@ -122,15 +118,11 @@
     <asp:Panel ID="PatronNoticePolicyLoanNoticesPanel" runat="server" Visible='<%# (string)Session["PatronNoticePolicyLoanNoticesPermission"] != null && PatronNoticePolicy2FormView.DataKey.Value != null %>'>
         <fieldset>
             <legend>
-                <asp:HyperLink ID="PatronNoticePolicyLoanNoticesHyperLink" runat="server" Text="Patron Notice Policy Loan Notices" NavigateUrl="~/PatronNoticePolicyLoanNotices/Default.aspx" /></legend>
+                <asp:HyperLink ID="PatronNoticePolicyLoanNoticesHyperLink" runat="server" Text="Patron Notice Policy Loan Notices" NavigateUrl="~/PatronNoticePolicyLoanNotices/Default.aspx" Enabled="false" /></legend>
             <telerik:RadGrid ID="PatronNoticePolicyLoanNoticesRadGrid" runat="server" AutoGenerateColumns="false" AllowSorting="true" AllowFilteringByColumn="false" GroupingSettings-CaseSensitive="false" AllowPaging="true" PageSize="10" EnableLinqExpressions="false" OnNeedDataSource="PatronNoticePolicyLoanNoticesRadGrid_NeedDataSource">
                 <MasterTableView DataKeyNames="Id" PagerStyle-Mode="NextPrevNumericAndAdvanced" NoMasterRecordsText="No patron notice policy loan notices found">
                     <Columns>
-                        <telerik:GridTemplateColumn HeaderText="Name" DataField="Name" SortExpression="Name" AutoPostBackOnFilter="true" CurrentFilterFunction="StartsWith">
-                            <ItemTemplate>
-                                <asp:HyperLink ID="NameHyperLink" runat="server" Text='<%#: Eval("Name") ?? "&nbsp;" %>' NavigateUrl='<%# $"~/PatronNoticePolicyLoanNotices/Edit.aspx?Id={Eval("Id")}" %>' />
-                            </ItemTemplate>
-                        </telerik:GridTemplateColumn>
+                        <telerik:GridBoundColumn HeaderText="Name" DataField="Name" AutoPostBackOnFilter="true" HtmlEncode="true" CurrentFilterFunction="StartsWith" />
                         <telerik:GridTemplateColumn AllowFiltering="false" AllowSorting="false" HeaderText="Template" DataField="Template.Name" SortExpression="Template.Name" AutoPostBackOnFilter="true" CurrentFilterFunction="StartsWith">
                             <ItemTemplate>
                                 <asp:HyperLink ID="TemplateHyperLink" runat="server" Text='<%#: Eval("TemplateId") != null ? Eval("Template.Name") ?? "&nbsp;" : "" %>' NavigateUrl='<%# $"~/Template2s/Edit.aspx?Id={Eval("TemplateId")}" %>' Enabled='<%# Session["Template2sPermission"] != null %>' />
@@ -154,15 +146,11 @@
     <asp:Panel ID="PatronNoticePolicyRequestNoticesPanel" runat="server" Visible='<%# (string)Session["PatronNoticePolicyRequestNoticesPermission"] != null && PatronNoticePolicy2FormView.DataKey.Value != null %>'>
         <fieldset>
             <legend>
-                <asp:HyperLink ID="PatronNoticePolicyRequestNoticesHyperLink" runat="server" Text="Patron Notice Policy Request Notices" NavigateUrl="~/PatronNoticePolicyRequestNotices/Default.aspx" /></legend>
+                <asp:HyperLink ID="PatronNoticePolicyRequestNoticesHyperLink" runat="server" Text="Patron Notice Policy Request Notices" NavigateUrl="~/PatronNoticePolicyRequestNotices/Default.aspx" Enabled="false" /></legend>
             <telerik:RadGrid ID="PatronNoticePolicyRequestNoticesRadGrid" runat="server" AutoGenerateColumns="false" AllowSorting="true" AllowFilteringByColumn="false" GroupingSettings-CaseSensitive="false" AllowPaging="true" PageSize="10" EnableLinqExpressions="false" OnNeedDataSource="PatronNoticePolicyRequestNoticesRadGrid_NeedDataSource">
                 <MasterTableView DataKeyNames="Id" PagerStyle-Mode="NextPrevNumericAndAdvanced" NoMasterRecordsText="No patron notice policy request notices found">
                     <Columns>
-                        <telerik:GridTemplateColumn HeaderText="Name" DataField="Name" SortExpression="Name" AutoPostBackOnFilter="true" CurrentFilterFunction="StartsWith">
-                            <ItemTemplate>
-                                <asp:HyperLink ID="NameHyperLink" runat="server" Text='<%#: Eval("Name") ?? "&nbsp;" %>' NavigateUrl='<%# $"~/PatronNoticePolicyRequestNotices/Edit.aspx?Id={Eval("Id")}" %>' />
-                            </ItemTemplate>
-                        </telerik:GridTemplateColumn>
+                        <telerik:GridBoundColumn HeaderText="Name" DataField="Name" AutoPostBackOnFilter="true" HtmlEncode="true" CurrentFilterFunction="StartsWith" />
                         <telerik:GridTemplateColumn AllowFiltering="false" AllowSorting="false" HeaderText="Template" DataField="Template.Name" SortExpression="Template.Name" AutoPostBackOnFilter="true" CurrentFilterFunction="StartsWith">
                             <ItemTemplate>
                                 <asp:HyperLink ID="TemplateHyperLink" runat="server" Text='<%#: Eval("TemplateId") != null ? Eval("Template.Name") ?? "&nbsp;" : "" %>' NavigateUrl='<%# $"~/Template2s/Edit.aspx?Id={Eval("TemplateId")}" %>' Enabled='<%# Session["Template2sPermission"] != null %>' />

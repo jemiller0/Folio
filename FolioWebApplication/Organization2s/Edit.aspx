@@ -546,15 +546,11 @@
     <asp:Panel ID="CurrenciesPanel" runat="server" Visible='<%# (string)Session["CurrenciesPermission"] != null && Organization2FormView.DataKey.Value != null %>'>
         <fieldset>
             <legend>
-                <asp:HyperLink ID="CurrenciesHyperLink" runat="server" Text="Currencies" NavigateUrl="~/Currencies/Default.aspx" /></legend>
+                <asp:HyperLink ID="CurrenciesHyperLink" runat="server" Text="Currencies" NavigateUrl="~/Currencies/Default.aspx" Enabled="false" /></legend>
             <telerik:RadGrid ID="CurrenciesRadGrid" runat="server" AutoGenerateColumns="false" AllowSorting="true" AllowFilteringByColumn="false" GroupingSettings-CaseSensitive="false" AllowPaging="true" PageSize="10" EnableLinqExpressions="false" OnNeedDataSource="CurrenciesRadGrid_NeedDataSource">
                 <MasterTableView DataKeyNames="Id" PagerStyle-Mode="NextPrevNumericAndAdvanced" NoMasterRecordsText="No currencies found">
                     <Columns>
-                        <telerik:GridTemplateColumn HeaderText="Content" DataField="Content" SortExpression="Content" AutoPostBackOnFilter="true" CurrentFilterFunction="StartsWith">
-                            <ItemTemplate>
-                                <asp:HyperLink ID="ContentHyperLink" runat="server" Text='<%#: Eval("Content") %>' NavigateUrl='<%# $"~/Currencies/Edit.aspx?Id={Eval("Id")}" %>' />
-                            </ItemTemplate>
-                        </telerik:GridTemplateColumn>
+                        <telerik:GridBoundColumn HeaderText="Content" DataField="Content" AutoPostBackOnFilter="true" HtmlEncode="true" CurrentFilterFunction="StartsWith" />
                     </Columns>
                 </MasterTableView>
             </telerik:RadGrid>
@@ -978,15 +974,11 @@
     <asp:Panel ID="OrganizationAccountsPanel" runat="server" Visible='<%# (string)Session["OrganizationAccountsPermission"] != null && Organization2FormView.DataKey.Value != null %>'>
         <fieldset>
             <legend>
-                <asp:HyperLink ID="OrganizationAccountsHyperLink" runat="server" Text="Organization Accounts" NavigateUrl="~/OrganizationAccounts/Default.aspx" /></legend>
+                <asp:HyperLink ID="OrganizationAccountsHyperLink" runat="server" Text="Organization Accounts" NavigateUrl="~/OrganizationAccounts/Default.aspx" Enabled="false" /></legend>
             <telerik:RadGrid ID="OrganizationAccountsRadGrid" runat="server" AutoGenerateColumns="false" AllowSorting="true" AllowFilteringByColumn="false" GroupingSettings-CaseSensitive="false" AllowPaging="true" PageSize="10" EnableLinqExpressions="false" OnNeedDataSource="OrganizationAccountsRadGrid_NeedDataSource">
                 <MasterTableView DataKeyNames="Id" PagerStyle-Mode="NextPrevNumericAndAdvanced" NoMasterRecordsText="No organization accounts found">
                     <Columns>
-                        <telerik:GridTemplateColumn HeaderText="Name" DataField="Name" SortExpression="Name" AutoPostBackOnFilter="true" CurrentFilterFunction="StartsWith">
-                            <ItemTemplate>
-                                <asp:HyperLink ID="NameHyperLink" runat="server" Text='<%#: Eval("Name") %>' NavigateUrl='<%# $"~/OrganizationAccounts/Edit.aspx?Id={Eval("Id")}" %>' />
-                            </ItemTemplate>
-                        </telerik:GridTemplateColumn>
+                        <telerik:GridBoundColumn HeaderText="Name" DataField="Name" AutoPostBackOnFilter="true" HtmlEncode="true" CurrentFilterFunction="StartsWith" />
                         <telerik:GridBoundColumn HeaderText="Account Number" DataField="AccountNumber" AutoPostBackOnFilter="true" HtmlEncode="true" CurrentFilterFunction="StartsWith" />
                         <telerik:GridBoundColumn HeaderText="Description" DataField="Description" AutoPostBackOnFilter="true" HtmlEncode="true" CurrentFilterFunction="StartsWith" />
                         <telerik:GridBoundColumn HeaderText="App System Number" DataField="AppSystemNumber" AutoPostBackOnFilter="true" HtmlEncode="true" CurrentFilterFunction="StartsWith" />
@@ -1004,7 +996,7 @@
     <asp:Panel ID="OrganizationAcquisitionsUnitsPanel" runat="server" Visible='<%# (string)Session["OrganizationAcquisitionsUnitsPermission"] != null && Organization2FormView.DataKey.Value != null %>'>
         <fieldset>
             <legend>
-                <asp:HyperLink ID="OrganizationAcquisitionsUnitsHyperLink" runat="server" Text="Organization Acquisitions Units" NavigateUrl="~/OrganizationAcquisitionsUnits/Default.aspx" /></legend>
+                <asp:HyperLink ID="OrganizationAcquisitionsUnitsHyperLink" runat="server" Text="Organization Acquisitions Units" NavigateUrl="~/OrganizationAcquisitionsUnits/Default.aspx" Enabled="false" /></legend>
             <telerik:RadGrid ID="OrganizationAcquisitionsUnitsRadGrid" runat="server" AutoGenerateColumns="false" AllowSorting="true" AllowFilteringByColumn="false" GroupingSettings-CaseSensitive="false" AllowPaging="true" PageSize="10" EnableLinqExpressions="false" OnNeedDataSource="OrganizationAcquisitionsUnitsRadGrid_NeedDataSource">
                 <MasterTableView DataKeyNames="Id" PagerStyle-Mode="NextPrevNumericAndAdvanced" NoMasterRecordsText="No organization acquisitions units found">
                     <Columns>
@@ -1021,15 +1013,11 @@
     <asp:Panel ID="OrganizationAddressesPanel" runat="server" Visible='<%# (string)Session["OrganizationAddressesPermission"] != null && Organization2FormView.DataKey.Value != null %>'>
         <fieldset>
             <legend>
-                <asp:HyperLink ID="OrganizationAddressesHyperLink" runat="server" Text="Organization Addresses" NavigateUrl="~/OrganizationAddresses/Default.aspx" /></legend>
+                <asp:HyperLink ID="OrganizationAddressesHyperLink" runat="server" Text="Organization Addresses" NavigateUrl="~/OrganizationAddresses/Default.aspx" Enabled="false" /></legend>
             <telerik:RadGrid ID="OrganizationAddressesRadGrid" runat="server" AutoGenerateColumns="false" AllowSorting="true" AllowFilteringByColumn="false" GroupingSettings-CaseSensitive="false" AllowPaging="true" PageSize="10" EnableLinqExpressions="false" OnNeedDataSource="OrganizationAddressesRadGrid_NeedDataSource">
                 <MasterTableView DataKeyNames="Id" PagerStyle-Mode="NextPrevNumericAndAdvanced" NoMasterRecordsText="No organization addresses found">
                     <Columns>
-                        <telerik:GridTemplateColumn HeaderText="Street Address 1" DataField="StreetAddress1" SortExpression="StreetAddress1" AutoPostBackOnFilter="true" CurrentFilterFunction="StartsWith">
-                            <ItemTemplate>
-                                <asp:HyperLink ID="StreetAddress1HyperLink" runat="server" Text='<%#: Eval("StreetAddress1") ?? "&nbsp;" %>' NavigateUrl='<%# $"~/OrganizationAddresses/Edit.aspx?Id={Eval("Id")}" %>' />
-                            </ItemTemplate>
-                        </telerik:GridTemplateColumn>
+                        <telerik:GridBoundColumn HeaderText="Street Address 1" DataField="StreetAddress1" AutoPostBackOnFilter="true" HtmlEncode="true" CurrentFilterFunction="StartsWith" />
                         <telerik:GridBoundColumn HeaderText="Street Address 2" DataField="StreetAddress2" AutoPostBackOnFilter="true" HtmlEncode="true" CurrentFilterFunction="StartsWith" />
                         <telerik:GridBoundColumn HeaderText="City" DataField="City" AutoPostBackOnFilter="true" HtmlEncode="true" CurrentFilterFunction="StartsWith" />
                         <telerik:GridBoundColumn HeaderText="State" DataField="State" AutoPostBackOnFilter="true" HtmlEncode="true" CurrentFilterFunction="StartsWith" />
@@ -1057,15 +1045,11 @@
     <asp:Panel ID="OrganizationAgreementsPanel" runat="server" Visible='<%# (string)Session["OrganizationAgreementsPermission"] != null && Organization2FormView.DataKey.Value != null %>'>
         <fieldset>
             <legend>
-                <asp:HyperLink ID="OrganizationAgreementsHyperLink" runat="server" Text="Organization Agreements" NavigateUrl="~/OrganizationAgreements/Default.aspx" /></legend>
+                <asp:HyperLink ID="OrganizationAgreementsHyperLink" runat="server" Text="Organization Agreements" NavigateUrl="~/OrganizationAgreements/Default.aspx" Enabled="false" /></legend>
             <telerik:RadGrid ID="OrganizationAgreementsRadGrid" runat="server" AutoGenerateColumns="false" AllowSorting="true" AllowFilteringByColumn="false" GroupingSettings-CaseSensitive="false" AllowPaging="true" PageSize="10" EnableLinqExpressions="false" OnNeedDataSource="OrganizationAgreementsRadGrid_NeedDataSource">
                 <MasterTableView DataKeyNames="Id" PagerStyle-Mode="NextPrevNumericAndAdvanced" NoMasterRecordsText="No organization agreements found">
                     <Columns>
-                        <telerik:GridTemplateColumn HeaderText="Name" DataField="Name" SortExpression="Name" AutoPostBackOnFilter="true" CurrentFilterFunction="StartsWith">
-                            <ItemTemplate>
-                                <asp:HyperLink ID="NameHyperLink" runat="server" Text='<%#: Eval("Name") %>' NavigateUrl='<%# $"~/OrganizationAgreements/Edit.aspx?Id={Eval("Id")}" %>' />
-                            </ItemTemplate>
-                        </telerik:GridTemplateColumn>
+                        <telerik:GridBoundColumn HeaderText="Name" DataField="Name" AutoPostBackOnFilter="true" HtmlEncode="true" CurrentFilterFunction="StartsWith" />
                         <telerik:GridBoundColumn HeaderText="Discount" DataField="Discount" AutoPostBackOnFilter="true" />
                         <telerik:GridHyperLinkColumn HeaderText="Reference URL" DataTextField="ReferenceUrl" DataNavigateUrlFields="ReferenceUrl" Target="_blank" SortExpression="ReferenceUrl" AutoPostBackOnFilter="true" CurrentFilterFunction="StartsWith" />
                         <telerik:GridBoundColumn HeaderText="Notes" DataField="Notes" AutoPostBackOnFilter="true" HtmlEncode="true" CurrentFilterFunction="StartsWith" />
@@ -1077,15 +1061,11 @@
     <asp:Panel ID="OrganizationAliasesPanel" runat="server" Visible='<%# (string)Session["OrganizationAliasesPermission"] != null && Organization2FormView.DataKey.Value != null %>'>
         <fieldset>
             <legend>
-                <asp:HyperLink ID="OrganizationAliasesHyperLink" runat="server" Text="Organization Aliases" NavigateUrl="~/OrganizationAliases/Default.aspx" /></legend>
+                <asp:HyperLink ID="OrganizationAliasesHyperLink" runat="server" Text="Organization Aliases" NavigateUrl="~/OrganizationAliases/Default.aspx" Enabled="false" /></legend>
             <telerik:RadGrid ID="OrganizationAliasesRadGrid" runat="server" AutoGenerateColumns="false" AllowSorting="true" AllowFilteringByColumn="false" GroupingSettings-CaseSensitive="false" AllowPaging="true" PageSize="10" EnableLinqExpressions="false" OnNeedDataSource="OrganizationAliasesRadGrid_NeedDataSource">
                 <MasterTableView DataKeyNames="Id" PagerStyle-Mode="NextPrevNumericAndAdvanced" NoMasterRecordsText="No organization aliases found">
                     <Columns>
-                        <telerik:GridTemplateColumn HeaderText="Value" DataField="Value" SortExpression="Value" AutoPostBackOnFilter="true" CurrentFilterFunction="StartsWith">
-                            <ItemTemplate>
-                                <asp:HyperLink ID="ValueHyperLink" runat="server" Text='<%#: Eval("Value") %>' NavigateUrl='<%# $"~/OrganizationAliases/Edit.aspx?Id={Eval("Id")}" %>' />
-                            </ItemTemplate>
-                        </telerik:GridTemplateColumn>
+                        <telerik:GridBoundColumn HeaderText="Value" DataField="Value" AutoPostBackOnFilter="true" HtmlEncode="true" CurrentFilterFunction="StartsWith" />
                         <telerik:GridBoundColumn HeaderText="Description" DataField="Description" AutoPostBackOnFilter="true" HtmlEncode="true" CurrentFilterFunction="StartsWith" />
                     </Columns>
                 </MasterTableView>
@@ -1095,7 +1075,7 @@
     <asp:Panel ID="OrganizationChangelogsPanel" runat="server" Visible='<%# (string)Session["OrganizationChangelogsPermission"] != null && Organization2FormView.DataKey.Value != null %>'>
         <fieldset>
             <legend>
-                <asp:HyperLink ID="OrganizationChangelogsHyperLink" runat="server" Text="Organization Changelogs" NavigateUrl="~/OrganizationChangelogs/Default.aspx" /></legend>
+                <asp:HyperLink ID="OrganizationChangelogsHyperLink" runat="server" Text="Organization Changelogs" NavigateUrl="~/OrganizationChangelogs/Default.aspx" Enabled="false" /></legend>
             <telerik:RadGrid ID="OrganizationChangelogsRadGrid" runat="server" AutoGenerateColumns="false" AllowSorting="true" AllowFilteringByColumn="false" GroupingSettings-CaseSensitive="false" AllowPaging="true" PageSize="10" EnableLinqExpressions="false" OnNeedDataSource="OrganizationChangelogsRadGrid_NeedDataSource">
                 <MasterTableView DataKeyNames="Id" PagerStyle-Mode="NextPrevNumericAndAdvanced" NoMasterRecordsText="No organization changelogs found">
                     <Columns>
@@ -1109,7 +1089,7 @@
     <asp:Panel ID="OrganizationContactsPanel" runat="server" Visible='<%# (string)Session["OrganizationContactsPermission"] != null && Organization2FormView.DataKey.Value != null %>'>
         <fieldset>
             <legend>
-                <asp:HyperLink ID="OrganizationContactsHyperLink" runat="server" Text="Organization Contacts" NavigateUrl="~/OrganizationContacts/Default.aspx" /></legend>
+                <asp:HyperLink ID="OrganizationContactsHyperLink" runat="server" Text="Organization Contacts" NavigateUrl="~/OrganizationContacts/Default.aspx" Enabled="false" /></legend>
             <telerik:RadGrid ID="OrganizationContactsRadGrid" runat="server" AutoGenerateColumns="false" AllowSorting="true" AllowFilteringByColumn="false" GroupingSettings-CaseSensitive="false" AllowPaging="true" PageSize="10" EnableLinqExpressions="false" OnNeedDataSource="OrganizationContactsRadGrid_NeedDataSource">
                 <MasterTableView DataKeyNames="Id" PagerStyle-Mode="NextPrevNumericAndAdvanced" NoMasterRecordsText="No organization contacts found">
                     <Columns>
@@ -1126,15 +1106,11 @@
     <asp:Panel ID="OrganizationEmailsPanel" runat="server" Visible='<%# (string)Session["OrganizationEmailsPermission"] != null && Organization2FormView.DataKey.Value != null %>'>
         <fieldset>
             <legend>
-                <asp:HyperLink ID="OrganizationEmailsHyperLink" runat="server" Text="Organization Emails" NavigateUrl="~/OrganizationEmails/Default.aspx" /></legend>
+                <asp:HyperLink ID="OrganizationEmailsHyperLink" runat="server" Text="Organization Emails" NavigateUrl="~/OrganizationEmails/Default.aspx" Enabled="false" /></legend>
             <telerik:RadGrid ID="OrganizationEmailsRadGrid" runat="server" AutoGenerateColumns="false" AllowSorting="true" AllowFilteringByColumn="false" GroupingSettings-CaseSensitive="false" AllowPaging="true" PageSize="10" EnableLinqExpressions="false" OnNeedDataSource="OrganizationEmailsRadGrid_NeedDataSource">
                 <MasterTableView DataKeyNames="Id" PagerStyle-Mode="NextPrevNumericAndAdvanced" NoMasterRecordsText="No organization emails found">
                     <Columns>
-                        <telerik:GridTemplateColumn HeaderText="Value" DataField="Value" SortExpression="Value" AutoPostBackOnFilter="true" CurrentFilterFunction="StartsWith">
-                            <ItemTemplate>
-                                <asp:HyperLink ID="ValueHyperLink" runat="server" Text='<%#: Eval("Value") %>' NavigateUrl='<%# $"~/OrganizationEmails/Edit.aspx?Id={Eval("Id")}" %>' />
-                            </ItemTemplate>
-                        </telerik:GridTemplateColumn>
+                        <telerik:GridHyperLinkColumn HeaderText="Value" DataTextField="Value" DataNavigateUrlFormatString="mailto:{0}" DataNavigateUrlFields="Value" SortExpression="Value" AutoPostBackOnFilter="true" CurrentFilterFunction="StartsWith" />
                         <telerik:GridBoundColumn HeaderText="Description" DataField="Description" AutoPostBackOnFilter="true" HtmlEncode="true" CurrentFilterFunction="StartsWith" />
                         <telerik:GridBoundColumn HeaderText="Is Primary" DataField="IsPrimary" AutoPostBackOnFilter="true" />
                         <telerik:GridBoundColumn HeaderText="Language" DataField="Language" AutoPostBackOnFilter="true" HtmlEncode="true" CurrentFilterFunction="StartsWith" />
@@ -1158,7 +1134,7 @@
     <asp:Panel ID="OrganizationInterfacesPanel" runat="server" Visible='<%# (string)Session["OrganizationInterfacesPermission"] != null && Organization2FormView.DataKey.Value != null %>'>
         <fieldset>
             <legend>
-                <asp:HyperLink ID="OrganizationInterfacesHyperLink" runat="server" Text="Organization Interfaces" NavigateUrl="~/OrganizationInterfaces/Default.aspx" /></legend>
+                <asp:HyperLink ID="OrganizationInterfacesHyperLink" runat="server" Text="Organization Interfaces" NavigateUrl="~/OrganizationInterfaces/Default.aspx" Enabled="false" /></legend>
             <telerik:RadGrid ID="OrganizationInterfacesRadGrid" runat="server" AutoGenerateColumns="false" AllowSorting="true" AllowFilteringByColumn="false" GroupingSettings-CaseSensitive="false" AllowPaging="true" PageSize="10" EnableLinqExpressions="false" OnNeedDataSource="OrganizationInterfacesRadGrid_NeedDataSource">
                 <MasterTableView DataKeyNames="Id" PagerStyle-Mode="NextPrevNumericAndAdvanced" NoMasterRecordsText="No organization interfaces found">
                     <Columns>
@@ -1175,15 +1151,11 @@
     <asp:Panel ID="OrganizationPhoneNumbersPanel" runat="server" Visible='<%# (string)Session["OrganizationPhoneNumbersPermission"] != null && Organization2FormView.DataKey.Value != null %>'>
         <fieldset>
             <legend>
-                <asp:HyperLink ID="OrganizationPhoneNumbersHyperLink" runat="server" Text="Organization Phone Numbers" NavigateUrl="~/OrganizationPhoneNumbers/Default.aspx" /></legend>
+                <asp:HyperLink ID="OrganizationPhoneNumbersHyperLink" runat="server" Text="Organization Phone Numbers" NavigateUrl="~/OrganizationPhoneNumbers/Default.aspx" Enabled="false" /></legend>
             <telerik:RadGrid ID="OrganizationPhoneNumbersRadGrid" runat="server" AutoGenerateColumns="false" AllowSorting="true" AllowFilteringByColumn="false" GroupingSettings-CaseSensitive="false" AllowPaging="true" PageSize="10" EnableLinqExpressions="false" OnNeedDataSource="OrganizationPhoneNumbersRadGrid_NeedDataSource">
                 <MasterTableView DataKeyNames="Id" PagerStyle-Mode="NextPrevNumericAndAdvanced" NoMasterRecordsText="No organization phone numbers found">
                     <Columns>
-                        <telerik:GridTemplateColumn HeaderText="Phone Number" DataField="PhoneNumber" SortExpression="PhoneNumber" AutoPostBackOnFilter="true" CurrentFilterFunction="StartsWith">
-                            <ItemTemplate>
-                                <asp:HyperLink ID="PhoneNumberHyperLink" runat="server" Text='<%#: Eval("PhoneNumber") %>' NavigateUrl='<%# $"~/OrganizationPhoneNumbers/Edit.aspx?Id={Eval("Id")}" %>' />
-                            </ItemTemplate>
-                        </telerik:GridTemplateColumn>
+                        <telerik:GridHyperLinkColumn HeaderText="Phone Number" DataTextField="PhoneNumber" DataNavigateUrlFormatString="tel:{0}" DataNavigateUrlFields="PhoneNumber" SortExpression="PhoneNumber" AutoPostBackOnFilter="true" CurrentFilterFunction="StartsWith" />
                         <telerik:GridBoundColumn HeaderText="Type" DataField="Type" AutoPostBackOnFilter="true" HtmlEncode="true" CurrentFilterFunction="StartsWith" />
                         <telerik:GridBoundColumn HeaderText="Is Primary" DataField="IsPrimary" AutoPostBackOnFilter="true" />
                         <telerik:GridBoundColumn HeaderText="Language" DataField="Language" AutoPostBackOnFilter="true" HtmlEncode="true" CurrentFilterFunction="StartsWith" />
@@ -1207,15 +1179,11 @@
     <asp:Panel ID="OrganizationTagsPanel" runat="server" Visible='<%# (string)Session["OrganizationTagsPermission"] != null && Organization2FormView.DataKey.Value != null %>'>
         <fieldset>
             <legend>
-                <asp:HyperLink ID="OrganizationTagsHyperLink" runat="server" Text="Organization Tags" NavigateUrl="~/OrganizationTags/Default.aspx" /></legend>
+                <asp:HyperLink ID="OrganizationTagsHyperLink" runat="server" Text="Organization Tags" NavigateUrl="~/OrganizationTags/Default.aspx" Enabled="false" /></legend>
             <telerik:RadGrid ID="OrganizationTagsRadGrid" runat="server" AutoGenerateColumns="false" AllowSorting="true" AllowFilteringByColumn="false" GroupingSettings-CaseSensitive="false" AllowPaging="true" PageSize="10" EnableLinqExpressions="false" OnNeedDataSource="OrganizationTagsRadGrid_NeedDataSource">
                 <MasterTableView DataKeyNames="Id" PagerStyle-Mode="NextPrevNumericAndAdvanced" NoMasterRecordsText="No organization tags found">
                     <Columns>
-                        <telerik:GridTemplateColumn HeaderText="Content" DataField="Content" SortExpression="Content" AutoPostBackOnFilter="true" CurrentFilterFunction="StartsWith">
-                            <ItemTemplate>
-                                <asp:HyperLink ID="ContentHyperLink" runat="server" Text='<%#: Eval("Content") %>' NavigateUrl='<%# $"~/OrganizationTags/Edit.aspx?Id={Eval("Id")}" %>' />
-                            </ItemTemplate>
-                        </telerik:GridTemplateColumn>
+                        <telerik:GridBoundColumn HeaderText="Content" DataField="Content" AutoPostBackOnFilter="true" HtmlEncode="true" CurrentFilterFunction="StartsWith" />
                     </Columns>
                 </MasterTableView>
             </telerik:RadGrid>
@@ -1224,15 +1192,11 @@
     <asp:Panel ID="OrganizationUrlsPanel" runat="server" Visible='<%# (string)Session["OrganizationUrlsPermission"] != null && Organization2FormView.DataKey.Value != null %>'>
         <fieldset>
             <legend>
-                <asp:HyperLink ID="OrganizationUrlsHyperLink" runat="server" Text="Organization URLs" NavigateUrl="~/OrganizationUrls/Default.aspx" /></legend>
+                <asp:HyperLink ID="OrganizationUrlsHyperLink" runat="server" Text="Organization URLs" NavigateUrl="~/OrganizationUrls/Default.aspx" Enabled="false" /></legend>
             <telerik:RadGrid ID="OrganizationUrlsRadGrid" runat="server" AutoGenerateColumns="false" AllowSorting="true" AllowFilteringByColumn="false" GroupingSettings-CaseSensitive="false" AllowPaging="true" PageSize="10" EnableLinqExpressions="false" OnNeedDataSource="OrganizationUrlsRadGrid_NeedDataSource">
                 <MasterTableView DataKeyNames="Id" PagerStyle-Mode="NextPrevNumericAndAdvanced" NoMasterRecordsText="No organization urls found">
                     <Columns>
-                        <telerik:GridTemplateColumn HeaderText="Value" DataField="Value" SortExpression="Value" AutoPostBackOnFilter="true" CurrentFilterFunction="StartsWith">
-                            <ItemTemplate>
-                                <asp:HyperLink ID="ValueHyperLink" runat="server" Text='<%#: Eval("Value") %>' NavigateUrl='<%# $"~/OrganizationUrls/Edit.aspx?Id={Eval("Id")}" %>' />
-                            </ItemTemplate>
-                        </telerik:GridTemplateColumn>
+                        <telerik:GridHyperLinkColumn HeaderText="Value" DataTextField="Value" DataNavigateUrlFields="Value" Target="_blank" SortExpression="Value" AutoPostBackOnFilter="true" CurrentFilterFunction="StartsWith" />
                         <telerik:GridBoundColumn HeaderText="Description" DataField="Description" AutoPostBackOnFilter="true" HtmlEncode="true" CurrentFilterFunction="StartsWith" />
                         <telerik:GridBoundColumn HeaderText="Language" DataField="Language" AutoPostBackOnFilter="true" HtmlEncode="true" CurrentFilterFunction="StartsWith" />
                         <telerik:GridBoundColumn HeaderText="Is Primary" DataField="IsPrimary" AutoPostBackOnFilter="true" />

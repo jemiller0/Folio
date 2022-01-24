@@ -122,7 +122,7 @@
     <asp:Panel ID="AllocatedFromFundsPanel" runat="server" Visible='<%# (string)Session["AllocatedFromFundsPermission"] != null && Fund2FormView.DataKey.Value != null %>'>
         <fieldset>
             <legend>
-                <asp:HyperLink ID="AllocatedFromFundsHyperLink" runat="server" Text="Allocated From Funds" NavigateUrl="~/AllocatedFromFunds/Default.aspx" /></legend>
+                <asp:HyperLink ID="AllocatedFromFundsHyperLink" runat="server" Text="Allocated From Funds" NavigateUrl="~/AllocatedFromFunds/Default.aspx" Enabled="false" /></legend>
             <telerik:RadGrid ID="AllocatedFromFundsRadGrid" runat="server" AutoGenerateColumns="false" AllowSorting="true" AllowFilteringByColumn="false" GroupingSettings-CaseSensitive="false" AllowPaging="true" PageSize="10" EnableLinqExpressions="false" OnNeedDataSource="AllocatedFromFundsRadGrid_NeedDataSource">
                 <MasterTableView DataKeyNames="Id" PagerStyle-Mode="NextPrevNumericAndAdvanced" NoMasterRecordsText="No allocated from funds found">
                     <Columns>
@@ -139,7 +139,7 @@
     <asp:Panel ID="AllocatedToFundsPanel" runat="server" Visible='<%# (string)Session["AllocatedToFundsPermission"] != null && Fund2FormView.DataKey.Value != null %>'>
         <fieldset>
             <legend>
-                <asp:HyperLink ID="AllocatedToFundsHyperLink" runat="server" Text="Allocated To Funds" NavigateUrl="~/AllocatedToFunds/Default.aspx" /></legend>
+                <asp:HyperLink ID="AllocatedToFundsHyperLink" runat="server" Text="Allocated To Funds" NavigateUrl="~/AllocatedToFunds/Default.aspx" Enabled="false" /></legend>
             <telerik:RadGrid ID="AllocatedToFundsRadGrid" runat="server" AutoGenerateColumns="false" AllowSorting="true" AllowFilteringByColumn="false" GroupingSettings-CaseSensitive="false" AllowPaging="true" PageSize="10" EnableLinqExpressions="false" OnNeedDataSource="AllocatedToFundsRadGrid_NeedDataSource">
                 <MasterTableView DataKeyNames="Id" PagerStyle-Mode="NextPrevNumericAndAdvanced" NoMasterRecordsText="No allocated to funds found">
                     <Columns>
@@ -260,7 +260,7 @@
     <asp:Panel ID="FundAcquisitionsUnitsPanel" runat="server" Visible='<%# (string)Session["FundAcquisitionsUnitsPermission"] != null && Fund2FormView.DataKey.Value != null %>'>
         <fieldset>
             <legend>
-                <asp:HyperLink ID="FundAcquisitionsUnitsHyperLink" runat="server" Text="Fund Acquisitions Units" NavigateUrl="~/FundAcquisitionsUnits/Default.aspx" /></legend>
+                <asp:HyperLink ID="FundAcquisitionsUnitsHyperLink" runat="server" Text="Fund Acquisitions Units" NavigateUrl="~/FundAcquisitionsUnits/Default.aspx" Enabled="false" /></legend>
             <telerik:RadGrid ID="FundAcquisitionsUnitsRadGrid" runat="server" AutoGenerateColumns="false" AllowSorting="true" AllowFilteringByColumn="false" GroupingSettings-CaseSensitive="false" AllowPaging="true" PageSize="10" EnableLinqExpressions="false" OnNeedDataSource="FundAcquisitionsUnitsRadGrid_NeedDataSource">
                 <MasterTableView DataKeyNames="Id" PagerStyle-Mode="NextPrevNumericAndAdvanced" NoMasterRecordsText="No fund acquisitions units found">
                     <Columns>
@@ -277,7 +277,7 @@
     <asp:Panel ID="FundTagsPanel" runat="server" Visible='<%# (string)Session["FundTagsPermission"] != null && Fund2FormView.DataKey.Value != null %>'>
         <fieldset>
             <legend>
-                <asp:HyperLink ID="FundTagsHyperLink" runat="server" Text="Fund Tags" NavigateUrl="~/FundTags/Default.aspx" /></legend>
+                <asp:HyperLink ID="FundTagsHyperLink" runat="server" Text="Fund Tags" NavigateUrl="~/FundTags/Default.aspx" Enabled="false" /></legend>
             <telerik:RadGrid ID="FundTagsRadGrid" runat="server" AutoGenerateColumns="false" AllowSorting="true" AllowFilteringByColumn="false" GroupingSettings-CaseSensitive="false" AllowPaging="true" PageSize="10" EnableLinqExpressions="false" OnNeedDataSource="FundTagsRadGrid_NeedDataSource">
                 <MasterTableView DataKeyNames="Id" PagerStyle-Mode="NextPrevNumericAndAdvanced" NoMasterRecordsText="No fund tags found">
                     <Columns>

@@ -374,15 +374,11 @@
     <asp:Panel ID="TemplateOutputFormatsPanel" runat="server" Visible='<%# (string)Session["TemplateOutputFormatsPermission"] != null && Template2FormView.DataKey.Value != null %>'>
         <fieldset>
             <legend>
-                <asp:HyperLink ID="TemplateOutputFormatsHyperLink" runat="server" Text="Template Output Formats" NavigateUrl="~/TemplateOutputFormats/Default.aspx" /></legend>
+                <asp:HyperLink ID="TemplateOutputFormatsHyperLink" runat="server" Text="Template Output Formats" NavigateUrl="~/TemplateOutputFormats/Default.aspx" Enabled="false" /></legend>
             <telerik:RadGrid ID="TemplateOutputFormatsRadGrid" runat="server" AutoGenerateColumns="false" AllowSorting="true" AllowFilteringByColumn="false" GroupingSettings-CaseSensitive="false" AllowPaging="true" PageSize="10" EnableLinqExpressions="false" OnNeedDataSource="TemplateOutputFormatsRadGrid_NeedDataSource">
                 <MasterTableView DataKeyNames="Id" PagerStyle-Mode="NextPrevNumericAndAdvanced" NoMasterRecordsText="No template output formats found">
                     <Columns>
-                        <telerik:GridTemplateColumn HeaderText="Content" DataField="Content" SortExpression="Content" AutoPostBackOnFilter="true" CurrentFilterFunction="StartsWith">
-                            <ItemTemplate>
-                                <asp:HyperLink ID="ContentHyperLink" runat="server" Text='<%#: Eval("Content") %>' NavigateUrl='<%# $"~/TemplateOutputFormats/Edit.aspx?Id={Eval("Id")}" %>' />
-                            </ItemTemplate>
-                        </telerik:GridTemplateColumn>
+                        <telerik:GridBoundColumn HeaderText="Content" DataField="Content" AutoPostBackOnFilter="true" HtmlEncode="true" CurrentFilterFunction="StartsWith" />
                     </Columns>
                 </MasterTableView>
             </telerik:RadGrid>

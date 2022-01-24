@@ -872,7 +872,7 @@
     <asp:Panel ID="ServicePointStaffSlipsPanel" runat="server" Visible='<%# (string)Session["ServicePointStaffSlipsPermission"] != null && ServicePoint2FormView.DataKey.Value != null %>'>
         <fieldset>
             <legend>
-                <asp:HyperLink ID="ServicePointStaffSlipsHyperLink" runat="server" Text="Service Point Staff Slips" NavigateUrl="~/ServicePointStaffSlips/Default.aspx" /></legend>
+                <asp:HyperLink ID="ServicePointStaffSlipsHyperLink" runat="server" Text="Service Point Staff Slips" NavigateUrl="~/ServicePointStaffSlips/Default.aspx" Enabled="false" /></legend>
             <telerik:RadGrid ID="ServicePointStaffSlipsRadGrid" runat="server" AutoGenerateColumns="false" AllowSorting="true" AllowFilteringByColumn="false" GroupingSettings-CaseSensitive="false" AllowPaging="true" PageSize="10" EnableLinqExpressions="false" OnNeedDataSource="ServicePointStaffSlipsRadGrid_NeedDataSource">
                 <MasterTableView DataKeyNames="Id" PagerStyle-Mode="NextPrevNumericAndAdvanced" NoMasterRecordsText="No service point staff slips found">
                     <Columns>

@@ -82,7 +82,7 @@
     <asp:Panel ID="FixedDueDateScheduleSchedulesPanel" runat="server" Visible='<%# (string)Session["FixedDueDateScheduleSchedulesPermission"] != null && FixedDueDateSchedule2FormView.DataKey.Value != null %>'>
         <fieldset>
             <legend>
-                <asp:HyperLink ID="FixedDueDateScheduleSchedulesHyperLink" runat="server" Text="Fixed Due Date Schedule Schedules" NavigateUrl="~/FixedDueDateScheduleSchedules/Default.aspx" /></legend>
+                <asp:HyperLink ID="FixedDueDateScheduleSchedulesHyperLink" runat="server" Text="Fixed Due Date Schedule Schedules" NavigateUrl="~/FixedDueDateScheduleSchedules/Default.aspx" Enabled="false" /></legend>
             <telerik:RadGrid ID="FixedDueDateScheduleSchedulesRadGrid" runat="server" AutoGenerateColumns="false" AllowSorting="true" AllowFilteringByColumn="false" GroupingSettings-CaseSensitive="false" AllowPaging="true" PageSize="10" EnableLinqExpressions="false" OnNeedDataSource="FixedDueDateScheduleSchedulesRadGrid_NeedDataSource">
                 <MasterTableView DataKeyNames="Id" PagerStyle-Mode="NextPrevNumericAndAdvanced" NoMasterRecordsText="No fixed due date schedule schedules found">
                     <Columns>

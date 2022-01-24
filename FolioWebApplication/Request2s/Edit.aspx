@@ -306,7 +306,7 @@
     <asp:Panel ID="RequestIdentifiersPanel" runat="server" Visible='<%# (string)Session["RequestIdentifiersPermission"] != null && Request2FormView.DataKey.Value != null %>'>
         <fieldset>
             <legend>
-                <asp:HyperLink ID="RequestIdentifiersHyperLink" runat="server" Text="Request Identifiers" NavigateUrl="~/RequestIdentifiers/Default.aspx" /></legend>
+                <asp:HyperLink ID="RequestIdentifiersHyperLink" runat="server" Text="Request Identifiers" NavigateUrl="~/RequestIdentifiers/Default.aspx" Enabled="false" /></legend>
             <telerik:RadGrid ID="RequestIdentifiersRadGrid" runat="server" AutoGenerateColumns="false" AllowSorting="true" AllowFilteringByColumn="false" GroupingSettings-CaseSensitive="false" AllowPaging="true" PageSize="10" EnableLinqExpressions="false" OnNeedDataSource="RequestIdentifiersRadGrid_NeedDataSource">
                 <MasterTableView DataKeyNames="Id" PagerStyle-Mode="NextPrevNumericAndAdvanced" NoMasterRecordsText="No request identifiers found">
                     <Columns>
@@ -324,15 +324,11 @@
     <asp:Panel ID="RequestTagsPanel" runat="server" Visible='<%# (string)Session["RequestTagsPermission"] != null && Request2FormView.DataKey.Value != null %>'>
         <fieldset>
             <legend>
-                <asp:HyperLink ID="RequestTagsHyperLink" runat="server" Text="Request Tags" NavigateUrl="~/RequestTags/Default.aspx" /></legend>
+                <asp:HyperLink ID="RequestTagsHyperLink" runat="server" Text="Request Tags" NavigateUrl="~/RequestTags/Default.aspx" Enabled="false" /></legend>
             <telerik:RadGrid ID="RequestTagsRadGrid" runat="server" AutoGenerateColumns="false" AllowSorting="true" AllowFilteringByColumn="false" GroupingSettings-CaseSensitive="false" AllowPaging="true" PageSize="10" EnableLinqExpressions="false" OnNeedDataSource="RequestTagsRadGrid_NeedDataSource">
                 <MasterTableView DataKeyNames="Id" PagerStyle-Mode="NextPrevNumericAndAdvanced" NoMasterRecordsText="No request tags found">
                     <Columns>
-                        <telerik:GridTemplateColumn HeaderText="Content" DataField="Content" SortExpression="Content" AutoPostBackOnFilter="true" CurrentFilterFunction="StartsWith">
-                            <ItemTemplate>
-                                <asp:HyperLink ID="ContentHyperLink" runat="server" Text='<%#: Eval("Content") %>' NavigateUrl='<%# $"~/RequestTags/Edit.aspx?Id={Eval("Id")}" %>' />
-                            </ItemTemplate>
-                        </telerik:GridTemplateColumn>
+                        <telerik:GridBoundColumn HeaderText="Content" DataField="Content" AutoPostBackOnFilter="true" HtmlEncode="true" CurrentFilterFunction="StartsWith" />
                     </Columns>
                 </MasterTableView>
             </telerik:RadGrid>

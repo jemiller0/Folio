@@ -138,7 +138,7 @@
     <asp:Panel ID="FinanceGroupAcquisitionsUnitsPanel" runat="server" Visible='<%# (string)Session["FinanceGroupAcquisitionsUnitsPermission"] != null && FinanceGroup2FormView.DataKey.Value != null %>'>
         <fieldset>
             <legend>
-                <asp:HyperLink ID="FinanceGroupAcquisitionsUnitsHyperLink" runat="server" Text="Finance Group Acquisitions Units" NavigateUrl="~/FinanceGroupAcquisitionsUnits/Default.aspx" /></legend>
+                <asp:HyperLink ID="FinanceGroupAcquisitionsUnitsHyperLink" runat="server" Text="Finance Group Acquisitions Units" NavigateUrl="~/FinanceGroupAcquisitionsUnits/Default.aspx" Enabled="false" /></legend>
             <telerik:RadGrid ID="FinanceGroupAcquisitionsUnitsRadGrid" runat="server" AutoGenerateColumns="false" AllowSorting="true" AllowFilteringByColumn="false" GroupingSettings-CaseSensitive="false" AllowPaging="true" PageSize="10" EnableLinqExpressions="false" OnNeedDataSource="FinanceGroupAcquisitionsUnitsRadGrid_NeedDataSource">
                 <MasterTableView DataKeyNames="Id" PagerStyle-Mode="NextPrevNumericAndAdvanced" NoMasterRecordsText="No finance group acquisitions units found">
                     <Columns>

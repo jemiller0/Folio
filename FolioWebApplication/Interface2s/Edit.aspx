@@ -138,15 +138,11 @@
     <asp:Panel ID="InterfaceTypesPanel" runat="server" Visible='<%# (string)Session["InterfaceTypesPermission"] != null && Interface2FormView.DataKey.Value != null %>'>
         <fieldset>
             <legend>
-                <asp:HyperLink ID="InterfaceTypesHyperLink" runat="server" Text="Interface Types" NavigateUrl="~/InterfaceTypes/Default.aspx" /></legend>
+                <asp:HyperLink ID="InterfaceTypesHyperLink" runat="server" Text="Interface Types" NavigateUrl="~/InterfaceTypes/Default.aspx" Enabled="false" /></legend>
             <telerik:RadGrid ID="InterfaceTypesRadGrid" runat="server" AutoGenerateColumns="false" AllowSorting="true" AllowFilteringByColumn="false" GroupingSettings-CaseSensitive="false" AllowPaging="true" PageSize="10" EnableLinqExpressions="false" OnNeedDataSource="InterfaceTypesRadGrid_NeedDataSource">
                 <MasterTableView DataKeyNames="Id" PagerStyle-Mode="NextPrevNumericAndAdvanced" NoMasterRecordsText="No interface types found">
                     <Columns>
-                        <telerik:GridTemplateColumn HeaderText="Content" DataField="Content" SortExpression="Content" AutoPostBackOnFilter="true" CurrentFilterFunction="StartsWith">
-                            <ItemTemplate>
-                                <asp:HyperLink ID="ContentHyperLink" runat="server" Text='<%#: Eval("Content") %>' NavigateUrl='<%# $"~/InterfaceTypes/Edit.aspx?Id={Eval("Id")}" %>' />
-                            </ItemTemplate>
-                        </telerik:GridTemplateColumn>
+                        <telerik:GridBoundColumn HeaderText="Content" DataField="Content" AutoPostBackOnFilter="true" HtmlEncode="true" CurrentFilterFunction="StartsWith" />
                     </Columns>
                 </MasterTableView>
             </telerik:RadGrid>

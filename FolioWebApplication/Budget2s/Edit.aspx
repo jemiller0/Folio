@@ -226,7 +226,7 @@
     <asp:Panel ID="BudgetAcquisitionsUnitsPanel" runat="server" Visible='<%# (string)Session["BudgetAcquisitionsUnitsPermission"] != null && Budget2FormView.DataKey.Value != null %>'>
         <fieldset>
             <legend>
-                <asp:HyperLink ID="BudgetAcquisitionsUnitsHyperLink" runat="server" Text="Budget Acquisitions Units" NavigateUrl="~/BudgetAcquisitionsUnits/Default.aspx" /></legend>
+                <asp:HyperLink ID="BudgetAcquisitionsUnitsHyperLink" runat="server" Text="Budget Acquisitions Units" NavigateUrl="~/BudgetAcquisitionsUnits/Default.aspx" Enabled="false" /></legend>
             <telerik:RadGrid ID="BudgetAcquisitionsUnitsRadGrid" runat="server" AutoGenerateColumns="false" AllowSorting="true" AllowFilteringByColumn="false" GroupingSettings-CaseSensitive="false" AllowPaging="true" PageSize="10" EnableLinqExpressions="false" OnNeedDataSource="BudgetAcquisitionsUnitsRadGrid_NeedDataSource">
                 <MasterTableView DataKeyNames="Id" PagerStyle-Mode="NextPrevNumericAndAdvanced" NoMasterRecordsText="No budget acquisitions units found">
                     <Columns>
@@ -314,7 +314,7 @@
     <asp:Panel ID="BudgetTagsPanel" runat="server" Visible='<%# (string)Session["BudgetTagsPermission"] != null && Budget2FormView.DataKey.Value != null %>'>
         <fieldset>
             <legend>
-                <asp:HyperLink ID="BudgetTagsHyperLink" runat="server" Text="Budget Tags" NavigateUrl="~/BudgetTags/Default.aspx" /></legend>
+                <asp:HyperLink ID="BudgetTagsHyperLink" runat="server" Text="Budget Tags" NavigateUrl="~/BudgetTags/Default.aspx" Enabled="false" /></legend>
             <telerik:RadGrid ID="BudgetTagsRadGrid" runat="server" AutoGenerateColumns="false" AllowSorting="true" AllowFilteringByColumn="false" GroupingSettings-CaseSensitive="false" AllowPaging="true" PageSize="10" EnableLinqExpressions="false" OnNeedDataSource="BudgetTagsRadGrid_NeedDataSource">
                 <MasterTableView DataKeyNames="Id" PagerStyle-Mode="NextPrevNumericAndAdvanced" NoMasterRecordsText="No budget tags found">
                     <Columns>

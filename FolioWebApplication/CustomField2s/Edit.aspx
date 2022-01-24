@@ -170,7 +170,7 @@
     <asp:Panel ID="CustomFieldValuesPanel" runat="server" Visible='<%# (string)Session["CustomFieldValuesPermission"] != null && CustomField2FormView.DataKey.Value != null %>'>
         <fieldset>
             <legend>
-                <asp:HyperLink ID="CustomFieldValuesHyperLink" runat="server" Text="Custom Field Values" NavigateUrl="~/CustomFieldValues/Default.aspx" /></legend>
+                <asp:HyperLink ID="CustomFieldValuesHyperLink" runat="server" Text="Custom Field Values" NavigateUrl="~/CustomFieldValues/Default.aspx" Enabled="false" /></legend>
             <telerik:RadGrid ID="CustomFieldValuesRadGrid" runat="server" AutoGenerateColumns="false" AllowSorting="true" AllowFilteringByColumn="false" GroupingSettings-CaseSensitive="false" AllowPaging="true" PageSize="10" EnableLinqExpressions="false" OnNeedDataSource="CustomFieldValuesRadGrid_NeedDataSource">
                 <MasterTableView DataKeyNames="Id" PagerStyle-Mode="NextPrevNumericAndAdvanced" NoMasterRecordsText="No custom field values found">
                     <Columns>

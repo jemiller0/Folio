@@ -98,7 +98,7 @@
     <asp:Panel ID="VoucherItemFundsPanel" runat="server" Visible='<%# (string)Session["VoucherItemFundsPermission"] != null && VoucherItem2FormView.DataKey.Value != null %>'>
         <fieldset>
             <legend>
-                <asp:HyperLink ID="VoucherItemFundsHyperLink" runat="server" Text="Voucher Item Funds" NavigateUrl="~/VoucherItemFunds/Default.aspx" /></legend>
+                <asp:HyperLink ID="VoucherItemFundsHyperLink" runat="server" Text="Voucher Item Funds" NavigateUrl="~/VoucherItemFunds/Default.aspx" Enabled="false" /></legend>
             <telerik:RadGrid ID="VoucherItemFundsRadGrid" runat="server" AutoGenerateColumns="false" AllowSorting="true" AllowFilteringByColumn="false" GroupingSettings-CaseSensitive="false" AllowPaging="true" PageSize="10" EnableLinqExpressions="false" OnNeedDataSource="VoucherItemFundsRadGrid_NeedDataSource">
                 <MasterTableView DataKeyNames="Id" PagerStyle-Mode="NextPrevNumericAndAdvanced" NoMasterRecordsText="No voucher item funds found">
                     <Columns>
@@ -133,7 +133,7 @@
     <asp:Panel ID="VoucherItemInvoiceItemsPanel" runat="server" Visible='<%# (string)Session["VoucherItemInvoiceItemsPermission"] != null && VoucherItem2FormView.DataKey.Value != null %>'>
         <fieldset>
             <legend>
-                <asp:HyperLink ID="VoucherItemInvoiceItemsHyperLink" runat="server" Text="Voucher Item Invoice Items" NavigateUrl="~/VoucherItemInvoiceItems/Default.aspx" /></legend>
+                <asp:HyperLink ID="VoucherItemInvoiceItemsHyperLink" runat="server" Text="Voucher Item Invoice Items" NavigateUrl="~/VoucherItemInvoiceItems/Default.aspx" Enabled="false" /></legend>
             <telerik:RadGrid ID="VoucherItemInvoiceItemsRadGrid" runat="server" AutoGenerateColumns="false" AllowSorting="true" AllowFilteringByColumn="false" GroupingSettings-CaseSensitive="false" AllowPaging="true" PageSize="10" EnableLinqExpressions="false" OnNeedDataSource="VoucherItemInvoiceItemsRadGrid_NeedDataSource">
                 <MasterTableView DataKeyNames="Id" PagerStyle-Mode="NextPrevNumericAndAdvanced" NoMasterRecordsText="No voucher item invoice items found">
                     <Columns>

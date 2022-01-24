@@ -258,7 +258,7 @@
     <asp:Panel ID="VoucherAcquisitionsUnitsPanel" runat="server" Visible='<%# (string)Session["VoucherAcquisitionsUnitsPermission"] != null && Voucher2FormView.DataKey.Value != null %>'>
         <fieldset>
             <legend>
-                <asp:HyperLink ID="VoucherAcquisitionsUnitsHyperLink" runat="server" Text="Voucher Acquisitions Units" NavigateUrl="~/VoucherAcquisitionsUnits/Default.aspx" /></legend>
+                <asp:HyperLink ID="VoucherAcquisitionsUnitsHyperLink" runat="server" Text="Voucher Acquisitions Units" NavigateUrl="~/VoucherAcquisitionsUnits/Default.aspx" Enabled="false" /></legend>
             <telerik:RadGrid ID="VoucherAcquisitionsUnitsRadGrid" runat="server" AutoGenerateColumns="false" AllowSorting="true" AllowFilteringByColumn="false" GroupingSettings-CaseSensitive="false" AllowPaging="true" PageSize="10" EnableLinqExpressions="false" OnNeedDataSource="VoucherAcquisitionsUnitsRadGrid_NeedDataSource">
                 <MasterTableView DataKeyNames="Id" PagerStyle-Mode="NextPrevNumericAndAdvanced" NoMasterRecordsText="No voucher acquisitions units found">
                     <Columns>
