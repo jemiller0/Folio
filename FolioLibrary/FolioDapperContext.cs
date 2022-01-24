@@ -2770,6 +2770,2516 @@ namespace FolioLibrary
             return wr2;
         }
 
+        public void AddAcquisitionsUnitsIndexes()
+        {
+        }
+        public void AddAcquisitionsUnit2sIndexes()
+        {
+        }
+        public void AddAddressesIndexes()
+        {
+        }
+        public void AddAddressTypesIndexes()
+        {
+        }
+        public void AddAddressType2sIndexes()
+        {
+        }
+        public void AddAlertsIndexes()
+        {
+        }
+        public void AddAlert2sIndexes()
+        {
+        }
+        public void AddAllocatedFromFundsIndexes()
+        {
+        }
+        public void AddAllocatedToFundsIndexes()
+        {
+        }
+        public void AddAlternativeTitlesIndexes()
+        {
+        }
+        public void AddAlternativeTitleTypesIndexes()
+        {
+        }
+        public void AddAlternativeTitleType2sIndexes()
+        {
+        }
+        public void AddAuthAttemptsIndexes()
+        {
+        }
+        public void AddAuthAttempt2sIndexes()
+        {
+        }
+        public void AddAuthCredentialsHistoriesIndexes()
+        {
+        }
+        public void AddAuthCredentialsHistory2sIndexes()
+        {
+        }
+        public void AddAuthPasswordActionsIndexes()
+        {
+        }
+        public void AddBatchGroupsIndexes()
+        {
+        }
+        public void AddBatchGroup2sIndexes()
+        {
+        }
+        public void AddBatchVouchersIndexes()
+        {
+        }
+        public void AddBatchVoucher2sIndexes()
+        {
+        }
+        public void AddBatchVoucherBatchedVouchersIndexes()
+        {
+        }
+        public void AddBatchVoucherBatchedVoucherBatchedVoucherLinesIndexes()
+        {
+        }
+        public void AddBatchVoucherBatchedVoucherBatchedVoucherLineFundCodesIndexes()
+        {
+        }
+        public void AddBatchVoucherExportsIndexes()
+        {
+        }
+        public void AddBatchVoucherExport2sIndexes()
+        {
+        }
+        public void AddBatchVoucherExportConfigsIndexes()
+        {
+        }
+        public void AddBatchVoucherExportConfig2sIndexes()
+        {
+        }
+        public void AddBatchVoucherExportConfigWeekdaysIndexes()
+        {
+        }
+        public void AddBlocksIndexes()
+        {
+        }
+        public void AddBlock2sIndexes()
+        {
+        }
+        public void AddBlockConditionsIndexes()
+        {
+        }
+        public void AddBlockCondition2sIndexes()
+        {
+        }
+        public void AddBlockLimitsIndexes()
+        {
+        }
+        public void AddBlockLimit2sIndexes()
+        {
+        }
+        public void AddBoundWithPartsIndexes()
+        {
+        }
+        public void AddBoundWithPart2sIndexes()
+        {
+        }
+        public void AddBudgetsIndexes()
+        {
+        }
+        public void AddBudget2sIndexes()
+        {
+        }
+        public void AddBudgetAcquisitionsUnitsIndexes()
+        {
+        }
+        public void AddBudgetExpenseClassesIndexes()
+        {
+        }
+        public void AddBudgetExpenseClass2sIndexes()
+        {
+        }
+        public void AddBudgetGroupsIndexes()
+        {
+        }
+        public void AddBudgetGroup2sIndexes()
+        {
+        }
+        public void AddBudgetTagsIndexes()
+        {
+        }
+        public void AddCallNumberTypesIndexes()
+        {
+        }
+        public void AddCallNumberType2sIndexes()
+        {
+        }
+        public void AddCampusesIndexes()
+        {
+        }
+        public void AddCampus2sIndexes()
+        {
+        }
+        public void AddCancellationReasonsIndexes()
+        {
+        }
+        public void AddCancellationReason2sIndexes()
+        {
+        }
+        public void AddCategoriesIndexes()
+        {
+        }
+        public void AddCategory2sIndexes()
+        {
+        }
+        public void AddCheckInsIndexes()
+        {
+        }
+        public void AddCheckIn2sIndexes()
+        {
+        }
+        public void AddCirculationNotesIndexes()
+        {
+        }
+        public void AddCirculationRulesIndexes()
+        {
+        }
+        public void AddCirculationRule2sIndexes()
+        {
+        }
+        public void AddClassificationsIndexes()
+        {
+        }
+        public void AddClassificationTypesIndexes()
+        {
+        }
+        public void AddClassificationType2sIndexes()
+        {
+        }
+        public void AddCloseReasonsIndexes()
+        {
+        }
+        public void AddCloseReason2sIndexes()
+        {
+        }
+        public void AddCommentsIndexes()
+        {
+        }
+        public void AddComment2sIndexes()
+        {
+        }
+        public void AddConfigurationsIndexes()
+        {
+        }
+        public void AddConfiguration2sIndexes()
+        {
+        }
+        public void AddContactsIndexes()
+        {
+        }
+        public void AddContact2sIndexes()
+        {
+        }
+        public void AddContactAddressesIndexes()
+        {
+        }
+        public void AddContactAddressCategoriesIndexes()
+        {
+        }
+        public void AddContactCategoriesIndexes()
+        {
+        }
+        public void AddContactEmailsIndexes()
+        {
+        }
+        public void AddContactEmailCategoriesIndexes()
+        {
+        }
+        public void AddContactPhoneNumbersIndexes()
+        {
+        }
+        public void AddContactPhoneNumberCategoriesIndexes()
+        {
+        }
+        public void AddContactTypesIndexes()
+        {
+        }
+        public void AddContactUrlsIndexes()
+        {
+        }
+        public void AddContactUrlCategoriesIndexes()
+        {
+        }
+        public void AddContributorsIndexes()
+        {
+        }
+        public void AddContributorNameTypesIndexes()
+        {
+        }
+        public void AddContributorNameType2sIndexes()
+        {
+        }
+        public void AddContributorTypesIndexes()
+        {
+        }
+        public void AddContributorType2sIndexes()
+        {
+        }
+        public void AddCountriesIndexes()
+        {
+        }
+        public void AddCurrenciesIndexes()
+        {
+        }
+        public void AddCustomFieldsIndexes()
+        {
+        }
+        public void AddCustomField2sIndexes()
+        {
+        }
+        public void AddCustomFieldValuesIndexes()
+        {
+        }
+        public void AddDepartmentsIndexes()
+        {
+        }
+        public void AddDepartment2sIndexes()
+        {
+        }
+        public void AddDocumentsIndexes()
+        {
+        }
+        public void AddDocument2sIndexes()
+        {
+        }
+        public void AddEditionsIndexes()
+        {
+        }
+        public void AddElectronicAccessesIndexes()
+        {
+        }
+        public void AddElectronicAccessRelationshipsIndexes()
+        {
+        }
+        public void AddElectronicAccessRelationship2sIndexes()
+        {
+        }
+        public void AddErrorRecordsIndexes()
+        {
+        }
+        public void AddErrorRecord2sIndexes()
+        {
+        }
+        public void AddEventLogsIndexes()
+        {
+        }
+        public void AddEventLog2sIndexes()
+        {
+        }
+        public void AddExpenseClassesIndexes()
+        {
+        }
+        public void AddExpenseClass2sIndexes()
+        {
+        }
+        public void AddExportConfigCredentialsIndexes()
+        {
+        }
+        public void AddExportConfigCredential2sIndexes()
+        {
+        }
+        public void AddExtentsIndexes()
+        {
+        }
+        public void AddFeesIndexes()
+        {
+        }
+        public void AddFee2sIndexes()
+        {
+        }
+        public void AddFeeTypesIndexes()
+        {
+        }
+        public void AddFeeType2sIndexes()
+        {
+        }
+        public void AddFinanceGroupsIndexes()
+        {
+        }
+        public void AddFinanceGroup2sIndexes()
+        {
+        }
+        public void AddFinanceGroupAcquisitionsUnitsIndexes()
+        {
+        }
+        public void AddFiscalYearsIndexes()
+        {
+        }
+        public void AddFiscalYear2sIndexes()
+        {
+        }
+        public void AddFiscalYearAcquisitionsUnitsIndexes()
+        {
+        }
+        public void AddFixedDueDateSchedulesIndexes()
+        {
+        }
+        public void AddFixedDueDateSchedule2sIndexes()
+        {
+        }
+        public void AddFixedDueDateScheduleSchedulesIndexes()
+        {
+        }
+        public void AddFormatsIndexes()
+        {
+        }
+        public void AddFundsIndexes()
+        {
+        }
+        public void AddFund2sIndexes()
+        {
+        }
+        public void AddFundAcquisitionsUnitsIndexes()
+        {
+        }
+        public void AddFundTagsIndexes()
+        {
+        }
+        public void AddFundTypesIndexes()
+        {
+        }
+        public void AddFundType2sIndexes()
+        {
+        }
+        public void AddGroupsIndexes()
+        {
+        }
+        public void AddGroup2sIndexes()
+        {
+        }
+        public void AddHoldingsIndexes()
+        {
+        }
+        public void AddHolding2sIndexes()
+        {
+        }
+        public void AddHoldingElectronicAccessesIndexes()
+        {
+        }
+        public void AddHoldingEntriesIndexes()
+        {
+        }
+        public void AddHoldingFormerIdsIndexes()
+        {
+        }
+        public void AddHoldingNotesIndexes()
+        {
+        }
+        public void AddHoldingNoteTypesIndexes()
+        {
+        }
+        public void AddHoldingNoteType2sIndexes()
+        {
+        }
+        public void AddHoldingStatisticalCodesIndexes()
+        {
+        }
+        public void AddHoldingTagsIndexes()
+        {
+        }
+        public void AddHoldingTypesIndexes()
+        {
+        }
+        public void AddHoldingType2sIndexes()
+        {
+        }
+        public void AddHridSettingsIndexes()
+        {
+        }
+        public void AddHridSetting2sIndexes()
+        {
+        }
+        public void AddIdentifiersIndexes()
+        {
+        }
+        public void AddIdTypesIndexes()
+        {
+        }
+        public void AddIdType2sIndexes()
+        {
+        }
+        public void AddIllPoliciesIndexes()
+        {
+        }
+        public void AddIllPolicy2sIndexes()
+        {
+        }
+        public void AddIndexStatementsIndexes()
+        {
+        }
+        public void AddInstancesIndexes()
+        {
+        }
+        public void AddInstance2sIndexes()
+        {
+        }
+        public void AddInstanceFormatsIndexes()
+        {
+        }
+        public void AddInstanceFormat2sIndexes()
+        {
+        }
+        public void AddInstanceNatureOfContentTermsIndexes()
+        {
+        }
+        public void AddInstanceNoteTypesIndexes()
+        {
+        }
+        public void AddInstanceNoteType2sIndexes()
+        {
+        }
+        public void AddInstanceRelationshipsIndexes()
+        {
+        }
+        public void AddInstanceRelationshipTypesIndexes()
+        {
+        }
+        public void AddInstanceSourceMarcsIndexes()
+        {
+        }
+        public void AddInstanceStatisticalCodesIndexes()
+        {
+        }
+        public void AddInstanceStatusesIndexes()
+        {
+        }
+        public void AddInstanceTagsIndexes()
+        {
+        }
+        public void AddInstanceTypesIndexes()
+        {
+        }
+        public void AddInstanceType2sIndexes()
+        {
+        }
+        public void AddInstitutionsIndexes()
+        {
+        }
+        public void AddInstitution2sIndexes()
+        {
+        }
+        public void AddInterfacesIndexes()
+        {
+        }
+        public void AddInterface2sIndexes()
+        {
+        }
+        public void AddInterfaceCredentialsIndexes()
+        {
+        }
+        public void AddInterfaceCredential2sIndexes()
+        {
+        }
+        public void AddInterfaceTypesIndexes()
+        {
+        }
+        public void AddInvoicesIndexes()
+        {
+        }
+        public void AddInvoice2sIndexes()
+        {
+        }
+        public void AddInvoiceAcquisitionsUnitsIndexes()
+        {
+        }
+        public void AddInvoiceAdjustmentsIndexes()
+        {
+        }
+        public void AddInvoiceAdjustmentFundsIndexes()
+        {
+        }
+        public void AddInvoiceItemsIndexes()
+        {
+        }
+        public void AddInvoiceItem2sIndexes()
+        {
+        }
+        public void AddInvoiceItemAdjustmentsIndexes()
+        {
+        }
+        public void AddInvoiceItemAdjustmentFundsIndexes()
+        {
+        }
+        public void AddInvoiceItemFundsIndexes()
+        {
+        }
+        public void AddInvoiceItemReferenceNumbersIndexes()
+        {
+        }
+        public void AddInvoiceItemTagsIndexes()
+        {
+        }
+        public void AddInvoiceOrderNumbersIndexes()
+        {
+        }
+        public void AddInvoiceTagsIndexes()
+        {
+        }
+        public void AddInvoiceTransactionSummariesIndexes()
+        {
+        }
+        public void AddInvoiceTransactionSummary2sIndexes()
+        {
+        }
+        public void AddIssuanceModesIndexes()
+        {
+        }
+        public void AddItemsIndexes()
+        {
+        }
+        public void AddItem2sIndexes()
+        {
+        }
+        public void AddItemDamagedStatusesIndexes()
+        {
+        }
+        public void AddItemDamagedStatus2sIndexes()
+        {
+        }
+        public void AddItemElectronicAccessesIndexes()
+        {
+        }
+        public void AddItemFormerIdsIndexes()
+        {
+        }
+        public void AddItemNotesIndexes()
+        {
+        }
+        public void AddItemNoteTypesIndexes()
+        {
+        }
+        public void AddItemNoteType2sIndexes()
+        {
+        }
+        public void AddItemStatisticalCodesIndexes()
+        {
+        }
+        public void AddItemTagsIndexes()
+        {
+        }
+        public void AddItemYearCaptionsIndexes()
+        {
+        }
+        public void AddJobExecutionsIndexes()
+        {
+        }
+        public void AddJobExecution2sIndexes()
+        {
+        }
+        public void AddJobExecutionProgressesIndexes()
+        {
+        }
+        public void AddJobExecutionProgress2sIndexes()
+        {
+        }
+        public void AddJobExecutionSourceChunksIndexes()
+        {
+        }
+        public void AddJobExecutionSourceChunk2sIndexes()
+        {
+        }
+        public void AddJobMonitoringsIndexes()
+        {
+        }
+        public void AddJobMonitoring2sIndexes()
+        {
+        }
+        public void AddJournalRecordsIndexes()
+        {
+        }
+        public void AddJournalRecord2sIndexes()
+        {
+        }
+        public void AddLanguagesIndexes()
+        {
+        }
+        public void AddLedgersIndexes()
+        {
+        }
+        public void AddLedger2sIndexes()
+        {
+        }
+        public void AddLedgerAcquisitionsUnitsIndexes()
+        {
+        }
+        public void AddLedgerRolloversIndexes()
+        {
+        }
+        public void AddLedgerRollover2sIndexes()
+        {
+        }
+        public void AddLedgerRolloverBudgetsRolloversIndexes()
+        {
+        }
+        public void AddLedgerRolloverEncumbrancesRolloversIndexes()
+        {
+        }
+        public void AddLedgerRolloverErrorsIndexes()
+        {
+        }
+        public void AddLedgerRolloverError2sIndexes()
+        {
+        }
+        public void AddLedgerRolloverProgressesIndexes()
+        {
+        }
+        public void AddLedgerRolloverProgress2sIndexes()
+        {
+        }
+        public void AddLibrariesIndexes()
+        {
+        }
+        public void AddLibrary2sIndexes()
+        {
+        }
+        public void AddLoansIndexes()
+        {
+        }
+        public void AddLoan2sIndexes()
+        {
+        }
+        public void AddLoanEventsIndexes()
+        {
+        }
+        public void AddLoanEvent2sIndexes()
+        {
+        }
+        public void AddLoanPoliciesIndexes()
+        {
+        }
+        public void AddLoanPolicy2sIndexes()
+        {
+        }
+        public void AddLoanTypesIndexes()
+        {
+        }
+        public void AddLoanType2sIndexes()
+        {
+        }
+        public void AddLocationsIndexes()
+        {
+        }
+        public void AddLocation2sIndexes()
+        {
+        }
+        public void AddLocationServicePointsIndexes()
+        {
+        }
+        public void AddLocationSettingsIndexes()
+        {
+        }
+        public void AddLoginsIndexes()
+        {
+        }
+        public void AddLogin2sIndexes()
+        {
+        }
+        public void AddLostItemFeePoliciesIndexes()
+        {
+        }
+        public void AddLostItemFeePolicy2sIndexes()
+        {
+        }
+        public void AddManualBlockTemplatesIndexes()
+        {
+        }
+        public void AddManualBlockTemplate2sIndexes()
+        {
+        }
+        public void AddMappingRulesIndexes()
+        {
+        }
+        public void AddMarcRecordsIndexes()
+        {
+        }
+        public void AddMarcRecord2sIndexes()
+        {
+        }
+        public void AddMaterialTypesIndexes()
+        {
+        }
+        public void AddMaterialType2sIndexes()
+        {
+        }
+        public void AddModeOfIssuancesIndexes()
+        {
+        }
+        public void AddNatureOfContentTermsIndexes()
+        {
+        }
+        public void AddNatureOfContentTerm2sIndexes()
+        {
+        }
+        public void AddNotesIndexes()
+        {
+        }
+        public void AddNote2sIndexes()
+        {
+        }
+        public void AddNote3sIndexes()
+        {
+        }
+        public void AddNoteLinksIndexes()
+        {
+        }
+        public void AddNoteTypesIndexes()
+        {
+        }
+        public void AddNoteType2sIndexes()
+        {
+        }
+        public void AddOrdersIndexes()
+        {
+        }
+        public void AddOrder2sIndexes()
+        {
+        }
+        public void AddOrderAcquisitionsUnitsIndexes()
+        {
+        }
+        public void AddOrderInvoicesIndexes()
+        {
+        }
+        public void AddOrderInvoice2sIndexes()
+        {
+        }
+        public void AddOrderItemsIndexes()
+        {
+        }
+        public void AddOrderItem2sIndexes()
+        {
+        }
+        public void AddOrderItemAlertsIndexes()
+        {
+        }
+        public void AddOrderItemClaimsIndexes()
+        {
+        }
+        public void AddOrderItemContributorsIndexes()
+        {
+        }
+        public void AddOrderItemFundsIndexes()
+        {
+        }
+        public void AddOrderItemLocation2sIndexes()
+        {
+        }
+        public void AddOrderItemProductIdsIndexes()
+        {
+        }
+        public void AddOrderItemReferenceNumbersIndexes()
+        {
+        }
+        public void AddOrderItemReportingCodesIndexes()
+        {
+        }
+        public void AddOrderItemTagsIndexes()
+        {
+        }
+        public void AddOrderItemVolumesIndexes()
+        {
+        }
+        public void AddOrderNotesIndexes()
+        {
+        }
+        public void AddOrderTagsIndexes()
+        {
+        }
+        public void AddOrderTemplatesIndexes()
+        {
+        }
+        public void AddOrderTemplate2sIndexes()
+        {
+        }
+        public void AddOrderTransactionSummariesIndexes()
+        {
+        }
+        public void AddOrderTransactionSummary2sIndexes()
+        {
+        }
+        public void AddOrganizationsIndexes()
+        {
+        }
+        public void AddOrganization2sIndexes()
+        {
+        }
+        public void AddOrganizationAccountsIndexes()
+        {
+        }
+        public void AddOrganizationAccountAcquisitionsUnitsIndexes()
+        {
+        }
+        public void AddOrganizationAcquisitionsUnitsIndexes()
+        {
+        }
+        public void AddOrganizationAddressesIndexes()
+        {
+        }
+        public void AddOrganizationAddressCategoriesIndexes()
+        {
+        }
+        public void AddOrganizationAgreementsIndexes()
+        {
+        }
+        public void AddOrganizationAliasesIndexes()
+        {
+        }
+        public void AddOrganizationChangelogsIndexes()
+        {
+        }
+        public void AddOrganizationContactsIndexes()
+        {
+        }
+        public void AddOrganizationEmailsIndexes()
+        {
+        }
+        public void AddOrganizationEmailCategoriesIndexes()
+        {
+        }
+        public void AddOrganizationInterfacesIndexes()
+        {
+        }
+        public void AddOrganizationPhoneNumbersIndexes()
+        {
+        }
+        public void AddOrganizationPhoneNumberCategoriesIndexes()
+        {
+        }
+        public void AddOrganizationTagsIndexes()
+        {
+        }
+        public void AddOrganizationUrlsIndexes()
+        {
+        }
+        public void AddOrganizationUrlCategoriesIndexes()
+        {
+        }
+        public void AddOverdueFinePoliciesIndexes()
+        {
+        }
+        public void AddOverdueFinePolicy2sIndexes()
+        {
+        }
+        public void AddOwnersIndexes()
+        {
+        }
+        public void AddOwner2sIndexes()
+        {
+        }
+        public void AddPatronActionSessionsIndexes()
+        {
+        }
+        public void AddPatronActionSession2sIndexes()
+        {
+        }
+        public void AddPatronNoticePoliciesIndexes()
+        {
+        }
+        public void AddPatronNoticePolicy2sIndexes()
+        {
+        }
+        public void AddPatronNoticePolicyFeeFineNoticesIndexes()
+        {
+        }
+        public void AddPatronNoticePolicyLoanNoticesIndexes()
+        {
+        }
+        public void AddPatronNoticePolicyRequestNoticesIndexes()
+        {
+        }
+        public void AddPaymentsIndexes()
+        {
+        }
+        public void AddPayment2sIndexes()
+        {
+        }
+        public void AddPaymentMethodsIndexes()
+        {
+        }
+        public void AddPaymentMethod2sIndexes()
+        {
+        }
+        public void AddPermissionsIndexes()
+        {
+        }
+        public void AddPermission2sIndexes()
+        {
+        }
+        public void AddPermissionChildOfsIndexes()
+        {
+        }
+        public void AddPermissionGrantedTosIndexes()
+        {
+        }
+        public void AddPermissionSubPermissionsIndexes()
+        {
+        }
+        public void AddPermissionsUsersIndexes()
+        {
+        }
+        public void AddPermissionsUser2sIndexes()
+        {
+        }
+        public void AddPermissionsUserPermissionsIndexes()
+        {
+        }
+        public void AddPermissionTagsIndexes()
+        {
+        }
+        public void AddPhysicalDescriptionsIndexes()
+        {
+        }
+        public void AddPrecedingSucceedingTitlesIndexes()
+        {
+        }
+        public void AddPrecedingSucceedingTitle2sIndexes()
+        {
+        }
+        public void AddPrecedingSucceedingTitleIdentifiersIndexes()
+        {
+        }
+        public void AddPrefixesIndexes()
+        {
+        }
+        public void AddPrefix2sIndexes()
+        {
+        }
+        public void AddPrintersIndexes()
+        {
+        }
+        public void AddProxiesIndexes()
+        {
+        }
+        public void AddProxy2sIndexes()
+        {
+        }
+        public void AddPublicationsIndexes()
+        {
+        }
+        public void AddPublicationFrequenciesIndexes()
+        {
+        }
+        public void AddPublicationRangesIndexes()
+        {
+        }
+        public void AddRawRecordsIndexes()
+        {
+        }
+        public void AddRawRecord2sIndexes()
+        {
+        }
+        public void AddReceivingsIndexes()
+        {
+        }
+        public void AddReceiving2sIndexes()
+        {
+        }
+        public void AddRecordsIndexes()
+        {
+        }
+        public void AddRecord2sIndexes()
+        {
+        }
+        public void AddRefundReasonsIndexes()
+        {
+        }
+        public void AddRefundReason2sIndexes()
+        {
+        }
+        public void AddRelationshipsIndexes()
+        {
+        }
+        public void AddRelationshipTypesIndexes()
+        {
+        }
+        public void AddReportingCodesIndexes()
+        {
+        }
+        public void AddReportingCode2sIndexes()
+        {
+        }
+        public void AddRequestsIndexes()
+        {
+        }
+        public void AddRequest2sIndexes()
+        {
+        }
+        public void AddRequestIdentifiersIndexes()
+        {
+        }
+        public void AddRequestPoliciesIndexes()
+        {
+        }
+        public void AddRequestPolicy2sIndexes()
+        {
+        }
+        public void AddRequestPolicyRequestTypesIndexes()
+        {
+        }
+        public void AddRequestTagsIndexes()
+        {
+        }
+        public void AddScheduledNoticesIndexes()
+        {
+        }
+        public void AddScheduledNotice2sIndexes()
+        {
+        }
+        public void AddSeriesIndexes()
+        {
+        }
+        public void AddServicePointsIndexes()
+        {
+        }
+        public void AddServicePoint2sIndexes()
+        {
+        }
+        public void AddServicePointOwnersIndexes()
+        {
+        }
+        public void AddServicePointStaffSlipsIndexes()
+        {
+        }
+        public void AddServicePointUsersIndexes()
+        {
+        }
+        public void AddServicePointUser2sIndexes()
+        {
+        }
+        public void AddServicePointUserServicePointsIndexes()
+        {
+        }
+        public void AddSettingsIndexes()
+        {
+        }
+        public void AddSnapshotsIndexes()
+        {
+        }
+        public void AddSnapshot2sIndexes()
+        {
+        }
+        public void AddSourcesIndexes()
+        {
+        }
+        public void AddSource2sIndexes()
+        {
+        }
+        public void AddSourceMarcsIndexes()
+        {
+        }
+        public void AddSourceMarcFieldsIndexes()
+        {
+        }
+        public void AddStaffSlipsIndexes()
+        {
+        }
+        public void AddStaffSlip2sIndexes()
+        {
+        }
+        public void AddStatisticalCodesIndexes()
+        {
+        }
+        public void AddStatisticalCode2sIndexes()
+        {
+        }
+        public void AddStatisticalCodeTypesIndexes()
+        {
+        }
+        public void AddStatisticalCodeType2sIndexes()
+        {
+        }
+        public void AddStatusesIndexes()
+        {
+        }
+        public void AddSubjectsIndexes()
+        {
+        }
+        public void AddSuffixesIndexes()
+        {
+        }
+        public void AddSuffix2sIndexes()
+        {
+        }
+        public void AddSupplementStatementsIndexes()
+        {
+        }
+        public void AddTagsIndexes()
+        {
+        }
+        public void AddTag2sIndexes()
+        {
+        }
+        public void AddTemplatesIndexes()
+        {
+        }
+        public void AddTemplate2sIndexes()
+        {
+        }
+        public void AddTemplateOutputFormatsIndexes()
+        {
+        }
+        public void AddTitlesIndexes()
+        {
+        }
+        public void AddTitle2sIndexes()
+        {
+        }
+        public void AddTitleContributorsIndexes()
+        {
+        }
+        public void AddTitleProductIdsIndexes()
+        {
+        }
+        public void AddTransactionsIndexes()
+        {
+        }
+        public void AddTransaction2sIndexes()
+        {
+        }
+        public void AddTransactionTagsIndexes()
+        {
+        }
+        public void AddTransferAccountsIndexes()
+        {
+        }
+        public void AddTransferAccount2sIndexes()
+        {
+        }
+        public void AddTransferCriteriasIndexes()
+        {
+        }
+        public void AddTransferCriteria2sIndexes()
+        {
+        }
+        public void AddUsersIndexes()
+        {
+        }
+        public void AddUser2sIndexes()
+        {
+        }
+        public void AddUserAcquisitionsUnitsIndexes()
+        {
+        }
+        public void AddUserAcquisitionsUnit2sIndexes()
+        {
+        }
+        public void AddUserAddressesIndexes()
+        {
+        }
+        public void AddUserDepartmentsIndexes()
+        {
+        }
+        public void AddUserRequestPreferencesIndexes()
+        {
+        }
+        public void AddUserRequestPreference2sIndexes()
+        {
+        }
+        public void AddUserSummariesIndexes()
+        {
+        }
+        public void AddUserSummary2sIndexes()
+        {
+        }
+        public void AddUserSummaryOpenFeesFinesIndexes()
+        {
+        }
+        public void AddUserSummaryOpenLoansIndexes()
+        {
+        }
+        public void AddUserTagsIndexes()
+        {
+        }
+        public void AddVouchersIndexes()
+        {
+        }
+        public void AddVoucher2sIndexes()
+        {
+        }
+        public void AddVoucherAcquisitionsUnitsIndexes()
+        {
+        }
+        public void AddVoucherItemsIndexes()
+        {
+        }
+        public void AddVoucherItem2sIndexes()
+        {
+        }
+        public void AddVoucherItemFundsIndexes()
+        {
+        }
+        public void AddVoucherItemInvoiceItemsIndexes()
+        {
+        }
+        public void AddWaiveReasonsIndexes()
+        {
+        }
+        public void AddWaiveReason2sIndexes()
+        {
+        }
+
+        public void RemoveAcquisitionsUnitsIndexes()
+        {
+        }
+        public void RemoveAcquisitionsUnit2sIndexes()
+        {
+        }
+        public void RemoveAddressesIndexes()
+        {
+        }
+        public void RemoveAddressTypesIndexes()
+        {
+        }
+        public void RemoveAddressType2sIndexes()
+        {
+        }
+        public void RemoveAlertsIndexes()
+        {
+        }
+        public void RemoveAlert2sIndexes()
+        {
+        }
+        public void RemoveAllocatedFromFundsIndexes()
+        {
+        }
+        public void RemoveAllocatedToFundsIndexes()
+        {
+        }
+        public void RemoveAlternativeTitlesIndexes()
+        {
+        }
+        public void RemoveAlternativeTitleTypesIndexes()
+        {
+        }
+        public void RemoveAlternativeTitleType2sIndexes()
+        {
+        }
+        public void RemoveAuthAttemptsIndexes()
+        {
+        }
+        public void RemoveAuthAttempt2sIndexes()
+        {
+        }
+        public void RemoveAuthCredentialsHistoriesIndexes()
+        {
+        }
+        public void RemoveAuthCredentialsHistory2sIndexes()
+        {
+        }
+        public void RemoveAuthPasswordActionsIndexes()
+        {
+        }
+        public void RemoveBatchGroupsIndexes()
+        {
+        }
+        public void RemoveBatchGroup2sIndexes()
+        {
+        }
+        public void RemoveBatchVouchersIndexes()
+        {
+        }
+        public void RemoveBatchVoucher2sIndexes()
+        {
+        }
+        public void RemoveBatchVoucherBatchedVouchersIndexes()
+        {
+        }
+        public void RemoveBatchVoucherBatchedVoucherBatchedVoucherLinesIndexes()
+        {
+        }
+        public void RemoveBatchVoucherBatchedVoucherBatchedVoucherLineFundCodesIndexes()
+        {
+        }
+        public void RemoveBatchVoucherExportsIndexes()
+        {
+        }
+        public void RemoveBatchVoucherExport2sIndexes()
+        {
+        }
+        public void RemoveBatchVoucherExportConfigsIndexes()
+        {
+        }
+        public void RemoveBatchVoucherExportConfig2sIndexes()
+        {
+        }
+        public void RemoveBatchVoucherExportConfigWeekdaysIndexes()
+        {
+        }
+        public void RemoveBlocksIndexes()
+        {
+        }
+        public void RemoveBlock2sIndexes()
+        {
+        }
+        public void RemoveBlockConditionsIndexes()
+        {
+        }
+        public void RemoveBlockCondition2sIndexes()
+        {
+        }
+        public void RemoveBlockLimitsIndexes()
+        {
+        }
+        public void RemoveBlockLimit2sIndexes()
+        {
+        }
+        public void RemoveBoundWithPartsIndexes()
+        {
+        }
+        public void RemoveBoundWithPart2sIndexes()
+        {
+        }
+        public void RemoveBudgetsIndexes()
+        {
+        }
+        public void RemoveBudget2sIndexes()
+        {
+        }
+        public void RemoveBudgetAcquisitionsUnitsIndexes()
+        {
+        }
+        public void RemoveBudgetExpenseClassesIndexes()
+        {
+        }
+        public void RemoveBudgetExpenseClass2sIndexes()
+        {
+        }
+        public void RemoveBudgetGroupsIndexes()
+        {
+        }
+        public void RemoveBudgetGroup2sIndexes()
+        {
+        }
+        public void RemoveBudgetTagsIndexes()
+        {
+        }
+        public void RemoveCallNumberTypesIndexes()
+        {
+        }
+        public void RemoveCallNumberType2sIndexes()
+        {
+        }
+        public void RemoveCampusesIndexes()
+        {
+        }
+        public void RemoveCampus2sIndexes()
+        {
+        }
+        public void RemoveCancellationReasonsIndexes()
+        {
+        }
+        public void RemoveCancellationReason2sIndexes()
+        {
+        }
+        public void RemoveCategoriesIndexes()
+        {
+        }
+        public void RemoveCategory2sIndexes()
+        {
+        }
+        public void RemoveCheckInsIndexes()
+        {
+        }
+        public void RemoveCheckIn2sIndexes()
+        {
+        }
+        public void RemoveCirculationNotesIndexes()
+        {
+        }
+        public void RemoveCirculationRulesIndexes()
+        {
+        }
+        public void RemoveCirculationRule2sIndexes()
+        {
+        }
+        public void RemoveClassificationsIndexes()
+        {
+        }
+        public void RemoveClassificationTypesIndexes()
+        {
+        }
+        public void RemoveClassificationType2sIndexes()
+        {
+        }
+        public void RemoveCloseReasonsIndexes()
+        {
+        }
+        public void RemoveCloseReason2sIndexes()
+        {
+        }
+        public void RemoveCommentsIndexes()
+        {
+        }
+        public void RemoveComment2sIndexes()
+        {
+        }
+        public void RemoveConfigurationsIndexes()
+        {
+        }
+        public void RemoveConfiguration2sIndexes()
+        {
+        }
+        public void RemoveContactsIndexes()
+        {
+        }
+        public void RemoveContact2sIndexes()
+        {
+        }
+        public void RemoveContactAddressesIndexes()
+        {
+        }
+        public void RemoveContactAddressCategoriesIndexes()
+        {
+        }
+        public void RemoveContactCategoriesIndexes()
+        {
+        }
+        public void RemoveContactEmailsIndexes()
+        {
+        }
+        public void RemoveContactEmailCategoriesIndexes()
+        {
+        }
+        public void RemoveContactPhoneNumbersIndexes()
+        {
+        }
+        public void RemoveContactPhoneNumberCategoriesIndexes()
+        {
+        }
+        public void RemoveContactTypesIndexes()
+        {
+        }
+        public void RemoveContactUrlsIndexes()
+        {
+        }
+        public void RemoveContactUrlCategoriesIndexes()
+        {
+        }
+        public void RemoveContributorsIndexes()
+        {
+        }
+        public void RemoveContributorNameTypesIndexes()
+        {
+        }
+        public void RemoveContributorNameType2sIndexes()
+        {
+        }
+        public void RemoveContributorTypesIndexes()
+        {
+        }
+        public void RemoveContributorType2sIndexes()
+        {
+        }
+        public void RemoveCountriesIndexes()
+        {
+        }
+        public void RemoveCurrenciesIndexes()
+        {
+        }
+        public void RemoveCustomFieldsIndexes()
+        {
+        }
+        public void RemoveCustomField2sIndexes()
+        {
+        }
+        public void RemoveCustomFieldValuesIndexes()
+        {
+        }
+        public void RemoveDepartmentsIndexes()
+        {
+        }
+        public void RemoveDepartment2sIndexes()
+        {
+        }
+        public void RemoveDocumentsIndexes()
+        {
+        }
+        public void RemoveDocument2sIndexes()
+        {
+        }
+        public void RemoveEditionsIndexes()
+        {
+        }
+        public void RemoveElectronicAccessesIndexes()
+        {
+        }
+        public void RemoveElectronicAccessRelationshipsIndexes()
+        {
+        }
+        public void RemoveElectronicAccessRelationship2sIndexes()
+        {
+        }
+        public void RemoveErrorRecordsIndexes()
+        {
+        }
+        public void RemoveErrorRecord2sIndexes()
+        {
+        }
+        public void RemoveEventLogsIndexes()
+        {
+        }
+        public void RemoveEventLog2sIndexes()
+        {
+        }
+        public void RemoveExpenseClassesIndexes()
+        {
+        }
+        public void RemoveExpenseClass2sIndexes()
+        {
+        }
+        public void RemoveExportConfigCredentialsIndexes()
+        {
+        }
+        public void RemoveExportConfigCredential2sIndexes()
+        {
+        }
+        public void RemoveExtentsIndexes()
+        {
+        }
+        public void RemoveFeesIndexes()
+        {
+        }
+        public void RemoveFee2sIndexes()
+        {
+        }
+        public void RemoveFeeTypesIndexes()
+        {
+        }
+        public void RemoveFeeType2sIndexes()
+        {
+        }
+        public void RemoveFinanceGroupsIndexes()
+        {
+        }
+        public void RemoveFinanceGroup2sIndexes()
+        {
+        }
+        public void RemoveFinanceGroupAcquisitionsUnitsIndexes()
+        {
+        }
+        public void RemoveFiscalYearsIndexes()
+        {
+        }
+        public void RemoveFiscalYear2sIndexes()
+        {
+        }
+        public void RemoveFiscalYearAcquisitionsUnitsIndexes()
+        {
+        }
+        public void RemoveFixedDueDateSchedulesIndexes()
+        {
+        }
+        public void RemoveFixedDueDateSchedule2sIndexes()
+        {
+        }
+        public void RemoveFixedDueDateScheduleSchedulesIndexes()
+        {
+        }
+        public void RemoveFormatsIndexes()
+        {
+        }
+        public void RemoveFundsIndexes()
+        {
+        }
+        public void RemoveFund2sIndexes()
+        {
+        }
+        public void RemoveFundAcquisitionsUnitsIndexes()
+        {
+        }
+        public void RemoveFundTagsIndexes()
+        {
+        }
+        public void RemoveFundTypesIndexes()
+        {
+        }
+        public void RemoveFundType2sIndexes()
+        {
+        }
+        public void RemoveGroupsIndexes()
+        {
+        }
+        public void RemoveGroup2sIndexes()
+        {
+        }
+        public void RemoveHoldingsIndexes()
+        {
+        }
+        public void RemoveHolding2sIndexes()
+        {
+        }
+        public void RemoveHoldingElectronicAccessesIndexes()
+        {
+        }
+        public void RemoveHoldingEntriesIndexes()
+        {
+        }
+        public void RemoveHoldingFormerIdsIndexes()
+        {
+        }
+        public void RemoveHoldingNotesIndexes()
+        {
+        }
+        public void RemoveHoldingNoteTypesIndexes()
+        {
+        }
+        public void RemoveHoldingNoteType2sIndexes()
+        {
+        }
+        public void RemoveHoldingStatisticalCodesIndexes()
+        {
+        }
+        public void RemoveHoldingTagsIndexes()
+        {
+        }
+        public void RemoveHoldingTypesIndexes()
+        {
+        }
+        public void RemoveHoldingType2sIndexes()
+        {
+        }
+        public void RemoveHridSettingsIndexes()
+        {
+        }
+        public void RemoveHridSetting2sIndexes()
+        {
+        }
+        public void RemoveIdentifiersIndexes()
+        {
+        }
+        public void RemoveIdTypesIndexes()
+        {
+        }
+        public void RemoveIdType2sIndexes()
+        {
+        }
+        public void RemoveIllPoliciesIndexes()
+        {
+        }
+        public void RemoveIllPolicy2sIndexes()
+        {
+        }
+        public void RemoveIndexStatementsIndexes()
+        {
+        }
+        public void RemoveInstancesIndexes()
+        {
+        }
+        public void RemoveInstance2sIndexes()
+        {
+        }
+        public void RemoveInstanceFormatsIndexes()
+        {
+        }
+        public void RemoveInstanceFormat2sIndexes()
+        {
+        }
+        public void RemoveInstanceNatureOfContentTermsIndexes()
+        {
+        }
+        public void RemoveInstanceNoteTypesIndexes()
+        {
+        }
+        public void RemoveInstanceNoteType2sIndexes()
+        {
+        }
+        public void RemoveInstanceRelationshipsIndexes()
+        {
+        }
+        public void RemoveInstanceRelationshipTypesIndexes()
+        {
+        }
+        public void RemoveInstanceSourceMarcsIndexes()
+        {
+        }
+        public void RemoveInstanceStatisticalCodesIndexes()
+        {
+        }
+        public void RemoveInstanceStatusesIndexes()
+        {
+        }
+        public void RemoveInstanceTagsIndexes()
+        {
+        }
+        public void RemoveInstanceTypesIndexes()
+        {
+        }
+        public void RemoveInstanceType2sIndexes()
+        {
+        }
+        public void RemoveInstitutionsIndexes()
+        {
+        }
+        public void RemoveInstitution2sIndexes()
+        {
+        }
+        public void RemoveInterfacesIndexes()
+        {
+        }
+        public void RemoveInterface2sIndexes()
+        {
+        }
+        public void RemoveInterfaceCredentialsIndexes()
+        {
+        }
+        public void RemoveInterfaceCredential2sIndexes()
+        {
+        }
+        public void RemoveInterfaceTypesIndexes()
+        {
+        }
+        public void RemoveInvoicesIndexes()
+        {
+        }
+        public void RemoveInvoice2sIndexes()
+        {
+        }
+        public void RemoveInvoiceAcquisitionsUnitsIndexes()
+        {
+        }
+        public void RemoveInvoiceAdjustmentsIndexes()
+        {
+        }
+        public void RemoveInvoiceAdjustmentFundsIndexes()
+        {
+        }
+        public void RemoveInvoiceItemsIndexes()
+        {
+        }
+        public void RemoveInvoiceItem2sIndexes()
+        {
+        }
+        public void RemoveInvoiceItemAdjustmentsIndexes()
+        {
+        }
+        public void RemoveInvoiceItemAdjustmentFundsIndexes()
+        {
+        }
+        public void RemoveInvoiceItemFundsIndexes()
+        {
+        }
+        public void RemoveInvoiceItemReferenceNumbersIndexes()
+        {
+        }
+        public void RemoveInvoiceItemTagsIndexes()
+        {
+        }
+        public void RemoveInvoiceOrderNumbersIndexes()
+        {
+        }
+        public void RemoveInvoiceTagsIndexes()
+        {
+        }
+        public void RemoveInvoiceTransactionSummariesIndexes()
+        {
+        }
+        public void RemoveInvoiceTransactionSummary2sIndexes()
+        {
+        }
+        public void RemoveIssuanceModesIndexes()
+        {
+        }
+        public void RemoveItemsIndexes()
+        {
+        }
+        public void RemoveItem2sIndexes()
+        {
+        }
+        public void RemoveItemDamagedStatusesIndexes()
+        {
+        }
+        public void RemoveItemDamagedStatus2sIndexes()
+        {
+        }
+        public void RemoveItemElectronicAccessesIndexes()
+        {
+        }
+        public void RemoveItemFormerIdsIndexes()
+        {
+        }
+        public void RemoveItemNotesIndexes()
+        {
+        }
+        public void RemoveItemNoteTypesIndexes()
+        {
+        }
+        public void RemoveItemNoteType2sIndexes()
+        {
+        }
+        public void RemoveItemStatisticalCodesIndexes()
+        {
+        }
+        public void RemoveItemTagsIndexes()
+        {
+        }
+        public void RemoveItemYearCaptionsIndexes()
+        {
+        }
+        public void RemoveJobExecutionsIndexes()
+        {
+        }
+        public void RemoveJobExecution2sIndexes()
+        {
+        }
+        public void RemoveJobExecutionProgressesIndexes()
+        {
+        }
+        public void RemoveJobExecutionProgress2sIndexes()
+        {
+        }
+        public void RemoveJobExecutionSourceChunksIndexes()
+        {
+        }
+        public void RemoveJobExecutionSourceChunk2sIndexes()
+        {
+        }
+        public void RemoveJobMonitoringsIndexes()
+        {
+        }
+        public void RemoveJobMonitoring2sIndexes()
+        {
+        }
+        public void RemoveJournalRecordsIndexes()
+        {
+        }
+        public void RemoveJournalRecord2sIndexes()
+        {
+        }
+        public void RemoveLanguagesIndexes()
+        {
+        }
+        public void RemoveLedgersIndexes()
+        {
+        }
+        public void RemoveLedger2sIndexes()
+        {
+        }
+        public void RemoveLedgerAcquisitionsUnitsIndexes()
+        {
+        }
+        public void RemoveLedgerRolloversIndexes()
+        {
+        }
+        public void RemoveLedgerRollover2sIndexes()
+        {
+        }
+        public void RemoveLedgerRolloverBudgetsRolloversIndexes()
+        {
+        }
+        public void RemoveLedgerRolloverEncumbrancesRolloversIndexes()
+        {
+        }
+        public void RemoveLedgerRolloverErrorsIndexes()
+        {
+        }
+        public void RemoveLedgerRolloverError2sIndexes()
+        {
+        }
+        public void RemoveLedgerRolloverProgressesIndexes()
+        {
+        }
+        public void RemoveLedgerRolloverProgress2sIndexes()
+        {
+        }
+        public void RemoveLibrariesIndexes()
+        {
+        }
+        public void RemoveLibrary2sIndexes()
+        {
+        }
+        public void RemoveLoansIndexes()
+        {
+        }
+        public void RemoveLoan2sIndexes()
+        {
+        }
+        public void RemoveLoanEventsIndexes()
+        {
+        }
+        public void RemoveLoanEvent2sIndexes()
+        {
+        }
+        public void RemoveLoanPoliciesIndexes()
+        {
+        }
+        public void RemoveLoanPolicy2sIndexes()
+        {
+        }
+        public void RemoveLoanTypesIndexes()
+        {
+        }
+        public void RemoveLoanType2sIndexes()
+        {
+        }
+        public void RemoveLocationsIndexes()
+        {
+        }
+        public void RemoveLocation2sIndexes()
+        {
+        }
+        public void RemoveLocationServicePointsIndexes()
+        {
+        }
+        public void RemoveLocationSettingsIndexes()
+        {
+        }
+        public void RemoveLoginsIndexes()
+        {
+        }
+        public void RemoveLogin2sIndexes()
+        {
+        }
+        public void RemoveLostItemFeePoliciesIndexes()
+        {
+        }
+        public void RemoveLostItemFeePolicy2sIndexes()
+        {
+        }
+        public void RemoveManualBlockTemplatesIndexes()
+        {
+        }
+        public void RemoveManualBlockTemplate2sIndexes()
+        {
+        }
+        public void RemoveMappingRulesIndexes()
+        {
+        }
+        public void RemoveMarcRecordsIndexes()
+        {
+        }
+        public void RemoveMarcRecord2sIndexes()
+        {
+        }
+        public void RemoveMaterialTypesIndexes()
+        {
+        }
+        public void RemoveMaterialType2sIndexes()
+        {
+        }
+        public void RemoveModeOfIssuancesIndexes()
+        {
+        }
+        public void RemoveNatureOfContentTermsIndexes()
+        {
+        }
+        public void RemoveNatureOfContentTerm2sIndexes()
+        {
+        }
+        public void RemoveNotesIndexes()
+        {
+        }
+        public void RemoveNote2sIndexes()
+        {
+        }
+        public void RemoveNote3sIndexes()
+        {
+        }
+        public void RemoveNoteLinksIndexes()
+        {
+        }
+        public void RemoveNoteTypesIndexes()
+        {
+        }
+        public void RemoveNoteType2sIndexes()
+        {
+        }
+        public void RemoveOrdersIndexes()
+        {
+        }
+        public void RemoveOrder2sIndexes()
+        {
+        }
+        public void RemoveOrderAcquisitionsUnitsIndexes()
+        {
+        }
+        public void RemoveOrderInvoicesIndexes()
+        {
+        }
+        public void RemoveOrderInvoice2sIndexes()
+        {
+        }
+        public void RemoveOrderItemsIndexes()
+        {
+        }
+        public void RemoveOrderItem2sIndexes()
+        {
+        }
+        public void RemoveOrderItemAlertsIndexes()
+        {
+        }
+        public void RemoveOrderItemClaimsIndexes()
+        {
+        }
+        public void RemoveOrderItemContributorsIndexes()
+        {
+        }
+        public void RemoveOrderItemFundsIndexes()
+        {
+        }
+        public void RemoveOrderItemLocation2sIndexes()
+        {
+        }
+        public void RemoveOrderItemProductIdsIndexes()
+        {
+        }
+        public void RemoveOrderItemReferenceNumbersIndexes()
+        {
+        }
+        public void RemoveOrderItemReportingCodesIndexes()
+        {
+        }
+        public void RemoveOrderItemTagsIndexes()
+        {
+        }
+        public void RemoveOrderItemVolumesIndexes()
+        {
+        }
+        public void RemoveOrderNotesIndexes()
+        {
+        }
+        public void RemoveOrderTagsIndexes()
+        {
+        }
+        public void RemoveOrderTemplatesIndexes()
+        {
+        }
+        public void RemoveOrderTemplate2sIndexes()
+        {
+        }
+        public void RemoveOrderTransactionSummariesIndexes()
+        {
+        }
+        public void RemoveOrderTransactionSummary2sIndexes()
+        {
+        }
+        public void RemoveOrganizationsIndexes()
+        {
+        }
+        public void RemoveOrganization2sIndexes()
+        {
+        }
+        public void RemoveOrganizationAccountsIndexes()
+        {
+        }
+        public void RemoveOrganizationAccountAcquisitionsUnitsIndexes()
+        {
+        }
+        public void RemoveOrganizationAcquisitionsUnitsIndexes()
+        {
+        }
+        public void RemoveOrganizationAddressesIndexes()
+        {
+        }
+        public void RemoveOrganizationAddressCategoriesIndexes()
+        {
+        }
+        public void RemoveOrganizationAgreementsIndexes()
+        {
+        }
+        public void RemoveOrganizationAliasesIndexes()
+        {
+        }
+        public void RemoveOrganizationChangelogsIndexes()
+        {
+        }
+        public void RemoveOrganizationContactsIndexes()
+        {
+        }
+        public void RemoveOrganizationEmailsIndexes()
+        {
+        }
+        public void RemoveOrganizationEmailCategoriesIndexes()
+        {
+        }
+        public void RemoveOrganizationInterfacesIndexes()
+        {
+        }
+        public void RemoveOrganizationPhoneNumbersIndexes()
+        {
+        }
+        public void RemoveOrganizationPhoneNumberCategoriesIndexes()
+        {
+        }
+        public void RemoveOrganizationTagsIndexes()
+        {
+        }
+        public void RemoveOrganizationUrlsIndexes()
+        {
+        }
+        public void RemoveOrganizationUrlCategoriesIndexes()
+        {
+        }
+        public void RemoveOverdueFinePoliciesIndexes()
+        {
+        }
+        public void RemoveOverdueFinePolicy2sIndexes()
+        {
+        }
+        public void RemoveOwnersIndexes()
+        {
+        }
+        public void RemoveOwner2sIndexes()
+        {
+        }
+        public void RemovePatronActionSessionsIndexes()
+        {
+        }
+        public void RemovePatronActionSession2sIndexes()
+        {
+        }
+        public void RemovePatronNoticePoliciesIndexes()
+        {
+        }
+        public void RemovePatronNoticePolicy2sIndexes()
+        {
+        }
+        public void RemovePatronNoticePolicyFeeFineNoticesIndexes()
+        {
+        }
+        public void RemovePatronNoticePolicyLoanNoticesIndexes()
+        {
+        }
+        public void RemovePatronNoticePolicyRequestNoticesIndexes()
+        {
+        }
+        public void RemovePaymentsIndexes()
+        {
+        }
+        public void RemovePayment2sIndexes()
+        {
+        }
+        public void RemovePaymentMethodsIndexes()
+        {
+        }
+        public void RemovePaymentMethod2sIndexes()
+        {
+        }
+        public void RemovePermissionsIndexes()
+        {
+        }
+        public void RemovePermission2sIndexes()
+        {
+        }
+        public void RemovePermissionChildOfsIndexes()
+        {
+        }
+        public void RemovePermissionGrantedTosIndexes()
+        {
+        }
+        public void RemovePermissionSubPermissionsIndexes()
+        {
+        }
+        public void RemovePermissionsUsersIndexes()
+        {
+        }
+        public void RemovePermissionsUser2sIndexes()
+        {
+        }
+        public void RemovePermissionsUserPermissionsIndexes()
+        {
+        }
+        public void RemovePermissionTagsIndexes()
+        {
+        }
+        public void RemovePhysicalDescriptionsIndexes()
+        {
+        }
+        public void RemovePrecedingSucceedingTitlesIndexes()
+        {
+        }
+        public void RemovePrecedingSucceedingTitle2sIndexes()
+        {
+        }
+        public void RemovePrecedingSucceedingTitleIdentifiersIndexes()
+        {
+        }
+        public void RemovePrefixesIndexes()
+        {
+        }
+        public void RemovePrefix2sIndexes()
+        {
+        }
+        public void RemovePrintersIndexes()
+        {
+        }
+        public void RemoveProxiesIndexes()
+        {
+        }
+        public void RemoveProxy2sIndexes()
+        {
+        }
+        public void RemovePublicationsIndexes()
+        {
+        }
+        public void RemovePublicationFrequenciesIndexes()
+        {
+        }
+        public void RemovePublicationRangesIndexes()
+        {
+        }
+        public void RemoveRawRecordsIndexes()
+        {
+        }
+        public void RemoveRawRecord2sIndexes()
+        {
+        }
+        public void RemoveReceivingsIndexes()
+        {
+        }
+        public void RemoveReceiving2sIndexes()
+        {
+        }
+        public void RemoveRecordsIndexes()
+        {
+        }
+        public void RemoveRecord2sIndexes()
+        {
+        }
+        public void RemoveRefundReasonsIndexes()
+        {
+        }
+        public void RemoveRefundReason2sIndexes()
+        {
+        }
+        public void RemoveRelationshipsIndexes()
+        {
+        }
+        public void RemoveRelationshipTypesIndexes()
+        {
+        }
+        public void RemoveReportingCodesIndexes()
+        {
+        }
+        public void RemoveReportingCode2sIndexes()
+        {
+        }
+        public void RemoveRequestsIndexes()
+        {
+        }
+        public void RemoveRequest2sIndexes()
+        {
+        }
+        public void RemoveRequestIdentifiersIndexes()
+        {
+        }
+        public void RemoveRequestPoliciesIndexes()
+        {
+        }
+        public void RemoveRequestPolicy2sIndexes()
+        {
+        }
+        public void RemoveRequestPolicyRequestTypesIndexes()
+        {
+        }
+        public void RemoveRequestTagsIndexes()
+        {
+        }
+        public void RemoveScheduledNoticesIndexes()
+        {
+        }
+        public void RemoveScheduledNotice2sIndexes()
+        {
+        }
+        public void RemoveSeriesIndexes()
+        {
+        }
+        public void RemoveServicePointsIndexes()
+        {
+        }
+        public void RemoveServicePoint2sIndexes()
+        {
+        }
+        public void RemoveServicePointOwnersIndexes()
+        {
+        }
+        public void RemoveServicePointStaffSlipsIndexes()
+        {
+        }
+        public void RemoveServicePointUsersIndexes()
+        {
+        }
+        public void RemoveServicePointUser2sIndexes()
+        {
+        }
+        public void RemoveServicePointUserServicePointsIndexes()
+        {
+        }
+        public void RemoveSettingsIndexes()
+        {
+        }
+        public void RemoveSnapshotsIndexes()
+        {
+        }
+        public void RemoveSnapshot2sIndexes()
+        {
+        }
+        public void RemoveSourcesIndexes()
+        {
+        }
+        public void RemoveSource2sIndexes()
+        {
+        }
+        public void RemoveSourceMarcsIndexes()
+        {
+        }
+        public void RemoveSourceMarcFieldsIndexes()
+        {
+        }
+        public void RemoveStaffSlipsIndexes()
+        {
+        }
+        public void RemoveStaffSlip2sIndexes()
+        {
+        }
+        public void RemoveStatisticalCodesIndexes()
+        {
+        }
+        public void RemoveStatisticalCode2sIndexes()
+        {
+        }
+        public void RemoveStatisticalCodeTypesIndexes()
+        {
+        }
+        public void RemoveStatisticalCodeType2sIndexes()
+        {
+        }
+        public void RemoveStatusesIndexes()
+        {
+        }
+        public void RemoveSubjectsIndexes()
+        {
+        }
+        public void RemoveSuffixesIndexes()
+        {
+        }
+        public void RemoveSuffix2sIndexes()
+        {
+        }
+        public void RemoveSupplementStatementsIndexes()
+        {
+        }
+        public void RemoveTagsIndexes()
+        {
+        }
+        public void RemoveTag2sIndexes()
+        {
+        }
+        public void RemoveTemplatesIndexes()
+        {
+        }
+        public void RemoveTemplate2sIndexes()
+        {
+        }
+        public void RemoveTemplateOutputFormatsIndexes()
+        {
+        }
+        public void RemoveTitlesIndexes()
+        {
+        }
+        public void RemoveTitle2sIndexes()
+        {
+        }
+        public void RemoveTitleContributorsIndexes()
+        {
+        }
+        public void RemoveTitleProductIdsIndexes()
+        {
+        }
+        public void RemoveTransactionsIndexes()
+        {
+        }
+        public void RemoveTransaction2sIndexes()
+        {
+        }
+        public void RemoveTransactionTagsIndexes()
+        {
+        }
+        public void RemoveTransferAccountsIndexes()
+        {
+        }
+        public void RemoveTransferAccount2sIndexes()
+        {
+        }
+        public void RemoveTransferCriteriasIndexes()
+        {
+        }
+        public void RemoveTransferCriteria2sIndexes()
+        {
+        }
+        public void RemoveUsersIndexes()
+        {
+        }
+        public void RemoveUser2sIndexes()
+        {
+        }
+        public void RemoveUserAcquisitionsUnitsIndexes()
+        {
+        }
+        public void RemoveUserAcquisitionsUnit2sIndexes()
+        {
+        }
+        public void RemoveUserAddressesIndexes()
+        {
+        }
+        public void RemoveUserDepartmentsIndexes()
+        {
+        }
+        public void RemoveUserRequestPreferencesIndexes()
+        {
+        }
+        public void RemoveUserRequestPreference2sIndexes()
+        {
+        }
+        public void RemoveUserSummariesIndexes()
+        {
+        }
+        public void RemoveUserSummary2sIndexes()
+        {
+        }
+        public void RemoveUserSummaryOpenFeesFinesIndexes()
+        {
+        }
+        public void RemoveUserSummaryOpenLoansIndexes()
+        {
+        }
+        public void RemoveUserTagsIndexes()
+        {
+        }
+        public void RemoveVouchersIndexes()
+        {
+        }
+        public void RemoveVoucher2sIndexes()
+        {
+        }
+        public void RemoveVoucherAcquisitionsUnitsIndexes()
+        {
+        }
+        public void RemoveVoucherItemsIndexes()
+        {
+        }
+        public void RemoveVoucherItem2sIndexes()
+        {
+        }
+        public void RemoveVoucherItemFundsIndexes()
+        {
+        }
+        public void RemoveVoucherItemInvoiceItemsIndexes()
+        {
+        }
+        public void RemoveWaiveReasonsIndexes()
+        {
+        }
+        public void RemoveWaiveReason2sIndexes()
+        {
+        }
+
         public IEnumerable<AcquisitionsUnit> AcquisitionsUnits(string where = null, object param = null, string orderBy = null, int? skip = null, int? take = null) => Query<AcquisitionsUnit>($"SELECT id AS \"Id\", COALESCE(jsonb_set(jsonb, '{{metadata,createdDate}}', ('\"' || (jsonb#>>'{{metadata,createdDate}}') || CASE WHEN jsonb#>>'{{metadata,createdDate}}' !~ '([-+]\\d\\d:\\d\\d)|Z$' THEN '+00:00' ELSE '' END || '\"')::jsonb), jsonb) AS \"Content\", creation_date AS \"CreationTime\", created_by AS \"CreationUserId\" FROM diku_mod_orders_storage{(IsMySql ? "_" : ".")}acquisitions_unit{(where != null ? $" WHERE {where}" : "")}{(orderBy != null || skip != null || take != null ? $" ORDER BY {orderBy ?? "id"}" : "")}", param, skip, take);
         public IEnumerable<AcquisitionsUnit2> AcquisitionsUnit2s(string where = null, object param = null, string orderBy = null, int? skip = null, int? take = null) => Query<AcquisitionsUnit2>($"SELECT id AS \"Id\", name AS \"Name\", is_deleted AS \"IsDeleted\", protect_create AS \"ProtectCreate\", protect_read AS \"ProtectRead\", protect_update AS \"ProtectUpdate\", protect_delete AS \"ProtectDelete\", created_date AS \"CreationTime\", created_by_user_id AS \"CreationUserId\", created_by_username AS \"CreationUserUsername\", updated_date AS \"LastWriteTime\", updated_by_user_id AS \"LastWriteUserId\", updated_by_username AS \"LastWriteUserUsername\", content AS \"Content\" FROM uc{(IsMySql ? "_" : ".")}acquisitions_units{(where != null ? $" WHERE {where}" : "")}{(orderBy != null || skip != null || take != null ? $" ORDER BY {orderBy ?? "id"}" : "")}", param, skip, take);
         public IEnumerable<Address> Addresses(string where = null, object param = null, string orderBy = null, int? skip = null, int? take = null) => Query<Address>($"SELECT id AS \"Id\", name AS \"Name\", content AS \"Content\", enabled AS \"Enabled\", created_date AS \"CreationTime\", created_by_user_id AS \"CreationUserId\", updated_date AS \"LastWriteTime\", updated_by_user_id AS \"LastWriteUserId\" FROM uc{(IsMySql ? "_" : ".")}addresses{(where != null ? $" WHERE {where}" : "")}{(orderBy != null || skip != null || take != null ? $" ORDER BY {orderBy ?? "id"}" : "")}", param, skip, take);
@@ -4026,6 +6536,425 @@ namespace FolioLibrary
         public bool AnyVoucherItemInvoiceItems(string where = null, object param = null) => Query($"SELECT 1 FROM uc{(IsMySql ? "_" : ".")}voucher_item_invoice_items{(where != null ? $" WHERE {where}" : "")}{(IsSqlServer ? $" ORDER BY id" : "")}", param: param, take: 1).Any();
         public bool AnyWaiveReasons(string where = null, object param = null) => Query($"SELECT 1 FROM diku_mod_feesfines{(IsMySql ? "_" : ".")}waives{(where != null ? $" WHERE {where}" : "")}{(IsSqlServer ? $" ORDER BY id" : "")}", param: param, take: 1).Any();
         public bool AnyWaiveReason2s(string where = null, object param = null) => Query($"SELECT 1 FROM uc{(IsMySql ? "_" : ".")}waive_reasons{(where != null ? $" WHERE {where}" : "")}{(IsSqlServer ? $" ORDER BY id" : "")}", param: param, take: 1).Any();
+
+        public void TruncateAcquisitionsUnits() { Execute($"TRUNCATE TABLE diku_mod_orders_storage.acquisitions_unit"); Commit(); }
+        public void TruncateAcquisitionsUnit2s() { Execute($"TRUNCATE TABLE uc.acquisitions_units"); Commit(); }
+        public void TruncateAddresses() { Execute($"TRUNCATE TABLE uc.addresses"); Commit(); }
+        public void TruncateAddressTypes() { Execute($"TRUNCATE TABLE diku_mod_users.addresstype"); Commit(); }
+        public void TruncateAddressType2s() { Execute($"TRUNCATE TABLE uc.address_types"); Commit(); }
+        public void TruncateAlerts() { Execute($"TRUNCATE TABLE diku_mod_orders_storage.alert"); Commit(); }
+        public void TruncateAlert2s() { Execute($"TRUNCATE TABLE uc.alerts"); Commit(); }
+        public void TruncateAllocatedFromFunds() { Execute($"TRUNCATE TABLE uc.allocated_from_funds"); Commit(); }
+        public void TruncateAllocatedToFunds() { Execute($"TRUNCATE TABLE uc.allocated_to_funds"); Commit(); }
+        public void TruncateAlternativeTitles() { Execute($"TRUNCATE TABLE uc.alternative_titles"); Commit(); }
+        public void TruncateAlternativeTitleTypes() { Execute($"TRUNCATE TABLE diku_mod_inventory_storage.alternative_title_type"); Commit(); }
+        public void TruncateAlternativeTitleType2s() { Execute($"TRUNCATE TABLE uc.alternative_title_types"); Commit(); }
+        public void TruncateAuthAttempts() { Execute($"TRUNCATE TABLE diku_mod_login.auth_attempts"); Commit(); }
+        public void TruncateAuthAttempt2s() { Execute($"TRUNCATE TABLE uc.auth_attempts"); Commit(); }
+        public void TruncateAuthCredentialsHistories() { Execute($"TRUNCATE TABLE diku_mod_login.auth_credentials_history"); Commit(); }
+        public void TruncateAuthCredentialsHistory2s() { Execute($"TRUNCATE TABLE uc.auth_credentials_histories"); Commit(); }
+        public void TruncateAuthPasswordActions() { Execute($"TRUNCATE TABLE diku_mod_login.auth_password_action"); Commit(); }
+        public void TruncateBatchGroups() { Execute($"TRUNCATE TABLE diku_mod_invoice_storage.batch_groups"); Commit(); }
+        public void TruncateBatchGroup2s() { Execute($"TRUNCATE TABLE uc.batch_groups"); Commit(); }
+        public void TruncateBatchVouchers() { Execute($"TRUNCATE TABLE diku_mod_invoice_storage.batch_vouchers"); Commit(); }
+        public void TruncateBatchVoucher2s() { Execute($"TRUNCATE TABLE uc.batch_vouchers"); Commit(); }
+        public void TruncateBatchVoucherBatchedVouchers() { Execute($"TRUNCATE TABLE uc.batch_voucher_batched_vouchers"); Commit(); }
+        public void TruncateBatchVoucherBatchedVoucherBatchedVoucherLines() { Execute($"TRUNCATE TABLE uc.batch_voucher_batched_voucher_batched_voucher_lines"); Commit(); }
+        public void TruncateBatchVoucherBatchedVoucherBatchedVoucherLineFundCodes() { Execute($"TRUNCATE TABLE uc.batch_voucher_batched_voucher_batched_voucher_line_fund_codes"); Commit(); }
+        public void TruncateBatchVoucherExports() { Execute($"TRUNCATE TABLE diku_mod_invoice_storage.batch_voucher_exports"); Commit(); }
+        public void TruncateBatchVoucherExport2s() { Execute($"TRUNCATE TABLE uc.batch_voucher_exports"); Commit(); }
+        public void TruncateBatchVoucherExportConfigs() { Execute($"TRUNCATE TABLE diku_mod_invoice_storage.batch_voucher_export_configs"); Commit(); }
+        public void TruncateBatchVoucherExportConfig2s() { Execute($"TRUNCATE TABLE uc.batch_voucher_export_configs"); Commit(); }
+        public void TruncateBatchVoucherExportConfigWeekdays() { Execute($"TRUNCATE TABLE uc.batch_voucher_export_config_weekdays"); Commit(); }
+        public void TruncateBlocks() { Execute($"TRUNCATE TABLE diku_mod_feesfines.manualblocks"); Commit(); }
+        public void TruncateBlock2s() { Execute($"TRUNCATE TABLE uc.blocks"); Commit(); }
+        public void TruncateBlockConditions() { Execute($"TRUNCATE TABLE diku_mod_patron_blocks.patron_block_conditions"); Commit(); }
+        public void TruncateBlockCondition2s() { Execute($"TRUNCATE TABLE uc.block_conditions"); Commit(); }
+        public void TruncateBlockLimits() { Execute($"TRUNCATE TABLE diku_mod_patron_blocks.patron_block_limits"); Commit(); }
+        public void TruncateBlockLimit2s() { Execute($"TRUNCATE TABLE uc.block_limits"); Commit(); }
+        public void TruncateBoundWithParts() { Execute($"TRUNCATE TABLE diku_mod_inventory_storage.bound_with_part"); Commit(); }
+        public void TruncateBoundWithPart2s() { Execute($"TRUNCATE TABLE uc.bound_with_parts"); Commit(); }
+        public void TruncateBudgets() { Execute($"TRUNCATE TABLE diku_mod_finance_storage.budget"); Commit(); }
+        public void TruncateBudget2s() { Execute($"TRUNCATE TABLE uc.budgets"); Commit(); }
+        public void TruncateBudgetAcquisitionsUnits() { Execute($"TRUNCATE TABLE uc.budget_acquisitions_units"); Commit(); }
+        public void TruncateBudgetExpenseClasses() { Execute($"TRUNCATE TABLE diku_mod_finance_storage.budget_expense_class"); Commit(); }
+        public void TruncateBudgetExpenseClass2s() { Execute($"TRUNCATE TABLE uc.budget_expense_classes"); Commit(); }
+        public void TruncateBudgetGroups() { Execute($"TRUNCATE TABLE diku_mod_finance_storage.group_fund_fiscal_year"); Commit(); }
+        public void TruncateBudgetGroup2s() { Execute($"TRUNCATE TABLE uc.budget_groups"); Commit(); }
+        public void TruncateBudgetTags() { Execute($"TRUNCATE TABLE uc.budget_tags"); Commit(); }
+        public void TruncateCallNumberTypes() { Execute($"TRUNCATE TABLE diku_mod_inventory_storage.call_number_type"); Commit(); }
+        public void TruncateCallNumberType2s() { Execute($"TRUNCATE TABLE uc.call_number_types"); Commit(); }
+        public void TruncateCampuses() { Execute($"TRUNCATE TABLE diku_mod_inventory_storage.loccampus"); Commit(); }
+        public void TruncateCampus2s() { Execute($"TRUNCATE TABLE uc.campuses"); Commit(); }
+        public void TruncateCancellationReasons() { Execute($"TRUNCATE TABLE diku_mod_circulation_storage.cancellation_reason"); Commit(); }
+        public void TruncateCancellationReason2s() { Execute($"TRUNCATE TABLE uc.cancellation_reasons"); Commit(); }
+        public void TruncateCategories() { Execute($"TRUNCATE TABLE diku_mod_organizations_storage.categories"); Commit(); }
+        public void TruncateCategory2s() { Execute($"TRUNCATE TABLE uc.categories"); Commit(); }
+        public void TruncateCheckIns() { Execute($"TRUNCATE TABLE diku_mod_circulation_storage.check_in"); Commit(); }
+        public void TruncateCheckIn2s() { Execute($"TRUNCATE TABLE uc.check_ins"); Commit(); }
+        public void TruncateCirculationNotes() { Execute($"TRUNCATE TABLE uc.circulation_notes"); Commit(); }
+        public void TruncateCirculationRules() { Execute($"TRUNCATE TABLE diku_mod_circulation_storage.circulation_rules"); Commit(); }
+        public void TruncateCirculationRule2s() { Execute($"TRUNCATE TABLE uc.circulation_rules"); Commit(); }
+        public void TruncateClassifications() { Execute($"TRUNCATE TABLE uc.classifications"); Commit(); }
+        public void TruncateClassificationTypes() { Execute($"TRUNCATE TABLE diku_mod_inventory_storage.classification_type"); Commit(); }
+        public void TruncateClassificationType2s() { Execute($"TRUNCATE TABLE uc.classification_types"); Commit(); }
+        public void TruncateCloseReasons() { Execute($"TRUNCATE TABLE diku_mod_orders_storage.reasons_for_closure"); Commit(); }
+        public void TruncateCloseReason2s() { Execute($"TRUNCATE TABLE uc.close_reasons"); Commit(); }
+        public void TruncateComments() { Execute($"TRUNCATE TABLE diku_mod_feesfines.comments"); Commit(); }
+        public void TruncateComment2s() { Execute($"TRUNCATE TABLE uc.comments"); Commit(); }
+        public void TruncateConfigurations() { Execute($"TRUNCATE TABLE diku_mod_configuration.config_data"); Commit(); }
+        public void TruncateConfiguration2s() { Execute($"TRUNCATE TABLE uc.configurations"); Commit(); }
+        public void TruncateContacts() { Execute($"TRUNCATE TABLE diku_mod_organizations_storage.contacts"); Commit(); }
+        public void TruncateContact2s() { Execute($"TRUNCATE TABLE uc.contacts"); Commit(); }
+        public void TruncateContactAddresses() { Execute($"TRUNCATE TABLE uc.contact_addresses"); Commit(); }
+        public void TruncateContactAddressCategories() { Execute($"TRUNCATE TABLE uc.contact_address_categories"); Commit(); }
+        public void TruncateContactCategories() { Execute($"TRUNCATE TABLE uc.contact_categories"); Commit(); }
+        public void TruncateContactEmails() { Execute($"TRUNCATE TABLE uc.contact_emails"); Commit(); }
+        public void TruncateContactEmailCategories() { Execute($"TRUNCATE TABLE uc.contact_email_categories"); Commit(); }
+        public void TruncateContactPhoneNumbers() { Execute($"TRUNCATE TABLE uc.contact_phone_numbers"); Commit(); }
+        public void TruncateContactPhoneNumberCategories() { Execute($"TRUNCATE TABLE uc.contact_phone_number_categories"); Commit(); }
+        public void TruncateContactTypes() { Execute($"TRUNCATE TABLE uc.contact_types"); Commit(); }
+        public void TruncateContactUrls() { Execute($"TRUNCATE TABLE uc.contact_urls"); Commit(); }
+        public void TruncateContactUrlCategories() { Execute($"TRUNCATE TABLE uc.contact_url_categories"); Commit(); }
+        public void TruncateContributors() { Execute($"TRUNCATE TABLE uc.contributors"); Commit(); }
+        public void TruncateContributorNameTypes() { Execute($"TRUNCATE TABLE diku_mod_inventory_storage.contributor_name_type"); Commit(); }
+        public void TruncateContributorNameType2s() { Execute($"TRUNCATE TABLE uc.contributor_name_types"); Commit(); }
+        public void TruncateContributorTypes() { Execute($"TRUNCATE TABLE diku_mod_inventory_storage.contributor_type"); Commit(); }
+        public void TruncateContributorType2s() { Execute($"TRUNCATE TABLE uc.contributor_types"); Commit(); }
+        public void TruncateCountries() { Execute($"TRUNCATE TABLE uc.countries"); Commit(); }
+        public void TruncateCurrencies() { Execute($"TRUNCATE TABLE uc.currencies"); Commit(); }
+        public void TruncateCustomFields() { Execute($"TRUNCATE TABLE diku_mod_users.custom_fields"); Commit(); }
+        public void TruncateCustomField2s() { Execute($"TRUNCATE TABLE uc.custom_fields"); Commit(); }
+        public void TruncateCustomFieldValues() { Execute($"TRUNCATE TABLE uc.custom_field_values"); Commit(); }
+        public void TruncateDepartments() { Execute($"TRUNCATE TABLE diku_mod_users.departments"); Commit(); }
+        public void TruncateDepartment2s() { Execute($"TRUNCATE TABLE uc.departments"); Commit(); }
+        public void TruncateDocuments() { Execute($"TRUNCATE TABLE diku_mod_invoice_storage.documents"); Commit(); }
+        public void TruncateDocument2s() { Execute($"TRUNCATE TABLE uc.documents"); Commit(); }
+        public void TruncateEditions() { Execute($"TRUNCATE TABLE uc.editions"); Commit(); }
+        public void TruncateElectronicAccesses() { Execute($"TRUNCATE TABLE uc.electronic_accesses"); Commit(); }
+        public void TruncateElectronicAccessRelationships() { Execute($"TRUNCATE TABLE diku_mod_inventory_storage.electronic_access_relationship"); Commit(); }
+        public void TruncateElectronicAccessRelationship2s() { Execute($"TRUNCATE TABLE uc.electronic_access_relationships"); Commit(); }
+        public void TruncateErrorRecords() { Execute($"TRUNCATE TABLE diku_mod_source_record_storage.error_records_lb"); Commit(); }
+        public void TruncateErrorRecord2s() { Execute($"TRUNCATE TABLE uc.error_records"); Commit(); }
+        public void TruncateEventLogs() { Execute($"TRUNCATE TABLE diku_mod_login.event_logs"); Commit(); }
+        public void TruncateEventLog2s() { Execute($"TRUNCATE TABLE uc.event_logs"); Commit(); }
+        public void TruncateExpenseClasses() { Execute($"TRUNCATE TABLE diku_mod_finance_storage.expense_class"); Commit(); }
+        public void TruncateExpenseClass2s() { Execute($"TRUNCATE TABLE uc.expense_classes"); Commit(); }
+        public void TruncateExportConfigCredentials() { Execute($"TRUNCATE TABLE diku_mod_invoice_storage.export_config_credentials"); Commit(); }
+        public void TruncateExportConfigCredential2s() { Execute($"TRUNCATE TABLE uc.export_config_credentials"); Commit(); }
+        public void TruncateExtents() { Execute($"TRUNCATE TABLE uc.extents"); Commit(); }
+        public void TruncateFees() { Execute($"TRUNCATE TABLE diku_mod_feesfines.accounts"); Commit(); }
+        public void TruncateFee2s() { Execute($"TRUNCATE TABLE uc.fees"); Commit(); }
+        public void TruncateFeeTypes() { Execute($"TRUNCATE TABLE diku_mod_feesfines.feefines"); Commit(); }
+        public void TruncateFeeType2s() { Execute($"TRUNCATE TABLE uc.fee_types"); Commit(); }
+        public void TruncateFinanceGroups() { Execute($"TRUNCATE TABLE diku_mod_finance_storage.groups"); Commit(); }
+        public void TruncateFinanceGroup2s() { Execute($"TRUNCATE TABLE uc.finance_groups"); Commit(); }
+        public void TruncateFinanceGroupAcquisitionsUnits() { Execute($"TRUNCATE TABLE uc.finance_group_acquisitions_units"); Commit(); }
+        public void TruncateFiscalYears() { Execute($"TRUNCATE TABLE diku_mod_finance_storage.fiscal_year"); Commit(); }
+        public void TruncateFiscalYear2s() { Execute($"TRUNCATE TABLE uc.fiscal_years"); Commit(); }
+        public void TruncateFiscalYearAcquisitionsUnits() { Execute($"TRUNCATE TABLE uc.fiscal_year_acquisitions_units"); Commit(); }
+        public void TruncateFixedDueDateSchedules() { Execute($"TRUNCATE TABLE diku_mod_circulation_storage.fixed_due_date_schedule"); Commit(); }
+        public void TruncateFixedDueDateSchedule2s() { Execute($"TRUNCATE TABLE uc.fixed_due_date_schedules"); Commit(); }
+        public void TruncateFixedDueDateScheduleSchedules() { Execute($"TRUNCATE TABLE uc.fixed_due_date_schedule_schedules"); Commit(); }
+        public void TruncateFormats() { Execute($"TRUNCATE TABLE uc.formats"); Commit(); }
+        public void TruncateFunds() { Execute($"TRUNCATE TABLE diku_mod_finance_storage.fund"); Commit(); }
+        public void TruncateFund2s() { Execute($"TRUNCATE TABLE uc.funds"); Commit(); }
+        public void TruncateFundAcquisitionsUnits() { Execute($"TRUNCATE TABLE uc.fund_acquisitions_units"); Commit(); }
+        public void TruncateFundTags() { Execute($"TRUNCATE TABLE uc.fund_tags"); Commit(); }
+        public void TruncateFundTypes() { Execute($"TRUNCATE TABLE diku_mod_finance_storage.fund_type"); Commit(); }
+        public void TruncateFundType2s() { Execute($"TRUNCATE TABLE uc.fund_types"); Commit(); }
+        public void TruncateGroups() { Execute($"TRUNCATE TABLE diku_mod_users.groups"); Commit(); }
+        public void TruncateGroup2s() { Execute($"TRUNCATE TABLE uc.groups"); Commit(); }
+        public void TruncateHoldings() { Execute($"TRUNCATE TABLE diku_mod_inventory_storage.holdings_record"); Commit(); }
+        public void TruncateHolding2s() { Execute($"TRUNCATE TABLE uc.holdings"); Commit(); }
+        public void TruncateHoldingElectronicAccesses() { Execute($"TRUNCATE TABLE uc.holding_electronic_accesses"); Commit(); }
+        public void TruncateHoldingEntries() { Execute($"TRUNCATE TABLE uc.holding_entries"); Commit(); }
+        public void TruncateHoldingFormerIds() { Execute($"TRUNCATE TABLE uc.holding_former_ids"); Commit(); }
+        public void TruncateHoldingNotes() { Execute($"TRUNCATE TABLE uc.holding_notes"); Commit(); }
+        public void TruncateHoldingNoteTypes() { Execute($"TRUNCATE TABLE diku_mod_inventory_storage.holdings_note_type"); Commit(); }
+        public void TruncateHoldingNoteType2s() { Execute($"TRUNCATE TABLE uc.holding_note_types"); Commit(); }
+        public void TruncateHoldingStatisticalCodes() { Execute($"TRUNCATE TABLE uc.holding_statistical_codes"); Commit(); }
+        public void TruncateHoldingTags() { Execute($"TRUNCATE TABLE uc.holding_tags"); Commit(); }
+        public void TruncateHoldingTypes() { Execute($"TRUNCATE TABLE diku_mod_inventory_storage.holdings_type"); Commit(); }
+        public void TruncateHoldingType2s() { Execute($"TRUNCATE TABLE uc.holding_types"); Commit(); }
+        public void TruncateHridSettings() { Execute($"TRUNCATE TABLE diku_mod_inventory_storage.hrid_settings"); Commit(); }
+        public void TruncateHridSetting2s() { Execute($"TRUNCATE TABLE uc.hrid_settings"); Commit(); }
+        public void TruncateIdentifiers() { Execute($"TRUNCATE TABLE uc.identifiers"); Commit(); }
+        public void TruncateIdTypes() { Execute($"TRUNCATE TABLE diku_mod_inventory_storage.identifier_type"); Commit(); }
+        public void TruncateIdType2s() { Execute($"TRUNCATE TABLE uc.id_types"); Commit(); }
+        public void TruncateIllPolicies() { Execute($"TRUNCATE TABLE diku_mod_inventory_storage.ill_policy"); Commit(); }
+        public void TruncateIllPolicy2s() { Execute($"TRUNCATE TABLE uc.ill_policies"); Commit(); }
+        public void TruncateIndexStatements() { Execute($"TRUNCATE TABLE uc.index_statements"); Commit(); }
+        public void TruncateInstances() { Execute($"TRUNCATE TABLE diku_mod_inventory_storage.instance"); Commit(); }
+        public void TruncateInstance2s() { Execute($"TRUNCATE TABLE uc.instances"); Commit(); }
+        public void TruncateInstanceFormats() { Execute($"TRUNCATE TABLE diku_mod_inventory_storage.instance_format"); Commit(); }
+        public void TruncateInstanceFormat2s() { Execute($"TRUNCATE TABLE uc.instance_formats"); Commit(); }
+        public void TruncateInstanceNatureOfContentTerms() { Execute($"TRUNCATE TABLE uc.instance_nature_of_content_terms"); Commit(); }
+        public void TruncateInstanceNoteTypes() { Execute($"TRUNCATE TABLE diku_mod_inventory_storage.instance_note_type"); Commit(); }
+        public void TruncateInstanceNoteType2s() { Execute($"TRUNCATE TABLE uc.instance_note_types"); Commit(); }
+        public void TruncateInstanceRelationships() { Execute($"TRUNCATE TABLE diku_mod_inventory_storage.instance_relationship"); Commit(); }
+        public void TruncateInstanceRelationshipTypes() { Execute($"TRUNCATE TABLE diku_mod_inventory_storage.instance_relationship_type"); Commit(); }
+        public void TruncateInstanceSourceMarcs() { Execute($"TRUNCATE TABLE diku_mod_inventory_storage.instance_source_marc"); Commit(); }
+        public void TruncateInstanceStatisticalCodes() { Execute($"TRUNCATE TABLE uc.instance_statistical_codes"); Commit(); }
+        public void TruncateInstanceStatuses() { Execute($"TRUNCATE TABLE diku_mod_inventory_storage.instance_status"); Commit(); }
+        public void TruncateInstanceTags() { Execute($"TRUNCATE TABLE uc.instance_tags"); Commit(); }
+        public void TruncateInstanceTypes() { Execute($"TRUNCATE TABLE diku_mod_inventory_storage.instance_type"); Commit(); }
+        public void TruncateInstanceType2s() { Execute($"TRUNCATE TABLE uc.instance_types"); Commit(); }
+        public void TruncateInstitutions() { Execute($"TRUNCATE TABLE diku_mod_inventory_storage.locinstitution"); Commit(); }
+        public void TruncateInstitution2s() { Execute($"TRUNCATE TABLE uc.institutions"); Commit(); }
+        public void TruncateInterfaces() { Execute($"TRUNCATE TABLE diku_mod_organizations_storage.interfaces"); Commit(); }
+        public void TruncateInterface2s() { Execute($"TRUNCATE TABLE uc.interfaces"); Commit(); }
+        public void TruncateInterfaceCredentials() { Execute($"TRUNCATE TABLE diku_mod_organizations_storage.interface_credentials"); Commit(); }
+        public void TruncateInterfaceCredential2s() { Execute($"TRUNCATE TABLE uc.interface_credentials"); Commit(); }
+        public void TruncateInterfaceTypes() { Execute($"TRUNCATE TABLE uc.interface_type"); Commit(); }
+        public void TruncateInvoices() { Execute($"TRUNCATE TABLE diku_mod_invoice_storage.invoices"); Commit(); }
+        public void TruncateInvoice2s() { Execute($"TRUNCATE TABLE uc.invoices"); Commit(); }
+        public void TruncateInvoiceAcquisitionsUnits() { Execute($"TRUNCATE TABLE uc.invoice_acquisitions_units"); Commit(); }
+        public void TruncateInvoiceAdjustments() { Execute($"TRUNCATE TABLE uc.invoice_adjustments"); Commit(); }
+        public void TruncateInvoiceAdjustmentFunds() { Execute($"TRUNCATE TABLE uc.invoice_adjustment_fund_distributions"); Commit(); }
+        public void TruncateInvoiceItems() { Execute($"TRUNCATE TABLE diku_mod_invoice_storage.invoice_lines"); Commit(); }
+        public void TruncateInvoiceItem2s() { Execute($"TRUNCATE TABLE uc.invoice_items"); Commit(); }
+        public void TruncateInvoiceItemAdjustments() { Execute($"TRUNCATE TABLE uc.invoice_item_adjustments"); Commit(); }
+        public void TruncateInvoiceItemAdjustmentFunds() { Execute($"TRUNCATE TABLE uc.invoice_item_adjustment_fund_distributions"); Commit(); }
+        public void TruncateInvoiceItemFunds() { Execute($"TRUNCATE TABLE uc.invoice_item_fund_distributions"); Commit(); }
+        public void TruncateInvoiceItemReferenceNumbers() { Execute($"TRUNCATE TABLE uc.invoice_item_reference_numbers"); Commit(); }
+        public void TruncateInvoiceItemTags() { Execute($"TRUNCATE TABLE uc.invoice_item_tags"); Commit(); }
+        public void TruncateInvoiceOrderNumbers() { Execute($"TRUNCATE TABLE uc.invoice_order_numbers"); Commit(); }
+        public void TruncateInvoiceTags() { Execute($"TRUNCATE TABLE uc.invoice_tags"); Commit(); }
+        public void TruncateInvoiceTransactionSummaries() { Execute($"TRUNCATE TABLE diku_mod_finance_storage.invoice_transaction_summaries"); Commit(); }
+        public void TruncateInvoiceTransactionSummary2s() { Execute($"TRUNCATE TABLE uc.invoice_transaction_summaries"); Commit(); }
+        public void TruncateIssuanceModes() { Execute($"TRUNCATE TABLE uc.mode_of_issuances"); Commit(); }
+        public void TruncateItems() { Execute($"TRUNCATE TABLE diku_mod_inventory_storage.item"); Commit(); }
+        public void TruncateItem2s() { Execute($"TRUNCATE TABLE uc.items"); Commit(); }
+        public void TruncateItemDamagedStatuses() { Execute($"TRUNCATE TABLE diku_mod_inventory_storage.item_damaged_status"); Commit(); }
+        public void TruncateItemDamagedStatus2s() { Execute($"TRUNCATE TABLE uc.item_damaged_statuses"); Commit(); }
+        public void TruncateItemElectronicAccesses() { Execute($"TRUNCATE TABLE uc.item_electronic_accesses"); Commit(); }
+        public void TruncateItemFormerIds() { Execute($"TRUNCATE TABLE uc.item_former_ids"); Commit(); }
+        public void TruncateItemNotes() { Execute($"TRUNCATE TABLE uc.item_notes"); Commit(); }
+        public void TruncateItemNoteTypes() { Execute($"TRUNCATE TABLE diku_mod_inventory_storage.item_note_type"); Commit(); }
+        public void TruncateItemNoteType2s() { Execute($"TRUNCATE TABLE uc.item_note_types"); Commit(); }
+        public void TruncateItemStatisticalCodes() { Execute($"TRUNCATE TABLE uc.item_statistical_codes"); Commit(); }
+        public void TruncateItemTags() { Execute($"TRUNCATE TABLE uc.item_tags"); Commit(); }
+        public void TruncateItemYearCaptions() { Execute($"TRUNCATE TABLE uc.item_year_caption"); Commit(); }
+        public void TruncateJobExecutions() { Execute($"TRUNCATE TABLE diku_mod_source_record_manager.job_executions"); Commit(); }
+        public void TruncateJobExecution2s() { Execute($"TRUNCATE TABLE uc.job_executions"); Commit(); }
+        public void TruncateJobExecutionProgresses() { Execute($"TRUNCATE TABLE diku_mod_source_record_manager.job_execution_progress"); Commit(); }
+        public void TruncateJobExecutionProgress2s() { Execute($"TRUNCATE TABLE uc.job_execution_progresses"); Commit(); }
+        public void TruncateJobExecutionSourceChunks() { Execute($"TRUNCATE TABLE diku_mod_source_record_manager.job_execution_source_chunks"); Commit(); }
+        public void TruncateJobExecutionSourceChunk2s() { Execute($"TRUNCATE TABLE uc.job_execution_source_chunks"); Commit(); }
+        public void TruncateJobMonitorings() { Execute($"TRUNCATE TABLE diku_mod_source_record_manager.job_monitoring"); Commit(); }
+        public void TruncateJobMonitoring2s() { Execute($"TRUNCATE TABLE uc.job_monitorings"); Commit(); }
+        public void TruncateJournalRecords() { Execute($"TRUNCATE TABLE diku_mod_source_record_manager.journal_records"); Commit(); }
+        public void TruncateJournalRecord2s() { Execute($"TRUNCATE TABLE uc.journal_records"); Commit(); }
+        public void TruncateLanguages() { Execute($"TRUNCATE TABLE uc.languages"); Commit(); }
+        public void TruncateLedgers() { Execute($"TRUNCATE TABLE diku_mod_finance_storage.ledger"); Commit(); }
+        public void TruncateLedger2s() { Execute($"TRUNCATE TABLE uc.ledgers"); Commit(); }
+        public void TruncateLedgerAcquisitionsUnits() { Execute($"TRUNCATE TABLE uc.ledger_acquisitions_units"); Commit(); }
+        public void TruncateLedgerRollovers() { Execute($"TRUNCATE TABLE diku_mod_finance_storage.ledger_fiscal_year_rollover"); Commit(); }
+        public void TruncateLedgerRollover2s() { Execute($"TRUNCATE TABLE uc.ledger_rollovers"); Commit(); }
+        public void TruncateLedgerRolloverBudgetsRollovers() { Execute($"TRUNCATE TABLE uc.ledger_rollover_budgets_rollover"); Commit(); }
+        public void TruncateLedgerRolloverEncumbrancesRollovers() { Execute($"TRUNCATE TABLE uc.ledger_rollover_encumbrances_rollover"); Commit(); }
+        public void TruncateLedgerRolloverErrors() { Execute($"TRUNCATE TABLE diku_mod_finance_storage.ledger_fiscal_year_rollover_error"); Commit(); }
+        public void TruncateLedgerRolloverError2s() { Execute($"TRUNCATE TABLE uc.ledger_rollover_errors"); Commit(); }
+        public void TruncateLedgerRolloverProgresses() { Execute($"TRUNCATE TABLE diku_mod_finance_storage.ledger_fiscal_year_rollover_progress"); Commit(); }
+        public void TruncateLedgerRolloverProgress2s() { Execute($"TRUNCATE TABLE uc.ledger_rollover_progresses"); Commit(); }
+        public void TruncateLibraries() { Execute($"TRUNCATE TABLE diku_mod_inventory_storage.loclibrary"); Commit(); }
+        public void TruncateLibrary2s() { Execute($"TRUNCATE TABLE uc.libraries"); Commit(); }
+        public void TruncateLoans() { Execute($"TRUNCATE TABLE diku_mod_circulation_storage.loan"); Commit(); }
+        public void TruncateLoan2s() { Execute($"TRUNCATE TABLE uc.loans"); Commit(); }
+        public void TruncateLoanEvents() { Execute($"TRUNCATE TABLE diku_mod_circulation_storage.audit_loan"); Commit(); }
+        public void TruncateLoanEvent2s() { Execute($"TRUNCATE TABLE uc.loan_events"); Commit(); }
+        public void TruncateLoanPolicies() { Execute($"TRUNCATE TABLE diku_mod_circulation_storage.loan_policy"); Commit(); }
+        public void TruncateLoanPolicy2s() { Execute($"TRUNCATE TABLE uc.loan_policies"); Commit(); }
+        public void TruncateLoanTypes() { Execute($"TRUNCATE TABLE diku_mod_inventory_storage.loan_type"); Commit(); }
+        public void TruncateLoanType2s() { Execute($"TRUNCATE TABLE uc.loan_types"); Commit(); }
+        public void TruncateLocations() { Execute($"TRUNCATE TABLE diku_mod_inventory_storage.location"); Commit(); }
+        public void TruncateLocation2s() { Execute($"TRUNCATE TABLE uc.locations"); Commit(); }
+        public void TruncateLocationServicePoints() { Execute($"TRUNCATE TABLE uc.location_service_points"); Commit(); }
+        public void TruncateLocationSettings() { Execute($"TRUNCATE TABLE uc.location_settings"); Commit(); }
+        public void TruncateLogins() { Execute($"TRUNCATE TABLE diku_mod_login.auth_credentials"); Commit(); }
+        public void TruncateLogin2s() { Execute($"TRUNCATE TABLE uc.logins"); Commit(); }
+        public void TruncateLostItemFeePolicies() { Execute($"TRUNCATE TABLE diku_mod_feesfines.lost_item_fee_policy"); Commit(); }
+        public void TruncateLostItemFeePolicy2s() { Execute($"TRUNCATE TABLE uc.lost_item_fee_policies"); Commit(); }
+        public void TruncateManualBlockTemplates() { Execute($"TRUNCATE TABLE diku_mod_feesfines.manual_block_templates"); Commit(); }
+        public void TruncateManualBlockTemplate2s() { Execute($"TRUNCATE TABLE uc.manual_block_templates"); Commit(); }
+        public void TruncateMappingRules() { Execute($"TRUNCATE TABLE diku_mod_source_record_manager.mapping_rules"); Commit(); }
+        public void TruncateMarcRecords() { Execute($"TRUNCATE TABLE diku_mod_source_record_storage.marc_records_lb"); Commit(); }
+        public void TruncateMarcRecord2s() { Execute($"TRUNCATE TABLE uc.marc_records"); Commit(); }
+        public void TruncateMaterialTypes() { Execute($"TRUNCATE TABLE diku_mod_inventory_storage.material_type"); Commit(); }
+        public void TruncateMaterialType2s() { Execute($"TRUNCATE TABLE uc.material_types"); Commit(); }
+        public void TruncateModeOfIssuances() { Execute($"TRUNCATE TABLE diku_mod_inventory_storage.mode_of_issuance"); Commit(); }
+        public void TruncateNatureOfContentTerms() { Execute($"TRUNCATE TABLE diku_mod_inventory_storage.nature_of_content_term"); Commit(); }
+        public void TruncateNatureOfContentTerm2s() { Execute($"TRUNCATE TABLE uc.nature_of_content_terms"); Commit(); }
+        public void TruncateNotes() { Execute($"TRUNCATE TABLE diku_mod_notes.note_data"); Commit(); }
+        public void TruncateNote2s() { Execute($"TRUNCATE TABLE uc.notes"); Commit(); }
+        public void TruncateNote3s() { Execute($"TRUNCATE TABLE uc.notes2"); Commit(); }
+        public void TruncateNoteLinks() { Execute($"TRUNCATE TABLE uc.note_links"); Commit(); }
+        public void TruncateNoteTypes() { Execute($"TRUNCATE TABLE diku_mod_notes.note_type"); Commit(); }
+        public void TruncateNoteType2s() { Execute($"TRUNCATE TABLE uc.note_types"); Commit(); }
+        public void TruncateOrders() { Execute($"TRUNCATE TABLE diku_mod_orders_storage.purchase_order"); Commit(); }
+        public void TruncateOrder2s() { Execute($"TRUNCATE TABLE uc.orders"); Commit(); }
+        public void TruncateOrderAcquisitionsUnits() { Execute($"TRUNCATE TABLE uc.order_acquisitions_units"); Commit(); }
+        public void TruncateOrderInvoices() { Execute($"TRUNCATE TABLE diku_mod_orders_storage.order_invoice_relationship"); Commit(); }
+        public void TruncateOrderInvoice2s() { Execute($"TRUNCATE TABLE uc.order_invoices"); Commit(); }
+        public void TruncateOrderItems() { Execute($"TRUNCATE TABLE diku_mod_orders_storage.po_line"); Commit(); }
+        public void TruncateOrderItem2s() { Execute($"TRUNCATE TABLE uc.order_items"); Commit(); }
+        public void TruncateOrderItemAlerts() { Execute($"TRUNCATE TABLE uc.order_item_alerts"); Commit(); }
+        public void TruncateOrderItemClaims() { Execute($"TRUNCATE TABLE uc.order_item_claims"); Commit(); }
+        public void TruncateOrderItemContributors() { Execute($"TRUNCATE TABLE uc.order_item_contributors"); Commit(); }
+        public void TruncateOrderItemFunds() { Execute($"TRUNCATE TABLE uc.order_item_fund_distributions"); Commit(); }
+        public void TruncateOrderItemLocation2s() { Execute($"TRUNCATE TABLE uc.order_item_locations"); Commit(); }
+        public void TruncateOrderItemProductIds() { Execute($"TRUNCATE TABLE uc.order_item_product_ids"); Commit(); }
+        public void TruncateOrderItemReferenceNumbers() { Execute($"TRUNCATE TABLE uc.order_item_reference_numbers"); Commit(); }
+        public void TruncateOrderItemReportingCodes() { Execute($"TRUNCATE TABLE uc.order_item_reporting_codes"); Commit(); }
+        public void TruncateOrderItemTags() { Execute($"TRUNCATE TABLE uc.order_item_tags"); Commit(); }
+        public void TruncateOrderItemVolumes() { Execute($"TRUNCATE TABLE uc.order_item_volumes"); Commit(); }
+        public void TruncateOrderNotes() { Execute($"TRUNCATE TABLE uc.order_notes"); Commit(); }
+        public void TruncateOrderTags() { Execute($"TRUNCATE TABLE uc.order_tags"); Commit(); }
+        public void TruncateOrderTemplates() { Execute($"TRUNCATE TABLE diku_mod_orders_storage.order_templates"); Commit(); }
+        public void TruncateOrderTemplate2s() { Execute($"TRUNCATE TABLE uc.order_templates"); Commit(); }
+        public void TruncateOrderTransactionSummaries() { Execute($"TRUNCATE TABLE diku_mod_finance_storage.order_transaction_summaries"); Commit(); }
+        public void TruncateOrderTransactionSummary2s() { Execute($"TRUNCATE TABLE uc.order_transaction_summaries"); Commit(); }
+        public void TruncateOrganizations() { Execute($"TRUNCATE TABLE diku_mod_organizations_storage.organizations"); Commit(); }
+        public void TruncateOrganization2s() { Execute($"TRUNCATE TABLE uc.organizations"); Commit(); }
+        public void TruncateOrganizationAccounts() { Execute($"TRUNCATE TABLE uc.organization_accounts"); Commit(); }
+        public void TruncateOrganizationAccountAcquisitionsUnits() { Execute($"TRUNCATE TABLE uc.organization_account_acquisitions_units"); Commit(); }
+        public void TruncateOrganizationAcquisitionsUnits() { Execute($"TRUNCATE TABLE uc.organization_acquisitions_units"); Commit(); }
+        public void TruncateOrganizationAddresses() { Execute($"TRUNCATE TABLE uc.organization_addresses"); Commit(); }
+        public void TruncateOrganizationAddressCategories() { Execute($"TRUNCATE TABLE uc.organization_address_categories"); Commit(); }
+        public void TruncateOrganizationAgreements() { Execute($"TRUNCATE TABLE uc.organization_agreements"); Commit(); }
+        public void TruncateOrganizationAliases() { Execute($"TRUNCATE TABLE uc.organization_aliases"); Commit(); }
+        public void TruncateOrganizationChangelogs() { Execute($"TRUNCATE TABLE uc.organization_changelogs"); Commit(); }
+        public void TruncateOrganizationContacts() { Execute($"TRUNCATE TABLE uc.organization_contacts"); Commit(); }
+        public void TruncateOrganizationEmails() { Execute($"TRUNCATE TABLE uc.organization_emails"); Commit(); }
+        public void TruncateOrganizationEmailCategories() { Execute($"TRUNCATE TABLE uc.organization_email_categories"); Commit(); }
+        public void TruncateOrganizationInterfaces() { Execute($"TRUNCATE TABLE uc.organization_interfaces"); Commit(); }
+        public void TruncateOrganizationPhoneNumbers() { Execute($"TRUNCATE TABLE uc.organization_phone_numbers"); Commit(); }
+        public void TruncateOrganizationPhoneNumberCategories() { Execute($"TRUNCATE TABLE uc.organization_phone_number_categories"); Commit(); }
+        public void TruncateOrganizationTags() { Execute($"TRUNCATE TABLE uc.organization_tags"); Commit(); }
+        public void TruncateOrganizationUrls() { Execute($"TRUNCATE TABLE uc.organization_urls"); Commit(); }
+        public void TruncateOrganizationUrlCategories() { Execute($"TRUNCATE TABLE uc.organization_url_categories"); Commit(); }
+        public void TruncateOverdueFinePolicies() { Execute($"TRUNCATE TABLE diku_mod_feesfines.overdue_fine_policy"); Commit(); }
+        public void TruncateOverdueFinePolicy2s() { Execute($"TRUNCATE TABLE uc.overdue_fine_policies"); Commit(); }
+        public void TruncateOwners() { Execute($"TRUNCATE TABLE diku_mod_feesfines.owners"); Commit(); }
+        public void TruncateOwner2s() { Execute($"TRUNCATE TABLE uc.owners"); Commit(); }
+        public void TruncatePatronActionSessions() { Execute($"TRUNCATE TABLE diku_mod_circulation_storage.patron_action_session"); Commit(); }
+        public void TruncatePatronActionSession2s() { Execute($"TRUNCATE TABLE uc.patron_action_sessions"); Commit(); }
+        public void TruncatePatronNoticePolicies() { Execute($"TRUNCATE TABLE diku_mod_circulation_storage.patron_notice_policy"); Commit(); }
+        public void TruncatePatronNoticePolicy2s() { Execute($"TRUNCATE TABLE uc.patron_notice_policies"); Commit(); }
+        public void TruncatePatronNoticePolicyFeeFineNotices() { Execute($"TRUNCATE TABLE uc.patron_notice_policy_fee_fine_notices"); Commit(); }
+        public void TruncatePatronNoticePolicyLoanNotices() { Execute($"TRUNCATE TABLE uc.patron_notice_policy_loan_notices"); Commit(); }
+        public void TruncatePatronNoticePolicyRequestNotices() { Execute($"TRUNCATE TABLE uc.patron_notice_policy_request_notices"); Commit(); }
+        public void TruncatePayments() { Execute($"TRUNCATE TABLE diku_mod_feesfines.feefineactions"); Commit(); }
+        public void TruncatePayment2s() { Execute($"TRUNCATE TABLE uc.payments"); Commit(); }
+        public void TruncatePaymentMethods() { Execute($"TRUNCATE TABLE diku_mod_feesfines.payments"); Commit(); }
+        public void TruncatePaymentMethod2s() { Execute($"TRUNCATE TABLE uc.payment_methods"); Commit(); }
+        public void TruncatePermissions() { Execute($"TRUNCATE TABLE diku_mod_permissions.permissions"); Commit(); }
+        public void TruncatePermission2s() { Execute($"TRUNCATE TABLE uc.permissions"); Commit(); }
+        public void TruncatePermissionChildOfs() { Execute($"TRUNCATE TABLE uc.permission_child_of"); Commit(); }
+        public void TruncatePermissionGrantedTos() { Execute($"TRUNCATE TABLE uc.permission_granted_to"); Commit(); }
+        public void TruncatePermissionSubPermissions() { Execute($"TRUNCATE TABLE uc.permission_sub_permissions"); Commit(); }
+        public void TruncatePermissionsUsers() { Execute($"TRUNCATE TABLE diku_mod_permissions.permissions_users"); Commit(); }
+        public void TruncatePermissionsUser2s() { Execute($"TRUNCATE TABLE uc.permissions_users"); Commit(); }
+        public void TruncatePermissionsUserPermissions() { Execute($"TRUNCATE TABLE uc.permissions_user_permissions"); Commit(); }
+        public void TruncatePermissionTags() { Execute($"TRUNCATE TABLE uc.permission_tags"); Commit(); }
+        public void TruncatePhysicalDescriptions() { Execute($"TRUNCATE TABLE uc.physical_descriptions"); Commit(); }
+        public void TruncatePrecedingSucceedingTitles() { Execute($"TRUNCATE TABLE diku_mod_inventory_storage.preceding_succeeding_title"); Commit(); }
+        public void TruncatePrecedingSucceedingTitle2s() { Execute($"TRUNCATE TABLE uc.preceding_succeeding_titles"); Commit(); }
+        public void TruncatePrecedingSucceedingTitleIdentifiers() { Execute($"TRUNCATE TABLE uc.preceding_succeeding_title_identifiers"); Commit(); }
+        public void TruncatePrefixes() { Execute($"TRUNCATE TABLE diku_mod_orders_storage.prefixes"); Commit(); }
+        public void TruncatePrefix2s() { Execute($"TRUNCATE TABLE uc.prefixes"); Commit(); }
+        public void TruncatePrinters() { Execute($"TRUNCATE TABLE uc.printers"); Commit(); }
+        public void TruncateProxies() { Execute($"TRUNCATE TABLE diku_mod_users.proxyfor"); Commit(); }
+        public void TruncateProxy2s() { Execute($"TRUNCATE TABLE uc.proxies"); Commit(); }
+        public void TruncatePublications() { Execute($"TRUNCATE TABLE uc.publications"); Commit(); }
+        public void TruncatePublicationFrequencies() { Execute($"TRUNCATE TABLE uc.publication_frequency"); Commit(); }
+        public void TruncatePublicationRanges() { Execute($"TRUNCATE TABLE uc.publication_range"); Commit(); }
+        public void TruncateRawRecords() { Execute($"TRUNCATE TABLE diku_mod_source_record_storage.raw_records_lb"); Commit(); }
+        public void TruncateRawRecord2s() { Execute($"TRUNCATE TABLE uc.raw_records"); Commit(); }
+        public void TruncateReceivings() { Execute($"TRUNCATE TABLE diku_mod_orders_storage.pieces"); Commit(); }
+        public void TruncateReceiving2s() { Execute($"TRUNCATE TABLE uc.receivings"); Commit(); }
+        public void TruncateRecords() { Execute($"TRUNCATE TABLE diku_mod_source_record_storage.records_lb"); Commit(); }
+        public void TruncateRecord2s() { Execute($"TRUNCATE TABLE uc.records"); Commit(); }
+        public void TruncateRefundReasons() { Execute($"TRUNCATE TABLE diku_mod_feesfines.refunds"); Commit(); }
+        public void TruncateRefundReason2s() { Execute($"TRUNCATE TABLE uc.refund_reasons"); Commit(); }
+        public void TruncateRelationships() { Execute($"TRUNCATE TABLE uc.relationships"); Commit(); }
+        public void TruncateRelationshipTypes() { Execute($"TRUNCATE TABLE uc.relationship_types"); Commit(); }
+        public void TruncateReportingCodes() { Execute($"TRUNCATE TABLE diku_mod_orders_storage.reporting_code"); Commit(); }
+        public void TruncateReportingCode2s() { Execute($"TRUNCATE TABLE uc.reporting_codes"); Commit(); }
+        public void TruncateRequests() { Execute($"TRUNCATE TABLE diku_mod_circulation_storage.request"); Commit(); }
+        public void TruncateRequest2s() { Execute($"TRUNCATE TABLE uc.requests"); Commit(); }
+        public void TruncateRequestIdentifiers() { Execute($"TRUNCATE TABLE uc.request_identifiers"); Commit(); }
+        public void TruncateRequestPolicies() { Execute($"TRUNCATE TABLE diku_mod_circulation_storage.request_policy"); Commit(); }
+        public void TruncateRequestPolicy2s() { Execute($"TRUNCATE TABLE uc.request_policies"); Commit(); }
+        public void TruncateRequestPolicyRequestTypes() { Execute($"TRUNCATE TABLE uc.request_policy_request_types"); Commit(); }
+        public void TruncateRequestTags() { Execute($"TRUNCATE TABLE uc.request_tags"); Commit(); }
+        public void TruncateScheduledNotices() { Execute($"TRUNCATE TABLE diku_mod_circulation_storage.scheduled_notice"); Commit(); }
+        public void TruncateScheduledNotice2s() { Execute($"TRUNCATE TABLE uc.scheduled_notices"); Commit(); }
+        public void TruncateSeries() { Execute($"TRUNCATE TABLE uc.series"); Commit(); }
+        public void TruncateServicePoints() { Execute($"TRUNCATE TABLE diku_mod_inventory_storage.service_point"); Commit(); }
+        public void TruncateServicePoint2s() { Execute($"TRUNCATE TABLE uc.service_points"); Commit(); }
+        public void TruncateServicePointOwners() { Execute($"TRUNCATE TABLE uc.service_point_owners"); Commit(); }
+        public void TruncateServicePointStaffSlips() { Execute($"TRUNCATE TABLE uc.service_point_staff_slips"); Commit(); }
+        public void TruncateServicePointUsers() { Execute($"TRUNCATE TABLE diku_mod_inventory_storage.service_point_user"); Commit(); }
+        public void TruncateServicePointUser2s() { Execute($"TRUNCATE TABLE uc.service_point_users"); Commit(); }
+        public void TruncateServicePointUserServicePoints() { Execute($"TRUNCATE TABLE uc.service_point_user_service_points"); Commit(); }
+        public void TruncateSettings() { Execute($"TRUNCATE TABLE uc.settings"); Commit(); }
+        public void TruncateSnapshots() { Execute($"TRUNCATE TABLE diku_mod_source_record_storage.snapshots_lb"); Commit(); }
+        public void TruncateSnapshot2s() { Execute($"TRUNCATE TABLE uc.snapshots"); Commit(); }
+        public void TruncateSources() { Execute($"TRUNCATE TABLE diku_mod_inventory_storage.holdings_records_source"); Commit(); }
+        public void TruncateSource2s() { Execute($"TRUNCATE TABLE uc.sources"); Commit(); }
+        public void TruncateSourceMarcs() { Execute($"TRUNCATE TABLE uc.source_marcs"); Commit(); }
+        public void TruncateSourceMarcFields() { Execute($"TRUNCATE TABLE uc.source_marc_fields"); Commit(); }
+        public void TruncateStaffSlips() { Execute($"TRUNCATE TABLE diku_mod_circulation_storage.staff_slips"); Commit(); }
+        public void TruncateStaffSlip2s() { Execute($"TRUNCATE TABLE uc.staff_slips"); Commit(); }
+        public void TruncateStatisticalCodes() { Execute($"TRUNCATE TABLE diku_mod_inventory_storage.statistical_code"); Commit(); }
+        public void TruncateStatisticalCode2s() { Execute($"TRUNCATE TABLE uc.statistical_codes"); Commit(); }
+        public void TruncateStatisticalCodeTypes() { Execute($"TRUNCATE TABLE diku_mod_inventory_storage.statistical_code_type"); Commit(); }
+        public void TruncateStatisticalCodeType2s() { Execute($"TRUNCATE TABLE uc.statistical_code_types"); Commit(); }
+        public void TruncateStatuses() { Execute($"TRUNCATE TABLE uc.statuses"); Commit(); }
+        public void TruncateSubjects() { Execute($"TRUNCATE TABLE uc.subjects"); Commit(); }
+        public void TruncateSuffixes() { Execute($"TRUNCATE TABLE diku_mod_orders_storage.suffixes"); Commit(); }
+        public void TruncateSuffix2s() { Execute($"TRUNCATE TABLE uc.suffixes"); Commit(); }
+        public void TruncateSupplementStatements() { Execute($"TRUNCATE TABLE uc.supplement_statements"); Commit(); }
+        public void TruncateTags() { Execute($"TRUNCATE TABLE diku_mod_tags.tags"); Commit(); }
+        public void TruncateTag2s() { Execute($"TRUNCATE TABLE uc.tags"); Commit(); }
+        public void TruncateTemplates() { Execute($"TRUNCATE TABLE diku_mod_template_engine.template"); Commit(); }
+        public void TruncateTemplate2s() { Execute($"TRUNCATE TABLE uc.templates"); Commit(); }
+        public void TruncateTemplateOutputFormats() { Execute($"TRUNCATE TABLE uc.template_output_formats"); Commit(); }
+        public void TruncateTitles() { Execute($"TRUNCATE TABLE diku_mod_orders_storage.titles"); Commit(); }
+        public void TruncateTitle2s() { Execute($"TRUNCATE TABLE uc.titles"); Commit(); }
+        public void TruncateTitleContributors() { Execute($"TRUNCATE TABLE uc.title_contributors"); Commit(); }
+        public void TruncateTitleProductIds() { Execute($"TRUNCATE TABLE uc.title_product_ids"); Commit(); }
+        public void TruncateTransactions() { Execute($"TRUNCATE TABLE diku_mod_finance_storage.transaction"); Commit(); }
+        public void TruncateTransaction2s() { Execute($"TRUNCATE TABLE uc.transactions"); Commit(); }
+        public void TruncateTransactionTags() { Execute($"TRUNCATE TABLE uc.transaction_tags"); Commit(); }
+        public void TruncateTransferAccounts() { Execute($"TRUNCATE TABLE diku_mod_feesfines.transfers"); Commit(); }
+        public void TruncateTransferAccount2s() { Execute($"TRUNCATE TABLE uc.transfer_accounts"); Commit(); }
+        public void TruncateTransferCriterias() { Execute($"TRUNCATE TABLE diku_mod_feesfines.transfer_criteria"); Commit(); }
+        public void TruncateTransferCriteria2s() { Execute($"TRUNCATE TABLE uc.transfer_criterias"); Commit(); }
+        public void TruncateUsers() { Execute($"TRUNCATE TABLE diku_mod_users.users"); Commit(); }
+        public void TruncateUser2s() { Execute($"TRUNCATE TABLE uc.users"); Commit(); }
+        public void TruncateUserAcquisitionsUnits() { Execute($"TRUNCATE TABLE diku_mod_orders_storage.acquisitions_unit_membership"); Commit(); }
+        public void TruncateUserAcquisitionsUnit2s() { Execute($"TRUNCATE TABLE uc.user_acquisitions_units"); Commit(); }
+        public void TruncateUserAddresses() { Execute($"TRUNCATE TABLE uc.user_addresses"); Commit(); }
+        public void TruncateUserDepartments() { Execute($"TRUNCATE TABLE uc.user_departments"); Commit(); }
+        public void TruncateUserRequestPreferences() { Execute($"TRUNCATE TABLE diku_mod_circulation_storage.user_request_preference"); Commit(); }
+        public void TruncateUserRequestPreference2s() { Execute($"TRUNCATE TABLE uc.user_request_preferences"); Commit(); }
+        public void TruncateUserSummaries() { Execute($"TRUNCATE TABLE diku_mod_patron_blocks.user_summary"); Commit(); }
+        public void TruncateUserSummary2s() { Execute($"TRUNCATE TABLE uc.user_summaries"); Commit(); }
+        public void TruncateUserSummaryOpenFeesFines() { Execute($"TRUNCATE TABLE uc.user_summary_open_fees_fines"); Commit(); }
+        public void TruncateUserSummaryOpenLoans() { Execute($"TRUNCATE TABLE uc.user_summary_open_loans"); Commit(); }
+        public void TruncateUserTags() { Execute($"TRUNCATE TABLE uc.user_tags"); Commit(); }
+        public void TruncateVouchers() { Execute($"TRUNCATE TABLE diku_mod_invoice_storage.vouchers"); Commit(); }
+        public void TruncateVoucher2s() { Execute($"TRUNCATE TABLE uc.vouchers"); Commit(); }
+        public void TruncateVoucherAcquisitionsUnits() { Execute($"TRUNCATE TABLE uc.voucher_acquisitions_units"); Commit(); }
+        public void TruncateVoucherItems() { Execute($"TRUNCATE TABLE diku_mod_invoice_storage.voucher_lines"); Commit(); }
+        public void TruncateVoucherItem2s() { Execute($"TRUNCATE TABLE uc.voucher_items"); Commit(); }
+        public void TruncateVoucherItemFunds() { Execute($"TRUNCATE TABLE uc.voucher_item_fund_distributions"); Commit(); }
+        public void TruncateVoucherItemInvoiceItems() { Execute($"TRUNCATE TABLE uc.voucher_item_invoice_items"); Commit(); }
+        public void TruncateWaiveReasons() { Execute($"TRUNCATE TABLE diku_mod_feesfines.waives"); Commit(); }
+        public void TruncateWaiveReason2s() { Execute($"TRUNCATE TABLE uc.waive_reasons"); Commit(); }
 
         public void Insert(AcquisitionsUnit acquisitionsUnit) => Execute("INSERT INTO diku_mod_orders_storage.acquisitions_unit (id, jsonb, creation_date, created_by) VALUES (@Id, @Content::jsonb, @CreationTime, @CreationUserId)", acquisitionsUnit);
         public void Insert(AddressType addressType) => Execute("INSERT INTO diku_mod_users.addresstype (id, jsonb, creation_date, created_by) VALUES (@Id, @Content::jsonb, @CreationTime, @CreationUserId)", addressType);
