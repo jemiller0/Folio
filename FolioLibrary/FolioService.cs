@@ -157,14 +157,13 @@ namespace FolioLibrary
         {
             using (var fsc = new FolioServiceContext())
             {
-                var i = fsc.Item2s($"barcode == \"{barcode}\""/*, load: true*/).SingleOrDefault();
+                var i = fsc.Item2s($"barcode == \"{barcode}\"", load: true).SingleOrDefault();
                 if (i == null) return null;
-                if (i.EffectiveCallNumberTypeId != null) i.EffectiveCallNumberType = fsc.FindCallNumberType2(i.EffectiveCallNumberTypeId);
-                if (i.EffectiveLocationId != null) i.EffectiveLocation = fsc.FindLocation2(i.EffectiveLocationId);
                 var ls = fsc.LocationSettings().SingleOrDefault(ls2 => ls2.LocationId == i.EffectiveLocationId);
                 var s = fsc.FindSetting(ls?.SettingsId) ?? new Setting { FontFamily = "Courier New", FontSize = 11, FontWeight = FontWeight.Bold, Orientation = orientation ?? Orientation.Portrait };
                 if (orientation != null) s.Orientation = orientation;
                 var locationCode = i.EffectiveLocation?.Code != null ? GetCollectionCode(Regex.Replace(i.EffectiveLocation?.Code, ".+-", "")) : null;
+                var copyNumber = i.CopyNumber ?? i.Holding.CopyNumber;
                 var l = new Label
                 {
                     Id = i.Barcode,
@@ -176,7 +175,7 @@ namespace FolioLibrary
                     },
                     Item = i,
                     Orientation = s.Orientation,
-                    Text = $"{(i.EffectiveCallNumberPrefix != null ? i.EffectiveCallNumberPrefix + "\n" : null)}{(i.EffectiveCallNumber != null ? FormatCallNumber(i.EffectiveCallNumberType?.Name, i.EffectiveCallNumber) + "\n" : null)}{(i.Enumeration != null ? FormatEnumeration(i.Enumeration) + "\n" : null)}{(i.Chronology != null ? i.Chronology + "\n" : null)}{(i.CopyNumber != null ? FormatCopyNumber(i.CopyNumber) + "\n" : null)}{(locationCode != null ? locationCode + "\n" : null)}{(false && locationCode == "Rec" ? string.Join(" ", i.ItemNotes.Select(@in => @in.Note)) + "\n" : null)}"
+                    Text = $"{(i.EffectiveCallNumberPrefix != null ? i.EffectiveCallNumberPrefix + "\n" : null)}{(i.EffectiveCallNumber != null ? FormatCallNumber(i.EffectiveCallNumberType?.Name, i.EffectiveCallNumber) + "\n" : null)}{(i.Enumeration != null ? FormatEnumeration(i.Enumeration) + "\n" : null)}{(i.Chronology != null ? i.Chronology + "\n" : null)}{(copyNumber != null ? FormatCopyNumber(copyNumber) + "\n" : null)}{(locationCode != null ? locationCode + "\n" : null)}{(false && locationCode == "Rec" ? string.Join(" ", i.ItemNotes.Select(@in => @in.Note)) + "\n" : null)}".Replace("\n\n", "\n")
                 };
                 if (l.Orientation == Orientation.Landscape) l.Text = l.Text.Replace("\n", " ");
                 return l;

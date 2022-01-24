@@ -44,13 +44,16 @@ namespace FolioWebApplication.Labels
             }
         }
 
-        public Label LabelFormView_GetItem([QueryString]string barcode)
+        public Label LabelFormView_GetItem([QueryString] string barcode)
         {
             if (barcode == null) return null;
             BarcodeRadTextBox.Text = barcode;
             if (Session["Label"] != null) return (Label)Session["Label"];
             var l = FolioService.Instance.GetLabel(barcode);
             if (l == null) FindCustomValidator.IsValid = false;
+
+            if (l != null) Title = $"Label {barcode}";
+
             return l;
         }
 
