@@ -295,6 +295,9 @@
                 <asp:HyperLink ID="ExtentsHyperLink" runat="server" Text="Extents" NavigateUrl="~/Extents/Default.aspx" Enabled="false" /></legend>
             <telerik:RadGrid ID="ExtentsRadGrid" runat="server" AutoGenerateColumns="false" AllowSorting="true" AllowFilteringByColumn="false" GroupingSettings-CaseSensitive="false" AllowPaging="true" PageSize="10" EnableLinqExpressions="false" OnNeedDataSource="ExtentsRadGrid_NeedDataSource">
                 <MasterTableView DataKeyNames="Id, HoldingId" PagerStyle-Mode="NextPrevNumericAndAdvanced" NoMasterRecordsText="No extents found">
+                    <SortExpressions>
+                        <telerik:GridSortExpression FieldName="Content" />
+                    </SortExpressions>
                     <Columns>
                         <telerik:GridBoundColumn HeaderText="Content" DataField="Content" AutoPostBackOnFilter="true" HtmlEncode="true" CurrentFilterFunction="StartsWith" />
                         <telerik:GridBoundColumn HeaderText="Note" DataField="Note" AutoPostBackOnFilter="true" HtmlEncode="true" CurrentFilterFunction="StartsWith" />
@@ -419,6 +422,9 @@
                 <asp:HyperLink ID="HoldingEntriesHyperLink" runat="server" Text="Holding Entries" NavigateUrl="~/HoldingEntries/Default.aspx" Enabled="false" /></legend>
             <telerik:RadGrid ID="HoldingEntriesRadGrid" runat="server" AutoGenerateColumns="false" AllowSorting="true" AllowFilteringByColumn="false" GroupingSettings-CaseSensitive="false" AllowPaging="true" PageSize="10" EnableLinqExpressions="false" OnNeedDataSource="HoldingEntriesRadGrid_NeedDataSource" OnItemCommand="HoldingEntriesRadGrid_ItemCommand">
                 <MasterTableView DataKeyNames="Id, HoldingId" PagerStyle-Mode="NextPrevNumericAndAdvanced" NoMasterRecordsText="No holding entries found">
+                    <SortExpressions>
+                        <telerik:GridSortExpression FieldName="Enumeration" SortOrder="Descending" />
+                    </SortExpressions>
                     <Columns>
                         <telerik:GridTemplateColumn AllowFiltering="false" ItemStyle-Width="0px">
                             <ItemTemplate>
@@ -439,6 +445,9 @@
                 <asp:HyperLink ID="HoldingFormerIdsHyperLink" runat="server" Text="Holding Former Ids" NavigateUrl="~/HoldingFormerIds/Default.aspx" Enabled="false" /></legend>
             <telerik:RadGrid ID="HoldingFormerIdsRadGrid" runat="server" AutoGenerateColumns="false" AllowSorting="true" AllowFilteringByColumn="false" GroupingSettings-CaseSensitive="false" AllowPaging="true" PageSize="10" EnableLinqExpressions="false" OnNeedDataSource="HoldingFormerIdsRadGrid_NeedDataSource">
                 <MasterTableView DataKeyNames="Id, HoldingId" PagerStyle-Mode="NextPrevNumericAndAdvanced" NoMasterRecordsText="No holding former ids found">
+                    <SortExpressions>
+                        <telerik:GridSortExpression FieldName="Content" />
+                    </SortExpressions>
                     <Columns>
                         <telerik:GridBoundColumn HeaderText="Content" DataField="Content" AutoPostBackOnFilter="true" HtmlEncode="true" CurrentFilterFunction="StartsWith" />
                     </Columns>
@@ -488,6 +497,9 @@
                 <asp:HyperLink ID="HoldingTagsHyperLink" runat="server" Text="Holding Tags" NavigateUrl="~/HoldingTags/Default.aspx" Enabled="false" /></legend>
             <telerik:RadGrid ID="HoldingTagsRadGrid" runat="server" AutoGenerateColumns="false" AllowSorting="true" AllowFilteringByColumn="false" GroupingSettings-CaseSensitive="false" AllowPaging="true" PageSize="10" EnableLinqExpressions="false" OnNeedDataSource="HoldingTagsRadGrid_NeedDataSource">
                 <MasterTableView DataKeyNames="Id, HoldingId" PagerStyle-Mode="NextPrevNumericAndAdvanced" NoMasterRecordsText="No holding tags found">
+                    <SortExpressions>
+                        <telerik:GridSortExpression FieldName="Content" />
+                    </SortExpressions>
                     <Columns>
                         <telerik:GridBoundColumn HeaderText="Content" DataField="Content" AutoPostBackOnFilter="true" HtmlEncode="true" CurrentFilterFunction="StartsWith" />
                     </Columns>

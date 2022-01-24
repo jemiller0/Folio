@@ -286,6 +286,9 @@
                 <asp:HyperLink ID="PermissionChildOfsHyperLink" runat="server" Text="Permission Child Ofs" NavigateUrl="~/PermissionChildOfs/Default.aspx" Enabled="false" /></legend>
             <telerik:RadGrid ID="PermissionChildOfsRadGrid" runat="server" AutoGenerateColumns="false" AllowSorting="true" AllowFilteringByColumn="false" GroupingSettings-CaseSensitive="false" AllowPaging="true" PageSize="10" EnableLinqExpressions="false" OnNeedDataSource="PermissionChildOfsRadGrid_NeedDataSource">
                 <MasterTableView DataKeyNames="Id" PagerStyle-Mode="NextPrevNumericAndAdvanced" NoMasterRecordsText="No permission child ofs found">
+                    <SortExpressions>
+                        <telerik:GridSortExpression FieldName="Content" />
+                    </SortExpressions>
                     <Columns>
                         <telerik:GridBoundColumn HeaderText="Content" DataField="Content" AutoPostBackOnFilter="true" HtmlEncode="true" CurrentFilterFunction="StartsWith" />
                     </Columns>
@@ -316,6 +319,9 @@
                 <asp:HyperLink ID="PermissionSubPermissionsHyperLink" runat="server" Text="Permission Sub Permissions" NavigateUrl="~/PermissionSubPermissions/Default.aspx" Enabled="false" /></legend>
             <telerik:RadGrid ID="PermissionSubPermissionsRadGrid" runat="server" AutoGenerateColumns="false" AllowSorting="true" AllowFilteringByColumn="false" GroupingSettings-CaseSensitive="false" AllowPaging="true" PageSize="10" EnableLinqExpressions="false" OnNeedDataSource="PermissionSubPermissionsRadGrid_NeedDataSource">
                 <MasterTableView DataKeyNames="Id" PagerStyle-Mode="NextPrevNumericAndAdvanced" NoMasterRecordsText="No permission sub permissions found">
+                    <SortExpressions>
+                        <telerik:GridSortExpression FieldName="Content" />
+                    </SortExpressions>
                     <Columns>
                         <telerik:GridBoundColumn HeaderText="Content" DataField="Content" AutoPostBackOnFilter="true" HtmlEncode="true" CurrentFilterFunction="StartsWith" />
                     </Columns>
@@ -329,6 +335,9 @@
                 <asp:HyperLink ID="PermissionTagsHyperLink" runat="server" Text="Permission Tags" NavigateUrl="~/PermissionTags/Default.aspx" Enabled="false" /></legend>
             <telerik:RadGrid ID="PermissionTagsRadGrid" runat="server" AutoGenerateColumns="false" AllowSorting="true" AllowFilteringByColumn="false" GroupingSettings-CaseSensitive="false" AllowPaging="true" PageSize="10" EnableLinqExpressions="false" OnNeedDataSource="PermissionTagsRadGrid_NeedDataSource">
                 <MasterTableView DataKeyNames="Id" PagerStyle-Mode="NextPrevNumericAndAdvanced" NoMasterRecordsText="No permission tags found">
+                    <SortExpressions>
+                        <telerik:GridSortExpression FieldName="Content" />
+                    </SortExpressions>
                     <Columns>
                         <telerik:GridBoundColumn HeaderText="Content" DataField="Content" AutoPostBackOnFilter="true" HtmlEncode="true" CurrentFilterFunction="StartsWith" />
                     </Columns>

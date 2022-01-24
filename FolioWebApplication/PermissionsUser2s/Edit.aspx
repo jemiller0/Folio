@@ -77,6 +77,9 @@
                 <asp:HyperLink ID="PermissionsUserPermissionsHyperLink" runat="server" Text="Permissions User Permissions" NavigateUrl="~/PermissionsUserPermissions/Default.aspx" Enabled="false" /></legend>
             <telerik:RadGrid ID="PermissionsUserPermissionsRadGrid" runat="server" AutoGenerateColumns="false" AllowSorting="true" AllowFilteringByColumn="false" GroupingSettings-CaseSensitive="false" AllowPaging="true" PageSize="10" EnableLinqExpressions="false" OnNeedDataSource="PermissionsUserPermissionsRadGrid_NeedDataSource">
                 <MasterTableView DataKeyNames="Id" PagerStyle-Mode="NextPrevNumericAndAdvanced" NoMasterRecordsText="No permissions user permissions found">
+                    <SortExpressions>
+                        <telerik:GridSortExpression FieldName="Content" />
+                    </SortExpressions>
                     <Columns>
                         <telerik:GridBoundColumn HeaderText="Content" DataField="Content" AutoPostBackOnFilter="true" HtmlEncode="true" CurrentFilterFunction="StartsWith" />
                     </Columns>

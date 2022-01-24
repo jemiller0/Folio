@@ -93,6 +93,9 @@
                 <asp:HyperLink ID="PatronNoticePolicyFeeFineNoticesHyperLink" runat="server" Text="Patron Notice Policy Fee Fine Notices" NavigateUrl="~/PatronNoticePolicyFeeFineNotices/Default.aspx" Enabled="false" /></legend>
             <telerik:RadGrid ID="PatronNoticePolicyFeeFineNoticesRadGrid" runat="server" AutoGenerateColumns="false" AllowSorting="true" AllowFilteringByColumn="false" GroupingSettings-CaseSensitive="false" AllowPaging="true" PageSize="10" EnableLinqExpressions="false" OnNeedDataSource="PatronNoticePolicyFeeFineNoticesRadGrid_NeedDataSource">
                 <MasterTableView DataKeyNames="Id" PagerStyle-Mode="NextPrevNumericAndAdvanced" NoMasterRecordsText="No patron notice policy fee fine notices found">
+                    <SortExpressions>
+                        <telerik:GridSortExpression FieldName="Name" />
+                    </SortExpressions>
                     <Columns>
                         <telerik:GridBoundColumn HeaderText="Name" DataField="Name" AutoPostBackOnFilter="true" HtmlEncode="true" CurrentFilterFunction="StartsWith" />
                         <telerik:GridTemplateColumn AllowFiltering="false" AllowSorting="false" HeaderText="Template" DataField="Template.Name" SortExpression="Template.Name" AutoPostBackOnFilter="true" CurrentFilterFunction="StartsWith">
@@ -121,6 +124,9 @@
                 <asp:HyperLink ID="PatronNoticePolicyLoanNoticesHyperLink" runat="server" Text="Patron Notice Policy Loan Notices" NavigateUrl="~/PatronNoticePolicyLoanNotices/Default.aspx" Enabled="false" /></legend>
             <telerik:RadGrid ID="PatronNoticePolicyLoanNoticesRadGrid" runat="server" AutoGenerateColumns="false" AllowSorting="true" AllowFilteringByColumn="false" GroupingSettings-CaseSensitive="false" AllowPaging="true" PageSize="10" EnableLinqExpressions="false" OnNeedDataSource="PatronNoticePolicyLoanNoticesRadGrid_NeedDataSource">
                 <MasterTableView DataKeyNames="Id" PagerStyle-Mode="NextPrevNumericAndAdvanced" NoMasterRecordsText="No patron notice policy loan notices found">
+                    <SortExpressions>
+                        <telerik:GridSortExpression FieldName="Name" />
+                    </SortExpressions>
                     <Columns>
                         <telerik:GridBoundColumn HeaderText="Name" DataField="Name" AutoPostBackOnFilter="true" HtmlEncode="true" CurrentFilterFunction="StartsWith" />
                         <telerik:GridTemplateColumn AllowFiltering="false" AllowSorting="false" HeaderText="Template" DataField="Template.Name" SortExpression="Template.Name" AutoPostBackOnFilter="true" CurrentFilterFunction="StartsWith">
@@ -149,6 +155,9 @@
                 <asp:HyperLink ID="PatronNoticePolicyRequestNoticesHyperLink" runat="server" Text="Patron Notice Policy Request Notices" NavigateUrl="~/PatronNoticePolicyRequestNotices/Default.aspx" Enabled="false" /></legend>
             <telerik:RadGrid ID="PatronNoticePolicyRequestNoticesRadGrid" runat="server" AutoGenerateColumns="false" AllowSorting="true" AllowFilteringByColumn="false" GroupingSettings-CaseSensitive="false" AllowPaging="true" PageSize="10" EnableLinqExpressions="false" OnNeedDataSource="PatronNoticePolicyRequestNoticesRadGrid_NeedDataSource">
                 <MasterTableView DataKeyNames="Id" PagerStyle-Mode="NextPrevNumericAndAdvanced" NoMasterRecordsText="No patron notice policy request notices found">
+                    <SortExpressions>
+                        <telerik:GridSortExpression FieldName="Name" />
+                    </SortExpressions>
                     <Columns>
                         <telerik:GridBoundColumn HeaderText="Name" DataField="Name" AutoPostBackOnFilter="true" HtmlEncode="true" CurrentFilterFunction="StartsWith" />
                         <telerik:GridTemplateColumn AllowFiltering="false" AllowSorting="false" HeaderText="Template" DataField="Template.Name" SortExpression="Template.Name" AutoPostBackOnFilter="true" CurrentFilterFunction="StartsWith">

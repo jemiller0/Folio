@@ -377,6 +377,9 @@
                 <asp:HyperLink ID="TemplateOutputFormatsHyperLink" runat="server" Text="Template Output Formats" NavigateUrl="~/TemplateOutputFormats/Default.aspx" Enabled="false" /></legend>
             <telerik:RadGrid ID="TemplateOutputFormatsRadGrid" runat="server" AutoGenerateColumns="false" AllowSorting="true" AllowFilteringByColumn="false" GroupingSettings-CaseSensitive="false" AllowPaging="true" PageSize="10" EnableLinqExpressions="false" OnNeedDataSource="TemplateOutputFormatsRadGrid_NeedDataSource">
                 <MasterTableView DataKeyNames="Id" PagerStyle-Mode="NextPrevNumericAndAdvanced" NoMasterRecordsText="No template output formats found">
+                    <SortExpressions>
+                        <telerik:GridSortExpression FieldName="Content" />
+                    </SortExpressions>
                     <Columns>
                         <telerik:GridBoundColumn HeaderText="Content" DataField="Content" AutoPostBackOnFilter="true" HtmlEncode="true" CurrentFilterFunction="StartsWith" />
                     </Columns>

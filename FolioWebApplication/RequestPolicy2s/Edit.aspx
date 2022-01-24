@@ -85,6 +85,9 @@
                 <asp:HyperLink ID="RequestPolicyRequestTypesHyperLink" runat="server" Text="Request Policy Request Types" NavigateUrl="~/RequestPolicyRequestTypes/Default.aspx" Enabled="false" /></legend>
             <telerik:RadGrid ID="RequestPolicyRequestTypesRadGrid" runat="server" AutoGenerateColumns="false" AllowSorting="true" AllowFilteringByColumn="false" GroupingSettings-CaseSensitive="false" AllowPaging="true" PageSize="10" EnableLinqExpressions="false" OnNeedDataSource="RequestPolicyRequestTypesRadGrid_NeedDataSource">
                 <MasterTableView DataKeyNames="Id" PagerStyle-Mode="NextPrevNumericAndAdvanced" NoMasterRecordsText="No request policy request types found">
+                    <SortExpressions>
+                        <telerik:GridSortExpression FieldName="Content" />
+                    </SortExpressions>
                     <Columns>
                         <telerik:GridBoundColumn HeaderText="Content" DataField="Content" AutoPostBackOnFilter="true" HtmlEncode="true" CurrentFilterFunction="StartsWith" />
                     </Columns>

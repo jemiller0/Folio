@@ -213,6 +213,9 @@
                 <asp:HyperLink ID="AlternativeTitlesHyperLink" runat="server" Text="Alternative Titles" NavigateUrl="~/AlternativeTitles/Default.aspx" Enabled="false" /></legend>
             <telerik:RadGrid ID="AlternativeTitlesRadGrid" runat="server" AutoGenerateColumns="false" AllowSorting="true" AllowFilteringByColumn="false" GroupingSettings-CaseSensitive="false" AllowPaging="true" PageSize="10" EnableLinqExpressions="false" OnNeedDataSource="AlternativeTitlesRadGrid_NeedDataSource">
                 <MasterTableView DataKeyNames="Id, InstanceId" PagerStyle-Mode="NextPrevNumericAndAdvanced" NoMasterRecordsText="No alternative titles found">
+                    <SortExpressions>
+                        <telerik:GridSortExpression FieldName="Content" />
+                    </SortExpressions>
                     <Columns>
                         <telerik:GridTemplateColumn AllowFiltering="false" AllowSorting="false" HeaderText="Alternative Title Type" DataField="AlternativeTitleType.Name" SortExpression="AlternativeTitleType.Name" AutoPostBackOnFilter="true" CurrentFilterFunction="StartsWith">
                             <ItemTemplate>
@@ -231,6 +234,9 @@
                 <asp:HyperLink ID="ClassificationsHyperLink" runat="server" Text="Classifications" NavigateUrl="~/Classifications/Default.aspx" Enabled="false" /></legend>
             <telerik:RadGrid ID="ClassificationsRadGrid" runat="server" AutoGenerateColumns="false" AllowSorting="true" AllowFilteringByColumn="false" GroupingSettings-CaseSensitive="false" AllowPaging="true" PageSize="10" EnableLinqExpressions="false" OnNeedDataSource="ClassificationsRadGrid_NeedDataSource">
                 <MasterTableView DataKeyNames="Id, InstanceId" PagerStyle-Mode="NextPrevNumericAndAdvanced" NoMasterRecordsText="No classifications found">
+                    <SortExpressions>
+                        <telerik:GridSortExpression FieldName="Number" />
+                    </SortExpressions>
                     <Columns>
                         <telerik:GridBoundColumn HeaderText="Number" DataField="Number" AutoPostBackOnFilter="true" HtmlEncode="true" CurrentFilterFunction="StartsWith" />
                         <telerik:GridTemplateColumn AllowFiltering="false" AllowSorting="false" HeaderText="Classification Type" DataField="ClassificationType.Name" SortExpression="ClassificationType.Name" AutoPostBackOnFilter="true" CurrentFilterFunction="StartsWith">
@@ -249,6 +255,9 @@
                 <asp:HyperLink ID="ContributorsHyperLink" runat="server" Text="Contributors" NavigateUrl="~/Contributors/Default.aspx" Enabled="false" /></legend>
             <telerik:RadGrid ID="ContributorsRadGrid" runat="server" AutoGenerateColumns="false" AllowSorting="true" AllowFilteringByColumn="false" GroupingSettings-CaseSensitive="false" AllowPaging="true" PageSize="10" EnableLinqExpressions="false" OnNeedDataSource="ContributorsRadGrid_NeedDataSource">
                 <MasterTableView DataKeyNames="Id, InstanceId" PagerStyle-Mode="NextPrevNumericAndAdvanced" NoMasterRecordsText="No contributors found">
+                    <SortExpressions>
+                        <telerik:GridSortExpression FieldName="Name" />
+                    </SortExpressions>
                     <Columns>
                         <telerik:GridBoundColumn HeaderText="Name" DataField="Name" AutoPostBackOnFilter="true" HtmlEncode="true" CurrentFilterFunction="StartsWith" />
                         <telerik:GridTemplateColumn AllowFiltering="false" AllowSorting="false" HeaderText="Contributor Type" DataField="ContributorType.Name" SortExpression="ContributorType.Name" AutoPostBackOnFilter="true" CurrentFilterFunction="StartsWith">
@@ -274,6 +283,9 @@
                 <asp:HyperLink ID="EditionsHyperLink" runat="server" Text="Editions" NavigateUrl="~/Editions/Default.aspx" Enabled="false" /></legend>
             <telerik:RadGrid ID="EditionsRadGrid" runat="server" AutoGenerateColumns="false" AllowSorting="true" AllowFilteringByColumn="false" GroupingSettings-CaseSensitive="false" AllowPaging="true" PageSize="10" EnableLinqExpressions="false" OnNeedDataSource="EditionsRadGrid_NeedDataSource">
                 <MasterTableView DataKeyNames="Id, InstanceId" PagerStyle-Mode="NextPrevNumericAndAdvanced" NoMasterRecordsText="No editions found">
+                    <SortExpressions>
+                        <telerik:GridSortExpression FieldName="Content" />
+                    </SortExpressions>
                     <Columns>
                         <telerik:GridBoundColumn HeaderText="Content" DataField="Content" AutoPostBackOnFilter="true" HtmlEncode="true" CurrentFilterFunction="StartsWith" />
                     </Columns>
@@ -616,6 +628,9 @@
                 <asp:HyperLink ID="IdentifiersHyperLink" runat="server" Text="Identifiers" NavigateUrl="~/Identifiers/Default.aspx" Enabled="false" /></legend>
             <telerik:RadGrid ID="IdentifiersRadGrid" runat="server" AutoGenerateColumns="false" AllowSorting="true" AllowFilteringByColumn="false" GroupingSettings-CaseSensitive="false" AllowPaging="true" PageSize="10" EnableLinqExpressions="false" OnNeedDataSource="IdentifiersRadGrid_NeedDataSource">
                 <MasterTableView DataKeyNames="Id, InstanceId" PagerStyle-Mode="NextPrevNumericAndAdvanced" NoMasterRecordsText="No identifiers found">
+                    <SortExpressions>
+                        <telerik:GridSortExpression FieldName="Content" />
+                    </SortExpressions>
                     <Columns>
                         <telerik:GridBoundColumn HeaderText="Content" DataField="Content" AutoPostBackOnFilter="true" HtmlEncode="true" CurrentFilterFunction="StartsWith" />
                         <telerik:GridTemplateColumn AllowFiltering="false" AllowSorting="false" HeaderText="Identifier Type" DataField="IdentifierType.Name" SortExpression="IdentifierType.Name" AutoPostBackOnFilter="true" CurrentFilterFunction="StartsWith">
@@ -685,6 +700,9 @@
                 <asp:HyperLink ID="InstanceTagsHyperLink" runat="server" Text="Instance Tags" NavigateUrl="~/InstanceTags/Default.aspx" Enabled="false" /></legend>
             <telerik:RadGrid ID="InstanceTagsRadGrid" runat="server" AutoGenerateColumns="false" AllowSorting="true" AllowFilteringByColumn="false" GroupingSettings-CaseSensitive="false" AllowPaging="true" PageSize="10" EnableLinqExpressions="false" OnNeedDataSource="InstanceTagsRadGrid_NeedDataSource">
                 <MasterTableView DataKeyNames="Id, InstanceId" PagerStyle-Mode="NextPrevNumericAndAdvanced" NoMasterRecordsText="No instance tags found">
+                    <SortExpressions>
+                        <telerik:GridSortExpression FieldName="Content" />
+                    </SortExpressions>
                     <Columns>
                         <telerik:GridBoundColumn HeaderText="Content" DataField="Content" AutoPostBackOnFilter="true" HtmlEncode="true" CurrentFilterFunction="StartsWith" />
                     </Columns>
@@ -698,6 +716,9 @@
                 <asp:HyperLink ID="LanguagesHyperLink" runat="server" Text="Languages" NavigateUrl="~/Languages/Default.aspx" Enabled="false" /></legend>
             <telerik:RadGrid ID="LanguagesRadGrid" runat="server" AutoGenerateColumns="false" AllowSorting="true" AllowFilteringByColumn="false" GroupingSettings-CaseSensitive="false" AllowPaging="true" PageSize="10" EnableLinqExpressions="false" OnNeedDataSource="LanguagesRadGrid_NeedDataSource">
                 <MasterTableView DataKeyNames="Id, InstanceId" PagerStyle-Mode="NextPrevNumericAndAdvanced" NoMasterRecordsText="No languages found">
+                    <SortExpressions>
+                        <telerik:GridSortExpression FieldName="Content" />
+                    </SortExpressions>
                     <Columns>
                         <telerik:GridBoundColumn HeaderText="Content" DataField="Content" AutoPostBackOnFilter="true" HtmlEncode="true" CurrentFilterFunction="StartsWith" />
                     </Columns>
@@ -855,6 +876,9 @@
                 <asp:HyperLink ID="PhysicalDescriptionsHyperLink" runat="server" Text="Physical Descriptions" NavigateUrl="~/PhysicalDescriptions/Default.aspx" Enabled="false" /></legend>
             <telerik:RadGrid ID="PhysicalDescriptionsRadGrid" runat="server" AutoGenerateColumns="false" AllowSorting="true" AllowFilteringByColumn="false" GroupingSettings-CaseSensitive="false" AllowPaging="true" PageSize="10" EnableLinqExpressions="false" OnNeedDataSource="PhysicalDescriptionsRadGrid_NeedDataSource">
                 <MasterTableView DataKeyNames="Id, InstanceId" PagerStyle-Mode="NextPrevNumericAndAdvanced" NoMasterRecordsText="No physical descriptions found">
+                    <SortExpressions>
+                        <telerik:GridSortExpression FieldName="Content" />
+                    </SortExpressions>
                     <Columns>
                         <telerik:GridBoundColumn HeaderText="Content" DataField="Content" AutoPostBackOnFilter="true" HtmlEncode="true" CurrentFilterFunction="StartsWith" />
                     </Columns>
@@ -964,6 +988,9 @@
                 <asp:HyperLink ID="PublicationFrequenciesHyperLink" runat="server" Text="Publication Frequencies" NavigateUrl="~/PublicationFrequencies/Default.aspx" Enabled="false" /></legend>
             <telerik:RadGrid ID="PublicationFrequenciesRadGrid" runat="server" AutoGenerateColumns="false" AllowSorting="true" AllowFilteringByColumn="false" GroupingSettings-CaseSensitive="false" AllowPaging="true" PageSize="10" EnableLinqExpressions="false" OnNeedDataSource="PublicationFrequenciesRadGrid_NeedDataSource">
                 <MasterTableView DataKeyNames="Id, InstanceId" PagerStyle-Mode="NextPrevNumericAndAdvanced" NoMasterRecordsText="No publication frequencies found">
+                    <SortExpressions>
+                        <telerik:GridSortExpression FieldName="Content" />
+                    </SortExpressions>
                     <Columns>
                         <telerik:GridBoundColumn HeaderText="Content" DataField="Content" AutoPostBackOnFilter="true" HtmlEncode="true" CurrentFilterFunction="StartsWith" />
                     </Columns>
@@ -977,6 +1004,9 @@
                 <asp:HyperLink ID="PublicationRangesHyperLink" runat="server" Text="Publication Ranges" NavigateUrl="~/PublicationRanges/Default.aspx" Enabled="false" /></legend>
             <telerik:RadGrid ID="PublicationRangesRadGrid" runat="server" AutoGenerateColumns="false" AllowSorting="true" AllowFilteringByColumn="false" GroupingSettings-CaseSensitive="false" AllowPaging="true" PageSize="10" EnableLinqExpressions="false" OnNeedDataSource="PublicationRangesRadGrid_NeedDataSource">
                 <MasterTableView DataKeyNames="Id, InstanceId" PagerStyle-Mode="NextPrevNumericAndAdvanced" NoMasterRecordsText="No publication ranges found">
+                    <SortExpressions>
+                        <telerik:GridSortExpression FieldName="Content" />
+                    </SortExpressions>
                     <Columns>
                         <telerik:GridBoundColumn HeaderText="Content" DataField="Content" AutoPostBackOnFilter="true" HtmlEncode="true" CurrentFilterFunction="StartsWith" />
                     </Columns>
@@ -1100,6 +1130,9 @@
                 <asp:HyperLink ID="SeriesHyperLink" runat="server" Text="Series" NavigateUrl="~/Series/Default.aspx" Enabled="false" /></legend>
             <telerik:RadGrid ID="SeriesRadGrid" runat="server" AutoGenerateColumns="false" AllowSorting="true" AllowFilteringByColumn="false" GroupingSettings-CaseSensitive="false" AllowPaging="true" PageSize="10" EnableLinqExpressions="false" OnNeedDataSource="SeriesRadGrid_NeedDataSource">
                 <MasterTableView DataKeyNames="Id, InstanceId" PagerStyle-Mode="NextPrevNumericAndAdvanced" NoMasterRecordsText="No series found">
+                    <SortExpressions>
+                        <telerik:GridSortExpression FieldName="Content" />
+                    </SortExpressions>
                     <Columns>
                         <telerik:GridBoundColumn HeaderText="Content" DataField="Content" AutoPostBackOnFilter="true" HtmlEncode="true" CurrentFilterFunction="StartsWith" />
                     </Columns>
@@ -1113,6 +1146,9 @@
                 <asp:HyperLink ID="SubjectsHyperLink" runat="server" Text="Subjects" NavigateUrl="~/Subjects/Default.aspx" Enabled="false" /></legend>
             <telerik:RadGrid ID="SubjectsRadGrid" runat="server" AutoGenerateColumns="false" AllowSorting="true" AllowFilteringByColumn="false" GroupingSettings-CaseSensitive="false" AllowPaging="true" PageSize="10" EnableLinqExpressions="false" OnNeedDataSource="SubjectsRadGrid_NeedDataSource">
                 <MasterTableView DataKeyNames="Id, InstanceId" PagerStyle-Mode="NextPrevNumericAndAdvanced" NoMasterRecordsText="No subjects found">
+                    <SortExpressions>
+                        <telerik:GridSortExpression FieldName="Content" />
+                    </SortExpressions>
                     <Columns>
                         <telerik:GridBoundColumn HeaderText="Content" DataField="Content" AutoPostBackOnFilter="true" HtmlEncode="true" CurrentFilterFunction="StartsWith" />
                     </Columns>

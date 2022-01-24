@@ -109,6 +109,9 @@
                 <asp:HyperLink ID="BatchVoucherExportConfigWeekdaysHyperLink" runat="server" Text="Batch Voucher Export Config Weekdays" NavigateUrl="~/BatchVoucherExportConfigWeekdays/Default.aspx" Enabled="false" /></legend>
             <telerik:RadGrid ID="BatchVoucherExportConfigWeekdaysRadGrid" runat="server" AutoGenerateColumns="false" AllowSorting="true" AllowFilteringByColumn="false" GroupingSettings-CaseSensitive="false" AllowPaging="true" PageSize="10" EnableLinqExpressions="false" OnNeedDataSource="BatchVoucherExportConfigWeekdaysRadGrid_NeedDataSource">
                 <MasterTableView DataKeyNames="Id" PagerStyle-Mode="NextPrevNumericAndAdvanced" NoMasterRecordsText="No batch voucher export config weekdays found">
+                    <SortExpressions>
+                        <telerik:GridSortExpression FieldName="Content" />
+                    </SortExpressions>
                     <Columns>
                         <telerik:GridBoundColumn HeaderText="Content" DataField="Content" AutoPostBackOnFilter="true" HtmlEncode="true" CurrentFilterFunction="StartsWith" />
                     </Columns>

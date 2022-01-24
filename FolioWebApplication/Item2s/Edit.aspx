@@ -603,6 +603,9 @@
                 <asp:HyperLink ID="ItemFormerIdsHyperLink" runat="server" Text="Item Former Ids" NavigateUrl="~/ItemFormerIds/Default.aspx" Enabled="false" /></legend>
             <telerik:RadGrid ID="ItemFormerIdsRadGrid" runat="server" AutoGenerateColumns="false" AllowSorting="true" AllowFilteringByColumn="false" GroupingSettings-CaseSensitive="false" AllowPaging="true" PageSize="10" EnableLinqExpressions="false" OnNeedDataSource="ItemFormerIdsRadGrid_NeedDataSource">
                 <MasterTableView DataKeyNames="Id, ItemId" PagerStyle-Mode="NextPrevNumericAndAdvanced" NoMasterRecordsText="No item former ids found">
+                    <SortExpressions>
+                        <telerik:GridSortExpression FieldName="Content" />
+                    </SortExpressions>
                     <Columns>
                         <telerik:GridBoundColumn HeaderText="Content" DataField="Content" AutoPostBackOnFilter="true" HtmlEncode="true" CurrentFilterFunction="StartsWith" />
                     </Columns>
@@ -652,6 +655,9 @@
                 <asp:HyperLink ID="ItemTagsHyperLink" runat="server" Text="Item Tags" NavigateUrl="~/ItemTags/Default.aspx" Enabled="false" /></legend>
             <telerik:RadGrid ID="ItemTagsRadGrid" runat="server" AutoGenerateColumns="false" AllowSorting="true" AllowFilteringByColumn="false" GroupingSettings-CaseSensitive="false" AllowPaging="true" PageSize="10" EnableLinqExpressions="false" OnNeedDataSource="ItemTagsRadGrid_NeedDataSource">
                 <MasterTableView DataKeyNames="Id, ItemId" PagerStyle-Mode="NextPrevNumericAndAdvanced" NoMasterRecordsText="No item tags found">
+                    <SortExpressions>
+                        <telerik:GridSortExpression FieldName="Content" />
+                    </SortExpressions>
                     <Columns>
                         <telerik:GridBoundColumn HeaderText="Content" DataField="Content" AutoPostBackOnFilter="true" HtmlEncode="true" CurrentFilterFunction="StartsWith" />
                     </Columns>
@@ -665,6 +671,9 @@
                 <asp:HyperLink ID="ItemYearCaptionsHyperLink" runat="server" Text="Item Year Captions" NavigateUrl="~/ItemYearCaptions/Default.aspx" Enabled="false" /></legend>
             <telerik:RadGrid ID="ItemYearCaptionsRadGrid" runat="server" AutoGenerateColumns="false" AllowSorting="true" AllowFilteringByColumn="false" GroupingSettings-CaseSensitive="false" AllowPaging="true" PageSize="10" EnableLinqExpressions="false" OnNeedDataSource="ItemYearCaptionsRadGrid_NeedDataSource">
                 <MasterTableView DataKeyNames="Id, ItemId" PagerStyle-Mode="NextPrevNumericAndAdvanced" NoMasterRecordsText="No item year captions found">
+                    <SortExpressions>
+                        <telerik:GridSortExpression FieldName="Content" />
+                    </SortExpressions>
                     <Columns>
                         <telerik:GridBoundColumn HeaderText="Content" DataField="Content" AutoPostBackOnFilter="true" HtmlEncode="true" CurrentFilterFunction="StartsWith" />
                     </Columns>
