@@ -46,10 +46,10 @@ namespace FolioLibrary
         [Column("title"), Display(Order = 6), JsonProperty("title"), Required, StringLength(1024)]
         public virtual string Title { get; set; }
 
-        [Column("author"), Display(Order = 7), Editable(false), JsonProperty("contributors.0.name"), StringLength(1024)]
+        [Column("author"), Display(Order = 7), Editable(false), JsonProperty("contributors[0].name"), StringLength(1024)]
         public virtual string Author { get; set; }
 
-        [Column("publication_year"), Display(Name = "Publication Year", Order = 8), Editable(false), JsonProperty("publication.0.dateOfPublication"), StringLength(1024)]
+        [Column("publication_year"), Display(Name = "Publication Year", Order = 8), Editable(false), JsonProperty("publication[0].dateOfPublication"), StringLength(1024)]
         public virtual string PublicationYear { get; set; }
 
         [Column("index_title"), JsonProperty("indexTitle"), ScaffoldColumn(false), StringLength(1024)]
@@ -215,8 +215,8 @@ namespace FolioLibrary
             MatchKey = (string)jObject.SelectToken("matchKey"),
             Source = (string)jObject.SelectToken("source"),
             Title = (string)jObject.SelectToken("title"),
-            Author = (string)jObject.SelectToken("contributors.0.name"),
-            PublicationYear = (string)jObject.SelectToken("publication.0.dateOfPublication"),
+            Author = (string)jObject.SelectToken("contributors[0].name"),
+            PublicationYear = (string)jObject.SelectToken("publication[0].dateOfPublication"),
             IndexTitle = (string)jObject.SelectToken("indexTitle"),
             PublicationPeriodStart = (int?)jObject.SelectToken("publicationPeriod.start"),
             PublicationPeriodEnd = (int?)jObject.SelectToken("publicationPeriod.end"),
@@ -263,8 +263,6 @@ namespace FolioLibrary
             new JProperty("matchKey", MatchKey),
             new JProperty("source", Source),
             new JProperty("title", Title),
-            new JProperty("contributors", Contributors?.Select(c => c.ToJObject())),
-            new JProperty("publication", Publications?.Select(p => p.ToJObject())),
             new JProperty("indexTitle", IndexTitle),
             new JProperty("publicationPeriod", new JObject(
                 new JProperty("start", PublicationPeriodStart),
@@ -287,6 +285,7 @@ namespace FolioLibrary
                 new JProperty("updatedByUsername", LastWriteUserUsername))),
             new JProperty("alternativeTitles", AlternativeTitles?.Select(at => at.ToJObject())),
             new JProperty("classifications", Classifications?.Select(c => c.ToJObject())),
+            new JProperty("contributors", Contributors?.Select(c => c.ToJObject())),
             new JProperty("editions", Editions?.Select(e2 => e2.ToJObject())),
             new JProperty("electronicAccess", ElectronicAccesses?.Select(ea => ea.ToJObject())),
             new JProperty("identifiers", Identifiers?.Select(i => i.ToJObject())),
@@ -300,6 +299,7 @@ namespace FolioLibrary
             new JProperty("physicalDescriptions", PhysicalDescriptions?.Select(pd => pd.ToJObject())),
             new JProperty("publicationFrequency", PublicationFrequencies?.Select(pf => pf.ToJObject())),
             new JProperty("publicationRange", PublicationRanges?.Select(pr => pr.ToJObject())),
+            new JProperty("publication", Publications?.Select(p => p.ToJObject())),
             new JProperty("series", Series?.Select(s => s.ToJObject())),
             new JProperty("subjects", Subjects?.Select(s => s.ToJObject()))).RemoveNullAndEmptyProperties();
     }

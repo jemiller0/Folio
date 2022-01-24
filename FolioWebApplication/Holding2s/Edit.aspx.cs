@@ -86,6 +86,30 @@ namespace FolioWebApplication.Holding2s
             HoldingElectronicAccessesPanel.Visible = Holding2FormView.DataKey.Value != null && ((string)Session["HoldingElectronicAccessesPermission"] == "Edit" || Session["HoldingElectronicAccessesPermission"] != null && l.Any());
         }
 
+        protected void HoldingEntriesRadGrid_ItemCommand(object sender, GridCommandEventArgs e)
+        {
+            if (e.CommandName == "Print")
+            {
+                var gei = (GridEditableItem)e.Item;
+                var id = (string)gei.GetDataKeyValue("Id");
+                var holdingId = (Guid)gei.GetDataKeyValue("HoldingId");
+                var he = folioServiceContext.FindHolding2(holdingId, true).HoldingEntries.SingleOrDefault(he2 => he2.Id == id);
+                if (he == null)
+                    HoldingEntriesRadGrid.Rebind();
+                else
+                {
+                    var label = new Label
+                    {
+                        Font = new Font { Family = "Arial Narrow", Size = 11, Weight = FontWeight.Normal },
+                        Orientation = Orientation.Landscape,
+                        IsSerial = true,
+                        Text = $"{he.Holding.Location.Code} {he.Holding.CallNumber} {he.Holding.CopyNumber}\r\n{(he.Holding.Instance.Author != null ? Global.Truncate(he.Holding.Instance.Author, 44) + "\r\n" : null)}{(he.Holding.Instance.Title != null ? Global.Truncate(he.Holding.Instance.Title, 44) + "\r\n" : null)}{he.Enumeration} {he.Chronology}\r\nBib: {he.Holding.Instance.ShortId} Hold: {he.Holding.ShortId} Rec'd: {he.Holding.LastWriteTime:d}"
+                    };
+                    Global.Print(label, this, folioServiceContext);
+                }
+            }
+        }
+
         protected void HoldingEntriesRadGrid_NeedDataSource(object sender, GridNeedDataSourceEventArgs e)
         {
             if (Session["HoldingEntriesPermission"] == null) return;

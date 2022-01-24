@@ -285,5 +285,7 @@ namespace FolioWebApplication
                 ScriptManager.RegisterStartupScript(page, typeof(Page), null, $"w = window.open(); w.document.write('<html><body><div style=\"{(label.Width != null ? $"width: {label.Width}px; " : "")}font-family: {label.Font.Family}; font-size: {label.Font.Size}pt; font-weight: {label.Font.Weight}{(label.Orientation == Orientation.Portrait || label.IsSerial ? "" : "; transform: translateX(-100%) rotate(-90deg); transform-origin: 100% 0%; position: absolute")}\">{HttpUtility.JavaScriptStringEncode(label.Text.Replace("\r\n", "<br />"))}</div></body></html>'); w.document.close(); w.print(); w.close();", true);
             }
         }
+
+        public static string Truncate(string value, int length) => value != null ? value.Length > length ? value.Substring(0, length - 1) + "…" : value : null;
     }
 }

@@ -431,12 +431,17 @@
         <fieldset>
             <legend>
                 <asp:HyperLink ID="HoldingEntriesHyperLink" runat="server" Text="Holding Entries" NavigateUrl="~/HoldingEntries/Default.aspx" /></legend>
-            <telerik:RadGrid ID="HoldingEntriesRadGrid" runat="server" AutoGenerateColumns="false" AllowSorting="true" AllowFilteringByColumn="false" GroupingSettings-CaseSensitive="false" AllowPaging="true" PageSize="10" EnableLinqExpressions="false" OnNeedDataSource="HoldingEntriesRadGrid_NeedDataSource">
+            <telerik:RadGrid ID="HoldingEntriesRadGrid" runat="server" AutoGenerateColumns="false" AllowSorting="true" AllowFilteringByColumn="false" GroupingSettings-CaseSensitive="false" AllowPaging="true" PageSize="10" EnableLinqExpressions="false" OnNeedDataSource="HoldingEntriesRadGrid_NeedDataSource" OnItemCommand="HoldingEntriesRadGrid_ItemCommand">
                 <MasterTableView DataKeyNames="Id, HoldingId" PagerStyle-Mode="NextPrevNumericAndAdvanced" NoMasterRecordsText="No holding entries found">
                     <Columns>
                         <telerik:GridTemplateColumn AllowFiltering="false" ItemStyle-Width="0px">
                             <ItemTemplate>
                                 <asp:HyperLink ID="ViewHyperLink" Text="View" NavigateUrl='<%# $"~/HoldingEntries/Edit.aspx?Id={Eval("Id")}&HoldingId={Eval("HoldingId")}" %>' runat="server" />
+                            </ItemTemplate>
+                        </telerik:GridTemplateColumn>
+                        <telerik:GridTemplateColumn AllowFiltering="false" ItemStyle-Width="0px">
+                            <ItemTemplate>
+                                <asp:LinkButton ID="PrintLinkButton" runat="server" CommandName="Print">Print Label</asp:LinkButton>
                             </ItemTemplate>
                         </telerik:GridTemplateColumn>
                         <telerik:GridBoundColumn HeaderText="Public Display" DataField="PublicDisplay" AutoPostBackOnFilter="true" />
