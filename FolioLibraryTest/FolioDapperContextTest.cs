@@ -5283,7 +5283,7 @@ o2.ongoing_renewal_date AS ""OngoingRenewalDate"",
 o2.ongoing_review_date AS ""OngoingReviewDate"",
 st.name AS ""ShipTo"",
 o2.ship_to_id AS ""ShipToId"",
-t.id AS ""Template"",
+t.template_name AS ""Template"",
 o2.template_id AS ""TemplateId"",
 v.name AS ""Vendor"",
 o2.vendor_id AS ""VendorId"",
@@ -5807,12 +5807,12 @@ LEFT JOIN uc.orders AS o ON o.id = ot.order_id
             folioDapperContext.Query(@"
 SELECT
 ot2.id AS ""Id"",
-ot2.template_name AS ""TemplateName"",
-ot2.template_code AS ""TemplateCode"",
-ot2.template_description AS ""TemplateDescription"",
+ot2.template_name AS ""Name"",
+ot2.template_code AS ""Code"",
+ot2.template_description AS ""Description"",
 ot2.content AS ""Content"" 
 FROM uc.order_templates AS ot2
- ORDER BY ot2.id
+ ORDER BY ot2.template_name
 ", take: 1);
             traceSource.TraceEvent(TraceEventType.Information, 0, $"OrderTemplate2sQueryTest()\r\n    ElapsedTime={s.Elapsed}");
         }

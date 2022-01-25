@@ -24,7 +24,7 @@ namespace FolioWebApplication.OrderTemplate2s
 
         protected void OrderTemplate2sRadGrid_NeedDataSource(object sender, GridNeedDataSourceEventArgs e)
         {
-            var d = new Dictionary<string, string>() { { "Id", "id" }, { "TemplateName", "templateName" }, { "TemplateCode", "templateCode" }, { "TemplateDescription", "templateDescription" } };
+            var d = new Dictionary<string, string>() { { "Id", "id" }, { "Name", "templateName" }, { "Code", "templateCode" }, { "Description", "templateDescription" } };
             OrderTemplate2sRadGrid.DataSource = folioServiceContext.OrderTemplate2s(out var i, Global.GetCqlFilter(OrderTemplate2sRadGrid, d), OrderTemplate2sRadGrid.MasterTableView.SortExpressions.Count > 0 ? $"{d[OrderTemplate2sRadGrid.MasterTableView.SortExpressions[0].FieldName]}{(OrderTemplate2sRadGrid.MasterTableView.SortExpressions[0].SortOrder == GridSortOrder.Descending ? "/sort.descending" : "")}" : null, OrderTemplate2sRadGrid.PageSize * OrderTemplate2sRadGrid.CurrentPageIndex, OrderTemplate2sRadGrid.PageSize, true);
             OrderTemplate2sRadGrid.VirtualItemCount = i;
         }
@@ -37,10 +37,10 @@ namespace FolioWebApplication.OrderTemplate2s
             Response.Charset = "utf-8";
             Response.AppendHeader("Content-Disposition", "attachment; filename=\"OrderTemplate2s.txt\"");
             Response.BufferOutput = false;
-            var d = new Dictionary<string, string>() { { "Id", "id" }, { "TemplateName", "templateName" }, { "TemplateCode", "templateCode" }, { "TemplateDescription", "templateDescription" } };
-            Response.Write("Id\tTemplateName\tTemplateCode\tTemplateDescription\r\n");
+            var d = new Dictionary<string, string>() { { "Id", "id" }, { "Name", "templateName" }, { "Code", "templateCode" }, { "Description", "templateDescription" } };
+            Response.Write("Id\tName\tCode\tDescription\r\n");
             foreach (var ot2 in folioServiceContext.OrderTemplate2s(Global.GetCqlFilter(OrderTemplate2sRadGrid, d), OrderTemplate2sRadGrid.MasterTableView.SortExpressions.Count > 0 ? $"{d[OrderTemplate2sRadGrid.MasterTableView.SortExpressions[0].FieldName]}{(OrderTemplate2sRadGrid.MasterTableView.SortExpressions[0].SortOrder == GridSortOrder.Descending ? "/sort.descending" : "")}" : null, load: true))
-                Response.Write($"{ot2.Id}\t{Global.TextEncode(ot2.TemplateName)}\t{Global.TextEncode(ot2.TemplateCode)}\t{Global.TextEncode(ot2.TemplateDescription)}\r\n");
+                Response.Write($"{ot2.Id}\t{Global.TextEncode(ot2.Name)}\t{Global.TextEncode(ot2.Code)}\t{Global.TextEncode(ot2.Description)}\r\n");
             Response.End();
         }
 

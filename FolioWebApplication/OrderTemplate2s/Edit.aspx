@@ -17,28 +17,28 @@
                                     <asp:HyperLink ID="IdHyperLink" runat="server" Text='<%# Eval("Id") %>' NavigateUrl='<%# $"Edit.aspx?Id={Eval("Id")}" %>' />
                                 </td>
                             </tr>
-                            <tr runat="server" visible='<%# Eval("TemplateName") != null %>'>
+                            <tr runat="server" visible='<%# Eval("Name") != null %>'>
                                 <td>
-                                    <asp:Label ID="TemplateNameLabel" runat="server" Text="Template Name:" AssociatedControlID="TemplateNameLiteral" />
+                                    <asp:Label ID="NameLabel" runat="server" Text="Name:" AssociatedControlID="NameLiteral" />
                                 </td>
                                 <td>
-                                    <asp:Literal ID="TemplateNameLiteral" runat="server" Text='<%#: Eval("TemplateName") %>' />
-                                </td>
-                            </tr>
-                            <tr runat="server" visible='<%# Eval("TemplateCode") != null %>'>
-                                <td>
-                                    <asp:Label ID="TemplateCodeLabel" runat="server" Text="Template Code:" AssociatedControlID="TemplateCodeLiteral" />
-                                </td>
-                                <td>
-                                    <asp:Literal ID="TemplateCodeLiteral" runat="server" Text='<%#: Eval("TemplateCode") %>' />
+                                    <asp:Literal ID="NameLiteral" runat="server" Text='<%#: Eval("Name") %>' />
                                 </td>
                             </tr>
-                            <tr runat="server" visible='<%# Eval("TemplateDescription") != null %>'>
+                            <tr runat="server" visible='<%# Eval("Code") != null %>'>
                                 <td>
-                                    <asp:Label ID="TemplateDescriptionLabel" runat="server" Text="Template Description:" AssociatedControlID="TemplateDescriptionLiteral" />
+                                    <asp:Label ID="CodeLabel" runat="server" Text="Code:" AssociatedControlID="CodeLiteral" />
                                 </td>
                                 <td>
-                                    <asp:Literal ID="TemplateDescriptionLiteral" runat="server" Text='<%#: Eval("TemplateDescription") %>' />
+                                    <asp:Literal ID="CodeLiteral" runat="server" Text='<%#: Eval("Code") %>' />
+                                </td>
+                            </tr>
+                            <tr runat="server" visible='<%# Eval("Description") != null %>'>
+                                <td>
+                                    <asp:Label ID="DescriptionLabel" runat="server" Text="Description:" AssociatedControlID="DescriptionLiteral" />
+                                </td>
+                                <td>
+                                    <asp:Literal ID="DescriptionLiteral" runat="server" Text='<%#: Eval("Description") %>' />
                                 </td>
                             </tr>
                             <tr runat="server" visible='<%# Eval("Content") != null %>'>

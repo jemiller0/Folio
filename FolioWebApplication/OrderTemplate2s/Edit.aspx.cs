@@ -30,7 +30,7 @@ namespace FolioWebApplication.OrderTemplate2s
             if (ot2 == null) Response.Redirect("Default.aspx");
             ot2.Content = ot2.Content != null ? JsonConvert.DeserializeObject<JToken>(ot2.Content, new JsonSerializerSettings { DateTimeZoneHandling = DateTimeZoneHandling.Local }).ToString() : null;
             OrderTemplate2FormView.DataSource = new[] { ot2 };
-            Title = $"Order Template {ot2.Id}";
+            Title = $"Order Template {ot2.Name}";
         }
 
         protected void Order2sRadGrid_NeedDataSource(object sender, GridNeedDataSourceEventArgs e)

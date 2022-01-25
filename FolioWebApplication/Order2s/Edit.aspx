@@ -182,7 +182,7 @@
                                     <asp:Label ID="TemplateLabel" runat="server" Text="Template:" AssociatedControlID="TemplateHyperLink" />
                                 </td>
                                 <td>
-                                    <asp:HyperLink ID="TemplateHyperLink" runat="server" Text='<%# Eval("Template.Id") %>' NavigateUrl='<%# $"~/OrderTemplate2s/Edit.aspx?Id={Eval("TemplateId")}" %>' Enabled='<%# Session["OrderTemplate2sPermission"] != null %>' />
+                                    <asp:HyperLink ID="TemplateHyperLink" runat="server" Text='<%#: Eval("Template.Name") %>' NavigateUrl='<%# $"~/OrderTemplate2s/Edit.aspx?Id={Eval("TemplateId")}" %>' Enabled='<%# Session["OrderTemplate2sPermission"] != null %>' />
                                 </td>
                             </tr>
                             <tr runat="server" visible='<%# Eval("Vendor") != null %>'>

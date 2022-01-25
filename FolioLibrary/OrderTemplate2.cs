@@ -14,7 +14,7 @@ namespace FolioLibrary
 {
     // uc.order_templates -> diku_mod_orders_storage.order_templates
     // OrderTemplate2 -> OrderTemplate
-    [DisplayColumn(nameof(Id)), DisplayName("Order Templates"), JsonObject(MemberSerialization = MemberSerialization.OptIn), Table("order_templates", Schema = "uc")]
+    [DisplayColumn(nameof(Name)), DisplayName("Order Templates"), JsonObject(MemberSerialization = MemberSerialization.OptIn), Table("order_templates", Schema = "uc")]
     public partial class OrderTemplate2
     {
         public static ValidationResult ValidateContent(string value)
@@ -31,14 +31,14 @@ namespace FolioLibrary
         [Column("id"), Display(Order = 1), Editable(false), JsonProperty("id")]
         public virtual Guid? Id { get; set; }
 
-        [Column("template_name"), Display(Name = "Template Name", Order = 2), JsonProperty("templateName"), Required, StringLength(1024)]
-        public virtual string TemplateName { get; set; }
+        [Column("template_name"), Display(Order = 2), JsonProperty("templateName"), Required, StringLength(1024)]
+        public virtual string Name { get; set; }
 
-        [Column("template_code"), Display(Name = "Template Code", Order = 3), JsonProperty("templateCode"), StringLength(1024)]
-        public virtual string TemplateCode { get; set; }
+        [Column("template_code"), Display(Order = 3), JsonProperty("templateCode"), StringLength(1024)]
+        public virtual string Code { get; set; }
 
-        [Column("template_description"), Display(Name = "Template Description", Order = 4), JsonProperty("templateDescription"), StringLength(1024)]
-        public virtual string TemplateDescription { get; set; }
+        [Column("template_description"), Display(Order = 4), JsonProperty("templateDescription"), StringLength(1024)]
+        public virtual string Description { get; set; }
 
         [Column("content"), CustomValidation(typeof(OrderTemplate), nameof(ValidateContent)), DataType(DataType.MultilineText), Display(Order = 5), Editable(false)]
         public virtual string Content { get; set; }
@@ -46,21 +46,21 @@ namespace FolioLibrary
         [Display(Name = "Orders", Order = 6)]
         public virtual ICollection<Order2> Order2s { get; set; }
 
-        public override string ToString() => $"{{ {nameof(Id)} = {Id}, {nameof(TemplateName)} = {TemplateName}, {nameof(TemplateCode)} = {TemplateCode}, {nameof(TemplateDescription)} = {TemplateDescription}, {nameof(Content)} = {Content} }}";
+        public override string ToString() => $"{{ {nameof(Id)} = {Id}, {nameof(Name)} = {Name}, {nameof(Code)} = {Code}, {nameof(Description)} = {Description}, {nameof(Content)} = {Content} }}";
 
         public static OrderTemplate2 FromJObject(JObject jObject) => jObject != null ? new OrderTemplate2
         {
             Id = (Guid?)jObject.SelectToken("id"),
-            TemplateName = (string)jObject.SelectToken("templateName"),
-            TemplateCode = (string)jObject.SelectToken("templateCode"),
-            TemplateDescription = (string)jObject.SelectToken("templateDescription"),
+            Name = (string)jObject.SelectToken("templateName"),
+            Code = (string)jObject.SelectToken("templateCode"),
+            Description = (string)jObject.SelectToken("templateDescription"),
             Content = JsonConvert.SerializeObject(jObject, FolioDapperContext.UniversalTimeJsonSerializationSettings)
         } : null;
 
         public JObject ToJObject() => new JObject(
             new JProperty("id", Id),
-            new JProperty("templateName", TemplateName),
-            new JProperty("templateCode", TemplateCode),
-            new JProperty("templateDescription", TemplateDescription)).RemoveNullAndEmptyProperties();
+            new JProperty("templateName", Name),
+            new JProperty("templateCode", Code),
+            new JProperty("templateDescription", Description)).RemoveNullAndEmptyProperties();
     }
 }
