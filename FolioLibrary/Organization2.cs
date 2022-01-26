@@ -365,18 +365,18 @@ namespace FolioLibrary
             LastWriteUserUsername = (string)jObject.SelectToken("metadata.updatedByUsername"),
             Content = JsonConvert.SerializeObject(jObject, FolioDapperContext.UniversalTimeJsonSerializationSettings),
             Currencies = jObject.SelectToken("vendorCurrencies")?.Select(jt => Currency.FromJObject((JValue)jt)).ToArray(),
-            OrganizationAccounts = jObject.SelectToken("accounts")?.Select(jt => OrganizationAccount.FromJObject((JObject)jt)).ToArray(),
+            OrganizationAccounts = jObject.SelectToken("accounts")?.Where(jt => jt.HasValues).Select(jt => OrganizationAccount.FromJObject((JObject)jt)).ToArray(),
             OrganizationAcquisitionsUnits = jObject.SelectToken("acqUnitIds")?.Select(jt => OrganizationAcquisitionsUnit.FromJObject((JValue)jt)).ToArray(),
-            OrganizationAddresses = jObject.SelectToken("addresses")?.Select(jt => OrganizationAddress.FromJObject((JObject)jt)).ToArray(),
-            OrganizationAgreements = jObject.SelectToken("agreements")?.Select(jt => OrganizationAgreement.FromJObject((JObject)jt)).ToArray(),
-            OrganizationAliases = jObject.SelectToken("aliases")?.Select(jt => OrganizationAlias.FromJObject((JObject)jt)).ToArray(),
-            OrganizationChangelogs = jObject.SelectToken("changelogs")?.Select(jt => OrganizationChangelog.FromJObject((JObject)jt)).ToArray(),
+            OrganizationAddresses = jObject.SelectToken("addresses")?.Where(jt => jt.HasValues).Select(jt => OrganizationAddress.FromJObject((JObject)jt)).ToArray(),
+            OrganizationAgreements = jObject.SelectToken("agreements")?.Where(jt => jt.HasValues).Select(jt => OrganizationAgreement.FromJObject((JObject)jt)).ToArray(),
+            OrganizationAliases = jObject.SelectToken("aliases")?.Where(jt => jt.HasValues).Select(jt => OrganizationAlias.FromJObject((JObject)jt)).ToArray(),
+            OrganizationChangelogs = jObject.SelectToken("changelogs")?.Where(jt => jt.HasValues).Select(jt => OrganizationChangelog.FromJObject((JObject)jt)).ToArray(),
             OrganizationContacts = jObject.SelectToken("contacts")?.Select(jt => OrganizationContact.FromJObject((JValue)jt)).ToArray(),
-            OrganizationEmails = jObject.SelectToken("emails")?.Select(jt => OrganizationEmail.FromJObject((JObject)jt)).ToArray(),
+            OrganizationEmails = jObject.SelectToken("emails")?.Where(jt => jt.HasValues).Select(jt => OrganizationEmail.FromJObject((JObject)jt)).ToArray(),
             OrganizationInterfaces = jObject.SelectToken("interfaces")?.Select(jt => OrganizationInterface.FromJObject((JValue)jt)).ToArray(),
-            OrganizationPhoneNumbers = jObject.SelectToken("phoneNumbers")?.Select(jt => OrganizationPhoneNumber.FromJObject((JObject)jt)).ToArray(),
+            OrganizationPhoneNumbers = jObject.SelectToken("phoneNumbers")?.Where(jt => jt.HasValues).Select(jt => OrganizationPhoneNumber.FromJObject((JObject)jt)).ToArray(),
             OrganizationTags = jObject.SelectToken("tags.tagList")?.Select(jt => OrganizationTag.FromJObject((JValue)jt)).ToArray(),
-            OrganizationUrls = jObject.SelectToken("urls")?.Select(jt => OrganizationUrl.FromJObject((JObject)jt)).ToArray()
+            OrganizationUrls = jObject.SelectToken("urls")?.Where(jt => jt.HasValues).Select(jt => OrganizationUrl.FromJObject((JObject)jt)).ToArray()
         } : null;
 
         public JObject ToJObject() => new JObject(

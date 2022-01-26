@@ -116,11 +116,11 @@ namespace FolioLibrary
             LastWriteUserId = (Guid?)jObject.SelectToken("metadata.updatedByUserId"),
             LastWriteUserUsername = (string)jObject.SelectToken("metadata.updatedByUsername"),
             Content = JsonConvert.SerializeObject(jObject, FolioDapperContext.UniversalTimeJsonSerializationSettings),
-            ContactAddresses = jObject.SelectToken("addresses")?.Select(jt => ContactAddress.FromJObject((JObject)jt)).ToArray(),
+            ContactAddresses = jObject.SelectToken("addresses")?.Where(jt => jt.HasValues).Select(jt => ContactAddress.FromJObject((JObject)jt)).ToArray(),
             ContactCategories = jObject.SelectToken("categories")?.Select(jt => ContactCategory.FromJObject((JValue)jt)).ToArray(),
-            ContactEmails = jObject.SelectToken("emails")?.Select(jt => ContactEmail.FromJObject((JObject)jt)).ToArray(),
-            ContactPhoneNumbers = jObject.SelectToken("phoneNumbers")?.Select(jt => ContactPhoneNumber.FromJObject((JObject)jt)).ToArray(),
-            ContactUrls = jObject.SelectToken("urls")?.Select(jt => ContactUrl.FromJObject((JObject)jt)).ToArray()
+            ContactEmails = jObject.SelectToken("emails")?.Where(jt => jt.HasValues).Select(jt => ContactEmail.FromJObject((JObject)jt)).ToArray(),
+            ContactPhoneNumbers = jObject.SelectToken("phoneNumbers")?.Where(jt => jt.HasValues).Select(jt => ContactPhoneNumber.FromJObject((JObject)jt)).ToArray(),
+            ContactUrls = jObject.SelectToken("urls")?.Where(jt => jt.HasValues).Select(jt => ContactUrl.FromJObject((JObject)jt)).ToArray()
         } : null;
 
         public JObject ToJObject() => new JObject(

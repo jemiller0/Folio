@@ -119,8 +119,8 @@ namespace FolioLibrary
             LastWriteUserId = (Guid?)jObject.SelectToken("metadata.updatedByUserId"),
             LastWriteUserUsername = (string)jObject.SelectToken("metadata.updatedByUsername"),
             Content = JsonConvert.SerializeObject(jObject, FolioDapperContext.UniversalTimeJsonSerializationSettings),
-            LedgerRolloverBudgetsRollovers = jObject.SelectToken("budgetsRollover")?.Select(jt => LedgerRolloverBudgetsRollover.FromJObject((JObject)jt)).ToArray(),
-            LedgerRolloverEncumbrancesRollovers = jObject.SelectToken("encumbrancesRollover")?.Select(jt => LedgerRolloverEncumbrancesRollover.FromJObject((JObject)jt)).ToArray()
+            LedgerRolloverBudgetsRollovers = jObject.SelectToken("budgetsRollover")?.Where(jt => jt.HasValues).Select(jt => LedgerRolloverBudgetsRollover.FromJObject((JObject)jt)).ToArray(),
+            LedgerRolloverEncumbrancesRollovers = jObject.SelectToken("encumbrancesRollover")?.Where(jt => jt.HasValues).Select(jt => LedgerRolloverEncumbrancesRollover.FromJObject((JObject)jt)).ToArray()
         } : null;
 
         public JObject ToJObject() => new JObject(

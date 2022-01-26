@@ -87,8 +87,8 @@ namespace FolioLibrary
             LastWriteUserId = (Guid?)jObject.SelectToken("metadata.updatedByUserId"),
             LastWriteUserUsername = (string)jObject.SelectToken("metadata.updatedByUsername"),
             Content = JsonConvert.SerializeObject(jObject, FolioDapperContext.UniversalTimeJsonSerializationSettings),
-            UserSummaryOpenFeesFines = jObject.SelectToken("openFeesFines")?.Select(jt => UserSummaryOpenFeesFine.FromJObject((JObject)jt)).ToArray(),
-            UserSummaryOpenLoans = jObject.SelectToken("openLoans")?.Select(jt => UserSummaryOpenLoan.FromJObject((JObject)jt)).ToArray()
+            UserSummaryOpenFeesFines = jObject.SelectToken("openFeesFines")?.Where(jt => jt.HasValues).Select(jt => UserSummaryOpenFeesFine.FromJObject((JObject)jt)).ToArray(),
+            UserSummaryOpenLoans = jObject.SelectToken("openLoans")?.Where(jt => jt.HasValues).Select(jt => UserSummaryOpenLoan.FromJObject((JObject)jt)).ToArray()
         } : null;
 
         public JObject ToJObject() => new JObject(

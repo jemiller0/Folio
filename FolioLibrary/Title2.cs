@@ -141,8 +141,8 @@ namespace FolioLibrary
             LastWriteUserId = (Guid?)jObject.SelectToken("metadata.updatedByUserId"),
             LastWriteUserUsername = (string)jObject.SelectToken("metadata.updatedByUsername"),
             Content = JsonConvert.SerializeObject(jObject, FolioDapperContext.UniversalTimeJsonSerializationSettings),
-            TitleContributors = jObject.SelectToken("contributors")?.Select(jt => TitleContributor.FromJObject((JObject)jt)).ToArray(),
-            TitleProductIds = jObject.SelectToken("productIds")?.Select(jt => TitleProductId.FromJObject((JObject)jt)).ToArray()
+            TitleContributors = jObject.SelectToken("contributors")?.Where(jt => jt.HasValues).Select(jt => TitleContributor.FromJObject((JObject)jt)).ToArray(),
+            TitleProductIds = jObject.SelectToken("productIds")?.Where(jt => jt.HasValues).Select(jt => TitleProductId.FromJObject((JObject)jt)).ToArray()
         } : null;
 
         public JObject ToJObject() => new JObject(

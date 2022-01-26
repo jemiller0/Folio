@@ -311,10 +311,10 @@ namespace FolioLibrary
             LastCheckInServicePointId = (Guid?)jObject.SelectToken("lastCheckIn.servicePointId"),
             LastCheckInStaffMemberId = (Guid?)jObject.SelectToken("lastCheckIn.staffMemberId"),
             Content = JsonConvert.SerializeObject(jObject, FolioDapperContext.UniversalTimeJsonSerializationSettings),
-            CirculationNotes = jObject.SelectToken("circulationNotes")?.Select(jt => CirculationNote.FromJObject((JObject)jt)).ToArray(),
-            ItemElectronicAccesses = jObject.SelectToken("electronicAccess")?.Select(jt => ItemElectronicAccess.FromJObject((JObject)jt)).ToArray(),
+            CirculationNotes = jObject.SelectToken("circulationNotes")?.Where(jt => jt.HasValues).Select(jt => CirculationNote.FromJObject((JObject)jt)).ToArray(),
+            ItemElectronicAccesses = jObject.SelectToken("electronicAccess")?.Where(jt => jt.HasValues).Select(jt => ItemElectronicAccess.FromJObject((JObject)jt)).ToArray(),
             ItemFormerIds = jObject.SelectToken("formerIds")?.Select(jt => ItemFormerId.FromJObject((JValue)jt)).ToArray(),
-            ItemNotes = jObject.SelectToken("notes")?.Select(jt => ItemNote.FromJObject((JObject)jt)).ToArray(),
+            ItemNotes = jObject.SelectToken("notes")?.Where(jt => jt.HasValues).Select(jt => ItemNote.FromJObject((JObject)jt)).ToArray(),
             ItemStatisticalCodes = jObject.SelectToken("statisticalCodeIds")?.Select(jt => ItemStatisticalCode.FromJObject((JValue)jt)).ToArray(),
             ItemTags = jObject.SelectToken("tags.tagList")?.Select(jt => ItemTag.FromJObject((JValue)jt)).ToArray(),
             ItemYearCaptions = jObject.SelectToken("yearCaption")?.Select(jt => ItemYearCaption.FromJObject((JValue)jt)).ToArray()

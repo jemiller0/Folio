@@ -1033,7 +1033,7 @@ namespace FolioLibrary
             LastWriteUserId = (Guid?)jObject.SelectToken("metadata.updatedByUserId"),
             LastWriteUserUsername = (string)jObject.SelectToken("metadata.updatedByUsername"),
             Content = JsonConvert.SerializeObject(jObject, FolioDapperContext.UniversalTimeJsonSerializationSettings),
-            UserAddresses = jObject.SelectToken("personal.addresses")?.Select(jt => UserAddress.FromJObject((JObject)jt)).ToArray(),
+            UserAddresses = jObject.SelectToken("personal.addresses")?.Where(jt => jt.HasValues).Select(jt => UserAddress.FromJObject((JObject)jt)).ToArray(),
             UserDepartments = jObject.SelectToken("departments")?.Select(jt => UserDepartment.FromJObject((JValue)jt)).ToArray(),
             UserTags = jObject.SelectToken("tags.tagList")?.Select(jt => UserTag.FromJObject((JValue)jt)).ToArray()
         } : null;

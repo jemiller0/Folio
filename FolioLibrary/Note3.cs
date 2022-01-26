@@ -133,7 +133,7 @@ namespace FolioLibrary
             LastWriteUserId = (Guid?)jObject.SelectToken("metadata.updatedByUserId"),
             LastWriteUserUsername = (string)jObject.SelectToken("metadata.updatedByUsername"),
             Content = JsonConvert.SerializeObject(jObject, FolioDapperContext.UniversalTimeJsonSerializationSettings),
-            NoteLinks = jObject.SelectToken("links")?.Select(jt => NoteLink.FromJObject((JObject)jt)).ToArray()
+            NoteLinks = jObject.SelectToken("links")?.Where(jt => jt.HasValues).Select(jt => NoteLink.FromJObject((JObject)jt)).ToArray()
         } : null;
 
         public JObject ToJObject() => new JObject(
