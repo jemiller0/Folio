@@ -99,6 +99,7 @@ namespace FolioWebApplication.Holding2s
                     HoldingEntriesRadGrid.Rebind();
                 else
                 {
+                    var author = he.Holding.Instance.Contributors.FirstOrDefault(c => c.Primary.Value)?.Name;
                     var locationName = he.Holding.HoldingNotes.Where(hn => hn.HoldingNoteType.Name == "Unbound location").FirstOrDefault()?.Note;
                     var m = Regex.Match(locationName ?? "", @"^.*? - (.+?) - .*$", RegexOptions.Compiled);
                     var locationCode = m.Success ? m.Groups[1].Value : locationName;
@@ -107,7 +108,7 @@ namespace FolioWebApplication.Holding2s
                         Font = new Font { Family = "Arial Narrow", Size = 11, Weight = FontWeight.Normal },
                         Orientation = Orientation.Landscape,
                         IsSerial = true,
-                        Text = $"{locationCode} {he.Holding.CallNumber} {he.Holding.CopyNumber}\r\n{(he.Holding.Instance.Author != null ? Global.Truncate(he.Holding.Instance.Author, 44) + "\r\n" : null)}{(he.Holding.Instance.Title != null ? Global.Truncate(he.Holding.Instance.Title, 44) + "\r\n" : null)}{he.Enumeration} {he.Chronology}\r\nBib: {he.Holding.Instance.ShortId} Hold: {he.Holding.ShortId} Rec'd: {he.Holding.LastWriteTime:d}"
+                        Text = $"{locationCode} {he.Holding.CallNumber} {he.Holding.CopyNumber}\r\n{(author != null ? Global.Truncate(author, 44) + "\r\n" : null)}{(he.Holding.Instance.Title != null ? Global.Truncate(he.Holding.Instance.Title, 44) + "\r\n" : null)}{he.Enumeration} {he.Chronology}\r\nBib: {he.Holding.Instance.ShortId} Hold: {he.Holding.ShortId} Rec'd: {he.Holding.LastWriteTime:d}"
                     };
                     Global.Print(label, this, folioServiceContext);
                 }
