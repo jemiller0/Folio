@@ -14,9 +14,16 @@ namespace FolioLibrary
 {
     // uc.holdings -> diku_mod_inventory_storage.holdings_record
     // Holding2 -> Holding
-    [DisplayColumn(nameof(ShortId)), DisplayName("Holdings"), JsonConverter(typeof(JsonPathJsonConverter<Holding2>)), JsonObject(MemberSerialization = MemberSerialization.OptIn), Table("holdings", Schema = "uc")]
+    [CustomValidation(typeof(Holding2), nameof(ValidateHolding2)), DisplayColumn(nameof(ShortId)), DisplayName("Holdings"), JsonConverter(typeof(JsonPathJsonConverter<Holding2>)), JsonObject(MemberSerialization = MemberSerialization.OptIn), Table("holdings", Schema = "uc")]
     public partial class Holding2
     {
+        public static ValidationResult ValidateHolding2(Holding2 holding2, ValidationContext context)
+        {
+            var fsc = (FolioServiceContext)context.ObjectInstance;
+            if (holding2.ShortId != null && fsc.AnyHolding2s($"id <> \"{holding2.Id}\" and hrid == \"{holding2.ShortId}\"")) return new ValidationResult("Short Id already exists");
+            return ValidationResult.Success;
+        }
+
         public static ValidationResult ValidateContent(string value)
         {
             using (var sr = new StreamReader(Assembly.GetExecutingAssembly().GetManifestResourceStream("FolioLibrary.Holding.json")))

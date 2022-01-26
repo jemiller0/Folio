@@ -14,9 +14,16 @@ namespace FolioLibrary
 {
     // uc.instances -> diku_mod_inventory_storage.instance
     // Instance2 -> Instance
-    [DisplayColumn(nameof(Title)), DisplayName("Instances"), JsonConverter(typeof(JsonPathJsonConverter<Instance2>)), JsonObject(MemberSerialization = MemberSerialization.OptIn), Table("instances", Schema = "uc")]
+    [CustomValidation(typeof(Instance2), nameof(ValidateInstance2)), DisplayColumn(nameof(Title)), DisplayName("Instances"), JsonConverter(typeof(JsonPathJsonConverter<Instance2>)), JsonObject(MemberSerialization = MemberSerialization.OptIn), Table("instances", Schema = "uc")]
     public partial class Instance2
     {
+        public static ValidationResult ValidateInstance2(Instance2 instance2, ValidationContext context)
+        {
+            var fsc = (FolioServiceContext)context.ObjectInstance;
+            if (instance2.ShortId != null && fsc.AnyInstance2s($"id <> \"{instance2.Id}\" and hrid == \"{instance2.ShortId}\"")) return new ValidationResult("Short Id already exists");
+            return ValidationResult.Success;
+        }
+
         public static ValidationResult ValidateContent(string value)
         {
             using (var sr = new StreamReader(Assembly.GetExecutingAssembly().GetManifestResourceStream("FolioLibrary.Instance.json")))

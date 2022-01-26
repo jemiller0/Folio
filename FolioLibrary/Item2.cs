@@ -14,9 +14,17 @@ namespace FolioLibrary
 {
     // uc.items -> diku_mod_inventory_storage.item
     // Item2 -> Item
-    [DisplayColumn(nameof(ShortId)), DisplayName("Items"), JsonConverter(typeof(JsonPathJsonConverter<Item2>)), JsonObject(MemberSerialization = MemberSerialization.OptIn), Table("items", Schema = "uc")]
+    [CustomValidation(typeof(Item2), nameof(ValidateItem2)), DisplayColumn(nameof(ShortId)), DisplayName("Items"), JsonConverter(typeof(JsonPathJsonConverter<Item2>)), JsonObject(MemberSerialization = MemberSerialization.OptIn), Table("items", Schema = "uc")]
     public partial class Item2
     {
+        public static ValidationResult ValidateItem2(Item2 item2, ValidationContext context)
+        {
+            var fsc = (FolioServiceContext)context.ObjectInstance;
+            if (item2.ShortId != null && fsc.AnyItem2s($"id <> \"{item2.Id}\" and hrid == \"{item2.ShortId}\"")) return new ValidationResult("Short Id already exists");
+            if (item2.Barcode != null && fsc.AnyItem2s($"id <> \"{item2.Id}\" and barcode == \"{item2.Barcode}\"")) return new ValidationResult("Barcode already exists");
+            return ValidationResult.Success;
+        }
+
         public static ValidationResult ValidateContent(string value)
         {
             using (var sr = new StreamReader(Assembly.GetExecutingAssembly().GetManifestResourceStream("FolioLibrary.Item.json")))

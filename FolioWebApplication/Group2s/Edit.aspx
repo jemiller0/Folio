@@ -252,8 +252,16 @@
                                 <asp:HyperLink ID="UsernameHyperLink" runat="server" Text='<%#: Eval("Username") ?? "&nbsp;" %>' NavigateUrl='<%# $"~/User2s/Edit.aspx?Id={Eval("Id")}" %>' />
                             </ItemTemplate>
                         </telerik:GridTemplateColumn>
-                        <telerik:GridBoundColumn HeaderText="External System Id" DataField="ExternalSystemId" AutoPostBackOnFilter="true" HtmlEncode="true" CurrentFilterFunction="StartsWith" />
-                        <telerik:GridBoundColumn HeaderText="Barcode" DataField="Barcode" AutoPostBackOnFilter="true" HtmlEncode="true" CurrentFilterFunction="StartsWith" />
+                        <telerik:GridTemplateColumn HeaderText="External System Id" DataField="ExternalSystemId" SortExpression="ExternalSystemId" AutoPostBackOnFilter="true" CurrentFilterFunction="StartsWith">
+                            <ItemTemplate>
+                                <asp:HyperLink ID="ExternalSystemIdHyperLink" runat="server" Text='<%#: Eval("ExternalSystemId") ?? "&nbsp;" %>' NavigateUrl='<%# $"~/User2s/Edit.aspx?Id={Eval("Id")}" %>' />
+                            </ItemTemplate>
+                        </telerik:GridTemplateColumn>
+                        <telerik:GridTemplateColumn HeaderText="Barcode" DataField="Barcode" SortExpression="Barcode" AutoPostBackOnFilter="true" CurrentFilterFunction="StartsWith">
+                            <ItemTemplate>
+                                <asp:HyperLink ID="BarcodeHyperLink" runat="server" Text='<%#: Eval("Barcode") ?? "&nbsp;" %>' NavigateUrl='<%# $"~/User2s/Edit.aspx?Id={Eval("Id")}" %>' />
+                            </ItemTemplate>
+                        </telerik:GridTemplateColumn>
                         <telerik:GridBoundColumn HeaderText="Active" DataField="Active" AutoPostBackOnFilter="true" />
                         <telerik:GridBoundColumn HeaderText="Name" DataField="Name" AllowFiltering="false" AllowSorting="false" HtmlEncode="true" />
                         <telerik:GridBoundColumn HeaderText="Last Name" DataField="LastName" AutoPostBackOnFilter="true" HtmlEncode="true" CurrentFilterFunction="StartsWith" />
