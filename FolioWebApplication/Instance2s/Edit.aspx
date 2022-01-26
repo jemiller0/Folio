@@ -65,28 +65,20 @@
                                     <asp:Literal ID="AuthorLiteral" runat="server" Text='<%#: Eval("Author") %>' />
                                 </td>
                             </tr>
-                            <tr runat="server" visible='<%# Eval("PublicationYear") != null %>'>
+                            <tr runat="server" visible='<%# Eval("PublicationStartYear") != null %>'>
                                 <td>
-                                    <asp:Label ID="PublicationYearLabel" runat="server" Text="Publication Year:" AssociatedControlID="PublicationYearLiteral" />
+                                    <asp:Label ID="PublicationStartYearLabel" runat="server" Text="Publication Start Year:" AssociatedControlID="PublicationStartYearLiteral" />
                                 </td>
                                 <td>
-                                    <asp:Literal ID="PublicationYearLiteral" runat="server" Text='<%#: Eval("PublicationYear") %>' />
-                                </td>
-                            </tr>
-                            <tr runat="server" visible='<%# Eval("PublicationPeriodStart") != null %>'>
-                                <td>
-                                    <asp:Label ID="PublicationPeriodStartLabel" runat="server" Text="Publication Period Start:" AssociatedControlID="PublicationPeriodStartLiteral" />
-                                </td>
-                                <td>
-                                    <asp:Literal ID="PublicationPeriodStartLiteral" runat="server" Text='<%#: Eval("PublicationPeriodStart") %>' />
+                                    <asp:Literal ID="PublicationStartYearLiteral" runat="server" Text='<%#: Eval("PublicationStartYear") %>' />
                                 </td>
                             </tr>
-                            <tr runat="server" visible='<%# Eval("PublicationPeriodEnd") != null %>'>
+                            <tr runat="server" visible='<%# Eval("PublicationEndYear") != null %>'>
                                 <td>
-                                    <asp:Label ID="PublicationPeriodEndLabel" runat="server" Text="Publication Period End:" AssociatedControlID="PublicationPeriodEndLiteral" />
+                                    <asp:Label ID="PublicationEndYearLabel" runat="server" Text="Publication End Year:" AssociatedControlID="PublicationEndYearLiteral" />
                                 </td>
                                 <td>
-                                    <asp:Literal ID="PublicationPeriodEndLiteral" runat="server" Text='<%#: Eval("PublicationPeriodEnd") %>' />
+                                    <asp:Literal ID="PublicationEndYearLiteral" runat="server" Text='<%#: Eval("PublicationEndYear") %>' />
                                 </td>
                             </tr>
                             <tr runat="server" visible='<%# Eval("InstanceType") != null %>'>
