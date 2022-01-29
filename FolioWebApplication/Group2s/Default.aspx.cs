@@ -25,8 +25,20 @@ namespace FolioWebApplication.Group2s
         protected void Group2sRadGrid_NeedDataSource(object sender, GridNeedDataSourceEventArgs e)
         {
             var d = new Dictionary<string, string>() { { "Id", "id" }, { "Name", "group" }, { "Description", "desc" }, { "ExpirationOffsetInDays", "expirationOffsetInDays" }, { "CreationTime", "metadata.createdDate" }, { "CreationUserId", "metadata.createdByUserId" }, { "LastWriteTime", "metadata.updatedDate" }, { "LastWriteUserId", "metadata.updatedByUserId" } };
-            Group2sRadGrid.DataSource = folioServiceContext.Group2s(out var i, Global.GetCqlFilter(Group2sRadGrid, d), Group2sRadGrid.MasterTableView.SortExpressions.Count > 0 ? $"{d[Group2sRadGrid.MasterTableView.SortExpressions[0].FieldName]}{(Group2sRadGrid.MasterTableView.SortExpressions[0].SortOrder == GridSortOrder.Descending ? "/sort.descending" : "")}" : null, Group2sRadGrid.PageSize * Group2sRadGrid.CurrentPageIndex, Group2sRadGrid.PageSize, true);
+            var where = Global.Trim(string.Join(" and ", new string[]
+            {
+                Global.GetCqlFilter(Group2sRadGrid, "Id", "id"),
+                Global.GetCqlFilter(Group2sRadGrid, "Name", "group"),
+                Global.GetCqlFilter(Group2sRadGrid, "Description", "desc"),
+                Global.GetCqlFilter(Group2sRadGrid, "ExpirationOffsetInDays", "expirationOffsetInDays"),
+                Global.GetCqlFilter(Group2sRadGrid, "CreationTime", "metadata.createdDate"),
+                Global.GetCqlFilter(Group2sRadGrid, "CreationUser.Username", "metadata.createdByUserId", "username", folioServiceContext.FolioServiceClient.Users),
+                Global.GetCqlFilter(Group2sRadGrid, "LastWriteTime", "metadata.updatedDate"),
+                Global.GetCqlFilter(Group2sRadGrid, "LastWriteUser.Username", "metadata.updatedByUserId", "username", folioServiceContext.FolioServiceClient.Users)
+            }.Where(s => s != null)));
+            Group2sRadGrid.DataSource = folioServiceContext.Group2s(out var i, where, Group2sRadGrid.MasterTableView.SortExpressions.Count > 0 ? $"{d[Group2sRadGrid.MasterTableView.SortExpressions[0].FieldName]}{(Group2sRadGrid.MasterTableView.SortExpressions[0].SortOrder == GridSortOrder.Descending ? "/sort.descending" : "")}" : null, Group2sRadGrid.PageSize * Group2sRadGrid.CurrentPageIndex, Group2sRadGrid.PageSize, true);
             Group2sRadGrid.VirtualItemCount = i;
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"where = {where}");
         }
 
         protected void ExportLinkButton_Click(object sender, EventArgs e)

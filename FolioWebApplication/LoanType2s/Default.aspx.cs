@@ -25,8 +25,18 @@ namespace FolioWebApplication.LoanType2s
         protected void LoanType2sRadGrid_NeedDataSource(object sender, GridNeedDataSourceEventArgs e)
         {
             var d = new Dictionary<string, string>() { { "Id", "id" }, { "Name", "name" }, { "CreationTime", "metadata.createdDate" }, { "CreationUserId", "metadata.createdByUserId" }, { "LastWriteTime", "metadata.updatedDate" }, { "LastWriteUserId", "metadata.updatedByUserId" } };
-            LoanType2sRadGrid.DataSource = folioServiceContext.LoanType2s(out var i, Global.GetCqlFilter(LoanType2sRadGrid, d), LoanType2sRadGrid.MasterTableView.SortExpressions.Count > 0 ? $"{d[LoanType2sRadGrid.MasterTableView.SortExpressions[0].FieldName]}{(LoanType2sRadGrid.MasterTableView.SortExpressions[0].SortOrder == GridSortOrder.Descending ? "/sort.descending" : "")}" : null, LoanType2sRadGrid.PageSize * LoanType2sRadGrid.CurrentPageIndex, LoanType2sRadGrid.PageSize, true);
+            var where = Global.Trim(string.Join(" and ", new string[]
+            {
+                Global.GetCqlFilter(LoanType2sRadGrid, "Id", "id"),
+                Global.GetCqlFilter(LoanType2sRadGrid, "Name", "name"),
+                Global.GetCqlFilter(LoanType2sRadGrid, "CreationTime", "metadata.createdDate"),
+                Global.GetCqlFilter(LoanType2sRadGrid, "CreationUser.Username", "metadata.createdByUserId", "username", folioServiceContext.FolioServiceClient.Users),
+                Global.GetCqlFilter(LoanType2sRadGrid, "LastWriteTime", "metadata.updatedDate"),
+                Global.GetCqlFilter(LoanType2sRadGrid, "LastWriteUser.Username", "metadata.updatedByUserId", "username", folioServiceContext.FolioServiceClient.Users)
+            }.Where(s => s != null)));
+            LoanType2sRadGrid.DataSource = folioServiceContext.LoanType2s(out var i, where, LoanType2sRadGrid.MasterTableView.SortExpressions.Count > 0 ? $"{d[LoanType2sRadGrid.MasterTableView.SortExpressions[0].FieldName]}{(LoanType2sRadGrid.MasterTableView.SortExpressions[0].SortOrder == GridSortOrder.Descending ? "/sort.descending" : "")}" : null, LoanType2sRadGrid.PageSize * LoanType2sRadGrid.CurrentPageIndex, LoanType2sRadGrid.PageSize, true);
             LoanType2sRadGrid.VirtualItemCount = i;
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"where = {where}");
         }
 
         protected void ExportLinkButton_Click(object sender, EventArgs e)

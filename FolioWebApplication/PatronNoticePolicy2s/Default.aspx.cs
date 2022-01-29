@@ -25,8 +25,20 @@ namespace FolioWebApplication.PatronNoticePolicy2s
         protected void PatronNoticePolicy2sRadGrid_NeedDataSource(object sender, GridNeedDataSourceEventArgs e)
         {
             var d = new Dictionary<string, string>() { { "Id", "id" }, { "Name", "name" }, { "Description", "description" }, { "Active", "active" }, { "CreationTime", "metadata.createdDate" }, { "CreationUserId", "metadata.createdByUserId" }, { "LastWriteTime", "metadata.updatedDate" }, { "LastWriteUserId", "metadata.updatedByUserId" } };
-            PatronNoticePolicy2sRadGrid.DataSource = folioServiceContext.PatronNoticePolicy2s(out var i, Global.GetCqlFilter(PatronNoticePolicy2sRadGrid, d), PatronNoticePolicy2sRadGrid.MasterTableView.SortExpressions.Count > 0 ? $"{d[PatronNoticePolicy2sRadGrid.MasterTableView.SortExpressions[0].FieldName]}{(PatronNoticePolicy2sRadGrid.MasterTableView.SortExpressions[0].SortOrder == GridSortOrder.Descending ? "/sort.descending" : "")}" : null, PatronNoticePolicy2sRadGrid.PageSize * PatronNoticePolicy2sRadGrid.CurrentPageIndex, PatronNoticePolicy2sRadGrid.PageSize, true);
+            var where = Global.Trim(string.Join(" and ", new string[]
+            {
+                Global.GetCqlFilter(PatronNoticePolicy2sRadGrid, "Id", "id"),
+                Global.GetCqlFilter(PatronNoticePolicy2sRadGrid, "Name", "name"),
+                Global.GetCqlFilter(PatronNoticePolicy2sRadGrid, "Description", "description"),
+                Global.GetCqlFilter(PatronNoticePolicy2sRadGrid, "Active", "active"),
+                Global.GetCqlFilter(PatronNoticePolicy2sRadGrid, "CreationTime", "metadata.createdDate"),
+                Global.GetCqlFilter(PatronNoticePolicy2sRadGrid, "CreationUser.Username", "metadata.createdByUserId", "username", folioServiceContext.FolioServiceClient.Users),
+                Global.GetCqlFilter(PatronNoticePolicy2sRadGrid, "LastWriteTime", "metadata.updatedDate"),
+                Global.GetCqlFilter(PatronNoticePolicy2sRadGrid, "LastWriteUser.Username", "metadata.updatedByUserId", "username", folioServiceContext.FolioServiceClient.Users)
+            }.Where(s => s != null)));
+            PatronNoticePolicy2sRadGrid.DataSource = folioServiceContext.PatronNoticePolicy2s(out var i, where, PatronNoticePolicy2sRadGrid.MasterTableView.SortExpressions.Count > 0 ? $"{d[PatronNoticePolicy2sRadGrid.MasterTableView.SortExpressions[0].FieldName]}{(PatronNoticePolicy2sRadGrid.MasterTableView.SortExpressions[0].SortOrder == GridSortOrder.Descending ? "/sort.descending" : "")}" : null, PatronNoticePolicy2sRadGrid.PageSize * PatronNoticePolicy2sRadGrid.CurrentPageIndex, PatronNoticePolicy2sRadGrid.PageSize, true);
             PatronNoticePolicy2sRadGrid.VirtualItemCount = i;
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"where = {where}");
         }
 
         protected void ExportLinkButton_Click(object sender, EventArgs e)

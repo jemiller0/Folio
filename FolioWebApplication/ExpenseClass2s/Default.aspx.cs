@@ -25,8 +25,20 @@ namespace FolioWebApplication.ExpenseClass2s
         protected void ExpenseClass2sRadGrid_NeedDataSource(object sender, GridNeedDataSourceEventArgs e)
         {
             var d = new Dictionary<string, string>() { { "Id", "id" }, { "Code", "code" }, { "AccountNumberExtension", "externalAccountNumberExt" }, { "Name", "name" }, { "CreationTime", "metadata.createdDate" }, { "CreationUserId", "metadata.createdByUserId" }, { "LastWriteTime", "metadata.updatedDate" }, { "LastWriteUserId", "metadata.updatedByUserId" } };
-            ExpenseClass2sRadGrid.DataSource = folioServiceContext.ExpenseClass2s(out var i, Global.GetCqlFilter(ExpenseClass2sRadGrid, d), ExpenseClass2sRadGrid.MasterTableView.SortExpressions.Count > 0 ? $"{d[ExpenseClass2sRadGrid.MasterTableView.SortExpressions[0].FieldName]}{(ExpenseClass2sRadGrid.MasterTableView.SortExpressions[0].SortOrder == GridSortOrder.Descending ? "/sort.descending" : "")}" : null, ExpenseClass2sRadGrid.PageSize * ExpenseClass2sRadGrid.CurrentPageIndex, ExpenseClass2sRadGrid.PageSize, true);
+            var where = Global.Trim(string.Join(" and ", new string[]
+            {
+                Global.GetCqlFilter(ExpenseClass2sRadGrid, "Id", "id"),
+                Global.GetCqlFilter(ExpenseClass2sRadGrid, "Code", "code"),
+                Global.GetCqlFilter(ExpenseClass2sRadGrid, "AccountNumberExtension", "externalAccountNumberExt"),
+                Global.GetCqlFilter(ExpenseClass2sRadGrid, "Name", "name"),
+                Global.GetCqlFilter(ExpenseClass2sRadGrid, "CreationTime", "metadata.createdDate"),
+                Global.GetCqlFilter(ExpenseClass2sRadGrid, "CreationUser.Username", "metadata.createdByUserId", "username", folioServiceContext.FolioServiceClient.Users),
+                Global.GetCqlFilter(ExpenseClass2sRadGrid, "LastWriteTime", "metadata.updatedDate"),
+                Global.GetCqlFilter(ExpenseClass2sRadGrid, "LastWriteUser.Username", "metadata.updatedByUserId", "username", folioServiceContext.FolioServiceClient.Users)
+            }.Where(s => s != null)));
+            ExpenseClass2sRadGrid.DataSource = folioServiceContext.ExpenseClass2s(out var i, where, ExpenseClass2sRadGrid.MasterTableView.SortExpressions.Count > 0 ? $"{d[ExpenseClass2sRadGrid.MasterTableView.SortExpressions[0].FieldName]}{(ExpenseClass2sRadGrid.MasterTableView.SortExpressions[0].SortOrder == GridSortOrder.Descending ? "/sort.descending" : "")}" : null, ExpenseClass2sRadGrid.PageSize * ExpenseClass2sRadGrid.CurrentPageIndex, ExpenseClass2sRadGrid.PageSize, true);
             ExpenseClass2sRadGrid.VirtualItemCount = i;
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"where = {where}");
         }
 
         protected void ExportLinkButton_Click(object sender, EventArgs e)

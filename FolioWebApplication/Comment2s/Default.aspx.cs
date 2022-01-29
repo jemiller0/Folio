@@ -25,8 +25,21 @@ namespace FolioWebApplication.Comment2s
         protected void Comment2sRadGrid_NeedDataSource(object sender, GridNeedDataSourceEventArgs e)
         {
             var d = new Dictionary<string, string>() { { "Id", "id" }, { "Paid", "paid" }, { "Waived", "waived" }, { "Refunded", "refunded" }, { "TransferredManually", "transferredManually" }, { "CreationTime", "metadata.createdDate" }, { "CreationUserId", "metadata.createdByUserId" }, { "LastWriteTime", "metadata.updatedDate" }, { "LastWriteUserId", "metadata.updatedByUserId" } };
-            Comment2sRadGrid.DataSource = folioServiceContext.Comment2s(out var i, Global.GetCqlFilter(Comment2sRadGrid, d), Comment2sRadGrid.MasterTableView.SortExpressions.Count > 0 ? $"{d[Comment2sRadGrid.MasterTableView.SortExpressions[0].FieldName]}{(Comment2sRadGrid.MasterTableView.SortExpressions[0].SortOrder == GridSortOrder.Descending ? "/sort.descending" : "")}" : null, Comment2sRadGrid.PageSize * Comment2sRadGrid.CurrentPageIndex, Comment2sRadGrid.PageSize, true);
+            var where = Global.Trim(string.Join(" and ", new string[]
+            {
+                Global.GetCqlFilter(Comment2sRadGrid, "Id", "id"),
+                Global.GetCqlFilter(Comment2sRadGrid, "Paid", "paid"),
+                Global.GetCqlFilter(Comment2sRadGrid, "Waived", "waived"),
+                Global.GetCqlFilter(Comment2sRadGrid, "Refunded", "refunded"),
+                Global.GetCqlFilter(Comment2sRadGrid, "TransferredManually", "transferredManually"),
+                Global.GetCqlFilter(Comment2sRadGrid, "CreationTime", "metadata.createdDate"),
+                Global.GetCqlFilter(Comment2sRadGrid, "CreationUser.Username", "metadata.createdByUserId", "username", folioServiceContext.FolioServiceClient.Users),
+                Global.GetCqlFilter(Comment2sRadGrid, "LastWriteTime", "metadata.updatedDate"),
+                Global.GetCqlFilter(Comment2sRadGrid, "LastWriteUser.Username", "metadata.updatedByUserId", "username", folioServiceContext.FolioServiceClient.Users)
+            }.Where(s => s != null)));
+            Comment2sRadGrid.DataSource = folioServiceContext.Comment2s(out var i, where, Comment2sRadGrid.MasterTableView.SortExpressions.Count > 0 ? $"{d[Comment2sRadGrid.MasterTableView.SortExpressions[0].FieldName]}{(Comment2sRadGrid.MasterTableView.SortExpressions[0].SortOrder == GridSortOrder.Descending ? "/sort.descending" : "")}" : null, Comment2sRadGrid.PageSize * Comment2sRadGrid.CurrentPageIndex, Comment2sRadGrid.PageSize, true);
             Comment2sRadGrid.VirtualItemCount = i;
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"where = {where}");
         }
 
         protected void ExportLinkButton_Click(object sender, EventArgs e)

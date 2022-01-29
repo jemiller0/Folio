@@ -25,8 +25,22 @@ namespace FolioWebApplication.Template2s
         protected void Template2sRadGrid_NeedDataSource(object sender, GridNeedDataSourceEventArgs e)
         {
             var d = new Dictionary<string, string>() { { "Id", "id" }, { "Name", "name" }, { "Active", "active" }, { "Category", "category" }, { "Description", "description" }, { "TemplateResolver", "templateResolver" }, { "CreationTime", "metadata.createdDate" }, { "CreationUserId", "metadata.createdByUserId" }, { "LastWriteTime", "metadata.updatedDate" }, { "LastWriteUserId", "metadata.updatedByUserId" } };
-            Template2sRadGrid.DataSource = folioServiceContext.Template2s(out var i, Global.GetCqlFilter(Template2sRadGrid, d), Template2sRadGrid.MasterTableView.SortExpressions.Count > 0 ? $"{d[Template2sRadGrid.MasterTableView.SortExpressions[0].FieldName]}{(Template2sRadGrid.MasterTableView.SortExpressions[0].SortOrder == GridSortOrder.Descending ? "/sort.descending" : "")}" : null, Template2sRadGrid.PageSize * Template2sRadGrid.CurrentPageIndex, Template2sRadGrid.PageSize, true);
+            var where = Global.Trim(string.Join(" and ", new string[]
+            {
+                Global.GetCqlFilter(Template2sRadGrid, "Id", "id"),
+                Global.GetCqlFilter(Template2sRadGrid, "Name", "name"),
+                Global.GetCqlFilter(Template2sRadGrid, "Active", "active"),
+                Global.GetCqlFilter(Template2sRadGrid, "Category", "category"),
+                Global.GetCqlFilter(Template2sRadGrid, "Description", "description"),
+                Global.GetCqlFilter(Template2sRadGrid, "TemplateResolver", "templateResolver"),
+                Global.GetCqlFilter(Template2sRadGrid, "CreationTime", "metadata.createdDate"),
+                Global.GetCqlFilter(Template2sRadGrid, "CreationUser.Username", "metadata.createdByUserId", "username", folioServiceContext.FolioServiceClient.Users),
+                Global.GetCqlFilter(Template2sRadGrid, "LastWriteTime", "metadata.updatedDate"),
+                Global.GetCqlFilter(Template2sRadGrid, "LastWriteUser.Username", "metadata.updatedByUserId", "username", folioServiceContext.FolioServiceClient.Users)
+            }.Where(s => s != null)));
+            Template2sRadGrid.DataSource = folioServiceContext.Template2s(out var i, where, Template2sRadGrid.MasterTableView.SortExpressions.Count > 0 ? $"{d[Template2sRadGrid.MasterTableView.SortExpressions[0].FieldName]}{(Template2sRadGrid.MasterTableView.SortExpressions[0].SortOrder == GridSortOrder.Descending ? "/sort.descending" : "")}" : null, Template2sRadGrid.PageSize * Template2sRadGrid.CurrentPageIndex, Template2sRadGrid.PageSize, true);
             Template2sRadGrid.VirtualItemCount = i;
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"where = {where}");
         }
 
         protected void ExportLinkButton_Click(object sender, EventArgs e)

@@ -25,8 +25,14 @@ namespace FolioWebApplication.FundType2s
         protected void FundType2sRadGrid_NeedDataSource(object sender, GridNeedDataSourceEventArgs e)
         {
             var d = new Dictionary<string, string>() { { "Id", "id" }, { "Name", "name" } };
-            FundType2sRadGrid.DataSource = folioServiceContext.FundType2s(out var i, Global.GetCqlFilter(FundType2sRadGrid, d), FundType2sRadGrid.MasterTableView.SortExpressions.Count > 0 ? $"{d[FundType2sRadGrid.MasterTableView.SortExpressions[0].FieldName]}{(FundType2sRadGrid.MasterTableView.SortExpressions[0].SortOrder == GridSortOrder.Descending ? "/sort.descending" : "")}" : null, FundType2sRadGrid.PageSize * FundType2sRadGrid.CurrentPageIndex, FundType2sRadGrid.PageSize, true);
+            var where = Global.Trim(string.Join(" and ", new string[]
+            {
+                Global.GetCqlFilter(FundType2sRadGrid, "Id", "id"),
+                Global.GetCqlFilter(FundType2sRadGrid, "Name", "name")
+            }.Where(s => s != null)));
+            FundType2sRadGrid.DataSource = folioServiceContext.FundType2s(out var i, where, FundType2sRadGrid.MasterTableView.SortExpressions.Count > 0 ? $"{d[FundType2sRadGrid.MasterTableView.SortExpressions[0].FieldName]}{(FundType2sRadGrid.MasterTableView.SortExpressions[0].SortOrder == GridSortOrder.Descending ? "/sort.descending" : "")}" : null, FundType2sRadGrid.PageSize * FundType2sRadGrid.CurrentPageIndex, FundType2sRadGrid.PageSize, true);
             FundType2sRadGrid.VirtualItemCount = i;
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"where = {where}");
         }
 
         protected void ExportLinkButton_Click(object sender, EventArgs e)

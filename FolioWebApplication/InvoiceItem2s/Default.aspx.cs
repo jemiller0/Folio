@@ -25,8 +25,35 @@ namespace FolioWebApplication.InvoiceItem2s
         protected void InvoiceItem2sRadGrid_NeedDataSource(object sender, GridNeedDataSourceEventArgs e)
         {
             var d = new Dictionary<string, string>() { { "Id", "id" }, { "AccountingCode", "accountingCode" }, { "AccountNumber", "accountNumber" }, { "AdjustmentsTotal", "adjustmentsTotal" }, { "Comment", "comment" }, { "Description", "description" }, { "InvoiceId", "invoiceId" }, { "Number", "invoiceLineNumber" }, { "InvoiceLineStatus", "invoiceLineStatus" }, { "OrderItemId", "poLineId" }, { "ProductId", "productId" }, { "ProductIdTypeId", "productIdType" }, { "Quantity", "quantity" }, { "ReleaseEncumbrance", "releaseEncumbrance" }, { "SubscriptionInfo", "subscriptionInfo" }, { "SubscriptionStartDate", "subscriptionStart" }, { "SubscriptionEndDate", "subscriptionEnd" }, { "SubTotal", "subTotal" }, { "Total", "total" }, { "CreationTime", "metadata.createdDate" }, { "CreationUserId", "metadata.createdByUserId" }, { "LastWriteTime", "metadata.updatedDate" }, { "LastWriteUserId", "metadata.updatedByUserId" } };
-            InvoiceItem2sRadGrid.DataSource = folioServiceContext.InvoiceItem2s(out var i, Global.GetCqlFilter(InvoiceItem2sRadGrid, d), InvoiceItem2sRadGrid.MasterTableView.SortExpressions.Count > 0 ? $"{d[InvoiceItem2sRadGrid.MasterTableView.SortExpressions[0].FieldName]}{(InvoiceItem2sRadGrid.MasterTableView.SortExpressions[0].SortOrder == GridSortOrder.Descending ? "/sort.descending" : "")}" : null, InvoiceItem2sRadGrid.PageSize * InvoiceItem2sRadGrid.CurrentPageIndex, InvoiceItem2sRadGrid.PageSize, true);
+            var where = Global.Trim(string.Join(" and ", new string[]
+            {
+                Global.GetCqlFilter(InvoiceItem2sRadGrid, "Id", "id"),
+                Global.GetCqlFilter(InvoiceItem2sRadGrid, "AccountingCode", "accountingCode"),
+                Global.GetCqlFilter(InvoiceItem2sRadGrid, "AccountNumber", "accountNumber"),
+                Global.GetCqlFilter(InvoiceItem2sRadGrid, "AdjustmentsTotal", "adjustmentsTotal"),
+                Global.GetCqlFilter(InvoiceItem2sRadGrid, "Comment", "comment"),
+                Global.GetCqlFilter(InvoiceItem2sRadGrid, "Description", "description"),
+                Global.GetCqlFilter(InvoiceItem2sRadGrid, "Invoice.Number", "invoiceId", "folioInvoiceNo", folioServiceContext.FolioServiceClient.Invoices),
+                Global.GetCqlFilter(InvoiceItem2sRadGrid, "Number", "invoiceLineNumber"),
+                Global.GetCqlFilter(InvoiceItem2sRadGrid, "InvoiceLineStatus", "invoiceLineStatus"),
+                Global.GetCqlFilter(InvoiceItem2sRadGrid, "OrderItem.Number", "poLineId", "poLineNumber", folioServiceContext.FolioServiceClient.OrderItems),
+                Global.GetCqlFilter(InvoiceItem2sRadGrid, "ProductId", "productId"),
+                Global.GetCqlFilter(InvoiceItem2sRadGrid, "ProductIdType.Name", "productIdType", "name", folioServiceContext.FolioServiceClient.IdTypes),
+                Global.GetCqlFilter(InvoiceItem2sRadGrid, "Quantity", "quantity"),
+                Global.GetCqlFilter(InvoiceItem2sRadGrid, "ReleaseEncumbrance", "releaseEncumbrance"),
+                Global.GetCqlFilter(InvoiceItem2sRadGrid, "SubscriptionInfo", "subscriptionInfo"),
+                Global.GetCqlFilter(InvoiceItem2sRadGrid, "SubscriptionStartDate", "subscriptionStart"),
+                Global.GetCqlFilter(InvoiceItem2sRadGrid, "SubscriptionEndDate", "subscriptionEnd"),
+                Global.GetCqlFilter(InvoiceItem2sRadGrid, "SubTotal", "subTotal"),
+                Global.GetCqlFilter(InvoiceItem2sRadGrid, "Total", "total"),
+                Global.GetCqlFilter(InvoiceItem2sRadGrid, "CreationTime", "metadata.createdDate"),
+                Global.GetCqlFilter(InvoiceItem2sRadGrid, "CreationUser.Username", "metadata.createdByUserId", "username", folioServiceContext.FolioServiceClient.Users),
+                Global.GetCqlFilter(InvoiceItem2sRadGrid, "LastWriteTime", "metadata.updatedDate"),
+                Global.GetCqlFilter(InvoiceItem2sRadGrid, "LastWriteUser.Username", "metadata.updatedByUserId", "username", folioServiceContext.FolioServiceClient.Users)
+            }.Where(s => s != null)));
+            InvoiceItem2sRadGrid.DataSource = folioServiceContext.InvoiceItem2s(out var i, where, InvoiceItem2sRadGrid.MasterTableView.SortExpressions.Count > 0 ? $"{d[InvoiceItem2sRadGrid.MasterTableView.SortExpressions[0].FieldName]}{(InvoiceItem2sRadGrid.MasterTableView.SortExpressions[0].SortOrder == GridSortOrder.Descending ? "/sort.descending" : "")}" : null, InvoiceItem2sRadGrid.PageSize * InvoiceItem2sRadGrid.CurrentPageIndex, InvoiceItem2sRadGrid.PageSize, true);
             InvoiceItem2sRadGrid.VirtualItemCount = i;
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"where = {where}");
         }
 
         protected void ExportLinkButton_Click(object sender, EventArgs e)

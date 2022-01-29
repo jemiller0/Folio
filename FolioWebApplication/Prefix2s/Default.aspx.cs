@@ -25,8 +25,15 @@ namespace FolioWebApplication.Prefix2s
         protected void Prefix2sRadGrid_NeedDataSource(object sender, GridNeedDataSourceEventArgs e)
         {
             var d = new Dictionary<string, string>() { { "Id", "id" }, { "Name", "name" }, { "Description", "description" } };
-            Prefix2sRadGrid.DataSource = folioServiceContext.Prefix2s(out var i, Global.GetCqlFilter(Prefix2sRadGrid, d), Prefix2sRadGrid.MasterTableView.SortExpressions.Count > 0 ? $"{d[Prefix2sRadGrid.MasterTableView.SortExpressions[0].FieldName]}{(Prefix2sRadGrid.MasterTableView.SortExpressions[0].SortOrder == GridSortOrder.Descending ? "/sort.descending" : "")}" : null, Prefix2sRadGrid.PageSize * Prefix2sRadGrid.CurrentPageIndex, Prefix2sRadGrid.PageSize, true);
+            var where = Global.Trim(string.Join(" and ", new string[]
+            {
+                Global.GetCqlFilter(Prefix2sRadGrid, "Id", "id"),
+                Global.GetCqlFilter(Prefix2sRadGrid, "Name", "name"),
+                Global.GetCqlFilter(Prefix2sRadGrid, "Description", "description")
+            }.Where(s => s != null)));
+            Prefix2sRadGrid.DataSource = folioServiceContext.Prefix2s(out var i, where, Prefix2sRadGrid.MasterTableView.SortExpressions.Count > 0 ? $"{d[Prefix2sRadGrid.MasterTableView.SortExpressions[0].FieldName]}{(Prefix2sRadGrid.MasterTableView.SortExpressions[0].SortOrder == GridSortOrder.Descending ? "/sort.descending" : "")}" : null, Prefix2sRadGrid.PageSize * Prefix2sRadGrid.CurrentPageIndex, Prefix2sRadGrid.PageSize, true);
             Prefix2sRadGrid.VirtualItemCount = i;
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"where = {where}");
         }
 
         protected void ExportLinkButton_Click(object sender, EventArgs e)

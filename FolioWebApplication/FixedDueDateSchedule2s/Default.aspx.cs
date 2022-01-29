@@ -25,8 +25,19 @@ namespace FolioWebApplication.FixedDueDateSchedule2s
         protected void FixedDueDateSchedule2sRadGrid_NeedDataSource(object sender, GridNeedDataSourceEventArgs e)
         {
             var d = new Dictionary<string, string>() { { "Id", "id" }, { "Name", "name" }, { "Description", "description" }, { "CreationTime", "metadata.createdDate" }, { "CreationUserId", "metadata.createdByUserId" }, { "LastWriteTime", "metadata.updatedDate" }, { "LastWriteUserId", "metadata.updatedByUserId" } };
-            FixedDueDateSchedule2sRadGrid.DataSource = folioServiceContext.FixedDueDateSchedule2s(out var i, Global.GetCqlFilter(FixedDueDateSchedule2sRadGrid, d), FixedDueDateSchedule2sRadGrid.MasterTableView.SortExpressions.Count > 0 ? $"{d[FixedDueDateSchedule2sRadGrid.MasterTableView.SortExpressions[0].FieldName]}{(FixedDueDateSchedule2sRadGrid.MasterTableView.SortExpressions[0].SortOrder == GridSortOrder.Descending ? "/sort.descending" : "")}" : null, FixedDueDateSchedule2sRadGrid.PageSize * FixedDueDateSchedule2sRadGrid.CurrentPageIndex, FixedDueDateSchedule2sRadGrid.PageSize, true);
+            var where = Global.Trim(string.Join(" and ", new string[]
+            {
+                Global.GetCqlFilter(FixedDueDateSchedule2sRadGrid, "Id", "id"),
+                Global.GetCqlFilter(FixedDueDateSchedule2sRadGrid, "Name", "name"),
+                Global.GetCqlFilter(FixedDueDateSchedule2sRadGrid, "Description", "description"),
+                Global.GetCqlFilter(FixedDueDateSchedule2sRadGrid, "CreationTime", "metadata.createdDate"),
+                Global.GetCqlFilter(FixedDueDateSchedule2sRadGrid, "CreationUser.Username", "metadata.createdByUserId", "username", folioServiceContext.FolioServiceClient.Users),
+                Global.GetCqlFilter(FixedDueDateSchedule2sRadGrid, "LastWriteTime", "metadata.updatedDate"),
+                Global.GetCqlFilter(FixedDueDateSchedule2sRadGrid, "LastWriteUser.Username", "metadata.updatedByUserId", "username", folioServiceContext.FolioServiceClient.Users)
+            }.Where(s => s != null)));
+            FixedDueDateSchedule2sRadGrid.DataSource = folioServiceContext.FixedDueDateSchedule2s(out var i, where, FixedDueDateSchedule2sRadGrid.MasterTableView.SortExpressions.Count > 0 ? $"{d[FixedDueDateSchedule2sRadGrid.MasterTableView.SortExpressions[0].FieldName]}{(FixedDueDateSchedule2sRadGrid.MasterTableView.SortExpressions[0].SortOrder == GridSortOrder.Descending ? "/sort.descending" : "")}" : null, FixedDueDateSchedule2sRadGrid.PageSize * FixedDueDateSchedule2sRadGrid.CurrentPageIndex, FixedDueDateSchedule2sRadGrid.PageSize, true);
             FixedDueDateSchedule2sRadGrid.VirtualItemCount = i;
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"where = {where}");
         }
 
         protected void ExportLinkButton_Click(object sender, EventArgs e)

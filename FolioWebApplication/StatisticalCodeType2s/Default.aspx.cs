@@ -25,8 +25,19 @@ namespace FolioWebApplication.StatisticalCodeType2s
         protected void StatisticalCodeType2sRadGrid_NeedDataSource(object sender, GridNeedDataSourceEventArgs e)
         {
             var d = new Dictionary<string, string>() { { "Id", "id" }, { "Name", "name" }, { "Source", "source" }, { "CreationTime", "metadata.createdDate" }, { "CreationUserId", "metadata.createdByUserId" }, { "LastWriteTime", "metadata.updatedDate" }, { "LastWriteUserId", "metadata.updatedByUserId" } };
-            StatisticalCodeType2sRadGrid.DataSource = folioServiceContext.StatisticalCodeType2s(out var i, Global.GetCqlFilter(StatisticalCodeType2sRadGrid, d), StatisticalCodeType2sRadGrid.MasterTableView.SortExpressions.Count > 0 ? $"{d[StatisticalCodeType2sRadGrid.MasterTableView.SortExpressions[0].FieldName]}{(StatisticalCodeType2sRadGrid.MasterTableView.SortExpressions[0].SortOrder == GridSortOrder.Descending ? "/sort.descending" : "")}" : null, StatisticalCodeType2sRadGrid.PageSize * StatisticalCodeType2sRadGrid.CurrentPageIndex, StatisticalCodeType2sRadGrid.PageSize, true);
+            var where = Global.Trim(string.Join(" and ", new string[]
+            {
+                Global.GetCqlFilter(StatisticalCodeType2sRadGrid, "Id", "id"),
+                Global.GetCqlFilter(StatisticalCodeType2sRadGrid, "Name", "name"),
+                Global.GetCqlFilter(StatisticalCodeType2sRadGrid, "Source", "source"),
+                Global.GetCqlFilter(StatisticalCodeType2sRadGrid, "CreationTime", "metadata.createdDate"),
+                Global.GetCqlFilter(StatisticalCodeType2sRadGrid, "CreationUser.Username", "metadata.createdByUserId", "username", folioServiceContext.FolioServiceClient.Users),
+                Global.GetCqlFilter(StatisticalCodeType2sRadGrid, "LastWriteTime", "metadata.updatedDate"),
+                Global.GetCqlFilter(StatisticalCodeType2sRadGrid, "LastWriteUser.Username", "metadata.updatedByUserId", "username", folioServiceContext.FolioServiceClient.Users)
+            }.Where(s => s != null)));
+            StatisticalCodeType2sRadGrid.DataSource = folioServiceContext.StatisticalCodeType2s(out var i, where, StatisticalCodeType2sRadGrid.MasterTableView.SortExpressions.Count > 0 ? $"{d[StatisticalCodeType2sRadGrid.MasterTableView.SortExpressions[0].FieldName]}{(StatisticalCodeType2sRadGrid.MasterTableView.SortExpressions[0].SortOrder == GridSortOrder.Descending ? "/sort.descending" : "")}" : null, StatisticalCodeType2sRadGrid.PageSize * StatisticalCodeType2sRadGrid.CurrentPageIndex, StatisticalCodeType2sRadGrid.PageSize, true);
             StatisticalCodeType2sRadGrid.VirtualItemCount = i;
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"where = {where}");
         }
 
         protected void ExportLinkButton_Click(object sender, EventArgs e)

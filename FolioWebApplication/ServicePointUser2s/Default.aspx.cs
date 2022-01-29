@@ -25,8 +25,19 @@ namespace FolioWebApplication.ServicePointUser2s
         protected void ServicePointUser2sRadGrid_NeedDataSource(object sender, GridNeedDataSourceEventArgs e)
         {
             var d = new Dictionary<string, string>() { { "Id", "id" }, { "UserId", "userId" }, { "DefaultServicePointId", "defaultServicePointId" }, { "CreationTime", "metadata.createdDate" }, { "CreationUserId", "metadata.createdByUserId" }, { "LastWriteTime", "metadata.updatedDate" }, { "LastWriteUserId", "metadata.updatedByUserId" } };
-            ServicePointUser2sRadGrid.DataSource = folioServiceContext.ServicePointUser2s(out var i, Global.GetCqlFilter(ServicePointUser2sRadGrid, d), ServicePointUser2sRadGrid.MasterTableView.SortExpressions.Count > 0 ? $"{d[ServicePointUser2sRadGrid.MasterTableView.SortExpressions[0].FieldName]}{(ServicePointUser2sRadGrid.MasterTableView.SortExpressions[0].SortOrder == GridSortOrder.Descending ? "/sort.descending" : "")}" : null, ServicePointUser2sRadGrid.PageSize * ServicePointUser2sRadGrid.CurrentPageIndex, ServicePointUser2sRadGrid.PageSize, true);
+            var where = Global.Trim(string.Join(" and ", new string[]
+            {
+                Global.GetCqlFilter(ServicePointUser2sRadGrid, "Id", "id"),
+                Global.GetCqlFilter(ServicePointUser2sRadGrid, "User.Username", "userId", "username", folioServiceContext.FolioServiceClient.Users),
+                Global.GetCqlFilter(ServicePointUser2sRadGrid, "DefaultServicePoint.Name", "defaultServicePointId", "name", folioServiceContext.FolioServiceClient.ServicePoints),
+                Global.GetCqlFilter(ServicePointUser2sRadGrid, "CreationTime", "metadata.createdDate"),
+                Global.GetCqlFilter(ServicePointUser2sRadGrid, "CreationUser.Username", "metadata.createdByUserId", "username", folioServiceContext.FolioServiceClient.Users),
+                Global.GetCqlFilter(ServicePointUser2sRadGrid, "LastWriteTime", "metadata.updatedDate"),
+                Global.GetCqlFilter(ServicePointUser2sRadGrid, "LastWriteUser.Username", "metadata.updatedByUserId", "username", folioServiceContext.FolioServiceClient.Users)
+            }.Where(s => s != null)));
+            ServicePointUser2sRadGrid.DataSource = folioServiceContext.ServicePointUser2s(out var i, where, ServicePointUser2sRadGrid.MasterTableView.SortExpressions.Count > 0 ? $"{d[ServicePointUser2sRadGrid.MasterTableView.SortExpressions[0].FieldName]}{(ServicePointUser2sRadGrid.MasterTableView.SortExpressions[0].SortOrder == GridSortOrder.Descending ? "/sort.descending" : "")}" : null, ServicePointUser2sRadGrid.PageSize * ServicePointUser2sRadGrid.CurrentPageIndex, ServicePointUser2sRadGrid.PageSize, true);
             ServicePointUser2sRadGrid.VirtualItemCount = i;
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"where = {where}");
         }
 
         protected void ExportLinkButton_Click(object sender, EventArgs e)

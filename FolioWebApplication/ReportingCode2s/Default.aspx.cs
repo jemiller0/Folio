@@ -25,8 +25,15 @@ namespace FolioWebApplication.ReportingCode2s
         protected void ReportingCode2sRadGrid_NeedDataSource(object sender, GridNeedDataSourceEventArgs e)
         {
             var d = new Dictionary<string, string>() { { "Id", "id" }, { "Code", "code" }, { "Description", "description" } };
-            ReportingCode2sRadGrid.DataSource = folioServiceContext.ReportingCode2s(out var i, Global.GetCqlFilter(ReportingCode2sRadGrid, d), ReportingCode2sRadGrid.MasterTableView.SortExpressions.Count > 0 ? $"{d[ReportingCode2sRadGrid.MasterTableView.SortExpressions[0].FieldName]}{(ReportingCode2sRadGrid.MasterTableView.SortExpressions[0].SortOrder == GridSortOrder.Descending ? "/sort.descending" : "")}" : null, ReportingCode2sRadGrid.PageSize * ReportingCode2sRadGrid.CurrentPageIndex, ReportingCode2sRadGrid.PageSize, true);
+            var where = Global.Trim(string.Join(" and ", new string[]
+            {
+                Global.GetCqlFilter(ReportingCode2sRadGrid, "Id", "id"),
+                Global.GetCqlFilter(ReportingCode2sRadGrid, "Code", "code"),
+                Global.GetCqlFilter(ReportingCode2sRadGrid, "Description", "description")
+            }.Where(s => s != null)));
+            ReportingCode2sRadGrid.DataSource = folioServiceContext.ReportingCode2s(out var i, where, ReportingCode2sRadGrid.MasterTableView.SortExpressions.Count > 0 ? $"{d[ReportingCode2sRadGrid.MasterTableView.SortExpressions[0].FieldName]}{(ReportingCode2sRadGrid.MasterTableView.SortExpressions[0].SortOrder == GridSortOrder.Descending ? "/sort.descending" : "")}" : null, ReportingCode2sRadGrid.PageSize * ReportingCode2sRadGrid.CurrentPageIndex, ReportingCode2sRadGrid.PageSize, true);
             ReportingCode2sRadGrid.VirtualItemCount = i;
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"where = {where}");
         }
 
         protected void ExportLinkButton_Click(object sender, EventArgs e)

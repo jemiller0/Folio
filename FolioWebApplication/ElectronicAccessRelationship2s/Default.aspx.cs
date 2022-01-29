@@ -25,8 +25,18 @@ namespace FolioWebApplication.ElectronicAccessRelationship2s
         protected void ElectronicAccessRelationship2sRadGrid_NeedDataSource(object sender, GridNeedDataSourceEventArgs e)
         {
             var d = new Dictionary<string, string>() { { "Id", "id" }, { "Name", "name" }, { "CreationTime", "metadata.createdDate" }, { "CreationUserId", "metadata.createdByUserId" }, { "LastWriteTime", "metadata.updatedDate" }, { "LastWriteUserId", "metadata.updatedByUserId" } };
-            ElectronicAccessRelationship2sRadGrid.DataSource = folioServiceContext.ElectronicAccessRelationship2s(out var i, Global.GetCqlFilter(ElectronicAccessRelationship2sRadGrid, d), ElectronicAccessRelationship2sRadGrid.MasterTableView.SortExpressions.Count > 0 ? $"{d[ElectronicAccessRelationship2sRadGrid.MasterTableView.SortExpressions[0].FieldName]}{(ElectronicAccessRelationship2sRadGrid.MasterTableView.SortExpressions[0].SortOrder == GridSortOrder.Descending ? "/sort.descending" : "")}" : null, ElectronicAccessRelationship2sRadGrid.PageSize * ElectronicAccessRelationship2sRadGrid.CurrentPageIndex, ElectronicAccessRelationship2sRadGrid.PageSize, true);
+            var where = Global.Trim(string.Join(" and ", new string[]
+            {
+                Global.GetCqlFilter(ElectronicAccessRelationship2sRadGrid, "Id", "id"),
+                Global.GetCqlFilter(ElectronicAccessRelationship2sRadGrid, "Name", "name"),
+                Global.GetCqlFilter(ElectronicAccessRelationship2sRadGrid, "CreationTime", "metadata.createdDate"),
+                Global.GetCqlFilter(ElectronicAccessRelationship2sRadGrid, "CreationUser.Username", "metadata.createdByUserId", "username", folioServiceContext.FolioServiceClient.Users),
+                Global.GetCqlFilter(ElectronicAccessRelationship2sRadGrid, "LastWriteTime", "metadata.updatedDate"),
+                Global.GetCqlFilter(ElectronicAccessRelationship2sRadGrid, "LastWriteUser.Username", "metadata.updatedByUserId", "username", folioServiceContext.FolioServiceClient.Users)
+            }.Where(s => s != null)));
+            ElectronicAccessRelationship2sRadGrid.DataSource = folioServiceContext.ElectronicAccessRelationship2s(out var i, where, ElectronicAccessRelationship2sRadGrid.MasterTableView.SortExpressions.Count > 0 ? $"{d[ElectronicAccessRelationship2sRadGrid.MasterTableView.SortExpressions[0].FieldName]}{(ElectronicAccessRelationship2sRadGrid.MasterTableView.SortExpressions[0].SortOrder == GridSortOrder.Descending ? "/sort.descending" : "")}" : null, ElectronicAccessRelationship2sRadGrid.PageSize * ElectronicAccessRelationship2sRadGrid.CurrentPageIndex, ElectronicAccessRelationship2sRadGrid.PageSize, true);
             ElectronicAccessRelationship2sRadGrid.VirtualItemCount = i;
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"where = {where}");
         }
 
         protected void ExportLinkButton_Click(object sender, EventArgs e)

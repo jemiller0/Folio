@@ -25,8 +25,20 @@ namespace FolioWebApplication.Campus2s
         protected void Campus2sRadGrid_NeedDataSource(object sender, GridNeedDataSourceEventArgs e)
         {
             var d = new Dictionary<string, string>() { { "Id", "id" }, { "Name", "name" }, { "Code", "code" }, { "InstitutionId", "institutionId" }, { "CreationTime", "metadata.createdDate" }, { "CreationUserId", "metadata.createdByUserId" }, { "LastWriteTime", "metadata.updatedDate" }, { "LastWriteUserId", "metadata.updatedByUserId" } };
-            Campus2sRadGrid.DataSource = folioServiceContext.Campus2s(out var i, Global.GetCqlFilter(Campus2sRadGrid, d), Campus2sRadGrid.MasterTableView.SortExpressions.Count > 0 ? $"{d[Campus2sRadGrid.MasterTableView.SortExpressions[0].FieldName]}{(Campus2sRadGrid.MasterTableView.SortExpressions[0].SortOrder == GridSortOrder.Descending ? "/sort.descending" : "")}" : null, Campus2sRadGrid.PageSize * Campus2sRadGrid.CurrentPageIndex, Campus2sRadGrid.PageSize, true);
+            var where = Global.Trim(string.Join(" and ", new string[]
+            {
+                Global.GetCqlFilter(Campus2sRadGrid, "Id", "id"),
+                Global.GetCqlFilter(Campus2sRadGrid, "Name", "name"),
+                Global.GetCqlFilter(Campus2sRadGrid, "Code", "code"),
+                Global.GetCqlFilter(Campus2sRadGrid, "Institution.Name", "institutionId", "name", folioServiceContext.FolioServiceClient.Institutions),
+                Global.GetCqlFilter(Campus2sRadGrid, "CreationTime", "metadata.createdDate"),
+                Global.GetCqlFilter(Campus2sRadGrid, "CreationUser.Username", "metadata.createdByUserId", "username", folioServiceContext.FolioServiceClient.Users),
+                Global.GetCqlFilter(Campus2sRadGrid, "LastWriteTime", "metadata.updatedDate"),
+                Global.GetCqlFilter(Campus2sRadGrid, "LastWriteUser.Username", "metadata.updatedByUserId", "username", folioServiceContext.FolioServiceClient.Users)
+            }.Where(s => s != null)));
+            Campus2sRadGrid.DataSource = folioServiceContext.Campus2s(out var i, where, Campus2sRadGrid.MasterTableView.SortExpressions.Count > 0 ? $"{d[Campus2sRadGrid.MasterTableView.SortExpressions[0].FieldName]}{(Campus2sRadGrid.MasterTableView.SortExpressions[0].SortOrder == GridSortOrder.Descending ? "/sort.descending" : "")}" : null, Campus2sRadGrid.PageSize * Campus2sRadGrid.CurrentPageIndex, Campus2sRadGrid.PageSize, true);
             Campus2sRadGrid.VirtualItemCount = i;
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"where = {where}");
         }
 
         protected void ExportLinkButton_Click(object sender, EventArgs e)

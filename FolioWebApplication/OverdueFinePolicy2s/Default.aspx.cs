@@ -25,8 +25,28 @@ namespace FolioWebApplication.OverdueFinePolicy2s
         protected void OverdueFinePolicy2sRadGrid_NeedDataSource(object sender, GridNeedDataSourceEventArgs e)
         {
             var d = new Dictionary<string, string>() { { "Id", "id" }, { "Name", "name" }, { "Description", "description" }, { "OverdueFineQuantity", "overdueFine.quantity" }, { "OverdueFineInterval", "overdueFine.intervalId" }, { "CountClosed", "countClosed" }, { "MaxOverdueFine", "maxOverdueFine" }, { "ForgiveOverdueFine", "forgiveOverdueFine" }, { "OverdueRecallFineQuantity", "overdueRecallFine.quantity" }, { "OverdueRecallFineInterval", "overdueRecallFine.intervalId" }, { "GracePeriodRecall", "gracePeriodRecall" }, { "MaxOverdueRecallFine", "maxOverdueRecallFine" }, { "CreationTime", "metadata.createdDate" }, { "CreationUserId", "metadata.createdByUserId" }, { "LastWriteTime", "metadata.updatedDate" }, { "LastWriteUserId", "metadata.updatedByUserId" } };
-            OverdueFinePolicy2sRadGrid.DataSource = folioServiceContext.OverdueFinePolicy2s(out var i, Global.GetCqlFilter(OverdueFinePolicy2sRadGrid, d), OverdueFinePolicy2sRadGrid.MasterTableView.SortExpressions.Count > 0 ? $"{d[OverdueFinePolicy2sRadGrid.MasterTableView.SortExpressions[0].FieldName]}{(OverdueFinePolicy2sRadGrid.MasterTableView.SortExpressions[0].SortOrder == GridSortOrder.Descending ? "/sort.descending" : "")}" : null, OverdueFinePolicy2sRadGrid.PageSize * OverdueFinePolicy2sRadGrid.CurrentPageIndex, OverdueFinePolicy2sRadGrid.PageSize, true);
+            var where = Global.Trim(string.Join(" and ", new string[]
+            {
+                Global.GetCqlFilter(OverdueFinePolicy2sRadGrid, "Id", "id"),
+                Global.GetCqlFilter(OverdueFinePolicy2sRadGrid, "Name", "name"),
+                Global.GetCqlFilter(OverdueFinePolicy2sRadGrid, "Description", "description"),
+                Global.GetCqlFilter(OverdueFinePolicy2sRadGrid, "OverdueFineQuantity", "overdueFine.quantity"),
+                Global.GetCqlFilter(OverdueFinePolicy2sRadGrid, "OverdueFineInterval", "overdueFine.intervalId"),
+                Global.GetCqlFilter(OverdueFinePolicy2sRadGrid, "CountClosed", "countClosed"),
+                Global.GetCqlFilter(OverdueFinePolicy2sRadGrid, "MaxOverdueFine", "maxOverdueFine"),
+                Global.GetCqlFilter(OverdueFinePolicy2sRadGrid, "ForgiveOverdueFine", "forgiveOverdueFine"),
+                Global.GetCqlFilter(OverdueFinePolicy2sRadGrid, "OverdueRecallFineQuantity", "overdueRecallFine.quantity"),
+                Global.GetCqlFilter(OverdueFinePolicy2sRadGrid, "OverdueRecallFineInterval", "overdueRecallFine.intervalId"),
+                Global.GetCqlFilter(OverdueFinePolicy2sRadGrid, "GracePeriodRecall", "gracePeriodRecall"),
+                Global.GetCqlFilter(OverdueFinePolicy2sRadGrid, "MaxOverdueRecallFine", "maxOverdueRecallFine"),
+                Global.GetCqlFilter(OverdueFinePolicy2sRadGrid, "CreationTime", "metadata.createdDate"),
+                Global.GetCqlFilter(OverdueFinePolicy2sRadGrid, "CreationUser.Username", "metadata.createdByUserId", "username", folioServiceContext.FolioServiceClient.Users),
+                Global.GetCqlFilter(OverdueFinePolicy2sRadGrid, "LastWriteTime", "metadata.updatedDate"),
+                Global.GetCqlFilter(OverdueFinePolicy2sRadGrid, "LastWriteUser.Username", "metadata.updatedByUserId", "username", folioServiceContext.FolioServiceClient.Users)
+            }.Where(s => s != null)));
+            OverdueFinePolicy2sRadGrid.DataSource = folioServiceContext.OverdueFinePolicy2s(out var i, where, OverdueFinePolicy2sRadGrid.MasterTableView.SortExpressions.Count > 0 ? $"{d[OverdueFinePolicy2sRadGrid.MasterTableView.SortExpressions[0].FieldName]}{(OverdueFinePolicy2sRadGrid.MasterTableView.SortExpressions[0].SortOrder == GridSortOrder.Descending ? "/sort.descending" : "")}" : null, OverdueFinePolicy2sRadGrid.PageSize * OverdueFinePolicy2sRadGrid.CurrentPageIndex, OverdueFinePolicy2sRadGrid.PageSize, true);
             OverdueFinePolicy2sRadGrid.VirtualItemCount = i;
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"where = {where}");
         }
 
         protected void ExportLinkButton_Click(object sender, EventArgs e)

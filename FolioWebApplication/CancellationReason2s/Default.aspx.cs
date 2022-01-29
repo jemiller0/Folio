@@ -25,8 +25,21 @@ namespace FolioWebApplication.CancellationReason2s
         protected void CancellationReason2sRadGrid_NeedDataSource(object sender, GridNeedDataSourceEventArgs e)
         {
             var d = new Dictionary<string, string>() { { "Id", "id" }, { "Name", "name" }, { "Description", "description" }, { "PublicDescription", "publicDescription" }, { "RequiresAdditionalInformation", "requiresAdditionalInformation" }, { "CreationTime", "metadata.createdDate" }, { "CreationUserId", "metadata.createdByUserId" }, { "LastWriteTime", "metadata.updatedDate" }, { "LastWriteUserId", "metadata.updatedByUserId" } };
-            CancellationReason2sRadGrid.DataSource = folioServiceContext.CancellationReason2s(out var i, Global.GetCqlFilter(CancellationReason2sRadGrid, d), CancellationReason2sRadGrid.MasterTableView.SortExpressions.Count > 0 ? $"{d[CancellationReason2sRadGrid.MasterTableView.SortExpressions[0].FieldName]}{(CancellationReason2sRadGrid.MasterTableView.SortExpressions[0].SortOrder == GridSortOrder.Descending ? "/sort.descending" : "")}" : null, CancellationReason2sRadGrid.PageSize * CancellationReason2sRadGrid.CurrentPageIndex, CancellationReason2sRadGrid.PageSize, true);
+            var where = Global.Trim(string.Join(" and ", new string[]
+            {
+                Global.GetCqlFilter(CancellationReason2sRadGrid, "Id", "id"),
+                Global.GetCqlFilter(CancellationReason2sRadGrid, "Name", "name"),
+                Global.GetCqlFilter(CancellationReason2sRadGrid, "Description", "description"),
+                Global.GetCqlFilter(CancellationReason2sRadGrid, "PublicDescription", "publicDescription"),
+                Global.GetCqlFilter(CancellationReason2sRadGrid, "RequiresAdditionalInformation", "requiresAdditionalInformation"),
+                Global.GetCqlFilter(CancellationReason2sRadGrid, "CreationTime", "metadata.createdDate"),
+                Global.GetCqlFilter(CancellationReason2sRadGrid, "CreationUser.Username", "metadata.createdByUserId", "username", folioServiceContext.FolioServiceClient.Users),
+                Global.GetCqlFilter(CancellationReason2sRadGrid, "LastWriteTime", "metadata.updatedDate"),
+                Global.GetCqlFilter(CancellationReason2sRadGrid, "LastWriteUser.Username", "metadata.updatedByUserId", "username", folioServiceContext.FolioServiceClient.Users)
+            }.Where(s => s != null)));
+            CancellationReason2sRadGrid.DataSource = folioServiceContext.CancellationReason2s(out var i, where, CancellationReason2sRadGrid.MasterTableView.SortExpressions.Count > 0 ? $"{d[CancellationReason2sRadGrid.MasterTableView.SortExpressions[0].FieldName]}{(CancellationReason2sRadGrid.MasterTableView.SortExpressions[0].SortOrder == GridSortOrder.Descending ? "/sort.descending" : "")}" : null, CancellationReason2sRadGrid.PageSize * CancellationReason2sRadGrid.CurrentPageIndex, CancellationReason2sRadGrid.PageSize, true);
             CancellationReason2sRadGrid.VirtualItemCount = i;
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"where = {where}");
         }
 
         protected void ExportLinkButton_Click(object sender, EventArgs e)

@@ -25,8 +25,19 @@ namespace FolioWebApplication.IssuanceModes
         protected void IssuanceModesRadGrid_NeedDataSource(object sender, GridNeedDataSourceEventArgs e)
         {
             var d = new Dictionary<string, string>() { { "Id", "id" }, { "Name", "name" }, { "Source", "source" }, { "CreationTime", "metadata.createdDate" }, { "CreationUserId", "metadata.createdByUserId" }, { "LastWriteTime", "metadata.updatedDate" }, { "LastWriteUserId", "metadata.updatedByUserId" } };
-            IssuanceModesRadGrid.DataSource = folioServiceContext.IssuanceModes(out var i, Global.GetCqlFilter(IssuanceModesRadGrid, d), IssuanceModesRadGrid.MasterTableView.SortExpressions.Count > 0 ? $"{d[IssuanceModesRadGrid.MasterTableView.SortExpressions[0].FieldName]}{(IssuanceModesRadGrid.MasterTableView.SortExpressions[0].SortOrder == GridSortOrder.Descending ? "/sort.descending" : "")}" : null, IssuanceModesRadGrid.PageSize * IssuanceModesRadGrid.CurrentPageIndex, IssuanceModesRadGrid.PageSize, true);
+            var where = Global.Trim(string.Join(" and ", new string[]
+            {
+                Global.GetCqlFilter(IssuanceModesRadGrid, "Id", "id"),
+                Global.GetCqlFilter(IssuanceModesRadGrid, "Name", "name"),
+                Global.GetCqlFilter(IssuanceModesRadGrid, "Source", "source"),
+                Global.GetCqlFilter(IssuanceModesRadGrid, "CreationTime", "metadata.createdDate"),
+                Global.GetCqlFilter(IssuanceModesRadGrid, "CreationUser.Username", "metadata.createdByUserId", "username", folioServiceContext.FolioServiceClient.Users),
+                Global.GetCqlFilter(IssuanceModesRadGrid, "LastWriteTime", "metadata.updatedDate"),
+                Global.GetCqlFilter(IssuanceModesRadGrid, "LastWriteUser.Username", "metadata.updatedByUserId", "username", folioServiceContext.FolioServiceClient.Users)
+            }.Where(s => s != null)));
+            IssuanceModesRadGrid.DataSource = folioServiceContext.IssuanceModes(out var i, where, IssuanceModesRadGrid.MasterTableView.SortExpressions.Count > 0 ? $"{d[IssuanceModesRadGrid.MasterTableView.SortExpressions[0].FieldName]}{(IssuanceModesRadGrid.MasterTableView.SortExpressions[0].SortOrder == GridSortOrder.Descending ? "/sort.descending" : "")}" : null, IssuanceModesRadGrid.PageSize * IssuanceModesRadGrid.CurrentPageIndex, IssuanceModesRadGrid.PageSize, true);
             IssuanceModesRadGrid.VirtualItemCount = i;
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"where = {where}");
         }
 
         protected void ExportLinkButton_Click(object sender, EventArgs e)

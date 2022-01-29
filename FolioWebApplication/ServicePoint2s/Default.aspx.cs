@@ -25,8 +25,25 @@ namespace FolioWebApplication.ServicePoint2s
         protected void ServicePoint2sRadGrid_NeedDataSource(object sender, GridNeedDataSourceEventArgs e)
         {
             var d = new Dictionary<string, string>() { { "Id", "id" }, { "Name", "name" }, { "Code", "code" }, { "DiscoveryDisplayName", "discoveryDisplayName" }, { "Description", "description" }, { "ShelvingLagTime", "shelvingLagTime" }, { "PickupLocation", "pickupLocation" }, { "HoldShelfExpiryPeriodDuration", "holdShelfExpiryPeriod.duration" }, { "HoldShelfExpiryPeriodInterval", "holdShelfExpiryPeriod.intervalId" }, { "CreationTime", "metadata.createdDate" }, { "CreationUserId", "metadata.createdByUserId" }, { "LastWriteTime", "metadata.updatedDate" }, { "LastWriteUserId", "metadata.updatedByUserId" } };
-            ServicePoint2sRadGrid.DataSource = folioServiceContext.ServicePoint2s(out var i, Global.GetCqlFilter(ServicePoint2sRadGrid, d), ServicePoint2sRadGrid.MasterTableView.SortExpressions.Count > 0 ? $"{d[ServicePoint2sRadGrid.MasterTableView.SortExpressions[0].FieldName]}{(ServicePoint2sRadGrid.MasterTableView.SortExpressions[0].SortOrder == GridSortOrder.Descending ? "/sort.descending" : "")}" : null, ServicePoint2sRadGrid.PageSize * ServicePoint2sRadGrid.CurrentPageIndex, ServicePoint2sRadGrid.PageSize, true);
+            var where = Global.Trim(string.Join(" and ", new string[]
+            {
+                Global.GetCqlFilter(ServicePoint2sRadGrid, "Id", "id"),
+                Global.GetCqlFilter(ServicePoint2sRadGrid, "Name", "name"),
+                Global.GetCqlFilter(ServicePoint2sRadGrid, "Code", "code"),
+                Global.GetCqlFilter(ServicePoint2sRadGrid, "DiscoveryDisplayName", "discoveryDisplayName"),
+                Global.GetCqlFilter(ServicePoint2sRadGrid, "Description", "description"),
+                Global.GetCqlFilter(ServicePoint2sRadGrid, "ShelvingLagTime", "shelvingLagTime"),
+                Global.GetCqlFilter(ServicePoint2sRadGrid, "PickupLocation", "pickupLocation"),
+                Global.GetCqlFilter(ServicePoint2sRadGrid, "HoldShelfExpiryPeriodDuration", "holdShelfExpiryPeriod.duration"),
+                Global.GetCqlFilter(ServicePoint2sRadGrid, "HoldShelfExpiryPeriodInterval", "holdShelfExpiryPeriod.intervalId"),
+                Global.GetCqlFilter(ServicePoint2sRadGrid, "CreationTime", "metadata.createdDate"),
+                Global.GetCqlFilter(ServicePoint2sRadGrid, "CreationUser.Username", "metadata.createdByUserId", "username", folioServiceContext.FolioServiceClient.Users),
+                Global.GetCqlFilter(ServicePoint2sRadGrid, "LastWriteTime", "metadata.updatedDate"),
+                Global.GetCqlFilter(ServicePoint2sRadGrid, "LastWriteUser.Username", "metadata.updatedByUserId", "username", folioServiceContext.FolioServiceClient.Users)
+            }.Where(s => s != null)));
+            ServicePoint2sRadGrid.DataSource = folioServiceContext.ServicePoint2s(out var i, where, ServicePoint2sRadGrid.MasterTableView.SortExpressions.Count > 0 ? $"{d[ServicePoint2sRadGrid.MasterTableView.SortExpressions[0].FieldName]}{(ServicePoint2sRadGrid.MasterTableView.SortExpressions[0].SortOrder == GridSortOrder.Descending ? "/sort.descending" : "")}" : null, ServicePoint2sRadGrid.PageSize * ServicePoint2sRadGrid.CurrentPageIndex, ServicePoint2sRadGrid.PageSize, true);
             ServicePoint2sRadGrid.VirtualItemCount = i;
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"where = {where}");
         }
 
         protected void ExportLinkButton_Click(object sender, EventArgs e)

@@ -1,4 +1,5 @@
 ﻿using FolioLibrary;
+using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
@@ -128,10 +129,10 @@ namespace FolioWebApplication
                             SetUsersPermissions("View");
                         }
                         else if (
-                            hs.Contains("department:Coll Servc Budg & Report") 
-                            || hs.Contains("department:Tech Srvc-Cat Admin") 
-                            || hs.Contains("department:Tech Srvc-Cont Resources") 
-                            || hs.Contains("department:Law Cataloging") 
+                            hs.Contains("department:Coll Servc Budg & Report")
+                            || hs.Contains("department:Tech Srvc-Cat Admin")
+                            || hs.Contains("department:Tech Srvc-Cont Resources")
+                            || hs.Contains("department:Law Cataloging")
                             || hs.Contains("department:Law Library Administration")
                             || hs.Contains("department:Scrc-Pres")
                             || hs.Contains("department:Area Studies - East Asia")
@@ -178,7 +179,7 @@ namespace FolioWebApplication
                         ////Session["Holding2sPermission"] = hs.Contains("uc.holdings.edit") ? "Edit" : hs.Contains("all") || hs.Contains("inventory.all") || hs.Contains("uc.holdings.view") ? "View" : null;
                         ////Session["Instance2sPermission"] = hs.Contains("uc.instances.edit") ? "Edit" : hs.Contains("all") || hs.Contains("inventory.all") || hs.Contains("uc.instances.view") ? "View" : null;
                         ////Session["Item2sPermission"] = hs.Contains("uc.items.edit") ? "Edit" : hs.Contains("all") || hs.Contains("inventory.all") || hs.Contains("uc.items.view") ? "View" : null;
-                        
+
                         Session["LocationSettingsPermission"] = hs.Contains("uc.locationsettings.edit") ? "Edit" : hs.Contains("all") || hs.Contains("configuration.all") || hs.Contains("uc.locationsettings.view") ? "View" : null;
                         Session["PrintersPermission"] = hs.Contains("uc.printers.edit") ? "Edit" : hs.Contains("all") || hs.Contains("configuration.all") || hs.Contains("uc.printers.view") ? "View" : null;
                         Session["SettingsPermission"] = hs.Contains("uc.settings.edit") ? "Edit" : hs.Contains("all") || hs.Contains("configuration.all") || hs.Contains("uc.settings.view") ? "View" : null;
@@ -226,6 +227,39 @@ namespace FolioWebApplication
             { GridKnownFunction.NotIsNull, "{0} = \"\"" },
             { GridKnownFunction.StartsWith, "{0} == \"{1}*\"" }
         };
+
+        public static string GetCqlFilter(RadGrid radGrid, string dataField, string name, string name2 = null, Func<string, string, int?, int?, IEnumerable<JObject>> query = null)
+        {
+            var gc = radGrid.MasterTableView.Columns.FindByDataField(dataField);
+            if (gc.CurrentFilterValue != "" || gc.CurrentFilterFunction == GridKnownFunction.IsEmpty || gc.CurrentFilterFunction == GridKnownFunction.IsNull || gc.CurrentFilterFunction == GridKnownFunction.NotIsEmpty || gc.CurrentFilterFunction == GridKnownFunction.NotIsNull)
+            {
+                if (query == null)
+                {
+                    if (gc.DataType == typeof(DateTime)) gc.CurrentFilterValue = DateTime.TryParse(gc.CurrentFilterValue, out var dt) ? dt.ToUniversalTime().ToString("o") : null;
+                    return string.Format(formats[gc.CurrentFilterFunction], name, FolioServiceClient.EncodeCql(gc.CurrentFilterValue));
+                }
+                else
+                    return $"{name} == ({string.Join(" or ", query(GetCqlFilter(radGrid, dataField, name2), null, null, radGrid.PageSize).Select(jo => $"\"{jo["id"]}\""))})";
+            }
+            return null;
+        }
+
+        //public static string GetCqlFilter(GridColumn gc, string name, IEnumerable<string> ids = null)
+        //{
+        //    if (gc.CurrentFilterValue != "" || gc.CurrentFilterFunction == GridKnownFunction.IsEmpty || gc.CurrentFilterFunction == GridKnownFunction.IsNull || gc.CurrentFilterFunction == GridKnownFunction.NotIsEmpty || gc.CurrentFilterFunction == GridKnownFunction.NotIsNull)
+        //    {
+        //        if (ids != null)
+        //        {
+        //            if (gc.DataType == typeof(DateTime)) gc.CurrentFilterValue = DateTime.TryParse(gc.CurrentFilterValue, out var dt) ? dt.ToUniversalTime().ToString("o") : null;
+        //            return string.Format(formats[gc.CurrentFilterFunction], name, FolioServiceClient.EncodeCql(gc.CurrentFilterValue));
+        //        }
+        //        else
+        //        {
+
+        //        }
+        //    }
+        //    return null;
+        //}
 
         public static string GetCqlFilter(RadGrid radGrid, Dictionary<string, string> properties, string where = null)
         {

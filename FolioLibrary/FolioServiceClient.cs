@@ -110,7 +110,7 @@ namespace FolioLibrary
             var hrm = httpClient.GetAsync(url).Result;
             var s2 = hrm.Content.ReadAsStringAsync().Result;
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}{1}", hrm.Headers, s2);
-            var jo = hrm.Content.Headers.ContentType.MediaType == "application/json" ? JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings) : null;
+            var jo = hrm.Content.Headers.ContentType?.MediaType == "application/json" ? JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings) : null;
             if (hrm.StatusCode != HttpStatusCode.OK) throw new HttpRequestException($"Response status code does not indicate success: {hrm.StatusCode} ({hrm.ReasonPhrase}).\r\n{s2}");
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", s.Elapsed);
             count = (int)jo["totalRecords"];
@@ -131,7 +131,7 @@ namespace FolioLibrary
             if (hrm.StatusCode != HttpStatusCode.OK)
             {
                 var s2 = hrm.Content.ReadAsStringAsync().Result;
-                if (hrm.Content.Headers.ContentType.MediaType == "application/json") s2 = JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings).ToString();
+                if (hrm.Content.Headers.ContentType?.MediaType == "application/json") s2 = JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings).ToString();
                 traceSource.TraceEvent(TraceEventType.Verbose, 0, s2);
                 throw new HttpRequestException($"Response status code does not indicate success: {hrm.StatusCode} ({hrm.ReasonPhrase}).\r\n{s2}");
             }
@@ -162,7 +162,7 @@ namespace FolioLibrary
             var hrm = httpClient.GetAsync(url).Result;
             var s2 = hrm.Content.ReadAsStringAsync().Result;
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}{1}", hrm.Headers, s2);
-            var jo = hrm.Content.Headers.ContentType.MediaType == "application/json" ? JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings) : null;
+            var jo = hrm.Content.Headers.ContentType?.MediaType == "application/json" ? JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings) : null;
             if (hrm.StatusCode != HttpStatusCode.OK && hrm.StatusCode != HttpStatusCode.NotFound) throw new HttpRequestException($"Response status code does not indicate success: {hrm.StatusCode} ({hrm.ReasonPhrase}).\r\n{s2}");
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", s.Elapsed);
             return jo;
@@ -240,7 +240,7 @@ namespace FolioLibrary
             var hrm = httpClient.GetAsync(url).Result;
             var s2 = hrm.Content.ReadAsStringAsync().Result;
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}{1}", hrm.Headers, s2);
-            var jo = hrm.Content.Headers.ContentType.MediaType == "application/json" ? JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings) : null;
+            var jo = hrm.Content.Headers.ContentType?.MediaType == "application/json" ? JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings) : null;
             if (hrm.StatusCode != HttpStatusCode.OK) throw new HttpRequestException($"Response status code does not indicate success: {hrm.StatusCode} ({hrm.ReasonPhrase}).\r\n{s2}");
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", s.Elapsed);
             count = (int)jo["totalRecords"];
@@ -261,7 +261,7 @@ namespace FolioLibrary
             if (hrm.StatusCode != HttpStatusCode.OK)
             {
                 var s2 = hrm.Content.ReadAsStringAsync().Result;
-                if (hrm.Content.Headers.ContentType.MediaType == "application/json") s2 = JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings).ToString();
+                if (hrm.Content.Headers.ContentType?.MediaType == "application/json") s2 = JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings).ToString();
                 traceSource.TraceEvent(TraceEventType.Verbose, 0, s2);
                 throw new HttpRequestException($"Response status code does not indicate success: {hrm.StatusCode} ({hrm.ReasonPhrase}).\r\n{s2}");
             }
@@ -292,7 +292,7 @@ namespace FolioLibrary
             var hrm = httpClient.GetAsync(url).Result;
             var s2 = hrm.Content.ReadAsStringAsync().Result;
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}{1}", hrm.Headers, s2);
-            var jo = hrm.Content.Headers.ContentType.MediaType == "application/json" ? JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings) : null;
+            var jo = hrm.Content.Headers.ContentType?.MediaType == "application/json" ? JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings) : null;
             if (hrm.StatusCode != HttpStatusCode.OK && hrm.StatusCode != HttpStatusCode.NotFound) throw new HttpRequestException($"Response status code does not indicate success: {hrm.StatusCode} ({hrm.ReasonPhrase}).\r\n{s2}");
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", s.Elapsed);
             return jo;
@@ -370,7 +370,7 @@ namespace FolioLibrary
             var hrm = httpClient.GetAsync(url).Result;
             var s2 = hrm.Content.ReadAsStringAsync().Result;
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}{1}", hrm.Headers, s2);
-            var jo = hrm.Content.Headers.ContentType.MediaType == "application/json" ? JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings) : null;
+            var jo = hrm.Content.Headers.ContentType?.MediaType == "application/json" ? JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings) : null;
             if (hrm.StatusCode != HttpStatusCode.OK) throw new HttpRequestException($"Response status code does not indicate success: {hrm.StatusCode} ({hrm.ReasonPhrase}).\r\n{s2}");
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", s.Elapsed);
             count = (int)jo["totalRecords"];
@@ -391,7 +391,7 @@ namespace FolioLibrary
             if (hrm.StatusCode != HttpStatusCode.OK)
             {
                 var s2 = hrm.Content.ReadAsStringAsync().Result;
-                if (hrm.Content.Headers.ContentType.MediaType == "application/json") s2 = JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings).ToString();
+                if (hrm.Content.Headers.ContentType?.MediaType == "application/json") s2 = JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings).ToString();
                 traceSource.TraceEvent(TraceEventType.Verbose, 0, s2);
                 throw new HttpRequestException($"Response status code does not indicate success: {hrm.StatusCode} ({hrm.ReasonPhrase}).\r\n{s2}");
             }
@@ -422,7 +422,7 @@ namespace FolioLibrary
             var hrm = httpClient.GetAsync(url).Result;
             var s2 = hrm.Content.ReadAsStringAsync().Result;
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}{1}", hrm.Headers, s2);
-            var jo = hrm.Content.Headers.ContentType.MediaType == "application/json" ? JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings) : null;
+            var jo = hrm.Content.Headers.ContentType?.MediaType == "application/json" ? JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings) : null;
             if (hrm.StatusCode != HttpStatusCode.OK && hrm.StatusCode != HttpStatusCode.NotFound) throw new HttpRequestException($"Response status code does not indicate success: {hrm.StatusCode} ({hrm.ReasonPhrase}).\r\n{s2}");
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", s.Elapsed);
             return jo;
@@ -500,7 +500,7 @@ namespace FolioLibrary
             var hrm = httpClient.GetAsync(url).Result;
             var s2 = hrm.Content.ReadAsStringAsync().Result;
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}{1}", hrm.Headers, s2);
-            var jo = hrm.Content.Headers.ContentType.MediaType == "application/json" ? JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings) : null;
+            var jo = hrm.Content.Headers.ContentType?.MediaType == "application/json" ? JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings) : null;
             if (hrm.StatusCode != HttpStatusCode.OK) throw new HttpRequestException($"Response status code does not indicate success: {hrm.StatusCode} ({hrm.ReasonPhrase}).\r\n{s2}");
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", s.Elapsed);
             count = (int)jo["totalRecords"];
@@ -521,7 +521,7 @@ namespace FolioLibrary
             if (hrm.StatusCode != HttpStatusCode.OK)
             {
                 var s2 = hrm.Content.ReadAsStringAsync().Result;
-                if (hrm.Content.Headers.ContentType.MediaType == "application/json") s2 = JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings).ToString();
+                if (hrm.Content.Headers.ContentType?.MediaType == "application/json") s2 = JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings).ToString();
                 traceSource.TraceEvent(TraceEventType.Verbose, 0, s2);
                 throw new HttpRequestException($"Response status code does not indicate success: {hrm.StatusCode} ({hrm.ReasonPhrase}).\r\n{s2}");
             }
@@ -552,7 +552,7 @@ namespace FolioLibrary
             var hrm = httpClient.GetAsync(url).Result;
             var s2 = hrm.Content.ReadAsStringAsync().Result;
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}{1}", hrm.Headers, s2);
-            var jo = hrm.Content.Headers.ContentType.MediaType == "application/json" ? JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings) : null;
+            var jo = hrm.Content.Headers.ContentType?.MediaType == "application/json" ? JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings) : null;
             if (hrm.StatusCode != HttpStatusCode.OK && hrm.StatusCode != HttpStatusCode.NotFound) throw new HttpRequestException($"Response status code does not indicate success: {hrm.StatusCode} ({hrm.ReasonPhrase}).\r\n{s2}");
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", s.Elapsed);
             return jo;
@@ -630,7 +630,7 @@ namespace FolioLibrary
             var hrm = httpClient.GetAsync(url).Result;
             var s2 = hrm.Content.ReadAsStringAsync().Result;
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}{1}", hrm.Headers, s2);
-            var jo = hrm.Content.Headers.ContentType.MediaType == "application/json" ? JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings) : null;
+            var jo = hrm.Content.Headers.ContentType?.MediaType == "application/json" ? JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings) : null;
             if (hrm.StatusCode != HttpStatusCode.OK) throw new HttpRequestException($"Response status code does not indicate success: {hrm.StatusCode} ({hrm.ReasonPhrase}).\r\n{s2}");
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", s.Elapsed);
             count = (int)jo["totalRecords"];
@@ -651,7 +651,7 @@ namespace FolioLibrary
             if (hrm.StatusCode != HttpStatusCode.OK)
             {
                 var s2 = hrm.Content.ReadAsStringAsync().Result;
-                if (hrm.Content.Headers.ContentType.MediaType == "application/json") s2 = JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings).ToString();
+                if (hrm.Content.Headers.ContentType?.MediaType == "application/json") s2 = JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings).ToString();
                 traceSource.TraceEvent(TraceEventType.Verbose, 0, s2);
                 throw new HttpRequestException($"Response status code does not indicate success: {hrm.StatusCode} ({hrm.ReasonPhrase}).\r\n{s2}");
             }
@@ -682,7 +682,7 @@ namespace FolioLibrary
             var hrm = httpClient.GetAsync(url).Result;
             var s2 = hrm.Content.ReadAsStringAsync().Result;
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}{1}", hrm.Headers, s2);
-            var jo = hrm.Content.Headers.ContentType.MediaType == "application/json" ? JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings) : null;
+            var jo = hrm.Content.Headers.ContentType?.MediaType == "application/json" ? JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings) : null;
             if (hrm.StatusCode != HttpStatusCode.OK && hrm.StatusCode != HttpStatusCode.NotFound) throw new HttpRequestException($"Response status code does not indicate success: {hrm.StatusCode} ({hrm.ReasonPhrase}).\r\n{s2}");
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", s.Elapsed);
             return jo;
@@ -760,7 +760,7 @@ namespace FolioLibrary
             var hrm = httpClient.GetAsync(url).Result;
             var s2 = hrm.Content.ReadAsStringAsync().Result;
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}{1}", hrm.Headers, s2);
-            var jo = hrm.Content.Headers.ContentType.MediaType == "application/json" ? JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings) : null;
+            var jo = hrm.Content.Headers.ContentType?.MediaType == "application/json" ? JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings) : null;
             if (hrm.StatusCode != HttpStatusCode.OK) throw new HttpRequestException($"Response status code does not indicate success: {hrm.StatusCode} ({hrm.ReasonPhrase}).\r\n{s2}");
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", s.Elapsed);
             count = (int)jo["totalRecords"];
@@ -781,7 +781,7 @@ namespace FolioLibrary
             if (hrm.StatusCode != HttpStatusCode.OK)
             {
                 var s2 = hrm.Content.ReadAsStringAsync().Result;
-                if (hrm.Content.Headers.ContentType.MediaType == "application/json") s2 = JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings).ToString();
+                if (hrm.Content.Headers.ContentType?.MediaType == "application/json") s2 = JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings).ToString();
                 traceSource.TraceEvent(TraceEventType.Verbose, 0, s2);
                 throw new HttpRequestException($"Response status code does not indicate success: {hrm.StatusCode} ({hrm.ReasonPhrase}).\r\n{s2}");
             }
@@ -812,7 +812,7 @@ namespace FolioLibrary
             var hrm = httpClient.GetAsync(url).Result;
             var s2 = hrm.Content.ReadAsStringAsync().Result;
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}{1}", hrm.Headers, s2);
-            var jo = hrm.Content.Headers.ContentType.MediaType == "application/json" ? JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings) : null;
+            var jo = hrm.Content.Headers.ContentType?.MediaType == "application/json" ? JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings) : null;
             if (hrm.StatusCode != HttpStatusCode.OK && hrm.StatusCode != HttpStatusCode.NotFound) throw new HttpRequestException($"Response status code does not indicate success: {hrm.StatusCode} ({hrm.ReasonPhrase}).\r\n{s2}");
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", s.Elapsed);
             return jo;
@@ -890,7 +890,7 @@ namespace FolioLibrary
             var hrm = httpClient.GetAsync(url).Result;
             var s2 = hrm.Content.ReadAsStringAsync().Result;
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}{1}", hrm.Headers, s2);
-            var jo = hrm.Content.Headers.ContentType.MediaType == "application/json" ? JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings) : null;
+            var jo = hrm.Content.Headers.ContentType?.MediaType == "application/json" ? JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings) : null;
             if (hrm.StatusCode != HttpStatusCode.OK) throw new HttpRequestException($"Response status code does not indicate success: {hrm.StatusCode} ({hrm.ReasonPhrase}).\r\n{s2}");
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", s.Elapsed);
             count = (int)jo["totalRecords"];
@@ -911,7 +911,7 @@ namespace FolioLibrary
             if (hrm.StatusCode != HttpStatusCode.OK)
             {
                 var s2 = hrm.Content.ReadAsStringAsync().Result;
-                if (hrm.Content.Headers.ContentType.MediaType == "application/json") s2 = JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings).ToString();
+                if (hrm.Content.Headers.ContentType?.MediaType == "application/json") s2 = JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings).ToString();
                 traceSource.TraceEvent(TraceEventType.Verbose, 0, s2);
                 throw new HttpRequestException($"Response status code does not indicate success: {hrm.StatusCode} ({hrm.ReasonPhrase}).\r\n{s2}");
             }
@@ -942,7 +942,7 @@ namespace FolioLibrary
             var hrm = httpClient.GetAsync(url).Result;
             var s2 = hrm.Content.ReadAsStringAsync().Result;
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}{1}", hrm.Headers, s2);
-            var jo = hrm.Content.Headers.ContentType.MediaType == "application/json" ? JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings) : null;
+            var jo = hrm.Content.Headers.ContentType?.MediaType == "application/json" ? JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings) : null;
             if (hrm.StatusCode != HttpStatusCode.OK && hrm.StatusCode != HttpStatusCode.NotFound) throw new HttpRequestException($"Response status code does not indicate success: {hrm.StatusCode} ({hrm.ReasonPhrase}).\r\n{s2}");
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", s.Elapsed);
             return jo;
@@ -1020,7 +1020,7 @@ namespace FolioLibrary
             var hrm = httpClient.GetAsync(url).Result;
             var s2 = hrm.Content.ReadAsStringAsync().Result;
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}{1}", hrm.Headers, s2);
-            var jo = hrm.Content.Headers.ContentType.MediaType == "application/json" ? JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings) : null;
+            var jo = hrm.Content.Headers.ContentType?.MediaType == "application/json" ? JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings) : null;
             if (hrm.StatusCode != HttpStatusCode.OK) throw new HttpRequestException($"Response status code does not indicate success: {hrm.StatusCode} ({hrm.ReasonPhrase}).\r\n{s2}");
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", s.Elapsed);
             count = (int)jo["totalRecords"];
@@ -1041,7 +1041,7 @@ namespace FolioLibrary
             if (hrm.StatusCode != HttpStatusCode.OK)
             {
                 var s2 = hrm.Content.ReadAsStringAsync().Result;
-                if (hrm.Content.Headers.ContentType.MediaType == "application/json") s2 = JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings).ToString();
+                if (hrm.Content.Headers.ContentType?.MediaType == "application/json") s2 = JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings).ToString();
                 traceSource.TraceEvent(TraceEventType.Verbose, 0, s2);
                 throw new HttpRequestException($"Response status code does not indicate success: {hrm.StatusCode} ({hrm.ReasonPhrase}).\r\n{s2}");
             }
@@ -1072,7 +1072,7 @@ namespace FolioLibrary
             var hrm = httpClient.GetAsync(url).Result;
             var s2 = hrm.Content.ReadAsStringAsync().Result;
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}{1}", hrm.Headers, s2);
-            var jo = hrm.Content.Headers.ContentType.MediaType == "application/json" ? JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings) : null;
+            var jo = hrm.Content.Headers.ContentType?.MediaType == "application/json" ? JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings) : null;
             if (hrm.StatusCode != HttpStatusCode.OK && hrm.StatusCode != HttpStatusCode.NotFound) throw new HttpRequestException($"Response status code does not indicate success: {hrm.StatusCode} ({hrm.ReasonPhrase}).\r\n{s2}");
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", s.Elapsed);
             return jo;
@@ -1150,7 +1150,7 @@ namespace FolioLibrary
             var hrm = httpClient.GetAsync(url).Result;
             var s2 = hrm.Content.ReadAsStringAsync().Result;
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}{1}", hrm.Headers, s2);
-            var jo = hrm.Content.Headers.ContentType.MediaType == "application/json" ? JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings) : null;
+            var jo = hrm.Content.Headers.ContentType?.MediaType == "application/json" ? JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings) : null;
             if (hrm.StatusCode != HttpStatusCode.OK) throw new HttpRequestException($"Response status code does not indicate success: {hrm.StatusCode} ({hrm.ReasonPhrase}).\r\n{s2}");
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", s.Elapsed);
             count = (int)jo["totalRecords"];
@@ -1171,7 +1171,7 @@ namespace FolioLibrary
             if (hrm.StatusCode != HttpStatusCode.OK)
             {
                 var s2 = hrm.Content.ReadAsStringAsync().Result;
-                if (hrm.Content.Headers.ContentType.MediaType == "application/json") s2 = JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings).ToString();
+                if (hrm.Content.Headers.ContentType?.MediaType == "application/json") s2 = JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings).ToString();
                 traceSource.TraceEvent(TraceEventType.Verbose, 0, s2);
                 throw new HttpRequestException($"Response status code does not indicate success: {hrm.StatusCode} ({hrm.ReasonPhrase}).\r\n{s2}");
             }
@@ -1202,7 +1202,7 @@ namespace FolioLibrary
             var hrm = httpClient.GetAsync(url).Result;
             var s2 = hrm.Content.ReadAsStringAsync().Result;
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}{1}", hrm.Headers, s2);
-            var jo = hrm.Content.Headers.ContentType.MediaType == "application/json" ? JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings) : null;
+            var jo = hrm.Content.Headers.ContentType?.MediaType == "application/json" ? JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings) : null;
             if (hrm.StatusCode != HttpStatusCode.OK && hrm.StatusCode != HttpStatusCode.NotFound) throw new HttpRequestException($"Response status code does not indicate success: {hrm.StatusCode} ({hrm.ReasonPhrase}).\r\n{s2}");
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", s.Elapsed);
             return jo;
@@ -1280,7 +1280,7 @@ namespace FolioLibrary
             var hrm = httpClient.GetAsync(url).Result;
             var s2 = hrm.Content.ReadAsStringAsync().Result;
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}{1}", hrm.Headers, s2);
-            var jo = hrm.Content.Headers.ContentType.MediaType == "application/json" ? JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings) : null;
+            var jo = hrm.Content.Headers.ContentType?.MediaType == "application/json" ? JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings) : null;
             if (hrm.StatusCode != HttpStatusCode.OK) throw new HttpRequestException($"Response status code does not indicate success: {hrm.StatusCode} ({hrm.ReasonPhrase}).\r\n{s2}");
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", s.Elapsed);
             count = (int)jo["totalRecords"];
@@ -1301,7 +1301,7 @@ namespace FolioLibrary
             if (hrm.StatusCode != HttpStatusCode.OK)
             {
                 var s2 = hrm.Content.ReadAsStringAsync().Result;
-                if (hrm.Content.Headers.ContentType.MediaType == "application/json") s2 = JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings).ToString();
+                if (hrm.Content.Headers.ContentType?.MediaType == "application/json") s2 = JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings).ToString();
                 traceSource.TraceEvent(TraceEventType.Verbose, 0, s2);
                 throw new HttpRequestException($"Response status code does not indicate success: {hrm.StatusCode} ({hrm.ReasonPhrase}).\r\n{s2}");
             }
@@ -1332,7 +1332,7 @@ namespace FolioLibrary
             var hrm = httpClient.GetAsync(url).Result;
             var s2 = hrm.Content.ReadAsStringAsync().Result;
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}{1}", hrm.Headers, s2);
-            var jo = hrm.Content.Headers.ContentType.MediaType == "application/json" ? JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings) : null;
+            var jo = hrm.Content.Headers.ContentType?.MediaType == "application/json" ? JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings) : null;
             if (hrm.StatusCode != HttpStatusCode.OK && hrm.StatusCode != HttpStatusCode.NotFound) throw new HttpRequestException($"Response status code does not indicate success: {hrm.StatusCode} ({hrm.ReasonPhrase}).\r\n{s2}");
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", s.Elapsed);
             return jo;
@@ -1410,7 +1410,7 @@ namespace FolioLibrary
             var hrm = httpClient.GetAsync(url).Result;
             var s2 = hrm.Content.ReadAsStringAsync().Result;
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}{1}", hrm.Headers, s2);
-            var jo = hrm.Content.Headers.ContentType.MediaType == "application/json" ? JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings) : null;
+            var jo = hrm.Content.Headers.ContentType?.MediaType == "application/json" ? JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings) : null;
             if (hrm.StatusCode != HttpStatusCode.OK) throw new HttpRequestException($"Response status code does not indicate success: {hrm.StatusCode} ({hrm.ReasonPhrase}).\r\n{s2}");
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", s.Elapsed);
             count = (int)jo["totalRecords"];
@@ -1431,7 +1431,7 @@ namespace FolioLibrary
             if (hrm.StatusCode != HttpStatusCode.OK)
             {
                 var s2 = hrm.Content.ReadAsStringAsync().Result;
-                if (hrm.Content.Headers.ContentType.MediaType == "application/json") s2 = JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings).ToString();
+                if (hrm.Content.Headers.ContentType?.MediaType == "application/json") s2 = JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings).ToString();
                 traceSource.TraceEvent(TraceEventType.Verbose, 0, s2);
                 throw new HttpRequestException($"Response status code does not indicate success: {hrm.StatusCode} ({hrm.ReasonPhrase}).\r\n{s2}");
             }
@@ -1462,7 +1462,7 @@ namespace FolioLibrary
             var hrm = httpClient.GetAsync(url).Result;
             var s2 = hrm.Content.ReadAsStringAsync().Result;
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}{1}", hrm.Headers, s2);
-            var jo = hrm.Content.Headers.ContentType.MediaType == "application/json" ? JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings) : null;
+            var jo = hrm.Content.Headers.ContentType?.MediaType == "application/json" ? JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings) : null;
             if (hrm.StatusCode != HttpStatusCode.OK && hrm.StatusCode != HttpStatusCode.NotFound) throw new HttpRequestException($"Response status code does not indicate success: {hrm.StatusCode} ({hrm.ReasonPhrase}).\r\n{s2}");
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", s.Elapsed);
             return jo;
@@ -1540,7 +1540,7 @@ namespace FolioLibrary
             var hrm = httpClient.GetAsync(url).Result;
             var s2 = hrm.Content.ReadAsStringAsync().Result;
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}{1}", hrm.Headers, s2);
-            var jo = hrm.Content.Headers.ContentType.MediaType == "application/json" ? JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings) : null;
+            var jo = hrm.Content.Headers.ContentType?.MediaType == "application/json" ? JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings) : null;
             if (hrm.StatusCode != HttpStatusCode.OK) throw new HttpRequestException($"Response status code does not indicate success: {hrm.StatusCode} ({hrm.ReasonPhrase}).\r\n{s2}");
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", s.Elapsed);
             count = (int)jo["totalRecords"];
@@ -1561,7 +1561,7 @@ namespace FolioLibrary
             if (hrm.StatusCode != HttpStatusCode.OK)
             {
                 var s2 = hrm.Content.ReadAsStringAsync().Result;
-                if (hrm.Content.Headers.ContentType.MediaType == "application/json") s2 = JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings).ToString();
+                if (hrm.Content.Headers.ContentType?.MediaType == "application/json") s2 = JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings).ToString();
                 traceSource.TraceEvent(TraceEventType.Verbose, 0, s2);
                 throw new HttpRequestException($"Response status code does not indicate success: {hrm.StatusCode} ({hrm.ReasonPhrase}).\r\n{s2}");
             }
@@ -1592,7 +1592,7 @@ namespace FolioLibrary
             var hrm = httpClient.GetAsync(url).Result;
             var s2 = hrm.Content.ReadAsStringAsync().Result;
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}{1}", hrm.Headers, s2);
-            var jo = hrm.Content.Headers.ContentType.MediaType == "application/json" ? JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings) : null;
+            var jo = hrm.Content.Headers.ContentType?.MediaType == "application/json" ? JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings) : null;
             if (hrm.StatusCode != HttpStatusCode.OK && hrm.StatusCode != HttpStatusCode.NotFound) throw new HttpRequestException($"Response status code does not indicate success: {hrm.StatusCode} ({hrm.ReasonPhrase}).\r\n{s2}");
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", s.Elapsed);
             return jo;
@@ -1670,7 +1670,7 @@ namespace FolioLibrary
             var hrm = httpClient.GetAsync(url).Result;
             var s2 = hrm.Content.ReadAsStringAsync().Result;
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}{1}", hrm.Headers, s2);
-            var jo = hrm.Content.Headers.ContentType.MediaType == "application/json" ? JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings) : null;
+            var jo = hrm.Content.Headers.ContentType?.MediaType == "application/json" ? JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings) : null;
             if (hrm.StatusCode != HttpStatusCode.OK) throw new HttpRequestException($"Response status code does not indicate success: {hrm.StatusCode} ({hrm.ReasonPhrase}).\r\n{s2}");
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", s.Elapsed);
             count = (int)jo["totalRecords"];
@@ -1691,7 +1691,7 @@ namespace FolioLibrary
             if (hrm.StatusCode != HttpStatusCode.OK)
             {
                 var s2 = hrm.Content.ReadAsStringAsync().Result;
-                if (hrm.Content.Headers.ContentType.MediaType == "application/json") s2 = JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings).ToString();
+                if (hrm.Content.Headers.ContentType?.MediaType == "application/json") s2 = JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings).ToString();
                 traceSource.TraceEvent(TraceEventType.Verbose, 0, s2);
                 throw new HttpRequestException($"Response status code does not indicate success: {hrm.StatusCode} ({hrm.ReasonPhrase}).\r\n{s2}");
             }
@@ -1722,7 +1722,7 @@ namespace FolioLibrary
             var hrm = httpClient.GetAsync(url).Result;
             var s2 = hrm.Content.ReadAsStringAsync().Result;
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}{1}", hrm.Headers, s2);
-            var jo = hrm.Content.Headers.ContentType.MediaType == "application/json" ? JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings) : null;
+            var jo = hrm.Content.Headers.ContentType?.MediaType == "application/json" ? JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings) : null;
             if (hrm.StatusCode != HttpStatusCode.OK && hrm.StatusCode != HttpStatusCode.NotFound) throw new HttpRequestException($"Response status code does not indicate success: {hrm.StatusCode} ({hrm.ReasonPhrase}).\r\n{s2}");
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", s.Elapsed);
             return jo;
@@ -1800,7 +1800,7 @@ namespace FolioLibrary
             var hrm = httpClient.GetAsync(url).Result;
             var s2 = hrm.Content.ReadAsStringAsync().Result;
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}{1}", hrm.Headers, s2);
-            var jo = hrm.Content.Headers.ContentType.MediaType == "application/json" ? JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings) : null;
+            var jo = hrm.Content.Headers.ContentType?.MediaType == "application/json" ? JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings) : null;
             if (hrm.StatusCode != HttpStatusCode.OK) throw new HttpRequestException($"Response status code does not indicate success: {hrm.StatusCode} ({hrm.ReasonPhrase}).\r\n{s2}");
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", s.Elapsed);
             count = (int)jo["totalRecords"];
@@ -1821,7 +1821,7 @@ namespace FolioLibrary
             if (hrm.StatusCode != HttpStatusCode.OK)
             {
                 var s2 = hrm.Content.ReadAsStringAsync().Result;
-                if (hrm.Content.Headers.ContentType.MediaType == "application/json") s2 = JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings).ToString();
+                if (hrm.Content.Headers.ContentType?.MediaType == "application/json") s2 = JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings).ToString();
                 traceSource.TraceEvent(TraceEventType.Verbose, 0, s2);
                 throw new HttpRequestException($"Response status code does not indicate success: {hrm.StatusCode} ({hrm.ReasonPhrase}).\r\n{s2}");
             }
@@ -1852,7 +1852,7 @@ namespace FolioLibrary
             var hrm = httpClient.GetAsync(url).Result;
             var s2 = hrm.Content.ReadAsStringAsync().Result;
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}{1}", hrm.Headers, s2);
-            var jo = hrm.Content.Headers.ContentType.MediaType == "application/json" ? JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings) : null;
+            var jo = hrm.Content.Headers.ContentType?.MediaType == "application/json" ? JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings) : null;
             if (hrm.StatusCode != HttpStatusCode.OK && hrm.StatusCode != HttpStatusCode.NotFound) throw new HttpRequestException($"Response status code does not indicate success: {hrm.StatusCode} ({hrm.ReasonPhrase}).\r\n{s2}");
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", s.Elapsed);
             return jo;
@@ -1930,7 +1930,7 @@ namespace FolioLibrary
             var hrm = httpClient.GetAsync(url).Result;
             var s2 = hrm.Content.ReadAsStringAsync().Result;
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}{1}", hrm.Headers, s2);
-            var jo = hrm.Content.Headers.ContentType.MediaType == "application/json" ? JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings) : null;
+            var jo = hrm.Content.Headers.ContentType?.MediaType == "application/json" ? JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings) : null;
             if (hrm.StatusCode != HttpStatusCode.OK) throw new HttpRequestException($"Response status code does not indicate success: {hrm.StatusCode} ({hrm.ReasonPhrase}).\r\n{s2}");
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", s.Elapsed);
             count = (int)jo["totalRecords"];
@@ -1951,7 +1951,7 @@ namespace FolioLibrary
             if (hrm.StatusCode != HttpStatusCode.OK)
             {
                 var s2 = hrm.Content.ReadAsStringAsync().Result;
-                if (hrm.Content.Headers.ContentType.MediaType == "application/json") s2 = JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings).ToString();
+                if (hrm.Content.Headers.ContentType?.MediaType == "application/json") s2 = JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings).ToString();
                 traceSource.TraceEvent(TraceEventType.Verbose, 0, s2);
                 throw new HttpRequestException($"Response status code does not indicate success: {hrm.StatusCode} ({hrm.ReasonPhrase}).\r\n{s2}");
             }
@@ -1982,7 +1982,7 @@ namespace FolioLibrary
             var hrm = httpClient.GetAsync(url).Result;
             var s2 = hrm.Content.ReadAsStringAsync().Result;
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}{1}", hrm.Headers, s2);
-            var jo = hrm.Content.Headers.ContentType.MediaType == "application/json" ? JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings) : null;
+            var jo = hrm.Content.Headers.ContentType?.MediaType == "application/json" ? JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings) : null;
             if (hrm.StatusCode != HttpStatusCode.OK && hrm.StatusCode != HttpStatusCode.NotFound) throw new HttpRequestException($"Response status code does not indicate success: {hrm.StatusCode} ({hrm.ReasonPhrase}).\r\n{s2}");
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", s.Elapsed);
             return jo;
@@ -2060,7 +2060,7 @@ namespace FolioLibrary
             var hrm = httpClient.GetAsync(url).Result;
             var s2 = hrm.Content.ReadAsStringAsync().Result;
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}{1}", hrm.Headers, s2);
-            var jo = hrm.Content.Headers.ContentType.MediaType == "application/json" ? JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings) : null;
+            var jo = hrm.Content.Headers.ContentType?.MediaType == "application/json" ? JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings) : null;
             if (hrm.StatusCode != HttpStatusCode.OK) throw new HttpRequestException($"Response status code does not indicate success: {hrm.StatusCode} ({hrm.ReasonPhrase}).\r\n{s2}");
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", s.Elapsed);
             count = (int)jo["totalRecords"];
@@ -2081,7 +2081,7 @@ namespace FolioLibrary
             if (hrm.StatusCode != HttpStatusCode.OK)
             {
                 var s2 = hrm.Content.ReadAsStringAsync().Result;
-                if (hrm.Content.Headers.ContentType.MediaType == "application/json") s2 = JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings).ToString();
+                if (hrm.Content.Headers.ContentType?.MediaType == "application/json") s2 = JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings).ToString();
                 traceSource.TraceEvent(TraceEventType.Verbose, 0, s2);
                 throw new HttpRequestException($"Response status code does not indicate success: {hrm.StatusCode} ({hrm.ReasonPhrase}).\r\n{s2}");
             }
@@ -2112,7 +2112,7 @@ namespace FolioLibrary
             var hrm = httpClient.GetAsync(url).Result;
             var s2 = hrm.Content.ReadAsStringAsync().Result;
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}{1}", hrm.Headers, s2);
-            var jo = hrm.Content.Headers.ContentType.MediaType == "application/json" ? JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings) : null;
+            var jo = hrm.Content.Headers.ContentType?.MediaType == "application/json" ? JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings) : null;
             if (hrm.StatusCode != HttpStatusCode.OK && hrm.StatusCode != HttpStatusCode.NotFound) throw new HttpRequestException($"Response status code does not indicate success: {hrm.StatusCode} ({hrm.ReasonPhrase}).\r\n{s2}");
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", s.Elapsed);
             return jo;
@@ -2190,7 +2190,7 @@ namespace FolioLibrary
             var hrm = httpClient.GetAsync(url).Result;
             var s2 = hrm.Content.ReadAsStringAsync().Result;
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}{1}", hrm.Headers, s2);
-            var jo = hrm.Content.Headers.ContentType.MediaType == "application/json" ? JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings) : null;
+            var jo = hrm.Content.Headers.ContentType?.MediaType == "application/json" ? JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings) : null;
             if (hrm.StatusCode != HttpStatusCode.OK) throw new HttpRequestException($"Response status code does not indicate success: {hrm.StatusCode} ({hrm.ReasonPhrase}).\r\n{s2}");
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", s.Elapsed);
             count = (int)jo["totalRecords"];
@@ -2211,7 +2211,7 @@ namespace FolioLibrary
             if (hrm.StatusCode != HttpStatusCode.OK)
             {
                 var s2 = hrm.Content.ReadAsStringAsync().Result;
-                if (hrm.Content.Headers.ContentType.MediaType == "application/json") s2 = JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings).ToString();
+                if (hrm.Content.Headers.ContentType?.MediaType == "application/json") s2 = JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings).ToString();
                 traceSource.TraceEvent(TraceEventType.Verbose, 0, s2);
                 throw new HttpRequestException($"Response status code does not indicate success: {hrm.StatusCode} ({hrm.ReasonPhrase}).\r\n{s2}");
             }
@@ -2242,7 +2242,7 @@ namespace FolioLibrary
             var hrm = httpClient.GetAsync(url).Result;
             var s2 = hrm.Content.ReadAsStringAsync().Result;
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}{1}", hrm.Headers, s2);
-            var jo = hrm.Content.Headers.ContentType.MediaType == "application/json" ? JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings) : null;
+            var jo = hrm.Content.Headers.ContentType?.MediaType == "application/json" ? JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings) : null;
             if (hrm.StatusCode != HttpStatusCode.OK && hrm.StatusCode != HttpStatusCode.NotFound) throw new HttpRequestException($"Response status code does not indicate success: {hrm.StatusCode} ({hrm.ReasonPhrase}).\r\n{s2}");
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", s.Elapsed);
             return jo;
@@ -2320,7 +2320,7 @@ namespace FolioLibrary
             var hrm = httpClient.GetAsync(url).Result;
             var s2 = hrm.Content.ReadAsStringAsync().Result;
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}{1}", hrm.Headers, s2);
-            var jo = hrm.Content.Headers.ContentType.MediaType == "application/json" ? JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings) : null;
+            var jo = hrm.Content.Headers.ContentType?.MediaType == "application/json" ? JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings) : null;
             if (hrm.StatusCode != HttpStatusCode.OK) throw new HttpRequestException($"Response status code does not indicate success: {hrm.StatusCode} ({hrm.ReasonPhrase}).\r\n{s2}");
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", s.Elapsed);
             count = (int)jo["totalRecords"];
@@ -2341,7 +2341,7 @@ namespace FolioLibrary
             if (hrm.StatusCode != HttpStatusCode.OK)
             {
                 var s2 = hrm.Content.ReadAsStringAsync().Result;
-                if (hrm.Content.Headers.ContentType.MediaType == "application/json") s2 = JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings).ToString();
+                if (hrm.Content.Headers.ContentType?.MediaType == "application/json") s2 = JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings).ToString();
                 traceSource.TraceEvent(TraceEventType.Verbose, 0, s2);
                 throw new HttpRequestException($"Response status code does not indicate success: {hrm.StatusCode} ({hrm.ReasonPhrase}).\r\n{s2}");
             }
@@ -2372,7 +2372,7 @@ namespace FolioLibrary
             var hrm = httpClient.GetAsync(url).Result;
             var s2 = hrm.Content.ReadAsStringAsync().Result;
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}{1}", hrm.Headers, s2);
-            var jo = hrm.Content.Headers.ContentType.MediaType == "application/json" ? JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings) : null;
+            var jo = hrm.Content.Headers.ContentType?.MediaType == "application/json" ? JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings) : null;
             if (hrm.StatusCode != HttpStatusCode.OK && hrm.StatusCode != HttpStatusCode.NotFound) throw new HttpRequestException($"Response status code does not indicate success: {hrm.StatusCode} ({hrm.ReasonPhrase}).\r\n{s2}");
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", s.Elapsed);
             return jo;
@@ -2450,7 +2450,7 @@ namespace FolioLibrary
             var hrm = httpClient.GetAsync(url).Result;
             var s2 = hrm.Content.ReadAsStringAsync().Result;
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}{1}", hrm.Headers, s2);
-            var jo = hrm.Content.Headers.ContentType.MediaType == "application/json" ? JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings) : null;
+            var jo = hrm.Content.Headers.ContentType?.MediaType == "application/json" ? JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings) : null;
             if (hrm.StatusCode != HttpStatusCode.OK) throw new HttpRequestException($"Response status code does not indicate success: {hrm.StatusCode} ({hrm.ReasonPhrase}).\r\n{s2}");
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", s.Elapsed);
             count = (int)jo["totalRecords"];
@@ -2471,7 +2471,7 @@ namespace FolioLibrary
             if (hrm.StatusCode != HttpStatusCode.OK)
             {
                 var s2 = hrm.Content.ReadAsStringAsync().Result;
-                if (hrm.Content.Headers.ContentType.MediaType == "application/json") s2 = JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings).ToString();
+                if (hrm.Content.Headers.ContentType?.MediaType == "application/json") s2 = JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings).ToString();
                 traceSource.TraceEvent(TraceEventType.Verbose, 0, s2);
                 throw new HttpRequestException($"Response status code does not indicate success: {hrm.StatusCode} ({hrm.ReasonPhrase}).\r\n{s2}");
             }
@@ -2502,7 +2502,7 @@ namespace FolioLibrary
             var hrm = httpClient.GetAsync(url).Result;
             var s2 = hrm.Content.ReadAsStringAsync().Result;
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}{1}", hrm.Headers, s2);
-            var jo = hrm.Content.Headers.ContentType.MediaType == "application/json" ? JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings) : null;
+            var jo = hrm.Content.Headers.ContentType?.MediaType == "application/json" ? JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings) : null;
             if (hrm.StatusCode != HttpStatusCode.OK && hrm.StatusCode != HttpStatusCode.NotFound) throw new HttpRequestException($"Response status code does not indicate success: {hrm.StatusCode} ({hrm.ReasonPhrase}).\r\n{s2}");
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", s.Elapsed);
             return jo;
@@ -2571,7 +2571,7 @@ namespace FolioLibrary
             var hrm = httpClient.GetAsync(url).Result;
             var s2 = hrm.Content.ReadAsStringAsync().Result;
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}{1}", hrm.Headers, s2);
-            var jo = hrm.Content.Headers.ContentType.MediaType == "application/json" ? JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings) : null;
+            var jo = hrm.Content.Headers.ContentType?.MediaType == "application/json" ? JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings) : null;
             if (hrm.StatusCode != HttpStatusCode.OK && hrm.StatusCode != HttpStatusCode.NotFound) throw new HttpRequestException($"Response status code does not indicate success: {hrm.StatusCode} ({hrm.ReasonPhrase}).\r\n{s2}");
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", s.Elapsed);
             return jo;
@@ -2614,7 +2614,7 @@ namespace FolioLibrary
             var hrm = httpClient.GetAsync(url).Result;
             var s2 = hrm.Content.ReadAsStringAsync().Result;
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}{1}", hrm.Headers, s2);
-            var jo = hrm.Content.Headers.ContentType.MediaType == "application/json" ? JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings) : null;
+            var jo = hrm.Content.Headers.ContentType?.MediaType == "application/json" ? JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings) : null;
             if (hrm.StatusCode != HttpStatusCode.OK) throw new HttpRequestException($"Response status code does not indicate success: {hrm.StatusCode} ({hrm.ReasonPhrase}).\r\n{s2}");
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", s.Elapsed);
             count = (int)jo["totalRecords"];
@@ -2635,7 +2635,7 @@ namespace FolioLibrary
             if (hrm.StatusCode != HttpStatusCode.OK)
             {
                 var s2 = hrm.Content.ReadAsStringAsync().Result;
-                if (hrm.Content.Headers.ContentType.MediaType == "application/json") s2 = JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings).ToString();
+                if (hrm.Content.Headers.ContentType?.MediaType == "application/json") s2 = JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings).ToString();
                 traceSource.TraceEvent(TraceEventType.Verbose, 0, s2);
                 throw new HttpRequestException($"Response status code does not indicate success: {hrm.StatusCode} ({hrm.ReasonPhrase}).\r\n{s2}");
             }
@@ -2666,7 +2666,7 @@ namespace FolioLibrary
             var hrm = httpClient.GetAsync(url).Result;
             var s2 = hrm.Content.ReadAsStringAsync().Result;
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}{1}", hrm.Headers, s2);
-            var jo = hrm.Content.Headers.ContentType.MediaType == "application/json" ? JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings) : null;
+            var jo = hrm.Content.Headers.ContentType?.MediaType == "application/json" ? JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings) : null;
             if (hrm.StatusCode != HttpStatusCode.OK && hrm.StatusCode != HttpStatusCode.NotFound) throw new HttpRequestException($"Response status code does not indicate success: {hrm.StatusCode} ({hrm.ReasonPhrase}).\r\n{s2}");
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", s.Elapsed);
             return jo;
@@ -2744,7 +2744,7 @@ namespace FolioLibrary
             var hrm = httpClient.GetAsync(url).Result;
             var s2 = hrm.Content.ReadAsStringAsync().Result;
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}{1}", hrm.Headers, s2);
-            var jo = hrm.Content.Headers.ContentType.MediaType == "application/json" ? JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings) : null;
+            var jo = hrm.Content.Headers.ContentType?.MediaType == "application/json" ? JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings) : null;
             if (hrm.StatusCode != HttpStatusCode.OK) throw new HttpRequestException($"Response status code does not indicate success: {hrm.StatusCode} ({hrm.ReasonPhrase}).\r\n{s2}");
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", s.Elapsed);
             count = (int)jo["totalRecords"];
@@ -2765,7 +2765,7 @@ namespace FolioLibrary
             if (hrm.StatusCode != HttpStatusCode.OK)
             {
                 var s2 = hrm.Content.ReadAsStringAsync().Result;
-                if (hrm.Content.Headers.ContentType.MediaType == "application/json") s2 = JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings).ToString();
+                if (hrm.Content.Headers.ContentType?.MediaType == "application/json") s2 = JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings).ToString();
                 traceSource.TraceEvent(TraceEventType.Verbose, 0, s2);
                 throw new HttpRequestException($"Response status code does not indicate success: {hrm.StatusCode} ({hrm.ReasonPhrase}).\r\n{s2}");
             }
@@ -2796,7 +2796,7 @@ namespace FolioLibrary
             var hrm = httpClient.GetAsync(url).Result;
             var s2 = hrm.Content.ReadAsStringAsync().Result;
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}{1}", hrm.Headers, s2);
-            var jo = hrm.Content.Headers.ContentType.MediaType == "application/json" ? JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings) : null;
+            var jo = hrm.Content.Headers.ContentType?.MediaType == "application/json" ? JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings) : null;
             if (hrm.StatusCode != HttpStatusCode.OK && hrm.StatusCode != HttpStatusCode.NotFound) throw new HttpRequestException($"Response status code does not indicate success: {hrm.StatusCode} ({hrm.ReasonPhrase}).\r\n{s2}");
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", s.Elapsed);
             return jo;
@@ -2874,7 +2874,7 @@ namespace FolioLibrary
             var hrm = httpClient.GetAsync(url).Result;
             var s2 = hrm.Content.ReadAsStringAsync().Result;
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}{1}", hrm.Headers, s2);
-            var jo = hrm.Content.Headers.ContentType.MediaType == "application/json" ? JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings) : null;
+            var jo = hrm.Content.Headers.ContentType?.MediaType == "application/json" ? JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings) : null;
             if (hrm.StatusCode != HttpStatusCode.OK) throw new HttpRequestException($"Response status code does not indicate success: {hrm.StatusCode} ({hrm.ReasonPhrase}).\r\n{s2}");
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", s.Elapsed);
             count = (int)jo["totalRecords"];
@@ -2895,7 +2895,7 @@ namespace FolioLibrary
             if (hrm.StatusCode != HttpStatusCode.OK)
             {
                 var s2 = hrm.Content.ReadAsStringAsync().Result;
-                if (hrm.Content.Headers.ContentType.MediaType == "application/json") s2 = JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings).ToString();
+                if (hrm.Content.Headers.ContentType?.MediaType == "application/json") s2 = JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings).ToString();
                 traceSource.TraceEvent(TraceEventType.Verbose, 0, s2);
                 throw new HttpRequestException($"Response status code does not indicate success: {hrm.StatusCode} ({hrm.ReasonPhrase}).\r\n{s2}");
             }
@@ -2926,7 +2926,7 @@ namespace FolioLibrary
             var hrm = httpClient.GetAsync(url).Result;
             var s2 = hrm.Content.ReadAsStringAsync().Result;
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}{1}", hrm.Headers, s2);
-            var jo = hrm.Content.Headers.ContentType.MediaType == "application/json" ? JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings) : null;
+            var jo = hrm.Content.Headers.ContentType?.MediaType == "application/json" ? JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings) : null;
             if (hrm.StatusCode != HttpStatusCode.OK && hrm.StatusCode != HttpStatusCode.NotFound) throw new HttpRequestException($"Response status code does not indicate success: {hrm.StatusCode} ({hrm.ReasonPhrase}).\r\n{s2}");
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", s.Elapsed);
             return jo;
@@ -3004,7 +3004,7 @@ namespace FolioLibrary
             var hrm = httpClient.GetAsync(url).Result;
             var s2 = hrm.Content.ReadAsStringAsync().Result;
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}{1}", hrm.Headers, s2);
-            var jo = hrm.Content.Headers.ContentType.MediaType == "application/json" ? JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings) : null;
+            var jo = hrm.Content.Headers.ContentType?.MediaType == "application/json" ? JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings) : null;
             if (hrm.StatusCode != HttpStatusCode.OK) throw new HttpRequestException($"Response status code does not indicate success: {hrm.StatusCode} ({hrm.ReasonPhrase}).\r\n{s2}");
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", s.Elapsed);
             count = (int)jo["totalRecords"];
@@ -3025,7 +3025,7 @@ namespace FolioLibrary
             if (hrm.StatusCode != HttpStatusCode.OK)
             {
                 var s2 = hrm.Content.ReadAsStringAsync().Result;
-                if (hrm.Content.Headers.ContentType.MediaType == "application/json") s2 = JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings).ToString();
+                if (hrm.Content.Headers.ContentType?.MediaType == "application/json") s2 = JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings).ToString();
                 traceSource.TraceEvent(TraceEventType.Verbose, 0, s2);
                 throw new HttpRequestException($"Response status code does not indicate success: {hrm.StatusCode} ({hrm.ReasonPhrase}).\r\n{s2}");
             }
@@ -3056,7 +3056,7 @@ namespace FolioLibrary
             var hrm = httpClient.GetAsync(url).Result;
             var s2 = hrm.Content.ReadAsStringAsync().Result;
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}{1}", hrm.Headers, s2);
-            var jo = hrm.Content.Headers.ContentType.MediaType == "application/json" ? JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings) : null;
+            var jo = hrm.Content.Headers.ContentType?.MediaType == "application/json" ? JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings) : null;
             if (hrm.StatusCode != HttpStatusCode.OK && hrm.StatusCode != HttpStatusCode.NotFound) throw new HttpRequestException($"Response status code does not indicate success: {hrm.StatusCode} ({hrm.ReasonPhrase}).\r\n{s2}");
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", s.Elapsed);
             return jo;
@@ -3134,7 +3134,7 @@ namespace FolioLibrary
             var hrm = httpClient.GetAsync(url).Result;
             var s2 = hrm.Content.ReadAsStringAsync().Result;
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}{1}", hrm.Headers, s2);
-            var jo = hrm.Content.Headers.ContentType.MediaType == "application/json" ? JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings) : null;
+            var jo = hrm.Content.Headers.ContentType?.MediaType == "application/json" ? JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings) : null;
             if (hrm.StatusCode != HttpStatusCode.OK) throw new HttpRequestException($"Response status code does not indicate success: {hrm.StatusCode} ({hrm.ReasonPhrase}).\r\n{s2}");
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", s.Elapsed);
             count = (int)jo["totalRecords"];
@@ -3155,7 +3155,7 @@ namespace FolioLibrary
             if (hrm.StatusCode != HttpStatusCode.OK)
             {
                 var s2 = hrm.Content.ReadAsStringAsync().Result;
-                if (hrm.Content.Headers.ContentType.MediaType == "application/json") s2 = JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings).ToString();
+                if (hrm.Content.Headers.ContentType?.MediaType == "application/json") s2 = JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings).ToString();
                 traceSource.TraceEvent(TraceEventType.Verbose, 0, s2);
                 throw new HttpRequestException($"Response status code does not indicate success: {hrm.StatusCode} ({hrm.ReasonPhrase}).\r\n{s2}");
             }
@@ -3186,7 +3186,7 @@ namespace FolioLibrary
             var hrm = httpClient.GetAsync(url).Result;
             var s2 = hrm.Content.ReadAsStringAsync().Result;
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}{1}", hrm.Headers, s2);
-            var jo = hrm.Content.Headers.ContentType.MediaType == "application/json" ? JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings) : null;
+            var jo = hrm.Content.Headers.ContentType?.MediaType == "application/json" ? JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings) : null;
             if (hrm.StatusCode != HttpStatusCode.OK && hrm.StatusCode != HttpStatusCode.NotFound) throw new HttpRequestException($"Response status code does not indicate success: {hrm.StatusCode} ({hrm.ReasonPhrase}).\r\n{s2}");
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", s.Elapsed);
             return jo;
@@ -3264,7 +3264,7 @@ namespace FolioLibrary
             var hrm = httpClient.GetAsync(url).Result;
             var s2 = hrm.Content.ReadAsStringAsync().Result;
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}{1}", hrm.Headers, s2);
-            var jo = hrm.Content.Headers.ContentType.MediaType == "application/json" ? JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings) : null;
+            var jo = hrm.Content.Headers.ContentType?.MediaType == "application/json" ? JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings) : null;
             if (hrm.StatusCode != HttpStatusCode.OK) throw new HttpRequestException($"Response status code does not indicate success: {hrm.StatusCode} ({hrm.ReasonPhrase}).\r\n{s2}");
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", s.Elapsed);
             count = (int)jo["totalRecords"];
@@ -3285,7 +3285,7 @@ namespace FolioLibrary
             if (hrm.StatusCode != HttpStatusCode.OK)
             {
                 var s2 = hrm.Content.ReadAsStringAsync().Result;
-                if (hrm.Content.Headers.ContentType.MediaType == "application/json") s2 = JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings).ToString();
+                if (hrm.Content.Headers.ContentType?.MediaType == "application/json") s2 = JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings).ToString();
                 traceSource.TraceEvent(TraceEventType.Verbose, 0, s2);
                 throw new HttpRequestException($"Response status code does not indicate success: {hrm.StatusCode} ({hrm.ReasonPhrase}).\r\n{s2}");
             }
@@ -3316,7 +3316,7 @@ namespace FolioLibrary
             var hrm = httpClient.GetAsync(url).Result;
             var s2 = hrm.Content.ReadAsStringAsync().Result;
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}{1}", hrm.Headers, s2);
-            var jo = hrm.Content.Headers.ContentType.MediaType == "application/json" ? JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings) : null;
+            var jo = hrm.Content.Headers.ContentType?.MediaType == "application/json" ? JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings) : null;
             if (hrm.StatusCode != HttpStatusCode.OK && hrm.StatusCode != HttpStatusCode.NotFound) throw new HttpRequestException($"Response status code does not indicate success: {hrm.StatusCode} ({hrm.ReasonPhrase}).\r\n{s2}");
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", s.Elapsed);
             return jo;
@@ -3394,7 +3394,7 @@ namespace FolioLibrary
             var hrm = httpClient.GetAsync(url).Result;
             var s2 = hrm.Content.ReadAsStringAsync().Result;
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}{1}", hrm.Headers, s2);
-            var jo = hrm.Content.Headers.ContentType.MediaType == "application/json" ? JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings) : null;
+            var jo = hrm.Content.Headers.ContentType?.MediaType == "application/json" ? JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings) : null;
             if (hrm.StatusCode != HttpStatusCode.OK) throw new HttpRequestException($"Response status code does not indicate success: {hrm.StatusCode} ({hrm.ReasonPhrase}).\r\n{s2}");
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", s.Elapsed);
             count = (int)jo["totalRecords"];
@@ -3415,7 +3415,7 @@ namespace FolioLibrary
             if (hrm.StatusCode != HttpStatusCode.OK)
             {
                 var s2 = hrm.Content.ReadAsStringAsync().Result;
-                if (hrm.Content.Headers.ContentType.MediaType == "application/json") s2 = JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings).ToString();
+                if (hrm.Content.Headers.ContentType?.MediaType == "application/json") s2 = JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings).ToString();
                 traceSource.TraceEvent(TraceEventType.Verbose, 0, s2);
                 throw new HttpRequestException($"Response status code does not indicate success: {hrm.StatusCode} ({hrm.ReasonPhrase}).\r\n{s2}");
             }
@@ -3446,7 +3446,7 @@ namespace FolioLibrary
             var hrm = httpClient.GetAsync(url).Result;
             var s2 = hrm.Content.ReadAsStringAsync().Result;
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}{1}", hrm.Headers, s2);
-            var jo = hrm.Content.Headers.ContentType.MediaType == "application/json" ? JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings) : null;
+            var jo = hrm.Content.Headers.ContentType?.MediaType == "application/json" ? JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings) : null;
             if (hrm.StatusCode != HttpStatusCode.OK && hrm.StatusCode != HttpStatusCode.NotFound) throw new HttpRequestException($"Response status code does not indicate success: {hrm.StatusCode} ({hrm.ReasonPhrase}).\r\n{s2}");
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", s.Elapsed);
             return jo;
@@ -3526,7 +3526,7 @@ namespace FolioLibrary
             httpClient.DefaultRequestHeaders.Remove("x-okapi-module-id");
             var s2 = hrm.Content.ReadAsStringAsync().Result;
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}{1}", hrm.Headers, s2);
-            var jo = hrm.Content.Headers.ContentType.MediaType == "application/json" ? JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings) : null;
+            var jo = hrm.Content.Headers.ContentType?.MediaType == "application/json" ? JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings) : null;
             if (hrm.StatusCode != HttpStatusCode.OK) throw new HttpRequestException($"Response status code does not indicate success: {hrm.StatusCode} ({hrm.ReasonPhrase}).\r\n{s2}");
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", s.Elapsed);
             count = (int)jo["totalRecords"];
@@ -3549,7 +3549,7 @@ namespace FolioLibrary
             if (hrm.StatusCode != HttpStatusCode.OK)
             {
                 var s2 = hrm.Content.ReadAsStringAsync().Result;
-                if (hrm.Content.Headers.ContentType.MediaType == "application/json") s2 = JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings).ToString();
+                if (hrm.Content.Headers.ContentType?.MediaType == "application/json") s2 = JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings).ToString();
                 traceSource.TraceEvent(TraceEventType.Verbose, 0, s2);
                 throw new HttpRequestException($"Response status code does not indicate success: {hrm.StatusCode} ({hrm.ReasonPhrase}).\r\n{s2}");
             }
@@ -3582,7 +3582,7 @@ namespace FolioLibrary
             httpClient.DefaultRequestHeaders.Remove("x-okapi-module-id");
             var s2 = hrm.Content.ReadAsStringAsync().Result;
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}{1}", hrm.Headers, s2);
-            var jo = hrm.Content.Headers.ContentType.MediaType == "application/json" ? JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings) : null;
+            var jo = hrm.Content.Headers.ContentType?.MediaType == "application/json" ? JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings) : null;
             if (hrm.StatusCode != HttpStatusCode.OK && hrm.StatusCode != HttpStatusCode.NotFound) throw new HttpRequestException($"Response status code does not indicate success: {hrm.StatusCode} ({hrm.ReasonPhrase}).\r\n{s2}");
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", s.Elapsed);
             return jo;
@@ -3666,7 +3666,7 @@ namespace FolioLibrary
             var hrm = httpClient.GetAsync(url).Result;
             var s2 = hrm.Content.ReadAsStringAsync().Result;
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}{1}", hrm.Headers, s2);
-            var jo = hrm.Content.Headers.ContentType.MediaType == "application/json" ? JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings) : null;
+            var jo = hrm.Content.Headers.ContentType?.MediaType == "application/json" ? JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings) : null;
             if (hrm.StatusCode != HttpStatusCode.OK) throw new HttpRequestException($"Response status code does not indicate success: {hrm.StatusCode} ({hrm.ReasonPhrase}).\r\n{s2}");
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", s.Elapsed);
             count = (int)jo["totalRecords"];
@@ -3687,7 +3687,7 @@ namespace FolioLibrary
             if (hrm.StatusCode != HttpStatusCode.OK)
             {
                 var s2 = hrm.Content.ReadAsStringAsync().Result;
-                if (hrm.Content.Headers.ContentType.MediaType == "application/json") s2 = JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings).ToString();
+                if (hrm.Content.Headers.ContentType?.MediaType == "application/json") s2 = JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings).ToString();
                 traceSource.TraceEvent(TraceEventType.Verbose, 0, s2);
                 throw new HttpRequestException($"Response status code does not indicate success: {hrm.StatusCode} ({hrm.ReasonPhrase}).\r\n{s2}");
             }
@@ -3718,7 +3718,7 @@ namespace FolioLibrary
             var hrm = httpClient.GetAsync(url).Result;
             var s2 = hrm.Content.ReadAsStringAsync().Result;
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}{1}", hrm.Headers, s2);
-            var jo = hrm.Content.Headers.ContentType.MediaType == "application/json" ? JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings) : null;
+            var jo = hrm.Content.Headers.ContentType?.MediaType == "application/json" ? JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings) : null;
             if (hrm.StatusCode != HttpStatusCode.OK && hrm.StatusCode != HttpStatusCode.NotFound) throw new HttpRequestException($"Response status code does not indicate success: {hrm.StatusCode} ({hrm.ReasonPhrase}).\r\n{s2}");
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", s.Elapsed);
             return jo;
@@ -3796,7 +3796,7 @@ namespace FolioLibrary
             var hrm = httpClient.GetAsync(url).Result;
             var s2 = hrm.Content.ReadAsStringAsync().Result;
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}{1}", hrm.Headers, s2);
-            var jo = hrm.Content.Headers.ContentType.MediaType == "application/json" ? JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings) : null;
+            var jo = hrm.Content.Headers.ContentType?.MediaType == "application/json" ? JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings) : null;
             if (hrm.StatusCode != HttpStatusCode.OK) throw new HttpRequestException($"Response status code does not indicate success: {hrm.StatusCode} ({hrm.ReasonPhrase}).\r\n{s2}");
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", s.Elapsed);
             count = (int)jo["totalRecords"];
@@ -3817,7 +3817,7 @@ namespace FolioLibrary
             if (hrm.StatusCode != HttpStatusCode.OK)
             {
                 var s2 = hrm.Content.ReadAsStringAsync().Result;
-                if (hrm.Content.Headers.ContentType.MediaType == "application/json") s2 = JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings).ToString();
+                if (hrm.Content.Headers.ContentType?.MediaType == "application/json") s2 = JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings).ToString();
                 traceSource.TraceEvent(TraceEventType.Verbose, 0, s2);
                 throw new HttpRequestException($"Response status code does not indicate success: {hrm.StatusCode} ({hrm.ReasonPhrase}).\r\n{s2}");
             }
@@ -3848,7 +3848,7 @@ namespace FolioLibrary
             var hrm = httpClient.GetAsync(url).Result;
             var s2 = hrm.Content.ReadAsStringAsync().Result;
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}{1}", hrm.Headers, s2);
-            var jo = hrm.Content.Headers.ContentType.MediaType == "application/json" ? JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings) : null;
+            var jo = hrm.Content.Headers.ContentType?.MediaType == "application/json" ? JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings) : null;
             if (hrm.StatusCode != HttpStatusCode.OK && hrm.StatusCode != HttpStatusCode.NotFound) throw new HttpRequestException($"Response status code does not indicate success: {hrm.StatusCode} ({hrm.ReasonPhrase}).\r\n{s2}");
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", s.Elapsed);
             return jo;
@@ -3926,7 +3926,7 @@ namespace FolioLibrary
             var hrm = httpClient.GetAsync(url).Result;
             var s2 = hrm.Content.ReadAsStringAsync().Result;
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}{1}", hrm.Headers, s2);
-            var jo = hrm.Content.Headers.ContentType.MediaType == "application/json" ? JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings) : null;
+            var jo = hrm.Content.Headers.ContentType?.MediaType == "application/json" ? JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings) : null;
             if (hrm.StatusCode != HttpStatusCode.OK) throw new HttpRequestException($"Response status code does not indicate success: {hrm.StatusCode} ({hrm.ReasonPhrase}).\r\n{s2}");
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", s.Elapsed);
             count = (int)jo["totalRecords"];
@@ -3947,7 +3947,7 @@ namespace FolioLibrary
             if (hrm.StatusCode != HttpStatusCode.OK)
             {
                 var s2 = hrm.Content.ReadAsStringAsync().Result;
-                if (hrm.Content.Headers.ContentType.MediaType == "application/json") s2 = JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings).ToString();
+                if (hrm.Content.Headers.ContentType?.MediaType == "application/json") s2 = JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings).ToString();
                 traceSource.TraceEvent(TraceEventType.Verbose, 0, s2);
                 throw new HttpRequestException($"Response status code does not indicate success: {hrm.StatusCode} ({hrm.ReasonPhrase}).\r\n{s2}");
             }
@@ -3978,7 +3978,7 @@ namespace FolioLibrary
             var hrm = httpClient.GetAsync(url).Result;
             var s2 = hrm.Content.ReadAsStringAsync().Result;
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}{1}", hrm.Headers, s2);
-            var jo = hrm.Content.Headers.ContentType.MediaType == "application/json" ? JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings) : null;
+            var jo = hrm.Content.Headers.ContentType?.MediaType == "application/json" ? JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings) : null;
             if (hrm.StatusCode != HttpStatusCode.OK && hrm.StatusCode != HttpStatusCode.NotFound) throw new HttpRequestException($"Response status code does not indicate success: {hrm.StatusCode} ({hrm.ReasonPhrase}).\r\n{s2}");
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", s.Elapsed);
             return jo;
@@ -4056,7 +4056,7 @@ namespace FolioLibrary
             var hrm = httpClient.GetAsync(url).Result;
             var s2 = hrm.Content.ReadAsStringAsync().Result;
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}{1}", hrm.Headers, s2);
-            var jo = hrm.Content.Headers.ContentType.MediaType == "application/json" ? JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings) : null;
+            var jo = hrm.Content.Headers.ContentType?.MediaType == "application/json" ? JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings) : null;
             if (hrm.StatusCode != HttpStatusCode.OK) throw new HttpRequestException($"Response status code does not indicate success: {hrm.StatusCode} ({hrm.ReasonPhrase}).\r\n{s2}");
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", s.Elapsed);
             count = (int)jo["totalRecords"];
@@ -4081,7 +4081,7 @@ namespace FolioLibrary
                 if (hrm.StatusCode != HttpStatusCode.OK)
                 {
                     var s2 = hrm.Content.ReadAsStringAsync().Result;
-                    if (hrm.Content.Headers.ContentType.MediaType == "application/json") s2 = JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings).ToString();
+                    if (hrm.Content.Headers.ContentType?.MediaType == "application/json") s2 = JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings).ToString();
                     traceSource.TraceEvent(TraceEventType.Verbose, 0, s2);
                     throw new HttpRequestException($"Response status code does not indicate success: {hrm.StatusCode} ({hrm.ReasonPhrase}).\r\n{s2}");
                 }
@@ -4118,7 +4118,7 @@ namespace FolioLibrary
             var hrm = httpClient.GetAsync(url).Result;
             var s2 = hrm.Content.ReadAsStringAsync().Result;
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}{1}", hrm.Headers, s2);
-            var jo = hrm.Content.Headers.ContentType.MediaType == "application/json" ? JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings) : null;
+            var jo = hrm.Content.Headers.ContentType?.MediaType == "application/json" ? JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings) : null;
             if (hrm.StatusCode != HttpStatusCode.OK && hrm.StatusCode != HttpStatusCode.NotFound) throw new HttpRequestException($"Response status code does not indicate success: {hrm.StatusCode} ({hrm.ReasonPhrase}).\r\n{s2}");
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", s.Elapsed);
             return jo;
@@ -4196,7 +4196,7 @@ namespace FolioLibrary
             var hrm = httpClient.GetAsync(url).Result;
             var s2 = hrm.Content.ReadAsStringAsync().Result;
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}{1}", hrm.Headers, s2);
-            var jo = hrm.Content.Headers.ContentType.MediaType == "application/json" ? JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings) : null;
+            var jo = hrm.Content.Headers.ContentType?.MediaType == "application/json" ? JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings) : null;
             if (hrm.StatusCode != HttpStatusCode.OK) throw new HttpRequestException($"Response status code does not indicate success: {hrm.StatusCode} ({hrm.ReasonPhrase}).\r\n{s2}");
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", s.Elapsed);
             count = (int)jo["totalRecords"];
@@ -4217,7 +4217,7 @@ namespace FolioLibrary
             if (hrm.StatusCode != HttpStatusCode.OK)
             {
                 var s2 = hrm.Content.ReadAsStringAsync().Result;
-                if (hrm.Content.Headers.ContentType.MediaType == "application/json") s2 = JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings).ToString();
+                if (hrm.Content.Headers.ContentType?.MediaType == "application/json") s2 = JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings).ToString();
                 traceSource.TraceEvent(TraceEventType.Verbose, 0, s2);
                 throw new HttpRequestException($"Response status code does not indicate success: {hrm.StatusCode} ({hrm.ReasonPhrase}).\r\n{s2}");
             }
@@ -4248,7 +4248,7 @@ namespace FolioLibrary
             var hrm = httpClient.GetAsync(url).Result;
             var s2 = hrm.Content.ReadAsStringAsync().Result;
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}{1}", hrm.Headers, s2);
-            var jo = hrm.Content.Headers.ContentType.MediaType == "application/json" ? JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings) : null;
+            var jo = hrm.Content.Headers.ContentType?.MediaType == "application/json" ? JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings) : null;
             if (hrm.StatusCode != HttpStatusCode.OK && hrm.StatusCode != HttpStatusCode.NotFound) throw new HttpRequestException($"Response status code does not indicate success: {hrm.StatusCode} ({hrm.ReasonPhrase}).\r\n{s2}");
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", s.Elapsed);
             return jo;
@@ -4326,7 +4326,7 @@ namespace FolioLibrary
             var hrm = httpClient.GetAsync(url).Result;
             var s2 = hrm.Content.ReadAsStringAsync().Result;
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}{1}", hrm.Headers, s2);
-            var jo = hrm.Content.Headers.ContentType.MediaType == "application/json" ? JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings) : null;
+            var jo = hrm.Content.Headers.ContentType?.MediaType == "application/json" ? JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings) : null;
             if (hrm.StatusCode != HttpStatusCode.OK) throw new HttpRequestException($"Response status code does not indicate success: {hrm.StatusCode} ({hrm.ReasonPhrase}).\r\n{s2}");
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", s.Elapsed);
             count = (int)jo["totalRecords"];
@@ -4347,7 +4347,7 @@ namespace FolioLibrary
             if (hrm.StatusCode != HttpStatusCode.OK)
             {
                 var s2 = hrm.Content.ReadAsStringAsync().Result;
-                if (hrm.Content.Headers.ContentType.MediaType == "application/json") s2 = JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings).ToString();
+                if (hrm.Content.Headers.ContentType?.MediaType == "application/json") s2 = JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings).ToString();
                 traceSource.TraceEvent(TraceEventType.Verbose, 0, s2);
                 throw new HttpRequestException($"Response status code does not indicate success: {hrm.StatusCode} ({hrm.ReasonPhrase}).\r\n{s2}");
             }
@@ -4378,7 +4378,7 @@ namespace FolioLibrary
             var hrm = httpClient.GetAsync(url).Result;
             var s2 = hrm.Content.ReadAsStringAsync().Result;
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}{1}", hrm.Headers, s2);
-            var jo = hrm.Content.Headers.ContentType.MediaType == "application/json" ? JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings) : null;
+            var jo = hrm.Content.Headers.ContentType?.MediaType == "application/json" ? JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings) : null;
             if (hrm.StatusCode != HttpStatusCode.OK && hrm.StatusCode != HttpStatusCode.NotFound) throw new HttpRequestException($"Response status code does not indicate success: {hrm.StatusCode} ({hrm.ReasonPhrase}).\r\n{s2}");
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", s.Elapsed);
             return jo;
@@ -4456,7 +4456,7 @@ namespace FolioLibrary
             var hrm = httpClient.GetAsync(url).Result;
             var s2 = hrm.Content.ReadAsStringAsync().Result;
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}{1}", hrm.Headers, s2);
-            var jo = hrm.Content.Headers.ContentType.MediaType == "application/json" ? JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings) : null;
+            var jo = hrm.Content.Headers.ContentType?.MediaType == "application/json" ? JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings) : null;
             if (hrm.StatusCode != HttpStatusCode.OK) throw new HttpRequestException($"Response status code does not indicate success: {hrm.StatusCode} ({hrm.ReasonPhrase}).\r\n{s2}");
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", s.Elapsed);
             count = (int)jo["totalRecords"];
@@ -4477,7 +4477,7 @@ namespace FolioLibrary
             if (hrm.StatusCode != HttpStatusCode.OK)
             {
                 var s2 = hrm.Content.ReadAsStringAsync().Result;
-                if (hrm.Content.Headers.ContentType.MediaType == "application/json") s2 = JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings).ToString();
+                if (hrm.Content.Headers.ContentType?.MediaType == "application/json") s2 = JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings).ToString();
                 traceSource.TraceEvent(TraceEventType.Verbose, 0, s2);
                 throw new HttpRequestException($"Response status code does not indicate success: {hrm.StatusCode} ({hrm.ReasonPhrase}).\r\n{s2}");
             }
@@ -4508,7 +4508,7 @@ namespace FolioLibrary
             var hrm = httpClient.GetAsync(url).Result;
             var s2 = hrm.Content.ReadAsStringAsync().Result;
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}{1}", hrm.Headers, s2);
-            var jo = hrm.Content.Headers.ContentType.MediaType == "application/json" ? JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings) : null;
+            var jo = hrm.Content.Headers.ContentType?.MediaType == "application/json" ? JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings) : null;
             if (hrm.StatusCode != HttpStatusCode.OK && hrm.StatusCode != HttpStatusCode.NotFound) throw new HttpRequestException($"Response status code does not indicate success: {hrm.StatusCode} ({hrm.ReasonPhrase}).\r\n{s2}");
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", s.Elapsed);
             return jo;
@@ -4586,7 +4586,7 @@ namespace FolioLibrary
             var hrm = httpClient.GetAsync(url).Result;
             var s2 = hrm.Content.ReadAsStringAsync().Result;
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}{1}", hrm.Headers, s2);
-            var jo = hrm.Content.Headers.ContentType.MediaType == "application/json" ? JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings) : null;
+            var jo = hrm.Content.Headers.ContentType?.MediaType == "application/json" ? JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings) : null;
             if (hrm.StatusCode != HttpStatusCode.OK) throw new HttpRequestException($"Response status code does not indicate success: {hrm.StatusCode} ({hrm.ReasonPhrase}).\r\n{s2}");
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", s.Elapsed);
             count = (int)jo["totalRecords"];
@@ -4607,7 +4607,7 @@ namespace FolioLibrary
             if (hrm.StatusCode != HttpStatusCode.OK)
             {
                 var s2 = hrm.Content.ReadAsStringAsync().Result;
-                if (hrm.Content.Headers.ContentType.MediaType == "application/json") s2 = JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings).ToString();
+                if (hrm.Content.Headers.ContentType?.MediaType == "application/json") s2 = JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings).ToString();
                 traceSource.TraceEvent(TraceEventType.Verbose, 0, s2);
                 throw new HttpRequestException($"Response status code does not indicate success: {hrm.StatusCode} ({hrm.ReasonPhrase}).\r\n{s2}");
             }
@@ -4638,7 +4638,7 @@ namespace FolioLibrary
             var hrm = httpClient.GetAsync(url).Result;
             var s2 = hrm.Content.ReadAsStringAsync().Result;
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}{1}", hrm.Headers, s2);
-            var jo = hrm.Content.Headers.ContentType.MediaType == "application/json" ? JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings) : null;
+            var jo = hrm.Content.Headers.ContentType?.MediaType == "application/json" ? JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings) : null;
             if (hrm.StatusCode != HttpStatusCode.OK && hrm.StatusCode != HttpStatusCode.NotFound) throw new HttpRequestException($"Response status code does not indicate success: {hrm.StatusCode} ({hrm.ReasonPhrase}).\r\n{s2}");
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", s.Elapsed);
             return jo;
@@ -4716,7 +4716,7 @@ namespace FolioLibrary
             var hrm = httpClient.GetAsync(url).Result;
             var s2 = hrm.Content.ReadAsStringAsync().Result;
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}{1}", hrm.Headers, s2);
-            var jo = hrm.Content.Headers.ContentType.MediaType == "application/json" ? JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings) : null;
+            var jo = hrm.Content.Headers.ContentType?.MediaType == "application/json" ? JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings) : null;
             if (hrm.StatusCode != HttpStatusCode.OK) throw new HttpRequestException($"Response status code does not indicate success: {hrm.StatusCode} ({hrm.ReasonPhrase}).\r\n{s2}");
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", s.Elapsed);
             count = (int)jo["totalRecords"];
@@ -4737,7 +4737,7 @@ namespace FolioLibrary
             if (hrm.StatusCode != HttpStatusCode.OK)
             {
                 var s2 = hrm.Content.ReadAsStringAsync().Result;
-                if (hrm.Content.Headers.ContentType.MediaType == "application/json") s2 = JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings).ToString();
+                if (hrm.Content.Headers.ContentType?.MediaType == "application/json") s2 = JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings).ToString();
                 traceSource.TraceEvent(TraceEventType.Verbose, 0, s2);
                 throw new HttpRequestException($"Response status code does not indicate success: {hrm.StatusCode} ({hrm.ReasonPhrase}).\r\n{s2}");
             }
@@ -4768,7 +4768,7 @@ namespace FolioLibrary
             var hrm = httpClient.GetAsync(url).Result;
             var s2 = hrm.Content.ReadAsStringAsync().Result;
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}{1}", hrm.Headers, s2);
-            var jo = hrm.Content.Headers.ContentType.MediaType == "application/json" ? JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings) : null;
+            var jo = hrm.Content.Headers.ContentType?.MediaType == "application/json" ? JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings) : null;
             if (hrm.StatusCode != HttpStatusCode.OK && hrm.StatusCode != HttpStatusCode.NotFound) throw new HttpRequestException($"Response status code does not indicate success: {hrm.StatusCode} ({hrm.ReasonPhrase}).\r\n{s2}");
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", s.Elapsed);
             return jo;
@@ -4846,7 +4846,7 @@ namespace FolioLibrary
             var hrm = httpClient.GetAsync(url).Result;
             var s2 = hrm.Content.ReadAsStringAsync().Result;
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}{1}", hrm.Headers, s2);
-            var jo = hrm.Content.Headers.ContentType.MediaType == "application/json" ? JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings) : null;
+            var jo = hrm.Content.Headers.ContentType?.MediaType == "application/json" ? JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings) : null;
             if (hrm.StatusCode != HttpStatusCode.OK) throw new HttpRequestException($"Response status code does not indicate success: {hrm.StatusCode} ({hrm.ReasonPhrase}).\r\n{s2}");
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", s.Elapsed);
             count = (int)jo["totalRecords"];
@@ -4867,7 +4867,7 @@ namespace FolioLibrary
             if (hrm.StatusCode != HttpStatusCode.OK)
             {
                 var s2 = hrm.Content.ReadAsStringAsync().Result;
-                if (hrm.Content.Headers.ContentType.MediaType == "application/json") s2 = JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings).ToString();
+                if (hrm.Content.Headers.ContentType?.MediaType == "application/json") s2 = JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings).ToString();
                 traceSource.TraceEvent(TraceEventType.Verbose, 0, s2);
                 throw new HttpRequestException($"Response status code does not indicate success: {hrm.StatusCode} ({hrm.ReasonPhrase}).\r\n{s2}");
             }
@@ -4898,7 +4898,7 @@ namespace FolioLibrary
             var hrm = httpClient.GetAsync(url).Result;
             var s2 = hrm.Content.ReadAsStringAsync().Result;
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}{1}", hrm.Headers, s2);
-            var jo = hrm.Content.Headers.ContentType.MediaType == "application/json" ? JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings) : null;
+            var jo = hrm.Content.Headers.ContentType?.MediaType == "application/json" ? JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings) : null;
             if (hrm.StatusCode != HttpStatusCode.OK && hrm.StatusCode != HttpStatusCode.NotFound) throw new HttpRequestException($"Response status code does not indicate success: {hrm.StatusCode} ({hrm.ReasonPhrase}).\r\n{s2}");
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", s.Elapsed);
             return jo;
@@ -4976,7 +4976,7 @@ namespace FolioLibrary
             var hrm = httpClient.GetAsync(url).Result;
             var s2 = hrm.Content.ReadAsStringAsync().Result;
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}{1}", hrm.Headers, s2);
-            var jo = hrm.Content.Headers.ContentType.MediaType == "application/json" ? JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings) : null;
+            var jo = hrm.Content.Headers.ContentType?.MediaType == "application/json" ? JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings) : null;
             if (hrm.StatusCode != HttpStatusCode.OK) throw new HttpRequestException($"Response status code does not indicate success: {hrm.StatusCode} ({hrm.ReasonPhrase}).\r\n{s2}");
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", s.Elapsed);
             count = (int)jo["totalRecords"];
@@ -4997,7 +4997,7 @@ namespace FolioLibrary
             if (hrm.StatusCode != HttpStatusCode.OK)
             {
                 var s2 = hrm.Content.ReadAsStringAsync().Result;
-                if (hrm.Content.Headers.ContentType.MediaType == "application/json") s2 = JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings).ToString();
+                if (hrm.Content.Headers.ContentType?.MediaType == "application/json") s2 = JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings).ToString();
                 traceSource.TraceEvent(TraceEventType.Verbose, 0, s2);
                 throw new HttpRequestException($"Response status code does not indicate success: {hrm.StatusCode} ({hrm.ReasonPhrase}).\r\n{s2}");
             }
@@ -5028,7 +5028,7 @@ namespace FolioLibrary
             var hrm = httpClient.GetAsync(url).Result;
             var s2 = hrm.Content.ReadAsStringAsync().Result;
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}{1}", hrm.Headers, s2);
-            var jo = hrm.Content.Headers.ContentType.MediaType == "application/json" ? JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings) : null;
+            var jo = hrm.Content.Headers.ContentType?.MediaType == "application/json" ? JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings) : null;
             if (hrm.StatusCode != HttpStatusCode.OK && hrm.StatusCode != HttpStatusCode.NotFound) throw new HttpRequestException($"Response status code does not indicate success: {hrm.StatusCode} ({hrm.ReasonPhrase}).\r\n{s2}");
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", s.Elapsed);
             return jo;
@@ -5106,7 +5106,7 @@ namespace FolioLibrary
             var hrm = httpClient.GetAsync(url).Result;
             var s2 = hrm.Content.ReadAsStringAsync().Result;
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}{1}", hrm.Headers, s2);
-            var jo = hrm.Content.Headers.ContentType.MediaType == "application/json" ? JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings) : null;
+            var jo = hrm.Content.Headers.ContentType?.MediaType == "application/json" ? JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings) : null;
             if (hrm.StatusCode != HttpStatusCode.OK) throw new HttpRequestException($"Response status code does not indicate success: {hrm.StatusCode} ({hrm.ReasonPhrase}).\r\n{s2}");
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", s.Elapsed);
             count = (int)jo["totalRecords"];
@@ -5127,7 +5127,7 @@ namespace FolioLibrary
             if (hrm.StatusCode != HttpStatusCode.OK)
             {
                 var s2 = hrm.Content.ReadAsStringAsync().Result;
-                if (hrm.Content.Headers.ContentType.MediaType == "application/json") s2 = JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings).ToString();
+                if (hrm.Content.Headers.ContentType?.MediaType == "application/json") s2 = JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings).ToString();
                 traceSource.TraceEvent(TraceEventType.Verbose, 0, s2);
                 throw new HttpRequestException($"Response status code does not indicate success: {hrm.StatusCode} ({hrm.ReasonPhrase}).\r\n{s2}");
             }
@@ -5158,7 +5158,7 @@ namespace FolioLibrary
             var hrm = httpClient.GetAsync(url).Result;
             var s2 = hrm.Content.ReadAsStringAsync().Result;
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}{1}", hrm.Headers, s2);
-            var jo = hrm.Content.Headers.ContentType.MediaType == "application/json" ? JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings) : null;
+            var jo = hrm.Content.Headers.ContentType?.MediaType == "application/json" ? JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings) : null;
             if (hrm.StatusCode != HttpStatusCode.OK && hrm.StatusCode != HttpStatusCode.NotFound) throw new HttpRequestException($"Response status code does not indicate success: {hrm.StatusCode} ({hrm.ReasonPhrase}).\r\n{s2}");
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", s.Elapsed);
             return jo;
@@ -5256,7 +5256,7 @@ namespace FolioLibrary
             var hrm = httpClient.GetAsync(url).Result;
             var s2 = hrm.Content.ReadAsStringAsync().Result;
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}{1}", hrm.Headers, s2);
-            var jo = hrm.Content.Headers.ContentType.MediaType == "application/json" ? JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings) : null;
+            var jo = hrm.Content.Headers.ContentType?.MediaType == "application/json" ? JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings) : null;
             if (hrm.StatusCode != HttpStatusCode.OK) throw new HttpRequestException($"Response status code does not indicate success: {hrm.StatusCode} ({hrm.ReasonPhrase}).\r\n{s2}");
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", s.Elapsed);
             count = (int)jo["totalRecords"];
@@ -5277,7 +5277,7 @@ namespace FolioLibrary
             if (hrm.StatusCode != HttpStatusCode.OK)
             {
                 var s2 = hrm.Content.ReadAsStringAsync().Result;
-                if (hrm.Content.Headers.ContentType.MediaType == "application/json") s2 = JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings).ToString();
+                if (hrm.Content.Headers.ContentType?.MediaType == "application/json") s2 = JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings).ToString();
                 traceSource.TraceEvent(TraceEventType.Verbose, 0, s2);
                 throw new HttpRequestException($"Response status code does not indicate success: {hrm.StatusCode} ({hrm.ReasonPhrase}).\r\n{s2}");
             }
@@ -5308,7 +5308,7 @@ namespace FolioLibrary
             var hrm = httpClient.GetAsync(url).Result;
             var s2 = hrm.Content.ReadAsStringAsync().Result;
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}{1}", hrm.Headers, s2);
-            var jo = hrm.Content.Headers.ContentType.MediaType == "application/json" ? JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings) : null;
+            var jo = hrm.Content.Headers.ContentType?.MediaType == "application/json" ? JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings) : null;
             if (hrm.StatusCode != HttpStatusCode.OK && hrm.StatusCode != HttpStatusCode.NotFound) throw new HttpRequestException($"Response status code does not indicate success: {hrm.StatusCode} ({hrm.ReasonPhrase}).\r\n{s2}");
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", s.Elapsed);
             return jo;
@@ -5386,7 +5386,7 @@ namespace FolioLibrary
             var hrm = httpClient.GetAsync(url).Result;
             var s2 = hrm.Content.ReadAsStringAsync().Result;
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}{1}", hrm.Headers, s2);
-            var jo = hrm.Content.Headers.ContentType.MediaType == "application/json" ? JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings) : null;
+            var jo = hrm.Content.Headers.ContentType?.MediaType == "application/json" ? JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings) : null;
             if (hrm.StatusCode != HttpStatusCode.OK) throw new HttpRequestException($"Response status code does not indicate success: {hrm.StatusCode} ({hrm.ReasonPhrase}).\r\n{s2}");
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", s.Elapsed);
             count = (int)jo["totalRecords"];
@@ -5407,7 +5407,7 @@ namespace FolioLibrary
             if (hrm.StatusCode != HttpStatusCode.OK)
             {
                 var s2 = hrm.Content.ReadAsStringAsync().Result;
-                if (hrm.Content.Headers.ContentType.MediaType == "application/json") s2 = JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings).ToString();
+                if (hrm.Content.Headers.ContentType?.MediaType == "application/json") s2 = JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings).ToString();
                 traceSource.TraceEvent(TraceEventType.Verbose, 0, s2);
                 throw new HttpRequestException($"Response status code does not indicate success: {hrm.StatusCode} ({hrm.ReasonPhrase}).\r\n{s2}");
             }
@@ -5438,7 +5438,7 @@ namespace FolioLibrary
             var hrm = httpClient.GetAsync(url).Result;
             var s2 = hrm.Content.ReadAsStringAsync().Result;
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}{1}", hrm.Headers, s2);
-            var jo = hrm.Content.Headers.ContentType.MediaType == "application/json" ? JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings) : null;
+            var jo = hrm.Content.Headers.ContentType?.MediaType == "application/json" ? JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings) : null;
             if (hrm.StatusCode != HttpStatusCode.OK && hrm.StatusCode != HttpStatusCode.NotFound) throw new HttpRequestException($"Response status code does not indicate success: {hrm.StatusCode} ({hrm.ReasonPhrase}).\r\n{s2}");
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", s.Elapsed);
             return jo;
@@ -5507,7 +5507,7 @@ namespace FolioLibrary
             var hrm = httpClient.GetAsync(url).Result;
             var s2 = hrm.Content.ReadAsStringAsync().Result;
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}{1}", hrm.Headers, s2);
-            var jo = hrm.Content.Headers.ContentType.MediaType == "application/json" ? JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings) : null;
+            var jo = hrm.Content.Headers.ContentType?.MediaType == "application/json" ? JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings) : null;
             if (hrm.StatusCode != HttpStatusCode.OK && hrm.StatusCode != HttpStatusCode.NotFound) throw new HttpRequestException($"Response status code does not indicate success: {hrm.StatusCode} ({hrm.ReasonPhrase}).\r\n{s2}");
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", s.Elapsed);
             return jo;
@@ -5550,7 +5550,7 @@ namespace FolioLibrary
             var hrm = httpClient.GetAsync(url).Result;
             var s2 = hrm.Content.ReadAsStringAsync().Result;
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}{1}", hrm.Headers, s2);
-            var jo = hrm.Content.Headers.ContentType.MediaType == "application/json" ? JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings) : null;
+            var jo = hrm.Content.Headers.ContentType?.MediaType == "application/json" ? JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings) : null;
             if (hrm.StatusCode != HttpStatusCode.OK) throw new HttpRequestException($"Response status code does not indicate success: {hrm.StatusCode} ({hrm.ReasonPhrase}).\r\n{s2}");
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", s.Elapsed);
             count = (int)jo["totalRecords"];
@@ -5571,7 +5571,7 @@ namespace FolioLibrary
             if (hrm.StatusCode != HttpStatusCode.OK)
             {
                 var s2 = hrm.Content.ReadAsStringAsync().Result;
-                if (hrm.Content.Headers.ContentType.MediaType == "application/json") s2 = JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings).ToString();
+                if (hrm.Content.Headers.ContentType?.MediaType == "application/json") s2 = JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings).ToString();
                 traceSource.TraceEvent(TraceEventType.Verbose, 0, s2);
                 throw new HttpRequestException($"Response status code does not indicate success: {hrm.StatusCode} ({hrm.ReasonPhrase}).\r\n{s2}");
             }
@@ -5602,7 +5602,7 @@ namespace FolioLibrary
             var hrm = httpClient.GetAsync(url).Result;
             var s2 = hrm.Content.ReadAsStringAsync().Result;
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}{1}", hrm.Headers, s2);
-            var jo = hrm.Content.Headers.ContentType.MediaType == "application/json" ? JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings) : null;
+            var jo = hrm.Content.Headers.ContentType?.MediaType == "application/json" ? JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings) : null;
             if (hrm.StatusCode != HttpStatusCode.OK && hrm.StatusCode != HttpStatusCode.NotFound) throw new HttpRequestException($"Response status code does not indicate success: {hrm.StatusCode} ({hrm.ReasonPhrase}).\r\n{s2}");
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", s.Elapsed);
             return jo;
@@ -5680,7 +5680,7 @@ namespace FolioLibrary
             var hrm = httpClient.GetAsync(url).Result;
             var s2 = hrm.Content.ReadAsStringAsync().Result;
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}{1}", hrm.Headers, s2);
-            var jo = hrm.Content.Headers.ContentType.MediaType == "application/json" ? JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings) : null;
+            var jo = hrm.Content.Headers.ContentType?.MediaType == "application/json" ? JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings) : null;
             if (hrm.StatusCode != HttpStatusCode.OK) throw new HttpRequestException($"Response status code does not indicate success: {hrm.StatusCode} ({hrm.ReasonPhrase}).\r\n{s2}");
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", s.Elapsed);
             count = (int)jo["totalRecords"];
@@ -5701,7 +5701,7 @@ namespace FolioLibrary
             if (hrm.StatusCode != HttpStatusCode.OK)
             {
                 var s2 = hrm.Content.ReadAsStringAsync().Result;
-                if (hrm.Content.Headers.ContentType.MediaType == "application/json") s2 = JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings).ToString();
+                if (hrm.Content.Headers.ContentType?.MediaType == "application/json") s2 = JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings).ToString();
                 traceSource.TraceEvent(TraceEventType.Verbose, 0, s2);
                 throw new HttpRequestException($"Response status code does not indicate success: {hrm.StatusCode} ({hrm.ReasonPhrase}).\r\n{s2}");
             }
@@ -5732,7 +5732,7 @@ namespace FolioLibrary
             var hrm = httpClient.GetAsync(url).Result;
             var s2 = hrm.Content.ReadAsStringAsync().Result;
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}{1}", hrm.Headers, s2);
-            var jo = hrm.Content.Headers.ContentType.MediaType == "application/json" ? JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings) : null;
+            var jo = hrm.Content.Headers.ContentType?.MediaType == "application/json" ? JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings) : null;
             if (hrm.StatusCode != HttpStatusCode.OK && hrm.StatusCode != HttpStatusCode.NotFound) throw new HttpRequestException($"Response status code does not indicate success: {hrm.StatusCode} ({hrm.ReasonPhrase}).\r\n{s2}");
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", s.Elapsed);
             return jo;
@@ -5810,7 +5810,7 @@ namespace FolioLibrary
             var hrm = httpClient.GetAsync(url).Result;
             var s2 = hrm.Content.ReadAsStringAsync().Result;
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}{1}", hrm.Headers, s2);
-            var jo = hrm.Content.Headers.ContentType.MediaType == "application/json" ? JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings) : null;
+            var jo = hrm.Content.Headers.ContentType?.MediaType == "application/json" ? JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings) : null;
             if (hrm.StatusCode != HttpStatusCode.OK) throw new HttpRequestException($"Response status code does not indicate success: {hrm.StatusCode} ({hrm.ReasonPhrase}).\r\n{s2}");
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", s.Elapsed);
             count = (int)jo["totalRecords"];
@@ -5831,7 +5831,7 @@ namespace FolioLibrary
             if (hrm.StatusCode != HttpStatusCode.OK)
             {
                 var s2 = hrm.Content.ReadAsStringAsync().Result;
-                if (hrm.Content.Headers.ContentType.MediaType == "application/json") s2 = JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings).ToString();
+                if (hrm.Content.Headers.ContentType?.MediaType == "application/json") s2 = JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings).ToString();
                 traceSource.TraceEvent(TraceEventType.Verbose, 0, s2);
                 throw new HttpRequestException($"Response status code does not indicate success: {hrm.StatusCode} ({hrm.ReasonPhrase}).\r\n{s2}");
             }
@@ -5862,7 +5862,7 @@ namespace FolioLibrary
             var hrm = httpClient.GetAsync(url).Result;
             var s2 = hrm.Content.ReadAsStringAsync().Result;
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}{1}", hrm.Headers, s2);
-            var jo = hrm.Content.Headers.ContentType.MediaType == "application/json" ? JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings) : null;
+            var jo = hrm.Content.Headers.ContentType?.MediaType == "application/json" ? JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings) : null;
             if (hrm.StatusCode != HttpStatusCode.OK && hrm.StatusCode != HttpStatusCode.NotFound) throw new HttpRequestException($"Response status code does not indicate success: {hrm.StatusCode} ({hrm.ReasonPhrase}).\r\n{s2}");
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", s.Elapsed);
             return jo;
@@ -5960,7 +5960,7 @@ namespace FolioLibrary
             var hrm = httpClient.GetAsync(url).Result;
             var s2 = hrm.Content.ReadAsStringAsync().Result;
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}{1}", hrm.Headers, s2);
-            var jo = hrm.Content.Headers.ContentType.MediaType == "application/json" ? JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings) : null;
+            var jo = hrm.Content.Headers.ContentType?.MediaType == "application/json" ? JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings) : null;
             if (hrm.StatusCode != HttpStatusCode.OK) throw new HttpRequestException($"Response status code does not indicate success: {hrm.StatusCode} ({hrm.ReasonPhrase}).\r\n{s2}");
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", s.Elapsed);
             count = (int)jo["totalRecords"];
@@ -5981,7 +5981,7 @@ namespace FolioLibrary
             if (hrm.StatusCode != HttpStatusCode.OK)
             {
                 var s2 = hrm.Content.ReadAsStringAsync().Result;
-                if (hrm.Content.Headers.ContentType.MediaType == "application/json") s2 = JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings).ToString();
+                if (hrm.Content.Headers.ContentType?.MediaType == "application/json") s2 = JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings).ToString();
                 traceSource.TraceEvent(TraceEventType.Verbose, 0, s2);
                 throw new HttpRequestException($"Response status code does not indicate success: {hrm.StatusCode} ({hrm.ReasonPhrase}).\r\n{s2}");
             }
@@ -6012,7 +6012,7 @@ namespace FolioLibrary
             var hrm = httpClient.GetAsync(url).Result;
             var s2 = hrm.Content.ReadAsStringAsync().Result;
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}{1}", hrm.Headers, s2);
-            var jo = hrm.Content.Headers.ContentType.MediaType == "application/json" ? JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings) : null;
+            var jo = hrm.Content.Headers.ContentType?.MediaType == "application/json" ? JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings) : null;
             if (hrm.StatusCode != HttpStatusCode.OK && hrm.StatusCode != HttpStatusCode.NotFound) throw new HttpRequestException($"Response status code does not indicate success: {hrm.StatusCode} ({hrm.ReasonPhrase}).\r\n{s2}");
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", s.Elapsed);
             return jo;
@@ -6090,7 +6090,7 @@ namespace FolioLibrary
             var hrm = httpClient.GetAsync(url).Result;
             var s2 = hrm.Content.ReadAsStringAsync().Result;
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}{1}", hrm.Headers, s2);
-            var jo = hrm.Content.Headers.ContentType.MediaType == "application/json" ? JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings) : null;
+            var jo = hrm.Content.Headers.ContentType?.MediaType == "application/json" ? JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings) : null;
             if (hrm.StatusCode != HttpStatusCode.OK) throw new HttpRequestException($"Response status code does not indicate success: {hrm.StatusCode} ({hrm.ReasonPhrase}).\r\n{s2}");
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", s.Elapsed);
             count = (int)jo["totalRecords"];
@@ -6111,7 +6111,7 @@ namespace FolioLibrary
             if (hrm.StatusCode != HttpStatusCode.OK)
             {
                 var s2 = hrm.Content.ReadAsStringAsync().Result;
-                if (hrm.Content.Headers.ContentType.MediaType == "application/json") s2 = JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings).ToString();
+                if (hrm.Content.Headers.ContentType?.MediaType == "application/json") s2 = JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings).ToString();
                 traceSource.TraceEvent(TraceEventType.Verbose, 0, s2);
                 throw new HttpRequestException($"Response status code does not indicate success: {hrm.StatusCode} ({hrm.ReasonPhrase}).\r\n{s2}");
             }
@@ -6142,7 +6142,7 @@ namespace FolioLibrary
             var hrm = httpClient.GetAsync(url).Result;
             var s2 = hrm.Content.ReadAsStringAsync().Result;
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}{1}", hrm.Headers, s2);
-            var jo = hrm.Content.Headers.ContentType.MediaType == "application/json" ? JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings) : null;
+            var jo = hrm.Content.Headers.ContentType?.MediaType == "application/json" ? JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings) : null;
             if (hrm.StatusCode != HttpStatusCode.OK && hrm.StatusCode != HttpStatusCode.NotFound) throw new HttpRequestException($"Response status code does not indicate success: {hrm.StatusCode} ({hrm.ReasonPhrase}).\r\n{s2}");
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", s.Elapsed);
             return jo;
@@ -6220,7 +6220,7 @@ namespace FolioLibrary
             var hrm = httpClient.GetAsync(url).Result;
             var s2 = hrm.Content.ReadAsStringAsync().Result;
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}{1}", hrm.Headers, s2);
-            var jo = hrm.Content.Headers.ContentType.MediaType == "application/json" ? JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings) : null;
+            var jo = hrm.Content.Headers.ContentType?.MediaType == "application/json" ? JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings) : null;
             if (hrm.StatusCode != HttpStatusCode.OK) throw new HttpRequestException($"Response status code does not indicate success: {hrm.StatusCode} ({hrm.ReasonPhrase}).\r\n{s2}");
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", s.Elapsed);
             count = (int)jo["totalRecords"];
@@ -6241,7 +6241,7 @@ namespace FolioLibrary
             if (hrm.StatusCode != HttpStatusCode.OK)
             {
                 var s2 = hrm.Content.ReadAsStringAsync().Result;
-                if (hrm.Content.Headers.ContentType.MediaType == "application/json") s2 = JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings).ToString();
+                if (hrm.Content.Headers.ContentType?.MediaType == "application/json") s2 = JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings).ToString();
                 traceSource.TraceEvent(TraceEventType.Verbose, 0, s2);
                 throw new HttpRequestException($"Response status code does not indicate success: {hrm.StatusCode} ({hrm.ReasonPhrase}).\r\n{s2}");
             }
@@ -6272,7 +6272,7 @@ namespace FolioLibrary
             var hrm = httpClient.GetAsync(url).Result;
             var s2 = hrm.Content.ReadAsStringAsync().Result;
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}{1}", hrm.Headers, s2);
-            var jo = hrm.Content.Headers.ContentType.MediaType == "application/json" ? JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings) : null;
+            var jo = hrm.Content.Headers.ContentType?.MediaType == "application/json" ? JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings) : null;
             if (hrm.StatusCode != HttpStatusCode.OK && hrm.StatusCode != HttpStatusCode.NotFound) throw new HttpRequestException($"Response status code does not indicate success: {hrm.StatusCode} ({hrm.ReasonPhrase}).\r\n{s2}");
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", s.Elapsed);
             return jo;
@@ -6350,7 +6350,7 @@ namespace FolioLibrary
             var hrm = httpClient.GetAsync(url).Result;
             var s2 = hrm.Content.ReadAsStringAsync().Result;
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}{1}", hrm.Headers, s2);
-            var jo = hrm.Content.Headers.ContentType.MediaType == "application/json" ? JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings) : null;
+            var jo = hrm.Content.Headers.ContentType?.MediaType == "application/json" ? JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings) : null;
             if (hrm.StatusCode != HttpStatusCode.OK) throw new HttpRequestException($"Response status code does not indicate success: {hrm.StatusCode} ({hrm.ReasonPhrase}).\r\n{s2}");
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", s.Elapsed);
             count = (int)jo["totalRecords"];
@@ -6371,7 +6371,7 @@ namespace FolioLibrary
             if (hrm.StatusCode != HttpStatusCode.OK)
             {
                 var s2 = hrm.Content.ReadAsStringAsync().Result;
-                if (hrm.Content.Headers.ContentType.MediaType == "application/json") s2 = JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings).ToString();
+                if (hrm.Content.Headers.ContentType?.MediaType == "application/json") s2 = JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings).ToString();
                 traceSource.TraceEvent(TraceEventType.Verbose, 0, s2);
                 throw new HttpRequestException($"Response status code does not indicate success: {hrm.StatusCode} ({hrm.ReasonPhrase}).\r\n{s2}");
             }
@@ -6402,7 +6402,7 @@ namespace FolioLibrary
             var hrm = httpClient.GetAsync(url).Result;
             var s2 = hrm.Content.ReadAsStringAsync().Result;
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}{1}", hrm.Headers, s2);
-            var jo = hrm.Content.Headers.ContentType.MediaType == "application/json" ? JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings) : null;
+            var jo = hrm.Content.Headers.ContentType?.MediaType == "application/json" ? JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings) : null;
             if (hrm.StatusCode != HttpStatusCode.OK && hrm.StatusCode != HttpStatusCode.NotFound) throw new HttpRequestException($"Response status code does not indicate success: {hrm.StatusCode} ({hrm.ReasonPhrase}).\r\n{s2}");
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", s.Elapsed);
             return jo;
@@ -6480,7 +6480,7 @@ namespace FolioLibrary
             var hrm = httpClient.GetAsync(url).Result;
             var s2 = hrm.Content.ReadAsStringAsync().Result;
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}{1}", hrm.Headers, s2);
-            var jo = hrm.Content.Headers.ContentType.MediaType == "application/json" ? JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings) : null;
+            var jo = hrm.Content.Headers.ContentType?.MediaType == "application/json" ? JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings) : null;
             if (hrm.StatusCode != HttpStatusCode.OK) throw new HttpRequestException($"Response status code does not indicate success: {hrm.StatusCode} ({hrm.ReasonPhrase}).\r\n{s2}");
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", s.Elapsed);
             count = (int)jo["totalRecords"];
@@ -6501,7 +6501,7 @@ namespace FolioLibrary
             if (hrm.StatusCode != HttpStatusCode.OK)
             {
                 var s2 = hrm.Content.ReadAsStringAsync().Result;
-                if (hrm.Content.Headers.ContentType.MediaType == "application/json") s2 = JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings).ToString();
+                if (hrm.Content.Headers.ContentType?.MediaType == "application/json") s2 = JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings).ToString();
                 traceSource.TraceEvent(TraceEventType.Verbose, 0, s2);
                 throw new HttpRequestException($"Response status code does not indicate success: {hrm.StatusCode} ({hrm.ReasonPhrase}).\r\n{s2}");
             }
@@ -6532,7 +6532,7 @@ namespace FolioLibrary
             var hrm = httpClient.GetAsync(url).Result;
             var s2 = hrm.Content.ReadAsStringAsync().Result;
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}{1}", hrm.Headers, s2);
-            var jo = hrm.Content.Headers.ContentType.MediaType == "application/json" ? JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings) : null;
+            var jo = hrm.Content.Headers.ContentType?.MediaType == "application/json" ? JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings) : null;
             if (hrm.StatusCode != HttpStatusCode.OK && hrm.StatusCode != HttpStatusCode.NotFound) throw new HttpRequestException($"Response status code does not indicate success: {hrm.StatusCode} ({hrm.ReasonPhrase}).\r\n{s2}");
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", s.Elapsed);
             return jo;
@@ -6610,7 +6610,7 @@ namespace FolioLibrary
             var hrm = httpClient.GetAsync(url).Result;
             var s2 = hrm.Content.ReadAsStringAsync().Result;
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}{1}", hrm.Headers, s2);
-            var jo = hrm.Content.Headers.ContentType.MediaType == "application/json" ? JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings) : null;
+            var jo = hrm.Content.Headers.ContentType?.MediaType == "application/json" ? JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings) : null;
             if (hrm.StatusCode != HttpStatusCode.OK) throw new HttpRequestException($"Response status code does not indicate success: {hrm.StatusCode} ({hrm.ReasonPhrase}).\r\n{s2}");
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", s.Elapsed);
             count = (int)jo["totalRecords"];
@@ -6631,7 +6631,7 @@ namespace FolioLibrary
             if (hrm.StatusCode != HttpStatusCode.OK)
             {
                 var s2 = hrm.Content.ReadAsStringAsync().Result;
-                if (hrm.Content.Headers.ContentType.MediaType == "application/json") s2 = JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings).ToString();
+                if (hrm.Content.Headers.ContentType?.MediaType == "application/json") s2 = JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings).ToString();
                 traceSource.TraceEvent(TraceEventType.Verbose, 0, s2);
                 throw new HttpRequestException($"Response status code does not indicate success: {hrm.StatusCode} ({hrm.ReasonPhrase}).\r\n{s2}");
             }
@@ -6662,7 +6662,7 @@ namespace FolioLibrary
             var hrm = httpClient.GetAsync(url).Result;
             var s2 = hrm.Content.ReadAsStringAsync().Result;
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}{1}", hrm.Headers, s2);
-            var jo = hrm.Content.Headers.ContentType.MediaType == "application/json" ? JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings) : null;
+            var jo = hrm.Content.Headers.ContentType?.MediaType == "application/json" ? JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings) : null;
             if (hrm.StatusCode != HttpStatusCode.OK && hrm.StatusCode != HttpStatusCode.NotFound) throw new HttpRequestException($"Response status code does not indicate success: {hrm.StatusCode} ({hrm.ReasonPhrase}).\r\n{s2}");
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", s.Elapsed);
             return jo;
@@ -6740,7 +6740,7 @@ namespace FolioLibrary
             var hrm = httpClient.GetAsync(url).Result;
             var s2 = hrm.Content.ReadAsStringAsync().Result;
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}{1}", hrm.Headers, s2);
-            var jo = hrm.Content.Headers.ContentType.MediaType == "application/json" ? JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings) : null;
+            var jo = hrm.Content.Headers.ContentType?.MediaType == "application/json" ? JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings) : null;
             if (hrm.StatusCode != HttpStatusCode.OK) throw new HttpRequestException($"Response status code does not indicate success: {hrm.StatusCode} ({hrm.ReasonPhrase}).\r\n{s2}");
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", s.Elapsed);
             count = (int)jo["totalRecords"];
@@ -6761,7 +6761,7 @@ namespace FolioLibrary
             if (hrm.StatusCode != HttpStatusCode.OK)
             {
                 var s2 = hrm.Content.ReadAsStringAsync().Result;
-                if (hrm.Content.Headers.ContentType.MediaType == "application/json") s2 = JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings).ToString();
+                if (hrm.Content.Headers.ContentType?.MediaType == "application/json") s2 = JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings).ToString();
                 traceSource.TraceEvent(TraceEventType.Verbose, 0, s2);
                 throw new HttpRequestException($"Response status code does not indicate success: {hrm.StatusCode} ({hrm.ReasonPhrase}).\r\n{s2}");
             }
@@ -6792,7 +6792,7 @@ namespace FolioLibrary
             var hrm = httpClient.GetAsync(url).Result;
             var s2 = hrm.Content.ReadAsStringAsync().Result;
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}{1}", hrm.Headers, s2);
-            var jo = hrm.Content.Headers.ContentType.MediaType == "application/json" ? JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings) : null;
+            var jo = hrm.Content.Headers.ContentType?.MediaType == "application/json" ? JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings) : null;
             if (hrm.StatusCode != HttpStatusCode.OK && hrm.StatusCode != HttpStatusCode.NotFound) throw new HttpRequestException($"Response status code does not indicate success: {hrm.StatusCode} ({hrm.ReasonPhrase}).\r\n{s2}");
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", s.Elapsed);
             return jo;
@@ -6870,7 +6870,7 @@ namespace FolioLibrary
             var hrm = httpClient.GetAsync(url).Result;
             var s2 = hrm.Content.ReadAsStringAsync().Result;
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}{1}", hrm.Headers, s2);
-            var jo = hrm.Content.Headers.ContentType.MediaType == "application/json" ? JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings) : null;
+            var jo = hrm.Content.Headers.ContentType?.MediaType == "application/json" ? JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings) : null;
             if (hrm.StatusCode != HttpStatusCode.OK) throw new HttpRequestException($"Response status code does not indicate success: {hrm.StatusCode} ({hrm.ReasonPhrase}).\r\n{s2}");
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", s.Elapsed);
             count = (int)jo["totalRecords"];
@@ -6891,7 +6891,7 @@ namespace FolioLibrary
             if (hrm.StatusCode != HttpStatusCode.OK)
             {
                 var s2 = hrm.Content.ReadAsStringAsync().Result;
-                if (hrm.Content.Headers.ContentType.MediaType == "application/json") s2 = JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings).ToString();
+                if (hrm.Content.Headers.ContentType?.MediaType == "application/json") s2 = JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings).ToString();
                 traceSource.TraceEvent(TraceEventType.Verbose, 0, s2);
                 throw new HttpRequestException($"Response status code does not indicate success: {hrm.StatusCode} ({hrm.ReasonPhrase}).\r\n{s2}");
             }
@@ -6922,7 +6922,7 @@ namespace FolioLibrary
             var hrm = httpClient.GetAsync(url).Result;
             var s2 = hrm.Content.ReadAsStringAsync().Result;
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}{1}", hrm.Headers, s2);
-            var jo = hrm.Content.Headers.ContentType.MediaType == "application/json" ? JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings) : null;
+            var jo = hrm.Content.Headers.ContentType?.MediaType == "application/json" ? JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings) : null;
             if (hrm.StatusCode != HttpStatusCode.OK && hrm.StatusCode != HttpStatusCode.NotFound) throw new HttpRequestException($"Response status code does not indicate success: {hrm.StatusCode} ({hrm.ReasonPhrase}).\r\n{s2}");
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", s.Elapsed);
             return jo;
@@ -7000,7 +7000,7 @@ namespace FolioLibrary
             var hrm = httpClient.GetAsync(url).Result;
             var s2 = hrm.Content.ReadAsStringAsync().Result;
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}{1}", hrm.Headers, s2);
-            var jo = hrm.Content.Headers.ContentType.MediaType == "application/json" ? JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings) : null;
+            var jo = hrm.Content.Headers.ContentType?.MediaType == "application/json" ? JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings) : null;
             if (hrm.StatusCode != HttpStatusCode.OK) throw new HttpRequestException($"Response status code does not indicate success: {hrm.StatusCode} ({hrm.ReasonPhrase}).\r\n{s2}");
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", s.Elapsed);
             count = (int)jo["totalRecords"];
@@ -7021,7 +7021,7 @@ namespace FolioLibrary
             if (hrm.StatusCode != HttpStatusCode.OK)
             {
                 var s2 = hrm.Content.ReadAsStringAsync().Result;
-                if (hrm.Content.Headers.ContentType.MediaType == "application/json") s2 = JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings).ToString();
+                if (hrm.Content.Headers.ContentType?.MediaType == "application/json") s2 = JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings).ToString();
                 traceSource.TraceEvent(TraceEventType.Verbose, 0, s2);
                 throw new HttpRequestException($"Response status code does not indicate success: {hrm.StatusCode} ({hrm.ReasonPhrase}).\r\n{s2}");
             }
@@ -7052,7 +7052,7 @@ namespace FolioLibrary
             var hrm = httpClient.GetAsync(url).Result;
             var s2 = hrm.Content.ReadAsStringAsync().Result;
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}{1}", hrm.Headers, s2);
-            var jo = hrm.Content.Headers.ContentType.MediaType == "application/json" ? JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings) : null;
+            var jo = hrm.Content.Headers.ContentType?.MediaType == "application/json" ? JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings) : null;
             if (hrm.StatusCode != HttpStatusCode.OK && hrm.StatusCode != HttpStatusCode.NotFound) throw new HttpRequestException($"Response status code does not indicate success: {hrm.StatusCode} ({hrm.ReasonPhrase}).\r\n{s2}");
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", s.Elapsed);
             return jo;
@@ -7130,7 +7130,7 @@ namespace FolioLibrary
             var hrm = httpClient.GetAsync(url).Result;
             var s2 = hrm.Content.ReadAsStringAsync().Result;
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}{1}", hrm.Headers, s2);
-            var jo = hrm.Content.Headers.ContentType.MediaType == "application/json" ? JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings) : null;
+            var jo = hrm.Content.Headers.ContentType?.MediaType == "application/json" ? JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings) : null;
             if (hrm.StatusCode != HttpStatusCode.OK) throw new HttpRequestException($"Response status code does not indicate success: {hrm.StatusCode} ({hrm.ReasonPhrase}).\r\n{s2}");
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", s.Elapsed);
             count = (int)jo["totalRecords"];
@@ -7151,7 +7151,7 @@ namespace FolioLibrary
             if (hrm.StatusCode != HttpStatusCode.OK)
             {
                 var s2 = hrm.Content.ReadAsStringAsync().Result;
-                if (hrm.Content.Headers.ContentType.MediaType == "application/json") s2 = JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings).ToString();
+                if (hrm.Content.Headers.ContentType?.MediaType == "application/json") s2 = JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings).ToString();
                 traceSource.TraceEvent(TraceEventType.Verbose, 0, s2);
                 throw new HttpRequestException($"Response status code does not indicate success: {hrm.StatusCode} ({hrm.ReasonPhrase}).\r\n{s2}");
             }
@@ -7182,7 +7182,7 @@ namespace FolioLibrary
             var hrm = httpClient.GetAsync(url).Result;
             var s2 = hrm.Content.ReadAsStringAsync().Result;
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}{1}", hrm.Headers, s2);
-            var jo = hrm.Content.Headers.ContentType.MediaType == "application/json" ? JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings) : null;
+            var jo = hrm.Content.Headers.ContentType?.MediaType == "application/json" ? JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings) : null;
             if (hrm.StatusCode != HttpStatusCode.OK && hrm.StatusCode != HttpStatusCode.NotFound) throw new HttpRequestException($"Response status code does not indicate success: {hrm.StatusCode} ({hrm.ReasonPhrase}).\r\n{s2}");
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", s.Elapsed);
             return jo;
@@ -7252,7 +7252,7 @@ namespace FolioLibrary
             var hrm = httpClient.GetAsync(url).Result;
             var s2 = hrm.Content.ReadAsStringAsync().Result;
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}{1}", hrm.Headers, s2);
-            var jo = hrm.Content.Headers.ContentType.MediaType == "application/json" ? JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings) : null;
+            var jo = hrm.Content.Headers.ContentType?.MediaType == "application/json" ? JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings) : null;
             if (hrm.StatusCode != HttpStatusCode.OK && hrm.StatusCode != HttpStatusCode.NotFound) throw new HttpRequestException($"Response status code does not indicate success: {hrm.StatusCode} ({hrm.ReasonPhrase}).\r\n{s2}");
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", s.Elapsed);
             return jo;
@@ -7330,7 +7330,7 @@ namespace FolioLibrary
             var hrm = httpClient.GetAsync(url).Result;
             var s2 = hrm.Content.ReadAsStringAsync().Result;
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}{1}", hrm.Headers, s2);
-            var jo = hrm.Content.Headers.ContentType.MediaType == "application/json" ? JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings) : null;
+            var jo = hrm.Content.Headers.ContentType?.MediaType == "application/json" ? JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings) : null;
             if (hrm.StatusCode != HttpStatusCode.OK) throw new HttpRequestException($"Response status code does not indicate success: {hrm.StatusCode} ({hrm.ReasonPhrase}).\r\n{s2}");
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", s.Elapsed);
             count = (int)jo["totalRecords"];
@@ -7351,7 +7351,7 @@ namespace FolioLibrary
             if (hrm.StatusCode != HttpStatusCode.OK)
             {
                 var s2 = hrm.Content.ReadAsStringAsync().Result;
-                if (hrm.Content.Headers.ContentType.MediaType == "application/json") s2 = JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings).ToString();
+                if (hrm.Content.Headers.ContentType?.MediaType == "application/json") s2 = JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings).ToString();
                 traceSource.TraceEvent(TraceEventType.Verbose, 0, s2);
                 throw new HttpRequestException($"Response status code does not indicate success: {hrm.StatusCode} ({hrm.ReasonPhrase}).\r\n{s2}");
             }
@@ -7382,7 +7382,7 @@ namespace FolioLibrary
             var hrm = httpClient.GetAsync(url).Result;
             var s2 = hrm.Content.ReadAsStringAsync().Result;
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}{1}", hrm.Headers, s2);
-            var jo = hrm.Content.Headers.ContentType.MediaType == "application/json" ? JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings) : null;
+            var jo = hrm.Content.Headers.ContentType?.MediaType == "application/json" ? JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings) : null;
             if (hrm.StatusCode != HttpStatusCode.OK && hrm.StatusCode != HttpStatusCode.NotFound) throw new HttpRequestException($"Response status code does not indicate success: {hrm.StatusCode} ({hrm.ReasonPhrase}).\r\n{s2}");
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", s.Elapsed);
             return jo;
@@ -7480,7 +7480,7 @@ namespace FolioLibrary
             var hrm = httpClient.GetAsync(url).Result;
             var s2 = hrm.Content.ReadAsStringAsync().Result;
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}{1}", hrm.Headers, s2);
-            var jo = hrm.Content.Headers.ContentType.MediaType == "application/json" ? JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings) : null;
+            var jo = hrm.Content.Headers.ContentType?.MediaType == "application/json" ? JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings) : null;
             if (hrm.StatusCode != HttpStatusCode.OK) throw new HttpRequestException($"Response status code does not indicate success: {hrm.StatusCode} ({hrm.ReasonPhrase}).\r\n{s2}");
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", s.Elapsed);
             count = (int)jo["totalRecords"];
@@ -7501,7 +7501,7 @@ namespace FolioLibrary
             if (hrm.StatusCode != HttpStatusCode.OK)
             {
                 var s2 = hrm.Content.ReadAsStringAsync().Result;
-                if (hrm.Content.Headers.ContentType.MediaType == "application/json") s2 = JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings).ToString();
+                if (hrm.Content.Headers.ContentType?.MediaType == "application/json") s2 = JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings).ToString();
                 traceSource.TraceEvent(TraceEventType.Verbose, 0, s2);
                 throw new HttpRequestException($"Response status code does not indicate success: {hrm.StatusCode} ({hrm.ReasonPhrase}).\r\n{s2}");
             }
@@ -7532,7 +7532,7 @@ namespace FolioLibrary
             var hrm = httpClient.GetAsync(url).Result;
             var s2 = hrm.Content.ReadAsStringAsync().Result;
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}{1}", hrm.Headers, s2);
-            var jo = hrm.Content.Headers.ContentType.MediaType == "application/json" ? JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings) : null;
+            var jo = hrm.Content.Headers.ContentType?.MediaType == "application/json" ? JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings) : null;
             if (hrm.StatusCode != HttpStatusCode.OK && hrm.StatusCode != HttpStatusCode.NotFound) throw new HttpRequestException($"Response status code does not indicate success: {hrm.StatusCode} ({hrm.ReasonPhrase}).\r\n{s2}");
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", s.Elapsed);
             return jo;
@@ -7610,7 +7610,7 @@ namespace FolioLibrary
             var hrm = httpClient.GetAsync(url).Result;
             var s2 = hrm.Content.ReadAsStringAsync().Result;
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}{1}", hrm.Headers, s2);
-            var jo = hrm.Content.Headers.ContentType.MediaType == "application/json" ? JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings) : null;
+            var jo = hrm.Content.Headers.ContentType?.MediaType == "application/json" ? JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings) : null;
             if (hrm.StatusCode != HttpStatusCode.OK) throw new HttpRequestException($"Response status code does not indicate success: {hrm.StatusCode} ({hrm.ReasonPhrase}).\r\n{s2}");
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", s.Elapsed);
             count = (int)jo["totalRecords"];
@@ -7631,7 +7631,7 @@ namespace FolioLibrary
             if (hrm.StatusCode != HttpStatusCode.OK)
             {
                 var s2 = hrm.Content.ReadAsStringAsync().Result;
-                if (hrm.Content.Headers.ContentType.MediaType == "application/json") s2 = JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings).ToString();
+                if (hrm.Content.Headers.ContentType?.MediaType == "application/json") s2 = JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings).ToString();
                 traceSource.TraceEvent(TraceEventType.Verbose, 0, s2);
                 throw new HttpRequestException($"Response status code does not indicate success: {hrm.StatusCode} ({hrm.ReasonPhrase}).\r\n{s2}");
             }
@@ -7662,7 +7662,7 @@ namespace FolioLibrary
             var hrm = httpClient.GetAsync(url).Result;
             var s2 = hrm.Content.ReadAsStringAsync().Result;
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}{1}", hrm.Headers, s2);
-            var jo = hrm.Content.Headers.ContentType.MediaType == "application/json" ? JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings) : null;
+            var jo = hrm.Content.Headers.ContentType?.MediaType == "application/json" ? JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings) : null;
             if (hrm.StatusCode != HttpStatusCode.OK && hrm.StatusCode != HttpStatusCode.NotFound) throw new HttpRequestException($"Response status code does not indicate success: {hrm.StatusCode} ({hrm.ReasonPhrase}).\r\n{s2}");
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", s.Elapsed);
             return jo;
@@ -7740,7 +7740,7 @@ namespace FolioLibrary
             var hrm = httpClient.GetAsync(url).Result;
             var s2 = hrm.Content.ReadAsStringAsync().Result;
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}{1}", hrm.Headers, s2);
-            var jo = hrm.Content.Headers.ContentType.MediaType == "application/json" ? JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings) : null;
+            var jo = hrm.Content.Headers.ContentType?.MediaType == "application/json" ? JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings) : null;
             if (hrm.StatusCode != HttpStatusCode.OK) throw new HttpRequestException($"Response status code does not indicate success: {hrm.StatusCode} ({hrm.ReasonPhrase}).\r\n{s2}");
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", s.Elapsed);
             count = (int)jo["totalRecords"];
@@ -7761,7 +7761,7 @@ namespace FolioLibrary
             if (hrm.StatusCode != HttpStatusCode.OK)
             {
                 var s2 = hrm.Content.ReadAsStringAsync().Result;
-                if (hrm.Content.Headers.ContentType.MediaType == "application/json") s2 = JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings).ToString();
+                if (hrm.Content.Headers.ContentType?.MediaType == "application/json") s2 = JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings).ToString();
                 traceSource.TraceEvent(TraceEventType.Verbose, 0, s2);
                 throw new HttpRequestException($"Response status code does not indicate success: {hrm.StatusCode} ({hrm.ReasonPhrase}).\r\n{s2}");
             }
@@ -7792,7 +7792,7 @@ namespace FolioLibrary
             var hrm = httpClient.GetAsync(url).Result;
             var s2 = hrm.Content.ReadAsStringAsync().Result;
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}{1}", hrm.Headers, s2);
-            var jo = hrm.Content.Headers.ContentType.MediaType == "application/json" ? JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings) : null;
+            var jo = hrm.Content.Headers.ContentType?.MediaType == "application/json" ? JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings) : null;
             if (hrm.StatusCode != HttpStatusCode.OK && hrm.StatusCode != HttpStatusCode.NotFound) throw new HttpRequestException($"Response status code does not indicate success: {hrm.StatusCode} ({hrm.ReasonPhrase}).\r\n{s2}");
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", s.Elapsed);
             return jo;
@@ -7870,7 +7870,7 @@ namespace FolioLibrary
             var hrm = httpClient.GetAsync(url).Result;
             var s2 = hrm.Content.ReadAsStringAsync().Result;
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}{1}", hrm.Headers, s2);
-            var jo = hrm.Content.Headers.ContentType.MediaType == "application/json" ? JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings) : null;
+            var jo = hrm.Content.Headers.ContentType?.MediaType == "application/json" ? JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings) : null;
             if (hrm.StatusCode != HttpStatusCode.OK) throw new HttpRequestException($"Response status code does not indicate success: {hrm.StatusCode} ({hrm.ReasonPhrase}).\r\n{s2}");
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", s.Elapsed);
             count = (int)jo["totalRecords"];
@@ -7891,7 +7891,7 @@ namespace FolioLibrary
             if (hrm.StatusCode != HttpStatusCode.OK)
             {
                 var s2 = hrm.Content.ReadAsStringAsync().Result;
-                if (hrm.Content.Headers.ContentType.MediaType == "application/json") s2 = JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings).ToString();
+                if (hrm.Content.Headers.ContentType?.MediaType == "application/json") s2 = JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings).ToString();
                 traceSource.TraceEvent(TraceEventType.Verbose, 0, s2);
                 throw new HttpRequestException($"Response status code does not indicate success: {hrm.StatusCode} ({hrm.ReasonPhrase}).\r\n{s2}");
             }
@@ -7922,7 +7922,7 @@ namespace FolioLibrary
             var hrm = httpClient.GetAsync(url).Result;
             var s2 = hrm.Content.ReadAsStringAsync().Result;
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}{1}", hrm.Headers, s2);
-            var jo = hrm.Content.Headers.ContentType.MediaType == "application/json" ? JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings) : null;
+            var jo = hrm.Content.Headers.ContentType?.MediaType == "application/json" ? JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings) : null;
             if (hrm.StatusCode != HttpStatusCode.OK && hrm.StatusCode != HttpStatusCode.NotFound) throw new HttpRequestException($"Response status code does not indicate success: {hrm.StatusCode} ({hrm.ReasonPhrase}).\r\n{s2}");
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", s.Elapsed);
             return jo;
@@ -8000,7 +8000,7 @@ namespace FolioLibrary
             var hrm = httpClient.GetAsync(url).Result;
             var s2 = hrm.Content.ReadAsStringAsync().Result;
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}{1}", hrm.Headers, s2);
-            var jo = hrm.Content.Headers.ContentType.MediaType == "application/json" ? JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings) : null;
+            var jo = hrm.Content.Headers.ContentType?.MediaType == "application/json" ? JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings) : null;
             if (hrm.StatusCode != HttpStatusCode.OK) throw new HttpRequestException($"Response status code does not indicate success: {hrm.StatusCode} ({hrm.ReasonPhrase}).\r\n{s2}");
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", s.Elapsed);
             count = (int)jo["totalRecords"];
@@ -8021,7 +8021,7 @@ namespace FolioLibrary
             if (hrm.StatusCode != HttpStatusCode.OK)
             {
                 var s2 = hrm.Content.ReadAsStringAsync().Result;
-                if (hrm.Content.Headers.ContentType.MediaType == "application/json") s2 = JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings).ToString();
+                if (hrm.Content.Headers.ContentType?.MediaType == "application/json") s2 = JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings).ToString();
                 traceSource.TraceEvent(TraceEventType.Verbose, 0, s2);
                 throw new HttpRequestException($"Response status code does not indicate success: {hrm.StatusCode} ({hrm.ReasonPhrase}).\r\n{s2}");
             }
@@ -8052,7 +8052,7 @@ namespace FolioLibrary
             var hrm = httpClient.GetAsync(url).Result;
             var s2 = hrm.Content.ReadAsStringAsync().Result;
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}{1}", hrm.Headers, s2);
-            var jo = hrm.Content.Headers.ContentType.MediaType == "application/json" ? JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings) : null;
+            var jo = hrm.Content.Headers.ContentType?.MediaType == "application/json" ? JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings) : null;
             if (hrm.StatusCode != HttpStatusCode.OK && hrm.StatusCode != HttpStatusCode.NotFound) throw new HttpRequestException($"Response status code does not indicate success: {hrm.StatusCode} ({hrm.ReasonPhrase}).\r\n{s2}");
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", s.Elapsed);
             return jo;
@@ -8130,7 +8130,7 @@ namespace FolioLibrary
             var hrm = httpClient.GetAsync(url).Result;
             var s2 = hrm.Content.ReadAsStringAsync().Result;
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}{1}", hrm.Headers, s2);
-            var jo = hrm.Content.Headers.ContentType.MediaType == "application/json" ? JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings) : null;
+            var jo = hrm.Content.Headers.ContentType?.MediaType == "application/json" ? JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings) : null;
             if (hrm.StatusCode != HttpStatusCode.OK) throw new HttpRequestException($"Response status code does not indicate success: {hrm.StatusCode} ({hrm.ReasonPhrase}).\r\n{s2}");
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", s.Elapsed);
             count = (int)jo["totalRecords"];
@@ -8151,7 +8151,7 @@ namespace FolioLibrary
             if (hrm.StatusCode != HttpStatusCode.OK)
             {
                 var s2 = hrm.Content.ReadAsStringAsync().Result;
-                if (hrm.Content.Headers.ContentType.MediaType == "application/json") s2 = JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings).ToString();
+                if (hrm.Content.Headers.ContentType?.MediaType == "application/json") s2 = JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings).ToString();
                 traceSource.TraceEvent(TraceEventType.Verbose, 0, s2);
                 throw new HttpRequestException($"Response status code does not indicate success: {hrm.StatusCode} ({hrm.ReasonPhrase}).\r\n{s2}");
             }
@@ -8182,7 +8182,7 @@ namespace FolioLibrary
             var hrm = httpClient.GetAsync(url).Result;
             var s2 = hrm.Content.ReadAsStringAsync().Result;
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}{1}", hrm.Headers, s2);
-            var jo = hrm.Content.Headers.ContentType.MediaType == "application/json" ? JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings) : null;
+            var jo = hrm.Content.Headers.ContentType?.MediaType == "application/json" ? JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings) : null;
             if (hrm.StatusCode != HttpStatusCode.OK && hrm.StatusCode != HttpStatusCode.NotFound) throw new HttpRequestException($"Response status code does not indicate success: {hrm.StatusCode} ({hrm.ReasonPhrase}).\r\n{s2}");
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", s.Elapsed);
             return jo;
@@ -8260,7 +8260,7 @@ namespace FolioLibrary
             var hrm = httpClient.GetAsync(url).Result;
             var s2 = hrm.Content.ReadAsStringAsync().Result;
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}{1}", hrm.Headers, s2);
-            var jo = hrm.Content.Headers.ContentType.MediaType == "application/json" ? JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings) : null;
+            var jo = hrm.Content.Headers.ContentType?.MediaType == "application/json" ? JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings) : null;
             if (hrm.StatusCode != HttpStatusCode.OK) throw new HttpRequestException($"Response status code does not indicate success: {hrm.StatusCode} ({hrm.ReasonPhrase}).\r\n{s2}");
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", s.Elapsed);
             count = (int)jo["totalRecords"];
@@ -8281,7 +8281,7 @@ namespace FolioLibrary
             if (hrm.StatusCode != HttpStatusCode.OK)
             {
                 var s2 = hrm.Content.ReadAsStringAsync().Result;
-                if (hrm.Content.Headers.ContentType.MediaType == "application/json") s2 = JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings).ToString();
+                if (hrm.Content.Headers.ContentType?.MediaType == "application/json") s2 = JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings).ToString();
                 traceSource.TraceEvent(TraceEventType.Verbose, 0, s2);
                 throw new HttpRequestException($"Response status code does not indicate success: {hrm.StatusCode} ({hrm.ReasonPhrase}).\r\n{s2}");
             }
@@ -8312,7 +8312,7 @@ namespace FolioLibrary
             var hrm = httpClient.GetAsync(url).Result;
             var s2 = hrm.Content.ReadAsStringAsync().Result;
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}{1}", hrm.Headers, s2);
-            var jo = hrm.Content.Headers.ContentType.MediaType == "application/json" ? JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings) : null;
+            var jo = hrm.Content.Headers.ContentType?.MediaType == "application/json" ? JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings) : null;
             if (hrm.StatusCode != HttpStatusCode.OK && hrm.StatusCode != HttpStatusCode.NotFound) throw new HttpRequestException($"Response status code does not indicate success: {hrm.StatusCode} ({hrm.ReasonPhrase}).\r\n{s2}");
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", s.Elapsed);
             return jo;
@@ -8390,7 +8390,7 @@ namespace FolioLibrary
             var hrm = httpClient.GetAsync(url).Result;
             var s2 = hrm.Content.ReadAsStringAsync().Result;
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}{1}", hrm.Headers, s2);
-            var jo = hrm.Content.Headers.ContentType.MediaType == "application/json" ? JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings) : null;
+            var jo = hrm.Content.Headers.ContentType?.MediaType == "application/json" ? JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings) : null;
             if (hrm.StatusCode != HttpStatusCode.OK) throw new HttpRequestException($"Response status code does not indicate success: {hrm.StatusCode} ({hrm.ReasonPhrase}).\r\n{s2}");
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", s.Elapsed);
             count = (int)jo["totalRecords"];
@@ -8415,7 +8415,7 @@ namespace FolioLibrary
                 if (hrm.StatusCode != HttpStatusCode.OK)
                 {
                     var s2 = hrm.Content.ReadAsStringAsync().Result;
-                    if (hrm.Content.Headers.ContentType.MediaType == "application/json") s2 = JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings).ToString();
+                    if (hrm.Content.Headers.ContentType?.MediaType == "application/json") s2 = JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings).ToString();
                     traceSource.TraceEvent(TraceEventType.Verbose, 0, s2);
                     throw new HttpRequestException($"Response status code does not indicate success: {hrm.StatusCode} ({hrm.ReasonPhrase}).\r\n{s2}");
                 }
@@ -8452,7 +8452,7 @@ namespace FolioLibrary
             var hrm = httpClient.GetAsync(url).Result;
             var s2 = hrm.Content.ReadAsStringAsync().Result;
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}{1}", hrm.Headers, s2);
-            var jo = hrm.Content.Headers.ContentType.MediaType == "application/json" ? JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings) : null;
+            var jo = hrm.Content.Headers.ContentType?.MediaType == "application/json" ? JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings) : null;
             if (hrm.StatusCode != HttpStatusCode.OK && hrm.StatusCode != HttpStatusCode.NotFound) throw new HttpRequestException($"Response status code does not indicate success: {hrm.StatusCode} ({hrm.ReasonPhrase}).\r\n{s2}");
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", s.Elapsed);
             return jo;
@@ -8530,7 +8530,7 @@ namespace FolioLibrary
             var hrm = httpClient.GetAsync(url).Result;
             var s2 = hrm.Content.ReadAsStringAsync().Result;
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}{1}", hrm.Headers, s2);
-            var jo = hrm.Content.Headers.ContentType.MediaType == "application/json" ? JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings) : null;
+            var jo = hrm.Content.Headers.ContentType?.MediaType == "application/json" ? JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings) : null;
             if (hrm.StatusCode != HttpStatusCode.OK) throw new HttpRequestException($"Response status code does not indicate success: {hrm.StatusCode} ({hrm.ReasonPhrase}).\r\n{s2}");
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", s.Elapsed);
             count = (int)jo["totalRecords"];
@@ -8551,7 +8551,7 @@ namespace FolioLibrary
             if (hrm.StatusCode != HttpStatusCode.OK)
             {
                 var s2 = hrm.Content.ReadAsStringAsync().Result;
-                if (hrm.Content.Headers.ContentType.MediaType == "application/json") s2 = JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings).ToString();
+                if (hrm.Content.Headers.ContentType?.MediaType == "application/json") s2 = JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings).ToString();
                 traceSource.TraceEvent(TraceEventType.Verbose, 0, s2);
                 throw new HttpRequestException($"Response status code does not indicate success: {hrm.StatusCode} ({hrm.ReasonPhrase}).\r\n{s2}");
             }
@@ -8582,7 +8582,7 @@ namespace FolioLibrary
             var hrm = httpClient.GetAsync(url).Result;
             var s2 = hrm.Content.ReadAsStringAsync().Result;
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}{1}", hrm.Headers, s2);
-            var jo = hrm.Content.Headers.ContentType.MediaType == "application/json" ? JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings) : null;
+            var jo = hrm.Content.Headers.ContentType?.MediaType == "application/json" ? JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings) : null;
             if (hrm.StatusCode != HttpStatusCode.OK && hrm.StatusCode != HttpStatusCode.NotFound) throw new HttpRequestException($"Response status code does not indicate success: {hrm.StatusCode} ({hrm.ReasonPhrase}).\r\n{s2}");
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", s.Elapsed);
             return jo;
@@ -8660,7 +8660,7 @@ namespace FolioLibrary
             var hrm = httpClient.GetAsync(url).Result;
             var s2 = hrm.Content.ReadAsStringAsync().Result;
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}{1}", hrm.Headers, s2);
-            var jo = hrm.Content.Headers.ContentType.MediaType == "application/json" ? JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings) : null;
+            var jo = hrm.Content.Headers.ContentType?.MediaType == "application/json" ? JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings) : null;
             if (hrm.StatusCode != HttpStatusCode.OK) throw new HttpRequestException($"Response status code does not indicate success: {hrm.StatusCode} ({hrm.ReasonPhrase}).\r\n{s2}");
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", s.Elapsed);
             count = (int)jo["totalRecords"];
@@ -8681,7 +8681,7 @@ namespace FolioLibrary
             if (hrm.StatusCode != HttpStatusCode.OK)
             {
                 var s2 = hrm.Content.ReadAsStringAsync().Result;
-                if (hrm.Content.Headers.ContentType.MediaType == "application/json") s2 = JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings).ToString();
+                if (hrm.Content.Headers.ContentType?.MediaType == "application/json") s2 = JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings).ToString();
                 traceSource.TraceEvent(TraceEventType.Verbose, 0, s2);
                 throw new HttpRequestException($"Response status code does not indicate success: {hrm.StatusCode} ({hrm.ReasonPhrase}).\r\n{s2}");
             }
@@ -8712,7 +8712,7 @@ namespace FolioLibrary
             var hrm = httpClient.GetAsync(url).Result;
             var s2 = hrm.Content.ReadAsStringAsync().Result;
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}{1}", hrm.Headers, s2);
-            var jo = hrm.Content.Headers.ContentType.MediaType == "application/json" ? JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings) : null;
+            var jo = hrm.Content.Headers.ContentType?.MediaType == "application/json" ? JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings) : null;
             if (hrm.StatusCode != HttpStatusCode.OK && hrm.StatusCode != HttpStatusCode.NotFound) throw new HttpRequestException($"Response status code does not indicate success: {hrm.StatusCode} ({hrm.ReasonPhrase}).\r\n{s2}");
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", s.Elapsed);
             return jo;
@@ -8790,7 +8790,7 @@ namespace FolioLibrary
             var hrm = httpClient.GetAsync(url).Result;
             var s2 = hrm.Content.ReadAsStringAsync().Result;
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}{1}", hrm.Headers, s2);
-            var jo = hrm.Content.Headers.ContentType.MediaType == "application/json" ? JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings) : null;
+            var jo = hrm.Content.Headers.ContentType?.MediaType == "application/json" ? JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings) : null;
             if (hrm.StatusCode != HttpStatusCode.OK) throw new HttpRequestException($"Response status code does not indicate success: {hrm.StatusCode} ({hrm.ReasonPhrase}).\r\n{s2}");
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", s.Elapsed);
             count = (int)jo["totalRecords"];
@@ -8811,7 +8811,7 @@ namespace FolioLibrary
             if (hrm.StatusCode != HttpStatusCode.OK)
             {
                 var s2 = hrm.Content.ReadAsStringAsync().Result;
-                if (hrm.Content.Headers.ContentType.MediaType == "application/json") s2 = JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings).ToString();
+                if (hrm.Content.Headers.ContentType?.MediaType == "application/json") s2 = JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings).ToString();
                 traceSource.TraceEvent(TraceEventType.Verbose, 0, s2);
                 throw new HttpRequestException($"Response status code does not indicate success: {hrm.StatusCode} ({hrm.ReasonPhrase}).\r\n{s2}");
             }
@@ -8842,7 +8842,7 @@ namespace FolioLibrary
             var hrm = httpClient.GetAsync(url).Result;
             var s2 = hrm.Content.ReadAsStringAsync().Result;
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}{1}", hrm.Headers, s2);
-            var jo = hrm.Content.Headers.ContentType.MediaType == "application/json" ? JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings) : null;
+            var jo = hrm.Content.Headers.ContentType?.MediaType == "application/json" ? JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings) : null;
             if (hrm.StatusCode != HttpStatusCode.OK && hrm.StatusCode != HttpStatusCode.NotFound) throw new HttpRequestException($"Response status code does not indicate success: {hrm.StatusCode} ({hrm.ReasonPhrase}).\r\n{s2}");
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", s.Elapsed);
             return jo;
@@ -8921,7 +8921,7 @@ namespace FolioLibrary
             var hrm = httpClient.GetAsync(url).Result;
             var s2 = hrm.Content.ReadAsStringAsync().Result;
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}{1}", hrm.Headers, s2);
-            var jo = hrm.Content.Headers.ContentType.MediaType == "application/json" ? JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings) : null;
+            var jo = hrm.Content.Headers.ContentType?.MediaType == "application/json" ? JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings) : null;
             if (hrm.StatusCode != HttpStatusCode.OK) throw new HttpRequestException($"Response status code does not indicate success: {hrm.StatusCode} ({hrm.ReasonPhrase}).\r\n{s2}");
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", s.Elapsed);
             count = (int)jo["totalRecords"];
@@ -8943,7 +8943,7 @@ namespace FolioLibrary
             if (hrm.StatusCode != HttpStatusCode.OK)
             {
                 var s2 = hrm.Content.ReadAsStringAsync().Result;
-                if (hrm.Content.Headers.ContentType.MediaType == "application/json") s2 = JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings).ToString();
+                if (hrm.Content.Headers.ContentType?.MediaType == "application/json") s2 = JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings).ToString();
                 traceSource.TraceEvent(TraceEventType.Verbose, 0, s2);
                 throw new HttpRequestException($"Response status code does not indicate success: {hrm.StatusCode} ({hrm.ReasonPhrase}).\r\n{s2}");
             }
@@ -8974,7 +8974,7 @@ namespace FolioLibrary
             var hrm = httpClient.GetAsync(url).Result;
             var s2 = hrm.Content.ReadAsStringAsync().Result;
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}{1}", hrm.Headers, s2);
-            var jo = hrm.Content.Headers.ContentType.MediaType == "application/json" ? JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings) : null;
+            var jo = hrm.Content.Headers.ContentType?.MediaType == "application/json" ? JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings) : null;
             if (hrm.StatusCode != HttpStatusCode.OK && hrm.StatusCode != HttpStatusCode.NotFound) throw new HttpRequestException($"Response status code does not indicate success: {hrm.StatusCode} ({hrm.ReasonPhrase}).\r\n{s2}");
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", s.Elapsed);
             return jo;
@@ -9072,7 +9072,7 @@ namespace FolioLibrary
             var hrm = httpClient.GetAsync(url).Result;
             var s2 = hrm.Content.ReadAsStringAsync().Result;
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}{1}", hrm.Headers, s2);
-            var jo = hrm.Content.Headers.ContentType.MediaType == "application/json" ? JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings) : null;
+            var jo = hrm.Content.Headers.ContentType?.MediaType == "application/json" ? JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings) : null;
             if (hrm.StatusCode != HttpStatusCode.OK) throw new HttpRequestException($"Response status code does not indicate success: {hrm.StatusCode} ({hrm.ReasonPhrase}).\r\n{s2}");
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", s.Elapsed);
             count = (int)jo["totalRecords"];
@@ -9093,7 +9093,7 @@ namespace FolioLibrary
             if (hrm.StatusCode != HttpStatusCode.OK)
             {
                 var s2 = hrm.Content.ReadAsStringAsync().Result;
-                if (hrm.Content.Headers.ContentType.MediaType == "application/json") s2 = JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings).ToString();
+                if (hrm.Content.Headers.ContentType?.MediaType == "application/json") s2 = JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings).ToString();
                 traceSource.TraceEvent(TraceEventType.Verbose, 0, s2);
                 throw new HttpRequestException($"Response status code does not indicate success: {hrm.StatusCode} ({hrm.ReasonPhrase}).\r\n{s2}");
             }
@@ -9124,7 +9124,7 @@ namespace FolioLibrary
             var hrm = httpClient.GetAsync(url).Result;
             var s2 = hrm.Content.ReadAsStringAsync().Result;
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}{1}", hrm.Headers, s2);
-            var jo = hrm.Content.Headers.ContentType.MediaType == "application/json" ? JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings) : null;
+            var jo = hrm.Content.Headers.ContentType?.MediaType == "application/json" ? JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings) : null;
             if (hrm.StatusCode != HttpStatusCode.OK && hrm.StatusCode != HttpStatusCode.NotFound) throw new HttpRequestException($"Response status code does not indicate success: {hrm.StatusCode} ({hrm.ReasonPhrase}).\r\n{s2}");
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", s.Elapsed);
             return jo;
@@ -9202,7 +9202,7 @@ namespace FolioLibrary
             var hrm = httpClient.GetAsync(url).Result;
             var s2 = hrm.Content.ReadAsStringAsync().Result;
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}{1}", hrm.Headers, s2);
-            var jo = hrm.Content.Headers.ContentType.MediaType == "application/json" ? JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings) : null;
+            var jo = hrm.Content.Headers.ContentType?.MediaType == "application/json" ? JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings) : null;
             if (hrm.StatusCode != HttpStatusCode.OK) throw new HttpRequestException($"Response status code does not indicate success: {hrm.StatusCode} ({hrm.ReasonPhrase}).\r\n{s2}");
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", s.Elapsed);
             count = (int)jo["totalRecords"];
@@ -9223,7 +9223,7 @@ namespace FolioLibrary
             if (hrm.StatusCode != HttpStatusCode.OK)
             {
                 var s2 = hrm.Content.ReadAsStringAsync().Result;
-                if (hrm.Content.Headers.ContentType.MediaType == "application/json") s2 = JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings).ToString();
+                if (hrm.Content.Headers.ContentType?.MediaType == "application/json") s2 = JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings).ToString();
                 traceSource.TraceEvent(TraceEventType.Verbose, 0, s2);
                 throw new HttpRequestException($"Response status code does not indicate success: {hrm.StatusCode} ({hrm.ReasonPhrase}).\r\n{s2}");
             }
@@ -9254,7 +9254,7 @@ namespace FolioLibrary
             var hrm = httpClient.GetAsync(url).Result;
             var s2 = hrm.Content.ReadAsStringAsync().Result;
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}{1}", hrm.Headers, s2);
-            var jo = hrm.Content.Headers.ContentType.MediaType == "application/json" ? JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings) : null;
+            var jo = hrm.Content.Headers.ContentType?.MediaType == "application/json" ? JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings) : null;
             if (hrm.StatusCode != HttpStatusCode.OK && hrm.StatusCode != HttpStatusCode.NotFound) throw new HttpRequestException($"Response status code does not indicate success: {hrm.StatusCode} ({hrm.ReasonPhrase}).\r\n{s2}");
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", s.Elapsed);
             return jo;
@@ -9332,7 +9332,7 @@ namespace FolioLibrary
             var hrm = httpClient.GetAsync(url).Result;
             var s2 = hrm.Content.ReadAsStringAsync().Result;
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}{1}", hrm.Headers, s2);
-            var jo = hrm.Content.Headers.ContentType.MediaType == "application/json" ? JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings) : null;
+            var jo = hrm.Content.Headers.ContentType?.MediaType == "application/json" ? JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings) : null;
             if (hrm.StatusCode != HttpStatusCode.OK) throw new HttpRequestException($"Response status code does not indicate success: {hrm.StatusCode} ({hrm.ReasonPhrase}).\r\n{s2}");
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", s.Elapsed);
             count = (int)jo["totalRecords"];
@@ -9353,7 +9353,7 @@ namespace FolioLibrary
             if (hrm.StatusCode != HttpStatusCode.OK)
             {
                 var s2 = hrm.Content.ReadAsStringAsync().Result;
-                if (hrm.Content.Headers.ContentType.MediaType == "application/json") s2 = JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings).ToString();
+                if (hrm.Content.Headers.ContentType?.MediaType == "application/json") s2 = JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings).ToString();
                 traceSource.TraceEvent(TraceEventType.Verbose, 0, s2);
                 throw new HttpRequestException($"Response status code does not indicate success: {hrm.StatusCode} ({hrm.ReasonPhrase}).\r\n{s2}");
             }
@@ -9384,7 +9384,7 @@ namespace FolioLibrary
             var hrm = httpClient.GetAsync(url).Result;
             var s2 = hrm.Content.ReadAsStringAsync().Result;
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}{1}", hrm.Headers, s2);
-            var jo = hrm.Content.Headers.ContentType.MediaType == "application/json" ? JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings) : null;
+            var jo = hrm.Content.Headers.ContentType?.MediaType == "application/json" ? JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings) : null;
             if (hrm.StatusCode != HttpStatusCode.OK && hrm.StatusCode != HttpStatusCode.NotFound) throw new HttpRequestException($"Response status code does not indicate success: {hrm.StatusCode} ({hrm.ReasonPhrase}).\r\n{s2}");
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", s.Elapsed);
             return jo;
@@ -9462,7 +9462,7 @@ namespace FolioLibrary
             var hrm = httpClient.GetAsync(url).Result;
             var s2 = hrm.Content.ReadAsStringAsync().Result;
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}{1}", hrm.Headers, s2);
-            var jo = hrm.Content.Headers.ContentType.MediaType == "application/json" ? JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings) : null;
+            var jo = hrm.Content.Headers.ContentType?.MediaType == "application/json" ? JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings) : null;
             if (hrm.StatusCode != HttpStatusCode.OK) throw new HttpRequestException($"Response status code does not indicate success: {hrm.StatusCode} ({hrm.ReasonPhrase}).\r\n{s2}");
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", s.Elapsed);
             count = (int)jo["totalRecords"];
@@ -9483,7 +9483,7 @@ namespace FolioLibrary
             if (hrm.StatusCode != HttpStatusCode.OK)
             {
                 var s2 = hrm.Content.ReadAsStringAsync().Result;
-                if (hrm.Content.Headers.ContentType.MediaType == "application/json") s2 = JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings).ToString();
+                if (hrm.Content.Headers.ContentType?.MediaType == "application/json") s2 = JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings).ToString();
                 traceSource.TraceEvent(TraceEventType.Verbose, 0, s2);
                 throw new HttpRequestException($"Response status code does not indicate success: {hrm.StatusCode} ({hrm.ReasonPhrase}).\r\n{s2}");
             }
@@ -9514,7 +9514,7 @@ namespace FolioLibrary
             var hrm = httpClient.GetAsync(url).Result;
             var s2 = hrm.Content.ReadAsStringAsync().Result;
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}{1}", hrm.Headers, s2);
-            var jo = hrm.Content.Headers.ContentType.MediaType == "application/json" ? JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings) : null;
+            var jo = hrm.Content.Headers.ContentType?.MediaType == "application/json" ? JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings) : null;
             if (hrm.StatusCode != HttpStatusCode.OK && hrm.StatusCode != HttpStatusCode.NotFound) throw new HttpRequestException($"Response status code does not indicate success: {hrm.StatusCode} ({hrm.ReasonPhrase}).\r\n{s2}");
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", s.Elapsed);
             return jo;
@@ -9592,7 +9592,7 @@ namespace FolioLibrary
             var hrm = httpClient.GetAsync(url).Result;
             var s2 = hrm.Content.ReadAsStringAsync().Result;
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}{1}", hrm.Headers, s2);
-            var jo = hrm.Content.Headers.ContentType.MediaType == "application/json" ? JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings) : null;
+            var jo = hrm.Content.Headers.ContentType?.MediaType == "application/json" ? JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings) : null;
             if (hrm.StatusCode != HttpStatusCode.OK) throw new HttpRequestException($"Response status code does not indicate success: {hrm.StatusCode} ({hrm.ReasonPhrase}).\r\n{s2}");
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", s.Elapsed);
             count = (int)jo["totalRecords"];
@@ -9613,7 +9613,7 @@ namespace FolioLibrary
             if (hrm.StatusCode != HttpStatusCode.OK)
             {
                 var s2 = hrm.Content.ReadAsStringAsync().Result;
-                if (hrm.Content.Headers.ContentType.MediaType == "application/json") s2 = JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings).ToString();
+                if (hrm.Content.Headers.ContentType?.MediaType == "application/json") s2 = JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings).ToString();
                 traceSource.TraceEvent(TraceEventType.Verbose, 0, s2);
                 throw new HttpRequestException($"Response status code does not indicate success: {hrm.StatusCode} ({hrm.ReasonPhrase}).\r\n{s2}");
             }
@@ -9644,7 +9644,7 @@ namespace FolioLibrary
             var hrm = httpClient.GetAsync(url).Result;
             var s2 = hrm.Content.ReadAsStringAsync().Result;
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}{1}", hrm.Headers, s2);
-            var jo = hrm.Content.Headers.ContentType.MediaType == "application/json" ? JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings) : null;
+            var jo = hrm.Content.Headers.ContentType?.MediaType == "application/json" ? JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings) : null;
             if (hrm.StatusCode != HttpStatusCode.OK && hrm.StatusCode != HttpStatusCode.NotFound) throw new HttpRequestException($"Response status code does not indicate success: {hrm.StatusCode} ({hrm.ReasonPhrase}).\r\n{s2}");
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", s.Elapsed);
             return jo;
@@ -9722,7 +9722,7 @@ namespace FolioLibrary
             var hrm = httpClient.GetAsync(url).Result;
             var s2 = hrm.Content.ReadAsStringAsync().Result;
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}{1}", hrm.Headers, s2);
-            var jo = hrm.Content.Headers.ContentType.MediaType == "application/json" ? JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings) : null;
+            var jo = hrm.Content.Headers.ContentType?.MediaType == "application/json" ? JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings) : null;
             if (hrm.StatusCode != HttpStatusCode.OK) throw new HttpRequestException($"Response status code does not indicate success: {hrm.StatusCode} ({hrm.ReasonPhrase}).\r\n{s2}");
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", s.Elapsed);
             count = (int)jo["totalRecords"];
@@ -9743,7 +9743,7 @@ namespace FolioLibrary
             if (hrm.StatusCode != HttpStatusCode.OK)
             {
                 var s2 = hrm.Content.ReadAsStringAsync().Result;
-                if (hrm.Content.Headers.ContentType.MediaType == "application/json") s2 = JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings).ToString();
+                if (hrm.Content.Headers.ContentType?.MediaType == "application/json") s2 = JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings).ToString();
                 traceSource.TraceEvent(TraceEventType.Verbose, 0, s2);
                 throw new HttpRequestException($"Response status code does not indicate success: {hrm.StatusCode} ({hrm.ReasonPhrase}).\r\n{s2}");
             }
@@ -9774,7 +9774,7 @@ namespace FolioLibrary
             var hrm = httpClient.GetAsync(url).Result;
             var s2 = hrm.Content.ReadAsStringAsync().Result;
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}{1}", hrm.Headers, s2);
-            var jo = hrm.Content.Headers.ContentType.MediaType == "application/json" ? JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings) : null;
+            var jo = hrm.Content.Headers.ContentType?.MediaType == "application/json" ? JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings) : null;
             if (hrm.StatusCode != HttpStatusCode.OK && hrm.StatusCode != HttpStatusCode.NotFound) throw new HttpRequestException($"Response status code does not indicate success: {hrm.StatusCode} ({hrm.ReasonPhrase}).\r\n{s2}");
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", s.Elapsed);
             return jo;
@@ -9852,7 +9852,7 @@ namespace FolioLibrary
             var hrm = httpClient.GetAsync(url).Result;
             var s2 = hrm.Content.ReadAsStringAsync().Result;
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}{1}", hrm.Headers, s2);
-            var jo = hrm.Content.Headers.ContentType.MediaType == "application/json" ? JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings) : null;
+            var jo = hrm.Content.Headers.ContentType?.MediaType == "application/json" ? JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings) : null;
             if (hrm.StatusCode != HttpStatusCode.OK) throw new HttpRequestException($"Response status code does not indicate success: {hrm.StatusCode} ({hrm.ReasonPhrase}).\r\n{s2}");
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", s.Elapsed);
             count = (int)jo["totalRecords"];
@@ -9873,7 +9873,7 @@ namespace FolioLibrary
             if (hrm.StatusCode != HttpStatusCode.OK)
             {
                 var s2 = hrm.Content.ReadAsStringAsync().Result;
-                if (hrm.Content.Headers.ContentType.MediaType == "application/json") s2 = JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings).ToString();
+                if (hrm.Content.Headers.ContentType?.MediaType == "application/json") s2 = JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings).ToString();
                 traceSource.TraceEvent(TraceEventType.Verbose, 0, s2);
                 throw new HttpRequestException($"Response status code does not indicate success: {hrm.StatusCode} ({hrm.ReasonPhrase}).\r\n{s2}");
             }
@@ -9904,7 +9904,7 @@ namespace FolioLibrary
             var hrm = httpClient.GetAsync(url).Result;
             var s2 = hrm.Content.ReadAsStringAsync().Result;
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}{1}", hrm.Headers, s2);
-            var jo = hrm.Content.Headers.ContentType.MediaType == "application/json" ? JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings) : null;
+            var jo = hrm.Content.Headers.ContentType?.MediaType == "application/json" ? JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings) : null;
             if (hrm.StatusCode != HttpStatusCode.OK && hrm.StatusCode != HttpStatusCode.NotFound) throw new HttpRequestException($"Response status code does not indicate success: {hrm.StatusCode} ({hrm.ReasonPhrase}).\r\n{s2}");
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", s.Elapsed);
             return jo;
@@ -9982,7 +9982,7 @@ namespace FolioLibrary
             var hrm = httpClient.GetAsync(url).Result;
             var s2 = hrm.Content.ReadAsStringAsync().Result;
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}{1}", hrm.Headers, s2);
-            var jo = hrm.Content.Headers.ContentType.MediaType == "application/json" ? JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings) : null;
+            var jo = hrm.Content.Headers.ContentType?.MediaType == "application/json" ? JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings) : null;
             if (hrm.StatusCode != HttpStatusCode.OK) throw new HttpRequestException($"Response status code does not indicate success: {hrm.StatusCode} ({hrm.ReasonPhrase}).\r\n{s2}");
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", s.Elapsed);
             count = (int)jo["totalRecords"];
@@ -10007,7 +10007,7 @@ namespace FolioLibrary
                 if (hrm.StatusCode != HttpStatusCode.OK)
                 {
                     var s2 = hrm.Content.ReadAsStringAsync().Result;
-                    if (hrm.Content.Headers.ContentType.MediaType == "application/json") s2 = JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings).ToString();
+                    if (hrm.Content.Headers.ContentType?.MediaType == "application/json") s2 = JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings).ToString();
                     traceSource.TraceEvent(TraceEventType.Verbose, 0, s2);
                     throw new HttpRequestException($"Response status code does not indicate success: {hrm.StatusCode} ({hrm.ReasonPhrase}).\r\n{s2}");
                 }
@@ -10044,7 +10044,7 @@ namespace FolioLibrary
             var hrm = httpClient.GetAsync(url).Result;
             var s2 = hrm.Content.ReadAsStringAsync().Result;
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}{1}", hrm.Headers, s2);
-            var jo = hrm.Content.Headers.ContentType.MediaType == "application/json" ? JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings) : null;
+            var jo = hrm.Content.Headers.ContentType?.MediaType == "application/json" ? JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings) : null;
             if (hrm.StatusCode != HttpStatusCode.OK && hrm.StatusCode != HttpStatusCode.NotFound) throw new HttpRequestException($"Response status code does not indicate success: {hrm.StatusCode} ({hrm.ReasonPhrase}).\r\n{s2}");
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", s.Elapsed);
             return jo;
@@ -10122,7 +10122,7 @@ namespace FolioLibrary
             var hrm = httpClient.GetAsync(url).Result;
             var s2 = hrm.Content.ReadAsStringAsync().Result;
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}{1}", hrm.Headers, s2);
-            var jo = hrm.Content.Headers.ContentType.MediaType == "application/json" ? JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings) : null;
+            var jo = hrm.Content.Headers.ContentType?.MediaType == "application/json" ? JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings) : null;
             if (hrm.StatusCode != HttpStatusCode.OK) throw new HttpRequestException($"Response status code does not indicate success: {hrm.StatusCode} ({hrm.ReasonPhrase}).\r\n{s2}");
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", s.Elapsed);
             count = (int)jo["totalRecords"];
@@ -10143,7 +10143,7 @@ namespace FolioLibrary
             if (hrm.StatusCode != HttpStatusCode.OK)
             {
                 var s2 = hrm.Content.ReadAsStringAsync().Result;
-                if (hrm.Content.Headers.ContentType.MediaType == "application/json") s2 = JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings).ToString();
+                if (hrm.Content.Headers.ContentType?.MediaType == "application/json") s2 = JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings).ToString();
                 traceSource.TraceEvent(TraceEventType.Verbose, 0, s2);
                 throw new HttpRequestException($"Response status code does not indicate success: {hrm.StatusCode} ({hrm.ReasonPhrase}).\r\n{s2}");
             }
@@ -10174,7 +10174,7 @@ namespace FolioLibrary
             var hrm = httpClient.GetAsync(url).Result;
             var s2 = hrm.Content.ReadAsStringAsync().Result;
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}{1}", hrm.Headers, s2);
-            var jo = hrm.Content.Headers.ContentType.MediaType == "application/json" ? JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings) : null;
+            var jo = hrm.Content.Headers.ContentType?.MediaType == "application/json" ? JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings) : null;
             if (hrm.StatusCode != HttpStatusCode.OK && hrm.StatusCode != HttpStatusCode.NotFound) throw new HttpRequestException($"Response status code does not indicate success: {hrm.StatusCode} ({hrm.ReasonPhrase}).\r\n{s2}");
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", s.Elapsed);
             return jo;
@@ -10252,7 +10252,7 @@ namespace FolioLibrary
             var hrm = httpClient.GetAsync(url).Result;
             var s2 = hrm.Content.ReadAsStringAsync().Result;
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}{1}", hrm.Headers, s2);
-            var jo = hrm.Content.Headers.ContentType.MediaType == "application/json" ? JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings) : null;
+            var jo = hrm.Content.Headers.ContentType?.MediaType == "application/json" ? JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings) : null;
             if (hrm.StatusCode != HttpStatusCode.OK) throw new HttpRequestException($"Response status code does not indicate success: {hrm.StatusCode} ({hrm.ReasonPhrase}).\r\n{s2}");
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", s.Elapsed);
             count = (int)jo["totalRecords"];
@@ -10277,7 +10277,7 @@ namespace FolioLibrary
                 if (hrm.StatusCode != HttpStatusCode.OK)
                 {
                     var s2 = hrm.Content.ReadAsStringAsync().Result;
-                    if (hrm.Content.Headers.ContentType.MediaType == "application/json") s2 = JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings).ToString();
+                    if (hrm.Content.Headers.ContentType?.MediaType == "application/json") s2 = JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings).ToString();
                     traceSource.TraceEvent(TraceEventType.Verbose, 0, s2);
                     throw new HttpRequestException($"Response status code does not indicate success: {hrm.StatusCode} ({hrm.ReasonPhrase}).\r\n{s2}");
                 }
@@ -10314,7 +10314,7 @@ namespace FolioLibrary
             var hrm = httpClient.GetAsync(url).Result;
             var s2 = hrm.Content.ReadAsStringAsync().Result;
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}{1}", hrm.Headers, s2);
-            var jo = hrm.Content.Headers.ContentType.MediaType == "application/json" ? JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings) : null;
+            var jo = hrm.Content.Headers.ContentType?.MediaType == "application/json" ? JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings) : null;
             if (hrm.StatusCode != HttpStatusCode.OK && hrm.StatusCode != HttpStatusCode.NotFound) throw new HttpRequestException($"Response status code does not indicate success: {hrm.StatusCode} ({hrm.ReasonPhrase}).\r\n{s2}");
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", s.Elapsed);
             return jo;
@@ -10392,7 +10392,7 @@ namespace FolioLibrary
             var hrm = httpClient.GetAsync(url).Result;
             var s2 = hrm.Content.ReadAsStringAsync().Result;
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}{1}", hrm.Headers, s2);
-            var jo = hrm.Content.Headers.ContentType.MediaType == "application/json" ? JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings) : null;
+            var jo = hrm.Content.Headers.ContentType?.MediaType == "application/json" ? JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings) : null;
             if (hrm.StatusCode != HttpStatusCode.OK) throw new HttpRequestException($"Response status code does not indicate success: {hrm.StatusCode} ({hrm.ReasonPhrase}).\r\n{s2}");
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", s.Elapsed);
             count = (int)jo["totalRecords"];
@@ -10413,7 +10413,7 @@ namespace FolioLibrary
             if (hrm.StatusCode != HttpStatusCode.OK)
             {
                 var s2 = hrm.Content.ReadAsStringAsync().Result;
-                if (hrm.Content.Headers.ContentType.MediaType == "application/json") s2 = JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings).ToString();
+                if (hrm.Content.Headers.ContentType?.MediaType == "application/json") s2 = JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings).ToString();
                 traceSource.TraceEvent(TraceEventType.Verbose, 0, s2);
                 throw new HttpRequestException($"Response status code does not indicate success: {hrm.StatusCode} ({hrm.ReasonPhrase}).\r\n{s2}");
             }
@@ -10444,7 +10444,7 @@ namespace FolioLibrary
             var hrm = httpClient.GetAsync(url).Result;
             var s2 = hrm.Content.ReadAsStringAsync().Result;
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}{1}", hrm.Headers, s2);
-            var jo = hrm.Content.Headers.ContentType.MediaType == "application/json" ? JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings) : null;
+            var jo = hrm.Content.Headers.ContentType?.MediaType == "application/json" ? JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings) : null;
             if (hrm.StatusCode != HttpStatusCode.OK && hrm.StatusCode != HttpStatusCode.NotFound) throw new HttpRequestException($"Response status code does not indicate success: {hrm.StatusCode} ({hrm.ReasonPhrase}).\r\n{s2}");
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", s.Elapsed);
             return jo;
@@ -10514,7 +10514,7 @@ namespace FolioLibrary
             var hrm = httpClient.GetAsync(url).Result;
             var s2 = hrm.Content.ReadAsStringAsync().Result;
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}{1}", hrm.Headers, s2);
-            var jo = hrm.Content.Headers.ContentType.MediaType == "application/json" ? JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings) : null;
+            var jo = hrm.Content.Headers.ContentType?.MediaType == "application/json" ? JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings) : null;
             if (hrm.StatusCode != HttpStatusCode.OK && hrm.StatusCode != HttpStatusCode.NotFound) throw new HttpRequestException($"Response status code does not indicate success: {hrm.StatusCode} ({hrm.ReasonPhrase}).\r\n{s2}");
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", s.Elapsed);
             return jo;
@@ -10592,7 +10592,7 @@ namespace FolioLibrary
             var hrm = httpClient.GetAsync(url).Result;
             var s2 = hrm.Content.ReadAsStringAsync().Result;
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}{1}", hrm.Headers, s2);
-            var jo = hrm.Content.Headers.ContentType.MediaType == "application/json" ? JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings) : null;
+            var jo = hrm.Content.Headers.ContentType?.MediaType == "application/json" ? JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings) : null;
             if (hrm.StatusCode != HttpStatusCode.OK) throw new HttpRequestException($"Response status code does not indicate success: {hrm.StatusCode} ({hrm.ReasonPhrase}).\r\n{s2}");
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", s.Elapsed);
             count = (int)jo["totalRecords"];
@@ -10613,7 +10613,7 @@ namespace FolioLibrary
             if (hrm.StatusCode != HttpStatusCode.OK)
             {
                 var s2 = hrm.Content.ReadAsStringAsync().Result;
-                if (hrm.Content.Headers.ContentType.MediaType == "application/json") s2 = JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings).ToString();
+                if (hrm.Content.Headers.ContentType?.MediaType == "application/json") s2 = JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings).ToString();
                 traceSource.TraceEvent(TraceEventType.Verbose, 0, s2);
                 throw new HttpRequestException($"Response status code does not indicate success: {hrm.StatusCode} ({hrm.ReasonPhrase}).\r\n{s2}");
             }
@@ -10644,7 +10644,7 @@ namespace FolioLibrary
             var hrm = httpClient.GetAsync(url).Result;
             var s2 = hrm.Content.ReadAsStringAsync().Result;
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}{1}", hrm.Headers, s2);
-            var jo = hrm.Content.Headers.ContentType.MediaType == "application/json" ? JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings) : null;
+            var jo = hrm.Content.Headers.ContentType?.MediaType == "application/json" ? JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings) : null;
             if (hrm.StatusCode != HttpStatusCode.OK && hrm.StatusCode != HttpStatusCode.NotFound) throw new HttpRequestException($"Response status code does not indicate success: {hrm.StatusCode} ({hrm.ReasonPhrase}).\r\n{s2}");
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", s.Elapsed);
             return jo;
@@ -10722,7 +10722,7 @@ namespace FolioLibrary
             var hrm = httpClient.GetAsync(url).Result;
             var s2 = hrm.Content.ReadAsStringAsync().Result;
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}{1}", hrm.Headers, s2);
-            var jo = hrm.Content.Headers.ContentType.MediaType == "application/json" ? JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings) : null;
+            var jo = hrm.Content.Headers.ContentType?.MediaType == "application/json" ? JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings) : null;
             if (hrm.StatusCode != HttpStatusCode.OK) throw new HttpRequestException($"Response status code does not indicate success: {hrm.StatusCode} ({hrm.ReasonPhrase}).\r\n{s2}");
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", s.Elapsed);
             count = (int)jo["totalRecords"];
@@ -10743,7 +10743,7 @@ namespace FolioLibrary
             if (hrm.StatusCode != HttpStatusCode.OK)
             {
                 var s2 = hrm.Content.ReadAsStringAsync().Result;
-                if (hrm.Content.Headers.ContentType.MediaType == "application/json") s2 = JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings).ToString();
+                if (hrm.Content.Headers.ContentType?.MediaType == "application/json") s2 = JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings).ToString();
                 traceSource.TraceEvent(TraceEventType.Verbose, 0, s2);
                 throw new HttpRequestException($"Response status code does not indicate success: {hrm.StatusCode} ({hrm.ReasonPhrase}).\r\n{s2}");
             }
@@ -10774,7 +10774,7 @@ namespace FolioLibrary
             var hrm = httpClient.GetAsync(url).Result;
             var s2 = hrm.Content.ReadAsStringAsync().Result;
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}{1}", hrm.Headers, s2);
-            var jo = hrm.Content.Headers.ContentType.MediaType == "application/json" ? JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings) : null;
+            var jo = hrm.Content.Headers.ContentType?.MediaType == "application/json" ? JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings) : null;
             if (hrm.StatusCode != HttpStatusCode.OK && hrm.StatusCode != HttpStatusCode.NotFound) throw new HttpRequestException($"Response status code does not indicate success: {hrm.StatusCode} ({hrm.ReasonPhrase}).\r\n{s2}");
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", s.Elapsed);
             return jo;
@@ -10852,7 +10852,7 @@ namespace FolioLibrary
             var hrm = httpClient.GetAsync(url).Result;
             var s2 = hrm.Content.ReadAsStringAsync().Result;
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}{1}", hrm.Headers, s2);
-            var jo = hrm.Content.Headers.ContentType.MediaType == "application/json" ? JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings) : null;
+            var jo = hrm.Content.Headers.ContentType?.MediaType == "application/json" ? JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings) : null;
             if (hrm.StatusCode != HttpStatusCode.OK) throw new HttpRequestException($"Response status code does not indicate success: {hrm.StatusCode} ({hrm.ReasonPhrase}).\r\n{s2}");
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", s.Elapsed);
             count = (int)jo["totalRecords"];
@@ -10873,7 +10873,7 @@ namespace FolioLibrary
             if (hrm.StatusCode != HttpStatusCode.OK)
             {
                 var s2 = hrm.Content.ReadAsStringAsync().Result;
-                if (hrm.Content.Headers.ContentType.MediaType == "application/json") s2 = JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings).ToString();
+                if (hrm.Content.Headers.ContentType?.MediaType == "application/json") s2 = JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings).ToString();
                 traceSource.TraceEvent(TraceEventType.Verbose, 0, s2);
                 throw new HttpRequestException($"Response status code does not indicate success: {hrm.StatusCode} ({hrm.ReasonPhrase}).\r\n{s2}");
             }
@@ -10904,7 +10904,7 @@ namespace FolioLibrary
             var hrm = httpClient.GetAsync(url).Result;
             var s2 = hrm.Content.ReadAsStringAsync().Result;
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}{1}", hrm.Headers, s2);
-            var jo = hrm.Content.Headers.ContentType.MediaType == "application/json" ? JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings) : null;
+            var jo = hrm.Content.Headers.ContentType?.MediaType == "application/json" ? JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings) : null;
             if (hrm.StatusCode != HttpStatusCode.OK && hrm.StatusCode != HttpStatusCode.NotFound) throw new HttpRequestException($"Response status code does not indicate success: {hrm.StatusCode} ({hrm.ReasonPhrase}).\r\n{s2}");
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", s.Elapsed);
             return jo;
@@ -10982,7 +10982,7 @@ namespace FolioLibrary
             var hrm = httpClient.GetAsync(url).Result;
             var s2 = hrm.Content.ReadAsStringAsync().Result;
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}{1}", hrm.Headers, s2);
-            var jo = hrm.Content.Headers.ContentType.MediaType == "application/json" ? JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings) : null;
+            var jo = hrm.Content.Headers.ContentType?.MediaType == "application/json" ? JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings) : null;
             if (hrm.StatusCode != HttpStatusCode.OK) throw new HttpRequestException($"Response status code does not indicate success: {hrm.StatusCode} ({hrm.ReasonPhrase}).\r\n{s2}");
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", s.Elapsed);
             count = (int)jo["totalRecords"];
@@ -11003,7 +11003,7 @@ namespace FolioLibrary
             if (hrm.StatusCode != HttpStatusCode.OK)
             {
                 var s2 = hrm.Content.ReadAsStringAsync().Result;
-                if (hrm.Content.Headers.ContentType.MediaType == "application/json") s2 = JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings).ToString();
+                if (hrm.Content.Headers.ContentType?.MediaType == "application/json") s2 = JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings).ToString();
                 traceSource.TraceEvent(TraceEventType.Verbose, 0, s2);
                 throw new HttpRequestException($"Response status code does not indicate success: {hrm.StatusCode} ({hrm.ReasonPhrase}).\r\n{s2}");
             }
@@ -11034,7 +11034,7 @@ namespace FolioLibrary
             var hrm = httpClient.GetAsync(url).Result;
             var s2 = hrm.Content.ReadAsStringAsync().Result;
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}{1}", hrm.Headers, s2);
-            var jo = hrm.Content.Headers.ContentType.MediaType == "application/json" ? JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings) : null;
+            var jo = hrm.Content.Headers.ContentType?.MediaType == "application/json" ? JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings) : null;
             if (hrm.StatusCode != HttpStatusCode.OK && hrm.StatusCode != HttpStatusCode.NotFound) throw new HttpRequestException($"Response status code does not indicate success: {hrm.StatusCode} ({hrm.ReasonPhrase}).\r\n{s2}");
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", s.Elapsed);
             return jo;
@@ -11112,7 +11112,7 @@ namespace FolioLibrary
             var hrm = httpClient.GetAsync(url).Result;
             var s2 = hrm.Content.ReadAsStringAsync().Result;
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}{1}", hrm.Headers, s2);
-            var jo = hrm.Content.Headers.ContentType.MediaType == "application/json" ? JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings) : null;
+            var jo = hrm.Content.Headers.ContentType?.MediaType == "application/json" ? JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings) : null;
             if (hrm.StatusCode != HttpStatusCode.OK) throw new HttpRequestException($"Response status code does not indicate success: {hrm.StatusCode} ({hrm.ReasonPhrase}).\r\n{s2}");
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", s.Elapsed);
             count = (int)jo["totalRecords"];
@@ -11133,7 +11133,7 @@ namespace FolioLibrary
             if (hrm.StatusCode != HttpStatusCode.OK)
             {
                 var s2 = hrm.Content.ReadAsStringAsync().Result;
-                if (hrm.Content.Headers.ContentType.MediaType == "application/json") s2 = JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings).ToString();
+                if (hrm.Content.Headers.ContentType?.MediaType == "application/json") s2 = JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings).ToString();
                 traceSource.TraceEvent(TraceEventType.Verbose, 0, s2);
                 throw new HttpRequestException($"Response status code does not indicate success: {hrm.StatusCode} ({hrm.ReasonPhrase}).\r\n{s2}");
             }
@@ -11164,7 +11164,7 @@ namespace FolioLibrary
             var hrm = httpClient.GetAsync(url).Result;
             var s2 = hrm.Content.ReadAsStringAsync().Result;
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}{1}", hrm.Headers, s2);
-            var jo = hrm.Content.Headers.ContentType.MediaType == "application/json" ? JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings) : null;
+            var jo = hrm.Content.Headers.ContentType?.MediaType == "application/json" ? JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings) : null;
             if (hrm.StatusCode != HttpStatusCode.OK && hrm.StatusCode != HttpStatusCode.NotFound) throw new HttpRequestException($"Response status code does not indicate success: {hrm.StatusCode} ({hrm.ReasonPhrase}).\r\n{s2}");
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", s.Elapsed);
             return jo;
@@ -11242,7 +11242,7 @@ namespace FolioLibrary
             var hrm = httpClient.GetAsync(url).Result;
             var s2 = hrm.Content.ReadAsStringAsync().Result;
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}{1}", hrm.Headers, s2);
-            var jo = hrm.Content.Headers.ContentType.MediaType == "application/json" ? JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings) : null;
+            var jo = hrm.Content.Headers.ContentType?.MediaType == "application/json" ? JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings) : null;
             if (hrm.StatusCode != HttpStatusCode.OK) throw new HttpRequestException($"Response status code does not indicate success: {hrm.StatusCode} ({hrm.ReasonPhrase}).\r\n{s2}");
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", s.Elapsed);
             count = (int)jo["totalRecords"];
@@ -11267,7 +11267,7 @@ namespace FolioLibrary
                 if (hrm.StatusCode != HttpStatusCode.OK)
                 {
                     var s2 = hrm.Content.ReadAsStringAsync().Result;
-                    if (hrm.Content.Headers.ContentType.MediaType == "application/json") s2 = JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings).ToString();
+                    if (hrm.Content.Headers.ContentType?.MediaType == "application/json") s2 = JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings).ToString();
                     traceSource.TraceEvent(TraceEventType.Verbose, 0, s2);
                     throw new HttpRequestException($"Response status code does not indicate success: {hrm.StatusCode} ({hrm.ReasonPhrase}).\r\n{s2}");
                 }
@@ -11304,7 +11304,7 @@ namespace FolioLibrary
             var hrm = httpClient.GetAsync(url).Result;
             var s2 = hrm.Content.ReadAsStringAsync().Result;
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}{1}", hrm.Headers, s2);
-            var jo = hrm.Content.Headers.ContentType.MediaType == "application/json" ? JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings) : null;
+            var jo = hrm.Content.Headers.ContentType?.MediaType == "application/json" ? JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings) : null;
             if (hrm.StatusCode != HttpStatusCode.OK && hrm.StatusCode != HttpStatusCode.NotFound) throw new HttpRequestException($"Response status code does not indicate success: {hrm.StatusCode} ({hrm.ReasonPhrase}).\r\n{s2}");
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", s.Elapsed);
             return jo;
@@ -11382,7 +11382,7 @@ namespace FolioLibrary
             var hrm = httpClient.GetAsync(url).Result;
             var s2 = hrm.Content.ReadAsStringAsync().Result;
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}{1}", hrm.Headers, s2);
-            var jo = hrm.Content.Headers.ContentType.MediaType == "application/json" ? JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings) : null;
+            var jo = hrm.Content.Headers.ContentType?.MediaType == "application/json" ? JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings) : null;
             if (hrm.StatusCode != HttpStatusCode.OK) throw new HttpRequestException($"Response status code does not indicate success: {hrm.StatusCode} ({hrm.ReasonPhrase}).\r\n{s2}");
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", s.Elapsed);
             count = (int)jo["totalRecords"];
@@ -11403,7 +11403,7 @@ namespace FolioLibrary
             if (hrm.StatusCode != HttpStatusCode.OK)
             {
                 var s2 = hrm.Content.ReadAsStringAsync().Result;
-                if (hrm.Content.Headers.ContentType.MediaType == "application/json") s2 = JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings).ToString();
+                if (hrm.Content.Headers.ContentType?.MediaType == "application/json") s2 = JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings).ToString();
                 traceSource.TraceEvent(TraceEventType.Verbose, 0, s2);
                 throw new HttpRequestException($"Response status code does not indicate success: {hrm.StatusCode} ({hrm.ReasonPhrase}).\r\n{s2}");
             }
@@ -11434,7 +11434,7 @@ namespace FolioLibrary
             var hrm = httpClient.GetAsync(url).Result;
             var s2 = hrm.Content.ReadAsStringAsync().Result;
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}{1}", hrm.Headers, s2);
-            var jo = hrm.Content.Headers.ContentType.MediaType == "application/json" ? JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings) : null;
+            var jo = hrm.Content.Headers.ContentType?.MediaType == "application/json" ? JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings) : null;
             if (hrm.StatusCode != HttpStatusCode.OK && hrm.StatusCode != HttpStatusCode.NotFound) throw new HttpRequestException($"Response status code does not indicate success: {hrm.StatusCode} ({hrm.ReasonPhrase}).\r\n{s2}");
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", s.Elapsed);
             return jo;
@@ -11512,7 +11512,7 @@ namespace FolioLibrary
             var hrm = httpClient.GetAsync(url).Result;
             var s2 = hrm.Content.ReadAsStringAsync().Result;
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}{1}", hrm.Headers, s2);
-            var jo = hrm.Content.Headers.ContentType.MediaType == "application/json" ? JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings) : null;
+            var jo = hrm.Content.Headers.ContentType?.MediaType == "application/json" ? JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings) : null;
             if (hrm.StatusCode != HttpStatusCode.OK) throw new HttpRequestException($"Response status code does not indicate success: {hrm.StatusCode} ({hrm.ReasonPhrase}).\r\n{s2}");
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", s.Elapsed);
             count = (int)jo["totalRecords"];
@@ -11532,7 +11532,7 @@ namespace FolioLibrary
             if (hrm.StatusCode != HttpStatusCode.OK)
             {
                 var s2 = hrm.Content.ReadAsStringAsync().Result;
-                if (hrm.Content.Headers.ContentType.MediaType == "application/json") s2 = JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings).ToString();
+                if (hrm.Content.Headers.ContentType?.MediaType == "application/json") s2 = JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings).ToString();
                 traceSource.TraceEvent(TraceEventType.Verbose, 0, s2);
                 throw new HttpRequestException($"Response status code does not indicate success: {hrm.StatusCode} ({hrm.ReasonPhrase}).\r\n{s2}");
             }
@@ -11563,7 +11563,7 @@ namespace FolioLibrary
             var hrm = httpClient.GetAsync(url).Result;
             var s2 = hrm.Content.ReadAsStringAsync().Result;
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}{1}", hrm.Headers, s2);
-            var jo = hrm.Content.Headers.ContentType.MediaType == "application/json" ? JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings) : null;
+            var jo = hrm.Content.Headers.ContentType?.MediaType == "application/json" ? JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings) : null;
             if (hrm.StatusCode != HttpStatusCode.OK && hrm.StatusCode != HttpStatusCode.NotFound) throw new HttpRequestException($"Response status code does not indicate success: {hrm.StatusCode} ({hrm.ReasonPhrase}).\r\n{s2}");
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", s.Elapsed);
             return jo;
@@ -11641,7 +11641,7 @@ namespace FolioLibrary
             var hrm = httpClient.GetAsync(url).Result;
             var s2 = hrm.Content.ReadAsStringAsync().Result;
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}{1}", hrm.Headers, s2);
-            var jo = hrm.Content.Headers.ContentType.MediaType == "application/json" ? JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings) : null;
+            var jo = hrm.Content.Headers.ContentType?.MediaType == "application/json" ? JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings) : null;
             if (hrm.StatusCode != HttpStatusCode.OK) throw new HttpRequestException($"Response status code does not indicate success: {hrm.StatusCode} ({hrm.ReasonPhrase}).\r\n{s2}");
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", s.Elapsed);
             count = (int)jo["totalRecords"];
@@ -11666,7 +11666,7 @@ namespace FolioLibrary
                 if (hrm.StatusCode != HttpStatusCode.OK)
                 {
                     var s2 = hrm.Content.ReadAsStringAsync().Result;
-                    if (hrm.Content.Headers.ContentType.MediaType == "application/json") s2 = JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings).ToString();
+                    if (hrm.Content.Headers.ContentType?.MediaType == "application/json") s2 = JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings).ToString();
                     traceSource.TraceEvent(TraceEventType.Verbose, 0, s2);
                     throw new HttpRequestException($"Response status code does not indicate success: {hrm.StatusCode} ({hrm.ReasonPhrase}).\r\n{s2}");
                 }
@@ -11703,7 +11703,7 @@ namespace FolioLibrary
             var hrm = httpClient.GetAsync(url).Result;
             var s2 = hrm.Content.ReadAsStringAsync().Result;
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}{1}", hrm.Headers, s2);
-            var jo = hrm.Content.Headers.ContentType.MediaType == "application/json" ? JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings) : null;
+            var jo = hrm.Content.Headers.ContentType?.MediaType == "application/json" ? JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings) : null;
             if (hrm.StatusCode != HttpStatusCode.OK && hrm.StatusCode != HttpStatusCode.NotFound) throw new HttpRequestException($"Response status code does not indicate success: {hrm.StatusCode} ({hrm.ReasonPhrase}).\r\n{s2}");
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", s.Elapsed);
             return jo;
@@ -11781,7 +11781,7 @@ namespace FolioLibrary
             var hrm = httpClient.GetAsync(url).Result;
             var s2 = hrm.Content.ReadAsStringAsync().Result;
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}{1}", hrm.Headers, s2);
-            var jo = hrm.Content.Headers.ContentType.MediaType == "application/json" ? JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings) : null;
+            var jo = hrm.Content.Headers.ContentType?.MediaType == "application/json" ? JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings) : null;
             if (hrm.StatusCode != HttpStatusCode.OK) throw new HttpRequestException($"Response status code does not indicate success: {hrm.StatusCode} ({hrm.ReasonPhrase}).\r\n{s2}");
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", s.Elapsed);
             count = (int)jo["totalRecords"];
@@ -11806,7 +11806,7 @@ namespace FolioLibrary
                 if (hrm.StatusCode != HttpStatusCode.OK)
                 {
                     var s2 = hrm.Content.ReadAsStringAsync().Result;
-                    if (hrm.Content.Headers.ContentType.MediaType == "application/json") s2 = JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings).ToString();
+                    if (hrm.Content.Headers.ContentType?.MediaType == "application/json") s2 = JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings).ToString();
                     traceSource.TraceEvent(TraceEventType.Verbose, 0, s2);
                     throw new HttpRequestException($"Response status code does not indicate success: {hrm.StatusCode} ({hrm.ReasonPhrase}).\r\n{s2}");
                 }
@@ -11843,7 +11843,7 @@ namespace FolioLibrary
             var hrm = httpClient.GetAsync(url).Result;
             var s2 = hrm.Content.ReadAsStringAsync().Result;
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}{1}", hrm.Headers, s2);
-            var jo = hrm.Content.Headers.ContentType.MediaType == "application/json" ? JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings) : null;
+            var jo = hrm.Content.Headers.ContentType?.MediaType == "application/json" ? JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings) : null;
             if (hrm.StatusCode != HttpStatusCode.OK && hrm.StatusCode != HttpStatusCode.NotFound) throw new HttpRequestException($"Response status code does not indicate success: {hrm.StatusCode} ({hrm.ReasonPhrase}).\r\n{s2}");
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", s.Elapsed);
             return jo;
@@ -11921,7 +11921,7 @@ namespace FolioLibrary
             var hrm = httpClient.GetAsync(url).Result;
             var s2 = hrm.Content.ReadAsStringAsync().Result;
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}{1}", hrm.Headers, s2);
-            var jo = hrm.Content.Headers.ContentType.MediaType == "application/json" ? JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings) : null;
+            var jo = hrm.Content.Headers.ContentType?.MediaType == "application/json" ? JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings) : null;
             if (hrm.StatusCode != HttpStatusCode.OK) throw new HttpRequestException($"Response status code does not indicate success: {hrm.StatusCode} ({hrm.ReasonPhrase}).\r\n{s2}");
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", s.Elapsed);
             count = (int)jo["totalRecords"];
@@ -11942,7 +11942,7 @@ namespace FolioLibrary
             if (hrm.StatusCode != HttpStatusCode.OK)
             {
                 var s2 = hrm.Content.ReadAsStringAsync().Result;
-                if (hrm.Content.Headers.ContentType.MediaType == "application/json") s2 = JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings).ToString();
+                if (hrm.Content.Headers.ContentType?.MediaType == "application/json") s2 = JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings).ToString();
                 traceSource.TraceEvent(TraceEventType.Verbose, 0, s2);
                 throw new HttpRequestException($"Response status code does not indicate success: {hrm.StatusCode} ({hrm.ReasonPhrase}).\r\n{s2}");
             }
@@ -11973,7 +11973,7 @@ namespace FolioLibrary
             var hrm = httpClient.GetAsync(url).Result;
             var s2 = hrm.Content.ReadAsStringAsync().Result;
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}{1}", hrm.Headers, s2);
-            var jo = hrm.Content.Headers.ContentType.MediaType == "application/json" ? JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings) : null;
+            var jo = hrm.Content.Headers.ContentType?.MediaType == "application/json" ? JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings) : null;
             if (hrm.StatusCode != HttpStatusCode.OK && hrm.StatusCode != HttpStatusCode.NotFound) throw new HttpRequestException($"Response status code does not indicate success: {hrm.StatusCode} ({hrm.ReasonPhrase}).\r\n{s2}");
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", s.Elapsed);
             return jo;
@@ -12052,7 +12052,7 @@ namespace FolioLibrary
             var hrm = httpClient.GetAsync(url).Result;
             var s2 = hrm.Content.ReadAsStringAsync().Result;
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}{1}", hrm.Headers, s2);
-            var jo = hrm.Content.Headers.ContentType.MediaType == "application/json" ? JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings) : null;
+            var jo = hrm.Content.Headers.ContentType?.MediaType == "application/json" ? JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings) : null;
             if (hrm.StatusCode != HttpStatusCode.OK) throw new HttpRequestException($"Response status code does not indicate success: {hrm.StatusCode} ({hrm.ReasonPhrase}).\r\n{s2}");
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", s.Elapsed);
             count = (int)jo["totalRecords"];
@@ -12074,7 +12074,7 @@ namespace FolioLibrary
             if (hrm.StatusCode != HttpStatusCode.OK)
             {
                 var s2 = hrm.Content.ReadAsStringAsync().Result;
-                if (hrm.Content.Headers.ContentType.MediaType == "application/json") s2 = JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings).ToString();
+                if (hrm.Content.Headers.ContentType?.MediaType == "application/json") s2 = JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings).ToString();
                 traceSource.TraceEvent(TraceEventType.Verbose, 0, s2);
                 throw new HttpRequestException($"Response status code does not indicate success: {hrm.StatusCode} ({hrm.ReasonPhrase}).\r\n{s2}");
             }
@@ -12105,7 +12105,7 @@ namespace FolioLibrary
             var hrm = httpClient.GetAsync(url).Result;
             var s2 = hrm.Content.ReadAsStringAsync().Result;
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}{1}", hrm.Headers, s2);
-            var jo = hrm.Content.Headers.ContentType.MediaType == "application/json" ? JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings) : null;
+            var jo = hrm.Content.Headers.ContentType?.MediaType == "application/json" ? JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings) : null;
             if (hrm.StatusCode != HttpStatusCode.OK && hrm.StatusCode != HttpStatusCode.NotFound) throw new HttpRequestException($"Response status code does not indicate success: {hrm.StatusCode} ({hrm.ReasonPhrase}).\r\n{s2}");
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", s.Elapsed);
             return jo;
@@ -12183,7 +12183,7 @@ namespace FolioLibrary
             var hrm = httpClient.GetAsync(url).Result;
             var s2 = hrm.Content.ReadAsStringAsync().Result;
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}{1}", hrm.Headers, s2);
-            var jo = hrm.Content.Headers.ContentType.MediaType == "application/json" ? JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings) : null;
+            var jo = hrm.Content.Headers.ContentType?.MediaType == "application/json" ? JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings) : null;
             if (hrm.StatusCode != HttpStatusCode.OK) throw new HttpRequestException($"Response status code does not indicate success: {hrm.StatusCode} ({hrm.ReasonPhrase}).\r\n{s2}");
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", s.Elapsed);
             count = (int)jo["totalRecords"];
@@ -12204,7 +12204,7 @@ namespace FolioLibrary
             if (hrm.StatusCode != HttpStatusCode.OK)
             {
                 var s2 = hrm.Content.ReadAsStringAsync().Result;
-                if (hrm.Content.Headers.ContentType.MediaType == "application/json") s2 = JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings).ToString();
+                if (hrm.Content.Headers.ContentType?.MediaType == "application/json") s2 = JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings).ToString();
                 traceSource.TraceEvent(TraceEventType.Verbose, 0, s2);
                 throw new HttpRequestException($"Response status code does not indicate success: {hrm.StatusCode} ({hrm.ReasonPhrase}).\r\n{s2}");
             }
@@ -12235,7 +12235,7 @@ namespace FolioLibrary
             var hrm = httpClient.GetAsync(url).Result;
             var s2 = hrm.Content.ReadAsStringAsync().Result;
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}{1}", hrm.Headers, s2);
-            var jo = hrm.Content.Headers.ContentType.MediaType == "application/json" ? JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings) : null;
+            var jo = hrm.Content.Headers.ContentType?.MediaType == "application/json" ? JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings) : null;
             if (hrm.StatusCode != HttpStatusCode.OK && hrm.StatusCode != HttpStatusCode.NotFound) throw new HttpRequestException($"Response status code does not indicate success: {hrm.StatusCode} ({hrm.ReasonPhrase}).\r\n{s2}");
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", s.Elapsed);
             return jo;
@@ -12313,7 +12313,7 @@ namespace FolioLibrary
             var hrm = httpClient.GetAsync(url).Result;
             var s2 = hrm.Content.ReadAsStringAsync().Result;
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}{1}", hrm.Headers, s2);
-            var jo = hrm.Content.Headers.ContentType.MediaType == "application/json" ? JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings) : null;
+            var jo = hrm.Content.Headers.ContentType?.MediaType == "application/json" ? JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings) : null;
             if (hrm.StatusCode != HttpStatusCode.OK) throw new HttpRequestException($"Response status code does not indicate success: {hrm.StatusCode} ({hrm.ReasonPhrase}).\r\n{s2}");
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", s.Elapsed);
             count = (int)jo["totalRecords"];
@@ -12334,7 +12334,7 @@ namespace FolioLibrary
             if (hrm.StatusCode != HttpStatusCode.OK)
             {
                 var s2 = hrm.Content.ReadAsStringAsync().Result;
-                if (hrm.Content.Headers.ContentType.MediaType == "application/json") s2 = JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings).ToString();
+                if (hrm.Content.Headers.ContentType?.MediaType == "application/json") s2 = JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings).ToString();
                 traceSource.TraceEvent(TraceEventType.Verbose, 0, s2);
                 throw new HttpRequestException($"Response status code does not indicate success: {hrm.StatusCode} ({hrm.ReasonPhrase}).\r\n{s2}");
             }
@@ -12365,7 +12365,7 @@ namespace FolioLibrary
             var hrm = httpClient.GetAsync(url).Result;
             var s2 = hrm.Content.ReadAsStringAsync().Result;
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}{1}", hrm.Headers, s2);
-            var jo = hrm.Content.Headers.ContentType.MediaType == "application/json" ? JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings) : null;
+            var jo = hrm.Content.Headers.ContentType?.MediaType == "application/json" ? JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings) : null;
             if (hrm.StatusCode != HttpStatusCode.OK && hrm.StatusCode != HttpStatusCode.NotFound) throw new HttpRequestException($"Response status code does not indicate success: {hrm.StatusCode} ({hrm.ReasonPhrase}).\r\n{s2}");
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", s.Elapsed);
             return jo;
@@ -12444,7 +12444,7 @@ namespace FolioLibrary
             var hrm = httpClient.GetAsync(url).Result;
             var s2 = hrm.Content.ReadAsStringAsync().Result;
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}{1}", hrm.Headers, s2);
-            var jo = hrm.Content.Headers.ContentType.MediaType == "application/json" ? JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings) : null;
+            var jo = hrm.Content.Headers.ContentType?.MediaType == "application/json" ? JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings) : null;
             if (hrm.StatusCode != HttpStatusCode.OK) throw new HttpRequestException($"Response status code does not indicate success: {hrm.StatusCode} ({hrm.ReasonPhrase}).\r\n{s2}");
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", s.Elapsed);
             count = (int)jo["totalRecords"];
@@ -12470,7 +12470,7 @@ namespace FolioLibrary
                 if (hrm.StatusCode != HttpStatusCode.OK)
                 {
                     var s2 = hrm.Content.ReadAsStringAsync().Result;
-                    if (hrm.Content.Headers.ContentType.MediaType == "application/json") s2 = JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings).ToString();
+                    if (hrm.Content.Headers.ContentType?.MediaType == "application/json") s2 = JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings).ToString();
                     traceSource.TraceEvent(TraceEventType.Verbose, 0, s2);
                     throw new HttpRequestException($"Response status code does not indicate success: {hrm.StatusCode} ({hrm.ReasonPhrase}).\r\n{s2}");
                 }
@@ -12507,7 +12507,7 @@ namespace FolioLibrary
             var hrm = httpClient.GetAsync(url).Result;
             var s2 = hrm.Content.ReadAsStringAsync().Result;
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}{1}", hrm.Headers, s2);
-            var jo = hrm.Content.Headers.ContentType.MediaType == "application/json" ? JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings) : null;
+            var jo = hrm.Content.Headers.ContentType?.MediaType == "application/json" ? JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings) : null;
             if (hrm.StatusCode != HttpStatusCode.OK && hrm.StatusCode != HttpStatusCode.NotFound) throw new HttpRequestException($"Response status code does not indicate success: {hrm.StatusCode} ({hrm.ReasonPhrase}).\r\n{s2}");
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", s.Elapsed);
             return jo;
@@ -12605,7 +12605,7 @@ namespace FolioLibrary
             var hrm = httpClient.GetAsync(url).Result;
             var s2 = hrm.Content.ReadAsStringAsync().Result;
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}{1}", hrm.Headers, s2);
-            var jo = hrm.Content.Headers.ContentType.MediaType == "application/json" ? JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings) : null;
+            var jo = hrm.Content.Headers.ContentType?.MediaType == "application/json" ? JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings) : null;
             if (hrm.StatusCode != HttpStatusCode.OK) throw new HttpRequestException($"Response status code does not indicate success: {hrm.StatusCode} ({hrm.ReasonPhrase}).\r\n{s2}");
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", s.Elapsed);
             count = (int)jo["totalRecords"];
@@ -12626,7 +12626,7 @@ namespace FolioLibrary
             if (hrm.StatusCode != HttpStatusCode.OK)
             {
                 var s2 = hrm.Content.ReadAsStringAsync().Result;
-                if (hrm.Content.Headers.ContentType.MediaType == "application/json") s2 = JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings).ToString();
+                if (hrm.Content.Headers.ContentType?.MediaType == "application/json") s2 = JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings).ToString();
                 traceSource.TraceEvent(TraceEventType.Verbose, 0, s2);
                 throw new HttpRequestException($"Response status code does not indicate success: {hrm.StatusCode} ({hrm.ReasonPhrase}).\r\n{s2}");
             }
@@ -12657,7 +12657,7 @@ namespace FolioLibrary
             var hrm = httpClient.GetAsync(url).Result;
             var s2 = hrm.Content.ReadAsStringAsync().Result;
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}{1}", hrm.Headers, s2);
-            var jo = hrm.Content.Headers.ContentType.MediaType == "application/json" ? JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings) : null;
+            var jo = hrm.Content.Headers.ContentType?.MediaType == "application/json" ? JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings) : null;
             if (hrm.StatusCode != HttpStatusCode.OK && hrm.StatusCode != HttpStatusCode.NotFound) throw new HttpRequestException($"Response status code does not indicate success: {hrm.StatusCode} ({hrm.ReasonPhrase}).\r\n{s2}");
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", s.Elapsed);
             return jo;
@@ -12735,7 +12735,7 @@ namespace FolioLibrary
             var hrm = httpClient.GetAsync(url).Result;
             var s2 = hrm.Content.ReadAsStringAsync().Result;
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}{1}", hrm.Headers, s2);
-            var jo = hrm.Content.Headers.ContentType.MediaType == "application/json" ? JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings) : null;
+            var jo = hrm.Content.Headers.ContentType?.MediaType == "application/json" ? JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings) : null;
             if (hrm.StatusCode != HttpStatusCode.OK) throw new HttpRequestException($"Response status code does not indicate success: {hrm.StatusCode} ({hrm.ReasonPhrase}).\r\n{s2}");
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", s.Elapsed);
             count = (int)jo["totalRecords"];
@@ -12756,7 +12756,7 @@ namespace FolioLibrary
             if (hrm.StatusCode != HttpStatusCode.OK)
             {
                 var s2 = hrm.Content.ReadAsStringAsync().Result;
-                if (hrm.Content.Headers.ContentType.MediaType == "application/json") s2 = JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings).ToString();
+                if (hrm.Content.Headers.ContentType?.MediaType == "application/json") s2 = JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings).ToString();
                 traceSource.TraceEvent(TraceEventType.Verbose, 0, s2);
                 throw new HttpRequestException($"Response status code does not indicate success: {hrm.StatusCode} ({hrm.ReasonPhrase}).\r\n{s2}");
             }
@@ -12787,7 +12787,7 @@ namespace FolioLibrary
             var hrm = httpClient.GetAsync(url).Result;
             var s2 = hrm.Content.ReadAsStringAsync().Result;
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}{1}", hrm.Headers, s2);
-            var jo = hrm.Content.Headers.ContentType.MediaType == "application/json" ? JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings) : null;
+            var jo = hrm.Content.Headers.ContentType?.MediaType == "application/json" ? JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings) : null;
             if (hrm.StatusCode != HttpStatusCode.OK && hrm.StatusCode != HttpStatusCode.NotFound) throw new HttpRequestException($"Response status code does not indicate success: {hrm.StatusCode} ({hrm.ReasonPhrase}).\r\n{s2}");
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", s.Elapsed);
             return jo;
@@ -12865,7 +12865,7 @@ namespace FolioLibrary
             var hrm = httpClient.GetAsync(url).Result;
             var s2 = hrm.Content.ReadAsStringAsync().Result;
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}{1}", hrm.Headers, s2);
-            var jo = hrm.Content.Headers.ContentType.MediaType == "application/json" ? JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings) : null;
+            var jo = hrm.Content.Headers.ContentType?.MediaType == "application/json" ? JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings) : null;
             if (hrm.StatusCode != HttpStatusCode.OK) throw new HttpRequestException($"Response status code does not indicate success: {hrm.StatusCode} ({hrm.ReasonPhrase}).\r\n{s2}");
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", s.Elapsed);
             count = (int)jo["totalRecords"];
@@ -12886,7 +12886,7 @@ namespace FolioLibrary
             if (hrm.StatusCode != HttpStatusCode.OK)
             {
                 var s2 = hrm.Content.ReadAsStringAsync().Result;
-                if (hrm.Content.Headers.ContentType.MediaType == "application/json") s2 = JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings).ToString();
+                if (hrm.Content.Headers.ContentType?.MediaType == "application/json") s2 = JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings).ToString();
                 traceSource.TraceEvent(TraceEventType.Verbose, 0, s2);
                 throw new HttpRequestException($"Response status code does not indicate success: {hrm.StatusCode} ({hrm.ReasonPhrase}).\r\n{s2}");
             }
@@ -12917,7 +12917,7 @@ namespace FolioLibrary
             var hrm = httpClient.GetAsync(url).Result;
             var s2 = hrm.Content.ReadAsStringAsync().Result;
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}{1}", hrm.Headers, s2);
-            var jo = hrm.Content.Headers.ContentType.MediaType == "application/json" ? JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings) : null;
+            var jo = hrm.Content.Headers.ContentType?.MediaType == "application/json" ? JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings) : null;
             if (hrm.StatusCode != HttpStatusCode.OK && hrm.StatusCode != HttpStatusCode.NotFound) throw new HttpRequestException($"Response status code does not indicate success: {hrm.StatusCode} ({hrm.ReasonPhrase}).\r\n{s2}");
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", s.Elapsed);
             return jo;
@@ -12995,7 +12995,7 @@ namespace FolioLibrary
             var hrm = httpClient.GetAsync(url).Result;
             var s2 = hrm.Content.ReadAsStringAsync().Result;
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}{1}", hrm.Headers, s2);
-            var jo = hrm.Content.Headers.ContentType.MediaType == "application/json" ? JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings) : null;
+            var jo = hrm.Content.Headers.ContentType?.MediaType == "application/json" ? JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings) : null;
             if (hrm.StatusCode != HttpStatusCode.OK) throw new HttpRequestException($"Response status code does not indicate success: {hrm.StatusCode} ({hrm.ReasonPhrase}).\r\n{s2}");
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", s.Elapsed);
             count = (int)jo["totalRecords"];
@@ -13016,7 +13016,7 @@ namespace FolioLibrary
             if (hrm.StatusCode != HttpStatusCode.OK)
             {
                 var s2 = hrm.Content.ReadAsStringAsync().Result;
-                if (hrm.Content.Headers.ContentType.MediaType == "application/json") s2 = JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings).ToString();
+                if (hrm.Content.Headers.ContentType?.MediaType == "application/json") s2 = JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings).ToString();
                 traceSource.TraceEvent(TraceEventType.Verbose, 0, s2);
                 throw new HttpRequestException($"Response status code does not indicate success: {hrm.StatusCode} ({hrm.ReasonPhrase}).\r\n{s2}");
             }
@@ -13047,7 +13047,7 @@ namespace FolioLibrary
             var hrm = httpClient.GetAsync(url).Result;
             var s2 = hrm.Content.ReadAsStringAsync().Result;
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}{1}", hrm.Headers, s2);
-            var jo = hrm.Content.Headers.ContentType.MediaType == "application/json" ? JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings) : null;
+            var jo = hrm.Content.Headers.ContentType?.MediaType == "application/json" ? JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings) : null;
             if (hrm.StatusCode != HttpStatusCode.OK && hrm.StatusCode != HttpStatusCode.NotFound) throw new HttpRequestException($"Response status code does not indicate success: {hrm.StatusCode} ({hrm.ReasonPhrase}).\r\n{s2}");
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", s.Elapsed);
             return jo;
@@ -13125,7 +13125,7 @@ namespace FolioLibrary
             var hrm = httpClient.GetAsync(url).Result;
             var s2 = hrm.Content.ReadAsStringAsync().Result;
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}{1}", hrm.Headers, s2);
-            var jo = hrm.Content.Headers.ContentType.MediaType == "application/json" ? JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings) : null;
+            var jo = hrm.Content.Headers.ContentType?.MediaType == "application/json" ? JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings) : null;
             if (hrm.StatusCode != HttpStatusCode.OK) throw new HttpRequestException($"Response status code does not indicate success: {hrm.StatusCode} ({hrm.ReasonPhrase}).\r\n{s2}");
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", s.Elapsed);
             count = (int)jo["totalRecords"];
@@ -13146,7 +13146,7 @@ namespace FolioLibrary
             if (hrm.StatusCode != HttpStatusCode.OK)
             {
                 var s2 = hrm.Content.ReadAsStringAsync().Result;
-                if (hrm.Content.Headers.ContentType.MediaType == "application/json") s2 = JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings).ToString();
+                if (hrm.Content.Headers.ContentType?.MediaType == "application/json") s2 = JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings).ToString();
                 traceSource.TraceEvent(TraceEventType.Verbose, 0, s2);
                 throw new HttpRequestException($"Response status code does not indicate success: {hrm.StatusCode} ({hrm.ReasonPhrase}).\r\n{s2}");
             }
@@ -13177,7 +13177,7 @@ namespace FolioLibrary
             var hrm = httpClient.GetAsync(url).Result;
             var s2 = hrm.Content.ReadAsStringAsync().Result;
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}{1}", hrm.Headers, s2);
-            var jo = hrm.Content.Headers.ContentType.MediaType == "application/json" ? JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings) : null;
+            var jo = hrm.Content.Headers.ContentType?.MediaType == "application/json" ? JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings) : null;
             if (hrm.StatusCode != HttpStatusCode.OK && hrm.StatusCode != HttpStatusCode.NotFound) throw new HttpRequestException($"Response status code does not indicate success: {hrm.StatusCode} ({hrm.ReasonPhrase}).\r\n{s2}");
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", s.Elapsed);
             return jo;
@@ -13255,7 +13255,7 @@ namespace FolioLibrary
             var hrm = httpClient.GetAsync(url).Result;
             var s2 = hrm.Content.ReadAsStringAsync().Result;
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}{1}", hrm.Headers, s2);
-            var jo = hrm.Content.Headers.ContentType.MediaType == "application/json" ? JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings) : null;
+            var jo = hrm.Content.Headers.ContentType?.MediaType == "application/json" ? JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings) : null;
             if (hrm.StatusCode != HttpStatusCode.OK) throw new HttpRequestException($"Response status code does not indicate success: {hrm.StatusCode} ({hrm.ReasonPhrase}).\r\n{s2}");
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", s.Elapsed);
             count = (int)jo["totalRecords"];
@@ -13276,7 +13276,7 @@ namespace FolioLibrary
             if (hrm.StatusCode != HttpStatusCode.OK)
             {
                 var s2 = hrm.Content.ReadAsStringAsync().Result;
-                if (hrm.Content.Headers.ContentType.MediaType == "application/json") s2 = JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings).ToString();
+                if (hrm.Content.Headers.ContentType?.MediaType == "application/json") s2 = JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings).ToString();
                 traceSource.TraceEvent(TraceEventType.Verbose, 0, s2);
                 throw new HttpRequestException($"Response status code does not indicate success: {hrm.StatusCode} ({hrm.ReasonPhrase}).\r\n{s2}");
             }
@@ -13307,7 +13307,7 @@ namespace FolioLibrary
             var hrm = httpClient.GetAsync(url).Result;
             var s2 = hrm.Content.ReadAsStringAsync().Result;
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}{1}", hrm.Headers, s2);
-            var jo = hrm.Content.Headers.ContentType.MediaType == "application/json" ? JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings) : null;
+            var jo = hrm.Content.Headers.ContentType?.MediaType == "application/json" ? JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings) : null;
             if (hrm.StatusCode != HttpStatusCode.OK && hrm.StatusCode != HttpStatusCode.NotFound) throw new HttpRequestException($"Response status code does not indicate success: {hrm.StatusCode} ({hrm.ReasonPhrase}).\r\n{s2}");
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", s.Elapsed);
             return jo;
@@ -13385,7 +13385,7 @@ namespace FolioLibrary
             var hrm = httpClient.GetAsync(url).Result;
             var s2 = hrm.Content.ReadAsStringAsync().Result;
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}{1}", hrm.Headers, s2);
-            var jo = hrm.Content.Headers.ContentType.MediaType == "application/json" ? JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings) : null;
+            var jo = hrm.Content.Headers.ContentType?.MediaType == "application/json" ? JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings) : null;
             if (hrm.StatusCode != HttpStatusCode.OK) throw new HttpRequestException($"Response status code does not indicate success: {hrm.StatusCode} ({hrm.ReasonPhrase}).\r\n{s2}");
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", s.Elapsed);
             count = (int)jo["totalRecords"];
@@ -13406,7 +13406,7 @@ namespace FolioLibrary
             if (hrm.StatusCode != HttpStatusCode.OK)
             {
                 var s2 = hrm.Content.ReadAsStringAsync().Result;
-                if (hrm.Content.Headers.ContentType.MediaType == "application/json") s2 = JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings).ToString();
+                if (hrm.Content.Headers.ContentType?.MediaType == "application/json") s2 = JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings).ToString();
                 traceSource.TraceEvent(TraceEventType.Verbose, 0, s2);
                 throw new HttpRequestException($"Response status code does not indicate success: {hrm.StatusCode} ({hrm.ReasonPhrase}).\r\n{s2}");
             }
@@ -13437,7 +13437,7 @@ namespace FolioLibrary
             var hrm = httpClient.GetAsync(url).Result;
             var s2 = hrm.Content.ReadAsStringAsync().Result;
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}{1}", hrm.Headers, s2);
-            var jo = hrm.Content.Headers.ContentType.MediaType == "application/json" ? JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings) : null;
+            var jo = hrm.Content.Headers.ContentType?.MediaType == "application/json" ? JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings) : null;
             if (hrm.StatusCode != HttpStatusCode.OK && hrm.StatusCode != HttpStatusCode.NotFound) throw new HttpRequestException($"Response status code does not indicate success: {hrm.StatusCode} ({hrm.ReasonPhrase}).\r\n{s2}");
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", s.Elapsed);
             return jo;
@@ -13516,7 +13516,7 @@ namespace FolioLibrary
             var hrm = httpClient.GetAsync(url).Result;
             var s2 = hrm.Content.ReadAsStringAsync().Result;
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}{1}", hrm.Headers, s2);
-            var jo = hrm.Content.Headers.ContentType.MediaType == "application/json" ? JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings) : null;
+            var jo = hrm.Content.Headers.ContentType?.MediaType == "application/json" ? JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings) : null;
             if (hrm.StatusCode != HttpStatusCode.OK) throw new HttpRequestException($"Response status code does not indicate success: {hrm.StatusCode} ({hrm.ReasonPhrase}).\r\n{s2}");
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", s.Elapsed);
             count = (int)jo["totalRecords"];
@@ -13538,7 +13538,7 @@ namespace FolioLibrary
             if (hrm.StatusCode != HttpStatusCode.OK)
             {
                 var s2 = hrm.Content.ReadAsStringAsync().Result;
-                if (hrm.Content.Headers.ContentType.MediaType == "application/json") s2 = JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings).ToString();
+                if (hrm.Content.Headers.ContentType?.MediaType == "application/json") s2 = JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings).ToString();
                 traceSource.TraceEvent(TraceEventType.Verbose, 0, s2);
                 throw new HttpRequestException($"Response status code does not indicate success: {hrm.StatusCode} ({hrm.ReasonPhrase}).\r\n{s2}");
             }
@@ -13569,7 +13569,7 @@ namespace FolioLibrary
             var hrm = httpClient.GetAsync(url).Result;
             var s2 = hrm.Content.ReadAsStringAsync().Result;
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}{1}", hrm.Headers, s2);
-            var jo = hrm.Content.Headers.ContentType.MediaType == "application/json" ? JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings) : null;
+            var jo = hrm.Content.Headers.ContentType?.MediaType == "application/json" ? JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings) : null;
             if (hrm.StatusCode != HttpStatusCode.OK && hrm.StatusCode != HttpStatusCode.NotFound) throw new HttpRequestException($"Response status code does not indicate success: {hrm.StatusCode} ({hrm.ReasonPhrase}).\r\n{s2}");
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", s.Elapsed);
             return jo;
@@ -13647,7 +13647,7 @@ namespace FolioLibrary
             var hrm = httpClient.GetAsync(url).Result;
             var s2 = hrm.Content.ReadAsStringAsync().Result;
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}{1}", hrm.Headers, s2);
-            var jo = hrm.Content.Headers.ContentType.MediaType == "application/json" ? JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings) : null;
+            var jo = hrm.Content.Headers.ContentType?.MediaType == "application/json" ? JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings) : null;
             if (hrm.StatusCode != HttpStatusCode.OK) throw new HttpRequestException($"Response status code does not indicate success: {hrm.StatusCode} ({hrm.ReasonPhrase}).\r\n{s2}");
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", s.Elapsed);
             count = (int)jo["totalRecords"];
@@ -13668,7 +13668,7 @@ namespace FolioLibrary
             if (hrm.StatusCode != HttpStatusCode.OK)
             {
                 var s2 = hrm.Content.ReadAsStringAsync().Result;
-                if (hrm.Content.Headers.ContentType.MediaType == "application/json") s2 = JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings).ToString();
+                if (hrm.Content.Headers.ContentType?.MediaType == "application/json") s2 = JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings).ToString();
                 traceSource.TraceEvent(TraceEventType.Verbose, 0, s2);
                 throw new HttpRequestException($"Response status code does not indicate success: {hrm.StatusCode} ({hrm.ReasonPhrase}).\r\n{s2}");
             }
@@ -13699,7 +13699,7 @@ namespace FolioLibrary
             var hrm = httpClient.GetAsync(url).Result;
             var s2 = hrm.Content.ReadAsStringAsync().Result;
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}{1}", hrm.Headers, s2);
-            var jo = hrm.Content.Headers.ContentType.MediaType == "application/json" ? JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings) : null;
+            var jo = hrm.Content.Headers.ContentType?.MediaType == "application/json" ? JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings) : null;
             if (hrm.StatusCode != HttpStatusCode.OK && hrm.StatusCode != HttpStatusCode.NotFound) throw new HttpRequestException($"Response status code does not indicate success: {hrm.StatusCode} ({hrm.ReasonPhrase}).\r\n{s2}");
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", s.Elapsed);
             return jo;
@@ -13777,7 +13777,7 @@ namespace FolioLibrary
             var hrm = httpClient.GetAsync(url).Result;
             var s2 = hrm.Content.ReadAsStringAsync().Result;
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}{1}", hrm.Headers, s2);
-            var jo = hrm.Content.Headers.ContentType.MediaType == "application/json" ? JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings) : null;
+            var jo = hrm.Content.Headers.ContentType?.MediaType == "application/json" ? JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings) : null;
             if (hrm.StatusCode != HttpStatusCode.OK) throw new HttpRequestException($"Response status code does not indicate success: {hrm.StatusCode} ({hrm.ReasonPhrase}).\r\n{s2}");
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", s.Elapsed);
             count = (int)jo["totalRecords"];
@@ -13798,7 +13798,7 @@ namespace FolioLibrary
             if (hrm.StatusCode != HttpStatusCode.OK)
             {
                 var s2 = hrm.Content.ReadAsStringAsync().Result;
-                if (hrm.Content.Headers.ContentType.MediaType == "application/json") s2 = JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings).ToString();
+                if (hrm.Content.Headers.ContentType?.MediaType == "application/json") s2 = JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings).ToString();
                 traceSource.TraceEvent(TraceEventType.Verbose, 0, s2);
                 throw new HttpRequestException($"Response status code does not indicate success: {hrm.StatusCode} ({hrm.ReasonPhrase}).\r\n{s2}");
             }
@@ -13829,7 +13829,7 @@ namespace FolioLibrary
             var hrm = httpClient.GetAsync(url).Result;
             var s2 = hrm.Content.ReadAsStringAsync().Result;
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}{1}", hrm.Headers, s2);
-            var jo = hrm.Content.Headers.ContentType.MediaType == "application/json" ? JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings) : null;
+            var jo = hrm.Content.Headers.ContentType?.MediaType == "application/json" ? JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings) : null;
             if (hrm.StatusCode != HttpStatusCode.OK && hrm.StatusCode != HttpStatusCode.NotFound) throw new HttpRequestException($"Response status code does not indicate success: {hrm.StatusCode} ({hrm.ReasonPhrase}).\r\n{s2}");
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", s.Elapsed);
             return jo;
@@ -13907,7 +13907,7 @@ namespace FolioLibrary
             var hrm = httpClient.GetAsync(url).Result;
             var s2 = hrm.Content.ReadAsStringAsync().Result;
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}{1}", hrm.Headers, s2);
-            var jo = hrm.Content.Headers.ContentType.MediaType == "application/json" ? JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings) : null;
+            var jo = hrm.Content.Headers.ContentType?.MediaType == "application/json" ? JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings) : null;
             if (hrm.StatusCode != HttpStatusCode.OK) throw new HttpRequestException($"Response status code does not indicate success: {hrm.StatusCode} ({hrm.ReasonPhrase}).\r\n{s2}");
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", s.Elapsed);
             count = (int)jo["totalRecords"];
@@ -13928,7 +13928,7 @@ namespace FolioLibrary
             if (hrm.StatusCode != HttpStatusCode.OK)
             {
                 var s2 = hrm.Content.ReadAsStringAsync().Result;
-                if (hrm.Content.Headers.ContentType.MediaType == "application/json") s2 = JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings).ToString();
+                if (hrm.Content.Headers.ContentType?.MediaType == "application/json") s2 = JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings).ToString();
                 traceSource.TraceEvent(TraceEventType.Verbose, 0, s2);
                 throw new HttpRequestException($"Response status code does not indicate success: {hrm.StatusCode} ({hrm.ReasonPhrase}).\r\n{s2}");
             }
@@ -13959,7 +13959,7 @@ namespace FolioLibrary
             var hrm = httpClient.GetAsync(url).Result;
             var s2 = hrm.Content.ReadAsStringAsync().Result;
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}{1}", hrm.Headers, s2);
-            var jo = hrm.Content.Headers.ContentType.MediaType == "application/json" ? JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings) : null;
+            var jo = hrm.Content.Headers.ContentType?.MediaType == "application/json" ? JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings) : null;
             if (hrm.StatusCode != HttpStatusCode.OK && hrm.StatusCode != HttpStatusCode.NotFound) throw new HttpRequestException($"Response status code does not indicate success: {hrm.StatusCode} ({hrm.ReasonPhrase}).\r\n{s2}");
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", s.Elapsed);
             return jo;
@@ -14037,7 +14037,7 @@ namespace FolioLibrary
             var hrm = httpClient.GetAsync(url).Result;
             var s2 = hrm.Content.ReadAsStringAsync().Result;
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}{1}", hrm.Headers, s2);
-            var jo = hrm.Content.Headers.ContentType.MediaType == "application/json" ? JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings) : null;
+            var jo = hrm.Content.Headers.ContentType?.MediaType == "application/json" ? JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings) : null;
             if (hrm.StatusCode != HttpStatusCode.OK) throw new HttpRequestException($"Response status code does not indicate success: {hrm.StatusCode} ({hrm.ReasonPhrase}).\r\n{s2}");
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", s.Elapsed);
             count = (int)jo["totalRecords"];
@@ -14058,7 +14058,7 @@ namespace FolioLibrary
             if (hrm.StatusCode != HttpStatusCode.OK)
             {
                 var s2 = hrm.Content.ReadAsStringAsync().Result;
-                if (hrm.Content.Headers.ContentType.MediaType == "application/json") s2 = JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings).ToString();
+                if (hrm.Content.Headers.ContentType?.MediaType == "application/json") s2 = JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings).ToString();
                 traceSource.TraceEvent(TraceEventType.Verbose, 0, s2);
                 throw new HttpRequestException($"Response status code does not indicate success: {hrm.StatusCode} ({hrm.ReasonPhrase}).\r\n{s2}");
             }
@@ -14089,7 +14089,7 @@ namespace FolioLibrary
             var hrm = httpClient.GetAsync(url).Result;
             var s2 = hrm.Content.ReadAsStringAsync().Result;
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}{1}", hrm.Headers, s2);
-            var jo = hrm.Content.Headers.ContentType.MediaType == "application/json" ? JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings) : null;
+            var jo = hrm.Content.Headers.ContentType?.MediaType == "application/json" ? JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings) : null;
             if (hrm.StatusCode != HttpStatusCode.OK && hrm.StatusCode != HttpStatusCode.NotFound) throw new HttpRequestException($"Response status code does not indicate success: {hrm.StatusCode} ({hrm.ReasonPhrase}).\r\n{s2}");
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", s.Elapsed);
             return jo;
@@ -14167,7 +14167,7 @@ namespace FolioLibrary
             var hrm = httpClient.GetAsync(url).Result;
             var s2 = hrm.Content.ReadAsStringAsync().Result;
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}{1}", hrm.Headers, s2);
-            var jo = hrm.Content.Headers.ContentType.MediaType == "application/json" ? JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings) : null;
+            var jo = hrm.Content.Headers.ContentType?.MediaType == "application/json" ? JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings) : null;
             if (hrm.StatusCode != HttpStatusCode.OK) throw new HttpRequestException($"Response status code does not indicate success: {hrm.StatusCode} ({hrm.ReasonPhrase}).\r\n{s2}");
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", s.Elapsed);
             count = (int)jo["totalRecords"];
@@ -14188,7 +14188,7 @@ namespace FolioLibrary
             if (hrm.StatusCode != HttpStatusCode.OK)
             {
                 var s2 = hrm.Content.ReadAsStringAsync().Result;
-                if (hrm.Content.Headers.ContentType.MediaType == "application/json") s2 = JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings).ToString();
+                if (hrm.Content.Headers.ContentType?.MediaType == "application/json") s2 = JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings).ToString();
                 traceSource.TraceEvent(TraceEventType.Verbose, 0, s2);
                 throw new HttpRequestException($"Response status code does not indicate success: {hrm.StatusCode} ({hrm.ReasonPhrase}).\r\n{s2}");
             }
@@ -14219,7 +14219,7 @@ namespace FolioLibrary
             var hrm = httpClient.GetAsync(url).Result;
             var s2 = hrm.Content.ReadAsStringAsync().Result;
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}{1}", hrm.Headers, s2);
-            var jo = hrm.Content.Headers.ContentType.MediaType == "application/json" ? JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings) : null;
+            var jo = hrm.Content.Headers.ContentType?.MediaType == "application/json" ? JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings) : null;
             if (hrm.StatusCode != HttpStatusCode.OK && hrm.StatusCode != HttpStatusCode.NotFound) throw new HttpRequestException($"Response status code does not indicate success: {hrm.StatusCode} ({hrm.ReasonPhrase}).\r\n{s2}");
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", s.Elapsed);
             return jo;
@@ -14297,7 +14297,7 @@ namespace FolioLibrary
             var hrm = httpClient.GetAsync(url).Result;
             var s2 = hrm.Content.ReadAsStringAsync().Result;
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}{1}", hrm.Headers, s2);
-            var jo = hrm.Content.Headers.ContentType.MediaType == "application/json" ? JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings) : null;
+            var jo = hrm.Content.Headers.ContentType?.MediaType == "application/json" ? JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings) : null;
             if (hrm.StatusCode != HttpStatusCode.OK) throw new HttpRequestException($"Response status code does not indicate success: {hrm.StatusCode} ({hrm.ReasonPhrase}).\r\n{s2}");
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", s.Elapsed);
             count = (int)jo["totalRecords"];
@@ -14318,7 +14318,7 @@ namespace FolioLibrary
             if (hrm.StatusCode != HttpStatusCode.OK)
             {
                 var s2 = hrm.Content.ReadAsStringAsync().Result;
-                if (hrm.Content.Headers.ContentType.MediaType == "application/json") s2 = JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings).ToString();
+                if (hrm.Content.Headers.ContentType?.MediaType == "application/json") s2 = JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings).ToString();
                 traceSource.TraceEvent(TraceEventType.Verbose, 0, s2);
                 throw new HttpRequestException($"Response status code does not indicate success: {hrm.StatusCode} ({hrm.ReasonPhrase}).\r\n{s2}");
             }
@@ -14349,7 +14349,7 @@ namespace FolioLibrary
             var hrm = httpClient.GetAsync(url).Result;
             var s2 = hrm.Content.ReadAsStringAsync().Result;
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}{1}", hrm.Headers, s2);
-            var jo = hrm.Content.Headers.ContentType.MediaType == "application/json" ? JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings) : null;
+            var jo = hrm.Content.Headers.ContentType?.MediaType == "application/json" ? JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings) : null;
             if (hrm.StatusCode != HttpStatusCode.OK && hrm.StatusCode != HttpStatusCode.NotFound) throw new HttpRequestException($"Response status code does not indicate success: {hrm.StatusCode} ({hrm.ReasonPhrase}).\r\n{s2}");
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", s.Elapsed);
             return jo;
@@ -14427,7 +14427,7 @@ namespace FolioLibrary
             var hrm = httpClient.GetAsync(url).Result;
             var s2 = hrm.Content.ReadAsStringAsync().Result;
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}{1}", hrm.Headers, s2);
-            var jo = hrm.Content.Headers.ContentType.MediaType == "application/json" ? JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings) : null;
+            var jo = hrm.Content.Headers.ContentType?.MediaType == "application/json" ? JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings) : null;
             if (hrm.StatusCode != HttpStatusCode.OK) throw new HttpRequestException($"Response status code does not indicate success: {hrm.StatusCode} ({hrm.ReasonPhrase}).\r\n{s2}");
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", s.Elapsed);
             count = (int)jo["totalRecords"];
@@ -14448,7 +14448,7 @@ namespace FolioLibrary
             if (hrm.StatusCode != HttpStatusCode.OK)
             {
                 var s2 = hrm.Content.ReadAsStringAsync().Result;
-                if (hrm.Content.Headers.ContentType.MediaType == "application/json") s2 = JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings).ToString();
+                if (hrm.Content.Headers.ContentType?.MediaType == "application/json") s2 = JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings).ToString();
                 traceSource.TraceEvent(TraceEventType.Verbose, 0, s2);
                 throw new HttpRequestException($"Response status code does not indicate success: {hrm.StatusCode} ({hrm.ReasonPhrase}).\r\n{s2}");
             }
@@ -14479,7 +14479,7 @@ namespace FolioLibrary
             var hrm = httpClient.GetAsync(url).Result;
             var s2 = hrm.Content.ReadAsStringAsync().Result;
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}{1}", hrm.Headers, s2);
-            var jo = hrm.Content.Headers.ContentType.MediaType == "application/json" ? JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings) : null;
+            var jo = hrm.Content.Headers.ContentType?.MediaType == "application/json" ? JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings) : null;
             if (hrm.StatusCode != HttpStatusCode.OK && hrm.StatusCode != HttpStatusCode.NotFound) throw new HttpRequestException($"Response status code does not indicate success: {hrm.StatusCode} ({hrm.ReasonPhrase}).\r\n{s2}");
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", s.Elapsed);
             return jo;
@@ -14557,7 +14557,7 @@ namespace FolioLibrary
             var hrm = httpClient.GetAsync(url).Result;
             var s2 = hrm.Content.ReadAsStringAsync().Result;
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}{1}", hrm.Headers, s2);
-            var jo = hrm.Content.Headers.ContentType.MediaType == "application/json" ? JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings) : null;
+            var jo = hrm.Content.Headers.ContentType?.MediaType == "application/json" ? JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings) : null;
             if (hrm.StatusCode != HttpStatusCode.OK) throw new HttpRequestException($"Response status code does not indicate success: {hrm.StatusCode} ({hrm.ReasonPhrase}).\r\n{s2}");
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", s.Elapsed);
             count = (int)jo["totalRecords"];
@@ -14578,7 +14578,7 @@ namespace FolioLibrary
             if (hrm.StatusCode != HttpStatusCode.OK)
             {
                 var s2 = hrm.Content.ReadAsStringAsync().Result;
-                if (hrm.Content.Headers.ContentType.MediaType == "application/json") s2 = JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings).ToString();
+                if (hrm.Content.Headers.ContentType?.MediaType == "application/json") s2 = JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings).ToString();
                 traceSource.TraceEvent(TraceEventType.Verbose, 0, s2);
                 throw new HttpRequestException($"Response status code does not indicate success: {hrm.StatusCode} ({hrm.ReasonPhrase}).\r\n{s2}");
             }
@@ -14609,7 +14609,7 @@ namespace FolioLibrary
             var hrm = httpClient.GetAsync(url).Result;
             var s2 = hrm.Content.ReadAsStringAsync().Result;
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}{1}", hrm.Headers, s2);
-            var jo = hrm.Content.Headers.ContentType.MediaType == "application/json" ? JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings) : null;
+            var jo = hrm.Content.Headers.ContentType?.MediaType == "application/json" ? JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings) : null;
             if (hrm.StatusCode != HttpStatusCode.OK && hrm.StatusCode != HttpStatusCode.NotFound) throw new HttpRequestException($"Response status code does not indicate success: {hrm.StatusCode} ({hrm.ReasonPhrase}).\r\n{s2}");
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", s.Elapsed);
             return jo;
@@ -14687,7 +14687,7 @@ namespace FolioLibrary
             var hrm = httpClient.GetAsync(url).Result;
             var s2 = hrm.Content.ReadAsStringAsync().Result;
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}{1}", hrm.Headers, s2);
-            var jo = hrm.Content.Headers.ContentType.MediaType == "application/json" ? JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings) : null;
+            var jo = hrm.Content.Headers.ContentType?.MediaType == "application/json" ? JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings) : null;
             if (hrm.StatusCode != HttpStatusCode.OK) throw new HttpRequestException($"Response status code does not indicate success: {hrm.StatusCode} ({hrm.ReasonPhrase}).\r\n{s2}");
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", s.Elapsed);
             count = (int)jo["totalRecords"];
@@ -14712,7 +14712,7 @@ namespace FolioLibrary
                 if (hrm.StatusCode != HttpStatusCode.OK)
                 {
                     var s2 = hrm.Content.ReadAsStringAsync().Result;
-                    if (hrm.Content.Headers.ContentType.MediaType == "application/json") s2 = JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings).ToString();
+                    if (hrm.Content.Headers.ContentType?.MediaType == "application/json") s2 = JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings).ToString();
                     traceSource.TraceEvent(TraceEventType.Verbose, 0, s2);
                     throw new HttpRequestException($"Response status code does not indicate success: {hrm.StatusCode} ({hrm.ReasonPhrase}).\r\n{s2}");
                 }
@@ -14749,7 +14749,7 @@ namespace FolioLibrary
             var hrm = httpClient.GetAsync(url).Result;
             var s2 = hrm.Content.ReadAsStringAsync().Result;
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}{1}", hrm.Headers, s2);
-            var jo = hrm.Content.Headers.ContentType.MediaType == "application/json" ? JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings) : null;
+            var jo = hrm.Content.Headers.ContentType?.MediaType == "application/json" ? JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings) : null;
             if (hrm.StatusCode != HttpStatusCode.OK && hrm.StatusCode != HttpStatusCode.NotFound) throw new HttpRequestException($"Response status code does not indicate success: {hrm.StatusCode} ({hrm.ReasonPhrase}).\r\n{s2}");
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", s.Elapsed);
             return jo;
@@ -14827,7 +14827,7 @@ namespace FolioLibrary
             var hrm = httpClient.GetAsync(url).Result;
             var s2 = hrm.Content.ReadAsStringAsync().Result;
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}{1}", hrm.Headers, s2);
-            var jo = hrm.Content.Headers.ContentType.MediaType == "application/json" ? JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings) : null;
+            var jo = hrm.Content.Headers.ContentType?.MediaType == "application/json" ? JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings) : null;
             if (hrm.StatusCode != HttpStatusCode.OK) throw new HttpRequestException($"Response status code does not indicate success: {hrm.StatusCode} ({hrm.ReasonPhrase}).\r\n{s2}");
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", s.Elapsed);
             count = (int)jo["totalRecords"];
@@ -14852,7 +14852,7 @@ namespace FolioLibrary
                 if (hrm.StatusCode != HttpStatusCode.OK)
                 {
                     var s2 = hrm.Content.ReadAsStringAsync().Result;
-                    if (hrm.Content.Headers.ContentType.MediaType == "application/json") s2 = JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings).ToString();
+                    if (hrm.Content.Headers.ContentType?.MediaType == "application/json") s2 = JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings).ToString();
                     traceSource.TraceEvent(TraceEventType.Verbose, 0, s2);
                     throw new HttpRequestException($"Response status code does not indicate success: {hrm.StatusCode} ({hrm.ReasonPhrase}).\r\n{s2}");
                 }
@@ -14889,7 +14889,7 @@ namespace FolioLibrary
             var hrm = httpClient.GetAsync(url).Result;
             var s2 = hrm.Content.ReadAsStringAsync().Result;
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}{1}", hrm.Headers, s2);
-            var jo = hrm.Content.Headers.ContentType.MediaType == "application/json" ? JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings) : null;
+            var jo = hrm.Content.Headers.ContentType?.MediaType == "application/json" ? JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings) : null;
             if (hrm.StatusCode != HttpStatusCode.OK && hrm.StatusCode != HttpStatusCode.NotFound) throw new HttpRequestException($"Response status code does not indicate success: {hrm.StatusCode} ({hrm.ReasonPhrase}).\r\n{s2}");
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", s.Elapsed);
             return jo;
@@ -14967,7 +14967,7 @@ namespace FolioLibrary
             var hrm = httpClient.GetAsync(url).Result;
             var s2 = hrm.Content.ReadAsStringAsync().Result;
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}{1}", hrm.Headers, s2);
-            var jo = hrm.Content.Headers.ContentType.MediaType == "application/json" ? JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings) : null;
+            var jo = hrm.Content.Headers.ContentType?.MediaType == "application/json" ? JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings) : null;
             if (hrm.StatusCode != HttpStatusCode.OK) throw new HttpRequestException($"Response status code does not indicate success: {hrm.StatusCode} ({hrm.ReasonPhrase}).\r\n{s2}");
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", s.Elapsed);
             count = (int)jo["totalRecords"];
@@ -14988,7 +14988,7 @@ namespace FolioLibrary
             if (hrm.StatusCode != HttpStatusCode.OK)
             {
                 var s2 = hrm.Content.ReadAsStringAsync().Result;
-                if (hrm.Content.Headers.ContentType.MediaType == "application/json") s2 = JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings).ToString();
+                if (hrm.Content.Headers.ContentType?.MediaType == "application/json") s2 = JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings).ToString();
                 traceSource.TraceEvent(TraceEventType.Verbose, 0, s2);
                 throw new HttpRequestException($"Response status code does not indicate success: {hrm.StatusCode} ({hrm.ReasonPhrase}).\r\n{s2}");
             }
@@ -15019,7 +15019,7 @@ namespace FolioLibrary
             var hrm = httpClient.GetAsync(url).Result;
             var s2 = hrm.Content.ReadAsStringAsync().Result;
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}{1}", hrm.Headers, s2);
-            var jo = hrm.Content.Headers.ContentType.MediaType == "application/json" ? JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings) : null;
+            var jo = hrm.Content.Headers.ContentType?.MediaType == "application/json" ? JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings) : null;
             if (hrm.StatusCode != HttpStatusCode.OK && hrm.StatusCode != HttpStatusCode.NotFound) throw new HttpRequestException($"Response status code does not indicate success: {hrm.StatusCode} ({hrm.ReasonPhrase}).\r\n{s2}");
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", s.Elapsed);
             return jo;
@@ -15097,7 +15097,7 @@ namespace FolioLibrary
             var hrm = httpClient.GetAsync(url).Result;
             var s2 = hrm.Content.ReadAsStringAsync().Result;
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}{1}", hrm.Headers, s2);
-            var jo = hrm.Content.Headers.ContentType.MediaType == "application/json" ? JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings) : null;
+            var jo = hrm.Content.Headers.ContentType?.MediaType == "application/json" ? JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings) : null;
             if (hrm.StatusCode != HttpStatusCode.OK) throw new HttpRequestException($"Response status code does not indicate success: {hrm.StatusCode} ({hrm.ReasonPhrase}).\r\n{s2}");
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", s.Elapsed);
             count = (int)jo["totalRecords"];
@@ -15118,7 +15118,7 @@ namespace FolioLibrary
             if (hrm.StatusCode != HttpStatusCode.OK)
             {
                 var s2 = hrm.Content.ReadAsStringAsync().Result;
-                if (hrm.Content.Headers.ContentType.MediaType == "application/json") s2 = JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings).ToString();
+                if (hrm.Content.Headers.ContentType?.MediaType == "application/json") s2 = JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings).ToString();
                 traceSource.TraceEvent(TraceEventType.Verbose, 0, s2);
                 throw new HttpRequestException($"Response status code does not indicate success: {hrm.StatusCode} ({hrm.ReasonPhrase}).\r\n{s2}");
             }
@@ -15149,7 +15149,7 @@ namespace FolioLibrary
             var hrm = httpClient.GetAsync(url).Result;
             var s2 = hrm.Content.ReadAsStringAsync().Result;
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}{1}", hrm.Headers, s2);
-            var jo = hrm.Content.Headers.ContentType.MediaType == "application/json" ? JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings) : null;
+            var jo = hrm.Content.Headers.ContentType?.MediaType == "application/json" ? JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings) : null;
             if (hrm.StatusCode != HttpStatusCode.OK && hrm.StatusCode != HttpStatusCode.NotFound) throw new HttpRequestException($"Response status code does not indicate success: {hrm.StatusCode} ({hrm.ReasonPhrase}).\r\n{s2}");
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", s.Elapsed);
             return jo;
@@ -15227,7 +15227,7 @@ namespace FolioLibrary
             var hrm = httpClient.GetAsync(url).Result;
             var s2 = hrm.Content.ReadAsStringAsync().Result;
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}{1}", hrm.Headers, s2);
-            var jo = hrm.Content.Headers.ContentType.MediaType == "application/json" ? JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings) : null;
+            var jo = hrm.Content.Headers.ContentType?.MediaType == "application/json" ? JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings) : null;
             if (hrm.StatusCode != HttpStatusCode.OK) throw new HttpRequestException($"Response status code does not indicate success: {hrm.StatusCode} ({hrm.ReasonPhrase}).\r\n{s2}");
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", s.Elapsed);
             count = (int)jo["totalRecords"];
@@ -15248,7 +15248,7 @@ namespace FolioLibrary
             if (hrm.StatusCode != HttpStatusCode.OK)
             {
                 var s2 = hrm.Content.ReadAsStringAsync().Result;
-                if (hrm.Content.Headers.ContentType.MediaType == "application/json") s2 = JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings).ToString();
+                if (hrm.Content.Headers.ContentType?.MediaType == "application/json") s2 = JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings).ToString();
                 traceSource.TraceEvent(TraceEventType.Verbose, 0, s2);
                 throw new HttpRequestException($"Response status code does not indicate success: {hrm.StatusCode} ({hrm.ReasonPhrase}).\r\n{s2}");
             }
@@ -15279,7 +15279,7 @@ namespace FolioLibrary
             var hrm = httpClient.GetAsync(url).Result;
             var s2 = hrm.Content.ReadAsStringAsync().Result;
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}{1}", hrm.Headers, s2);
-            var jo = hrm.Content.Headers.ContentType.MediaType == "application/json" ? JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings) : null;
+            var jo = hrm.Content.Headers.ContentType?.MediaType == "application/json" ? JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings) : null;
             if (hrm.StatusCode != HttpStatusCode.OK && hrm.StatusCode != HttpStatusCode.NotFound) throw new HttpRequestException($"Response status code does not indicate success: {hrm.StatusCode} ({hrm.ReasonPhrase}).\r\n{s2}");
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", s.Elapsed);
             return jo;
@@ -15376,7 +15376,7 @@ namespace FolioLibrary
             var hrm = httpClient.GetAsync(url).Result;
             var s2 = hrm.Content.ReadAsStringAsync().Result;
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}{1}", hrm.Headers, s2);
-            var jo = hrm.Content.Headers.ContentType.MediaType == "application/json" ? JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings) : null;
+            var jo = hrm.Content.Headers.ContentType?.MediaType == "application/json" ? JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings) : null;
             if (hrm.StatusCode != HttpStatusCode.OK) throw new HttpRequestException($"Response status code does not indicate success: {hrm.StatusCode} ({hrm.ReasonPhrase}).\r\n{s2}");
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", s.Elapsed);
             count = (int)jo["totalRecords"];
@@ -15397,7 +15397,7 @@ namespace FolioLibrary
             if (hrm.StatusCode != HttpStatusCode.OK)
             {
                 var s2 = hrm.Content.ReadAsStringAsync().Result;
-                if (hrm.Content.Headers.ContentType.MediaType == "application/json") s2 = JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings).ToString();
+                if (hrm.Content.Headers.ContentType?.MediaType == "application/json") s2 = JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings).ToString();
                 traceSource.TraceEvent(TraceEventType.Verbose, 0, s2);
                 throw new HttpRequestException($"Response status code does not indicate success: {hrm.StatusCode} ({hrm.ReasonPhrase}).\r\n{s2}");
             }
@@ -15428,7 +15428,7 @@ namespace FolioLibrary
             var hrm = httpClient.GetAsync(url).Result;
             var s2 = hrm.Content.ReadAsStringAsync().Result;
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}{1}", hrm.Headers, s2);
-            var jo = hrm.Content.Headers.ContentType.MediaType == "application/json" ? JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings) : null;
+            var jo = hrm.Content.Headers.ContentType?.MediaType == "application/json" ? JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings) : null;
             if (hrm.StatusCode != HttpStatusCode.OK && hrm.StatusCode != HttpStatusCode.NotFound) throw new HttpRequestException($"Response status code does not indicate success: {hrm.StatusCode} ({hrm.ReasonPhrase}).\r\n{s2}");
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", s.Elapsed);
             return jo;
@@ -15506,7 +15506,7 @@ namespace FolioLibrary
             var hrm = httpClient.GetAsync(url).Result;
             var s2 = hrm.Content.ReadAsStringAsync().Result;
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}{1}", hrm.Headers, s2);
-            var jo = hrm.Content.Headers.ContentType.MediaType == "application/json" ? JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings) : null;
+            var jo = hrm.Content.Headers.ContentType?.MediaType == "application/json" ? JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings) : null;
             if (hrm.StatusCode != HttpStatusCode.OK) throw new HttpRequestException($"Response status code does not indicate success: {hrm.StatusCode} ({hrm.ReasonPhrase}).\r\n{s2}");
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", s.Elapsed);
             count = (int)jo["totalRecords"];
@@ -15527,7 +15527,7 @@ namespace FolioLibrary
             if (hrm.StatusCode != HttpStatusCode.OK)
             {
                 var s2 = hrm.Content.ReadAsStringAsync().Result;
-                if (hrm.Content.Headers.ContentType.MediaType == "application/json") s2 = JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings).ToString();
+                if (hrm.Content.Headers.ContentType?.MediaType == "application/json") s2 = JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings).ToString();
                 traceSource.TraceEvent(TraceEventType.Verbose, 0, s2);
                 throw new HttpRequestException($"Response status code does not indicate success: {hrm.StatusCode} ({hrm.ReasonPhrase}).\r\n{s2}");
             }
@@ -15558,7 +15558,7 @@ namespace FolioLibrary
             var hrm = httpClient.GetAsync(url).Result;
             var s2 = hrm.Content.ReadAsStringAsync().Result;
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}{1}", hrm.Headers, s2);
-            var jo = hrm.Content.Headers.ContentType.MediaType == "application/json" ? JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings) : null;
+            var jo = hrm.Content.Headers.ContentType?.MediaType == "application/json" ? JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings) : null;
             if (hrm.StatusCode != HttpStatusCode.OK && hrm.StatusCode != HttpStatusCode.NotFound) throw new HttpRequestException($"Response status code does not indicate success: {hrm.StatusCode} ({hrm.ReasonPhrase}).\r\n{s2}");
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", s.Elapsed);
             return jo;
@@ -15636,7 +15636,7 @@ namespace FolioLibrary
             var hrm = httpClient.GetAsync(url).Result;
             var s2 = hrm.Content.ReadAsStringAsync().Result;
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}{1}", hrm.Headers, s2);
-            var jo = hrm.Content.Headers.ContentType.MediaType == "application/json" ? JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings) : null;
+            var jo = hrm.Content.Headers.ContentType?.MediaType == "application/json" ? JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings) : null;
             if (hrm.StatusCode != HttpStatusCode.OK) throw new HttpRequestException($"Response status code does not indicate success: {hrm.StatusCode} ({hrm.ReasonPhrase}).\r\n{s2}");
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", s.Elapsed);
             count = (int)jo["totalRecords"];
@@ -15657,7 +15657,7 @@ namespace FolioLibrary
             if (hrm.StatusCode != HttpStatusCode.OK)
             {
                 var s2 = hrm.Content.ReadAsStringAsync().Result;
-                if (hrm.Content.Headers.ContentType.MediaType == "application/json") s2 = JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings).ToString();
+                if (hrm.Content.Headers.ContentType?.MediaType == "application/json") s2 = JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings).ToString();
                 traceSource.TraceEvent(TraceEventType.Verbose, 0, s2);
                 throw new HttpRequestException($"Response status code does not indicate success: {hrm.StatusCode} ({hrm.ReasonPhrase}).\r\n{s2}");
             }
@@ -15688,7 +15688,7 @@ namespace FolioLibrary
             var hrm = httpClient.GetAsync(url).Result;
             var s2 = hrm.Content.ReadAsStringAsync().Result;
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}{1}", hrm.Headers, s2);
-            var jo = hrm.Content.Headers.ContentType.MediaType == "application/json" ? JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings) : null;
+            var jo = hrm.Content.Headers.ContentType?.MediaType == "application/json" ? JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings) : null;
             if (hrm.StatusCode != HttpStatusCode.OK && hrm.StatusCode != HttpStatusCode.NotFound) throw new HttpRequestException($"Response status code does not indicate success: {hrm.StatusCode} ({hrm.ReasonPhrase}).\r\n{s2}");
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", s.Elapsed);
             return jo;
@@ -15766,7 +15766,7 @@ namespace FolioLibrary
             var hrm = httpClient.GetAsync(url).Result;
             var s2 = hrm.Content.ReadAsStringAsync().Result;
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}{1}", hrm.Headers, s2);
-            var jo = hrm.Content.Headers.ContentType.MediaType == "application/json" ? JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings) : null;
+            var jo = hrm.Content.Headers.ContentType?.MediaType == "application/json" ? JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings) : null;
             if (hrm.StatusCode != HttpStatusCode.OK) throw new HttpRequestException($"Response status code does not indicate success: {hrm.StatusCode} ({hrm.ReasonPhrase}).\r\n{s2}");
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", s.Elapsed);
             count = (int)jo["totalRecords"];
@@ -15787,7 +15787,7 @@ namespace FolioLibrary
             if (hrm.StatusCode != HttpStatusCode.OK)
             {
                 var s2 = hrm.Content.ReadAsStringAsync().Result;
-                if (hrm.Content.Headers.ContentType.MediaType == "application/json") s2 = JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings).ToString();
+                if (hrm.Content.Headers.ContentType?.MediaType == "application/json") s2 = JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings).ToString();
                 traceSource.TraceEvent(TraceEventType.Verbose, 0, s2);
                 throw new HttpRequestException($"Response status code does not indicate success: {hrm.StatusCode} ({hrm.ReasonPhrase}).\r\n{s2}");
             }
@@ -15818,7 +15818,7 @@ namespace FolioLibrary
             var hrm = httpClient.GetAsync(url).Result;
             var s2 = hrm.Content.ReadAsStringAsync().Result;
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}{1}", hrm.Headers, s2);
-            var jo = hrm.Content.Headers.ContentType.MediaType == "application/json" ? JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings) : null;
+            var jo = hrm.Content.Headers.ContentType?.MediaType == "application/json" ? JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings) : null;
             if (hrm.StatusCode != HttpStatusCode.OK && hrm.StatusCode != HttpStatusCode.NotFound) throw new HttpRequestException($"Response status code does not indicate success: {hrm.StatusCode} ({hrm.ReasonPhrase}).\r\n{s2}");
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", s.Elapsed);
             return jo;
@@ -15896,7 +15896,7 @@ namespace FolioLibrary
             var hrm = httpClient.GetAsync(url).Result;
             var s2 = hrm.Content.ReadAsStringAsync().Result;
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}{1}", hrm.Headers, s2);
-            var jo = hrm.Content.Headers.ContentType.MediaType == "application/json" ? JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings) : null;
+            var jo = hrm.Content.Headers.ContentType?.MediaType == "application/json" ? JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings) : null;
             if (hrm.StatusCode != HttpStatusCode.OK) throw new HttpRequestException($"Response status code does not indicate success: {hrm.StatusCode} ({hrm.ReasonPhrase}).\r\n{s2}");
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", s.Elapsed);
             count = (int)jo["totalRecords"];
@@ -15917,7 +15917,7 @@ namespace FolioLibrary
             if (hrm.StatusCode != HttpStatusCode.OK)
             {
                 var s2 = hrm.Content.ReadAsStringAsync().Result;
-                if (hrm.Content.Headers.ContentType.MediaType == "application/json") s2 = JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings).ToString();
+                if (hrm.Content.Headers.ContentType?.MediaType == "application/json") s2 = JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings).ToString();
                 traceSource.TraceEvent(TraceEventType.Verbose, 0, s2);
                 throw new HttpRequestException($"Response status code does not indicate success: {hrm.StatusCode} ({hrm.ReasonPhrase}).\r\n{s2}");
             }
@@ -15948,7 +15948,7 @@ namespace FolioLibrary
             var hrm = httpClient.GetAsync(url).Result;
             var s2 = hrm.Content.ReadAsStringAsync().Result;
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}{1}", hrm.Headers, s2);
-            var jo = hrm.Content.Headers.ContentType.MediaType == "application/json" ? JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings) : null;
+            var jo = hrm.Content.Headers.ContentType?.MediaType == "application/json" ? JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings) : null;
             if (hrm.StatusCode != HttpStatusCode.OK && hrm.StatusCode != HttpStatusCode.NotFound) throw new HttpRequestException($"Response status code does not indicate success: {hrm.StatusCode} ({hrm.ReasonPhrase}).\r\n{s2}");
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", s.Elapsed);
             return jo;
@@ -16025,7 +16025,7 @@ namespace FolioLibrary
             var hrm = httpClient.GetAsync(url).Result;
             var s2 = hrm.Content.ReadAsStringAsync().Result;
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}{1}", hrm.Headers, s2);
-            var ja = hrm.Content.Headers.ContentType.MediaType == "application/json" ? JArray.Parse(s2) : null;
+            var ja = hrm.Content.Headers.ContentType?.MediaType == "application/json" ? JArray.Parse(s2) : null;
             if (hrm.StatusCode != HttpStatusCode.OK) throw new HttpRequestException($"Response status code does not indicate success: {hrm.StatusCode} ({hrm.ReasonPhrase}).\r\n{s2}");
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", s.Elapsed);
             return ja.Cast<JObject>().ToArray();
@@ -16045,7 +16045,7 @@ namespace FolioLibrary
             var hrm = httpClient.PostAsync(url, sc).Result;
             s2 = hrm.Content.ReadAsStringAsync().Result;
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}{1}", hrm.Headers, s2);
-            var jo = hrm.Content.Headers.ContentType.MediaType == "application/json" ? JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings) : null;
+            var jo = hrm.Content.Headers.ContentType?.MediaType == "application/json" ? JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings) : null;
             if (hrm.StatusCode != HttpStatusCode.Created) throw new HttpRequestException($"Response status code does not indicate success: {hrm.StatusCode} ({hrm.ReasonPhrase}).\r\n{s2}");
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", s.Elapsed);
             return jo;

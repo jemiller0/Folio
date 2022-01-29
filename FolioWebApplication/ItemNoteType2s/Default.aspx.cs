@@ -25,8 +25,19 @@ namespace FolioWebApplication.ItemNoteType2s
         protected void ItemNoteType2sRadGrid_NeedDataSource(object sender, GridNeedDataSourceEventArgs e)
         {
             var d = new Dictionary<string, string>() { { "Id", "id" }, { "Name", "name" }, { "Source", "source" }, { "CreationTime", "metadata.createdDate" }, { "CreationUserId", "metadata.createdByUserId" }, { "LastWriteTime", "metadata.updatedDate" }, { "LastWriteUserId", "metadata.updatedByUserId" } };
-            ItemNoteType2sRadGrid.DataSource = folioServiceContext.ItemNoteType2s(out var i, Global.GetCqlFilter(ItemNoteType2sRadGrid, d), ItemNoteType2sRadGrid.MasterTableView.SortExpressions.Count > 0 ? $"{d[ItemNoteType2sRadGrid.MasterTableView.SortExpressions[0].FieldName]}{(ItemNoteType2sRadGrid.MasterTableView.SortExpressions[0].SortOrder == GridSortOrder.Descending ? "/sort.descending" : "")}" : null, ItemNoteType2sRadGrid.PageSize * ItemNoteType2sRadGrid.CurrentPageIndex, ItemNoteType2sRadGrid.PageSize, true);
+            var where = Global.Trim(string.Join(" and ", new string[]
+            {
+                Global.GetCqlFilter(ItemNoteType2sRadGrid, "Id", "id"),
+                Global.GetCqlFilter(ItemNoteType2sRadGrid, "Name", "name"),
+                Global.GetCqlFilter(ItemNoteType2sRadGrid, "Source", "source"),
+                Global.GetCqlFilter(ItemNoteType2sRadGrid, "CreationTime", "metadata.createdDate"),
+                Global.GetCqlFilter(ItemNoteType2sRadGrid, "CreationUser.Username", "metadata.createdByUserId", "username", folioServiceContext.FolioServiceClient.Users),
+                Global.GetCqlFilter(ItemNoteType2sRadGrid, "LastWriteTime", "metadata.updatedDate"),
+                Global.GetCqlFilter(ItemNoteType2sRadGrid, "LastWriteUser.Username", "metadata.updatedByUserId", "username", folioServiceContext.FolioServiceClient.Users)
+            }.Where(s => s != null)));
+            ItemNoteType2sRadGrid.DataSource = folioServiceContext.ItemNoteType2s(out var i, where, ItemNoteType2sRadGrid.MasterTableView.SortExpressions.Count > 0 ? $"{d[ItemNoteType2sRadGrid.MasterTableView.SortExpressions[0].FieldName]}{(ItemNoteType2sRadGrid.MasterTableView.SortExpressions[0].SortOrder == GridSortOrder.Descending ? "/sort.descending" : "")}" : null, ItemNoteType2sRadGrid.PageSize * ItemNoteType2sRadGrid.CurrentPageIndex, ItemNoteType2sRadGrid.PageSize, true);
             ItemNoteType2sRadGrid.VirtualItemCount = i;
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"where = {where}");
         }
 
         protected void ExportLinkButton_Click(object sender, EventArgs e)

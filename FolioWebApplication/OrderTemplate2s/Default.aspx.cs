@@ -25,8 +25,16 @@ namespace FolioWebApplication.OrderTemplate2s
         protected void OrderTemplate2sRadGrid_NeedDataSource(object sender, GridNeedDataSourceEventArgs e)
         {
             var d = new Dictionary<string, string>() { { "Id", "id" }, { "Name", "templateName" }, { "Code", "templateCode" }, { "Description", "templateDescription" } };
-            OrderTemplate2sRadGrid.DataSource = folioServiceContext.OrderTemplate2s(out var i, Global.GetCqlFilter(OrderTemplate2sRadGrid, d), OrderTemplate2sRadGrid.MasterTableView.SortExpressions.Count > 0 ? $"{d[OrderTemplate2sRadGrid.MasterTableView.SortExpressions[0].FieldName]}{(OrderTemplate2sRadGrid.MasterTableView.SortExpressions[0].SortOrder == GridSortOrder.Descending ? "/sort.descending" : "")}" : null, OrderTemplate2sRadGrid.PageSize * OrderTemplate2sRadGrid.CurrentPageIndex, OrderTemplate2sRadGrid.PageSize, true);
+            var where = Global.Trim(string.Join(" and ", new string[]
+            {
+                Global.GetCqlFilter(OrderTemplate2sRadGrid, "Id", "id"),
+                Global.GetCqlFilter(OrderTemplate2sRadGrid, "Name", "templateName"),
+                Global.GetCqlFilter(OrderTemplate2sRadGrid, "Code", "templateCode"),
+                Global.GetCqlFilter(OrderTemplate2sRadGrid, "Description", "templateDescription")
+            }.Where(s => s != null)));
+            OrderTemplate2sRadGrid.DataSource = folioServiceContext.OrderTemplate2s(out var i, where, OrderTemplate2sRadGrid.MasterTableView.SortExpressions.Count > 0 ? $"{d[OrderTemplate2sRadGrid.MasterTableView.SortExpressions[0].FieldName]}{(OrderTemplate2sRadGrid.MasterTableView.SortExpressions[0].SortOrder == GridSortOrder.Descending ? "/sort.descending" : "")}" : null, OrderTemplate2sRadGrid.PageSize * OrderTemplate2sRadGrid.CurrentPageIndex, OrderTemplate2sRadGrid.PageSize, true);
             OrderTemplate2sRadGrid.VirtualItemCount = i;
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"where = {where}");
         }
 
         protected void ExportLinkButton_Click(object sender, EventArgs e)

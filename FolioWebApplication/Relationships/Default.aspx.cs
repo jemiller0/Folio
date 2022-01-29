@@ -25,8 +25,20 @@ namespace FolioWebApplication.Relationships
         protected void RelationshipsRadGrid_NeedDataSource(object sender, GridNeedDataSourceEventArgs e)
         {
             var d = new Dictionary<string, string>() { { "Id", "id" }, { "SuperInstanceId", "superInstanceId" }, { "SubInstanceId", "subInstanceId" }, { "InstanceRelationshipTypeId", "instanceRelationshipTypeId" }, { "CreationTime", "metadata.createdDate" }, { "CreationUserId", "metadata.createdByUserId" }, { "LastWriteTime", "metadata.updatedDate" }, { "LastWriteUserId", "metadata.updatedByUserId" } };
-            RelationshipsRadGrid.DataSource = folioServiceContext.Relationships(out var i, Global.GetCqlFilter(RelationshipsRadGrid, d), RelationshipsRadGrid.MasterTableView.SortExpressions.Count > 0 ? $"{d[RelationshipsRadGrid.MasterTableView.SortExpressions[0].FieldName]}{(RelationshipsRadGrid.MasterTableView.SortExpressions[0].SortOrder == GridSortOrder.Descending ? "/sort.descending" : "")}" : null, RelationshipsRadGrid.PageSize * RelationshipsRadGrid.CurrentPageIndex, RelationshipsRadGrid.PageSize, true);
+            var where = Global.Trim(string.Join(" and ", new string[]
+            {
+                Global.GetCqlFilter(RelationshipsRadGrid, "Id", "id"),
+                Global.GetCqlFilter(RelationshipsRadGrid, "SuperInstance.Title", "superInstanceId", "title", folioServiceContext.FolioServiceClient.Instances),
+                Global.GetCqlFilter(RelationshipsRadGrid, "SubInstance.Title", "subInstanceId", "title", folioServiceContext.FolioServiceClient.Instances),
+                Global.GetCqlFilter(RelationshipsRadGrid, "InstanceRelationshipType.Name", "instanceRelationshipTypeId", "name", folioServiceContext.FolioServiceClient.InstanceRelationshipTypes),
+                Global.GetCqlFilter(RelationshipsRadGrid, "CreationTime", "metadata.createdDate"),
+                Global.GetCqlFilter(RelationshipsRadGrid, "CreationUser.Username", "metadata.createdByUserId", "username", folioServiceContext.FolioServiceClient.Users),
+                Global.GetCqlFilter(RelationshipsRadGrid, "LastWriteTime", "metadata.updatedDate"),
+                Global.GetCqlFilter(RelationshipsRadGrid, "LastWriteUser.Username", "metadata.updatedByUserId", "username", folioServiceContext.FolioServiceClient.Users)
+            }.Where(s => s != null)));
+            RelationshipsRadGrid.DataSource = folioServiceContext.Relationships(out var i, where, RelationshipsRadGrid.MasterTableView.SortExpressions.Count > 0 ? $"{d[RelationshipsRadGrid.MasterTableView.SortExpressions[0].FieldName]}{(RelationshipsRadGrid.MasterTableView.SortExpressions[0].SortOrder == GridSortOrder.Descending ? "/sort.descending" : "")}" : null, RelationshipsRadGrid.PageSize * RelationshipsRadGrid.CurrentPageIndex, RelationshipsRadGrid.PageSize, true);
             RelationshipsRadGrid.VirtualItemCount = i;
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"where = {where}");
         }
 
         protected void ExportLinkButton_Click(object sender, EventArgs e)

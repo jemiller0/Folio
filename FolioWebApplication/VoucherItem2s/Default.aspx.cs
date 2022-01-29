@@ -25,8 +25,21 @@ namespace FolioWebApplication.VoucherItem2s
         protected void VoucherItem2sRadGrid_NeedDataSource(object sender, GridNeedDataSourceEventArgs e)
         {
             var d = new Dictionary<string, string>() { { "Id", "id" }, { "Amount", "amount" }, { "AccountNumber", "externalAccountNumber" }, { "SubTransactionId", "subTransactionId" }, { "VoucherId", "voucherId" }, { "CreationTime", "metadata.createdDate" }, { "CreationUserId", "metadata.createdByUserId" }, { "LastWriteTime", "metadata.updatedDate" }, { "LastWriteUserId", "metadata.updatedByUserId" } };
-            VoucherItem2sRadGrid.DataSource = folioServiceContext.VoucherItem2s(out var i, Global.GetCqlFilter(VoucherItem2sRadGrid, d), VoucherItem2sRadGrid.MasterTableView.SortExpressions.Count > 0 ? $"{d[VoucherItem2sRadGrid.MasterTableView.SortExpressions[0].FieldName]}{(VoucherItem2sRadGrid.MasterTableView.SortExpressions[0].SortOrder == GridSortOrder.Descending ? "/sort.descending" : "")}" : null, VoucherItem2sRadGrid.PageSize * VoucherItem2sRadGrid.CurrentPageIndex, VoucherItem2sRadGrid.PageSize, true);
+            var where = Global.Trim(string.Join(" and ", new string[]
+            {
+                Global.GetCqlFilter(VoucherItem2sRadGrid, "Id", "id"),
+                Global.GetCqlFilter(VoucherItem2sRadGrid, "Amount", "amount"),
+                Global.GetCqlFilter(VoucherItem2sRadGrid, "AccountNumber", "externalAccountNumber"),
+                Global.GetCqlFilter(VoucherItem2sRadGrid, "SubTransaction.Amount", "subTransactionId", "amount", folioServiceContext.FolioServiceClient.Transactions),
+                Global.GetCqlFilter(VoucherItem2sRadGrid, "Voucher.Number", "voucherId", "voucherNumber", folioServiceContext.FolioServiceClient.Vouchers),
+                Global.GetCqlFilter(VoucherItem2sRadGrid, "CreationTime", "metadata.createdDate"),
+                Global.GetCqlFilter(VoucherItem2sRadGrid, "CreationUser.Username", "metadata.createdByUserId", "username", folioServiceContext.FolioServiceClient.Users),
+                Global.GetCqlFilter(VoucherItem2sRadGrid, "LastWriteTime", "metadata.updatedDate"),
+                Global.GetCqlFilter(VoucherItem2sRadGrid, "LastWriteUser.Username", "metadata.updatedByUserId", "username", folioServiceContext.FolioServiceClient.Users)
+            }.Where(s => s != null)));
+            VoucherItem2sRadGrid.DataSource = folioServiceContext.VoucherItem2s(out var i, where, VoucherItem2sRadGrid.MasterTableView.SortExpressions.Count > 0 ? $"{d[VoucherItem2sRadGrid.MasterTableView.SortExpressions[0].FieldName]}{(VoucherItem2sRadGrid.MasterTableView.SortExpressions[0].SortOrder == GridSortOrder.Descending ? "/sort.descending" : "")}" : null, VoucherItem2sRadGrid.PageSize * VoucherItem2sRadGrid.CurrentPageIndex, VoucherItem2sRadGrid.PageSize, true);
             VoucherItem2sRadGrid.VirtualItemCount = i;
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"where = {where}");
         }
 
         protected void ExportLinkButton_Click(object sender, EventArgs e)

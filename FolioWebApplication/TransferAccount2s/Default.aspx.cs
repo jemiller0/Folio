@@ -25,8 +25,20 @@ namespace FolioWebApplication.TransferAccount2s
         protected void TransferAccount2sRadGrid_NeedDataSource(object sender, GridNeedDataSourceEventArgs e)
         {
             var d = new Dictionary<string, string>() { { "Id", "id" }, { "Name", "accountName" }, { "Description", "desc" }, { "CreationTime", "metadata.createdDate" }, { "CreationUserId", "metadata.createdByUserId" }, { "LastWriteTime", "metadata.updatedDate" }, { "LastWriteUserId", "metadata.updatedByUserId" }, { "OwnerId", "ownerId" } };
-            TransferAccount2sRadGrid.DataSource = folioServiceContext.TransferAccount2s(out var i, Global.GetCqlFilter(TransferAccount2sRadGrid, d), TransferAccount2sRadGrid.MasterTableView.SortExpressions.Count > 0 ? $"{d[TransferAccount2sRadGrid.MasterTableView.SortExpressions[0].FieldName]}{(TransferAccount2sRadGrid.MasterTableView.SortExpressions[0].SortOrder == GridSortOrder.Descending ? "/sort.descending" : "")}" : null, TransferAccount2sRadGrid.PageSize * TransferAccount2sRadGrid.CurrentPageIndex, TransferAccount2sRadGrid.PageSize, true);
+            var where = Global.Trim(string.Join(" and ", new string[]
+            {
+                Global.GetCqlFilter(TransferAccount2sRadGrid, "Id", "id"),
+                Global.GetCqlFilter(TransferAccount2sRadGrid, "Name", "accountName"),
+                Global.GetCqlFilter(TransferAccount2sRadGrid, "Description", "desc"),
+                Global.GetCqlFilter(TransferAccount2sRadGrid, "CreationTime", "metadata.createdDate"),
+                Global.GetCqlFilter(TransferAccount2sRadGrid, "CreationUser.Username", "metadata.createdByUserId", "username", folioServiceContext.FolioServiceClient.Users),
+                Global.GetCqlFilter(TransferAccount2sRadGrid, "LastWriteTime", "metadata.updatedDate"),
+                Global.GetCqlFilter(TransferAccount2sRadGrid, "LastWriteUser.Username", "metadata.updatedByUserId", "username", folioServiceContext.FolioServiceClient.Users),
+                Global.GetCqlFilter(TransferAccount2sRadGrid, "Owner.Name", "ownerId", "owner", folioServiceContext.FolioServiceClient.Owners)
+            }.Where(s => s != null)));
+            TransferAccount2sRadGrid.DataSource = folioServiceContext.TransferAccount2s(out var i, where, TransferAccount2sRadGrid.MasterTableView.SortExpressions.Count > 0 ? $"{d[TransferAccount2sRadGrid.MasterTableView.SortExpressions[0].FieldName]}{(TransferAccount2sRadGrid.MasterTableView.SortExpressions[0].SortOrder == GridSortOrder.Descending ? "/sort.descending" : "")}" : null, TransferAccount2sRadGrid.PageSize * TransferAccount2sRadGrid.CurrentPageIndex, TransferAccount2sRadGrid.PageSize, true);
             TransferAccount2sRadGrid.VirtualItemCount = i;
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"where = {where}");
         }
 
         protected void ExportLinkButton_Click(object sender, EventArgs e)

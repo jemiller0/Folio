@@ -25,8 +25,19 @@ namespace FolioWebApplication.ItemDamagedStatus2s
         protected void ItemDamagedStatus2sRadGrid_NeedDataSource(object sender, GridNeedDataSourceEventArgs e)
         {
             var d = new Dictionary<string, string>() { { "Id", "id" }, { "Name", "name" }, { "Source", "source" }, { "CreationTime", "metadata.createdDate" }, { "CreationUserId", "metadata.createdByUserId" }, { "LastWriteTime", "metadata.updatedDate" }, { "LastWriteUserId", "metadata.updatedByUserId" } };
-            ItemDamagedStatus2sRadGrid.DataSource = folioServiceContext.ItemDamagedStatus2s(out var i, Global.GetCqlFilter(ItemDamagedStatus2sRadGrid, d), ItemDamagedStatus2sRadGrid.MasterTableView.SortExpressions.Count > 0 ? $"{d[ItemDamagedStatus2sRadGrid.MasterTableView.SortExpressions[0].FieldName]}{(ItemDamagedStatus2sRadGrid.MasterTableView.SortExpressions[0].SortOrder == GridSortOrder.Descending ? "/sort.descending" : "")}" : null, ItemDamagedStatus2sRadGrid.PageSize * ItemDamagedStatus2sRadGrid.CurrentPageIndex, ItemDamagedStatus2sRadGrid.PageSize, true);
+            var where = Global.Trim(string.Join(" and ", new string[]
+            {
+                Global.GetCqlFilter(ItemDamagedStatus2sRadGrid, "Id", "id"),
+                Global.GetCqlFilter(ItemDamagedStatus2sRadGrid, "Name", "name"),
+                Global.GetCqlFilter(ItemDamagedStatus2sRadGrid, "Source", "source"),
+                Global.GetCqlFilter(ItemDamagedStatus2sRadGrid, "CreationTime", "metadata.createdDate"),
+                Global.GetCqlFilter(ItemDamagedStatus2sRadGrid, "CreationUser.Username", "metadata.createdByUserId", "username", folioServiceContext.FolioServiceClient.Users),
+                Global.GetCqlFilter(ItemDamagedStatus2sRadGrid, "LastWriteTime", "metadata.updatedDate"),
+                Global.GetCqlFilter(ItemDamagedStatus2sRadGrid, "LastWriteUser.Username", "metadata.updatedByUserId", "username", folioServiceContext.FolioServiceClient.Users)
+            }.Where(s => s != null)));
+            ItemDamagedStatus2sRadGrid.DataSource = folioServiceContext.ItemDamagedStatus2s(out var i, where, ItemDamagedStatus2sRadGrid.MasterTableView.SortExpressions.Count > 0 ? $"{d[ItemDamagedStatus2sRadGrid.MasterTableView.SortExpressions[0].FieldName]}{(ItemDamagedStatus2sRadGrid.MasterTableView.SortExpressions[0].SortOrder == GridSortOrder.Descending ? "/sort.descending" : "")}" : null, ItemDamagedStatus2sRadGrid.PageSize * ItemDamagedStatus2sRadGrid.CurrentPageIndex, ItemDamagedStatus2sRadGrid.PageSize, true);
             ItemDamagedStatus2sRadGrid.VirtualItemCount = i;
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"where = {where}");
         }
 
         protected void ExportLinkButton_Click(object sender, EventArgs e)

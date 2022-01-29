@@ -25,8 +25,23 @@ namespace FolioWebApplication.UserRequestPreference2s
         protected void UserRequestPreference2sRadGrid_NeedDataSource(object sender, GridNeedDataSourceEventArgs e)
         {
             var d = new Dictionary<string, string>() { { "Id", "id" }, { "UserId", "userId" }, { "HoldShelf", "holdShelf" }, { "Delivery", "delivery" }, { "DefaultServicePointId", "defaultServicePointId" }, { "DefaultDeliveryAddressTypeId", "defaultDeliveryAddressTypeId" }, { "Fulfillment", "fulfillment" }, { "CreationTime", "metadata.createdDate" }, { "CreationUserId", "metadata.createdByUserId" }, { "LastWriteTime", "metadata.updatedDate" }, { "LastWriteUserId", "metadata.updatedByUserId" } };
-            UserRequestPreference2sRadGrid.DataSource = folioServiceContext.UserRequestPreference2s(out var i, Global.GetCqlFilter(UserRequestPreference2sRadGrid, d), UserRequestPreference2sRadGrid.MasterTableView.SortExpressions.Count > 0 ? $"{d[UserRequestPreference2sRadGrid.MasterTableView.SortExpressions[0].FieldName]}{(UserRequestPreference2sRadGrid.MasterTableView.SortExpressions[0].SortOrder == GridSortOrder.Descending ? "/sort.descending" : "")}" : null, UserRequestPreference2sRadGrid.PageSize * UserRequestPreference2sRadGrid.CurrentPageIndex, UserRequestPreference2sRadGrid.PageSize, true);
+            var where = Global.Trim(string.Join(" and ", new string[]
+            {
+                Global.GetCqlFilter(UserRequestPreference2sRadGrid, "Id", "id"),
+                Global.GetCqlFilter(UserRequestPreference2sRadGrid, "User.Username", "userId", "username", folioServiceContext.FolioServiceClient.Users),
+                Global.GetCqlFilter(UserRequestPreference2sRadGrid, "HoldShelf", "holdShelf"),
+                Global.GetCqlFilter(UserRequestPreference2sRadGrid, "Delivery", "delivery"),
+                Global.GetCqlFilter(UserRequestPreference2sRadGrid, "DefaultServicePoint.Name", "defaultServicePointId", "name", folioServiceContext.FolioServiceClient.ServicePoints),
+                Global.GetCqlFilter(UserRequestPreference2sRadGrid, "DefaultDeliveryAddressType.Name", "defaultDeliveryAddressTypeId", "addressType", folioServiceContext.FolioServiceClient.AddressTypes),
+                Global.GetCqlFilter(UserRequestPreference2sRadGrid, "Fulfillment", "fulfillment"),
+                Global.GetCqlFilter(UserRequestPreference2sRadGrid, "CreationTime", "metadata.createdDate"),
+                Global.GetCqlFilter(UserRequestPreference2sRadGrid, "CreationUser.Username", "metadata.createdByUserId", "username", folioServiceContext.FolioServiceClient.Users),
+                Global.GetCqlFilter(UserRequestPreference2sRadGrid, "LastWriteTime", "metadata.updatedDate"),
+                Global.GetCqlFilter(UserRequestPreference2sRadGrid, "LastWriteUser.Username", "metadata.updatedByUserId", "username", folioServiceContext.FolioServiceClient.Users)
+            }.Where(s => s != null)));
+            UserRequestPreference2sRadGrid.DataSource = folioServiceContext.UserRequestPreference2s(out var i, where, UserRequestPreference2sRadGrid.MasterTableView.SortExpressions.Count > 0 ? $"{d[UserRequestPreference2sRadGrid.MasterTableView.SortExpressions[0].FieldName]}{(UserRequestPreference2sRadGrid.MasterTableView.SortExpressions[0].SortOrder == GridSortOrder.Descending ? "/sort.descending" : "")}" : null, UserRequestPreference2sRadGrid.PageSize * UserRequestPreference2sRadGrid.CurrentPageIndex, UserRequestPreference2sRadGrid.PageSize, true);
             UserRequestPreference2sRadGrid.VirtualItemCount = i;
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"where = {where}");
         }
 
         protected void ExportLinkButton_Click(object sender, EventArgs e)

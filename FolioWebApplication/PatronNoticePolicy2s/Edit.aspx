@@ -98,7 +98,7 @@
                     </SortExpressions>
                     <Columns>
                         <telerik:GridBoundColumn HeaderText="Name" DataField="Name" AutoPostBackOnFilter="true" HtmlEncode="true" CurrentFilterFunction="StartsWith" />
-                        <telerik:GridTemplateColumn AllowFiltering="false" AllowSorting="false" HeaderText="Template" DataField="Template.Name" SortExpression="Template.Name" AutoPostBackOnFilter="true" CurrentFilterFunction="StartsWith">
+                        <telerik:GridTemplateColumn HeaderText="Template" DataField="Template.Name" AllowSorting="false" AutoPostBackOnFilter="true" CurrentFilterFunction="StartsWith">
                             <ItemTemplate>
                                 <asp:HyperLink ID="TemplateHyperLink" runat="server" Text='<%#: Eval("TemplateId") != null ? Eval("Template.Name") ?? "&nbsp;" : "" %>' NavigateUrl='<%# $"~/Template2s/Edit.aspx?Id={Eval("TemplateId")}" %>' Enabled='<%# Session["Template2sPermission"] != null %>' />
                             </ItemTemplate>
@@ -129,7 +129,7 @@
                     </SortExpressions>
                     <Columns>
                         <telerik:GridBoundColumn HeaderText="Name" DataField="Name" AutoPostBackOnFilter="true" HtmlEncode="true" CurrentFilterFunction="StartsWith" />
-                        <telerik:GridTemplateColumn AllowFiltering="false" AllowSorting="false" HeaderText="Template" DataField="Template.Name" SortExpression="Template.Name" AutoPostBackOnFilter="true" CurrentFilterFunction="StartsWith">
+                        <telerik:GridTemplateColumn HeaderText="Template" DataField="Template.Name" AllowSorting="false" AutoPostBackOnFilter="true" CurrentFilterFunction="StartsWith">
                             <ItemTemplate>
                                 <asp:HyperLink ID="TemplateHyperLink" runat="server" Text='<%#: Eval("TemplateId") != null ? Eval("Template.Name") ?? "&nbsp;" : "" %>' NavigateUrl='<%# $"~/Template2s/Edit.aspx?Id={Eval("TemplateId")}" %>' Enabled='<%# Session["Template2sPermission"] != null %>' />
                             </ItemTemplate>
@@ -160,7 +160,7 @@
                     </SortExpressions>
                     <Columns>
                         <telerik:GridBoundColumn HeaderText="Name" DataField="Name" AutoPostBackOnFilter="true" HtmlEncode="true" CurrentFilterFunction="StartsWith" />
-                        <telerik:GridTemplateColumn AllowFiltering="false" AllowSorting="false" HeaderText="Template" DataField="Template.Name" SortExpression="Template.Name" AutoPostBackOnFilter="true" CurrentFilterFunction="StartsWith">
+                        <telerik:GridTemplateColumn HeaderText="Template" DataField="Template.Name" AllowSorting="false" AutoPostBackOnFilter="true" CurrentFilterFunction="StartsWith">
                             <ItemTemplate>
                                 <asp:HyperLink ID="TemplateHyperLink" runat="server" Text='<%#: Eval("TemplateId") != null ? Eval("Template.Name") ?? "&nbsp;" : "" %>' NavigateUrl='<%# $"~/Template2s/Edit.aspx?Id={Eval("TemplateId")}" %>' Enabled='<%# Session["Template2sPermission"] != null %>' />
                             </ItemTemplate>

@@ -25,8 +25,19 @@ namespace FolioWebApplication.UserAcquisitionsUnit2s
         protected void UserAcquisitionsUnit2sRadGrid_NeedDataSource(object sender, GridNeedDataSourceEventArgs e)
         {
             var d = new Dictionary<string, string>() { { "Id", "id" }, { "UserId", "userId" }, { "AcquisitionsUnitId", "acquisitionsUnitId" }, { "CreationTime", "metadata.createdDate" }, { "CreationUserId", "metadata.createdByUserId" }, { "LastWriteTime", "metadata.updatedDate" }, { "LastWriteUserId", "metadata.updatedByUserId" } };
-            UserAcquisitionsUnit2sRadGrid.DataSource = folioServiceContext.UserAcquisitionsUnit2s(out var i, Global.GetCqlFilter(UserAcquisitionsUnit2sRadGrid, d), UserAcquisitionsUnit2sRadGrid.MasterTableView.SortExpressions.Count > 0 ? $"{d[UserAcquisitionsUnit2sRadGrid.MasterTableView.SortExpressions[0].FieldName]}{(UserAcquisitionsUnit2sRadGrid.MasterTableView.SortExpressions[0].SortOrder == GridSortOrder.Descending ? "/sort.descending" : "")}" : null, UserAcquisitionsUnit2sRadGrid.PageSize * UserAcquisitionsUnit2sRadGrid.CurrentPageIndex, UserAcquisitionsUnit2sRadGrid.PageSize, true);
+            var where = Global.Trim(string.Join(" and ", new string[]
+            {
+                Global.GetCqlFilter(UserAcquisitionsUnit2sRadGrid, "Id", "id"),
+                Global.GetCqlFilter(UserAcquisitionsUnit2sRadGrid, "User.Username", "userId", "username", folioServiceContext.FolioServiceClient.Users),
+                Global.GetCqlFilter(UserAcquisitionsUnit2sRadGrid, "AcquisitionsUnit.Name", "acquisitionsUnitId", "name", folioServiceContext.FolioServiceClient.AcquisitionsUnits),
+                Global.GetCqlFilter(UserAcquisitionsUnit2sRadGrid, "CreationTime", "metadata.createdDate"),
+                Global.GetCqlFilter(UserAcquisitionsUnit2sRadGrid, "CreationUser.Username", "metadata.createdByUserId", "username", folioServiceContext.FolioServiceClient.Users),
+                Global.GetCqlFilter(UserAcquisitionsUnit2sRadGrid, "LastWriteTime", "metadata.updatedDate"),
+                Global.GetCqlFilter(UserAcquisitionsUnit2sRadGrid, "LastWriteUser.Username", "metadata.updatedByUserId", "username", folioServiceContext.FolioServiceClient.Users)
+            }.Where(s => s != null)));
+            UserAcquisitionsUnit2sRadGrid.DataSource = folioServiceContext.UserAcquisitionsUnit2s(out var i, where, UserAcquisitionsUnit2sRadGrid.MasterTableView.SortExpressions.Count > 0 ? $"{d[UserAcquisitionsUnit2sRadGrid.MasterTableView.SortExpressions[0].FieldName]}{(UserAcquisitionsUnit2sRadGrid.MasterTableView.SortExpressions[0].SortOrder == GridSortOrder.Descending ? "/sort.descending" : "")}" : null, UserAcquisitionsUnit2sRadGrid.PageSize * UserAcquisitionsUnit2sRadGrid.CurrentPageIndex, UserAcquisitionsUnit2sRadGrid.PageSize, true);
             UserAcquisitionsUnit2sRadGrid.VirtualItemCount = i;
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"where = {where}");
         }
 
         protected void ExportLinkButton_Click(object sender, EventArgs e)

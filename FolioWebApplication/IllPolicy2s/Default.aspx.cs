@@ -25,8 +25,19 @@ namespace FolioWebApplication.IllPolicy2s
         protected void IllPolicy2sRadGrid_NeedDataSource(object sender, GridNeedDataSourceEventArgs e)
         {
             var d = new Dictionary<string, string>() { { "Id", "id" }, { "Name", "name" }, { "Source", "source" }, { "CreationTime", "metadata.createdDate" }, { "CreationUserId", "metadata.createdByUserId" }, { "LastWriteTime", "metadata.updatedDate" }, { "LastWriteUserId", "metadata.updatedByUserId" } };
-            IllPolicy2sRadGrid.DataSource = folioServiceContext.IllPolicy2s(out var i, Global.GetCqlFilter(IllPolicy2sRadGrid, d), IllPolicy2sRadGrid.MasterTableView.SortExpressions.Count > 0 ? $"{d[IllPolicy2sRadGrid.MasterTableView.SortExpressions[0].FieldName]}{(IllPolicy2sRadGrid.MasterTableView.SortExpressions[0].SortOrder == GridSortOrder.Descending ? "/sort.descending" : "")}" : null, IllPolicy2sRadGrid.PageSize * IllPolicy2sRadGrid.CurrentPageIndex, IllPolicy2sRadGrid.PageSize, true);
+            var where = Global.Trim(string.Join(" and ", new string[]
+            {
+                Global.GetCqlFilter(IllPolicy2sRadGrid, "Id", "id"),
+                Global.GetCqlFilter(IllPolicy2sRadGrid, "Name", "name"),
+                Global.GetCqlFilter(IllPolicy2sRadGrid, "Source", "source"),
+                Global.GetCqlFilter(IllPolicy2sRadGrid, "CreationTime", "metadata.createdDate"),
+                Global.GetCqlFilter(IllPolicy2sRadGrid, "CreationUser.Username", "metadata.createdByUserId", "username", folioServiceContext.FolioServiceClient.Users),
+                Global.GetCqlFilter(IllPolicy2sRadGrid, "LastWriteTime", "metadata.updatedDate"),
+                Global.GetCqlFilter(IllPolicy2sRadGrid, "LastWriteUser.Username", "metadata.updatedByUserId", "username", folioServiceContext.FolioServiceClient.Users)
+            }.Where(s => s != null)));
+            IllPolicy2sRadGrid.DataSource = folioServiceContext.IllPolicy2s(out var i, where, IllPolicy2sRadGrid.MasterTableView.SortExpressions.Count > 0 ? $"{d[IllPolicy2sRadGrid.MasterTableView.SortExpressions[0].FieldName]}{(IllPolicy2sRadGrid.MasterTableView.SortExpressions[0].SortOrder == GridSortOrder.Descending ? "/sort.descending" : "")}" : null, IllPolicy2sRadGrid.PageSize * IllPolicy2sRadGrid.CurrentPageIndex, IllPolicy2sRadGrid.PageSize, true);
             IllPolicy2sRadGrid.VirtualItemCount = i;
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"where = {where}");
         }
 
         protected void ExportLinkButton_Click(object sender, EventArgs e)

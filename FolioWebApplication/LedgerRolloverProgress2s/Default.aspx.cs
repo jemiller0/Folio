@@ -25,8 +25,22 @@ namespace FolioWebApplication.LedgerRolloverProgress2s
         protected void LedgerRolloverProgress2sRadGrid_NeedDataSource(object sender, GridNeedDataSourceEventArgs e)
         {
             var d = new Dictionary<string, string>() { { "Id", "id" }, { "LedgerRolloverId", "ledgerRolloverId" }, { "OverallRolloverStatus", "overallRolloverStatus" }, { "BudgetsClosingRolloverStatus", "budgetsClosingRolloverStatus" }, { "FinancialRolloverStatus", "financialRolloverStatus" }, { "OrdersRolloverStatus", "ordersRolloverStatus" }, { "CreationTime", "metadata.createdDate" }, { "CreationUserId", "metadata.createdByUserId" }, { "LastWriteTime", "metadata.updatedDate" }, { "LastWriteUserId", "metadata.updatedByUserId" } };
-            LedgerRolloverProgress2sRadGrid.DataSource = folioServiceContext.LedgerRolloverProgress2s(out var i, Global.GetCqlFilter(LedgerRolloverProgress2sRadGrid, d), LedgerRolloverProgress2sRadGrid.MasterTableView.SortExpressions.Count > 0 ? $"{d[LedgerRolloverProgress2sRadGrid.MasterTableView.SortExpressions[0].FieldName]}{(LedgerRolloverProgress2sRadGrid.MasterTableView.SortExpressions[0].SortOrder == GridSortOrder.Descending ? "/sort.descending" : "")}" : null, LedgerRolloverProgress2sRadGrid.PageSize * LedgerRolloverProgress2sRadGrid.CurrentPageIndex, LedgerRolloverProgress2sRadGrid.PageSize, true);
+            var where = Global.Trim(string.Join(" and ", new string[]
+            {
+                Global.GetCqlFilter(LedgerRolloverProgress2sRadGrid, "Id", "id"),
+                Global.GetCqlFilter(LedgerRolloverProgress2sRadGrid, "LedgerRollover.Id", "ledgerRolloverId", "id", folioServiceContext.FolioServiceClient.LedgerRollovers),
+                Global.GetCqlFilter(LedgerRolloverProgress2sRadGrid, "OverallRolloverStatus", "overallRolloverStatus"),
+                Global.GetCqlFilter(LedgerRolloverProgress2sRadGrid, "BudgetsClosingRolloverStatus", "budgetsClosingRolloverStatus"),
+                Global.GetCqlFilter(LedgerRolloverProgress2sRadGrid, "FinancialRolloverStatus", "financialRolloverStatus"),
+                Global.GetCqlFilter(LedgerRolloverProgress2sRadGrid, "OrdersRolloverStatus", "ordersRolloverStatus"),
+                Global.GetCqlFilter(LedgerRolloverProgress2sRadGrid, "CreationTime", "metadata.createdDate"),
+                Global.GetCqlFilter(LedgerRolloverProgress2sRadGrid, "CreationUser.Username", "metadata.createdByUserId", "username", folioServiceContext.FolioServiceClient.Users),
+                Global.GetCqlFilter(LedgerRolloverProgress2sRadGrid, "LastWriteTime", "metadata.updatedDate"),
+                Global.GetCqlFilter(LedgerRolloverProgress2sRadGrid, "LastWriteUser.Username", "metadata.updatedByUserId", "username", folioServiceContext.FolioServiceClient.Users)
+            }.Where(s => s != null)));
+            LedgerRolloverProgress2sRadGrid.DataSource = folioServiceContext.LedgerRolloverProgress2s(out var i, where, LedgerRolloverProgress2sRadGrid.MasterTableView.SortExpressions.Count > 0 ? $"{d[LedgerRolloverProgress2sRadGrid.MasterTableView.SortExpressions[0].FieldName]}{(LedgerRolloverProgress2sRadGrid.MasterTableView.SortExpressions[0].SortOrder == GridSortOrder.Descending ? "/sort.descending" : "")}" : null, LedgerRolloverProgress2sRadGrid.PageSize * LedgerRolloverProgress2sRadGrid.CurrentPageIndex, LedgerRolloverProgress2sRadGrid.PageSize, true);
             LedgerRolloverProgress2sRadGrid.VirtualItemCount = i;
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"where = {where}");
         }
 
         protected void ExportLinkButton_Click(object sender, EventArgs e)

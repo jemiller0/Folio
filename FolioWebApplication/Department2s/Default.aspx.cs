@@ -25,8 +25,20 @@ namespace FolioWebApplication.Department2s
         protected void Department2sRadGrid_NeedDataSource(object sender, GridNeedDataSourceEventArgs e)
         {
             var d = new Dictionary<string, string>() { { "Id", "id" }, { "Name", "name" }, { "Code", "code" }, { "UsageNumber", "usageNumber" }, { "CreationTime", "metadata.createdDate" }, { "CreationUserId", "metadata.createdByUserId" }, { "LastWriteTime", "metadata.updatedDate" }, { "LastWriteUserId", "metadata.updatedByUserId" } };
-            Department2sRadGrid.DataSource = folioServiceContext.Department2s(out var i, Global.GetCqlFilter(Department2sRadGrid, d), Department2sRadGrid.MasterTableView.SortExpressions.Count > 0 ? $"{d[Department2sRadGrid.MasterTableView.SortExpressions[0].FieldName]}{(Department2sRadGrid.MasterTableView.SortExpressions[0].SortOrder == GridSortOrder.Descending ? "/sort.descending" : "")}" : null, Department2sRadGrid.PageSize * Department2sRadGrid.CurrentPageIndex, Department2sRadGrid.PageSize, true);
+            var where = Global.Trim(string.Join(" and ", new string[]
+            {
+                Global.GetCqlFilter(Department2sRadGrid, "Id", "id"),
+                Global.GetCqlFilter(Department2sRadGrid, "Name", "name"),
+                Global.GetCqlFilter(Department2sRadGrid, "Code", "code"),
+                Global.GetCqlFilter(Department2sRadGrid, "UsageNumber", "usageNumber"),
+                Global.GetCqlFilter(Department2sRadGrid, "CreationTime", "metadata.createdDate"),
+                Global.GetCqlFilter(Department2sRadGrid, "CreationUser.Username", "metadata.createdByUserId", "username", folioServiceContext.FolioServiceClient.Users),
+                Global.GetCqlFilter(Department2sRadGrid, "LastWriteTime", "metadata.updatedDate"),
+                Global.GetCqlFilter(Department2sRadGrid, "LastWriteUser.Username", "metadata.updatedByUserId", "username", folioServiceContext.FolioServiceClient.Users)
+            }.Where(s => s != null)));
+            Department2sRadGrid.DataSource = folioServiceContext.Department2s(out var i, where, Department2sRadGrid.MasterTableView.SortExpressions.Count > 0 ? $"{d[Department2sRadGrid.MasterTableView.SortExpressions[0].FieldName]}{(Department2sRadGrid.MasterTableView.SortExpressions[0].SortOrder == GridSortOrder.Descending ? "/sort.descending" : "")}" : null, Department2sRadGrid.PageSize * Department2sRadGrid.CurrentPageIndex, Department2sRadGrid.PageSize, true);
             Department2sRadGrid.VirtualItemCount = i;
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"where = {where}");
         }
 
         protected void ExportLinkButton_Click(object sender, EventArgs e)

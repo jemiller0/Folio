@@ -25,8 +25,30 @@ namespace FolioWebApplication.CustomField2s
         protected void CustomField2sRadGrid_NeedDataSource(object sender, GridNeedDataSourceEventArgs e)
         {
             var d = new Dictionary<string, string>() { { "Id", "id" }, { "Name", "name" }, { "RefId", "refId" }, { "Type", "type" }, { "EntityType", "entityType" }, { "Visible", "visible" }, { "Required", "required" }, { "IsRepeatable", "isRepeatable" }, { "Order", "order" }, { "HelpText", "helpText" }, { "CheckboxFieldDefault", "checkboxField.default" }, { "SelectFieldMultiSelect", "selectField.multiSelect" }, { "SelectFieldOptionsSortingOrder", "selectField.options.sortingOrder" }, { "TextFieldFieldFormat", "textField.fieldFormat" }, { "CreationTime", "metadata.createdDate" }, { "CreationUserId", "metadata.createdByUserId" }, { "LastWriteTime", "metadata.updatedDate" }, { "LastWriteUserId", "metadata.updatedByUserId" } };
-            CustomField2sRadGrid.DataSource = folioServiceContext.CustomField2s(out var i, Global.GetCqlFilter(CustomField2sRadGrid, d), CustomField2sRadGrid.MasterTableView.SortExpressions.Count > 0 ? $"{d[CustomField2sRadGrid.MasterTableView.SortExpressions[0].FieldName]}{(CustomField2sRadGrid.MasterTableView.SortExpressions[0].SortOrder == GridSortOrder.Descending ? "/sort.descending" : "")}" : null, CustomField2sRadGrid.PageSize * CustomField2sRadGrid.CurrentPageIndex, CustomField2sRadGrid.PageSize, true);
+            var where = Global.Trim(string.Join(" and ", new string[]
+            {
+                Global.GetCqlFilter(CustomField2sRadGrid, "Id", "id"),
+                Global.GetCqlFilter(CustomField2sRadGrid, "Name", "name"),
+                Global.GetCqlFilter(CustomField2sRadGrid, "RefId", "refId"),
+                Global.GetCqlFilter(CustomField2sRadGrid, "Type", "type"),
+                Global.GetCqlFilter(CustomField2sRadGrid, "EntityType", "entityType"),
+                Global.GetCqlFilter(CustomField2sRadGrid, "Visible", "visible"),
+                Global.GetCqlFilter(CustomField2sRadGrid, "Required", "required"),
+                Global.GetCqlFilter(CustomField2sRadGrid, "IsRepeatable", "isRepeatable"),
+                Global.GetCqlFilter(CustomField2sRadGrid, "Order", "order"),
+                Global.GetCqlFilter(CustomField2sRadGrid, "HelpText", "helpText"),
+                Global.GetCqlFilter(CustomField2sRadGrid, "CheckboxFieldDefault", "checkboxField.default"),
+                Global.GetCqlFilter(CustomField2sRadGrid, "SelectFieldMultiSelect", "selectField.multiSelect"),
+                Global.GetCqlFilter(CustomField2sRadGrid, "SelectFieldOptionsSortingOrder", "selectField.options.sortingOrder"),
+                Global.GetCqlFilter(CustomField2sRadGrid, "TextFieldFieldFormat", "textField.fieldFormat"),
+                Global.GetCqlFilter(CustomField2sRadGrid, "CreationTime", "metadata.createdDate"),
+                Global.GetCqlFilter(CustomField2sRadGrid, "CreationUser.Username", "metadata.createdByUserId", "username", folioServiceContext.FolioServiceClient.Users),
+                Global.GetCqlFilter(CustomField2sRadGrid, "LastWriteTime", "metadata.updatedDate"),
+                Global.GetCqlFilter(CustomField2sRadGrid, "LastWriteUser.Username", "metadata.updatedByUserId", "username", folioServiceContext.FolioServiceClient.Users)
+            }.Where(s => s != null)));
+            CustomField2sRadGrid.DataSource = folioServiceContext.CustomField2s(out var i, where, CustomField2sRadGrid.MasterTableView.SortExpressions.Count > 0 ? $"{d[CustomField2sRadGrid.MasterTableView.SortExpressions[0].FieldName]}{(CustomField2sRadGrid.MasterTableView.SortExpressions[0].SortOrder == GridSortOrder.Descending ? "/sort.descending" : "")}" : null, CustomField2sRadGrid.PageSize * CustomField2sRadGrid.CurrentPageIndex, CustomField2sRadGrid.PageSize, true);
             CustomField2sRadGrid.VirtualItemCount = i;
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"where = {where}");
         }
 
         protected void ExportLinkButton_Click(object sender, EventArgs e)

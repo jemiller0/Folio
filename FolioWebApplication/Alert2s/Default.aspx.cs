@@ -25,8 +25,14 @@ namespace FolioWebApplication.Alert2s
         protected void Alert2sRadGrid_NeedDataSource(object sender, GridNeedDataSourceEventArgs e)
         {
             var d = new Dictionary<string, string>() { { "Id", "id" }, { "Alert", "alert" } };
-            Alert2sRadGrid.DataSource = folioServiceContext.Alert2s(out var i, Global.GetCqlFilter(Alert2sRadGrid, d), Alert2sRadGrid.MasterTableView.SortExpressions.Count > 0 ? $"{d[Alert2sRadGrid.MasterTableView.SortExpressions[0].FieldName]}{(Alert2sRadGrid.MasterTableView.SortExpressions[0].SortOrder == GridSortOrder.Descending ? "/sort.descending" : "")}" : null, Alert2sRadGrid.PageSize * Alert2sRadGrid.CurrentPageIndex, Alert2sRadGrid.PageSize, true);
+            var where = Global.Trim(string.Join(" and ", new string[]
+            {
+                Global.GetCqlFilter(Alert2sRadGrid, "Id", "id"),
+                Global.GetCqlFilter(Alert2sRadGrid, "Alert", "alert")
+            }.Where(s => s != null)));
+            Alert2sRadGrid.DataSource = folioServiceContext.Alert2s(out var i, where, Alert2sRadGrid.MasterTableView.SortExpressions.Count > 0 ? $"{d[Alert2sRadGrid.MasterTableView.SortExpressions[0].FieldName]}{(Alert2sRadGrid.MasterTableView.SortExpressions[0].SortOrder == GridSortOrder.Descending ? "/sort.descending" : "")}" : null, Alert2sRadGrid.PageSize * Alert2sRadGrid.CurrentPageIndex, Alert2sRadGrid.PageSize, true);
             Alert2sRadGrid.VirtualItemCount = i;
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"where = {where}");
         }
 
         protected void ExportLinkButton_Click(object sender, EventArgs e)

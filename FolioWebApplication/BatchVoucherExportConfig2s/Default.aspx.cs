@@ -25,8 +25,22 @@ namespace FolioWebApplication.BatchVoucherExportConfig2s
         protected void BatchVoucherExportConfig2sRadGrid_NeedDataSource(object sender, GridNeedDataSourceEventArgs e)
         {
             var d = new Dictionary<string, string>() { { "Id", "id" }, { "BatchGroupId", "batchGroupId" }, { "EnableScheduledExport", "enableScheduledExport" }, { "Format", "format" }, { "StartTime", "startTime" }, { "UploadUri", "uploadURI" }, { "CreationTime", "metadata.createdDate" }, { "CreationUserId", "metadata.createdByUserId" }, { "LastWriteTime", "metadata.updatedDate" }, { "LastWriteUserId", "metadata.updatedByUserId" } };
-            BatchVoucherExportConfig2sRadGrid.DataSource = folioServiceContext.BatchVoucherExportConfig2s(out var i, Global.GetCqlFilter(BatchVoucherExportConfig2sRadGrid, d), BatchVoucherExportConfig2sRadGrid.MasterTableView.SortExpressions.Count > 0 ? $"{d[BatchVoucherExportConfig2sRadGrid.MasterTableView.SortExpressions[0].FieldName]}{(BatchVoucherExportConfig2sRadGrid.MasterTableView.SortExpressions[0].SortOrder == GridSortOrder.Descending ? "/sort.descending" : "")}" : null, BatchVoucherExportConfig2sRadGrid.PageSize * BatchVoucherExportConfig2sRadGrid.CurrentPageIndex, BatchVoucherExportConfig2sRadGrid.PageSize, true);
+            var where = Global.Trim(string.Join(" and ", new string[]
+            {
+                Global.GetCqlFilter(BatchVoucherExportConfig2sRadGrid, "Id", "id"),
+                Global.GetCqlFilter(BatchVoucherExportConfig2sRadGrid, "BatchGroup.Name", "batchGroupId", "name", folioServiceContext.FolioServiceClient.BatchGroups),
+                Global.GetCqlFilter(BatchVoucherExportConfig2sRadGrid, "EnableScheduledExport", "enableScheduledExport"),
+                Global.GetCqlFilter(BatchVoucherExportConfig2sRadGrid, "Format", "format"),
+                Global.GetCqlFilter(BatchVoucherExportConfig2sRadGrid, "StartTime", "startTime"),
+                Global.GetCqlFilter(BatchVoucherExportConfig2sRadGrid, "UploadUri", "uploadURI"),
+                Global.GetCqlFilter(BatchVoucherExportConfig2sRadGrid, "CreationTime", "metadata.createdDate"),
+                Global.GetCqlFilter(BatchVoucherExportConfig2sRadGrid, "CreationUser.Username", "metadata.createdByUserId", "username", folioServiceContext.FolioServiceClient.Users),
+                Global.GetCqlFilter(BatchVoucherExportConfig2sRadGrid, "LastWriteTime", "metadata.updatedDate"),
+                Global.GetCqlFilter(BatchVoucherExportConfig2sRadGrid, "LastWriteUser.Username", "metadata.updatedByUserId", "username", folioServiceContext.FolioServiceClient.Users)
+            }.Where(s => s != null)));
+            BatchVoucherExportConfig2sRadGrid.DataSource = folioServiceContext.BatchVoucherExportConfig2s(out var i, where, BatchVoucherExportConfig2sRadGrid.MasterTableView.SortExpressions.Count > 0 ? $"{d[BatchVoucherExportConfig2sRadGrid.MasterTableView.SortExpressions[0].FieldName]}{(BatchVoucherExportConfig2sRadGrid.MasterTableView.SortExpressions[0].SortOrder == GridSortOrder.Descending ? "/sort.descending" : "")}" : null, BatchVoucherExportConfig2sRadGrid.PageSize * BatchVoucherExportConfig2sRadGrid.CurrentPageIndex, BatchVoucherExportConfig2sRadGrid.PageSize, true);
             BatchVoucherExportConfig2sRadGrid.VirtualItemCount = i;
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"where = {where}");
         }
 
         protected void ExportLinkButton_Click(object sender, EventArgs e)

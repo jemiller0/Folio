@@ -25,8 +25,19 @@ namespace FolioWebApplication.NatureOfContentTerm2s
         protected void NatureOfContentTerm2sRadGrid_NeedDataSource(object sender, GridNeedDataSourceEventArgs e)
         {
             var d = new Dictionary<string, string>() { { "Id", "id" }, { "Name", "name" }, { "Source", "source" }, { "CreationTime", "metadata.createdDate" }, { "CreationUserId", "metadata.createdByUserId" }, { "LastWriteTime", "metadata.updatedDate" }, { "LastWriteUserId", "metadata.updatedByUserId" } };
-            NatureOfContentTerm2sRadGrid.DataSource = folioServiceContext.NatureOfContentTerm2s(out var i, Global.GetCqlFilter(NatureOfContentTerm2sRadGrid, d), NatureOfContentTerm2sRadGrid.MasterTableView.SortExpressions.Count > 0 ? $"{d[NatureOfContentTerm2sRadGrid.MasterTableView.SortExpressions[0].FieldName]}{(NatureOfContentTerm2sRadGrid.MasterTableView.SortExpressions[0].SortOrder == GridSortOrder.Descending ? "/sort.descending" : "")}" : null, NatureOfContentTerm2sRadGrid.PageSize * NatureOfContentTerm2sRadGrid.CurrentPageIndex, NatureOfContentTerm2sRadGrid.PageSize, true);
+            var where = Global.Trim(string.Join(" and ", new string[]
+            {
+                Global.GetCqlFilter(NatureOfContentTerm2sRadGrid, "Id", "id"),
+                Global.GetCqlFilter(NatureOfContentTerm2sRadGrid, "Name", "name"),
+                Global.GetCqlFilter(NatureOfContentTerm2sRadGrid, "Source", "source"),
+                Global.GetCqlFilter(NatureOfContentTerm2sRadGrid, "CreationTime", "metadata.createdDate"),
+                Global.GetCqlFilter(NatureOfContentTerm2sRadGrid, "CreationUser.Username", "metadata.createdByUserId", "username", folioServiceContext.FolioServiceClient.Users),
+                Global.GetCqlFilter(NatureOfContentTerm2sRadGrid, "LastWriteTime", "metadata.updatedDate"),
+                Global.GetCqlFilter(NatureOfContentTerm2sRadGrid, "LastWriteUser.Username", "metadata.updatedByUserId", "username", folioServiceContext.FolioServiceClient.Users)
+            }.Where(s => s != null)));
+            NatureOfContentTerm2sRadGrid.DataSource = folioServiceContext.NatureOfContentTerm2s(out var i, where, NatureOfContentTerm2sRadGrid.MasterTableView.SortExpressions.Count > 0 ? $"{d[NatureOfContentTerm2sRadGrid.MasterTableView.SortExpressions[0].FieldName]}{(NatureOfContentTerm2sRadGrid.MasterTableView.SortExpressions[0].SortOrder == GridSortOrder.Descending ? "/sort.descending" : "")}" : null, NatureOfContentTerm2sRadGrid.PageSize * NatureOfContentTerm2sRadGrid.CurrentPageIndex, NatureOfContentTerm2sRadGrid.PageSize, true);
             NatureOfContentTerm2sRadGrid.VirtualItemCount = i;
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"where = {where}");
         }
 
         protected void ExportLinkButton_Click(object sender, EventArgs e)

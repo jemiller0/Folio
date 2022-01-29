@@ -25,8 +25,37 @@ namespace FolioWebApplication.Budget2s
         protected void Budget2sRadGrid_NeedDataSource(object sender, GridNeedDataSourceEventArgs e)
         {
             var d = new Dictionary<string, string>() { { "Id", "id" }, { "Name", "name" }, { "BudgetStatus", "budgetStatus" }, { "AllowableEncumbrance", "allowableEncumbrance" }, { "AllowableExpenditure", "allowableExpenditure" }, { "Allocated", "allocated" }, { "AwaitingPayment", "awaitingPayment" }, { "Available", "available" }, { "Encumbered", "encumbered" }, { "Expenditures", "expenditures" }, { "NetTransfers", "netTransfers" }, { "Unavailable", "unavailable" }, { "OverEncumbrance", "overEncumbrance" }, { "OverExpended", "overExpended" }, { "FundId", "fundId" }, { "FiscalYearId", "fiscalYearId" }, { "CreationTime", "metadata.createdDate" }, { "CreationUserId", "metadata.createdByUserId" }, { "LastWriteTime", "metadata.updatedDate" }, { "LastWriteUserId", "metadata.updatedByUserId" }, { "InitialAllocation", "initialAllocation" }, { "AllocationTo", "allocationTo" }, { "AllocationFrom", "allocationFrom" }, { "TotalFunding", "totalFunding" }, { "CashBalance", "cashBalance" } };
-            Budget2sRadGrid.DataSource = folioServiceContext.Budget2s(out var i, Global.GetCqlFilter(Budget2sRadGrid, d), Budget2sRadGrid.MasterTableView.SortExpressions.Count > 0 ? $"{d[Budget2sRadGrid.MasterTableView.SortExpressions[0].FieldName]}{(Budget2sRadGrid.MasterTableView.SortExpressions[0].SortOrder == GridSortOrder.Descending ? "/sort.descending" : "")}" : null, Budget2sRadGrid.PageSize * Budget2sRadGrid.CurrentPageIndex, Budget2sRadGrid.PageSize, true);
+            var where = Global.Trim(string.Join(" and ", new string[]
+            {
+                Global.GetCqlFilter(Budget2sRadGrid, "Id", "id"),
+                Global.GetCqlFilter(Budget2sRadGrid, "Name", "name"),
+                Global.GetCqlFilter(Budget2sRadGrid, "BudgetStatus", "budgetStatus"),
+                Global.GetCqlFilter(Budget2sRadGrid, "AllowableEncumbrance", "allowableEncumbrance"),
+                Global.GetCqlFilter(Budget2sRadGrid, "AllowableExpenditure", "allowableExpenditure"),
+                Global.GetCqlFilter(Budget2sRadGrid, "Allocated", "allocated"),
+                Global.GetCqlFilter(Budget2sRadGrid, "AwaitingPayment", "awaitingPayment"),
+                Global.GetCqlFilter(Budget2sRadGrid, "Available", "available"),
+                Global.GetCqlFilter(Budget2sRadGrid, "Encumbered", "encumbered"),
+                Global.GetCqlFilter(Budget2sRadGrid, "Expenditures", "expenditures"),
+                Global.GetCqlFilter(Budget2sRadGrid, "NetTransfers", "netTransfers"),
+                Global.GetCqlFilter(Budget2sRadGrid, "Unavailable", "unavailable"),
+                Global.GetCqlFilter(Budget2sRadGrid, "OverEncumbrance", "overEncumbrance"),
+                Global.GetCqlFilter(Budget2sRadGrid, "OverExpended", "overExpended"),
+                Global.GetCqlFilter(Budget2sRadGrid, "Fund.Name", "fundId", "name", folioServiceContext.FolioServiceClient.Funds),
+                Global.GetCqlFilter(Budget2sRadGrid, "FiscalYear.Name", "fiscalYearId", "name", folioServiceContext.FolioServiceClient.FiscalYears),
+                Global.GetCqlFilter(Budget2sRadGrid, "CreationTime", "metadata.createdDate"),
+                Global.GetCqlFilter(Budget2sRadGrid, "CreationUser.Username", "metadata.createdByUserId", "username", folioServiceContext.FolioServiceClient.Users),
+                Global.GetCqlFilter(Budget2sRadGrid, "LastWriteTime", "metadata.updatedDate"),
+                Global.GetCqlFilter(Budget2sRadGrid, "LastWriteUser.Username", "metadata.updatedByUserId", "username", folioServiceContext.FolioServiceClient.Users),
+                Global.GetCqlFilter(Budget2sRadGrid, "InitialAllocation", "initialAllocation"),
+                Global.GetCqlFilter(Budget2sRadGrid, "AllocationTo", "allocationTo"),
+                Global.GetCqlFilter(Budget2sRadGrid, "AllocationFrom", "allocationFrom"),
+                Global.GetCqlFilter(Budget2sRadGrid, "TotalFunding", "totalFunding"),
+                Global.GetCqlFilter(Budget2sRadGrid, "CashBalance", "cashBalance")
+            }.Where(s => s != null)));
+            Budget2sRadGrid.DataSource = folioServiceContext.Budget2s(out var i, where, Budget2sRadGrid.MasterTableView.SortExpressions.Count > 0 ? $"{d[Budget2sRadGrid.MasterTableView.SortExpressions[0].FieldName]}{(Budget2sRadGrid.MasterTableView.SortExpressions[0].SortOrder == GridSortOrder.Descending ? "/sort.descending" : "")}" : null, Budget2sRadGrid.PageSize * Budget2sRadGrid.CurrentPageIndex, Budget2sRadGrid.PageSize, true);
             Budget2sRadGrid.VirtualItemCount = i;
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"where = {where}");
         }
 
         protected void ExportLinkButton_Click(object sender, EventArgs e)

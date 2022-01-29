@@ -25,8 +25,20 @@ namespace FolioWebApplication.BlockLimit2s
         protected void BlockLimit2sRadGrid_NeedDataSource(object sender, GridNeedDataSourceEventArgs e)
         {
             var d = new Dictionary<string, string>() { { "Id", "id" }, { "GroupId", "patronGroupId" }, { "ConditionId", "conditionId" }, { "Value", "value" }, { "CreationTime", "metadata.createdDate" }, { "CreationUserId", "metadata.createdByUserId" }, { "LastWriteTime", "metadata.updatedDate" }, { "LastWriteUserId", "metadata.updatedByUserId" } };
-            BlockLimit2sRadGrid.DataSource = folioServiceContext.BlockLimit2s(out var i, Global.GetCqlFilter(BlockLimit2sRadGrid, d), BlockLimit2sRadGrid.MasterTableView.SortExpressions.Count > 0 ? $"{d[BlockLimit2sRadGrid.MasterTableView.SortExpressions[0].FieldName]}{(BlockLimit2sRadGrid.MasterTableView.SortExpressions[0].SortOrder == GridSortOrder.Descending ? "/sort.descending" : "")}" : null, BlockLimit2sRadGrid.PageSize * BlockLimit2sRadGrid.CurrentPageIndex, BlockLimit2sRadGrid.PageSize, true);
+            var where = Global.Trim(string.Join(" and ", new string[]
+            {
+                Global.GetCqlFilter(BlockLimit2sRadGrid, "Id", "id"),
+                Global.GetCqlFilter(BlockLimit2sRadGrid, "Group.Name", "patronGroupId", "group", folioServiceContext.FolioServiceClient.Groups),
+                Global.GetCqlFilter(BlockLimit2sRadGrid, "Condition.Name", "conditionId", "name", folioServiceContext.FolioServiceClient.BlockConditions),
+                Global.GetCqlFilter(BlockLimit2sRadGrid, "Value", "value"),
+                Global.GetCqlFilter(BlockLimit2sRadGrid, "CreationTime", "metadata.createdDate"),
+                Global.GetCqlFilter(BlockLimit2sRadGrid, "CreationUser.Username", "metadata.createdByUserId", "username", folioServiceContext.FolioServiceClient.Users),
+                Global.GetCqlFilter(BlockLimit2sRadGrid, "LastWriteTime", "metadata.updatedDate"),
+                Global.GetCqlFilter(BlockLimit2sRadGrid, "LastWriteUser.Username", "metadata.updatedByUserId", "username", folioServiceContext.FolioServiceClient.Users)
+            }.Where(s => s != null)));
+            BlockLimit2sRadGrid.DataSource = folioServiceContext.BlockLimit2s(out var i, where, BlockLimit2sRadGrid.MasterTableView.SortExpressions.Count > 0 ? $"{d[BlockLimit2sRadGrid.MasterTableView.SortExpressions[0].FieldName]}{(BlockLimit2sRadGrid.MasterTableView.SortExpressions[0].SortOrder == GridSortOrder.Descending ? "/sort.descending" : "")}" : null, BlockLimit2sRadGrid.PageSize * BlockLimit2sRadGrid.CurrentPageIndex, BlockLimit2sRadGrid.PageSize, true);
             BlockLimit2sRadGrid.VirtualItemCount = i;
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"where = {where}");
         }
 
         protected void ExportLinkButton_Click(object sender, EventArgs e)

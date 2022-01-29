@@ -25,8 +25,20 @@ namespace FolioWebApplication.WaiveReason2s
         protected void WaiveReason2sRadGrid_NeedDataSource(object sender, GridNeedDataSourceEventArgs e)
         {
             var d = new Dictionary<string, string>() { { "Id", "id" }, { "Name", "nameReason" }, { "Description", "description" }, { "CreationTime", "metadata.createdDate" }, { "CreationUserId", "metadata.createdByUserId" }, { "LastWriteTime", "metadata.updatedDate" }, { "LastWriteUserId", "metadata.updatedByUserId" }, { "AccountId", "accountId" } };
-            WaiveReason2sRadGrid.DataSource = folioServiceContext.WaiveReason2s(out var i, Global.GetCqlFilter(WaiveReason2sRadGrid, d), WaiveReason2sRadGrid.MasterTableView.SortExpressions.Count > 0 ? $"{d[WaiveReason2sRadGrid.MasterTableView.SortExpressions[0].FieldName]}{(WaiveReason2sRadGrid.MasterTableView.SortExpressions[0].SortOrder == GridSortOrder.Descending ? "/sort.descending" : "")}" : null, WaiveReason2sRadGrid.PageSize * WaiveReason2sRadGrid.CurrentPageIndex, WaiveReason2sRadGrid.PageSize, true);
+            var where = Global.Trim(string.Join(" and ", new string[]
+            {
+                Global.GetCqlFilter(WaiveReason2sRadGrid, "Id", "id"),
+                Global.GetCqlFilter(WaiveReason2sRadGrid, "Name", "nameReason"),
+                Global.GetCqlFilter(WaiveReason2sRadGrid, "Description", "description"),
+                Global.GetCqlFilter(WaiveReason2sRadGrid, "CreationTime", "metadata.createdDate"),
+                Global.GetCqlFilter(WaiveReason2sRadGrid, "CreationUser.Username", "metadata.createdByUserId", "username", folioServiceContext.FolioServiceClient.Users),
+                Global.GetCqlFilter(WaiveReason2sRadGrid, "LastWriteTime", "metadata.updatedDate"),
+                Global.GetCqlFilter(WaiveReason2sRadGrid, "LastWriteUser.Username", "metadata.updatedByUserId", "username", folioServiceContext.FolioServiceClient.Users),
+                Global.GetCqlFilter(WaiveReason2sRadGrid, "Account.Title", "accountId", "title", folioServiceContext.FolioServiceClient.Fees)
+            }.Where(s => s != null)));
+            WaiveReason2sRadGrid.DataSource = folioServiceContext.WaiveReason2s(out var i, where, WaiveReason2sRadGrid.MasterTableView.SortExpressions.Count > 0 ? $"{d[WaiveReason2sRadGrid.MasterTableView.SortExpressions[0].FieldName]}{(WaiveReason2sRadGrid.MasterTableView.SortExpressions[0].SortOrder == GridSortOrder.Descending ? "/sort.descending" : "")}" : null, WaiveReason2sRadGrid.PageSize * WaiveReason2sRadGrid.CurrentPageIndex, WaiveReason2sRadGrid.PageSize, true);
             WaiveReason2sRadGrid.VirtualItemCount = i;
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"where = {where}");
         }
 
         protected void ExportLinkButton_Click(object sender, EventArgs e)

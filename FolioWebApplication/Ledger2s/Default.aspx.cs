@@ -25,8 +25,39 @@ namespace FolioWebApplication.Ledger2s
         protected void Ledger2sRadGrid_NeedDataSource(object sender, GridNeedDataSourceEventArgs e)
         {
             var d = new Dictionary<string, string>() { { "Id", "id" }, { "Name", "name" }, { "Code", "code" }, { "Description", "description" }, { "FiscalYearOneId", "fiscalYearOneId" }, { "LedgerStatus", "ledgerStatus" }, { "Allocated", "allocated" }, { "Available", "available" }, { "NetTransfers", "netTransfers" }, { "Unavailable", "unavailable" }, { "Currency", "currency" }, { "RestrictEncumbrance", "restrictEncumbrance" }, { "RestrictExpenditures", "restrictExpenditures" }, { "CreationTime", "metadata.createdDate" }, { "CreationUserId", "metadata.createdByUserId" }, { "LastWriteTime", "metadata.updatedDate" }, { "LastWriteUserId", "metadata.updatedByUserId" }, { "InitialAllocation", "initialAllocation" }, { "AllocationTo", "allocationTo" }, { "AllocationFrom", "allocationFrom" }, { "TotalFunding", "totalFunding" }, { "CashBalance", "cashBalance" }, { "AwaitingPayment", "awaitingPayment" }, { "Encumbered", "encumbered" }, { "Expenditures", "expenditures" }, { "OverEncumbrance", "overEncumbrance" }, { "OverExpended", "overExpended" } };
-            Ledger2sRadGrid.DataSource = folioServiceContext.Ledger2s(out var i, Global.GetCqlFilter(Ledger2sRadGrid, d), Ledger2sRadGrid.MasterTableView.SortExpressions.Count > 0 ? $"{d[Ledger2sRadGrid.MasterTableView.SortExpressions[0].FieldName]}{(Ledger2sRadGrid.MasterTableView.SortExpressions[0].SortOrder == GridSortOrder.Descending ? "/sort.descending" : "")}" : null, Ledger2sRadGrid.PageSize * Ledger2sRadGrid.CurrentPageIndex, Ledger2sRadGrid.PageSize, true);
+            var where = Global.Trim(string.Join(" and ", new string[]
+            {
+                Global.GetCqlFilter(Ledger2sRadGrid, "Id", "id"),
+                Global.GetCqlFilter(Ledger2sRadGrid, "Name", "name"),
+                Global.GetCqlFilter(Ledger2sRadGrid, "Code", "code"),
+                Global.GetCqlFilter(Ledger2sRadGrid, "Description", "description"),
+                Global.GetCqlFilter(Ledger2sRadGrid, "FiscalYearOne.Name", "fiscalYearOneId", "name", folioServiceContext.FolioServiceClient.FiscalYears),
+                Global.GetCqlFilter(Ledger2sRadGrid, "LedgerStatus", "ledgerStatus"),
+                Global.GetCqlFilter(Ledger2sRadGrid, "Allocated", "allocated"),
+                Global.GetCqlFilter(Ledger2sRadGrid, "Available", "available"),
+                Global.GetCqlFilter(Ledger2sRadGrid, "NetTransfers", "netTransfers"),
+                Global.GetCqlFilter(Ledger2sRadGrid, "Unavailable", "unavailable"),
+                Global.GetCqlFilter(Ledger2sRadGrid, "Currency", "currency"),
+                Global.GetCqlFilter(Ledger2sRadGrid, "RestrictEncumbrance", "restrictEncumbrance"),
+                Global.GetCqlFilter(Ledger2sRadGrid, "RestrictExpenditures", "restrictExpenditures"),
+                Global.GetCqlFilter(Ledger2sRadGrid, "CreationTime", "metadata.createdDate"),
+                Global.GetCqlFilter(Ledger2sRadGrid, "CreationUser.Username", "metadata.createdByUserId", "username", folioServiceContext.FolioServiceClient.Users),
+                Global.GetCqlFilter(Ledger2sRadGrid, "LastWriteTime", "metadata.updatedDate"),
+                Global.GetCqlFilter(Ledger2sRadGrid, "LastWriteUser.Username", "metadata.updatedByUserId", "username", folioServiceContext.FolioServiceClient.Users),
+                Global.GetCqlFilter(Ledger2sRadGrid, "InitialAllocation", "initialAllocation"),
+                Global.GetCqlFilter(Ledger2sRadGrid, "AllocationTo", "allocationTo"),
+                Global.GetCqlFilter(Ledger2sRadGrid, "AllocationFrom", "allocationFrom"),
+                Global.GetCqlFilter(Ledger2sRadGrid, "TotalFunding", "totalFunding"),
+                Global.GetCqlFilter(Ledger2sRadGrid, "CashBalance", "cashBalance"),
+                Global.GetCqlFilter(Ledger2sRadGrid, "AwaitingPayment", "awaitingPayment"),
+                Global.GetCqlFilter(Ledger2sRadGrid, "Encumbered", "encumbered"),
+                Global.GetCqlFilter(Ledger2sRadGrid, "Expenditures", "expenditures"),
+                Global.GetCqlFilter(Ledger2sRadGrid, "OverEncumbrance", "overEncumbrance"),
+                Global.GetCqlFilter(Ledger2sRadGrid, "OverExpended", "overExpended")
+            }.Where(s => s != null)));
+            Ledger2sRadGrid.DataSource = folioServiceContext.Ledger2s(out var i, where, Ledger2sRadGrid.MasterTableView.SortExpressions.Count > 0 ? $"{d[Ledger2sRadGrid.MasterTableView.SortExpressions[0].FieldName]}{(Ledger2sRadGrid.MasterTableView.SortExpressions[0].SortOrder == GridSortOrder.Descending ? "/sort.descending" : "")}" : null, Ledger2sRadGrid.PageSize * Ledger2sRadGrid.CurrentPageIndex, Ledger2sRadGrid.PageSize, true);
             Ledger2sRadGrid.VirtualItemCount = i;
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"where = {where}");
         }
 
         protected void ExportLinkButton_Click(object sender, EventArgs e)

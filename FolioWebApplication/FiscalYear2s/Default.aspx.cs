@@ -25,8 +25,37 @@ namespace FolioWebApplication.FiscalYear2s
         protected void FiscalYear2sRadGrid_NeedDataSource(object sender, GridNeedDataSourceEventArgs e)
         {
             var d = new Dictionary<string, string>() { { "Id", "id" }, { "Name", "name" }, { "Code", "code" }, { "Currency", "currency" }, { "Description", "description" }, { "StartDate", "periodStart" }, { "EndDate", "periodEnd" }, { "Series", "series" }, { "FinancialSummaryAllocated", "financialSummary.allocated" }, { "FinancialSummaryAvailable", "financialSummary.available" }, { "FinancialSummaryUnavailable", "financialSummary.unavailable" }, { "FinancialSummaryInitialAllocation", "financialSummary.initialAllocation" }, { "FinancialSummaryAllocationTo", "financialSummary.allocationTo" }, { "FinancialSummaryAllocationFrom", "financialSummary.allocationFrom" }, { "FinancialSummaryTotalFunding", "financialSummary.totalFunding" }, { "FinancialSummaryCashBalance", "financialSummary.cashBalance" }, { "FinancialSummaryAwaitingPayment", "financialSummary.awaitingPayment" }, { "FinancialSummaryEncumbered", "financialSummary.encumbered" }, { "FinancialSummaryExpenditures", "financialSummary.expenditures" }, { "FinancialSummaryOverEncumbrance", "financialSummary.overEncumbrance" }, { "FinancialSummaryOverExpended", "financialSummary.overExpended" }, { "CreationTime", "metadata.createdDate" }, { "CreationUserId", "metadata.createdByUserId" }, { "LastWriteTime", "metadata.updatedDate" }, { "LastWriteUserId", "metadata.updatedByUserId" } };
-            FiscalYear2sRadGrid.DataSource = folioServiceContext.FiscalYear2s(out var i, Global.GetCqlFilter(FiscalYear2sRadGrid, d), FiscalYear2sRadGrid.MasterTableView.SortExpressions.Count > 0 ? $"{d[FiscalYear2sRadGrid.MasterTableView.SortExpressions[0].FieldName]}{(FiscalYear2sRadGrid.MasterTableView.SortExpressions[0].SortOrder == GridSortOrder.Descending ? "/sort.descending" : "")}" : null, FiscalYear2sRadGrid.PageSize * FiscalYear2sRadGrid.CurrentPageIndex, FiscalYear2sRadGrid.PageSize, true);
+            var where = Global.Trim(string.Join(" and ", new string[]
+            {
+                Global.GetCqlFilter(FiscalYear2sRadGrid, "Id", "id"),
+                Global.GetCqlFilter(FiscalYear2sRadGrid, "Name", "name"),
+                Global.GetCqlFilter(FiscalYear2sRadGrid, "Code", "code"),
+                Global.GetCqlFilter(FiscalYear2sRadGrid, "Currency", "currency"),
+                Global.GetCqlFilter(FiscalYear2sRadGrid, "Description", "description"),
+                Global.GetCqlFilter(FiscalYear2sRadGrid, "StartDate", "periodStart"),
+                Global.GetCqlFilter(FiscalYear2sRadGrid, "EndDate", "periodEnd"),
+                Global.GetCqlFilter(FiscalYear2sRadGrid, "Series", "series"),
+                Global.GetCqlFilter(FiscalYear2sRadGrid, "FinancialSummaryAllocated", "financialSummary.allocated"),
+                Global.GetCqlFilter(FiscalYear2sRadGrid, "FinancialSummaryAvailable", "financialSummary.available"),
+                Global.GetCqlFilter(FiscalYear2sRadGrid, "FinancialSummaryUnavailable", "financialSummary.unavailable"),
+                Global.GetCqlFilter(FiscalYear2sRadGrid, "FinancialSummaryInitialAllocation", "financialSummary.initialAllocation"),
+                Global.GetCqlFilter(FiscalYear2sRadGrid, "FinancialSummaryAllocationTo", "financialSummary.allocationTo"),
+                Global.GetCqlFilter(FiscalYear2sRadGrid, "FinancialSummaryAllocationFrom", "financialSummary.allocationFrom"),
+                Global.GetCqlFilter(FiscalYear2sRadGrid, "FinancialSummaryTotalFunding", "financialSummary.totalFunding"),
+                Global.GetCqlFilter(FiscalYear2sRadGrid, "FinancialSummaryCashBalance", "financialSummary.cashBalance"),
+                Global.GetCqlFilter(FiscalYear2sRadGrid, "FinancialSummaryAwaitingPayment", "financialSummary.awaitingPayment"),
+                Global.GetCqlFilter(FiscalYear2sRadGrid, "FinancialSummaryEncumbered", "financialSummary.encumbered"),
+                Global.GetCqlFilter(FiscalYear2sRadGrid, "FinancialSummaryExpenditures", "financialSummary.expenditures"),
+                Global.GetCqlFilter(FiscalYear2sRadGrid, "FinancialSummaryOverEncumbrance", "financialSummary.overEncumbrance"),
+                Global.GetCqlFilter(FiscalYear2sRadGrid, "FinancialSummaryOverExpended", "financialSummary.overExpended"),
+                Global.GetCqlFilter(FiscalYear2sRadGrid, "CreationTime", "metadata.createdDate"),
+                Global.GetCqlFilter(FiscalYear2sRadGrid, "CreationUser.Username", "metadata.createdByUserId", "username", folioServiceContext.FolioServiceClient.Users),
+                Global.GetCqlFilter(FiscalYear2sRadGrid, "LastWriteTime", "metadata.updatedDate"),
+                Global.GetCqlFilter(FiscalYear2sRadGrid, "LastWriteUser.Username", "metadata.updatedByUserId", "username", folioServiceContext.FolioServiceClient.Users)
+            }.Where(s => s != null)));
+            FiscalYear2sRadGrid.DataSource = folioServiceContext.FiscalYear2s(out var i, where, FiscalYear2sRadGrid.MasterTableView.SortExpressions.Count > 0 ? $"{d[FiscalYear2sRadGrid.MasterTableView.SortExpressions[0].FieldName]}{(FiscalYear2sRadGrid.MasterTableView.SortExpressions[0].SortOrder == GridSortOrder.Descending ? "/sort.descending" : "")}" : null, FiscalYear2sRadGrid.PageSize * FiscalYear2sRadGrid.CurrentPageIndex, FiscalYear2sRadGrid.PageSize, true);
             FiscalYear2sRadGrid.VirtualItemCount = i;
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"where = {where}");
         }
 
         protected void ExportLinkButton_Click(object sender, EventArgs e)

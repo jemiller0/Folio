@@ -25,8 +25,24 @@ namespace FolioWebApplication.Proxy2s
         protected void Proxy2sRadGrid_NeedDataSource(object sender, GridNeedDataSourceEventArgs e)
         {
             var d = new Dictionary<string, string>() { { "Id", "id" }, { "UserId", "userId" }, { "ProxyUserId", "proxyUserId" }, { "RequestForSponsor", "requestForSponsor" }, { "NotificationsTo", "notificationsTo" }, { "AccrueTo", "accrueTo" }, { "Status", "status" }, { "ExpirationDate", "expirationDate" }, { "CreationTime", "metadata.createdDate" }, { "CreationUserId", "metadata.createdByUserId" }, { "LastWriteTime", "metadata.updatedDate" }, { "LastWriteUserId", "metadata.updatedByUserId" } };
-            Proxy2sRadGrid.DataSource = folioServiceContext.Proxy2s(out var i, Global.GetCqlFilter(Proxy2sRadGrid, d), Proxy2sRadGrid.MasterTableView.SortExpressions.Count > 0 ? $"{d[Proxy2sRadGrid.MasterTableView.SortExpressions[0].FieldName]}{(Proxy2sRadGrid.MasterTableView.SortExpressions[0].SortOrder == GridSortOrder.Descending ? "/sort.descending" : "")}" : null, Proxy2sRadGrid.PageSize * Proxy2sRadGrid.CurrentPageIndex, Proxy2sRadGrid.PageSize, true);
+            var where = Global.Trim(string.Join(" and ", new string[]
+            {
+                Global.GetCqlFilter(Proxy2sRadGrid, "Id", "id"),
+                Global.GetCqlFilter(Proxy2sRadGrid, "User.Username", "userId", "username", folioServiceContext.FolioServiceClient.Users),
+                Global.GetCqlFilter(Proxy2sRadGrid, "ProxyUser.Username", "proxyUserId", "username", folioServiceContext.FolioServiceClient.Users),
+                Global.GetCqlFilter(Proxy2sRadGrid, "RequestForSponsor", "requestForSponsor"),
+                Global.GetCqlFilter(Proxy2sRadGrid, "NotificationsTo", "notificationsTo"),
+                Global.GetCqlFilter(Proxy2sRadGrid, "AccrueTo", "accrueTo"),
+                Global.GetCqlFilter(Proxy2sRadGrid, "Status", "status"),
+                Global.GetCqlFilter(Proxy2sRadGrid, "ExpirationDate", "expirationDate"),
+                Global.GetCqlFilter(Proxy2sRadGrid, "CreationTime", "metadata.createdDate"),
+                Global.GetCqlFilter(Proxy2sRadGrid, "CreationUser.Username", "metadata.createdByUserId", "username", folioServiceContext.FolioServiceClient.Users),
+                Global.GetCqlFilter(Proxy2sRadGrid, "LastWriteTime", "metadata.updatedDate"),
+                Global.GetCqlFilter(Proxy2sRadGrid, "LastWriteUser.Username", "metadata.updatedByUserId", "username", folioServiceContext.FolioServiceClient.Users)
+            }.Where(s => s != null)));
+            Proxy2sRadGrid.DataSource = folioServiceContext.Proxy2s(out var i, where, Proxy2sRadGrid.MasterTableView.SortExpressions.Count > 0 ? $"{d[Proxy2sRadGrid.MasterTableView.SortExpressions[0].FieldName]}{(Proxy2sRadGrid.MasterTableView.SortExpressions[0].SortOrder == GridSortOrder.Descending ? "/sort.descending" : "")}" : null, Proxy2sRadGrid.PageSize * Proxy2sRadGrid.CurrentPageIndex, Proxy2sRadGrid.PageSize, true);
             Proxy2sRadGrid.VirtualItemCount = i;
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"where = {where}");
         }
 
         protected void ExportLinkButton_Click(object sender, EventArgs e)

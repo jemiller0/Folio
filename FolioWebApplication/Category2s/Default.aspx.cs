@@ -25,8 +25,18 @@ namespace FolioWebApplication.Category2s
         protected void Category2sRadGrid_NeedDataSource(object sender, GridNeedDataSourceEventArgs e)
         {
             var d = new Dictionary<string, string>() { { "Id", "id" }, { "Name", "value" }, { "CreationTime", "metadata.createdDate" }, { "CreationUserId", "metadata.createdByUserId" }, { "LastWriteTime", "metadata.updatedDate" }, { "LastWriteUserId", "metadata.updatedByUserId" } };
-            Category2sRadGrid.DataSource = folioServiceContext.Category2s(out var i, Global.GetCqlFilter(Category2sRadGrid, d), Category2sRadGrid.MasterTableView.SortExpressions.Count > 0 ? $"{d[Category2sRadGrid.MasterTableView.SortExpressions[0].FieldName]}{(Category2sRadGrid.MasterTableView.SortExpressions[0].SortOrder == GridSortOrder.Descending ? "/sort.descending" : "")}" : null, Category2sRadGrid.PageSize * Category2sRadGrid.CurrentPageIndex, Category2sRadGrid.PageSize, true);
+            var where = Global.Trim(string.Join(" and ", new string[]
+            {
+                Global.GetCqlFilter(Category2sRadGrid, "Id", "id"),
+                Global.GetCqlFilter(Category2sRadGrid, "Name", "value"),
+                Global.GetCqlFilter(Category2sRadGrid, "CreationTime", "metadata.createdDate"),
+                Global.GetCqlFilter(Category2sRadGrid, "CreationUser.Username", "metadata.createdByUserId", "username", folioServiceContext.FolioServiceClient.Users),
+                Global.GetCqlFilter(Category2sRadGrid, "LastWriteTime", "metadata.updatedDate"),
+                Global.GetCqlFilter(Category2sRadGrid, "LastWriteUser.Username", "metadata.updatedByUserId", "username", folioServiceContext.FolioServiceClient.Users)
+            }.Where(s => s != null)));
+            Category2sRadGrid.DataSource = folioServiceContext.Category2s(out var i, where, Category2sRadGrid.MasterTableView.SortExpressions.Count > 0 ? $"{d[Category2sRadGrid.MasterTableView.SortExpressions[0].FieldName]}{(Category2sRadGrid.MasterTableView.SortExpressions[0].SortOrder == GridSortOrder.Descending ? "/sort.descending" : "")}" : null, Category2sRadGrid.PageSize * Category2sRadGrid.CurrentPageIndex, Category2sRadGrid.PageSize, true);
             Category2sRadGrid.VirtualItemCount = i;
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"where = {where}");
         }
 
         protected void ExportLinkButton_Click(object sender, EventArgs e)

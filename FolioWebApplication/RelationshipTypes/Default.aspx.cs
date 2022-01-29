@@ -25,8 +25,18 @@ namespace FolioWebApplication.RelationshipTypes
         protected void RelationshipTypesRadGrid_NeedDataSource(object sender, GridNeedDataSourceEventArgs e)
         {
             var d = new Dictionary<string, string>() { { "Id", "id" }, { "Name", "name" }, { "CreationTime", "metadata.createdDate" }, { "CreationUserId", "metadata.createdByUserId" }, { "LastWriteTime", "metadata.updatedDate" }, { "LastWriteUserId", "metadata.updatedByUserId" } };
-            RelationshipTypesRadGrid.DataSource = folioServiceContext.RelationshipTypes(out var i, Global.GetCqlFilter(RelationshipTypesRadGrid, d), RelationshipTypesRadGrid.MasterTableView.SortExpressions.Count > 0 ? $"{d[RelationshipTypesRadGrid.MasterTableView.SortExpressions[0].FieldName]}{(RelationshipTypesRadGrid.MasterTableView.SortExpressions[0].SortOrder == GridSortOrder.Descending ? "/sort.descending" : "")}" : null, RelationshipTypesRadGrid.PageSize * RelationshipTypesRadGrid.CurrentPageIndex, RelationshipTypesRadGrid.PageSize, true);
+            var where = Global.Trim(string.Join(" and ", new string[]
+            {
+                Global.GetCqlFilter(RelationshipTypesRadGrid, "Id", "id"),
+                Global.GetCqlFilter(RelationshipTypesRadGrid, "Name", "name"),
+                Global.GetCqlFilter(RelationshipTypesRadGrid, "CreationTime", "metadata.createdDate"),
+                Global.GetCqlFilter(RelationshipTypesRadGrid, "CreationUser.Username", "metadata.createdByUserId", "username", folioServiceContext.FolioServiceClient.Users),
+                Global.GetCqlFilter(RelationshipTypesRadGrid, "LastWriteTime", "metadata.updatedDate"),
+                Global.GetCqlFilter(RelationshipTypesRadGrid, "LastWriteUser.Username", "metadata.updatedByUserId", "username", folioServiceContext.FolioServiceClient.Users)
+            }.Where(s => s != null)));
+            RelationshipTypesRadGrid.DataSource = folioServiceContext.RelationshipTypes(out var i, where, RelationshipTypesRadGrid.MasterTableView.SortExpressions.Count > 0 ? $"{d[RelationshipTypesRadGrid.MasterTableView.SortExpressions[0].FieldName]}{(RelationshipTypesRadGrid.MasterTableView.SortExpressions[0].SortOrder == GridSortOrder.Descending ? "/sort.descending" : "")}" : null, RelationshipTypesRadGrid.PageSize * RelationshipTypesRadGrid.CurrentPageIndex, RelationshipTypesRadGrid.PageSize, true);
             RelationshipTypesRadGrid.VirtualItemCount = i;
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"where = {where}");
         }
 
         protected void ExportLinkButton_Click(object sender, EventArgs e)

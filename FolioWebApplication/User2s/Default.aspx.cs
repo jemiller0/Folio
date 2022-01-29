@@ -31,8 +31,48 @@ namespace FolioWebApplication.User2s
         protected void User2sRadGrid_NeedDataSource(object sender, GridNeedDataSourceEventArgs e)
         {
             var d = new Dictionary<string, string>() { { "Id", "id" }, { "Username", "username" }, { "ExternalSystemId", "externalSystemId" }, { "Barcode", "barcode" }, { "Active", "active" }, { "GroupId", "patronGroup" }, { "LastName", "personal.lastName" }, { "FirstName", "personal.firstName" }, { "MiddleName", "personal.middleName" }, { "PreferredFirstName", "personal.preferredFirstName" }, { "EmailAddress", "personal.email" }, { "PhoneNumber", "personal.phone" }, { "MobilePhoneNumber", "personal.mobilePhone" }, { "BirthDate", "personal.dateOfBirth" }, { "PreferredContactTypeId", "personal.preferredContactTypeId" }, { "StartDate", "enrollmentDate" }, { "EndDate", "expirationDate" }, { "Source", "customFields.source" }, { "Category", "customFields.category" }, { "Status", "customFields.status" }, { "Statuses", "customFields.statuses" }, { "StaffStatus", "customFields.staffStatus" }, { "StaffPrivileges", "customFields.staffPrivileges" }, { "StaffDivision", "customFields.staffDivision" }, { "StaffDepartment", "customFields.staffDepartment" }, { "StudentId", "customFields.studentId" }, { "StudentStatus", "customFields.studentStatus" }, { "StudentRestriction", "customFields.studentRestriction" }, { "StudentDivision", "customFields.studentDivision" }, { "StudentDepartment", "customFields.studentDepartment" }, { "Deceased", "customFields.deceased" }, { "Collections", "customFields.collections" }, { "CreationTime", "metadata.createdDate" }, { "CreationUserId", "metadata.createdByUserId" }, { "LastWriteTime", "metadata.updatedDate" }, { "LastWriteUserId", "metadata.updatedByUserId" } };
-            User2sRadGrid.DataSource = folioServiceContext.User2s(out var i, Global.GetCqlFilter(User2sRadGrid, d), User2sRadGrid.MasterTableView.SortExpressions.Count > 0 ? $"{d[User2sRadGrid.MasterTableView.SortExpressions[0].FieldName]}{(User2sRadGrid.MasterTableView.SortExpressions[0].SortOrder == GridSortOrder.Descending ? "/sort.descending" : "")}" : null, User2sRadGrid.PageSize * User2sRadGrid.CurrentPageIndex, User2sRadGrid.PageSize, true);
+            var where = Global.Trim(string.Join(" and ", new string[]
+            {
+                Global.GetCqlFilter(User2sRadGrid, "Id", "id"),
+                Global.GetCqlFilter(User2sRadGrid, "Username", "username"),
+                Global.GetCqlFilter(User2sRadGrid, "ExternalSystemId", "externalSystemId"),
+                Global.GetCqlFilter(User2sRadGrid, "Barcode", "barcode"),
+                Global.GetCqlFilter(User2sRadGrid, "Active", "active"),
+                Global.GetCqlFilter(User2sRadGrid, "Group.Name", "patronGroup", "group", folioServiceContext.FolioServiceClient.Groups),
+                Global.GetCqlFilter(User2sRadGrid, "Name", ""),
+                Global.GetCqlFilter(User2sRadGrid, "LastName", "personal.lastName"),
+                Global.GetCqlFilter(User2sRadGrid, "FirstName", "personal.firstName"),
+                Global.GetCqlFilter(User2sRadGrid, "MiddleName", "personal.middleName"),
+                Global.GetCqlFilter(User2sRadGrid, "PreferredFirstName", "personal.preferredFirstName"),
+                Global.GetCqlFilter(User2sRadGrid, "EmailAddress", "personal.email"),
+                Global.GetCqlFilter(User2sRadGrid, "PhoneNumber", "personal.phone"),
+                Global.GetCqlFilter(User2sRadGrid, "MobilePhoneNumber", "personal.mobilePhone"),
+                Global.GetCqlFilter(User2sRadGrid, "BirthDate", "personal.dateOfBirth"),
+                Global.GetCqlFilter(User2sRadGrid, "StartDate", "enrollmentDate"),
+                Global.GetCqlFilter(User2sRadGrid, "EndDate", "expirationDate"),
+                Global.GetCqlFilter(User2sRadGrid, "Source", "customFields.source"),
+                Global.GetCqlFilter(User2sRadGrid, "Category", "customFields.category"),
+                Global.GetCqlFilter(User2sRadGrid, "Status", "customFields.status"),
+                Global.GetCqlFilter(User2sRadGrid, "Statuses", "customFields.statuses"),
+                Global.GetCqlFilter(User2sRadGrid, "StaffStatus", "customFields.staffStatus"),
+                Global.GetCqlFilter(User2sRadGrid, "StaffPrivileges", "customFields.staffPrivileges"),
+                Global.GetCqlFilter(User2sRadGrid, "StaffDivision", "customFields.staffDivision"),
+                Global.GetCqlFilter(User2sRadGrid, "StaffDepartment", "customFields.staffDepartment"),
+                Global.GetCqlFilter(User2sRadGrid, "StudentId", "customFields.studentId"),
+                Global.GetCqlFilter(User2sRadGrid, "StudentStatus", "customFields.studentStatus"),
+                Global.GetCqlFilter(User2sRadGrid, "StudentRestriction", "customFields.studentRestriction"),
+                Global.GetCqlFilter(User2sRadGrid, "StudentDivision", "customFields.studentDivision"),
+                Global.GetCqlFilter(User2sRadGrid, "StudentDepartment", "customFields.studentDepartment"),
+                Global.GetCqlFilter(User2sRadGrid, "Deceased", "customFields.deceased"),
+                Global.GetCqlFilter(User2sRadGrid, "Collections", "customFields.collections"),
+                Global.GetCqlFilter(User2sRadGrid, "CreationTime", "metadata.createdDate"),
+                Global.GetCqlFilter(User2sRadGrid, "CreationUser.Username", "metadata.createdByUserId", "username", folioServiceContext.FolioServiceClient.Users),
+                Global.GetCqlFilter(User2sRadGrid, "LastWriteTime", "metadata.updatedDate"),
+                Global.GetCqlFilter(User2sRadGrid, "LastWriteUser.Username", "metadata.updatedByUserId", "username", folioServiceContext.FolioServiceClient.Users)
+            }.Where(s => s != null)));
+            User2sRadGrid.DataSource = folioServiceContext.User2s(out var i, where, User2sRadGrid.MasterTableView.SortExpressions.Count > 0 ? $"{d[User2sRadGrid.MasterTableView.SortExpressions[0].FieldName]}{(User2sRadGrid.MasterTableView.SortExpressions[0].SortOrder == GridSortOrder.Descending ? "/sort.descending" : "")}" : null, User2sRadGrid.PageSize * User2sRadGrid.CurrentPageIndex, User2sRadGrid.PageSize, true);
             User2sRadGrid.VirtualItemCount = i;
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"where = {where}");
         }
 
         protected void ExportLinkButton_Click(object sender, EventArgs e)

@@ -25,8 +25,23 @@ namespace FolioWebApplication.FeeType2s
         protected void FeeType2sRadGrid_NeedDataSource(object sender, GridNeedDataSourceEventArgs e)
         {
             var d = new Dictionary<string, string>() { { "Id", "id" }, { "Automatic", "automatic" }, { "Name", "feeFineType" }, { "DefaultAmount", "defaultAmount" }, { "ChargeNoticeId", "chargeNoticeId" }, { "ActionNoticeId", "actionNoticeId" }, { "OwnerId", "ownerId" }, { "CreationTime", "metadata.createdDate" }, { "CreationUserId", "metadata.createdByUserId" }, { "LastWriteTime", "metadata.updatedDate" }, { "LastWriteUserId", "metadata.updatedByUserId" } };
-            FeeType2sRadGrid.DataSource = folioServiceContext.FeeType2s(out var i, Global.GetCqlFilter(FeeType2sRadGrid, d), FeeType2sRadGrid.MasterTableView.SortExpressions.Count > 0 ? $"{d[FeeType2sRadGrid.MasterTableView.SortExpressions[0].FieldName]}{(FeeType2sRadGrid.MasterTableView.SortExpressions[0].SortOrder == GridSortOrder.Descending ? "/sort.descending" : "")}" : null, FeeType2sRadGrid.PageSize * FeeType2sRadGrid.CurrentPageIndex, FeeType2sRadGrid.PageSize, true);
+            var where = Global.Trim(string.Join(" and ", new string[]
+            {
+                Global.GetCqlFilter(FeeType2sRadGrid, "Id", "id"),
+                Global.GetCqlFilter(FeeType2sRadGrid, "Automatic", "automatic"),
+                Global.GetCqlFilter(FeeType2sRadGrid, "Name", "feeFineType"),
+                Global.GetCqlFilter(FeeType2sRadGrid, "DefaultAmount", "defaultAmount"),
+                Global.GetCqlFilter(FeeType2sRadGrid, "ChargeNotice.Name", "chargeNoticeId", "name", folioServiceContext.FolioServiceClient.Templates),
+                Global.GetCqlFilter(FeeType2sRadGrid, "ActionNotice.Name", "actionNoticeId", "name", folioServiceContext.FolioServiceClient.Templates),
+                Global.GetCqlFilter(FeeType2sRadGrid, "Owner.Name", "ownerId", "owner", folioServiceContext.FolioServiceClient.Owners),
+                Global.GetCqlFilter(FeeType2sRadGrid, "CreationTime", "metadata.createdDate"),
+                Global.GetCqlFilter(FeeType2sRadGrid, "CreationUser.Username", "metadata.createdByUserId", "username", folioServiceContext.FolioServiceClient.Users),
+                Global.GetCqlFilter(FeeType2sRadGrid, "LastWriteTime", "metadata.updatedDate"),
+                Global.GetCqlFilter(FeeType2sRadGrid, "LastWriteUser.Username", "metadata.updatedByUserId", "username", folioServiceContext.FolioServiceClient.Users)
+            }.Where(s => s != null)));
+            FeeType2sRadGrid.DataSource = folioServiceContext.FeeType2s(out var i, where, FeeType2sRadGrid.MasterTableView.SortExpressions.Count > 0 ? $"{d[FeeType2sRadGrid.MasterTableView.SortExpressions[0].FieldName]}{(FeeType2sRadGrid.MasterTableView.SortExpressions[0].SortOrder == GridSortOrder.Descending ? "/sort.descending" : "")}" : null, FeeType2sRadGrid.PageSize * FeeType2sRadGrid.CurrentPageIndex, FeeType2sRadGrid.PageSize, true);
             FeeType2sRadGrid.VirtualItemCount = i;
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"where = {where}");
         }
 
         protected void ExportLinkButton_Click(object sender, EventArgs e)

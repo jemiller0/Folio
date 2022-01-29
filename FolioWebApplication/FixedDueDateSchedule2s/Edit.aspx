@@ -129,7 +129,7 @@
                         <telerik:GridBoundColumn HeaderText="Loans Policy Grace Period Interval" DataField="LoansPolicyGracePeriodInterval" AutoPostBackOnFilter="true" HtmlEncode="true" CurrentFilterFunction="StartsWith" />
                         <telerik:GridBoundColumn HeaderText="Loans Policy Opening Time Offset Duration" DataField="LoansPolicyOpeningTimeOffsetDuration" AutoPostBackOnFilter="true" />
                         <telerik:GridBoundColumn HeaderText="Loans Policy Opening Time Offset Interval" DataField="LoansPolicyOpeningTimeOffsetInterval" AutoPostBackOnFilter="true" HtmlEncode="true" CurrentFilterFunction="StartsWith" />
-                        <telerik:GridTemplateColumn AllowFiltering="false" AllowSorting="false" HeaderText="Loans Policy Fixed Due Date Schedule" DataField="LoansPolicyFixedDueDateSchedule.Name" SortExpression="LoansPolicyFixedDueDateSchedule.Name" AutoPostBackOnFilter="true" CurrentFilterFunction="StartsWith">
+                        <telerik:GridTemplateColumn HeaderText="Loans Policy Fixed Due Date Schedule" DataField="LoansPolicyFixedDueDateSchedule.Name" AllowSorting="false" AutoPostBackOnFilter="true" CurrentFilterFunction="StartsWith">
                             <ItemTemplate>
                                 <asp:HyperLink ID="LoansPolicyFixedDueDateScheduleHyperLink" runat="server" Text='<%#: Eval("LoansPolicyFixedDueDateSchedule.Name") %>' NavigateUrl='<%# $"~/FixedDueDateSchedule2s/Edit.aspx?Id={Eval("LoansPolicyFixedDueDateScheduleId")}" %>' Enabled='<%# Session["FixedDueDateSchedule2sPermission"] != null %>' />
                             </ItemTemplate>
@@ -162,13 +162,13 @@
                         <telerik:GridBoundColumn HeaderText="Pages Alternate Renewal Loan Period Duration" DataField="PagesAlternateRenewalLoanPeriodDuration" AutoPostBackOnFilter="true" />
                         <telerik:GridBoundColumn HeaderText="Pages Alternate Renewal Loan Period Interval" DataField="PagesAlternateRenewalLoanPeriodInterval" AutoPostBackOnFilter="true" HtmlEncode="true" CurrentFilterFunction="StartsWith" />
                         <telerik:GridBoundColumn HeaderText="Creation Time" DataField="CreationTime" AutoPostBackOnFilter="true" DataFormatString="{0:g}" />
-                        <telerik:GridTemplateColumn AllowFiltering="false" AllowSorting="false" HeaderText="Creation User" DataField="CreationUser.Username" SortExpression="CreationUser.Username" AutoPostBackOnFilter="true" CurrentFilterFunction="StartsWith">
+                        <telerik:GridTemplateColumn HeaderText="Creation User" DataField="CreationUser.Username" AllowSorting="false" AutoPostBackOnFilter="true" CurrentFilterFunction="StartsWith">
                             <ItemTemplate>
                                 <asp:HyperLink ID="CreationUserHyperLink" runat="server" Text='<%#: Eval("CreationUserId") != null ? Eval("CreationUser.Username") ?? "&nbsp;" : "" %>' NavigateUrl='<%# $"~/User2s/Edit.aspx?Id={Eval("CreationUserId")}" %>' Enabled='<%# Session["User2sPermission"] != null %>' />
                             </ItemTemplate>
                         </telerik:GridTemplateColumn>
                         <telerik:GridBoundColumn HeaderText="Last Write Time" DataField="LastWriteTime" AutoPostBackOnFilter="true" DataFormatString="{0:g}" />
-                        <telerik:GridTemplateColumn AllowFiltering="false" AllowSorting="false" HeaderText="Last Write User" DataField="LastWriteUser.Username" SortExpression="LastWriteUser.Username" AutoPostBackOnFilter="true" CurrentFilterFunction="StartsWith">
+                        <telerik:GridTemplateColumn HeaderText="Last Write User" DataField="LastWriteUser.Username" AllowSorting="false" AutoPostBackOnFilter="true" CurrentFilterFunction="StartsWith">
                             <ItemTemplate>
                                 <asp:HyperLink ID="LastWriteUserHyperLink" runat="server" Text='<%#: Eval("LastWriteUserId") != null ? Eval("LastWriteUser.Username") ?? "&nbsp;" : "" %>' NavigateUrl='<%# $"~/User2s/Edit.aspx?Id={Eval("LastWriteUserId")}" %>' Enabled='<%# Session["User2sPermission"] != null %>' />
                             </ItemTemplate>
@@ -221,7 +221,7 @@
                         <telerik:GridBoundColumn HeaderText="Renewals Policy Different Period" DataField="RenewalsPolicyDifferentPeriod" AutoPostBackOnFilter="true" />
                         <telerik:GridBoundColumn HeaderText="Renewals Policy Period Duration" DataField="RenewalsPolicyPeriodDuration" AutoPostBackOnFilter="true" />
                         <telerik:GridBoundColumn HeaderText="Renewals Policy Period Interval" DataField="RenewalsPolicyPeriodInterval" AutoPostBackOnFilter="true" HtmlEncode="true" CurrentFilterFunction="StartsWith" />
-                        <telerik:GridTemplateColumn AllowFiltering="false" AllowSorting="false" HeaderText="Renewals Policy Alternate Fixed Due Date Schedule" DataField="RenewalsPolicyAlternateFixedDueDateSchedule.Name" SortExpression="RenewalsPolicyAlternateFixedDueDateSchedule.Name" AutoPostBackOnFilter="true" CurrentFilterFunction="StartsWith">
+                        <telerik:GridTemplateColumn HeaderText="Renewals Policy Alternate Fixed Due Date Schedule" DataField="RenewalsPolicyAlternateFixedDueDateSchedule.Name" AllowSorting="false" AutoPostBackOnFilter="true" CurrentFilterFunction="StartsWith">
                             <ItemTemplate>
                                 <asp:HyperLink ID="RenewalsPolicyAlternateFixedDueDateScheduleHyperLink" runat="server" Text='<%#: Eval("RenewalsPolicyAlternateFixedDueDateSchedule.Name") %>' NavigateUrl='<%# $"~/FixedDueDateSchedule2s/Edit.aspx?Id={Eval("RenewalsPolicyAlternateFixedDueDateScheduleId")}" %>' Enabled='<%# Session["FixedDueDateSchedule2sPermission"] != null %>' />
                             </ItemTemplate>
@@ -246,13 +246,13 @@
                         <telerik:GridBoundColumn HeaderText="Pages Alternate Renewal Loan Period Duration" DataField="PagesAlternateRenewalLoanPeriodDuration" AutoPostBackOnFilter="true" />
                         <telerik:GridBoundColumn HeaderText="Pages Alternate Renewal Loan Period Interval" DataField="PagesAlternateRenewalLoanPeriodInterval" AutoPostBackOnFilter="true" HtmlEncode="true" CurrentFilterFunction="StartsWith" />
                         <telerik:GridBoundColumn HeaderText="Creation Time" DataField="CreationTime" AutoPostBackOnFilter="true" DataFormatString="{0:g}" />
-                        <telerik:GridTemplateColumn AllowFiltering="false" AllowSorting="false" HeaderText="Creation User" DataField="CreationUser.Username" SortExpression="CreationUser.Username" AutoPostBackOnFilter="true" CurrentFilterFunction="StartsWith">
+                        <telerik:GridTemplateColumn HeaderText="Creation User" DataField="CreationUser.Username" AllowSorting="false" AutoPostBackOnFilter="true" CurrentFilterFunction="StartsWith">
                             <ItemTemplate>
                                 <asp:HyperLink ID="CreationUserHyperLink" runat="server" Text='<%#: Eval("CreationUserId") != null ? Eval("CreationUser.Username") ?? "&nbsp;" : "" %>' NavigateUrl='<%# $"~/User2s/Edit.aspx?Id={Eval("CreationUserId")}" %>' Enabled='<%# Session["User2sPermission"] != null %>' />
                             </ItemTemplate>
                         </telerik:GridTemplateColumn>
                         <telerik:GridBoundColumn HeaderText="Last Write Time" DataField="LastWriteTime" AutoPostBackOnFilter="true" DataFormatString="{0:g}" />
-                        <telerik:GridTemplateColumn AllowFiltering="false" AllowSorting="false" HeaderText="Last Write User" DataField="LastWriteUser.Username" SortExpression="LastWriteUser.Username" AutoPostBackOnFilter="true" CurrentFilterFunction="StartsWith">
+                        <telerik:GridTemplateColumn HeaderText="Last Write User" DataField="LastWriteUser.Username" AllowSorting="false" AutoPostBackOnFilter="true" CurrentFilterFunction="StartsWith">
                             <ItemTemplate>
                                 <asp:HyperLink ID="LastWriteUserHyperLink" runat="server" Text='<%#: Eval("LastWriteUserId") != null ? Eval("LastWriteUser.Username") ?? "&nbsp;" : "" %>' NavigateUrl='<%# $"~/User2s/Edit.aspx?Id={Eval("LastWriteUserId")}" %>' Enabled='<%# Session["User2sPermission"] != null %>' />
                             </ItemTemplate>

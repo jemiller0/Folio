@@ -25,8 +25,19 @@ namespace FolioWebApplication.IdType2s
         protected void IdType2sRadGrid_NeedDataSource(object sender, GridNeedDataSourceEventArgs e)
         {
             var d = new Dictionary<string, string>() { { "Id", "id" }, { "Name", "name" }, { "Source", "source" }, { "CreationTime", "metadata.createdDate" }, { "CreationUserId", "metadata.createdByUserId" }, { "LastWriteTime", "metadata.updatedDate" }, { "LastWriteUserId", "metadata.updatedByUserId" } };
-            IdType2sRadGrid.DataSource = folioServiceContext.IdType2s(out var i, Global.GetCqlFilter(IdType2sRadGrid, d), IdType2sRadGrid.MasterTableView.SortExpressions.Count > 0 ? $"{d[IdType2sRadGrid.MasterTableView.SortExpressions[0].FieldName]}{(IdType2sRadGrid.MasterTableView.SortExpressions[0].SortOrder == GridSortOrder.Descending ? "/sort.descending" : "")}" : null, IdType2sRadGrid.PageSize * IdType2sRadGrid.CurrentPageIndex, IdType2sRadGrid.PageSize, true);
+            var where = Global.Trim(string.Join(" and ", new string[]
+            {
+                Global.GetCqlFilter(IdType2sRadGrid, "Id", "id"),
+                Global.GetCqlFilter(IdType2sRadGrid, "Name", "name"),
+                Global.GetCqlFilter(IdType2sRadGrid, "Source", "source"),
+                Global.GetCqlFilter(IdType2sRadGrid, "CreationTime", "metadata.createdDate"),
+                Global.GetCqlFilter(IdType2sRadGrid, "CreationUser.Username", "metadata.createdByUserId", "username", folioServiceContext.FolioServiceClient.Users),
+                Global.GetCqlFilter(IdType2sRadGrid, "LastWriteTime", "metadata.updatedDate"),
+                Global.GetCqlFilter(IdType2sRadGrid, "LastWriteUser.Username", "metadata.updatedByUserId", "username", folioServiceContext.FolioServiceClient.Users)
+            }.Where(s => s != null)));
+            IdType2sRadGrid.DataSource = folioServiceContext.IdType2s(out var i, where, IdType2sRadGrid.MasterTableView.SortExpressions.Count > 0 ? $"{d[IdType2sRadGrid.MasterTableView.SortExpressions[0].FieldName]}{(IdType2sRadGrid.MasterTableView.SortExpressions[0].SortOrder == GridSortOrder.Descending ? "/sort.descending" : "")}" : null, IdType2sRadGrid.PageSize * IdType2sRadGrid.CurrentPageIndex, IdType2sRadGrid.PageSize, true);
             IdType2sRadGrid.VirtualItemCount = i;
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"where = {where}");
         }
 
         protected void ExportLinkButton_Click(object sender, EventArgs e)

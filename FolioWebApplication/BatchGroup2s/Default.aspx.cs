@@ -25,8 +25,19 @@ namespace FolioWebApplication.BatchGroup2s
         protected void BatchGroup2sRadGrid_NeedDataSource(object sender, GridNeedDataSourceEventArgs e)
         {
             var d = new Dictionary<string, string>() { { "Id", "id" }, { "Name", "name" }, { "Description", "description" }, { "CreationTime", "metadata.createdDate" }, { "CreationUserId", "metadata.createdByUserId" }, { "LastWriteTime", "metadata.updatedDate" }, { "LastWriteUserId", "metadata.updatedByUserId" } };
-            BatchGroup2sRadGrid.DataSource = folioServiceContext.BatchGroup2s(out var i, Global.GetCqlFilter(BatchGroup2sRadGrid, d), BatchGroup2sRadGrid.MasterTableView.SortExpressions.Count > 0 ? $"{d[BatchGroup2sRadGrid.MasterTableView.SortExpressions[0].FieldName]}{(BatchGroup2sRadGrid.MasterTableView.SortExpressions[0].SortOrder == GridSortOrder.Descending ? "/sort.descending" : "")}" : null, BatchGroup2sRadGrid.PageSize * BatchGroup2sRadGrid.CurrentPageIndex, BatchGroup2sRadGrid.PageSize, true);
+            var where = Global.Trim(string.Join(" and ", new string[]
+            {
+                Global.GetCqlFilter(BatchGroup2sRadGrid, "Id", "id"),
+                Global.GetCqlFilter(BatchGroup2sRadGrid, "Name", "name"),
+                Global.GetCqlFilter(BatchGroup2sRadGrid, "Description", "description"),
+                Global.GetCqlFilter(BatchGroup2sRadGrid, "CreationTime", "metadata.createdDate"),
+                Global.GetCqlFilter(BatchGroup2sRadGrid, "CreationUser.Username", "metadata.createdByUserId", "username", folioServiceContext.FolioServiceClient.Users),
+                Global.GetCqlFilter(BatchGroup2sRadGrid, "LastWriteTime", "metadata.updatedDate"),
+                Global.GetCqlFilter(BatchGroup2sRadGrid, "LastWriteUser.Username", "metadata.updatedByUserId", "username", folioServiceContext.FolioServiceClient.Users)
+            }.Where(s => s != null)));
+            BatchGroup2sRadGrid.DataSource = folioServiceContext.BatchGroup2s(out var i, where, BatchGroup2sRadGrid.MasterTableView.SortExpressions.Count > 0 ? $"{d[BatchGroup2sRadGrid.MasterTableView.SortExpressions[0].FieldName]}{(BatchGroup2sRadGrid.MasterTableView.SortExpressions[0].SortOrder == GridSortOrder.Descending ? "/sort.descending" : "")}" : null, BatchGroup2sRadGrid.PageSize * BatchGroup2sRadGrid.CurrentPageIndex, BatchGroup2sRadGrid.PageSize, true);
             BatchGroup2sRadGrid.VirtualItemCount = i;
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"where = {where}");
         }
 
         protected void ExportLinkButton_Click(object sender, EventArgs e)

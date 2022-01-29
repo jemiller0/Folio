@@ -25,8 +25,19 @@ namespace FolioWebApplication.ContributorNameType2s
         protected void ContributorNameType2sRadGrid_NeedDataSource(object sender, GridNeedDataSourceEventArgs e)
         {
             var d = new Dictionary<string, string>() { { "Id", "id" }, { "Name", "name" }, { "Ordering", "ordering" }, { "CreationTime", "metadata.createdDate" }, { "CreationUserId", "metadata.createdByUserId" }, { "LastWriteTime", "metadata.updatedDate" }, { "LastWriteUserId", "metadata.updatedByUserId" } };
-            ContributorNameType2sRadGrid.DataSource = folioServiceContext.ContributorNameType2s(out var i, Global.GetCqlFilter(ContributorNameType2sRadGrid, d), ContributorNameType2sRadGrid.MasterTableView.SortExpressions.Count > 0 ? $"{d[ContributorNameType2sRadGrid.MasterTableView.SortExpressions[0].FieldName]}{(ContributorNameType2sRadGrid.MasterTableView.SortExpressions[0].SortOrder == GridSortOrder.Descending ? "/sort.descending" : "")}" : null, ContributorNameType2sRadGrid.PageSize * ContributorNameType2sRadGrid.CurrentPageIndex, ContributorNameType2sRadGrid.PageSize, true);
+            var where = Global.Trim(string.Join(" and ", new string[]
+            {
+                Global.GetCqlFilter(ContributorNameType2sRadGrid, "Id", "id"),
+                Global.GetCqlFilter(ContributorNameType2sRadGrid, "Name", "name"),
+                Global.GetCqlFilter(ContributorNameType2sRadGrid, "Ordering", "ordering"),
+                Global.GetCqlFilter(ContributorNameType2sRadGrid, "CreationTime", "metadata.createdDate"),
+                Global.GetCqlFilter(ContributorNameType2sRadGrid, "CreationUser.Username", "metadata.createdByUserId", "username", folioServiceContext.FolioServiceClient.Users),
+                Global.GetCqlFilter(ContributorNameType2sRadGrid, "LastWriteTime", "metadata.updatedDate"),
+                Global.GetCqlFilter(ContributorNameType2sRadGrid, "LastWriteUser.Username", "metadata.updatedByUserId", "username", folioServiceContext.FolioServiceClient.Users)
+            }.Where(s => s != null)));
+            ContributorNameType2sRadGrid.DataSource = folioServiceContext.ContributorNameType2s(out var i, where, ContributorNameType2sRadGrid.MasterTableView.SortExpressions.Count > 0 ? $"{d[ContributorNameType2sRadGrid.MasterTableView.SortExpressions[0].FieldName]}{(ContributorNameType2sRadGrid.MasterTableView.SortExpressions[0].SortOrder == GridSortOrder.Descending ? "/sort.descending" : "")}" : null, ContributorNameType2sRadGrid.PageSize * ContributorNameType2sRadGrid.CurrentPageIndex, ContributorNameType2sRadGrid.PageSize, true);
             ContributorNameType2sRadGrid.VirtualItemCount = i;
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"where = {where}");
         }
 
         protected void ExportLinkButton_Click(object sender, EventArgs e)

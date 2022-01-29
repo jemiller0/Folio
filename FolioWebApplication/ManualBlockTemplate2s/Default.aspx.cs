@@ -25,8 +25,25 @@ namespace FolioWebApplication.ManualBlockTemplate2s
         protected void ManualBlockTemplate2sRadGrid_NeedDataSource(object sender, GridNeedDataSourceEventArgs e)
         {
             var d = new Dictionary<string, string>() { { "Id", "id" }, { "Name", "name" }, { "Code", "code" }, { "Description", "desc" }, { "BlockTemplateDescription", "blockTemplate.desc" }, { "BlockTemplatePatronMessage", "blockTemplate.patronMessage" }, { "BlockTemplateBorrowing", "blockTemplate.borrowing" }, { "BlockTemplateRenewals", "blockTemplate.renewals" }, { "BlockTemplateRequests", "blockTemplate.requests" }, { "CreationTime", "metadata.createdDate" }, { "CreationUserId", "metadata.createdByUserId" }, { "LastWriteTime", "metadata.updatedDate" }, { "LastWriteUserId", "metadata.updatedByUserId" } };
-            ManualBlockTemplate2sRadGrid.DataSource = folioServiceContext.ManualBlockTemplate2s(out var i, Global.GetCqlFilter(ManualBlockTemplate2sRadGrid, d), ManualBlockTemplate2sRadGrid.MasterTableView.SortExpressions.Count > 0 ? $"{d[ManualBlockTemplate2sRadGrid.MasterTableView.SortExpressions[0].FieldName]}{(ManualBlockTemplate2sRadGrid.MasterTableView.SortExpressions[0].SortOrder == GridSortOrder.Descending ? "/sort.descending" : "")}" : null, ManualBlockTemplate2sRadGrid.PageSize * ManualBlockTemplate2sRadGrid.CurrentPageIndex, ManualBlockTemplate2sRadGrid.PageSize, true);
+            var where = Global.Trim(string.Join(" and ", new string[]
+            {
+                Global.GetCqlFilter(ManualBlockTemplate2sRadGrid, "Id", "id"),
+                Global.GetCqlFilter(ManualBlockTemplate2sRadGrid, "Name", "name"),
+                Global.GetCqlFilter(ManualBlockTemplate2sRadGrid, "Code", "code"),
+                Global.GetCqlFilter(ManualBlockTemplate2sRadGrid, "Description", "desc"),
+                Global.GetCqlFilter(ManualBlockTemplate2sRadGrid, "BlockTemplateDescription", "blockTemplate.desc"),
+                Global.GetCqlFilter(ManualBlockTemplate2sRadGrid, "BlockTemplatePatronMessage", "blockTemplate.patronMessage"),
+                Global.GetCqlFilter(ManualBlockTemplate2sRadGrid, "BlockTemplateBorrowing", "blockTemplate.borrowing"),
+                Global.GetCqlFilter(ManualBlockTemplate2sRadGrid, "BlockTemplateRenewals", "blockTemplate.renewals"),
+                Global.GetCqlFilter(ManualBlockTemplate2sRadGrid, "BlockTemplateRequests", "blockTemplate.requests"),
+                Global.GetCqlFilter(ManualBlockTemplate2sRadGrid, "CreationTime", "metadata.createdDate"),
+                Global.GetCqlFilter(ManualBlockTemplate2sRadGrid, "CreationUser.Username", "metadata.createdByUserId", "username", folioServiceContext.FolioServiceClient.Users),
+                Global.GetCqlFilter(ManualBlockTemplate2sRadGrid, "LastWriteTime", "metadata.updatedDate"),
+                Global.GetCqlFilter(ManualBlockTemplate2sRadGrid, "LastWriteUser.Username", "metadata.updatedByUserId", "username", folioServiceContext.FolioServiceClient.Users)
+            }.Where(s => s != null)));
+            ManualBlockTemplate2sRadGrid.DataSource = folioServiceContext.ManualBlockTemplate2s(out var i, where, ManualBlockTemplate2sRadGrid.MasterTableView.SortExpressions.Count > 0 ? $"{d[ManualBlockTemplate2sRadGrid.MasterTableView.SortExpressions[0].FieldName]}{(ManualBlockTemplate2sRadGrid.MasterTableView.SortExpressions[0].SortOrder == GridSortOrder.Descending ? "/sort.descending" : "")}" : null, ManualBlockTemplate2sRadGrid.PageSize * ManualBlockTemplate2sRadGrid.CurrentPageIndex, ManualBlockTemplate2sRadGrid.PageSize, true);
             ManualBlockTemplate2sRadGrid.VirtualItemCount = i;
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"where = {where}");
         }
 
         protected void ExportLinkButton_Click(object sender, EventArgs e)

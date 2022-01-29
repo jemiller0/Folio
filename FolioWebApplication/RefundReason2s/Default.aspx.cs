@@ -25,8 +25,20 @@ namespace FolioWebApplication.RefundReason2s
         protected void RefundReason2sRadGrid_NeedDataSource(object sender, GridNeedDataSourceEventArgs e)
         {
             var d = new Dictionary<string, string>() { { "Id", "id" }, { "Name", "nameReason" }, { "Description", "description" }, { "CreationTime", "metadata.createdDate" }, { "CreationUserId", "metadata.createdByUserId" }, { "LastWriteTime", "metadata.updatedDate" }, { "LastWriteUserId", "metadata.updatedByUserId" }, { "AccountId", "accountId" } };
-            RefundReason2sRadGrid.DataSource = folioServiceContext.RefundReason2s(out var i, Global.GetCqlFilter(RefundReason2sRadGrid, d), RefundReason2sRadGrid.MasterTableView.SortExpressions.Count > 0 ? $"{d[RefundReason2sRadGrid.MasterTableView.SortExpressions[0].FieldName]}{(RefundReason2sRadGrid.MasterTableView.SortExpressions[0].SortOrder == GridSortOrder.Descending ? "/sort.descending" : "")}" : null, RefundReason2sRadGrid.PageSize * RefundReason2sRadGrid.CurrentPageIndex, RefundReason2sRadGrid.PageSize, true);
+            var where = Global.Trim(string.Join(" and ", new string[]
+            {
+                Global.GetCqlFilter(RefundReason2sRadGrid, "Id", "id"),
+                Global.GetCqlFilter(RefundReason2sRadGrid, "Name", "nameReason"),
+                Global.GetCqlFilter(RefundReason2sRadGrid, "Description", "description"),
+                Global.GetCqlFilter(RefundReason2sRadGrid, "CreationTime", "metadata.createdDate"),
+                Global.GetCqlFilter(RefundReason2sRadGrid, "CreationUser.Username", "metadata.createdByUserId", "username", folioServiceContext.FolioServiceClient.Users),
+                Global.GetCqlFilter(RefundReason2sRadGrid, "LastWriteTime", "metadata.updatedDate"),
+                Global.GetCqlFilter(RefundReason2sRadGrid, "LastWriteUser.Username", "metadata.updatedByUserId", "username", folioServiceContext.FolioServiceClient.Users),
+                Global.GetCqlFilter(RefundReason2sRadGrid, "Account.Title", "accountId", "title", folioServiceContext.FolioServiceClient.Fees)
+            }.Where(s => s != null)));
+            RefundReason2sRadGrid.DataSource = folioServiceContext.RefundReason2s(out var i, where, RefundReason2sRadGrid.MasterTableView.SortExpressions.Count > 0 ? $"{d[RefundReason2sRadGrid.MasterTableView.SortExpressions[0].FieldName]}{(RefundReason2sRadGrid.MasterTableView.SortExpressions[0].SortOrder == GridSortOrder.Descending ? "/sort.descending" : "")}" : null, RefundReason2sRadGrid.PageSize * RefundReason2sRadGrid.CurrentPageIndex, RefundReason2sRadGrid.PageSize, true);
             RefundReason2sRadGrid.VirtualItemCount = i;
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"where = {where}");
         }
 
         protected void ExportLinkButton_Click(object sender, EventArgs e)

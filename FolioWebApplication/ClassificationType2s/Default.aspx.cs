@@ -25,8 +25,19 @@ namespace FolioWebApplication.ClassificationType2s
         protected void ClassificationType2sRadGrid_NeedDataSource(object sender, GridNeedDataSourceEventArgs e)
         {
             var d = new Dictionary<string, string>() { { "Id", "id" }, { "Name", "name" }, { "Source", "source" }, { "CreationTime", "metadata.createdDate" }, { "CreationUserId", "metadata.createdByUserId" }, { "LastWriteTime", "metadata.updatedDate" }, { "LastWriteUserId", "metadata.updatedByUserId" } };
-            ClassificationType2sRadGrid.DataSource = folioServiceContext.ClassificationType2s(out var i, Global.GetCqlFilter(ClassificationType2sRadGrid, d), ClassificationType2sRadGrid.MasterTableView.SortExpressions.Count > 0 ? $"{d[ClassificationType2sRadGrid.MasterTableView.SortExpressions[0].FieldName]}{(ClassificationType2sRadGrid.MasterTableView.SortExpressions[0].SortOrder == GridSortOrder.Descending ? "/sort.descending" : "")}" : null, ClassificationType2sRadGrid.PageSize * ClassificationType2sRadGrid.CurrentPageIndex, ClassificationType2sRadGrid.PageSize, true);
+            var where = Global.Trim(string.Join(" and ", new string[]
+            {
+                Global.GetCqlFilter(ClassificationType2sRadGrid, "Id", "id"),
+                Global.GetCqlFilter(ClassificationType2sRadGrid, "Name", "name"),
+                Global.GetCqlFilter(ClassificationType2sRadGrid, "Source", "source"),
+                Global.GetCqlFilter(ClassificationType2sRadGrid, "CreationTime", "metadata.createdDate"),
+                Global.GetCqlFilter(ClassificationType2sRadGrid, "CreationUser.Username", "metadata.createdByUserId", "username", folioServiceContext.FolioServiceClient.Users),
+                Global.GetCqlFilter(ClassificationType2sRadGrid, "LastWriteTime", "metadata.updatedDate"),
+                Global.GetCqlFilter(ClassificationType2sRadGrid, "LastWriteUser.Username", "metadata.updatedByUserId", "username", folioServiceContext.FolioServiceClient.Users)
+            }.Where(s => s != null)));
+            ClassificationType2sRadGrid.DataSource = folioServiceContext.ClassificationType2s(out var i, where, ClassificationType2sRadGrid.MasterTableView.SortExpressions.Count > 0 ? $"{d[ClassificationType2sRadGrid.MasterTableView.SortExpressions[0].FieldName]}{(ClassificationType2sRadGrid.MasterTableView.SortExpressions[0].SortOrder == GridSortOrder.Descending ? "/sort.descending" : "")}" : null, ClassificationType2sRadGrid.PageSize * ClassificationType2sRadGrid.CurrentPageIndex, ClassificationType2sRadGrid.PageSize, true);
             ClassificationType2sRadGrid.VirtualItemCount = i;
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"where = {where}");
         }
 
         protected void ExportLinkButton_Click(object sender, EventArgs e)
