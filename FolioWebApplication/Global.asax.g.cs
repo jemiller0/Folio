@@ -107,7 +107,6 @@ namespace FolioWebApplication
             Session["FundAcquisitionsUnitsPermission"] = roles.Contains("all") || roles.Contains("finance.all") || roles.Contains("uc.fundacquisitionsunits.view") ? "View" : null;
             Session["FundTagsPermission"] = roles.Contains("all") || roles.Contains("finance.all") || roles.Contains("uc.fundtags.view") ? "View" : null;
             Session["FundType2sPermission"] = roles.Contains("all") || roles.Contains("finance.all") || roles.Contains("uc.fundtypes.view") ? "View" : null;
-            Session["InvoiceTransactionSummary2sPermission"] = roles.Contains("all") || roles.Contains("finance.all") || roles.Contains("uc.invoicetransactionsummaries.view") ? "View" : null;
             Session["Ledger2sPermission"] = roles.Contains("all") || roles.Contains("finance.all") || roles.Contains("uc.ledgers.view") ? "View" : null;
             Session["LedgerAcquisitionsUnitsPermission"] = roles.Contains("all") || roles.Contains("finance.all") || roles.Contains("uc.ledgeracquisitionsunits.view") ? "View" : null;
             Session["LedgerRollover2sPermission"] = roles.Contains("all") || roles.Contains("finance.all") || roles.Contains("uc.ledgerrollovers.view") ? "View" : null;
@@ -115,7 +114,6 @@ namespace FolioWebApplication
             Session["LedgerRolloverEncumbrancesRolloversPermission"] = roles.Contains("all") || roles.Contains("finance.all") || roles.Contains("uc.ledgerrolloverencumbrancesrollovers.view") ? "View" : null;
             Session["LedgerRolloverError2sPermission"] = roles.Contains("all") || roles.Contains("finance.all") || roles.Contains("uc.ledgerrollovererrors.view") ? "View" : null;
             Session["LedgerRolloverProgress2sPermission"] = roles.Contains("all") || roles.Contains("finance.all") || roles.Contains("uc.ledgerrolloverprogresses.view") ? "View" : null;
-            Session["OrderTransactionSummary2sPermission"] = roles.Contains("all") || roles.Contains("finance.all") || roles.Contains("uc.ordertransactionsummaries.view") ? "View" : null;
             Session["Transaction2sPermission"] = roles.Contains("all") || roles.Contains("finance.all") || roles.Contains("uc.transactions.view") ? "View" : null;
             Session["TransactionTagsPermission"] = roles.Contains("all") || roles.Contains("finance.all") || roles.Contains("uc.transactiontags.view") ? "View" : null;
         }
@@ -449,7 +447,6 @@ namespace FolioWebApplication
             Session["FundAcquisitionsUnitsPermission"] = permission;
             Session["FundTagsPermission"] = permission;
             Session["FundType2sPermission"] = permission;
-            Session["InvoiceTransactionSummary2sPermission"] = permission;
             Session["Ledger2sPermission"] = permission;
             Session["LedgerAcquisitionsUnitsPermission"] = permission;
             Session["LedgerRollover2sPermission"] = permission;
@@ -457,7 +454,6 @@ namespace FolioWebApplication
             Session["LedgerRolloverEncumbrancesRolloversPermission"] = permission;
             Session["LedgerRolloverError2sPermission"] = permission;
             Session["LedgerRolloverProgress2sPermission"] = permission;
-            Session["OrderTransactionSummary2sPermission"] = permission;
             Session["Transaction2sPermission"] = permission;
             Session["TransactionTagsPermission"] = permission;
         }

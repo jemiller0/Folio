@@ -3443,8 +3443,7 @@ i2.created_by_user_id AS ""CreationUserId"",
 i2.updated_date AS ""LastWriteTime"",
 lwu.username AS ""LastWriteUser"",
 i2.updated_by_user_id AS ""LastWriteUserId"",
-i2.content AS ""Content"",
-its2.id AS ""InvoiceTransactionSummary2"" 
+i2.content AS ""Content"" 
 FROM uc.invoices AS i2
 LEFT JOIN uc.users AS ab ON ab.id = i2.approved_by_id
 LEFT JOIN uc.batch_groups AS bg ON bg.id = i2.batch_group_id
@@ -3804,32 +3803,6 @@ LEFT JOIN uc.invoices AS i ON i.id = it.invoice_id
  ORDER BY it.content
 ", take: 1);
             traceSource.TraceEvent(TraceEventType.Information, 0, $"InvoiceTagsQueryTest()\r\n    ElapsedTime={s.Elapsed}");
-        }
-
-        [TestMethod]
-        public void QueryInvoiceTransactionSummary2sTest()
-        {
-            var s = Stopwatch.StartNew();
-            folioDapperContext.InvoiceTransactionSummary2s(take: 1).ToArray();
-            traceSource.TraceEvent(TraceEventType.Information, 0, $"InvoiceTransactionSummary2sTest()\r\n    ElapsedTime={s.Elapsed}");
-        }
-
-        [TestMethod]
-        public void InvoiceTransactionSummary2sQueryTest()
-        {
-            var s = Stopwatch.StartNew();
-            folioDapperContext.Query(@"
-SELECT
-its2.id AS ""Id"",
-i2.folio_invoice_no AS ""Invoice2"",
-its2.num_pending_payments AS ""NumPendingPayments"",
-its2.num_payments_credits AS ""NumPaymentsCredits"",
-its2.content AS ""Content"" 
-FROM uc.invoice_transaction_summaries AS its2
-LEFT JOIN uc.invoices AS i2 ON i2.id = its2.id
- ORDER BY its2.id
-", take: 1);
-            traceSource.TraceEvent(TraceEventType.Information, 0, $"InvoiceTransactionSummary2sQueryTest()\r\n    ElapsedTime={s.Elapsed}");
         }
 
         [TestMethod]
@@ -5293,8 +5266,7 @@ o2.created_by_user_id AS ""CreationUserId"",
 o2.updated_date AS ""LastWriteTime"",
 lwu.username AS ""LastWriteUser"",
 o2.updated_by_user_id AS ""LastWriteUserId"",
-o2.content AS ""Content"",
-ots2.id AS ""OrderTransactionSummary2"" 
+o2.content AS ""Content"" 
 FROM uc.orders AS o2
 LEFT JOIN uc.users AS ab ON ab.id = o2.approved_by_id
 LEFT JOIN uc.users AS at ON at.id = o2.assigned_to_id
@@ -5814,31 +5786,6 @@ FROM uc.order_templates AS ot2
  ORDER BY ot2.template_name
 ", take: 1);
             traceSource.TraceEvent(TraceEventType.Information, 0, $"OrderTemplate2sQueryTest()\r\n    ElapsedTime={s.Elapsed}");
-        }
-
-        [TestMethod]
-        public void QueryOrderTransactionSummary2sTest()
-        {
-            var s = Stopwatch.StartNew();
-            folioDapperContext.OrderTransactionSummary2s(take: 1).ToArray();
-            traceSource.TraceEvent(TraceEventType.Information, 0, $"OrderTransactionSummary2sTest()\r\n    ElapsedTime={s.Elapsed}");
-        }
-
-        [TestMethod]
-        public void OrderTransactionSummary2sQueryTest()
-        {
-            var s = Stopwatch.StartNew();
-            folioDapperContext.Query(@"
-SELECT
-ots2.id AS ""Id"",
-o2.po_number AS ""Order2"",
-ots2.num_transactions AS ""NumTransactions"",
-ots2.content AS ""Content"" 
-FROM uc.order_transaction_summaries AS ots2
-LEFT JOIN uc.orders AS o2 ON o2.id = ots2.id
- ORDER BY ots2.id
-", take: 1);
-            traceSource.TraceEvent(TraceEventType.Information, 0, $"OrderTransactionSummary2sQueryTest()\r\n    ElapsedTime={s.Elapsed}");
         }
 
         [TestMethod]

@@ -17,20 +17,20 @@
                                 <asp:HyperLink ID="ViewHyperLink" Text="View" NavigateUrl='<%# $"Edit.aspx?Id={Eval("Id")}" %>' runat="server" />
                             </ItemTemplate>
                         </telerik:GridTemplateColumn>
-                        <telerik:GridBoundColumn HeaderText="Status" DataField="Status" AutoPostBackOnFilter="true" HtmlEncode="true" CurrentFilterFunction="StartsWith" />
-                        <telerik:GridBoundColumn HeaderText="Processing Started Date" DataField="ProcessingStartedDate" AutoPostBackOnFilter="true" DataFormatString="{0:d}" />
-                        <telerik:GridTemplateColumn HeaderText="Creation User" DataField="CreationUser.Username" AllowSorting="false" AutoPostBackOnFilter="true" CurrentFilterFunction="StartsWith">
+                        <telerik:GridBoundColumn HeaderText="Status" DataField="Status" AllowFiltering="false" AllowSorting="false" HtmlEncode="true" />
+                        <telerik:GridBoundColumn HeaderText="Processing Started Date" DataField="ProcessingStartedDate" AllowFiltering="false" AllowSorting="false" DataFormatString="{0:d}" />
+                        <telerik:GridTemplateColumn HeaderText="Creation User" DataField="CreationUser.Username" AllowSorting="false" AllowFiltering="false">
                             <ItemTemplate>
                                 <asp:HyperLink ID="CreationUserHyperLink" runat="server" Text='<%#: Eval("CreationUserId") != null ? Eval("CreationUser.Username") ?? "&nbsp;" : "" %>' NavigateUrl='<%# $"~/User2s/Edit.aspx?Id={Eval("CreationUserId")}" %>' Enabled='<%# Session["User2sPermission"] != null %>' />
                             </ItemTemplate>
                         </telerik:GridTemplateColumn>
-                        <telerik:GridBoundColumn HeaderText="Creation Time" DataField="CreationTime" AutoPostBackOnFilter="true" DataFormatString="{0:g}" />
-                        <telerik:GridTemplateColumn HeaderText="Last Write User" DataField="LastWriteUser.Username" AllowSorting="false" AutoPostBackOnFilter="true" CurrentFilterFunction="StartsWith">
+                        <telerik:GridBoundColumn HeaderText="Creation Time" DataField="CreationTime" AllowFiltering="false" AllowSorting="false" DataFormatString="{0:g}" />
+                        <telerik:GridTemplateColumn HeaderText="Last Write User" DataField="LastWriteUser.Username" AllowSorting="false" AllowFiltering="false">
                             <ItemTemplate>
                                 <asp:HyperLink ID="LastWriteUserHyperLink" runat="server" Text='<%#: Eval("LastWriteUserId") != null ? Eval("LastWriteUser.Username") ?? "&nbsp;" : "" %>' NavigateUrl='<%# $"~/User2s/Edit.aspx?Id={Eval("LastWriteUserId")}" %>' Enabled='<%# Session["User2sPermission"] != null %>' />
                             </ItemTemplate>
                         </telerik:GridTemplateColumn>
-                        <telerik:GridBoundColumn HeaderText="Last Write Time" DataField="LastWriteTime" AutoPostBackOnFilter="true" DataFormatString="{0:g}" />
+                        <telerik:GridBoundColumn HeaderText="Last Write Time" DataField="LastWriteTime" AllowFiltering="false" AllowSorting="false" DataFormatString="{0:g}" />
                     </Columns>
                 </MasterTableView>
             </telerik:RadGrid>

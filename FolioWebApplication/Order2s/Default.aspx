@@ -77,7 +77,6 @@
                                 <asp:HyperLink ID="LastWriteUserHyperLink" runat="server" Text='<%#: Eval("LastWriteUserId") != null ? Eval("LastWriteUser.Username") ?? "&nbsp;" : "" %>' NavigateUrl='<%# $"~/User2s/Edit.aspx?Id={Eval("LastWriteUserId")}" %>' Enabled='<%# Session["User2sPermission"] != null %>' />
                             </ItemTemplate>
                         </telerik:GridTemplateColumn>
-                        <telerik:GridBoundColumn HeaderText="Order Transaction Summary" DataField="OrderTransactionSummary2" AutoPostBackOnFilter="true" AllowSorting="false" />
                     </Columns>
                 </MasterTableView>
             </telerik:RadGrid>

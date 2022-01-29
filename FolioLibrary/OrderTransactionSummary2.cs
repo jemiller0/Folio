@@ -2,7 +2,6 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using NJsonSchema;
 using System;
-using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.IO;
@@ -13,7 +12,7 @@ namespace FolioLibrary
 {
     // uc.order_transaction_summaries -> diku_mod_finance_storage.order_transaction_summaries
     // OrderTransactionSummary2 -> OrderTransactionSummary
-    [DisplayColumn(nameof(Id)), DisplayName("Order Transaction Summaries"), JsonObject(MemberSerialization = MemberSerialization.OptIn), Table("order_transaction_summaries", Schema = "uc")]
+    [JsonObject(MemberSerialization = MemberSerialization.OptIn), Table("order_transaction_summaries", Schema = "uc")]
     public partial class OrderTransactionSummary2
     {
         public static ValidationResult ValidateContent(string value)

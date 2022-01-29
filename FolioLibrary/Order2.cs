@@ -173,7 +173,7 @@ namespace FolioLibrary
         [Display(Name = "Order Tags", Order = 46), JsonConverter(typeof(ArrayJsonConverter<List<OrderTag>, OrderTag>), "Content"), JsonProperty("tags.tagList")]
         public virtual ICollection<OrderTag> OrderTags { get; set; }
 
-        [Display(Name = "Order Transaction Summary", Order = 47)]
+        [ScaffoldColumn(false)]
         public virtual OrderTransactionSummary2 OrderTransactionSummary2 { get; set; }
 
         [Display(Name = "Transactions", Order = 48)]

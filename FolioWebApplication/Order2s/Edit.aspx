@@ -241,14 +241,6 @@
                                     <pre><asp:Literal ID="ContentLiteral" runat="server" Text='<%#: Eval("Content") %>' /></pre>
                                 </td>
                             </tr>
-                            <tr runat="server" visible='<%# Eval("OrderTransactionSummary2") != null %>'>
-                                <td>
-                                    <asp:HyperLink runat="server" Text="Order Transaction Summary:" NavigateUrl="~/OrderTransactionSummary2s/Default.aspx" Enabled='<%# Session["OrderTransactionSummary2sPermission"] != null %>' />
-                                </td>
-                                <td>
-                                    <asp:HyperLink ID="OrderTransactionSummary2HyperLink" runat="server" Text='<%# Eval("OrderTransactionSummary2.Id") %>' NavigateUrl='<%# $"~/OrderTransactionSummary2s/Edit.aspx?Id={Eval("Id")}" %>' Enabled='<%# Session["OrderTransactionSummary2sPermission"] != null %>' />
-                                </td>
-                            </tr>
                         </table>
                     </asp:Panel>
                 </ItemTemplate>

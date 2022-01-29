@@ -75,39 +75,39 @@
                                 <asp:HyperLink ID="ViewHyperLink" Text="View" NavigateUrl='<%# $"~/Record2s/Edit.aspx?Id={Eval("Id")}" %>' runat="server" />
                             </ItemTemplate>
                         </telerik:GridTemplateColumn>
-                        <telerik:GridTemplateColumn HeaderText="Id" DataField="Id" SortExpression="Id" AutoPostBackOnFilter="true" CurrentFilterFunction="EqualTo">
+                        <telerik:GridTemplateColumn HeaderText="Id" DataField="Id" AllowSorting="false" AllowFiltering="false">
                             <ItemTemplate>
                                 <asp:HyperLink ID="IdHyperLink" runat="server" Text='<%# Eval("Id") %>' NavigateUrl='<%# $"~/Record2s/Edit.aspx?Id={Eval("Id")}" %>' />
                             </ItemTemplate>
                         </telerik:GridTemplateColumn>
-                        <telerik:GridBoundColumn HeaderText="Matched Id" DataField="MatchedId" AutoPostBackOnFilter="true" CurrentFilterFunction="EqualTo" />
-                        <telerik:GridBoundColumn HeaderText="Generation" DataField="Generation" AutoPostBackOnFilter="true" />
-                        <telerik:GridBoundColumn HeaderText="Record Type" DataField="RecordType" AutoPostBackOnFilter="true" HtmlEncode="true" CurrentFilterFunction="StartsWith" />
-                        <telerik:GridTemplateColumn HeaderText="Instance" DataField="Instance.Title" AllowSorting="false" AutoPostBackOnFilter="true" CurrentFilterFunction="StartsWith">
+                        <telerik:GridBoundColumn HeaderText="Matched Id" DataField="MatchedId" AllowFiltering="false" AllowSorting="false" />
+                        <telerik:GridBoundColumn HeaderText="Generation" DataField="Generation" AllowFiltering="false" AllowSorting="false" />
+                        <telerik:GridBoundColumn HeaderText="Record Type" DataField="RecordType" AllowFiltering="false" AllowSorting="false" HtmlEncode="true" />
+                        <telerik:GridTemplateColumn HeaderText="Instance" DataField="Instance.Title" AllowSorting="false" AllowFiltering="false">
                             <ItemTemplate>
                                 <asp:HyperLink ID="InstanceHyperLink" runat="server" Text='<%#: Eval("Instance.Title") %>' NavigateUrl='<%# $"~/Instance2s/Edit.aspx?Id={Eval("InstanceId")}" %>' Enabled='<%# Session["Instance2sPermission"] != null %>' />
                             </ItemTemplate>
                         </telerik:GridTemplateColumn>
-                        <telerik:GridBoundColumn HeaderText="State" DataField="State" AutoPostBackOnFilter="true" HtmlEncode="true" CurrentFilterFunction="StartsWith" />
-                        <telerik:GridBoundColumn HeaderText="Leader Record Status" DataField="LeaderRecordStatus" AutoPostBackOnFilter="true" HtmlEncode="true" CurrentFilterFunction="StartsWith" />
-                        <telerik:GridBoundColumn HeaderText="Order" DataField="Order" AutoPostBackOnFilter="true" />
-                        <telerik:GridBoundColumn HeaderText="Suppress Discovery" DataField="SuppressDiscovery" AutoPostBackOnFilter="true" />
-                        <telerik:GridTemplateColumn HeaderText="Creation User" DataField="CreationUser.Username" AllowSorting="false" AutoPostBackOnFilter="true" CurrentFilterFunction="StartsWith">
+                        <telerik:GridBoundColumn HeaderText="State" DataField="State" AllowFiltering="false" AllowSorting="false" HtmlEncode="true" />
+                        <telerik:GridBoundColumn HeaderText="Leader Record Status" DataField="LeaderRecordStatus" AllowFiltering="false" AllowSorting="false" HtmlEncode="true" />
+                        <telerik:GridBoundColumn HeaderText="Order" DataField="Order" AllowFiltering="false" AllowSorting="false" />
+                        <telerik:GridBoundColumn HeaderText="Suppress Discovery" DataField="SuppressDiscovery" AllowFiltering="false" AllowSorting="false" />
+                        <telerik:GridTemplateColumn HeaderText="Creation User" DataField="CreationUser.Username" AllowSorting="false" AllowFiltering="false">
                             <ItemTemplate>
                                 <asp:HyperLink ID="CreationUserHyperLink" runat="server" Text='<%#: Eval("CreationUserId") != null ? Eval("CreationUser.Username") ?? "&nbsp;" : "" %>' NavigateUrl='<%# $"~/User2s/Edit.aspx?Id={Eval("CreationUserId")}" %>' Enabled='<%# Session["User2sPermission"] != null %>' />
                             </ItemTemplate>
                         </telerik:GridTemplateColumn>
-                        <telerik:GridBoundColumn HeaderText="Creation Time" DataField="CreationTime" AutoPostBackOnFilter="true" DataFormatString="{0:g}" />
-                        <telerik:GridTemplateColumn HeaderText="Last Write User" DataField="LastWriteUser.Username" AllowSorting="false" AutoPostBackOnFilter="true" CurrentFilterFunction="StartsWith">
+                        <telerik:GridBoundColumn HeaderText="Creation Time" DataField="CreationTime" AllowFiltering="false" AllowSorting="false" DataFormatString="{0:g}" />
+                        <telerik:GridTemplateColumn HeaderText="Last Write User" DataField="LastWriteUser.Username" AllowSorting="false" AllowFiltering="false">
                             <ItemTemplate>
                                 <asp:HyperLink ID="LastWriteUserHyperLink" runat="server" Text='<%#: Eval("LastWriteUserId") != null ? Eval("LastWriteUser.Username") ?? "&nbsp;" : "" %>' NavigateUrl='<%# $"~/User2s/Edit.aspx?Id={Eval("LastWriteUserId")}" %>' Enabled='<%# Session["User2sPermission"] != null %>' />
                             </ItemTemplate>
                         </telerik:GridTemplateColumn>
-                        <telerik:GridBoundColumn HeaderText="Last Write Time" DataField="LastWriteTime" AutoPostBackOnFilter="true" DataFormatString="{0:g}" />
-                        <telerik:GridBoundColumn HeaderText="Instance Hrid" DataField="InstanceHrid" AutoPostBackOnFilter="true" HtmlEncode="true" CurrentFilterFunction="StartsWith" />
-                        <telerik:GridBoundColumn HeaderText="Error Record 2" DataField="ErrorRecord2" AutoPostBackOnFilter="true" AllowSorting="false" />
-                        <telerik:GridBoundColumn HeaderText="Marc Record 2" DataField="MarcRecord2" AutoPostBackOnFilter="true" AllowSorting="false" />
-                        <telerik:GridBoundColumn HeaderText="Raw Record 2" DataField="RawRecord2" AutoPostBackOnFilter="true" AllowSorting="false" />
+                        <telerik:GridBoundColumn HeaderText="Last Write Time" DataField="LastWriteTime" AllowFiltering="false" AllowSorting="false" DataFormatString="{0:g}" />
+                        <telerik:GridBoundColumn HeaderText="Instance Hrid" DataField="InstanceHrid" AllowFiltering="false" AllowSorting="false" HtmlEncode="true" />
+                        <telerik:GridBoundColumn HeaderText="Error Record 2" DataField="ErrorRecord2" AllowFiltering="false" AllowSorting="false" />
+                        <telerik:GridBoundColumn HeaderText="Marc Record 2" DataField="MarcRecord2" AllowFiltering="false" AllowSorting="false" />
+                        <telerik:GridBoundColumn HeaderText="Raw Record 2" DataField="RawRecord2" AllowFiltering="false" AllowSorting="false" />
                     </Columns>
                 </MasterTableView>
             </telerik:RadGrid>

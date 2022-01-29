@@ -187,7 +187,7 @@ namespace FolioLibrary
         [Display(Name = "Invoice Tags", Order = 53), JsonConverter(typeof(ArrayJsonConverter<List<InvoiceTag>, InvoiceTag>), "Content"), JsonProperty("tags.tagList")]
         public virtual ICollection<InvoiceTag> InvoiceTags { get; set; }
 
-        [Display(Name = "Invoice Transaction Summary 2", Order = 54)]
+        [ScaffoldColumn(false)]
         public virtual InvoiceTransactionSummary2 InvoiceTransactionSummary2 { get; set; }
 
         [Display(Name = "Order Invoices", Order = 55)]

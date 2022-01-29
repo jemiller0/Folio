@@ -313,14 +313,6 @@
                                     <pre><asp:Literal ID="ContentLiteral" runat="server" Text='<%#: Eval("Content") %>' /></pre>
                                 </td>
                             </tr>
-                            <tr runat="server" visible='<%# Eval("InvoiceTransactionSummary2") != null %>'>
-                                <td>
-                                    <asp:HyperLink runat="server" Text="Invoice Transaction Summary:" NavigateUrl="~/InvoiceTransactionSummary2s/Default.aspx" Enabled='<%# Session["InvoiceTransactionSummary2sPermission"] != null %>' />
-                                </td>
-                                <td>
-                                    <asp:HyperLink ID="InvoiceTransactionSummary2HyperLink" runat="server" Text='<%# Eval("InvoiceTransactionSummary2.Id") %>' NavigateUrl='<%# $"~/InvoiceTransactionSummary2s/Edit.aspx?Id={Eval("Id")}" %>' Enabled='<%# Session["InvoiceTransactionSummary2sPermission"] != null %>' />
-                                </td>
-                            </tr>
                         </table>
                     </asp:Panel>
                 </ItemTemplate>
