@@ -17,5 +17,16 @@ namespace FolioWebApplication
                 }
             }
         }
+
+        protected void RadScriptManager1_AsyncPostBackError(object sender, System.Web.UI.AsyncPostBackErrorEventArgs e)
+        {
+            RadScriptManager1.AsyncPostBackErrorMessage = e.Exception.Message;
+            //Server.ClearError();
+            //ErrorDiv.InnerText = e.Exception.Message;
+            //ErrorLiteral.Text = "TEST!!!!";
+            
+            //Page.ClientScript.RegisterStartupScript(this.GetType(), "myalert", "alert('There was a problem processing your order');", true);
+
+        }
     }
 }

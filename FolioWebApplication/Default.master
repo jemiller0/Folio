@@ -1,4 +1,4 @@
-<%@ master language="C#" autoeventwireup="true" codebehind="Default.master.cs" inherits="FolioWebApplication.Default" %>
+<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="Default.master.cs" Inherits="FolioWebApplication.Default" %>
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
@@ -10,7 +10,32 @@
 </head>
 <body>
     <form id="Form1" runat="server">
-        <telerik:RadScriptManager ID="RadScriptManager1" runat="server" />
+        <script type="text/javascript">
+            Sys.Application.add_load(AppLoad);
+
+            function AppLoad() {
+                Sys.WebForms.PageRequestManager.getInstance().add_endRequest(EndRequest);
+            }
+
+            function EndRequest(sender, args) {
+                // Check to see if there's an error on this request.
+                if (args.get_error() != undefined) {
+
+                    var msg = args.get_error().message.replace("Sys.WebForms.PageRequestManagerServerErrorException: ", "");
+
+                    // Show the custom error. 
+                    // Here you can be creative and do whatever you want
+                    // with the exception (i.e. call a modalpopup and show 
+                    // a nicer error window). I will simply use 'alert'
+                    alert(msg);
+
+                    // Let the framework know that the error is handled, 
+                    //  so it doesn't throw the JavaScript alert.
+                    args.set_errorHandled(true);
+                }
+            }
+        </script>
+        <telerik:RadScriptManager ID="RadScriptManager1" runat="server" OnAsyncPostBackError="RadScriptManager1_AsyncPostBackError" />
         <telerik:RadStyleSheetManager ID="RadStyleSheetManager1" runat="server" />
         <telerik:RadSkinManager ID="RadSkinManager1" runat="server" Skin="Default" />
         <telerik:RadAjaxLoadingPanel ID="RadAjaxLoadingPanel1" runat="server" />
@@ -189,10 +214,12 @@
                 </Items>
             </telerik:RadMenu>
         </div>
+        <div runat="server" id="ErrorDiv" />
         <div id="MainDiv">
             <asp:ContentPlaceHolder ID="ContentPlaceHolder1" runat="server" />
         </div>
         <div id="FooterDiv">
+            <asp:Literal ID="ErrorLiteral" runat="server" />
             &copy; The University of Chicago Library
         </div>
     </form>

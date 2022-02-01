@@ -235,7 +235,7 @@ namespace FolioWebApplication
             {
                 if (query == null)
                 {
-                    if (gc.DataType == typeof(DateTime)) gc.CurrentFilterValue = DateTime.TryParse(gc.CurrentFilterValue, out var dt) ? dt.ToUniversalTime().ToString("o") : null;
+                    if (gc.DataType == typeof(DateTime)) gc.CurrentFilterValue = DateTime.TryParse(gc.CurrentFilterValue, out var dt) ? dt.ToUniversalTime().ToString("yyyy-MM-ddTHH:mm:ss.fff+00:00"/*"o"*/) : null;
                     return string.Format(formats[gc.CurrentFilterFunction], name, FolioServiceClient.EncodeCql(gc.CurrentFilterValue));
                 }
                 else
