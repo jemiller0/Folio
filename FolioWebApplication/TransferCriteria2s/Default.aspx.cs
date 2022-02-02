@@ -46,9 +46,17 @@ namespace FolioWebApplication.TransferCriteria2s
             Response.Charset = "utf-8";
             Response.AppendHeader("Content-Disposition", "attachment; filename=\"TransferCriteria2s.txt\"");
             Response.BufferOutput = false;
-            var d = new Dictionary<string, string>() { { "Id", "id" }, { "Criteria", "criteria" }, { "Type", "type" }, { "Value", "value" }, { "Interval", "interval" } };
             Response.Write("Id\tCriteria\tType\tValue\tInterval\r\n");
-            foreach (var tc2 in folioServiceContext.TransferCriteria2s(Global.GetCqlFilter(TransferCriteria2sRadGrid, d), TransferCriteria2sRadGrid.MasterTableView.SortExpressions.Count > 0 ? $"{d[TransferCriteria2sRadGrid.MasterTableView.SortExpressions[0].FieldName]}{(TransferCriteria2sRadGrid.MasterTableView.SortExpressions[0].SortOrder == GridSortOrder.Descending ? "/sort.descending" : "")}" : null, load: true))
+            var d = new Dictionary<string, string>() { { "Id", "id" }, { "Criteria", "criteria" }, { "Type", "type" }, { "Value", "value" }, { "Interval", "interval" } };
+            var where = Global.Trim(string.Join(" and ", new string[]
+            {
+                Global.GetCqlFilter(TransferCriteria2sRadGrid, "Id", "id"),
+                Global.GetCqlFilter(TransferCriteria2sRadGrid, "Criteria", "criteria"),
+                Global.GetCqlFilter(TransferCriteria2sRadGrid, "Type", "type"),
+                Global.GetCqlFilter(TransferCriteria2sRadGrid, "Value", "value"),
+                Global.GetCqlFilter(TransferCriteria2sRadGrid, "Interval", "interval")
+            }.Where(s => s != null)));
+            foreach (var tc2 in folioServiceContext.TransferCriteria2s(where, TransferCriteria2sRadGrid.MasterTableView.SortExpressions.Count > 0 ? $"{d[TransferCriteria2sRadGrid.MasterTableView.SortExpressions[0].FieldName]}{(TransferCriteria2sRadGrid.MasterTableView.SortExpressions[0].SortOrder == GridSortOrder.Descending ? "/sort.descending" : "")}" : null, load: true))
                 Response.Write($"{tc2.Id}\t{Global.TextEncode(tc2.Criteria)}\t{Global.TextEncode(tc2.Type)}\t{tc2.Value}\t{Global.TextEncode(tc2.Interval)}\r\n");
             Response.End();
         }

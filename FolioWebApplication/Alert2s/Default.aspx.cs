@@ -43,9 +43,14 @@ namespace FolioWebApplication.Alert2s
             Response.Charset = "utf-8";
             Response.AppendHeader("Content-Disposition", "attachment; filename=\"Alert2s.txt\"");
             Response.BufferOutput = false;
-            var d = new Dictionary<string, string>() { { "Id", "id" }, { "Alert", "alert" } };
             Response.Write("Id\tAlert\r\n");
-            foreach (var a2 in folioServiceContext.Alert2s(Global.GetCqlFilter(Alert2sRadGrid, d), Alert2sRadGrid.MasterTableView.SortExpressions.Count > 0 ? $"{d[Alert2sRadGrid.MasterTableView.SortExpressions[0].FieldName]}{(Alert2sRadGrid.MasterTableView.SortExpressions[0].SortOrder == GridSortOrder.Descending ? "/sort.descending" : "")}" : null, load: true))
+            var d = new Dictionary<string, string>() { { "Id", "id" }, { "Alert", "alert" } };
+            var where = Global.Trim(string.Join(" and ", new string[]
+            {
+                Global.GetCqlFilter(Alert2sRadGrid, "Id", "id"),
+                Global.GetCqlFilter(Alert2sRadGrid, "Alert", "alert")
+            }.Where(s => s != null)));
+            foreach (var a2 in folioServiceContext.Alert2s(where, Alert2sRadGrid.MasterTableView.SortExpressions.Count > 0 ? $"{d[Alert2sRadGrid.MasterTableView.SortExpressions[0].FieldName]}{(Alert2sRadGrid.MasterTableView.SortExpressions[0].SortOrder == GridSortOrder.Descending ? "/sort.descending" : "")}" : null, load: true))
                 Response.Write($"{a2.Id}\t{Global.TextEncode(a2.Alert)}\r\n");
             Response.End();
         }

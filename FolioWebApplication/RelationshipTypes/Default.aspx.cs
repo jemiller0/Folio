@@ -47,9 +47,18 @@ namespace FolioWebApplication.RelationshipTypes
             Response.Charset = "utf-8";
             Response.AppendHeader("Content-Disposition", "attachment; filename=\"RelationshipTypes.txt\"");
             Response.BufferOutput = false;
-            var d = new Dictionary<string, string>() { { "Id", "id" }, { "Name", "name" }, { "CreationTime", "metadata.createdDate" }, { "CreationUserId", "metadata.createdByUserId" }, { "LastWriteTime", "metadata.updatedDate" }, { "LastWriteUserId", "metadata.updatedByUserId" } };
             Response.Write("Id\tName\tCreationTime\tCreationUser\tCreationUserId\tLastWriteTime\tLastWriteUser\tLastWriteUserId\r\n");
-            foreach (var rt in folioServiceContext.RelationshipTypes(Global.GetCqlFilter(RelationshipTypesRadGrid, d), RelationshipTypesRadGrid.MasterTableView.SortExpressions.Count > 0 ? $"{d[RelationshipTypesRadGrid.MasterTableView.SortExpressions[0].FieldName]}{(RelationshipTypesRadGrid.MasterTableView.SortExpressions[0].SortOrder == GridSortOrder.Descending ? "/sort.descending" : "")}" : null, load: true))
+            var d = new Dictionary<string, string>() { { "Id", "id" }, { "Name", "name" }, { "CreationTime", "metadata.createdDate" }, { "CreationUserId", "metadata.createdByUserId" }, { "LastWriteTime", "metadata.updatedDate" }, { "LastWriteUserId", "metadata.updatedByUserId" } };
+            var where = Global.Trim(string.Join(" and ", new string[]
+            {
+                Global.GetCqlFilter(RelationshipTypesRadGrid, "Id", "id"),
+                Global.GetCqlFilter(RelationshipTypesRadGrid, "Name", "name"),
+                Global.GetCqlFilter(RelationshipTypesRadGrid, "CreationTime", "metadata.createdDate"),
+                Global.GetCqlFilter(RelationshipTypesRadGrid, "CreationUser.Username", "metadata.createdByUserId", "username", folioServiceContext.FolioServiceClient.Users),
+                Global.GetCqlFilter(RelationshipTypesRadGrid, "LastWriteTime", "metadata.updatedDate"),
+                Global.GetCqlFilter(RelationshipTypesRadGrid, "LastWriteUser.Username", "metadata.updatedByUserId", "username", folioServiceContext.FolioServiceClient.Users)
+            }.Where(s => s != null)));
+            foreach (var rt in folioServiceContext.RelationshipTypes(where, RelationshipTypesRadGrid.MasterTableView.SortExpressions.Count > 0 ? $"{d[RelationshipTypesRadGrid.MasterTableView.SortExpressions[0].FieldName]}{(RelationshipTypesRadGrid.MasterTableView.SortExpressions[0].SortOrder == GridSortOrder.Descending ? "/sort.descending" : "")}" : null, load: true))
                 Response.Write($"{rt.Id}\t{Global.TextEncode(rt.Name)}\t{rt.CreationTime:M/d/yyyy HH:mm:ss}\t{Global.TextEncode(rt.CreationUser?.Username)}\t{rt.CreationUserId}\t{rt.LastWriteTime:M/d/yyyy HH:mm:ss}\t{Global.TextEncode(rt.LastWriteUser?.Username)}\t{rt.LastWriteUserId}\r\n");
             Response.End();
         }

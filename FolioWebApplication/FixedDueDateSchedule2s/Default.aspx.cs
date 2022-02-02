@@ -48,9 +48,19 @@ namespace FolioWebApplication.FixedDueDateSchedule2s
             Response.Charset = "utf-8";
             Response.AppendHeader("Content-Disposition", "attachment; filename=\"FixedDueDateSchedule2s.txt\"");
             Response.BufferOutput = false;
-            var d = new Dictionary<string, string>() { { "Id", "id" }, { "Name", "name" }, { "Description", "description" }, { "CreationTime", "metadata.createdDate" }, { "CreationUserId", "metadata.createdByUserId" }, { "LastWriteTime", "metadata.updatedDate" }, { "LastWriteUserId", "metadata.updatedByUserId" } };
             Response.Write("Id\tName\tDescription\tCreationTime\tCreationUser\tCreationUserId\tLastWriteTime\tLastWriteUser\tLastWriteUserId\r\n");
-            foreach (var fdds2 in folioServiceContext.FixedDueDateSchedule2s(Global.GetCqlFilter(FixedDueDateSchedule2sRadGrid, d), FixedDueDateSchedule2sRadGrid.MasterTableView.SortExpressions.Count > 0 ? $"{d[FixedDueDateSchedule2sRadGrid.MasterTableView.SortExpressions[0].FieldName]}{(FixedDueDateSchedule2sRadGrid.MasterTableView.SortExpressions[0].SortOrder == GridSortOrder.Descending ? "/sort.descending" : "")}" : null, load: true))
+            var d = new Dictionary<string, string>() { { "Id", "id" }, { "Name", "name" }, { "Description", "description" }, { "CreationTime", "metadata.createdDate" }, { "CreationUserId", "metadata.createdByUserId" }, { "LastWriteTime", "metadata.updatedDate" }, { "LastWriteUserId", "metadata.updatedByUserId" } };
+            var where = Global.Trim(string.Join(" and ", new string[]
+            {
+                Global.GetCqlFilter(FixedDueDateSchedule2sRadGrid, "Id", "id"),
+                Global.GetCqlFilter(FixedDueDateSchedule2sRadGrid, "Name", "name"),
+                Global.GetCqlFilter(FixedDueDateSchedule2sRadGrid, "Description", "description"),
+                Global.GetCqlFilter(FixedDueDateSchedule2sRadGrid, "CreationTime", "metadata.createdDate"),
+                Global.GetCqlFilter(FixedDueDateSchedule2sRadGrid, "CreationUser.Username", "metadata.createdByUserId", "username", folioServiceContext.FolioServiceClient.Users),
+                Global.GetCqlFilter(FixedDueDateSchedule2sRadGrid, "LastWriteTime", "metadata.updatedDate"),
+                Global.GetCqlFilter(FixedDueDateSchedule2sRadGrid, "LastWriteUser.Username", "metadata.updatedByUserId", "username", folioServiceContext.FolioServiceClient.Users)
+            }.Where(s => s != null)));
+            foreach (var fdds2 in folioServiceContext.FixedDueDateSchedule2s(where, FixedDueDateSchedule2sRadGrid.MasterTableView.SortExpressions.Count > 0 ? $"{d[FixedDueDateSchedule2sRadGrid.MasterTableView.SortExpressions[0].FieldName]}{(FixedDueDateSchedule2sRadGrid.MasterTableView.SortExpressions[0].SortOrder == GridSortOrder.Descending ? "/sort.descending" : "")}" : null, load: true))
                 Response.Write($"{fdds2.Id}\t{Global.TextEncode(fdds2.Name)}\t{Global.TextEncode(fdds2.Description)}\t{fdds2.CreationTime:M/d/yyyy HH:mm:ss}\t{Global.TextEncode(fdds2.CreationUser?.Username)}\t{fdds2.CreationUserId}\t{fdds2.LastWriteTime:M/d/yyyy HH:mm:ss}\t{Global.TextEncode(fdds2.LastWriteUser?.Username)}\t{fdds2.LastWriteUserId}\r\n");
             Response.End();
         }

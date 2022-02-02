@@ -50,9 +50,21 @@ namespace FolioWebApplication.VoucherItem2s
             Response.Charset = "utf-8";
             Response.AppendHeader("Content-Disposition", "attachment; filename=\"VoucherItem2s.txt\"");
             Response.BufferOutput = false;
-            var d = new Dictionary<string, string>() { { "Id", "id" }, { "Amount", "amount" }, { "AccountNumber", "externalAccountNumber" }, { "SubTransactionId", "subTransactionId" }, { "VoucherId", "voucherId" }, { "CreationTime", "metadata.createdDate" }, { "CreationUserId", "metadata.createdByUserId" }, { "LastWriteTime", "metadata.updatedDate" }, { "LastWriteUserId", "metadata.updatedByUserId" } };
             Response.Write("Id\tAmount\tAccountNumber\tSubTransaction\tSubTransactionId\tVoucher\tVoucherId\tCreationTime\tCreationUser\tCreationUserId\tLastWriteTime\tLastWriteUser\tLastWriteUserId\r\n");
-            foreach (var vi2 in folioServiceContext.VoucherItem2s(Global.GetCqlFilter(VoucherItem2sRadGrid, d), VoucherItem2sRadGrid.MasterTableView.SortExpressions.Count > 0 ? $"{d[VoucherItem2sRadGrid.MasterTableView.SortExpressions[0].FieldName]}{(VoucherItem2sRadGrid.MasterTableView.SortExpressions[0].SortOrder == GridSortOrder.Descending ? "/sort.descending" : "")}" : null, load: true))
+            var d = new Dictionary<string, string>() { { "Id", "id" }, { "Amount", "amount" }, { "AccountNumber", "externalAccountNumber" }, { "SubTransactionId", "subTransactionId" }, { "VoucherId", "voucherId" }, { "CreationTime", "metadata.createdDate" }, { "CreationUserId", "metadata.createdByUserId" }, { "LastWriteTime", "metadata.updatedDate" }, { "LastWriteUserId", "metadata.updatedByUserId" } };
+            var where = Global.Trim(string.Join(" and ", new string[]
+            {
+                Global.GetCqlFilter(VoucherItem2sRadGrid, "Id", "id"),
+                Global.GetCqlFilter(VoucherItem2sRadGrid, "Amount", "amount"),
+                Global.GetCqlFilter(VoucherItem2sRadGrid, "AccountNumber", "externalAccountNumber"),
+                Global.GetCqlFilter(VoucherItem2sRadGrid, "SubTransaction.Amount", "subTransactionId", "amount", folioServiceContext.FolioServiceClient.Transactions),
+                Global.GetCqlFilter(VoucherItem2sRadGrid, "Voucher.Number", "voucherId", "voucherNumber", folioServiceContext.FolioServiceClient.Vouchers),
+                Global.GetCqlFilter(VoucherItem2sRadGrid, "CreationTime", "metadata.createdDate"),
+                Global.GetCqlFilter(VoucherItem2sRadGrid, "CreationUser.Username", "metadata.createdByUserId", "username", folioServiceContext.FolioServiceClient.Users),
+                Global.GetCqlFilter(VoucherItem2sRadGrid, "LastWriteTime", "metadata.updatedDate"),
+                Global.GetCqlFilter(VoucherItem2sRadGrid, "LastWriteUser.Username", "metadata.updatedByUserId", "username", folioServiceContext.FolioServiceClient.Users)
+            }.Where(s => s != null)));
+            foreach (var vi2 in folioServiceContext.VoucherItem2s(where, VoucherItem2sRadGrid.MasterTableView.SortExpressions.Count > 0 ? $"{d[VoucherItem2sRadGrid.MasterTableView.SortExpressions[0].FieldName]}{(VoucherItem2sRadGrid.MasterTableView.SortExpressions[0].SortOrder == GridSortOrder.Descending ? "/sort.descending" : "")}" : null, load: true))
                 Response.Write($"{vi2.Id}\t{vi2.Amount}\t{Global.TextEncode(vi2.AccountNumber)}\t{vi2.SubTransaction?.Amount}\t{vi2.SubTransactionId}\t{Global.TextEncode(vi2.Voucher?.Number)}\t{vi2.VoucherId}\t{vi2.CreationTime:M/d/yyyy HH:mm:ss}\t{Global.TextEncode(vi2.CreationUser?.Username)}\t{vi2.CreationUserId}\t{vi2.LastWriteTime:M/d/yyyy HH:mm:ss}\t{Global.TextEncode(vi2.LastWriteUser?.Username)}\t{vi2.LastWriteUserId}\r\n");
             Response.End();
         }

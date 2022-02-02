@@ -46,9 +46,17 @@ namespace FolioWebApplication.BudgetGroup2s
             Response.Charset = "utf-8";
             Response.AppendHeader("Content-Disposition", "attachment; filename=\"BudgetGroup2s.txt\"");
             Response.BufferOutput = false;
-            var d = new Dictionary<string, string>() { { "Id", "id" }, { "BudgetId", "budgetId" }, { "GroupId", "groupId" }, { "FiscalYearId", "fiscalYearId" }, { "FundId", "fundId" } };
             Response.Write("Id\tBudget\tBudgetId\tGroup\tGroupId\tFiscalYear\tFiscalYearId\tFund\tFundId\r\n");
-            foreach (var bg2 in folioServiceContext.BudgetGroup2s(Global.GetCqlFilter(BudgetGroup2sRadGrid, d), BudgetGroup2sRadGrid.MasterTableView.SortExpressions.Count > 0 ? $"{d[BudgetGroup2sRadGrid.MasterTableView.SortExpressions[0].FieldName]}{(BudgetGroup2sRadGrid.MasterTableView.SortExpressions[0].SortOrder == GridSortOrder.Descending ? "/sort.descending" : "")}" : null, load: true))
+            var d = new Dictionary<string, string>() { { "Id", "id" }, { "BudgetId", "budgetId" }, { "GroupId", "groupId" }, { "FiscalYearId", "fiscalYearId" }, { "FundId", "fundId" } };
+            var where = Global.Trim(string.Join(" and ", new string[]
+            {
+                Global.GetCqlFilter(BudgetGroup2sRadGrid, "Id", "id"),
+                Global.GetCqlFilter(BudgetGroup2sRadGrid, "Budget.Name", "budgetId", "name", folioServiceContext.FolioServiceClient.Budgets),
+                Global.GetCqlFilter(BudgetGroup2sRadGrid, "Group.Name", "groupId", "name", folioServiceContext.FolioServiceClient.FinanceGroups),
+                Global.GetCqlFilter(BudgetGroup2sRadGrid, "FiscalYear.Name", "fiscalYearId", "name", folioServiceContext.FolioServiceClient.FiscalYears),
+                Global.GetCqlFilter(BudgetGroup2sRadGrid, "Fund.Name", "fundId", "name", folioServiceContext.FolioServiceClient.Funds)
+            }.Where(s => s != null)));
+            foreach (var bg2 in folioServiceContext.BudgetGroup2s(where, BudgetGroup2sRadGrid.MasterTableView.SortExpressions.Count > 0 ? $"{d[BudgetGroup2sRadGrid.MasterTableView.SortExpressions[0].FieldName]}{(BudgetGroup2sRadGrid.MasterTableView.SortExpressions[0].SortOrder == GridSortOrder.Descending ? "/sort.descending" : "")}" : null, load: true))
                 Response.Write($"{bg2.Id}\t{Global.TextEncode(bg2.Budget?.Name)}\t{bg2.BudgetId}\t{Global.TextEncode(bg2.Group?.Name)}\t{bg2.GroupId}\t{Global.TextEncode(bg2.FiscalYear?.Name)}\t{bg2.FiscalYearId}\t{Global.TextEncode(bg2.Fund?.Name)}\t{bg2.FundId}\r\n");
             Response.End();
         }

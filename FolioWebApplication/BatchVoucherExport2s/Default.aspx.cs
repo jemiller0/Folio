@@ -51,9 +51,22 @@ namespace FolioWebApplication.BatchVoucherExport2s
             Response.Charset = "utf-8";
             Response.AppendHeader("Content-Disposition", "attachment; filename=\"BatchVoucherExport2s.txt\"");
             Response.BufferOutput = false;
-            var d = new Dictionary<string, string>() { { "Id", "id" }, { "Status", "status" }, { "Message", "message" }, { "BatchGroupId", "batchGroupId" }, { "Start", "start" }, { "End", "end" }, { "BatchVoucherId", "batchVoucherId" }, { "CreationTime", "metadata.createdDate" }, { "CreationUserId", "metadata.createdByUserId" }, { "LastWriteTime", "metadata.updatedDate" }, { "LastWriteUserId", "metadata.updatedByUserId" } };
             Response.Write("Id\tStatus\tMessage\tBatchGroup\tBatchGroupId\tStart\tEnd\tBatchVoucher\tBatchVoucherId\tCreationTime\tCreationUser\tCreationUserId\tLastWriteTime\tLastWriteUser\tLastWriteUserId\r\n");
-            foreach (var bve2 in folioServiceContext.BatchVoucherExport2s(Global.GetCqlFilter(BatchVoucherExport2sRadGrid, d), BatchVoucherExport2sRadGrid.MasterTableView.SortExpressions.Count > 0 ? $"{d[BatchVoucherExport2sRadGrid.MasterTableView.SortExpressions[0].FieldName]}{(BatchVoucherExport2sRadGrid.MasterTableView.SortExpressions[0].SortOrder == GridSortOrder.Descending ? "/sort.descending" : "")}" : null, load: true))
+            var d = new Dictionary<string, string>() { { "Id", "id" }, { "Status", "status" }, { "Message", "message" }, { "BatchGroupId", "batchGroupId" }, { "Start", "start" }, { "End", "end" }, { "BatchVoucherId", "batchVoucherId" }, { "CreationTime", "metadata.createdDate" }, { "CreationUserId", "metadata.createdByUserId" }, { "LastWriteTime", "metadata.updatedDate" }, { "LastWriteUserId", "metadata.updatedByUserId" } };
+            var where = Global.Trim(string.Join(" and ", new string[]
+            {
+                Global.GetCqlFilter(BatchVoucherExport2sRadGrid, "Id", "id"),
+                Global.GetCqlFilter(BatchVoucherExport2sRadGrid, "Status", "status"),
+                Global.GetCqlFilter(BatchVoucherExport2sRadGrid, "Message", "message"),
+                Global.GetCqlFilter(BatchVoucherExport2sRadGrid, "BatchGroup.Name", "batchGroupId", "name", folioServiceContext.FolioServiceClient.BatchGroups),
+                Global.GetCqlFilter(BatchVoucherExport2sRadGrid, "Start", "start"),
+                Global.GetCqlFilter(BatchVoucherExport2sRadGrid, "End", "end"),
+                Global.GetCqlFilter(BatchVoucherExport2sRadGrid, "CreationTime", "metadata.createdDate"),
+                Global.GetCqlFilter(BatchVoucherExport2sRadGrid, "CreationUser.Username", "metadata.createdByUserId", "username", folioServiceContext.FolioServiceClient.Users),
+                Global.GetCqlFilter(BatchVoucherExport2sRadGrid, "LastWriteTime", "metadata.updatedDate"),
+                Global.GetCqlFilter(BatchVoucherExport2sRadGrid, "LastWriteUser.Username", "metadata.updatedByUserId", "username", folioServiceContext.FolioServiceClient.Users)
+            }.Where(s => s != null)));
+            foreach (var bve2 in folioServiceContext.BatchVoucherExport2s(where, BatchVoucherExport2sRadGrid.MasterTableView.SortExpressions.Count > 0 ? $"{d[BatchVoucherExport2sRadGrid.MasterTableView.SortExpressions[0].FieldName]}{(BatchVoucherExport2sRadGrid.MasterTableView.SortExpressions[0].SortOrder == GridSortOrder.Descending ? "/sort.descending" : "")}" : null, load: true))
                 Response.Write($"{bve2.Id}\t{Global.TextEncode(bve2.Status)}\t{Global.TextEncode(bve2.Message)}\t{Global.TextEncode(bve2.BatchGroup?.Name)}\t{bve2.BatchGroupId}\t{bve2.Start:M/d/yyyy}\t{bve2.End:M/d/yyyy}\t{bve2.BatchVoucher?.Id}\t{bve2.BatchVoucherId}\t{bve2.CreationTime:M/d/yyyy HH:mm:ss}\t{Global.TextEncode(bve2.CreationUser?.Username)}\t{bve2.CreationUserId}\t{bve2.LastWriteTime:M/d/yyyy HH:mm:ss}\t{Global.TextEncode(bve2.LastWriteUser?.Username)}\t{bve2.LastWriteUserId}\r\n");
             Response.End();
         }

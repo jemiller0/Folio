@@ -51,9 +51,22 @@ namespace FolioWebApplication.BatchVoucherExportConfig2s
             Response.Charset = "utf-8";
             Response.AppendHeader("Content-Disposition", "attachment; filename=\"BatchVoucherExportConfig2s.txt\"");
             Response.BufferOutput = false;
-            var d = new Dictionary<string, string>() { { "Id", "id" }, { "BatchGroupId", "batchGroupId" }, { "EnableScheduledExport", "enableScheduledExport" }, { "Format", "format" }, { "StartTime", "startTime" }, { "UploadUri", "uploadURI" }, { "CreationTime", "metadata.createdDate" }, { "CreationUserId", "metadata.createdByUserId" }, { "LastWriteTime", "metadata.updatedDate" }, { "LastWriteUserId", "metadata.updatedByUserId" } };
             Response.Write("Id\tBatchGroup\tBatchGroupId\tEnableScheduledExport\tFormat\tStartTime\tUploadUri\tCreationTime\tCreationUser\tCreationUserId\tLastWriteTime\tLastWriteUser\tLastWriteUserId\r\n");
-            foreach (var bvec2 in folioServiceContext.BatchVoucherExportConfig2s(Global.GetCqlFilter(BatchVoucherExportConfig2sRadGrid, d), BatchVoucherExportConfig2sRadGrid.MasterTableView.SortExpressions.Count > 0 ? $"{d[BatchVoucherExportConfig2sRadGrid.MasterTableView.SortExpressions[0].FieldName]}{(BatchVoucherExportConfig2sRadGrid.MasterTableView.SortExpressions[0].SortOrder == GridSortOrder.Descending ? "/sort.descending" : "")}" : null, load: true))
+            var d = new Dictionary<string, string>() { { "Id", "id" }, { "BatchGroupId", "batchGroupId" }, { "EnableScheduledExport", "enableScheduledExport" }, { "Format", "format" }, { "StartTime", "startTime" }, { "UploadUri", "uploadURI" }, { "CreationTime", "metadata.createdDate" }, { "CreationUserId", "metadata.createdByUserId" }, { "LastWriteTime", "metadata.updatedDate" }, { "LastWriteUserId", "metadata.updatedByUserId" } };
+            var where = Global.Trim(string.Join(" and ", new string[]
+            {
+                Global.GetCqlFilter(BatchVoucherExportConfig2sRadGrid, "Id", "id"),
+                Global.GetCqlFilter(BatchVoucherExportConfig2sRadGrid, "BatchGroup.Name", "batchGroupId", "name", folioServiceContext.FolioServiceClient.BatchGroups),
+                Global.GetCqlFilter(BatchVoucherExportConfig2sRadGrid, "EnableScheduledExport", "enableScheduledExport"),
+                Global.GetCqlFilter(BatchVoucherExportConfig2sRadGrid, "Format", "format"),
+                Global.GetCqlFilter(BatchVoucherExportConfig2sRadGrid, "StartTime", "startTime"),
+                Global.GetCqlFilter(BatchVoucherExportConfig2sRadGrid, "UploadUri", "uploadURI"),
+                Global.GetCqlFilter(BatchVoucherExportConfig2sRadGrid, "CreationTime", "metadata.createdDate"),
+                Global.GetCqlFilter(BatchVoucherExportConfig2sRadGrid, "CreationUser.Username", "metadata.createdByUserId", "username", folioServiceContext.FolioServiceClient.Users),
+                Global.GetCqlFilter(BatchVoucherExportConfig2sRadGrid, "LastWriteTime", "metadata.updatedDate"),
+                Global.GetCqlFilter(BatchVoucherExportConfig2sRadGrid, "LastWriteUser.Username", "metadata.updatedByUserId", "username", folioServiceContext.FolioServiceClient.Users)
+            }.Where(s => s != null)));
+            foreach (var bvec2 in folioServiceContext.BatchVoucherExportConfig2s(where, BatchVoucherExportConfig2sRadGrid.MasterTableView.SortExpressions.Count > 0 ? $"{d[BatchVoucherExportConfig2sRadGrid.MasterTableView.SortExpressions[0].FieldName]}{(BatchVoucherExportConfig2sRadGrid.MasterTableView.SortExpressions[0].SortOrder == GridSortOrder.Descending ? "/sort.descending" : "")}" : null, load: true))
                 Response.Write($"{bvec2.Id}\t{Global.TextEncode(bvec2.BatchGroup?.Name)}\t{bvec2.BatchGroupId}\t{bvec2.EnableScheduledExport}\t{Global.TextEncode(bvec2.Format)}\t{Global.TextEncode(bvec2.StartTime)}\t{Global.TextEncode(bvec2.UploadUri)}\t{bvec2.CreationTime:M/d/yyyy HH:mm:ss}\t{Global.TextEncode(bvec2.CreationUser?.Username)}\t{bvec2.CreationUserId}\t{bvec2.LastWriteTime:M/d/yyyy HH:mm:ss}\t{Global.TextEncode(bvec2.LastWriteUser?.Username)}\t{bvec2.LastWriteUserId}\r\n");
             Response.End();
         }

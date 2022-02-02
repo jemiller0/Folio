@@ -48,9 +48,19 @@ namespace FolioWebApplication.Source2s
             Response.Charset = "utf-8";
             Response.AppendHeader("Content-Disposition", "attachment; filename=\"Source2s.txt\"");
             Response.BufferOutput = false;
-            var d = new Dictionary<string, string>() { { "Id", "id" }, { "Name", "name" }, { "Source", "source" }, { "CreationTime", "metadata.createdDate" }, { "CreationUserId", "metadata.createdByUserId" }, { "LastWriteTime", "metadata.updatedDate" }, { "LastWriteUserId", "metadata.updatedByUserId" } };
             Response.Write("Id\tName\tSource\tCreationTime\tCreationUser\tCreationUserId\tLastWriteTime\tLastWriteUser\tLastWriteUserId\r\n");
-            foreach (var s2 in folioServiceContext.Source2s(Global.GetCqlFilter(Source2sRadGrid, d), Source2sRadGrid.MasterTableView.SortExpressions.Count > 0 ? $"{d[Source2sRadGrid.MasterTableView.SortExpressions[0].FieldName]}{(Source2sRadGrid.MasterTableView.SortExpressions[0].SortOrder == GridSortOrder.Descending ? "/sort.descending" : "")}" : null, load: true))
+            var d = new Dictionary<string, string>() { { "Id", "id" }, { "Name", "name" }, { "Source", "source" }, { "CreationTime", "metadata.createdDate" }, { "CreationUserId", "metadata.createdByUserId" }, { "LastWriteTime", "metadata.updatedDate" }, { "LastWriteUserId", "metadata.updatedByUserId" } };
+            var where = Global.Trim(string.Join(" and ", new string[]
+            {
+                Global.GetCqlFilter(Source2sRadGrid, "Id", "id"),
+                Global.GetCqlFilter(Source2sRadGrid, "Name", "name"),
+                Global.GetCqlFilter(Source2sRadGrid, "Source", "source"),
+                Global.GetCqlFilter(Source2sRadGrid, "CreationTime", "metadata.createdDate"),
+                Global.GetCqlFilter(Source2sRadGrid, "CreationUser.Username", "metadata.createdByUserId", "username", folioServiceContext.FolioServiceClient.Users),
+                Global.GetCqlFilter(Source2sRadGrid, "LastWriteTime", "metadata.updatedDate"),
+                Global.GetCqlFilter(Source2sRadGrid, "LastWriteUser.Username", "metadata.updatedByUserId", "username", folioServiceContext.FolioServiceClient.Users)
+            }.Where(s => s != null)));
+            foreach (var s2 in folioServiceContext.Source2s(where, Source2sRadGrid.MasterTableView.SortExpressions.Count > 0 ? $"{d[Source2sRadGrid.MasterTableView.SortExpressions[0].FieldName]}{(Source2sRadGrid.MasterTableView.SortExpressions[0].SortOrder == GridSortOrder.Descending ? "/sort.descending" : "")}" : null, load: true))
                 Response.Write($"{s2.Id}\t{Global.TextEncode(s2.Name)}\t{Global.TextEncode(s2.Source)}\t{s2.CreationTime:M/d/yyyy HH:mm:ss}\t{Global.TextEncode(s2.CreationUser?.Username)}\t{s2.CreationUserId}\t{s2.LastWriteTime:M/d/yyyy HH:mm:ss}\t{Global.TextEncode(s2.LastWriteUser?.Username)}\t{s2.LastWriteUserId}\r\n");
             Response.End();
         }

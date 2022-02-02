@@ -50,9 +50,21 @@ namespace FolioWebApplication.CancellationReason2s
             Response.Charset = "utf-8";
             Response.AppendHeader("Content-Disposition", "attachment; filename=\"CancellationReason2s.txt\"");
             Response.BufferOutput = false;
-            var d = new Dictionary<string, string>() { { "Id", "id" }, { "Name", "name" }, { "Description", "description" }, { "PublicDescription", "publicDescription" }, { "RequiresAdditionalInformation", "requiresAdditionalInformation" }, { "CreationTime", "metadata.createdDate" }, { "CreationUserId", "metadata.createdByUserId" }, { "LastWriteTime", "metadata.updatedDate" }, { "LastWriteUserId", "metadata.updatedByUserId" } };
             Response.Write("Id\tName\tDescription\tPublicDescription\tRequiresAdditionalInformation\tCreationTime\tCreationUser\tCreationUserId\tLastWriteTime\tLastWriteUser\tLastWriteUserId\r\n");
-            foreach (var cr2 in folioServiceContext.CancellationReason2s(Global.GetCqlFilter(CancellationReason2sRadGrid, d), CancellationReason2sRadGrid.MasterTableView.SortExpressions.Count > 0 ? $"{d[CancellationReason2sRadGrid.MasterTableView.SortExpressions[0].FieldName]}{(CancellationReason2sRadGrid.MasterTableView.SortExpressions[0].SortOrder == GridSortOrder.Descending ? "/sort.descending" : "")}" : null, load: true))
+            var d = new Dictionary<string, string>() { { "Id", "id" }, { "Name", "name" }, { "Description", "description" }, { "PublicDescription", "publicDescription" }, { "RequiresAdditionalInformation", "requiresAdditionalInformation" }, { "CreationTime", "metadata.createdDate" }, { "CreationUserId", "metadata.createdByUserId" }, { "LastWriteTime", "metadata.updatedDate" }, { "LastWriteUserId", "metadata.updatedByUserId" } };
+            var where = Global.Trim(string.Join(" and ", new string[]
+            {
+                Global.GetCqlFilter(CancellationReason2sRadGrid, "Id", "id"),
+                Global.GetCqlFilter(CancellationReason2sRadGrid, "Name", "name"),
+                Global.GetCqlFilter(CancellationReason2sRadGrid, "Description", "description"),
+                Global.GetCqlFilter(CancellationReason2sRadGrid, "PublicDescription", "publicDescription"),
+                Global.GetCqlFilter(CancellationReason2sRadGrid, "RequiresAdditionalInformation", "requiresAdditionalInformation"),
+                Global.GetCqlFilter(CancellationReason2sRadGrid, "CreationTime", "metadata.createdDate"),
+                Global.GetCqlFilter(CancellationReason2sRadGrid, "CreationUser.Username", "metadata.createdByUserId", "username", folioServiceContext.FolioServiceClient.Users),
+                Global.GetCqlFilter(CancellationReason2sRadGrid, "LastWriteTime", "metadata.updatedDate"),
+                Global.GetCqlFilter(CancellationReason2sRadGrid, "LastWriteUser.Username", "metadata.updatedByUserId", "username", folioServiceContext.FolioServiceClient.Users)
+            }.Where(s => s != null)));
+            foreach (var cr2 in folioServiceContext.CancellationReason2s(where, CancellationReason2sRadGrid.MasterTableView.SortExpressions.Count > 0 ? $"{d[CancellationReason2sRadGrid.MasterTableView.SortExpressions[0].FieldName]}{(CancellationReason2sRadGrid.MasterTableView.SortExpressions[0].SortOrder == GridSortOrder.Descending ? "/sort.descending" : "")}" : null, load: true))
                 Response.Write($"{cr2.Id}\t{Global.TextEncode(cr2.Name)}\t{Global.TextEncode(cr2.Description)}\t{Global.TextEncode(cr2.PublicDescription)}\t{cr2.RequiresAdditionalInformation}\t{cr2.CreationTime:M/d/yyyy HH:mm:ss}\t{Global.TextEncode(cr2.CreationUser?.Username)}\t{cr2.CreationUserId}\t{cr2.LastWriteTime:M/d/yyyy HH:mm:ss}\t{Global.TextEncode(cr2.LastWriteUser?.Username)}\t{cr2.LastWriteUserId}\r\n");
             Response.End();
         }

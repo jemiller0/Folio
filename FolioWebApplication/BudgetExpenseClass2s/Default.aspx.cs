@@ -45,9 +45,16 @@ namespace FolioWebApplication.BudgetExpenseClass2s
             Response.Charset = "utf-8";
             Response.AppendHeader("Content-Disposition", "attachment; filename=\"BudgetExpenseClass2s.txt\"");
             Response.BufferOutput = false;
-            var d = new Dictionary<string, string>() { { "Id", "id" }, { "BudgetId", "budgetId" }, { "ExpenseClassId", "expenseClassId" }, { "Status", "status" } };
             Response.Write("Id\tBudget\tBudgetId\tExpenseClass\tExpenseClassId\tStatus\r\n");
-            foreach (var bec2 in folioServiceContext.BudgetExpenseClass2s(Global.GetCqlFilter(BudgetExpenseClass2sRadGrid, d), BudgetExpenseClass2sRadGrid.MasterTableView.SortExpressions.Count > 0 ? $"{d[BudgetExpenseClass2sRadGrid.MasterTableView.SortExpressions[0].FieldName]}{(BudgetExpenseClass2sRadGrid.MasterTableView.SortExpressions[0].SortOrder == GridSortOrder.Descending ? "/sort.descending" : "")}" : null, load: true))
+            var d = new Dictionary<string, string>() { { "Id", "id" }, { "BudgetId", "budgetId" }, { "ExpenseClassId", "expenseClassId" }, { "Status", "status" } };
+            var where = Global.Trim(string.Join(" and ", new string[]
+            {
+                Global.GetCqlFilter(BudgetExpenseClass2sRadGrid, "Id", "id"),
+                Global.GetCqlFilter(BudgetExpenseClass2sRadGrid, "Budget.Name", "budgetId", "name", folioServiceContext.FolioServiceClient.Budgets),
+                Global.GetCqlFilter(BudgetExpenseClass2sRadGrid, "ExpenseClass.Name", "expenseClassId", "name", folioServiceContext.FolioServiceClient.ExpenseClasses),
+                Global.GetCqlFilter(BudgetExpenseClass2sRadGrid, "Status", "status")
+            }.Where(s => s != null)));
+            foreach (var bec2 in folioServiceContext.BudgetExpenseClass2s(where, BudgetExpenseClass2sRadGrid.MasterTableView.SortExpressions.Count > 0 ? $"{d[BudgetExpenseClass2sRadGrid.MasterTableView.SortExpressions[0].FieldName]}{(BudgetExpenseClass2sRadGrid.MasterTableView.SortExpressions[0].SortOrder == GridSortOrder.Descending ? "/sort.descending" : "")}" : null, load: true))
                 Response.Write($"{bec2.Id}\t{Global.TextEncode(bec2.Budget?.Name)}\t{bec2.BudgetId}\t{Global.TextEncode(bec2.ExpenseClass?.Name)}\t{bec2.ExpenseClassId}\t{Global.TextEncode(bec2.Status)}\r\n");
             Response.End();
         }

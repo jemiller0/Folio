@@ -41,9 +41,8 @@ namespace FolioWebApplication.Printers
             Response.Charset = "utf-8";
             Response.AppendHeader("Content-Disposition", "attachment; filename=\"Printers.txt\"");
             Response.BufferOutput = false;
-            var d = new Dictionary<string, string>() { { "Id", "id" } };
             Response.Write("Id\tComputerName\tName\tLeft\tTop\tWidth\tHeight\tEnabled\tCreationTime\tCreationUser\tCreationUserId\tLastWriteTime\tLastWriteUser\tLastWriteUserId\r\n");
-            foreach (var p in folioServiceContext.Printers(Global.GetCqlFilter(PrintersRadGrid, d), PrintersRadGrid.MasterTableView.SortExpressions.Count > 0 ? $"{d[PrintersRadGrid.MasterTableView.SortExpressions[0].FieldName]}{(PrintersRadGrid.MasterTableView.SortExpressions[0].SortOrder == GridSortOrder.Descending ? "/sort.descending" : "")}" : null, load: true))
+            foreach (var p in folioServiceContext.Printers(load: true))
                 Response.Write($"{p.Id}\t{Global.TextEncode(p.ComputerName)}\t{Global.TextEncode(p.Name)}\t{p.Left}\t{p.Top}\t{p.Width}\t{p.Height}\t{p.Enabled}\t{p.CreationTime:M/d/yyyy HH:mm:ss}\t{Global.TextEncode(p.CreationUser?.Username)}\t{p.CreationUserId}\t{p.LastWriteTime:M/d/yyyy HH:mm:ss}\t{Global.TextEncode(p.LastWriteUser?.Username)}\t{p.LastWriteUserId}\r\n");
             Response.End();
         }

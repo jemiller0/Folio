@@ -233,7 +233,7 @@ namespace FolioWebApplication
             var gc = radGrid.MasterTableView.Columns.FindByDataField(dataField);
             if (gc.CurrentFilterValue != "" || gc.CurrentFilterFunction == GridKnownFunction.IsEmpty || gc.CurrentFilterFunction == GridKnownFunction.IsNull || gc.CurrentFilterFunction == GridKnownFunction.NotIsEmpty || gc.CurrentFilterFunction == GridKnownFunction.NotIsNull)
             {
-                if (query == null)
+                if (query == null || gc.CurrentFilterFunction == GridKnownFunction.IsNull || gc.CurrentFilterFunction == GridKnownFunction.NotIsNull)
                 {
                     if (gc.DataType == typeof(DateTime)) gc.CurrentFilterValue = DateTime.TryParse(gc.CurrentFilterValue, out var dt) ? dt.ToUniversalTime().ToString("yyyy-MM-ddTHH:mm:ss.fff+00:00"/*"o"*/) : null;
                     return string.Format(formats[gc.CurrentFilterFunction], name, FolioServiceClient.EncodeCql(gc.CurrentFilterValue));

@@ -49,9 +49,20 @@ namespace FolioWebApplication.PatronActionSession2s
             Response.Charset = "utf-8";
             Response.AppendHeader("Content-Disposition", "attachment; filename=\"PatronActionSession2s.txt\"");
             Response.BufferOutput = false;
-            var d = new Dictionary<string, string>() { { "Id", "id" }, { "PatronId", "patronId" }, { "LoanId", "loanId" }, { "ActionType", "actionType" }, { "CreationTime", "metadata.createdDate" }, { "CreationUserId", "metadata.createdByUserId" }, { "LastWriteTime", "metadata.updatedDate" }, { "LastWriteUserId", "metadata.updatedByUserId" } };
             Response.Write("Id\tPatron\tPatronId\tLoan\tLoanId\tActionType\tCreationTime\tCreationUser\tCreationUserId\tLastWriteTime\tLastWriteUser\tLastWriteUserId\r\n");
-            foreach (var pas2 in folioServiceContext.PatronActionSession2s(Global.GetCqlFilter(PatronActionSession2sRadGrid, d), PatronActionSession2sRadGrid.MasterTableView.SortExpressions.Count > 0 ? $"{d[PatronActionSession2sRadGrid.MasterTableView.SortExpressions[0].FieldName]}{(PatronActionSession2sRadGrid.MasterTableView.SortExpressions[0].SortOrder == GridSortOrder.Descending ? "/sort.descending" : "")}" : null, load: true))
+            var d = new Dictionary<string, string>() { { "Id", "id" }, { "PatronId", "patronId" }, { "LoanId", "loanId" }, { "ActionType", "actionType" }, { "CreationTime", "metadata.createdDate" }, { "CreationUserId", "metadata.createdByUserId" }, { "LastWriteTime", "metadata.updatedDate" }, { "LastWriteUserId", "metadata.updatedByUserId" } };
+            var where = Global.Trim(string.Join(" and ", new string[]
+            {
+                Global.GetCqlFilter(PatronActionSession2sRadGrid, "Id", "id"),
+                Global.GetCqlFilter(PatronActionSession2sRadGrid, "Patron.Username", "patronId", "username", folioServiceContext.FolioServiceClient.Users),
+                Global.GetCqlFilter(PatronActionSession2sRadGrid, "Loan.Id", "loanId", "id", folioServiceContext.FolioServiceClient.Loans),
+                Global.GetCqlFilter(PatronActionSession2sRadGrid, "ActionType", "actionType"),
+                Global.GetCqlFilter(PatronActionSession2sRadGrid, "CreationTime", "metadata.createdDate"),
+                Global.GetCqlFilter(PatronActionSession2sRadGrid, "CreationUser.Username", "metadata.createdByUserId", "username", folioServiceContext.FolioServiceClient.Users),
+                Global.GetCqlFilter(PatronActionSession2sRadGrid, "LastWriteTime", "metadata.updatedDate"),
+                Global.GetCqlFilter(PatronActionSession2sRadGrid, "LastWriteUser.Username", "metadata.updatedByUserId", "username", folioServiceContext.FolioServiceClient.Users)
+            }.Where(s => s != null)));
+            foreach (var pas2 in folioServiceContext.PatronActionSession2s(where, PatronActionSession2sRadGrid.MasterTableView.SortExpressions.Count > 0 ? $"{d[PatronActionSession2sRadGrid.MasterTableView.SortExpressions[0].FieldName]}{(PatronActionSession2sRadGrid.MasterTableView.SortExpressions[0].SortOrder == GridSortOrder.Descending ? "/sort.descending" : "")}" : null, load: true))
                 Response.Write($"{pas2.Id}\t{Global.TextEncode(pas2.Patron?.Username)}\t{pas2.PatronId}\t{pas2.Loan?.Id}\t{pas2.LoanId}\t{Global.TextEncode(pas2.ActionType)}\t{pas2.CreationTime:M/d/yyyy HH:mm:ss}\t{Global.TextEncode(pas2.CreationUser?.Username)}\t{pas2.CreationUserId}\t{pas2.LastWriteTime:M/d/yyyy HH:mm:ss}\t{Global.TextEncode(pas2.LastWriteUser?.Username)}\t{pas2.LastWriteUserId}\r\n");
             Response.End();
         }

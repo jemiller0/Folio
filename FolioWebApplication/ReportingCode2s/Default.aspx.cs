@@ -44,9 +44,15 @@ namespace FolioWebApplication.ReportingCode2s
             Response.Charset = "utf-8";
             Response.AppendHeader("Content-Disposition", "attachment; filename=\"ReportingCode2s.txt\"");
             Response.BufferOutput = false;
-            var d = new Dictionary<string, string>() { { "Id", "id" }, { "Code", "code" }, { "Description", "description" } };
             Response.Write("Id\tCode\tDescription\r\n");
-            foreach (var rc2 in folioServiceContext.ReportingCode2s(Global.GetCqlFilter(ReportingCode2sRadGrid, d), ReportingCode2sRadGrid.MasterTableView.SortExpressions.Count > 0 ? $"{d[ReportingCode2sRadGrid.MasterTableView.SortExpressions[0].FieldName]}{(ReportingCode2sRadGrid.MasterTableView.SortExpressions[0].SortOrder == GridSortOrder.Descending ? "/sort.descending" : "")}" : null, load: true))
+            var d = new Dictionary<string, string>() { { "Id", "id" }, { "Code", "code" }, { "Description", "description" } };
+            var where = Global.Trim(string.Join(" and ", new string[]
+            {
+                Global.GetCqlFilter(ReportingCode2sRadGrid, "Id", "id"),
+                Global.GetCqlFilter(ReportingCode2sRadGrid, "Code", "code"),
+                Global.GetCqlFilter(ReportingCode2sRadGrid, "Description", "description")
+            }.Where(s => s != null)));
+            foreach (var rc2 in folioServiceContext.ReportingCode2s(where, ReportingCode2sRadGrid.MasterTableView.SortExpressions.Count > 0 ? $"{d[ReportingCode2sRadGrid.MasterTableView.SortExpressions[0].FieldName]}{(ReportingCode2sRadGrid.MasterTableView.SortExpressions[0].SortOrder == GridSortOrder.Descending ? "/sort.descending" : "")}" : null, load: true))
                 Response.Write($"{rc2.Id}\t{Global.TextEncode(rc2.Code)}\t{Global.TextEncode(rc2.Description)}\r\n");
             Response.End();
         }

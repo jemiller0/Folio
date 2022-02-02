@@ -41,9 +41,8 @@ namespace FolioWebApplication.LocationSettings
             Response.Charset = "utf-8";
             Response.AppendHeader("Content-Disposition", "attachment; filename=\"LocationSettings.txt\"");
             Response.BufferOutput = false;
-            var d = new Dictionary<string, string>() { { "Id", "id" } };
             Response.Write("Id\tLocation\tLocationId\tSettings\tSettingsId\tEnabled\tCreationTime\tCreationUser\tCreationUserId\tLastWriteTime\tLastWriteUser\tLastWriteUserId\r\n");
-            foreach (var ls in folioServiceContext.LocationSettings(Global.GetCqlFilter(LocationSettingsRadGrid, d), LocationSettingsRadGrid.MasterTableView.SortExpressions.Count > 0 ? $"{d[LocationSettingsRadGrid.MasterTableView.SortExpressions[0].FieldName]}{(LocationSettingsRadGrid.MasterTableView.SortExpressions[0].SortOrder == GridSortOrder.Descending ? "/sort.descending" : "")}" : null, load: true))
+            foreach (var ls in folioServiceContext.LocationSettings(load: true))
                 Response.Write($"{ls.Id}\t{Global.TextEncode(ls.Location?.Name)}\t{ls.LocationId}\t{Global.TextEncode(ls.Settings?.Name)}\t{ls.SettingsId}\t{ls.Enabled}\t{ls.CreationTime:M/d/yyyy HH:mm:ss}\t{Global.TextEncode(ls.CreationUser?.Username)}\t{ls.CreationUserId}\t{ls.LastWriteTime:M/d/yyyy HH:mm:ss}\t{Global.TextEncode(ls.LastWriteUser?.Username)}\t{ls.LastWriteUserId}\r\n");
             Response.End();
         }

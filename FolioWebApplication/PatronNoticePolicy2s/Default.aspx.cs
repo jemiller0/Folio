@@ -49,9 +49,20 @@ namespace FolioWebApplication.PatronNoticePolicy2s
             Response.Charset = "utf-8";
             Response.AppendHeader("Content-Disposition", "attachment; filename=\"PatronNoticePolicy2s.txt\"");
             Response.BufferOutput = false;
-            var d = new Dictionary<string, string>() { { "Id", "id" }, { "Name", "name" }, { "Description", "description" }, { "Active", "active" }, { "CreationTime", "metadata.createdDate" }, { "CreationUserId", "metadata.createdByUserId" }, { "LastWriteTime", "metadata.updatedDate" }, { "LastWriteUserId", "metadata.updatedByUserId" } };
             Response.Write("Id\tName\tDescription\tActive\tCreationTime\tCreationUser\tCreationUserId\tLastWriteTime\tLastWriteUser\tLastWriteUserId\r\n");
-            foreach (var pnp2 in folioServiceContext.PatronNoticePolicy2s(Global.GetCqlFilter(PatronNoticePolicy2sRadGrid, d), PatronNoticePolicy2sRadGrid.MasterTableView.SortExpressions.Count > 0 ? $"{d[PatronNoticePolicy2sRadGrid.MasterTableView.SortExpressions[0].FieldName]}{(PatronNoticePolicy2sRadGrid.MasterTableView.SortExpressions[0].SortOrder == GridSortOrder.Descending ? "/sort.descending" : "")}" : null, load: true))
+            var d = new Dictionary<string, string>() { { "Id", "id" }, { "Name", "name" }, { "Description", "description" }, { "Active", "active" }, { "CreationTime", "metadata.createdDate" }, { "CreationUserId", "metadata.createdByUserId" }, { "LastWriteTime", "metadata.updatedDate" }, { "LastWriteUserId", "metadata.updatedByUserId" } };
+            var where = Global.Trim(string.Join(" and ", new string[]
+            {
+                Global.GetCqlFilter(PatronNoticePolicy2sRadGrid, "Id", "id"),
+                Global.GetCqlFilter(PatronNoticePolicy2sRadGrid, "Name", "name"),
+                Global.GetCqlFilter(PatronNoticePolicy2sRadGrid, "Description", "description"),
+                Global.GetCqlFilter(PatronNoticePolicy2sRadGrid, "Active", "active"),
+                Global.GetCqlFilter(PatronNoticePolicy2sRadGrid, "CreationTime", "metadata.createdDate"),
+                Global.GetCqlFilter(PatronNoticePolicy2sRadGrid, "CreationUser.Username", "metadata.createdByUserId", "username", folioServiceContext.FolioServiceClient.Users),
+                Global.GetCqlFilter(PatronNoticePolicy2sRadGrid, "LastWriteTime", "metadata.updatedDate"),
+                Global.GetCqlFilter(PatronNoticePolicy2sRadGrid, "LastWriteUser.Username", "metadata.updatedByUserId", "username", folioServiceContext.FolioServiceClient.Users)
+            }.Where(s => s != null)));
+            foreach (var pnp2 in folioServiceContext.PatronNoticePolicy2s(where, PatronNoticePolicy2sRadGrid.MasterTableView.SortExpressions.Count > 0 ? $"{d[PatronNoticePolicy2sRadGrid.MasterTableView.SortExpressions[0].FieldName]}{(PatronNoticePolicy2sRadGrid.MasterTableView.SortExpressions[0].SortOrder == GridSortOrder.Descending ? "/sort.descending" : "")}" : null, load: true))
                 Response.Write($"{pnp2.Id}\t{Global.TextEncode(pnp2.Name)}\t{Global.TextEncode(pnp2.Description)}\t{pnp2.Active}\t{pnp2.CreationTime:M/d/yyyy HH:mm:ss}\t{Global.TextEncode(pnp2.CreationUser?.Username)}\t{pnp2.CreationUserId}\t{pnp2.LastWriteTime:M/d/yyyy HH:mm:ss}\t{Global.TextEncode(pnp2.LastWriteUser?.Username)}\t{pnp2.LastWriteUserId}\r\n");
             Response.End();
         }

@@ -48,9 +48,19 @@ namespace FolioWebApplication.HoldingNoteType2s
             Response.Charset = "utf-8";
             Response.AppendHeader("Content-Disposition", "attachment; filename=\"HoldingNoteType2s.txt\"");
             Response.BufferOutput = false;
-            var d = new Dictionary<string, string>() { { "Id", "id" }, { "Name", "name" }, { "Source", "source" }, { "CreationTime", "metadata.createdDate" }, { "CreationUserId", "metadata.createdByUserId" }, { "LastWriteTime", "metadata.updatedDate" }, { "LastWriteUserId", "metadata.updatedByUserId" } };
             Response.Write("Id\tName\tSource\tCreationTime\tCreationUser\tCreationUserId\tLastWriteTime\tLastWriteUser\tLastWriteUserId\r\n");
-            foreach (var hnt2 in folioServiceContext.HoldingNoteType2s(Global.GetCqlFilter(HoldingNoteType2sRadGrid, d), HoldingNoteType2sRadGrid.MasterTableView.SortExpressions.Count > 0 ? $"{d[HoldingNoteType2sRadGrid.MasterTableView.SortExpressions[0].FieldName]}{(HoldingNoteType2sRadGrid.MasterTableView.SortExpressions[0].SortOrder == GridSortOrder.Descending ? "/sort.descending" : "")}" : null, load: true))
+            var d = new Dictionary<string, string>() { { "Id", "id" }, { "Name", "name" }, { "Source", "source" }, { "CreationTime", "metadata.createdDate" }, { "CreationUserId", "metadata.createdByUserId" }, { "LastWriteTime", "metadata.updatedDate" }, { "LastWriteUserId", "metadata.updatedByUserId" } };
+            var where = Global.Trim(string.Join(" and ", new string[]
+            {
+                Global.GetCqlFilter(HoldingNoteType2sRadGrid, "Id", "id"),
+                Global.GetCqlFilter(HoldingNoteType2sRadGrid, "Name", "name"),
+                Global.GetCqlFilter(HoldingNoteType2sRadGrid, "Source", "source"),
+                Global.GetCqlFilter(HoldingNoteType2sRadGrid, "CreationTime", "metadata.createdDate"),
+                Global.GetCqlFilter(HoldingNoteType2sRadGrid, "CreationUser.Username", "metadata.createdByUserId", "username", folioServiceContext.FolioServiceClient.Users),
+                Global.GetCqlFilter(HoldingNoteType2sRadGrid, "LastWriteTime", "metadata.updatedDate"),
+                Global.GetCqlFilter(HoldingNoteType2sRadGrid, "LastWriteUser.Username", "metadata.updatedByUserId", "username", folioServiceContext.FolioServiceClient.Users)
+            }.Where(s => s != null)));
+            foreach (var hnt2 in folioServiceContext.HoldingNoteType2s(where, HoldingNoteType2sRadGrid.MasterTableView.SortExpressions.Count > 0 ? $"{d[HoldingNoteType2sRadGrid.MasterTableView.SortExpressions[0].FieldName]}{(HoldingNoteType2sRadGrid.MasterTableView.SortExpressions[0].SortOrder == GridSortOrder.Descending ? "/sort.descending" : "")}" : null, load: true))
                 Response.Write($"{hnt2.Id}\t{Global.TextEncode(hnt2.Name)}\t{Global.TextEncode(hnt2.Source)}\t{hnt2.CreationTime:M/d/yyyy HH:mm:ss}\t{Global.TextEncode(hnt2.CreationUser?.Username)}\t{hnt2.CreationUserId}\t{hnt2.LastWriteTime:M/d/yyyy HH:mm:ss}\t{Global.TextEncode(hnt2.LastWriteUser?.Username)}\t{hnt2.LastWriteUserId}\r\n");
             Response.End();
         }

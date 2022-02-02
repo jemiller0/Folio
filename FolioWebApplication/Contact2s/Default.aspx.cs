@@ -53,9 +53,24 @@ namespace FolioWebApplication.Contact2s
             Response.Charset = "utf-8";
             Response.AppendHeader("Content-Disposition", "attachment; filename=\"Contact2s.txt\"");
             Response.BufferOutput = false;
-            var d = new Dictionary<string, string>() { { "Id", "id" }, { "Prefix", "prefix" }, { "FirstName", "firstName" }, { "LastName", "lastName" }, { "Language", "language" }, { "Notes", "notes" }, { "Inactive", "inactive" }, { "CreationTime", "metadata.createdDate" }, { "CreationUserId", "metadata.createdByUserId" }, { "LastWriteTime", "metadata.updatedDate" }, { "LastWriteUserId", "metadata.updatedByUserId" } };
             Response.Write("Id\tName\tPrefix\tFirstName\tLastName\tLanguage\tNotes\tInactive\tCreationTime\tCreationUser\tCreationUserId\tLastWriteTime\tLastWriteUser\tLastWriteUserId\r\n");
-            foreach (var c2 in folioServiceContext.Contact2s(Global.GetCqlFilter(Contact2sRadGrid, d), Contact2sRadGrid.MasterTableView.SortExpressions.Count > 0 ? $"{d[Contact2sRadGrid.MasterTableView.SortExpressions[0].FieldName]}{(Contact2sRadGrid.MasterTableView.SortExpressions[0].SortOrder == GridSortOrder.Descending ? "/sort.descending" : "")}" : null, load: true))
+            var d = new Dictionary<string, string>() { { "Id", "id" }, { "Prefix", "prefix" }, { "FirstName", "firstName" }, { "LastName", "lastName" }, { "Language", "language" }, { "Notes", "notes" }, { "Inactive", "inactive" }, { "CreationTime", "metadata.createdDate" }, { "CreationUserId", "metadata.createdByUserId" }, { "LastWriteTime", "metadata.updatedDate" }, { "LastWriteUserId", "metadata.updatedByUserId" } };
+            var where = Global.Trim(string.Join(" and ", new string[]
+            {
+                Global.GetCqlFilter(Contact2sRadGrid, "Id", "id"),
+                Global.GetCqlFilter(Contact2sRadGrid, "Name", ""),
+                Global.GetCqlFilter(Contact2sRadGrid, "Prefix", "prefix"),
+                Global.GetCqlFilter(Contact2sRadGrid, "FirstName", "firstName"),
+                Global.GetCqlFilter(Contact2sRadGrid, "LastName", "lastName"),
+                Global.GetCqlFilter(Contact2sRadGrid, "Language", "language"),
+                Global.GetCqlFilter(Contact2sRadGrid, "Notes", "notes"),
+                Global.GetCqlFilter(Contact2sRadGrid, "Inactive", "inactive"),
+                Global.GetCqlFilter(Contact2sRadGrid, "CreationTime", "metadata.createdDate"),
+                Global.GetCqlFilter(Contact2sRadGrid, "CreationUser.Username", "metadata.createdByUserId", "username", folioServiceContext.FolioServiceClient.Users),
+                Global.GetCqlFilter(Contact2sRadGrid, "LastWriteTime", "metadata.updatedDate"),
+                Global.GetCqlFilter(Contact2sRadGrid, "LastWriteUser.Username", "metadata.updatedByUserId", "username", folioServiceContext.FolioServiceClient.Users)
+            }.Where(s => s != null)));
+            foreach (var c2 in folioServiceContext.Contact2s(where, Contact2sRadGrid.MasterTableView.SortExpressions.Count > 0 ? $"{d[Contact2sRadGrid.MasterTableView.SortExpressions[0].FieldName]}{(Contact2sRadGrid.MasterTableView.SortExpressions[0].SortOrder == GridSortOrder.Descending ? "/sort.descending" : "")}" : null, load: true))
                 Response.Write($"{c2.Id}\t{Global.TextEncode(c2.Name)}\t{Global.TextEncode(c2.Prefix)}\t{Global.TextEncode(c2.FirstName)}\t{Global.TextEncode(c2.LastName)}\t{Global.TextEncode(c2.Language)}\t{Global.TextEncode(c2.Notes)}\t{c2.Inactive}\t{c2.CreationTime:M/d/yyyy HH:mm:ss}\t{Global.TextEncode(c2.CreationUser?.Username)}\t{c2.CreationUserId}\t{c2.LastWriteTime:M/d/yyyy HH:mm:ss}\t{Global.TextEncode(c2.LastWriteUser?.Username)}\t{c2.LastWriteUserId}\r\n");
             Response.End();
         }

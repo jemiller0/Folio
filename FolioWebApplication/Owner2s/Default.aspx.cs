@@ -50,9 +50,21 @@ namespace FolioWebApplication.Owner2s
             Response.Charset = "utf-8";
             Response.AppendHeader("Content-Disposition", "attachment; filename=\"Owner2s.txt\"");
             Response.BufferOutput = false;
-            var d = new Dictionary<string, string>() { { "Id", "id" }, { "Name", "owner" }, { "Description", "desc" }, { "DefaultChargeNoticeId", "defaultChargeNoticeId" }, { "DefaultActionNoticeId", "defaultActionNoticeId" }, { "CreationTime", "metadata.createdDate" }, { "CreationUserId", "metadata.createdByUserId" }, { "LastWriteTime", "metadata.updatedDate" }, { "LastWriteUserId", "metadata.updatedByUserId" } };
             Response.Write("Id\tName\tDescription\tDefaultChargeNotice\tDefaultChargeNoticeId\tDefaultActionNotice\tDefaultActionNoticeId\tCreationTime\tCreationUser\tCreationUserId\tLastWriteTime\tLastWriteUser\tLastWriteUserId\r\n");
-            foreach (var o2 in folioServiceContext.Owner2s(Global.GetCqlFilter(Owner2sRadGrid, d), Owner2sRadGrid.MasterTableView.SortExpressions.Count > 0 ? $"{d[Owner2sRadGrid.MasterTableView.SortExpressions[0].FieldName]}{(Owner2sRadGrid.MasterTableView.SortExpressions[0].SortOrder == GridSortOrder.Descending ? "/sort.descending" : "")}" : null, load: true))
+            var d = new Dictionary<string, string>() { { "Id", "id" }, { "Name", "owner" }, { "Description", "desc" }, { "DefaultChargeNoticeId", "defaultChargeNoticeId" }, { "DefaultActionNoticeId", "defaultActionNoticeId" }, { "CreationTime", "metadata.createdDate" }, { "CreationUserId", "metadata.createdByUserId" }, { "LastWriteTime", "metadata.updatedDate" }, { "LastWriteUserId", "metadata.updatedByUserId" } };
+            var where = Global.Trim(string.Join(" and ", new string[]
+            {
+                Global.GetCqlFilter(Owner2sRadGrid, "Id", "id"),
+                Global.GetCqlFilter(Owner2sRadGrid, "Name", "owner"),
+                Global.GetCqlFilter(Owner2sRadGrid, "Description", "desc"),
+                Global.GetCqlFilter(Owner2sRadGrid, "DefaultChargeNotice.Name", "defaultChargeNoticeId", "name", folioServiceContext.FolioServiceClient.Templates),
+                Global.GetCqlFilter(Owner2sRadGrid, "DefaultActionNotice.Name", "defaultActionNoticeId", "name", folioServiceContext.FolioServiceClient.Templates),
+                Global.GetCqlFilter(Owner2sRadGrid, "CreationTime", "metadata.createdDate"),
+                Global.GetCqlFilter(Owner2sRadGrid, "CreationUser.Username", "metadata.createdByUserId", "username", folioServiceContext.FolioServiceClient.Users),
+                Global.GetCqlFilter(Owner2sRadGrid, "LastWriteTime", "metadata.updatedDate"),
+                Global.GetCqlFilter(Owner2sRadGrid, "LastWriteUser.Username", "metadata.updatedByUserId", "username", folioServiceContext.FolioServiceClient.Users)
+            }.Where(s => s != null)));
+            foreach (var o2 in folioServiceContext.Owner2s(where, Owner2sRadGrid.MasterTableView.SortExpressions.Count > 0 ? $"{d[Owner2sRadGrid.MasterTableView.SortExpressions[0].FieldName]}{(Owner2sRadGrid.MasterTableView.SortExpressions[0].SortOrder == GridSortOrder.Descending ? "/sort.descending" : "")}" : null, load: true))
                 Response.Write($"{o2.Id}\t{Global.TextEncode(o2.Name)}\t{Global.TextEncode(o2.Description)}\t{Global.TextEncode(o2.DefaultChargeNotice?.Name)}\t{o2.DefaultChargeNoticeId}\t{Global.TextEncode(o2.DefaultActionNotice?.Name)}\t{o2.DefaultActionNoticeId}\t{o2.CreationTime:M/d/yyyy HH:mm:ss}\t{Global.TextEncode(o2.CreationUser?.Username)}\t{o2.CreationUserId}\t{o2.LastWriteTime:M/d/yyyy HH:mm:ss}\t{Global.TextEncode(o2.LastWriteUser?.Username)}\t{o2.LastWriteUserId}\r\n");
             Response.End();
         }

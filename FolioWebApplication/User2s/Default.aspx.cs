@@ -83,9 +83,48 @@ namespace FolioWebApplication.User2s
             Response.Charset = "utf-8";
             Response.AppendHeader("Content-Disposition", "attachment; filename=\"User2s.txt\"");
             Response.BufferOutput = false;
-            var d = new Dictionary<string, string>() { { "Id", "id" }, { "Username", "username" }, { "ExternalSystemId", "externalSystemId" }, { "Barcode", "barcode" }, { "Active", "active" }, { "GroupId", "patronGroup" }, { "LastName", "personal.lastName" }, { "FirstName", "personal.firstName" }, { "MiddleName", "personal.middleName" }, { "PreferredFirstName", "personal.preferredFirstName" }, { "EmailAddress", "personal.email" }, { "PhoneNumber", "personal.phone" }, { "MobilePhoneNumber", "personal.mobilePhone" }, { "BirthDate", "personal.dateOfBirth" }, { "PreferredContactTypeId", "personal.preferredContactTypeId" }, { "StartDate", "enrollmentDate" }, { "EndDate", "expirationDate" }, { "Source", "customFields.source" }, { "Category", "customFields.category" }, { "Status", "customFields.status" }, { "Statuses", "customFields.statuses" }, { "StaffStatus", "customFields.staffStatus" }, { "StaffPrivileges", "customFields.staffPrivileges" }, { "StaffDivision", "customFields.staffDivision" }, { "StaffDepartment", "customFields.staffDepartment" }, { "StudentId", "customFields.studentId" }, { "StudentStatus", "customFields.studentStatus" }, { "StudentRestriction", "customFields.studentRestriction" }, { "StudentDivision", "customFields.studentDivision" }, { "StudentDepartment", "customFields.studentDepartment" }, { "Deceased", "customFields.deceased" }, { "Collections", "customFields.collections" }, { "CreationTime", "metadata.createdDate" }, { "CreationUserId", "metadata.createdByUserId" }, { "LastWriteTime", "metadata.updatedDate" }, { "LastWriteUserId", "metadata.updatedByUserId" } };
             Response.Write("Id\tUsername\tExternalSystemId\tBarcode\tActive\tGroup\tGroupId\tName\tLastName\tFirstName\tMiddleName\tPreferredFirstName\tEmailAddress\tPhoneNumber\tMobilePhoneNumber\tBirthDate\tPreferredContactType\tPreferredContactTypeId\tStartDate\tEndDate\tSource\tCategory\tStatus\tStatuses\tStaffStatus\tStaffPrivileges\tStaffDivision\tStaffDepartment\tStudentId\tStudentStatus\tStudentRestriction\tStudentDivision\tStudentDepartment\tDeceased\tCollections\tCreationTime\tCreationUser\tCreationUserId\tLastWriteTime\tLastWriteUser\tLastWriteUserId\r\n");
-            foreach (var u2 in folioServiceContext.User2s(Global.GetCqlFilter(User2sRadGrid, d), User2sRadGrid.MasterTableView.SortExpressions.Count > 0 ? $"{d[User2sRadGrid.MasterTableView.SortExpressions[0].FieldName]}{(User2sRadGrid.MasterTableView.SortExpressions[0].SortOrder == GridSortOrder.Descending ? "/sort.descending" : "")}" : null, load: true))
+            var d = new Dictionary<string, string>() { { "Id", "id" }, { "Username", "username" }, { "ExternalSystemId", "externalSystemId" }, { "Barcode", "barcode" }, { "Active", "active" }, { "GroupId", "patronGroup" }, { "LastName", "personal.lastName" }, { "FirstName", "personal.firstName" }, { "MiddleName", "personal.middleName" }, { "PreferredFirstName", "personal.preferredFirstName" }, { "EmailAddress", "personal.email" }, { "PhoneNumber", "personal.phone" }, { "MobilePhoneNumber", "personal.mobilePhone" }, { "BirthDate", "personal.dateOfBirth" }, { "PreferredContactTypeId", "personal.preferredContactTypeId" }, { "StartDate", "enrollmentDate" }, { "EndDate", "expirationDate" }, { "Source", "customFields.source" }, { "Category", "customFields.category" }, { "Status", "customFields.status" }, { "Statuses", "customFields.statuses" }, { "StaffStatus", "customFields.staffStatus" }, { "StaffPrivileges", "customFields.staffPrivileges" }, { "StaffDivision", "customFields.staffDivision" }, { "StaffDepartment", "customFields.staffDepartment" }, { "StudentId", "customFields.studentId" }, { "StudentStatus", "customFields.studentStatus" }, { "StudentRestriction", "customFields.studentRestriction" }, { "StudentDivision", "customFields.studentDivision" }, { "StudentDepartment", "customFields.studentDepartment" }, { "Deceased", "customFields.deceased" }, { "Collections", "customFields.collections" }, { "CreationTime", "metadata.createdDate" }, { "CreationUserId", "metadata.createdByUserId" }, { "LastWriteTime", "metadata.updatedDate" }, { "LastWriteUserId", "metadata.updatedByUserId" } };
+            var where = Global.Trim(string.Join(" and ", new string[]
+            {
+                Global.GetCqlFilter(User2sRadGrid, "Id", "id"),
+                Global.GetCqlFilter(User2sRadGrid, "Username", "username"),
+                Global.GetCqlFilter(User2sRadGrid, "ExternalSystemId", "externalSystemId"),
+                Global.GetCqlFilter(User2sRadGrid, "Barcode", "barcode"),
+                Global.GetCqlFilter(User2sRadGrid, "Active", "active"),
+                Global.GetCqlFilter(User2sRadGrid, "Group.Name", "patronGroup", "group", folioServiceContext.FolioServiceClient.Groups),
+                Global.GetCqlFilter(User2sRadGrid, "Name", ""),
+                Global.GetCqlFilter(User2sRadGrid, "LastName", "personal.lastName"),
+                Global.GetCqlFilter(User2sRadGrid, "FirstName", "personal.firstName"),
+                Global.GetCqlFilter(User2sRadGrid, "MiddleName", "personal.middleName"),
+                Global.GetCqlFilter(User2sRadGrid, "PreferredFirstName", "personal.preferredFirstName"),
+                Global.GetCqlFilter(User2sRadGrid, "EmailAddress", "personal.email"),
+                Global.GetCqlFilter(User2sRadGrid, "PhoneNumber", "personal.phone"),
+                Global.GetCqlFilter(User2sRadGrid, "MobilePhoneNumber", "personal.mobilePhone"),
+                Global.GetCqlFilter(User2sRadGrid, "BirthDate", "personal.dateOfBirth"),
+                Global.GetCqlFilter(User2sRadGrid, "StartDate", "enrollmentDate"),
+                Global.GetCqlFilter(User2sRadGrid, "EndDate", "expirationDate"),
+                Global.GetCqlFilter(User2sRadGrid, "Source", "customFields.source"),
+                Global.GetCqlFilter(User2sRadGrid, "Category", "customFields.category"),
+                Global.GetCqlFilter(User2sRadGrid, "Status", "customFields.status"),
+                Global.GetCqlFilter(User2sRadGrid, "Statuses", "customFields.statuses"),
+                Global.GetCqlFilter(User2sRadGrid, "StaffStatus", "customFields.staffStatus"),
+                Global.GetCqlFilter(User2sRadGrid, "StaffPrivileges", "customFields.staffPrivileges"),
+                Global.GetCqlFilter(User2sRadGrid, "StaffDivision", "customFields.staffDivision"),
+                Global.GetCqlFilter(User2sRadGrid, "StaffDepartment", "customFields.staffDepartment"),
+                Global.GetCqlFilter(User2sRadGrid, "StudentId", "customFields.studentId"),
+                Global.GetCqlFilter(User2sRadGrid, "StudentStatus", "customFields.studentStatus"),
+                Global.GetCqlFilter(User2sRadGrid, "StudentRestriction", "customFields.studentRestriction"),
+                Global.GetCqlFilter(User2sRadGrid, "StudentDivision", "customFields.studentDivision"),
+                Global.GetCqlFilter(User2sRadGrid, "StudentDepartment", "customFields.studentDepartment"),
+                Global.GetCqlFilter(User2sRadGrid, "Deceased", "customFields.deceased"),
+                Global.GetCqlFilter(User2sRadGrid, "Collections", "customFields.collections"),
+                Global.GetCqlFilter(User2sRadGrid, "CreationTime", "metadata.createdDate"),
+                Global.GetCqlFilter(User2sRadGrid, "CreationUser.Username", "metadata.createdByUserId", "username", folioServiceContext.FolioServiceClient.Users),
+                Global.GetCqlFilter(User2sRadGrid, "LastWriteTime", "metadata.updatedDate"),
+                Global.GetCqlFilter(User2sRadGrid, "LastWriteUser.Username", "metadata.updatedByUserId", "username", folioServiceContext.FolioServiceClient.Users)
+            }.Where(s => s != null)));
+            foreach (var u2 in folioServiceContext.User2s(where, User2sRadGrid.MasterTableView.SortExpressions.Count > 0 ? $"{d[User2sRadGrid.MasterTableView.SortExpressions[0].FieldName]}{(User2sRadGrid.MasterTableView.SortExpressions[0].SortOrder == GridSortOrder.Descending ? "/sort.descending" : "")}" : null, load: true))
                 Response.Write($"{u2.Id}\t{Global.TextEncode(u2.Username)}\t{Global.TextEncode(u2.ExternalSystemId)}\t{Global.TextEncode(u2.Barcode)}\t{u2.Active}\t{Global.TextEncode(u2.Group?.Name)}\t{u2.GroupId}\t{Global.TextEncode(u2.Name)}\t{Global.TextEncode(u2.LastName)}\t{Global.TextEncode(u2.FirstName)}\t{Global.TextEncode(u2.MiddleName)}\t{Global.TextEncode(u2.PreferredFirstName)}\t{Global.TextEncode(u2.EmailAddress)}\t{Global.TextEncode(u2.PhoneNumber)}\t{Global.TextEncode(u2.MobilePhoneNumber)}\t{u2.BirthDate:M/d/yyyy}\t{Global.TextEncode(u2.PreferredContactType?.Name)}\t{Global.TextEncode(u2.PreferredContactTypeId)}\t{u2.StartDate:M/d/yyyy}\t{u2.EndDate:M/d/yyyy}\t{Global.TextEncode(u2.Source)}\t{Global.TextEncode(u2.Category)}\t{Global.TextEncode(u2.Status)}\t{Global.TextEncode(u2.Statuses)}\t{Global.TextEncode(u2.StaffStatus)}\t{Global.TextEncode(u2.StaffPrivileges)}\t{Global.TextEncode(u2.StaffDivision)}\t{Global.TextEncode(u2.StaffDepartment)}\t{Global.TextEncode(u2.StudentId)}\t{Global.TextEncode(u2.StudentStatus)}\t{u2.StudentRestriction}\t{Global.TextEncode(u2.StudentDivision)}\t{Global.TextEncode(u2.StudentDepartment)}\t{u2.Deceased}\t{u2.Collections}\t{u2.CreationTime:M/d/yyyy HH:mm:ss}\t{Global.TextEncode(u2.CreationUser?.Username)}\t{u2.CreationUserId}\t{u2.LastWriteTime:M/d/yyyy HH:mm:ss}\t{Global.TextEncode(u2.LastWriteUser?.Username)}\t{u2.LastWriteUserId}\r\n");
             Response.End();
         }

@@ -43,9 +43,14 @@ namespace FolioWebApplication.FundType2s
             Response.Charset = "utf-8";
             Response.AppendHeader("Content-Disposition", "attachment; filename=\"FundType2s.txt\"");
             Response.BufferOutput = false;
-            var d = new Dictionary<string, string>() { { "Id", "id" }, { "Name", "name" } };
             Response.Write("Id\tName\r\n");
-            foreach (var ft2 in folioServiceContext.FundType2s(Global.GetCqlFilter(FundType2sRadGrid, d), FundType2sRadGrid.MasterTableView.SortExpressions.Count > 0 ? $"{d[FundType2sRadGrid.MasterTableView.SortExpressions[0].FieldName]}{(FundType2sRadGrid.MasterTableView.SortExpressions[0].SortOrder == GridSortOrder.Descending ? "/sort.descending" : "")}" : null, load: true))
+            var d = new Dictionary<string, string>() { { "Id", "id" }, { "Name", "name" } };
+            var where = Global.Trim(string.Join(" and ", new string[]
+            {
+                Global.GetCqlFilter(FundType2sRadGrid, "Id", "id"),
+                Global.GetCqlFilter(FundType2sRadGrid, "Name", "name")
+            }.Where(s => s != null)));
+            foreach (var ft2 in folioServiceContext.FundType2s(where, FundType2sRadGrid.MasterTableView.SortExpressions.Count > 0 ? $"{d[FundType2sRadGrid.MasterTableView.SortExpressions[0].FieldName]}{(FundType2sRadGrid.MasterTableView.SortExpressions[0].SortOrder == GridSortOrder.Descending ? "/sort.descending" : "")}" : null, load: true))
                 Response.Write($"{ft2.Id}\t{Global.TextEncode(ft2.Name)}\r\n");
             Response.End();
         }

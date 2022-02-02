@@ -44,9 +44,15 @@ namespace FolioWebApplication.Prefix2s
             Response.Charset = "utf-8";
             Response.AppendHeader("Content-Disposition", "attachment; filename=\"Prefix2s.txt\"");
             Response.BufferOutput = false;
-            var d = new Dictionary<string, string>() { { "Id", "id" }, { "Name", "name" }, { "Description", "description" } };
             Response.Write("Id\tName\tDescription\r\n");
-            foreach (var p2 in folioServiceContext.Prefix2s(Global.GetCqlFilter(Prefix2sRadGrid, d), Prefix2sRadGrid.MasterTableView.SortExpressions.Count > 0 ? $"{d[Prefix2sRadGrid.MasterTableView.SortExpressions[0].FieldName]}{(Prefix2sRadGrid.MasterTableView.SortExpressions[0].SortOrder == GridSortOrder.Descending ? "/sort.descending" : "")}" : null, load: true))
+            var d = new Dictionary<string, string>() { { "Id", "id" }, { "Name", "name" }, { "Description", "description" } };
+            var where = Global.Trim(string.Join(" and ", new string[]
+            {
+                Global.GetCqlFilter(Prefix2sRadGrid, "Id", "id"),
+                Global.GetCqlFilter(Prefix2sRadGrid, "Name", "name"),
+                Global.GetCqlFilter(Prefix2sRadGrid, "Description", "description")
+            }.Where(s => s != null)));
+            foreach (var p2 in folioServiceContext.Prefix2s(where, Prefix2sRadGrid.MasterTableView.SortExpressions.Count > 0 ? $"{d[Prefix2sRadGrid.MasterTableView.SortExpressions[0].FieldName]}{(Prefix2sRadGrid.MasterTableView.SortExpressions[0].SortOrder == GridSortOrder.Descending ? "/sort.descending" : "")}" : null, load: true))
                 Response.Write($"{p2.Id}\t{Global.TextEncode(p2.Name)}\t{Global.TextEncode(p2.Description)}\r\n");
             Response.End();
         }

@@ -48,9 +48,19 @@ namespace FolioWebApplication.ServicePointUser2s
             Response.Charset = "utf-8";
             Response.AppendHeader("Content-Disposition", "attachment; filename=\"ServicePointUser2s.txt\"");
             Response.BufferOutput = false;
-            var d = new Dictionary<string, string>() { { "Id", "id" }, { "UserId", "userId" }, { "DefaultServicePointId", "defaultServicePointId" }, { "CreationTime", "metadata.createdDate" }, { "CreationUserId", "metadata.createdByUserId" }, { "LastWriteTime", "metadata.updatedDate" }, { "LastWriteUserId", "metadata.updatedByUserId" } };
             Response.Write("Id\tUser\tUserId\tDefaultServicePoint\tDefaultServicePointId\tCreationTime\tCreationUser\tCreationUserId\tLastWriteTime\tLastWriteUser\tLastWriteUserId\r\n");
-            foreach (var spu2 in folioServiceContext.ServicePointUser2s(Global.GetCqlFilter(ServicePointUser2sRadGrid, d), ServicePointUser2sRadGrid.MasterTableView.SortExpressions.Count > 0 ? $"{d[ServicePointUser2sRadGrid.MasterTableView.SortExpressions[0].FieldName]}{(ServicePointUser2sRadGrid.MasterTableView.SortExpressions[0].SortOrder == GridSortOrder.Descending ? "/sort.descending" : "")}" : null, load: true))
+            var d = new Dictionary<string, string>() { { "Id", "id" }, { "UserId", "userId" }, { "DefaultServicePointId", "defaultServicePointId" }, { "CreationTime", "metadata.createdDate" }, { "CreationUserId", "metadata.createdByUserId" }, { "LastWriteTime", "metadata.updatedDate" }, { "LastWriteUserId", "metadata.updatedByUserId" } };
+            var where = Global.Trim(string.Join(" and ", new string[]
+            {
+                Global.GetCqlFilter(ServicePointUser2sRadGrid, "Id", "id"),
+                Global.GetCqlFilter(ServicePointUser2sRadGrid, "User.Username", "userId", "username", folioServiceContext.FolioServiceClient.Users),
+                Global.GetCqlFilter(ServicePointUser2sRadGrid, "DefaultServicePoint.Name", "defaultServicePointId", "name", folioServiceContext.FolioServiceClient.ServicePoints),
+                Global.GetCqlFilter(ServicePointUser2sRadGrid, "CreationTime", "metadata.createdDate"),
+                Global.GetCqlFilter(ServicePointUser2sRadGrid, "CreationUser.Username", "metadata.createdByUserId", "username", folioServiceContext.FolioServiceClient.Users),
+                Global.GetCqlFilter(ServicePointUser2sRadGrid, "LastWriteTime", "metadata.updatedDate"),
+                Global.GetCqlFilter(ServicePointUser2sRadGrid, "LastWriteUser.Username", "metadata.updatedByUserId", "username", folioServiceContext.FolioServiceClient.Users)
+            }.Where(s => s != null)));
+            foreach (var spu2 in folioServiceContext.ServicePointUser2s(where, ServicePointUser2sRadGrid.MasterTableView.SortExpressions.Count > 0 ? $"{d[ServicePointUser2sRadGrid.MasterTableView.SortExpressions[0].FieldName]}{(ServicePointUser2sRadGrid.MasterTableView.SortExpressions[0].SortOrder == GridSortOrder.Descending ? "/sort.descending" : "")}" : null, load: true))
                 Response.Write($"{spu2.Id}\t{Global.TextEncode(spu2.User?.Username)}\t{spu2.UserId}\t{Global.TextEncode(spu2.DefaultServicePoint?.Name)}\t{spu2.DefaultServicePointId}\t{spu2.CreationTime:M/d/yyyy HH:mm:ss}\t{Global.TextEncode(spu2.CreationUser?.Username)}\t{spu2.CreationUserId}\t{spu2.LastWriteTime:M/d/yyyy HH:mm:ss}\t{Global.TextEncode(spu2.LastWriteUser?.Username)}\t{spu2.LastWriteUserId}\r\n");
             Response.End();
         }

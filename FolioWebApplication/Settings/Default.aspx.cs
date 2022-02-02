@@ -42,9 +42,8 @@ namespace FolioWebApplication.Settings
             Response.Charset = "utf-8";
             Response.AppendHeader("Content-Disposition", "attachment; filename=\"Settings.txt\"");
             Response.BufferOutput = false;
-            var d = new Dictionary<string, string>() { { "Id", "id" } };
             Response.Write("Id\tName\tOrientation\tFontFamily\tFontSize\tFontWeight\tEnabled\tCreationTime\tCreationUser\tCreationUserId\tLastWriteTime\tLastWriteUser\tLastWriteUserId\r\n");
-            foreach (var s in folioServiceContext.Settings(Global.GetCqlFilter(SettingsRadGrid, d), SettingsRadGrid.MasterTableView.SortExpressions.Count > 0 ? $"{d[SettingsRadGrid.MasterTableView.SortExpressions[0].FieldName]}{(SettingsRadGrid.MasterTableView.SortExpressions[0].SortOrder == GridSortOrder.Descending ? "/sort.descending" : "")}" : null, load: true))
+            foreach (var s in folioServiceContext.Settings(load: true))
                 Response.Write($"{s.Id}\t{Global.TextEncode(s.Name)}\t{s.Orientation}\t{Global.TextEncode(s.FontFamily)}\t{s.FontSize}\t{s.FontWeight}\t{s.Enabled}\t{s.CreationTime:M/d/yyyy HH:mm:ss}\t{Global.TextEncode(s.CreationUser?.Username)}\t{s.CreationUserId}\t{s.LastWriteTime:M/d/yyyy HH:mm:ss}\t{Global.TextEncode(s.LastWriteUser?.Username)}\t{s.LastWriteUserId}\r\n");
             Response.End();
         }

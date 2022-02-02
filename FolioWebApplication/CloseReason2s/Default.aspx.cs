@@ -44,9 +44,15 @@ namespace FolioWebApplication.CloseReason2s
             Response.Charset = "utf-8";
             Response.AppendHeader("Content-Disposition", "attachment; filename=\"CloseReason2s.txt\"");
             Response.BufferOutput = false;
-            var d = new Dictionary<string, string>() { { "Id", "id" }, { "Name", "reason" }, { "Source", "source" } };
             Response.Write("Id\tName\tSource\r\n");
-            foreach (var cr2 in folioServiceContext.CloseReason2s(Global.GetCqlFilter(CloseReason2sRadGrid, d), CloseReason2sRadGrid.MasterTableView.SortExpressions.Count > 0 ? $"{d[CloseReason2sRadGrid.MasterTableView.SortExpressions[0].FieldName]}{(CloseReason2sRadGrid.MasterTableView.SortExpressions[0].SortOrder == GridSortOrder.Descending ? "/sort.descending" : "")}" : null, load: true))
+            var d = new Dictionary<string, string>() { { "Id", "id" }, { "Name", "reason" }, { "Source", "source" } };
+            var where = Global.Trim(string.Join(" and ", new string[]
+            {
+                Global.GetCqlFilter(CloseReason2sRadGrid, "Id", "id"),
+                Global.GetCqlFilter(CloseReason2sRadGrid, "Name", "reason"),
+                Global.GetCqlFilter(CloseReason2sRadGrid, "Source", "source")
+            }.Where(s => s != null)));
+            foreach (var cr2 in folioServiceContext.CloseReason2s(where, CloseReason2sRadGrid.MasterTableView.SortExpressions.Count > 0 ? $"{d[CloseReason2sRadGrid.MasterTableView.SortExpressions[0].FieldName]}{(CloseReason2sRadGrid.MasterTableView.SortExpressions[0].SortOrder == GridSortOrder.Descending ? "/sort.descending" : "")}" : null, load: true))
                 Response.Write($"{cr2.Id}\t{Global.TextEncode(cr2.Name)}\t{Global.TextEncode(cr2.Source)}\r\n");
             Response.End();
         }

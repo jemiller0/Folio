@@ -44,9 +44,15 @@ namespace FolioWebApplication.OrderInvoice2s
             Response.Charset = "utf-8";
             Response.AppendHeader("Content-Disposition", "attachment; filename=\"OrderInvoice2s.txt\"");
             Response.BufferOutput = false;
-            var d = new Dictionary<string, string>() { { "Id", "id" }, { "OrderId", "purchaseOrderId" }, { "InvoiceId", "invoiceId" } };
             Response.Write("Id\tOrder\tOrderId\tInvoice\tInvoiceId\r\n");
-            foreach (var oi2 in folioServiceContext.OrderInvoice2s(Global.GetCqlFilter(OrderInvoice2sRadGrid, d), OrderInvoice2sRadGrid.MasterTableView.SortExpressions.Count > 0 ? $"{d[OrderInvoice2sRadGrid.MasterTableView.SortExpressions[0].FieldName]}{(OrderInvoice2sRadGrid.MasterTableView.SortExpressions[0].SortOrder == GridSortOrder.Descending ? "/sort.descending" : "")}" : null, load: true))
+            var d = new Dictionary<string, string>() { { "Id", "id" }, { "OrderId", "purchaseOrderId" }, { "InvoiceId", "invoiceId" } };
+            var where = Global.Trim(string.Join(" and ", new string[]
+            {
+                Global.GetCqlFilter(OrderInvoice2sRadGrid, "Id", "id"),
+                Global.GetCqlFilter(OrderInvoice2sRadGrid, "Order.Number", "purchaseOrderId", "poNumber", folioServiceContext.FolioServiceClient.Orders),
+                Global.GetCqlFilter(OrderInvoice2sRadGrid, "Invoice.Number", "invoiceId", "folioInvoiceNo", folioServiceContext.FolioServiceClient.Invoices)
+            }.Where(s => s != null)));
+            foreach (var oi2 in folioServiceContext.OrderInvoice2s(where, OrderInvoice2sRadGrid.MasterTableView.SortExpressions.Count > 0 ? $"{d[OrderInvoice2sRadGrid.MasterTableView.SortExpressions[0].FieldName]}{(OrderInvoice2sRadGrid.MasterTableView.SortExpressions[0].SortOrder == GridSortOrder.Descending ? "/sort.descending" : "")}" : null, load: true))
                 Response.Write($"{oi2.Id}\t{Global.TextEncode(oi2.Order?.Number)}\t{oi2.OrderId}\t{Global.TextEncode(oi2.Invoice?.Number)}\t{oi2.InvoiceId}\r\n");
             Response.End();
         }

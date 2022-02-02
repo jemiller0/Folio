@@ -49,9 +49,20 @@ namespace FolioWebApplication.TransferAccount2s
             Response.Charset = "utf-8";
             Response.AppendHeader("Content-Disposition", "attachment; filename=\"TransferAccount2s.txt\"");
             Response.BufferOutput = false;
-            var d = new Dictionary<string, string>() { { "Id", "id" }, { "Name", "accountName" }, { "Description", "desc" }, { "CreationTime", "metadata.createdDate" }, { "CreationUserId", "metadata.createdByUserId" }, { "LastWriteTime", "metadata.updatedDate" }, { "LastWriteUserId", "metadata.updatedByUserId" }, { "OwnerId", "ownerId" } };
             Response.Write("Id\tName\tDescription\tCreationTime\tCreationUser\tCreationUserId\tLastWriteTime\tLastWriteUser\tLastWriteUserId\tOwner\tOwnerId\r\n");
-            foreach (var ta2 in folioServiceContext.TransferAccount2s(Global.GetCqlFilter(TransferAccount2sRadGrid, d), TransferAccount2sRadGrid.MasterTableView.SortExpressions.Count > 0 ? $"{d[TransferAccount2sRadGrid.MasterTableView.SortExpressions[0].FieldName]}{(TransferAccount2sRadGrid.MasterTableView.SortExpressions[0].SortOrder == GridSortOrder.Descending ? "/sort.descending" : "")}" : null, load: true))
+            var d = new Dictionary<string, string>() { { "Id", "id" }, { "Name", "accountName" }, { "Description", "desc" }, { "CreationTime", "metadata.createdDate" }, { "CreationUserId", "metadata.createdByUserId" }, { "LastWriteTime", "metadata.updatedDate" }, { "LastWriteUserId", "metadata.updatedByUserId" }, { "OwnerId", "ownerId" } };
+            var where = Global.Trim(string.Join(" and ", new string[]
+            {
+                Global.GetCqlFilter(TransferAccount2sRadGrid, "Id", "id"),
+                Global.GetCqlFilter(TransferAccount2sRadGrid, "Name", "accountName"),
+                Global.GetCqlFilter(TransferAccount2sRadGrid, "Description", "desc"),
+                Global.GetCqlFilter(TransferAccount2sRadGrid, "CreationTime", "metadata.createdDate"),
+                Global.GetCqlFilter(TransferAccount2sRadGrid, "CreationUser.Username", "metadata.createdByUserId", "username", folioServiceContext.FolioServiceClient.Users),
+                Global.GetCqlFilter(TransferAccount2sRadGrid, "LastWriteTime", "metadata.updatedDate"),
+                Global.GetCqlFilter(TransferAccount2sRadGrid, "LastWriteUser.Username", "metadata.updatedByUserId", "username", folioServiceContext.FolioServiceClient.Users),
+                Global.GetCqlFilter(TransferAccount2sRadGrid, "Owner.Name", "ownerId", "owner", folioServiceContext.FolioServiceClient.Owners)
+            }.Where(s => s != null)));
+            foreach (var ta2 in folioServiceContext.TransferAccount2s(where, TransferAccount2sRadGrid.MasterTableView.SortExpressions.Count > 0 ? $"{d[TransferAccount2sRadGrid.MasterTableView.SortExpressions[0].FieldName]}{(TransferAccount2sRadGrid.MasterTableView.SortExpressions[0].SortOrder == GridSortOrder.Descending ? "/sort.descending" : "")}" : null, load: true))
                 Response.Write($"{ta2.Id}\t{Global.TextEncode(ta2.Name)}\t{Global.TextEncode(ta2.Description)}\t{ta2.CreationTime:M/d/yyyy HH:mm:ss}\t{Global.TextEncode(ta2.CreationUser?.Username)}\t{ta2.CreationUserId}\t{ta2.LastWriteTime:M/d/yyyy HH:mm:ss}\t{Global.TextEncode(ta2.LastWriteUser?.Username)}\t{ta2.LastWriteUserId}\t{Global.TextEncode(ta2.Owner?.Name)}\t{ta2.OwnerId}\r\n");
             Response.End();
         }

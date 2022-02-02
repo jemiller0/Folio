@@ -50,9 +50,21 @@ namespace FolioWebApplication.Comment2s
             Response.Charset = "utf-8";
             Response.AppendHeader("Content-Disposition", "attachment; filename=\"Comment2s.txt\"");
             Response.BufferOutput = false;
-            var d = new Dictionary<string, string>() { { "Id", "id" }, { "Paid", "paid" }, { "Waived", "waived" }, { "Refunded", "refunded" }, { "TransferredManually", "transferredManually" }, { "CreationTime", "metadata.createdDate" }, { "CreationUserId", "metadata.createdByUserId" }, { "LastWriteTime", "metadata.updatedDate" }, { "LastWriteUserId", "metadata.updatedByUserId" } };
             Response.Write("Id\tPaid\tWaived\tRefunded\tTransferredManually\tCreationTime\tCreationUser\tCreationUserId\tLastWriteTime\tLastWriteUser\tLastWriteUserId\r\n");
-            foreach (var c2 in folioServiceContext.Comment2s(Global.GetCqlFilter(Comment2sRadGrid, d), Comment2sRadGrid.MasterTableView.SortExpressions.Count > 0 ? $"{d[Comment2sRadGrid.MasterTableView.SortExpressions[0].FieldName]}{(Comment2sRadGrid.MasterTableView.SortExpressions[0].SortOrder == GridSortOrder.Descending ? "/sort.descending" : "")}" : null, load: true))
+            var d = new Dictionary<string, string>() { { "Id", "id" }, { "Paid", "paid" }, { "Waived", "waived" }, { "Refunded", "refunded" }, { "TransferredManually", "transferredManually" }, { "CreationTime", "metadata.createdDate" }, { "CreationUserId", "metadata.createdByUserId" }, { "LastWriteTime", "metadata.updatedDate" }, { "LastWriteUserId", "metadata.updatedByUserId" } };
+            var where = Global.Trim(string.Join(" and ", new string[]
+            {
+                Global.GetCqlFilter(Comment2sRadGrid, "Id", "id"),
+                Global.GetCqlFilter(Comment2sRadGrid, "Paid", "paid"),
+                Global.GetCqlFilter(Comment2sRadGrid, "Waived", "waived"),
+                Global.GetCqlFilter(Comment2sRadGrid, "Refunded", "refunded"),
+                Global.GetCqlFilter(Comment2sRadGrid, "TransferredManually", "transferredManually"),
+                Global.GetCqlFilter(Comment2sRadGrid, "CreationTime", "metadata.createdDate"),
+                Global.GetCqlFilter(Comment2sRadGrid, "CreationUser.Username", "metadata.createdByUserId", "username", folioServiceContext.FolioServiceClient.Users),
+                Global.GetCqlFilter(Comment2sRadGrid, "LastWriteTime", "metadata.updatedDate"),
+                Global.GetCqlFilter(Comment2sRadGrid, "LastWriteUser.Username", "metadata.updatedByUserId", "username", folioServiceContext.FolioServiceClient.Users)
+            }.Where(s => s != null)));
+            foreach (var c2 in folioServiceContext.Comment2s(where, Comment2sRadGrid.MasterTableView.SortExpressions.Count > 0 ? $"{d[Comment2sRadGrid.MasterTableView.SortExpressions[0].FieldName]}{(Comment2sRadGrid.MasterTableView.SortExpressions[0].SortOrder == GridSortOrder.Descending ? "/sort.descending" : "")}" : null, load: true))
                 Response.Write($"{c2.Id}\t{c2.Paid}\t{c2.Waived}\t{c2.Refunded}\t{c2.TransferredManually}\t{c2.CreationTime:M/d/yyyy HH:mm:ss}\t{Global.TextEncode(c2.CreationUser?.Username)}\t{c2.CreationUserId}\t{c2.LastWriteTime:M/d/yyyy HH:mm:ss}\t{Global.TextEncode(c2.LastWriteUser?.Username)}\t{c2.LastWriteUserId}\r\n");
             Response.End();
         }

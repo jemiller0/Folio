@@ -52,9 +52,23 @@ namespace FolioWebApplication.BlockCondition2s
             Response.Charset = "utf-8";
             Response.AppendHeader("Content-Disposition", "attachment; filename=\"BlockCondition2s.txt\"");
             Response.BufferOutput = false;
-            var d = new Dictionary<string, string>() { { "Id", "id" }, { "Name", "name" }, { "BlockBorrowing", "blockBorrowing" }, { "BlockRenewals", "blockRenewals" }, { "BlockRequests", "blockRequests" }, { "ValueType", "valueType" }, { "Message", "message" }, { "CreationTime", "metadata.createdDate" }, { "CreationUserId", "metadata.createdByUserId" }, { "LastWriteTime", "metadata.updatedDate" }, { "LastWriteUserId", "metadata.updatedByUserId" } };
             Response.Write("Id\tName\tBlockBorrowing\tBlockRenewals\tBlockRequests\tValueType\tMessage\tCreationTime\tCreationUser\tCreationUserId\tLastWriteTime\tLastWriteUser\tLastWriteUserId\r\n");
-            foreach (var bc2 in folioServiceContext.BlockCondition2s(Global.GetCqlFilter(BlockCondition2sRadGrid, d), BlockCondition2sRadGrid.MasterTableView.SortExpressions.Count > 0 ? $"{d[BlockCondition2sRadGrid.MasterTableView.SortExpressions[0].FieldName]}{(BlockCondition2sRadGrid.MasterTableView.SortExpressions[0].SortOrder == GridSortOrder.Descending ? "/sort.descending" : "")}" : null, load: true))
+            var d = new Dictionary<string, string>() { { "Id", "id" }, { "Name", "name" }, { "BlockBorrowing", "blockBorrowing" }, { "BlockRenewals", "blockRenewals" }, { "BlockRequests", "blockRequests" }, { "ValueType", "valueType" }, { "Message", "message" }, { "CreationTime", "metadata.createdDate" }, { "CreationUserId", "metadata.createdByUserId" }, { "LastWriteTime", "metadata.updatedDate" }, { "LastWriteUserId", "metadata.updatedByUserId" } };
+            var where = Global.Trim(string.Join(" and ", new string[]
+            {
+                Global.GetCqlFilter(BlockCondition2sRadGrid, "Id", "id"),
+                Global.GetCqlFilter(BlockCondition2sRadGrid, "Name", "name"),
+                Global.GetCqlFilter(BlockCondition2sRadGrid, "BlockBorrowing", "blockBorrowing"),
+                Global.GetCqlFilter(BlockCondition2sRadGrid, "BlockRenewals", "blockRenewals"),
+                Global.GetCqlFilter(BlockCondition2sRadGrid, "BlockRequests", "blockRequests"),
+                Global.GetCqlFilter(BlockCondition2sRadGrid, "ValueType", "valueType"),
+                Global.GetCqlFilter(BlockCondition2sRadGrid, "Message", "message"),
+                Global.GetCqlFilter(BlockCondition2sRadGrid, "CreationTime", "metadata.createdDate"),
+                Global.GetCqlFilter(BlockCondition2sRadGrid, "CreationUser.Username", "metadata.createdByUserId", "username", folioServiceContext.FolioServiceClient.Users),
+                Global.GetCqlFilter(BlockCondition2sRadGrid, "LastWriteTime", "metadata.updatedDate"),
+                Global.GetCqlFilter(BlockCondition2sRadGrid, "LastWriteUser.Username", "metadata.updatedByUserId", "username", folioServiceContext.FolioServiceClient.Users)
+            }.Where(s => s != null)));
+            foreach (var bc2 in folioServiceContext.BlockCondition2s(where, BlockCondition2sRadGrid.MasterTableView.SortExpressions.Count > 0 ? $"{d[BlockCondition2sRadGrid.MasterTableView.SortExpressions[0].FieldName]}{(BlockCondition2sRadGrid.MasterTableView.SortExpressions[0].SortOrder == GridSortOrder.Descending ? "/sort.descending" : "")}" : null, load: true))
                 Response.Write($"{bc2.Id}\t{Global.TextEncode(bc2.Name)}\t{bc2.BlockBorrowing}\t{bc2.BlockRenewals}\t{bc2.BlockRequests}\t{Global.TextEncode(bc2.ValueType)}\t{Global.TextEncode(bc2.Message)}\t{bc2.CreationTime:M/d/yyyy HH:mm:ss}\t{Global.TextEncode(bc2.CreationUser?.Username)}\t{bc2.CreationUserId}\t{bc2.LastWriteTime:M/d/yyyy HH:mm:ss}\t{Global.TextEncode(bc2.LastWriteUser?.Username)}\t{bc2.LastWriteUserId}\r\n");
             Response.End();
         }
