@@ -18,24 +18,14 @@
             }
 
             function EndRequest(sender, args) {
-                // Check to see if there's an error on this request.
                 if (args.get_error() != undefined) {
-
-                    var msg = args.get_error().message.replace("Sys.WebForms.PageRequestManagerServerErrorException: ", "");
-
-                    // Show the custom error. 
-                    // Here you can be creative and do whatever you want
-                    // with the exception (i.e. call a modalpopup and show 
-                    // a nicer error window). I will simply use 'alert'
+                    var msg = args.get_error().message.replace("Sys.WebForms.PageRequestManagerServerErrorException: ", "").replace("Sys.WebForms.PageRequestManagerTimeoutException: ", "");
                     alert(msg);
-
-                    // Let the framework know that the error is handled, 
-                    //  so it doesn't throw the JavaScript alert.
                     args.set_errorHandled(true);
                 }
             }
         </script>
-        <telerik:RadScriptManager ID="RadScriptManager1" runat="server" OnAsyncPostBackError="RadScriptManager1_AsyncPostBackError" />
+        <telerik:RadScriptManager ID="RadScriptManager1" runat="server" OnAsyncPostBackError="RadScriptManager1_AsyncPostBackError" AsyncPostBackTimeout ="30" />
         <telerik:RadStyleSheetManager ID="RadStyleSheetManager1" runat="server" />
         <telerik:RadSkinManager ID="RadSkinManager1" runat="server" Skin="Default" />
         <telerik:RadAjaxLoadingPanel ID="RadAjaxLoadingPanel1" runat="server" />
@@ -214,12 +204,10 @@
                 </Items>
             </telerik:RadMenu>
         </div>
-        <div runat="server" id="ErrorDiv" />
         <div id="MainDiv">
             <asp:ContentPlaceHolder ID="ContentPlaceHolder1" runat="server" />
         </div>
         <div id="FooterDiv">
-            <asp:Literal ID="ErrorLiteral" runat="server" />
             &copy; The University of Chicago Library
         </div>
     </form>

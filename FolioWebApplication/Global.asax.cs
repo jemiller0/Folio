@@ -239,7 +239,7 @@ namespace FolioWebApplication
                     return string.Format(formats[gc.CurrentFilterFunction], name, FolioServiceClient.EncodeCql(gc.CurrentFilterValue));
                 }
                 else
-                    return $"{name} == ({string.Join(" or ", query(GetCqlFilter(radGrid, dataField, name2), null, null, radGrid.PageSize).Select(jo => $"\"{jo["id"]}\""))})";
+                    return $"{name} == ({string.Join(" or ", query(GetCqlFilter(radGrid, dataField, name2), null, null, radGrid.PageSize).Select(jo => $"\"{jo["id"]}\""))})".Replace(" == ()", " == false");
             }
             return null;
         }

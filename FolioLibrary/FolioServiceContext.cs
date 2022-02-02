@@ -11,7 +11,7 @@ namespace FolioLibrary
         public FolioServiceClient FolioServiceClient { get; set; }
         Dictionary<Guid, object> objects = new Dictionary<Guid, object>();
 
-        public FolioServiceContext(string nameOrConnectionString = "FolioServiceClient", string accessToken = null) => FolioServiceClient = new FolioServiceClient(nameOrConnectionString, accessToken);
+        public FolioServiceContext(string nameOrConnectionString = "FolioServiceClient", string accessToken = null, TimeSpan? timeout = null) => FolioServiceClient = new FolioServiceClient(nameOrConnectionString, accessToken, timeout);
 
         public bool AnyAcquisitionsUnit2s(string where = null) => FolioServiceClient.AnyAcquisitionsUnits(where);
 

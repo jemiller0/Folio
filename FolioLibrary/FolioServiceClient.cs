@@ -32,7 +32,7 @@ namespace FolioLibrary
         private readonly static JsonSerializerSettings universalTimeJsonSerializationSettings = new JsonSerializerSettings { Formatting = traceSource.Switch.Level == SourceLevels.Verbose ? Formatting.Indented : Formatting.None, DateTimeZoneHandling = DateTimeZoneHandling.Utc, DateFormatString = "yyyy-MM-ddTHH:mm:ss.fff+00:00" };
         private readonly static JsonSerializer localTimeJsonSerializer = new JsonSerializer { Formatting = Formatting.Indented, DateTimeZoneHandling = DateTimeZoneHandling.Local };
 
-        public FolioServiceClient(string nameOrConnectionString = "FolioServiceClient", string accessToken = null)
+        public FolioServiceClient(string nameOrConnectionString = "FolioServiceClient", string accessToken = null, TimeSpan? timeout = null)
         {
             var connectionString = ConfigurationManager.ConnectionStrings[nameOrConnectionString ?? "FolioServiceClient"]?.ConnectionString ?? nameOrConnectionString;
             if (connectionString != null && connectionString.StartsWith("http"))
@@ -54,6 +54,7 @@ namespace FolioLibrary
                 httpClient.DefaultRequestHeaders.TryAddWithoutValidation("x-okapi-tenant", Tenant);
                 if (AccessToken != null) httpClient.DefaultRequestHeaders.TryAddWithoutValidation("x-okapi-token", AccessToken);
             }
+            httpClient.Timeout = timeout ?? Timeout.InfiniteTimeSpan;
         }
 
         private void AuthenticateIfNecessary()
