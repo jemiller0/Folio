@@ -111,7 +111,7 @@
                             <telerik:RadMenuItem Text="Holding Types" NavigateUrl="~/HoldingType2s/Default.aspx" Visible='<%# Session["HoldingType2sPermission"] != null %>' />
                             <telerik:RadMenuItem Text="Holdings" NavigateUrl="~/Holding2s/Default.aspx" Visible='<%# Session["Holding2sPermission"] != null %>' />
                             <telerik:RadMenuItem Text="Id Types" NavigateUrl="~/IdType2s/Default.aspx" Visible='<%# Session["IdType2sPermission"] != null %>' />
-                            <telerik:RadMenuItem Text="Ill Policies" NavigateUrl="~/IllPolicy2s/Default.aspx" Visible='<%# Session["IllPolicy2sPermission"] != null %>' />
+                            <telerik:RadMenuItem Text="ILL Policies" NavigateUrl="~/IllPolicy2s/Default.aspx" Visible='<%# Session["IllPolicy2sPermission"] != null %>' />
                             <telerik:RadMenuItem Text="Instance Note Types" NavigateUrl="~/InstanceNoteType2s/Default.aspx" Visible='<%# Session["InstanceNoteType2sPermission"] != null %>' />
                             <telerik:RadMenuItem Text="Instance Types" NavigateUrl="~/InstanceType2s/Default.aspx" Visible='<%# Session["InstanceType2sPermission"] != null %>' />
                             <telerik:RadMenuItem Text="Instances" NavigateUrl="~/Instance2s/Default.aspx" Visible='<%# Session["Instance2sPermission"] != null %>' />

@@ -31,7 +31,7 @@ namespace FolioWebApplication.IllPolicy2s
             if (ip2 == null) Response.Redirect("Default.aspx");
             ip2.Content = ip2.Content != null ? JsonConvert.DeserializeObject<JToken>(ip2.Content, new JsonSerializerSettings { DateTimeZoneHandling = DateTimeZoneHandling.Local }).ToString() : null;
             IllPolicy2FormView.DataSource = new[] { ip2 };
-            Title = $"Ill Policy {ip2.Name}";
+            Title = $"ILL Policy {ip2.Name}";
         }
 
         protected void Holding2sRadGrid_NeedDataSource(object sender, GridNeedDataSourceEventArgs e)

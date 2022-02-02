@@ -14,7 +14,7 @@ namespace FolioLibrary
 {
     // uc.ill_policies -> diku_mod_inventory_storage.ill_policy
     // IllPolicy2 -> IllPolicy
-    [DisplayColumn(nameof(Name)), DisplayName("Ill Policies"), JsonConverter(typeof(JsonPathJsonConverter<IllPolicy2>)), JsonObject(MemberSerialization = MemberSerialization.OptIn), Table("ill_policies", Schema = "uc")]
+    [DisplayColumn(nameof(Name)), DisplayName("ILL Policies"), JsonConverter(typeof(JsonPathJsonConverter<IllPolicy2>)), JsonObject(MemberSerialization = MemberSerialization.OptIn), Table("ill_policies", Schema = "uc")]
     public partial class IllPolicy2
     {
         public static ValidationResult ValidateContent(string value)

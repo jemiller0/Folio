@@ -1,9 +1,9 @@
-<%@ Page Title="Ill Policies" Language="C#" MasterPageFile="~/Default.master" AutoEventWireup="true" CodeBehind="Default.aspx.cs" Inherits="FolioWebApplication.IllPolicy2s.Default" %>
+<%@ Page Title="ILL Policies" Language="C#" MasterPageFile="~/Default.master" AutoEventWireup="true" CodeBehind="Default.aspx.cs" Inherits="FolioWebApplication.IllPolicy2s.Default" %>
 
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
     <asp:Panel ID="IllPolicy2sPanel" runat="server">
         <fieldset>
-            <legend><asp:HyperLink ID="IllPolicy2sHyperLink" runat="server" Text="Ill Policies" NavigateUrl="Default.aspx" /></legend>
+            <legend><asp:HyperLink ID="IllPolicy2sHyperLink" runat="server" Text="ILL Policies" NavigateUrl="Default.aspx" /></legend>
             <asp:LinkButton ID="ExportLinkButton" runat="server" Text="Export" OnClick="ExportLinkButton_Click" />
             <telerik:RadGrid ID="IllPolicy2sRadGrid" runat="server" AutoGenerateColumns="false" AllowSorting="true" AllowFilteringByColumn="true" GroupingSettings-CaseSensitive="false" AllowPaging="true" AllowCustomPaging="true" PageSize="100" EnableLinqExpressions="false" OnNeedDataSource="IllPolicy2sRadGrid_NeedDataSource">
                 <MasterTableView DataKeyNames="Id" PagerStyle-Mode="NextPrevNumericAndAdvanced" NoMasterRecordsText="No ill policies found" CommandItemDisplay="Top">

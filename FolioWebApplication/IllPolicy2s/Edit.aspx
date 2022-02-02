@@ -4,7 +4,7 @@
     <asp:Panel ID="IllPolicy2Panel" runat="server">
         <fieldset>
             <legend>
-                <asp:HyperLink ID="IllPolicy2HyperLink" runat="server" Text="Ill Policy" NavigateUrl="Default.aspx" /></legend>
+                <asp:HyperLink ID="IllPolicy2HyperLink" runat="server" Text="ILL Policy" NavigateUrl="Default.aspx" /></legend>
             <asp:FormView ID="IllPolicy2FormView" runat="server" DataKeyNames="Id" DefaultMode="ReadOnly" RenderOuterTable="false" OnDataBinding="IllPolicy2FormView_DataBinding">
                 <ItemTemplate>
                     <asp:Panel ID="ViewIllPolicy2Panel" runat="server">
