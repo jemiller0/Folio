@@ -73,7 +73,7 @@ namespace FolioWebApplication.IdType2s
                 InvoiceItem2sRadGrid.AllowFilteringByColumn = InvoiceItem2sRadGrid.VirtualItemCount > 10;
                 InvoiceItem2sPanel.Visible = IdType2FormView.DataKey.Value != null && Session["InvoiceItem2sPermission"] != null && InvoiceItem2sRadGrid.VirtualItemCount > 0;
             }
-            traceSource.TraceEvent(TraceEventType.Information, 0, $"where = {where}");
+            traceSource.TraceEvent(TraceEventType.Verbose, 0, $"where = {where}");
         }
 
         public override void Dispose()

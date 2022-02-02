@@ -37,7 +37,7 @@ namespace FolioWebApplication.ItemDamagedStatus2s
             }.Where(s => s != null)));
             ItemDamagedStatus2sRadGrid.DataSource = folioServiceContext.ItemDamagedStatus2s(out var i, where, ItemDamagedStatus2sRadGrid.MasterTableView.SortExpressions.Count > 0 ? $"{d[ItemDamagedStatus2sRadGrid.MasterTableView.SortExpressions[0].FieldName]}{(ItemDamagedStatus2sRadGrid.MasterTableView.SortExpressions[0].SortOrder == GridSortOrder.Descending ? "/sort.descending" : "")}" : null, ItemDamagedStatus2sRadGrid.PageSize * ItemDamagedStatus2sRadGrid.CurrentPageIndex, ItemDamagedStatus2sRadGrid.PageSize, true);
             ItemDamagedStatus2sRadGrid.VirtualItemCount = i;
-            traceSource.TraceEvent(TraceEventType.Information, 0, $"where = {where}");
+            traceSource.TraceEvent(TraceEventType.Verbose, 0, $"where = {where}");
         }
 
         protected void ExportLinkButton_Click(object sender, EventArgs e)

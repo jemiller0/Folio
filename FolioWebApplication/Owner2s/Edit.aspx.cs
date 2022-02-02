@@ -75,7 +75,7 @@ namespace FolioWebApplication.Owner2s
                 Fee2sRadGrid.AllowFilteringByColumn = Fee2sRadGrid.VirtualItemCount > 10;
                 Fee2sPanel.Visible = Owner2FormView.DataKey.Value != null && Session["Fee2sPermission"] != null && Fee2sRadGrid.VirtualItemCount > 0;
             }
-            traceSource.TraceEvent(TraceEventType.Information, 0, $"where = {where}");
+            traceSource.TraceEvent(TraceEventType.Verbose, 0, $"where = {where}");
         }
 
         protected void FeeType2sRadGrid_NeedDataSource(object sender, GridNeedDataSourceEventArgs e)
@@ -105,7 +105,7 @@ namespace FolioWebApplication.Owner2s
                 FeeType2sRadGrid.AllowFilteringByColumn = FeeType2sRadGrid.VirtualItemCount > 10;
                 FeeType2sPanel.Visible = Owner2FormView.DataKey.Value != null && Session["FeeType2sPermission"] != null && FeeType2sRadGrid.VirtualItemCount > 0;
             }
-            traceSource.TraceEvent(TraceEventType.Information, 0, $"where = {where}");
+            traceSource.TraceEvent(TraceEventType.Verbose, 0, $"where = {where}");
         }
 
         protected void PaymentMethod2sRadGrid_NeedDataSource(object sender, GridNeedDataSourceEventArgs e)
@@ -132,7 +132,7 @@ namespace FolioWebApplication.Owner2s
                 PaymentMethod2sRadGrid.AllowFilteringByColumn = PaymentMethod2sRadGrid.VirtualItemCount > 10;
                 PaymentMethod2sPanel.Visible = Owner2FormView.DataKey.Value != null && Session["PaymentMethod2sPermission"] != null && PaymentMethod2sRadGrid.VirtualItemCount > 0;
             }
-            traceSource.TraceEvent(TraceEventType.Information, 0, $"where = {where}");
+            traceSource.TraceEvent(TraceEventType.Verbose, 0, $"where = {where}");
         }
 
         protected void ServicePointOwnersRadGrid_NeedDataSource(object sender, GridNeedDataSourceEventArgs e)
@@ -170,7 +170,7 @@ namespace FolioWebApplication.Owner2s
                 TransferAccount2sRadGrid.AllowFilteringByColumn = TransferAccount2sRadGrid.VirtualItemCount > 10;
                 TransferAccount2sPanel.Visible = Owner2FormView.DataKey.Value != null && Session["TransferAccount2sPermission"] != null && TransferAccount2sRadGrid.VirtualItemCount > 0;
             }
-            traceSource.TraceEvent(TraceEventType.Information, 0, $"where = {where}");
+            traceSource.TraceEvent(TraceEventType.Verbose, 0, $"where = {where}");
         }
 
         public override void Dispose()

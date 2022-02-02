@@ -38,7 +38,7 @@ namespace FolioWebApplication.PatronNoticePolicy2s
             }.Where(s => s != null)));
             PatronNoticePolicy2sRadGrid.DataSource = folioServiceContext.PatronNoticePolicy2s(out var i, where, PatronNoticePolicy2sRadGrid.MasterTableView.SortExpressions.Count > 0 ? $"{d[PatronNoticePolicy2sRadGrid.MasterTableView.SortExpressions[0].FieldName]}{(PatronNoticePolicy2sRadGrid.MasterTableView.SortExpressions[0].SortOrder == GridSortOrder.Descending ? "/sort.descending" : "")}" : null, PatronNoticePolicy2sRadGrid.PageSize * PatronNoticePolicy2sRadGrid.CurrentPageIndex, PatronNoticePolicy2sRadGrid.PageSize, true);
             PatronNoticePolicy2sRadGrid.VirtualItemCount = i;
-            traceSource.TraceEvent(TraceEventType.Information, 0, $"where = {where}");
+            traceSource.TraceEvent(TraceEventType.Verbose, 0, $"where = {where}");
         }
 
         protected void ExportLinkButton_Click(object sender, EventArgs e)

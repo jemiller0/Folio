@@ -36,7 +36,7 @@ namespace FolioWebApplication.LoanType2s
             }.Where(s => s != null)));
             LoanType2sRadGrid.DataSource = folioServiceContext.LoanType2s(out var i, where, LoanType2sRadGrid.MasterTableView.SortExpressions.Count > 0 ? $"{d[LoanType2sRadGrid.MasterTableView.SortExpressions[0].FieldName]}{(LoanType2sRadGrid.MasterTableView.SortExpressions[0].SortOrder == GridSortOrder.Descending ? "/sort.descending" : "")}" : null, LoanType2sRadGrid.PageSize * LoanType2sRadGrid.CurrentPageIndex, LoanType2sRadGrid.PageSize, true);
             LoanType2sRadGrid.VirtualItemCount = i;
-            traceSource.TraceEvent(TraceEventType.Information, 0, $"where = {where}");
+            traceSource.TraceEvent(TraceEventType.Verbose, 0, $"where = {where}");
         }
 
         protected void ExportLinkButton_Click(object sender, EventArgs e)

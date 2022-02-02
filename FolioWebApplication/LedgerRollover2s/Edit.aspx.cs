@@ -81,7 +81,7 @@ namespace FolioWebApplication.LedgerRollover2s
                 LedgerRolloverError2sRadGrid.AllowFilteringByColumn = LedgerRolloverError2sRadGrid.VirtualItemCount > 10;
                 LedgerRolloverError2sPanel.Visible = LedgerRollover2FormView.DataKey.Value != null && Session["LedgerRolloverError2sPermission"] != null && LedgerRolloverError2sRadGrid.VirtualItemCount > 0;
             }
-            traceSource.TraceEvent(TraceEventType.Information, 0, $"where = {where}");
+            traceSource.TraceEvent(TraceEventType.Verbose, 0, $"where = {where}");
         }
 
         protected void LedgerRolloverProgress2sRadGrid_NeedDataSource(object sender, GridNeedDataSourceEventArgs e)
@@ -110,7 +110,7 @@ namespace FolioWebApplication.LedgerRollover2s
                 LedgerRolloverProgress2sRadGrid.AllowFilteringByColumn = LedgerRolloverProgress2sRadGrid.VirtualItemCount > 10;
                 LedgerRolloverProgress2sPanel.Visible = LedgerRollover2FormView.DataKey.Value != null && Session["LedgerRolloverProgress2sPermission"] != null && LedgerRolloverProgress2sRadGrid.VirtualItemCount > 0;
             }
-            traceSource.TraceEvent(TraceEventType.Information, 0, $"where = {where}");
+            traceSource.TraceEvent(TraceEventType.Verbose, 0, $"where = {where}");
         }
 
         public override void Dispose()

@@ -63,7 +63,7 @@ namespace FolioWebApplication.Fee2s
                 Payment2sRadGrid.AllowFilteringByColumn = Payment2sRadGrid.VirtualItemCount > 10;
                 Payment2sPanel.Visible = Fee2FormView.DataKey.Value != null && Session["Payment2sPermission"] != null && Payment2sRadGrid.VirtualItemCount > 0;
             }
-            traceSource.TraceEvent(TraceEventType.Information, 0, $"where = {where}");
+            traceSource.TraceEvent(TraceEventType.Verbose, 0, $"where = {where}");
         }
 
         protected void RefundReason2sRadGrid_NeedDataSource(object sender, GridNeedDataSourceEventArgs e)
@@ -90,7 +90,7 @@ namespace FolioWebApplication.Fee2s
                 RefundReason2sRadGrid.AllowFilteringByColumn = RefundReason2sRadGrid.VirtualItemCount > 10;
                 RefundReason2sPanel.Visible = Fee2FormView.DataKey.Value != null && Session["RefundReason2sPermission"] != null && RefundReason2sRadGrid.VirtualItemCount > 0;
             }
-            traceSource.TraceEvent(TraceEventType.Information, 0, $"where = {where}");
+            traceSource.TraceEvent(TraceEventType.Verbose, 0, $"where = {where}");
         }
 
         protected void WaiveReason2sRadGrid_NeedDataSource(object sender, GridNeedDataSourceEventArgs e)
@@ -117,7 +117,7 @@ namespace FolioWebApplication.Fee2s
                 WaiveReason2sRadGrid.AllowFilteringByColumn = WaiveReason2sRadGrid.VirtualItemCount > 10;
                 WaiveReason2sPanel.Visible = Fee2FormView.DataKey.Value != null && Session["WaiveReason2sPermission"] != null && WaiveReason2sRadGrid.VirtualItemCount > 0;
             }
-            traceSource.TraceEvent(TraceEventType.Information, 0, $"where = {where}");
+            traceSource.TraceEvent(TraceEventType.Verbose, 0, $"where = {where}");
         }
 
         public override void Dispose()

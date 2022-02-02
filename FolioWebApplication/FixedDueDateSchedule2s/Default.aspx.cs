@@ -37,7 +37,7 @@ namespace FolioWebApplication.FixedDueDateSchedule2s
             }.Where(s => s != null)));
             FixedDueDateSchedule2sRadGrid.DataSource = folioServiceContext.FixedDueDateSchedule2s(out var i, where, FixedDueDateSchedule2sRadGrid.MasterTableView.SortExpressions.Count > 0 ? $"{d[FixedDueDateSchedule2sRadGrid.MasterTableView.SortExpressions[0].FieldName]}{(FixedDueDateSchedule2sRadGrid.MasterTableView.SortExpressions[0].SortOrder == GridSortOrder.Descending ? "/sort.descending" : "")}" : null, FixedDueDateSchedule2sRadGrid.PageSize * FixedDueDateSchedule2sRadGrid.CurrentPageIndex, FixedDueDateSchedule2sRadGrid.PageSize, true);
             FixedDueDateSchedule2sRadGrid.VirtualItemCount = i;
-            traceSource.TraceEvent(TraceEventType.Information, 0, $"where = {where}");
+            traceSource.TraceEvent(TraceEventType.Verbose, 0, $"where = {where}");
         }
 
         protected void ExportLinkButton_Click(object sender, EventArgs e)

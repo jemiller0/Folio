@@ -374,7 +374,7 @@ namespace FolioWebApplication.User2s
                 Block2s2RadGrid.AllowFilteringByColumn = Block2s2RadGrid.VirtualItemCount > 10;
                 Block2s2Panel.Visible = User2FormView.DataKey.Value != null && Session["Block2sPermission"] != null && Block2s2RadGrid.VirtualItemCount > 0;
             }
-            traceSource.TraceEvent(TraceEventType.Information, 0, $"where = {where}");
+            traceSource.TraceEvent(TraceEventType.Verbose, 0, $"where = {where}");
         }
 
         protected void CheckIn2sRadGrid_NeedDataSource(object sender, GridNeedDataSourceEventArgs e)
@@ -401,7 +401,7 @@ namespace FolioWebApplication.User2s
                 CheckIn2sRadGrid.AllowFilteringByColumn = CheckIn2sRadGrid.VirtualItemCount > 10;
                 CheckIn2sPanel.Visible = User2FormView.DataKey.Value != null && Session["CheckIn2sPermission"] != null && CheckIn2sRadGrid.VirtualItemCount > 0;
             }
-            traceSource.TraceEvent(TraceEventType.Information, 0, $"where = {where}");
+            traceSource.TraceEvent(TraceEventType.Verbose, 0, $"where = {where}");
         }
 
         protected void Fee2s2RadGrid_NeedDataSource(object sender, GridNeedDataSourceEventArgs e)
@@ -445,7 +445,7 @@ namespace FolioWebApplication.User2s
                 Fee2s2RadGrid.AllowFilteringByColumn = Fee2s2RadGrid.VirtualItemCount > 10;
                 Fee2s2Panel.Visible = User2FormView.DataKey.Value != null && Session["Fee2sPermission"] != null && Fee2s2RadGrid.VirtualItemCount > 0;
             }
-            traceSource.TraceEvent(TraceEventType.Information, 0, $"where = {where}");
+            traceSource.TraceEvent(TraceEventType.Verbose, 0, $"where = {where}");
         }
 
         protected void Fee2s2Payment2sRadGrid_NeedDataSource(object sender, GridNeedDataSourceEventArgs e)
@@ -476,7 +476,7 @@ namespace FolioWebApplication.User2s
             {
                 rg.AllowFilteringByColumn = rg.VirtualItemCount > 10;
             }
-            traceSource.TraceEvent(TraceEventType.Information, 0, $"where = {where}");
+            traceSource.TraceEvent(TraceEventType.Verbose, 0, $"where = {where}");
         }
 
         protected void Invoice2sRadGrid_NeedDataSource(object sender, GridNeedDataSourceEventArgs e)
@@ -532,7 +532,7 @@ namespace FolioWebApplication.User2s
                 Invoice2sRadGrid.AllowFilteringByColumn = Invoice2sRadGrid.VirtualItemCount > 10;
                 Invoice2sPanel.Visible = User2FormView.DataKey.Value != null && Session["Invoice2sPermission"] != null && Invoice2sRadGrid.VirtualItemCount > 0;
             }
-            traceSource.TraceEvent(TraceEventType.Information, 0, $"where = {where}");
+            traceSource.TraceEvent(TraceEventType.Verbose, 0, $"where = {where}");
         }
 
         protected void Loan2s1RadGrid_NeedDataSource(object sender, GridNeedDataSourceEventArgs e)
@@ -581,7 +581,7 @@ namespace FolioWebApplication.User2s
                 Loan2s1RadGrid.AllowFilteringByColumn = Loan2s1RadGrid.VirtualItemCount > 10;
                 Loan2s1Panel.Visible = User2FormView.DataKey.Value != null && Session["Loan2sPermission"] != null && Loan2s1RadGrid.VirtualItemCount > 0;
             }
-            traceSource.TraceEvent(TraceEventType.Information, 0, $"where = {where}");
+            traceSource.TraceEvent(TraceEventType.Verbose, 0, $"where = {where}");
         }
 
         protected void Loan2s3RadGrid_NeedDataSource(object sender, GridNeedDataSourceEventArgs e)
@@ -630,7 +630,7 @@ namespace FolioWebApplication.User2s
                 Loan2s3RadGrid.AllowFilteringByColumn = Loan2s3RadGrid.VirtualItemCount > 10;
                 Loan2s3Panel.Visible = User2FormView.DataKey.Value != null && Session["Loan2sPermission"] != null && Loan2s3RadGrid.VirtualItemCount > 0;
             }
-            traceSource.TraceEvent(TraceEventType.Information, 0, $"where = {where}");
+            traceSource.TraceEvent(TraceEventType.Verbose, 0, $"where = {where}");
         }
 
         protected void Order2sRadGrid_NeedDataSource(object sender, GridNeedDataSourceEventArgs e)
@@ -675,7 +675,7 @@ namespace FolioWebApplication.User2s
                 Order2sRadGrid.AllowFilteringByColumn = Order2sRadGrid.VirtualItemCount > 10;
                 Order2sPanel.Visible = User2FormView.DataKey.Value != null && Session["Order2sPermission"] != null && Order2sRadGrid.VirtualItemCount > 0;
             }
-            traceSource.TraceEvent(TraceEventType.Information, 0, $"where = {where}");
+            traceSource.TraceEvent(TraceEventType.Verbose, 0, $"where = {where}");
         }
 
         protected void Order2s1RadGrid_NeedDataSource(object sender, GridNeedDataSourceEventArgs e)
@@ -720,7 +720,7 @@ namespace FolioWebApplication.User2s
                 Order2s1RadGrid.AllowFilteringByColumn = Order2s1RadGrid.VirtualItemCount > 10;
                 Order2s1Panel.Visible = User2FormView.DataKey.Value != null && Session["Order2sPermission"] != null && Order2s1RadGrid.VirtualItemCount > 0;
             }
-            traceSource.TraceEvent(TraceEventType.Information, 0, $"where = {where}");
+            traceSource.TraceEvent(TraceEventType.Verbose, 0, $"where = {where}");
         }
 
         protected void PatronActionSession2sRadGrid_NeedDataSource(object sender, GridNeedDataSourceEventArgs e)
@@ -747,7 +747,7 @@ namespace FolioWebApplication.User2s
                 PatronActionSession2sRadGrid.AllowFilteringByColumn = PatronActionSession2sRadGrid.VirtualItemCount > 10;
                 PatronActionSession2sPanel.Visible = User2FormView.DataKey.Value != null && Session["PatronActionSession2sPermission"] != null && PatronActionSession2sRadGrid.VirtualItemCount > 0;
             }
-            traceSource.TraceEvent(TraceEventType.Information, 0, $"where = {where}");
+            traceSource.TraceEvent(TraceEventType.Verbose, 0, $"where = {where}");
         }
 
         protected void Payment2sRadGrid_NeedDataSource(object sender, GridNeedDataSourceEventArgs e)
@@ -779,7 +779,7 @@ namespace FolioWebApplication.User2s
                 Payment2sRadGrid.AllowFilteringByColumn = Payment2sRadGrid.VirtualItemCount > 10;
                 Payment2sPanel.Visible = User2FormView.DataKey.Value != null && Session["Payment2sPermission"] != null && Payment2sRadGrid.VirtualItemCount > 0;
             }
-            traceSource.TraceEvent(TraceEventType.Information, 0, $"where = {where}");
+            traceSource.TraceEvent(TraceEventType.Verbose, 0, $"where = {where}");
         }
 
         protected void PermissionsUser2s2RadGrid_NeedDataSource(object sender, GridNeedDataSourceEventArgs e)
@@ -804,7 +804,7 @@ namespace FolioWebApplication.User2s
                 PermissionsUser2s2RadGrid.AllowFilteringByColumn = PermissionsUser2s2RadGrid.VirtualItemCount > 10;
                 PermissionsUser2s2Panel.Visible = User2FormView.DataKey.Value != null && Session["PermissionsUser2sPermission"] != null && PermissionsUser2s2RadGrid.VirtualItemCount > 0;
             }
-            traceSource.TraceEvent(TraceEventType.Information, 0, $"where = {where}");
+            traceSource.TraceEvent(TraceEventType.Verbose, 0, $"where = {where}");
         }
 
         protected void Proxy2s1RadGrid_NeedDataSource(object sender, GridNeedDataSourceEventArgs e)
@@ -835,7 +835,7 @@ namespace FolioWebApplication.User2s
                 Proxy2s1RadGrid.AllowFilteringByColumn = Proxy2s1RadGrid.VirtualItemCount > 10;
                 Proxy2s1Panel.Visible = User2FormView.DataKey.Value != null && Session["Proxy2sPermission"] != null && Proxy2s1RadGrid.VirtualItemCount > 0;
             }
-            traceSource.TraceEvent(TraceEventType.Information, 0, $"where = {where}");
+            traceSource.TraceEvent(TraceEventType.Verbose, 0, $"where = {where}");
         }
 
         protected void Proxy2s3RadGrid_NeedDataSource(object sender, GridNeedDataSourceEventArgs e)
@@ -866,7 +866,7 @@ namespace FolioWebApplication.User2s
                 Proxy2s3RadGrid.AllowFilteringByColumn = Proxy2s3RadGrid.VirtualItemCount > 10;
                 Proxy2s3Panel.Visible = User2FormView.DataKey.Value != null && Session["Proxy2sPermission"] != null && Proxy2s3RadGrid.VirtualItemCount > 0;
             }
-            traceSource.TraceEvent(TraceEventType.Information, 0, $"where = {where}");
+            traceSource.TraceEvent(TraceEventType.Verbose, 0, $"where = {where}");
         }
 
         protected void Request2sRadGrid_NeedDataSource(object sender, GridNeedDataSourceEventArgs e)
@@ -920,7 +920,7 @@ namespace FolioWebApplication.User2s
                 Request2sRadGrid.AllowFilteringByColumn = Request2sRadGrid.VirtualItemCount > 10;
                 Request2sPanel.Visible = User2FormView.DataKey.Value != null && Session["Request2sPermission"] != null && Request2sRadGrid.VirtualItemCount > 0;
             }
-            traceSource.TraceEvent(TraceEventType.Information, 0, $"where = {where}");
+            traceSource.TraceEvent(TraceEventType.Verbose, 0, $"where = {where}");
         }
 
         protected void Request2s2RadGrid_NeedDataSource(object sender, GridNeedDataSourceEventArgs e)
@@ -974,7 +974,7 @@ namespace FolioWebApplication.User2s
                 Request2s2RadGrid.AllowFilteringByColumn = Request2s2RadGrid.VirtualItemCount > 10;
                 Request2s2Panel.Visible = User2FormView.DataKey.Value != null && Session["Request2sPermission"] != null && Request2s2RadGrid.VirtualItemCount > 0;
             }
-            traceSource.TraceEvent(TraceEventType.Information, 0, $"where = {where}");
+            traceSource.TraceEvent(TraceEventType.Verbose, 0, $"where = {where}");
         }
 
         protected void Request2s3RadGrid_NeedDataSource(object sender, GridNeedDataSourceEventArgs e)
@@ -1028,7 +1028,7 @@ namespace FolioWebApplication.User2s
                 Request2s3RadGrid.AllowFilteringByColumn = Request2s3RadGrid.VirtualItemCount > 10;
                 Request2s3Panel.Visible = User2FormView.DataKey.Value != null && Session["Request2sPermission"] != null && Request2s3RadGrid.VirtualItemCount > 0;
             }
-            traceSource.TraceEvent(TraceEventType.Information, 0, $"where = {where}");
+            traceSource.TraceEvent(TraceEventType.Verbose, 0, $"where = {where}");
         }
 
         protected void ScheduledNotice2sRadGrid_NeedDataSource(object sender, GridNeedDataSourceEventArgs e)
@@ -1064,7 +1064,7 @@ namespace FolioWebApplication.User2s
                 ScheduledNotice2sRadGrid.AllowFilteringByColumn = ScheduledNotice2sRadGrid.VirtualItemCount > 10;
                 ScheduledNotice2sPanel.Visible = User2FormView.DataKey.Value != null && Session["ScheduledNotice2sPermission"] != null && ScheduledNotice2sRadGrid.VirtualItemCount > 0;
             }
-            traceSource.TraceEvent(TraceEventType.Information, 0, $"where = {where}");
+            traceSource.TraceEvent(TraceEventType.Verbose, 0, $"where = {where}");
         }
 
         protected void ServicePointUser2s2RadGrid_NeedDataSource(object sender, GridNeedDataSourceEventArgs e)
@@ -1090,7 +1090,7 @@ namespace FolioWebApplication.User2s
                 ServicePointUser2s2RadGrid.AllowFilteringByColumn = ServicePointUser2s2RadGrid.VirtualItemCount > 10;
                 ServicePointUser2s2Panel.Visible = User2FormView.DataKey.Value != null && Session["ServicePointUser2sPermission"] != null && ServicePointUser2s2RadGrid.VirtualItemCount > 0;
             }
-            traceSource.TraceEvent(TraceEventType.Information, 0, $"where = {where}");
+            traceSource.TraceEvent(TraceEventType.Verbose, 0, $"where = {where}");
         }
 
         protected void UserAcquisitionsUnit2s2RadGrid_NeedDataSource(object sender, GridNeedDataSourceEventArgs e)
@@ -1116,7 +1116,7 @@ namespace FolioWebApplication.User2s
                 UserAcquisitionsUnit2s2RadGrid.AllowFilteringByColumn = UserAcquisitionsUnit2s2RadGrid.VirtualItemCount > 10;
                 UserAcquisitionsUnit2s2Panel.Visible = User2FormView.DataKey.Value != null && Session["UserAcquisitionsUnit2sPermission"] != null && UserAcquisitionsUnit2s2RadGrid.VirtualItemCount > 0;
             }
-            traceSource.TraceEvent(TraceEventType.Information, 0, $"where = {where}");
+            traceSource.TraceEvent(TraceEventType.Verbose, 0, $"where = {where}");
         }
 
         protected void UserAddressesRadGrid_NeedDataSource(object sender, GridNeedDataSourceEventArgs e)
@@ -1168,7 +1168,7 @@ namespace FolioWebApplication.User2s
                 UserRequestPreference2s2RadGrid.AllowFilteringByColumn = UserRequestPreference2s2RadGrid.VirtualItemCount > 10;
                 UserRequestPreference2s2Panel.Visible = User2FormView.DataKey.Value != null && Session["UserRequestPreference2sPermission"] != null && UserRequestPreference2s2RadGrid.VirtualItemCount > 0;
             }
-            traceSource.TraceEvent(TraceEventType.Information, 0, $"where = {where}");
+            traceSource.TraceEvent(TraceEventType.Verbose, 0, $"where = {where}");
         }
 
         protected void UserTagsRadGrid_NeedDataSource(object sender, GridNeedDataSourceEventArgs e)

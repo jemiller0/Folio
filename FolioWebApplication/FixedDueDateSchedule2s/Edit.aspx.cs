@@ -106,7 +106,7 @@ namespace FolioWebApplication.FixedDueDateSchedule2s
                 LoanPolicy2sRadGrid.AllowFilteringByColumn = LoanPolicy2sRadGrid.VirtualItemCount > 10;
                 LoanPolicy2sPanel.Visible = FixedDueDateSchedule2FormView.DataKey.Value != null && Session["LoanPolicy2sPermission"] != null && LoanPolicy2sRadGrid.VirtualItemCount > 0;
             }
-            traceSource.TraceEvent(TraceEventType.Information, 0, $"where = {where}");
+            traceSource.TraceEvent(TraceEventType.Verbose, 0, $"where = {where}");
         }
 
         protected void LoanPolicy2s1RadGrid_NeedDataSource(object sender, GridNeedDataSourceEventArgs e)
@@ -170,7 +170,7 @@ namespace FolioWebApplication.FixedDueDateSchedule2s
                 LoanPolicy2s1RadGrid.AllowFilteringByColumn = LoanPolicy2s1RadGrid.VirtualItemCount > 10;
                 LoanPolicy2s1Panel.Visible = FixedDueDateSchedule2FormView.DataKey.Value != null && Session["LoanPolicy2sPermission"] != null && LoanPolicy2s1RadGrid.VirtualItemCount > 0;
             }
-            traceSource.TraceEvent(TraceEventType.Information, 0, $"where = {where}");
+            traceSource.TraceEvent(TraceEventType.Verbose, 0, $"where = {where}");
         }
 
         public override void Dispose()

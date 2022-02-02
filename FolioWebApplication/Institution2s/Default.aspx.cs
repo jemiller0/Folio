@@ -37,7 +37,7 @@ namespace FolioWebApplication.Institution2s
             }.Where(s => s != null)));
             Institution2sRadGrid.DataSource = folioServiceContext.Institution2s(out var i, where, Institution2sRadGrid.MasterTableView.SortExpressions.Count > 0 ? $"{d[Institution2sRadGrid.MasterTableView.SortExpressions[0].FieldName]}{(Institution2sRadGrid.MasterTableView.SortExpressions[0].SortOrder == GridSortOrder.Descending ? "/sort.descending" : "")}" : null, Institution2sRadGrid.PageSize * Institution2sRadGrid.CurrentPageIndex, Institution2sRadGrid.PageSize, true);
             Institution2sRadGrid.VirtualItemCount = i;
-            traceSource.TraceEvent(TraceEventType.Information, 0, $"where = {where}");
+            traceSource.TraceEvent(TraceEventType.Verbose, 0, $"where = {where}");
         }
 
         protected void ExportLinkButton_Click(object sender, EventArgs e)

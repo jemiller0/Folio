@@ -33,7 +33,7 @@ namespace FolioWebApplication.CloseReason2s
             }.Where(s => s != null)));
             CloseReason2sRadGrid.DataSource = folioServiceContext.CloseReason2s(out var i, where, CloseReason2sRadGrid.MasterTableView.SortExpressions.Count > 0 ? $"{d[CloseReason2sRadGrid.MasterTableView.SortExpressions[0].FieldName]}{(CloseReason2sRadGrid.MasterTableView.SortExpressions[0].SortOrder == GridSortOrder.Descending ? "/sort.descending" : "")}" : null, CloseReason2sRadGrid.PageSize * CloseReason2sRadGrid.CurrentPageIndex, CloseReason2sRadGrid.PageSize, true);
             CloseReason2sRadGrid.VirtualItemCount = i;
-            traceSource.TraceEvent(TraceEventType.Information, 0, $"where = {where}");
+            traceSource.TraceEvent(TraceEventType.Verbose, 0, $"where = {where}");
         }
 
         protected void ExportLinkButton_Click(object sender, EventArgs e)

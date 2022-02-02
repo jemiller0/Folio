@@ -37,7 +37,7 @@ namespace FolioWebApplication.IssuanceModes
             }.Where(s => s != null)));
             IssuanceModesRadGrid.DataSource = folioServiceContext.IssuanceModes(out var i, where, IssuanceModesRadGrid.MasterTableView.SortExpressions.Count > 0 ? $"{d[IssuanceModesRadGrid.MasterTableView.SortExpressions[0].FieldName]}{(IssuanceModesRadGrid.MasterTableView.SortExpressions[0].SortOrder == GridSortOrder.Descending ? "/sort.descending" : "")}" : null, IssuanceModesRadGrid.PageSize * IssuanceModesRadGrid.CurrentPageIndex, IssuanceModesRadGrid.PageSize, true);
             IssuanceModesRadGrid.VirtualItemCount = i;
-            traceSource.TraceEvent(TraceEventType.Information, 0, $"where = {where}");
+            traceSource.TraceEvent(TraceEventType.Verbose, 0, $"where = {where}");
         }
 
         protected void ExportLinkButton_Click(object sender, EventArgs e)

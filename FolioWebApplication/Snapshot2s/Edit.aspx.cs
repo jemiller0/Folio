@@ -62,7 +62,7 @@ namespace FolioWebApplication.Snapshot2s
                 Record2sRadGrid.AllowFilteringByColumn = Record2sRadGrid.VirtualItemCount > 10;
                 Record2sPanel.Visible = Snapshot2FormView.DataKey.Value != null && Session["Record2sPermission"] != null && Record2sRadGrid.VirtualItemCount > 0;
             }
-            traceSource.TraceEvent(TraceEventType.Information, 0, $"where = {where}");
+            traceSource.TraceEvent(TraceEventType.Verbose, 0, $"where = {where}");
         }
 
         public override void Dispose()

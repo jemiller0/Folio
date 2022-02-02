@@ -38,7 +38,7 @@ namespace FolioWebApplication.Statuses
             }.Where(s => s != null)));
             StatusesRadGrid.DataSource = folioServiceContext.Statuses(out var i, where, StatusesRadGrid.MasterTableView.SortExpressions.Count > 0 ? $"{d[StatusesRadGrid.MasterTableView.SortExpressions[0].FieldName]}{(StatusesRadGrid.MasterTableView.SortExpressions[0].SortOrder == GridSortOrder.Descending ? "/sort.descending" : "")}" : null, StatusesRadGrid.PageSize * StatusesRadGrid.CurrentPageIndex, StatusesRadGrid.PageSize, true);
             StatusesRadGrid.VirtualItemCount = i;
-            traceSource.TraceEvent(TraceEventType.Information, 0, $"where = {where}");
+            traceSource.TraceEvent(TraceEventType.Verbose, 0, $"where = {where}");
         }
 
         protected void ExportLinkButton_Click(object sender, EventArgs e)

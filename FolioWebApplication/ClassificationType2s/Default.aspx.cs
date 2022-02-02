@@ -37,7 +37,7 @@ namespace FolioWebApplication.ClassificationType2s
             }.Where(s => s != null)));
             ClassificationType2sRadGrid.DataSource = folioServiceContext.ClassificationType2s(out var i, where, ClassificationType2sRadGrid.MasterTableView.SortExpressions.Count > 0 ? $"{d[ClassificationType2sRadGrid.MasterTableView.SortExpressions[0].FieldName]}{(ClassificationType2sRadGrid.MasterTableView.SortExpressions[0].SortOrder == GridSortOrder.Descending ? "/sort.descending" : "")}" : null, ClassificationType2sRadGrid.PageSize * ClassificationType2sRadGrid.CurrentPageIndex, ClassificationType2sRadGrid.PageSize, true);
             ClassificationType2sRadGrid.VirtualItemCount = i;
-            traceSource.TraceEvent(TraceEventType.Information, 0, $"where = {where}");
+            traceSource.TraceEvent(TraceEventType.Verbose, 0, $"where = {where}");
         }
 
         protected void ExportLinkButton_Click(object sender, EventArgs e)

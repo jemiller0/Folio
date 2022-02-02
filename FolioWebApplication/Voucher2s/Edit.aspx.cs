@@ -70,7 +70,7 @@ namespace FolioWebApplication.Voucher2s
                 VoucherItem2sRadGrid.AllowFilteringByColumn = VoucherItem2sRadGrid.VirtualItemCount > 10;
                 VoucherItem2sPanel.Visible = Voucher2FormView.DataKey.Value != null && Session["VoucherItem2sPermission"] != null && VoucherItem2sRadGrid.VirtualItemCount > 0;
             }
-            traceSource.TraceEvent(TraceEventType.Information, 0, $"where = {where}");
+            traceSource.TraceEvent(TraceEventType.Verbose, 0, $"where = {where}");
         }
 
         public override void Dispose()

@@ -57,7 +57,7 @@ namespace FolioWebApplication.AcquisitionsUnit2s
                 UserAcquisitionsUnit2sRadGrid.AllowFilteringByColumn = UserAcquisitionsUnit2sRadGrid.VirtualItemCount > 10;
                 UserAcquisitionsUnit2sPanel.Visible = AcquisitionsUnit2FormView.DataKey.Value != null && Session["UserAcquisitionsUnit2sPermission"] != null && UserAcquisitionsUnit2sRadGrid.VirtualItemCount > 0;
             }
-            traceSource.TraceEvent(TraceEventType.Information, 0, $"where = {where}");
+            traceSource.TraceEvent(TraceEventType.Verbose, 0, $"where = {where}");
         }
 
         public override void Dispose()

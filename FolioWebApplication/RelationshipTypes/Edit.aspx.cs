@@ -58,7 +58,7 @@ namespace FolioWebApplication.RelationshipTypes
                 InstanceRelationshipsRadGrid.AllowFilteringByColumn = InstanceRelationshipsRadGrid.VirtualItemCount > 10;
                 InstanceRelationshipsPanel.Visible = RelationshipTypeFormView.DataKey.Value != null && Session["RelationshipsPermission"] != null && InstanceRelationshipsRadGrid.VirtualItemCount > 0;
             }
-            traceSource.TraceEvent(TraceEventType.Information, 0, $"where = {where}");
+            traceSource.TraceEvent(TraceEventType.Verbose, 0, $"where = {where}");
         }
 
         public override void Dispose()

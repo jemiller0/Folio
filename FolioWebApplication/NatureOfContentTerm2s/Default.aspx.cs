@@ -37,7 +37,7 @@ namespace FolioWebApplication.NatureOfContentTerm2s
             }.Where(s => s != null)));
             NatureOfContentTerm2sRadGrid.DataSource = folioServiceContext.NatureOfContentTerm2s(out var i, where, NatureOfContentTerm2sRadGrid.MasterTableView.SortExpressions.Count > 0 ? $"{d[NatureOfContentTerm2sRadGrid.MasterTableView.SortExpressions[0].FieldName]}{(NatureOfContentTerm2sRadGrid.MasterTableView.SortExpressions[0].SortOrder == GridSortOrder.Descending ? "/sort.descending" : "")}" : null, NatureOfContentTerm2sRadGrid.PageSize * NatureOfContentTerm2sRadGrid.CurrentPageIndex, NatureOfContentTerm2sRadGrid.PageSize, true);
             NatureOfContentTerm2sRadGrid.VirtualItemCount = i;
-            traceSource.TraceEvent(TraceEventType.Information, 0, $"where = {where}");
+            traceSource.TraceEvent(TraceEventType.Verbose, 0, $"where = {where}");
         }
 
         protected void ExportLinkButton_Click(object sender, EventArgs e)

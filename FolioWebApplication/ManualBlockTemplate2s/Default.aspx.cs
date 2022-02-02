@@ -43,7 +43,7 @@ namespace FolioWebApplication.ManualBlockTemplate2s
             }.Where(s => s != null)));
             ManualBlockTemplate2sRadGrid.DataSource = folioServiceContext.ManualBlockTemplate2s(out var i, where, ManualBlockTemplate2sRadGrid.MasterTableView.SortExpressions.Count > 0 ? $"{d[ManualBlockTemplate2sRadGrid.MasterTableView.SortExpressions[0].FieldName]}{(ManualBlockTemplate2sRadGrid.MasterTableView.SortExpressions[0].SortOrder == GridSortOrder.Descending ? "/sort.descending" : "")}" : null, ManualBlockTemplate2sRadGrid.PageSize * ManualBlockTemplate2sRadGrid.CurrentPageIndex, ManualBlockTemplate2sRadGrid.PageSize, true);
             ManualBlockTemplate2sRadGrid.VirtualItemCount = i;
-            traceSource.TraceEvent(TraceEventType.Information, 0, $"where = {where}");
+            traceSource.TraceEvent(TraceEventType.Verbose, 0, $"where = {where}");
         }
 
         protected void ExportLinkButton_Click(object sender, EventArgs e)

@@ -41,7 +41,7 @@ namespace FolioWebApplication.AcquisitionsUnit2s
             }.Where(s => s != null)));
             AcquisitionsUnit2sRadGrid.DataSource = folioServiceContext.AcquisitionsUnit2s(out var i, where, AcquisitionsUnit2sRadGrid.MasterTableView.SortExpressions.Count > 0 ? $"{d[AcquisitionsUnit2sRadGrid.MasterTableView.SortExpressions[0].FieldName]}{(AcquisitionsUnit2sRadGrid.MasterTableView.SortExpressions[0].SortOrder == GridSortOrder.Descending ? "/sort.descending" : "")}" : null, AcquisitionsUnit2sRadGrid.PageSize * AcquisitionsUnit2sRadGrid.CurrentPageIndex, AcquisitionsUnit2sRadGrid.PageSize, true);
             AcquisitionsUnit2sRadGrid.VirtualItemCount = i;
-            traceSource.TraceEvent(TraceEventType.Information, 0, $"where = {where}");
+            traceSource.TraceEvent(TraceEventType.Verbose, 0, $"where = {where}");
         }
 
         protected void ExportLinkButton_Click(object sender, EventArgs e)

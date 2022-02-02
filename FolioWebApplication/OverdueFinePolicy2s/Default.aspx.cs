@@ -46,7 +46,7 @@ namespace FolioWebApplication.OverdueFinePolicy2s
             }.Where(s => s != null)));
             OverdueFinePolicy2sRadGrid.DataSource = folioServiceContext.OverdueFinePolicy2s(out var i, where, OverdueFinePolicy2sRadGrid.MasterTableView.SortExpressions.Count > 0 ? $"{d[OverdueFinePolicy2sRadGrid.MasterTableView.SortExpressions[0].FieldName]}{(OverdueFinePolicy2sRadGrid.MasterTableView.SortExpressions[0].SortOrder == GridSortOrder.Descending ? "/sort.descending" : "")}" : null, OverdueFinePolicy2sRadGrid.PageSize * OverdueFinePolicy2sRadGrid.CurrentPageIndex, OverdueFinePolicy2sRadGrid.PageSize, true);
             OverdueFinePolicy2sRadGrid.VirtualItemCount = i;
-            traceSource.TraceEvent(TraceEventType.Information, 0, $"where = {where}");
+            traceSource.TraceEvent(TraceEventType.Verbose, 0, $"where = {where}");
         }
 
         protected void ExportLinkButton_Click(object sender, EventArgs e)

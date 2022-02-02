@@ -39,7 +39,7 @@ namespace FolioWebApplication.FinanceGroup2s
             }.Where(s => s != null)));
             FinanceGroup2sRadGrid.DataSource = folioServiceContext.FinanceGroup2s(out var i, where, FinanceGroup2sRadGrid.MasterTableView.SortExpressions.Count > 0 ? $"{d[FinanceGroup2sRadGrid.MasterTableView.SortExpressions[0].FieldName]}{(FinanceGroup2sRadGrid.MasterTableView.SortExpressions[0].SortOrder == GridSortOrder.Descending ? "/sort.descending" : "")}" : null, FinanceGroup2sRadGrid.PageSize * FinanceGroup2sRadGrid.CurrentPageIndex, FinanceGroup2sRadGrid.PageSize, true);
             FinanceGroup2sRadGrid.VirtualItemCount = i;
-            traceSource.TraceEvent(TraceEventType.Information, 0, $"where = {where}");
+            traceSource.TraceEvent(TraceEventType.Verbose, 0, $"where = {where}");
         }
 
         protected void ExportLinkButton_Click(object sender, EventArgs e)

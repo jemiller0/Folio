@@ -45,7 +45,7 @@ namespace FolioWebApplication.Block2s
             }.Where(s => s != null)));
             Block2sRadGrid.DataSource = folioServiceContext.Block2s(out var i, where, Block2sRadGrid.MasterTableView.SortExpressions.Count > 0 ? $"{d[Block2sRadGrid.MasterTableView.SortExpressions[0].FieldName]}{(Block2sRadGrid.MasterTableView.SortExpressions[0].SortOrder == GridSortOrder.Descending ? "/sort.descending" : "")}" : null, Block2sRadGrid.PageSize * Block2sRadGrid.CurrentPageIndex, Block2sRadGrid.PageSize, true);
             Block2sRadGrid.VirtualItemCount = i;
-            traceSource.TraceEvent(TraceEventType.Information, 0, $"where = {where}");
+            traceSource.TraceEvent(TraceEventType.Verbose, 0, $"where = {where}");
         }
 
         protected void ExportLinkButton_Click(object sender, EventArgs e)

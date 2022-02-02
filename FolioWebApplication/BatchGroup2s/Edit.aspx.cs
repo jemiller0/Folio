@@ -60,7 +60,7 @@ namespace FolioWebApplication.BatchGroup2s
                 BatchVoucherExport2sRadGrid.AllowFilteringByColumn = BatchVoucherExport2sRadGrid.VirtualItemCount > 10;
                 BatchVoucherExport2sPanel.Visible = BatchGroup2FormView.DataKey.Value != null && Session["BatchVoucherExport2sPermission"] != null && BatchVoucherExport2sRadGrid.VirtualItemCount > 0;
             }
-            traceSource.TraceEvent(TraceEventType.Information, 0, $"where = {where}");
+            traceSource.TraceEvent(TraceEventType.Verbose, 0, $"where = {where}");
         }
 
         protected void BatchVoucherExportConfig2sRadGrid_NeedDataSource(object sender, GridNeedDataSourceEventArgs e)
@@ -89,7 +89,7 @@ namespace FolioWebApplication.BatchGroup2s
                 BatchVoucherExportConfig2sRadGrid.AllowFilteringByColumn = BatchVoucherExportConfig2sRadGrid.VirtualItemCount > 10;
                 BatchVoucherExportConfig2sPanel.Visible = BatchGroup2FormView.DataKey.Value != null && Session["BatchVoucherExportConfig2sPermission"] != null && BatchVoucherExportConfig2sRadGrid.VirtualItemCount > 0;
             }
-            traceSource.TraceEvent(TraceEventType.Information, 0, $"where = {where}");
+            traceSource.TraceEvent(TraceEventType.Verbose, 0, $"where = {where}");
         }
 
         protected void Invoice2sRadGrid_NeedDataSource(object sender, GridNeedDataSourceEventArgs e)
@@ -145,7 +145,7 @@ namespace FolioWebApplication.BatchGroup2s
                 Invoice2sRadGrid.AllowFilteringByColumn = Invoice2sRadGrid.VirtualItemCount > 10;
                 Invoice2sPanel.Visible = BatchGroup2FormView.DataKey.Value != null && Session["Invoice2sPermission"] != null && Invoice2sRadGrid.VirtualItemCount > 0;
             }
-            traceSource.TraceEvent(TraceEventType.Information, 0, $"where = {where}");
+            traceSource.TraceEvent(TraceEventType.Verbose, 0, $"where = {where}");
         }
 
         protected void Voucher2sRadGrid_NeedDataSource(object sender, GridNeedDataSourceEventArgs e)
@@ -193,7 +193,7 @@ namespace FolioWebApplication.BatchGroup2s
                 Voucher2sRadGrid.AllowFilteringByColumn = Voucher2sRadGrid.VirtualItemCount > 10;
                 Voucher2sPanel.Visible = BatchGroup2FormView.DataKey.Value != null && Session["Voucher2sPermission"] != null && Voucher2sRadGrid.VirtualItemCount > 0;
             }
-            traceSource.TraceEvent(TraceEventType.Information, 0, $"where = {where}");
+            traceSource.TraceEvent(TraceEventType.Verbose, 0, $"where = {where}");
         }
 
         public override void Dispose()

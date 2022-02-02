@@ -58,7 +58,7 @@ namespace FolioWebApplication.StatisticalCodeType2s
                 StatisticalCode2sRadGrid.AllowFilteringByColumn = StatisticalCode2sRadGrid.VirtualItemCount > 10;
                 StatisticalCode2sPanel.Visible = StatisticalCodeType2FormView.DataKey.Value != null && Session["StatisticalCode2sPermission"] != null && StatisticalCode2sRadGrid.VirtualItemCount > 0;
             }
-            traceSource.TraceEvent(TraceEventType.Information, 0, $"where = {where}");
+            traceSource.TraceEvent(TraceEventType.Verbose, 0, $"where = {where}");
         }
 
         public override void Dispose()

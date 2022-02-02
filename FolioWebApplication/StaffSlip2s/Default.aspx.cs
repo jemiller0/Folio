@@ -39,7 +39,7 @@ namespace FolioWebApplication.StaffSlip2s
             }.Where(s => s != null)));
             StaffSlip2sRadGrid.DataSource = folioServiceContext.StaffSlip2s(out var i, where, StaffSlip2sRadGrid.MasterTableView.SortExpressions.Count > 0 ? $"{d[StaffSlip2sRadGrid.MasterTableView.SortExpressions[0].FieldName]}{(StaffSlip2sRadGrid.MasterTableView.SortExpressions[0].SortOrder == GridSortOrder.Descending ? "/sort.descending" : "")}" : null, StaffSlip2sRadGrid.PageSize * StaffSlip2sRadGrid.CurrentPageIndex, StaffSlip2sRadGrid.PageSize, true);
             StaffSlip2sRadGrid.VirtualItemCount = i;
-            traceSource.TraceEvent(TraceEventType.Information, 0, $"where = {where}");
+            traceSource.TraceEvent(TraceEventType.Verbose, 0, $"where = {where}");
         }
 
         protected void ExportLinkButton_Click(object sender, EventArgs e)

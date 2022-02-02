@@ -33,7 +33,7 @@ namespace FolioWebApplication.Prefix2s
             }.Where(s => s != null)));
             Prefix2sRadGrid.DataSource = folioServiceContext.Prefix2s(out var i, where, Prefix2sRadGrid.MasterTableView.SortExpressions.Count > 0 ? $"{d[Prefix2sRadGrid.MasterTableView.SortExpressions[0].FieldName]}{(Prefix2sRadGrid.MasterTableView.SortExpressions[0].SortOrder == GridSortOrder.Descending ? "/sort.descending" : "")}" : null, Prefix2sRadGrid.PageSize * Prefix2sRadGrid.CurrentPageIndex, Prefix2sRadGrid.PageSize, true);
             Prefix2sRadGrid.VirtualItemCount = i;
-            traceSource.TraceEvent(TraceEventType.Information, 0, $"where = {where}");
+            traceSource.TraceEvent(TraceEventType.Verbose, 0, $"where = {where}");
         }
 
         protected void ExportLinkButton_Click(object sender, EventArgs e)

@@ -37,7 +37,7 @@ namespace FolioWebApplication.BatchGroup2s
             }.Where(s => s != null)));
             BatchGroup2sRadGrid.DataSource = folioServiceContext.BatchGroup2s(out var i, where, BatchGroup2sRadGrid.MasterTableView.SortExpressions.Count > 0 ? $"{d[BatchGroup2sRadGrid.MasterTableView.SortExpressions[0].FieldName]}{(BatchGroup2sRadGrid.MasterTableView.SortExpressions[0].SortOrder == GridSortOrder.Descending ? "/sort.descending" : "")}" : null, BatchGroup2sRadGrid.PageSize * BatchGroup2sRadGrid.CurrentPageIndex, BatchGroup2sRadGrid.PageSize, true);
             BatchGroup2sRadGrid.VirtualItemCount = i;
-            traceSource.TraceEvent(TraceEventType.Information, 0, $"where = {where}");
+            traceSource.TraceEvent(TraceEventType.Verbose, 0, $"where = {where}");
         }
 
         protected void ExportLinkButton_Click(object sender, EventArgs e)

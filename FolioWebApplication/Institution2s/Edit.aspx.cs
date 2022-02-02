@@ -58,7 +58,7 @@ namespace FolioWebApplication.Institution2s
                 Campus2sRadGrid.AllowFilteringByColumn = Campus2sRadGrid.VirtualItemCount > 10;
                 Campus2sPanel.Visible = Institution2FormView.DataKey.Value != null && Session["Campus2sPermission"] != null && Campus2sRadGrid.VirtualItemCount > 0;
             }
-            traceSource.TraceEvent(TraceEventType.Information, 0, $"where = {where}");
+            traceSource.TraceEvent(TraceEventType.Verbose, 0, $"where = {where}");
         }
 
         protected void Location2sRadGrid_NeedDataSource(object sender, GridNeedDataSourceEventArgs e)
@@ -91,7 +91,7 @@ namespace FolioWebApplication.Institution2s
                 Location2sRadGrid.AllowFilteringByColumn = Location2sRadGrid.VirtualItemCount > 10;
                 Location2sPanel.Visible = Institution2FormView.DataKey.Value != null && Session["Location2sPermission"] != null && Location2sRadGrid.VirtualItemCount > 0;
             }
-            traceSource.TraceEvent(TraceEventType.Information, 0, $"where = {where}");
+            traceSource.TraceEvent(TraceEventType.Verbose, 0, $"where = {where}");
         }
 
         public override void Dispose()

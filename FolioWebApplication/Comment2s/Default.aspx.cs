@@ -39,7 +39,7 @@ namespace FolioWebApplication.Comment2s
             }.Where(s => s != null)));
             Comment2sRadGrid.DataSource = folioServiceContext.Comment2s(out var i, where, Comment2sRadGrid.MasterTableView.SortExpressions.Count > 0 ? $"{d[Comment2sRadGrid.MasterTableView.SortExpressions[0].FieldName]}{(Comment2sRadGrid.MasterTableView.SortExpressions[0].SortOrder == GridSortOrder.Descending ? "/sort.descending" : "")}" : null, Comment2sRadGrid.PageSize * Comment2sRadGrid.CurrentPageIndex, Comment2sRadGrid.PageSize, true);
             Comment2sRadGrid.VirtualItemCount = i;
-            traceSource.TraceEvent(TraceEventType.Information, 0, $"where = {where}");
+            traceSource.TraceEvent(TraceEventType.Verbose, 0, $"where = {where}");
         }
 
         protected void ExportLinkButton_Click(object sender, EventArgs e)
