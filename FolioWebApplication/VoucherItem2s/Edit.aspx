@@ -103,7 +103,7 @@
                 <MasterTableView DataKeyNames="Id" PagerStyle-Mode="NextPrevNumericAndAdvanced" NoMasterRecordsText="No voucher item funds found">
                     <Columns>
                         <telerik:GridBoundColumn HeaderText="Fund Code" DataField="FundCode" AutoPostBackOnFilter="true" HtmlEncode="true" CurrentFilterFunction="StartsWith" />
-                        <telerik:GridTemplateColumn HeaderText="Encumbrance" DataField="Encumbrance.Amount" AllowSorting="false" AutoPostBackOnFilter="true">
+                        <telerik:GridTemplateColumn HeaderText="Encumbrance" DataField="Encumbrance.Amount" AllowSorting="false" AutoPostBackOnFilter="true" DataType="System.Decimal">
                             <ItemTemplate>
                                 <asp:HyperLink ID="EncumbranceHyperLink" runat="server" Text='<%# $"{Eval("Encumbrance.Amount"):c}" %>' NavigateUrl='<%# $"~/Transaction2s/Edit.aspx?Id={Eval("EncumbranceId")}" %>' Enabled='<%# Session["Transaction2sPermission"] != null %>' />
                             </ItemTemplate>

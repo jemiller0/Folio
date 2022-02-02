@@ -22,7 +22,7 @@
                                 <asp:HyperLink ID="IdHyperLink" runat="server" Text='<%# Eval("Id") ?? "&nbsp;" %>' NavigateUrl='<%# $"Edit.aspx?Id={Eval("Id")}" %>' />
                             </ItemTemplate>
                         </telerik:GridTemplateColumn>
-                        <telerik:GridTemplateColumn HeaderText="Ledger Rollover" DataField="LedgerRollover.Id" AllowSorting="false" AutoPostBackOnFilter="true" CurrentFilterFunction="EqualTo">
+                        <telerik:GridTemplateColumn HeaderText="Ledger Rollover" DataField="LedgerRollover.Id" AllowSorting="false" AutoPostBackOnFilter="true" CurrentFilterFunction="EqualTo" DataType="System.Guid">
                             <ItemTemplate>
                                 <asp:HyperLink ID="LedgerRolloverHyperLink" runat="server" Text='<%# Eval("LedgerRolloverId") != null ? Eval("LedgerRollover.Id") ?? "&nbsp;" : "" %>' NavigateUrl='<%# $"~/LedgerRollover2s/Edit.aspx?Id={Eval("LedgerRolloverId")}" %>' Enabled='<%# Session["LedgerRollover2sPermission"] != null %>' />
                             </ItemTemplate>

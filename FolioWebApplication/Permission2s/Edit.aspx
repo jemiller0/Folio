@@ -303,7 +303,7 @@
             <telerik:RadGrid ID="PermissionGrantedTosRadGrid" runat="server" AutoGenerateColumns="false" AllowSorting="true" AllowFilteringByColumn="false" GroupingSettings-CaseSensitive="false" AllowPaging="true" PageSize="10" EnableLinqExpressions="false" OnNeedDataSource="PermissionGrantedTosRadGrid_NeedDataSource">
                 <MasterTableView DataKeyNames="Id" PagerStyle-Mode="NextPrevNumericAndAdvanced" NoMasterRecordsText="No permission granted tos found">
                     <Columns>
-                        <telerik:GridTemplateColumn HeaderText="Permissions User" DataField="PermissionsUser.Id" AllowSorting="false" AutoPostBackOnFilter="true" CurrentFilterFunction="EqualTo">
+                        <telerik:GridTemplateColumn HeaderText="Permissions User" DataField="PermissionsUser.Id" AllowSorting="false" AutoPostBackOnFilter="true" CurrentFilterFunction="EqualTo" DataType="System.Guid">
                             <ItemTemplate>
                                 <asp:HyperLink ID="PermissionsUserHyperLink" runat="server" Text='<%# Eval("PermissionsUser.Id") %>' NavigateUrl='<%# $"~/PermissionsUser2s/Edit.aspx?Id={Eval("PermissionsUserId")}" %>' Enabled='<%# Session["PermissionsUser2sPermission"] != null %>' />
                             </ItemTemplate>

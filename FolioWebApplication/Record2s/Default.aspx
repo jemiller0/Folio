@@ -19,7 +19,7 @@
                                 <asp:HyperLink ID="IdHyperLink" runat="server" Text='<%# Eval("Id") %>' NavigateUrl='<%# $"Edit.aspx?Id={Eval("Id")}" %>' />
                             </ItemTemplate>
                         </telerik:GridTemplateColumn>
-                        <telerik:GridTemplateColumn HeaderText="Snapshot" DataField="Snapshot.Id" AllowSorting="false" AllowFiltering="false">
+                        <telerik:GridTemplateColumn HeaderText="Snapshot" DataField="Snapshot.Id" AllowSorting="false" AllowFiltering="false" DataType="System.Guid">
                             <ItemTemplate>
                                 <asp:HyperLink ID="SnapshotHyperLink" runat="server" Text='<%# Eval("Snapshot.Id") %>' NavigateUrl='<%# $"~/Snapshot2s/Edit.aspx?Id={Eval("SnapshotId")}" %>' Enabled='<%# Session["Snapshot2sPermission"] != null %>' />
                             </ItemTemplate>
