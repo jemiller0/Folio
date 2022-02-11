@@ -11,7 +11,7 @@ using System.Reflection;
 
 namespace FolioLibrary
 {
-    // uc.batch_voucher_exports -> diku_mod_invoice_storage.batch_voucher_exports
+    // uc.batch_voucher_exports -> uchicago_mod_invoice_storage.batch_voucher_exports
     // BatchVoucherExport2 -> BatchVoucherExport
     [DisplayColumn(nameof(Id)), DisplayName("Batch Voucher Exports"), JsonConverter(typeof(JsonPathJsonConverter<BatchVoucherExport2>)), JsonObject(MemberSerialization = MemberSerialization.OptIn), Table("batch_voucher_exports", Schema = "uc")]
     public partial class BatchVoucherExport2

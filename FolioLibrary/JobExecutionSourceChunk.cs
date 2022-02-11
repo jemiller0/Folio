@@ -10,7 +10,7 @@ using System.Reflection;
 
 namespace FolioLibrary
 {
-    [Table("job_execution_source_chunks", Schema = "diku_mod_source_record_manager")]
+    [Table("job_execution_source_chunks", Schema = "uchicago_mod_source_record_manager")]
     public partial class JobExecutionSourceChunk
     {
         public static ValidationResult ValidateContent(string value)

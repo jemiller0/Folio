@@ -11,7 +11,7 @@ using System.Reflection;
 
 namespace FolioLibrary
 {
-    // uc.manual_block_templates -> diku_mod_feesfines.manual_block_templates
+    // uc.manual_block_templates -> uchicago_mod_feesfines.manual_block_templates
     // ManualBlockTemplate2 -> ManualBlockTemplate
     [DisplayColumn(nameof(Name)), DisplayName("Manual Block Templates"), JsonConverter(typeof(JsonPathJsonConverter<ManualBlockTemplate2>)), JsonObject(MemberSerialization = MemberSerialization.OptIn), Table("manual_block_templates", Schema = "uc")]
     public partial class ManualBlockTemplate2

@@ -12,7 +12,7 @@ using System.Reflection;
 
 namespace FolioLibrary
 {
-    // uc.source_marcs -> diku_mod_inventory_storage.instance_source_marc
+    // uc.source_marcs -> uchicago_mod_inventory_storage.instance_source_marc
     // SourceMarc -> InstanceSourceMarc
     [DisplayColumn(nameof(Id)), DisplayName("Source Marcs"), JsonObject(MemberSerialization = MemberSerialization.OptIn), Table("source_marcs", Schema = "uc")]
     public partial class SourceMarc

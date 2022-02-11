@@ -6,7 +6,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace FolioLibrary
 {
-    // uc.user_departments -> diku_mod_users.users
+    // uc.user_departments -> uchicago_mod_users.users
     // UserDepartment -> User
     [DisplayColumn(nameof(Id)), DisplayName("User Departments"), Table("user_departments", Schema = "uc")]
     public partial class UserDepartment

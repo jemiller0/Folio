@@ -10,7 +10,7 @@ using System.Reflection;
 
 namespace FolioLibrary
 {
-    [Table("alternative_title_type", Schema = "diku_mod_inventory_storage")]
+    [Table("alternative_title_type", Schema = "uchicago_mod_inventory_storage")]
     public partial class AlternativeTitleType
     {
         public static ValidationResult ValidateContent(string value)

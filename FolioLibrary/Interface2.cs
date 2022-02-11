@@ -12,7 +12,7 @@ using System.Reflection;
 
 namespace FolioLibrary
 {
-    // uc.interfaces -> diku_mod_organizations_storage.interfaces
+    // uc.interfaces -> uchicago_mod_organizations_storage.interfaces
     // Interface2 -> Interface
     [DisplayColumn(nameof(Name)), DisplayName("Interfaces"), JsonConverter(typeof(JsonPathJsonConverter<Interface2>)), JsonObject(MemberSerialization = MemberSerialization.OptIn), Table("interfaces", Schema = "uc")]
     public partial class Interface2

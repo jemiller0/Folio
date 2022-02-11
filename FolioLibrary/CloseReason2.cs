@@ -11,7 +11,7 @@ using System.Reflection;
 
 namespace FolioLibrary
 {
-    // uc.close_reasons -> diku_mod_orders_storage.reasons_for_closure
+    // uc.close_reasons -> uchicago_mod_orders_storage.reasons_for_closure
     // CloseReason2 -> CloseReason
     [DisplayColumn(nameof(Name)), DisplayName("Close Reasons"), JsonObject(MemberSerialization = MemberSerialization.OptIn), Table("close_reasons", Schema = "uc")]
     public partial class CloseReason2

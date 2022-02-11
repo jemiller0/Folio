@@ -12,7 +12,7 @@ using System.Reflection;
 
 namespace FolioLibrary
 {
-    // uc.expense_classes -> diku_mod_finance_storage.expense_class
+    // uc.expense_classes -> uchicago_mod_finance_storage.expense_class
     // ExpenseClass2 -> ExpenseClass
     [DisplayColumn(nameof(Name)), DisplayName("Expense Classes"), JsonConverter(typeof(JsonPathJsonConverter<ExpenseClass2>)), JsonObject(MemberSerialization = MemberSerialization.OptIn), Table("expense_classes", Schema = "uc")]
     public partial class ExpenseClass2

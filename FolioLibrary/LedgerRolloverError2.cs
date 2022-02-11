@@ -11,7 +11,7 @@ using System.Reflection;
 
 namespace FolioLibrary
 {
-    // uc.ledger_rollover_errors -> diku_mod_finance_storage.ledger_fiscal_year_rollover_error
+    // uc.ledger_rollover_errors -> uchicago_mod_finance_storage.ledger_fiscal_year_rollover_error
     // LedgerRolloverError2 -> LedgerRolloverError
     [DisplayColumn(nameof(Id)), DisplayName("Ledger Rollover Errors"), JsonConverter(typeof(JsonPathJsonConverter<LedgerRolloverError2>)), JsonObject(MemberSerialization = MemberSerialization.OptIn), Table("ledger_rollover_errors", Schema = "uc")]
     public partial class LedgerRolloverError2

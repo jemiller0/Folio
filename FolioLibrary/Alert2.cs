@@ -12,7 +12,7 @@ using System.Reflection;
 
 namespace FolioLibrary
 {
-    // uc.alerts -> diku_mod_orders_storage.alert
+    // uc.alerts -> uchicago_mod_orders_storage.alert
     // Alert2 -> Alert
     [DisplayColumn(nameof(Id)), DisplayName("Alerts"), JsonObject(MemberSerialization = MemberSerialization.OptIn), Table("alerts", Schema = "uc")]
     public partial class Alert2

@@ -7,7 +7,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace FolioLibrary
 {
-    // uc.note_links -> diku_mod_notes.note_data
+    // uc.note_links -> uchicago_mod_notes.note_data
     // NoteLink -> Note
     [DisplayColumn(nameof(Id)), DisplayName("Note Links"), JsonObject(MemberSerialization = MemberSerialization.OptIn), Table("note_links", Schema = "uc")]
     public partial class NoteLink

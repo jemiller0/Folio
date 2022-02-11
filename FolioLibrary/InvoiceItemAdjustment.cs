@@ -7,7 +7,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace FolioLibrary
 {
-    // uc.invoice_item_adjustments -> diku_mod_invoice_storage.invoice_lines
+    // uc.invoice_item_adjustments -> uchicago_mod_invoice_storage.invoice_lines
     // InvoiceItemAdjustment -> InvoiceItem
     [DisplayColumn(nameof(Id)), DisplayName("Invoice Item Adjustments"), JsonObject(MemberSerialization = MemberSerialization.OptIn), Table("invoice_item_adjustments", Schema = "uc")]
     public partial class InvoiceItemAdjustment

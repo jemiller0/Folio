@@ -7,7 +7,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace FolioLibrary
 {
-    // uc.journal_records -> diku_mod_source_record_manager.journal_records
+    // uc.journal_records -> uchicago_mod_source_record_manager.journal_records
     // JournalRecord2 -> JournalRecord
     [DisplayColumn(nameof(Title)), DisplayName("Journal Records"), JsonObject(MemberSerialization = MemberSerialization.OptIn), Table("journal_records", Schema = "uc")]
     public partial class JournalRecord2

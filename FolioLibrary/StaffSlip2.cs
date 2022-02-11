@@ -12,7 +12,7 @@ using System.Reflection;
 
 namespace FolioLibrary
 {
-    // uc.staff_slips -> diku_mod_circulation_storage.staff_slips
+    // uc.staff_slips -> uchicago_mod_circulation_storage.staff_slips
     // StaffSlip2 -> StaffSlip
     [DisplayColumn(nameof(Name)), DisplayName("Staff Slips"), JsonConverter(typeof(JsonPathJsonConverter<StaffSlip2>)), JsonObject(MemberSerialization = MemberSerialization.OptIn), Table("staff_slips", Schema = "uc")]
     public partial class StaffSlip2

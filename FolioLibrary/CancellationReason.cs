@@ -11,7 +11,7 @@ using System.Reflection;
 
 namespace FolioLibrary
 {
-    [Table("cancellation_reason", Schema = "diku_mod_circulation_storage")]
+    [Table("cancellation_reason", Schema = "uchicago_mod_circulation_storage")]
     public partial class CancellationReason
     {
         public static ValidationResult ValidateContent(string value)

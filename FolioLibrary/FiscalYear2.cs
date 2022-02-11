@@ -12,7 +12,7 @@ using System.Reflection;
 
 namespace FolioLibrary
 {
-    // uc.fiscal_years -> diku_mod_finance_storage.fiscal_year
+    // uc.fiscal_years -> uchicago_mod_finance_storage.fiscal_year
     // FiscalYear2 -> FiscalYear
     [DisplayColumn(nameof(Name)), DisplayName("Fiscal Years"), JsonConverter(typeof(JsonPathJsonConverter<FiscalYear2>)), JsonObject(MemberSerialization = MemberSerialization.OptIn), Table("fiscal_years", Schema = "uc")]
     public partial class FiscalYear2

@@ -10,7 +10,7 @@ using System.Reflection;
 
 namespace FolioLibrary
 {
-    [Table("hrid_settings", Schema = "diku_mod_inventory_storage")]
+    [Table("hrid_settings", Schema = "uchicago_mod_inventory_storage")]
     public partial class HridSetting
     {
         public static ValidationResult ValidateContent(string value)

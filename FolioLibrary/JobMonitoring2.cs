@@ -7,7 +7,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace FolioLibrary
 {
-    // uc.job_monitorings -> diku_mod_source_record_manager.job_monitoring
+    // uc.job_monitorings -> uchicago_mod_source_record_manager.job_monitoring
     // JobMonitoring2 -> JobMonitoring
     [DisplayColumn(nameof(Id)), DisplayName("Job Monitorings"), JsonObject(MemberSerialization = MemberSerialization.OptIn), Table("job_monitorings", Schema = "uc")]
     public partial class JobMonitoring2

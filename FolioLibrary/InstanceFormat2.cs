@@ -6,7 +6,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace FolioLibrary
 {
-    // uc.instance_formats -> diku_mod_inventory_storage.instance
+    // uc.instance_formats -> uchicago_mod_inventory_storage.instance
     // InstanceFormat2 -> Instance
     [DisplayColumn(nameof(Id)), DisplayName("Instance Formats"), Table("instance_formats", Schema = "uc")]
     public partial class InstanceFormat2

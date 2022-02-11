@@ -12,7 +12,7 @@ using System.Reflection;
 
 namespace FolioLibrary
 {
-    // uc.electronic_access_relationships -> diku_mod_inventory_storage.electronic_access_relationship
+    // uc.electronic_access_relationships -> uchicago_mod_inventory_storage.electronic_access_relationship
     // ElectronicAccessRelationship2 -> ElectronicAccessRelationship
     [DisplayColumn(nameof(Name)), DisplayName("Electronic Access Relationships"), JsonConverter(typeof(JsonPathJsonConverter<ElectronicAccessRelationship2>)), JsonObject(MemberSerialization = MemberSerialization.OptIn), Table("electronic_access_relationships", Schema = "uc")]
     public partial class ElectronicAccessRelationship2

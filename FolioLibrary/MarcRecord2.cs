@@ -11,7 +11,7 @@ using System.Reflection;
 
 namespace FolioLibrary
 {
-    // uc.marc_records -> diku_mod_source_record_storage.marc_records_lb
+    // uc.marc_records -> uchicago_mod_source_record_storage.marc_records_lb
     // MarcRecord2 -> MarcRecord
     [DisplayColumn(nameof(Id)), DisplayName("Marc Records"), JsonObject(MemberSerialization = MemberSerialization.OptIn), Table("marc_records", Schema = "uc")]
     public partial class MarcRecord2

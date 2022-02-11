@@ -11,7 +11,7 @@ using System.Reflection;
 
 namespace FolioLibrary
 {
-    // uc.blocks -> diku_mod_feesfines.manualblocks
+    // uc.blocks -> uchicago_mod_feesfines.manualblocks
     // Block2 -> Block
     [DisplayColumn(nameof(Id)), DisplayName("Blocks"), JsonConverter(typeof(JsonPathJsonConverter<Block2>)), JsonObject(MemberSerialization = MemberSerialization.OptIn), Table("blocks", Schema = "uc")]
     public partial class Block2

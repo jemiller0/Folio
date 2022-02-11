@@ -11,7 +11,7 @@ using System.Reflection;
 
 namespace FolioLibrary
 {
-    // uc.bound_with_parts -> diku_mod_inventory_storage.bound_with_part
+    // uc.bound_with_parts -> uchicago_mod_inventory_storage.bound_with_part
     // BoundWithPart2 -> BoundWithPart
     [DisplayColumn(nameof(Id)), DisplayName("Bound With Parts"), JsonConverter(typeof(JsonPathJsonConverter<BoundWithPart2>)), JsonObject(MemberSerialization = MemberSerialization.OptIn), Table("bound_with_parts", Schema = "uc")]
     public partial class BoundWithPart2

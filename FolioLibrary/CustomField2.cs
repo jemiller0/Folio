@@ -12,7 +12,7 @@ using System.Reflection;
 
 namespace FolioLibrary
 {
-    // uc.custom_fields -> diku_mod_users.custom_fields
+    // uc.custom_fields -> uchicago_mod_users.custom_fields
     // CustomField2 -> CustomField
     [DisplayColumn(nameof(Name)), DisplayName("Custom Fields"), JsonConverter(typeof(JsonPathJsonConverter<CustomField2>)), JsonObject(MemberSerialization = MemberSerialization.OptIn), Table("custom_fields", Schema = "uc")]
     public partial class CustomField2

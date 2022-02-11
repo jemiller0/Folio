@@ -11,7 +11,7 @@ using System.Reflection;
 
 namespace FolioLibrary
 {
-    // uc.transfer_accounts -> diku_mod_feesfines.transfers
+    // uc.transfer_accounts -> uchicago_mod_feesfines.transfers
     // TransferAccount2 -> TransferAccount
     [DisplayColumn(nameof(Name)), DisplayName("Transfer Accounts"), JsonConverter(typeof(JsonPathJsonConverter<TransferAccount2>)), JsonObject(MemberSerialization = MemberSerialization.OptIn), Table("transfer_accounts", Schema = "uc")]
     public partial class TransferAccount2

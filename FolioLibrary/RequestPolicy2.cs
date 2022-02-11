@@ -12,7 +12,7 @@ using System.Reflection;
 
 namespace FolioLibrary
 {
-    // uc.request_policies -> diku_mod_circulation_storage.request_policy
+    // uc.request_policies -> uchicago_mod_circulation_storage.request_policy
     // RequestPolicy2 -> RequestPolicy
     [DisplayColumn(nameof(Name)), DisplayName("Request Policies"), JsonConverter(typeof(JsonPathJsonConverter<RequestPolicy2>)), JsonObject(MemberSerialization = MemberSerialization.OptIn), Table("request_policies", Schema = "uc")]
     public partial class RequestPolicy2

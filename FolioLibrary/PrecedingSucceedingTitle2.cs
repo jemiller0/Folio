@@ -12,7 +12,7 @@ using System.Reflection;
 
 namespace FolioLibrary
 {
-    // uc.preceding_succeeding_titles -> diku_mod_inventory_storage.preceding_succeeding_title
+    // uc.preceding_succeeding_titles -> uchicago_mod_inventory_storage.preceding_succeeding_title
     // PrecedingSucceedingTitle2 -> PrecedingSucceedingTitle
     [DisplayColumn(nameof(Title)), DisplayName("Preceding Succeeding Titles"), JsonConverter(typeof(JsonPathJsonConverter<PrecedingSucceedingTitle2>)), JsonObject(MemberSerialization = MemberSerialization.OptIn), Table("preceding_succeeding_titles", Schema = "uc")]
     public partial class PrecedingSucceedingTitle2

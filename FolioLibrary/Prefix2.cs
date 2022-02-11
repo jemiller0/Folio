@@ -11,7 +11,7 @@ using System.Reflection;
 
 namespace FolioLibrary
 {
-    // uc.prefixes -> diku_mod_orders_storage.prefixes
+    // uc.prefixes -> uchicago_mod_orders_storage.prefixes
     // Prefix2 -> Prefix
     [DisplayColumn(nameof(Name)), DisplayName("Prefixes"), JsonObject(MemberSerialization = MemberSerialization.OptIn), Table("prefixes", Schema = "uc")]
     public partial class Prefix2

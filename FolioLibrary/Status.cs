@@ -11,7 +11,7 @@ using System.Reflection;
 
 namespace FolioLibrary
 {
-    // uc.statuses -> diku_mod_inventory_storage.instance_status
+    // uc.statuses -> uchicago_mod_inventory_storage.instance_status
     // Status -> InstanceStatus
     [DisplayColumn(nameof(Name)), JsonConverter(typeof(JsonPathJsonConverter<Status>)), JsonObject(MemberSerialization = MemberSerialization.OptIn), Table("statuses", Schema = "uc")]
     public partial class Status

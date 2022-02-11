@@ -11,7 +11,7 @@ using System.Reflection;
 
 namespace FolioLibrary
 {
-    [Table("call_number_type", Schema = "diku_mod_inventory_storage")]
+    [Table("call_number_type", Schema = "uchicago_mod_inventory_storage")]
     public partial class CallNumberType
     {
         public static ValidationResult ValidateContent(string value)

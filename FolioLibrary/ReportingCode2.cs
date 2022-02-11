@@ -12,7 +12,7 @@ using System.Reflection;
 
 namespace FolioLibrary
 {
-    // uc.reporting_codes -> diku_mod_orders_storage.reporting_code
+    // uc.reporting_codes -> uchicago_mod_orders_storage.reporting_code
     // ReportingCode2 -> ReportingCode
     [DisplayColumn(nameof(Id)), DisplayName("Reporting Codes"), JsonObject(MemberSerialization = MemberSerialization.OptIn), Table("reporting_codes", Schema = "uc")]
     public partial class ReportingCode2

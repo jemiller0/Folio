@@ -8,7 +8,7 @@ using System.Linq;
 
 namespace FolioLibrary
 {
-    // uc.batch_voucher_batched_voucher_batched_voucher_lines -> diku_mod_invoice_storage.batch_vouchers
+    // uc.batch_voucher_batched_voucher_batched_voucher_lines -> uchicago_mod_invoice_storage.batch_vouchers
     // BatchVoucherBatchedVoucherBatchedVoucherLine -> BatchVoucher
     [DisplayColumn(nameof(Id)), DisplayName("Batch Voucher Batched Voucher Batched Voucher Lines"), JsonObject(MemberSerialization = MemberSerialization.OptIn), Table("batch_voucher_batched_voucher_batched_voucher_lines", Schema = "uc")]
     public partial class BatchVoucherBatchedVoucherBatchedVoucherLine

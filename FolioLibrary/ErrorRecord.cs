@@ -9,7 +9,7 @@ using System.Reflection;
 
 namespace FolioLibrary
 {
-    [Table("error_records_lb", Schema = "diku_mod_source_record_storage")]
+    [Table("error_records_lb", Schema = "uchicago_mod_source_record_storage")]
     public partial class ErrorRecord
     {
         public static ValidationResult ValidateContent(string value)

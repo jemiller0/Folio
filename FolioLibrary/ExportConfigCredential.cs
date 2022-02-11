@@ -10,7 +10,7 @@ using System.Reflection;
 
 namespace FolioLibrary
 {
-    [Table("export_config_credentials", Schema = "diku_mod_invoice_storage")]
+    [Table("export_config_credentials", Schema = "uchicago_mod_invoice_storage")]
     public partial class ExportConfigCredential
     {
         public static ValidationResult ValidateContent(string value)

@@ -17,7 +17,7 @@ uc.TIMESTAMP_CAST(jsonb#>>'{metadata,updatedDate}') AS updated_date,
 CAST(jsonb#>>'{metadata,updatedByUserId}' AS UUID) AS updated_by_user_id,
 jsonb#>>'{metadata,updatedByUsername}' AS updated_by_username,
 jsonb_pretty(COALESCE(jsonb_set(jsonb, '{metadata,createdDate}', ('"' || (jsonb#>>'{metadata,createdDate}') || CASE WHEN jsonb#>>'{metadata,createdDate}' !~ '([-+]\d\d:\d\d)|Z$' THEN '+00:00' ELSE '' END || '"')::jsonb), jsonb)) AS content
-FROM diku_mod_orders_storage.acquisitions_unit;
+FROM uchicago_mod_orders_storage.acquisitions_unit;
 CREATE VIEW uc.address_types AS
 SELECT
 id AS id,
@@ -30,13 +30,13 @@ uc.TIMESTAMP_CAST(jsonb#>>'{metadata,updatedDate}') AS updated_date,
 CAST(jsonb#>>'{metadata,updatedByUserId}' AS UUID) AS updated_by_user_id,
 jsonb#>>'{metadata,updatedByUsername}' AS updated_by_username,
 jsonb_pretty(COALESCE(jsonb_set(jsonb, '{metadata,createdDate}', ('"' || (jsonb#>>'{metadata,createdDate}') || CASE WHEN jsonb#>>'{metadata,createdDate}' !~ '([-+]\d\d:\d\d)|Z$' THEN '+00:00' ELSE '' END || '"')::jsonb), jsonb)) AS content
-FROM diku_mod_users.addresstype;
+FROM uchicago_mod_users.addresstype;
 CREATE VIEW uc.alerts AS
 SELECT
 id AS id,
 jsonb->>'alert' AS alert,
 jsonb_pretty(jsonb) AS content
-FROM diku_mod_orders_storage.alert;
+FROM uchicago_mod_orders_storage.alert;
 CREATE VIEW uc.alternative_title_types AS
 SELECT
 id AS id,
@@ -49,7 +49,7 @@ uc.TIMESTAMP_CAST(jsonb#>>'{metadata,updatedDate}') AS updated_date,
 CAST(jsonb#>>'{metadata,updatedByUserId}' AS UUID) AS updated_by_user_id,
 jsonb#>>'{metadata,updatedByUsername}' AS updated_by_username,
 jsonb_pretty(COALESCE(jsonb_set(jsonb, '{metadata,createdDate}', ('"' || (jsonb#>>'{metadata,createdDate}') || CASE WHEN jsonb#>>'{metadata,createdDate}' !~ '([-+]\d\d:\d\d)|Z$' THEN '+00:00' ELSE '' END || '"')::jsonb), jsonb)) AS content
-FROM diku_mod_inventory_storage.alternative_title_type;
+FROM uchicago_mod_inventory_storage.alternative_title_type;
 CREATE VIEW uc.auth_attempts AS
 SELECT
 id AS id,
@@ -57,7 +57,7 @@ CAST(jsonb->>'userId' AS UUID) AS user_id,
 uc.TIMESTAMP_CAST(jsonb->>'lastAttempt') AS last_attempt,
 CAST(jsonb->>'attemptCount' AS INTEGER) AS attempt_count,
 jsonb_pretty(jsonb) AS content
-FROM diku_mod_login.auth_attempts;
+FROM uchicago_mod_login.auth_attempts;
 CREATE VIEW uc.auth_credentials_histories AS
 SELECT
 id AS id,
@@ -72,7 +72,7 @@ uc.TIMESTAMP_CAST(jsonb#>>'{metadata,updatedDate}') AS updated_date,
 CAST(jsonb#>>'{metadata,updatedByUserId}' AS UUID) AS updated_by_user_id,
 jsonb#>>'{metadata,updatedByUsername}' AS updated_by_username,
 jsonb_pretty(COALESCE(jsonb_set(jsonb, '{metadata,createdDate}', ('"' || (jsonb#>>'{metadata,createdDate}') || CASE WHEN jsonb#>>'{metadata,createdDate}' !~ '([-+]\d\d:\d\d)|Z$' THEN '+00:00' ELSE '' END || '"')::jsonb), jsonb)) AS content
-FROM diku_mod_login.auth_credentials_history;
+FROM uchicago_mod_login.auth_credentials_history;
 CREATE VIEW uc.batch_groups AS
 SELECT
 id AS id,
@@ -85,20 +85,20 @@ uc.TIMESTAMP_CAST(jsonb#>>'{metadata,updatedDate}') AS updated_date,
 CAST(jsonb#>>'{metadata,updatedByUserId}' AS UUID) AS updated_by_user_id,
 jsonb#>>'{metadata,updatedByUsername}' AS updated_by_username,
 jsonb_pretty(COALESCE(jsonb_set(jsonb, '{metadata,createdDate}', ('"' || (jsonb#>>'{metadata,createdDate}') || CASE WHEN jsonb#>>'{metadata,createdDate}' !~ '([-+]\d\d:\d\d)|Z$' THEN '+00:00' ELSE '' END || '"')::jsonb), jsonb)) AS content
-FROM diku_mod_invoice_storage.batch_groups;
+FROM uchicago_mod_invoice_storage.batch_groups;
 CREATE VIEW uc.batch_voucher_batched_voucher_batched_voucher_line_fund_codes AS
 SELECT
 id AS id,
 batch_voucher_batched_voucher_batched_voucher_line_id AS batch_voucher_batched_voucher_batched_voucher_line_id,
 CAST(jsonb AS VARCHAR(1024)) AS content
-FROM (SELECT id::text || ordinality::text AS id, id AS batch_voucher_batched_voucher_batched_voucher_line_id, value AS jsonb FROM (SELECT id::text || ordinality::text AS id, id AS batch_voucher_batched_voucher_id, value AS jsonb FROM (SELECT id::text || ordinality::text AS id, id AS batch_voucher_id, value AS jsonb FROM diku_mod_invoice_storage.batch_vouchers, jsonb_array_elements((jsonb->>'batchedVouchers')::jsonb) WITH ORDINALITY) a, jsonb_array_elements((jsonb->>'batchedVoucherLines')::jsonb) WITH ORDINALITY) a, jsonb_array_elements_text((jsonb->>'fundCodes')::jsonb) WITH ORDINALITY) a;
+FROM (SELECT id::text || ordinality::text AS id, id AS batch_voucher_batched_voucher_batched_voucher_line_id, value AS jsonb FROM (SELECT id::text || ordinality::text AS id, id AS batch_voucher_batched_voucher_id, value AS jsonb FROM (SELECT id::text || ordinality::text AS id, id AS batch_voucher_id, value AS jsonb FROM uchicago_mod_invoice_storage.batch_vouchers, jsonb_array_elements((jsonb->>'batchedVouchers')::jsonb) WITH ORDINALITY) a, jsonb_array_elements((jsonb->>'batchedVoucherLines')::jsonb) WITH ORDINALITY) a, jsonb_array_elements_text((jsonb->>'fundCodes')::jsonb) WITH ORDINALITY) a;
 CREATE VIEW uc.batch_voucher_batched_voucher_batched_voucher_lines AS
 SELECT
 id AS id,
 batch_voucher_batched_voucher_id AS batch_voucher_batched_voucher_id,
 CAST(jsonb->>'amount' AS DECIMAL(19,2)) AS amount,
 jsonb->>'externalAccountNumber' AS external_account_number
-FROM (SELECT id::text || ordinality::text AS id, id AS batch_voucher_batched_voucher_id, value AS jsonb FROM (SELECT id::text || ordinality::text AS id, id AS batch_voucher_id, value AS jsonb FROM diku_mod_invoice_storage.batch_vouchers, jsonb_array_elements((jsonb->>'batchedVouchers')::jsonb) WITH ORDINALITY) a, jsonb_array_elements((jsonb->>'batchedVoucherLines')::jsonb) WITH ORDINALITY) a;
+FROM (SELECT id::text || ordinality::text AS id, id AS batch_voucher_batched_voucher_id, value AS jsonb FROM (SELECT id::text || ordinality::text AS id, id AS batch_voucher_id, value AS jsonb FROM uchicago_mod_invoice_storage.batch_vouchers, jsonb_array_elements((jsonb->>'batchedVouchers')::jsonb) WITH ORDINALITY) a, jsonb_array_elements((jsonb->>'batchedVoucherLines')::jsonb) WITH ORDINALITY) a;
 CREATE VIEW uc.batch_voucher_batched_vouchers AS
 SELECT
 id AS id,
@@ -127,7 +127,7 @@ jsonb#>>'{vendorAddress,city}' AS vendor_address_city,
 jsonb#>>'{vendorAddress,stateRegion}' AS vendor_address_state_region,
 jsonb#>>'{vendorAddress,zipCode}' AS vendor_address_zip_code,
 jsonb#>>'{vendorAddress,country}' AS vendor_address_country
-FROM (SELECT id::text || ordinality::text AS id, id AS batch_voucher_id, value AS jsonb FROM diku_mod_invoice_storage.batch_vouchers, jsonb_array_elements((jsonb->>'batchedVouchers')::jsonb) WITH ORDINALITY) a;
+FROM (SELECT id::text || ordinality::text AS id, id AS batch_voucher_id, value AS jsonb FROM uchicago_mod_invoice_storage.batch_vouchers, jsonb_array_elements((jsonb->>'batchedVouchers')::jsonb) WITH ORDINALITY) a;
 CREATE VIEW uc.batch_vouchers AS
 SELECT
 id AS id,
@@ -137,7 +137,7 @@ uc.TIMESTAMP_CAST(jsonb->>'start') AS start,
 uc.TIMESTAMP_CAST(jsonb->>'end') AS end,
 CAST(jsonb->>'totalRecords' AS INTEGER) AS total_records,
 jsonb_pretty(jsonb) AS content
-FROM diku_mod_invoice_storage.batch_vouchers;
+FROM uchicago_mod_invoice_storage.batch_vouchers;
 CREATE VIEW uc.batch_voucher_exports AS
 SELECT
 id AS id,
@@ -154,13 +154,13 @@ uc.TIMESTAMP_CAST(jsonb#>>'{metadata,updatedDate}') AS updated_date,
 CAST(jsonb#>>'{metadata,updatedByUserId}' AS UUID) AS updated_by_user_id,
 jsonb#>>'{metadata,updatedByUsername}' AS updated_by_username,
 jsonb_pretty(COALESCE(jsonb_set(jsonb, '{metadata,createdDate}', ('"' || (jsonb#>>'{metadata,createdDate}') || CASE WHEN jsonb#>>'{metadata,createdDate}' !~ '([-+]\d\d:\d\d)|Z$' THEN '+00:00' ELSE '' END || '"')::jsonb), jsonb)) AS content
-FROM diku_mod_invoice_storage.batch_voucher_exports;
+FROM uchicago_mod_invoice_storage.batch_voucher_exports;
 CREATE VIEW uc.batch_voucher_export_config_weekdays AS
 SELECT
 id AS id,
 batch_voucher_export_config_id AS batch_voucher_export_config_id,
 CAST(jsonb AS VARCHAR(1024)) AS content
-FROM (SELECT id::text || ordinality::text AS id, id AS batch_voucher_export_config_id, value AS jsonb FROM diku_mod_invoice_storage.batch_voucher_export_configs, jsonb_array_elements_text((jsonb->>'weekdays')::jsonb) WITH ORDINALITY) a;
+FROM (SELECT id::text || ordinality::text AS id, id AS batch_voucher_export_config_id, value AS jsonb FROM uchicago_mod_invoice_storage.batch_voucher_export_configs, jsonb_array_elements_text((jsonb->>'weekdays')::jsonb) WITH ORDINALITY) a;
 CREATE VIEW uc.batch_voucher_export_configs AS
 SELECT
 id AS id,
@@ -176,7 +176,7 @@ uc.TIMESTAMP_CAST(jsonb#>>'{metadata,updatedDate}') AS updated_date,
 CAST(jsonb#>>'{metadata,updatedByUserId}' AS UUID) AS updated_by_user_id,
 jsonb#>>'{metadata,updatedByUsername}' AS updated_by_username,
 jsonb_pretty(COALESCE(jsonb_set(jsonb, '{metadata,createdDate}', ('"' || (jsonb#>>'{metadata,createdDate}') || CASE WHEN jsonb#>>'{metadata,createdDate}' !~ '([-+]\d\d:\d\d)|Z$' THEN '+00:00' ELSE '' END || '"')::jsonb), jsonb)) AS content
-FROM diku_mod_invoice_storage.batch_voucher_export_configs;
+FROM uchicago_mod_invoice_storage.batch_voucher_export_configs;
 CREATE VIEW uc.blocks AS
 SELECT
 id AS id,
@@ -197,7 +197,7 @@ uc.TIMESTAMP_CAST(jsonb#>>'{metadata,updatedDate}') AS updated_date,
 CAST(jsonb#>>'{metadata,updatedByUserId}' AS UUID) AS updated_by_user_id,
 jsonb#>>'{metadata,updatedByUsername}' AS updated_by_username,
 jsonb_pretty(COALESCE(jsonb_set(jsonb, '{metadata,createdDate}', ('"' || (jsonb#>>'{metadata,createdDate}') || CASE WHEN jsonb#>>'{metadata,createdDate}' !~ '([-+]\d\d:\d\d)|Z$' THEN '+00:00' ELSE '' END || '"')::jsonb), jsonb)) AS content
-FROM diku_mod_feesfines.manualblocks;
+FROM uchicago_mod_feesfines.manualblocks;
 CREATE VIEW uc.block_conditions AS
 SELECT
 id AS id,
@@ -214,7 +214,7 @@ uc.TIMESTAMP_CAST(jsonb#>>'{metadata,updatedDate}') AS updated_date,
 CAST(jsonb#>>'{metadata,updatedByUserId}' AS UUID) AS updated_by_user_id,
 jsonb#>>'{metadata,updatedByUsername}' AS updated_by_username,
 jsonb_pretty(COALESCE(jsonb_set(jsonb, '{metadata,createdDate}', ('"' || (jsonb#>>'{metadata,createdDate}') || CASE WHEN jsonb#>>'{metadata,createdDate}' !~ '([-+]\d\d:\d\d)|Z$' THEN '+00:00' ELSE '' END || '"')::jsonb), jsonb)) AS content
-FROM diku_mod_patron_blocks.patron_block_conditions;
+FROM uchicago_mod_patron_blocks.patron_block_conditions;
 CREATE VIEW uc.block_limits AS
 SELECT
 id AS id,
@@ -229,7 +229,7 @@ CAST(jsonb#>>'{metadata,updatedByUserId}' AS UUID) AS updated_by_user_id,
 jsonb#>>'{metadata,updatedByUsername}' AS updated_by_username,
 jsonb_pretty(COALESCE(jsonb_set(jsonb, '{metadata,createdDate}', ('"' || (jsonb#>>'{metadata,createdDate}') || CASE WHEN jsonb#>>'{metadata,createdDate}' !~ '([-+]\d\d:\d\d)|Z$' THEN '+00:00' ELSE '' END || '"')::jsonb), jsonb)) AS content,
 conditionid AS conditionid
-FROM diku_mod_patron_blocks.patron_block_limits;
+FROM uchicago_mod_patron_blocks.patron_block_limits;
 CREATE VIEW uc.bound_with_parts AS
 SELECT
 id AS id,
@@ -242,19 +242,19 @@ uc.TIMESTAMP_CAST(jsonb#>>'{metadata,updatedDate}') AS updated_date,
 CAST(jsonb#>>'{metadata,updatedByUserId}' AS UUID) AS updated_by_user_id,
 jsonb#>>'{metadata,updatedByUsername}' AS updated_by_username,
 jsonb_pretty(COALESCE(jsonb_set(jsonb, '{metadata,createdDate}', ('"' || (jsonb#>>'{metadata,createdDate}') || CASE WHEN jsonb#>>'{metadata,createdDate}' !~ '([-+]\d\d:\d\d)|Z$' THEN '+00:00' ELSE '' END || '"')::jsonb), jsonb)) AS content
-FROM diku_mod_inventory_storage.bound_with_part;
+FROM uchicago_mod_inventory_storage.bound_with_part;
 CREATE VIEW uc.budget_acquisitions_units AS
 SELECT
 id AS id,
 budget_id AS budget_id,
 CAST(jsonb AS UUID) AS acquisitions_unit_id
-FROM (SELECT id::text || ordinality::text AS id, id AS budget_id, value AS jsonb FROM diku_mod_finance_storage.budget, jsonb_array_elements_text((jsonb->>'acqUnitIds')::jsonb) WITH ORDINALITY) a;
+FROM (SELECT id::text || ordinality::text AS id, id AS budget_id, value AS jsonb FROM uchicago_mod_finance_storage.budget, jsonb_array_elements_text((jsonb->>'acqUnitIds')::jsonb) WITH ORDINALITY) a;
 CREATE VIEW uc.budget_tags AS
 SELECT
 id AS id,
 budget_id AS budget_id,
 CAST(jsonb AS UUID) AS tag_id
-FROM (SELECT id::text || ordinality::text AS id, id AS budget_id, value AS jsonb FROM diku_mod_finance_storage.budget, jsonb_array_elements_text((jsonb#>>'{tags,tagList}')::jsonb) WITH ORDINALITY) a;
+FROM (SELECT id::text || ordinality::text AS id, id AS budget_id, value AS jsonb FROM uchicago_mod_finance_storage.budget, jsonb_array_elements_text((jsonb#>>'{tags,tagList}')::jsonb) WITH ORDINALITY) a;
 CREATE VIEW uc.budgets AS
 SELECT
 id AS id,
@@ -285,7 +285,7 @@ CAST(jsonb->>'allocationFrom' AS DECIMAL(19,2)) AS allocation_from,
 CAST(jsonb->>'totalFunding' AS DECIMAL(19,2)) AS total_funding,
 CAST(jsonb->>'cashBalance' AS DECIMAL(19,2)) AS cash_balance,
 jsonb_pretty(COALESCE(jsonb_set(jsonb, '{metadata,createdDate}', ('"' || (jsonb#>>'{metadata,createdDate}') || CASE WHEN jsonb#>>'{metadata,createdDate}' !~ '([-+]\d\d:\d\d)|Z$' THEN '+00:00' ELSE '' END || '"')::jsonb), jsonb)) AS content
-FROM diku_mod_finance_storage.budget;
+FROM uchicago_mod_finance_storage.budget;
 CREATE VIEW uc.budget_expense_classes AS
 SELECT
 id AS id,
@@ -293,7 +293,7 @@ CAST(jsonb->>'budgetId' AS UUID) AS budget_id,
 CAST(jsonb->>'expenseClassId' AS UUID) AS expense_class_id,
 jsonb->>'status' AS status,
 jsonb_pretty(jsonb) AS content
-FROM diku_mod_finance_storage.budget_expense_class;
+FROM uchicago_mod_finance_storage.budget_expense_class;
 CREATE VIEW uc.budget_groups AS
 SELECT
 id AS id,
@@ -302,7 +302,7 @@ CAST(jsonb->>'groupId' AS UUID) AS group_id,
 CAST(jsonb->>'fiscalYearId' AS UUID) AS fiscal_year_id,
 CAST(jsonb->>'fundId' AS UUID) AS fund_id,
 jsonb_pretty(jsonb) AS content
-FROM diku_mod_finance_storage.group_fund_fiscal_year;
+FROM uchicago_mod_finance_storage.group_fund_fiscal_year;
 CREATE VIEW uc.call_number_types AS
 SELECT
 id AS id,
@@ -315,7 +315,7 @@ uc.TIMESTAMP_CAST(jsonb#>>'{metadata,updatedDate}') AS updated_date,
 CAST(jsonb#>>'{metadata,updatedByUserId}' AS UUID) AS updated_by_user_id,
 jsonb#>>'{metadata,updatedByUsername}' AS updated_by_username,
 jsonb_pretty(COALESCE(jsonb_set(jsonb, '{metadata,createdDate}', ('"' || (jsonb#>>'{metadata,createdDate}') || CASE WHEN jsonb#>>'{metadata,createdDate}' !~ '([-+]\d\d:\d\d)|Z$' THEN '+00:00' ELSE '' END || '"')::jsonb), jsonb)) AS content
-FROM diku_mod_inventory_storage.call_number_type;
+FROM uchicago_mod_inventory_storage.call_number_type;
 CREATE VIEW uc.campuses AS
 SELECT
 id AS id,
@@ -329,7 +329,7 @@ uc.TIMESTAMP_CAST(jsonb#>>'{metadata,updatedDate}') AS updated_date,
 CAST(jsonb#>>'{metadata,updatedByUserId}' AS UUID) AS updated_by_user_id,
 jsonb#>>'{metadata,updatedByUsername}' AS updated_by_username,
 jsonb_pretty(COALESCE(jsonb_set(jsonb, '{metadata,createdDate}', ('"' || (jsonb#>>'{metadata,createdDate}') || CASE WHEN jsonb#>>'{metadata,createdDate}' !~ '([-+]\d\d:\d\d)|Z$' THEN '+00:00' ELSE '' END || '"')::jsonb), jsonb)) AS content
-FROM diku_mod_inventory_storage.loccampus;
+FROM uchicago_mod_inventory_storage.loccampus;
 CREATE VIEW uc.cancellation_reasons AS
 SELECT
 id AS id,
@@ -344,7 +344,7 @@ uc.TIMESTAMP_CAST(jsonb#>>'{metadata,updatedDate}') AS updated_date,
 CAST(jsonb#>>'{metadata,updatedByUserId}' AS UUID) AS updated_by_user_id,
 jsonb#>>'{metadata,updatedByUsername}' AS updated_by_username,
 jsonb_pretty(COALESCE(jsonb_set(jsonb, '{metadata,createdDate}', ('"' || (jsonb#>>'{metadata,createdDate}') || CASE WHEN jsonb#>>'{metadata,createdDate}' !~ '([-+]\d\d:\d\d)|Z$' THEN '+00:00' ELSE '' END || '"')::jsonb), jsonb)) AS content
-FROM diku_mod_circulation_storage.cancellation_reason;
+FROM uchicago_mod_circulation_storage.cancellation_reason;
 CREATE VIEW uc.categories AS
 SELECT
 id AS id,
@@ -356,7 +356,7 @@ uc.TIMESTAMP_CAST(jsonb#>>'{metadata,updatedDate}') AS updated_date,
 CAST(jsonb#>>'{metadata,updatedByUserId}' AS UUID) AS updated_by_user_id,
 jsonb#>>'{metadata,updatedByUsername}' AS updated_by_username,
 jsonb_pretty(COALESCE(jsonb_set(jsonb, '{metadata,createdDate}', ('"' || (jsonb#>>'{metadata,createdDate}') || CASE WHEN jsonb#>>'{metadata,createdDate}' !~ '([-+]\d\d:\d\d)|Z$' THEN '+00:00' ELSE '' END || '"')::jsonb), jsonb)) AS content
-FROM diku_mod_organizations_storage.categories;
+FROM uchicago_mod_organizations_storage.categories;
 CREATE VIEW uc.check_ins AS
 SELECT
 id AS id,
@@ -368,14 +368,14 @@ CAST(jsonb->>'itemLocationId' AS UUID) AS item_location_id,
 CAST(jsonb->>'servicePointId' AS UUID) AS service_point_id,
 CAST(jsonb->>'performedByUserId' AS UUID) AS performed_by_user_id,
 jsonb_pretty(jsonb) AS content
-FROM diku_mod_circulation_storage.check_in;
+FROM uchicago_mod_circulation_storage.check_in;
 CREATE VIEW uc.circulation_rules AS
 SELECT
 id AS id,
 jsonb->>'rulesAsText' AS rules_as_text,
 jsonb_pretty(jsonb) AS content,
 lock AS lock
-FROM diku_mod_circulation_storage.circulation_rules;
+FROM uchicago_mod_circulation_storage.circulation_rules;
 CREATE VIEW uc.classification_types AS
 SELECT
 id AS id,
@@ -388,14 +388,14 @@ uc.TIMESTAMP_CAST(jsonb#>>'{metadata,updatedDate}') AS updated_date,
 CAST(jsonb#>>'{metadata,updatedByUserId}' AS UUID) AS updated_by_user_id,
 jsonb#>>'{metadata,updatedByUsername}' AS updated_by_username,
 jsonb_pretty(COALESCE(jsonb_set(jsonb, '{metadata,createdDate}', ('"' || (jsonb#>>'{metadata,createdDate}') || CASE WHEN jsonb#>>'{metadata,createdDate}' !~ '([-+]\d\d:\d\d)|Z$' THEN '+00:00' ELSE '' END || '"')::jsonb), jsonb)) AS content
-FROM diku_mod_inventory_storage.classification_type;
+FROM uchicago_mod_inventory_storage.classification_type;
 CREATE VIEW uc.close_reasons AS
 SELECT
 id AS id,
 jsonb->>'reason' AS name,
 jsonb->>'source' AS source,
 jsonb_pretty(jsonb) AS content
-FROM diku_mod_orders_storage.reasons_for_closure;
+FROM uchicago_mod_orders_storage.reasons_for_closure;
 CREATE VIEW uc.comments AS
 SELECT
 id AS id,
@@ -410,7 +410,7 @@ uc.TIMESTAMP_CAST(jsonb#>>'{metadata,updatedDate}') AS updated_date,
 CAST(jsonb#>>'{metadata,updatedByUserId}' AS UUID) AS updated_by_user_id,
 jsonb#>>'{metadata,updatedByUsername}' AS updated_by_username,
 jsonb_pretty(COALESCE(jsonb_set(jsonb, '{metadata,createdDate}', ('"' || (jsonb#>>'{metadata,createdDate}') || CASE WHEN jsonb#>>'{metadata,createdDate}' !~ '([-+]\d\d:\d\d)|Z$' THEN '+00:00' ELSE '' END || '"')::jsonb), jsonb)) AS content
-FROM diku_mod_feesfines.comments;
+FROM uchicago_mod_feesfines.comments;
 CREATE VIEW uc.configurations AS
 SELECT
 id AS id,
@@ -429,13 +429,13 @@ uc.TIMESTAMP_CAST(jsonb#>>'{metadata,updatedDate}') AS updated_date,
 CAST(jsonb#>>'{metadata,updatedByUserId}' AS UUID) AS updated_by_user_id,
 jsonb#>>'{metadata,updatedByUsername}' AS updated_by_username,
 jsonb_pretty(COALESCE(jsonb_set(jsonb, '{metadata,createdDate}', ('"' || (jsonb#>>'{metadata,createdDate}') || CASE WHEN jsonb#>>'{metadata,createdDate}' !~ '([-+]\d\d:\d\d)|Z$' THEN '+00:00' ELSE '' END || '"')::jsonb), jsonb)) AS content
-FROM diku_mod_configuration.config_data;
+FROM uchicago_mod_configuration.config_data;
 CREATE VIEW uc.contact_phone_number_categories AS
 SELECT
 id AS id,
 contact_phone_number_id AS contact_phone_number_id,
 CAST(jsonb AS UUID) AS category_id
-FROM (SELECT id::text || ordinality::text AS id, id AS contact_phone_number_id, value AS jsonb FROM (SELECT id::text || ordinality::text AS id, id AS contact_id, value AS jsonb FROM diku_mod_organizations_storage.contacts, jsonb_array_elements((jsonb->>'phoneNumbers')::jsonb) WITH ORDINALITY) a, jsonb_array_elements_text((jsonb->>'categories')::jsonb) WITH ORDINALITY) a;
+FROM (SELECT id::text || ordinality::text AS id, id AS contact_phone_number_id, value AS jsonb FROM (SELECT id::text || ordinality::text AS id, id AS contact_id, value AS jsonb FROM uchicago_mod_organizations_storage.contacts, jsonb_array_elements((jsonb->>'phoneNumbers')::jsonb) WITH ORDINALITY) a, jsonb_array_elements_text((jsonb->>'categories')::jsonb) WITH ORDINALITY) a;
 CREATE VIEW uc.contact_phone_numbers AS
 SELECT
 id AS id,
@@ -451,13 +451,13 @@ jsonb#>>'{metadata,createdByUsername}' AS created_by_username,
 uc.TIMESTAMP_CAST(jsonb#>>'{metadata,updatedDate}') AS updated_date,
 CAST(jsonb#>>'{metadata,updatedByUserId}' AS UUID) AS updated_by_user_id,
 jsonb#>>'{metadata,updatedByUsername}' AS updated_by_username
-FROM (SELECT id::text || ordinality::text AS id, id AS contact_id, value AS jsonb FROM diku_mod_organizations_storage.contacts, jsonb_array_elements((jsonb->>'phoneNumbers')::jsonb) WITH ORDINALITY) a;
+FROM (SELECT id::text || ordinality::text AS id, id AS contact_id, value AS jsonb FROM uchicago_mod_organizations_storage.contacts, jsonb_array_elements((jsonb->>'phoneNumbers')::jsonb) WITH ORDINALITY) a;
 CREATE VIEW uc.contact_email_categories AS
 SELECT
 id AS id,
 contact_email_id AS contact_email_id,
 CAST(jsonb AS UUID) AS category_id
-FROM (SELECT id::text || ordinality::text AS id, id AS contact_email_id, value AS jsonb FROM (SELECT id::text || ordinality::text AS id, id AS contact_id, value AS jsonb FROM diku_mod_organizations_storage.contacts, jsonb_array_elements((jsonb->>'emails')::jsonb) WITH ORDINALITY) a, jsonb_array_elements_text((jsonb->>'categories')::jsonb) WITH ORDINALITY) a;
+FROM (SELECT id::text || ordinality::text AS id, id AS contact_email_id, value AS jsonb FROM (SELECT id::text || ordinality::text AS id, id AS contact_id, value AS jsonb FROM uchicago_mod_organizations_storage.contacts, jsonb_array_elements((jsonb->>'emails')::jsonb) WITH ORDINALITY) a, jsonb_array_elements_text((jsonb->>'categories')::jsonb) WITH ORDINALITY) a;
 CREATE VIEW uc.contact_emails AS
 SELECT
 id AS id,
@@ -473,13 +473,13 @@ jsonb#>>'{metadata,createdByUsername}' AS created_by_username,
 uc.TIMESTAMP_CAST(jsonb#>>'{metadata,updatedDate}') AS updated_date,
 CAST(jsonb#>>'{metadata,updatedByUserId}' AS UUID) AS updated_by_user_id,
 jsonb#>>'{metadata,updatedByUsername}' AS updated_by_username
-FROM (SELECT id::text || ordinality::text AS id, id AS contact_id, value AS jsonb FROM diku_mod_organizations_storage.contacts, jsonb_array_elements((jsonb->>'emails')::jsonb) WITH ORDINALITY) a;
+FROM (SELECT id::text || ordinality::text AS id, id AS contact_id, value AS jsonb FROM uchicago_mod_organizations_storage.contacts, jsonb_array_elements((jsonb->>'emails')::jsonb) WITH ORDINALITY) a;
 CREATE VIEW uc.contact_address_categories AS
 SELECT
 id AS id,
 contact_address_id AS contact_address_id,
 CAST(jsonb AS UUID) AS category_id
-FROM (SELECT id::text || ordinality::text AS id, id AS contact_address_id, value AS jsonb FROM (SELECT id::text || ordinality::text AS id, id AS contact_id, value AS jsonb FROM diku_mod_organizations_storage.contacts, jsonb_array_elements((jsonb->>'addresses')::jsonb) WITH ORDINALITY) a, jsonb_array_elements_text((jsonb->>'categories')::jsonb) WITH ORDINALITY) a;
+FROM (SELECT id::text || ordinality::text AS id, id AS contact_address_id, value AS jsonb FROM (SELECT id::text || ordinality::text AS id, id AS contact_id, value AS jsonb FROM uchicago_mod_organizations_storage.contacts, jsonb_array_elements((jsonb->>'addresses')::jsonb) WITH ORDINALITY) a, jsonb_array_elements_text((jsonb->>'categories')::jsonb) WITH ORDINALITY) a;
 CREATE VIEW uc.contact_addresses AS
 SELECT
 id AS id,
@@ -499,13 +499,13 @@ jsonb#>>'{metadata,createdByUsername}' AS created_by_username,
 uc.TIMESTAMP_CAST(jsonb#>>'{metadata,updatedDate}') AS updated_date,
 CAST(jsonb#>>'{metadata,updatedByUserId}' AS UUID) AS updated_by_user_id,
 jsonb#>>'{metadata,updatedByUsername}' AS updated_by_username
-FROM (SELECT id::text || ordinality::text AS id, id AS contact_id, value AS jsonb FROM diku_mod_organizations_storage.contacts, jsonb_array_elements((jsonb->>'addresses')::jsonb) WITH ORDINALITY) a;
+FROM (SELECT id::text || ordinality::text AS id, id AS contact_id, value AS jsonb FROM uchicago_mod_organizations_storage.contacts, jsonb_array_elements((jsonb->>'addresses')::jsonb) WITH ORDINALITY) a;
 CREATE VIEW uc.contact_url_categories AS
 SELECT
 id AS id,
 contact_url_id AS contact_url_id,
 CAST(jsonb AS UUID) AS category_id
-FROM (SELECT id::text || ordinality::text AS id, id AS contact_url_id, value AS jsonb FROM (SELECT id::text || ordinality::text AS id, id AS contact_id, value AS jsonb FROM diku_mod_organizations_storage.contacts, jsonb_array_elements((jsonb->>'urls')::jsonb) WITH ORDINALITY) a, jsonb_array_elements_text((jsonb->>'categories')::jsonb) WITH ORDINALITY) a;
+FROM (SELECT id::text || ordinality::text AS id, id AS contact_url_id, value AS jsonb FROM (SELECT id::text || ordinality::text AS id, id AS contact_id, value AS jsonb FROM uchicago_mod_organizations_storage.contacts, jsonb_array_elements((jsonb->>'urls')::jsonb) WITH ORDINALITY) a, jsonb_array_elements_text((jsonb->>'categories')::jsonb) WITH ORDINALITY) a;
 CREATE VIEW uc.contact_urls AS
 SELECT
 id AS id,
@@ -522,13 +522,13 @@ jsonb#>>'{metadata,createdByUsername}' AS created_by_username,
 uc.TIMESTAMP_CAST(jsonb#>>'{metadata,updatedDate}') AS updated_date,
 CAST(jsonb#>>'{metadata,updatedByUserId}' AS UUID) AS updated_by_user_id,
 jsonb#>>'{metadata,updatedByUsername}' AS updated_by_username
-FROM (SELECT id::text || ordinality::text AS id, id AS contact_id, value AS jsonb FROM diku_mod_organizations_storage.contacts, jsonb_array_elements((jsonb->>'urls')::jsonb) WITH ORDINALITY) a;
+FROM (SELECT id::text || ordinality::text AS id, id AS contact_id, value AS jsonb FROM uchicago_mod_organizations_storage.contacts, jsonb_array_elements((jsonb->>'urls')::jsonb) WITH ORDINALITY) a;
 CREATE VIEW uc.contact_categories AS
 SELECT
 id AS id,
 contact_id AS contact_id,
 CAST(jsonb AS UUID) AS category_id
-FROM (SELECT id::text || ordinality::text AS id, id AS contact_id, value AS jsonb FROM diku_mod_organizations_storage.contacts, jsonb_array_elements_text((jsonb->>'categories')::jsonb) WITH ORDINALITY) a;
+FROM (SELECT id::text || ordinality::text AS id, id AS contact_id, value AS jsonb FROM uchicago_mod_organizations_storage.contacts, jsonb_array_elements_text((jsonb->>'categories')::jsonb) WITH ORDINALITY) a;
 CREATE VIEW uc.contacts AS
 SELECT
 id AS id,
@@ -546,7 +546,7 @@ uc.TIMESTAMP_CAST(jsonb#>>'{metadata,updatedDate}') AS updated_date,
 CAST(jsonb#>>'{metadata,updatedByUserId}' AS UUID) AS updated_by_user_id,
 jsonb#>>'{metadata,updatedByUsername}' AS updated_by_username,
 jsonb_pretty(COALESCE(jsonb_set(jsonb, '{metadata,createdDate}', ('"' || (jsonb#>>'{metadata,createdDate}') || CASE WHEN jsonb#>>'{metadata,createdDate}' !~ '([-+]\d\d:\d\d)|Z$' THEN '+00:00' ELSE '' END || '"')::jsonb), jsonb)) AS content
-FROM diku_mod_organizations_storage.contacts;
+FROM uchicago_mod_organizations_storage.contacts;
 CREATE VIEW uc.contributor_name_types AS
 SELECT
 id AS id,
@@ -559,7 +559,7 @@ uc.TIMESTAMP_CAST(jsonb#>>'{metadata,updatedDate}') AS updated_date,
 CAST(jsonb#>>'{metadata,updatedByUserId}' AS UUID) AS updated_by_user_id,
 jsonb#>>'{metadata,updatedByUsername}' AS updated_by_username,
 jsonb_pretty(COALESCE(jsonb_set(jsonb, '{metadata,createdDate}', ('"' || (jsonb#>>'{metadata,createdDate}') || CASE WHEN jsonb#>>'{metadata,createdDate}' !~ '([-+]\d\d:\d\d)|Z$' THEN '+00:00' ELSE '' END || '"')::jsonb), jsonb)) AS content
-FROM diku_mod_inventory_storage.contributor_name_type;
+FROM uchicago_mod_inventory_storage.contributor_name_type;
 CREATE VIEW uc.contributor_types AS
 SELECT
 id AS id,
@@ -572,7 +572,7 @@ uc.TIMESTAMP_CAST(jsonb#>>'{metadata,updatedDate}') AS updated_date,
 CAST(jsonb#>>'{metadata,updatedByUserId}' AS UUID) AS updated_by_user_id,
 jsonb#>>'{metadata,updatedByUsername}' AS updated_by_username,
 jsonb_pretty(COALESCE(jsonb_set(jsonb, '{metadata,createdDate}', ('"' || (jsonb#>>'{metadata,createdDate}') || CASE WHEN jsonb#>>'{metadata,createdDate}' !~ '([-+]\d\d:\d\d)|Z$' THEN '+00:00' ELSE '' END || '"')::jsonb), jsonb)) AS content
-FROM diku_mod_inventory_storage.contributor_type;
+FROM uchicago_mod_inventory_storage.contributor_type;
 CREATE VIEW uc.custom_field_values AS
 SELECT
 id AS id,
@@ -580,7 +580,7 @@ custom_field_id AS custom_field_id,
 jsonb->>'id' AS id2,
 jsonb->>'value' AS value,
 CAST(jsonb->>'default' AS BOOLEAN) AS default
-FROM (SELECT id::text || ordinality::text AS id, id AS custom_field_id, value AS jsonb FROM diku_mod_users.custom_fields, jsonb_array_elements((jsonb#>>'{selectField,options,values}')::jsonb) WITH ORDINALITY) a;
+FROM (SELECT id::text || ordinality::text AS id, id AS custom_field_id, value AS jsonb FROM uchicago_mod_users.custom_fields, jsonb_array_elements((jsonb#>>'{selectField,options,values}')::jsonb) WITH ORDINALITY) a;
 CREATE VIEW uc.custom_fields AS
 SELECT
 id AS id,
@@ -604,7 +604,7 @@ uc.TIMESTAMP_CAST(jsonb#>>'{metadata,updatedDate}') AS updated_date,
 CAST(jsonb#>>'{metadata,updatedByUserId}' AS UUID) AS updated_by_user_id,
 jsonb#>>'{metadata,updatedByUsername}' AS updated_by_username,
 jsonb_pretty(COALESCE(jsonb_set(jsonb, '{metadata,createdDate}', ('"' || (jsonb#>>'{metadata,createdDate}') || CASE WHEN jsonb#>>'{metadata,createdDate}' !~ '([-+]\d\d:\d\d)|Z$' THEN '+00:00' ELSE '' END || '"')::jsonb), jsonb)) AS content
-FROM diku_mod_users.custom_fields;
+FROM uchicago_mod_users.custom_fields;
 CREATE VIEW uc.departments AS
 SELECT
 id AS id,
@@ -618,7 +618,7 @@ uc.TIMESTAMP_CAST(jsonb#>>'{metadata,updatedDate}') AS updated_date,
 CAST(jsonb#>>'{metadata,updatedByUserId}' AS UUID) AS updated_by_user_id,
 jsonb#>>'{metadata,updatedByUsername}' AS updated_by_username,
 jsonb_pretty(COALESCE(jsonb_set(jsonb, '{metadata,createdDate}', ('"' || (jsonb#>>'{metadata,createdDate}') || CASE WHEN jsonb#>>'{metadata,createdDate}' !~ '([-+]\d\d:\d\d)|Z$' THEN '+00:00' ELSE '' END || '"')::jsonb), jsonb)) AS content
-FROM diku_mod_users.departments;
+FROM uchicago_mod_users.departments;
 CREATE VIEW uc.documents AS
 SELECT
 id AS id,
@@ -641,7 +641,7 @@ jsonb#>>'{metadata,updatedByUsername}' AS updated_by_username,
 jsonb_pretty(COALESCE(jsonb_set(jsonb, '{metadata,createdDate}', ('"' || (jsonb#>>'{metadata,createdDate}') || CASE WHEN jsonb#>>'{metadata,createdDate}' !~ '([-+]\d\d:\d\d)|Z$' THEN '+00:00' ELSE '' END || '"')::jsonb), jsonb)) AS content,
 invoiceid AS invoiceid,
 document_data AS document_data
-FROM diku_mod_invoice_storage.documents;
+FROM uchicago_mod_invoice_storage.documents;
 CREATE VIEW uc.electronic_access_relationships AS
 SELECT
 id AS id,
@@ -653,13 +653,13 @@ uc.TIMESTAMP_CAST(jsonb#>>'{metadata,updatedDate}') AS updated_date,
 CAST(jsonb#>>'{metadata,updatedByUserId}' AS UUID) AS updated_by_user_id,
 jsonb#>>'{metadata,updatedByUsername}' AS updated_by_username,
 jsonb_pretty(COALESCE(jsonb_set(jsonb, '{metadata,createdDate}', ('"' || (jsonb#>>'{metadata,createdDate}') || CASE WHEN jsonb#>>'{metadata,createdDate}' !~ '([-+]\d\d:\d\d)|Z$' THEN '+00:00' ELSE '' END || '"')::jsonb), jsonb)) AS content
-FROM diku_mod_inventory_storage.electronic_access_relationship;
+FROM uchicago_mod_inventory_storage.electronic_access_relationship;
 CREATE VIEW uc.error_records AS
 SELECT
 id AS id,
 content AS content,
 description AS description
-FROM diku_mod_source_record_storage.error_records_lb;
+FROM uchicago_mod_source_record_storage.error_records_lb;
 CREATE VIEW uc.event_logs AS
 SELECT
 id AS id,
@@ -675,7 +675,7 @@ uc.TIMESTAMP_CAST(jsonb#>>'{metadata,updatedDate}') AS updated_date,
 CAST(jsonb#>>'{metadata,updatedByUserId}' AS UUID) AS updated_by_user_id,
 jsonb#>>'{metadata,updatedByUsername}' AS updated_by_username,
 jsonb_pretty(COALESCE(jsonb_set(jsonb, '{metadata,createdDate}', ('"' || (jsonb#>>'{metadata,createdDate}') || CASE WHEN jsonb#>>'{metadata,createdDate}' !~ '([-+]\d\d:\d\d)|Z$' THEN '+00:00' ELSE '' END || '"')::jsonb), jsonb)) AS content
-FROM diku_mod_login.event_logs;
+FROM uchicago_mod_login.event_logs;
 CREATE VIEW uc.expense_classes AS
 SELECT
 id AS id,
@@ -689,7 +689,7 @@ uc.TIMESTAMP_CAST(jsonb#>>'{metadata,updatedDate}') AS updated_date,
 CAST(jsonb#>>'{metadata,updatedByUserId}' AS UUID) AS updated_by_user_id,
 jsonb#>>'{metadata,updatedByUsername}' AS updated_by_username,
 jsonb_pretty(COALESCE(jsonb_set(jsonb, '{metadata,createdDate}', ('"' || (jsonb#>>'{metadata,createdDate}') || CASE WHEN jsonb#>>'{metadata,createdDate}' !~ '([-+]\d\d:\d\d)|Z$' THEN '+00:00' ELSE '' END || '"')::jsonb), jsonb)) AS content
-FROM diku_mod_finance_storage.expense_class;
+FROM uchicago_mod_finance_storage.expense_class;
 CREATE VIEW uc.export_config_credentials AS
 SELECT
 id AS id,
@@ -703,7 +703,7 @@ uc.TIMESTAMP_CAST(jsonb#>>'{metadata,updatedDate}') AS updated_date,
 CAST(jsonb#>>'{metadata,updatedByUserId}' AS UUID) AS updated_by_user_id,
 jsonb#>>'{metadata,updatedByUsername}' AS updated_by_username,
 jsonb_pretty(COALESCE(jsonb_set(jsonb, '{metadata,createdDate}', ('"' || (jsonb#>>'{metadata,createdDate}') || CASE WHEN jsonb#>>'{metadata,createdDate}' !~ '([-+]\d\d:\d\d)|Z$' THEN '+00:00' ELSE '' END || '"')::jsonb), jsonb)) AS content
-FROM diku_mod_invoice_storage.export_config_credentials;
+FROM uchicago_mod_invoice_storage.export_config_credentials;
 CREATE VIEW uc.fees AS
 SELECT
 id AS id,
@@ -738,7 +738,7 @@ CAST(jsonb->>'ownerId' AS UUID) AS owner_id,
 CAST(jsonb->>'holdingsRecordId' AS UUID) AS holding_id,
 CAST(jsonb->>'instanceId' AS UUID) AS instance_id,
 jsonb_pretty(COALESCE(jsonb_set(jsonb, '{metadata,createdDate}', ('"' || (jsonb#>>'{metadata,createdDate}') || CASE WHEN jsonb#>>'{metadata,createdDate}' !~ '([-+]\d\d:\d\d)|Z$' THEN '+00:00' ELSE '' END || '"')::jsonb), jsonb)) AS content
-FROM diku_mod_feesfines.accounts;
+FROM uchicago_mod_feesfines.accounts;
 CREATE VIEW uc.fee_types AS
 SELECT
 id AS id,
@@ -755,13 +755,13 @@ uc.TIMESTAMP_CAST(jsonb#>>'{metadata,updatedDate}') AS updated_date,
 CAST(jsonb#>>'{metadata,updatedByUserId}' AS UUID) AS updated_by_user_id,
 jsonb#>>'{metadata,updatedByUsername}' AS updated_by_username,
 jsonb_pretty(COALESCE(jsonb_set(jsonb, '{metadata,createdDate}', ('"' || (jsonb#>>'{metadata,createdDate}') || CASE WHEN jsonb#>>'{metadata,createdDate}' !~ '([-+]\d\d:\d\d)|Z$' THEN '+00:00' ELSE '' END || '"')::jsonb), jsonb)) AS content
-FROM diku_mod_feesfines.feefines;
+FROM uchicago_mod_feesfines.feefines;
 CREATE VIEW uc.finance_group_acquisitions_units AS
 SELECT
 id AS id,
 finance_group_id AS finance_group_id,
 CAST(jsonb AS UUID) AS acquisitions_unit_id
-FROM (SELECT id::text || ordinality::text AS id, id AS finance_group_id, value AS jsonb FROM diku_mod_finance_storage.groups, jsonb_array_elements_text((jsonb->>'acqUnitIds')::jsonb) WITH ORDINALITY) a;
+FROM (SELECT id::text || ordinality::text AS id, id AS finance_group_id, value AS jsonb FROM uchicago_mod_finance_storage.groups, jsonb_array_elements_text((jsonb->>'acqUnitIds')::jsonb) WITH ORDINALITY) a;
 CREATE VIEW uc.finance_groups AS
 SELECT
 id AS id,
@@ -776,13 +776,13 @@ uc.TIMESTAMP_CAST(jsonb#>>'{metadata,updatedDate}') AS updated_date,
 CAST(jsonb#>>'{metadata,updatedByUserId}' AS UUID) AS updated_by_user_id,
 jsonb#>>'{metadata,updatedByUsername}' AS updated_by_username,
 jsonb_pretty(COALESCE(jsonb_set(jsonb, '{metadata,createdDate}', ('"' || (jsonb#>>'{metadata,createdDate}') || CASE WHEN jsonb#>>'{metadata,createdDate}' !~ '([-+]\d\d:\d\d)|Z$' THEN '+00:00' ELSE '' END || '"')::jsonb), jsonb)) AS content
-FROM diku_mod_finance_storage.groups;
+FROM uchicago_mod_finance_storage.groups;
 CREATE VIEW uc.fiscal_year_acquisitions_units AS
 SELECT
 id AS id,
 fiscal_year_id AS fiscal_year_id,
 CAST(jsonb AS UUID) AS acquisitions_unit_id
-FROM (SELECT id::text || ordinality::text AS id, id AS fiscal_year_id, value AS jsonb FROM diku_mod_finance_storage.fiscal_year, jsonb_array_elements_text((jsonb->>'acqUnitIds')::jsonb) WITH ORDINALITY) a;
+FROM (SELECT id::text || ordinality::text AS id, id AS fiscal_year_id, value AS jsonb FROM uchicago_mod_finance_storage.fiscal_year, jsonb_array_elements_text((jsonb->>'acqUnitIds')::jsonb) WITH ORDINALITY) a;
 CREATE VIEW uc.fiscal_years AS
 SELECT
 id AS id,
@@ -813,7 +813,7 @@ uc.TIMESTAMP_CAST(jsonb#>>'{metadata,updatedDate}') AS updated_date,
 CAST(jsonb#>>'{metadata,updatedByUserId}' AS UUID) AS updated_by_user_id,
 jsonb#>>'{metadata,updatedByUsername}' AS updated_by_username,
 jsonb_pretty(COALESCE(jsonb_set(jsonb, '{metadata,createdDate}', ('"' || (jsonb#>>'{metadata,createdDate}') || CASE WHEN jsonb#>>'{metadata,createdDate}' !~ '([-+]\d\d:\d\d)|Z$' THEN '+00:00' ELSE '' END || '"')::jsonb), jsonb)) AS content
-FROM diku_mod_finance_storage.fiscal_year;
+FROM uchicago_mod_finance_storage.fiscal_year;
 CREATE VIEW uc.fixed_due_date_schedule_schedules AS
 SELECT
 id AS id,
@@ -821,7 +821,7 @@ fixed_due_date_schedule_id AS fixed_due_date_schedule_id,
 uc.TIMESTAMP_CAST(jsonb->>'from') AS from,
 uc.TIMESTAMP_CAST(jsonb->>'to') AS to,
 uc.TIMESTAMP_CAST(jsonb->>'due') AS due
-FROM (SELECT id::text || ordinality::text AS id, id AS fixed_due_date_schedule_id, value AS jsonb FROM diku_mod_circulation_storage.fixed_due_date_schedule, jsonb_array_elements((jsonb->>'schedules')::jsonb) WITH ORDINALITY) a;
+FROM (SELECT id::text || ordinality::text AS id, id AS fixed_due_date_schedule_id, value AS jsonb FROM uchicago_mod_circulation_storage.fixed_due_date_schedule, jsonb_array_elements((jsonb->>'schedules')::jsonb) WITH ORDINALITY) a;
 CREATE VIEW uc.fixed_due_date_schedules AS
 SELECT
 id AS id,
@@ -834,31 +834,31 @@ uc.TIMESTAMP_CAST(jsonb#>>'{metadata,updatedDate}') AS updated_date,
 CAST(jsonb#>>'{metadata,updatedByUserId}' AS UUID) AS updated_by_user_id,
 jsonb#>>'{metadata,updatedByUsername}' AS updated_by_username,
 jsonb_pretty(COALESCE(jsonb_set(jsonb, '{metadata,createdDate}', ('"' || (jsonb#>>'{metadata,createdDate}') || CASE WHEN jsonb#>>'{metadata,createdDate}' !~ '([-+]\d\d:\d\d)|Z$' THEN '+00:00' ELSE '' END || '"')::jsonb), jsonb)) AS content
-FROM diku_mod_circulation_storage.fixed_due_date_schedule;
+FROM uchicago_mod_circulation_storage.fixed_due_date_schedule;
 CREATE VIEW uc.allocated_from_funds AS
 SELECT
 id AS id,
 fund_id AS fund_id,
 CAST(jsonb AS UUID) AS from_fund_id
-FROM (SELECT id::text || ordinality::text AS id, id AS fund_id, value AS jsonb FROM diku_mod_finance_storage.fund, jsonb_array_elements_text((jsonb->>'allocatedFromIds')::jsonb) WITH ORDINALITY) a;
+FROM (SELECT id::text || ordinality::text AS id, id AS fund_id, value AS jsonb FROM uchicago_mod_finance_storage.fund, jsonb_array_elements_text((jsonb->>'allocatedFromIds')::jsonb) WITH ORDINALITY) a;
 CREATE VIEW uc.allocated_to_funds AS
 SELECT
 id AS id,
 fund_id AS fund_id,
 CAST(jsonb AS UUID) AS to_fund_id
-FROM (SELECT id::text || ordinality::text AS id, id AS fund_id, value AS jsonb FROM diku_mod_finance_storage.fund, jsonb_array_elements_text((jsonb->>'allocatedToIds')::jsonb) WITH ORDINALITY) a;
+FROM (SELECT id::text || ordinality::text AS id, id AS fund_id, value AS jsonb FROM uchicago_mod_finance_storage.fund, jsonb_array_elements_text((jsonb->>'allocatedToIds')::jsonb) WITH ORDINALITY) a;
 CREATE VIEW uc.fund_acquisitions_units AS
 SELECT
 id AS id,
 fund_id AS fund_id,
 CAST(jsonb AS UUID) AS acquisitions_unit_id
-FROM (SELECT id::text || ordinality::text AS id, id AS fund_id, value AS jsonb FROM diku_mod_finance_storage.fund, jsonb_array_elements_text((jsonb->>'acqUnitIds')::jsonb) WITH ORDINALITY) a;
+FROM (SELECT id::text || ordinality::text AS id, id AS fund_id, value AS jsonb FROM uchicago_mod_finance_storage.fund, jsonb_array_elements_text((jsonb->>'acqUnitIds')::jsonb) WITH ORDINALITY) a;
 CREATE VIEW uc.fund_tags AS
 SELECT
 id AS id,
 fund_id AS fund_id,
 CAST(jsonb AS UUID) AS tag_id
-FROM (SELECT id::text || ordinality::text AS id, id AS fund_id, value AS jsonb FROM diku_mod_finance_storage.fund, jsonb_array_elements_text((jsonb#>>'{tags,tagList}')::jsonb) WITH ORDINALITY) a;
+FROM (SELECT id::text || ordinality::text AS id, id AS fund_id, value AS jsonb FROM uchicago_mod_finance_storage.fund, jsonb_array_elements_text((jsonb#>>'{tags,tagList}')::jsonb) WITH ORDINALITY) a;
 CREATE VIEW uc.funds AS
 SELECT
 id AS id,
@@ -876,13 +876,13 @@ uc.TIMESTAMP_CAST(jsonb#>>'{metadata,updatedDate}') AS updated_date,
 CAST(jsonb#>>'{metadata,updatedByUserId}' AS UUID) AS updated_by_user_id,
 jsonb#>>'{metadata,updatedByUsername}' AS updated_by_username,
 jsonb_pretty(COALESCE(jsonb_set(jsonb, '{metadata,createdDate}', ('"' || (jsonb#>>'{metadata,createdDate}') || CASE WHEN jsonb#>>'{metadata,createdDate}' !~ '([-+]\d\d:\d\d)|Z$' THEN '+00:00' ELSE '' END || '"')::jsonb), jsonb)) AS content
-FROM diku_mod_finance_storage.fund;
+FROM uchicago_mod_finance_storage.fund;
 CREATE VIEW uc.fund_types AS
 SELECT
 id AS id,
 jsonb->>'name' AS name,
 jsonb_pretty(jsonb) AS content
-FROM diku_mod_finance_storage.fund_type;
+FROM uchicago_mod_finance_storage.fund_type;
 CREATE VIEW uc.groups AS
 SELECT
 id AS id,
@@ -896,13 +896,13 @@ uc.TIMESTAMP_CAST(jsonb#>>'{metadata,updatedDate}') AS updated_date,
 CAST(jsonb#>>'{metadata,updatedByUserId}' AS UUID) AS updated_by_user_id,
 jsonb#>>'{metadata,updatedByUsername}' AS updated_by_username,
 jsonb_pretty(COALESCE(jsonb_set(jsonb, '{metadata,createdDate}', ('"' || (jsonb#>>'{metadata,createdDate}') || CASE WHEN jsonb#>>'{metadata,createdDate}' !~ '([-+]\d\d:\d\d)|Z$' THEN '+00:00' ELSE '' END || '"')::jsonb), jsonb)) AS content
-FROM diku_mod_users.groups;
+FROM uchicago_mod_users.groups;
 CREATE VIEW uc.holding_former_ids AS
 SELECT
 id AS id,
 holding_id AS holding_id,
 CAST(jsonb AS VARCHAR(1024)) AS content
-FROM (SELECT id::text || ordinality::text AS id, id AS holding_id, value AS jsonb FROM diku_mod_inventory_storage.holdings_record, jsonb_array_elements_text((jsonb->>'formerIds')::jsonb) WITH ORDINALITY) a;
+FROM (SELECT id::text || ordinality::text AS id, id AS holding_id, value AS jsonb FROM uchicago_mod_inventory_storage.holdings_record, jsonb_array_elements_text((jsonb->>'formerIds')::jsonb) WITH ORDINALITY) a;
 CREATE VIEW uc.holding_electronic_accesses AS
 SELECT
 id AS id,
@@ -912,7 +912,7 @@ jsonb->>'linkText' AS link_text,
 jsonb->>'materialsSpecification' AS materials_specification,
 jsonb->>'publicNote' AS public_note,
 CAST(jsonb->>'relationshipId' AS UUID) AS relationship_id
-FROM (SELECT id::text || ordinality::text AS id, id AS holding_id, value AS jsonb FROM diku_mod_inventory_storage.holdings_record, jsonb_array_elements((jsonb->>'electronicAccess')::jsonb) WITH ORDINALITY) a;
+FROM (SELECT id::text || ordinality::text AS id, id AS holding_id, value AS jsonb FROM uchicago_mod_inventory_storage.holdings_record, jsonb_array_elements((jsonb->>'electronicAccess')::jsonb) WITH ORDINALITY) a;
 CREATE VIEW uc.holding_notes AS
 SELECT
 id AS id,
@@ -920,7 +920,7 @@ holding_id AS holding_id,
 CAST(jsonb->>'holdingsNoteTypeId' AS UUID) AS holding_note_type_id,
 jsonb->>'note' AS note,
 CAST(jsonb->>'staffOnly' AS BOOLEAN) AS staff_only
-FROM (SELECT id::text || ordinality::text AS id, id AS holding_id, value AS jsonb FROM diku_mod_inventory_storage.holdings_record, jsonb_array_elements((jsonb->>'notes')::jsonb) WITH ORDINALITY) a;
+FROM (SELECT id::text || ordinality::text AS id, id AS holding_id, value AS jsonb FROM uchicago_mod_inventory_storage.holdings_record, jsonb_array_elements((jsonb->>'notes')::jsonb) WITH ORDINALITY) a;
 CREATE VIEW uc.extents AS
 SELECT
 id AS id,
@@ -928,7 +928,7 @@ holding_id AS holding_id,
 jsonb->>'statement' AS statement,
 jsonb->>'note' AS note,
 jsonb->>'staffNote' AS staff_note
-FROM (SELECT id::text || ordinality::text AS id, id AS holding_id, value AS jsonb FROM diku_mod_inventory_storage.holdings_record, jsonb_array_elements((jsonb->>'holdingsStatements')::jsonb) WITH ORDINALITY) a;
+FROM (SELECT id::text || ordinality::text AS id, id AS holding_id, value AS jsonb FROM uchicago_mod_inventory_storage.holdings_record, jsonb_array_elements((jsonb->>'holdingsStatements')::jsonb) WITH ORDINALITY) a;
 CREATE VIEW uc.index_statements AS
 SELECT
 id AS id,
@@ -936,7 +936,7 @@ holding_id AS holding_id,
 jsonb->>'statement' AS statement,
 jsonb->>'note' AS note,
 jsonb->>'staffNote' AS staff_note
-FROM (SELECT id::text || ordinality::text AS id, id AS holding_id, value AS jsonb FROM diku_mod_inventory_storage.holdings_record, jsonb_array_elements((jsonb->>'holdingsStatementsForIndexes')::jsonb) WITH ORDINALITY) a;
+FROM (SELECT id::text || ordinality::text AS id, id AS holding_id, value AS jsonb FROM uchicago_mod_inventory_storage.holdings_record, jsonb_array_elements((jsonb->>'holdingsStatementsForIndexes')::jsonb) WITH ORDINALITY) a;
 CREATE VIEW uc.supplement_statements AS
 SELECT
 id AS id,
@@ -944,7 +944,7 @@ holding_id AS holding_id,
 jsonb->>'statement' AS statement,
 jsonb->>'note' AS note,
 jsonb->>'staffNote' AS staff_note
-FROM (SELECT id::text || ordinality::text AS id, id AS holding_id, value AS jsonb FROM diku_mod_inventory_storage.holdings_record, jsonb_array_elements((jsonb->>'holdingsStatementsForSupplements')::jsonb) WITH ORDINALITY) a;
+FROM (SELECT id::text || ordinality::text AS id, id AS holding_id, value AS jsonb FROM uchicago_mod_inventory_storage.holdings_record, jsonb_array_elements((jsonb->>'holdingsStatementsForSupplements')::jsonb) WITH ORDINALITY) a;
 CREATE VIEW uc.holding_entries AS
 SELECT
 id AS id,
@@ -952,19 +952,19 @@ holding_id AS holding_id,
 CAST(jsonb->>'publicDisplay' AS BOOLEAN) AS public_display,
 jsonb->>'enumeration' AS enumeration,
 jsonb->>'chronology' AS chronology
-FROM (SELECT id::text || ordinality::text AS id, id AS holding_id, value AS jsonb FROM diku_mod_inventory_storage.holdings_record, jsonb_array_elements((jsonb#>>'{receivingHistory,entries}')::jsonb) WITH ORDINALITY) a;
+FROM (SELECT id::text || ordinality::text AS id, id AS holding_id, value AS jsonb FROM uchicago_mod_inventory_storage.holdings_record, jsonb_array_elements((jsonb#>>'{receivingHistory,entries}')::jsonb) WITH ORDINALITY) a;
 CREATE VIEW uc.holding_statistical_codes AS
 SELECT
 id AS id,
 holding_id AS holding_id,
 CAST(jsonb AS UUID) AS statistical_code_id
-FROM (SELECT id::text || ordinality::text AS id, id AS holding_id, value AS jsonb FROM diku_mod_inventory_storage.holdings_record, jsonb_array_elements_text((jsonb->>'statisticalCodeIds')::jsonb) WITH ORDINALITY) a;
+FROM (SELECT id::text || ordinality::text AS id, id AS holding_id, value AS jsonb FROM uchicago_mod_inventory_storage.holdings_record, jsonb_array_elements_text((jsonb->>'statisticalCodeIds')::jsonb) WITH ORDINALITY) a;
 CREATE VIEW uc.holding_tags AS
 SELECT
 id AS id,
 holding_id AS holding_id,
 CAST(jsonb AS VARCHAR(1024)) AS content
-FROM (SELECT id::text || ordinality::text AS id, id AS holding_id, value AS jsonb FROM diku_mod_inventory_storage.holdings_record, jsonb_array_elements_text((jsonb#>>'{tags,tagList}')::jsonb) WITH ORDINALITY) a;
+FROM (SELECT id::text || ordinality::text AS id, id AS holding_id, value AS jsonb FROM uchicago_mod_inventory_storage.holdings_record, jsonb_array_elements_text((jsonb#>>'{tags,tagList}')::jsonb) WITH ORDINALITY) a;
 CREATE VIEW uc.holdings AS
 SELECT
 id AS id,
@@ -998,7 +998,7 @@ CAST(jsonb#>>'{metadata,updatedByUserId}' AS UUID) AS updated_by_user_id,
 jsonb#>>'{metadata,updatedByUsername}' AS updated_by_username,
 CAST(jsonb->>'sourceId' AS UUID) AS source_id,
 jsonb_pretty(COALESCE(jsonb_set(jsonb, '{metadata,createdDate}', ('"' || (jsonb#>>'{metadata,createdDate}') || CASE WHEN jsonb#>>'{metadata,createdDate}' !~ '([-+]\d\d:\d\d)|Z$' THEN '+00:00' ELSE '' END || '"')::jsonb), jsonb)) AS content
-FROM diku_mod_inventory_storage.holdings_record;
+FROM uchicago_mod_inventory_storage.holdings_record;
 CREATE VIEW uc.holding_note_types AS
 SELECT
 id AS id,
@@ -1011,7 +1011,7 @@ uc.TIMESTAMP_CAST(jsonb#>>'{metadata,updatedDate}') AS updated_date,
 CAST(jsonb#>>'{metadata,updatedByUserId}' AS UUID) AS updated_by_user_id,
 jsonb#>>'{metadata,updatedByUsername}' AS updated_by_username,
 jsonb_pretty(COALESCE(jsonb_set(jsonb, '{metadata,createdDate}', ('"' || (jsonb#>>'{metadata,createdDate}') || CASE WHEN jsonb#>>'{metadata,createdDate}' !~ '([-+]\d\d:\d\d)|Z$' THEN '+00:00' ELSE '' END || '"')::jsonb), jsonb)) AS content
-FROM diku_mod_inventory_storage.holdings_note_type;
+FROM uchicago_mod_inventory_storage.holdings_note_type;
 CREATE VIEW uc.holding_types AS
 SELECT
 id AS id,
@@ -1024,7 +1024,7 @@ uc.TIMESTAMP_CAST(jsonb#>>'{metadata,updatedDate}') AS updated_date,
 CAST(jsonb#>>'{metadata,updatedByUserId}' AS UUID) AS updated_by_user_id,
 jsonb#>>'{metadata,updatedByUsername}' AS updated_by_username,
 jsonb_pretty(COALESCE(jsonb_set(jsonb, '{metadata,createdDate}', ('"' || (jsonb#>>'{metadata,createdDate}') || CASE WHEN jsonb#>>'{metadata,createdDate}' !~ '([-+]\d\d:\d\d)|Z$' THEN '+00:00' ELSE '' END || '"')::jsonb), jsonb)) AS content
-FROM diku_mod_inventory_storage.holdings_type;
+FROM uchicago_mod_inventory_storage.holdings_type;
 CREATE VIEW uc.hrid_settings AS
 SELECT
 id AS id,
@@ -1037,7 +1037,7 @@ CAST(jsonb#>>'{items,startNumber}' AS INTEGER) AS items_start_number,
 CAST(jsonb->>'commonRetainLeadingZeroes' AS BOOLEAN) AS common_retain_leading_zeroes,
 jsonb_pretty(jsonb) AS content,
 lock AS lock
-FROM diku_mod_inventory_storage.hrid_settings;
+FROM uchicago_mod_inventory_storage.hrid_settings;
 CREATE VIEW uc.id_types AS
 SELECT
 id AS id,
@@ -1050,7 +1050,7 @@ uc.TIMESTAMP_CAST(jsonb#>>'{metadata,updatedDate}') AS updated_date,
 CAST(jsonb#>>'{metadata,updatedByUserId}' AS UUID) AS updated_by_user_id,
 jsonb#>>'{metadata,updatedByUsername}' AS updated_by_username,
 jsonb_pretty(COALESCE(jsonb_set(jsonb, '{metadata,createdDate}', ('"' || (jsonb#>>'{metadata,createdDate}') || CASE WHEN jsonb#>>'{metadata,createdDate}' !~ '([-+]\d\d:\d\d)|Z$' THEN '+00:00' ELSE '' END || '"')::jsonb), jsonb)) AS content
-FROM diku_mod_inventory_storage.identifier_type;
+FROM uchicago_mod_inventory_storage.identifier_type;
 CREATE VIEW uc.ill_policies AS
 SELECT
 id AS id,
@@ -1063,33 +1063,33 @@ uc.TIMESTAMP_CAST(jsonb#>>'{metadata,updatedDate}') AS updated_date,
 CAST(jsonb#>>'{metadata,updatedByUserId}' AS UUID) AS updated_by_user_id,
 jsonb#>>'{metadata,updatedByUsername}' AS updated_by_username,
 jsonb_pretty(COALESCE(jsonb_set(jsonb, '{metadata,createdDate}', ('"' || (jsonb#>>'{metadata,createdDate}') || CASE WHEN jsonb#>>'{metadata,createdDate}' !~ '([-+]\d\d:\d\d)|Z$' THEN '+00:00' ELSE '' END || '"')::jsonb), jsonb)) AS content
-FROM diku_mod_inventory_storage.ill_policy;
+FROM uchicago_mod_inventory_storage.ill_policy;
 CREATE VIEW uc.alternative_titles AS
 SELECT
 id AS id,
 instance_id AS instance_id,
 CAST(jsonb->>'alternativeTitleTypeId' AS UUID) AS alternative_title_type_id,
 jsonb->>'alternativeTitle' AS alternative_title
-FROM (SELECT id::text || ordinality::text AS id, id AS instance_id, value AS jsonb FROM diku_mod_inventory_storage.instance, jsonb_array_elements((jsonb->>'alternativeTitles')::jsonb) WITH ORDINALITY) a;
+FROM (SELECT id::text || ordinality::text AS id, id AS instance_id, value AS jsonb FROM uchicago_mod_inventory_storage.instance, jsonb_array_elements((jsonb->>'alternativeTitles')::jsonb) WITH ORDINALITY) a;
 CREATE VIEW uc.editions AS
 SELECT
 id AS id,
 instance_id AS instance_id,
 CAST(jsonb AS VARCHAR(1024)) AS content
-FROM (SELECT id::text || ordinality::text AS id, id AS instance_id, value AS jsonb FROM diku_mod_inventory_storage.instance, jsonb_array_elements_text((jsonb->>'editions')::jsonb) WITH ORDINALITY) a;
+FROM (SELECT id::text || ordinality::text AS id, id AS instance_id, value AS jsonb FROM uchicago_mod_inventory_storage.instance, jsonb_array_elements_text((jsonb->>'editions')::jsonb) WITH ORDINALITY) a;
 CREATE VIEW uc.series AS
 SELECT
 id AS id,
 instance_id AS instance_id,
 CAST(jsonb AS VARCHAR(1024)) AS content
-FROM (SELECT id::text || ordinality::text AS id, id AS instance_id, value AS jsonb FROM diku_mod_inventory_storage.instance, jsonb_array_elements_text((jsonb->>'series')::jsonb) WITH ORDINALITY) a;
+FROM (SELECT id::text || ordinality::text AS id, id AS instance_id, value AS jsonb FROM uchicago_mod_inventory_storage.instance, jsonb_array_elements_text((jsonb->>'series')::jsonb) WITH ORDINALITY) a;
 CREATE VIEW uc.identifiers AS
 SELECT
 id AS id,
 instance_id AS instance_id,
 jsonb->>'value' AS value,
 CAST(jsonb->>'identifierTypeId' AS UUID) AS identifier_type_id
-FROM (SELECT id::text || ordinality::text AS id, id AS instance_id, value AS jsonb FROM diku_mod_inventory_storage.instance, jsonb_array_elements((jsonb->>'identifiers')::jsonb) WITH ORDINALITY) a;
+FROM (SELECT id::text || ordinality::text AS id, id AS instance_id, value AS jsonb FROM uchicago_mod_inventory_storage.instance, jsonb_array_elements((jsonb->>'identifiers')::jsonb) WITH ORDINALITY) a;
 CREATE VIEW uc.contributors AS
 SELECT
 id AS id,
@@ -1099,20 +1099,20 @@ CAST(jsonb->>'contributorTypeId' AS UUID) AS contributor_type_id,
 jsonb->>'contributorTypeText' AS contributor_type_text,
 CAST(jsonb->>'contributorNameTypeId' AS UUID) AS contributor_name_type_id,
 CAST(jsonb->>'primary' AS BOOLEAN) AS primary
-FROM (SELECT id::text || ordinality::text AS id, id AS instance_id, value AS jsonb FROM diku_mod_inventory_storage.instance, jsonb_array_elements((jsonb->>'contributors')::jsonb) WITH ORDINALITY) a;
+FROM (SELECT id::text || ordinality::text AS id, id AS instance_id, value AS jsonb FROM uchicago_mod_inventory_storage.instance, jsonb_array_elements((jsonb->>'contributors')::jsonb) WITH ORDINALITY) a;
 CREATE VIEW uc.subjects AS
 SELECT
 id AS id,
 instance_id AS instance_id,
 CAST(jsonb AS VARCHAR(1024)) AS content
-FROM (SELECT id::text || ordinality::text AS id, id AS instance_id, value AS jsonb FROM diku_mod_inventory_storage.instance, jsonb_array_elements_text((jsonb->>'subjects')::jsonb) WITH ORDINALITY) a;
+FROM (SELECT id::text || ordinality::text AS id, id AS instance_id, value AS jsonb FROM uchicago_mod_inventory_storage.instance, jsonb_array_elements_text((jsonb->>'subjects')::jsonb) WITH ORDINALITY) a;
 CREATE VIEW uc.classifications AS
 SELECT
 id AS id,
 instance_id AS instance_id,
 jsonb->>'classificationNumber' AS classification_number,
 CAST(jsonb->>'classificationTypeId' AS UUID) AS classification_type_id
-FROM (SELECT id::text || ordinality::text AS id, id AS instance_id, value AS jsonb FROM diku_mod_inventory_storage.instance, jsonb_array_elements((jsonb->>'classifications')::jsonb) WITH ORDINALITY) a;
+FROM (SELECT id::text || ordinality::text AS id, id AS instance_id, value AS jsonb FROM uchicago_mod_inventory_storage.instance, jsonb_array_elements((jsonb->>'classifications')::jsonb) WITH ORDINALITY) a;
 CREATE VIEW uc.publications AS
 SELECT
 id AS id,
@@ -1121,19 +1121,19 @@ jsonb->>'publisher' AS publisher,
 jsonb->>'place' AS place,
 jsonb->>'dateOfPublication' AS date_of_publication,
 jsonb->>'role' AS role
-FROM (SELECT id::text || ordinality::text AS id, id AS instance_id, value AS jsonb FROM diku_mod_inventory_storage.instance, jsonb_array_elements((jsonb->>'publication')::jsonb) WITH ORDINALITY) a;
+FROM (SELECT id::text || ordinality::text AS id, id AS instance_id, value AS jsonb FROM uchicago_mod_inventory_storage.instance, jsonb_array_elements((jsonb->>'publication')::jsonb) WITH ORDINALITY) a;
 CREATE VIEW uc.publication_frequency AS
 SELECT
 id AS id,
 instance_id AS instance_id,
 CAST(jsonb AS VARCHAR(1024)) AS content
-FROM (SELECT id::text || ordinality::text AS id, id AS instance_id, value AS jsonb FROM diku_mod_inventory_storage.instance, jsonb_array_elements_text((jsonb->>'publicationFrequency')::jsonb) WITH ORDINALITY) a;
+FROM (SELECT id::text || ordinality::text AS id, id AS instance_id, value AS jsonb FROM uchicago_mod_inventory_storage.instance, jsonb_array_elements_text((jsonb->>'publicationFrequency')::jsonb) WITH ORDINALITY) a;
 CREATE VIEW uc.publication_range AS
 SELECT
 id AS id,
 instance_id AS instance_id,
 CAST(jsonb AS VARCHAR(1024)) AS content
-FROM (SELECT id::text || ordinality::text AS id, id AS instance_id, value AS jsonb FROM diku_mod_inventory_storage.instance, jsonb_array_elements_text((jsonb->>'publicationRange')::jsonb) WITH ORDINALITY) a;
+FROM (SELECT id::text || ordinality::text AS id, id AS instance_id, value AS jsonb FROM uchicago_mod_inventory_storage.instance, jsonb_array_elements_text((jsonb->>'publicationRange')::jsonb) WITH ORDINALITY) a;
 CREATE VIEW uc.electronic_accesses AS
 SELECT
 id AS id,
@@ -1143,25 +1143,25 @@ jsonb->>'linkText' AS link_text,
 jsonb->>'materialsSpecification' AS materials_specification,
 jsonb->>'publicNote' AS public_note,
 CAST(jsonb->>'relationshipId' AS UUID) AS relationship_id
-FROM (SELECT id::text || ordinality::text AS id, id AS instance_id, value AS jsonb FROM diku_mod_inventory_storage.instance, jsonb_array_elements((jsonb->>'electronicAccess')::jsonb) WITH ORDINALITY) a;
+FROM (SELECT id::text || ordinality::text AS id, id AS instance_id, value AS jsonb FROM uchicago_mod_inventory_storage.instance, jsonb_array_elements((jsonb->>'electronicAccess')::jsonb) WITH ORDINALITY) a;
 CREATE VIEW uc.instance_formats AS
 SELECT
 id AS id,
 instance_id AS instance_id,
 CAST(jsonb AS UUID) AS format_id
-FROM (SELECT id::text || ordinality::text AS id, id AS instance_id, value AS jsonb FROM diku_mod_inventory_storage.instance, jsonb_array_elements_text((jsonb->>'instanceFormatIds')::jsonb) WITH ORDINALITY) a;
+FROM (SELECT id::text || ordinality::text AS id, id AS instance_id, value AS jsonb FROM uchicago_mod_inventory_storage.instance, jsonb_array_elements_text((jsonb->>'instanceFormatIds')::jsonb) WITH ORDINALITY) a;
 CREATE VIEW uc.physical_descriptions AS
 SELECT
 id AS id,
 instance_id AS instance_id,
 CAST(jsonb AS VARCHAR(1024)) AS content
-FROM (SELECT id::text || ordinality::text AS id, id AS instance_id, value AS jsonb FROM diku_mod_inventory_storage.instance, jsonb_array_elements_text((jsonb->>'physicalDescriptions')::jsonb) WITH ORDINALITY) a;
+FROM (SELECT id::text || ordinality::text AS id, id AS instance_id, value AS jsonb FROM uchicago_mod_inventory_storage.instance, jsonb_array_elements_text((jsonb->>'physicalDescriptions')::jsonb) WITH ORDINALITY) a;
 CREATE VIEW uc.languages AS
 SELECT
 id AS id,
 instance_id AS instance_id,
 CAST(jsonb AS VARCHAR(1024)) AS content
-FROM (SELECT id::text || ordinality::text AS id, id AS instance_id, value AS jsonb FROM diku_mod_inventory_storage.instance, jsonb_array_elements_text((jsonb->>'languages')::jsonb) WITH ORDINALITY) a;
+FROM (SELECT id::text || ordinality::text AS id, id AS instance_id, value AS jsonb FROM uchicago_mod_inventory_storage.instance, jsonb_array_elements_text((jsonb->>'languages')::jsonb) WITH ORDINALITY) a;
 CREATE VIEW uc.notes AS
 SELECT
 id AS id,
@@ -1169,25 +1169,25 @@ instance_id AS instance_id,
 CAST(jsonb->>'instanceNoteTypeId' AS UUID) AS instance_note_type_id,
 jsonb->>'note' AS note,
 CAST(jsonb->>'staffOnly' AS BOOLEAN) AS staff_only
-FROM (SELECT id::text || ordinality::text AS id, id AS instance_id, value AS jsonb FROM diku_mod_inventory_storage.instance, jsonb_array_elements((jsonb->>'notes')::jsonb) WITH ORDINALITY) a;
+FROM (SELECT id::text || ordinality::text AS id, id AS instance_id, value AS jsonb FROM uchicago_mod_inventory_storage.instance, jsonb_array_elements((jsonb->>'notes')::jsonb) WITH ORDINALITY) a;
 CREATE VIEW uc.instance_statistical_codes AS
 SELECT
 id AS id,
 instance_id AS instance_id,
 CAST(jsonb AS UUID) AS statistical_code_id
-FROM (SELECT id::text || ordinality::text AS id, id AS instance_id, value AS jsonb FROM diku_mod_inventory_storage.instance, jsonb_array_elements_text((jsonb->>'statisticalCodeIds')::jsonb) WITH ORDINALITY) a;
+FROM (SELECT id::text || ordinality::text AS id, id AS instance_id, value AS jsonb FROM uchicago_mod_inventory_storage.instance, jsonb_array_elements_text((jsonb->>'statisticalCodeIds')::jsonb) WITH ORDINALITY) a;
 CREATE VIEW uc.instance_tags AS
 SELECT
 id AS id,
 instance_id AS instance_id,
 CAST(jsonb AS VARCHAR(1024)) AS content
-FROM (SELECT id::text || ordinality::text AS id, id AS instance_id, value AS jsonb FROM diku_mod_inventory_storage.instance, jsonb_array_elements_text((jsonb#>>'{tags,tagList}')::jsonb) WITH ORDINALITY) a;
+FROM (SELECT id::text || ordinality::text AS id, id AS instance_id, value AS jsonb FROM uchicago_mod_inventory_storage.instance, jsonb_array_elements_text((jsonb#>>'{tags,tagList}')::jsonb) WITH ORDINALITY) a;
 CREATE VIEW uc.instance_nature_of_content_terms AS
 SELECT
 id AS id,
 instance_id AS instance_id,
 CAST(jsonb AS UUID) AS nature_of_content_term_id
-FROM (SELECT id::text || ordinality::text AS id, id AS instance_id, value AS jsonb FROM diku_mod_inventory_storage.instance, jsonb_array_elements_text((jsonb->>'natureOfContentTermIds')::jsonb) WITH ORDINALITY) a;
+FROM (SELECT id::text || ordinality::text AS id, id AS instance_id, value AS jsonb FROM uchicago_mod_inventory_storage.instance, jsonb_array_elements_text((jsonb->>'natureOfContentTermIds')::jsonb) WITH ORDINALITY) a;
 CREATE VIEW uc.instances AS
 SELECT
 id AS id,
@@ -1216,7 +1216,7 @@ uc.TIMESTAMP_CAST(jsonb#>>'{metadata,updatedDate}') AS updated_date,
 CAST(jsonb#>>'{metadata,updatedByUserId}' AS UUID) AS updated_by_user_id,
 jsonb#>>'{metadata,updatedByUsername}' AS updated_by_username,
 jsonb_pretty(COALESCE(jsonb_set(jsonb, '{metadata,createdDate}', ('"' || (jsonb#>>'{metadata,createdDate}') || CASE WHEN jsonb#>>'{metadata,createdDate}' !~ '([-+]\d\d:\d\d)|Z$' THEN '+00:00' ELSE '' END || '"')::jsonb), jsonb)) AS content
-FROM diku_mod_inventory_storage.instance;
+FROM uchicago_mod_inventory_storage.instance;
 CREATE VIEW uc.formats AS
 SELECT
 id AS id,
@@ -1230,7 +1230,7 @@ uc.TIMESTAMP_CAST(jsonb#>>'{metadata,updatedDate}') AS updated_date,
 CAST(jsonb#>>'{metadata,updatedByUserId}' AS UUID) AS updated_by_user_id,
 jsonb#>>'{metadata,updatedByUsername}' AS updated_by_username,
 jsonb_pretty(COALESCE(jsonb_set(jsonb, '{metadata,createdDate}', ('"' || (jsonb#>>'{metadata,createdDate}') || CASE WHEN jsonb#>>'{metadata,createdDate}' !~ '([-+]\d\d:\d\d)|Z$' THEN '+00:00' ELSE '' END || '"')::jsonb), jsonb)) AS content
-FROM diku_mod_inventory_storage.instance_format;
+FROM uchicago_mod_inventory_storage.instance_format;
 CREATE VIEW uc.instance_note_types AS
 SELECT
 id AS id,
@@ -1243,7 +1243,7 @@ uc.TIMESTAMP_CAST(jsonb#>>'{metadata,updatedDate}') AS updated_date,
 CAST(jsonb#>>'{metadata,updatedByUserId}' AS UUID) AS updated_by_user_id,
 jsonb#>>'{metadata,updatedByUsername}' AS updated_by_username,
 jsonb_pretty(COALESCE(jsonb_set(jsonb, '{metadata,createdDate}', ('"' || (jsonb#>>'{metadata,createdDate}') || CASE WHEN jsonb#>>'{metadata,createdDate}' !~ '([-+]\d\d:\d\d)|Z$' THEN '+00:00' ELSE '' END || '"')::jsonb), jsonb)) AS content
-FROM diku_mod_inventory_storage.instance_note_type;
+FROM uchicago_mod_inventory_storage.instance_note_type;
 CREATE VIEW uc.relationships AS
 SELECT
 id AS id,
@@ -1257,7 +1257,7 @@ uc.TIMESTAMP_CAST(jsonb#>>'{metadata,updatedDate}') AS updated_date,
 CAST(jsonb#>>'{metadata,updatedByUserId}' AS UUID) AS updated_by_user_id,
 jsonb#>>'{metadata,updatedByUsername}' AS updated_by_username,
 jsonb_pretty(COALESCE(jsonb_set(jsonb, '{metadata,createdDate}', ('"' || (jsonb#>>'{metadata,createdDate}') || CASE WHEN jsonb#>>'{metadata,createdDate}' !~ '([-+]\d\d:\d\d)|Z$' THEN '+00:00' ELSE '' END || '"')::jsonb), jsonb)) AS content
-FROM diku_mod_inventory_storage.instance_relationship;
+FROM uchicago_mod_inventory_storage.instance_relationship;
 CREATE VIEW uc.relationship_types AS
 SELECT
 id AS id,
@@ -1269,19 +1269,19 @@ uc.TIMESTAMP_CAST(jsonb#>>'{metadata,updatedDate}') AS updated_date,
 CAST(jsonb#>>'{metadata,updatedByUserId}' AS UUID) AS updated_by_user_id,
 jsonb#>>'{metadata,updatedByUsername}' AS updated_by_username,
 jsonb_pretty(COALESCE(jsonb_set(jsonb, '{metadata,createdDate}', ('"' || (jsonb#>>'{metadata,createdDate}') || CASE WHEN jsonb#>>'{metadata,createdDate}' !~ '([-+]\d\d:\d\d)|Z$' THEN '+00:00' ELSE '' END || '"')::jsonb), jsonb)) AS content
-FROM diku_mod_inventory_storage.instance_relationship_type;
+FROM uchicago_mod_inventory_storage.instance_relationship_type;
 CREATE VIEW uc.source_marc_fields AS
 SELECT
 id AS id,
 source_marc_id AS source_marc_id,
 CAST(jsonb AS VARCHAR(1024)) AS content
-FROM (SELECT id::text || ordinality::text AS id, id AS source_marc_id, value AS jsonb FROM diku_mod_inventory_storage.instance_source_marc, jsonb_array_elements_text((jsonb->>'fields')::jsonb) WITH ORDINALITY) a;
+FROM (SELECT id::text || ordinality::text AS id, id AS source_marc_id, value AS jsonb FROM uchicago_mod_inventory_storage.instance_source_marc, jsonb_array_elements_text((jsonb->>'fields')::jsonb) WITH ORDINALITY) a;
 CREATE VIEW uc.source_marcs AS
 SELECT
 id AS id,
 CAST(jsonb->>'leader' AS VARCHAR(24)) AS leader,
 jsonb_pretty(jsonb) AS content
-FROM diku_mod_inventory_storage.instance_source_marc;
+FROM uchicago_mod_inventory_storage.instance_source_marc;
 CREATE VIEW uc.statuses AS
 SELECT
 id AS id,
@@ -1295,7 +1295,7 @@ uc.TIMESTAMP_CAST(jsonb#>>'{metadata,updatedDate}') AS updated_date,
 CAST(jsonb#>>'{metadata,updatedByUserId}' AS UUID) AS updated_by_user_id,
 jsonb#>>'{metadata,updatedByUsername}' AS updated_by_username,
 jsonb_pretty(COALESCE(jsonb_set(jsonb, '{metadata,createdDate}', ('"' || (jsonb#>>'{metadata,createdDate}') || CASE WHEN jsonb#>>'{metadata,createdDate}' !~ '([-+]\d\d:\d\d)|Z$' THEN '+00:00' ELSE '' END || '"')::jsonb), jsonb)) AS content
-FROM diku_mod_inventory_storage.instance_status;
+FROM uchicago_mod_inventory_storage.instance_status;
 CREATE VIEW uc.instance_types AS
 SELECT
 id AS id,
@@ -1308,7 +1308,7 @@ uc.TIMESTAMP_CAST(jsonb#>>'{metadata,updatedDate}') AS updated_date,
 CAST(jsonb#>>'{metadata,updatedByUserId}' AS UUID) AS updated_by_user_id,
 jsonb#>>'{metadata,updatedByUsername}' AS updated_by_username,
 jsonb_pretty(COALESCE(jsonb_set(jsonb, '{metadata,createdDate}', ('"' || (jsonb#>>'{metadata,createdDate}') || CASE WHEN jsonb#>>'{metadata,createdDate}' !~ '([-+]\d\d:\d\d)|Z$' THEN '+00:00' ELSE '' END || '"')::jsonb), jsonb)) AS content
-FROM diku_mod_inventory_storage.instance_type;
+FROM uchicago_mod_inventory_storage.instance_type;
 CREATE VIEW uc.institutions AS
 SELECT
 id AS id,
@@ -1321,13 +1321,13 @@ uc.TIMESTAMP_CAST(jsonb#>>'{metadata,updatedDate}') AS updated_date,
 CAST(jsonb#>>'{metadata,updatedByUserId}' AS UUID) AS updated_by_user_id,
 jsonb#>>'{metadata,updatedByUsername}' AS updated_by_username,
 jsonb_pretty(COALESCE(jsonb_set(jsonb, '{metadata,createdDate}', ('"' || (jsonb#>>'{metadata,createdDate}') || CASE WHEN jsonb#>>'{metadata,createdDate}' !~ '([-+]\d\d:\d\d)|Z$' THEN '+00:00' ELSE '' END || '"')::jsonb), jsonb)) AS content
-FROM diku_mod_inventory_storage.locinstitution;
+FROM uchicago_mod_inventory_storage.locinstitution;
 CREATE VIEW uc.interface_type AS
 SELECT
 id AS id,
 interface_id AS interface_id,
 CAST(jsonb AS VARCHAR(1024)) AS content
-FROM (SELECT id::text || ordinality::text AS id, id AS interface_id, value AS jsonb FROM diku_mod_organizations_storage.interfaces, jsonb_array_elements_text((jsonb->>'type')::jsonb) WITH ORDINALITY) a;
+FROM (SELECT id::text || ordinality::text AS id, id AS interface_id, value AS jsonb FROM uchicago_mod_organizations_storage.interfaces, jsonb_array_elements_text((jsonb->>'type')::jsonb) WITH ORDINALITY) a;
 CREATE VIEW uc.interfaces AS
 SELECT
 id AS id,
@@ -1347,7 +1347,7 @@ uc.TIMESTAMP_CAST(jsonb#>>'{metadata,updatedDate}') AS updated_date,
 CAST(jsonb#>>'{metadata,updatedByUserId}' AS UUID) AS updated_by_user_id,
 jsonb#>>'{metadata,updatedByUsername}' AS updated_by_username,
 jsonb_pretty(COALESCE(jsonb_set(jsonb, '{metadata,createdDate}', ('"' || (jsonb#>>'{metadata,createdDate}') || CASE WHEN jsonb#>>'{metadata,createdDate}' !~ '([-+]\d\d:\d\d)|Z$' THEN '+00:00' ELSE '' END || '"')::jsonb), jsonb)) AS content
-FROM diku_mod_organizations_storage.interfaces;
+FROM uchicago_mod_organizations_storage.interfaces;
 CREATE VIEW uc.interface_credentials AS
 SELECT
 id AS id,
@@ -1355,7 +1355,7 @@ jsonb->>'username' AS username,
 jsonb->>'password' AS password,
 CAST(jsonb->>'interfaceId' AS UUID) AS interface_id,
 jsonb_pretty(jsonb) AS content
-FROM diku_mod_organizations_storage.interface_credentials;
+FROM uchicago_mod_organizations_storage.interface_credentials;
 CREATE VIEW uc.invoice_adjustment_fund_distributions AS
 SELECT
 id AS id,
@@ -1367,7 +1367,7 @@ CAST(jsonb->>'invoiceLineId' AS UUID) AS invoice_item_id,
 jsonb->>'distributionType' AS distribution_type,
 CAST(jsonb->>'expenseClassId' AS UUID) AS expense_class_id,
 CAST(jsonb->>'value' AS DECIMAL(19,2)) AS value
-FROM (SELECT id::text || ordinality::text AS id, id AS invoice_adjustment_id, value AS jsonb FROM (SELECT id::text || ordinality::text AS id, id AS invoice_id, value AS jsonb FROM diku_mod_invoice_storage.invoices, jsonb_array_elements((jsonb->>'adjustments')::jsonb) WITH ORDINALITY) a, jsonb_array_elements((jsonb->>'fundDistributions')::jsonb) WITH ORDINALITY) a;
+FROM (SELECT id::text || ordinality::text AS id, id AS invoice_adjustment_id, value AS jsonb FROM (SELECT id::text || ordinality::text AS id, id AS invoice_id, value AS jsonb FROM uchicago_mod_invoice_storage.invoices, jsonb_array_elements((jsonb->>'adjustments')::jsonb) WITH ORDINALITY) a, jsonb_array_elements((jsonb->>'fundDistributions')::jsonb) WITH ORDINALITY) a;
 CREATE VIEW uc.invoice_adjustments AS
 SELECT
 id AS id,
@@ -1380,25 +1380,25 @@ jsonb->>'prorate' AS prorate,
 jsonb->>'relationToTotal' AS relation_to_total,
 jsonb->>'type' AS type,
 CAST(jsonb->>'value' AS DECIMAL(19,2)) AS value
-FROM (SELECT id::text || ordinality::text AS id, id AS invoice_id, value AS jsonb FROM diku_mod_invoice_storage.invoices, jsonb_array_elements((jsonb->>'adjustments')::jsonb) WITH ORDINALITY) a;
+FROM (SELECT id::text || ordinality::text AS id, id AS invoice_id, value AS jsonb FROM uchicago_mod_invoice_storage.invoices, jsonb_array_elements((jsonb->>'adjustments')::jsonb) WITH ORDINALITY) a;
 CREATE VIEW uc.invoice_order_numbers AS
 SELECT
 id AS id,
 invoice_id AS invoice_id,
 CAST(jsonb AS VARCHAR(1024)) AS content
-FROM (SELECT id::text || ordinality::text AS id, id AS invoice_id, value AS jsonb FROM diku_mod_invoice_storage.invoices, jsonb_array_elements_text((jsonb->>'poNumbers')::jsonb) WITH ORDINALITY) a;
+FROM (SELECT id::text || ordinality::text AS id, id AS invoice_id, value AS jsonb FROM uchicago_mod_invoice_storage.invoices, jsonb_array_elements_text((jsonb->>'poNumbers')::jsonb) WITH ORDINALITY) a;
 CREATE VIEW uc.invoice_acquisitions_units AS
 SELECT
 id AS id,
 invoice_id AS invoice_id,
 CAST(jsonb AS UUID) AS acquisitions_unit_id
-FROM (SELECT id::text || ordinality::text AS id, id AS invoice_id, value AS jsonb FROM diku_mod_invoice_storage.invoices, jsonb_array_elements_text((jsonb->>'acqUnitIds')::jsonb) WITH ORDINALITY) a;
+FROM (SELECT id::text || ordinality::text AS id, id AS invoice_id, value AS jsonb FROM uchicago_mod_invoice_storage.invoices, jsonb_array_elements_text((jsonb->>'acqUnitIds')::jsonb) WITH ORDINALITY) a;
 CREATE VIEW uc.invoice_tags AS
 SELECT
 id AS id,
 invoice_id AS invoice_id,
 CAST(jsonb AS VARCHAR(1024)) AS content
-FROM (SELECT id::text || ordinality::text AS id, id AS invoice_id, value AS jsonb FROM diku_mod_invoice_storage.invoices, jsonb_array_elements_text((jsonb#>>'{tags,tagList}')::jsonb) WITH ORDINALITY) a;
+FROM (SELECT id::text || ordinality::text AS id, id AS invoice_id, value AS jsonb FROM uchicago_mod_invoice_storage.invoices, jsonb_array_elements_text((jsonb#>>'{tags,tagList}')::jsonb) WITH ORDINALITY) a;
 CREATE VIEW uc.invoices AS
 SELECT
 id AS id,
@@ -1441,7 +1441,7 @@ uc.TIMESTAMP_CAST(jsonb#>>'{metadata,updatedDate}') AS updated_date,
 CAST(jsonb#>>'{metadata,updatedByUserId}' AS UUID) AS updated_by_user_id,
 jsonb#>>'{metadata,updatedByUsername}' AS updated_by_username,
 jsonb_pretty(COALESCE(jsonb_set(jsonb, '{metadata,createdDate}', ('"' || (jsonb#>>'{metadata,createdDate}') || CASE WHEN jsonb#>>'{metadata,createdDate}' !~ '([-+]\d\d:\d\d)|Z$' THEN '+00:00' ELSE '' END || '"')::jsonb), jsonb)) AS content
-FROM diku_mod_invoice_storage.invoices;
+FROM uchicago_mod_invoice_storage.invoices;
 CREATE VIEW uc.invoice_item_adjustment_fund_distributions AS
 SELECT
 id AS id,
@@ -1453,7 +1453,7 @@ CAST(jsonb->>'invoiceLineId' AS UUID) AS invoice_item_id,
 jsonb->>'distributionType' AS distribution_type,
 CAST(jsonb->>'expenseClassId' AS UUID) AS expense_class_id,
 CAST(jsonb->>'value' AS DECIMAL(19,2)) AS value
-FROM (SELECT id::text || ordinality::text AS id, id AS invoice_item_adjustment_id, value AS jsonb FROM (SELECT id::text || ordinality::text AS id, id AS invoice_item_id, value AS jsonb FROM diku_mod_invoice_storage.invoice_lines, jsonb_array_elements((jsonb->>'adjustments')::jsonb) WITH ORDINALITY) a, jsonb_array_elements((jsonb->>'fundDistributions')::jsonb) WITH ORDINALITY) a;
+FROM (SELECT id::text || ordinality::text AS id, id AS invoice_item_adjustment_id, value AS jsonb FROM (SELECT id::text || ordinality::text AS id, id AS invoice_item_id, value AS jsonb FROM uchicago_mod_invoice_storage.invoice_lines, jsonb_array_elements((jsonb->>'adjustments')::jsonb) WITH ORDINALITY) a, jsonb_array_elements((jsonb->>'fundDistributions')::jsonb) WITH ORDINALITY) a;
 CREATE VIEW uc.invoice_item_adjustments AS
 SELECT
 id AS id,
@@ -1466,7 +1466,7 @@ jsonb->>'prorate' AS prorate,
 jsonb->>'relationToTotal' AS relation_to_total,
 jsonb->>'type' AS type,
 CAST(jsonb->>'value' AS DECIMAL(19,2)) AS value
-FROM (SELECT id::text || ordinality::text AS id, id AS invoice_item_id, value AS jsonb FROM diku_mod_invoice_storage.invoice_lines, jsonb_array_elements((jsonb->>'adjustments')::jsonb) WITH ORDINALITY) a;
+FROM (SELECT id::text || ordinality::text AS id, id AS invoice_item_id, value AS jsonb FROM uchicago_mod_invoice_storage.invoice_lines, jsonb_array_elements((jsonb->>'adjustments')::jsonb) WITH ORDINALITY) a;
 CREATE VIEW uc.invoice_item_fund_distributions AS
 SELECT
 id AS id,
@@ -1477,7 +1477,7 @@ CAST(jsonb->>'fundId' AS UUID) AS fund_id,
 jsonb->>'distributionType' AS distribution_type,
 CAST(jsonb->>'expenseClassId' AS UUID) AS expense_class_id,
 CAST(jsonb->>'value' AS DECIMAL(19,2)) AS value
-FROM (SELECT id::text || ordinality::text AS id, id AS invoice_item_id, value AS jsonb FROM diku_mod_invoice_storage.invoice_lines, jsonb_array_elements((jsonb->>'fundDistributions')::jsonb) WITH ORDINALITY) a;
+FROM (SELECT id::text || ordinality::text AS id, id AS invoice_item_id, value AS jsonb FROM uchicago_mod_invoice_storage.invoice_lines, jsonb_array_elements((jsonb->>'fundDistributions')::jsonb) WITH ORDINALITY) a;
 CREATE VIEW uc.invoice_item_reference_numbers AS
 SELECT
 id AS id,
@@ -1485,13 +1485,13 @@ invoice_item_id AS invoice_item_id,
 jsonb->>'refNumber' AS ref_number,
 jsonb->>'refNumberType' AS ref_number_type,
 jsonb->>'vendorDetailsSource' AS vendor_details_source
-FROM (SELECT id::text || ordinality::text AS id, id AS invoice_item_id, value AS jsonb FROM diku_mod_invoice_storage.invoice_lines, jsonb_array_elements((jsonb->>'referenceNumbers')::jsonb) WITH ORDINALITY) a;
+FROM (SELECT id::text || ordinality::text AS id, id AS invoice_item_id, value AS jsonb FROM uchicago_mod_invoice_storage.invoice_lines, jsonb_array_elements((jsonb->>'referenceNumbers')::jsonb) WITH ORDINALITY) a;
 CREATE VIEW uc.invoice_item_tags AS
 SELECT
 id AS id,
 invoice_item_id AS invoice_item_id,
 CAST(jsonb AS VARCHAR(1024)) AS content
-FROM (SELECT id::text || ordinality::text AS id, id AS invoice_item_id, value AS jsonb FROM diku_mod_invoice_storage.invoice_lines, jsonb_array_elements_text((jsonb#>>'{tags,tagList}')::jsonb) WITH ORDINALITY) a;
+FROM (SELECT id::text || ordinality::text AS id, id AS invoice_item_id, value AS jsonb FROM uchicago_mod_invoice_storage.invoice_lines, jsonb_array_elements_text((jsonb#>>'{tags,tagList}')::jsonb) WITH ORDINALITY) a;
 CREATE VIEW uc.invoice_items AS
 SELECT
 id AS id,
@@ -1520,26 +1520,26 @@ uc.TIMESTAMP_CAST(jsonb#>>'{metadata,updatedDate}') AS updated_date,
 CAST(jsonb#>>'{metadata,updatedByUserId}' AS UUID) AS updated_by_user_id,
 jsonb#>>'{metadata,updatedByUsername}' AS updated_by_username,
 jsonb_pretty(COALESCE(jsonb_set(jsonb, '{metadata,createdDate}', ('"' || (jsonb#>>'{metadata,createdDate}') || CASE WHEN jsonb#>>'{metadata,createdDate}' !~ '([-+]\d\d:\d\d)|Z$' THEN '+00:00' ELSE '' END || '"')::jsonb), jsonb)) AS content
-FROM diku_mod_invoice_storage.invoice_lines;
+FROM uchicago_mod_invoice_storage.invoice_lines;
 CREATE VIEW uc.invoice_transaction_summaries AS
 SELECT
 id AS id,
 CAST(jsonb->>'numPendingPayments' AS INTEGER) AS num_pending_payments,
 CAST(jsonb->>'numPaymentsCredits' AS INTEGER) AS num_payments_credits,
 jsonb_pretty(jsonb) AS content
-FROM diku_mod_finance_storage.invoice_transaction_summaries;
+FROM uchicago_mod_finance_storage.invoice_transaction_summaries;
 CREATE VIEW uc.item_former_ids AS
 SELECT
 id AS id,
 item_id AS item_id,
 CAST(jsonb AS VARCHAR(1024)) AS content
-FROM (SELECT id::text || ordinality::text AS id, id AS item_id, value AS jsonb FROM diku_mod_inventory_storage.item, jsonb_array_elements_text((jsonb->>'formerIds')::jsonb) WITH ORDINALITY) a;
+FROM (SELECT id::text || ordinality::text AS id, id AS item_id, value AS jsonb FROM uchicago_mod_inventory_storage.item, jsonb_array_elements_text((jsonb->>'formerIds')::jsonb) WITH ORDINALITY) a;
 CREATE VIEW uc.item_year_caption AS
 SELECT
 id AS id,
 item_id AS item_id,
 CAST(jsonb AS VARCHAR(1024)) AS content
-FROM (SELECT id::text || ordinality::text AS id, id AS item_id, value AS jsonb FROM diku_mod_inventory_storage.item, jsonb_array_elements_text((jsonb->>'yearCaption')::jsonb) WITH ORDINALITY) a;
+FROM (SELECT id::text || ordinality::text AS id, id AS item_id, value AS jsonb FROM uchicago_mod_inventory_storage.item, jsonb_array_elements_text((jsonb->>'yearCaption')::jsonb) WITH ORDINALITY) a;
 CREATE VIEW uc.item_notes AS
 SELECT
 id AS id,
@@ -1547,7 +1547,7 @@ item_id AS item_id,
 CAST(jsonb->>'itemNoteTypeId' AS UUID) AS item_note_type_id,
 jsonb->>'note' AS note,
 CAST(jsonb->>'staffOnly' AS BOOLEAN) AS staff_only
-FROM (SELECT id::text || ordinality::text AS id, id AS item_id, value AS jsonb FROM diku_mod_inventory_storage.item, jsonb_array_elements((jsonb->>'notes')::jsonb) WITH ORDINALITY) a;
+FROM (SELECT id::text || ordinality::text AS id, id AS item_id, value AS jsonb FROM uchicago_mod_inventory_storage.item, jsonb_array_elements((jsonb->>'notes')::jsonb) WITH ORDINALITY) a;
 CREATE VIEW uc.circulation_notes AS
 SELECT
 id AS id,
@@ -1560,7 +1560,7 @@ jsonb#>>'{source,personal,lastName}' AS source_personal_last_name,
 jsonb#>>'{source,personal,firstName}' AS source_personal_first_name,
 jsonb->>'date' AS date,
 CAST(jsonb->>'staffOnly' AS BOOLEAN) AS staff_only
-FROM (SELECT id::text || ordinality::text AS id, id AS item_id, value AS jsonb FROM diku_mod_inventory_storage.item, jsonb_array_elements((jsonb->>'circulationNotes')::jsonb) WITH ORDINALITY) a;
+FROM (SELECT id::text || ordinality::text AS id, id AS item_id, value AS jsonb FROM uchicago_mod_inventory_storage.item, jsonb_array_elements((jsonb->>'circulationNotes')::jsonb) WITH ORDINALITY) a;
 CREATE VIEW uc.item_electronic_accesses AS
 SELECT
 id AS id,
@@ -1570,19 +1570,19 @@ jsonb->>'linkText' AS link_text,
 jsonb->>'materialsSpecification' AS materials_specification,
 jsonb->>'publicNote' AS public_note,
 CAST(jsonb->>'relationshipId' AS UUID) AS relationship_id
-FROM (SELECT id::text || ordinality::text AS id, id AS item_id, value AS jsonb FROM diku_mod_inventory_storage.item, jsonb_array_elements((jsonb->>'electronicAccess')::jsonb) WITH ORDINALITY) a;
+FROM (SELECT id::text || ordinality::text AS id, id AS item_id, value AS jsonb FROM uchicago_mod_inventory_storage.item, jsonb_array_elements((jsonb->>'electronicAccess')::jsonb) WITH ORDINALITY) a;
 CREATE VIEW uc.item_statistical_codes AS
 SELECT
 id AS id,
 item_id AS item_id,
 CAST(jsonb AS UUID) AS statistical_code_id
-FROM (SELECT id::text || ordinality::text AS id, id AS item_id, value AS jsonb FROM diku_mod_inventory_storage.item, jsonb_array_elements_text((jsonb->>'statisticalCodeIds')::jsonb) WITH ORDINALITY) a;
+FROM (SELECT id::text || ordinality::text AS id, id AS item_id, value AS jsonb FROM uchicago_mod_inventory_storage.item, jsonb_array_elements_text((jsonb->>'statisticalCodeIds')::jsonb) WITH ORDINALITY) a;
 CREATE VIEW uc.item_tags AS
 SELECT
 id AS id,
 item_id AS item_id,
 CAST(jsonb AS VARCHAR(1024)) AS content
-FROM (SELECT id::text || ordinality::text AS id, id AS item_id, value AS jsonb FROM diku_mod_inventory_storage.item, jsonb_array_elements_text((jsonb#>>'{tags,tagList}')::jsonb) WITH ORDINALITY) a;
+FROM (SELECT id::text || ordinality::text AS id, id AS item_id, value AS jsonb FROM uchicago_mod_inventory_storage.item, jsonb_array_elements_text((jsonb#>>'{tags,tagList}')::jsonb) WITH ORDINALITY) a;
 CREATE VIEW uc.items AS
 SELECT
 id AS id,
@@ -1633,7 +1633,7 @@ uc.TIMESTAMP_CAST(jsonb#>>'{lastCheckIn,dateTime}') AS last_check_in_date_time,
 CAST(jsonb#>>'{lastCheckIn,servicePointId}' AS UUID) AS last_check_in_service_point_id,
 CAST(jsonb#>>'{lastCheckIn,staffMemberId}' AS UUID) AS last_check_in_staff_member_id,
 jsonb_pretty(COALESCE(jsonb_set(jsonb, '{metadata,createdDate}', ('"' || (jsonb#>>'{metadata,createdDate}') || CASE WHEN jsonb#>>'{metadata,createdDate}' !~ '([-+]\d\d:\d\d)|Z$' THEN '+00:00' ELSE '' END || '"')::jsonb), jsonb)) AS content
-FROM diku_mod_inventory_storage.item;
+FROM uchicago_mod_inventory_storage.item;
 CREATE VIEW uc.item_damaged_statuses AS
 SELECT
 id AS id,
@@ -1646,7 +1646,7 @@ uc.TIMESTAMP_CAST(jsonb#>>'{metadata,updatedDate}') AS updated_date,
 CAST(jsonb#>>'{metadata,updatedByUserId}' AS UUID) AS updated_by_user_id,
 jsonb#>>'{metadata,updatedByUsername}' AS updated_by_username,
 jsonb_pretty(COALESCE(jsonb_set(jsonb, '{metadata,createdDate}', ('"' || (jsonb#>>'{metadata,createdDate}') || CASE WHEN jsonb#>>'{metadata,createdDate}' !~ '([-+]\d\d:\d\d)|Z$' THEN '+00:00' ELSE '' END || '"')::jsonb), jsonb)) AS content
-FROM diku_mod_inventory_storage.item_damaged_status;
+FROM uchicago_mod_inventory_storage.item_damaged_status;
 CREATE VIEW uc.item_note_types AS
 SELECT
 id AS id,
@@ -1659,7 +1659,7 @@ uc.TIMESTAMP_CAST(jsonb#>>'{metadata,updatedDate}') AS updated_date,
 CAST(jsonb#>>'{metadata,updatedByUserId}' AS UUID) AS updated_by_user_id,
 jsonb#>>'{metadata,updatedByUsername}' AS updated_by_username,
 jsonb_pretty(COALESCE(jsonb_set(jsonb, '{metadata,createdDate}', ('"' || (jsonb#>>'{metadata,createdDate}') || CASE WHEN jsonb#>>'{metadata,createdDate}' !~ '([-+]\d\d:\d\d)|Z$' THEN '+00:00' ELSE '' END || '"')::jsonb), jsonb)) AS content
-FROM diku_mod_inventory_storage.item_note_type;
+FROM uchicago_mod_inventory_storage.item_note_type;
 CREATE VIEW uc.job_executions AS
 SELECT
 id AS id,
@@ -1686,7 +1686,7 @@ jsonb->>'uiStatus' AS ui_status,
 jsonb->>'errorStatus' AS error_status,
 CAST(jsonb->>'userId' AS UUID) AS user_id,
 jsonb_pretty(jsonb) AS content
-FROM diku_mod_source_record_manager.job_executions;
+FROM uchicago_mod_source_record_manager.job_executions;
 CREATE VIEW uc.job_execution_progresses AS
 SELECT
 id AS id,
@@ -1695,7 +1695,7 @@ CAST(jsonb->>'currentlySucceeded' AS INTEGER) AS currently_succeeded,
 CAST(jsonb->>'currentlyFailed' AS INTEGER) AS currently_failed,
 CAST(jsonb->>'total' AS INTEGER) AS total,
 jsonb_pretty(jsonb) AS content
-FROM diku_mod_source_record_manager.job_execution_progress;
+FROM uchicago_mod_source_record_manager.job_execution_progress;
 CREATE VIEW uc.job_execution_source_chunks AS
 SELECT
 id AS id,
@@ -1707,14 +1707,14 @@ CAST(jsonb->>'processedAmount' AS INTEGER) AS processed_amount,
 uc.TIMESTAMP_CAST(jsonb->>'completedDate') AS completed_date,
 jsonb->>'error' AS error,
 jsonb_pretty(jsonb) AS content
-FROM diku_mod_source_record_manager.job_execution_source_chunks;
+FROM uchicago_mod_source_record_manager.job_execution_source_chunks;
 CREATE VIEW uc.job_monitorings AS
 SELECT
 id AS id,
 job_execution_id AS job_execution_id,
 last_event_timestamp AS last_event_timestamp,
 notification_sent AS notification_sent
-FROM diku_mod_source_record_manager.job_monitoring;
+FROM uchicago_mod_source_record_manager.job_monitoring;
 CREATE VIEW uc.journal_records AS
 SELECT
 id AS id,
@@ -1729,13 +1729,13 @@ action_date AS action_date,
 source_record_order AS source_record_order,
 error AS error,
 title AS title
-FROM diku_mod_source_record_manager.journal_records;
+FROM uchicago_mod_source_record_manager.journal_records;
 CREATE VIEW uc.ledger_acquisitions_units AS
 SELECT
 id AS id,
 ledger_id AS ledger_id,
 CAST(jsonb AS UUID) AS acquisitions_unit_id
-FROM (SELECT id::text || ordinality::text AS id, id AS ledger_id, value AS jsonb FROM diku_mod_finance_storage.ledger, jsonb_array_elements_text((jsonb->>'acqUnitIds')::jsonb) WITH ORDINALITY) a;
+FROM (SELECT id::text || ordinality::text AS id, id AS ledger_id, value AS jsonb FROM uchicago_mod_finance_storage.ledger, jsonb_array_elements_text((jsonb->>'acqUnitIds')::jsonb) WITH ORDINALITY) a;
 CREATE VIEW uc.ledgers AS
 SELECT
 id AS id,
@@ -1768,7 +1768,7 @@ CAST(jsonb->>'expenditures' AS DECIMAL(19,2)) AS expenditures,
 CAST(jsonb->>'overEncumbrance' AS DECIMAL(19,2)) AS over_encumbrance,
 CAST(jsonb->>'overExpended' AS DECIMAL(19,2)) AS over_expended,
 jsonb_pretty(COALESCE(jsonb_set(jsonb, '{metadata,createdDate}', ('"' || (jsonb#>>'{metadata,createdDate}') || CASE WHEN jsonb#>>'{metadata,createdDate}' !~ '([-+]\d\d:\d\d)|Z$' THEN '+00:00' ELSE '' END || '"')::jsonb), jsonb)) AS content
-FROM diku_mod_finance_storage.ledger;
+FROM uchicago_mod_finance_storage.ledger;
 CREATE VIEW uc.ledger_rollover_budgets_rollover AS
 SELECT
 id AS id,
@@ -1781,7 +1781,7 @@ CAST(jsonb->>'adjustAllocation' AS DECIMAL(19,2)) AS adjust_allocation,
 jsonb->>'addAvailableTo' AS add_available_to,
 CAST(jsonb->>'allowableEncumbrance' AS DECIMAL(19,2)) AS allowable_encumbrance,
 CAST(jsonb->>'allowableExpenditure' AS DECIMAL(19,2)) AS allowable_expenditure
-FROM (SELECT id::text || ordinality::text AS id, id AS ledger_rollover_id, value AS jsonb FROM diku_mod_finance_storage.ledger_fiscal_year_rollover, jsonb_array_elements((jsonb->>'budgetsRollover')::jsonb) WITH ORDINALITY) a;
+FROM (SELECT id::text || ordinality::text AS id, id AS ledger_rollover_id, value AS jsonb FROM uchicago_mod_finance_storage.ledger_fiscal_year_rollover, jsonb_array_elements((jsonb->>'budgetsRollover')::jsonb) WITH ORDINALITY) a;
 CREATE VIEW uc.ledger_rollover_encumbrances_rollover AS
 SELECT
 id AS id,
@@ -1789,7 +1789,7 @@ ledger_rollover_id AS ledger_rollover_id,
 jsonb->>'orderType' AS order_type,
 jsonb->>'basedOn' AS based_on,
 CAST(jsonb->>'increaseBy' AS DECIMAL(19,2)) AS increase_by
-FROM (SELECT id::text || ordinality::text AS id, id AS ledger_rollover_id, value AS jsonb FROM diku_mod_finance_storage.ledger_fiscal_year_rollover, jsonb_array_elements((jsonb->>'encumbrancesRollover')::jsonb) WITH ORDINALITY) a;
+FROM (SELECT id::text || ordinality::text AS id, id AS ledger_rollover_id, value AS jsonb FROM uchicago_mod_finance_storage.ledger_fiscal_year_rollover, jsonb_array_elements((jsonb->>'encumbrancesRollover')::jsonb) WITH ORDINALITY) a;
 CREATE VIEW uc.ledger_rollovers AS
 SELECT
 id AS id,
@@ -1807,7 +1807,7 @@ uc.TIMESTAMP_CAST(jsonb#>>'{metadata,updatedDate}') AS updated_date,
 CAST(jsonb#>>'{metadata,updatedByUserId}' AS UUID) AS updated_by_user_id,
 jsonb#>>'{metadata,updatedByUsername}' AS updated_by_username,
 jsonb_pretty(COALESCE(jsonb_set(jsonb, '{metadata,createdDate}', ('"' || (jsonb#>>'{metadata,createdDate}') || CASE WHEN jsonb#>>'{metadata,createdDate}' !~ '([-+]\d\d:\d\d)|Z$' THEN '+00:00' ELSE '' END || '"')::jsonb), jsonb)) AS content
-FROM diku_mod_finance_storage.ledger_fiscal_year_rollover;
+FROM uchicago_mod_finance_storage.ledger_fiscal_year_rollover;
 CREATE VIEW uc.ledger_rollover_errors AS
 SELECT
 id AS id,
@@ -1822,7 +1822,7 @@ uc.TIMESTAMP_CAST(jsonb#>>'{metadata,updatedDate}') AS updated_date,
 CAST(jsonb#>>'{metadata,updatedByUserId}' AS UUID) AS updated_by_user_id,
 jsonb#>>'{metadata,updatedByUsername}' AS updated_by_username,
 jsonb_pretty(COALESCE(jsonb_set(jsonb, '{metadata,createdDate}', ('"' || (jsonb#>>'{metadata,createdDate}') || CASE WHEN jsonb#>>'{metadata,createdDate}' !~ '([-+]\d\d:\d\d)|Z$' THEN '+00:00' ELSE '' END || '"')::jsonb), jsonb)) AS content
-FROM diku_mod_finance_storage.ledger_fiscal_year_rollover_error;
+FROM uchicago_mod_finance_storage.ledger_fiscal_year_rollover_error;
 CREATE VIEW uc.ledger_rollover_progresses AS
 SELECT
 id AS id,
@@ -1838,7 +1838,7 @@ uc.TIMESTAMP_CAST(jsonb#>>'{metadata,updatedDate}') AS updated_date,
 CAST(jsonb#>>'{metadata,updatedByUserId}' AS UUID) AS updated_by_user_id,
 jsonb#>>'{metadata,updatedByUsername}' AS updated_by_username,
 jsonb_pretty(COALESCE(jsonb_set(jsonb, '{metadata,createdDate}', ('"' || (jsonb#>>'{metadata,createdDate}') || CASE WHEN jsonb#>>'{metadata,createdDate}' !~ '([-+]\d\d:\d\d)|Z$' THEN '+00:00' ELSE '' END || '"')::jsonb), jsonb)) AS content
-FROM diku_mod_finance_storage.ledger_fiscal_year_rollover_progress;
+FROM uchicago_mod_finance_storage.ledger_fiscal_year_rollover_progress;
 CREATE VIEW uc.libraries AS
 SELECT
 id AS id,
@@ -1852,7 +1852,7 @@ uc.TIMESTAMP_CAST(jsonb#>>'{metadata,updatedDate}') AS updated_date,
 CAST(jsonb#>>'{metadata,updatedByUserId}' AS UUID) AS updated_by_user_id,
 jsonb#>>'{metadata,updatedByUsername}' AS updated_by_username,
 jsonb_pretty(COALESCE(jsonb_set(jsonb, '{metadata,createdDate}', ('"' || (jsonb#>>'{metadata,createdDate}') || CASE WHEN jsonb#>>'{metadata,createdDate}' !~ '([-+]\d\d:\d\d)|Z$' THEN '+00:00' ELSE '' END || '"')::jsonb), jsonb)) AS content
-FROM diku_mod_inventory_storage.loclibrary;
+FROM uchicago_mod_inventory_storage.loclibrary;
 CREATE VIEW uc.loans AS
 SELECT
 id AS id,
@@ -1888,7 +1888,7 @@ CAST(jsonb#>>'{agedToLostDelayedBilling,lostItemHasBeenBilled}' AS BOOLEAN) AS a
 uc.TIMESTAMP_CAST(jsonb#>>'{agedToLostDelayedBilling,dateLostItemShouldBeBilled}') AS aged_to_lost_delayed_billing_date_lost_item_should_be_billed,
 uc.TIMESTAMP_CAST(jsonb#>>'{agedToLostDelayedBilling,agedToLostDate}') AS aged_to_lost_delayed_billing_aged_to_lost_date,
 jsonb_pretty(COALESCE(jsonb_set(jsonb, '{metadata,createdDate}', ('"' || (jsonb#>>'{metadata,createdDate}') || CASE WHEN jsonb#>>'{metadata,createdDate}' !~ '([-+]\d\d:\d\d)|Z$' THEN '+00:00' ELSE '' END || '"')::jsonb), jsonb)) AS content
-FROM diku_mod_circulation_storage.loan;
+FROM uchicago_mod_circulation_storage.loan;
 CREATE VIEW uc.loan_events AS
 SELECT
 id AS id,
@@ -1926,7 +1926,7 @@ CAST(jsonb#>>'{loan,agedToLostDelayedBilling,lostItemHasBeenBilled}' AS BOOLEAN)
 uc.TIMESTAMP_CAST(jsonb#>>'{loan,agedToLostDelayedBilling,dateLostItemShouldBeBilled}') AS loan_aged_to_lost_delayed_billing_date_lost_item_should_be_billed,
 uc.TIMESTAMP_CAST(jsonb#>>'{loan,agedToLostDelayedBilling,agedToLostDate}') AS loan_aged_to_lost_delayed_billing_aged_to_lost_date,
 jsonb_pretty(jsonb) AS content
-FROM diku_mod_circulation_storage.audit_loan;
+FROM uchicago_mod_circulation_storage.audit_loan;
 CREATE VIEW uc.loan_policies AS
 SELECT
 id AS id,
@@ -1977,7 +1977,7 @@ uc.TIMESTAMP_CAST(jsonb#>>'{metadata,updatedDate}') AS updated_date,
 CAST(jsonb#>>'{metadata,updatedByUserId}' AS UUID) AS updated_by_user_id,
 jsonb#>>'{metadata,updatedByUsername}' AS updated_by_username,
 jsonb_pretty(COALESCE(jsonb_set(jsonb, '{metadata,createdDate}', ('"' || (jsonb#>>'{metadata,createdDate}') || CASE WHEN jsonb#>>'{metadata,createdDate}' !~ '([-+]\d\d:\d\d)|Z$' THEN '+00:00' ELSE '' END || '"')::jsonb), jsonb)) AS content
-FROM diku_mod_circulation_storage.loan_policy;
+FROM uchicago_mod_circulation_storage.loan_policy;
 CREATE VIEW uc.loan_types AS
 SELECT
 id AS id,
@@ -1989,13 +1989,13 @@ uc.TIMESTAMP_CAST(jsonb#>>'{metadata,updatedDate}') AS updated_date,
 CAST(jsonb#>>'{metadata,updatedByUserId}' AS UUID) AS updated_by_user_id,
 jsonb#>>'{metadata,updatedByUsername}' AS updated_by_username,
 jsonb_pretty(COALESCE(jsonb_set(jsonb, '{metadata,createdDate}', ('"' || (jsonb#>>'{metadata,createdDate}') || CASE WHEN jsonb#>>'{metadata,createdDate}' !~ '([-+]\d\d:\d\d)|Z$' THEN '+00:00' ELSE '' END || '"')::jsonb), jsonb)) AS content
-FROM diku_mod_inventory_storage.loan_type;
+FROM uchicago_mod_inventory_storage.loan_type;
 CREATE VIEW uc.location_service_points AS
 SELECT
 id AS id,
 location_id AS location_id,
 CAST(jsonb AS UUID) AS service_point_id
-FROM (SELECT id::text || ordinality::text AS id, id AS location_id, value AS jsonb FROM diku_mod_inventory_storage.location, jsonb_array_elements_text((jsonb->>'servicePointIds')::jsonb) WITH ORDINALITY) a;
+FROM (SELECT id::text || ordinality::text AS id, id AS location_id, value AS jsonb FROM uchicago_mod_inventory_storage.location, jsonb_array_elements_text((jsonb->>'servicePointIds')::jsonb) WITH ORDINALITY) a;
 CREATE VIEW uc.locations AS
 SELECT
 id AS id,
@@ -2015,7 +2015,7 @@ uc.TIMESTAMP_CAST(jsonb#>>'{metadata,updatedDate}') AS updated_date,
 CAST(jsonb#>>'{metadata,updatedByUserId}' AS UUID) AS updated_by_user_id,
 jsonb#>>'{metadata,updatedByUsername}' AS updated_by_username,
 jsonb_pretty(COALESCE(jsonb_set(jsonb, '{metadata,createdDate}', ('"' || (jsonb#>>'{metadata,createdDate}') || CASE WHEN jsonb#>>'{metadata,createdDate}' !~ '([-+]\d\d:\d\d)|Z$' THEN '+00:00' ELSE '' END || '"')::jsonb), jsonb)) AS content
-FROM diku_mod_inventory_storage.location;
+FROM uchicago_mod_inventory_storage.location;
 CREATE VIEW uc.logins AS
 SELECT
 id AS id,
@@ -2029,7 +2029,7 @@ uc.TIMESTAMP_CAST(jsonb#>>'{metadata,updatedDate}') AS updated_date,
 CAST(jsonb#>>'{metadata,updatedByUserId}' AS UUID) AS updated_by_user_id,
 jsonb#>>'{metadata,updatedByUsername}' AS updated_by_username,
 jsonb_pretty(COALESCE(jsonb_set(jsonb, '{metadata,createdDate}', ('"' || (jsonb#>>'{metadata,createdDate}') || CASE WHEN jsonb#>>'{metadata,createdDate}' !~ '([-+]\d\d:\d\d)|Z$' THEN '+00:00' ELSE '' END || '"')::jsonb), jsonb)) AS content
-FROM diku_mod_login.auth_credentials;
+FROM uchicago_mod_login.auth_credentials;
 CREATE VIEW uc.lost_item_fee_policies AS
 SELECT
 id AS id,
@@ -2064,7 +2064,7 @@ uc.TIMESTAMP_CAST(jsonb#>>'{metadata,updatedDate}') AS updated_date,
 CAST(jsonb#>>'{metadata,updatedByUserId}' AS UUID) AS updated_by_user_id,
 jsonb#>>'{metadata,updatedByUsername}' AS updated_by_username,
 jsonb_pretty(COALESCE(jsonb_set(jsonb, '{metadata,createdDate}', ('"' || (jsonb#>>'{metadata,createdDate}') || CASE WHEN jsonb#>>'{metadata,createdDate}' !~ '([-+]\d\d:\d\d)|Z$' THEN '+00:00' ELSE '' END || '"')::jsonb), jsonb)) AS content
-FROM diku_mod_feesfines.lost_item_fee_policy;
+FROM uchicago_mod_feesfines.lost_item_fee_policy;
 CREATE VIEW uc.manual_block_templates AS
 SELECT
 id AS id,
@@ -2083,12 +2083,12 @@ uc.TIMESTAMP_CAST(jsonb#>>'{metadata,updatedDate}') AS updated_date,
 CAST(jsonb#>>'{metadata,updatedByUserId}' AS UUID) AS updated_by_user_id,
 jsonb#>>'{metadata,updatedByUsername}' AS updated_by_username,
 jsonb_pretty(COALESCE(jsonb_set(jsonb, '{metadata,createdDate}', ('"' || (jsonb#>>'{metadata,createdDate}') || CASE WHEN jsonb#>>'{metadata,createdDate}' !~ '([-+]\d\d:\d\d)|Z$' THEN '+00:00' ELSE '' END || '"')::jsonb), jsonb)) AS content
-FROM diku_mod_feesfines.manual_block_templates;
+FROM uchicago_mod_feesfines.manual_block_templates;
 CREATE VIEW uc.marc_records AS
 SELECT
 id AS id,
 jsonb_pretty(content) AS content
-FROM diku_mod_source_record_storage.marc_records_lb;
+FROM uchicago_mod_source_record_storage.marc_records_lb;
 CREATE VIEW uc.material_types AS
 SELECT
 id AS id,
@@ -2101,7 +2101,7 @@ uc.TIMESTAMP_CAST(jsonb#>>'{metadata,updatedDate}') AS updated_date,
 CAST(jsonb#>>'{metadata,updatedByUserId}' AS UUID) AS updated_by_user_id,
 jsonb#>>'{metadata,updatedByUsername}' AS updated_by_username,
 jsonb_pretty(COALESCE(jsonb_set(jsonb, '{metadata,createdDate}', ('"' || (jsonb#>>'{metadata,createdDate}') || CASE WHEN jsonb#>>'{metadata,createdDate}' !~ '([-+]\d\d:\d\d)|Z$' THEN '+00:00' ELSE '' END || '"')::jsonb), jsonb)) AS content
-FROM diku_mod_inventory_storage.material_type;
+FROM uchicago_mod_inventory_storage.material_type;
 CREATE VIEW uc.mode_of_issuances AS
 SELECT
 id AS id,
@@ -2114,7 +2114,7 @@ uc.TIMESTAMP_CAST(jsonb#>>'{metadata,updatedDate}') AS updated_date,
 CAST(jsonb#>>'{metadata,updatedByUserId}' AS UUID) AS updated_by_user_id,
 jsonb#>>'{metadata,updatedByUsername}' AS updated_by_username,
 jsonb_pretty(COALESCE(jsonb_set(jsonb, '{metadata,createdDate}', ('"' || (jsonb#>>'{metadata,createdDate}') || CASE WHEN jsonb#>>'{metadata,createdDate}' !~ '([-+]\d\d:\d\d)|Z$' THEN '+00:00' ELSE '' END || '"')::jsonb), jsonb)) AS content
-FROM diku_mod_inventory_storage.mode_of_issuance;
+FROM uchicago_mod_inventory_storage.mode_of_issuance;
 CREATE VIEW uc.nature_of_content_terms AS
 SELECT
 id AS id,
@@ -2127,14 +2127,14 @@ uc.TIMESTAMP_CAST(jsonb#>>'{metadata,updatedDate}') AS updated_date,
 CAST(jsonb#>>'{metadata,updatedByUserId}' AS UUID) AS updated_by_user_id,
 jsonb#>>'{metadata,updatedByUsername}' AS updated_by_username,
 jsonb_pretty(COALESCE(jsonb_set(jsonb, '{metadata,createdDate}', ('"' || (jsonb#>>'{metadata,createdDate}') || CASE WHEN jsonb#>>'{metadata,createdDate}' !~ '([-+]\d\d:\d\d)|Z$' THEN '+00:00' ELSE '' END || '"')::jsonb), jsonb)) AS content
-FROM diku_mod_inventory_storage.nature_of_content_term;
+FROM uchicago_mod_inventory_storage.nature_of_content_term;
 CREATE VIEW uc.note_links AS
 SELECT
 id AS id,
 note_id AS note_id,
 jsonb->>'id' AS id2,
 jsonb->>'type' AS type
-FROM (SELECT id::text || ordinality::text AS id, id AS note_id, value AS jsonb FROM diku_mod_notes.note_data, jsonb_array_elements((jsonb->>'links')::jsonb) WITH ORDINALITY) a;
+FROM (SELECT id::text || ordinality::text AS id, id AS note_id, value AS jsonb FROM uchicago_mod_notes.note_data, jsonb_array_elements((jsonb->>'links')::jsonb) WITH ORDINALITY) a;
 CREATE VIEW uc.notes2 AS
 SELECT
 id AS id,
@@ -2159,7 +2159,7 @@ jsonb#>>'{metadata,updatedByUsername}' AS updated_by_username,
 jsonb_pretty(COALESCE(jsonb_set(jsonb, '{metadata,createdDate}', ('"' || (jsonb#>>'{metadata,createdDate}') || CASE WHEN jsonb#>>'{metadata,createdDate}' !~ '([-+]\d\d:\d\d)|Z$' THEN '+00:00' ELSE '' END || '"')::jsonb), jsonb)) AS content,
 temporary_type_id AS temporary_type_id,
 search_content AS search_content
-FROM diku_mod_notes.note_data;
+FROM uchicago_mod_notes.note_data;
 CREATE VIEW uc.note_types AS
 SELECT
 id AS id,
@@ -2172,25 +2172,25 @@ uc.TIMESTAMP_CAST(jsonb#>>'{metadata,updatedDate}') AS updated_date,
 CAST(jsonb#>>'{metadata,updatedByUserId}' AS UUID) AS updated_by_user_id,
 jsonb#>>'{metadata,updatedByUsername}' AS updated_by_username,
 jsonb_pretty(COALESCE(jsonb_set(jsonb, '{metadata,createdDate}', ('"' || (jsonb#>>'{metadata,createdDate}') || CASE WHEN jsonb#>>'{metadata,createdDate}' !~ '([-+]\d\d:\d\d)|Z$' THEN '+00:00' ELSE '' END || '"')::jsonb), jsonb)) AS content
-FROM diku_mod_notes.note_type;
+FROM uchicago_mod_notes.note_type;
 CREATE VIEW uc.order_notes AS
 SELECT
 id AS id,
 order_id AS order_id,
 CAST(jsonb AS VARCHAR(1024)) AS content
-FROM (SELECT id::text || ordinality::text AS id, id AS order_id, value AS jsonb FROM diku_mod_orders_storage.purchase_order, jsonb_array_elements_text((jsonb->>'notes')::jsonb) WITH ORDINALITY) a;
+FROM (SELECT id::text || ordinality::text AS id, id AS order_id, value AS jsonb FROM uchicago_mod_orders_storage.purchase_order, jsonb_array_elements_text((jsonb->>'notes')::jsonb) WITH ORDINALITY) a;
 CREATE VIEW uc.order_acquisitions_units AS
 SELECT
 id AS id,
 order_id AS order_id,
 CAST(jsonb AS UUID) AS acquisitions_unit_id
-FROM (SELECT id::text || ordinality::text AS id, id AS order_id, value AS jsonb FROM diku_mod_orders_storage.purchase_order, jsonb_array_elements_text((jsonb->>'acqUnitIds')::jsonb) WITH ORDINALITY) a;
+FROM (SELECT id::text || ordinality::text AS id, id AS order_id, value AS jsonb FROM uchicago_mod_orders_storage.purchase_order, jsonb_array_elements_text((jsonb->>'acqUnitIds')::jsonb) WITH ORDINALITY) a;
 CREATE VIEW uc.order_tags AS
 SELECT
 id AS id,
 order_id AS order_id,
 CAST(jsonb AS VARCHAR(1024)) AS content
-FROM (SELECT id::text || ordinality::text AS id, id AS order_id, value AS jsonb FROM diku_mod_orders_storage.purchase_order, jsonb_array_elements_text((jsonb#>>'{tags,tagList}')::jsonb) WITH ORDINALITY) a;
+FROM (SELECT id::text || ordinality::text AS id, id AS order_id, value AS jsonb FROM uchicago_mod_orders_storage.purchase_order, jsonb_array_elements_text((jsonb#>>'{tags,tagList}')::jsonb) WITH ORDINALITY) a;
 CREATE VIEW uc.orders AS
 SELECT
 id AS id,
@@ -2226,20 +2226,20 @@ uc.TIMESTAMP_CAST(jsonb#>>'{metadata,updatedDate}') AS updated_date,
 CAST(jsonb#>>'{metadata,updatedByUserId}' AS UUID) AS updated_by_user_id,
 jsonb#>>'{metadata,updatedByUsername}' AS updated_by_username,
 jsonb_pretty(COALESCE(jsonb_set(jsonb, '{metadata,createdDate}', ('"' || (jsonb#>>'{metadata,createdDate}') || CASE WHEN jsonb#>>'{metadata,createdDate}' !~ '([-+]\d\d:\d\d)|Z$' THEN '+00:00' ELSE '' END || '"')::jsonb), jsonb)) AS content
-FROM diku_mod_orders_storage.purchase_order;
+FROM uchicago_mod_orders_storage.purchase_order;
 CREATE VIEW uc.order_invoices AS
 SELECT
 id AS id,
 CAST(jsonb->>'purchaseOrderId' AS UUID) AS order_id,
 CAST(jsonb->>'invoiceId' AS UUID) AS invoice_id,
 jsonb_pretty(jsonb) AS content
-FROM diku_mod_orders_storage.order_invoice_relationship;
+FROM uchicago_mod_orders_storage.order_invoice_relationship;
 CREATE VIEW uc.order_item_alerts AS
 SELECT
 id AS id,
 order_item_id AS order_item_id,
 CAST(jsonb AS UUID) AS alert_id
-FROM (SELECT id::text || ordinality::text AS id, id AS order_item_id, value AS jsonb FROM diku_mod_orders_storage.po_line, jsonb_array_elements_text((jsonb->>'alerts')::jsonb) WITH ORDINALITY) a;
+FROM (SELECT id::text || ordinality::text AS id, id AS order_item_id, value AS jsonb FROM uchicago_mod_orders_storage.po_line, jsonb_array_elements_text((jsonb->>'alerts')::jsonb) WITH ORDINALITY) a;
 CREATE VIEW uc.order_item_claims AS
 SELECT
 id AS id,
@@ -2247,14 +2247,14 @@ order_item_id AS order_item_id,
 CAST(jsonb->>'claimed' AS BOOLEAN) AS claimed,
 uc.TIMESTAMP_CAST(jsonb->>'sent') AS sent,
 CAST(jsonb->>'grace' AS INTEGER) AS grace
-FROM (SELECT id::text || ordinality::text AS id, id AS order_item_id, value AS jsonb FROM diku_mod_orders_storage.po_line, jsonb_array_elements((jsonb->>'claims')::jsonb) WITH ORDINALITY) a;
+FROM (SELECT id::text || ordinality::text AS id, id AS order_item_id, value AS jsonb FROM uchicago_mod_orders_storage.po_line, jsonb_array_elements((jsonb->>'claims')::jsonb) WITH ORDINALITY) a;
 CREATE VIEW uc.order_item_contributors AS
 SELECT
 id AS id,
 order_item_id AS order_item_id,
 jsonb->>'contributor' AS contributor,
 CAST(jsonb->>'contributorNameTypeId' AS UUID) AS contributor_name_type_id
-FROM (SELECT id::text || ordinality::text AS id, id AS order_item_id, value AS jsonb FROM diku_mod_orders_storage.po_line, jsonb_array_elements((jsonb->>'contributors')::jsonb) WITH ORDINALITY) a;
+FROM (SELECT id::text || ordinality::text AS id, id AS order_item_id, value AS jsonb FROM uchicago_mod_orders_storage.po_line, jsonb_array_elements((jsonb->>'contributors')::jsonb) WITH ORDINALITY) a;
 CREATE VIEW uc.order_item_product_ids AS
 SELECT
 id AS id,
@@ -2262,7 +2262,7 @@ order_item_id AS order_item_id,
 jsonb->>'productId' AS product_id,
 CAST(jsonb->>'productIdType' AS UUID) AS product_id_type_id,
 jsonb->>'qualifier' AS qualifier
-FROM (SELECT id::text || ordinality::text AS id, id AS order_item_id, value AS jsonb FROM diku_mod_orders_storage.po_line, jsonb_array_elements((jsonb#>>'{details,productIds}')::jsonb) WITH ORDINALITY) a;
+FROM (SELECT id::text || ordinality::text AS id, id AS order_item_id, value AS jsonb FROM uchicago_mod_orders_storage.po_line, jsonb_array_elements((jsonb#>>'{details,productIds}')::jsonb) WITH ORDINALITY) a;
 CREATE VIEW uc.order_item_fund_distributions AS
 SELECT
 id AS id,
@@ -2273,7 +2273,7 @@ CAST(jsonb->>'fundId' AS UUID) AS fund_id,
 CAST(jsonb->>'expenseClassId' AS UUID) AS expense_class_id,
 jsonb->>'distributionType' AS distribution_type,
 CAST(jsonb->>'value' AS DECIMAL(19,2)) AS value
-FROM (SELECT id::text || ordinality::text AS id, id AS order_item_id, value AS jsonb FROM diku_mod_orders_storage.po_line, jsonb_array_elements((jsonb->>'fundDistribution')::jsonb) WITH ORDINALITY) a;
+FROM (SELECT id::text || ordinality::text AS id, id AS order_item_id, value AS jsonb FROM uchicago_mod_orders_storage.po_line, jsonb_array_elements((jsonb->>'fundDistribution')::jsonb) WITH ORDINALITY) a;
 CREATE VIEW uc.order_item_locations AS
 SELECT
 id AS id,
@@ -2283,25 +2283,25 @@ CAST(jsonb->>'holdingId' AS UUID) AS holding_id,
 CAST(jsonb->>'quantity' AS INTEGER) AS quantity,
 CAST(jsonb->>'quantityElectronic' AS INTEGER) AS quantity_electronic,
 CAST(jsonb->>'quantityPhysical' AS INTEGER) AS quantity_physical
-FROM (SELECT id::text || ordinality::text AS id, id AS order_item_id, value AS jsonb FROM diku_mod_orders_storage.po_line, jsonb_array_elements((jsonb->>'locations')::jsonb) WITH ORDINALITY) a;
+FROM (SELECT id::text || ordinality::text AS id, id AS order_item_id, value AS jsonb FROM uchicago_mod_orders_storage.po_line, jsonb_array_elements((jsonb->>'locations')::jsonb) WITH ORDINALITY) a;
 CREATE VIEW uc.order_item_volumes AS
 SELECT
 id AS id,
 order_item_id AS order_item_id,
 CAST(jsonb AS VARCHAR(1024)) AS content
-FROM (SELECT id::text || ordinality::text AS id, id AS order_item_id, value AS jsonb FROM diku_mod_orders_storage.po_line, jsonb_array_elements_text((jsonb#>>'{physical,volumes}')::jsonb) WITH ORDINALITY) a;
+FROM (SELECT id::text || ordinality::text AS id, id AS order_item_id, value AS jsonb FROM uchicago_mod_orders_storage.po_line, jsonb_array_elements_text((jsonb#>>'{physical,volumes}')::jsonb) WITH ORDINALITY) a;
 CREATE VIEW uc.order_item_reporting_codes AS
 SELECT
 id AS id,
 order_item_id AS order_item_id,
 CAST(jsonb AS UUID) AS reporting_code_id
-FROM (SELECT id::text || ordinality::text AS id, id AS order_item_id, value AS jsonb FROM diku_mod_orders_storage.po_line, jsonb_array_elements_text((jsonb->>'reportingCodes')::jsonb) WITH ORDINALITY) a;
+FROM (SELECT id::text || ordinality::text AS id, id AS order_item_id, value AS jsonb FROM uchicago_mod_orders_storage.po_line, jsonb_array_elements_text((jsonb->>'reportingCodes')::jsonb) WITH ORDINALITY) a;
 CREATE VIEW uc.order_item_tags AS
 SELECT
 id AS id,
 order_item_id AS order_item_id,
 CAST(jsonb AS VARCHAR(1024)) AS content
-FROM (SELECT id::text || ordinality::text AS id, id AS order_item_id, value AS jsonb FROM diku_mod_orders_storage.po_line, jsonb_array_elements_text((jsonb#>>'{tags,tagList}')::jsonb) WITH ORDINALITY) a;
+FROM (SELECT id::text || ordinality::text AS id, id AS order_item_id, value AS jsonb FROM uchicago_mod_orders_storage.po_line, jsonb_array_elements_text((jsonb#>>'{tags,tagList}')::jsonb) WITH ORDINALITY) a;
 CREATE VIEW uc.order_item_reference_numbers AS
 SELECT
 id AS id,
@@ -2309,7 +2309,7 @@ order_item_id AS order_item_id,
 jsonb->>'refNumber' AS ref_number,
 jsonb->>'refNumberType' AS ref_number_type,
 jsonb->>'vendorDetailsSource' AS vendor_details_source
-FROM (SELECT id::text || ordinality::text AS id, id AS order_item_id, value AS jsonb FROM diku_mod_orders_storage.po_line, jsonb_array_elements((jsonb#>>'{vendorDetail,referenceNumbers}')::jsonb) WITH ORDINALITY) a;
+FROM (SELECT id::text || ordinality::text AS id, id AS order_item_id, value AS jsonb FROM uchicago_mod_orders_storage.po_line, jsonb_array_elements((jsonb#>>'{vendorDetail,referenceNumbers}')::jsonb) WITH ORDINALITY) a;
 CREATE VIEW uc.order_items AS
 SELECT
 id AS id,
@@ -2381,7 +2381,7 @@ uc.TIMESTAMP_CAST(jsonb#>>'{metadata,updatedDate}') AS updated_date,
 CAST(jsonb#>>'{metadata,updatedByUserId}' AS UUID) AS updated_by_user_id,
 jsonb#>>'{metadata,updatedByUsername}' AS updated_by_username,
 jsonb_pretty(COALESCE(jsonb_set(jsonb, '{metadata,createdDate}', ('"' || (jsonb#>>'{metadata,createdDate}') || CASE WHEN jsonb#>>'{metadata,createdDate}' !~ '([-+]\d\d:\d\d)|Z$' THEN '+00:00' ELSE '' END || '"')::jsonb), jsonb)) AS content
-FROM diku_mod_orders_storage.po_line;
+FROM uchicago_mod_orders_storage.po_line;
 CREATE VIEW uc.order_templates AS
 SELECT
 id AS id,
@@ -2389,26 +2389,26 @@ jsonb->>'templateName' AS template_name,
 jsonb->>'templateCode' AS template_code,
 jsonb->>'templateDescription' AS template_description,
 jsonb_pretty(jsonb) AS content
-FROM diku_mod_orders_storage.order_templates;
+FROM uchicago_mod_orders_storage.order_templates;
 CREATE VIEW uc.order_transaction_summaries AS
 SELECT
 id AS id,
 CAST(jsonb->>'numTransactions' AS INTEGER) AS num_transactions,
 jsonb_pretty(jsonb) AS content
-FROM diku_mod_finance_storage.order_transaction_summaries;
+FROM uchicago_mod_finance_storage.order_transaction_summaries;
 CREATE VIEW uc.organization_aliases AS
 SELECT
 id AS id,
 organization_id AS organization_id,
 jsonb->>'value' AS value,
 jsonb->>'description' AS description
-FROM (SELECT id::text || ordinality::text AS id, id AS organization_id, value AS jsonb FROM diku_mod_organizations_storage.organizations, jsonb_array_elements((jsonb->>'aliases')::jsonb) WITH ORDINALITY) a;
+FROM (SELECT id::text || ordinality::text AS id, id AS organization_id, value AS jsonb FROM uchicago_mod_organizations_storage.organizations, jsonb_array_elements((jsonb->>'aliases')::jsonb) WITH ORDINALITY) a;
 CREATE VIEW uc.organization_address_categories AS
 SELECT
 id AS id,
 organization_address_id AS organization_address_id,
 CAST(jsonb AS UUID) AS category_id
-FROM (SELECT id::text || ordinality::text AS id, id AS organization_address_id, value AS jsonb FROM (SELECT id::text || ordinality::text AS id, id AS organization_id, value AS jsonb FROM diku_mod_organizations_storage.organizations, jsonb_array_elements((jsonb->>'addresses')::jsonb) WITH ORDINALITY) a, jsonb_array_elements_text((jsonb->>'categories')::jsonb) WITH ORDINALITY) a;
+FROM (SELECT id::text || ordinality::text AS id, id AS organization_address_id, value AS jsonb FROM (SELECT id::text || ordinality::text AS id, id AS organization_id, value AS jsonb FROM uchicago_mod_organizations_storage.organizations, jsonb_array_elements((jsonb->>'addresses')::jsonb) WITH ORDINALITY) a, jsonb_array_elements_text((jsonb->>'categories')::jsonb) WITH ORDINALITY) a;
 CREATE VIEW uc.organization_addresses AS
 SELECT
 id AS id,
@@ -2428,13 +2428,13 @@ jsonb#>>'{metadata,createdByUsername}' AS created_by_username,
 uc.TIMESTAMP_CAST(jsonb#>>'{metadata,updatedDate}') AS updated_date,
 CAST(jsonb#>>'{metadata,updatedByUserId}' AS UUID) AS updated_by_user_id,
 jsonb#>>'{metadata,updatedByUsername}' AS updated_by_username
-FROM (SELECT id::text || ordinality::text AS id, id AS organization_id, value AS jsonb FROM diku_mod_organizations_storage.organizations, jsonb_array_elements((jsonb->>'addresses')::jsonb) WITH ORDINALITY) a;
+FROM (SELECT id::text || ordinality::text AS id, id AS organization_id, value AS jsonb FROM uchicago_mod_organizations_storage.organizations, jsonb_array_elements((jsonb->>'addresses')::jsonb) WITH ORDINALITY) a;
 CREATE VIEW uc.organization_phone_number_categories AS
 SELECT
 id AS id,
 organization_phone_number_id AS organization_phone_number_id,
 CAST(jsonb AS UUID) AS category_id
-FROM (SELECT id::text || ordinality::text AS id, id AS organization_phone_number_id, value AS jsonb FROM (SELECT id::text || ordinality::text AS id, id AS organization_id, value AS jsonb FROM diku_mod_organizations_storage.organizations, jsonb_array_elements((jsonb->>'phoneNumbers')::jsonb) WITH ORDINALITY) a, jsonb_array_elements_text((jsonb->>'categories')::jsonb) WITH ORDINALITY) a;
+FROM (SELECT id::text || ordinality::text AS id, id AS organization_phone_number_id, value AS jsonb FROM (SELECT id::text || ordinality::text AS id, id AS organization_id, value AS jsonb FROM uchicago_mod_organizations_storage.organizations, jsonb_array_elements((jsonb->>'phoneNumbers')::jsonb) WITH ORDINALITY) a, jsonb_array_elements_text((jsonb->>'categories')::jsonb) WITH ORDINALITY) a;
 CREATE VIEW uc.organization_phone_numbers AS
 SELECT
 id AS id,
@@ -2450,13 +2450,13 @@ jsonb#>>'{metadata,createdByUsername}' AS created_by_username,
 uc.TIMESTAMP_CAST(jsonb#>>'{metadata,updatedDate}') AS updated_date,
 CAST(jsonb#>>'{metadata,updatedByUserId}' AS UUID) AS updated_by_user_id,
 jsonb#>>'{metadata,updatedByUsername}' AS updated_by_username
-FROM (SELECT id::text || ordinality::text AS id, id AS organization_id, value AS jsonb FROM diku_mod_organizations_storage.organizations, jsonb_array_elements((jsonb->>'phoneNumbers')::jsonb) WITH ORDINALITY) a;
+FROM (SELECT id::text || ordinality::text AS id, id AS organization_id, value AS jsonb FROM uchicago_mod_organizations_storage.organizations, jsonb_array_elements((jsonb->>'phoneNumbers')::jsonb) WITH ORDINALITY) a;
 CREATE VIEW uc.organization_email_categories AS
 SELECT
 id AS id,
 organization_email_id AS organization_email_id,
 CAST(jsonb AS UUID) AS category_id
-FROM (SELECT id::text || ordinality::text AS id, id AS organization_email_id, value AS jsonb FROM (SELECT id::text || ordinality::text AS id, id AS organization_id, value AS jsonb FROM diku_mod_organizations_storage.organizations, jsonb_array_elements((jsonb->>'emails')::jsonb) WITH ORDINALITY) a, jsonb_array_elements_text((jsonb->>'categories')::jsonb) WITH ORDINALITY) a;
+FROM (SELECT id::text || ordinality::text AS id, id AS organization_email_id, value AS jsonb FROM (SELECT id::text || ordinality::text AS id, id AS organization_id, value AS jsonb FROM uchicago_mod_organizations_storage.organizations, jsonb_array_elements((jsonb->>'emails')::jsonb) WITH ORDINALITY) a, jsonb_array_elements_text((jsonb->>'categories')::jsonb) WITH ORDINALITY) a;
 CREATE VIEW uc.organization_emails AS
 SELECT
 id AS id,
@@ -2472,13 +2472,13 @@ jsonb#>>'{metadata,createdByUsername}' AS created_by_username,
 uc.TIMESTAMP_CAST(jsonb#>>'{metadata,updatedDate}') AS updated_date,
 CAST(jsonb#>>'{metadata,updatedByUserId}' AS UUID) AS updated_by_user_id,
 jsonb#>>'{metadata,updatedByUsername}' AS updated_by_username
-FROM (SELECT id::text || ordinality::text AS id, id AS organization_id, value AS jsonb FROM diku_mod_organizations_storage.organizations, jsonb_array_elements((jsonb->>'emails')::jsonb) WITH ORDINALITY) a;
+FROM (SELECT id::text || ordinality::text AS id, id AS organization_id, value AS jsonb FROM uchicago_mod_organizations_storage.organizations, jsonb_array_elements((jsonb->>'emails')::jsonb) WITH ORDINALITY) a;
 CREATE VIEW uc.organization_url_categories AS
 SELECT
 id AS id,
 organization_url_id AS organization_url_id,
 CAST(jsonb AS UUID) AS category_id
-FROM (SELECT id::text || ordinality::text AS id, id AS organization_url_id, value AS jsonb FROM (SELECT id::text || ordinality::text AS id, id AS organization_id, value AS jsonb FROM diku_mod_organizations_storage.organizations, jsonb_array_elements((jsonb->>'urls')::jsonb) WITH ORDINALITY) a, jsonb_array_elements_text((jsonb->>'categories')::jsonb) WITH ORDINALITY) a;
+FROM (SELECT id::text || ordinality::text AS id, id AS organization_url_id, value AS jsonb FROM (SELECT id::text || ordinality::text AS id, id AS organization_id, value AS jsonb FROM uchicago_mod_organizations_storage.organizations, jsonb_array_elements((jsonb->>'urls')::jsonb) WITH ORDINALITY) a, jsonb_array_elements_text((jsonb->>'categories')::jsonb) WITH ORDINALITY) a;
 CREATE VIEW uc.organization_urls AS
 SELECT
 id AS id,
@@ -2495,13 +2495,13 @@ jsonb#>>'{metadata,createdByUsername}' AS created_by_username,
 uc.TIMESTAMP_CAST(jsonb#>>'{metadata,updatedDate}') AS updated_date,
 CAST(jsonb#>>'{metadata,updatedByUserId}' AS UUID) AS updated_by_user_id,
 jsonb#>>'{metadata,updatedByUsername}' AS updated_by_username
-FROM (SELECT id::text || ordinality::text AS id, id AS organization_id, value AS jsonb FROM diku_mod_organizations_storage.organizations, jsonb_array_elements((jsonb->>'urls')::jsonb) WITH ORDINALITY) a;
+FROM (SELECT id::text || ordinality::text AS id, id AS organization_id, value AS jsonb FROM uchicago_mod_organizations_storage.organizations, jsonb_array_elements((jsonb->>'urls')::jsonb) WITH ORDINALITY) a;
 CREATE VIEW uc.organization_contacts AS
 SELECT
 id AS id,
 organization_id AS organization_id,
 CAST(jsonb AS UUID) AS contact_id
-FROM (SELECT id::text || ordinality::text AS id, id AS organization_id, value AS jsonb FROM diku_mod_organizations_storage.organizations, jsonb_array_elements_text((jsonb->>'contacts')::jsonb) WITH ORDINALITY) a;
+FROM (SELECT id::text || ordinality::text AS id, id AS organization_id, value AS jsonb FROM uchicago_mod_organizations_storage.organizations, jsonb_array_elements_text((jsonb->>'contacts')::jsonb) WITH ORDINALITY) a;
 CREATE VIEW uc.organization_agreements AS
 SELECT
 id AS id,
@@ -2510,25 +2510,25 @@ jsonb->>'name' AS name,
 CAST(jsonb->>'discount' AS DECIMAL(19,2)) AS discount,
 jsonb->>'referenceUrl' AS reference_url,
 jsonb->>'notes' AS notes
-FROM (SELECT id::text || ordinality::text AS id, id AS organization_id, value AS jsonb FROM diku_mod_organizations_storage.organizations, jsonb_array_elements((jsonb->>'agreements')::jsonb) WITH ORDINALITY) a;
+FROM (SELECT id::text || ordinality::text AS id, id AS organization_id, value AS jsonb FROM uchicago_mod_organizations_storage.organizations, jsonb_array_elements((jsonb->>'agreements')::jsonb) WITH ORDINALITY) a;
 CREATE VIEW uc.currencies AS
 SELECT
 id AS id,
 organization_id AS organization_id,
 CAST(jsonb AS VARCHAR(1024)) AS content
-FROM (SELECT id::text || ordinality::text AS id, id AS organization_id, value AS jsonb FROM diku_mod_organizations_storage.organizations, jsonb_array_elements_text((jsonb->>'vendorCurrencies')::jsonb) WITH ORDINALITY) a;
+FROM (SELECT id::text || ordinality::text AS id, id AS organization_id, value AS jsonb FROM uchicago_mod_organizations_storage.organizations, jsonb_array_elements_text((jsonb->>'vendorCurrencies')::jsonb) WITH ORDINALITY) a;
 CREATE VIEW uc.organization_interfaces AS
 SELECT
 id AS id,
 organization_id AS organization_id,
 CAST(jsonb AS UUID) AS interface_id
-FROM (SELECT id::text || ordinality::text AS id, id AS organization_id, value AS jsonb FROM diku_mod_organizations_storage.organizations, jsonb_array_elements_text((jsonb->>'interfaces')::jsonb) WITH ORDINALITY) a;
+FROM (SELECT id::text || ordinality::text AS id, id AS organization_id, value AS jsonb FROM uchicago_mod_organizations_storage.organizations, jsonb_array_elements_text((jsonb->>'interfaces')::jsonb) WITH ORDINALITY) a;
 CREATE VIEW uc.organization_account_acquisitions_units AS
 SELECT
 id AS id,
 organization_account_id AS organization_account_id,
 CAST(jsonb AS UUID) AS acquisitions_unit_id
-FROM (SELECT id::text || ordinality::text AS id, id AS organization_account_id, value AS jsonb FROM (SELECT id::text || ordinality::text AS id, id AS organization_id, value AS jsonb FROM diku_mod_organizations_storage.organizations, jsonb_array_elements((jsonb->>'accounts')::jsonb) WITH ORDINALITY) a, jsonb_array_elements_text((jsonb->>'acqUnitIds')::jsonb) WITH ORDINALITY) a;
+FROM (SELECT id::text || ordinality::text AS id, id AS organization_account_id, value AS jsonb FROM (SELECT id::text || ordinality::text AS id, id AS organization_id, value AS jsonb FROM uchicago_mod_organizations_storage.organizations, jsonb_array_elements((jsonb->>'accounts')::jsonb) WITH ORDINALITY) a, jsonb_array_elements_text((jsonb->>'acqUnitIds')::jsonb) WITH ORDINALITY) a;
 CREATE VIEW uc.organization_accounts AS
 SELECT
 id AS id,
@@ -2543,26 +2543,26 @@ jsonb->>'contactInfo' AS contact_info,
 jsonb->>'libraryCode' AS library_code,
 jsonb->>'libraryEdiCode' AS library_edi_code,
 jsonb->>'notes' AS notes
-FROM (SELECT id::text || ordinality::text AS id, id AS organization_id, value AS jsonb FROM diku_mod_organizations_storage.organizations, jsonb_array_elements((jsonb->>'accounts')::jsonb) WITH ORDINALITY) a;
+FROM (SELECT id::text || ordinality::text AS id, id AS organization_id, value AS jsonb FROM uchicago_mod_organizations_storage.organizations, jsonb_array_elements((jsonb->>'accounts')::jsonb) WITH ORDINALITY) a;
 CREATE VIEW uc.organization_changelogs AS
 SELECT
 id AS id,
 organization_id AS organization_id,
 jsonb->>'description' AS description,
 uc.TIMESTAMP_CAST(jsonb->>'timestamp') AS timestamp
-FROM (SELECT id::text || ordinality::text AS id, id AS organization_id, value AS jsonb FROM diku_mod_organizations_storage.organizations, jsonb_array_elements((jsonb->>'changelogs')::jsonb) WITH ORDINALITY) a;
+FROM (SELECT id::text || ordinality::text AS id, id AS organization_id, value AS jsonb FROM uchicago_mod_organizations_storage.organizations, jsonb_array_elements((jsonb->>'changelogs')::jsonb) WITH ORDINALITY) a;
 CREATE VIEW uc.organization_acquisitions_units AS
 SELECT
 id AS id,
 organization_id AS organization_id,
 CAST(jsonb AS UUID) AS acquisitions_unit_id
-FROM (SELECT id::text || ordinality::text AS id, id AS organization_id, value AS jsonb FROM diku_mod_organizations_storage.organizations, jsonb_array_elements_text((jsonb->>'acqUnitIds')::jsonb) WITH ORDINALITY) a;
+FROM (SELECT id::text || ordinality::text AS id, id AS organization_id, value AS jsonb FROM uchicago_mod_organizations_storage.organizations, jsonb_array_elements_text((jsonb->>'acqUnitIds')::jsonb) WITH ORDINALITY) a;
 CREATE VIEW uc.organization_tags AS
 SELECT
 id AS id,
 organization_id AS organization_id,
 CAST(jsonb AS VARCHAR(1024)) AS content
-FROM (SELECT id::text || ordinality::text AS id, id AS organization_id, value AS jsonb FROM diku_mod_organizations_storage.organizations, jsonb_array_elements_text((jsonb#>>'{tags,tagList}')::jsonb) WITH ORDINALITY) a;
+FROM (SELECT id::text || ordinality::text AS id, id AS organization_id, value AS jsonb FROM uchicago_mod_organizations_storage.organizations, jsonb_array_elements_text((jsonb#>>'{tags,tagList}')::jsonb) WITH ORDINALITY) a;
 CREATE VIEW uc.organizations AS
 SELECT
 id AS id,
@@ -2633,7 +2633,7 @@ uc.TIMESTAMP_CAST(jsonb#>>'{metadata,updatedDate}') AS updated_date,
 CAST(jsonb#>>'{metadata,updatedByUserId}' AS UUID) AS updated_by_user_id,
 jsonb#>>'{metadata,updatedByUsername}' AS updated_by_username,
 jsonb_pretty(COALESCE(jsonb_set(jsonb, '{metadata,createdDate}', ('"' || (jsonb#>>'{metadata,createdDate}') || CASE WHEN jsonb#>>'{metadata,createdDate}' !~ '([-+]\d\d:\d\d)|Z$' THEN '+00:00' ELSE '' END || '"')::jsonb), jsonb)) AS content
-FROM diku_mod_organizations_storage.organizations;
+FROM uchicago_mod_organizations_storage.organizations;
 CREATE VIEW uc.overdue_fine_policies AS
 SELECT
 id AS id,
@@ -2655,14 +2655,14 @@ uc.TIMESTAMP_CAST(jsonb#>>'{metadata,updatedDate}') AS updated_date,
 CAST(jsonb#>>'{metadata,updatedByUserId}' AS UUID) AS updated_by_user_id,
 jsonb#>>'{metadata,updatedByUsername}' AS updated_by_username,
 jsonb_pretty(COALESCE(jsonb_set(jsonb, '{metadata,createdDate}', ('"' || (jsonb#>>'{metadata,createdDate}') || CASE WHEN jsonb#>>'{metadata,createdDate}' !~ '([-+]\d\d:\d\d)|Z$' THEN '+00:00' ELSE '' END || '"')::jsonb), jsonb)) AS content
-FROM diku_mod_feesfines.overdue_fine_policy;
+FROM uchicago_mod_feesfines.overdue_fine_policy;
 CREATE VIEW uc.service_point_owners AS
 SELECT
 id AS id,
 owner_id AS owner_id,
 CAST(jsonb->>'value' AS UUID) AS service_point_id,
 jsonb->>'label' AS label
-FROM (SELECT id::text || ordinality::text AS id, id AS owner_id, value AS jsonb FROM diku_mod_feesfines.owners, jsonb_array_elements((jsonb->>'servicePointOwner')::jsonb) WITH ORDINALITY) a;
+FROM (SELECT id::text || ordinality::text AS id, id AS owner_id, value AS jsonb FROM uchicago_mod_feesfines.owners, jsonb_array_elements((jsonb->>'servicePointOwner')::jsonb) WITH ORDINALITY) a;
 CREATE VIEW uc.owners AS
 SELECT
 id AS id,
@@ -2677,7 +2677,7 @@ uc.TIMESTAMP_CAST(jsonb#>>'{metadata,updatedDate}') AS updated_date,
 CAST(jsonb#>>'{metadata,updatedByUserId}' AS UUID) AS updated_by_user_id,
 jsonb#>>'{metadata,updatedByUsername}' AS updated_by_username,
 jsonb_pretty(COALESCE(jsonb_set(jsonb, '{metadata,createdDate}', ('"' || (jsonb#>>'{metadata,createdDate}') || CASE WHEN jsonb#>>'{metadata,createdDate}' !~ '([-+]\d\d:\d\d)|Z$' THEN '+00:00' ELSE '' END || '"')::jsonb), jsonb)) AS content
-FROM diku_mod_feesfines.owners;
+FROM uchicago_mod_feesfines.owners;
 CREATE VIEW uc.patron_action_sessions AS
 SELECT
 id AS id,
@@ -2691,7 +2691,7 @@ uc.TIMESTAMP_CAST(jsonb#>>'{metadata,updatedDate}') AS updated_date,
 CAST(jsonb#>>'{metadata,updatedByUserId}' AS UUID) AS updated_by_user_id,
 jsonb#>>'{metadata,updatedByUsername}' AS updated_by_username,
 jsonb_pretty(COALESCE(jsonb_set(jsonb, '{metadata,createdDate}', ('"' || (jsonb#>>'{metadata,createdDate}') || CASE WHEN jsonb#>>'{metadata,createdDate}' !~ '([-+]\d\d:\d\d)|Z$' THEN '+00:00' ELSE '' END || '"')::jsonb), jsonb)) AS content
-FROM diku_mod_circulation_storage.patron_action_session;
+FROM uchicago_mod_circulation_storage.patron_action_session;
 CREATE VIEW uc.patron_notice_policy_loan_notices AS
 SELECT
 id AS id,
@@ -2708,7 +2708,7 @@ CAST(jsonb#>>'{sendOptions,sendBy,duration}' AS INTEGER) AS send_options_send_by
 jsonb#>>'{sendOptions,sendBy,intervalId}' AS send_options_send_by_interval_id,
 CAST(jsonb#>>'{sendOptions,sendEvery,duration}' AS INTEGER) AS send_options_send_every_duration,
 jsonb#>>'{sendOptions,sendEvery,intervalId}' AS send_options_send_every_interval_id
-FROM (SELECT id::text || ordinality::text AS id, id AS patron_notice_policy_id, value AS jsonb FROM diku_mod_circulation_storage.patron_notice_policy, jsonb_array_elements((jsonb->>'loanNotices')::jsonb) WITH ORDINALITY) a;
+FROM (SELECT id::text || ordinality::text AS id, id AS patron_notice_policy_id, value AS jsonb FROM uchicago_mod_circulation_storage.patron_notice_policy, jsonb_array_elements((jsonb->>'loanNotices')::jsonb) WITH ORDINALITY) a;
 CREATE VIEW uc.patron_notice_policy_fee_fine_notices AS
 SELECT
 id AS id,
@@ -2725,7 +2725,7 @@ CAST(jsonb#>>'{sendOptions,sendBy,duration}' AS INTEGER) AS send_options_send_by
 jsonb#>>'{sendOptions,sendBy,intervalId}' AS send_options_send_by_interval_id,
 CAST(jsonb#>>'{sendOptions,sendEvery,duration}' AS INTEGER) AS send_options_send_every_duration,
 jsonb#>>'{sendOptions,sendEvery,intervalId}' AS send_options_send_every_interval_id
-FROM (SELECT id::text || ordinality::text AS id, id AS patron_notice_policy_id, value AS jsonb FROM diku_mod_circulation_storage.patron_notice_policy, jsonb_array_elements((jsonb->>'feeFineNotices')::jsonb) WITH ORDINALITY) a;
+FROM (SELECT id::text || ordinality::text AS id, id AS patron_notice_policy_id, value AS jsonb FROM uchicago_mod_circulation_storage.patron_notice_policy, jsonb_array_elements((jsonb->>'feeFineNotices')::jsonb) WITH ORDINALITY) a;
 CREATE VIEW uc.patron_notice_policy_request_notices AS
 SELECT
 id AS id,
@@ -2742,7 +2742,7 @@ CAST(jsonb#>>'{sendOptions,sendBy,duration}' AS INTEGER) AS send_options_send_by
 jsonb#>>'{sendOptions,sendBy,intervalId}' AS send_options_send_by_interval_id,
 CAST(jsonb#>>'{sendOptions,sendEvery,duration}' AS INTEGER) AS send_options_send_every_duration,
 jsonb#>>'{sendOptions,sendEvery,intervalId}' AS send_options_send_every_interval_id
-FROM (SELECT id::text || ordinality::text AS id, id AS patron_notice_policy_id, value AS jsonb FROM diku_mod_circulation_storage.patron_notice_policy, jsonb_array_elements((jsonb->>'requestNotices')::jsonb) WITH ORDINALITY) a;
+FROM (SELECT id::text || ordinality::text AS id, id AS patron_notice_policy_id, value AS jsonb FROM uchicago_mod_circulation_storage.patron_notice_policy, jsonb_array_elements((jsonb->>'requestNotices')::jsonb) WITH ORDINALITY) a;
 CREATE VIEW uc.patron_notice_policies AS
 SELECT
 id AS id,
@@ -2756,7 +2756,7 @@ uc.TIMESTAMP_CAST(jsonb#>>'{metadata,updatedDate}') AS updated_date,
 CAST(jsonb#>>'{metadata,updatedByUserId}' AS UUID) AS updated_by_user_id,
 jsonb#>>'{metadata,updatedByUsername}' AS updated_by_username,
 jsonb_pretty(COALESCE(jsonb_set(jsonb, '{metadata,createdDate}', ('"' || (jsonb#>>'{metadata,createdDate}') || CASE WHEN jsonb#>>'{metadata,createdDate}' !~ '([-+]\d\d:\d\d)|Z$' THEN '+00:00' ELSE '' END || '"')::jsonb), jsonb)) AS content
-FROM diku_mod_circulation_storage.patron_notice_policy;
+FROM uchicago_mod_circulation_storage.patron_notice_policy;
 CREATE VIEW uc.payments AS
 SELECT
 id AS id,
@@ -2773,7 +2773,7 @@ jsonb->>'paymentMethod' AS payment_method,
 CAST(jsonb->>'accountId' AS UUID) AS fee_id,
 CAST(jsonb->>'userId' AS UUID) AS user_id,
 jsonb_pretty(jsonb) AS content
-FROM diku_mod_feesfines.feefineactions;
+FROM uchicago_mod_feesfines.feefineactions;
 CREATE VIEW uc.payment_methods AS
 SELECT
 id AS id,
@@ -2787,31 +2787,31 @@ CAST(jsonb#>>'{metadata,updatedByUserId}' AS UUID) AS updated_by_user_id,
 jsonb#>>'{metadata,updatedByUsername}' AS updated_by_username,
 CAST(jsonb->>'ownerId' AS UUID) AS owner_id,
 jsonb_pretty(COALESCE(jsonb_set(jsonb, '{metadata,createdDate}', ('"' || (jsonb#>>'{metadata,createdDate}') || CASE WHEN jsonb#>>'{metadata,createdDate}' !~ '([-+]\d\d:\d\d)|Z$' THEN '+00:00' ELSE '' END || '"')::jsonb), jsonb)) AS content
-FROM diku_mod_feesfines.payments;
+FROM uchicago_mod_feesfines.payments;
 CREATE VIEW uc.permission_tags AS
 SELECT
 id AS id,
 permission_id AS permission_id,
 CAST(jsonb AS VARCHAR(1024)) AS content
-FROM (SELECT id::text || ordinality::text AS id, id AS permission_id, value AS jsonb FROM diku_mod_permissions.permissions, jsonb_array_elements_text((jsonb->>'tags')::jsonb) WITH ORDINALITY) a;
+FROM (SELECT id::text || ordinality::text AS id, id AS permission_id, value AS jsonb FROM uchicago_mod_permissions.permissions, jsonb_array_elements_text((jsonb->>'tags')::jsonb) WITH ORDINALITY) a;
 CREATE VIEW uc.permission_sub_permissions AS
 SELECT
 id AS id,
 permission_id AS permission_id,
 CAST(jsonb AS VARCHAR(1024)) AS content
-FROM (SELECT id::text || ordinality::text AS id, id AS permission_id, value AS jsonb FROM diku_mod_permissions.permissions, jsonb_array_elements_text((jsonb->>'subPermissions')::jsonb) WITH ORDINALITY) a;
+FROM (SELECT id::text || ordinality::text AS id, id AS permission_id, value AS jsonb FROM uchicago_mod_permissions.permissions, jsonb_array_elements_text((jsonb->>'subPermissions')::jsonb) WITH ORDINALITY) a;
 CREATE VIEW uc.permission_child_of AS
 SELECT
 id AS id,
 permission_id AS permission_id,
 CAST(jsonb AS VARCHAR(1024)) AS content
-FROM (SELECT id::text || ordinality::text AS id, id AS permission_id, value AS jsonb FROM diku_mod_permissions.permissions, jsonb_array_elements_text((jsonb->>'childOf')::jsonb) WITH ORDINALITY) a;
+FROM (SELECT id::text || ordinality::text AS id, id AS permission_id, value AS jsonb FROM uchicago_mod_permissions.permissions, jsonb_array_elements_text((jsonb->>'childOf')::jsonb) WITH ORDINALITY) a;
 CREATE VIEW uc.permission_granted_to AS
 SELECT
 id AS id,
 permission_id AS permission_id,
 CAST(jsonb AS UUID) AS permissions_user_id
-FROM (SELECT id::text || ordinality::text AS id, id AS permission_id, value AS jsonb FROM diku_mod_permissions.permissions, jsonb_array_elements_text((jsonb->>'grantedTo')::jsonb) WITH ORDINALITY) a;
+FROM (SELECT id::text || ordinality::text AS id, id AS permission_id, value AS jsonb FROM uchicago_mod_permissions.permissions, jsonb_array_elements_text((jsonb->>'grantedTo')::jsonb) WITH ORDINALITY) a;
 CREATE VIEW uc.permissions AS
 SELECT
 id AS id,
@@ -2831,13 +2831,13 @@ uc.TIMESTAMP_CAST(jsonb#>>'{metadata,updatedDate}') AS updated_date,
 CAST(jsonb#>>'{metadata,updatedByUserId}' AS UUID) AS updated_by_user_id,
 jsonb#>>'{metadata,updatedByUsername}' AS updated_by_username,
 jsonb_pretty(COALESCE(jsonb_set(jsonb, '{metadata,createdDate}', ('"' || (jsonb#>>'{metadata,createdDate}') || CASE WHEN jsonb#>>'{metadata,createdDate}' !~ '([-+]\d\d:\d\d)|Z$' THEN '+00:00' ELSE '' END || '"')::jsonb), jsonb)) AS content
-FROM diku_mod_permissions.permissions;
+FROM uchicago_mod_permissions.permissions;
 CREATE VIEW uc.permissions_user_permissions AS
 SELECT
 id AS id,
 permissions_user_id AS permissions_user_id,
 CAST(jsonb AS VARCHAR(1024)) AS content
-FROM (SELECT id::text || ordinality::text AS id, id AS permissions_user_id, value AS jsonb FROM diku_mod_permissions.permissions_users, jsonb_array_elements_text((jsonb->>'permissions')::jsonb) WITH ORDINALITY) a;
+FROM (SELECT id::text || ordinality::text AS id, id AS permissions_user_id, value AS jsonb FROM uchicago_mod_permissions.permissions_users, jsonb_array_elements_text((jsonb->>'permissions')::jsonb) WITH ORDINALITY) a;
 CREATE VIEW uc.permissions_users AS
 SELECT
 id AS id,
@@ -2849,14 +2849,14 @@ uc.TIMESTAMP_CAST(jsonb#>>'{metadata,updatedDate}') AS updated_date,
 CAST(jsonb#>>'{metadata,updatedByUserId}' AS UUID) AS updated_by_user_id,
 jsonb#>>'{metadata,updatedByUsername}' AS updated_by_username,
 jsonb_pretty(COALESCE(jsonb_set(jsonb, '{metadata,createdDate}', ('"' || (jsonb#>>'{metadata,createdDate}') || CASE WHEN jsonb#>>'{metadata,createdDate}' !~ '([-+]\d\d:\d\d)|Z$' THEN '+00:00' ELSE '' END || '"')::jsonb), jsonb)) AS content
-FROM diku_mod_permissions.permissions_users;
+FROM uchicago_mod_permissions.permissions_users;
 CREATE VIEW uc.preceding_succeeding_title_identifiers AS
 SELECT
 id AS id,
 preceding_succeeding_title_id AS preceding_succeeding_title_id,
 jsonb->>'value' AS value,
 CAST(jsonb->>'identifierTypeId' AS UUID) AS identifier_type_id
-FROM (SELECT id::text || ordinality::text AS id, id AS preceding_succeeding_title_id, value AS jsonb FROM diku_mod_inventory_storage.preceding_succeeding_title, jsonb_array_elements((jsonb->>'identifiers')::jsonb) WITH ORDINALITY) a;
+FROM (SELECT id::text || ordinality::text AS id, id AS preceding_succeeding_title_id, value AS jsonb FROM uchicago_mod_inventory_storage.preceding_succeeding_title, jsonb_array_elements((jsonb->>'identifiers')::jsonb) WITH ORDINALITY) a;
 CREATE VIEW uc.preceding_succeeding_titles AS
 SELECT
 id AS id,
@@ -2871,14 +2871,14 @@ uc.TIMESTAMP_CAST(jsonb#>>'{metadata,updatedDate}') AS updated_date,
 CAST(jsonb#>>'{metadata,updatedByUserId}' AS UUID) AS updated_by_user_id,
 jsonb#>>'{metadata,updatedByUsername}' AS updated_by_username,
 jsonb_pretty(COALESCE(jsonb_set(jsonb, '{metadata,createdDate}', ('"' || (jsonb#>>'{metadata,createdDate}') || CASE WHEN jsonb#>>'{metadata,createdDate}' !~ '([-+]\d\d:\d\d)|Z$' THEN '+00:00' ELSE '' END || '"')::jsonb), jsonb)) AS content
-FROM diku_mod_inventory_storage.preceding_succeeding_title;
+FROM uchicago_mod_inventory_storage.preceding_succeeding_title;
 CREATE VIEW uc.prefixes AS
 SELECT
 id AS id,
 jsonb->>'name' AS name,
 jsonb->>'description' AS description,
 jsonb_pretty(jsonb) AS content
-FROM diku_mod_orders_storage.prefixes;
+FROM uchicago_mod_orders_storage.prefixes;
 CREATE VIEW uc.proxies AS
 SELECT
 id AS id,
@@ -2896,12 +2896,12 @@ uc.TIMESTAMP_CAST(jsonb#>>'{metadata,updatedDate}') AS updated_date,
 CAST(jsonb#>>'{metadata,updatedByUserId}' AS UUID) AS updated_by_user_id,
 jsonb#>>'{metadata,updatedByUsername}' AS updated_by_username,
 jsonb_pretty(COALESCE(jsonb_set(jsonb, '{metadata,createdDate}', ('"' || (jsonb#>>'{metadata,createdDate}') || CASE WHEN jsonb#>>'{metadata,createdDate}' !~ '([-+]\d\d:\d\d)|Z$' THEN '+00:00' ELSE '' END || '"')::jsonb), jsonb)) AS content
-FROM diku_mod_users.proxyfor;
+FROM uchicago_mod_users.proxyfor;
 CREATE VIEW uc.raw_records AS
 SELECT
 id AS id,
 content AS content
-FROM diku_mod_source_record_storage.raw_records_lb;
+FROM uchicago_mod_source_record_storage.raw_records_lb;
 CREATE VIEW uc.receivings AS
 SELECT
 id AS id,
@@ -2922,7 +2922,7 @@ CAST(jsonb->>'supplement' AS BOOLEAN) AS supplement,
 uc.TIMESTAMP_CAST(jsonb->>'receiptDate') AS receipt_date,
 uc.TIMESTAMP_CAST(jsonb->>'receivedDate') AS received_date,
 jsonb_pretty(jsonb) AS content
-FROM diku_mod_orders_storage.pieces;
+FROM uchicago_mod_orders_storage.pieces;
 CREATE VIEW uc.records AS
 SELECT
 id AS id,
@@ -2940,7 +2940,7 @@ created_date AS creation_time,
 updated_by_user_id AS last_write_user_id,
 updated_date AS last_write_time,
 instance_hrid AS instance_hrid
-FROM diku_mod_source_record_storage.records_lb;
+FROM uchicago_mod_source_record_storage.records_lb;
 CREATE VIEW uc.refund_reasons AS
 SELECT
 id AS id,
@@ -2954,27 +2954,27 @@ CAST(jsonb#>>'{metadata,updatedByUserId}' AS UUID) AS updated_by_user_id,
 jsonb#>>'{metadata,updatedByUsername}' AS updated_by_username,
 CAST(jsonb->>'accountId' AS UUID) AS account_id,
 jsonb_pretty(COALESCE(jsonb_set(jsonb, '{metadata,createdDate}', ('"' || (jsonb#>>'{metadata,createdDate}') || CASE WHEN jsonb#>>'{metadata,createdDate}' !~ '([-+]\d\d:\d\d)|Z$' THEN '+00:00' ELSE '' END || '"')::jsonb), jsonb)) AS content
-FROM diku_mod_feesfines.refunds;
+FROM uchicago_mod_feesfines.refunds;
 CREATE VIEW uc.reporting_codes AS
 SELECT
 id AS id,
 jsonb->>'code' AS code,
 jsonb->>'description' AS description,
 jsonb_pretty(jsonb) AS content
-FROM diku_mod_orders_storage.reporting_code;
+FROM uchicago_mod_orders_storage.reporting_code;
 CREATE VIEW uc.request_identifiers AS
 SELECT
 id AS id,
 request_id AS request_id,
 jsonb->>'value' AS value,
 CAST(jsonb->>'identifierTypeId' AS UUID) AS identifier_type_id
-FROM (SELECT id::text || ordinality::text AS id, id AS request_id, value AS jsonb FROM diku_mod_circulation_storage.request, jsonb_array_elements((jsonb#>>'{item,identifiers}')::jsonb) WITH ORDINALITY) a;
+FROM (SELECT id::text || ordinality::text AS id, id AS request_id, value AS jsonb FROM uchicago_mod_circulation_storage.request, jsonb_array_elements((jsonb#>>'{item,identifiers}')::jsonb) WITH ORDINALITY) a;
 CREATE VIEW uc.request_tags AS
 SELECT
 id AS id,
 request_id AS request_id,
 CAST(jsonb AS VARCHAR(1024)) AS content
-FROM (SELECT id::text || ordinality::text AS id, id AS request_id, value AS jsonb FROM diku_mod_circulation_storage.request, jsonb_array_elements_text((jsonb#>>'{tags,tagList}')::jsonb) WITH ORDINALITY) a;
+FROM (SELECT id::text || ordinality::text AS id, id AS request_id, value AS jsonb FROM uchicago_mod_circulation_storage.request, jsonb_array_elements_text((jsonb#>>'{tags,tagList}')::jsonb) WITH ORDINALITY) a;
 CREATE VIEW uc.requests AS
 SELECT
 id AS id,
@@ -3015,13 +3015,13 @@ CAST(jsonb#>>'{metadata,updatedByUserId}' AS UUID) AS updated_by_user_id,
 jsonb#>>'{metadata,updatedByUsername}' AS updated_by_username,
 uc.TIMESTAMP_CAST(jsonb->>'awaitingPickupRequestClosedDate') AS awaiting_pickup_request_closed_date,
 jsonb_pretty(COALESCE(jsonb_set(jsonb, '{metadata,createdDate}', ('"' || (jsonb#>>'{metadata,createdDate}') || CASE WHEN jsonb#>>'{metadata,createdDate}' !~ '([-+]\d\d:\d\d)|Z$' THEN '+00:00' ELSE '' END || '"')::jsonb), jsonb)) AS content
-FROM diku_mod_circulation_storage.request;
+FROM uchicago_mod_circulation_storage.request;
 CREATE VIEW uc.request_policy_request_types AS
 SELECT
 id AS id,
 request_policy_id AS request_policy_id,
 CAST(jsonb AS VARCHAR(1024)) AS content
-FROM (SELECT id::text || ordinality::text AS id, id AS request_policy_id, value AS jsonb FROM diku_mod_circulation_storage.request_policy, jsonb_array_elements_text((jsonb->>'requestTypes')::jsonb) WITH ORDINALITY) a;
+FROM (SELECT id::text || ordinality::text AS id, id AS request_policy_id, value AS jsonb FROM uchicago_mod_circulation_storage.request_policy, jsonb_array_elements_text((jsonb->>'requestTypes')::jsonb) WITH ORDINALITY) a;
 CREATE VIEW uc.request_policies AS
 SELECT
 id AS id,
@@ -3034,7 +3034,7 @@ uc.TIMESTAMP_CAST(jsonb#>>'{metadata,updatedDate}') AS updated_date,
 CAST(jsonb#>>'{metadata,updatedByUserId}' AS UUID) AS updated_by_user_id,
 jsonb#>>'{metadata,updatedByUsername}' AS updated_by_username,
 jsonb_pretty(COALESCE(jsonb_set(jsonb, '{metadata,createdDate}', ('"' || (jsonb#>>'{metadata,createdDate}') || CASE WHEN jsonb#>>'{metadata,createdDate}' !~ '([-+]\d\d:\d\d)|Z$' THEN '+00:00' ELSE '' END || '"')::jsonb), jsonb)) AS content
-FROM diku_mod_circulation_storage.request_policy;
+FROM uchicago_mod_circulation_storage.request_policy;
 CREATE VIEW uc.scheduled_notices AS
 SELECT
 id AS id,
@@ -3057,14 +3057,14 @@ uc.TIMESTAMP_CAST(jsonb#>>'{metadata,updatedDate}') AS updated_date,
 CAST(jsonb#>>'{metadata,updatedByUserId}' AS UUID) AS updated_by_user_id,
 jsonb#>>'{metadata,updatedByUsername}' AS updated_by_username,
 jsonb_pretty(COALESCE(jsonb_set(jsonb, '{metadata,createdDate}', ('"' || (jsonb#>>'{metadata,createdDate}') || CASE WHEN jsonb#>>'{metadata,createdDate}' !~ '([-+]\d\d:\d\d)|Z$' THEN '+00:00' ELSE '' END || '"')::jsonb), jsonb)) AS content
-FROM diku_mod_circulation_storage.scheduled_notice;
+FROM uchicago_mod_circulation_storage.scheduled_notice;
 CREATE VIEW uc.service_point_staff_slips AS
 SELECT
 id AS id,
 service_point_id AS service_point_id,
 CAST(jsonb->>'id' AS UUID) AS staff_slip_id,
 CAST(jsonb->>'printByDefault' AS BOOLEAN) AS print_by_default
-FROM (SELECT id::text || ordinality::text AS id, id AS service_point_id, value AS jsonb FROM diku_mod_inventory_storage.service_point, jsonb_array_elements((jsonb->>'staffSlips')::jsonb) WITH ORDINALITY) a;
+FROM (SELECT id::text || ordinality::text AS id, id AS service_point_id, value AS jsonb FROM uchicago_mod_inventory_storage.service_point, jsonb_array_elements((jsonb->>'staffSlips')::jsonb) WITH ORDINALITY) a;
 CREATE VIEW uc.service_points AS
 SELECT
 id AS id,
@@ -3083,13 +3083,13 @@ uc.TIMESTAMP_CAST(jsonb#>>'{metadata,updatedDate}') AS updated_date,
 CAST(jsonb#>>'{metadata,updatedByUserId}' AS UUID) AS updated_by_user_id,
 jsonb#>>'{metadata,updatedByUsername}' AS updated_by_username,
 jsonb_pretty(COALESCE(jsonb_set(jsonb, '{metadata,createdDate}', ('"' || (jsonb#>>'{metadata,createdDate}') || CASE WHEN jsonb#>>'{metadata,createdDate}' !~ '([-+]\d\d:\d\d)|Z$' THEN '+00:00' ELSE '' END || '"')::jsonb), jsonb)) AS content
-FROM diku_mod_inventory_storage.service_point;
+FROM uchicago_mod_inventory_storage.service_point;
 CREATE VIEW uc.service_point_user_service_points AS
 SELECT
 id AS id,
 service_point_user_id AS service_point_user_id,
 CAST(jsonb AS UUID) AS service_point_id
-FROM (SELECT id::text || ordinality::text AS id, id AS service_point_user_id, value AS jsonb FROM diku_mod_inventory_storage.service_point_user, jsonb_array_elements_text((jsonb->>'servicePointsIds')::jsonb) WITH ORDINALITY) a;
+FROM (SELECT id::text || ordinality::text AS id, id AS service_point_user_id, value AS jsonb FROM uchicago_mod_inventory_storage.service_point_user, jsonb_array_elements_text((jsonb->>'servicePointsIds')::jsonb) WITH ORDINALITY) a;
 CREATE VIEW uc.service_point_users AS
 SELECT
 id AS id,
@@ -3102,7 +3102,7 @@ uc.TIMESTAMP_CAST(jsonb#>>'{metadata,updatedDate}') AS updated_date,
 CAST(jsonb#>>'{metadata,updatedByUserId}' AS UUID) AS updated_by_user_id,
 jsonb#>>'{metadata,updatedByUsername}' AS updated_by_username,
 jsonb_pretty(COALESCE(jsonb_set(jsonb, '{metadata,createdDate}', ('"' || (jsonb#>>'{metadata,createdDate}') || CASE WHEN jsonb#>>'{metadata,createdDate}' !~ '([-+]\d\d:\d\d)|Z$' THEN '+00:00' ELSE '' END || '"')::jsonb), jsonb)) AS content
-FROM diku_mod_inventory_storage.service_point_user;
+FROM uchicago_mod_inventory_storage.service_point_user;
 CREATE VIEW uc.snapshots AS
 SELECT
 id AS id,
@@ -3112,7 +3112,7 @@ created_by_user_id AS creation_user_id,
 created_date AS creation_time,
 updated_by_user_id AS last_write_user_id,
 updated_date AS last_write_time
-FROM diku_mod_source_record_storage.snapshots_lb;
+FROM uchicago_mod_source_record_storage.snapshots_lb;
 CREATE VIEW uc.sources AS
 SELECT
 id AS id,
@@ -3125,7 +3125,7 @@ uc.TIMESTAMP_CAST(jsonb#>>'{metadata,updatedDate}') AS updated_date,
 CAST(jsonb#>>'{metadata,updatedByUserId}' AS UUID) AS updated_by_user_id,
 jsonb#>>'{metadata,updatedByUsername}' AS updated_by_username,
 jsonb_pretty(COALESCE(jsonb_set(jsonb, '{metadata,createdDate}', ('"' || (jsonb#>>'{metadata,createdDate}') || CASE WHEN jsonb#>>'{metadata,createdDate}' !~ '([-+]\d\d:\d\d)|Z$' THEN '+00:00' ELSE '' END || '"')::jsonb), jsonb)) AS content
-FROM diku_mod_inventory_storage.holdings_records_source;
+FROM uchicago_mod_inventory_storage.holdings_records_source;
 CREATE VIEW uc.staff_slips AS
 SELECT
 id AS id,
@@ -3140,7 +3140,7 @@ uc.TIMESTAMP_CAST(jsonb#>>'{metadata,updatedDate}') AS updated_date,
 CAST(jsonb#>>'{metadata,updatedByUserId}' AS UUID) AS updated_by_user_id,
 jsonb#>>'{metadata,updatedByUsername}' AS updated_by_username,
 jsonb_pretty(COALESCE(jsonb_set(jsonb, '{metadata,createdDate}', ('"' || (jsonb#>>'{metadata,createdDate}') || CASE WHEN jsonb#>>'{metadata,createdDate}' !~ '([-+]\d\d:\d\d)|Z$' THEN '+00:00' ELSE '' END || '"')::jsonb), jsonb)) AS content
-FROM diku_mod_circulation_storage.staff_slips;
+FROM uchicago_mod_circulation_storage.staff_slips;
 CREATE VIEW uc.statistical_codes AS
 SELECT
 id AS id,
@@ -3154,7 +3154,7 @@ uc.TIMESTAMP_CAST(jsonb#>>'{metadata,updatedDate}') AS updated_date,
 CAST(jsonb#>>'{metadata,updatedByUserId}' AS UUID) AS updated_by_user_id,
 jsonb#>>'{metadata,updatedByUsername}' AS updated_by_username,
 jsonb_pretty(COALESCE(jsonb_set(jsonb, '{metadata,createdDate}', ('"' || (jsonb#>>'{metadata,createdDate}') || CASE WHEN jsonb#>>'{metadata,createdDate}' !~ '([-+]\d\d:\d\d)|Z$' THEN '+00:00' ELSE '' END || '"')::jsonb), jsonb)) AS content
-FROM diku_mod_inventory_storage.statistical_code;
+FROM uchicago_mod_inventory_storage.statistical_code;
 CREATE VIEW uc.statistical_code_types AS
 SELECT
 id AS id,
@@ -3167,14 +3167,14 @@ uc.TIMESTAMP_CAST(jsonb#>>'{metadata,updatedDate}') AS updated_date,
 CAST(jsonb#>>'{metadata,updatedByUserId}' AS UUID) AS updated_by_user_id,
 jsonb#>>'{metadata,updatedByUsername}' AS updated_by_username,
 jsonb_pretty(COALESCE(jsonb_set(jsonb, '{metadata,createdDate}', ('"' || (jsonb#>>'{metadata,createdDate}') || CASE WHEN jsonb#>>'{metadata,createdDate}' !~ '([-+]\d\d:\d\d)|Z$' THEN '+00:00' ELSE '' END || '"')::jsonb), jsonb)) AS content
-FROM diku_mod_inventory_storage.statistical_code_type;
+FROM uchicago_mod_inventory_storage.statistical_code_type;
 CREATE VIEW uc.suffixes AS
 SELECT
 id AS id,
 jsonb->>'name' AS name,
 jsonb->>'description' AS description,
 jsonb_pretty(jsonb) AS content
-FROM diku_mod_orders_storage.suffixes;
+FROM uchicago_mod_orders_storage.suffixes;
 CREATE VIEW uc.tags AS
 SELECT
 id AS id,
@@ -3187,13 +3187,13 @@ uc.TIMESTAMP_CAST(jsonb#>>'{metadata,updatedDate}') AS updated_date,
 CAST(jsonb#>>'{metadata,updatedByUserId}' AS UUID) AS updated_by_user_id,
 jsonb#>>'{metadata,updatedByUsername}' AS updated_by_username,
 jsonb_pretty(COALESCE(jsonb_set(jsonb, '{metadata,createdDate}', ('"' || (jsonb#>>'{metadata,createdDate}') || CASE WHEN jsonb#>>'{metadata,createdDate}' !~ '([-+]\d\d:\d\d)|Z$' THEN '+00:00' ELSE '' END || '"')::jsonb), jsonb)) AS content
-FROM diku_mod_tags.tags;
+FROM uchicago_mod_tags.tags;
 CREATE VIEW uc.template_output_formats AS
 SELECT
 id AS id,
 template_id AS template_id,
 CAST(jsonb AS VARCHAR(1024)) AS content
-FROM (SELECT id::text || ordinality::text AS id, id AS template_id, value AS jsonb FROM diku_mod_template_engine.template, jsonb_array_elements_text((jsonb->>'outputFormats')::jsonb) WITH ORDINALITY) a;
+FROM (SELECT id::text || ordinality::text AS id, id AS template_id, value AS jsonb FROM uchicago_mod_template_engine.template, jsonb_array_elements_text((jsonb->>'outputFormats')::jsonb) WITH ORDINALITY) a;
 CREATE VIEW uc.templates AS
 SELECT
 id AS id,
@@ -3209,7 +3209,7 @@ uc.TIMESTAMP_CAST(jsonb#>>'{metadata,updatedDate}') AS updated_date,
 CAST(jsonb#>>'{metadata,updatedByUserId}' AS UUID) AS updated_by_user_id,
 jsonb#>>'{metadata,updatedByUsername}' AS updated_by_username,
 jsonb_pretty(COALESCE(jsonb_set(jsonb, '{metadata,createdDate}', ('"' || (jsonb#>>'{metadata,createdDate}') || CASE WHEN jsonb#>>'{metadata,createdDate}' !~ '([-+]\d\d:\d\d)|Z$' THEN '+00:00' ELSE '' END || '"')::jsonb), jsonb)) AS content
-FROM diku_mod_template_engine.template;
+FROM uchicago_mod_template_engine.template;
 CREATE VIEW uc.title_product_ids AS
 SELECT
 id AS id,
@@ -3217,14 +3217,14 @@ title_id AS title_id,
 jsonb->>'productId' AS product_id,
 CAST(jsonb->>'productIdType' AS UUID) AS product_id_type_id,
 jsonb->>'qualifier' AS qualifier
-FROM (SELECT id::text || ordinality::text AS id, id AS title_id, value AS jsonb FROM diku_mod_orders_storage.titles, jsonb_array_elements((jsonb->>'productIds')::jsonb) WITH ORDINALITY) a;
+FROM (SELECT id::text || ordinality::text AS id, id AS title_id, value AS jsonb FROM uchicago_mod_orders_storage.titles, jsonb_array_elements((jsonb->>'productIds')::jsonb) WITH ORDINALITY) a;
 CREATE VIEW uc.title_contributors AS
 SELECT
 id AS id,
 title_id AS title_id,
 jsonb->>'contributor' AS contributor,
 CAST(jsonb->>'contributorNameTypeId' AS UUID) AS contributor_name_type_id
-FROM (SELECT id::text || ordinality::text AS id, id AS title_id, value AS jsonb FROM diku_mod_orders_storage.titles, jsonb_array_elements((jsonb->>'contributors')::jsonb) WITH ORDINALITY) a;
+FROM (SELECT id::text || ordinality::text AS id, id AS title_id, value AS jsonb FROM uchicago_mod_orders_storage.titles, jsonb_array_elements((jsonb->>'contributors')::jsonb) WITH ORDINALITY) a;
 CREATE VIEW uc.titles AS
 SELECT
 id AS id,
@@ -3249,13 +3249,13 @@ uc.TIMESTAMP_CAST(jsonb#>>'{metadata,updatedDate}') AS updated_date,
 CAST(jsonb#>>'{metadata,updatedByUserId}' AS UUID) AS updated_by_user_id,
 jsonb#>>'{metadata,updatedByUsername}' AS updated_by_username,
 jsonb_pretty(COALESCE(jsonb_set(jsonb, '{metadata,createdDate}', ('"' || (jsonb#>>'{metadata,createdDate}') || CASE WHEN jsonb#>>'{metadata,createdDate}' !~ '([-+]\d\d:\d\d)|Z$' THEN '+00:00' ELSE '' END || '"')::jsonb), jsonb)) AS content
-FROM diku_mod_orders_storage.titles;
+FROM uchicago_mod_orders_storage.titles;
 CREATE VIEW uc.transaction_tags AS
 SELECT
 id AS id,
 transaction_id AS transaction_id,
 CAST(jsonb AS VARCHAR(1024)) AS content
-FROM (SELECT id::text || ordinality::text AS id, id AS transaction_id, value AS jsonb FROM diku_mod_finance_storage.transaction, jsonb_array_elements_text((jsonb#>>'{tags,tagList}')::jsonb) WITH ORDINALITY) a;
+FROM (SELECT id::text || ordinality::text AS id, id AS transaction_id, value AS jsonb FROM uchicago_mod_finance_storage.transaction, jsonb_array_elements_text((jsonb#>>'{tags,tagList}')::jsonb) WITH ORDINALITY) a;
 CREATE VIEW uc.transactions AS
 SELECT
 id AS id,
@@ -3292,7 +3292,7 @@ uc.TIMESTAMP_CAST(jsonb#>>'{metadata,updatedDate}') AS updated_date,
 CAST(jsonb#>>'{metadata,updatedByUserId}' AS UUID) AS updated_by_user_id,
 jsonb#>>'{metadata,updatedByUsername}' AS updated_by_username,
 jsonb_pretty(COALESCE(jsonb_set(jsonb, '{metadata,createdDate}', ('"' || (jsonb#>>'{metadata,createdDate}') || CASE WHEN jsonb#>>'{metadata,createdDate}' !~ '([-+]\d\d:\d\d)|Z$' THEN '+00:00' ELSE '' END || '"')::jsonb), jsonb)) AS content
-FROM diku_mod_finance_storage.transaction;
+FROM uchicago_mod_finance_storage.transaction;
 CREATE VIEW uc.transfer_accounts AS
 SELECT
 id AS id,
@@ -3306,7 +3306,7 @@ CAST(jsonb#>>'{metadata,updatedByUserId}' AS UUID) AS updated_by_user_id,
 jsonb#>>'{metadata,updatedByUsername}' AS updated_by_username,
 CAST(jsonb->>'ownerId' AS UUID) AS owner_id,
 jsonb_pretty(COALESCE(jsonb_set(jsonb, '{metadata,createdDate}', ('"' || (jsonb#>>'{metadata,createdDate}') || CASE WHEN jsonb#>>'{metadata,createdDate}' !~ '([-+]\d\d:\d\d)|Z$' THEN '+00:00' ELSE '' END || '"')::jsonb), jsonb)) AS content
-FROM diku_mod_feesfines.transfers;
+FROM uchicago_mod_feesfines.transfers;
 CREATE VIEW uc.transfer_criterias AS
 SELECT
 id AS id,
@@ -3315,13 +3315,13 @@ jsonb->>'type' AS type,
 CAST(jsonb->>'value' AS DECIMAL(19,2)) AS value,
 jsonb->>'interval' AS interval,
 jsonb_pretty(jsonb) AS content
-FROM diku_mod_feesfines.transfer_criteria;
+FROM uchicago_mod_feesfines.transfer_criteria;
 CREATE VIEW uc.user_departments AS
 SELECT
 id AS id,
 user_id AS user_id,
 CAST(jsonb AS UUID) AS department_id
-FROM (SELECT id::text || ordinality::text AS id, id AS user_id, value AS jsonb FROM diku_mod_users.users, jsonb_array_elements_text((jsonb->>'departments')::jsonb) WITH ORDINALITY) a;
+FROM (SELECT id::text || ordinality::text AS id, id AS user_id, value AS jsonb FROM uchicago_mod_users.users, jsonb_array_elements_text((jsonb->>'departments')::jsonb) WITH ORDINALITY) a;
 CREATE VIEW uc.user_addresses AS
 SELECT
 id AS id,
@@ -3335,13 +3335,13 @@ jsonb->>'region' AS region,
 jsonb->>'postalCode' AS postal_code,
 CAST(jsonb->>'addressTypeId' AS UUID) AS address_type_id,
 CAST(jsonb->>'primaryAddress' AS BOOLEAN) AS primary_address
-FROM (SELECT id::text || ordinality::text AS id, id AS user_id, value AS jsonb FROM diku_mod_users.users, jsonb_array_elements((jsonb#>>'{personal,addresses}')::jsonb) WITH ORDINALITY) a;
+FROM (SELECT id::text || ordinality::text AS id, id AS user_id, value AS jsonb FROM uchicago_mod_users.users, jsonb_array_elements((jsonb#>>'{personal,addresses}')::jsonb) WITH ORDINALITY) a;
 CREATE VIEW uc.user_tags AS
 SELECT
 id AS id,
 user_id AS user_id,
 CAST(jsonb AS VARCHAR(1024)) AS content
-FROM (SELECT id::text || ordinality::text AS id, id AS user_id, value AS jsonb FROM diku_mod_users.users, jsonb_array_elements_text((jsonb#>>'{tags,tagList}')::jsonb) WITH ORDINALITY) a;
+FROM (SELECT id::text || ordinality::text AS id, id AS user_id, value AS jsonb FROM uchicago_mod_users.users, jsonb_array_elements_text((jsonb#>>'{tags,tagList}')::jsonb) WITH ORDINALITY) a;
 CREATE VIEW uc.users AS
 SELECT
 id AS id,
@@ -3385,7 +3385,7 @@ uc.TIMESTAMP_CAST(jsonb#>>'{metadata,updatedDate}') AS updated_date,
 CAST(jsonb#>>'{metadata,updatedByUserId}' AS UUID) AS updated_by_user_id,
 jsonb#>>'{metadata,updatedByUsername}' AS updated_by_username,
 jsonb_pretty(COALESCE(jsonb_set(jsonb, '{metadata,createdDate}', ('"' || (jsonb#>>'{metadata,createdDate}') || CASE WHEN jsonb#>>'{metadata,createdDate}' !~ '([-+]\d\d:\d\d)|Z$' THEN '+00:00' ELSE '' END || '"')::jsonb), jsonb)) AS content
-FROM diku_mod_users.users;
+FROM uchicago_mod_users.users;
 CREATE VIEW uc.user_acquisitions_units AS
 SELECT
 id AS id,
@@ -3398,7 +3398,7 @@ uc.TIMESTAMP_CAST(jsonb#>>'{metadata,updatedDate}') AS updated_date,
 CAST(jsonb#>>'{metadata,updatedByUserId}' AS UUID) AS updated_by_user_id,
 jsonb#>>'{metadata,updatedByUsername}' AS updated_by_username,
 jsonb_pretty(COALESCE(jsonb_set(jsonb, '{metadata,createdDate}', ('"' || (jsonb#>>'{metadata,createdDate}') || CASE WHEN jsonb#>>'{metadata,createdDate}' !~ '([-+]\d\d:\d\d)|Z$' THEN '+00:00' ELSE '' END || '"')::jsonb), jsonb)) AS content
-FROM diku_mod_orders_storage.acquisitions_unit_membership;
+FROM uchicago_mod_orders_storage.acquisitions_unit_membership;
 CREATE VIEW uc.user_request_preferences AS
 SELECT
 id AS id,
@@ -3415,7 +3415,7 @@ uc.TIMESTAMP_CAST(jsonb#>>'{metadata,updatedDate}') AS updated_date,
 CAST(jsonb#>>'{metadata,updatedByUserId}' AS UUID) AS updated_by_user_id,
 jsonb#>>'{metadata,updatedByUsername}' AS updated_by_username,
 jsonb_pretty(COALESCE(jsonb_set(jsonb, '{metadata,createdDate}', ('"' || (jsonb#>>'{metadata,createdDate}') || CASE WHEN jsonb#>>'{metadata,createdDate}' !~ '([-+]\d\d:\d\d)|Z$' THEN '+00:00' ELSE '' END || '"')::jsonb), jsonb)) AS content
-FROM diku_mod_circulation_storage.user_request_preference;
+FROM uchicago_mod_circulation_storage.user_request_preference;
 CREATE VIEW uc.user_summary_open_loans AS
 SELECT
 id AS id,
@@ -3427,7 +3427,7 @@ CAST(jsonb->>'itemLost' AS BOOLEAN) AS item_lost,
 CAST(jsonb->>'itemClaimedReturned' AS BOOLEAN) AS item_claimed_returned,
 CAST(jsonb#>>'{gracePeriod,duration}' AS INTEGER) AS grace_period_duration,
 jsonb#>>'{gracePeriod,intervalId}' AS grace_period_interval_id
-FROM (SELECT id::text || ordinality::text AS id, id AS user_summary_id, value AS jsonb FROM diku_mod_patron_blocks.user_summary, jsonb_array_elements((jsonb->>'openLoans')::jsonb) WITH ORDINALITY) a;
+FROM (SELECT id::text || ordinality::text AS id, id AS user_summary_id, value AS jsonb FROM uchicago_mod_patron_blocks.user_summary, jsonb_array_elements((jsonb->>'openLoans')::jsonb) WITH ORDINALITY) a;
 CREATE VIEW uc.user_summary_open_fees_fines AS
 SELECT
 id AS id,
@@ -3436,7 +3436,7 @@ CAST(jsonb->>'feeFineId' AS UUID) AS fee_fine_id,
 CAST(jsonb->>'feeFineTypeId' AS UUID) AS fee_fine_type_id,
 CAST(jsonb->>'loanId' AS UUID) AS loan_id,
 CAST(jsonb->>'balance' AS DECIMAL(19,2)) AS balance
-FROM (SELECT id::text || ordinality::text AS id, id AS user_summary_id, value AS jsonb FROM diku_mod_patron_blocks.user_summary, jsonb_array_elements((jsonb->>'openFeesFines')::jsonb) WITH ORDINALITY) a;
+FROM (SELECT id::text || ordinality::text AS id, id AS user_summary_id, value AS jsonb FROM uchicago_mod_patron_blocks.user_summary, jsonb_array_elements((jsonb->>'openFeesFines')::jsonb) WITH ORDINALITY) a;
 CREATE VIEW uc.user_summaries AS
 SELECT
 id AS id,
@@ -3449,13 +3449,13 @@ uc.TIMESTAMP_CAST(jsonb#>>'{metadata,updatedDate}') AS updated_date,
 CAST(jsonb#>>'{metadata,updatedByUserId}' AS UUID) AS updated_by_user_id,
 jsonb#>>'{metadata,updatedByUsername}' AS updated_by_username,
 jsonb_pretty(COALESCE(jsonb_set(jsonb, '{metadata,createdDate}', ('"' || (jsonb#>>'{metadata,createdDate}') || CASE WHEN jsonb#>>'{metadata,createdDate}' !~ '([-+]\d\d:\d\d)|Z$' THEN '+00:00' ELSE '' END || '"')::jsonb), jsonb)) AS content
-FROM diku_mod_patron_blocks.user_summary;
+FROM uchicago_mod_patron_blocks.user_summary;
 CREATE VIEW uc.voucher_acquisitions_units AS
 SELECT
 id AS id,
 voucher_id AS voucher_id,
 CAST(jsonb AS UUID) AS acquisitions_unit_id
-FROM (SELECT id::text || ordinality::text AS id, id AS voucher_id, value AS jsonb FROM diku_mod_invoice_storage.vouchers, jsonb_array_elements_text((jsonb->>'acqUnitIds')::jsonb) WITH ORDINALITY) a;
+FROM (SELECT id::text || ordinality::text AS id, id AS voucher_id, value AS jsonb FROM uchicago_mod_invoice_storage.vouchers, jsonb_array_elements_text((jsonb->>'acqUnitIds')::jsonb) WITH ORDINALITY) a;
 CREATE VIEW uc.vouchers AS
 SELECT
 id AS id,
@@ -3490,7 +3490,7 @@ uc.TIMESTAMP_CAST(jsonb#>>'{metadata,updatedDate}') AS updated_date,
 CAST(jsonb#>>'{metadata,updatedByUserId}' AS UUID) AS updated_by_user_id,
 jsonb#>>'{metadata,updatedByUsername}' AS updated_by_username,
 jsonb_pretty(COALESCE(jsonb_set(jsonb, '{metadata,createdDate}', ('"' || (jsonb#>>'{metadata,createdDate}') || CASE WHEN jsonb#>>'{metadata,createdDate}' !~ '([-+]\d\d:\d\d)|Z$' THEN '+00:00' ELSE '' END || '"')::jsonb), jsonb)) AS content
-FROM diku_mod_invoice_storage.vouchers;
+FROM uchicago_mod_invoice_storage.vouchers;
 CREATE VIEW uc.voucher_item_fund_distributions AS
 SELECT
 id AS id,
@@ -3502,13 +3502,13 @@ CAST(jsonb->>'invoiceLineId' AS UUID) AS invoice_item_id,
 jsonb->>'distributionType' AS distribution_type,
 CAST(jsonb->>'expenseClassId' AS UUID) AS expense_class_id,
 CAST(jsonb->>'value' AS DECIMAL(19,2)) AS value
-FROM (SELECT id::text || ordinality::text AS id, id AS voucher_item_id, value AS jsonb FROM diku_mod_invoice_storage.voucher_lines, jsonb_array_elements((jsonb->>'fundDistributions')::jsonb) WITH ORDINALITY) a;
+FROM (SELECT id::text || ordinality::text AS id, id AS voucher_item_id, value AS jsonb FROM uchicago_mod_invoice_storage.voucher_lines, jsonb_array_elements((jsonb->>'fundDistributions')::jsonb) WITH ORDINALITY) a;
 CREATE VIEW uc.voucher_item_invoice_items AS
 SELECT
 id AS id,
 voucher_item_id AS voucher_item_id,
 CAST(jsonb AS UUID) AS invoice_item_id
-FROM (SELECT id::text || ordinality::text AS id, id AS voucher_item_id, value AS jsonb FROM diku_mod_invoice_storage.voucher_lines, jsonb_array_elements_text((jsonb->>'sourceIds')::jsonb) WITH ORDINALITY) a;
+FROM (SELECT id::text || ordinality::text AS id, id AS voucher_item_id, value AS jsonb FROM uchicago_mod_invoice_storage.voucher_lines, jsonb_array_elements_text((jsonb->>'sourceIds')::jsonb) WITH ORDINALITY) a;
 CREATE VIEW uc.voucher_items AS
 SELECT
 id AS id,
@@ -3523,7 +3523,7 @@ uc.TIMESTAMP_CAST(jsonb#>>'{metadata,updatedDate}') AS updated_date,
 CAST(jsonb#>>'{metadata,updatedByUserId}' AS UUID) AS updated_by_user_id,
 jsonb#>>'{metadata,updatedByUsername}' AS updated_by_username,
 jsonb_pretty(COALESCE(jsonb_set(jsonb, '{metadata,createdDate}', ('"' || (jsonb#>>'{metadata,createdDate}') || CASE WHEN jsonb#>>'{metadata,createdDate}' !~ '([-+]\d\d:\d\d)|Z$' THEN '+00:00' ELSE '' END || '"')::jsonb), jsonb)) AS content
-FROM diku_mod_invoice_storage.voucher_lines;
+FROM uchicago_mod_invoice_storage.voucher_lines;
 CREATE VIEW uc.waive_reasons AS
 SELECT
 id AS id,
@@ -3537,7 +3537,7 @@ CAST(jsonb#>>'{metadata,updatedByUserId}' AS UUID) AS updated_by_user_id,
 jsonb#>>'{metadata,updatedByUsername}' AS updated_by_username,
 CAST(jsonb->>'accountId' AS UUID) AS account_id,
 jsonb_pretty(COALESCE(jsonb_set(jsonb, '{metadata,createdDate}', ('"' || (jsonb#>>'{metadata,createdDate}') || CASE WHEN jsonb#>>'{metadata,createdDate}' !~ '([-+]\d\d:\d\d)|Z$' THEN '+00:00' ELSE '' END || '"')::jsonb), jsonb)) AS content
-FROM diku_mod_feesfines.waives;
+FROM uchicago_mod_feesfines.waives;
 CREATE VIEW uc.addresses AS
 SELECT 
 c.id, 

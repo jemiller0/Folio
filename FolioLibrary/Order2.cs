@@ -12,7 +12,7 @@ using System.Reflection;
 
 namespace FolioLibrary
 {
-    // uc.orders -> diku_mod_orders_storage.purchase_order
+    // uc.orders -> uchicago_mod_orders_storage.purchase_order
     // Order2 -> Order
     [CustomValidation(typeof(Order2), nameof(ValidateOrder2)), DisplayColumn(nameof(Number)), DisplayName("Orders"), JsonConverter(typeof(JsonPathJsonConverter<Order2>)), JsonObject(MemberSerialization = MemberSerialization.OptIn), Table("orders", Schema = "uc")]
     public partial class Order2

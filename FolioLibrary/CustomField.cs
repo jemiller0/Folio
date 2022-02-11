@@ -10,7 +10,7 @@ using System.Reflection;
 
 namespace FolioLibrary
 {
-    [Table("custom_fields", Schema = "diku_mod_users")]
+    [Table("custom_fields", Schema = "uchicago_mod_users")]
     public partial class CustomField
     {
         public static ValidationResult ValidateContent(string value)

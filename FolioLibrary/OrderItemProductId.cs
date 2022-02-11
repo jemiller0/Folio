@@ -7,7 +7,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace FolioLibrary
 {
-    // uc.order_item_product_ids -> diku_mod_orders_storage.po_line
+    // uc.order_item_product_ids -> uchicago_mod_orders_storage.po_line
     // OrderItemProductId -> OrderItem
     [DisplayColumn(nameof(Id)), DisplayName("Order Item Product Ids"), JsonObject(MemberSerialization = MemberSerialization.OptIn), Table("order_item_product_ids", Schema = "uc")]
     public partial class OrderItemProductId

@@ -7,7 +7,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace FolioLibrary
 {
-    // uc.service_point_staff_slips -> diku_mod_inventory_storage.service_point
+    // uc.service_point_staff_slips -> uchicago_mod_inventory_storage.service_point
     // ServicePointStaffSlip -> ServicePoint
     [DisplayColumn(nameof(Id)), DisplayName("Service Point Staff Slips"), JsonObject(MemberSerialization = MemberSerialization.OptIn), Table("service_point_staff_slips", Schema = "uc")]
     public partial class ServicePointStaffSlip

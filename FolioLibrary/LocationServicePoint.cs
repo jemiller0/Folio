@@ -6,7 +6,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace FolioLibrary
 {
-    // uc.location_service_points -> diku_mod_inventory_storage.location
+    // uc.location_service_points -> uchicago_mod_inventory_storage.location
     // LocationServicePoint -> Location
     [DisplayColumn(nameof(Id)), DisplayName("Location Service Points"), Table("location_service_points", Schema = "uc")]
     public partial class LocationServicePoint

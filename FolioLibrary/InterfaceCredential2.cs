@@ -11,7 +11,7 @@ using System.Reflection;
 
 namespace FolioLibrary
 {
-    // uc.interface_credentials -> diku_mod_organizations_storage.interface_credentials
+    // uc.interface_credentials -> uchicago_mod_organizations_storage.interface_credentials
     // InterfaceCredential2 -> InterfaceCredential
     [DisplayColumn(nameof(Id)), DisplayName("Interface Credentials"), JsonObject(MemberSerialization = MemberSerialization.OptIn), Table("interface_credentials", Schema = "uc")]
     public partial class InterfaceCredential2

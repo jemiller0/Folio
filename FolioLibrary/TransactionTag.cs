@@ -6,7 +6,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace FolioLibrary
 {
-    // uc.transaction_tags -> diku_mod_finance_storage.transaction
+    // uc.transaction_tags -> uchicago_mod_finance_storage.transaction
     // TransactionTag -> Transaction
     [DisplayColumn(nameof(Content)), DisplayName("Transaction Tags"), Table("transaction_tags", Schema = "uc")]
     public partial class TransactionTag

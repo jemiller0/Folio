@@ -11,7 +11,7 @@ using System.Reflection;
 
 namespace FolioLibrary
 {
-    // uc.proxies -> diku_mod_users.proxyfor
+    // uc.proxies -> uchicago_mod_users.proxyfor
     // Proxy2 -> Proxy
     [DisplayColumn(nameof(Id)), DisplayName("Proxies"), JsonConverter(typeof(JsonPathJsonConverter<Proxy2>)), JsonObject(MemberSerialization = MemberSerialization.OptIn), Table("proxies", Schema = "uc")]
     public partial class Proxy2

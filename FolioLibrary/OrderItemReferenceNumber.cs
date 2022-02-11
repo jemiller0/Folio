@@ -7,7 +7,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace FolioLibrary
 {
-    // uc.order_item_reference_numbers -> diku_mod_orders_storage.po_line
+    // uc.order_item_reference_numbers -> uchicago_mod_orders_storage.po_line
     // OrderItemReferenceNumber -> OrderItem
     [DisplayColumn(nameof(Id)), DisplayName("Order Item Reference Numbers"), JsonObject(MemberSerialization = MemberSerialization.OptIn), Table("order_item_reference_numbers", Schema = "uc")]
     public partial class OrderItemReferenceNumber

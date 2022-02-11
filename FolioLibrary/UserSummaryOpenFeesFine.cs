@@ -7,7 +7,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace FolioLibrary
 {
-    // uc.user_summary_open_fees_fines -> diku_mod_patron_blocks.user_summary
+    // uc.user_summary_open_fees_fines -> uchicago_mod_patron_blocks.user_summary
     // UserSummaryOpenFeesFine -> UserSummary
     [DisplayColumn(nameof(Id)), DisplayName("User Summary Open Fees Fines"), JsonObject(MemberSerialization = MemberSerialization.OptIn), Table("user_summary_open_fees_fines", Schema = "uc")]
     public partial class UserSummaryOpenFeesFine

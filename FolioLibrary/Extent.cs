@@ -6,7 +6,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace FolioLibrary
 {
-    // uc.extents -> diku_mod_inventory_storage.holdings_record
+    // uc.extents -> uchicago_mod_inventory_storage.holdings_record
     // Extent -> Holding
     [DisplayColumn(nameof(Content)), JsonObject(MemberSerialization = MemberSerialization.OptIn), Table("extents", Schema = "uc")]
     public partial class Extent

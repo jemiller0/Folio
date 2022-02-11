@@ -12,7 +12,7 @@ using System.Reflection;
 
 namespace FolioLibrary
 {
-    // uc.batch_groups -> diku_mod_invoice_storage.batch_groups
+    // uc.batch_groups -> uchicago_mod_invoice_storage.batch_groups
     // BatchGroup2 -> BatchGroup
     [DisplayColumn(nameof(Name)), DisplayName("Batch Groups"), JsonConverter(typeof(JsonPathJsonConverter<BatchGroup2>)), JsonObject(MemberSerialization = MemberSerialization.OptIn), Table("batch_groups", Schema = "uc")]
     public partial class BatchGroup2

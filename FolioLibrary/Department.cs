@@ -10,7 +10,7 @@ using System.Reflection;
 
 namespace FolioLibrary
 {
-    [Table("departments", Schema = "diku_mod_users")]
+    [Table("departments", Schema = "uchicago_mod_users")]
     public partial class Department
     {
         public static ValidationResult ValidateContent(string value)

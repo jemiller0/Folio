@@ -6,7 +6,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace FolioLibrary
 {
-    // uc.order_item_volumes -> diku_mod_orders_storage.po_line
+    // uc.order_item_volumes -> uchicago_mod_orders_storage.po_line
     // OrderItemVolume -> OrderItem
     [DisplayColumn(nameof(Content)), DisplayName("Order Item Volumes"), Table("order_item_volumes", Schema = "uc")]
     public partial class OrderItemVolume

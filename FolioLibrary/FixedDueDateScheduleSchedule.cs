@@ -7,7 +7,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace FolioLibrary
 {
-    // uc.fixed_due_date_schedule_schedules -> diku_mod_circulation_storage.fixed_due_date_schedule
+    // uc.fixed_due_date_schedule_schedules -> uchicago_mod_circulation_storage.fixed_due_date_schedule
     // FixedDueDateScheduleSchedule -> FixedDueDateSchedule
     [DisplayColumn(nameof(Id)), DisplayName("Fixed Due Date Schedule Schedules"), JsonObject(MemberSerialization = MemberSerialization.OptIn), Table("fixed_due_date_schedule_schedules", Schema = "uc")]
     public partial class FixedDueDateScheduleSchedule

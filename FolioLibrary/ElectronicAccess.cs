@@ -7,7 +7,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace FolioLibrary
 {
-    // uc.electronic_accesses -> diku_mod_inventory_storage.instance
+    // uc.electronic_accesses -> uchicago_mod_inventory_storage.instance
     // ElectronicAccess -> Instance
     [DisplayColumn(nameof(Id)), DisplayName("Electronic Accesses"), JsonObject(MemberSerialization = MemberSerialization.OptIn), Table("electronic_accesses", Schema = "uc")]
     public partial class ElectronicAccess

@@ -11,7 +11,7 @@ using System.Reflection;
 
 namespace FolioLibrary
 {
-    [Table("patron_block_conditions", Schema = "diku_mod_patron_blocks")]
+    [Table("patron_block_conditions", Schema = "uchicago_mod_patron_blocks")]
     public partial class BlockCondition
     {
         public static ValidationResult ValidateContent(string value)

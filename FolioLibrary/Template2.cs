@@ -12,7 +12,7 @@ using System.Reflection;
 
 namespace FolioLibrary
 {
-    // uc.templates -> diku_mod_template_engine.template
+    // uc.templates -> uchicago_mod_template_engine.template
     // Template2 -> Template
     [DisplayColumn(nameof(Name)), DisplayName("Templates"), JsonConverter(typeof(JsonPathJsonConverter<Template2>)), JsonObject(MemberSerialization = MemberSerialization.OptIn), Table("templates", Schema = "uc")]
     public partial class Template2

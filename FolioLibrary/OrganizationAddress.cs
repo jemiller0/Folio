@@ -9,7 +9,7 @@ using System.Linq;
 
 namespace FolioLibrary
 {
-    // uc.organization_addresses -> diku_mod_organizations_storage.organizations
+    // uc.organization_addresses -> uchicago_mod_organizations_storage.organizations
     // OrganizationAddress -> Organization
     [DisplayColumn(nameof(StreetAddress1)), DisplayName("Organization Addresses"), JsonConverter(typeof(JsonPathJsonConverter<OrganizationAddress>)), JsonObject(MemberSerialization = MemberSerialization.OptIn), Table("organization_addresses", Schema = "uc")]
     public partial class OrganizationAddress

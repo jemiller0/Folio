@@ -6,7 +6,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace FolioLibrary
 {
-    // uc.organization_tags -> diku_mod_organizations_storage.organizations
+    // uc.organization_tags -> uchicago_mod_organizations_storage.organizations
     // OrganizationTag -> Organization
     [DisplayColumn(nameof(Content)), DisplayName("Organization Tags"), Table("organization_tags", Schema = "uc")]
     public partial class OrganizationTag

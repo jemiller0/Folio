@@ -10,7 +10,7 @@ using System.Reflection;
 
 namespace FolioLibrary
 {
-    [Table("preceding_succeeding_title", Schema = "diku_mod_inventory_storage")]
+    [Table("preceding_succeeding_title", Schema = "uchicago_mod_inventory_storage")]
     public partial class PrecedingSucceedingTitle
     {
         public static ValidationResult ValidateContent(string value)

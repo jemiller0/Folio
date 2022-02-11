@@ -12,7 +12,7 @@ using System.Reflection;
 
 namespace FolioLibrary
 {
-    // uc.block_conditions -> diku_mod_patron_blocks.patron_block_conditions
+    // uc.block_conditions -> uchicago_mod_patron_blocks.patron_block_conditions
     // BlockCondition2 -> BlockCondition
     [DisplayColumn(nameof(Name)), DisplayName("Block Conditions"), JsonConverter(typeof(JsonPathJsonConverter<BlockCondition2>)), JsonObject(MemberSerialization = MemberSerialization.OptIn), Table("block_conditions", Schema = "uc")]
     public partial class BlockCondition2

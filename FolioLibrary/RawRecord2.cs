@@ -7,7 +7,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace FolioLibrary
 {
-    // uc.raw_records -> diku_mod_source_record_storage.raw_records_lb
+    // uc.raw_records -> uchicago_mod_source_record_storage.raw_records_lb
     // RawRecord2 -> RawRecord
     [DisplayColumn(nameof(Id)), DisplayName("Raw Records"), JsonObject(MemberSerialization = MemberSerialization.OptIn), Table("raw_records", Schema = "uc")]
     public partial class RawRecord2

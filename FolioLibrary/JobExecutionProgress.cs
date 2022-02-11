@@ -10,7 +10,7 @@ using System.Reflection;
 
 namespace FolioLibrary
 {
-    [Table("job_execution_progress", Schema = "diku_mod_source_record_manager")]
+    [Table("job_execution_progress", Schema = "uchicago_mod_source_record_manager")]
     public partial class JobExecutionProgress
     {
         public static ValidationResult ValidateContent(string value)

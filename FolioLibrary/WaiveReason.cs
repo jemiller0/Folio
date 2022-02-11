@@ -10,7 +10,7 @@ using System.Reflection;
 
 namespace FolioLibrary
 {
-    [Table("waives", Schema = "diku_mod_feesfines")]
+    [Table("waives", Schema = "uchicago_mod_feesfines")]
     public partial class WaiveReason
     {
         public static ValidationResult ValidateContent(string value)

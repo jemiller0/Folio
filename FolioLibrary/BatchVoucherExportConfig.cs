@@ -11,7 +11,7 @@ using System.Reflection;
 
 namespace FolioLibrary
 {
-    [Table("batch_voucher_export_configs", Schema = "diku_mod_invoice_storage")]
+    [Table("batch_voucher_export_configs", Schema = "uchicago_mod_invoice_storage")]
     public partial class BatchVoucherExportConfig
     {
         public static ValidationResult ValidateContent(string value)

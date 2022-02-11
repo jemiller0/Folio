@@ -5,7 +5,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace FolioLibrary
 {
-    // uc.batch_voucher_batched_voucher_batched_voucher_line_fund_codes -> diku_mod_invoice_storage.batch_vouchers
+    // uc.batch_voucher_batched_voucher_batched_voucher_line_fund_codes -> uchicago_mod_invoice_storage.batch_vouchers
     // BatchVoucherBatchedVoucherBatchedVoucherLineFundCode -> BatchVoucher
     [DisplayColumn(nameof(Content)), DisplayName("Batch Voucher Batched Voucher Batched Voucher Line Fund Codes"), Table("batch_voucher_batched_voucher_batched_voucher_line_fund_codes", Schema = "uc")]
     public partial class BatchVoucherBatchedVoucherBatchedVoucherLineFundCode

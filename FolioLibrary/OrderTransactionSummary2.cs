@@ -10,7 +10,7 @@ using System.Reflection;
 
 namespace FolioLibrary
 {
-    // uc.order_transaction_summaries -> diku_mod_finance_storage.order_transaction_summaries
+    // uc.order_transaction_summaries -> uchicago_mod_finance_storage.order_transaction_summaries
     // OrderTransactionSummary2 -> OrderTransactionSummary
     [JsonObject(MemberSerialization = MemberSerialization.OptIn), Table("order_transaction_summaries", Schema = "uc")]
     public partial class OrderTransactionSummary2

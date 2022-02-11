@@ -12,7 +12,7 @@ using System.Reflection;
 
 namespace FolioLibrary
 {
-    // uc.instance_types -> diku_mod_inventory_storage.instance_type
+    // uc.instance_types -> uchicago_mod_inventory_storage.instance_type
     // InstanceType2 -> InstanceType
     [DisplayColumn(nameof(Name)), DisplayName("Instance Types"), JsonConverter(typeof(JsonPathJsonConverter<InstanceType2>)), JsonObject(MemberSerialization = MemberSerialization.OptIn), Table("instance_types", Schema = "uc")]
     public partial class InstanceType2

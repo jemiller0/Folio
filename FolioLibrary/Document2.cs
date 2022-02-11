@@ -11,7 +11,7 @@ using System.Reflection;
 
 namespace FolioLibrary
 {
-    // uc.documents -> diku_mod_invoice_storage.documents
+    // uc.documents -> uchicago_mod_invoice_storage.documents
     // Document2 -> Document
     [DisplayColumn(nameof(Id)), DisplayName("Documents"), JsonConverter(typeof(JsonPathJsonConverter<Document2>)), JsonObject(MemberSerialization = MemberSerialization.OptIn), Table("documents", Schema = "uc")]
     public partial class Document2

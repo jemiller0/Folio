@@ -11,7 +11,7 @@ using System.Reflection;
 
 namespace FolioLibrary
 {
-    [Table("ledger", Schema = "diku_mod_finance_storage")]
+    [Table("ledger", Schema = "uchicago_mod_finance_storage")]
     public partial class Ledger
     {
         public static ValidationResult ValidateContent(string value)

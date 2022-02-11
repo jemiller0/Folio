@@ -6,7 +6,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace FolioLibrary
 {
-    // uc.permission_sub_permissions -> diku_mod_permissions.permissions
+    // uc.permission_sub_permissions -> uchicago_mod_permissions.permissions
     // PermissionSubPermission -> Permission
     [DisplayColumn(nameof(Content)), DisplayName("Permission Sub Permissions"), Table("permission_sub_permissions", Schema = "uc")]
     public partial class PermissionSubPermission

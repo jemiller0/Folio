@@ -10,7 +10,7 @@ using System.Reflection;
 
 namespace FolioLibrary
 {
-    [Table("reasons_for_closure", Schema = "diku_mod_orders_storage")]
+    [Table("reasons_for_closure", Schema = "uchicago_mod_orders_storage")]
     public partial class CloseReason
     {
         public static ValidationResult ValidateContent(string value)

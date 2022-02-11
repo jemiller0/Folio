@@ -11,7 +11,7 @@ using System.Reflection;
 
 namespace FolioLibrary
 {
-    // uc.hrid_settings -> diku_mod_inventory_storage.hrid_settings
+    // uc.hrid_settings -> uchicago_mod_inventory_storage.hrid_settings
     // HridSetting2 -> HridSetting
     [DisplayColumn(nameof(Id)), DisplayName("HRID Settings"), JsonConverter(typeof(JsonPathJsonConverter<HridSetting2>)), JsonObject(MemberSerialization = MemberSerialization.OptIn), Table("hrid_settings", Schema = "uc")]
     public partial class HridSetting2

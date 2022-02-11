@@ -7,7 +7,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace FolioLibrary
 {
-    // uc.alternative_titles -> diku_mod_inventory_storage.instance
+    // uc.alternative_titles -> uchicago_mod_inventory_storage.instance
     // AlternativeTitle -> Instance
     [DisplayColumn(nameof(Content)), DisplayName("Alternative Titles"), JsonObject(MemberSerialization = MemberSerialization.OptIn), Table("alternative_titles", Schema = "uc")]
     public partial class AlternativeTitle

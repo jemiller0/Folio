@@ -11,7 +11,7 @@ using System.Reflection;
 
 namespace FolioLibrary
 {
-    // uc.comments -> diku_mod_feesfines.comments
+    // uc.comments -> uchicago_mod_feesfines.comments
     // Comment2 -> Comment
     [DisplayColumn(nameof(Id)), DisplayName("Comments"), JsonConverter(typeof(JsonPathJsonConverter<Comment2>)), JsonObject(MemberSerialization = MemberSerialization.OptIn), Table("comments", Schema = "uc")]
     public partial class Comment2

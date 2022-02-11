@@ -11,7 +11,7 @@ using System.Reflection;
 
 namespace FolioLibrary
 {
-    // uc.transfer_criterias -> diku_mod_feesfines.transfer_criteria
+    // uc.transfer_criterias -> uchicago_mod_feesfines.transfer_criteria
     // TransferCriteria2 -> TransferCriteria
     [DisplayColumn(nameof(Id)), DisplayName("Transfer Criterias"), JsonObject(MemberSerialization = MemberSerialization.OptIn), Table("transfer_criterias", Schema = "uc")]
     public partial class TransferCriteria2

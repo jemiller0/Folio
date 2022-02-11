@@ -28,10 +28,10 @@ Change to the project directory.
 cd Folio
 ```
 
-If you are going to use SQL and are using a tenant name other than the default "diku" tenant name, change the tenant name to the name of your tenant. Replace TENANT below with the name of your tenant. Warning: this command does a recursive replace on all files in the current directory. Make sure you run it from the project directory.
+If you are going to use SQL, change the tenant name to the name of your tenant. Replace TENANT below with the name of your tenant. Warning: this command does a recursive replace on all files in the current directory. Make sure you run it from the project directory.
 
 ```
-grep -rlZ 'diku_' . | xargs -0 sed -i 's/diku_/TENANT_/g'
+grep -rlZ 'uchicago_' . | xargs -0 sed -i 's/uchicago_/TENANT_/g'
 ```
 
 Build the project.
@@ -287,7 +287,6 @@ FolioLibrary/Folio.sql contains SQL views that can be helpful for reviewing load
 
 ## Limitations
 
-* SQL support currently assumes you are using the diku default tenant name
 * Logins can't be round-tripped using web API, the API uses a different JSON schema than is used in the database
 * SQL views for tables that have large numbers of instances may not be performant
 * Doesn't currently use a robust command-line parsing library, mispelled arguments will be ignored

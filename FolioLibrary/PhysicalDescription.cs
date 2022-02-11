@@ -6,7 +6,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace FolioLibrary
 {
-    // uc.physical_descriptions -> diku_mod_inventory_storage.instance
+    // uc.physical_descriptions -> uchicago_mod_inventory_storage.instance
     // PhysicalDescription -> Instance
     [DisplayColumn(nameof(Content)), DisplayName("Physical Descriptions"), Table("physical_descriptions", Schema = "uc")]
     public partial class PhysicalDescription

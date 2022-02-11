@@ -2850,7 +2850,7 @@ namespace FolioLibrary
         {
             if (acquisitionsUnitsDataTable != null && acquisitionsUnitsDataTable.Rows.Count > 0)
             {
-                sqlBulkCopy.DestinationTableName = $"diku_mod_orders_storage{(IsMySql ? "_" : ".")}acquisitions_unit";
+                sqlBulkCopy.DestinationTableName = $"uchicago_mod_orders_storage{(IsMySql ? "_" : ".")}acquisitions_unit";
                 sqlBulkCopy.ColumnMappings.Clear();
                 sqlBulkCopy.ColumnMappings.Add("id", "id");
                 sqlBulkCopy.ColumnMappings.Add("jsonb", "jsonb");
@@ -2861,7 +2861,7 @@ namespace FolioLibrary
             }
             if (addressTypesDataTable != null && addressTypesDataTable.Rows.Count > 0)
             {
-                sqlBulkCopy.DestinationTableName = $"diku_mod_users{(IsMySql ? "_" : ".")}addresstype";
+                sqlBulkCopy.DestinationTableName = $"uchicago_mod_users{(IsMySql ? "_" : ".")}addresstype";
                 sqlBulkCopy.ColumnMappings.Clear();
                 sqlBulkCopy.ColumnMappings.Add("id", "id");
                 sqlBulkCopy.ColumnMappings.Add("jsonb", "jsonb");
@@ -2872,7 +2872,7 @@ namespace FolioLibrary
             }
             if (alertsDataTable != null && alertsDataTable.Rows.Count > 0)
             {
-                sqlBulkCopy.DestinationTableName = $"diku_mod_orders_storage{(IsMySql ? "_" : ".")}alert";
+                sqlBulkCopy.DestinationTableName = $"uchicago_mod_orders_storage{(IsMySql ? "_" : ".")}alert";
                 sqlBulkCopy.ColumnMappings.Clear();
                 sqlBulkCopy.ColumnMappings.Add("id", "id");
                 sqlBulkCopy.ColumnMappings.Add("jsonb", "jsonb");
@@ -2883,7 +2883,7 @@ namespace FolioLibrary
             }
             if (alternativeTitleTypesDataTable != null && alternativeTitleTypesDataTable.Rows.Count > 0)
             {
-                sqlBulkCopy.DestinationTableName = $"diku_mod_inventory_storage{(IsMySql ? "_" : ".")}alternative_title_type";
+                sqlBulkCopy.DestinationTableName = $"uchicago_mod_inventory_storage{(IsMySql ? "_" : ".")}alternative_title_type";
                 sqlBulkCopy.ColumnMappings.Clear();
                 sqlBulkCopy.ColumnMappings.Add("id", "id");
                 sqlBulkCopy.ColumnMappings.Add("jsonb", "jsonb");
@@ -2894,7 +2894,7 @@ namespace FolioLibrary
             }
             if (authAttemptsDataTable != null && authAttemptsDataTable.Rows.Count > 0)
             {
-                sqlBulkCopy.DestinationTableName = $"diku_mod_login{(IsMySql ? "_" : ".")}auth_attempts";
+                sqlBulkCopy.DestinationTableName = $"uchicago_mod_login{(IsMySql ? "_" : ".")}auth_attempts";
                 sqlBulkCopy.ColumnMappings.Clear();
                 sqlBulkCopy.ColumnMappings.Add("id", "id");
                 sqlBulkCopy.ColumnMappings.Add("jsonb", "jsonb");
@@ -2905,7 +2905,7 @@ namespace FolioLibrary
             }
             if (authCredentialsHistoriesDataTable != null && authCredentialsHistoriesDataTable.Rows.Count > 0)
             {
-                sqlBulkCopy.DestinationTableName = $"diku_mod_login{(IsMySql ? "_" : ".")}auth_credentials_history";
+                sqlBulkCopy.DestinationTableName = $"uchicago_mod_login{(IsMySql ? "_" : ".")}auth_credentials_history";
                 sqlBulkCopy.ColumnMappings.Clear();
                 sqlBulkCopy.ColumnMappings.Add("id", "id");
                 sqlBulkCopy.ColumnMappings.Add("jsonb", "jsonb");
@@ -2916,7 +2916,7 @@ namespace FolioLibrary
             }
             if (authPasswordActionsDataTable != null && authPasswordActionsDataTable.Rows.Count > 0)
             {
-                sqlBulkCopy.DestinationTableName = $"diku_mod_login{(IsMySql ? "_" : ".")}auth_password_action";
+                sqlBulkCopy.DestinationTableName = $"uchicago_mod_login{(IsMySql ? "_" : ".")}auth_password_action";
                 sqlBulkCopy.ColumnMappings.Clear();
                 sqlBulkCopy.ColumnMappings.Add("id", "id");
                 sqlBulkCopy.ColumnMappings.Add("jsonb", "jsonb");
@@ -2927,7 +2927,7 @@ namespace FolioLibrary
             }
             if (batchGroupsDataTable != null && batchGroupsDataTable.Rows.Count > 0)
             {
-                sqlBulkCopy.DestinationTableName = $"diku_mod_invoice_storage{(IsMySql ? "_" : ".")}batch_groups";
+                sqlBulkCopy.DestinationTableName = $"uchicago_mod_invoice_storage{(IsMySql ? "_" : ".")}batch_groups";
                 sqlBulkCopy.ColumnMappings.Clear();
                 sqlBulkCopy.ColumnMappings.Add("id", "id");
                 sqlBulkCopy.ColumnMappings.Add("jsonb", "jsonb");
@@ -2938,7 +2938,7 @@ namespace FolioLibrary
             }
             if (batchVouchersDataTable != null && batchVouchersDataTable.Rows.Count > 0)
             {
-                sqlBulkCopy.DestinationTableName = $"diku_mod_invoice_storage{(IsMySql ? "_" : ".")}batch_vouchers";
+                sqlBulkCopy.DestinationTableName = $"uchicago_mod_invoice_storage{(IsMySql ? "_" : ".")}batch_vouchers";
                 sqlBulkCopy.ColumnMappings.Clear();
                 sqlBulkCopy.ColumnMappings.Add("id", "id");
                 sqlBulkCopy.ColumnMappings.Add("jsonb", "jsonb");
@@ -2947,7 +2947,7 @@ namespace FolioLibrary
             }
             if (batchVoucherExportsDataTable != null && batchVoucherExportsDataTable.Rows.Count > 0)
             {
-                sqlBulkCopy.DestinationTableName = $"diku_mod_invoice_storage{(IsMySql ? "_" : ".")}batch_voucher_exports";
+                sqlBulkCopy.DestinationTableName = $"uchicago_mod_invoice_storage{(IsMySql ? "_" : ".")}batch_voucher_exports";
                 sqlBulkCopy.ColumnMappings.Clear();
                 sqlBulkCopy.ColumnMappings.Add("id", "id");
                 sqlBulkCopy.ColumnMappings.Add("jsonb", "jsonb");
@@ -2960,7 +2960,7 @@ namespace FolioLibrary
             }
             if (batchVoucherExportConfigsDataTable != null && batchVoucherExportConfigsDataTable.Rows.Count > 0)
             {
-                sqlBulkCopy.DestinationTableName = $"diku_mod_invoice_storage{(IsMySql ? "_" : ".")}batch_voucher_export_configs";
+                sqlBulkCopy.DestinationTableName = $"uchicago_mod_invoice_storage{(IsMySql ? "_" : ".")}batch_voucher_export_configs";
                 sqlBulkCopy.ColumnMappings.Clear();
                 sqlBulkCopy.ColumnMappings.Add("id", "id");
                 sqlBulkCopy.ColumnMappings.Add("jsonb", "jsonb");
@@ -2972,7 +2972,7 @@ namespace FolioLibrary
             }
             if (blocksDataTable != null && blocksDataTable.Rows.Count > 0)
             {
-                sqlBulkCopy.DestinationTableName = $"diku_mod_feesfines{(IsMySql ? "_" : ".")}manualblocks";
+                sqlBulkCopy.DestinationTableName = $"uchicago_mod_feesfines{(IsMySql ? "_" : ".")}manualblocks";
                 sqlBulkCopy.ColumnMappings.Clear();
                 sqlBulkCopy.ColumnMappings.Add("id", "id");
                 sqlBulkCopy.ColumnMappings.Add("jsonb", "jsonb");
@@ -2983,7 +2983,7 @@ namespace FolioLibrary
             }
             if (blockConditionsDataTable != null && blockConditionsDataTable.Rows.Count > 0)
             {
-                sqlBulkCopy.DestinationTableName = $"diku_mod_patron_blocks{(IsMySql ? "_" : ".")}patron_block_conditions";
+                sqlBulkCopy.DestinationTableName = $"uchicago_mod_patron_blocks{(IsMySql ? "_" : ".")}patron_block_conditions";
                 sqlBulkCopy.ColumnMappings.Clear();
                 sqlBulkCopy.ColumnMappings.Add("id", "id");
                 sqlBulkCopy.ColumnMappings.Add("jsonb", "jsonb");
@@ -2994,7 +2994,7 @@ namespace FolioLibrary
             }
             if (blockLimitsDataTable != null && blockLimitsDataTable.Rows.Count > 0)
             {
-                sqlBulkCopy.DestinationTableName = $"diku_mod_patron_blocks{(IsMySql ? "_" : ".")}patron_block_limits";
+                sqlBulkCopy.DestinationTableName = $"uchicago_mod_patron_blocks{(IsMySql ? "_" : ".")}patron_block_limits";
                 sqlBulkCopy.ColumnMappings.Clear();
                 sqlBulkCopy.ColumnMappings.Add("id", "id");
                 sqlBulkCopy.ColumnMappings.Add("jsonb", "jsonb");
@@ -3006,7 +3006,7 @@ namespace FolioLibrary
             }
             if (boundWithPartsDataTable != null && boundWithPartsDataTable.Rows.Count > 0)
             {
-                sqlBulkCopy.DestinationTableName = $"diku_mod_inventory_storage{(IsMySql ? "_" : ".")}bound_with_part";
+                sqlBulkCopy.DestinationTableName = $"uchicago_mod_inventory_storage{(IsMySql ? "_" : ".")}bound_with_part";
                 sqlBulkCopy.ColumnMappings.Clear();
                 sqlBulkCopy.ColumnMappings.Add("id", "id");
                 sqlBulkCopy.ColumnMappings.Add("jsonb", "jsonb");
@@ -3019,7 +3019,7 @@ namespace FolioLibrary
             }
             if (budgetsDataTable != null && budgetsDataTable.Rows.Count > 0)
             {
-                sqlBulkCopy.DestinationTableName = $"diku_mod_finance_storage{(IsMySql ? "_" : ".")}budget";
+                sqlBulkCopy.DestinationTableName = $"uchicago_mod_finance_storage{(IsMySql ? "_" : ".")}budget";
                 sqlBulkCopy.ColumnMappings.Clear();
                 sqlBulkCopy.ColumnMappings.Add("id", "id");
                 sqlBulkCopy.ColumnMappings.Add("jsonb", "jsonb");
@@ -3032,7 +3032,7 @@ namespace FolioLibrary
             }
             if (budgetExpenseClassesDataTable != null && budgetExpenseClassesDataTable.Rows.Count > 0)
             {
-                sqlBulkCopy.DestinationTableName = $"diku_mod_finance_storage{(IsMySql ? "_" : ".")}budget_expense_class";
+                sqlBulkCopy.DestinationTableName = $"uchicago_mod_finance_storage{(IsMySql ? "_" : ".")}budget_expense_class";
                 sqlBulkCopy.ColumnMappings.Clear();
                 sqlBulkCopy.ColumnMappings.Add("id", "id");
                 sqlBulkCopy.ColumnMappings.Add("jsonb", "jsonb");
@@ -3043,7 +3043,7 @@ namespace FolioLibrary
             }
             if (budgetGroupsDataTable != null && budgetGroupsDataTable.Rows.Count > 0)
             {
-                sqlBulkCopy.DestinationTableName = $"diku_mod_finance_storage{(IsMySql ? "_" : ".")}group_fund_fiscal_year";
+                sqlBulkCopy.DestinationTableName = $"uchicago_mod_finance_storage{(IsMySql ? "_" : ".")}group_fund_fiscal_year";
                 sqlBulkCopy.ColumnMappings.Clear();
                 sqlBulkCopy.ColumnMappings.Add("id", "id");
                 sqlBulkCopy.ColumnMappings.Add("jsonb", "jsonb");
@@ -3056,7 +3056,7 @@ namespace FolioLibrary
             }
             if (callNumberTypesDataTable != null && callNumberTypesDataTable.Rows.Count > 0)
             {
-                sqlBulkCopy.DestinationTableName = $"diku_mod_inventory_storage{(IsMySql ? "_" : ".")}call_number_type";
+                sqlBulkCopy.DestinationTableName = $"uchicago_mod_inventory_storage{(IsMySql ? "_" : ".")}call_number_type";
                 sqlBulkCopy.ColumnMappings.Clear();
                 sqlBulkCopy.ColumnMappings.Add("id", "id");
                 sqlBulkCopy.ColumnMappings.Add("jsonb", "jsonb");
@@ -3067,7 +3067,7 @@ namespace FolioLibrary
             }
             if (campusesDataTable != null && campusesDataTable.Rows.Count > 0)
             {
-                sqlBulkCopy.DestinationTableName = $"diku_mod_inventory_storage{(IsMySql ? "_" : ".")}loccampus";
+                sqlBulkCopy.DestinationTableName = $"uchicago_mod_inventory_storage{(IsMySql ? "_" : ".")}loccampus";
                 sqlBulkCopy.ColumnMappings.Clear();
                 sqlBulkCopy.ColumnMappings.Add("id", "id");
                 sqlBulkCopy.ColumnMappings.Add("jsonb", "jsonb");
@@ -3079,7 +3079,7 @@ namespace FolioLibrary
             }
             if (cancellationReasonsDataTable != null && cancellationReasonsDataTable.Rows.Count > 0)
             {
-                sqlBulkCopy.DestinationTableName = $"diku_mod_circulation_storage{(IsMySql ? "_" : ".")}cancellation_reason";
+                sqlBulkCopy.DestinationTableName = $"uchicago_mod_circulation_storage{(IsMySql ? "_" : ".")}cancellation_reason";
                 sqlBulkCopy.ColumnMappings.Clear();
                 sqlBulkCopy.ColumnMappings.Add("id", "id");
                 sqlBulkCopy.ColumnMappings.Add("jsonb", "jsonb");
@@ -3090,7 +3090,7 @@ namespace FolioLibrary
             }
             if (categoriesDataTable != null && categoriesDataTable.Rows.Count > 0)
             {
-                sqlBulkCopy.DestinationTableName = $"diku_mod_organizations_storage{(IsMySql ? "_" : ".")}categories";
+                sqlBulkCopy.DestinationTableName = $"uchicago_mod_organizations_storage{(IsMySql ? "_" : ".")}categories";
                 sqlBulkCopy.ColumnMappings.Clear();
                 sqlBulkCopy.ColumnMappings.Add("id", "id");
                 sqlBulkCopy.ColumnMappings.Add("jsonb", "jsonb");
@@ -3101,7 +3101,7 @@ namespace FolioLibrary
             }
             if (checkInsDataTable != null && checkInsDataTable.Rows.Count > 0)
             {
-                sqlBulkCopy.DestinationTableName = $"diku_mod_circulation_storage{(IsMySql ? "_" : ".")}check_in";
+                sqlBulkCopy.DestinationTableName = $"uchicago_mod_circulation_storage{(IsMySql ? "_" : ".")}check_in";
                 sqlBulkCopy.ColumnMappings.Clear();
                 sqlBulkCopy.ColumnMappings.Add("id", "id");
                 sqlBulkCopy.ColumnMappings.Add("jsonb", "jsonb");
@@ -3112,7 +3112,7 @@ namespace FolioLibrary
             }
             if (circulationRulesDataTable != null && circulationRulesDataTable.Rows.Count > 0)
             {
-                sqlBulkCopy.DestinationTableName = $"diku_mod_circulation_storage{(IsMySql ? "_" : ".")}circulation_rules";
+                sqlBulkCopy.DestinationTableName = $"uchicago_mod_circulation_storage{(IsMySql ? "_" : ".")}circulation_rules";
                 sqlBulkCopy.ColumnMappings.Clear();
                 sqlBulkCopy.ColumnMappings.Add("id", "id");
                 sqlBulkCopy.ColumnMappings.Add("jsonb", "jsonb");
@@ -3122,7 +3122,7 @@ namespace FolioLibrary
             }
             if (classificationTypesDataTable != null && classificationTypesDataTable.Rows.Count > 0)
             {
-                sqlBulkCopy.DestinationTableName = $"diku_mod_inventory_storage{(IsMySql ? "_" : ".")}classification_type";
+                sqlBulkCopy.DestinationTableName = $"uchicago_mod_inventory_storage{(IsMySql ? "_" : ".")}classification_type";
                 sqlBulkCopy.ColumnMappings.Clear();
                 sqlBulkCopy.ColumnMappings.Add("id", "id");
                 sqlBulkCopy.ColumnMappings.Add("jsonb", "jsonb");
@@ -3133,7 +3133,7 @@ namespace FolioLibrary
             }
             if (closeReasonsDataTable != null && closeReasonsDataTable.Rows.Count > 0)
             {
-                sqlBulkCopy.DestinationTableName = $"diku_mod_orders_storage{(IsMySql ? "_" : ".")}reasons_for_closure";
+                sqlBulkCopy.DestinationTableName = $"uchicago_mod_orders_storage{(IsMySql ? "_" : ".")}reasons_for_closure";
                 sqlBulkCopy.ColumnMappings.Clear();
                 sqlBulkCopy.ColumnMappings.Add("id", "id");
                 sqlBulkCopy.ColumnMappings.Add("jsonb", "jsonb");
@@ -3142,7 +3142,7 @@ namespace FolioLibrary
             }
             if (commentsDataTable != null && commentsDataTable.Rows.Count > 0)
             {
-                sqlBulkCopy.DestinationTableName = $"diku_mod_feesfines{(IsMySql ? "_" : ".")}comments";
+                sqlBulkCopy.DestinationTableName = $"uchicago_mod_feesfines{(IsMySql ? "_" : ".")}comments";
                 sqlBulkCopy.ColumnMappings.Clear();
                 sqlBulkCopy.ColumnMappings.Add("id", "id");
                 sqlBulkCopy.ColumnMappings.Add("jsonb", "jsonb");
@@ -3153,7 +3153,7 @@ namespace FolioLibrary
             }
             if (configurationsDataTable != null && configurationsDataTable.Rows.Count > 0)
             {
-                sqlBulkCopy.DestinationTableName = $"diku_mod_configuration{(IsMySql ? "_" : ".")}config_data";
+                sqlBulkCopy.DestinationTableName = $"uchicago_mod_configuration{(IsMySql ? "_" : ".")}config_data";
                 sqlBulkCopy.ColumnMappings.Clear();
                 sqlBulkCopy.ColumnMappings.Add("id", "id");
                 sqlBulkCopy.ColumnMappings.Add("jsonb", "jsonb");
@@ -3164,7 +3164,7 @@ namespace FolioLibrary
             }
             if (contactsDataTable != null && contactsDataTable.Rows.Count > 0)
             {
-                sqlBulkCopy.DestinationTableName = $"diku_mod_organizations_storage{(IsMySql ? "_" : ".")}contacts";
+                sqlBulkCopy.DestinationTableName = $"uchicago_mod_organizations_storage{(IsMySql ? "_" : ".")}contacts";
                 sqlBulkCopy.ColumnMappings.Clear();
                 sqlBulkCopy.ColumnMappings.Add("id", "id");
                 sqlBulkCopy.ColumnMappings.Add("jsonb", "jsonb");
@@ -3184,7 +3184,7 @@ namespace FolioLibrary
             }
             if (contributorNameTypesDataTable != null && contributorNameTypesDataTable.Rows.Count > 0)
             {
-                sqlBulkCopy.DestinationTableName = $"diku_mod_inventory_storage{(IsMySql ? "_" : ".")}contributor_name_type";
+                sqlBulkCopy.DestinationTableName = $"uchicago_mod_inventory_storage{(IsMySql ? "_" : ".")}contributor_name_type";
                 sqlBulkCopy.ColumnMappings.Clear();
                 sqlBulkCopy.ColumnMappings.Add("id", "id");
                 sqlBulkCopy.ColumnMappings.Add("jsonb", "jsonb");
@@ -3195,7 +3195,7 @@ namespace FolioLibrary
             }
             if (contributorTypesDataTable != null && contributorTypesDataTable.Rows.Count > 0)
             {
-                sqlBulkCopy.DestinationTableName = $"diku_mod_inventory_storage{(IsMySql ? "_" : ".")}contributor_type";
+                sqlBulkCopy.DestinationTableName = $"uchicago_mod_inventory_storage{(IsMySql ? "_" : ".")}contributor_type";
                 sqlBulkCopy.ColumnMappings.Clear();
                 sqlBulkCopy.ColumnMappings.Add("id", "id");
                 sqlBulkCopy.ColumnMappings.Add("jsonb", "jsonb");
@@ -3214,7 +3214,7 @@ namespace FolioLibrary
             }
             if (customFieldsDataTable != null && customFieldsDataTable.Rows.Count > 0)
             {
-                sqlBulkCopy.DestinationTableName = $"diku_mod_users{(IsMySql ? "_" : ".")}custom_fields";
+                sqlBulkCopy.DestinationTableName = $"uchicago_mod_users{(IsMySql ? "_" : ".")}custom_fields";
                 sqlBulkCopy.ColumnMappings.Clear();
                 sqlBulkCopy.ColumnMappings.Add("id", "id");
                 sqlBulkCopy.ColumnMappings.Add("jsonb", "jsonb");
@@ -3223,7 +3223,7 @@ namespace FolioLibrary
             }
             if (departmentsDataTable != null && departmentsDataTable.Rows.Count > 0)
             {
-                sqlBulkCopy.DestinationTableName = $"diku_mod_users{(IsMySql ? "_" : ".")}departments";
+                sqlBulkCopy.DestinationTableName = $"uchicago_mod_users{(IsMySql ? "_" : ".")}departments";
                 sqlBulkCopy.ColumnMappings.Clear();
                 sqlBulkCopy.ColumnMappings.Add("id", "id");
                 sqlBulkCopy.ColumnMappings.Add("jsonb", "jsonb");
@@ -3234,7 +3234,7 @@ namespace FolioLibrary
             }
             if (documentsDataTable != null && documentsDataTable.Rows.Count > 0)
             {
-                sqlBulkCopy.DestinationTableName = $"diku_mod_invoice_storage{(IsMySql ? "_" : ".")}documents";
+                sqlBulkCopy.DestinationTableName = $"uchicago_mod_invoice_storage{(IsMySql ? "_" : ".")}documents";
                 sqlBulkCopy.ColumnMappings.Clear();
                 sqlBulkCopy.ColumnMappings.Add("id", "id");
                 sqlBulkCopy.ColumnMappings.Add("jsonb", "jsonb");
@@ -3247,7 +3247,7 @@ namespace FolioLibrary
             }
             if (electronicAccessRelationshipsDataTable != null && electronicAccessRelationshipsDataTable.Rows.Count > 0)
             {
-                sqlBulkCopy.DestinationTableName = $"diku_mod_inventory_storage{(IsMySql ? "_" : ".")}electronic_access_relationship";
+                sqlBulkCopy.DestinationTableName = $"uchicago_mod_inventory_storage{(IsMySql ? "_" : ".")}electronic_access_relationship";
                 sqlBulkCopy.ColumnMappings.Clear();
                 sqlBulkCopy.ColumnMappings.Add("id", "id");
                 sqlBulkCopy.ColumnMappings.Add("jsonb", "jsonb");
@@ -3258,7 +3258,7 @@ namespace FolioLibrary
             }
             if (errorRecordsDataTable != null && errorRecordsDataTable.Rows.Count > 0)
             {
-                sqlBulkCopy.DestinationTableName = $"diku_mod_source_record_storage{(IsMySql ? "_" : ".")}error_records_lb";
+                sqlBulkCopy.DestinationTableName = $"uchicago_mod_source_record_storage{(IsMySql ? "_" : ".")}error_records_lb";
                 sqlBulkCopy.ColumnMappings.Clear();
                 sqlBulkCopy.ColumnMappings.Add("id", "id");
                 sqlBulkCopy.ColumnMappings.Add("content", "content");
@@ -3268,7 +3268,7 @@ namespace FolioLibrary
             }
             if (eventLogsDataTable != null && eventLogsDataTable.Rows.Count > 0)
             {
-                sqlBulkCopy.DestinationTableName = $"diku_mod_login{(IsMySql ? "_" : ".")}event_logs";
+                sqlBulkCopy.DestinationTableName = $"uchicago_mod_login{(IsMySql ? "_" : ".")}event_logs";
                 sqlBulkCopy.ColumnMappings.Clear();
                 sqlBulkCopy.ColumnMappings.Add("id", "id");
                 sqlBulkCopy.ColumnMappings.Add("jsonb", "jsonb");
@@ -3279,7 +3279,7 @@ namespace FolioLibrary
             }
             if (expenseClassesDataTable != null && expenseClassesDataTable.Rows.Count > 0)
             {
-                sqlBulkCopy.DestinationTableName = $"diku_mod_finance_storage{(IsMySql ? "_" : ".")}expense_class";
+                sqlBulkCopy.DestinationTableName = $"uchicago_mod_finance_storage{(IsMySql ? "_" : ".")}expense_class";
                 sqlBulkCopy.ColumnMappings.Clear();
                 sqlBulkCopy.ColumnMappings.Add("id", "id");
                 sqlBulkCopy.ColumnMappings.Add("jsonb", "jsonb");
@@ -3288,7 +3288,7 @@ namespace FolioLibrary
             }
             if (exportConfigCredentialsDataTable != null && exportConfigCredentialsDataTable.Rows.Count > 0)
             {
-                sqlBulkCopy.DestinationTableName = $"diku_mod_invoice_storage{(IsMySql ? "_" : ".")}export_config_credentials";
+                sqlBulkCopy.DestinationTableName = $"uchicago_mod_invoice_storage{(IsMySql ? "_" : ".")}export_config_credentials";
                 sqlBulkCopy.ColumnMappings.Clear();
                 sqlBulkCopy.ColumnMappings.Add("id", "id");
                 sqlBulkCopy.ColumnMappings.Add("jsonb", "jsonb");
@@ -3300,7 +3300,7 @@ namespace FolioLibrary
             }
             if (feesDataTable != null && feesDataTable.Rows.Count > 0)
             {
-                sqlBulkCopy.DestinationTableName = $"diku_mod_feesfines{(IsMySql ? "_" : ".")}accounts";
+                sqlBulkCopy.DestinationTableName = $"uchicago_mod_feesfines{(IsMySql ? "_" : ".")}accounts";
                 sqlBulkCopy.ColumnMappings.Clear();
                 sqlBulkCopy.ColumnMappings.Add("id", "id");
                 sqlBulkCopy.ColumnMappings.Add("jsonb", "jsonb");
@@ -3311,7 +3311,7 @@ namespace FolioLibrary
             }
             if (feeTypesDataTable != null && feeTypesDataTable.Rows.Count > 0)
             {
-                sqlBulkCopy.DestinationTableName = $"diku_mod_feesfines{(IsMySql ? "_" : ".")}feefines";
+                sqlBulkCopy.DestinationTableName = $"uchicago_mod_feesfines{(IsMySql ? "_" : ".")}feefines";
                 sqlBulkCopy.ColumnMappings.Clear();
                 sqlBulkCopy.ColumnMappings.Add("id", "id");
                 sqlBulkCopy.ColumnMappings.Add("jsonb", "jsonb");
@@ -3323,7 +3323,7 @@ namespace FolioLibrary
             }
             if (financeGroupsDataTable != null && financeGroupsDataTable.Rows.Count > 0)
             {
-                sqlBulkCopy.DestinationTableName = $"diku_mod_finance_storage{(IsMySql ? "_" : ".")}groups";
+                sqlBulkCopy.DestinationTableName = $"uchicago_mod_finance_storage{(IsMySql ? "_" : ".")}groups";
                 sqlBulkCopy.ColumnMappings.Clear();
                 sqlBulkCopy.ColumnMappings.Add("id", "id");
                 sqlBulkCopy.ColumnMappings.Add("jsonb", "jsonb");
@@ -3334,7 +3334,7 @@ namespace FolioLibrary
             }
             if (fiscalYearsDataTable != null && fiscalYearsDataTable.Rows.Count > 0)
             {
-                sqlBulkCopy.DestinationTableName = $"diku_mod_finance_storage{(IsMySql ? "_" : ".")}fiscal_year";
+                sqlBulkCopy.DestinationTableName = $"uchicago_mod_finance_storage{(IsMySql ? "_" : ".")}fiscal_year";
                 sqlBulkCopy.ColumnMappings.Clear();
                 sqlBulkCopy.ColumnMappings.Add("id", "id");
                 sqlBulkCopy.ColumnMappings.Add("jsonb", "jsonb");
@@ -3345,7 +3345,7 @@ namespace FolioLibrary
             }
             if (fixedDueDateSchedulesDataTable != null && fixedDueDateSchedulesDataTable.Rows.Count > 0)
             {
-                sqlBulkCopy.DestinationTableName = $"diku_mod_circulation_storage{(IsMySql ? "_" : ".")}fixed_due_date_schedule";
+                sqlBulkCopy.DestinationTableName = $"uchicago_mod_circulation_storage{(IsMySql ? "_" : ".")}fixed_due_date_schedule";
                 sqlBulkCopy.ColumnMappings.Clear();
                 sqlBulkCopy.ColumnMappings.Add("id", "id");
                 sqlBulkCopy.ColumnMappings.Add("jsonb", "jsonb");
@@ -3354,7 +3354,7 @@ namespace FolioLibrary
             }
             if (fundsDataTable != null && fundsDataTable.Rows.Count > 0)
             {
-                sqlBulkCopy.DestinationTableName = $"diku_mod_finance_storage{(IsMySql ? "_" : ".")}fund";
+                sqlBulkCopy.DestinationTableName = $"uchicago_mod_finance_storage{(IsMySql ? "_" : ".")}fund";
                 sqlBulkCopy.ColumnMappings.Clear();
                 sqlBulkCopy.ColumnMappings.Add("id", "id");
                 sqlBulkCopy.ColumnMappings.Add("jsonb", "jsonb");
@@ -3367,7 +3367,7 @@ namespace FolioLibrary
             }
             if (fundTypesDataTable != null && fundTypesDataTable.Rows.Count > 0)
             {
-                sqlBulkCopy.DestinationTableName = $"diku_mod_finance_storage{(IsMySql ? "_" : ".")}fund_type";
+                sqlBulkCopy.DestinationTableName = $"uchicago_mod_finance_storage{(IsMySql ? "_" : ".")}fund_type";
                 sqlBulkCopy.ColumnMappings.Clear();
                 sqlBulkCopy.ColumnMappings.Add("id", "id");
                 sqlBulkCopy.ColumnMappings.Add("jsonb", "jsonb");
@@ -3376,7 +3376,7 @@ namespace FolioLibrary
             }
             if (groupsDataTable != null && groupsDataTable.Rows.Count > 0)
             {
-                sqlBulkCopy.DestinationTableName = $"diku_mod_users{(IsMySql ? "_" : ".")}groups";
+                sqlBulkCopy.DestinationTableName = $"uchicago_mod_users{(IsMySql ? "_" : ".")}groups";
                 sqlBulkCopy.ColumnMappings.Clear();
                 sqlBulkCopy.ColumnMappings.Add("id", "id");
                 sqlBulkCopy.ColumnMappings.Add("jsonb", "jsonb");
@@ -3387,7 +3387,7 @@ namespace FolioLibrary
             }
             if (holdingsDataTable != null && holdingsDataTable.Rows.Count > 0)
             {
-                sqlBulkCopy.DestinationTableName = $"diku_mod_inventory_storage{(IsMySql ? "_" : ".")}holdings_record";
+                sqlBulkCopy.DestinationTableName = $"uchicago_mod_inventory_storage{(IsMySql ? "_" : ".")}holdings_record";
                 sqlBulkCopy.ColumnMappings.Clear();
                 sqlBulkCopy.ColumnMappings.Add("id", "id");
                 sqlBulkCopy.ColumnMappings.Add("jsonb", "jsonb");
@@ -3406,7 +3406,7 @@ namespace FolioLibrary
             }
             if (holdingNoteTypesDataTable != null && holdingNoteTypesDataTable.Rows.Count > 0)
             {
-                sqlBulkCopy.DestinationTableName = $"diku_mod_inventory_storage{(IsMySql ? "_" : ".")}holdings_note_type";
+                sqlBulkCopy.DestinationTableName = $"uchicago_mod_inventory_storage{(IsMySql ? "_" : ".")}holdings_note_type";
                 sqlBulkCopy.ColumnMappings.Clear();
                 sqlBulkCopy.ColumnMappings.Add("id", "id");
                 sqlBulkCopy.ColumnMappings.Add("jsonb", "jsonb");
@@ -3417,7 +3417,7 @@ namespace FolioLibrary
             }
             if (holdingTypesDataTable != null && holdingTypesDataTable.Rows.Count > 0)
             {
-                sqlBulkCopy.DestinationTableName = $"diku_mod_inventory_storage{(IsMySql ? "_" : ".")}holdings_type";
+                sqlBulkCopy.DestinationTableName = $"uchicago_mod_inventory_storage{(IsMySql ? "_" : ".")}holdings_type";
                 sqlBulkCopy.ColumnMappings.Clear();
                 sqlBulkCopy.ColumnMappings.Add("id", "id");
                 sqlBulkCopy.ColumnMappings.Add("jsonb", "jsonb");
@@ -3428,7 +3428,7 @@ namespace FolioLibrary
             }
             if (hridSettingsDataTable != null && hridSettingsDataTable.Rows.Count > 0)
             {
-                sqlBulkCopy.DestinationTableName = $"diku_mod_inventory_storage{(IsMySql ? "_" : ".")}hrid_settings";
+                sqlBulkCopy.DestinationTableName = $"uchicago_mod_inventory_storage{(IsMySql ? "_" : ".")}hrid_settings";
                 sqlBulkCopy.ColumnMappings.Clear();
                 sqlBulkCopy.ColumnMappings.Add("id", "id");
                 sqlBulkCopy.ColumnMappings.Add("jsonb", "jsonb");
@@ -3438,7 +3438,7 @@ namespace FolioLibrary
             }
             if (idTypesDataTable != null && idTypesDataTable.Rows.Count > 0)
             {
-                sqlBulkCopy.DestinationTableName = $"diku_mod_inventory_storage{(IsMySql ? "_" : ".")}identifier_type";
+                sqlBulkCopy.DestinationTableName = $"uchicago_mod_inventory_storage{(IsMySql ? "_" : ".")}identifier_type";
                 sqlBulkCopy.ColumnMappings.Clear();
                 sqlBulkCopy.ColumnMappings.Add("id", "id");
                 sqlBulkCopy.ColumnMappings.Add("jsonb", "jsonb");
@@ -3449,7 +3449,7 @@ namespace FolioLibrary
             }
             if (illPoliciesDataTable != null && illPoliciesDataTable.Rows.Count > 0)
             {
-                sqlBulkCopy.DestinationTableName = $"diku_mod_inventory_storage{(IsMySql ? "_" : ".")}ill_policy";
+                sqlBulkCopy.DestinationTableName = $"uchicago_mod_inventory_storage{(IsMySql ? "_" : ".")}ill_policy";
                 sqlBulkCopy.ColumnMappings.Clear();
                 sqlBulkCopy.ColumnMappings.Add("id", "id");
                 sqlBulkCopy.ColumnMappings.Add("jsonb", "jsonb");
@@ -3460,7 +3460,7 @@ namespace FolioLibrary
             }
             if (instancesDataTable != null && instancesDataTable.Rows.Count > 0)
             {
-                sqlBulkCopy.DestinationTableName = $"diku_mod_inventory_storage{(IsMySql ? "_" : ".")}instance";
+                sqlBulkCopy.DestinationTableName = $"uchicago_mod_inventory_storage{(IsMySql ? "_" : ".")}instance";
                 sqlBulkCopy.ColumnMappings.Clear();
                 sqlBulkCopy.ColumnMappings.Add("id", "id");
                 sqlBulkCopy.ColumnMappings.Add("jsonb", "jsonb");
@@ -3474,7 +3474,7 @@ namespace FolioLibrary
             }
             if (instanceFormatsDataTable != null && instanceFormatsDataTable.Rows.Count > 0)
             {
-                sqlBulkCopy.DestinationTableName = $"diku_mod_inventory_storage{(IsMySql ? "_" : ".")}instance_format";
+                sqlBulkCopy.DestinationTableName = $"uchicago_mod_inventory_storage{(IsMySql ? "_" : ".")}instance_format";
                 sqlBulkCopy.ColumnMappings.Clear();
                 sqlBulkCopy.ColumnMappings.Add("id", "id");
                 sqlBulkCopy.ColumnMappings.Add("jsonb", "jsonb");
@@ -3483,7 +3483,7 @@ namespace FolioLibrary
             }
             if (instanceNoteTypesDataTable != null && instanceNoteTypesDataTable.Rows.Count > 0)
             {
-                sqlBulkCopy.DestinationTableName = $"diku_mod_inventory_storage{(IsMySql ? "_" : ".")}instance_note_type";
+                sqlBulkCopy.DestinationTableName = $"uchicago_mod_inventory_storage{(IsMySql ? "_" : ".")}instance_note_type";
                 sqlBulkCopy.ColumnMappings.Clear();
                 sqlBulkCopy.ColumnMappings.Add("id", "id");
                 sqlBulkCopy.ColumnMappings.Add("jsonb", "jsonb");
@@ -3494,7 +3494,7 @@ namespace FolioLibrary
             }
             if (instanceRelationshipsDataTable != null && instanceRelationshipsDataTable.Rows.Count > 0)
             {
-                sqlBulkCopy.DestinationTableName = $"diku_mod_inventory_storage{(IsMySql ? "_" : ".")}instance_relationship";
+                sqlBulkCopy.DestinationTableName = $"uchicago_mod_inventory_storage{(IsMySql ? "_" : ".")}instance_relationship";
                 sqlBulkCopy.ColumnMappings.Clear();
                 sqlBulkCopy.ColumnMappings.Add("id", "id");
                 sqlBulkCopy.ColumnMappings.Add("jsonb", "jsonb");
@@ -3508,7 +3508,7 @@ namespace FolioLibrary
             }
             if (instanceRelationshipTypesDataTable != null && instanceRelationshipTypesDataTable.Rows.Count > 0)
             {
-                sqlBulkCopy.DestinationTableName = $"diku_mod_inventory_storage{(IsMySql ? "_" : ".")}instance_relationship_type";
+                sqlBulkCopy.DestinationTableName = $"uchicago_mod_inventory_storage{(IsMySql ? "_" : ".")}instance_relationship_type";
                 sqlBulkCopy.ColumnMappings.Clear();
                 sqlBulkCopy.ColumnMappings.Add("id", "id");
                 sqlBulkCopy.ColumnMappings.Add("jsonb", "jsonb");
@@ -3519,7 +3519,7 @@ namespace FolioLibrary
             }
             if (instanceSourceMarcsDataTable != null && instanceSourceMarcsDataTable.Rows.Count > 0)
             {
-                sqlBulkCopy.DestinationTableName = $"diku_mod_inventory_storage{(IsMySql ? "_" : ".")}instance_source_marc";
+                sqlBulkCopy.DestinationTableName = $"uchicago_mod_inventory_storage{(IsMySql ? "_" : ".")}instance_source_marc";
                 sqlBulkCopy.ColumnMappings.Clear();
                 sqlBulkCopy.ColumnMappings.Add("id", "id");
                 sqlBulkCopy.ColumnMappings.Add("jsonb", "jsonb");
@@ -3530,7 +3530,7 @@ namespace FolioLibrary
             }
             if (instanceStatusesDataTable != null && instanceStatusesDataTable.Rows.Count > 0)
             {
-                sqlBulkCopy.DestinationTableName = $"diku_mod_inventory_storage{(IsMySql ? "_" : ".")}instance_status";
+                sqlBulkCopy.DestinationTableName = $"uchicago_mod_inventory_storage{(IsMySql ? "_" : ".")}instance_status";
                 sqlBulkCopy.ColumnMappings.Clear();
                 sqlBulkCopy.ColumnMappings.Add("id", "id");
                 sqlBulkCopy.ColumnMappings.Add("jsonb", "jsonb");
@@ -3541,7 +3541,7 @@ namespace FolioLibrary
             }
             if (instanceTypesDataTable != null && instanceTypesDataTable.Rows.Count > 0)
             {
-                sqlBulkCopy.DestinationTableName = $"diku_mod_inventory_storage{(IsMySql ? "_" : ".")}instance_type";
+                sqlBulkCopy.DestinationTableName = $"uchicago_mod_inventory_storage{(IsMySql ? "_" : ".")}instance_type";
                 sqlBulkCopy.ColumnMappings.Clear();
                 sqlBulkCopy.ColumnMappings.Add("id", "id");
                 sqlBulkCopy.ColumnMappings.Add("jsonb", "jsonb");
@@ -3550,7 +3550,7 @@ namespace FolioLibrary
             }
             if (institutionsDataTable != null && institutionsDataTable.Rows.Count > 0)
             {
-                sqlBulkCopy.DestinationTableName = $"diku_mod_inventory_storage{(IsMySql ? "_" : ".")}locinstitution";
+                sqlBulkCopy.DestinationTableName = $"uchicago_mod_inventory_storage{(IsMySql ? "_" : ".")}locinstitution";
                 sqlBulkCopy.ColumnMappings.Clear();
                 sqlBulkCopy.ColumnMappings.Add("id", "id");
                 sqlBulkCopy.ColumnMappings.Add("jsonb", "jsonb");
@@ -3561,7 +3561,7 @@ namespace FolioLibrary
             }
             if (interfacesDataTable != null && interfacesDataTable.Rows.Count > 0)
             {
-                sqlBulkCopy.DestinationTableName = $"diku_mod_organizations_storage{(IsMySql ? "_" : ".")}interfaces";
+                sqlBulkCopy.DestinationTableName = $"uchicago_mod_organizations_storage{(IsMySql ? "_" : ".")}interfaces";
                 sqlBulkCopy.ColumnMappings.Clear();
                 sqlBulkCopy.ColumnMappings.Add("id", "id");
                 sqlBulkCopy.ColumnMappings.Add("jsonb", "jsonb");
@@ -3572,7 +3572,7 @@ namespace FolioLibrary
             }
             if (interfaceCredentialsDataTable != null && interfaceCredentialsDataTable.Rows.Count > 0)
             {
-                sqlBulkCopy.DestinationTableName = $"diku_mod_organizations_storage{(IsMySql ? "_" : ".")}interface_credentials";
+                sqlBulkCopy.DestinationTableName = $"uchicago_mod_organizations_storage{(IsMySql ? "_" : ".")}interface_credentials";
                 sqlBulkCopy.ColumnMappings.Clear();
                 sqlBulkCopy.ColumnMappings.Add("id", "id");
                 sqlBulkCopy.ColumnMappings.Add("jsonb", "jsonb");
@@ -3582,7 +3582,7 @@ namespace FolioLibrary
             }
             if (invoicesDataTable != null && invoicesDataTable.Rows.Count > 0)
             {
-                sqlBulkCopy.DestinationTableName = $"diku_mod_invoice_storage{(IsMySql ? "_" : ".")}invoices";
+                sqlBulkCopy.DestinationTableName = $"uchicago_mod_invoice_storage{(IsMySql ? "_" : ".")}invoices";
                 sqlBulkCopy.ColumnMappings.Clear();
                 sqlBulkCopy.ColumnMappings.Add("id", "id");
                 sqlBulkCopy.ColumnMappings.Add("jsonb", "jsonb");
@@ -3594,7 +3594,7 @@ namespace FolioLibrary
             }
             if (invoiceItemsDataTable != null && invoiceItemsDataTable.Rows.Count > 0)
             {
-                sqlBulkCopy.DestinationTableName = $"diku_mod_invoice_storage{(IsMySql ? "_" : ".")}invoice_lines";
+                sqlBulkCopy.DestinationTableName = $"uchicago_mod_invoice_storage{(IsMySql ? "_" : ".")}invoice_lines";
                 sqlBulkCopy.ColumnMappings.Clear();
                 sqlBulkCopy.ColumnMappings.Add("id", "id");
                 sqlBulkCopy.ColumnMappings.Add("jsonb", "jsonb");
@@ -3606,7 +3606,7 @@ namespace FolioLibrary
             }
             if (invoiceTransactionSummariesDataTable != null && invoiceTransactionSummariesDataTable.Rows.Count > 0)
             {
-                sqlBulkCopy.DestinationTableName = $"diku_mod_finance_storage{(IsMySql ? "_" : ".")}invoice_transaction_summaries";
+                sqlBulkCopy.DestinationTableName = $"uchicago_mod_finance_storage{(IsMySql ? "_" : ".")}invoice_transaction_summaries";
                 sqlBulkCopy.ColumnMappings.Clear();
                 sqlBulkCopy.ColumnMappings.Add("id", "id");
                 sqlBulkCopy.ColumnMappings.Add("jsonb", "jsonb");
@@ -3615,7 +3615,7 @@ namespace FolioLibrary
             }
             if (itemsDataTable != null && itemsDataTable.Rows.Count > 0)
             {
-                sqlBulkCopy.DestinationTableName = $"diku_mod_inventory_storage{(IsMySql ? "_" : ".")}item";
+                sqlBulkCopy.DestinationTableName = $"uchicago_mod_inventory_storage{(IsMySql ? "_" : ".")}item";
                 sqlBulkCopy.ColumnMappings.Clear();
                 sqlBulkCopy.ColumnMappings.Add("id", "id");
                 sqlBulkCopy.ColumnMappings.Add("jsonb", "jsonb");
@@ -3633,7 +3633,7 @@ namespace FolioLibrary
             }
             if (itemDamagedStatusesDataTable != null && itemDamagedStatusesDataTable.Rows.Count > 0)
             {
-                sqlBulkCopy.DestinationTableName = $"diku_mod_inventory_storage{(IsMySql ? "_" : ".")}item_damaged_status";
+                sqlBulkCopy.DestinationTableName = $"uchicago_mod_inventory_storage{(IsMySql ? "_" : ".")}item_damaged_status";
                 sqlBulkCopy.ColumnMappings.Clear();
                 sqlBulkCopy.ColumnMappings.Add("id", "id");
                 sqlBulkCopy.ColumnMappings.Add("jsonb", "jsonb");
@@ -3644,7 +3644,7 @@ namespace FolioLibrary
             }
             if (itemNoteTypesDataTable != null && itemNoteTypesDataTable.Rows.Count > 0)
             {
-                sqlBulkCopy.DestinationTableName = $"diku_mod_inventory_storage{(IsMySql ? "_" : ".")}item_note_type";
+                sqlBulkCopy.DestinationTableName = $"uchicago_mod_inventory_storage{(IsMySql ? "_" : ".")}item_note_type";
                 sqlBulkCopy.ColumnMappings.Clear();
                 sqlBulkCopy.ColumnMappings.Add("id", "id");
                 sqlBulkCopy.ColumnMappings.Add("jsonb", "jsonb");
@@ -3655,7 +3655,7 @@ namespace FolioLibrary
             }
             if (jobExecutionsDataTable != null && jobExecutionsDataTable.Rows.Count > 0)
             {
-                sqlBulkCopy.DestinationTableName = $"diku_mod_source_record_manager{(IsMySql ? "_" : ".")}job_executions";
+                sqlBulkCopy.DestinationTableName = $"uchicago_mod_source_record_manager{(IsMySql ? "_" : ".")}job_executions";
                 sqlBulkCopy.ColumnMappings.Clear();
                 sqlBulkCopy.ColumnMappings.Add("id", "id");
                 sqlBulkCopy.ColumnMappings.Add("jsonb", "jsonb");
@@ -3664,7 +3664,7 @@ namespace FolioLibrary
             }
             if (jobExecutionProgressesDataTable != null && jobExecutionProgressesDataTable.Rows.Count > 0)
             {
-                sqlBulkCopy.DestinationTableName = $"diku_mod_source_record_manager{(IsMySql ? "_" : ".")}job_execution_progress";
+                sqlBulkCopy.DestinationTableName = $"uchicago_mod_source_record_manager{(IsMySql ? "_" : ".")}job_execution_progress";
                 sqlBulkCopy.ColumnMappings.Clear();
                 sqlBulkCopy.ColumnMappings.Add("id", "id");
                 sqlBulkCopy.ColumnMappings.Add("jsonb", "jsonb");
@@ -3674,7 +3674,7 @@ namespace FolioLibrary
             }
             if (jobExecutionSourceChunksDataTable != null && jobExecutionSourceChunksDataTable.Rows.Count > 0)
             {
-                sqlBulkCopy.DestinationTableName = $"diku_mod_source_record_manager{(IsMySql ? "_" : ".")}job_execution_source_chunks";
+                sqlBulkCopy.DestinationTableName = $"uchicago_mod_source_record_manager{(IsMySql ? "_" : ".")}job_execution_source_chunks";
                 sqlBulkCopy.ColumnMappings.Clear();
                 sqlBulkCopy.ColumnMappings.Add("id", "id");
                 sqlBulkCopy.ColumnMappings.Add("jsonb", "jsonb");
@@ -3684,7 +3684,7 @@ namespace FolioLibrary
             }
             if (jobMonitoringsDataTable != null && jobMonitoringsDataTable.Rows.Count > 0)
             {
-                sqlBulkCopy.DestinationTableName = $"diku_mod_source_record_manager{(IsMySql ? "_" : ".")}job_monitoring";
+                sqlBulkCopy.DestinationTableName = $"uchicago_mod_source_record_manager{(IsMySql ? "_" : ".")}job_monitoring";
                 sqlBulkCopy.ColumnMappings.Clear();
                 sqlBulkCopy.ColumnMappings.Add("id", "id");
                 sqlBulkCopy.ColumnMappings.Add("job_execution_id", "job_execution_id");
@@ -3695,7 +3695,7 @@ namespace FolioLibrary
             }
             if (journalRecordsDataTable != null && journalRecordsDataTable.Rows.Count > 0)
             {
-                sqlBulkCopy.DestinationTableName = $"diku_mod_source_record_manager{(IsMySql ? "_" : ".")}journal_records";
+                sqlBulkCopy.DestinationTableName = $"uchicago_mod_source_record_manager{(IsMySql ? "_" : ".")}journal_records";
                 sqlBulkCopy.ColumnMappings.Clear();
                 sqlBulkCopy.ColumnMappings.Add("id", "id");
                 sqlBulkCopy.ColumnMappings.Add("job_execution_id", "job_execution_id");
@@ -3714,7 +3714,7 @@ namespace FolioLibrary
             }
             if (ledgersDataTable != null && ledgersDataTable.Rows.Count > 0)
             {
-                sqlBulkCopy.DestinationTableName = $"diku_mod_finance_storage{(IsMySql ? "_" : ".")}ledger";
+                sqlBulkCopy.DestinationTableName = $"uchicago_mod_finance_storage{(IsMySql ? "_" : ".")}ledger";
                 sqlBulkCopy.ColumnMappings.Clear();
                 sqlBulkCopy.ColumnMappings.Add("id", "id");
                 sqlBulkCopy.ColumnMappings.Add("jsonb", "jsonb");
@@ -3726,7 +3726,7 @@ namespace FolioLibrary
             }
             if (ledgerRolloversDataTable != null && ledgerRolloversDataTable.Rows.Count > 0)
             {
-                sqlBulkCopy.DestinationTableName = $"diku_mod_finance_storage{(IsMySql ? "_" : ".")}ledger_fiscal_year_rollover";
+                sqlBulkCopy.DestinationTableName = $"uchicago_mod_finance_storage{(IsMySql ? "_" : ".")}ledger_fiscal_year_rollover";
                 sqlBulkCopy.ColumnMappings.Clear();
                 sqlBulkCopy.ColumnMappings.Add("id", "id");
                 sqlBulkCopy.ColumnMappings.Add("jsonb", "jsonb");
@@ -3740,7 +3740,7 @@ namespace FolioLibrary
             }
             if (ledgerRolloverErrorsDataTable != null && ledgerRolloverErrorsDataTable.Rows.Count > 0)
             {
-                sqlBulkCopy.DestinationTableName = $"diku_mod_finance_storage{(IsMySql ? "_" : ".")}ledger_fiscal_year_rollover_error";
+                sqlBulkCopy.DestinationTableName = $"uchicago_mod_finance_storage{(IsMySql ? "_" : ".")}ledger_fiscal_year_rollover_error";
                 sqlBulkCopy.ColumnMappings.Clear();
                 sqlBulkCopy.ColumnMappings.Add("id", "id");
                 sqlBulkCopy.ColumnMappings.Add("jsonb", "jsonb");
@@ -3752,7 +3752,7 @@ namespace FolioLibrary
             }
             if (ledgerRolloverProgressesDataTable != null && ledgerRolloverProgressesDataTable.Rows.Count > 0)
             {
-                sqlBulkCopy.DestinationTableName = $"diku_mod_finance_storage{(IsMySql ? "_" : ".")}ledger_fiscal_year_rollover_progress";
+                sqlBulkCopy.DestinationTableName = $"uchicago_mod_finance_storage{(IsMySql ? "_" : ".")}ledger_fiscal_year_rollover_progress";
                 sqlBulkCopy.ColumnMappings.Clear();
                 sqlBulkCopy.ColumnMappings.Add("id", "id");
                 sqlBulkCopy.ColumnMappings.Add("jsonb", "jsonb");
@@ -3764,7 +3764,7 @@ namespace FolioLibrary
             }
             if (librariesDataTable != null && librariesDataTable.Rows.Count > 0)
             {
-                sqlBulkCopy.DestinationTableName = $"diku_mod_inventory_storage{(IsMySql ? "_" : ".")}loclibrary";
+                sqlBulkCopy.DestinationTableName = $"uchicago_mod_inventory_storage{(IsMySql ? "_" : ".")}loclibrary";
                 sqlBulkCopy.ColumnMappings.Clear();
                 sqlBulkCopy.ColumnMappings.Add("id", "id");
                 sqlBulkCopy.ColumnMappings.Add("jsonb", "jsonb");
@@ -3776,7 +3776,7 @@ namespace FolioLibrary
             }
             if (loansDataTable != null && loansDataTable.Rows.Count > 0)
             {
-                sqlBulkCopy.DestinationTableName = $"diku_mod_circulation_storage{(IsMySql ? "_" : ".")}loan";
+                sqlBulkCopy.DestinationTableName = $"uchicago_mod_circulation_storage{(IsMySql ? "_" : ".")}loan";
                 sqlBulkCopy.ColumnMappings.Clear();
                 sqlBulkCopy.ColumnMappings.Add("id", "id");
                 sqlBulkCopy.ColumnMappings.Add("jsonb", "jsonb");
@@ -3787,7 +3787,7 @@ namespace FolioLibrary
             }
             if (loanEventsDataTable != null && loanEventsDataTable.Rows.Count > 0)
             {
-                sqlBulkCopy.DestinationTableName = $"diku_mod_circulation_storage{(IsMySql ? "_" : ".")}audit_loan";
+                sqlBulkCopy.DestinationTableName = $"uchicago_mod_circulation_storage{(IsMySql ? "_" : ".")}audit_loan";
                 sqlBulkCopy.ColumnMappings.Clear();
                 sqlBulkCopy.ColumnMappings.Add("id", "id");
                 sqlBulkCopy.ColumnMappings.Add("jsonb", "jsonb");
@@ -3796,7 +3796,7 @@ namespace FolioLibrary
             }
             if (loanPoliciesDataTable != null && loanPoliciesDataTable.Rows.Count > 0)
             {
-                sqlBulkCopy.DestinationTableName = $"diku_mod_circulation_storage{(IsMySql ? "_" : ".")}loan_policy";
+                sqlBulkCopy.DestinationTableName = $"uchicago_mod_circulation_storage{(IsMySql ? "_" : ".")}loan_policy";
                 sqlBulkCopy.ColumnMappings.Clear();
                 sqlBulkCopy.ColumnMappings.Add("id", "id");
                 sqlBulkCopy.ColumnMappings.Add("jsonb", "jsonb");
@@ -3809,7 +3809,7 @@ namespace FolioLibrary
             }
             if (loanTypesDataTable != null && loanTypesDataTable.Rows.Count > 0)
             {
-                sqlBulkCopy.DestinationTableName = $"diku_mod_inventory_storage{(IsMySql ? "_" : ".")}loan_type";
+                sqlBulkCopy.DestinationTableName = $"uchicago_mod_inventory_storage{(IsMySql ? "_" : ".")}loan_type";
                 sqlBulkCopy.ColumnMappings.Clear();
                 sqlBulkCopy.ColumnMappings.Add("id", "id");
                 sqlBulkCopy.ColumnMappings.Add("jsonb", "jsonb");
@@ -3820,7 +3820,7 @@ namespace FolioLibrary
             }
             if (locationsDataTable != null && locationsDataTable.Rows.Count > 0)
             {
-                sqlBulkCopy.DestinationTableName = $"diku_mod_inventory_storage{(IsMySql ? "_" : ".")}location";
+                sqlBulkCopy.DestinationTableName = $"uchicago_mod_inventory_storage{(IsMySql ? "_" : ".")}location";
                 sqlBulkCopy.ColumnMappings.Clear();
                 sqlBulkCopy.ColumnMappings.Add("id", "id");
                 sqlBulkCopy.ColumnMappings.Add("jsonb", "jsonb");
@@ -3834,7 +3834,7 @@ namespace FolioLibrary
             }
             if (loginsDataTable != null && loginsDataTable.Rows.Count > 0)
             {
-                sqlBulkCopy.DestinationTableName = $"diku_mod_login{(IsMySql ? "_" : ".")}auth_credentials";
+                sqlBulkCopy.DestinationTableName = $"uchicago_mod_login{(IsMySql ? "_" : ".")}auth_credentials";
                 sqlBulkCopy.ColumnMappings.Clear();
                 sqlBulkCopy.ColumnMappings.Add("id", "id");
                 sqlBulkCopy.ColumnMappings.Add("jsonb", "jsonb");
@@ -3845,7 +3845,7 @@ namespace FolioLibrary
             }
             if (lostItemFeePoliciesDataTable != null && lostItemFeePoliciesDataTable.Rows.Count > 0)
             {
-                sqlBulkCopy.DestinationTableName = $"diku_mod_feesfines{(IsMySql ? "_" : ".")}lost_item_fee_policy";
+                sqlBulkCopy.DestinationTableName = $"uchicago_mod_feesfines{(IsMySql ? "_" : ".")}lost_item_fee_policy";
                 sqlBulkCopy.ColumnMappings.Clear();
                 sqlBulkCopy.ColumnMappings.Add("id", "id");
                 sqlBulkCopy.ColumnMappings.Add("jsonb", "jsonb");
@@ -3856,7 +3856,7 @@ namespace FolioLibrary
             }
             if (manualBlockTemplatesDataTable != null && manualBlockTemplatesDataTable.Rows.Count > 0)
             {
-                sqlBulkCopy.DestinationTableName = $"diku_mod_feesfines{(IsMySql ? "_" : ".")}manual_block_templates";
+                sqlBulkCopy.DestinationTableName = $"uchicago_mod_feesfines{(IsMySql ? "_" : ".")}manual_block_templates";
                 sqlBulkCopy.ColumnMappings.Clear();
                 sqlBulkCopy.ColumnMappings.Add("id", "id");
                 sqlBulkCopy.ColumnMappings.Add("jsonb", "jsonb");
@@ -3867,7 +3867,7 @@ namespace FolioLibrary
             }
             if (mappingRulesDataTable != null && mappingRulesDataTable.Rows.Count > 0)
             {
-                sqlBulkCopy.DestinationTableName = $"diku_mod_source_record_manager{(IsMySql ? "_" : ".")}mapping_rules";
+                sqlBulkCopy.DestinationTableName = $"uchicago_mod_source_record_manager{(IsMySql ? "_" : ".")}mapping_rules";
                 sqlBulkCopy.ColumnMappings.Clear();
                 sqlBulkCopy.ColumnMappings.Add("id", "id");
                 sqlBulkCopy.ColumnMappings.Add("jsonb", "jsonb");
@@ -3876,7 +3876,7 @@ namespace FolioLibrary
             }
             if (marcRecordsDataTable != null && marcRecordsDataTable.Rows.Count > 0)
             {
-                sqlBulkCopy.DestinationTableName = $"diku_mod_source_record_storage{(IsMySql ? "_" : ".")}marc_records_lb";
+                sqlBulkCopy.DestinationTableName = $"uchicago_mod_source_record_storage{(IsMySql ? "_" : ".")}marc_records_lb";
                 sqlBulkCopy.ColumnMappings.Clear();
                 sqlBulkCopy.ColumnMappings.Add("id", "id");
                 sqlBulkCopy.ColumnMappings.Add("content", "content");
@@ -3885,7 +3885,7 @@ namespace FolioLibrary
             }
             if (materialTypesDataTable != null && materialTypesDataTable.Rows.Count > 0)
             {
-                sqlBulkCopy.DestinationTableName = $"diku_mod_inventory_storage{(IsMySql ? "_" : ".")}material_type";
+                sqlBulkCopy.DestinationTableName = $"uchicago_mod_inventory_storage{(IsMySql ? "_" : ".")}material_type";
                 sqlBulkCopy.ColumnMappings.Clear();
                 sqlBulkCopy.ColumnMappings.Add("id", "id");
                 sqlBulkCopy.ColumnMappings.Add("jsonb", "jsonb");
@@ -3896,7 +3896,7 @@ namespace FolioLibrary
             }
             if (modeOfIssuancesDataTable != null && modeOfIssuancesDataTable.Rows.Count > 0)
             {
-                sqlBulkCopy.DestinationTableName = $"diku_mod_inventory_storage{(IsMySql ? "_" : ".")}mode_of_issuance";
+                sqlBulkCopy.DestinationTableName = $"uchicago_mod_inventory_storage{(IsMySql ? "_" : ".")}mode_of_issuance";
                 sqlBulkCopy.ColumnMappings.Clear();
                 sqlBulkCopy.ColumnMappings.Add("id", "id");
                 sqlBulkCopy.ColumnMappings.Add("jsonb", "jsonb");
@@ -3907,7 +3907,7 @@ namespace FolioLibrary
             }
             if (natureOfContentTermsDataTable != null && natureOfContentTermsDataTable.Rows.Count > 0)
             {
-                sqlBulkCopy.DestinationTableName = $"diku_mod_inventory_storage{(IsMySql ? "_" : ".")}nature_of_content_term";
+                sqlBulkCopy.DestinationTableName = $"uchicago_mod_inventory_storage{(IsMySql ? "_" : ".")}nature_of_content_term";
                 sqlBulkCopy.ColumnMappings.Clear();
                 sqlBulkCopy.ColumnMappings.Add("id", "id");
                 sqlBulkCopy.ColumnMappings.Add("jsonb", "jsonb");
@@ -3918,7 +3918,7 @@ namespace FolioLibrary
             }
             if (notesDataTable != null && notesDataTable.Rows.Count > 0)
             {
-                sqlBulkCopy.DestinationTableName = $"diku_mod_notes{(IsMySql ? "_" : ".")}note_data";
+                sqlBulkCopy.DestinationTableName = $"uchicago_mod_notes{(IsMySql ? "_" : ".")}note_data";
                 sqlBulkCopy.ColumnMappings.Clear();
                 sqlBulkCopy.ColumnMappings.Add("id", "id");
                 sqlBulkCopy.ColumnMappings.Add("jsonb", "jsonb");
@@ -3929,7 +3929,7 @@ namespace FolioLibrary
             }
             if (noteTypesDataTable != null && noteTypesDataTable.Rows.Count > 0)
             {
-                sqlBulkCopy.DestinationTableName = $"diku_mod_notes{(IsMySql ? "_" : ".")}note_type";
+                sqlBulkCopy.DestinationTableName = $"uchicago_mod_notes{(IsMySql ? "_" : ".")}note_type";
                 sqlBulkCopy.ColumnMappings.Clear();
                 sqlBulkCopy.ColumnMappings.Add("id", "id");
                 sqlBulkCopy.ColumnMappings.Add("jsonb", "jsonb");
@@ -3938,7 +3938,7 @@ namespace FolioLibrary
             }
             if (ordersDataTable != null && ordersDataTable.Rows.Count > 0)
             {
-                sqlBulkCopy.DestinationTableName = $"diku_mod_orders_storage{(IsMySql ? "_" : ".")}purchase_order";
+                sqlBulkCopy.DestinationTableName = $"uchicago_mod_orders_storage{(IsMySql ? "_" : ".")}purchase_order";
                 sqlBulkCopy.ColumnMappings.Clear();
                 sqlBulkCopy.ColumnMappings.Add("id", "id");
                 sqlBulkCopy.ColumnMappings.Add("jsonb", "jsonb");
@@ -3949,7 +3949,7 @@ namespace FolioLibrary
             }
             if (orderInvoicesDataTable != null && orderInvoicesDataTable.Rows.Count > 0)
             {
-                sqlBulkCopy.DestinationTableName = $"diku_mod_orders_storage{(IsMySql ? "_" : ".")}order_invoice_relationship";
+                sqlBulkCopy.DestinationTableName = $"uchicago_mod_orders_storage{(IsMySql ? "_" : ".")}order_invoice_relationship";
                 sqlBulkCopy.ColumnMappings.Clear();
                 sqlBulkCopy.ColumnMappings.Add("id", "id");
                 sqlBulkCopy.ColumnMappings.Add("jsonb", "jsonb");
@@ -3959,7 +3959,7 @@ namespace FolioLibrary
             }
             if (orderItemsDataTable != null && orderItemsDataTable.Rows.Count > 0)
             {
-                sqlBulkCopy.DestinationTableName = $"diku_mod_orders_storage{(IsMySql ? "_" : ".")}po_line";
+                sqlBulkCopy.DestinationTableName = $"uchicago_mod_orders_storage{(IsMySql ? "_" : ".")}po_line";
                 sqlBulkCopy.ColumnMappings.Clear();
                 sqlBulkCopy.ColumnMappings.Add("id", "id");
                 sqlBulkCopy.ColumnMappings.Add("jsonb", "jsonb");
@@ -3971,7 +3971,7 @@ namespace FolioLibrary
             }
             if (orderTemplatesDataTable != null && orderTemplatesDataTable.Rows.Count > 0)
             {
-                sqlBulkCopy.DestinationTableName = $"diku_mod_orders_storage{(IsMySql ? "_" : ".")}order_templates";
+                sqlBulkCopy.DestinationTableName = $"uchicago_mod_orders_storage{(IsMySql ? "_" : ".")}order_templates";
                 sqlBulkCopy.ColumnMappings.Clear();
                 sqlBulkCopy.ColumnMappings.Add("id", "id");
                 sqlBulkCopy.ColumnMappings.Add("jsonb", "jsonb");
@@ -3980,7 +3980,7 @@ namespace FolioLibrary
             }
             if (orderTransactionSummariesDataTable != null && orderTransactionSummariesDataTable.Rows.Count > 0)
             {
-                sqlBulkCopy.DestinationTableName = $"diku_mod_finance_storage{(IsMySql ? "_" : ".")}order_transaction_summaries";
+                sqlBulkCopy.DestinationTableName = $"uchicago_mod_finance_storage{(IsMySql ? "_" : ".")}order_transaction_summaries";
                 sqlBulkCopy.ColumnMappings.Clear();
                 sqlBulkCopy.ColumnMappings.Add("id", "id");
                 sqlBulkCopy.ColumnMappings.Add("jsonb", "jsonb");
@@ -3989,7 +3989,7 @@ namespace FolioLibrary
             }
             if (organizationsDataTable != null && organizationsDataTable.Rows.Count > 0)
             {
-                sqlBulkCopy.DestinationTableName = $"diku_mod_organizations_storage{(IsMySql ? "_" : ".")}organizations";
+                sqlBulkCopy.DestinationTableName = $"uchicago_mod_organizations_storage{(IsMySql ? "_" : ".")}organizations";
                 sqlBulkCopy.ColumnMappings.Clear();
                 sqlBulkCopy.ColumnMappings.Add("id", "id");
                 sqlBulkCopy.ColumnMappings.Add("jsonb", "jsonb");
@@ -4000,7 +4000,7 @@ namespace FolioLibrary
             }
             if (overdueFinePoliciesDataTable != null && overdueFinePoliciesDataTable.Rows.Count > 0)
             {
-                sqlBulkCopy.DestinationTableName = $"diku_mod_feesfines{(IsMySql ? "_" : ".")}overdue_fine_policy";
+                sqlBulkCopy.DestinationTableName = $"uchicago_mod_feesfines{(IsMySql ? "_" : ".")}overdue_fine_policy";
                 sqlBulkCopy.ColumnMappings.Clear();
                 sqlBulkCopy.ColumnMappings.Add("id", "id");
                 sqlBulkCopy.ColumnMappings.Add("jsonb", "jsonb");
@@ -4011,7 +4011,7 @@ namespace FolioLibrary
             }
             if (ownersDataTable != null && ownersDataTable.Rows.Count > 0)
             {
-                sqlBulkCopy.DestinationTableName = $"diku_mod_feesfines{(IsMySql ? "_" : ".")}owners";
+                sqlBulkCopy.DestinationTableName = $"uchicago_mod_feesfines{(IsMySql ? "_" : ".")}owners";
                 sqlBulkCopy.ColumnMappings.Clear();
                 sqlBulkCopy.ColumnMappings.Add("id", "id");
                 sqlBulkCopy.ColumnMappings.Add("jsonb", "jsonb");
@@ -4022,7 +4022,7 @@ namespace FolioLibrary
             }
             if (patronActionSessionsDataTable != null && patronActionSessionsDataTable.Rows.Count > 0)
             {
-                sqlBulkCopy.DestinationTableName = $"diku_mod_circulation_storage{(IsMySql ? "_" : ".")}patron_action_session";
+                sqlBulkCopy.DestinationTableName = $"uchicago_mod_circulation_storage{(IsMySql ? "_" : ".")}patron_action_session";
                 sqlBulkCopy.ColumnMappings.Clear();
                 sqlBulkCopy.ColumnMappings.Add("id", "id");
                 sqlBulkCopy.ColumnMappings.Add("jsonb", "jsonb");
@@ -4033,7 +4033,7 @@ namespace FolioLibrary
             }
             if (patronNoticePoliciesDataTable != null && patronNoticePoliciesDataTable.Rows.Count > 0)
             {
-                sqlBulkCopy.DestinationTableName = $"diku_mod_circulation_storage{(IsMySql ? "_" : ".")}patron_notice_policy";
+                sqlBulkCopy.DestinationTableName = $"uchicago_mod_circulation_storage{(IsMySql ? "_" : ".")}patron_notice_policy";
                 sqlBulkCopy.ColumnMappings.Clear();
                 sqlBulkCopy.ColumnMappings.Add("id", "id");
                 sqlBulkCopy.ColumnMappings.Add("jsonb", "jsonb");
@@ -4044,7 +4044,7 @@ namespace FolioLibrary
             }
             if (paymentsDataTable != null && paymentsDataTable.Rows.Count > 0)
             {
-                sqlBulkCopy.DestinationTableName = $"diku_mod_feesfines{(IsMySql ? "_" : ".")}feefineactions";
+                sqlBulkCopy.DestinationTableName = $"uchicago_mod_feesfines{(IsMySql ? "_" : ".")}feefineactions";
                 sqlBulkCopy.ColumnMappings.Clear();
                 sqlBulkCopy.ColumnMappings.Add("id", "id");
                 sqlBulkCopy.ColumnMappings.Add("jsonb", "jsonb");
@@ -4055,7 +4055,7 @@ namespace FolioLibrary
             }
             if (paymentMethodsDataTable != null && paymentMethodsDataTable.Rows.Count > 0)
             {
-                sqlBulkCopy.DestinationTableName = $"diku_mod_feesfines{(IsMySql ? "_" : ".")}payments";
+                sqlBulkCopy.DestinationTableName = $"uchicago_mod_feesfines{(IsMySql ? "_" : ".")}payments";
                 sqlBulkCopy.ColumnMappings.Clear();
                 sqlBulkCopy.ColumnMappings.Add("id", "id");
                 sqlBulkCopy.ColumnMappings.Add("jsonb", "jsonb");
@@ -4066,7 +4066,7 @@ namespace FolioLibrary
             }
             if (permissionsDataTable != null && permissionsDataTable.Rows.Count > 0)
             {
-                sqlBulkCopy.DestinationTableName = $"diku_mod_permissions{(IsMySql ? "_" : ".")}permissions";
+                sqlBulkCopy.DestinationTableName = $"uchicago_mod_permissions{(IsMySql ? "_" : ".")}permissions";
                 sqlBulkCopy.ColumnMappings.Clear();
                 sqlBulkCopy.ColumnMappings.Add("id", "id");
                 sqlBulkCopy.ColumnMappings.Add("jsonb", "jsonb");
@@ -4077,7 +4077,7 @@ namespace FolioLibrary
             }
             if (permissionsUsersDataTable != null && permissionsUsersDataTable.Rows.Count > 0)
             {
-                sqlBulkCopy.DestinationTableName = $"diku_mod_permissions{(IsMySql ? "_" : ".")}permissions_users";
+                sqlBulkCopy.DestinationTableName = $"uchicago_mod_permissions{(IsMySql ? "_" : ".")}permissions_users";
                 sqlBulkCopy.ColumnMappings.Clear();
                 sqlBulkCopy.ColumnMappings.Add("id", "id");
                 sqlBulkCopy.ColumnMappings.Add("jsonb", "jsonb");
@@ -4088,7 +4088,7 @@ namespace FolioLibrary
             }
             if (precedingSucceedingTitlesDataTable != null && precedingSucceedingTitlesDataTable.Rows.Count > 0)
             {
-                sqlBulkCopy.DestinationTableName = $"diku_mod_inventory_storage{(IsMySql ? "_" : ".")}preceding_succeeding_title";
+                sqlBulkCopy.DestinationTableName = $"uchicago_mod_inventory_storage{(IsMySql ? "_" : ".")}preceding_succeeding_title";
                 sqlBulkCopy.ColumnMappings.Clear();
                 sqlBulkCopy.ColumnMappings.Add("id", "id");
                 sqlBulkCopy.ColumnMappings.Add("jsonb", "jsonb");
@@ -4101,7 +4101,7 @@ namespace FolioLibrary
             }
             if (prefixesDataTable != null && prefixesDataTable.Rows.Count > 0)
             {
-                sqlBulkCopy.DestinationTableName = $"diku_mod_orders_storage{(IsMySql ? "_" : ".")}prefixes";
+                sqlBulkCopy.DestinationTableName = $"uchicago_mod_orders_storage{(IsMySql ? "_" : ".")}prefixes";
                 sqlBulkCopy.ColumnMappings.Clear();
                 sqlBulkCopy.ColumnMappings.Add("id", "id");
                 sqlBulkCopy.ColumnMappings.Add("jsonb", "jsonb");
@@ -4110,7 +4110,7 @@ namespace FolioLibrary
             }
             if (proxiesDataTable != null && proxiesDataTable.Rows.Count > 0)
             {
-                sqlBulkCopy.DestinationTableName = $"diku_mod_users{(IsMySql ? "_" : ".")}proxyfor";
+                sqlBulkCopy.DestinationTableName = $"uchicago_mod_users{(IsMySql ? "_" : ".")}proxyfor";
                 sqlBulkCopy.ColumnMappings.Clear();
                 sqlBulkCopy.ColumnMappings.Add("id", "id");
                 sqlBulkCopy.ColumnMappings.Add("jsonb", "jsonb");
@@ -4121,7 +4121,7 @@ namespace FolioLibrary
             }
             if (rawRecordsDataTable != null && rawRecordsDataTable.Rows.Count > 0)
             {
-                sqlBulkCopy.DestinationTableName = $"diku_mod_source_record_storage{(IsMySql ? "_" : ".")}raw_records_lb";
+                sqlBulkCopy.DestinationTableName = $"uchicago_mod_source_record_storage{(IsMySql ? "_" : ".")}raw_records_lb";
                 sqlBulkCopy.ColumnMappings.Clear();
                 sqlBulkCopy.ColumnMappings.Add("id", "id");
                 sqlBulkCopy.ColumnMappings.Add("content", "content");
@@ -4130,7 +4130,7 @@ namespace FolioLibrary
             }
             if (receivingsDataTable != null && receivingsDataTable.Rows.Count > 0)
             {
-                sqlBulkCopy.DestinationTableName = $"diku_mod_orders_storage{(IsMySql ? "_" : ".")}pieces";
+                sqlBulkCopy.DestinationTableName = $"uchicago_mod_orders_storage{(IsMySql ? "_" : ".")}pieces";
                 sqlBulkCopy.ColumnMappings.Clear();
                 sqlBulkCopy.ColumnMappings.Add("id", "id");
                 sqlBulkCopy.ColumnMappings.Add("jsonb", "jsonb");
@@ -4143,7 +4143,7 @@ namespace FolioLibrary
             }
             if (recordsDataTable != null && recordsDataTable.Rows.Count > 0)
             {
-                sqlBulkCopy.DestinationTableName = $"diku_mod_source_record_storage{(IsMySql ? "_" : ".")}records_lb";
+                sqlBulkCopy.DestinationTableName = $"uchicago_mod_source_record_storage{(IsMySql ? "_" : ".")}records_lb";
                 sqlBulkCopy.ColumnMappings.Clear();
                 sqlBulkCopy.ColumnMappings.Add("id", "id");
                 sqlBulkCopy.ColumnMappings.Add("snapshot_id", "snapshot_id");
@@ -4165,7 +4165,7 @@ namespace FolioLibrary
             }
             if (refundReasonsDataTable != null && refundReasonsDataTable.Rows.Count > 0)
             {
-                sqlBulkCopy.DestinationTableName = $"diku_mod_feesfines{(IsMySql ? "_" : ".")}refunds";
+                sqlBulkCopy.DestinationTableName = $"uchicago_mod_feesfines{(IsMySql ? "_" : ".")}refunds";
                 sqlBulkCopy.ColumnMappings.Clear();
                 sqlBulkCopy.ColumnMappings.Add("id", "id");
                 sqlBulkCopy.ColumnMappings.Add("jsonb", "jsonb");
@@ -4176,7 +4176,7 @@ namespace FolioLibrary
             }
             if (reportingCodesDataTable != null && reportingCodesDataTable.Rows.Count > 0)
             {
-                sqlBulkCopy.DestinationTableName = $"diku_mod_orders_storage{(IsMySql ? "_" : ".")}reporting_code";
+                sqlBulkCopy.DestinationTableName = $"uchicago_mod_orders_storage{(IsMySql ? "_" : ".")}reporting_code";
                 sqlBulkCopy.ColumnMappings.Clear();
                 sqlBulkCopy.ColumnMappings.Add("id", "id");
                 sqlBulkCopy.ColumnMappings.Add("jsonb", "jsonb");
@@ -4187,7 +4187,7 @@ namespace FolioLibrary
             }
             if (requestsDataTable != null && requestsDataTable.Rows.Count > 0)
             {
-                sqlBulkCopy.DestinationTableName = $"diku_mod_circulation_storage{(IsMySql ? "_" : ".")}request";
+                sqlBulkCopy.DestinationTableName = $"uchicago_mod_circulation_storage{(IsMySql ? "_" : ".")}request";
                 sqlBulkCopy.ColumnMappings.Clear();
                 sqlBulkCopy.ColumnMappings.Add("id", "id");
                 sqlBulkCopy.ColumnMappings.Add("jsonb", "jsonb");
@@ -4199,7 +4199,7 @@ namespace FolioLibrary
             }
             if (requestPoliciesDataTable != null && requestPoliciesDataTable.Rows.Count > 0)
             {
-                sqlBulkCopy.DestinationTableName = $"diku_mod_circulation_storage{(IsMySql ? "_" : ".")}request_policy";
+                sqlBulkCopy.DestinationTableName = $"uchicago_mod_circulation_storage{(IsMySql ? "_" : ".")}request_policy";
                 sqlBulkCopy.ColumnMappings.Clear();
                 sqlBulkCopy.ColumnMappings.Add("id", "id");
                 sqlBulkCopy.ColumnMappings.Add("jsonb", "jsonb");
@@ -4210,7 +4210,7 @@ namespace FolioLibrary
             }
             if (scheduledNoticesDataTable != null && scheduledNoticesDataTable.Rows.Count > 0)
             {
-                sqlBulkCopy.DestinationTableName = $"diku_mod_circulation_storage{(IsMySql ? "_" : ".")}scheduled_notice";
+                sqlBulkCopy.DestinationTableName = $"uchicago_mod_circulation_storage{(IsMySql ? "_" : ".")}scheduled_notice";
                 sqlBulkCopy.ColumnMappings.Clear();
                 sqlBulkCopy.ColumnMappings.Add("id", "id");
                 sqlBulkCopy.ColumnMappings.Add("jsonb", "jsonb");
@@ -4221,7 +4221,7 @@ namespace FolioLibrary
             }
             if (servicePointsDataTable != null && servicePointsDataTable.Rows.Count > 0)
             {
-                sqlBulkCopy.DestinationTableName = $"diku_mod_inventory_storage{(IsMySql ? "_" : ".")}service_point";
+                sqlBulkCopy.DestinationTableName = $"uchicago_mod_inventory_storage{(IsMySql ? "_" : ".")}service_point";
                 sqlBulkCopy.ColumnMappings.Clear();
                 sqlBulkCopy.ColumnMappings.Add("id", "id");
                 sqlBulkCopy.ColumnMappings.Add("jsonb", "jsonb");
@@ -4232,7 +4232,7 @@ namespace FolioLibrary
             }
             if (servicePointUsersDataTable != null && servicePointUsersDataTable.Rows.Count > 0)
             {
-                sqlBulkCopy.DestinationTableName = $"diku_mod_inventory_storage{(IsMySql ? "_" : ".")}service_point_user";
+                sqlBulkCopy.DestinationTableName = $"uchicago_mod_inventory_storage{(IsMySql ? "_" : ".")}service_point_user";
                 sqlBulkCopy.ColumnMappings.Clear();
                 sqlBulkCopy.ColumnMappings.Add("id", "id");
                 sqlBulkCopy.ColumnMappings.Add("jsonb", "jsonb");
@@ -4244,7 +4244,7 @@ namespace FolioLibrary
             }
             if (snapshotsDataTable != null && snapshotsDataTable.Rows.Count > 0)
             {
-                sqlBulkCopy.DestinationTableName = $"diku_mod_source_record_storage{(IsMySql ? "_" : ".")}snapshots_lb";
+                sqlBulkCopy.DestinationTableName = $"uchicago_mod_source_record_storage{(IsMySql ? "_" : ".")}snapshots_lb";
                 sqlBulkCopy.ColumnMappings.Clear();
                 sqlBulkCopy.ColumnMappings.Add("id", "id");
                 sqlBulkCopy.ColumnMappings.Add("status", "status");
@@ -4258,7 +4258,7 @@ namespace FolioLibrary
             }
             if (sourcesDataTable != null && sourcesDataTable.Rows.Count > 0)
             {
-                sqlBulkCopy.DestinationTableName = $"diku_mod_inventory_storage{(IsMySql ? "_" : ".")}holdings_records_source";
+                sqlBulkCopy.DestinationTableName = $"uchicago_mod_inventory_storage{(IsMySql ? "_" : ".")}holdings_records_source";
                 sqlBulkCopy.ColumnMappings.Clear();
                 sqlBulkCopy.ColumnMappings.Add("id", "id");
                 sqlBulkCopy.ColumnMappings.Add("jsonb", "jsonb");
@@ -4269,7 +4269,7 @@ namespace FolioLibrary
             }
             if (staffSlipsDataTable != null && staffSlipsDataTable.Rows.Count > 0)
             {
-                sqlBulkCopy.DestinationTableName = $"diku_mod_circulation_storage{(IsMySql ? "_" : ".")}staff_slips";
+                sqlBulkCopy.DestinationTableName = $"uchicago_mod_circulation_storage{(IsMySql ? "_" : ".")}staff_slips";
                 sqlBulkCopy.ColumnMappings.Clear();
                 sqlBulkCopy.ColumnMappings.Add("id", "id");
                 sqlBulkCopy.ColumnMappings.Add("jsonb", "jsonb");
@@ -4280,7 +4280,7 @@ namespace FolioLibrary
             }
             if (statisticalCodesDataTable != null && statisticalCodesDataTable.Rows.Count > 0)
             {
-                sqlBulkCopy.DestinationTableName = $"diku_mod_inventory_storage{(IsMySql ? "_" : ".")}statistical_code";
+                sqlBulkCopy.DestinationTableName = $"uchicago_mod_inventory_storage{(IsMySql ? "_" : ".")}statistical_code";
                 sqlBulkCopy.ColumnMappings.Clear();
                 sqlBulkCopy.ColumnMappings.Add("id", "id");
                 sqlBulkCopy.ColumnMappings.Add("jsonb", "jsonb");
@@ -4292,7 +4292,7 @@ namespace FolioLibrary
             }
             if (statisticalCodeTypesDataTable != null && statisticalCodeTypesDataTable.Rows.Count > 0)
             {
-                sqlBulkCopy.DestinationTableName = $"diku_mod_inventory_storage{(IsMySql ? "_" : ".")}statistical_code_type";
+                sqlBulkCopy.DestinationTableName = $"uchicago_mod_inventory_storage{(IsMySql ? "_" : ".")}statistical_code_type";
                 sqlBulkCopy.ColumnMappings.Clear();
                 sqlBulkCopy.ColumnMappings.Add("id", "id");
                 sqlBulkCopy.ColumnMappings.Add("jsonb", "jsonb");
@@ -4303,7 +4303,7 @@ namespace FolioLibrary
             }
             if (suffixesDataTable != null && suffixesDataTable.Rows.Count > 0)
             {
-                sqlBulkCopy.DestinationTableName = $"diku_mod_orders_storage{(IsMySql ? "_" : ".")}suffixes";
+                sqlBulkCopy.DestinationTableName = $"uchicago_mod_orders_storage{(IsMySql ? "_" : ".")}suffixes";
                 sqlBulkCopy.ColumnMappings.Clear();
                 sqlBulkCopy.ColumnMappings.Add("id", "id");
                 sqlBulkCopy.ColumnMappings.Add("jsonb", "jsonb");
@@ -4312,7 +4312,7 @@ namespace FolioLibrary
             }
             if (tagsDataTable != null && tagsDataTable.Rows.Count > 0)
             {
-                sqlBulkCopy.DestinationTableName = $"diku_mod_tags{(IsMySql ? "_" : ".")}tags";
+                sqlBulkCopy.DestinationTableName = $"uchicago_mod_tags{(IsMySql ? "_" : ".")}tags";
                 sqlBulkCopy.ColumnMappings.Clear();
                 sqlBulkCopy.ColumnMappings.Add("id", "id");
                 sqlBulkCopy.ColumnMappings.Add("jsonb", "jsonb");
@@ -4323,7 +4323,7 @@ namespace FolioLibrary
             }
             if (templatesDataTable != null && templatesDataTable.Rows.Count > 0)
             {
-                sqlBulkCopy.DestinationTableName = $"diku_mod_template_engine{(IsMySql ? "_" : ".")}template";
+                sqlBulkCopy.DestinationTableName = $"uchicago_mod_template_engine{(IsMySql ? "_" : ".")}template";
                 sqlBulkCopy.ColumnMappings.Clear();
                 sqlBulkCopy.ColumnMappings.Add("id", "id");
                 sqlBulkCopy.ColumnMappings.Add("jsonb", "jsonb");
@@ -4334,7 +4334,7 @@ namespace FolioLibrary
             }
             if (titlesDataTable != null && titlesDataTable.Rows.Count > 0)
             {
-                sqlBulkCopy.DestinationTableName = $"diku_mod_orders_storage{(IsMySql ? "_" : ".")}titles";
+                sqlBulkCopy.DestinationTableName = $"uchicago_mod_orders_storage{(IsMySql ? "_" : ".")}titles";
                 sqlBulkCopy.ColumnMappings.Clear();
                 sqlBulkCopy.ColumnMappings.Add("id", "id");
                 sqlBulkCopy.ColumnMappings.Add("jsonb", "jsonb");
@@ -4346,7 +4346,7 @@ namespace FolioLibrary
             }
             if (transactionsDataTable != null && transactionsDataTable.Rows.Count > 0)
             {
-                sqlBulkCopy.DestinationTableName = $"diku_mod_finance_storage{(IsMySql ? "_" : ".")}transaction";
+                sqlBulkCopy.DestinationTableName = $"uchicago_mod_finance_storage{(IsMySql ? "_" : ".")}transaction";
                 sqlBulkCopy.ColumnMappings.Clear();
                 sqlBulkCopy.ColumnMappings.Add("id", "id");
                 sqlBulkCopy.ColumnMappings.Add("jsonb", "jsonb");
@@ -4362,7 +4362,7 @@ namespace FolioLibrary
             }
             if (transferAccountsDataTable != null && transferAccountsDataTable.Rows.Count > 0)
             {
-                sqlBulkCopy.DestinationTableName = $"diku_mod_feesfines{(IsMySql ? "_" : ".")}transfers";
+                sqlBulkCopy.DestinationTableName = $"uchicago_mod_feesfines{(IsMySql ? "_" : ".")}transfers";
                 sqlBulkCopy.ColumnMappings.Clear();
                 sqlBulkCopy.ColumnMappings.Add("id", "id");
                 sqlBulkCopy.ColumnMappings.Add("jsonb", "jsonb");
@@ -4373,7 +4373,7 @@ namespace FolioLibrary
             }
             if (transferCriteriasDataTable != null && transferCriteriasDataTable.Rows.Count > 0)
             {
-                sqlBulkCopy.DestinationTableName = $"diku_mod_feesfines{(IsMySql ? "_" : ".")}transfer_criteria";
+                sqlBulkCopy.DestinationTableName = $"uchicago_mod_feesfines{(IsMySql ? "_" : ".")}transfer_criteria";
                 sqlBulkCopy.ColumnMappings.Clear();
                 sqlBulkCopy.ColumnMappings.Add("id", "id");
                 sqlBulkCopy.ColumnMappings.Add("jsonb", "jsonb");
@@ -4384,7 +4384,7 @@ namespace FolioLibrary
             }
             if (usersDataTable != null && usersDataTable.Rows.Count > 0)
             {
-                sqlBulkCopy.DestinationTableName = $"diku_mod_users{(IsMySql ? "_" : ".")}users";
+                sqlBulkCopy.DestinationTableName = $"uchicago_mod_users{(IsMySql ? "_" : ".")}users";
                 sqlBulkCopy.ColumnMappings.Clear();
                 sqlBulkCopy.ColumnMappings.Add("id", "id");
                 sqlBulkCopy.ColumnMappings.Add("jsonb", "jsonb");
@@ -4396,7 +4396,7 @@ namespace FolioLibrary
             }
             if (userAcquisitionsUnitsDataTable != null && userAcquisitionsUnitsDataTable.Rows.Count > 0)
             {
-                sqlBulkCopy.DestinationTableName = $"diku_mod_orders_storage{(IsMySql ? "_" : ".")}acquisitions_unit_membership";
+                sqlBulkCopy.DestinationTableName = $"uchicago_mod_orders_storage{(IsMySql ? "_" : ".")}acquisitions_unit_membership";
                 sqlBulkCopy.ColumnMappings.Clear();
                 sqlBulkCopy.ColumnMappings.Add("id", "id");
                 sqlBulkCopy.ColumnMappings.Add("jsonb", "jsonb");
@@ -4408,7 +4408,7 @@ namespace FolioLibrary
             }
             if (userRequestPreferencesDataTable != null && userRequestPreferencesDataTable.Rows.Count > 0)
             {
-                sqlBulkCopy.DestinationTableName = $"diku_mod_circulation_storage{(IsMySql ? "_" : ".")}user_request_preference";
+                sqlBulkCopy.DestinationTableName = $"uchicago_mod_circulation_storage{(IsMySql ? "_" : ".")}user_request_preference";
                 sqlBulkCopy.ColumnMappings.Clear();
                 sqlBulkCopy.ColumnMappings.Add("id", "id");
                 sqlBulkCopy.ColumnMappings.Add("jsonb", "jsonb");
@@ -4419,7 +4419,7 @@ namespace FolioLibrary
             }
             if (userSummariesDataTable != null && userSummariesDataTable.Rows.Count > 0)
             {
-                sqlBulkCopy.DestinationTableName = $"diku_mod_patron_blocks{(IsMySql ? "_" : ".")}user_summary";
+                sqlBulkCopy.DestinationTableName = $"uchicago_mod_patron_blocks{(IsMySql ? "_" : ".")}user_summary";
                 sqlBulkCopy.ColumnMappings.Clear();
                 sqlBulkCopy.ColumnMappings.Add("id", "id");
                 sqlBulkCopy.ColumnMappings.Add("jsonb", "jsonb");
@@ -4430,7 +4430,7 @@ namespace FolioLibrary
             }
             if (vouchersDataTable != null && vouchersDataTable.Rows.Count > 0)
             {
-                sqlBulkCopy.DestinationTableName = $"diku_mod_invoice_storage{(IsMySql ? "_" : ".")}vouchers";
+                sqlBulkCopy.DestinationTableName = $"uchicago_mod_invoice_storage{(IsMySql ? "_" : ".")}vouchers";
                 sqlBulkCopy.ColumnMappings.Clear();
                 sqlBulkCopy.ColumnMappings.Add("id", "id");
                 sqlBulkCopy.ColumnMappings.Add("jsonb", "jsonb");
@@ -4443,7 +4443,7 @@ namespace FolioLibrary
             }
             if (voucherItemsDataTable != null && voucherItemsDataTable.Rows.Count > 0)
             {
-                sqlBulkCopy.DestinationTableName = $"diku_mod_invoice_storage{(IsMySql ? "_" : ".")}voucher_lines";
+                sqlBulkCopy.DestinationTableName = $"uchicago_mod_invoice_storage{(IsMySql ? "_" : ".")}voucher_lines";
                 sqlBulkCopy.ColumnMappings.Clear();
                 sqlBulkCopy.ColumnMappings.Add("id", "id");
                 sqlBulkCopy.ColumnMappings.Add("jsonb", "jsonb");
@@ -4455,7 +4455,7 @@ namespace FolioLibrary
             }
             if (waiveReasonsDataTable != null && waiveReasonsDataTable.Rows.Count > 0)
             {
-                sqlBulkCopy.DestinationTableName = $"diku_mod_feesfines{(IsMySql ? "_" : ".")}waives";
+                sqlBulkCopy.DestinationTableName = $"uchicago_mod_feesfines{(IsMySql ? "_" : ".")}waives";
                 sqlBulkCopy.ColumnMappings.Clear();
                 sqlBulkCopy.ColumnMappings.Add("id", "id");
                 sqlBulkCopy.ColumnMappings.Add("jsonb", "jsonb");

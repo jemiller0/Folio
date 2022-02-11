@@ -6,7 +6,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace FolioLibrary
 {
-    // uc.item_statistical_codes -> diku_mod_inventory_storage.item
+    // uc.item_statistical_codes -> uchicago_mod_inventory_storage.item
     // ItemStatisticalCode -> Item
     [DisplayColumn(nameof(Id)), DisplayName("Item Statistical Codes"), Table("item_statistical_codes", Schema = "uc")]
     public partial class ItemStatisticalCode

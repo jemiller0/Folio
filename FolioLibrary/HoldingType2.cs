@@ -12,7 +12,7 @@ using System.Reflection;
 
 namespace FolioLibrary
 {
-    // uc.holding_types -> diku_mod_inventory_storage.holdings_type
+    // uc.holding_types -> uchicago_mod_inventory_storage.holdings_type
     // HoldingType2 -> HoldingType
     [DisplayColumn(nameof(Name)), DisplayName("Holding Types"), JsonConverter(typeof(JsonPathJsonConverter<HoldingType2>)), JsonObject(MemberSerialization = MemberSerialization.OptIn), Table("holding_types", Schema = "uc")]
     public partial class HoldingType2

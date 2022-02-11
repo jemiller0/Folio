@@ -12,7 +12,7 @@ using System.Reflection;
 
 namespace FolioLibrary
 {
-    // uc.classification_types -> diku_mod_inventory_storage.classification_type
+    // uc.classification_types -> uchicago_mod_inventory_storage.classification_type
     // ClassificationType2 -> ClassificationType
     [DisplayColumn(nameof(Name)), DisplayName("Classification Types"), JsonConverter(typeof(JsonPathJsonConverter<ClassificationType2>)), JsonObject(MemberSerialization = MemberSerialization.OptIn), Table("classification_types", Schema = "uc")]
     public partial class ClassificationType2

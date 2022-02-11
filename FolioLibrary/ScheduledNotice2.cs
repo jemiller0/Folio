@@ -11,7 +11,7 @@ using System.Reflection;
 
 namespace FolioLibrary
 {
-    // uc.scheduled_notices -> diku_mod_circulation_storage.scheduled_notice
+    // uc.scheduled_notices -> uchicago_mod_circulation_storage.scheduled_notice
     // ScheduledNotice2 -> ScheduledNotice
     [DisplayColumn(nameof(Id)), DisplayName("Scheduled Notices"), JsonConverter(typeof(JsonPathJsonConverter<ScheduledNotice2>)), JsonObject(MemberSerialization = MemberSerialization.OptIn), Table("scheduled_notices", Schema = "uc")]
     public partial class ScheduledNotice2

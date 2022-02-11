@@ -12,7 +12,7 @@ using System.Reflection;
 
 namespace FolioLibrary
 {
-    // uc.mode_of_issuances -> diku_mod_inventory_storage.mode_of_issuance
+    // uc.mode_of_issuances -> uchicago_mod_inventory_storage.mode_of_issuance
     // IssuanceMode -> ModeOfIssuance
     [DisplayColumn(nameof(Name)), DisplayName("Issuance Modes"), JsonConverter(typeof(JsonPathJsonConverter<IssuanceMode>)), JsonObject(MemberSerialization = MemberSerialization.OptIn), Table("mode_of_issuances", Schema = "uc")]
     public partial class IssuanceMode

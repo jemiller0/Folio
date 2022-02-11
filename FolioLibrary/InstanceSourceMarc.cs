@@ -10,7 +10,7 @@ using System.Reflection;
 
 namespace FolioLibrary
 {
-    [Table("instance_source_marc", Schema = "diku_mod_inventory_storage")]
+    [Table("instance_source_marc", Schema = "uchicago_mod_inventory_storage")]
     public partial class InstanceSourceMarc
     {
         public static ValidationResult ValidateContent(string value)

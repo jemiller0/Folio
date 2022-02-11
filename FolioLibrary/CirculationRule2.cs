@@ -11,7 +11,7 @@ using System.Reflection;
 
 namespace FolioLibrary
 {
-    // uc.circulation_rules -> diku_mod_circulation_storage.circulation_rules
+    // uc.circulation_rules -> uchicago_mod_circulation_storage.circulation_rules
     // CirculationRule2 -> CirculationRule
     [DisplayColumn(nameof(Id)), DisplayName("Circulation Rules"), JsonObject(MemberSerialization = MemberSerialization.OptIn), Table("circulation_rules", Schema = "uc")]
     public partial class CirculationRule2

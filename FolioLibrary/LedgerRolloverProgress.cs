@@ -10,7 +10,7 @@ using System.Reflection;
 
 namespace FolioLibrary
 {
-    [Table("ledger_fiscal_year_rollover_progress", Schema = "diku_mod_finance_storage")]
+    [Table("ledger_fiscal_year_rollover_progress", Schema = "uchicago_mod_finance_storage")]
     public partial class LedgerRolloverProgress
     {
         public static ValidationResult ValidateContent(string value)

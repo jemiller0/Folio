@@ -12,7 +12,7 @@ using System.Reflection;
 
 namespace FolioLibrary
 {
-    // uc.payments -> diku_mod_feesfines.feefineactions
+    // uc.payments -> uchicago_mod_feesfines.feefineactions
     // Payment2 -> Payment
     [DisplayColumn(nameof(Id)), DisplayName("Payments"), JsonObject(MemberSerialization = MemberSerialization.OptIn), Table("payments", Schema = "uc")]
     public partial class Payment2

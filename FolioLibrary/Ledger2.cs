@@ -12,7 +12,7 @@ using System.Reflection;
 
 namespace FolioLibrary
 {
-    // uc.ledgers -> diku_mod_finance_storage.ledger
+    // uc.ledgers -> uchicago_mod_finance_storage.ledger
     // Ledger2 -> Ledger
     [DisplayColumn(nameof(Name)), DisplayName("Ledgers"), JsonConverter(typeof(JsonPathJsonConverter<Ledger2>)), JsonObject(MemberSerialization = MemberSerialization.OptIn), Table("ledgers", Schema = "uc")]
     public partial class Ledger2

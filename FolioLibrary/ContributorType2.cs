@@ -12,7 +12,7 @@ using System.Reflection;
 
 namespace FolioLibrary
 {
-    // uc.contributor_types -> diku_mod_inventory_storage.contributor_type
+    // uc.contributor_types -> uchicago_mod_inventory_storage.contributor_type
     // ContributorType2 -> ContributorType
     [DisplayColumn(nameof(Name)), DisplayName("Contributor Types"), JsonConverter(typeof(JsonPathJsonConverter<ContributorType2>)), JsonObject(MemberSerialization = MemberSerialization.OptIn), Table("contributor_types", Schema = "uc")]
     public partial class ContributorType2

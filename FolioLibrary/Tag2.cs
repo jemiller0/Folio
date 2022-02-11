@@ -12,7 +12,7 @@ using System.Reflection;
 
 namespace FolioLibrary
 {
-    // uc.tags -> diku_mod_tags.tags
+    // uc.tags -> uchicago_mod_tags.tags
     // Tag2 -> Tag
     [DisplayColumn(nameof(Id)), DisplayName("Tags"), JsonConverter(typeof(JsonPathJsonConverter<Tag2>)), JsonObject(MemberSerialization = MemberSerialization.OptIn), Table("tags", Schema = "uc")]
     public partial class Tag2

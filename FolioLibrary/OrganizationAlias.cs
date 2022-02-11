@@ -7,7 +7,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace FolioLibrary
 {
-    // uc.organization_aliases -> diku_mod_organizations_storage.organizations
+    // uc.organization_aliases -> uchicago_mod_organizations_storage.organizations
     // OrganizationAlias -> Organization
     [DisplayColumn(nameof(Value)), DisplayName("Organization Aliases"), JsonObject(MemberSerialization = MemberSerialization.OptIn), Table("organization_aliases", Schema = "uc")]
     public partial class OrganizationAlias

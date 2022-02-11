@@ -6,7 +6,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace FolioLibrary
 {
-    [Table("mapping_rules", Schema = "diku_mod_source_record_manager")]
+    [Table("mapping_rules", Schema = "uchicago_mod_source_record_manager")]
     public partial class MappingRule
     {
         [Column("id"), Display(Order = 1), Editable(false)]

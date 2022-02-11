@@ -11,7 +11,7 @@ using System.Reflection;
 
 namespace FolioLibrary
 {
-    // uc.event_logs -> diku_mod_login.event_logs
+    // uc.event_logs -> uchicago_mod_login.event_logs
     // EventLog2 -> EventLog
     [DisplayColumn(nameof(Id)), DisplayName("Event Logs"), JsonConverter(typeof(JsonPathJsonConverter<EventLog2>)), JsonObject(MemberSerialization = MemberSerialization.OptIn), Table("event_logs", Schema = "uc")]
     public partial class EventLog2

@@ -7,7 +7,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace FolioLibrary
 {
-    // uc.request_identifiers -> diku_mod_circulation_storage.request
+    // uc.request_identifiers -> uchicago_mod_circulation_storage.request
     // RequestIdentifier -> Request
     [DisplayColumn(nameof(Id)), DisplayName("Request Identifiers"), JsonObject(MemberSerialization = MemberSerialization.OptIn), Table("request_identifiers", Schema = "uc")]
     public partial class RequestIdentifier

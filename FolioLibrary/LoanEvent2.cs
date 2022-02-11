@@ -11,7 +11,7 @@ using System.Reflection;
 
 namespace FolioLibrary
 {
-    // uc.loan_events -> diku_mod_circulation_storage.audit_loan
+    // uc.loan_events -> uchicago_mod_circulation_storage.audit_loan
     // LoanEvent2 -> LoanEvent
     [DisplayColumn(nameof(Id)), DisplayName("Loan Events"), JsonConverter(typeof(JsonPathJsonConverter<LoanEvent2>)), JsonObject(MemberSerialization = MemberSerialization.OptIn), Table("loan_events", Schema = "uc")]
     public partial class LoanEvent2

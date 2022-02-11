@@ -11,7 +11,7 @@ using System.Reflection;
 
 namespace FolioLibrary
 {
-    // uc.ledger_rollover_progresses -> diku_mod_finance_storage.ledger_fiscal_year_rollover_progress
+    // uc.ledger_rollover_progresses -> uchicago_mod_finance_storage.ledger_fiscal_year_rollover_progress
     // LedgerRolloverProgress2 -> LedgerRolloverProgress
     [DisplayColumn(nameof(Id)), DisplayName("Ledger Rollover Progresses"), JsonConverter(typeof(JsonPathJsonConverter<LedgerRolloverProgress2>)), JsonObject(MemberSerialization = MemberSerialization.OptIn), Table("ledger_rollover_progresses", Schema = "uc")]
     public partial class LedgerRolloverProgress2

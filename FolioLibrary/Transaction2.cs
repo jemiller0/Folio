@@ -12,7 +12,7 @@ using System.Reflection;
 
 namespace FolioLibrary
 {
-    // uc.transactions -> diku_mod_finance_storage.transaction
+    // uc.transactions -> uchicago_mod_finance_storage.transaction
     // Transaction2 -> Transaction
     [DisplayColumn(nameof(Amount)), DisplayName("Transactions"), JsonConverter(typeof(JsonPathJsonConverter<Transaction2>)), JsonObject(MemberSerialization = MemberSerialization.OptIn), Table("transactions", Schema = "uc")]
     public partial class Transaction2

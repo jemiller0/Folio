@@ -12,7 +12,7 @@ using System.Reflection;
 
 namespace FolioLibrary
 {
-    // uc.fixed_due_date_schedules -> diku_mod_circulation_storage.fixed_due_date_schedule
+    // uc.fixed_due_date_schedules -> uchicago_mod_circulation_storage.fixed_due_date_schedule
     // FixedDueDateSchedule2 -> FixedDueDateSchedule
     [DisplayColumn(nameof(Name)), DisplayName("Fixed Due Date Schedules"), JsonConverter(typeof(JsonPathJsonConverter<FixedDueDateSchedule2>)), JsonObject(MemberSerialization = MemberSerialization.OptIn), Table("fixed_due_date_schedules", Schema = "uc")]
     public partial class FixedDueDateSchedule2

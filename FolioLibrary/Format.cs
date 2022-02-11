@@ -11,7 +11,7 @@ using System.Reflection;
 
 namespace FolioLibrary
 {
-    // uc.formats -> diku_mod_inventory_storage.instance_format
+    // uc.formats -> uchicago_mod_inventory_storage.instance_format
     // Format -> InstanceFormat
     [DisplayColumn(nameof(Name)), JsonConverter(typeof(JsonPathJsonConverter<Format>)), JsonObject(MemberSerialization = MemberSerialization.OptIn), Table("formats", Schema = "uc")]
     public partial class Format

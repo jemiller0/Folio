@@ -6,7 +6,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace FolioLibrary
 {
-    [Table("auth_password_action", Schema = "diku_mod_login")]
+    [Table("auth_password_action", Schema = "uchicago_mod_login")]
     public partial class AuthPasswordAction
     {
         [Column("id"), Display(Order = 1), Editable(false)]

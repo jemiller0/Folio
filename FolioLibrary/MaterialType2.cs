@@ -12,7 +12,7 @@ using System.Reflection;
 
 namespace FolioLibrary
 {
-    // uc.material_types -> diku_mod_inventory_storage.material_type
+    // uc.material_types -> uchicago_mod_inventory_storage.material_type
     // MaterialType2 -> MaterialType
     [DisplayColumn(nameof(Name)), DisplayName("Material Types"), JsonConverter(typeof(JsonPathJsonConverter<MaterialType2>)), JsonObject(MemberSerialization = MemberSerialization.OptIn), Table("material_types", Schema = "uc")]
     public partial class MaterialType2

@@ -5,7 +5,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace FolioLibrary
 {
-    [Table("records_lb", Schema = "diku_mod_source_record_storage")]
+    [Table("records_lb", Schema = "uchicago_mod_source_record_storage")]
     public partial class Record
     {
         [Column("id"), ScaffoldColumn(false)]

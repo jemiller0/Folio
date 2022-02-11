@@ -1411,7 +1411,7 @@ namespace FolioConsoleApplication
             var path = Path.Combine(Path.GetDirectoryName(Process.GetCurrentProcess().MainModule.FileName), "ConnectionStrings.config");
             if (!File.Exists(path))
             {
-                File.WriteAllText(path, "<connectionStrings>\r\n  <add name=\"FolioContext\" providerName=\"Npgsql\" connectionString=\"Host=localhost;Username=postgres;Password=;Database=folio\" />\r\n  <add name=\"FolioServiceClient\" connectionString=\"http://localhost:9130/diku?username=diku_admin&amp;password=\" />\r\n</connectionStrings>");
+                File.WriteAllText(path, "<connectionStrings>\r\n  <add name=\"FolioContext\" providerName=\"Npgsql\" connectionString=\"Host=localhost;Username=postgres;Password=;Database=folio\" />\r\n  <add name=\"FolioServiceClient\" connectionString=\"http://localhost:9130/uchicago?username=uchicago_admin&amp;password=\" />\r\n</connectionStrings>");
                 traceSource.TraceEvent(TraceEventType.Information, 0, $"Created {path}");
             }
             path = Path.Combine(Path.GetDirectoryName(Process.GetCurrentProcess().MainModule.FileName), "AppSettings.config");
@@ -1465,7 +1465,7 @@ namespace FolioConsoleApplication
                 }
                 else
                 {
-                    if (!whatIf) i = fbcc.ExecuteNonQuery($"DELETE FROM diku_mod_orders_storage.acquisitions_unit{(where != null ? $" WHERE {where}" : "")}");
+                    if (!whatIf) i = fbcc.ExecuteNonQuery($"DELETE FROM uchicago_mod_orders_storage.acquisitions_unit{(where != null ? $" WHERE {where}" : "")}");
                 }
                 traceSource.TraceEvent(TraceEventType.Information, 0, $"Deleted {i} acquisitions units");
             }
@@ -1612,7 +1612,7 @@ namespace FolioConsoleApplication
                 }
                 else
                 {
-                    if (!whatIf) i = fbcc.ExecuteNonQuery($"DELETE FROM diku_mod_users.addresstype{(where != null ? $" WHERE {where}" : "")}");
+                    if (!whatIf) i = fbcc.ExecuteNonQuery($"DELETE FROM uchicago_mod_users.addresstype{(where != null ? $" WHERE {where}" : "")}");
                 }
                 traceSource.TraceEvent(TraceEventType.Information, 0, $"Deleted {i} address types");
             }
@@ -1759,7 +1759,7 @@ namespace FolioConsoleApplication
                 }
                 else
                 {
-                    if (!whatIf) i = fbcc.ExecuteNonQuery($"DELETE FROM diku_mod_orders_storage.alert{(where != null ? $" WHERE {where}" : "")}");
+                    if (!whatIf) i = fbcc.ExecuteNonQuery($"DELETE FROM uchicago_mod_orders_storage.alert{(where != null ? $" WHERE {where}" : "")}");
                 }
                 traceSource.TraceEvent(TraceEventType.Information, 0, $"Deleted {i} alerts");
             }
@@ -1906,7 +1906,7 @@ namespace FolioConsoleApplication
                 }
                 else
                 {
-                    if (!whatIf) i = fbcc.ExecuteNonQuery($"DELETE FROM diku_mod_inventory_storage.alternative_title_type{(where != null ? $" WHERE {where}" : "")}");
+                    if (!whatIf) i = fbcc.ExecuteNonQuery($"DELETE FROM uchicago_mod_inventory_storage.alternative_title_type{(where != null ? $" WHERE {where}" : "")}");
                 }
                 traceSource.TraceEvent(TraceEventType.Information, 0, $"Deleted {i} alternative title types");
             }
@@ -2053,7 +2053,7 @@ namespace FolioConsoleApplication
                 }
                 else
                 {
-                    if (!whatIf) i = fbcc.ExecuteNonQuery($"DELETE FROM diku_mod_invoice_storage.batch_groups{(where != null ? $" WHERE {where}" : "")}");
+                    if (!whatIf) i = fbcc.ExecuteNonQuery($"DELETE FROM uchicago_mod_invoice_storage.batch_groups{(where != null ? $" WHERE {where}" : "")}");
                 }
                 traceSource.TraceEvent(TraceEventType.Information, 0, $"Deleted {i} batch groups");
             }
@@ -2188,7 +2188,7 @@ namespace FolioConsoleApplication
                 }
                 else
                 {
-                    if (!whatIf) i = fbcc.ExecuteNonQuery($"DELETE FROM diku_mod_invoice_storage.batch_vouchers{(where != null ? $" WHERE {where}" : "")}");
+                    if (!whatIf) i = fbcc.ExecuteNonQuery($"DELETE FROM uchicago_mod_invoice_storage.batch_vouchers{(where != null ? $" WHERE {where}" : "")}");
                 }
                 traceSource.TraceEvent(TraceEventType.Information, 0, $"Deleted {i} batch vouchers");
             }
@@ -2328,7 +2328,7 @@ namespace FolioConsoleApplication
                 }
                 else
                 {
-                    if (!whatIf) i = fbcc.ExecuteNonQuery($"DELETE FROM diku_mod_invoice_storage.batch_voucher_exports{(where != null ? $" WHERE {where}" : "")}");
+                    if (!whatIf) i = fbcc.ExecuteNonQuery($"DELETE FROM uchicago_mod_invoice_storage.batch_voucher_exports{(where != null ? $" WHERE {where}" : "")}");
                 }
                 traceSource.TraceEvent(TraceEventType.Information, 0, $"Deleted {i} batch voucher exports");
             }
@@ -2475,7 +2475,7 @@ namespace FolioConsoleApplication
                 }
                 else
                 {
-                    if (!whatIf) i = fbcc.ExecuteNonQuery($"DELETE FROM diku_mod_invoice_storage.batch_voucher_export_configs{(where != null ? $" WHERE {where}" : "")}");
+                    if (!whatIf) i = fbcc.ExecuteNonQuery($"DELETE FROM uchicago_mod_invoice_storage.batch_voucher_export_configs{(where != null ? $" WHERE {where}" : "")}");
                 }
                 traceSource.TraceEvent(TraceEventType.Information, 0, $"Deleted {i} batch voucher export configs");
             }
@@ -2622,7 +2622,7 @@ namespace FolioConsoleApplication
                 }
                 else
                 {
-                    if (!whatIf) i = fbcc.ExecuteNonQuery($"DELETE FROM diku_mod_feesfines.manualblocks{(where != null ? $" WHERE {where}" : "")}");
+                    if (!whatIf) i = fbcc.ExecuteNonQuery($"DELETE FROM uchicago_mod_feesfines.manualblocks{(where != null ? $" WHERE {where}" : "")}");
                 }
                 traceSource.TraceEvent(TraceEventType.Information, 0, $"Deleted {i} blocks");
             }
@@ -2769,7 +2769,7 @@ namespace FolioConsoleApplication
                 }
                 else
                 {
-                    if (!whatIf) i = fbcc.ExecuteNonQuery($"DELETE FROM diku_mod_patron_blocks.patron_block_conditions{(where != null ? $" WHERE {where}" : "")}");
+                    if (!whatIf) i = fbcc.ExecuteNonQuery($"DELETE FROM uchicago_mod_patron_blocks.patron_block_conditions{(where != null ? $" WHERE {where}" : "")}");
                 }
                 traceSource.TraceEvent(TraceEventType.Information, 0, $"Deleted {i} block conditions");
             }
@@ -2916,7 +2916,7 @@ namespace FolioConsoleApplication
                 }
                 else
                 {
-                    if (!whatIf) i = fbcc.ExecuteNonQuery($"DELETE FROM diku_mod_patron_blocks.patron_block_limits{(where != null ? $" WHERE {where}" : "")}");
+                    if (!whatIf) i = fbcc.ExecuteNonQuery($"DELETE FROM uchicago_mod_patron_blocks.patron_block_limits{(where != null ? $" WHERE {where}" : "")}");
                 }
                 traceSource.TraceEvent(TraceEventType.Information, 0, $"Deleted {i} block limits");
             }
@@ -3063,7 +3063,7 @@ namespace FolioConsoleApplication
                 }
                 else
                 {
-                    if (!whatIf) i = fbcc.ExecuteNonQuery($"DELETE FROM diku_mod_inventory_storage.bound_with_part{(where != null ? $" WHERE {where}" : "")}");
+                    if (!whatIf) i = fbcc.ExecuteNonQuery($"DELETE FROM uchicago_mod_inventory_storage.bound_with_part{(where != null ? $" WHERE {where}" : "")}");
                 }
                 traceSource.TraceEvent(TraceEventType.Information, 0, $"Deleted {i} bound with parts");
             }
@@ -3210,7 +3210,7 @@ namespace FolioConsoleApplication
                 }
                 else
                 {
-                    if (!whatIf) i = fbcc.ExecuteNonQuery($"DELETE FROM diku_mod_finance_storage.budget{(where != null ? $" WHERE {where}" : "")}");
+                    if (!whatIf) i = fbcc.ExecuteNonQuery($"DELETE FROM uchicago_mod_finance_storage.budget{(where != null ? $" WHERE {where}" : "")}");
                 }
                 traceSource.TraceEvent(TraceEventType.Information, 0, $"Deleted {i} budgets");
             }
@@ -3357,7 +3357,7 @@ namespace FolioConsoleApplication
                 }
                 else
                 {
-                    if (!whatIf) i = fbcc.ExecuteNonQuery($"DELETE FROM diku_mod_finance_storage.budget_expense_class{(where != null ? $" WHERE {where}" : "")}");
+                    if (!whatIf) i = fbcc.ExecuteNonQuery($"DELETE FROM uchicago_mod_finance_storage.budget_expense_class{(where != null ? $" WHERE {where}" : "")}");
                 }
                 traceSource.TraceEvent(TraceEventType.Information, 0, $"Deleted {i} budget expense classes");
             }
@@ -3504,7 +3504,7 @@ namespace FolioConsoleApplication
                 }
                 else
                 {
-                    if (!whatIf) i = fbcc.ExecuteNonQuery($"DELETE FROM diku_mod_finance_storage.group_fund_fiscal_year{(where != null ? $" WHERE {where}" : "")}");
+                    if (!whatIf) i = fbcc.ExecuteNonQuery($"DELETE FROM uchicago_mod_finance_storage.group_fund_fiscal_year{(where != null ? $" WHERE {where}" : "")}");
                 }
                 traceSource.TraceEvent(TraceEventType.Information, 0, $"Deleted {i} budget groups");
             }
@@ -3651,7 +3651,7 @@ namespace FolioConsoleApplication
                 }
                 else
                 {
-                    if (!whatIf) i = fbcc.ExecuteNonQuery($"DELETE FROM diku_mod_inventory_storage.call_number_type{(where != null ? $" WHERE {where}" : "")}");
+                    if (!whatIf) i = fbcc.ExecuteNonQuery($"DELETE FROM uchicago_mod_inventory_storage.call_number_type{(where != null ? $" WHERE {where}" : "")}");
                 }
                 traceSource.TraceEvent(TraceEventType.Information, 0, $"Deleted {i} call number types");
             }
@@ -3798,7 +3798,7 @@ namespace FolioConsoleApplication
                 }
                 else
                 {
-                    if (!whatIf) i = fbcc.ExecuteNonQuery($"DELETE FROM diku_mod_inventory_storage.loccampus{(where != null ? $" WHERE {where}" : "")}");
+                    if (!whatIf) i = fbcc.ExecuteNonQuery($"DELETE FROM uchicago_mod_inventory_storage.loccampus{(where != null ? $" WHERE {where}" : "")}");
                 }
                 traceSource.TraceEvent(TraceEventType.Information, 0, $"Deleted {i} campuses");
             }
@@ -3945,7 +3945,7 @@ namespace FolioConsoleApplication
                 }
                 else
                 {
-                    if (!whatIf) i = fbcc.ExecuteNonQuery($"DELETE FROM diku_mod_circulation_storage.cancellation_reason{(where != null ? $" WHERE {where}" : "")}");
+                    if (!whatIf) i = fbcc.ExecuteNonQuery($"DELETE FROM uchicago_mod_circulation_storage.cancellation_reason{(where != null ? $" WHERE {where}" : "")}");
                 }
                 traceSource.TraceEvent(TraceEventType.Information, 0, $"Deleted {i} cancellation reasons");
             }
@@ -4092,7 +4092,7 @@ namespace FolioConsoleApplication
                 }
                 else
                 {
-                    if (!whatIf) i = fbcc.ExecuteNonQuery($"DELETE FROM diku_mod_organizations_storage.categories{(where != null ? $" WHERE {where}" : "")}");
+                    if (!whatIf) i = fbcc.ExecuteNonQuery($"DELETE FROM uchicago_mod_organizations_storage.categories{(where != null ? $" WHERE {where}" : "")}");
                 }
                 traceSource.TraceEvent(TraceEventType.Information, 0, $"Deleted {i} categories");
             }
@@ -4239,7 +4239,7 @@ namespace FolioConsoleApplication
                 }
                 else
                 {
-                    if (!whatIf) i = fbcc.ExecuteNonQuery($"DELETE FROM diku_mod_circulation_storage.check_in{(where != null ? $" WHERE {where}" : "")}");
+                    if (!whatIf) i = fbcc.ExecuteNonQuery($"DELETE FROM uchicago_mod_circulation_storage.check_in{(where != null ? $" WHERE {where}" : "")}");
                 }
                 traceSource.TraceEvent(TraceEventType.Information, 0, $"Deleted {i} check ins");
             }
@@ -4375,7 +4375,7 @@ namespace FolioConsoleApplication
                 }
                 else
                 {
-                    if (!whatIf) i = fbcc.ExecuteNonQuery($"DELETE FROM diku_mod_circulation_storage.circulation_rules{(where != null ? $" WHERE {where}" : "")}");
+                    if (!whatIf) i = fbcc.ExecuteNonQuery($"DELETE FROM uchicago_mod_circulation_storage.circulation_rules{(where != null ? $" WHERE {where}" : "")}");
                 }
                 traceSource.TraceEvent(TraceEventType.Information, 0, $"Deleted {i} circulation rules");
             }
@@ -4522,7 +4522,7 @@ namespace FolioConsoleApplication
                 }
                 else
                 {
-                    if (!whatIf) i = fbcc.ExecuteNonQuery($"DELETE FROM diku_mod_inventory_storage.classification_type{(where != null ? $" WHERE {where}" : "")}");
+                    if (!whatIf) i = fbcc.ExecuteNonQuery($"DELETE FROM uchicago_mod_inventory_storage.classification_type{(where != null ? $" WHERE {where}" : "")}");
                 }
                 traceSource.TraceEvent(TraceEventType.Information, 0, $"Deleted {i} classification types");
             }
@@ -4669,7 +4669,7 @@ namespace FolioConsoleApplication
                 }
                 else
                 {
-                    if (!whatIf) i = fbcc.ExecuteNonQuery($"DELETE FROM diku_mod_orders_storage.reasons_for_closure{(where != null ? $" WHERE {where}" : "")}");
+                    if (!whatIf) i = fbcc.ExecuteNonQuery($"DELETE FROM uchicago_mod_orders_storage.reasons_for_closure{(where != null ? $" WHERE {where}" : "")}");
                 }
                 traceSource.TraceEvent(TraceEventType.Information, 0, $"Deleted {i} close reasons");
             }
@@ -4816,7 +4816,7 @@ namespace FolioConsoleApplication
                 }
                 else
                 {
-                    if (!whatIf) i = fbcc.ExecuteNonQuery($"DELETE FROM diku_mod_feesfines.comments{(where != null ? $" WHERE {where}" : "")}");
+                    if (!whatIf) i = fbcc.ExecuteNonQuery($"DELETE FROM uchicago_mod_feesfines.comments{(where != null ? $" WHERE {where}" : "")}");
                 }
                 traceSource.TraceEvent(TraceEventType.Information, 0, $"Deleted {i} comments");
             }
@@ -4963,7 +4963,7 @@ namespace FolioConsoleApplication
                 }
                 else
                 {
-                    if (!whatIf) i = fbcc.ExecuteNonQuery($"DELETE FROM diku_mod_configuration.config_data{(where != null ? $" WHERE {where}" : "")}");
+                    if (!whatIf) i = fbcc.ExecuteNonQuery($"DELETE FROM uchicago_mod_configuration.config_data{(where != null ? $" WHERE {where}" : "")}");
                 }
                 traceSource.TraceEvent(TraceEventType.Information, 0, $"Deleted {i} configurations");
             }
@@ -5110,7 +5110,7 @@ namespace FolioConsoleApplication
                 }
                 else
                 {
-                    if (!whatIf) i = fbcc.ExecuteNonQuery($"DELETE FROM diku_mod_organizations_storage.contacts{(where != null ? $" WHERE {where}" : "")}");
+                    if (!whatIf) i = fbcc.ExecuteNonQuery($"DELETE FROM uchicago_mod_organizations_storage.contacts{(where != null ? $" WHERE {where}" : "")}");
                 }
                 traceSource.TraceEvent(TraceEventType.Information, 0, $"Deleted {i} contacts");
             }
@@ -5257,7 +5257,7 @@ namespace FolioConsoleApplication
                 }
                 else
                 {
-                    if (!whatIf) i = fbcc.ExecuteNonQuery($"DELETE FROM diku_mod_inventory_storage.contributor_name_type{(where != null ? $" WHERE {where}" : "")}");
+                    if (!whatIf) i = fbcc.ExecuteNonQuery($"DELETE FROM uchicago_mod_inventory_storage.contributor_name_type{(where != null ? $" WHERE {where}" : "")}");
                 }
                 traceSource.TraceEvent(TraceEventType.Information, 0, $"Deleted {i} contributor name types");
             }
@@ -5404,7 +5404,7 @@ namespace FolioConsoleApplication
                 }
                 else
                 {
-                    if (!whatIf) i = fbcc.ExecuteNonQuery($"DELETE FROM diku_mod_inventory_storage.contributor_type{(where != null ? $" WHERE {where}" : "")}");
+                    if (!whatIf) i = fbcc.ExecuteNonQuery($"DELETE FROM uchicago_mod_inventory_storage.contributor_type{(where != null ? $" WHERE {where}" : "")}");
                 }
                 traceSource.TraceEvent(TraceEventType.Information, 0, $"Deleted {i} contributor types");
             }
@@ -5551,7 +5551,7 @@ namespace FolioConsoleApplication
                 }
                 else
                 {
-                    if (!whatIf) i = fbcc.ExecuteNonQuery($"DELETE FROM diku_mod_users.custom_fields{(where != null ? $" WHERE {where}" : "")}");
+                    if (!whatIf) i = fbcc.ExecuteNonQuery($"DELETE FROM uchicago_mod_users.custom_fields{(where != null ? $" WHERE {where}" : "")}");
                 }
                 traceSource.TraceEvent(TraceEventType.Information, 0, $"Deleted {i} custom fields");
             }
@@ -5698,7 +5698,7 @@ namespace FolioConsoleApplication
                 }
                 else
                 {
-                    if (!whatIf) i = fbcc.ExecuteNonQuery($"DELETE FROM diku_mod_users.departments{(where != null ? $" WHERE {where}" : "")}");
+                    if (!whatIf) i = fbcc.ExecuteNonQuery($"DELETE FROM uchicago_mod_users.departments{(where != null ? $" WHERE {where}" : "")}");
                 }
                 traceSource.TraceEvent(TraceEventType.Information, 0, $"Deleted {i} departments");
             }
@@ -5833,7 +5833,7 @@ namespace FolioConsoleApplication
                 }
                 else
                 {
-                    if (!whatIf) i = fbcc.ExecuteNonQuery($"DELETE FROM diku_mod_invoice_storage.documents{(where != null ? $" WHERE {where}" : "")}");
+                    if (!whatIf) i = fbcc.ExecuteNonQuery($"DELETE FROM uchicago_mod_invoice_storage.documents{(where != null ? $" WHERE {where}" : "")}");
                 }
                 traceSource.TraceEvent(TraceEventType.Information, 0, $"Deleted {i} documents");
             }
@@ -5973,7 +5973,7 @@ namespace FolioConsoleApplication
                 }
                 else
                 {
-                    if (!whatIf) i = fbcc.ExecuteNonQuery($"DELETE FROM diku_mod_inventory_storage.electronic_access_relationship{(where != null ? $" WHERE {where}" : "")}");
+                    if (!whatIf) i = fbcc.ExecuteNonQuery($"DELETE FROM uchicago_mod_inventory_storage.electronic_access_relationship{(where != null ? $" WHERE {where}" : "")}");
                 }
                 traceSource.TraceEvent(TraceEventType.Information, 0, $"Deleted {i} electronic access relationships");
             }
@@ -6120,7 +6120,7 @@ namespace FolioConsoleApplication
                 }
                 else
                 {
-                    if (!whatIf) i = fbcc.ExecuteNonQuery($"DELETE FROM diku_mod_finance_storage.expense_class{(where != null ? $" WHERE {where}" : "")}");
+                    if (!whatIf) i = fbcc.ExecuteNonQuery($"DELETE FROM uchicago_mod_finance_storage.expense_class{(where != null ? $" WHERE {where}" : "")}");
                 }
                 traceSource.TraceEvent(TraceEventType.Information, 0, $"Deleted {i} expense classes");
             }
@@ -6255,7 +6255,7 @@ namespace FolioConsoleApplication
                 }
                 else
                 {
-                    if (!whatIf) i = fbcc.ExecuteNonQuery($"DELETE FROM diku_mod_invoice_storage.export_config_credentials{(where != null ? $" WHERE {where}" : "")}");
+                    if (!whatIf) i = fbcc.ExecuteNonQuery($"DELETE FROM uchicago_mod_invoice_storage.export_config_credentials{(where != null ? $" WHERE {where}" : "")}");
                 }
                 traceSource.TraceEvent(TraceEventType.Information, 0, $"Deleted {i} export config credentials");
             }
@@ -6395,7 +6395,7 @@ namespace FolioConsoleApplication
                 }
                 else
                 {
-                    if (!whatIf) i = fbcc.ExecuteNonQuery($"DELETE FROM diku_mod_feesfines.accounts{(where != null ? $" WHERE {where}" : "")}");
+                    if (!whatIf) i = fbcc.ExecuteNonQuery($"DELETE FROM uchicago_mod_feesfines.accounts{(where != null ? $" WHERE {where}" : "")}");
                 }
                 traceSource.TraceEvent(TraceEventType.Information, 0, $"Deleted {i} fees");
             }
@@ -6542,7 +6542,7 @@ namespace FolioConsoleApplication
                 }
                 else
                 {
-                    if (!whatIf) i = fbcc.ExecuteNonQuery($"DELETE FROM diku_mod_feesfines.feefines{(where != null ? $" WHERE {where}" : "")}");
+                    if (!whatIf) i = fbcc.ExecuteNonQuery($"DELETE FROM uchicago_mod_feesfines.feefines{(where != null ? $" WHERE {where}" : "")}");
                 }
                 traceSource.TraceEvent(TraceEventType.Information, 0, $"Deleted {i} fee types");
             }
@@ -6689,7 +6689,7 @@ namespace FolioConsoleApplication
                 }
                 else
                 {
-                    if (!whatIf) i = fbcc.ExecuteNonQuery($"DELETE FROM diku_mod_finance_storage.groups{(where != null ? $" WHERE {where}" : "")}");
+                    if (!whatIf) i = fbcc.ExecuteNonQuery($"DELETE FROM uchicago_mod_finance_storage.groups{(where != null ? $" WHERE {where}" : "")}");
                 }
                 traceSource.TraceEvent(TraceEventType.Information, 0, $"Deleted {i} finance groups");
             }
@@ -6836,7 +6836,7 @@ namespace FolioConsoleApplication
                 }
                 else
                 {
-                    if (!whatIf) i = fbcc.ExecuteNonQuery($"DELETE FROM diku_mod_finance_storage.fiscal_year{(where != null ? $" WHERE {where}" : "")}");
+                    if (!whatIf) i = fbcc.ExecuteNonQuery($"DELETE FROM uchicago_mod_finance_storage.fiscal_year{(where != null ? $" WHERE {where}" : "")}");
                 }
                 traceSource.TraceEvent(TraceEventType.Information, 0, $"Deleted {i} fiscal years");
             }
@@ -6983,7 +6983,7 @@ namespace FolioConsoleApplication
                 }
                 else
                 {
-                    if (!whatIf) i = fbcc.ExecuteNonQuery($"DELETE FROM diku_mod_circulation_storage.fixed_due_date_schedule{(where != null ? $" WHERE {where}" : "")}");
+                    if (!whatIf) i = fbcc.ExecuteNonQuery($"DELETE FROM uchicago_mod_circulation_storage.fixed_due_date_schedule{(where != null ? $" WHERE {where}" : "")}");
                 }
                 traceSource.TraceEvent(TraceEventType.Information, 0, $"Deleted {i} fixed due date schedules");
             }
@@ -7130,7 +7130,7 @@ namespace FolioConsoleApplication
                 }
                 else
                 {
-                    if (!whatIf) i = fbcc.ExecuteNonQuery($"DELETE FROM diku_mod_finance_storage.fund{(where != null ? $" WHERE {where}" : "")}");
+                    if (!whatIf) i = fbcc.ExecuteNonQuery($"DELETE FROM uchicago_mod_finance_storage.fund{(where != null ? $" WHERE {where}" : "")}");
                 }
                 traceSource.TraceEvent(TraceEventType.Information, 0, $"Deleted {i} funds");
             }
@@ -7277,7 +7277,7 @@ namespace FolioConsoleApplication
                 }
                 else
                 {
-                    if (!whatIf) i = fbcc.ExecuteNonQuery($"DELETE FROM diku_mod_finance_storage.fund_type{(where != null ? $" WHERE {where}" : "")}");
+                    if (!whatIf) i = fbcc.ExecuteNonQuery($"DELETE FROM uchicago_mod_finance_storage.fund_type{(where != null ? $" WHERE {where}" : "")}");
                 }
                 traceSource.TraceEvent(TraceEventType.Information, 0, $"Deleted {i} fund types");
             }
@@ -7424,7 +7424,7 @@ namespace FolioConsoleApplication
                 }
                 else
                 {
-                    if (!whatIf) i = fbcc.ExecuteNonQuery($"DELETE FROM diku_mod_users.groups{(where != null ? $" WHERE {where}" : "")}");
+                    if (!whatIf) i = fbcc.ExecuteNonQuery($"DELETE FROM uchicago_mod_users.groups{(where != null ? $" WHERE {where}" : "")}");
                 }
                 traceSource.TraceEvent(TraceEventType.Information, 0, $"Deleted {i} groups");
             }
@@ -7571,7 +7571,7 @@ namespace FolioConsoleApplication
                 }
                 else
                 {
-                    if (!whatIf) i = fbcc.ExecuteNonQuery($"DELETE FROM diku_mod_inventory_storage.holdings_record{(where != null ? $" WHERE {where}" : "")}");
+                    if (!whatIf) i = fbcc.ExecuteNonQuery($"DELETE FROM uchicago_mod_inventory_storage.holdings_record{(where != null ? $" WHERE {where}" : "")}");
                 }
                 traceSource.TraceEvent(TraceEventType.Information, 0, $"Deleted {i} holdings");
             }
@@ -7639,7 +7639,7 @@ namespace FolioConsoleApplication
                 }
                 if (api && !whatIf && l2.Any()) fsc.InsertHoldings(l2);
                 fbcc.Commit();
-                fdc.Execute($"ALTER SEQUENCE diku_mod_inventory_storage.hrid_holdings_seq RESTART {fdc.ExecuteScalar<int>("SELECT MAX((jsonb->>'hrid')::int) + 1 FROM diku_mod_inventory_storage.holdings_record")}");
+                fdc.Execute($"ALTER SEQUENCE uchicago_mod_inventory_storage.hrid_holdings_seq RESTART {fdc.ExecuteScalar<int>("SELECT MAX((jsonb->>'hrid')::int) + 1 FROM uchicago_mod_inventory_storage.holdings_record")}");
                 fdc.Commit();
                 traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
                 traceSource.TraceEvent(TraceEventType.Information, 0, $"Added {i} holdings");
@@ -7725,7 +7725,7 @@ namespace FolioConsoleApplication
                 }
                 else
                 {
-                    if (!whatIf) i = fbcc.ExecuteNonQuery($"DELETE FROM diku_mod_inventory_storage.holdings_note_type{(where != null ? $" WHERE {where}" : "")}");
+                    if (!whatIf) i = fbcc.ExecuteNonQuery($"DELETE FROM uchicago_mod_inventory_storage.holdings_note_type{(where != null ? $" WHERE {where}" : "")}");
                 }
                 traceSource.TraceEvent(TraceEventType.Information, 0, $"Deleted {i} holding note types");
             }
@@ -7872,7 +7872,7 @@ namespace FolioConsoleApplication
                 }
                 else
                 {
-                    if (!whatIf) i = fbcc.ExecuteNonQuery($"DELETE FROM diku_mod_inventory_storage.holdings_type{(where != null ? $" WHERE {where}" : "")}");
+                    if (!whatIf) i = fbcc.ExecuteNonQuery($"DELETE FROM uchicago_mod_inventory_storage.holdings_type{(where != null ? $" WHERE {where}" : "")}");
                 }
                 traceSource.TraceEvent(TraceEventType.Information, 0, $"Deleted {i} holding types");
             }
@@ -8008,7 +8008,7 @@ namespace FolioConsoleApplication
                 }
                 else
                 {
-                    if (!whatIf) i = fbcc.ExecuteNonQuery($"DELETE FROM diku_mod_inventory_storage.hrid_settings{(where != null ? $" WHERE {where}" : "")}");
+                    if (!whatIf) i = fbcc.ExecuteNonQuery($"DELETE FROM uchicago_mod_inventory_storage.hrid_settings{(where != null ? $" WHERE {where}" : "")}");
                 }
                 traceSource.TraceEvent(TraceEventType.Information, 0, $"Deleted {i} hrid settings");
             }
@@ -8155,7 +8155,7 @@ namespace FolioConsoleApplication
                 }
                 else
                 {
-                    if (!whatIf) i = fbcc.ExecuteNonQuery($"DELETE FROM diku_mod_inventory_storage.identifier_type{(where != null ? $" WHERE {where}" : "")}");
+                    if (!whatIf) i = fbcc.ExecuteNonQuery($"DELETE FROM uchicago_mod_inventory_storage.identifier_type{(where != null ? $" WHERE {where}" : "")}");
                 }
                 traceSource.TraceEvent(TraceEventType.Information, 0, $"Deleted {i} id types");
             }
@@ -8302,7 +8302,7 @@ namespace FolioConsoleApplication
                 }
                 else
                 {
-                    if (!whatIf) i = fbcc.ExecuteNonQuery($"DELETE FROM diku_mod_inventory_storage.ill_policy{(where != null ? $" WHERE {where}" : "")}");
+                    if (!whatIf) i = fbcc.ExecuteNonQuery($"DELETE FROM uchicago_mod_inventory_storage.ill_policy{(where != null ? $" WHERE {where}" : "")}");
                 }
                 traceSource.TraceEvent(TraceEventType.Information, 0, $"Deleted {i} ill policies");
             }
@@ -8449,7 +8449,7 @@ namespace FolioConsoleApplication
                 }
                 else
                 {
-                    if (!whatIf) i = fbcc.ExecuteNonQuery($"DELETE FROM diku_mod_inventory_storage.instance{(where != null ? $" WHERE {where}" : "")}");
+                    if (!whatIf) i = fbcc.ExecuteNonQuery($"DELETE FROM uchicago_mod_inventory_storage.instance{(where != null ? $" WHERE {where}" : "")}");
                 }
                 traceSource.TraceEvent(TraceEventType.Information, 0, $"Deleted {i} instances");
             }
@@ -8517,7 +8517,7 @@ namespace FolioConsoleApplication
                 }
                 if (api && !whatIf && l2.Any()) fsc.InsertInstances(l2);
                 fbcc.Commit();
-                fdc.Execute($"ALTER SEQUENCE diku_mod_inventory_storage.hrid_instances_seq RESTART {fdc.ExecuteScalar<int>("SELECT MAX((jsonb->>'hrid')::int) + 1 FROM diku_mod_inventory_storage.instance")}");
+                fdc.Execute($"ALTER SEQUENCE uchicago_mod_inventory_storage.hrid_instances_seq RESTART {fdc.ExecuteScalar<int>("SELECT MAX((jsonb->>'hrid')::int) + 1 FROM uchicago_mod_inventory_storage.instance")}");
                 fdc.Commit();
                 traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
                 traceSource.TraceEvent(TraceEventType.Information, 0, $"Added {i} instances");
@@ -8603,7 +8603,7 @@ namespace FolioConsoleApplication
                 }
                 else
                 {
-                    if (!whatIf) i = fbcc.ExecuteNonQuery($"DELETE FROM diku_mod_inventory_storage.instance_format{(where != null ? $" WHERE {where}" : "")}");
+                    if (!whatIf) i = fbcc.ExecuteNonQuery($"DELETE FROM uchicago_mod_inventory_storage.instance_format{(where != null ? $" WHERE {where}" : "")}");
                 }
                 traceSource.TraceEvent(TraceEventType.Information, 0, $"Deleted {i} instance formats");
             }
@@ -8750,7 +8750,7 @@ namespace FolioConsoleApplication
                 }
                 else
                 {
-                    if (!whatIf) i = fbcc.ExecuteNonQuery($"DELETE FROM diku_mod_inventory_storage.instance_note_type{(where != null ? $" WHERE {where}" : "")}");
+                    if (!whatIf) i = fbcc.ExecuteNonQuery($"DELETE FROM uchicago_mod_inventory_storage.instance_note_type{(where != null ? $" WHERE {where}" : "")}");
                 }
                 traceSource.TraceEvent(TraceEventType.Information, 0, $"Deleted {i} instance note types");
             }
@@ -8897,7 +8897,7 @@ namespace FolioConsoleApplication
                 }
                 else
                 {
-                    if (!whatIf) i = fbcc.ExecuteNonQuery($"DELETE FROM diku_mod_inventory_storage.instance_relationship{(where != null ? $" WHERE {where}" : "")}");
+                    if (!whatIf) i = fbcc.ExecuteNonQuery($"DELETE FROM uchicago_mod_inventory_storage.instance_relationship{(where != null ? $" WHERE {where}" : "")}");
                 }
                 traceSource.TraceEvent(TraceEventType.Information, 0, $"Deleted {i} instance relationships");
             }
@@ -9044,7 +9044,7 @@ namespace FolioConsoleApplication
                 }
                 else
                 {
-                    if (!whatIf) i = fbcc.ExecuteNonQuery($"DELETE FROM diku_mod_inventory_storage.instance_relationship_type{(where != null ? $" WHERE {where}" : "")}");
+                    if (!whatIf) i = fbcc.ExecuteNonQuery($"DELETE FROM uchicago_mod_inventory_storage.instance_relationship_type{(where != null ? $" WHERE {where}" : "")}");
                 }
                 traceSource.TraceEvent(TraceEventType.Information, 0, $"Deleted {i} instance relationship types");
             }
@@ -9191,7 +9191,7 @@ namespace FolioConsoleApplication
                 }
                 else
                 {
-                    if (!whatIf) i = fbcc.ExecuteNonQuery($"DELETE FROM diku_mod_inventory_storage.instance_status{(where != null ? $" WHERE {where}" : "")}");
+                    if (!whatIf) i = fbcc.ExecuteNonQuery($"DELETE FROM uchicago_mod_inventory_storage.instance_status{(where != null ? $" WHERE {where}" : "")}");
                 }
                 traceSource.TraceEvent(TraceEventType.Information, 0, $"Deleted {i} instance statuses");
             }
@@ -9338,7 +9338,7 @@ namespace FolioConsoleApplication
                 }
                 else
                 {
-                    if (!whatIf) i = fbcc.ExecuteNonQuery($"DELETE FROM diku_mod_inventory_storage.instance_type{(where != null ? $" WHERE {where}" : "")}");
+                    if (!whatIf) i = fbcc.ExecuteNonQuery($"DELETE FROM uchicago_mod_inventory_storage.instance_type{(where != null ? $" WHERE {where}" : "")}");
                 }
                 traceSource.TraceEvent(TraceEventType.Information, 0, $"Deleted {i} instance types");
             }
@@ -9485,7 +9485,7 @@ namespace FolioConsoleApplication
                 }
                 else
                 {
-                    if (!whatIf) i = fbcc.ExecuteNonQuery($"DELETE FROM diku_mod_inventory_storage.locinstitution{(where != null ? $" WHERE {where}" : "")}");
+                    if (!whatIf) i = fbcc.ExecuteNonQuery($"DELETE FROM uchicago_mod_inventory_storage.locinstitution{(where != null ? $" WHERE {where}" : "")}");
                 }
                 traceSource.TraceEvent(TraceEventType.Information, 0, $"Deleted {i} institutions");
             }
@@ -9632,7 +9632,7 @@ namespace FolioConsoleApplication
                 }
                 else
                 {
-                    if (!whatIf) i = fbcc.ExecuteNonQuery($"DELETE FROM diku_mod_organizations_storage.interfaces{(where != null ? $" WHERE {where}" : "")}");
+                    if (!whatIf) i = fbcc.ExecuteNonQuery($"DELETE FROM uchicago_mod_organizations_storage.interfaces{(where != null ? $" WHERE {where}" : "")}");
                 }
                 traceSource.TraceEvent(TraceEventType.Information, 0, $"Deleted {i} interfaces");
             }
@@ -9767,7 +9767,7 @@ namespace FolioConsoleApplication
                 }
                 else
                 {
-                    if (!whatIf) i = fbcc.ExecuteNonQuery($"DELETE FROM diku_mod_organizations_storage.interface_credentials{(where != null ? $" WHERE {where}" : "")}");
+                    if (!whatIf) i = fbcc.ExecuteNonQuery($"DELETE FROM uchicago_mod_organizations_storage.interface_credentials{(where != null ? $" WHERE {where}" : "")}");
                 }
                 traceSource.TraceEvent(TraceEventType.Information, 0, $"Deleted {i} interface credentials");
             }
@@ -9907,7 +9907,7 @@ namespace FolioConsoleApplication
                 }
                 else
                 {
-                    if (!whatIf) i = fbcc.ExecuteNonQuery($"DELETE FROM diku_mod_invoice_storage.invoices{(where != null ? $" WHERE {where}" : "")}");
+                    if (!whatIf) i = fbcc.ExecuteNonQuery($"DELETE FROM uchicago_mod_invoice_storage.invoices{(where != null ? $" WHERE {where}" : "")}");
                 }
                 traceSource.TraceEvent(TraceEventType.Information, 0, $"Deleted {i} invoices");
             }
@@ -9971,7 +9971,7 @@ namespace FolioConsoleApplication
                     }
                 }
                 fbcc.Commit();
-                fdc.Execute($"ALTER SEQUENCE diku_mod_invoice_storage.invoice_number RESTART {fdc.ExecuteScalar<int>("SELECT MAX((jsonb->>'folioInvoiceNo')::int) + 1 FROM diku_mod_invoice_storage.invoices")}");
+                fdc.Execute($"ALTER SEQUENCE uchicago_mod_invoice_storage.invoice_number RESTART {fdc.ExecuteScalar<int>("SELECT MAX((jsonb->>'folioInvoiceNo')::int) + 1 FROM uchicago_mod_invoice_storage.invoices")}");
                 fdc.Commit();
                 traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
                 traceSource.TraceEvent(TraceEventType.Information, 0, $"Added {i} invoices");
@@ -10057,7 +10057,7 @@ namespace FolioConsoleApplication
                 }
                 else
                 {
-                    if (!whatIf) i = fbcc.ExecuteNonQuery($"DELETE FROM diku_mod_invoice_storage.invoice_lines{(where != null ? $" WHERE {where}" : "")}");
+                    if (!whatIf) i = fbcc.ExecuteNonQuery($"DELETE FROM uchicago_mod_invoice_storage.invoice_lines{(where != null ? $" WHERE {where}" : "")}");
                 }
                 traceSource.TraceEvent(TraceEventType.Information, 0, $"Deleted {i} invoice items");
             }
@@ -10192,7 +10192,7 @@ namespace FolioConsoleApplication
                 }
                 else
                 {
-                    if (!whatIf) i = fbcc.ExecuteNonQuery($"DELETE FROM diku_mod_finance_storage.invoice_transaction_summaries{(where != null ? $" WHERE {where}" : "")}");
+                    if (!whatIf) i = fbcc.ExecuteNonQuery($"DELETE FROM uchicago_mod_finance_storage.invoice_transaction_summaries{(where != null ? $" WHERE {where}" : "")}");
                 }
                 traceSource.TraceEvent(TraceEventType.Information, 0, $"Deleted {i} invoice transaction summaries");
             }
@@ -10338,7 +10338,7 @@ namespace FolioConsoleApplication
                 }
                 else
                 {
-                    if (!whatIf) i = fbcc.ExecuteNonQuery($"DELETE FROM diku_mod_inventory_storage.item{(where != null ? $" WHERE {where}" : "")}");
+                    if (!whatIf) i = fbcc.ExecuteNonQuery($"DELETE FROM uchicago_mod_inventory_storage.item{(where != null ? $" WHERE {where}" : "")}");
                 }
                 traceSource.TraceEvent(TraceEventType.Information, 0, $"Deleted {i} items");
             }
@@ -10406,7 +10406,7 @@ namespace FolioConsoleApplication
                 }
                 if (api && !whatIf && l2.Any()) fsc.InsertItems(l2);
                 fbcc.Commit();
-                fdc.Execute($"ALTER SEQUENCE diku_mod_inventory_storage.hrid_items_seq RESTART {fdc.ExecuteScalar<int>("SELECT MAX((jsonb->>'hrid')::int) + 1 FROM diku_mod_inventory_storage.item")}");
+                fdc.Execute($"ALTER SEQUENCE uchicago_mod_inventory_storage.hrid_items_seq RESTART {fdc.ExecuteScalar<int>("SELECT MAX((jsonb->>'hrid')::int) + 1 FROM uchicago_mod_inventory_storage.item")}");
                 fdc.Commit();
                 traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
                 traceSource.TraceEvent(TraceEventType.Information, 0, $"Added {i} items");
@@ -10492,7 +10492,7 @@ namespace FolioConsoleApplication
                 }
                 else
                 {
-                    if (!whatIf) i = fbcc.ExecuteNonQuery($"DELETE FROM diku_mod_inventory_storage.item_damaged_status{(where != null ? $" WHERE {where}" : "")}");
+                    if (!whatIf) i = fbcc.ExecuteNonQuery($"DELETE FROM uchicago_mod_inventory_storage.item_damaged_status{(where != null ? $" WHERE {where}" : "")}");
                 }
                 traceSource.TraceEvent(TraceEventType.Information, 0, $"Deleted {i} item damaged statuses");
             }
@@ -10639,7 +10639,7 @@ namespace FolioConsoleApplication
                 }
                 else
                 {
-                    if (!whatIf) i = fbcc.ExecuteNonQuery($"DELETE FROM diku_mod_inventory_storage.item_note_type{(where != null ? $" WHERE {where}" : "")}");
+                    if (!whatIf) i = fbcc.ExecuteNonQuery($"DELETE FROM uchicago_mod_inventory_storage.item_note_type{(where != null ? $" WHERE {where}" : "")}");
                 }
                 traceSource.TraceEvent(TraceEventType.Information, 0, $"Deleted {i} item note types");
             }
@@ -10786,7 +10786,7 @@ namespace FolioConsoleApplication
                 }
                 else
                 {
-                    if (!whatIf) i = fbcc.ExecuteNonQuery($"DELETE FROM diku_mod_finance_storage.ledger{(where != null ? $" WHERE {where}" : "")}");
+                    if (!whatIf) i = fbcc.ExecuteNonQuery($"DELETE FROM uchicago_mod_finance_storage.ledger{(where != null ? $" WHERE {where}" : "")}");
                 }
                 traceSource.TraceEvent(TraceEventType.Information, 0, $"Deleted {i} ledgers");
             }
@@ -10933,7 +10933,7 @@ namespace FolioConsoleApplication
                 }
                 else
                 {
-                    if (!whatIf) i = fbcc.ExecuteNonQuery($"DELETE FROM diku_mod_finance_storage.ledger_fiscal_year_rollover{(where != null ? $" WHERE {where}" : "")}");
+                    if (!whatIf) i = fbcc.ExecuteNonQuery($"DELETE FROM uchicago_mod_finance_storage.ledger_fiscal_year_rollover{(where != null ? $" WHERE {where}" : "")}");
                 }
                 traceSource.TraceEvent(TraceEventType.Information, 0, $"Deleted {i} ledger rollovers");
             }
@@ -11080,7 +11080,7 @@ namespace FolioConsoleApplication
                 }
                 else
                 {
-                    if (!whatIf) i = fbcc.ExecuteNonQuery($"DELETE FROM diku_mod_finance_storage.ledger_fiscal_year_rollover_error{(where != null ? $" WHERE {where}" : "")}");
+                    if (!whatIf) i = fbcc.ExecuteNonQuery($"DELETE FROM uchicago_mod_finance_storage.ledger_fiscal_year_rollover_error{(where != null ? $" WHERE {where}" : "")}");
                 }
                 traceSource.TraceEvent(TraceEventType.Information, 0, $"Deleted {i} ledger rollover errors");
             }
@@ -11227,7 +11227,7 @@ namespace FolioConsoleApplication
                 }
                 else
                 {
-                    if (!whatIf) i = fbcc.ExecuteNonQuery($"DELETE FROM diku_mod_finance_storage.ledger_fiscal_year_rollover_progress{(where != null ? $" WHERE {where}" : "")}");
+                    if (!whatIf) i = fbcc.ExecuteNonQuery($"DELETE FROM uchicago_mod_finance_storage.ledger_fiscal_year_rollover_progress{(where != null ? $" WHERE {where}" : "")}");
                 }
                 traceSource.TraceEvent(TraceEventType.Information, 0, $"Deleted {i} ledger rollover progresses");
             }
@@ -11374,7 +11374,7 @@ namespace FolioConsoleApplication
                 }
                 else
                 {
-                    if (!whatIf) i = fbcc.ExecuteNonQuery($"DELETE FROM diku_mod_inventory_storage.loclibrary{(where != null ? $" WHERE {where}" : "")}");
+                    if (!whatIf) i = fbcc.ExecuteNonQuery($"DELETE FROM uchicago_mod_inventory_storage.loclibrary{(where != null ? $" WHERE {where}" : "")}");
                 }
                 traceSource.TraceEvent(TraceEventType.Information, 0, $"Deleted {i} libraries");
             }
@@ -11521,7 +11521,7 @@ namespace FolioConsoleApplication
                 }
                 else
                 {
-                    if (!whatIf) i = fbcc.ExecuteNonQuery($"DELETE FROM diku_mod_circulation_storage.loan{(where != null ? $" WHERE {where}" : "")}");
+                    if (!whatIf) i = fbcc.ExecuteNonQuery($"DELETE FROM uchicago_mod_circulation_storage.loan{(where != null ? $" WHERE {where}" : "")}");
                 }
                 traceSource.TraceEvent(TraceEventType.Information, 0, $"Deleted {i} loans");
             }
@@ -11656,7 +11656,7 @@ namespace FolioConsoleApplication
                 }
                 else
                 {
-                    if (!whatIf) i = fbcc.ExecuteNonQuery($"DELETE FROM diku_mod_circulation_storage.audit_loan{(where != null ? $" WHERE {where}" : "")}");
+                    if (!whatIf) i = fbcc.ExecuteNonQuery($"DELETE FROM uchicago_mod_circulation_storage.audit_loan{(where != null ? $" WHERE {where}" : "")}");
                 }
                 traceSource.TraceEvent(TraceEventType.Information, 0, $"Deleted {i} loan events");
             }
@@ -11796,7 +11796,7 @@ namespace FolioConsoleApplication
                 }
                 else
                 {
-                    if (!whatIf) i = fbcc.ExecuteNonQuery($"DELETE FROM diku_mod_circulation_storage.loan_policy{(where != null ? $" WHERE {where}" : "")}");
+                    if (!whatIf) i = fbcc.ExecuteNonQuery($"DELETE FROM uchicago_mod_circulation_storage.loan_policy{(where != null ? $" WHERE {where}" : "")}");
                 }
                 traceSource.TraceEvent(TraceEventType.Information, 0, $"Deleted {i} loan policies");
             }
@@ -11943,7 +11943,7 @@ namespace FolioConsoleApplication
                 }
                 else
                 {
-                    if (!whatIf) i = fbcc.ExecuteNonQuery($"DELETE FROM diku_mod_inventory_storage.loan_type{(where != null ? $" WHERE {where}" : "")}");
+                    if (!whatIf) i = fbcc.ExecuteNonQuery($"DELETE FROM uchicago_mod_inventory_storage.loan_type{(where != null ? $" WHERE {where}" : "")}");
                 }
                 traceSource.TraceEvent(TraceEventType.Information, 0, $"Deleted {i} loan types");
             }
@@ -12090,7 +12090,7 @@ namespace FolioConsoleApplication
                 }
                 else
                 {
-                    if (!whatIf) i = fbcc.ExecuteNonQuery($"DELETE FROM diku_mod_inventory_storage.location{(where != null ? $" WHERE {where}" : "")}");
+                    if (!whatIf) i = fbcc.ExecuteNonQuery($"DELETE FROM uchicago_mod_inventory_storage.location{(where != null ? $" WHERE {where}" : "")}");
                 }
                 traceSource.TraceEvent(TraceEventType.Information, 0, $"Deleted {i} locations");
             }
@@ -12225,7 +12225,7 @@ namespace FolioConsoleApplication
                 }
                 else
                 {
-                    if (!whatIf) i = fbcc.ExecuteNonQuery($"DELETE FROM diku_mod_login.auth_credentials{(where != null ? $" WHERE {where}" : "")}");
+                    if (!whatIf) i = fbcc.ExecuteNonQuery($"DELETE FROM uchicago_mod_login.auth_credentials{(where != null ? $" WHERE {where}" : "")}");
                 }
                 traceSource.TraceEvent(TraceEventType.Information, 0, $"Deleted {i} logins");
             }
@@ -12371,7 +12371,7 @@ namespace FolioConsoleApplication
                 }
                 else
                 {
-                    if (!whatIf) i = fbcc.ExecuteNonQuery($"DELETE FROM diku_mod_feesfines.lost_item_fee_policy{(where != null ? $" WHERE {where}" : "")}");
+                    if (!whatIf) i = fbcc.ExecuteNonQuery($"DELETE FROM uchicago_mod_feesfines.lost_item_fee_policy{(where != null ? $" WHERE {where}" : "")}");
                 }
                 traceSource.TraceEvent(TraceEventType.Information, 0, $"Deleted {i} lost item fee policies");
             }
@@ -12518,7 +12518,7 @@ namespace FolioConsoleApplication
                 }
                 else
                 {
-                    if (!whatIf) i = fbcc.ExecuteNonQuery($"DELETE FROM diku_mod_feesfines.manual_block_templates{(where != null ? $" WHERE {where}" : "")}");
+                    if (!whatIf) i = fbcc.ExecuteNonQuery($"DELETE FROM uchicago_mod_feesfines.manual_block_templates{(where != null ? $" WHERE {where}" : "")}");
                 }
                 traceSource.TraceEvent(TraceEventType.Information, 0, $"Deleted {i} manual block templates");
             }
@@ -12665,7 +12665,7 @@ namespace FolioConsoleApplication
                 }
                 else
                 {
-                    if (!whatIf) i = fbcc.ExecuteNonQuery($"DELETE FROM diku_mod_inventory_storage.material_type{(where != null ? $" WHERE {where}" : "")}");
+                    if (!whatIf) i = fbcc.ExecuteNonQuery($"DELETE FROM uchicago_mod_inventory_storage.material_type{(where != null ? $" WHERE {where}" : "")}");
                 }
                 traceSource.TraceEvent(TraceEventType.Information, 0, $"Deleted {i} material types");
             }
@@ -12812,7 +12812,7 @@ namespace FolioConsoleApplication
                 }
                 else
                 {
-                    if (!whatIf) i = fbcc.ExecuteNonQuery($"DELETE FROM diku_mod_inventory_storage.mode_of_issuance{(where != null ? $" WHERE {where}" : "")}");
+                    if (!whatIf) i = fbcc.ExecuteNonQuery($"DELETE FROM uchicago_mod_inventory_storage.mode_of_issuance{(where != null ? $" WHERE {where}" : "")}");
                 }
                 traceSource.TraceEvent(TraceEventType.Information, 0, $"Deleted {i} mode of issuances");
             }
@@ -12959,7 +12959,7 @@ namespace FolioConsoleApplication
                 }
                 else
                 {
-                    if (!whatIf) i = fbcc.ExecuteNonQuery($"DELETE FROM diku_mod_inventory_storage.nature_of_content_term{(where != null ? $" WHERE {where}" : "")}");
+                    if (!whatIf) i = fbcc.ExecuteNonQuery($"DELETE FROM uchicago_mod_inventory_storage.nature_of_content_term{(where != null ? $" WHERE {where}" : "")}");
                 }
                 traceSource.TraceEvent(TraceEventType.Information, 0, $"Deleted {i} nature of content terms");
             }
@@ -13106,7 +13106,7 @@ namespace FolioConsoleApplication
                 }
                 else
                 {
-                    if (!whatIf) i = fbcc.ExecuteNonQuery($"DELETE FROM diku_mod_orders_storage.purchase_order{(where != null ? $" WHERE {where}" : "")}");
+                    if (!whatIf) i = fbcc.ExecuteNonQuery($"DELETE FROM uchicago_mod_orders_storage.purchase_order{(where != null ? $" WHERE {where}" : "")}");
                 }
                 traceSource.TraceEvent(TraceEventType.Information, 0, $"Deleted {i} orders");
             }
@@ -13170,7 +13170,7 @@ namespace FolioConsoleApplication
                     }
                 }
                 fbcc.Commit();
-                fdc.Execute($"ALTER SEQUENCE diku_mod_orders_storage.po_number RESTART {fdc.ExecuteScalar<int>("SELECT MAX(CASE WHEN (jsonb->>'poNumber')::int < 500000 THEN (jsonb->>'poNumber')::int ELSE 0 END) + 1 FROM diku_mod_orders_storage.purchase_order")}");
+                fdc.Execute($"ALTER SEQUENCE uchicago_mod_orders_storage.po_number RESTART {fdc.ExecuteScalar<int>("SELECT MAX(CASE WHEN (jsonb->>'poNumber')::int < 500000 THEN (jsonb->>'poNumber')::int ELSE 0 END) + 1 FROM uchicago_mod_orders_storage.purchase_order")}");
                 fdc.Commit();
                 traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
                 traceSource.TraceEvent(TraceEventType.Information, 0, $"Added {i} orders");
@@ -13256,7 +13256,7 @@ namespace FolioConsoleApplication
                 }
                 else
                 {
-                    if (!whatIf) i = fbcc.ExecuteNonQuery($"DELETE FROM diku_mod_orders_storage.order_invoice_relationship{(where != null ? $" WHERE {where}" : "")}");
+                    if (!whatIf) i = fbcc.ExecuteNonQuery($"DELETE FROM uchicago_mod_orders_storage.order_invoice_relationship{(where != null ? $" WHERE {where}" : "")}");
                 }
                 traceSource.TraceEvent(TraceEventType.Information, 0, $"Deleted {i} order invoices");
             }
@@ -13403,7 +13403,7 @@ namespace FolioConsoleApplication
                 }
                 else
                 {
-                    if (!whatIf) i = fbcc.ExecuteNonQuery($"DELETE FROM diku_mod_orders_storage.po_line{(where != null ? $" WHERE {where}" : "")}");
+                    if (!whatIf) i = fbcc.ExecuteNonQuery($"DELETE FROM uchicago_mod_orders_storage.po_line{(where != null ? $" WHERE {where}" : "")}");
                 }
                 traceSource.TraceEvent(TraceEventType.Information, 0, $"Deleted {i} order items");
             }
@@ -13550,7 +13550,7 @@ namespace FolioConsoleApplication
                 }
                 else
                 {
-                    if (!whatIf) i = fbcc.ExecuteNonQuery($"DELETE FROM diku_mod_orders_storage.order_templates{(where != null ? $" WHERE {where}" : "")}");
+                    if (!whatIf) i = fbcc.ExecuteNonQuery($"DELETE FROM uchicago_mod_orders_storage.order_templates{(where != null ? $" WHERE {where}" : "")}");
                 }
                 traceSource.TraceEvent(TraceEventType.Information, 0, $"Deleted {i} order templates");
             }
@@ -13685,7 +13685,7 @@ namespace FolioConsoleApplication
                 }
                 else
                 {
-                    if (!whatIf) i = fbcc.ExecuteNonQuery($"DELETE FROM diku_mod_finance_storage.order_transaction_summaries{(where != null ? $" WHERE {where}" : "")}");
+                    if (!whatIf) i = fbcc.ExecuteNonQuery($"DELETE FROM uchicago_mod_finance_storage.order_transaction_summaries{(where != null ? $" WHERE {where}" : "")}");
                 }
                 traceSource.TraceEvent(TraceEventType.Information, 0, $"Deleted {i} order transaction summaries");
             }
@@ -13831,7 +13831,7 @@ namespace FolioConsoleApplication
                 }
                 else
                 {
-                    if (!whatIf) i = fbcc.ExecuteNonQuery($"DELETE FROM diku_mod_organizations_storage.organizations{(where != null ? $" WHERE {where}" : "")}");
+                    if (!whatIf) i = fbcc.ExecuteNonQuery($"DELETE FROM uchicago_mod_organizations_storage.organizations{(where != null ? $" WHERE {where}" : "")}");
                 }
                 traceSource.TraceEvent(TraceEventType.Information, 0, $"Deleted {i} organizations");
             }
@@ -13978,7 +13978,7 @@ namespace FolioConsoleApplication
                 }
                 else
                 {
-                    if (!whatIf) i = fbcc.ExecuteNonQuery($"DELETE FROM diku_mod_feesfines.overdue_fine_policy{(where != null ? $" WHERE {where}" : "")}");
+                    if (!whatIf) i = fbcc.ExecuteNonQuery($"DELETE FROM uchicago_mod_feesfines.overdue_fine_policy{(where != null ? $" WHERE {where}" : "")}");
                 }
                 traceSource.TraceEvent(TraceEventType.Information, 0, $"Deleted {i} overdue fine policies");
             }
@@ -14125,7 +14125,7 @@ namespace FolioConsoleApplication
                 }
                 else
                 {
-                    if (!whatIf) i = fbcc.ExecuteNonQuery($"DELETE FROM diku_mod_feesfines.owners{(where != null ? $" WHERE {where}" : "")}");
+                    if (!whatIf) i = fbcc.ExecuteNonQuery($"DELETE FROM uchicago_mod_feesfines.owners{(where != null ? $" WHERE {where}" : "")}");
                 }
                 traceSource.TraceEvent(TraceEventType.Information, 0, $"Deleted {i} owners");
             }
@@ -14272,7 +14272,7 @@ namespace FolioConsoleApplication
                 }
                 else
                 {
-                    if (!whatIf) i = fbcc.ExecuteNonQuery($"DELETE FROM diku_mod_circulation_storage.patron_action_session{(where != null ? $" WHERE {where}" : "")}");
+                    if (!whatIf) i = fbcc.ExecuteNonQuery($"DELETE FROM uchicago_mod_circulation_storage.patron_action_session{(where != null ? $" WHERE {where}" : "")}");
                 }
                 traceSource.TraceEvent(TraceEventType.Information, 0, $"Deleted {i} patron action sessions");
             }
@@ -14419,7 +14419,7 @@ namespace FolioConsoleApplication
                 }
                 else
                 {
-                    if (!whatIf) i = fbcc.ExecuteNonQuery($"DELETE FROM diku_mod_circulation_storage.patron_notice_policy{(where != null ? $" WHERE {where}" : "")}");
+                    if (!whatIf) i = fbcc.ExecuteNonQuery($"DELETE FROM uchicago_mod_circulation_storage.patron_notice_policy{(where != null ? $" WHERE {where}" : "")}");
                 }
                 traceSource.TraceEvent(TraceEventType.Information, 0, $"Deleted {i} patron notice policies");
             }
@@ -14566,7 +14566,7 @@ namespace FolioConsoleApplication
                 }
                 else
                 {
-                    if (!whatIf) i = fbcc.ExecuteNonQuery($"DELETE FROM diku_mod_feesfines.feefineactions{(where != null ? $" WHERE {where}" : "")}");
+                    if (!whatIf) i = fbcc.ExecuteNonQuery($"DELETE FROM uchicago_mod_feesfines.feefineactions{(where != null ? $" WHERE {where}" : "")}");
                 }
                 traceSource.TraceEvent(TraceEventType.Information, 0, $"Deleted {i} payments");
             }
@@ -14713,7 +14713,7 @@ namespace FolioConsoleApplication
                 }
                 else
                 {
-                    if (!whatIf) i = fbcc.ExecuteNonQuery($"DELETE FROM diku_mod_feesfines.payments{(where != null ? $" WHERE {where}" : "")}");
+                    if (!whatIf) i = fbcc.ExecuteNonQuery($"DELETE FROM uchicago_mod_feesfines.payments{(where != null ? $" WHERE {where}" : "")}");
                 }
                 traceSource.TraceEvent(TraceEventType.Information, 0, $"Deleted {i} payment methods");
             }
@@ -14860,7 +14860,7 @@ namespace FolioConsoleApplication
                 }
                 else
                 {
-                    if (!whatIf) i = fbcc.ExecuteNonQuery($"DELETE FROM diku_mod_permissions.permissions{(where != null ? $" WHERE {where}" : "")}");
+                    if (!whatIf) i = fbcc.ExecuteNonQuery($"DELETE FROM uchicago_mod_permissions.permissions{(where != null ? $" WHERE {where}" : "")}");
                 }
                 traceSource.TraceEvent(TraceEventType.Information, 0, $"Deleted {i} permissions");
             }
@@ -15007,7 +15007,7 @@ namespace FolioConsoleApplication
                 }
                 else
                 {
-                    if (!whatIf) i = fbcc.ExecuteNonQuery($"DELETE FROM diku_mod_permissions.permissions_users{(where != null ? $" WHERE {where}" : "")}");
+                    if (!whatIf) i = fbcc.ExecuteNonQuery($"DELETE FROM uchicago_mod_permissions.permissions_users{(where != null ? $" WHERE {where}" : "")}");
                 }
                 traceSource.TraceEvent(TraceEventType.Information, 0, $"Deleted {i} permissions users");
             }
@@ -15154,7 +15154,7 @@ namespace FolioConsoleApplication
                 }
                 else
                 {
-                    if (!whatIf) i = fbcc.ExecuteNonQuery($"DELETE FROM diku_mod_inventory_storage.preceding_succeeding_title{(where != null ? $" WHERE {where}" : "")}");
+                    if (!whatIf) i = fbcc.ExecuteNonQuery($"DELETE FROM uchicago_mod_inventory_storage.preceding_succeeding_title{(where != null ? $" WHERE {where}" : "")}");
                 }
                 traceSource.TraceEvent(TraceEventType.Information, 0, $"Deleted {i} preceding succeeding titles");
             }
@@ -15301,7 +15301,7 @@ namespace FolioConsoleApplication
                 }
                 else
                 {
-                    if (!whatIf) i = fbcc.ExecuteNonQuery($"DELETE FROM diku_mod_orders_storage.prefixes{(where != null ? $" WHERE {where}" : "")}");
+                    if (!whatIf) i = fbcc.ExecuteNonQuery($"DELETE FROM uchicago_mod_orders_storage.prefixes{(where != null ? $" WHERE {where}" : "")}");
                 }
                 traceSource.TraceEvent(TraceEventType.Information, 0, $"Deleted {i} prefixes");
             }
@@ -15448,7 +15448,7 @@ namespace FolioConsoleApplication
                 }
                 else
                 {
-                    if (!whatIf) i = fbcc.ExecuteNonQuery($"DELETE FROM diku_mod_users.proxyfor{(where != null ? $" WHERE {where}" : "")}");
+                    if (!whatIf) i = fbcc.ExecuteNonQuery($"DELETE FROM uchicago_mod_users.proxyfor{(where != null ? $" WHERE {where}" : "")}");
                 }
                 traceSource.TraceEvent(TraceEventType.Information, 0, $"Deleted {i} proxies");
             }
@@ -15595,7 +15595,7 @@ namespace FolioConsoleApplication
                 }
                 else
                 {
-                    if (!whatIf) i = fbcc.ExecuteNonQuery($"DELETE FROM diku_mod_orders_storage.pieces{(where != null ? $" WHERE {where}" : "")}");
+                    if (!whatIf) i = fbcc.ExecuteNonQuery($"DELETE FROM uchicago_mod_orders_storage.pieces{(where != null ? $" WHERE {where}" : "")}");
                 }
                 traceSource.TraceEvent(TraceEventType.Information, 0, $"Deleted {i} receivings");
             }
@@ -15742,7 +15742,7 @@ namespace FolioConsoleApplication
                 }
                 else
                 {
-                    if (!whatIf) i = fbcc.ExecuteNonQuery($"DELETE FROM diku_mod_source_record_storage.records_lb{(where != null ? $" WHERE {where}" : "")}");
+                    if (!whatIf) i = fbcc.ExecuteNonQuery($"DELETE FROM uchicago_mod_source_record_storage.records_lb{(where != null ? $" WHERE {where}" : "")}");
                 }
                 traceSource.TraceEvent(TraceEventType.Information, 0, $"Deleted {i} records");
             }
@@ -15818,7 +15818,7 @@ namespace FolioConsoleApplication
                 var js = JsonSchema.FromJsonAsync(sr.ReadToEndAsync().Result).Result;
                 jtw.WriteStartArray();
                 var i = 0;
-                foreach (var jo in api ? fsc.Records(where, orderBy, skip, take) : fdc.Query($"SELECT r.id::text AS id, r.snapshot_id::text AS \"snapshotId\", NULL AS \"matchedProfileId\", r.matched_id::text AS \"matchedId\", r.generation AS generation, r.record_type AS \"recordType\", rr.id::text AS id2, rr.content AS content, mr.id::text AS id3, mr.content AS content2, NULL AS \"formattedContent\", er.id::text AS id4, er.description AS description, er.content AS content3, false AS deleted, r.suppress_discovery AS \"suppressDiscovery\", r.created_date AS \"createdDate\", r.created_by_user_id::text AS \"createdByUserId\", NULL AS \"createdByUsername\", r.updated_date AS \"updatedDate\", r.updated_by_user_id::text AS \"updatedByUserId\", NULL AS \"updatedByUsername\", r.order AS order, r.instance_id::text AS \"instanceId\", r.instance_hrid AS \"instanceHrid\", r.state AS state, r.leader_record_status AS \"leaderRecordStatus\" FROM diku_mod_source_record_storage.records_lb r LEFT JOIN diku_mod_source_record_storage.raw_records_lb rr ON rr.id = r.id LEFT JOIN diku_mod_source_record_storage.marc_records_lb mr ON mr.id = r.id LEFT JOIN diku_mod_source_record_storage.error_records_lb er ON er.id = r.id{(where != null ? $" WHERE {where}" : "")}{(orderBy != null ? $" ORDER BY {orderBy}" : "")}", null, skip, take, 5 * 60).Select(d => JObject.FromObject(new
+                foreach (var jo in api ? fsc.Records(where, orderBy, skip, take) : fdc.Query($"SELECT r.id::text AS id, r.snapshot_id::text AS \"snapshotId\", NULL AS \"matchedProfileId\", r.matched_id::text AS \"matchedId\", r.generation AS generation, r.record_type AS \"recordType\", rr.id::text AS id2, rr.content AS content, mr.id::text AS id3, mr.content AS content2, NULL AS \"formattedContent\", er.id::text AS id4, er.description AS description, er.content AS content3, false AS deleted, r.suppress_discovery AS \"suppressDiscovery\", r.created_date AS \"createdDate\", r.created_by_user_id::text AS \"createdByUserId\", NULL AS \"createdByUsername\", r.updated_date AS \"updatedDate\", r.updated_by_user_id::text AS \"updatedByUserId\", NULL AS \"updatedByUsername\", r.order AS order, r.instance_id::text AS \"instanceId\", r.instance_hrid AS \"instanceHrid\", r.state AS state, r.leader_record_status AS \"leaderRecordStatus\" FROM uchicago_mod_source_record_storage.records_lb r LEFT JOIN uchicago_mod_source_record_storage.raw_records_lb rr ON rr.id = r.id LEFT JOIN uchicago_mod_source_record_storage.marc_records_lb mr ON mr.id = r.id LEFT JOIN uchicago_mod_source_record_storage.error_records_lb er ON er.id = r.id{(where != null ? $" WHERE {where}" : "")}{(orderBy != null ? $" ORDER BY {orderBy}" : "")}", null, skip, take, 5 * 60).Select(d => JObject.FromObject(new
                 {
                     d.id,
                     d.snapshotId,
@@ -15931,7 +15931,7 @@ namespace FolioConsoleApplication
                 }
                 else
                 {
-                    if (!whatIf) i = fbcc.ExecuteNonQuery($"DELETE FROM diku_mod_feesfines.refunds{(where != null ? $" WHERE {where}" : "")}");
+                    if (!whatIf) i = fbcc.ExecuteNonQuery($"DELETE FROM uchicago_mod_feesfines.refunds{(where != null ? $" WHERE {where}" : "")}");
                 }
                 traceSource.TraceEvent(TraceEventType.Information, 0, $"Deleted {i} refund reasons");
             }
@@ -16078,7 +16078,7 @@ namespace FolioConsoleApplication
                 }
                 else
                 {
-                    if (!whatIf) i = fbcc.ExecuteNonQuery($"DELETE FROM diku_mod_orders_storage.reporting_code{(where != null ? $" WHERE {where}" : "")}");
+                    if (!whatIf) i = fbcc.ExecuteNonQuery($"DELETE FROM uchicago_mod_orders_storage.reporting_code{(where != null ? $" WHERE {where}" : "")}");
                 }
                 traceSource.TraceEvent(TraceEventType.Information, 0, $"Deleted {i} reporting codes");
             }
@@ -16225,7 +16225,7 @@ namespace FolioConsoleApplication
                 }
                 else
                 {
-                    if (!whatIf) i = fbcc.ExecuteNonQuery($"DELETE FROM diku_mod_circulation_storage.request{(where != null ? $" WHERE {where}" : "")}");
+                    if (!whatIf) i = fbcc.ExecuteNonQuery($"DELETE FROM uchicago_mod_circulation_storage.request{(where != null ? $" WHERE {where}" : "")}");
                 }
                 traceSource.TraceEvent(TraceEventType.Information, 0, $"Deleted {i} requests");
             }
@@ -16372,7 +16372,7 @@ namespace FolioConsoleApplication
                 }
                 else
                 {
-                    if (!whatIf) i = fbcc.ExecuteNonQuery($"DELETE FROM diku_mod_circulation_storage.request_policy{(where != null ? $" WHERE {where}" : "")}");
+                    if (!whatIf) i = fbcc.ExecuteNonQuery($"DELETE FROM uchicago_mod_circulation_storage.request_policy{(where != null ? $" WHERE {where}" : "")}");
                 }
                 traceSource.TraceEvent(TraceEventType.Information, 0, $"Deleted {i} request policies");
             }
@@ -16519,7 +16519,7 @@ namespace FolioConsoleApplication
                 }
                 else
                 {
-                    if (!whatIf) i = fbcc.ExecuteNonQuery($"DELETE FROM diku_mod_circulation_storage.scheduled_notice{(where != null ? $" WHERE {where}" : "")}");
+                    if (!whatIf) i = fbcc.ExecuteNonQuery($"DELETE FROM uchicago_mod_circulation_storage.scheduled_notice{(where != null ? $" WHERE {where}" : "")}");
                 }
                 traceSource.TraceEvent(TraceEventType.Information, 0, $"Deleted {i} scheduled notices");
             }
@@ -16666,7 +16666,7 @@ namespace FolioConsoleApplication
                 }
                 else
                 {
-                    if (!whatIf) i = fbcc.ExecuteNonQuery($"DELETE FROM diku_mod_inventory_storage.service_point{(where != null ? $" WHERE {where}" : "")}");
+                    if (!whatIf) i = fbcc.ExecuteNonQuery($"DELETE FROM uchicago_mod_inventory_storage.service_point{(where != null ? $" WHERE {where}" : "")}");
                 }
                 traceSource.TraceEvent(TraceEventType.Information, 0, $"Deleted {i} service points");
             }
@@ -16813,7 +16813,7 @@ namespace FolioConsoleApplication
                 }
                 else
                 {
-                    if (!whatIf) i = fbcc.ExecuteNonQuery($"DELETE FROM diku_mod_inventory_storage.service_point_user{(where != null ? $" WHERE {where}" : "")}");
+                    if (!whatIf) i = fbcc.ExecuteNonQuery($"DELETE FROM uchicago_mod_inventory_storage.service_point_user{(where != null ? $" WHERE {where}" : "")}");
                 }
                 traceSource.TraceEvent(TraceEventType.Information, 0, $"Deleted {i} service point users");
             }
@@ -16960,7 +16960,7 @@ namespace FolioConsoleApplication
                 }
                 else
                 {
-                    if (!whatIf) i = fbcc.ExecuteNonQuery($"DELETE FROM diku_mod_source_record_storage.snapshots_lb{(where != null ? $" WHERE {where}" : "")}");
+                    if (!whatIf) i = fbcc.ExecuteNonQuery($"DELETE FROM uchicago_mod_source_record_storage.snapshots_lb{(where != null ? $" WHERE {where}" : "")}");
                 }
                 traceSource.TraceEvent(TraceEventType.Information, 0, $"Deleted {i} snapshots");
             }
@@ -17096,7 +17096,7 @@ namespace FolioConsoleApplication
                 }
                 else
                 {
-                    if (!whatIf) i = fbcc.ExecuteNonQuery($"DELETE FROM diku_mod_inventory_storage.holdings_records_source{(where != null ? $" WHERE {where}" : "")}");
+                    if (!whatIf) i = fbcc.ExecuteNonQuery($"DELETE FROM uchicago_mod_inventory_storage.holdings_records_source{(where != null ? $" WHERE {where}" : "")}");
                 }
                 traceSource.TraceEvent(TraceEventType.Information, 0, $"Deleted {i} sources");
             }
@@ -17243,7 +17243,7 @@ namespace FolioConsoleApplication
                 }
                 else
                 {
-                    if (!whatIf) i = fbcc.ExecuteNonQuery($"DELETE FROM diku_mod_circulation_storage.staff_slips{(where != null ? $" WHERE {where}" : "")}");
+                    if (!whatIf) i = fbcc.ExecuteNonQuery($"DELETE FROM uchicago_mod_circulation_storage.staff_slips{(where != null ? $" WHERE {where}" : "")}");
                 }
                 traceSource.TraceEvent(TraceEventType.Information, 0, $"Deleted {i} staff slips");
             }
@@ -17390,7 +17390,7 @@ namespace FolioConsoleApplication
                 }
                 else
                 {
-                    if (!whatIf) i = fbcc.ExecuteNonQuery($"DELETE FROM diku_mod_inventory_storage.statistical_code{(where != null ? $" WHERE {where}" : "")}");
+                    if (!whatIf) i = fbcc.ExecuteNonQuery($"DELETE FROM uchicago_mod_inventory_storage.statistical_code{(where != null ? $" WHERE {where}" : "")}");
                 }
                 traceSource.TraceEvent(TraceEventType.Information, 0, $"Deleted {i} statistical codes");
             }
@@ -17537,7 +17537,7 @@ namespace FolioConsoleApplication
                 }
                 else
                 {
-                    if (!whatIf) i = fbcc.ExecuteNonQuery($"DELETE FROM diku_mod_inventory_storage.statistical_code_type{(where != null ? $" WHERE {where}" : "")}");
+                    if (!whatIf) i = fbcc.ExecuteNonQuery($"DELETE FROM uchicago_mod_inventory_storage.statistical_code_type{(where != null ? $" WHERE {where}" : "")}");
                 }
                 traceSource.TraceEvent(TraceEventType.Information, 0, $"Deleted {i} statistical code types");
             }
@@ -17684,7 +17684,7 @@ namespace FolioConsoleApplication
                 }
                 else
                 {
-                    if (!whatIf) i = fbcc.ExecuteNonQuery($"DELETE FROM diku_mod_orders_storage.suffixes{(where != null ? $" WHERE {where}" : "")}");
+                    if (!whatIf) i = fbcc.ExecuteNonQuery($"DELETE FROM uchicago_mod_orders_storage.suffixes{(where != null ? $" WHERE {where}" : "")}");
                 }
                 traceSource.TraceEvent(TraceEventType.Information, 0, $"Deleted {i} suffixes");
             }
@@ -17831,7 +17831,7 @@ namespace FolioConsoleApplication
                 }
                 else
                 {
-                    if (!whatIf) i = fbcc.ExecuteNonQuery($"DELETE FROM diku_mod_template_engine.template{(where != null ? $" WHERE {where}" : "")}");
+                    if (!whatIf) i = fbcc.ExecuteNonQuery($"DELETE FROM uchicago_mod_template_engine.template{(where != null ? $" WHERE {where}" : "")}");
                 }
                 traceSource.TraceEvent(TraceEventType.Information, 0, $"Deleted {i} templates");
             }
@@ -17978,7 +17978,7 @@ namespace FolioConsoleApplication
                 }
                 else
                 {
-                    if (!whatIf) i = fbcc.ExecuteNonQuery($"DELETE FROM diku_mod_orders_storage.titles{(where != null ? $" WHERE {where}" : "")}");
+                    if (!whatIf) i = fbcc.ExecuteNonQuery($"DELETE FROM uchicago_mod_orders_storage.titles{(where != null ? $" WHERE {where}" : "")}");
                 }
                 traceSource.TraceEvent(TraceEventType.Information, 0, $"Deleted {i} titles");
             }
@@ -18125,7 +18125,7 @@ namespace FolioConsoleApplication
                 }
                 else
                 {
-                    if (!whatIf) i = fbcc.ExecuteNonQuery($"DELETE FROM diku_mod_finance_storage.transaction{(where != null ? $" WHERE {where}" : "")}");
+                    if (!whatIf) i = fbcc.ExecuteNonQuery($"DELETE FROM uchicago_mod_finance_storage.transaction{(where != null ? $" WHERE {where}" : "")}");
                 }
                 traceSource.TraceEvent(TraceEventType.Information, 0, $"Deleted {i} transactions");
             }
@@ -18272,7 +18272,7 @@ namespace FolioConsoleApplication
                 }
                 else
                 {
-                    if (!whatIf) i = fbcc.ExecuteNonQuery($"DELETE FROM diku_mod_feesfines.transfers{(where != null ? $" WHERE {where}" : "")}");
+                    if (!whatIf) i = fbcc.ExecuteNonQuery($"DELETE FROM uchicago_mod_feesfines.transfers{(where != null ? $" WHERE {where}" : "")}");
                 }
                 traceSource.TraceEvent(TraceEventType.Information, 0, $"Deleted {i} transfer accounts");
             }
@@ -18419,7 +18419,7 @@ namespace FolioConsoleApplication
                 }
                 else
                 {
-                    if (!whatIf) i = fbcc.ExecuteNonQuery($"DELETE FROM diku_mod_feesfines.transfer_criteria{(where != null ? $" WHERE {where}" : "")}");
+                    if (!whatIf) i = fbcc.ExecuteNonQuery($"DELETE FROM uchicago_mod_feesfines.transfer_criteria{(where != null ? $" WHERE {where}" : "")}");
                 }
                 traceSource.TraceEvent(TraceEventType.Information, 0, $"Deleted {i} transfer criterias");
             }
@@ -18566,7 +18566,7 @@ namespace FolioConsoleApplication
                 }
                 else
                 {
-                    if (!whatIf) i = fbcc.ExecuteNonQuery($"DELETE FROM diku_mod_users.users{(where != null ? $" WHERE {where}" : "")}");
+                    if (!whatIf) i = fbcc.ExecuteNonQuery($"DELETE FROM uchicago_mod_users.users{(where != null ? $" WHERE {where}" : "")}");
                 }
                 traceSource.TraceEvent(TraceEventType.Information, 0, $"Deleted {i} users");
             }
@@ -18647,7 +18647,7 @@ namespace FolioConsoleApplication
             {
                 var dt = api ? fsc.GetCurrentTime() : fdc.ExecuteScalar<DateTime>("SELECT current_timestamp");
                 dt = dt.AddTicks(-dt.Ticks % TimeSpan.TicksPerMillisecond);
-                var users = api ? fsc.Users().ToArray() : fdc.Query<string>($"SELECT jsonb FROM diku_mod_users.users").Select(s3 => JsonConvert.DeserializeObject<JObject>(s3)).ToArray();
+                var users = api ? fsc.Users().ToArray() : fdc.Query<string>($"SELECT jsonb FROM uchicago_mod_users.users").Select(s3 => JsonConvert.DeserializeObject<JObject>(s3)).ToArray();
                 var ids = users.ToDictionary(jo => (string)jo["id"]);
                 var externalSystemIds = users.Where(jo => jo.SelectToken("externalSystemId") != null).ToDictionary(jo => (string)jo.SelectToken("externalSystemId"));
                 var usernames = users.Where(jo => jo.SelectToken("username") != null).ToDictionary(jo => (string)jo.SelectToken("username"));
@@ -18769,7 +18769,7 @@ namespace FolioConsoleApplication
                     }
                     else
                     {
-                        k = fdc.Execute($"UPDATE diku_mod_users.users SET jsonb = jsonb_set(jsonb_set(jsonb_set(jsonb, '{{active}}', 'false'), '{{metadata,updatedDate}}', '\"{dt.ToUniversalTime():yyyy-MM-ddTHH:mm:ss.fff+00:00}\"'), '{{metadata,updatedByUserId}}', '\"{userId}\"') WHERE (jsonb->>'active')::BOOLEAN = true AND (jsonb#>>'{{metadata,updatedDate}}')::timestamptz < @dt::timestamptz AND id != '{userId}'{(where != null ? $" AND {where}" : "")}", new { dt });
+                        k = fdc.Execute($"UPDATE uchicago_mod_users.users SET jsonb = jsonb_set(jsonb_set(jsonb_set(jsonb, '{{active}}', 'false'), '{{metadata,updatedDate}}', '\"{dt.ToUniversalTime():yyyy-MM-ddTHH:mm:ss.fff+00:00}\"'), '{{metadata,updatedByUserId}}', '\"{userId}\"') WHERE (jsonb->>'active')::BOOLEAN = true AND (jsonb#>>'{{metadata,updatedDate}}')::timestamptz < @dt::timestamptz AND id != '{userId}'{(where != null ? $" AND {where}" : "")}", new { dt });
                         fdc.Commit();
                     }
                     traceSource.TraceEvent(TraceEventType.Information, 0, $"Disabled {k} users");
@@ -18873,7 +18873,7 @@ namespace FolioConsoleApplication
                 }
                 else
                 {
-                    if (!whatIf) i = fbcc.ExecuteNonQuery($"DELETE FROM diku_mod_orders_storage.acquisitions_unit_membership{(where != null ? $" WHERE {where}" : "")}");
+                    if (!whatIf) i = fbcc.ExecuteNonQuery($"DELETE FROM uchicago_mod_orders_storage.acquisitions_unit_membership{(where != null ? $" WHERE {where}" : "")}");
                 }
                 traceSource.TraceEvent(TraceEventType.Information, 0, $"Deleted {i} user acquisitions units");
             }
@@ -19020,7 +19020,7 @@ namespace FolioConsoleApplication
                 }
                 else
                 {
-                    if (!whatIf) i = fbcc.ExecuteNonQuery($"DELETE FROM diku_mod_circulation_storage.user_request_preference{(where != null ? $" WHERE {where}" : "")}");
+                    if (!whatIf) i = fbcc.ExecuteNonQuery($"DELETE FROM uchicago_mod_circulation_storage.user_request_preference{(where != null ? $" WHERE {where}" : "")}");
                 }
                 traceSource.TraceEvent(TraceEventType.Information, 0, $"Deleted {i} user request preferences");
             }
@@ -19155,7 +19155,7 @@ namespace FolioConsoleApplication
                 }
                 else
                 {
-                    if (!whatIf) i = fbcc.ExecuteNonQuery($"DELETE FROM diku_mod_patron_blocks.user_summary{(where != null ? $" WHERE {where}" : "")}");
+                    if (!whatIf) i = fbcc.ExecuteNonQuery($"DELETE FROM uchicago_mod_patron_blocks.user_summary{(where != null ? $" WHERE {where}" : "")}");
                 }
                 traceSource.TraceEvent(TraceEventType.Information, 0, $"Deleted {i} user summaries");
             }
@@ -19295,7 +19295,7 @@ namespace FolioConsoleApplication
                 }
                 else
                 {
-                    if (!whatIf) i = fbcc.ExecuteNonQuery($"DELETE FROM diku_mod_invoice_storage.vouchers{(where != null ? $" WHERE {where}" : "")}");
+                    if (!whatIf) i = fbcc.ExecuteNonQuery($"DELETE FROM uchicago_mod_invoice_storage.vouchers{(where != null ? $" WHERE {where}" : "")}");
                 }
                 traceSource.TraceEvent(TraceEventType.Information, 0, $"Deleted {i} vouchers");
             }
@@ -19359,7 +19359,7 @@ namespace FolioConsoleApplication
                     }
                 }
                 fbcc.Commit();
-                fdc.Execute($"ALTER SEQUENCE diku_mod_invoice_storage.voucher_number START 360000 RESTART {fdc.ExecuteScalar<int>("SELECT MAX(CASE WHEN LEFT(jsonb->> 'voucherNumber', 1) = 'R' THEN SUBSTRING(jsonb->>'voucherNumber', 2)::int ELSE 0 END) + 1 FROM diku_mod_invoice_storage.vouchers")}");
+                fdc.Execute($"ALTER SEQUENCE uchicago_mod_invoice_storage.voucher_number START 360000 RESTART {fdc.ExecuteScalar<int>("SELECT MAX(CASE WHEN LEFT(jsonb->> 'voucherNumber', 1) = 'R' THEN SUBSTRING(jsonb->>'voucherNumber', 2)::int ELSE 0 END) + 1 FROM uchicago_mod_invoice_storage.vouchers")}");
                 fdc.Commit();
                 traceSource.TraceEvent(TraceEventType.Information, 0, $"{i} {s2.Elapsed} {s.Elapsed}");
                 traceSource.TraceEvent(TraceEventType.Information, 0, $"Added {i} vouchers");
@@ -19445,7 +19445,7 @@ namespace FolioConsoleApplication
                 }
                 else
                 {
-                    if (!whatIf) i = fbcc.ExecuteNonQuery($"DELETE FROM diku_mod_invoice_storage.voucher_lines{(where != null ? $" WHERE {where}" : "")}");
+                    if (!whatIf) i = fbcc.ExecuteNonQuery($"DELETE FROM uchicago_mod_invoice_storage.voucher_lines{(where != null ? $" WHERE {where}" : "")}");
                 }
                 traceSource.TraceEvent(TraceEventType.Information, 0, $"Deleted {i} voucher items");
             }
@@ -19592,7 +19592,7 @@ namespace FolioConsoleApplication
                 }
                 else
                 {
-                    if (!whatIf) i = fbcc.ExecuteNonQuery($"DELETE FROM diku_mod_feesfines.waives{(where != null ? $" WHERE {where}" : "")}");
+                    if (!whatIf) i = fbcc.ExecuteNonQuery($"DELETE FROM uchicago_mod_feesfines.waives{(where != null ? $" WHERE {where}" : "")}");
                 }
                 traceSource.TraceEvent(TraceEventType.Information, 0, $"Deleted {i} waive reasons");
             }

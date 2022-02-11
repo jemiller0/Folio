@@ -8,7 +8,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace FolioLibrary
 {
-    // uc.snapshots -> diku_mod_source_record_storage.snapshots_lb
+    // uc.snapshots -> uchicago_mod_source_record_storage.snapshots_lb
     // Snapshot2 -> Snapshot
     [DisplayColumn(nameof(Id)), DisplayName("Snapshots"), JsonConverter(typeof(JsonPathJsonConverter<Snapshot2>)), JsonObject(MemberSerialization = MemberSerialization.OptIn), Table("snapshots", Schema = "uc")]
     public partial class Snapshot2

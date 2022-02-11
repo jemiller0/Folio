@@ -6,7 +6,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace FolioLibrary
 {
-    // uc.publication_range -> diku_mod_inventory_storage.instance
+    // uc.publication_range -> uchicago_mod_inventory_storage.instance
     // PublicationRange -> Instance
     [DisplayColumn(nameof(Content)), DisplayName("Publication Ranges"), Table("publication_range", Schema = "uc")]
     public partial class PublicationRange

@@ -6,7 +6,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace FolioLibrary
 {
-    // uc.interface_type -> diku_mod_organizations_storage.interfaces
+    // uc.interface_type -> uchicago_mod_organizations_storage.interfaces
     // InterfaceType -> Interface
     [DisplayColumn(nameof(Content)), DisplayName("Interface Types"), Table("interface_type", Schema = "uc")]
     public partial class InterfaceType

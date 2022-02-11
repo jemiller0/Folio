@@ -6,7 +6,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace FolioLibrary
 {
-    // uc.request_tags -> diku_mod_circulation_storage.request
+    // uc.request_tags -> uchicago_mod_circulation_storage.request
     // RequestTag -> Request
     [DisplayColumn(nameof(Content)), DisplayName("Request Tags"), Table("request_tags", Schema = "uc")]
     public partial class RequestTag

@@ -12,7 +12,7 @@ using System.Reflection;
 
 namespace FolioLibrary
 {
-    // uc.invoice_items -> diku_mod_invoice_storage.invoice_lines
+    // uc.invoice_items -> uchicago_mod_invoice_storage.invoice_lines
     // InvoiceItem2 -> InvoiceItem
     [DisplayColumn(nameof(Number)), DisplayName("Invoice Items"), JsonConverter(typeof(JsonPathJsonConverter<InvoiceItem2>)), JsonObject(MemberSerialization = MemberSerialization.OptIn), Table("invoice_items", Schema = "uc")]
     public partial class InvoiceItem2

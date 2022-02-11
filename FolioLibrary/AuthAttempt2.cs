@@ -11,7 +11,7 @@ using System.Reflection;
 
 namespace FolioLibrary
 {
-    // uc.auth_attempts -> diku_mod_login.auth_attempts
+    // uc.auth_attempts -> uchicago_mod_login.auth_attempts
     // AuthAttempt2 -> AuthAttempt
     [DisplayColumn(nameof(Id)), DisplayName("Auth Attempts"), JsonObject(MemberSerialization = MemberSerialization.OptIn), Table("auth_attempts", Schema = "uc")]
     public partial class AuthAttempt2

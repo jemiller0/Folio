@@ -7,7 +7,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace FolioLibrary
 {
-    // uc.patron_notice_policy_fee_fine_notices -> diku_mod_circulation_storage.patron_notice_policy
+    // uc.patron_notice_policy_fee_fine_notices -> uchicago_mod_circulation_storage.patron_notice_policy
     // PatronNoticePolicyFeeFineNotice -> PatronNoticePolicy
     [DisplayColumn(nameof(Name)), DisplayName("Patron Notice Policy Fee Fine Notices"), JsonConverter(typeof(JsonPathJsonConverter<PatronNoticePolicyFeeFineNotice>)), JsonObject(MemberSerialization = MemberSerialization.OptIn), Table("patron_notice_policy_fee_fine_notices", Schema = "uc")]
     public partial class PatronNoticePolicyFeeFineNotice

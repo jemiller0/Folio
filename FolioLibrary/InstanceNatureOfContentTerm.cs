@@ -6,7 +6,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace FolioLibrary
 {
-    // uc.instance_nature_of_content_terms -> diku_mod_inventory_storage.instance
+    // uc.instance_nature_of_content_terms -> uchicago_mod_inventory_storage.instance
     // InstanceNatureOfContentTerm -> Instance
     [DisplayColumn(nameof(Id)), DisplayName("Instance Nature Of Content Terms"), Table("instance_nature_of_content_terms", Schema = "uc")]
     public partial class InstanceNatureOfContentTerm

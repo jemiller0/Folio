@@ -11,7 +11,7 @@ using System.Reflection;
 
 namespace FolioLibrary
 {
-    // uc.payment_methods -> diku_mod_feesfines.payments
+    // uc.payment_methods -> uchicago_mod_feesfines.payments
     // PaymentMethod2 -> PaymentMethod
     [DisplayColumn(nameof(Name)), DisplayName("Payment Methods"), JsonConverter(typeof(JsonPathJsonConverter<PaymentMethod2>)), JsonObject(MemberSerialization = MemberSerialization.OptIn), Table("payment_methods", Schema = "uc")]
     public partial class PaymentMethod2

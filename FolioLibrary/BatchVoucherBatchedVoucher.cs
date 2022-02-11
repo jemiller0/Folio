@@ -9,7 +9,7 @@ using System.Linq;
 
 namespace FolioLibrary
 {
-    // uc.batch_voucher_batched_vouchers -> diku_mod_invoice_storage.batch_vouchers
+    // uc.batch_voucher_batched_vouchers -> uchicago_mod_invoice_storage.batch_vouchers
     // BatchVoucherBatchedVoucher -> BatchVoucher
     [DisplayColumn(nameof(Id)), DisplayName("Batch Voucher Batched Vouchers"), JsonConverter(typeof(JsonPathJsonConverter<BatchVoucherBatchedVoucher>)), JsonObject(MemberSerialization = MemberSerialization.OptIn), Table("batch_voucher_batched_vouchers", Schema = "uc")]
     public partial class BatchVoucherBatchedVoucher

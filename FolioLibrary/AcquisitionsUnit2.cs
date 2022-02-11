@@ -12,7 +12,7 @@ using System.Reflection;
 
 namespace FolioLibrary
 {
-    // uc.acquisitions_units -> diku_mod_orders_storage.acquisitions_unit
+    // uc.acquisitions_units -> uchicago_mod_orders_storage.acquisitions_unit
     // AcquisitionsUnit2 -> AcquisitionsUnit
     [DisplayColumn(nameof(Name)), DisplayName("Acquisitions Units"), JsonConverter(typeof(JsonPathJsonConverter<AcquisitionsUnit2>)), JsonObject(MemberSerialization = MemberSerialization.OptIn), Table("acquisitions_units", Schema = "uc")]
     public partial class AcquisitionsUnit2

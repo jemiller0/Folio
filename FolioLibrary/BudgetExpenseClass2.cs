@@ -11,7 +11,7 @@ using System.Reflection;
 
 namespace FolioLibrary
 {
-    // uc.budget_expense_classes -> diku_mod_finance_storage.budget_expense_class
+    // uc.budget_expense_classes -> uchicago_mod_finance_storage.budget_expense_class
     // BudgetExpenseClass2 -> BudgetExpenseClass
     [DisplayColumn(nameof(Id)), DisplayName("Budget Expense Classes"), JsonObject(MemberSerialization = MemberSerialization.OptIn), Table("budget_expense_classes", Schema = "uc")]
     public partial class BudgetExpenseClass2

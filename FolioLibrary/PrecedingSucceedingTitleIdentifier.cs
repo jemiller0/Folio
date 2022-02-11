@@ -7,7 +7,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace FolioLibrary
 {
-    // uc.preceding_succeeding_title_identifiers -> diku_mod_inventory_storage.preceding_succeeding_title
+    // uc.preceding_succeeding_title_identifiers -> uchicago_mod_inventory_storage.preceding_succeeding_title
     // PrecedingSucceedingTitleIdentifier -> PrecedingSucceedingTitle
     [DisplayColumn(nameof(Id)), DisplayName("Preceding Succeeding Title Identifiers"), JsonObject(MemberSerialization = MemberSerialization.OptIn), Table("preceding_succeeding_title_identifiers", Schema = "uc")]
     public partial class PrecedingSucceedingTitleIdentifier

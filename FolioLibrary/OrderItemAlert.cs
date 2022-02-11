@@ -6,7 +6,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace FolioLibrary
 {
-    // uc.order_item_alerts -> diku_mod_orders_storage.po_line
+    // uc.order_item_alerts -> uchicago_mod_orders_storage.po_line
     // OrderItemAlert -> OrderItem
     [DisplayColumn(nameof(Id)), DisplayName("Order Item Alerts"), Table("order_item_alerts", Schema = "uc")]
     public partial class OrderItemAlert

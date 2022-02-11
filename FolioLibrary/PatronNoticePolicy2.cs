@@ -12,7 +12,7 @@ using System.Reflection;
 
 namespace FolioLibrary
 {
-    // uc.patron_notice_policies -> diku_mod_circulation_storage.patron_notice_policy
+    // uc.patron_notice_policies -> uchicago_mod_circulation_storage.patron_notice_policy
     // PatronNoticePolicy2 -> PatronNoticePolicy
     [DisplayColumn(nameof(Name)), DisplayName("Patron Notice Policies"), JsonConverter(typeof(JsonPathJsonConverter<PatronNoticePolicy2>)), JsonObject(MemberSerialization = MemberSerialization.OptIn), Table("patron_notice_policies", Schema = "uc")]
     public partial class PatronNoticePolicy2

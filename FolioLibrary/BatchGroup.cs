@@ -11,7 +11,7 @@ using System.Reflection;
 
 namespace FolioLibrary
 {
-    [Table("batch_groups", Schema = "diku_mod_invoice_storage")]
+    [Table("batch_groups", Schema = "uchicago_mod_invoice_storage")]
     public partial class BatchGroup
     {
         public static ValidationResult ValidateContent(string value)

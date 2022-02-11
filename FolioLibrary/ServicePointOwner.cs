@@ -7,7 +7,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace FolioLibrary
 {
-    // uc.service_point_owners -> diku_mod_feesfines.owners
+    // uc.service_point_owners -> uchicago_mod_feesfines.owners
     // ServicePointOwner -> Owner
     [DisplayColumn(nameof(Id)), DisplayName("Service Point Owners"), JsonObject(MemberSerialization = MemberSerialization.OptIn), Table("service_point_owners", Schema = "uc")]
     public partial class ServicePointOwner

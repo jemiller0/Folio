@@ -12,7 +12,7 @@ using System.Reflection;
 
 namespace FolioLibrary
 {
-    // uc.lost_item_fee_policies -> diku_mod_feesfines.lost_item_fee_policy
+    // uc.lost_item_fee_policies -> uchicago_mod_feesfines.lost_item_fee_policy
     // LostItemFeePolicy2 -> LostItemFeePolicy
     [DisplayColumn(nameof(Name)), DisplayName("Lost Item Fee Policies"), JsonConverter(typeof(JsonPathJsonConverter<LostItemFeePolicy2>)), JsonObject(MemberSerialization = MemberSerialization.OptIn), Table("lost_item_fee_policies", Schema = "uc")]
     public partial class LostItemFeePolicy2

@@ -6,7 +6,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace FolioLibrary
 {
-    // uc.fiscal_year_acquisitions_units -> diku_mod_finance_storage.fiscal_year
+    // uc.fiscal_year_acquisitions_units -> uchicago_mod_finance_storage.fiscal_year
     // FiscalYearAcquisitionsUnit -> FiscalYear
     [DisplayColumn(nameof(Id)), DisplayName("Fiscal Year Acquisitions Units"), Table("fiscal_year_acquisitions_units", Schema = "uc")]
     public partial class FiscalYearAcquisitionsUnit

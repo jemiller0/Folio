@@ -11,7 +11,7 @@ using System.Reflection;
 
 namespace FolioLibrary
 {
-    // uc.waive_reasons -> diku_mod_feesfines.waives
+    // uc.waive_reasons -> uchicago_mod_feesfines.waives
     // WaiveReason2 -> WaiveReason
     [DisplayColumn(nameof(Name)), DisplayName("Waive Reasons"), JsonConverter(typeof(JsonPathJsonConverter<WaiveReason2>)), JsonObject(MemberSerialization = MemberSerialization.OptIn), Table("waive_reasons", Schema = "uc")]
     public partial class WaiveReason2

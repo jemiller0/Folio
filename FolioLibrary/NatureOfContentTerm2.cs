@@ -12,7 +12,7 @@ using System.Reflection;
 
 namespace FolioLibrary
 {
-    // uc.nature_of_content_terms -> diku_mod_inventory_storage.nature_of_content_term
+    // uc.nature_of_content_terms -> uchicago_mod_inventory_storage.nature_of_content_term
     // NatureOfContentTerm2 -> NatureOfContentTerm
     [DisplayColumn(nameof(Name)), DisplayName("Nature Of Content Terms"), JsonConverter(typeof(JsonPathJsonConverter<NatureOfContentTerm2>)), JsonObject(MemberSerialization = MemberSerialization.OptIn), Table("nature_of_content_terms", Schema = "uc")]
     public partial class NatureOfContentTerm2

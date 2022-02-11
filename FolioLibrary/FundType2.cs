@@ -12,7 +12,7 @@ using System.Reflection;
 
 namespace FolioLibrary
 {
-    // uc.fund_types -> diku_mod_finance_storage.fund_type
+    // uc.fund_types -> uchicago_mod_finance_storage.fund_type
     // FundType2 -> FundType
     [DisplayColumn(nameof(Name)), DisplayName("Fund Types"), JsonObject(MemberSerialization = MemberSerialization.OptIn), Table("fund_types", Schema = "uc")]
     public partial class FundType2

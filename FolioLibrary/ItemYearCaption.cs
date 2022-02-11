@@ -6,7 +6,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace FolioLibrary
 {
-    // uc.item_year_caption -> diku_mod_inventory_storage.item
+    // uc.item_year_caption -> uchicago_mod_inventory_storage.item
     // ItemYearCaption -> Item
     [DisplayColumn(nameof(Content)), DisplayName("Item Year Captions"), Table("item_year_caption", Schema = "uc")]
     public partial class ItemYearCaption

@@ -12,7 +12,7 @@ using System.Reflection;
 
 namespace FolioLibrary
 {
-    // uc.item_damaged_statuses -> diku_mod_inventory_storage.item_damaged_status
+    // uc.item_damaged_statuses -> uchicago_mod_inventory_storage.item_damaged_status
     // ItemDamagedStatus2 -> ItemDamagedStatus
     [DisplayColumn(nameof(Name)), DisplayName("Item Damaged Statuses"), JsonConverter(typeof(JsonPathJsonConverter<ItemDamagedStatus2>)), JsonObject(MemberSerialization = MemberSerialization.OptIn), Table("item_damaged_statuses", Schema = "uc")]
     public partial class ItemDamagedStatus2

@@ -11,7 +11,7 @@ using System.Reflection;
 
 namespace FolioLibrary
 {
-    // uc.job_execution_progresses -> diku_mod_source_record_manager.job_execution_progress
+    // uc.job_execution_progresses -> uchicago_mod_source_record_manager.job_execution_progress
     // JobExecutionProgress2 -> JobExecutionProgress
     [DisplayColumn(nameof(Id)), DisplayName("Job Execution Progresses"), JsonObject(MemberSerialization = MemberSerialization.OptIn), Table("job_execution_progresses", Schema = "uc")]
     public partial class JobExecutionProgress2

@@ -12,7 +12,7 @@ using System.Reflection;
 
 namespace FolioLibrary
 {
-    // uc.user_summaries -> diku_mod_patron_blocks.user_summary
+    // uc.user_summaries -> uchicago_mod_patron_blocks.user_summary
     // UserSummary2 -> UserSummary
     [DisplayColumn(nameof(Id)), DisplayName("User Summaries"), JsonConverter(typeof(JsonPathJsonConverter<UserSummary2>)), JsonObject(MemberSerialization = MemberSerialization.OptIn), Table("user_summaries", Schema = "uc")]
     public partial class UserSummary2

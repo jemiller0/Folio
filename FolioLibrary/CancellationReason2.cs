@@ -12,7 +12,7 @@ using System.Reflection;
 
 namespace FolioLibrary
 {
-    // uc.cancellation_reasons -> diku_mod_circulation_storage.cancellation_reason
+    // uc.cancellation_reasons -> uchicago_mod_circulation_storage.cancellation_reason
     // CancellationReason2 -> CancellationReason
     [DisplayColumn(nameof(Name)), DisplayName("Cancellation Reasons"), JsonConverter(typeof(JsonPathJsonConverter<CancellationReason2>)), JsonObject(MemberSerialization = MemberSerialization.OptIn), Table("cancellation_reasons", Schema = "uc")]
     public partial class CancellationReason2

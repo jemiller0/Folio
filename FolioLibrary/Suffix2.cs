@@ -11,7 +11,7 @@ using System.Reflection;
 
 namespace FolioLibrary
 {
-    // uc.suffixes -> diku_mod_orders_storage.suffixes
+    // uc.suffixes -> uchicago_mod_orders_storage.suffixes
     // Suffix2 -> Suffix
     [DisplayColumn(nameof(Name)), DisplayName("Suffixes"), JsonObject(MemberSerialization = MemberSerialization.OptIn), Table("suffixes", Schema = "uc")]
     public partial class Suffix2

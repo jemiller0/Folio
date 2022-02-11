@@ -12,7 +12,7 @@ using System.Reflection;
 
 namespace FolioLibrary
 {
-    // uc.order_templates -> diku_mod_orders_storage.order_templates
+    // uc.order_templates -> uchicago_mod_orders_storage.order_templates
     // OrderTemplate2 -> OrderTemplate
     [DisplayColumn(nameof(Name)), DisplayName("Order Templates"), JsonObject(MemberSerialization = MemberSerialization.OptIn), Table("order_templates", Schema = "uc")]
     public partial class OrderTemplate2

@@ -12,7 +12,7 @@ using System.Reflection;
 
 namespace FolioLibrary
 {
-    // uc.relationship_types -> diku_mod_inventory_storage.instance_relationship_type
+    // uc.relationship_types -> uchicago_mod_inventory_storage.instance_relationship_type
     // RelationshipType -> InstanceRelationshipType
     [DisplayColumn(nameof(Name)), DisplayName("Relationship Types"), JsonConverter(typeof(JsonPathJsonConverter<RelationshipType>)), JsonObject(MemberSerialization = MemberSerialization.OptIn), Table("relationship_types", Schema = "uc")]
     public partial class RelationshipType

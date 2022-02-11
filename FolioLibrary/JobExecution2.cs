@@ -12,7 +12,7 @@ using System.Reflection;
 
 namespace FolioLibrary
 {
-    // uc.job_executions -> diku_mod_source_record_manager.job_executions
+    // uc.job_executions -> uchicago_mod_source_record_manager.job_executions
     // JobExecution2 -> JobExecution
     [DisplayColumn(nameof(Id)), DisplayName("Job Executions"), JsonConverter(typeof(JsonPathJsonConverter<JobExecution2>)), JsonObject(MemberSerialization = MemberSerialization.OptIn), Table("job_executions", Schema = "uc")]
     public partial class JobExecution2

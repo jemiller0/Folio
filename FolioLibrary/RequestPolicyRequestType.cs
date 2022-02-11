@@ -6,7 +6,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace FolioLibrary
 {
-    // uc.request_policy_request_types -> diku_mod_circulation_storage.request_policy
+    // uc.request_policy_request_types -> uchicago_mod_circulation_storage.request_policy
     // RequestPolicyRequestType -> RequestPolicy
     [DisplayColumn(nameof(Content)), DisplayName("Request Policy Request Types"), Table("request_policy_request_types", Schema = "uc")]
     public partial class RequestPolicyRequestType

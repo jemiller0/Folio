@@ -12,7 +12,7 @@ using System.Reflection;
 
 namespace FolioLibrary
 {
-    // uc.call_number_types -> diku_mod_inventory_storage.call_number_type
+    // uc.call_number_types -> uchicago_mod_inventory_storage.call_number_type
     // CallNumberType2 -> CallNumberType
     [DisplayColumn(nameof(Name)), DisplayName("Call Number Types"), JsonConverter(typeof(JsonPathJsonConverter<CallNumberType2>)), JsonObject(MemberSerialization = MemberSerialization.OptIn), Table("call_number_types", Schema = "uc")]
     public partial class CallNumberType2

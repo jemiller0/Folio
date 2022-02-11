@@ -6,7 +6,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace FolioLibrary
 {
-    // uc.template_output_formats -> diku_mod_template_engine.template
+    // uc.template_output_formats -> uchicago_mod_template_engine.template
     // TemplateOutputFormat -> Template
     [DisplayColumn(nameof(Content)), DisplayName("Template Output Formats"), Table("template_output_formats", Schema = "uc")]
     public partial class TemplateOutputFormat

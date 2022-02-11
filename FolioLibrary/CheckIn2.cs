@@ -11,7 +11,7 @@ using System.Reflection;
 
 namespace FolioLibrary
 {
-    // uc.check_ins -> diku_mod_circulation_storage.check_in
+    // uc.check_ins -> uchicago_mod_circulation_storage.check_in
     // CheckIn2 -> CheckIn
     [DisplayColumn(nameof(Id)), DisplayName("Check Ins"), JsonObject(MemberSerialization = MemberSerialization.OptIn), Table("check_ins", Schema = "uc")]
     public partial class CheckIn2

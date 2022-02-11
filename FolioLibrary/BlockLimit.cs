@@ -10,7 +10,7 @@ using System.Reflection;
 
 namespace FolioLibrary
 {
-    [Table("patron_block_limits", Schema = "diku_mod_patron_blocks")]
+    [Table("patron_block_limits", Schema = "uchicago_mod_patron_blocks")]
     public partial class BlockLimit
     {
         public static ValidationResult ValidateContent(string value)

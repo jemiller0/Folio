@@ -7,7 +7,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace FolioLibrary
 {
-    // uc.user_addresses -> diku_mod_users.users
+    // uc.user_addresses -> uchicago_mod_users.users
     // UserAddress -> User
     [DisplayColumn(nameof(StreetAddress1)), DisplayName("User Addresses"), JsonObject(MemberSerialization = MemberSerialization.OptIn), Table("user_addresses", Schema = "uc")]
     public partial class UserAddress

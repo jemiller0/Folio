@@ -12,7 +12,7 @@ using System.Reflection;
 
 namespace FolioLibrary
 {
-    // uc.alternative_title_types -> diku_mod_inventory_storage.alternative_title_type
+    // uc.alternative_title_types -> uchicago_mod_inventory_storage.alternative_title_type
     // AlternativeTitleType2 -> AlternativeTitleType
     [DisplayColumn(nameof(Name)), DisplayName("Alternative Title Types"), JsonConverter(typeof(JsonPathJsonConverter<AlternativeTitleType2>)), JsonObject(MemberSerialization = MemberSerialization.OptIn), Table("alternative_title_types", Schema = "uc")]
     public partial class AlternativeTitleType2

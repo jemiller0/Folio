@@ -6,7 +6,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace FolioLibrary
 {
-    // uc.classifications -> diku_mod_inventory_storage.instance
+    // uc.classifications -> uchicago_mod_inventory_storage.instance
     // Classification -> Instance
     [DisplayColumn(nameof(Number)), JsonObject(MemberSerialization = MemberSerialization.OptIn), Table("classifications", Schema = "uc")]
     public partial class Classification

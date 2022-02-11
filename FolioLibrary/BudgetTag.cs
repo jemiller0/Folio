@@ -6,7 +6,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace FolioLibrary
 {
-    // uc.budget_tags -> diku_mod_finance_storage.budget
+    // uc.budget_tags -> uchicago_mod_finance_storage.budget
     // BudgetTag -> Budget
     [DisplayColumn(nameof(Id)), DisplayName("Budget Tags"), Table("budget_tags", Schema = "uc")]
     public partial class BudgetTag

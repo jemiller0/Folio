@@ -10,7 +10,7 @@ using System.Reflection;
 
 namespace FolioLibrary
 {
-    [Table("proxyfor", Schema = "diku_mod_users")]
+    [Table("proxyfor", Schema = "uchicago_mod_users")]
     public partial class Proxy
     {
         public static ValidationResult ValidateContent(string value)

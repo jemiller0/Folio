@@ -6,7 +6,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace FolioLibrary
 {
-    // uc.allocated_from_funds -> diku_mod_finance_storage.fund
+    // uc.allocated_from_funds -> uchicago_mod_finance_storage.fund
     // AllocatedFromFund -> Fund
     [DisplayColumn(nameof(Id)), DisplayName("Allocated From Funds"), Table("allocated_from_funds", Schema = "uc")]
     public partial class AllocatedFromFund

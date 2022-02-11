@@ -6,7 +6,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace FolioLibrary
 {
-    // uc.source_marc_fields -> diku_mod_inventory_storage.instance_source_marc
+    // uc.source_marc_fields -> uchicago_mod_inventory_storage.instance_source_marc
     // SourceMarcField -> InstanceSourceMarc
     [DisplayColumn(nameof(Content)), DisplayName("Source Marc Fields"), Table("source_marc_fields", Schema = "uc")]
     public partial class SourceMarcField

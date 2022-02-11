@@ -5,7 +5,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace FolioLibrary
 {
-    // uc.editions -> diku_mod_inventory_storage.instance
+    // uc.editions -> uchicago_mod_inventory_storage.instance
     // Edition -> Instance
     [DisplayColumn(nameof(Content)), Table("editions", Schema = "uc")]
     public partial class Edition

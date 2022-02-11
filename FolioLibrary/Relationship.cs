@@ -10,7 +10,7 @@ using System.Reflection;
 
 namespace FolioLibrary
 {
-    // uc.relationships -> diku_mod_inventory_storage.instance_relationship
+    // uc.relationships -> uchicago_mod_inventory_storage.instance_relationship
     // Relationship -> InstanceRelationship
     [DisplayColumn(nameof(Id)), JsonConverter(typeof(JsonPathJsonConverter<Relationship>)), JsonObject(MemberSerialization = MemberSerialization.OptIn), Table("relationships", Schema = "uc")]
     public partial class Relationship

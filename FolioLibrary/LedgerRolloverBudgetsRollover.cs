@@ -7,7 +7,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace FolioLibrary
 {
-    // uc.ledger_rollover_budgets_rollover -> diku_mod_finance_storage.ledger_fiscal_year_rollover
+    // uc.ledger_rollover_budgets_rollover -> uchicago_mod_finance_storage.ledger_fiscal_year_rollover
     // LedgerRolloverBudgetsRollover -> LedgerRollover
     [DisplayColumn(nameof(Id)), DisplayName("Ledger Rollover Budgets Rollovers"), JsonObject(MemberSerialization = MemberSerialization.OptIn), Table("ledger_rollover_budgets_rollover", Schema = "uc")]
     public partial class LedgerRolloverBudgetsRollover

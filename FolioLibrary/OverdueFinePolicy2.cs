@@ -12,7 +12,7 @@ using System.Reflection;
 
 namespace FolioLibrary
 {
-    // uc.overdue_fine_policies -> diku_mod_feesfines.overdue_fine_policy
+    // uc.overdue_fine_policies -> uchicago_mod_feesfines.overdue_fine_policy
     // OverdueFinePolicy2 -> OverdueFinePolicy
     [DisplayColumn(nameof(Name)), DisplayName("Overdue Fine Policies"), JsonConverter(typeof(JsonPathJsonConverter<OverdueFinePolicy2>)), JsonObject(MemberSerialization = MemberSerialization.OptIn), Table("overdue_fine_policies", Schema = "uc")]
     public partial class OverdueFinePolicy2

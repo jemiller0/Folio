@@ -11,7 +11,7 @@ using System.Reflection;
 
 namespace FolioLibrary
 {
-    [Table("fiscal_year", Schema = "diku_mod_finance_storage")]
+    [Table("fiscal_year", Schema = "uchicago_mod_finance_storage")]
     public partial class FiscalYear
     {
         public static ValidationResult ValidateContent(string value)

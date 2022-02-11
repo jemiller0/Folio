@@ -11,7 +11,7 @@ using System.Reflection;
 
 namespace FolioLibrary
 {
-    // uc.job_execution_source_chunks -> diku_mod_source_record_manager.job_execution_source_chunks
+    // uc.job_execution_source_chunks -> uchicago_mod_source_record_manager.job_execution_source_chunks
     // JobExecutionSourceChunk2 -> JobExecutionSourceChunk
     [DisplayColumn(nameof(Id)), DisplayName("Job Execution Source Chunks"), JsonObject(MemberSerialization = MemberSerialization.OptIn), Table("job_execution_source_chunks", Schema = "uc")]
     public partial class JobExecutionSourceChunk2

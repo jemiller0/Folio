@@ -10,7 +10,7 @@ using System.Reflection;
 
 namespace FolioLibrary
 {
-    // uc.invoice_transaction_summaries -> diku_mod_finance_storage.invoice_transaction_summaries
+    // uc.invoice_transaction_summaries -> uchicago_mod_finance_storage.invoice_transaction_summaries
     // InvoiceTransactionSummary2 -> InvoiceTransactionSummary
     [JsonObject(MemberSerialization = MemberSerialization.OptIn), Table("invoice_transaction_summaries", Schema = "uc")]
     public partial class InvoiceTransactionSummary2

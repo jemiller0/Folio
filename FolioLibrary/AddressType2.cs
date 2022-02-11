@@ -12,7 +12,7 @@ using System.Reflection;
 
 namespace FolioLibrary
 {
-    // uc.address_types -> diku_mod_users.addresstype
+    // uc.address_types -> uchicago_mod_users.addresstype
     // AddressType2 -> AddressType
     [DisplayColumn(nameof(Name)), DisplayName("Address Types"), JsonConverter(typeof(JsonPathJsonConverter<AddressType2>)), JsonObject(MemberSerialization = MemberSerialization.OptIn), Table("address_types", Schema = "uc")]
     public partial class AddressType2

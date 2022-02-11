@@ -7,7 +7,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace FolioLibrary
 {
-    // uc.custom_field_values -> diku_mod_users.custom_fields
+    // uc.custom_field_values -> uchicago_mod_users.custom_fields
     // CustomFieldValue -> CustomField
     [DisplayColumn(nameof(Id)), DisplayName("Custom Field Values"), JsonObject(MemberSerialization = MemberSerialization.OptIn), Table("custom_field_values", Schema = "uc")]
     public partial class CustomFieldValue

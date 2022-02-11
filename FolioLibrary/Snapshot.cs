@@ -6,7 +6,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace FolioLibrary
 {
-    [Table("snapshots_lb", Schema = "diku_mod_source_record_storage")]
+    [Table("snapshots_lb", Schema = "uchicago_mod_source_record_storage")]
     public partial class Snapshot
     {
         [Column("id"), ScaffoldColumn(false)]

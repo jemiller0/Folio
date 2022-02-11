@@ -6,7 +6,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace FolioLibrary
 {
-    // uc.batch_voucher_export_config_weekdays -> diku_mod_invoice_storage.batch_voucher_export_configs
+    // uc.batch_voucher_export_config_weekdays -> uchicago_mod_invoice_storage.batch_voucher_export_configs
     // BatchVoucherExportConfigWeekday -> BatchVoucherExportConfig
     [DisplayColumn(nameof(Content)), DisplayName("Batch Voucher Export Config Weekdays"), Table("batch_voucher_export_config_weekdays", Schema = "uc")]
     public partial class BatchVoucherExportConfigWeekday

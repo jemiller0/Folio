@@ -7,7 +7,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace FolioLibrary
 {
-    // uc.index_statements -> diku_mod_inventory_storage.holdings_record
+    // uc.index_statements -> uchicago_mod_inventory_storage.holdings_record
     // IndexStatement -> Holding
     [DisplayColumn(nameof(Id)), DisplayName("Index Statements"), JsonObject(MemberSerialization = MemberSerialization.OptIn), Table("index_statements", Schema = "uc")]
     public partial class IndexStatement

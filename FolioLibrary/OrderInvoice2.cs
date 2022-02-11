@@ -11,7 +11,7 @@ using System.Reflection;
 
 namespace FolioLibrary
 {
-    // uc.order_invoices -> diku_mod_orders_storage.order_invoice_relationship
+    // uc.order_invoices -> uchicago_mod_orders_storage.order_invoice_relationship
     // OrderInvoice2 -> OrderInvoice
     [DisplayColumn(nameof(Id)), DisplayName("Order Invoices"), JsonObject(MemberSerialization = MemberSerialization.OptIn), Table("order_invoices", Schema = "uc")]
     public partial class OrderInvoice2

@@ -11,7 +11,7 @@ using System.Reflection;
 
 namespace FolioLibrary
 {
-    // uc.patron_action_sessions -> diku_mod_circulation_storage.patron_action_session
+    // uc.patron_action_sessions -> uchicago_mod_circulation_storage.patron_action_session
     // PatronActionSession2 -> PatronActionSession
     [DisplayColumn(nameof(Id)), DisplayName("Patron Action Sessions"), JsonConverter(typeof(JsonPathJsonConverter<PatronActionSession2>)), JsonObject(MemberSerialization = MemberSerialization.OptIn), Table("patron_action_sessions", Schema = "uc")]
     public partial class PatronActionSession2

@@ -6,7 +6,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace FolioLibrary
 {
-    // uc.invoice_order_numbers -> diku_mod_invoice_storage.invoices
+    // uc.invoice_order_numbers -> uchicago_mod_invoice_storage.invoices
     // InvoiceOrderNumber -> Invoice
     [DisplayColumn(nameof(Content)), DisplayName("Invoice Order Numbers"), Table("invoice_order_numbers", Schema = "uc")]
     public partial class InvoiceOrderNumber

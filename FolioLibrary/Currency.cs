@@ -5,7 +5,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace FolioLibrary
 {
-    // uc.currencies -> diku_mod_organizations_storage.organizations
+    // uc.currencies -> uchicago_mod_organizations_storage.organizations
     // Currency -> Organization
     [DisplayColumn(nameof(Content)), Table("currencies", Schema = "uc")]
     public partial class Currency

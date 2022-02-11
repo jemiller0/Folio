@@ -7,7 +7,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace FolioLibrary
 {
-    // uc.error_records -> diku_mod_source_record_storage.error_records_lb
+    // uc.error_records -> uchicago_mod_source_record_storage.error_records_lb
     // ErrorRecord2 -> ErrorRecord
     [DisplayColumn(nameof(Id)), DisplayName("Error Records"), JsonObject(MemberSerialization = MemberSerialization.OptIn), Table("error_records", Schema = "uc")]
     public partial class ErrorRecord2

@@ -10,7 +10,7 @@ using System.Reflection;
 
 namespace FolioLibrary
 {
-    [Table("group_fund_fiscal_year", Schema = "diku_mod_finance_storage")]
+    [Table("group_fund_fiscal_year", Schema = "uchicago_mod_finance_storage")]
     public partial class BudgetGroup
     {
         public static ValidationResult ValidateContent(string value)

@@ -6,7 +6,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace FolioLibrary
 {
-    // uc.contact_phone_number_categories -> diku_mod_organizations_storage.contacts
+    // uc.contact_phone_number_categories -> uchicago_mod_organizations_storage.contacts
     // ContactPhoneNumberCategory -> Contact
     [DisplayColumn(nameof(Id)), DisplayName("Contact Phone Number Categories"), Table("contact_phone_number_categories", Schema = "uc")]
     public partial class ContactPhoneNumberCategory

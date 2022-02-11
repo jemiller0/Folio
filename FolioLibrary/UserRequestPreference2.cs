@@ -11,7 +11,7 @@ using System.Reflection;
 
 namespace FolioLibrary
 {
-    // uc.user_request_preferences -> diku_mod_circulation_storage.user_request_preference
+    // uc.user_request_preferences -> uchicago_mod_circulation_storage.user_request_preference
     // UserRequestPreference2 -> UserRequestPreference
     [DisplayColumn(nameof(Id)), DisplayName("User Request Preferences"), JsonConverter(typeof(JsonPathJsonConverter<UserRequestPreference2>)), JsonObject(MemberSerialization = MemberSerialization.OptIn), Table("user_request_preferences", Schema = "uc")]
     public partial class UserRequestPreference2

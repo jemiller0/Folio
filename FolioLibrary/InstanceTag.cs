@@ -6,7 +6,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace FolioLibrary
 {
-    // uc.instance_tags -> diku_mod_inventory_storage.instance
+    // uc.instance_tags -> uchicago_mod_inventory_storage.instance
     // InstanceTag -> Instance
     [DisplayColumn(nameof(Content)), DisplayName("Instance Tags"), Table("instance_tags", Schema = "uc")]
     public partial class InstanceTag

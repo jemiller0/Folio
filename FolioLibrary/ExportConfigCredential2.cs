@@ -11,7 +11,7 @@ using System.Reflection;
 
 namespace FolioLibrary
 {
-    // uc.export_config_credentials -> diku_mod_invoice_storage.export_config_credentials
+    // uc.export_config_credentials -> uchicago_mod_invoice_storage.export_config_credentials
     // ExportConfigCredential2 -> ExportConfigCredential
     [DisplayColumn(nameof(Id)), DisplayName("Export Config Credentials"), JsonConverter(typeof(JsonPathJsonConverter<ExportConfigCredential2>)), JsonObject(MemberSerialization = MemberSerialization.OptIn), Table("export_config_credentials", Schema = "uc")]
     public partial class ExportConfigCredential2

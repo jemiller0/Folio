@@ -11,7 +11,7 @@ using System.Reflection;
 
 namespace FolioLibrary
 {
-    // uc.refund_reasons -> diku_mod_feesfines.refunds
+    // uc.refund_reasons -> uchicago_mod_feesfines.refunds
     // RefundReason2 -> RefundReason
     [DisplayColumn(nameof(Name)), DisplayName("Refund Reasons"), JsonConverter(typeof(JsonPathJsonConverter<RefundReason2>)), JsonObject(MemberSerialization = MemberSerialization.OptIn), Table("refund_reasons", Schema = "uc")]
     public partial class RefundReason2

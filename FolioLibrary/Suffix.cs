@@ -10,7 +10,7 @@ using System.Reflection;
 
 namespace FolioLibrary
 {
-    [Table("suffixes", Schema = "diku_mod_orders_storage")]
+    [Table("suffixes", Schema = "uchicago_mod_orders_storage")]
     public partial class Suffix
     {
         public static ValidationResult ValidateContent(string value)

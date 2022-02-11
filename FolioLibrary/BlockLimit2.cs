@@ -11,7 +11,7 @@ using System.Reflection;
 
 namespace FolioLibrary
 {
-    // uc.block_limits -> diku_mod_patron_blocks.patron_block_limits
+    // uc.block_limits -> uchicago_mod_patron_blocks.patron_block_limits
     // BlockLimit2 -> BlockLimit
     [DisplayColumn(nameof(Id)), DisplayName("Block Limits"), JsonConverter(typeof(JsonPathJsonConverter<BlockLimit2>)), JsonObject(MemberSerialization = MemberSerialization.OptIn), Table("block_limits", Schema = "uc")]
     public partial class BlockLimit2

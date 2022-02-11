@@ -7,7 +7,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace FolioLibrary
 {
-    // uc.invoice_item_reference_numbers -> diku_mod_invoice_storage.invoice_lines
+    // uc.invoice_item_reference_numbers -> uchicago_mod_invoice_storage.invoice_lines
     // InvoiceItemReferenceNumber -> InvoiceItem
     [DisplayColumn(nameof(Id)), DisplayName("Invoice Item Reference Numbers"), JsonObject(MemberSerialization = MemberSerialization.OptIn), Table("invoice_item_reference_numbers", Schema = "uc")]
     public partial class InvoiceItemReferenceNumber

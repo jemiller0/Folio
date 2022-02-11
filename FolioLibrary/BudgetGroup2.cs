@@ -11,7 +11,7 @@ using System.Reflection;
 
 namespace FolioLibrary
 {
-    // uc.budget_groups -> diku_mod_finance_storage.group_fund_fiscal_year
+    // uc.budget_groups -> uchicago_mod_finance_storage.group_fund_fiscal_year
     // BudgetGroup2 -> BudgetGroup
     [DisplayColumn(nameof(Id)), DisplayName("Budget Groups"), JsonObject(MemberSerialization = MemberSerialization.OptIn), Table("budget_groups", Schema = "uc")]
     public partial class BudgetGroup2

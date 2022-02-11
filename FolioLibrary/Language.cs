@@ -5,7 +5,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace FolioLibrary
 {
-    // uc.languages -> diku_mod_inventory_storage.instance
+    // uc.languages -> uchicago_mod_inventory_storage.instance
     // Language -> Instance
     [DisplayColumn(nameof(Content)), Table("languages", Schema = "uc")]
     public partial class Language

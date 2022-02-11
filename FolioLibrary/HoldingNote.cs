@@ -7,7 +7,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace FolioLibrary
 {
-    // uc.holding_notes -> diku_mod_inventory_storage.holdings_record
+    // uc.holding_notes -> uchicago_mod_inventory_storage.holdings_record
     // HoldingNote -> Holding
     [DisplayColumn(nameof(Id)), DisplayName("Holding Notes"), JsonObject(MemberSerialization = MemberSerialization.OptIn), Table("holding_notes", Schema = "uc")]
     public partial class HoldingNote
