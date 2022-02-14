@@ -96,6 +96,7 @@ namespace FolioWebApplication
                 //ImpersonateUser("mcdial");
                 //ImpersonateUser("igrundseth");
                 //ImpersonateUser("cecillegraham");
+                //ImpersonateUser("mhwhite19");
 
                 traceSource.TraceEvent(TraceEventType.Verbose, 0, $"{Request.Url}\n    UserName={User?.Identity?.Name}\n    LocalDateTime={DateTime.Now:G}");
                 if (Session["UserName"] == null)
@@ -130,6 +131,7 @@ namespace FolioWebApplication
                         }
                         else if (
                             hs.Contains("department:Coll Servc Budg & Report")
+                            || hs.Contains("department:Tech Srvc-Rec & Rap Cat")
                             || hs.Contains("department:Tech Srvc-Cat Admin")
                             || hs.Contains("department:Tech Srvc-Cont Resources")
                             || hs.Contains("department:Law Cataloging")
