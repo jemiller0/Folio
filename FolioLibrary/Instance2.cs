@@ -225,7 +225,7 @@ namespace FolioLibrary
             PublicationEndYear = (int?)jObject.SelectToken("publicationPeriod.end"),
             InstanceTypeId = (Guid?)jObject.SelectToken("instanceTypeId"),
             IssuanceModeId = (Guid?)jObject.SelectToken("modeOfIssuanceId"),
-            CatalogedDate = (DateTime?)jObject.SelectToken("catalogedDate"),
+            CatalogedDate = ((DateTime?)jObject.SelectToken("catalogedDate"))?.ToUniversalTime(),
             PreviouslyHeld = (bool?)jObject.SelectToken("previouslyHeld"),
             StaffSuppress = (bool?)jObject.SelectToken("staffSuppress"),
             DiscoverySuppress = (bool?)jObject.SelectToken("discoverySuppress"),

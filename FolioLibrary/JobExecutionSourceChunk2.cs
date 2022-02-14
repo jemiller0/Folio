@@ -67,7 +67,7 @@ namespace FolioLibrary
             State = (string)jObject.SelectToken("state"),
             ChunkSize = (int?)jObject.SelectToken("chunkSize"),
             ProcessedAmount = (int?)jObject.SelectToken("processedAmount"),
-            CompletedDate = (DateTime?)jObject.SelectToken("completedDate"),
+            CompletedDate = ((DateTime?)jObject.SelectToken("completedDate"))?.ToUniversalTime(),
             Error = (string)jObject.SelectToken("error"),
             Content = JsonConvert.SerializeObject(jObject, FolioDapperContext.UniversalTimeJsonSerializationSettings)
         } : null;

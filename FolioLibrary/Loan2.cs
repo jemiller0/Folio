@@ -201,8 +201,8 @@ namespace FolioLibrary
             CheckinServicePointId = (Guid?)jObject.SelectToken("checkinServicePointId"),
             GroupId = (Guid?)jObject.SelectToken("patronGroupIdAtCheckout"),
             DueDateChangedByRecall = (bool?)jObject.SelectToken("dueDateChangedByRecall"),
-            DeclaredLostDate = (DateTime?)jObject.SelectToken("declaredLostDate"),
-            ClaimedReturnedDate = (DateTime?)jObject.SelectToken("claimedReturnedDate"),
+            DeclaredLostDate = ((DateTime?)jObject.SelectToken("declaredLostDate"))?.ToUniversalTime(),
+            ClaimedReturnedDate = ((DateTime?)jObject.SelectToken("claimedReturnedDate"))?.ToUniversalTime(),
             OverdueFinePolicyId = (Guid?)jObject.SelectToken("overdueFinePolicyId"),
             LostItemPolicyId = (Guid?)jObject.SelectToken("lostItemPolicyId"),
             CreationTime = (DateTime?)jObject.SelectToken("metadata.createdDate"),
@@ -213,7 +213,7 @@ namespace FolioLibrary
             LastWriteUserUsername = (string)jObject.SelectToken("metadata.updatedByUsername"),
             AgedToLostDelayedBillingLostItemHasBeenBilled = (bool?)jObject.SelectToken("agedToLostDelayedBilling.lostItemHasBeenBilled"),
             AgedToLostDelayedBillingDateLostItemShouldBeBilled = (DateTime?)jObject.SelectToken("agedToLostDelayedBilling.dateLostItemShouldBeBilled"),
-            AgedToLostDelayedBillingAgedToLostDate = (DateTime?)jObject.SelectToken("agedToLostDelayedBilling.agedToLostDate"),
+            AgedToLostDelayedBillingAgedToLostDate = ((DateTime?)jObject.SelectToken("agedToLostDelayedBilling.agedToLostDate"))?.ToUniversalTime(),
             Content = JsonConvert.SerializeObject(jObject, FolioDapperContext.UniversalTimeJsonSerializationSettings)
         } : null;
 

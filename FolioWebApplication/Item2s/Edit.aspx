@@ -233,20 +233,20 @@
                                     <asp:Literal ID="DamagedStatusTimeLiteral" runat="server" Text='<%# Eval("DamagedStatusTime", "{0:g}") %>' />
                                 </td>
                             </tr>
-                            <tr runat="server" visible='<%# Eval("StatusName") != null %>'>
+                            <tr runat="server" visible='<%# Eval("Status") != null %>'>
                                 <td>
-                                    <asp:Label ID="StatusNameLabel" runat="server" Text="Status Name:" AssociatedControlID="StatusNameLiteral" />
+                                    <asp:Label ID="StatusLabel" runat="server" Text="Status:" AssociatedControlID="StatusLiteral" />
                                 </td>
                                 <td>
-                                    <asp:Literal ID="StatusNameLiteral" runat="server" Text='<%#: Eval("StatusName") %>' />
+                                    <asp:Literal ID="StatusLiteral" runat="server" Text='<%#: Eval("Status") %>' />
                                 </td>
                             </tr>
-                            <tr runat="server" visible='<%# Eval("StatusDate") != null %>'>
+                            <tr runat="server" visible='<%# Eval("StatusLastWriteTime") != null %>'>
                                 <td>
-                                    <asp:Label ID="StatusDateLabel" runat="server" Text="Status Date:" AssociatedControlID="StatusDateLiteral" />
+                                    <asp:Label ID="StatusLastWriteTimeLabel" runat="server" Text="Status Last Write Time:" AssociatedControlID="StatusLastWriteTimeLiteral" />
                                 </td>
                                 <td>
-                                    <asp:Literal ID="StatusDateLiteral" runat="server" Text='<%# Eval("StatusDate", "{0:d}") %>' />
+                                    <asp:Literal ID="StatusLastWriteTimeLiteral" runat="server" Text='<%# Eval("StatusLastWriteTime", "{0:g}") %>' />
                                 </td>
                             </tr>
                             <tr runat="server" visible='<%# Eval("MaterialType") != null %>'>

@@ -49,7 +49,7 @@ namespace FolioLibrary
         {
             Id = (Guid?)jObject.SelectToken("jobExecutionId"),
             Status = (string)jObject.SelectToken("status"),
-            ProcessingStartedDate = (DateTime?)jObject.SelectToken("processingStartedDate"),
+            ProcessingStartedDate = ((DateTime?)jObject.SelectToken("processingStartedDate"))?.ToUniversalTime(),
             CreationUserId = (Guid?)jObject.SelectToken("metadata.createdByUserId"),
             CreationTime = (DateTime?)jObject.SelectToken("metadata.createdDate"),
             LastWriteUserId = (Guid?)jObject.SelectToken("metadata.updatedByUserId"),

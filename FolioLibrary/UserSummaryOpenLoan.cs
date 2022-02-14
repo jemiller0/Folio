@@ -50,7 +50,7 @@ namespace FolioLibrary
         public static UserSummaryOpenLoan FromJObject(JObject jObject) => jObject != null ? new UserSummaryOpenLoan
         {
             LoanId = (Guid?)jObject.SelectToken("loanId"),
-            DueDate = (DateTime?)jObject.SelectToken("dueDate"),
+            DueDate = ((DateTime?)jObject.SelectToken("dueDate"))?.ToUniversalTime(),
             Recall = (bool?)jObject.SelectToken("recall"),
             ItemLost = (bool?)jObject.SelectToken("itemLost"),
             ItemClaimedReturned = (bool?)jObject.SelectToken("itemClaimedReturned"),

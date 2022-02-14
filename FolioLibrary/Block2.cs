@@ -100,7 +100,7 @@ namespace FolioLibrary
             Code = (string)jObject.SelectToken("code"),
             StaffInformation = (string)jObject.SelectToken("staffInformation"),
             PatronMessage = (string)jObject.SelectToken("patronMessage"),
-            ExpirationDate = (DateTime?)jObject.SelectToken("expirationDate"),
+            ExpirationDate = ((DateTime?)jObject.SelectToken("expirationDate"))?.ToUniversalTime(),
             Borrowing = (bool?)jObject.SelectToken("borrowing"),
             Renewals = (bool?)jObject.SelectToken("renewals"),
             Requests = (bool?)jObject.SelectToken("requests"),

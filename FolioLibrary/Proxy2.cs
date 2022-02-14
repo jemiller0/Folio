@@ -95,7 +95,7 @@ namespace FolioLibrary
             NotificationsTo = (string)jObject.SelectToken("notificationsTo"),
             AccrueTo = (string)jObject.SelectToken("accrueTo"),
             Status = (string)jObject.SelectToken("status"),
-            ExpirationDate = (DateTime?)jObject.SelectToken("expirationDate"),
+            ExpirationDate = ((DateTime?)jObject.SelectToken("expirationDate"))?.ToUniversalTime(),
             CreationTime = (DateTime?)jObject.SelectToken("metadata.createdDate"),
             CreationUserId = (Guid?)jObject.SelectToken("metadata.createdByUserId"),
             CreationUserUsername = (string)jObject.SelectToken("metadata.createdByUsername"),

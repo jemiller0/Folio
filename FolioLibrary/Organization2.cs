@@ -341,7 +341,7 @@ namespace FolioLibrary
             EdiFtpInvoiceDirectory = (string)jObject.SelectToken("edi.ediFtp.invoiceDirectory"),
             EdiFtpNotes = (string)jObject.SelectToken("edi.ediFtp.notes"),
             EdiJobScheduleEdi = (bool?)jObject.SelectToken("edi.ediJob.scheduleEdi"),
-            EdiJobSchedulingDate = (DateTime?)jObject.SelectToken("edi.ediJob.schedulingDate"),
+            EdiJobSchedulingDate = ((DateTime?)jObject.SelectToken("edi.ediJob.schedulingDate"))?.ToUniversalTime(),
             EdiJobTime = (string)jObject.SelectToken("edi.ediJob.time"),
             EdiJobIsMonday = (bool?)jObject.SelectToken("edi.ediJob.isMonday"),
             EdiJobIsTuesday = (bool?)jObject.SelectToken("edi.ediJob.isTuesday"),

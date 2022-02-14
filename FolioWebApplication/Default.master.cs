@@ -13,6 +13,7 @@ namespace FolioWebApplication
                 if (Session["LabelsPermission"] != null)
                 {
                     rmi.Visible = true;
+                    rmi.Items.Insert(rmi.Items.IndexOf(rmi.Items.FindItemByText("Libraries")), new RadMenuItem("Labels", "~/Labels/Default.aspx"));
                 }
             }
         }

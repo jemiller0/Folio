@@ -80,7 +80,7 @@ namespace FolioLibrary
             UserId = (Guid?)jObject.SelectToken("userId"),
             Hash = (string)jObject.SelectToken("hash"),
             Salt = (string)jObject.SelectToken("salt"),
-            Date = (DateTime?)jObject.SelectToken("date"),
+            Date = ((DateTime?)jObject.SelectToken("date"))?.ToUniversalTime(),
             CreationTime = (DateTime?)jObject.SelectToken("metadata.createdDate"),
             CreationUserId = (Guid?)jObject.SelectToken("metadata.createdByUserId"),
             CreationUserUsername = (string)jObject.SelectToken("metadata.createdByUsername"),

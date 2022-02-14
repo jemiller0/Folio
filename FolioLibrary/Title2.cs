@@ -120,7 +120,7 @@ namespace FolioLibrary
         public static Title2 FromJObject(JObject jObject) => jObject != null ? new Title2
         {
             Id = (Guid?)jObject.SelectToken("id"),
-            ExpectedReceiptDate = (DateTime?)jObject.SelectToken("expectedReceiptDate"),
+            ExpectedReceiptDate = ((DateTime?)jObject.SelectToken("expectedReceiptDate"))?.ToUniversalTime(),
             Title = (string)jObject.SelectToken("title"),
             OrderItemId = (Guid?)jObject.SelectToken("poLineId"),
             InstanceId = (Guid?)jObject.SelectToken("instanceId"),
