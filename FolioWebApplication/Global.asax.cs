@@ -114,6 +114,7 @@ namespace FolioWebApplication
                         if (hs.Contains("department:Library Systems - Ils")
                             || userName == "stp0"
                             || userName == "kmarti"
+                            || userName == "t-9wsch1"
                             )
                         {
                             SetCirculationPermissions("View");
@@ -131,9 +132,13 @@ namespace FolioWebApplication
                         }
                         else if (
                             hs.Contains("department:Coll Servc Budg & Report")
-                            || hs.Contains("department:Tech Srvc-Rec & Rap Cat")
                             || hs.Contains("department:Tech Srvc-Cat Admin")
                             || hs.Contains("department:Tech Srvc-Cont Resources")
+                            || hs.Contains("department:Tech Srvc-Copy Cat")
+                            || hs.Contains("department:Tech Srvc-Data Mgmt")
+                            || hs.Contains("department:Tech Srvc-Mono Order")
+                            || hs.Contains("department:Tech Srvc-Original Cat")
+                            || hs.Contains("department:Tech Srvc-Rec & Rap Cat")
                             || hs.Contains("department:Law Cataloging")
                             || hs.Contains("department:Law Library Administration")
                             || hs.Contains("department:Scrc-Pres")
