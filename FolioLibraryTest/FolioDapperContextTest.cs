@@ -6647,8 +6647,7 @@ p2.notify AS ""Notify"",
 p2.amount_action AS ""Amount"",
 p2.balance AS ""RemainingAmount"",
 p2.transaction_information AS ""TransactionInformation"",
-sp.name AS ""ServicePoint"",
-p2.service_point_id AS ""ServicePointId"",
+p2.service_point AS ""ServicePoint"",
 p2.source AS ""Source"",
 p2.payment_method AS ""PaymentMethod"",
 f.title AS ""Fee"",
@@ -6657,7 +6656,6 @@ u.username AS ""User"",
 p2.user_id AS ""UserId"",
 p2.content AS ""Content"" 
 FROM uc.payments AS p2
-LEFT JOIN uc.service_points AS sp ON sp.id = p2.service_point_id
 LEFT JOIN uc.fees AS f ON f.id = p2.fee_id
 LEFT JOIN uc.users AS u ON u.id = p2.user_id
  ORDER BY p2.id

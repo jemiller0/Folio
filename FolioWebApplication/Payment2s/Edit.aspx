@@ -75,10 +75,10 @@
                             </tr>
                             <tr runat="server" visible='<%# Eval("ServicePoint") != null %>'>
                                 <td>
-                                    <asp:Label ID="ServicePointLabel" runat="server" Text="Service Point:" AssociatedControlID="ServicePointHyperLink" />
+                                    <asp:Label ID="ServicePointLabel" runat="server" Text="Service Point:" AssociatedControlID="ServicePointLiteral" />
                                 </td>
                                 <td>
-                                    <asp:HyperLink ID="ServicePointHyperLink" runat="server" Text='<%#: Eval("ServicePoint.Name") %>' NavigateUrl='<%# $"~/ServicePoint2s/Edit.aspx?Id={Eval("ServicePointId")}" %>' Enabled='<%# Session["ServicePoint2sPermission"] != null %>' />
+                                    <asp:Literal ID="ServicePointLiteral" runat="server" Text='<%#: Eval("ServicePoint") %>' />
                                 </td>
                             </tr>
                             <tr runat="server" visible='<%# Eval("Source") != null %>'>

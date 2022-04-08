@@ -39,7 +39,7 @@ namespace FolioWebApplication.Fee2s
             if (Session["Payment2sPermission"] == null) return;
             var id = (Guid?)Fee2FormView.DataKey.Value;
             if (id == null) return;
-            var d = new Dictionary<string, string>() { { "Id", "id" }, { "CreationTime", "dateAction" }, { "TypeAction", "typeAction" }, { "Comments", "comments" }, { "Notify", "notify" }, { "Amount", "amountAction" }, { "RemainingAmount", "balance" }, { "TransactionInformation", "transactionInformation" }, { "ServicePointId", "createdAt" }, { "Source", "source" }, { "PaymentMethod", "paymentMethod" }, { "FeeId", "accountId" }, { "UserId", "userId" } };
+            var d = new Dictionary<string, string>() { { "Id", "id" }, { "CreationTime", "dateAction" }, { "TypeAction", "typeAction" }, { "Comments", "comments" }, { "Notify", "notify" }, { "Amount", "amountAction" }, { "RemainingAmount", "balance" }, { "TransactionInformation", "transactionInformation" }, { "ServicePoint", "createdAt" }, { "Source", "source" }, { "PaymentMethod", "paymentMethod" }, { "FeeId", "accountId" }, { "UserId", "userId" } };
             var where = Global.Trim(string.Join(" and ", new string[]
             {
                 $"accountId == \"{id}\"",
@@ -51,7 +51,7 @@ namespace FolioWebApplication.Fee2s
                 Global.GetCqlFilter(Payment2sRadGrid, "Amount", "amountAction"),
                 Global.GetCqlFilter(Payment2sRadGrid, "RemainingAmount", "balance"),
                 Global.GetCqlFilter(Payment2sRadGrid, "TransactionInformation", "transactionInformation"),
-                Global.GetCqlFilter(Payment2sRadGrid, "ServicePoint.Name", "createdAt", "name", folioServiceContext.FolioServiceClient.ServicePoints),
+                Global.GetCqlFilter(Payment2sRadGrid, "ServicePoint", "createdAt"),
                 Global.GetCqlFilter(Payment2sRadGrid, "Source", "source"),
                 Global.GetCqlFilter(Payment2sRadGrid, "PaymentMethod", "paymentMethod"),
                 Global.GetCqlFilter(Payment2sRadGrid, "User.Username", "userId", "username", folioServiceContext.FolioServiceClient.Users)

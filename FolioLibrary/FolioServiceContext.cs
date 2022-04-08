@@ -4667,7 +4667,6 @@ namespace FolioLibrary
             return FolioServiceClient.Payments(out count, where, orderBy, skip, take).Select(jo =>
             {
                 var p2 = Payment2.FromJObject(jo);
-                if (load && p2.ServicePointId != null) p2.ServicePoint = (ServicePoint2)(cache && objects.ContainsKey(p2.ServicePointId.Value) ? objects[p2.ServicePointId.Value] : objects[p2.ServicePointId.Value] = FindServicePoint2(p2.ServicePointId));
                 if (load && p2.FeeId != null) p2.Fee = (Fee2)(cache && objects.ContainsKey(p2.FeeId.Value) ? objects[p2.FeeId.Value] : objects[p2.FeeId.Value] = FindFee2(p2.FeeId));
                 if (load && p2.UserId != null) p2.User = (User2)(cache && objects.ContainsKey(p2.UserId.Value) ? objects[p2.UserId.Value] : objects[p2.UserId.Value] = FindUser2(p2.UserId));
                 return p2;
@@ -4679,7 +4678,6 @@ namespace FolioLibrary
             foreach (var jo in FolioServiceClient.Payments(where, orderBy, skip, take))
             {
                 var p2 = Payment2.FromJObject(jo);
-                if (load && p2.ServicePointId != null) p2.ServicePoint = (ServicePoint2)(cache && objects.ContainsKey(p2.ServicePointId.Value) ? objects[p2.ServicePointId.Value] : objects[p2.ServicePointId.Value] = FindServicePoint2(p2.ServicePointId));
                 if (load && p2.FeeId != null) p2.Fee = (Fee2)(cache && objects.ContainsKey(p2.FeeId.Value) ? objects[p2.FeeId.Value] : objects[p2.FeeId.Value] = FindFee2(p2.FeeId));
                 if (load && p2.UserId != null) p2.User = (User2)(cache && objects.ContainsKey(p2.UserId.Value) ? objects[p2.UserId.Value] : objects[p2.UserId.Value] = FindUser2(p2.UserId));
                 yield return p2;
@@ -4690,7 +4688,6 @@ namespace FolioLibrary
         {
             var p2 = Payment2.FromJObject(FolioServiceClient.GetPayment(id?.ToString()));
             if (p2 == null) return null;
-            if (load && p2.ServicePointId != null) p2.ServicePoint = (ServicePoint2)(cache && objects.ContainsKey(p2.ServicePointId.Value) ? objects[p2.ServicePointId.Value] : objects[p2.ServicePointId.Value] = FindServicePoint2(p2.ServicePointId));
             if (load && p2.FeeId != null) p2.Fee = (Fee2)(cache && objects.ContainsKey(p2.FeeId.Value) ? objects[p2.FeeId.Value] : objects[p2.FeeId.Value] = FindFee2(p2.FeeId));
             if (load && p2.UserId != null) p2.User = (User2)(cache && objects.ContainsKey(p2.UserId.Value) ? objects[p2.UserId.Value] : objects[p2.UserId.Value] = FindUser2(p2.UserId));
             return p2;

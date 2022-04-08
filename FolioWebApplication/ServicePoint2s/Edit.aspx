@@ -758,50 +758,6 @@
             </telerik:RadGrid>
         </fieldset>
     </asp:Panel>
-    <asp:Panel ID="Payment2sPanel" runat="server" Visible='<%# (string)Session["Payment2sPermission"] != null && ServicePoint2FormView.DataKey.Value != null %>'>
-        <fieldset>
-            <legend>
-                <asp:HyperLink ID="Payment2sHyperLink" runat="server" Text="Payments" NavigateUrl="~/Payment2s/Default.aspx" /></legend>
-            <telerik:RadGrid ID="Payment2sRadGrid" runat="server" AutoGenerateColumns="false" AllowSorting="true" AllowFilteringByColumn="false" GroupingSettings-CaseSensitive="false" AllowPaging="true" AllowCustomPaging="true" PageSize="10" EnableLinqExpressions="false" OnNeedDataSource="Payment2sRadGrid_NeedDataSource">
-                <MasterTableView DataKeyNames="Id" PagerStyle-Mode="NextPrevNumericAndAdvanced" NoMasterRecordsText="No payments found">
-                    <SortExpressions>
-                        <telerik:GridSortExpression FieldName="CreationTime" SortOrder="Descending" />
-                    </SortExpressions>
-                    <Columns>
-                        <telerik:GridTemplateColumn AllowFiltering="false" ItemStyle-Width="0px">
-                            <ItemTemplate>
-                                <asp:HyperLink ID="ViewHyperLink" Text="View" NavigateUrl='<%# $"~/Payment2s/Edit.aspx?Id={Eval("Id")}" %>' runat="server" />
-                            </ItemTemplate>
-                        </telerik:GridTemplateColumn>
-                        <telerik:GridTemplateColumn HeaderText="Id" DataField="Id" SortExpression="Id" AutoPostBackOnFilter="true" CurrentFilterFunction="EqualTo">
-                            <ItemTemplate>
-                                <asp:HyperLink ID="IdHyperLink" runat="server" Text='<%# Eval("Id") %>' NavigateUrl='<%# $"~/Payment2s/Edit.aspx?Id={Eval("Id")}" %>' />
-                            </ItemTemplate>
-                        </telerik:GridTemplateColumn>
-                        <telerik:GridBoundColumn HeaderText="Creation Time" DataField="CreationTime" AutoPostBackOnFilter="true" DataFormatString="{0:g}" />
-                        <telerik:GridBoundColumn HeaderText="Type Action" DataField="TypeAction" AutoPostBackOnFilter="true" HtmlEncode="true" CurrentFilterFunction="StartsWith" />
-                        <telerik:GridBoundColumn HeaderText="Comments" DataField="Comments" AutoPostBackOnFilter="true" HtmlEncode="true" CurrentFilterFunction="StartsWith" />
-                        <telerik:GridBoundColumn HeaderText="Notify" DataField="Notify" AutoPostBackOnFilter="true" />
-                        <telerik:GridBoundColumn HeaderText="Amount" DataField="Amount" AutoPostBackOnFilter="true" DataFormatString="{0:c}" />
-                        <telerik:GridBoundColumn HeaderText="Remaining Amount" DataField="RemainingAmount" AutoPostBackOnFilter="true" DataFormatString="{0:c}" />
-                        <telerik:GridBoundColumn HeaderText="Transaction Information" DataField="TransactionInformation" AutoPostBackOnFilter="true" HtmlEncode="true" CurrentFilterFunction="StartsWith" />
-                        <telerik:GridBoundColumn HeaderText="Source" DataField="Source" AutoPostBackOnFilter="true" HtmlEncode="true" CurrentFilterFunction="StartsWith" />
-                        <telerik:GridBoundColumn HeaderText="Payment Method" DataField="PaymentMethod" AutoPostBackOnFilter="true" HtmlEncode="true" CurrentFilterFunction="StartsWith" />
-                        <telerik:GridTemplateColumn HeaderText="Fee" DataField="Fee.Title" AllowSorting="false" AutoPostBackOnFilter="true" CurrentFilterFunction="StartsWith">
-                            <ItemTemplate>
-                                <asp:HyperLink ID="FeeHyperLink" runat="server" Text='<%#: Eval("FeeId") != null ? Eval("Fee.Title") ?? "&nbsp;" : "" %>' NavigateUrl='<%# $"~/Fee2s/Edit.aspx?Id={Eval("FeeId")}" %>' Enabled='<%# Session["Fee2sPermission"] != null %>' />
-                            </ItemTemplate>
-                        </telerik:GridTemplateColumn>
-                        <telerik:GridTemplateColumn HeaderText="User" DataField="User.Username" AllowSorting="false" AutoPostBackOnFilter="true" CurrentFilterFunction="StartsWith">
-                            <ItemTemplate>
-                                <asp:HyperLink ID="UserHyperLink" runat="server" Text='<%#: Eval("UserId") != null ? Eval("User.Username") ?? "&nbsp;" : "" %>' NavigateUrl='<%# $"~/User2s/Edit.aspx?Id={Eval("UserId")}" %>' Enabled='<%# Session["User2sPermission"] != null %>' />
-                            </ItemTemplate>
-                        </telerik:GridTemplateColumn>
-                    </Columns>
-                </MasterTableView>
-            </telerik:RadGrid>
-        </fieldset>
-    </asp:Panel>
     <asp:Panel ID="Request2sPanel" runat="server" Visible='<%# (string)Session["Request2sPermission"] != null && ServicePoint2FormView.DataKey.Value != null %>'>
         <fieldset>
             <legend>
@@ -995,11 +951,6 @@
             <telerik:AjaxSetting AjaxControlID="Location2sRadGrid">
                 <UpdatedControls>
                     <telerik:AjaxUpdatedControl ControlID="Location2sPanel" LoadingPanelID="RadAjaxLoadingPanel1" />
-                </UpdatedControls>
-            </telerik:AjaxSetting>
-            <telerik:AjaxSetting AjaxControlID="Payment2sRadGrid">
-                <UpdatedControls>
-                    <telerik:AjaxUpdatedControl ControlID="Payment2sPanel" LoadingPanelID="RadAjaxLoadingPanel1" />
                 </UpdatedControls>
             </telerik:AjaxSetting>
             <telerik:AjaxSetting AjaxControlID="Request2sRadGrid">

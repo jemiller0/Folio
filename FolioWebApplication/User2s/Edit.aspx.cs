@@ -453,7 +453,7 @@ namespace FolioWebApplication.User2s
             if (Session["Payment2sPermission"] == null) return;
             var rg = (RadGrid)sender;
             var id = (Guid?)((GridDataItem)rg.Parent.Parent).GetDataKeyValue("Id");
-            var d = new Dictionary<string, string>() { { "Id", "id" }, { "CreationTime", "dateAction" }, { "TypeAction", "typeAction" }, { "Comments", "comments" }, { "Notify", "notify" }, { "Amount", "amountAction" }, { "RemainingAmount", "balance" }, { "TransactionInformation", "transactionInformation" }, { "ServicePointId", "createdAt" }, { "Source", "source" }, { "PaymentMethod", "paymentMethod" }, { "FeeId", "accountId" }, { "UserId", "userId" } };
+            var d = new Dictionary<string, string>() { { "Id", "id" }, { "CreationTime", "dateAction" }, { "TypeAction", "typeAction" }, { "Comments", "comments" }, { "Notify", "notify" }, { "Amount", "amountAction" }, { "RemainingAmount", "balance" }, { "TransactionInformation", "transactionInformation" }, { "ServicePoint", "createdAt" }, { "Source", "source" }, { "PaymentMethod", "paymentMethod" }, { "FeeId", "accountId" }, { "UserId", "userId" } };
             var where = Global.Trim(string.Join(" and ", new string[]
             {
                 $"accountId == \"{id}\"",
@@ -465,7 +465,7 @@ namespace FolioWebApplication.User2s
                 Global.GetCqlFilter(rg, "Amount", "amountAction"),
                 Global.GetCqlFilter(rg, "RemainingAmount", "balance"),
                 Global.GetCqlFilter(rg, "TransactionInformation", "transactionInformation"),
-                Global.GetCqlFilter(rg, "ServicePoint.Name", "createdAt", "name", folioServiceContext.FolioServiceClient.ServicePoints),
+                Global.GetCqlFilter(rg, "ServicePoint", "createdAt"),
                 Global.GetCqlFilter(rg, "Source", "source"),
                 Global.GetCqlFilter(rg, "PaymentMethod", "paymentMethod"),
                 Global.GetCqlFilter(rg, "User.Username", "userId", "username", folioServiceContext.FolioServiceClient.Users)
@@ -755,7 +755,7 @@ namespace FolioWebApplication.User2s
             if (Session["Payment2sPermission"] == null) return;
             var id = (Guid?)User2FormView.DataKey.Value;
             if (id == null) return;
-            var d = new Dictionary<string, string>() { { "Id", "id" }, { "CreationTime", "dateAction" }, { "TypeAction", "typeAction" }, { "Comments", "comments" }, { "Notify", "notify" }, { "Amount", "amountAction" }, { "RemainingAmount", "balance" }, { "TransactionInformation", "transactionInformation" }, { "ServicePointId", "createdAt" }, { "Source", "source" }, { "PaymentMethod", "paymentMethod" }, { "FeeId", "accountId" }, { "UserId", "userId" } };
+            var d = new Dictionary<string, string>() { { "Id", "id" }, { "CreationTime", "dateAction" }, { "TypeAction", "typeAction" }, { "Comments", "comments" }, { "Notify", "notify" }, { "Amount", "amountAction" }, { "RemainingAmount", "balance" }, { "TransactionInformation", "transactionInformation" }, { "ServicePoint", "createdAt" }, { "Source", "source" }, { "PaymentMethod", "paymentMethod" }, { "FeeId", "accountId" }, { "UserId", "userId" } };
             var where = Global.Trim(string.Join(" and ", new string[]
             {
                 $"userId == \"{id}\"",
@@ -767,7 +767,7 @@ namespace FolioWebApplication.User2s
                 Global.GetCqlFilter(Payment2sRadGrid, "Amount", "amountAction"),
                 Global.GetCqlFilter(Payment2sRadGrid, "RemainingAmount", "balance"),
                 Global.GetCqlFilter(Payment2sRadGrid, "TransactionInformation", "transactionInformation"),
-                Global.GetCqlFilter(Payment2sRadGrid, "ServicePoint.Name", "createdAt", "name", folioServiceContext.FolioServiceClient.ServicePoints),
+                Global.GetCqlFilter(Payment2sRadGrid, "ServicePoint", "createdAt"),
                 Global.GetCqlFilter(Payment2sRadGrid, "Source", "source"),
                 Global.GetCqlFilter(Payment2sRadGrid, "PaymentMethod", "paymentMethod"),
                 Global.GetCqlFilter(Payment2sRadGrid, "Fee.Title", "accountId", "title", folioServiceContext.FolioServiceClient.Fees)

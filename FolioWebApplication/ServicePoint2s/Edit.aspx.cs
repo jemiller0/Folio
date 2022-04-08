@@ -346,38 +346,6 @@ namespace FolioWebApplication.ServicePoint2s
             traceSource.TraceEvent(TraceEventType.Verbose, 0, $"where = {where}");
         }
 
-        protected void Payment2sRadGrid_NeedDataSource(object sender, GridNeedDataSourceEventArgs e)
-        {
-            if (Session["Payment2sPermission"] == null) return;
-            var id = (Guid?)ServicePoint2FormView.DataKey.Value;
-            if (id == null) return;
-            var d = new Dictionary<string, string>() { { "Id", "id" }, { "CreationTime", "dateAction" }, { "TypeAction", "typeAction" }, { "Comments", "comments" }, { "Notify", "notify" }, { "Amount", "amountAction" }, { "RemainingAmount", "balance" }, { "TransactionInformation", "transactionInformation" }, { "ServicePointId", "createdAt" }, { "Source", "source" }, { "PaymentMethod", "paymentMethod" }, { "FeeId", "accountId" }, { "UserId", "userId" } };
-            var where = Global.Trim(string.Join(" and ", new string[]
-            {
-                $"createdAt == \"{id}\"",
-                Global.GetCqlFilter(Payment2sRadGrid, "Id", "id"),
-                Global.GetCqlFilter(Payment2sRadGrid, "CreationTime", "dateAction"),
-                Global.GetCqlFilter(Payment2sRadGrid, "TypeAction", "typeAction"),
-                Global.GetCqlFilter(Payment2sRadGrid, "Comments", "comments"),
-                Global.GetCqlFilter(Payment2sRadGrid, "Notify", "notify"),
-                Global.GetCqlFilter(Payment2sRadGrid, "Amount", "amountAction"),
-                Global.GetCqlFilter(Payment2sRadGrid, "RemainingAmount", "balance"),
-                Global.GetCqlFilter(Payment2sRadGrid, "TransactionInformation", "transactionInformation"),
-                Global.GetCqlFilter(Payment2sRadGrid, "Source", "source"),
-                Global.GetCqlFilter(Payment2sRadGrid, "PaymentMethod", "paymentMethod"),
-                Global.GetCqlFilter(Payment2sRadGrid, "Fee.Title", "accountId", "title", folioServiceContext.FolioServiceClient.Fees),
-                Global.GetCqlFilter(Payment2sRadGrid, "User.Username", "userId", "username", folioServiceContext.FolioServiceClient.Users)
-            }.Where(s => s != null)));
-            Payment2sRadGrid.DataSource = folioServiceContext.Payment2s(out var i, where, Payment2sRadGrid.MasterTableView.SortExpressions.Count > 0 ? $"{d[Payment2sRadGrid.MasterTableView.SortExpressions[0].FieldName]}{(Payment2sRadGrid.MasterTableView.SortExpressions[0].SortOrder == GridSortOrder.Descending ? "/sort.descending" : "")}" : null, Payment2sRadGrid.PageSize * Payment2sRadGrid.CurrentPageIndex, Payment2sRadGrid.PageSize, true);
-            Payment2sRadGrid.VirtualItemCount = i;
-            if (Payment2sRadGrid.MasterTableView.FilterExpression == "")
-            {
-                Payment2sRadGrid.AllowFilteringByColumn = Payment2sRadGrid.VirtualItemCount > 10;
-                Payment2sPanel.Visible = ServicePoint2FormView.DataKey.Value != null && Session["Payment2sPermission"] != null && Payment2sRadGrid.VirtualItemCount > 0;
-            }
-            traceSource.TraceEvent(TraceEventType.Verbose, 0, $"where = {where}");
-        }
-
         protected void Request2sRadGrid_NeedDataSource(object sender, GridNeedDataSourceEventArgs e)
         {
             if (Session["Request2sPermission"] == null) return;

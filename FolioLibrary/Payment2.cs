@@ -52,37 +52,34 @@ namespace FolioLibrary
         [Column("transaction_information"), Display(Name = "Transaction Information", Order = 8), JsonProperty("transactionInformation"), StringLength(1024)]
         public virtual string TransactionInformation { get; set; }
 
-        [Display(Name = "Service Point", Order = 9)]
-        public virtual ServicePoint2 ServicePoint { get; set; }
+        [Column("service_point"), Display(Name = "Service Point", Order = 9), JsonProperty("createdAt"), StringLength(1024)]
+        public virtual string ServicePoint { get; set; }
 
-        [Column("service_point_id"), Display(Name = "Service Point", Order = 10), JsonProperty("createdAt")]
-        public virtual Guid? ServicePointId { get; set; }
-
-        [Column("source"), Display(Order = 11), JsonProperty("source"), StringLength(1024)]
+        [Column("source"), Display(Order = 10), JsonProperty("source"), StringLength(1024)]
         public virtual string Source { get; set; }
 
-        [Column("payment_method"), Display(Name = "Payment Method", Order = 12), JsonProperty("paymentMethod"), StringLength(1024)]
+        [Column("payment_method"), Display(Name = "Payment Method", Order = 11), JsonProperty("paymentMethod"), StringLength(1024)]
         public virtual string PaymentMethod { get; set; }
 
-        [Display(Order = 13)]
+        [Display(Order = 12)]
         public virtual Fee2 Fee { get; set; }
 
-        [Column("fee_id"), Display(Name = "Fee", Order = 14), JsonProperty("accountId"), Required]
+        [Column("fee_id"), Display(Name = "Fee", Order = 13), JsonProperty("accountId"), Required]
         public virtual Guid? FeeId { get; set; }
 
-        [Display(Order = 15)]
+        [Display(Order = 14)]
         public virtual User2 User { get; set; }
 
-        [Column("user_id"), Display(Name = "User", Order = 16), JsonProperty("userId"), Required]
+        [Column("user_id"), Display(Name = "User", Order = 15), JsonProperty("userId"), Required]
         public virtual Guid? UserId { get; set; }
 
-        [Column("content"), CustomValidation(typeof(Payment), nameof(ValidateContent)), DataType(DataType.MultilineText), Display(Order = 17), Editable(false)]
+        [Column("content"), CustomValidation(typeof(Payment), nameof(ValidateContent)), DataType(DataType.MultilineText), Display(Order = 16), Editable(false)]
         public virtual string Content { get; set; }
 
-        [Display(Name = "Scheduled Notices", Order = 18)]
+        [Display(Name = "Scheduled Notices", Order = 17)]
         public virtual ICollection<ScheduledNotice2> ScheduledNotice2s { get; set; }
 
-        public override string ToString() => $"{{ {nameof(Id)} = {Id}, {nameof(CreationTime)} = {CreationTime}, {nameof(TypeAction)} = {TypeAction}, {nameof(Comments)} = {Comments}, {nameof(Notify)} = {Notify}, {nameof(Amount)} = {Amount}, {nameof(RemainingAmount)} = {RemainingAmount}, {nameof(TransactionInformation)} = {TransactionInformation}, {nameof(ServicePointId)} = {ServicePointId}, {nameof(Source)} = {Source}, {nameof(PaymentMethod)} = {PaymentMethod}, {nameof(FeeId)} = {FeeId}, {nameof(UserId)} = {UserId}, {nameof(Content)} = {Content} }}";
+        public override string ToString() => $"{{ {nameof(Id)} = {Id}, {nameof(CreationTime)} = {CreationTime}, {nameof(TypeAction)} = {TypeAction}, {nameof(Comments)} = {Comments}, {nameof(Notify)} = {Notify}, {nameof(Amount)} = {Amount}, {nameof(RemainingAmount)} = {RemainingAmount}, {nameof(TransactionInformation)} = {TransactionInformation}, {nameof(ServicePoint)} = {ServicePoint}, {nameof(Source)} = {Source}, {nameof(PaymentMethod)} = {PaymentMethod}, {nameof(FeeId)} = {FeeId}, {nameof(UserId)} = {UserId}, {nameof(Content)} = {Content} }}";
 
         public static Payment2 FromJObject(JObject jObject) => jObject != null ? new Payment2
         {
@@ -94,7 +91,7 @@ namespace FolioLibrary
             Amount = (decimal?)jObject.SelectToken("amountAction"),
             RemainingAmount = (decimal?)jObject.SelectToken("balance"),
             TransactionInformation = (string)jObject.SelectToken("transactionInformation"),
-            ServicePointId = (Guid?)jObject.SelectToken("createdAt"),
+            ServicePoint = (string)jObject.SelectToken("createdAt"),
             Source = (string)jObject.SelectToken("source"),
             PaymentMethod = (string)jObject.SelectToken("paymentMethod"),
             FeeId = (Guid?)jObject.SelectToken("accountId"),
@@ -111,7 +108,7 @@ namespace FolioLibrary
             new JProperty("amountAction", Amount),
             new JProperty("balance", RemainingAmount),
             new JProperty("transactionInformation", TransactionInformation),
-            new JProperty("createdAt", ServicePointId),
+            new JProperty("createdAt", ServicePoint),
             new JProperty("source", Source),
             new JProperty("paymentMethod", PaymentMethod),
             new JProperty("accountId", FeeId),
