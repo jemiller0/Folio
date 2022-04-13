@@ -293,28 +293,31 @@ namespace FolioLibrary
         [Display(Name = "Order Item Locations", Order = 86), JsonProperty("locations")]
         public virtual ICollection<OrderItemLocation2> OrderItemLocation2s { get; set; }
 
-        [Display(Name = "Order Item Product Ids", Order = 87), JsonProperty("details.productIds")]
+        [Display(Name = "Order Item Notes", Order = 87)]
+        public virtual ICollection<OrderItemNote> OrderItemNotes { get; set; }
+
+        [Display(Name = "Order Item Product Ids", Order = 88), JsonProperty("details.productIds")]
         public virtual ICollection<OrderItemProductId> OrderItemProductIds { get; set; }
 
-        [Display(Name = "Order Item Reference Numbers", Order = 88), JsonProperty("vendorDetail.referenceNumbers")]
+        [Display(Name = "Order Item Reference Numbers", Order = 89), JsonProperty("vendorDetail.referenceNumbers")]
         public virtual ICollection<OrderItemReferenceNumber> OrderItemReferenceNumbers { get; set; }
 
-        [Display(Name = "Order Item Reporting Codes", Order = 89), JsonConverter(typeof(ArrayJsonConverter<List<OrderItemReportingCode>, OrderItemReportingCode>), "ReportingCodeId"), JsonProperty("reportingCodes")]
+        [Display(Name = "Order Item Reporting Codes", Order = 90), JsonConverter(typeof(ArrayJsonConverter<List<OrderItemReportingCode>, OrderItemReportingCode>), "ReportingCodeId"), JsonProperty("reportingCodes")]
         public virtual ICollection<OrderItemReportingCode> OrderItemReportingCodes { get; set; }
 
-        [Display(Name = "Order Item Tags", Order = 90), JsonConverter(typeof(ArrayJsonConverter<List<OrderItemTag>, OrderItemTag>), "Content"), JsonProperty("tags.tagList")]
+        [Display(Name = "Order Item Tags", Order = 91), JsonConverter(typeof(ArrayJsonConverter<List<OrderItemTag>, OrderItemTag>), "Content"), JsonProperty("tags.tagList")]
         public virtual ICollection<OrderItemTag> OrderItemTags { get; set; }
 
-        [Display(Name = "Order Item Volumes", Order = 91), JsonConverter(typeof(ArrayJsonConverter<List<OrderItemVolume>, OrderItemVolume>), "Content"), JsonProperty("physical.volumes")]
+        [Display(Name = "Order Item Volumes", Order = 92), JsonConverter(typeof(ArrayJsonConverter<List<OrderItemVolume>, OrderItemVolume>), "Content"), JsonProperty("physical.volumes")]
         public virtual ICollection<OrderItemVolume> OrderItemVolumes { get; set; }
 
-        [Display(Name = "Receivings", Order = 92)]
+        [Display(Name = "Receivings", Order = 93)]
         public virtual ICollection<Receiving2> Receiving2s { get; set; }
 
-        [Display(Name = "Titles", Order = 93)]
+        [Display(Name = "Titles", Order = 94)]
         public virtual ICollection<Title2> Title2s { get; set; }
 
-        [Display(Name = "Transactions", Order = 94)]
+        [Display(Name = "Transactions", Order = 95)]
         public virtual ICollection<Transaction2> Transaction2s { get; set; }
 
         public override string ToString() => $"{{ {nameof(Id)} = {Id}, {nameof(Edition)} = {Edition}, {nameof(CheckinItems)} = {CheckinItems}, {nameof(AgreementId)} = {AgreementId}, {nameof(AcquisitionMethod)} = {AcquisitionMethod}, {nameof(CancellationRestriction)} = {CancellationRestriction}, {nameof(CancellationRestrictionNote)} = {CancellationRestrictionNote}, {nameof(Collection)} = {Collection}, {nameof(PhysicalUnitListPrice)} = {PhysicalUnitListPrice}, {nameof(ElectronicUnitListPrice)} = {ElectronicUnitListPrice}, {nameof(Currency)} = {Currency}, {nameof(AdditionalCost)} = {AdditionalCost}, {nameof(Discount)} = {Discount}, {nameof(DiscountType)} = {DiscountType}, {nameof(ExchangeRate)} = {ExchangeRate}, {nameof(PhysicalQuantity)} = {PhysicalQuantity}, {nameof(ElectronicQuantity)} = {ElectronicQuantity}, {nameof(EstimatedPrice)} = {EstimatedPrice}, {nameof(FiscalYearRolloverAdjustmentAmount)} = {FiscalYearRolloverAdjustmentAmount}, {nameof(InternalNote)} = {InternalNote}, {nameof(ReceivingNote)} = {ReceivingNote}, {nameof(SubscriptionFrom)} = {SubscriptionFrom}, {nameof(SubscriptionInterval)} = {SubscriptionInterval}, {nameof(SubscriptionTo)} = {SubscriptionTo}, {nameof(Donor)} = {Donor}, {nameof(EresourceActivated)} = {EresourceActivated}, {nameof(EresourceActivationDue)} = {EresourceActivationDue}, {nameof(EresourceCreateInventory)} = {EresourceCreateInventory}, {nameof(EresourceTrial)} = {EresourceTrial}, {nameof(EresourceExpectedActivationDate)} = {EresourceExpectedActivationDate}, {nameof(EresourceUserLimit)} = {EresourceUserLimit}, {nameof(EresourceAccessProviderId)} = {EresourceAccessProviderId}, {nameof(EresourceLicenseCode)} = {EresourceLicenseCode}, {nameof(EresourceLicenseDescription)} = {EresourceLicenseDescription}, {nameof(EresourceLicenseReference)} = {EresourceLicenseReference}, {nameof(EresourceMaterialTypeId)} = {EresourceMaterialTypeId}, {nameof(EresourceResourceUrl)} = {EresourceResourceUrl}, {nameof(InstanceId)} = {InstanceId}, {nameof(IsPackage)} = {IsPackage}, {nameof(OrderFormat)} = {OrderFormat}, {nameof(PackageOrderItemId)} = {PackageOrderItemId}, {nameof(PaymentStatus)} = {PaymentStatus}, {nameof(PhysicalCreateInventory)} = {PhysicalCreateInventory}, {nameof(PhysicalMaterialTypeId)} = {PhysicalMaterialTypeId}, {nameof(PhysicalMaterialSupplierId)} = {PhysicalMaterialSupplierId}, {nameof(PhysicalExpectedReceiptDate)} = {PhysicalExpectedReceiptDate}, {nameof(PhysicalReceiptDue)} = {PhysicalReceiptDue}, {nameof(Description)} = {Description}, {nameof(Number)} = {Number}, {nameof(PublicationYear)} = {PublicationYear}, {nameof(Publisher)} = {Publisher}, {nameof(OrderId)} = {OrderId}, {nameof(ReceiptDate)} = {ReceiptDate}, {nameof(ReceiptStatus)} = {ReceiptStatus}, {nameof(Requester)} = {Requester}, {nameof(Rush)} = {Rush}, {nameof(Selector)} = {Selector}, {nameof(Source)} = {Source}, {nameof(TitleOrPackage)} = {TitleOrPackage}, {nameof(VendorInstructions)} = {VendorInstructions}, {nameof(VendorNote)} = {VendorNote}, {nameof(VendorCustomerId)} = {VendorCustomerId}, {nameof(CreationTime)} = {CreationTime}, {nameof(CreationUserId)} = {CreationUserId}, {nameof(CreationUserUsername)} = {CreationUserUsername}, {nameof(LastWriteTime)} = {LastWriteTime}, {nameof(LastWriteUserId)} = {LastWriteUserId}, {nameof(LastWriteUserUsername)} = {LastWriteUserUsername}, {nameof(Content)} = {Content}, {nameof(OrderItemAlerts)} = {(OrderItemAlerts != null ? $"{{ {string.Join(", ", OrderItemAlerts)} }}" : "")}, {nameof(OrderItemClaims)} = {(OrderItemClaims != null ? $"{{ {string.Join(", ", OrderItemClaims)} }}" : "")}, {nameof(OrderItemContributors)} = {(OrderItemContributors != null ? $"{{ {string.Join(", ", OrderItemContributors)} }}" : "")}, {nameof(OrderItemFunds)} = {(OrderItemFunds != null ? $"{{ {string.Join(", ", OrderItemFunds)} }}" : "")}, {nameof(OrderItemLocation2s)} = {(OrderItemLocation2s != null ? $"{{ {string.Join(", ", OrderItemLocation2s)} }}" : "")}, {nameof(OrderItemProductIds)} = {(OrderItemProductIds != null ? $"{{ {string.Join(", ", OrderItemProductIds)} }}" : "")}, {nameof(OrderItemReferenceNumbers)} = {(OrderItemReferenceNumbers != null ? $"{{ {string.Join(", ", OrderItemReferenceNumbers)} }}" : "")}, {nameof(OrderItemReportingCodes)} = {(OrderItemReportingCodes != null ? $"{{ {string.Join(", ", OrderItemReportingCodes)} }}" : "")}, {nameof(OrderItemTags)} = {(OrderItemTags != null ? $"{{ {string.Join(", ", OrderItemTags)} }}" : "")}, {nameof(OrderItemVolumes)} = {(OrderItemVolumes != null ? $"{{ {string.Join(", ", OrderItemVolumes)} }}" : "")} }}";

@@ -13,6 +13,10 @@ namespace FolioWebApplication.Request2s
 
         protected RadGrid RequestIdentifiersRadGrid;
 
+        protected Panel RequestNotesPanel;
+
+        protected RadGrid RequestNotesRadGrid;
+
         protected Panel RequestTagsPanel;
 
         protected RadGrid RequestTagsRadGrid;

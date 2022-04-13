@@ -65,6 +65,10 @@ namespace FolioWebApplication.Organization2s
 
         protected RadGrid OrganizationInterfacesRadGrid;
 
+        protected Panel OrganizationNotesPanel;
+
+        protected RadGrid OrganizationNotesRadGrid;
+
         protected Panel OrganizationPhoneNumbersPanel;
 
         protected RadGrid OrganizationPhoneNumbersRadGrid;

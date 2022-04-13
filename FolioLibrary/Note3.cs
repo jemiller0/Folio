@@ -106,10 +106,22 @@ namespace FolioLibrary
         [Column("search_content"), Display(Name = "Search Content", Order = 26), StringLength(1024)]
         public virtual string SearchContent { get; set; }
 
-        [Display(Name = "Note Links", Order = 27), JsonProperty("links")]
-        public virtual ICollection<NoteLink> NoteLinks { get; set; }
+        [Display(Name = "Object Notes", Order = 27), JsonProperty("links")]
+        public virtual ICollection<ObjectNote> ObjectNotes { get; set; }
 
-        public override string ToString() => $"{{ {nameof(Id)} = {Id}, {nameof(TypeId)} = {TypeId}, {nameof(Type)} = {Type}, {nameof(Domain)} = {Domain}, {nameof(Title)} = {Title}, {nameof(Content2)} = {Content2}, {nameof(Status)} = {Status}, {nameof(CreatorLastName)} = {CreatorLastName}, {nameof(CreatorFirstName)} = {CreatorFirstName}, {nameof(CreatorMiddleName)} = {CreatorMiddleName}, {nameof(UpdaterLastName)} = {UpdaterLastName}, {nameof(UpdaterFirstName)} = {UpdaterFirstName}, {nameof(UpdaterMiddleName)} = {UpdaterMiddleName}, {nameof(CreationTime)} = {CreationTime}, {nameof(CreationUserId)} = {CreationUserId}, {nameof(CreationUserUsername)} = {CreationUserUsername}, {nameof(LastWriteTime)} = {LastWriteTime}, {nameof(LastWriteUserId)} = {LastWriteUserId}, {nameof(LastWriteUserUsername)} = {LastWriteUserUsername}, {nameof(Content)} = {Content}, {nameof(TemporaryTypeId)} = {TemporaryTypeId}, {nameof(SearchContent)} = {SearchContent}, {nameof(NoteLinks)} = {(NoteLinks != null ? $"{{ {string.Join(", ", NoteLinks)} }}" : "")} }}";
+        [Display(Name = "Order Item Notes", Order = 28)]
+        public virtual ICollection<OrderItemNote> OrderItemNotes { get; set; }
+
+        [Display(Name = "Organization Notes", Order = 29)]
+        public virtual ICollection<OrganizationNote> OrganizationNotes { get; set; }
+
+        [Display(Name = "Request Notes", Order = 30)]
+        public virtual ICollection<RequestNote> RequestNotes { get; set; }
+
+        [Display(Name = "User Notes", Order = 31)]
+        public virtual ICollection<UserNote> UserNotes { get; set; }
+
+        public override string ToString() => $"{{ {nameof(Id)} = {Id}, {nameof(TypeId)} = {TypeId}, {nameof(Type)} = {Type}, {nameof(Domain)} = {Domain}, {nameof(Title)} = {Title}, {nameof(Content2)} = {Content2}, {nameof(Status)} = {Status}, {nameof(CreatorLastName)} = {CreatorLastName}, {nameof(CreatorFirstName)} = {CreatorFirstName}, {nameof(CreatorMiddleName)} = {CreatorMiddleName}, {nameof(UpdaterLastName)} = {UpdaterLastName}, {nameof(UpdaterFirstName)} = {UpdaterFirstName}, {nameof(UpdaterMiddleName)} = {UpdaterMiddleName}, {nameof(CreationTime)} = {CreationTime}, {nameof(CreationUserId)} = {CreationUserId}, {nameof(CreationUserUsername)} = {CreationUserUsername}, {nameof(LastWriteTime)} = {LastWriteTime}, {nameof(LastWriteUserId)} = {LastWriteUserId}, {nameof(LastWriteUserUsername)} = {LastWriteUserUsername}, {nameof(Content)} = {Content}, {nameof(TemporaryTypeId)} = {TemporaryTypeId}, {nameof(SearchContent)} = {SearchContent}, {nameof(ObjectNotes)} = {(ObjectNotes != null ? $"{{ {string.Join(", ", ObjectNotes)} }}" : "")} }}";
 
         public static Note3 FromJObject(JObject jObject) => jObject != null ? new Note3
         {
@@ -133,7 +145,7 @@ namespace FolioLibrary
             LastWriteUserId = (Guid?)jObject.SelectToken("metadata.updatedByUserId"),
             LastWriteUserUsername = (string)jObject.SelectToken("metadata.updatedByUsername"),
             Content = JsonConvert.SerializeObject(jObject, FolioDapperContext.UniversalTimeJsonSerializationSettings),
-            NoteLinks = jObject.SelectToken("links")?.Where(jt => jt.HasValues).Select(jt => NoteLink.FromJObject((JObject)jt)).ToArray()
+            ObjectNotes = jObject.SelectToken("links")?.Where(jt => jt.HasValues).Select(jt => ObjectNote.FromJObject((JObject)jt)).ToArray()
         } : null;
 
         public JObject ToJObject() => new JObject(
@@ -159,6 +171,6 @@ namespace FolioLibrary
                 new JProperty("updatedDate", LastWriteTime?.ToLocalTime()),
                 new JProperty("updatedByUserId", LastWriteUserId),
                 new JProperty("updatedByUsername", LastWriteUserUsername))),
-            new JProperty("links", NoteLinks?.Select(nl => nl.ToJObject()))).RemoveNullAndEmptyProperties();
+            new JProperty("links", ObjectNotes?.Select(@on => @on.ToJObject()))).RemoveNullAndEmptyProperties();
     }
 }

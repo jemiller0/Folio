@@ -1033,6 +1033,10 @@ namespace FolioWebApplication.User2s
 
         protected RadGrid UserDepartmentsRadGrid;
 
+        protected Panel UserNotesPanel;
+
+        protected RadGrid UserNotesRadGrid;
+
         protected Panel UserRequestPreference2sPanel;
 
         protected RadGrid UserRequestPreference2sRadGrid;

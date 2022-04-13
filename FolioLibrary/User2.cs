@@ -949,43 +949,46 @@ namespace FolioLibrary
         [Display(Name = "User Departments", Order = 304), JsonConverter(typeof(ArrayJsonConverter<List<UserDepartment>, UserDepartment>), "DepartmentId"), JsonProperty("departments")]
         public virtual ICollection<UserDepartment> UserDepartments { get; set; }
 
-        [Display(Name = "User Request Preferences", Order = 305)]
+        [Display(Name = "User Notes", Order = 305)]
+        public virtual ICollection<UserNote> UserNotes { get; set; }
+
+        [Display(Name = "User Request Preferences", Order = 306)]
         public virtual ICollection<UserRequestPreference2> UserRequestPreference2s { get; set; }
 
-        [Display(Name = "User Request Preferences 1", Order = 306)]
+        [Display(Name = "User Request Preferences 1", Order = 307)]
         public virtual ICollection<UserRequestPreference2> UserRequestPreference2s1 { get; set; }
 
-        [Display(Name = "User Request Preferences 2", Order = 307)]
+        [Display(Name = "User Request Preferences 2", Order = 308)]
         public virtual ICollection<UserRequestPreference2> UserRequestPreference2s2 { get; set; }
 
-        [Display(Name = "User Summarys", Order = 308)]
+        [Display(Name = "User Summarys", Order = 309)]
         public virtual ICollection<UserSummary2> UserSummary2s { get; set; }
 
-        [Display(Name = "User Summarys 1", Order = 309)]
+        [Display(Name = "User Summarys 1", Order = 310)]
         public virtual ICollection<UserSummary2> UserSummary2s1 { get; set; }
 
-        [Display(Name = "User Summarys 2", Order = 310)]
+        [Display(Name = "User Summarys 2", Order = 311)]
         public virtual ICollection<UserSummary2> UserSummary2s2 { get; set; }
 
-        [Display(Name = "User Tags", Order = 311), JsonConverter(typeof(ArrayJsonConverter<List<UserTag>, UserTag>), "Content"), JsonProperty("tags.tagList")]
+        [Display(Name = "User Tags", Order = 312), JsonConverter(typeof(ArrayJsonConverter<List<UserTag>, UserTag>), "Content"), JsonProperty("tags.tagList")]
         public virtual ICollection<UserTag> UserTags { get; set; }
 
-        [Display(Name = "Vouchers", Order = 312)]
+        [Display(Name = "Vouchers", Order = 313)]
         public virtual ICollection<Voucher2> Voucher2s { get; set; }
 
-        [Display(Name = "Vouchers 1", Order = 313)]
+        [Display(Name = "Vouchers 1", Order = 314)]
         public virtual ICollection<Voucher2> Voucher2s1 { get; set; }
 
-        [Display(Name = "Voucher Items", Order = 314)]
+        [Display(Name = "Voucher Items", Order = 315)]
         public virtual ICollection<VoucherItem2> VoucherItem2s { get; set; }
 
-        [Display(Name = "Voucher Items 1", Order = 315)]
+        [Display(Name = "Voucher Items 1", Order = 316)]
         public virtual ICollection<VoucherItem2> VoucherItem2s1 { get; set; }
 
-        [Display(Name = "Waive Reasons", Order = 316)]
+        [Display(Name = "Waive Reasons", Order = 317)]
         public virtual ICollection<WaiveReason2> WaiveReason2s { get; set; }
 
-        [Display(Name = "Waive Reasons 1", Order = 317)]
+        [Display(Name = "Waive Reasons 1", Order = 318)]
         public virtual ICollection<WaiveReason2> WaiveReason2s1 { get; set; }
 
         public override string ToString() => $"{{ {nameof(Id)} = {Id}, {nameof(Username)} = {Username}, {nameof(ExternalSystemId)} = {ExternalSystemId}, {nameof(Barcode)} = {Barcode}, {nameof(Active)} = {Active}, {nameof(Type)} = {Type}, {nameof(GroupId)} = {GroupId}, {nameof(Name)} = {Name}, {nameof(LastName)} = {LastName}, {nameof(FirstName)} = {FirstName}, {nameof(MiddleName)} = {MiddleName}, {nameof(PreferredFirstName)} = {PreferredFirstName}, {nameof(EmailAddress)} = {EmailAddress}, {nameof(PhoneNumber)} = {PhoneNumber}, {nameof(MobilePhoneNumber)} = {MobilePhoneNumber}, {nameof(BirthDate)} = {BirthDate}, {nameof(PreferredContactTypeId)} = {PreferredContactTypeId}, {nameof(StartDate)} = {StartDate}, {nameof(EndDate)} = {EndDate}, {nameof(Source)} = {Source}, {nameof(Category)} = {Category}, {nameof(Status)} = {Status}, {nameof(Statuses)} = {Statuses}, {nameof(StaffStatus)} = {StaffStatus}, {nameof(StaffPrivileges)} = {StaffPrivileges}, {nameof(StaffDivision)} = {StaffDivision}, {nameof(StaffDepartment)} = {StaffDepartment}, {nameof(StudentId)} = {StudentId}, {nameof(StudentStatus)} = {StudentStatus}, {nameof(StudentRestriction)} = {StudentRestriction}, {nameof(StudentDivision)} = {StudentDivision}, {nameof(StudentDepartment)} = {StudentDepartment}, {nameof(Deceased)} = {Deceased}, {nameof(Collections)} = {Collections}, {nameof(CreationTime)} = {CreationTime}, {nameof(CreationUserId)} = {CreationUserId}, {nameof(CreationUserUsername)} = {CreationUserUsername}, {nameof(LastWriteTime)} = {LastWriteTime}, {nameof(LastWriteUserId)} = {LastWriteUserId}, {nameof(LastWriteUserUsername)} = {LastWriteUserUsername}, {nameof(Content)} = {Content}, {nameof(UserAddresses)} = {(UserAddresses != null ? $"{{ {string.Join(", ", UserAddresses)} }}" : "")}, {nameof(UserDepartments)} = {(UserDepartments != null ? $"{{ {string.Join(", ", UserDepartments)} }}" : "")}, {nameof(UserTags)} = {(UserTags != null ? $"{{ {string.Join(", ", UserTags)} }}" : "")} }}";

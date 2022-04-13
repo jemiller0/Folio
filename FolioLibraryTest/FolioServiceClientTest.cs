@@ -3928,18 +3928,6 @@ namespace FolioLibraryTest
         }
 
         [TestMethod]
-        public void DeserializeNoteLinkTest()
-        {
-            var s = Stopwatch.StartNew();
-            var jo = folioServiceClient.Notes(take: 1).SingleOrDefault();
-            if (jo == null) Assert.Inconclusive();
-            var nl = JsonConvert.DeserializeObject<NoteLink>(jo.ToString());
-            traceSource.TraceEvent(TraceEventType.Information, 0, nl.ToString());
-            Assert.IsNotNull(nl);
-            traceSource.TraceEvent(TraceEventType.Information, 0, $"DeserializeNoteLinkTest()\r\n    ElapsedTime={s.Elapsed}");
-        }
-
-        [TestMethod]
         public void DeserializeNoteType2Test()
         {
             var s = Stopwatch.StartNew();
@@ -3949,6 +3937,18 @@ namespace FolioLibraryTest
             traceSource.TraceEvent(TraceEventType.Information, 0, nt2.ToString());
             Assert.IsNotNull(nt2);
             traceSource.TraceEvent(TraceEventType.Information, 0, $"DeserializeNoteType2Test()\r\n    ElapsedTime={s.Elapsed}");
+        }
+
+        [TestMethod]
+        public void DeserializeObjectNoteTest()
+        {
+            var s = Stopwatch.StartNew();
+            var jo = folioServiceClient.Notes(take: 1).SingleOrDefault();
+            if (jo == null) Assert.Inconclusive();
+            var @on = JsonConvert.DeserializeObject<ObjectNote>(jo.ToString());
+            traceSource.TraceEvent(TraceEventType.Information, 0, @on.ToString());
+            Assert.IsNotNull(@on);
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"DeserializeObjectNoteTest()\r\n    ElapsedTime={s.Elapsed}");
         }
 
         [TestMethod]

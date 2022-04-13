@@ -3902,11 +3902,11 @@ namespace FolioLibrary
             if (load && n3.LastWriteUserId != null) n3.LastWriteUser = (User2)(cache && objects.ContainsKey(n3.LastWriteUserId.Value) ? objects[n3.LastWriteUserId.Value] : objects[n3.LastWriteUserId.Value] = FindUser2(n3.LastWriteUserId));
             if (load && n3.TemporaryTypeId != null) n3.TemporaryType = (NoteType2)(cache && objects.ContainsKey(n3.TemporaryTypeId.Value) ? objects[n3.TemporaryTypeId.Value] : objects[n3.TemporaryTypeId.Value] = FindNoteType2(n3.TemporaryTypeId));
             var i = 0;
-            if (n3.NoteLinks != null) foreach (var nl in n3.NoteLinks)
+            if (n3.ObjectNotes != null) foreach (var @on in n3.ObjectNotes)
                 {
-                    nl.Id = (++i).ToString();
-                    nl.NoteId = n3.Id;
-                    nl.Note = n3;
+                    @on.Id = (++i).ToString();
+                    @on.NoteId = n3.Id;
+                    @on.Note = n3;
                 }
             return n3;
         }

@@ -1660,13 +1660,6 @@ namespace FolioLibrary
             if (load && n3.TemporaryTypeId != null) n3.TemporaryType = FindNoteType2(n3.TemporaryTypeId);
             return n3;
         }
-        public NoteLink FindNoteLink(string id, bool load = false)
-        {
-            var nl = Query<NoteLink>($"SELECT id AS \"Id\", note_id AS \"NoteId\", id2 AS \"Id2\", type AS \"Type\" FROM uc{(IsMySql ? "_" : ".")}note_links WHERE id = @id", new { id }).SingleOrDefault();
-            if (nl == null) return null;
-            if (load && nl.NoteId != null) nl.Note = FindNote3(nl.NoteId);
-            return nl;
-        }
         public NoteType FindNoteType(Guid? id, bool load = false) => Query<NoteType>($"SELECT id AS \"Id\", jsonb AS \"Content\" FROM uchicago_mod_notes{(IsMySql ? "_" : ".")}note_type WHERE id = @id", new { id }).SingleOrDefault();
         public NoteType2 FindNoteType2(Guid? id, bool load = false)
         {
@@ -1675,6 +1668,13 @@ namespace FolioLibrary
             if (load && nt2.CreationUserId != null) nt2.CreationUser = FindUser2(nt2.CreationUserId);
             if (load && nt2.LastWriteUserId != null) nt2.LastWriteUser = FindUser2(nt2.LastWriteUserId);
             return nt2;
+        }
+        public ObjectNote FindObjectNote(string id, bool load = false)
+        {
+            var @on = Query<ObjectNote>($"SELECT id AS \"Id\", note_id AS \"NoteId\", object_id AS \"ObjectId\", type AS \"Type\" FROM uc{(IsMySql ? "_" : ".")}object_notes WHERE id = @id", new { id }).SingleOrDefault();
+            if (@on == null) return null;
+            if (load && @on.NoteId != null) @on.Note = FindNote3(@on.NoteId);
+            return @on;
         }
         public Order FindOrder(Guid? id, bool load = false) => Query<Order>($"SELECT id AS \"Id\", jsonb AS \"Content\", creation_date AS \"CreationTime\", created_by AS \"CreationUserId\" FROM uchicago_mod_orders_storage{(IsMySql ? "_" : ".")}purchase_order WHERE id = @id", new { id }).SingleOrDefault();
         public Order2 FindOrder2(Guid? id, bool load = false)
@@ -1777,6 +1777,14 @@ namespace FolioLibrary
             if (load && oil2.LocationId != null) oil2.Location = FindLocation2(oil2.LocationId);
             if (load && oil2.HoldingId != null) oil2.Holding = FindHolding2(oil2.HoldingId);
             return oil2;
+        }
+        public OrderItemNote FindOrderItemNote(string id, bool load = false)
+        {
+            var oin = Query<OrderItemNote>($"SELECT id AS \"Id\", order_item_id AS \"OrderItemId\", note_id AS \"NoteId\" FROM uc{(IsMySql ? "_" : ".")}order_item_notes WHERE id = @id", new { id }).SingleOrDefault();
+            if (oin == null) return null;
+            if (load && oin.OrderItemId != null) oin.OrderItem = FindOrderItem2(oin.OrderItemId);
+            if (load && oin.NoteId != null) oin.Note = FindNote3(oin.NoteId);
+            return oin;
         }
         public OrderItemProductId FindOrderItemProductId(string id, bool load = false)
         {
@@ -1941,6 +1949,14 @@ namespace FolioLibrary
             if (load && oi.OrganizationId != null) oi.Organization = FindOrganization2(oi.OrganizationId);
             if (load && oi.InterfaceId != null) oi.Interface = FindInterface2(oi.InterfaceId);
             return oi;
+        }
+        public OrganizationNote FindOrganizationNote(string id, bool load = false)
+        {
+            var @on = Query<OrganizationNote>($"SELECT id AS \"Id\", organization_id AS \"OrganizationId\", note_id AS \"NoteId\" FROM uc{(IsMySql ? "_" : ".")}organization_notes WHERE id = @id", new { id }).SingleOrDefault();
+            if (@on == null) return null;
+            if (load && @on.OrganizationId != null) @on.Organization = FindOrganization2(@on.OrganizationId);
+            if (load && @on.NoteId != null) @on.Note = FindNote3(@on.NoteId);
+            return @on;
         }
         public OrganizationPhoneNumber FindOrganizationPhoneNumber(string id, bool load = false)
         {
@@ -2307,6 +2323,14 @@ namespace FolioLibrary
             if (load && ri.IdentifierTypeId != null) ri.IdentifierType = FindIdType2(ri.IdentifierTypeId);
             return ri;
         }
+        public RequestNote FindRequestNote(string id, bool load = false)
+        {
+            var rn = Query<RequestNote>($"SELECT id AS \"Id\", request_id AS \"RequestId\", note_id AS \"NoteId\" FROM uc{(IsMySql ? "_" : ".")}request_notes WHERE id = @id", new { id }).SingleOrDefault();
+            if (rn == null) return null;
+            if (load && rn.RequestId != null) rn.Request = FindRequest2(rn.RequestId);
+            if (load && rn.NoteId != null) rn.Note = FindNote3(rn.NoteId);
+            return rn;
+        }
         public RequestPolicy FindRequestPolicy(Guid? id, bool load = false) => Query<RequestPolicy>($"SELECT id AS \"Id\", jsonb AS \"Content\", creation_date AS \"CreationTime\", created_by AS \"CreationUserId\" FROM uchicago_mod_circulation_storage{(IsMySql ? "_" : ".")}request_policy WHERE id = @id", new { id }).SingleOrDefault();
         public RequestPolicy2 FindRequestPolicy2(Guid? id, bool load = false)
         {
@@ -2649,6 +2673,14 @@ namespace FolioLibrary
             if (load && ud.UserId != null) ud.User = FindUser2(ud.UserId);
             if (load && ud.DepartmentId != null) ud.Department = FindDepartment2(ud.DepartmentId);
             return ud;
+        }
+        public UserNote FindUserNote(string id, bool load = false)
+        {
+            var un = Query<UserNote>($"SELECT id AS \"Id\", user_id AS \"UserId\", note_id AS \"NoteId\" FROM uc{(IsMySql ? "_" : ".")}user_notes WHERE id = @id", new { id }).SingleOrDefault();
+            if (un == null) return null;
+            if (load && un.UserId != null) un.User = FindUser2(un.UserId);
+            if (load && un.NoteId != null) un.Note = FindNote3(un.NoteId);
+            return un;
         }
         public UserRequestPreference FindUserRequestPreference(Guid? id, bool load = false) => Query<UserRequestPreference>($"SELECT id AS \"Id\", jsonb AS \"Content\", creation_date AS \"CreationTime\", created_by AS \"CreationUserId\" FROM uchicago_mod_circulation_storage{(IsMySql ? "_" : ".")}user_request_preference WHERE id = @id", new { id }).SingleOrDefault();
         public UserRequestPreference2 FindUserRequestPreference2(Guid? id, bool load = false)
@@ -3527,13 +3559,13 @@ namespace FolioLibrary
         public void AddNote3sIndexes()
         {
         }
-        public void AddNoteLinksIndexes()
-        {
-        }
         public void AddNoteTypesIndexes()
         {
         }
         public void AddNoteType2sIndexes()
+        {
+        }
+        public void AddObjectNotesIndexes()
         {
         }
         public void AddOrdersIndexes()
@@ -3570,6 +3602,9 @@ namespace FolioLibrary
         {
         }
         public void AddOrderItemLocation2sIndexes()
+        {
+        }
+        public void AddOrderItemNotesIndexes()
         {
         }
         public void AddOrderItemProductIdsIndexes()
@@ -3645,6 +3680,9 @@ namespace FolioLibrary
         {
         }
         public void AddOrganizationInterfacesIndexes()
+        {
+        }
+        public void AddOrganizationNotesIndexes()
         {
         }
         public void AddOrganizationPhoneNumbersIndexes()
@@ -3815,6 +3853,9 @@ namespace FolioLibrary
         public void AddRequestIdentifiersIndexes()
         {
         }
+        public void AddRequestNotesIndexes()
+        {
+        }
         public void AddRequestPoliciesIndexes()
         {
         }
@@ -3975,6 +4016,9 @@ namespace FolioLibrary
         {
         }
         public void AddUserDepartmentsIndexes()
+        {
+        }
+        public void AddUserNotesIndexes()
         {
         }
         public void AddUserRequestPreferencesIndexes()
@@ -4782,13 +4826,13 @@ namespace FolioLibrary
         public void RemoveNote3sIndexes()
         {
         }
-        public void RemoveNoteLinksIndexes()
-        {
-        }
         public void RemoveNoteTypesIndexes()
         {
         }
         public void RemoveNoteType2sIndexes()
+        {
+        }
+        public void RemoveObjectNotesIndexes()
         {
         }
         public void RemoveOrdersIndexes()
@@ -4825,6 +4869,9 @@ namespace FolioLibrary
         {
         }
         public void RemoveOrderItemLocation2sIndexes()
+        {
+        }
+        public void RemoveOrderItemNotesIndexes()
         {
         }
         public void RemoveOrderItemProductIdsIndexes()
@@ -4900,6 +4947,9 @@ namespace FolioLibrary
         {
         }
         public void RemoveOrganizationInterfacesIndexes()
+        {
+        }
+        public void RemoveOrganizationNotesIndexes()
         {
         }
         public void RemoveOrganizationPhoneNumbersIndexes()
@@ -5070,6 +5120,9 @@ namespace FolioLibrary
         public void RemoveRequestIdentifiersIndexes()
         {
         }
+        public void RemoveRequestNotesIndexes()
+        {
+        }
         public void RemoveRequestPoliciesIndexes()
         {
         }
@@ -5230,6 +5283,9 @@ namespace FolioLibrary
         {
         }
         public void RemoveUserDepartmentsIndexes()
+        {
+        }
+        public void RemoveUserNotesIndexes()
         {
         }
         public void RemoveUserRequestPreferencesIndexes()
@@ -5533,9 +5589,9 @@ namespace FolioLibrary
         public IEnumerable<Note> Notes(string where = null, object param = null, string orderBy = null, int? skip = null, int? take = null) => Query<Note>($"SELECT id AS \"Id\", COALESCE(jsonb_set(jsonb, '{{metadata,createdDate}}', ('\"' || (jsonb#>>'{{metadata,createdDate}}') || CASE WHEN jsonb#>>'{{metadata,createdDate}}' !~ '([-+]\\d\\d:\\d\\d)|Z$' THEN '+00:00' ELSE '' END || '\"')::jsonb), jsonb) AS \"Content\", temporary_type_id AS \"TemporaryTypeId\", search_content AS \"SearchContent\" FROM uchicago_mod_notes{(IsMySql ? "_" : ".")}note_data{(where != null ? $" WHERE {where}" : "")}{(orderBy != null || skip != null || take != null ? $" ORDER BY {orderBy ?? "id"}" : "")}", param, skip, take);
         public IEnumerable<Note2> Note2s(string where = null, object param = null, string orderBy = null, int? skip = null, int? take = null) => Query<Note2>($"SELECT id AS \"Id\", instance_id AS \"InstanceId\", instance_note_type_id AS \"InstanceNoteTypeId\", note AS \"Note\", staff_only AS \"StaffOnly\" FROM uc{(IsMySql ? "_" : ".")}notes{(where != null ? $" WHERE {where}" : "")}{(orderBy != null || skip != null || take != null ? $" ORDER BY {orderBy ?? "id, instance_id"}" : "")}", param, skip, take);
         public IEnumerable<Note3> Note3s(string where = null, object param = null, string orderBy = null, int? skip = null, int? take = null) => Query<Note3>($"SELECT id AS \"Id\", type_id AS \"TypeId\", type AS \"Type\", domain AS \"Domain\", title AS \"Title\", content2 AS \"Content2\", status AS \"Status\", creator_last_name AS \"CreatorLastName\", creator_first_name AS \"CreatorFirstName\", creator_middle_name AS \"CreatorMiddleName\", updater_last_name AS \"UpdaterLastName\", updater_first_name AS \"UpdaterFirstName\", updater_middle_name AS \"UpdaterMiddleName\", created_date AS \"CreationTime\", created_by_user_id AS \"CreationUserId\", created_by_username AS \"CreationUserUsername\", updated_date AS \"LastWriteTime\", updated_by_user_id AS \"LastWriteUserId\", updated_by_username AS \"LastWriteUserUsername\", content AS \"Content\", temporary_type_id AS \"TemporaryTypeId\", search_content AS \"SearchContent\" FROM uc{(IsMySql ? "_" : ".")}notes2{(where != null ? $" WHERE {where}" : "")}{(orderBy != null || skip != null || take != null ? $" ORDER BY {orderBy ?? "id"}" : "")}", param, skip, take);
-        public IEnumerable<NoteLink> NoteLinks(string where = null, object param = null, string orderBy = null, int? skip = null, int? take = null) => Query<NoteLink>($"SELECT id AS \"Id\", note_id AS \"NoteId\", id2 AS \"Id2\", type AS \"Type\" FROM uc{(IsMySql ? "_" : ".")}note_links{(where != null ? $" WHERE {where}" : "")}{(orderBy != null || skip != null || take != null ? $" ORDER BY {orderBy ?? "id"}" : "")}", param, skip, take);
         public IEnumerable<NoteType> NoteTypes(string where = null, object param = null, string orderBy = null, int? skip = null, int? take = null) => Query<NoteType>($"SELECT id AS \"Id\", COALESCE(jsonb_set(jsonb, '{{metadata,createdDate}}', ('\"' || (jsonb#>>'{{metadata,createdDate}}') || CASE WHEN jsonb#>>'{{metadata,createdDate}}' !~ '([-+]\\d\\d:\\d\\d)|Z$' THEN '+00:00' ELSE '' END || '\"')::jsonb), jsonb) AS \"Content\" FROM uchicago_mod_notes{(IsMySql ? "_" : ".")}note_type{(where != null ? $" WHERE {where}" : "")}{(orderBy != null || skip != null || take != null ? $" ORDER BY {orderBy ?? "id"}" : "")}", param, skip, take);
         public IEnumerable<NoteType2> NoteType2s(string where = null, object param = null, string orderBy = null, int? skip = null, int? take = null) => Query<NoteType2>($"SELECT id AS \"Id\", name AS \"Name\", usage_note_total AS \"UsageNoteTotal\", created_date AS \"CreationTime\", created_by_user_id AS \"CreationUserId\", created_by_username AS \"CreationUserUsername\", updated_date AS \"LastWriteTime\", updated_by_user_id AS \"LastWriteUserId\", updated_by_username AS \"LastWriteUserUsername\", content AS \"Content\" FROM uc{(IsMySql ? "_" : ".")}note_types{(where != null ? $" WHERE {where}" : "")}{(orderBy != null || skip != null || take != null ? $" ORDER BY {orderBy ?? "id"}" : "")}", param, skip, take);
+        public IEnumerable<ObjectNote> ObjectNotes(string where = null, object param = null, string orderBy = null, int? skip = null, int? take = null) => Query<ObjectNote>($"SELECT id AS \"Id\", note_id AS \"NoteId\", object_id AS \"ObjectId\", type AS \"Type\" FROM uc{(IsMySql ? "_" : ".")}object_notes{(where != null ? $" WHERE {where}" : "")}{(orderBy != null || skip != null || take != null ? $" ORDER BY {orderBy ?? "id"}" : "")}", param, skip, take);
         public IEnumerable<Order> Orders(string where = null, object param = null, string orderBy = null, int? skip = null, int? take = null) => Query<Order>($"SELECT id AS \"Id\", COALESCE(jsonb_set(jsonb, '{{metadata,createdDate}}', ('\"' || (jsonb#>>'{{metadata,createdDate}}') || CASE WHEN jsonb#>>'{{metadata,createdDate}}' !~ '([-+]\\d\\d:\\d\\d)|Z$' THEN '+00:00' ELSE '' END || '\"')::jsonb), jsonb) AS \"Content\", creation_date AS \"CreationTime\", created_by AS \"CreationUserId\" FROM uchicago_mod_orders_storage{(IsMySql ? "_" : ".")}purchase_order{(where != null ? $" WHERE {where}" : "")}{(orderBy != null || skip != null || take != null ? $" ORDER BY {orderBy ?? "id"}" : "")}", param, skip, take);
         public IEnumerable<Order2> Order2s(string where = null, object param = null, string orderBy = null, int? skip = null, int? take = null) => Query<Order2>($"SELECT id AS \"Id\", approved AS \"Approved\", approved_by_id AS \"ApprovedById\", approval_date AS \"ApprovalDate\", assigned_to_id AS \"AssignedToId\", bill_to_id AS \"BillToId\", close_reason_reason AS \"CloseReasonReason\", close_reason_note AS \"CloseReasonNote\", date_ordered AS \"OrderDate\", manual_po AS \"Manual\", po_number AS \"Number\", po_number_prefix AS \"NumberPrefix\", po_number_suffix AS \"NumberSuffix\", order_type AS \"OrderType\", re_encumber AS \"Reencumber\", ongoing_interval AS \"OngoingInterval\", ongoing_is_subscription AS \"OngoingIsSubscription\", ongoing_manual_renewal AS \"OngoingManualRenewal\", ongoing_notes AS \"OngoingNotes\", ongoing_review_period AS \"OngoingReviewPeriod\", ongoing_renewal_date AS \"OngoingRenewalDate\", ongoing_review_date AS \"OngoingReviewDate\", ship_to_id AS \"ShipToId\", template_id AS \"TemplateId\", vendor_id AS \"VendorId\", status AS \"Status\", created_date AS \"CreationTime\", created_by_user_id AS \"CreationUserId\", created_by_username AS \"CreationUserUsername\", updated_date AS \"LastWriteTime\", updated_by_user_id AS \"LastWriteUserId\", updated_by_username AS \"LastWriteUserUsername\", content AS \"Content\" FROM uc{(IsMySql ? "_" : ".")}orders{(where != null ? $" WHERE {where}" : "")}{(orderBy != null || skip != null || take != null ? $" ORDER BY {orderBy ?? "id"}" : "")}", param, skip, take);
         public IEnumerable<OrderAcquisitionsUnit> OrderAcquisitionsUnits(string where = null, object param = null, string orderBy = null, int? skip = null, int? take = null) => Query<OrderAcquisitionsUnit>($"SELECT id AS \"Id\", order_id AS \"OrderId\", acquisitions_unit_id AS \"AcquisitionsUnitId\" FROM uc{(IsMySql ? "_" : ".")}order_acquisitions_units{(where != null ? $" WHERE {where}" : "")}{(orderBy != null || skip != null || take != null ? $" ORDER BY {orderBy ?? "id"}" : "")}", param, skip, take);
@@ -5548,6 +5604,7 @@ namespace FolioLibrary
         public IEnumerable<OrderItemContributor> OrderItemContributors(string where = null, object param = null, string orderBy = null, int? skip = null, int? take = null) => Query<OrderItemContributor>($"SELECT id AS \"Id\", order_item_id AS \"OrderItemId\", contributor AS \"Contributor\", contributor_name_type_id AS \"ContributorNameTypeId\" FROM uc{(IsMySql ? "_" : ".")}order_item_contributors{(where != null ? $" WHERE {where}" : "")}{(orderBy != null || skip != null || take != null ? $" ORDER BY {orderBy ?? "id"}" : "")}", param, skip, take);
         public IEnumerable<OrderItemFund> OrderItemFunds(string where = null, object param = null, string orderBy = null, int? skip = null, int? take = null) => Query<OrderItemFund>($"SELECT id AS \"Id\", order_item_id AS \"OrderItemId\", code AS \"FundCode\", encumbrance_id AS \"EncumbranceId\", fund_id AS \"FundId\", expense_class_id AS \"ExpenseClassId\", distribution_type AS \"DistributionType\", value AS \"Value\" FROM uc{(IsMySql ? "_" : ".")}order_item_fund_distributions{(where != null ? $" WHERE {where}" : "")}{(orderBy != null || skip != null || take != null ? $" ORDER BY {orderBy ?? "id"}" : "")}", param, skip, take);
         public IEnumerable<OrderItemLocation2> OrderItemLocation2s(string where = null, object param = null, string orderBy = null, int? skip = null, int? take = null) => Query<OrderItemLocation2>($"SELECT id AS \"Id\", order_item_id AS \"OrderItemId\", location_id AS \"LocationId\", holding_id AS \"HoldingId\", quantity AS \"Quantity\", quantity_electronic AS \"ElectronicQuantity\", quantity_physical AS \"PhysicalQuantity\" FROM uc{(IsMySql ? "_" : ".")}order_item_locations{(where != null ? $" WHERE {where}" : "")}{(orderBy != null || skip != null || take != null ? $" ORDER BY {orderBy ?? "id"}" : "")}", param, skip, take);
+        public IEnumerable<OrderItemNote> OrderItemNotes(string where = null, object param = null, string orderBy = null, int? skip = null, int? take = null) => Query<OrderItemNote>($"SELECT id AS \"Id\", order_item_id AS \"OrderItemId\", note_id AS \"NoteId\" FROM uc{(IsMySql ? "_" : ".")}order_item_notes{(where != null ? $" WHERE {where}" : "")}{(orderBy != null || skip != null || take != null ? $" ORDER BY {orderBy ?? "id"}" : "")}", param, skip, take);
         public IEnumerable<OrderItemProductId> OrderItemProductIds(string where = null, object param = null, string orderBy = null, int? skip = null, int? take = null) => Query<OrderItemProductId>($"SELECT id AS \"Id\", order_item_id AS \"OrderItemId\", product_id AS \"ProductId\", product_id_type_id AS \"ProductIdTypeId\", qualifier AS \"Qualifier\" FROM uc{(IsMySql ? "_" : ".")}order_item_product_ids{(where != null ? $" WHERE {where}" : "")}{(orderBy != null || skip != null || take != null ? $" ORDER BY {orderBy ?? "id"}" : "")}", param, skip, take);
         public IEnumerable<OrderItemReferenceNumber> OrderItemReferenceNumbers(string where = null, object param = null, string orderBy = null, int? skip = null, int? take = null) => Query<OrderItemReferenceNumber>($"SELECT id AS \"Id\", order_item_id AS \"OrderItemId\", ref_number AS \"ReferenceNumber\", ref_number_type AS \"ReferenceNumberType\", vendor_details_source AS \"VendorDetailsSource\" FROM uc{(IsMySql ? "_" : ".")}order_item_reference_numbers{(where != null ? $" WHERE {where}" : "")}{(orderBy != null || skip != null || take != null ? $" ORDER BY {orderBy ?? "id"}" : "")}", param, skip, take);
         public IEnumerable<OrderItemReportingCode> OrderItemReportingCodes(string where = null, object param = null, string orderBy = null, int? skip = null, int? take = null) => Query<OrderItemReportingCode>($"SELECT id AS \"Id\", order_item_id AS \"OrderItemId\", reporting_code_id AS \"ReportingCodeId\" FROM uc{(IsMySql ? "_" : ".")}order_item_reporting_codes{(where != null ? $" WHERE {where}" : "")}{(orderBy != null || skip != null || take != null ? $" ORDER BY {orderBy ?? "id"}" : "")}", param, skip, take);
@@ -5573,6 +5630,7 @@ namespace FolioLibrary
         public IEnumerable<OrganizationEmail> OrganizationEmails(string where = null, object param = null, string orderBy = null, int? skip = null, int? take = null) => Query<OrganizationEmail>($"SELECT id AS \"Id\", organization_id AS \"OrganizationId\", id2 AS \"Id2\", value AS \"Value\", description AS \"Description\", is_primary AS \"IsPrimary\", language AS \"Language\", created_date AS \"CreationTime\", created_by_user_id AS \"CreationUserId\", created_by_username AS \"CreationUserUsername\", updated_date AS \"LastWriteTime\", updated_by_user_id AS \"LastWriteUserId\", updated_by_username AS \"LastWriteUserUsername\" FROM uc{(IsMySql ? "_" : ".")}organization_emails{(where != null ? $" WHERE {where}" : "")}{(orderBy != null || skip != null || take != null ? $" ORDER BY {orderBy ?? "id"}" : "")}", param, skip, take);
         public IEnumerable<OrganizationEmailCategory> OrganizationEmailCategories(string where = null, object param = null, string orderBy = null, int? skip = null, int? take = null) => Query<OrganizationEmailCategory>($"SELECT id AS \"Id\", organization_email_id AS \"OrganizationEmailId\", category_id AS \"CategoryId\" FROM uc{(IsMySql ? "_" : ".")}organization_email_categories{(where != null ? $" WHERE {where}" : "")}{(orderBy != null || skip != null || take != null ? $" ORDER BY {orderBy ?? "id"}" : "")}", param, skip, take);
         public IEnumerable<OrganizationInterface> OrganizationInterfaces(string where = null, object param = null, string orderBy = null, int? skip = null, int? take = null) => Query<OrganizationInterface>($"SELECT id AS \"Id\", organization_id AS \"OrganizationId\", interface_id AS \"InterfaceId\" FROM uc{(IsMySql ? "_" : ".")}organization_interfaces{(where != null ? $" WHERE {where}" : "")}{(orderBy != null || skip != null || take != null ? $" ORDER BY {orderBy ?? "id"}" : "")}", param, skip, take);
+        public IEnumerable<OrganizationNote> OrganizationNotes(string where = null, object param = null, string orderBy = null, int? skip = null, int? take = null) => Query<OrganizationNote>($"SELECT id AS \"Id\", organization_id AS \"OrganizationId\", note_id AS \"NoteId\" FROM uc{(IsMySql ? "_" : ".")}organization_notes{(where != null ? $" WHERE {where}" : "")}{(orderBy != null || skip != null || take != null ? $" ORDER BY {orderBy ?? "id"}" : "")}", param, skip, take);
         public IEnumerable<OrganizationPhoneNumber> OrganizationPhoneNumbers(string where = null, object param = null, string orderBy = null, int? skip = null, int? take = null) => Query<OrganizationPhoneNumber>($"SELECT id AS \"Id\", organization_id AS \"OrganizationId\", id2 AS \"Id2\", phone_number AS \"PhoneNumber\", type AS \"Type\", is_primary AS \"IsPrimary\", language AS \"Language\", created_date AS \"CreationTime\", created_by_user_id AS \"CreationUserId\", created_by_username AS \"CreationUserUsername\", updated_date AS \"LastWriteTime\", updated_by_user_id AS \"LastWriteUserId\", updated_by_username AS \"LastWriteUserUsername\" FROM uc{(IsMySql ? "_" : ".")}organization_phone_numbers{(where != null ? $" WHERE {where}" : "")}{(orderBy != null || skip != null || take != null ? $" ORDER BY {orderBy ?? "id"}" : "")}", param, skip, take);
         public IEnumerable<OrganizationPhoneNumberCategory> OrganizationPhoneNumberCategories(string where = null, object param = null, string orderBy = null, int? skip = null, int? take = null) => Query<OrganizationPhoneNumberCategory>($"SELECT id AS \"Id\", organization_phone_number_id AS \"OrganizationPhoneNumberId\", category_id AS \"CategoryId\" FROM uc{(IsMySql ? "_" : ".")}organization_phone_number_categories{(where != null ? $" WHERE {where}" : "")}{(orderBy != null || skip != null || take != null ? $" ORDER BY {orderBy ?? "id"}" : "")}", param, skip, take);
         public IEnumerable<OrganizationTag> OrganizationTags(string where = null, object param = null, string orderBy = null, int? skip = null, int? take = null) => Query<OrganizationTag>($"SELECT id AS \"Id\", organization_id AS \"OrganizationId\", content AS \"Content\" FROM uc{(IsMySql ? "_" : ".")}organization_tags{(where != null ? $" WHERE {where}" : "")}{(orderBy != null || skip != null || take != null ? $" ORDER BY {orderBy ?? "id"}" : "")}", param, skip, take);
@@ -5629,6 +5687,7 @@ namespace FolioLibrary
         public IEnumerable<Request> Requests(string where = null, object param = null, string orderBy = null, int? skip = null, int? take = null) => Query<Request>($"SELECT id AS \"Id\", COALESCE(jsonb_set(jsonb, '{{metadata,createdDate}}', ('\"' || (jsonb#>>'{{metadata,createdDate}}') || CASE WHEN jsonb#>>'{{metadata,createdDate}}' !~ '([-+]\\d\\d:\\d\\d)|Z$' THEN '+00:00' ELSE '' END || '\"')::jsonb), jsonb) AS \"Content\", creation_date AS \"CreationTime\", created_by AS \"CreationUserId\", cancellationreasonid AS \"Cancellationreasonid\" FROM uchicago_mod_circulation_storage{(IsMySql ? "_" : ".")}request{(where != null ? $" WHERE {where}" : "")}{(orderBy != null || skip != null || take != null ? $" ORDER BY {orderBy ?? "id"}" : "")}", param, skip, take);
         public IEnumerable<Request2> Request2s(string where = null, object param = null, string orderBy = null, int? skip = null, int? take = null) => Query<Request2>($"SELECT id AS \"Id\", request_type AS \"RequestType\", request_date AS \"RequestDate\", patron_comments AS \"PatronComments\", requester_id AS \"RequesterId\", proxy_user_id AS \"ProxyUserId\", item_id AS \"ItemId\", status AS \"Status\", cancellation_reason_id AS \"CancellationReasonId\", cancelled_by_user_id AS \"CancelledByUserId\", cancellation_additional_information AS \"CancellationAdditionalInformation\", cancelled_date AS \"CancelledDate\", position AS \"Position\", item_title AS \"ItemTitle\", item_barcode AS \"ItemBarcode\", requester_first_name AS \"RequesterFirstName\", requester_last_name AS \"RequesterLastName\", requester_middle_name AS \"RequesterMiddleName\", requester_barcode AS \"RequesterBarcode\", requester_patron_group AS \"RequesterPatronGroup\", proxy_first_name AS \"ProxyFirstName\", proxy_last_name AS \"ProxyLastName\", proxy_middle_name AS \"ProxyMiddleName\", proxy_barcode AS \"ProxyBarcode\", proxy_patron_group AS \"ProxyPatronGroup\", fulfilment_preference AS \"FulfilmentPreference\", delivery_address_type_id AS \"DeliveryAddressTypeId\", request_expiration_date AS \"RequestExpirationDate\", hold_shelf_expiration_date AS \"HoldShelfExpirationDate\", pickup_service_point_id AS \"PickupServicePointId\", created_date AS \"CreationTime\", created_by_user_id AS \"CreationUserId\", created_by_username AS \"CreationUserUsername\", updated_date AS \"LastWriteTime\", updated_by_user_id AS \"LastWriteUserId\", updated_by_username AS \"LastWriteUserUsername\", awaiting_pickup_request_closed_date AS \"AwaitingPickupRequestClosedDate\", content AS \"Content\" FROM uc{(IsMySql ? "_" : ".")}requests{(where != null ? $" WHERE {where}" : "")}{(orderBy != null || skip != null || take != null ? $" ORDER BY {orderBy ?? "id"}" : "")}", param, skip, take);
         public IEnumerable<RequestIdentifier> RequestIdentifiers(string where = null, object param = null, string orderBy = null, int? skip = null, int? take = null) => Query<RequestIdentifier>($"SELECT id AS \"Id\", request_id AS \"RequestId\", value AS \"Value\", identifier_type_id AS \"IdentifierTypeId\" FROM uc{(IsMySql ? "_" : ".")}request_identifiers{(where != null ? $" WHERE {where}" : "")}{(orderBy != null || skip != null || take != null ? $" ORDER BY {orderBy ?? "id"}" : "")}", param, skip, take);
+        public IEnumerable<RequestNote> RequestNotes(string where = null, object param = null, string orderBy = null, int? skip = null, int? take = null) => Query<RequestNote>($"SELECT id AS \"Id\", request_id AS \"RequestId\", note_id AS \"NoteId\" FROM uc{(IsMySql ? "_" : ".")}request_notes{(where != null ? $" WHERE {where}" : "")}{(orderBy != null || skip != null || take != null ? $" ORDER BY {orderBy ?? "id"}" : "")}", param, skip, take);
         public IEnumerable<RequestPolicy> RequestPolicies(string where = null, object param = null, string orderBy = null, int? skip = null, int? take = null) => Query<RequestPolicy>($"SELECT id AS \"Id\", COALESCE(jsonb_set(jsonb, '{{metadata,createdDate}}', ('\"' || (jsonb#>>'{{metadata,createdDate}}') || CASE WHEN jsonb#>>'{{metadata,createdDate}}' !~ '([-+]\\d\\d:\\d\\d)|Z$' THEN '+00:00' ELSE '' END || '\"')::jsonb), jsonb) AS \"Content\", creation_date AS \"CreationTime\", created_by AS \"CreationUserId\" FROM uchicago_mod_circulation_storage{(IsMySql ? "_" : ".")}request_policy{(where != null ? $" WHERE {where}" : "")}{(orderBy != null || skip != null || take != null ? $" ORDER BY {orderBy ?? "id"}" : "")}", param, skip, take);
         public IEnumerable<RequestPolicy2> RequestPolicy2s(string where = null, object param = null, string orderBy = null, int? skip = null, int? take = null) => Query<RequestPolicy2>($"SELECT id AS \"Id\", name AS \"Name\", description AS \"Description\", created_date AS \"CreationTime\", created_by_user_id AS \"CreationUserId\", created_by_username AS \"CreationUserUsername\", updated_date AS \"LastWriteTime\", updated_by_user_id AS \"LastWriteUserId\", updated_by_username AS \"LastWriteUserUsername\", content AS \"Content\" FROM uc{(IsMySql ? "_" : ".")}request_policies{(where != null ? $" WHERE {where}" : "")}{(orderBy != null || skip != null || take != null ? $" ORDER BY {orderBy ?? "id"}" : "")}", param, skip, take);
         public IEnumerable<RequestPolicyRequestType> RequestPolicyRequestTypes(string where = null, object param = null, string orderBy = null, int? skip = null, int? take = null) => Query<RequestPolicyRequestType>($"SELECT id AS \"Id\", request_policy_id AS \"RequestPolicyId\", content AS \"Content\" FROM uc{(IsMySql ? "_" : ".")}request_policy_request_types{(where != null ? $" WHERE {where}" : "")}{(orderBy != null || skip != null || take != null ? $" ORDER BY {orderBy ?? "id"}" : "")}", param, skip, take);
@@ -5683,6 +5742,7 @@ namespace FolioLibrary
         public IEnumerable<UserAcquisitionsUnit2> UserAcquisitionsUnit2s(string where = null, object param = null, string orderBy = null, int? skip = null, int? take = null) => Query<UserAcquisitionsUnit2>($"SELECT id AS \"Id\", user_id AS \"UserId\", acquisitions_unit_id AS \"AcquisitionsUnitId\", created_date AS \"CreationTime\", created_by_user_id AS \"CreationUserId\", created_by_username AS \"CreationUserUsername\", updated_date AS \"LastWriteTime\", updated_by_user_id AS \"LastWriteUserId\", updated_by_username AS \"LastWriteUserUsername\", content AS \"Content\" FROM uc{(IsMySql ? "_" : ".")}user_acquisitions_units{(where != null ? $" WHERE {where}" : "")}{(orderBy != null || skip != null || take != null ? $" ORDER BY {orderBy ?? "id"}" : "")}", param, skip, take);
         public IEnumerable<UserAddress> UserAddresses(string where = null, object param = null, string orderBy = null, int? skip = null, int? take = null) => Query<UserAddress>($"SELECT id AS \"Id\", user_id AS \"UserId\", id2 AS \"Id2\", country_id AS \"CountryCode\", address_line1 AS \"StreetAddress1\", address_line2 AS \"StreetAddress2\", city AS \"City\", region AS \"State\", postal_code AS \"PostalCode\", address_type_id AS \"AddressTypeId\", primary_address AS \"Default\" FROM uc{(IsMySql ? "_" : ".")}user_addresses{(where != null ? $" WHERE {where}" : "")}{(orderBy != null || skip != null || take != null ? $" ORDER BY {orderBy ?? "id"}" : "")}", param, skip, take);
         public IEnumerable<UserDepartment> UserDepartments(string where = null, object param = null, string orderBy = null, int? skip = null, int? take = null) => Query<UserDepartment>($"SELECT id AS \"Id\", user_id AS \"UserId\", department_id AS \"DepartmentId\" FROM uc{(IsMySql ? "_" : ".")}user_departments{(where != null ? $" WHERE {where}" : "")}{(orderBy != null || skip != null || take != null ? $" ORDER BY {orderBy ?? "id"}" : "")}", param, skip, take);
+        public IEnumerable<UserNote> UserNotes(string where = null, object param = null, string orderBy = null, int? skip = null, int? take = null) => Query<UserNote>($"SELECT id AS \"Id\", user_id AS \"UserId\", note_id AS \"NoteId\" FROM uc{(IsMySql ? "_" : ".")}user_notes{(where != null ? $" WHERE {where}" : "")}{(orderBy != null || skip != null || take != null ? $" ORDER BY {orderBy ?? "id"}" : "")}", param, skip, take);
         public IEnumerable<UserRequestPreference> UserRequestPreferences(string where = null, object param = null, string orderBy = null, int? skip = null, int? take = null) => Query<UserRequestPreference>($"SELECT id AS \"Id\", COALESCE(jsonb_set(jsonb, '{{metadata,createdDate}}', ('\"' || (jsonb#>>'{{metadata,createdDate}}') || CASE WHEN jsonb#>>'{{metadata,createdDate}}' !~ '([-+]\\d\\d:\\d\\d)|Z$' THEN '+00:00' ELSE '' END || '\"')::jsonb), jsonb) AS \"Content\", creation_date AS \"CreationTime\", created_by AS \"CreationUserId\" FROM uchicago_mod_circulation_storage{(IsMySql ? "_" : ".")}user_request_preference{(where != null ? $" WHERE {where}" : "")}{(orderBy != null || skip != null || take != null ? $" ORDER BY {orderBy ?? "id"}" : "")}", param, skip, take);
         public IEnumerable<UserRequestPreference2> UserRequestPreference2s(string where = null, object param = null, string orderBy = null, int? skip = null, int? take = null) => Query<UserRequestPreference2>($"SELECT id AS \"Id\", user_id AS \"UserId\", hold_shelf AS \"HoldShelf\", delivery AS \"Delivery\", default_service_point_id AS \"DefaultServicePointId\", default_delivery_address_type_id AS \"DefaultDeliveryAddressTypeId\", fulfillment AS \"Fulfillment\", created_date AS \"CreationTime\", created_by_user_id AS \"CreationUserId\", created_by_username AS \"CreationUserUsername\", updated_date AS \"LastWriteTime\", updated_by_user_id AS \"LastWriteUserId\", updated_by_username AS \"LastWriteUserUsername\", content AS \"Content\" FROM uc{(IsMySql ? "_" : ".")}user_request_preferences{(where != null ? $" WHERE {where}" : "")}{(orderBy != null || skip != null || take != null ? $" ORDER BY {orderBy ?? "id"}" : "")}", param, skip, take);
         public IEnumerable<UserSummary> UserSummaries(string where = null, object param = null, string orderBy = null, int? skip = null, int? take = null) => Query<UserSummary>($"SELECT id AS \"Id\", COALESCE(jsonb_set(jsonb, '{{metadata,createdDate}}', ('\"' || (jsonb#>>'{{metadata,createdDate}}') || CASE WHEN jsonb#>>'{{metadata,createdDate}}' !~ '([-+]\\d\\d:\\d\\d)|Z$' THEN '+00:00' ELSE '' END || '\"')::jsonb), jsonb) AS \"Content\", creation_date AS \"CreationTime\", created_by AS \"CreationUserId\" FROM uchicago_mod_patron_blocks{(IsMySql ? "_" : ".")}user_summary{(where != null ? $" WHERE {where}" : "")}{(orderBy != null || skip != null || take != null ? $" ORDER BY {orderBy ?? "id"}" : "")}", param, skip, take);
@@ -5952,9 +6012,9 @@ namespace FolioLibrary
         public int CountNotes(string where = null, object param = null, int? take = null) => Count($"SELECT 1 FROM uchicago_mod_notes{(IsMySql ? "_" : ".")}note_data{(where != null ? $" WHERE {where}" : "")}", param: param, take: take);
         public int CountNote2s(string where = null, object param = null, int? take = null) => Count($"SELECT 1 FROM uc{(IsMySql ? "_" : ".")}notes{(where != null ? $" WHERE {where}" : "")}", param: param, take: take);
         public int CountNote3s(string where = null, object param = null, int? take = null) => Count($"SELECT 1 FROM uc{(IsMySql ? "_" : ".")}notes2{(where != null ? $" WHERE {where}" : "")}", param: param, take: take);
-        public int CountNoteLinks(string where = null, object param = null, int? take = null) => Count($"SELECT 1 FROM uc{(IsMySql ? "_" : ".")}note_links{(where != null ? $" WHERE {where}" : "")}", param: param, take: take);
         public int CountNoteTypes(string where = null, object param = null, int? take = null) => Count($"SELECT 1 FROM uchicago_mod_notes{(IsMySql ? "_" : ".")}note_type{(where != null ? $" WHERE {where}" : "")}", param: param, take: take);
         public int CountNoteType2s(string where = null, object param = null, int? take = null) => Count($"SELECT 1 FROM uc{(IsMySql ? "_" : ".")}note_types{(where != null ? $" WHERE {where}" : "")}", param: param, take: take);
+        public int CountObjectNotes(string where = null, object param = null, int? take = null) => Count($"SELECT 1 FROM uc{(IsMySql ? "_" : ".")}object_notes{(where != null ? $" WHERE {where}" : "")}", param: param, take: take);
         public int CountOrders(string where = null, object param = null, int? take = null) => Count($"SELECT 1 FROM uchicago_mod_orders_storage{(IsMySql ? "_" : ".")}purchase_order{(where != null ? $" WHERE {where}" : "")}", param: param, take: take);
         public int CountOrder2s(string where = null, object param = null, int? take = null) => Count($"SELECT 1 FROM uc{(IsMySql ? "_" : ".")}orders{(where != null ? $" WHERE {where}" : "")}", param: param, take: take);
         public int CountOrderAcquisitionsUnits(string where = null, object param = null, int? take = null) => Count($"SELECT 1 FROM uc{(IsMySql ? "_" : ".")}order_acquisitions_units{(where != null ? $" WHERE {where}" : "")}", param: param, take: take);
@@ -5967,6 +6027,7 @@ namespace FolioLibrary
         public int CountOrderItemContributors(string where = null, object param = null, int? take = null) => Count($"SELECT 1 FROM uc{(IsMySql ? "_" : ".")}order_item_contributors{(where != null ? $" WHERE {where}" : "")}", param: param, take: take);
         public int CountOrderItemFunds(string where = null, object param = null, int? take = null) => Count($"SELECT 1 FROM uc{(IsMySql ? "_" : ".")}order_item_fund_distributions{(where != null ? $" WHERE {where}" : "")}", param: param, take: take);
         public int CountOrderItemLocation2s(string where = null, object param = null, int? take = null) => Count($"SELECT 1 FROM uc{(IsMySql ? "_" : ".")}order_item_locations{(where != null ? $" WHERE {where}" : "")}", param: param, take: take);
+        public int CountOrderItemNotes(string where = null, object param = null, int? take = null) => Count($"SELECT 1 FROM uc{(IsMySql ? "_" : ".")}order_item_notes{(where != null ? $" WHERE {where}" : "")}", param: param, take: take);
         public int CountOrderItemProductIds(string where = null, object param = null, int? take = null) => Count($"SELECT 1 FROM uc{(IsMySql ? "_" : ".")}order_item_product_ids{(where != null ? $" WHERE {where}" : "")}", param: param, take: take);
         public int CountOrderItemReferenceNumbers(string where = null, object param = null, int? take = null) => Count($"SELECT 1 FROM uc{(IsMySql ? "_" : ".")}order_item_reference_numbers{(where != null ? $" WHERE {where}" : "")}", param: param, take: take);
         public int CountOrderItemReportingCodes(string where = null, object param = null, int? take = null) => Count($"SELECT 1 FROM uc{(IsMySql ? "_" : ".")}order_item_reporting_codes{(where != null ? $" WHERE {where}" : "")}", param: param, take: take);
@@ -5992,6 +6053,7 @@ namespace FolioLibrary
         public int CountOrganizationEmails(string where = null, object param = null, int? take = null) => Count($"SELECT 1 FROM uc{(IsMySql ? "_" : ".")}organization_emails{(where != null ? $" WHERE {where}" : "")}", param: param, take: take);
         public int CountOrganizationEmailCategories(string where = null, object param = null, int? take = null) => Count($"SELECT 1 FROM uc{(IsMySql ? "_" : ".")}organization_email_categories{(where != null ? $" WHERE {where}" : "")}", param: param, take: take);
         public int CountOrganizationInterfaces(string where = null, object param = null, int? take = null) => Count($"SELECT 1 FROM uc{(IsMySql ? "_" : ".")}organization_interfaces{(where != null ? $" WHERE {where}" : "")}", param: param, take: take);
+        public int CountOrganizationNotes(string where = null, object param = null, int? take = null) => Count($"SELECT 1 FROM uc{(IsMySql ? "_" : ".")}organization_notes{(where != null ? $" WHERE {where}" : "")}", param: param, take: take);
         public int CountOrganizationPhoneNumbers(string where = null, object param = null, int? take = null) => Count($"SELECT 1 FROM uc{(IsMySql ? "_" : ".")}organization_phone_numbers{(where != null ? $" WHERE {where}" : "")}", param: param, take: take);
         public int CountOrganizationPhoneNumberCategories(string where = null, object param = null, int? take = null) => Count($"SELECT 1 FROM uc{(IsMySql ? "_" : ".")}organization_phone_number_categories{(where != null ? $" WHERE {where}" : "")}", param: param, take: take);
         public int CountOrganizationTags(string where = null, object param = null, int? take = null) => Count($"SELECT 1 FROM uc{(IsMySql ? "_" : ".")}organization_tags{(where != null ? $" WHERE {where}" : "")}", param: param, take: take);
@@ -6048,6 +6110,7 @@ namespace FolioLibrary
         public int CountRequests(string where = null, object param = null, int? take = null) => Count($"SELECT 1 FROM uchicago_mod_circulation_storage{(IsMySql ? "_" : ".")}request{(where != null ? $" WHERE {where}" : "")}", param: param, take: take);
         public int CountRequest2s(string where = null, object param = null, int? take = null) => Count($"SELECT 1 FROM uc{(IsMySql ? "_" : ".")}requests{(where != null ? $" WHERE {where}" : "")}", param: param, take: take);
         public int CountRequestIdentifiers(string where = null, object param = null, int? take = null) => Count($"SELECT 1 FROM uc{(IsMySql ? "_" : ".")}request_identifiers{(where != null ? $" WHERE {where}" : "")}", param: param, take: take);
+        public int CountRequestNotes(string where = null, object param = null, int? take = null) => Count($"SELECT 1 FROM uc{(IsMySql ? "_" : ".")}request_notes{(where != null ? $" WHERE {where}" : "")}", param: param, take: take);
         public int CountRequestPolicies(string where = null, object param = null, int? take = null) => Count($"SELECT 1 FROM uchicago_mod_circulation_storage{(IsMySql ? "_" : ".")}request_policy{(where != null ? $" WHERE {where}" : "")}", param: param, take: take);
         public int CountRequestPolicy2s(string where = null, object param = null, int? take = null) => Count($"SELECT 1 FROM uc{(IsMySql ? "_" : ".")}request_policies{(where != null ? $" WHERE {where}" : "")}", param: param, take: take);
         public int CountRequestPolicyRequestTypes(string where = null, object param = null, int? take = null) => Count($"SELECT 1 FROM uc{(IsMySql ? "_" : ".")}request_policy_request_types{(where != null ? $" WHERE {where}" : "")}", param: param, take: take);
@@ -6102,6 +6165,7 @@ namespace FolioLibrary
         public int CountUserAcquisitionsUnit2s(string where = null, object param = null, int? take = null) => Count($"SELECT 1 FROM uc{(IsMySql ? "_" : ".")}user_acquisitions_units{(where != null ? $" WHERE {where}" : "")}", param: param, take: take);
         public int CountUserAddresses(string where = null, object param = null, int? take = null) => Count($"SELECT 1 FROM uc{(IsMySql ? "_" : ".")}user_addresses{(where != null ? $" WHERE {where}" : "")}", param: param, take: take);
         public int CountUserDepartments(string where = null, object param = null, int? take = null) => Count($"SELECT 1 FROM uc{(IsMySql ? "_" : ".")}user_departments{(where != null ? $" WHERE {where}" : "")}", param: param, take: take);
+        public int CountUserNotes(string where = null, object param = null, int? take = null) => Count($"SELECT 1 FROM uc{(IsMySql ? "_" : ".")}user_notes{(where != null ? $" WHERE {where}" : "")}", param: param, take: take);
         public int CountUserRequestPreferences(string where = null, object param = null, int? take = null) => Count($"SELECT 1 FROM uchicago_mod_circulation_storage{(IsMySql ? "_" : ".")}user_request_preference{(where != null ? $" WHERE {where}" : "")}", param: param, take: take);
         public int CountUserRequestPreference2s(string where = null, object param = null, int? take = null) => Count($"SELECT 1 FROM uc{(IsMySql ? "_" : ".")}user_request_preferences{(where != null ? $" WHERE {where}" : "")}", param: param, take: take);
         public int CountUserSummaries(string where = null, object param = null, int? take = null) => Count($"SELECT 1 FROM uchicago_mod_patron_blocks{(IsMySql ? "_" : ".")}user_summary{(where != null ? $" WHERE {where}" : "")}", param: param, take: take);
@@ -6371,9 +6435,9 @@ namespace FolioLibrary
         public bool AnyNotes(string where = null, object param = null) => Query($"SELECT 1 FROM uchicago_mod_notes{(IsMySql ? "_" : ".")}note_data{(where != null ? $" WHERE {where}" : "")}{(IsSqlServer ? $" ORDER BY id" : "")}", param: param, take: 1).Any();
         public bool AnyNote2s(string where = null, object param = null) => Query($"SELECT 1 FROM uc{(IsMySql ? "_" : ".")}notes{(where != null ? $" WHERE {where}" : "")}{(IsSqlServer ? $" ORDER BY id, instance_id" : "")}", param: param, take: 1).Any();
         public bool AnyNote3s(string where = null, object param = null) => Query($"SELECT 1 FROM uc{(IsMySql ? "_" : ".")}notes2{(where != null ? $" WHERE {where}" : "")}{(IsSqlServer ? $" ORDER BY id" : "")}", param: param, take: 1).Any();
-        public bool AnyNoteLinks(string where = null, object param = null) => Query($"SELECT 1 FROM uc{(IsMySql ? "_" : ".")}note_links{(where != null ? $" WHERE {where}" : "")}{(IsSqlServer ? $" ORDER BY id" : "")}", param: param, take: 1).Any();
         public bool AnyNoteTypes(string where = null, object param = null) => Query($"SELECT 1 FROM uchicago_mod_notes{(IsMySql ? "_" : ".")}note_type{(where != null ? $" WHERE {where}" : "")}{(IsSqlServer ? $" ORDER BY id" : "")}", param: param, take: 1).Any();
         public bool AnyNoteType2s(string where = null, object param = null) => Query($"SELECT 1 FROM uc{(IsMySql ? "_" : ".")}note_types{(where != null ? $" WHERE {where}" : "")}{(IsSqlServer ? $" ORDER BY id" : "")}", param: param, take: 1).Any();
+        public bool AnyObjectNotes(string where = null, object param = null) => Query($"SELECT 1 FROM uc{(IsMySql ? "_" : ".")}object_notes{(where != null ? $" WHERE {where}" : "")}{(IsSqlServer ? $" ORDER BY id" : "")}", param: param, take: 1).Any();
         public bool AnyOrders(string where = null, object param = null) => Query($"SELECT 1 FROM uchicago_mod_orders_storage{(IsMySql ? "_" : ".")}purchase_order{(where != null ? $" WHERE {where}" : "")}{(IsSqlServer ? $" ORDER BY id" : "")}", param: param, take: 1).Any();
         public bool AnyOrder2s(string where = null, object param = null) => Query($"SELECT 1 FROM uc{(IsMySql ? "_" : ".")}orders{(where != null ? $" WHERE {where}" : "")}{(IsSqlServer ? $" ORDER BY id" : "")}", param: param, take: 1).Any();
         public bool AnyOrderAcquisitionsUnits(string where = null, object param = null) => Query($"SELECT 1 FROM uc{(IsMySql ? "_" : ".")}order_acquisitions_units{(where != null ? $" WHERE {where}" : "")}{(IsSqlServer ? $" ORDER BY id" : "")}", param: param, take: 1).Any();
@@ -6386,6 +6450,7 @@ namespace FolioLibrary
         public bool AnyOrderItemContributors(string where = null, object param = null) => Query($"SELECT 1 FROM uc{(IsMySql ? "_" : ".")}order_item_contributors{(where != null ? $" WHERE {where}" : "")}{(IsSqlServer ? $" ORDER BY id" : "")}", param: param, take: 1).Any();
         public bool AnyOrderItemFunds(string where = null, object param = null) => Query($"SELECT 1 FROM uc{(IsMySql ? "_" : ".")}order_item_fund_distributions{(where != null ? $" WHERE {where}" : "")}{(IsSqlServer ? $" ORDER BY id" : "")}", param: param, take: 1).Any();
         public bool AnyOrderItemLocation2s(string where = null, object param = null) => Query($"SELECT 1 FROM uc{(IsMySql ? "_" : ".")}order_item_locations{(where != null ? $" WHERE {where}" : "")}{(IsSqlServer ? $" ORDER BY id" : "")}", param: param, take: 1).Any();
+        public bool AnyOrderItemNotes(string where = null, object param = null) => Query($"SELECT 1 FROM uc{(IsMySql ? "_" : ".")}order_item_notes{(where != null ? $" WHERE {where}" : "")}{(IsSqlServer ? $" ORDER BY id" : "")}", param: param, take: 1).Any();
         public bool AnyOrderItemProductIds(string where = null, object param = null) => Query($"SELECT 1 FROM uc{(IsMySql ? "_" : ".")}order_item_product_ids{(where != null ? $" WHERE {where}" : "")}{(IsSqlServer ? $" ORDER BY id" : "")}", param: param, take: 1).Any();
         public bool AnyOrderItemReferenceNumbers(string where = null, object param = null) => Query($"SELECT 1 FROM uc{(IsMySql ? "_" : ".")}order_item_reference_numbers{(where != null ? $" WHERE {where}" : "")}{(IsSqlServer ? $" ORDER BY id" : "")}", param: param, take: 1).Any();
         public bool AnyOrderItemReportingCodes(string where = null, object param = null) => Query($"SELECT 1 FROM uc{(IsMySql ? "_" : ".")}order_item_reporting_codes{(where != null ? $" WHERE {where}" : "")}{(IsSqlServer ? $" ORDER BY id" : "")}", param: param, take: 1).Any();
@@ -6411,6 +6476,7 @@ namespace FolioLibrary
         public bool AnyOrganizationEmails(string where = null, object param = null) => Query($"SELECT 1 FROM uc{(IsMySql ? "_" : ".")}organization_emails{(where != null ? $" WHERE {where}" : "")}{(IsSqlServer ? $" ORDER BY id" : "")}", param: param, take: 1).Any();
         public bool AnyOrganizationEmailCategories(string where = null, object param = null) => Query($"SELECT 1 FROM uc{(IsMySql ? "_" : ".")}organization_email_categories{(where != null ? $" WHERE {where}" : "")}{(IsSqlServer ? $" ORDER BY id" : "")}", param: param, take: 1).Any();
         public bool AnyOrganizationInterfaces(string where = null, object param = null) => Query($"SELECT 1 FROM uc{(IsMySql ? "_" : ".")}organization_interfaces{(where != null ? $" WHERE {where}" : "")}{(IsSqlServer ? $" ORDER BY id" : "")}", param: param, take: 1).Any();
+        public bool AnyOrganizationNotes(string where = null, object param = null) => Query($"SELECT 1 FROM uc{(IsMySql ? "_" : ".")}organization_notes{(where != null ? $" WHERE {where}" : "")}{(IsSqlServer ? $" ORDER BY id" : "")}", param: param, take: 1).Any();
         public bool AnyOrganizationPhoneNumbers(string where = null, object param = null) => Query($"SELECT 1 FROM uc{(IsMySql ? "_" : ".")}organization_phone_numbers{(where != null ? $" WHERE {where}" : "")}{(IsSqlServer ? $" ORDER BY id" : "")}", param: param, take: 1).Any();
         public bool AnyOrganizationPhoneNumberCategories(string where = null, object param = null) => Query($"SELECT 1 FROM uc{(IsMySql ? "_" : ".")}organization_phone_number_categories{(where != null ? $" WHERE {where}" : "")}{(IsSqlServer ? $" ORDER BY id" : "")}", param: param, take: 1).Any();
         public bool AnyOrganizationTags(string where = null, object param = null) => Query($"SELECT 1 FROM uc{(IsMySql ? "_" : ".")}organization_tags{(where != null ? $" WHERE {where}" : "")}{(IsSqlServer ? $" ORDER BY id" : "")}", param: param, take: 1).Any();
@@ -6467,6 +6533,7 @@ namespace FolioLibrary
         public bool AnyRequests(string where = null, object param = null) => Query($"SELECT 1 FROM uchicago_mod_circulation_storage{(IsMySql ? "_" : ".")}request{(where != null ? $" WHERE {where}" : "")}{(IsSqlServer ? $" ORDER BY id" : "")}", param: param, take: 1).Any();
         public bool AnyRequest2s(string where = null, object param = null) => Query($"SELECT 1 FROM uc{(IsMySql ? "_" : ".")}requests{(where != null ? $" WHERE {where}" : "")}{(IsSqlServer ? $" ORDER BY id" : "")}", param: param, take: 1).Any();
         public bool AnyRequestIdentifiers(string where = null, object param = null) => Query($"SELECT 1 FROM uc{(IsMySql ? "_" : ".")}request_identifiers{(where != null ? $" WHERE {where}" : "")}{(IsSqlServer ? $" ORDER BY id" : "")}", param: param, take: 1).Any();
+        public bool AnyRequestNotes(string where = null, object param = null) => Query($"SELECT 1 FROM uc{(IsMySql ? "_" : ".")}request_notes{(where != null ? $" WHERE {where}" : "")}{(IsSqlServer ? $" ORDER BY id" : "")}", param: param, take: 1).Any();
         public bool AnyRequestPolicies(string where = null, object param = null) => Query($"SELECT 1 FROM uchicago_mod_circulation_storage{(IsMySql ? "_" : ".")}request_policy{(where != null ? $" WHERE {where}" : "")}{(IsSqlServer ? $" ORDER BY id" : "")}", param: param, take: 1).Any();
         public bool AnyRequestPolicy2s(string where = null, object param = null) => Query($"SELECT 1 FROM uc{(IsMySql ? "_" : ".")}request_policies{(where != null ? $" WHERE {where}" : "")}{(IsSqlServer ? $" ORDER BY id" : "")}", param: param, take: 1).Any();
         public bool AnyRequestPolicyRequestTypes(string where = null, object param = null) => Query($"SELECT 1 FROM uc{(IsMySql ? "_" : ".")}request_policy_request_types{(where != null ? $" WHERE {where}" : "")}{(IsSqlServer ? $" ORDER BY id" : "")}", param: param, take: 1).Any();
@@ -6521,6 +6588,7 @@ namespace FolioLibrary
         public bool AnyUserAcquisitionsUnit2s(string where = null, object param = null) => Query($"SELECT 1 FROM uc{(IsMySql ? "_" : ".")}user_acquisitions_units{(where != null ? $" WHERE {where}" : "")}{(IsSqlServer ? $" ORDER BY id" : "")}", param: param, take: 1).Any();
         public bool AnyUserAddresses(string where = null, object param = null) => Query($"SELECT 1 FROM uc{(IsMySql ? "_" : ".")}user_addresses{(where != null ? $" WHERE {where}" : "")}{(IsSqlServer ? $" ORDER BY id" : "")}", param: param, take: 1).Any();
         public bool AnyUserDepartments(string where = null, object param = null) => Query($"SELECT 1 FROM uc{(IsMySql ? "_" : ".")}user_departments{(where != null ? $" WHERE {where}" : "")}{(IsSqlServer ? $" ORDER BY id" : "")}", param: param, take: 1).Any();
+        public bool AnyUserNotes(string where = null, object param = null) => Query($"SELECT 1 FROM uc{(IsMySql ? "_" : ".")}user_notes{(where != null ? $" WHERE {where}" : "")}{(IsSqlServer ? $" ORDER BY id" : "")}", param: param, take: 1).Any();
         public bool AnyUserRequestPreferences(string where = null, object param = null) => Query($"SELECT 1 FROM uchicago_mod_circulation_storage{(IsMySql ? "_" : ".")}user_request_preference{(where != null ? $" WHERE {where}" : "")}{(IsSqlServer ? $" ORDER BY id" : "")}", param: param, take: 1).Any();
         public bool AnyUserRequestPreference2s(string where = null, object param = null) => Query($"SELECT 1 FROM uc{(IsMySql ? "_" : ".")}user_request_preferences{(where != null ? $" WHERE {where}" : "")}{(IsSqlServer ? $" ORDER BY id" : "")}", param: param, take: 1).Any();
         public bool AnyUserSummaries(string where = null, object param = null) => Query($"SELECT 1 FROM uchicago_mod_patron_blocks{(IsMySql ? "_" : ".")}user_summary{(where != null ? $" WHERE {where}" : "")}{(IsSqlServer ? $" ORDER BY id" : "")}", param: param, take: 1).Any();
@@ -6790,9 +6858,9 @@ namespace FolioLibrary
         public void TruncateNotes() { Execute($"TRUNCATE TABLE uchicago_mod_notes.note_data"); Commit(); }
         public void TruncateNote2s() { Execute($"TRUNCATE TABLE uc.notes"); Commit(); }
         public void TruncateNote3s() { Execute($"TRUNCATE TABLE uc.notes2"); Commit(); }
-        public void TruncateNoteLinks() { Execute($"TRUNCATE TABLE uc.note_links"); Commit(); }
         public void TruncateNoteTypes() { Execute($"TRUNCATE TABLE uchicago_mod_notes.note_type"); Commit(); }
         public void TruncateNoteType2s() { Execute($"TRUNCATE TABLE uc.note_types"); Commit(); }
+        public void TruncateObjectNotes() { Execute($"TRUNCATE TABLE uc.object_notes"); Commit(); }
         public void TruncateOrders() { Execute($"TRUNCATE TABLE uchicago_mod_orders_storage.purchase_order"); Commit(); }
         public void TruncateOrder2s() { Execute($"TRUNCATE TABLE uc.orders"); Commit(); }
         public void TruncateOrderAcquisitionsUnits() { Execute($"TRUNCATE TABLE uc.order_acquisitions_units"); Commit(); }
@@ -6805,6 +6873,7 @@ namespace FolioLibrary
         public void TruncateOrderItemContributors() { Execute($"TRUNCATE TABLE uc.order_item_contributors"); Commit(); }
         public void TruncateOrderItemFunds() { Execute($"TRUNCATE TABLE uc.order_item_fund_distributions"); Commit(); }
         public void TruncateOrderItemLocation2s() { Execute($"TRUNCATE TABLE uc.order_item_locations"); Commit(); }
+        public void TruncateOrderItemNotes() { Execute($"TRUNCATE TABLE uc.order_item_notes"); Commit(); }
         public void TruncateOrderItemProductIds() { Execute($"TRUNCATE TABLE uc.order_item_product_ids"); Commit(); }
         public void TruncateOrderItemReferenceNumbers() { Execute($"TRUNCATE TABLE uc.order_item_reference_numbers"); Commit(); }
         public void TruncateOrderItemReportingCodes() { Execute($"TRUNCATE TABLE uc.order_item_reporting_codes"); Commit(); }
@@ -6830,6 +6899,7 @@ namespace FolioLibrary
         public void TruncateOrganizationEmails() { Execute($"TRUNCATE TABLE uc.organization_emails"); Commit(); }
         public void TruncateOrganizationEmailCategories() { Execute($"TRUNCATE TABLE uc.organization_email_categories"); Commit(); }
         public void TruncateOrganizationInterfaces() { Execute($"TRUNCATE TABLE uc.organization_interfaces"); Commit(); }
+        public void TruncateOrganizationNotes() { Execute($"TRUNCATE TABLE uc.organization_notes"); Commit(); }
         public void TruncateOrganizationPhoneNumbers() { Execute($"TRUNCATE TABLE uc.organization_phone_numbers"); Commit(); }
         public void TruncateOrganizationPhoneNumberCategories() { Execute($"TRUNCATE TABLE uc.organization_phone_number_categories"); Commit(); }
         public void TruncateOrganizationTags() { Execute($"TRUNCATE TABLE uc.organization_tags"); Commit(); }
@@ -6886,6 +6956,7 @@ namespace FolioLibrary
         public void TruncateRequests() { Execute($"TRUNCATE TABLE uchicago_mod_circulation_storage.request"); Commit(); }
         public void TruncateRequest2s() { Execute($"TRUNCATE TABLE uc.requests"); Commit(); }
         public void TruncateRequestIdentifiers() { Execute($"TRUNCATE TABLE uc.request_identifiers"); Commit(); }
+        public void TruncateRequestNotes() { Execute($"TRUNCATE TABLE uc.request_notes"); Commit(); }
         public void TruncateRequestPolicies() { Execute($"TRUNCATE TABLE uchicago_mod_circulation_storage.request_policy"); Commit(); }
         public void TruncateRequestPolicy2s() { Execute($"TRUNCATE TABLE uc.request_policies"); Commit(); }
         public void TruncateRequestPolicyRequestTypes() { Execute($"TRUNCATE TABLE uc.request_policy_request_types"); Commit(); }
@@ -6940,6 +7011,7 @@ namespace FolioLibrary
         public void TruncateUserAcquisitionsUnit2s() { Execute($"TRUNCATE TABLE uc.user_acquisitions_units"); Commit(); }
         public void TruncateUserAddresses() { Execute($"TRUNCATE TABLE uc.user_addresses"); Commit(); }
         public void TruncateUserDepartments() { Execute($"TRUNCATE TABLE uc.user_departments"); Commit(); }
+        public void TruncateUserNotes() { Execute($"TRUNCATE TABLE uc.user_notes"); Commit(); }
         public void TruncateUserRequestPreferences() { Execute($"TRUNCATE TABLE uchicago_mod_circulation_storage.user_request_preference"); Commit(); }
         public void TruncateUserRequestPreference2s() { Execute($"TRUNCATE TABLE uc.user_request_preferences"); Commit(); }
         public void TruncateUserSummaries() { Execute($"TRUNCATE TABLE uchicago_mod_patron_blocks.user_summary"); Commit(); }
@@ -7496,9 +7568,9 @@ namespace FolioLibrary
         public int DeleteNote(Guid? id) => Execute($"DELETE FROM uchicago_mod_notes{(IsMySql ? "_" : ".")}note_data WHERE id = @id", new { id });
         public int DeleteNote2(string id, Guid? instanceId) => Execute($"DELETE FROM uc{(IsMySql ? "_" : ".")}notes WHERE id = @id AND instance_id = @instanceId", new { id, instanceId });
         public int DeleteNote3(Guid? id) => Execute($"DELETE FROM uc{(IsMySql ? "_" : ".")}notes2 WHERE id = @id", new { id });
-        public int DeleteNoteLink(string id) => Execute($"DELETE FROM uc{(IsMySql ? "_" : ".")}note_links WHERE id = @id", new { id });
         public int DeleteNoteType(Guid? id) => Execute($"DELETE FROM uchicago_mod_notes{(IsMySql ? "_" : ".")}note_type WHERE id = @id", new { id });
         public int DeleteNoteType2(Guid? id) => Execute($"DELETE FROM uc{(IsMySql ? "_" : ".")}note_types WHERE id = @id", new { id });
+        public int DeleteObjectNote(string id) => Execute($"DELETE FROM uc{(IsMySql ? "_" : ".")}object_notes WHERE id = @id", new { id });
         public int DeleteOrder(Guid? id) => Execute($"DELETE FROM uchicago_mod_orders_storage{(IsMySql ? "_" : ".")}purchase_order WHERE id = @id", new { id });
         public int DeleteOrder2(Guid? id) => Execute($"DELETE FROM uc{(IsMySql ? "_" : ".")}orders WHERE id = @id", new { id });
         public int DeleteOrderAcquisitionsUnit(string id) => Execute($"DELETE FROM uc{(IsMySql ? "_" : ".")}order_acquisitions_units WHERE id = @id", new { id });
@@ -7511,6 +7583,7 @@ namespace FolioLibrary
         public int DeleteOrderItemContributor(string id) => Execute($"DELETE FROM uc{(IsMySql ? "_" : ".")}order_item_contributors WHERE id = @id", new { id });
         public int DeleteOrderItemFund(string id) => Execute($"DELETE FROM uc{(IsMySql ? "_" : ".")}order_item_fund_distributions WHERE id = @id", new { id });
         public int DeleteOrderItemLocation2(string id) => Execute($"DELETE FROM uc{(IsMySql ? "_" : ".")}order_item_locations WHERE id = @id", new { id });
+        public int DeleteOrderItemNote(string id) => Execute($"DELETE FROM uc{(IsMySql ? "_" : ".")}order_item_notes WHERE id = @id", new { id });
         public int DeleteOrderItemProductId(string id) => Execute($"DELETE FROM uc{(IsMySql ? "_" : ".")}order_item_product_ids WHERE id = @id", new { id });
         public int DeleteOrderItemReferenceNumber(string id) => Execute($"DELETE FROM uc{(IsMySql ? "_" : ".")}order_item_reference_numbers WHERE id = @id", new { id });
         public int DeleteOrderItemReportingCode(string id) => Execute($"DELETE FROM uc{(IsMySql ? "_" : ".")}order_item_reporting_codes WHERE id = @id", new { id });
@@ -7536,6 +7609,7 @@ namespace FolioLibrary
         public int DeleteOrganizationEmail(string id) => Execute($"DELETE FROM uc{(IsMySql ? "_" : ".")}organization_emails WHERE id = @id", new { id });
         public int DeleteOrganizationEmailCategory(string id) => Execute($"DELETE FROM uc{(IsMySql ? "_" : ".")}organization_email_categories WHERE id = @id", new { id });
         public int DeleteOrganizationInterface(string id) => Execute($"DELETE FROM uc{(IsMySql ? "_" : ".")}organization_interfaces WHERE id = @id", new { id });
+        public int DeleteOrganizationNote(string id) => Execute($"DELETE FROM uc{(IsMySql ? "_" : ".")}organization_notes WHERE id = @id", new { id });
         public int DeleteOrganizationPhoneNumber(string id) => Execute($"DELETE FROM uc{(IsMySql ? "_" : ".")}organization_phone_numbers WHERE id = @id", new { id });
         public int DeleteOrganizationPhoneNumberCategory(string id) => Execute($"DELETE FROM uc{(IsMySql ? "_" : ".")}organization_phone_number_categories WHERE id = @id", new { id });
         public int DeleteOrganizationTag(string id) => Execute($"DELETE FROM uc{(IsMySql ? "_" : ".")}organization_tags WHERE id = @id", new { id });
@@ -7592,6 +7666,7 @@ namespace FolioLibrary
         public int DeleteRequest(Guid? id) => Execute($"DELETE FROM uchicago_mod_circulation_storage{(IsMySql ? "_" : ".")}request WHERE id = @id", new { id });
         public int DeleteRequest2(Guid? id) => Execute($"DELETE FROM uc{(IsMySql ? "_" : ".")}requests WHERE id = @id", new { id });
         public int DeleteRequestIdentifier(string id) => Execute($"DELETE FROM uc{(IsMySql ? "_" : ".")}request_identifiers WHERE id = @id", new { id });
+        public int DeleteRequestNote(string id) => Execute($"DELETE FROM uc{(IsMySql ? "_" : ".")}request_notes WHERE id = @id", new { id });
         public int DeleteRequestPolicy(Guid? id) => Execute($"DELETE FROM uchicago_mod_circulation_storage{(IsMySql ? "_" : ".")}request_policy WHERE id = @id", new { id });
         public int DeleteRequestPolicy2(Guid? id) => Execute($"DELETE FROM uc{(IsMySql ? "_" : ".")}request_policies WHERE id = @id", new { id });
         public int DeleteRequestPolicyRequestType(string id) => Execute($"DELETE FROM uc{(IsMySql ? "_" : ".")}request_policy_request_types WHERE id = @id", new { id });
@@ -7646,6 +7721,7 @@ namespace FolioLibrary
         public int DeleteUserAcquisitionsUnit2(Guid? id) => Execute($"DELETE FROM uc{(IsMySql ? "_" : ".")}user_acquisitions_units WHERE id = @id", new { id });
         public int DeleteUserAddress(string id) => Execute($"DELETE FROM uc{(IsMySql ? "_" : ".")}user_addresses WHERE id = @id", new { id });
         public int DeleteUserDepartment(string id) => Execute($"DELETE FROM uc{(IsMySql ? "_" : ".")}user_departments WHERE id = @id", new { id });
+        public int DeleteUserNote(string id) => Execute($"DELETE FROM uc{(IsMySql ? "_" : ".")}user_notes WHERE id = @id", new { id });
         public int DeleteUserRequestPreference(Guid? id) => Execute($"DELETE FROM uchicago_mod_circulation_storage{(IsMySql ? "_" : ".")}user_request_preference WHERE id = @id", new { id });
         public int DeleteUserRequestPreference2(Guid? id) => Execute($"DELETE FROM uc{(IsMySql ? "_" : ".")}user_request_preferences WHERE id = @id", new { id });
         public int DeleteUserSummary(Guid? id) => Execute($"DELETE FROM uchicago_mod_patron_blocks{(IsMySql ? "_" : ".")}user_summary WHERE id = @id", new { id });

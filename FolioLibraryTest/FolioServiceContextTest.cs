@@ -911,7 +911,7 @@ namespace FolioLibraryTest
             var s = Stopwatch.StartNew();
             var n3 = folioServiceContext.Note3s(take: 1).SingleOrDefault();
             if (n3 == null) Assert.Inconclusive();
-            n3.NoteLinks = null;
+            n3.ObjectNotes = null;
             var n4 = folioDapperContext.Note3s(take: 1).SingleOrDefault();
             n4.Content = null;
             Assert.AreEqual(n3.ToString(), n4.ToString());

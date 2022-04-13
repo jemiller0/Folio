@@ -172,10 +172,13 @@ namespace FolioLibrary
         [Display(Name = "Request Identifiers", Order = 48), JsonProperty("item.identifiers")]
         public virtual ICollection<RequestIdentifier> RequestIdentifiers { get; set; }
 
-        [Display(Name = "Request Tags", Order = 49), JsonConverter(typeof(ArrayJsonConverter<List<RequestTag>, RequestTag>), "Content"), JsonProperty("tags.tagList")]
+        [Display(Name = "Request Notes", Order = 49)]
+        public virtual ICollection<RequestNote> RequestNotes { get; set; }
+
+        [Display(Name = "Request Tags", Order = 50), JsonConverter(typeof(ArrayJsonConverter<List<RequestTag>, RequestTag>), "Content"), JsonProperty("tags.tagList")]
         public virtual ICollection<RequestTag> RequestTags { get; set; }
 
-        [Display(Name = "Scheduled Notices", Order = 50)]
+        [Display(Name = "Scheduled Notices", Order = 51)]
         public virtual ICollection<ScheduledNotice2> ScheduledNotice2s { get; set; }
 
         public override string ToString() => $"{{ {nameof(Id)} = {Id}, {nameof(RequestType)} = {RequestType}, {nameof(RequestDate)} = {RequestDate}, {nameof(PatronComments)} = {PatronComments}, {nameof(RequesterId)} = {RequesterId}, {nameof(ProxyUserId)} = {ProxyUserId}, {nameof(ItemId)} = {ItemId}, {nameof(Status)} = {Status}, {nameof(CancellationReasonId)} = {CancellationReasonId}, {nameof(CancelledByUserId)} = {CancelledByUserId}, {nameof(CancellationAdditionalInformation)} = {CancellationAdditionalInformation}, {nameof(CancelledDate)} = {CancelledDate}, {nameof(Position)} = {Position}, {nameof(ItemTitle)} = {ItemTitle}, {nameof(ItemBarcode)} = {ItemBarcode}, {nameof(RequesterFirstName)} = {RequesterFirstName}, {nameof(RequesterLastName)} = {RequesterLastName}, {nameof(RequesterMiddleName)} = {RequesterMiddleName}, {nameof(RequesterBarcode)} = {RequesterBarcode}, {nameof(RequesterPatronGroup)} = {RequesterPatronGroup}, {nameof(ProxyFirstName)} = {ProxyFirstName}, {nameof(ProxyLastName)} = {ProxyLastName}, {nameof(ProxyMiddleName)} = {ProxyMiddleName}, {nameof(ProxyBarcode)} = {ProxyBarcode}, {nameof(ProxyPatronGroup)} = {ProxyPatronGroup}, {nameof(FulfilmentPreference)} = {FulfilmentPreference}, {nameof(DeliveryAddressTypeId)} = {DeliveryAddressTypeId}, {nameof(RequestExpirationDate)} = {RequestExpirationDate}, {nameof(HoldShelfExpirationDate)} = {HoldShelfExpirationDate}, {nameof(PickupServicePointId)} = {PickupServicePointId}, {nameof(CreationTime)} = {CreationTime}, {nameof(CreationUserId)} = {CreationUserId}, {nameof(CreationUserUsername)} = {CreationUserUsername}, {nameof(LastWriteTime)} = {LastWriteTime}, {nameof(LastWriteUserId)} = {LastWriteUserId}, {nameof(LastWriteUserUsername)} = {LastWriteUserUsername}, {nameof(AwaitingPickupRequestClosedDate)} = {AwaitingPickupRequestClosedDate}, {nameof(Content)} = {Content}, {nameof(RequestIdentifiers)} = {(RequestIdentifiers != null ? $"{{ {string.Join(", ", RequestIdentifiers)} }}" : "")}, {nameof(RequestTags)} = {(RequestTags != null ? $"{{ {string.Join(", ", RequestTags)} }}" : "")} }}";

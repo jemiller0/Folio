@@ -5588,6 +5588,32 @@ LEFT JOIN uc.holdings AS h ON h.id = oil2.holding_id
         }
 
         [TestMethod]
+        public void QueryOrderItemNotesTest()
+        {
+            var s = Stopwatch.StartNew();
+            folioDapperContext.OrderItemNotes(take: 1).ToArray();
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"OrderItemNotesTest()\r\n    ElapsedTime={s.Elapsed}");
+        }
+
+        [TestMethod]
+        public void OrderItemNotesQueryTest()
+        {
+            var s = Stopwatch.StartNew();
+            folioDapperContext.Query(@"
+SELECT
+oi.po_line_number AS ""OrderItem"",
+oin.order_item_id AS ""OrderItemId"",
+n.title AS ""Note"",
+oin.note_id AS ""NoteId"" 
+FROM uc.order_item_notes AS oin
+LEFT JOIN uc.order_items AS oi ON oi.id = oin.order_item_id
+LEFT JOIN uc.notes2 AS n ON n.id = oin.note_id
+ ORDER BY oin.id
+", take: 1);
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"OrderItemNotesQueryTest()\r\n    ElapsedTime={s.Elapsed}");
+        }
+
+        [TestMethod]
         public void QueryOrderItemProductIdsTest()
         {
             var s = Stopwatch.StartNew();
@@ -6216,6 +6242,32 @@ LEFT JOIN uc.interfaces AS i ON i.id = oi.interface_id
  ORDER BY oi.id
 ", take: 1);
             traceSource.TraceEvent(TraceEventType.Information, 0, $"OrganizationInterfacesQueryTest()\r\n    ElapsedTime={s.Elapsed}");
+        }
+
+        [TestMethod]
+        public void QueryOrganizationNotesTest()
+        {
+            var s = Stopwatch.StartNew();
+            folioDapperContext.OrganizationNotes(take: 1).ToArray();
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"OrganizationNotesTest()\r\n    ElapsedTime={s.Elapsed}");
+        }
+
+        [TestMethod]
+        public void OrganizationNotesQueryTest()
+        {
+            var s = Stopwatch.StartNew();
+            folioDapperContext.Query(@"
+SELECT
+o.name AS ""Organization"",
+@on.organization_id AS ""OrganizationId"",
+n.title AS ""Note"",
+@on.note_id AS ""NoteId"" 
+FROM uc.organization_notes AS @on
+LEFT JOIN uc.organizations AS o ON o.id = @on.organization_id
+LEFT JOIN uc.notes2 AS n ON n.id = @on.note_id
+ ORDER BY @on.id
+", take: 1);
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"OrganizationNotesQueryTest()\r\n    ElapsedTime={s.Elapsed}");
         }
 
         [TestMethod]
@@ -7504,6 +7556,32 @@ LEFT JOIN uc.id_types AS it ON it.id = ri.identifier_type_id
         }
 
         [TestMethod]
+        public void QueryRequestNotesTest()
+        {
+            var s = Stopwatch.StartNew();
+            folioDapperContext.RequestNotes(take: 1).ToArray();
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"RequestNotesTest()\r\n    ElapsedTime={s.Elapsed}");
+        }
+
+        [TestMethod]
+        public void RequestNotesQueryTest()
+        {
+            var s = Stopwatch.StartNew();
+            folioDapperContext.Query(@"
+SELECT
+r.id AS ""Request"",
+rn.request_id AS ""RequestId"",
+n.title AS ""Note"",
+rn.note_id AS ""NoteId"" 
+FROM uc.request_notes AS rn
+LEFT JOIN uc.requests AS r ON r.id = rn.request_id
+LEFT JOIN uc.notes2 AS n ON n.id = rn.note_id
+ ORDER BY rn.id
+", take: 1);
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"RequestNotesQueryTest()\r\n    ElapsedTime={s.Elapsed}");
+        }
+
+        [TestMethod]
         public void QueryRequestPolicy2sTest()
         {
             var s = Stopwatch.StartNew();
@@ -8645,6 +8723,32 @@ LEFT JOIN uc.departments AS d ON d.id = ud.department_id
  ORDER BY ud.id
 ", take: 1);
             traceSource.TraceEvent(TraceEventType.Information, 0, $"UserDepartmentsQueryTest()\r\n    ElapsedTime={s.Elapsed}");
+        }
+
+        [TestMethod]
+        public void QueryUserNotesTest()
+        {
+            var s = Stopwatch.StartNew();
+            folioDapperContext.UserNotes(take: 1).ToArray();
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"UserNotesTest()\r\n    ElapsedTime={s.Elapsed}");
+        }
+
+        [TestMethod]
+        public void UserNotesQueryTest()
+        {
+            var s = Stopwatch.StartNew();
+            folioDapperContext.Query(@"
+SELECT
+u.username AS ""User"",
+un.user_id AS ""UserId"",
+n.title AS ""Note"",
+un.note_id AS ""NoteId"" 
+FROM uc.user_notes AS un
+LEFT JOIN uc.users AS u ON u.id = un.user_id
+LEFT JOIN uc.notes2 AS n ON n.id = un.note_id
+ ORDER BY un.id
+", take: 1);
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"UserNotesQueryTest()\r\n    ElapsedTime={s.Elapsed}");
         }
 
         [TestMethod]

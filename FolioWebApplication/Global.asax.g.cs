@@ -53,6 +53,7 @@ namespace FolioWebApplication
             Session["PatronNoticePolicyRequestNoticesPermission"] = roles.Contains("all") || roles.Contains("circulation.all") || roles.Contains("uc.patronnoticepolicyrequestnotices.view") ? "View" : null;
             Session["Request2sPermission"] = roles.Contains("all") || roles.Contains("circulation.all") || roles.Contains("uc.requests.view") ? "View" : null;
             Session["RequestIdentifiersPermission"] = roles.Contains("all") || roles.Contains("circulation.all") || roles.Contains("uc.requestidentifiers.view") ? "View" : null;
+            Session["RequestNotesPermission"] = roles.Contains("all") || roles.Contains("circulation.all") || roles.Contains("uc.requestnotes.view") ? "View" : null;
             Session["RequestPolicy2sPermission"] = roles.Contains("all") || roles.Contains("circulation.all") || roles.Contains("uc.requestpolicies.view") ? "View" : null;
             Session["RequestPolicyRequestTypesPermission"] = roles.Contains("all") || roles.Contains("circulation.all") || roles.Contains("uc.requestpolicyrequesttypes.view") ? "View" : null;
             Session["RequestTagsPermission"] = roles.Contains("all") || roles.Contains("circulation.all") || roles.Contains("uc.requesttags.view") ? "View" : null;
@@ -252,6 +253,7 @@ namespace FolioWebApplication
             Session["OrderItemContributorsPermission"] = roles.Contains("all") || roles.Contains("orders.all") || roles.Contains("uc.orderitemcontributors.view") ? "View" : null;
             Session["OrderItemFundsPermission"] = roles.Contains("all") || roles.Contains("orders.all") || roles.Contains("uc.orderitemfunds.view") ? "View" : null;
             Session["OrderItemLocation2sPermission"] = roles.Contains("all") || roles.Contains("orders.all") || roles.Contains("uc.orderitemlocations.view") ? "View" : null;
+            Session["OrderItemNotesPermission"] = roles.Contains("all") || roles.Contains("orders.all") || roles.Contains("uc.orderitemnotes.view") ? "View" : null;
             Session["OrderItemProductIdsPermission"] = roles.Contains("all") || roles.Contains("orders.all") || roles.Contains("uc.orderitemproductids.view") ? "View" : null;
             Session["OrderItemReferenceNumbersPermission"] = roles.Contains("all") || roles.Contains("orders.all") || roles.Contains("uc.orderitemreferencenumbers.view") ? "View" : null;
             Session["OrderItemReportingCodesPermission"] = roles.Contains("all") || roles.Contains("orders.all") || roles.Contains("uc.orderitemreportingcodes.view") ? "View" : null;
@@ -300,6 +302,7 @@ namespace FolioWebApplication
             Session["OrganizationEmailsPermission"] = roles.Contains("all") || roles.Contains("organizations.module.all") || roles.Contains("uc.organizationemails.view") ? "View" : null;
             Session["OrganizationEmailCategoriesPermission"] = roles.Contains("all") || roles.Contains("organizations.module.all") || roles.Contains("uc.organizationemailcategories.view") ? "View" : null;
             Session["OrganizationInterfacesPermission"] = roles.Contains("all") || roles.Contains("organizations.module.all") || roles.Contains("uc.organizationinterfaces.view") ? "View" : null;
+            Session["OrganizationNotesPermission"] = roles.Contains("all") || roles.Contains("organizations.module.all") || roles.Contains("uc.organizationnotes.view") ? "View" : null;
             Session["OrganizationPhoneNumbersPermission"] = roles.Contains("all") || roles.Contains("organizations.module.all") || roles.Contains("uc.organizationphonenumbers.view") ? "View" : null;
             Session["OrganizationPhoneNumberCategoriesPermission"] = roles.Contains("all") || roles.Contains("organizations.module.all") || roles.Contains("uc.organizationphonenumbercategories.view") ? "View" : null;
             Session["OrganizationTagsPermission"] = roles.Contains("all") || roles.Contains("organizations.module.all") || roles.Contains("uc.organizationtags.view") ? "View" : null;
@@ -353,6 +356,7 @@ namespace FolioWebApplication
             Session["User2sPermission"] = roles.Contains("uc.users.edit") ? "Edit" : roles.Contains("all") || roles.Contains("uc.users.view") || roles.Contains("users.all") ? "View" : null;
             Session["UserAddressesPermission"] = roles.Contains("all") || roles.Contains("uc.useraddresses.view") || roles.Contains("users.all") ? "View" : null;
             Session["UserDepartmentsPermission"] = roles.Contains("all") || roles.Contains("uc.userdepartments.view") || roles.Contains("users.all") ? "View" : null;
+            Session["UserNotesPermission"] = roles.Contains("all") || roles.Contains("uc.usernotes.view") || roles.Contains("users.all") ? "View" : null;
             Session["UserSummary2sPermission"] = roles.Contains("all") || roles.Contains("uc.usersummaries.view") || roles.Contains("users.all") ? "View" : null;
             Session["UserSummaryOpenFeesFinesPermission"] = roles.Contains("all") || roles.Contains("uc.usersummaryopenfeesfines.view") || roles.Contains("users.all") ? "View" : null;
             Session["UserSummaryOpenLoansPermission"] = roles.Contains("all") || roles.Contains("uc.usersummaryopenloans.view") || roles.Contains("users.all") ? "View" : null;
@@ -393,6 +397,7 @@ namespace FolioWebApplication
             Session["PatronNoticePolicyRequestNoticesPermission"] = permission;
             Session["Request2sPermission"] = permission;
             Session["RequestIdentifiersPermission"] = permission;
+            Session["RequestNotesPermission"] = permission;
             Session["RequestPolicy2sPermission"] = permission;
             Session["RequestPolicyRequestTypesPermission"] = permission;
             Session["RequestTagsPermission"] = permission;
@@ -592,6 +597,7 @@ namespace FolioWebApplication
             Session["OrderItemContributorsPermission"] = permission;
             Session["OrderItemFundsPermission"] = permission;
             Session["OrderItemLocation2sPermission"] = permission;
+            Session["OrderItemNotesPermission"] = permission;
             Session["OrderItemProductIdsPermission"] = permission;
             Session["OrderItemReferenceNumbersPermission"] = permission;
             Session["OrderItemReportingCodesPermission"] = permission;
@@ -640,6 +646,7 @@ namespace FolioWebApplication
             Session["OrganizationEmailsPermission"] = permission;
             Session["OrganizationEmailCategoriesPermission"] = permission;
             Session["OrganizationInterfacesPermission"] = permission;
+            Session["OrganizationNotesPermission"] = permission;
             Session["OrganizationPhoneNumbersPermission"] = permission;
             Session["OrganizationPhoneNumberCategoriesPermission"] = permission;
             Session["OrganizationTagsPermission"] = permission;
@@ -693,6 +700,7 @@ namespace FolioWebApplication
             Session["User2sPermission"] = permission;
             Session["UserAddressesPermission"] = permission;
             Session["UserDepartmentsPermission"] = permission;
+            Session["UserNotesPermission"] = permission;
             Session["UserSummary2sPermission"] = permission;
             Session["UserSummaryOpenFeesFinesPermission"] = permission;
             Session["UserSummaryOpenLoansPermission"] = permission;
