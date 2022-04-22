@@ -3782,6 +3782,31 @@ LEFT JOIN uc.invoices AS i ON i.id = ion.invoice_id
         }
 
         [TestMethod]
+        public void QueryInvoiceStatusesTest()
+        {
+            var s = Stopwatch.StartNew();
+            folioDapperContext.InvoiceStatuses(take: 1).ToArray();
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"InvoiceStatusesTest()\r\n    ElapsedTime={s.Elapsed}");
+        }
+
+        [TestMethod]
+        public void InvoiceStatusesQueryTest()
+        {
+            var s = Stopwatch.StartNew();
+            folioDapperContext.Query(@"
+SELECT
+@is.name AS ""Name"",
+@is.creation_time AS ""CreationTime"",
+@is.creation_username AS ""CreationUsername"",
+@is.last_write_time AS ""LastWriteTime"",
+@is.last_write_username AS ""LastWriteUsername"" 
+FROM uc.invoice_statuses AS @is
+ ORDER BY @is.name
+", take: 1);
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"InvoiceStatusesQueryTest()\r\n    ElapsedTime={s.Elapsed}");
+        }
+
+        [TestMethod]
         public void QueryInvoiceTagsTest()
         {
             var s = Stopwatch.StartNew();
@@ -4101,6 +4126,31 @@ LEFT JOIN uc.statistical_codes AS sc ON sc.id = isc.statistical_code_id
  ORDER BY isc.id
 ", take: 1);
             traceSource.TraceEvent(TraceEventType.Information, 0, $"ItemStatisticalCodesQueryTest()\r\n    ElapsedTime={s.Elapsed}");
+        }
+
+        [TestMethod]
+        public void QueryItemStatusesTest()
+        {
+            var s = Stopwatch.StartNew();
+            folioDapperContext.ItemStatuses(take: 1).ToArray();
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"ItemStatusesTest()\r\n    ElapsedTime={s.Elapsed}");
+        }
+
+        [TestMethod]
+        public void ItemStatusesQueryTest()
+        {
+            var s = Stopwatch.StartNew();
+            folioDapperContext.Query(@"
+SELECT
+@is.name AS ""Name"",
+@is.creation_time AS ""CreationTime"",
+@is.creation_username AS ""CreationUsername"",
+@is.last_write_time AS ""LastWriteTime"",
+@is.last_write_username AS ""LastWriteUsername"" 
+FROM uc.item_statuses AS @is
+ ORDER BY @is.name
+", take: 1);
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"ItemStatusesQueryTest()\r\n    ElapsedTime={s.Elapsed}");
         }
 
         [TestMethod]
@@ -5766,6 +5816,31 @@ LEFT JOIN uc.orders AS o ON o.id = @on.order_id
         }
 
         [TestMethod]
+        public void QueryOrderStatusesTest()
+        {
+            var s = Stopwatch.StartNew();
+            folioDapperContext.OrderStatuses(take: 1).ToArray();
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"OrderStatusesTest()\r\n    ElapsedTime={s.Elapsed}");
+        }
+
+        [TestMethod]
+        public void OrderStatusesQueryTest()
+        {
+            var s = Stopwatch.StartNew();
+            folioDapperContext.Query(@"
+SELECT
+os.name AS ""Name"",
+os.creation_time AS ""CreationTime"",
+os.creation_username AS ""CreationUsername"",
+os.last_write_time AS ""LastWriteTime"",
+os.last_write_username AS ""LastWriteUsername"" 
+FROM uc.order_statuses AS os
+ ORDER BY os.name
+", take: 1);
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"OrderStatusesQueryTest()\r\n    ElapsedTime={s.Elapsed}");
+        }
+
+        [TestMethod]
         public void QueryOrderTagsTest()
         {
             var s = Stopwatch.StartNew();
@@ -5812,6 +5887,31 @@ FROM uc.order_templates AS ot2
  ORDER BY ot2.template_name
 ", take: 1);
             traceSource.TraceEvent(TraceEventType.Information, 0, $"OrderTemplate2sQueryTest()\r\n    ElapsedTime={s.Elapsed}");
+        }
+
+        [TestMethod]
+        public void QueryOrderTypesTest()
+        {
+            var s = Stopwatch.StartNew();
+            folioDapperContext.OrderTypes(take: 1).ToArray();
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"OrderTypesTest()\r\n    ElapsedTime={s.Elapsed}");
+        }
+
+        [TestMethod]
+        public void OrderTypesQueryTest()
+        {
+            var s = Stopwatch.StartNew();
+            folioDapperContext.Query(@"
+SELECT
+ot.name AS ""Name"",
+ot.creation_time AS ""CreationTime"",
+ot.creation_username AS ""CreationUsername"",
+ot.last_write_time AS ""LastWriteTime"",
+ot.last_write_username AS ""LastWriteUsername"" 
+FROM uc.order_types AS ot
+ ORDER BY ot.name
+", take: 1);
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"OrderTypesQueryTest()\r\n    ElapsedTime={s.Elapsed}");
         }
 
         [TestMethod]
@@ -6748,6 +6848,32 @@ LEFT JOIN uc.owners AS o ON o.id = pm2.owner_id
  ORDER BY pm2.name
 ", take: 1);
             traceSource.TraceEvent(TraceEventType.Information, 0, $"PaymentMethod2sQueryTest()\r\n    ElapsedTime={s.Elapsed}");
+        }
+
+        [TestMethod]
+        public void QueryPaymentTypesTest()
+        {
+            var s = Stopwatch.StartNew();
+            folioDapperContext.PaymentTypes(take: 1).ToArray();
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"PaymentTypesTest()\r\n    ElapsedTime={s.Elapsed}");
+        }
+
+        [TestMethod]
+        public void PaymentTypesQueryTest()
+        {
+            var s = Stopwatch.StartNew();
+            folioDapperContext.Query(@"
+SELECT
+pt.code AS ""Code"",
+pt.name AS ""Name"",
+pt.creation_time AS ""CreationTime"",
+pt.creation_username AS ""CreationUsername"",
+pt.last_write_time AS ""LastWriteTime"",
+pt.last_write_username AS ""LastWriteUsername"" 
+FROM uc.payment_types AS pt
+ ORDER BY pt.name
+", take: 1);
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"PaymentTypesQueryTest()\r\n    ElapsedTime={s.Elapsed}");
         }
 
         [TestMethod]
@@ -9102,6 +9228,31 @@ LEFT JOIN uc.invoice_items AS ii ON ii.id = viii.invoice_item_id
  ORDER BY viii.id
 ", take: 1);
             traceSource.TraceEvent(TraceEventType.Information, 0, $"VoucherItemInvoiceItemsQueryTest()\r\n    ElapsedTime={s.Elapsed}");
+        }
+
+        [TestMethod]
+        public void QueryVoucherStatusesTest()
+        {
+            var s = Stopwatch.StartNew();
+            folioDapperContext.VoucherStatuses(take: 1).ToArray();
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"VoucherStatusesTest()\r\n    ElapsedTime={s.Elapsed}");
+        }
+
+        [TestMethod]
+        public void VoucherStatusesQueryTest()
+        {
+            var s = Stopwatch.StartNew();
+            folioDapperContext.Query(@"
+SELECT
+vs.name AS ""Name"",
+vs.creation_time AS ""CreationTime"",
+vs.creation_username AS ""CreationUsername"",
+vs.last_write_time AS ""LastWriteTime"",
+vs.last_write_username AS ""LastWriteUsername"" 
+FROM uc.voucher_statuses AS vs
+ ORDER BY vs.name
+", take: 1);
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"VoucherStatusesQueryTest()\r\n    ElapsedTime={s.Elapsed}");
         }
 
         [TestMethod]

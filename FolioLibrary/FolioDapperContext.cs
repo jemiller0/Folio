@@ -1184,6 +1184,7 @@ namespace FolioLibrary
             if (load && ion.InvoiceId != null) ion.Invoice = FindInvoice2(ion.InvoiceId);
             return ion;
         }
+        public InvoiceStatus FindInvoiceStatus(int? id, bool load = false) => Query<InvoiceStatus>($"SELECT id AS \"Id\", name AS \"Name\", creation_time AS \"CreationTime\", creation_username AS \"CreationUsername\", last_write_time AS \"LastWriteTime\", last_write_username AS \"LastWriteUsername\" FROM uc{(IsMySql ? "_" : ".")}invoice_statuses WHERE id = @id", new { id }).SingleOrDefault();
         public InvoiceTag FindInvoiceTag(string id, bool load = false)
         {
             var it = Query<InvoiceTag>($"SELECT id AS \"Id\", invoice_id AS \"InvoiceId\", content AS \"Content\" FROM uc{(IsMySql ? "_" : ".")}invoice_tags WHERE id = @id", new { id }).SingleOrDefault();
@@ -1291,6 +1292,7 @@ namespace FolioLibrary
             if (load && isc.StatisticalCodeId != null) isc.StatisticalCode = FindStatisticalCode2(isc.StatisticalCodeId);
             return isc;
         }
+        public ItemStatus FindItemStatus(int? id, bool load = false) => Query<ItemStatus>($"SELECT id AS \"Id\", name AS \"Name\", creation_time AS \"CreationTime\", creation_username AS \"CreationUsername\", last_write_time AS \"LastWriteTime\", last_write_username AS \"LastWriteUsername\" FROM uc{(IsMySql ? "_" : ".")}item_statuses WHERE id = @id", new { id }).SingleOrDefault();
         public ItemTag FindItemTag(string id, Guid? itemId, bool load = false)
         {
             var it = Query<ItemTag>($"SELECT id AS \"Id\", item_id AS \"ItemId\", content AS \"Content\" FROM uc{(IsMySql ? "_" : ".")}item_tags WHERE id = @id AND item_id = @itemId", new { id, itemId }).SingleOrDefault();
@@ -1830,6 +1832,7 @@ namespace FolioLibrary
             if (load && @on.OrderId != null) @on.Order = FindOrder2(@on.OrderId);
             return @on;
         }
+        public OrderStatus FindOrderStatus(int? id, bool load = false) => Query<OrderStatus>($"SELECT id AS \"Id\", name AS \"Name\", creation_time AS \"CreationTime\", creation_username AS \"CreationUsername\", last_write_time AS \"LastWriteTime\", last_write_username AS \"LastWriteUsername\" FROM uc{(IsMySql ? "_" : ".")}order_statuses WHERE id = @id", new { id }).SingleOrDefault();
         public OrderTag FindOrderTag(string id, bool load = false)
         {
             var ot = Query<OrderTag>($"SELECT id AS \"Id\", order_id AS \"OrderId\", content AS \"Content\" FROM uc{(IsMySql ? "_" : ".")}order_tags WHERE id = @id", new { id }).SingleOrDefault();
@@ -1847,6 +1850,7 @@ namespace FolioLibrary
             if (load && ots2.Id != null) ots2.Order2 = FindOrder2(ots2.Id);
             return ots2;
         }
+        public OrderType FindOrderType(int? id, bool load = false) => Query<OrderType>($"SELECT id AS \"Id\", name AS \"Name\", creation_time AS \"CreationTime\", creation_username AS \"CreationUsername\", last_write_time AS \"LastWriteTime\", last_write_username AS \"LastWriteUsername\" FROM uc{(IsMySql ? "_" : ".")}order_types WHERE id = @id", new { id }).SingleOrDefault();
         public Organization FindOrganization(Guid? id, bool load = false) => Query<Organization>($"SELECT id AS \"Id\", jsonb AS \"Content\", creation_date AS \"CreationTime\", created_by AS \"CreationUserId\" FROM uchicago_mod_organizations_storage{(IsMySql ? "_" : ".")}organizations WHERE id = @id", new { id }).SingleOrDefault();
         public Organization2 FindOrganization2(Guid? id, bool load = false)
         {
@@ -2082,6 +2086,7 @@ namespace FolioLibrary
             if (load && pm2.OwnerId != null) pm2.Owner = FindOwner2(pm2.OwnerId);
             return pm2;
         }
+        public PaymentType FindPaymentType(int? id, bool load = false) => Query<PaymentType>($"SELECT id AS \"Id\", code AS \"Code\", name AS \"Name\", creation_time AS \"CreationTime\", creation_username AS \"CreationUsername\", last_write_time AS \"LastWriteTime\", last_write_username AS \"LastWriteUsername\" FROM uc{(IsMySql ? "_" : ".")}payment_types WHERE id = @id", new { id }).SingleOrDefault();
         public Permission FindPermission(Guid? id, bool load = false) => Query<Permission>($"SELECT id AS \"Id\", jsonb AS \"Content\", creation_date AS \"CreationTime\", created_by AS \"CreationUserId\" FROM uchicago_mod_permissions{(IsMySql ? "_" : ".")}permissions WHERE id = @id", new { id }).SingleOrDefault();
         public Permission2 FindPermission2(Guid? id, bool load = false)
         {
@@ -2792,6 +2797,7 @@ namespace FolioLibrary
             if (load && viii.InvoiceItemId != null) viii.InvoiceItem = FindInvoiceItem2(viii.InvoiceItemId);
             return viii;
         }
+        public VoucherStatus FindVoucherStatus(int? id, bool load = false) => Query<VoucherStatus>($"SELECT id AS \"Id\", name AS \"Name\", creation_time AS \"CreationTime\", creation_username AS \"CreationUsername\", last_write_time AS \"LastWriteTime\", last_write_username AS \"LastWriteUsername\" FROM uc{(IsMySql ? "_" : ".")}voucher_statuses WHERE id = @id", new { id }).SingleOrDefault();
         public WaiveReason FindWaiveReason(Guid? id, bool load = false) => Query<WaiveReason>($"SELECT id AS \"Id\", jsonb AS \"Content\", creation_date AS \"CreationTime\", created_by AS \"CreationUserId\" FROM uchicago_mod_feesfines{(IsMySql ? "_" : ".")}waives WHERE id = @id", new { id }).SingleOrDefault();
         public WaiveReason2 FindWaiveReason2(Guid? id, bool load = false)
         {
@@ -3352,6 +3358,9 @@ namespace FolioLibrary
         public void AddInvoiceOrderNumbersIndexes()
         {
         }
+        public void AddInvoiceStatusesIndexes()
+        {
+        }
         public void AddInvoiceTagsIndexes()
         {
         }
@@ -3392,6 +3401,9 @@ namespace FolioLibrary
         {
         }
         public void AddItemStatisticalCodesIndexes()
+        {
+        }
+        public void AddItemStatusesIndexes()
         {
         }
         public void AddItemTagsIndexes()
@@ -3625,6 +3637,9 @@ namespace FolioLibrary
         public void AddOrderNotesIndexes()
         {
         }
+        public void AddOrderStatusesIndexes()
+        {
+        }
         public void AddOrderTagsIndexes()
         {
         }
@@ -3638,6 +3653,9 @@ namespace FolioLibrary
         {
         }
         public void AddOrderTransactionSummary2sIndexes()
+        {
+        }
+        public void AddOrderTypesIndexes()
         {
         }
         public void AddOrganizationsIndexes()
@@ -3743,6 +3761,9 @@ namespace FolioLibrary
         {
         }
         public void AddPaymentMethod2sIndexes()
+        {
+        }
+        public void AddPaymentTypesIndexes()
         {
         }
         public void AddPermissionsIndexes()
@@ -4061,6 +4082,9 @@ namespace FolioLibrary
         {
         }
         public void AddVoucherItemInvoiceItemsIndexes()
+        {
+        }
+        public void AddVoucherStatusesIndexes()
         {
         }
         public void AddWaiveReasonsIndexes()
@@ -4619,6 +4643,9 @@ namespace FolioLibrary
         public void RemoveInvoiceOrderNumbersIndexes()
         {
         }
+        public void RemoveInvoiceStatusesIndexes()
+        {
+        }
         public void RemoveInvoiceTagsIndexes()
         {
         }
@@ -4659,6 +4686,9 @@ namespace FolioLibrary
         {
         }
         public void RemoveItemStatisticalCodesIndexes()
+        {
+        }
+        public void RemoveItemStatusesIndexes()
         {
         }
         public void RemoveItemTagsIndexes()
@@ -4892,6 +4922,9 @@ namespace FolioLibrary
         public void RemoveOrderNotesIndexes()
         {
         }
+        public void RemoveOrderStatusesIndexes()
+        {
+        }
         public void RemoveOrderTagsIndexes()
         {
         }
@@ -4905,6 +4938,9 @@ namespace FolioLibrary
         {
         }
         public void RemoveOrderTransactionSummary2sIndexes()
+        {
+        }
+        public void RemoveOrderTypesIndexes()
         {
         }
         public void RemoveOrganizationsIndexes()
@@ -5010,6 +5046,9 @@ namespace FolioLibrary
         {
         }
         public void RemovePaymentMethod2sIndexes()
+        {
+        }
+        public void RemovePaymentTypesIndexes()
         {
         }
         public void RemovePermissionsIndexes()
@@ -5330,6 +5369,9 @@ namespace FolioLibrary
         public void RemoveVoucherItemInvoiceItemsIndexes()
         {
         }
+        public void RemoveVoucherStatusesIndexes()
+        {
+        }
         public void RemoveWaiveReasonsIndexes()
         {
         }
@@ -5520,6 +5562,7 @@ namespace FolioLibrary
         public IEnumerable<InvoiceItemReferenceNumber> InvoiceItemReferenceNumbers(string where = null, object param = null, string orderBy = null, int? skip = null, int? take = null) => Query<InvoiceItemReferenceNumber>($"SELECT id AS \"Id\", invoice_item_id AS \"InvoiceItemId\", ref_number AS \"ReferenceNumber\", ref_number_type AS \"ReferenceNumberType\", vendor_details_source AS \"VendorDetailsSource\" FROM uc{(IsMySql ? "_" : ".")}invoice_item_reference_numbers{(where != null ? $" WHERE {where}" : "")}{(orderBy != null || skip != null || take != null ? $" ORDER BY {orderBy ?? "id"}" : "")}", param, skip, take);
         public IEnumerable<InvoiceItemTag> InvoiceItemTags(string where = null, object param = null, string orderBy = null, int? skip = null, int? take = null) => Query<InvoiceItemTag>($"SELECT id AS \"Id\", invoice_item_id AS \"InvoiceItemId\", content AS \"Content\" FROM uc{(IsMySql ? "_" : ".")}invoice_item_tags{(where != null ? $" WHERE {where}" : "")}{(orderBy != null || skip != null || take != null ? $" ORDER BY {orderBy ?? "id"}" : "")}", param, skip, take);
         public IEnumerable<InvoiceOrderNumber> InvoiceOrderNumbers(string where = null, object param = null, string orderBy = null, int? skip = null, int? take = null) => Query<InvoiceOrderNumber>($"SELECT id AS \"Id\", invoice_id AS \"InvoiceId\", content AS \"Content\" FROM uc{(IsMySql ? "_" : ".")}invoice_order_numbers{(where != null ? $" WHERE {where}" : "")}{(orderBy != null || skip != null || take != null ? $" ORDER BY {orderBy ?? "id"}" : "")}", param, skip, take);
+        public IEnumerable<InvoiceStatus> InvoiceStatuses(string where = null, object param = null, string orderBy = null, int? skip = null, int? take = null) => Query<InvoiceStatus>($"SELECT id AS \"Id\", name AS \"Name\", creation_time AS \"CreationTime\", creation_username AS \"CreationUsername\", last_write_time AS \"LastWriteTime\", last_write_username AS \"LastWriteUsername\" FROM uc{(IsMySql ? "_" : ".")}invoice_statuses{(where != null ? $" WHERE {where}" : "")}{(orderBy != null || skip != null || take != null ? $" ORDER BY {orderBy ?? "id"}" : "")}", param, skip, take);
         public IEnumerable<InvoiceTag> InvoiceTags(string where = null, object param = null, string orderBy = null, int? skip = null, int? take = null) => Query<InvoiceTag>($"SELECT id AS \"Id\", invoice_id AS \"InvoiceId\", content AS \"Content\" FROM uc{(IsMySql ? "_" : ".")}invoice_tags{(where != null ? $" WHERE {where}" : "")}{(orderBy != null || skip != null || take != null ? $" ORDER BY {orderBy ?? "id"}" : "")}", param, skip, take);
         public IEnumerable<InvoiceTransactionSummary> InvoiceTransactionSummaries(string where = null, object param = null, string orderBy = null, int? skip = null, int? take = null) => Query<InvoiceTransactionSummary>($"SELECT id AS \"Id\", COALESCE(jsonb_set(jsonb, '{{metadata,createdDate}}', ('\"' || (jsonb#>>'{{metadata,createdDate}}') || CASE WHEN jsonb#>>'{{metadata,createdDate}}' !~ '([-+]\\d\\d:\\d\\d)|Z$' THEN '+00:00' ELSE '' END || '\"')::jsonb), jsonb) AS \"Content\" FROM uchicago_mod_finance_storage{(IsMySql ? "_" : ".")}invoice_transaction_summaries{(where != null ? $" WHERE {where}" : "")}{(orderBy != null || skip != null || take != null ? $" ORDER BY {orderBy ?? "id"}" : "")}", param, skip, take);
         public IEnumerable<InvoiceTransactionSummary2> InvoiceTransactionSummary2s(string where = null, object param = null, string orderBy = null, int? skip = null, int? take = null) => Query<InvoiceTransactionSummary2>($"SELECT id AS \"Id\", num_pending_payments AS \"NumPendingPayments\", num_payments_credits AS \"NumPaymentsCredits\", content AS \"Content\" FROM uc{(IsMySql ? "_" : ".")}invoice_transaction_summaries{(where != null ? $" WHERE {where}" : "")}{(orderBy != null || skip != null || take != null ? $" ORDER BY {orderBy ?? "id"}" : "")}", param, skip, take);
@@ -5534,6 +5577,7 @@ namespace FolioLibrary
         public IEnumerable<ItemNoteType> ItemNoteTypes(string where = null, object param = null, string orderBy = null, int? skip = null, int? take = null) => Query<ItemNoteType>($"SELECT id AS \"Id\", COALESCE(jsonb_set(jsonb, '{{metadata,createdDate}}', ('\"' || (jsonb#>>'{{metadata,createdDate}}') || CASE WHEN jsonb#>>'{{metadata,createdDate}}' !~ '([-+]\\d\\d:\\d\\d)|Z$' THEN '+00:00' ELSE '' END || '\"')::jsonb), jsonb) AS \"Content\", creation_date AS \"CreationTime\", created_by AS \"CreationUserId\" FROM uchicago_mod_inventory_storage{(IsMySql ? "_" : ".")}item_note_type{(where != null ? $" WHERE {where}" : "")}{(orderBy != null || skip != null || take != null ? $" ORDER BY {orderBy ?? "id"}" : "")}", param, skip, take);
         public IEnumerable<ItemNoteType2> ItemNoteType2s(string where = null, object param = null, string orderBy = null, int? skip = null, int? take = null) => Query<ItemNoteType2>($"SELECT id AS \"Id\", name AS \"Name\", source AS \"Source\", created_date AS \"CreationTime\", created_by_user_id AS \"CreationUserId\", created_by_username AS \"CreationUserUsername\", updated_date AS \"LastWriteTime\", updated_by_user_id AS \"LastWriteUserId\", updated_by_username AS \"LastWriteUserUsername\", content AS \"Content\" FROM uc{(IsMySql ? "_" : ".")}item_note_types{(where != null ? $" WHERE {where}" : "")}{(orderBy != null || skip != null || take != null ? $" ORDER BY {orderBy ?? "id"}" : "")}", param, skip, take);
         public IEnumerable<ItemStatisticalCode> ItemStatisticalCodes(string where = null, object param = null, string orderBy = null, int? skip = null, int? take = null) => Query<ItemStatisticalCode>($"SELECT id AS \"Id\", item_id AS \"ItemId\", statistical_code_id AS \"StatisticalCodeId\" FROM uc{(IsMySql ? "_" : ".")}item_statistical_codes{(where != null ? $" WHERE {where}" : "")}{(orderBy != null || skip != null || take != null ? $" ORDER BY {orderBy ?? "id, item_id"}" : "")}", param, skip, take);
+        public IEnumerable<ItemStatus> ItemStatuses(string where = null, object param = null, string orderBy = null, int? skip = null, int? take = null) => Query<ItemStatus>($"SELECT id AS \"Id\", name AS \"Name\", creation_time AS \"CreationTime\", creation_username AS \"CreationUsername\", last_write_time AS \"LastWriteTime\", last_write_username AS \"LastWriteUsername\" FROM uc{(IsMySql ? "_" : ".")}item_statuses{(where != null ? $" WHERE {where}" : "")}{(orderBy != null || skip != null || take != null ? $" ORDER BY {orderBy ?? "id"}" : "")}", param, skip, take);
         public IEnumerable<ItemTag> ItemTags(string where = null, object param = null, string orderBy = null, int? skip = null, int? take = null) => Query<ItemTag>($"SELECT id AS \"Id\", item_id AS \"ItemId\", content AS \"Content\" FROM uc{(IsMySql ? "_" : ".")}item_tags{(where != null ? $" WHERE {where}" : "")}{(orderBy != null || skip != null || take != null ? $" ORDER BY {orderBy ?? "id, item_id"}" : "")}", param, skip, take);
         public IEnumerable<ItemYearCaption> ItemYearCaptions(string where = null, object param = null, string orderBy = null, int? skip = null, int? take = null) => Query<ItemYearCaption>($"SELECT id AS \"Id\", item_id AS \"ItemId\", content AS \"Content\" FROM uc{(IsMySql ? "_" : ".")}item_year_caption{(where != null ? $" WHERE {where}" : "")}{(orderBy != null || skip != null || take != null ? $" ORDER BY {orderBy ?? "id, item_id"}" : "")}", param, skip, take);
         public IEnumerable<JobExecution> JobExecutions(string where = null, object param = null, string orderBy = null, int? skip = null, int? take = null) => Query<JobExecution>($"SELECT id AS \"Id\", COALESCE(jsonb_set(jsonb, '{{metadata,createdDate}}', ('\"' || (jsonb#>>'{{metadata,createdDate}}') || CASE WHEN jsonb#>>'{{metadata,createdDate}}' !~ '([-+]\\d\\d:\\d\\d)|Z$' THEN '+00:00' ELSE '' END || '\"')::jsonb), jsonb) AS \"Content\" FROM uchicago_mod_source_record_manager{(IsMySql ? "_" : ".")}job_executions{(where != null ? $" WHERE {where}" : "")}{(orderBy != null || skip != null || take != null ? $" ORDER BY {orderBy ?? "id"}" : "")}", param, skip, take);
@@ -5611,11 +5655,13 @@ namespace FolioLibrary
         public IEnumerable<OrderItemTag> OrderItemTags(string where = null, object param = null, string orderBy = null, int? skip = null, int? take = null) => Query<OrderItemTag>($"SELECT id AS \"Id\", order_item_id AS \"OrderItemId\", content AS \"Content\" FROM uc{(IsMySql ? "_" : ".")}order_item_tags{(where != null ? $" WHERE {where}" : "")}{(orderBy != null || skip != null || take != null ? $" ORDER BY {orderBy ?? "id"}" : "")}", param, skip, take);
         public IEnumerable<OrderItemVolume> OrderItemVolumes(string where = null, object param = null, string orderBy = null, int? skip = null, int? take = null) => Query<OrderItemVolume>($"SELECT id AS \"Id\", order_item_id AS \"OrderItemId\", content AS \"Content\" FROM uc{(IsMySql ? "_" : ".")}order_item_volumes{(where != null ? $" WHERE {where}" : "")}{(orderBy != null || skip != null || take != null ? $" ORDER BY {orderBy ?? "id"}" : "")}", param, skip, take);
         public IEnumerable<OrderNote> OrderNotes(string where = null, object param = null, string orderBy = null, int? skip = null, int? take = null) => Query<OrderNote>($"SELECT id AS \"Id\", order_id AS \"OrderId\", content AS \"Content\" FROM uc{(IsMySql ? "_" : ".")}order_notes{(where != null ? $" WHERE {where}" : "")}{(orderBy != null || skip != null || take != null ? $" ORDER BY {orderBy ?? "id"}" : "")}", param, skip, take);
+        public IEnumerable<OrderStatus> OrderStatuses(string where = null, object param = null, string orderBy = null, int? skip = null, int? take = null) => Query<OrderStatus>($"SELECT id AS \"Id\", name AS \"Name\", creation_time AS \"CreationTime\", creation_username AS \"CreationUsername\", last_write_time AS \"LastWriteTime\", last_write_username AS \"LastWriteUsername\" FROM uc{(IsMySql ? "_" : ".")}order_statuses{(where != null ? $" WHERE {where}" : "")}{(orderBy != null || skip != null || take != null ? $" ORDER BY {orderBy ?? "id"}" : "")}", param, skip, take);
         public IEnumerable<OrderTag> OrderTags(string where = null, object param = null, string orderBy = null, int? skip = null, int? take = null) => Query<OrderTag>($"SELECT id AS \"Id\", order_id AS \"OrderId\", content AS \"Content\" FROM uc{(IsMySql ? "_" : ".")}order_tags{(where != null ? $" WHERE {where}" : "")}{(orderBy != null || skip != null || take != null ? $" ORDER BY {orderBy ?? "id"}" : "")}", param, skip, take);
         public IEnumerable<OrderTemplate> OrderTemplates(string where = null, object param = null, string orderBy = null, int? skip = null, int? take = null) => Query<OrderTemplate>($"SELECT id AS \"Id\", COALESCE(jsonb_set(jsonb, '{{metadata,createdDate}}', ('\"' || (jsonb#>>'{{metadata,createdDate}}') || CASE WHEN jsonb#>>'{{metadata,createdDate}}' !~ '([-+]\\d\\d:\\d\\d)|Z$' THEN '+00:00' ELSE '' END || '\"')::jsonb), jsonb) AS \"Content\" FROM uchicago_mod_orders_storage{(IsMySql ? "_" : ".")}order_templates{(where != null ? $" WHERE {where}" : "")}{(orderBy != null || skip != null || take != null ? $" ORDER BY {orderBy ?? "id"}" : "")}", param, skip, take);
         public IEnumerable<OrderTemplate2> OrderTemplate2s(string where = null, object param = null, string orderBy = null, int? skip = null, int? take = null) => Query<OrderTemplate2>($"SELECT id AS \"Id\", template_name AS \"Name\", template_code AS \"Code\", template_description AS \"Description\", content AS \"Content\" FROM uc{(IsMySql ? "_" : ".")}order_templates{(where != null ? $" WHERE {where}" : "")}{(orderBy != null || skip != null || take != null ? $" ORDER BY {orderBy ?? "id"}" : "")}", param, skip, take);
         public IEnumerable<OrderTransactionSummary> OrderTransactionSummaries(string where = null, object param = null, string orderBy = null, int? skip = null, int? take = null) => Query<OrderTransactionSummary>($"SELECT id AS \"Id\", COALESCE(jsonb_set(jsonb, '{{metadata,createdDate}}', ('\"' || (jsonb#>>'{{metadata,createdDate}}') || CASE WHEN jsonb#>>'{{metadata,createdDate}}' !~ '([-+]\\d\\d:\\d\\d)|Z$' THEN '+00:00' ELSE '' END || '\"')::jsonb), jsonb) AS \"Content\" FROM uchicago_mod_finance_storage{(IsMySql ? "_" : ".")}order_transaction_summaries{(where != null ? $" WHERE {where}" : "")}{(orderBy != null || skip != null || take != null ? $" ORDER BY {orderBy ?? "id"}" : "")}", param, skip, take);
         public IEnumerable<OrderTransactionSummary2> OrderTransactionSummary2s(string where = null, object param = null, string orderBy = null, int? skip = null, int? take = null) => Query<OrderTransactionSummary2>($"SELECT id AS \"Id\", num_transactions AS \"NumTransactions\", content AS \"Content\" FROM uc{(IsMySql ? "_" : ".")}order_transaction_summaries{(where != null ? $" WHERE {where}" : "")}{(orderBy != null || skip != null || take != null ? $" ORDER BY {orderBy ?? "id"}" : "")}", param, skip, take);
+        public IEnumerable<OrderType> OrderTypes(string where = null, object param = null, string orderBy = null, int? skip = null, int? take = null) => Query<OrderType>($"SELECT id AS \"Id\", name AS \"Name\", creation_time AS \"CreationTime\", creation_username AS \"CreationUsername\", last_write_time AS \"LastWriteTime\", last_write_username AS \"LastWriteUsername\" FROM uc{(IsMySql ? "_" : ".")}order_types{(where != null ? $" WHERE {where}" : "")}{(orderBy != null || skip != null || take != null ? $" ORDER BY {orderBy ?? "id"}" : "")}", param, skip, take);
         public IEnumerable<Organization> Organizations(string where = null, object param = null, string orderBy = null, int? skip = null, int? take = null) => Query<Organization>($"SELECT id AS \"Id\", COALESCE(jsonb_set(jsonb, '{{metadata,createdDate}}', ('\"' || (jsonb#>>'{{metadata,createdDate}}') || CASE WHEN jsonb#>>'{{metadata,createdDate}}' !~ '([-+]\\d\\d:\\d\\d)|Z$' THEN '+00:00' ELSE '' END || '\"')::jsonb), jsonb) AS \"Content\", creation_date AS \"CreationTime\", created_by AS \"CreationUserId\" FROM uchicago_mod_organizations_storage{(IsMySql ? "_" : ".")}organizations{(where != null ? $" WHERE {where}" : "")}{(orderBy != null || skip != null || take != null ? $" ORDER BY {orderBy ?? "id"}" : "")}", param, skip, take);
         public IEnumerable<Organization2> Organization2s(string where = null, object param = null, string orderBy = null, int? skip = null, int? take = null) => Query<Organization2>($"SELECT id AS \"Id\", name AS \"Name\", code AS \"Code\", description AS \"Description\", export_to_accounting AS \"ExportToAccounting\", status AS \"Status\", language AS \"Language\", erp_code AS \"AccountingCode\", payment_method AS \"PaymentMethod\", access_provider AS \"AccessProvider\", governmental AS \"Governmental\", licensor AS \"Licensor\", material_supplier AS \"MaterialSupplier\", claiming_interval AS \"ClaimingInterval\", discount_percent AS \"DiscountPercent\", expected_activation_interval AS \"ExpectedActivationInterval\", expected_invoice_interval AS \"ExpectedInvoiceInterval\", renewal_activation_interval AS \"RenewalActivationInterval\", subscription_interval AS \"SubscriptionInterval\", expected_receipt_interval AS \"ExpectedReceiptInterval\", tax_id AS \"TaxId\", liable_for_vat AS \"LiableForVat\", tax_percentage AS \"TaxPercentage\", edi_vendor_edi_code AS \"EdiVendorEdiCode\", edi_vendor_edi_type AS \"EdiVendorEdiType\", edi_lib_edi_code AS \"EdiLibEdiCode\", edi_lib_edi_type AS \"EdiLibEdiType\", edi_prorate_tax AS \"EdiProrateTax\", edi_prorate_fees AS \"EdiProrateFees\", edi_naming_convention AS \"EdiNamingConvention\", edi_send_acct_num AS \"EdiSendAcctNum\", edi_support_order AS \"EdiSupportOrder\", edi_support_invoice AS \"EdiSupportInvoice\", edi_notes AS \"EdiNotes\", edi_ftp_ftp_format AS \"EdiFtpFtpFormat\", edi_ftp_server_address AS \"EdiFtpServerAddress\", edi_ftp_username AS \"EdiFtpUsername\", edi_ftp_password AS \"EdiFtpPassword\", edi_ftp_ftp_mode AS \"EdiFtpFtpMode\", edi_ftp_ftp_conn_mode AS \"EdiFtpFtpConnMode\", edi_ftp_ftp_port AS \"EdiFtpFtpPort\", edi_ftp_order_directory AS \"EdiFtpOrderDirectory\", edi_ftp_invoice_directory AS \"EdiFtpInvoiceDirectory\", edi_ftp_notes AS \"EdiFtpNotes\", edi_job_schedule_edi AS \"EdiJobScheduleEdi\", edi_job_scheduling_date AS \"EdiJobSchedulingDate\", edi_job_time AS \"EdiJobTime\", edi_job_is_monday AS \"EdiJobIsMonday\", edi_job_is_tuesday AS \"EdiJobIsTuesday\", edi_job_is_wednesday AS \"EdiJobIsWednesday\", edi_job_is_thursday AS \"EdiJobIsThursday\", edi_job_is_friday AS \"EdiJobIsFriday\", edi_job_is_saturday AS \"EdiJobIsSaturday\", edi_job_is_sunday AS \"EdiJobIsSunday\", edi_job_send_to_emails AS \"EdiJobSendToEmails\", edi_job_notify_all_edi AS \"EdiJobNotifyAllEdi\", edi_job_notify_invoice_only AS \"EdiJobNotifyInvoiceOnly\", edi_job_notify_error_only AS \"EdiJobNotifyErrorOnly\", edi_job_scheduling_notes AS \"EdiJobSchedulingNotes\", is_vendor AS \"IsVendor\", san_code AS \"SanCode\", created_date AS \"CreationTime\", created_by_user_id AS \"CreationUserId\", created_by_username AS \"CreationUserUsername\", updated_date AS \"LastWriteTime\", updated_by_user_id AS \"LastWriteUserId\", updated_by_username AS \"LastWriteUserUsername\", content AS \"Content\" FROM uc{(IsMySql ? "_" : ".")}organizations{(where != null ? $" WHERE {where}" : "")}{(orderBy != null || skip != null || take != null ? $" ORDER BY {orderBy ?? "id"}" : "")}", param, skip, take);
         public IEnumerable<OrganizationAccount> OrganizationAccounts(string where = null, object param = null, string orderBy = null, int? skip = null, int? take = null) => Query<OrganizationAccount>($"SELECT id AS \"Id\", organization_id AS \"OrganizationId\", name AS \"Name\", account_no AS \"AccountNumber\", description AS \"Description\", app_system_no AS \"AppSystemNumber\", payment_method AS \"PaymentMethod\", account_status AS \"AccountStatus\", contact_info AS \"ContactInfo\", library_code AS \"LibraryCode\", library_edi_code AS \"LibraryEdiCode\", notes AS \"Notes\" FROM uc{(IsMySql ? "_" : ".")}organization_accounts{(where != null ? $" WHERE {where}" : "")}{(orderBy != null || skip != null || take != null ? $" ORDER BY {orderBy ?? "id"}" : "")}", param, skip, take);
@@ -5651,6 +5697,7 @@ namespace FolioLibrary
         public IEnumerable<Payment2> Payment2s(string where = null, object param = null, string orderBy = null, int? skip = null, int? take = null) => Query<Payment2>($"SELECT id AS \"Id\", date_action AS \"CreationTime\", type_action AS \"TypeAction\", comments AS \"Comments\", notify AS \"Notify\", amount_action AS \"Amount\", balance AS \"RemainingAmount\", transaction_information AS \"TransactionInformation\", service_point AS \"ServicePoint\", source AS \"Source\", payment_method AS \"PaymentMethod\", fee_id AS \"FeeId\", user_id AS \"UserId\", content AS \"Content\" FROM uc{(IsMySql ? "_" : ".")}payments{(where != null ? $" WHERE {where}" : "")}{(orderBy != null || skip != null || take != null ? $" ORDER BY {orderBy ?? "id"}" : "")}", param, skip, take);
         public IEnumerable<PaymentMethod> PaymentMethods(string where = null, object param = null, string orderBy = null, int? skip = null, int? take = null) => Query<PaymentMethod>($"SELECT id AS \"Id\", COALESCE(jsonb_set(jsonb, '{{metadata,createdDate}}', ('\"' || (jsonb#>>'{{metadata,createdDate}}') || CASE WHEN jsonb#>>'{{metadata,createdDate}}' !~ '([-+]\\d\\d:\\d\\d)|Z$' THEN '+00:00' ELSE '' END || '\"')::jsonb), jsonb) AS \"Content\", creation_date AS \"CreationTime\", created_by AS \"CreationUserId\" FROM uchicago_mod_feesfines{(IsMySql ? "_" : ".")}payments{(where != null ? $" WHERE {where}" : "")}{(orderBy != null || skip != null || take != null ? $" ORDER BY {orderBy ?? "id"}" : "")}", param, skip, take);
         public IEnumerable<PaymentMethod2> PaymentMethod2s(string where = null, object param = null, string orderBy = null, int? skip = null, int? take = null) => Query<PaymentMethod2>($"SELECT id AS \"Id\", name AS \"Name\", allowed_refund_method AS \"AllowedRefundMethod\", created_date AS \"CreationTime\", created_by_user_id AS \"CreationUserId\", created_by_username AS \"CreationUserUsername\", updated_date AS \"LastWriteTime\", updated_by_user_id AS \"LastWriteUserId\", updated_by_username AS \"LastWriteUserUsername\", owner_id AS \"OwnerId\", content AS \"Content\" FROM uc{(IsMySql ? "_" : ".")}payment_methods{(where != null ? $" WHERE {where}" : "")}{(orderBy != null || skip != null || take != null ? $" ORDER BY {orderBy ?? "id"}" : "")}", param, skip, take);
+        public IEnumerable<PaymentType> PaymentTypes(string where = null, object param = null, string orderBy = null, int? skip = null, int? take = null) => Query<PaymentType>($"SELECT id AS \"Id\", code AS \"Code\", name AS \"Name\", creation_time AS \"CreationTime\", creation_username AS \"CreationUsername\", last_write_time AS \"LastWriteTime\", last_write_username AS \"LastWriteUsername\" FROM uc{(IsMySql ? "_" : ".")}payment_types{(where != null ? $" WHERE {where}" : "")}{(orderBy != null || skip != null || take != null ? $" ORDER BY {orderBy ?? "id"}" : "")}", param, skip, take);
         public IEnumerable<Permission> Permissions(string where = null, object param = null, string orderBy = null, int? skip = null, int? take = null) => Query<Permission>($"SELECT id AS \"Id\", COALESCE(jsonb_set(jsonb, '{{metadata,createdDate}}', ('\"' || (jsonb#>>'{{metadata,createdDate}}') || CASE WHEN jsonb#>>'{{metadata,createdDate}}' !~ '([-+]\\d\\d:\\d\\d)|Z$' THEN '+00:00' ELSE '' END || '\"')::jsonb), jsonb) AS \"Content\", creation_date AS \"CreationTime\", created_by AS \"CreationUserId\" FROM uchicago_mod_permissions{(IsMySql ? "_" : ".")}permissions{(where != null ? $" WHERE {where}" : "")}{(orderBy != null || skip != null || take != null ? $" ORDER BY {orderBy ?? "id"}" : "")}", param, skip, take);
         public IEnumerable<Permission2> Permission2s(string where = null, object param = null, string orderBy = null, int? skip = null, int? take = null) => Query<Permission2>($"SELECT id AS \"Id\", permission_name AS \"Code\", display_name AS \"Name\", description AS \"Description\", mutable AS \"Editable\", visible AS \"Visible\", dummy AS \"Dummy\", deprecated AS \"Deprecated\", module_name AS \"ModuleName\", module_version AS \"ModuleVersion\", created_date AS \"CreationTime\", created_by_user_id AS \"CreationUserId\", created_by_username AS \"CreationUserUsername\", updated_date AS \"LastWriteTime\", updated_by_user_id AS \"LastWriteUserId\", updated_by_username AS \"LastWriteUserUsername\", content AS \"Content\" FROM uc{(IsMySql ? "_" : ".")}permissions{(where != null ? $" WHERE {where}" : "")}{(orderBy != null || skip != null || take != null ? $" ORDER BY {orderBy ?? "id"}" : "")}", param, skip, take);
         public IEnumerable<PermissionChildOf> PermissionChildOfs(string where = null, object param = null, string orderBy = null, int? skip = null, int? take = null) => Query<PermissionChildOf>($"SELECT id AS \"Id\", permission_id AS \"PermissionId\", content AS \"Content\" FROM uc{(IsMySql ? "_" : ".")}permission_child_of{(where != null ? $" WHERE {where}" : "")}{(orderBy != null || skip != null || take != null ? $" ORDER BY {orderBy ?? "id"}" : "")}", param, skip, take);
@@ -5757,6 +5804,7 @@ namespace FolioLibrary
         public IEnumerable<VoucherItem2> VoucherItem2s(string where = null, object param = null, string orderBy = null, int? skip = null, int? take = null) => Query<VoucherItem2>($"SELECT id AS \"Id\", amount AS \"Amount\", external_account_number AS \"AccountNumber\", sub_transaction_id AS \"SubTransactionId\", voucher_id AS \"VoucherId\", created_date AS \"CreationTime\", created_by_user_id AS \"CreationUserId\", created_by_username AS \"CreationUserUsername\", updated_date AS \"LastWriteTime\", updated_by_user_id AS \"LastWriteUserId\", updated_by_username AS \"LastWriteUserUsername\", content AS \"Content\" FROM uc{(IsMySql ? "_" : ".")}voucher_items{(where != null ? $" WHERE {where}" : "")}{(orderBy != null || skip != null || take != null ? $" ORDER BY {orderBy ?? "id"}" : "")}", param, skip, take);
         public IEnumerable<VoucherItemFund> VoucherItemFunds(string where = null, object param = null, string orderBy = null, int? skip = null, int? take = null) => Query<VoucherItemFund>($"SELECT id AS \"Id\", voucher_item_id AS \"VoucherItemId\", code AS \"FundCode\", encumbrance_id AS \"EncumbranceId\", fund_id AS \"FundId\", invoice_item_id AS \"InvoiceItemId\", distribution_type AS \"DistributionType\", expense_class_id AS \"ExpenseClassId\", value AS \"Value\" FROM uc{(IsMySql ? "_" : ".")}voucher_item_fund_distributions{(where != null ? $" WHERE {where}" : "")}{(orderBy != null || skip != null || take != null ? $" ORDER BY {orderBy ?? "id"}" : "")}", param, skip, take);
         public IEnumerable<VoucherItemInvoiceItem> VoucherItemInvoiceItems(string where = null, object param = null, string orderBy = null, int? skip = null, int? take = null) => Query<VoucherItemInvoiceItem>($"SELECT id AS \"Id\", voucher_item_id AS \"VoucherItemId\", invoice_item_id AS \"InvoiceItemId\" FROM uc{(IsMySql ? "_" : ".")}voucher_item_invoice_items{(where != null ? $" WHERE {where}" : "")}{(orderBy != null || skip != null || take != null ? $" ORDER BY {orderBy ?? "id"}" : "")}", param, skip, take);
+        public IEnumerable<VoucherStatus> VoucherStatuses(string where = null, object param = null, string orderBy = null, int? skip = null, int? take = null) => Query<VoucherStatus>($"SELECT id AS \"Id\", name AS \"Name\", creation_time AS \"CreationTime\", creation_username AS \"CreationUsername\", last_write_time AS \"LastWriteTime\", last_write_username AS \"LastWriteUsername\" FROM uc{(IsMySql ? "_" : ".")}voucher_statuses{(where != null ? $" WHERE {where}" : "")}{(orderBy != null || skip != null || take != null ? $" ORDER BY {orderBy ?? "id"}" : "")}", param, skip, take);
         public IEnumerable<WaiveReason> WaiveReasons(string where = null, object param = null, string orderBy = null, int? skip = null, int? take = null) => Query<WaiveReason>($"SELECT id AS \"Id\", COALESCE(jsonb_set(jsonb, '{{metadata,createdDate}}', ('\"' || (jsonb#>>'{{metadata,createdDate}}') || CASE WHEN jsonb#>>'{{metadata,createdDate}}' !~ '([-+]\\d\\d:\\d\\d)|Z$' THEN '+00:00' ELSE '' END || '\"')::jsonb), jsonb) AS \"Content\", creation_date AS \"CreationTime\", created_by AS \"CreationUserId\" FROM uchicago_mod_feesfines{(IsMySql ? "_" : ".")}waives{(where != null ? $" WHERE {where}" : "")}{(orderBy != null || skip != null || take != null ? $" ORDER BY {orderBy ?? "id"}" : "")}", param, skip, take);
         public IEnumerable<WaiveReason2> WaiveReason2s(string where = null, object param = null, string orderBy = null, int? skip = null, int? take = null) => Query<WaiveReason2>($"SELECT id AS \"Id\", name AS \"Name\", description AS \"Description\", created_date AS \"CreationTime\", created_by_user_id AS \"CreationUserId\", created_by_username AS \"CreationUserUsername\", updated_date AS \"LastWriteTime\", updated_by_user_id AS \"LastWriteUserId\", updated_by_username AS \"LastWriteUserUsername\", account_id AS \"AccountId\", content AS \"Content\" FROM uc{(IsMySql ? "_" : ".")}waive_reasons{(where != null ? $" WHERE {where}" : "")}{(orderBy != null || skip != null || take != null ? $" ORDER BY {orderBy ?? "id"}" : "")}", param, skip, take);
 
@@ -5943,6 +5991,7 @@ namespace FolioLibrary
         public int CountInvoiceItemReferenceNumbers(string where = null, object param = null, int? take = null) => Count($"SELECT 1 FROM uc{(IsMySql ? "_" : ".")}invoice_item_reference_numbers{(where != null ? $" WHERE {where}" : "")}", param: param, take: take);
         public int CountInvoiceItemTags(string where = null, object param = null, int? take = null) => Count($"SELECT 1 FROM uc{(IsMySql ? "_" : ".")}invoice_item_tags{(where != null ? $" WHERE {where}" : "")}", param: param, take: take);
         public int CountInvoiceOrderNumbers(string where = null, object param = null, int? take = null) => Count($"SELECT 1 FROM uc{(IsMySql ? "_" : ".")}invoice_order_numbers{(where != null ? $" WHERE {where}" : "")}", param: param, take: take);
+        public int CountInvoiceStatuses(string where = null, object param = null, int? take = null) => Count($"SELECT 1 FROM uc{(IsMySql ? "_" : ".")}invoice_statuses{(where != null ? $" WHERE {where}" : "")}", param: param, take: take);
         public int CountInvoiceTags(string where = null, object param = null, int? take = null) => Count($"SELECT 1 FROM uc{(IsMySql ? "_" : ".")}invoice_tags{(where != null ? $" WHERE {where}" : "")}", param: param, take: take);
         public int CountInvoiceTransactionSummaries(string where = null, object param = null, int? take = null) => Count($"SELECT 1 FROM uchicago_mod_finance_storage{(IsMySql ? "_" : ".")}invoice_transaction_summaries{(where != null ? $" WHERE {where}" : "")}", param: param, take: take);
         public int CountInvoiceTransactionSummary2s(string where = null, object param = null, int? take = null) => Count($"SELECT 1 FROM uc{(IsMySql ? "_" : ".")}invoice_transaction_summaries{(where != null ? $" WHERE {where}" : "")}", param: param, take: take);
@@ -5957,6 +6006,7 @@ namespace FolioLibrary
         public int CountItemNoteTypes(string where = null, object param = null, int? take = null) => Count($"SELECT 1 FROM uchicago_mod_inventory_storage{(IsMySql ? "_" : ".")}item_note_type{(where != null ? $" WHERE {where}" : "")}", param: param, take: take);
         public int CountItemNoteType2s(string where = null, object param = null, int? take = null) => Count($"SELECT 1 FROM uc{(IsMySql ? "_" : ".")}item_note_types{(where != null ? $" WHERE {where}" : "")}", param: param, take: take);
         public int CountItemStatisticalCodes(string where = null, object param = null, int? take = null) => Count($"SELECT 1 FROM uc{(IsMySql ? "_" : ".")}item_statistical_codes{(where != null ? $" WHERE {where}" : "")}", param: param, take: take);
+        public int CountItemStatuses(string where = null, object param = null, int? take = null) => Count($"SELECT 1 FROM uc{(IsMySql ? "_" : ".")}item_statuses{(where != null ? $" WHERE {where}" : "")}", param: param, take: take);
         public int CountItemTags(string where = null, object param = null, int? take = null) => Count($"SELECT 1 FROM uc{(IsMySql ? "_" : ".")}item_tags{(where != null ? $" WHERE {where}" : "")}", param: param, take: take);
         public int CountItemYearCaptions(string where = null, object param = null, int? take = null) => Count($"SELECT 1 FROM uc{(IsMySql ? "_" : ".")}item_year_caption{(where != null ? $" WHERE {where}" : "")}", param: param, take: take);
         public int CountJobExecutions(string where = null, object param = null, int? take = null) => Count($"SELECT 1 FROM uchicago_mod_source_record_manager{(IsMySql ? "_" : ".")}job_executions{(where != null ? $" WHERE {where}" : "")}", param: param, take: take);
@@ -6034,11 +6084,13 @@ namespace FolioLibrary
         public int CountOrderItemTags(string where = null, object param = null, int? take = null) => Count($"SELECT 1 FROM uc{(IsMySql ? "_" : ".")}order_item_tags{(where != null ? $" WHERE {where}" : "")}", param: param, take: take);
         public int CountOrderItemVolumes(string where = null, object param = null, int? take = null) => Count($"SELECT 1 FROM uc{(IsMySql ? "_" : ".")}order_item_volumes{(where != null ? $" WHERE {where}" : "")}", param: param, take: take);
         public int CountOrderNotes(string where = null, object param = null, int? take = null) => Count($"SELECT 1 FROM uc{(IsMySql ? "_" : ".")}order_notes{(where != null ? $" WHERE {where}" : "")}", param: param, take: take);
+        public int CountOrderStatuses(string where = null, object param = null, int? take = null) => Count($"SELECT 1 FROM uc{(IsMySql ? "_" : ".")}order_statuses{(where != null ? $" WHERE {where}" : "")}", param: param, take: take);
         public int CountOrderTags(string where = null, object param = null, int? take = null) => Count($"SELECT 1 FROM uc{(IsMySql ? "_" : ".")}order_tags{(where != null ? $" WHERE {where}" : "")}", param: param, take: take);
         public int CountOrderTemplates(string where = null, object param = null, int? take = null) => Count($"SELECT 1 FROM uchicago_mod_orders_storage{(IsMySql ? "_" : ".")}order_templates{(where != null ? $" WHERE {where}" : "")}", param: param, take: take);
         public int CountOrderTemplate2s(string where = null, object param = null, int? take = null) => Count($"SELECT 1 FROM uc{(IsMySql ? "_" : ".")}order_templates{(where != null ? $" WHERE {where}" : "")}", param: param, take: take);
         public int CountOrderTransactionSummaries(string where = null, object param = null, int? take = null) => Count($"SELECT 1 FROM uchicago_mod_finance_storage{(IsMySql ? "_" : ".")}order_transaction_summaries{(where != null ? $" WHERE {where}" : "")}", param: param, take: take);
         public int CountOrderTransactionSummary2s(string where = null, object param = null, int? take = null) => Count($"SELECT 1 FROM uc{(IsMySql ? "_" : ".")}order_transaction_summaries{(where != null ? $" WHERE {where}" : "")}", param: param, take: take);
+        public int CountOrderTypes(string where = null, object param = null, int? take = null) => Count($"SELECT 1 FROM uc{(IsMySql ? "_" : ".")}order_types{(where != null ? $" WHERE {where}" : "")}", param: param, take: take);
         public int CountOrganizations(string where = null, object param = null, int? take = null) => Count($"SELECT 1 FROM uchicago_mod_organizations_storage{(IsMySql ? "_" : ".")}organizations{(where != null ? $" WHERE {where}" : "")}", param: param, take: take);
         public int CountOrganization2s(string where = null, object param = null, int? take = null) => Count($"SELECT 1 FROM uc{(IsMySql ? "_" : ".")}organizations{(where != null ? $" WHERE {where}" : "")}", param: param, take: take);
         public int CountOrganizationAccounts(string where = null, object param = null, int? take = null) => Count($"SELECT 1 FROM uc{(IsMySql ? "_" : ".")}organization_accounts{(where != null ? $" WHERE {where}" : "")}", param: param, take: take);
@@ -6074,6 +6126,7 @@ namespace FolioLibrary
         public int CountPayment2s(string where = null, object param = null, int? take = null) => Count($"SELECT 1 FROM uc{(IsMySql ? "_" : ".")}payments{(where != null ? $" WHERE {where}" : "")}", param: param, take: take);
         public int CountPaymentMethods(string where = null, object param = null, int? take = null) => Count($"SELECT 1 FROM uchicago_mod_feesfines{(IsMySql ? "_" : ".")}payments{(where != null ? $" WHERE {where}" : "")}", param: param, take: take);
         public int CountPaymentMethod2s(string where = null, object param = null, int? take = null) => Count($"SELECT 1 FROM uc{(IsMySql ? "_" : ".")}payment_methods{(where != null ? $" WHERE {where}" : "")}", param: param, take: take);
+        public int CountPaymentTypes(string where = null, object param = null, int? take = null) => Count($"SELECT 1 FROM uc{(IsMySql ? "_" : ".")}payment_types{(where != null ? $" WHERE {where}" : "")}", param: param, take: take);
         public int CountPermissions(string where = null, object param = null, int? take = null) => Count($"SELECT 1 FROM uchicago_mod_permissions{(IsMySql ? "_" : ".")}permissions{(where != null ? $" WHERE {where}" : "")}", param: param, take: take);
         public int CountPermission2s(string where = null, object param = null, int? take = null) => Count($"SELECT 1 FROM uc{(IsMySql ? "_" : ".")}permissions{(where != null ? $" WHERE {where}" : "")}", param: param, take: take);
         public int CountPermissionChildOfs(string where = null, object param = null, int? take = null) => Count($"SELECT 1 FROM uc{(IsMySql ? "_" : ".")}permission_child_of{(where != null ? $" WHERE {where}" : "")}", param: param, take: take);
@@ -6180,6 +6233,7 @@ namespace FolioLibrary
         public int CountVoucherItem2s(string where = null, object param = null, int? take = null) => Count($"SELECT 1 FROM uc{(IsMySql ? "_" : ".")}voucher_items{(where != null ? $" WHERE {where}" : "")}", param: param, take: take);
         public int CountVoucherItemFunds(string where = null, object param = null, int? take = null) => Count($"SELECT 1 FROM uc{(IsMySql ? "_" : ".")}voucher_item_fund_distributions{(where != null ? $" WHERE {where}" : "")}", param: param, take: take);
         public int CountVoucherItemInvoiceItems(string where = null, object param = null, int? take = null) => Count($"SELECT 1 FROM uc{(IsMySql ? "_" : ".")}voucher_item_invoice_items{(where != null ? $" WHERE {where}" : "")}", param: param, take: take);
+        public int CountVoucherStatuses(string where = null, object param = null, int? take = null) => Count($"SELECT 1 FROM uc{(IsMySql ? "_" : ".")}voucher_statuses{(where != null ? $" WHERE {where}" : "")}", param: param, take: take);
         public int CountWaiveReasons(string where = null, object param = null, int? take = null) => Count($"SELECT 1 FROM uchicago_mod_feesfines{(IsMySql ? "_" : ".")}waives{(where != null ? $" WHERE {where}" : "")}", param: param, take: take);
         public int CountWaiveReason2s(string where = null, object param = null, int? take = null) => Count($"SELECT 1 FROM uc{(IsMySql ? "_" : ".")}waive_reasons{(where != null ? $" WHERE {where}" : "")}", param: param, take: take);
 
@@ -6366,6 +6420,7 @@ namespace FolioLibrary
         public bool AnyInvoiceItemReferenceNumbers(string where = null, object param = null) => Query($"SELECT 1 FROM uc{(IsMySql ? "_" : ".")}invoice_item_reference_numbers{(where != null ? $" WHERE {where}" : "")}{(IsSqlServer ? $" ORDER BY id" : "")}", param: param, take: 1).Any();
         public bool AnyInvoiceItemTags(string where = null, object param = null) => Query($"SELECT 1 FROM uc{(IsMySql ? "_" : ".")}invoice_item_tags{(where != null ? $" WHERE {where}" : "")}{(IsSqlServer ? $" ORDER BY id" : "")}", param: param, take: 1).Any();
         public bool AnyInvoiceOrderNumbers(string where = null, object param = null) => Query($"SELECT 1 FROM uc{(IsMySql ? "_" : ".")}invoice_order_numbers{(where != null ? $" WHERE {where}" : "")}{(IsSqlServer ? $" ORDER BY id" : "")}", param: param, take: 1).Any();
+        public bool AnyInvoiceStatuses(string where = null, object param = null) => Query($"SELECT 1 FROM uc{(IsMySql ? "_" : ".")}invoice_statuses{(where != null ? $" WHERE {where}" : "")}{(IsSqlServer ? $" ORDER BY id" : "")}", param: param, take: 1).Any();
         public bool AnyInvoiceTags(string where = null, object param = null) => Query($"SELECT 1 FROM uc{(IsMySql ? "_" : ".")}invoice_tags{(where != null ? $" WHERE {where}" : "")}{(IsSqlServer ? $" ORDER BY id" : "")}", param: param, take: 1).Any();
         public bool AnyInvoiceTransactionSummaries(string where = null, object param = null) => Query($"SELECT 1 FROM uchicago_mod_finance_storage{(IsMySql ? "_" : ".")}invoice_transaction_summaries{(where != null ? $" WHERE {where}" : "")}{(IsSqlServer ? $" ORDER BY id" : "")}", param: param, take: 1).Any();
         public bool AnyInvoiceTransactionSummary2s(string where = null, object param = null) => Query($"SELECT 1 FROM uc{(IsMySql ? "_" : ".")}invoice_transaction_summaries{(where != null ? $" WHERE {where}" : "")}{(IsSqlServer ? $" ORDER BY id" : "")}", param: param, take: 1).Any();
@@ -6380,6 +6435,7 @@ namespace FolioLibrary
         public bool AnyItemNoteTypes(string where = null, object param = null) => Query($"SELECT 1 FROM uchicago_mod_inventory_storage{(IsMySql ? "_" : ".")}item_note_type{(where != null ? $" WHERE {where}" : "")}{(IsSqlServer ? $" ORDER BY id" : "")}", param: param, take: 1).Any();
         public bool AnyItemNoteType2s(string where = null, object param = null) => Query($"SELECT 1 FROM uc{(IsMySql ? "_" : ".")}item_note_types{(where != null ? $" WHERE {where}" : "")}{(IsSqlServer ? $" ORDER BY id" : "")}", param: param, take: 1).Any();
         public bool AnyItemStatisticalCodes(string where = null, object param = null) => Query($"SELECT 1 FROM uc{(IsMySql ? "_" : ".")}item_statistical_codes{(where != null ? $" WHERE {where}" : "")}{(IsSqlServer ? $" ORDER BY id, item_id" : "")}", param: param, take: 1).Any();
+        public bool AnyItemStatuses(string where = null, object param = null) => Query($"SELECT 1 FROM uc{(IsMySql ? "_" : ".")}item_statuses{(where != null ? $" WHERE {where}" : "")}{(IsSqlServer ? $" ORDER BY id" : "")}", param: param, take: 1).Any();
         public bool AnyItemTags(string where = null, object param = null) => Query($"SELECT 1 FROM uc{(IsMySql ? "_" : ".")}item_tags{(where != null ? $" WHERE {where}" : "")}{(IsSqlServer ? $" ORDER BY id, item_id" : "")}", param: param, take: 1).Any();
         public bool AnyItemYearCaptions(string where = null, object param = null) => Query($"SELECT 1 FROM uc{(IsMySql ? "_" : ".")}item_year_caption{(where != null ? $" WHERE {where}" : "")}{(IsSqlServer ? $" ORDER BY id, item_id" : "")}", param: param, take: 1).Any();
         public bool AnyJobExecutions(string where = null, object param = null) => Query($"SELECT 1 FROM uchicago_mod_source_record_manager{(IsMySql ? "_" : ".")}job_executions{(where != null ? $" WHERE {where}" : "")}{(IsSqlServer ? $" ORDER BY id" : "")}", param: param, take: 1).Any();
@@ -6457,11 +6513,13 @@ namespace FolioLibrary
         public bool AnyOrderItemTags(string where = null, object param = null) => Query($"SELECT 1 FROM uc{(IsMySql ? "_" : ".")}order_item_tags{(where != null ? $" WHERE {where}" : "")}{(IsSqlServer ? $" ORDER BY id" : "")}", param: param, take: 1).Any();
         public bool AnyOrderItemVolumes(string where = null, object param = null) => Query($"SELECT 1 FROM uc{(IsMySql ? "_" : ".")}order_item_volumes{(where != null ? $" WHERE {where}" : "")}{(IsSqlServer ? $" ORDER BY id" : "")}", param: param, take: 1).Any();
         public bool AnyOrderNotes(string where = null, object param = null) => Query($"SELECT 1 FROM uc{(IsMySql ? "_" : ".")}order_notes{(where != null ? $" WHERE {where}" : "")}{(IsSqlServer ? $" ORDER BY id" : "")}", param: param, take: 1).Any();
+        public bool AnyOrderStatuses(string where = null, object param = null) => Query($"SELECT 1 FROM uc{(IsMySql ? "_" : ".")}order_statuses{(where != null ? $" WHERE {where}" : "")}{(IsSqlServer ? $" ORDER BY id" : "")}", param: param, take: 1).Any();
         public bool AnyOrderTags(string where = null, object param = null) => Query($"SELECT 1 FROM uc{(IsMySql ? "_" : ".")}order_tags{(where != null ? $" WHERE {where}" : "")}{(IsSqlServer ? $" ORDER BY id" : "")}", param: param, take: 1).Any();
         public bool AnyOrderTemplates(string where = null, object param = null) => Query($"SELECT 1 FROM uchicago_mod_orders_storage{(IsMySql ? "_" : ".")}order_templates{(where != null ? $" WHERE {where}" : "")}{(IsSqlServer ? $" ORDER BY id" : "")}", param: param, take: 1).Any();
         public bool AnyOrderTemplate2s(string where = null, object param = null) => Query($"SELECT 1 FROM uc{(IsMySql ? "_" : ".")}order_templates{(where != null ? $" WHERE {where}" : "")}{(IsSqlServer ? $" ORDER BY id" : "")}", param: param, take: 1).Any();
         public bool AnyOrderTransactionSummaries(string where = null, object param = null) => Query($"SELECT 1 FROM uchicago_mod_finance_storage{(IsMySql ? "_" : ".")}order_transaction_summaries{(where != null ? $" WHERE {where}" : "")}{(IsSqlServer ? $" ORDER BY id" : "")}", param: param, take: 1).Any();
         public bool AnyOrderTransactionSummary2s(string where = null, object param = null) => Query($"SELECT 1 FROM uc{(IsMySql ? "_" : ".")}order_transaction_summaries{(where != null ? $" WHERE {where}" : "")}{(IsSqlServer ? $" ORDER BY id" : "")}", param: param, take: 1).Any();
+        public bool AnyOrderTypes(string where = null, object param = null) => Query($"SELECT 1 FROM uc{(IsMySql ? "_" : ".")}order_types{(where != null ? $" WHERE {where}" : "")}{(IsSqlServer ? $" ORDER BY id" : "")}", param: param, take: 1).Any();
         public bool AnyOrganizations(string where = null, object param = null) => Query($"SELECT 1 FROM uchicago_mod_organizations_storage{(IsMySql ? "_" : ".")}organizations{(where != null ? $" WHERE {where}" : "")}{(IsSqlServer ? $" ORDER BY id" : "")}", param: param, take: 1).Any();
         public bool AnyOrganization2s(string where = null, object param = null) => Query($"SELECT 1 FROM uc{(IsMySql ? "_" : ".")}organizations{(where != null ? $" WHERE {where}" : "")}{(IsSqlServer ? $" ORDER BY id" : "")}", param: param, take: 1).Any();
         public bool AnyOrganizationAccounts(string where = null, object param = null) => Query($"SELECT 1 FROM uc{(IsMySql ? "_" : ".")}organization_accounts{(where != null ? $" WHERE {where}" : "")}{(IsSqlServer ? $" ORDER BY id" : "")}", param: param, take: 1).Any();
@@ -6497,6 +6555,7 @@ namespace FolioLibrary
         public bool AnyPayment2s(string where = null, object param = null) => Query($"SELECT 1 FROM uc{(IsMySql ? "_" : ".")}payments{(where != null ? $" WHERE {where}" : "")}{(IsSqlServer ? $" ORDER BY id" : "")}", param: param, take: 1).Any();
         public bool AnyPaymentMethods(string where = null, object param = null) => Query($"SELECT 1 FROM uchicago_mod_feesfines{(IsMySql ? "_" : ".")}payments{(where != null ? $" WHERE {where}" : "")}{(IsSqlServer ? $" ORDER BY id" : "")}", param: param, take: 1).Any();
         public bool AnyPaymentMethod2s(string where = null, object param = null) => Query($"SELECT 1 FROM uc{(IsMySql ? "_" : ".")}payment_methods{(where != null ? $" WHERE {where}" : "")}{(IsSqlServer ? $" ORDER BY id" : "")}", param: param, take: 1).Any();
+        public bool AnyPaymentTypes(string where = null, object param = null) => Query($"SELECT 1 FROM uc{(IsMySql ? "_" : ".")}payment_types{(where != null ? $" WHERE {where}" : "")}{(IsSqlServer ? $" ORDER BY id" : "")}", param: param, take: 1).Any();
         public bool AnyPermissions(string where = null, object param = null) => Query($"SELECT 1 FROM uchicago_mod_permissions{(IsMySql ? "_" : ".")}permissions{(where != null ? $" WHERE {where}" : "")}{(IsSqlServer ? $" ORDER BY id" : "")}", param: param, take: 1).Any();
         public bool AnyPermission2s(string where = null, object param = null) => Query($"SELECT 1 FROM uc{(IsMySql ? "_" : ".")}permissions{(where != null ? $" WHERE {where}" : "")}{(IsSqlServer ? $" ORDER BY id" : "")}", param: param, take: 1).Any();
         public bool AnyPermissionChildOfs(string where = null, object param = null) => Query($"SELECT 1 FROM uc{(IsMySql ? "_" : ".")}permission_child_of{(where != null ? $" WHERE {where}" : "")}{(IsSqlServer ? $" ORDER BY id" : "")}", param: param, take: 1).Any();
@@ -6603,6 +6662,7 @@ namespace FolioLibrary
         public bool AnyVoucherItem2s(string where = null, object param = null) => Query($"SELECT 1 FROM uc{(IsMySql ? "_" : ".")}voucher_items{(where != null ? $" WHERE {where}" : "")}{(IsSqlServer ? $" ORDER BY id" : "")}", param: param, take: 1).Any();
         public bool AnyVoucherItemFunds(string where = null, object param = null) => Query($"SELECT 1 FROM uc{(IsMySql ? "_" : ".")}voucher_item_fund_distributions{(where != null ? $" WHERE {where}" : "")}{(IsSqlServer ? $" ORDER BY id" : "")}", param: param, take: 1).Any();
         public bool AnyVoucherItemInvoiceItems(string where = null, object param = null) => Query($"SELECT 1 FROM uc{(IsMySql ? "_" : ".")}voucher_item_invoice_items{(where != null ? $" WHERE {where}" : "")}{(IsSqlServer ? $" ORDER BY id" : "")}", param: param, take: 1).Any();
+        public bool AnyVoucherStatuses(string where = null, object param = null) => Query($"SELECT 1 FROM uc{(IsMySql ? "_" : ".")}voucher_statuses{(where != null ? $" WHERE {where}" : "")}{(IsSqlServer ? $" ORDER BY id" : "")}", param: param, take: 1).Any();
         public bool AnyWaiveReasons(string where = null, object param = null) => Query($"SELECT 1 FROM uchicago_mod_feesfines{(IsMySql ? "_" : ".")}waives{(where != null ? $" WHERE {where}" : "")}{(IsSqlServer ? $" ORDER BY id" : "")}", param: param, take: 1).Any();
         public bool AnyWaiveReason2s(string where = null, object param = null) => Query($"SELECT 1 FROM uc{(IsMySql ? "_" : ".")}waive_reasons{(where != null ? $" WHERE {where}" : "")}{(IsSqlServer ? $" ORDER BY id" : "")}", param: param, take: 1).Any();
 
@@ -6789,6 +6849,7 @@ namespace FolioLibrary
         public void TruncateInvoiceItemReferenceNumbers() { Execute($"TRUNCATE TABLE uc.invoice_item_reference_numbers"); Commit(); }
         public void TruncateInvoiceItemTags() { Execute($"TRUNCATE TABLE uc.invoice_item_tags"); Commit(); }
         public void TruncateInvoiceOrderNumbers() { Execute($"TRUNCATE TABLE uc.invoice_order_numbers"); Commit(); }
+        public void TruncateInvoiceStatuses() { Execute($"TRUNCATE TABLE uc.invoice_statuses"); Commit(); }
         public void TruncateInvoiceTags() { Execute($"TRUNCATE TABLE uc.invoice_tags"); Commit(); }
         public void TruncateInvoiceTransactionSummaries() { Execute($"TRUNCATE TABLE uchicago_mod_finance_storage.invoice_transaction_summaries"); Commit(); }
         public void TruncateInvoiceTransactionSummary2s() { Execute($"TRUNCATE TABLE uc.invoice_transaction_summaries"); Commit(); }
@@ -6803,6 +6864,7 @@ namespace FolioLibrary
         public void TruncateItemNoteTypes() { Execute($"TRUNCATE TABLE uchicago_mod_inventory_storage.item_note_type"); Commit(); }
         public void TruncateItemNoteType2s() { Execute($"TRUNCATE TABLE uc.item_note_types"); Commit(); }
         public void TruncateItemStatisticalCodes() { Execute($"TRUNCATE TABLE uc.item_statistical_codes"); Commit(); }
+        public void TruncateItemStatuses() { Execute($"TRUNCATE TABLE uc.item_statuses"); Commit(); }
         public void TruncateItemTags() { Execute($"TRUNCATE TABLE uc.item_tags"); Commit(); }
         public void TruncateItemYearCaptions() { Execute($"TRUNCATE TABLE uc.item_year_caption"); Commit(); }
         public void TruncateJobExecutions() { Execute($"TRUNCATE TABLE uchicago_mod_source_record_manager.job_executions"); Commit(); }
@@ -6880,11 +6942,13 @@ namespace FolioLibrary
         public void TruncateOrderItemTags() { Execute($"TRUNCATE TABLE uc.order_item_tags"); Commit(); }
         public void TruncateOrderItemVolumes() { Execute($"TRUNCATE TABLE uc.order_item_volumes"); Commit(); }
         public void TruncateOrderNotes() { Execute($"TRUNCATE TABLE uc.order_notes"); Commit(); }
+        public void TruncateOrderStatuses() { Execute($"TRUNCATE TABLE uc.order_statuses"); Commit(); }
         public void TruncateOrderTags() { Execute($"TRUNCATE TABLE uc.order_tags"); Commit(); }
         public void TruncateOrderTemplates() { Execute($"TRUNCATE TABLE uchicago_mod_orders_storage.order_templates"); Commit(); }
         public void TruncateOrderTemplate2s() { Execute($"TRUNCATE TABLE uc.order_templates"); Commit(); }
         public void TruncateOrderTransactionSummaries() { Execute($"TRUNCATE TABLE uchicago_mod_finance_storage.order_transaction_summaries"); Commit(); }
         public void TruncateOrderTransactionSummary2s() { Execute($"TRUNCATE TABLE uc.order_transaction_summaries"); Commit(); }
+        public void TruncateOrderTypes() { Execute($"TRUNCATE TABLE uc.order_types"); Commit(); }
         public void TruncateOrganizations() { Execute($"TRUNCATE TABLE uchicago_mod_organizations_storage.organizations"); Commit(); }
         public void TruncateOrganization2s() { Execute($"TRUNCATE TABLE uc.organizations"); Commit(); }
         public void TruncateOrganizationAccounts() { Execute($"TRUNCATE TABLE uc.organization_accounts"); Commit(); }
@@ -6920,6 +6984,7 @@ namespace FolioLibrary
         public void TruncatePayment2s() { Execute($"TRUNCATE TABLE uc.payments"); Commit(); }
         public void TruncatePaymentMethods() { Execute($"TRUNCATE TABLE uchicago_mod_feesfines.payments"); Commit(); }
         public void TruncatePaymentMethod2s() { Execute($"TRUNCATE TABLE uc.payment_methods"); Commit(); }
+        public void TruncatePaymentTypes() { Execute($"TRUNCATE TABLE uc.payment_types"); Commit(); }
         public void TruncatePermissions() { Execute($"TRUNCATE TABLE uchicago_mod_permissions.permissions"); Commit(); }
         public void TruncatePermission2s() { Execute($"TRUNCATE TABLE uc.permissions"); Commit(); }
         public void TruncatePermissionChildOfs() { Execute($"TRUNCATE TABLE uc.permission_child_of"); Commit(); }
@@ -7026,6 +7091,7 @@ namespace FolioLibrary
         public void TruncateVoucherItem2s() { Execute($"TRUNCATE TABLE uc.voucher_items"); Commit(); }
         public void TruncateVoucherItemFunds() { Execute($"TRUNCATE TABLE uc.voucher_item_fund_distributions"); Commit(); }
         public void TruncateVoucherItemInvoiceItems() { Execute($"TRUNCATE TABLE uc.voucher_item_invoice_items"); Commit(); }
+        public void TruncateVoucherStatuses() { Execute($"TRUNCATE TABLE uc.voucher_statuses"); Commit(); }
         public void TruncateWaiveReasons() { Execute($"TRUNCATE TABLE uchicago_mod_feesfines.waives"); Commit(); }
         public void TruncateWaiveReason2s() { Execute($"TRUNCATE TABLE uc.waive_reasons"); Commit(); }
         public void Insert(AcquisitionsUnit acquisitionsUnit) => Execute("INSERT INTO uchicago_mod_orders_storage.acquisitions_unit (id, jsonb, creation_date, created_by) VALUES (@Id, @Content::jsonb, @CreationTime, @CreationUserId)", acquisitionsUnit);
@@ -7096,10 +7162,12 @@ namespace FolioLibrary
         public void Insert(InterfaceCredential interfaceCredential) => Execute("INSERT INTO uchicago_mod_organizations_storage.interface_credentials (id, jsonb, interfaceid) VALUES (@Id, @Content::jsonb, @Interfaceid)", interfaceCredential);
         public void Insert(Invoice invoice) => Execute("INSERT INTO uchicago_mod_invoice_storage.invoices (id, jsonb, creation_date, created_by, batchgroupid) VALUES (@Id, @Content::jsonb, @CreationTime, @CreationUserId, @Batchgroupid)", invoice);
         public void Insert(InvoiceItem invoiceItem) => Execute("INSERT INTO uchicago_mod_invoice_storage.invoice_lines (id, jsonb, creation_date, created_by, invoiceid) VALUES (@Id, @Content::jsonb, @CreationTime, @CreationUserId, @Invoiceid)", invoiceItem);
+        public void Insert(InvoiceStatus invoiceStatus) => Execute("INSERT INTO uc.invoice_statuses (id, name, creation_time, creation_username, last_write_time, last_write_username) VALUES (@Id, @Name, @CreationTime, @CreationUsername, @LastWriteTime, @LastWriteUsername)", invoiceStatus);
         public void Insert(InvoiceTransactionSummary invoiceTransactionSummary) => Execute("INSERT INTO uchicago_mod_finance_storage.invoice_transaction_summaries (id, jsonb) VALUES (@Id, @Content::jsonb)", invoiceTransactionSummary);
         public void Insert(Item item) => Execute("INSERT INTO uchicago_mod_inventory_storage.item (id, jsonb, creation_date, created_by, holdingsrecordid, permanentloantypeid, temporaryloantypeid, materialtypeid, permanentlocationid, temporarylocationid, effectivelocationid) VALUES (@Id, @Content::jsonb, @CreationTime, @CreationUserId, @Holdingsrecordid, @Permanentloantypeid, @Temporaryloantypeid, @Materialtypeid, @Permanentlocationid, @Temporarylocationid, @Effectivelocationid)", item);
         public void Insert(ItemDamagedStatus itemDamagedStatus) => Execute("INSERT INTO uchicago_mod_inventory_storage.item_damaged_status (id, jsonb, creation_date, created_by) VALUES (@Id, @Content::jsonb, @CreationTime, @CreationUserId)", itemDamagedStatus);
         public void Insert(ItemNoteType itemNoteType) => Execute("INSERT INTO uchicago_mod_inventory_storage.item_note_type (id, jsonb, creation_date, created_by) VALUES (@Id, @Content::jsonb, @CreationTime, @CreationUserId)", itemNoteType);
+        public void Insert(ItemStatus itemStatus) => Execute("INSERT INTO uc.item_statuses (id, name, creation_time, creation_username, last_write_time, last_write_username) VALUES (@Id, @Name, @CreationTime, @CreationUsername, @LastWriteTime, @LastWriteUsername)", itemStatus);
         public void Insert(JobExecution jobExecution) => Execute("INSERT INTO uchicago_mod_source_record_manager.job_executions (id, jsonb) VALUES (@Id, @Content::jsonb)", jobExecution);
         public void Insert(JobExecutionProgress jobExecutionProgress) => Execute("INSERT INTO uchicago_mod_source_record_manager.job_execution_progress (id, jsonb, jobexecutionid) VALUES (@Id, @Content::jsonb, @Jobexecutionid)", jobExecutionProgress);
         public void Insert(JobExecutionSourceChunk jobExecutionSourceChunk) => Execute("INSERT INTO uchicago_mod_source_record_manager.job_execution_source_chunks (id, jsonb, jobexecutionid) VALUES (@Id, @Content::jsonb, @Jobexecutionid)", jobExecutionSourceChunk);
@@ -7128,8 +7196,10 @@ namespace FolioLibrary
         public void Insert(Order order) => Execute("INSERT INTO uchicago_mod_orders_storage.purchase_order (id, jsonb, creation_date, created_by) VALUES (@Id, @Content::jsonb, @CreationTime, @CreationUserId)", order);
         public void Insert(OrderInvoice orderInvoice) => Execute("INSERT INTO uchicago_mod_orders_storage.order_invoice_relationship (id, jsonb, purchaseorderid) VALUES (@Id, @Content::jsonb, @Purchaseorderid)", orderInvoice);
         public void Insert(OrderItem orderItem) => Execute("INSERT INTO uchicago_mod_orders_storage.po_line (id, jsonb, creation_date, created_by, purchaseorderid) VALUES (@Id, @Content::jsonb, @CreationTime, @CreationUserId, @Purchaseorderid)", orderItem);
+        public void Insert(OrderStatus orderStatus) => Execute("INSERT INTO uc.order_statuses (id, name, creation_time, creation_username, last_write_time, last_write_username) VALUES (@Id, @Name, @CreationTime, @CreationUsername, @LastWriteTime, @LastWriteUsername)", orderStatus);
         public void Insert(OrderTemplate orderTemplate) => Execute("INSERT INTO uchicago_mod_orders_storage.order_templates (id, jsonb) VALUES (@Id, @Content::jsonb)", orderTemplate);
         public void Insert(OrderTransactionSummary orderTransactionSummary) => Execute("INSERT INTO uchicago_mod_finance_storage.order_transaction_summaries (id, jsonb) VALUES (@Id, @Content::jsonb)", orderTransactionSummary);
+        public void Insert(OrderType orderType) => Execute("INSERT INTO uc.order_types (id, name, creation_time, creation_username, last_write_time, last_write_username) VALUES (@Id, @Name, @CreationTime, @CreationUsername, @LastWriteTime, @LastWriteUsername)", orderType);
         public void Insert(Organization organization) => Execute("INSERT INTO uchicago_mod_organizations_storage.organizations (id, jsonb, creation_date, created_by) VALUES (@Id, @Content::jsonb, @CreationTime, @CreationUserId)", organization);
         public void Insert(OverdueFinePolicy overdueFinePolicy) => Execute("INSERT INTO uchicago_mod_feesfines.overdue_fine_policy (id, jsonb, creation_date, created_by) VALUES (@Id, @Content::jsonb, @CreationTime, @CreationUserId)", overdueFinePolicy);
         public void Insert(Owner owner) => Execute("INSERT INTO uchicago_mod_feesfines.owners (id, jsonb, creation_date, created_by) VALUES (@Id, @Content::jsonb, @CreationTime, @CreationUserId)", owner);
@@ -7137,6 +7207,7 @@ namespace FolioLibrary
         public void Insert(PatronNoticePolicy patronNoticePolicy) => Execute("INSERT INTO uchicago_mod_circulation_storage.patron_notice_policy (id, jsonb, creation_date, created_by) VALUES (@Id, @Content::jsonb, @CreationTime, @CreationUserId)", patronNoticePolicy);
         public void Insert(Payment payment) => Execute("INSERT INTO uchicago_mod_feesfines.feefineactions (id, jsonb, creation_date, created_by) VALUES (@Id, @Content::jsonb, @CreationTime, @CreationUserId)", payment);
         public void Insert(PaymentMethod paymentMethod) => Execute("INSERT INTO uchicago_mod_feesfines.payments (id, jsonb, creation_date, created_by) VALUES (@Id, @Content::jsonb, @CreationTime, @CreationUserId)", paymentMethod);
+        public void Insert(PaymentType paymentType) => Execute("INSERT INTO uc.payment_types (id, code, name, creation_time, creation_username, last_write_time, last_write_username) VALUES (@Id, @Code, @Name, @CreationTime, @CreationUsername, @LastWriteTime, @LastWriteUsername)", paymentType);
         public void Insert(Permission permission) => Execute("INSERT INTO uchicago_mod_permissions.permissions (id, jsonb, creation_date, created_by) VALUES (@Id, @Content::jsonb, @CreationTime, @CreationUserId)", permission);
         public void Insert(PermissionsUser permissionsUser) => Execute("INSERT INTO uchicago_mod_permissions.permissions_users (id, jsonb, creation_date, created_by) VALUES (@Id, @Content::jsonb, @CreationTime, @CreationUserId)", permissionsUser);
         public void Insert(PrecedingSucceedingTitle precedingSucceedingTitle) => Execute("INSERT INTO uchicago_mod_inventory_storage.preceding_succeeding_title (id, jsonb, creation_date, created_by, precedinginstanceid, succeedinginstanceid) VALUES (@Id, @Content::jsonb, @CreationTime, @CreationUserId, @Precedinginstanceid, @Succeedinginstanceid)", precedingSucceedingTitle);
@@ -7170,6 +7241,7 @@ namespace FolioLibrary
         public void Insert(UserSummary userSummary) => Execute("INSERT INTO uchicago_mod_patron_blocks.user_summary (id, jsonb, creation_date, created_by) VALUES (@Id, @Content::jsonb, @CreationTime, @CreationUserId)", userSummary);
         public void Insert(Voucher voucher) => Execute("INSERT INTO uchicago_mod_invoice_storage.vouchers (id, jsonb, creation_date, created_by, invoiceid, batchgroupid) VALUES (@Id, @Content::jsonb, @CreationTime, @CreationUserId, @Invoiceid, @Batchgroupid)", voucher);
         public void Insert(VoucherItem voucherItem) => Execute("INSERT INTO uchicago_mod_invoice_storage.voucher_lines (id, jsonb, creation_date, created_by, voucherid) VALUES (@Id, @Content::jsonb, @CreationTime, @CreationUserId, @Voucherid)", voucherItem);
+        public void Insert(VoucherStatus voucherStatus) => Execute("INSERT INTO uc.voucher_statuses (id, name, creation_time, creation_username, last_write_time, last_write_username) VALUES (@Id, @Name, @CreationTime, @CreationUsername, @LastWriteTime, @LastWriteUsername)", voucherStatus);
         public void Insert(WaiveReason waiveReason) => Execute("INSERT INTO uchicago_mod_feesfines.waives (id, jsonb, creation_date, created_by) VALUES (@Id, @Content::jsonb, @CreationTime, @CreationUserId)", waiveReason);
 
         public int Update(AcquisitionsUnit acquisitionsUnit) => Execute($"UPDATE uchicago_mod_orders_storage.acquisitions_unit SET jsonb = @Content::jsonb, creation_date = @CreationTime, created_by = @CreationUserId WHERE id = @Id", acquisitionsUnit);
@@ -7240,10 +7312,12 @@ namespace FolioLibrary
         public int Update(InterfaceCredential interfaceCredential) => Execute($"UPDATE uchicago_mod_organizations_storage.interface_credentials SET jsonb = @Content::jsonb, interfaceid = @Interfaceid WHERE id = @Id", interfaceCredential);
         public int Update(Invoice invoice) => Execute($"UPDATE uchicago_mod_invoice_storage.invoices SET jsonb = @Content::jsonb, creation_date = @CreationTime, created_by = @CreationUserId, batchgroupid = @Batchgroupid WHERE id = @Id", invoice);
         public int Update(InvoiceItem invoiceItem) => Execute($"UPDATE uchicago_mod_invoice_storage.invoice_lines SET jsonb = @Content::jsonb, creation_date = @CreationTime, created_by = @CreationUserId, invoiceid = @Invoiceid WHERE id = @Id", invoiceItem);
+        public int Update(InvoiceStatus invoiceStatus, DateTime? lastWriteTime = null) => Execute($"UPDATE uc.invoice_statuses SET name = @Name, creation_time = @CreationTime, creation_username = @CreationUsername, last_write_time = @LastWriteTime, last_write_username = @LastWriteUsername WHERE id = @Id{(lastWriteTime != null ? " AND (last_write_time IS NULL OR last_write_time = @_lastWriteTime)" : "")}", new { invoiceStatus.Name, invoiceStatus.CreationTime, invoiceStatus.CreationUsername, invoiceStatus.LastWriteTime, invoiceStatus.LastWriteUsername, invoiceStatus.Id, _lastWriteTime = lastWriteTime });
         public int Update(InvoiceTransactionSummary invoiceTransactionSummary) => Execute($"UPDATE uchicago_mod_finance_storage.invoice_transaction_summaries SET jsonb = @Content::jsonb WHERE id = @Id", invoiceTransactionSummary);
         public int Update(Item item) => Execute($"UPDATE uchicago_mod_inventory_storage.item SET jsonb = @Content::jsonb, creation_date = @CreationTime, created_by = @CreationUserId, holdingsrecordid = @Holdingsrecordid, permanentloantypeid = @Permanentloantypeid, temporaryloantypeid = @Temporaryloantypeid, materialtypeid = @Materialtypeid, permanentlocationid = @Permanentlocationid, temporarylocationid = @Temporarylocationid, effectivelocationid = @Effectivelocationid WHERE id = @Id", item);
         public int Update(ItemDamagedStatus itemDamagedStatus) => Execute($"UPDATE uchicago_mod_inventory_storage.item_damaged_status SET jsonb = @Content::jsonb, creation_date = @CreationTime, created_by = @CreationUserId WHERE id = @Id", itemDamagedStatus);
         public int Update(ItemNoteType itemNoteType) => Execute($"UPDATE uchicago_mod_inventory_storage.item_note_type SET jsonb = @Content::jsonb, creation_date = @CreationTime, created_by = @CreationUserId WHERE id = @Id", itemNoteType);
+        public int Update(ItemStatus itemStatus, DateTime? lastWriteTime = null) => Execute($"UPDATE uc.item_statuses SET name = @Name, creation_time = @CreationTime, creation_username = @CreationUsername, last_write_time = @LastWriteTime, last_write_username = @LastWriteUsername WHERE id = @Id{(lastWriteTime != null ? " AND (last_write_time IS NULL OR last_write_time = @_lastWriteTime)" : "")}", new { itemStatus.Name, itemStatus.CreationTime, itemStatus.CreationUsername, itemStatus.LastWriteTime, itemStatus.LastWriteUsername, itemStatus.Id, _lastWriteTime = lastWriteTime });
         public int Update(JobExecution jobExecution) => Execute($"UPDATE uchicago_mod_source_record_manager.job_executions SET jsonb = @Content::jsonb WHERE id = @Id", jobExecution);
         public int Update(JobExecutionProgress jobExecutionProgress) => Execute($"UPDATE uchicago_mod_source_record_manager.job_execution_progress SET jsonb = @Content::jsonb, jobexecutionid = @Jobexecutionid WHERE id = @Id", jobExecutionProgress);
         public int Update(JobExecutionSourceChunk jobExecutionSourceChunk) => Execute($"UPDATE uchicago_mod_source_record_manager.job_execution_source_chunks SET jsonb = @Content::jsonb, jobexecutionid = @Jobexecutionid WHERE id = @Id", jobExecutionSourceChunk);
@@ -7272,8 +7346,10 @@ namespace FolioLibrary
         public int Update(Order order) => Execute($"UPDATE uchicago_mod_orders_storage.purchase_order SET jsonb = @Content::jsonb, creation_date = @CreationTime, created_by = @CreationUserId WHERE id = @Id", order);
         public int Update(OrderInvoice orderInvoice) => Execute($"UPDATE uchicago_mod_orders_storage.order_invoice_relationship SET jsonb = @Content::jsonb, purchaseorderid = @Purchaseorderid WHERE id = @Id", orderInvoice);
         public int Update(OrderItem orderItem) => Execute($"UPDATE uchicago_mod_orders_storage.po_line SET jsonb = @Content::jsonb, creation_date = @CreationTime, created_by = @CreationUserId, purchaseorderid = @Purchaseorderid WHERE id = @Id", orderItem);
+        public int Update(OrderStatus orderStatus, DateTime? lastWriteTime = null) => Execute($"UPDATE uc.order_statuses SET name = @Name, creation_time = @CreationTime, creation_username = @CreationUsername, last_write_time = @LastWriteTime, last_write_username = @LastWriteUsername WHERE id = @Id{(lastWriteTime != null ? " AND (last_write_time IS NULL OR last_write_time = @_lastWriteTime)" : "")}", new { orderStatus.Name, orderStatus.CreationTime, orderStatus.CreationUsername, orderStatus.LastWriteTime, orderStatus.LastWriteUsername, orderStatus.Id, _lastWriteTime = lastWriteTime });
         public int Update(OrderTemplate orderTemplate) => Execute($"UPDATE uchicago_mod_orders_storage.order_templates SET jsonb = @Content::jsonb WHERE id = @Id", orderTemplate);
         public int Update(OrderTransactionSummary orderTransactionSummary) => Execute($"UPDATE uchicago_mod_finance_storage.order_transaction_summaries SET jsonb = @Content::jsonb WHERE id = @Id", orderTransactionSummary);
+        public int Update(OrderType orderType, DateTime? lastWriteTime = null) => Execute($"UPDATE uc.order_types SET name = @Name, creation_time = @CreationTime, creation_username = @CreationUsername, last_write_time = @LastWriteTime, last_write_username = @LastWriteUsername WHERE id = @Id{(lastWriteTime != null ? " AND (last_write_time IS NULL OR last_write_time = @_lastWriteTime)" : "")}", new { orderType.Name, orderType.CreationTime, orderType.CreationUsername, orderType.LastWriteTime, orderType.LastWriteUsername, orderType.Id, _lastWriteTime = lastWriteTime });
         public int Update(Organization organization) => Execute($"UPDATE uchicago_mod_organizations_storage.organizations SET jsonb = @Content::jsonb, creation_date = @CreationTime, created_by = @CreationUserId WHERE id = @Id", organization);
         public int Update(OverdueFinePolicy overdueFinePolicy) => Execute($"UPDATE uchicago_mod_feesfines.overdue_fine_policy SET jsonb = @Content::jsonb, creation_date = @CreationTime, created_by = @CreationUserId WHERE id = @Id", overdueFinePolicy);
         public int Update(Owner owner) => Execute($"UPDATE uchicago_mod_feesfines.owners SET jsonb = @Content::jsonb, creation_date = @CreationTime, created_by = @CreationUserId WHERE id = @Id", owner);
@@ -7281,6 +7357,7 @@ namespace FolioLibrary
         public int Update(PatronNoticePolicy patronNoticePolicy) => Execute($"UPDATE uchicago_mod_circulation_storage.patron_notice_policy SET jsonb = @Content::jsonb, creation_date = @CreationTime, created_by = @CreationUserId WHERE id = @Id", patronNoticePolicy);
         public int Update(Payment payment) => Execute($"UPDATE uchicago_mod_feesfines.feefineactions SET jsonb = @Content::jsonb, creation_date = @CreationTime, created_by = @CreationUserId WHERE id = @Id", payment);
         public int Update(PaymentMethod paymentMethod) => Execute($"UPDATE uchicago_mod_feesfines.payments SET jsonb = @Content::jsonb, creation_date = @CreationTime, created_by = @CreationUserId WHERE id = @Id", paymentMethod);
+        public int Update(PaymentType paymentType, DateTime? lastWriteTime = null) => Execute($"UPDATE uc.payment_types SET code = @Code, name = @Name, creation_time = @CreationTime, creation_username = @CreationUsername, last_write_time = @LastWriteTime, last_write_username = @LastWriteUsername WHERE id = @Id{(lastWriteTime != null ? " AND (last_write_time IS NULL OR last_write_time = @_lastWriteTime)" : "")}", new { paymentType.Code, paymentType.Name, paymentType.CreationTime, paymentType.CreationUsername, paymentType.LastWriteTime, paymentType.LastWriteUsername, paymentType.Id, _lastWriteTime = lastWriteTime });
         public int Update(Permission permission) => Execute($"UPDATE uchicago_mod_permissions.permissions SET jsonb = @Content::jsonb, creation_date = @CreationTime, created_by = @CreationUserId WHERE id = @Id", permission);
         public int Update(PermissionsUser permissionsUser) => Execute($"UPDATE uchicago_mod_permissions.permissions_users SET jsonb = @Content::jsonb, creation_date = @CreationTime, created_by = @CreationUserId WHERE id = @Id", permissionsUser);
         public int Update(PrecedingSucceedingTitle precedingSucceedingTitle) => Execute($"UPDATE uchicago_mod_inventory_storage.preceding_succeeding_title SET jsonb = @Content::jsonb, creation_date = @CreationTime, created_by = @CreationUserId, precedinginstanceid = @Precedinginstanceid, succeedinginstanceid = @Succeedinginstanceid WHERE id = @Id", precedingSucceedingTitle);
@@ -7314,7 +7391,753 @@ namespace FolioLibrary
         public int Update(UserSummary userSummary) => Execute($"UPDATE uchicago_mod_patron_blocks.user_summary SET jsonb = @Content::jsonb, creation_date = @CreationTime, created_by = @CreationUserId WHERE id = @Id", userSummary);
         public int Update(Voucher voucher) => Execute($"UPDATE uchicago_mod_invoice_storage.vouchers SET jsonb = @Content::jsonb, creation_date = @CreationTime, created_by = @CreationUserId, invoiceid = @Invoiceid, batchgroupid = @Batchgroupid WHERE id = @Id", voucher);
         public int Update(VoucherItem voucherItem) => Execute($"UPDATE uchicago_mod_invoice_storage.voucher_lines SET jsonb = @Content::jsonb, creation_date = @CreationTime, created_by = @CreationUserId, voucherid = @Voucherid WHERE id = @Id", voucherItem);
+        public int Update(VoucherStatus voucherStatus, DateTime? lastWriteTime = null) => Execute($"UPDATE uc.voucher_statuses SET name = @Name, creation_time = @CreationTime, creation_username = @CreationUsername, last_write_time = @LastWriteTime, last_write_username = @LastWriteUsername WHERE id = @Id{(lastWriteTime != null ? " AND (last_write_time IS NULL OR last_write_time = @_lastWriteTime)" : "")}", new { voucherStatus.Name, voucherStatus.CreationTime, voucherStatus.CreationUsername, voucherStatus.LastWriteTime, voucherStatus.LastWriteUsername, voucherStatus.Id, _lastWriteTime = lastWriteTime });
         public int Update(WaiveReason waiveReason) => Execute($"UPDATE uchicago_mod_feesfines.waives SET jsonb = @Content::jsonb, creation_date = @CreationTime, created_by = @CreationUserId WHERE id = @Id", waiveReason);
+
+        public void UpdateOrInsert(AcquisitionsUnit acquisitionsUnit)
+        {
+            if (acquisitionsUnit.Id == null || Update(acquisitionsUnit) != 1) Insert(acquisitionsUnit);
+        }
+
+        public void UpdateOrInsert(AddressType addressType)
+        {
+            if (addressType.Id == null || Update(addressType) != 1) Insert(addressType);
+        }
+
+        public void UpdateOrInsert(Alert alert)
+        {
+            if (alert.Id == null || Update(alert) != 1) Insert(alert);
+        }
+
+        public void UpdateOrInsert(AlternativeTitleType alternativeTitleType)
+        {
+            if (alternativeTitleType.Id == null || Update(alternativeTitleType) != 1) Insert(alternativeTitleType);
+        }
+
+        public void UpdateOrInsert(AuthAttempt authAttempt)
+        {
+            if (authAttempt.Id == null || Update(authAttempt) != 1) Insert(authAttempt);
+        }
+
+        public void UpdateOrInsert(AuthCredentialsHistory authCredentialsHistory)
+        {
+            if (authCredentialsHistory.Id == null || Update(authCredentialsHistory) != 1) Insert(authCredentialsHistory);
+        }
+
+        public void UpdateOrInsert(AuthPasswordAction authPasswordAction)
+        {
+            if (authPasswordAction.Id == null || Update(authPasswordAction) != 1) Insert(authPasswordAction);
+        }
+
+        public void UpdateOrInsert(BatchGroup batchGroup)
+        {
+            if (batchGroup.Id == null || Update(batchGroup) != 1) Insert(batchGroup);
+        }
+
+        public void UpdateOrInsert(BatchVoucher batchVoucher)
+        {
+            if (batchVoucher.Id == null || Update(batchVoucher) != 1) Insert(batchVoucher);
+        }
+
+        public void UpdateOrInsert(BatchVoucherExport batchVoucherExport)
+        {
+            if (batchVoucherExport.Id == null || Update(batchVoucherExport) != 1) Insert(batchVoucherExport);
+        }
+
+        public void UpdateOrInsert(BatchVoucherExportConfig batchVoucherExportConfig)
+        {
+            if (batchVoucherExportConfig.Id == null || Update(batchVoucherExportConfig) != 1) Insert(batchVoucherExportConfig);
+        }
+
+        public void UpdateOrInsert(Block block)
+        {
+            if (block.Id == null || Update(block) != 1) Insert(block);
+        }
+
+        public void UpdateOrInsert(BlockCondition blockCondition)
+        {
+            if (blockCondition.Id == null || Update(blockCondition) != 1) Insert(blockCondition);
+        }
+
+        public void UpdateOrInsert(BlockLimit blockLimit)
+        {
+            if (blockLimit.Id == null || Update(blockLimit) != 1) Insert(blockLimit);
+        }
+
+        public void UpdateOrInsert(BoundWithPart boundWithPart)
+        {
+            if (boundWithPart.Id == null || Update(boundWithPart) != 1) Insert(boundWithPart);
+        }
+
+        public void UpdateOrInsert(Budget budget)
+        {
+            if (budget.Id == null || Update(budget) != 1) Insert(budget);
+        }
+
+        public void UpdateOrInsert(BudgetExpenseClass budgetExpenseClass)
+        {
+            if (budgetExpenseClass.Id == null || Update(budgetExpenseClass) != 1) Insert(budgetExpenseClass);
+        }
+
+        public void UpdateOrInsert(BudgetGroup budgetGroup)
+        {
+            if (budgetGroup.Id == null || Update(budgetGroup) != 1) Insert(budgetGroup);
+        }
+
+        public void UpdateOrInsert(CallNumberType callNumberType)
+        {
+            if (callNumberType.Id == null || Update(callNumberType) != 1) Insert(callNumberType);
+        }
+
+        public void UpdateOrInsert(Campus campus)
+        {
+            if (campus.Id == null || Update(campus) != 1) Insert(campus);
+        }
+
+        public void UpdateOrInsert(CancellationReason cancellationReason)
+        {
+            if (cancellationReason.Id == null || Update(cancellationReason) != 1) Insert(cancellationReason);
+        }
+
+        public void UpdateOrInsert(Category category)
+        {
+            if (category.Id == null || Update(category) != 1) Insert(category);
+        }
+
+        public void UpdateOrInsert(CheckIn checkIn)
+        {
+            if (checkIn.Id == null || Update(checkIn) != 1) Insert(checkIn);
+        }
+
+        public void UpdateOrInsert(CirculationRule circulationRule)
+        {
+            if (circulationRule.Id == null || Update(circulationRule) != 1) Insert(circulationRule);
+        }
+
+        public void UpdateOrInsert(ClassificationType classificationType)
+        {
+            if (classificationType.Id == null || Update(classificationType) != 1) Insert(classificationType);
+        }
+
+        public void UpdateOrInsert(CloseReason closeReason)
+        {
+            if (closeReason.Id == null || Update(closeReason) != 1) Insert(closeReason);
+        }
+
+        public void UpdateOrInsert(Comment comment)
+        {
+            if (comment.Id == null || Update(comment) != 1) Insert(comment);
+        }
+
+        public void UpdateOrInsert(Configuration configuration)
+        {
+            if (configuration.Id == null || Update(configuration) != 1) Insert(configuration);
+        }
+
+        public void UpdateOrInsert(Contact contact)
+        {
+            if (contact.Id == null || Update(contact) != 1) Insert(contact);
+        }
+
+        public void UpdateOrInsert(ContactType contactType)
+        {
+            if (contactType.Id == null || Update(contactType) != 1) Insert(contactType);
+        }
+
+        public void UpdateOrInsert(ContributorNameType contributorNameType)
+        {
+            if (contributorNameType.Id == null || Update(contributorNameType) != 1) Insert(contributorNameType);
+        }
+
+        public void UpdateOrInsert(ContributorType contributorType)
+        {
+            if (contributorType.Id == null || Update(contributorType) != 1) Insert(contributorType);
+        }
+
+        public void UpdateOrInsert(Country country)
+        {
+            if (country.Alpha2Code == null || Update(country) != 1) Insert(country);
+        }
+
+        public void UpdateOrInsert(CustomField customField)
+        {
+            if (customField.Id == null || Update(customField) != 1) Insert(customField);
+        }
+
+        public void UpdateOrInsert(Department department)
+        {
+            if (department.Id == null || Update(department) != 1) Insert(department);
+        }
+
+        public void UpdateOrInsert(Document document)
+        {
+            if (document.Id == null || Update(document) != 1) Insert(document);
+        }
+
+        public void UpdateOrInsert(ElectronicAccessRelationship electronicAccessRelationship)
+        {
+            if (electronicAccessRelationship.Id == null || Update(electronicAccessRelationship) != 1) Insert(electronicAccessRelationship);
+        }
+
+        public void UpdateOrInsert(ErrorRecord errorRecord)
+        {
+            if (errorRecord.Id == null || Update(errorRecord) != 1) Insert(errorRecord);
+        }
+
+        public void UpdateOrInsert(EventLog eventLog)
+        {
+            if (eventLog.Id == null || Update(eventLog) != 1) Insert(eventLog);
+        }
+
+        public void UpdateOrInsert(ExpenseClass expenseClass)
+        {
+            if (expenseClass.Id == null || Update(expenseClass) != 1) Insert(expenseClass);
+        }
+
+        public void UpdateOrInsert(ExportConfigCredential exportConfigCredential)
+        {
+            if (exportConfigCredential.Id == null || Update(exportConfigCredential) != 1) Insert(exportConfigCredential);
+        }
+
+        public void UpdateOrInsert(Fee fee)
+        {
+            if (fee.Id == null || Update(fee) != 1) Insert(fee);
+        }
+
+        public void UpdateOrInsert(FeeType feeType)
+        {
+            if (feeType.Id == null || Update(feeType) != 1) Insert(feeType);
+        }
+
+        public void UpdateOrInsert(FinanceGroup financeGroup)
+        {
+            if (financeGroup.Id == null || Update(financeGroup) != 1) Insert(financeGroup);
+        }
+
+        public void UpdateOrInsert(FiscalYear fiscalYear)
+        {
+            if (fiscalYear.Id == null || Update(fiscalYear) != 1) Insert(fiscalYear);
+        }
+
+        public void UpdateOrInsert(FixedDueDateSchedule fixedDueDateSchedule)
+        {
+            if (fixedDueDateSchedule.Id == null || Update(fixedDueDateSchedule) != 1) Insert(fixedDueDateSchedule);
+        }
+
+        public void UpdateOrInsert(Fund fund)
+        {
+            if (fund.Id == null || Update(fund) != 1) Insert(fund);
+        }
+
+        public void UpdateOrInsert(FundType fundType)
+        {
+            if (fundType.Id == null || Update(fundType) != 1) Insert(fundType);
+        }
+
+        public void UpdateOrInsert(Group group)
+        {
+            if (group.Id == null || Update(group) != 1) Insert(group);
+        }
+
+        public void UpdateOrInsert(Holding holding)
+        {
+            if (holding.Id == null || Update(holding) != 1) Insert(holding);
+        }
+
+        public void UpdateOrInsert(HoldingNoteType holdingNoteType)
+        {
+            if (holdingNoteType.Id == null || Update(holdingNoteType) != 1) Insert(holdingNoteType);
+        }
+
+        public void UpdateOrInsert(HoldingType holdingType)
+        {
+            if (holdingType.Id == null || Update(holdingType) != 1) Insert(holdingType);
+        }
+
+        public void UpdateOrInsert(HridSetting hridSetting)
+        {
+            if (hridSetting.Id == null || Update(hridSetting) != 1) Insert(hridSetting);
+        }
+
+        public void UpdateOrInsert(IdType idType)
+        {
+            if (idType.Id == null || Update(idType) != 1) Insert(idType);
+        }
+
+        public void UpdateOrInsert(IllPolicy illPolicy)
+        {
+            if (illPolicy.Id == null || Update(illPolicy) != 1) Insert(illPolicy);
+        }
+
+        public void UpdateOrInsert(Instance instance)
+        {
+            if (instance.Id == null || Update(instance) != 1) Insert(instance);
+        }
+
+        public void UpdateOrInsert(InstanceFormat instanceFormat)
+        {
+            if (instanceFormat.Id == null || Update(instanceFormat) != 1) Insert(instanceFormat);
+        }
+
+        public void UpdateOrInsert(InstanceNoteType instanceNoteType)
+        {
+            if (instanceNoteType.Id == null || Update(instanceNoteType) != 1) Insert(instanceNoteType);
+        }
+
+        public void UpdateOrInsert(InstanceRelationship instanceRelationship)
+        {
+            if (instanceRelationship.Id == null || Update(instanceRelationship) != 1) Insert(instanceRelationship);
+        }
+
+        public void UpdateOrInsert(InstanceRelationshipType instanceRelationshipType)
+        {
+            if (instanceRelationshipType.Id == null || Update(instanceRelationshipType) != 1) Insert(instanceRelationshipType);
+        }
+
+        public void UpdateOrInsert(InstanceSourceMarc instanceSourceMarc)
+        {
+            if (instanceSourceMarc.Id == null || Update(instanceSourceMarc) != 1) Insert(instanceSourceMarc);
+        }
+
+        public void UpdateOrInsert(InstanceStatus instanceStatus)
+        {
+            if (instanceStatus.Id == null || Update(instanceStatus) != 1) Insert(instanceStatus);
+        }
+
+        public void UpdateOrInsert(InstanceType instanceType)
+        {
+            if (instanceType.Id == null || Update(instanceType) != 1) Insert(instanceType);
+        }
+
+        public void UpdateOrInsert(Institution institution)
+        {
+            if (institution.Id == null || Update(institution) != 1) Insert(institution);
+        }
+
+        public void UpdateOrInsert(Interface @interface)
+        {
+            if (@interface.Id == null || Update(@interface) != 1) Insert(@interface);
+        }
+
+        public void UpdateOrInsert(InterfaceCredential interfaceCredential)
+        {
+            if (interfaceCredential.Id == null || Update(interfaceCredential) != 1) Insert(interfaceCredential);
+        }
+
+        public void UpdateOrInsert(Invoice invoice)
+        {
+            if (invoice.Id == null || Update(invoice) != 1) Insert(invoice);
+        }
+
+        public void UpdateOrInsert(InvoiceItem invoiceItem)
+        {
+            if (invoiceItem.Id == null || Update(invoiceItem) != 1) Insert(invoiceItem);
+        }
+
+        public void UpdateOrInsert(InvoiceStatus invoiceStatus)
+        {
+            if (invoiceStatus.Id == null || Update(invoiceStatus) != 1) Insert(invoiceStatus);
+        }
+
+        public void UpdateOrInsert(InvoiceTransactionSummary invoiceTransactionSummary)
+        {
+            if (invoiceTransactionSummary.Id == null || Update(invoiceTransactionSummary) != 1) Insert(invoiceTransactionSummary);
+        }
+
+        public void UpdateOrInsert(Item item)
+        {
+            if (item.Id == null || Update(item) != 1) Insert(item);
+        }
+
+        public void UpdateOrInsert(ItemDamagedStatus itemDamagedStatus)
+        {
+            if (itemDamagedStatus.Id == null || Update(itemDamagedStatus) != 1) Insert(itemDamagedStatus);
+        }
+
+        public void UpdateOrInsert(ItemNoteType itemNoteType)
+        {
+            if (itemNoteType.Id == null || Update(itemNoteType) != 1) Insert(itemNoteType);
+        }
+
+        public void UpdateOrInsert(ItemStatus itemStatus)
+        {
+            if (itemStatus.Id == null || Update(itemStatus) != 1) Insert(itemStatus);
+        }
+
+        public void UpdateOrInsert(JobExecution jobExecution)
+        {
+            if (jobExecution.Id == null || Update(jobExecution) != 1) Insert(jobExecution);
+        }
+
+        public void UpdateOrInsert(JobExecutionProgress jobExecutionProgress)
+        {
+            if (jobExecutionProgress.Id == null || Update(jobExecutionProgress) != 1) Insert(jobExecutionProgress);
+        }
+
+        public void UpdateOrInsert(JobExecutionSourceChunk jobExecutionSourceChunk)
+        {
+            if (jobExecutionSourceChunk.Id == null || Update(jobExecutionSourceChunk) != 1) Insert(jobExecutionSourceChunk);
+        }
+
+        public void UpdateOrInsert(JobMonitoring jobMonitoring)
+        {
+            if (jobMonitoring.Id == null || Update(jobMonitoring) != 1) Insert(jobMonitoring);
+        }
+
+        public void UpdateOrInsert(JournalRecord journalRecord)
+        {
+            if (journalRecord.Id == null || Update(journalRecord) != 1) Insert(journalRecord);
+        }
+
+        public void UpdateOrInsert(Ledger ledger)
+        {
+            if (ledger.Id == null || Update(ledger) != 1) Insert(ledger);
+        }
+
+        public void UpdateOrInsert(LedgerRollover ledgerRollover)
+        {
+            if (ledgerRollover.Id == null || Update(ledgerRollover) != 1) Insert(ledgerRollover);
+        }
+
+        public void UpdateOrInsert(LedgerRolloverError ledgerRolloverError)
+        {
+            if (ledgerRolloverError.Id == null || Update(ledgerRolloverError) != 1) Insert(ledgerRolloverError);
+        }
+
+        public void UpdateOrInsert(LedgerRolloverProgress ledgerRolloverProgress)
+        {
+            if (ledgerRolloverProgress.Id == null || Update(ledgerRolloverProgress) != 1) Insert(ledgerRolloverProgress);
+        }
+
+        public void UpdateOrInsert(Library library)
+        {
+            if (library.Id == null || Update(library) != 1) Insert(library);
+        }
+
+        public void UpdateOrInsert(Loan loan)
+        {
+            if (loan.Id == null || Update(loan) != 1) Insert(loan);
+        }
+
+        public void UpdateOrInsert(LoanEvent loanEvent)
+        {
+            if (loanEvent.Id == null || Update(loanEvent) != 1) Insert(loanEvent);
+        }
+
+        public void UpdateOrInsert(LoanPolicy loanPolicy)
+        {
+            if (loanPolicy.Id == null || Update(loanPolicy) != 1) Insert(loanPolicy);
+        }
+
+        public void UpdateOrInsert(LoanType loanType)
+        {
+            if (loanType.Id == null || Update(loanType) != 1) Insert(loanType);
+        }
+
+        public void UpdateOrInsert(Location location)
+        {
+            if (location.Id == null || Update(location) != 1) Insert(location);
+        }
+
+        public void UpdateOrInsert(Login login)
+        {
+            if (login.Id == null || Update(login) != 1) Insert(login);
+        }
+
+        public void UpdateOrInsert(LostItemFeePolicy lostItemFeePolicy)
+        {
+            if (lostItemFeePolicy.Id == null || Update(lostItemFeePolicy) != 1) Insert(lostItemFeePolicy);
+        }
+
+        public void UpdateOrInsert(ManualBlockTemplate manualBlockTemplate)
+        {
+            if (manualBlockTemplate.Id == null || Update(manualBlockTemplate) != 1) Insert(manualBlockTemplate);
+        }
+
+        public void UpdateOrInsert(MappingRule mappingRule)
+        {
+            if (mappingRule.Id == null || Update(mappingRule) != 1) Insert(mappingRule);
+        }
+
+        public void UpdateOrInsert(MarcRecord marcRecord)
+        {
+            if (marcRecord.Id == null || Update(marcRecord) != 1) Insert(marcRecord);
+        }
+
+        public void UpdateOrInsert(MaterialType materialType)
+        {
+            if (materialType.Id == null || Update(materialType) != 1) Insert(materialType);
+        }
+
+        public void UpdateOrInsert(ModeOfIssuance modeOfIssuance)
+        {
+            if (modeOfIssuance.Id == null || Update(modeOfIssuance) != 1) Insert(modeOfIssuance);
+        }
+
+        public void UpdateOrInsert(NatureOfContentTerm natureOfContentTerm)
+        {
+            if (natureOfContentTerm.Id == null || Update(natureOfContentTerm) != 1) Insert(natureOfContentTerm);
+        }
+
+        public void UpdateOrInsert(Note note)
+        {
+            if (note.Id == null || Update(note) != 1) Insert(note);
+        }
+
+        public void UpdateOrInsert(NoteType noteType)
+        {
+            if (noteType.Id == null || Update(noteType) != 1) Insert(noteType);
+        }
+
+        public void UpdateOrInsert(Order order)
+        {
+            if (order.Id == null || Update(order) != 1) Insert(order);
+        }
+
+        public void UpdateOrInsert(OrderInvoice orderInvoice)
+        {
+            if (orderInvoice.Id == null || Update(orderInvoice) != 1) Insert(orderInvoice);
+        }
+
+        public void UpdateOrInsert(OrderItem orderItem)
+        {
+            if (orderItem.Id == null || Update(orderItem) != 1) Insert(orderItem);
+        }
+
+        public void UpdateOrInsert(OrderStatus orderStatus)
+        {
+            if (orderStatus.Id == null || Update(orderStatus) != 1) Insert(orderStatus);
+        }
+
+        public void UpdateOrInsert(OrderTemplate orderTemplate)
+        {
+            if (orderTemplate.Id == null || Update(orderTemplate) != 1) Insert(orderTemplate);
+        }
+
+        public void UpdateOrInsert(OrderTransactionSummary orderTransactionSummary)
+        {
+            if (orderTransactionSummary.Id == null || Update(orderTransactionSummary) != 1) Insert(orderTransactionSummary);
+        }
+
+        public void UpdateOrInsert(OrderType orderType)
+        {
+            if (orderType.Id == null || Update(orderType) != 1) Insert(orderType);
+        }
+
+        public void UpdateOrInsert(Organization organization)
+        {
+            if (organization.Id == null || Update(organization) != 1) Insert(organization);
+        }
+
+        public void UpdateOrInsert(OverdueFinePolicy overdueFinePolicy)
+        {
+            if (overdueFinePolicy.Id == null || Update(overdueFinePolicy) != 1) Insert(overdueFinePolicy);
+        }
+
+        public void UpdateOrInsert(Owner owner)
+        {
+            if (owner.Id == null || Update(owner) != 1) Insert(owner);
+        }
+
+        public void UpdateOrInsert(PatronActionSession patronActionSession)
+        {
+            if (patronActionSession.Id == null || Update(patronActionSession) != 1) Insert(patronActionSession);
+        }
+
+        public void UpdateOrInsert(PatronNoticePolicy patronNoticePolicy)
+        {
+            if (patronNoticePolicy.Id == null || Update(patronNoticePolicy) != 1) Insert(patronNoticePolicy);
+        }
+
+        public void UpdateOrInsert(Payment payment)
+        {
+            if (payment.Id == null || Update(payment) != 1) Insert(payment);
+        }
+
+        public void UpdateOrInsert(PaymentMethod paymentMethod)
+        {
+            if (paymentMethod.Id == null || Update(paymentMethod) != 1) Insert(paymentMethod);
+        }
+
+        public void UpdateOrInsert(PaymentType paymentType)
+        {
+            if (paymentType.Id == null || Update(paymentType) != 1) Insert(paymentType);
+        }
+
+        public void UpdateOrInsert(Permission permission)
+        {
+            if (permission.Id == null || Update(permission) != 1) Insert(permission);
+        }
+
+        public void UpdateOrInsert(PermissionsUser permissionsUser)
+        {
+            if (permissionsUser.Id == null || Update(permissionsUser) != 1) Insert(permissionsUser);
+        }
+
+        public void UpdateOrInsert(PrecedingSucceedingTitle precedingSucceedingTitle)
+        {
+            if (precedingSucceedingTitle.Id == null || Update(precedingSucceedingTitle) != 1) Insert(precedingSucceedingTitle);
+        }
+
+        public void UpdateOrInsert(Prefix prefix)
+        {
+            if (prefix.Id == null || Update(prefix) != 1) Insert(prefix);
+        }
+
+        public void UpdateOrInsert(Proxy proxy)
+        {
+            if (proxy.Id == null || Update(proxy) != 1) Insert(proxy);
+        }
+
+        public void UpdateOrInsert(RawRecord rawRecord)
+        {
+            if (rawRecord.Id == null || Update(rawRecord) != 1) Insert(rawRecord);
+        }
+
+        public void UpdateOrInsert(Receiving receiving)
+        {
+            if (receiving.Id == null || Update(receiving) != 1) Insert(receiving);
+        }
+
+        public void UpdateOrInsert(Record record)
+        {
+            if (record.Id == null || Update(record) != 1) Insert(record);
+        }
+
+        public void UpdateOrInsert(RefundReason refundReason)
+        {
+            if (refundReason.Id == null || Update(refundReason) != 1) Insert(refundReason);
+        }
+
+        public void UpdateOrInsert(ReportingCode reportingCode)
+        {
+            if (reportingCode.Id == null || Update(reportingCode) != 1) Insert(reportingCode);
+        }
+
+        public void UpdateOrInsert(Request request)
+        {
+            if (request.Id == null || Update(request) != 1) Insert(request);
+        }
+
+        public void UpdateOrInsert(RequestPolicy requestPolicy)
+        {
+            if (requestPolicy.Id == null || Update(requestPolicy) != 1) Insert(requestPolicy);
+        }
+
+        public void UpdateOrInsert(ScheduledNotice scheduledNotice)
+        {
+            if (scheduledNotice.Id == null || Update(scheduledNotice) != 1) Insert(scheduledNotice);
+        }
+
+        public void UpdateOrInsert(ServicePoint servicePoint)
+        {
+            if (servicePoint.Id == null || Update(servicePoint) != 1) Insert(servicePoint);
+        }
+
+        public void UpdateOrInsert(ServicePointUser servicePointUser)
+        {
+            if (servicePointUser.Id == null || Update(servicePointUser) != 1) Insert(servicePointUser);
+        }
+
+        public void UpdateOrInsert(Snapshot snapshot)
+        {
+            if (snapshot.Id == null || Update(snapshot) != 1) Insert(snapshot);
+        }
+
+        public void UpdateOrInsert(Source source)
+        {
+            if (source.Id == null || Update(source) != 1) Insert(source);
+        }
+
+        public void UpdateOrInsert(StaffSlip staffSlip)
+        {
+            if (staffSlip.Id == null || Update(staffSlip) != 1) Insert(staffSlip);
+        }
+
+        public void UpdateOrInsert(StatisticalCode statisticalCode)
+        {
+            if (statisticalCode.Id == null || Update(statisticalCode) != 1) Insert(statisticalCode);
+        }
+
+        public void UpdateOrInsert(StatisticalCodeType statisticalCodeType)
+        {
+            if (statisticalCodeType.Id == null || Update(statisticalCodeType) != 1) Insert(statisticalCodeType);
+        }
+
+        public void UpdateOrInsert(Suffix suffix)
+        {
+            if (suffix.Id == null || Update(suffix) != 1) Insert(suffix);
+        }
+
+        public void UpdateOrInsert(Tag tag)
+        {
+            if (tag.Id == null || Update(tag) != 1) Insert(tag);
+        }
+
+        public void UpdateOrInsert(Template template)
+        {
+            if (template.Id == null || Update(template) != 1) Insert(template);
+        }
+
+        public void UpdateOrInsert(Title title)
+        {
+            if (title.Id == null || Update(title) != 1) Insert(title);
+        }
+
+        public void UpdateOrInsert(Transaction transaction)
+        {
+            if (transaction.Id == null || Update(transaction) != 1) Insert(transaction);
+        }
+
+        public void UpdateOrInsert(TransferAccount transferAccount)
+        {
+            if (transferAccount.Id == null || Update(transferAccount) != 1) Insert(transferAccount);
+        }
+
+        public void UpdateOrInsert(TransferCriteria transferCriteria)
+        {
+            if (transferCriteria.Id == null || Update(transferCriteria) != 1) Insert(transferCriteria);
+        }
+
+        public void UpdateOrInsert(User user)
+        {
+            if (user.Id == null || Update(user) != 1) Insert(user);
+        }
+
+        public void UpdateOrInsert(UserAcquisitionsUnit userAcquisitionsUnit)
+        {
+            if (userAcquisitionsUnit.Id == null || Update(userAcquisitionsUnit) != 1) Insert(userAcquisitionsUnit);
+        }
+
+        public void UpdateOrInsert(UserRequestPreference userRequestPreference)
+        {
+            if (userRequestPreference.Id == null || Update(userRequestPreference) != 1) Insert(userRequestPreference);
+        }
+
+        public void UpdateOrInsert(UserSummary userSummary)
+        {
+            if (userSummary.Id == null || Update(userSummary) != 1) Insert(userSummary);
+        }
+
+        public void UpdateOrInsert(Voucher voucher)
+        {
+            if (voucher.Id == null || Update(voucher) != 1) Insert(voucher);
+        }
+
+        public void UpdateOrInsert(VoucherItem voucherItem)
+        {
+            if (voucherItem.Id == null || Update(voucherItem) != 1) Insert(voucherItem);
+        }
+
+        public void UpdateOrInsert(VoucherStatus voucherStatus)
+        {
+            if (voucherStatus.Id == null || Update(voucherStatus) != 1) Insert(voucherStatus);
+        }
+
+        public void UpdateOrInsert(WaiveReason waiveReason)
+        {
+            if (waiveReason.Id == null || Update(waiveReason) != 1) Insert(waiveReason);
+        }
 
         public int DeleteAcquisitionsUnit(Guid? id) => Execute($"DELETE FROM uchicago_mod_orders_storage{(IsMySql ? "_" : ".")}acquisitions_unit WHERE id = @id", new { id });
         public int DeleteAcquisitionsUnit2(Guid? id) => Execute($"DELETE FROM uc{(IsMySql ? "_" : ".")}acquisitions_units WHERE id = @id", new { id });
@@ -7499,6 +8322,7 @@ namespace FolioLibrary
         public int DeleteInvoiceItemReferenceNumber(string id) => Execute($"DELETE FROM uc{(IsMySql ? "_" : ".")}invoice_item_reference_numbers WHERE id = @id", new { id });
         public int DeleteInvoiceItemTag(string id) => Execute($"DELETE FROM uc{(IsMySql ? "_" : ".")}invoice_item_tags WHERE id = @id", new { id });
         public int DeleteInvoiceOrderNumber(string id) => Execute($"DELETE FROM uc{(IsMySql ? "_" : ".")}invoice_order_numbers WHERE id = @id", new { id });
+        public int DeleteInvoiceStatus(int? id) => Execute($"DELETE FROM uc{(IsMySql ? "_" : ".")}invoice_statuses WHERE id = @id", new { id });
         public int DeleteInvoiceTag(string id) => Execute($"DELETE FROM uc{(IsMySql ? "_" : ".")}invoice_tags WHERE id = @id", new { id });
         public int DeleteInvoiceTransactionSummary(Guid? id) => Execute($"DELETE FROM uchicago_mod_finance_storage{(IsMySql ? "_" : ".")}invoice_transaction_summaries WHERE id = @id", new { id });
         public int DeleteInvoiceTransactionSummary2(Guid? id) => Execute($"DELETE FROM uc{(IsMySql ? "_" : ".")}invoice_transaction_summaries WHERE id = @id", new { id });
@@ -7513,6 +8337,7 @@ namespace FolioLibrary
         public int DeleteItemNoteType(Guid? id) => Execute($"DELETE FROM uchicago_mod_inventory_storage{(IsMySql ? "_" : ".")}item_note_type WHERE id = @id", new { id });
         public int DeleteItemNoteType2(Guid? id) => Execute($"DELETE FROM uc{(IsMySql ? "_" : ".")}item_note_types WHERE id = @id", new { id });
         public int DeleteItemStatisticalCode(string id, Guid? itemId) => Execute($"DELETE FROM uc{(IsMySql ? "_" : ".")}item_statistical_codes WHERE id = @id AND item_id = @itemId", new { id, itemId });
+        public int DeleteItemStatus(int? id) => Execute($"DELETE FROM uc{(IsMySql ? "_" : ".")}item_statuses WHERE id = @id", new { id });
         public int DeleteItemTag(string id, Guid? itemId) => Execute($"DELETE FROM uc{(IsMySql ? "_" : ".")}item_tags WHERE id = @id AND item_id = @itemId", new { id, itemId });
         public int DeleteItemYearCaption(string id, Guid? itemId) => Execute($"DELETE FROM uc{(IsMySql ? "_" : ".")}item_year_caption WHERE id = @id AND item_id = @itemId", new { id, itemId });
         public int DeleteJobExecution(Guid? id) => Execute($"DELETE FROM uchicago_mod_source_record_manager{(IsMySql ? "_" : ".")}job_executions WHERE id = @id", new { id });
@@ -7590,11 +8415,13 @@ namespace FolioLibrary
         public int DeleteOrderItemTag(string id) => Execute($"DELETE FROM uc{(IsMySql ? "_" : ".")}order_item_tags WHERE id = @id", new { id });
         public int DeleteOrderItemVolume(string id) => Execute($"DELETE FROM uc{(IsMySql ? "_" : ".")}order_item_volumes WHERE id = @id", new { id });
         public int DeleteOrderNote(string id) => Execute($"DELETE FROM uc{(IsMySql ? "_" : ".")}order_notes WHERE id = @id", new { id });
+        public int DeleteOrderStatus(int? id) => Execute($"DELETE FROM uc{(IsMySql ? "_" : ".")}order_statuses WHERE id = @id", new { id });
         public int DeleteOrderTag(string id) => Execute($"DELETE FROM uc{(IsMySql ? "_" : ".")}order_tags WHERE id = @id", new { id });
         public int DeleteOrderTemplate(Guid? id) => Execute($"DELETE FROM uchicago_mod_orders_storage{(IsMySql ? "_" : ".")}order_templates WHERE id = @id", new { id });
         public int DeleteOrderTemplate2(Guid? id) => Execute($"DELETE FROM uc{(IsMySql ? "_" : ".")}order_templates WHERE id = @id", new { id });
         public int DeleteOrderTransactionSummary(Guid? id) => Execute($"DELETE FROM uchicago_mod_finance_storage{(IsMySql ? "_" : ".")}order_transaction_summaries WHERE id = @id", new { id });
         public int DeleteOrderTransactionSummary2(Guid? id) => Execute($"DELETE FROM uc{(IsMySql ? "_" : ".")}order_transaction_summaries WHERE id = @id", new { id });
+        public int DeleteOrderType(int? id) => Execute($"DELETE FROM uc{(IsMySql ? "_" : ".")}order_types WHERE id = @id", new { id });
         public int DeleteOrganization(Guid? id) => Execute($"DELETE FROM uchicago_mod_organizations_storage{(IsMySql ? "_" : ".")}organizations WHERE id = @id", new { id });
         public int DeleteOrganization2(Guid? id) => Execute($"DELETE FROM uc{(IsMySql ? "_" : ".")}organizations WHERE id = @id", new { id });
         public int DeleteOrganizationAccount(string id) => Execute($"DELETE FROM uc{(IsMySql ? "_" : ".")}organization_accounts WHERE id = @id", new { id });
@@ -7630,6 +8457,7 @@ namespace FolioLibrary
         public int DeletePayment2(Guid? id) => Execute($"DELETE FROM uc{(IsMySql ? "_" : ".")}payments WHERE id = @id", new { id });
         public int DeletePaymentMethod(Guid? id) => Execute($"DELETE FROM uchicago_mod_feesfines{(IsMySql ? "_" : ".")}payments WHERE id = @id", new { id });
         public int DeletePaymentMethod2(Guid? id) => Execute($"DELETE FROM uc{(IsMySql ? "_" : ".")}payment_methods WHERE id = @id", new { id });
+        public int DeletePaymentType(int? id) => Execute($"DELETE FROM uc{(IsMySql ? "_" : ".")}payment_types WHERE id = @id", new { id });
         public int DeletePermission(Guid? id) => Execute($"DELETE FROM uchicago_mod_permissions{(IsMySql ? "_" : ".")}permissions WHERE id = @id", new { id });
         public int DeletePermission2(Guid? id) => Execute($"DELETE FROM uc{(IsMySql ? "_" : ".")}permissions WHERE id = @id", new { id });
         public int DeletePermissionChildOf(string id) => Execute($"DELETE FROM uc{(IsMySql ? "_" : ".")}permission_child_of WHERE id = @id", new { id });
@@ -7736,6 +8564,7 @@ namespace FolioLibrary
         public int DeleteVoucherItem2(Guid? id) => Execute($"DELETE FROM uc{(IsMySql ? "_" : ".")}voucher_items WHERE id = @id", new { id });
         public int DeleteVoucherItemFund(string id) => Execute($"DELETE FROM uc{(IsMySql ? "_" : ".")}voucher_item_fund_distributions WHERE id = @id", new { id });
         public int DeleteVoucherItemInvoiceItem(string id) => Execute($"DELETE FROM uc{(IsMySql ? "_" : ".")}voucher_item_invoice_items WHERE id = @id", new { id });
+        public int DeleteVoucherStatus(int? id) => Execute($"DELETE FROM uc{(IsMySql ? "_" : ".")}voucher_statuses WHERE id = @id", new { id });
         public int DeleteWaiveReason(Guid? id) => Execute($"DELETE FROM uchicago_mod_feesfines{(IsMySql ? "_" : ".")}waives WHERE id = @id", new { id });
         public int DeleteWaiveReason2(Guid? id) => Execute($"DELETE FROM uc{(IsMySql ? "_" : ".")}waive_reasons WHERE id = @id", new { id });
 

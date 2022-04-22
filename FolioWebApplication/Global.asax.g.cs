@@ -167,6 +167,7 @@ namespace FolioWebApplication
             Session["ItemNotesPermission"] = roles.Contains("all") || roles.Contains("inventory.all") || roles.Contains("uc.itemnotes.view") ? "View" : null;
             Session["ItemNoteType2sPermission"] = roles.Contains("all") || roles.Contains("inventory.all") || roles.Contains("uc.itemnotetypes.view") ? "View" : null;
             Session["ItemStatisticalCodesPermission"] = roles.Contains("all") || roles.Contains("inventory.all") || roles.Contains("uc.itemstatisticalcodes.view") ? "View" : null;
+            Session["ItemStatusesPermission"] = roles.Contains("all") || roles.Contains("inventory.all") || roles.Contains("uc.itemstatuses.view") ? "View" : null;
             Session["ItemTagsPermission"] = roles.Contains("all") || roles.Contains("inventory.all") || roles.Contains("uc.itemtags.view") ? "View" : null;
             Session["ItemYearCaptionsPermission"] = roles.Contains("all") || roles.Contains("inventory.all") || roles.Contains("uc.itemyearcaptions.view") ? "View" : null;
             Session["LanguagesPermission"] = roles.Contains("all") || roles.Contains("inventory.all") || roles.Contains("uc.languages.view") ? "View" : null;
@@ -223,12 +224,15 @@ namespace FolioWebApplication
             Session["InvoiceItemReferenceNumbersPermission"] = roles.Contains("all") || roles.Contains("uc.invoiceitemreferencenumbers.view") ? "View" : null;
             Session["InvoiceItemTagsPermission"] = roles.Contains("all") || roles.Contains("uc.invoiceitemtags.view") ? "View" : null;
             Session["InvoiceOrderNumbersPermission"] = roles.Contains("all") || roles.Contains("uc.invoiceordernumbers.view") ? "View" : null;
+            Session["InvoiceStatusesPermission"] = roles.Contains("all") || roles.Contains("uc.invoicestatuses.view") ? "View" : null;
             Session["InvoiceTagsPermission"] = roles.Contains("all") || roles.Contains("uc.invoicetags.view") ? "View" : null;
+            Session["PaymentTypesPermission"] = roles.Contains("all") || roles.Contains("uc.paymenttypes.view") ? "View" : null;
             Session["Voucher2sPermission"] = roles.Contains("all") || roles.Contains("uc.vouchers.view") ? "View" : null;
             Session["VoucherAcquisitionsUnitsPermission"] = roles.Contains("all") || roles.Contains("uc.voucheracquisitionsunits.view") ? "View" : null;
             Session["VoucherItem2sPermission"] = roles.Contains("all") || roles.Contains("uc.voucheritems.view") ? "View" : null;
             Session["VoucherItemFundsPermission"] = roles.Contains("all") || roles.Contains("uc.voucheritemfunds.view") ? "View" : null;
             Session["VoucherItemInvoiceItemsPermission"] = roles.Contains("all") || roles.Contains("uc.voucheriteminvoiceitems.view") ? "View" : null;
+            Session["VoucherStatusesPermission"] = roles.Contains("all") || roles.Contains("uc.voucherstatuses.view") ? "View" : null;
         }
 
         private void SetLoginPermissions(HashSet<string> roles)
@@ -260,8 +264,10 @@ namespace FolioWebApplication
             Session["OrderItemTagsPermission"] = roles.Contains("all") || roles.Contains("orders.all") || roles.Contains("uc.orderitemtags.view") ? "View" : null;
             Session["OrderItemVolumesPermission"] = roles.Contains("all") || roles.Contains("orders.all") || roles.Contains("uc.orderitemvolumes.view") ? "View" : null;
             Session["OrderNotesPermission"] = roles.Contains("all") || roles.Contains("orders.all") || roles.Contains("uc.ordernotes.view") ? "View" : null;
+            Session["OrderStatusesPermission"] = roles.Contains("all") || roles.Contains("orders.all") || roles.Contains("uc.orderstatuses.view") ? "View" : null;
             Session["OrderTagsPermission"] = roles.Contains("all") || roles.Contains("orders.all") || roles.Contains("uc.ordertags.view") ? "View" : null;
             Session["OrderTemplate2sPermission"] = roles.Contains("all") || roles.Contains("orders.all") || roles.Contains("uc.ordertemplates.view") ? "View" : null;
+            Session["OrderTypesPermission"] = roles.Contains("all") || roles.Contains("orders.all") || roles.Contains("uc.ordertypes.view") ? "View" : null;
             Session["Prefix2sPermission"] = roles.Contains("all") || roles.Contains("orders.all") || roles.Contains("uc.prefixes.view") ? "View" : null;
             Session["Receiving2sPermission"] = roles.Contains("all") || roles.Contains("orders.all") || roles.Contains("uc.receivings.view") ? "View" : null;
             Session["ReportingCode2sPermission"] = roles.Contains("all") || roles.Contains("orders.all") || roles.Contains("uc.reportingcodes.view") ? "View" : null;
@@ -511,6 +517,7 @@ namespace FolioWebApplication
             Session["ItemNotesPermission"] = permission;
             Session["ItemNoteType2sPermission"] = permission;
             Session["ItemStatisticalCodesPermission"] = permission;
+            Session["ItemStatusesPermission"] = permission;
             Session["ItemTagsPermission"] = permission;
             Session["ItemYearCaptionsPermission"] = permission;
             Session["LanguagesPermission"] = permission;
@@ -567,12 +574,15 @@ namespace FolioWebApplication
             Session["InvoiceItemReferenceNumbersPermission"] = permission;
             Session["InvoiceItemTagsPermission"] = permission;
             Session["InvoiceOrderNumbersPermission"] = permission;
+            Session["InvoiceStatusesPermission"] = permission;
             Session["InvoiceTagsPermission"] = permission;
+            Session["PaymentTypesPermission"] = permission;
             Session["Voucher2sPermission"] = permission;
             Session["VoucherAcquisitionsUnitsPermission"] = permission;
             Session["VoucherItem2sPermission"] = permission;
             Session["VoucherItemFundsPermission"] = permission;
             Session["VoucherItemInvoiceItemsPermission"] = permission;
+            Session["VoucherStatusesPermission"] = permission;
         }
 
         private void SetLoginPermissions(string permission = null)
@@ -604,8 +614,10 @@ namespace FolioWebApplication
             Session["OrderItemTagsPermission"] = permission;
             Session["OrderItemVolumesPermission"] = permission;
             Session["OrderNotesPermission"] = permission;
+            Session["OrderStatusesPermission"] = permission;
             Session["OrderTagsPermission"] = permission;
             Session["OrderTemplate2sPermission"] = permission;
+            Session["OrderTypesPermission"] = permission;
             Session["Prefix2sPermission"] = permission;
             Session["Receiving2sPermission"] = permission;
             Session["ReportingCode2sPermission"] = permission;
