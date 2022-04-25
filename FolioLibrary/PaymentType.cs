@@ -12,24 +12,21 @@ namespace FolioLibrary
         [Column("id"), ScaffoldColumn(false)]
         public virtual int? Id { get; set; }
 
-        [Column("code"), Display(Order = 2), Required, StringLength(128)]
-        public virtual string Code { get; set; }
-
-        [Column("name"), Display(Order = 3), Required, StringLength(128)]
+        [Column("name"), Display(Order = 2), Required, StringLength(128)]
         public virtual string Name { get; set; }
 
-        [Column("creation_time"), DataType(DataType.DateTime), Display(Name = "Creation Time", Order = 4), DisplayFormat(DataFormatString = "{0:g}"), Editable(false)]
+        [Column("creation_time"), DataType(DataType.DateTime), Display(Name = "Creation Time", Order = 3), DisplayFormat(DataFormatString = "{0:g}"), Editable(false)]
         public virtual DateTime? CreationTime { get; set; }
 
-        [Column("creation_username"), Display(Name = "Creation Username", Order = 5), Required, StringLength(128)]
+        [Column("creation_username"), Display(Name = "Creation Username", Order = 4), Required, StringLength(128)]
         public virtual string CreationUsername { get; set; }
 
-        [Column("last_write_time"), DataType(DataType.DateTime), Display(Name = "Last Write Time", Order = 6), DisplayFormat(DataFormatString = "{0:g}"), Editable(false)]
+        [Column("last_write_time"), DataType(DataType.DateTime), Display(Name = "Last Write Time", Order = 5), DisplayFormat(DataFormatString = "{0:g}"), Editable(false)]
         public virtual DateTime? LastWriteTime { get; set; }
 
-        [Column("last_write_username"), Display(Name = "Last Write Username", Order = 7), Editable(false), StringLength(128)]
+        [Column("last_write_username"), Display(Name = "Last Write Username", Order = 6), Editable(false), StringLength(128)]
         public virtual string LastWriteUsername { get; set; }
 
-        public override string ToString() => $"{{ {nameof(Id)} = {Id}, {nameof(Code)} = {Code}, {nameof(Name)} = {Name}, {nameof(CreationTime)} = {CreationTime}, {nameof(CreationUsername)} = {CreationUsername}, {nameof(LastWriteTime)} = {LastWriteTime}, {nameof(LastWriteUsername)} = {LastWriteUsername} }}";
+        public override string ToString() => $"{{ {nameof(Id)} = {Id}, {nameof(Name)} = {Name}, {nameof(CreationTime)} = {CreationTime}, {nameof(CreationUsername)} = {CreationUsername}, {nameof(LastWriteTime)} = {LastWriteTime}, {nameof(LastWriteUsername)} = {LastWriteUsername} }}";
     }
 }

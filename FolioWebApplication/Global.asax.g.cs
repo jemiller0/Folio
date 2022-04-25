@@ -178,6 +178,7 @@ namespace FolioWebApplication
             Session["MaterialType2sPermission"] = roles.Contains("all") || roles.Contains("inventory.all") || roles.Contains("uc.materialtypes.view") ? "View" : null;
             Session["NatureOfContentTerm2sPermission"] = roles.Contains("all") || roles.Contains("inventory.all") || roles.Contains("uc.natureofcontentterms.view") ? "View" : null;
             Session["Note2sPermission"] = roles.Contains("all") || roles.Contains("inventory.all") || roles.Contains("uc.notes.view") ? "View" : null;
+            Session["OclcNumbersPermission"] = roles.Contains("all") || roles.Contains("inventory.all") || roles.Contains("uc.oclcnumbers.view") ? "View" : null;
             Session["PhysicalDescriptionsPermission"] = roles.Contains("all") || roles.Contains("inventory.all") || roles.Contains("uc.physicaldescriptions.view") ? "View" : null;
             Session["PrecedingSucceedingTitle2sPermission"] = roles.Contains("all") || roles.Contains("inventory.all") || roles.Contains("uc.precedingsucceedingtitles.view") ? "View" : null;
             Session["PrecedingSucceedingTitleIdentifiersPermission"] = roles.Contains("all") || roles.Contains("inventory.all") || roles.Contains("uc.precedingsucceedingtitleidentifiers.view") ? "View" : null;
@@ -528,6 +529,7 @@ namespace FolioWebApplication
             Session["MaterialType2sPermission"] = permission;
             Session["NatureOfContentTerm2sPermission"] = permission;
             Session["Note2sPermission"] = permission;
+            Session["OclcNumbersPermission"] = permission;
             Session["PhysicalDescriptionsPermission"] = permission;
             Session["PrecedingSucceedingTitle2sPermission"] = permission;
             Session["PrecedingSucceedingTitleIdentifiersPermission"] = permission;

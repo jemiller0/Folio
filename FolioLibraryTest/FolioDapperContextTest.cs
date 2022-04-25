@@ -5267,6 +5267,30 @@ LEFT JOIN uc.instance_note_types AS @int ON @int.id = n2.instance_note_type_id
         }
 
         [TestMethod]
+        public void QueryOclcNumbersTest()
+        {
+            var s = Stopwatch.StartNew();
+            folioDapperContext.OclcNumbers(take: 1).ToArray();
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"OclcNumbersTest()\r\n    ElapsedTime={s.Elapsed}");
+        }
+
+        [TestMethod]
+        public void OclcNumbersQueryTest()
+        {
+            var s = Stopwatch.StartNew();
+            folioDapperContext.Query(@"
+SELECT
+i.title AS ""Instance"",
+@on.instance_id AS ""InstanceId"",
+@on.content AS ""Content"" 
+FROM uc.oclc_numbers AS @on
+LEFT JOIN uc.instances AS i ON i.id = @on.instance_id
+ ORDER BY @on.content
+", take: 1);
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"OclcNumbersQueryTest()\r\n    ElapsedTime={s.Elapsed}");
+        }
+
+        [TestMethod]
         public void QueryOrder2sTest()
         {
             var s = Stopwatch.StartNew();
@@ -6864,7 +6888,6 @@ LEFT JOIN uc.owners AS o ON o.id = pm2.owner_id
             var s = Stopwatch.StartNew();
             folioDapperContext.Query(@"
 SELECT
-pt.code AS ""Code"",
 pt.name AS ""Name"",
 pt.creation_time AS ""CreationTime"",
 pt.creation_username AS ""CreationUsername"",

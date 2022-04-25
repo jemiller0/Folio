@@ -65,6 +65,10 @@ namespace FolioWebApplication.Instance2s
 
         protected RadGrid Note2sRadGrid;
 
+        protected Panel OclcNumbersPanel;
+
+        protected RadGrid OclcNumbersRadGrid;
+
         protected Panel OrderItem2sPanel;
 
         protected RadGrid OrderItem2sRadGrid;

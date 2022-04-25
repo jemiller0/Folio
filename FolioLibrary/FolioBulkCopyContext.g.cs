@@ -2246,7 +2246,6 @@ namespace FolioLibrary
             {
                 paymentTypesDataTable = new DataTable();
                 paymentTypesDataTable.Columns.Add(new DataColumn { ColumnName = "id", DataType = typeof(int) });
-                paymentTypesDataTable.Columns.Add(new DataColumn { ColumnName = "code", DataType = typeof(string) });
                 paymentTypesDataTable.Columns.Add(new DataColumn { ColumnName = "name", DataType = typeof(string) });
                 paymentTypesDataTable.Columns.Add(new DataColumn { ColumnName = "creation_time", DataType = typeof(DateTime) });
                 paymentTypesDataTable.Columns.Add(new DataColumn { ColumnName = "creation_username", DataType = typeof(string) });
@@ -2256,7 +2255,6 @@ namespace FolioLibrary
             }
             var dr = paymentTypesDataTable.NewRow();
             dr["id"] = (object)paymentType.Id ?? DBNull.Value;
-            dr["code"] = (object)paymentType.Code ?? DBNull.Value;
             dr["name"] = (object)paymentType.Name ?? DBNull.Value;
             dr["creation_time"] = (object)paymentType.CreationTime ?? DBNull.Value;
             dr["creation_username"] = (object)paymentType.CreationUsername ?? DBNull.Value;
@@ -4261,7 +4259,6 @@ namespace FolioLibrary
                 sqlBulkCopy.DestinationTableName = $"uc{(IsMySql ? "_" : ".")}payment_types";
                 sqlBulkCopy.ColumnMappings.Clear();
                 sqlBulkCopy.ColumnMappings.Add("id", "id");
-                sqlBulkCopy.ColumnMappings.Add("code", "code");
                 sqlBulkCopy.ColumnMappings.Add("name", "name");
                 sqlBulkCopy.ColumnMappings.Add("creation_time", "creation_time");
                 sqlBulkCopy.ColumnMappings.Add("creation_username", "creation_username");
