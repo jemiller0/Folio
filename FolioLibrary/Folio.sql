@@ -3744,3 +3744,25 @@ FROM uc.identifiers
 WHERE identifier_type_id = '439bfbae-75bc-4f74-9fc7-b2a2d47ce3ef'
 ) a
 WHERE content IS NOT NULL;
+CREATE VIEW uc.isbns AS
+SELECT * FROM
+(
+SELECT 
+id, 
+instance_id,
+COALESCE(TRIM(REGEXP_REPLACE(value, '[^0-9X]', '', 'g')), '', NULL)::VARCHAR(128) AS content
+FROM uc.identifiers
+WHERE identifier_type_id = '8261054f-be78-422d-bd51-4ed9f33c3422'
+) a
+WHERE content IS NOT NULL;
+CREATE VIEW uc.issns AS
+SELECT * FROM
+(
+SELECT 
+id, 
+instance_id,
+COALESCE(TRIM(REGEXP_REPLACE(value, '[^0-9X]', '', 'g')), '', NULL)::VARCHAR(128) AS content
+FROM uc.identifiers
+WHERE identifier_type_id = '913300b2-03ed-469a-8179-c1092c991227'
+) a
+WHERE content IS NOT NULL;

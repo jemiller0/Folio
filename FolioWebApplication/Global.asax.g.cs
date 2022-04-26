@@ -159,6 +159,8 @@ namespace FolioWebApplication
             Session["InstanceTagsPermission"] = roles.Contains("all") || roles.Contains("inventory.all") || roles.Contains("uc.instancetags.view") ? "View" : null;
             Session["InstanceType2sPermission"] = roles.Contains("all") || roles.Contains("inventory.all") || roles.Contains("uc.instancetypes.view") ? "View" : null;
             Session["Institution2sPermission"] = roles.Contains("all") || roles.Contains("inventory.all") || roles.Contains("uc.institutions.view") ? "View" : null;
+            Session["IsbnsPermission"] = roles.Contains("all") || roles.Contains("inventory.all") || roles.Contains("uc.isbns.view") ? "View" : null;
+            Session["IssnsPermission"] = roles.Contains("all") || roles.Contains("inventory.all") || roles.Contains("uc.issns.view") ? "View" : null;
             Session["IssuanceModesPermission"] = roles.Contains("all") || roles.Contains("inventory.all") || roles.Contains("uc.issuancemodes.view") ? "View" : null;
             Session["Item2sPermission"] = roles.Contains("all") || roles.Contains("inventory.all") || roles.Contains("uc.items.view") ? "View" : null;
             Session["ItemDamagedStatus2sPermission"] = roles.Contains("all") || roles.Contains("inventory.all") || roles.Contains("uc.itemdamagedstatuses.view") ? "View" : null;
@@ -510,6 +512,8 @@ namespace FolioWebApplication
             Session["InstanceTagsPermission"] = permission;
             Session["InstanceType2sPermission"] = permission;
             Session["Institution2sPermission"] = permission;
+            Session["IsbnsPermission"] = permission;
+            Session["IssnsPermission"] = permission;
             Session["IssuanceModesPermission"] = permission;
             Session["Item2sPermission"] = permission;
             Session["ItemDamagedStatus2sPermission"] = permission;

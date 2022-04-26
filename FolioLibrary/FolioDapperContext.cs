@@ -1200,6 +1200,20 @@ namespace FolioLibrary
             if (load && its2.Id != null) its2.Invoice2 = FindInvoice2(its2.Id);
             return its2;
         }
+        public Isbn FindIsbn(string id, Guid? instanceId, bool load = false)
+        {
+            var i = Query<Isbn>($"SELECT id AS \"Id\", instance_id AS \"InstanceId\", content AS \"Content\" FROM uc{(IsMySql ? "_" : ".")}isbns WHERE id = @id AND instance_id = @instanceId", new { id, instanceId }).SingleOrDefault();
+            if (i == null) return null;
+            if (load && i.InstanceId != null) i.Instance = FindInstance2(i.InstanceId);
+            return i;
+        }
+        public Issn FindIssn(string id, Guid? instanceId, bool load = false)
+        {
+            var i = Query<Issn>($"SELECT id AS \"Id\", instance_id AS \"InstanceId\", content AS \"Content\" FROM uc{(IsMySql ? "_" : ".")}issns WHERE id = @id AND instance_id = @instanceId", new { id, instanceId }).SingleOrDefault();
+            if (i == null) return null;
+            if (load && i.InstanceId != null) i.Instance = FindInstance2(i.InstanceId);
+            return i;
+        }
         public IssuanceMode FindIssuanceMode(Guid? id, bool load = false)
         {
             var im = Query<IssuanceMode>($"SELECT id AS \"Id\", name AS \"Name\", source AS \"Source\", created_date AS \"CreationTime\", created_by_user_id AS \"CreationUserId\", created_by_username AS \"CreationUserUsername\", updated_date AS \"LastWriteTime\", updated_by_user_id AS \"LastWriteUserId\", updated_by_username AS \"LastWriteUserUsername\", content AS \"Content\" FROM uc{(IsMySql ? "_" : ".")}mode_of_issuances WHERE id = @id", new { id }).SingleOrDefault();
@@ -3377,6 +3391,12 @@ namespace FolioLibrary
         public void AddInvoiceTransactionSummary2sIndexes()
         {
         }
+        public void AddIsbnsIndexes()
+        {
+        }
+        public void AddIssnsIndexes()
+        {
+        }
         public void AddIssuanceModesIndexes()
         {
         }
@@ -4665,6 +4685,12 @@ namespace FolioLibrary
         public void RemoveInvoiceTransactionSummary2sIndexes()
         {
         }
+        public void RemoveIsbnsIndexes()
+        {
+        }
+        public void RemoveIssnsIndexes()
+        {
+        }
         public void RemoveIssuanceModesIndexes()
         {
         }
@@ -5579,6 +5605,8 @@ namespace FolioLibrary
         public IEnumerable<InvoiceTag> InvoiceTags(string where = null, object param = null, string orderBy = null, int? skip = null, int? take = null) => Query<InvoiceTag>($"SELECT id AS \"Id\", invoice_id AS \"InvoiceId\", content AS \"Content\" FROM uc{(IsMySql ? "_" : ".")}invoice_tags{(where != null ? $" WHERE {where}" : "")}{(orderBy != null || skip != null || take != null ? $" ORDER BY {orderBy ?? "id"}" : "")}", param, skip, take);
         public IEnumerable<InvoiceTransactionSummary> InvoiceTransactionSummaries(string where = null, object param = null, string orderBy = null, int? skip = null, int? take = null) => Query<InvoiceTransactionSummary>($"SELECT id AS \"Id\", COALESCE(jsonb_set(jsonb, '{{metadata,createdDate}}', ('\"' || (jsonb#>>'{{metadata,createdDate}}') || CASE WHEN jsonb#>>'{{metadata,createdDate}}' !~ '([-+]\\d\\d:\\d\\d)|Z$' THEN '+00:00' ELSE '' END || '\"')::jsonb), jsonb) AS \"Content\" FROM uchicago_mod_finance_storage{(IsMySql ? "_" : ".")}invoice_transaction_summaries{(where != null ? $" WHERE {where}" : "")}{(orderBy != null || skip != null || take != null ? $" ORDER BY {orderBy ?? "id"}" : "")}", param, skip, take);
         public IEnumerable<InvoiceTransactionSummary2> InvoiceTransactionSummary2s(string where = null, object param = null, string orderBy = null, int? skip = null, int? take = null) => Query<InvoiceTransactionSummary2>($"SELECT id AS \"Id\", num_pending_payments AS \"NumPendingPayments\", num_payments_credits AS \"NumPaymentsCredits\", content AS \"Content\" FROM uc{(IsMySql ? "_" : ".")}invoice_transaction_summaries{(where != null ? $" WHERE {where}" : "")}{(orderBy != null || skip != null || take != null ? $" ORDER BY {orderBy ?? "id"}" : "")}", param, skip, take);
+        public IEnumerable<Isbn> Isbns(string where = null, object param = null, string orderBy = null, int? skip = null, int? take = null) => Query<Isbn>($"SELECT id AS \"Id\", instance_id AS \"InstanceId\", content AS \"Content\" FROM uc{(IsMySql ? "_" : ".")}isbns{(where != null ? $" WHERE {where}" : "")}{(orderBy != null || skip != null || take != null ? $" ORDER BY {orderBy ?? "id, instance_id"}" : "")}", param, skip, take);
+        public IEnumerable<Issn> Issns(string where = null, object param = null, string orderBy = null, int? skip = null, int? take = null) => Query<Issn>($"SELECT id AS \"Id\", instance_id AS \"InstanceId\", content AS \"Content\" FROM uc{(IsMySql ? "_" : ".")}issns{(where != null ? $" WHERE {where}" : "")}{(orderBy != null || skip != null || take != null ? $" ORDER BY {orderBy ?? "id, instance_id"}" : "")}", param, skip, take);
         public IEnumerable<IssuanceMode> IssuanceModes(string where = null, object param = null, string orderBy = null, int? skip = null, int? take = null) => Query<IssuanceMode>($"SELECT id AS \"Id\", name AS \"Name\", source AS \"Source\", created_date AS \"CreationTime\", created_by_user_id AS \"CreationUserId\", created_by_username AS \"CreationUserUsername\", updated_date AS \"LastWriteTime\", updated_by_user_id AS \"LastWriteUserId\", updated_by_username AS \"LastWriteUserUsername\", content AS \"Content\" FROM uc{(IsMySql ? "_" : ".")}mode_of_issuances{(where != null ? $" WHERE {where}" : "")}{(orderBy != null || skip != null || take != null ? $" ORDER BY {orderBy ?? "id"}" : "")}", param, skip, take);
         public IEnumerable<Item> Items(string where = null, object param = null, string orderBy = null, int? skip = null, int? take = null) => Query<Item>($"SELECT id AS \"Id\", COALESCE(jsonb_set(jsonb, '{{metadata,createdDate}}', ('\"' || (jsonb#>>'{{metadata,createdDate}}') || CASE WHEN jsonb#>>'{{metadata,createdDate}}' !~ '([-+]\\d\\d:\\d\\d)|Z$' THEN '+00:00' ELSE '' END || '\"')::jsonb), jsonb) AS \"Content\", creation_date AS \"CreationTime\", created_by AS \"CreationUserId\", holdingsrecordid AS \"Holdingsrecordid\", permanentloantypeid AS \"Permanentloantypeid\", temporaryloantypeid AS \"Temporaryloantypeid\", materialtypeid AS \"Materialtypeid\", permanentlocationid AS \"Permanentlocationid\", temporarylocationid AS \"Temporarylocationid\", effectivelocationid AS \"Effectivelocationid\" FROM uchicago_mod_inventory_storage{(IsMySql ? "_" : ".")}item{(where != null ? $" WHERE {where}" : "")}{(orderBy != null || skip != null || take != null ? $" ORDER BY {orderBy ?? "id"}" : "")}", param, skip, take);
         public IEnumerable<Item2> Item2s(string where = null, object param = null, string orderBy = null, int? skip = null, int? take = null) => Query<Item2>($"SELECT id AS \"Id\", _version AS \"Version\", hrid AS \"ShortId\", holding_id AS \"HoldingId\", discovery_suppress AS \"DiscoverySuppress\", accession_number AS \"AccessionNumber\", barcode AS \"Barcode\", effective_shelving_order AS \"EffectiveShelvingOrder\", call_number AS \"CallNumber\", call_number_prefix AS \"CallNumberPrefix\", call_number_suffix AS \"CallNumberSuffix\", call_number_type_id AS \"CallNumberTypeId\", effective_call_number AS \"EffectiveCallNumber\", effective_call_number_prefix AS \"EffectiveCallNumberPrefix\", effective_call_number_suffix AS \"EffectiveCallNumberSuffix\", effective_call_number_type_id AS \"EffectiveCallNumberTypeId\", volume AS \"Volume\", enumeration AS \"Enumeration\", chronology AS \"Chronology\", item_identifier AS \"ItemIdentifier\", copy_number AS \"CopyNumber\", number_of_pieces AS \"PiecesCount\", description_of_pieces AS \"PiecesDescription\", number_of_missing_pieces AS \"MissingPiecesCount\", missing_pieces AS \"MissingPiecesDescription\", missing_pieces_date AS \"MissingPiecesTime\", item_damaged_status_id AS \"DamagedStatusId\", item_damaged_status_date AS \"DamagedStatusTime\", status_name AS \"Status\", status_date AS \"StatusLastWriteTime\", material_type_id AS \"MaterialTypeId\", permanent_loan_type_id AS \"PermanentLoanTypeId\", temporary_loan_type_id AS \"TemporaryLoanTypeId\", permanent_location_id AS \"PermanentLocationId\", temporary_location_id AS \"TemporaryLocationId\", effective_location_id AS \"EffectiveLocationId\", in_transit_destination_service_point_id AS \"InTransitDestinationServicePointId\", order_item_id AS \"OrderItemId\", created_date AS \"CreationTime\", created_by_user_id AS \"CreationUserId\", created_by_username AS \"CreationUserUsername\", updated_date AS \"LastWriteTime\", updated_by_user_id AS \"LastWriteUserId\", updated_by_username AS \"LastWriteUserUsername\", last_check_in_date_time AS \"LastCheckInDateTime\", last_check_in_service_point_id AS \"LastCheckInServicePointId\", last_check_in_staff_member_id AS \"LastCheckInStaffMemberId\", content AS \"Content\" FROM uc{(IsMySql ? "_" : ".")}items{(where != null ? $" WHERE {where}" : "")}{(orderBy != null || skip != null || take != null ? $" ORDER BY {orderBy ?? "id"}" : "")}", param, skip, take);
@@ -6009,6 +6037,8 @@ namespace FolioLibrary
         public int CountInvoiceTags(string where = null, object param = null, int? take = null) => Count($"SELECT 1 FROM uc{(IsMySql ? "_" : ".")}invoice_tags{(where != null ? $" WHERE {where}" : "")}", param: param, take: take);
         public int CountInvoiceTransactionSummaries(string where = null, object param = null, int? take = null) => Count($"SELECT 1 FROM uchicago_mod_finance_storage{(IsMySql ? "_" : ".")}invoice_transaction_summaries{(where != null ? $" WHERE {where}" : "")}", param: param, take: take);
         public int CountInvoiceTransactionSummary2s(string where = null, object param = null, int? take = null) => Count($"SELECT 1 FROM uc{(IsMySql ? "_" : ".")}invoice_transaction_summaries{(where != null ? $" WHERE {where}" : "")}", param: param, take: take);
+        public int CountIsbns(string where = null, object param = null, int? take = null) => Count($"SELECT 1 FROM uc{(IsMySql ? "_" : ".")}isbns{(where != null ? $" WHERE {where}" : "")}", param: param, take: take);
+        public int CountIssns(string where = null, object param = null, int? take = null) => Count($"SELECT 1 FROM uc{(IsMySql ? "_" : ".")}issns{(where != null ? $" WHERE {where}" : "")}", param: param, take: take);
         public int CountIssuanceModes(string where = null, object param = null, int? take = null) => Count($"SELECT 1 FROM uc{(IsMySql ? "_" : ".")}mode_of_issuances{(where != null ? $" WHERE {where}" : "")}", param: param, take: take);
         public int CountItems(string where = null, object param = null, int? take = null) => Count($"SELECT 1 FROM uchicago_mod_inventory_storage{(IsMySql ? "_" : ".")}item{(where != null ? $" WHERE {where}" : "")}", param: param, take: take);
         public int CountItem2s(string where = null, object param = null, int? take = null) => Count($"SELECT 1 FROM uc{(IsMySql ? "_" : ".")}items{(where != null ? $" WHERE {where}" : "")}", param: param, take: take);
@@ -6439,6 +6469,8 @@ namespace FolioLibrary
         public bool AnyInvoiceTags(string where = null, object param = null) => Query($"SELECT 1 FROM uc{(IsMySql ? "_" : ".")}invoice_tags{(where != null ? $" WHERE {where}" : "")}{(IsSqlServer ? $" ORDER BY id" : "")}", param: param, take: 1).Any();
         public bool AnyInvoiceTransactionSummaries(string where = null, object param = null) => Query($"SELECT 1 FROM uchicago_mod_finance_storage{(IsMySql ? "_" : ".")}invoice_transaction_summaries{(where != null ? $" WHERE {where}" : "")}{(IsSqlServer ? $" ORDER BY id" : "")}", param: param, take: 1).Any();
         public bool AnyInvoiceTransactionSummary2s(string where = null, object param = null) => Query($"SELECT 1 FROM uc{(IsMySql ? "_" : ".")}invoice_transaction_summaries{(where != null ? $" WHERE {where}" : "")}{(IsSqlServer ? $" ORDER BY id" : "")}", param: param, take: 1).Any();
+        public bool AnyIsbns(string where = null, object param = null) => Query($"SELECT 1 FROM uc{(IsMySql ? "_" : ".")}isbns{(where != null ? $" WHERE {where}" : "")}{(IsSqlServer ? $" ORDER BY id, instance_id" : "")}", param: param, take: 1).Any();
+        public bool AnyIssns(string where = null, object param = null) => Query($"SELECT 1 FROM uc{(IsMySql ? "_" : ".")}issns{(where != null ? $" WHERE {where}" : "")}{(IsSqlServer ? $" ORDER BY id, instance_id" : "")}", param: param, take: 1).Any();
         public bool AnyIssuanceModes(string where = null, object param = null) => Query($"SELECT 1 FROM uc{(IsMySql ? "_" : ".")}mode_of_issuances{(where != null ? $" WHERE {where}" : "")}{(IsSqlServer ? $" ORDER BY id" : "")}", param: param, take: 1).Any();
         public bool AnyItems(string where = null, object param = null) => Query($"SELECT 1 FROM uchicago_mod_inventory_storage{(IsMySql ? "_" : ".")}item{(where != null ? $" WHERE {where}" : "")}{(IsSqlServer ? $" ORDER BY id" : "")}", param: param, take: 1).Any();
         public bool AnyItem2s(string where = null, object param = null) => Query($"SELECT 1 FROM uc{(IsMySql ? "_" : ".")}items{(where != null ? $" WHERE {where}" : "")}{(IsSqlServer ? $" ORDER BY id" : "")}", param: param, take: 1).Any();
@@ -6869,6 +6901,8 @@ namespace FolioLibrary
         public void TruncateInvoiceTags() { Execute($"TRUNCATE TABLE uc.invoice_tags"); Commit(); }
         public void TruncateInvoiceTransactionSummaries() { Execute($"TRUNCATE TABLE uchicago_mod_finance_storage.invoice_transaction_summaries"); Commit(); }
         public void TruncateInvoiceTransactionSummary2s() { Execute($"TRUNCATE TABLE uc.invoice_transaction_summaries"); Commit(); }
+        public void TruncateIsbns() { Execute($"TRUNCATE TABLE uc.isbns"); Commit(); }
+        public void TruncateIssns() { Execute($"TRUNCATE TABLE uc.issns"); Commit(); }
         public void TruncateIssuanceModes() { Execute($"TRUNCATE TABLE uc.mode_of_issuances"); Commit(); }
         public void TruncateItems() { Execute($"TRUNCATE TABLE uchicago_mod_inventory_storage.item"); Commit(); }
         public void TruncateItem2s() { Execute($"TRUNCATE TABLE uc.items"); Commit(); }
@@ -8343,6 +8377,8 @@ namespace FolioLibrary
         public int DeleteInvoiceTag(string id) => Execute($"DELETE FROM uc{(IsMySql ? "_" : ".")}invoice_tags WHERE id = @id", new { id });
         public int DeleteInvoiceTransactionSummary(Guid? id) => Execute($"DELETE FROM uchicago_mod_finance_storage{(IsMySql ? "_" : ".")}invoice_transaction_summaries WHERE id = @id", new { id });
         public int DeleteInvoiceTransactionSummary2(Guid? id) => Execute($"DELETE FROM uc{(IsMySql ? "_" : ".")}invoice_transaction_summaries WHERE id = @id", new { id });
+        public int DeleteIsbn(string id, Guid? instanceId) => Execute($"DELETE FROM uc{(IsMySql ? "_" : ".")}isbns WHERE id = @id AND instance_id = @instanceId", new { id, instanceId });
+        public int DeleteIssn(string id, Guid? instanceId) => Execute($"DELETE FROM uc{(IsMySql ? "_" : ".")}issns WHERE id = @id AND instance_id = @instanceId", new { id, instanceId });
         public int DeleteIssuanceMode(Guid? id) => Execute($"DELETE FROM uc{(IsMySql ? "_" : ".")}mode_of_issuances WHERE id = @id", new { id });
         public int DeleteItem(Guid? id) => Execute($"DELETE FROM uchicago_mod_inventory_storage{(IsMySql ? "_" : ".")}item WHERE id = @id", new { id });
         public int DeleteItem2(Guid? id) => Execute($"DELETE FROM uc{(IsMySql ? "_" : ".")}items WHERE id = @id", new { id });

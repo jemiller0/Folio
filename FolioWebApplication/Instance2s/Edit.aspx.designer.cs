@@ -57,6 +57,14 @@ namespace FolioWebApplication.Instance2s
 
         protected RadGrid InstanceTagsRadGrid;
 
+        protected Panel IsbnsPanel;
+
+        protected RadGrid IsbnsRadGrid;
+
+        protected Panel IssnsPanel;
+
+        protected RadGrid IssnsRadGrid;
+
         protected Panel LanguagesPanel;
 
         protected RadGrid LanguagesRadGrid;

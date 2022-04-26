@@ -3831,6 +3831,52 @@ LEFT JOIN uc.invoices AS i ON i.id = it.invoice_id
         }
 
         [TestMethod]
+        public void QueryIsbnsTest()
+        {
+            var s = Stopwatch.StartNew();
+            folioDapperContext.Isbns(take: 1).ToArray();
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"IsbnsTest()\r\n    ElapsedTime={s.Elapsed}");
+        }
+
+        [TestMethod]
+        public void IsbnsQueryTest()
+        {
+            var s = Stopwatch.StartNew();
+            folioDapperContext.Query(@"
+SELECT
+i2.title AS ""Instance"",
+i.content AS ""Content"" 
+FROM uc.isbns AS i
+LEFT JOIN uc.instances AS i2 ON i2.id = i.instance_id
+ ORDER BY i.content
+", take: 1);
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"IsbnsQueryTest()\r\n    ElapsedTime={s.Elapsed}");
+        }
+
+        [TestMethod]
+        public void QueryIssnsTest()
+        {
+            var s = Stopwatch.StartNew();
+            folioDapperContext.Issns(take: 1).ToArray();
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"IssnsTest()\r\n    ElapsedTime={s.Elapsed}");
+        }
+
+        [TestMethod]
+        public void IssnsQueryTest()
+        {
+            var s = Stopwatch.StartNew();
+            folioDapperContext.Query(@"
+SELECT
+i2.title AS ""Instance"",
+i.content AS ""Content"" 
+FROM uc.issns AS i
+LEFT JOIN uc.instances AS i2 ON i2.id = i.instance_id
+ ORDER BY i.content
+", take: 1);
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"IssnsQueryTest()\r\n    ElapsedTime={s.Elapsed}");
+        }
+
+        [TestMethod]
         public void QueryIssuanceModesTest()
         {
             var s = Stopwatch.StartNew();
