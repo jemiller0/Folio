@@ -309,8 +309,7 @@ namespace FolioWebApplication.User2s
                 if (folioServiceContext.AnyStatisticalCodeType2s($"metadata.updatedByUserId == \"{id}\"")) throw new Exception("User cannot be deleted because it is being referenced by a statistical code type");
                 if (folioServiceContext.AnyStatuses($"metadata.createdByUserId == \"{id}\"")) throw new Exception("User cannot be deleted because it is being referenced by a status");
                 if (folioServiceContext.AnyStatuses($"metadata.updatedByUserId == \"{id}\"")) throw new Exception("User cannot be deleted because it is being referenced by a status");
-                if (folioServiceContext.AnyTag2s($"metadata.createdByUserId == \"{id}\"")) throw new Exception("User cannot be deleted because it is being referenced by a tag");
-                if (folioServiceContext.AnyTag2s($"metadata.updatedByUserId == \"{id}\"")) throw new Exception("User cannot be deleted because it is being referenced by a tag");
+                if (folioServiceContext.AnyTag2s($" == \"{id}\"")) throw new Exception("User cannot be deleted because it is being referenced by a tag");
                 if (folioServiceContext.AnyTemplate2s($"metadata.createdByUserId == \"{id}\"")) throw new Exception("User cannot be deleted because it is being referenced by a template");
                 if (folioServiceContext.AnyTemplate2s($"metadata.updatedByUserId == \"{id}\"")) throw new Exception("User cannot be deleted because it is being referenced by a template");
                 if (folioServiceContext.AnyTitle2s($"metadata.createdByUserId == \"{id}\"")) throw new Exception("User cannot be deleted because it is being referenced by a title");

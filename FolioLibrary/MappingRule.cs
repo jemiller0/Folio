@@ -15,7 +15,10 @@ namespace FolioLibrary
         [Column("jsonb"), DataType(DataType.MultilineText), Display(Order = 2), Required]
         public virtual string Content { get; set; }
 
-        public override string ToString() => $"{{ {nameof(Id)} = {Id}, {nameof(Content)} = {Content} }}";
+        [Column("record_type"), Display(Name = "Record Type", Order = 3), Required, StringLength(1024)]
+        public virtual string RecordType { get; set; }
+
+        public override string ToString() => $"{{ {nameof(Id)} = {Id}, {nameof(Content)} = {Content}, {nameof(RecordType)} = {RecordType} }}";
 
         public static MappingRule FromJObject(JValue jObject) => jObject != null ? new MappingRule
         {

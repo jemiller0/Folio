@@ -1406,7 +1406,6 @@ namespace FolioLibraryTest
             var t2 = folioServiceContext.Tag2s(take: 1).SingleOrDefault();
             if (t2 == null) Assert.Inconclusive();
             var t3 = folioDapperContext.Tag2s(take: 1).SingleOrDefault();
-            t3.Content = null;
             Assert.AreEqual(t2.ToString(), t3.ToString());
             traceSource.TraceEvent(TraceEventType.Information, 0, $"Tags_DeserializeTag2Test()\r\n    ElapsedTime={s.Elapsed}");
         }

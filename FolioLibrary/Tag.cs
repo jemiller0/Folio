@@ -1,51 +1,34 @@
-using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
-using NJsonSchema;
 using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.IO;
-using System.Linq;
-using System.Reflection;
 
 namespace FolioLibrary
 {
     [Table("tags", Schema = "uchicago_mod_tags")]
     public partial class Tag
     {
-        public static ValidationResult ValidateContent(string value)
-        {
-            using (var sr = new StreamReader(Assembly.GetExecutingAssembly().GetManifestResourceStream("FolioLibrary.Tag.json")))
-            {
-                var js = JsonSchema.FromJsonAsync(sr.ReadToEndAsync().Result).Result;
-                var l = js.Validate(value);
-                if (l.Any()) return new ValidationResult($"The Content field is invalid. {string.Join(" ", l.Select(ve => ve.ToString()))}", new[] { "Content" });
-            }
-            return ValidationResult.Success;
-        }
-
-        [Column("id"), Display(Order = 1), Editable(false)]
+        [Column("id"), ScaffoldColumn(false)]
         public virtual Guid? Id { get; set; }
 
-        [Column("jsonb"), CustomValidation(typeof(Tag), nameof(ValidateContent)), DataType(DataType.MultilineText), Display(Order = 2), Required]
-        public virtual string Content { get; set; }
+        [Column("created_by"), Display(Name = "Creation User Id", Order = 2), Editable(false)]
+        public virtual Guid? CreationUserId { get; set; }
 
-        [Column("creation_date"), DataType(DataType.DateTime), Display(Name = "Creation Time", Order = 3), DisplayFormat(DataFormatString = "{0:g}"), Editable(false)]
+        [Column("label"), Display(Order = 3), Required, StringLength(255)]
+        public virtual string Label { get; set; }
+
+        [Column("description"), Display(Order = 4), StringLength(255)]
+        public virtual string Description { get; set; }
+
+        [Column("created_date"), DataType(DataType.DateTime), Display(Name = "Creation Time", Order = 5), DisplayFormat(DataFormatString = "{0:g}"), Editable(false)]
         public virtual DateTime? CreationTime { get; set; }
 
-        [Column("created_by"), Display(Name = "Creation User Id", Order = 4), Editable(false)]
-        public virtual string CreationUserId { get; set; }
+        [Column("updated_date"), DataType(DataType.DateTime), Display(Name = "Last Write Time", Order = 6), DisplayFormat(DataFormatString = "{0:g}"), Editable(false)]
+        public virtual DateTime? LastWriteTime { get; set; }
 
-        public override string ToString() => $"{{ {nameof(Id)} = {Id}, {nameof(Content)} = {Content}, {nameof(CreationTime)} = {CreationTime}, {nameof(CreationUserId)} = {CreationUserId} }}";
+        [Column("updated_by"), Display(Name = "Updated By", Order = 7)]
+        public virtual Guid? UpdatedBy { get; set; }
 
-        public static Tag FromJObject(JObject jObject) => jObject != null ? new Tag
-        {
-            Id = (Guid?)jObject.SelectToken("id"),
-            Content = JsonConvert.SerializeObject(jObject, FolioDapperContext.UniversalTimeJsonSerializationSettings),
-            CreationTime = ((DateTime?)jObject.SelectToken("metadata.createdDate"))?.ToUniversalTime(),
-            CreationUserId = (string)jObject.SelectToken("metadata.createdByUserId")
-        } : null;
-
-        public JObject ToJObject() => JsonConvert.DeserializeObject<JObject>(Content, FolioDapperContext.LocalTimeJsonSerializationSettings);
+        public override string ToString() => $"{{ {nameof(Id)} = {Id}, {nameof(CreationUserId)} = {CreationUserId}, {nameof(Label)} = {Label}, {nameof(Description)} = {Description}, {nameof(CreationTime)} = {CreationTime}, {nameof(LastWriteTime)} = {LastWriteTime}, {nameof(UpdatedBy)} = {UpdatedBy} }}";
     }
 }

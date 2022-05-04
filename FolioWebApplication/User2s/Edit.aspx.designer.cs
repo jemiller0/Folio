@@ -969,10 +969,6 @@ namespace FolioWebApplication.User2s
 
         protected RadGrid Tag2sRadGrid;
 
-        protected Panel Tag2s1Panel;
-
-        protected RadGrid Tag2s1RadGrid;
-
         protected Panel Template2sPanel;
 
         protected RadGrid Template2sRadGrid;

@@ -9313,6 +9313,266 @@ namespace FolioLibrary
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", s.Elapsed);
         }
 
+        public bool AnyMappingParamsSnapshots(string where = null) => MappingParamsSnapshots(where, take: 1).Any();
+
+        public int CountMappingParamsSnapshots(string where = null)
+        {
+            MappingParamsSnapshots(out var i, take: 0);
+            return i;
+        }
+
+        public JObject[] MappingParamsSnapshots(out int count, string where = null, string orderBy = null, int? skip = null, int? take = 100)
+        {
+            var s = Stopwatch.StartNew();
+            traceSource.TraceEvent(TraceEventType.Verbose, 0, "Querying mapping params snapshots");
+            AuthenticateIfNecessary();
+            if ((skip != null || take != null) && take != 0) orderBy = orderBy ?? "id";
+            var url = $"{Url}/mapping-params-snapshots{(where != null || orderBy != null ? $"?query={WebUtility.UrlEncode(where)}{(orderBy != null ? $"{(where != null ? " " : "cql.allrecords=1 ")}sortby {WebUtility.UrlEncode(orderBy)}" : "")}" : "")}{(skip != null ? $"{(where != null || orderBy != null ? "&" : "?")}offset={skip}" : "")}{(where != null || orderBy != null || skip != null ? "&" : "?")}limit={take ?? int.MaxValue}";
+            traceSource.TraceEvent(TraceEventType.Verbose, 0, url);
+            traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", httpClient.DefaultRequestHeaders);
+            var hrm = httpClient.GetAsync(url).Result;
+            var s2 = hrm.Content.ReadAsStringAsync().Result;
+            traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}{1}", hrm.Headers, s2);
+            var jo = hrm.Content.Headers.ContentType?.MediaType == "application/json" ? JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings) : null;
+            if (hrm.StatusCode != HttpStatusCode.OK) throw new HttpRequestException($"Response status code does not indicate success: {hrm.StatusCode} ({hrm.ReasonPhrase}).\r\n{s2}");
+            traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", s.Elapsed);
+            count = (int)jo["totalRecords"];
+            return jo.Properties().SkipWhile(jp => jp.Name == "totalRecords").First().Value.Cast<JObject>().ToArray();
+        }
+
+        public IEnumerable<JObject> MappingParamsSnapshots(string where = null, string orderBy = null, int? skip = null, int? take = null)
+        {
+            var s = Stopwatch.StartNew();
+            traceSource.TraceEvent(TraceEventType.Verbose, 0, "Querying mapping params snapshots");
+            AuthenticateIfNecessary();
+            if ((skip != null || take != null) && take != 0) orderBy = orderBy ?? "id";
+            var url = $"{Url}/mapping-params-snapshots{(where != null || orderBy != null ? $"?query={WebUtility.UrlEncode(where)}{(orderBy != null ? $"{(where != null ? " " : "cql.allrecords=1 ")}sortby {WebUtility.UrlEncode(orderBy)}" : "")}" : "")}{(skip != null ? $"{(where != null || orderBy != null ? "&" : "?")}offset={skip}" : "")}{(where != null || orderBy != null || skip != null ? "&" : "?")}limit={take ?? int.MaxValue}";
+            traceSource.TraceEvent(TraceEventType.Verbose, 0, url);
+            traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", httpClient.DefaultRequestHeaders);
+            var hrm = httpClient.GetAsync(url, HttpCompletionOption.ResponseHeadersRead).Result;
+            traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", hrm.Headers);
+            if (hrm.StatusCode != HttpStatusCode.OK)
+            {
+                var s2 = hrm.Content.ReadAsStringAsync().Result;
+                if (hrm.Content.Headers.ContentType?.MediaType == "application/json") s2 = JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings).ToString();
+                traceSource.TraceEvent(TraceEventType.Verbose, 0, s2);
+                throw new HttpRequestException($"Response status code does not indicate success: {hrm.StatusCode} ({hrm.ReasonPhrase}).\r\n{s2}");
+            }
+            using (var sr = new StreamReader(hrm.Content.ReadAsStreamAsync().Result))
+            using (var jtr = new JsonTextReader(sr) { SupportMultipleContent = true })
+            {
+                if (!jtr.Read()) throw new InvalidDataException();
+                while (jtr.Read() && jtr.TokenType != JsonToken.StartArray) ;
+                while (jtr.Read() && jtr.TokenType != JsonToken.EndArray)
+                {
+                    var jo = (JObject)localTimeJsonSerializer.Deserialize(jtr);
+                    traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", jo);
+                    yield return jo;
+                }
+            }
+            traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", s.Elapsed);
+        }
+
+        public JObject GetMappingParamsSnapshot(string id)
+        {
+            var s = Stopwatch.StartNew();
+            traceSource.TraceEvent(TraceEventType.Verbose, 0, "Getting mapping params snapshot {0}", id);
+            if (id == null) return null;
+            AuthenticateIfNecessary();
+            var url = $"{Url}/mapping-params-snapshots/{id}";
+            traceSource.TraceEvent(TraceEventType.Verbose, 0, url);
+            traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", httpClient.DefaultRequestHeaders);
+            var hrm = httpClient.GetAsync(url).Result;
+            var s2 = hrm.Content.ReadAsStringAsync().Result;
+            traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}{1}", hrm.Headers, s2);
+            var jo = hrm.Content.Headers.ContentType?.MediaType == "application/json" ? JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings) : null;
+            if (hrm.StatusCode != HttpStatusCode.OK && hrm.StatusCode != HttpStatusCode.NotFound) throw new HttpRequestException($"Response status code does not indicate success: {hrm.StatusCode} ({hrm.ReasonPhrase}).\r\n{s2}");
+            traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", s.Elapsed);
+            return jo;
+        }
+
+        public JObject InsertMappingParamsSnapshot(JObject mappingParamsSnapshot)
+        {
+            var s = Stopwatch.StartNew();
+            if (mappingParamsSnapshot[""] == null) mappingParamsSnapshot[""] = Guid.NewGuid();
+            traceSource.TraceEvent(TraceEventType.Verbose, 0, "Inserting mapping params snapshot {0}", mappingParamsSnapshot[""]);
+            AuthenticateIfNecessary();
+            var url = $"{Url}/mapping-params-snapshots";
+            traceSource.TraceEvent(TraceEventType.Verbose, 0, url);
+            var s2 = JsonConvert.SerializeObject(mappingParamsSnapshot, universalTimeJsonSerializationSettings);
+            var sc = new StringContent(s2, Encoding.UTF8, "application/json");
+            traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}{1}", httpClient.DefaultRequestHeaders, s2);
+            var hrm = httpClient.PostAsync(url, sc).Result;
+            s2 = hrm.Content.ReadAsStringAsync().Result;
+            traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}{1}", hrm.Headers, s2);
+            var jo = hrm.Content.Headers.ContentType?.MediaType == "application/json" ? JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings) : null;
+            if (hrm.StatusCode != HttpStatusCode.Created) throw new HttpRequestException($"Response status code does not indicate success: {hrm.StatusCode} ({hrm.ReasonPhrase}).\r\n{s2}");
+            traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", s.Elapsed);
+            return jo;
+        }
+
+        public void UpdateMappingParamsSnapshot(JObject mappingParamsSnapshot)
+        {
+            var s = Stopwatch.StartNew();
+            traceSource.TraceEvent(TraceEventType.Verbose, 0, $"Updating mapping params snapshot {mappingParamsSnapshot[""]}");
+            AuthenticateIfNecessary();
+            var url = $"{Url}/mapping-params-snapshots/{mappingParamsSnapshot[""]}";
+            traceSource.TraceEvent(TraceEventType.Verbose, 0, url);
+            var s2 = JsonConvert.SerializeObject(mappingParamsSnapshot, universalTimeJsonSerializationSettings);
+            var sc = new StringContent(s2, Encoding.UTF8, "application/json");
+            traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}{1}", httpClient.DefaultRequestHeaders, s2);
+            var hrm = httpClient.PutAsync(url, sc).Result;
+            s2 = hrm.Content.ReadAsStringAsync().Result;
+            traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}{1}", hrm.Headers, s2);
+            if (hrm.StatusCode != HttpStatusCode.NoContent) throw new HttpRequestException($"Response status code does not indicate success: {hrm.StatusCode} ({hrm.ReasonPhrase}).\r\n{s2}");
+            traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", s.Elapsed);
+        }
+
+        public void DeleteMappingParamsSnapshot(string id)
+        {
+            var s = Stopwatch.StartNew();
+            traceSource.TraceEvent(TraceEventType.Verbose, 0, $"Deleting mapping params snapshot {id}");
+            AuthenticateIfNecessary();
+            var url = $"{Url}/mapping-params-snapshots/{id}";
+            traceSource.TraceEvent(TraceEventType.Verbose, 0, url);
+            traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", httpClient.DefaultRequestHeaders);
+            var hrm = httpClient.DeleteAsync(url).Result;
+            var s2 = hrm.Content.ReadAsStringAsync().Result;
+            traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}{1}", hrm.Headers, s2);
+            if (hrm.StatusCode != HttpStatusCode.NoContent) throw new HttpRequestException($"Response status code does not indicate success: {hrm.StatusCode} ({hrm.ReasonPhrase}).\r\n{s2}");
+            traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", s.Elapsed);
+        }
+
+        public bool AnyMappingRulesSnapshots(string where = null) => MappingRulesSnapshots(where, take: 1).Any();
+
+        public int CountMappingRulesSnapshots(string where = null)
+        {
+            MappingRulesSnapshots(out var i, take: 0);
+            return i;
+        }
+
+        public JObject[] MappingRulesSnapshots(out int count, string where = null, string orderBy = null, int? skip = null, int? take = 100)
+        {
+            var s = Stopwatch.StartNew();
+            traceSource.TraceEvent(TraceEventType.Verbose, 0, "Querying mapping rules snapshots");
+            AuthenticateIfNecessary();
+            if ((skip != null || take != null) && take != 0) orderBy = orderBy ?? "id";
+            var url = $"{Url}/mapping-rules-snapshots{(where != null || orderBy != null ? $"?query={WebUtility.UrlEncode(where)}{(orderBy != null ? $"{(where != null ? " " : "cql.allrecords=1 ")}sortby {WebUtility.UrlEncode(orderBy)}" : "")}" : "")}{(skip != null ? $"{(where != null || orderBy != null ? "&" : "?")}offset={skip}" : "")}{(where != null || orderBy != null || skip != null ? "&" : "?")}limit={take ?? int.MaxValue}";
+            traceSource.TraceEvent(TraceEventType.Verbose, 0, url);
+            traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", httpClient.DefaultRequestHeaders);
+            var hrm = httpClient.GetAsync(url).Result;
+            var s2 = hrm.Content.ReadAsStringAsync().Result;
+            traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}{1}", hrm.Headers, s2);
+            var jo = hrm.Content.Headers.ContentType?.MediaType == "application/json" ? JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings) : null;
+            if (hrm.StatusCode != HttpStatusCode.OK) throw new HttpRequestException($"Response status code does not indicate success: {hrm.StatusCode} ({hrm.ReasonPhrase}).\r\n{s2}");
+            traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", s.Elapsed);
+            count = (int)jo["totalRecords"];
+            return jo.Properties().SkipWhile(jp => jp.Name == "totalRecords").First().Value.Cast<JObject>().ToArray();
+        }
+
+        public IEnumerable<JObject> MappingRulesSnapshots(string where = null, string orderBy = null, int? skip = null, int? take = null)
+        {
+            var s = Stopwatch.StartNew();
+            traceSource.TraceEvent(TraceEventType.Verbose, 0, "Querying mapping rules snapshots");
+            AuthenticateIfNecessary();
+            if ((skip != null || take != null) && take != 0) orderBy = orderBy ?? "id";
+            var url = $"{Url}/mapping-rules-snapshots{(where != null || orderBy != null ? $"?query={WebUtility.UrlEncode(where)}{(orderBy != null ? $"{(where != null ? " " : "cql.allrecords=1 ")}sortby {WebUtility.UrlEncode(orderBy)}" : "")}" : "")}{(skip != null ? $"{(where != null || orderBy != null ? "&" : "?")}offset={skip}" : "")}{(where != null || orderBy != null || skip != null ? "&" : "?")}limit={take ?? int.MaxValue}";
+            traceSource.TraceEvent(TraceEventType.Verbose, 0, url);
+            traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", httpClient.DefaultRequestHeaders);
+            var hrm = httpClient.GetAsync(url, HttpCompletionOption.ResponseHeadersRead).Result;
+            traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", hrm.Headers);
+            if (hrm.StatusCode != HttpStatusCode.OK)
+            {
+                var s2 = hrm.Content.ReadAsStringAsync().Result;
+                if (hrm.Content.Headers.ContentType?.MediaType == "application/json") s2 = JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings).ToString();
+                traceSource.TraceEvent(TraceEventType.Verbose, 0, s2);
+                throw new HttpRequestException($"Response status code does not indicate success: {hrm.StatusCode} ({hrm.ReasonPhrase}).\r\n{s2}");
+            }
+            using (var sr = new StreamReader(hrm.Content.ReadAsStreamAsync().Result))
+            using (var jtr = new JsonTextReader(sr) { SupportMultipleContent = true })
+            {
+                if (!jtr.Read()) throw new InvalidDataException();
+                while (jtr.Read() && jtr.TokenType != JsonToken.StartArray) ;
+                while (jtr.Read() && jtr.TokenType != JsonToken.EndArray)
+                {
+                    var jo = (JObject)localTimeJsonSerializer.Deserialize(jtr);
+                    traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", jo);
+                    yield return jo;
+                }
+            }
+            traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", s.Elapsed);
+        }
+
+        public JObject GetMappingRulesSnapshot(string id)
+        {
+            var s = Stopwatch.StartNew();
+            traceSource.TraceEvent(TraceEventType.Verbose, 0, "Getting mapping rules snapshot {0}", id);
+            if (id == null) return null;
+            AuthenticateIfNecessary();
+            var url = $"{Url}/mapping-rules-snapshots/{id}";
+            traceSource.TraceEvent(TraceEventType.Verbose, 0, url);
+            traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", httpClient.DefaultRequestHeaders);
+            var hrm = httpClient.GetAsync(url).Result;
+            var s2 = hrm.Content.ReadAsStringAsync().Result;
+            traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}{1}", hrm.Headers, s2);
+            var jo = hrm.Content.Headers.ContentType?.MediaType == "application/json" ? JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings) : null;
+            if (hrm.StatusCode != HttpStatusCode.OK && hrm.StatusCode != HttpStatusCode.NotFound) throw new HttpRequestException($"Response status code does not indicate success: {hrm.StatusCode} ({hrm.ReasonPhrase}).\r\n{s2}");
+            traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", s.Elapsed);
+            return jo;
+        }
+
+        public JObject InsertMappingRulesSnapshot(JObject mappingRulesSnapshot)
+        {
+            var s = Stopwatch.StartNew();
+            if (mappingRulesSnapshot[""] == null) mappingRulesSnapshot[""] = Guid.NewGuid();
+            traceSource.TraceEvent(TraceEventType.Verbose, 0, "Inserting mapping rules snapshot {0}", mappingRulesSnapshot[""]);
+            AuthenticateIfNecessary();
+            var url = $"{Url}/mapping-rules-snapshots";
+            traceSource.TraceEvent(TraceEventType.Verbose, 0, url);
+            var s2 = JsonConvert.SerializeObject(mappingRulesSnapshot, universalTimeJsonSerializationSettings);
+            var sc = new StringContent(s2, Encoding.UTF8, "application/json");
+            traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}{1}", httpClient.DefaultRequestHeaders, s2);
+            var hrm = httpClient.PostAsync(url, sc).Result;
+            s2 = hrm.Content.ReadAsStringAsync().Result;
+            traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}{1}", hrm.Headers, s2);
+            var jo = hrm.Content.Headers.ContentType?.MediaType == "application/json" ? JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings) : null;
+            if (hrm.StatusCode != HttpStatusCode.Created) throw new HttpRequestException($"Response status code does not indicate success: {hrm.StatusCode} ({hrm.ReasonPhrase}).\r\n{s2}");
+            traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", s.Elapsed);
+            return jo;
+        }
+
+        public void UpdateMappingRulesSnapshot(JObject mappingRulesSnapshot)
+        {
+            var s = Stopwatch.StartNew();
+            traceSource.TraceEvent(TraceEventType.Verbose, 0, $"Updating mapping rules snapshot {mappingRulesSnapshot[""]}");
+            AuthenticateIfNecessary();
+            var url = $"{Url}/mapping-rules-snapshots/{mappingRulesSnapshot[""]}";
+            traceSource.TraceEvent(TraceEventType.Verbose, 0, url);
+            var s2 = JsonConvert.SerializeObject(mappingRulesSnapshot, universalTimeJsonSerializationSettings);
+            var sc = new StringContent(s2, Encoding.UTF8, "application/json");
+            traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}{1}", httpClient.DefaultRequestHeaders, s2);
+            var hrm = httpClient.PutAsync(url, sc).Result;
+            s2 = hrm.Content.ReadAsStringAsync().Result;
+            traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}{1}", hrm.Headers, s2);
+            if (hrm.StatusCode != HttpStatusCode.NoContent) throw new HttpRequestException($"Response status code does not indicate success: {hrm.StatusCode} ({hrm.ReasonPhrase}).\r\n{s2}");
+            traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", s.Elapsed);
+        }
+
+        public void DeleteMappingRulesSnapshot(string id)
+        {
+            var s = Stopwatch.StartNew();
+            traceSource.TraceEvent(TraceEventType.Verbose, 0, $"Deleting mapping rules snapshot {id}");
+            AuthenticateIfNecessary();
+            var url = $"{Url}/mapping-rules-snapshots/{id}";
+            traceSource.TraceEvent(TraceEventType.Verbose, 0, url);
+            traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", httpClient.DefaultRequestHeaders);
+            var hrm = httpClient.DeleteAsync(url).Result;
+            var s2 = hrm.Content.ReadAsStringAsync().Result;
+            traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}{1}", hrm.Headers, s2);
+            if (hrm.StatusCode != HttpStatusCode.NoContent) throw new HttpRequestException($"Response status code does not indicate success: {hrm.StatusCode} ({hrm.ReasonPhrase}).\r\n{s2}");
+            traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", s.Elapsed);
+        }
+
         public bool AnyMaterialTypes(string where = null) => MaterialTypes(where, take: 1).Any();
 
         public int CountMaterialTypes(string where = null)
@@ -14489,8 +14749,8 @@ namespace FolioLibrary
         public JObject InsertTag(JObject tag)
         {
             var s = Stopwatch.StartNew();
-            if (tag["id"] == null) tag["id"] = Guid.NewGuid();
-            traceSource.TraceEvent(TraceEventType.Verbose, 0, "Inserting tag {0}", tag["id"]);
+            if (tag[""] == null) tag[""] = Guid.NewGuid();
+            traceSource.TraceEvent(TraceEventType.Verbose, 0, "Inserting tag {0}", tag[""]);
             AuthenticateIfNecessary();
             var url = $"{Url}/tags";
             traceSource.TraceEvent(TraceEventType.Verbose, 0, url);
@@ -14509,9 +14769,9 @@ namespace FolioLibrary
         public void UpdateTag(JObject tag)
         {
             var s = Stopwatch.StartNew();
-            traceSource.TraceEvent(TraceEventType.Verbose, 0, $"Updating tag {tag["id"]}");
+            traceSource.TraceEvent(TraceEventType.Verbose, 0, $"Updating tag {tag[""]}");
             AuthenticateIfNecessary();
-            var url = $"{Url}/tags/{tag["id"]}";
+            var url = $"{Url}/tags/{tag[""]}";
             traceSource.TraceEvent(TraceEventType.Verbose, 0, url);
             var s2 = JsonConvert.SerializeObject(tag, universalTimeJsonSerializationSettings);
             var sc = new StringContent(s2, Encoding.UTF8, "application/json");

@@ -1384,6 +1384,46 @@ namespace FolioLibraryTest
         }
 
         [TestMethod]
+        public void CountMappingParamsSnapshotsTest()
+        {
+            var s = Stopwatch.StartNew();
+            var i = folioServiceClient.CountMappingParamsSnapshots();
+            var j = folioDapperContext.CountMappingParamsSnapshots();
+            Assert.IsTrue(i == j);
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"CountMappingParamsSnapshotsTest()\r\n    ElapsedTime={s.Elapsed}");
+        }
+
+        [TestMethod]
+        public void SourceMappingParamsSnapshotsTest()
+        {
+            var s = Stopwatch.StartNew();
+            var l = folioServiceClient.MappingParamsSnapshots(take: take).Select(jo => (string)jo["id"]).ToArray();
+            var l2 = folioDapperContext.MappingParamsSnapshots(take: take).Select(u => u.Id.ToString()).ToArray();
+            Assert.IsTrue(l.SequenceEqual(l2));
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"MappingParamsSnapshotsTest()\r\n    ElapsedTime={s.Elapsed}");
+        }
+
+        [TestMethod]
+        public void CountMappingRulesSnapshotsTest()
+        {
+            var s = Stopwatch.StartNew();
+            var i = folioServiceClient.CountMappingRulesSnapshots();
+            var j = folioDapperContext.CountMappingRulesSnapshots();
+            Assert.IsTrue(i == j);
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"CountMappingRulesSnapshotsTest()\r\n    ElapsedTime={s.Elapsed}");
+        }
+
+        [TestMethod]
+        public void SourceMappingRulesSnapshotsTest()
+        {
+            var s = Stopwatch.StartNew();
+            var l = folioServiceClient.MappingRulesSnapshots(take: take).Select(jo => (string)jo["id"]).ToArray();
+            var l2 = folioDapperContext.MappingRulesSnapshots(take: take).Select(u => u.Id.ToString()).ToArray();
+            Assert.IsTrue(l.SequenceEqual(l2));
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"MappingRulesSnapshotsTest()\r\n    ElapsedTime={s.Elapsed}");
+        }
+
+        [TestMethod]
         public void CountMaterialTypesTest()
         {
             var s = Stopwatch.StartNew();

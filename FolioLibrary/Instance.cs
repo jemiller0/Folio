@@ -67,6 +67,9 @@ namespace FolioLibrary
         [Display(Name = "Instance Source Marc", Order = 14)]
         public virtual InstanceSourceMarc InstanceSourceMarc { get; set; }
 
+        [Display(Name = "Instance Source Marc 1", Order = 15)]
+        public virtual InstanceSourceMarc InstanceSourceMarc1 { get; set; }
+
         [ScaffoldColumn(false)]
         public virtual ICollection<PrecedingSucceedingTitle> PrecedingSucceedingTitles { get; set; }
 

@@ -26,7 +26,7 @@ namespace FolioLibrary
         [Column("record_type"), Display(Name = "Record Type", Order = 6), Required, StringLength(1024)]
         public virtual string RecordType { get; set; }
 
-        [Column("instance_id"), Display(Name = "Instance Id", Order = 7)]
+        [Column("external_id"), Display(Name = "Instance Id", Order = 7)]
         public virtual Guid? InstanceId { get; set; }
 
         [Column("state"), Display(Order = 8), Required, StringLength(1024)]
@@ -53,7 +53,7 @@ namespace FolioLibrary
         [Column("updated_date"), DataType(DataType.DateTime), Display(Name = "Last Write Time", Order = 15), DisplayFormat(DataFormatString = "{0:g}"), Editable(false)]
         public virtual DateTime? LastWriteTime { get; set; }
 
-        [Column("instance_hrid"), Display(Name = "Instance Hrid", Order = 16), StringLength(1024)]
+        [Column("external_hrid"), Display(Name = "Instance Hrid", Order = 16), StringLength(1024)]
         public virtual string InstanceHrid { get; set; }
 
         [Display(Name = "Error Record", Order = 17)]

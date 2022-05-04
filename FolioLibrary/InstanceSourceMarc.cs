@@ -24,19 +24,22 @@ namespace FolioLibrary
             return ValidationResult.Success;
         }
 
-        [Column("id"), Display(Name = "Instance", Order = 1), Editable(false), ForeignKey("Instance")]
+        [Column("id"), Display(Name = "Instance", Order = 1), Editable(false), ForeignKey("Instance1")]
         public virtual Guid? Id { get; set; }
 
-        [Display(Order = 2)]
+        [Display(Order = 2), InverseProperty("InstanceSourceMarc")]
         public virtual Instance Instance { get; set; }
 
-        [Column("jsonb"), CustomValidation(typeof(InstanceSourceMarc), nameof(ValidateContent)), DataType(DataType.MultilineText), Display(Order = 3), Required]
+        [Display(Name = "Instance 1", Order = 3), InverseProperty("InstanceSourceMarc1")]
+        public virtual Instance Instance1 { get; set; }
+
+        [Column("jsonb"), CustomValidation(typeof(InstanceSourceMarc), nameof(ValidateContent)), DataType(DataType.MultilineText), Display(Order = 4), Required]
         public virtual string Content { get; set; }
 
-        [Column("creation_date"), DataType(DataType.DateTime), Display(Name = "Creation Time", Order = 4), DisplayFormat(DataFormatString = "{0:g}"), Editable(false)]
+        [Column("creation_date"), DataType(DataType.DateTime), Display(Name = "Creation Time", Order = 5), DisplayFormat(DataFormatString = "{0:g}"), Editable(false)]
         public virtual DateTime? CreationTime { get; set; }
 
-        [Column("created_by"), Display(Name = "Creation User Id", Order = 5), Editable(false)]
+        [Column("created_by"), Display(Name = "Creation User Id", Order = 6), Editable(false)]
         public virtual string CreationUserId { get; set; }
 
         public override string ToString() => $"{{ {nameof(Id)} = {Id}, {nameof(Content)} = {Content}, {nameof(CreationTime)} = {CreationTime}, {nameof(CreationUserId)} = {CreationUserId} }}";

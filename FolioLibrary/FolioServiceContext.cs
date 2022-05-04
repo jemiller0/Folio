@@ -6021,7 +6021,6 @@ namespace FolioLibrary
             return FolioServiceClient.Tags(out count, where, orderBy, skip, take).Select(jo =>
             {
                 var t2 = Tag2.FromJObject(jo);
-                if (load && t2.CreationUserId != null) t2.CreationUser = (User2)(cache && objects.ContainsKey(t2.CreationUserId.Value) ? objects[t2.CreationUserId.Value] : objects[t2.CreationUserId.Value] = FindUser2(t2.CreationUserId));
                 if (load && t2.LastWriteUserId != null) t2.LastWriteUser = (User2)(cache && objects.ContainsKey(t2.LastWriteUserId.Value) ? objects[t2.LastWriteUserId.Value] : objects[t2.LastWriteUserId.Value] = FindUser2(t2.LastWriteUserId));
                 return t2;
             }).ToArray();
@@ -6032,7 +6031,6 @@ namespace FolioLibrary
             foreach (var jo in FolioServiceClient.Tags(where, orderBy, skip, take))
             {
                 var t2 = Tag2.FromJObject(jo);
-                if (load && t2.CreationUserId != null) t2.CreationUser = (User2)(cache && objects.ContainsKey(t2.CreationUserId.Value) ? objects[t2.CreationUserId.Value] : objects[t2.CreationUserId.Value] = FindUser2(t2.CreationUserId));
                 if (load && t2.LastWriteUserId != null) t2.LastWriteUser = (User2)(cache && objects.ContainsKey(t2.LastWriteUserId.Value) ? objects[t2.LastWriteUserId.Value] : objects[t2.LastWriteUserId.Value] = FindUser2(t2.LastWriteUserId));
                 yield return t2;
             }
@@ -6042,7 +6040,6 @@ namespace FolioLibrary
         {
             var t2 = Tag2.FromJObject(FolioServiceClient.GetTag(id?.ToString()));
             if (t2 == null) return null;
-            if (load && t2.CreationUserId != null) t2.CreationUser = (User2)(cache && objects.ContainsKey(t2.CreationUserId.Value) ? objects[t2.CreationUserId.Value] : objects[t2.CreationUserId.Value] = FindUser2(t2.CreationUserId));
             if (load && t2.LastWriteUserId != null) t2.LastWriteUser = (User2)(cache && objects.ContainsKey(t2.LastWriteUserId.Value) ? objects[t2.LastWriteUserId.Value] : objects[t2.LastWriteUserId.Value] = FindUser2(t2.LastWriteUserId));
             return t2;
         }
