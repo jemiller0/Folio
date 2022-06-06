@@ -2687,6 +2687,29 @@ LEFT JOIN uc.sources AS s ON s.id = h2.source_id
         }
 
         [TestMethod]
+        public void QueryHoldingDonorsTest()
+        {
+            var s = Stopwatch.StartNew();
+            folioDapperContext.HoldingDonors(take: 1).ToArray();
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"HoldingDonorsTest()\r\n    ElapsedTime={s.Elapsed}");
+        }
+
+        [TestMethod]
+        public void HoldingDonorsQueryTest()
+        {
+            var s = Stopwatch.StartNew();
+            folioDapperContext.Query(@"
+SELECT
+h.hrid AS ""Holding"",
+hd.donor_code AS ""DonorCode"" 
+FROM uc.holding_donors AS hd
+LEFT JOIN uc.holdings AS h ON h.id = hd.holding_id
+ ORDER BY hd.id
+", take: 1);
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"HoldingDonorsQueryTest()\r\n    ElapsedTime={s.Elapsed}");
+        }
+
+        [TestMethod]
         public void QueryHoldingElectronicAccessesTest()
         {
             var s = Stopwatch.StartNew();
@@ -4036,6 +4059,29 @@ LEFT JOIN uc.users AS lwu ON lwu.id = ids2.updated_by_user_id
  ORDER BY ids2.name
 ", take: 1);
             traceSource.TraceEvent(TraceEventType.Information, 0, $"ItemDamagedStatus2sQueryTest()\r\n    ElapsedTime={s.Elapsed}");
+        }
+
+        [TestMethod]
+        public void QueryItemDonorsTest()
+        {
+            var s = Stopwatch.StartNew();
+            folioDapperContext.ItemDonors(take: 1).ToArray();
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"ItemDonorsTest()\r\n    ElapsedTime={s.Elapsed}");
+        }
+
+        [TestMethod]
+        public void ItemDonorsQueryTest()
+        {
+            var s = Stopwatch.StartNew();
+            folioDapperContext.Query(@"
+SELECT
+i.hrid AS ""Item"",
+id2.donor_code AS ""DonorCode"" 
+FROM uc.item_donors AS id2
+LEFT JOIN uc.items AS i ON i.id = id2.item_id
+ ORDER BY id2.id
+", take: 1);
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"ItemDonorsQueryTest()\r\n    ElapsedTime={s.Elapsed}");
         }
 
         [TestMethod]

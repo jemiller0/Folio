@@ -138,6 +138,7 @@ namespace FolioWebApplication
             Session["ExtentsPermission"] = roles.Contains("all") || roles.Contains("inventory.all") || roles.Contains("uc.extents.view") ? "View" : null;
             Session["FormatsPermission"] = roles.Contains("all") || roles.Contains("inventory.all") || roles.Contains("uc.formats.view") ? "View" : null;
             Session["Holding2sPermission"] = roles.Contains("all") || roles.Contains("inventory.all") || roles.Contains("uc.holdings.view") ? "View" : null;
+            Session["HoldingDonorsPermission"] = roles.Contains("all") || roles.Contains("inventory.all") || roles.Contains("uc.holdingdonors.view") ? "View" : null;
             Session["HoldingElectronicAccessesPermission"] = roles.Contains("all") || roles.Contains("inventory.all") || roles.Contains("uc.holdingelectronicaccesses.view") ? "View" : null;
             Session["HoldingEntriesPermission"] = roles.Contains("all") || roles.Contains("inventory.all") || roles.Contains("uc.holdingentries.view") ? "View" : null;
             Session["HoldingFormerIdsPermission"] = roles.Contains("all") || roles.Contains("inventory.all") || roles.Contains("uc.holdingformerids.view") ? "View" : null;
@@ -164,6 +165,7 @@ namespace FolioWebApplication
             Session["IssuanceModesPermission"] = roles.Contains("all") || roles.Contains("inventory.all") || roles.Contains("uc.issuancemodes.view") ? "View" : null;
             Session["Item2sPermission"] = roles.Contains("all") || roles.Contains("inventory.all") || roles.Contains("uc.items.view") ? "View" : null;
             Session["ItemDamagedStatus2sPermission"] = roles.Contains("all") || roles.Contains("inventory.all") || roles.Contains("uc.itemdamagedstatuses.view") ? "View" : null;
+            Session["ItemDonorsPermission"] = roles.Contains("all") || roles.Contains("inventory.all") || roles.Contains("uc.itemdonors.view") ? "View" : null;
             Session["ItemElectronicAccessesPermission"] = roles.Contains("all") || roles.Contains("inventory.all") || roles.Contains("uc.itemelectronicaccesses.view") ? "View" : null;
             Session["ItemFormerIdsPermission"] = roles.Contains("all") || roles.Contains("inventory.all") || roles.Contains("uc.itemformerids.view") ? "View" : null;
             Session["ItemNotesPermission"] = roles.Contains("all") || roles.Contains("inventory.all") || roles.Contains("uc.itemnotes.view") ? "View" : null;
@@ -491,6 +493,7 @@ namespace FolioWebApplication
             Session["ExtentsPermission"] = permission;
             Session["FormatsPermission"] = permission;
             Session["Holding2sPermission"] = permission;
+            Session["HoldingDonorsPermission"] = permission;
             Session["HoldingElectronicAccessesPermission"] = permission;
             Session["HoldingEntriesPermission"] = permission;
             Session["HoldingFormerIdsPermission"] = permission;
@@ -517,6 +520,7 @@ namespace FolioWebApplication
             Session["IssuanceModesPermission"] = permission;
             Session["Item2sPermission"] = permission;
             Session["ItemDamagedStatus2sPermission"] = permission;
+            Session["ItemDonorsPermission"] = permission;
             Session["ItemElectronicAccessesPermission"] = permission;
             Session["ItemFormerIdsPermission"] = permission;
             Session["ItemNotesPermission"] = permission;

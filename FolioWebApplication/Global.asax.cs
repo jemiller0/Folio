@@ -97,6 +97,7 @@ namespace FolioWebApplication
                 //ImpersonateUser("igrundseth");
                 //ImpersonateUser("cecillegraham");
                 //ImpersonateUser("mhwhite19");
+                //ImpersonateUser("lhauglan");
 
                 traceSource.TraceEvent(TraceEventType.Verbose, 0, $"{Request.Url}\n    UserName={User?.Identity?.Name}\n    LocalDateTime={DateTime.Now:G}");
                 if (Session["UserName"] == null)
@@ -144,6 +145,7 @@ namespace FolioWebApplication
                             || hs.Contains("department:Scrc-Pres")
                             || hs.Contains("department:Area Studies - East Asia")
                             || hs.Contains("department:Law Acquisitions & Erm")
+                            || hs.Contains("department:E-Resources Management")
                             || userName == "burnstein"
                             )
                         {

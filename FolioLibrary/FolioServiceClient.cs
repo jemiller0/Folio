@@ -10260,7 +10260,7 @@ namespace FolioLibrary
             orderBy = orderBy ?? "id";
             while (take > 0)
             {
-                var url = $"{Url}/orders-storage/purchase-orders{(where != null || orderBy != null ? $"?query={WebUtility.UrlEncode(where)}{(orderBy != null ? $"{(where != null ? " " : "cql.allrecords=1 ")}sortby {WebUtility.UrlEncode(orderBy)}" : "")}" : "")}{(skip != null ? $"{(where != null || orderBy != null ? "&" : "?")}offset={skip}" : "")}{(where != null || orderBy != null || skip != null ? "&" : "?")}limit={Math.Min(take.Value, 10000)}";
+                var url = $"{Url}/orders-storage/purchase-orders{(where != null || orderBy != null ? $"?query={WebUtility.UrlEncode(where)}{(orderBy != null ? $"{(where != null ? " " : "cql.allrecords=1 ")}sortby {WebUtility.UrlEncode(orderBy)}" : "")}" : "")}{(skip != null ? $"{(where != null || orderBy != null ? "&" : "?")}offset={skip}" : "")}{(where != null || orderBy != null || skip != null ? "&" : "?")}limit={Math.Min(take.Value, 5000)}";
                 traceSource.TraceEvent(TraceEventType.Verbose, 0, url);
                 traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", httpClient.DefaultRequestHeaders);
                 var hrm = httpClient.GetAsync(url, HttpCompletionOption.ResponseHeadersRead).Result;
@@ -10285,7 +10285,7 @@ namespace FolioLibrary
                         ++i;
                         yield return jo;
                     }
-                    if (i < Math.Min(take.Value, 10000)) break;
+                    if (i < Math.Min(take.Value, 5000)) break;
                     skip += i;
                     take -= i;
                 }
@@ -10530,7 +10530,7 @@ namespace FolioLibrary
             orderBy = orderBy ?? "id";
             while (take > 0)
             {
-                var url = $"{Url}/orders-storage/po-lines{(where != null || orderBy != null ? $"?query={WebUtility.UrlEncode(where)}{(orderBy != null ? $"{(where != null ? " " : "cql.allrecords=1 ")}sortby {WebUtility.UrlEncode(orderBy)}" : "")}" : "")}{(skip != null ? $"{(where != null || orderBy != null ? "&" : "?")}offset={skip}" : "")}{(where != null || orderBy != null || skip != null ? "&" : "?")}limit={Math.Min(take.Value, 10000)}";
+                var url = $"{Url}/orders-storage/po-lines{(where != null || orderBy != null ? $"?query={WebUtility.UrlEncode(where)}{(orderBy != null ? $"{(where != null ? " " : "cql.allrecords=1 ")}sortby {WebUtility.UrlEncode(orderBy)}" : "")}" : "")}{(skip != null ? $"{(where != null || orderBy != null ? "&" : "?")}offset={skip}" : "")}{(where != null || orderBy != null || skip != null ? "&" : "?")}limit={Math.Min(take.Value, 2000)}";
                 traceSource.TraceEvent(TraceEventType.Verbose, 0, url);
                 traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", httpClient.DefaultRequestHeaders);
                 var hrm = httpClient.GetAsync(url, HttpCompletionOption.ResponseHeadersRead).Result;
@@ -10555,7 +10555,7 @@ namespace FolioLibrary
                         ++i;
                         yield return jo;
                     }
-                    if (i < Math.Min(take.Value, 10000)) break;
+                    if (i < Math.Min(take.Value, 2000)) break;
                     skip += i;
                     take -= i;
                 }
@@ -16292,33 +16292,74 @@ namespace FolioLibrary
             return ja.Cast<JObject>().ToArray();
         }
 
-        public IEnumerable<JObject> Objects(string url, string where = null, string orderBy = null, int? skip = null, int? take = null)
+        public IEnumerable<JObject> Objects(string url, string where = null, string orderBy = null, int? skip = null, int? take = null, int? pageSize = null)
         {
             var s = Stopwatch.StartNew();
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "Querying objects");
             AuthenticateIfNecessary();
+            if (pageSize == null)
+            {
             url = $"{Url}/{url}{(where != null || orderBy != null ? $"?query={WebUtility.UrlEncode(where)}{(orderBy != null ? $"{(where != null ? " " : "cql.allrecords=1 ")}sortby {WebUtility.UrlEncode(orderBy)}" : "")}" : "")}{(skip != null ? $"{(where != null || orderBy != null ? "&" : "?")}offset={skip}" : "")}{(where != null || orderBy != null || skip != null ? "&" : "?")}limit={take ?? int.MaxValue}";
-            traceSource.TraceEvent(TraceEventType.Verbose, 0, url);
-            traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", httpClient.DefaultRequestHeaders);
-            var hrm = httpClient.GetAsync(url, HttpCompletionOption.ResponseHeadersRead).Result;
-            traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", hrm.Headers);
-            if (hrm.StatusCode != HttpStatusCode.OK)
-            {
-                var s2 = hrm.Content.ReadAsStringAsync().Result;
-                if (hrm.Content.Headers.ContentType?.MediaType == "application/json") s2 = JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings).ToString();
-                traceSource.TraceEvent(TraceEventType.Verbose, 0, s2);
-                throw new HttpRequestException($"Response status code does not indicate success: {hrm.StatusCode} ({hrm.ReasonPhrase}).\r\n{s2}");
-            }
-            using (var sr = new StreamReader(hrm.Content.ReadAsStreamAsync().Result))
-            using (var jtr = new JsonTextReader(sr) { SupportMultipleContent = true })
-            {
-                if (!jtr.Read()) throw new InvalidDataException();
-                while (jtr.Read() && jtr.TokenType != JsonToken.StartArray) ;
-                while (jtr.Read() && jtr.TokenType != JsonToken.EndArray)
+                traceSource.TraceEvent(TraceEventType.Verbose, 0, url);
+                traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", httpClient.DefaultRequestHeaders);
+                var hrm = httpClient.GetAsync(url, HttpCompletionOption.ResponseHeadersRead).Result;
+                traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", hrm.Headers);
+                if (hrm.StatusCode != HttpStatusCode.OK)
                 {
-                    var jo = (JObject)localTimeJsonSerializer.Deserialize(jtr);
-                    traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", jo);
-                    yield return jo;
+                    var s2 = hrm.Content.ReadAsStringAsync().Result;
+                    if (hrm.Content.Headers.ContentType?.MediaType == "application/json") s2 = JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings).ToString();
+                    traceSource.TraceEvent(TraceEventType.Verbose, 0, s2);
+                    throw new HttpRequestException($"Response status code does not indicate success: {hrm.StatusCode} ({hrm.ReasonPhrase}).\r\n{s2}");
+                }
+                using (var sr = new StreamReader(hrm.Content.ReadAsStreamAsync().Result))
+                using (var jtr = new JsonTextReader(sr) { SupportMultipleContent = true })
+                {
+                    if (!jtr.Read()) throw new InvalidDataException();
+                    while (jtr.Read() && jtr.TokenType != JsonToken.StartArray) ;
+                    while (jtr.Read() && jtr.TokenType != JsonToken.EndArray)
+                    {
+                        var jo = (JObject)localTimeJsonSerializer.Deserialize(jtr);
+                        traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", jo);
+                        yield return jo;
+                    }
+                }
+            }
+            else
+            {
+                skip = skip ?? 0;
+                take = take ?? int.MaxValue;
+                orderBy = orderBy ?? "id";
+                while (take > 0)
+                {
+                    var url2 = $"{Url}/{url}?orderBy={orderBy}&offset={skip}&limit={Math.Min(take.Value, pageSize.Value)}";
+                    traceSource.TraceEvent(TraceEventType.Verbose, 0, url2);
+                    traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", httpClient.DefaultRequestHeaders);
+                    var hrm = httpClient.GetAsync(url2, HttpCompletionOption.ResponseHeadersRead).Result;
+                    traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", hrm.Headers);
+                    if (hrm.StatusCode != HttpStatusCode.OK)
+                    {
+                        var s2 = hrm.Content.ReadAsStringAsync().Result;
+                        if (hrm.Content.Headers.ContentType?.MediaType == "application/json") s2 = JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings).ToString();
+                        traceSource.TraceEvent(TraceEventType.Verbose, 0, s2);
+                        throw new HttpRequestException($"Response status code does not indicate success: {hrm.StatusCode} ({hrm.ReasonPhrase}).\r\n{s2}");
+                    }
+                    using (var sr = new StreamReader(hrm.Content.ReadAsStreamAsync().Result))
+                    using (var jtr = new JsonTextReader(sr) { SupportMultipleContent = true })
+                    {
+                        if (!jtr.Read()) throw new InvalidDataException();
+                        while (jtr.Read() && jtr.TokenType != JsonToken.StartArray) ;
+                        var i = 0;
+                        while (jtr.Read() && jtr.TokenType != JsonToken.EndArray)
+                        {
+                            var jo = (JObject)localTimeJsonSerializer.Deserialize(jtr);
+                            traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", jo);
+                            ++i;
+                            yield return jo;
+                        }
+                        if (i < Math.Min(take.Value, pageSize.Value)) break;
+                        skip += i;
+                        take -= i;
+                    }
                 }
             }
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", s.Elapsed);

@@ -848,6 +848,13 @@ namespace FolioLibrary
             if (load && h2.SourceId != null) h2.Source = FindSource2(h2.SourceId);
             return h2;
         }
+        public HoldingDonor FindHoldingDonor(string id, Guid? holdingId, bool load = false)
+        {
+            var hd = Query<HoldingDonor>($"SELECT id AS \"Id\", holding_id AS \"HoldingId\", donor_code AS \"DonorCode\" FROM uc{(IsMySql ? "_" : ".")}holding_donors WHERE id = @id AND holding_id = @holdingId", new { id, holdingId }).SingleOrDefault();
+            if (hd == null) return null;
+            if (load && hd.HoldingId != null) hd.Holding = FindHolding2(hd.HoldingId);
+            return hd;
+        }
         public HoldingElectronicAccess FindHoldingElectronicAccess(string id, Guid? holdingId, bool load = false)
         {
             var hea = Query<HoldingElectronicAccess>($"SELECT id AS \"Id\", holding_id AS \"HoldingId\", uri AS \"Uri\", link_text AS \"LinkText\", materials_specification AS \"MaterialsSpecification\", public_note AS \"PublicNote\", relationship_id AS \"RelationshipId\" FROM uc{(IsMySql ? "_" : ".")}holding_electronic_accesses WHERE id = @id AND holding_id = @holdingId", new { id, holdingId }).SingleOrDefault();
@@ -1266,6 +1273,13 @@ namespace FolioLibrary
             if (load && ids2.CreationUserId != null) ids2.CreationUser = FindUser2(ids2.CreationUserId);
             if (load && ids2.LastWriteUserId != null) ids2.LastWriteUser = FindUser2(ids2.LastWriteUserId);
             return ids2;
+        }
+        public ItemDonor FindItemDonor(string id, Guid? itemId, bool load = false)
+        {
+            var id2 = Query<ItemDonor>($"SELECT id AS \"Id\", item_id AS \"ItemId\", donor_code AS \"DonorCode\" FROM uc{(IsMySql ? "_" : ".")}item_donors WHERE id = @id AND item_id = @itemId", new { id, itemId }).SingleOrDefault();
+            if (id2 == null) return null;
+            if (load && id2.ItemId != null) id2.Item = FindItem2(id2.ItemId);
+            return id2;
         }
         public ItemElectronicAccess FindItemElectronicAccess(string id, Guid? itemId, bool load = false)
         {
@@ -3222,6 +3236,9 @@ namespace FolioLibrary
         public void AddHolding2sIndexes()
         {
         }
+        public void AddHoldingDonorsIndexes()
+        {
+        }
         public void AddHoldingElectronicAccessesIndexes()
         {
         }
@@ -3412,6 +3429,9 @@ namespace FolioLibrary
         {
         }
         public void AddItemDamagedStatus2sIndexes()
+        {
+        }
+        public void AddItemDonorsIndexes()
         {
         }
         public void AddItemElectronicAccessesIndexes()
@@ -4522,6 +4542,9 @@ namespace FolioLibrary
         public void RemoveHolding2sIndexes()
         {
         }
+        public void RemoveHoldingDonorsIndexes()
+        {
+        }
         public void RemoveHoldingElectronicAccessesIndexes()
         {
         }
@@ -4712,6 +4735,9 @@ namespace FolioLibrary
         {
         }
         public void RemoveItemDamagedStatus2sIndexes()
+        {
+        }
+        public void RemoveItemDonorsIndexes()
         {
         }
         public void RemoveItemElectronicAccessesIndexes()
@@ -5562,6 +5588,7 @@ namespace FolioLibrary
         public IEnumerable<Group2> Group2s(string where = null, object param = null, string orderBy = null, int? skip = null, int? take = null) => Query<Group2>($"SELECT id AS \"Id\", \"group\" AS \"Name\", \"desc\" AS \"Description\", expiration_offset_in_days AS \"ExpirationOffsetInDays\", created_date AS \"CreationTime\", created_by_user_id AS \"CreationUserId\", created_by_username AS \"CreationUserUsername\", updated_date AS \"LastWriteTime\", updated_by_user_id AS \"LastWriteUserId\", updated_by_username AS \"LastWriteUserUsername\", content AS \"Content\" FROM uc{(IsMySql ? "_" : ".")}groups{(where != null ? $" WHERE {where}" : "")}{(orderBy != null || skip != null || take != null ? $" ORDER BY {orderBy ?? "id"}" : "")}", param, skip, take);
         public IEnumerable<Holding> Holdings(string where = null, object param = null, string orderBy = null, int? skip = null, int? take = null) => Query<Holding>($"SELECT id AS \"Id\", COALESCE(jsonb_set(jsonb, '{{metadata,createdDate}}', ('\"' || (jsonb#>>'{{metadata,createdDate}}') || CASE WHEN jsonb#>>'{{metadata,createdDate}}' !~ '([-+]\\d\\d:\\d\\d)|Z$' THEN '+00:00' ELSE '' END || '\"')::jsonb), jsonb) AS \"Content\", creation_date AS \"CreationTime\", created_by AS \"CreationUserId\", instanceid AS \"Instanceid\", permanentlocationid AS \"Permanentlocationid\", temporarylocationid AS \"Temporarylocationid\", effectivelocationid AS \"Effectivelocationid\", holdingstypeid AS \"Holdingstypeid\", callnumbertypeid AS \"Callnumbertypeid\", illpolicyid AS \"Illpolicyid\", sourceid AS \"Sourceid\" FROM uchicago_mod_inventory_storage{(IsMySql ? "_" : ".")}holdings_record{(where != null ? $" WHERE {where}" : "")}{(orderBy != null || skip != null || take != null ? $" ORDER BY {orderBy ?? "id"}" : "")}", param, skip, take);
         public IEnumerable<Holding2> Holding2s(string where = null, object param = null, string orderBy = null, int? skip = null, int? take = null) => Query<Holding2>($"SELECT id AS \"Id\", _version AS \"Version\", hrid AS \"ShortId\", holding_type_id AS \"HoldingTypeId\", instance_id AS \"InstanceId\", permanent_location_id AS \"LocationId\", temporary_location_id AS \"TemporaryLocationId\", effective_location_id AS \"EffectiveLocationId\", call_number_type_id AS \"CallNumberTypeId\", call_number_prefix AS \"CallNumberPrefix\", call_number AS \"CallNumber\", call_number_suffix AS \"CallNumberSuffix\", shelving_title AS \"ShelvingTitle\", acquisition_format AS \"AcquisitionFormat\", acquisition_method AS \"AcquisitionMethod\", receipt_status AS \"ReceiptStatus\", ill_policy_id AS \"IllPolicyId\", retention_policy AS \"RetentionPolicy\", digitization_policy AS \"DigitizationPolicy\", copy_number AS \"CopyNumber\", number_of_items AS \"ItemCount\", receiving_history_display_type AS \"ReceivingHistoryDisplayType\", discovery_suppress AS \"DiscoverySuppress\", created_date AS \"CreationTime\", created_by_user_id AS \"CreationUserId\", created_by_username AS \"CreationUserUsername\", updated_date AS \"LastWriteTime\", updated_by_user_id AS \"LastWriteUserId\", updated_by_username AS \"LastWriteUserUsername\", source_id AS \"SourceId\", content AS \"Content\" FROM uc{(IsMySql ? "_" : ".")}holdings{(where != null ? $" WHERE {where}" : "")}{(orderBy != null || skip != null || take != null ? $" ORDER BY {orderBy ?? "id"}" : "")}", param, skip, take);
+        public IEnumerable<HoldingDonor> HoldingDonors(string where = null, object param = null, string orderBy = null, int? skip = null, int? take = null) => Query<HoldingDonor>($"SELECT id AS \"Id\", holding_id AS \"HoldingId\", donor_code AS \"DonorCode\" FROM uc{(IsMySql ? "_" : ".")}holding_donors{(where != null ? $" WHERE {where}" : "")}{(orderBy != null || skip != null || take != null ? $" ORDER BY {orderBy ?? "id, holding_id"}" : "")}", param, skip, take);
         public IEnumerable<HoldingElectronicAccess> HoldingElectronicAccesses(string where = null, object param = null, string orderBy = null, int? skip = null, int? take = null) => Query<HoldingElectronicAccess>($"SELECT id AS \"Id\", holding_id AS \"HoldingId\", uri AS \"Uri\", link_text AS \"LinkText\", materials_specification AS \"MaterialsSpecification\", public_note AS \"PublicNote\", relationship_id AS \"RelationshipId\" FROM uc{(IsMySql ? "_" : ".")}holding_electronic_accesses{(where != null ? $" WHERE {where}" : "")}{(orderBy != null || skip != null || take != null ? $" ORDER BY {orderBy ?? "id, holding_id"}" : "")}", param, skip, take);
         public IEnumerable<HoldingEntry> HoldingEntries(string where = null, object param = null, string orderBy = null, int? skip = null, int? take = null) => Query<HoldingEntry>($"SELECT id AS \"Id\", holding_id AS \"HoldingId\", public_display AS \"PublicDisplay\", enumeration AS \"Enumeration\", chronology AS \"Chronology\" FROM uc{(IsMySql ? "_" : ".")}holding_entries{(where != null ? $" WHERE {where}" : "")}{(orderBy != null || skip != null || take != null ? $" ORDER BY {orderBy ?? "id, holding_id"}" : "")}", param, skip, take);
         public IEnumerable<HoldingFormerId> HoldingFormerIds(string where = null, object param = null, string orderBy = null, int? skip = null, int? take = null) => Query<HoldingFormerId>($"SELECT id AS \"Id\", holding_id AS \"HoldingId\", content AS \"Content\" FROM uc{(IsMySql ? "_" : ".")}holding_former_ids{(where != null ? $" WHERE {where}" : "")}{(orderBy != null || skip != null || take != null ? $" ORDER BY {orderBy ?? "id, holding_id"}" : "")}", param, skip, take);
@@ -5626,6 +5653,7 @@ namespace FolioLibrary
         public IEnumerable<Item2> Item2s(string where = null, object param = null, string orderBy = null, int? skip = null, int? take = null) => Query<Item2>($"SELECT id AS \"Id\", _version AS \"Version\", hrid AS \"ShortId\", holding_id AS \"HoldingId\", discovery_suppress AS \"DiscoverySuppress\", accession_number AS \"AccessionNumber\", barcode AS \"Barcode\", effective_shelving_order AS \"EffectiveShelvingOrder\", call_number AS \"CallNumber\", call_number_prefix AS \"CallNumberPrefix\", call_number_suffix AS \"CallNumberSuffix\", call_number_type_id AS \"CallNumberTypeId\", effective_call_number AS \"EffectiveCallNumber\", effective_call_number_prefix AS \"EffectiveCallNumberPrefix\", effective_call_number_suffix AS \"EffectiveCallNumberSuffix\", effective_call_number_type_id AS \"EffectiveCallNumberTypeId\", volume AS \"Volume\", enumeration AS \"Enumeration\", chronology AS \"Chronology\", item_identifier AS \"ItemIdentifier\", copy_number AS \"CopyNumber\", number_of_pieces AS \"PiecesCount\", description_of_pieces AS \"PiecesDescription\", number_of_missing_pieces AS \"MissingPiecesCount\", missing_pieces AS \"MissingPiecesDescription\", missing_pieces_date AS \"MissingPiecesTime\", item_damaged_status_id AS \"DamagedStatusId\", item_damaged_status_date AS \"DamagedStatusTime\", status_name AS \"Status\", status_date AS \"StatusLastWriteTime\", material_type_id AS \"MaterialTypeId\", permanent_loan_type_id AS \"PermanentLoanTypeId\", temporary_loan_type_id AS \"TemporaryLoanTypeId\", permanent_location_id AS \"PermanentLocationId\", temporary_location_id AS \"TemporaryLocationId\", effective_location_id AS \"EffectiveLocationId\", in_transit_destination_service_point_id AS \"InTransitDestinationServicePointId\", order_item_id AS \"OrderItemId\", created_date AS \"CreationTime\", created_by_user_id AS \"CreationUserId\", created_by_username AS \"CreationUserUsername\", updated_date AS \"LastWriteTime\", updated_by_user_id AS \"LastWriteUserId\", updated_by_username AS \"LastWriteUserUsername\", last_check_in_date_time AS \"LastCheckInDateTime\", last_check_in_service_point_id AS \"LastCheckInServicePointId\", last_check_in_staff_member_id AS \"LastCheckInStaffMemberId\", content AS \"Content\" FROM uc{(IsMySql ? "_" : ".")}items{(where != null ? $" WHERE {where}" : "")}{(orderBy != null || skip != null || take != null ? $" ORDER BY {orderBy ?? "id"}" : "")}", param, skip, take);
         public IEnumerable<ItemDamagedStatus> ItemDamagedStatuses(string where = null, object param = null, string orderBy = null, int? skip = null, int? take = null) => Query<ItemDamagedStatus>($"SELECT id AS \"Id\", COALESCE(jsonb_set(jsonb, '{{metadata,createdDate}}', ('\"' || (jsonb#>>'{{metadata,createdDate}}') || CASE WHEN jsonb#>>'{{metadata,createdDate}}' !~ '([-+]\\d\\d:\\d\\d)|Z$' THEN '+00:00' ELSE '' END || '\"')::jsonb), jsonb) AS \"Content\", creation_date AS \"CreationTime\", created_by AS \"CreationUserId\" FROM uchicago_mod_inventory_storage{(IsMySql ? "_" : ".")}item_damaged_status{(where != null ? $" WHERE {where}" : "")}{(orderBy != null || skip != null || take != null ? $" ORDER BY {orderBy ?? "id"}" : "")}", param, skip, take);
         public IEnumerable<ItemDamagedStatus2> ItemDamagedStatus2s(string where = null, object param = null, string orderBy = null, int? skip = null, int? take = null) => Query<ItemDamagedStatus2>($"SELECT id AS \"Id\", name AS \"Name\", source AS \"Source\", created_date AS \"CreationTime\", created_by_user_id AS \"CreationUserId\", created_by_username AS \"CreationUserUsername\", updated_date AS \"LastWriteTime\", updated_by_user_id AS \"LastWriteUserId\", updated_by_username AS \"LastWriteUserUsername\", content AS \"Content\" FROM uc{(IsMySql ? "_" : ".")}item_damaged_statuses{(where != null ? $" WHERE {where}" : "")}{(orderBy != null || skip != null || take != null ? $" ORDER BY {orderBy ?? "id"}" : "")}", param, skip, take);
+        public IEnumerable<ItemDonor> ItemDonors(string where = null, object param = null, string orderBy = null, int? skip = null, int? take = null) => Query<ItemDonor>($"SELECT id AS \"Id\", item_id AS \"ItemId\", donor_code AS \"DonorCode\" FROM uc{(IsMySql ? "_" : ".")}item_donors{(where != null ? $" WHERE {where}" : "")}{(orderBy != null || skip != null || take != null ? $" ORDER BY {orderBy ?? "id, item_id"}" : "")}", param, skip, take);
         public IEnumerable<ItemElectronicAccess> ItemElectronicAccesses(string where = null, object param = null, string orderBy = null, int? skip = null, int? take = null) => Query<ItemElectronicAccess>($"SELECT id AS \"Id\", item_id AS \"ItemId\", uri AS \"Uri\", link_text AS \"LinkText\", materials_specification AS \"MaterialsSpecification\", public_note AS \"PublicNote\", relationship_id AS \"RelationshipId\" FROM uc{(IsMySql ? "_" : ".")}item_electronic_accesses{(where != null ? $" WHERE {where}" : "")}{(orderBy != null || skip != null || take != null ? $" ORDER BY {orderBy ?? "id, item_id"}" : "")}", param, skip, take);
         public IEnumerable<ItemFormerId> ItemFormerIds(string where = null, object param = null, string orderBy = null, int? skip = null, int? take = null) => Query<ItemFormerId>($"SELECT id AS \"Id\", item_id AS \"ItemId\", content AS \"Content\" FROM uc{(IsMySql ? "_" : ".")}item_former_ids{(where != null ? $" WHERE {where}" : "")}{(orderBy != null || skip != null || take != null ? $" ORDER BY {orderBy ?? "id, item_id"}" : "")}", param, skip, take);
         public IEnumerable<ItemNote> ItemNotes(string where = null, object param = null, string orderBy = null, int? skip = null, int? take = null) => Query<ItemNote>($"SELECT id AS \"Id\", item_id AS \"ItemId\", item_note_type_id AS \"ItemNoteTypeId\", note AS \"Note\", staff_only AS \"StaffOnly\" FROM uc{(IsMySql ? "_" : ".")}item_notes{(where != null ? $" WHERE {where}" : "")}{(orderBy != null || skip != null || take != null ? $" ORDER BY {orderBy ?? "id, item_id"}" : "")}", param, skip, take);
@@ -5996,6 +6024,7 @@ namespace FolioLibrary
         public int CountGroup2s(string where = null, object param = null, int? take = null) => Count($"SELECT 1 FROM uc{(IsMySql ? "_" : ".")}groups{(where != null ? $" WHERE {where}" : "")}", param: param, take: take);
         public int CountHoldings(string where = null, object param = null, int? take = null) => Count($"SELECT 1 FROM uchicago_mod_inventory_storage{(IsMySql ? "_" : ".")}holdings_record{(where != null ? $" WHERE {where}" : "")}", param: param, take: take);
         public int CountHolding2s(string where = null, object param = null, int? take = null) => Count($"SELECT 1 FROM uc{(IsMySql ? "_" : ".")}holdings{(where != null ? $" WHERE {where}" : "")}", param: param, take: take);
+        public int CountHoldingDonors(string where = null, object param = null, int? take = null) => Count($"SELECT 1 FROM uc{(IsMySql ? "_" : ".")}holding_donors{(where != null ? $" WHERE {where}" : "")}", param: param, take: take);
         public int CountHoldingElectronicAccesses(string where = null, object param = null, int? take = null) => Count($"SELECT 1 FROM uc{(IsMySql ? "_" : ".")}holding_electronic_accesses{(where != null ? $" WHERE {where}" : "")}", param: param, take: take);
         public int CountHoldingEntries(string where = null, object param = null, int? take = null) => Count($"SELECT 1 FROM uc{(IsMySql ? "_" : ".")}holding_entries{(where != null ? $" WHERE {where}" : "")}", param: param, take: take);
         public int CountHoldingFormerIds(string where = null, object param = null, int? take = null) => Count($"SELECT 1 FROM uc{(IsMySql ? "_" : ".")}holding_former_ids{(where != null ? $" WHERE {where}" : "")}", param: param, take: take);
@@ -6060,6 +6089,7 @@ namespace FolioLibrary
         public int CountItem2s(string where = null, object param = null, int? take = null) => Count($"SELECT 1 FROM uc{(IsMySql ? "_" : ".")}items{(where != null ? $" WHERE {where}" : "")}", param: param, take: take);
         public int CountItemDamagedStatuses(string where = null, object param = null, int? take = null) => Count($"SELECT 1 FROM uchicago_mod_inventory_storage{(IsMySql ? "_" : ".")}item_damaged_status{(where != null ? $" WHERE {where}" : "")}", param: param, take: take);
         public int CountItemDamagedStatus2s(string where = null, object param = null, int? take = null) => Count($"SELECT 1 FROM uc{(IsMySql ? "_" : ".")}item_damaged_statuses{(where != null ? $" WHERE {where}" : "")}", param: param, take: take);
+        public int CountItemDonors(string where = null, object param = null, int? take = null) => Count($"SELECT 1 FROM uc{(IsMySql ? "_" : ".")}item_donors{(where != null ? $" WHERE {where}" : "")}", param: param, take: take);
         public int CountItemElectronicAccesses(string where = null, object param = null, int? take = null) => Count($"SELECT 1 FROM uc{(IsMySql ? "_" : ".")}item_electronic_accesses{(where != null ? $" WHERE {where}" : "")}", param: param, take: take);
         public int CountItemFormerIds(string where = null, object param = null, int? take = null) => Count($"SELECT 1 FROM uc{(IsMySql ? "_" : ".")}item_former_ids{(where != null ? $" WHERE {where}" : "")}", param: param, take: take);
         public int CountItemNotes(string where = null, object param = null, int? take = null) => Count($"SELECT 1 FROM uc{(IsMySql ? "_" : ".")}item_notes{(where != null ? $" WHERE {where}" : "")}", param: param, take: take);
@@ -6430,6 +6460,7 @@ namespace FolioLibrary
         public bool AnyGroup2s(string where = null, object param = null) => Query($"SELECT 1 FROM uc{(IsMySql ? "_" : ".")}groups{(where != null ? $" WHERE {where}" : "")}{(IsSqlServer ? $" ORDER BY id" : "")}", param: param, take: 1).Any();
         public bool AnyHoldings(string where = null, object param = null) => Query($"SELECT 1 FROM uchicago_mod_inventory_storage{(IsMySql ? "_" : ".")}holdings_record{(where != null ? $" WHERE {where}" : "")}{(IsSqlServer ? $" ORDER BY id" : "")}", param: param, take: 1).Any();
         public bool AnyHolding2s(string where = null, object param = null) => Query($"SELECT 1 FROM uc{(IsMySql ? "_" : ".")}holdings{(where != null ? $" WHERE {where}" : "")}{(IsSqlServer ? $" ORDER BY id" : "")}", param: param, take: 1).Any();
+        public bool AnyHoldingDonors(string where = null, object param = null) => Query($"SELECT 1 FROM uc{(IsMySql ? "_" : ".")}holding_donors{(where != null ? $" WHERE {where}" : "")}{(IsSqlServer ? $" ORDER BY id, holding_id" : "")}", param: param, take: 1).Any();
         public bool AnyHoldingElectronicAccesses(string where = null, object param = null) => Query($"SELECT 1 FROM uc{(IsMySql ? "_" : ".")}holding_electronic_accesses{(where != null ? $" WHERE {where}" : "")}{(IsSqlServer ? $" ORDER BY id, holding_id" : "")}", param: param, take: 1).Any();
         public bool AnyHoldingEntries(string where = null, object param = null) => Query($"SELECT 1 FROM uc{(IsMySql ? "_" : ".")}holding_entries{(where != null ? $" WHERE {where}" : "")}{(IsSqlServer ? $" ORDER BY id, holding_id" : "")}", param: param, take: 1).Any();
         public bool AnyHoldingFormerIds(string where = null, object param = null) => Query($"SELECT 1 FROM uc{(IsMySql ? "_" : ".")}holding_former_ids{(where != null ? $" WHERE {where}" : "")}{(IsSqlServer ? $" ORDER BY id, holding_id" : "")}", param: param, take: 1).Any();
@@ -6494,6 +6525,7 @@ namespace FolioLibrary
         public bool AnyItem2s(string where = null, object param = null) => Query($"SELECT 1 FROM uc{(IsMySql ? "_" : ".")}items{(where != null ? $" WHERE {where}" : "")}{(IsSqlServer ? $" ORDER BY id" : "")}", param: param, take: 1).Any();
         public bool AnyItemDamagedStatuses(string where = null, object param = null) => Query($"SELECT 1 FROM uchicago_mod_inventory_storage{(IsMySql ? "_" : ".")}item_damaged_status{(where != null ? $" WHERE {where}" : "")}{(IsSqlServer ? $" ORDER BY id" : "")}", param: param, take: 1).Any();
         public bool AnyItemDamagedStatus2s(string where = null, object param = null) => Query($"SELECT 1 FROM uc{(IsMySql ? "_" : ".")}item_damaged_statuses{(where != null ? $" WHERE {where}" : "")}{(IsSqlServer ? $" ORDER BY id" : "")}", param: param, take: 1).Any();
+        public bool AnyItemDonors(string where = null, object param = null) => Query($"SELECT 1 FROM uc{(IsMySql ? "_" : ".")}item_donors{(where != null ? $" WHERE {where}" : "")}{(IsSqlServer ? $" ORDER BY id, item_id" : "")}", param: param, take: 1).Any();
         public bool AnyItemElectronicAccesses(string where = null, object param = null) => Query($"SELECT 1 FROM uc{(IsMySql ? "_" : ".")}item_electronic_accesses{(where != null ? $" WHERE {where}" : "")}{(IsSqlServer ? $" ORDER BY id, item_id" : "")}", param: param, take: 1).Any();
         public bool AnyItemFormerIds(string where = null, object param = null) => Query($"SELECT 1 FROM uc{(IsMySql ? "_" : ".")}item_former_ids{(where != null ? $" WHERE {where}" : "")}{(IsSqlServer ? $" ORDER BY id, item_id" : "")}", param: param, take: 1).Any();
         public bool AnyItemNotes(string where = null, object param = null) => Query($"SELECT 1 FROM uc{(IsMySql ? "_" : ".")}item_notes{(where != null ? $" WHERE {where}" : "")}{(IsSqlServer ? $" ORDER BY id, item_id" : "")}", param: param, take: 1).Any();
@@ -6864,6 +6896,7 @@ namespace FolioLibrary
         public void TruncateGroup2s() { Execute($"TRUNCATE TABLE uc.groups"); Commit(); }
         public void TruncateHoldings() { Execute($"TRUNCATE TABLE uchicago_mod_inventory_storage.holdings_record"); Commit(); }
         public void TruncateHolding2s() { Execute($"TRUNCATE TABLE uc.holdings"); Commit(); }
+        public void TruncateHoldingDonors() { Execute($"TRUNCATE TABLE uc.holding_donors"); Commit(); }
         public void TruncateHoldingElectronicAccesses() { Execute($"TRUNCATE TABLE uc.holding_electronic_accesses"); Commit(); }
         public void TruncateHoldingEntries() { Execute($"TRUNCATE TABLE uc.holding_entries"); Commit(); }
         public void TruncateHoldingFormerIds() { Execute($"TRUNCATE TABLE uc.holding_former_ids"); Commit(); }
@@ -6928,6 +6961,7 @@ namespace FolioLibrary
         public void TruncateItem2s() { Execute($"TRUNCATE TABLE uc.items"); Commit(); }
         public void TruncateItemDamagedStatuses() { Execute($"TRUNCATE TABLE uchicago_mod_inventory_storage.item_damaged_status"); Commit(); }
         public void TruncateItemDamagedStatus2s() { Execute($"TRUNCATE TABLE uc.item_damaged_statuses"); Commit(); }
+        public void TruncateItemDonors() { Execute($"TRUNCATE TABLE uc.item_donors"); Commit(); }
         public void TruncateItemElectronicAccesses() { Execute($"TRUNCATE TABLE uc.item_electronic_accesses"); Commit(); }
         public void TruncateItemFormerIds() { Execute($"TRUNCATE TABLE uc.item_former_ids"); Commit(); }
         public void TruncateItemNotes() { Execute($"TRUNCATE TABLE uc.item_notes"); Commit(); }
@@ -7290,7 +7324,7 @@ namespace FolioLibrary
         public void Insert(Proxy proxy) => Execute("INSERT INTO uchicago_mod_users.proxyfor (id, jsonb, creation_date, created_by) VALUES (@Id, @Content::jsonb, @CreationTime, @CreationUserId)", proxy);
         public void Insert(RawRecord rawRecord) => Execute("INSERT INTO uchicago_mod_source_record_storage.raw_records_lb (id, content) VALUES (@Id, @Content)", rawRecord);
         public void Insert(Receiving receiving) => Execute("INSERT INTO uchicago_mod_orders_storage.pieces (id, jsonb, creation_date, created_by, polineid, titleid) VALUES (@Id, @Content::jsonb, @CreationTime, @CreationUserId, @Polineid, @Titleid)", receiving);
-        public void Insert(Record record) => Execute("INSERT INTO uchicago_mod_source_record_storage.records_lb (id, snapshot_id, matched_id, generation, record_type, external_id, state, leader_record_status, order, suppress_discovery, created_by_user_id, created_date, updated_by_user_id, updated_date, external_hrid) VALUES (@Id, @SnapshotId, @MatchedId, @Generation, @RecordType, @InstanceId, @State, @LeaderRecordStatus, @Order, @SuppressDiscovery, @CreationUserId, @CreationTime, @LastWriteUserId, @LastWriteTime, @InstanceHrid)", record);
+        public void Insert(Record record) => Execute("INSERT INTO uchicago_mod_source_record_storage.records_lb (id, snapshot_id, matched_id, generation, record_type, external_id, state, leader_record_status, \"order\", suppress_discovery, created_by_user_id, created_date, updated_by_user_id, updated_date, external_hrid) VALUES (@Id, @SnapshotId, @MatchedId, @Generation, @RecordType, @InstanceId, @State, @LeaderRecordStatus, @Order, @SuppressDiscovery, @CreationUserId, @CreationTime, @LastWriteUserId, @LastWriteTime, @InstanceHrid)", record);
         public void Insert(RefundReason refundReason) => Execute("INSERT INTO uchicago_mod_feesfines.refunds (id, jsonb, creation_date, created_by) VALUES (@Id, @Content::jsonb, @CreationTime, @CreationUserId)", refundReason);
         public void Insert(ReportingCode reportingCode) => Execute("INSERT INTO uchicago_mod_orders_storage.reporting_code (id, jsonb, creation_date, created_by) VALUES (@Id, @Content::jsonb, @CreationTime, @CreationUserId)", reportingCode);
         public void Insert(Request request) => Execute("INSERT INTO uchicago_mod_circulation_storage.request (id, jsonb, creation_date, created_by, cancellationreasonid) VALUES (@Id, @Content::jsonb, @CreationTime, @CreationUserId, @Cancellationreasonid)", request);
@@ -7319,911 +7353,911 @@ namespace FolioLibrary
         public void Insert(VoucherStatus voucherStatus) => Execute("INSERT INTO uc.voucher_statuses (id, name, creation_time, creation_username, last_write_time, last_write_username) VALUES (@Id, @Name, @CreationTime, @CreationUsername, @LastWriteTime, @LastWriteUsername)", voucherStatus);
         public void Insert(WaiveReason waiveReason) => Execute("INSERT INTO uchicago_mod_feesfines.waives (id, jsonb, creation_date, created_by) VALUES (@Id, @Content::jsonb, @CreationTime, @CreationUserId)", waiveReason);
 
-        public int Update(AcquisitionsUnit acquisitionsUnit) => Execute($"UPDATE uchicago_mod_orders_storage.acquisitions_unit SET jsonb = @Content::jsonb, creation_date = @CreationTime, created_by = @CreationUserId WHERE id = @Id", acquisitionsUnit);
-        public int Update(AddressType addressType) => Execute($"UPDATE uchicago_mod_users.addresstype SET jsonb = @Content::jsonb, creation_date = @CreationTime, created_by = @CreationUserId WHERE id = @Id", addressType);
-        public int Update(Alert alert) => Execute($"UPDATE uchicago_mod_orders_storage.alert SET jsonb = @Content::jsonb, creation_date = @CreationTime, created_by = @CreationUserId WHERE id = @Id", alert);
-        public int Update(AlternativeTitleType alternativeTitleType) => Execute($"UPDATE uchicago_mod_inventory_storage.alternative_title_type SET jsonb = @Content::jsonb, creation_date = @CreationTime, created_by = @CreationUserId WHERE id = @Id", alternativeTitleType);
-        public int Update(AuthAttempt authAttempt) => Execute($"UPDATE uchicago_mod_login.auth_attempts SET jsonb = @Content::jsonb, creation_date = @CreationTime, created_by = @CreationUserId WHERE id = @Id", authAttempt);
-        public int Update(AuthCredentialsHistory authCredentialsHistory) => Execute($"UPDATE uchicago_mod_login.auth_credentials_history SET jsonb = @Content::jsonb, creation_date = @CreationTime, created_by = @CreationUserId WHERE id = @Id", authCredentialsHistory);
-        public int Update(AuthPasswordAction authPasswordAction) => Execute($"UPDATE uchicago_mod_login.auth_password_action SET jsonb = @Content::jsonb, creation_date = @CreationTime, created_by = @CreationUserId WHERE id = @Id", authPasswordAction);
-        public int Update(BatchGroup batchGroup) => Execute($"UPDATE uchicago_mod_invoice_storage.batch_groups SET jsonb = @Content::jsonb, creation_date = @CreationTime, created_by = @CreationUserId WHERE id = @Id", batchGroup);
-        public int Update(BatchVoucher batchVoucher) => Execute($"UPDATE uchicago_mod_invoice_storage.batch_vouchers SET jsonb = @Content::jsonb WHERE id = @Id", batchVoucher);
-        public int Update(BatchVoucherExport batchVoucherExport) => Execute($"UPDATE uchicago_mod_invoice_storage.batch_voucher_exports SET jsonb = @Content::jsonb, creation_date = @CreationTime, created_by = @CreationUserId, batchgroupid = @Batchgroupid, batchvoucherid = @Batchvoucherid WHERE id = @Id", batchVoucherExport);
-        public int Update(BatchVoucherExportConfig batchVoucherExportConfig) => Execute($"UPDATE uchicago_mod_invoice_storage.batch_voucher_export_configs SET jsonb = @Content::jsonb, creation_date = @CreationTime, created_by = @CreationUserId, batchgroupid = @Batchgroupid WHERE id = @Id", batchVoucherExportConfig);
-        public int Update(Block block) => Execute($"UPDATE uchicago_mod_feesfines.manualblocks SET jsonb = @Content::jsonb, creation_date = @CreationTime, created_by = @CreationUserId WHERE id = @Id", block);
-        public int Update(BlockCondition blockCondition) => Execute($"UPDATE uchicago_mod_patron_blocks.patron_block_conditions SET jsonb = @Content::jsonb, creation_date = @CreationTime, created_by = @CreationUserId WHERE id = @Id", blockCondition);
-        public int Update(BlockLimit blockLimit) => Execute($"UPDATE uchicago_mod_patron_blocks.patron_block_limits SET jsonb = @Content::jsonb, creation_date = @CreationTime, created_by = @CreationUserId, conditionid = @Conditionid WHERE id = @Id", blockLimit);
-        public int Update(BoundWithPart boundWithPart) => Execute($"UPDATE uchicago_mod_inventory_storage.bound_with_part SET jsonb = @Content::jsonb, creation_date = @CreationTime, created_by = @CreationUserId, itemid = @Itemid, holdingsrecordid = @Holdingsrecordid WHERE id = @Id", boundWithPart);
-        public int Update(Budget budget) => Execute($"UPDATE uchicago_mod_finance_storage.budget SET jsonb = @Content::jsonb, creation_date = @CreationTime, created_by = @CreationUserId, fundid = @FundId, fiscalyearid = @FiscalYearId WHERE id = @Id", budget);
-        public int Update(BudgetExpenseClass budgetExpenseClass) => Execute($"UPDATE uchicago_mod_finance_storage.budget_expense_class SET jsonb = @Content::jsonb, budgetid = @Budgetid, expenseclassid = @Expenseclassid WHERE id = @Id", budgetExpenseClass);
-        public int Update(BudgetGroup budgetGroup) => Execute($"UPDATE uchicago_mod_finance_storage.group_fund_fiscal_year SET jsonb = @Content::jsonb, budgetid = @Budgetid, groupid = @Groupid, fundid = @Fundid, fiscalyearid = @Fiscalyearid WHERE id = @Id", budgetGroup);
-        public int Update(CallNumberType callNumberType) => Execute($"UPDATE uchicago_mod_inventory_storage.call_number_type SET jsonb = @Content::jsonb, creation_date = @CreationTime, created_by = @CreationUserId WHERE id = @Id", callNumberType);
-        public int Update(Campus campus) => Execute($"UPDATE uchicago_mod_inventory_storage.loccampus SET jsonb = @Content::jsonb, creation_date = @CreationTime, created_by = @CreationUserId, institutionid = @Institutionid WHERE id = @Id", campus);
-        public int Update(CancellationReason cancellationReason) => Execute($"UPDATE uchicago_mod_circulation_storage.cancellation_reason SET jsonb = @Content::jsonb, creation_date = @CreationTime, created_by = @CreationUserId WHERE id = @Id", cancellationReason);
-        public int Update(Category category) => Execute($"UPDATE uchicago_mod_organizations_storage.categories SET jsonb = @Content::jsonb, creation_date = @CreationTime, created_by = @CreationUserId WHERE id = @Id", category);
-        public int Update(CheckIn checkIn) => Execute($"UPDATE uchicago_mod_circulation_storage.check_in SET jsonb = @Content::jsonb, creation_date = @CreationTime, created_by = @CreationUserId WHERE id = @Id", checkIn);
-        public int Update(CirculationRule circulationRule) => Execute($"UPDATE uchicago_mod_circulation_storage.circulation_rules SET jsonb = @Content::jsonb, lock = @Lock WHERE id = @Id", circulationRule);
-        public int Update(ClassificationType classificationType) => Execute($"UPDATE uchicago_mod_inventory_storage.classification_type SET jsonb = @Content::jsonb, creation_date = @CreationTime, created_by = @CreationUserId WHERE id = @Id", classificationType);
-        public int Update(CloseReason closeReason) => Execute($"UPDATE uchicago_mod_orders_storage.reasons_for_closure SET jsonb = @Content::jsonb WHERE id = @Id", closeReason);
-        public int Update(Comment comment) => Execute($"UPDATE uchicago_mod_feesfines.comments SET jsonb = @Content::jsonb, creation_date = @CreationTime, created_by = @CreationUserId WHERE id = @Id", comment);
-        public int Update(Configuration configuration) => Execute($"UPDATE uchicago_mod_configuration.config_data SET jsonb = @Content::jsonb, creation_date = @CreationTime, created_by = @CreationUserId WHERE id = @Id", configuration);
-        public int Update(Contact contact) => Execute($"UPDATE uchicago_mod_organizations_storage.contacts SET jsonb = @Content::jsonb, creation_date = @CreationTime, created_by = @CreationUserId WHERE id = @Id", contact);
-        public int Update(ContactType contactType) => Execute($"UPDATE uc.contact_types SET name = @Name WHERE id = @Id", contactType);
-        public int Update(ContributorNameType contributorNameType) => Execute($"UPDATE uchicago_mod_inventory_storage.contributor_name_type SET jsonb = @Content::jsonb, creation_date = @CreationTime, created_by = @CreationUserId WHERE id = @Id", contributorNameType);
-        public int Update(ContributorType contributorType) => Execute($"UPDATE uchicago_mod_inventory_storage.contributor_type SET jsonb = @Content::jsonb WHERE id = @Id", contributorType);
-        public int Update(Country country) => Execute($"UPDATE uc.countries SET alpha2_code = @Alpha2Code, alpha3_code = @Alpha3Code, name = @Name WHERE id = @Id", country);
-        public int Update(CustomField customField) => Execute($"UPDATE uchicago_mod_users.custom_fields SET jsonb = @Content::jsonb WHERE id = @Id", customField);
-        public int Update(Department department) => Execute($"UPDATE uchicago_mod_users.departments SET jsonb = @Content::jsonb, creation_date = @CreationTime, created_by = @CreationUserId WHERE id = @Id", department);
-        public int Update(Document document) => Execute($"UPDATE uchicago_mod_invoice_storage.documents SET jsonb = @Content::jsonb, creation_date = @CreationTime, created_by = @CreationUserId, invoiceid = @Invoiceid, document_data = @DocumentData WHERE id = @Id", document);
-        public int Update(ElectronicAccessRelationship electronicAccessRelationship) => Execute($"UPDATE uchicago_mod_inventory_storage.electronic_access_relationship SET jsonb = @Content::jsonb, creation_date = @CreationTime, created_by = @CreationUserId WHERE id = @Id", electronicAccessRelationship);
-        public int Update(ErrorRecord errorRecord) => Execute($"UPDATE uchicago_mod_source_record_storage.error_records_lb SET content = @Content, description = @Description WHERE id = @Id", errorRecord);
-        public int Update(EventLog eventLog) => Execute($"UPDATE uchicago_mod_login.event_logs SET jsonb = @Content::jsonb, creation_date = @CreationTime, created_by = @CreationUserId WHERE id = @Id", eventLog);
-        public int Update(ExpenseClass expenseClass) => Execute($"UPDATE uchicago_mod_finance_storage.expense_class SET jsonb = @Content::jsonb WHERE id = @Id", expenseClass);
-        public int Update(ExportConfigCredential exportConfigCredential) => Execute($"UPDATE uchicago_mod_invoice_storage.export_config_credentials SET jsonb = @Content::jsonb, creation_date = @CreationTime, created_by = @CreationUserId, exportconfigid = @Exportconfigid WHERE id = @Id", exportConfigCredential);
-        public int Update(Fee fee) => Execute($"UPDATE uchicago_mod_feesfines.accounts SET jsonb = @Content::jsonb, creation_date = @CreationTime, created_by = @CreationUserId WHERE id = @Id", fee);
-        public int Update(FeeType feeType) => Execute($"UPDATE uchicago_mod_feesfines.feefines SET jsonb = @Content::jsonb, creation_date = @CreationTime, created_by = @CreationUserId, ownerid = @Ownerid WHERE id = @Id", feeType);
-        public int Update(FinanceGroup financeGroup) => Execute($"UPDATE uchicago_mod_finance_storage.groups SET jsonb = @Content::jsonb, creation_date = @CreationTime, created_by = @CreationUserId WHERE id = @Id", financeGroup);
-        public int Update(FiscalYear fiscalYear) => Execute($"UPDATE uchicago_mod_finance_storage.fiscal_year SET jsonb = @Content::jsonb, creation_date = @CreationTime, created_by = @CreationUserId WHERE id = @Id", fiscalYear);
-        public int Update(FixedDueDateSchedule fixedDueDateSchedule) => Execute($"UPDATE uchicago_mod_circulation_storage.fixed_due_date_schedule SET jsonb = @Content::jsonb WHERE id = @Id", fixedDueDateSchedule);
-        public int Update(Fund fund) => Execute($"UPDATE uchicago_mod_finance_storage.fund SET jsonb = @Content::jsonb, creation_date = @CreationTime, created_by = @CreationUserId, ledgerid = @LedgerId, fundtypeid = @Fundtypeid WHERE id = @Id", fund);
-        public int Update(FundType fundType) => Execute($"UPDATE uchicago_mod_finance_storage.fund_type SET jsonb = @Content::jsonb WHERE id = @Id", fundType);
-        public int Update(Group group) => Execute($"UPDATE uchicago_mod_users.groups SET jsonb = @Content::jsonb, creation_date = @CreationTime, created_by = @CreationUserId WHERE id = @Id", group);
-        public int Update(Holding holding) => Execute($"UPDATE uchicago_mod_inventory_storage.holdings_record SET jsonb = @Content::jsonb, creation_date = @CreationTime, created_by = @CreationUserId, instanceid = @Instanceid, permanentlocationid = @Permanentlocationid, temporarylocationid = @Temporarylocationid, effectivelocationid = @Effectivelocationid, holdingstypeid = @Holdingstypeid, callnumbertypeid = @Callnumbertypeid, illpolicyid = @Illpolicyid, sourceid = @Sourceid WHERE id = @Id", holding);
-        public int Update(HoldingNoteType holdingNoteType) => Execute($"UPDATE uchicago_mod_inventory_storage.holdings_note_type SET jsonb = @Content::jsonb, creation_date = @CreationTime, created_by = @CreationUserId WHERE id = @Id", holdingNoteType);
-        public int Update(HoldingType holdingType) => Execute($"UPDATE uchicago_mod_inventory_storage.holdings_type SET jsonb = @Content::jsonb, creation_date = @CreationTime, created_by = @CreationUserId WHERE id = @Id", holdingType);
-        public int Update(HridSetting hridSetting) => Execute($"UPDATE uchicago_mod_inventory_storage.hrid_settings SET jsonb = @Content::jsonb, lock = @Lock WHERE id = @Id", hridSetting);
-        public int Update(IdType idType) => Execute($"UPDATE uchicago_mod_inventory_storage.identifier_type SET jsonb = @Content::jsonb, creation_date = @CreationTime, created_by = @CreationUserId WHERE id = @Id", idType);
-        public int Update(IllPolicy illPolicy) => Execute($"UPDATE uchicago_mod_inventory_storage.ill_policy SET jsonb = @Content::jsonb, creation_date = @CreationTime, created_by = @CreationUserId WHERE id = @Id", illPolicy);
-        public int Update(Instance instance) => Execute($"UPDATE uchicago_mod_inventory_storage.instance SET jsonb = @Content::jsonb, creation_date = @CreationTime, created_by = @CreationUserId, instancestatusid = @Instancestatusid, modeofissuanceid = @Modeofissuanceid, instancetypeid = @Instancetypeid WHERE id = @Id", instance);
-        public int Update(InstanceFormat instanceFormat) => Execute($"UPDATE uchicago_mod_inventory_storage.instance_format SET jsonb = @Content::jsonb WHERE id = @Id", instanceFormat);
-        public int Update(InstanceNoteType instanceNoteType) => Execute($"UPDATE uchicago_mod_inventory_storage.instance_note_type SET jsonb = @Content::jsonb, creation_date = @CreationTime, created_by = @CreationUserId WHERE id = @Id", instanceNoteType);
-        public int Update(InstanceRelationship instanceRelationship) => Execute($"UPDATE uchicago_mod_inventory_storage.instance_relationship SET jsonb = @Content::jsonb, creation_date = @CreationTime, created_by = @CreationUserId, superinstanceid = @Superinstanceid, subinstanceid = @Subinstanceid, instancerelationshiptypeid = @Instancerelationshiptypeid WHERE id = @Id", instanceRelationship);
-        public int Update(InstanceRelationshipType instanceRelationshipType) => Execute($"UPDATE uchicago_mod_inventory_storage.instance_relationship_type SET jsonb = @Content::jsonb, creation_date = @CreationTime, created_by = @CreationUserId WHERE id = @Id", instanceRelationshipType);
-        public int Update(InstanceSourceMarc instanceSourceMarc) => Execute($"UPDATE uchicago_mod_inventory_storage.instance_source_marc SET jsonb = @Content::jsonb, creation_date = @CreationTime, created_by = @CreationUserId WHERE id = @Id", instanceSourceMarc);
-        public int Update(InstanceStatus instanceStatus) => Execute($"UPDATE uchicago_mod_inventory_storage.instance_status SET jsonb = @Content::jsonb, creation_date = @CreationTime, created_by = @CreationUserId WHERE id = @Id", instanceStatus);
-        public int Update(InstanceType instanceType) => Execute($"UPDATE uchicago_mod_inventory_storage.instance_type SET jsonb = @Content::jsonb WHERE id = @Id", instanceType);
-        public int Update(Institution institution) => Execute($"UPDATE uchicago_mod_inventory_storage.locinstitution SET jsonb = @Content::jsonb, creation_date = @CreationTime, created_by = @CreationUserId WHERE id = @Id", institution);
-        public int Update(Interface @interface) => Execute($"UPDATE uchicago_mod_organizations_storage.interfaces SET jsonb = @Content::jsonb, creation_date = @CreationTime, created_by = @CreationUserId WHERE id = @Id", @interface);
-        public int Update(InterfaceCredential interfaceCredential) => Execute($"UPDATE uchicago_mod_organizations_storage.interface_credentials SET jsonb = @Content::jsonb, interfaceid = @Interfaceid WHERE id = @Id", interfaceCredential);
-        public int Update(Invoice invoice) => Execute($"UPDATE uchicago_mod_invoice_storage.invoices SET jsonb = @Content::jsonb, creation_date = @CreationTime, created_by = @CreationUserId, batchgroupid = @Batchgroupid WHERE id = @Id", invoice);
-        public int Update(InvoiceItem invoiceItem) => Execute($"UPDATE uchicago_mod_invoice_storage.invoice_lines SET jsonb = @Content::jsonb, creation_date = @CreationTime, created_by = @CreationUserId, invoiceid = @Invoiceid WHERE id = @Id", invoiceItem);
-        public int Update(InvoiceStatus invoiceStatus, DateTime? lastWriteTime = null) => Execute($"UPDATE uc.invoice_statuses SET name = @Name, creation_time = @CreationTime, creation_username = @CreationUsername, last_write_time = @LastWriteTime, last_write_username = @LastWriteUsername WHERE id = @Id{(lastWriteTime != null ? " AND (last_write_time IS NULL OR last_write_time = @_lastWriteTime)" : "")}", new { invoiceStatus.Name, invoiceStatus.CreationTime, invoiceStatus.CreationUsername, invoiceStatus.LastWriteTime, invoiceStatus.LastWriteUsername, invoiceStatus.Id, _lastWriteTime = lastWriteTime });
-        public int Update(InvoiceTransactionSummary invoiceTransactionSummary) => Execute($"UPDATE uchicago_mod_finance_storage.invoice_transaction_summaries SET jsonb = @Content::jsonb WHERE id = @Id", invoiceTransactionSummary);
-        public int Update(Item item) => Execute($"UPDATE uchicago_mod_inventory_storage.item SET jsonb = @Content::jsonb, creation_date = @CreationTime, created_by = @CreationUserId, holdingsrecordid = @Holdingsrecordid, permanentloantypeid = @Permanentloantypeid, temporaryloantypeid = @Temporaryloantypeid, materialtypeid = @Materialtypeid, permanentlocationid = @Permanentlocationid, temporarylocationid = @Temporarylocationid, effectivelocationid = @Effectivelocationid WHERE id = @Id", item);
-        public int Update(ItemDamagedStatus itemDamagedStatus) => Execute($"UPDATE uchicago_mod_inventory_storage.item_damaged_status SET jsonb = @Content::jsonb, creation_date = @CreationTime, created_by = @CreationUserId WHERE id = @Id", itemDamagedStatus);
-        public int Update(ItemNoteType itemNoteType) => Execute($"UPDATE uchicago_mod_inventory_storage.item_note_type SET jsonb = @Content::jsonb, creation_date = @CreationTime, created_by = @CreationUserId WHERE id = @Id", itemNoteType);
-        public int Update(ItemStatus itemStatus, DateTime? lastWriteTime = null) => Execute($"UPDATE uc.item_statuses SET name = @Name, creation_time = @CreationTime, creation_username = @CreationUsername, last_write_time = @LastWriteTime, last_write_username = @LastWriteUsername WHERE id = @Id{(lastWriteTime != null ? " AND (last_write_time IS NULL OR last_write_time = @_lastWriteTime)" : "")}", new { itemStatus.Name, itemStatus.CreationTime, itemStatus.CreationUsername, itemStatus.LastWriteTime, itemStatus.LastWriteUsername, itemStatus.Id, _lastWriteTime = lastWriteTime });
-        public int Update(JobExecution jobExecution) => Execute($"UPDATE uchicago_mod_source_record_manager.job_executions SET jsonb = @Content::jsonb WHERE id = @Id", jobExecution);
-        public int Update(JobExecutionProgress jobExecutionProgress) => Execute($"UPDATE uchicago_mod_source_record_manager.job_execution_progress SET jsonb = @Content::jsonb, jobexecutionid = @Jobexecutionid WHERE id = @Id", jobExecutionProgress);
-        public int Update(JobExecutionSourceChunk jobExecutionSourceChunk) => Execute($"UPDATE uchicago_mod_source_record_manager.job_execution_source_chunks SET jsonb = @Content::jsonb, jobexecutionid = @Jobexecutionid WHERE id = @Id", jobExecutionSourceChunk);
-        public int Update(JobMonitoring jobMonitoring) => Execute($"UPDATE uchicago_mod_source_record_manager.job_monitoring SET job_execution_id = @JobExecutionId, last_event_timestamp = @LastEventTimestamp, notification_sent = @NotificationSent WHERE id = @Id", jobMonitoring);
-        public int Update(JournalRecord journalRecord) => Execute($"UPDATE uchicago_mod_source_record_manager.journal_records SET job_execution_id = @JobExecutionId, source_id = @SourceId, entity_type = @EntityType, entity_id = @EntityId, entity_hrid = @EntityHrid, action_type = @ActionType, action_status = @ActionStatus, action_date = @ActionDate, source_record_order = @SourceRecordOrder, error = @Error, title = @Title WHERE id = @Id", journalRecord);
-        public int Update(Ledger ledger) => Execute($"UPDATE uchicago_mod_finance_storage.ledger SET jsonb = @Content::jsonb, creation_date = @CreationTime, created_by = @CreationUserId, fiscalyearoneid = @Fiscalyearoneid WHERE id = @Id", ledger);
-        public int Update(LedgerRollover ledgerRollover) => Execute($"UPDATE uchicago_mod_finance_storage.ledger_fiscal_year_rollover SET jsonb = @Content::jsonb, creation_date = @CreationTime, created_by = @CreationUserId, ledgerid = @Ledgerid, fromfiscalyearid = @Fromfiscalyearid, tofiscalyearid = @Tofiscalyearid WHERE id = @Id", ledgerRollover);
-        public int Update(LedgerRolloverError ledgerRolloverError) => Execute($"UPDATE uchicago_mod_finance_storage.ledger_fiscal_year_rollover_error SET jsonb = @Content::jsonb, creation_date = @CreationTime, created_by = @CreationUserId, ledgerrolloverid = @Ledgerrolloverid WHERE id = @Id", ledgerRolloverError);
-        public int Update(LedgerRolloverProgress ledgerRolloverProgress) => Execute($"UPDATE uchicago_mod_finance_storage.ledger_fiscal_year_rollover_progress SET jsonb = @Content::jsonb, creation_date = @CreationTime, created_by = @CreationUserId, ledgerrolloverid = @Ledgerrolloverid WHERE id = @Id", ledgerRolloverProgress);
-        public int Update(Library library) => Execute($"UPDATE uchicago_mod_inventory_storage.loclibrary SET jsonb = @Content::jsonb, creation_date = @CreationTime, created_by = @CreationUserId, campusid = @Campusid WHERE id = @Id", library);
-        public int Update(Loan loan) => Execute($"UPDATE uchicago_mod_circulation_storage.loan SET jsonb = @Content::jsonb, creation_date = @CreationTime, created_by = @CreationUserId WHERE id = @Id", loan);
-        public int Update(LoanEvent loanEvent) => Execute($"UPDATE uchicago_mod_circulation_storage.audit_loan SET jsonb = @Content::jsonb WHERE id = @Id", loanEvent);
-        public int Update(LoanPolicy loanPolicy) => Execute($"UPDATE uchicago_mod_circulation_storage.loan_policy SET jsonb = @Content::jsonb, creation_date = @CreationTime, created_by = @CreationUserId, loanspolicy_fixedduedatescheduleid = @LoanspolicyFixedduedatescheduleid, renewalspolicy_alternatefixedduedatescheduleid = @RenewalspolicyAlternatefixedduedatescheduleid WHERE id = @Id", loanPolicy);
-        public int Update(LoanType loanType) => Execute($"UPDATE uchicago_mod_inventory_storage.loan_type SET jsonb = @Content::jsonb, creation_date = @CreationTime, created_by = @CreationUserId WHERE id = @Id", loanType);
-        public int Update(Location location) => Execute($"UPDATE uchicago_mod_inventory_storage.location SET jsonb = @Content::jsonb, creation_date = @CreationTime, created_by = @CreationUserId, institutionid = @Institutionid, campusid = @Campusid, libraryid = @Libraryid WHERE id = @Id", location);
-        public int Update(Login login) => Execute($"UPDATE uchicago_mod_login.auth_credentials SET jsonb = @Content::jsonb, creation_date = @CreationTime, created_by = @CreationUserId WHERE id = @Id", login);
-        public int Update(LostItemFeePolicy lostItemFeePolicy) => Execute($"UPDATE uchicago_mod_feesfines.lost_item_fee_policy SET jsonb = @Content::jsonb, creation_date = @CreationTime, created_by = @CreationUserId WHERE id = @Id", lostItemFeePolicy);
-        public int Update(ManualBlockTemplate manualBlockTemplate) => Execute($"UPDATE uchicago_mod_feesfines.manual_block_templates SET jsonb = @Content::jsonb, creation_date = @CreationTime, created_by = @CreationUserId WHERE id = @Id", manualBlockTemplate);
-        public int Update(MappingParamsSnapshot mappingParamsSnapshot) => Execute($"UPDATE uchicago_mod_source_record_manager.mapping_params_snapshots SET params = @Params::jsonb, saved_timestamp = @SavedTimestamp WHERE job_execution_id = @Id", mappingParamsSnapshot);
-        public int Update(MappingRule mappingRule) => Execute($"UPDATE uchicago_mod_source_record_manager.mapping_rules SET jsonb = @Content::jsonb, record_type = @RecordType WHERE id = @Id", mappingRule);
-        public int Update(MappingRulesSnapshot mappingRulesSnapshot) => Execute($"UPDATE uchicago_mod_source_record_manager.mapping_rules_snapshots SET rules = @Rules::jsonb, saved_timestamp = @SavedTimestamp WHERE job_execution_id = @Id", mappingRulesSnapshot);
-        public int Update(MarcRecord marcRecord) => Execute($"UPDATE uchicago_mod_source_record_storage.marc_records_lb SET content = @Content::jsonb WHERE id = @Id", marcRecord);
-        public int Update(MaterialType materialType) => Execute($"UPDATE uchicago_mod_inventory_storage.material_type SET jsonb = @Content::jsonb, creation_date = @CreationTime, created_by = @CreationUserId WHERE id = @Id", materialType);
-        public int Update(ModeOfIssuance modeOfIssuance) => Execute($"UPDATE uchicago_mod_inventory_storage.mode_of_issuance SET jsonb = @Content::jsonb, creation_date = @CreationTime, created_by = @CreationUserId WHERE id = @Id", modeOfIssuance);
-        public int Update(NatureOfContentTerm natureOfContentTerm) => Execute($"UPDATE uchicago_mod_inventory_storage.nature_of_content_term SET jsonb = @Content::jsonb, creation_date = @CreationTime, created_by = @CreationUserId WHERE id = @Id", natureOfContentTerm);
-        public int Update(Note note) => Execute($"UPDATE uchicago_mod_notes.note_data SET jsonb = @Content::jsonb, temporary_type_id = @TemporaryTypeId, search_content = @SearchContent WHERE id = @Id", note);
-        public int Update(NoteType noteType) => Execute($"UPDATE uchicago_mod_notes.note_type SET jsonb = @Content::jsonb WHERE id = @Id", noteType);
-        public int Update(Order order) => Execute($"UPDATE uchicago_mod_orders_storage.purchase_order SET jsonb = @Content::jsonb, creation_date = @CreationTime, created_by = @CreationUserId WHERE id = @Id", order);
-        public int Update(OrderInvoice orderInvoice) => Execute($"UPDATE uchicago_mod_orders_storage.order_invoice_relationship SET jsonb = @Content::jsonb, purchaseorderid = @Purchaseorderid WHERE id = @Id", orderInvoice);
-        public int Update(OrderItem orderItem) => Execute($"UPDATE uchicago_mod_orders_storage.po_line SET jsonb = @Content::jsonb, creation_date = @CreationTime, created_by = @CreationUserId, purchaseorderid = @Purchaseorderid WHERE id = @Id", orderItem);
-        public int Update(OrderStatus orderStatus, DateTime? lastWriteTime = null) => Execute($"UPDATE uc.order_statuses SET name = @Name, creation_time = @CreationTime, creation_username = @CreationUsername, last_write_time = @LastWriteTime, last_write_username = @LastWriteUsername WHERE id = @Id{(lastWriteTime != null ? " AND (last_write_time IS NULL OR last_write_time = @_lastWriteTime)" : "")}", new { orderStatus.Name, orderStatus.CreationTime, orderStatus.CreationUsername, orderStatus.LastWriteTime, orderStatus.LastWriteUsername, orderStatus.Id, _lastWriteTime = lastWriteTime });
-        public int Update(OrderTemplate orderTemplate) => Execute($"UPDATE uchicago_mod_orders_storage.order_templates SET jsonb = @Content::jsonb WHERE id = @Id", orderTemplate);
-        public int Update(OrderTransactionSummary orderTransactionSummary) => Execute($"UPDATE uchicago_mod_finance_storage.order_transaction_summaries SET jsonb = @Content::jsonb WHERE id = @Id", orderTransactionSummary);
-        public int Update(OrderType orderType, DateTime? lastWriteTime = null) => Execute($"UPDATE uc.order_types SET name = @Name, creation_time = @CreationTime, creation_username = @CreationUsername, last_write_time = @LastWriteTime, last_write_username = @LastWriteUsername WHERE id = @Id{(lastWriteTime != null ? " AND (last_write_time IS NULL OR last_write_time = @_lastWriteTime)" : "")}", new { orderType.Name, orderType.CreationTime, orderType.CreationUsername, orderType.LastWriteTime, orderType.LastWriteUsername, orderType.Id, _lastWriteTime = lastWriteTime });
-        public int Update(Organization organization) => Execute($"UPDATE uchicago_mod_organizations_storage.organizations SET jsonb = @Content::jsonb, creation_date = @CreationTime, created_by = @CreationUserId WHERE id = @Id", organization);
-        public int Update(OverdueFinePolicy overdueFinePolicy) => Execute($"UPDATE uchicago_mod_feesfines.overdue_fine_policy SET jsonb = @Content::jsonb, creation_date = @CreationTime, created_by = @CreationUserId WHERE id = @Id", overdueFinePolicy);
-        public int Update(Owner owner) => Execute($"UPDATE uchicago_mod_feesfines.owners SET jsonb = @Content::jsonb, creation_date = @CreationTime, created_by = @CreationUserId WHERE id = @Id", owner);
-        public int Update(PatronActionSession patronActionSession) => Execute($"UPDATE uchicago_mod_circulation_storage.patron_action_session SET jsonb = @Content::jsonb, creation_date = @CreationTime, created_by = @CreationUserId WHERE id = @Id", patronActionSession);
-        public int Update(PatronNoticePolicy patronNoticePolicy) => Execute($"UPDATE uchicago_mod_circulation_storage.patron_notice_policy SET jsonb = @Content::jsonb, creation_date = @CreationTime, created_by = @CreationUserId WHERE id = @Id", patronNoticePolicy);
-        public int Update(Payment payment) => Execute($"UPDATE uchicago_mod_feesfines.feefineactions SET jsonb = @Content::jsonb, creation_date = @CreationTime, created_by = @CreationUserId WHERE id = @Id", payment);
-        public int Update(PaymentMethod paymentMethod) => Execute($"UPDATE uchicago_mod_feesfines.payments SET jsonb = @Content::jsonb, creation_date = @CreationTime, created_by = @CreationUserId WHERE id = @Id", paymentMethod);
-        public int Update(PaymentType paymentType, DateTime? lastWriteTime = null) => Execute($"UPDATE uc.payment_types SET name = @Name, creation_time = @CreationTime, creation_username = @CreationUsername, last_write_time = @LastWriteTime, last_write_username = @LastWriteUsername WHERE id = @Id{(lastWriteTime != null ? " AND (last_write_time IS NULL OR last_write_time = @_lastWriteTime)" : "")}", new { paymentType.Name, paymentType.CreationTime, paymentType.CreationUsername, paymentType.LastWriteTime, paymentType.LastWriteUsername, paymentType.Id, _lastWriteTime = lastWriteTime });
-        public int Update(Permission permission) => Execute($"UPDATE uchicago_mod_permissions.permissions SET jsonb = @Content::jsonb, creation_date = @CreationTime, created_by = @CreationUserId WHERE id = @Id", permission);
-        public int Update(PermissionsUser permissionsUser) => Execute($"UPDATE uchicago_mod_permissions.permissions_users SET jsonb = @Content::jsonb, creation_date = @CreationTime, created_by = @CreationUserId WHERE id = @Id", permissionsUser);
-        public int Update(PrecedingSucceedingTitle precedingSucceedingTitle) => Execute($"UPDATE uchicago_mod_inventory_storage.preceding_succeeding_title SET jsonb = @Content::jsonb, creation_date = @CreationTime, created_by = @CreationUserId, precedinginstanceid = @Precedinginstanceid, succeedinginstanceid = @Succeedinginstanceid WHERE id = @Id", precedingSucceedingTitle);
-        public int Update(Prefix prefix) => Execute($"UPDATE uchicago_mod_orders_storage.prefixes SET jsonb = @Content::jsonb WHERE id = @Id", prefix);
-        public int Update(Proxy proxy) => Execute($"UPDATE uchicago_mod_users.proxyfor SET jsonb = @Content::jsonb, creation_date = @CreationTime, created_by = @CreationUserId WHERE id = @Id", proxy);
-        public int Update(RawRecord rawRecord) => Execute($"UPDATE uchicago_mod_source_record_storage.raw_records_lb SET content = @Content WHERE id = @Id", rawRecord);
-        public int Update(Receiving receiving) => Execute($"UPDATE uchicago_mod_orders_storage.pieces SET jsonb = @Content::jsonb, creation_date = @CreationTime, created_by = @CreationUserId, polineid = @Polineid, titleid = @Titleid WHERE id = @Id", receiving);
-        public int Update(Record record, DateTime? lastWriteTime = null) => Execute($"UPDATE uchicago_mod_source_record_storage.records_lb SET snapshot_id = @SnapshotId, matched_id = @MatchedId, generation = @Generation, record_type = @RecordType, external_id = @InstanceId, state = @State, leader_record_status = @LeaderRecordStatus, order = @Order, suppress_discovery = @SuppressDiscovery, created_by_user_id = @CreationUserId, created_date = @CreationTime, updated_by_user_id = @LastWriteUserId, updated_date = @LastWriteTime, external_hrid = @InstanceHrid WHERE id = @Id{(lastWriteTime != null ? " AND (updated_date IS NULL OR updated_date = @_lastWriteTime)" : "")}", new { record.SnapshotId, record.MatchedId, record.Generation, record.RecordType, record.InstanceId, record.State, record.LeaderRecordStatus, record.Order, record.SuppressDiscovery, record.CreationUserId, record.CreationTime, record.LastWriteUserId, record.LastWriteTime, record.InstanceHrid, record.Id, _lastWriteTime = lastWriteTime });
-        public int Update(RefundReason refundReason) => Execute($"UPDATE uchicago_mod_feesfines.refunds SET jsonb = @Content::jsonb, creation_date = @CreationTime, created_by = @CreationUserId WHERE id = @Id", refundReason);
-        public int Update(ReportingCode reportingCode) => Execute($"UPDATE uchicago_mod_orders_storage.reporting_code SET jsonb = @Content::jsonb, creation_date = @CreationTime, created_by = @CreationUserId WHERE id = @Id", reportingCode);
-        public int Update(Request request) => Execute($"UPDATE uchicago_mod_circulation_storage.request SET jsonb = @Content::jsonb, creation_date = @CreationTime, created_by = @CreationUserId, cancellationreasonid = @Cancellationreasonid WHERE id = @Id", request);
-        public int Update(RequestPolicy requestPolicy) => Execute($"UPDATE uchicago_mod_circulation_storage.request_policy SET jsonb = @Content::jsonb, creation_date = @CreationTime, created_by = @CreationUserId WHERE id = @Id", requestPolicy);
-        public int Update(ScheduledNotice scheduledNotice) => Execute($"UPDATE uchicago_mod_circulation_storage.scheduled_notice SET jsonb = @Content::jsonb, creation_date = @CreationTime, created_by = @CreationUserId WHERE id = @Id", scheduledNotice);
-        public int Update(ServicePoint servicePoint) => Execute($"UPDATE uchicago_mod_inventory_storage.service_point SET jsonb = @Content::jsonb, creation_date = @CreationTime, created_by = @CreationUserId WHERE id = @Id", servicePoint);
-        public int Update(ServicePointUser servicePointUser) => Execute($"UPDATE uchicago_mod_inventory_storage.service_point_user SET jsonb = @Content::jsonb, creation_date = @CreationTime, created_by = @CreationUserId, defaultservicepointid = @Defaultservicepointid WHERE id = @Id", servicePointUser);
-        public int Update(Snapshot snapshot, DateTime? lastWriteTime = null) => Execute($"UPDATE uchicago_mod_source_record_storage.snapshots_lb SET status = @Status, processing_started_date = @ProcessingStartedDate, created_by_user_id = @CreationUserId, created_date = @CreationTime, updated_by_user_id = @LastWriteUserId, updated_date = @LastWriteTime WHERE id = @Id{(lastWriteTime != null ? " AND (updated_date IS NULL OR updated_date = @_lastWriteTime)" : "")}", new { snapshot.Status, snapshot.ProcessingStartedDate, snapshot.CreationUserId, snapshot.CreationTime, snapshot.LastWriteUserId, snapshot.LastWriteTime, snapshot.Id, _lastWriteTime = lastWriteTime });
-        public int Update(Source source) => Execute($"UPDATE uchicago_mod_inventory_storage.holdings_records_source SET jsonb = @Content::jsonb, creation_date = @CreationTime, created_by = @CreationUserId WHERE id = @Id", source);
-        public int Update(StaffSlip staffSlip) => Execute($"UPDATE uchicago_mod_circulation_storage.staff_slips SET jsonb = @Content::jsonb, creation_date = @CreationTime, created_by = @CreationUserId WHERE id = @Id", staffSlip);
-        public int Update(StatisticalCode statisticalCode) => Execute($"UPDATE uchicago_mod_inventory_storage.statistical_code SET jsonb = @Content::jsonb, creation_date = @CreationTime, created_by = @CreationUserId, statisticalcodetypeid = @Statisticalcodetypeid WHERE id = @Id", statisticalCode);
-        public int Update(StatisticalCodeType statisticalCodeType) => Execute($"UPDATE uchicago_mod_inventory_storage.statistical_code_type SET jsonb = @Content::jsonb, creation_date = @CreationTime, created_by = @CreationUserId WHERE id = @Id", statisticalCodeType);
-        public int Update(Suffix suffix) => Execute($"UPDATE uchicago_mod_orders_storage.suffixes SET jsonb = @Content::jsonb WHERE id = @Id", suffix);
-        public int Update(Tag tag, DateTime? lastWriteTime = null) => Execute($"UPDATE uchicago_mod_tags.tags SET created_by = @CreationUserId, label = @Label, description = @Description, created_date = @CreationTime, updated_date = @LastWriteTime, updated_by = @UpdatedBy WHERE id = @Id{(lastWriteTime != null ? " AND (updated_date IS NULL OR updated_date = @_lastWriteTime)" : "")}", new { tag.CreationUserId, tag.Label, tag.Description, tag.CreationTime, tag.LastWriteTime, tag.UpdatedBy, tag.Id, _lastWriteTime = lastWriteTime });
-        public int Update(Template template) => Execute($"UPDATE uchicago_mod_template_engine.template SET jsonb = @Content::jsonb, creation_date = @CreationTime, created_by = @CreationUserId WHERE id = @Id", template);
-        public int Update(Title title) => Execute($"UPDATE uchicago_mod_orders_storage.titles SET jsonb = @Content::jsonb, creation_date = @CreationTime, created_by = @CreationUserId, polineid = @Polineid WHERE id = @Id", title);
-        public int Update(Transaction transaction) => Execute($"UPDATE uchicago_mod_finance_storage.transaction SET jsonb = @Content::jsonb, creation_date = @CreationTime, created_by = @CreationUserId, fiscalyearid = @Fiscalyearid, fromfundid = @Fromfundid, sourcefiscalyearid = @Sourcefiscalyearid, tofundid = @Tofundid, expenseclassid = @Expenseclassid WHERE id = @Id", transaction);
-        public int Update(TransferAccount transferAccount) => Execute($"UPDATE uchicago_mod_feesfines.transfers SET jsonb = @Content::jsonb, creation_date = @CreationTime, created_by = @CreationUserId WHERE id = @Id", transferAccount);
-        public int Update(TransferCriteria transferCriteria) => Execute($"UPDATE uchicago_mod_feesfines.transfer_criteria SET jsonb = @Content::jsonb, creation_date = @CreationTime, created_by = @CreationUserId WHERE id = @Id", transferCriteria);
-        public int Update(User user) => Execute($"UPDATE uchicago_mod_users.users SET jsonb = @Content::jsonb, creation_date = @CreationTime, created_by = @CreationUserId, patrongroup = @Patrongroup WHERE id = @Id", user);
-        public int Update(UserAcquisitionsUnit userAcquisitionsUnit) => Execute($"UPDATE uchicago_mod_orders_storage.acquisitions_unit_membership SET jsonb = @Content::jsonb, creation_date = @CreationTime, created_by = @CreationUserId, acquisitionsunitid = @Acquisitionsunitid WHERE id = @Id", userAcquisitionsUnit);
-        public int Update(UserRequestPreference userRequestPreference) => Execute($"UPDATE uchicago_mod_circulation_storage.user_request_preference SET jsonb = @Content::jsonb, creation_date = @CreationTime, created_by = @CreationUserId WHERE id = @Id", userRequestPreference);
-        public int Update(UserSummary userSummary) => Execute($"UPDATE uchicago_mod_patron_blocks.user_summary SET jsonb = @Content::jsonb, creation_date = @CreationTime, created_by = @CreationUserId WHERE id = @Id", userSummary);
-        public int Update(Voucher voucher) => Execute($"UPDATE uchicago_mod_invoice_storage.vouchers SET jsonb = @Content::jsonb, creation_date = @CreationTime, created_by = @CreationUserId, invoiceid = @Invoiceid, batchgroupid = @Batchgroupid WHERE id = @Id", voucher);
-        public int Update(VoucherItem voucherItem) => Execute($"UPDATE uchicago_mod_invoice_storage.voucher_lines SET jsonb = @Content::jsonb, creation_date = @CreationTime, created_by = @CreationUserId, voucherid = @Voucherid WHERE id = @Id", voucherItem);
-        public int Update(VoucherStatus voucherStatus, DateTime? lastWriteTime = null) => Execute($"UPDATE uc.voucher_statuses SET name = @Name, creation_time = @CreationTime, creation_username = @CreationUsername, last_write_time = @LastWriteTime, last_write_username = @LastWriteUsername WHERE id = @Id{(lastWriteTime != null ? " AND (last_write_time IS NULL OR last_write_time = @_lastWriteTime)" : "")}", new { voucherStatus.Name, voucherStatus.CreationTime, voucherStatus.CreationUsername, voucherStatus.LastWriteTime, voucherStatus.LastWriteUsername, voucherStatus.Id, _lastWriteTime = lastWriteTime });
-        public int Update(WaiveReason waiveReason) => Execute($"UPDATE uchicago_mod_feesfines.waives SET jsonb = @Content::jsonb, creation_date = @CreationTime, created_by = @CreationUserId WHERE id = @Id", waiveReason);
+        public int Update(AcquisitionsUnit acquisitionsUnit, string where = null) => Execute($"UPDATE uchicago_mod_orders_storage.acquisitions_unit SET jsonb = @Content::jsonb, creation_date = @CreationTime, created_by = @CreationUserId WHERE {where ?? "id = @Id"}", acquisitionsUnit);
+        public int Update(AddressType addressType, string where = null) => Execute($"UPDATE uchicago_mod_users.addresstype SET jsonb = @Content::jsonb, creation_date = @CreationTime, created_by = @CreationUserId WHERE {where ?? "id = @Id"}", addressType);
+        public int Update(Alert alert, string where = null) => Execute($"UPDATE uchicago_mod_orders_storage.alert SET jsonb = @Content::jsonb, creation_date = @CreationTime, created_by = @CreationUserId WHERE {where ?? "id = @Id"}", alert);
+        public int Update(AlternativeTitleType alternativeTitleType, string where = null) => Execute($"UPDATE uchicago_mod_inventory_storage.alternative_title_type SET jsonb = @Content::jsonb, creation_date = @CreationTime, created_by = @CreationUserId WHERE {where ?? "id = @Id"}", alternativeTitleType);
+        public int Update(AuthAttempt authAttempt, string where = null) => Execute($"UPDATE uchicago_mod_login.auth_attempts SET jsonb = @Content::jsonb, creation_date = @CreationTime, created_by = @CreationUserId WHERE {where ?? "id = @Id"}", authAttempt);
+        public int Update(AuthCredentialsHistory authCredentialsHistory, string where = null) => Execute($"UPDATE uchicago_mod_login.auth_credentials_history SET jsonb = @Content::jsonb, creation_date = @CreationTime, created_by = @CreationUserId WHERE {where ?? "id = @Id"}", authCredentialsHistory);
+        public int Update(AuthPasswordAction authPasswordAction, string where = null) => Execute($"UPDATE uchicago_mod_login.auth_password_action SET jsonb = @Content::jsonb, creation_date = @CreationTime, created_by = @CreationUserId WHERE {where ?? "id = @Id"}", authPasswordAction);
+        public int Update(BatchGroup batchGroup, string where = null) => Execute($"UPDATE uchicago_mod_invoice_storage.batch_groups SET jsonb = @Content::jsonb, creation_date = @CreationTime, created_by = @CreationUserId WHERE {where ?? "id = @Id"}", batchGroup);
+        public int Update(BatchVoucher batchVoucher, string where = null) => Execute($"UPDATE uchicago_mod_invoice_storage.batch_vouchers SET jsonb = @Content::jsonb WHERE {where ?? "id = @Id"}", batchVoucher);
+        public int Update(BatchVoucherExport batchVoucherExport, string where = null) => Execute($"UPDATE uchicago_mod_invoice_storage.batch_voucher_exports SET jsonb = @Content::jsonb, creation_date = @CreationTime, created_by = @CreationUserId, batchgroupid = @Batchgroupid, batchvoucherid = @Batchvoucherid WHERE {where ?? "id = @Id"}", batchVoucherExport);
+        public int Update(BatchVoucherExportConfig batchVoucherExportConfig, string where = null) => Execute($"UPDATE uchicago_mod_invoice_storage.batch_voucher_export_configs SET jsonb = @Content::jsonb, creation_date = @CreationTime, created_by = @CreationUserId, batchgroupid = @Batchgroupid WHERE {where ?? "id = @Id"}", batchVoucherExportConfig);
+        public int Update(Block block, string where = null) => Execute($"UPDATE uchicago_mod_feesfines.manualblocks SET jsonb = @Content::jsonb, creation_date = @CreationTime, created_by = @CreationUserId WHERE {where ?? "id = @Id"}", block);
+        public int Update(BlockCondition blockCondition, string where = null) => Execute($"UPDATE uchicago_mod_patron_blocks.patron_block_conditions SET jsonb = @Content::jsonb, creation_date = @CreationTime, created_by = @CreationUserId WHERE {where ?? "id = @Id"}", blockCondition);
+        public int Update(BlockLimit blockLimit, string where = null) => Execute($"UPDATE uchicago_mod_patron_blocks.patron_block_limits SET jsonb = @Content::jsonb, creation_date = @CreationTime, created_by = @CreationUserId, conditionid = @Conditionid WHERE {where ?? "id = @Id"}", blockLimit);
+        public int Update(BoundWithPart boundWithPart, string where = null) => Execute($"UPDATE uchicago_mod_inventory_storage.bound_with_part SET jsonb = @Content::jsonb, creation_date = @CreationTime, created_by = @CreationUserId, itemid = @Itemid, holdingsrecordid = @Holdingsrecordid WHERE {where ?? "id = @Id"}", boundWithPart);
+        public int Update(Budget budget, string where = null) => Execute($"UPDATE uchicago_mod_finance_storage.budget SET jsonb = @Content::jsonb, creation_date = @CreationTime, created_by = @CreationUserId, fundid = @FundId, fiscalyearid = @FiscalYearId WHERE {where ?? "id = @Id"}", budget);
+        public int Update(BudgetExpenseClass budgetExpenseClass, string where = null) => Execute($"UPDATE uchicago_mod_finance_storage.budget_expense_class SET jsonb = @Content::jsonb, budgetid = @Budgetid, expenseclassid = @Expenseclassid WHERE {where ?? "id = @Id"}", budgetExpenseClass);
+        public int Update(BudgetGroup budgetGroup, string where = null) => Execute($"UPDATE uchicago_mod_finance_storage.group_fund_fiscal_year SET jsonb = @Content::jsonb, budgetid = @Budgetid, groupid = @Groupid, fundid = @Fundid, fiscalyearid = @Fiscalyearid WHERE {where ?? "id = @Id"}", budgetGroup);
+        public int Update(CallNumberType callNumberType, string where = null) => Execute($"UPDATE uchicago_mod_inventory_storage.call_number_type SET jsonb = @Content::jsonb, creation_date = @CreationTime, created_by = @CreationUserId WHERE {where ?? "id = @Id"}", callNumberType);
+        public int Update(Campus campus, string where = null) => Execute($"UPDATE uchicago_mod_inventory_storage.loccampus SET jsonb = @Content::jsonb, creation_date = @CreationTime, created_by = @CreationUserId, institutionid = @Institutionid WHERE {where ?? "id = @Id"}", campus);
+        public int Update(CancellationReason cancellationReason, string where = null) => Execute($"UPDATE uchicago_mod_circulation_storage.cancellation_reason SET jsonb = @Content::jsonb, creation_date = @CreationTime, created_by = @CreationUserId WHERE {where ?? "id = @Id"}", cancellationReason);
+        public int Update(Category category, string where = null) => Execute($"UPDATE uchicago_mod_organizations_storage.categories SET jsonb = @Content::jsonb, creation_date = @CreationTime, created_by = @CreationUserId WHERE {where ?? "id = @Id"}", category);
+        public int Update(CheckIn checkIn, string where = null) => Execute($"UPDATE uchicago_mod_circulation_storage.check_in SET jsonb = @Content::jsonb, creation_date = @CreationTime, created_by = @CreationUserId WHERE {where ?? "id = @Id"}", checkIn);
+        public int Update(CirculationRule circulationRule, string where = null) => Execute($"UPDATE uchicago_mod_circulation_storage.circulation_rules SET jsonb = @Content::jsonb, lock = @Lock WHERE {where ?? "id = @Id"}", circulationRule);
+        public int Update(ClassificationType classificationType, string where = null) => Execute($"UPDATE uchicago_mod_inventory_storage.classification_type SET jsonb = @Content::jsonb, creation_date = @CreationTime, created_by = @CreationUserId WHERE {where ?? "id = @Id"}", classificationType);
+        public int Update(CloseReason closeReason, string where = null) => Execute($"UPDATE uchicago_mod_orders_storage.reasons_for_closure SET jsonb = @Content::jsonb WHERE {where ?? "id = @Id"}", closeReason);
+        public int Update(Comment comment, string where = null) => Execute($"UPDATE uchicago_mod_feesfines.comments SET jsonb = @Content::jsonb, creation_date = @CreationTime, created_by = @CreationUserId WHERE {where ?? "id = @Id"}", comment);
+        public int Update(Configuration configuration, string where = null) => Execute($"UPDATE uchicago_mod_configuration.config_data SET jsonb = @Content::jsonb, creation_date = @CreationTime, created_by = @CreationUserId WHERE {where ?? "id = @Id"}", configuration);
+        public int Update(Contact contact, string where = null) => Execute($"UPDATE uchicago_mod_organizations_storage.contacts SET jsonb = @Content::jsonb, creation_date = @CreationTime, created_by = @CreationUserId WHERE {where ?? "id = @Id"}", contact);
+        public int Update(ContactType contactType, string where = null) => Execute($"UPDATE uc.contact_types SET name = @Name WHERE {where ?? "id = @Id"}", contactType);
+        public int Update(ContributorNameType contributorNameType, string where = null) => Execute($"UPDATE uchicago_mod_inventory_storage.contributor_name_type SET jsonb = @Content::jsonb, creation_date = @CreationTime, created_by = @CreationUserId WHERE {where ?? "id = @Id"}", contributorNameType);
+        public int Update(ContributorType contributorType, string where = null) => Execute($"UPDATE uchicago_mod_inventory_storage.contributor_type SET jsonb = @Content::jsonb WHERE {where ?? "id = @Id"}", contributorType);
+        public int Update(Country country, string where = null) => Execute($"UPDATE uc.countries SET alpha2_code = @Alpha2Code, alpha3_code = @Alpha3Code, name = @Name WHERE {where ?? "id = @Id"}", country);
+        public int Update(CustomField customField, string where = null) => Execute($"UPDATE uchicago_mod_users.custom_fields SET jsonb = @Content::jsonb WHERE {where ?? "id = @Id"}", customField);
+        public int Update(Department department, string where = null) => Execute($"UPDATE uchicago_mod_users.departments SET jsonb = @Content::jsonb, creation_date = @CreationTime, created_by = @CreationUserId WHERE {where ?? "id = @Id"}", department);
+        public int Update(Document document, string where = null) => Execute($"UPDATE uchicago_mod_invoice_storage.documents SET jsonb = @Content::jsonb, creation_date = @CreationTime, created_by = @CreationUserId, invoiceid = @Invoiceid, document_data = @DocumentData WHERE {where ?? "id = @Id"}", document);
+        public int Update(ElectronicAccessRelationship electronicAccessRelationship, string where = null) => Execute($"UPDATE uchicago_mod_inventory_storage.electronic_access_relationship SET jsonb = @Content::jsonb, creation_date = @CreationTime, created_by = @CreationUserId WHERE {where ?? "id = @Id"}", electronicAccessRelationship);
+        public int Update(ErrorRecord errorRecord, string where = null) => Execute($"UPDATE uchicago_mod_source_record_storage.error_records_lb SET content = @Content, description = @Description WHERE {where ?? "id = @Id"}", errorRecord);
+        public int Update(EventLog eventLog, string where = null) => Execute($"UPDATE uchicago_mod_login.event_logs SET jsonb = @Content::jsonb, creation_date = @CreationTime, created_by = @CreationUserId WHERE {where ?? "id = @Id"}", eventLog);
+        public int Update(ExpenseClass expenseClass, string where = null) => Execute($"UPDATE uchicago_mod_finance_storage.expense_class SET jsonb = @Content::jsonb WHERE {where ?? "id = @Id"}", expenseClass);
+        public int Update(ExportConfigCredential exportConfigCredential, string where = null) => Execute($"UPDATE uchicago_mod_invoice_storage.export_config_credentials SET jsonb = @Content::jsonb, creation_date = @CreationTime, created_by = @CreationUserId, exportconfigid = @Exportconfigid WHERE {where ?? "id = @Id"}", exportConfigCredential);
+        public int Update(Fee fee, string where = null) => Execute($"UPDATE uchicago_mod_feesfines.accounts SET jsonb = @Content::jsonb, creation_date = @CreationTime, created_by = @CreationUserId WHERE {where ?? "id = @Id"}", fee);
+        public int Update(FeeType feeType, string where = null) => Execute($"UPDATE uchicago_mod_feesfines.feefines SET jsonb = @Content::jsonb, creation_date = @CreationTime, created_by = @CreationUserId, ownerid = @Ownerid WHERE {where ?? "id = @Id"}", feeType);
+        public int Update(FinanceGroup financeGroup, string where = null) => Execute($"UPDATE uchicago_mod_finance_storage.groups SET jsonb = @Content::jsonb, creation_date = @CreationTime, created_by = @CreationUserId WHERE {where ?? "id = @Id"}", financeGroup);
+        public int Update(FiscalYear fiscalYear, string where = null) => Execute($"UPDATE uchicago_mod_finance_storage.fiscal_year SET jsonb = @Content::jsonb, creation_date = @CreationTime, created_by = @CreationUserId WHERE {where ?? "id = @Id"}", fiscalYear);
+        public int Update(FixedDueDateSchedule fixedDueDateSchedule, string where = null) => Execute($"UPDATE uchicago_mod_circulation_storage.fixed_due_date_schedule SET jsonb = @Content::jsonb WHERE {where ?? "id = @Id"}", fixedDueDateSchedule);
+        public int Update(Fund fund, string where = null) => Execute($"UPDATE uchicago_mod_finance_storage.fund SET jsonb = @Content::jsonb, creation_date = @CreationTime, created_by = @CreationUserId, ledgerid = @LedgerId, fundtypeid = @Fundtypeid WHERE {where ?? "id = @Id"}", fund);
+        public int Update(FundType fundType, string where = null) => Execute($"UPDATE uchicago_mod_finance_storage.fund_type SET jsonb = @Content::jsonb WHERE {where ?? "id = @Id"}", fundType);
+        public int Update(Group group, string where = null) => Execute($"UPDATE uchicago_mod_users.groups SET jsonb = @Content::jsonb, creation_date = @CreationTime, created_by = @CreationUserId WHERE {where ?? "id = @Id"}", group);
+        public int Update(Holding holding, string where = null) => Execute($"UPDATE uchicago_mod_inventory_storage.holdings_record SET jsonb = @Content::jsonb, creation_date = @CreationTime, created_by = @CreationUserId, instanceid = @Instanceid, permanentlocationid = @Permanentlocationid, temporarylocationid = @Temporarylocationid, effectivelocationid = @Effectivelocationid, holdingstypeid = @Holdingstypeid, callnumbertypeid = @Callnumbertypeid, illpolicyid = @Illpolicyid, sourceid = @Sourceid WHERE {where ?? "id = @Id"}", holding);
+        public int Update(HoldingNoteType holdingNoteType, string where = null) => Execute($"UPDATE uchicago_mod_inventory_storage.holdings_note_type SET jsonb = @Content::jsonb, creation_date = @CreationTime, created_by = @CreationUserId WHERE {where ?? "id = @Id"}", holdingNoteType);
+        public int Update(HoldingType holdingType, string where = null) => Execute($"UPDATE uchicago_mod_inventory_storage.holdings_type SET jsonb = @Content::jsonb, creation_date = @CreationTime, created_by = @CreationUserId WHERE {where ?? "id = @Id"}", holdingType);
+        public int Update(HridSetting hridSetting, string where = null) => Execute($"UPDATE uchicago_mod_inventory_storage.hrid_settings SET jsonb = @Content::jsonb, lock = @Lock WHERE {where ?? "id = @Id"}", hridSetting);
+        public int Update(IdType idType, string where = null) => Execute($"UPDATE uchicago_mod_inventory_storage.identifier_type SET jsonb = @Content::jsonb, creation_date = @CreationTime, created_by = @CreationUserId WHERE {where ?? "id = @Id"}", idType);
+        public int Update(IllPolicy illPolicy, string where = null) => Execute($"UPDATE uchicago_mod_inventory_storage.ill_policy SET jsonb = @Content::jsonb, creation_date = @CreationTime, created_by = @CreationUserId WHERE {where ?? "id = @Id"}", illPolicy);
+        public int Update(Instance instance, string where = null) => Execute($"UPDATE uchicago_mod_inventory_storage.instance SET jsonb = @Content::jsonb, creation_date = @CreationTime, created_by = @CreationUserId, instancestatusid = @Instancestatusid, modeofissuanceid = @Modeofissuanceid, instancetypeid = @Instancetypeid WHERE {where ?? "id = @Id"}", instance);
+        public int Update(InstanceFormat instanceFormat, string where = null) => Execute($"UPDATE uchicago_mod_inventory_storage.instance_format SET jsonb = @Content::jsonb WHERE {where ?? "id = @Id"}", instanceFormat);
+        public int Update(InstanceNoteType instanceNoteType, string where = null) => Execute($"UPDATE uchicago_mod_inventory_storage.instance_note_type SET jsonb = @Content::jsonb, creation_date = @CreationTime, created_by = @CreationUserId WHERE {where ?? "id = @Id"}", instanceNoteType);
+        public int Update(InstanceRelationship instanceRelationship, string where = null) => Execute($"UPDATE uchicago_mod_inventory_storage.instance_relationship SET jsonb = @Content::jsonb, creation_date = @CreationTime, created_by = @CreationUserId, superinstanceid = @Superinstanceid, subinstanceid = @Subinstanceid, instancerelationshiptypeid = @Instancerelationshiptypeid WHERE {where ?? "id = @Id"}", instanceRelationship);
+        public int Update(InstanceRelationshipType instanceRelationshipType, string where = null) => Execute($"UPDATE uchicago_mod_inventory_storage.instance_relationship_type SET jsonb = @Content::jsonb, creation_date = @CreationTime, created_by = @CreationUserId WHERE {where ?? "id = @Id"}", instanceRelationshipType);
+        public int Update(InstanceSourceMarc instanceSourceMarc, string where = null) => Execute($"UPDATE uchicago_mod_inventory_storage.instance_source_marc SET jsonb = @Content::jsonb, creation_date = @CreationTime, created_by = @CreationUserId WHERE {where ?? "id = @Id"}", instanceSourceMarc);
+        public int Update(InstanceStatus instanceStatus, string where = null) => Execute($"UPDATE uchicago_mod_inventory_storage.instance_status SET jsonb = @Content::jsonb, creation_date = @CreationTime, created_by = @CreationUserId WHERE {where ?? "id = @Id"}", instanceStatus);
+        public int Update(InstanceType instanceType, string where = null) => Execute($"UPDATE uchicago_mod_inventory_storage.instance_type SET jsonb = @Content::jsonb WHERE {where ?? "id = @Id"}", instanceType);
+        public int Update(Institution institution, string where = null) => Execute($"UPDATE uchicago_mod_inventory_storage.locinstitution SET jsonb = @Content::jsonb, creation_date = @CreationTime, created_by = @CreationUserId WHERE {where ?? "id = @Id"}", institution);
+        public int Update(Interface @interface, string where = null) => Execute($"UPDATE uchicago_mod_organizations_storage.interfaces SET jsonb = @Content::jsonb, creation_date = @CreationTime, created_by = @CreationUserId WHERE {where ?? "id = @Id"}", @interface);
+        public int Update(InterfaceCredential interfaceCredential, string where = null) => Execute($"UPDATE uchicago_mod_organizations_storage.interface_credentials SET jsonb = @Content::jsonb, interfaceid = @Interfaceid WHERE {where ?? "id = @Id"}", interfaceCredential);
+        public int Update(Invoice invoice, string where = null) => Execute($"UPDATE uchicago_mod_invoice_storage.invoices SET jsonb = @Content::jsonb, creation_date = @CreationTime, created_by = @CreationUserId, batchgroupid = @Batchgroupid WHERE {where ?? "id = @Id"}", invoice);
+        public int Update(InvoiceItem invoiceItem, string where = null) => Execute($"UPDATE uchicago_mod_invoice_storage.invoice_lines SET jsonb = @Content::jsonb, creation_date = @CreationTime, created_by = @CreationUserId, invoiceid = @Invoiceid WHERE {where ?? "id = @Id"}", invoiceItem);
+        public int Update(InvoiceStatus invoiceStatus, DateTime? lastWriteTime = null, string where = null) => Execute($"UPDATE uc.invoice_statuses SET name = @Name, creation_time = @CreationTime, creation_username = @CreationUsername, last_write_time = @LastWriteTime, last_write_username = @LastWriteUsername WHERE {where ?? "id = @Id"}{(lastWriteTime != null ? " AND (last_write_time IS NULL OR last_write_time = @_lastWriteTime)" : "")}", new { invoiceStatus.Name, invoiceStatus.CreationTime, invoiceStatus.CreationUsername, invoiceStatus.LastWriteTime, invoiceStatus.LastWriteUsername, invoiceStatus.Id, _lastWriteTime = lastWriteTime });
+        public int Update(InvoiceTransactionSummary invoiceTransactionSummary, string where = null) => Execute($"UPDATE uchicago_mod_finance_storage.invoice_transaction_summaries SET jsonb = @Content::jsonb WHERE {where ?? "id = @Id"}", invoiceTransactionSummary);
+        public int Update(Item item, string where = null) => Execute($"UPDATE uchicago_mod_inventory_storage.item SET jsonb = @Content::jsonb, creation_date = @CreationTime, created_by = @CreationUserId, holdingsrecordid = @Holdingsrecordid, permanentloantypeid = @Permanentloantypeid, temporaryloantypeid = @Temporaryloantypeid, materialtypeid = @Materialtypeid, permanentlocationid = @Permanentlocationid, temporarylocationid = @Temporarylocationid, effectivelocationid = @Effectivelocationid WHERE {where ?? "id = @Id"}", item);
+        public int Update(ItemDamagedStatus itemDamagedStatus, string where = null) => Execute($"UPDATE uchicago_mod_inventory_storage.item_damaged_status SET jsonb = @Content::jsonb, creation_date = @CreationTime, created_by = @CreationUserId WHERE {where ?? "id = @Id"}", itemDamagedStatus);
+        public int Update(ItemNoteType itemNoteType, string where = null) => Execute($"UPDATE uchicago_mod_inventory_storage.item_note_type SET jsonb = @Content::jsonb, creation_date = @CreationTime, created_by = @CreationUserId WHERE {where ?? "id = @Id"}", itemNoteType);
+        public int Update(ItemStatus itemStatus, DateTime? lastWriteTime = null, string where = null) => Execute($"UPDATE uc.item_statuses SET name = @Name, creation_time = @CreationTime, creation_username = @CreationUsername, last_write_time = @LastWriteTime, last_write_username = @LastWriteUsername WHERE {where ?? "id = @Id"}{(lastWriteTime != null ? " AND (last_write_time IS NULL OR last_write_time = @_lastWriteTime)" : "")}", new { itemStatus.Name, itemStatus.CreationTime, itemStatus.CreationUsername, itemStatus.LastWriteTime, itemStatus.LastWriteUsername, itemStatus.Id, _lastWriteTime = lastWriteTime });
+        public int Update(JobExecution jobExecution, string where = null) => Execute($"UPDATE uchicago_mod_source_record_manager.job_executions SET jsonb = @Content::jsonb WHERE {where ?? "id = @Id"}", jobExecution);
+        public int Update(JobExecutionProgress jobExecutionProgress, string where = null) => Execute($"UPDATE uchicago_mod_source_record_manager.job_execution_progress SET jsonb = @Content::jsonb, jobexecutionid = @Jobexecutionid WHERE {where ?? "id = @Id"}", jobExecutionProgress);
+        public int Update(JobExecutionSourceChunk jobExecutionSourceChunk, string where = null) => Execute($"UPDATE uchicago_mod_source_record_manager.job_execution_source_chunks SET jsonb = @Content::jsonb, jobexecutionid = @Jobexecutionid WHERE {where ?? "id = @Id"}", jobExecutionSourceChunk);
+        public int Update(JobMonitoring jobMonitoring, string where = null) => Execute($"UPDATE uchicago_mod_source_record_manager.job_monitoring SET job_execution_id = @JobExecutionId, last_event_timestamp = @LastEventTimestamp, notification_sent = @NotificationSent WHERE {where ?? "id = @Id"}", jobMonitoring);
+        public int Update(JournalRecord journalRecord, string where = null) => Execute($"UPDATE uchicago_mod_source_record_manager.journal_records SET job_execution_id = @JobExecutionId, source_id = @SourceId, entity_type = @EntityType, entity_id = @EntityId, entity_hrid = @EntityHrid, action_type = @ActionType, action_status = @ActionStatus, action_date = @ActionDate, source_record_order = @SourceRecordOrder, error = @Error, title = @Title WHERE {where ?? "id = @Id"}", journalRecord);
+        public int Update(Ledger ledger, string where = null) => Execute($"UPDATE uchicago_mod_finance_storage.ledger SET jsonb = @Content::jsonb, creation_date = @CreationTime, created_by = @CreationUserId, fiscalyearoneid = @Fiscalyearoneid WHERE {where ?? "id = @Id"}", ledger);
+        public int Update(LedgerRollover ledgerRollover, string where = null) => Execute($"UPDATE uchicago_mod_finance_storage.ledger_fiscal_year_rollover SET jsonb = @Content::jsonb, creation_date = @CreationTime, created_by = @CreationUserId, ledgerid = @Ledgerid, fromfiscalyearid = @Fromfiscalyearid, tofiscalyearid = @Tofiscalyearid WHERE {where ?? "id = @Id"}", ledgerRollover);
+        public int Update(LedgerRolloverError ledgerRolloverError, string where = null) => Execute($"UPDATE uchicago_mod_finance_storage.ledger_fiscal_year_rollover_error SET jsonb = @Content::jsonb, creation_date = @CreationTime, created_by = @CreationUserId, ledgerrolloverid = @Ledgerrolloverid WHERE {where ?? "id = @Id"}", ledgerRolloverError);
+        public int Update(LedgerRolloverProgress ledgerRolloverProgress, string where = null) => Execute($"UPDATE uchicago_mod_finance_storage.ledger_fiscal_year_rollover_progress SET jsonb = @Content::jsonb, creation_date = @CreationTime, created_by = @CreationUserId, ledgerrolloverid = @Ledgerrolloverid WHERE {where ?? "id = @Id"}", ledgerRolloverProgress);
+        public int Update(Library library, string where = null) => Execute($"UPDATE uchicago_mod_inventory_storage.loclibrary SET jsonb = @Content::jsonb, creation_date = @CreationTime, created_by = @CreationUserId, campusid = @Campusid WHERE {where ?? "id = @Id"}", library);
+        public int Update(Loan loan, string where = null) => Execute($"UPDATE uchicago_mod_circulation_storage.loan SET jsonb = @Content::jsonb, creation_date = @CreationTime, created_by = @CreationUserId WHERE {where ?? "id = @Id"}", loan);
+        public int Update(LoanEvent loanEvent, string where = null) => Execute($"UPDATE uchicago_mod_circulation_storage.audit_loan SET jsonb = @Content::jsonb WHERE {where ?? "id = @Id"}", loanEvent);
+        public int Update(LoanPolicy loanPolicy, string where = null) => Execute($"UPDATE uchicago_mod_circulation_storage.loan_policy SET jsonb = @Content::jsonb, creation_date = @CreationTime, created_by = @CreationUserId, loanspolicy_fixedduedatescheduleid = @LoanspolicyFixedduedatescheduleid, renewalspolicy_alternatefixedduedatescheduleid = @RenewalspolicyAlternatefixedduedatescheduleid WHERE {where ?? "id = @Id"}", loanPolicy);
+        public int Update(LoanType loanType, string where = null) => Execute($"UPDATE uchicago_mod_inventory_storage.loan_type SET jsonb = @Content::jsonb, creation_date = @CreationTime, created_by = @CreationUserId WHERE {where ?? "id = @Id"}", loanType);
+        public int Update(Location location, string where = null) => Execute($"UPDATE uchicago_mod_inventory_storage.location SET jsonb = @Content::jsonb, creation_date = @CreationTime, created_by = @CreationUserId, institutionid = @Institutionid, campusid = @Campusid, libraryid = @Libraryid WHERE {where ?? "id = @Id"}", location);
+        public int Update(Login login, string where = null) => Execute($"UPDATE uchicago_mod_login.auth_credentials SET jsonb = @Content::jsonb, creation_date = @CreationTime, created_by = @CreationUserId WHERE {where ?? "id = @Id"}", login);
+        public int Update(LostItemFeePolicy lostItemFeePolicy, string where = null) => Execute($"UPDATE uchicago_mod_feesfines.lost_item_fee_policy SET jsonb = @Content::jsonb, creation_date = @CreationTime, created_by = @CreationUserId WHERE {where ?? "id = @Id"}", lostItemFeePolicy);
+        public int Update(ManualBlockTemplate manualBlockTemplate, string where = null) => Execute($"UPDATE uchicago_mod_feesfines.manual_block_templates SET jsonb = @Content::jsonb, creation_date = @CreationTime, created_by = @CreationUserId WHERE {where ?? "id = @Id"}", manualBlockTemplate);
+        public int Update(MappingParamsSnapshot mappingParamsSnapshot, string where = null) => Execute($"UPDATE uchicago_mod_source_record_manager.mapping_params_snapshots SET params = @Params::jsonb, saved_timestamp = @SavedTimestamp WHERE {where ?? "job_execution_id = @Id"}", mappingParamsSnapshot);
+        public int Update(MappingRule mappingRule, string where = null) => Execute($"UPDATE uchicago_mod_source_record_manager.mapping_rules SET jsonb = @Content::jsonb, record_type = @RecordType WHERE {where ?? "id = @Id"}", mappingRule);
+        public int Update(MappingRulesSnapshot mappingRulesSnapshot, string where = null) => Execute($"UPDATE uchicago_mod_source_record_manager.mapping_rules_snapshots SET rules = @Rules::jsonb, saved_timestamp = @SavedTimestamp WHERE {where ?? "job_execution_id = @Id"}", mappingRulesSnapshot);
+        public int Update(MarcRecord marcRecord, string where = null) => Execute($"UPDATE uchicago_mod_source_record_storage.marc_records_lb SET content = @Content::jsonb WHERE {where ?? "id = @Id"}", marcRecord);
+        public int Update(MaterialType materialType, string where = null) => Execute($"UPDATE uchicago_mod_inventory_storage.material_type SET jsonb = @Content::jsonb, creation_date = @CreationTime, created_by = @CreationUserId WHERE {where ?? "id = @Id"}", materialType);
+        public int Update(ModeOfIssuance modeOfIssuance, string where = null) => Execute($"UPDATE uchicago_mod_inventory_storage.mode_of_issuance SET jsonb = @Content::jsonb, creation_date = @CreationTime, created_by = @CreationUserId WHERE {where ?? "id = @Id"}", modeOfIssuance);
+        public int Update(NatureOfContentTerm natureOfContentTerm, string where = null) => Execute($"UPDATE uchicago_mod_inventory_storage.nature_of_content_term SET jsonb = @Content::jsonb, creation_date = @CreationTime, created_by = @CreationUserId WHERE {where ?? "id = @Id"}", natureOfContentTerm);
+        public int Update(Note note, string where = null) => Execute($"UPDATE uchicago_mod_notes.note_data SET jsonb = @Content::jsonb, temporary_type_id = @TemporaryTypeId, search_content = @SearchContent WHERE {where ?? "id = @Id"}", note);
+        public int Update(NoteType noteType, string where = null) => Execute($"UPDATE uchicago_mod_notes.note_type SET jsonb = @Content::jsonb WHERE {where ?? "id = @Id"}", noteType);
+        public int Update(Order order, string where = null) => Execute($"UPDATE uchicago_mod_orders_storage.purchase_order SET jsonb = @Content::jsonb, creation_date = @CreationTime, created_by = @CreationUserId WHERE {where ?? "id = @Id"}", order);
+        public int Update(OrderInvoice orderInvoice, string where = null) => Execute($"UPDATE uchicago_mod_orders_storage.order_invoice_relationship SET jsonb = @Content::jsonb, purchaseorderid = @Purchaseorderid WHERE {where ?? "id = @Id"}", orderInvoice);
+        public int Update(OrderItem orderItem, string where = null) => Execute($"UPDATE uchicago_mod_orders_storage.po_line SET jsonb = @Content::jsonb, creation_date = @CreationTime, created_by = @CreationUserId, purchaseorderid = @Purchaseorderid WHERE {where ?? "id = @Id"}", orderItem);
+        public int Update(OrderStatus orderStatus, DateTime? lastWriteTime = null, string where = null) => Execute($"UPDATE uc.order_statuses SET name = @Name, creation_time = @CreationTime, creation_username = @CreationUsername, last_write_time = @LastWriteTime, last_write_username = @LastWriteUsername WHERE {where ?? "id = @Id"}{(lastWriteTime != null ? " AND (last_write_time IS NULL OR last_write_time = @_lastWriteTime)" : "")}", new { orderStatus.Name, orderStatus.CreationTime, orderStatus.CreationUsername, orderStatus.LastWriteTime, orderStatus.LastWriteUsername, orderStatus.Id, _lastWriteTime = lastWriteTime });
+        public int Update(OrderTemplate orderTemplate, string where = null) => Execute($"UPDATE uchicago_mod_orders_storage.order_templates SET jsonb = @Content::jsonb WHERE {where ?? "id = @Id"}", orderTemplate);
+        public int Update(OrderTransactionSummary orderTransactionSummary, string where = null) => Execute($"UPDATE uchicago_mod_finance_storage.order_transaction_summaries SET jsonb = @Content::jsonb WHERE {where ?? "id = @Id"}", orderTransactionSummary);
+        public int Update(OrderType orderType, DateTime? lastWriteTime = null, string where = null) => Execute($"UPDATE uc.order_types SET name = @Name, creation_time = @CreationTime, creation_username = @CreationUsername, last_write_time = @LastWriteTime, last_write_username = @LastWriteUsername WHERE {where ?? "id = @Id"}{(lastWriteTime != null ? " AND (last_write_time IS NULL OR last_write_time = @_lastWriteTime)" : "")}", new { orderType.Name, orderType.CreationTime, orderType.CreationUsername, orderType.LastWriteTime, orderType.LastWriteUsername, orderType.Id, _lastWriteTime = lastWriteTime });
+        public int Update(Organization organization, string where = null) => Execute($"UPDATE uchicago_mod_organizations_storage.organizations SET jsonb = @Content::jsonb, creation_date = @CreationTime, created_by = @CreationUserId WHERE {where ?? "id = @Id"}", organization);
+        public int Update(OverdueFinePolicy overdueFinePolicy, string where = null) => Execute($"UPDATE uchicago_mod_feesfines.overdue_fine_policy SET jsonb = @Content::jsonb, creation_date = @CreationTime, created_by = @CreationUserId WHERE {where ?? "id = @Id"}", overdueFinePolicy);
+        public int Update(Owner owner, string where = null) => Execute($"UPDATE uchicago_mod_feesfines.owners SET jsonb = @Content::jsonb, creation_date = @CreationTime, created_by = @CreationUserId WHERE {where ?? "id = @Id"}", owner);
+        public int Update(PatronActionSession patronActionSession, string where = null) => Execute($"UPDATE uchicago_mod_circulation_storage.patron_action_session SET jsonb = @Content::jsonb, creation_date = @CreationTime, created_by = @CreationUserId WHERE {where ?? "id = @Id"}", patronActionSession);
+        public int Update(PatronNoticePolicy patronNoticePolicy, string where = null) => Execute($"UPDATE uchicago_mod_circulation_storage.patron_notice_policy SET jsonb = @Content::jsonb, creation_date = @CreationTime, created_by = @CreationUserId WHERE {where ?? "id = @Id"}", patronNoticePolicy);
+        public int Update(Payment payment, string where = null) => Execute($"UPDATE uchicago_mod_feesfines.feefineactions SET jsonb = @Content::jsonb, creation_date = @CreationTime, created_by = @CreationUserId WHERE {where ?? "id = @Id"}", payment);
+        public int Update(PaymentMethod paymentMethod, string where = null) => Execute($"UPDATE uchicago_mod_feesfines.payments SET jsonb = @Content::jsonb, creation_date = @CreationTime, created_by = @CreationUserId WHERE {where ?? "id = @Id"}", paymentMethod);
+        public int Update(PaymentType paymentType, DateTime? lastWriteTime = null, string where = null) => Execute($"UPDATE uc.payment_types SET name = @Name, creation_time = @CreationTime, creation_username = @CreationUsername, last_write_time = @LastWriteTime, last_write_username = @LastWriteUsername WHERE {where ?? "id = @Id"}{(lastWriteTime != null ? " AND (last_write_time IS NULL OR last_write_time = @_lastWriteTime)" : "")}", new { paymentType.Name, paymentType.CreationTime, paymentType.CreationUsername, paymentType.LastWriteTime, paymentType.LastWriteUsername, paymentType.Id, _lastWriteTime = lastWriteTime });
+        public int Update(Permission permission, string where = null) => Execute($"UPDATE uchicago_mod_permissions.permissions SET jsonb = @Content::jsonb, creation_date = @CreationTime, created_by = @CreationUserId WHERE {where ?? "id = @Id"}", permission);
+        public int Update(PermissionsUser permissionsUser, string where = null) => Execute($"UPDATE uchicago_mod_permissions.permissions_users SET jsonb = @Content::jsonb, creation_date = @CreationTime, created_by = @CreationUserId WHERE {where ?? "id = @Id"}", permissionsUser);
+        public int Update(PrecedingSucceedingTitle precedingSucceedingTitle, string where = null) => Execute($"UPDATE uchicago_mod_inventory_storage.preceding_succeeding_title SET jsonb = @Content::jsonb, creation_date = @CreationTime, created_by = @CreationUserId, precedinginstanceid = @Precedinginstanceid, succeedinginstanceid = @Succeedinginstanceid WHERE {where ?? "id = @Id"}", precedingSucceedingTitle);
+        public int Update(Prefix prefix, string where = null) => Execute($"UPDATE uchicago_mod_orders_storage.prefixes SET jsonb = @Content::jsonb WHERE {where ?? "id = @Id"}", prefix);
+        public int Update(Proxy proxy, string where = null) => Execute($"UPDATE uchicago_mod_users.proxyfor SET jsonb = @Content::jsonb, creation_date = @CreationTime, created_by = @CreationUserId WHERE {where ?? "id = @Id"}", proxy);
+        public int Update(RawRecord rawRecord, string where = null) => Execute($"UPDATE uchicago_mod_source_record_storage.raw_records_lb SET content = @Content WHERE {where ?? "id = @Id"}", rawRecord);
+        public int Update(Receiving receiving, string where = null) => Execute($"UPDATE uchicago_mod_orders_storage.pieces SET jsonb = @Content::jsonb, creation_date = @CreationTime, created_by = @CreationUserId, polineid = @Polineid, titleid = @Titleid WHERE {where ?? "id = @Id"}", receiving);
+        public int Update(Record record, DateTime? lastWriteTime = null, string where = null) => Execute($"UPDATE uchicago_mod_source_record_storage.records_lb SET snapshot_id = @SnapshotId, matched_id = @MatchedId, generation = @Generation, record_type = @RecordType, external_id = @InstanceId, state = @State, leader_record_status = @LeaderRecordStatus, \"order\" = @Order, suppress_discovery = @SuppressDiscovery, created_by_user_id = @CreationUserId, created_date = @CreationTime, updated_by_user_id = @LastWriteUserId, updated_date = @LastWriteTime, external_hrid = @InstanceHrid WHERE {where ?? "id = @Id"}{(lastWriteTime != null ? " AND (updated_date IS NULL OR updated_date = @_lastWriteTime)" : "")}", new { record.SnapshotId, record.MatchedId, record.Generation, record.RecordType, record.InstanceId, record.State, record.LeaderRecordStatus, record.Order, record.SuppressDiscovery, record.CreationUserId, record.CreationTime, record.LastWriteUserId, record.LastWriteTime, record.InstanceHrid, record.Id, _lastWriteTime = lastWriteTime });
+        public int Update(RefundReason refundReason, string where = null) => Execute($"UPDATE uchicago_mod_feesfines.refunds SET jsonb = @Content::jsonb, creation_date = @CreationTime, created_by = @CreationUserId WHERE {where ?? "id = @Id"}", refundReason);
+        public int Update(ReportingCode reportingCode, string where = null) => Execute($"UPDATE uchicago_mod_orders_storage.reporting_code SET jsonb = @Content::jsonb, creation_date = @CreationTime, created_by = @CreationUserId WHERE {where ?? "id = @Id"}", reportingCode);
+        public int Update(Request request, string where = null) => Execute($"UPDATE uchicago_mod_circulation_storage.request SET jsonb = @Content::jsonb, creation_date = @CreationTime, created_by = @CreationUserId, cancellationreasonid = @Cancellationreasonid WHERE {where ?? "id = @Id"}", request);
+        public int Update(RequestPolicy requestPolicy, string where = null) => Execute($"UPDATE uchicago_mod_circulation_storage.request_policy SET jsonb = @Content::jsonb, creation_date = @CreationTime, created_by = @CreationUserId WHERE {where ?? "id = @Id"}", requestPolicy);
+        public int Update(ScheduledNotice scheduledNotice, string where = null) => Execute($"UPDATE uchicago_mod_circulation_storage.scheduled_notice SET jsonb = @Content::jsonb, creation_date = @CreationTime, created_by = @CreationUserId WHERE {where ?? "id = @Id"}", scheduledNotice);
+        public int Update(ServicePoint servicePoint, string where = null) => Execute($"UPDATE uchicago_mod_inventory_storage.service_point SET jsonb = @Content::jsonb, creation_date = @CreationTime, created_by = @CreationUserId WHERE {where ?? "id = @Id"}", servicePoint);
+        public int Update(ServicePointUser servicePointUser, string where = null) => Execute($"UPDATE uchicago_mod_inventory_storage.service_point_user SET jsonb = @Content::jsonb, creation_date = @CreationTime, created_by = @CreationUserId, defaultservicepointid = @Defaultservicepointid WHERE {where ?? "id = @Id"}", servicePointUser);
+        public int Update(Snapshot snapshot, DateTime? lastWriteTime = null, string where = null) => Execute($"UPDATE uchicago_mod_source_record_storage.snapshots_lb SET status = @Status, processing_started_date = @ProcessingStartedDate, created_by_user_id = @CreationUserId, created_date = @CreationTime, updated_by_user_id = @LastWriteUserId, updated_date = @LastWriteTime WHERE {where ?? "id = @Id"}{(lastWriteTime != null ? " AND (updated_date IS NULL OR updated_date = @_lastWriteTime)" : "")}", new { snapshot.Status, snapshot.ProcessingStartedDate, snapshot.CreationUserId, snapshot.CreationTime, snapshot.LastWriteUserId, snapshot.LastWriteTime, snapshot.Id, _lastWriteTime = lastWriteTime });
+        public int Update(Source source, string where = null) => Execute($"UPDATE uchicago_mod_inventory_storage.holdings_records_source SET jsonb = @Content::jsonb, creation_date = @CreationTime, created_by = @CreationUserId WHERE {where ?? "id = @Id"}", source);
+        public int Update(StaffSlip staffSlip, string where = null) => Execute($"UPDATE uchicago_mod_circulation_storage.staff_slips SET jsonb = @Content::jsonb, creation_date = @CreationTime, created_by = @CreationUserId WHERE {where ?? "id = @Id"}", staffSlip);
+        public int Update(StatisticalCode statisticalCode, string where = null) => Execute($"UPDATE uchicago_mod_inventory_storage.statistical_code SET jsonb = @Content::jsonb, creation_date = @CreationTime, created_by = @CreationUserId, statisticalcodetypeid = @Statisticalcodetypeid WHERE {where ?? "id = @Id"}", statisticalCode);
+        public int Update(StatisticalCodeType statisticalCodeType, string where = null) => Execute($"UPDATE uchicago_mod_inventory_storage.statistical_code_type SET jsonb = @Content::jsonb, creation_date = @CreationTime, created_by = @CreationUserId WHERE {where ?? "id = @Id"}", statisticalCodeType);
+        public int Update(Suffix suffix, string where = null) => Execute($"UPDATE uchicago_mod_orders_storage.suffixes SET jsonb = @Content::jsonb WHERE {where ?? "id = @Id"}", suffix);
+        public int Update(Tag tag, DateTime? lastWriteTime = null, string where = null) => Execute($"UPDATE uchicago_mod_tags.tags SET created_by = @CreationUserId, label = @Label, description = @Description, created_date = @CreationTime, updated_date = @LastWriteTime, updated_by = @UpdatedBy WHERE {where ?? "id = @Id"}{(lastWriteTime != null ? " AND (updated_date IS NULL OR updated_date = @_lastWriteTime)" : "")}", new { tag.CreationUserId, tag.Label, tag.Description, tag.CreationTime, tag.LastWriteTime, tag.UpdatedBy, tag.Id, _lastWriteTime = lastWriteTime });
+        public int Update(Template template, string where = null) => Execute($"UPDATE uchicago_mod_template_engine.template SET jsonb = @Content::jsonb, creation_date = @CreationTime, created_by = @CreationUserId WHERE {where ?? "id = @Id"}", template);
+        public int Update(Title title, string where = null) => Execute($"UPDATE uchicago_mod_orders_storage.titles SET jsonb = @Content::jsonb, creation_date = @CreationTime, created_by = @CreationUserId, polineid = @Polineid WHERE {where ?? "id = @Id"}", title);
+        public int Update(Transaction transaction, string where = null) => Execute($"UPDATE uchicago_mod_finance_storage.transaction SET jsonb = @Content::jsonb, creation_date = @CreationTime, created_by = @CreationUserId, fiscalyearid = @Fiscalyearid, fromfundid = @Fromfundid, sourcefiscalyearid = @Sourcefiscalyearid, tofundid = @Tofundid, expenseclassid = @Expenseclassid WHERE {where ?? "id = @Id"}", transaction);
+        public int Update(TransferAccount transferAccount, string where = null) => Execute($"UPDATE uchicago_mod_feesfines.transfers SET jsonb = @Content::jsonb, creation_date = @CreationTime, created_by = @CreationUserId WHERE {where ?? "id = @Id"}", transferAccount);
+        public int Update(TransferCriteria transferCriteria, string where = null) => Execute($"UPDATE uchicago_mod_feesfines.transfer_criteria SET jsonb = @Content::jsonb, creation_date = @CreationTime, created_by = @CreationUserId WHERE {where ?? "id = @Id"}", transferCriteria);
+        public int Update(User user, string where = null) => Execute($"UPDATE uchicago_mod_users.users SET jsonb = @Content::jsonb, creation_date = @CreationTime, created_by = @CreationUserId, patrongroup = @Patrongroup WHERE {where ?? "id = @Id"}", user);
+        public int Update(UserAcquisitionsUnit userAcquisitionsUnit, string where = null) => Execute($"UPDATE uchicago_mod_orders_storage.acquisitions_unit_membership SET jsonb = @Content::jsonb, creation_date = @CreationTime, created_by = @CreationUserId, acquisitionsunitid = @Acquisitionsunitid WHERE {where ?? "id = @Id"}", userAcquisitionsUnit);
+        public int Update(UserRequestPreference userRequestPreference, string where = null) => Execute($"UPDATE uchicago_mod_circulation_storage.user_request_preference SET jsonb = @Content::jsonb, creation_date = @CreationTime, created_by = @CreationUserId WHERE {where ?? "id = @Id"}", userRequestPreference);
+        public int Update(UserSummary userSummary, string where = null) => Execute($"UPDATE uchicago_mod_patron_blocks.user_summary SET jsonb = @Content::jsonb, creation_date = @CreationTime, created_by = @CreationUserId WHERE {where ?? "id = @Id"}", userSummary);
+        public int Update(Voucher voucher, string where = null) => Execute($"UPDATE uchicago_mod_invoice_storage.vouchers SET jsonb = @Content::jsonb, creation_date = @CreationTime, created_by = @CreationUserId, invoiceid = @Invoiceid, batchgroupid = @Batchgroupid WHERE {where ?? "id = @Id"}", voucher);
+        public int Update(VoucherItem voucherItem, string where = null) => Execute($"UPDATE uchicago_mod_invoice_storage.voucher_lines SET jsonb = @Content::jsonb, creation_date = @CreationTime, created_by = @CreationUserId, voucherid = @Voucherid WHERE {where ?? "id = @Id"}", voucherItem);
+        public int Update(VoucherStatus voucherStatus, DateTime? lastWriteTime = null, string where = null) => Execute($"UPDATE uc.voucher_statuses SET name = @Name, creation_time = @CreationTime, creation_username = @CreationUsername, last_write_time = @LastWriteTime, last_write_username = @LastWriteUsername WHERE {where ?? "id = @Id"}{(lastWriteTime != null ? " AND (last_write_time IS NULL OR last_write_time = @_lastWriteTime)" : "")}", new { voucherStatus.Name, voucherStatus.CreationTime, voucherStatus.CreationUsername, voucherStatus.LastWriteTime, voucherStatus.LastWriteUsername, voucherStatus.Id, _lastWriteTime = lastWriteTime });
+        public int Update(WaiveReason waiveReason, string where = null) => Execute($"UPDATE uchicago_mod_feesfines.waives SET jsonb = @Content::jsonb, creation_date = @CreationTime, created_by = @CreationUserId WHERE {where ?? "id = @Id"}", waiveReason);
 
-        public void UpdateOrInsert(AcquisitionsUnit acquisitionsUnit)
+        public void UpdateOrInsert(AcquisitionsUnit acquisitionsUnit, string where = null)
         {
-            if (acquisitionsUnit.Id == null || Update(acquisitionsUnit) != 1) Insert(acquisitionsUnit);
+            if (acquisitionsUnit.Id == null || Update(acquisitionsUnit, where: where) != 1) Insert(acquisitionsUnit);
         }
 
-        public void UpdateOrInsert(AddressType addressType)
+        public void UpdateOrInsert(AddressType addressType, string where = null)
         {
-            if (addressType.Id == null || Update(addressType) != 1) Insert(addressType);
+            if (addressType.Id == null || Update(addressType, where: where) != 1) Insert(addressType);
         }
 
-        public void UpdateOrInsert(Alert alert)
+        public void UpdateOrInsert(Alert alert, string where = null)
         {
-            if (alert.Id == null || Update(alert) != 1) Insert(alert);
+            if (alert.Id == null || Update(alert, where: where) != 1) Insert(alert);
         }
 
-        public void UpdateOrInsert(AlternativeTitleType alternativeTitleType)
+        public void UpdateOrInsert(AlternativeTitleType alternativeTitleType, string where = null)
         {
-            if (alternativeTitleType.Id == null || Update(alternativeTitleType) != 1) Insert(alternativeTitleType);
+            if (alternativeTitleType.Id == null || Update(alternativeTitleType, where: where) != 1) Insert(alternativeTitleType);
         }
 
-        public void UpdateOrInsert(AuthAttempt authAttempt)
+        public void UpdateOrInsert(AuthAttempt authAttempt, string where = null)
         {
-            if (authAttempt.Id == null || Update(authAttempt) != 1) Insert(authAttempt);
+            if (authAttempt.Id == null || Update(authAttempt, where: where) != 1) Insert(authAttempt);
         }
 
-        public void UpdateOrInsert(AuthCredentialsHistory authCredentialsHistory)
+        public void UpdateOrInsert(AuthCredentialsHistory authCredentialsHistory, string where = null)
         {
-            if (authCredentialsHistory.Id == null || Update(authCredentialsHistory) != 1) Insert(authCredentialsHistory);
+            if (authCredentialsHistory.Id == null || Update(authCredentialsHistory, where: where) != 1) Insert(authCredentialsHistory);
         }
 
-        public void UpdateOrInsert(AuthPasswordAction authPasswordAction)
+        public void UpdateOrInsert(AuthPasswordAction authPasswordAction, string where = null)
         {
-            if (authPasswordAction.Id == null || Update(authPasswordAction) != 1) Insert(authPasswordAction);
+            if (authPasswordAction.Id == null || Update(authPasswordAction, where: where) != 1) Insert(authPasswordAction);
         }
 
-        public void UpdateOrInsert(BatchGroup batchGroup)
+        public void UpdateOrInsert(BatchGroup batchGroup, string where = null)
         {
-            if (batchGroup.Id == null || Update(batchGroup) != 1) Insert(batchGroup);
+            if (batchGroup.Id == null || Update(batchGroup, where: where) != 1) Insert(batchGroup);
         }
 
-        public void UpdateOrInsert(BatchVoucher batchVoucher)
+        public void UpdateOrInsert(BatchVoucher batchVoucher, string where = null)
         {
-            if (batchVoucher.Id == null || Update(batchVoucher) != 1) Insert(batchVoucher);
+            if (batchVoucher.Id == null || Update(batchVoucher, where: where) != 1) Insert(batchVoucher);
         }
 
-        public void UpdateOrInsert(BatchVoucherExport batchVoucherExport)
+        public void UpdateOrInsert(BatchVoucherExport batchVoucherExport, string where = null)
         {
-            if (batchVoucherExport.Id == null || Update(batchVoucherExport) != 1) Insert(batchVoucherExport);
+            if (batchVoucherExport.Id == null || Update(batchVoucherExport, where: where) != 1) Insert(batchVoucherExport);
         }
 
-        public void UpdateOrInsert(BatchVoucherExportConfig batchVoucherExportConfig)
+        public void UpdateOrInsert(BatchVoucherExportConfig batchVoucherExportConfig, string where = null)
         {
-            if (batchVoucherExportConfig.Id == null || Update(batchVoucherExportConfig) != 1) Insert(batchVoucherExportConfig);
+            if (batchVoucherExportConfig.Id == null || Update(batchVoucherExportConfig, where: where) != 1) Insert(batchVoucherExportConfig);
         }
 
-        public void UpdateOrInsert(Block block)
+        public void UpdateOrInsert(Block block, string where = null)
         {
-            if (block.Id == null || Update(block) != 1) Insert(block);
+            if (block.Id == null || Update(block, where: where) != 1) Insert(block);
         }
 
-        public void UpdateOrInsert(BlockCondition blockCondition)
+        public void UpdateOrInsert(BlockCondition blockCondition, string where = null)
         {
-            if (blockCondition.Id == null || Update(blockCondition) != 1) Insert(blockCondition);
+            if (blockCondition.Id == null || Update(blockCondition, where: where) != 1) Insert(blockCondition);
         }
 
-        public void UpdateOrInsert(BlockLimit blockLimit)
+        public void UpdateOrInsert(BlockLimit blockLimit, string where = null)
         {
-            if (blockLimit.Id == null || Update(blockLimit) != 1) Insert(blockLimit);
+            if (blockLimit.Id == null || Update(blockLimit, where: where) != 1) Insert(blockLimit);
         }
 
-        public void UpdateOrInsert(BoundWithPart boundWithPart)
+        public void UpdateOrInsert(BoundWithPart boundWithPart, string where = null)
         {
-            if (boundWithPart.Id == null || Update(boundWithPart) != 1) Insert(boundWithPart);
+            if (boundWithPart.Id == null || Update(boundWithPart, where: where) != 1) Insert(boundWithPart);
         }
 
-        public void UpdateOrInsert(Budget budget)
+        public void UpdateOrInsert(Budget budget, string where = null)
         {
-            if (budget.Id == null || Update(budget) != 1) Insert(budget);
+            if (budget.Id == null || Update(budget, where: where) != 1) Insert(budget);
         }
 
-        public void UpdateOrInsert(BudgetExpenseClass budgetExpenseClass)
+        public void UpdateOrInsert(BudgetExpenseClass budgetExpenseClass, string where = null)
         {
-            if (budgetExpenseClass.Id == null || Update(budgetExpenseClass) != 1) Insert(budgetExpenseClass);
+            if (budgetExpenseClass.Id == null || Update(budgetExpenseClass, where: where) != 1) Insert(budgetExpenseClass);
         }
 
-        public void UpdateOrInsert(BudgetGroup budgetGroup)
+        public void UpdateOrInsert(BudgetGroup budgetGroup, string where = null)
         {
-            if (budgetGroup.Id == null || Update(budgetGroup) != 1) Insert(budgetGroup);
+            if (budgetGroup.Id == null || Update(budgetGroup, where: where) != 1) Insert(budgetGroup);
         }
 
-        public void UpdateOrInsert(CallNumberType callNumberType)
+        public void UpdateOrInsert(CallNumberType callNumberType, string where = null)
         {
-            if (callNumberType.Id == null || Update(callNumberType) != 1) Insert(callNumberType);
+            if (callNumberType.Id == null || Update(callNumberType, where: where) != 1) Insert(callNumberType);
         }
 
-        public void UpdateOrInsert(Campus campus)
+        public void UpdateOrInsert(Campus campus, string where = null)
         {
-            if (campus.Id == null || Update(campus) != 1) Insert(campus);
+            if (campus.Id == null || Update(campus, where: where) != 1) Insert(campus);
         }
 
-        public void UpdateOrInsert(CancellationReason cancellationReason)
+        public void UpdateOrInsert(CancellationReason cancellationReason, string where = null)
         {
-            if (cancellationReason.Id == null || Update(cancellationReason) != 1) Insert(cancellationReason);
+            if (cancellationReason.Id == null || Update(cancellationReason, where: where) != 1) Insert(cancellationReason);
         }
 
-        public void UpdateOrInsert(Category category)
+        public void UpdateOrInsert(Category category, string where = null)
         {
-            if (category.Id == null || Update(category) != 1) Insert(category);
+            if (category.Id == null || Update(category, where: where) != 1) Insert(category);
         }
 
-        public void UpdateOrInsert(CheckIn checkIn)
+        public void UpdateOrInsert(CheckIn checkIn, string where = null)
         {
-            if (checkIn.Id == null || Update(checkIn) != 1) Insert(checkIn);
+            if (checkIn.Id == null || Update(checkIn, where: where) != 1) Insert(checkIn);
         }
 
-        public void UpdateOrInsert(CirculationRule circulationRule)
+        public void UpdateOrInsert(CirculationRule circulationRule, string where = null)
         {
-            if (circulationRule.Id == null || Update(circulationRule) != 1) Insert(circulationRule);
+            if (circulationRule.Id == null || Update(circulationRule, where: where) != 1) Insert(circulationRule);
         }
 
-        public void UpdateOrInsert(ClassificationType classificationType)
+        public void UpdateOrInsert(ClassificationType classificationType, string where = null)
         {
-            if (classificationType.Id == null || Update(classificationType) != 1) Insert(classificationType);
+            if (classificationType.Id == null || Update(classificationType, where: where) != 1) Insert(classificationType);
         }
 
-        public void UpdateOrInsert(CloseReason closeReason)
+        public void UpdateOrInsert(CloseReason closeReason, string where = null)
         {
-            if (closeReason.Id == null || Update(closeReason) != 1) Insert(closeReason);
+            if (closeReason.Id == null || Update(closeReason, where: where) != 1) Insert(closeReason);
         }
 
-        public void UpdateOrInsert(Comment comment)
+        public void UpdateOrInsert(Comment comment, string where = null)
         {
-            if (comment.Id == null || Update(comment) != 1) Insert(comment);
+            if (comment.Id == null || Update(comment, where: where) != 1) Insert(comment);
         }
 
-        public void UpdateOrInsert(Configuration configuration)
+        public void UpdateOrInsert(Configuration configuration, string where = null)
         {
-            if (configuration.Id == null || Update(configuration) != 1) Insert(configuration);
+            if (configuration.Id == null || Update(configuration, where: where) != 1) Insert(configuration);
         }
 
-        public void UpdateOrInsert(Contact contact)
+        public void UpdateOrInsert(Contact contact, string where = null)
         {
-            if (contact.Id == null || Update(contact) != 1) Insert(contact);
+            if (contact.Id == null || Update(contact, where: where) != 1) Insert(contact);
         }
 
-        public void UpdateOrInsert(ContactType contactType)
+        public void UpdateOrInsert(ContactType contactType, string where = null)
         {
-            if (contactType.Id == null || Update(contactType) != 1) Insert(contactType);
+            if (contactType.Id == null || Update(contactType, where: where) != 1) Insert(contactType);
         }
 
-        public void UpdateOrInsert(ContributorNameType contributorNameType)
+        public void UpdateOrInsert(ContributorNameType contributorNameType, string where = null)
         {
-            if (contributorNameType.Id == null || Update(contributorNameType) != 1) Insert(contributorNameType);
+            if (contributorNameType.Id == null || Update(contributorNameType, where: where) != 1) Insert(contributorNameType);
         }
 
-        public void UpdateOrInsert(ContributorType contributorType)
+        public void UpdateOrInsert(ContributorType contributorType, string where = null)
         {
-            if (contributorType.Id == null || Update(contributorType) != 1) Insert(contributorType);
+            if (contributorType.Id == null || Update(contributorType, where: where) != 1) Insert(contributorType);
         }
 
-        public void UpdateOrInsert(Country country)
+        public void UpdateOrInsert(Country country, string where = null)
         {
-            if (country.Id == null || Update(country) != 1) Insert(country);
+            if (country.Id == null || Update(country, where: where) != 1) Insert(country);
         }
 
-        public void UpdateOrInsert(CustomField customField)
+        public void UpdateOrInsert(CustomField customField, string where = null)
         {
-            if (customField.Id == null || Update(customField) != 1) Insert(customField);
+            if (customField.Id == null || Update(customField, where: where) != 1) Insert(customField);
         }
 
-        public void UpdateOrInsert(Department department)
+        public void UpdateOrInsert(Department department, string where = null)
         {
-            if (department.Id == null || Update(department) != 1) Insert(department);
+            if (department.Id == null || Update(department, where: where) != 1) Insert(department);
         }
 
-        public void UpdateOrInsert(Document document)
+        public void UpdateOrInsert(Document document, string where = null)
         {
-            if (document.Id == null || Update(document) != 1) Insert(document);
+            if (document.Id == null || Update(document, where: where) != 1) Insert(document);
         }
 
-        public void UpdateOrInsert(ElectronicAccessRelationship electronicAccessRelationship)
+        public void UpdateOrInsert(ElectronicAccessRelationship electronicAccessRelationship, string where = null)
         {
-            if (electronicAccessRelationship.Id == null || Update(electronicAccessRelationship) != 1) Insert(electronicAccessRelationship);
+            if (electronicAccessRelationship.Id == null || Update(electronicAccessRelationship, where: where) != 1) Insert(electronicAccessRelationship);
         }
 
-        public void UpdateOrInsert(ErrorRecord errorRecord)
+        public void UpdateOrInsert(ErrorRecord errorRecord, string where = null)
         {
-            if (errorRecord.Id == null || Update(errorRecord) != 1) Insert(errorRecord);
+            if (errorRecord.Id == null || Update(errorRecord, where: where) != 1) Insert(errorRecord);
         }
 
-        public void UpdateOrInsert(EventLog eventLog)
+        public void UpdateOrInsert(EventLog eventLog, string where = null)
         {
-            if (eventLog.Id == null || Update(eventLog) != 1) Insert(eventLog);
+            if (eventLog.Id == null || Update(eventLog, where: where) != 1) Insert(eventLog);
         }
 
-        public void UpdateOrInsert(ExpenseClass expenseClass)
+        public void UpdateOrInsert(ExpenseClass expenseClass, string where = null)
         {
-            if (expenseClass.Id == null || Update(expenseClass) != 1) Insert(expenseClass);
+            if (expenseClass.Id == null || Update(expenseClass, where: where) != 1) Insert(expenseClass);
         }
 
-        public void UpdateOrInsert(ExportConfigCredential exportConfigCredential)
+        public void UpdateOrInsert(ExportConfigCredential exportConfigCredential, string where = null)
         {
-            if (exportConfigCredential.Id == null || Update(exportConfigCredential) != 1) Insert(exportConfigCredential);
+            if (exportConfigCredential.Id == null || Update(exportConfigCredential, where: where) != 1) Insert(exportConfigCredential);
         }
 
-        public void UpdateOrInsert(Fee fee)
+        public void UpdateOrInsert(Fee fee, string where = null)
         {
-            if (fee.Id == null || Update(fee) != 1) Insert(fee);
+            if (fee.Id == null || Update(fee, where: where) != 1) Insert(fee);
         }
 
-        public void UpdateOrInsert(FeeType feeType)
+        public void UpdateOrInsert(FeeType feeType, string where = null)
         {
-            if (feeType.Id == null || Update(feeType) != 1) Insert(feeType);
+            if (feeType.Id == null || Update(feeType, where: where) != 1) Insert(feeType);
         }
 
-        public void UpdateOrInsert(FinanceGroup financeGroup)
+        public void UpdateOrInsert(FinanceGroup financeGroup, string where = null)
         {
-            if (financeGroup.Id == null || Update(financeGroup) != 1) Insert(financeGroup);
+            if (financeGroup.Id == null || Update(financeGroup, where: where) != 1) Insert(financeGroup);
         }
 
-        public void UpdateOrInsert(FiscalYear fiscalYear)
+        public void UpdateOrInsert(FiscalYear fiscalYear, string where = null)
         {
-            if (fiscalYear.Id == null || Update(fiscalYear) != 1) Insert(fiscalYear);
+            if (fiscalYear.Id == null || Update(fiscalYear, where: where) != 1) Insert(fiscalYear);
         }
 
-        public void UpdateOrInsert(FixedDueDateSchedule fixedDueDateSchedule)
+        public void UpdateOrInsert(FixedDueDateSchedule fixedDueDateSchedule, string where = null)
         {
-            if (fixedDueDateSchedule.Id == null || Update(fixedDueDateSchedule) != 1) Insert(fixedDueDateSchedule);
+            if (fixedDueDateSchedule.Id == null || Update(fixedDueDateSchedule, where: where) != 1) Insert(fixedDueDateSchedule);
         }
 
-        public void UpdateOrInsert(Fund fund)
+        public void UpdateOrInsert(Fund fund, string where = null)
         {
-            if (fund.Id == null || Update(fund) != 1) Insert(fund);
+            if (fund.Id == null || Update(fund, where: where) != 1) Insert(fund);
         }
 
-        public void UpdateOrInsert(FundType fundType)
+        public void UpdateOrInsert(FundType fundType, string where = null)
         {
-            if (fundType.Id == null || Update(fundType) != 1) Insert(fundType);
+            if (fundType.Id == null || Update(fundType, where: where) != 1) Insert(fundType);
         }
 
-        public void UpdateOrInsert(Group group)
+        public void UpdateOrInsert(Group group, string where = null)
         {
-            if (group.Id == null || Update(group) != 1) Insert(group);
+            if (group.Id == null || Update(group, where: where) != 1) Insert(group);
         }
 
-        public void UpdateOrInsert(Holding holding)
+        public void UpdateOrInsert(Holding holding, string where = null)
         {
-            if (holding.Id == null || Update(holding) != 1) Insert(holding);
+            if (holding.Id == null || Update(holding, where: where) != 1) Insert(holding);
         }
 
-        public void UpdateOrInsert(HoldingNoteType holdingNoteType)
+        public void UpdateOrInsert(HoldingNoteType holdingNoteType, string where = null)
         {
-            if (holdingNoteType.Id == null || Update(holdingNoteType) != 1) Insert(holdingNoteType);
+            if (holdingNoteType.Id == null || Update(holdingNoteType, where: where) != 1) Insert(holdingNoteType);
         }
 
-        public void UpdateOrInsert(HoldingType holdingType)
+        public void UpdateOrInsert(HoldingType holdingType, string where = null)
         {
-            if (holdingType.Id == null || Update(holdingType) != 1) Insert(holdingType);
+            if (holdingType.Id == null || Update(holdingType, where: where) != 1) Insert(holdingType);
         }
 
-        public void UpdateOrInsert(HridSetting hridSetting)
+        public void UpdateOrInsert(HridSetting hridSetting, string where = null)
         {
-            if (hridSetting.Id == null || Update(hridSetting) != 1) Insert(hridSetting);
+            if (hridSetting.Id == null || Update(hridSetting, where: where) != 1) Insert(hridSetting);
         }
 
-        public void UpdateOrInsert(IdType idType)
+        public void UpdateOrInsert(IdType idType, string where = null)
         {
-            if (idType.Id == null || Update(idType) != 1) Insert(idType);
+            if (idType.Id == null || Update(idType, where: where) != 1) Insert(idType);
         }
 
-        public void UpdateOrInsert(IllPolicy illPolicy)
+        public void UpdateOrInsert(IllPolicy illPolicy, string where = null)
         {
-            if (illPolicy.Id == null || Update(illPolicy) != 1) Insert(illPolicy);
+            if (illPolicy.Id == null || Update(illPolicy, where: where) != 1) Insert(illPolicy);
         }
 
-        public void UpdateOrInsert(Instance instance)
+        public void UpdateOrInsert(Instance instance, string where = null)
         {
-            if (instance.Id == null || Update(instance) != 1) Insert(instance);
+            if (instance.Id == null || Update(instance, where: where) != 1) Insert(instance);
         }
 
-        public void UpdateOrInsert(InstanceFormat instanceFormat)
+        public void UpdateOrInsert(InstanceFormat instanceFormat, string where = null)
         {
-            if (instanceFormat.Id == null || Update(instanceFormat) != 1) Insert(instanceFormat);
+            if (instanceFormat.Id == null || Update(instanceFormat, where: where) != 1) Insert(instanceFormat);
         }
 
-        public void UpdateOrInsert(InstanceNoteType instanceNoteType)
+        public void UpdateOrInsert(InstanceNoteType instanceNoteType, string where = null)
         {
-            if (instanceNoteType.Id == null || Update(instanceNoteType) != 1) Insert(instanceNoteType);
+            if (instanceNoteType.Id == null || Update(instanceNoteType, where: where) != 1) Insert(instanceNoteType);
         }
 
-        public void UpdateOrInsert(InstanceRelationship instanceRelationship)
+        public void UpdateOrInsert(InstanceRelationship instanceRelationship, string where = null)
         {
-            if (instanceRelationship.Id == null || Update(instanceRelationship) != 1) Insert(instanceRelationship);
+            if (instanceRelationship.Id == null || Update(instanceRelationship, where: where) != 1) Insert(instanceRelationship);
         }
 
-        public void UpdateOrInsert(InstanceRelationshipType instanceRelationshipType)
+        public void UpdateOrInsert(InstanceRelationshipType instanceRelationshipType, string where = null)
         {
-            if (instanceRelationshipType.Id == null || Update(instanceRelationshipType) != 1) Insert(instanceRelationshipType);
+            if (instanceRelationshipType.Id == null || Update(instanceRelationshipType, where: where) != 1) Insert(instanceRelationshipType);
         }
 
-        public void UpdateOrInsert(InstanceSourceMarc instanceSourceMarc)
+        public void UpdateOrInsert(InstanceSourceMarc instanceSourceMarc, string where = null)
         {
-            if (instanceSourceMarc.Id == null || Update(instanceSourceMarc) != 1) Insert(instanceSourceMarc);
+            if (instanceSourceMarc.Id == null || Update(instanceSourceMarc, where: where) != 1) Insert(instanceSourceMarc);
         }
 
-        public void UpdateOrInsert(InstanceStatus instanceStatus)
+        public void UpdateOrInsert(InstanceStatus instanceStatus, string where = null)
         {
-            if (instanceStatus.Id == null || Update(instanceStatus) != 1) Insert(instanceStatus);
+            if (instanceStatus.Id == null || Update(instanceStatus, where: where) != 1) Insert(instanceStatus);
         }
 
-        public void UpdateOrInsert(InstanceType instanceType)
+        public void UpdateOrInsert(InstanceType instanceType, string where = null)
         {
-            if (instanceType.Id == null || Update(instanceType) != 1) Insert(instanceType);
+            if (instanceType.Id == null || Update(instanceType, where: where) != 1) Insert(instanceType);
         }
 
-        public void UpdateOrInsert(Institution institution)
+        public void UpdateOrInsert(Institution institution, string where = null)
         {
-            if (institution.Id == null || Update(institution) != 1) Insert(institution);
+            if (institution.Id == null || Update(institution, where: where) != 1) Insert(institution);
         }
 
-        public void UpdateOrInsert(Interface @interface)
+        public void UpdateOrInsert(Interface @interface, string where = null)
         {
-            if (@interface.Id == null || Update(@interface) != 1) Insert(@interface);
+            if (@interface.Id == null || Update(@interface, where: where) != 1) Insert(@interface);
         }
 
-        public void UpdateOrInsert(InterfaceCredential interfaceCredential)
+        public void UpdateOrInsert(InterfaceCredential interfaceCredential, string where = null)
         {
-            if (interfaceCredential.Id == null || Update(interfaceCredential) != 1) Insert(interfaceCredential);
+            if (interfaceCredential.Id == null || Update(interfaceCredential, where: where) != 1) Insert(interfaceCredential);
         }
 
-        public void UpdateOrInsert(Invoice invoice)
+        public void UpdateOrInsert(Invoice invoice, string where = null)
         {
-            if (invoice.Id == null || Update(invoice) != 1) Insert(invoice);
+            if (invoice.Id == null || Update(invoice, where: where) != 1) Insert(invoice);
         }
 
-        public void UpdateOrInsert(InvoiceItem invoiceItem)
+        public void UpdateOrInsert(InvoiceItem invoiceItem, string where = null)
         {
-            if (invoiceItem.Id == null || Update(invoiceItem) != 1) Insert(invoiceItem);
+            if (invoiceItem.Id == null || Update(invoiceItem, where: where) != 1) Insert(invoiceItem);
         }
 
-        public void UpdateOrInsert(InvoiceStatus invoiceStatus)
+        public void UpdateOrInsert(InvoiceStatus invoiceStatus, string where = null)
         {
-            if (invoiceStatus.Id == null || Update(invoiceStatus) != 1) Insert(invoiceStatus);
+            if (invoiceStatus.Id == null || Update(invoiceStatus, where: where) != 1) Insert(invoiceStatus);
         }
 
-        public void UpdateOrInsert(InvoiceTransactionSummary invoiceTransactionSummary)
+        public void UpdateOrInsert(InvoiceTransactionSummary invoiceTransactionSummary, string where = null)
         {
-            if (invoiceTransactionSummary.Id == null || Update(invoiceTransactionSummary) != 1) Insert(invoiceTransactionSummary);
+            if (invoiceTransactionSummary.Id == null || Update(invoiceTransactionSummary, where: where) != 1) Insert(invoiceTransactionSummary);
         }
 
-        public void UpdateOrInsert(Item item)
+        public void UpdateOrInsert(Item item, string where = null)
         {
-            if (item.Id == null || Update(item) != 1) Insert(item);
+            if (item.Id == null || Update(item, where: where) != 1) Insert(item);
         }
 
-        public void UpdateOrInsert(ItemDamagedStatus itemDamagedStatus)
+        public void UpdateOrInsert(ItemDamagedStatus itemDamagedStatus, string where = null)
         {
-            if (itemDamagedStatus.Id == null || Update(itemDamagedStatus) != 1) Insert(itemDamagedStatus);
+            if (itemDamagedStatus.Id == null || Update(itemDamagedStatus, where: where) != 1) Insert(itemDamagedStatus);
         }
 
-        public void UpdateOrInsert(ItemNoteType itemNoteType)
+        public void UpdateOrInsert(ItemNoteType itemNoteType, string where = null)
         {
-            if (itemNoteType.Id == null || Update(itemNoteType) != 1) Insert(itemNoteType);
+            if (itemNoteType.Id == null || Update(itemNoteType, where: where) != 1) Insert(itemNoteType);
         }
 
-        public void UpdateOrInsert(ItemStatus itemStatus)
+        public void UpdateOrInsert(ItemStatus itemStatus, string where = null)
         {
-            if (itemStatus.Id == null || Update(itemStatus) != 1) Insert(itemStatus);
+            if (itemStatus.Id == null || Update(itemStatus, where: where) != 1) Insert(itemStatus);
         }
 
-        public void UpdateOrInsert(JobExecution jobExecution)
+        public void UpdateOrInsert(JobExecution jobExecution, string where = null)
         {
-            if (jobExecution.Id == null || Update(jobExecution) != 1) Insert(jobExecution);
+            if (jobExecution.Id == null || Update(jobExecution, where: where) != 1) Insert(jobExecution);
         }
 
-        public void UpdateOrInsert(JobExecutionProgress jobExecutionProgress)
+        public void UpdateOrInsert(JobExecutionProgress jobExecutionProgress, string where = null)
         {
-            if (jobExecutionProgress.Id == null || Update(jobExecutionProgress) != 1) Insert(jobExecutionProgress);
+            if (jobExecutionProgress.Id == null || Update(jobExecutionProgress, where: where) != 1) Insert(jobExecutionProgress);
         }
 
-        public void UpdateOrInsert(JobExecutionSourceChunk jobExecutionSourceChunk)
+        public void UpdateOrInsert(JobExecutionSourceChunk jobExecutionSourceChunk, string where = null)
         {
-            if (jobExecutionSourceChunk.Id == null || Update(jobExecutionSourceChunk) != 1) Insert(jobExecutionSourceChunk);
+            if (jobExecutionSourceChunk.Id == null || Update(jobExecutionSourceChunk, where: where) != 1) Insert(jobExecutionSourceChunk);
         }
 
-        public void UpdateOrInsert(JobMonitoring jobMonitoring)
+        public void UpdateOrInsert(JobMonitoring jobMonitoring, string where = null)
         {
-            if (jobMonitoring.Id == null || Update(jobMonitoring) != 1) Insert(jobMonitoring);
+            if (jobMonitoring.Id == null || Update(jobMonitoring, where: where) != 1) Insert(jobMonitoring);
         }
 
-        public void UpdateOrInsert(JournalRecord journalRecord)
+        public void UpdateOrInsert(JournalRecord journalRecord, string where = null)
         {
-            if (journalRecord.Id == null || Update(journalRecord) != 1) Insert(journalRecord);
+            if (journalRecord.Id == null || Update(journalRecord, where: where) != 1) Insert(journalRecord);
         }
 
-        public void UpdateOrInsert(Ledger ledger)
+        public void UpdateOrInsert(Ledger ledger, string where = null)
         {
-            if (ledger.Id == null || Update(ledger) != 1) Insert(ledger);
+            if (ledger.Id == null || Update(ledger, where: where) != 1) Insert(ledger);
         }
 
-        public void UpdateOrInsert(LedgerRollover ledgerRollover)
+        public void UpdateOrInsert(LedgerRollover ledgerRollover, string where = null)
         {
-            if (ledgerRollover.Id == null || Update(ledgerRollover) != 1) Insert(ledgerRollover);
+            if (ledgerRollover.Id == null || Update(ledgerRollover, where: where) != 1) Insert(ledgerRollover);
         }
 
-        public void UpdateOrInsert(LedgerRolloverError ledgerRolloverError)
+        public void UpdateOrInsert(LedgerRolloverError ledgerRolloverError, string where = null)
         {
-            if (ledgerRolloverError.Id == null || Update(ledgerRolloverError) != 1) Insert(ledgerRolloverError);
+            if (ledgerRolloverError.Id == null || Update(ledgerRolloverError, where: where) != 1) Insert(ledgerRolloverError);
         }
 
-        public void UpdateOrInsert(LedgerRolloverProgress ledgerRolloverProgress)
+        public void UpdateOrInsert(LedgerRolloverProgress ledgerRolloverProgress, string where = null)
         {
-            if (ledgerRolloverProgress.Id == null || Update(ledgerRolloverProgress) != 1) Insert(ledgerRolloverProgress);
+            if (ledgerRolloverProgress.Id == null || Update(ledgerRolloverProgress, where: where) != 1) Insert(ledgerRolloverProgress);
         }
 
-        public void UpdateOrInsert(Library library)
+        public void UpdateOrInsert(Library library, string where = null)
         {
-            if (library.Id == null || Update(library) != 1) Insert(library);
+            if (library.Id == null || Update(library, where: where) != 1) Insert(library);
         }
 
-        public void UpdateOrInsert(Loan loan)
+        public void UpdateOrInsert(Loan loan, string where = null)
         {
-            if (loan.Id == null || Update(loan) != 1) Insert(loan);
+            if (loan.Id == null || Update(loan, where: where) != 1) Insert(loan);
         }
 
-        public void UpdateOrInsert(LoanEvent loanEvent)
+        public void UpdateOrInsert(LoanEvent loanEvent, string where = null)
         {
-            if (loanEvent.Id == null || Update(loanEvent) != 1) Insert(loanEvent);
+            if (loanEvent.Id == null || Update(loanEvent, where: where) != 1) Insert(loanEvent);
         }
 
-        public void UpdateOrInsert(LoanPolicy loanPolicy)
+        public void UpdateOrInsert(LoanPolicy loanPolicy, string where = null)
         {
-            if (loanPolicy.Id == null || Update(loanPolicy) != 1) Insert(loanPolicy);
+            if (loanPolicy.Id == null || Update(loanPolicy, where: where) != 1) Insert(loanPolicy);
         }
 
-        public void UpdateOrInsert(LoanType loanType)
+        public void UpdateOrInsert(LoanType loanType, string where = null)
         {
-            if (loanType.Id == null || Update(loanType) != 1) Insert(loanType);
+            if (loanType.Id == null || Update(loanType, where: where) != 1) Insert(loanType);
         }
 
-        public void UpdateOrInsert(Location location)
+        public void UpdateOrInsert(Location location, string where = null)
         {
-            if (location.Id == null || Update(location) != 1) Insert(location);
+            if (location.Id == null || Update(location, where: where) != 1) Insert(location);
         }
 
-        public void UpdateOrInsert(Login login)
+        public void UpdateOrInsert(Login login, string where = null)
         {
-            if (login.Id == null || Update(login) != 1) Insert(login);
+            if (login.Id == null || Update(login, where: where) != 1) Insert(login);
         }
 
-        public void UpdateOrInsert(LostItemFeePolicy lostItemFeePolicy)
+        public void UpdateOrInsert(LostItemFeePolicy lostItemFeePolicy, string where = null)
         {
-            if (lostItemFeePolicy.Id == null || Update(lostItemFeePolicy) != 1) Insert(lostItemFeePolicy);
+            if (lostItemFeePolicy.Id == null || Update(lostItemFeePolicy, where: where) != 1) Insert(lostItemFeePolicy);
         }
 
-        public void UpdateOrInsert(ManualBlockTemplate manualBlockTemplate)
+        public void UpdateOrInsert(ManualBlockTemplate manualBlockTemplate, string where = null)
         {
-            if (manualBlockTemplate.Id == null || Update(manualBlockTemplate) != 1) Insert(manualBlockTemplate);
+            if (manualBlockTemplate.Id == null || Update(manualBlockTemplate, where: where) != 1) Insert(manualBlockTemplate);
         }
 
-        public void UpdateOrInsert(MappingParamsSnapshot mappingParamsSnapshot)
+        public void UpdateOrInsert(MappingParamsSnapshot mappingParamsSnapshot, string where = null)
         {
-            if (mappingParamsSnapshot.Id == null || Update(mappingParamsSnapshot) != 1) Insert(mappingParamsSnapshot);
+            if (mappingParamsSnapshot.Id == null || Update(mappingParamsSnapshot, where: where) != 1) Insert(mappingParamsSnapshot);
         }
 
-        public void UpdateOrInsert(MappingRule mappingRule)
+        public void UpdateOrInsert(MappingRule mappingRule, string where = null)
         {
-            if (mappingRule.Id == null || Update(mappingRule) != 1) Insert(mappingRule);
+            if (mappingRule.Id == null || Update(mappingRule, where: where) != 1) Insert(mappingRule);
         }
 
-        public void UpdateOrInsert(MappingRulesSnapshot mappingRulesSnapshot)
+        public void UpdateOrInsert(MappingRulesSnapshot mappingRulesSnapshot, string where = null)
         {
-            if (mappingRulesSnapshot.Id == null || Update(mappingRulesSnapshot) != 1) Insert(mappingRulesSnapshot);
+            if (mappingRulesSnapshot.Id == null || Update(mappingRulesSnapshot, where: where) != 1) Insert(mappingRulesSnapshot);
         }
 
-        public void UpdateOrInsert(MarcRecord marcRecord)
+        public void UpdateOrInsert(MarcRecord marcRecord, string where = null)
         {
-            if (marcRecord.Id == null || Update(marcRecord) != 1) Insert(marcRecord);
+            if (marcRecord.Id == null || Update(marcRecord, where: where) != 1) Insert(marcRecord);
         }
 
-        public void UpdateOrInsert(MaterialType materialType)
+        public void UpdateOrInsert(MaterialType materialType, string where = null)
         {
-            if (materialType.Id == null || Update(materialType) != 1) Insert(materialType);
+            if (materialType.Id == null || Update(materialType, where: where) != 1) Insert(materialType);
         }
 
-        public void UpdateOrInsert(ModeOfIssuance modeOfIssuance)
+        public void UpdateOrInsert(ModeOfIssuance modeOfIssuance, string where = null)
         {
-            if (modeOfIssuance.Id == null || Update(modeOfIssuance) != 1) Insert(modeOfIssuance);
+            if (modeOfIssuance.Id == null || Update(modeOfIssuance, where: where) != 1) Insert(modeOfIssuance);
         }
 
-        public void UpdateOrInsert(NatureOfContentTerm natureOfContentTerm)
+        public void UpdateOrInsert(NatureOfContentTerm natureOfContentTerm, string where = null)
         {
-            if (natureOfContentTerm.Id == null || Update(natureOfContentTerm) != 1) Insert(natureOfContentTerm);
+            if (natureOfContentTerm.Id == null || Update(natureOfContentTerm, where: where) != 1) Insert(natureOfContentTerm);
         }
 
-        public void UpdateOrInsert(Note note)
+        public void UpdateOrInsert(Note note, string where = null)
         {
-            if (note.Id == null || Update(note) != 1) Insert(note);
+            if (note.Id == null || Update(note, where: where) != 1) Insert(note);
         }
 
-        public void UpdateOrInsert(NoteType noteType)
+        public void UpdateOrInsert(NoteType noteType, string where = null)
         {
-            if (noteType.Id == null || Update(noteType) != 1) Insert(noteType);
+            if (noteType.Id == null || Update(noteType, where: where) != 1) Insert(noteType);
         }
 
-        public void UpdateOrInsert(Order order)
+        public void UpdateOrInsert(Order order, string where = null)
         {
-            if (order.Id == null || Update(order) != 1) Insert(order);
+            if (order.Id == null || Update(order, where: where) != 1) Insert(order);
         }
 
-        public void UpdateOrInsert(OrderInvoice orderInvoice)
+        public void UpdateOrInsert(OrderInvoice orderInvoice, string where = null)
         {
-            if (orderInvoice.Id == null || Update(orderInvoice) != 1) Insert(orderInvoice);
+            if (orderInvoice.Id == null || Update(orderInvoice, where: where) != 1) Insert(orderInvoice);
         }
 
-        public void UpdateOrInsert(OrderItem orderItem)
+        public void UpdateOrInsert(OrderItem orderItem, string where = null)
         {
-            if (orderItem.Id == null || Update(orderItem) != 1) Insert(orderItem);
+            if (orderItem.Id == null || Update(orderItem, where: where) != 1) Insert(orderItem);
         }
 
-        public void UpdateOrInsert(OrderStatus orderStatus)
+        public void UpdateOrInsert(OrderStatus orderStatus, string where = null)
         {
-            if (orderStatus.Id == null || Update(orderStatus) != 1) Insert(orderStatus);
+            if (orderStatus.Id == null || Update(orderStatus, where: where) != 1) Insert(orderStatus);
         }
 
-        public void UpdateOrInsert(OrderTemplate orderTemplate)
+        public void UpdateOrInsert(OrderTemplate orderTemplate, string where = null)
         {
-            if (orderTemplate.Id == null || Update(orderTemplate) != 1) Insert(orderTemplate);
+            if (orderTemplate.Id == null || Update(orderTemplate, where: where) != 1) Insert(orderTemplate);
         }
 
-        public void UpdateOrInsert(OrderTransactionSummary orderTransactionSummary)
+        public void UpdateOrInsert(OrderTransactionSummary orderTransactionSummary, string where = null)
         {
-            if (orderTransactionSummary.Id == null || Update(orderTransactionSummary) != 1) Insert(orderTransactionSummary);
+            if (orderTransactionSummary.Id == null || Update(orderTransactionSummary, where: where) != 1) Insert(orderTransactionSummary);
         }
 
-        public void UpdateOrInsert(OrderType orderType)
+        public void UpdateOrInsert(OrderType orderType, string where = null)
         {
-            if (orderType.Id == null || Update(orderType) != 1) Insert(orderType);
+            if (orderType.Id == null || Update(orderType, where: where) != 1) Insert(orderType);
         }
 
-        public void UpdateOrInsert(Organization organization)
+        public void UpdateOrInsert(Organization organization, string where = null)
         {
-            if (organization.Id == null || Update(organization) != 1) Insert(organization);
+            if (organization.Id == null || Update(organization, where: where) != 1) Insert(organization);
         }
 
-        public void UpdateOrInsert(OverdueFinePolicy overdueFinePolicy)
+        public void UpdateOrInsert(OverdueFinePolicy overdueFinePolicy, string where = null)
         {
-            if (overdueFinePolicy.Id == null || Update(overdueFinePolicy) != 1) Insert(overdueFinePolicy);
+            if (overdueFinePolicy.Id == null || Update(overdueFinePolicy, where: where) != 1) Insert(overdueFinePolicy);
         }
 
-        public void UpdateOrInsert(Owner owner)
+        public void UpdateOrInsert(Owner owner, string where = null)
         {
-            if (owner.Id == null || Update(owner) != 1) Insert(owner);
+            if (owner.Id == null || Update(owner, where: where) != 1) Insert(owner);
         }
 
-        public void UpdateOrInsert(PatronActionSession patronActionSession)
+        public void UpdateOrInsert(PatronActionSession patronActionSession, string where = null)
         {
-            if (patronActionSession.Id == null || Update(patronActionSession) != 1) Insert(patronActionSession);
+            if (patronActionSession.Id == null || Update(patronActionSession, where: where) != 1) Insert(patronActionSession);
         }
 
-        public void UpdateOrInsert(PatronNoticePolicy patronNoticePolicy)
+        public void UpdateOrInsert(PatronNoticePolicy patronNoticePolicy, string where = null)
         {
-            if (patronNoticePolicy.Id == null || Update(patronNoticePolicy) != 1) Insert(patronNoticePolicy);
+            if (patronNoticePolicy.Id == null || Update(patronNoticePolicy, where: where) != 1) Insert(patronNoticePolicy);
         }
 
-        public void UpdateOrInsert(Payment payment)
+        public void UpdateOrInsert(Payment payment, string where = null)
         {
-            if (payment.Id == null || Update(payment) != 1) Insert(payment);
+            if (payment.Id == null || Update(payment, where: where) != 1) Insert(payment);
         }
 
-        public void UpdateOrInsert(PaymentMethod paymentMethod)
+        public void UpdateOrInsert(PaymentMethod paymentMethod, string where = null)
         {
-            if (paymentMethod.Id == null || Update(paymentMethod) != 1) Insert(paymentMethod);
+            if (paymentMethod.Id == null || Update(paymentMethod, where: where) != 1) Insert(paymentMethod);
         }
 
-        public void UpdateOrInsert(PaymentType paymentType)
+        public void UpdateOrInsert(PaymentType paymentType, string where = null)
         {
-            if (paymentType.Id == null || Update(paymentType) != 1) Insert(paymentType);
+            if (paymentType.Id == null || Update(paymentType, where: where) != 1) Insert(paymentType);
         }
 
-        public void UpdateOrInsert(Permission permission)
+        public void UpdateOrInsert(Permission permission, string where = null)
         {
-            if (permission.Id == null || Update(permission) != 1) Insert(permission);
+            if (permission.Id == null || Update(permission, where: where) != 1) Insert(permission);
         }
 
-        public void UpdateOrInsert(PermissionsUser permissionsUser)
+        public void UpdateOrInsert(PermissionsUser permissionsUser, string where = null)
         {
-            if (permissionsUser.Id == null || Update(permissionsUser) != 1) Insert(permissionsUser);
+            if (permissionsUser.Id == null || Update(permissionsUser, where: where) != 1) Insert(permissionsUser);
         }
 
-        public void UpdateOrInsert(PrecedingSucceedingTitle precedingSucceedingTitle)
+        public void UpdateOrInsert(PrecedingSucceedingTitle precedingSucceedingTitle, string where = null)
         {
-            if (precedingSucceedingTitle.Id == null || Update(precedingSucceedingTitle) != 1) Insert(precedingSucceedingTitle);
+            if (precedingSucceedingTitle.Id == null || Update(precedingSucceedingTitle, where: where) != 1) Insert(precedingSucceedingTitle);
         }
 
-        public void UpdateOrInsert(Prefix prefix)
+        public void UpdateOrInsert(Prefix prefix, string where = null)
         {
-            if (prefix.Id == null || Update(prefix) != 1) Insert(prefix);
+            if (prefix.Id == null || Update(prefix, where: where) != 1) Insert(prefix);
         }
 
-        public void UpdateOrInsert(Proxy proxy)
+        public void UpdateOrInsert(Proxy proxy, string where = null)
         {
-            if (proxy.Id == null || Update(proxy) != 1) Insert(proxy);
+            if (proxy.Id == null || Update(proxy, where: where) != 1) Insert(proxy);
         }
 
-        public void UpdateOrInsert(RawRecord rawRecord)
+        public void UpdateOrInsert(RawRecord rawRecord, string where = null)
         {
-            if (rawRecord.Id == null || Update(rawRecord) != 1) Insert(rawRecord);
+            if (rawRecord.Id == null || Update(rawRecord, where: where) != 1) Insert(rawRecord);
         }
 
-        public void UpdateOrInsert(Receiving receiving)
+        public void UpdateOrInsert(Receiving receiving, string where = null)
         {
-            if (receiving.Id == null || Update(receiving) != 1) Insert(receiving);
+            if (receiving.Id == null || Update(receiving, where: where) != 1) Insert(receiving);
         }
 
-        public void UpdateOrInsert(Record record)
+        public void UpdateOrInsert(Record record, string where = null)
         {
-            if (record.Id == null || Update(record) != 1) Insert(record);
+            if (record.Id == null || Update(record, where: where) != 1) Insert(record);
         }
 
-        public void UpdateOrInsert(RefundReason refundReason)
+        public void UpdateOrInsert(RefundReason refundReason, string where = null)
         {
-            if (refundReason.Id == null || Update(refundReason) != 1) Insert(refundReason);
+            if (refundReason.Id == null || Update(refundReason, where: where) != 1) Insert(refundReason);
         }
 
-        public void UpdateOrInsert(ReportingCode reportingCode)
+        public void UpdateOrInsert(ReportingCode reportingCode, string where = null)
         {
-            if (reportingCode.Id == null || Update(reportingCode) != 1) Insert(reportingCode);
+            if (reportingCode.Id == null || Update(reportingCode, where: where) != 1) Insert(reportingCode);
         }
 
-        public void UpdateOrInsert(Request request)
+        public void UpdateOrInsert(Request request, string where = null)
         {
-            if (request.Id == null || Update(request) != 1) Insert(request);
+            if (request.Id == null || Update(request, where: where) != 1) Insert(request);
         }
 
-        public void UpdateOrInsert(RequestPolicy requestPolicy)
+        public void UpdateOrInsert(RequestPolicy requestPolicy, string where = null)
         {
-            if (requestPolicy.Id == null || Update(requestPolicy) != 1) Insert(requestPolicy);
+            if (requestPolicy.Id == null || Update(requestPolicy, where: where) != 1) Insert(requestPolicy);
         }
 
-        public void UpdateOrInsert(ScheduledNotice scheduledNotice)
+        public void UpdateOrInsert(ScheduledNotice scheduledNotice, string where = null)
         {
-            if (scheduledNotice.Id == null || Update(scheduledNotice) != 1) Insert(scheduledNotice);
+            if (scheduledNotice.Id == null || Update(scheduledNotice, where: where) != 1) Insert(scheduledNotice);
         }
 
-        public void UpdateOrInsert(ServicePoint servicePoint)
+        public void UpdateOrInsert(ServicePoint servicePoint, string where = null)
         {
-            if (servicePoint.Id == null || Update(servicePoint) != 1) Insert(servicePoint);
+            if (servicePoint.Id == null || Update(servicePoint, where: where) != 1) Insert(servicePoint);
         }
 
-        public void UpdateOrInsert(ServicePointUser servicePointUser)
+        public void UpdateOrInsert(ServicePointUser servicePointUser, string where = null)
         {
-            if (servicePointUser.Id == null || Update(servicePointUser) != 1) Insert(servicePointUser);
+            if (servicePointUser.Id == null || Update(servicePointUser, where: where) != 1) Insert(servicePointUser);
         }
 
-        public void UpdateOrInsert(Snapshot snapshot)
+        public void UpdateOrInsert(Snapshot snapshot, string where = null)
         {
-            if (snapshot.Id == null || Update(snapshot) != 1) Insert(snapshot);
+            if (snapshot.Id == null || Update(snapshot, where: where) != 1) Insert(snapshot);
         }
 
-        public void UpdateOrInsert(Source source)
+        public void UpdateOrInsert(Source source, string where = null)
         {
-            if (source.Id == null || Update(source) != 1) Insert(source);
+            if (source.Id == null || Update(source, where: where) != 1) Insert(source);
         }
 
-        public void UpdateOrInsert(StaffSlip staffSlip)
+        public void UpdateOrInsert(StaffSlip staffSlip, string where = null)
         {
-            if (staffSlip.Id == null || Update(staffSlip) != 1) Insert(staffSlip);
+            if (staffSlip.Id == null || Update(staffSlip, where: where) != 1) Insert(staffSlip);
         }
 
-        public void UpdateOrInsert(StatisticalCode statisticalCode)
+        public void UpdateOrInsert(StatisticalCode statisticalCode, string where = null)
         {
-            if (statisticalCode.Id == null || Update(statisticalCode) != 1) Insert(statisticalCode);
+            if (statisticalCode.Id == null || Update(statisticalCode, where: where) != 1) Insert(statisticalCode);
         }
 
-        public void UpdateOrInsert(StatisticalCodeType statisticalCodeType)
+        public void UpdateOrInsert(StatisticalCodeType statisticalCodeType, string where = null)
         {
-            if (statisticalCodeType.Id == null || Update(statisticalCodeType) != 1) Insert(statisticalCodeType);
+            if (statisticalCodeType.Id == null || Update(statisticalCodeType, where: where) != 1) Insert(statisticalCodeType);
         }
 
-        public void UpdateOrInsert(Suffix suffix)
+        public void UpdateOrInsert(Suffix suffix, string where = null)
         {
-            if (suffix.Id == null || Update(suffix) != 1) Insert(suffix);
+            if (suffix.Id == null || Update(suffix, where: where) != 1) Insert(suffix);
         }
 
-        public void UpdateOrInsert(Tag tag)
+        public void UpdateOrInsert(Tag tag, string where = null)
         {
-            if (tag.Id == null || Update(tag) != 1) Insert(tag);
+            if (tag.Id == null || Update(tag, where: where) != 1) Insert(tag);
         }
 
-        public void UpdateOrInsert(Template template)
+        public void UpdateOrInsert(Template template, string where = null)
         {
-            if (template.Id == null || Update(template) != 1) Insert(template);
+            if (template.Id == null || Update(template, where: where) != 1) Insert(template);
         }
 
-        public void UpdateOrInsert(Title title)
+        public void UpdateOrInsert(Title title, string where = null)
         {
-            if (title.Id == null || Update(title) != 1) Insert(title);
+            if (title.Id == null || Update(title, where: where) != 1) Insert(title);
         }
 
-        public void UpdateOrInsert(Transaction transaction)
+        public void UpdateOrInsert(Transaction transaction, string where = null)
         {
-            if (transaction.Id == null || Update(transaction) != 1) Insert(transaction);
+            if (transaction.Id == null || Update(transaction, where: where) != 1) Insert(transaction);
         }
 
-        public void UpdateOrInsert(TransferAccount transferAccount)
+        public void UpdateOrInsert(TransferAccount transferAccount, string where = null)
         {
-            if (transferAccount.Id == null || Update(transferAccount) != 1) Insert(transferAccount);
+            if (transferAccount.Id == null || Update(transferAccount, where: where) != 1) Insert(transferAccount);
         }
 
-        public void UpdateOrInsert(TransferCriteria transferCriteria)
+        public void UpdateOrInsert(TransferCriteria transferCriteria, string where = null)
         {
-            if (transferCriteria.Id == null || Update(transferCriteria) != 1) Insert(transferCriteria);
+            if (transferCriteria.Id == null || Update(transferCriteria, where: where) != 1) Insert(transferCriteria);
         }
 
-        public void UpdateOrInsert(User user)
+        public void UpdateOrInsert(User user, string where = null)
         {
-            if (user.Id == null || Update(user) != 1) Insert(user);
+            if (user.Id == null || Update(user, where: where) != 1) Insert(user);
         }
 
-        public void UpdateOrInsert(UserAcquisitionsUnit userAcquisitionsUnit)
+        public void UpdateOrInsert(UserAcquisitionsUnit userAcquisitionsUnit, string where = null)
         {
-            if (userAcquisitionsUnit.Id == null || Update(userAcquisitionsUnit) != 1) Insert(userAcquisitionsUnit);
+            if (userAcquisitionsUnit.Id == null || Update(userAcquisitionsUnit, where: where) != 1) Insert(userAcquisitionsUnit);
         }
 
-        public void UpdateOrInsert(UserRequestPreference userRequestPreference)
+        public void UpdateOrInsert(UserRequestPreference userRequestPreference, string where = null)
         {
-            if (userRequestPreference.Id == null || Update(userRequestPreference) != 1) Insert(userRequestPreference);
+            if (userRequestPreference.Id == null || Update(userRequestPreference, where: where) != 1) Insert(userRequestPreference);
         }
 
-        public void UpdateOrInsert(UserSummary userSummary)
+        public void UpdateOrInsert(UserSummary userSummary, string where = null)
         {
-            if (userSummary.Id == null || Update(userSummary) != 1) Insert(userSummary);
+            if (userSummary.Id == null || Update(userSummary, where: where) != 1) Insert(userSummary);
         }
 
-        public void UpdateOrInsert(Voucher voucher)
+        public void UpdateOrInsert(Voucher voucher, string where = null)
         {
-            if (voucher.Id == null || Update(voucher) != 1) Insert(voucher);
+            if (voucher.Id == null || Update(voucher, where: where) != 1) Insert(voucher);
         }
 
-        public void UpdateOrInsert(VoucherItem voucherItem)
+        public void UpdateOrInsert(VoucherItem voucherItem, string where = null)
         {
-            if (voucherItem.Id == null || Update(voucherItem) != 1) Insert(voucherItem);
+            if (voucherItem.Id == null || Update(voucherItem, where: where) != 1) Insert(voucherItem);
         }
 
-        public void UpdateOrInsert(VoucherStatus voucherStatus)
+        public void UpdateOrInsert(VoucherStatus voucherStatus, string where = null)
         {
-            if (voucherStatus.Id == null || Update(voucherStatus) != 1) Insert(voucherStatus);
+            if (voucherStatus.Id == null || Update(voucherStatus, where: where) != 1) Insert(voucherStatus);
         }
 
-        public void UpdateOrInsert(WaiveReason waiveReason)
+        public void UpdateOrInsert(WaiveReason waiveReason, string where = null)
         {
-            if (waiveReason.Id == null || Update(waiveReason) != 1) Insert(waiveReason);
+            if (waiveReason.Id == null || Update(waiveReason, where: where) != 1) Insert(waiveReason);
         }
 
         public int DeleteAcquisitionsUnit(Guid? id) => Execute($"DELETE FROM uchicago_mod_orders_storage{(IsMySql ? "_" : ".")}acquisitions_unit WHERE id = @id", new { id });
@@ -8356,6 +8390,7 @@ namespace FolioLibrary
         public int DeleteGroup2(Guid? id) => Execute($"DELETE FROM uc{(IsMySql ? "_" : ".")}groups WHERE id = @id", new { id });
         public int DeleteHolding(Guid? id) => Execute($"DELETE FROM uchicago_mod_inventory_storage{(IsMySql ? "_" : ".")}holdings_record WHERE id = @id", new { id });
         public int DeleteHolding2(Guid? id) => Execute($"DELETE FROM uc{(IsMySql ? "_" : ".")}holdings WHERE id = @id", new { id });
+        public int DeleteHoldingDonor(string id, Guid? holdingId) => Execute($"DELETE FROM uc{(IsMySql ? "_" : ".")}holding_donors WHERE id = @id AND holding_id = @holdingId", new { id, holdingId });
         public int DeleteHoldingElectronicAccess(string id, Guid? holdingId) => Execute($"DELETE FROM uc{(IsMySql ? "_" : ".")}holding_electronic_accesses WHERE id = @id AND holding_id = @holdingId", new { id, holdingId });
         public int DeleteHoldingEntry(string id, Guid? holdingId) => Execute($"DELETE FROM uc{(IsMySql ? "_" : ".")}holding_entries WHERE id = @id AND holding_id = @holdingId", new { id, holdingId });
         public int DeleteHoldingFormerId(string id, Guid? holdingId) => Execute($"DELETE FROM uc{(IsMySql ? "_" : ".")}holding_former_ids WHERE id = @id AND holding_id = @holdingId", new { id, holdingId });
@@ -8420,6 +8455,7 @@ namespace FolioLibrary
         public int DeleteItem2(Guid? id) => Execute($"DELETE FROM uc{(IsMySql ? "_" : ".")}items WHERE id = @id", new { id });
         public int DeleteItemDamagedStatus(Guid? id) => Execute($"DELETE FROM uchicago_mod_inventory_storage{(IsMySql ? "_" : ".")}item_damaged_status WHERE id = @id", new { id });
         public int DeleteItemDamagedStatus2(Guid? id) => Execute($"DELETE FROM uc{(IsMySql ? "_" : ".")}item_damaged_statuses WHERE id = @id", new { id });
+        public int DeleteItemDonor(string id, Guid? itemId) => Execute($"DELETE FROM uc{(IsMySql ? "_" : ".")}item_donors WHERE id = @id AND item_id = @itemId", new { id, itemId });
         public int DeleteItemElectronicAccess(string id, Guid? itemId) => Execute($"DELETE FROM uc{(IsMySql ? "_" : ".")}item_electronic_accesses WHERE id = @id AND item_id = @itemId", new { id, itemId });
         public int DeleteItemFormerId(string id, Guid? itemId) => Execute($"DELETE FROM uc{(IsMySql ? "_" : ".")}item_former_ids WHERE id = @id AND item_id = @itemId", new { id, itemId });
         public int DeleteItemNote(string id, Guid? itemId) => Execute($"DELETE FROM uc{(IsMySql ? "_" : ".")}item_notes WHERE id = @id AND item_id = @itemId", new { id, itemId });
@@ -8659,6 +8695,441 @@ namespace FolioLibrary
         public int DeleteVoucherStatus(int? id) => Execute($"DELETE FROM uc{(IsMySql ? "_" : ".")}voucher_statuses WHERE id = @id", new { id });
         public int DeleteWaiveReason(Guid? id) => Execute($"DELETE FROM uchicago_mod_feesfines{(IsMySql ? "_" : ".")}waives WHERE id = @id", new { id });
         public int DeleteWaiveReason2(Guid? id) => Execute($"DELETE FROM uc{(IsMySql ? "_" : ".")}waive_reasons WHERE id = @id", new { id });
+        public int DeleteAcquisitionsUnits(string where = null, object param = null) => Execute($"DELETE FROM uchicago_mod_orders_storage{(IsMySql ? "_" : ".")}acquisitions_unit{(where != null ? $" WHERE {where}" : "")}", param);
+        public int DeleteAcquisitionsUnit2s(string where = null, object param = null) => Execute($"DELETE FROM uc{(IsMySql ? "_" : ".")}acquisitions_units{(where != null ? $" WHERE {where}" : "")}", param);
+        public int DeleteAddresses(string where = null, object param = null) => Execute($"DELETE FROM uc{(IsMySql ? "_" : ".")}addresses{(where != null ? $" WHERE {where}" : "")}", param);
+        public int DeleteAddressTypes(string where = null, object param = null) => Execute($"DELETE FROM uchicago_mod_users{(IsMySql ? "_" : ".")}addresstype{(where != null ? $" WHERE {where}" : "")}", param);
+        public int DeleteAddressType2s(string where = null, object param = null) => Execute($"DELETE FROM uc{(IsMySql ? "_" : ".")}address_types{(where != null ? $" WHERE {where}" : "")}", param);
+        public int DeleteAlerts(string where = null, object param = null) => Execute($"DELETE FROM uchicago_mod_orders_storage{(IsMySql ? "_" : ".")}alert{(where != null ? $" WHERE {where}" : "")}", param);
+        public int DeleteAlert2s(string where = null, object param = null) => Execute($"DELETE FROM uc{(IsMySql ? "_" : ".")}alerts{(where != null ? $" WHERE {where}" : "")}", param);
+        public int DeleteAllocatedFromFunds(string where = null, object param = null) => Execute($"DELETE FROM uc{(IsMySql ? "_" : ".")}allocated_from_funds{(where != null ? $" WHERE {where}" : "")}", param);
+        public int DeleteAllocatedToFunds(string where = null, object param = null) => Execute($"DELETE FROM uc{(IsMySql ? "_" : ".")}allocated_to_funds{(where != null ? $" WHERE {where}" : "")}", param);
+        public int DeleteAlternativeTitles(string where = null, object param = null) => Execute($"DELETE FROM uc{(IsMySql ? "_" : ".")}alternative_titles{(where != null ? $" WHERE {where}" : "")}", param);
+        public int DeleteAlternativeTitleTypes(string where = null, object param = null) => Execute($"DELETE FROM uchicago_mod_inventory_storage{(IsMySql ? "_" : ".")}alternative_title_type{(where != null ? $" WHERE {where}" : "")}", param);
+        public int DeleteAlternativeTitleType2s(string where = null, object param = null) => Execute($"DELETE FROM uc{(IsMySql ? "_" : ".")}alternative_title_types{(where != null ? $" WHERE {where}" : "")}", param);
+        public int DeleteAuthAttempts(string where = null, object param = null) => Execute($"DELETE FROM uchicago_mod_login{(IsMySql ? "_" : ".")}auth_attempts{(where != null ? $" WHERE {where}" : "")}", param);
+        public int DeleteAuthAttempt2s(string where = null, object param = null) => Execute($"DELETE FROM uc{(IsMySql ? "_" : ".")}auth_attempts{(where != null ? $" WHERE {where}" : "")}", param);
+        public int DeleteAuthCredentialsHistories(string where = null, object param = null) => Execute($"DELETE FROM uchicago_mod_login{(IsMySql ? "_" : ".")}auth_credentials_history{(where != null ? $" WHERE {where}" : "")}", param);
+        public int DeleteAuthCredentialsHistory2s(string where = null, object param = null) => Execute($"DELETE FROM uc{(IsMySql ? "_" : ".")}auth_credentials_histories{(where != null ? $" WHERE {where}" : "")}", param);
+        public int DeleteAuthPasswordActions(string where = null, object param = null) => Execute($"DELETE FROM uchicago_mod_login{(IsMySql ? "_" : ".")}auth_password_action{(where != null ? $" WHERE {where}" : "")}", param);
+        public int DeleteBatchGroups(string where = null, object param = null) => Execute($"DELETE FROM uchicago_mod_invoice_storage{(IsMySql ? "_" : ".")}batch_groups{(where != null ? $" WHERE {where}" : "")}", param);
+        public int DeleteBatchGroup2s(string where = null, object param = null) => Execute($"DELETE FROM uc{(IsMySql ? "_" : ".")}batch_groups{(where != null ? $" WHERE {where}" : "")}", param);
+        public int DeleteBatchVouchers(string where = null, object param = null) => Execute($"DELETE FROM uchicago_mod_invoice_storage{(IsMySql ? "_" : ".")}batch_vouchers{(where != null ? $" WHERE {where}" : "")}", param);
+        public int DeleteBatchVoucher2s(string where = null, object param = null) => Execute($"DELETE FROM uc{(IsMySql ? "_" : ".")}batch_vouchers{(where != null ? $" WHERE {where}" : "")}", param);
+        public int DeleteBatchVoucherBatchedVouchers(string where = null, object param = null) => Execute($"DELETE FROM uc{(IsMySql ? "_" : ".")}batch_voucher_batched_vouchers{(where != null ? $" WHERE {where}" : "")}", param);
+        public int DeleteBatchVoucherBatchedVoucherBatchedVoucherLines(string where = null, object param = null) => Execute($"DELETE FROM uc{(IsMySql ? "_" : ".")}batch_voucher_batched_voucher_batched_voucher_lines{(where != null ? $" WHERE {where}" : "")}", param);
+        public int DeleteBatchVoucherBatchedVoucherBatchedVoucherLineFundCodes(string where = null, object param = null) => Execute($"DELETE FROM uc{(IsMySql ? "_" : ".")}batch_voucher_batched_voucher_batched_voucher_line_fund_codes{(where != null ? $" WHERE {where}" : "")}", param);
+        public int DeleteBatchVoucherExports(string where = null, object param = null) => Execute($"DELETE FROM uchicago_mod_invoice_storage{(IsMySql ? "_" : ".")}batch_voucher_exports{(where != null ? $" WHERE {where}" : "")}", param);
+        public int DeleteBatchVoucherExport2s(string where = null, object param = null) => Execute($"DELETE FROM uc{(IsMySql ? "_" : ".")}batch_voucher_exports{(where != null ? $" WHERE {where}" : "")}", param);
+        public int DeleteBatchVoucherExportConfigs(string where = null, object param = null) => Execute($"DELETE FROM uchicago_mod_invoice_storage{(IsMySql ? "_" : ".")}batch_voucher_export_configs{(where != null ? $" WHERE {where}" : "")}", param);
+        public int DeleteBatchVoucherExportConfig2s(string where = null, object param = null) => Execute($"DELETE FROM uc{(IsMySql ? "_" : ".")}batch_voucher_export_configs{(where != null ? $" WHERE {where}" : "")}", param);
+        public int DeleteBatchVoucherExportConfigWeekdays(string where = null, object param = null) => Execute($"DELETE FROM uc{(IsMySql ? "_" : ".")}batch_voucher_export_config_weekdays{(where != null ? $" WHERE {where}" : "")}", param);
+        public int DeleteBlocks(string where = null, object param = null) => Execute($"DELETE FROM uchicago_mod_feesfines{(IsMySql ? "_" : ".")}manualblocks{(where != null ? $" WHERE {where}" : "")}", param);
+        public int DeleteBlock2s(string where = null, object param = null) => Execute($"DELETE FROM uc{(IsMySql ? "_" : ".")}blocks{(where != null ? $" WHERE {where}" : "")}", param);
+        public int DeleteBlockConditions(string where = null, object param = null) => Execute($"DELETE FROM uchicago_mod_patron_blocks{(IsMySql ? "_" : ".")}patron_block_conditions{(where != null ? $" WHERE {where}" : "")}", param);
+        public int DeleteBlockCondition2s(string where = null, object param = null) => Execute($"DELETE FROM uc{(IsMySql ? "_" : ".")}block_conditions{(where != null ? $" WHERE {where}" : "")}", param);
+        public int DeleteBlockLimits(string where = null, object param = null) => Execute($"DELETE FROM uchicago_mod_patron_blocks{(IsMySql ? "_" : ".")}patron_block_limits{(where != null ? $" WHERE {where}" : "")}", param);
+        public int DeleteBlockLimit2s(string where = null, object param = null) => Execute($"DELETE FROM uc{(IsMySql ? "_" : ".")}block_limits{(where != null ? $" WHERE {where}" : "")}", param);
+        public int DeleteBoundWithParts(string where = null, object param = null) => Execute($"DELETE FROM uchicago_mod_inventory_storage{(IsMySql ? "_" : ".")}bound_with_part{(where != null ? $" WHERE {where}" : "")}", param);
+        public int DeleteBoundWithPart2s(string where = null, object param = null) => Execute($"DELETE FROM uc{(IsMySql ? "_" : ".")}bound_with_parts{(where != null ? $" WHERE {where}" : "")}", param);
+        public int DeleteBudgets(string where = null, object param = null) => Execute($"DELETE FROM uchicago_mod_finance_storage{(IsMySql ? "_" : ".")}budget{(where != null ? $" WHERE {where}" : "")}", param);
+        public int DeleteBudget2s(string where = null, object param = null) => Execute($"DELETE FROM uc{(IsMySql ? "_" : ".")}budgets{(where != null ? $" WHERE {where}" : "")}", param);
+        public int DeleteBudgetAcquisitionsUnits(string where = null, object param = null) => Execute($"DELETE FROM uc{(IsMySql ? "_" : ".")}budget_acquisitions_units{(where != null ? $" WHERE {where}" : "")}", param);
+        public int DeleteBudgetExpenseClasses(string where = null, object param = null) => Execute($"DELETE FROM uchicago_mod_finance_storage{(IsMySql ? "_" : ".")}budget_expense_class{(where != null ? $" WHERE {where}" : "")}", param);
+        public int DeleteBudgetExpenseClass2s(string where = null, object param = null) => Execute($"DELETE FROM uc{(IsMySql ? "_" : ".")}budget_expense_classes{(where != null ? $" WHERE {where}" : "")}", param);
+        public int DeleteBudgetGroups(string where = null, object param = null) => Execute($"DELETE FROM uchicago_mod_finance_storage{(IsMySql ? "_" : ".")}group_fund_fiscal_year{(where != null ? $" WHERE {where}" : "")}", param);
+        public int DeleteBudgetGroup2s(string where = null, object param = null) => Execute($"DELETE FROM uc{(IsMySql ? "_" : ".")}budget_groups{(where != null ? $" WHERE {where}" : "")}", param);
+        public int DeleteBudgetTags(string where = null, object param = null) => Execute($"DELETE FROM uc{(IsMySql ? "_" : ".")}budget_tags{(where != null ? $" WHERE {where}" : "")}", param);
+        public int DeleteCallNumberTypes(string where = null, object param = null) => Execute($"DELETE FROM uchicago_mod_inventory_storage{(IsMySql ? "_" : ".")}call_number_type{(where != null ? $" WHERE {where}" : "")}", param);
+        public int DeleteCallNumberType2s(string where = null, object param = null) => Execute($"DELETE FROM uc{(IsMySql ? "_" : ".")}call_number_types{(where != null ? $" WHERE {where}" : "")}", param);
+        public int DeleteCampuses(string where = null, object param = null) => Execute($"DELETE FROM uchicago_mod_inventory_storage{(IsMySql ? "_" : ".")}loccampus{(where != null ? $" WHERE {where}" : "")}", param);
+        public int DeleteCampus2s(string where = null, object param = null) => Execute($"DELETE FROM uc{(IsMySql ? "_" : ".")}campuses{(where != null ? $" WHERE {where}" : "")}", param);
+        public int DeleteCancellationReasons(string where = null, object param = null) => Execute($"DELETE FROM uchicago_mod_circulation_storage{(IsMySql ? "_" : ".")}cancellation_reason{(where != null ? $" WHERE {where}" : "")}", param);
+        public int DeleteCancellationReason2s(string where = null, object param = null) => Execute($"DELETE FROM uc{(IsMySql ? "_" : ".")}cancellation_reasons{(where != null ? $" WHERE {where}" : "")}", param);
+        public int DeleteCategories(string where = null, object param = null) => Execute($"DELETE FROM uchicago_mod_organizations_storage{(IsMySql ? "_" : ".")}categories{(where != null ? $" WHERE {where}" : "")}", param);
+        public int DeleteCategory2s(string where = null, object param = null) => Execute($"DELETE FROM uc{(IsMySql ? "_" : ".")}categories{(where != null ? $" WHERE {where}" : "")}", param);
+        public int DeleteCheckIns(string where = null, object param = null) => Execute($"DELETE FROM uchicago_mod_circulation_storage{(IsMySql ? "_" : ".")}check_in{(where != null ? $" WHERE {where}" : "")}", param);
+        public int DeleteCheckIn2s(string where = null, object param = null) => Execute($"DELETE FROM uc{(IsMySql ? "_" : ".")}check_ins{(where != null ? $" WHERE {where}" : "")}", param);
+        public int DeleteCirculationNotes(string where = null, object param = null) => Execute($"DELETE FROM uc{(IsMySql ? "_" : ".")}circulation_notes{(where != null ? $" WHERE {where}" : "")}", param);
+        public int DeleteCirculationRules(string where = null, object param = null) => Execute($"DELETE FROM uchicago_mod_circulation_storage{(IsMySql ? "_" : ".")}circulation_rules{(where != null ? $" WHERE {where}" : "")}", param);
+        public int DeleteCirculationRule2s(string where = null, object param = null) => Execute($"DELETE FROM uc{(IsMySql ? "_" : ".")}circulation_rules{(where != null ? $" WHERE {where}" : "")}", param);
+        public int DeleteClassifications(string where = null, object param = null) => Execute($"DELETE FROM uc{(IsMySql ? "_" : ".")}classifications{(where != null ? $" WHERE {where}" : "")}", param);
+        public int DeleteClassificationTypes(string where = null, object param = null) => Execute($"DELETE FROM uchicago_mod_inventory_storage{(IsMySql ? "_" : ".")}classification_type{(where != null ? $" WHERE {where}" : "")}", param);
+        public int DeleteClassificationType2s(string where = null, object param = null) => Execute($"DELETE FROM uc{(IsMySql ? "_" : ".")}classification_types{(where != null ? $" WHERE {where}" : "")}", param);
+        public int DeleteCloseReasons(string where = null, object param = null) => Execute($"DELETE FROM uchicago_mod_orders_storage{(IsMySql ? "_" : ".")}reasons_for_closure{(where != null ? $" WHERE {where}" : "")}", param);
+        public int DeleteCloseReason2s(string where = null, object param = null) => Execute($"DELETE FROM uc{(IsMySql ? "_" : ".")}close_reasons{(where != null ? $" WHERE {where}" : "")}", param);
+        public int DeleteComments(string where = null, object param = null) => Execute($"DELETE FROM uchicago_mod_feesfines{(IsMySql ? "_" : ".")}comments{(where != null ? $" WHERE {where}" : "")}", param);
+        public int DeleteComment2s(string where = null, object param = null) => Execute($"DELETE FROM uc{(IsMySql ? "_" : ".")}comments{(where != null ? $" WHERE {where}" : "")}", param);
+        public int DeleteConfigurations(string where = null, object param = null) => Execute($"DELETE FROM uchicago_mod_configuration{(IsMySql ? "_" : ".")}config_data{(where != null ? $" WHERE {where}" : "")}", param);
+        public int DeleteConfiguration2s(string where = null, object param = null) => Execute($"DELETE FROM uc{(IsMySql ? "_" : ".")}configurations{(where != null ? $" WHERE {where}" : "")}", param);
+        public int DeleteContacts(string where = null, object param = null) => Execute($"DELETE FROM uchicago_mod_organizations_storage{(IsMySql ? "_" : ".")}contacts{(where != null ? $" WHERE {where}" : "")}", param);
+        public int DeleteContact2s(string where = null, object param = null) => Execute($"DELETE FROM uc{(IsMySql ? "_" : ".")}contacts{(where != null ? $" WHERE {where}" : "")}", param);
+        public int DeleteContactAddresses(string where = null, object param = null) => Execute($"DELETE FROM uc{(IsMySql ? "_" : ".")}contact_addresses{(where != null ? $" WHERE {where}" : "")}", param);
+        public int DeleteContactAddressCategories(string where = null, object param = null) => Execute($"DELETE FROM uc{(IsMySql ? "_" : ".")}contact_address_categories{(where != null ? $" WHERE {where}" : "")}", param);
+        public int DeleteContactCategories(string where = null, object param = null) => Execute($"DELETE FROM uc{(IsMySql ? "_" : ".")}contact_categories{(where != null ? $" WHERE {where}" : "")}", param);
+        public int DeleteContactEmails(string where = null, object param = null) => Execute($"DELETE FROM uc{(IsMySql ? "_" : ".")}contact_emails{(where != null ? $" WHERE {where}" : "")}", param);
+        public int DeleteContactEmailCategories(string where = null, object param = null) => Execute($"DELETE FROM uc{(IsMySql ? "_" : ".")}contact_email_categories{(where != null ? $" WHERE {where}" : "")}", param);
+        public int DeleteContactPhoneNumbers(string where = null, object param = null) => Execute($"DELETE FROM uc{(IsMySql ? "_" : ".")}contact_phone_numbers{(where != null ? $" WHERE {where}" : "")}", param);
+        public int DeleteContactPhoneNumberCategories(string where = null, object param = null) => Execute($"DELETE FROM uc{(IsMySql ? "_" : ".")}contact_phone_number_categories{(where != null ? $" WHERE {where}" : "")}", param);
+        public int DeleteContactTypes(string where = null, object param = null) => Execute($"DELETE FROM uc{(IsMySql ? "_" : ".")}contact_types{(where != null ? $" WHERE {where}" : "")}", param);
+        public int DeleteContactUrls(string where = null, object param = null) => Execute($"DELETE FROM uc{(IsMySql ? "_" : ".")}contact_urls{(where != null ? $" WHERE {where}" : "")}", param);
+        public int DeleteContactUrlCategories(string where = null, object param = null) => Execute($"DELETE FROM uc{(IsMySql ? "_" : ".")}contact_url_categories{(where != null ? $" WHERE {where}" : "")}", param);
+        public int DeleteContributors(string where = null, object param = null) => Execute($"DELETE FROM uc{(IsMySql ? "_" : ".")}contributors{(where != null ? $" WHERE {where}" : "")}", param);
+        public int DeleteContributorNameTypes(string where = null, object param = null) => Execute($"DELETE FROM uchicago_mod_inventory_storage{(IsMySql ? "_" : ".")}contributor_name_type{(where != null ? $" WHERE {where}" : "")}", param);
+        public int DeleteContributorNameType2s(string where = null, object param = null) => Execute($"DELETE FROM uc{(IsMySql ? "_" : ".")}contributor_name_types{(where != null ? $" WHERE {where}" : "")}", param);
+        public int DeleteContributorTypes(string where = null, object param = null) => Execute($"DELETE FROM uchicago_mod_inventory_storage{(IsMySql ? "_" : ".")}contributor_type{(where != null ? $" WHERE {where}" : "")}", param);
+        public int DeleteContributorType2s(string where = null, object param = null) => Execute($"DELETE FROM uc{(IsMySql ? "_" : ".")}contributor_types{(where != null ? $" WHERE {where}" : "")}", param);
+        public int DeleteCountries(string where = null, object param = null) => Execute($"DELETE FROM uc{(IsMySql ? "_" : ".")}countries{(where != null ? $" WHERE {where}" : "")}", param);
+        public int DeleteCurrencies(string where = null, object param = null) => Execute($"DELETE FROM uc{(IsMySql ? "_" : ".")}currencies{(where != null ? $" WHERE {where}" : "")}", param);
+        public int DeleteCustomFields(string where = null, object param = null) => Execute($"DELETE FROM uchicago_mod_users{(IsMySql ? "_" : ".")}custom_fields{(where != null ? $" WHERE {where}" : "")}", param);
+        public int DeleteCustomField2s(string where = null, object param = null) => Execute($"DELETE FROM uc{(IsMySql ? "_" : ".")}custom_fields{(where != null ? $" WHERE {where}" : "")}", param);
+        public int DeleteCustomFieldValues(string where = null, object param = null) => Execute($"DELETE FROM uc{(IsMySql ? "_" : ".")}custom_field_values{(where != null ? $" WHERE {where}" : "")}", param);
+        public int DeleteDepartments(string where = null, object param = null) => Execute($"DELETE FROM uchicago_mod_users{(IsMySql ? "_" : ".")}departments{(where != null ? $" WHERE {where}" : "")}", param);
+        public int DeleteDepartment2s(string where = null, object param = null) => Execute($"DELETE FROM uc{(IsMySql ? "_" : ".")}departments{(where != null ? $" WHERE {where}" : "")}", param);
+        public int DeleteDocuments(string where = null, object param = null) => Execute($"DELETE FROM uchicago_mod_invoice_storage{(IsMySql ? "_" : ".")}documents{(where != null ? $" WHERE {where}" : "")}", param);
+        public int DeleteDocument2s(string where = null, object param = null) => Execute($"DELETE FROM uc{(IsMySql ? "_" : ".")}documents{(where != null ? $" WHERE {where}" : "")}", param);
+        public int DeleteEditions(string where = null, object param = null) => Execute($"DELETE FROM uc{(IsMySql ? "_" : ".")}editions{(where != null ? $" WHERE {where}" : "")}", param);
+        public int DeleteElectronicAccesses(string where = null, object param = null) => Execute($"DELETE FROM uc{(IsMySql ? "_" : ".")}electronic_accesses{(where != null ? $" WHERE {where}" : "")}", param);
+        public int DeleteElectronicAccessRelationships(string where = null, object param = null) => Execute($"DELETE FROM uchicago_mod_inventory_storage{(IsMySql ? "_" : ".")}electronic_access_relationship{(where != null ? $" WHERE {where}" : "")}", param);
+        public int DeleteElectronicAccessRelationship2s(string where = null, object param = null) => Execute($"DELETE FROM uc{(IsMySql ? "_" : ".")}electronic_access_relationships{(where != null ? $" WHERE {where}" : "")}", param);
+        public int DeleteErrorRecords(string where = null, object param = null) => Execute($"DELETE FROM uchicago_mod_source_record_storage{(IsMySql ? "_" : ".")}error_records_lb{(where != null ? $" WHERE {where}" : "")}", param);
+        public int DeleteErrorRecord2s(string where = null, object param = null) => Execute($"DELETE FROM uc{(IsMySql ? "_" : ".")}error_records{(where != null ? $" WHERE {where}" : "")}", param);
+        public int DeleteEventLogs(string where = null, object param = null) => Execute($"DELETE FROM uchicago_mod_login{(IsMySql ? "_" : ".")}event_logs{(where != null ? $" WHERE {where}" : "")}", param);
+        public int DeleteEventLog2s(string where = null, object param = null) => Execute($"DELETE FROM uc{(IsMySql ? "_" : ".")}event_logs{(where != null ? $" WHERE {where}" : "")}", param);
+        public int DeleteExpenseClasses(string where = null, object param = null) => Execute($"DELETE FROM uchicago_mod_finance_storage{(IsMySql ? "_" : ".")}expense_class{(where != null ? $" WHERE {where}" : "")}", param);
+        public int DeleteExpenseClass2s(string where = null, object param = null) => Execute($"DELETE FROM uc{(IsMySql ? "_" : ".")}expense_classes{(where != null ? $" WHERE {where}" : "")}", param);
+        public int DeleteExportConfigCredentials(string where = null, object param = null) => Execute($"DELETE FROM uchicago_mod_invoice_storage{(IsMySql ? "_" : ".")}export_config_credentials{(where != null ? $" WHERE {where}" : "")}", param);
+        public int DeleteExportConfigCredential2s(string where = null, object param = null) => Execute($"DELETE FROM uc{(IsMySql ? "_" : ".")}export_config_credentials{(where != null ? $" WHERE {where}" : "")}", param);
+        public int DeleteExtents(string where = null, object param = null) => Execute($"DELETE FROM uc{(IsMySql ? "_" : ".")}extents{(where != null ? $" WHERE {where}" : "")}", param);
+        public int DeleteFees(string where = null, object param = null) => Execute($"DELETE FROM uchicago_mod_feesfines{(IsMySql ? "_" : ".")}accounts{(where != null ? $" WHERE {where}" : "")}", param);
+        public int DeleteFee2s(string where = null, object param = null) => Execute($"DELETE FROM uc{(IsMySql ? "_" : ".")}fees{(where != null ? $" WHERE {where}" : "")}", param);
+        public int DeleteFeeTypes(string where = null, object param = null) => Execute($"DELETE FROM uchicago_mod_feesfines{(IsMySql ? "_" : ".")}feefines{(where != null ? $" WHERE {where}" : "")}", param);
+        public int DeleteFeeType2s(string where = null, object param = null) => Execute($"DELETE FROM uc{(IsMySql ? "_" : ".")}fee_types{(where != null ? $" WHERE {where}" : "")}", param);
+        public int DeleteFinanceGroups(string where = null, object param = null) => Execute($"DELETE FROM uchicago_mod_finance_storage{(IsMySql ? "_" : ".")}groups{(where != null ? $" WHERE {where}" : "")}", param);
+        public int DeleteFinanceGroup2s(string where = null, object param = null) => Execute($"DELETE FROM uc{(IsMySql ? "_" : ".")}finance_groups{(where != null ? $" WHERE {where}" : "")}", param);
+        public int DeleteFinanceGroupAcquisitionsUnits(string where = null, object param = null) => Execute($"DELETE FROM uc{(IsMySql ? "_" : ".")}finance_group_acquisitions_units{(where != null ? $" WHERE {where}" : "")}", param);
+        public int DeleteFiscalYears(string where = null, object param = null) => Execute($"DELETE FROM uchicago_mod_finance_storage{(IsMySql ? "_" : ".")}fiscal_year{(where != null ? $" WHERE {where}" : "")}", param);
+        public int DeleteFiscalYear2s(string where = null, object param = null) => Execute($"DELETE FROM uc{(IsMySql ? "_" : ".")}fiscal_years{(where != null ? $" WHERE {where}" : "")}", param);
+        public int DeleteFiscalYearAcquisitionsUnits(string where = null, object param = null) => Execute($"DELETE FROM uc{(IsMySql ? "_" : ".")}fiscal_year_acquisitions_units{(where != null ? $" WHERE {where}" : "")}", param);
+        public int DeleteFixedDueDateSchedules(string where = null, object param = null) => Execute($"DELETE FROM uchicago_mod_circulation_storage{(IsMySql ? "_" : ".")}fixed_due_date_schedule{(where != null ? $" WHERE {where}" : "")}", param);
+        public int DeleteFixedDueDateSchedule2s(string where = null, object param = null) => Execute($"DELETE FROM uc{(IsMySql ? "_" : ".")}fixed_due_date_schedules{(where != null ? $" WHERE {where}" : "")}", param);
+        public int DeleteFixedDueDateScheduleSchedules(string where = null, object param = null) => Execute($"DELETE FROM uc{(IsMySql ? "_" : ".")}fixed_due_date_schedule_schedules{(where != null ? $" WHERE {where}" : "")}", param);
+        public int DeleteFormats(string where = null, object param = null) => Execute($"DELETE FROM uc{(IsMySql ? "_" : ".")}formats{(where != null ? $" WHERE {where}" : "")}", param);
+        public int DeleteFunds(string where = null, object param = null) => Execute($"DELETE FROM uchicago_mod_finance_storage{(IsMySql ? "_" : ".")}fund{(where != null ? $" WHERE {where}" : "")}", param);
+        public int DeleteFund2s(string where = null, object param = null) => Execute($"DELETE FROM uc{(IsMySql ? "_" : ".")}funds{(where != null ? $" WHERE {where}" : "")}", param);
+        public int DeleteFundAcquisitionsUnits(string where = null, object param = null) => Execute($"DELETE FROM uc{(IsMySql ? "_" : ".")}fund_acquisitions_units{(where != null ? $" WHERE {where}" : "")}", param);
+        public int DeleteFundTags(string where = null, object param = null) => Execute($"DELETE FROM uc{(IsMySql ? "_" : ".")}fund_tags{(where != null ? $" WHERE {where}" : "")}", param);
+        public int DeleteFundTypes(string where = null, object param = null) => Execute($"DELETE FROM uchicago_mod_finance_storage{(IsMySql ? "_" : ".")}fund_type{(where != null ? $" WHERE {where}" : "")}", param);
+        public int DeleteFundType2s(string where = null, object param = null) => Execute($"DELETE FROM uc{(IsMySql ? "_" : ".")}fund_types{(where != null ? $" WHERE {where}" : "")}", param);
+        public int DeleteGroups(string where = null, object param = null) => Execute($"DELETE FROM uchicago_mod_users{(IsMySql ? "_" : ".")}groups{(where != null ? $" WHERE {where}" : "")}", param);
+        public int DeleteGroup2s(string where = null, object param = null) => Execute($"DELETE FROM uc{(IsMySql ? "_" : ".")}groups{(where != null ? $" WHERE {where}" : "")}", param);
+        public int DeleteHoldings(string where = null, object param = null) => Execute($"DELETE FROM uchicago_mod_inventory_storage{(IsMySql ? "_" : ".")}holdings_record{(where != null ? $" WHERE {where}" : "")}", param);
+        public int DeleteHolding2s(string where = null, object param = null) => Execute($"DELETE FROM uc{(IsMySql ? "_" : ".")}holdings{(where != null ? $" WHERE {where}" : "")}", param);
+        public int DeleteHoldingDonors(string where = null, object param = null) => Execute($"DELETE FROM uc{(IsMySql ? "_" : ".")}holding_donors{(where != null ? $" WHERE {where}" : "")}", param);
+        public int DeleteHoldingElectronicAccesses(string where = null, object param = null) => Execute($"DELETE FROM uc{(IsMySql ? "_" : ".")}holding_electronic_accesses{(where != null ? $" WHERE {where}" : "")}", param);
+        public int DeleteHoldingEntries(string where = null, object param = null) => Execute($"DELETE FROM uc{(IsMySql ? "_" : ".")}holding_entries{(where != null ? $" WHERE {where}" : "")}", param);
+        public int DeleteHoldingFormerIds(string where = null, object param = null) => Execute($"DELETE FROM uc{(IsMySql ? "_" : ".")}holding_former_ids{(where != null ? $" WHERE {where}" : "")}", param);
+        public int DeleteHoldingNotes(string where = null, object param = null) => Execute($"DELETE FROM uc{(IsMySql ? "_" : ".")}holding_notes{(where != null ? $" WHERE {where}" : "")}", param);
+        public int DeleteHoldingNoteTypes(string where = null, object param = null) => Execute($"DELETE FROM uchicago_mod_inventory_storage{(IsMySql ? "_" : ".")}holdings_note_type{(where != null ? $" WHERE {where}" : "")}", param);
+        public int DeleteHoldingNoteType2s(string where = null, object param = null) => Execute($"DELETE FROM uc{(IsMySql ? "_" : ".")}holding_note_types{(where != null ? $" WHERE {where}" : "")}", param);
+        public int DeleteHoldingStatisticalCodes(string where = null, object param = null) => Execute($"DELETE FROM uc{(IsMySql ? "_" : ".")}holding_statistical_codes{(where != null ? $" WHERE {where}" : "")}", param);
+        public int DeleteHoldingTags(string where = null, object param = null) => Execute($"DELETE FROM uc{(IsMySql ? "_" : ".")}holding_tags{(where != null ? $" WHERE {where}" : "")}", param);
+        public int DeleteHoldingTypes(string where = null, object param = null) => Execute($"DELETE FROM uchicago_mod_inventory_storage{(IsMySql ? "_" : ".")}holdings_type{(where != null ? $" WHERE {where}" : "")}", param);
+        public int DeleteHoldingType2s(string where = null, object param = null) => Execute($"DELETE FROM uc{(IsMySql ? "_" : ".")}holding_types{(where != null ? $" WHERE {where}" : "")}", param);
+        public int DeleteHridSettings(string where = null, object param = null) => Execute($"DELETE FROM uchicago_mod_inventory_storage{(IsMySql ? "_" : ".")}hrid_settings{(where != null ? $" WHERE {where}" : "")}", param);
+        public int DeleteHridSetting2s(string where = null, object param = null) => Execute($"DELETE FROM uc{(IsMySql ? "_" : ".")}hrid_settings{(where != null ? $" WHERE {where}" : "")}", param);
+        public int DeleteIdentifiers(string where = null, object param = null) => Execute($"DELETE FROM uc{(IsMySql ? "_" : ".")}identifiers{(where != null ? $" WHERE {where}" : "")}", param);
+        public int DeleteIdTypes(string where = null, object param = null) => Execute($"DELETE FROM uchicago_mod_inventory_storage{(IsMySql ? "_" : ".")}identifier_type{(where != null ? $" WHERE {where}" : "")}", param);
+        public int DeleteIdType2s(string where = null, object param = null) => Execute($"DELETE FROM uc{(IsMySql ? "_" : ".")}id_types{(where != null ? $" WHERE {where}" : "")}", param);
+        public int DeleteIllPolicies(string where = null, object param = null) => Execute($"DELETE FROM uchicago_mod_inventory_storage{(IsMySql ? "_" : ".")}ill_policy{(where != null ? $" WHERE {where}" : "")}", param);
+        public int DeleteIllPolicy2s(string where = null, object param = null) => Execute($"DELETE FROM uc{(IsMySql ? "_" : ".")}ill_policies{(where != null ? $" WHERE {where}" : "")}", param);
+        public int DeleteIndexStatements(string where = null, object param = null) => Execute($"DELETE FROM uc{(IsMySql ? "_" : ".")}index_statements{(where != null ? $" WHERE {where}" : "")}", param);
+        public int DeleteInstances(string where = null, object param = null) => Execute($"DELETE FROM uchicago_mod_inventory_storage{(IsMySql ? "_" : ".")}instance{(where != null ? $" WHERE {where}" : "")}", param);
+        public int DeleteInstance2s(string where = null, object param = null) => Execute($"DELETE FROM uc{(IsMySql ? "_" : ".")}instances{(where != null ? $" WHERE {where}" : "")}", param);
+        public int DeleteInstanceFormats(string where = null, object param = null) => Execute($"DELETE FROM uchicago_mod_inventory_storage{(IsMySql ? "_" : ".")}instance_format{(where != null ? $" WHERE {where}" : "")}", param);
+        public int DeleteInstanceFormat2s(string where = null, object param = null) => Execute($"DELETE FROM uc{(IsMySql ? "_" : ".")}instance_formats{(where != null ? $" WHERE {where}" : "")}", param);
+        public int DeleteInstanceNatureOfContentTerms(string where = null, object param = null) => Execute($"DELETE FROM uc{(IsMySql ? "_" : ".")}instance_nature_of_content_terms{(where != null ? $" WHERE {where}" : "")}", param);
+        public int DeleteInstanceNoteTypes(string where = null, object param = null) => Execute($"DELETE FROM uchicago_mod_inventory_storage{(IsMySql ? "_" : ".")}instance_note_type{(where != null ? $" WHERE {where}" : "")}", param);
+        public int DeleteInstanceNoteType2s(string where = null, object param = null) => Execute($"DELETE FROM uc{(IsMySql ? "_" : ".")}instance_note_types{(where != null ? $" WHERE {where}" : "")}", param);
+        public int DeleteInstanceRelationships(string where = null, object param = null) => Execute($"DELETE FROM uchicago_mod_inventory_storage{(IsMySql ? "_" : ".")}instance_relationship{(where != null ? $" WHERE {where}" : "")}", param);
+        public int DeleteInstanceRelationshipTypes(string where = null, object param = null) => Execute($"DELETE FROM uchicago_mod_inventory_storage{(IsMySql ? "_" : ".")}instance_relationship_type{(where != null ? $" WHERE {where}" : "")}", param);
+        public int DeleteInstanceSourceMarcs(string where = null, object param = null) => Execute($"DELETE FROM uchicago_mod_inventory_storage{(IsMySql ? "_" : ".")}instance_source_marc{(where != null ? $" WHERE {where}" : "")}", param);
+        public int DeleteInstanceStatisticalCodes(string where = null, object param = null) => Execute($"DELETE FROM uc{(IsMySql ? "_" : ".")}instance_statistical_codes{(where != null ? $" WHERE {where}" : "")}", param);
+        public int DeleteInstanceStatuses(string where = null, object param = null) => Execute($"DELETE FROM uchicago_mod_inventory_storage{(IsMySql ? "_" : ".")}instance_status{(where != null ? $" WHERE {where}" : "")}", param);
+        public int DeleteInstanceTags(string where = null, object param = null) => Execute($"DELETE FROM uc{(IsMySql ? "_" : ".")}instance_tags{(where != null ? $" WHERE {where}" : "")}", param);
+        public int DeleteInstanceTypes(string where = null, object param = null) => Execute($"DELETE FROM uchicago_mod_inventory_storage{(IsMySql ? "_" : ".")}instance_type{(where != null ? $" WHERE {where}" : "")}", param);
+        public int DeleteInstanceType2s(string where = null, object param = null) => Execute($"DELETE FROM uc{(IsMySql ? "_" : ".")}instance_types{(where != null ? $" WHERE {where}" : "")}", param);
+        public int DeleteInstitutions(string where = null, object param = null) => Execute($"DELETE FROM uchicago_mod_inventory_storage{(IsMySql ? "_" : ".")}locinstitution{(where != null ? $" WHERE {where}" : "")}", param);
+        public int DeleteInstitution2s(string where = null, object param = null) => Execute($"DELETE FROM uc{(IsMySql ? "_" : ".")}institutions{(where != null ? $" WHERE {where}" : "")}", param);
+        public int DeleteInterfaces(string where = null, object param = null) => Execute($"DELETE FROM uchicago_mod_organizations_storage{(IsMySql ? "_" : ".")}interfaces{(where != null ? $" WHERE {where}" : "")}", param);
+        public int DeleteInterface2s(string where = null, object param = null) => Execute($"DELETE FROM uc{(IsMySql ? "_" : ".")}interfaces{(where != null ? $" WHERE {where}" : "")}", param);
+        public int DeleteInterfaceCredentials(string where = null, object param = null) => Execute($"DELETE FROM uchicago_mod_organizations_storage{(IsMySql ? "_" : ".")}interface_credentials{(where != null ? $" WHERE {where}" : "")}", param);
+        public int DeleteInterfaceCredential2s(string where = null, object param = null) => Execute($"DELETE FROM uc{(IsMySql ? "_" : ".")}interface_credentials{(where != null ? $" WHERE {where}" : "")}", param);
+        public int DeleteInterfaceTypes(string where = null, object param = null) => Execute($"DELETE FROM uc{(IsMySql ? "_" : ".")}interface_type{(where != null ? $" WHERE {where}" : "")}", param);
+        public int DeleteInvoices(string where = null, object param = null) => Execute($"DELETE FROM uchicago_mod_invoice_storage{(IsMySql ? "_" : ".")}invoices{(where != null ? $" WHERE {where}" : "")}", param);
+        public int DeleteInvoice2s(string where = null, object param = null) => Execute($"DELETE FROM uc{(IsMySql ? "_" : ".")}invoices{(where != null ? $" WHERE {where}" : "")}", param);
+        public int DeleteInvoiceAcquisitionsUnits(string where = null, object param = null) => Execute($"DELETE FROM uc{(IsMySql ? "_" : ".")}invoice_acquisitions_units{(where != null ? $" WHERE {where}" : "")}", param);
+        public int DeleteInvoiceAdjustments(string where = null, object param = null) => Execute($"DELETE FROM uc{(IsMySql ? "_" : ".")}invoice_adjustments{(where != null ? $" WHERE {where}" : "")}", param);
+        public int DeleteInvoiceAdjustmentFunds(string where = null, object param = null) => Execute($"DELETE FROM uc{(IsMySql ? "_" : ".")}invoice_adjustment_fund_distributions{(where != null ? $" WHERE {where}" : "")}", param);
+        public int DeleteInvoiceItems(string where = null, object param = null) => Execute($"DELETE FROM uchicago_mod_invoice_storage{(IsMySql ? "_" : ".")}invoice_lines{(where != null ? $" WHERE {where}" : "")}", param);
+        public int DeleteInvoiceItem2s(string where = null, object param = null) => Execute($"DELETE FROM uc{(IsMySql ? "_" : ".")}invoice_items{(where != null ? $" WHERE {where}" : "")}", param);
+        public int DeleteInvoiceItemAdjustments(string where = null, object param = null) => Execute($"DELETE FROM uc{(IsMySql ? "_" : ".")}invoice_item_adjustments{(where != null ? $" WHERE {where}" : "")}", param);
+        public int DeleteInvoiceItemAdjustmentFunds(string where = null, object param = null) => Execute($"DELETE FROM uc{(IsMySql ? "_" : ".")}invoice_item_adjustment_fund_distributions{(where != null ? $" WHERE {where}" : "")}", param);
+        public int DeleteInvoiceItemFunds(string where = null, object param = null) => Execute($"DELETE FROM uc{(IsMySql ? "_" : ".")}invoice_item_fund_distributions{(where != null ? $" WHERE {where}" : "")}", param);
+        public int DeleteInvoiceItemReferenceNumbers(string where = null, object param = null) => Execute($"DELETE FROM uc{(IsMySql ? "_" : ".")}invoice_item_reference_numbers{(where != null ? $" WHERE {where}" : "")}", param);
+        public int DeleteInvoiceItemTags(string where = null, object param = null) => Execute($"DELETE FROM uc{(IsMySql ? "_" : ".")}invoice_item_tags{(where != null ? $" WHERE {where}" : "")}", param);
+        public int DeleteInvoiceOrderNumbers(string where = null, object param = null) => Execute($"DELETE FROM uc{(IsMySql ? "_" : ".")}invoice_order_numbers{(where != null ? $" WHERE {where}" : "")}", param);
+        public int DeleteInvoiceStatuses(string where = null, object param = null) => Execute($"DELETE FROM uc{(IsMySql ? "_" : ".")}invoice_statuses{(where != null ? $" WHERE {where}" : "")}", param);
+        public int DeleteInvoiceTags(string where = null, object param = null) => Execute($"DELETE FROM uc{(IsMySql ? "_" : ".")}invoice_tags{(where != null ? $" WHERE {where}" : "")}", param);
+        public int DeleteInvoiceTransactionSummaries(string where = null, object param = null) => Execute($"DELETE FROM uchicago_mod_finance_storage{(IsMySql ? "_" : ".")}invoice_transaction_summaries{(where != null ? $" WHERE {where}" : "")}", param);
+        public int DeleteInvoiceTransactionSummary2s(string where = null, object param = null) => Execute($"DELETE FROM uc{(IsMySql ? "_" : ".")}invoice_transaction_summaries{(where != null ? $" WHERE {where}" : "")}", param);
+        public int DeleteIsbns(string where = null, object param = null) => Execute($"DELETE FROM uc{(IsMySql ? "_" : ".")}isbns{(where != null ? $" WHERE {where}" : "")}", param);
+        public int DeleteIssns(string where = null, object param = null) => Execute($"DELETE FROM uc{(IsMySql ? "_" : ".")}issns{(where != null ? $" WHERE {where}" : "")}", param);
+        public int DeleteIssuanceModes(string where = null, object param = null) => Execute($"DELETE FROM uc{(IsMySql ? "_" : ".")}mode_of_issuances{(where != null ? $" WHERE {where}" : "")}", param);
+        public int DeleteItems(string where = null, object param = null) => Execute($"DELETE FROM uchicago_mod_inventory_storage{(IsMySql ? "_" : ".")}item{(where != null ? $" WHERE {where}" : "")}", param);
+        public int DeleteItem2s(string where = null, object param = null) => Execute($"DELETE FROM uc{(IsMySql ? "_" : ".")}items{(where != null ? $" WHERE {where}" : "")}", param);
+        public int DeleteItemDamagedStatuses(string where = null, object param = null) => Execute($"DELETE FROM uchicago_mod_inventory_storage{(IsMySql ? "_" : ".")}item_damaged_status{(where != null ? $" WHERE {where}" : "")}", param);
+        public int DeleteItemDamagedStatus2s(string where = null, object param = null) => Execute($"DELETE FROM uc{(IsMySql ? "_" : ".")}item_damaged_statuses{(where != null ? $" WHERE {where}" : "")}", param);
+        public int DeleteItemDonors(string where = null, object param = null) => Execute($"DELETE FROM uc{(IsMySql ? "_" : ".")}item_donors{(where != null ? $" WHERE {where}" : "")}", param);
+        public int DeleteItemElectronicAccesses(string where = null, object param = null) => Execute($"DELETE FROM uc{(IsMySql ? "_" : ".")}item_electronic_accesses{(where != null ? $" WHERE {where}" : "")}", param);
+        public int DeleteItemFormerIds(string where = null, object param = null) => Execute($"DELETE FROM uc{(IsMySql ? "_" : ".")}item_former_ids{(where != null ? $" WHERE {where}" : "")}", param);
+        public int DeleteItemNotes(string where = null, object param = null) => Execute($"DELETE FROM uc{(IsMySql ? "_" : ".")}item_notes{(where != null ? $" WHERE {where}" : "")}", param);
+        public int DeleteItemNoteTypes(string where = null, object param = null) => Execute($"DELETE FROM uchicago_mod_inventory_storage{(IsMySql ? "_" : ".")}item_note_type{(where != null ? $" WHERE {where}" : "")}", param);
+        public int DeleteItemNoteType2s(string where = null, object param = null) => Execute($"DELETE FROM uc{(IsMySql ? "_" : ".")}item_note_types{(where != null ? $" WHERE {where}" : "")}", param);
+        public int DeleteItemStatisticalCodes(string where = null, object param = null) => Execute($"DELETE FROM uc{(IsMySql ? "_" : ".")}item_statistical_codes{(where != null ? $" WHERE {where}" : "")}", param);
+        public int DeleteItemStatuses(string where = null, object param = null) => Execute($"DELETE FROM uc{(IsMySql ? "_" : ".")}item_statuses{(where != null ? $" WHERE {where}" : "")}", param);
+        public int DeleteItemTags(string where = null, object param = null) => Execute($"DELETE FROM uc{(IsMySql ? "_" : ".")}item_tags{(where != null ? $" WHERE {where}" : "")}", param);
+        public int DeleteItemYearCaptions(string where = null, object param = null) => Execute($"DELETE FROM uc{(IsMySql ? "_" : ".")}item_year_caption{(where != null ? $" WHERE {where}" : "")}", param);
+        public int DeleteJobExecutions(string where = null, object param = null) => Execute($"DELETE FROM uchicago_mod_source_record_manager{(IsMySql ? "_" : ".")}job_executions{(where != null ? $" WHERE {where}" : "")}", param);
+        public int DeleteJobExecution2s(string where = null, object param = null) => Execute($"DELETE FROM uc{(IsMySql ? "_" : ".")}job_executions{(where != null ? $" WHERE {where}" : "")}", param);
+        public int DeleteJobExecutionProgresses(string where = null, object param = null) => Execute($"DELETE FROM uchicago_mod_source_record_manager{(IsMySql ? "_" : ".")}job_execution_progress{(where != null ? $" WHERE {where}" : "")}", param);
+        public int DeleteJobExecutionProgress2s(string where = null, object param = null) => Execute($"DELETE FROM uc{(IsMySql ? "_" : ".")}job_execution_progresses{(where != null ? $" WHERE {where}" : "")}", param);
+        public int DeleteJobExecutionSourceChunks(string where = null, object param = null) => Execute($"DELETE FROM uchicago_mod_source_record_manager{(IsMySql ? "_" : ".")}job_execution_source_chunks{(where != null ? $" WHERE {where}" : "")}", param);
+        public int DeleteJobExecutionSourceChunk2s(string where = null, object param = null) => Execute($"DELETE FROM uc{(IsMySql ? "_" : ".")}job_execution_source_chunks{(where != null ? $" WHERE {where}" : "")}", param);
+        public int DeleteJobMonitorings(string where = null, object param = null) => Execute($"DELETE FROM uchicago_mod_source_record_manager{(IsMySql ? "_" : ".")}job_monitoring{(where != null ? $" WHERE {where}" : "")}", param);
+        public int DeleteJobMonitoring2s(string where = null, object param = null) => Execute($"DELETE FROM uc{(IsMySql ? "_" : ".")}job_monitorings{(where != null ? $" WHERE {where}" : "")}", param);
+        public int DeleteJournalRecords(string where = null, object param = null) => Execute($"DELETE FROM uchicago_mod_source_record_manager{(IsMySql ? "_" : ".")}journal_records{(where != null ? $" WHERE {where}" : "")}", param);
+        public int DeleteJournalRecord2s(string where = null, object param = null) => Execute($"DELETE FROM uc{(IsMySql ? "_" : ".")}journal_records{(where != null ? $" WHERE {where}" : "")}", param);
+        public int DeleteLanguages(string where = null, object param = null) => Execute($"DELETE FROM uc{(IsMySql ? "_" : ".")}languages{(where != null ? $" WHERE {where}" : "")}", param);
+        public int DeleteLedgers(string where = null, object param = null) => Execute($"DELETE FROM uchicago_mod_finance_storage{(IsMySql ? "_" : ".")}ledger{(where != null ? $" WHERE {where}" : "")}", param);
+        public int DeleteLedger2s(string where = null, object param = null) => Execute($"DELETE FROM uc{(IsMySql ? "_" : ".")}ledgers{(where != null ? $" WHERE {where}" : "")}", param);
+        public int DeleteLedgerAcquisitionsUnits(string where = null, object param = null) => Execute($"DELETE FROM uc{(IsMySql ? "_" : ".")}ledger_acquisitions_units{(where != null ? $" WHERE {where}" : "")}", param);
+        public int DeleteLedgerRollovers(string where = null, object param = null) => Execute($"DELETE FROM uchicago_mod_finance_storage{(IsMySql ? "_" : ".")}ledger_fiscal_year_rollover{(where != null ? $" WHERE {where}" : "")}", param);
+        public int DeleteLedgerRollover2s(string where = null, object param = null) => Execute($"DELETE FROM uc{(IsMySql ? "_" : ".")}ledger_rollovers{(where != null ? $" WHERE {where}" : "")}", param);
+        public int DeleteLedgerRolloverBudgetsRollovers(string where = null, object param = null) => Execute($"DELETE FROM uc{(IsMySql ? "_" : ".")}ledger_rollover_budgets_rollover{(where != null ? $" WHERE {where}" : "")}", param);
+        public int DeleteLedgerRolloverEncumbrancesRollovers(string where = null, object param = null) => Execute($"DELETE FROM uc{(IsMySql ? "_" : ".")}ledger_rollover_encumbrances_rollover{(where != null ? $" WHERE {where}" : "")}", param);
+        public int DeleteLedgerRolloverErrors(string where = null, object param = null) => Execute($"DELETE FROM uchicago_mod_finance_storage{(IsMySql ? "_" : ".")}ledger_fiscal_year_rollover_error{(where != null ? $" WHERE {where}" : "")}", param);
+        public int DeleteLedgerRolloverError2s(string where = null, object param = null) => Execute($"DELETE FROM uc{(IsMySql ? "_" : ".")}ledger_rollover_errors{(where != null ? $" WHERE {where}" : "")}", param);
+        public int DeleteLedgerRolloverProgresses(string where = null, object param = null) => Execute($"DELETE FROM uchicago_mod_finance_storage{(IsMySql ? "_" : ".")}ledger_fiscal_year_rollover_progress{(where != null ? $" WHERE {where}" : "")}", param);
+        public int DeleteLedgerRolloverProgress2s(string where = null, object param = null) => Execute($"DELETE FROM uc{(IsMySql ? "_" : ".")}ledger_rollover_progresses{(where != null ? $" WHERE {where}" : "")}", param);
+        public int DeleteLibraries(string where = null, object param = null) => Execute($"DELETE FROM uchicago_mod_inventory_storage{(IsMySql ? "_" : ".")}loclibrary{(where != null ? $" WHERE {where}" : "")}", param);
+        public int DeleteLibrary2s(string where = null, object param = null) => Execute($"DELETE FROM uc{(IsMySql ? "_" : ".")}libraries{(where != null ? $" WHERE {where}" : "")}", param);
+        public int DeleteLoans(string where = null, object param = null) => Execute($"DELETE FROM uchicago_mod_circulation_storage{(IsMySql ? "_" : ".")}loan{(where != null ? $" WHERE {where}" : "")}", param);
+        public int DeleteLoan2s(string where = null, object param = null) => Execute($"DELETE FROM uc{(IsMySql ? "_" : ".")}loans{(where != null ? $" WHERE {where}" : "")}", param);
+        public int DeleteLoanEvents(string where = null, object param = null) => Execute($"DELETE FROM uchicago_mod_circulation_storage{(IsMySql ? "_" : ".")}audit_loan{(where != null ? $" WHERE {where}" : "")}", param);
+        public int DeleteLoanEvent2s(string where = null, object param = null) => Execute($"DELETE FROM uc{(IsMySql ? "_" : ".")}loan_events{(where != null ? $" WHERE {where}" : "")}", param);
+        public int DeleteLoanPolicies(string where = null, object param = null) => Execute($"DELETE FROM uchicago_mod_circulation_storage{(IsMySql ? "_" : ".")}loan_policy{(where != null ? $" WHERE {where}" : "")}", param);
+        public int DeleteLoanPolicy2s(string where = null, object param = null) => Execute($"DELETE FROM uc{(IsMySql ? "_" : ".")}loan_policies{(where != null ? $" WHERE {where}" : "")}", param);
+        public int DeleteLoanTypes(string where = null, object param = null) => Execute($"DELETE FROM uchicago_mod_inventory_storage{(IsMySql ? "_" : ".")}loan_type{(where != null ? $" WHERE {where}" : "")}", param);
+        public int DeleteLoanType2s(string where = null, object param = null) => Execute($"DELETE FROM uc{(IsMySql ? "_" : ".")}loan_types{(where != null ? $" WHERE {where}" : "")}", param);
+        public int DeleteLocations(string where = null, object param = null) => Execute($"DELETE FROM uchicago_mod_inventory_storage{(IsMySql ? "_" : ".")}location{(where != null ? $" WHERE {where}" : "")}", param);
+        public int DeleteLocation2s(string where = null, object param = null) => Execute($"DELETE FROM uc{(IsMySql ? "_" : ".")}locations{(where != null ? $" WHERE {where}" : "")}", param);
+        public int DeleteLocationServicePoints(string where = null, object param = null) => Execute($"DELETE FROM uc{(IsMySql ? "_" : ".")}location_service_points{(where != null ? $" WHERE {where}" : "")}", param);
+        public int DeleteLocationSettings(string where = null, object param = null) => Execute($"DELETE FROM uc{(IsMySql ? "_" : ".")}location_settings{(where != null ? $" WHERE {where}" : "")}", param);
+        public int DeleteLogins(string where = null, object param = null) => Execute($"DELETE FROM uchicago_mod_login{(IsMySql ? "_" : ".")}auth_credentials{(where != null ? $" WHERE {where}" : "")}", param);
+        public int DeleteLogin2s(string where = null, object param = null) => Execute($"DELETE FROM uc{(IsMySql ? "_" : ".")}logins{(where != null ? $" WHERE {where}" : "")}", param);
+        public int DeleteLostItemFeePolicies(string where = null, object param = null) => Execute($"DELETE FROM uchicago_mod_feesfines{(IsMySql ? "_" : ".")}lost_item_fee_policy{(where != null ? $" WHERE {where}" : "")}", param);
+        public int DeleteLostItemFeePolicy2s(string where = null, object param = null) => Execute($"DELETE FROM uc{(IsMySql ? "_" : ".")}lost_item_fee_policies{(where != null ? $" WHERE {where}" : "")}", param);
+        public int DeleteManualBlockTemplates(string where = null, object param = null) => Execute($"DELETE FROM uchicago_mod_feesfines{(IsMySql ? "_" : ".")}manual_block_templates{(where != null ? $" WHERE {where}" : "")}", param);
+        public int DeleteManualBlockTemplate2s(string where = null, object param = null) => Execute($"DELETE FROM uc{(IsMySql ? "_" : ".")}manual_block_templates{(where != null ? $" WHERE {where}" : "")}", param);
+        public int DeleteMappingParamsSnapshots(string where = null, object param = null) => Execute($"DELETE FROM uchicago_mod_source_record_manager{(IsMySql ? "_" : ".")}mapping_params_snapshots{(where != null ? $" WHERE {where}" : "")}", param);
+        public int DeleteMappingRules(string where = null, object param = null) => Execute($"DELETE FROM uchicago_mod_source_record_manager{(IsMySql ? "_" : ".")}mapping_rules{(where != null ? $" WHERE {where}" : "")}", param);
+        public int DeleteMappingRulesSnapshots(string where = null, object param = null) => Execute($"DELETE FROM uchicago_mod_source_record_manager{(IsMySql ? "_" : ".")}mapping_rules_snapshots{(where != null ? $" WHERE {where}" : "")}", param);
+        public int DeleteMarcRecords(string where = null, object param = null) => Execute($"DELETE FROM uchicago_mod_source_record_storage{(IsMySql ? "_" : ".")}marc_records_lb{(where != null ? $" WHERE {where}" : "")}", param);
+        public int DeleteMarcRecord2s(string where = null, object param = null) => Execute($"DELETE FROM uc{(IsMySql ? "_" : ".")}marc_records{(where != null ? $" WHERE {where}" : "")}", param);
+        public int DeleteMaterialTypes(string where = null, object param = null) => Execute($"DELETE FROM uchicago_mod_inventory_storage{(IsMySql ? "_" : ".")}material_type{(where != null ? $" WHERE {where}" : "")}", param);
+        public int DeleteMaterialType2s(string where = null, object param = null) => Execute($"DELETE FROM uc{(IsMySql ? "_" : ".")}material_types{(where != null ? $" WHERE {where}" : "")}", param);
+        public int DeleteModeOfIssuances(string where = null, object param = null) => Execute($"DELETE FROM uchicago_mod_inventory_storage{(IsMySql ? "_" : ".")}mode_of_issuance{(where != null ? $" WHERE {where}" : "")}", param);
+        public int DeleteNatureOfContentTerms(string where = null, object param = null) => Execute($"DELETE FROM uchicago_mod_inventory_storage{(IsMySql ? "_" : ".")}nature_of_content_term{(where != null ? $" WHERE {where}" : "")}", param);
+        public int DeleteNatureOfContentTerm2s(string where = null, object param = null) => Execute($"DELETE FROM uc{(IsMySql ? "_" : ".")}nature_of_content_terms{(where != null ? $" WHERE {where}" : "")}", param);
+        public int DeleteNotes(string where = null, object param = null) => Execute($"DELETE FROM uchicago_mod_notes{(IsMySql ? "_" : ".")}note_data{(where != null ? $" WHERE {where}" : "")}", param);
+        public int DeleteNote2s(string where = null, object param = null) => Execute($"DELETE FROM uc{(IsMySql ? "_" : ".")}notes{(where != null ? $" WHERE {where}" : "")}", param);
+        public int DeleteNote3s(string where = null, object param = null) => Execute($"DELETE FROM uc{(IsMySql ? "_" : ".")}notes2{(where != null ? $" WHERE {where}" : "")}", param);
+        public int DeleteNoteTypes(string where = null, object param = null) => Execute($"DELETE FROM uchicago_mod_notes{(IsMySql ? "_" : ".")}note_type{(where != null ? $" WHERE {where}" : "")}", param);
+        public int DeleteNoteType2s(string where = null, object param = null) => Execute($"DELETE FROM uc{(IsMySql ? "_" : ".")}note_types{(where != null ? $" WHERE {where}" : "")}", param);
+        public int DeleteObjectNotes(string where = null, object param = null) => Execute($"DELETE FROM uc{(IsMySql ? "_" : ".")}object_notes{(where != null ? $" WHERE {where}" : "")}", param);
+        public int DeleteOclcNumbers(string where = null, object param = null) => Execute($"DELETE FROM uc{(IsMySql ? "_" : ".")}oclc_numbers{(where != null ? $" WHERE {where}" : "")}", param);
+        public int DeleteOrders(string where = null, object param = null) => Execute($"DELETE FROM uchicago_mod_orders_storage{(IsMySql ? "_" : ".")}purchase_order{(where != null ? $" WHERE {where}" : "")}", param);
+        public int DeleteOrder2s(string where = null, object param = null) => Execute($"DELETE FROM uc{(IsMySql ? "_" : ".")}orders{(where != null ? $" WHERE {where}" : "")}", param);
+        public int DeleteOrderAcquisitionsUnits(string where = null, object param = null) => Execute($"DELETE FROM uc{(IsMySql ? "_" : ".")}order_acquisitions_units{(where != null ? $" WHERE {where}" : "")}", param);
+        public int DeleteOrderInvoices(string where = null, object param = null) => Execute($"DELETE FROM uchicago_mod_orders_storage{(IsMySql ? "_" : ".")}order_invoice_relationship{(where != null ? $" WHERE {where}" : "")}", param);
+        public int DeleteOrderInvoice2s(string where = null, object param = null) => Execute($"DELETE FROM uc{(IsMySql ? "_" : ".")}order_invoices{(where != null ? $" WHERE {where}" : "")}", param);
+        public int DeleteOrderItems(string where = null, object param = null) => Execute($"DELETE FROM uchicago_mod_orders_storage{(IsMySql ? "_" : ".")}po_line{(where != null ? $" WHERE {where}" : "")}", param);
+        public int DeleteOrderItem2s(string where = null, object param = null) => Execute($"DELETE FROM uc{(IsMySql ? "_" : ".")}order_items{(where != null ? $" WHERE {where}" : "")}", param);
+        public int DeleteOrderItemAlerts(string where = null, object param = null) => Execute($"DELETE FROM uc{(IsMySql ? "_" : ".")}order_item_alerts{(where != null ? $" WHERE {where}" : "")}", param);
+        public int DeleteOrderItemClaims(string where = null, object param = null) => Execute($"DELETE FROM uc{(IsMySql ? "_" : ".")}order_item_claims{(where != null ? $" WHERE {where}" : "")}", param);
+        public int DeleteOrderItemContributors(string where = null, object param = null) => Execute($"DELETE FROM uc{(IsMySql ? "_" : ".")}order_item_contributors{(where != null ? $" WHERE {where}" : "")}", param);
+        public int DeleteOrderItemFunds(string where = null, object param = null) => Execute($"DELETE FROM uc{(IsMySql ? "_" : ".")}order_item_fund_distributions{(where != null ? $" WHERE {where}" : "")}", param);
+        public int DeleteOrderItemLocation2s(string where = null, object param = null) => Execute($"DELETE FROM uc{(IsMySql ? "_" : ".")}order_item_locations{(where != null ? $" WHERE {where}" : "")}", param);
+        public int DeleteOrderItemNotes(string where = null, object param = null) => Execute($"DELETE FROM uc{(IsMySql ? "_" : ".")}order_item_notes{(where != null ? $" WHERE {where}" : "")}", param);
+        public int DeleteOrderItemProductIds(string where = null, object param = null) => Execute($"DELETE FROM uc{(IsMySql ? "_" : ".")}order_item_product_ids{(where != null ? $" WHERE {where}" : "")}", param);
+        public int DeleteOrderItemReferenceNumbers(string where = null, object param = null) => Execute($"DELETE FROM uc{(IsMySql ? "_" : ".")}order_item_reference_numbers{(where != null ? $" WHERE {where}" : "")}", param);
+        public int DeleteOrderItemReportingCodes(string where = null, object param = null) => Execute($"DELETE FROM uc{(IsMySql ? "_" : ".")}order_item_reporting_codes{(where != null ? $" WHERE {where}" : "")}", param);
+        public int DeleteOrderItemTags(string where = null, object param = null) => Execute($"DELETE FROM uc{(IsMySql ? "_" : ".")}order_item_tags{(where != null ? $" WHERE {where}" : "")}", param);
+        public int DeleteOrderItemVolumes(string where = null, object param = null) => Execute($"DELETE FROM uc{(IsMySql ? "_" : ".")}order_item_volumes{(where != null ? $" WHERE {where}" : "")}", param);
+        public int DeleteOrderNotes(string where = null, object param = null) => Execute($"DELETE FROM uc{(IsMySql ? "_" : ".")}order_notes{(where != null ? $" WHERE {where}" : "")}", param);
+        public int DeleteOrderStatuses(string where = null, object param = null) => Execute($"DELETE FROM uc{(IsMySql ? "_" : ".")}order_statuses{(where != null ? $" WHERE {where}" : "")}", param);
+        public int DeleteOrderTags(string where = null, object param = null) => Execute($"DELETE FROM uc{(IsMySql ? "_" : ".")}order_tags{(where != null ? $" WHERE {where}" : "")}", param);
+        public int DeleteOrderTemplates(string where = null, object param = null) => Execute($"DELETE FROM uchicago_mod_orders_storage{(IsMySql ? "_" : ".")}order_templates{(where != null ? $" WHERE {where}" : "")}", param);
+        public int DeleteOrderTemplate2s(string where = null, object param = null) => Execute($"DELETE FROM uc{(IsMySql ? "_" : ".")}order_templates{(where != null ? $" WHERE {where}" : "")}", param);
+        public int DeleteOrderTransactionSummaries(string where = null, object param = null) => Execute($"DELETE FROM uchicago_mod_finance_storage{(IsMySql ? "_" : ".")}order_transaction_summaries{(where != null ? $" WHERE {where}" : "")}", param);
+        public int DeleteOrderTransactionSummary2s(string where = null, object param = null) => Execute($"DELETE FROM uc{(IsMySql ? "_" : ".")}order_transaction_summaries{(where != null ? $" WHERE {where}" : "")}", param);
+        public int DeleteOrderTypes(string where = null, object param = null) => Execute($"DELETE FROM uc{(IsMySql ? "_" : ".")}order_types{(where != null ? $" WHERE {where}" : "")}", param);
+        public int DeleteOrganizations(string where = null, object param = null) => Execute($"DELETE FROM uchicago_mod_organizations_storage{(IsMySql ? "_" : ".")}organizations{(where != null ? $" WHERE {where}" : "")}", param);
+        public int DeleteOrganization2s(string where = null, object param = null) => Execute($"DELETE FROM uc{(IsMySql ? "_" : ".")}organizations{(where != null ? $" WHERE {where}" : "")}", param);
+        public int DeleteOrganizationAccounts(string where = null, object param = null) => Execute($"DELETE FROM uc{(IsMySql ? "_" : ".")}organization_accounts{(where != null ? $" WHERE {where}" : "")}", param);
+        public int DeleteOrganizationAccountAcquisitionsUnits(string where = null, object param = null) => Execute($"DELETE FROM uc{(IsMySql ? "_" : ".")}organization_account_acquisitions_units{(where != null ? $" WHERE {where}" : "")}", param);
+        public int DeleteOrganizationAcquisitionsUnits(string where = null, object param = null) => Execute($"DELETE FROM uc{(IsMySql ? "_" : ".")}organization_acquisitions_units{(where != null ? $" WHERE {where}" : "")}", param);
+        public int DeleteOrganizationAddresses(string where = null, object param = null) => Execute($"DELETE FROM uc{(IsMySql ? "_" : ".")}organization_addresses{(where != null ? $" WHERE {where}" : "")}", param);
+        public int DeleteOrganizationAddressCategories(string where = null, object param = null) => Execute($"DELETE FROM uc{(IsMySql ? "_" : ".")}organization_address_categories{(where != null ? $" WHERE {where}" : "")}", param);
+        public int DeleteOrganizationAgreements(string where = null, object param = null) => Execute($"DELETE FROM uc{(IsMySql ? "_" : ".")}organization_agreements{(where != null ? $" WHERE {where}" : "")}", param);
+        public int DeleteOrganizationAliases(string where = null, object param = null) => Execute($"DELETE FROM uc{(IsMySql ? "_" : ".")}organization_aliases{(where != null ? $" WHERE {where}" : "")}", param);
+        public int DeleteOrganizationChangelogs(string where = null, object param = null) => Execute($"DELETE FROM uc{(IsMySql ? "_" : ".")}organization_changelogs{(where != null ? $" WHERE {where}" : "")}", param);
+        public int DeleteOrganizationContacts(string where = null, object param = null) => Execute($"DELETE FROM uc{(IsMySql ? "_" : ".")}organization_contacts{(where != null ? $" WHERE {where}" : "")}", param);
+        public int DeleteOrganizationEmails(string where = null, object param = null) => Execute($"DELETE FROM uc{(IsMySql ? "_" : ".")}organization_emails{(where != null ? $" WHERE {where}" : "")}", param);
+        public int DeleteOrganizationEmailCategories(string where = null, object param = null) => Execute($"DELETE FROM uc{(IsMySql ? "_" : ".")}organization_email_categories{(where != null ? $" WHERE {where}" : "")}", param);
+        public int DeleteOrganizationInterfaces(string where = null, object param = null) => Execute($"DELETE FROM uc{(IsMySql ? "_" : ".")}organization_interfaces{(where != null ? $" WHERE {where}" : "")}", param);
+        public int DeleteOrganizationNotes(string where = null, object param = null) => Execute($"DELETE FROM uc{(IsMySql ? "_" : ".")}organization_notes{(where != null ? $" WHERE {where}" : "")}", param);
+        public int DeleteOrganizationPhoneNumbers(string where = null, object param = null) => Execute($"DELETE FROM uc{(IsMySql ? "_" : ".")}organization_phone_numbers{(where != null ? $" WHERE {where}" : "")}", param);
+        public int DeleteOrganizationPhoneNumberCategories(string where = null, object param = null) => Execute($"DELETE FROM uc{(IsMySql ? "_" : ".")}organization_phone_number_categories{(where != null ? $" WHERE {where}" : "")}", param);
+        public int DeleteOrganizationTags(string where = null, object param = null) => Execute($"DELETE FROM uc{(IsMySql ? "_" : ".")}organization_tags{(where != null ? $" WHERE {where}" : "")}", param);
+        public int DeleteOrganizationUrls(string where = null, object param = null) => Execute($"DELETE FROM uc{(IsMySql ? "_" : ".")}organization_urls{(where != null ? $" WHERE {where}" : "")}", param);
+        public int DeleteOrganizationUrlCategories(string where = null, object param = null) => Execute($"DELETE FROM uc{(IsMySql ? "_" : ".")}organization_url_categories{(where != null ? $" WHERE {where}" : "")}", param);
+        public int DeleteOverdueFinePolicies(string where = null, object param = null) => Execute($"DELETE FROM uchicago_mod_feesfines{(IsMySql ? "_" : ".")}overdue_fine_policy{(where != null ? $" WHERE {where}" : "")}", param);
+        public int DeleteOverdueFinePolicy2s(string where = null, object param = null) => Execute($"DELETE FROM uc{(IsMySql ? "_" : ".")}overdue_fine_policies{(where != null ? $" WHERE {where}" : "")}", param);
+        public int DeleteOwners(string where = null, object param = null) => Execute($"DELETE FROM uchicago_mod_feesfines{(IsMySql ? "_" : ".")}owners{(where != null ? $" WHERE {where}" : "")}", param);
+        public int DeleteOwner2s(string where = null, object param = null) => Execute($"DELETE FROM uc{(IsMySql ? "_" : ".")}owners{(where != null ? $" WHERE {where}" : "")}", param);
+        public int DeletePatronActionSessions(string where = null, object param = null) => Execute($"DELETE FROM uchicago_mod_circulation_storage{(IsMySql ? "_" : ".")}patron_action_session{(where != null ? $" WHERE {where}" : "")}", param);
+        public int DeletePatronActionSession2s(string where = null, object param = null) => Execute($"DELETE FROM uc{(IsMySql ? "_" : ".")}patron_action_sessions{(where != null ? $" WHERE {where}" : "")}", param);
+        public int DeletePatronNoticePolicies(string where = null, object param = null) => Execute($"DELETE FROM uchicago_mod_circulation_storage{(IsMySql ? "_" : ".")}patron_notice_policy{(where != null ? $" WHERE {where}" : "")}", param);
+        public int DeletePatronNoticePolicy2s(string where = null, object param = null) => Execute($"DELETE FROM uc{(IsMySql ? "_" : ".")}patron_notice_policies{(where != null ? $" WHERE {where}" : "")}", param);
+        public int DeletePatronNoticePolicyFeeFineNotices(string where = null, object param = null) => Execute($"DELETE FROM uc{(IsMySql ? "_" : ".")}patron_notice_policy_fee_fine_notices{(where != null ? $" WHERE {where}" : "")}", param);
+        public int DeletePatronNoticePolicyLoanNotices(string where = null, object param = null) => Execute($"DELETE FROM uc{(IsMySql ? "_" : ".")}patron_notice_policy_loan_notices{(where != null ? $" WHERE {where}" : "")}", param);
+        public int DeletePatronNoticePolicyRequestNotices(string where = null, object param = null) => Execute($"DELETE FROM uc{(IsMySql ? "_" : ".")}patron_notice_policy_request_notices{(where != null ? $" WHERE {where}" : "")}", param);
+        public int DeletePayments(string where = null, object param = null) => Execute($"DELETE FROM uchicago_mod_feesfines{(IsMySql ? "_" : ".")}feefineactions{(where != null ? $" WHERE {where}" : "")}", param);
+        public int DeletePayment2s(string where = null, object param = null) => Execute($"DELETE FROM uc{(IsMySql ? "_" : ".")}payments{(where != null ? $" WHERE {where}" : "")}", param);
+        public int DeletePaymentMethods(string where = null, object param = null) => Execute($"DELETE FROM uchicago_mod_feesfines{(IsMySql ? "_" : ".")}payments{(where != null ? $" WHERE {where}" : "")}", param);
+        public int DeletePaymentMethod2s(string where = null, object param = null) => Execute($"DELETE FROM uc{(IsMySql ? "_" : ".")}payment_methods{(where != null ? $" WHERE {where}" : "")}", param);
+        public int DeletePaymentTypes(string where = null, object param = null) => Execute($"DELETE FROM uc{(IsMySql ? "_" : ".")}payment_types{(where != null ? $" WHERE {where}" : "")}", param);
+        public int DeletePermissions(string where = null, object param = null) => Execute($"DELETE FROM uchicago_mod_permissions{(IsMySql ? "_" : ".")}permissions{(where != null ? $" WHERE {where}" : "")}", param);
+        public int DeletePermission2s(string where = null, object param = null) => Execute($"DELETE FROM uc{(IsMySql ? "_" : ".")}permissions{(where != null ? $" WHERE {where}" : "")}", param);
+        public int DeletePermissionChildOfs(string where = null, object param = null) => Execute($"DELETE FROM uc{(IsMySql ? "_" : ".")}permission_child_of{(where != null ? $" WHERE {where}" : "")}", param);
+        public int DeletePermissionGrantedTos(string where = null, object param = null) => Execute($"DELETE FROM uc{(IsMySql ? "_" : ".")}permission_granted_to{(where != null ? $" WHERE {where}" : "")}", param);
+        public int DeletePermissionSubPermissions(string where = null, object param = null) => Execute($"DELETE FROM uc{(IsMySql ? "_" : ".")}permission_sub_permissions{(where != null ? $" WHERE {where}" : "")}", param);
+        public int DeletePermissionsUsers(string where = null, object param = null) => Execute($"DELETE FROM uchicago_mod_permissions{(IsMySql ? "_" : ".")}permissions_users{(where != null ? $" WHERE {where}" : "")}", param);
+        public int DeletePermissionsUser2s(string where = null, object param = null) => Execute($"DELETE FROM uc{(IsMySql ? "_" : ".")}permissions_users{(where != null ? $" WHERE {where}" : "")}", param);
+        public int DeletePermissionsUserPermissions(string where = null, object param = null) => Execute($"DELETE FROM uc{(IsMySql ? "_" : ".")}permissions_user_permissions{(where != null ? $" WHERE {where}" : "")}", param);
+        public int DeletePermissionTags(string where = null, object param = null) => Execute($"DELETE FROM uc{(IsMySql ? "_" : ".")}permission_tags{(where != null ? $" WHERE {where}" : "")}", param);
+        public int DeletePhysicalDescriptions(string where = null, object param = null) => Execute($"DELETE FROM uc{(IsMySql ? "_" : ".")}physical_descriptions{(where != null ? $" WHERE {where}" : "")}", param);
+        public int DeletePrecedingSucceedingTitles(string where = null, object param = null) => Execute($"DELETE FROM uchicago_mod_inventory_storage{(IsMySql ? "_" : ".")}preceding_succeeding_title{(where != null ? $" WHERE {where}" : "")}", param);
+        public int DeletePrecedingSucceedingTitle2s(string where = null, object param = null) => Execute($"DELETE FROM uc{(IsMySql ? "_" : ".")}preceding_succeeding_titles{(where != null ? $" WHERE {where}" : "")}", param);
+        public int DeletePrecedingSucceedingTitleIdentifiers(string where = null, object param = null) => Execute($"DELETE FROM uc{(IsMySql ? "_" : ".")}preceding_succeeding_title_identifiers{(where != null ? $" WHERE {where}" : "")}", param);
+        public int DeletePrefixes(string where = null, object param = null) => Execute($"DELETE FROM uchicago_mod_orders_storage{(IsMySql ? "_" : ".")}prefixes{(where != null ? $" WHERE {where}" : "")}", param);
+        public int DeletePrefix2s(string where = null, object param = null) => Execute($"DELETE FROM uc{(IsMySql ? "_" : ".")}prefixes{(where != null ? $" WHERE {where}" : "")}", param);
+        public int DeletePrinters(string where = null, object param = null) => Execute($"DELETE FROM uc{(IsMySql ? "_" : ".")}printers{(where != null ? $" WHERE {where}" : "")}", param);
+        public int DeleteProxies(string where = null, object param = null) => Execute($"DELETE FROM uchicago_mod_users{(IsMySql ? "_" : ".")}proxyfor{(where != null ? $" WHERE {where}" : "")}", param);
+        public int DeleteProxy2s(string where = null, object param = null) => Execute($"DELETE FROM uc{(IsMySql ? "_" : ".")}proxies{(where != null ? $" WHERE {where}" : "")}", param);
+        public int DeletePublications(string where = null, object param = null) => Execute($"DELETE FROM uc{(IsMySql ? "_" : ".")}publications{(where != null ? $" WHERE {where}" : "")}", param);
+        public int DeletePublicationFrequencies(string where = null, object param = null) => Execute($"DELETE FROM uc{(IsMySql ? "_" : ".")}publication_frequency{(where != null ? $" WHERE {where}" : "")}", param);
+        public int DeletePublicationRanges(string where = null, object param = null) => Execute($"DELETE FROM uc{(IsMySql ? "_" : ".")}publication_range{(where != null ? $" WHERE {where}" : "")}", param);
+        public int DeleteRawRecords(string where = null, object param = null) => Execute($"DELETE FROM uchicago_mod_source_record_storage{(IsMySql ? "_" : ".")}raw_records_lb{(where != null ? $" WHERE {where}" : "")}", param);
+        public int DeleteRawRecord2s(string where = null, object param = null) => Execute($"DELETE FROM uc{(IsMySql ? "_" : ".")}raw_records{(where != null ? $" WHERE {where}" : "")}", param);
+        public int DeleteReceivings(string where = null, object param = null) => Execute($"DELETE FROM uchicago_mod_orders_storage{(IsMySql ? "_" : ".")}pieces{(where != null ? $" WHERE {where}" : "")}", param);
+        public int DeleteReceiving2s(string where = null, object param = null) => Execute($"DELETE FROM uc{(IsMySql ? "_" : ".")}receivings{(where != null ? $" WHERE {where}" : "")}", param);
+        public int DeleteRecords(string where = null, object param = null) => Execute($"DELETE FROM uchicago_mod_source_record_storage{(IsMySql ? "_" : ".")}records_lb{(where != null ? $" WHERE {where}" : "")}", param);
+        public int DeleteRecord2s(string where = null, object param = null) => Execute($"DELETE FROM uc{(IsMySql ? "_" : ".")}records{(where != null ? $" WHERE {where}" : "")}", param);
+        public int DeleteRefundReasons(string where = null, object param = null) => Execute($"DELETE FROM uchicago_mod_feesfines{(IsMySql ? "_" : ".")}refunds{(where != null ? $" WHERE {where}" : "")}", param);
+        public int DeleteRefundReason2s(string where = null, object param = null) => Execute($"DELETE FROM uc{(IsMySql ? "_" : ".")}refund_reasons{(where != null ? $" WHERE {where}" : "")}", param);
+        public int DeleteRelationships(string where = null, object param = null) => Execute($"DELETE FROM uc{(IsMySql ? "_" : ".")}relationships{(where != null ? $" WHERE {where}" : "")}", param);
+        public int DeleteRelationshipTypes(string where = null, object param = null) => Execute($"DELETE FROM uc{(IsMySql ? "_" : ".")}relationship_types{(where != null ? $" WHERE {where}" : "")}", param);
+        public int DeleteReportingCodes(string where = null, object param = null) => Execute($"DELETE FROM uchicago_mod_orders_storage{(IsMySql ? "_" : ".")}reporting_code{(where != null ? $" WHERE {where}" : "")}", param);
+        public int DeleteReportingCode2s(string where = null, object param = null) => Execute($"DELETE FROM uc{(IsMySql ? "_" : ".")}reporting_codes{(where != null ? $" WHERE {where}" : "")}", param);
+        public int DeleteRequests(string where = null, object param = null) => Execute($"DELETE FROM uchicago_mod_circulation_storage{(IsMySql ? "_" : ".")}request{(where != null ? $" WHERE {where}" : "")}", param);
+        public int DeleteRequest2s(string where = null, object param = null) => Execute($"DELETE FROM uc{(IsMySql ? "_" : ".")}requests{(where != null ? $" WHERE {where}" : "")}", param);
+        public int DeleteRequestIdentifiers(string where = null, object param = null) => Execute($"DELETE FROM uc{(IsMySql ? "_" : ".")}request_identifiers{(where != null ? $" WHERE {where}" : "")}", param);
+        public int DeleteRequestNotes(string where = null, object param = null) => Execute($"DELETE FROM uc{(IsMySql ? "_" : ".")}request_notes{(where != null ? $" WHERE {where}" : "")}", param);
+        public int DeleteRequestPolicies(string where = null, object param = null) => Execute($"DELETE FROM uchicago_mod_circulation_storage{(IsMySql ? "_" : ".")}request_policy{(where != null ? $" WHERE {where}" : "")}", param);
+        public int DeleteRequestPolicy2s(string where = null, object param = null) => Execute($"DELETE FROM uc{(IsMySql ? "_" : ".")}request_policies{(where != null ? $" WHERE {where}" : "")}", param);
+        public int DeleteRequestPolicyRequestTypes(string where = null, object param = null) => Execute($"DELETE FROM uc{(IsMySql ? "_" : ".")}request_policy_request_types{(where != null ? $" WHERE {where}" : "")}", param);
+        public int DeleteRequestTags(string where = null, object param = null) => Execute($"DELETE FROM uc{(IsMySql ? "_" : ".")}request_tags{(where != null ? $" WHERE {where}" : "")}", param);
+        public int DeleteScheduledNotices(string where = null, object param = null) => Execute($"DELETE FROM uchicago_mod_circulation_storage{(IsMySql ? "_" : ".")}scheduled_notice{(where != null ? $" WHERE {where}" : "")}", param);
+        public int DeleteScheduledNotice2s(string where = null, object param = null) => Execute($"DELETE FROM uc{(IsMySql ? "_" : ".")}scheduled_notices{(where != null ? $" WHERE {where}" : "")}", param);
+        public int DeleteSeries(string where = null, object param = null) => Execute($"DELETE FROM uc{(IsMySql ? "_" : ".")}series{(where != null ? $" WHERE {where}" : "")}", param);
+        public int DeleteServicePoints(string where = null, object param = null) => Execute($"DELETE FROM uchicago_mod_inventory_storage{(IsMySql ? "_" : ".")}service_point{(where != null ? $" WHERE {where}" : "")}", param);
+        public int DeleteServicePoint2s(string where = null, object param = null) => Execute($"DELETE FROM uc{(IsMySql ? "_" : ".")}service_points{(where != null ? $" WHERE {where}" : "")}", param);
+        public int DeleteServicePointOwners(string where = null, object param = null) => Execute($"DELETE FROM uc{(IsMySql ? "_" : ".")}service_point_owners{(where != null ? $" WHERE {where}" : "")}", param);
+        public int DeleteServicePointStaffSlips(string where = null, object param = null) => Execute($"DELETE FROM uc{(IsMySql ? "_" : ".")}service_point_staff_slips{(where != null ? $" WHERE {where}" : "")}", param);
+        public int DeleteServicePointUsers(string where = null, object param = null) => Execute($"DELETE FROM uchicago_mod_inventory_storage{(IsMySql ? "_" : ".")}service_point_user{(where != null ? $" WHERE {where}" : "")}", param);
+        public int DeleteServicePointUser2s(string where = null, object param = null) => Execute($"DELETE FROM uc{(IsMySql ? "_" : ".")}service_point_users{(where != null ? $" WHERE {where}" : "")}", param);
+        public int DeleteServicePointUserServicePoints(string where = null, object param = null) => Execute($"DELETE FROM uc{(IsMySql ? "_" : ".")}service_point_user_service_points{(where != null ? $" WHERE {where}" : "")}", param);
+        public int DeleteSettings(string where = null, object param = null) => Execute($"DELETE FROM uc{(IsMySql ? "_" : ".")}settings{(where != null ? $" WHERE {where}" : "")}", param);
+        public int DeleteSnapshots(string where = null, object param = null) => Execute($"DELETE FROM uchicago_mod_source_record_storage{(IsMySql ? "_" : ".")}snapshots_lb{(where != null ? $" WHERE {where}" : "")}", param);
+        public int DeleteSnapshot2s(string where = null, object param = null) => Execute($"DELETE FROM uc{(IsMySql ? "_" : ".")}snapshots{(where != null ? $" WHERE {where}" : "")}", param);
+        public int DeleteSources(string where = null, object param = null) => Execute($"DELETE FROM uchicago_mod_inventory_storage{(IsMySql ? "_" : ".")}holdings_records_source{(where != null ? $" WHERE {where}" : "")}", param);
+        public int DeleteSource2s(string where = null, object param = null) => Execute($"DELETE FROM uc{(IsMySql ? "_" : ".")}sources{(where != null ? $" WHERE {where}" : "")}", param);
+        public int DeleteSourceMarcs(string where = null, object param = null) => Execute($"DELETE FROM uc{(IsMySql ? "_" : ".")}source_marcs{(where != null ? $" WHERE {where}" : "")}", param);
+        public int DeleteSourceMarcFields(string where = null, object param = null) => Execute($"DELETE FROM uc{(IsMySql ? "_" : ".")}source_marc_fields{(where != null ? $" WHERE {where}" : "")}", param);
+        public int DeleteStaffSlips(string where = null, object param = null) => Execute($"DELETE FROM uchicago_mod_circulation_storage{(IsMySql ? "_" : ".")}staff_slips{(where != null ? $" WHERE {where}" : "")}", param);
+        public int DeleteStaffSlip2s(string where = null, object param = null) => Execute($"DELETE FROM uc{(IsMySql ? "_" : ".")}staff_slips{(where != null ? $" WHERE {where}" : "")}", param);
+        public int DeleteStatisticalCodes(string where = null, object param = null) => Execute($"DELETE FROM uchicago_mod_inventory_storage{(IsMySql ? "_" : ".")}statistical_code{(where != null ? $" WHERE {where}" : "")}", param);
+        public int DeleteStatisticalCode2s(string where = null, object param = null) => Execute($"DELETE FROM uc{(IsMySql ? "_" : ".")}statistical_codes{(where != null ? $" WHERE {where}" : "")}", param);
+        public int DeleteStatisticalCodeTypes(string where = null, object param = null) => Execute($"DELETE FROM uchicago_mod_inventory_storage{(IsMySql ? "_" : ".")}statistical_code_type{(where != null ? $" WHERE {where}" : "")}", param);
+        public int DeleteStatisticalCodeType2s(string where = null, object param = null) => Execute($"DELETE FROM uc{(IsMySql ? "_" : ".")}statistical_code_types{(where != null ? $" WHERE {where}" : "")}", param);
+        public int DeleteStatuses(string where = null, object param = null) => Execute($"DELETE FROM uc{(IsMySql ? "_" : ".")}statuses{(where != null ? $" WHERE {where}" : "")}", param);
+        public int DeleteSubjects(string where = null, object param = null) => Execute($"DELETE FROM uc{(IsMySql ? "_" : ".")}subjects{(where != null ? $" WHERE {where}" : "")}", param);
+        public int DeleteSuffixes(string where = null, object param = null) => Execute($"DELETE FROM uchicago_mod_orders_storage{(IsMySql ? "_" : ".")}suffixes{(where != null ? $" WHERE {where}" : "")}", param);
+        public int DeleteSuffix2s(string where = null, object param = null) => Execute($"DELETE FROM uc{(IsMySql ? "_" : ".")}suffixes{(where != null ? $" WHERE {where}" : "")}", param);
+        public int DeleteSupplementStatements(string where = null, object param = null) => Execute($"DELETE FROM uc{(IsMySql ? "_" : ".")}supplement_statements{(where != null ? $" WHERE {where}" : "")}", param);
+        public int DeleteTags(string where = null, object param = null) => Execute($"DELETE FROM uchicago_mod_tags{(IsMySql ? "_" : ".")}tags{(where != null ? $" WHERE {where}" : "")}", param);
+        public int DeleteTag2s(string where = null, object param = null) => Execute($"DELETE FROM uc{(IsMySql ? "_" : ".")}tags{(where != null ? $" WHERE {where}" : "")}", param);
+        public int DeleteTemplates(string where = null, object param = null) => Execute($"DELETE FROM uchicago_mod_template_engine{(IsMySql ? "_" : ".")}template{(where != null ? $" WHERE {where}" : "")}", param);
+        public int DeleteTemplate2s(string where = null, object param = null) => Execute($"DELETE FROM uc{(IsMySql ? "_" : ".")}templates{(where != null ? $" WHERE {where}" : "")}", param);
+        public int DeleteTemplateOutputFormats(string where = null, object param = null) => Execute($"DELETE FROM uc{(IsMySql ? "_" : ".")}template_output_formats{(where != null ? $" WHERE {where}" : "")}", param);
+        public int DeleteTitles(string where = null, object param = null) => Execute($"DELETE FROM uchicago_mod_orders_storage{(IsMySql ? "_" : ".")}titles{(where != null ? $" WHERE {where}" : "")}", param);
+        public int DeleteTitle2s(string where = null, object param = null) => Execute($"DELETE FROM uc{(IsMySql ? "_" : ".")}titles{(where != null ? $" WHERE {where}" : "")}", param);
+        public int DeleteTitleContributors(string where = null, object param = null) => Execute($"DELETE FROM uc{(IsMySql ? "_" : ".")}title_contributors{(where != null ? $" WHERE {where}" : "")}", param);
+        public int DeleteTitleProductIds(string where = null, object param = null) => Execute($"DELETE FROM uc{(IsMySql ? "_" : ".")}title_product_ids{(where != null ? $" WHERE {where}" : "")}", param);
+        public int DeleteTransactions(string where = null, object param = null) => Execute($"DELETE FROM uchicago_mod_finance_storage{(IsMySql ? "_" : ".")}transaction{(where != null ? $" WHERE {where}" : "")}", param);
+        public int DeleteTransaction2s(string where = null, object param = null) => Execute($"DELETE FROM uc{(IsMySql ? "_" : ".")}transactions{(where != null ? $" WHERE {where}" : "")}", param);
+        public int DeleteTransactionTags(string where = null, object param = null) => Execute($"DELETE FROM uc{(IsMySql ? "_" : ".")}transaction_tags{(where != null ? $" WHERE {where}" : "")}", param);
+        public int DeleteTransferAccounts(string where = null, object param = null) => Execute($"DELETE FROM uchicago_mod_feesfines{(IsMySql ? "_" : ".")}transfers{(where != null ? $" WHERE {where}" : "")}", param);
+        public int DeleteTransferAccount2s(string where = null, object param = null) => Execute($"DELETE FROM uc{(IsMySql ? "_" : ".")}transfer_accounts{(where != null ? $" WHERE {where}" : "")}", param);
+        public int DeleteTransferCriterias(string where = null, object param = null) => Execute($"DELETE FROM uchicago_mod_feesfines{(IsMySql ? "_" : ".")}transfer_criteria{(where != null ? $" WHERE {where}" : "")}", param);
+        public int DeleteTransferCriteria2s(string where = null, object param = null) => Execute($"DELETE FROM uc{(IsMySql ? "_" : ".")}transfer_criterias{(where != null ? $" WHERE {where}" : "")}", param);
+        public int DeleteUsers(string where = null, object param = null) => Execute($"DELETE FROM uchicago_mod_users{(IsMySql ? "_" : ".")}users{(where != null ? $" WHERE {where}" : "")}", param);
+        public int DeleteUser2s(string where = null, object param = null) => Execute($"DELETE FROM uc{(IsMySql ? "_" : ".")}users{(where != null ? $" WHERE {where}" : "")}", param);
+        public int DeleteUserAcquisitionsUnits(string where = null, object param = null) => Execute($"DELETE FROM uchicago_mod_orders_storage{(IsMySql ? "_" : ".")}acquisitions_unit_membership{(where != null ? $" WHERE {where}" : "")}", param);
+        public int DeleteUserAcquisitionsUnit2s(string where = null, object param = null) => Execute($"DELETE FROM uc{(IsMySql ? "_" : ".")}user_acquisitions_units{(where != null ? $" WHERE {where}" : "")}", param);
+        public int DeleteUserAddresses(string where = null, object param = null) => Execute($"DELETE FROM uc{(IsMySql ? "_" : ".")}user_addresses{(where != null ? $" WHERE {where}" : "")}", param);
+        public int DeleteUserDepartments(string where = null, object param = null) => Execute($"DELETE FROM uc{(IsMySql ? "_" : ".")}user_departments{(where != null ? $" WHERE {where}" : "")}", param);
+        public int DeleteUserNotes(string where = null, object param = null) => Execute($"DELETE FROM uc{(IsMySql ? "_" : ".")}user_notes{(where != null ? $" WHERE {where}" : "")}", param);
+        public int DeleteUserRequestPreferences(string where = null, object param = null) => Execute($"DELETE FROM uchicago_mod_circulation_storage{(IsMySql ? "_" : ".")}user_request_preference{(where != null ? $" WHERE {where}" : "")}", param);
+        public int DeleteUserRequestPreference2s(string where = null, object param = null) => Execute($"DELETE FROM uc{(IsMySql ? "_" : ".")}user_request_preferences{(where != null ? $" WHERE {where}" : "")}", param);
+        public int DeleteUserSummaries(string where = null, object param = null) => Execute($"DELETE FROM uchicago_mod_patron_blocks{(IsMySql ? "_" : ".")}user_summary{(where != null ? $" WHERE {where}" : "")}", param);
+        public int DeleteUserSummary2s(string where = null, object param = null) => Execute($"DELETE FROM uc{(IsMySql ? "_" : ".")}user_summaries{(where != null ? $" WHERE {where}" : "")}", param);
+        public int DeleteUserSummaryOpenFeesFines(string where = null, object param = null) => Execute($"DELETE FROM uc{(IsMySql ? "_" : ".")}user_summary_open_fees_fines{(where != null ? $" WHERE {where}" : "")}", param);
+        public int DeleteUserSummaryOpenLoans(string where = null, object param = null) => Execute($"DELETE FROM uc{(IsMySql ? "_" : ".")}user_summary_open_loans{(where != null ? $" WHERE {where}" : "")}", param);
+        public int DeleteUserTags(string where = null, object param = null) => Execute($"DELETE FROM uc{(IsMySql ? "_" : ".")}user_tags{(where != null ? $" WHERE {where}" : "")}", param);
+        public int DeleteVouchers(string where = null, object param = null) => Execute($"DELETE FROM uchicago_mod_invoice_storage{(IsMySql ? "_" : ".")}vouchers{(where != null ? $" WHERE {where}" : "")}", param);
+        public int DeleteVoucher2s(string where = null, object param = null) => Execute($"DELETE FROM uc{(IsMySql ? "_" : ".")}vouchers{(where != null ? $" WHERE {where}" : "")}", param);
+        public int DeleteVoucherAcquisitionsUnits(string where = null, object param = null) => Execute($"DELETE FROM uc{(IsMySql ? "_" : ".")}voucher_acquisitions_units{(where != null ? $" WHERE {where}" : "")}", param);
+        public int DeleteVoucherItems(string where = null, object param = null) => Execute($"DELETE FROM uchicago_mod_invoice_storage{(IsMySql ? "_" : ".")}voucher_lines{(where != null ? $" WHERE {where}" : "")}", param);
+        public int DeleteVoucherItem2s(string where = null, object param = null) => Execute($"DELETE FROM uc{(IsMySql ? "_" : ".")}voucher_items{(where != null ? $" WHERE {where}" : "")}", param);
+        public int DeleteVoucherItemFunds(string where = null, object param = null) => Execute($"DELETE FROM uc{(IsMySql ? "_" : ".")}voucher_item_fund_distributions{(where != null ? $" WHERE {where}" : "")}", param);
+        public int DeleteVoucherItemInvoiceItems(string where = null, object param = null) => Execute($"DELETE FROM uc{(IsMySql ? "_" : ".")}voucher_item_invoice_items{(where != null ? $" WHERE {where}" : "")}", param);
+        public int DeleteVoucherStatuses(string where = null, object param = null) => Execute($"DELETE FROM uc{(IsMySql ? "_" : ".")}voucher_statuses{(where != null ? $" WHERE {where}" : "")}", param);
+        public int DeleteWaiveReasons(string where = null, object param = null) => Execute($"DELETE FROM uchicago_mod_feesfines{(IsMySql ? "_" : ".")}waives{(where != null ? $" WHERE {where}" : "")}", param);
+        public int DeleteWaiveReason2s(string where = null, object param = null) => Execute($"DELETE FROM uc{(IsMySql ? "_" : ".")}waive_reasons{(where != null ? $" WHERE {where}" : "")}", param);
 
         public int Execute(string sql, object param = null, int? commandTimeout = null)
         {

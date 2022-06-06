@@ -21,6 +21,10 @@ namespace FolioWebApplication.Holding2s
 
         protected RadGrid Fee2sRadGrid;
 
+        protected Panel HoldingDonorsPanel;
+
+        protected RadGrid HoldingDonorsRadGrid;
+
         protected Panel HoldingElectronicAccessesPanel;
 
         protected RadGrid HoldingElectronicAccessesRadGrid;
