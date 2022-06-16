@@ -35,12 +35,21 @@ namespace FolioLibrary
         [Column("donor_code"), Display(Name = "Donor Code", Order = 4), StringLength(1024)]
         public virtual string DonorCode { get; set; }
 
-        public override string ToString() => $"{{ {nameof(Id)} = {Id}, {nameof(HoldingId)} = {HoldingId}, {nameof(DonorCode)} = {DonorCode} }}";
+        [Column("created_date"), ScaffoldColumn(false)]
+        public virtual DateTime? CreationTime { get; set; }
 
-        public static HoldingDonor FromJObject(JValue jObject) => jObject != null ? new HoldingDonor
-        {
-            DonorCode = (string)jObject
-        } : null;
+        [Column("created_by_user_id"), ScaffoldColumn(false)]
+        public virtual Guid? CreationUserId { get; set; }
+
+        [Column("updated_date"), ScaffoldColumn(false)]
+        public virtual DateTime? LastWriteTime { get; set; }
+
+        [Column("updated_by_user_id"), ScaffoldColumn(false)]
+        public virtual Guid? LastWriteUserId { get; set; }
+
+        public override string ToString() => $"{{ {nameof(Id)} = {Id}, {nameof(HoldingId)} = {HoldingId}, {nameof(DonorCode)} = {DonorCode}, {nameof(CreationTime)} = {CreationTime}, {nameof(CreationUserId)} = {CreationUserId}, {nameof(LastWriteTime)} = {LastWriteTime}, {nameof(LastWriteUserId)} = {LastWriteUserId} }}";
+
+        public static HoldingDonor FromJObject(JObject jObject) => throw new NotImplementedException();
 
         public JValue ToJObject() => throw new NotImplementedException();
     }

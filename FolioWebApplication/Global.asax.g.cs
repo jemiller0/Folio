@@ -274,6 +274,7 @@ namespace FolioWebApplication
             Session["OrderTemplate2sPermission"] = roles.Contains("all") || roles.Contains("orders.all") || roles.Contains("uc.ordertemplates.view") ? "View" : null;
             Session["OrderTypesPermission"] = roles.Contains("all") || roles.Contains("orders.all") || roles.Contains("uc.ordertypes.view") ? "View" : null;
             Session["Prefix2sPermission"] = roles.Contains("all") || roles.Contains("orders.all") || roles.Contains("uc.prefixes.view") ? "View" : null;
+            Session["ReceiptStatusesPermission"] = roles.Contains("all") || roles.Contains("orders.all") || roles.Contains("uc.receiptstatuses.view") ? "View" : null;
             Session["Receiving2sPermission"] = roles.Contains("all") || roles.Contains("orders.all") || roles.Contains("uc.receivings.view") ? "View" : null;
             Session["ReportingCode2sPermission"] = roles.Contains("all") || roles.Contains("orders.all") || roles.Contains("uc.reportingcodes.view") ? "View" : null;
             Session["Suffix2sPermission"] = roles.Contains("all") || roles.Contains("orders.all") || roles.Contains("uc.suffixes.view") ? "View" : null;
@@ -629,6 +630,7 @@ namespace FolioWebApplication
             Session["OrderTemplate2sPermission"] = permission;
             Session["OrderTypesPermission"] = permission;
             Session["Prefix2sPermission"] = permission;
+            Session["ReceiptStatusesPermission"] = permission;
             Session["Receiving2sPermission"] = permission;
             Session["ReportingCode2sPermission"] = permission;
             Session["Suffix2sPermission"] = permission;

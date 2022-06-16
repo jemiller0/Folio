@@ -7470,6 +7470,31 @@ LEFT JOIN uc.records AS r2 ON r2.id = rr2.id
         }
 
         [TestMethod]
+        public void QueryReceiptStatusesTest()
+        {
+            var s = Stopwatch.StartNew();
+            folioDapperContext.ReceiptStatuses(take: 1).ToArray();
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"ReceiptStatusesTest()\r\n    ElapsedTime={s.Elapsed}");
+        }
+
+        [TestMethod]
+        public void ReceiptStatusesQueryTest()
+        {
+            var s = Stopwatch.StartNew();
+            folioDapperContext.Query(@"
+SELECT
+rs.name AS ""Name"",
+rs.creation_time AS ""CreationTime"",
+rs.creation_username AS ""CreationUsername"",
+rs.last_write_time AS ""LastWriteTime"",
+rs.last_write_username AS ""LastWriteUsername"" 
+FROM uc.receipt_statuses AS rs
+ ORDER BY rs.name
+", take: 1);
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"ReceiptStatusesQueryTest()\r\n    ElapsedTime={s.Elapsed}");
+        }
+
+        [TestMethod]
         public void QueryReceiving2sTest()
         {
             var s = Stopwatch.StartNew();

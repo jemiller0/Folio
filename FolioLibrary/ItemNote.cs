@@ -45,7 +45,19 @@ namespace FolioLibrary
         [Column("staff_only"), Display(Name = "Staff Only", Order = 7), JsonProperty("staffOnly")]
         public virtual bool? StaffOnly { get; set; }
 
-        public override string ToString() => $"{{ {nameof(Id)} = {Id}, {nameof(ItemId)} = {ItemId}, {nameof(ItemNoteTypeId)} = {ItemNoteTypeId}, {nameof(Note)} = {Note}, {nameof(StaffOnly)} = {StaffOnly} }}";
+        [Column("created_date"), ScaffoldColumn(false)]
+        public virtual DateTime? CreationTime { get; set; }
+
+        [Column("created_by_user_id"), ScaffoldColumn(false)]
+        public virtual Guid? CreationUserId { get; set; }
+
+        [Column("updated_date"), ScaffoldColumn(false)]
+        public virtual DateTime? LastWriteTime { get; set; }
+
+        [Column("updated_by_user_id"), ScaffoldColumn(false)]
+        public virtual Guid? LastWriteUserId { get; set; }
+
+        public override string ToString() => $"{{ {nameof(Id)} = {Id}, {nameof(ItemId)} = {ItemId}, {nameof(ItemNoteTypeId)} = {ItemNoteTypeId}, {nameof(Note)} = {Note}, {nameof(StaffOnly)} = {StaffOnly}, {nameof(CreationTime)} = {CreationTime}, {nameof(CreationUserId)} = {CreationUserId}, {nameof(LastWriteTime)} = {LastWriteTime}, {nameof(LastWriteUserId)} = {LastWriteUserId} }}";
 
         public static ItemNote FromJObject(JObject jObject) => jObject != null ? new ItemNote
         {
