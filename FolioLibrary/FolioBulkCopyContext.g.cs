@@ -12,7 +12,7 @@ namespace FolioLibrary
 {
     public partial class FolioBulkCopyContext : IDisposable
     {
-        private DataTable acquisitionsUnitsDataTable, addressTypesDataTable, alertsDataTable, alternativeTitleTypesDataTable, authAttemptsDataTable, authCredentialsHistoriesDataTable, authPasswordActionsDataTable, batchGroupsDataTable, batchVouchersDataTable, batchVoucherExportsDataTable, batchVoucherExportConfigsDataTable, blocksDataTable, blockConditionsDataTable, blockLimitsDataTable, boundWithPartsDataTable, budgetsDataTable, budgetExpenseClassesDataTable, budgetGroupsDataTable, callNumberTypesDataTable, campusesDataTable, cancellationReasonsDataTable, categoriesDataTable, checkInsDataTable, circulationRulesDataTable, classificationTypesDataTable, closeReasonsDataTable, commentsDataTable, configurationsDataTable, contactsDataTable, contactTypesDataTable, contributorNameTypesDataTable, contributorTypesDataTable, countriesDataTable, customFieldsDataTable, departmentsDataTable, documentsDataTable, electronicAccessRelationshipsDataTable, errorRecordsDataTable, eventLogsDataTable, expenseClassesDataTable, exportConfigCredentialsDataTable, feesDataTable, feeTypesDataTable, financeGroupsDataTable, fiscalYearsDataTable, fixedDueDateSchedulesDataTable, fundsDataTable, fundTypesDataTable, groupsDataTable, holdingsDataTable, holdingNoteTypesDataTable, holdingTypesDataTable, hridSettingsDataTable, idTypesDataTable, illPoliciesDataTable, instancesDataTable, instanceFormatsDataTable, instanceNoteTypesDataTable, instanceRelationshipsDataTable, instanceRelationshipTypesDataTable, instanceSourceMarcsDataTable, instanceStatusesDataTable, instanceTypesDataTable, institutionsDataTable, interfacesDataTable, interfaceCredentialsDataTable, invoicesDataTable, invoiceItemsDataTable, invoiceStatusesDataTable, invoiceTransactionSummariesDataTable, itemsDataTable, itemDamagedStatusesDataTable, itemNoteTypesDataTable, itemStatusesDataTable, jobExecutionsDataTable, jobExecutionProgressesDataTable, jobExecutionSourceChunksDataTable, jobMonitoringsDataTable, journalRecordsDataTable, ledgersDataTable, ledgerRolloversDataTable, ledgerRolloverErrorsDataTable, ledgerRolloverProgressesDataTable, librariesDataTable, loansDataTable, loanEventsDataTable, loanPoliciesDataTable, loanTypesDataTable, locationsDataTable, loginsDataTable, lostItemFeePoliciesDataTable, manualBlockTemplatesDataTable, mappingParamsSnapshotsDataTable, mappingRulesDataTable, mappingRulesSnapshotsDataTable, marcRecordsDataTable, materialTypesDataTable, modeOfIssuancesDataTable, natureOfContentTermsDataTable, notesDataTable, noteTypesDataTable, ordersDataTable, orderInvoicesDataTable, orderItemsDataTable, orderStatusesDataTable, orderTemplatesDataTable, orderTransactionSummariesDataTable, orderTypesDataTable, organizationsDataTable, overdueFinePoliciesDataTable, ownersDataTable, patronActionSessionsDataTable, patronNoticePoliciesDataTable, paymentsDataTable, paymentMethodsDataTable, paymentTypesDataTable, permissionsDataTable, permissionsUsersDataTable, precedingSucceedingTitlesDataTable, prefixesDataTable, proxiesDataTable, rawRecordsDataTable, receiptStatusesDataTable, receivingsDataTable, recordsDataTable, refundReasonsDataTable, reportingCodesDataTable, requestsDataTable, requestPoliciesDataTable, scheduledNoticesDataTable, servicePointsDataTable, servicePointUsersDataTable, snapshotsDataTable, sourcesDataTable, staffSlipsDataTable, statisticalCodesDataTable, statisticalCodeTypesDataTable, suffixesDataTable, tagsDataTable, templatesDataTable, titlesDataTable, transactionsDataTable, transferAccountsDataTable, transferCriteriasDataTable, usersDataTable, userAcquisitionsUnitsDataTable, userRequestPreferencesDataTable, userSummariesDataTable, vouchersDataTable, voucherItemsDataTable, voucherStatusesDataTable, waiveReasonsDataTable;
+        private DataTable acquisitionsUnitsDataTable, addressTypesDataTable, alertsDataTable, alternativeTitleTypesDataTable, authAttemptsDataTable, authCredentialsHistoriesDataTable, authPasswordActionsDataTable, batchGroupsDataTable, batchVouchersDataTable, batchVoucherExportsDataTable, batchVoucherExportConfigsDataTable, blocksDataTable, blockConditionsDataTable, blockLimitsDataTable, boundWithPartsDataTable, budgetsDataTable, budgetExpenseClassesDataTable, budgetGroupsDataTable, callNumberTypesDataTable, campusesDataTable, cancellationReasonsDataTable, categoriesDataTable, checkInsDataTable, circulationRulesDataTable, classificationTypesDataTable, closeReasonsDataTable, commentsDataTable, configurationsDataTable, contactsDataTable, contactTypesDataTable, contributorNameTypesDataTable, contributorTypesDataTable, countriesDataTable, customFieldsDataTable, departmentsDataTable, documentsDataTable, donorsDataTable, electronicAccessRelationshipsDataTable, errorRecordsDataTable, eventLogsDataTable, expenseClassesDataTable, exportConfigCredentialsDataTable, feesDataTable, feeTypesDataTable, financeGroupsDataTable, fiscalYearsDataTable, fixedDueDateSchedulesDataTable, fundsDataTable, fund3sDataTable, fundTypesDataTable, groupsDataTable, holdingsDataTable, holdingDonor2sDataTable, holdingNoteTypesDataTable, holdingTypesDataTable, hridSettingsDataTable, idTypesDataTable, illPoliciesDataTable, instancesDataTable, instanceFormatsDataTable, instanceNoteTypesDataTable, instanceRelationshipsDataTable, instanceRelationshipTypesDataTable, instanceSourceMarcsDataTable, instanceStatusesDataTable, instanceTypesDataTable, institutionsDataTable, interfacesDataTable, interfaceCredentialsDataTable, invoicesDataTable, invoice3sDataTable, invoiceItemsDataTable, invoiceItem3sDataTable, invoiceItemDonorsDataTable, invoiceItemFund2sDataTable, invoiceStatusesDataTable, invoiceTransactionSummariesDataTable, itemsDataTable, itemDamagedStatusesDataTable, itemDonor2sDataTable, itemNoteTypesDataTable, itemOrderItemsDataTable, itemStatusesDataTable, jobExecutionsDataTable, jobExecutionProgressesDataTable, jobExecutionSourceChunksDataTable, jobMonitoringsDataTable, journalRecordsDataTable, ledgersDataTable, ledgerRolloversDataTable, ledgerRolloverErrorsDataTable, ledgerRolloverProgressesDataTable, librariesDataTable, loansDataTable, loanEventsDataTable, loanPoliciesDataTable, loanTypesDataTable, locationsDataTable, loginsDataTable, lostItemFeePoliciesDataTable, manualBlockTemplatesDataTable, mappingParamsSnapshotsDataTable, mappingRulesDataTable, mappingRulesSnapshotsDataTable, marcRecordsDataTable, materialTypesDataTable, modeOfIssuancesDataTable, natureOfContentTermsDataTable, notesDataTable, noteTypesDataTable, ordersDataTable, order3sDataTable, orderInvoicesDataTable, orderItemsDataTable, orderItem3sDataTable, orderItemDonorsDataTable, orderItemFund3sDataTable, orderStatusesDataTable, orderStatus2sDataTable, orderTemplatesDataTable, orderTransactionSummariesDataTable, orderTypesDataTable, orderType2sDataTable, organizationsDataTable, overdueFinePoliciesDataTable, ownersDataTable, patronActionSessionsDataTable, patronNoticePoliciesDataTable, paymentsDataTable, paymentMethodsDataTable, paymentTypesDataTable, permissionsDataTable, permissionsUsersDataTable, personDonorsDataTable, precedingSucceedingTitlesDataTable, prefixesDataTable, proxiesDataTable, rawRecordsDataTable, receiptStatusesDataTable, receivingsDataTable, recordsDataTable, refundReasonsDataTable, reportingCodesDataTable, requestsDataTable, requestPoliciesDataTable, scheduledNoticesDataTable, servicePointsDataTable, servicePointUsersDataTable, snapshotsDataTable, sourcesDataTable, staffSlipsDataTable, statisticalCodesDataTable, statisticalCodeTypesDataTable, suffixesDataTable, tagsDataTable, templatesDataTable, titlesDataTable, transactionsDataTable, transferAccountsDataTable, transferCriteriasDataTable, usersDataTable, userAcquisitionsUnitsDataTable, userRequestPreferencesDataTable, userSummariesDataTable, vendorsDataTable, vouchersDataTable, voucherItemsDataTable, voucherStatusesDataTable, waiveReasonsDataTable;
         private bool checkConstraints;
         private string connectionString;
         private bool identityInsert;
@@ -731,6 +731,41 @@ namespace FolioLibrary
             documentsDataTable.Rows.Add(dr);
         }
 
+        public void Insert(Donor donor)
+        {
+            if (donorsDataTable == null)
+            {
+                donorsDataTable = new DataTable();
+                donorsDataTable.Columns.Add(new DataColumn { ColumnName = "id", DataType = typeof(int) });
+                donorsDataTable.Columns.Add(new DataColumn { ColumnName = "name", DataType = typeof(string) });
+                donorsDataTable.Columns.Add(new DataColumn { ColumnName = "code", DataType = typeof(string) });
+                donorsDataTable.Columns.Add(new DataColumn { ColumnName = "amount", DataType = typeof(decimal) });
+                donorsDataTable.Columns.Add(new DataColumn { ColumnName = "report", DataType = typeof(string) });
+                donorsDataTable.Columns.Add(new DataColumn { ColumnName = "creation_time", DataType = typeof(DateTime) });
+                donorsDataTable.Columns.Add(new DataColumn { ColumnName = "creation_username", DataType = typeof(string) });
+                donorsDataTable.Columns.Add(new DataColumn { ColumnName = "last_write_time", DataType = typeof(DateTime) });
+                donorsDataTable.Columns.Add(new DataColumn { ColumnName = "last_write_username", DataType = typeof(string) });
+                donorsDataTable.Columns.Add(new DataColumn { ColumnName = "enabled", DataType = typeof(bool) });
+                donorsDataTable.Columns.Add(new DataColumn { ColumnName = "public_display", DataType = typeof(string) });
+                donorsDataTable.Columns.Add(new DataColumn { ColumnName = "notes", DataType = typeof(string) });
+                
+            }
+            var dr = donorsDataTable.NewRow();
+            dr["id"] = (object)donor.Id ?? DBNull.Value;
+            dr["name"] = (object)donor.Name ?? DBNull.Value;
+            dr["code"] = (object)donor.Code ?? DBNull.Value;
+            dr["amount"] = (object)donor.Amount ?? DBNull.Value;
+            dr["report"] = (object)donor.Report ?? DBNull.Value;
+            dr["creation_time"] = (object)donor.CreationTime ?? DBNull.Value;
+            dr["creation_username"] = (object)donor.CreationUsername ?? DBNull.Value;
+            dr["last_write_time"] = (object)donor.LastWriteTime ?? DBNull.Value;
+            dr["last_write_username"] = (object)donor.LastWriteUsername ?? DBNull.Value;
+            dr["enabled"] = (object)donor.Enabled ?? DBNull.Value;
+            dr["public_display"] = (object)donor.PublicDisplay ?? DBNull.Value;
+            dr["notes"] = (object)donor.Notes ?? DBNull.Value;
+            donorsDataTable.Rows.Add(dr);
+        }
+
         public void Insert(ElectronicAccessRelationship electronicAccessRelationship)
         {
             if (electronicAccessRelationshipsDataTable == null)
@@ -938,6 +973,35 @@ namespace FolioLibrary
             fundsDataTable.Rows.Add(dr);
         }
 
+        public void Insert(Fund3 fund3)
+        {
+            if (fund3sDataTable == null)
+            {
+                fund3sDataTable = new DataTable();
+                fund3sDataTable.Columns.Add(new DataColumn { ColumnName = "id", DataType = typeof(int) });
+                fund3sDataTable.Columns.Add(new DataColumn { ColumnName = "name", DataType = typeof(string) });
+                fund3sDataTable.Columns.Add(new DataColumn { ColumnName = "number", DataType = typeof(string) });
+                fund3sDataTable.Columns.Add(new DataColumn { ColumnName = "code", DataType = typeof(string) });
+                fund3sDataTable.Columns.Add(new DataColumn { ColumnName = "creation_time", DataType = typeof(DateTime) });
+                fund3sDataTable.Columns.Add(new DataColumn { ColumnName = "creation_username", DataType = typeof(string) });
+                fund3sDataTable.Columns.Add(new DataColumn { ColumnName = "last_write_time", DataType = typeof(DateTime) });
+                fund3sDataTable.Columns.Add(new DataColumn { ColumnName = "last_write_username", DataType = typeof(string) });
+                fund3sDataTable.Columns.Add(new DataColumn { ColumnName = "long_id", DataType = typeof(Guid) });
+                
+            }
+            var dr = fund3sDataTable.NewRow();
+            dr["id"] = (object)fund3.Id ?? DBNull.Value;
+            dr["name"] = (object)fund3.Name ?? DBNull.Value;
+            dr["number"] = (object)fund3.Number ?? DBNull.Value;
+            dr["code"] = (object)fund3.Code ?? DBNull.Value;
+            dr["creation_time"] = (object)fund3.CreationTime ?? DBNull.Value;
+            dr["creation_username"] = (object)fund3.CreationUsername ?? DBNull.Value;
+            dr["last_write_time"] = (object)fund3.LastWriteTime ?? DBNull.Value;
+            dr["last_write_username"] = (object)fund3.LastWriteUsername ?? DBNull.Value;
+            dr["long_id"] = (object)fund3.LongId ?? DBNull.Value;
+            fund3sDataTable.Rows.Add(dr);
+        }
+
         public void Insert(FundType fundType)
         {
             if (fundTypesDataTable == null)
@@ -1005,6 +1069,35 @@ namespace FolioLibrary
             dr["illpolicyid"] = (object)holding.Illpolicyid ?? DBNull.Value;
             dr["sourceid"] = (object)holding.Sourceid ?? DBNull.Value;
             holdingsDataTable.Rows.Add(dr);
+        }
+
+        public void Insert(HoldingDonor2 holdingDonor2)
+        {
+            if (holdingDonor2sDataTable == null)
+            {
+                holdingDonor2sDataTable = new DataTable();
+                holdingDonor2sDataTable.Columns.Add(new DataColumn { ColumnName = "id", DataType = typeof(int) });
+                holdingDonor2sDataTable.Columns.Add(new DataColumn { ColumnName = "holding_id", DataType = typeof(Guid) });
+                holdingDonor2sDataTable.Columns.Add(new DataColumn { ColumnName = "holding_short_id", DataType = typeof(int) });
+                holdingDonor2sDataTable.Columns.Add(new DataColumn { ColumnName = "donor_id", DataType = typeof(int) });
+                holdingDonor2sDataTable.Columns.Add(new DataColumn { ColumnName = "report", DataType = typeof(bool) });
+                holdingDonor2sDataTable.Columns.Add(new DataColumn { ColumnName = "creation_time", DataType = typeof(DateTime) });
+                holdingDonor2sDataTable.Columns.Add(new DataColumn { ColumnName = "creation_username", DataType = typeof(string) });
+                holdingDonor2sDataTable.Columns.Add(new DataColumn { ColumnName = "last_write_time", DataType = typeof(DateTime) });
+                holdingDonor2sDataTable.Columns.Add(new DataColumn { ColumnName = "last_write_username", DataType = typeof(string) });
+                
+            }
+            var dr = holdingDonor2sDataTable.NewRow();
+            dr["id"] = (object)holdingDonor2.Id ?? DBNull.Value;
+            dr["holding_id"] = (object)holdingDonor2.HoldingId ?? DBNull.Value;
+            dr["holding_short_id"] = (object)holdingDonor2.HoldingShortId ?? DBNull.Value;
+            dr["donor_id"] = (object)holdingDonor2.DonorId ?? DBNull.Value;
+            dr["report"] = (object)holdingDonor2.Report ?? DBNull.Value;
+            dr["creation_time"] = (object)holdingDonor2.CreationTime ?? DBNull.Value;
+            dr["creation_username"] = (object)holdingDonor2.CreationUsername ?? DBNull.Value;
+            dr["last_write_time"] = (object)holdingDonor2.LastWriteTime ?? DBNull.Value;
+            dr["last_write_username"] = (object)holdingDonor2.LastWriteUsername ?? DBNull.Value;
+            holdingDonor2sDataTable.Rows.Add(dr);
         }
 
         public void Insert(HoldingNoteType holdingNoteType)
@@ -1332,6 +1425,49 @@ namespace FolioLibrary
             invoicesDataTable.Rows.Add(dr);
         }
 
+        public void Insert(Invoice3 invoice3)
+        {
+            if (invoice3sDataTable == null)
+            {
+                invoice3sDataTable = new DataTable();
+                invoice3sDataTable.Columns.Add(new DataColumn { ColumnName = "id", DataType = typeof(int) });
+                invoice3sDataTable.Columns.Add(new DataColumn { ColumnName = "vendor_id", DataType = typeof(int) });
+                invoice3sDataTable.Columns.Add(new DataColumn { ColumnName = "invoice_date", DataType = typeof(DateTime) });
+                invoice3sDataTable.Columns.Add(new DataColumn { ColumnName = "vendor_invoice_id", DataType = typeof(string) });
+                invoice3sDataTable.Columns.Add(new DataColumn { ColumnName = "vendor_invoice_amount", DataType = typeof(decimal) });
+                invoice3sDataTable.Columns.Add(new DataColumn { ColumnName = "invoice_status_id", DataType = typeof(int) });
+                invoice3sDataTable.Columns.Add(new DataColumn { ColumnName = "fiscal_year", DataType = typeof(int) });
+                invoice3sDataTable.Columns.Add(new DataColumn { ColumnName = "approve_time", DataType = typeof(DateTime) });
+                invoice3sDataTable.Columns.Add(new DataColumn { ColumnName = "approve_username", DataType = typeof(string) });
+                invoice3sDataTable.Columns.Add(new DataColumn { ColumnName = "cancel_time", DataType = typeof(DateTime) });
+                invoice3sDataTable.Columns.Add(new DataColumn { ColumnName = "cancel_username", DataType = typeof(string) });
+                invoice3sDataTable.Columns.Add(new DataColumn { ColumnName = "creation_time", DataType = typeof(DateTime) });
+                invoice3sDataTable.Columns.Add(new DataColumn { ColumnName = "creation_username", DataType = typeof(string) });
+                invoice3sDataTable.Columns.Add(new DataColumn { ColumnName = "last_write_time", DataType = typeof(DateTime) });
+                invoice3sDataTable.Columns.Add(new DataColumn { ColumnName = "last_write_username", DataType = typeof(string) });
+                invoice3sDataTable.Columns.Add(new DataColumn { ColumnName = "long_id", DataType = typeof(Guid) });
+                
+            }
+            var dr = invoice3sDataTable.NewRow();
+            dr["id"] = (object)invoice3.Id ?? DBNull.Value;
+            dr["vendor_id"] = (object)invoice3.VendorId ?? DBNull.Value;
+            dr["invoice_date"] = (object)invoice3.InvoiceDate ?? DBNull.Value;
+            dr["vendor_invoice_id"] = (object)invoice3.VendorInvoiceId ?? DBNull.Value;
+            dr["vendor_invoice_amount"] = (object)invoice3.VendorInvoiceAmount ?? DBNull.Value;
+            dr["invoice_status_id"] = (object)invoice3.InvoiceStatusId ?? DBNull.Value;
+            dr["fiscal_year"] = (object)invoice3.FiscalYear ?? DBNull.Value;
+            dr["approve_time"] = (object)invoice3.ApproveTime ?? DBNull.Value;
+            dr["approve_username"] = (object)invoice3.ApproveUsername ?? DBNull.Value;
+            dr["cancel_time"] = (object)invoice3.CancelTime ?? DBNull.Value;
+            dr["cancel_username"] = (object)invoice3.CancelUsername ?? DBNull.Value;
+            dr["creation_time"] = (object)invoice3.CreationTime ?? DBNull.Value;
+            dr["creation_username"] = (object)invoice3.CreationUsername ?? DBNull.Value;
+            dr["last_write_time"] = (object)invoice3.LastWriteTime ?? DBNull.Value;
+            dr["last_write_username"] = (object)invoice3.LastWriteUsername ?? DBNull.Value;
+            dr["long_id"] = (object)invoice3.LongId ?? DBNull.Value;
+            invoice3sDataTable.Rows.Add(dr);
+        }
+
         public void Insert(InvoiceItem invoiceItem)
         {
             if (invoiceItemsDataTable == null)
@@ -1351,6 +1487,99 @@ namespace FolioLibrary
             dr["created_by"] = (object)invoiceItem.CreationUserId ?? DBNull.Value;
             dr["invoiceid"] = (object)invoiceItem.Invoiceid ?? DBNull.Value;
             invoiceItemsDataTable.Rows.Add(dr);
+        }
+
+        public void Insert(InvoiceItem3 invoiceItem3)
+        {
+            if (invoiceItem3sDataTable == null)
+            {
+                invoiceItem3sDataTable = new DataTable();
+                invoiceItem3sDataTable.Columns.Add(new DataColumn { ColumnName = "id", DataType = typeof(int) });
+                invoiceItem3sDataTable.Columns.Add(new DataColumn { ColumnName = "invoice_id", DataType = typeof(int) });
+                invoiceItem3sDataTable.Columns.Add(new DataColumn { ColumnName = "name", DataType = typeof(string) });
+                invoiceItem3sDataTable.Columns.Add(new DataColumn { ColumnName = "quantity", DataType = typeof(int) });
+                invoiceItem3sDataTable.Columns.Add(new DataColumn { ColumnName = "order_item_id", DataType = typeof(int) });
+                invoiceItem3sDataTable.Columns.Add(new DataColumn { ColumnName = "creation_time", DataType = typeof(DateTime) });
+                invoiceItem3sDataTable.Columns.Add(new DataColumn { ColumnName = "creation_username", DataType = typeof(string) });
+                invoiceItem3sDataTable.Columns.Add(new DataColumn { ColumnName = "last_write_time", DataType = typeof(DateTime) });
+                invoiceItem3sDataTable.Columns.Add(new DataColumn { ColumnName = "last_write_username", DataType = typeof(string) });
+                invoiceItem3sDataTable.Columns.Add(new DataColumn { ColumnName = "long_id", DataType = typeof(Guid) });
+                
+            }
+            var dr = invoiceItem3sDataTable.NewRow();
+            dr["id"] = (object)invoiceItem3.Id ?? DBNull.Value;
+            dr["invoice_id"] = (object)invoiceItem3.InvoiceId ?? DBNull.Value;
+            dr["name"] = (object)invoiceItem3.Name ?? DBNull.Value;
+            dr["quantity"] = (object)invoiceItem3.Quantity ?? DBNull.Value;
+            dr["order_item_id"] = (object)invoiceItem3.OrderItemId ?? DBNull.Value;
+            dr["creation_time"] = (object)invoiceItem3.CreationTime ?? DBNull.Value;
+            dr["creation_username"] = (object)invoiceItem3.CreationUsername ?? DBNull.Value;
+            dr["last_write_time"] = (object)invoiceItem3.LastWriteTime ?? DBNull.Value;
+            dr["last_write_username"] = (object)invoiceItem3.LastWriteUsername ?? DBNull.Value;
+            dr["long_id"] = (object)invoiceItem3.LongId ?? DBNull.Value;
+            invoiceItem3sDataTable.Rows.Add(dr);
+        }
+
+        public void Insert(InvoiceItemDonor invoiceItemDonor)
+        {
+            if (invoiceItemDonorsDataTable == null)
+            {
+                invoiceItemDonorsDataTable = new DataTable();
+                invoiceItemDonorsDataTable.Columns.Add(new DataColumn { ColumnName = "id", DataType = typeof(int) });
+                invoiceItemDonorsDataTable.Columns.Add(new DataColumn { ColumnName = "invoice_item_id", DataType = typeof(string) });
+                invoiceItemDonorsDataTable.Columns.Add(new DataColumn { ColumnName = "invoice_item_short_id", DataType = typeof(int) });
+                invoiceItemDonorsDataTable.Columns.Add(new DataColumn { ColumnName = "donor_id", DataType = typeof(int) });
+                invoiceItemDonorsDataTable.Columns.Add(new DataColumn { ColumnName = "amount", DataType = typeof(decimal) });
+                invoiceItemDonorsDataTable.Columns.Add(new DataColumn { ColumnName = "shipping_amount", DataType = typeof(decimal) });
+                invoiceItemDonorsDataTable.Columns.Add(new DataColumn { ColumnName = "creation_time", DataType = typeof(DateTime) });
+                invoiceItemDonorsDataTable.Columns.Add(new DataColumn { ColumnName = "creation_username", DataType = typeof(string) });
+                invoiceItemDonorsDataTable.Columns.Add(new DataColumn { ColumnName = "last_write_time", DataType = typeof(DateTime) });
+                invoiceItemDonorsDataTable.Columns.Add(new DataColumn { ColumnName = "last_write_username", DataType = typeof(string) });
+                
+            }
+            var dr = invoiceItemDonorsDataTable.NewRow();
+            dr["id"] = (object)invoiceItemDonor.Id ?? DBNull.Value;
+            dr["invoice_item_id"] = (object)invoiceItemDonor.InvoiceItemId ?? DBNull.Value;
+            dr["invoice_item_short_id"] = (object)invoiceItemDonor.InvoiceItemShortId ?? DBNull.Value;
+            dr["donor_id"] = (object)invoiceItemDonor.DonorId ?? DBNull.Value;
+            dr["amount"] = (object)invoiceItemDonor.Amount ?? DBNull.Value;
+            dr["shipping_amount"] = (object)invoiceItemDonor.ShippingAmount ?? DBNull.Value;
+            dr["creation_time"] = (object)invoiceItemDonor.CreationTime ?? DBNull.Value;
+            dr["creation_username"] = (object)invoiceItemDonor.CreationUsername ?? DBNull.Value;
+            dr["last_write_time"] = (object)invoiceItemDonor.LastWriteTime ?? DBNull.Value;
+            dr["last_write_username"] = (object)invoiceItemDonor.LastWriteUsername ?? DBNull.Value;
+            invoiceItemDonorsDataTable.Rows.Add(dr);
+        }
+
+        public void Insert(InvoiceItemFund2 invoiceItemFund2)
+        {
+            if (invoiceItemFund2sDataTable == null)
+            {
+                invoiceItemFund2sDataTable = new DataTable();
+                invoiceItemFund2sDataTable.Columns.Add(new DataColumn { ColumnName = "id", DataType = typeof(int) });
+                invoiceItemFund2sDataTable.Columns.Add(new DataColumn { ColumnName = "invoice_item_id", DataType = typeof(int) });
+                invoiceItemFund2sDataTable.Columns.Add(new DataColumn { ColumnName = "fund_id", DataType = typeof(int) });
+                invoiceItemFund2sDataTable.Columns.Add(new DataColumn { ColumnName = "amount", DataType = typeof(decimal) });
+                invoiceItemFund2sDataTable.Columns.Add(new DataColumn { ColumnName = "shipping_amount", DataType = typeof(decimal) });
+                invoiceItemFund2sDataTable.Columns.Add(new DataColumn { ColumnName = "creation_time", DataType = typeof(DateTime) });
+                invoiceItemFund2sDataTable.Columns.Add(new DataColumn { ColumnName = "creation_username", DataType = typeof(string) });
+                invoiceItemFund2sDataTable.Columns.Add(new DataColumn { ColumnName = "last_write_time", DataType = typeof(DateTime) });
+                invoiceItemFund2sDataTable.Columns.Add(new DataColumn { ColumnName = "last_write_username", DataType = typeof(string) });
+                invoiceItemFund2sDataTable.Columns.Add(new DataColumn { ColumnName = "long_id", DataType = typeof(Guid) });
+                
+            }
+            var dr = invoiceItemFund2sDataTable.NewRow();
+            dr["id"] = (object)invoiceItemFund2.Id ?? DBNull.Value;
+            dr["invoice_item_id"] = (object)invoiceItemFund2.InvoiceItemId ?? DBNull.Value;
+            dr["fund_id"] = (object)invoiceItemFund2.FundId ?? DBNull.Value;
+            dr["amount"] = (object)invoiceItemFund2.Amount ?? DBNull.Value;
+            dr["shipping_amount"] = (object)invoiceItemFund2.ShippingAmount ?? DBNull.Value;
+            dr["creation_time"] = (object)invoiceItemFund2.CreationTime ?? DBNull.Value;
+            dr["creation_username"] = (object)invoiceItemFund2.CreationUsername ?? DBNull.Value;
+            dr["last_write_time"] = (object)invoiceItemFund2.LastWriteTime ?? DBNull.Value;
+            dr["last_write_username"] = (object)invoiceItemFund2.LastWriteUsername ?? DBNull.Value;
+            dr["long_id"] = (object)invoiceItemFund2.LongId ?? DBNull.Value;
+            invoiceItemFund2sDataTable.Rows.Add(dr);
         }
 
         public void Insert(InvoiceStatus invoiceStatus)
@@ -1443,6 +1672,35 @@ namespace FolioLibrary
             itemDamagedStatusesDataTable.Rows.Add(dr);
         }
 
+        public void Insert(ItemDonor2 itemDonor2)
+        {
+            if (itemDonor2sDataTable == null)
+            {
+                itemDonor2sDataTable = new DataTable();
+                itemDonor2sDataTable.Columns.Add(new DataColumn { ColumnName = "id", DataType = typeof(int) });
+                itemDonor2sDataTable.Columns.Add(new DataColumn { ColumnName = "item_id", DataType = typeof(Guid) });
+                itemDonor2sDataTable.Columns.Add(new DataColumn { ColumnName = "item_short_id", DataType = typeof(int) });
+                itemDonor2sDataTable.Columns.Add(new DataColumn { ColumnName = "donor_id", DataType = typeof(int) });
+                itemDonor2sDataTable.Columns.Add(new DataColumn { ColumnName = "report", DataType = typeof(bool) });
+                itemDonor2sDataTable.Columns.Add(new DataColumn { ColumnName = "creation_time", DataType = typeof(DateTime) });
+                itemDonor2sDataTable.Columns.Add(new DataColumn { ColumnName = "creation_username", DataType = typeof(string) });
+                itemDonor2sDataTable.Columns.Add(new DataColumn { ColumnName = "last_write_time", DataType = typeof(DateTime) });
+                itemDonor2sDataTable.Columns.Add(new DataColumn { ColumnName = "last_write_username", DataType = typeof(string) });
+                
+            }
+            var dr = itemDonor2sDataTable.NewRow();
+            dr["id"] = (object)itemDonor2.Id ?? DBNull.Value;
+            dr["item_id"] = (object)itemDonor2.ItemId ?? DBNull.Value;
+            dr["item_short_id"] = (object)itemDonor2.ItemShortId ?? DBNull.Value;
+            dr["donor_id"] = (object)itemDonor2.DonorId ?? DBNull.Value;
+            dr["report"] = (object)itemDonor2.Report ?? DBNull.Value;
+            dr["creation_time"] = (object)itemDonor2.CreationTime ?? DBNull.Value;
+            dr["creation_username"] = (object)itemDonor2.CreationUsername ?? DBNull.Value;
+            dr["last_write_time"] = (object)itemDonor2.LastWriteTime ?? DBNull.Value;
+            dr["last_write_username"] = (object)itemDonor2.LastWriteUsername ?? DBNull.Value;
+            itemDonor2sDataTable.Rows.Add(dr);
+        }
+
         public void Insert(ItemNoteType itemNoteType)
         {
             if (itemNoteTypesDataTable == null)
@@ -1460,6 +1718,21 @@ namespace FolioLibrary
             dr["creation_date"] = (object)itemNoteType.CreationTime ?? DBNull.Value;
             dr["created_by"] = (object)itemNoteType.CreationUserId ?? DBNull.Value;
             itemNoteTypesDataTable.Rows.Add(dr);
+        }
+
+        public void Insert(ItemOrderItem itemOrderItem)
+        {
+            if (itemOrderItemsDataTable == null)
+            {
+                itemOrderItemsDataTable = new DataTable();
+                itemOrderItemsDataTable.Columns.Add(new DataColumn { ColumnName = "id", DataType = typeof(int) });
+                itemOrderItemsDataTable.Columns.Add(new DataColumn { ColumnName = "order_item_id", DataType = typeof(int) });
+                
+            }
+            var dr = itemOrderItemsDataTable.NewRow();
+            dr["id"] = (object)itemOrderItem.Id ?? DBNull.Value;
+            dr["order_item_id"] = (object)itemOrderItem.OrderItemId ?? DBNull.Value;
+            itemOrderItemsDataTable.Rows.Add(dr);
         }
 
         public void Insert(ItemStatus itemStatus)
@@ -2031,6 +2304,57 @@ namespace FolioLibrary
             ordersDataTable.Rows.Add(dr);
         }
 
+        public void Insert(Order3 order3)
+        {
+            if (order3sDataTable == null)
+            {
+                order3sDataTable = new DataTable();
+                order3sDataTable.Columns.Add(new DataColumn { ColumnName = "id", DataType = typeof(int) });
+                order3sDataTable.Columns.Add(new DataColumn { ColumnName = "document_id", DataType = typeof(int) });
+                order3sDataTable.Columns.Add(new DataColumn { ColumnName = "vendor_id", DataType = typeof(int) });
+                order3sDataTable.Columns.Add(new DataColumn { ColumnName = "order_date", DataType = typeof(DateTime) });
+                order3sDataTable.Columns.Add(new DataColumn { ColumnName = "order_type_id", DataType = typeof(int) });
+                order3sDataTable.Columns.Add(new DataColumn { ColumnName = "order_status_id", DataType = typeof(int) });
+                order3sDataTable.Columns.Add(new DataColumn { ColumnName = "fiscal_year", DataType = typeof(int) });
+                order3sDataTable.Columns.Add(new DataColumn { ColumnName = "vendor_customer_id", DataType = typeof(string) });
+                order3sDataTable.Columns.Add(new DataColumn { ColumnName = "delivery_room_id", DataType = typeof(int) });
+                order3sDataTable.Columns.Add(new DataColumn { ColumnName = "approve_time", DataType = typeof(DateTime) });
+                order3sDataTable.Columns.Add(new DataColumn { ColumnName = "approve_username", DataType = typeof(string) });
+                order3sDataTable.Columns.Add(new DataColumn { ColumnName = "cancel_time", DataType = typeof(DateTime) });
+                order3sDataTable.Columns.Add(new DataColumn { ColumnName = "cancel_username", DataType = typeof(string) });
+                order3sDataTable.Columns.Add(new DataColumn { ColumnName = "freight_amount", DataType = typeof(decimal) });
+                order3sDataTable.Columns.Add(new DataColumn { ColumnName = "shipping_amount", DataType = typeof(decimal) });
+                order3sDataTable.Columns.Add(new DataColumn { ColumnName = "creation_time", DataType = typeof(DateTime) });
+                order3sDataTable.Columns.Add(new DataColumn { ColumnName = "creation_username", DataType = typeof(string) });
+                order3sDataTable.Columns.Add(new DataColumn { ColumnName = "last_write_time", DataType = typeof(DateTime) });
+                order3sDataTable.Columns.Add(new DataColumn { ColumnName = "last_write_username", DataType = typeof(string) });
+                order3sDataTable.Columns.Add(new DataColumn { ColumnName = "long_id", DataType = typeof(Guid) });
+                
+            }
+            var dr = order3sDataTable.NewRow();
+            dr["id"] = (object)order3.Id ?? DBNull.Value;
+            dr["document_id"] = (object)order3.DocumentId ?? DBNull.Value;
+            dr["vendor_id"] = (object)order3.VendorId ?? DBNull.Value;
+            dr["order_date"] = (object)order3.OrderDate ?? DBNull.Value;
+            dr["order_type_id"] = (object)order3.OrderTypeId ?? DBNull.Value;
+            dr["order_status_id"] = (object)order3.OrderStatusId ?? DBNull.Value;
+            dr["fiscal_year"] = (object)order3.FiscalYear ?? DBNull.Value;
+            dr["vendor_customer_id"] = (object)order3.VendorCustomerId ?? DBNull.Value;
+            dr["delivery_room_id"] = (object)order3.DeliveryRoomId ?? DBNull.Value;
+            dr["approve_time"] = (object)order3.ApproveTime ?? DBNull.Value;
+            dr["approve_username"] = (object)order3.ApproveUsername ?? DBNull.Value;
+            dr["cancel_time"] = (object)order3.CancelTime ?? DBNull.Value;
+            dr["cancel_username"] = (object)order3.CancelUsername ?? DBNull.Value;
+            dr["freight_amount"] = (object)order3.FreightAmount ?? DBNull.Value;
+            dr["shipping_amount"] = (object)order3.ShippingAmount ?? DBNull.Value;
+            dr["creation_time"] = (object)order3.CreationTime ?? DBNull.Value;
+            dr["creation_username"] = (object)order3.CreationUsername ?? DBNull.Value;
+            dr["last_write_time"] = (object)order3.LastWriteTime ?? DBNull.Value;
+            dr["last_write_username"] = (object)order3.LastWriteUsername ?? DBNull.Value;
+            dr["long_id"] = (object)order3.LongId ?? DBNull.Value;
+            order3sDataTable.Rows.Add(dr);
+        }
+
         public void Insert(OrderInvoice orderInvoice)
         {
             if (orderInvoicesDataTable == null)
@@ -2069,6 +2393,113 @@ namespace FolioLibrary
             orderItemsDataTable.Rows.Add(dr);
         }
 
+        public void Insert(OrderItem3 orderItem3)
+        {
+            if (orderItem3sDataTable == null)
+            {
+                orderItem3sDataTable = new DataTable();
+                orderItem3sDataTable.Columns.Add(new DataColumn { ColumnName = "id", DataType = typeof(int) });
+                orderItem3sDataTable.Columns.Add(new DataColumn { ColumnName = "order_id", DataType = typeof(int) });
+                orderItem3sDataTable.Columns.Add(new DataColumn { ColumnName = "name", DataType = typeof(string) });
+                orderItem3sDataTable.Columns.Add(new DataColumn { ColumnName = "unit_price", DataType = typeof(decimal) });
+                orderItem3sDataTable.Columns.Add(new DataColumn { ColumnName = "quantity", DataType = typeof(int) });
+                orderItem3sDataTable.Columns.Add(new DataColumn { ColumnName = "vendor_item_id", DataType = typeof(string) });
+                orderItem3sDataTable.Columns.Add(new DataColumn { ColumnName = "vendor_notes", DataType = typeof(string) });
+                orderItem3sDataTable.Columns.Add(new DataColumn { ColumnName = "special_notes", DataType = typeof(string) });
+                orderItem3sDataTable.Columns.Add(new DataColumn { ColumnName = "miscellaneous_notes", DataType = typeof(string) });
+                orderItem3sDataTable.Columns.Add(new DataColumn { ColumnName = "selector_notes", DataType = typeof(string) });
+                orderItem3sDataTable.Columns.Add(new DataColumn { ColumnName = "instance_id", DataType = typeof(int) });
+                orderItem3sDataTable.Columns.Add(new DataColumn { ColumnName = "holding_id", DataType = typeof(int) });
+                orderItem3sDataTable.Columns.Add(new DataColumn { ColumnName = "creation_time", DataType = typeof(DateTime) });
+                orderItem3sDataTable.Columns.Add(new DataColumn { ColumnName = "creation_username", DataType = typeof(string) });
+                orderItem3sDataTable.Columns.Add(new DataColumn { ColumnName = "last_write_time", DataType = typeof(DateTime) });
+                orderItem3sDataTable.Columns.Add(new DataColumn { ColumnName = "last_write_username", DataType = typeof(string) });
+                orderItem3sDataTable.Columns.Add(new DataColumn { ColumnName = "long_id", DataType = typeof(Guid) });
+                orderItem3sDataTable.Columns.Add(new DataColumn { ColumnName = "receipt_status_id", DataType = typeof(int) });
+                
+            }
+            var dr = orderItem3sDataTable.NewRow();
+            dr["id"] = (object)orderItem3.Id ?? DBNull.Value;
+            dr["order_id"] = (object)orderItem3.OrderId ?? DBNull.Value;
+            dr["name"] = (object)orderItem3.Name ?? DBNull.Value;
+            dr["unit_price"] = (object)orderItem3.UnitPrice ?? DBNull.Value;
+            dr["quantity"] = (object)orderItem3.Quantity ?? DBNull.Value;
+            dr["vendor_item_id"] = (object)orderItem3.VendorItemId ?? DBNull.Value;
+            dr["vendor_notes"] = (object)orderItem3.VendorNotes ?? DBNull.Value;
+            dr["special_notes"] = (object)orderItem3.SpecialNotes ?? DBNull.Value;
+            dr["miscellaneous_notes"] = (object)orderItem3.MiscellaneousNotes ?? DBNull.Value;
+            dr["selector_notes"] = (object)orderItem3.SelectorNotes ?? DBNull.Value;
+            dr["instance_id"] = (object)orderItem3.InstanceId ?? DBNull.Value;
+            dr["holding_id"] = (object)orderItem3.HoldingId ?? DBNull.Value;
+            dr["creation_time"] = (object)orderItem3.CreationTime ?? DBNull.Value;
+            dr["creation_username"] = (object)orderItem3.CreationUsername ?? DBNull.Value;
+            dr["last_write_time"] = (object)orderItem3.LastWriteTime ?? DBNull.Value;
+            dr["last_write_username"] = (object)orderItem3.LastWriteUsername ?? DBNull.Value;
+            dr["long_id"] = (object)orderItem3.LongId ?? DBNull.Value;
+            dr["receipt_status_id"] = (object)orderItem3.ReceiptStatusId ?? DBNull.Value;
+            orderItem3sDataTable.Rows.Add(dr);
+        }
+
+        public void Insert(OrderItemDonor orderItemDonor)
+        {
+            if (orderItemDonorsDataTable == null)
+            {
+                orderItemDonorsDataTable = new DataTable();
+                orderItemDonorsDataTable.Columns.Add(new DataColumn { ColumnName = "id", DataType = typeof(int) });
+                orderItemDonorsDataTable.Columns.Add(new DataColumn { ColumnName = "order_item_id", DataType = typeof(string) });
+                orderItemDonorsDataTable.Columns.Add(new DataColumn { ColumnName = "order_item_short_id", DataType = typeof(int) });
+                orderItemDonorsDataTable.Columns.Add(new DataColumn { ColumnName = "donor_id", DataType = typeof(int) });
+                orderItemDonorsDataTable.Columns.Add(new DataColumn { ColumnName = "report", DataType = typeof(bool) });
+                orderItemDonorsDataTable.Columns.Add(new DataColumn { ColumnName = "amount", DataType = typeof(decimal) });
+                orderItemDonorsDataTable.Columns.Add(new DataColumn { ColumnName = "creation_time", DataType = typeof(DateTime) });
+                orderItemDonorsDataTable.Columns.Add(new DataColumn { ColumnName = "creation_username", DataType = typeof(string) });
+                orderItemDonorsDataTable.Columns.Add(new DataColumn { ColumnName = "last_write_time", DataType = typeof(DateTime) });
+                orderItemDonorsDataTable.Columns.Add(new DataColumn { ColumnName = "last_write_username", DataType = typeof(string) });
+                
+            }
+            var dr = orderItemDonorsDataTable.NewRow();
+            dr["id"] = (object)orderItemDonor.Id ?? DBNull.Value;
+            dr["order_item_id"] = (object)orderItemDonor.OrderItemId ?? DBNull.Value;
+            dr["order_item_short_id"] = (object)orderItemDonor.OrderItemShortId ?? DBNull.Value;
+            dr["donor_id"] = (object)orderItemDonor.DonorId ?? DBNull.Value;
+            dr["report"] = (object)orderItemDonor.Report ?? DBNull.Value;
+            dr["amount"] = (object)orderItemDonor.Amount ?? DBNull.Value;
+            dr["creation_time"] = (object)orderItemDonor.CreationTime ?? DBNull.Value;
+            dr["creation_username"] = (object)orderItemDonor.CreationUsername ?? DBNull.Value;
+            dr["last_write_time"] = (object)orderItemDonor.LastWriteTime ?? DBNull.Value;
+            dr["last_write_username"] = (object)orderItemDonor.LastWriteUsername ?? DBNull.Value;
+            orderItemDonorsDataTable.Rows.Add(dr);
+        }
+
+        public void Insert(OrderItemFund3 orderItemFund3)
+        {
+            if (orderItemFund3sDataTable == null)
+            {
+                orderItemFund3sDataTable = new DataTable();
+                orderItemFund3sDataTable.Columns.Add(new DataColumn { ColumnName = "id", DataType = typeof(int) });
+                orderItemFund3sDataTable.Columns.Add(new DataColumn { ColumnName = "order_item_id", DataType = typeof(int) });
+                orderItemFund3sDataTable.Columns.Add(new DataColumn { ColumnName = "fund_id", DataType = typeof(int) });
+                orderItemFund3sDataTable.Columns.Add(new DataColumn { ColumnName = "amount", DataType = typeof(decimal) });
+                orderItemFund3sDataTable.Columns.Add(new DataColumn { ColumnName = "creation_time", DataType = typeof(DateTime) });
+                orderItemFund3sDataTable.Columns.Add(new DataColumn { ColumnName = "creation_username", DataType = typeof(string) });
+                orderItemFund3sDataTable.Columns.Add(new DataColumn { ColumnName = "last_write_time", DataType = typeof(DateTime) });
+                orderItemFund3sDataTable.Columns.Add(new DataColumn { ColumnName = "last_write_username", DataType = typeof(string) });
+                orderItemFund3sDataTable.Columns.Add(new DataColumn { ColumnName = "long_id", DataType = typeof(Guid) });
+                
+            }
+            var dr = orderItemFund3sDataTable.NewRow();
+            dr["id"] = (object)orderItemFund3.Id ?? DBNull.Value;
+            dr["order_item_id"] = (object)orderItemFund3.OrderItemId ?? DBNull.Value;
+            dr["fund_id"] = (object)orderItemFund3.FundId ?? DBNull.Value;
+            dr["amount"] = (object)orderItemFund3.Amount ?? DBNull.Value;
+            dr["creation_time"] = (object)orderItemFund3.CreationTime ?? DBNull.Value;
+            dr["creation_username"] = (object)orderItemFund3.CreationUsername ?? DBNull.Value;
+            dr["last_write_time"] = (object)orderItemFund3.LastWriteTime ?? DBNull.Value;
+            dr["last_write_username"] = (object)orderItemFund3.LastWriteUsername ?? DBNull.Value;
+            dr["long_id"] = (object)orderItemFund3.LongId ?? DBNull.Value;
+            orderItemFund3sDataTable.Rows.Add(dr);
+        }
+
         public void Insert(OrderStatus orderStatus)
         {
             if (orderStatusesDataTable == null)
@@ -2090,6 +2521,29 @@ namespace FolioLibrary
             dr["last_write_time"] = (object)orderStatus.LastWriteTime ?? DBNull.Value;
             dr["last_write_username"] = (object)orderStatus.LastWriteUsername ?? DBNull.Value;
             orderStatusesDataTable.Rows.Add(dr);
+        }
+
+        public void Insert(OrderStatus2 orderStatus2)
+        {
+            if (orderStatus2sDataTable == null)
+            {
+                orderStatus2sDataTable = new DataTable();
+                orderStatus2sDataTable.Columns.Add(new DataColumn { ColumnName = "id", DataType = typeof(int) });
+                orderStatus2sDataTable.Columns.Add(new DataColumn { ColumnName = "name", DataType = typeof(string) });
+                orderStatus2sDataTable.Columns.Add(new DataColumn { ColumnName = "creation_time", DataType = typeof(DateTime) });
+                orderStatus2sDataTable.Columns.Add(new DataColumn { ColumnName = "creation_username", DataType = typeof(string) });
+                orderStatus2sDataTable.Columns.Add(new DataColumn { ColumnName = "last_write_time", DataType = typeof(DateTime) });
+                orderStatus2sDataTable.Columns.Add(new DataColumn { ColumnName = "last_write_username", DataType = typeof(string) });
+                
+            }
+            var dr = orderStatus2sDataTable.NewRow();
+            dr["id"] = (object)orderStatus2.Id ?? DBNull.Value;
+            dr["name"] = (object)orderStatus2.Name ?? DBNull.Value;
+            dr["creation_time"] = (object)orderStatus2.CreationTime ?? DBNull.Value;
+            dr["creation_username"] = (object)orderStatus2.CreationUsername ?? DBNull.Value;
+            dr["last_write_time"] = (object)orderStatus2.LastWriteTime ?? DBNull.Value;
+            dr["last_write_username"] = (object)orderStatus2.LastWriteUsername ?? DBNull.Value;
+            orderStatus2sDataTable.Rows.Add(dr);
         }
 
         public void Insert(OrderTemplate orderTemplate)
@@ -2143,6 +2597,29 @@ namespace FolioLibrary
             dr["last_write_time"] = (object)orderType.LastWriteTime ?? DBNull.Value;
             dr["last_write_username"] = (object)orderType.LastWriteUsername ?? DBNull.Value;
             orderTypesDataTable.Rows.Add(dr);
+        }
+
+        public void Insert(OrderType2 orderType2)
+        {
+            if (orderType2sDataTable == null)
+            {
+                orderType2sDataTable = new DataTable();
+                orderType2sDataTable.Columns.Add(new DataColumn { ColumnName = "id", DataType = typeof(int) });
+                orderType2sDataTable.Columns.Add(new DataColumn { ColumnName = "name", DataType = typeof(string) });
+                orderType2sDataTable.Columns.Add(new DataColumn { ColumnName = "creation_time", DataType = typeof(DateTime) });
+                orderType2sDataTable.Columns.Add(new DataColumn { ColumnName = "creation_username", DataType = typeof(string) });
+                orderType2sDataTable.Columns.Add(new DataColumn { ColumnName = "last_write_time", DataType = typeof(DateTime) });
+                orderType2sDataTable.Columns.Add(new DataColumn { ColumnName = "last_write_username", DataType = typeof(string) });
+                
+            }
+            var dr = orderType2sDataTable.NewRow();
+            dr["id"] = (object)orderType2.Id ?? DBNull.Value;
+            dr["name"] = (object)orderType2.Name ?? DBNull.Value;
+            dr["creation_time"] = (object)orderType2.CreationTime ?? DBNull.Value;
+            dr["creation_username"] = (object)orderType2.CreationUsername ?? DBNull.Value;
+            dr["last_write_time"] = (object)orderType2.LastWriteTime ?? DBNull.Value;
+            dr["last_write_username"] = (object)orderType2.LastWriteUsername ?? DBNull.Value;
+            orderType2sDataTable.Rows.Add(dr);
         }
 
         public void Insert(Organization organization)
@@ -2337,6 +2814,31 @@ namespace FolioLibrary
             dr["creation_date"] = (object)permissionsUser.CreationTime ?? DBNull.Value;
             dr["created_by"] = (object)permissionsUser.CreationUserId ?? DBNull.Value;
             permissionsUsersDataTable.Rows.Add(dr);
+        }
+
+        public void Insert(PersonDonor personDonor)
+        {
+            if (personDonorsDataTable == null)
+            {
+                personDonorsDataTable = new DataTable();
+                personDonorsDataTable.Columns.Add(new DataColumn { ColumnName = "id", DataType = typeof(int) });
+                personDonorsDataTable.Columns.Add(new DataColumn { ColumnName = "person_id", DataType = typeof(Guid) });
+                personDonorsDataTable.Columns.Add(new DataColumn { ColumnName = "donor_id", DataType = typeof(int) });
+                personDonorsDataTable.Columns.Add(new DataColumn { ColumnName = "creation_time", DataType = typeof(DateTime) });
+                personDonorsDataTable.Columns.Add(new DataColumn { ColumnName = "creation_username", DataType = typeof(string) });
+                personDonorsDataTable.Columns.Add(new DataColumn { ColumnName = "last_write_time", DataType = typeof(DateTime) });
+                personDonorsDataTable.Columns.Add(new DataColumn { ColumnName = "last_write_username", DataType = typeof(string) });
+                
+            }
+            var dr = personDonorsDataTable.NewRow();
+            dr["id"] = (object)personDonor.Id ?? DBNull.Value;
+            dr["person_id"] = (object)personDonor.PersonId ?? DBNull.Value;
+            dr["donor_id"] = (object)personDonor.DonorId ?? DBNull.Value;
+            dr["creation_time"] = (object)personDonor.CreationTime ?? DBNull.Value;
+            dr["creation_username"] = (object)personDonor.CreationUsername ?? DBNull.Value;
+            dr["last_write_time"] = (object)personDonor.LastWriteTime ?? DBNull.Value;
+            dr["last_write_username"] = (object)personDonor.LastWriteUsername ?? DBNull.Value;
+            personDonorsDataTable.Rows.Add(dr);
         }
 
         public void Insert(PrecedingSucceedingTitle precedingSucceedingTitle)
@@ -2965,6 +3467,39 @@ namespace FolioLibrary
             userSummariesDataTable.Rows.Add(dr);
         }
 
+        public void Insert(Vendor vendor)
+        {
+            if (vendorsDataTable == null)
+            {
+                vendorsDataTable = new DataTable();
+                vendorsDataTable.Columns.Add(new DataColumn { ColumnName = "id", DataType = typeof(int) });
+                vendorsDataTable.Columns.Add(new DataColumn { ColumnName = "id2", DataType = typeof(string) });
+                vendorsDataTable.Columns.Add(new DataColumn { ColumnName = "name", DataType = typeof(string) });
+                vendorsDataTable.Columns.Add(new DataColumn { ColumnName = "number", DataType = typeof(string) });
+                vendorsDataTable.Columns.Add(new DataColumn { ColumnName = "code", DataType = typeof(string) });
+                vendorsDataTable.Columns.Add(new DataColumn { ColumnName = "email_address", DataType = typeof(string) });
+                vendorsDataTable.Columns.Add(new DataColumn { ColumnName = "creation_time", DataType = typeof(DateTime) });
+                vendorsDataTable.Columns.Add(new DataColumn { ColumnName = "creation_username", DataType = typeof(string) });
+                vendorsDataTable.Columns.Add(new DataColumn { ColumnName = "last_write_time", DataType = typeof(DateTime) });
+                vendorsDataTable.Columns.Add(new DataColumn { ColumnName = "last_write_username", DataType = typeof(string) });
+                vendorsDataTable.Columns.Add(new DataColumn { ColumnName = "long_id", DataType = typeof(Guid) });
+                
+            }
+            var dr = vendorsDataTable.NewRow();
+            dr["id"] = (object)vendor.Id ?? DBNull.Value;
+            dr["id2"] = (object)vendor.Id2 ?? DBNull.Value;
+            dr["name"] = (object)vendor.Name ?? DBNull.Value;
+            dr["number"] = (object)vendor.Number ?? DBNull.Value;
+            dr["code"] = (object)vendor.Code ?? DBNull.Value;
+            dr["email_address"] = (object)vendor.EmailAddress ?? DBNull.Value;
+            dr["creation_time"] = (object)vendor.CreationTime ?? DBNull.Value;
+            dr["creation_username"] = (object)vendor.CreationUsername ?? DBNull.Value;
+            dr["last_write_time"] = (object)vendor.LastWriteTime ?? DBNull.Value;
+            dr["last_write_username"] = (object)vendor.LastWriteUsername ?? DBNull.Value;
+            dr["long_id"] = (object)vendor.LongId ?? DBNull.Value;
+            vendorsDataTable.Rows.Add(dr);
+        }
+
         public void Insert(Voucher voucher)
         {
             if (vouchersDataTable == null)
@@ -3451,6 +3986,25 @@ namespace FolioLibrary
                 sqlBulkCopy.WriteToServer(documentsDataTable);
                 documentsDataTable.Clear();
             }
+            if (donorsDataTable != null && donorsDataTable.Rows.Count > 0)
+            {
+                sqlBulkCopy.DestinationTableName = $"local{(IsMySql ? "_" : ".")}donors";
+                sqlBulkCopy.ColumnMappings.Clear();
+                sqlBulkCopy.ColumnMappings.Add("id", "id");
+                sqlBulkCopy.ColumnMappings.Add("name", "name");
+                sqlBulkCopy.ColumnMappings.Add("code", "code");
+                sqlBulkCopy.ColumnMappings.Add("amount", "amount");
+                sqlBulkCopy.ColumnMappings.Add("report", "report");
+                sqlBulkCopy.ColumnMappings.Add("creation_time", "creation_time");
+                sqlBulkCopy.ColumnMappings.Add("creation_username", "creation_username");
+                sqlBulkCopy.ColumnMappings.Add("last_write_time", "last_write_time");
+                sqlBulkCopy.ColumnMappings.Add("last_write_username", "last_write_username");
+                sqlBulkCopy.ColumnMappings.Add("enabled", "enabled");
+                sqlBulkCopy.ColumnMappings.Add("public_display", "public_display");
+                sqlBulkCopy.ColumnMappings.Add("notes", "notes");
+                sqlBulkCopy.WriteToServer(donorsDataTable);
+                donorsDataTable.Clear();
+            }
             if (electronicAccessRelationshipsDataTable != null && electronicAccessRelationshipsDataTable.Rows.Count > 0)
             {
                 sqlBulkCopy.DestinationTableName = $"uchicago_mod_inventory_storage{(IsMySql ? "_" : ".")}electronic_access_relationship";
@@ -3571,6 +4125,22 @@ namespace FolioLibrary
                 sqlBulkCopy.WriteToServer(fundsDataTable);
                 fundsDataTable.Clear();
             }
+            if (fund3sDataTable != null && fund3sDataTable.Rows.Count > 0)
+            {
+                sqlBulkCopy.DestinationTableName = $"local{(IsMySql ? "_" : ".")}funds";
+                sqlBulkCopy.ColumnMappings.Clear();
+                sqlBulkCopy.ColumnMappings.Add("id", "id");
+                sqlBulkCopy.ColumnMappings.Add("name", "name");
+                sqlBulkCopy.ColumnMappings.Add("number", "number");
+                sqlBulkCopy.ColumnMappings.Add("code", "code");
+                sqlBulkCopy.ColumnMappings.Add("creation_time", "creation_time");
+                sqlBulkCopy.ColumnMappings.Add("creation_username", "creation_username");
+                sqlBulkCopy.ColumnMappings.Add("last_write_time", "last_write_time");
+                sqlBulkCopy.ColumnMappings.Add("last_write_username", "last_write_username");
+                sqlBulkCopy.ColumnMappings.Add("long_id", "long_id");
+                sqlBulkCopy.WriteToServer(fund3sDataTable);
+                fund3sDataTable.Clear();
+            }
             if (fundTypesDataTable != null && fundTypesDataTable.Rows.Count > 0)
             {
                 sqlBulkCopy.DestinationTableName = $"uchicago_mod_finance_storage{(IsMySql ? "_" : ".")}fund_type";
@@ -3609,6 +4179,22 @@ namespace FolioLibrary
                 sqlBulkCopy.ColumnMappings.Add("sourceid", "sourceid");
                 sqlBulkCopy.WriteToServer(holdingsDataTable);
                 holdingsDataTable.Clear();
+            }
+            if (holdingDonor2sDataTable != null && holdingDonor2sDataTable.Rows.Count > 0)
+            {
+                sqlBulkCopy.DestinationTableName = $"local{(IsMySql ? "_" : ".")}holding_donors";
+                sqlBulkCopy.ColumnMappings.Clear();
+                sqlBulkCopy.ColumnMappings.Add("id", "id");
+                sqlBulkCopy.ColumnMappings.Add("holding_id", "holding_id");
+                sqlBulkCopy.ColumnMappings.Add("holding_short_id", "holding_short_id");
+                sqlBulkCopy.ColumnMappings.Add("donor_id", "donor_id");
+                sqlBulkCopy.ColumnMappings.Add("report", "report");
+                sqlBulkCopy.ColumnMappings.Add("creation_time", "creation_time");
+                sqlBulkCopy.ColumnMappings.Add("creation_username", "creation_username");
+                sqlBulkCopy.ColumnMappings.Add("last_write_time", "last_write_time");
+                sqlBulkCopy.ColumnMappings.Add("last_write_username", "last_write_username");
+                sqlBulkCopy.WriteToServer(holdingDonor2sDataTable);
+                holdingDonor2sDataTable.Clear();
             }
             if (holdingNoteTypesDataTable != null && holdingNoteTypesDataTable.Rows.Count > 0)
             {
@@ -3798,6 +4384,29 @@ namespace FolioLibrary
                 sqlBulkCopy.WriteToServer(invoicesDataTable);
                 invoicesDataTable.Clear();
             }
+            if (invoice3sDataTable != null && invoice3sDataTable.Rows.Count > 0)
+            {
+                sqlBulkCopy.DestinationTableName = $"local{(IsMySql ? "_" : ".")}invoices";
+                sqlBulkCopy.ColumnMappings.Clear();
+                sqlBulkCopy.ColumnMappings.Add("id", "id");
+                sqlBulkCopy.ColumnMappings.Add("vendor_id", "vendor_id");
+                sqlBulkCopy.ColumnMappings.Add("invoice_date", "invoice_date");
+                sqlBulkCopy.ColumnMappings.Add("vendor_invoice_id", "vendor_invoice_id");
+                sqlBulkCopy.ColumnMappings.Add("vendor_invoice_amount", "vendor_invoice_amount");
+                sqlBulkCopy.ColumnMappings.Add("invoice_status_id", "invoice_status_id");
+                sqlBulkCopy.ColumnMappings.Add("fiscal_year", "fiscal_year");
+                sqlBulkCopy.ColumnMappings.Add("approve_time", "approve_time");
+                sqlBulkCopy.ColumnMappings.Add("approve_username", "approve_username");
+                sqlBulkCopy.ColumnMappings.Add("cancel_time", "cancel_time");
+                sqlBulkCopy.ColumnMappings.Add("cancel_username", "cancel_username");
+                sqlBulkCopy.ColumnMappings.Add("creation_time", "creation_time");
+                sqlBulkCopy.ColumnMappings.Add("creation_username", "creation_username");
+                sqlBulkCopy.ColumnMappings.Add("last_write_time", "last_write_time");
+                sqlBulkCopy.ColumnMappings.Add("last_write_username", "last_write_username");
+                sqlBulkCopy.ColumnMappings.Add("long_id", "long_id");
+                sqlBulkCopy.WriteToServer(invoice3sDataTable);
+                invoice3sDataTable.Clear();
+            }
             if (invoiceItemsDataTable != null && invoiceItemsDataTable.Rows.Count > 0)
             {
                 sqlBulkCopy.DestinationTableName = $"uchicago_mod_invoice_storage{(IsMySql ? "_" : ".")}invoice_lines";
@@ -3809,6 +4418,57 @@ namespace FolioLibrary
                 sqlBulkCopy.ColumnMappings.Add("invoiceid", "invoiceid");
                 sqlBulkCopy.WriteToServer(invoiceItemsDataTable);
                 invoiceItemsDataTable.Clear();
+            }
+            if (invoiceItem3sDataTable != null && invoiceItem3sDataTable.Rows.Count > 0)
+            {
+                sqlBulkCopy.DestinationTableName = $"local{(IsMySql ? "_" : ".")}invoice_items";
+                sqlBulkCopy.ColumnMappings.Clear();
+                sqlBulkCopy.ColumnMappings.Add("id", "id");
+                sqlBulkCopy.ColumnMappings.Add("invoice_id", "invoice_id");
+                sqlBulkCopy.ColumnMappings.Add("name", "name");
+                sqlBulkCopy.ColumnMappings.Add("quantity", "quantity");
+                sqlBulkCopy.ColumnMappings.Add("order_item_id", "order_item_id");
+                sqlBulkCopy.ColumnMappings.Add("creation_time", "creation_time");
+                sqlBulkCopy.ColumnMappings.Add("creation_username", "creation_username");
+                sqlBulkCopy.ColumnMappings.Add("last_write_time", "last_write_time");
+                sqlBulkCopy.ColumnMappings.Add("last_write_username", "last_write_username");
+                sqlBulkCopy.ColumnMappings.Add("long_id", "long_id");
+                sqlBulkCopy.WriteToServer(invoiceItem3sDataTable);
+                invoiceItem3sDataTable.Clear();
+            }
+            if (invoiceItemDonorsDataTable != null && invoiceItemDonorsDataTable.Rows.Count > 0)
+            {
+                sqlBulkCopy.DestinationTableName = $"local{(IsMySql ? "_" : ".")}invoice_item_donors";
+                sqlBulkCopy.ColumnMappings.Clear();
+                sqlBulkCopy.ColumnMappings.Add("id", "id");
+                sqlBulkCopy.ColumnMappings.Add("invoice_item_id", "invoice_item_id");
+                sqlBulkCopy.ColumnMappings.Add("invoice_item_short_id", "invoice_item_short_id");
+                sqlBulkCopy.ColumnMappings.Add("donor_id", "donor_id");
+                sqlBulkCopy.ColumnMappings.Add("amount", "amount");
+                sqlBulkCopy.ColumnMappings.Add("shipping_amount", "shipping_amount");
+                sqlBulkCopy.ColumnMappings.Add("creation_time", "creation_time");
+                sqlBulkCopy.ColumnMappings.Add("creation_username", "creation_username");
+                sqlBulkCopy.ColumnMappings.Add("last_write_time", "last_write_time");
+                sqlBulkCopy.ColumnMappings.Add("last_write_username", "last_write_username");
+                sqlBulkCopy.WriteToServer(invoiceItemDonorsDataTable);
+                invoiceItemDonorsDataTable.Clear();
+            }
+            if (invoiceItemFund2sDataTable != null && invoiceItemFund2sDataTable.Rows.Count > 0)
+            {
+                sqlBulkCopy.DestinationTableName = $"local{(IsMySql ? "_" : ".")}invoice_item_funds";
+                sqlBulkCopy.ColumnMappings.Clear();
+                sqlBulkCopy.ColumnMappings.Add("id", "id");
+                sqlBulkCopy.ColumnMappings.Add("invoice_item_id", "invoice_item_id");
+                sqlBulkCopy.ColumnMappings.Add("fund_id", "fund_id");
+                sqlBulkCopy.ColumnMappings.Add("amount", "amount");
+                sqlBulkCopy.ColumnMappings.Add("shipping_amount", "shipping_amount");
+                sqlBulkCopy.ColumnMappings.Add("creation_time", "creation_time");
+                sqlBulkCopy.ColumnMappings.Add("creation_username", "creation_username");
+                sqlBulkCopy.ColumnMappings.Add("last_write_time", "last_write_time");
+                sqlBulkCopy.ColumnMappings.Add("last_write_username", "last_write_username");
+                sqlBulkCopy.ColumnMappings.Add("long_id", "long_id");
+                sqlBulkCopy.WriteToServer(invoiceItemFund2sDataTable);
+                invoiceItemFund2sDataTable.Clear();
             }
             if (invoiceStatusesDataTable != null && invoiceStatusesDataTable.Rows.Count > 0)
             {
@@ -3861,6 +4521,22 @@ namespace FolioLibrary
                 sqlBulkCopy.WriteToServer(itemDamagedStatusesDataTable);
                 itemDamagedStatusesDataTable.Clear();
             }
+            if (itemDonor2sDataTable != null && itemDonor2sDataTable.Rows.Count > 0)
+            {
+                sqlBulkCopy.DestinationTableName = $"local{(IsMySql ? "_" : ".")}item_donors";
+                sqlBulkCopy.ColumnMappings.Clear();
+                sqlBulkCopy.ColumnMappings.Add("id", "id");
+                sqlBulkCopy.ColumnMappings.Add("item_id", "item_id");
+                sqlBulkCopy.ColumnMappings.Add("item_short_id", "item_short_id");
+                sqlBulkCopy.ColumnMappings.Add("donor_id", "donor_id");
+                sqlBulkCopy.ColumnMappings.Add("report", "report");
+                sqlBulkCopy.ColumnMappings.Add("creation_time", "creation_time");
+                sqlBulkCopy.ColumnMappings.Add("creation_username", "creation_username");
+                sqlBulkCopy.ColumnMappings.Add("last_write_time", "last_write_time");
+                sqlBulkCopy.ColumnMappings.Add("last_write_username", "last_write_username");
+                sqlBulkCopy.WriteToServer(itemDonor2sDataTable);
+                itemDonor2sDataTable.Clear();
+            }
             if (itemNoteTypesDataTable != null && itemNoteTypesDataTable.Rows.Count > 0)
             {
                 sqlBulkCopy.DestinationTableName = $"uchicago_mod_inventory_storage{(IsMySql ? "_" : ".")}item_note_type";
@@ -3871,6 +4547,15 @@ namespace FolioLibrary
                 sqlBulkCopy.ColumnMappings.Add("created_by", "created_by");
                 sqlBulkCopy.WriteToServer(itemNoteTypesDataTable);
                 itemNoteTypesDataTable.Clear();
+            }
+            if (itemOrderItemsDataTable != null && itemOrderItemsDataTable.Rows.Count > 0)
+            {
+                sqlBulkCopy.DestinationTableName = $"local{(IsMySql ? "_" : ".")}item_order_items";
+                sqlBulkCopy.ColumnMappings.Clear();
+                sqlBulkCopy.ColumnMappings.Add("id", "id");
+                sqlBulkCopy.ColumnMappings.Add("order_item_id", "order_item_id");
+                sqlBulkCopy.WriteToServer(itemOrderItemsDataTable);
+                itemOrderItemsDataTable.Clear();
             }
             if (itemStatusesDataTable != null && itemStatusesDataTable.Rows.Count > 0)
             {
@@ -4200,6 +4885,33 @@ namespace FolioLibrary
                 sqlBulkCopy.WriteToServer(ordersDataTable);
                 ordersDataTable.Clear();
             }
+            if (order3sDataTable != null && order3sDataTable.Rows.Count > 0)
+            {
+                sqlBulkCopy.DestinationTableName = $"local{(IsMySql ? "_" : ".")}orders";
+                sqlBulkCopy.ColumnMappings.Clear();
+                sqlBulkCopy.ColumnMappings.Add("id", "id");
+                sqlBulkCopy.ColumnMappings.Add("document_id", "document_id");
+                sqlBulkCopy.ColumnMappings.Add("vendor_id", "vendor_id");
+                sqlBulkCopy.ColumnMappings.Add("order_date", "order_date");
+                sqlBulkCopy.ColumnMappings.Add("order_type_id", "order_type_id");
+                sqlBulkCopy.ColumnMappings.Add("order_status_id", "order_status_id");
+                sqlBulkCopy.ColumnMappings.Add("fiscal_year", "fiscal_year");
+                sqlBulkCopy.ColumnMappings.Add("vendor_customer_id", "vendor_customer_id");
+                sqlBulkCopy.ColumnMappings.Add("delivery_room_id", "delivery_room_id");
+                sqlBulkCopy.ColumnMappings.Add("approve_time", "approve_time");
+                sqlBulkCopy.ColumnMappings.Add("approve_username", "approve_username");
+                sqlBulkCopy.ColumnMappings.Add("cancel_time", "cancel_time");
+                sqlBulkCopy.ColumnMappings.Add("cancel_username", "cancel_username");
+                sqlBulkCopy.ColumnMappings.Add("freight_amount", "freight_amount");
+                sqlBulkCopy.ColumnMappings.Add("shipping_amount", "shipping_amount");
+                sqlBulkCopy.ColumnMappings.Add("creation_time", "creation_time");
+                sqlBulkCopy.ColumnMappings.Add("creation_username", "creation_username");
+                sqlBulkCopy.ColumnMappings.Add("last_write_time", "last_write_time");
+                sqlBulkCopy.ColumnMappings.Add("last_write_username", "last_write_username");
+                sqlBulkCopy.ColumnMappings.Add("long_id", "long_id");
+                sqlBulkCopy.WriteToServer(order3sDataTable);
+                order3sDataTable.Clear();
+            }
             if (orderInvoicesDataTable != null && orderInvoicesDataTable.Rows.Count > 0)
             {
                 sqlBulkCopy.DestinationTableName = $"uchicago_mod_orders_storage{(IsMySql ? "_" : ".")}order_invoice_relationship";
@@ -4222,6 +4934,64 @@ namespace FolioLibrary
                 sqlBulkCopy.WriteToServer(orderItemsDataTable);
                 orderItemsDataTable.Clear();
             }
+            if (orderItem3sDataTable != null && orderItem3sDataTable.Rows.Count > 0)
+            {
+                sqlBulkCopy.DestinationTableName = $"local{(IsMySql ? "_" : ".")}order_items";
+                sqlBulkCopy.ColumnMappings.Clear();
+                sqlBulkCopy.ColumnMappings.Add("id", "id");
+                sqlBulkCopy.ColumnMappings.Add("order_id", "order_id");
+                sqlBulkCopy.ColumnMappings.Add("name", "name");
+                sqlBulkCopy.ColumnMappings.Add("unit_price", "unit_price");
+                sqlBulkCopy.ColumnMappings.Add("quantity", "quantity");
+                sqlBulkCopy.ColumnMappings.Add("vendor_item_id", "vendor_item_id");
+                sqlBulkCopy.ColumnMappings.Add("vendor_notes", "vendor_notes");
+                sqlBulkCopy.ColumnMappings.Add("special_notes", "special_notes");
+                sqlBulkCopy.ColumnMappings.Add("miscellaneous_notes", "miscellaneous_notes");
+                sqlBulkCopy.ColumnMappings.Add("selector_notes", "selector_notes");
+                sqlBulkCopy.ColumnMappings.Add("instance_id", "instance_id");
+                sqlBulkCopy.ColumnMappings.Add("holding_id", "holding_id");
+                sqlBulkCopy.ColumnMappings.Add("creation_time", "creation_time");
+                sqlBulkCopy.ColumnMappings.Add("creation_username", "creation_username");
+                sqlBulkCopy.ColumnMappings.Add("last_write_time", "last_write_time");
+                sqlBulkCopy.ColumnMappings.Add("last_write_username", "last_write_username");
+                sqlBulkCopy.ColumnMappings.Add("long_id", "long_id");
+                sqlBulkCopy.ColumnMappings.Add("receipt_status_id", "receipt_status_id");
+                sqlBulkCopy.WriteToServer(orderItem3sDataTable);
+                orderItem3sDataTable.Clear();
+            }
+            if (orderItemDonorsDataTable != null && orderItemDonorsDataTable.Rows.Count > 0)
+            {
+                sqlBulkCopy.DestinationTableName = $"local{(IsMySql ? "_" : ".")}order_item_donors";
+                sqlBulkCopy.ColumnMappings.Clear();
+                sqlBulkCopy.ColumnMappings.Add("id", "id");
+                sqlBulkCopy.ColumnMappings.Add("order_item_id", "order_item_id");
+                sqlBulkCopy.ColumnMappings.Add("order_item_short_id", "order_item_short_id");
+                sqlBulkCopy.ColumnMappings.Add("donor_id", "donor_id");
+                sqlBulkCopy.ColumnMappings.Add("report", "report");
+                sqlBulkCopy.ColumnMappings.Add("amount", "amount");
+                sqlBulkCopy.ColumnMappings.Add("creation_time", "creation_time");
+                sqlBulkCopy.ColumnMappings.Add("creation_username", "creation_username");
+                sqlBulkCopy.ColumnMappings.Add("last_write_time", "last_write_time");
+                sqlBulkCopy.ColumnMappings.Add("last_write_username", "last_write_username");
+                sqlBulkCopy.WriteToServer(orderItemDonorsDataTable);
+                orderItemDonorsDataTable.Clear();
+            }
+            if (orderItemFund3sDataTable != null && orderItemFund3sDataTable.Rows.Count > 0)
+            {
+                sqlBulkCopy.DestinationTableName = $"local{(IsMySql ? "_" : ".")}order_item_funds";
+                sqlBulkCopy.ColumnMappings.Clear();
+                sqlBulkCopy.ColumnMappings.Add("id", "id");
+                sqlBulkCopy.ColumnMappings.Add("order_item_id", "order_item_id");
+                sqlBulkCopy.ColumnMappings.Add("fund_id", "fund_id");
+                sqlBulkCopy.ColumnMappings.Add("amount", "amount");
+                sqlBulkCopy.ColumnMappings.Add("creation_time", "creation_time");
+                sqlBulkCopy.ColumnMappings.Add("creation_username", "creation_username");
+                sqlBulkCopy.ColumnMappings.Add("last_write_time", "last_write_time");
+                sqlBulkCopy.ColumnMappings.Add("last_write_username", "last_write_username");
+                sqlBulkCopy.ColumnMappings.Add("long_id", "long_id");
+                sqlBulkCopy.WriteToServer(orderItemFund3sDataTable);
+                orderItemFund3sDataTable.Clear();
+            }
             if (orderStatusesDataTable != null && orderStatusesDataTable.Rows.Count > 0)
             {
                 sqlBulkCopy.DestinationTableName = $"uc{(IsMySql ? "_" : ".")}order_statuses";
@@ -4234,6 +5004,19 @@ namespace FolioLibrary
                 sqlBulkCopy.ColumnMappings.Add("last_write_username", "last_write_username");
                 sqlBulkCopy.WriteToServer(orderStatusesDataTable);
                 orderStatusesDataTable.Clear();
+            }
+            if (orderStatus2sDataTable != null && orderStatus2sDataTable.Rows.Count > 0)
+            {
+                sqlBulkCopy.DestinationTableName = $"local{(IsMySql ? "_" : ".")}order_statuses";
+                sqlBulkCopy.ColumnMappings.Clear();
+                sqlBulkCopy.ColumnMappings.Add("id", "id");
+                sqlBulkCopy.ColumnMappings.Add("name", "name");
+                sqlBulkCopy.ColumnMappings.Add("creation_time", "creation_time");
+                sqlBulkCopy.ColumnMappings.Add("creation_username", "creation_username");
+                sqlBulkCopy.ColumnMappings.Add("last_write_time", "last_write_time");
+                sqlBulkCopy.ColumnMappings.Add("last_write_username", "last_write_username");
+                sqlBulkCopy.WriteToServer(orderStatus2sDataTable);
+                orderStatus2sDataTable.Clear();
             }
             if (orderTemplatesDataTable != null && orderTemplatesDataTable.Rows.Count > 0)
             {
@@ -4265,6 +5048,19 @@ namespace FolioLibrary
                 sqlBulkCopy.ColumnMappings.Add("last_write_username", "last_write_username");
                 sqlBulkCopy.WriteToServer(orderTypesDataTable);
                 orderTypesDataTable.Clear();
+            }
+            if (orderType2sDataTable != null && orderType2sDataTable.Rows.Count > 0)
+            {
+                sqlBulkCopy.DestinationTableName = $"local{(IsMySql ? "_" : ".")}order_types";
+                sqlBulkCopy.ColumnMappings.Clear();
+                sqlBulkCopy.ColumnMappings.Add("id", "id");
+                sqlBulkCopy.ColumnMappings.Add("name", "name");
+                sqlBulkCopy.ColumnMappings.Add("creation_time", "creation_time");
+                sqlBulkCopy.ColumnMappings.Add("creation_username", "creation_username");
+                sqlBulkCopy.ColumnMappings.Add("last_write_time", "last_write_time");
+                sqlBulkCopy.ColumnMappings.Add("last_write_username", "last_write_username");
+                sqlBulkCopy.WriteToServer(orderType2sDataTable);
+                orderType2sDataTable.Clear();
             }
             if (organizationsDataTable != null && organizationsDataTable.Rows.Count > 0)
             {
@@ -4377,6 +5173,20 @@ namespace FolioLibrary
                 sqlBulkCopy.ColumnMappings.Add("created_by", "created_by");
                 sqlBulkCopy.WriteToServer(permissionsUsersDataTable);
                 permissionsUsersDataTable.Clear();
+            }
+            if (personDonorsDataTable != null && personDonorsDataTable.Rows.Count > 0)
+            {
+                sqlBulkCopy.DestinationTableName = $"local{(IsMySql ? "_" : ".")}person_donors";
+                sqlBulkCopy.ColumnMappings.Clear();
+                sqlBulkCopy.ColumnMappings.Add("id", "id");
+                sqlBulkCopy.ColumnMappings.Add("person_id", "person_id");
+                sqlBulkCopy.ColumnMappings.Add("donor_id", "donor_id");
+                sqlBulkCopy.ColumnMappings.Add("creation_time", "creation_time");
+                sqlBulkCopy.ColumnMappings.Add("creation_username", "creation_username");
+                sqlBulkCopy.ColumnMappings.Add("last_write_time", "last_write_time");
+                sqlBulkCopy.ColumnMappings.Add("last_write_username", "last_write_username");
+                sqlBulkCopy.WriteToServer(personDonorsDataTable);
+                personDonorsDataTable.Clear();
             }
             if (precedingSucceedingTitlesDataTable != null && precedingSucceedingTitlesDataTable.Rows.Count > 0)
             {
@@ -4736,6 +5546,24 @@ namespace FolioLibrary
                 sqlBulkCopy.WriteToServer(userSummariesDataTable);
                 userSummariesDataTable.Clear();
             }
+            if (vendorsDataTable != null && vendorsDataTable.Rows.Count > 0)
+            {
+                sqlBulkCopy.DestinationTableName = $"local{(IsMySql ? "_" : ".")}vendors";
+                sqlBulkCopy.ColumnMappings.Clear();
+                sqlBulkCopy.ColumnMappings.Add("id", "id");
+                sqlBulkCopy.ColumnMappings.Add("id2", "id2");
+                sqlBulkCopy.ColumnMappings.Add("name", "name");
+                sqlBulkCopy.ColumnMappings.Add("number", "number");
+                sqlBulkCopy.ColumnMappings.Add("code", "code");
+                sqlBulkCopy.ColumnMappings.Add("email_address", "email_address");
+                sqlBulkCopy.ColumnMappings.Add("creation_time", "creation_time");
+                sqlBulkCopy.ColumnMappings.Add("creation_username", "creation_username");
+                sqlBulkCopy.ColumnMappings.Add("last_write_time", "last_write_time");
+                sqlBulkCopy.ColumnMappings.Add("last_write_username", "last_write_username");
+                sqlBulkCopy.ColumnMappings.Add("long_id", "long_id");
+                sqlBulkCopy.WriteToServer(vendorsDataTable);
+                vendorsDataTable.Clear();
+            }
             if (vouchersDataTable != null && vouchersDataTable.Rows.Count > 0)
             {
                 sqlBulkCopy.DestinationTableName = $"uchicago_mod_invoice_storage{(IsMySql ? "_" : ".")}vouchers";
@@ -4826,6 +5654,7 @@ namespace FolioLibrary
             if (customFieldsDataTable != null) customFieldsDataTable.Dispose();
             if (departmentsDataTable != null) departmentsDataTable.Dispose();
             if (documentsDataTable != null) documentsDataTable.Dispose();
+            if (donorsDataTable != null) donorsDataTable.Dispose();
             if (electronicAccessRelationshipsDataTable != null) electronicAccessRelationshipsDataTable.Dispose();
             if (errorRecordsDataTable != null) errorRecordsDataTable.Dispose();
             if (eventLogsDataTable != null) eventLogsDataTable.Dispose();
@@ -4837,9 +5666,11 @@ namespace FolioLibrary
             if (fiscalYearsDataTable != null) fiscalYearsDataTable.Dispose();
             if (fixedDueDateSchedulesDataTable != null) fixedDueDateSchedulesDataTable.Dispose();
             if (fundsDataTable != null) fundsDataTable.Dispose();
+            if (fund3sDataTable != null) fund3sDataTable.Dispose();
             if (fundTypesDataTable != null) fundTypesDataTable.Dispose();
             if (groupsDataTable != null) groupsDataTable.Dispose();
             if (holdingsDataTable != null) holdingsDataTable.Dispose();
+            if (holdingDonor2sDataTable != null) holdingDonor2sDataTable.Dispose();
             if (holdingNoteTypesDataTable != null) holdingNoteTypesDataTable.Dispose();
             if (holdingTypesDataTable != null) holdingTypesDataTable.Dispose();
             if (hridSettingsDataTable != null) hridSettingsDataTable.Dispose();
@@ -4857,12 +5688,18 @@ namespace FolioLibrary
             if (interfacesDataTable != null) interfacesDataTable.Dispose();
             if (interfaceCredentialsDataTable != null) interfaceCredentialsDataTable.Dispose();
             if (invoicesDataTable != null) invoicesDataTable.Dispose();
+            if (invoice3sDataTable != null) invoice3sDataTable.Dispose();
             if (invoiceItemsDataTable != null) invoiceItemsDataTable.Dispose();
+            if (invoiceItem3sDataTable != null) invoiceItem3sDataTable.Dispose();
+            if (invoiceItemDonorsDataTable != null) invoiceItemDonorsDataTable.Dispose();
+            if (invoiceItemFund2sDataTable != null) invoiceItemFund2sDataTable.Dispose();
             if (invoiceStatusesDataTable != null) invoiceStatusesDataTable.Dispose();
             if (invoiceTransactionSummariesDataTable != null) invoiceTransactionSummariesDataTable.Dispose();
             if (itemsDataTable != null) itemsDataTable.Dispose();
             if (itemDamagedStatusesDataTable != null) itemDamagedStatusesDataTable.Dispose();
+            if (itemDonor2sDataTable != null) itemDonor2sDataTable.Dispose();
             if (itemNoteTypesDataTable != null) itemNoteTypesDataTable.Dispose();
+            if (itemOrderItemsDataTable != null) itemOrderItemsDataTable.Dispose();
             if (itemStatusesDataTable != null) itemStatusesDataTable.Dispose();
             if (jobExecutionsDataTable != null) jobExecutionsDataTable.Dispose();
             if (jobExecutionProgressesDataTable != null) jobExecutionProgressesDataTable.Dispose();
@@ -4892,12 +5729,18 @@ namespace FolioLibrary
             if (notesDataTable != null) notesDataTable.Dispose();
             if (noteTypesDataTable != null) noteTypesDataTable.Dispose();
             if (ordersDataTable != null) ordersDataTable.Dispose();
+            if (order3sDataTable != null) order3sDataTable.Dispose();
             if (orderInvoicesDataTable != null) orderInvoicesDataTable.Dispose();
             if (orderItemsDataTable != null) orderItemsDataTable.Dispose();
+            if (orderItem3sDataTable != null) orderItem3sDataTable.Dispose();
+            if (orderItemDonorsDataTable != null) orderItemDonorsDataTable.Dispose();
+            if (orderItemFund3sDataTable != null) orderItemFund3sDataTable.Dispose();
             if (orderStatusesDataTable != null) orderStatusesDataTable.Dispose();
+            if (orderStatus2sDataTable != null) orderStatus2sDataTable.Dispose();
             if (orderTemplatesDataTable != null) orderTemplatesDataTable.Dispose();
             if (orderTransactionSummariesDataTable != null) orderTransactionSummariesDataTable.Dispose();
             if (orderTypesDataTable != null) orderTypesDataTable.Dispose();
+            if (orderType2sDataTable != null) orderType2sDataTable.Dispose();
             if (organizationsDataTable != null) organizationsDataTable.Dispose();
             if (overdueFinePoliciesDataTable != null) overdueFinePoliciesDataTable.Dispose();
             if (ownersDataTable != null) ownersDataTable.Dispose();
@@ -4908,6 +5751,7 @@ namespace FolioLibrary
             if (paymentTypesDataTable != null) paymentTypesDataTable.Dispose();
             if (permissionsDataTable != null) permissionsDataTable.Dispose();
             if (permissionsUsersDataTable != null) permissionsUsersDataTable.Dispose();
+            if (personDonorsDataTable != null) personDonorsDataTable.Dispose();
             if (precedingSucceedingTitlesDataTable != null) precedingSucceedingTitlesDataTable.Dispose();
             if (prefixesDataTable != null) prefixesDataTable.Dispose();
             if (proxiesDataTable != null) proxiesDataTable.Dispose();
@@ -4938,6 +5782,7 @@ namespace FolioLibrary
             if (userAcquisitionsUnitsDataTable != null) userAcquisitionsUnitsDataTable.Dispose();
             if (userRequestPreferencesDataTable != null) userRequestPreferencesDataTable.Dispose();
             if (userSummariesDataTable != null) userSummariesDataTable.Dispose();
+            if (vendorsDataTable != null) vendorsDataTable.Dispose();
             if (vouchersDataTable != null) vouchersDataTable.Dispose();
             if (voucherItemsDataTable != null) voucherItemsDataTable.Dispose();
             if (voucherStatusesDataTable != null) voucherStatusesDataTable.Dispose();
