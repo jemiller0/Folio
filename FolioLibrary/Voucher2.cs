@@ -94,22 +94,22 @@ namespace FolioLibrary
         [Column("vendor_id"), Display(Name = "Vendor", Order = 22), JsonProperty("vendorId")]
         public virtual Guid? VendorId { get; set; }
 
-        [Column("vendor_address_address_line1"), Display(Name = "Vendor Street Address 1", Order = 23), JsonProperty("vendorAddress.addressLine1"), StringLength(1024)]
+        [Column("vendor_address_address_line1"), JsonProperty("vendorAddress.addressLine1"), ScaffoldColumn(false), StringLength(1024)]
         public virtual string VendorStreetAddress1 { get; set; }
 
-        [Column("vendor_address_address_line2"), Display(Name = "Vendor Street Address 2", Order = 24), JsonProperty("vendorAddress.addressLine2"), StringLength(1024)]
+        [Column("vendor_address_address_line2"), JsonProperty("vendorAddress.addressLine2"), ScaffoldColumn(false), StringLength(1024)]
         public virtual string VendorStreetAddress2 { get; set; }
 
-        [Column("vendor_address_city"), Display(Name = "Vendor City", Order = 25), JsonProperty("vendorAddress.city"), StringLength(1024)]
+        [Column("vendor_address_city"), JsonProperty("vendorAddress.city"), ScaffoldColumn(false), StringLength(1024)]
         public virtual string VendorCity { get; set; }
 
-        [Column("vendor_address_state_region"), Display(Name = "Vendor State", Order = 26), JsonProperty("vendorAddress.stateRegion"), StringLength(1024)]
+        [Column("vendor_address_state_region"), JsonProperty("vendorAddress.stateRegion"), ScaffoldColumn(false), StringLength(1024)]
         public virtual string VendorState { get; set; }
 
-        [Column("vendor_address_zip_code"), Display(Name = "Vendor Postal Code", Order = 27), JsonProperty("vendorAddress.zipCode"), RegularExpression(@"^\d{5}(-\d{4})?$"), StringLength(1024)]
+        [Column("vendor_address_zip_code"), JsonProperty("vendorAddress.zipCode"), ScaffoldColumn(false), StringLength(1024)]
         public virtual string VendorPostalCode { get; set; }
 
-        [Column("vendor_address_country"), Display(Name = "Vendor Country Code", Order = 28), JsonProperty("vendorAddress.country"), StringLength(1024)]
+        [Column("vendor_address_country"), JsonProperty("vendorAddress.country"), ScaffoldColumn(false), StringLength(1024)]
         public virtual string VendorCountryCode { get; set; }
 
         [Column("created_date"), DataType(DataType.DateTime), Display(Name = "Creation Time", Order = 29), DisplayFormat(DataFormatString = "{0:g}"), Editable(false), JsonProperty("metadata.createdDate")]

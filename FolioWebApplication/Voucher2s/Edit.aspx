@@ -161,54 +161,6 @@
                                     <asp:HyperLink ID="VendorHyperLink" runat="server" Text='<%#: Eval("Vendor.Name") %>' NavigateUrl='<%# $"~/Organization2s/Edit.aspx?Id={Eval("VendorId")}" %>' Enabled='<%# Session["Organization2sPermission"] != null %>' />
                                 </td>
                             </tr>
-                            <tr runat="server" visible='<%# Eval("VendorStreetAddress1") != null %>'>
-                                <td>
-                                    <asp:Label ID="VendorStreetAddress1Label" runat="server" Text="Vendor Street Address 1:" AssociatedControlID="VendorStreetAddress1Literal" />
-                                </td>
-                                <td>
-                                    <asp:Literal ID="VendorStreetAddress1Literal" runat="server" Text='<%#: Eval("VendorStreetAddress1") %>' />
-                                </td>
-                            </tr>
-                            <tr runat="server" visible='<%# Eval("VendorStreetAddress2") != null %>'>
-                                <td>
-                                    <asp:Label ID="VendorStreetAddress2Label" runat="server" Text="Vendor Street Address 2:" AssociatedControlID="VendorStreetAddress2Literal" />
-                                </td>
-                                <td>
-                                    <asp:Literal ID="VendorStreetAddress2Literal" runat="server" Text='<%#: Eval("VendorStreetAddress2") %>' />
-                                </td>
-                            </tr>
-                            <tr runat="server" visible='<%# Eval("VendorCity") != null %>'>
-                                <td>
-                                    <asp:Label ID="VendorCityLabel" runat="server" Text="Vendor City:" AssociatedControlID="VendorCityLiteral" />
-                                </td>
-                                <td>
-                                    <asp:Literal ID="VendorCityLiteral" runat="server" Text='<%#: Eval("VendorCity") %>' />
-                                </td>
-                            </tr>
-                            <tr runat="server" visible='<%# Eval("VendorState") != null %>'>
-                                <td>
-                                    <asp:Label ID="VendorStateLabel" runat="server" Text="Vendor State:" AssociatedControlID="VendorStateLiteral" />
-                                </td>
-                                <td>
-                                    <asp:Literal ID="VendorStateLiteral" runat="server" Text='<%#: Eval("VendorState") %>' />
-                                </td>
-                            </tr>
-                            <tr runat="server" visible='<%# Eval("VendorPostalCode") != null %>'>
-                                <td>
-                                    <asp:Label ID="VendorPostalCodeLabel" runat="server" Text="Vendor Postal Code:" AssociatedControlID="VendorPostalCodeLiteral" />
-                                </td>
-                                <td>
-                                    <asp:Literal ID="VendorPostalCodeLiteral" runat="server" Text='<%#: Eval("VendorPostalCode") %>' />
-                                </td>
-                            </tr>
-                            <tr runat="server" visible='<%# Eval("VendorCountryCode") != null %>'>
-                                <td>
-                                    <asp:Label ID="VendorCountryCodeLabel" runat="server" Text="Vendor Country Code:" AssociatedControlID="VendorCountryCodeLiteral" />
-                                </td>
-                                <td>
-                                    <asp:Literal ID="VendorCountryCodeLiteral" runat="server" Text='<%#: Eval("VendorCountryCode") %>' />
-                                </td>
-                            </tr>
                             <tr runat="server" visible='<%# Eval("CreationTime") != null %>'>
                                 <td>
                                     <asp:Label ID="CreationTimeLabel" runat="server" Text="Creation Time:" AssociatedControlID="CreationTimeLiteral" />

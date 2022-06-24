@@ -453,7 +453,7 @@ namespace FolioWebApplication.Organization2s
             if (Session["Voucher2sPermission"] == null) return;
             var id = (Guid?)Organization2FormView.DataKey.Value;
             if (id == null) return;
-            var d = new Dictionary<string, string>() { { "Id", "id" }, { "AccountingCode", "accountingCode" }, { "AccountNumber", "accountNo" }, { "Amount", "amount" }, { "BatchGroupId", "batchGroupId" }, { "DisbursementNumber", "disbursementNumber" }, { "DisbursementDate", "disbursementDate" }, { "DisbursementAmount", "disbursementAmount" }, { "Enclosure", "enclosureNeeded" }, { "InvoiceCurrency", "invoiceCurrency" }, { "InvoiceId", "invoiceId" }, { "ExchangeRate", "exchangeRate" }, { "ExportToAccounting", "exportToAccounting" }, { "Status", "status" }, { "SystemCurrency", "systemCurrency" }, { "Type", "type" }, { "VoucherDate", "voucherDate" }, { "Number", "voucherNumber" }, { "VendorId", "vendorId" }, { "VendorStreetAddress1", "vendorAddress.addressLine1" }, { "VendorStreetAddress2", "vendorAddress.addressLine2" }, { "VendorCity", "vendorAddress.city" }, { "VendorState", "vendorAddress.stateRegion" }, { "VendorPostalCode", "vendorAddress.zipCode" }, { "VendorCountryCode", "vendorAddress.country" }, { "CreationTime", "metadata.createdDate" }, { "CreationUserId", "metadata.createdByUserId" }, { "LastWriteTime", "metadata.updatedDate" }, { "LastWriteUserId", "metadata.updatedByUserId" } };
+            var d = new Dictionary<string, string>() { { "Id", "id" }, { "AccountingCode", "accountingCode" }, { "AccountNumber", "accountNo" }, { "Amount", "amount" }, { "BatchGroupId", "batchGroupId" }, { "DisbursementNumber", "disbursementNumber" }, { "DisbursementDate", "disbursementDate" }, { "DisbursementAmount", "disbursementAmount" }, { "Enclosure", "enclosureNeeded" }, { "InvoiceCurrency", "invoiceCurrency" }, { "InvoiceId", "invoiceId" }, { "ExchangeRate", "exchangeRate" }, { "ExportToAccounting", "exportToAccounting" }, { "Status", "status" }, { "SystemCurrency", "systemCurrency" }, { "Type", "type" }, { "VoucherDate", "voucherDate" }, { "Number", "voucherNumber" }, { "VendorId", "vendorId" }, { "CreationTime", "metadata.createdDate" }, { "CreationUserId", "metadata.createdByUserId" }, { "LastWriteTime", "metadata.updatedDate" }, { "LastWriteUserId", "metadata.updatedByUserId" } };
             var where = Global.Trim(string.Join(" and ", new string[]
             {
                 $"vendorId == \"{id}\"",
@@ -475,12 +475,6 @@ namespace FolioWebApplication.Organization2s
                 Global.GetCqlFilter(Voucher2sRadGrid, "Type", "type"),
                 Global.GetCqlFilter(Voucher2sRadGrid, "VoucherDate", "voucherDate"),
                 Global.GetCqlFilter(Voucher2sRadGrid, "Number", "voucherNumber"),
-                Global.GetCqlFilter(Voucher2sRadGrid, "VendorStreetAddress1", "vendorAddress.addressLine1"),
-                Global.GetCqlFilter(Voucher2sRadGrid, "VendorStreetAddress2", "vendorAddress.addressLine2"),
-                Global.GetCqlFilter(Voucher2sRadGrid, "VendorCity", "vendorAddress.city"),
-                Global.GetCqlFilter(Voucher2sRadGrid, "VendorState", "vendorAddress.stateRegion"),
-                Global.GetCqlFilter(Voucher2sRadGrid, "VendorPostalCode", "vendorAddress.zipCode"),
-                Global.GetCqlFilter(Voucher2sRadGrid, "VendorCountryCode", "vendorAddress.country"),
                 Global.GetCqlFilter(Voucher2sRadGrid, "CreationTime", "metadata.createdDate"),
                 Global.GetCqlFilter(Voucher2sRadGrid, "CreationUser.Username", "metadata.createdByUserId", "username", folioServiceContext.FolioServiceClient.Users),
                 Global.GetCqlFilter(Voucher2sRadGrid, "LastWriteTime", "metadata.updatedDate"),

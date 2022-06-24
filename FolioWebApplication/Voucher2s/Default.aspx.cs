@@ -24,7 +24,7 @@ namespace FolioWebApplication.Voucher2s
 
         protected void Voucher2sRadGrid_NeedDataSource(object sender, GridNeedDataSourceEventArgs e)
         {
-            var d = new Dictionary<string, string>() { { "Id", "id" }, { "AccountingCode", "accountingCode" }, { "AccountNumber", "accountNo" }, { "Amount", "amount" }, { "BatchGroupId", "batchGroupId" }, { "DisbursementNumber", "disbursementNumber" }, { "DisbursementDate", "disbursementDate" }, { "DisbursementAmount", "disbursementAmount" }, { "Enclosure", "enclosureNeeded" }, { "InvoiceCurrency", "invoiceCurrency" }, { "InvoiceId", "invoiceId" }, { "ExchangeRate", "exchangeRate" }, { "ExportToAccounting", "exportToAccounting" }, { "Status", "status" }, { "SystemCurrency", "systemCurrency" }, { "Type", "type" }, { "VoucherDate", "voucherDate" }, { "Number", "voucherNumber" }, { "VendorId", "vendorId" }, { "VendorStreetAddress1", "vendorAddress.addressLine1" }, { "VendorStreetAddress2", "vendorAddress.addressLine2" }, { "VendorCity", "vendorAddress.city" }, { "VendorState", "vendorAddress.stateRegion" }, { "VendorPostalCode", "vendorAddress.zipCode" }, { "VendorCountryCode", "vendorAddress.country" }, { "CreationTime", "metadata.createdDate" }, { "CreationUserId", "metadata.createdByUserId" }, { "LastWriteTime", "metadata.updatedDate" }, { "LastWriteUserId", "metadata.updatedByUserId" } };
+            var d = new Dictionary<string, string>() { { "Id", "id" }, { "AccountingCode", "accountingCode" }, { "AccountNumber", "accountNo" }, { "Amount", "amount" }, { "BatchGroupId", "batchGroupId" }, { "DisbursementNumber", "disbursementNumber" }, { "DisbursementDate", "disbursementDate" }, { "DisbursementAmount", "disbursementAmount" }, { "Enclosure", "enclosureNeeded" }, { "InvoiceCurrency", "invoiceCurrency" }, { "InvoiceId", "invoiceId" }, { "ExchangeRate", "exchangeRate" }, { "ExportToAccounting", "exportToAccounting" }, { "Status", "status" }, { "SystemCurrency", "systemCurrency" }, { "Type", "type" }, { "VoucherDate", "voucherDate" }, { "Number", "voucherNumber" }, { "VendorId", "vendorId" }, { "CreationTime", "metadata.createdDate" }, { "CreationUserId", "metadata.createdByUserId" }, { "LastWriteTime", "metadata.updatedDate" }, { "LastWriteUserId", "metadata.updatedByUserId" } };
             var where = Global.Trim(string.Join(" and ", new string[]
             {
                 Global.GetCqlFilter(Voucher2sRadGrid, "Id", "id"),
@@ -46,12 +46,6 @@ namespace FolioWebApplication.Voucher2s
                 Global.GetCqlFilter(Voucher2sRadGrid, "VoucherDate", "voucherDate"),
                 Global.GetCqlFilter(Voucher2sRadGrid, "Number", "voucherNumber"),
                 Global.GetCqlFilter(Voucher2sRadGrid, "Vendor.Name", "vendorId", "name", folioServiceContext.FolioServiceClient.Organizations),
-                Global.GetCqlFilter(Voucher2sRadGrid, "VendorStreetAddress1", "vendorAddress.addressLine1"),
-                Global.GetCqlFilter(Voucher2sRadGrid, "VendorStreetAddress2", "vendorAddress.addressLine2"),
-                Global.GetCqlFilter(Voucher2sRadGrid, "VendorCity", "vendorAddress.city"),
-                Global.GetCqlFilter(Voucher2sRadGrid, "VendorState", "vendorAddress.stateRegion"),
-                Global.GetCqlFilter(Voucher2sRadGrid, "VendorPostalCode", "vendorAddress.zipCode"),
-                Global.GetCqlFilter(Voucher2sRadGrid, "VendorCountryCode", "vendorAddress.country"),
                 Global.GetCqlFilter(Voucher2sRadGrid, "CreationTime", "metadata.createdDate"),
                 Global.GetCqlFilter(Voucher2sRadGrid, "CreationUser.Username", "metadata.createdByUserId", "username", folioServiceContext.FolioServiceClient.Users),
                 Global.GetCqlFilter(Voucher2sRadGrid, "LastWriteTime", "metadata.updatedDate"),
@@ -70,8 +64,8 @@ namespace FolioWebApplication.Voucher2s
             Response.Charset = "utf-8";
             Response.AppendHeader("Content-Disposition", "attachment; filename=\"Voucher2s.txt\"");
             Response.BufferOutput = false;
-            Response.Write("Id\tAccountingCode\tAccountNumber\tAmount\tBatchGroup\tBatchGroupId\tDisbursementNumber\tDisbursementDate\tDisbursementAmount\tEnclosure\tInvoiceCurrency\tInvoice\tInvoiceId\tExchangeRate\tExportToAccounting\tStatus\tSystemCurrency\tType\tVoucherDate\tNumber\tVendor\tVendorId\tVendorStreetAddress1\tVendorStreetAddress2\tVendorCity\tVendorState\tVendorPostalCode\tVendorCountryCode\tCreationTime\tCreationUser\tCreationUserId\tLastWriteTime\tLastWriteUser\tLastWriteUserId\r\n");
-            var d = new Dictionary<string, string>() { { "Id", "id" }, { "AccountingCode", "accountingCode" }, { "AccountNumber", "accountNo" }, { "Amount", "amount" }, { "BatchGroupId", "batchGroupId" }, { "DisbursementNumber", "disbursementNumber" }, { "DisbursementDate", "disbursementDate" }, { "DisbursementAmount", "disbursementAmount" }, { "Enclosure", "enclosureNeeded" }, { "InvoiceCurrency", "invoiceCurrency" }, { "InvoiceId", "invoiceId" }, { "ExchangeRate", "exchangeRate" }, { "ExportToAccounting", "exportToAccounting" }, { "Status", "status" }, { "SystemCurrency", "systemCurrency" }, { "Type", "type" }, { "VoucherDate", "voucherDate" }, { "Number", "voucherNumber" }, { "VendorId", "vendorId" }, { "VendorStreetAddress1", "vendorAddress.addressLine1" }, { "VendorStreetAddress2", "vendorAddress.addressLine2" }, { "VendorCity", "vendorAddress.city" }, { "VendorState", "vendorAddress.stateRegion" }, { "VendorPostalCode", "vendorAddress.zipCode" }, { "VendorCountryCode", "vendorAddress.country" }, { "CreationTime", "metadata.createdDate" }, { "CreationUserId", "metadata.createdByUserId" }, { "LastWriteTime", "metadata.updatedDate" }, { "LastWriteUserId", "metadata.updatedByUserId" } };
+            Response.Write("Id\tAccountingCode\tAccountNumber\tAmount\tBatchGroup\tBatchGroupId\tDisbursementNumber\tDisbursementDate\tDisbursementAmount\tEnclosure\tInvoiceCurrency\tInvoice\tInvoiceId\tExchangeRate\tExportToAccounting\tStatus\tSystemCurrency\tType\tVoucherDate\tNumber\tVendor\tVendorId\tCreationTime\tCreationUser\tCreationUserId\tLastWriteTime\tLastWriteUser\tLastWriteUserId\r\n");
+            var d = new Dictionary<string, string>() { { "Id", "id" }, { "AccountingCode", "accountingCode" }, { "AccountNumber", "accountNo" }, { "Amount", "amount" }, { "BatchGroupId", "batchGroupId" }, { "DisbursementNumber", "disbursementNumber" }, { "DisbursementDate", "disbursementDate" }, { "DisbursementAmount", "disbursementAmount" }, { "Enclosure", "enclosureNeeded" }, { "InvoiceCurrency", "invoiceCurrency" }, { "InvoiceId", "invoiceId" }, { "ExchangeRate", "exchangeRate" }, { "ExportToAccounting", "exportToAccounting" }, { "Status", "status" }, { "SystemCurrency", "systemCurrency" }, { "Type", "type" }, { "VoucherDate", "voucherDate" }, { "Number", "voucherNumber" }, { "VendorId", "vendorId" }, { "CreationTime", "metadata.createdDate" }, { "CreationUserId", "metadata.createdByUserId" }, { "LastWriteTime", "metadata.updatedDate" }, { "LastWriteUserId", "metadata.updatedByUserId" } };
             var where = Global.Trim(string.Join(" and ", new string[]
             {
                 Global.GetCqlFilter(Voucher2sRadGrid, "Id", "id"),
@@ -93,20 +87,41 @@ namespace FolioWebApplication.Voucher2s
                 Global.GetCqlFilter(Voucher2sRadGrid, "VoucherDate", "voucherDate"),
                 Global.GetCqlFilter(Voucher2sRadGrid, "Number", "voucherNumber"),
                 Global.GetCqlFilter(Voucher2sRadGrid, "Vendor.Name", "vendorId", "name", folioServiceContext.FolioServiceClient.Organizations),
-                Global.GetCqlFilter(Voucher2sRadGrid, "VendorStreetAddress1", "vendorAddress.addressLine1"),
-                Global.GetCqlFilter(Voucher2sRadGrid, "VendorStreetAddress2", "vendorAddress.addressLine2"),
-                Global.GetCqlFilter(Voucher2sRadGrid, "VendorCity", "vendorAddress.city"),
-                Global.GetCqlFilter(Voucher2sRadGrid, "VendorState", "vendorAddress.stateRegion"),
-                Global.GetCqlFilter(Voucher2sRadGrid, "VendorPostalCode", "vendorAddress.zipCode"),
-                Global.GetCqlFilter(Voucher2sRadGrid, "VendorCountryCode", "vendorAddress.country"),
                 Global.GetCqlFilter(Voucher2sRadGrid, "CreationTime", "metadata.createdDate"),
                 Global.GetCqlFilter(Voucher2sRadGrid, "CreationUser.Username", "metadata.createdByUserId", "username", folioServiceContext.FolioServiceClient.Users),
                 Global.GetCqlFilter(Voucher2sRadGrid, "LastWriteTime", "metadata.updatedDate"),
                 Global.GetCqlFilter(Voucher2sRadGrid, "LastWriteUser.Username", "metadata.updatedByUserId", "username", folioServiceContext.FolioServiceClient.Users)
             }.Where(s => s != null)));
             foreach (var v2 in folioServiceContext.Voucher2s(where, Voucher2sRadGrid.MasterTableView.SortExpressions.Count > 0 ? $"{d[Voucher2sRadGrid.MasterTableView.SortExpressions[0].FieldName]}{(Voucher2sRadGrid.MasterTableView.SortExpressions[0].SortOrder == GridSortOrder.Descending ? "/sort.descending" : "")}" : null, load: true))
-                Response.Write($"{v2.Id}\t{Global.TextEncode(v2.AccountingCode)}\t{Global.TextEncode(v2.AccountNumber)}\t{v2.Amount}\t{Global.TextEncode(v2.BatchGroup?.Name)}\t{v2.BatchGroupId}\t{Global.TextEncode(v2.DisbursementNumber)}\t{v2.DisbursementDate:M/d/yyyy}\t{v2.DisbursementAmount}\t{v2.Enclosure}\t{Global.TextEncode(v2.InvoiceCurrency)}\t{Global.TextEncode(v2.Invoice?.Number)}\t{v2.InvoiceId}\t{v2.ExchangeRate}\t{v2.ExportToAccounting}\t{Global.TextEncode(v2.Status)}\t{Global.TextEncode(v2.SystemCurrency)}\t{Global.TextEncode(v2.Type)}\t{v2.VoucherDate:M/d/yyyy}\t{Global.TextEncode(v2.Number)}\t{Global.TextEncode(v2.Vendor?.Name)}\t{v2.VendorId}\t{Global.TextEncode(v2.VendorStreetAddress1)}\t{Global.TextEncode(v2.VendorStreetAddress2)}\t{Global.TextEncode(v2.VendorCity)}\t{Global.TextEncode(v2.VendorState)}\t{Global.TextEncode(v2.VendorPostalCode)}\t{Global.TextEncode(v2.VendorCountryCode)}\t{v2.CreationTime:M/d/yyyy HH:mm:ss}\t{Global.TextEncode(v2.CreationUser?.Username)}\t{v2.CreationUserId}\t{v2.LastWriteTime:M/d/yyyy HH:mm:ss}\t{Global.TextEncode(v2.LastWriteUser?.Username)}\t{v2.LastWriteUserId}\r\n");
+                Response.Write($"{v2.Id}\t{Global.TextEncode(v2.AccountingCode)}\t{Global.TextEncode(v2.AccountNumber)}\t{v2.Amount}\t{Global.TextEncode(v2.BatchGroup?.Name)}\t{v2.BatchGroupId}\t{Global.TextEncode(v2.DisbursementNumber)}\t{v2.DisbursementDate:M/d/yyyy}\t{v2.DisbursementAmount}\t{v2.Enclosure}\t{Global.TextEncode(v2.InvoiceCurrency)}\t{Global.TextEncode(v2.Invoice?.Number)}\t{v2.InvoiceId}\t{v2.ExchangeRate}\t{v2.ExportToAccounting}\t{Global.TextEncode(v2.Status)}\t{Global.TextEncode(v2.SystemCurrency)}\t{Global.TextEncode(v2.Type)}\t{v2.VoucherDate:M/d/yyyy}\t{Global.TextEncode(v2.Number)}\t{Global.TextEncode(v2.Vendor?.Name)}\t{v2.VendorId}\t{v2.CreationTime:M/d/yyyy HH:mm:ss}\t{Global.TextEncode(v2.CreationUser?.Username)}\t{v2.CreationUserId}\t{v2.LastWriteTime:M/d/yyyy HH:mm:ss}\t{Global.TextEncode(v2.LastWriteUser?.Username)}\t{v2.LastWriteUserId}\r\n");
             Response.End();
+        }
+
+        protected void Voucher2sVoucherItem2sRadGrid_NeedDataSource(object sender, GridNeedDataSourceEventArgs e)
+        {
+            if (Session["VoucherItem2sPermission"] == null) return;
+            var rg = (RadGrid)sender;
+            var id = (Guid?)((GridDataItem)rg.Parent.Parent).GetDataKeyValue("Id");
+            var d = new Dictionary<string, string>() { { "Id", "id" }, { "Amount", "amount" }, { "AccountNumber", "externalAccountNumber" }, { "SubTransactionId", "subTransactionId" }, { "VoucherId", "voucherId" }, { "CreationTime", "metadata.createdDate" }, { "CreationUserId", "metadata.createdByUserId" }, { "LastWriteTime", "metadata.updatedDate" }, { "LastWriteUserId", "metadata.updatedByUserId" } };
+            var where = Global.Trim(string.Join(" and ", new string[]
+            {
+                $"voucherId == \"{id}\"",
+                Global.GetCqlFilter(rg, "Id", "id"),
+                Global.GetCqlFilter(rg, "Amount", "amount"),
+                Global.GetCqlFilter(rg, "AccountNumber", "externalAccountNumber"),
+                Global.GetCqlFilter(rg, "SubTransaction.Amount", "subTransactionId", "amount", folioServiceContext.FolioServiceClient.Transactions),
+                Global.GetCqlFilter(rg, "CreationTime", "metadata.createdDate"),
+                Global.GetCqlFilter(rg, "CreationUser.Username", "metadata.createdByUserId", "username", folioServiceContext.FolioServiceClient.Users),
+                Global.GetCqlFilter(rg, "LastWriteTime", "metadata.updatedDate"),
+                Global.GetCqlFilter(rg, "LastWriteUser.Username", "metadata.updatedByUserId", "username", folioServiceContext.FolioServiceClient.Users)
+            }.Where(s => s != null)));
+            rg.DataSource = folioServiceContext.VoucherItem2s(out var i, where, rg.MasterTableView.SortExpressions.Count > 0 ? $"{d[rg.MasterTableView.SortExpressions[0].FieldName]}{(rg.MasterTableView.SortExpressions[0].SortOrder == GridSortOrder.Descending ? "/sort.descending" : "")}" : null, rg.PageSize * rg.CurrentPageIndex, rg.PageSize, true);
+            rg.VirtualItemCount = i;
+            if (rg.MasterTableView.FilterExpression == "")
+            {
+                rg.AllowFilteringByColumn = rg.VirtualItemCount > 10;
+            }
+            traceSource.TraceEvent(TraceEventType.Verbose, 0, $"where = {where}");
         }
 
         public override void Dispose()
