@@ -38,6 +38,7 @@ namespace FolioWebApplication.Voucher2s
                 Global.GetCqlFilter(Voucher2sRadGrid, "Enclosure", "enclosureNeeded"),
                 Global.GetCqlFilter(Voucher2sRadGrid, "InvoiceCurrency", "invoiceCurrency"),
                 Global.GetCqlFilter(Voucher2sRadGrid, "Invoice.Number", "invoiceId", "folioInvoiceNo", folioServiceContext.FolioServiceClient.Invoices),
+                Global.GetCqlFilter(Voucher2sRadGrid, "Invoice.VendorInvoiceNumber", "invoiceId", "vendorInvoiceNo", folioServiceContext.FolioServiceClient.Invoices),
                 Global.GetCqlFilter(Voucher2sRadGrid, "ExchangeRate", "exchangeRate"),
                 Global.GetCqlFilter(Voucher2sRadGrid, "ExportToAccounting", "exportToAccounting"),
                 Global.GetCqlFilter(Voucher2sRadGrid, "Status", "status"),
@@ -64,7 +65,7 @@ namespace FolioWebApplication.Voucher2s
             Response.Charset = "utf-8";
             Response.AppendHeader("Content-Disposition", "attachment; filename=\"Voucher2s.txt\"");
             Response.BufferOutput = false;
-            Response.Write("Id\tAccountingCode\tAccountNumber\tAmount\tBatchGroup\tBatchGroupId\tDisbursementNumber\tDisbursementDate\tDisbursementAmount\tEnclosure\tInvoiceCurrency\tInvoice\tInvoiceId\tExchangeRate\tExportToAccounting\tStatus\tSystemCurrency\tType\tVoucherDate\tNumber\tVendor\tVendorId\tCreationTime\tCreationUser\tCreationUserId\tLastWriteTime\tLastWriteUser\tLastWriteUserId\r\n");
+            Response.Write("Id\tAccountingCode\tAccountNumber\tAmount\tBatchGroup\tBatchGroupId\tDisbursementNumber\tDisbursementDate\tDisbursementAmount\tEnclosure\tInvoiceCurrency\tInvoice\tInvoiceId\tExchangeRate\tExportToAccounting\tStatus\tSystemCurrency\tType\tVoucherDate\tNumber\tVendor\tVendorId\tCreationTime\tCreationUser\tCreationUserId\tLastWriteTime\tLastWriteUser\tLastWriteUserId\tVendorInvoiceNumber\r\n");
             var d = new Dictionary<string, string>() { { "Id", "id" }, { "AccountingCode", "accountingCode" }, { "AccountNumber", "accountNo" }, { "Amount", "amount" }, { "BatchGroupId", "batchGroupId" }, { "DisbursementNumber", "disbursementNumber" }, { "DisbursementDate", "disbursementDate" }, { "DisbursementAmount", "disbursementAmount" }, { "Enclosure", "enclosureNeeded" }, { "InvoiceCurrency", "invoiceCurrency" }, { "InvoiceId", "invoiceId" }, { "ExchangeRate", "exchangeRate" }, { "ExportToAccounting", "exportToAccounting" }, { "Status", "status" }, { "SystemCurrency", "systemCurrency" }, { "Type", "type" }, { "VoucherDate", "voucherDate" }, { "Number", "voucherNumber" }, { "VendorId", "vendorId" }, { "CreationTime", "metadata.createdDate" }, { "CreationUserId", "metadata.createdByUserId" }, { "LastWriteTime", "metadata.updatedDate" }, { "LastWriteUserId", "metadata.updatedByUserId" } };
             var where = Global.Trim(string.Join(" and ", new string[]
             {
@@ -79,6 +80,7 @@ namespace FolioWebApplication.Voucher2s
                 Global.GetCqlFilter(Voucher2sRadGrid, "Enclosure", "enclosureNeeded"),
                 Global.GetCqlFilter(Voucher2sRadGrid, "InvoiceCurrency", "invoiceCurrency"),
                 Global.GetCqlFilter(Voucher2sRadGrid, "Invoice.Number", "invoiceId", "folioInvoiceNo", folioServiceContext.FolioServiceClient.Invoices),
+                Global.GetCqlFilter(Voucher2sRadGrid, "Invoice.VendorInvoiceNumber", "invoiceId", "vendorInvoiceNo", folioServiceContext.FolioServiceClient.Invoices),
                 Global.GetCqlFilter(Voucher2sRadGrid, "ExchangeRate", "exchangeRate"),
                 Global.GetCqlFilter(Voucher2sRadGrid, "ExportToAccounting", "exportToAccounting"),
                 Global.GetCqlFilter(Voucher2sRadGrid, "Status", "status"),
@@ -93,7 +95,7 @@ namespace FolioWebApplication.Voucher2s
                 Global.GetCqlFilter(Voucher2sRadGrid, "LastWriteUser.Username", "metadata.updatedByUserId", "username", folioServiceContext.FolioServiceClient.Users)
             }.Where(s => s != null)));
             foreach (var v2 in folioServiceContext.Voucher2s(where, Voucher2sRadGrid.MasterTableView.SortExpressions.Count > 0 ? $"{d[Voucher2sRadGrid.MasterTableView.SortExpressions[0].FieldName]}{(Voucher2sRadGrid.MasterTableView.SortExpressions[0].SortOrder == GridSortOrder.Descending ? "/sort.descending" : "")}" : null, load: true))
-                Response.Write($"{v2.Id}\t{Global.TextEncode(v2.AccountingCode)}\t{Global.TextEncode(v2.AccountNumber)}\t{v2.Amount}\t{Global.TextEncode(v2.BatchGroup?.Name)}\t{v2.BatchGroupId}\t{Global.TextEncode(v2.DisbursementNumber)}\t{v2.DisbursementDate:M/d/yyyy}\t{v2.DisbursementAmount}\t{v2.Enclosure}\t{Global.TextEncode(v2.InvoiceCurrency)}\t{Global.TextEncode(v2.Invoice?.Number)}\t{v2.InvoiceId}\t{v2.ExchangeRate}\t{v2.ExportToAccounting}\t{Global.TextEncode(v2.Status)}\t{Global.TextEncode(v2.SystemCurrency)}\t{Global.TextEncode(v2.Type)}\t{v2.VoucherDate:M/d/yyyy}\t{Global.TextEncode(v2.Number)}\t{Global.TextEncode(v2.Vendor?.Name)}\t{v2.VendorId}\t{v2.CreationTime:M/d/yyyy HH:mm:ss}\t{Global.TextEncode(v2.CreationUser?.Username)}\t{v2.CreationUserId}\t{v2.LastWriteTime:M/d/yyyy HH:mm:ss}\t{Global.TextEncode(v2.LastWriteUser?.Username)}\t{v2.LastWriteUserId}\r\n");
+                Response.Write($"{v2.Id}\t{Global.TextEncode(v2.AccountingCode)}\t{Global.TextEncode(v2.AccountNumber)}\t{v2.Amount}\t{Global.TextEncode(v2.BatchGroup?.Name)}\t{v2.BatchGroupId}\t{Global.TextEncode(v2.DisbursementNumber)}\t{v2.DisbursementDate:M/d/yyyy}\t{v2.DisbursementAmount}\t{v2.Enclosure}\t{Global.TextEncode(v2.InvoiceCurrency)}\t{Global.TextEncode(v2.Invoice?.Number)}\t{v2.InvoiceId}\t{v2.ExchangeRate}\t{v2.ExportToAccounting}\t{Global.TextEncode(v2.Status)}\t{Global.TextEncode(v2.SystemCurrency)}\t{Global.TextEncode(v2.Type)}\t{v2.VoucherDate:M/d/yyyy}\t{Global.TextEncode(v2.Number)}\t{Global.TextEncode(v2.Vendor?.Name)}\t{v2.VendorId}\t{v2.CreationTime:M/d/yyyy HH:mm:ss}\t{Global.TextEncode(v2.CreationUser?.Username)}\t{v2.CreationUserId}\t{v2.LastWriteTime:M/d/yyyy HH:mm:ss}\t{Global.TextEncode(v2.LastWriteUser?.Username)}\t{v2.LastWriteUserId}\t{Global.TextEncode(v2.Invoice.VendorInvoiceNumber)}\r\n");
             Response.End();
         }
 
