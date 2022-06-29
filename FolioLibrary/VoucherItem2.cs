@@ -37,7 +37,7 @@ namespace FolioLibrary
         [Column("external_account_number"), Display(Name = "Account Number", Order = 3), JsonProperty("externalAccountNumber"), Required, StringLength(1024)]
         public virtual string AccountNumber { get; set; }
 
-        [Display(Name = "Sub Transaction", Order = 4)]
+        [ScaffoldColumn(false)]
         public virtual Transaction2 SubTransaction { get; set; }
 
         [Column("sub_transaction_id"), Display(Name = "Sub Transaction", Order = 5), JsonProperty("subTransactionId")]

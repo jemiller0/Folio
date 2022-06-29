@@ -111,7 +111,6 @@ namespace FolioWebApplication.Voucher2s
                 Global.GetCqlFilter(rg, "Id", "id"),
                 Global.GetCqlFilter(rg, "Amount", "amount"),
                 Global.GetCqlFilter(rg, "AccountNumber", "externalAccountNumber"),
-                Global.GetCqlFilter(rg, "SubTransaction.Amount", "subTransactionId", "amount", folioServiceContext.FolioServiceClient.Transactions),
                 Global.GetCqlFilter(rg, "CreationTime", "metadata.createdDate"),
                 Global.GetCqlFilter(rg, "CreationUser.Username", "metadata.createdByUserId", "username", folioServiceContext.FolioServiceClient.Users),
                 Global.GetCqlFilter(rg, "LastWriteTime", "metadata.updatedDate"),

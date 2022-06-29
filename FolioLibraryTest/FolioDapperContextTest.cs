@@ -9279,7 +9279,6 @@ SELECT
 vi2.id AS ""Id"",
 vi2.amount AS ""Amount"",
 vi2.external_account_number AS ""AccountNumber"",
-st.amount AS ""SubTransaction"",
 vi2.sub_transaction_id AS ""SubTransactionId"",
 v.voucher_number AS ""Voucher"",
 vi2.voucher_id AS ""VoucherId"",

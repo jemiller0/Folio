@@ -57,7 +57,6 @@ namespace FolioWebApplication.Voucher2s
                 Global.GetCqlFilter(VoucherItem2sRadGrid, "Id", "id"),
                 Global.GetCqlFilter(VoucherItem2sRadGrid, "Amount", "amount"),
                 Global.GetCqlFilter(VoucherItem2sRadGrid, "AccountNumber", "externalAccountNumber"),
-                Global.GetCqlFilter(VoucherItem2sRadGrid, "SubTransaction.Amount", "subTransactionId", "amount", folioServiceContext.FolioServiceClient.Transactions),
                 Global.GetCqlFilter(VoucherItem2sRadGrid, "CreationTime", "metadata.createdDate"),
                 Global.GetCqlFilter(VoucherItem2sRadGrid, "CreationUser.Username", "metadata.createdByUserId", "username", folioServiceContext.FolioServiceClient.Users),
                 Global.GetCqlFilter(VoucherItem2sRadGrid, "LastWriteTime", "metadata.updatedDate"),

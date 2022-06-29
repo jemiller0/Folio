@@ -33,14 +33,6 @@
                                     <asp:Literal ID="AccountNumberLiteral" runat="server" Text='<%#: Eval("AccountNumber") %>' />
                                 </td>
                             </tr>
-                            <tr runat="server" visible='<%# Eval("SubTransaction") != null %>'>
-                                <td>
-                                    <asp:Label ID="SubTransactionLabel" runat="server" Text="Sub Transaction:" AssociatedControlID="SubTransactionHyperLink" />
-                                </td>
-                                <td>
-                                    <asp:HyperLink ID="SubTransactionHyperLink" runat="server" Text='<%# Eval("SubTransaction.Amount", "{0:c}") %>' NavigateUrl='<%# $"~/Transaction2s/Edit.aspx?Id={Eval("SubTransactionId")}" %>' Enabled='<%# Session["Transaction2sPermission"] != null %>' />
-                                </td>
-                            </tr>
                             <tr runat="server" visible='<%# Eval("Voucher") != null %>'>
                                 <td>
                                     <asp:Label ID="VoucherLabel" runat="server" Text="Voucher:" AssociatedControlID="VoucherHyperLink" />
