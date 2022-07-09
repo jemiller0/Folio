@@ -12,7 +12,7 @@ namespace FolioLibrary
 {
     public partial class FolioBulkCopyContext : IDisposable
     {
-        private DataTable acquisitionsUnitsDataTable, addressTypesDataTable, alertsDataTable, alternativeTitleTypesDataTable, authAttemptsDataTable, authCredentialsHistoriesDataTable, authPasswordActionsDataTable, batchGroupsDataTable, batchVouchersDataTable, batchVoucherExportsDataTable, batchVoucherExportConfigsDataTable, blocksDataTable, blockConditionsDataTable, blockLimitsDataTable, boundWithPartsDataTable, budgetsDataTable, budgetExpenseClassesDataTable, budgetGroupsDataTable, callNumberTypesDataTable, campusesDataTable, cancellationReasonsDataTable, categoriesDataTable, checkInsDataTable, circulationRulesDataTable, classificationTypesDataTable, closeReasonsDataTable, commentsDataTable, configurationsDataTable, contactsDataTable, contactTypesDataTable, contributorNameTypesDataTable, contributorTypesDataTable, countriesDataTable, customFieldsDataTable, departmentsDataTable, documentsDataTable, donorsDataTable, electronicAccessRelationshipsDataTable, errorRecordsDataTable, eventLogsDataTable, expenseClassesDataTable, exportConfigCredentialsDataTable, feesDataTable, feeTypesDataTable, financeGroupsDataTable, fiscalYearsDataTable, fixedDueDateSchedulesDataTable, fundsDataTable, fund3sDataTable, fundTypesDataTable, groupsDataTable, holdingsDataTable, holdingDonor2sDataTable, holdingNoteTypesDataTable, holdingTypesDataTable, hridSettingsDataTable, idTypesDataTable, illPoliciesDataTable, instancesDataTable, instanceFormatsDataTable, instanceNoteTypesDataTable, instanceRelationshipsDataTable, instanceRelationshipTypesDataTable, instanceSourceMarcsDataTable, instanceStatusesDataTable, instanceTypesDataTable, institutionsDataTable, interfacesDataTable, interfaceCredentialsDataTable, invoicesDataTable, invoice3sDataTable, invoiceItemsDataTable, invoiceItem3sDataTable, invoiceItemDonorsDataTable, invoiceItemFund2sDataTable, invoiceStatusesDataTable, invoiceTransactionSummariesDataTable, itemsDataTable, itemDamagedStatusesDataTable, itemDonor2sDataTable, itemNoteTypesDataTable, itemOrderItemsDataTable, itemStatusesDataTable, jobExecutionsDataTable, jobExecutionProgressesDataTable, jobExecutionSourceChunksDataTable, jobMonitoringsDataTable, journalRecordsDataTable, ledgersDataTable, ledgerRolloversDataTable, ledgerRolloverErrorsDataTable, ledgerRolloverProgressesDataTable, librariesDataTable, loansDataTable, loanEventsDataTable, loanPoliciesDataTable, loanTypesDataTable, locationsDataTable, loginsDataTable, lostItemFeePoliciesDataTable, manualBlockTemplatesDataTable, mappingParamsSnapshotsDataTable, mappingRulesDataTable, mappingRulesSnapshotsDataTable, marcRecordsDataTable, materialTypesDataTable, modeOfIssuancesDataTable, natureOfContentTermsDataTable, notesDataTable, noteTypesDataTable, ordersDataTable, order3sDataTable, orderInvoicesDataTable, orderItemsDataTable, orderItem3sDataTable, orderItemDonorsDataTable, orderItemFund3sDataTable, orderStatusesDataTable, orderStatus2sDataTable, orderTemplatesDataTable, orderTransactionSummariesDataTable, orderTypesDataTable, orderType2sDataTable, organizationsDataTable, overdueFinePoliciesDataTable, ownersDataTable, patronActionSessionsDataTable, patronNoticePoliciesDataTable, paymentsDataTable, paymentMethodsDataTable, paymentTypesDataTable, permissionsDataTable, permissionsUsersDataTable, personDonorsDataTable, precedingSucceedingTitlesDataTable, prefixesDataTable, proxiesDataTable, rawRecordsDataTable, receiptStatusesDataTable, receivingsDataTable, recordsDataTable, refundReasonsDataTable, reportingCodesDataTable, requestsDataTable, requestPoliciesDataTable, scheduledNoticesDataTable, servicePointsDataTable, servicePointUsersDataTable, snapshotsDataTable, sourcesDataTable, staffSlipsDataTable, statisticalCodesDataTable, statisticalCodeTypesDataTable, suffixesDataTable, tagsDataTable, templatesDataTable, titlesDataTable, transactionsDataTable, transferAccountsDataTable, transferCriteriasDataTable, usersDataTable, userAcquisitionsUnitsDataTable, userRequestPreferencesDataTable, userSummariesDataTable, vendorsDataTable, vouchersDataTable, voucherItemsDataTable, voucherStatusesDataTable, waiveReasonsDataTable;
+        private DataTable acquisitionsUnitsDataTable, addressTypesDataTable, alertsDataTable, alternativeTitleTypesDataTable, authAttemptsDataTable, authCredentialsHistoriesDataTable, authPasswordActionsDataTable, batchGroupsDataTable, batchVouchersDataTable, batchVoucherExportsDataTable, batchVoucherExportConfigsDataTable, blocksDataTable, blockConditionsDataTable, blockLimitsDataTable, boundWithPartsDataTable, budgetsDataTable, budgetExpenseClassesDataTable, budgetGroupsDataTable, callNumberTypesDataTable, campusesDataTable, cancellationReasonsDataTable, categoriesDataTable, checkInsDataTable, circulationRulesDataTable, classificationTypesDataTable, closeReasonsDataTable, commentsDataTable, configurationsDataTable, contactsDataTable, contactTypesDataTable, contributorNameTypesDataTable, contributorTypesDataTable, countriesDataTable, customFieldsDataTable, departmentsDataTable, documentsDataTable, donorsDataTable, electronicAccessRelationshipsDataTable, errorRecordsDataTable, eventLogsDataTable, expenseClassesDataTable, exportConfigCredentialsDataTable, feesDataTable, feeTypesDataTable, financeGroupsDataTable, fiscalYearsDataTable, fixedDueDateSchedulesDataTable, fundsDataTable, fund3sDataTable, fundTypesDataTable, groupsDataTable, holdingsDataTable, holdingDonor2sDataTable, holdingNoteTypesDataTable, holdingTypesDataTable, hridSettingsDataTable, idTypesDataTable, illPoliciesDataTable, instancesDataTable, instanceFormatsDataTable, instanceNoteTypesDataTable, instanceRelationshipsDataTable, instanceRelationshipTypesDataTable, instanceSourceMarcsDataTable, instanceStatusesDataTable, instanceTypesDataTable, institutionsDataTable, interfacesDataTable, interfaceCredentialsDataTable, invoicesDataTable, invoice3sDataTable, invoiceItemsDataTable, invoiceItem3sDataTable, invoiceItemDonorsDataTable, invoiceItemFund2sDataTable, invoiceStatusesDataTable, invoiceTransactionSummariesDataTable, itemsDataTable, itemDamagedStatusesDataTable, itemDonor2sDataTable, itemNoteTypesDataTable, itemOrderItemsDataTable, itemStatusesDataTable, jobExecutionsDataTable, jobExecutionProgressesDataTable, jobExecutionSourceChunksDataTable, jobMonitoringsDataTable, journalRecordsDataTable, ledgersDataTable, ledgerRolloversDataTable, ledgerRolloverErrorsDataTable, ledgerRolloverProgressesDataTable, librariesDataTable, loansDataTable, loanEventsDataTable, loanPoliciesDataTable, loanTypesDataTable, locationsDataTable, loginsDataTable, lostItemFeePoliciesDataTable, manualBlockTemplatesDataTable, mappingParamsSnapshotsDataTable, mappingRulesDataTable, mappingRulesSnapshotsDataTable, marcRecordsDataTable, materialTypesDataTable, modeOfIssuancesDataTable, natureOfContentTermsDataTable, notesDataTable, noteTypesDataTable, ordersDataTable, order3sDataTable, orderInvoicesDataTable, orderItemsDataTable, orderItem3sDataTable, orderItemDonorsDataTable, orderItemFund3sDataTable, orderStatusesDataTable, orderStatus2sDataTable, orderTemplatesDataTable, orderTransactionSummariesDataTable, orderTypesDataTable, orderType2sDataTable, organizationsDataTable, overdueFinePoliciesDataTable, ownersDataTable, patronActionSessionsDataTable, patronNoticePoliciesDataTable, paymentsDataTable, paymentMethodsDataTable, paymentTypesDataTable, permissionsDataTable, permissionsUsersDataTable, personDonorsDataTable, precedingSucceedingTitlesDataTable, prefixesDataTable, proxiesDataTable, rawRecordsDataTable, receiptStatusesDataTable, receivingsDataTable, recordsDataTable, refundReasonsDataTable, reportingCodesDataTable, requestsDataTable, requestPoliciesDataTable, scheduledNoticesDataTable, servicePointsDataTable, servicePointUsersDataTable, snapshotsDataTable, sourcesDataTable, staffSlipsDataTable, statisticalCodesDataTable, statisticalCodeTypesDataTable, suffixesDataTable, tagsDataTable, templatesDataTable, titlesDataTable, transactionsDataTable, transferAccountsDataTable, transferCriteriasDataTable, usersDataTable, userAcquisitionsUnitsDataTable, userRequestPreferencesDataTable, userSummariesDataTable, vendorsDataTable, vouchersDataTable, voucher3sDataTable, voucherItemsDataTable, voucherItem3sDataTable, voucherStatusesDataTable, waiveReasonsDataTable;
         private bool checkConstraints;
         private string connectionString;
         private bool identityInsert;
@@ -3523,6 +3523,73 @@ namespace FolioLibrary
             vouchersDataTable.Rows.Add(dr);
         }
 
+        public void Insert(Voucher3 voucher3)
+        {
+            if (voucher3sDataTable == null)
+            {
+                voucher3sDataTable = new DataTable();
+                voucher3sDataTable.Columns.Add(new DataColumn { ColumnName = "id", DataType = typeof(int) });
+                voucher3sDataTable.Columns.Add(new DataColumn { ColumnName = "invoice_date", DataType = typeof(DateTime) });
+                voucher3sDataTable.Columns.Add(new DataColumn { ColumnName = "vendor_invoice_id", DataType = typeof(string) });
+                voucher3sDataTable.Columns.Add(new DataColumn { ColumnName = "vendor_invoice_amount", DataType = typeof(decimal) });
+                voucher3sDataTable.Columns.Add(new DataColumn { ColumnName = "vendor_number", DataType = typeof(string) });
+                voucher3sDataTable.Columns.Add(new DataColumn { ColumnName = "number", DataType = typeof(string) });
+                voucher3sDataTable.Columns.Add(new DataColumn { ColumnName = "payment_type_id", DataType = typeof(int) });
+                voucher3sDataTable.Columns.Add(new DataColumn { ColumnName = "enclosure", DataType = typeof(bool) });
+                voucher3sDataTable.Columns.Add(new DataColumn { ColumnName = "manual", DataType = typeof(bool) });
+                voucher3sDataTable.Columns.Add(new DataColumn { ColumnName = "voucher_status_id", DataType = typeof(int) });
+                voucher3sDataTable.Columns.Add(new DataColumn { ColumnName = "notes", DataType = typeof(string) });
+                voucher3sDataTable.Columns.Add(new DataColumn { ColumnName = "review_time", DataType = typeof(DateTime) });
+                voucher3sDataTable.Columns.Add(new DataColumn { ColumnName = "review_username", DataType = typeof(string) });
+                voucher3sDataTable.Columns.Add(new DataColumn { ColumnName = "approve_time", DataType = typeof(DateTime) });
+                voucher3sDataTable.Columns.Add(new DataColumn { ColumnName = "approve_username", DataType = typeof(string) });
+                voucher3sDataTable.Columns.Add(new DataColumn { ColumnName = "cancel_time", DataType = typeof(DateTime) });
+                voucher3sDataTable.Columns.Add(new DataColumn { ColumnName = "cancel_username", DataType = typeof(string) });
+                voucher3sDataTable.Columns.Add(new DataColumn { ColumnName = "export_id", DataType = typeof(int) });
+                voucher3sDataTable.Columns.Add(new DataColumn { ColumnName = "export_time", DataType = typeof(DateTime) });
+                voucher3sDataTable.Columns.Add(new DataColumn { ColumnName = "check_number", DataType = typeof(string) });
+                voucher3sDataTable.Columns.Add(new DataColumn { ColumnName = "completion_time", DataType = typeof(DateTime) });
+                voucher3sDataTable.Columns.Add(new DataColumn { ColumnName = "completion_username", DataType = typeof(string) });
+                voucher3sDataTable.Columns.Add(new DataColumn { ColumnName = "mail_time", DataType = typeof(DateTime) });
+                voucher3sDataTable.Columns.Add(new DataColumn { ColumnName = "creation_time", DataType = typeof(DateTime) });
+                voucher3sDataTable.Columns.Add(new DataColumn { ColumnName = "creation_username", DataType = typeof(string) });
+                voucher3sDataTable.Columns.Add(new DataColumn { ColumnName = "last_write_time", DataType = typeof(DateTime) });
+                voucher3sDataTable.Columns.Add(new DataColumn { ColumnName = "last_write_username", DataType = typeof(string) });
+                voucher3sDataTable.Columns.Add(new DataColumn { ColumnName = "long_id", DataType = typeof(Guid) });
+                
+            }
+            var dr = voucher3sDataTable.NewRow();
+            dr["id"] = (object)voucher3.Id ?? DBNull.Value;
+            dr["invoice_date"] = (object)voucher3.InvoiceDate ?? DBNull.Value;
+            dr["vendor_invoice_id"] = (object)voucher3.VendorInvoiceId ?? DBNull.Value;
+            dr["vendor_invoice_amount"] = (object)voucher3.VendorInvoiceAmount ?? DBNull.Value;
+            dr["vendor_number"] = (object)voucher3.VendorNumber ?? DBNull.Value;
+            dr["number"] = (object)voucher3.Number ?? DBNull.Value;
+            dr["payment_type_id"] = (object)voucher3.PaymentTypeId ?? DBNull.Value;
+            dr["enclosure"] = (object)voucher3.Enclosure ?? DBNull.Value;
+            dr["manual"] = (object)voucher3.Manual ?? DBNull.Value;
+            dr["voucher_status_id"] = (object)voucher3.VoucherStatusId ?? DBNull.Value;
+            dr["notes"] = (object)voucher3.Notes ?? DBNull.Value;
+            dr["review_time"] = (object)voucher3.ReviewTime ?? DBNull.Value;
+            dr["review_username"] = (object)voucher3.ReviewUsername ?? DBNull.Value;
+            dr["approve_time"] = (object)voucher3.ApproveTime ?? DBNull.Value;
+            dr["approve_username"] = (object)voucher3.ApproveUsername ?? DBNull.Value;
+            dr["cancel_time"] = (object)voucher3.CancelTime ?? DBNull.Value;
+            dr["cancel_username"] = (object)voucher3.CancelUsername ?? DBNull.Value;
+            dr["export_id"] = (object)voucher3.ExportId ?? DBNull.Value;
+            dr["export_time"] = (object)voucher3.ExportTime ?? DBNull.Value;
+            dr["check_number"] = (object)voucher3.CheckNumber ?? DBNull.Value;
+            dr["completion_time"] = (object)voucher3.CompletionTime ?? DBNull.Value;
+            dr["completion_username"] = (object)voucher3.CompletionUsername ?? DBNull.Value;
+            dr["mail_time"] = (object)voucher3.MailTime ?? DBNull.Value;
+            dr["creation_time"] = (object)voucher3.CreationTime ?? DBNull.Value;
+            dr["creation_username"] = (object)voucher3.CreationUsername ?? DBNull.Value;
+            dr["last_write_time"] = (object)voucher3.LastWriteTime ?? DBNull.Value;
+            dr["last_write_username"] = (object)voucher3.LastWriteUsername ?? DBNull.Value;
+            dr["long_id"] = (object)voucher3.LongId ?? DBNull.Value;
+            voucher3sDataTable.Rows.Add(dr);
+        }
+
         public void Insert(VoucherItem voucherItem)
         {
             if (voucherItemsDataTable == null)
@@ -3542,6 +3609,35 @@ namespace FolioLibrary
             dr["created_by"] = (object)voucherItem.CreationUserId ?? DBNull.Value;
             dr["voucherid"] = (object)voucherItem.Voucherid ?? DBNull.Value;
             voucherItemsDataTable.Rows.Add(dr);
+        }
+
+        public void Insert(VoucherItem3 voucherItem3)
+        {
+            if (voucherItem3sDataTable == null)
+            {
+                voucherItem3sDataTable = new DataTable();
+                voucherItem3sDataTable.Columns.Add(new DataColumn { ColumnName = "id", DataType = typeof(int) });
+                voucherItem3sDataTable.Columns.Add(new DataColumn { ColumnName = "voucher_id", DataType = typeof(int) });
+                voucherItem3sDataTable.Columns.Add(new DataColumn { ColumnName = "account_number", DataType = typeof(string) });
+                voucherItem3sDataTable.Columns.Add(new DataColumn { ColumnName = "amount", DataType = typeof(decimal) });
+                voucherItem3sDataTable.Columns.Add(new DataColumn { ColumnName = "creation_time", DataType = typeof(DateTime) });
+                voucherItem3sDataTable.Columns.Add(new DataColumn { ColumnName = "creation_username", DataType = typeof(string) });
+                voucherItem3sDataTable.Columns.Add(new DataColumn { ColumnName = "last_write_time", DataType = typeof(DateTime) });
+                voucherItem3sDataTable.Columns.Add(new DataColumn { ColumnName = "last_write_username", DataType = typeof(string) });
+                voucherItem3sDataTable.Columns.Add(new DataColumn { ColumnName = "long_id", DataType = typeof(Guid) });
+                
+            }
+            var dr = voucherItem3sDataTable.NewRow();
+            dr["id"] = (object)voucherItem3.Id ?? DBNull.Value;
+            dr["voucher_id"] = (object)voucherItem3.VoucherId ?? DBNull.Value;
+            dr["account_number"] = (object)voucherItem3.AccountNumber ?? DBNull.Value;
+            dr["amount"] = (object)voucherItem3.Amount ?? DBNull.Value;
+            dr["creation_time"] = (object)voucherItem3.CreationTime ?? DBNull.Value;
+            dr["creation_username"] = (object)voucherItem3.CreationUsername ?? DBNull.Value;
+            dr["last_write_time"] = (object)voucherItem3.LastWriteTime ?? DBNull.Value;
+            dr["last_write_username"] = (object)voucherItem3.LastWriteUsername ?? DBNull.Value;
+            dr["long_id"] = (object)voucherItem3.LongId ?? DBNull.Value;
+            voucherItem3sDataTable.Rows.Add(dr);
         }
 
         public void Insert(VoucherStatus voucherStatus)
@@ -5577,6 +5673,41 @@ namespace FolioLibrary
                 sqlBulkCopy.WriteToServer(vouchersDataTable);
                 vouchersDataTable.Clear();
             }
+            if (voucher3sDataTable != null && voucher3sDataTable.Rows.Count > 0)
+            {
+                sqlBulkCopy.DestinationTableName = $"local{(IsMySql ? "_" : ".")}vouchers";
+                sqlBulkCopy.ColumnMappings.Clear();
+                sqlBulkCopy.ColumnMappings.Add("id", "id");
+                sqlBulkCopy.ColumnMappings.Add("invoice_date", "invoice_date");
+                sqlBulkCopy.ColumnMappings.Add("vendor_invoice_id", "vendor_invoice_id");
+                sqlBulkCopy.ColumnMappings.Add("vendor_invoice_amount", "vendor_invoice_amount");
+                sqlBulkCopy.ColumnMappings.Add("vendor_number", "vendor_number");
+                sqlBulkCopy.ColumnMappings.Add("number", "number");
+                sqlBulkCopy.ColumnMappings.Add("payment_type_id", "payment_type_id");
+                sqlBulkCopy.ColumnMappings.Add("enclosure", "enclosure");
+                sqlBulkCopy.ColumnMappings.Add("manual", "manual");
+                sqlBulkCopy.ColumnMappings.Add("voucher_status_id", "voucher_status_id");
+                sqlBulkCopy.ColumnMappings.Add("notes", "notes");
+                sqlBulkCopy.ColumnMappings.Add("review_time", "review_time");
+                sqlBulkCopy.ColumnMappings.Add("review_username", "review_username");
+                sqlBulkCopy.ColumnMappings.Add("approve_time", "approve_time");
+                sqlBulkCopy.ColumnMappings.Add("approve_username", "approve_username");
+                sqlBulkCopy.ColumnMappings.Add("cancel_time", "cancel_time");
+                sqlBulkCopy.ColumnMappings.Add("cancel_username", "cancel_username");
+                sqlBulkCopy.ColumnMappings.Add("export_id", "export_id");
+                sqlBulkCopy.ColumnMappings.Add("export_time", "export_time");
+                sqlBulkCopy.ColumnMappings.Add("check_number", "check_number");
+                sqlBulkCopy.ColumnMappings.Add("completion_time", "completion_time");
+                sqlBulkCopy.ColumnMappings.Add("completion_username", "completion_username");
+                sqlBulkCopy.ColumnMappings.Add("mail_time", "mail_time");
+                sqlBulkCopy.ColumnMappings.Add("creation_time", "creation_time");
+                sqlBulkCopy.ColumnMappings.Add("creation_username", "creation_username");
+                sqlBulkCopy.ColumnMappings.Add("last_write_time", "last_write_time");
+                sqlBulkCopy.ColumnMappings.Add("last_write_username", "last_write_username");
+                sqlBulkCopy.ColumnMappings.Add("long_id", "long_id");
+                sqlBulkCopy.WriteToServer(voucher3sDataTable);
+                voucher3sDataTable.Clear();
+            }
             if (voucherItemsDataTable != null && voucherItemsDataTable.Rows.Count > 0)
             {
                 sqlBulkCopy.DestinationTableName = $"uchicago_mod_invoice_storage{(IsMySql ? "_" : ".")}voucher_lines";
@@ -5588,6 +5719,22 @@ namespace FolioLibrary
                 sqlBulkCopy.ColumnMappings.Add("voucherid", "voucherid");
                 sqlBulkCopy.WriteToServer(voucherItemsDataTable);
                 voucherItemsDataTable.Clear();
+            }
+            if (voucherItem3sDataTable != null && voucherItem3sDataTable.Rows.Count > 0)
+            {
+                sqlBulkCopy.DestinationTableName = $"local{(IsMySql ? "_" : ".")}voucher_items";
+                sqlBulkCopy.ColumnMappings.Clear();
+                sqlBulkCopy.ColumnMappings.Add("id", "id");
+                sqlBulkCopy.ColumnMappings.Add("voucher_id", "voucher_id");
+                sqlBulkCopy.ColumnMappings.Add("account_number", "account_number");
+                sqlBulkCopy.ColumnMappings.Add("amount", "amount");
+                sqlBulkCopy.ColumnMappings.Add("creation_time", "creation_time");
+                sqlBulkCopy.ColumnMappings.Add("creation_username", "creation_username");
+                sqlBulkCopy.ColumnMappings.Add("last_write_time", "last_write_time");
+                sqlBulkCopy.ColumnMappings.Add("last_write_username", "last_write_username");
+                sqlBulkCopy.ColumnMappings.Add("long_id", "long_id");
+                sqlBulkCopy.WriteToServer(voucherItem3sDataTable);
+                voucherItem3sDataTable.Clear();
             }
             if (voucherStatusesDataTable != null && voucherStatusesDataTable.Rows.Count > 0)
             {
@@ -5784,7 +5931,9 @@ namespace FolioLibrary
             if (userSummariesDataTable != null) userSummariesDataTable.Dispose();
             if (vendorsDataTable != null) vendorsDataTable.Dispose();
             if (vouchersDataTable != null) vouchersDataTable.Dispose();
+            if (voucher3sDataTable != null) voucher3sDataTable.Dispose();
             if (voucherItemsDataTable != null) voucherItemsDataTable.Dispose();
+            if (voucherItem3sDataTable != null) voucherItem3sDataTable.Dispose();
             if (voucherStatusesDataTable != null) voucherStatusesDataTable.Dispose();
             if (waiveReasonsDataTable != null) waiveReasonsDataTable.Dispose();
         }

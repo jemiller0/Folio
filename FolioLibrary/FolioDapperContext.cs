@@ -2808,6 +2808,7 @@ namespace FolioLibrary
             if (load && v2.LastWriteUserId != null) v2.LastWriteUser = FindUser2(v2.LastWriteUserId);
             return v2;
         }
+        public Voucher3 FindVoucher3(int? id, bool load = false) => Query<Voucher3>($"SELECT id AS \"Id\", invoice_date AS \"InvoiceDate\", vendor_invoice_id AS \"VendorInvoiceId\", vendor_invoice_amount AS \"VendorInvoiceAmount\", vendor_number AS \"VendorNumber\", number AS \"Number\", payment_type_id AS \"PaymentTypeId\", enclosure AS \"Enclosure\", manual AS \"Manual\", voucher_status_id AS \"VoucherStatusId\", notes AS \"Notes\", review_time AS \"ReviewTime\", review_username AS \"ReviewUsername\", approve_time AS \"ApproveTime\", approve_username AS \"ApproveUsername\", cancel_time AS \"CancelTime\", cancel_username AS \"CancelUsername\", export_id AS \"ExportId\", export_time AS \"ExportTime\", check_number AS \"CheckNumber\", completion_time AS \"CompletionTime\", completion_username AS \"CompletionUsername\", mail_time AS \"MailTime\", creation_time AS \"CreationTime\", creation_username AS \"CreationUsername\", last_write_time AS \"LastWriteTime\", last_write_username AS \"LastWriteUsername\", long_id AS \"LongId\" FROM local{(IsMySql ? "_" : ".")}vouchers WHERE id = @id", new { id }).SingleOrDefault();
         public VoucherAcquisitionsUnit FindVoucherAcquisitionsUnit(string id, bool load = false)
         {
             var vau = Query<VoucherAcquisitionsUnit>($"SELECT id AS \"Id\", voucher_id AS \"VoucherId\", acquisitions_unit_id AS \"AcquisitionsUnitId\" FROM uc{(IsMySql ? "_" : ".")}voucher_acquisitions_units WHERE id = @id", new { id }).SingleOrDefault();
@@ -2833,6 +2834,7 @@ namespace FolioLibrary
             if (load && vi2.LastWriteUserId != null) vi2.LastWriteUser = FindUser2(vi2.LastWriteUserId);
             return vi2;
         }
+        public VoucherItem3 FindVoucherItem3(int? id, bool load = false) => Query<VoucherItem3>($"SELECT id AS \"Id\", voucher_id AS \"VoucherId\", account_number AS \"AccountNumber\", amount AS \"Amount\", creation_time AS \"CreationTime\", creation_username AS \"CreationUsername\", last_write_time AS \"LastWriteTime\", last_write_username AS \"LastWriteUsername\", long_id AS \"LongId\" FROM local{(IsMySql ? "_" : ".")}voucher_items WHERE id = @id", new { id }).SingleOrDefault();
         public VoucherItemFund FindVoucherItemFund(string id, bool load = false)
         {
             var vif = Query<VoucherItemFund>($"SELECT id AS \"Id\", voucher_item_id AS \"VoucherItemId\", code AS \"FundCode\", encumbrance_id AS \"EncumbranceId\", fund_id AS \"FundId\", invoice_item_id AS \"InvoiceItemId\", distribution_type AS \"DistributionType\", expense_class_id AS \"ExpenseClassId\", value AS \"Value\" FROM uc{(IsMySql ? "_" : ".")}voucher_item_fund_distributions WHERE id = @id", new { id }).SingleOrDefault();
@@ -4199,6 +4201,9 @@ namespace FolioLibrary
         public void AddVoucher2sIndexes()
         {
         }
+        public void AddVoucher3sIndexes()
+        {
+        }
         public void AddVoucherAcquisitionsUnitsIndexes()
         {
         }
@@ -4206,6 +4211,9 @@ namespace FolioLibrary
         {
         }
         public void AddVoucherItem2sIndexes()
+        {
+        }
+        public void AddVoucherItem3sIndexes()
         {
         }
         public void AddVoucherItemFundsIndexes()
@@ -5559,6 +5567,9 @@ namespace FolioLibrary
         public void RemoveVoucher2sIndexes()
         {
         }
+        public void RemoveVoucher3sIndexes()
+        {
+        }
         public void RemoveVoucherAcquisitionsUnitsIndexes()
         {
         }
@@ -5566,6 +5577,9 @@ namespace FolioLibrary
         {
         }
         public void RemoveVoucherItem2sIndexes()
+        {
+        }
+        public void RemoveVoucherItem3sIndexes()
         {
         }
         public void RemoveVoucherItemFundsIndexes()
@@ -6029,9 +6043,11 @@ namespace FolioLibrary
         public IEnumerable<Vendor> Vendors(string where = null, object param = null, string orderBy = null, int? skip = null, int? take = null) => Query<Vendor>($"SELECT id AS \"Id\", id2 AS \"Id2\", name AS \"Name\", number AS \"Number\", code AS \"Code\", email_address AS \"EmailAddress\", creation_time AS \"CreationTime\", creation_username AS \"CreationUsername\", last_write_time AS \"LastWriteTime\", last_write_username AS \"LastWriteUsername\", long_id AS \"LongId\" FROM local{(IsMySql ? "_" : ".")}vendors{(where != null ? $" WHERE {where}" : "")}{(orderBy != null || skip != null || take != null ? $" ORDER BY {orderBy ?? "id"}" : "")}", param, skip, take);
         public IEnumerable<Voucher> Vouchers(string where = null, object param = null, string orderBy = null, int? skip = null, int? take = null) => Query<Voucher>($"SELECT id AS \"Id\", COALESCE(jsonb_set(jsonb, '{{metadata,createdDate}}', ('\"' || (jsonb#>>'{{metadata,createdDate}}') || CASE WHEN jsonb#>>'{{metadata,createdDate}}' !~ '([-+]\\d\\d:\\d\\d)|Z$' THEN '+00:00' ELSE '' END || '\"')::jsonb), jsonb) AS \"Content\", creation_date AS \"CreationTime\", created_by AS \"CreationUserId\", invoiceid AS \"Invoiceid\", batchgroupid AS \"Batchgroupid\" FROM uchicago_mod_invoice_storage{(IsMySql ? "_" : ".")}vouchers{(where != null ? $" WHERE {where}" : "")}{(orderBy != null || skip != null || take != null ? $" ORDER BY {orderBy ?? "id"}" : "")}", param, skip, take);
         public IEnumerable<Voucher2> Voucher2s(string where = null, object param = null, string orderBy = null, int? skip = null, int? take = null) => Query<Voucher2>($"SELECT id AS \"Id\", accounting_code AS \"AccountingCode\", account_no AS \"AccountNumber\", amount AS \"Amount\", batch_group_id AS \"BatchGroupId\", disbursement_number AS \"DisbursementNumber\", disbursement_date AS \"DisbursementDate\", disbursement_amount AS \"DisbursementAmount\", enclosure_needed AS \"Enclosure\", invoice_currency AS \"InvoiceCurrency\", invoice_id AS \"InvoiceId\", exchange_rate AS \"ExchangeRate\", export_to_accounting AS \"ExportToAccounting\", status AS \"Status\", system_currency AS \"SystemCurrency\", type AS \"Type\", voucher_date AS \"VoucherDate\", voucher_number AS \"Number\", vendor_id AS \"VendorId\", vendor_address_address_line1 AS \"VendorStreetAddress1\", vendor_address_address_line2 AS \"VendorStreetAddress2\", vendor_address_city AS \"VendorCity\", vendor_address_state_region AS \"VendorState\", vendor_address_zip_code AS \"VendorPostalCode\", vendor_address_country AS \"VendorCountryCode\", created_date AS \"CreationTime\", created_by_user_id AS \"CreationUserId\", created_by_username AS \"CreationUserUsername\", updated_date AS \"LastWriteTime\", updated_by_user_id AS \"LastWriteUserId\", updated_by_username AS \"LastWriteUserUsername\", content AS \"Content\" FROM uc{(IsMySql ? "_" : ".")}vouchers{(where != null ? $" WHERE {where}" : "")}{(orderBy != null || skip != null || take != null ? $" ORDER BY {orderBy ?? "id"}" : "")}", param, skip, take);
+        public IEnumerable<Voucher3> Voucher3s(string where = null, object param = null, string orderBy = null, int? skip = null, int? take = null) => Query<Voucher3>($"SELECT id AS \"Id\", invoice_date AS \"InvoiceDate\", vendor_invoice_id AS \"VendorInvoiceId\", vendor_invoice_amount AS \"VendorInvoiceAmount\", vendor_number AS \"VendorNumber\", number AS \"Number\", payment_type_id AS \"PaymentTypeId\", enclosure AS \"Enclosure\", manual AS \"Manual\", voucher_status_id AS \"VoucherStatusId\", notes AS \"Notes\", review_time AS \"ReviewTime\", review_username AS \"ReviewUsername\", approve_time AS \"ApproveTime\", approve_username AS \"ApproveUsername\", cancel_time AS \"CancelTime\", cancel_username AS \"CancelUsername\", export_id AS \"ExportId\", export_time AS \"ExportTime\", check_number AS \"CheckNumber\", completion_time AS \"CompletionTime\", completion_username AS \"CompletionUsername\", mail_time AS \"MailTime\", creation_time AS \"CreationTime\", creation_username AS \"CreationUsername\", last_write_time AS \"LastWriteTime\", last_write_username AS \"LastWriteUsername\", long_id AS \"LongId\" FROM local{(IsMySql ? "_" : ".")}vouchers{(where != null ? $" WHERE {where}" : "")}{(orderBy != null || skip != null || take != null ? $" ORDER BY {orderBy ?? "id"}" : "")}", param, skip, take);
         public IEnumerable<VoucherAcquisitionsUnit> VoucherAcquisitionsUnits(string where = null, object param = null, string orderBy = null, int? skip = null, int? take = null) => Query<VoucherAcquisitionsUnit>($"SELECT id AS \"Id\", voucher_id AS \"VoucherId\", acquisitions_unit_id AS \"AcquisitionsUnitId\" FROM uc{(IsMySql ? "_" : ".")}voucher_acquisitions_units{(where != null ? $" WHERE {where}" : "")}{(orderBy != null || skip != null || take != null ? $" ORDER BY {orderBy ?? "id"}" : "")}", param, skip, take);
         public IEnumerable<VoucherItem> VoucherItems(string where = null, object param = null, string orderBy = null, int? skip = null, int? take = null) => Query<VoucherItem>($"SELECT id AS \"Id\", COALESCE(jsonb_set(jsonb, '{{metadata,createdDate}}', ('\"' || (jsonb#>>'{{metadata,createdDate}}') || CASE WHEN jsonb#>>'{{metadata,createdDate}}' !~ '([-+]\\d\\d:\\d\\d)|Z$' THEN '+00:00' ELSE '' END || '\"')::jsonb), jsonb) AS \"Content\", creation_date AS \"CreationTime\", created_by AS \"CreationUserId\", voucherid AS \"Voucherid\" FROM uchicago_mod_invoice_storage{(IsMySql ? "_" : ".")}voucher_lines{(where != null ? $" WHERE {where}" : "")}{(orderBy != null || skip != null || take != null ? $" ORDER BY {orderBy ?? "id"}" : "")}", param, skip, take);
         public IEnumerable<VoucherItem2> VoucherItem2s(string where = null, object param = null, string orderBy = null, int? skip = null, int? take = null) => Query<VoucherItem2>($"SELECT id AS \"Id\", amount AS \"Amount\", external_account_number AS \"AccountNumber\", sub_transaction_id AS \"SubTransactionId\", voucher_id AS \"VoucherId\", created_date AS \"CreationTime\", created_by_user_id AS \"CreationUserId\", created_by_username AS \"CreationUserUsername\", updated_date AS \"LastWriteTime\", updated_by_user_id AS \"LastWriteUserId\", updated_by_username AS \"LastWriteUserUsername\", content AS \"Content\" FROM uc{(IsMySql ? "_" : ".")}voucher_items{(where != null ? $" WHERE {where}" : "")}{(orderBy != null || skip != null || take != null ? $" ORDER BY {orderBy ?? "id"}" : "")}", param, skip, take);
+        public IEnumerable<VoucherItem3> VoucherItem3s(string where = null, object param = null, string orderBy = null, int? skip = null, int? take = null) => Query<VoucherItem3>($"SELECT id AS \"Id\", voucher_id AS \"VoucherId\", account_number AS \"AccountNumber\", amount AS \"Amount\", creation_time AS \"CreationTime\", creation_username AS \"CreationUsername\", last_write_time AS \"LastWriteTime\", last_write_username AS \"LastWriteUsername\", long_id AS \"LongId\" FROM local{(IsMySql ? "_" : ".")}voucher_items{(where != null ? $" WHERE {where}" : "")}{(orderBy != null || skip != null || take != null ? $" ORDER BY {orderBy ?? "id"}" : "")}", param, skip, take);
         public IEnumerable<VoucherItemFund> VoucherItemFunds(string where = null, object param = null, string orderBy = null, int? skip = null, int? take = null) => Query<VoucherItemFund>($"SELECT id AS \"Id\", voucher_item_id AS \"VoucherItemId\", code AS \"FundCode\", encumbrance_id AS \"EncumbranceId\", fund_id AS \"FundId\", invoice_item_id AS \"InvoiceItemId\", distribution_type AS \"DistributionType\", expense_class_id AS \"ExpenseClassId\", value AS \"Value\" FROM uc{(IsMySql ? "_" : ".")}voucher_item_fund_distributions{(where != null ? $" WHERE {where}" : "")}{(orderBy != null || skip != null || take != null ? $" ORDER BY {orderBy ?? "id"}" : "")}", param, skip, take);
         public IEnumerable<VoucherItemInvoiceItem> VoucherItemInvoiceItems(string where = null, object param = null, string orderBy = null, int? skip = null, int? take = null) => Query<VoucherItemInvoiceItem>($"SELECT id AS \"Id\", voucher_item_id AS \"VoucherItemId\", invoice_item_id AS \"InvoiceItemId\" FROM uc{(IsMySql ? "_" : ".")}voucher_item_invoice_items{(where != null ? $" WHERE {where}" : "")}{(orderBy != null || skip != null || take != null ? $" ORDER BY {orderBy ?? "id"}" : "")}", param, skip, take);
         public IEnumerable<VoucherStatus> VoucherStatuses(string where = null, object param = null, string orderBy = null, int? skip = null, int? take = null) => Query<VoucherStatus>($"SELECT id AS \"Id\", name AS \"Name\", creation_time AS \"CreationTime\", creation_username AS \"CreationUsername\", last_write_time AS \"LastWriteTime\", last_write_username AS \"LastWriteUsername\" FROM uc{(IsMySql ? "_" : ".")}voucher_statuses{(where != null ? $" WHERE {where}" : "")}{(orderBy != null || skip != null || take != null ? $" ORDER BY {orderBy ?? "id"}" : "")}", param, skip, take);
@@ -6483,9 +6499,11 @@ namespace FolioLibrary
         public int CountVendors(string where = null, object param = null, int? take = null) => Count($"SELECT 1 FROM local{(IsMySql ? "_" : ".")}vendors{(where != null ? $" WHERE {where}" : "")}", param: param, take: take);
         public int CountVouchers(string where = null, object param = null, int? take = null) => Count($"SELECT 1 FROM uchicago_mod_invoice_storage{(IsMySql ? "_" : ".")}vouchers{(where != null ? $" WHERE {where}" : "")}", param: param, take: take);
         public int CountVoucher2s(string where = null, object param = null, int? take = null) => Count($"SELECT 1 FROM uc{(IsMySql ? "_" : ".")}vouchers{(where != null ? $" WHERE {where}" : "")}", param: param, take: take);
+        public int CountVoucher3s(string where = null, object param = null, int? take = null) => Count($"SELECT 1 FROM local{(IsMySql ? "_" : ".")}vouchers{(where != null ? $" WHERE {where}" : "")}", param: param, take: take);
         public int CountVoucherAcquisitionsUnits(string where = null, object param = null, int? take = null) => Count($"SELECT 1 FROM uc{(IsMySql ? "_" : ".")}voucher_acquisitions_units{(where != null ? $" WHERE {where}" : "")}", param: param, take: take);
         public int CountVoucherItems(string where = null, object param = null, int? take = null) => Count($"SELECT 1 FROM uchicago_mod_invoice_storage{(IsMySql ? "_" : ".")}voucher_lines{(where != null ? $" WHERE {where}" : "")}", param: param, take: take);
         public int CountVoucherItem2s(string where = null, object param = null, int? take = null) => Count($"SELECT 1 FROM uc{(IsMySql ? "_" : ".")}voucher_items{(where != null ? $" WHERE {where}" : "")}", param: param, take: take);
+        public int CountVoucherItem3s(string where = null, object param = null, int? take = null) => Count($"SELECT 1 FROM local{(IsMySql ? "_" : ".")}voucher_items{(where != null ? $" WHERE {where}" : "")}", param: param, take: take);
         public int CountVoucherItemFunds(string where = null, object param = null, int? take = null) => Count($"SELECT 1 FROM uc{(IsMySql ? "_" : ".")}voucher_item_fund_distributions{(where != null ? $" WHERE {where}" : "")}", param: param, take: take);
         public int CountVoucherItemInvoiceItems(string where = null, object param = null, int? take = null) => Count($"SELECT 1 FROM uc{(IsMySql ? "_" : ".")}voucher_item_invoice_items{(where != null ? $" WHERE {where}" : "")}", param: param, take: take);
         public int CountVoucherStatuses(string where = null, object param = null, int? take = null) => Count($"SELECT 1 FROM uc{(IsMySql ? "_" : ".")}voucher_statuses{(where != null ? $" WHERE {where}" : "")}", param: param, take: take);
@@ -6937,9 +6955,11 @@ namespace FolioLibrary
         public bool AnyVendors(string where = null, object param = null) => Query($"SELECT 1 FROM local{(IsMySql ? "_" : ".")}vendors{(where != null ? $" WHERE {where}" : "")}{(IsSqlServer ? $" ORDER BY id" : "")}", param: param, take: 1).Any();
         public bool AnyVouchers(string where = null, object param = null) => Query($"SELECT 1 FROM uchicago_mod_invoice_storage{(IsMySql ? "_" : ".")}vouchers{(where != null ? $" WHERE {where}" : "")}{(IsSqlServer ? $" ORDER BY id" : "")}", param: param, take: 1).Any();
         public bool AnyVoucher2s(string where = null, object param = null) => Query($"SELECT 1 FROM uc{(IsMySql ? "_" : ".")}vouchers{(where != null ? $" WHERE {where}" : "")}{(IsSqlServer ? $" ORDER BY id" : "")}", param: param, take: 1).Any();
+        public bool AnyVoucher3s(string where = null, object param = null) => Query($"SELECT 1 FROM local{(IsMySql ? "_" : ".")}vouchers{(where != null ? $" WHERE {where}" : "")}{(IsSqlServer ? $" ORDER BY id" : "")}", param: param, take: 1).Any();
         public bool AnyVoucherAcquisitionsUnits(string where = null, object param = null) => Query($"SELECT 1 FROM uc{(IsMySql ? "_" : ".")}voucher_acquisitions_units{(where != null ? $" WHERE {where}" : "")}{(IsSqlServer ? $" ORDER BY id" : "")}", param: param, take: 1).Any();
         public bool AnyVoucherItems(string where = null, object param = null) => Query($"SELECT 1 FROM uchicago_mod_invoice_storage{(IsMySql ? "_" : ".")}voucher_lines{(where != null ? $" WHERE {where}" : "")}{(IsSqlServer ? $" ORDER BY id" : "")}", param: param, take: 1).Any();
         public bool AnyVoucherItem2s(string where = null, object param = null) => Query($"SELECT 1 FROM uc{(IsMySql ? "_" : ".")}voucher_items{(where != null ? $" WHERE {where}" : "")}{(IsSqlServer ? $" ORDER BY id" : "")}", param: param, take: 1).Any();
+        public bool AnyVoucherItem3s(string where = null, object param = null) => Query($"SELECT 1 FROM local{(IsMySql ? "_" : ".")}voucher_items{(where != null ? $" WHERE {where}" : "")}{(IsSqlServer ? $" ORDER BY id" : "")}", param: param, take: 1).Any();
         public bool AnyVoucherItemFunds(string where = null, object param = null) => Query($"SELECT 1 FROM uc{(IsMySql ? "_" : ".")}voucher_item_fund_distributions{(where != null ? $" WHERE {where}" : "")}{(IsSqlServer ? $" ORDER BY id" : "")}", param: param, take: 1).Any();
         public bool AnyVoucherItemInvoiceItems(string where = null, object param = null) => Query($"SELECT 1 FROM uc{(IsMySql ? "_" : ".")}voucher_item_invoice_items{(where != null ? $" WHERE {where}" : "")}{(IsSqlServer ? $" ORDER BY id" : "")}", param: param, take: 1).Any();
         public bool AnyVoucherStatuses(string where = null, object param = null) => Query($"SELECT 1 FROM uc{(IsMySql ? "_" : ".")}voucher_statuses{(where != null ? $" WHERE {where}" : "")}{(IsSqlServer ? $" ORDER BY id" : "")}", param: param, take: 1).Any();
@@ -7391,9 +7411,11 @@ namespace FolioLibrary
         public void TruncateVendors() { Execute($"TRUNCATE TABLE local.vendors"); Commit(); }
         public void TruncateVouchers() { Execute($"TRUNCATE TABLE uchicago_mod_invoice_storage.vouchers"); Commit(); }
         public void TruncateVoucher2s() { Execute($"TRUNCATE TABLE uc.vouchers"); Commit(); }
+        public void TruncateVoucher3s() { Execute($"TRUNCATE TABLE local.vouchers"); Commit(); }
         public void TruncateVoucherAcquisitionsUnits() { Execute($"TRUNCATE TABLE uc.voucher_acquisitions_units"); Commit(); }
         public void TruncateVoucherItems() { Execute($"TRUNCATE TABLE uchicago_mod_invoice_storage.voucher_lines"); Commit(); }
         public void TruncateVoucherItem2s() { Execute($"TRUNCATE TABLE uc.voucher_items"); Commit(); }
+        public void TruncateVoucherItem3s() { Execute($"TRUNCATE TABLE local.voucher_items"); Commit(); }
         public void TruncateVoucherItemFunds() { Execute($"TRUNCATE TABLE uc.voucher_item_fund_distributions"); Commit(); }
         public void TruncateVoucherItemInvoiceItems() { Execute($"TRUNCATE TABLE uc.voucher_item_invoice_items"); Commit(); }
         public void TruncateVoucherStatuses() { Execute($"TRUNCATE TABLE uc.voucher_statuses"); Commit(); }
@@ -7565,7 +7587,9 @@ namespace FolioLibrary
         public void Insert(UserSummary userSummary) => Execute("INSERT INTO uchicago_mod_patron_blocks.user_summary (id, jsonb, creation_date, created_by) VALUES (@Id, @Content::jsonb, @CreationTime, @CreationUserId)", userSummary);
         public void Insert(Vendor vendor) => Execute("INSERT INTO local.vendors (id, id2, name, number, code, email_address, creation_time, creation_username, last_write_time, last_write_username, long_id) VALUES (@Id, @Id2, @Name, @Number, @Code, @EmailAddress, @CreationTime, @CreationUsername, @LastWriteTime, @LastWriteUsername, @LongId)", vendor);
         public void Insert(Voucher voucher) => Execute("INSERT INTO uchicago_mod_invoice_storage.vouchers (id, jsonb, creation_date, created_by, invoiceid, batchgroupid) VALUES (@Id, @Content::jsonb, @CreationTime, @CreationUserId, @Invoiceid, @Batchgroupid)", voucher);
+        public void Insert(Voucher3 voucher3) => Execute("INSERT INTO local.vouchers (id, invoice_date, vendor_invoice_id, vendor_invoice_amount, vendor_number, number, payment_type_id, enclosure, manual, voucher_status_id, notes, review_time, review_username, approve_time, approve_username, cancel_time, cancel_username, export_id, export_time, check_number, completion_time, completion_username, mail_time, creation_time, creation_username, last_write_time, last_write_username, long_id) VALUES (@Id, @InvoiceDate, @VendorInvoiceId, @VendorInvoiceAmount, @VendorNumber, @Number, @PaymentTypeId, @Enclosure, @Manual, @VoucherStatusId, @Notes, @ReviewTime, @ReviewUsername, @ApproveTime, @ApproveUsername, @CancelTime, @CancelUsername, @ExportId, @ExportTime, @CheckNumber, @CompletionTime, @CompletionUsername, @MailTime, @CreationTime, @CreationUsername, @LastWriteTime, @LastWriteUsername, @LongId)", voucher3);
         public void Insert(VoucherItem voucherItem) => Execute("INSERT INTO uchicago_mod_invoice_storage.voucher_lines (id, jsonb, creation_date, created_by, voucherid) VALUES (@Id, @Content::jsonb, @CreationTime, @CreationUserId, @Voucherid)", voucherItem);
+        public void Insert(VoucherItem3 voucherItem3) => Execute("INSERT INTO local.voucher_items (id, voucher_id, account_number, amount, creation_time, creation_username, last_write_time, last_write_username, long_id) VALUES (@Id, @VoucherId, @AccountNumber, @Amount, @CreationTime, @CreationUsername, @LastWriteTime, @LastWriteUsername, @LongId)", voucherItem3);
         public void Insert(VoucherStatus voucherStatus) => Execute("INSERT INTO uc.voucher_statuses (id, name, creation_time, creation_username, last_write_time, last_write_username) VALUES (@Id, @Name, @CreationTime, @CreationUsername, @LastWriteTime, @LastWriteUsername)", voucherStatus);
         public void Insert(WaiveReason waiveReason) => Execute("INSERT INTO uchicago_mod_feesfines.waives (id, jsonb, creation_date, created_by) VALUES (@Id, @Content::jsonb, @CreationTime, @CreationUserId)", waiveReason);
 
@@ -7735,7 +7759,9 @@ namespace FolioLibrary
         public int Update(UserSummary userSummary, string where = null) => Execute($"UPDATE uchicago_mod_patron_blocks.user_summary SET jsonb = @Content::jsonb, creation_date = @CreationTime, created_by = @CreationUserId WHERE {where ?? "id = @Id"}", userSummary);
         public int Update(Vendor vendor, DateTime? lastWriteTime = null, string where = null) => Execute($"UPDATE local.vendors SET id2 = @Id2, name = @Name, number = @Number, code = @Code, email_address = @EmailAddress, creation_time = @CreationTime, creation_username = @CreationUsername, last_write_time = @LastWriteTime, last_write_username = @LastWriteUsername, long_id = @LongId WHERE {where ?? "id = @Id"}{(lastWriteTime != null ? " AND (last_write_time IS NULL OR last_write_time = @_lastWriteTime)" : "")}", new { vendor.Id2, vendor.Name, vendor.Number, vendor.Code, vendor.EmailAddress, vendor.CreationTime, vendor.CreationUsername, vendor.LastWriteTime, vendor.LastWriteUsername, vendor.LongId, vendor.Id, _lastWriteTime = lastWriteTime });
         public int Update(Voucher voucher, string where = null) => Execute($"UPDATE uchicago_mod_invoice_storage.vouchers SET jsonb = @Content::jsonb, creation_date = @CreationTime, created_by = @CreationUserId, invoiceid = @Invoiceid, batchgroupid = @Batchgroupid WHERE {where ?? "id = @Id"}", voucher);
+        public int Update(Voucher3 voucher3, DateTime? lastWriteTime = null, string where = null) => Execute($"UPDATE local.vouchers SET invoice_date = @InvoiceDate, vendor_invoice_id = @VendorInvoiceId, vendor_invoice_amount = @VendorInvoiceAmount, vendor_number = @VendorNumber, number = @Number, payment_type_id = @PaymentTypeId, enclosure = @Enclosure, manual = @Manual, voucher_status_id = @VoucherStatusId, notes = @Notes, review_time = @ReviewTime, review_username = @ReviewUsername, approve_time = @ApproveTime, approve_username = @ApproveUsername, cancel_time = @CancelTime, cancel_username = @CancelUsername, export_id = @ExportId, export_time = @ExportTime, check_number = @CheckNumber, completion_time = @CompletionTime, completion_username = @CompletionUsername, mail_time = @MailTime, creation_time = @CreationTime, creation_username = @CreationUsername, last_write_time = @LastWriteTime, last_write_username = @LastWriteUsername, long_id = @LongId WHERE {where ?? "id = @Id"}{(lastWriteTime != null ? " AND (last_write_time IS NULL OR last_write_time = @_lastWriteTime)" : "")}", new { voucher3.InvoiceDate, voucher3.VendorInvoiceId, voucher3.VendorInvoiceAmount, voucher3.VendorNumber, voucher3.Number, voucher3.PaymentTypeId, voucher3.Enclosure, voucher3.Manual, voucher3.VoucherStatusId, voucher3.Notes, voucher3.ReviewTime, voucher3.ReviewUsername, voucher3.ApproveTime, voucher3.ApproveUsername, voucher3.CancelTime, voucher3.CancelUsername, voucher3.ExportId, voucher3.ExportTime, voucher3.CheckNumber, voucher3.CompletionTime, voucher3.CompletionUsername, voucher3.MailTime, voucher3.CreationTime, voucher3.CreationUsername, voucher3.LastWriteTime, voucher3.LastWriteUsername, voucher3.LongId, voucher3.Id, _lastWriteTime = lastWriteTime });
         public int Update(VoucherItem voucherItem, string where = null) => Execute($"UPDATE uchicago_mod_invoice_storage.voucher_lines SET jsonb = @Content::jsonb, creation_date = @CreationTime, created_by = @CreationUserId, voucherid = @Voucherid WHERE {where ?? "id = @Id"}", voucherItem);
+        public int Update(VoucherItem3 voucherItem3, DateTime? lastWriteTime = null, string where = null) => Execute($"UPDATE local.voucher_items SET voucher_id = @VoucherId, account_number = @AccountNumber, amount = @Amount, creation_time = @CreationTime, creation_username = @CreationUsername, last_write_time = @LastWriteTime, last_write_username = @LastWriteUsername, long_id = @LongId WHERE {where ?? "id = @Id"}{(lastWriteTime != null ? " AND (last_write_time IS NULL OR last_write_time = @_lastWriteTime)" : "")}", new { voucherItem3.VoucherId, voucherItem3.AccountNumber, voucherItem3.Amount, voucherItem3.CreationTime, voucherItem3.CreationUsername, voucherItem3.LastWriteTime, voucherItem3.LastWriteUsername, voucherItem3.LongId, voucherItem3.Id, _lastWriteTime = lastWriteTime });
         public int Update(VoucherStatus voucherStatus, DateTime? lastWriteTime = null, string where = null) => Execute($"UPDATE uc.voucher_statuses SET name = @Name, creation_time = @CreationTime, creation_username = @CreationUsername, last_write_time = @LastWriteTime, last_write_username = @LastWriteUsername WHERE {where ?? "id = @Id"}{(lastWriteTime != null ? " AND (last_write_time IS NULL OR last_write_time = @_lastWriteTime)" : "")}", new { voucherStatus.Name, voucherStatus.CreationTime, voucherStatus.CreationUsername, voucherStatus.LastWriteTime, voucherStatus.LastWriteUsername, voucherStatus.Id, _lastWriteTime = lastWriteTime });
         public int Update(WaiveReason waiveReason, string where = null) => Execute($"UPDATE uchicago_mod_feesfines.waives SET jsonb = @Content::jsonb, creation_date = @CreationTime, created_by = @CreationUserId WHERE {where ?? "id = @Id"}", waiveReason);
 
@@ -8569,9 +8595,19 @@ namespace FolioLibrary
             if (voucher.Id == null || Update(voucher, where: where) != 1) Insert(voucher);
         }
 
+        public void UpdateOrInsert(Voucher3 voucher3, string where = null)
+        {
+            if (voucher3.Id == null || Update(voucher3, where: where) != 1) Insert(voucher3);
+        }
+
         public void UpdateOrInsert(VoucherItem voucherItem, string where = null)
         {
             if (voucherItem.Id == null || Update(voucherItem, where: where) != 1) Insert(voucherItem);
+        }
+
+        public void UpdateOrInsert(VoucherItem3 voucherItem3, string where = null)
+        {
+            if (voucherItem3.Id == null || Update(voucherItem3, where: where) != 1) Insert(voucherItem3);
         }
 
         public void UpdateOrInsert(VoucherStatus voucherStatus, string where = null)
@@ -9029,9 +9065,11 @@ namespace FolioLibrary
         public int DeleteVendor(int? id) => Execute($"DELETE FROM local{(IsMySql ? "_" : ".")}vendors WHERE id = @id", new { id });
         public int DeleteVoucher(Guid? id) => Execute($"DELETE FROM uchicago_mod_invoice_storage{(IsMySql ? "_" : ".")}vouchers WHERE id = @id", new { id });
         public int DeleteVoucher2(Guid? id) => Execute($"DELETE FROM uc{(IsMySql ? "_" : ".")}vouchers WHERE id = @id", new { id });
+        public int DeleteVoucher3(int? id) => Execute($"DELETE FROM local{(IsMySql ? "_" : ".")}vouchers WHERE id = @id", new { id });
         public int DeleteVoucherAcquisitionsUnit(string id) => Execute($"DELETE FROM uc{(IsMySql ? "_" : ".")}voucher_acquisitions_units WHERE id = @id", new { id });
         public int DeleteVoucherItem(Guid? id) => Execute($"DELETE FROM uchicago_mod_invoice_storage{(IsMySql ? "_" : ".")}voucher_lines WHERE id = @id", new { id });
         public int DeleteVoucherItem2(Guid? id) => Execute($"DELETE FROM uc{(IsMySql ? "_" : ".")}voucher_items WHERE id = @id", new { id });
+        public int DeleteVoucherItem3(int? id) => Execute($"DELETE FROM local{(IsMySql ? "_" : ".")}voucher_items WHERE id = @id", new { id });
         public int DeleteVoucherItemFund(string id) => Execute($"DELETE FROM uc{(IsMySql ? "_" : ".")}voucher_item_fund_distributions WHERE id = @id", new { id });
         public int DeleteVoucherItemInvoiceItem(string id) => Execute($"DELETE FROM uc{(IsMySql ? "_" : ".")}voucher_item_invoice_items WHERE id = @id", new { id });
         public int DeleteVoucherStatus(int? id) => Execute($"DELETE FROM uc{(IsMySql ? "_" : ".")}voucher_statuses WHERE id = @id", new { id });
@@ -9482,9 +9520,11 @@ namespace FolioLibrary
         public int DeleteVendors(string where = null, object param = null) => Execute($"DELETE FROM local{(IsMySql ? "_" : ".")}vendors{(where != null ? $" WHERE {where}" : "")}", param);
         public int DeleteVouchers(string where = null, object param = null) => Execute($"DELETE FROM uchicago_mod_invoice_storage{(IsMySql ? "_" : ".")}vouchers{(where != null ? $" WHERE {where}" : "")}", param);
         public int DeleteVoucher2s(string where = null, object param = null) => Execute($"DELETE FROM uc{(IsMySql ? "_" : ".")}vouchers{(where != null ? $" WHERE {where}" : "")}", param);
+        public int DeleteVoucher3s(string where = null, object param = null) => Execute($"DELETE FROM local{(IsMySql ? "_" : ".")}vouchers{(where != null ? $" WHERE {where}" : "")}", param);
         public int DeleteVoucherAcquisitionsUnits(string where = null, object param = null) => Execute($"DELETE FROM uc{(IsMySql ? "_" : ".")}voucher_acquisitions_units{(where != null ? $" WHERE {where}" : "")}", param);
         public int DeleteVoucherItems(string where = null, object param = null) => Execute($"DELETE FROM uchicago_mod_invoice_storage{(IsMySql ? "_" : ".")}voucher_lines{(where != null ? $" WHERE {where}" : "")}", param);
         public int DeleteVoucherItem2s(string where = null, object param = null) => Execute($"DELETE FROM uc{(IsMySql ? "_" : ".")}voucher_items{(where != null ? $" WHERE {where}" : "")}", param);
+        public int DeleteVoucherItem3s(string where = null, object param = null) => Execute($"DELETE FROM local{(IsMySql ? "_" : ".")}voucher_items{(where != null ? $" WHERE {where}" : "")}", param);
         public int DeleteVoucherItemFunds(string where = null, object param = null) => Execute($"DELETE FROM uc{(IsMySql ? "_" : ".")}voucher_item_fund_distributions{(where != null ? $" WHERE {where}" : "")}", param);
         public int DeleteVoucherItemInvoiceItems(string where = null, object param = null) => Execute($"DELETE FROM uc{(IsMySql ? "_" : ".")}voucher_item_invoice_items{(where != null ? $" WHERE {where}" : "")}", param);
         public int DeleteVoucherStatuses(string where = null, object param = null) => Execute($"DELETE FROM uc{(IsMySql ? "_" : ".")}voucher_statuses{(where != null ? $" WHERE {where}" : "")}", param);
