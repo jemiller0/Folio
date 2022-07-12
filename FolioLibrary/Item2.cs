@@ -39,7 +39,7 @@ namespace FolioLibrary
         [Column("id"), Display(Order = 1), Editable(false), JsonProperty("id")]
         public virtual Guid? Id { get; set; }
 
-        [Column("_version"), Display(Order = 2), JsonProperty("_version")]
+        [Column("_version"), JsonProperty("_version"), ScaffoldColumn(false)]
         public virtual int? Version { get; set; }
 
         [Column("hrid"), Display(Name = "Short Id", Order = 3), Editable(false), JsonConverter(typeof(StringJsonConverter<int?>)), JsonProperty("hrid")]
@@ -240,37 +240,40 @@ namespace FolioLibrary
         [Display(Name = "Fees", Order = 68)]
         public virtual ICollection<Fee2> Fee2s { get; set; }
 
-        [Display(Name = "Item Donors", Order = 69)]
+        [Display(Name = "Item Administrative Notes", Order = 69), JsonConverter(typeof(ArrayJsonConverter<List<ItemAdministrativeNote>, ItemAdministrativeNote>), "Content"), JsonProperty("administrativeNotes")]
+        public virtual ICollection<ItemAdministrativeNote> ItemAdministrativeNotes { get; set; }
+
+        [Display(Name = "Item Donors", Order = 70)]
         public virtual ICollection<ItemDonor> ItemDonors { get; set; }
 
-        [Display(Name = "Item Electronic Accesses", Order = 70), JsonProperty("electronicAccess")]
+        [Display(Name = "Item Electronic Accesses", Order = 71), JsonProperty("electronicAccess")]
         public virtual ICollection<ItemElectronicAccess> ItemElectronicAccesses { get; set; }
 
-        [Display(Name = "Item Former Ids", Order = 71), JsonConverter(typeof(ArrayJsonConverter<List<ItemFormerId>, ItemFormerId>), "Content"), JsonProperty("formerIds")]
+        [Display(Name = "Item Former Ids", Order = 72), JsonConverter(typeof(ArrayJsonConverter<List<ItemFormerId>, ItemFormerId>), "Content"), JsonProperty("formerIds")]
         public virtual ICollection<ItemFormerId> ItemFormerIds { get; set; }
 
-        [Display(Name = "Item Notes", Order = 72), JsonProperty("notes")]
+        [Display(Name = "Item Notes", Order = 73), JsonProperty("notes")]
         public virtual ICollection<ItemNote> ItemNotes { get; set; }
 
-        [Display(Name = "Item Statistical Codes", Order = 73), JsonConverter(typeof(ArrayJsonConverter<List<ItemStatisticalCode>, ItemStatisticalCode>), "StatisticalCodeId"), JsonProperty("statisticalCodeIds")]
+        [Display(Name = "Item Statistical Codes", Order = 74), JsonConverter(typeof(ArrayJsonConverter<List<ItemStatisticalCode>, ItemStatisticalCode>), "StatisticalCodeId"), JsonProperty("statisticalCodeIds")]
         public virtual ICollection<ItemStatisticalCode> ItemStatisticalCodes { get; set; }
 
-        [Display(Name = "Item Tags", Order = 74), JsonConverter(typeof(ArrayJsonConverter<List<ItemTag>, ItemTag>), "Content"), JsonProperty("tags.tagList")]
+        [Display(Name = "Item Tags", Order = 75), JsonConverter(typeof(ArrayJsonConverter<List<ItemTag>, ItemTag>), "Content"), JsonProperty("tags.tagList")]
         public virtual ICollection<ItemTag> ItemTags { get; set; }
 
-        [Display(Name = "Item Year Captions", Order = 75), JsonConverter(typeof(ArrayJsonConverter<List<ItemYearCaption>, ItemYearCaption>), "Content"), JsonProperty("yearCaption")]
+        [Display(Name = "Item Year Captions", Order = 76), JsonConverter(typeof(ArrayJsonConverter<List<ItemYearCaption>, ItemYearCaption>), "Content"), JsonProperty("yearCaption")]
         public virtual ICollection<ItemYearCaption> ItemYearCaptions { get; set; }
 
-        [Display(Name = "Loans", Order = 76)]
+        [Display(Name = "Loans", Order = 77)]
         public virtual ICollection<Loan2> Loan2s { get; set; }
 
-        [Display(Name = "Receivings", Order = 77)]
+        [Display(Name = "Receivings", Order = 78)]
         public virtual ICollection<Receiving2> Receiving2s { get; set; }
 
-        [Display(Name = "Requests", Order = 78)]
+        [Display(Name = "Requests", Order = 79)]
         public virtual ICollection<Request2> Request2s { get; set; }
 
-        public override string ToString() => $"{{ {nameof(Id)} = {Id}, {nameof(Version)} = {Version}, {nameof(ShortId)} = {ShortId}, {nameof(HoldingId)} = {HoldingId}, {nameof(DiscoverySuppress)} = {DiscoverySuppress}, {nameof(AccessionNumber)} = {AccessionNumber}, {nameof(Barcode)} = {Barcode}, {nameof(EffectiveShelvingOrder)} = {EffectiveShelvingOrder}, {nameof(CallNumber)} = {CallNumber}, {nameof(CallNumberPrefix)} = {CallNumberPrefix}, {nameof(CallNumberSuffix)} = {CallNumberSuffix}, {nameof(CallNumberTypeId)} = {CallNumberTypeId}, {nameof(EffectiveCallNumber)} = {EffectiveCallNumber}, {nameof(EffectiveCallNumberPrefix)} = {EffectiveCallNumberPrefix}, {nameof(EffectiveCallNumberSuffix)} = {EffectiveCallNumberSuffix}, {nameof(EffectiveCallNumberTypeId)} = {EffectiveCallNumberTypeId}, {nameof(Volume)} = {Volume}, {nameof(Enumeration)} = {Enumeration}, {nameof(Chronology)} = {Chronology}, {nameof(ItemIdentifier)} = {ItemIdentifier}, {nameof(CopyNumber)} = {CopyNumber}, {nameof(PiecesCount)} = {PiecesCount}, {nameof(PiecesDescription)} = {PiecesDescription}, {nameof(MissingPiecesCount)} = {MissingPiecesCount}, {nameof(MissingPiecesDescription)} = {MissingPiecesDescription}, {nameof(MissingPiecesTime)} = {MissingPiecesTime}, {nameof(DamagedStatusId)} = {DamagedStatusId}, {nameof(DamagedStatusTime)} = {DamagedStatusTime}, {nameof(Status)} = {Status}, {nameof(StatusLastWriteTime)} = {StatusLastWriteTime}, {nameof(MaterialTypeId)} = {MaterialTypeId}, {nameof(PermanentLoanTypeId)} = {PermanentLoanTypeId}, {nameof(TemporaryLoanTypeId)} = {TemporaryLoanTypeId}, {nameof(PermanentLocationId)} = {PermanentLocationId}, {nameof(TemporaryLocationId)} = {TemporaryLocationId}, {nameof(EffectiveLocationId)} = {EffectiveLocationId}, {nameof(InTransitDestinationServicePointId)} = {InTransitDestinationServicePointId}, {nameof(OrderItemId)} = {OrderItemId}, {nameof(CreationTime)} = {CreationTime}, {nameof(CreationUserId)} = {CreationUserId}, {nameof(CreationUserUsername)} = {CreationUserUsername}, {nameof(LastWriteTime)} = {LastWriteTime}, {nameof(LastWriteUserId)} = {LastWriteUserId}, {nameof(LastWriteUserUsername)} = {LastWriteUserUsername}, {nameof(LastCheckInDateTime)} = {LastCheckInDateTime}, {nameof(LastCheckInServicePointId)} = {LastCheckInServicePointId}, {nameof(LastCheckInStaffMemberId)} = {LastCheckInStaffMemberId}, {nameof(Content)} = {Content}, {nameof(CirculationNotes)} = {(CirculationNotes != null ? $"{{ {string.Join(", ", CirculationNotes)} }}" : "")}, {nameof(ItemElectronicAccesses)} = {(ItemElectronicAccesses != null ? $"{{ {string.Join(", ", ItemElectronicAccesses)} }}" : "")}, {nameof(ItemFormerIds)} = {(ItemFormerIds != null ? $"{{ {string.Join(", ", ItemFormerIds)} }}" : "")}, {nameof(ItemNotes)} = {(ItemNotes != null ? $"{{ {string.Join(", ", ItemNotes)} }}" : "")}, {nameof(ItemStatisticalCodes)} = {(ItemStatisticalCodes != null ? $"{{ {string.Join(", ", ItemStatisticalCodes)} }}" : "")}, {nameof(ItemTags)} = {(ItemTags != null ? $"{{ {string.Join(", ", ItemTags)} }}" : "")}, {nameof(ItemYearCaptions)} = {(ItemYearCaptions != null ? $"{{ {string.Join(", ", ItemYearCaptions)} }}" : "")} }}";
+        public override string ToString() => $"{{ {nameof(Id)} = {Id}, {nameof(Version)} = {Version}, {nameof(ShortId)} = {ShortId}, {nameof(HoldingId)} = {HoldingId}, {nameof(DiscoverySuppress)} = {DiscoverySuppress}, {nameof(AccessionNumber)} = {AccessionNumber}, {nameof(Barcode)} = {Barcode}, {nameof(EffectiveShelvingOrder)} = {EffectiveShelvingOrder}, {nameof(CallNumber)} = {CallNumber}, {nameof(CallNumberPrefix)} = {CallNumberPrefix}, {nameof(CallNumberSuffix)} = {CallNumberSuffix}, {nameof(CallNumberTypeId)} = {CallNumberTypeId}, {nameof(EffectiveCallNumber)} = {EffectiveCallNumber}, {nameof(EffectiveCallNumberPrefix)} = {EffectiveCallNumberPrefix}, {nameof(EffectiveCallNumberSuffix)} = {EffectiveCallNumberSuffix}, {nameof(EffectiveCallNumberTypeId)} = {EffectiveCallNumberTypeId}, {nameof(Volume)} = {Volume}, {nameof(Enumeration)} = {Enumeration}, {nameof(Chronology)} = {Chronology}, {nameof(ItemIdentifier)} = {ItemIdentifier}, {nameof(CopyNumber)} = {CopyNumber}, {nameof(PiecesCount)} = {PiecesCount}, {nameof(PiecesDescription)} = {PiecesDescription}, {nameof(MissingPiecesCount)} = {MissingPiecesCount}, {nameof(MissingPiecesDescription)} = {MissingPiecesDescription}, {nameof(MissingPiecesTime)} = {MissingPiecesTime}, {nameof(DamagedStatusId)} = {DamagedStatusId}, {nameof(DamagedStatusTime)} = {DamagedStatusTime}, {nameof(Status)} = {Status}, {nameof(StatusLastWriteTime)} = {StatusLastWriteTime}, {nameof(MaterialTypeId)} = {MaterialTypeId}, {nameof(PermanentLoanTypeId)} = {PermanentLoanTypeId}, {nameof(TemporaryLoanTypeId)} = {TemporaryLoanTypeId}, {nameof(PermanentLocationId)} = {PermanentLocationId}, {nameof(TemporaryLocationId)} = {TemporaryLocationId}, {nameof(EffectiveLocationId)} = {EffectiveLocationId}, {nameof(InTransitDestinationServicePointId)} = {InTransitDestinationServicePointId}, {nameof(OrderItemId)} = {OrderItemId}, {nameof(CreationTime)} = {CreationTime}, {nameof(CreationUserId)} = {CreationUserId}, {nameof(CreationUserUsername)} = {CreationUserUsername}, {nameof(LastWriteTime)} = {LastWriteTime}, {nameof(LastWriteUserId)} = {LastWriteUserId}, {nameof(LastWriteUserUsername)} = {LastWriteUserUsername}, {nameof(LastCheckInDateTime)} = {LastCheckInDateTime}, {nameof(LastCheckInServicePointId)} = {LastCheckInServicePointId}, {nameof(LastCheckInStaffMemberId)} = {LastCheckInStaffMemberId}, {nameof(Content)} = {Content}, {nameof(CirculationNotes)} = {(CirculationNotes != null ? $"{{ {string.Join(", ", CirculationNotes)} }}" : "")}, {nameof(ItemAdministrativeNotes)} = {(ItemAdministrativeNotes != null ? $"{{ {string.Join(", ", ItemAdministrativeNotes)} }}" : "")}, {nameof(ItemElectronicAccesses)} = {(ItemElectronicAccesses != null ? $"{{ {string.Join(", ", ItemElectronicAccesses)} }}" : "")}, {nameof(ItemFormerIds)} = {(ItemFormerIds != null ? $"{{ {string.Join(", ", ItemFormerIds)} }}" : "")}, {nameof(ItemNotes)} = {(ItemNotes != null ? $"{{ {string.Join(", ", ItemNotes)} }}" : "")}, {nameof(ItemStatisticalCodes)} = {(ItemStatisticalCodes != null ? $"{{ {string.Join(", ", ItemStatisticalCodes)} }}" : "")}, {nameof(ItemTags)} = {(ItemTags != null ? $"{{ {string.Join(", ", ItemTags)} }}" : "")}, {nameof(ItemYearCaptions)} = {(ItemYearCaptions != null ? $"{{ {string.Join(", ", ItemYearCaptions)} }}" : "")} }}";
 
         public static Item2 FromJObject(JObject jObject) => jObject != null ? new Item2
         {
@@ -323,6 +326,7 @@ namespace FolioLibrary
             LastCheckInStaffMemberId = (Guid?)jObject.SelectToken("lastCheckIn.staffMemberId"),
             Content = JsonConvert.SerializeObject(jObject, FolioDapperContext.UniversalTimeJsonSerializationSettings),
             CirculationNotes = jObject.SelectToken("circulationNotes")?.Where(jt => jt.HasValues).Select(jt => CirculationNote.FromJObject((JObject)jt)).ToArray(),
+            ItemAdministrativeNotes = jObject.SelectToken("administrativeNotes")?.Select(jt => ItemAdministrativeNote.FromJObject((JValue)jt)).ToArray(),
             ItemElectronicAccesses = jObject.SelectToken("electronicAccess")?.Where(jt => jt.HasValues).Select(jt => ItemElectronicAccess.FromJObject((JObject)jt)).ToArray(),
             ItemFormerIds = jObject.SelectToken("formerIds")?.Select(jt => ItemFormerId.FromJObject((JValue)jt)).ToArray(),
             ItemNotes = jObject.SelectToken("notes")?.Where(jt => jt.HasValues).Select(jt => ItemNote.FromJObject((JObject)jt)).ToArray(),
@@ -384,6 +388,7 @@ namespace FolioLibrary
                 new JProperty("servicePointId", LastCheckInServicePointId),
                 new JProperty("staffMemberId", LastCheckInStaffMemberId))),
             new JProperty("circulationNotes", CirculationNotes?.Select(cn => cn.ToJObject())),
+            new JProperty("administrativeNotes", ItemAdministrativeNotes?.Select(ian => ian.ToJObject())),
             new JProperty("electronicAccess", ItemElectronicAccesses?.Select(iea => iea.ToJObject())),
             new JProperty("formerIds", ItemFormerIds?.Select(ifi => ifi.ToJObject())),
             new JProperty("notes", ItemNotes?.Select(@in => @in.ToJObject())),

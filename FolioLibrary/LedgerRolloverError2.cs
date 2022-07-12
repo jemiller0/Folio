@@ -36,7 +36,7 @@ namespace FolioLibrary
         [Column("ledger_rollover_id"), Display(Name = "Ledger Rollover", Order = 3), JsonProperty("ledgerRolloverId")]
         public virtual Guid? LedgerRolloverId { get; set; }
 
-        [Column("error_type"), Display(Name = "Error Type", Order = 4), JsonProperty("errorType"), RegularExpression(@"^(Fund|Order)$"), StringLength(1024)]
+        [Column("error_type"), Display(Name = "Error Type", Order = 4), JsonProperty("errorType"), RegularExpression(@"^(Fund|Order|Order rollover|Financial rollover|Other)$"), StringLength(1024)]
         public virtual string ErrorType { get; set; }
 
         [Column("failed_action"), Display(Name = "Failed Action", Order = 5), JsonProperty("failedAction"), StringLength(1024)]

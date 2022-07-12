@@ -102,6 +102,8 @@ namespace FolioWebApplication.User2s
             var id = (Guid?)User2FormView.DataKey.Value;
             try
             {
+                if (folioServiceContext.AnyAcquisitionMethod2s($"metadata.createdByUserId == \"{id}\"")) throw new Exception("User cannot be deleted because it is being referenced by a acquisition method");
+                if (folioServiceContext.AnyAcquisitionMethod2s($"metadata.updatedByUserId == \"{id}\"")) throw new Exception("User cannot be deleted because it is being referenced by a acquisition method");
                 if (folioServiceContext.AnyAcquisitionsUnit2s($"metadata.createdByUserId == \"{id}\"")) throw new Exception("User cannot be deleted because it is being referenced by a acquisitions unit");
                 if (folioServiceContext.AnyAcquisitionsUnit2s($"metadata.updatedByUserId == \"{id}\"")) throw new Exception("User cannot be deleted because it is being referenced by a acquisitions unit");
                 if (folioServiceContext.AnyAddressType2s($"metadata.createdByUserId == \"{id}\"")) throw new Exception("User cannot be deleted because it is being referenced by a address type");
@@ -110,10 +112,6 @@ namespace FolioWebApplication.User2s
                 if (folioServiceContext.AnyAlternativeTitleType2s($"metadata.updatedByUserId == \"{id}\"")) throw new Exception("User cannot be deleted because it is being referenced by a alternative title type");
                 if (folioServiceContext.AnyBatchGroup2s($"metadata.createdByUserId == \"{id}\"")) throw new Exception("User cannot be deleted because it is being referenced by a batch group");
                 if (folioServiceContext.AnyBatchGroup2s($"metadata.updatedByUserId == \"{id}\"")) throw new Exception("User cannot be deleted because it is being referenced by a batch group");
-                if (folioServiceContext.AnyBatchVoucherExport2s($"metadata.createdByUserId == \"{id}\"")) throw new Exception("User cannot be deleted because it is being referenced by a batch voucher export");
-                if (folioServiceContext.AnyBatchVoucherExport2s($"metadata.updatedByUserId == \"{id}\"")) throw new Exception("User cannot be deleted because it is being referenced by a batch voucher export");
-                if (folioServiceContext.AnyBatchVoucherExportConfig2s($"metadata.createdByUserId == \"{id}\"")) throw new Exception("User cannot be deleted because it is being referenced by a batch voucher export config");
-                if (folioServiceContext.AnyBatchVoucherExportConfig2s($"metadata.updatedByUserId == \"{id}\"")) throw new Exception("User cannot be deleted because it is being referenced by a batch voucher export config");
                 if (folioServiceContext.AnyBlock2s($"metadata.createdByUserId == \"{id}\"")) throw new Exception("User cannot be deleted because it is being referenced by a block");
                 if (folioServiceContext.AnyBlock2s($"metadata.updatedByUserId == \"{id}\"")) throw new Exception("User cannot be deleted because it is being referenced by a block");
                 if (folioServiceContext.AnyBlock2s($"userId == \"{id}\"")) throw new Exception("User cannot be deleted because it is being referenced by a block");
@@ -235,10 +233,10 @@ namespace FolioWebApplication.User2s
                 if (folioServiceContext.AnyMaterialType2s($"metadata.updatedByUserId == \"{id}\"")) throw new Exception("User cannot be deleted because it is being referenced by a material type");
                 if (folioServiceContext.AnyNatureOfContentTerm2s($"metadata.createdByUserId == \"{id}\"")) throw new Exception("User cannot be deleted because it is being referenced by a nature of content term");
                 if (folioServiceContext.AnyNatureOfContentTerm2s($"metadata.updatedByUserId == \"{id}\"")) throw new Exception("User cannot be deleted because it is being referenced by a nature of content term");
-                if (folioServiceContext.AnyNote3s($"metadata.createdByUserId == \"{id}\"")) throw new Exception("User cannot be deleted because it is being referenced by a note");
-                if (folioServiceContext.AnyNote3s($"metadata.updatedByUserId == \"{id}\"")) throw new Exception("User cannot be deleted because it is being referenced by a note");
-                if (folioServiceContext.AnyNoteType2s($"metadata.createdByUserId == \"{id}\"")) throw new Exception("User cannot be deleted because it is being referenced by a note type");
-                if (folioServiceContext.AnyNoteType2s($"metadata.updatedByUserId == \"{id}\"")) throw new Exception("User cannot be deleted because it is being referenced by a note type");
+                if (folioServiceContext.AnyNote2s($" == \"{id}\"")) throw new Exception("User cannot be deleted because it is being referenced by a note");
+                if (folioServiceContext.AnyNote2s($" == \"{id}\"")) throw new Exception("User cannot be deleted because it is being referenced by a note");
+                if (folioServiceContext.AnyNoteType2s($" == \"{id}\"")) throw new Exception("User cannot be deleted because it is being referenced by a note type");
+                if (folioServiceContext.AnyNoteType2s($" == \"{id}\"")) throw new Exception("User cannot be deleted because it is being referenced by a note type");
                 if (folioServiceContext.AnyOrder2s($"approvedById == \"{id}\"")) throw new Exception("User cannot be deleted because it is being referenced by a order");
                 if (folioServiceContext.AnyOrder2s($"assignedTo == \"{id}\"")) throw new Exception("User cannot be deleted because it is being referenced by a order");
                 if (folioServiceContext.AnyOrder2s($"metadata.createdByUserId == \"{id}\"")) throw new Exception("User cannot be deleted because it is being referenced by a order");
@@ -309,6 +307,7 @@ namespace FolioWebApplication.User2s
                 if (folioServiceContext.AnyStatisticalCodeType2s($"metadata.updatedByUserId == \"{id}\"")) throw new Exception("User cannot be deleted because it is being referenced by a statistical code type");
                 if (folioServiceContext.AnyStatuses($"metadata.createdByUserId == \"{id}\"")) throw new Exception("User cannot be deleted because it is being referenced by a status");
                 if (folioServiceContext.AnyStatuses($"metadata.updatedByUserId == \"{id}\"")) throw new Exception("User cannot be deleted because it is being referenced by a status");
+                if (folioServiceContext.AnyTag2s($" == \"{id}\"")) throw new Exception("User cannot be deleted because it is being referenced by a tag");
                 if (folioServiceContext.AnyTag2s($" == \"{id}\"")) throw new Exception("User cannot be deleted because it is being referenced by a tag");
                 if (folioServiceContext.AnyTemplate2s($"metadata.createdByUserId == \"{id}\"")) throw new Exception("User cannot be deleted because it is being referenced by a template");
                 if (folioServiceContext.AnyTemplate2s($"metadata.updatedByUserId == \"{id}\"")) throw new Exception("User cannot be deleted because it is being referenced by a template");

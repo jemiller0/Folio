@@ -31,116 +31,120 @@ namespace FolioLibrary
         [Column("id"), Display(Order = 1), Editable(false), JsonProperty("id")]
         public virtual Guid? Id { get; set; }
 
-        [Column("name"), Display(Order = 2), JsonProperty("name"), Required, StringLength(1024)]
+        [Column("_version"), JsonProperty("_version"), ScaffoldColumn(false)]
+        public virtual int? Version { get; set; }
+
+        [Column("name"), Display(Order = 3), JsonProperty("name"), Required, StringLength(1024)]
         public virtual string Name { get; set; }
 
-        [Column("code"), Display(Order = 3), JsonProperty("code"), Required, StringLength(1024)]
+        [Column("code"), Display(Order = 4), JsonProperty("code"), Required, StringLength(1024)]
         public virtual string Code { get; set; }
 
-        [Column("description"), Display(Order = 4), JsonProperty("description"), StringLength(1024)]
+        [Column("description"), Display(Order = 5), JsonProperty("description"), StringLength(1024)]
         public virtual string Description { get; set; }
 
-        [Display(Name = "Fiscal Year One", Order = 5)]
+        [Display(Name = "Fiscal Year One", Order = 6)]
         public virtual FiscalYear2 FiscalYearOne { get; set; }
 
-        [Column("fiscal_year_one_id"), Display(Name = "Fiscal Year One", Order = 6), JsonProperty("fiscalYearOneId"), Required]
+        [Column("fiscal_year_one_id"), Display(Name = "Fiscal Year One", Order = 7), JsonProperty("fiscalYearOneId"), Required]
         public virtual Guid? FiscalYearOneId { get; set; }
 
-        [Column("ledger_status"), Display(Name = "Ledger Status", Order = 7), JsonProperty("ledgerStatus"), RegularExpression(@"^(Active|Inactive|Frozen)$"), Required, StringLength(1024)]
+        [Column("ledger_status"), Display(Name = "Ledger Status", Order = 8), JsonProperty("ledgerStatus"), RegularExpression(@"^(Active|Inactive|Frozen)$"), Required, StringLength(1024)]
         public virtual string LedgerStatus { get; set; }
 
-        [Column("allocated"), DataType(DataType.Currency), Display(Order = 8), DisplayFormat(DataFormatString = "{0:c}"), Editable(false), JsonProperty("allocated")]
+        [Column("allocated"), DataType(DataType.Currency), Display(Order = 9), DisplayFormat(DataFormatString = "{0:c}"), Editable(false), JsonProperty("allocated")]
         public virtual decimal? Allocated { get; set; }
 
-        [Column("available"), DataType(DataType.Currency), Display(Order = 9), DisplayFormat(DataFormatString = "{0:c}"), Editable(false), JsonProperty("available")]
+        [Column("available"), DataType(DataType.Currency), Display(Order = 10), DisplayFormat(DataFormatString = "{0:c}"), Editable(false), JsonProperty("available")]
         public virtual decimal? Available { get; set; }
 
-        [Column("net_transfers"), DataType(DataType.Currency), Display(Name = "Net Transfers", Order = 10), DisplayFormat(DataFormatString = "{0:c}"), Editable(false), JsonProperty("netTransfers")]
+        [Column("net_transfers"), DataType(DataType.Currency), Display(Name = "Net Transfers", Order = 11), DisplayFormat(DataFormatString = "{0:c}"), Editable(false), JsonProperty("netTransfers")]
         public virtual decimal? NetTransfers { get; set; }
 
-        [Column("unavailable"), DataType(DataType.Currency), Display(Order = 11), DisplayFormat(DataFormatString = "{0:c}"), Editable(false), JsonProperty("unavailable")]
+        [Column("unavailable"), DataType(DataType.Currency), Display(Order = 12), DisplayFormat(DataFormatString = "{0:c}"), Editable(false), JsonProperty("unavailable")]
         public virtual decimal? Unavailable { get; set; }
 
-        [Column("currency"), Display(Order = 12), JsonProperty("currency"), StringLength(1024)]
+        [Column("currency"), Display(Order = 13), JsonProperty("currency"), StringLength(1024)]
         public virtual string Currency { get; set; }
 
-        [Column("restrict_encumbrance"), Display(Name = "Restrict Encumbrance", Order = 13), JsonProperty("restrictEncumbrance")]
+        [Column("restrict_encumbrance"), Display(Name = "Restrict Encumbrance", Order = 14), JsonProperty("restrictEncumbrance")]
         public virtual bool? RestrictEncumbrance { get; set; }
 
-        [Column("restrict_expenditures"), Display(Name = "Restrict Expenditures", Order = 14), JsonProperty("restrictExpenditures")]
+        [Column("restrict_expenditures"), Display(Name = "Restrict Expenditures", Order = 15), JsonProperty("restrictExpenditures")]
         public virtual bool? RestrictExpenditures { get; set; }
 
-        [Column("created_date"), DataType(DataType.DateTime), Display(Name = "Creation Time", Order = 15), DisplayFormat(DataFormatString = "{0:g}"), Editable(false), JsonProperty("metadata.createdDate")]
+        [Column("created_date"), DataType(DataType.DateTime), Display(Name = "Creation Time", Order = 16), DisplayFormat(DataFormatString = "{0:g}"), Editable(false), JsonProperty("metadata.createdDate")]
         public virtual DateTime? CreationTime { get; set; }
 
-        [Display(Name = "Creation User", Order = 16), InverseProperty("Ledger2s")]
+        [Display(Name = "Creation User", Order = 17), InverseProperty("Ledger2s")]
         public virtual User2 CreationUser { get; set; }
 
-        [Column("created_by_user_id"), Display(Name = "Creation User", Order = 17), Editable(false), JsonProperty("metadata.createdByUserId")]
+        [Column("created_by_user_id"), Display(Name = "Creation User", Order = 18), Editable(false), JsonProperty("metadata.createdByUserId")]
         public virtual Guid? CreationUserId { get; set; }
 
         [Column("created_by_username"), JsonProperty("metadata.createdByUsername"), ScaffoldColumn(false), StringLength(1024)]
         public virtual string CreationUserUsername { get; set; }
 
-        [Column("updated_date"), DataType(DataType.DateTime), Display(Name = "Last Write Time", Order = 19), DisplayFormat(DataFormatString = "{0:g}"), Editable(false), JsonProperty("metadata.updatedDate")]
+        [Column("updated_date"), DataType(DataType.DateTime), Display(Name = "Last Write Time", Order = 20), DisplayFormat(DataFormatString = "{0:g}"), Editable(false), JsonProperty("metadata.updatedDate")]
         public virtual DateTime? LastWriteTime { get; set; }
 
-        [Display(Name = "Last Write User", Order = 20), InverseProperty("Ledger2s1")]
+        [Display(Name = "Last Write User", Order = 21), InverseProperty("Ledger2s1")]
         public virtual User2 LastWriteUser { get; set; }
 
-        [Column("updated_by_user_id"), Display(Name = "Last Write User", Order = 21), Editable(false), JsonProperty("metadata.updatedByUserId")]
+        [Column("updated_by_user_id"), Display(Name = "Last Write User", Order = 22), Editable(false), JsonProperty("metadata.updatedByUserId")]
         public virtual Guid? LastWriteUserId { get; set; }
 
         [Column("updated_by_username"), JsonProperty("metadata.updatedByUsername"), ScaffoldColumn(false), StringLength(1024)]
         public virtual string LastWriteUserUsername { get; set; }
 
-        [Column("initial_allocation"), DataType(DataType.Currency), Display(Name = "Initial Allocation", Order = 23), DisplayFormat(DataFormatString = "{0:c}"), Editable(false), JsonProperty("initialAllocation")]
+        [Column("initial_allocation"), DataType(DataType.Currency), Display(Name = "Initial Allocation", Order = 24), DisplayFormat(DataFormatString = "{0:c}"), Editable(false), JsonProperty("initialAllocation")]
         public virtual decimal? InitialAllocation { get; set; }
 
-        [Column("allocation_to"), DataType(DataType.Currency), Display(Name = "Allocation To", Order = 24), DisplayFormat(DataFormatString = "{0:c}"), Editable(false), JsonProperty("allocationTo")]
+        [Column("allocation_to"), DataType(DataType.Currency), Display(Name = "Allocation To", Order = 25), DisplayFormat(DataFormatString = "{0:c}"), Editable(false), JsonProperty("allocationTo")]
         public virtual decimal? AllocationTo { get; set; }
 
-        [Column("allocation_from"), DataType(DataType.Currency), Display(Name = "Allocation From", Order = 25), DisplayFormat(DataFormatString = "{0:c}"), Editable(false), JsonProperty("allocationFrom")]
+        [Column("allocation_from"), DataType(DataType.Currency), Display(Name = "Allocation From", Order = 26), DisplayFormat(DataFormatString = "{0:c}"), Editable(false), JsonProperty("allocationFrom")]
         public virtual decimal? AllocationFrom { get; set; }
 
-        [Column("total_funding"), DataType(DataType.Currency), Display(Name = "Total Funding", Order = 26), DisplayFormat(DataFormatString = "{0:c}"), Editable(false), JsonProperty("totalFunding")]
+        [Column("total_funding"), DataType(DataType.Currency), Display(Name = "Total Funding", Order = 27), DisplayFormat(DataFormatString = "{0:c}"), Editable(false), JsonProperty("totalFunding")]
         public virtual decimal? TotalFunding { get; set; }
 
-        [Column("cash_balance"), DataType(DataType.Currency), Display(Name = "Cash Balance", Order = 27), DisplayFormat(DataFormatString = "{0:c}"), Editable(false), JsonProperty("cashBalance")]
+        [Column("cash_balance"), DataType(DataType.Currency), Display(Name = "Cash Balance", Order = 28), DisplayFormat(DataFormatString = "{0:c}"), Editable(false), JsonProperty("cashBalance")]
         public virtual decimal? CashBalance { get; set; }
 
-        [Column("awaiting_payment"), DataType(DataType.Currency), Display(Name = "Awaiting Payment", Order = 28), DisplayFormat(DataFormatString = "{0:c}"), Editable(false), JsonProperty("awaitingPayment")]
+        [Column("awaiting_payment"), DataType(DataType.Currency), Display(Name = "Awaiting Payment", Order = 29), DisplayFormat(DataFormatString = "{0:c}"), Editable(false), JsonProperty("awaitingPayment")]
         public virtual decimal? AwaitingPayment { get; set; }
 
-        [Column("encumbered"), DataType(DataType.Currency), Display(Order = 29), DisplayFormat(DataFormatString = "{0:c}"), Editable(false), JsonProperty("encumbered")]
+        [Column("encumbered"), DataType(DataType.Currency), Display(Order = 30), DisplayFormat(DataFormatString = "{0:c}"), Editable(false), JsonProperty("encumbered")]
         public virtual decimal? Encumbered { get; set; }
 
-        [Column("expenditures"), DataType(DataType.Currency), Display(Order = 30), DisplayFormat(DataFormatString = "{0:c}"), Editable(false), JsonProperty("expenditures")]
+        [Column("expenditures"), DataType(DataType.Currency), Display(Order = 31), DisplayFormat(DataFormatString = "{0:c}"), Editable(false), JsonProperty("expenditures")]
         public virtual decimal? Expenditures { get; set; }
 
-        [Column("over_encumbrance"), DataType(DataType.Currency), Display(Name = "Over Encumbrance", Order = 31), DisplayFormat(DataFormatString = "{0:c}"), Editable(false), JsonProperty("overEncumbrance")]
+        [Column("over_encumbrance"), DataType(DataType.Currency), Display(Name = "Over Encumbrance", Order = 32), DisplayFormat(DataFormatString = "{0:c}"), Editable(false), JsonProperty("overEncumbrance")]
         public virtual decimal? OverEncumbrance { get; set; }
 
-        [Column("over_expended"), DataType(DataType.Currency), Display(Name = "Over Expended", Order = 32), DisplayFormat(DataFormatString = "{0:c}"), Editable(false), JsonProperty("overExpended")]
+        [Column("over_expended"), DataType(DataType.Currency), Display(Name = "Over Expended", Order = 33), DisplayFormat(DataFormatString = "{0:c}"), Editable(false), JsonProperty("overExpended")]
         public virtual decimal? OverExpended { get; set; }
 
-        [Column("content"), CustomValidation(typeof(Ledger), nameof(ValidateContent)), DataType(DataType.MultilineText), Display(Order = 33), Editable(false)]
+        [Column("content"), CustomValidation(typeof(Ledger), nameof(ValidateContent)), DataType(DataType.MultilineText), Display(Order = 34), Editable(false)]
         public virtual string Content { get; set; }
 
-        [Display(Name = "Funds", Order = 34)]
+        [Display(Name = "Funds", Order = 35)]
         public virtual ICollection<Fund2> Fund2s { get; set; }
 
-        [Display(Name = "Ledger Acquisitions Units", Order = 35), JsonConverter(typeof(ArrayJsonConverter<List<LedgerAcquisitionsUnit>, LedgerAcquisitionsUnit>), "AcquisitionsUnitId"), JsonProperty("acqUnitIds")]
+        [Display(Name = "Ledger Acquisitions Units", Order = 36), JsonConverter(typeof(ArrayJsonConverter<List<LedgerAcquisitionsUnit>, LedgerAcquisitionsUnit>), "AcquisitionsUnitId"), JsonProperty("acqUnitIds")]
         public virtual ICollection<LedgerAcquisitionsUnit> LedgerAcquisitionsUnits { get; set; }
 
-        [Display(Name = "Ledger Rollovers", Order = 36)]
+        [Display(Name = "Ledger Rollovers", Order = 37)]
         public virtual ICollection<LedgerRollover2> LedgerRollover2s { get; set; }
 
-        public override string ToString() => $"{{ {nameof(Id)} = {Id}, {nameof(Name)} = {Name}, {nameof(Code)} = {Code}, {nameof(Description)} = {Description}, {nameof(FiscalYearOneId)} = {FiscalYearOneId}, {nameof(LedgerStatus)} = {LedgerStatus}, {nameof(Allocated)} = {Allocated}, {nameof(Available)} = {Available}, {nameof(NetTransfers)} = {NetTransfers}, {nameof(Unavailable)} = {Unavailable}, {nameof(Currency)} = {Currency}, {nameof(RestrictEncumbrance)} = {RestrictEncumbrance}, {nameof(RestrictExpenditures)} = {RestrictExpenditures}, {nameof(CreationTime)} = {CreationTime}, {nameof(CreationUserId)} = {CreationUserId}, {nameof(CreationUserUsername)} = {CreationUserUsername}, {nameof(LastWriteTime)} = {LastWriteTime}, {nameof(LastWriteUserId)} = {LastWriteUserId}, {nameof(LastWriteUserUsername)} = {LastWriteUserUsername}, {nameof(InitialAllocation)} = {InitialAllocation}, {nameof(AllocationTo)} = {AllocationTo}, {nameof(AllocationFrom)} = {AllocationFrom}, {nameof(TotalFunding)} = {TotalFunding}, {nameof(CashBalance)} = {CashBalance}, {nameof(AwaitingPayment)} = {AwaitingPayment}, {nameof(Encumbered)} = {Encumbered}, {nameof(Expenditures)} = {Expenditures}, {nameof(OverEncumbrance)} = {OverEncumbrance}, {nameof(OverExpended)} = {OverExpended}, {nameof(Content)} = {Content}, {nameof(LedgerAcquisitionsUnits)} = {(LedgerAcquisitionsUnits != null ? $"{{ {string.Join(", ", LedgerAcquisitionsUnits)} }}" : "")} }}";
+        public override string ToString() => $"{{ {nameof(Id)} = {Id}, {nameof(Version)} = {Version}, {nameof(Name)} = {Name}, {nameof(Code)} = {Code}, {nameof(Description)} = {Description}, {nameof(FiscalYearOneId)} = {FiscalYearOneId}, {nameof(LedgerStatus)} = {LedgerStatus}, {nameof(Allocated)} = {Allocated}, {nameof(Available)} = {Available}, {nameof(NetTransfers)} = {NetTransfers}, {nameof(Unavailable)} = {Unavailable}, {nameof(Currency)} = {Currency}, {nameof(RestrictEncumbrance)} = {RestrictEncumbrance}, {nameof(RestrictExpenditures)} = {RestrictExpenditures}, {nameof(CreationTime)} = {CreationTime}, {nameof(CreationUserId)} = {CreationUserId}, {nameof(CreationUserUsername)} = {CreationUserUsername}, {nameof(LastWriteTime)} = {LastWriteTime}, {nameof(LastWriteUserId)} = {LastWriteUserId}, {nameof(LastWriteUserUsername)} = {LastWriteUserUsername}, {nameof(InitialAllocation)} = {InitialAllocation}, {nameof(AllocationTo)} = {AllocationTo}, {nameof(AllocationFrom)} = {AllocationFrom}, {nameof(TotalFunding)} = {TotalFunding}, {nameof(CashBalance)} = {CashBalance}, {nameof(AwaitingPayment)} = {AwaitingPayment}, {nameof(Encumbered)} = {Encumbered}, {nameof(Expenditures)} = {Expenditures}, {nameof(OverEncumbrance)} = {OverEncumbrance}, {nameof(OverExpended)} = {OverExpended}, {nameof(Content)} = {Content}, {nameof(LedgerAcquisitionsUnits)} = {(LedgerAcquisitionsUnits != null ? $"{{ {string.Join(", ", LedgerAcquisitionsUnits)} }}" : "")} }}";
 
         public static Ledger2 FromJObject(JObject jObject) => jObject != null ? new Ledger2
         {
             Id = (Guid?)jObject.SelectToken("id"),
+            Version = (int?)jObject.SelectToken("_version"),
             Name = (string)jObject.SelectToken("name"),
             Code = (string)jObject.SelectToken("code"),
             Description = (string)jObject.SelectToken("description"),
@@ -175,6 +179,7 @@ namespace FolioLibrary
 
         public JObject ToJObject() => new JObject(
             new JProperty("id", Id),
+            new JProperty("_version", Version),
             new JProperty("name", Name),
             new JProperty("code", Code),
             new JProperty("description", Description),

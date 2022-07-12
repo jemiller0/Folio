@@ -17,14 +17,6 @@
                                     <asp:HyperLink ID="IdHyperLink" runat="server" Text='<%# Eval("Id") %>' NavigateUrl='<%# $"Edit.aspx?Id={Eval("Id")}" %>' />
                                 </td>
                             </tr>
-                            <tr runat="server" visible='<%# Eval("Version") != null %>'>
-                                <td>
-                                    <asp:Label ID="VersionLabel" runat="server" Text="Version:" AssociatedControlID="VersionLiteral" />
-                                </td>
-                                <td>
-                                    <asp:Literal ID="VersionLiteral" runat="server" Text='<%#: Eval("Version") %>' />
-                                </td>
-                            </tr>
                             <tr runat="server" visible='<%# Eval("ShortId") != null %>'>
                                 <td>
                                     <asp:Label ID="ShortIdLabel" runat="server" Text="Short Id:" AssociatedControlID="ShortIdLiteral" />
@@ -400,6 +392,22 @@
             </telerik:RadGrid>
         </fieldset>
     </asp:Panel>
+    <asp:Panel ID="HoldingAdministrativeNotesPanel" runat="server" Visible='<%# (string)Session["HoldingAdministrativeNotesPermission"] != null && Holding2FormView.DataKey.Value != null %>'>
+        <fieldset>
+            <legend>
+                <asp:HyperLink ID="HoldingAdministrativeNotesHyperLink" runat="server" Text="Holding Administrative Notes" NavigateUrl="~/HoldingAdministrativeNotes/Default.aspx" Enabled="false" /></legend>
+            <telerik:RadGrid ID="HoldingAdministrativeNotesRadGrid" runat="server" AutoGenerateColumns="false" AllowSorting="true" AllowFilteringByColumn="false" GroupingSettings-CaseSensitive="false" AllowPaging="true" PageSize="10" EnableLinqExpressions="false" OnNeedDataSource="HoldingAdministrativeNotesRadGrid_NeedDataSource">
+                <MasterTableView DataKeyNames="Id, HoldingId" PagerStyle-Mode="NextPrevNumericAndAdvanced" NoMasterRecordsText="No holding administrative notes found">
+                    <SortExpressions>
+                        <telerik:GridSortExpression FieldName="Content" />
+                    </SortExpressions>
+                    <Columns>
+                        <telerik:GridBoundColumn HeaderText="Content" DataField="Content" AutoPostBackOnFilter="true" HtmlEncode="true" CurrentFilterFunction="StartsWith" />
+                    </Columns>
+                </MasterTableView>
+            </telerik:RadGrid>
+        </fieldset>
+    </asp:Panel>
     <asp:Panel ID="HoldingElectronicAccessesPanel" runat="server" Visible='<%# (string)Session["HoldingElectronicAccessesPermission"] != null && Holding2FormView.DataKey.Value != null %>'>
         <fieldset>
             <legend>
@@ -549,7 +557,6 @@
                                 <asp:HyperLink ID="IdHyperLink" runat="server" Text='<%# Eval("Id") %>' NavigateUrl='<%# $"~/Item2s/Edit.aspx?Id={Eval("Id")}" %>' />
                             </ItemTemplate>
                         </telerik:GridTemplateColumn>
-                        <telerik:GridBoundColumn HeaderText="Version" DataField="Version" AutoPostBackOnFilter="true" />
                         <telerik:GridTemplateColumn HeaderText="Short Id" DataField="ShortId" SortExpression="ShortId" AutoPostBackOnFilter="true">
                             <ItemTemplate>
                                 <asp:HyperLink ID="ShortIdHyperLink" runat="server" Text='<%# Eval("ShortId") ?? "&nbsp;" %>' NavigateUrl='<%# $"~/Item2s/Edit.aspx?Id={Eval("Id")}" %>' />
@@ -717,6 +724,7 @@
                         <telerik:GridBoundColumn HeaderText="Enumeration" DataField="Enumeration" AutoPostBackOnFilter="true" HtmlEncode="true" CurrentFilterFunction="StartsWith" />
                         <telerik:GridBoundColumn HeaderText="Chronology" DataField="Chronology" AutoPostBackOnFilter="true" HtmlEncode="true" CurrentFilterFunction="StartsWith" />
                         <telerik:GridBoundColumn HeaderText="Discovery Suppress" DataField="DiscoverySuppress" AutoPostBackOnFilter="true" />
+                        <telerik:GridBoundColumn HeaderText="Copy Number" DataField="CopyNumber" AutoPostBackOnFilter="true" HtmlEncode="true" CurrentFilterFunction="StartsWith" />
                         <telerik:GridBoundColumn HeaderText="Receiving Status" DataField="ReceivingStatus" AutoPostBackOnFilter="true" HtmlEncode="true" CurrentFilterFunction="StartsWith" />
                         <telerik:GridBoundColumn HeaderText="Supplement" DataField="Supplement" AutoPostBackOnFilter="true" />
                         <telerik:GridBoundColumn HeaderText="Receipt Time" DataField="ReceiptTime" AutoPostBackOnFilter="true" DataFormatString="{0:g}" />
@@ -756,6 +764,11 @@
             <telerik:AjaxSetting AjaxControlID="Fee2sRadGrid">
                 <UpdatedControls>
                     <telerik:AjaxUpdatedControl ControlID="Fee2sPanel" LoadingPanelID="RadAjaxLoadingPanel1" />
+                </UpdatedControls>
+            </telerik:AjaxSetting>
+            <telerik:AjaxSetting AjaxControlID="HoldingAdministrativeNotesRadGrid">
+                <UpdatedControls>
+                    <telerik:AjaxUpdatedControl ControlID="HoldingAdministrativeNotesPanel" LoadingPanelID="RadAjaxLoadingPanel1" />
                 </UpdatedControls>
             </telerik:AjaxSetting>
             <telerik:AjaxSetting AjaxControlID="HoldingElectronicAccessesRadGrid">

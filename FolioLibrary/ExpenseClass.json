@@ -12,9 +12,14 @@
       "type": "string",
       "pattern": "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-5][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}$"
     },
+    "_version": {
+      "description": "Record version for optimistic locking",
+      "type": "integer"
+    },
     "code": {
       "description": "The code of the expense class",
-      "type": "string"
+      "type": "string",
+      "pattern": "^[^:]+$"
     },
     "externalAccountNumberExt": {
       "description": "An external account number extension",
@@ -65,6 +70,7 @@
     }
   },
   "required": [
-    "name"
+    "name",
+    "code"
   ]
 }

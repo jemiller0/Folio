@@ -17,14 +17,6 @@
                                     <asp:HyperLink ID="IdHyperLink" runat="server" Text='<%# Eval("Id") %>' NavigateUrl='<%# $"Edit.aspx?Id={Eval("Id")}" %>' />
                                 </td>
                             </tr>
-                            <tr runat="server" visible='<%# Eval("Version") != null %>'>
-                                <td>
-                                    <asp:Label ID="VersionLabel" runat="server" Text="Version:" AssociatedControlID="VersionLiteral" />
-                                </td>
-                                <td>
-                                    <asp:Literal ID="VersionLiteral" runat="server" Text='<%#: Eval("Version") %>' />
-                                </td>
-                            </tr>
                             <tr runat="server" visible='<%# Eval("ShortId") != null %>'>
                                 <td>
                                     <asp:Label ID="ShortIdLabel" runat="server" Text="Short Id:" AssociatedControlID="ShortIdLiteral" />
@@ -581,6 +573,22 @@
             </telerik:RadGrid>
         </fieldset>
     </asp:Panel>
+    <asp:Panel ID="ItemAdministrativeNotesPanel" runat="server" Visible='<%# (string)Session["ItemAdministrativeNotesPermission"] != null && Item2FormView.DataKey.Value != null %>'>
+        <fieldset>
+            <legend>
+                <asp:HyperLink ID="ItemAdministrativeNotesHyperLink" runat="server" Text="Item Administrative Notes" NavigateUrl="~/ItemAdministrativeNotes/Default.aspx" Enabled="false" /></legend>
+            <telerik:RadGrid ID="ItemAdministrativeNotesRadGrid" runat="server" AutoGenerateColumns="false" AllowSorting="true" AllowFilteringByColumn="false" GroupingSettings-CaseSensitive="false" AllowPaging="true" PageSize="10" EnableLinqExpressions="false" OnNeedDataSource="ItemAdministrativeNotesRadGrid_NeedDataSource">
+                <MasterTableView DataKeyNames="Id, ItemId" PagerStyle-Mode="NextPrevNumericAndAdvanced" NoMasterRecordsText="No item administrative notes found">
+                    <SortExpressions>
+                        <telerik:GridSortExpression FieldName="Content" />
+                    </SortExpressions>
+                    <Columns>
+                        <telerik:GridBoundColumn HeaderText="Content" DataField="Content" AutoPostBackOnFilter="true" HtmlEncode="true" CurrentFilterFunction="StartsWith" />
+                    </Columns>
+                </MasterTableView>
+            </telerik:RadGrid>
+        </fieldset>
+    </asp:Panel>
     <asp:Panel ID="ItemElectronicAccessesPanel" runat="server" Visible='<%# (string)Session["ItemElectronicAccessesPermission"] != null && Item2FormView.DataKey.Value != null %>'>
         <fieldset>
             <legend>
@@ -840,6 +848,7 @@
                         <telerik:GridBoundColumn HeaderText="Enumeration" DataField="Enumeration" AutoPostBackOnFilter="true" HtmlEncode="true" CurrentFilterFunction="StartsWith" />
                         <telerik:GridBoundColumn HeaderText="Chronology" DataField="Chronology" AutoPostBackOnFilter="true" HtmlEncode="true" CurrentFilterFunction="StartsWith" />
                         <telerik:GridBoundColumn HeaderText="Discovery Suppress" DataField="DiscoverySuppress" AutoPostBackOnFilter="true" />
+                        <telerik:GridBoundColumn HeaderText="Copy Number" DataField="CopyNumber" AutoPostBackOnFilter="true" HtmlEncode="true" CurrentFilterFunction="StartsWith" />
                         <telerik:GridBoundColumn HeaderText="Receiving Status" DataField="ReceivingStatus" AutoPostBackOnFilter="true" HtmlEncode="true" CurrentFilterFunction="StartsWith" />
                         <telerik:GridBoundColumn HeaderText="Supplement" DataField="Supplement" AutoPostBackOnFilter="true" />
                         <telerik:GridBoundColumn HeaderText="Receipt Time" DataField="ReceiptTime" AutoPostBackOnFilter="true" DataFormatString="{0:g}" />
@@ -959,6 +968,11 @@
             <telerik:AjaxSetting AjaxControlID="Fee2sRadGrid">
                 <UpdatedControls>
                     <telerik:AjaxUpdatedControl ControlID="Fee2sPanel" LoadingPanelID="RadAjaxLoadingPanel1" />
+                </UpdatedControls>
+            </telerik:AjaxSetting>
+            <telerik:AjaxSetting AjaxControlID="ItemAdministrativeNotesRadGrid">
+                <UpdatedControls>
+                    <telerik:AjaxUpdatedControl ControlID="ItemAdministrativeNotesPanel" LoadingPanelID="RadAjaxLoadingPanel1" />
                 </UpdatedControls>
             </telerik:AjaxSetting>
             <telerik:AjaxSetting AjaxControlID="ItemElectronicAccessesRadGrid">

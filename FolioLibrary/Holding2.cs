@@ -38,7 +38,7 @@ namespace FolioLibrary
         [Column("id"), Display(Order = 1), Editable(false), JsonProperty("id")]
         public virtual Guid? Id { get; set; }
 
-        [Column("_version"), Display(Order = 2), JsonProperty("_version")]
+        [Column("_version"), JsonProperty("_version"), ScaffoldColumn(false)]
         public virtual int? Version { get; set; }
 
         [Column("hrid"), Display(Name = "Short Id", Order = 3), Editable(false), JsonConverter(typeof(StringJsonConverter<int?>)), JsonProperty("hrid")]
@@ -167,43 +167,46 @@ namespace FolioLibrary
         [Display(Name = "Fees", Order = 44)]
         public virtual ICollection<Fee2> Fee2s { get; set; }
 
-        [Display(Name = "Holding Donors", Order = 45)]
+        [Display(Name = "Holding Administrative Notes", Order = 45), JsonConverter(typeof(ArrayJsonConverter<List<HoldingAdministrativeNote>, HoldingAdministrativeNote>), "Content"), JsonProperty("administrativeNotes")]
+        public virtual ICollection<HoldingAdministrativeNote> HoldingAdministrativeNotes { get; set; }
+
+        [Display(Name = "Holding Donors", Order = 46)]
         public virtual ICollection<HoldingDonor> HoldingDonors { get; set; }
 
-        [Display(Name = "Holding Electronic Accesses", Order = 46), JsonProperty("electronicAccess")]
+        [Display(Name = "Holding Electronic Accesses", Order = 47), JsonProperty("electronicAccess")]
         public virtual ICollection<HoldingElectronicAccess> HoldingElectronicAccesses { get; set; }
 
-        [Display(Name = "Holding Entries", Order = 47), JsonProperty("receivingHistory.entries")]
+        [Display(Name = "Holding Entries", Order = 48), JsonProperty("receivingHistory.entries")]
         public virtual ICollection<HoldingEntry> HoldingEntries { get; set; }
 
-        [Display(Name = "Holding Former Ids", Order = 48), JsonConverter(typeof(ArrayJsonConverter<List<HoldingFormerId>, HoldingFormerId>), "Content"), JsonProperty("formerIds")]
+        [Display(Name = "Holding Former Ids", Order = 49), JsonConverter(typeof(ArrayJsonConverter<List<HoldingFormerId>, HoldingFormerId>), "Content"), JsonProperty("formerIds")]
         public virtual ICollection<HoldingFormerId> HoldingFormerIds { get; set; }
 
-        [Display(Name = "Holding Notes", Order = 49), JsonProperty("notes")]
+        [Display(Name = "Holding Notes", Order = 50), JsonProperty("notes")]
         public virtual ICollection<HoldingNote> HoldingNotes { get; set; }
 
-        [Display(Name = "Holding Statistical Codes", Order = 50), JsonConverter(typeof(ArrayJsonConverter<List<HoldingStatisticalCode>, HoldingStatisticalCode>), "StatisticalCodeId"), JsonProperty("statisticalCodeIds")]
+        [Display(Name = "Holding Statistical Codes", Order = 51), JsonConverter(typeof(ArrayJsonConverter<List<HoldingStatisticalCode>, HoldingStatisticalCode>), "StatisticalCodeId"), JsonProperty("statisticalCodeIds")]
         public virtual ICollection<HoldingStatisticalCode> HoldingStatisticalCodes { get; set; }
 
-        [Display(Name = "Holding Tags", Order = 51), JsonConverter(typeof(ArrayJsonConverter<List<HoldingTag>, HoldingTag>), "Content"), JsonProperty("tags.tagList")]
+        [Display(Name = "Holding Tags", Order = 52), JsonConverter(typeof(ArrayJsonConverter<List<HoldingTag>, HoldingTag>), "Content"), JsonProperty("tags.tagList")]
         public virtual ICollection<HoldingTag> HoldingTags { get; set; }
 
-        [Display(Name = "Index Statements", Order = 52), JsonProperty("holdingsStatementsForIndexes")]
+        [Display(Name = "Index Statements", Order = 53), JsonProperty("holdingsStatementsForIndexes")]
         public virtual ICollection<IndexStatement> IndexStatements { get; set; }
 
-        [Display(Name = "Items", Order = 53)]
+        [Display(Name = "Items", Order = 54)]
         public virtual ICollection<Item2> Item2s { get; set; }
 
-        [Display(Name = "Order Item Locations", Order = 54)]
+        [Display(Name = "Order Item Locations", Order = 55)]
         public virtual ICollection<OrderItemLocation2> OrderItemLocation2s { get; set; }
 
-        [Display(Name = "Receivings", Order = 55)]
+        [Display(Name = "Receivings", Order = 56)]
         public virtual ICollection<Receiving2> Receiving2s { get; set; }
 
-        [Display(Name = "Supplement Statements", Order = 56), JsonProperty("holdingsStatementsForSupplements")]
+        [Display(Name = "Supplement Statements", Order = 57), JsonProperty("holdingsStatementsForSupplements")]
         public virtual ICollection<SupplementStatement> SupplementStatements { get; set; }
 
-        public override string ToString() => $"{{ {nameof(Id)} = {Id}, {nameof(Version)} = {Version}, {nameof(ShortId)} = {ShortId}, {nameof(HoldingTypeId)} = {HoldingTypeId}, {nameof(InstanceId)} = {InstanceId}, {nameof(LocationId)} = {LocationId}, {nameof(TemporaryLocationId)} = {TemporaryLocationId}, {nameof(EffectiveLocationId)} = {EffectiveLocationId}, {nameof(CallNumberTypeId)} = {CallNumberTypeId}, {nameof(CallNumberPrefix)} = {CallNumberPrefix}, {nameof(CallNumber)} = {CallNumber}, {nameof(CallNumberSuffix)} = {CallNumberSuffix}, {nameof(ShelvingTitle)} = {ShelvingTitle}, {nameof(AcquisitionFormat)} = {AcquisitionFormat}, {nameof(AcquisitionMethod)} = {AcquisitionMethod}, {nameof(ReceiptStatus)} = {ReceiptStatus}, {nameof(IllPolicyId)} = {IllPolicyId}, {nameof(RetentionPolicy)} = {RetentionPolicy}, {nameof(DigitizationPolicy)} = {DigitizationPolicy}, {nameof(CopyNumber)} = {CopyNumber}, {nameof(ItemCount)} = {ItemCount}, {nameof(ReceivingHistoryDisplayType)} = {ReceivingHistoryDisplayType}, {nameof(DiscoverySuppress)} = {DiscoverySuppress}, {nameof(CreationTime)} = {CreationTime}, {nameof(CreationUserId)} = {CreationUserId}, {nameof(CreationUserUsername)} = {CreationUserUsername}, {nameof(LastWriteTime)} = {LastWriteTime}, {nameof(LastWriteUserId)} = {LastWriteUserId}, {nameof(LastWriteUserUsername)} = {LastWriteUserUsername}, {nameof(SourceId)} = {SourceId}, {nameof(Content)} = {Content}, {nameof(Extents)} = {(Extents != null ? $"{{ {string.Join(", ", Extents)} }}" : "")}, {nameof(HoldingElectronicAccesses)} = {(HoldingElectronicAccesses != null ? $"{{ {string.Join(", ", HoldingElectronicAccesses)} }}" : "")}, {nameof(HoldingEntries)} = {(HoldingEntries != null ? $"{{ {string.Join(", ", HoldingEntries)} }}" : "")}, {nameof(HoldingFormerIds)} = {(HoldingFormerIds != null ? $"{{ {string.Join(", ", HoldingFormerIds)} }}" : "")}, {nameof(HoldingNotes)} = {(HoldingNotes != null ? $"{{ {string.Join(", ", HoldingNotes)} }}" : "")}, {nameof(HoldingStatisticalCodes)} = {(HoldingStatisticalCodes != null ? $"{{ {string.Join(", ", HoldingStatisticalCodes)} }}" : "")}, {nameof(HoldingTags)} = {(HoldingTags != null ? $"{{ {string.Join(", ", HoldingTags)} }}" : "")}, {nameof(IndexStatements)} = {(IndexStatements != null ? $"{{ {string.Join(", ", IndexStatements)} }}" : "")}, {nameof(SupplementStatements)} = {(SupplementStatements != null ? $"{{ {string.Join(", ", SupplementStatements)} }}" : "")} }}";
+        public override string ToString() => $"{{ {nameof(Id)} = {Id}, {nameof(Version)} = {Version}, {nameof(ShortId)} = {ShortId}, {nameof(HoldingTypeId)} = {HoldingTypeId}, {nameof(InstanceId)} = {InstanceId}, {nameof(LocationId)} = {LocationId}, {nameof(TemporaryLocationId)} = {TemporaryLocationId}, {nameof(EffectiveLocationId)} = {EffectiveLocationId}, {nameof(CallNumberTypeId)} = {CallNumberTypeId}, {nameof(CallNumberPrefix)} = {CallNumberPrefix}, {nameof(CallNumber)} = {CallNumber}, {nameof(CallNumberSuffix)} = {CallNumberSuffix}, {nameof(ShelvingTitle)} = {ShelvingTitle}, {nameof(AcquisitionFormat)} = {AcquisitionFormat}, {nameof(AcquisitionMethod)} = {AcquisitionMethod}, {nameof(ReceiptStatus)} = {ReceiptStatus}, {nameof(IllPolicyId)} = {IllPolicyId}, {nameof(RetentionPolicy)} = {RetentionPolicy}, {nameof(DigitizationPolicy)} = {DigitizationPolicy}, {nameof(CopyNumber)} = {CopyNumber}, {nameof(ItemCount)} = {ItemCount}, {nameof(ReceivingHistoryDisplayType)} = {ReceivingHistoryDisplayType}, {nameof(DiscoverySuppress)} = {DiscoverySuppress}, {nameof(CreationTime)} = {CreationTime}, {nameof(CreationUserId)} = {CreationUserId}, {nameof(CreationUserUsername)} = {CreationUserUsername}, {nameof(LastWriteTime)} = {LastWriteTime}, {nameof(LastWriteUserId)} = {LastWriteUserId}, {nameof(LastWriteUserUsername)} = {LastWriteUserUsername}, {nameof(SourceId)} = {SourceId}, {nameof(Content)} = {Content}, {nameof(Extents)} = {(Extents != null ? $"{{ {string.Join(", ", Extents)} }}" : "")}, {nameof(HoldingAdministrativeNotes)} = {(HoldingAdministrativeNotes != null ? $"{{ {string.Join(", ", HoldingAdministrativeNotes)} }}" : "")}, {nameof(HoldingElectronicAccesses)} = {(HoldingElectronicAccesses != null ? $"{{ {string.Join(", ", HoldingElectronicAccesses)} }}" : "")}, {nameof(HoldingEntries)} = {(HoldingEntries != null ? $"{{ {string.Join(", ", HoldingEntries)} }}" : "")}, {nameof(HoldingFormerIds)} = {(HoldingFormerIds != null ? $"{{ {string.Join(", ", HoldingFormerIds)} }}" : "")}, {nameof(HoldingNotes)} = {(HoldingNotes != null ? $"{{ {string.Join(", ", HoldingNotes)} }}" : "")}, {nameof(HoldingStatisticalCodes)} = {(HoldingStatisticalCodes != null ? $"{{ {string.Join(", ", HoldingStatisticalCodes)} }}" : "")}, {nameof(HoldingTags)} = {(HoldingTags != null ? $"{{ {string.Join(", ", HoldingTags)} }}" : "")}, {nameof(IndexStatements)} = {(IndexStatements != null ? $"{{ {string.Join(", ", IndexStatements)} }}" : "")}, {nameof(SupplementStatements)} = {(SupplementStatements != null ? $"{{ {string.Join(", ", SupplementStatements)} }}" : "")} }}";
 
         public static Holding2 FromJObject(JObject jObject) => jObject != null ? new Holding2
         {
@@ -239,6 +242,7 @@ namespace FolioLibrary
             SourceId = (Guid?)jObject.SelectToken("sourceId"),
             Content = JsonConvert.SerializeObject(jObject, FolioDapperContext.UniversalTimeJsonSerializationSettings),
             Extents = jObject.SelectToken("holdingsStatements")?.Where(jt => jt.HasValues).Select(jt => Extent.FromJObject((JObject)jt)).ToArray(),
+            HoldingAdministrativeNotes = jObject.SelectToken("administrativeNotes")?.Select(jt => HoldingAdministrativeNote.FromJObject((JValue)jt)).ToArray(),
             HoldingElectronicAccesses = jObject.SelectToken("electronicAccess")?.Where(jt => jt.HasValues).Select(jt => HoldingElectronicAccess.FromJObject((JObject)jt)).ToArray(),
             HoldingEntries = jObject.SelectToken("receivingHistory.entries")?.Where(jt => jt.HasValues).Select(jt => HoldingEntry.FromJObject((JObject)jt)).ToArray(),
             HoldingFormerIds = jObject.SelectToken("formerIds")?.Select(jt => HoldingFormerId.FromJObject((JValue)jt)).ToArray(),
@@ -284,6 +288,7 @@ namespace FolioLibrary
                 new JProperty("updatedByUsername", LastWriteUserUsername))),
             new JProperty("sourceId", SourceId),
             new JProperty("holdingsStatements", Extents?.Select(e2 => e2.ToJObject())),
+            new JProperty("administrativeNotes", HoldingAdministrativeNotes?.Select(han => han.ToJObject())),
             new JProperty("electronicAccess", HoldingElectronicAccesses?.Select(hea => hea.ToJObject())),
             new JProperty("formerIds", HoldingFormerIds?.Select(hfi => hfi.ToJObject())),
             new JProperty("notes", HoldingNotes?.Select(hn => hn.ToJObject())),

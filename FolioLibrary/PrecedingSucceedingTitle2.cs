@@ -46,8 +46,8 @@ namespace FolioLibrary
         [Column("title"), Display(Order = 6), JsonProperty("title"), StringLength(1024)]
         public virtual string Title { get; set; }
 
-        [Column("hrid"), Display(Order = 7), JsonProperty("hrid"), StringLength(1024)]
-        public virtual string Hrid { get; set; }
+        [Column("hrid"), Display(Name = "Short Id", Order = 7), JsonProperty("hrid"), StringLength(1024)]
+        public virtual string ShortId { get; set; }
 
         [Column("created_date"), DataType(DataType.DateTime), Display(Name = "Creation Time", Order = 8), DisplayFormat(DataFormatString = "{0:g}"), Editable(false), JsonProperty("metadata.createdDate")]
         public virtual DateTime? CreationTime { get; set; }
@@ -79,7 +79,7 @@ namespace FolioLibrary
         [Display(Name = "Preceding Succeeding Title Identifiers", Order = 17), JsonProperty("identifiers")]
         public virtual ICollection<PrecedingSucceedingTitleIdentifier> PrecedingSucceedingTitleIdentifiers { get; set; }
 
-        public override string ToString() => $"{{ {nameof(Id)} = {Id}, {nameof(PrecedingInstanceId)} = {PrecedingInstanceId}, {nameof(SucceedingInstanceId)} = {SucceedingInstanceId}, {nameof(Title)} = {Title}, {nameof(Hrid)} = {Hrid}, {nameof(CreationTime)} = {CreationTime}, {nameof(CreationUserId)} = {CreationUserId}, {nameof(CreationUserUsername)} = {CreationUserUsername}, {nameof(LastWriteTime)} = {LastWriteTime}, {nameof(LastWriteUserId)} = {LastWriteUserId}, {nameof(LastWriteUserUsername)} = {LastWriteUserUsername}, {nameof(Content)} = {Content}, {nameof(PrecedingSucceedingTitleIdentifiers)} = {(PrecedingSucceedingTitleIdentifiers != null ? $"{{ {string.Join(", ", PrecedingSucceedingTitleIdentifiers)} }}" : "")} }}";
+        public override string ToString() => $"{{ {nameof(Id)} = {Id}, {nameof(PrecedingInstanceId)} = {PrecedingInstanceId}, {nameof(SucceedingInstanceId)} = {SucceedingInstanceId}, {nameof(Title)} = {Title}, {nameof(ShortId)} = {ShortId}, {nameof(CreationTime)} = {CreationTime}, {nameof(CreationUserId)} = {CreationUserId}, {nameof(CreationUserUsername)} = {CreationUserUsername}, {nameof(LastWriteTime)} = {LastWriteTime}, {nameof(LastWriteUserId)} = {LastWriteUserId}, {nameof(LastWriteUserUsername)} = {LastWriteUserUsername}, {nameof(Content)} = {Content}, {nameof(PrecedingSucceedingTitleIdentifiers)} = {(PrecedingSucceedingTitleIdentifiers != null ? $"{{ {string.Join(", ", PrecedingSucceedingTitleIdentifiers)} }}" : "")} }}";
 
         public static PrecedingSucceedingTitle2 FromJObject(JObject jObject) => jObject != null ? new PrecedingSucceedingTitle2
         {
@@ -87,7 +87,7 @@ namespace FolioLibrary
             PrecedingInstanceId = (Guid?)jObject.SelectToken("precedingInstanceId"),
             SucceedingInstanceId = (Guid?)jObject.SelectToken("succeedingInstanceId"),
             Title = (string)jObject.SelectToken("title"),
-            Hrid = (string)jObject.SelectToken("hrid"),
+            ShortId = (string)jObject.SelectToken("hrid"),
             CreationTime = (DateTime?)jObject.SelectToken("metadata.createdDate"),
             CreationUserId = (Guid?)jObject.SelectToken("metadata.createdByUserId"),
             CreationUserUsername = (string)jObject.SelectToken("metadata.createdByUsername"),
@@ -103,7 +103,7 @@ namespace FolioLibrary
             new JProperty("precedingInstanceId", PrecedingInstanceId),
             new JProperty("succeedingInstanceId", SucceedingInstanceId),
             new JProperty("title", Title),
-            new JProperty("hrid", Hrid),
+            new JProperty("hrid", ShortId),
             new JProperty("metadata", new JObject(
                 new JProperty("createdDate", CreationTime?.ToLocalTime()),
                 new JProperty("createdByUserId", CreationUserId),

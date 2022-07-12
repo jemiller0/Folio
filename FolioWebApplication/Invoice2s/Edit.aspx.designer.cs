@@ -9,10 +9,6 @@ namespace FolioWebApplication.Invoice2s
 
         protected FormView Invoice2FormView;
 
-        protected Panel Document2sPanel;
-
-        protected RadGrid Document2sRadGrid;
-
         protected Panel InvoiceAcquisitionsUnitsPanel;
 
         protected RadGrid InvoiceAcquisitionsUnitsRadGrid;

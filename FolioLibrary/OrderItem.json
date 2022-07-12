@@ -22,19 +22,12 @@
       "$ref": "#/properties/id"
     },
     "acquisitionMethod": {
-      "description": "the acquisition method for this purchase order line",
-      "type": "string",
-      "enum": [
-        "Approval Plan",
-        "Demand Driven Acquisitions (DDA)",
-        "Depository",
-        "Evidence Based Acquisitions (EBA)",
-        "Exchange",
-        "Gift",
-        "Purchase At Vendor System",
-        "Purchase",
-        "Technical"
-      ]
+      "$ref": "#/properties/id"
+    },
+    "automaticExport": {
+      "description": "if true then line will be marked as available to export in the EDIFACT format or other format",
+      "type": "boolean",
+      "default": false
     },
     "alerts": {
       "id": "alerts",
@@ -316,17 +309,20 @@
         "additionalProperties": false,
         "properties": {
           "code": {
-            "description": "the fund code",
-            "type": "string"
+            "description": "Fund code format",
+            "type": "string",
+            "pattern": "^[^:]+$"
           },
           "encumbrance": {
-            "$ref": "#/properties/id"
+            "description": "The UUID format string",
+            "type": "string",
+            "pattern": "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-5][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}$"
           },
           "fundId": {
-            "$ref": "#/properties/id"
+            "$ref": "#/properties/fundDistribution/items/properties/encumbrance"
           },
           "expenseClassId": {
-            "$ref": "#/properties/id"
+            "$ref": "#/properties/fundDistribution/items/properties/encumbrance"
           },
           "distributionType": {
             "description": "Percentage or amount type of the value property",
@@ -372,7 +368,9 @@
             "pattern": "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-5][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}$"
           },
           "holdingId": {
-            "$ref": "#/properties/id"
+            "description": "The UUID format string",
+            "type": "string",
+            "pattern": "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-5][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}$"
           },
           "quantity": {
             "description": "combined/total quanitity of physical and electronic items",
@@ -388,6 +386,11 @@
           }
         }
       }
+    },
+    "lastEDIExportDate": {
+      "description": "The last date when line was exported in the EDIFACT file",
+      "type": "string",
+      "format": "date-time"
     },
     "orderFormat": {
       "description": "The purchase order line format",
@@ -512,6 +515,10 @@
         "Ongoing"
       ]
     },
+    "renewalNote": {
+      "description": "Renewal note for this purchase order line",
+      "type": "string"
+    },
     "reportingCodes": {
       "id": "reportingCodes",
       "description": "a list of reporting codes associated with this purchase order line",
@@ -626,10 +633,7 @@
             }
           }
         }
-      },
-      "required": [
-        "instructions"
-      ]
+      }
     },
     "metadata": {
       "title": "Metadata Schema",

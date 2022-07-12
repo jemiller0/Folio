@@ -1,42 +1,37 @@
-using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System;
-using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace FolioLibrary
 {
-    // uc.note_links -> uchicago_mod_notes.note_data
-    // NoteLink -> Note
-    [DisplayColumn(nameof(Id)), DisplayName("Note Links"), JsonObject(MemberSerialization = MemberSerialization.OptIn), Table("note_links", Schema = "uc")]
+    [Table("note_link", Schema = "uchicago_mod_notes")]
     public partial class NoteLink
     {
-        [Column("id"), ScaffoldColumn(false)]
-        public virtual string Id { get; set; }
+        [NotMapped, ScaffoldColumn(false)]
+        public virtual string NoteLinkKey => NoteId == null || LinkId == null ? null : $"{NoteId},{LinkId}";
 
-        [Display(Order = 2)]
-        public virtual Note3 Note { get; set; }
+        public override bool Equals(object obj)
+        {
+            if (this == obj) return true;
+            if (obj == null || GetType() != obj.GetType()) return false;
+            return NoteLinkKey == ((NoteLink)obj).NoteLinkKey;
+        }
 
-        [Column("note_id"), Display(Name = "Note", Order = 3), Required]
+        public override int GetHashCode() => NoteLinkKey?.GetHashCode() ?? 0;
+
+        [Display(Order = 1)]
+        public virtual Note Note { get; set; }
+
+        [Column("note_id", Order = 2), ScaffoldColumn(false)]
         public virtual Guid? NoteId { get; set; }
 
-        [Column("id2"), Display(Name = "Id 2", Order = 4), JsonProperty("id"), Required, StringLength(1024)]
-        public virtual string Id2 { get; set; }
+        [Display(Order = 3)]
+        public virtual Link Link { get; set; }
 
-        [Column("type"), Display(Order = 5), JsonProperty("type"), Required, StringLength(1024)]
-        public virtual string Type { get; set; }
+        [Column("link_id", Order = 4), ScaffoldColumn(false)]
+        public virtual Guid? LinkId { get; set; }
 
-        public override string ToString() => $"{{ {nameof(Id)} = {Id}, {nameof(NoteId)} = {NoteId}, {nameof(Id2)} = {Id2}, {nameof(Type)} = {Type} }}";
-
-        public static NoteLink FromJObject(JObject jObject) => jObject != null ? new NoteLink
-        {
-            Id2 = (string)jObject.SelectToken("id"),
-            Type = (string)jObject.SelectToken("type")
-        } : null;
-
-        public JObject ToJObject() => new JObject(
-            new JProperty("id", Id2),
-            new JProperty("type", Type)).RemoveNullAndEmptyProperties();
+        public override string ToString() => $"{{ {nameof(NoteId)} = {NoteId}, {nameof(LinkId)} = {LinkId} }}";
     }
 }

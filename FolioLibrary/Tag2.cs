@@ -16,31 +16,37 @@ namespace FolioLibrary
         [Column("id"), JsonProperty("id"), ScaffoldColumn(false)]
         public virtual Guid? Id { get; set; }
 
-        [Column("label"), Display(Order = 2), Required, StringLength(255)]
+        [Display(Name = "Creation User", Order = 2), InverseProperty("Tag2s")]
+        public virtual User2 CreationUser { get; set; }
+
+        [Column("creation_user_id"), Display(Name = "Creation User", Order = 3), Editable(false)]
+        public virtual Guid? CreationUserId { get; set; }
+
+        [Column("label"), Display(Order = 4), Required, StringLength(255)]
         public virtual string Label { get; set; }
 
-        [Column("description"), Display(Order = 3), StringLength(255)]
+        [Column("description"), Display(Order = 5), StringLength(255)]
         public virtual string Description { get; set; }
 
-        [Column("creation_time"), DataType(DataType.DateTime), Display(Name = "Creation Time", Order = 4), DisplayFormat(DataFormatString = "{0:g}"), Editable(false)]
+        [Column("creation_time"), DataType(DataType.DateTime), Display(Name = "Creation Time", Order = 6), DisplayFormat(DataFormatString = "{0:g}"), Editable(false)]
         public virtual DateTime? CreationTime { get; set; }
 
-        [Column("last_write_time"), DataType(DataType.DateTime), Display(Name = "Last Write Time", Order = 5), DisplayFormat(DataFormatString = "{0:g}"), Editable(false)]
+        [Column("last_write_time"), DataType(DataType.DateTime), Display(Name = "Last Write Time", Order = 7), DisplayFormat(DataFormatString = "{0:g}"), Editable(false)]
         public virtual DateTime? LastWriteTime { get; set; }
 
-        [Display(Name = "Last Write User", Order = 6)]
+        [Display(Name = "Last Write User", Order = 8), InverseProperty("Tag2s1")]
         public virtual User2 LastWriteUser { get; set; }
 
-        [Column("updated_by"), Display(Name = "Last Write User", Order = 7), Editable(false)]
+        [Column("updated_by_user_id"), Display(Name = "Last Write User", Order = 9), Editable(false)]
         public virtual Guid? LastWriteUserId { get; set; }
 
-        [Display(Name = "Budget Tags", Order = 8)]
+        [Display(Name = "Budget Tags", Order = 10)]
         public virtual ICollection<BudgetTag> BudgetTags { get; set; }
 
-        [Display(Name = "Fund Tags", Order = 9)]
+        [Display(Name = "Fund Tags", Order = 11)]
         public virtual ICollection<FundTag> FundTags { get; set; }
 
-        public override string ToString() => $"{{ {nameof(Id)} = {Id}, {nameof(Label)} = {Label}, {nameof(Description)} = {Description}, {nameof(CreationTime)} = {CreationTime}, {nameof(LastWriteTime)} = {LastWriteTime}, {nameof(LastWriteUserId)} = {LastWriteUserId} }}";
+        public override string ToString() => $"{{ {nameof(Id)} = {Id}, {nameof(CreationUserId)} = {CreationUserId}, {nameof(Label)} = {Label}, {nameof(Description)} = {Description}, {nameof(CreationTime)} = {CreationTime}, {nameof(LastWriteTime)} = {LastWriteTime}, {nameof(LastWriteUserId)} = {LastWriteUserId} }}";
 
         public static Tag2 FromJObject(JObject jObject) => jObject != null ? new Tag2
         {

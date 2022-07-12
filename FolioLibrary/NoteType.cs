@@ -1,47 +1,35 @@
-using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
-using NJsonSchema;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.IO;
-using System.Linq;
-using System.Reflection;
 
 namespace FolioLibrary
 {
-    [Table("note_type", Schema = "uchicago_mod_notes")]
+    [Table("type", Schema = "uchicago_mod_notes")]
     public partial class NoteType
     {
-        public static ValidationResult ValidateContent(string value)
-        {
-            using (var sr = new StreamReader(Assembly.GetExecutingAssembly().GetManifestResourceStream("FolioLibrary.NoteType.json")))
-            {
-                var js = JsonSchema.FromJsonAsync(sr.ReadToEndAsync().Result).Result;
-                var l = js.Validate(value);
-                if (l.Any()) return new ValidationResult($"The Content field is invalid. {string.Join(" ", l.Select(ve => ve.ToString()))}", new[] { "Content" });
-            }
-            return ValidationResult.Success;
-        }
-
-        [Column("id"), Display(Order = 1), Editable(false)]
+        [Column("id"), ScaffoldColumn(false)]
         public virtual Guid? Id { get; set; }
 
-        [Column("jsonb"), CustomValidation(typeof(NoteType), nameof(ValidateContent)), DataType(DataType.MultilineText), Display(Order = 2), Required]
-        public virtual string Content { get; set; }
+        [Column("name"), Display(Order = 2), Required, StringLength(255)]
+        public virtual string Name { get; set; }
+
+        [Column("created_by"), Display(Name = "Creation User Id", Order = 3), Editable(false)]
+        public virtual Guid? CreationUserId { get; set; }
+
+        [Column("created_date"), DataType(DataType.DateTime), Display(Name = "Creation Time", Order = 4), DisplayFormat(DataFormatString = "{0:g}"), Editable(false)]
+        public virtual DateTime? CreationTime { get; set; }
+
+        [Column("updated_by"), Display(Name = "Updated By", Order = 5)]
+        public virtual Guid? UpdatedBy { get; set; }
+
+        [Column("updated_date"), DataType(DataType.DateTime), Display(Name = "Last Write Time", Order = 6), DisplayFormat(DataFormatString = "{0:g}"), Editable(false)]
+        public virtual DateTime? LastWriteTime { get; set; }
 
         [ScaffoldColumn(false)]
         public virtual ICollection<Note> Notes { get; set; }
 
-        public override string ToString() => $"{{ {nameof(Id)} = {Id}, {nameof(Content)} = {Content} }}";
-
-        public static NoteType FromJObject(JObject jObject) => jObject != null ? new NoteType
-        {
-            Id = (Guid?)jObject.SelectToken("id"),
-            Content = JsonConvert.SerializeObject(jObject, FolioDapperContext.UniversalTimeJsonSerializationSettings)
-        } : null;
-
-        public JObject ToJObject() => JsonConvert.DeserializeObject<JObject>(Content, FolioDapperContext.LocalTimeJsonSerializationSettings);
+        public override string ToString() => $"{{ {nameof(Id)} = {Id}, {nameof(Name)} = {Name}, {nameof(CreationUserId)} = {CreationUserId}, {nameof(CreationTime)} = {CreationTime}, {nameof(UpdatedBy)} = {UpdatedBy}, {nameof(LastWriteTime)} = {LastWriteTime} }}";
     }
 }

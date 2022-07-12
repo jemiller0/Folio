@@ -66,8 +66,8 @@ namespace FolioLibrary
         [Column("last_write_time"), DataType(DataType.DateTime), Display(Name = "Last Write Time", Order = 18), DisplayFormat(DataFormatString = "{0:g}"), Editable(false), JsonProperty("metadata.updatedDate")]
         public virtual DateTime? LastWriteTime { get; set; }
 
-        [Column("instance_hrid"), Display(Name = "Instance Hrid", Order = 19), StringLength(1024)]
-        public virtual string InstanceHrid { get; set; }
+        [Column("instance_short_id"), Display(Name = "Instance Short Id", Order = 19), StringLength(1024)]
+        public virtual string InstanceShortId { get; set; }
 
         [Display(Name = "Error Record 2", Order = 20)]
         public virtual ErrorRecord2 ErrorRecord2 { get; set; }
@@ -78,7 +78,7 @@ namespace FolioLibrary
         [Display(Name = "Raw Record 2", Order = 22)]
         public virtual RawRecord2 RawRecord2 { get; set; }
 
-        public override string ToString() => $"{{ {nameof(Id)} = {Id}, {nameof(SnapshotId)} = {SnapshotId}, {nameof(MatchedId)} = {MatchedId}, {nameof(Generation)} = {Generation}, {nameof(RecordType)} = {RecordType}, {nameof(InstanceId)} = {InstanceId}, {nameof(State)} = {State}, {nameof(LeaderRecordStatus)} = {LeaderRecordStatus}, {nameof(Order)} = {Order}, {nameof(SuppressDiscovery)} = {SuppressDiscovery}, {nameof(CreationUserId)} = {CreationUserId}, {nameof(CreationTime)} = {CreationTime}, {nameof(LastWriteUserId)} = {LastWriteUserId}, {nameof(LastWriteTime)} = {LastWriteTime}, {nameof(InstanceHrid)} = {InstanceHrid} }}";
+        public override string ToString() => $"{{ {nameof(Id)} = {Id}, {nameof(SnapshotId)} = {SnapshotId}, {nameof(MatchedId)} = {MatchedId}, {nameof(Generation)} = {Generation}, {nameof(RecordType)} = {RecordType}, {nameof(InstanceId)} = {InstanceId}, {nameof(State)} = {State}, {nameof(LeaderRecordStatus)} = {LeaderRecordStatus}, {nameof(Order)} = {Order}, {nameof(SuppressDiscovery)} = {SuppressDiscovery}, {nameof(CreationUserId)} = {CreationUserId}, {nameof(CreationTime)} = {CreationTime}, {nameof(LastWriteUserId)} = {LastWriteUserId}, {nameof(LastWriteTime)} = {LastWriteTime}, {nameof(InstanceShortId)} = {InstanceShortId} }}";
 
         public static Record2 FromJObject(JObject jObject) => jObject != null ? new Record2
         {

@@ -53,8 +53,8 @@ namespace FolioLibrary
         [Column("updated_date"), DataType(DataType.DateTime), Display(Name = "Last Write Time", Order = 15), DisplayFormat(DataFormatString = "{0:g}"), Editable(false)]
         public virtual DateTime? LastWriteTime { get; set; }
 
-        [Column("external_hrid"), Display(Name = "Instance Hrid", Order = 16), StringLength(1024)]
-        public virtual string InstanceHrid { get; set; }
+        [Column("external_hrid"), Display(Name = "Instance Short Id", Order = 16), StringLength(1024)]
+        public virtual string InstanceShortId { get; set; }
 
         [Display(Name = "Error Record", Order = 17)]
         public virtual ErrorRecord ErrorRecord { get; set; }
@@ -65,6 +65,6 @@ namespace FolioLibrary
         [Display(Name = "Raw Record", Order = 19)]
         public virtual RawRecord RawRecord { get; set; }
 
-        public override string ToString() => $"{{ {nameof(Id)} = {Id}, {nameof(SnapshotId)} = {SnapshotId}, {nameof(MatchedId)} = {MatchedId}, {nameof(Generation)} = {Generation}, {nameof(RecordType)} = {RecordType}, {nameof(InstanceId)} = {InstanceId}, {nameof(State)} = {State}, {nameof(LeaderRecordStatus)} = {LeaderRecordStatus}, {nameof(Order)} = {Order}, {nameof(SuppressDiscovery)} = {SuppressDiscovery}, {nameof(CreationUserId)} = {CreationUserId}, {nameof(CreationTime)} = {CreationTime}, {nameof(LastWriteUserId)} = {LastWriteUserId}, {nameof(LastWriteTime)} = {LastWriteTime}, {nameof(InstanceHrid)} = {InstanceHrid} }}";
+        public override string ToString() => $"{{ {nameof(Id)} = {Id}, {nameof(SnapshotId)} = {SnapshotId}, {nameof(MatchedId)} = {MatchedId}, {nameof(Generation)} = {Generation}, {nameof(RecordType)} = {RecordType}, {nameof(InstanceId)} = {InstanceId}, {nameof(State)} = {State}, {nameof(LeaderRecordStatus)} = {LeaderRecordStatus}, {nameof(Order)} = {Order}, {nameof(SuppressDiscovery)} = {SuppressDiscovery}, {nameof(CreationUserId)} = {CreationUserId}, {nameof(CreationTime)} = {CreationTime}, {nameof(LastWriteUserId)} = {LastWriteUserId}, {nameof(LastWriteTime)} = {LastWriteTime}, {nameof(InstanceShortId)} = {InstanceShortId} }}";
     }
 }

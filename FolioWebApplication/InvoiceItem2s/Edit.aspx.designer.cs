@@ -9,14 +9,6 @@ namespace FolioWebApplication.InvoiceItem2s
 
         protected FormView InvoiceItem2FormView;
 
-        protected Panel InvoiceAdjustmentFundsPanel;
-
-        protected RadGrid InvoiceAdjustmentFundsRadGrid;
-
-        protected Panel InvoiceItemAdjustmentFundsPanel;
-
-        protected RadGrid InvoiceItemAdjustmentFundsRadGrid;
-
         protected Panel InvoiceItemAdjustmentsPanel;
 
         protected RadGrid InvoiceItemAdjustmentsRadGrid;
@@ -36,10 +28,6 @@ namespace FolioWebApplication.InvoiceItem2s
         protected Panel Transaction2sPanel;
 
         protected RadGrid Transaction2sRadGrid;
-
-        protected Panel VoucherItemFundsPanel;
-
-        protected RadGrid VoucherItemFundsRadGrid;
 
         protected Panel VoucherItemInvoiceItemsPanel;
 

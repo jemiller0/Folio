@@ -31,7 +31,7 @@ namespace FolioLibrary
         [Column("id"), Display(Order = 1), Editable(false), JsonProperty("id")]
         public virtual Guid? Id { get; set; }
 
-        [Column("_version"), Display(Order = 2), JsonProperty("_version")]
+        [Column("_version"), JsonProperty("_version"), ScaffoldColumn(false)]
         public virtual int? Version { get; set; }
 
         [Display(Order = 3), InverseProperty("UserSummary2s2")]

@@ -105,11 +105,12 @@
         "isSubscription": {
           "description": "Whether or not this is a subscription",
           "type": "boolean",
-          "default": "false"
+          "default": false
         },
         "manualRenewal": {
           "description": "Whether or not this is a manual renewal",
-          "type": "boolean"
+          "type": "boolean",
+          "default": false
         },
         "notes": {
           "description": "Notes associated with the Ongoing order",

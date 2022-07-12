@@ -34,17 +34,6 @@ namespace FolioWebApplication.InvoiceItem2s
             Title = $"Invoice Item {ii2.Number}";
         }
 
-        protected void InvoiceItemAdjustmentFundsRadGrid_NeedDataSource(object sender, GridNeedDataSourceEventArgs e)
-        {
-            if (Session["InvoiceItemAdjustmentFundsPermission"] == null) return;
-            var id = (Guid?)InvoiceItem2FormView.DataKey.Value;
-            if (id == null) return;
-            var l = folioServiceContext.FindInvoiceItem2(id, true).InvoiceItemAdjustmentFunds ?? new InvoiceItemAdjustmentFund[] { };
-            InvoiceItemAdjustmentFundsRadGrid.DataSource = l;
-            InvoiceItemAdjustmentFundsRadGrid.AllowFilteringByColumn = l.Count() > 10;
-            InvoiceItemAdjustmentFundsPanel.Visible = InvoiceItem2FormView.DataKey.Value != null && ((string)Session["InvoiceItemAdjustmentFundsPermission"] == "Edit" || Session["InvoiceItemAdjustmentFundsPermission"] != null && l.Any());
-        }
-
         protected void InvoiceItemAdjustmentsRadGrid_NeedDataSource(object sender, GridNeedDataSourceEventArgs e)
         {
             if (Session["InvoiceItemAdjustmentsPermission"] == null) return;
@@ -94,7 +83,7 @@ namespace FolioWebApplication.InvoiceItem2s
             if (Session["Transaction2sPermission"] == null) return;
             var id = (Guid?)InvoiceItem2FormView.DataKey.Value;
             if (id == null) return;
-            var d = new Dictionary<string, string>() { { "Id", "id" }, { "Amount", "amount" }, { "AwaitingPaymentEncumbranceId", "awaitingPayment.encumbranceId" }, { "AwaitingPaymentReleaseEncumbrance", "awaitingPayment.releaseEncumbrance" }, { "Currency", "currency" }, { "Description", "description" }, { "AwaitingPaymentAmount", "encumbrance.amountAwaitingPayment" }, { "ExpendedAmount", "encumbrance.amountExpended" }, { "InitialEncumberedAmount", "encumbrance.initialAmountEncumbered" }, { "Status", "encumbrance.status" }, { "OrderType", "encumbrance.orderType" }, { "OrderStatus", "encumbrance.orderStatus" }, { "Subscription", "encumbrance.subscription" }, { "ReEncumber", "encumbrance.reEncumber" }, { "OrderId", "encumbrance.sourcePurchaseOrderId" }, { "OrderItemId", "encumbrance.sourcePoLineId" }, { "ExpenseClassId", "expenseClassId" }, { "FiscalYearId", "fiscalYearId" }, { "FromFundId", "fromFundId" }, { "InvoiceCancelled", "invoiceCancelled" }, { "PaymentEncumbranceId", "paymentEncumbranceId" }, { "Source", "source" }, { "SourceFiscalYearId", "sourceFiscalYearId" }, { "InvoiceId", "sourceInvoiceId" }, { "InvoiceItemId", "sourceInvoiceLineId" }, { "ToFundId", "toFundId" }, { "TransactionType", "transactionType" }, { "CreationTime", "metadata.createdDate" }, { "CreationUserId", "metadata.createdByUserId" }, { "LastWriteTime", "metadata.updatedDate" }, { "LastWriteUserId", "metadata.updatedByUserId" } };
+            var d = new Dictionary<string, string>() { { "Id", "id" }, { "Amount", "amount" }, { "AwaitingPaymentEncumbranceId", "awaitingPayment.encumbranceId" }, { "AwaitingPaymentReleaseEncumbrance", "awaitingPayment.releaseEncumbrance" }, { "Currency", "currency" }, { "Description", "description" }, { "AwaitingPaymentAmount", "encumbrance.amountAwaitingPayment" }, { "ExpendedAmount", "encumbrance.amountExpended" }, { "InitialEncumberedAmount", "encumbrance.initialAmountEncumbered" }, { "Status", "encumbrance.status" }, { "OrderType", "encumbrance.orderType" }, { "OrderStatus", "encumbrance.orderStatus" }, { "Subscription", "encumbrance.subscription" }, { "ReEncumber", "encumbrance.reEncumber" }, { "OrderId", "encumbrance.sourcePurchaseOrderId" }, { "OrderItemId", "encumbrance.sourcePoLineId" }, { "ExpenseClassId", "expenseClassId" }, { "FiscalYearId", "fiscalYearId" }, { "FromFundId", "fromFundId" }, { "InvoiceCancelled", "invoiceCancelled" }, { "PaymentEncumbranceId", "paymentEncumbranceId" }, { "Source", "source" }, { "SourceFiscalYearId", "sourceFiscalYearId" }, { "InvoiceId", "sourceInvoiceId" }, { "InvoiceItemId", "sourceInvoiceLineId" }, { "ToFundId", "toFundId" }, { "TransactionType", "transactionType" }, { "VoidedAmount", "voidedAmount" }, { "CreationTime", "metadata.createdDate" }, { "CreationUserId", "metadata.createdByUserId" }, { "LastWriteTime", "metadata.updatedDate" }, { "LastWriteUserId", "metadata.updatedByUserId" } };
             var where = Global.Trim(string.Join(" and ", new string[]
             {
                 $"sourceInvoiceLineId == \"{id}\"",
@@ -124,6 +113,7 @@ namespace FolioWebApplication.InvoiceItem2s
                 Global.GetCqlFilter(Transaction2sRadGrid, "Invoice.Number", "sourceInvoiceId", "folioInvoiceNo", folioServiceContext.FolioServiceClient.Invoices),
                 Global.GetCqlFilter(Transaction2sRadGrid, "ToFund.Name", "toFundId", "name", folioServiceContext.FolioServiceClient.Funds),
                 Global.GetCqlFilter(Transaction2sRadGrid, "TransactionType", "transactionType"),
+                Global.GetCqlFilter(Transaction2sRadGrid, "VoidedAmount", "voidedAmount"),
                 Global.GetCqlFilter(Transaction2sRadGrid, "CreationTime", "metadata.createdDate"),
                 Global.GetCqlFilter(Transaction2sRadGrid, "CreationUser.Username", "metadata.createdByUserId", "username", folioServiceContext.FolioServiceClient.Users),
                 Global.GetCqlFilter(Transaction2sRadGrid, "LastWriteTime", "metadata.updatedDate"),

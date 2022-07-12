@@ -19,6 +19,10 @@
     "templateDescription": {
       "description": "The order template description",
       "type": "string"
+    },
+    "hiddenFields": {
+      "description": "Fields for hidden from end user",
+      "type": "object"
     }
   },
   "required": [

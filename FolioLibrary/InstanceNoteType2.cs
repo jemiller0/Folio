@@ -64,8 +64,8 @@ namespace FolioLibrary
         [Column("content"), CustomValidation(typeof(InstanceNoteType), nameof(ValidateContent)), DataType(DataType.MultilineText), Display(Order = 12), Editable(false)]
         public virtual string Content { get; set; }
 
-        [Display(Name = "Notes", Order = 13)]
-        public virtual ICollection<Note2> Note2s { get; set; }
+        [Display(Name = "Instance Notes", Order = 13)]
+        public virtual ICollection<InstanceNote> InstanceNotes { get; set; }
 
         public override string ToString() => $"{{ {nameof(Id)} = {Id}, {nameof(Name)} = {Name}, {nameof(Source)} = {Source}, {nameof(CreationTime)} = {CreationTime}, {nameof(CreationUserId)} = {CreationUserId}, {nameof(CreationUserUsername)} = {CreationUserUsername}, {nameof(LastWriteTime)} = {LastWriteTime}, {nameof(LastWriteUserId)} = {LastWriteUserId}, {nameof(LastWriteUserUsername)} = {LastWriteUserUsername}, {nameof(Content)} = {Content} }}";
 

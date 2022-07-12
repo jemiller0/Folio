@@ -64,16 +64,10 @@ namespace FolioLibrary
         [Column("content"), CustomValidation(typeof(BatchGroup), nameof(ValidateContent)), DataType(DataType.MultilineText), Display(Order = 12), Editable(false)]
         public virtual string Content { get; set; }
 
-        [Display(Name = "Batch Voucher Exports", Order = 13)]
-        public virtual ICollection<BatchVoucherExport2> BatchVoucherExport2s { get; set; }
-
-        [Display(Name = "Batch Voucher Export Configs", Order = 14)]
-        public virtual ICollection<BatchVoucherExportConfig2> BatchVoucherExportConfig2s { get; set; }
-
-        [Display(Name = "Invoices", Order = 15)]
+        [Display(Name = "Invoices", Order = 13)]
         public virtual ICollection<Invoice2> Invoice2s { get; set; }
 
-        [Display(Name = "Vouchers", Order = 16)]
+        [Display(Name = "Vouchers", Order = 14)]
         public virtual ICollection<Voucher2> Voucher2s { get; set; }
 
         public override string ToString() => $"{{ {nameof(Id)} = {Id}, {nameof(Name)} = {Name}, {nameof(Description)} = {Description}, {nameof(CreationTime)} = {CreationTime}, {nameof(CreationUserId)} = {CreationUserId}, {nameof(CreationUserUsername)} = {CreationUserUsername}, {nameof(LastWriteTime)} = {LastWriteTime}, {nameof(LastWriteUserId)} = {LastWriteUserId}, {nameof(LastWriteUserUsername)} = {LastWriteUserUsername}, {nameof(Content)} = {Content} }}";

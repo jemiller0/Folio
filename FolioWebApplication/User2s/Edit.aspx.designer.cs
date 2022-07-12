@@ -9,6 +9,14 @@ namespace FolioWebApplication.User2s
 
         protected FormView User2FormView;
 
+        protected Panel AcquisitionMethod2sPanel;
+
+        protected RadGrid AcquisitionMethod2sRadGrid;
+
+        protected Panel AcquisitionMethod2s1Panel;
+
+        protected RadGrid AcquisitionMethod2s1RadGrid;
+
         protected Panel AcquisitionsUnit2sPanel;
 
         protected RadGrid AcquisitionsUnit2sRadGrid;
@@ -64,22 +72,6 @@ namespace FolioWebApplication.User2s
         protected Panel BatchGroup2s1Panel;
 
         protected RadGrid BatchGroup2s1RadGrid;
-
-        protected Panel BatchVoucherExport2sPanel;
-
-        protected RadGrid BatchVoucherExport2sRadGrid;
-
-        protected Panel BatchVoucherExport2s1Panel;
-
-        protected RadGrid BatchVoucherExport2s1RadGrid;
-
-        protected Panel BatchVoucherExportConfig2sPanel;
-
-        protected RadGrid BatchVoucherExportConfig2sRadGrid;
-
-        protected Panel BatchVoucherExportConfig2s1Panel;
-
-        protected RadGrid BatchVoucherExportConfig2s1RadGrid;
 
         protected Panel Block2sPanel;
 
@@ -257,22 +249,6 @@ namespace FolioWebApplication.User2s
 
         protected RadGrid Department2s1RadGrid;
 
-        protected Panel Document2sPanel;
-
-        protected RadGrid Document2sRadGrid;
-
-        protected Panel Document2s1Panel;
-
-        protected RadGrid Document2s1RadGrid;
-
-        protected Panel Document2s2Panel;
-
-        protected RadGrid Document2s2RadGrid;
-
-        protected Panel Document2s3Panel;
-
-        protected RadGrid Document2s3RadGrid;
-
         protected Panel ElectronicAccessRelationship2sPanel;
 
         protected RadGrid ElectronicAccessRelationship2sRadGrid;
@@ -300,14 +276,6 @@ namespace FolioWebApplication.User2s
         protected Panel ExpenseClass2s1Panel;
 
         protected RadGrid ExpenseClass2s1RadGrid;
-
-        protected Panel ExportConfigCredential2sPanel;
-
-        protected RadGrid ExportConfigCredential2sRadGrid;
-
-        protected Panel ExportConfigCredential2s1Panel;
-
-        protected RadGrid ExportConfigCredential2s1RadGrid;
 
         protected Panel Fee2sPanel;
 
@@ -384,6 +352,22 @@ namespace FolioWebApplication.User2s
         protected Panel Holding2s1Panel;
 
         protected RadGrid Holding2s1RadGrid;
+
+        protected Panel HoldingDonorsPanel;
+
+        protected RadGrid HoldingDonorsRadGrid;
+
+        protected Panel HoldingDonors1Panel;
+
+        protected RadGrid HoldingDonors1RadGrid;
+
+        protected Panel HoldingNotesPanel;
+
+        protected RadGrid HoldingNotesRadGrid;
+
+        protected Panel HoldingNotes1Panel;
+
+        protected RadGrid HoldingNotes1RadGrid;
 
         protected Panel HoldingNoteType2sPanel;
 
@@ -493,6 +477,22 @@ namespace FolioWebApplication.User2s
 
         protected RadGrid ItemDamagedStatus2s1RadGrid;
 
+        protected Panel ItemDonorsPanel;
+
+        protected RadGrid ItemDonorsRadGrid;
+
+        protected Panel ItemDonors1Panel;
+
+        protected RadGrid ItemDonors1RadGrid;
+
+        protected Panel ItemNotesPanel;
+
+        protected RadGrid ItemNotesRadGrid;
+
+        protected Panel ItemNotes1Panel;
+
+        protected RadGrid ItemNotes1RadGrid;
+
         protected Panel ItemNoteType2sPanel;
 
         protected RadGrid ItemNoteType2sRadGrid;
@@ -500,10 +500,6 @@ namespace FolioWebApplication.User2s
         protected Panel ItemNoteType2s1Panel;
 
         protected RadGrid ItemNoteType2s1RadGrid;
-
-        protected Panel JobExecution2sPanel;
-
-        protected RadGrid JobExecution2sRadGrid;
 
         protected Panel Ledger2sPanel;
 
@@ -637,13 +633,13 @@ namespace FolioWebApplication.User2s
 
         protected RadGrid NatureOfContentTerm2s1RadGrid;
 
-        protected Panel Note3sPanel;
+        protected Panel Note2sPanel;
 
-        protected RadGrid Note3sRadGrid;
+        protected RadGrid Note2sRadGrid;
 
-        protected Panel Note3s1Panel;
+        protected Panel Note2s1Panel;
 
-        protected RadGrid Note3s1RadGrid;
+        protected RadGrid Note2s1RadGrid;
 
         protected Panel NoteType2sPanel;
 
@@ -968,6 +964,10 @@ namespace FolioWebApplication.User2s
         protected Panel Tag2sPanel;
 
         protected RadGrid Tag2sRadGrid;
+
+        protected Panel Tag2s1Panel;
+
+        protected RadGrid Tag2s1RadGrid;
 
         protected Panel Template2sPanel;
 

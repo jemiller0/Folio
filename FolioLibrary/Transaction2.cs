@@ -31,179 +31,186 @@ namespace FolioLibrary
         [Column("id"), Display(Order = 1), Editable(false), JsonProperty("id")]
         public virtual Guid? Id { get; set; }
 
-        [Column("amount"), DataType(DataType.Currency), Display(Order = 2), DisplayFormat(DataFormatString = "{0:c}", ApplyFormatInEditMode = true), JsonProperty("amount"), Required]
+        [Column("_version"), JsonProperty("_version"), ScaffoldColumn(false)]
+        public virtual int? Version { get; set; }
+
+        [Column("amount"), DataType(DataType.Currency), Display(Order = 3), DisplayFormat(DataFormatString = "{0:c}", ApplyFormatInEditMode = true), JsonProperty("amount"), Required]
         public virtual decimal? Amount { get; set; }
 
-        [Display(Name = "Awaiting Payment Encumbrance", Order = 3), InverseProperty("Transaction2s")]
+        [Display(Name = "Awaiting Payment Encumbrance", Order = 4), InverseProperty("Transaction2s")]
         public virtual Transaction2 AwaitingPaymentEncumbrance { get; set; }
 
-        [Column("awaiting_payment_encumbrance_id"), Display(Name = "Awaiting Payment Encumbrance", Order = 4), JsonProperty("awaitingPayment.encumbranceId")]
+        [Column("awaiting_payment_encumbrance_id"), Display(Name = "Awaiting Payment Encumbrance", Order = 5), JsonProperty("awaitingPayment.encumbranceId")]
         public virtual Guid? AwaitingPaymentEncumbranceId { get; set; }
 
-        [Column("awaiting_payment_release_encumbrance"), Display(Name = "Awaiting Payment Release Encumbrance", Order = 5), JsonProperty("awaitingPayment.releaseEncumbrance")]
+        [Column("awaiting_payment_release_encumbrance"), Display(Name = "Awaiting Payment Release Encumbrance", Order = 6), JsonProperty("awaitingPayment.releaseEncumbrance")]
         public virtual bool? AwaitingPaymentReleaseEncumbrance { get; set; }
 
-        [Column("currency"), Display(Order = 6), JsonProperty("currency"), Required, StringLength(1024)]
+        [Column("currency"), Display(Order = 7), JsonProperty("currency"), Required, StringLength(1024)]
         public virtual string Currency { get; set; }
 
-        [Column("description"), Display(Order = 7), JsonProperty("description"), StringLength(1024)]
+        [Column("description"), Display(Order = 8), JsonProperty("description"), StringLength(1024)]
         public virtual string Description { get; set; }
 
-        [Column("encumbrance_amount_awaiting_payment"), DataType(DataType.Currency), Display(Name = "Awaiting Payment Amount", Order = 8), DisplayFormat(DataFormatString = "{0:c}", ApplyFormatInEditMode = true), JsonProperty("encumbrance.amountAwaitingPayment")]
+        [Column("encumbrance_amount_awaiting_payment"), DataType(DataType.Currency), Display(Name = "Awaiting Payment Amount", Order = 9), DisplayFormat(DataFormatString = "{0:c}", ApplyFormatInEditMode = true), JsonProperty("encumbrance.amountAwaitingPayment")]
         public virtual decimal? AwaitingPaymentAmount { get; set; }
 
-        [Column("encumbrance_amount_expended"), DataType(DataType.Currency), Display(Name = "Expended Amount", Order = 9), DisplayFormat(DataFormatString = "{0:c}", ApplyFormatInEditMode = true), JsonProperty("encumbrance.amountExpended")]
+        [Column("encumbrance_amount_expended"), DataType(DataType.Currency), Display(Name = "Expended Amount", Order = 10), DisplayFormat(DataFormatString = "{0:c}", ApplyFormatInEditMode = true), JsonProperty("encumbrance.amountExpended")]
         public virtual decimal? ExpendedAmount { get; set; }
 
-        [Column("encumbrance_initial_amount_encumbered"), DataType(DataType.Currency), Display(Name = "Initial Encumbered Amount", Order = 10), DisplayFormat(DataFormatString = "{0:c}", ApplyFormatInEditMode = true), JsonProperty("encumbrance.initialAmountEncumbered"), Required]
+        [Column("encumbrance_initial_amount_encumbered"), DataType(DataType.Currency), Display(Name = "Initial Encumbered Amount", Order = 11), DisplayFormat(DataFormatString = "{0:c}", ApplyFormatInEditMode = true), JsonProperty("encumbrance.initialAmountEncumbered"), Required]
         public virtual decimal? InitialEncumberedAmount { get; set; }
 
-        [Column("encumbrance_status"), Display(Order = 11), JsonProperty("encumbrance.status"), RegularExpression(@"^(Released|Unreleased|Pending)$"), Required, StringLength(1024)]
+        [Column("encumbrance_status"), Display(Order = 12), JsonProperty("encumbrance.status"), RegularExpression(@"^(Released|Unreleased|Pending)$"), Required, StringLength(1024)]
         public virtual string Status { get; set; }
 
-        [Column("encumbrance_order_type"), Display(Name = "Order Type", Order = 12), JsonProperty("encumbrance.orderType"), RegularExpression(@"^(One-Time|Ongoing)$"), Required, StringLength(1024)]
+        [Column("encumbrance_order_type"), Display(Name = "Order Type", Order = 13), JsonProperty("encumbrance.orderType"), RegularExpression(@"^(One-Time|Ongoing)$"), Required, StringLength(1024)]
         public virtual string OrderType { get; set; }
 
-        [Column("encumbrance_order_status"), Display(Name = "Order Status", Order = 13), JsonProperty("encumbrance.orderStatus"), RegularExpression(@"^(Pending|Open|Closed)$"), StringLength(1024)]
+        [Column("encumbrance_order_status"), Display(Name = "Order Status", Order = 14), JsonProperty("encumbrance.orderStatus"), RegularExpression(@"^(Pending|Open|Closed)$"), StringLength(1024)]
         public virtual string OrderStatus { get; set; }
 
-        [Column("encumbrance_subscription"), Display(Order = 14), JsonProperty("encumbrance.subscription")]
+        [Column("encumbrance_subscription"), Display(Order = 15), JsonProperty("encumbrance.subscription")]
         public virtual bool? Subscription { get; set; }
 
-        [Column("encumbrance_re_encumber"), Display(Name = "Re Encumber", Order = 15), JsonProperty("encumbrance.reEncumber")]
+        [Column("encumbrance_re_encumber"), Display(Name = "Re Encumber", Order = 16), JsonProperty("encumbrance.reEncumber")]
         public virtual bool? ReEncumber { get; set; }
 
-        [Display(Order = 16)]
+        [Display(Order = 17)]
         public virtual Order2 Order { get; set; }
 
-        [Column("encumbrance_source_purchase_order_id"), Display(Name = "Order", Order = 17), JsonProperty("encumbrance.sourcePurchaseOrderId"), Required]
+        [Column("encumbrance_source_purchase_order_id"), Display(Name = "Order", Order = 18), JsonProperty("encumbrance.sourcePurchaseOrderId"), Required]
         public virtual Guid? OrderId { get; set; }
 
-        [Display(Name = "Order Item", Order = 18)]
+        [Display(Name = "Order Item", Order = 19)]
         public virtual OrderItem2 OrderItem { get; set; }
 
-        [Column("encumbrance_source_po_line_id"), Display(Name = "Order Item", Order = 19), JsonProperty("encumbrance.sourcePoLineId"), Required]
+        [Column("encumbrance_source_po_line_id"), Display(Name = "Order Item", Order = 20), JsonProperty("encumbrance.sourcePoLineId"), Required]
         public virtual Guid? OrderItemId { get; set; }
 
-        [Display(Name = "Expense Class", Order = 20)]
+        [Display(Name = "Expense Class", Order = 21)]
         public virtual ExpenseClass2 ExpenseClass { get; set; }
 
-        [Column("expense_class_id"), Display(Name = "Expense Class", Order = 21), JsonProperty("expenseClassId")]
+        [Column("expense_class_id"), Display(Name = "Expense Class", Order = 22), JsonProperty("expenseClassId")]
         public virtual Guid? ExpenseClassId { get; set; }
 
-        [Display(Name = "Fiscal Year", Order = 22), InverseProperty("Transaction2s1")]
+        [Display(Name = "Fiscal Year", Order = 23), InverseProperty("Transaction2s1")]
         public virtual FiscalYear2 FiscalYear { get; set; }
 
-        [Column("fiscal_year_id"), Display(Name = "Fiscal Year", Order = 23), JsonProperty("fiscalYearId"), Required]
+        [Column("fiscal_year_id"), Display(Name = "Fiscal Year", Order = 24), JsonProperty("fiscalYearId"), Required]
         public virtual Guid? FiscalYearId { get; set; }
 
-        [Display(Name = "From Fund", Order = 24), InverseProperty("Transaction2s")]
+        [Display(Name = "From Fund", Order = 25), InverseProperty("Transaction2s")]
         public virtual Fund2 FromFund { get; set; }
 
-        [Column("from_fund_id"), Display(Name = "From Fund", Order = 25), JsonProperty("fromFundId")]
+        [Column("from_fund_id"), Display(Name = "From Fund", Order = 26), JsonProperty("fromFundId")]
         public virtual Guid? FromFundId { get; set; }
 
-        [Column("invoice_cancelled"), Display(Name = "Invoice Cancelled", Order = 26), JsonProperty("invoiceCancelled")]
+        [Column("invoice_cancelled"), Display(Name = "Invoice Cancelled", Order = 27), JsonProperty("invoiceCancelled")]
         public virtual bool? InvoiceCancelled { get; set; }
 
-        [Display(Name = "Payment Encumbrance", Order = 27), InverseProperty("Transaction2s1")]
+        [Display(Name = "Payment Encumbrance", Order = 28), InverseProperty("Transaction2s1")]
         public virtual Transaction2 PaymentEncumbrance { get; set; }
 
-        [Column("payment_encumbrance_id"), Display(Name = "Payment Encumbrance", Order = 28), JsonProperty("paymentEncumbranceId")]
+        [Column("payment_encumbrance_id"), Display(Name = "Payment Encumbrance", Order = 29), JsonProperty("paymentEncumbranceId")]
         public virtual Guid? PaymentEncumbranceId { get; set; }
 
-        [Column("source"), Display(Order = 29), JsonProperty("source"), RegularExpression(@"^(User|PoLine|Invoice)$"), Required, StringLength(1024)]
+        [Column("source"), Display(Order = 30), JsonProperty("source"), RegularExpression(@"^(User|PoLine|Invoice)$"), Required, StringLength(1024)]
         public virtual string Source { get; set; }
 
-        [Display(Name = "Source Fiscal Year", Order = 30), InverseProperty("Transaction2s")]
+        [Display(Name = "Source Fiscal Year", Order = 31), InverseProperty("Transaction2s")]
         public virtual FiscalYear2 SourceFiscalYear { get; set; }
 
-        [Column("source_fiscal_year_id"), Display(Name = "Source Fiscal Year", Order = 31), JsonProperty("sourceFiscalYearId")]
+        [Column("source_fiscal_year_id"), Display(Name = "Source Fiscal Year", Order = 32), JsonProperty("sourceFiscalYearId")]
         public virtual Guid? SourceFiscalYearId { get; set; }
 
-        [Display(Order = 32)]
+        [Display(Order = 33)]
         public virtual Invoice2 Invoice { get; set; }
 
-        [Column("source_invoice_id"), Display(Name = "Invoice", Order = 33), JsonProperty("sourceInvoiceId")]
+        [Column("source_invoice_id"), Display(Name = "Invoice", Order = 34), JsonProperty("sourceInvoiceId")]
         public virtual Guid? InvoiceId { get; set; }
 
-        [Display(Name = "Invoice Item", Order = 34)]
+        [Display(Name = "Invoice Item", Order = 35)]
         public virtual InvoiceItem2 InvoiceItem { get; set; }
 
-        [Column("source_invoice_line_id"), Display(Name = "Invoice Item", Order = 35), JsonProperty("sourceInvoiceLineId")]
+        [Column("source_invoice_line_id"), Display(Name = "Invoice Item", Order = 36), JsonProperty("sourceInvoiceLineId")]
         public virtual Guid? InvoiceItemId { get; set; }
 
-        [Display(Name = "To Fund", Order = 36), InverseProperty("Transaction2s1")]
+        [Display(Name = "To Fund", Order = 37), InverseProperty("Transaction2s1")]
         public virtual Fund2 ToFund { get; set; }
 
-        [Column("to_fund_id"), Display(Name = "To Fund", Order = 37), JsonProperty("toFundId")]
+        [Column("to_fund_id"), Display(Name = "To Fund", Order = 38), JsonProperty("toFundId")]
         public virtual Guid? ToFundId { get; set; }
 
-        [Column("transaction_type"), Display(Name = "Transaction Type", Order = 38), JsonProperty("transactionType"), RegularExpression(@"^(Allocation|Credit|Encumbrance|Payment|Pending payment|Rollover transfer|Transfer)$"), Required, StringLength(1024)]
+        [Column("transaction_type"), Display(Name = "Transaction Type", Order = 39), JsonProperty("transactionType"), RegularExpression(@"^(Allocation|Credit|Encumbrance|Payment|Pending payment|Rollover transfer|Transfer)$"), Required, StringLength(1024)]
         public virtual string TransactionType { get; set; }
 
-        [Column("created_date"), DataType(DataType.DateTime), Display(Name = "Creation Time", Order = 39), DisplayFormat(DataFormatString = "{0:g}"), Editable(false), JsonProperty("metadata.createdDate")]
+        [Column("voided_amount"), DataType(DataType.Currency), Display(Name = "Voided Amount", Order = 40), DisplayFormat(DataFormatString = "{0:c}", ApplyFormatInEditMode = true), JsonProperty("voidedAmount")]
+        public virtual decimal? VoidedAmount { get; set; }
+
+        [Column("created_date"), DataType(DataType.DateTime), Display(Name = "Creation Time", Order = 41), DisplayFormat(DataFormatString = "{0:g}"), Editable(false), JsonProperty("metadata.createdDate")]
         public virtual DateTime? CreationTime { get; set; }
 
-        [Display(Name = "Creation User", Order = 40), InverseProperty("Transaction2s")]
+        [Display(Name = "Creation User", Order = 42), InverseProperty("Transaction2s")]
         public virtual User2 CreationUser { get; set; }
 
-        [Column("created_by_user_id"), Display(Name = "Creation User", Order = 41), Editable(false), JsonProperty("metadata.createdByUserId")]
+        [Column("created_by_user_id"), Display(Name = "Creation User", Order = 43), Editable(false), JsonProperty("metadata.createdByUserId")]
         public virtual Guid? CreationUserId { get; set; }
 
         [Column("created_by_username"), JsonProperty("metadata.createdByUsername"), ScaffoldColumn(false), StringLength(1024)]
         public virtual string CreationUserUsername { get; set; }
 
-        [Column("updated_date"), DataType(DataType.DateTime), Display(Name = "Last Write Time", Order = 43), DisplayFormat(DataFormatString = "{0:g}"), Editable(false), JsonProperty("metadata.updatedDate")]
+        [Column("updated_date"), DataType(DataType.DateTime), Display(Name = "Last Write Time", Order = 45), DisplayFormat(DataFormatString = "{0:g}"), Editable(false), JsonProperty("metadata.updatedDate")]
         public virtual DateTime? LastWriteTime { get; set; }
 
-        [Display(Name = "Last Write User", Order = 44), InverseProperty("Transaction2s1")]
+        [Display(Name = "Last Write User", Order = 46), InverseProperty("Transaction2s1")]
         public virtual User2 LastWriteUser { get; set; }
 
-        [Column("updated_by_user_id"), Display(Name = "Last Write User", Order = 45), Editable(false), JsonProperty("metadata.updatedByUserId")]
+        [Column("updated_by_user_id"), Display(Name = "Last Write User", Order = 47), Editable(false), JsonProperty("metadata.updatedByUserId")]
         public virtual Guid? LastWriteUserId { get; set; }
 
         [Column("updated_by_username"), JsonProperty("metadata.updatedByUsername"), ScaffoldColumn(false), StringLength(1024)]
         public virtual string LastWriteUserUsername { get; set; }
 
-        [Column("content"), CustomValidation(typeof(Transaction), nameof(ValidateContent)), DataType(DataType.MultilineText), Display(Order = 47), Editable(false)]
+        [Column("content"), CustomValidation(typeof(Transaction), nameof(ValidateContent)), DataType(DataType.MultilineText), Display(Order = 49), Editable(false)]
         public virtual string Content { get; set; }
 
-        [Display(Name = "Invoices", Order = 48)]
+        [Display(Name = "Invoices", Order = 50)]
         public virtual ICollection<Invoice2> Invoice2s { get; set; }
 
-        [Display(Name = "Invoice Adjustment Funds", Order = 49)]
+        [Display(Name = "Invoice Adjustment Funds", Order = 51)]
         public virtual ICollection<InvoiceAdjustmentFund> InvoiceAdjustmentFunds { get; set; }
 
-        [Display(Name = "Invoice Item Adjustment Funds", Order = 50)]
+        [Display(Name = "Invoice Item Adjustment Funds", Order = 52)]
         public virtual ICollection<InvoiceItemAdjustmentFund> InvoiceItemAdjustmentFunds { get; set; }
 
-        [Display(Name = "Invoice Item Funds", Order = 51)]
+        [Display(Name = "Invoice Item Funds", Order = 53)]
         public virtual ICollection<InvoiceItemFund> InvoiceItemFunds { get; set; }
 
-        [Display(Name = "Order Item Funds", Order = 52)]
+        [Display(Name = "Order Item Funds", Order = 54)]
         public virtual ICollection<OrderItemFund> OrderItemFunds { get; set; }
 
-        [Display(Name = "Transactions", Order = 53)]
+        [Display(Name = "Transactions", Order = 55)]
         public virtual ICollection<Transaction2> Transaction2s { get; set; }
 
-        [Display(Name = "Transactions 1", Order = 54)]
+        [Display(Name = "Transactions 1", Order = 56)]
         public virtual ICollection<Transaction2> Transaction2s1 { get; set; }
 
-        [Display(Name = "Transaction Tags", Order = 55), JsonConverter(typeof(ArrayJsonConverter<List<TransactionTag>, TransactionTag>), "Content"), JsonProperty("tags.tagList")]
+        [Display(Name = "Transaction Tags", Order = 57), JsonConverter(typeof(ArrayJsonConverter<List<TransactionTag>, TransactionTag>), "Content"), JsonProperty("tags.tagList")]
         public virtual ICollection<TransactionTag> TransactionTags { get; set; }
 
-        [Display(Name = "Voucher Items", Order = 56)]
+        [Display(Name = "Voucher Items", Order = 58)]
         public virtual ICollection<VoucherItem2> VoucherItem2s { get; set; }
 
-        [Display(Name = "Voucher Item Funds", Order = 57)]
+        [Display(Name = "Voucher Item Funds", Order = 59)]
         public virtual ICollection<VoucherItemFund> VoucherItemFunds { get; set; }
 
-        public override string ToString() => $"{{ {nameof(Id)} = {Id}, {nameof(Amount)} = {Amount}, {nameof(AwaitingPaymentEncumbranceId)} = {AwaitingPaymentEncumbranceId}, {nameof(AwaitingPaymentReleaseEncumbrance)} = {AwaitingPaymentReleaseEncumbrance}, {nameof(Currency)} = {Currency}, {nameof(Description)} = {Description}, {nameof(AwaitingPaymentAmount)} = {AwaitingPaymentAmount}, {nameof(ExpendedAmount)} = {ExpendedAmount}, {nameof(InitialEncumberedAmount)} = {InitialEncumberedAmount}, {nameof(Status)} = {Status}, {nameof(OrderType)} = {OrderType}, {nameof(OrderStatus)} = {OrderStatus}, {nameof(Subscription)} = {Subscription}, {nameof(ReEncumber)} = {ReEncumber}, {nameof(OrderId)} = {OrderId}, {nameof(OrderItemId)} = {OrderItemId}, {nameof(ExpenseClassId)} = {ExpenseClassId}, {nameof(FiscalYearId)} = {FiscalYearId}, {nameof(FromFundId)} = {FromFundId}, {nameof(InvoiceCancelled)} = {InvoiceCancelled}, {nameof(PaymentEncumbranceId)} = {PaymentEncumbranceId}, {nameof(Source)} = {Source}, {nameof(SourceFiscalYearId)} = {SourceFiscalYearId}, {nameof(InvoiceId)} = {InvoiceId}, {nameof(InvoiceItemId)} = {InvoiceItemId}, {nameof(ToFundId)} = {ToFundId}, {nameof(TransactionType)} = {TransactionType}, {nameof(CreationTime)} = {CreationTime}, {nameof(CreationUserId)} = {CreationUserId}, {nameof(CreationUserUsername)} = {CreationUserUsername}, {nameof(LastWriteTime)} = {LastWriteTime}, {nameof(LastWriteUserId)} = {LastWriteUserId}, {nameof(LastWriteUserUsername)} = {LastWriteUserUsername}, {nameof(Content)} = {Content}, {nameof(TransactionTags)} = {(TransactionTags != null ? $"{{ {string.Join(", ", TransactionTags)} }}" : "")} }}";
+        public override string ToString() => $"{{ {nameof(Id)} = {Id}, {nameof(Version)} = {Version}, {nameof(Amount)} = {Amount}, {nameof(AwaitingPaymentEncumbranceId)} = {AwaitingPaymentEncumbranceId}, {nameof(AwaitingPaymentReleaseEncumbrance)} = {AwaitingPaymentReleaseEncumbrance}, {nameof(Currency)} = {Currency}, {nameof(Description)} = {Description}, {nameof(AwaitingPaymentAmount)} = {AwaitingPaymentAmount}, {nameof(ExpendedAmount)} = {ExpendedAmount}, {nameof(InitialEncumberedAmount)} = {InitialEncumberedAmount}, {nameof(Status)} = {Status}, {nameof(OrderType)} = {OrderType}, {nameof(OrderStatus)} = {OrderStatus}, {nameof(Subscription)} = {Subscription}, {nameof(ReEncumber)} = {ReEncumber}, {nameof(OrderId)} = {OrderId}, {nameof(OrderItemId)} = {OrderItemId}, {nameof(ExpenseClassId)} = {ExpenseClassId}, {nameof(FiscalYearId)} = {FiscalYearId}, {nameof(FromFundId)} = {FromFundId}, {nameof(InvoiceCancelled)} = {InvoiceCancelled}, {nameof(PaymentEncumbranceId)} = {PaymentEncumbranceId}, {nameof(Source)} = {Source}, {nameof(SourceFiscalYearId)} = {SourceFiscalYearId}, {nameof(InvoiceId)} = {InvoiceId}, {nameof(InvoiceItemId)} = {InvoiceItemId}, {nameof(ToFundId)} = {ToFundId}, {nameof(TransactionType)} = {TransactionType}, {nameof(VoidedAmount)} = {VoidedAmount}, {nameof(CreationTime)} = {CreationTime}, {nameof(CreationUserId)} = {CreationUserId}, {nameof(CreationUserUsername)} = {CreationUserUsername}, {nameof(LastWriteTime)} = {LastWriteTime}, {nameof(LastWriteUserId)} = {LastWriteUserId}, {nameof(LastWriteUserUsername)} = {LastWriteUserUsername}, {nameof(Content)} = {Content}, {nameof(TransactionTags)} = {(TransactionTags != null ? $"{{ {string.Join(", ", TransactionTags)} }}" : "")} }}";
 
         public static Transaction2 FromJObject(JObject jObject) => jObject != null ? new Transaction2
         {
             Id = (Guid?)jObject.SelectToken("id"),
+            Version = (int?)jObject.SelectToken("_version"),
             Amount = (decimal?)jObject.SelectToken("amount"),
             AwaitingPaymentEncumbranceId = (Guid?)jObject.SelectToken("awaitingPayment.encumbranceId"),
             AwaitingPaymentReleaseEncumbrance = (bool?)jObject.SelectToken("awaitingPayment.releaseEncumbrance"),
@@ -230,6 +237,7 @@ namespace FolioLibrary
             InvoiceItemId = (Guid?)jObject.SelectToken("sourceInvoiceLineId"),
             ToFundId = (Guid?)jObject.SelectToken("toFundId"),
             TransactionType = (string)jObject.SelectToken("transactionType"),
+            VoidedAmount = (decimal?)jObject.SelectToken("voidedAmount"),
             CreationTime = (DateTime?)jObject.SelectToken("metadata.createdDate"),
             CreationUserId = (Guid?)jObject.SelectToken("metadata.createdByUserId"),
             CreationUserUsername = (string)jObject.SelectToken("metadata.createdByUsername"),
@@ -242,6 +250,7 @@ namespace FolioLibrary
 
         public JObject ToJObject() => new JObject(
             new JProperty("id", Id),
+            new JProperty("_version", Version),
             new JProperty("amount", Amount),
             new JProperty("awaitingPayment", new JObject(
                 new JProperty("encumbranceId", AwaitingPaymentEncumbranceId),
@@ -270,6 +279,7 @@ namespace FolioLibrary
             new JProperty("sourceInvoiceLineId", InvoiceItemId),
             new JProperty("toFundId", ToFundId),
             new JProperty("transactionType", TransactionType),
+            new JProperty("voidedAmount", VoidedAmount),
             new JProperty("metadata", new JObject(
                 new JProperty("createdDate", CreationTime?.ToLocalTime()),
                 new JProperty("createdByUserId", CreationUserId),

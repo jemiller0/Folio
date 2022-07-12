@@ -14,6 +14,27 @@ namespace FolioWebApplicationTest
         private static string Url { get; set; } = ConfigurationManager.AppSettings["url"];
 
         [TestMethod]
+        public void AcquisitionMethod2sDefaultAspxTest()
+        {
+            var s = Stopwatch.StartNew();
+            try
+            {
+                var hrm = httpClient.GetAsync($"{Url}/AcquisitionMethod2s/Default.aspx").Result;
+                hrm.EnsureSuccessStatusCode();
+                Assert.IsTrue(s.Elapsed < TimeSpan.FromSeconds(30));
+            }
+            catch (Exception e)
+            {
+                traceSource.TraceEvent(TraceEventType.Error, 0, e.ToString());
+                throw;
+            }
+            finally
+            {
+                traceSource.TraceEvent(TraceEventType.Information, 0, $"AcquisitionMethod2sDefaultAspxTest()\r\n    ElapsedTime={s.Elapsed}");
+            }
+        }
+
+        [TestMethod]
         public void AcquisitionsUnit2sDefaultAspxTest()
         {
             var s = Stopwatch.StartNew();
@@ -115,48 +136,6 @@ namespace FolioWebApplicationTest
             finally
             {
                 traceSource.TraceEvent(TraceEventType.Information, 0, $"BatchGroup2sDefaultAspxTest()\r\n    ElapsedTime={s.Elapsed}");
-            }
-        }
-
-        [TestMethod]
-        public void BatchVoucherExport2sDefaultAspxTest()
-        {
-            var s = Stopwatch.StartNew();
-            try
-            {
-                var hrm = httpClient.GetAsync($"{Url}/BatchVoucherExport2s/Default.aspx").Result;
-                hrm.EnsureSuccessStatusCode();
-                Assert.IsTrue(s.Elapsed < TimeSpan.FromSeconds(30));
-            }
-            catch (Exception e)
-            {
-                traceSource.TraceEvent(TraceEventType.Error, 0, e.ToString());
-                throw;
-            }
-            finally
-            {
-                traceSource.TraceEvent(TraceEventType.Information, 0, $"BatchVoucherExport2sDefaultAspxTest()\r\n    ElapsedTime={s.Elapsed}");
-            }
-        }
-
-        [TestMethod]
-        public void BatchVoucherExportConfig2sDefaultAspxTest()
-        {
-            var s = Stopwatch.StartNew();
-            try
-            {
-                var hrm = httpClient.GetAsync($"{Url}/BatchVoucherExportConfig2s/Default.aspx").Result;
-                hrm.EnsureSuccessStatusCode();
-                Assert.IsTrue(s.Elapsed < TimeSpan.FromSeconds(30));
-            }
-            catch (Exception e)
-            {
-                traceSource.TraceEvent(TraceEventType.Error, 0, e.ToString());
-                throw;
-            }
-            finally
-            {
-                traceSource.TraceEvent(TraceEventType.Information, 0, $"BatchVoucherExportConfig2sDefaultAspxTest()\r\n    ElapsedTime={s.Elapsed}");
             }
         }
 

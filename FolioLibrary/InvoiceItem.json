@@ -49,13 +49,14 @@
             "description": "Fund distribution records from which this adjustment will be paid; only valid at invoice level",
             "type": "array",
             "items": {
-              "description": "Invoice/voucher line fund distribution",
+              "description": "purchase order fund distribution",
               "type": "object",
               "additionalProperties": false,
               "properties": {
                 "code": {
-                  "description": "The code of the fund associated with this fund distribution",
-                  "type": "string"
+                  "description": "Fund code format",
+                  "type": "string",
+                  "pattern": "^[^:]+$"
                 },
                 "encumbrance": {
                   "description": "The UUID format string",
@@ -63,14 +64,10 @@
                   "pattern": "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-5][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}$"
                 },
                 "fundId": {
-                  "description": "The UUID format string",
-                  "type": "string",
-                  "pattern": "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-5][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}$"
+                  "$ref": "#/properties/adjustments/items/properties/fundDistributions/items/properties/encumbrance"
                 },
-                "invoiceLineId": {
-                  "description": "The UUID format string",
-                  "type": "string",
-                  "pattern": "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-5][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}$"
+                "expenseClassId": {
+                  "$ref": "#/properties/adjustments/items/properties/fundDistributions/items/properties/encumbrance"
                 },
                 "distributionType": {
                   "description": "Percentage or amount type of the value property",
@@ -81,13 +78,8 @@
                     "percentage"
                   ]
                 },
-                "expenseClassId": {
-                  "description": "The UUID format string",
-                  "type": "string",
-                  "pattern": "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-5][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}$"
-                },
                 "value": {
-                  "description": "The percentage of the cost to be applied to this fund",
+                  "description": "The value of the cost to be applied to this fund",
                   "type": "number"
                 }
               },
@@ -129,6 +121,10 @@
           },
           "value": {
             "description": "Adjustment value",
+            "type": "number"
+          },
+          "totalAmount": {
+            "description": "Total adjustment amount",
             "type": "number"
           }
         },

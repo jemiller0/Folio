@@ -18,10 +18,10 @@ namespace FolioLibrary
         [Display(Name = "Record 2", Order = 2)]
         public virtual Record2 Record2 { get; set; }
 
-        [Column("content"), DataType(DataType.MultilineText), Display(Order = 3), Editable(false)]
-        public virtual string Content { get; set; }
+        [Column("content2"), Display(Name = "Content 2", Order = 3), StringLength(1024)]
+        public virtual string Content2 { get; set; }
 
-        public override string ToString() => $"{{ {nameof(Id)} = {Id}, {nameof(Content)} = {Content} }}";
+        public override string ToString() => $"{{ {nameof(Id)} = {Id}, {nameof(Content2)} = {Content2} }}";
 
         public static RawRecord2 FromJObject(JObject jObject) => jObject != null ? new RawRecord2
         {

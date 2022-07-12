@@ -77,6 +77,10 @@ namespace FolioWebApplication.Organization2s
 
         protected RadGrid OrganizationTagsRadGrid;
 
+        protected Panel OrganizationTypesPanel;
+
+        protected RadGrid OrganizationTypesRadGrid;
+
         protected Panel OrganizationUrlsPanel;
 
         protected RadGrid OrganizationUrlsRadGrid;

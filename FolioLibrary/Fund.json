@@ -9,6 +9,10 @@
       "type": "string",
       "pattern": "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-5][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}$"
     },
+    "_version": {
+      "description": "Record version for optimistic locking",
+      "type": "integer"
+    },
     "allocatedFromIds": {
       "description": "All the funds that this fund is allowed to receive money from. This would be 1 fund or none. If this field is blank their is no restriction on allocating to this fund",
       "type": "array",
@@ -24,8 +28,9 @@
       }
     },
     "code": {
-      "description": "A unique code associated with the fund",
-      "type": "string"
+      "description": "Fund code format",
+      "type": "string",
+      "pattern": "^[^:]+$"
     },
     "description": {
       "description": "The description of this fund",

@@ -121,6 +121,7 @@ namespace FolioWebApplication
 
         private void SetInventoryPermissions(HashSet<string> roles)
         {
+            Session["AdministrativeNotesPermission"] = roles.Contains("all") || roles.Contains("inventory.all") || roles.Contains("uc.administrativenotes.view") ? "View" : null;
             Session["AlternativeTitlesPermission"] = roles.Contains("all") || roles.Contains("inventory.all") || roles.Contains("uc.alternativetitles.view") ? "View" : null;
             Session["AlternativeTitleType2sPermission"] = roles.Contains("all") || roles.Contains("inventory.all") || roles.Contains("uc.alternativetitletypes.view") ? "View" : null;
             Session["BoundWithPart2sPermission"] = roles.Contains("all") || roles.Contains("inventory.all") || roles.Contains("uc.boundwithparts.view") ? "View" : null;
@@ -138,6 +139,7 @@ namespace FolioWebApplication
             Session["ExtentsPermission"] = roles.Contains("all") || roles.Contains("inventory.all") || roles.Contains("uc.extents.view") ? "View" : null;
             Session["FormatsPermission"] = roles.Contains("all") || roles.Contains("inventory.all") || roles.Contains("uc.formats.view") ? "View" : null;
             Session["Holding2sPermission"] = roles.Contains("all") || roles.Contains("inventory.all") || roles.Contains("uc.holdings.view") ? "View" : null;
+            Session["HoldingAdministrativeNotesPermission"] = roles.Contains("all") || roles.Contains("inventory.all") || roles.Contains("uc.holdingadministrativenotes.view") ? "View" : null;
             Session["HoldingDonorsPermission"] = roles.Contains("all") || roles.Contains("inventory.all") || roles.Contains("uc.holdingdonors.view") ? "View" : null;
             Session["HoldingElectronicAccessesPermission"] = roles.Contains("all") || roles.Contains("inventory.all") || roles.Contains("uc.holdingelectronicaccesses.view") ? "View" : null;
             Session["HoldingEntriesPermission"] = roles.Contains("all") || roles.Contains("inventory.all") || roles.Contains("uc.holdingentries.view") ? "View" : null;
@@ -155,6 +157,7 @@ namespace FolioWebApplication
             Session["Instance2sPermission"] = roles.Contains("all") || roles.Contains("inventory.all") || roles.Contains("uc.instances.view") ? "View" : null;
             Session["InstanceFormat2sPermission"] = roles.Contains("all") || roles.Contains("inventory.all") || roles.Contains("uc.instanceformats.view") ? "View" : null;
             Session["InstanceNatureOfContentTermsPermission"] = roles.Contains("all") || roles.Contains("inventory.all") || roles.Contains("uc.instancenatureofcontentterms.view") ? "View" : null;
+            Session["InstanceNotesPermission"] = roles.Contains("all") || roles.Contains("inventory.all") || roles.Contains("uc.instancenotes.view") ? "View" : null;
             Session["InstanceNoteType2sPermission"] = roles.Contains("all") || roles.Contains("inventory.all") || roles.Contains("uc.instancenotetypes.view") ? "View" : null;
             Session["InstanceStatisticalCodesPermission"] = roles.Contains("all") || roles.Contains("inventory.all") || roles.Contains("uc.instancestatisticalcodes.view") ? "View" : null;
             Session["InstanceTagsPermission"] = roles.Contains("all") || roles.Contains("inventory.all") || roles.Contains("uc.instancetags.view") ? "View" : null;
@@ -164,6 +167,7 @@ namespace FolioWebApplication
             Session["IssnsPermission"] = roles.Contains("all") || roles.Contains("inventory.all") || roles.Contains("uc.issns.view") ? "View" : null;
             Session["IssuanceModesPermission"] = roles.Contains("all") || roles.Contains("inventory.all") || roles.Contains("uc.issuancemodes.view") ? "View" : null;
             Session["Item2sPermission"] = roles.Contains("all") || roles.Contains("inventory.all") || roles.Contains("uc.items.view") ? "View" : null;
+            Session["ItemAdministrativeNotesPermission"] = roles.Contains("all") || roles.Contains("inventory.all") || roles.Contains("uc.itemadministrativenotes.view") ? "View" : null;
             Session["ItemDamagedStatus2sPermission"] = roles.Contains("all") || roles.Contains("inventory.all") || roles.Contains("uc.itemdamagedstatuses.view") ? "View" : null;
             Session["ItemDonorsPermission"] = roles.Contains("all") || roles.Contains("inventory.all") || roles.Contains("uc.itemdonors.view") ? "View" : null;
             Session["ItemElectronicAccessesPermission"] = roles.Contains("all") || roles.Contains("inventory.all") || roles.Contains("uc.itemelectronicaccesses.view") ? "View" : null;
@@ -181,7 +185,6 @@ namespace FolioWebApplication
             Session["LocationServicePointsPermission"] = roles.Contains("all") || roles.Contains("inventory.all") || roles.Contains("uc.locationservicepoints.view") ? "View" : null;
             Session["MaterialType2sPermission"] = roles.Contains("all") || roles.Contains("inventory.all") || roles.Contains("uc.materialtypes.view") ? "View" : null;
             Session["NatureOfContentTerm2sPermission"] = roles.Contains("all") || roles.Contains("inventory.all") || roles.Contains("uc.natureofcontentterms.view") ? "View" : null;
-            Session["Note2sPermission"] = roles.Contains("all") || roles.Contains("inventory.all") || roles.Contains("uc.notes.view") ? "View" : null;
             Session["OclcNumbersPermission"] = roles.Contains("all") || roles.Contains("inventory.all") || roles.Contains("uc.oclcnumbers.view") ? "View" : null;
             Session["PhysicalDescriptionsPermission"] = roles.Contains("all") || roles.Contains("inventory.all") || roles.Contains("uc.physicaldescriptions.view") ? "View" : null;
             Session["PrecedingSucceedingTitle2sPermission"] = roles.Contains("all") || roles.Contains("inventory.all") || roles.Contains("uc.precedingsucceedingtitles.view") ? "View" : null;
@@ -209,15 +212,6 @@ namespace FolioWebApplication
         private void SetInvoicesPermissions(HashSet<string> roles)
         {
             Session["BatchGroup2sPermission"] = roles.Contains("all") || roles.Contains("uc.batchgroups.view") ? "View" : null;
-            Session["BatchVoucher2sPermission"] = roles.Contains("all") || roles.Contains("uc.batchvouchers.view") ? "View" : null;
-            Session["BatchVoucherBatchedVouchersPermission"] = roles.Contains("all") || roles.Contains("uc.batchvoucherbatchedvouchers.view") ? "View" : null;
-            Session["BatchVoucherBatchedVoucherBatchedVoucherLinesPermission"] = roles.Contains("all") || roles.Contains("uc.batchvoucherbatchedvoucherbatchedvoucherlines.view") ? "View" : null;
-            Session["BatchVoucherBatchedVoucherBatchedVoucherLineFundCodesPermission"] = roles.Contains("all") || roles.Contains("uc.batchvoucherbatchedvoucherbatchedvoucherlinefundcodes.view") ? "View" : null;
-            Session["BatchVoucherExport2sPermission"] = roles.Contains("all") || roles.Contains("uc.batchvoucherexports.view") ? "View" : null;
-            Session["BatchVoucherExportConfig2sPermission"] = roles.Contains("all") || roles.Contains("uc.batchvoucherexportconfigs.view") ? "View" : null;
-            Session["BatchVoucherExportConfigWeekdaysPermission"] = roles.Contains("all") || roles.Contains("uc.batchvoucherexportconfigweekdays.view") ? "View" : null;
-            Session["Document2sPermission"] = roles.Contains("all") || roles.Contains("uc.documents.view") ? "View" : null;
-            Session["ExportConfigCredential2sPermission"] = roles.Contains("all") || roles.Contains("uc.exportconfigcredentials.view") ? "View" : null;
             Session["Invoice2sPermission"] = roles.Contains("all") || roles.Contains("uc.invoices.view") ? "View" : null;
             Session["InvoiceAcquisitionsUnitsPermission"] = roles.Contains("all") || roles.Contains("uc.invoiceacquisitionsunits.view") ? "View" : null;
             Session["InvoiceAdjustmentsPermission"] = roles.Contains("all") || roles.Contains("uc.invoiceadjustments.view") ? "View" : null;
@@ -250,6 +244,7 @@ namespace FolioWebApplication
 
         private void SetOrdersPermissions(HashSet<string> roles)
         {
+            Session["AcquisitionMethod2sPermission"] = roles.Contains("all") || roles.Contains("orders.all") || roles.Contains("uc.acquisitionmethods.view") ? "View" : null;
             Session["AcquisitionsUnit2sPermission"] = roles.Contains("all") || roles.Contains("orders.all") || roles.Contains("uc.acquisitionsunits.view") ? "View" : null;
             Session["Alert2sPermission"] = roles.Contains("all") || roles.Contains("orders.all") || roles.Contains("uc.alerts.view") ? "View" : null;
             Session["CloseReason2sPermission"] = roles.Contains("all") || roles.Contains("orders.all") || roles.Contains("uc.closereasons.view") ? "View" : null;
@@ -318,6 +313,7 @@ namespace FolioWebApplication
             Session["OrganizationPhoneNumbersPermission"] = roles.Contains("all") || roles.Contains("organizations.module.all") || roles.Contains("uc.organizationphonenumbers.view") ? "View" : null;
             Session["OrganizationPhoneNumberCategoriesPermission"] = roles.Contains("all") || roles.Contains("organizations.module.all") || roles.Contains("uc.organizationphonenumbercategories.view") ? "View" : null;
             Session["OrganizationTagsPermission"] = roles.Contains("all") || roles.Contains("organizations.module.all") || roles.Contains("uc.organizationtags.view") ? "View" : null;
+            Session["OrganizationTypesPermission"] = roles.Contains("all") || roles.Contains("organizations.module.all") || roles.Contains("uc.organizationtypes.view") ? "View" : null;
             Session["OrganizationUrlsPermission"] = roles.Contains("all") || roles.Contains("organizations.module.all") || roles.Contains("uc.organizationurls.view") ? "View" : null;
             Session["OrganizationUrlCategoriesPermission"] = roles.Contains("all") || roles.Contains("organizations.module.all") || roles.Contains("uc.organizationurlcategories.view") ? "View" : null;
         }
@@ -336,11 +332,6 @@ namespace FolioWebApplication
         private void SetSourcePermissions(HashSet<string> roles)
         {
             Session["ErrorRecord2sPermission"] = roles.Contains("all") || roles.Contains("source-storage.all") || roles.Contains("uc.errorrecords.view") ? "View" : null;
-            Session["JobExecution2sPermission"] = roles.Contains("all") || roles.Contains("source-storage.all") || roles.Contains("uc.jobexecutions.view") ? "View" : null;
-            Session["JobExecutionProgress2sPermission"] = roles.Contains("all") || roles.Contains("source-storage.all") || roles.Contains("uc.jobexecutionprogresses.view") ? "View" : null;
-            Session["JobExecutionSourceChunk2sPermission"] = roles.Contains("all") || roles.Contains("source-storage.all") || roles.Contains("uc.jobexecutionsourcechunks.view") ? "View" : null;
-            Session["JobMonitoring2sPermission"] = roles.Contains("all") || roles.Contains("source-storage.all") || roles.Contains("uc.jobmonitorings.view") ? "View" : null;
-            Session["JournalRecord2sPermission"] = roles.Contains("all") || roles.Contains("source-storage.all") || roles.Contains("uc.journalrecords.view") ? "View" : null;
             Session["MarcRecord2sPermission"] = roles.Contains("all") || roles.Contains("source-storage.all") || roles.Contains("uc.marcrecords.view") ? "View" : null;
             Session["RawRecord2sPermission"] = roles.Contains("all") || roles.Contains("source-storage.all") || roles.Contains("uc.rawrecords.view") ? "View" : null;
             Session["Record2sPermission"] = roles.Contains("all") || roles.Contains("source-storage.all") || roles.Contains("uc.records.view") ? "View" : null;
@@ -477,6 +468,7 @@ namespace FolioWebApplication
 
         private void SetInventoryPermissions(string permission = null)
         {
+            Session["AdministrativeNotesPermission"] = permission;
             Session["AlternativeTitlesPermission"] = permission;
             Session["AlternativeTitleType2sPermission"] = permission;
             Session["BoundWithPart2sPermission"] = permission;
@@ -494,6 +486,7 @@ namespace FolioWebApplication
             Session["ExtentsPermission"] = permission;
             Session["FormatsPermission"] = permission;
             Session["Holding2sPermission"] = permission;
+            Session["HoldingAdministrativeNotesPermission"] = permission;
             Session["HoldingDonorsPermission"] = permission;
             Session["HoldingElectronicAccessesPermission"] = permission;
             Session["HoldingEntriesPermission"] = permission;
@@ -511,6 +504,7 @@ namespace FolioWebApplication
             Session["Instance2sPermission"] = permission;
             Session["InstanceFormat2sPermission"] = permission;
             Session["InstanceNatureOfContentTermsPermission"] = permission;
+            Session["InstanceNotesPermission"] = permission;
             Session["InstanceNoteType2sPermission"] = permission;
             Session["InstanceStatisticalCodesPermission"] = permission;
             Session["InstanceTagsPermission"] = permission;
@@ -520,6 +514,7 @@ namespace FolioWebApplication
             Session["IssnsPermission"] = permission;
             Session["IssuanceModesPermission"] = permission;
             Session["Item2sPermission"] = permission;
+            Session["ItemAdministrativeNotesPermission"] = permission;
             Session["ItemDamagedStatus2sPermission"] = permission;
             Session["ItemDonorsPermission"] = permission;
             Session["ItemElectronicAccessesPermission"] = permission;
@@ -537,7 +532,6 @@ namespace FolioWebApplication
             Session["LocationServicePointsPermission"] = permission;
             Session["MaterialType2sPermission"] = permission;
             Session["NatureOfContentTerm2sPermission"] = permission;
-            Session["Note2sPermission"] = permission;
             Session["OclcNumbersPermission"] = permission;
             Session["PhysicalDescriptionsPermission"] = permission;
             Session["PrecedingSucceedingTitle2sPermission"] = permission;
@@ -565,15 +559,6 @@ namespace FolioWebApplication
         private void SetInvoicesPermissions(string permission = null)
         {
             Session["BatchGroup2sPermission"] = permission;
-            Session["BatchVoucher2sPermission"] = permission;
-            Session["BatchVoucherBatchedVouchersPermission"] = permission;
-            Session["BatchVoucherBatchedVoucherBatchedVoucherLinesPermission"] = permission;
-            Session["BatchVoucherBatchedVoucherBatchedVoucherLineFundCodesPermission"] = permission;
-            Session["BatchVoucherExport2sPermission"] = permission;
-            Session["BatchVoucherExportConfig2sPermission"] = permission;
-            Session["BatchVoucherExportConfigWeekdaysPermission"] = permission;
-            Session["Document2sPermission"] = permission;
-            Session["ExportConfigCredential2sPermission"] = permission;
             Session["Invoice2sPermission"] = permission;
             Session["InvoiceAcquisitionsUnitsPermission"] = permission;
             Session["InvoiceAdjustmentsPermission"] = permission;
@@ -606,6 +591,7 @@ namespace FolioWebApplication
 
         private void SetOrdersPermissions(string permission = null)
         {
+            Session["AcquisitionMethod2sPermission"] = permission;
             Session["AcquisitionsUnit2sPermission"] = permission;
             Session["Alert2sPermission"] = permission;
             Session["CloseReason2sPermission"] = permission;
@@ -674,6 +660,7 @@ namespace FolioWebApplication
             Session["OrganizationPhoneNumbersPermission"] = permission;
             Session["OrganizationPhoneNumberCategoriesPermission"] = permission;
             Session["OrganizationTagsPermission"] = permission;
+            Session["OrganizationTypesPermission"] = permission;
             Session["OrganizationUrlsPermission"] = permission;
             Session["OrganizationUrlCategoriesPermission"] = permission;
         }
@@ -692,11 +679,6 @@ namespace FolioWebApplication
         private void SetSourcePermissions(string permission = null)
         {
             Session["ErrorRecord2sPermission"] = permission;
-            Session["JobExecution2sPermission"] = permission;
-            Session["JobExecutionProgress2sPermission"] = permission;
-            Session["JobExecutionSourceChunk2sPermission"] = permission;
-            Session["JobMonitoring2sPermission"] = permission;
-            Session["JournalRecord2sPermission"] = permission;
             Session["MarcRecord2sPermission"] = permission;
             Session["RawRecord2sPermission"] = permission;
             Session["Record2sPermission"] = permission;

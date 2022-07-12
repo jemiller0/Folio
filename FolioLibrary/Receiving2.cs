@@ -81,22 +81,25 @@ namespace FolioLibrary
         [Column("discovery_suppress"), Display(Name = "Discovery Suppress", Order = 18), JsonProperty("discoverySuppress")]
         public virtual bool? DiscoverySuppress { get; set; }
 
-        [Column("receiving_status"), Display(Name = "Receiving Status", Order = 19), JsonProperty("receivingStatus"), RegularExpression(@"^(Received|Expected)$"), Required, StringLength(1024)]
+        [Column("copy_number"), Display(Name = "Copy Number", Order = 19), JsonProperty("copyNumber"), StringLength(1024)]
+        public virtual string CopyNumber { get; set; }
+
+        [Column("receiving_status"), Display(Name = "Receiving Status", Order = 20), JsonProperty("receivingStatus"), RegularExpression(@"^(Received|Expected)$"), Required, StringLength(1024)]
         public virtual string ReceivingStatus { get; set; }
 
-        [Column("supplement"), Display(Order = 20), JsonProperty("supplement")]
+        [Column("supplement"), Display(Order = 21), JsonProperty("supplement")]
         public virtual bool? Supplement { get; set; }
 
-        [Column("receipt_date"), DataType(DataType.DateTime), Display(Name = "Receipt Time", Order = 21), DisplayFormat(DataFormatString = "{0:g}", ApplyFormatInEditMode = true), JsonProperty("receiptDate")]
+        [Column("receipt_date"), DataType(DataType.DateTime), Display(Name = "Receipt Time", Order = 22), DisplayFormat(DataFormatString = "{0:g}", ApplyFormatInEditMode = true), JsonProperty("receiptDate")]
         public virtual DateTime? ReceiptTime { get; set; }
 
-        [Column("received_date"), DataType(DataType.DateTime), Display(Name = "Receive Time", Order = 22), DisplayFormat(DataFormatString = "{0:g}", ApplyFormatInEditMode = true), JsonProperty("receivedDate")]
+        [Column("received_date"), DataType(DataType.DateTime), Display(Name = "Receive Time", Order = 23), DisplayFormat(DataFormatString = "{0:g}", ApplyFormatInEditMode = true), JsonProperty("receivedDate")]
         public virtual DateTime? ReceiveTime { get; set; }
 
-        [Column("content"), CustomValidation(typeof(Receiving), nameof(ValidateContent)), DataType(DataType.MultilineText), Display(Order = 23), Editable(false)]
+        [Column("content"), CustomValidation(typeof(Receiving), nameof(ValidateContent)), DataType(DataType.MultilineText), Display(Order = 24), Editable(false)]
         public virtual string Content { get; set; }
 
-        public override string ToString() => $"{{ {nameof(Id)} = {Id}, {nameof(Caption)} = {Caption}, {nameof(Comment)} = {Comment}, {nameof(Format)} = {Format}, {nameof(ItemId)} = {ItemId}, {nameof(LocationId)} = {LocationId}, {nameof(OrderItemId)} = {OrderItemId}, {nameof(TitleId)} = {TitleId}, {nameof(HoldingId)} = {HoldingId}, {nameof(DisplayOnHolding)} = {DisplayOnHolding}, {nameof(Enumeration)} = {Enumeration}, {nameof(Chronology)} = {Chronology}, {nameof(DiscoverySuppress)} = {DiscoverySuppress}, {nameof(ReceivingStatus)} = {ReceivingStatus}, {nameof(Supplement)} = {Supplement}, {nameof(ReceiptTime)} = {ReceiptTime}, {nameof(ReceiveTime)} = {ReceiveTime}, {nameof(Content)} = {Content} }}";
+        public override string ToString() => $"{{ {nameof(Id)} = {Id}, {nameof(Caption)} = {Caption}, {nameof(Comment)} = {Comment}, {nameof(Format)} = {Format}, {nameof(ItemId)} = {ItemId}, {nameof(LocationId)} = {LocationId}, {nameof(OrderItemId)} = {OrderItemId}, {nameof(TitleId)} = {TitleId}, {nameof(HoldingId)} = {HoldingId}, {nameof(DisplayOnHolding)} = {DisplayOnHolding}, {nameof(Enumeration)} = {Enumeration}, {nameof(Chronology)} = {Chronology}, {nameof(DiscoverySuppress)} = {DiscoverySuppress}, {nameof(CopyNumber)} = {CopyNumber}, {nameof(ReceivingStatus)} = {ReceivingStatus}, {nameof(Supplement)} = {Supplement}, {nameof(ReceiptTime)} = {ReceiptTime}, {nameof(ReceiveTime)} = {ReceiveTime}, {nameof(Content)} = {Content} }}";
 
         public static Receiving2 FromJObject(JObject jObject) => jObject != null ? new Receiving2
         {
@@ -113,6 +116,7 @@ namespace FolioLibrary
             Enumeration = (string)jObject.SelectToken("enumeration"),
             Chronology = (string)jObject.SelectToken("chronology"),
             DiscoverySuppress = (bool?)jObject.SelectToken("discoverySuppress"),
+            CopyNumber = (string)jObject.SelectToken("copyNumber"),
             ReceivingStatus = (string)jObject.SelectToken("receivingStatus"),
             Supplement = (bool?)jObject.SelectToken("supplement"),
             ReceiptTime = (DateTime?)jObject.SelectToken("receiptDate"),
@@ -134,6 +138,7 @@ namespace FolioLibrary
             new JProperty("enumeration", Enumeration),
             new JProperty("chronology", Chronology),
             new JProperty("discoverySuppress", DiscoverySuppress),
+            new JProperty("copyNumber", CopyNumber),
             new JProperty("receivingStatus", ReceivingStatus),
             new JProperty("supplement", Supplement),
             new JProperty("receiptDate", ReceiptTime?.ToLocalTime()),

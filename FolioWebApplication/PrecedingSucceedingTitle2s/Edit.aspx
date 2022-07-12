@@ -41,12 +41,12 @@
                                     <asp:Literal ID="TitleLiteral" runat="server" Text='<%#: Eval("Title") %>' />
                                 </td>
                             </tr>
-                            <tr runat="server" visible='<%# Eval("Hrid") != null %>'>
+                            <tr runat="server" visible='<%# Eval("ShortId") != null %>'>
                                 <td>
-                                    <asp:Label ID="HridLabel" runat="server" Text="Hrid:" AssociatedControlID="HridLiteral" />
+                                    <asp:Label ID="ShortIdLabel" runat="server" Text="Short Id:" AssociatedControlID="ShortIdLiteral" />
                                 </td>
                                 <td>
-                                    <asp:Literal ID="HridLiteral" runat="server" Text='<%#: Eval("Hrid") %>' />
+                                    <asp:Literal ID="ShortIdLiteral" runat="server" Text='<%#: Eval("ShortId") %>' />
                                 </td>
                             </tr>
                             <tr runat="server" visible='<%# Eval("CreationTime") != null %>'>

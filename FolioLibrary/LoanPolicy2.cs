@@ -46,7 +46,7 @@ namespace FolioLibrary
         [Column("loans_policy_period_duration"), Display(Name = "Loans Policy Period Duration", Order = 6), JsonProperty("loansPolicy.period.duration"), Required]
         public virtual int? LoansPolicyPeriodDuration { get; set; }
 
-        [Column("loans_policy_period_interval_id"), Display(Name = "Loans Policy Period Interval", Order = 7), JsonProperty("loansPolicy.period.intervalId"), RegularExpression(@"^(Minutes|Hours|Days|Weeks|Months)$"), Required, StringLength(1024)]
+        [Column("loans_policy_period_interval_id"), Display(Name = "Loans Policy Period Interval", Order = 7), JsonProperty("loansPolicy.period.intervalId"), RegularExpression(@"^(Minutes|Hours|Days|Weeks|Months|Years)$"), Required, StringLength(1024)]
         public virtual string LoansPolicyPeriodInterval { get; set; }
 
         [Column("loans_policy_closed_library_due_date_management_id"), Display(Name = "Loans Policy Closed Library Due Date Management Id", Order = 8), JsonProperty("loansPolicy.closedLibraryDueDateManagementId"), StringLength(1024)]
@@ -55,13 +55,13 @@ namespace FolioLibrary
         [Column("loans_policy_grace_period_duration"), Display(Name = "Loans Policy Grace Period Duration", Order = 9), JsonProperty("loansPolicy.gracePeriod.duration"), Required]
         public virtual int? LoansPolicyGracePeriodDuration { get; set; }
 
-        [Column("loans_policy_grace_period_interval_id"), Display(Name = "Loans Policy Grace Period Interval", Order = 10), JsonProperty("loansPolicy.gracePeriod.intervalId"), RegularExpression(@"^(Minutes|Hours|Days|Weeks|Months)$"), Required, StringLength(1024)]
+        [Column("loans_policy_grace_period_interval_id"), Display(Name = "Loans Policy Grace Period Interval", Order = 10), JsonProperty("loansPolicy.gracePeriod.intervalId"), RegularExpression(@"^(Minutes|Hours|Days|Weeks|Months|Years)$"), Required, StringLength(1024)]
         public virtual string LoansPolicyGracePeriodInterval { get; set; }
 
         [Column("loans_policy_opening_time_offset_duration"), Display(Name = "Loans Policy Opening Time Offset Duration", Order = 11), JsonProperty("loansPolicy.openingTimeOffset.duration"), Required]
         public virtual int? LoansPolicyOpeningTimeOffsetDuration { get; set; }
 
-        [Column("loans_policy_opening_time_offset_interval_id"), Display(Name = "Loans Policy Opening Time Offset Interval", Order = 12), JsonProperty("loansPolicy.openingTimeOffset.intervalId"), RegularExpression(@"^(Minutes|Hours|Days|Weeks|Months)$"), Required, StringLength(1024)]
+        [Column("loans_policy_opening_time_offset_interval_id"), Display(Name = "Loans Policy Opening Time Offset Interval", Order = 12), JsonProperty("loansPolicy.openingTimeOffset.intervalId"), RegularExpression(@"^(Minutes|Hours|Days|Weeks|Months|Years)$"), Required, StringLength(1024)]
         public virtual string LoansPolicyOpeningTimeOffsetInterval { get; set; }
 
         [Display(Name = "Loans Policy Fixed Due Date Schedule", Order = 13), InverseProperty("LoanPolicy2s1")]
@@ -91,7 +91,7 @@ namespace FolioLibrary
         [Column("renewals_policy_period_duration"), Display(Name = "Renewals Policy Period Duration", Order = 21), JsonProperty("renewalsPolicy.period.duration"), Required]
         public virtual int? RenewalsPolicyPeriodDuration { get; set; }
 
-        [Column("renewals_policy_period_interval_id"), Display(Name = "Renewals Policy Period Interval", Order = 22), JsonProperty("renewalsPolicy.period.intervalId"), RegularExpression(@"^(Minutes|Hours|Days|Weeks|Months)$"), Required, StringLength(1024)]
+        [Column("renewals_policy_period_interval_id"), Display(Name = "Renewals Policy Period Interval", Order = 22), JsonProperty("renewalsPolicy.period.intervalId"), RegularExpression(@"^(Minutes|Hours|Days|Weeks|Months|Years)$"), Required, StringLength(1024)]
         public virtual string RenewalsPolicyPeriodInterval { get; set; }
 
         [Display(Name = "Renewals Policy Alternate Fixed Due Date Schedule", Order = 23), InverseProperty("LoanPolicy2s")]
@@ -103,19 +103,19 @@ namespace FolioLibrary
         [Column("recalls_alternate_grace_period_duration"), Display(Name = "Recalls Alternate Grace Period Duration", Order = 25), JsonProperty("requestManagement.recalls.alternateGracePeriod.duration"), Required]
         public virtual int? RecallsAlternateGracePeriodDuration { get; set; }
 
-        [Column("recalls_alternate_grace_period_interval_id"), Display(Name = "Recalls Alternate Grace Period Interval", Order = 26), JsonProperty("requestManagement.recalls.alternateGracePeriod.intervalId"), RegularExpression(@"^(Minutes|Hours|Days|Weeks|Months)$"), Required, StringLength(1024)]
+        [Column("recalls_alternate_grace_period_interval_id"), Display(Name = "Recalls Alternate Grace Period Interval", Order = 26), JsonProperty("requestManagement.recalls.alternateGracePeriod.intervalId"), RegularExpression(@"^(Minutes|Hours|Days|Weeks|Months|Years)$"), Required, StringLength(1024)]
         public virtual string RecallsAlternateGracePeriodInterval { get; set; }
 
         [Column("recalls_minimum_guaranteed_loan_period_duration"), Display(Name = "Recalls Minimum Guaranteed Loan Period Duration", Order = 27), JsonProperty("requestManagement.recalls.minimumGuaranteedLoanPeriod.duration"), Required]
         public virtual int? RecallsMinimumGuaranteedLoanPeriodDuration { get; set; }
 
-        [Column("recalls_minimum_guaranteed_loan_period_interval_id"), Display(Name = "Recalls Minimum Guaranteed Loan Period Interval", Order = 28), JsonProperty("requestManagement.recalls.minimumGuaranteedLoanPeriod.intervalId"), RegularExpression(@"^(Minutes|Hours|Days|Weeks|Months)$"), Required, StringLength(1024)]
+        [Column("recalls_minimum_guaranteed_loan_period_interval_id"), Display(Name = "Recalls Minimum Guaranteed Loan Period Interval", Order = 28), JsonProperty("requestManagement.recalls.minimumGuaranteedLoanPeriod.intervalId"), RegularExpression(@"^(Minutes|Hours|Days|Weeks|Months|Years)$"), Required, StringLength(1024)]
         public virtual string RecallsMinimumGuaranteedLoanPeriodInterval { get; set; }
 
         [Column("recalls_recall_return_interval_duration"), Display(Name = "Recalls Recall Return Interval Duration", Order = 29), JsonProperty("requestManagement.recalls.recallReturnInterval.duration"), Required]
         public virtual int? RecallsRecallReturnIntervalDuration { get; set; }
 
-        [Column("recalls_recall_return_interval_interval_id"), Display(Name = "Recalls Recall Return Interval Interval", Order = 30), JsonProperty("requestManagement.recalls.recallReturnInterval.intervalId"), RegularExpression(@"^(Minutes|Hours|Days|Weeks|Months)$"), Required, StringLength(1024)]
+        [Column("recalls_recall_return_interval_interval_id"), Display(Name = "Recalls Recall Return Interval Interval", Order = 30), JsonProperty("requestManagement.recalls.recallReturnInterval.intervalId"), RegularExpression(@"^(Minutes|Hours|Days|Weeks|Months|Years)$"), Required, StringLength(1024)]
         public virtual string RecallsRecallReturnIntervalInterval { get; set; }
 
         [Column("recalls_allow_recalls_to_extend_overdue_loans"), Display(Name = "Recalls Allow Recalls To Extend Overdue Loans", Order = 31), JsonProperty("requestManagement.recalls.allowRecallsToExtendOverdueLoans")]
@@ -124,13 +124,13 @@ namespace FolioLibrary
         [Column("recalls_alternate_recall_return_interval_duration"), Display(Name = "Recalls Alternate Recall Return Interval Duration", Order = 32), JsonProperty("requestManagement.recalls.alternateRecallReturnInterval.duration")]
         public virtual int? RecallsAlternateRecallReturnIntervalDuration { get; set; }
 
-        [Column("recalls_alternate_recall_return_interval_interval_id"), Display(Name = "Recalls Alternate Recall Return Interval Interval", Order = 33), JsonProperty("requestManagement.recalls.alternateRecallReturnInterval.intervalId"), RegularExpression(@"^(Minutes|Hours|Days|Weeks|Months)$"), StringLength(1024)]
+        [Column("recalls_alternate_recall_return_interval_interval_id"), Display(Name = "Recalls Alternate Recall Return Interval Interval", Order = 33), JsonProperty("requestManagement.recalls.alternateRecallReturnInterval.intervalId"), RegularExpression(@"^(Minutes|Hours|Days|Weeks|Months|Years)$"), StringLength(1024)]
         public virtual string RecallsAlternateRecallReturnIntervalInterval { get; set; }
 
         [Column("holds_alternate_checkout_loan_period_duration"), Display(Name = "Holds Alternate Checkout Loan Period Duration", Order = 34), JsonProperty("requestManagement.holds.alternateCheckoutLoanPeriod.duration"), Required]
         public virtual int? HoldsAlternateCheckoutLoanPeriodDuration { get; set; }
 
-        [Column("holds_alternate_checkout_loan_period_interval_id"), Display(Name = "Holds Alternate Checkout Loan Period Interval", Order = 35), JsonProperty("requestManagement.holds.alternateCheckoutLoanPeriod.intervalId"), RegularExpression(@"^(Minutes|Hours|Days|Weeks|Months)$"), Required, StringLength(1024)]
+        [Column("holds_alternate_checkout_loan_period_interval_id"), Display(Name = "Holds Alternate Checkout Loan Period Interval", Order = 35), JsonProperty("requestManagement.holds.alternateCheckoutLoanPeriod.intervalId"), RegularExpression(@"^(Minutes|Hours|Days|Weeks|Months|Years)$"), Required, StringLength(1024)]
         public virtual string HoldsAlternateCheckoutLoanPeriodInterval { get; set; }
 
         [Column("holds_renew_items_with_request"), Display(Name = "Holds Renew Items With Request", Order = 36), JsonProperty("requestManagement.holds.renewItemsWithRequest")]
@@ -139,13 +139,13 @@ namespace FolioLibrary
         [Column("holds_alternate_renewal_loan_period_duration"), Display(Name = "Holds Alternate Renewal Loan Period Duration", Order = 37), JsonProperty("requestManagement.holds.alternateRenewalLoanPeriod.duration"), Required]
         public virtual int? HoldsAlternateRenewalLoanPeriodDuration { get; set; }
 
-        [Column("holds_alternate_renewal_loan_period_interval_id"), Display(Name = "Holds Alternate Renewal Loan Period Interval", Order = 38), JsonProperty("requestManagement.holds.alternateRenewalLoanPeriod.intervalId"), RegularExpression(@"^(Minutes|Hours|Days|Weeks|Months)$"), Required, StringLength(1024)]
+        [Column("holds_alternate_renewal_loan_period_interval_id"), Display(Name = "Holds Alternate Renewal Loan Period Interval", Order = 38), JsonProperty("requestManagement.holds.alternateRenewalLoanPeriod.intervalId"), RegularExpression(@"^(Minutes|Hours|Days|Weeks|Months|Years)$"), Required, StringLength(1024)]
         public virtual string HoldsAlternateRenewalLoanPeriodInterval { get; set; }
 
         [Column("pages_alternate_checkout_loan_period_duration"), Display(Name = "Pages Alternate Checkout Loan Period Duration", Order = 39), JsonProperty("requestManagement.pages.alternateCheckoutLoanPeriod.duration"), Required]
         public virtual int? PagesAlternateCheckoutLoanPeriodDuration { get; set; }
 
-        [Column("pages_alternate_checkout_loan_period_interval_id"), Display(Name = "Pages Alternate Checkout Loan Period Interval", Order = 40), JsonProperty("requestManagement.pages.alternateCheckoutLoanPeriod.intervalId"), RegularExpression(@"^(Minutes|Hours|Days|Weeks|Months)$"), Required, StringLength(1024)]
+        [Column("pages_alternate_checkout_loan_period_interval_id"), Display(Name = "Pages Alternate Checkout Loan Period Interval", Order = 40), JsonProperty("requestManagement.pages.alternateCheckoutLoanPeriod.intervalId"), RegularExpression(@"^(Minutes|Hours|Days|Weeks|Months|Years)$"), Required, StringLength(1024)]
         public virtual string PagesAlternateCheckoutLoanPeriodInterval { get; set; }
 
         [Column("pages_renew_items_with_request"), Display(Name = "Pages Renew Items With Request", Order = 41), JsonProperty("requestManagement.pages.renewItemsWithRequest")]
@@ -154,7 +154,7 @@ namespace FolioLibrary
         [Column("pages_alternate_renewal_loan_period_duration"), Display(Name = "Pages Alternate Renewal Loan Period Duration", Order = 42), JsonProperty("requestManagement.pages.alternateRenewalLoanPeriod.duration"), Required]
         public virtual int? PagesAlternateRenewalLoanPeriodDuration { get; set; }
 
-        [Column("pages_alternate_renewal_loan_period_interval_id"), Display(Name = "Pages Alternate Renewal Loan Period Interval", Order = 43), JsonProperty("requestManagement.pages.alternateRenewalLoanPeriod.intervalId"), RegularExpression(@"^(Minutes|Hours|Days|Weeks|Months)$"), Required, StringLength(1024)]
+        [Column("pages_alternate_renewal_loan_period_interval_id"), Display(Name = "Pages Alternate Renewal Loan Period Interval", Order = 43), JsonProperty("requestManagement.pages.alternateRenewalLoanPeriod.intervalId"), RegularExpression(@"^(Minutes|Hours|Days|Weeks|Months|Years)$"), Required, StringLength(1024)]
         public virtual string PagesAlternateRenewalLoanPeriodInterval { get; set; }
 
         [Column("created_date"), DataType(DataType.DateTime), Display(Name = "Creation Time", Order = 44), DisplayFormat(DataFormatString = "{0:g}"), Editable(false), JsonProperty("metadata.createdDate")]

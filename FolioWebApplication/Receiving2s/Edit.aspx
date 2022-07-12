@@ -113,6 +113,14 @@
                                     <asp:Literal ID="DiscoverySuppressLiteral" runat="server" Text='<%#: Eval("DiscoverySuppress") %>' />
                                 </td>
                             </tr>
+                            <tr runat="server" visible='<%# Eval("CopyNumber") != null %>'>
+                                <td>
+                                    <asp:Label ID="CopyNumberLabel" runat="server" Text="Copy Number:" AssociatedControlID="CopyNumberLiteral" />
+                                </td>
+                                <td>
+                                    <asp:Literal ID="CopyNumberLiteral" runat="server" Text='<%#: Eval("CopyNumber") %>' />
+                                </td>
+                            </tr>
                             <tr runat="server" visible='<%# Eval("ReceivingStatus") != null %>'>
                                 <td>
                                     <asp:Label ID="ReceivingStatusLabel" runat="server" Text="Receiving Status:" AssociatedControlID="ReceivingStatusLiteral" />

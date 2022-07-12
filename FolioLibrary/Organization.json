@@ -36,6 +36,14 @@
         "Pending"
       ]
     },
+    "organizationTypes": {
+      "description": "A list of organization types assigned to this organization",
+      "type": "array",
+      "items": {
+        "$ref": "#/properties/id"
+      },
+      "uniqueItems": true
+    },
     "language": {
       "description": "The language for this organization",
       "type": "string"

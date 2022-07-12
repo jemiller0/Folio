@@ -1,9 +1,11 @@
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Linq;
 
 namespace FolioLibrary
 {
@@ -21,10 +23,10 @@ namespace FolioLibrary
         [Column("invoice_item_id"), Display(Name = "Invoice Item", Order = 3), Required]
         public virtual Guid? InvoiceItemId { get; set; }
 
-        [Column("id2"), Display(Name = "Id 2", Order = 4), JsonProperty("id")]
+        [Column("id2"), JsonProperty("id"), ScaffoldColumn(false)]
         public virtual Guid? Id2 { get; set; }
 
-        [Column("adjustment_id"), Display(Name = "Adjustment Id", Order = 5), JsonProperty("adjustmentId")]
+        [Column("adjustment_id"), JsonProperty("adjustmentId"), ScaffoldColumn(false)]
         public virtual Guid? AdjustmentId { get; set; }
 
         [Column("description"), Display(Order = 6), JsonProperty("description"), Required, StringLength(1024)]
@@ -45,7 +47,13 @@ namespace FolioLibrary
         [Column("value"), Display(Order = 11), JsonProperty("value"), Required]
         public virtual decimal? Value { get; set; }
 
-        public override string ToString() => $"{{ {nameof(Id)} = {Id}, {nameof(InvoiceItemId)} = {InvoiceItemId}, {nameof(Id2)} = {Id2}, {nameof(AdjustmentId)} = {AdjustmentId}, {nameof(Description)} = {Description}, {nameof(ExportToAccounting)} = {ExportToAccounting}, {nameof(Prorate)} = {Prorate}, {nameof(RelationToTotal)} = {RelationToTotal}, {nameof(Type)} = {Type}, {nameof(Value)} = {Value} }}";
+        [Column("total_amount"), DataType(DataType.Currency), Display(Name = "Total Amount", Order = 12), DisplayFormat(DataFormatString = "{0:c}", ApplyFormatInEditMode = true), JsonProperty("totalAmount")]
+        public virtual decimal? TotalAmount { get; set; }
+
+        [Display(Name = "Invoice Item Adjustment Funds", Order = 13), JsonProperty("fundDistributions")]
+        public virtual ICollection<InvoiceItemAdjustmentFund> InvoiceItemAdjustmentFunds { get; set; }
+
+        public override string ToString() => $"{{ {nameof(Id)} = {Id}, {nameof(InvoiceItemId)} = {InvoiceItemId}, {nameof(Id2)} = {Id2}, {nameof(AdjustmentId)} = {AdjustmentId}, {nameof(Description)} = {Description}, {nameof(ExportToAccounting)} = {ExportToAccounting}, {nameof(Prorate)} = {Prorate}, {nameof(RelationToTotal)} = {RelationToTotal}, {nameof(Type)} = {Type}, {nameof(Value)} = {Value}, {nameof(TotalAmount)} = {TotalAmount}, {nameof(InvoiceItemAdjustmentFunds)} = {(InvoiceItemAdjustmentFunds != null ? $"{{ {string.Join(", ", InvoiceItemAdjustmentFunds)} }}" : "")} }}";
 
         public static InvoiceItemAdjustment FromJObject(JObject jObject) => jObject != null ? new InvoiceItemAdjustment
         {
@@ -56,7 +64,9 @@ namespace FolioLibrary
             Prorate = (string)jObject.SelectToken("prorate"),
             RelationToTotal = (string)jObject.SelectToken("relationToTotal"),
             Type = (string)jObject.SelectToken("type"),
-            Value = (decimal?)jObject.SelectToken("value")
+            Value = (decimal?)jObject.SelectToken("value"),
+            TotalAmount = (decimal?)jObject.SelectToken("totalAmount"),
+            InvoiceItemAdjustmentFunds = jObject.SelectToken("fundDistributions")?.Where(jt => jt.HasValues).Select(jt => InvoiceItemAdjustmentFund.FromJObject((JObject)jt)).ToArray()
         } : null;
 
         public JObject ToJObject() => new JObject(
@@ -67,6 +77,8 @@ namespace FolioLibrary
             new JProperty("prorate", Prorate),
             new JProperty("relationToTotal", RelationToTotal),
             new JProperty("type", Type),
-            new JProperty("value", Value)).RemoveNullAndEmptyProperties();
+            new JProperty("value", Value),
+            new JProperty("totalAmount", TotalAmount),
+            new JProperty("fundDistributions", InvoiceItemAdjustmentFunds?.Select(iiaf => iiaf.ToJObject()))).RemoveNullAndEmptyProperties();
     }
 }

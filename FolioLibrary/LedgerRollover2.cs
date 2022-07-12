@@ -31,80 +31,84 @@ namespace FolioLibrary
         [Column("id"), Display(Order = 1), Editable(false), JsonProperty("id")]
         public virtual Guid? Id { get; set; }
 
-        [Display(Order = 2)]
+        [Column("_version"), JsonProperty("_version"), ScaffoldColumn(false)]
+        public virtual int? Version { get; set; }
+
+        [Display(Order = 3)]
         public virtual Ledger2 Ledger { get; set; }
 
-        [Column("ledger_id"), Display(Name = "Ledger", Order = 3), JsonProperty("ledgerId")]
+        [Column("ledger_id"), Display(Name = "Ledger", Order = 4), JsonProperty("ledgerId")]
         public virtual Guid? LedgerId { get; set; }
 
-        [Display(Name = "From Fiscal Year", Order = 4), InverseProperty("LedgerRollover2s")]
+        [Display(Name = "From Fiscal Year", Order = 5), InverseProperty("LedgerRollover2s")]
         public virtual FiscalYear2 FromFiscalYear { get; set; }
 
-        [Column("from_fiscal_year_id"), Display(Name = "From Fiscal Year", Order = 5), JsonProperty("fromFiscalYearId")]
+        [Column("from_fiscal_year_id"), Display(Name = "From Fiscal Year", Order = 6), JsonProperty("fromFiscalYearId")]
         public virtual Guid? FromFiscalYearId { get; set; }
 
-        [Display(Name = "To Fiscal Year", Order = 6), InverseProperty("LedgerRollover2s1")]
+        [Display(Name = "To Fiscal Year", Order = 7), InverseProperty("LedgerRollover2s1")]
         public virtual FiscalYear2 ToFiscalYear { get; set; }
 
-        [Column("to_fiscal_year_id"), Display(Name = "To Fiscal Year", Order = 7), JsonProperty("toFiscalYearId")]
+        [Column("to_fiscal_year_id"), Display(Name = "To Fiscal Year", Order = 8), JsonProperty("toFiscalYearId")]
         public virtual Guid? ToFiscalYearId { get; set; }
 
-        [Column("restrict_encumbrance"), Display(Name = "Restrict Encumbrance", Order = 8), JsonProperty("restrictEncumbrance")]
+        [Column("restrict_encumbrance"), Display(Name = "Restrict Encumbrance", Order = 9), JsonProperty("restrictEncumbrance")]
         public virtual bool? RestrictEncumbrance { get; set; }
 
-        [Column("restrict_expenditures"), Display(Name = "Restrict Expenditures", Order = 9), JsonProperty("restrictExpenditures")]
+        [Column("restrict_expenditures"), Display(Name = "Restrict Expenditures", Order = 10), JsonProperty("restrictExpenditures")]
         public virtual bool? RestrictExpenditures { get; set; }
 
-        [Column("need_close_budgets"), Display(Name = "Need Close Budgets", Order = 10), JsonProperty("needCloseBudgets")]
+        [Column("need_close_budgets"), Display(Name = "Need Close Budgets", Order = 11), JsonProperty("needCloseBudgets")]
         public virtual bool? NeedCloseBudgets { get; set; }
 
-        [Column("currency_factor"), Display(Name = "Currency Factor", Order = 11), Editable(false), JsonProperty("currencyFactor")]
+        [Column("currency_factor"), Display(Name = "Currency Factor", Order = 12), Editable(false), JsonProperty("currencyFactor")]
         public virtual int? CurrencyFactor { get; set; }
 
-        [Column("created_date"), DataType(DataType.DateTime), Display(Name = "Creation Time", Order = 12), DisplayFormat(DataFormatString = "{0:g}"), Editable(false), JsonProperty("metadata.createdDate")]
+        [Column("created_date"), DataType(DataType.DateTime), Display(Name = "Creation Time", Order = 13), DisplayFormat(DataFormatString = "{0:g}"), Editable(false), JsonProperty("metadata.createdDate")]
         public virtual DateTime? CreationTime { get; set; }
 
-        [Display(Name = "Creation User", Order = 13), InverseProperty("LedgerRollover2s")]
+        [Display(Name = "Creation User", Order = 14), InverseProperty("LedgerRollover2s")]
         public virtual User2 CreationUser { get; set; }
 
-        [Column("created_by_user_id"), Display(Name = "Creation User", Order = 14), Editable(false), JsonProperty("metadata.createdByUserId")]
+        [Column("created_by_user_id"), Display(Name = "Creation User", Order = 15), Editable(false), JsonProperty("metadata.createdByUserId")]
         public virtual Guid? CreationUserId { get; set; }
 
         [Column("created_by_username"), JsonProperty("metadata.createdByUsername"), ScaffoldColumn(false), StringLength(1024)]
         public virtual string CreationUserUsername { get; set; }
 
-        [Column("updated_date"), DataType(DataType.DateTime), Display(Name = "Last Write Time", Order = 16), DisplayFormat(DataFormatString = "{0:g}"), Editable(false), JsonProperty("metadata.updatedDate")]
+        [Column("updated_date"), DataType(DataType.DateTime), Display(Name = "Last Write Time", Order = 17), DisplayFormat(DataFormatString = "{0:g}"), Editable(false), JsonProperty("metadata.updatedDate")]
         public virtual DateTime? LastWriteTime { get; set; }
 
-        [Display(Name = "Last Write User", Order = 17), InverseProperty("LedgerRollover2s1")]
+        [Display(Name = "Last Write User", Order = 18), InverseProperty("LedgerRollover2s1")]
         public virtual User2 LastWriteUser { get; set; }
 
-        [Column("updated_by_user_id"), Display(Name = "Last Write User", Order = 18), Editable(false), JsonProperty("metadata.updatedByUserId")]
+        [Column("updated_by_user_id"), Display(Name = "Last Write User", Order = 19), Editable(false), JsonProperty("metadata.updatedByUserId")]
         public virtual Guid? LastWriteUserId { get; set; }
 
         [Column("updated_by_username"), JsonProperty("metadata.updatedByUsername"), ScaffoldColumn(false), StringLength(1024)]
         public virtual string LastWriteUserUsername { get; set; }
 
-        [Column("content"), CustomValidation(typeof(LedgerRollover), nameof(ValidateContent)), DataType(DataType.MultilineText), Display(Order = 20), Editable(false)]
+        [Column("content"), CustomValidation(typeof(LedgerRollover), nameof(ValidateContent)), DataType(DataType.MultilineText), Display(Order = 21), Editable(false)]
         public virtual string Content { get; set; }
 
-        [Display(Name = "Ledger Rollover Budgets Rollovers", Order = 21), JsonProperty("budgetsRollover")]
+        [Display(Name = "Ledger Rollover Budgets Rollovers", Order = 22), JsonProperty("budgetsRollover")]
         public virtual ICollection<LedgerRolloverBudgetsRollover> LedgerRolloverBudgetsRollovers { get; set; }
 
-        [Display(Name = "Ledger Rollover Encumbrances Rollovers", Order = 22), JsonProperty("encumbrancesRollover")]
+        [Display(Name = "Ledger Rollover Encumbrances Rollovers", Order = 23), JsonProperty("encumbrancesRollover")]
         public virtual ICollection<LedgerRolloverEncumbrancesRollover> LedgerRolloverEncumbrancesRollovers { get; set; }
 
-        [Display(Name = "Ledger Rollover Errors", Order = 23)]
+        [Display(Name = "Ledger Rollover Errors", Order = 24)]
         public virtual ICollection<LedgerRolloverError2> LedgerRolloverError2s { get; set; }
 
-        [Display(Name = "Ledger Rollover Progresss", Order = 24)]
+        [Display(Name = "Ledger Rollover Progresss", Order = 25)]
         public virtual ICollection<LedgerRolloverProgress2> LedgerRolloverProgress2s { get; set; }
 
-        public override string ToString() => $"{{ {nameof(Id)} = {Id}, {nameof(LedgerId)} = {LedgerId}, {nameof(FromFiscalYearId)} = {FromFiscalYearId}, {nameof(ToFiscalYearId)} = {ToFiscalYearId}, {nameof(RestrictEncumbrance)} = {RestrictEncumbrance}, {nameof(RestrictExpenditures)} = {RestrictExpenditures}, {nameof(NeedCloseBudgets)} = {NeedCloseBudgets}, {nameof(CurrencyFactor)} = {CurrencyFactor}, {nameof(CreationTime)} = {CreationTime}, {nameof(CreationUserId)} = {CreationUserId}, {nameof(CreationUserUsername)} = {CreationUserUsername}, {nameof(LastWriteTime)} = {LastWriteTime}, {nameof(LastWriteUserId)} = {LastWriteUserId}, {nameof(LastWriteUserUsername)} = {LastWriteUserUsername}, {nameof(Content)} = {Content}, {nameof(LedgerRolloverBudgetsRollovers)} = {(LedgerRolloverBudgetsRollovers != null ? $"{{ {string.Join(", ", LedgerRolloverBudgetsRollovers)} }}" : "")}, {nameof(LedgerRolloverEncumbrancesRollovers)} = {(LedgerRolloverEncumbrancesRollovers != null ? $"{{ {string.Join(", ", LedgerRolloverEncumbrancesRollovers)} }}" : "")} }}";
+        public override string ToString() => $"{{ {nameof(Id)} = {Id}, {nameof(Version)} = {Version}, {nameof(LedgerId)} = {LedgerId}, {nameof(FromFiscalYearId)} = {FromFiscalYearId}, {nameof(ToFiscalYearId)} = {ToFiscalYearId}, {nameof(RestrictEncumbrance)} = {RestrictEncumbrance}, {nameof(RestrictExpenditures)} = {RestrictExpenditures}, {nameof(NeedCloseBudgets)} = {NeedCloseBudgets}, {nameof(CurrencyFactor)} = {CurrencyFactor}, {nameof(CreationTime)} = {CreationTime}, {nameof(CreationUserId)} = {CreationUserId}, {nameof(CreationUserUsername)} = {CreationUserUsername}, {nameof(LastWriteTime)} = {LastWriteTime}, {nameof(LastWriteUserId)} = {LastWriteUserId}, {nameof(LastWriteUserUsername)} = {LastWriteUserUsername}, {nameof(Content)} = {Content}, {nameof(LedgerRolloverBudgetsRollovers)} = {(LedgerRolloverBudgetsRollovers != null ? $"{{ {string.Join(", ", LedgerRolloverBudgetsRollovers)} }}" : "")}, {nameof(LedgerRolloverEncumbrancesRollovers)} = {(LedgerRolloverEncumbrancesRollovers != null ? $"{{ {string.Join(", ", LedgerRolloverEncumbrancesRollovers)} }}" : "")} }}";
 
         public static LedgerRollover2 FromJObject(JObject jObject) => jObject != null ? new LedgerRollover2
         {
             Id = (Guid?)jObject.SelectToken("id"),
+            Version = (int?)jObject.SelectToken("_version"),
             LedgerId = (Guid?)jObject.SelectToken("ledgerId"),
             FromFiscalYearId = (Guid?)jObject.SelectToken("fromFiscalYearId"),
             ToFiscalYearId = (Guid?)jObject.SelectToken("toFiscalYearId"),
@@ -125,6 +129,7 @@ namespace FolioLibrary
 
         public JObject ToJObject() => new JObject(
             new JProperty("id", Id),
+            new JProperty("_version", Version),
             new JProperty("ledgerId", LedgerId),
             new JProperty("fromFiscalYearId", FromFiscalYearId),
             new JProperty("toFiscalYearId", ToFiscalYearId),

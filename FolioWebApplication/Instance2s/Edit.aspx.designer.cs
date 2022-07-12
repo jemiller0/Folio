@@ -9,6 +9,10 @@ namespace FolioWebApplication.Instance2s
 
         protected FormView Instance2FormView;
 
+        protected Panel AdministrativeNotesPanel;
+
+        protected RadGrid AdministrativeNotesRadGrid;
+
         protected Panel AlternativeTitlesPanel;
 
         protected RadGrid AlternativeTitlesRadGrid;
@@ -49,6 +53,10 @@ namespace FolioWebApplication.Instance2s
 
         protected RadGrid InstanceNatureOfContentTermsRadGrid;
 
+        protected Panel InstanceNotesPanel;
+
+        protected RadGrid InstanceNotesRadGrid;
+
         protected Panel InstanceStatisticalCodesPanel;
 
         protected RadGrid InstanceStatisticalCodesRadGrid;
@@ -68,10 +76,6 @@ namespace FolioWebApplication.Instance2s
         protected Panel LanguagesPanel;
 
         protected RadGrid LanguagesRadGrid;
-
-        protected Panel Note2sPanel;
-
-        protected RadGrid Note2sRadGrid;
 
         protected Panel OclcNumbersPanel;
 

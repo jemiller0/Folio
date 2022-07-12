@@ -21,7 +21,7 @@ namespace FolioLibrary
         [Column("order_item_id"), Display(Name = "Order Item", Order = 3), Required]
         public virtual Guid? OrderItemId { get; set; }
 
-        [Column("code"), Display(Name = "Fund Code", Order = 4), JsonProperty("code"), StringLength(1024)]
+        [Column("code"), JsonProperty("code"), ScaffoldColumn(false), StringLength(1024)]
         public virtual string FundCode { get; set; }
 
         [Display(Order = 5)]

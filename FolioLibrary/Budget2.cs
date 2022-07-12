@@ -31,116 +31,120 @@ namespace FolioLibrary
         [Column("id"), Display(Order = 1), Editable(false), JsonProperty("id")]
         public virtual Guid? Id { get; set; }
 
-        [Column("name"), Display(Order = 2), JsonProperty("name"), Required, StringLength(1024)]
+        [Column("_version"), JsonProperty("_version"), ScaffoldColumn(false)]
+        public virtual int? Version { get; set; }
+
+        [Column("name"), Display(Order = 3), JsonProperty("name"), Required, StringLength(1024)]
         public virtual string Name { get; set; }
 
-        [Column("budget_status"), Display(Name = "Budget Status", Order = 3), JsonProperty("budgetStatus"), RegularExpression(@"^(Active|Frozen|Inactive|Planned|Closed)$"), Required, StringLength(1024)]
+        [Column("budget_status"), Display(Name = "Budget Status", Order = 4), JsonProperty("budgetStatus"), RegularExpression(@"^(Active|Frozen|Inactive|Planned|Closed)$"), Required, StringLength(1024)]
         public virtual string BudgetStatus { get; set; }
 
-        [Column("allowable_encumbrance"), Display(Name = "Allowable Encumbrance", Order = 4), JsonProperty("allowableEncumbrance")]
+        [Column("allowable_encumbrance"), Display(Name = "Allowable Encumbrance", Order = 5), JsonProperty("allowableEncumbrance")]
         public virtual decimal? AllowableEncumbrance { get; set; }
 
-        [Column("allowable_expenditure"), Display(Name = "Allowable Expenditure", Order = 5), JsonProperty("allowableExpenditure")]
+        [Column("allowable_expenditure"), Display(Name = "Allowable Expenditure", Order = 6), JsonProperty("allowableExpenditure")]
         public virtual decimal? AllowableExpenditure { get; set; }
 
-        [Column("allocated"), DataType(DataType.Currency), Display(Order = 6), DisplayFormat(DataFormatString = "{0:c}"), Editable(false), JsonProperty("allocated")]
+        [Column("allocated"), DataType(DataType.Currency), Display(Order = 7), DisplayFormat(DataFormatString = "{0:c}"), Editable(false), JsonProperty("allocated")]
         public virtual decimal? Allocated { get; set; }
 
-        [Column("awaiting_payment"), DataType(DataType.Currency), Display(Name = "Awaiting Payment", Order = 7), DisplayFormat(DataFormatString = "{0:c}", ApplyFormatInEditMode = true), JsonProperty("awaitingPayment")]
+        [Column("awaiting_payment"), DataType(DataType.Currency), Display(Name = "Awaiting Payment", Order = 8), DisplayFormat(DataFormatString = "{0:c}", ApplyFormatInEditMode = true), JsonProperty("awaitingPayment")]
         public virtual decimal? AwaitingPayment { get; set; }
 
-        [Column("available"), DataType(DataType.Currency), Display(Order = 8), DisplayFormat(DataFormatString = "{0:c}"), Editable(false), JsonProperty("available")]
+        [Column("available"), DataType(DataType.Currency), Display(Order = 9), DisplayFormat(DataFormatString = "{0:c}"), Editable(false), JsonProperty("available")]
         public virtual decimal? Available { get; set; }
 
-        [Column("encumbered"), DataType(DataType.Currency), Display(Order = 9), DisplayFormat(DataFormatString = "{0:c}", ApplyFormatInEditMode = true), JsonProperty("encumbered")]
+        [Column("encumbered"), DataType(DataType.Currency), Display(Order = 10), DisplayFormat(DataFormatString = "{0:c}", ApplyFormatInEditMode = true), JsonProperty("encumbered")]
         public virtual decimal? Encumbered { get; set; }
 
-        [Column("expenditures"), DataType(DataType.Currency), Display(Order = 10), DisplayFormat(DataFormatString = "{0:c}", ApplyFormatInEditMode = true), JsonProperty("expenditures")]
+        [Column("expenditures"), DataType(DataType.Currency), Display(Order = 11), DisplayFormat(DataFormatString = "{0:c}", ApplyFormatInEditMode = true), JsonProperty("expenditures")]
         public virtual decimal? Expenditures { get; set; }
 
-        [Column("net_transfers"), DataType(DataType.Currency), Display(Name = "Net Transfers", Order = 11), DisplayFormat(DataFormatString = "{0:c}", ApplyFormatInEditMode = true), JsonProperty("netTransfers")]
+        [Column("net_transfers"), DataType(DataType.Currency), Display(Name = "Net Transfers", Order = 12), DisplayFormat(DataFormatString = "{0:c}", ApplyFormatInEditMode = true), JsonProperty("netTransfers")]
         public virtual decimal? NetTransfers { get; set; }
 
-        [Column("unavailable"), DataType(DataType.Currency), Display(Order = 12), DisplayFormat(DataFormatString = "{0:c}"), Editable(false), JsonProperty("unavailable")]
+        [Column("unavailable"), DataType(DataType.Currency), Display(Order = 13), DisplayFormat(DataFormatString = "{0:c}"), Editable(false), JsonProperty("unavailable")]
         public virtual decimal? Unavailable { get; set; }
 
-        [Column("over_encumbrance"), DataType(DataType.Currency), Display(Name = "Over Encumbrance", Order = 13), DisplayFormat(DataFormatString = "{0:c}"), Editable(false), JsonProperty("overEncumbrance")]
+        [Column("over_encumbrance"), DataType(DataType.Currency), Display(Name = "Over Encumbrance", Order = 14), DisplayFormat(DataFormatString = "{0:c}"), Editable(false), JsonProperty("overEncumbrance")]
         public virtual decimal? OverEncumbrance { get; set; }
 
-        [Column("over_expended"), DataType(DataType.Currency), Display(Name = "Over Expended", Order = 14), DisplayFormat(DataFormatString = "{0:c}"), Editable(false), JsonProperty("overExpended")]
+        [Column("over_expended"), DataType(DataType.Currency), Display(Name = "Over Expended", Order = 15), DisplayFormat(DataFormatString = "{0:c}"), Editable(false), JsonProperty("overExpended")]
         public virtual decimal? OverExpended { get; set; }
 
-        [Display(Order = 15)]
+        [Display(Order = 16)]
         public virtual Fund2 Fund { get; set; }
 
-        [Column("fund_id"), Display(Name = "Fund", Order = 16), JsonProperty("fundId"), Required]
+        [Column("fund_id"), Display(Name = "Fund", Order = 17), JsonProperty("fundId"), Required]
         public virtual Guid? FundId { get; set; }
 
-        [Display(Name = "Fiscal Year", Order = 17)]
+        [Display(Name = "Fiscal Year", Order = 18)]
         public virtual FiscalYear2 FiscalYear { get; set; }
 
-        [Column("fiscal_year_id"), Display(Name = "Fiscal Year", Order = 18), JsonProperty("fiscalYearId"), Required]
+        [Column("fiscal_year_id"), Display(Name = "Fiscal Year", Order = 19), JsonProperty("fiscalYearId"), Required]
         public virtual Guid? FiscalYearId { get; set; }
 
-        [Column("created_date"), DataType(DataType.DateTime), Display(Name = "Creation Time", Order = 19), DisplayFormat(DataFormatString = "{0:g}"), Editable(false), JsonProperty("metadata.createdDate")]
+        [Column("created_date"), DataType(DataType.DateTime), Display(Name = "Creation Time", Order = 20), DisplayFormat(DataFormatString = "{0:g}"), Editable(false), JsonProperty("metadata.createdDate")]
         public virtual DateTime? CreationTime { get; set; }
 
-        [Display(Name = "Creation User", Order = 20), InverseProperty("Budget2s")]
+        [Display(Name = "Creation User", Order = 21), InverseProperty("Budget2s")]
         public virtual User2 CreationUser { get; set; }
 
-        [Column("created_by_user_id"), Display(Name = "Creation User", Order = 21), Editable(false), JsonProperty("metadata.createdByUserId")]
+        [Column("created_by_user_id"), Display(Name = "Creation User", Order = 22), Editable(false), JsonProperty("metadata.createdByUserId")]
         public virtual Guid? CreationUserId { get; set; }
 
         [Column("created_by_username"), JsonProperty("metadata.createdByUsername"), ScaffoldColumn(false), StringLength(1024)]
         public virtual string CreationUserUsername { get; set; }
 
-        [Column("updated_date"), DataType(DataType.DateTime), Display(Name = "Last Write Time", Order = 23), DisplayFormat(DataFormatString = "{0:g}"), Editable(false), JsonProperty("metadata.updatedDate")]
+        [Column("updated_date"), DataType(DataType.DateTime), Display(Name = "Last Write Time", Order = 24), DisplayFormat(DataFormatString = "{0:g}"), Editable(false), JsonProperty("metadata.updatedDate")]
         public virtual DateTime? LastWriteTime { get; set; }
 
-        [Display(Name = "Last Write User", Order = 24), InverseProperty("Budget2s1")]
+        [Display(Name = "Last Write User", Order = 25), InverseProperty("Budget2s1")]
         public virtual User2 LastWriteUser { get; set; }
 
-        [Column("updated_by_user_id"), Display(Name = "Last Write User", Order = 25), Editable(false), JsonProperty("metadata.updatedByUserId")]
+        [Column("updated_by_user_id"), Display(Name = "Last Write User", Order = 26), Editable(false), JsonProperty("metadata.updatedByUserId")]
         public virtual Guid? LastWriteUserId { get; set; }
 
         [Column("updated_by_username"), JsonProperty("metadata.updatedByUsername"), ScaffoldColumn(false), StringLength(1024)]
         public virtual string LastWriteUserUsername { get; set; }
 
-        [Column("initial_allocation"), DataType(DataType.Currency), Display(Name = "Initial Allocation", Order = 27), DisplayFormat(DataFormatString = "{0:c}", ApplyFormatInEditMode = true), JsonProperty("initialAllocation")]
+        [Column("initial_allocation"), DataType(DataType.Currency), Display(Name = "Initial Allocation", Order = 28), DisplayFormat(DataFormatString = "{0:c}", ApplyFormatInEditMode = true), JsonProperty("initialAllocation")]
         public virtual decimal? InitialAllocation { get; set; }
 
-        [Column("allocation_to"), DataType(DataType.Currency), Display(Name = "Allocation To", Order = 28), DisplayFormat(DataFormatString = "{0:c}", ApplyFormatInEditMode = true), JsonProperty("allocationTo")]
+        [Column("allocation_to"), DataType(DataType.Currency), Display(Name = "Allocation To", Order = 29), DisplayFormat(DataFormatString = "{0:c}", ApplyFormatInEditMode = true), JsonProperty("allocationTo")]
         public virtual decimal? AllocationTo { get; set; }
 
-        [Column("allocation_from"), DataType(DataType.Currency), Display(Name = "Allocation From", Order = 29), DisplayFormat(DataFormatString = "{0:c}", ApplyFormatInEditMode = true), JsonProperty("allocationFrom")]
+        [Column("allocation_from"), DataType(DataType.Currency), Display(Name = "Allocation From", Order = 30), DisplayFormat(DataFormatString = "{0:c}", ApplyFormatInEditMode = true), JsonProperty("allocationFrom")]
         public virtual decimal? AllocationFrom { get; set; }
 
-        [Column("total_funding"), DataType(DataType.Currency), Display(Name = "Total Funding", Order = 30), DisplayFormat(DataFormatString = "{0:c}"), Editable(false), JsonProperty("totalFunding")]
+        [Column("total_funding"), DataType(DataType.Currency), Display(Name = "Total Funding", Order = 31), DisplayFormat(DataFormatString = "{0:c}"), Editable(false), JsonProperty("totalFunding")]
         public virtual decimal? TotalFunding { get; set; }
 
-        [Column("cash_balance"), DataType(DataType.Currency), Display(Name = "Cash Balance", Order = 31), DisplayFormat(DataFormatString = "{0:c}"), Editable(false), JsonProperty("cashBalance")]
+        [Column("cash_balance"), DataType(DataType.Currency), Display(Name = "Cash Balance", Order = 32), DisplayFormat(DataFormatString = "{0:c}"), Editable(false), JsonProperty("cashBalance")]
         public virtual decimal? CashBalance { get; set; }
 
-        [Column("content"), CustomValidation(typeof(Budget), nameof(ValidateContent)), DataType(DataType.MultilineText), Display(Order = 32), Editable(false)]
+        [Column("content"), CustomValidation(typeof(Budget), nameof(ValidateContent)), DataType(DataType.MultilineText), Display(Order = 33), Editable(false)]
         public virtual string Content { get; set; }
 
-        [Display(Name = "Budget Acquisitions Units", Order = 33), JsonConverter(typeof(ArrayJsonConverter<List<BudgetAcquisitionsUnit>, BudgetAcquisitionsUnit>), "AcquisitionsUnitId"), JsonProperty("acqUnitIds")]
+        [Display(Name = "Budget Acquisitions Units", Order = 34), JsonConverter(typeof(ArrayJsonConverter<List<BudgetAcquisitionsUnit>, BudgetAcquisitionsUnit>), "AcquisitionsUnitId"), JsonProperty("acqUnitIds")]
         public virtual ICollection<BudgetAcquisitionsUnit> BudgetAcquisitionsUnits { get; set; }
 
-        [Display(Name = "Budget Expense Classs", Order = 34)]
+        [Display(Name = "Budget Expense Classs", Order = 35)]
         public virtual ICollection<BudgetExpenseClass2> BudgetExpenseClass2s { get; set; }
 
-        [Display(Name = "Budget Groups", Order = 35)]
+        [Display(Name = "Budget Groups", Order = 36)]
         public virtual ICollection<BudgetGroup2> BudgetGroup2s { get; set; }
 
-        [Display(Name = "Budget Tags", Order = 36), JsonConverter(typeof(ArrayJsonConverter<List<BudgetTag>, BudgetTag>), "TagId"), JsonProperty("tags.tagList")]
+        [Display(Name = "Budget Tags", Order = 37), JsonConverter(typeof(ArrayJsonConverter<List<BudgetTag>, BudgetTag>), "TagId"), JsonProperty("tags.tagList")]
         public virtual ICollection<BudgetTag> BudgetTags { get; set; }
 
-        public override string ToString() => $"{{ {nameof(Id)} = {Id}, {nameof(Name)} = {Name}, {nameof(BudgetStatus)} = {BudgetStatus}, {nameof(AllowableEncumbrance)} = {AllowableEncumbrance}, {nameof(AllowableExpenditure)} = {AllowableExpenditure}, {nameof(Allocated)} = {Allocated}, {nameof(AwaitingPayment)} = {AwaitingPayment}, {nameof(Available)} = {Available}, {nameof(Encumbered)} = {Encumbered}, {nameof(Expenditures)} = {Expenditures}, {nameof(NetTransfers)} = {NetTransfers}, {nameof(Unavailable)} = {Unavailable}, {nameof(OverEncumbrance)} = {OverEncumbrance}, {nameof(OverExpended)} = {OverExpended}, {nameof(FundId)} = {FundId}, {nameof(FiscalYearId)} = {FiscalYearId}, {nameof(CreationTime)} = {CreationTime}, {nameof(CreationUserId)} = {CreationUserId}, {nameof(CreationUserUsername)} = {CreationUserUsername}, {nameof(LastWriteTime)} = {LastWriteTime}, {nameof(LastWriteUserId)} = {LastWriteUserId}, {nameof(LastWriteUserUsername)} = {LastWriteUserUsername}, {nameof(InitialAllocation)} = {InitialAllocation}, {nameof(AllocationTo)} = {AllocationTo}, {nameof(AllocationFrom)} = {AllocationFrom}, {nameof(TotalFunding)} = {TotalFunding}, {nameof(CashBalance)} = {CashBalance}, {nameof(Content)} = {Content}, {nameof(BudgetAcquisitionsUnits)} = {(BudgetAcquisitionsUnits != null ? $"{{ {string.Join(", ", BudgetAcquisitionsUnits)} }}" : "")}, {nameof(BudgetTags)} = {(BudgetTags != null ? $"{{ {string.Join(", ", BudgetTags)} }}" : "")} }}";
+        public override string ToString() => $"{{ {nameof(Id)} = {Id}, {nameof(Version)} = {Version}, {nameof(Name)} = {Name}, {nameof(BudgetStatus)} = {BudgetStatus}, {nameof(AllowableEncumbrance)} = {AllowableEncumbrance}, {nameof(AllowableExpenditure)} = {AllowableExpenditure}, {nameof(Allocated)} = {Allocated}, {nameof(AwaitingPayment)} = {AwaitingPayment}, {nameof(Available)} = {Available}, {nameof(Encumbered)} = {Encumbered}, {nameof(Expenditures)} = {Expenditures}, {nameof(NetTransfers)} = {NetTransfers}, {nameof(Unavailable)} = {Unavailable}, {nameof(OverEncumbrance)} = {OverEncumbrance}, {nameof(OverExpended)} = {OverExpended}, {nameof(FundId)} = {FundId}, {nameof(FiscalYearId)} = {FiscalYearId}, {nameof(CreationTime)} = {CreationTime}, {nameof(CreationUserId)} = {CreationUserId}, {nameof(CreationUserUsername)} = {CreationUserUsername}, {nameof(LastWriteTime)} = {LastWriteTime}, {nameof(LastWriteUserId)} = {LastWriteUserId}, {nameof(LastWriteUserUsername)} = {LastWriteUserUsername}, {nameof(InitialAllocation)} = {InitialAllocation}, {nameof(AllocationTo)} = {AllocationTo}, {nameof(AllocationFrom)} = {AllocationFrom}, {nameof(TotalFunding)} = {TotalFunding}, {nameof(CashBalance)} = {CashBalance}, {nameof(Content)} = {Content}, {nameof(BudgetAcquisitionsUnits)} = {(BudgetAcquisitionsUnits != null ? $"{{ {string.Join(", ", BudgetAcquisitionsUnits)} }}" : "")}, {nameof(BudgetTags)} = {(BudgetTags != null ? $"{{ {string.Join(", ", BudgetTags)} }}" : "")} }}";
 
         public static Budget2 FromJObject(JObject jObject) => jObject != null ? new Budget2
         {
             Id = (Guid?)jObject.SelectToken("id"),
+            Version = (int?)jObject.SelectToken("_version"),
             Name = (string)jObject.SelectToken("name"),
             BudgetStatus = (string)jObject.SelectToken("budgetStatus"),
             AllowableEncumbrance = (decimal?)jObject.SelectToken("allowableEncumbrance"),
@@ -174,6 +178,7 @@ namespace FolioLibrary
 
         public JObject ToJObject() => new JObject(
             new JProperty("id", Id),
+            new JProperty("_version", Version),
             new JProperty("name", Name),
             new JProperty("budgetStatus", BudgetStatus),
             new JProperty("allowableEncumbrance", AllowableEncumbrance),

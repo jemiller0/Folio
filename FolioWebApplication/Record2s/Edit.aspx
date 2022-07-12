@@ -121,12 +121,12 @@
                                     <asp:Literal ID="LastWriteTimeLiteral" runat="server" Text='<%# Eval("LastWriteTime", "{0:g}") %>' />
                                 </td>
                             </tr>
-                            <tr runat="server" visible='<%# Eval("InstanceHrid") != null %>'>
+                            <tr runat="server" visible='<%# Eval("InstanceShortId") != null %>'>
                                 <td>
-                                    <asp:Label ID="InstanceHridLabel" runat="server" Text="Instance Hrid:" AssociatedControlID="InstanceHridLiteral" />
+                                    <asp:Label ID="InstanceShortIdLabel" runat="server" Text="Instance Short Id:" AssociatedControlID="InstanceShortIdLiteral" />
                                 </td>
                                 <td>
-                                    <asp:Literal ID="InstanceHridLiteral" runat="server" Text='<%#: Eval("InstanceHrid") %>' />
+                                    <asp:Literal ID="InstanceShortIdLiteral" runat="server" Text='<%#: Eval("InstanceShortId") %>' />
                                 </td>
                             </tr>
                             <tr runat="server" visible='<%# Eval("ErrorRecord2") != null %>'>

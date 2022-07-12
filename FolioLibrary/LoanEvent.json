@@ -19,7 +19,6 @@
       "title": "Loan",
       "description": "Links the item with the patron and applies certain conditions based on policies",
       "type": "object",
-      "additionalProperties": false,
       "properties": {
         "id": {
           "description": "Unique ID (generated UUID) of the loan",
@@ -46,7 +45,6 @@
         "status": {
           "description": "Overall status of the loan",
           "type": "object",
-          "additionalProperties": false,
           "properties": {
             "name": {
               "description": "Name of the status (currently can be any value, values commonly used are Open and Closed)",
@@ -189,12 +187,7 @@
             }
           }
         }
-      },
-      "required": [
-        "itemId",
-        "loanDate",
-        "action"
-      ]
+      }
     }
   },
   "required": [

@@ -2,7 +2,6 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using NJsonSchema;
 using System;
-using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.IO;
@@ -13,7 +12,7 @@ namespace FolioLibrary
 {
     // uc.documents -> uchicago_mod_invoice_storage.documents
     // Document2 -> Document
-    [DisplayColumn(nameof(Id)), DisplayName("Documents"), JsonConverter(typeof(JsonPathJsonConverter<Document2>)), JsonObject(MemberSerialization = MemberSerialization.OptIn), Table("documents", Schema = "uc")]
+    [JsonConverter(typeof(JsonPathJsonConverter<Document2>)), JsonObject(MemberSerialization = MemberSerialization.OptIn), Table("documents", Schema = "uc")]
     public partial class Document2
     {
         public static ValidationResult ValidateContent(string value)

@@ -30,38 +30,42 @@ namespace FolioLibrary
         [Column("id"), Display(Order = 1), Editable(false), JsonProperty("id")]
         public virtual Guid? Id { get; set; }
 
-        [Display(Order = 2)]
+        [Column("_version"), JsonProperty("_version"), ScaffoldColumn(false)]
+        public virtual int? Version { get; set; }
+
+        [Display(Order = 3)]
         public virtual Budget2 Budget { get; set; }
 
-        [Column("budget_id"), Display(Name = "Budget", Order = 3), JsonProperty("budgetId")]
+        [Column("budget_id"), Display(Name = "Budget", Order = 4), JsonProperty("budgetId")]
         public virtual Guid? BudgetId { get; set; }
 
-        [Display(Order = 4)]
+        [Display(Order = 5)]
         public virtual FinanceGroup2 Group { get; set; }
 
-        [Column("group_id"), Display(Name = "Group", Order = 5), JsonProperty("groupId"), Required]
+        [Column("group_id"), Display(Name = "Group", Order = 6), JsonProperty("groupId"), Required]
         public virtual Guid? GroupId { get; set; }
 
-        [Display(Name = "Fiscal Year", Order = 6)]
+        [Display(Name = "Fiscal Year", Order = 7)]
         public virtual FiscalYear2 FiscalYear { get; set; }
 
-        [Column("fiscal_year_id"), Display(Name = "Fiscal Year", Order = 7), JsonProperty("fiscalYearId"), Required]
+        [Column("fiscal_year_id"), Display(Name = "Fiscal Year", Order = 8), JsonProperty("fiscalYearId"), Required]
         public virtual Guid? FiscalYearId { get; set; }
 
-        [Display(Order = 8)]
+        [Display(Order = 9)]
         public virtual Fund2 Fund { get; set; }
 
-        [Column("fund_id"), Display(Name = "Fund", Order = 9), JsonProperty("fundId"), Required]
+        [Column("fund_id"), Display(Name = "Fund", Order = 10), JsonProperty("fundId"), Required]
         public virtual Guid? FundId { get; set; }
 
-        [Column("content"), CustomValidation(typeof(BudgetGroup), nameof(ValidateContent)), DataType(DataType.MultilineText), Display(Order = 10), Editable(false)]
+        [Column("content"), CustomValidation(typeof(BudgetGroup), nameof(ValidateContent)), DataType(DataType.MultilineText), Display(Order = 11), Editable(false)]
         public virtual string Content { get; set; }
 
-        public override string ToString() => $"{{ {nameof(Id)} = {Id}, {nameof(BudgetId)} = {BudgetId}, {nameof(GroupId)} = {GroupId}, {nameof(FiscalYearId)} = {FiscalYearId}, {nameof(FundId)} = {FundId}, {nameof(Content)} = {Content} }}";
+        public override string ToString() => $"{{ {nameof(Id)} = {Id}, {nameof(Version)} = {Version}, {nameof(BudgetId)} = {BudgetId}, {nameof(GroupId)} = {GroupId}, {nameof(FiscalYearId)} = {FiscalYearId}, {nameof(FundId)} = {FundId}, {nameof(Content)} = {Content} }}";
 
         public static BudgetGroup2 FromJObject(JObject jObject) => jObject != null ? new BudgetGroup2
         {
             Id = (Guid?)jObject.SelectToken("id"),
+            Version = (int?)jObject.SelectToken("_version"),
             BudgetId = (Guid?)jObject.SelectToken("budgetId"),
             GroupId = (Guid?)jObject.SelectToken("groupId"),
             FiscalYearId = (Guid?)jObject.SelectToken("fiscalYearId"),
@@ -71,6 +75,7 @@ namespace FolioLibrary
 
         public JObject ToJObject() => new JObject(
             new JProperty("id", Id),
+            new JProperty("_version", Version),
             new JProperty("budgetId", BudgetId),
             new JProperty("groupId", GroupId),
             new JProperty("fiscalYearId", FiscalYearId),

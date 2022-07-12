@@ -92,8 +92,7 @@
     },
     "publishedDate": {
       "description": "Year of the material's publication",
-      "type": "string",
-      "pattern": "^[0-9]{4}$"
+      "type": "string"
     },
     "receivingNote": {
       "description": "Receiving note of the POL identified by poLineId",

@@ -169,7 +169,7 @@ namespace FolioLibrary
         [Column("content"), CustomValidation(typeof(Invoice), nameof(ValidateContent)), DataType(DataType.MultilineText), Display(Order = 47), Editable(false)]
         public virtual string Content { get; set; }
 
-        [Display(Name = "Documents", Order = 48)]
+        [ScaffoldColumn(false)]
         public virtual ICollection<Document2> Document2s { get; set; }
 
         [Display(Name = "Invoice Acquisitions Units", Order = 49), JsonConverter(typeof(ArrayJsonConverter<List<InvoiceAcquisitionsUnit>, InvoiceAcquisitionsUnit>), "AcquisitionsUnitId"), JsonProperty("acqUnitIds")]

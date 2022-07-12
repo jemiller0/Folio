@@ -9,6 +9,10 @@
       "type": "string",
       "pattern": "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-5][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}$"
     },
+    "_version": {
+      "description": "Record version for optimistic locking",
+      "type": "integer"
+    },
     "ledgerId": {
       "$ref": "#/properties/id"
     },
@@ -113,11 +117,12 @@
             ]
           },
           "basedOn": {
-            "description": "Based on Expended to Remaining",
+            "description": "Based on Expended, Remaining or InitialAmount",
             "type": "string",
             "enum": [
               "Expended",
-              "Remaining"
+              "Remaining",
+              "InitialAmount"
             ]
           },
           "increaseBy": {

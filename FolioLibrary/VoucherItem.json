@@ -21,13 +21,14 @@
       "description": "List of fund distributions",
       "type": "array",
       "items": {
-        "description": "Invoice/voucher line fund distribution",
+        "description": "purchase order fund distribution",
         "type": "object",
         "additionalProperties": false,
         "properties": {
           "code": {
-            "description": "The code of the fund associated with this fund distribution",
-            "type": "string"
+            "description": "Fund code format",
+            "type": "string",
+            "pattern": "^[^:]+$"
           },
           "encumbrance": {
             "description": "The UUID format string",
@@ -37,7 +38,7 @@
           "fundId": {
             "$ref": "#/properties/fundDistributions/items/properties/encumbrance"
           },
-          "invoiceLineId": {
+          "expenseClassId": {
             "$ref": "#/properties/fundDistributions/items/properties/encumbrance"
           },
           "distributionType": {
@@ -49,11 +50,8 @@
               "percentage"
             ]
           },
-          "expenseClassId": {
-            "$ref": "#/properties/fundDistributions/items/properties/encumbrance"
-          },
           "value": {
-            "description": "The percentage of the cost to be applied to this fund",
+            "description": "The value of the cost to be applied to this fund",
             "type": "number"
           }
         },

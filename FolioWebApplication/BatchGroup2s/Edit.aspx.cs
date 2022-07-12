@@ -34,64 +34,6 @@ namespace FolioWebApplication.BatchGroup2s
             Title = $"Batch Group {bg2.Name}";
         }
 
-        protected void BatchVoucherExport2sRadGrid_NeedDataSource(object sender, GridNeedDataSourceEventArgs e)
-        {
-            if (Session["BatchVoucherExport2sPermission"] == null) return;
-            var id = (Guid?)BatchGroup2FormView.DataKey.Value;
-            if (id == null) return;
-            var d = new Dictionary<string, string>() { { "Id", "id" }, { "Status", "status" }, { "Message", "message" }, { "BatchGroupId", "batchGroupId" }, { "Start", "start" }, { "End", "end" }, { "BatchVoucherId", "batchVoucherId" }, { "CreationTime", "metadata.createdDate" }, { "CreationUserId", "metadata.createdByUserId" }, { "LastWriteTime", "metadata.updatedDate" }, { "LastWriteUserId", "metadata.updatedByUserId" } };
-            var where = Global.Trim(string.Join(" and ", new string[]
-            {
-                $"batchGroupId == \"{id}\"",
-                Global.GetCqlFilter(BatchVoucherExport2sRadGrid, "Id", "id"),
-                Global.GetCqlFilter(BatchVoucherExport2sRadGrid, "Status", "status"),
-                Global.GetCqlFilter(BatchVoucherExport2sRadGrid, "Message", "message"),
-                Global.GetCqlFilter(BatchVoucherExport2sRadGrid, "Start", "start"),
-                Global.GetCqlFilter(BatchVoucherExport2sRadGrid, "End", "end"),
-                Global.GetCqlFilter(BatchVoucherExport2sRadGrid, "CreationTime", "metadata.createdDate"),
-                Global.GetCqlFilter(BatchVoucherExport2sRadGrid, "CreationUser.Username", "metadata.createdByUserId", "username", folioServiceContext.FolioServiceClient.Users),
-                Global.GetCqlFilter(BatchVoucherExport2sRadGrid, "LastWriteTime", "metadata.updatedDate"),
-                Global.GetCqlFilter(BatchVoucherExport2sRadGrid, "LastWriteUser.Username", "metadata.updatedByUserId", "username", folioServiceContext.FolioServiceClient.Users)
-            }.Where(s => s != null)));
-            BatchVoucherExport2sRadGrid.DataSource = folioServiceContext.BatchVoucherExport2s(out var i, where, BatchVoucherExport2sRadGrid.MasterTableView.SortExpressions.Count > 0 ? $"{d[BatchVoucherExport2sRadGrid.MasterTableView.SortExpressions[0].FieldName]}{(BatchVoucherExport2sRadGrid.MasterTableView.SortExpressions[0].SortOrder == GridSortOrder.Descending ? "/sort.descending" : "")}" : null, BatchVoucherExport2sRadGrid.PageSize * BatchVoucherExport2sRadGrid.CurrentPageIndex, BatchVoucherExport2sRadGrid.PageSize, true);
-            BatchVoucherExport2sRadGrid.VirtualItemCount = i;
-            if (BatchVoucherExport2sRadGrid.MasterTableView.FilterExpression == "")
-            {
-                BatchVoucherExport2sRadGrid.AllowFilteringByColumn = BatchVoucherExport2sRadGrid.VirtualItemCount > 10;
-                BatchVoucherExport2sPanel.Visible = BatchGroup2FormView.DataKey.Value != null && Session["BatchVoucherExport2sPermission"] != null && BatchVoucherExport2sRadGrid.VirtualItemCount > 0;
-            }
-            traceSource.TraceEvent(TraceEventType.Verbose, 0, $"where = {where}");
-        }
-
-        protected void BatchVoucherExportConfig2sRadGrid_NeedDataSource(object sender, GridNeedDataSourceEventArgs e)
-        {
-            if (Session["BatchVoucherExportConfig2sPermission"] == null) return;
-            var id = (Guid?)BatchGroup2FormView.DataKey.Value;
-            if (id == null) return;
-            var d = new Dictionary<string, string>() { { "Id", "id" }, { "BatchGroupId", "batchGroupId" }, { "EnableScheduledExport", "enableScheduledExport" }, { "Format", "format" }, { "StartTime", "startTime" }, { "UploadUri", "uploadURI" }, { "CreationTime", "metadata.createdDate" }, { "CreationUserId", "metadata.createdByUserId" }, { "LastWriteTime", "metadata.updatedDate" }, { "LastWriteUserId", "metadata.updatedByUserId" } };
-            var where = Global.Trim(string.Join(" and ", new string[]
-            {
-                $"batchGroupId == \"{id}\"",
-                Global.GetCqlFilter(BatchVoucherExportConfig2sRadGrid, "Id", "id"),
-                Global.GetCqlFilter(BatchVoucherExportConfig2sRadGrid, "EnableScheduledExport", "enableScheduledExport"),
-                Global.GetCqlFilter(BatchVoucherExportConfig2sRadGrid, "Format", "format"),
-                Global.GetCqlFilter(BatchVoucherExportConfig2sRadGrid, "StartTime", "startTime"),
-                Global.GetCqlFilter(BatchVoucherExportConfig2sRadGrid, "UploadUri", "uploadURI"),
-                Global.GetCqlFilter(BatchVoucherExportConfig2sRadGrid, "CreationTime", "metadata.createdDate"),
-                Global.GetCqlFilter(BatchVoucherExportConfig2sRadGrid, "CreationUser.Username", "metadata.createdByUserId", "username", folioServiceContext.FolioServiceClient.Users),
-                Global.GetCqlFilter(BatchVoucherExportConfig2sRadGrid, "LastWriteTime", "metadata.updatedDate"),
-                Global.GetCqlFilter(BatchVoucherExportConfig2sRadGrid, "LastWriteUser.Username", "metadata.updatedByUserId", "username", folioServiceContext.FolioServiceClient.Users)
-            }.Where(s => s != null)));
-            BatchVoucherExportConfig2sRadGrid.DataSource = folioServiceContext.BatchVoucherExportConfig2s(out var i, where, BatchVoucherExportConfig2sRadGrid.MasterTableView.SortExpressions.Count > 0 ? $"{d[BatchVoucherExportConfig2sRadGrid.MasterTableView.SortExpressions[0].FieldName]}{(BatchVoucherExportConfig2sRadGrid.MasterTableView.SortExpressions[0].SortOrder == GridSortOrder.Descending ? "/sort.descending" : "")}" : null, BatchVoucherExportConfig2sRadGrid.PageSize * BatchVoucherExportConfig2sRadGrid.CurrentPageIndex, BatchVoucherExportConfig2sRadGrid.PageSize, true);
-            BatchVoucherExportConfig2sRadGrid.VirtualItemCount = i;
-            if (BatchVoucherExportConfig2sRadGrid.MasterTableView.FilterExpression == "")
-            {
-                BatchVoucherExportConfig2sRadGrid.AllowFilteringByColumn = BatchVoucherExportConfig2sRadGrid.VirtualItemCount > 10;
-                BatchVoucherExportConfig2sPanel.Visible = BatchGroup2FormView.DataKey.Value != null && Session["BatchVoucherExportConfig2sPermission"] != null && BatchVoucherExportConfig2sRadGrid.VirtualItemCount > 0;
-            }
-            traceSource.TraceEvent(TraceEventType.Verbose, 0, $"where = {where}");
-        }
-
         protected void Invoice2sRadGrid_NeedDataSource(object sender, GridNeedDataSourceEventArgs e)
         {
             if (Session["Invoice2sPermission"] == null) return;

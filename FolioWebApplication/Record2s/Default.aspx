@@ -48,7 +48,7 @@
                             </ItemTemplate>
                         </telerik:GridTemplateColumn>
                         <telerik:GridBoundColumn HeaderText="Last Write Time" DataField="LastWriteTime" AllowFiltering="false" AllowSorting="false" DataFormatString="{0:g}" />
-                        <telerik:GridBoundColumn HeaderText="Instance Hrid" DataField="InstanceHrid" AllowFiltering="false" AllowSorting="false" HtmlEncode="true" />
+                        <telerik:GridBoundColumn HeaderText="Instance Short Id" DataField="InstanceShortId" AllowFiltering="false" AllowSorting="false" HtmlEncode="true" />
                         <telerik:GridBoundColumn HeaderText="Error Record 2" DataField="ErrorRecord2" AllowFiltering="false" AllowSorting="false" />
                         <telerik:GridBoundColumn HeaderText="Marc Record 2" DataField="MarcRecord2" AllowFiltering="false" AllowSorting="false" />
                         <telerik:GridBoundColumn HeaderText="Raw Record 2" DataField="RawRecord2" AllowFiltering="false" AllowSorting="false" />

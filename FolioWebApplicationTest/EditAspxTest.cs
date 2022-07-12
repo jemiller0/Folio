@@ -18,6 +18,33 @@ namespace FolioWebApplicationTest
         private static string Url { get; set; } = ConfigurationManager.AppSettings["url"];
 
         [TestMethod]
+        public void AcquisitionMethod2sEditAspxTest()
+        {
+            var s = Stopwatch.StartNew();
+            try
+            {
+                var am2 = folioServiceContext.AcquisitionMethod2s(take: 1).SingleOrDefault();
+                if (am2 != null)
+                {
+                    var hrm = httpClient.GetAsync($"{Url}/AcquisitionMethod2s/Edit.aspx?Id={am2.Id}").Result;
+                    hrm.EnsureSuccessStatusCode();
+                    Assert.IsTrue(s.Elapsed < timeSpan);
+                }
+                else
+                    Assert.Inconclusive();
+            }
+            catch (Exception e)
+            {
+                traceSource.TraceEvent(TraceEventType.Error, 0, e.ToString());
+                throw;
+            }
+            finally
+            {
+                traceSource.TraceEvent(TraceEventType.Information, 0, $"AcquisitionMethod2sEditAspxTest()\r\n    ElapsedTime={s.Elapsed}");
+            }
+        }
+
+        [TestMethod]
         public void AcquisitionsUnit2sEditAspxTest()
         {
             var s = Stopwatch.StartNew();
@@ -149,60 +176,6 @@ namespace FolioWebApplicationTest
             finally
             {
                 traceSource.TraceEvent(TraceEventType.Information, 0, $"BatchGroup2sEditAspxTest()\r\n    ElapsedTime={s.Elapsed}");
-            }
-        }
-
-        [TestMethod]
-        public void BatchVoucherExport2sEditAspxTest()
-        {
-            var s = Stopwatch.StartNew();
-            try
-            {
-                var bve2 = folioServiceContext.BatchVoucherExport2s(take: 1).SingleOrDefault();
-                if (bve2 != null)
-                {
-                    var hrm = httpClient.GetAsync($"{Url}/BatchVoucherExport2s/Edit.aspx?Id={bve2.Id}").Result;
-                    hrm.EnsureSuccessStatusCode();
-                    Assert.IsTrue(s.Elapsed < timeSpan);
-                }
-                else
-                    Assert.Inconclusive();
-            }
-            catch (Exception e)
-            {
-                traceSource.TraceEvent(TraceEventType.Error, 0, e.ToString());
-                throw;
-            }
-            finally
-            {
-                traceSource.TraceEvent(TraceEventType.Information, 0, $"BatchVoucherExport2sEditAspxTest()\r\n    ElapsedTime={s.Elapsed}");
-            }
-        }
-
-        [TestMethod]
-        public void BatchVoucherExportConfig2sEditAspxTest()
-        {
-            var s = Stopwatch.StartNew();
-            try
-            {
-                var bvec2 = folioServiceContext.BatchVoucherExportConfig2s(take: 1).SingleOrDefault();
-                if (bvec2 != null)
-                {
-                    var hrm = httpClient.GetAsync($"{Url}/BatchVoucherExportConfig2s/Edit.aspx?Id={bvec2.Id}").Result;
-                    hrm.EnsureSuccessStatusCode();
-                    Assert.IsTrue(s.Elapsed < timeSpan);
-                }
-                else
-                    Assert.Inconclusive();
-            }
-            catch (Exception e)
-            {
-                traceSource.TraceEvent(TraceEventType.Error, 0, e.ToString());
-                throw;
-            }
-            finally
-            {
-                traceSource.TraceEvent(TraceEventType.Information, 0, $"BatchVoucherExportConfig2sEditAspxTest()\r\n    ElapsedTime={s.Elapsed}");
             }
         }
 

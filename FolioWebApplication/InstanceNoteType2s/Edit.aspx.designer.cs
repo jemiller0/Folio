@@ -9,9 +9,9 @@ namespace FolioWebApplication.InstanceNoteType2s
 
         protected FormView InstanceNoteType2FormView;
 
-        protected Panel Note2sPanel;
+        protected Panel InstanceNotesPanel;
 
-        protected RadGrid Note2sRadGrid;
+        protected RadGrid InstanceNotesRadGrid;
 
         protected RadAjaxManager RadAjaxManager1;
     }

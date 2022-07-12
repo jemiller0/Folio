@@ -38,13 +38,19 @@ namespace FolioLibrary
         [Column("created_date"), ScaffoldColumn(false)]
         public virtual DateTime? CreationTime { get; set; }
 
-        [Column("created_by_user_id"), ScaffoldColumn(false)]
+        [InverseProperty("ItemDonors"), ScaffoldColumn(false)]
+        public virtual User2 CreationUser { get; set; }
+
+        [Column("created_by_user_id"), Display(Name = "Creation User", Order = 7), Editable(false)]
         public virtual Guid? CreationUserId { get; set; }
 
         [Column("updated_date"), ScaffoldColumn(false)]
         public virtual DateTime? LastWriteTime { get; set; }
 
-        [Column("updated_by_user_id"), ScaffoldColumn(false)]
+        [InverseProperty("ItemDonors1"), ScaffoldColumn(false)]
+        public virtual User2 LastWriteUser { get; set; }
+
+        [Column("updated_by_user_id"), Display(Name = "Last Write User", Order = 10), Editable(false)]
         public virtual Guid? LastWriteUserId { get; set; }
 
         public override string ToString() => $"{{ {nameof(Id)} = {Id}, {nameof(ItemId)} = {ItemId}, {nameof(DonorCode)} = {DonorCode}, {nameof(CreationTime)} = {CreationTime}, {nameof(CreationUserId)} = {CreationUserId}, {nameof(LastWriteTime)} = {LastWriteTime}, {nameof(LastWriteUserId)} = {LastWriteUserId} }}";

@@ -41,7 +41,7 @@ namespace FolioWebApplication.Record2s
                 Global.GetCqlFilter(Record2sRadGrid, "CreationTime", "metadata.createdDate"),
                 Global.GetCqlFilter(Record2sRadGrid, "LastWriteUser.Username", "metadata.updatedByUserId", "username", folioServiceContext.FolioServiceClient.Users),
                 Global.GetCqlFilter(Record2sRadGrid, "LastWriteTime", "metadata.updatedDate"),
-                Global.GetCqlFilter(Record2sRadGrid, "InstanceHrid", "")
+                Global.GetCqlFilter(Record2sRadGrid, "InstanceShortId", "")
             }.Where(s => s != null)));
             Record2sRadGrid.DataSource = folioServiceContext.Record2s(out var i, where, Record2sRadGrid.MasterTableView.SortExpressions.Count > 0 ? $"{d[Record2sRadGrid.MasterTableView.SortExpressions[0].FieldName]}{(Record2sRadGrid.MasterTableView.SortExpressions[0].SortOrder == GridSortOrder.Descending ? "/sort.descending" : "")}" : null, Record2sRadGrid.PageSize * Record2sRadGrid.CurrentPageIndex, Record2sRadGrid.PageSize, true);
             Record2sRadGrid.VirtualItemCount = i;
@@ -56,7 +56,7 @@ namespace FolioWebApplication.Record2s
             Response.Charset = "utf-8";
             Response.AppendHeader("Content-Disposition", "attachment; filename=\"Record2s.txt\"");
             Response.BufferOutput = false;
-            Response.Write("Id\tSnapshot\tSnapshotId\tMatchedId\tGeneration\tRecordType\tInstance\tInstanceId\tState\tLeaderRecordStatus\tOrder\tSuppressDiscovery\tCreationUser\tCreationUserId\tCreationTime\tLastWriteUser\tLastWriteUserId\tLastWriteTime\tInstanceHrid\tErrorRecord2\tMarcRecord2\tRawRecord2\r\n");
+            Response.Write("Id\tSnapshot\tSnapshotId\tMatchedId\tGeneration\tRecordType\tInstance\tInstanceId\tState\tLeaderRecordStatus\tOrder\tSuppressDiscovery\tCreationUser\tCreationUserId\tCreationTime\tLastWriteUser\tLastWriteUserId\tLastWriteTime\tInstanceShortId\tErrorRecord2\tMarcRecord2\tRawRecord2\r\n");
             var d = new Dictionary<string, string>() { { "Id", "id" }, { "SnapshotId", "snapshotId" }, { "MatchedId", "matchedId" }, { "Generation", "generation" }, { "RecordType", "recordType" }, { "InstanceId", "externalIdsHolder.instanceId" }, { "State", "state" }, { "LeaderRecordStatus", "leaderRecordStatus" }, { "Order", "order" }, { "SuppressDiscovery", "additionalInfo.suppressDiscovery" }, { "CreationUserId", "metadata.createdByUserId" }, { "CreationTime", "metadata.createdDate" }, { "LastWriteUserId", "metadata.updatedByUserId" }, { "LastWriteTime", "metadata.updatedDate" } };
             var where = Global.Trim(string.Join(" and ", new string[]
             {
@@ -74,10 +74,10 @@ namespace FolioWebApplication.Record2s
                 Global.GetCqlFilter(Record2sRadGrid, "CreationTime", "metadata.createdDate"),
                 Global.GetCqlFilter(Record2sRadGrid, "LastWriteUser.Username", "metadata.updatedByUserId", "username", folioServiceContext.FolioServiceClient.Users),
                 Global.GetCqlFilter(Record2sRadGrid, "LastWriteTime", "metadata.updatedDate"),
-                Global.GetCqlFilter(Record2sRadGrid, "InstanceHrid", "")
+                Global.GetCqlFilter(Record2sRadGrid, "InstanceShortId", "")
             }.Where(s => s != null)));
             foreach (var r2 in folioServiceContext.Record2s(where, Record2sRadGrid.MasterTableView.SortExpressions.Count > 0 ? $"{d[Record2sRadGrid.MasterTableView.SortExpressions[0].FieldName]}{(Record2sRadGrid.MasterTableView.SortExpressions[0].SortOrder == GridSortOrder.Descending ? "/sort.descending" : "")}" : null, load: true))
-                Response.Write($"{r2.Id}\t{r2.Snapshot?.Id}\t{r2.SnapshotId}\t{r2.MatchedId}\t{r2.Generation}\t{Global.TextEncode(r2.RecordType)}\t{Global.TextEncode(r2.Instance?.Title)}\t{r2.InstanceId}\t{Global.TextEncode(r2.State)}\t{Global.TextEncode(r2.LeaderRecordStatus)}\t{r2.Order}\t{r2.SuppressDiscovery}\t{Global.TextEncode(r2.CreationUser?.Username)}\t{r2.CreationUserId}\t{r2.CreationTime:M/d/yyyy HH:mm:ss}\t{Global.TextEncode(r2.LastWriteUser?.Username)}\t{r2.LastWriteUserId}\t{r2.LastWriteTime:M/d/yyyy HH:mm:ss}\t{Global.TextEncode(r2.InstanceHrid)}\t{r2.ErrorRecord2?.Id}\t{r2.MarcRecord2?.Id}\t{r2.RawRecord2?.Id}\r\n");
+                Response.Write($"{r2.Id}\t{r2.Snapshot?.Id}\t{r2.SnapshotId}\t{r2.MatchedId}\t{r2.Generation}\t{Global.TextEncode(r2.RecordType)}\t{Global.TextEncode(r2.Instance?.Title)}\t{r2.InstanceId}\t{Global.TextEncode(r2.State)}\t{Global.TextEncode(r2.LeaderRecordStatus)}\t{r2.Order}\t{r2.SuppressDiscovery}\t{Global.TextEncode(r2.CreationUser?.Username)}\t{r2.CreationUserId}\t{r2.CreationTime:M/d/yyyy HH:mm:ss}\t{Global.TextEncode(r2.LastWriteUser?.Username)}\t{r2.LastWriteUserId}\t{r2.LastWriteTime:M/d/yyyy HH:mm:ss}\t{Global.TextEncode(r2.InstanceShortId)}\t{r2.ErrorRecord2?.Id}\t{r2.MarcRecord2?.Id}\t{r2.RawRecord2?.Id}\r\n");
             Response.End();
         }
 

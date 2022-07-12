@@ -31,29 +31,34 @@ namespace FolioLibrary
         [Column("id"), Display(Order = 1), Editable(false), JsonProperty("id")]
         public virtual Guid? Id { get; set; }
 
-        [Column("name"), Display(Order = 2), JsonProperty("name"), Required, StringLength(1024)]
+        [Column("_version"), JsonProperty("_version"), ScaffoldColumn(false)]
+        public virtual int? Version { get; set; }
+
+        [Column("name"), Display(Order = 3), JsonProperty("name"), Required, StringLength(1024)]
         public virtual string Name { get; set; }
 
-        [Column("content"), CustomValidation(typeof(FundType), nameof(ValidateContent)), DataType(DataType.MultilineText), Display(Order = 3), Editable(false)]
+        [Column("content"), CustomValidation(typeof(FundType), nameof(ValidateContent)), DataType(DataType.MultilineText), Display(Order = 4), Editable(false)]
         public virtual string Content { get; set; }
 
-        [Display(Name = "Funds", Order = 4)]
+        [Display(Name = "Funds", Order = 5)]
         public virtual ICollection<Fund2> Fund2s { get; set; }
 
-        [Display(Name = "Ledger Rollover Budgets Rollovers", Order = 5)]
+        [Display(Name = "Ledger Rollover Budgets Rollovers", Order = 6)]
         public virtual ICollection<LedgerRolloverBudgetsRollover> LedgerRolloverBudgetsRollovers { get; set; }
 
-        public override string ToString() => $"{{ {nameof(Id)} = {Id}, {nameof(Name)} = {Name}, {nameof(Content)} = {Content} }}";
+        public override string ToString() => $"{{ {nameof(Id)} = {Id}, {nameof(Version)} = {Version}, {nameof(Name)} = {Name}, {nameof(Content)} = {Content} }}";
 
         public static FundType2 FromJObject(JObject jObject) => jObject != null ? new FundType2
         {
             Id = (Guid?)jObject.SelectToken("id"),
+            Version = (int?)jObject.SelectToken("_version"),
             Name = (string)jObject.SelectToken("name"),
             Content = JsonConvert.SerializeObject(jObject, FolioDapperContext.UniversalTimeJsonSerializationSettings)
         } : null;
 
         public JObject ToJObject() => new JObject(
             new JProperty("id", Id),
+            new JProperty("_version", Version),
             new JProperty("name", Name)).RemoveNullAndEmptyProperties();
     }
 }

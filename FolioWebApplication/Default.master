@@ -136,19 +136,18 @@
                             <telerik:RadMenuItem Text="Statuses" NavigateUrl="~/Statuses/Default.aspx" Visible='<%# Session["StatusesPermission"] != null %>' />
                         </Items>
                     </telerik:RadMenuItem>
-                    <telerik:RadMenuItem Text="Invoices" Visible='<%# Session["BatchGroup2sPermission"] != null || Session["BatchVoucherExport2sPermission"] != null || Session["BatchVoucherExportConfig2sPermission"] != null || Session["Invoice2sPermission"] != null || Session["InvoiceItem2sPermission"] != null || Session["Voucher2sPermission"] != null || Session["VoucherItem2sPermission"] != null %>'>
+                    <telerik:RadMenuItem Text="Invoices" Visible='<%# Session["BatchGroup2sPermission"] != null || Session["Invoice2sPermission"] != null || Session["InvoiceItem2sPermission"] != null || Session["Voucher2sPermission"] != null || Session["VoucherItem2sPermission"] != null %>'>
                         <Items>
                             <telerik:RadMenuItem Text="Batch Groups" NavigateUrl="~/BatchGroup2s/Default.aspx" Visible='<%# Session["BatchGroup2sPermission"] != null %>' />
-                            <telerik:RadMenuItem Text="Batch Voucher Export Configs" NavigateUrl="~/BatchVoucherExportConfig2s/Default.aspx" Visible='<%# Session["BatchVoucherExportConfig2sPermission"] != null %>' />
-                            <telerik:RadMenuItem Text="Batch Voucher Exports" NavigateUrl="~/BatchVoucherExport2s/Default.aspx" Visible='<%# Session["BatchVoucherExport2sPermission"] != null %>' />
                             <telerik:RadMenuItem Text="Invoice Items" NavigateUrl="~/InvoiceItem2s/Default.aspx" Visible='<%# Session["InvoiceItem2sPermission"] != null %>' />
                             <telerik:RadMenuItem Text="Invoices" NavigateUrl="~/Invoice2s/Default.aspx" Visible='<%# Session["Invoice2sPermission"] != null %>' />
                             <telerik:RadMenuItem Text="Voucher Items" NavigateUrl="~/VoucherItem2s/Default.aspx" Visible='<%# Session["VoucherItem2sPermission"] != null %>' />
                             <telerik:RadMenuItem Text="Vouchers" NavigateUrl="~/Voucher2s/Default.aspx" Visible='<%# Session["Voucher2sPermission"] != null %>' />
                         </Items>
                     </telerik:RadMenuItem>
-                    <telerik:RadMenuItem Text="Orders" Visible='<%# Session["AcquisitionsUnit2sPermission"] != null || Session["Alert2sPermission"] != null || Session["CloseReason2sPermission"] != null || Session["Order2sPermission"] != null || Session["OrderInvoice2sPermission"] != null || Session["OrderItem2sPermission"] != null || Session["OrderTemplate2sPermission"] != null || Session["Prefix2sPermission"] != null || Session["Receiving2sPermission"] != null || Session["ReportingCode2sPermission"] != null || Session["Suffix2sPermission"] != null || Session["Title2sPermission"] != null || Session["UserAcquisitionsUnit2sPermission"] != null %>'>
+                    <telerik:RadMenuItem Text="Orders" Visible='<%# Session["AcquisitionMethod2sPermission"] != null || Session["AcquisitionsUnit2sPermission"] != null || Session["Alert2sPermission"] != null || Session["CloseReason2sPermission"] != null || Session["Order2sPermission"] != null || Session["OrderInvoice2sPermission"] != null || Session["OrderItem2sPermission"] != null || Session["OrderTemplate2sPermission"] != null || Session["Prefix2sPermission"] != null || Session["Receiving2sPermission"] != null || Session["ReportingCode2sPermission"] != null || Session["Suffix2sPermission"] != null || Session["Title2sPermission"] != null || Session["UserAcquisitionsUnit2sPermission"] != null %>'>
                         <Items>
+                            <telerik:RadMenuItem Text="Acquisition Methods" NavigateUrl="~/AcquisitionMethod2s/Default.aspx" Visible='<%# Session["AcquisitionMethod2sPermission"] != null %>' />
                             <telerik:RadMenuItem Text="Acquisitions Units" NavigateUrl="~/AcquisitionsUnit2s/Default.aspx" Visible='<%# Session["AcquisitionsUnit2sPermission"] != null %>' />
                             <telerik:RadMenuItem Text="Alerts" NavigateUrl="~/Alert2s/Default.aspx" Visible='<%# Session["Alert2sPermission"] != null %>' />
                             <telerik:RadMenuItem Text="Close Reasons" NavigateUrl="~/CloseReason2s/Default.aspx" Visible='<%# Session["CloseReason2sPermission"] != null %>' />

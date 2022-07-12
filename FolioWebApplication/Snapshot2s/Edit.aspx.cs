@@ -53,7 +53,7 @@ namespace FolioWebApplication.Snapshot2s
                 Global.GetCqlFilter(Record2sRadGrid, "CreationTime", "metadata.createdDate"),
                 Global.GetCqlFilter(Record2sRadGrid, "LastWriteUser.Username", "metadata.updatedByUserId", "username", folioServiceContext.FolioServiceClient.Users),
                 Global.GetCqlFilter(Record2sRadGrid, "LastWriteTime", "metadata.updatedDate"),
-                Global.GetCqlFilter(Record2sRadGrid, "InstanceHrid", "")
+                Global.GetCqlFilter(Record2sRadGrid, "InstanceShortId", "")
             }.Where(s => s != null)));
             Record2sRadGrid.DataSource = folioServiceContext.Record2s(out var i, where, Record2sRadGrid.MasterTableView.SortExpressions.Count > 0 ? $"{d[Record2sRadGrid.MasterTableView.SortExpressions[0].FieldName]}{(Record2sRadGrid.MasterTableView.SortExpressions[0].SortOrder == GridSortOrder.Descending ? "/sort.descending" : "")}" : null, Record2sRadGrid.PageSize * Record2sRadGrid.CurrentPageIndex, Record2sRadGrid.PageSize, true);
             Record2sRadGrid.VirtualItemCount = i;

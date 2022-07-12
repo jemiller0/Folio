@@ -3,6 +3,19 @@ CREATE SCHEMA uc;
 CREATE FUNCTION uc.date_cast(IN TEXT) RETURNS DATE LANGUAGE PLPGSQL IMMUTABLE AS 'BEGIN RETURN $1::DATE; EXCEPTION WHEN OTHERS THEN RETURN NULL; END';
 CREATE FUNCTION uc.timestamp_cast(IN TEXT) RETURNS TIMESTAMP WITH TIME ZONE LANGUAGE PLPGSQL IMMUTABLE AS 'BEGIN RETURN $1::TIMESTAMP WITH TIME ZONE; EXCEPTION WHEN OTHERS THEN RETURN NULL; END';
 CREATE FUNCTION uc.int_cast(IN TEXT) RETURNS INT LANGUAGE PLPGSQL IMMUTABLE AS 'BEGIN RETURN $1::INT; EXCEPTION WHEN OTHERS THEN RETURN NULL; END';
+CREATE VIEW uc.acquisition_methods AS
+SELECT
+am.id AS id,
+am.jsonb->>'value' AS value,
+am.jsonb->>'source' AS source,
+uc.TIMESTAMP_CAST(jsonb#>>'{metadata,createdDate}' || CASE WHEN jsonb#>>'{metadata,createdDate}' !~ '([-+]\d\d:\d\d)|Z$' THEN '+00:00' ELSE '' END) AS created_date,
+CAST(am.jsonb#>>'{metadata,createdByUserId}' AS UUID) AS created_by_user_id,
+am.jsonb#>>'{metadata,createdByUsername}' AS created_by_username,
+uc.TIMESTAMP_CAST(am.jsonb#>>'{metadata,updatedDate}') AS updated_date,
+CAST(am.jsonb#>>'{metadata,updatedByUserId}' AS UUID) AS updated_by_user_id,
+am.jsonb#>>'{metadata,updatedByUsername}' AS updated_by_username,
+jsonb_pretty(COALESCE(jsonb_set(jsonb, '{metadata,createdDate}', ('"' || (jsonb#>>'{metadata,createdDate}') || CASE WHEN jsonb#>>'{metadata,createdDate}' !~ '([-+]\d\d:\d\d)|Z$' THEN '+00:00' ELSE '' END || '"')::jsonb), jsonb)) AS content
+FROM uchicago_mod_orders_storage.acquisition_method am;
 CREATE VIEW uc.acquisitions_units AS
 SELECT
 au.id AS id,
@@ -88,97 +101,6 @@ CAST(bg.jsonb#>>'{metadata,updatedByUserId}' AS UUID) AS updated_by_user_id,
 bg.jsonb#>>'{metadata,updatedByUsername}' AS updated_by_username,
 jsonb_pretty(COALESCE(jsonb_set(jsonb, '{metadata,createdDate}', ('"' || (jsonb#>>'{metadata,createdDate}') || CASE WHEN jsonb#>>'{metadata,createdDate}' !~ '([-+]\d\d:\d\d)|Z$' THEN '+00:00' ELSE '' END || '"')::jsonb), jsonb)) AS content
 FROM uchicago_mod_invoice_storage.batch_groups bg;
-CREATE VIEW uc.batch_voucher_batched_voucher_batched_voucher_line_fund_codes AS
-SELECT
-uuid_generate_v5(bv.id, bvbv.ordinality::text || '-' || bvbvbvl.ordinality::text || '-' || bvbvbvlfc.ordinality::text)::text AS id,
-uuid_generate_v5(bv.id, bvbv.ordinality::text || '-' || bvbvbvl.ordinality::text)::text AS batch_voucher_batched_voucher_batched_voucher_line_id,
-CAST(bvbvbvlfc.jsonb AS VARCHAR(1024)) AS content
-FROM uchicago_mod_invoice_storage.batch_vouchers bv, jsonb_array_elements(bv.jsonb->'batchedVouchers') WITH ORDINALITY bvbv (jsonb), jsonb_array_elements(bvbv.jsonb->'batchedVoucherLines') WITH ORDINALITY bvbvbvl (jsonb), jsonb_array_elements_text(bvbvbvl.jsonb->'fundCodes') WITH ORDINALITY bvbvbvlfc (jsonb);
-CREATE VIEW uc.batch_voucher_batched_voucher_batched_voucher_lines AS
-SELECT
-uuid_generate_v5(bv.id, bvbv.ordinality::text || '-' || bvbvbvl.ordinality::text)::text AS id,
-uuid_generate_v5(bv.id, bvbv.ordinality::text)::text AS batch_voucher_batched_voucher_id,
-CAST(bvbvbvl.jsonb->>'amount' AS DECIMAL(19,2)) AS amount,
-bvbvbvl.jsonb->>'externalAccountNumber' AS external_account_number
-FROM uchicago_mod_invoice_storage.batch_vouchers bv, jsonb_array_elements(bv.jsonb->'batchedVouchers') WITH ORDINALITY bvbv (jsonb), jsonb_array_elements(bvbv.jsonb->'batchedVoucherLines') WITH ORDINALITY bvbvbvl (jsonb);
-CREATE VIEW uc.batch_voucher_batched_vouchers AS
-SELECT
-uuid_generate_v5(bv.id, bvbv.ordinality::text)::text AS id,
-bv.id AS batch_voucher_id,
-bvbv.jsonb->>'accountingCode' AS accounting_code,
-bvbv.jsonb->>'accountNo' AS account_no,
-CAST(bvbv.jsonb->>'amount' AS DECIMAL(19,2)) AS amount,
-bvbv.jsonb->>'disbursementNumber' AS disbursement_number,
-uc.DATE_CAST(bvbv.jsonb->>'disbursementDate') AS disbursement_date,
-CAST(bvbv.jsonb->>'disbursementAmount' AS DECIMAL(19,2)) AS disbursement_amount,
-CAST(bvbv.jsonb->>'enclosureNeeded' AS BOOLEAN) AS enclosure_needed,
-CAST(bvbv.jsonb->>'exchangeRate' AS DECIMAL(19,2)) AS exchange_rate,
-bvbv.jsonb->>'folioInvoiceNo' AS folio_invoice_no,
-bvbv.jsonb->>'invoiceCurrency' AS invoice_currency,
-bvbv.jsonb->>'invoiceNote' AS invoice_note,
-bvbv.jsonb->>'status' AS status,
-bvbv.jsonb->>'systemCurrency' AS system_currency,
-bvbv.jsonb->>'type' AS type,
-bvbv.jsonb->>'vendorInvoiceNo' AS vendor_invoice_no,
-bvbv.jsonb->>'vendorName' AS vendor_name,
-uc.DATE_CAST(bvbv.jsonb->>'voucherDate') AS voucher_date,
-bvbv.jsonb->>'voucherNumber' AS voucher_number,
-bvbv.jsonb#>>'{vendorAddress,addressLine1}' AS vendor_address_address_line1,
-bvbv.jsonb#>>'{vendorAddress,addressLine2}' AS vendor_address_address_line2,
-bvbv.jsonb#>>'{vendorAddress,city}' AS vendor_address_city,
-bvbv.jsonb#>>'{vendorAddress,stateRegion}' AS vendor_address_state_region,
-bvbv.jsonb#>>'{vendorAddress,zipCode}' AS vendor_address_zip_code,
-bvbv.jsonb#>>'{vendorAddress,country}' AS vendor_address_country
-FROM uchicago_mod_invoice_storage.batch_vouchers bv, jsonb_array_elements(bv.jsonb->'batchedVouchers') WITH ORDINALITY bvbv (jsonb);
-CREATE VIEW uc.batch_vouchers AS
-SELECT
-bv.id AS id,
-bv.jsonb->>'batchGroup' AS batch_group,
-uc.TIMESTAMP_CAST(bv.jsonb->>'created') AS created,
-uc.TIMESTAMP_CAST(bv.jsonb->>'start') AS start,
-uc.TIMESTAMP_CAST(bv.jsonb->>'end') AS end,
-CAST(bv.jsonb->>'totalRecords' AS INTEGER) AS total_records,
-jsonb_pretty(bv.jsonb) AS content
-FROM uchicago_mod_invoice_storage.batch_vouchers bv;
-CREATE VIEW uc.batch_voucher_exports AS
-SELECT
-bve.id AS id,
-bve.jsonb->>'status' AS status,
-bve.jsonb->>'message' AS message,
-CAST(bve.jsonb->>'batchGroupId' AS UUID) AS batch_group_id,
-uc.TIMESTAMP_CAST(bve.jsonb->>'start') AS start,
-uc.TIMESTAMP_CAST(bve.jsonb->>'end') AS end,
-CAST(bve.jsonb->>'batchVoucherId' AS UUID) AS batch_voucher_id,
-uc.TIMESTAMP_CAST(jsonb#>>'{metadata,createdDate}' || CASE WHEN jsonb#>>'{metadata,createdDate}' !~ '([-+]\d\d:\d\d)|Z$' THEN '+00:00' ELSE '' END) AS created_date,
-CAST(bve.jsonb#>>'{metadata,createdByUserId}' AS UUID) AS created_by_user_id,
-bve.jsonb#>>'{metadata,createdByUsername}' AS created_by_username,
-uc.TIMESTAMP_CAST(bve.jsonb#>>'{metadata,updatedDate}') AS updated_date,
-CAST(bve.jsonb#>>'{metadata,updatedByUserId}' AS UUID) AS updated_by_user_id,
-bve.jsonb#>>'{metadata,updatedByUsername}' AS updated_by_username,
-jsonb_pretty(COALESCE(jsonb_set(jsonb, '{metadata,createdDate}', ('"' || (jsonb#>>'{metadata,createdDate}') || CASE WHEN jsonb#>>'{metadata,createdDate}' !~ '([-+]\d\d:\d\d)|Z$' THEN '+00:00' ELSE '' END || '"')::jsonb), jsonb)) AS content
-FROM uchicago_mod_invoice_storage.batch_voucher_exports bve;
-CREATE VIEW uc.batch_voucher_export_config_weekdays AS
-SELECT
-uuid_generate_v5(bvec.id, bvecw.ordinality::text)::text AS id,
-bvec.id AS batch_voucher_export_config_id,
-CAST(bvecw.jsonb AS VARCHAR(1024)) AS content
-FROM uchicago_mod_invoice_storage.batch_voucher_export_configs bvec, jsonb_array_elements_text(bvec.jsonb->'weekdays') WITH ORDINALITY bvecw (jsonb);
-CREATE VIEW uc.batch_voucher_export_configs AS
-SELECT
-bvec.id AS id,
-CAST(bvec.jsonb->>'batchGroupId' AS UUID) AS batch_group_id,
-CAST(bvec.jsonb->>'enableScheduledExport' AS BOOLEAN) AS enable_scheduled_export,
-bvec.jsonb->>'format' AS format,
-bvec.jsonb->>'startTime' AS start_time,
-bvec.jsonb->>'uploadURI' AS upload_uri,
-uc.TIMESTAMP_CAST(jsonb#>>'{metadata,createdDate}' || CASE WHEN jsonb#>>'{metadata,createdDate}' !~ '([-+]\d\d:\d\d)|Z$' THEN '+00:00' ELSE '' END) AS created_date,
-CAST(bvec.jsonb#>>'{metadata,createdByUserId}' AS UUID) AS created_by_user_id,
-bvec.jsonb#>>'{metadata,createdByUsername}' AS created_by_username,
-uc.TIMESTAMP_CAST(bvec.jsonb#>>'{metadata,updatedDate}') AS updated_date,
-CAST(bvec.jsonb#>>'{metadata,updatedByUserId}' AS UUID) AS updated_by_user_id,
-bvec.jsonb#>>'{metadata,updatedByUsername}' AS updated_by_username,
-jsonb_pretty(COALESCE(jsonb_set(jsonb, '{metadata,createdDate}', ('"' || (jsonb#>>'{metadata,createdDate}') || CASE WHEN jsonb#>>'{metadata,createdDate}' !~ '([-+]\d\d:\d\d)|Z$' THEN '+00:00' ELSE '' END || '"')::jsonb), jsonb)) AS content
-FROM uchicago_mod_invoice_storage.batch_voucher_export_configs bvec;
 CREATE VIEW uc.blocks AS
 SELECT
 b.id AS id,
@@ -260,6 +182,7 @@ FROM uchicago_mod_finance_storage.budget b, jsonb_array_elements_text(b.jsonb#>'
 CREATE VIEW uc.budgets AS
 SELECT
 b.id AS id,
+CAST(b.jsonb->>'_version' AS INTEGER) AS _version,
 b.jsonb->>'name' AS name,
 b.jsonb->>'budgetStatus' AS budget_status,
 CAST(b.jsonb->>'allowableEncumbrance' AS DECIMAL(19,2)) AS allowable_encumbrance,
@@ -291,6 +214,7 @@ FROM uchicago_mod_finance_storage.budget b;
 CREATE VIEW uc.budget_expense_classes AS
 SELECT
 bec.id AS id,
+CAST(bec.jsonb->>'_version' AS INTEGER) AS _version,
 CAST(bec.jsonb->>'budgetId' AS UUID) AS budget_id,
 CAST(bec.jsonb->>'expenseClassId' AS UUID) AS expense_class_id,
 bec.jsonb->>'status' AS status,
@@ -299,6 +223,7 @@ FROM uchicago_mod_finance_storage.budget_expense_class bec;
 CREATE VIEW uc.budget_groups AS
 SELECT
 bg.id AS id,
+CAST(bg.jsonb->>'_version' AS INTEGER) AS _version,
 CAST(bg.jsonb->>'budgetId' AS UUID) AS budget_id,
 CAST(bg.jsonb->>'groupId' AS UUID) AS group_id,
 CAST(bg.jsonb->>'fiscalYearId' AS UUID) AS fiscal_year_id,
@@ -681,6 +606,7 @@ FROM uchicago_mod_login.event_logs el;
 CREATE VIEW uc.expense_classes AS
 SELECT
 ec.id AS id,
+CAST(ec.jsonb->>'_version' AS INTEGER) AS _version,
 ec.jsonb->>'code' AS code,
 ec.jsonb->>'externalAccountNumberExt' AS external_account_number_ext,
 ec.jsonb->>'name' AS name,
@@ -692,20 +618,6 @@ CAST(ec.jsonb#>>'{metadata,updatedByUserId}' AS UUID) AS updated_by_user_id,
 ec.jsonb#>>'{metadata,updatedByUsername}' AS updated_by_username,
 jsonb_pretty(COALESCE(jsonb_set(jsonb, '{metadata,createdDate}', ('"' || (jsonb#>>'{metadata,createdDate}') || CASE WHEN jsonb#>>'{metadata,createdDate}' !~ '([-+]\d\d:\d\d)|Z$' THEN '+00:00' ELSE '' END || '"')::jsonb), jsonb)) AS content
 FROM uchicago_mod_finance_storage.expense_class ec;
-CREATE VIEW uc.export_config_credentials AS
-SELECT
-ecc.id AS id,
-ecc.jsonb->>'username' AS username,
-ecc.jsonb->>'password' AS password,
-CAST(ecc.jsonb->>'exportConfigId' AS UUID) AS export_config_id,
-uc.TIMESTAMP_CAST(jsonb#>>'{metadata,createdDate}' || CASE WHEN jsonb#>>'{metadata,createdDate}' !~ '([-+]\d\d:\d\d)|Z$' THEN '+00:00' ELSE '' END) AS created_date,
-CAST(ecc.jsonb#>>'{metadata,createdByUserId}' AS UUID) AS created_by_user_id,
-ecc.jsonb#>>'{metadata,createdByUsername}' AS created_by_username,
-uc.TIMESTAMP_CAST(ecc.jsonb#>>'{metadata,updatedDate}') AS updated_date,
-CAST(ecc.jsonb#>>'{metadata,updatedByUserId}' AS UUID) AS updated_by_user_id,
-ecc.jsonb#>>'{metadata,updatedByUsername}' AS updated_by_username,
-jsonb_pretty(COALESCE(jsonb_set(jsonb, '{metadata,createdDate}', ('"' || (jsonb#>>'{metadata,createdDate}') || CASE WHEN jsonb#>>'{metadata,createdDate}' !~ '([-+]\d\d:\d\d)|Z$' THEN '+00:00' ELSE '' END || '"')::jsonb), jsonb)) AS content
-FROM uchicago_mod_invoice_storage.export_config_credentials ecc;
 CREATE VIEW uc.fees AS
 SELECT
 f.id AS id,
@@ -767,6 +679,7 @@ FROM uchicago_mod_finance_storage.groups fg, jsonb_array_elements_text(fg.jsonb-
 CREATE VIEW uc.finance_groups AS
 SELECT
 fg.id AS id,
+CAST(fg.jsonb->>'_version' AS INTEGER) AS _version,
 fg.jsonb->>'code' AS code,
 fg.jsonb->>'description' AS description,
 fg.jsonb->>'name' AS name,
@@ -788,6 +701,7 @@ FROM uchicago_mod_finance_storage.fiscal_year fy, jsonb_array_elements_text(fy.j
 CREATE VIEW uc.fiscal_years AS
 SELECT
 fy.id AS id,
+CAST(fy.jsonb->>'_version' AS INTEGER) AS _version,
 fy.jsonb->>'name' AS name,
 fy.jsonb->>'code' AS code,
 fy.jsonb->>'currency' AS currency,
@@ -864,6 +778,7 @@ FROM uchicago_mod_finance_storage.fund f, jsonb_array_elements_text(f.jsonb#>'{t
 CREATE VIEW uc.funds AS
 SELECT
 f.id AS id,
+CAST(f.jsonb->>'_version' AS INTEGER) AS _version,
 f.jsonb->>'code' AS code,
 f.jsonb->>'description' AS description,
 f.jsonb->>'externalAccountNo' AS external_account_no,
@@ -882,6 +797,7 @@ FROM uchicago_mod_finance_storage.fund f;
 CREATE VIEW uc.fund_types AS
 SELECT
 ft.id AS id,
+CAST(ft.jsonb->>'_version' AS INTEGER) AS _version,
 ft.jsonb->>'name' AS name,
 jsonb_pretty(ft.jsonb) AS content
 FROM uchicago_mod_finance_storage.fund_type ft;
@@ -915,6 +831,12 @@ hea.jsonb->>'materialsSpecification' AS materials_specification,
 hea.jsonb->>'publicNote' AS public_note,
 CAST(hea.jsonb->>'relationshipId' AS UUID) AS relationship_id
 FROM uchicago_mod_inventory_storage.holdings_record h, jsonb_array_elements(h.jsonb->'electronicAccess') WITH ORDINALITY hea (jsonb);
+CREATE VIEW uc.holding_administrative_notes AS
+SELECT
+uuid_generate_v5(h.id, han.ordinality::text)::text AS id,
+h.id AS holding_id,
+CAST(han.jsonb AS VARCHAR(1024)) AS content
+FROM uchicago_mod_inventory_storage.holdings_record h, jsonb_array_elements_text(h.jsonb->'administrativeNotes') WITH ORDINALITY han (jsonb);
 CREATE VIEW uc.holding_notes AS
 SELECT
 uuid_generate_v5(h.id, hn.ordinality::text)::text AS id,
@@ -1168,14 +1090,20 @@ uuid_generate_v5(i.id, l.ordinality::text)::text AS id,
 i.id AS instance_id,
 CAST(l.jsonb AS VARCHAR(1024)) AS content
 FROM uchicago_mod_inventory_storage.instance i, jsonb_array_elements_text(i.jsonb->'languages') WITH ORDINALITY l (jsonb);
-CREATE VIEW uc.notes AS
+CREATE VIEW uc.instance_notes AS
 SELECT
-uuid_generate_v5(i.id, n.ordinality::text)::text AS id,
+uuid_generate_v5(i.id, "in".ordinality::text)::text AS id,
 i.id AS instance_id,
-CAST(n.jsonb->>'instanceNoteTypeId' AS UUID) AS instance_note_type_id,
-n.jsonb->>'note' AS note,
-CAST(n.jsonb->>'staffOnly' AS BOOLEAN) AS staff_only
-FROM uchicago_mod_inventory_storage.instance i, jsonb_array_elements(i.jsonb->'notes') WITH ORDINALITY n (jsonb);
+CAST("in".jsonb->>'instanceNoteTypeId' AS UUID) AS instance_note_type_id,
+"in".jsonb->>'note' AS note,
+CAST("in".jsonb->>'staffOnly' AS BOOLEAN) AS staff_only
+FROM uchicago_mod_inventory_storage.instance i, jsonb_array_elements(i.jsonb->'notes') WITH ORDINALITY "in" (jsonb);
+CREATE VIEW uc.administrative_notes AS
+SELECT
+uuid_generate_v5(i.id, an.ordinality::text)::text AS id,
+i.id AS instance_id,
+CAST(an.jsonb AS VARCHAR(1024)) AS content
+FROM uchicago_mod_inventory_storage.instance i, jsonb_array_elements_text(i.jsonb->'administrativeNotes') WITH ORDINALITY an (jsonb);
 CREATE VIEW uc.instance_statistical_codes AS
 SELECT
 uuid_generate_v5(i.id, isc.ordinality::text)::text AS id,
@@ -1369,9 +1297,8 @@ uuid_generate_v5(i.id, ia.ordinality::text)::text AS invoice_adjustment_id,
 iafd.jsonb->>'code' AS code,
 CAST(iafd.jsonb->>'encumbrance' AS UUID) AS encumbrance_id,
 CAST(iafd.jsonb->>'fundId' AS UUID) AS fund_id,
-CAST(iafd.jsonb->>'invoiceLineId' AS UUID) AS invoice_item_id,
-iafd.jsonb->>'distributionType' AS distribution_type,
 CAST(iafd.jsonb->>'expenseClassId' AS UUID) AS expense_class_id,
+iafd.jsonb->>'distributionType' AS distribution_type,
 CAST(iafd.jsonb->>'value' AS DECIMAL(19,2)) AS value
 FROM uchicago_mod_invoice_storage.invoices i, jsonb_array_elements(i.jsonb->'adjustments') WITH ORDINALITY ia (jsonb), jsonb_array_elements(ia.jsonb->'fundDistributions') WITH ORDINALITY iafd (jsonb);
 CREATE VIEW uc.invoice_adjustments AS
@@ -1385,7 +1312,8 @@ CAST(ia.jsonb->>'exportToAccounting' AS BOOLEAN) AS export_to_accounting,
 ia.jsonb->>'prorate' AS prorate,
 ia.jsonb->>'relationToTotal' AS relation_to_total,
 ia.jsonb->>'type' AS type,
-CAST(ia.jsonb->>'value' AS DECIMAL(19,2)) AS value
+CAST(ia.jsonb->>'value' AS DECIMAL(19,2)) AS value,
+CAST(ia.jsonb->>'totalAmount' AS DECIMAL(19,2)) AS total_amount
 FROM uchicago_mod_invoice_storage.invoices i, jsonb_array_elements(i.jsonb->'adjustments') WITH ORDINALITY ia (jsonb);
 CREATE VIEW uc.invoice_order_numbers AS
 SELECT
@@ -1455,9 +1383,8 @@ uuid_generate_v5(ii.id, iia.ordinality::text)::text AS invoice_item_adjustment_i
 iiafd.jsonb->>'code' AS code,
 CAST(iiafd.jsonb->>'encumbrance' AS UUID) AS encumbrance_id,
 CAST(iiafd.jsonb->>'fundId' AS UUID) AS fund_id,
-CAST(iiafd.jsonb->>'invoiceLineId' AS UUID) AS invoice_item_id,
-iiafd.jsonb->>'distributionType' AS distribution_type,
 CAST(iiafd.jsonb->>'expenseClassId' AS UUID) AS expense_class_id,
+iiafd.jsonb->>'distributionType' AS distribution_type,
 CAST(iiafd.jsonb->>'value' AS DECIMAL(19,2)) AS value
 FROM uchicago_mod_invoice_storage.invoice_lines ii, jsonb_array_elements(ii.jsonb->'adjustments') WITH ORDINALITY iia (jsonb), jsonb_array_elements(iia.jsonb->'fundDistributions') WITH ORDINALITY iiafd (jsonb);
 CREATE VIEW uc.invoice_item_adjustments AS
@@ -1471,7 +1398,8 @@ CAST(iia.jsonb->>'exportToAccounting' AS BOOLEAN) AS export_to_accounting,
 iia.jsonb->>'prorate' AS prorate,
 iia.jsonb->>'relationToTotal' AS relation_to_total,
 iia.jsonb->>'type' AS type,
-CAST(iia.jsonb->>'value' AS DECIMAL(19,2)) AS value
+CAST(iia.jsonb->>'value' AS DECIMAL(19,2)) AS value,
+CAST(iia.jsonb->>'totalAmount' AS DECIMAL(19,2)) AS total_amount
 FROM uchicago_mod_invoice_storage.invoice_lines ii, jsonb_array_elements(ii.jsonb->'adjustments') WITH ORDINALITY iia (jsonb);
 CREATE VIEW uc.invoice_item_fund_distributions AS
 SELECT
@@ -1480,8 +1408,8 @@ ii.id AS invoice_item_id,
 iifd.jsonb->>'code' AS code,
 CAST(iifd.jsonb->>'encumbrance' AS UUID) AS encumbrance_id,
 CAST(iifd.jsonb->>'fundId' AS UUID) AS fund_id,
-iifd.jsonb->>'distributionType' AS distribution_type,
 CAST(iifd.jsonb->>'expenseClassId' AS UUID) AS expense_class_id,
+iifd.jsonb->>'distributionType' AS distribution_type,
 CAST(iifd.jsonb->>'value' AS DECIMAL(19,2)) AS value
 FROM uchicago_mod_invoice_storage.invoice_lines ii, jsonb_array_elements(ii.jsonb->'fundDistributions') WITH ORDINALITY iifd (jsonb);
 CREATE VIEW uc.invoice_item_reference_numbers AS
@@ -1546,6 +1474,12 @@ uuid_generate_v5(i.id, iyc.ordinality::text)::text AS id,
 i.id AS item_id,
 CAST(iyc.jsonb AS VARCHAR(1024)) AS content
 FROM uchicago_mod_inventory_storage.item i, jsonb_array_elements_text(i.jsonb->'yearCaption') WITH ORDINALITY iyc (jsonb);
+CREATE VIEW uc.item_administrative_notes AS
+SELECT
+uuid_generate_v5(i.id, ian.ordinality::text)::text AS id,
+i.id AS item_id,
+CAST(ian.jsonb AS VARCHAR(1024)) AS content
+FROM uchicago_mod_inventory_storage.item i, jsonb_array_elements_text(i.jsonb->'administrativeNotes') WITH ORDINALITY ian (jsonb);
 CREATE VIEW uc.item_notes AS
 SELECT
 uuid_generate_v5(i.id, "in".ordinality::text)::text AS id,
@@ -1670,76 +1604,6 @@ CAST(int.jsonb#>>'{metadata,updatedByUserId}' AS UUID) AS updated_by_user_id,
 int.jsonb#>>'{metadata,updatedByUsername}' AS updated_by_username,
 jsonb_pretty(COALESCE(jsonb_set(jsonb, '{metadata,createdDate}', ('"' || (jsonb#>>'{metadata,createdDate}') || CASE WHEN jsonb#>>'{metadata,createdDate}' !~ '([-+]\d\d:\d\d)|Z$' THEN '+00:00' ELSE '' END || '"')::jsonb), jsonb)) AS content
 FROM uchicago_mod_inventory_storage.item_note_type int;
-CREATE VIEW uc.job_executions AS
-SELECT
-je.id AS id,
-je.jsonb->>'hrId' AS hr_id,
-CAST(je.jsonb->>'parentJobId' AS UUID) AS parent_job_id,
-je.jsonb->>'subordinationType' AS subordination_type,
-je.jsonb#>>'{jobProfileInfo,name}' AS job_profile_info_name,
-je.jsonb#>>'{jobProfileInfo,dataType}' AS job_profile_info_data_type,
-CAST(je.jsonb#>>'{jobProfileSnapshotWrapper,profileId}' AS UUID) AS job_profile_snapshot_wrapper_profile_id,
-je.jsonb#>>'{jobProfileSnapshotWrapper,contentType}' AS job_profile_snapshot_wrapper_content_type,
-je.jsonb#>>'{jobProfileSnapshotWrapper,reactTo}' AS job_profile_snapshot_wrapper_react_to,
-CAST(je.jsonb#>>'{jobProfileSnapshotWrapper,order}' AS INTEGER) AS job_profile_snapshot_wrapper_order,
-je.jsonb->>'sourcePath' AS source_path,
-je.jsonb->>'fileName' AS file_name,
-je.jsonb#>>'{runBy,firstName}' AS run_by_first_name,
-je.jsonb#>>'{runBy,lastName}' AS run_by_last_name,
-CAST(je.jsonb#>>'{progress,jobExecutionId}' AS UUID) AS progress_job_execution_id,
-CAST(je.jsonb#>>'{progress,current}' AS INTEGER) AS progress_current,
-CAST(je.jsonb#>>'{progress,total}' AS INTEGER) AS progress_total,
-uc.DATE_CAST(je.jsonb->>'startedDate') AS started_date,
-uc.DATE_CAST(je.jsonb->>'completedDate') AS completed_date,
-je.jsonb->>'status' AS status,
-je.jsonb->>'uiStatus' AS ui_status,
-je.jsonb->>'errorStatus' AS error_status,
-CAST(je.jsonb->>'userId' AS UUID) AS user_id,
-jsonb_pretty(je.jsonb) AS content
-FROM uchicago_mod_source_record_manager.job_executions je;
-CREATE VIEW uc.job_execution_progresses AS
-SELECT
-jep.id AS id,
-CAST(jep.jsonb->>'jobExecutionId' AS UUID) AS job_execution_id,
-CAST(jep.jsonb->>'currentlySucceeded' AS INTEGER) AS currently_succeeded,
-CAST(jep.jsonb->>'currentlyFailed' AS INTEGER) AS currently_failed,
-CAST(jep.jsonb->>'total' AS INTEGER) AS total,
-jsonb_pretty(jep.jsonb) AS content
-FROM uchicago_mod_source_record_manager.job_execution_progress jep;
-CREATE VIEW uc.job_execution_source_chunks AS
-SELECT
-jesc.id AS id,
-CAST(jesc.jsonb->>'jobExecutionId' AS UUID) AS job_execution_id,
-CAST(jesc.jsonb->>'last' AS BOOLEAN) AS last,
-jesc.jsonb->>'state' AS state,
-CAST(jesc.jsonb->>'chunkSize' AS INTEGER) AS chunk_size,
-CAST(jesc.jsonb->>'processedAmount' AS INTEGER) AS processed_amount,
-uc.DATE_CAST(jesc.jsonb->>'completedDate') AS completed_date,
-jesc.jsonb->>'error' AS error,
-jsonb_pretty(jesc.jsonb) AS content
-FROM uchicago_mod_source_record_manager.job_execution_source_chunks jesc;
-CREATE VIEW uc.job_monitorings AS
-SELECT
-jm.id AS id,
-jm.job_execution_id AS job_execution_id,
-jm.last_event_timestamp AS last_event_timestamp,
-jm.notification_sent AS notification_sent
-FROM uchicago_mod_source_record_manager.job_monitoring jm;
-CREATE VIEW uc.journal_records AS
-SELECT
-jr.id AS id,
-jr.job_execution_id AS job_execution_id,
-jr.source_id AS source_id,
-jr.entity_type AS entity_type,
-jr.entity_id AS entity_id,
-jr.entity_hrid AS entity_hrid,
-jr.action_type AS action_type,
-jr.action_status AS action_status,
-jr.action_date AS action_date,
-jr.source_record_order AS source_record_order,
-jr.error AS error,
-jr.title AS title
-FROM uchicago_mod_source_record_manager.journal_records jr;
 CREATE VIEW uc.ledger_acquisitions_units AS
 SELECT
 uuid_generate_v5(l.id, lau.ordinality::text)::text AS id,
@@ -1749,6 +1613,7 @@ FROM uchicago_mod_finance_storage.ledger l, jsonb_array_elements_text(l.jsonb->'
 CREATE VIEW uc.ledgers AS
 SELECT
 l.id AS id,
+CAST(l.jsonb->>'_version' AS INTEGER) AS _version,
 l.jsonb->>'name' AS name,
 l.jsonb->>'code' AS code,
 l.jsonb->>'description' AS description,
@@ -1803,6 +1668,7 @@ FROM uchicago_mod_finance_storage.ledger_fiscal_year_rollover lr, jsonb_array_el
 CREATE VIEW uc.ledger_rollovers AS
 SELECT
 lr.id AS id,
+CAST(lr.jsonb->>'_version' AS INTEGER) AS _version,
 CAST(lr.jsonb->>'ledgerId' AS UUID) AS ledger_id,
 CAST(lr.jsonb->>'fromFiscalYearId' AS UUID) AS from_fiscal_year_id,
 CAST(lr.jsonb->>'toFiscalYearId' AS UUID) AS to_fiscal_year_id,
@@ -2138,51 +2004,30 @@ CAST(noct.jsonb#>>'{metadata,updatedByUserId}' AS UUID) AS updated_by_user_id,
 noct.jsonb#>>'{metadata,updatedByUsername}' AS updated_by_username,
 jsonb_pretty(COALESCE(jsonb_set(jsonb, '{metadata,createdDate}', ('"' || (jsonb#>>'{metadata,createdDate}') || CASE WHEN jsonb#>>'{metadata,createdDate}' !~ '([-+]\d\d:\d\d)|Z$' THEN '+00:00' ELSE '' END || '"')::jsonb), jsonb)) AS content
 FROM uchicago_mod_inventory_storage.nature_of_content_term noct;
-CREATE VIEW uc.object_notes AS
+CREATE VIEW uc.notes AS
 SELECT
-uuid_generate_v5(n2.id, "on".ordinality::text)::text AS id,
-n2.id AS note_id,
-CAST("on".jsonb->>'id' AS UUID) AS object_id,
-"on".jsonb->>'type' AS type
-FROM uchicago_mod_notes.note_data n2, jsonb_array_elements(n2.jsonb->'links') WITH ORDINALITY "on" (jsonb);
-CREATE VIEW uc.notes2 AS
-SELECT
-n2.id AS id,
-CAST(n2.jsonb->>'typeId' AS UUID) AS type_id,
-n2.jsonb->>'type' AS type,
-n2.jsonb->>'domain' AS domain,
-CAST(n2.jsonb->>'title' AS VARCHAR(255)) AS title,
-n2.jsonb->>'content' AS content2,
-n2.jsonb->>'status' AS status,
-n2.jsonb#>>'{creator,lastName}' AS creator_last_name,
-n2.jsonb#>>'{creator,firstName}' AS creator_first_name,
-n2.jsonb#>>'{creator,middleName}' AS creator_middle_name,
-n2.jsonb#>>'{updater,lastName}' AS updater_last_name,
-n2.jsonb#>>'{updater,firstName}' AS updater_first_name,
-n2.jsonb#>>'{updater,middleName}' AS updater_middle_name,
-uc.TIMESTAMP_CAST(jsonb#>>'{metadata,createdDate}' || CASE WHEN jsonb#>>'{metadata,createdDate}' !~ '([-+]\d\d:\d\d)|Z$' THEN '+00:00' ELSE '' END) AS created_date,
-CAST(n2.jsonb#>>'{metadata,createdByUserId}' AS UUID) AS created_by_user_id,
-n2.jsonb#>>'{metadata,createdByUsername}' AS created_by_username,
-uc.TIMESTAMP_CAST(n2.jsonb#>>'{metadata,updatedDate}') AS updated_date,
-CAST(n2.jsonb#>>'{metadata,updatedByUserId}' AS UUID) AS updated_by_user_id,
-n2.jsonb#>>'{metadata,updatedByUsername}' AS updated_by_username,
-jsonb_pretty(COALESCE(jsonb_set(jsonb, '{metadata,createdDate}', ('"' || (jsonb#>>'{metadata,createdDate}') || CASE WHEN jsonb#>>'{metadata,createdDate}' !~ '([-+]\d\d:\d\d)|Z$' THEN '+00:00' ELSE '' END || '"')::jsonb), jsonb)) AS content,
-n2.temporary_type_id AS temporary_type_id,
-n2.search_content AS search_content
-FROM uchicago_mod_notes.note_data n2;
+n.id AS id,
+n.title AS title,
+n.content AS content,
+n.indexed_content AS indexed_content,
+n.domain AS domain,
+n.type_id AS type_id,
+n.pop_up_on_user AS pop_up_on_user,
+n.pop_up_on_check_out AS pop_up_on_check_out,
+n.created_by AS creation_user_id,
+n.created_date AS creation_time,
+n.updated_by AS updated_by_user_id,
+n.updated_date AS last_write_time
+FROM uchicago_mod_notes.note n;
 CREATE VIEW uc.note_types AS
 SELECT
 nt.id AS id,
-nt.jsonb->>'name' AS name,
-CAST(nt.jsonb#>>'{usage,noteTotal}' AS INTEGER) AS usage_note_total,
-uc.TIMESTAMP_CAST(jsonb#>>'{metadata,createdDate}' || CASE WHEN jsonb#>>'{metadata,createdDate}' !~ '([-+]\d\d:\d\d)|Z$' THEN '+00:00' ELSE '' END) AS created_date,
-CAST(nt.jsonb#>>'{metadata,createdByUserId}' AS UUID) AS created_by_user_id,
-nt.jsonb#>>'{metadata,createdByUsername}' AS created_by_username,
-uc.TIMESTAMP_CAST(nt.jsonb#>>'{metadata,updatedDate}') AS updated_date,
-CAST(nt.jsonb#>>'{metadata,updatedByUserId}' AS UUID) AS updated_by_user_id,
-nt.jsonb#>>'{metadata,updatedByUsername}' AS updated_by_username,
-jsonb_pretty(COALESCE(jsonb_set(jsonb, '{metadata,createdDate}', ('"' || (jsonb#>>'{metadata,createdDate}') || CASE WHEN jsonb#>>'{metadata,createdDate}' !~ '([-+]\d\d:\d\d)|Z$' THEN '+00:00' ELSE '' END || '"')::jsonb), jsonb)) AS content
-FROM uchicago_mod_notes.note_type nt;
+nt.name AS name,
+nt.created_by AS creation_user_id,
+nt.created_date AS creation_time,
+nt.updated_by AS updated_by_user_id,
+nt.updated_date AS last_write_time
+FROM uchicago_mod_notes.type nt;
 CREATE VIEW uc.order_notes AS
 SELECT
 uuid_generate_v5(o.id, "on".ordinality::text)::text AS id,
@@ -2326,7 +2171,8 @@ oi.id AS id,
 oi.jsonb->>'edition' AS edition,
 CAST(oi.jsonb->>'checkinItems' AS BOOLEAN) AS checkin_items,
 CAST(oi.jsonb->>'agreementId' AS UUID) AS agreement_id,
-oi.jsonb->>'acquisitionMethod' AS acquisition_method,
+CAST(oi.jsonb->>'acquisitionMethod' AS UUID) AS acquisition_method_id,
+CAST(oi.jsonb->>'automaticExport' AS BOOLEAN) AS automatic_export,
 CAST(oi.jsonb->>'cancellationRestriction' AS BOOLEAN) AS cancellation_restriction,
 oi.jsonb->>'cancellationRestrictionNote' AS cancellation_restriction_note,
 CAST(oi.jsonb->>'collection' AS BOOLEAN) AS collection,
@@ -2361,6 +2207,7 @@ CAST(oi.jsonb#>>'{eresource,materialType}' AS UUID) AS eresource_material_type_i
 oi.jsonb#>>'{eresource,resourceUrl}' AS eresource_resource_url,
 CAST(oi.jsonb->>'instanceId' AS UUID) AS instance_id,
 CAST(oi.jsonb->>'isPackage' AS BOOLEAN) AS is_package,
+uc.DATE_CAST(oi.jsonb->>'lastEDIExportDate') AS last_edi_export_date,
 oi.jsonb->>'orderFormat' AS order_format,
 CAST(oi.jsonb->>'packagePoLineId' AS UUID) AS package_po_line_id,
 oi.jsonb->>'paymentStatus' AS payment_status,
@@ -2376,6 +2223,7 @@ oi.jsonb->>'publisher' AS publisher,
 CAST(oi.jsonb->>'purchaseOrderId' AS UUID) AS order_id,
 uc.DATE_CAST(oi.jsonb->>'receiptDate') AS receipt_date,
 oi.jsonb->>'receiptStatus' AS receipt_status,
+oi.jsonb->>'renewalNote' AS renewal_note,
 oi.jsonb->>'requester' AS requester,
 CAST(oi.jsonb->>'rush' AS BOOLEAN) AS rush,
 oi.jsonb->>'selector' AS selector,
@@ -2406,6 +2254,12 @@ ots.id AS id,
 CAST(ots.jsonb->>'numTransactions' AS INTEGER) AS num_transactions,
 jsonb_pretty(ots.jsonb) AS content
 FROM uchicago_mod_finance_storage.order_transaction_summaries ots;
+CREATE VIEW uc.organization_organization_types AS
+SELECT
+uuid_generate_v5(o.id, oot.ordinality::text)::text AS id,
+o.id AS organization_id,
+CAST(oot.jsonb AS VARCHAR(1024)) AS content
+FROM uchicago_mod_organizations_storage.organizations o, jsonb_array_elements_text(o.jsonb->'organizationTypes') WITH ORDINALITY oot (jsonb);
 CREATE VIEW uc.organization_aliases AS
 SELECT
 uuid_generate_v5(o.id, oa.ordinality::text)::text AS id,
@@ -2910,7 +2764,7 @@ FROM uchicago_mod_users.proxyfor p;
 CREATE VIEW uc.raw_records AS
 SELECT
 rr.id AS id,
-rr.content AS content
+rr.content AS content2
 FROM uchicago_mod_source_record_storage.raw_records_lb rr;
 CREATE VIEW uc.receivings AS
 SELECT
@@ -2927,6 +2781,7 @@ CAST(r.jsonb->>'displayOnHolding' AS BOOLEAN) AS display_on_holding,
 r.jsonb->>'enumeration' AS enumeration,
 r.jsonb->>'chronology' AS chronology,
 CAST(r.jsonb->>'discoverySuppress' AS BOOLEAN) AS discovery_suppress,
+r.jsonb->>'copyNumber' AS copy_number,
 r.jsonb->>'receivingStatus' AS receiving_status,
 CAST(r.jsonb->>'supplement' AS BOOLEAN) AS supplement,
 uc.TIMESTAMP_CAST(r.jsonb->>'receiptDate') AS receipt_date,
@@ -2949,7 +2804,7 @@ r.created_by_user_id AS creation_user_id,
 r.created_date AS creation_time,
 r.updated_by_user_id AS last_write_user_id,
 r.updated_date AS last_write_time,
-r.external_hrid AS instance_hrid
+r.external_hrid AS instance_short_id
 FROM uchicago_mod_source_record_storage.records_lb r;
 CREATE VIEW uc.refund_reasons AS
 SELECT
@@ -3188,11 +3043,12 @@ FROM uchicago_mod_orders_storage.suffixes s;
 CREATE VIEW uc.tags AS
 SELECT
 t.id AS id,
+t.created_by AS creation_user_id,
 t.label AS label,
 t.description AS description,
 t.created_date AS creation_time,
 t.updated_date AS last_write_time,
-t.updated_by AS updated_by
+t.updated_by AS updated_by_user_id
 FROM uchicago_mod_tags.tags t;
 CREATE VIEW uc.template_output_formats AS
 SELECT
@@ -3265,6 +3121,7 @@ FROM uchicago_mod_finance_storage.transaction t, jsonb_array_elements_text(t.jso
 CREATE VIEW uc.transactions AS
 SELECT
 t.id AS id,
+CAST(t.jsonb->>'_version' AS INTEGER) AS _version,
 CAST(t.jsonb->>'amount' AS DECIMAL(19,2)) AS amount,
 CAST(t.jsonb#>>'{awaitingPayment,encumbranceId}' AS UUID) AS awaiting_payment_encumbrance_id,
 CAST(t.jsonb#>>'{awaitingPayment,releaseEncumbrance}' AS BOOLEAN) AS awaiting_payment_release_encumbrance,
@@ -3291,6 +3148,7 @@ CAST(t.jsonb->>'sourceInvoiceId' AS UUID) AS source_invoice_id,
 CAST(t.jsonb->>'sourceInvoiceLineId' AS UUID) AS source_invoice_line_id,
 CAST(t.jsonb->>'toFundId' AS UUID) AS to_fund_id,
 t.jsonb->>'transactionType' AS transaction_type,
+CAST(t.jsonb->>'voidedAmount' AS DECIMAL(19,2)) AS voided_amount,
 uc.TIMESTAMP_CAST(jsonb#>>'{metadata,createdDate}' || CASE WHEN jsonb#>>'{metadata,createdDate}' !~ '([-+]\d\d:\d\d)|Z$' THEN '+00:00' ELSE '' END) AS created_date,
 CAST(t.jsonb#>>'{metadata,createdByUserId}' AS UUID) AS created_by_user_id,
 t.jsonb#>>'{metadata,createdByUsername}' AS created_by_username,
@@ -3504,9 +3362,8 @@ vi.id AS voucher_item_id,
 vifd.jsonb->>'code' AS code,
 CAST(vifd.jsonb->>'encumbrance' AS UUID) AS encumbrance_id,
 CAST(vifd.jsonb->>'fundId' AS UUID) AS fund_id,
-CAST(vifd.jsonb->>'invoiceLineId' AS UUID) AS invoice_item_id,
-vifd.jsonb->>'distributionType' AS distribution_type,
 CAST(vifd.jsonb->>'expenseClassId' AS UUID) AS expense_class_id,
+vifd.jsonb->>'distributionType' AS distribution_type,
 CAST(vifd.jsonb->>'value' AS DECIMAL(19,2)) AS value
 FROM uchicago_mod_invoice_storage.voucher_lines vi, jsonb_array_elements(vi.jsonb->'fundDistributions') WITH ORDINALITY vifd (jsonb);
 CREATE VIEW uc.voucher_item_invoice_items AS
@@ -3606,6 +3463,14 @@ CREATE TABLE uc.countries (
     name VARCHAR(128) NOT NULL,
     CONSTRAINT pk_countries PRIMARY KEY(id)
 );
+CREATE VIEW uc.object_notes AS
+SELECT 
+uuid_generate_v5(l.object_id::UUID, nl.note_id::TEXT) AS id,
+l.object_id::UUID,
+l.object_type AS type,
+nl.note_id 
+FROM uchicago_mod_notes.note_link nl
+JOIN uchicago_mod_notes.link l ON l.id = nl.link_id;
 CREATE VIEW uc.organization_notes AS
 SELECT 
 id, 
@@ -3774,7 +3639,7 @@ SELECT * FROM
 SELECT 
 id, 
 instance_id,
-NULLIF(TRIM(REGEXP_REPLACE(value, '[^0-9X]', '', 'g')), '')::VARCHAR(128) AS content
+NULLIF(REGEXP_REPLACE(UPPER(TRIM(value)), '( .*)|[^0-9X]', '', 'g'), '')::VARCHAR(128) AS content
 FROM uc.identifiers
 WHERE identifier_type_id = '8261054f-be78-422d-bd51-4ed9f33c3422'
 ) a

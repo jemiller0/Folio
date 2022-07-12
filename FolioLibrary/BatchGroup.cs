@@ -38,12 +38,6 @@ namespace FolioLibrary
         public virtual string CreationUserId { get; set; }
 
         [ScaffoldColumn(false)]
-        public virtual ICollection<BatchVoucherExportConfig> BatchVoucherExportConfigs { get; set; }
-
-        [ScaffoldColumn(false)]
-        public virtual ICollection<BatchVoucherExport> BatchVoucherExports { get; set; }
-
-        [ScaffoldColumn(false)]
         public virtual ICollection<Invoice> Invoices { get; set; }
 
         [ScaffoldColumn(false)]

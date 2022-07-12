@@ -15,6 +15,18 @@ namespace FolioLibraryTest
         private readonly static int? take = 100_000;
 
         [TestMethod]
+        public void Orders_DeserializeAcquisitionMethod2Test()
+        {
+            var s = Stopwatch.StartNew();
+            var am2 = folioServiceContext.AcquisitionMethod2s(take: 1).SingleOrDefault();
+            if (am2 == null) Assert.Inconclusive();
+            var am3 = folioDapperContext.AcquisitionMethod2s(take: 1).SingleOrDefault();
+            am3.Content = null;
+            Assert.AreEqual(am2.ToString(), am3.ToString());
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"Orders_DeserializeAcquisitionMethod2Test()\r\n    ElapsedTime={s.Elapsed}");
+        }
+
+        [TestMethod]
         public void Orders_DeserializeAcquisitionsUnit2Test()
         {
             var s = Stopwatch.StartNew();
@@ -72,31 +84,6 @@ namespace FolioLibraryTest
             bg3.Content = null;
             Assert.AreEqual(bg2.ToString(), bg3.ToString());
             traceSource.TraceEvent(TraceEventType.Information, 0, $"Invoices_DeserializeBatchGroup2Test()\r\n    ElapsedTime={s.Elapsed}");
-        }
-
-        [TestMethod]
-        public void Invoices_DeserializeBatchVoucherExport2Test()
-        {
-            var s = Stopwatch.StartNew();
-            var bve2 = folioServiceContext.BatchVoucherExport2s(take: 1).SingleOrDefault();
-            if (bve2 == null) Assert.Inconclusive();
-            var bve3 = folioDapperContext.BatchVoucherExport2s(take: 1).SingleOrDefault();
-            bve3.Content = null;
-            Assert.AreEqual(bve2.ToString(), bve3.ToString());
-            traceSource.TraceEvent(TraceEventType.Information, 0, $"Invoices_DeserializeBatchVoucherExport2Test()\r\n    ElapsedTime={s.Elapsed}");
-        }
-
-        [TestMethod]
-        public void Invoices_DeserializeBatchVoucherExportConfig2Test()
-        {
-            var s = Stopwatch.StartNew();
-            var bvec2 = folioServiceContext.BatchVoucherExportConfig2s(take: 1).SingleOrDefault();
-            if (bvec2 == null) Assert.Inconclusive();
-            bvec2.BatchVoucherExportConfigWeekdays = null;
-            var bvec3 = folioDapperContext.BatchVoucherExportConfig2s(take: 1).SingleOrDefault();
-            bvec3.Content = null;
-            Assert.AreEqual(bvec2.ToString(), bvec3.ToString());
-            traceSource.TraceEvent(TraceEventType.Information, 0, $"Invoices_DeserializeBatchVoucherExportConfig2Test()\r\n    ElapsedTime={s.Elapsed}");
         }
 
         [TestMethod]
@@ -505,6 +492,7 @@ namespace FolioLibraryTest
             var h2 = folioServiceContext.Holding2s(take: 1).SingleOrDefault();
             if (h2 == null) Assert.Inconclusive();
             h2.Extents = null;
+            h2.HoldingAdministrativeNotes = null;
             h2.HoldingElectronicAccesses = null;
             h2.HoldingEntries = null;
             h2.HoldingFormerIds = null;
@@ -573,6 +561,7 @@ namespace FolioLibraryTest
             var s = Stopwatch.StartNew();
             var i2 = folioServiceContext.Instance2s(take: 1).SingleOrDefault();
             if (i2 == null) Assert.Inconclusive();
+            i2.AdministrativeNotes = null;
             i2.AlternativeTitles = null;
             i2.Classifications = null;
             i2.Contributors = null;
@@ -581,10 +570,10 @@ namespace FolioLibraryTest
             i2.Identifiers = null;
             i2.InstanceFormat2s = null;
             i2.InstanceNatureOfContentTerms = null;
+            i2.InstanceNotes = null;
             i2.InstanceStatisticalCodes = null;
             i2.InstanceTags = null;
             i2.Languages = null;
-            i2.Note2s = null;
             i2.PhysicalDescriptions = null;
             i2.PublicationFrequencies = null;
             i2.PublicationRanges = null;
@@ -668,7 +657,6 @@ namespace FolioLibraryTest
             var s = Stopwatch.StartNew();
             var ii2 = folioServiceContext.InvoiceItem2s(take: 1).SingleOrDefault();
             if (ii2 == null) Assert.Inconclusive();
-            ii2.InvoiceItemAdjustmentFunds = null;
             ii2.InvoiceItemAdjustments = null;
             ii2.InvoiceItemFunds = null;
             ii2.InvoiceItemReferenceNumbers = null;
@@ -698,6 +686,7 @@ namespace FolioLibraryTest
             var i2 = folioServiceContext.Item2s(take: 1).SingleOrDefault();
             if (i2 == null) Assert.Inconclusive();
             i2.CirculationNotes = null;
+            i2.ItemAdministrativeNotes = null;
             i2.ItemElectronicAccesses = null;
             i2.ItemFormerIds = null;
             i2.ItemNotes = null;
@@ -906,16 +895,14 @@ namespace FolioLibraryTest
         }
 
         [TestMethod]
-        public void Notes_DeserializeNote3Test()
+        public void Notes_DeserializeNote2Test()
         {
             var s = Stopwatch.StartNew();
-            var n3 = folioServiceContext.Note3s(take: 1).SingleOrDefault();
-            if (n3 == null) Assert.Inconclusive();
-            n3.ObjectNotes = null;
-            var n4 = folioDapperContext.Note3s(take: 1).SingleOrDefault();
-            n4.Content = null;
-            Assert.AreEqual(n3.ToString(), n4.ToString());
-            traceSource.TraceEvent(TraceEventType.Information, 0, $"Notes_DeserializeNote3Test()\r\n    ElapsedTime={s.Elapsed}");
+            var n2 = folioServiceContext.Note2s(take: 1).SingleOrDefault();
+            if (n2 == null) Assert.Inconclusive();
+            var n3 = folioDapperContext.Note2s(take: 1).SingleOrDefault();
+            Assert.AreEqual(n2.ToString(), n3.ToString());
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"Notes_DeserializeNote2Test()\r\n    ElapsedTime={s.Elapsed}");
         }
 
         [TestMethod]
@@ -925,7 +912,6 @@ namespace FolioLibraryTest
             var nt2 = folioServiceContext.NoteType2s(take: 1).SingleOrDefault();
             if (nt2 == null) Assert.Inconclusive();
             var nt3 = folioDapperContext.NoteType2s(take: 1).SingleOrDefault();
-            nt3.Content = null;
             Assert.AreEqual(nt2.ToString(), nt3.ToString());
             traceSource.TraceEvent(TraceEventType.Information, 0, $"Notes_DeserializeNoteType2Test()\r\n    ElapsedTime={s.Elapsed}");
         }
@@ -1009,6 +995,7 @@ namespace FolioLibraryTest
             o2.OrganizationInterfaces = null;
             o2.OrganizationPhoneNumbers = null;
             o2.OrganizationTags = null;
+            o2.OrganizationTypes = null;
             o2.OrganizationUrls = null;
             var o3 = folioDapperContext.Organization2s(take: 1).SingleOrDefault();
             o3.Content = null;

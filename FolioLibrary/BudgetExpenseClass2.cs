@@ -30,29 +30,33 @@ namespace FolioLibrary
         [Column("id"), Display(Order = 1), Editable(false), JsonProperty("id")]
         public virtual Guid? Id { get; set; }
 
-        [Display(Order = 2)]
+        [Column("_version"), JsonProperty("_version"), ScaffoldColumn(false)]
+        public virtual int? Version { get; set; }
+
+        [Display(Order = 3)]
         public virtual Budget2 Budget { get; set; }
 
-        [Column("budget_id"), Display(Name = "Budget", Order = 3), JsonProperty("budgetId")]
+        [Column("budget_id"), Display(Name = "Budget", Order = 4), JsonProperty("budgetId")]
         public virtual Guid? BudgetId { get; set; }
 
-        [Display(Name = "Expense Class", Order = 4)]
+        [Display(Name = "Expense Class", Order = 5)]
         public virtual ExpenseClass2 ExpenseClass { get; set; }
 
-        [Column("expense_class_id"), Display(Name = "Expense Class", Order = 5), JsonProperty("expenseClassId")]
+        [Column("expense_class_id"), Display(Name = "Expense Class", Order = 6), JsonProperty("expenseClassId")]
         public virtual Guid? ExpenseClassId { get; set; }
 
-        [Column("status"), Display(Order = 6), JsonProperty("status"), RegularExpression(@"^(Active|Inactive)$"), StringLength(1024)]
+        [Column("status"), Display(Order = 7), JsonProperty("status"), RegularExpression(@"^(Active|Inactive)$"), StringLength(1024)]
         public virtual string Status { get; set; }
 
-        [Column("content"), CustomValidation(typeof(BudgetExpenseClass), nameof(ValidateContent)), DataType(DataType.MultilineText), Display(Order = 7), Editable(false)]
+        [Column("content"), CustomValidation(typeof(BudgetExpenseClass), nameof(ValidateContent)), DataType(DataType.MultilineText), Display(Order = 8), Editable(false)]
         public virtual string Content { get; set; }
 
-        public override string ToString() => $"{{ {nameof(Id)} = {Id}, {nameof(BudgetId)} = {BudgetId}, {nameof(ExpenseClassId)} = {ExpenseClassId}, {nameof(Status)} = {Status}, {nameof(Content)} = {Content} }}";
+        public override string ToString() => $"{{ {nameof(Id)} = {Id}, {nameof(Version)} = {Version}, {nameof(BudgetId)} = {BudgetId}, {nameof(ExpenseClassId)} = {ExpenseClassId}, {nameof(Status)} = {Status}, {nameof(Content)} = {Content} }}";
 
         public static BudgetExpenseClass2 FromJObject(JObject jObject) => jObject != null ? new BudgetExpenseClass2
         {
             Id = (Guid?)jObject.SelectToken("id"),
+            Version = (int?)jObject.SelectToken("_version"),
             BudgetId = (Guid?)jObject.SelectToken("budgetId"),
             ExpenseClassId = (Guid?)jObject.SelectToken("expenseClassId"),
             Status = (string)jObject.SelectToken("status"),
@@ -61,6 +65,7 @@ namespace FolioLibrary
 
         public JObject ToJObject() => new JObject(
             new JProperty("id", Id),
+            new JProperty("_version", Version),
             new JProperty("budgetId", BudgetId),
             new JProperty("expenseClassId", ExpenseClassId),
             new JProperty("status", Status)).RemoveNullAndEmptyProperties();

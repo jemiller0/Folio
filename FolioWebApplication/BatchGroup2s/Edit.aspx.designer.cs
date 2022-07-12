@@ -9,14 +9,6 @@ namespace FolioWebApplication.BatchGroup2s
 
         protected FormView BatchGroup2FormView;
 
-        protected Panel BatchVoucherExport2sPanel;
-
-        protected RadGrid BatchVoucherExport2sRadGrid;
-
-        protected Panel BatchVoucherExportConfig2sPanel;
-
-        protected RadGrid BatchVoucherExportConfig2sRadGrid;
-
         protected Panel Invoice2sPanel;
 
         protected RadGrid Invoice2sRadGrid;

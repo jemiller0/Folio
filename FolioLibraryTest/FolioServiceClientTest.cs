@@ -24,6 +24,26 @@ namespace FolioLibraryTest
         }
 
         [TestMethod]
+        public void CountAcquisitionMethodsTest()
+        {
+            var s = Stopwatch.StartNew();
+            var i = folioServiceClient.CountAcquisitionMethods();
+            var j = folioDapperContext.CountAcquisitionMethods();
+            Assert.IsTrue(i == j);
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"CountAcquisitionMethodsTest()\r\n    ElapsedTime={s.Elapsed}");
+        }
+
+        [TestMethod]
+        public void OrdersAcquisitionMethodsTest()
+        {
+            var s = Stopwatch.StartNew();
+            var l = folioServiceClient.AcquisitionMethods(take: take).Select(jo => (string)jo["id"]).ToArray();
+            var l2 = folioDapperContext.AcquisitionMethods(take: take).Select(u => u.Id.ToString()).ToArray();
+            Assert.IsTrue(l.SequenceEqual(l2));
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"AcquisitionMethodsTest()\r\n    ElapsedTime={s.Elapsed}");
+        }
+
+        [TestMethod]
         public void CountAcquisitionsUnitsTest()
         {
             var s = Stopwatch.StartNew();
@@ -121,46 +141,6 @@ namespace FolioLibraryTest
             var l2 = folioDapperContext.BatchGroups(take: take).Select(u => u.Id.ToString()).ToArray();
             Assert.IsTrue(l.SequenceEqual(l2));
             traceSource.TraceEvent(TraceEventType.Information, 0, $"BatchGroupsTest()\r\n    ElapsedTime={s.Elapsed}");
-        }
-
-        [TestMethod]
-        public void CountBatchVoucherExportsTest()
-        {
-            var s = Stopwatch.StartNew();
-            var i = folioServiceClient.CountBatchVoucherExports();
-            var j = folioDapperContext.CountBatchVoucherExports();
-            Assert.IsTrue(i == j);
-            traceSource.TraceEvent(TraceEventType.Information, 0, $"CountBatchVoucherExportsTest()\r\n    ElapsedTime={s.Elapsed}");
-        }
-
-        [TestMethod]
-        public void InvoicesBatchVoucherExportsTest()
-        {
-            var s = Stopwatch.StartNew();
-            var l = folioServiceClient.BatchVoucherExports(take: take).Select(jo => (string)jo["id"]).ToArray();
-            var l2 = folioDapperContext.BatchVoucherExports(take: take).Select(u => u.Id.ToString()).ToArray();
-            Assert.IsTrue(l.SequenceEqual(l2));
-            traceSource.TraceEvent(TraceEventType.Information, 0, $"BatchVoucherExportsTest()\r\n    ElapsedTime={s.Elapsed}");
-        }
-
-        [TestMethod]
-        public void CountBatchVoucherExportConfigsTest()
-        {
-            var s = Stopwatch.StartNew();
-            var i = folioServiceClient.CountBatchVoucherExportConfigs();
-            var j = folioDapperContext.CountBatchVoucherExportConfigs();
-            Assert.IsTrue(i == j);
-            traceSource.TraceEvent(TraceEventType.Information, 0, $"CountBatchVoucherExportConfigsTest()\r\n    ElapsedTime={s.Elapsed}");
-        }
-
-        [TestMethod]
-        public void InvoicesBatchVoucherExportConfigsTest()
-        {
-            var s = Stopwatch.StartNew();
-            var l = folioServiceClient.BatchVoucherExportConfigs(take: take).Select(jo => (string)jo["id"]).ToArray();
-            var l2 = folioDapperContext.BatchVoucherExportConfigs(take: take).Select(u => u.Id.ToString()).ToArray();
-            Assert.IsTrue(l.SequenceEqual(l2));
-            traceSource.TraceEvent(TraceEventType.Information, 0, $"BatchVoucherExportConfigsTest()\r\n    ElapsedTime={s.Elapsed}");
         }
 
         [TestMethod]
@@ -1384,46 +1364,6 @@ namespace FolioLibraryTest
         }
 
         [TestMethod]
-        public void CountMappingParamsSnapshotsTest()
-        {
-            var s = Stopwatch.StartNew();
-            var i = folioServiceClient.CountMappingParamsSnapshots();
-            var j = folioDapperContext.CountMappingParamsSnapshots();
-            Assert.IsTrue(i == j);
-            traceSource.TraceEvent(TraceEventType.Information, 0, $"CountMappingParamsSnapshotsTest()\r\n    ElapsedTime={s.Elapsed}");
-        }
-
-        [TestMethod]
-        public void SourceMappingParamsSnapshotsTest()
-        {
-            var s = Stopwatch.StartNew();
-            var l = folioServiceClient.MappingParamsSnapshots(take: take).Select(jo => (string)jo["id"]).ToArray();
-            var l2 = folioDapperContext.MappingParamsSnapshots(take: take).Select(u => u.Id.ToString()).ToArray();
-            Assert.IsTrue(l.SequenceEqual(l2));
-            traceSource.TraceEvent(TraceEventType.Information, 0, $"MappingParamsSnapshotsTest()\r\n    ElapsedTime={s.Elapsed}");
-        }
-
-        [TestMethod]
-        public void CountMappingRulesSnapshotsTest()
-        {
-            var s = Stopwatch.StartNew();
-            var i = folioServiceClient.CountMappingRulesSnapshots();
-            var j = folioDapperContext.CountMappingRulesSnapshots();
-            Assert.IsTrue(i == j);
-            traceSource.TraceEvent(TraceEventType.Information, 0, $"CountMappingRulesSnapshotsTest()\r\n    ElapsedTime={s.Elapsed}");
-        }
-
-        [TestMethod]
-        public void SourceMappingRulesSnapshotsTest()
-        {
-            var s = Stopwatch.StartNew();
-            var l = folioServiceClient.MappingRulesSnapshots(take: take).Select(jo => (string)jo["id"]).ToArray();
-            var l2 = folioDapperContext.MappingRulesSnapshots(take: take).Select(u => u.Id.ToString()).ToArray();
-            Assert.IsTrue(l.SequenceEqual(l2));
-            traceSource.TraceEvent(TraceEventType.Information, 0, $"MappingRulesSnapshotsTest()\r\n    ElapsedTime={s.Elapsed}");
-        }
-
-        [TestMethod]
         public void CountMaterialTypesTest()
         {
             var s = Stopwatch.StartNew();
@@ -1901,6 +1841,26 @@ namespace FolioLibraryTest
             var l2 = folioDapperContext.RefundReasons(take: take).Select(u => u.Id.ToString()).ToArray();
             Assert.IsTrue(l.SequenceEqual(l2));
             traceSource.TraceEvent(TraceEventType.Information, 0, $"RefundReasonsTest()\r\n    ElapsedTime={s.Elapsed}");
+        }
+
+        [TestMethod]
+        public void CountRelatedInstanceTypesTest()
+        {
+            var s = Stopwatch.StartNew();
+            var i = folioServiceClient.CountRelatedInstanceTypes();
+            var j = folioDapperContext.CountRelatedInstanceTypes();
+            Assert.IsTrue(i == j);
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"CountRelatedInstanceTypesTest()\r\n    ElapsedTime={s.Elapsed}");
+        }
+
+        [TestMethod]
+        public void InventoryRelatedInstanceTypesTest()
+        {
+            var s = Stopwatch.StartNew();
+            var l = folioServiceClient.RelatedInstanceTypes(take: take).Select(jo => (string)jo["id"]).ToArray();
+            var l2 = folioDapperContext.RelatedInstanceTypes(take: take).Select(u => u.Id.ToString()).ToArray();
+            Assert.IsTrue(l.SequenceEqual(l2));
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"RelatedInstanceTypesTest()\r\n    ElapsedTime={s.Elapsed}");
         }
 
         [TestMethod]
@@ -2384,6 +2344,18 @@ namespace FolioLibraryTest
         }
 
         [TestMethod]
+        public void DeserializeAcquisitionMethod2Test()
+        {
+            var s = Stopwatch.StartNew();
+            var jo = folioServiceClient.AcquisitionMethods(take: 1).SingleOrDefault();
+            if (jo == null) Assert.Inconclusive();
+            var am2 = JsonConvert.DeserializeObject<AcquisitionMethod2>(jo.ToString());
+            traceSource.TraceEvent(TraceEventType.Information, 0, am2.ToString());
+            Assert.IsNotNull(am2);
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"DeserializeAcquisitionMethod2Test()\r\n    ElapsedTime={s.Elapsed}");
+        }
+
+        [TestMethod]
         public void DeserializeAcquisitionsUnit2Test()
         {
             var s = Stopwatch.StartNew();
@@ -2405,6 +2377,18 @@ namespace FolioLibraryTest
             traceSource.TraceEvent(TraceEventType.Information, 0, at2.ToString());
             Assert.IsNotNull(at2);
             traceSource.TraceEvent(TraceEventType.Information, 0, $"DeserializeAddressType2Test()\r\n    ElapsedTime={s.Elapsed}");
+        }
+
+        [TestMethod]
+        public void DeserializeAdministrativeNoteTest()
+        {
+            var s = Stopwatch.StartNew();
+            var jo = folioServiceClient.Instances(take: 1).SingleOrDefault();
+            if (jo == null) Assert.Inconclusive();
+            var an = JsonConvert.DeserializeObject<AdministrativeNote>(jo.ToString());
+            traceSource.TraceEvent(TraceEventType.Information, 0, an.ToString());
+            Assert.IsNotNull(an);
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"DeserializeAdministrativeNoteTest()\r\n    ElapsedTime={s.Elapsed}");
         }
 
         [TestMethod]
@@ -2477,42 +2461,6 @@ namespace FolioLibraryTest
             traceSource.TraceEvent(TraceEventType.Information, 0, bg2.ToString());
             Assert.IsNotNull(bg2);
             traceSource.TraceEvent(TraceEventType.Information, 0, $"DeserializeBatchGroup2Test()\r\n    ElapsedTime={s.Elapsed}");
-        }
-
-        [TestMethod]
-        public void DeserializeBatchVoucherExport2Test()
-        {
-            var s = Stopwatch.StartNew();
-            var jo = folioServiceClient.BatchVoucherExports(take: 1).SingleOrDefault();
-            if (jo == null) Assert.Inconclusive();
-            var bve2 = JsonConvert.DeserializeObject<BatchVoucherExport2>(jo.ToString());
-            traceSource.TraceEvent(TraceEventType.Information, 0, bve2.ToString());
-            Assert.IsNotNull(bve2);
-            traceSource.TraceEvent(TraceEventType.Information, 0, $"DeserializeBatchVoucherExport2Test()\r\n    ElapsedTime={s.Elapsed}");
-        }
-
-        [TestMethod]
-        public void DeserializeBatchVoucherExportConfig2Test()
-        {
-            var s = Stopwatch.StartNew();
-            var jo = folioServiceClient.BatchVoucherExportConfigs(take: 1).SingleOrDefault();
-            if (jo == null) Assert.Inconclusive();
-            var bvec2 = JsonConvert.DeserializeObject<BatchVoucherExportConfig2>(jo.ToString());
-            traceSource.TraceEvent(TraceEventType.Information, 0, bvec2.ToString());
-            Assert.IsNotNull(bvec2);
-            traceSource.TraceEvent(TraceEventType.Information, 0, $"DeserializeBatchVoucherExportConfig2Test()\r\n    ElapsedTime={s.Elapsed}");
-        }
-
-        [TestMethod]
-        public void DeserializeBatchVoucherExportConfigWeekdayTest()
-        {
-            var s = Stopwatch.StartNew();
-            var jo = folioServiceClient.BatchVoucherExportConfigs(take: 1).SingleOrDefault();
-            if (jo == null) Assert.Inconclusive();
-            var bvecw = JsonConvert.DeserializeObject<BatchVoucherExportConfigWeekday>(jo.ToString());
-            traceSource.TraceEvent(TraceEventType.Information, 0, bvecw.ToString());
-            Assert.IsNotNull(bvecw);
-            traceSource.TraceEvent(TraceEventType.Information, 0, $"DeserializeBatchVoucherExportConfigWeekdayTest()\r\n    ElapsedTime={s.Elapsed}");
         }
 
         [TestMethod]
@@ -3200,6 +3148,18 @@ namespace FolioLibraryTest
         }
 
         [TestMethod]
+        public void DeserializeHoldingAdministrativeNoteTest()
+        {
+            var s = Stopwatch.StartNew();
+            var jo = folioServiceClient.Holdings(take: 1).SingleOrDefault();
+            if (jo == null) Assert.Inconclusive();
+            var han = JsonConvert.DeserializeObject<HoldingAdministrativeNote>(jo.ToString());
+            traceSource.TraceEvent(TraceEventType.Information, 0, han.ToString());
+            Assert.IsNotNull(han);
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"DeserializeHoldingAdministrativeNoteTest()\r\n    ElapsedTime={s.Elapsed}");
+        }
+
+        [TestMethod]
         public void DeserializeHoldingElectronicAccessTest()
         {
             var s = Stopwatch.StartNew();
@@ -3377,6 +3337,18 @@ namespace FolioLibraryTest
             traceSource.TraceEvent(TraceEventType.Information, 0, inoct.ToString());
             Assert.IsNotNull(inoct);
             traceSource.TraceEvent(TraceEventType.Information, 0, $"DeserializeInstanceNatureOfContentTermTest()\r\n    ElapsedTime={s.Elapsed}");
+        }
+
+        [TestMethod]
+        public void DeserializeInstanceNoteTest()
+        {
+            var s = Stopwatch.StartNew();
+            var jo = folioServiceClient.Instances(take: 1).SingleOrDefault();
+            if (jo == null) Assert.Inconclusive();
+            var @in = JsonConvert.DeserializeObject<InstanceNote>(jo.ToString());
+            traceSource.TraceEvent(TraceEventType.Information, 0, @in.ToString());
+            Assert.IsNotNull(@in);
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"DeserializeInstanceNoteTest()\r\n    ElapsedTime={s.Elapsed}");
         }
 
         [TestMethod]
@@ -3629,6 +3601,18 @@ namespace FolioLibraryTest
             traceSource.TraceEvent(TraceEventType.Information, 0, i2.ToString());
             Assert.IsNotNull(i2);
             traceSource.TraceEvent(TraceEventType.Information, 0, $"DeserializeItem2Test()\r\n    ElapsedTime={s.Elapsed}");
+        }
+
+        [TestMethod]
+        public void DeserializeItemAdministrativeNoteTest()
+        {
+            var s = Stopwatch.StartNew();
+            var jo = folioServiceClient.Items(take: 1).SingleOrDefault();
+            if (jo == null) Assert.Inconclusive();
+            var ian = JsonConvert.DeserializeObject<ItemAdministrativeNote>(jo.ToString());
+            traceSource.TraceEvent(TraceEventType.Information, 0, ian.ToString());
+            Assert.IsNotNull(ian);
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"DeserializeItemAdministrativeNoteTest()\r\n    ElapsedTime={s.Elapsed}");
         }
 
         [TestMethod]
@@ -3947,24 +3931,12 @@ namespace FolioLibraryTest
         public void DeserializeNote2Test()
         {
             var s = Stopwatch.StartNew();
-            var jo = folioServiceClient.Instances(take: 1).SingleOrDefault();
+            var jo = folioServiceClient.Notes(take: 1).SingleOrDefault();
             if (jo == null) Assert.Inconclusive();
             var n2 = JsonConvert.DeserializeObject<Note2>(jo.ToString());
             traceSource.TraceEvent(TraceEventType.Information, 0, n2.ToString());
             Assert.IsNotNull(n2);
             traceSource.TraceEvent(TraceEventType.Information, 0, $"DeserializeNote2Test()\r\n    ElapsedTime={s.Elapsed}");
-        }
-
-        [TestMethod]
-        public void DeserializeNote3Test()
-        {
-            var s = Stopwatch.StartNew();
-            var jo = folioServiceClient.Notes(take: 1).SingleOrDefault();
-            if (jo == null) Assert.Inconclusive();
-            var n3 = JsonConvert.DeserializeObject<Note3>(jo.ToString());
-            traceSource.TraceEvent(TraceEventType.Information, 0, n3.ToString());
-            Assert.IsNotNull(n3);
-            traceSource.TraceEvent(TraceEventType.Information, 0, $"DeserializeNote3Test()\r\n    ElapsedTime={s.Elapsed}");
         }
 
         [TestMethod]
@@ -3977,18 +3949,6 @@ namespace FolioLibraryTest
             traceSource.TraceEvent(TraceEventType.Information, 0, nt2.ToString());
             Assert.IsNotNull(nt2);
             traceSource.TraceEvent(TraceEventType.Information, 0, $"DeserializeNoteType2Test()\r\n    ElapsedTime={s.Elapsed}");
-        }
-
-        [TestMethod]
-        public void DeserializeObjectNoteTest()
-        {
-            var s = Stopwatch.StartNew();
-            var jo = folioServiceClient.Notes(take: 1).SingleOrDefault();
-            if (jo == null) Assert.Inconclusive();
-            var @on = JsonConvert.DeserializeObject<ObjectNote>(jo.ToString());
-            traceSource.TraceEvent(TraceEventType.Information, 0, @on.ToString());
-            Assert.IsNotNull(@on);
-            traceSource.TraceEvent(TraceEventType.Information, 0, $"DeserializeObjectNoteTest()\r\n    ElapsedTime={s.Elapsed}");
         }
 
         [TestMethod]
@@ -4385,6 +4345,18 @@ namespace FolioLibraryTest
             traceSource.TraceEvent(TraceEventType.Information, 0, ot.ToString());
             Assert.IsNotNull(ot);
             traceSource.TraceEvent(TraceEventType.Information, 0, $"DeserializeOrganizationTagTest()\r\n    ElapsedTime={s.Elapsed}");
+        }
+
+        [TestMethod]
+        public void DeserializeOrganizationTypeTest()
+        {
+            var s = Stopwatch.StartNew();
+            var jo = folioServiceClient.Organizations(take: 1).SingleOrDefault();
+            if (jo == null) Assert.Inconclusive();
+            var ot = JsonConvert.DeserializeObject<OrganizationType>(jo.ToString());
+            traceSource.TraceEvent(TraceEventType.Information, 0, ot.ToString());
+            Assert.IsNotNull(ot);
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"DeserializeOrganizationTypeTest()\r\n    ElapsedTime={s.Elapsed}");
         }
 
         [TestMethod]
