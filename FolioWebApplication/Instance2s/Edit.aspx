@@ -196,7 +196,7 @@
             <legend>
                 <asp:HyperLink ID="AdministrativeNotesHyperLink" runat="server" Text="Administrative Notes" NavigateUrl="~/AdministrativeNotes/Default.aspx" Enabled="false" /></legend>
             <telerik:RadGrid ID="AdministrativeNotesRadGrid" runat="server" AutoGenerateColumns="false" AllowSorting="true" AllowFilteringByColumn="false" GroupingSettings-CaseSensitive="false" AllowPaging="true" PageSize="10" EnableLinqExpressions="false" OnNeedDataSource="AdministrativeNotesRadGrid_NeedDataSource">
-                <MasterTableView DataKeyNames="Id" PagerStyle-Mode="NextPrevNumericAndAdvanced" NoMasterRecordsText="No administrative notes found">
+                <MasterTableView DataKeyNames="Id, InstanceId" PagerStyle-Mode="NextPrevNumericAndAdvanced" NoMasterRecordsText="No administrative notes found">
                     <SortExpressions>
                         <telerik:GridSortExpression FieldName="Content" />
                     </SortExpressions>

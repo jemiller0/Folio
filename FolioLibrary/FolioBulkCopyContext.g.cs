@@ -1011,27 +1011,25 @@ namespace FolioLibrary
             if (holdingDonor2sDataTable == null)
             {
                 holdingDonor2sDataTable = new DataTable();
-                holdingDonor2sDataTable.Columns.Add(new DataColumn { ColumnName = "id", DataType = typeof(int) });
                 holdingDonor2sDataTable.Columns.Add(new DataColumn { ColumnName = "holding_id", DataType = typeof(Guid) });
-                holdingDonor2sDataTable.Columns.Add(new DataColumn { ColumnName = "holding_short_id", DataType = typeof(int) });
                 holdingDonor2sDataTable.Columns.Add(new DataColumn { ColumnName = "donor_id", DataType = typeof(int) });
                 holdingDonor2sDataTable.Columns.Add(new DataColumn { ColumnName = "report", DataType = typeof(bool) });
                 holdingDonor2sDataTable.Columns.Add(new DataColumn { ColumnName = "creation_time", DataType = typeof(DateTime) });
                 holdingDonor2sDataTable.Columns.Add(new DataColumn { ColumnName = "creation_username", DataType = typeof(string) });
                 holdingDonor2sDataTable.Columns.Add(new DataColumn { ColumnName = "last_write_time", DataType = typeof(DateTime) });
                 holdingDonor2sDataTable.Columns.Add(new DataColumn { ColumnName = "last_write_username", DataType = typeof(string) });
+                holdingDonor2sDataTable.Columns.Add(new DataColumn { ColumnName = "id", DataType = typeof(Guid) });
                 
             }
             var dr = holdingDonor2sDataTable.NewRow();
-            dr["id"] = (object)holdingDonor2.Id ?? DBNull.Value;
             dr["holding_id"] = (object)holdingDonor2.HoldingId ?? DBNull.Value;
-            dr["holding_short_id"] = (object)holdingDonor2.HoldingShortId ?? DBNull.Value;
             dr["donor_id"] = (object)holdingDonor2.DonorId ?? DBNull.Value;
             dr["report"] = (object)holdingDonor2.Report ?? DBNull.Value;
             dr["creation_time"] = (object)holdingDonor2.CreationTime ?? DBNull.Value;
             dr["creation_username"] = (object)holdingDonor2.CreationUsername ?? DBNull.Value;
             dr["last_write_time"] = (object)holdingDonor2.LastWriteTime ?? DBNull.Value;
             dr["last_write_username"] = (object)holdingDonor2.LastWriteUsername ?? DBNull.Value;
+            dr["id"] = (object)holdingDonor2.Id ?? DBNull.Value;
             holdingDonor2sDataTable.Rows.Add(dr);
         }
 
@@ -4099,15 +4097,14 @@ namespace FolioLibrary
             {
                 sqlBulkCopy.DestinationTableName = $"local{(IsMySql ? "_" : ".")}holding_donors";
                 sqlBulkCopy.ColumnMappings.Clear();
-                sqlBulkCopy.ColumnMappings.Add("id", "id");
                 sqlBulkCopy.ColumnMappings.Add("holding_id", "holding_id");
-                sqlBulkCopy.ColumnMappings.Add("holding_short_id", "holding_short_id");
                 sqlBulkCopy.ColumnMappings.Add("donor_id", "donor_id");
                 sqlBulkCopy.ColumnMappings.Add("report", "report");
                 sqlBulkCopy.ColumnMappings.Add("creation_time", "creation_time");
                 sqlBulkCopy.ColumnMappings.Add("creation_username", "creation_username");
                 sqlBulkCopy.ColumnMappings.Add("last_write_time", "last_write_time");
                 sqlBulkCopy.ColumnMappings.Add("last_write_username", "last_write_username");
+                sqlBulkCopy.ColumnMappings.Add("id", "id");
                 sqlBulkCopy.WriteToServer(holdingDonor2sDataTable);
                 holdingDonor2sDataTable.Clear();
             }

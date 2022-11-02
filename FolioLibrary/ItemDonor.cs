@@ -24,7 +24,7 @@ namespace FolioLibrary
         public override int GetHashCode() => ItemDonorKey?.GetHashCode() ?? 0;
 
         [Column("id", Order = 1), ScaffoldColumn(false)]
-        public virtual string Id { get; set; }
+        public virtual Guid? Id { get; set; }
 
         [Display(Order = 2)]
         public virtual Item2 Item { get; set; }

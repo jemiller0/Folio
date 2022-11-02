@@ -3657,9 +3657,9 @@ WHERE identifier_type_id = '913300b2-03ed-469a-8179-c1092c991227'
 WHERE content IS NOT NULL;
 CREATE VIEW uc.holding_donors AS
 SELECT
-id,
+uuid_generate_v5(holding_id, UPPER(TRIM(note))) AS id,
 holding_id,
-UPPER(note) AS donor_code,
+UPPER(TRIM(note)) AS donor_code,
 created_date,
 created_by_user_id,
 updated_date,
@@ -3668,9 +3668,9 @@ FROM uc.holding_notes
 WHERE holding_note_type_id = '88914775-f677-4759-b57b-1a33b90b24e0';
 CREATE VIEW uc.item_donors AS
 SELECT
-id,
+uuid_generate_v5(item_id, UPPER(TRIM(note))) AS id,
 item_id,
-UPPER(note) AS donor_code,
+UPPER(TRIM(note)) AS donor_code,
 created_date,
 created_by_user_id,
 updated_date,

@@ -33,6 +33,14 @@
       "example": "There are access issues at BU campus",
       "type": "string"
     },
+    "popUpOnCheckOut": {
+      "type": "boolean",
+      "default": false
+    },
+    "popUpOnUser": {
+      "type": "boolean",
+      "default": false
+    },
     "status": {
       "description": "Status of note - applies when searching by link.id and status",
       "example": "ASSIGNED",

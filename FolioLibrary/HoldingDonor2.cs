@@ -8,14 +8,8 @@ namespace FolioLibrary
     [Table("holding_donors", Schema = "local")]
     public partial class HoldingDonor2
     {
-        [Column("id"), ScaffoldColumn(false)]
-        public virtual int? Id { get; set; }
-
         [Column("holding_id"), ScaffoldColumn(false)]
         public virtual Guid? HoldingId { get; set; }
-
-        [Column("holding_short_id"), ScaffoldColumn(false)]
-        public virtual int? HoldingShortId { get; set; }
 
         [Column("donor_id"), ScaffoldColumn(false)]
         public virtual int? DonorId { get; set; }
@@ -35,6 +29,9 @@ namespace FolioLibrary
         [Column("last_write_username"), ScaffoldColumn(false), StringLength(128)]
         public virtual string LastWriteUsername { get; set; }
 
-        public override string ToString() => $"{{ {nameof(Id)} = {Id}, {nameof(HoldingId)} = {HoldingId}, {nameof(HoldingShortId)} = {HoldingShortId}, {nameof(DonorId)} = {DonorId}, {nameof(Report)} = {Report}, {nameof(CreationTime)} = {CreationTime}, {nameof(CreationUsername)} = {CreationUsername}, {nameof(LastWriteTime)} = {LastWriteTime}, {nameof(LastWriteUsername)} = {LastWriteUsername} }}";
+        [Column("id"), ScaffoldColumn(false)]
+        public virtual Guid? Id { get; set; }
+
+        public override string ToString() => $"{{ {nameof(HoldingId)} = {HoldingId}, {nameof(DonorId)} = {DonorId}, {nameof(Report)} = {Report}, {nameof(CreationTime)} = {CreationTime}, {nameof(CreationUsername)} = {CreationUsername}, {nameof(LastWriteTime)} = {LastWriteTime}, {nameof(LastWriteUsername)} = {LastWriteUsername}, {nameof(Id)} = {Id} }}";
     }
 }

@@ -164,7 +164,6 @@ LEFT JOIN uc.users AS lwu ON lwu.id = at2.updated_by_user_id
             folioDapperContext.Query(@"
 SELECT
 i.title AS ""Instance"",
-an.instance_id AS ""InstanceId"",
 an.content AS ""Content"" 
 FROM uc.administrative_notes AS an
 LEFT JOIN uc.instances AS i ON i.id = an.instance_id

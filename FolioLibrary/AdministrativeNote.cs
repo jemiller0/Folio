@@ -11,13 +11,25 @@ namespace FolioLibrary
     [DisplayColumn(nameof(Content)), DisplayName("Administrative Notes"), Table("administrative_notes", Schema = "uc")]
     public partial class AdministrativeNote
     {
-        [Column("id"), ScaffoldColumn(false)]
+        [NotMapped, ScaffoldColumn(false)]
+        public virtual string AdministrativeNoteKey => Id == null || InstanceId == null ? null : $"{Id},{InstanceId}";
+
+        public override bool Equals(object obj)
+        {
+            if (this == obj) return true;
+            if (obj == null || GetType() != obj.GetType()) return false;
+            return AdministrativeNoteKey == ((AdministrativeNote)obj).AdministrativeNoteKey;
+        }
+
+        public override int GetHashCode() => AdministrativeNoteKey?.GetHashCode() ?? 0;
+
+        [Column("id", Order = 1), ScaffoldColumn(false)]
         public virtual string Id { get; set; }
 
         [Display(Order = 2)]
         public virtual Instance2 Instance { get; set; }
 
-        [Column("instance_id"), Display(Name = "Instance", Order = 3)]
+        [Column("instance_id", Order = 3), ScaffoldColumn(false)]
         public virtual Guid? InstanceId { get; set; }
 
         [Column("content"), Display(Order = 4), StringLength(1024)]
