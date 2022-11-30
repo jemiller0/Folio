@@ -1615,6 +1615,7 @@ namespace FolioLibrary
             if (load && @on.NoteId != null) @on.Note = FindNote2(@on.NoteId);
             return @on;
         }
+        public OclcHolding FindOclcHolding(int? id, bool load = false) => Query<OclcHolding>($"SELECT id AS \"Id\", number AS \"Number\", instance_id AS \"InstanceId\", last_write_time AS \"LastWriteTime\" FROM local{(IsMySql ? "_" : ".")}oclc_holdings WHERE id = @id", new { id }).SingleOrDefault();
         public OclcNumber FindOclcNumber(string id, Guid? instanceId, bool load = false)
         {
             var @on = Query<OclcNumber>($"SELECT id AS \"Id\", instance_id AS \"InstanceId\", content AS \"Content\" FROM uc{(IsMySql ? "_" : ".")}oclc_numbers WHERE id = @id AND instance_id = @instanceId", new { id, instanceId }).SingleOrDefault();
@@ -1622,6 +1623,7 @@ namespace FolioLibrary
             if (load && @on.InstanceId != null) @on.Instance = FindInstance2(@on.InstanceId);
             return @on;
         }
+        public OclcNumber2 FindOclcNumber2(int? id, bool load = false) => Query<OclcNumber2>($"SELECT id AS \"Id\", instance_id AS \"InstanceId\", content AS \"Content\", holding_creation_time AS \"HoldingCreationTime\", invalid_time AS \"InvalidTime\" FROM local{(IsMySql ? "_" : ".")}oclc_numbers WHERE id = @id", new { id }).SingleOrDefault();
         public Order FindOrder(Guid? id, bool load = false) => Query<Order>($"SELECT id AS \"Id\", jsonb AS \"Content\", creation_date AS \"CreationTime\", created_by AS \"CreationUserId\" FROM uchicago_mod_orders_storage{(IsMySql ? "_" : ".")}purchase_order WHERE id = @id", new { id }).SingleOrDefault();
         public Order2 FindOrder2(Guid? id, bool load = false)
         {
@@ -3534,7 +3536,13 @@ namespace FolioLibrary
         public void AddObjectNotesIndexes()
         {
         }
+        public void AddOclcHoldingsIndexes()
+        {
+        }
         public void AddOclcNumbersIndexes()
+        {
+        }
+        public void AddOclcNumber2sIndexes()
         {
         }
         public void AddOrdersIndexes()
@@ -4852,7 +4860,13 @@ namespace FolioLibrary
         public void RemoveObjectNotesIndexes()
         {
         }
+        public void RemoveOclcHoldingsIndexes()
+        {
+        }
         public void RemoveOclcNumbersIndexes()
+        {
+        }
+        public void RemoveOclcNumber2sIndexes()
         {
         }
         public void RemoveOrdersIndexes()
@@ -5662,7 +5676,9 @@ namespace FolioLibrary
         public IEnumerable<NoteType> NoteTypes(string where = null, object param = null, string orderBy = null, int? skip = null, int? take = null) => Query<NoteType>($"SELECT id AS \"Id\", name AS \"Name\", created_by AS \"CreationUserId\", created_date AS \"CreationTime\", updated_by AS \"UpdatedBy\", updated_date AS \"LastWriteTime\" FROM uchicago_mod_notes{(IsMySql ? "_" : ".")}type{(where != null ? $" WHERE {where}" : "")}{(orderBy != null || skip != null || take != null ? $" ORDER BY {orderBy ?? "id"}" : "")}", param, skip, take);
         public IEnumerable<NoteType2> NoteType2s(string where = null, object param = null, string orderBy = null, int? skip = null, int? take = null) => Query<NoteType2>($"SELECT id AS \"Id\", name AS \"Name\", creation_user_id AS \"CreationUserId\", creation_time AS \"CreationTime\", updated_by_user_id AS \"LastWriteUserId\", last_write_time AS \"LastWriteTime\" FROM uc{(IsMySql ? "_" : ".")}note_types{(where != null ? $" WHERE {where}" : "")}{(orderBy != null || skip != null || take != null ? $" ORDER BY {orderBy ?? "id"}" : "")}", param, skip, take);
         public IEnumerable<ObjectNote> ObjectNotes(string where = null, object param = null, string orderBy = null, int? skip = null, int? take = null) => Query<ObjectNote>($"SELECT id AS \"Id\", object_id AS \"ObjectId\", type AS \"Type\", note_id AS \"NoteId\" FROM uc{(IsMySql ? "_" : ".")}object_notes{(where != null ? $" WHERE {where}" : "")}{(orderBy != null || skip != null || take != null ? $" ORDER BY {orderBy ?? "id"}" : "")}", param, skip, take);
+        public IEnumerable<OclcHolding> OclcHoldings(string where = null, object param = null, string orderBy = null, int? skip = null, int? take = null) => Query<OclcHolding>($"SELECT id AS \"Id\", number AS \"Number\", instance_id AS \"InstanceId\", last_write_time AS \"LastWriteTime\" FROM local{(IsMySql ? "_" : ".")}oclc_holdings{(where != null ? $" WHERE {where}" : "")}{(orderBy != null || skip != null || take != null ? $" ORDER BY {orderBy ?? "id"}" : "")}", param, skip, take);
         public IEnumerable<OclcNumber> OclcNumbers(string where = null, object param = null, string orderBy = null, int? skip = null, int? take = null) => Query<OclcNumber>($"SELECT id AS \"Id\", instance_id AS \"InstanceId\", content AS \"Content\" FROM uc{(IsMySql ? "_" : ".")}oclc_numbers{(where != null ? $" WHERE {where}" : "")}{(orderBy != null || skip != null || take != null ? $" ORDER BY {orderBy ?? "id, instance_id"}" : "")}", param, skip, take);
+        public IEnumerable<OclcNumber2> OclcNumber2s(string where = null, object param = null, string orderBy = null, int? skip = null, int? take = null) => Query<OclcNumber2>($"SELECT id AS \"Id\", instance_id AS \"InstanceId\", content AS \"Content\", holding_creation_time AS \"HoldingCreationTime\", invalid_time AS \"InvalidTime\" FROM local{(IsMySql ? "_" : ".")}oclc_numbers{(where != null ? $" WHERE {where}" : "")}{(orderBy != null || skip != null || take != null ? $" ORDER BY {orderBy ?? "id"}" : "")}", param, skip, take);
         public IEnumerable<Order> Orders(string where = null, object param = null, string orderBy = null, int? skip = null, int? take = null) => Query<Order>($"SELECT id AS \"Id\", COALESCE(jsonb_set(jsonb, '{{metadata,createdDate}}', ('\"' || (jsonb#>>'{{metadata,createdDate}}') || CASE WHEN jsonb#>>'{{metadata,createdDate}}' !~ '([-+]\\d\\d:\\d\\d)|Z$' THEN '+00:00' ELSE '' END || '\"')::jsonb), jsonb) AS \"Content\", creation_date AS \"CreationTime\", created_by AS \"CreationUserId\" FROM uchicago_mod_orders_storage{(IsMySql ? "_" : ".")}purchase_order{(where != null ? $" WHERE {where}" : "")}{(orderBy != null || skip != null || take != null ? $" ORDER BY {orderBy ?? "id"}" : "")}", param, skip, take);
         public IEnumerable<Order2> Order2s(string where = null, object param = null, string orderBy = null, int? skip = null, int? take = null) => Query<Order2>($"SELECT id AS \"Id\", approved AS \"Approved\", approved_by_id AS \"ApprovedById\", approval_date AS \"ApprovalDate\", assigned_to_id AS \"AssignedToId\", bill_to_id AS \"BillToId\", close_reason_reason AS \"CloseReasonReason\", close_reason_note AS \"CloseReasonNote\", date_ordered AS \"OrderDate\", manual_po AS \"Manual\", po_number AS \"Number\", po_number_prefix AS \"NumberPrefix\", po_number_suffix AS \"NumberSuffix\", order_type AS \"OrderType\", re_encumber AS \"Reencumber\", ongoing_interval AS \"OngoingInterval\", ongoing_is_subscription AS \"OngoingIsSubscription\", ongoing_manual_renewal AS \"OngoingManualRenewal\", ongoing_notes AS \"OngoingNotes\", ongoing_review_period AS \"OngoingReviewPeriod\", ongoing_renewal_date AS \"OngoingRenewalDate\", ongoing_review_date AS \"OngoingReviewDate\", ship_to_id AS \"ShipToId\", template_id AS \"TemplateId\", vendor_id AS \"VendorId\", status AS \"Status\", created_date AS \"CreationTime\", created_by_user_id AS \"CreationUserId\", created_by_username AS \"CreationUserUsername\", updated_date AS \"LastWriteTime\", updated_by_user_id AS \"LastWriteUserId\", updated_by_username AS \"LastWriteUserUsername\", content AS \"Content\" FROM uc{(IsMySql ? "_" : ".")}orders{(where != null ? $" WHERE {where}" : "")}{(orderBy != null || skip != null || take != null ? $" ORDER BY {orderBy ?? "id"}" : "")}", param, skip, take);
         public IEnumerable<Order3> Order3s(string where = null, object param = null, string orderBy = null, int? skip = null, int? take = null) => Query<Order3>($"SELECT id AS \"Id\", document_id AS \"DocumentId\", vendor_id AS \"VendorId\", order_date AS \"OrderDate\", order_type_id AS \"OrderTypeId\", order_status_id AS \"OrderStatusId\", fiscal_year AS \"FiscalYear\", vendor_customer_id AS \"VendorCustomerId\", delivery_room_id AS \"DeliveryRoomId\", approve_time AS \"ApproveTime\", approve_username AS \"ApproveUsername\", cancel_time AS \"CancelTime\", cancel_username AS \"CancelUsername\", freight_amount AS \"FreightAmount\", shipping_amount AS \"ShippingAmount\", creation_time AS \"CreationTime\", creation_username AS \"CreationUsername\", last_write_time AS \"LastWriteTime\", last_write_username AS \"LastWriteUsername\", long_id AS \"LongId\" FROM local{(IsMySql ? "_" : ".")}orders{(where != null ? $" WHERE {where}" : "")}{(orderBy != null || skip != null || take != null ? $" ORDER BY {orderBy ?? "id"}" : "")}", param, skip, take);
@@ -6102,7 +6118,9 @@ namespace FolioLibrary
         public int CountNoteTypes(string where = null, object param = null, int? take = null) => Count($"SELECT 1 FROM uchicago_mod_notes{(IsMySql ? "_" : ".")}type{(where != null ? $" WHERE {where}" : "")}", param: param, take: take);
         public int CountNoteType2s(string where = null, object param = null, int? take = null) => Count($"SELECT 1 FROM uc{(IsMySql ? "_" : ".")}note_types{(where != null ? $" WHERE {where}" : "")}", param: param, take: take);
         public int CountObjectNotes(string where = null, object param = null, int? take = null) => Count($"SELECT 1 FROM uc{(IsMySql ? "_" : ".")}object_notes{(where != null ? $" WHERE {where}" : "")}", param: param, take: take);
+        public int CountOclcHoldings(string where = null, object param = null, int? take = null) => Count($"SELECT 1 FROM local{(IsMySql ? "_" : ".")}oclc_holdings{(where != null ? $" WHERE {where}" : "")}", param: param, take: take);
         public int CountOclcNumbers(string where = null, object param = null, int? take = null) => Count($"SELECT 1 FROM uc{(IsMySql ? "_" : ".")}oclc_numbers{(where != null ? $" WHERE {where}" : "")}", param: param, take: take);
+        public int CountOclcNumber2s(string where = null, object param = null, int? take = null) => Count($"SELECT 1 FROM local{(IsMySql ? "_" : ".")}oclc_numbers{(where != null ? $" WHERE {where}" : "")}", param: param, take: take);
         public int CountOrders(string where = null, object param = null, int? take = null) => Count($"SELECT 1 FROM uchicago_mod_orders_storage{(IsMySql ? "_" : ".")}purchase_order{(where != null ? $" WHERE {where}" : "")}", param: param, take: take);
         public int CountOrder2s(string where = null, object param = null, int? take = null) => Count($"SELECT 1 FROM uc{(IsMySql ? "_" : ".")}orders{(where != null ? $" WHERE {where}" : "")}", param: param, take: take);
         public int CountOrder3s(string where = null, object param = null, int? take = null) => Count($"SELECT 1 FROM local{(IsMySql ? "_" : ".")}orders{(where != null ? $" WHERE {where}" : "")}", param: param, take: take);
@@ -6542,7 +6560,9 @@ namespace FolioLibrary
         public bool AnyNoteTypes(string where = null, object param = null) => Query($"SELECT 1 FROM uchicago_mod_notes{(IsMySql ? "_" : ".")}type{(where != null ? $" WHERE {where}" : "")}{(IsSqlServer ? $" ORDER BY id" : "")}", param: param, take: 1).Any();
         public bool AnyNoteType2s(string where = null, object param = null) => Query($"SELECT 1 FROM uc{(IsMySql ? "_" : ".")}note_types{(where != null ? $" WHERE {where}" : "")}{(IsSqlServer ? $" ORDER BY id" : "")}", param: param, take: 1).Any();
         public bool AnyObjectNotes(string where = null, object param = null) => Query($"SELECT 1 FROM uc{(IsMySql ? "_" : ".")}object_notes{(where != null ? $" WHERE {where}" : "")}{(IsSqlServer ? $" ORDER BY id" : "")}", param: param, take: 1).Any();
+        public bool AnyOclcHoldings(string where = null, object param = null) => Query($"SELECT 1 FROM local{(IsMySql ? "_" : ".")}oclc_holdings{(where != null ? $" WHERE {where}" : "")}{(IsSqlServer ? $" ORDER BY id" : "")}", param: param, take: 1).Any();
         public bool AnyOclcNumbers(string where = null, object param = null) => Query($"SELECT 1 FROM uc{(IsMySql ? "_" : ".")}oclc_numbers{(where != null ? $" WHERE {where}" : "")}{(IsSqlServer ? $" ORDER BY id, instance_id" : "")}", param: param, take: 1).Any();
+        public bool AnyOclcNumber2s(string where = null, object param = null) => Query($"SELECT 1 FROM local{(IsMySql ? "_" : ".")}oclc_numbers{(where != null ? $" WHERE {where}" : "")}{(IsSqlServer ? $" ORDER BY id" : "")}", param: param, take: 1).Any();
         public bool AnyOrders(string where = null, object param = null) => Query($"SELECT 1 FROM uchicago_mod_orders_storage{(IsMySql ? "_" : ".")}purchase_order{(where != null ? $" WHERE {where}" : "")}{(IsSqlServer ? $" ORDER BY id" : "")}", param: param, take: 1).Any();
         public bool AnyOrder2s(string where = null, object param = null) => Query($"SELECT 1 FROM uc{(IsMySql ? "_" : ".")}orders{(where != null ? $" WHERE {where}" : "")}{(IsSqlServer ? $" ORDER BY id" : "")}", param: param, take: 1).Any();
         public bool AnyOrder3s(string where = null, object param = null) => Query($"SELECT 1 FROM local{(IsMySql ? "_" : ".")}orders{(where != null ? $" WHERE {where}" : "")}{(IsSqlServer ? $" ORDER BY id" : "")}", param: param, take: 1).Any();
@@ -6982,7 +7002,9 @@ namespace FolioLibrary
         public void TruncateNoteTypes() { Execute($"TRUNCATE TABLE uchicago_mod_notes.type"); Commit(); }
         public void TruncateNoteType2s() { Execute($"TRUNCATE TABLE uc.note_types"); Commit(); }
         public void TruncateObjectNotes() { Execute($"TRUNCATE TABLE uc.object_notes"); Commit(); }
+        public void TruncateOclcHoldings() { Execute($"TRUNCATE TABLE local.oclc_holdings"); Commit(); }
         public void TruncateOclcNumbers() { Execute($"TRUNCATE TABLE uc.oclc_numbers"); Commit(); }
+        public void TruncateOclcNumber2s() { Execute($"TRUNCATE TABLE local.oclc_numbers"); Commit(); }
         public void TruncateOrders() { Execute($"TRUNCATE TABLE uchicago_mod_orders_storage.purchase_order"); Commit(); }
         public void TruncateOrder2s() { Execute($"TRUNCATE TABLE uc.orders"); Commit(); }
         public void TruncateOrder3s() { Execute($"TRUNCATE TABLE local.orders"); Commit(); }
@@ -7268,6 +7290,8 @@ namespace FolioLibrary
         public void Insert(Note note) => Execute("INSERT INTO uchicago_mod_notes.note (id, title, content, indexed_content, domain, type_id, pop_up_on_user, pop_up_on_check_out, created_by, created_date, updated_by, updated_date) VALUES (@Id, @Title, @Content, @IndexedContent, @Domain, @TypeId, @PopUpOnUser, @PopUpOnCheckOut, @CreationUserId, @CreationTime, @UpdatedBy, @LastWriteTime)", note);
         public void Insert(NoteLink noteLink) => Execute("INSERT INTO uchicago_mod_notes.note_link (note_id, link_id) VALUES (@NoteId, @LinkId)", noteLink);
         public void Insert(NoteType noteType) => Execute("INSERT INTO uchicago_mod_notes.type (id, name, created_by, created_date, updated_by, updated_date) VALUES (@Id, @Name, @CreationUserId, @CreationTime, @UpdatedBy, @LastWriteTime)", noteType);
+        public void Insert(OclcHolding oclcHolding) => Execute("INSERT INTO local.oclc_holdings (id, number, instance_id, last_write_time) VALUES (@Id, @Number, @InstanceId, @LastWriteTime)", oclcHolding);
+        public void Insert(OclcNumber2 oclcNumber2) => Execute("INSERT INTO local.oclc_numbers (id, instance_id, content, holding_creation_time, invalid_time) VALUES (@Id, @InstanceId, @Content, @HoldingCreationTime, @InvalidTime)", oclcNumber2);
         public void Insert(Order order) => Execute("INSERT INTO uchicago_mod_orders_storage.purchase_order (id, jsonb, creation_date, created_by) VALUES (@Id, @Content::jsonb, @CreationTime, @CreationUserId)", order);
         public void Insert(Order3 order3) => Execute("INSERT INTO local.orders (id, document_id, vendor_id, order_date, order_type_id, order_status_id, fiscal_year, vendor_customer_id, delivery_room_id, approve_time, approve_username, cancel_time, cancel_username, freight_amount, shipping_amount, creation_time, creation_username, last_write_time, last_write_username, long_id) VALUES (@Id, @DocumentId, @VendorId, @OrderDate, @OrderTypeId, @OrderStatusId, @FiscalYear, @VendorCustomerId, @DeliveryRoomId, @ApproveTime, @ApproveUsername, @CancelTime, @CancelUsername, @FreightAmount, @ShippingAmount, @CreationTime, @CreationUsername, @LastWriteTime, @LastWriteUsername, @LongId)", order3);
         public void Insert(OrderInvoice orderInvoice) => Execute("INSERT INTO uchicago_mod_orders_storage.order_invoice_relationship (id, jsonb, purchaseorderid) VALUES (@Id, @Content::jsonb, @Purchaseorderid)", orderInvoice);
@@ -7432,6 +7456,8 @@ namespace FolioLibrary
         public int Update(Note note, DateTime? lastWriteTime = null, string where = null) => Execute($"UPDATE uchicago_mod_notes.note SET title = @Title, content = @Content, indexed_content = @IndexedContent, domain = @Domain, type_id = @TypeId, pop_up_on_user = @PopUpOnUser, pop_up_on_check_out = @PopUpOnCheckOut, created_by = @CreationUserId, created_date = @CreationTime, updated_by = @UpdatedBy, updated_date = @LastWriteTime WHERE {where ?? "id = @Id"}{(lastWriteTime != null ? " AND (updated_date IS NULL OR updated_date = @_lastWriteTime)" : "")}", new { note.Title, note.Content, note.IndexedContent, note.Domain, note.TypeId, note.PopUpOnUser, note.PopUpOnCheckOut, note.CreationUserId, note.CreationTime, note.UpdatedBy, note.LastWriteTime, note.Id, _lastWriteTime = lastWriteTime });
         public int Update(NoteLink noteLink, string where = null) => Execute($"UPDATE uchicago_mod_notes.note_link SET  WHERE {where ?? "note_id = @NoteId AND link_id = @LinkId"}", noteLink);
         public int Update(NoteType noteType, DateTime? lastWriteTime = null, string where = null) => Execute($"UPDATE uchicago_mod_notes.type SET name = @Name, created_by = @CreationUserId, created_date = @CreationTime, updated_by = @UpdatedBy, updated_date = @LastWriteTime WHERE {where ?? "id = @Id"}{(lastWriteTime != null ? " AND (updated_date IS NULL OR updated_date = @_lastWriteTime)" : "")}", new { noteType.Name, noteType.CreationUserId, noteType.CreationTime, noteType.UpdatedBy, noteType.LastWriteTime, noteType.Id, _lastWriteTime = lastWriteTime });
+        public int Update(OclcHolding oclcHolding, DateTime? lastWriteTime = null, string where = null) => Execute($"UPDATE local.oclc_holdings SET number = @Number, instance_id = @InstanceId, last_write_time = @LastWriteTime WHERE {where ?? "id = @Id"}{(lastWriteTime != null ? " AND (last_write_time IS NULL OR last_write_time = @_lastWriteTime)" : "")}", new { oclcHolding.Number, oclcHolding.InstanceId, oclcHolding.LastWriteTime, oclcHolding.Id, _lastWriteTime = lastWriteTime });
+        public int Update(OclcNumber2 oclcNumber2, string where = null) => Execute($"UPDATE local.oclc_numbers SET instance_id = @InstanceId, content = @Content, holding_creation_time = @HoldingCreationTime, invalid_time = @InvalidTime WHERE {where ?? "id = @Id"}", oclcNumber2);
         public int Update(Order order, string where = null) => Execute($"UPDATE uchicago_mod_orders_storage.purchase_order SET jsonb = @Content::jsonb, creation_date = @CreationTime, created_by = @CreationUserId WHERE {where ?? "id = @Id"}", order);
         public int Update(Order3 order3, DateTime? lastWriteTime = null, string where = null) => Execute($"UPDATE local.orders SET document_id = @DocumentId, vendor_id = @VendorId, order_date = @OrderDate, order_type_id = @OrderTypeId, order_status_id = @OrderStatusId, fiscal_year = @FiscalYear, vendor_customer_id = @VendorCustomerId, delivery_room_id = @DeliveryRoomId, approve_time = @ApproveTime, approve_username = @ApproveUsername, cancel_time = @CancelTime, cancel_username = @CancelUsername, freight_amount = @FreightAmount, shipping_amount = @ShippingAmount, creation_time = @CreationTime, creation_username = @CreationUsername, last_write_time = @LastWriteTime, last_write_username = @LastWriteUsername, long_id = @LongId WHERE {where ?? "id = @Id"}{(lastWriteTime != null ? " AND (last_write_time IS NULL OR last_write_time = @_lastWriteTime)" : "")}", new { order3.DocumentId, order3.VendorId, order3.OrderDate, order3.OrderTypeId, order3.OrderStatusId, order3.FiscalYear, order3.VendorCustomerId, order3.DeliveryRoomId, order3.ApproveTime, order3.ApproveUsername, order3.CancelTime, order3.CancelUsername, order3.FreightAmount, order3.ShippingAmount, order3.CreationTime, order3.CreationUsername, order3.LastWriteTime, order3.LastWriteUsername, order3.LongId, order3.Id, _lastWriteTime = lastWriteTime });
         public int Update(OrderInvoice orderInvoice, string where = null) => Execute($"UPDATE uchicago_mod_orders_storage.order_invoice_relationship SET jsonb = @Content::jsonb, purchaseorderid = @Purchaseorderid WHERE {where ?? "id = @Id"}", orderInvoice);
@@ -8000,6 +8026,16 @@ namespace FolioLibrary
             if (noteType.Id == null || Update(noteType, where: where) != 1) Insert(noteType);
         }
 
+        public void UpdateOrInsert(OclcHolding oclcHolding, string where = null)
+        {
+            if (oclcHolding.Id == null || Update(oclcHolding, where: where) != 1) Insert(oclcHolding);
+        }
+
+        public void UpdateOrInsert(OclcNumber2 oclcNumber2, string where = null)
+        {
+            if (oclcNumber2.Id == null || Update(oclcNumber2, where: where) != 1) Insert(oclcNumber2);
+        }
+
         public void UpdateOrInsert(Order order, string where = null)
         {
             if (order.Id == null || Update(order, where: where) != 1) Insert(order);
@@ -8564,7 +8600,9 @@ namespace FolioLibrary
         public int DeleteNoteType(Guid? id) => Execute($"DELETE FROM uchicago_mod_notes{(IsMySql ? "_" : ".")}type WHERE id = @id", new { id });
         public int DeleteNoteType2(Guid? id) => Execute($"DELETE FROM uc{(IsMySql ? "_" : ".")}note_types WHERE id = @id", new { id });
         public int DeleteObjectNote(Guid? id) => Execute($"DELETE FROM uc{(IsMySql ? "_" : ".")}object_notes WHERE id = @id", new { id });
+        public int DeleteOclcHolding(int? id) => Execute($"DELETE FROM local{(IsMySql ? "_" : ".")}oclc_holdings WHERE id = @id", new { id });
         public int DeleteOclcNumber(string id, Guid? instanceId) => Execute($"DELETE FROM uc{(IsMySql ? "_" : ".")}oclc_numbers WHERE id = @id AND instance_id = @instanceId", new { id, instanceId });
+        public int DeleteOclcNumber2(int? id) => Execute($"DELETE FROM local{(IsMySql ? "_" : ".")}oclc_numbers WHERE id = @id", new { id });
         public int DeleteOrder(Guid? id) => Execute($"DELETE FROM uchicago_mod_orders_storage{(IsMySql ? "_" : ".")}purchase_order WHERE id = @id", new { id });
         public int DeleteOrder2(Guid? id) => Execute($"DELETE FROM uc{(IsMySql ? "_" : ".")}orders WHERE id = @id", new { id });
         public int DeleteOrder3(int? id) => Execute($"DELETE FROM local{(IsMySql ? "_" : ".")}orders WHERE id = @id", new { id });
@@ -9003,7 +9041,9 @@ namespace FolioLibrary
         public int DeleteNoteTypes(string where = null, object param = null) => Execute($"DELETE FROM uchicago_mod_notes{(IsMySql ? "_" : ".")}type{(where != null ? $" WHERE {where}" : "")}", param);
         public int DeleteNoteType2s(string where = null, object param = null) => Execute($"DELETE FROM uc{(IsMySql ? "_" : ".")}note_types{(where != null ? $" WHERE {where}" : "")}", param);
         public int DeleteObjectNotes(string where = null, object param = null) => Execute($"DELETE FROM uc{(IsMySql ? "_" : ".")}object_notes{(where != null ? $" WHERE {where}" : "")}", param);
+        public int DeleteOclcHoldings(string where = null, object param = null) => Execute($"DELETE FROM local{(IsMySql ? "_" : ".")}oclc_holdings{(where != null ? $" WHERE {where}" : "")}", param);
         public int DeleteOclcNumbers(string where = null, object param = null) => Execute($"DELETE FROM uc{(IsMySql ? "_" : ".")}oclc_numbers{(where != null ? $" WHERE {where}" : "")}", param);
+        public int DeleteOclcNumber2s(string where = null, object param = null) => Execute($"DELETE FROM local{(IsMySql ? "_" : ".")}oclc_numbers{(where != null ? $" WHERE {where}" : "")}", param);
         public int DeleteOrders(string where = null, object param = null) => Execute($"DELETE FROM uchicago_mod_orders_storage{(IsMySql ? "_" : ".")}purchase_order{(where != null ? $" WHERE {where}" : "")}", param);
         public int DeleteOrder2s(string where = null, object param = null) => Execute($"DELETE FROM uc{(IsMySql ? "_" : ".")}orders{(where != null ? $" WHERE {where}" : "")}", param);
         public int DeleteOrder3s(string where = null, object param = null) => Execute($"DELETE FROM local{(IsMySql ? "_" : ".")}orders{(where != null ? $" WHERE {where}" : "")}", param);

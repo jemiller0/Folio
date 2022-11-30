@@ -18626,6 +18626,7 @@ namespace FolioConsoleApplication
                         foreach (var u in fsc.Users($"{(where != null ? $"{where} and " : "")}active == true and metadata.updatedDate <= \"{dt.ToUniversalTime():yyyy-MM-ddTHH:mm:ss.fff+00:00}\""))
                         {
                             u["active"] = false;
+                            u["expirationDate"] = DateTime.UtcNow.Date;
                             fsc.UpdateUser(u);
                             ++k;
                         }
