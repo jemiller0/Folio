@@ -21,9 +21,10 @@ namespace FolioLibrary
         {
             return FolioServiceClient.AcquisitionMethods(out count, where, orderBy, skip, take).Select(jo =>
             {
-                var am2 = AcquisitionMethod2.FromJObject(jo);
-                if (load && am2.CreationUserId != null) am2.CreationUser = (User2)(cache && objects.ContainsKey(am2.CreationUserId.Value) ? objects[am2.CreationUserId.Value] : objects[am2.CreationUserId.Value] = FindUser2(am2.CreationUserId));
-                if (load && am2.LastWriteUserId != null) am2.LastWriteUser = (User2)(cache && objects.ContainsKey(am2.LastWriteUserId.Value) ? objects[am2.LastWriteUserId.Value] : objects[am2.LastWriteUserId.Value] = FindUser2(am2.LastWriteUserId));
+                var id = Guid.Parse((string)jo["id"]);
+                var am2 = cache ? (AcquisitionMethod2)(objects.ContainsKey(id) ? objects[id] : objects[id] = AcquisitionMethod2.FromJObject(jo)) : AcquisitionMethod2.FromJObject(jo);
+                if (load && am2.CreationUserId != null) am2.CreationUser = FindUser2(am2.CreationUserId, cache: cache);
+                if (load && am2.LastWriteUserId != null) am2.LastWriteUser = FindUser2(am2.LastWriteUserId, cache: cache);
                 return am2;
             }).ToArray();
         }
@@ -32,19 +33,20 @@ namespace FolioLibrary
         {
             foreach (var jo in FolioServiceClient.AcquisitionMethods(where, orderBy, skip, take))
             {
-                var am2 = AcquisitionMethod2.FromJObject(jo);
-                if (load && am2.CreationUserId != null) am2.CreationUser = (User2)(cache && objects.ContainsKey(am2.CreationUserId.Value) ? objects[am2.CreationUserId.Value] : objects[am2.CreationUserId.Value] = FindUser2(am2.CreationUserId));
-                if (load && am2.LastWriteUserId != null) am2.LastWriteUser = (User2)(cache && objects.ContainsKey(am2.LastWriteUserId.Value) ? objects[am2.LastWriteUserId.Value] : objects[am2.LastWriteUserId.Value] = FindUser2(am2.LastWriteUserId));
+                var id = Guid.Parse((string)jo["id"]);
+                var am2 = cache ? (AcquisitionMethod2)(objects.ContainsKey(id) ? objects[id] : objects[id] = AcquisitionMethod2.FromJObject(jo)) : AcquisitionMethod2.FromJObject(jo);
+                if (load && am2.CreationUserId != null) am2.CreationUser = FindUser2(am2.CreationUserId, cache: cache);
+                if (load && am2.LastWriteUserId != null) am2.LastWriteUser = FindUser2(am2.LastWriteUserId, cache: cache);
                 yield return am2;
             }
         }
 
         public AcquisitionMethod2 FindAcquisitionMethod2(Guid? id, bool load = false, bool cache = true)
         {
-            var am2 = AcquisitionMethod2.FromJObject(FolioServiceClient.GetAcquisitionMethod(id?.ToString()));
+            var am2 = cache ? (AcquisitionMethod2)(objects.ContainsKey(id.Value) ? objects[id.Value] : objects[id.Value] = AcquisitionMethod2.FromJObject(FolioServiceClient.GetAcquisitionMethod(id?.ToString()))) : AcquisitionMethod2.FromJObject(FolioServiceClient.GetAcquisitionMethod(id?.ToString()));
             if (am2 == null) return null;
-            if (load && am2.CreationUserId != null) am2.CreationUser = (User2)(cache && objects.ContainsKey(am2.CreationUserId.Value) ? objects[am2.CreationUserId.Value] : objects[am2.CreationUserId.Value] = FindUser2(am2.CreationUserId));
-            if (load && am2.LastWriteUserId != null) am2.LastWriteUser = (User2)(cache && objects.ContainsKey(am2.LastWriteUserId.Value) ? objects[am2.LastWriteUserId.Value] : objects[am2.LastWriteUserId.Value] = FindUser2(am2.LastWriteUserId));
+            if (load && am2.CreationUserId != null) am2.CreationUser = FindUser2(am2.CreationUserId, cache: cache);
+            if (load && am2.LastWriteUserId != null) am2.LastWriteUser = FindUser2(am2.LastWriteUserId, cache: cache);
             return am2;
         }
 
@@ -66,9 +68,10 @@ namespace FolioLibrary
         {
             return FolioServiceClient.AcquisitionsUnits(out count, where, orderBy, skip, take).Select(jo =>
             {
-                var au2 = AcquisitionsUnit2.FromJObject(jo);
-                if (load && au2.CreationUserId != null) au2.CreationUser = (User2)(cache && objects.ContainsKey(au2.CreationUserId.Value) ? objects[au2.CreationUserId.Value] : objects[au2.CreationUserId.Value] = FindUser2(au2.CreationUserId));
-                if (load && au2.LastWriteUserId != null) au2.LastWriteUser = (User2)(cache && objects.ContainsKey(au2.LastWriteUserId.Value) ? objects[au2.LastWriteUserId.Value] : objects[au2.LastWriteUserId.Value] = FindUser2(au2.LastWriteUserId));
+                var id = Guid.Parse((string)jo["id"]);
+                var au2 = cache ? (AcquisitionsUnit2)(objects.ContainsKey(id) ? objects[id] : objects[id] = AcquisitionsUnit2.FromJObject(jo)) : AcquisitionsUnit2.FromJObject(jo);
+                if (load && au2.CreationUserId != null) au2.CreationUser = FindUser2(au2.CreationUserId, cache: cache);
+                if (load && au2.LastWriteUserId != null) au2.LastWriteUser = FindUser2(au2.LastWriteUserId, cache: cache);
                 return au2;
             }).ToArray();
         }
@@ -77,19 +80,20 @@ namespace FolioLibrary
         {
             foreach (var jo in FolioServiceClient.AcquisitionsUnits(where, orderBy, skip, take))
             {
-                var au2 = AcquisitionsUnit2.FromJObject(jo);
-                if (load && au2.CreationUserId != null) au2.CreationUser = (User2)(cache && objects.ContainsKey(au2.CreationUserId.Value) ? objects[au2.CreationUserId.Value] : objects[au2.CreationUserId.Value] = FindUser2(au2.CreationUserId));
-                if (load && au2.LastWriteUserId != null) au2.LastWriteUser = (User2)(cache && objects.ContainsKey(au2.LastWriteUserId.Value) ? objects[au2.LastWriteUserId.Value] : objects[au2.LastWriteUserId.Value] = FindUser2(au2.LastWriteUserId));
+                var id = Guid.Parse((string)jo["id"]);
+                var au2 = cache ? (AcquisitionsUnit2)(objects.ContainsKey(id) ? objects[id] : objects[id] = AcquisitionsUnit2.FromJObject(jo)) : AcquisitionsUnit2.FromJObject(jo);
+                if (load && au2.CreationUserId != null) au2.CreationUser = FindUser2(au2.CreationUserId, cache: cache);
+                if (load && au2.LastWriteUserId != null) au2.LastWriteUser = FindUser2(au2.LastWriteUserId, cache: cache);
                 yield return au2;
             }
         }
 
         public AcquisitionsUnit2 FindAcquisitionsUnit2(Guid? id, bool load = false, bool cache = true)
         {
-            var au2 = AcquisitionsUnit2.FromJObject(FolioServiceClient.GetAcquisitionsUnit(id?.ToString()));
+            var au2 = cache ? (AcquisitionsUnit2)(objects.ContainsKey(id.Value) ? objects[id.Value] : objects[id.Value] = AcquisitionsUnit2.FromJObject(FolioServiceClient.GetAcquisitionsUnit(id?.ToString()))) : AcquisitionsUnit2.FromJObject(FolioServiceClient.GetAcquisitionsUnit(id?.ToString()));
             if (au2 == null) return null;
-            if (load && au2.CreationUserId != null) au2.CreationUser = (User2)(cache && objects.ContainsKey(au2.CreationUserId.Value) ? objects[au2.CreationUserId.Value] : objects[au2.CreationUserId.Value] = FindUser2(au2.CreationUserId));
-            if (load && au2.LastWriteUserId != null) au2.LastWriteUser = (User2)(cache && objects.ContainsKey(au2.LastWriteUserId.Value) ? objects[au2.LastWriteUserId.Value] : objects[au2.LastWriteUserId.Value] = FindUser2(au2.LastWriteUserId));
+            if (load && au2.CreationUserId != null) au2.CreationUser = FindUser2(au2.CreationUserId, cache: cache);
+            if (load && au2.LastWriteUserId != null) au2.LastWriteUser = FindUser2(au2.LastWriteUserId, cache: cache);
             return au2;
         }
 
@@ -111,9 +115,10 @@ namespace FolioLibrary
         {
             return FolioServiceClient.AddressTypes(out count, where, orderBy, skip, take).Select(jo =>
             {
-                var at2 = AddressType2.FromJObject(jo);
-                if (load && at2.CreationUserId != null) at2.CreationUser = (User2)(cache && objects.ContainsKey(at2.CreationUserId.Value) ? objects[at2.CreationUserId.Value] : objects[at2.CreationUserId.Value] = FindUser2(at2.CreationUserId));
-                if (load && at2.LastWriteUserId != null) at2.LastWriteUser = (User2)(cache && objects.ContainsKey(at2.LastWriteUserId.Value) ? objects[at2.LastWriteUserId.Value] : objects[at2.LastWriteUserId.Value] = FindUser2(at2.LastWriteUserId));
+                var id = Guid.Parse((string)jo["id"]);
+                var at2 = cache ? (AddressType2)(objects.ContainsKey(id) ? objects[id] : objects[id] = AddressType2.FromJObject(jo)) : AddressType2.FromJObject(jo);
+                if (load && at2.CreationUserId != null) at2.CreationUser = FindUser2(at2.CreationUserId, cache: cache);
+                if (load && at2.LastWriteUserId != null) at2.LastWriteUser = FindUser2(at2.LastWriteUserId, cache: cache);
                 return at2;
             }).ToArray();
         }
@@ -122,19 +127,20 @@ namespace FolioLibrary
         {
             foreach (var jo in FolioServiceClient.AddressTypes(where, orderBy, skip, take))
             {
-                var at2 = AddressType2.FromJObject(jo);
-                if (load && at2.CreationUserId != null) at2.CreationUser = (User2)(cache && objects.ContainsKey(at2.CreationUserId.Value) ? objects[at2.CreationUserId.Value] : objects[at2.CreationUserId.Value] = FindUser2(at2.CreationUserId));
-                if (load && at2.LastWriteUserId != null) at2.LastWriteUser = (User2)(cache && objects.ContainsKey(at2.LastWriteUserId.Value) ? objects[at2.LastWriteUserId.Value] : objects[at2.LastWriteUserId.Value] = FindUser2(at2.LastWriteUserId));
+                var id = Guid.Parse((string)jo["id"]);
+                var at2 = cache ? (AddressType2)(objects.ContainsKey(id) ? objects[id] : objects[id] = AddressType2.FromJObject(jo)) : AddressType2.FromJObject(jo);
+                if (load && at2.CreationUserId != null) at2.CreationUser = FindUser2(at2.CreationUserId, cache: cache);
+                if (load && at2.LastWriteUserId != null) at2.LastWriteUser = FindUser2(at2.LastWriteUserId, cache: cache);
                 yield return at2;
             }
         }
 
         public AddressType2 FindAddressType2(Guid? id, bool load = false, bool cache = true)
         {
-            var at2 = AddressType2.FromJObject(FolioServiceClient.GetAddressType(id?.ToString()));
+            var at2 = cache ? (AddressType2)(objects.ContainsKey(id.Value) ? objects[id.Value] : objects[id.Value] = AddressType2.FromJObject(FolioServiceClient.GetAddressType(id?.ToString()))) : AddressType2.FromJObject(FolioServiceClient.GetAddressType(id?.ToString()));
             if (at2 == null) return null;
-            if (load && at2.CreationUserId != null) at2.CreationUser = (User2)(cache && objects.ContainsKey(at2.CreationUserId.Value) ? objects[at2.CreationUserId.Value] : objects[at2.CreationUserId.Value] = FindUser2(at2.CreationUserId));
-            if (load && at2.LastWriteUserId != null) at2.LastWriteUser = (User2)(cache && objects.ContainsKey(at2.LastWriteUserId.Value) ? objects[at2.LastWriteUserId.Value] : objects[at2.LastWriteUserId.Value] = FindUser2(at2.LastWriteUserId));
+            if (load && at2.CreationUserId != null) at2.CreationUser = FindUser2(at2.CreationUserId, cache: cache);
+            if (load && at2.LastWriteUserId != null) at2.LastWriteUser = FindUser2(at2.LastWriteUserId, cache: cache);
             return at2;
         }
 
@@ -156,7 +162,8 @@ namespace FolioLibrary
         {
             return FolioServiceClient.Alerts(out count, where, orderBy, skip, take).Select(jo =>
             {
-                var a2 = Alert2.FromJObject(jo);
+                var id = Guid.Parse((string)jo["id"]);
+                var a2 = cache ? (Alert2)(objects.ContainsKey(id) ? objects[id] : objects[id] = Alert2.FromJObject(jo)) : Alert2.FromJObject(jo);
                 return a2;
             }).ToArray();
         }
@@ -165,7 +172,8 @@ namespace FolioLibrary
         {
             foreach (var jo in FolioServiceClient.Alerts(where, orderBy, skip, take))
             {
-                var a2 = Alert2.FromJObject(jo);
+                var id = Guid.Parse((string)jo["id"]);
+                var a2 = cache ? (Alert2)(objects.ContainsKey(id) ? objects[id] : objects[id] = Alert2.FromJObject(jo)) : Alert2.FromJObject(jo);
                 yield return a2;
             }
         }
@@ -190,9 +198,10 @@ namespace FolioLibrary
         {
             return FolioServiceClient.AlternativeTitleTypes(out count, where, orderBy, skip, take).Select(jo =>
             {
-                var att2 = AlternativeTitleType2.FromJObject(jo);
-                if (load && att2.CreationUserId != null) att2.CreationUser = (User2)(cache && objects.ContainsKey(att2.CreationUserId.Value) ? objects[att2.CreationUserId.Value] : objects[att2.CreationUserId.Value] = FindUser2(att2.CreationUserId));
-                if (load && att2.LastWriteUserId != null) att2.LastWriteUser = (User2)(cache && objects.ContainsKey(att2.LastWriteUserId.Value) ? objects[att2.LastWriteUserId.Value] : objects[att2.LastWriteUserId.Value] = FindUser2(att2.LastWriteUserId));
+                var id = Guid.Parse((string)jo["id"]);
+                var att2 = cache ? (AlternativeTitleType2)(objects.ContainsKey(id) ? objects[id] : objects[id] = AlternativeTitleType2.FromJObject(jo)) : AlternativeTitleType2.FromJObject(jo);
+                if (load && att2.CreationUserId != null) att2.CreationUser = FindUser2(att2.CreationUserId, cache: cache);
+                if (load && att2.LastWriteUserId != null) att2.LastWriteUser = FindUser2(att2.LastWriteUserId, cache: cache);
                 return att2;
             }).ToArray();
         }
@@ -201,19 +210,20 @@ namespace FolioLibrary
         {
             foreach (var jo in FolioServiceClient.AlternativeTitleTypes(where, orderBy, skip, take))
             {
-                var att2 = AlternativeTitleType2.FromJObject(jo);
-                if (load && att2.CreationUserId != null) att2.CreationUser = (User2)(cache && objects.ContainsKey(att2.CreationUserId.Value) ? objects[att2.CreationUserId.Value] : objects[att2.CreationUserId.Value] = FindUser2(att2.CreationUserId));
-                if (load && att2.LastWriteUserId != null) att2.LastWriteUser = (User2)(cache && objects.ContainsKey(att2.LastWriteUserId.Value) ? objects[att2.LastWriteUserId.Value] : objects[att2.LastWriteUserId.Value] = FindUser2(att2.LastWriteUserId));
+                var id = Guid.Parse((string)jo["id"]);
+                var att2 = cache ? (AlternativeTitleType2)(objects.ContainsKey(id) ? objects[id] : objects[id] = AlternativeTitleType2.FromJObject(jo)) : AlternativeTitleType2.FromJObject(jo);
+                if (load && att2.CreationUserId != null) att2.CreationUser = FindUser2(att2.CreationUserId, cache: cache);
+                if (load && att2.LastWriteUserId != null) att2.LastWriteUser = FindUser2(att2.LastWriteUserId, cache: cache);
                 yield return att2;
             }
         }
 
         public AlternativeTitleType2 FindAlternativeTitleType2(Guid? id, bool load = false, bool cache = true)
         {
-            var att2 = AlternativeTitleType2.FromJObject(FolioServiceClient.GetAlternativeTitleType(id?.ToString()));
+            var att2 = cache ? (AlternativeTitleType2)(objects.ContainsKey(id.Value) ? objects[id.Value] : objects[id.Value] = AlternativeTitleType2.FromJObject(FolioServiceClient.GetAlternativeTitleType(id?.ToString()))) : AlternativeTitleType2.FromJObject(FolioServiceClient.GetAlternativeTitleType(id?.ToString()));
             if (att2 == null) return null;
-            if (load && att2.CreationUserId != null) att2.CreationUser = (User2)(cache && objects.ContainsKey(att2.CreationUserId.Value) ? objects[att2.CreationUserId.Value] : objects[att2.CreationUserId.Value] = FindUser2(att2.CreationUserId));
-            if (load && att2.LastWriteUserId != null) att2.LastWriteUser = (User2)(cache && objects.ContainsKey(att2.LastWriteUserId.Value) ? objects[att2.LastWriteUserId.Value] : objects[att2.LastWriteUserId.Value] = FindUser2(att2.LastWriteUserId));
+            if (load && att2.CreationUserId != null) att2.CreationUser = FindUser2(att2.CreationUserId, cache: cache);
+            if (load && att2.LastWriteUserId != null) att2.LastWriteUser = FindUser2(att2.LastWriteUserId, cache: cache);
             return att2;
         }
 
@@ -235,9 +245,10 @@ namespace FolioLibrary
         {
             return FolioServiceClient.BatchGroups(out count, where, orderBy, skip, take).Select(jo =>
             {
-                var bg2 = BatchGroup2.FromJObject(jo);
-                if (load && bg2.CreationUserId != null) bg2.CreationUser = (User2)(cache && objects.ContainsKey(bg2.CreationUserId.Value) ? objects[bg2.CreationUserId.Value] : objects[bg2.CreationUserId.Value] = FindUser2(bg2.CreationUserId));
-                if (load && bg2.LastWriteUserId != null) bg2.LastWriteUser = (User2)(cache && objects.ContainsKey(bg2.LastWriteUserId.Value) ? objects[bg2.LastWriteUserId.Value] : objects[bg2.LastWriteUserId.Value] = FindUser2(bg2.LastWriteUserId));
+                var id = Guid.Parse((string)jo["id"]);
+                var bg2 = cache ? (BatchGroup2)(objects.ContainsKey(id) ? objects[id] : objects[id] = BatchGroup2.FromJObject(jo)) : BatchGroup2.FromJObject(jo);
+                if (load && bg2.CreationUserId != null) bg2.CreationUser = FindUser2(bg2.CreationUserId, cache: cache);
+                if (load && bg2.LastWriteUserId != null) bg2.LastWriteUser = FindUser2(bg2.LastWriteUserId, cache: cache);
                 return bg2;
             }).ToArray();
         }
@@ -246,19 +257,20 @@ namespace FolioLibrary
         {
             foreach (var jo in FolioServiceClient.BatchGroups(where, orderBy, skip, take))
             {
-                var bg2 = BatchGroup2.FromJObject(jo);
-                if (load && bg2.CreationUserId != null) bg2.CreationUser = (User2)(cache && objects.ContainsKey(bg2.CreationUserId.Value) ? objects[bg2.CreationUserId.Value] : objects[bg2.CreationUserId.Value] = FindUser2(bg2.CreationUserId));
-                if (load && bg2.LastWriteUserId != null) bg2.LastWriteUser = (User2)(cache && objects.ContainsKey(bg2.LastWriteUserId.Value) ? objects[bg2.LastWriteUserId.Value] : objects[bg2.LastWriteUserId.Value] = FindUser2(bg2.LastWriteUserId));
+                var id = Guid.Parse((string)jo["id"]);
+                var bg2 = cache ? (BatchGroup2)(objects.ContainsKey(id) ? objects[id] : objects[id] = BatchGroup2.FromJObject(jo)) : BatchGroup2.FromJObject(jo);
+                if (load && bg2.CreationUserId != null) bg2.CreationUser = FindUser2(bg2.CreationUserId, cache: cache);
+                if (load && bg2.LastWriteUserId != null) bg2.LastWriteUser = FindUser2(bg2.LastWriteUserId, cache: cache);
                 yield return bg2;
             }
         }
 
         public BatchGroup2 FindBatchGroup2(Guid? id, bool load = false, bool cache = true)
         {
-            var bg2 = BatchGroup2.FromJObject(FolioServiceClient.GetBatchGroup(id?.ToString()));
+            var bg2 = cache ? (BatchGroup2)(objects.ContainsKey(id.Value) ? objects[id.Value] : objects[id.Value] = BatchGroup2.FromJObject(FolioServiceClient.GetBatchGroup(id?.ToString()))) : BatchGroup2.FromJObject(FolioServiceClient.GetBatchGroup(id?.ToString()));
             if (bg2 == null) return null;
-            if (load && bg2.CreationUserId != null) bg2.CreationUser = (User2)(cache && objects.ContainsKey(bg2.CreationUserId.Value) ? objects[bg2.CreationUserId.Value] : objects[bg2.CreationUserId.Value] = FindUser2(bg2.CreationUserId));
-            if (load && bg2.LastWriteUserId != null) bg2.LastWriteUser = (User2)(cache && objects.ContainsKey(bg2.LastWriteUserId.Value) ? objects[bg2.LastWriteUserId.Value] : objects[bg2.LastWriteUserId.Value] = FindUser2(bg2.LastWriteUserId));
+            if (load && bg2.CreationUserId != null) bg2.CreationUser = FindUser2(bg2.CreationUserId, cache: cache);
+            if (load && bg2.LastWriteUserId != null) bg2.LastWriteUser = FindUser2(bg2.LastWriteUserId, cache: cache);
             return bg2;
         }
 
@@ -280,10 +292,11 @@ namespace FolioLibrary
         {
             return FolioServiceClient.Blocks(out count, where, orderBy, skip, take).Select(jo =>
             {
-                var b2 = Block2.FromJObject(jo);
-                if (load && b2.UserId != null) b2.User = (User2)(cache && objects.ContainsKey(b2.UserId.Value) ? objects[b2.UserId.Value] : objects[b2.UserId.Value] = FindUser2(b2.UserId));
-                if (load && b2.CreationUserId != null) b2.CreationUser = (User2)(cache && objects.ContainsKey(b2.CreationUserId.Value) ? objects[b2.CreationUserId.Value] : objects[b2.CreationUserId.Value] = FindUser2(b2.CreationUserId));
-                if (load && b2.LastWriteUserId != null) b2.LastWriteUser = (User2)(cache && objects.ContainsKey(b2.LastWriteUserId.Value) ? objects[b2.LastWriteUserId.Value] : objects[b2.LastWriteUserId.Value] = FindUser2(b2.LastWriteUserId));
+                var id = Guid.Parse((string)jo["id"]);
+                var b2 = cache ? (Block2)(objects.ContainsKey(id) ? objects[id] : objects[id] = Block2.FromJObject(jo)) : Block2.FromJObject(jo);
+                if (load && b2.UserId != null) b2.User = FindUser2(b2.UserId, cache: cache);
+                if (load && b2.CreationUserId != null) b2.CreationUser = FindUser2(b2.CreationUserId, cache: cache);
+                if (load && b2.LastWriteUserId != null) b2.LastWriteUser = FindUser2(b2.LastWriteUserId, cache: cache);
                 return b2;
             }).ToArray();
         }
@@ -292,21 +305,22 @@ namespace FolioLibrary
         {
             foreach (var jo in FolioServiceClient.Blocks(where, orderBy, skip, take))
             {
-                var b2 = Block2.FromJObject(jo);
-                if (load && b2.UserId != null) b2.User = (User2)(cache && objects.ContainsKey(b2.UserId.Value) ? objects[b2.UserId.Value] : objects[b2.UserId.Value] = FindUser2(b2.UserId));
-                if (load && b2.CreationUserId != null) b2.CreationUser = (User2)(cache && objects.ContainsKey(b2.CreationUserId.Value) ? objects[b2.CreationUserId.Value] : objects[b2.CreationUserId.Value] = FindUser2(b2.CreationUserId));
-                if (load && b2.LastWriteUserId != null) b2.LastWriteUser = (User2)(cache && objects.ContainsKey(b2.LastWriteUserId.Value) ? objects[b2.LastWriteUserId.Value] : objects[b2.LastWriteUserId.Value] = FindUser2(b2.LastWriteUserId));
+                var id = Guid.Parse((string)jo["id"]);
+                var b2 = cache ? (Block2)(objects.ContainsKey(id) ? objects[id] : objects[id] = Block2.FromJObject(jo)) : Block2.FromJObject(jo);
+                if (load && b2.UserId != null) b2.User = FindUser2(b2.UserId, cache: cache);
+                if (load && b2.CreationUserId != null) b2.CreationUser = FindUser2(b2.CreationUserId, cache: cache);
+                if (load && b2.LastWriteUserId != null) b2.LastWriteUser = FindUser2(b2.LastWriteUserId, cache: cache);
                 yield return b2;
             }
         }
 
         public Block2 FindBlock2(Guid? id, bool load = false, bool cache = true)
         {
-            var b2 = Block2.FromJObject(FolioServiceClient.GetBlock(id?.ToString()));
+            var b2 = cache ? (Block2)(objects.ContainsKey(id.Value) ? objects[id.Value] : objects[id.Value] = Block2.FromJObject(FolioServiceClient.GetBlock(id?.ToString()))) : Block2.FromJObject(FolioServiceClient.GetBlock(id?.ToString()));
             if (b2 == null) return null;
-            if (load && b2.UserId != null) b2.User = (User2)(cache && objects.ContainsKey(b2.UserId.Value) ? objects[b2.UserId.Value] : objects[b2.UserId.Value] = FindUser2(b2.UserId));
-            if (load && b2.CreationUserId != null) b2.CreationUser = (User2)(cache && objects.ContainsKey(b2.CreationUserId.Value) ? objects[b2.CreationUserId.Value] : objects[b2.CreationUserId.Value] = FindUser2(b2.CreationUserId));
-            if (load && b2.LastWriteUserId != null) b2.LastWriteUser = (User2)(cache && objects.ContainsKey(b2.LastWriteUserId.Value) ? objects[b2.LastWriteUserId.Value] : objects[b2.LastWriteUserId.Value] = FindUser2(b2.LastWriteUserId));
+            if (load && b2.UserId != null) b2.User = FindUser2(b2.UserId, cache: cache);
+            if (load && b2.CreationUserId != null) b2.CreationUser = FindUser2(b2.CreationUserId, cache: cache);
+            if (load && b2.LastWriteUserId != null) b2.LastWriteUser = FindUser2(b2.LastWriteUserId, cache: cache);
             return b2;
         }
 
@@ -328,9 +342,10 @@ namespace FolioLibrary
         {
             return FolioServiceClient.BlockConditions(out count, where, orderBy, skip, take).Select(jo =>
             {
-                var bc2 = BlockCondition2.FromJObject(jo);
-                if (load && bc2.CreationUserId != null) bc2.CreationUser = (User2)(cache && objects.ContainsKey(bc2.CreationUserId.Value) ? objects[bc2.CreationUserId.Value] : objects[bc2.CreationUserId.Value] = FindUser2(bc2.CreationUserId));
-                if (load && bc2.LastWriteUserId != null) bc2.LastWriteUser = (User2)(cache && objects.ContainsKey(bc2.LastWriteUserId.Value) ? objects[bc2.LastWriteUserId.Value] : objects[bc2.LastWriteUserId.Value] = FindUser2(bc2.LastWriteUserId));
+                var id = Guid.Parse((string)jo["id"]);
+                var bc2 = cache ? (BlockCondition2)(objects.ContainsKey(id) ? objects[id] : objects[id] = BlockCondition2.FromJObject(jo)) : BlockCondition2.FromJObject(jo);
+                if (load && bc2.CreationUserId != null) bc2.CreationUser = FindUser2(bc2.CreationUserId, cache: cache);
+                if (load && bc2.LastWriteUserId != null) bc2.LastWriteUser = FindUser2(bc2.LastWriteUserId, cache: cache);
                 return bc2;
             }).ToArray();
         }
@@ -339,19 +354,20 @@ namespace FolioLibrary
         {
             foreach (var jo in FolioServiceClient.BlockConditions(where, orderBy, skip, take))
             {
-                var bc2 = BlockCondition2.FromJObject(jo);
-                if (load && bc2.CreationUserId != null) bc2.CreationUser = (User2)(cache && objects.ContainsKey(bc2.CreationUserId.Value) ? objects[bc2.CreationUserId.Value] : objects[bc2.CreationUserId.Value] = FindUser2(bc2.CreationUserId));
-                if (load && bc2.LastWriteUserId != null) bc2.LastWriteUser = (User2)(cache && objects.ContainsKey(bc2.LastWriteUserId.Value) ? objects[bc2.LastWriteUserId.Value] : objects[bc2.LastWriteUserId.Value] = FindUser2(bc2.LastWriteUserId));
+                var id = Guid.Parse((string)jo["id"]);
+                var bc2 = cache ? (BlockCondition2)(objects.ContainsKey(id) ? objects[id] : objects[id] = BlockCondition2.FromJObject(jo)) : BlockCondition2.FromJObject(jo);
+                if (load && bc2.CreationUserId != null) bc2.CreationUser = FindUser2(bc2.CreationUserId, cache: cache);
+                if (load && bc2.LastWriteUserId != null) bc2.LastWriteUser = FindUser2(bc2.LastWriteUserId, cache: cache);
                 yield return bc2;
             }
         }
 
         public BlockCondition2 FindBlockCondition2(Guid? id, bool load = false, bool cache = true)
         {
-            var bc2 = BlockCondition2.FromJObject(FolioServiceClient.GetBlockCondition(id?.ToString()));
+            var bc2 = cache ? (BlockCondition2)(objects.ContainsKey(id.Value) ? objects[id.Value] : objects[id.Value] = BlockCondition2.FromJObject(FolioServiceClient.GetBlockCondition(id?.ToString()))) : BlockCondition2.FromJObject(FolioServiceClient.GetBlockCondition(id?.ToString()));
             if (bc2 == null) return null;
-            if (load && bc2.CreationUserId != null) bc2.CreationUser = (User2)(cache && objects.ContainsKey(bc2.CreationUserId.Value) ? objects[bc2.CreationUserId.Value] : objects[bc2.CreationUserId.Value] = FindUser2(bc2.CreationUserId));
-            if (load && bc2.LastWriteUserId != null) bc2.LastWriteUser = (User2)(cache && objects.ContainsKey(bc2.LastWriteUserId.Value) ? objects[bc2.LastWriteUserId.Value] : objects[bc2.LastWriteUserId.Value] = FindUser2(bc2.LastWriteUserId));
+            if (load && bc2.CreationUserId != null) bc2.CreationUser = FindUser2(bc2.CreationUserId, cache: cache);
+            if (load && bc2.LastWriteUserId != null) bc2.LastWriteUser = FindUser2(bc2.LastWriteUserId, cache: cache);
             return bc2;
         }
 
@@ -373,11 +389,12 @@ namespace FolioLibrary
         {
             return FolioServiceClient.BlockLimits(out count, where, orderBy, skip, take).Select(jo =>
             {
-                var bl2 = BlockLimit2.FromJObject(jo);
-                if (load && bl2.GroupId != null) bl2.Group = (Group2)(cache && objects.ContainsKey(bl2.GroupId.Value) ? objects[bl2.GroupId.Value] : objects[bl2.GroupId.Value] = FindGroup2(bl2.GroupId));
-                if (load && bl2.ConditionId != null) bl2.Condition = (BlockCondition2)(cache && objects.ContainsKey(bl2.ConditionId.Value) ? objects[bl2.ConditionId.Value] : objects[bl2.ConditionId.Value] = FindBlockCondition2(bl2.ConditionId));
-                if (load && bl2.CreationUserId != null) bl2.CreationUser = (User2)(cache && objects.ContainsKey(bl2.CreationUserId.Value) ? objects[bl2.CreationUserId.Value] : objects[bl2.CreationUserId.Value] = FindUser2(bl2.CreationUserId));
-                if (load && bl2.LastWriteUserId != null) bl2.LastWriteUser = (User2)(cache && objects.ContainsKey(bl2.LastWriteUserId.Value) ? objects[bl2.LastWriteUserId.Value] : objects[bl2.LastWriteUserId.Value] = FindUser2(bl2.LastWriteUserId));
+                var id = Guid.Parse((string)jo["id"]);
+                var bl2 = cache ? (BlockLimit2)(objects.ContainsKey(id) ? objects[id] : objects[id] = BlockLimit2.FromJObject(jo)) : BlockLimit2.FromJObject(jo);
+                if (load && bl2.GroupId != null) bl2.Group = FindGroup2(bl2.GroupId, cache: cache);
+                if (load && bl2.ConditionId != null) bl2.Condition = FindBlockCondition2(bl2.ConditionId, cache: cache);
+                if (load && bl2.CreationUserId != null) bl2.CreationUser = FindUser2(bl2.CreationUserId, cache: cache);
+                if (load && bl2.LastWriteUserId != null) bl2.LastWriteUser = FindUser2(bl2.LastWriteUserId, cache: cache);
                 return bl2;
             }).ToArray();
         }
@@ -386,23 +403,24 @@ namespace FolioLibrary
         {
             foreach (var jo in FolioServiceClient.BlockLimits(where, orderBy, skip, take))
             {
-                var bl2 = BlockLimit2.FromJObject(jo);
-                if (load && bl2.GroupId != null) bl2.Group = (Group2)(cache && objects.ContainsKey(bl2.GroupId.Value) ? objects[bl2.GroupId.Value] : objects[bl2.GroupId.Value] = FindGroup2(bl2.GroupId));
-                if (load && bl2.ConditionId != null) bl2.Condition = (BlockCondition2)(cache && objects.ContainsKey(bl2.ConditionId.Value) ? objects[bl2.ConditionId.Value] : objects[bl2.ConditionId.Value] = FindBlockCondition2(bl2.ConditionId));
-                if (load && bl2.CreationUserId != null) bl2.CreationUser = (User2)(cache && objects.ContainsKey(bl2.CreationUserId.Value) ? objects[bl2.CreationUserId.Value] : objects[bl2.CreationUserId.Value] = FindUser2(bl2.CreationUserId));
-                if (load && bl2.LastWriteUserId != null) bl2.LastWriteUser = (User2)(cache && objects.ContainsKey(bl2.LastWriteUserId.Value) ? objects[bl2.LastWriteUserId.Value] : objects[bl2.LastWriteUserId.Value] = FindUser2(bl2.LastWriteUserId));
+                var id = Guid.Parse((string)jo["id"]);
+                var bl2 = cache ? (BlockLimit2)(objects.ContainsKey(id) ? objects[id] : objects[id] = BlockLimit2.FromJObject(jo)) : BlockLimit2.FromJObject(jo);
+                if (load && bl2.GroupId != null) bl2.Group = FindGroup2(bl2.GroupId, cache: cache);
+                if (load && bl2.ConditionId != null) bl2.Condition = FindBlockCondition2(bl2.ConditionId, cache: cache);
+                if (load && bl2.CreationUserId != null) bl2.CreationUser = FindUser2(bl2.CreationUserId, cache: cache);
+                if (load && bl2.LastWriteUserId != null) bl2.LastWriteUser = FindUser2(bl2.LastWriteUserId, cache: cache);
                 yield return bl2;
             }
         }
 
         public BlockLimit2 FindBlockLimit2(Guid? id, bool load = false, bool cache = true)
         {
-            var bl2 = BlockLimit2.FromJObject(FolioServiceClient.GetBlockLimit(id?.ToString()));
+            var bl2 = cache ? (BlockLimit2)(objects.ContainsKey(id.Value) ? objects[id.Value] : objects[id.Value] = BlockLimit2.FromJObject(FolioServiceClient.GetBlockLimit(id?.ToString()))) : BlockLimit2.FromJObject(FolioServiceClient.GetBlockLimit(id?.ToString()));
             if (bl2 == null) return null;
-            if (load && bl2.GroupId != null) bl2.Group = (Group2)(cache && objects.ContainsKey(bl2.GroupId.Value) ? objects[bl2.GroupId.Value] : objects[bl2.GroupId.Value] = FindGroup2(bl2.GroupId));
-            if (load && bl2.ConditionId != null) bl2.Condition = (BlockCondition2)(cache && objects.ContainsKey(bl2.ConditionId.Value) ? objects[bl2.ConditionId.Value] : objects[bl2.ConditionId.Value] = FindBlockCondition2(bl2.ConditionId));
-            if (load && bl2.CreationUserId != null) bl2.CreationUser = (User2)(cache && objects.ContainsKey(bl2.CreationUserId.Value) ? objects[bl2.CreationUserId.Value] : objects[bl2.CreationUserId.Value] = FindUser2(bl2.CreationUserId));
-            if (load && bl2.LastWriteUserId != null) bl2.LastWriteUser = (User2)(cache && objects.ContainsKey(bl2.LastWriteUserId.Value) ? objects[bl2.LastWriteUserId.Value] : objects[bl2.LastWriteUserId.Value] = FindUser2(bl2.LastWriteUserId));
+            if (load && bl2.GroupId != null) bl2.Group = FindGroup2(bl2.GroupId, cache: cache);
+            if (load && bl2.ConditionId != null) bl2.Condition = FindBlockCondition2(bl2.ConditionId, cache: cache);
+            if (load && bl2.CreationUserId != null) bl2.CreationUser = FindUser2(bl2.CreationUserId, cache: cache);
+            if (load && bl2.LastWriteUserId != null) bl2.LastWriteUser = FindUser2(bl2.LastWriteUserId, cache: cache);
             return bl2;
         }
 
@@ -424,11 +442,12 @@ namespace FolioLibrary
         {
             return FolioServiceClient.BoundWithParts(out count, where, orderBy, skip, take).Select(jo =>
             {
-                var bwp2 = BoundWithPart2.FromJObject(jo);
-                if (load && bwp2.HoldingId != null) bwp2.Holding = (Holding2)(cache && objects.ContainsKey(bwp2.HoldingId.Value) ? objects[bwp2.HoldingId.Value] : objects[bwp2.HoldingId.Value] = FindHolding2(bwp2.HoldingId));
-                if (load && bwp2.ItemId != null) bwp2.Item = (Item2)(cache && objects.ContainsKey(bwp2.ItemId.Value) ? objects[bwp2.ItemId.Value] : objects[bwp2.ItemId.Value] = FindItem2(bwp2.ItemId));
-                if (load && bwp2.CreationUserId != null) bwp2.CreationUser = (User2)(cache && objects.ContainsKey(bwp2.CreationUserId.Value) ? objects[bwp2.CreationUserId.Value] : objects[bwp2.CreationUserId.Value] = FindUser2(bwp2.CreationUserId));
-                if (load && bwp2.LastWriteUserId != null) bwp2.LastWriteUser = (User2)(cache && objects.ContainsKey(bwp2.LastWriteUserId.Value) ? objects[bwp2.LastWriteUserId.Value] : objects[bwp2.LastWriteUserId.Value] = FindUser2(bwp2.LastWriteUserId));
+                var id = Guid.Parse((string)jo["id"]);
+                var bwp2 = cache ? (BoundWithPart2)(objects.ContainsKey(id) ? objects[id] : objects[id] = BoundWithPart2.FromJObject(jo)) : BoundWithPart2.FromJObject(jo);
+                if (load && bwp2.HoldingId != null) bwp2.Holding = FindHolding2(bwp2.HoldingId, cache: cache);
+                if (load && bwp2.ItemId != null) bwp2.Item = FindItem2(bwp2.ItemId, cache: cache);
+                if (load && bwp2.CreationUserId != null) bwp2.CreationUser = FindUser2(bwp2.CreationUserId, cache: cache);
+                if (load && bwp2.LastWriteUserId != null) bwp2.LastWriteUser = FindUser2(bwp2.LastWriteUserId, cache: cache);
                 return bwp2;
             }).ToArray();
         }
@@ -437,23 +456,24 @@ namespace FolioLibrary
         {
             foreach (var jo in FolioServiceClient.BoundWithParts(where, orderBy, skip, take))
             {
-                var bwp2 = BoundWithPart2.FromJObject(jo);
-                if (load && bwp2.HoldingId != null) bwp2.Holding = (Holding2)(cache && objects.ContainsKey(bwp2.HoldingId.Value) ? objects[bwp2.HoldingId.Value] : objects[bwp2.HoldingId.Value] = FindHolding2(bwp2.HoldingId));
-                if (load && bwp2.ItemId != null) bwp2.Item = (Item2)(cache && objects.ContainsKey(bwp2.ItemId.Value) ? objects[bwp2.ItemId.Value] : objects[bwp2.ItemId.Value] = FindItem2(bwp2.ItemId));
-                if (load && bwp2.CreationUserId != null) bwp2.CreationUser = (User2)(cache && objects.ContainsKey(bwp2.CreationUserId.Value) ? objects[bwp2.CreationUserId.Value] : objects[bwp2.CreationUserId.Value] = FindUser2(bwp2.CreationUserId));
-                if (load && bwp2.LastWriteUserId != null) bwp2.LastWriteUser = (User2)(cache && objects.ContainsKey(bwp2.LastWriteUserId.Value) ? objects[bwp2.LastWriteUserId.Value] : objects[bwp2.LastWriteUserId.Value] = FindUser2(bwp2.LastWriteUserId));
+                var id = Guid.Parse((string)jo["id"]);
+                var bwp2 = cache ? (BoundWithPart2)(objects.ContainsKey(id) ? objects[id] : objects[id] = BoundWithPart2.FromJObject(jo)) : BoundWithPart2.FromJObject(jo);
+                if (load && bwp2.HoldingId != null) bwp2.Holding = FindHolding2(bwp2.HoldingId, cache: cache);
+                if (load && bwp2.ItemId != null) bwp2.Item = FindItem2(bwp2.ItemId, cache: cache);
+                if (load && bwp2.CreationUserId != null) bwp2.CreationUser = FindUser2(bwp2.CreationUserId, cache: cache);
+                if (load && bwp2.LastWriteUserId != null) bwp2.LastWriteUser = FindUser2(bwp2.LastWriteUserId, cache: cache);
                 yield return bwp2;
             }
         }
 
         public BoundWithPart2 FindBoundWithPart2(Guid? id, bool load = false, bool cache = true)
         {
-            var bwp2 = BoundWithPart2.FromJObject(FolioServiceClient.GetBoundWithPart(id?.ToString()));
+            var bwp2 = cache ? (BoundWithPart2)(objects.ContainsKey(id.Value) ? objects[id.Value] : objects[id.Value] = BoundWithPart2.FromJObject(FolioServiceClient.GetBoundWithPart(id?.ToString()))) : BoundWithPart2.FromJObject(FolioServiceClient.GetBoundWithPart(id?.ToString()));
             if (bwp2 == null) return null;
-            if (load && bwp2.HoldingId != null) bwp2.Holding = (Holding2)(cache && objects.ContainsKey(bwp2.HoldingId.Value) ? objects[bwp2.HoldingId.Value] : objects[bwp2.HoldingId.Value] = FindHolding2(bwp2.HoldingId));
-            if (load && bwp2.ItemId != null) bwp2.Item = (Item2)(cache && objects.ContainsKey(bwp2.ItemId.Value) ? objects[bwp2.ItemId.Value] : objects[bwp2.ItemId.Value] = FindItem2(bwp2.ItemId));
-            if (load && bwp2.CreationUserId != null) bwp2.CreationUser = (User2)(cache && objects.ContainsKey(bwp2.CreationUserId.Value) ? objects[bwp2.CreationUserId.Value] : objects[bwp2.CreationUserId.Value] = FindUser2(bwp2.CreationUserId));
-            if (load && bwp2.LastWriteUserId != null) bwp2.LastWriteUser = (User2)(cache && objects.ContainsKey(bwp2.LastWriteUserId.Value) ? objects[bwp2.LastWriteUserId.Value] : objects[bwp2.LastWriteUserId.Value] = FindUser2(bwp2.LastWriteUserId));
+            if (load && bwp2.HoldingId != null) bwp2.Holding = FindHolding2(bwp2.HoldingId, cache: cache);
+            if (load && bwp2.ItemId != null) bwp2.Item = FindItem2(bwp2.ItemId, cache: cache);
+            if (load && bwp2.CreationUserId != null) bwp2.CreationUser = FindUser2(bwp2.CreationUserId, cache: cache);
+            if (load && bwp2.LastWriteUserId != null) bwp2.LastWriteUser = FindUser2(bwp2.LastWriteUserId, cache: cache);
             return bwp2;
         }
 
@@ -475,11 +495,12 @@ namespace FolioLibrary
         {
             return FolioServiceClient.Budgets(out count, where, orderBy, skip, take).Select(jo =>
             {
-                var b2 = Budget2.FromJObject(jo);
-                if (load && b2.FundId != null) b2.Fund = (Fund2)(cache && objects.ContainsKey(b2.FundId.Value) ? objects[b2.FundId.Value] : objects[b2.FundId.Value] = FindFund2(b2.FundId));
-                if (load && b2.FiscalYearId != null) b2.FiscalYear = (FiscalYear2)(cache && objects.ContainsKey(b2.FiscalYearId.Value) ? objects[b2.FiscalYearId.Value] : objects[b2.FiscalYearId.Value] = FindFiscalYear2(b2.FiscalYearId));
-                if (load && b2.CreationUserId != null) b2.CreationUser = (User2)(cache && objects.ContainsKey(b2.CreationUserId.Value) ? objects[b2.CreationUserId.Value] : objects[b2.CreationUserId.Value] = FindUser2(b2.CreationUserId));
-                if (load && b2.LastWriteUserId != null) b2.LastWriteUser = (User2)(cache && objects.ContainsKey(b2.LastWriteUserId.Value) ? objects[b2.LastWriteUserId.Value] : objects[b2.LastWriteUserId.Value] = FindUser2(b2.LastWriteUserId));
+                var id = Guid.Parse((string)jo["id"]);
+                var b2 = cache ? (Budget2)(objects.ContainsKey(id) ? objects[id] : objects[id] = Budget2.FromJObject(jo)) : Budget2.FromJObject(jo);
+                if (load && b2.FundId != null) b2.Fund = FindFund2(b2.FundId, cache: cache);
+                if (load && b2.FiscalYearId != null) b2.FiscalYear = FindFiscalYear2(b2.FiscalYearId, cache: cache);
+                if (load && b2.CreationUserId != null) b2.CreationUser = FindUser2(b2.CreationUserId, cache: cache);
+                if (load && b2.LastWriteUserId != null) b2.LastWriteUser = FindUser2(b2.LastWriteUserId, cache: cache);
                 return b2;
             }).ToArray();
         }
@@ -488,30 +509,31 @@ namespace FolioLibrary
         {
             foreach (var jo in FolioServiceClient.Budgets(where, orderBy, skip, take))
             {
-                var b2 = Budget2.FromJObject(jo);
-                if (load && b2.FundId != null) b2.Fund = (Fund2)(cache && objects.ContainsKey(b2.FundId.Value) ? objects[b2.FundId.Value] : objects[b2.FundId.Value] = FindFund2(b2.FundId));
-                if (load && b2.FiscalYearId != null) b2.FiscalYear = (FiscalYear2)(cache && objects.ContainsKey(b2.FiscalYearId.Value) ? objects[b2.FiscalYearId.Value] : objects[b2.FiscalYearId.Value] = FindFiscalYear2(b2.FiscalYearId));
-                if (load && b2.CreationUserId != null) b2.CreationUser = (User2)(cache && objects.ContainsKey(b2.CreationUserId.Value) ? objects[b2.CreationUserId.Value] : objects[b2.CreationUserId.Value] = FindUser2(b2.CreationUserId));
-                if (load && b2.LastWriteUserId != null) b2.LastWriteUser = (User2)(cache && objects.ContainsKey(b2.LastWriteUserId.Value) ? objects[b2.LastWriteUserId.Value] : objects[b2.LastWriteUserId.Value] = FindUser2(b2.LastWriteUserId));
+                var id = Guid.Parse((string)jo["id"]);
+                var b2 = cache ? (Budget2)(objects.ContainsKey(id) ? objects[id] : objects[id] = Budget2.FromJObject(jo)) : Budget2.FromJObject(jo);
+                if (load && b2.FundId != null) b2.Fund = FindFund2(b2.FundId, cache: cache);
+                if (load && b2.FiscalYearId != null) b2.FiscalYear = FindFiscalYear2(b2.FiscalYearId, cache: cache);
+                if (load && b2.CreationUserId != null) b2.CreationUser = FindUser2(b2.CreationUserId, cache: cache);
+                if (load && b2.LastWriteUserId != null) b2.LastWriteUser = FindUser2(b2.LastWriteUserId, cache: cache);
                 yield return b2;
             }
         }
 
         public Budget2 FindBudget2(Guid? id, bool load = false, bool cache = true)
         {
-            var b2 = Budget2.FromJObject(FolioServiceClient.GetBudget(id?.ToString()));
+            var b2 = cache ? (Budget2)(objects.ContainsKey(id.Value) ? objects[id.Value] : objects[id.Value] = Budget2.FromJObject(FolioServiceClient.GetBudget(id?.ToString()))) : Budget2.FromJObject(FolioServiceClient.GetBudget(id?.ToString()));
             if (b2 == null) return null;
-            if (load && b2.FundId != null) b2.Fund = (Fund2)(cache && objects.ContainsKey(b2.FundId.Value) ? objects[b2.FundId.Value] : objects[b2.FundId.Value] = FindFund2(b2.FundId));
-            if (load && b2.FiscalYearId != null) b2.FiscalYear = (FiscalYear2)(cache && objects.ContainsKey(b2.FiscalYearId.Value) ? objects[b2.FiscalYearId.Value] : objects[b2.FiscalYearId.Value] = FindFiscalYear2(b2.FiscalYearId));
-            if (load && b2.CreationUserId != null) b2.CreationUser = (User2)(cache && objects.ContainsKey(b2.CreationUserId.Value) ? objects[b2.CreationUserId.Value] : objects[b2.CreationUserId.Value] = FindUser2(b2.CreationUserId));
-            if (load && b2.LastWriteUserId != null) b2.LastWriteUser = (User2)(cache && objects.ContainsKey(b2.LastWriteUserId.Value) ? objects[b2.LastWriteUserId.Value] : objects[b2.LastWriteUserId.Value] = FindUser2(b2.LastWriteUserId));
+            if (load && b2.FundId != null) b2.Fund = FindFund2(b2.FundId, cache: cache);
+            if (load && b2.FiscalYearId != null) b2.FiscalYear = FindFiscalYear2(b2.FiscalYearId, cache: cache);
+            if (load && b2.CreationUserId != null) b2.CreationUser = FindUser2(b2.CreationUserId, cache: cache);
+            if (load && b2.LastWriteUserId != null) b2.LastWriteUser = FindUser2(b2.LastWriteUserId, cache: cache);
             var i = 0;
             if (b2.BudgetAcquisitionsUnits != null) foreach (var bau in b2.BudgetAcquisitionsUnits)
                 {
                     bau.Id = (++i).ToString();
                     bau.BudgetId = b2.Id;
                     bau.Budget = b2;
-                    if (load && bau.AcquisitionsUnitId != null) bau.AcquisitionsUnit = (AcquisitionsUnit2)(cache && objects.ContainsKey(bau.AcquisitionsUnitId.Value) ? objects[bau.AcquisitionsUnitId.Value] : objects[bau.AcquisitionsUnitId.Value] = FindAcquisitionsUnit2(bau.AcquisitionsUnitId));
+                    if (load && bau.AcquisitionsUnitId != null) bau.AcquisitionsUnit = FindAcquisitionsUnit2(bau.AcquisitionsUnitId, cache: cache);
                 }
             i = 0;
             if (b2.BudgetTags != null) foreach (var bt in b2.BudgetTags)
@@ -519,7 +541,7 @@ namespace FolioLibrary
                     bt.Id = (++i).ToString();
                     bt.BudgetId = b2.Id;
                     bt.Budget = b2;
-                    if (load && bt.TagId != null) bt.Tag = (Tag2)(cache && objects.ContainsKey(bt.TagId.Value) ? objects[bt.TagId.Value] : objects[bt.TagId.Value] = FindTag2(bt.TagId));
+                    if (load && bt.TagId != null) bt.Tag = FindTag2(bt.TagId, cache: cache);
                 }
             return b2;
         }
@@ -542,9 +564,10 @@ namespace FolioLibrary
         {
             return FolioServiceClient.BudgetExpenseClasses(out count, where, orderBy, skip, take).Select(jo =>
             {
-                var bec2 = BudgetExpenseClass2.FromJObject(jo);
-                if (load && bec2.BudgetId != null) bec2.Budget = (Budget2)(cache && objects.ContainsKey(bec2.BudgetId.Value) ? objects[bec2.BudgetId.Value] : objects[bec2.BudgetId.Value] = FindBudget2(bec2.BudgetId));
-                if (load && bec2.ExpenseClassId != null) bec2.ExpenseClass = (ExpenseClass2)(cache && objects.ContainsKey(bec2.ExpenseClassId.Value) ? objects[bec2.ExpenseClassId.Value] : objects[bec2.ExpenseClassId.Value] = FindExpenseClass2(bec2.ExpenseClassId));
+                var id = Guid.Parse((string)jo["id"]);
+                var bec2 = cache ? (BudgetExpenseClass2)(objects.ContainsKey(id) ? objects[id] : objects[id] = BudgetExpenseClass2.FromJObject(jo)) : BudgetExpenseClass2.FromJObject(jo);
+                if (load && bec2.BudgetId != null) bec2.Budget = FindBudget2(bec2.BudgetId, cache: cache);
+                if (load && bec2.ExpenseClassId != null) bec2.ExpenseClass = FindExpenseClass2(bec2.ExpenseClassId, cache: cache);
                 return bec2;
             }).ToArray();
         }
@@ -553,19 +576,20 @@ namespace FolioLibrary
         {
             foreach (var jo in FolioServiceClient.BudgetExpenseClasses(where, orderBy, skip, take))
             {
-                var bec2 = BudgetExpenseClass2.FromJObject(jo);
-                if (load && bec2.BudgetId != null) bec2.Budget = (Budget2)(cache && objects.ContainsKey(bec2.BudgetId.Value) ? objects[bec2.BudgetId.Value] : objects[bec2.BudgetId.Value] = FindBudget2(bec2.BudgetId));
-                if (load && bec2.ExpenseClassId != null) bec2.ExpenseClass = (ExpenseClass2)(cache && objects.ContainsKey(bec2.ExpenseClassId.Value) ? objects[bec2.ExpenseClassId.Value] : objects[bec2.ExpenseClassId.Value] = FindExpenseClass2(bec2.ExpenseClassId));
+                var id = Guid.Parse((string)jo["id"]);
+                var bec2 = cache ? (BudgetExpenseClass2)(objects.ContainsKey(id) ? objects[id] : objects[id] = BudgetExpenseClass2.FromJObject(jo)) : BudgetExpenseClass2.FromJObject(jo);
+                if (load && bec2.BudgetId != null) bec2.Budget = FindBudget2(bec2.BudgetId, cache: cache);
+                if (load && bec2.ExpenseClassId != null) bec2.ExpenseClass = FindExpenseClass2(bec2.ExpenseClassId, cache: cache);
                 yield return bec2;
             }
         }
 
         public BudgetExpenseClass2 FindBudgetExpenseClass2(Guid? id, bool load = false, bool cache = true)
         {
-            var bec2 = BudgetExpenseClass2.FromJObject(FolioServiceClient.GetBudgetExpenseClass(id?.ToString()));
+            var bec2 = cache ? (BudgetExpenseClass2)(objects.ContainsKey(id.Value) ? objects[id.Value] : objects[id.Value] = BudgetExpenseClass2.FromJObject(FolioServiceClient.GetBudgetExpenseClass(id?.ToString()))) : BudgetExpenseClass2.FromJObject(FolioServiceClient.GetBudgetExpenseClass(id?.ToString()));
             if (bec2 == null) return null;
-            if (load && bec2.BudgetId != null) bec2.Budget = (Budget2)(cache && objects.ContainsKey(bec2.BudgetId.Value) ? objects[bec2.BudgetId.Value] : objects[bec2.BudgetId.Value] = FindBudget2(bec2.BudgetId));
-            if (load && bec2.ExpenseClassId != null) bec2.ExpenseClass = (ExpenseClass2)(cache && objects.ContainsKey(bec2.ExpenseClassId.Value) ? objects[bec2.ExpenseClassId.Value] : objects[bec2.ExpenseClassId.Value] = FindExpenseClass2(bec2.ExpenseClassId));
+            if (load && bec2.BudgetId != null) bec2.Budget = FindBudget2(bec2.BudgetId, cache: cache);
+            if (load && bec2.ExpenseClassId != null) bec2.ExpenseClass = FindExpenseClass2(bec2.ExpenseClassId, cache: cache);
             return bec2;
         }
 
@@ -587,11 +611,12 @@ namespace FolioLibrary
         {
             return FolioServiceClient.BudgetGroups(out count, where, orderBy, skip, take).Select(jo =>
             {
-                var bg2 = BudgetGroup2.FromJObject(jo);
-                if (load && bg2.BudgetId != null) bg2.Budget = (Budget2)(cache && objects.ContainsKey(bg2.BudgetId.Value) ? objects[bg2.BudgetId.Value] : objects[bg2.BudgetId.Value] = FindBudget2(bg2.BudgetId));
-                if (load && bg2.GroupId != null) bg2.Group = (FinanceGroup2)(cache && objects.ContainsKey(bg2.GroupId.Value) ? objects[bg2.GroupId.Value] : objects[bg2.GroupId.Value] = FindFinanceGroup2(bg2.GroupId));
-                if (load && bg2.FiscalYearId != null) bg2.FiscalYear = (FiscalYear2)(cache && objects.ContainsKey(bg2.FiscalYearId.Value) ? objects[bg2.FiscalYearId.Value] : objects[bg2.FiscalYearId.Value] = FindFiscalYear2(bg2.FiscalYearId));
-                if (load && bg2.FundId != null) bg2.Fund = (Fund2)(cache && objects.ContainsKey(bg2.FundId.Value) ? objects[bg2.FundId.Value] : objects[bg2.FundId.Value] = FindFund2(bg2.FundId));
+                var id = Guid.Parse((string)jo["id"]);
+                var bg2 = cache ? (BudgetGroup2)(objects.ContainsKey(id) ? objects[id] : objects[id] = BudgetGroup2.FromJObject(jo)) : BudgetGroup2.FromJObject(jo);
+                if (load && bg2.BudgetId != null) bg2.Budget = FindBudget2(bg2.BudgetId, cache: cache);
+                if (load && bg2.GroupId != null) bg2.Group = FindFinanceGroup2(bg2.GroupId, cache: cache);
+                if (load && bg2.FiscalYearId != null) bg2.FiscalYear = FindFiscalYear2(bg2.FiscalYearId, cache: cache);
+                if (load && bg2.FundId != null) bg2.Fund = FindFund2(bg2.FundId, cache: cache);
                 return bg2;
             }).ToArray();
         }
@@ -600,23 +625,24 @@ namespace FolioLibrary
         {
             foreach (var jo in FolioServiceClient.BudgetGroups(where, orderBy, skip, take))
             {
-                var bg2 = BudgetGroup2.FromJObject(jo);
-                if (load && bg2.BudgetId != null) bg2.Budget = (Budget2)(cache && objects.ContainsKey(bg2.BudgetId.Value) ? objects[bg2.BudgetId.Value] : objects[bg2.BudgetId.Value] = FindBudget2(bg2.BudgetId));
-                if (load && bg2.GroupId != null) bg2.Group = (FinanceGroup2)(cache && objects.ContainsKey(bg2.GroupId.Value) ? objects[bg2.GroupId.Value] : objects[bg2.GroupId.Value] = FindFinanceGroup2(bg2.GroupId));
-                if (load && bg2.FiscalYearId != null) bg2.FiscalYear = (FiscalYear2)(cache && objects.ContainsKey(bg2.FiscalYearId.Value) ? objects[bg2.FiscalYearId.Value] : objects[bg2.FiscalYearId.Value] = FindFiscalYear2(bg2.FiscalYearId));
-                if (load && bg2.FundId != null) bg2.Fund = (Fund2)(cache && objects.ContainsKey(bg2.FundId.Value) ? objects[bg2.FundId.Value] : objects[bg2.FundId.Value] = FindFund2(bg2.FundId));
+                var id = Guid.Parse((string)jo["id"]);
+                var bg2 = cache ? (BudgetGroup2)(objects.ContainsKey(id) ? objects[id] : objects[id] = BudgetGroup2.FromJObject(jo)) : BudgetGroup2.FromJObject(jo);
+                if (load && bg2.BudgetId != null) bg2.Budget = FindBudget2(bg2.BudgetId, cache: cache);
+                if (load && bg2.GroupId != null) bg2.Group = FindFinanceGroup2(bg2.GroupId, cache: cache);
+                if (load && bg2.FiscalYearId != null) bg2.FiscalYear = FindFiscalYear2(bg2.FiscalYearId, cache: cache);
+                if (load && bg2.FundId != null) bg2.Fund = FindFund2(bg2.FundId, cache: cache);
                 yield return bg2;
             }
         }
 
         public BudgetGroup2 FindBudgetGroup2(Guid? id, bool load = false, bool cache = true)
         {
-            var bg2 = BudgetGroup2.FromJObject(FolioServiceClient.GetBudgetGroup(id?.ToString()));
+            var bg2 = cache ? (BudgetGroup2)(objects.ContainsKey(id.Value) ? objects[id.Value] : objects[id.Value] = BudgetGroup2.FromJObject(FolioServiceClient.GetBudgetGroup(id?.ToString()))) : BudgetGroup2.FromJObject(FolioServiceClient.GetBudgetGroup(id?.ToString()));
             if (bg2 == null) return null;
-            if (load && bg2.BudgetId != null) bg2.Budget = (Budget2)(cache && objects.ContainsKey(bg2.BudgetId.Value) ? objects[bg2.BudgetId.Value] : objects[bg2.BudgetId.Value] = FindBudget2(bg2.BudgetId));
-            if (load && bg2.GroupId != null) bg2.Group = (FinanceGroup2)(cache && objects.ContainsKey(bg2.GroupId.Value) ? objects[bg2.GroupId.Value] : objects[bg2.GroupId.Value] = FindFinanceGroup2(bg2.GroupId));
-            if (load && bg2.FiscalYearId != null) bg2.FiscalYear = (FiscalYear2)(cache && objects.ContainsKey(bg2.FiscalYearId.Value) ? objects[bg2.FiscalYearId.Value] : objects[bg2.FiscalYearId.Value] = FindFiscalYear2(bg2.FiscalYearId));
-            if (load && bg2.FundId != null) bg2.Fund = (Fund2)(cache && objects.ContainsKey(bg2.FundId.Value) ? objects[bg2.FundId.Value] : objects[bg2.FundId.Value] = FindFund2(bg2.FundId));
+            if (load && bg2.BudgetId != null) bg2.Budget = FindBudget2(bg2.BudgetId, cache: cache);
+            if (load && bg2.GroupId != null) bg2.Group = FindFinanceGroup2(bg2.GroupId, cache: cache);
+            if (load && bg2.FiscalYearId != null) bg2.FiscalYear = FindFiscalYear2(bg2.FiscalYearId, cache: cache);
+            if (load && bg2.FundId != null) bg2.Fund = FindFund2(bg2.FundId, cache: cache);
             return bg2;
         }
 
@@ -638,9 +664,10 @@ namespace FolioLibrary
         {
             return FolioServiceClient.CallNumberTypes(out count, where, orderBy, skip, take).Select(jo =>
             {
-                var cnt2 = CallNumberType2.FromJObject(jo);
-                if (load && cnt2.CreationUserId != null) cnt2.CreationUser = (User2)(cache && objects.ContainsKey(cnt2.CreationUserId.Value) ? objects[cnt2.CreationUserId.Value] : objects[cnt2.CreationUserId.Value] = FindUser2(cnt2.CreationUserId));
-                if (load && cnt2.LastWriteUserId != null) cnt2.LastWriteUser = (User2)(cache && objects.ContainsKey(cnt2.LastWriteUserId.Value) ? objects[cnt2.LastWriteUserId.Value] : objects[cnt2.LastWriteUserId.Value] = FindUser2(cnt2.LastWriteUserId));
+                var id = Guid.Parse((string)jo["id"]);
+                var cnt2 = cache ? (CallNumberType2)(objects.ContainsKey(id) ? objects[id] : objects[id] = CallNumberType2.FromJObject(jo)) : CallNumberType2.FromJObject(jo);
+                if (load && cnt2.CreationUserId != null) cnt2.CreationUser = FindUser2(cnt2.CreationUserId, cache: cache);
+                if (load && cnt2.LastWriteUserId != null) cnt2.LastWriteUser = FindUser2(cnt2.LastWriteUserId, cache: cache);
                 return cnt2;
             }).ToArray();
         }
@@ -649,19 +676,20 @@ namespace FolioLibrary
         {
             foreach (var jo in FolioServiceClient.CallNumberTypes(where, orderBy, skip, take))
             {
-                var cnt2 = CallNumberType2.FromJObject(jo);
-                if (load && cnt2.CreationUserId != null) cnt2.CreationUser = (User2)(cache && objects.ContainsKey(cnt2.CreationUserId.Value) ? objects[cnt2.CreationUserId.Value] : objects[cnt2.CreationUserId.Value] = FindUser2(cnt2.CreationUserId));
-                if (load && cnt2.LastWriteUserId != null) cnt2.LastWriteUser = (User2)(cache && objects.ContainsKey(cnt2.LastWriteUserId.Value) ? objects[cnt2.LastWriteUserId.Value] : objects[cnt2.LastWriteUserId.Value] = FindUser2(cnt2.LastWriteUserId));
+                var id = Guid.Parse((string)jo["id"]);
+                var cnt2 = cache ? (CallNumberType2)(objects.ContainsKey(id) ? objects[id] : objects[id] = CallNumberType2.FromJObject(jo)) : CallNumberType2.FromJObject(jo);
+                if (load && cnt2.CreationUserId != null) cnt2.CreationUser = FindUser2(cnt2.CreationUserId, cache: cache);
+                if (load && cnt2.LastWriteUserId != null) cnt2.LastWriteUser = FindUser2(cnt2.LastWriteUserId, cache: cache);
                 yield return cnt2;
             }
         }
 
         public CallNumberType2 FindCallNumberType2(Guid? id, bool load = false, bool cache = true)
         {
-            var cnt2 = CallNumberType2.FromJObject(FolioServiceClient.GetCallNumberType(id?.ToString()));
+            var cnt2 = cache ? (CallNumberType2)(objects.ContainsKey(id.Value) ? objects[id.Value] : objects[id.Value] = CallNumberType2.FromJObject(FolioServiceClient.GetCallNumberType(id?.ToString()))) : CallNumberType2.FromJObject(FolioServiceClient.GetCallNumberType(id?.ToString()));
             if (cnt2 == null) return null;
-            if (load && cnt2.CreationUserId != null) cnt2.CreationUser = (User2)(cache && objects.ContainsKey(cnt2.CreationUserId.Value) ? objects[cnt2.CreationUserId.Value] : objects[cnt2.CreationUserId.Value] = FindUser2(cnt2.CreationUserId));
-            if (load && cnt2.LastWriteUserId != null) cnt2.LastWriteUser = (User2)(cache && objects.ContainsKey(cnt2.LastWriteUserId.Value) ? objects[cnt2.LastWriteUserId.Value] : objects[cnt2.LastWriteUserId.Value] = FindUser2(cnt2.LastWriteUserId));
+            if (load && cnt2.CreationUserId != null) cnt2.CreationUser = FindUser2(cnt2.CreationUserId, cache: cache);
+            if (load && cnt2.LastWriteUserId != null) cnt2.LastWriteUser = FindUser2(cnt2.LastWriteUserId, cache: cache);
             return cnt2;
         }
 
@@ -683,10 +711,11 @@ namespace FolioLibrary
         {
             return FolioServiceClient.Campuses(out count, where, orderBy, skip, take).Select(jo =>
             {
-                var c2 = Campus2.FromJObject(jo);
-                if (load && c2.InstitutionId != null) c2.Institution = (Institution2)(cache && objects.ContainsKey(c2.InstitutionId.Value) ? objects[c2.InstitutionId.Value] : objects[c2.InstitutionId.Value] = FindInstitution2(c2.InstitutionId));
-                if (load && c2.CreationUserId != null) c2.CreationUser = (User2)(cache && objects.ContainsKey(c2.CreationUserId.Value) ? objects[c2.CreationUserId.Value] : objects[c2.CreationUserId.Value] = FindUser2(c2.CreationUserId));
-                if (load && c2.LastWriteUserId != null) c2.LastWriteUser = (User2)(cache && objects.ContainsKey(c2.LastWriteUserId.Value) ? objects[c2.LastWriteUserId.Value] : objects[c2.LastWriteUserId.Value] = FindUser2(c2.LastWriteUserId));
+                var id = Guid.Parse((string)jo["id"]);
+                var c2 = cache ? (Campus2)(objects.ContainsKey(id) ? objects[id] : objects[id] = Campus2.FromJObject(jo)) : Campus2.FromJObject(jo);
+                if (load && c2.InstitutionId != null) c2.Institution = FindInstitution2(c2.InstitutionId, cache: cache);
+                if (load && c2.CreationUserId != null) c2.CreationUser = FindUser2(c2.CreationUserId, cache: cache);
+                if (load && c2.LastWriteUserId != null) c2.LastWriteUser = FindUser2(c2.LastWriteUserId, cache: cache);
                 return c2;
             }).ToArray();
         }
@@ -695,21 +724,22 @@ namespace FolioLibrary
         {
             foreach (var jo in FolioServiceClient.Campuses(where, orderBy, skip, take))
             {
-                var c2 = Campus2.FromJObject(jo);
-                if (load && c2.InstitutionId != null) c2.Institution = (Institution2)(cache && objects.ContainsKey(c2.InstitutionId.Value) ? objects[c2.InstitutionId.Value] : objects[c2.InstitutionId.Value] = FindInstitution2(c2.InstitutionId));
-                if (load && c2.CreationUserId != null) c2.CreationUser = (User2)(cache && objects.ContainsKey(c2.CreationUserId.Value) ? objects[c2.CreationUserId.Value] : objects[c2.CreationUserId.Value] = FindUser2(c2.CreationUserId));
-                if (load && c2.LastWriteUserId != null) c2.LastWriteUser = (User2)(cache && objects.ContainsKey(c2.LastWriteUserId.Value) ? objects[c2.LastWriteUserId.Value] : objects[c2.LastWriteUserId.Value] = FindUser2(c2.LastWriteUserId));
+                var id = Guid.Parse((string)jo["id"]);
+                var c2 = cache ? (Campus2)(objects.ContainsKey(id) ? objects[id] : objects[id] = Campus2.FromJObject(jo)) : Campus2.FromJObject(jo);
+                if (load && c2.InstitutionId != null) c2.Institution = FindInstitution2(c2.InstitutionId, cache: cache);
+                if (load && c2.CreationUserId != null) c2.CreationUser = FindUser2(c2.CreationUserId, cache: cache);
+                if (load && c2.LastWriteUserId != null) c2.LastWriteUser = FindUser2(c2.LastWriteUserId, cache: cache);
                 yield return c2;
             }
         }
 
         public Campus2 FindCampus2(Guid? id, bool load = false, bool cache = true)
         {
-            var c2 = Campus2.FromJObject(FolioServiceClient.GetCampus(id?.ToString()));
+            var c2 = cache ? (Campus2)(objects.ContainsKey(id.Value) ? objects[id.Value] : objects[id.Value] = Campus2.FromJObject(FolioServiceClient.GetCampus(id?.ToString()))) : Campus2.FromJObject(FolioServiceClient.GetCampus(id?.ToString()));
             if (c2 == null) return null;
-            if (load && c2.InstitutionId != null) c2.Institution = (Institution2)(cache && objects.ContainsKey(c2.InstitutionId.Value) ? objects[c2.InstitutionId.Value] : objects[c2.InstitutionId.Value] = FindInstitution2(c2.InstitutionId));
-            if (load && c2.CreationUserId != null) c2.CreationUser = (User2)(cache && objects.ContainsKey(c2.CreationUserId.Value) ? objects[c2.CreationUserId.Value] : objects[c2.CreationUserId.Value] = FindUser2(c2.CreationUserId));
-            if (load && c2.LastWriteUserId != null) c2.LastWriteUser = (User2)(cache && objects.ContainsKey(c2.LastWriteUserId.Value) ? objects[c2.LastWriteUserId.Value] : objects[c2.LastWriteUserId.Value] = FindUser2(c2.LastWriteUserId));
+            if (load && c2.InstitutionId != null) c2.Institution = FindInstitution2(c2.InstitutionId, cache: cache);
+            if (load && c2.CreationUserId != null) c2.CreationUser = FindUser2(c2.CreationUserId, cache: cache);
+            if (load && c2.LastWriteUserId != null) c2.LastWriteUser = FindUser2(c2.LastWriteUserId, cache: cache);
             return c2;
         }
 
@@ -731,9 +761,10 @@ namespace FolioLibrary
         {
             return FolioServiceClient.CancellationReasons(out count, where, orderBy, skip, take).Select(jo =>
             {
-                var cr2 = CancellationReason2.FromJObject(jo);
-                if (load && cr2.CreationUserId != null) cr2.CreationUser = (User2)(cache && objects.ContainsKey(cr2.CreationUserId.Value) ? objects[cr2.CreationUserId.Value] : objects[cr2.CreationUserId.Value] = FindUser2(cr2.CreationUserId));
-                if (load && cr2.LastWriteUserId != null) cr2.LastWriteUser = (User2)(cache && objects.ContainsKey(cr2.LastWriteUserId.Value) ? objects[cr2.LastWriteUserId.Value] : objects[cr2.LastWriteUserId.Value] = FindUser2(cr2.LastWriteUserId));
+                var id = Guid.Parse((string)jo["id"]);
+                var cr2 = cache ? (CancellationReason2)(objects.ContainsKey(id) ? objects[id] : objects[id] = CancellationReason2.FromJObject(jo)) : CancellationReason2.FromJObject(jo);
+                if (load && cr2.CreationUserId != null) cr2.CreationUser = FindUser2(cr2.CreationUserId, cache: cache);
+                if (load && cr2.LastWriteUserId != null) cr2.LastWriteUser = FindUser2(cr2.LastWriteUserId, cache: cache);
                 return cr2;
             }).ToArray();
         }
@@ -742,19 +773,20 @@ namespace FolioLibrary
         {
             foreach (var jo in FolioServiceClient.CancellationReasons(where, orderBy, skip, take))
             {
-                var cr2 = CancellationReason2.FromJObject(jo);
-                if (load && cr2.CreationUserId != null) cr2.CreationUser = (User2)(cache && objects.ContainsKey(cr2.CreationUserId.Value) ? objects[cr2.CreationUserId.Value] : objects[cr2.CreationUserId.Value] = FindUser2(cr2.CreationUserId));
-                if (load && cr2.LastWriteUserId != null) cr2.LastWriteUser = (User2)(cache && objects.ContainsKey(cr2.LastWriteUserId.Value) ? objects[cr2.LastWriteUserId.Value] : objects[cr2.LastWriteUserId.Value] = FindUser2(cr2.LastWriteUserId));
+                var id = Guid.Parse((string)jo["id"]);
+                var cr2 = cache ? (CancellationReason2)(objects.ContainsKey(id) ? objects[id] : objects[id] = CancellationReason2.FromJObject(jo)) : CancellationReason2.FromJObject(jo);
+                if (load && cr2.CreationUserId != null) cr2.CreationUser = FindUser2(cr2.CreationUserId, cache: cache);
+                if (load && cr2.LastWriteUserId != null) cr2.LastWriteUser = FindUser2(cr2.LastWriteUserId, cache: cache);
                 yield return cr2;
             }
         }
 
         public CancellationReason2 FindCancellationReason2(Guid? id, bool load = false, bool cache = true)
         {
-            var cr2 = CancellationReason2.FromJObject(FolioServiceClient.GetCancellationReason(id?.ToString()));
+            var cr2 = cache ? (CancellationReason2)(objects.ContainsKey(id.Value) ? objects[id.Value] : objects[id.Value] = CancellationReason2.FromJObject(FolioServiceClient.GetCancellationReason(id?.ToString()))) : CancellationReason2.FromJObject(FolioServiceClient.GetCancellationReason(id?.ToString()));
             if (cr2 == null) return null;
-            if (load && cr2.CreationUserId != null) cr2.CreationUser = (User2)(cache && objects.ContainsKey(cr2.CreationUserId.Value) ? objects[cr2.CreationUserId.Value] : objects[cr2.CreationUserId.Value] = FindUser2(cr2.CreationUserId));
-            if (load && cr2.LastWriteUserId != null) cr2.LastWriteUser = (User2)(cache && objects.ContainsKey(cr2.LastWriteUserId.Value) ? objects[cr2.LastWriteUserId.Value] : objects[cr2.LastWriteUserId.Value] = FindUser2(cr2.LastWriteUserId));
+            if (load && cr2.CreationUserId != null) cr2.CreationUser = FindUser2(cr2.CreationUserId, cache: cache);
+            if (load && cr2.LastWriteUserId != null) cr2.LastWriteUser = FindUser2(cr2.LastWriteUserId, cache: cache);
             return cr2;
         }
 
@@ -776,9 +808,10 @@ namespace FolioLibrary
         {
             return FolioServiceClient.Categories(out count, where, orderBy, skip, take).Select(jo =>
             {
-                var c2 = Category2.FromJObject(jo);
-                if (load && c2.CreationUserId != null) c2.CreationUser = (User2)(cache && objects.ContainsKey(c2.CreationUserId.Value) ? objects[c2.CreationUserId.Value] : objects[c2.CreationUserId.Value] = FindUser2(c2.CreationUserId));
-                if (load && c2.LastWriteUserId != null) c2.LastWriteUser = (User2)(cache && objects.ContainsKey(c2.LastWriteUserId.Value) ? objects[c2.LastWriteUserId.Value] : objects[c2.LastWriteUserId.Value] = FindUser2(c2.LastWriteUserId));
+                var id = Guid.Parse((string)jo["id"]);
+                var c2 = cache ? (Category2)(objects.ContainsKey(id) ? objects[id] : objects[id] = Category2.FromJObject(jo)) : Category2.FromJObject(jo);
+                if (load && c2.CreationUserId != null) c2.CreationUser = FindUser2(c2.CreationUserId, cache: cache);
+                if (load && c2.LastWriteUserId != null) c2.LastWriteUser = FindUser2(c2.LastWriteUserId, cache: cache);
                 return c2;
             }).ToArray();
         }
@@ -787,19 +820,20 @@ namespace FolioLibrary
         {
             foreach (var jo in FolioServiceClient.Categories(where, orderBy, skip, take))
             {
-                var c2 = Category2.FromJObject(jo);
-                if (load && c2.CreationUserId != null) c2.CreationUser = (User2)(cache && objects.ContainsKey(c2.CreationUserId.Value) ? objects[c2.CreationUserId.Value] : objects[c2.CreationUserId.Value] = FindUser2(c2.CreationUserId));
-                if (load && c2.LastWriteUserId != null) c2.LastWriteUser = (User2)(cache && objects.ContainsKey(c2.LastWriteUserId.Value) ? objects[c2.LastWriteUserId.Value] : objects[c2.LastWriteUserId.Value] = FindUser2(c2.LastWriteUserId));
+                var id = Guid.Parse((string)jo["id"]);
+                var c2 = cache ? (Category2)(objects.ContainsKey(id) ? objects[id] : objects[id] = Category2.FromJObject(jo)) : Category2.FromJObject(jo);
+                if (load && c2.CreationUserId != null) c2.CreationUser = FindUser2(c2.CreationUserId, cache: cache);
+                if (load && c2.LastWriteUserId != null) c2.LastWriteUser = FindUser2(c2.LastWriteUserId, cache: cache);
                 yield return c2;
             }
         }
 
         public Category2 FindCategory2(Guid? id, bool load = false, bool cache = true)
         {
-            var c2 = Category2.FromJObject(FolioServiceClient.GetCategory(id?.ToString()));
+            var c2 = cache ? (Category2)(objects.ContainsKey(id.Value) ? objects[id.Value] : objects[id.Value] = Category2.FromJObject(FolioServiceClient.GetCategory(id?.ToString()))) : Category2.FromJObject(FolioServiceClient.GetCategory(id?.ToString()));
             if (c2 == null) return null;
-            if (load && c2.CreationUserId != null) c2.CreationUser = (User2)(cache && objects.ContainsKey(c2.CreationUserId.Value) ? objects[c2.CreationUserId.Value] : objects[c2.CreationUserId.Value] = FindUser2(c2.CreationUserId));
-            if (load && c2.LastWriteUserId != null) c2.LastWriteUser = (User2)(cache && objects.ContainsKey(c2.LastWriteUserId.Value) ? objects[c2.LastWriteUserId.Value] : objects[c2.LastWriteUserId.Value] = FindUser2(c2.LastWriteUserId));
+            if (load && c2.CreationUserId != null) c2.CreationUser = FindUser2(c2.CreationUserId, cache: cache);
+            if (load && c2.LastWriteUserId != null) c2.LastWriteUser = FindUser2(c2.LastWriteUserId, cache: cache);
             return c2;
         }
 
@@ -821,11 +855,12 @@ namespace FolioLibrary
         {
             return FolioServiceClient.CheckIns(out count, where, orderBy, skip, take).Select(jo =>
             {
-                var ci2 = CheckIn2.FromJObject(jo);
-                if (load && ci2.ItemId != null) ci2.Item = (Item2)(cache && objects.ContainsKey(ci2.ItemId.Value) ? objects[ci2.ItemId.Value] : objects[ci2.ItemId.Value] = FindItem2(ci2.ItemId));
-                if (load && ci2.ItemLocationId != null) ci2.ItemLocation = (Location2)(cache && objects.ContainsKey(ci2.ItemLocationId.Value) ? objects[ci2.ItemLocationId.Value] : objects[ci2.ItemLocationId.Value] = FindLocation2(ci2.ItemLocationId));
-                if (load && ci2.ServicePointId != null) ci2.ServicePoint = (ServicePoint2)(cache && objects.ContainsKey(ci2.ServicePointId.Value) ? objects[ci2.ServicePointId.Value] : objects[ci2.ServicePointId.Value] = FindServicePoint2(ci2.ServicePointId));
-                if (load && ci2.PerformedByUserId != null) ci2.PerformedByUser = (User2)(cache && objects.ContainsKey(ci2.PerformedByUserId.Value) ? objects[ci2.PerformedByUserId.Value] : objects[ci2.PerformedByUserId.Value] = FindUser2(ci2.PerformedByUserId));
+                var id = Guid.Parse((string)jo["id"]);
+                var ci2 = cache ? (CheckIn2)(objects.ContainsKey(id) ? objects[id] : objects[id] = CheckIn2.FromJObject(jo)) : CheckIn2.FromJObject(jo);
+                if (load && ci2.ItemId != null) ci2.Item = FindItem2(ci2.ItemId, cache: cache);
+                if (load && ci2.ItemLocationId != null) ci2.ItemLocation = FindLocation2(ci2.ItemLocationId, cache: cache);
+                if (load && ci2.ServicePointId != null) ci2.ServicePoint = FindServicePoint2(ci2.ServicePointId, cache: cache);
+                if (load && ci2.PerformedByUserId != null) ci2.PerformedByUser = FindUser2(ci2.PerformedByUserId, cache: cache);
                 return ci2;
             }).ToArray();
         }
@@ -834,23 +869,24 @@ namespace FolioLibrary
         {
             foreach (var jo in FolioServiceClient.CheckIns(where, orderBy, skip, take))
             {
-                var ci2 = CheckIn2.FromJObject(jo);
-                if (load && ci2.ItemId != null) ci2.Item = (Item2)(cache && objects.ContainsKey(ci2.ItemId.Value) ? objects[ci2.ItemId.Value] : objects[ci2.ItemId.Value] = FindItem2(ci2.ItemId));
-                if (load && ci2.ItemLocationId != null) ci2.ItemLocation = (Location2)(cache && objects.ContainsKey(ci2.ItemLocationId.Value) ? objects[ci2.ItemLocationId.Value] : objects[ci2.ItemLocationId.Value] = FindLocation2(ci2.ItemLocationId));
-                if (load && ci2.ServicePointId != null) ci2.ServicePoint = (ServicePoint2)(cache && objects.ContainsKey(ci2.ServicePointId.Value) ? objects[ci2.ServicePointId.Value] : objects[ci2.ServicePointId.Value] = FindServicePoint2(ci2.ServicePointId));
-                if (load && ci2.PerformedByUserId != null) ci2.PerformedByUser = (User2)(cache && objects.ContainsKey(ci2.PerformedByUserId.Value) ? objects[ci2.PerformedByUserId.Value] : objects[ci2.PerformedByUserId.Value] = FindUser2(ci2.PerformedByUserId));
+                var id = Guid.Parse((string)jo["id"]);
+                var ci2 = cache ? (CheckIn2)(objects.ContainsKey(id) ? objects[id] : objects[id] = CheckIn2.FromJObject(jo)) : CheckIn2.FromJObject(jo);
+                if (load && ci2.ItemId != null) ci2.Item = FindItem2(ci2.ItemId, cache: cache);
+                if (load && ci2.ItemLocationId != null) ci2.ItemLocation = FindLocation2(ci2.ItemLocationId, cache: cache);
+                if (load && ci2.ServicePointId != null) ci2.ServicePoint = FindServicePoint2(ci2.ServicePointId, cache: cache);
+                if (load && ci2.PerformedByUserId != null) ci2.PerformedByUser = FindUser2(ci2.PerformedByUserId, cache: cache);
                 yield return ci2;
             }
         }
 
         public CheckIn2 FindCheckIn2(Guid? id, bool load = false, bool cache = true)
         {
-            var ci2 = CheckIn2.FromJObject(FolioServiceClient.GetCheckIn(id?.ToString()));
+            var ci2 = cache ? (CheckIn2)(objects.ContainsKey(id.Value) ? objects[id.Value] : objects[id.Value] = CheckIn2.FromJObject(FolioServiceClient.GetCheckIn(id?.ToString()))) : CheckIn2.FromJObject(FolioServiceClient.GetCheckIn(id?.ToString()));
             if (ci2 == null) return null;
-            if (load && ci2.ItemId != null) ci2.Item = (Item2)(cache && objects.ContainsKey(ci2.ItemId.Value) ? objects[ci2.ItemId.Value] : objects[ci2.ItemId.Value] = FindItem2(ci2.ItemId));
-            if (load && ci2.ItemLocationId != null) ci2.ItemLocation = (Location2)(cache && objects.ContainsKey(ci2.ItemLocationId.Value) ? objects[ci2.ItemLocationId.Value] : objects[ci2.ItemLocationId.Value] = FindLocation2(ci2.ItemLocationId));
-            if (load && ci2.ServicePointId != null) ci2.ServicePoint = (ServicePoint2)(cache && objects.ContainsKey(ci2.ServicePointId.Value) ? objects[ci2.ServicePointId.Value] : objects[ci2.ServicePointId.Value] = FindServicePoint2(ci2.ServicePointId));
-            if (load && ci2.PerformedByUserId != null) ci2.PerformedByUser = (User2)(cache && objects.ContainsKey(ci2.PerformedByUserId.Value) ? objects[ci2.PerformedByUserId.Value] : objects[ci2.PerformedByUserId.Value] = FindUser2(ci2.PerformedByUserId));
+            if (load && ci2.ItemId != null) ci2.Item = FindItem2(ci2.ItemId, cache: cache);
+            if (load && ci2.ItemLocationId != null) ci2.ItemLocation = FindLocation2(ci2.ItemLocationId, cache: cache);
+            if (load && ci2.ServicePointId != null) ci2.ServicePoint = FindServicePoint2(ci2.ServicePointId, cache: cache);
+            if (load && ci2.PerformedByUserId != null) ci2.PerformedByUser = FindUser2(ci2.PerformedByUserId, cache: cache);
             return ci2;
         }
 
@@ -876,9 +912,10 @@ namespace FolioLibrary
         {
             return FolioServiceClient.ClassificationTypes(out count, where, orderBy, skip, take).Select(jo =>
             {
-                var ct2 = ClassificationType2.FromJObject(jo);
-                if (load && ct2.CreationUserId != null) ct2.CreationUser = (User2)(cache && objects.ContainsKey(ct2.CreationUserId.Value) ? objects[ct2.CreationUserId.Value] : objects[ct2.CreationUserId.Value] = FindUser2(ct2.CreationUserId));
-                if (load && ct2.LastWriteUserId != null) ct2.LastWriteUser = (User2)(cache && objects.ContainsKey(ct2.LastWriteUserId.Value) ? objects[ct2.LastWriteUserId.Value] : objects[ct2.LastWriteUserId.Value] = FindUser2(ct2.LastWriteUserId));
+                var id = Guid.Parse((string)jo["id"]);
+                var ct2 = cache ? (ClassificationType2)(objects.ContainsKey(id) ? objects[id] : objects[id] = ClassificationType2.FromJObject(jo)) : ClassificationType2.FromJObject(jo);
+                if (load && ct2.CreationUserId != null) ct2.CreationUser = FindUser2(ct2.CreationUserId, cache: cache);
+                if (load && ct2.LastWriteUserId != null) ct2.LastWriteUser = FindUser2(ct2.LastWriteUserId, cache: cache);
                 return ct2;
             }).ToArray();
         }
@@ -887,19 +924,20 @@ namespace FolioLibrary
         {
             foreach (var jo in FolioServiceClient.ClassificationTypes(where, orderBy, skip, take))
             {
-                var ct2 = ClassificationType2.FromJObject(jo);
-                if (load && ct2.CreationUserId != null) ct2.CreationUser = (User2)(cache && objects.ContainsKey(ct2.CreationUserId.Value) ? objects[ct2.CreationUserId.Value] : objects[ct2.CreationUserId.Value] = FindUser2(ct2.CreationUserId));
-                if (load && ct2.LastWriteUserId != null) ct2.LastWriteUser = (User2)(cache && objects.ContainsKey(ct2.LastWriteUserId.Value) ? objects[ct2.LastWriteUserId.Value] : objects[ct2.LastWriteUserId.Value] = FindUser2(ct2.LastWriteUserId));
+                var id = Guid.Parse((string)jo["id"]);
+                var ct2 = cache ? (ClassificationType2)(objects.ContainsKey(id) ? objects[id] : objects[id] = ClassificationType2.FromJObject(jo)) : ClassificationType2.FromJObject(jo);
+                if (load && ct2.CreationUserId != null) ct2.CreationUser = FindUser2(ct2.CreationUserId, cache: cache);
+                if (load && ct2.LastWriteUserId != null) ct2.LastWriteUser = FindUser2(ct2.LastWriteUserId, cache: cache);
                 yield return ct2;
             }
         }
 
         public ClassificationType2 FindClassificationType2(Guid? id, bool load = false, bool cache = true)
         {
-            var ct2 = ClassificationType2.FromJObject(FolioServiceClient.GetClassificationType(id?.ToString()));
+            var ct2 = cache ? (ClassificationType2)(objects.ContainsKey(id.Value) ? objects[id.Value] : objects[id.Value] = ClassificationType2.FromJObject(FolioServiceClient.GetClassificationType(id?.ToString()))) : ClassificationType2.FromJObject(FolioServiceClient.GetClassificationType(id?.ToString()));
             if (ct2 == null) return null;
-            if (load && ct2.CreationUserId != null) ct2.CreationUser = (User2)(cache && objects.ContainsKey(ct2.CreationUserId.Value) ? objects[ct2.CreationUserId.Value] : objects[ct2.CreationUserId.Value] = FindUser2(ct2.CreationUserId));
-            if (load && ct2.LastWriteUserId != null) ct2.LastWriteUser = (User2)(cache && objects.ContainsKey(ct2.LastWriteUserId.Value) ? objects[ct2.LastWriteUserId.Value] : objects[ct2.LastWriteUserId.Value] = FindUser2(ct2.LastWriteUserId));
+            if (load && ct2.CreationUserId != null) ct2.CreationUser = FindUser2(ct2.CreationUserId, cache: cache);
+            if (load && ct2.LastWriteUserId != null) ct2.LastWriteUser = FindUser2(ct2.LastWriteUserId, cache: cache);
             return ct2;
         }
 
@@ -921,7 +959,8 @@ namespace FolioLibrary
         {
             return FolioServiceClient.CloseReasons(out count, where, orderBy, skip, take).Select(jo =>
             {
-                var cr2 = CloseReason2.FromJObject(jo);
+                var id = Guid.Parse((string)jo["id"]);
+                var cr2 = cache ? (CloseReason2)(objects.ContainsKey(id) ? objects[id] : objects[id] = CloseReason2.FromJObject(jo)) : CloseReason2.FromJObject(jo);
                 return cr2;
             }).ToArray();
         }
@@ -930,7 +969,8 @@ namespace FolioLibrary
         {
             foreach (var jo in FolioServiceClient.CloseReasons(where, orderBy, skip, take))
             {
-                var cr2 = CloseReason2.FromJObject(jo);
+                var id = Guid.Parse((string)jo["id"]);
+                var cr2 = cache ? (CloseReason2)(objects.ContainsKey(id) ? objects[id] : objects[id] = CloseReason2.FromJObject(jo)) : CloseReason2.FromJObject(jo);
                 yield return cr2;
             }
         }
@@ -955,9 +995,10 @@ namespace FolioLibrary
         {
             return FolioServiceClient.Comments(out count, where, orderBy, skip, take).Select(jo =>
             {
-                var c2 = Comment2.FromJObject(jo);
-                if (load && c2.CreationUserId != null) c2.CreationUser = (User2)(cache && objects.ContainsKey(c2.CreationUserId.Value) ? objects[c2.CreationUserId.Value] : objects[c2.CreationUserId.Value] = FindUser2(c2.CreationUserId));
-                if (load && c2.LastWriteUserId != null) c2.LastWriteUser = (User2)(cache && objects.ContainsKey(c2.LastWriteUserId.Value) ? objects[c2.LastWriteUserId.Value] : objects[c2.LastWriteUserId.Value] = FindUser2(c2.LastWriteUserId));
+                var id = Guid.Parse((string)jo["id"]);
+                var c2 = cache ? (Comment2)(objects.ContainsKey(id) ? objects[id] : objects[id] = Comment2.FromJObject(jo)) : Comment2.FromJObject(jo);
+                if (load && c2.CreationUserId != null) c2.CreationUser = FindUser2(c2.CreationUserId, cache: cache);
+                if (load && c2.LastWriteUserId != null) c2.LastWriteUser = FindUser2(c2.LastWriteUserId, cache: cache);
                 return c2;
             }).ToArray();
         }
@@ -966,19 +1007,20 @@ namespace FolioLibrary
         {
             foreach (var jo in FolioServiceClient.Comments(where, orderBy, skip, take))
             {
-                var c2 = Comment2.FromJObject(jo);
-                if (load && c2.CreationUserId != null) c2.CreationUser = (User2)(cache && objects.ContainsKey(c2.CreationUserId.Value) ? objects[c2.CreationUserId.Value] : objects[c2.CreationUserId.Value] = FindUser2(c2.CreationUserId));
-                if (load && c2.LastWriteUserId != null) c2.LastWriteUser = (User2)(cache && objects.ContainsKey(c2.LastWriteUserId.Value) ? objects[c2.LastWriteUserId.Value] : objects[c2.LastWriteUserId.Value] = FindUser2(c2.LastWriteUserId));
+                var id = Guid.Parse((string)jo["id"]);
+                var c2 = cache ? (Comment2)(objects.ContainsKey(id) ? objects[id] : objects[id] = Comment2.FromJObject(jo)) : Comment2.FromJObject(jo);
+                if (load && c2.CreationUserId != null) c2.CreationUser = FindUser2(c2.CreationUserId, cache: cache);
+                if (load && c2.LastWriteUserId != null) c2.LastWriteUser = FindUser2(c2.LastWriteUserId, cache: cache);
                 yield return c2;
             }
         }
 
         public Comment2 FindComment2(Guid? id, bool load = false, bool cache = true)
         {
-            var c2 = Comment2.FromJObject(FolioServiceClient.GetComment(id?.ToString()));
+            var c2 = cache ? (Comment2)(objects.ContainsKey(id.Value) ? objects[id.Value] : objects[id.Value] = Comment2.FromJObject(FolioServiceClient.GetComment(id?.ToString()))) : Comment2.FromJObject(FolioServiceClient.GetComment(id?.ToString()));
             if (c2 == null) return null;
-            if (load && c2.CreationUserId != null) c2.CreationUser = (User2)(cache && objects.ContainsKey(c2.CreationUserId.Value) ? objects[c2.CreationUserId.Value] : objects[c2.CreationUserId.Value] = FindUser2(c2.CreationUserId));
-            if (load && c2.LastWriteUserId != null) c2.LastWriteUser = (User2)(cache && objects.ContainsKey(c2.LastWriteUserId.Value) ? objects[c2.LastWriteUserId.Value] : objects[c2.LastWriteUserId.Value] = FindUser2(c2.LastWriteUserId));
+            if (load && c2.CreationUserId != null) c2.CreationUser = FindUser2(c2.CreationUserId, cache: cache);
+            if (load && c2.LastWriteUserId != null) c2.LastWriteUser = FindUser2(c2.LastWriteUserId, cache: cache);
             return c2;
         }
 
@@ -1000,9 +1042,10 @@ namespace FolioLibrary
         {
             return FolioServiceClient.Configurations(out count, where, orderBy, skip, take).Select(jo =>
             {
-                var c2 = Configuration2.FromJObject(jo);
-                if (load && c2.CreationUserId != null) c2.CreationUser = (User2)(cache && objects.ContainsKey(c2.CreationUserId.Value) ? objects[c2.CreationUserId.Value] : objects[c2.CreationUserId.Value] = FindUser2(c2.CreationUserId));
-                if (load && c2.LastWriteUserId != null) c2.LastWriteUser = (User2)(cache && objects.ContainsKey(c2.LastWriteUserId.Value) ? objects[c2.LastWriteUserId.Value] : objects[c2.LastWriteUserId.Value] = FindUser2(c2.LastWriteUserId));
+                var id = Guid.Parse((string)jo["id"]);
+                var c2 = cache ? (Configuration2)(objects.ContainsKey(id) ? objects[id] : objects[id] = Configuration2.FromJObject(jo)) : Configuration2.FromJObject(jo);
+                if (load && c2.CreationUserId != null) c2.CreationUser = FindUser2(c2.CreationUserId, cache: cache);
+                if (load && c2.LastWriteUserId != null) c2.LastWriteUser = FindUser2(c2.LastWriteUserId, cache: cache);
                 return c2;
             }).ToArray();
         }
@@ -1011,19 +1054,20 @@ namespace FolioLibrary
         {
             foreach (var jo in FolioServiceClient.Configurations(where, orderBy, skip, take))
             {
-                var c2 = Configuration2.FromJObject(jo);
-                if (load && c2.CreationUserId != null) c2.CreationUser = (User2)(cache && objects.ContainsKey(c2.CreationUserId.Value) ? objects[c2.CreationUserId.Value] : objects[c2.CreationUserId.Value] = FindUser2(c2.CreationUserId));
-                if (load && c2.LastWriteUserId != null) c2.LastWriteUser = (User2)(cache && objects.ContainsKey(c2.LastWriteUserId.Value) ? objects[c2.LastWriteUserId.Value] : objects[c2.LastWriteUserId.Value] = FindUser2(c2.LastWriteUserId));
+                var id = Guid.Parse((string)jo["id"]);
+                var c2 = cache ? (Configuration2)(objects.ContainsKey(id) ? objects[id] : objects[id] = Configuration2.FromJObject(jo)) : Configuration2.FromJObject(jo);
+                if (load && c2.CreationUserId != null) c2.CreationUser = FindUser2(c2.CreationUserId, cache: cache);
+                if (load && c2.LastWriteUserId != null) c2.LastWriteUser = FindUser2(c2.LastWriteUserId, cache: cache);
                 yield return c2;
             }
         }
 
         public Configuration2 FindConfiguration2(Guid? id, bool load = false, bool cache = true)
         {
-            var c2 = Configuration2.FromJObject(FolioServiceClient.GetConfiguration(id?.ToString()));
+            var c2 = cache ? (Configuration2)(objects.ContainsKey(id.Value) ? objects[id.Value] : objects[id.Value] = Configuration2.FromJObject(FolioServiceClient.GetConfiguration(id?.ToString()))) : Configuration2.FromJObject(FolioServiceClient.GetConfiguration(id?.ToString()));
             if (c2 == null) return null;
-            if (load && c2.CreationUserId != null) c2.CreationUser = (User2)(cache && objects.ContainsKey(c2.CreationUserId.Value) ? objects[c2.CreationUserId.Value] : objects[c2.CreationUserId.Value] = FindUser2(c2.CreationUserId));
-            if (load && c2.LastWriteUserId != null) c2.LastWriteUser = (User2)(cache && objects.ContainsKey(c2.LastWriteUserId.Value) ? objects[c2.LastWriteUserId.Value] : objects[c2.LastWriteUserId.Value] = FindUser2(c2.LastWriteUserId));
+            if (load && c2.CreationUserId != null) c2.CreationUser = FindUser2(c2.CreationUserId, cache: cache);
+            if (load && c2.LastWriteUserId != null) c2.LastWriteUser = FindUser2(c2.LastWriteUserId, cache: cache);
             return c2;
         }
 
@@ -1045,9 +1089,10 @@ namespace FolioLibrary
         {
             return FolioServiceClient.Contacts(out count, where, orderBy, skip, take).Select(jo =>
             {
-                var c2 = Contact2.FromJObject(jo);
-                if (load && c2.CreationUserId != null) c2.CreationUser = (User2)(cache && objects.ContainsKey(c2.CreationUserId.Value) ? objects[c2.CreationUserId.Value] : objects[c2.CreationUserId.Value] = FindUser2(c2.CreationUserId));
-                if (load && c2.LastWriteUserId != null) c2.LastWriteUser = (User2)(cache && objects.ContainsKey(c2.LastWriteUserId.Value) ? objects[c2.LastWriteUserId.Value] : objects[c2.LastWriteUserId.Value] = FindUser2(c2.LastWriteUserId));
+                var id = Guid.Parse((string)jo["id"]);
+                var c2 = cache ? (Contact2)(objects.ContainsKey(id) ? objects[id] : objects[id] = Contact2.FromJObject(jo)) : Contact2.FromJObject(jo);
+                if (load && c2.CreationUserId != null) c2.CreationUser = FindUser2(c2.CreationUserId, cache: cache);
+                if (load && c2.LastWriteUserId != null) c2.LastWriteUser = FindUser2(c2.LastWriteUserId, cache: cache);
                 return c2;
             }).ToArray();
         }
@@ -1056,27 +1101,28 @@ namespace FolioLibrary
         {
             foreach (var jo in FolioServiceClient.Contacts(where, orderBy, skip, take))
             {
-                var c2 = Contact2.FromJObject(jo);
-                if (load && c2.CreationUserId != null) c2.CreationUser = (User2)(cache && objects.ContainsKey(c2.CreationUserId.Value) ? objects[c2.CreationUserId.Value] : objects[c2.CreationUserId.Value] = FindUser2(c2.CreationUserId));
-                if (load && c2.LastWriteUserId != null) c2.LastWriteUser = (User2)(cache && objects.ContainsKey(c2.LastWriteUserId.Value) ? objects[c2.LastWriteUserId.Value] : objects[c2.LastWriteUserId.Value] = FindUser2(c2.LastWriteUserId));
+                var id = Guid.Parse((string)jo["id"]);
+                var c2 = cache ? (Contact2)(objects.ContainsKey(id) ? objects[id] : objects[id] = Contact2.FromJObject(jo)) : Contact2.FromJObject(jo);
+                if (load && c2.CreationUserId != null) c2.CreationUser = FindUser2(c2.CreationUserId, cache: cache);
+                if (load && c2.LastWriteUserId != null) c2.LastWriteUser = FindUser2(c2.LastWriteUserId, cache: cache);
                 yield return c2;
             }
         }
 
         public Contact2 FindContact2(Guid? id, bool load = false, bool cache = true)
         {
-            var c2 = Contact2.FromJObject(FolioServiceClient.GetContact(id?.ToString()));
+            var c2 = cache ? (Contact2)(objects.ContainsKey(id.Value) ? objects[id.Value] : objects[id.Value] = Contact2.FromJObject(FolioServiceClient.GetContact(id?.ToString()))) : Contact2.FromJObject(FolioServiceClient.GetContact(id?.ToString()));
             if (c2 == null) return null;
-            if (load && c2.CreationUserId != null) c2.CreationUser = (User2)(cache && objects.ContainsKey(c2.CreationUserId.Value) ? objects[c2.CreationUserId.Value] : objects[c2.CreationUserId.Value] = FindUser2(c2.CreationUserId));
-            if (load && c2.LastWriteUserId != null) c2.LastWriteUser = (User2)(cache && objects.ContainsKey(c2.LastWriteUserId.Value) ? objects[c2.LastWriteUserId.Value] : objects[c2.LastWriteUserId.Value] = FindUser2(c2.LastWriteUserId));
+            if (load && c2.CreationUserId != null) c2.CreationUser = FindUser2(c2.CreationUserId, cache: cache);
+            if (load && c2.LastWriteUserId != null) c2.LastWriteUser = FindUser2(c2.LastWriteUserId, cache: cache);
             var i = 0;
             if (c2.ContactAddresses != null) foreach (var ca in c2.ContactAddresses)
                 {
                     ca.Id = (++i).ToString();
                     ca.ContactId = c2.Id;
                     ca.Contact = c2;
-                    if (load && ca.CreationUserId != null) ca.CreationUser = (User2)(cache && objects.ContainsKey(ca.CreationUserId.Value) ? objects[ca.CreationUserId.Value] : objects[ca.CreationUserId.Value] = FindUser2(ca.CreationUserId));
-                    if (load && ca.LastWriteUserId != null) ca.LastWriteUser = (User2)(cache && objects.ContainsKey(ca.LastWriteUserId.Value) ? objects[ca.LastWriteUserId.Value] : objects[ca.LastWriteUserId.Value] = FindUser2(ca.LastWriteUserId));
+                    if (load && ca.CreationUserId != null) ca.CreationUser = FindUser2(ca.CreationUserId, cache: cache);
+                    if (load && ca.LastWriteUserId != null) ca.LastWriteUser = FindUser2(ca.LastWriteUserId, cache: cache);
                 }
             i = 0;
             if (c2.ContactCategories != null) foreach (var cc in c2.ContactCategories)
@@ -1084,7 +1130,7 @@ namespace FolioLibrary
                     cc.Id = (++i).ToString();
                     cc.ContactId = c2.Id;
                     cc.Contact = c2;
-                    if (load && cc.CategoryId != null) cc.Category = (Category2)(cache && objects.ContainsKey(cc.CategoryId.Value) ? objects[cc.CategoryId.Value] : objects[cc.CategoryId.Value] = FindCategory2(cc.CategoryId));
+                    if (load && cc.CategoryId != null) cc.Category = FindCategory2(cc.CategoryId, cache: cache);
                 }
             i = 0;
             if (c2.ContactEmails != null) foreach (var ce in c2.ContactEmails)
@@ -1092,8 +1138,8 @@ namespace FolioLibrary
                     ce.Id = (++i).ToString();
                     ce.ContactId = c2.Id;
                     ce.Contact = c2;
-                    if (load && ce.CreationUserId != null) ce.CreationUser = (User2)(cache && objects.ContainsKey(ce.CreationUserId.Value) ? objects[ce.CreationUserId.Value] : objects[ce.CreationUserId.Value] = FindUser2(ce.CreationUserId));
-                    if (load && ce.LastWriteUserId != null) ce.LastWriteUser = (User2)(cache && objects.ContainsKey(ce.LastWriteUserId.Value) ? objects[ce.LastWriteUserId.Value] : objects[ce.LastWriteUserId.Value] = FindUser2(ce.LastWriteUserId));
+                    if (load && ce.CreationUserId != null) ce.CreationUser = FindUser2(ce.CreationUserId, cache: cache);
+                    if (load && ce.LastWriteUserId != null) ce.LastWriteUser = FindUser2(ce.LastWriteUserId, cache: cache);
                 }
             i = 0;
             if (c2.ContactPhoneNumbers != null) foreach (var cpn in c2.ContactPhoneNumbers)
@@ -1101,8 +1147,8 @@ namespace FolioLibrary
                     cpn.Id = (++i).ToString();
                     cpn.ContactId = c2.Id;
                     cpn.Contact = c2;
-                    if (load && cpn.CreationUserId != null) cpn.CreationUser = (User2)(cache && objects.ContainsKey(cpn.CreationUserId.Value) ? objects[cpn.CreationUserId.Value] : objects[cpn.CreationUserId.Value] = FindUser2(cpn.CreationUserId));
-                    if (load && cpn.LastWriteUserId != null) cpn.LastWriteUser = (User2)(cache && objects.ContainsKey(cpn.LastWriteUserId.Value) ? objects[cpn.LastWriteUserId.Value] : objects[cpn.LastWriteUserId.Value] = FindUser2(cpn.LastWriteUserId));
+                    if (load && cpn.CreationUserId != null) cpn.CreationUser = FindUser2(cpn.CreationUserId, cache: cache);
+                    if (load && cpn.LastWriteUserId != null) cpn.LastWriteUser = FindUser2(cpn.LastWriteUserId, cache: cache);
                 }
             i = 0;
             if (c2.ContactUrls != null) foreach (var cu in c2.ContactUrls)
@@ -1110,8 +1156,8 @@ namespace FolioLibrary
                     cu.Id = (++i).ToString();
                     cu.ContactId = c2.Id;
                     cu.Contact = c2;
-                    if (load && cu.CreationUserId != null) cu.CreationUser = (User2)(cache && objects.ContainsKey(cu.CreationUserId.Value) ? objects[cu.CreationUserId.Value] : objects[cu.CreationUserId.Value] = FindUser2(cu.CreationUserId));
-                    if (load && cu.LastWriteUserId != null) cu.LastWriteUser = (User2)(cache && objects.ContainsKey(cu.LastWriteUserId.Value) ? objects[cu.LastWriteUserId.Value] : objects[cu.LastWriteUserId.Value] = FindUser2(cu.LastWriteUserId));
+                    if (load && cu.CreationUserId != null) cu.CreationUser = FindUser2(cu.CreationUserId, cache: cache);
+                    if (load && cu.LastWriteUserId != null) cu.LastWriteUser = FindUser2(cu.LastWriteUserId, cache: cache);
                 }
             return c2;
         }
@@ -1134,9 +1180,10 @@ namespace FolioLibrary
         {
             return FolioServiceClient.ContributorNameTypes(out count, where, orderBy, skip, take).Select(jo =>
             {
-                var cnt2 = ContributorNameType2.FromJObject(jo);
-                if (load && cnt2.CreationUserId != null) cnt2.CreationUser = (User2)(cache && objects.ContainsKey(cnt2.CreationUserId.Value) ? objects[cnt2.CreationUserId.Value] : objects[cnt2.CreationUserId.Value] = FindUser2(cnt2.CreationUserId));
-                if (load && cnt2.LastWriteUserId != null) cnt2.LastWriteUser = (User2)(cache && objects.ContainsKey(cnt2.LastWriteUserId.Value) ? objects[cnt2.LastWriteUserId.Value] : objects[cnt2.LastWriteUserId.Value] = FindUser2(cnt2.LastWriteUserId));
+                var id = Guid.Parse((string)jo["id"]);
+                var cnt2 = cache ? (ContributorNameType2)(objects.ContainsKey(id) ? objects[id] : objects[id] = ContributorNameType2.FromJObject(jo)) : ContributorNameType2.FromJObject(jo);
+                if (load && cnt2.CreationUserId != null) cnt2.CreationUser = FindUser2(cnt2.CreationUserId, cache: cache);
+                if (load && cnt2.LastWriteUserId != null) cnt2.LastWriteUser = FindUser2(cnt2.LastWriteUserId, cache: cache);
                 return cnt2;
             }).ToArray();
         }
@@ -1145,19 +1192,20 @@ namespace FolioLibrary
         {
             foreach (var jo in FolioServiceClient.ContributorNameTypes(where, orderBy, skip, take))
             {
-                var cnt2 = ContributorNameType2.FromJObject(jo);
-                if (load && cnt2.CreationUserId != null) cnt2.CreationUser = (User2)(cache && objects.ContainsKey(cnt2.CreationUserId.Value) ? objects[cnt2.CreationUserId.Value] : objects[cnt2.CreationUserId.Value] = FindUser2(cnt2.CreationUserId));
-                if (load && cnt2.LastWriteUserId != null) cnt2.LastWriteUser = (User2)(cache && objects.ContainsKey(cnt2.LastWriteUserId.Value) ? objects[cnt2.LastWriteUserId.Value] : objects[cnt2.LastWriteUserId.Value] = FindUser2(cnt2.LastWriteUserId));
+                var id = Guid.Parse((string)jo["id"]);
+                var cnt2 = cache ? (ContributorNameType2)(objects.ContainsKey(id) ? objects[id] : objects[id] = ContributorNameType2.FromJObject(jo)) : ContributorNameType2.FromJObject(jo);
+                if (load && cnt2.CreationUserId != null) cnt2.CreationUser = FindUser2(cnt2.CreationUserId, cache: cache);
+                if (load && cnt2.LastWriteUserId != null) cnt2.LastWriteUser = FindUser2(cnt2.LastWriteUserId, cache: cache);
                 yield return cnt2;
             }
         }
 
         public ContributorNameType2 FindContributorNameType2(Guid? id, bool load = false, bool cache = true)
         {
-            var cnt2 = ContributorNameType2.FromJObject(FolioServiceClient.GetContributorNameType(id?.ToString()));
+            var cnt2 = cache ? (ContributorNameType2)(objects.ContainsKey(id.Value) ? objects[id.Value] : objects[id.Value] = ContributorNameType2.FromJObject(FolioServiceClient.GetContributorNameType(id?.ToString()))) : ContributorNameType2.FromJObject(FolioServiceClient.GetContributorNameType(id?.ToString()));
             if (cnt2 == null) return null;
-            if (load && cnt2.CreationUserId != null) cnt2.CreationUser = (User2)(cache && objects.ContainsKey(cnt2.CreationUserId.Value) ? objects[cnt2.CreationUserId.Value] : objects[cnt2.CreationUserId.Value] = FindUser2(cnt2.CreationUserId));
-            if (load && cnt2.LastWriteUserId != null) cnt2.LastWriteUser = (User2)(cache && objects.ContainsKey(cnt2.LastWriteUserId.Value) ? objects[cnt2.LastWriteUserId.Value] : objects[cnt2.LastWriteUserId.Value] = FindUser2(cnt2.LastWriteUserId));
+            if (load && cnt2.CreationUserId != null) cnt2.CreationUser = FindUser2(cnt2.CreationUserId, cache: cache);
+            if (load && cnt2.LastWriteUserId != null) cnt2.LastWriteUser = FindUser2(cnt2.LastWriteUserId, cache: cache);
             return cnt2;
         }
 
@@ -1179,9 +1227,10 @@ namespace FolioLibrary
         {
             return FolioServiceClient.ContributorTypes(out count, where, orderBy, skip, take).Select(jo =>
             {
-                var ct2 = ContributorType2.FromJObject(jo);
-                if (load && ct2.CreationUserId != null) ct2.CreationUser = (User2)(cache && objects.ContainsKey(ct2.CreationUserId.Value) ? objects[ct2.CreationUserId.Value] : objects[ct2.CreationUserId.Value] = FindUser2(ct2.CreationUserId));
-                if (load && ct2.LastWriteUserId != null) ct2.LastWriteUser = (User2)(cache && objects.ContainsKey(ct2.LastWriteUserId.Value) ? objects[ct2.LastWriteUserId.Value] : objects[ct2.LastWriteUserId.Value] = FindUser2(ct2.LastWriteUserId));
+                var id = Guid.Parse((string)jo["id"]);
+                var ct2 = cache ? (ContributorType2)(objects.ContainsKey(id) ? objects[id] : objects[id] = ContributorType2.FromJObject(jo)) : ContributorType2.FromJObject(jo);
+                if (load && ct2.CreationUserId != null) ct2.CreationUser = FindUser2(ct2.CreationUserId, cache: cache);
+                if (load && ct2.LastWriteUserId != null) ct2.LastWriteUser = FindUser2(ct2.LastWriteUserId, cache: cache);
                 return ct2;
             }).ToArray();
         }
@@ -1190,19 +1239,20 @@ namespace FolioLibrary
         {
             foreach (var jo in FolioServiceClient.ContributorTypes(where, orderBy, skip, take))
             {
-                var ct2 = ContributorType2.FromJObject(jo);
-                if (load && ct2.CreationUserId != null) ct2.CreationUser = (User2)(cache && objects.ContainsKey(ct2.CreationUserId.Value) ? objects[ct2.CreationUserId.Value] : objects[ct2.CreationUserId.Value] = FindUser2(ct2.CreationUserId));
-                if (load && ct2.LastWriteUserId != null) ct2.LastWriteUser = (User2)(cache && objects.ContainsKey(ct2.LastWriteUserId.Value) ? objects[ct2.LastWriteUserId.Value] : objects[ct2.LastWriteUserId.Value] = FindUser2(ct2.LastWriteUserId));
+                var id = Guid.Parse((string)jo["id"]);
+                var ct2 = cache ? (ContributorType2)(objects.ContainsKey(id) ? objects[id] : objects[id] = ContributorType2.FromJObject(jo)) : ContributorType2.FromJObject(jo);
+                if (load && ct2.CreationUserId != null) ct2.CreationUser = FindUser2(ct2.CreationUserId, cache: cache);
+                if (load && ct2.LastWriteUserId != null) ct2.LastWriteUser = FindUser2(ct2.LastWriteUserId, cache: cache);
                 yield return ct2;
             }
         }
 
         public ContributorType2 FindContributorType2(Guid? id, bool load = false, bool cache = true)
         {
-            var ct2 = ContributorType2.FromJObject(FolioServiceClient.GetContributorType(id?.ToString()));
+            var ct2 = cache ? (ContributorType2)(objects.ContainsKey(id.Value) ? objects[id.Value] : objects[id.Value] = ContributorType2.FromJObject(FolioServiceClient.GetContributorType(id?.ToString()))) : ContributorType2.FromJObject(FolioServiceClient.GetContributorType(id?.ToString()));
             if (ct2 == null) return null;
-            if (load && ct2.CreationUserId != null) ct2.CreationUser = (User2)(cache && objects.ContainsKey(ct2.CreationUserId.Value) ? objects[ct2.CreationUserId.Value] : objects[ct2.CreationUserId.Value] = FindUser2(ct2.CreationUserId));
-            if (load && ct2.LastWriteUserId != null) ct2.LastWriteUser = (User2)(cache && objects.ContainsKey(ct2.LastWriteUserId.Value) ? objects[ct2.LastWriteUserId.Value] : objects[ct2.LastWriteUserId.Value] = FindUser2(ct2.LastWriteUserId));
+            if (load && ct2.CreationUserId != null) ct2.CreationUser = FindUser2(ct2.CreationUserId, cache: cache);
+            if (load && ct2.LastWriteUserId != null) ct2.LastWriteUser = FindUser2(ct2.LastWriteUserId, cache: cache);
             return ct2;
         }
 
@@ -1224,9 +1274,10 @@ namespace FolioLibrary
         {
             return FolioServiceClient.CustomFields(out count, where, orderBy, skip, take).Select(jo =>
             {
-                var cf2 = CustomField2.FromJObject(jo);
-                if (load && cf2.CreationUserId != null) cf2.CreationUser = (User2)(cache && objects.ContainsKey(cf2.CreationUserId.Value) ? objects[cf2.CreationUserId.Value] : objects[cf2.CreationUserId.Value] = FindUser2(cf2.CreationUserId));
-                if (load && cf2.LastWriteUserId != null) cf2.LastWriteUser = (User2)(cache && objects.ContainsKey(cf2.LastWriteUserId.Value) ? objects[cf2.LastWriteUserId.Value] : objects[cf2.LastWriteUserId.Value] = FindUser2(cf2.LastWriteUserId));
+                var id = Guid.Parse((string)jo["id"]);
+                var cf2 = cache ? (CustomField2)(objects.ContainsKey(id) ? objects[id] : objects[id] = CustomField2.FromJObject(jo)) : CustomField2.FromJObject(jo);
+                if (load && cf2.CreationUserId != null) cf2.CreationUser = FindUser2(cf2.CreationUserId, cache: cache);
+                if (load && cf2.LastWriteUserId != null) cf2.LastWriteUser = FindUser2(cf2.LastWriteUserId, cache: cache);
                 return cf2;
             }).ToArray();
         }
@@ -1235,19 +1286,20 @@ namespace FolioLibrary
         {
             foreach (var jo in FolioServiceClient.CustomFields(where, orderBy, skip, take))
             {
-                var cf2 = CustomField2.FromJObject(jo);
-                if (load && cf2.CreationUserId != null) cf2.CreationUser = (User2)(cache && objects.ContainsKey(cf2.CreationUserId.Value) ? objects[cf2.CreationUserId.Value] : objects[cf2.CreationUserId.Value] = FindUser2(cf2.CreationUserId));
-                if (load && cf2.LastWriteUserId != null) cf2.LastWriteUser = (User2)(cache && objects.ContainsKey(cf2.LastWriteUserId.Value) ? objects[cf2.LastWriteUserId.Value] : objects[cf2.LastWriteUserId.Value] = FindUser2(cf2.LastWriteUserId));
+                var id = Guid.Parse((string)jo["id"]);
+                var cf2 = cache ? (CustomField2)(objects.ContainsKey(id) ? objects[id] : objects[id] = CustomField2.FromJObject(jo)) : CustomField2.FromJObject(jo);
+                if (load && cf2.CreationUserId != null) cf2.CreationUser = FindUser2(cf2.CreationUserId, cache: cache);
+                if (load && cf2.LastWriteUserId != null) cf2.LastWriteUser = FindUser2(cf2.LastWriteUserId, cache: cache);
                 yield return cf2;
             }
         }
 
         public CustomField2 FindCustomField2(Guid? id, bool load = false, bool cache = true)
         {
-            var cf2 = CustomField2.FromJObject(FolioServiceClient.GetCustomField(id?.ToString()));
+            var cf2 = cache ? (CustomField2)(objects.ContainsKey(id.Value) ? objects[id.Value] : objects[id.Value] = CustomField2.FromJObject(FolioServiceClient.GetCustomField(id?.ToString()))) : CustomField2.FromJObject(FolioServiceClient.GetCustomField(id?.ToString()));
             if (cf2 == null) return null;
-            if (load && cf2.CreationUserId != null) cf2.CreationUser = (User2)(cache && objects.ContainsKey(cf2.CreationUserId.Value) ? objects[cf2.CreationUserId.Value] : objects[cf2.CreationUserId.Value] = FindUser2(cf2.CreationUserId));
-            if (load && cf2.LastWriteUserId != null) cf2.LastWriteUser = (User2)(cache && objects.ContainsKey(cf2.LastWriteUserId.Value) ? objects[cf2.LastWriteUserId.Value] : objects[cf2.LastWriteUserId.Value] = FindUser2(cf2.LastWriteUserId));
+            if (load && cf2.CreationUserId != null) cf2.CreationUser = FindUser2(cf2.CreationUserId, cache: cache);
+            if (load && cf2.LastWriteUserId != null) cf2.LastWriteUser = FindUser2(cf2.LastWriteUserId, cache: cache);
             var i = 0;
             if (cf2.CustomFieldValues != null) foreach (var cfv in cf2.CustomFieldValues)
                 {
@@ -1276,9 +1328,10 @@ namespace FolioLibrary
         {
             return FolioServiceClient.Departments(out count, where, orderBy, skip, take).Select(jo =>
             {
-                var d2 = Department2.FromJObject(jo);
-                if (load && d2.CreationUserId != null) d2.CreationUser = (User2)(cache && objects.ContainsKey(d2.CreationUserId.Value) ? objects[d2.CreationUserId.Value] : objects[d2.CreationUserId.Value] = FindUser2(d2.CreationUserId));
-                if (load && d2.LastWriteUserId != null) d2.LastWriteUser = (User2)(cache && objects.ContainsKey(d2.LastWriteUserId.Value) ? objects[d2.LastWriteUserId.Value] : objects[d2.LastWriteUserId.Value] = FindUser2(d2.LastWriteUserId));
+                var id = Guid.Parse((string)jo["id"]);
+                var d2 = cache ? (Department2)(objects.ContainsKey(id) ? objects[id] : objects[id] = Department2.FromJObject(jo)) : Department2.FromJObject(jo);
+                if (load && d2.CreationUserId != null) d2.CreationUser = FindUser2(d2.CreationUserId, cache: cache);
+                if (load && d2.LastWriteUserId != null) d2.LastWriteUser = FindUser2(d2.LastWriteUserId, cache: cache);
                 return d2;
             }).ToArray();
         }
@@ -1287,19 +1340,20 @@ namespace FolioLibrary
         {
             foreach (var jo in FolioServiceClient.Departments(where, orderBy, skip, take))
             {
-                var d2 = Department2.FromJObject(jo);
-                if (load && d2.CreationUserId != null) d2.CreationUser = (User2)(cache && objects.ContainsKey(d2.CreationUserId.Value) ? objects[d2.CreationUserId.Value] : objects[d2.CreationUserId.Value] = FindUser2(d2.CreationUserId));
-                if (load && d2.LastWriteUserId != null) d2.LastWriteUser = (User2)(cache && objects.ContainsKey(d2.LastWriteUserId.Value) ? objects[d2.LastWriteUserId.Value] : objects[d2.LastWriteUserId.Value] = FindUser2(d2.LastWriteUserId));
+                var id = Guid.Parse((string)jo["id"]);
+                var d2 = cache ? (Department2)(objects.ContainsKey(id) ? objects[id] : objects[id] = Department2.FromJObject(jo)) : Department2.FromJObject(jo);
+                if (load && d2.CreationUserId != null) d2.CreationUser = FindUser2(d2.CreationUserId, cache: cache);
+                if (load && d2.LastWriteUserId != null) d2.LastWriteUser = FindUser2(d2.LastWriteUserId, cache: cache);
                 yield return d2;
             }
         }
 
         public Department2 FindDepartment2(Guid? id, bool load = false, bool cache = true)
         {
-            var d2 = Department2.FromJObject(FolioServiceClient.GetDepartment(id?.ToString()));
+            var d2 = cache ? (Department2)(objects.ContainsKey(id.Value) ? objects[id.Value] : objects[id.Value] = Department2.FromJObject(FolioServiceClient.GetDepartment(id?.ToString()))) : Department2.FromJObject(FolioServiceClient.GetDepartment(id?.ToString()));
             if (d2 == null) return null;
-            if (load && d2.CreationUserId != null) d2.CreationUser = (User2)(cache && objects.ContainsKey(d2.CreationUserId.Value) ? objects[d2.CreationUserId.Value] : objects[d2.CreationUserId.Value] = FindUser2(d2.CreationUserId));
-            if (load && d2.LastWriteUserId != null) d2.LastWriteUser = (User2)(cache && objects.ContainsKey(d2.LastWriteUserId.Value) ? objects[d2.LastWriteUserId.Value] : objects[d2.LastWriteUserId.Value] = FindUser2(d2.LastWriteUserId));
+            if (load && d2.CreationUserId != null) d2.CreationUser = FindUser2(d2.CreationUserId, cache: cache);
+            if (load && d2.LastWriteUserId != null) d2.LastWriteUser = FindUser2(d2.LastWriteUserId, cache: cache);
             return d2;
         }
 
@@ -1321,9 +1375,10 @@ namespace FolioLibrary
         {
             return FolioServiceClient.ElectronicAccessRelationships(out count, where, orderBy, skip, take).Select(jo =>
             {
-                var ear2 = ElectronicAccessRelationship2.FromJObject(jo);
-                if (load && ear2.CreationUserId != null) ear2.CreationUser = (User2)(cache && objects.ContainsKey(ear2.CreationUserId.Value) ? objects[ear2.CreationUserId.Value] : objects[ear2.CreationUserId.Value] = FindUser2(ear2.CreationUserId));
-                if (load && ear2.LastWriteUserId != null) ear2.LastWriteUser = (User2)(cache && objects.ContainsKey(ear2.LastWriteUserId.Value) ? objects[ear2.LastWriteUserId.Value] : objects[ear2.LastWriteUserId.Value] = FindUser2(ear2.LastWriteUserId));
+                var id = Guid.Parse((string)jo["id"]);
+                var ear2 = cache ? (ElectronicAccessRelationship2)(objects.ContainsKey(id) ? objects[id] : objects[id] = ElectronicAccessRelationship2.FromJObject(jo)) : ElectronicAccessRelationship2.FromJObject(jo);
+                if (load && ear2.CreationUserId != null) ear2.CreationUser = FindUser2(ear2.CreationUserId, cache: cache);
+                if (load && ear2.LastWriteUserId != null) ear2.LastWriteUser = FindUser2(ear2.LastWriteUserId, cache: cache);
                 return ear2;
             }).ToArray();
         }
@@ -1332,19 +1387,20 @@ namespace FolioLibrary
         {
             foreach (var jo in FolioServiceClient.ElectronicAccessRelationships(where, orderBy, skip, take))
             {
-                var ear2 = ElectronicAccessRelationship2.FromJObject(jo);
-                if (load && ear2.CreationUserId != null) ear2.CreationUser = (User2)(cache && objects.ContainsKey(ear2.CreationUserId.Value) ? objects[ear2.CreationUserId.Value] : objects[ear2.CreationUserId.Value] = FindUser2(ear2.CreationUserId));
-                if (load && ear2.LastWriteUserId != null) ear2.LastWriteUser = (User2)(cache && objects.ContainsKey(ear2.LastWriteUserId.Value) ? objects[ear2.LastWriteUserId.Value] : objects[ear2.LastWriteUserId.Value] = FindUser2(ear2.LastWriteUserId));
+                var id = Guid.Parse((string)jo["id"]);
+                var ear2 = cache ? (ElectronicAccessRelationship2)(objects.ContainsKey(id) ? objects[id] : objects[id] = ElectronicAccessRelationship2.FromJObject(jo)) : ElectronicAccessRelationship2.FromJObject(jo);
+                if (load && ear2.CreationUserId != null) ear2.CreationUser = FindUser2(ear2.CreationUserId, cache: cache);
+                if (load && ear2.LastWriteUserId != null) ear2.LastWriteUser = FindUser2(ear2.LastWriteUserId, cache: cache);
                 yield return ear2;
             }
         }
 
         public ElectronicAccessRelationship2 FindElectronicAccessRelationship2(Guid? id, bool load = false, bool cache = true)
         {
-            var ear2 = ElectronicAccessRelationship2.FromJObject(FolioServiceClient.GetElectronicAccessRelationship(id?.ToString()));
+            var ear2 = cache ? (ElectronicAccessRelationship2)(objects.ContainsKey(id.Value) ? objects[id.Value] : objects[id.Value] = ElectronicAccessRelationship2.FromJObject(FolioServiceClient.GetElectronicAccessRelationship(id?.ToString()))) : ElectronicAccessRelationship2.FromJObject(FolioServiceClient.GetElectronicAccessRelationship(id?.ToString()));
             if (ear2 == null) return null;
-            if (load && ear2.CreationUserId != null) ear2.CreationUser = (User2)(cache && objects.ContainsKey(ear2.CreationUserId.Value) ? objects[ear2.CreationUserId.Value] : objects[ear2.CreationUserId.Value] = FindUser2(ear2.CreationUserId));
-            if (load && ear2.LastWriteUserId != null) ear2.LastWriteUser = (User2)(cache && objects.ContainsKey(ear2.LastWriteUserId.Value) ? objects[ear2.LastWriteUserId.Value] : objects[ear2.LastWriteUserId.Value] = FindUser2(ear2.LastWriteUserId));
+            if (load && ear2.CreationUserId != null) ear2.CreationUser = FindUser2(ear2.CreationUserId, cache: cache);
+            if (load && ear2.LastWriteUserId != null) ear2.LastWriteUser = FindUser2(ear2.LastWriteUserId, cache: cache);
             return ear2;
         }
 
@@ -1366,9 +1422,10 @@ namespace FolioLibrary
         {
             return FolioServiceClient.ExpenseClasses(out count, where, orderBy, skip, take).Select(jo =>
             {
-                var ec2 = ExpenseClass2.FromJObject(jo);
-                if (load && ec2.CreationUserId != null) ec2.CreationUser = (User2)(cache && objects.ContainsKey(ec2.CreationUserId.Value) ? objects[ec2.CreationUserId.Value] : objects[ec2.CreationUserId.Value] = FindUser2(ec2.CreationUserId));
-                if (load && ec2.LastWriteUserId != null) ec2.LastWriteUser = (User2)(cache && objects.ContainsKey(ec2.LastWriteUserId.Value) ? objects[ec2.LastWriteUserId.Value] : objects[ec2.LastWriteUserId.Value] = FindUser2(ec2.LastWriteUserId));
+                var id = Guid.Parse((string)jo["id"]);
+                var ec2 = cache ? (ExpenseClass2)(objects.ContainsKey(id) ? objects[id] : objects[id] = ExpenseClass2.FromJObject(jo)) : ExpenseClass2.FromJObject(jo);
+                if (load && ec2.CreationUserId != null) ec2.CreationUser = FindUser2(ec2.CreationUserId, cache: cache);
+                if (load && ec2.LastWriteUserId != null) ec2.LastWriteUser = FindUser2(ec2.LastWriteUserId, cache: cache);
                 return ec2;
             }).ToArray();
         }
@@ -1377,19 +1434,20 @@ namespace FolioLibrary
         {
             foreach (var jo in FolioServiceClient.ExpenseClasses(where, orderBy, skip, take))
             {
-                var ec2 = ExpenseClass2.FromJObject(jo);
-                if (load && ec2.CreationUserId != null) ec2.CreationUser = (User2)(cache && objects.ContainsKey(ec2.CreationUserId.Value) ? objects[ec2.CreationUserId.Value] : objects[ec2.CreationUserId.Value] = FindUser2(ec2.CreationUserId));
-                if (load && ec2.LastWriteUserId != null) ec2.LastWriteUser = (User2)(cache && objects.ContainsKey(ec2.LastWriteUserId.Value) ? objects[ec2.LastWriteUserId.Value] : objects[ec2.LastWriteUserId.Value] = FindUser2(ec2.LastWriteUserId));
+                var id = Guid.Parse((string)jo["id"]);
+                var ec2 = cache ? (ExpenseClass2)(objects.ContainsKey(id) ? objects[id] : objects[id] = ExpenseClass2.FromJObject(jo)) : ExpenseClass2.FromJObject(jo);
+                if (load && ec2.CreationUserId != null) ec2.CreationUser = FindUser2(ec2.CreationUserId, cache: cache);
+                if (load && ec2.LastWriteUserId != null) ec2.LastWriteUser = FindUser2(ec2.LastWriteUserId, cache: cache);
                 yield return ec2;
             }
         }
 
         public ExpenseClass2 FindExpenseClass2(Guid? id, bool load = false, bool cache = true)
         {
-            var ec2 = ExpenseClass2.FromJObject(FolioServiceClient.GetExpenseClass(id?.ToString()));
+            var ec2 = cache ? (ExpenseClass2)(objects.ContainsKey(id.Value) ? objects[id.Value] : objects[id.Value] = ExpenseClass2.FromJObject(FolioServiceClient.GetExpenseClass(id?.ToString()))) : ExpenseClass2.FromJObject(FolioServiceClient.GetExpenseClass(id?.ToString()));
             if (ec2 == null) return null;
-            if (load && ec2.CreationUserId != null) ec2.CreationUser = (User2)(cache && objects.ContainsKey(ec2.CreationUserId.Value) ? objects[ec2.CreationUserId.Value] : objects[ec2.CreationUserId.Value] = FindUser2(ec2.CreationUserId));
-            if (load && ec2.LastWriteUserId != null) ec2.LastWriteUser = (User2)(cache && objects.ContainsKey(ec2.LastWriteUserId.Value) ? objects[ec2.LastWriteUserId.Value] : objects[ec2.LastWriteUserId.Value] = FindUser2(ec2.LastWriteUserId));
+            if (load && ec2.CreationUserId != null) ec2.CreationUser = FindUser2(ec2.CreationUserId, cache: cache);
+            if (load && ec2.LastWriteUserId != null) ec2.LastWriteUser = FindUser2(ec2.LastWriteUserId, cache: cache);
             return ec2;
         }
 
@@ -1411,17 +1469,18 @@ namespace FolioLibrary
         {
             return FolioServiceClient.Fees(out count, where, orderBy, skip, take).Select(jo =>
             {
-                var f2 = Fee2.FromJObject(jo);
-                if (load && f2.CreationUserId != null) f2.CreationUser = (User2)(cache && objects.ContainsKey(f2.CreationUserId.Value) ? objects[f2.CreationUserId.Value] : objects[f2.CreationUserId.Value] = FindUser2(f2.CreationUserId));
-                if (load && f2.LastWriteUserId != null) f2.LastWriteUser = (User2)(cache && objects.ContainsKey(f2.LastWriteUserId.Value) ? objects[f2.LastWriteUserId.Value] : objects[f2.LastWriteUserId.Value] = FindUser2(f2.LastWriteUserId));
-                if (load && f2.LoanId != null) f2.Loan = (Loan2)(cache && objects.ContainsKey(f2.LoanId.Value) ? objects[f2.LoanId.Value] : objects[f2.LoanId.Value] = FindLoan2(f2.LoanId));
-                if (load && f2.UserId != null) f2.User = (User2)(cache && objects.ContainsKey(f2.UserId.Value) ? objects[f2.UserId.Value] : objects[f2.UserId.Value] = FindUser2(f2.UserId));
-                if (load && f2.ItemId != null) f2.Item = (Item2)(cache && objects.ContainsKey(f2.ItemId.Value) ? objects[f2.ItemId.Value] : objects[f2.ItemId.Value] = FindItem2(f2.ItemId));
-                if (load && f2.MaterialTypeId != null) f2.MaterialType1 = (MaterialType2)(cache && objects.ContainsKey(f2.MaterialTypeId.Value) ? objects[f2.MaterialTypeId.Value] : objects[f2.MaterialTypeId.Value] = FindMaterialType2(f2.MaterialTypeId));
-                if (load && f2.FeeTypeId != null) f2.FeeType = (FeeType2)(cache && objects.ContainsKey(f2.FeeTypeId.Value) ? objects[f2.FeeTypeId.Value] : objects[f2.FeeTypeId.Value] = FindFeeType2(f2.FeeTypeId));
-                if (load && f2.OwnerId != null) f2.Owner = (Owner2)(cache && objects.ContainsKey(f2.OwnerId.Value) ? objects[f2.OwnerId.Value] : objects[f2.OwnerId.Value] = FindOwner2(f2.OwnerId));
-                if (load && f2.HoldingId != null) f2.Holding = (Holding2)(cache && objects.ContainsKey(f2.HoldingId.Value) ? objects[f2.HoldingId.Value] : objects[f2.HoldingId.Value] = FindHolding2(f2.HoldingId));
-                if (load && f2.InstanceId != null) f2.Instance = (Instance2)(cache && objects.ContainsKey(f2.InstanceId.Value) ? objects[f2.InstanceId.Value] : objects[f2.InstanceId.Value] = FindInstance2(f2.InstanceId));
+                var id = Guid.Parse((string)jo["id"]);
+                var f2 = cache ? (Fee2)(objects.ContainsKey(id) ? objects[id] : objects[id] = Fee2.FromJObject(jo)) : Fee2.FromJObject(jo);
+                if (load && f2.CreationUserId != null) f2.CreationUser = FindUser2(f2.CreationUserId, cache: cache);
+                if (load && f2.LastWriteUserId != null) f2.LastWriteUser = FindUser2(f2.LastWriteUserId, cache: cache);
+                if (load && f2.LoanId != null) f2.Loan = FindLoan2(f2.LoanId, cache: cache);
+                if (load && f2.UserId != null) f2.User = FindUser2(f2.UserId, cache: cache);
+                if (load && f2.ItemId != null) f2.Item = FindItem2(f2.ItemId, cache: cache);
+                if (load && f2.MaterialTypeId != null) f2.MaterialType1 = FindMaterialType2(f2.MaterialTypeId, cache: cache);
+                if (load && f2.FeeTypeId != null) f2.FeeType = FindFeeType2(f2.FeeTypeId, cache: cache);
+                if (load && f2.OwnerId != null) f2.Owner = FindOwner2(f2.OwnerId, cache: cache);
+                if (load && f2.HoldingId != null) f2.Holding = FindHolding2(f2.HoldingId, cache: cache);
+                if (load && f2.InstanceId != null) f2.Instance = FindInstance2(f2.InstanceId, cache: cache);
                 return f2;
             }).ToArray();
         }
@@ -1430,35 +1489,36 @@ namespace FolioLibrary
         {
             foreach (var jo in FolioServiceClient.Fees(where, orderBy, skip, take))
             {
-                var f2 = Fee2.FromJObject(jo);
-                if (load && f2.CreationUserId != null) f2.CreationUser = (User2)(cache && objects.ContainsKey(f2.CreationUserId.Value) ? objects[f2.CreationUserId.Value] : objects[f2.CreationUserId.Value] = FindUser2(f2.CreationUserId));
-                if (load && f2.LastWriteUserId != null) f2.LastWriteUser = (User2)(cache && objects.ContainsKey(f2.LastWriteUserId.Value) ? objects[f2.LastWriteUserId.Value] : objects[f2.LastWriteUserId.Value] = FindUser2(f2.LastWriteUserId));
-                if (load && f2.LoanId != null) f2.Loan = (Loan2)(cache && objects.ContainsKey(f2.LoanId.Value) ? objects[f2.LoanId.Value] : objects[f2.LoanId.Value] = FindLoan2(f2.LoanId));
-                if (load && f2.UserId != null) f2.User = (User2)(cache && objects.ContainsKey(f2.UserId.Value) ? objects[f2.UserId.Value] : objects[f2.UserId.Value] = FindUser2(f2.UserId));
-                if (load && f2.ItemId != null) f2.Item = (Item2)(cache && objects.ContainsKey(f2.ItemId.Value) ? objects[f2.ItemId.Value] : objects[f2.ItemId.Value] = FindItem2(f2.ItemId));
-                if (load && f2.MaterialTypeId != null) f2.MaterialType1 = (MaterialType2)(cache && objects.ContainsKey(f2.MaterialTypeId.Value) ? objects[f2.MaterialTypeId.Value] : objects[f2.MaterialTypeId.Value] = FindMaterialType2(f2.MaterialTypeId));
-                if (load && f2.FeeTypeId != null) f2.FeeType = (FeeType2)(cache && objects.ContainsKey(f2.FeeTypeId.Value) ? objects[f2.FeeTypeId.Value] : objects[f2.FeeTypeId.Value] = FindFeeType2(f2.FeeTypeId));
-                if (load && f2.OwnerId != null) f2.Owner = (Owner2)(cache && objects.ContainsKey(f2.OwnerId.Value) ? objects[f2.OwnerId.Value] : objects[f2.OwnerId.Value] = FindOwner2(f2.OwnerId));
-                if (load && f2.HoldingId != null) f2.Holding = (Holding2)(cache && objects.ContainsKey(f2.HoldingId.Value) ? objects[f2.HoldingId.Value] : objects[f2.HoldingId.Value] = FindHolding2(f2.HoldingId));
-                if (load && f2.InstanceId != null) f2.Instance = (Instance2)(cache && objects.ContainsKey(f2.InstanceId.Value) ? objects[f2.InstanceId.Value] : objects[f2.InstanceId.Value] = FindInstance2(f2.InstanceId));
+                var id = Guid.Parse((string)jo["id"]);
+                var f2 = cache ? (Fee2)(objects.ContainsKey(id) ? objects[id] : objects[id] = Fee2.FromJObject(jo)) : Fee2.FromJObject(jo);
+                if (load && f2.CreationUserId != null) f2.CreationUser = FindUser2(f2.CreationUserId, cache: cache);
+                if (load && f2.LastWriteUserId != null) f2.LastWriteUser = FindUser2(f2.LastWriteUserId, cache: cache);
+                if (load && f2.LoanId != null) f2.Loan = FindLoan2(f2.LoanId, cache: cache);
+                if (load && f2.UserId != null) f2.User = FindUser2(f2.UserId, cache: cache);
+                if (load && f2.ItemId != null) f2.Item = FindItem2(f2.ItemId, cache: cache);
+                if (load && f2.MaterialTypeId != null) f2.MaterialType1 = FindMaterialType2(f2.MaterialTypeId, cache: cache);
+                if (load && f2.FeeTypeId != null) f2.FeeType = FindFeeType2(f2.FeeTypeId, cache: cache);
+                if (load && f2.OwnerId != null) f2.Owner = FindOwner2(f2.OwnerId, cache: cache);
+                if (load && f2.HoldingId != null) f2.Holding = FindHolding2(f2.HoldingId, cache: cache);
+                if (load && f2.InstanceId != null) f2.Instance = FindInstance2(f2.InstanceId, cache: cache);
                 yield return f2;
             }
         }
 
         public Fee2 FindFee2(Guid? id, bool load = false, bool cache = true)
         {
-            var f2 = Fee2.FromJObject(FolioServiceClient.GetFee(id?.ToString()));
+            var f2 = cache ? (Fee2)(objects.ContainsKey(id.Value) ? objects[id.Value] : objects[id.Value] = Fee2.FromJObject(FolioServiceClient.GetFee(id?.ToString()))) : Fee2.FromJObject(FolioServiceClient.GetFee(id?.ToString()));
             if (f2 == null) return null;
-            if (load && f2.CreationUserId != null) f2.CreationUser = (User2)(cache && objects.ContainsKey(f2.CreationUserId.Value) ? objects[f2.CreationUserId.Value] : objects[f2.CreationUserId.Value] = FindUser2(f2.CreationUserId));
-            if (load && f2.LastWriteUserId != null) f2.LastWriteUser = (User2)(cache && objects.ContainsKey(f2.LastWriteUserId.Value) ? objects[f2.LastWriteUserId.Value] : objects[f2.LastWriteUserId.Value] = FindUser2(f2.LastWriteUserId));
-            if (load && f2.LoanId != null) f2.Loan = (Loan2)(cache && objects.ContainsKey(f2.LoanId.Value) ? objects[f2.LoanId.Value] : objects[f2.LoanId.Value] = FindLoan2(f2.LoanId));
-            if (load && f2.UserId != null) f2.User = (User2)(cache && objects.ContainsKey(f2.UserId.Value) ? objects[f2.UserId.Value] : objects[f2.UserId.Value] = FindUser2(f2.UserId));
-            if (load && f2.ItemId != null) f2.Item = (Item2)(cache && objects.ContainsKey(f2.ItemId.Value) ? objects[f2.ItemId.Value] : objects[f2.ItemId.Value] = FindItem2(f2.ItemId));
-            if (load && f2.MaterialTypeId != null) f2.MaterialType1 = (MaterialType2)(cache && objects.ContainsKey(f2.MaterialTypeId.Value) ? objects[f2.MaterialTypeId.Value] : objects[f2.MaterialTypeId.Value] = FindMaterialType2(f2.MaterialTypeId));
-            if (load && f2.FeeTypeId != null) f2.FeeType = (FeeType2)(cache && objects.ContainsKey(f2.FeeTypeId.Value) ? objects[f2.FeeTypeId.Value] : objects[f2.FeeTypeId.Value] = FindFeeType2(f2.FeeTypeId));
-            if (load && f2.OwnerId != null) f2.Owner = (Owner2)(cache && objects.ContainsKey(f2.OwnerId.Value) ? objects[f2.OwnerId.Value] : objects[f2.OwnerId.Value] = FindOwner2(f2.OwnerId));
-            if (load && f2.HoldingId != null) f2.Holding = (Holding2)(cache && objects.ContainsKey(f2.HoldingId.Value) ? objects[f2.HoldingId.Value] : objects[f2.HoldingId.Value] = FindHolding2(f2.HoldingId));
-            if (load && f2.InstanceId != null) f2.Instance = (Instance2)(cache && objects.ContainsKey(f2.InstanceId.Value) ? objects[f2.InstanceId.Value] : objects[f2.InstanceId.Value] = FindInstance2(f2.InstanceId));
+            if (load && f2.CreationUserId != null) f2.CreationUser = FindUser2(f2.CreationUserId, cache: cache);
+            if (load && f2.LastWriteUserId != null) f2.LastWriteUser = FindUser2(f2.LastWriteUserId, cache: cache);
+            if (load && f2.LoanId != null) f2.Loan = FindLoan2(f2.LoanId, cache: cache);
+            if (load && f2.UserId != null) f2.User = FindUser2(f2.UserId, cache: cache);
+            if (load && f2.ItemId != null) f2.Item = FindItem2(f2.ItemId, cache: cache);
+            if (load && f2.MaterialTypeId != null) f2.MaterialType1 = FindMaterialType2(f2.MaterialTypeId, cache: cache);
+            if (load && f2.FeeTypeId != null) f2.FeeType = FindFeeType2(f2.FeeTypeId, cache: cache);
+            if (load && f2.OwnerId != null) f2.Owner = FindOwner2(f2.OwnerId, cache: cache);
+            if (load && f2.HoldingId != null) f2.Holding = FindHolding2(f2.HoldingId, cache: cache);
+            if (load && f2.InstanceId != null) f2.Instance = FindInstance2(f2.InstanceId, cache: cache);
             return f2;
         }
 
@@ -1480,12 +1540,13 @@ namespace FolioLibrary
         {
             return FolioServiceClient.FeeTypes(out count, where, orderBy, skip, take).Select(jo =>
             {
-                var ft2 = FeeType2.FromJObject(jo);
-                if (load && ft2.ChargeNoticeId != null) ft2.ChargeNotice = (Template2)(cache && objects.ContainsKey(ft2.ChargeNoticeId.Value) ? objects[ft2.ChargeNoticeId.Value] : objects[ft2.ChargeNoticeId.Value] = FindTemplate2(ft2.ChargeNoticeId));
-                if (load && ft2.ActionNoticeId != null) ft2.ActionNotice = (Template2)(cache && objects.ContainsKey(ft2.ActionNoticeId.Value) ? objects[ft2.ActionNoticeId.Value] : objects[ft2.ActionNoticeId.Value] = FindTemplate2(ft2.ActionNoticeId));
-                if (load && ft2.OwnerId != null) ft2.Owner = (Owner2)(cache && objects.ContainsKey(ft2.OwnerId.Value) ? objects[ft2.OwnerId.Value] : objects[ft2.OwnerId.Value] = FindOwner2(ft2.OwnerId));
-                if (load && ft2.CreationUserId != null) ft2.CreationUser = (User2)(cache && objects.ContainsKey(ft2.CreationUserId.Value) ? objects[ft2.CreationUserId.Value] : objects[ft2.CreationUserId.Value] = FindUser2(ft2.CreationUserId));
-                if (load && ft2.LastWriteUserId != null) ft2.LastWriteUser = (User2)(cache && objects.ContainsKey(ft2.LastWriteUserId.Value) ? objects[ft2.LastWriteUserId.Value] : objects[ft2.LastWriteUserId.Value] = FindUser2(ft2.LastWriteUserId));
+                var id = Guid.Parse((string)jo["id"]);
+                var ft2 = cache ? (FeeType2)(objects.ContainsKey(id) ? objects[id] : objects[id] = FeeType2.FromJObject(jo)) : FeeType2.FromJObject(jo);
+                if (load && ft2.ChargeNoticeId != null) ft2.ChargeNotice = FindTemplate2(ft2.ChargeNoticeId, cache: cache);
+                if (load && ft2.ActionNoticeId != null) ft2.ActionNotice = FindTemplate2(ft2.ActionNoticeId, cache: cache);
+                if (load && ft2.OwnerId != null) ft2.Owner = FindOwner2(ft2.OwnerId, cache: cache);
+                if (load && ft2.CreationUserId != null) ft2.CreationUser = FindUser2(ft2.CreationUserId, cache: cache);
+                if (load && ft2.LastWriteUserId != null) ft2.LastWriteUser = FindUser2(ft2.LastWriteUserId, cache: cache);
                 return ft2;
             }).ToArray();
         }
@@ -1494,25 +1555,26 @@ namespace FolioLibrary
         {
             foreach (var jo in FolioServiceClient.FeeTypes(where, orderBy, skip, take))
             {
-                var ft2 = FeeType2.FromJObject(jo);
-                if (load && ft2.ChargeNoticeId != null) ft2.ChargeNotice = (Template2)(cache && objects.ContainsKey(ft2.ChargeNoticeId.Value) ? objects[ft2.ChargeNoticeId.Value] : objects[ft2.ChargeNoticeId.Value] = FindTemplate2(ft2.ChargeNoticeId));
-                if (load && ft2.ActionNoticeId != null) ft2.ActionNotice = (Template2)(cache && objects.ContainsKey(ft2.ActionNoticeId.Value) ? objects[ft2.ActionNoticeId.Value] : objects[ft2.ActionNoticeId.Value] = FindTemplate2(ft2.ActionNoticeId));
-                if (load && ft2.OwnerId != null) ft2.Owner = (Owner2)(cache && objects.ContainsKey(ft2.OwnerId.Value) ? objects[ft2.OwnerId.Value] : objects[ft2.OwnerId.Value] = FindOwner2(ft2.OwnerId));
-                if (load && ft2.CreationUserId != null) ft2.CreationUser = (User2)(cache && objects.ContainsKey(ft2.CreationUserId.Value) ? objects[ft2.CreationUserId.Value] : objects[ft2.CreationUserId.Value] = FindUser2(ft2.CreationUserId));
-                if (load && ft2.LastWriteUserId != null) ft2.LastWriteUser = (User2)(cache && objects.ContainsKey(ft2.LastWriteUserId.Value) ? objects[ft2.LastWriteUserId.Value] : objects[ft2.LastWriteUserId.Value] = FindUser2(ft2.LastWriteUserId));
+                var id = Guid.Parse((string)jo["id"]);
+                var ft2 = cache ? (FeeType2)(objects.ContainsKey(id) ? objects[id] : objects[id] = FeeType2.FromJObject(jo)) : FeeType2.FromJObject(jo);
+                if (load && ft2.ChargeNoticeId != null) ft2.ChargeNotice = FindTemplate2(ft2.ChargeNoticeId, cache: cache);
+                if (load && ft2.ActionNoticeId != null) ft2.ActionNotice = FindTemplate2(ft2.ActionNoticeId, cache: cache);
+                if (load && ft2.OwnerId != null) ft2.Owner = FindOwner2(ft2.OwnerId, cache: cache);
+                if (load && ft2.CreationUserId != null) ft2.CreationUser = FindUser2(ft2.CreationUserId, cache: cache);
+                if (load && ft2.LastWriteUserId != null) ft2.LastWriteUser = FindUser2(ft2.LastWriteUserId, cache: cache);
                 yield return ft2;
             }
         }
 
         public FeeType2 FindFeeType2(Guid? id, bool load = false, bool cache = true)
         {
-            var ft2 = FeeType2.FromJObject(FolioServiceClient.GetFeeType(id?.ToString()));
+            var ft2 = cache ? (FeeType2)(objects.ContainsKey(id.Value) ? objects[id.Value] : objects[id.Value] = FeeType2.FromJObject(FolioServiceClient.GetFeeType(id?.ToString()))) : FeeType2.FromJObject(FolioServiceClient.GetFeeType(id?.ToString()));
             if (ft2 == null) return null;
-            if (load && ft2.ChargeNoticeId != null) ft2.ChargeNotice = (Template2)(cache && objects.ContainsKey(ft2.ChargeNoticeId.Value) ? objects[ft2.ChargeNoticeId.Value] : objects[ft2.ChargeNoticeId.Value] = FindTemplate2(ft2.ChargeNoticeId));
-            if (load && ft2.ActionNoticeId != null) ft2.ActionNotice = (Template2)(cache && objects.ContainsKey(ft2.ActionNoticeId.Value) ? objects[ft2.ActionNoticeId.Value] : objects[ft2.ActionNoticeId.Value] = FindTemplate2(ft2.ActionNoticeId));
-            if (load && ft2.OwnerId != null) ft2.Owner = (Owner2)(cache && objects.ContainsKey(ft2.OwnerId.Value) ? objects[ft2.OwnerId.Value] : objects[ft2.OwnerId.Value] = FindOwner2(ft2.OwnerId));
-            if (load && ft2.CreationUserId != null) ft2.CreationUser = (User2)(cache && objects.ContainsKey(ft2.CreationUserId.Value) ? objects[ft2.CreationUserId.Value] : objects[ft2.CreationUserId.Value] = FindUser2(ft2.CreationUserId));
-            if (load && ft2.LastWriteUserId != null) ft2.LastWriteUser = (User2)(cache && objects.ContainsKey(ft2.LastWriteUserId.Value) ? objects[ft2.LastWriteUserId.Value] : objects[ft2.LastWriteUserId.Value] = FindUser2(ft2.LastWriteUserId));
+            if (load && ft2.ChargeNoticeId != null) ft2.ChargeNotice = FindTemplate2(ft2.ChargeNoticeId, cache: cache);
+            if (load && ft2.ActionNoticeId != null) ft2.ActionNotice = FindTemplate2(ft2.ActionNoticeId, cache: cache);
+            if (load && ft2.OwnerId != null) ft2.Owner = FindOwner2(ft2.OwnerId, cache: cache);
+            if (load && ft2.CreationUserId != null) ft2.CreationUser = FindUser2(ft2.CreationUserId, cache: cache);
+            if (load && ft2.LastWriteUserId != null) ft2.LastWriteUser = FindUser2(ft2.LastWriteUserId, cache: cache);
             return ft2;
         }
 
@@ -1534,9 +1596,10 @@ namespace FolioLibrary
         {
             return FolioServiceClient.FinanceGroups(out count, where, orderBy, skip, take).Select(jo =>
             {
-                var fg2 = FinanceGroup2.FromJObject(jo);
-                if (load && fg2.CreationUserId != null) fg2.CreationUser = (User2)(cache && objects.ContainsKey(fg2.CreationUserId.Value) ? objects[fg2.CreationUserId.Value] : objects[fg2.CreationUserId.Value] = FindUser2(fg2.CreationUserId));
-                if (load && fg2.LastWriteUserId != null) fg2.LastWriteUser = (User2)(cache && objects.ContainsKey(fg2.LastWriteUserId.Value) ? objects[fg2.LastWriteUserId.Value] : objects[fg2.LastWriteUserId.Value] = FindUser2(fg2.LastWriteUserId));
+                var id = Guid.Parse((string)jo["id"]);
+                var fg2 = cache ? (FinanceGroup2)(objects.ContainsKey(id) ? objects[id] : objects[id] = FinanceGroup2.FromJObject(jo)) : FinanceGroup2.FromJObject(jo);
+                if (load && fg2.CreationUserId != null) fg2.CreationUser = FindUser2(fg2.CreationUserId, cache: cache);
+                if (load && fg2.LastWriteUserId != null) fg2.LastWriteUser = FindUser2(fg2.LastWriteUserId, cache: cache);
                 return fg2;
             }).ToArray();
         }
@@ -1545,26 +1608,27 @@ namespace FolioLibrary
         {
             foreach (var jo in FolioServiceClient.FinanceGroups(where, orderBy, skip, take))
             {
-                var fg2 = FinanceGroup2.FromJObject(jo);
-                if (load && fg2.CreationUserId != null) fg2.CreationUser = (User2)(cache && objects.ContainsKey(fg2.CreationUserId.Value) ? objects[fg2.CreationUserId.Value] : objects[fg2.CreationUserId.Value] = FindUser2(fg2.CreationUserId));
-                if (load && fg2.LastWriteUserId != null) fg2.LastWriteUser = (User2)(cache && objects.ContainsKey(fg2.LastWriteUserId.Value) ? objects[fg2.LastWriteUserId.Value] : objects[fg2.LastWriteUserId.Value] = FindUser2(fg2.LastWriteUserId));
+                var id = Guid.Parse((string)jo["id"]);
+                var fg2 = cache ? (FinanceGroup2)(objects.ContainsKey(id) ? objects[id] : objects[id] = FinanceGroup2.FromJObject(jo)) : FinanceGroup2.FromJObject(jo);
+                if (load && fg2.CreationUserId != null) fg2.CreationUser = FindUser2(fg2.CreationUserId, cache: cache);
+                if (load && fg2.LastWriteUserId != null) fg2.LastWriteUser = FindUser2(fg2.LastWriteUserId, cache: cache);
                 yield return fg2;
             }
         }
 
         public FinanceGroup2 FindFinanceGroup2(Guid? id, bool load = false, bool cache = true)
         {
-            var fg2 = FinanceGroup2.FromJObject(FolioServiceClient.GetFinanceGroup(id?.ToString()));
+            var fg2 = cache ? (FinanceGroup2)(objects.ContainsKey(id.Value) ? objects[id.Value] : objects[id.Value] = FinanceGroup2.FromJObject(FolioServiceClient.GetFinanceGroup(id?.ToString()))) : FinanceGroup2.FromJObject(FolioServiceClient.GetFinanceGroup(id?.ToString()));
             if (fg2 == null) return null;
-            if (load && fg2.CreationUserId != null) fg2.CreationUser = (User2)(cache && objects.ContainsKey(fg2.CreationUserId.Value) ? objects[fg2.CreationUserId.Value] : objects[fg2.CreationUserId.Value] = FindUser2(fg2.CreationUserId));
-            if (load && fg2.LastWriteUserId != null) fg2.LastWriteUser = (User2)(cache && objects.ContainsKey(fg2.LastWriteUserId.Value) ? objects[fg2.LastWriteUserId.Value] : objects[fg2.LastWriteUserId.Value] = FindUser2(fg2.LastWriteUserId));
+            if (load && fg2.CreationUserId != null) fg2.CreationUser = FindUser2(fg2.CreationUserId, cache: cache);
+            if (load && fg2.LastWriteUserId != null) fg2.LastWriteUser = FindUser2(fg2.LastWriteUserId, cache: cache);
             var i = 0;
             if (fg2.FinanceGroupAcquisitionsUnits != null) foreach (var fgau in fg2.FinanceGroupAcquisitionsUnits)
                 {
                     fgau.Id = (++i).ToString();
                     fgau.FinanceGroupId = fg2.Id;
                     fgau.FinanceGroup = fg2;
-                    if (load && fgau.AcquisitionsUnitId != null) fgau.AcquisitionsUnit = (AcquisitionsUnit2)(cache && objects.ContainsKey(fgau.AcquisitionsUnitId.Value) ? objects[fgau.AcquisitionsUnitId.Value] : objects[fgau.AcquisitionsUnitId.Value] = FindAcquisitionsUnit2(fgau.AcquisitionsUnitId));
+                    if (load && fgau.AcquisitionsUnitId != null) fgau.AcquisitionsUnit = FindAcquisitionsUnit2(fgau.AcquisitionsUnitId, cache: cache);
                 }
             return fg2;
         }
@@ -1587,9 +1651,10 @@ namespace FolioLibrary
         {
             return FolioServiceClient.FiscalYears(out count, where, orderBy, skip, take).Select(jo =>
             {
-                var fy2 = FiscalYear2.FromJObject(jo);
-                if (load && fy2.CreationUserId != null) fy2.CreationUser = (User2)(cache && objects.ContainsKey(fy2.CreationUserId.Value) ? objects[fy2.CreationUserId.Value] : objects[fy2.CreationUserId.Value] = FindUser2(fy2.CreationUserId));
-                if (load && fy2.LastWriteUserId != null) fy2.LastWriteUser = (User2)(cache && objects.ContainsKey(fy2.LastWriteUserId.Value) ? objects[fy2.LastWriteUserId.Value] : objects[fy2.LastWriteUserId.Value] = FindUser2(fy2.LastWriteUserId));
+                var id = Guid.Parse((string)jo["id"]);
+                var fy2 = cache ? (FiscalYear2)(objects.ContainsKey(id) ? objects[id] : objects[id] = FiscalYear2.FromJObject(jo)) : FiscalYear2.FromJObject(jo);
+                if (load && fy2.CreationUserId != null) fy2.CreationUser = FindUser2(fy2.CreationUserId, cache: cache);
+                if (load && fy2.LastWriteUserId != null) fy2.LastWriteUser = FindUser2(fy2.LastWriteUserId, cache: cache);
                 return fy2;
             }).ToArray();
         }
@@ -1598,26 +1663,27 @@ namespace FolioLibrary
         {
             foreach (var jo in FolioServiceClient.FiscalYears(where, orderBy, skip, take))
             {
-                var fy2 = FiscalYear2.FromJObject(jo);
-                if (load && fy2.CreationUserId != null) fy2.CreationUser = (User2)(cache && objects.ContainsKey(fy2.CreationUserId.Value) ? objects[fy2.CreationUserId.Value] : objects[fy2.CreationUserId.Value] = FindUser2(fy2.CreationUserId));
-                if (load && fy2.LastWriteUserId != null) fy2.LastWriteUser = (User2)(cache && objects.ContainsKey(fy2.LastWriteUserId.Value) ? objects[fy2.LastWriteUserId.Value] : objects[fy2.LastWriteUserId.Value] = FindUser2(fy2.LastWriteUserId));
+                var id = Guid.Parse((string)jo["id"]);
+                var fy2 = cache ? (FiscalYear2)(objects.ContainsKey(id) ? objects[id] : objects[id] = FiscalYear2.FromJObject(jo)) : FiscalYear2.FromJObject(jo);
+                if (load && fy2.CreationUserId != null) fy2.CreationUser = FindUser2(fy2.CreationUserId, cache: cache);
+                if (load && fy2.LastWriteUserId != null) fy2.LastWriteUser = FindUser2(fy2.LastWriteUserId, cache: cache);
                 yield return fy2;
             }
         }
 
         public FiscalYear2 FindFiscalYear2(Guid? id, bool load = false, bool cache = true)
         {
-            var fy2 = FiscalYear2.FromJObject(FolioServiceClient.GetFiscalYear(id?.ToString()));
+            var fy2 = cache ? (FiscalYear2)(objects.ContainsKey(id.Value) ? objects[id.Value] : objects[id.Value] = FiscalYear2.FromJObject(FolioServiceClient.GetFiscalYear(id?.ToString()))) : FiscalYear2.FromJObject(FolioServiceClient.GetFiscalYear(id?.ToString()));
             if (fy2 == null) return null;
-            if (load && fy2.CreationUserId != null) fy2.CreationUser = (User2)(cache && objects.ContainsKey(fy2.CreationUserId.Value) ? objects[fy2.CreationUserId.Value] : objects[fy2.CreationUserId.Value] = FindUser2(fy2.CreationUserId));
-            if (load && fy2.LastWriteUserId != null) fy2.LastWriteUser = (User2)(cache && objects.ContainsKey(fy2.LastWriteUserId.Value) ? objects[fy2.LastWriteUserId.Value] : objects[fy2.LastWriteUserId.Value] = FindUser2(fy2.LastWriteUserId));
+            if (load && fy2.CreationUserId != null) fy2.CreationUser = FindUser2(fy2.CreationUserId, cache: cache);
+            if (load && fy2.LastWriteUserId != null) fy2.LastWriteUser = FindUser2(fy2.LastWriteUserId, cache: cache);
             var i = 0;
             if (fy2.FiscalYearAcquisitionsUnits != null) foreach (var fyau in fy2.FiscalYearAcquisitionsUnits)
                 {
                     fyau.Id = (++i).ToString();
                     fyau.FiscalYearId = fy2.Id;
                     fyau.FiscalYear = fy2;
-                    if (load && fyau.AcquisitionsUnitId != null) fyau.AcquisitionsUnit = (AcquisitionsUnit2)(cache && objects.ContainsKey(fyau.AcquisitionsUnitId.Value) ? objects[fyau.AcquisitionsUnitId.Value] : objects[fyau.AcquisitionsUnitId.Value] = FindAcquisitionsUnit2(fyau.AcquisitionsUnitId));
+                    if (load && fyau.AcquisitionsUnitId != null) fyau.AcquisitionsUnit = FindAcquisitionsUnit2(fyau.AcquisitionsUnitId, cache: cache);
                 }
             return fy2;
         }
@@ -1640,9 +1706,10 @@ namespace FolioLibrary
         {
             return FolioServiceClient.FixedDueDateSchedules(out count, where, orderBy, skip, take).Select(jo =>
             {
-                var fdds2 = FixedDueDateSchedule2.FromJObject(jo);
-                if (load && fdds2.CreationUserId != null) fdds2.CreationUser = (User2)(cache && objects.ContainsKey(fdds2.CreationUserId.Value) ? objects[fdds2.CreationUserId.Value] : objects[fdds2.CreationUserId.Value] = FindUser2(fdds2.CreationUserId));
-                if (load && fdds2.LastWriteUserId != null) fdds2.LastWriteUser = (User2)(cache && objects.ContainsKey(fdds2.LastWriteUserId.Value) ? objects[fdds2.LastWriteUserId.Value] : objects[fdds2.LastWriteUserId.Value] = FindUser2(fdds2.LastWriteUserId));
+                var id = Guid.Parse((string)jo["id"]);
+                var fdds2 = cache ? (FixedDueDateSchedule2)(objects.ContainsKey(id) ? objects[id] : objects[id] = FixedDueDateSchedule2.FromJObject(jo)) : FixedDueDateSchedule2.FromJObject(jo);
+                if (load && fdds2.CreationUserId != null) fdds2.CreationUser = FindUser2(fdds2.CreationUserId, cache: cache);
+                if (load && fdds2.LastWriteUserId != null) fdds2.LastWriteUser = FindUser2(fdds2.LastWriteUserId, cache: cache);
                 return fdds2;
             }).ToArray();
         }
@@ -1651,19 +1718,20 @@ namespace FolioLibrary
         {
             foreach (var jo in FolioServiceClient.FixedDueDateSchedules(where, orderBy, skip, take))
             {
-                var fdds2 = FixedDueDateSchedule2.FromJObject(jo);
-                if (load && fdds2.CreationUserId != null) fdds2.CreationUser = (User2)(cache && objects.ContainsKey(fdds2.CreationUserId.Value) ? objects[fdds2.CreationUserId.Value] : objects[fdds2.CreationUserId.Value] = FindUser2(fdds2.CreationUserId));
-                if (load && fdds2.LastWriteUserId != null) fdds2.LastWriteUser = (User2)(cache && objects.ContainsKey(fdds2.LastWriteUserId.Value) ? objects[fdds2.LastWriteUserId.Value] : objects[fdds2.LastWriteUserId.Value] = FindUser2(fdds2.LastWriteUserId));
+                var id = Guid.Parse((string)jo["id"]);
+                var fdds2 = cache ? (FixedDueDateSchedule2)(objects.ContainsKey(id) ? objects[id] : objects[id] = FixedDueDateSchedule2.FromJObject(jo)) : FixedDueDateSchedule2.FromJObject(jo);
+                if (load && fdds2.CreationUserId != null) fdds2.CreationUser = FindUser2(fdds2.CreationUserId, cache: cache);
+                if (load && fdds2.LastWriteUserId != null) fdds2.LastWriteUser = FindUser2(fdds2.LastWriteUserId, cache: cache);
                 yield return fdds2;
             }
         }
 
         public FixedDueDateSchedule2 FindFixedDueDateSchedule2(Guid? id, bool load = false, bool cache = true)
         {
-            var fdds2 = FixedDueDateSchedule2.FromJObject(FolioServiceClient.GetFixedDueDateSchedule(id?.ToString()));
+            var fdds2 = cache ? (FixedDueDateSchedule2)(objects.ContainsKey(id.Value) ? objects[id.Value] : objects[id.Value] = FixedDueDateSchedule2.FromJObject(FolioServiceClient.GetFixedDueDateSchedule(id?.ToString()))) : FixedDueDateSchedule2.FromJObject(FolioServiceClient.GetFixedDueDateSchedule(id?.ToString()));
             if (fdds2 == null) return null;
-            if (load && fdds2.CreationUserId != null) fdds2.CreationUser = (User2)(cache && objects.ContainsKey(fdds2.CreationUserId.Value) ? objects[fdds2.CreationUserId.Value] : objects[fdds2.CreationUserId.Value] = FindUser2(fdds2.CreationUserId));
-            if (load && fdds2.LastWriteUserId != null) fdds2.LastWriteUser = (User2)(cache && objects.ContainsKey(fdds2.LastWriteUserId.Value) ? objects[fdds2.LastWriteUserId.Value] : objects[fdds2.LastWriteUserId.Value] = FindUser2(fdds2.LastWriteUserId));
+            if (load && fdds2.CreationUserId != null) fdds2.CreationUser = FindUser2(fdds2.CreationUserId, cache: cache);
+            if (load && fdds2.LastWriteUserId != null) fdds2.LastWriteUser = FindUser2(fdds2.LastWriteUserId, cache: cache);
             var i = 0;
             if (fdds2.FixedDueDateScheduleSchedules != null) foreach (var fddss in fdds2.FixedDueDateScheduleSchedules)
                 {
@@ -1692,9 +1760,10 @@ namespace FolioLibrary
         {
             return FolioServiceClient.InstanceFormats(out count, where, orderBy, skip, take).Select(jo =>
             {
-                var f = Format.FromJObject(jo);
-                if (load && f.CreationUserId != null) f.CreationUser = (User2)(cache && objects.ContainsKey(f.CreationUserId.Value) ? objects[f.CreationUserId.Value] : objects[f.CreationUserId.Value] = FindUser2(f.CreationUserId));
-                if (load && f.LastWriteUserId != null) f.LastWriteUser = (User2)(cache && objects.ContainsKey(f.LastWriteUserId.Value) ? objects[f.LastWriteUserId.Value] : objects[f.LastWriteUserId.Value] = FindUser2(f.LastWriteUserId));
+                var id = Guid.Parse((string)jo["id"]);
+                var f = cache ? (Format)(objects.ContainsKey(id) ? objects[id] : objects[id] = Format.FromJObject(jo)) : Format.FromJObject(jo);
+                if (load && f.CreationUserId != null) f.CreationUser = FindUser2(f.CreationUserId, cache: cache);
+                if (load && f.LastWriteUserId != null) f.LastWriteUser = FindUser2(f.LastWriteUserId, cache: cache);
                 return f;
             }).ToArray();
         }
@@ -1703,19 +1772,20 @@ namespace FolioLibrary
         {
             foreach (var jo in FolioServiceClient.InstanceFormats(where, orderBy, skip, take))
             {
-                var f = Format.FromJObject(jo);
-                if (load && f.CreationUserId != null) f.CreationUser = (User2)(cache && objects.ContainsKey(f.CreationUserId.Value) ? objects[f.CreationUserId.Value] : objects[f.CreationUserId.Value] = FindUser2(f.CreationUserId));
-                if (load && f.LastWriteUserId != null) f.LastWriteUser = (User2)(cache && objects.ContainsKey(f.LastWriteUserId.Value) ? objects[f.LastWriteUserId.Value] : objects[f.LastWriteUserId.Value] = FindUser2(f.LastWriteUserId));
+                var id = Guid.Parse((string)jo["id"]);
+                var f = cache ? (Format)(objects.ContainsKey(id) ? objects[id] : objects[id] = Format.FromJObject(jo)) : Format.FromJObject(jo);
+                if (load && f.CreationUserId != null) f.CreationUser = FindUser2(f.CreationUserId, cache: cache);
+                if (load && f.LastWriteUserId != null) f.LastWriteUser = FindUser2(f.LastWriteUserId, cache: cache);
                 yield return f;
             }
         }
 
         public Format FindFormat(Guid? id, bool load = false, bool cache = true)
         {
-            var f = Format.FromJObject(FolioServiceClient.GetInstanceFormat(id?.ToString()));
+            var f = cache ? (Format)(objects.ContainsKey(id.Value) ? objects[id.Value] : objects[id.Value] = Format.FromJObject(FolioServiceClient.GetInstanceFormat(id?.ToString()))) : Format.FromJObject(FolioServiceClient.GetInstanceFormat(id?.ToString()));
             if (f == null) return null;
-            if (load && f.CreationUserId != null) f.CreationUser = (User2)(cache && objects.ContainsKey(f.CreationUserId.Value) ? objects[f.CreationUserId.Value] : objects[f.CreationUserId.Value] = FindUser2(f.CreationUserId));
-            if (load && f.LastWriteUserId != null) f.LastWriteUser = (User2)(cache && objects.ContainsKey(f.LastWriteUserId.Value) ? objects[f.LastWriteUserId.Value] : objects[f.LastWriteUserId.Value] = FindUser2(f.LastWriteUserId));
+            if (load && f.CreationUserId != null) f.CreationUser = FindUser2(f.CreationUserId, cache: cache);
+            if (load && f.LastWriteUserId != null) f.LastWriteUser = FindUser2(f.LastWriteUserId, cache: cache);
             return f;
         }
 
@@ -1737,11 +1807,12 @@ namespace FolioLibrary
         {
             return FolioServiceClient.Funds(out count, where, orderBy, skip, take).Select(jo =>
             {
-                var f2 = Fund2.FromJObject(jo);
-                if (load && f2.FundTypeId != null) f2.FundType = (FundType2)(cache && objects.ContainsKey(f2.FundTypeId.Value) ? objects[f2.FundTypeId.Value] : objects[f2.FundTypeId.Value] = FindFundType2(f2.FundTypeId));
-                if (load && f2.LedgerId != null) f2.Ledger = (Ledger2)(cache && objects.ContainsKey(f2.LedgerId.Value) ? objects[f2.LedgerId.Value] : objects[f2.LedgerId.Value] = FindLedger2(f2.LedgerId));
-                if (load && f2.CreationUserId != null) f2.CreationUser = (User2)(cache && objects.ContainsKey(f2.CreationUserId.Value) ? objects[f2.CreationUserId.Value] : objects[f2.CreationUserId.Value] = FindUser2(f2.CreationUserId));
-                if (load && f2.LastWriteUserId != null) f2.LastWriteUser = (User2)(cache && objects.ContainsKey(f2.LastWriteUserId.Value) ? objects[f2.LastWriteUserId.Value] : objects[f2.LastWriteUserId.Value] = FindUser2(f2.LastWriteUserId));
+                var id = Guid.Parse((string)jo["id"]);
+                var f2 = cache ? (Fund2)(objects.ContainsKey(id) ? objects[id] : objects[id] = Fund2.FromJObject(jo)) : Fund2.FromJObject(jo);
+                if (load && f2.FundTypeId != null) f2.FundType = FindFundType2(f2.FundTypeId, cache: cache);
+                if (load && f2.LedgerId != null) f2.Ledger = FindLedger2(f2.LedgerId, cache: cache);
+                if (load && f2.CreationUserId != null) f2.CreationUser = FindUser2(f2.CreationUserId, cache: cache);
+                if (load && f2.LastWriteUserId != null) f2.LastWriteUser = FindUser2(f2.LastWriteUserId, cache: cache);
                 return f2;
             }).ToArray();
         }
@@ -1750,30 +1821,31 @@ namespace FolioLibrary
         {
             foreach (var jo in FolioServiceClient.Funds(where, orderBy, skip, take))
             {
-                var f2 = Fund2.FromJObject(jo);
-                if (load && f2.FundTypeId != null) f2.FundType = (FundType2)(cache && objects.ContainsKey(f2.FundTypeId.Value) ? objects[f2.FundTypeId.Value] : objects[f2.FundTypeId.Value] = FindFundType2(f2.FundTypeId));
-                if (load && f2.LedgerId != null) f2.Ledger = (Ledger2)(cache && objects.ContainsKey(f2.LedgerId.Value) ? objects[f2.LedgerId.Value] : objects[f2.LedgerId.Value] = FindLedger2(f2.LedgerId));
-                if (load && f2.CreationUserId != null) f2.CreationUser = (User2)(cache && objects.ContainsKey(f2.CreationUserId.Value) ? objects[f2.CreationUserId.Value] : objects[f2.CreationUserId.Value] = FindUser2(f2.CreationUserId));
-                if (load && f2.LastWriteUserId != null) f2.LastWriteUser = (User2)(cache && objects.ContainsKey(f2.LastWriteUserId.Value) ? objects[f2.LastWriteUserId.Value] : objects[f2.LastWriteUserId.Value] = FindUser2(f2.LastWriteUserId));
+                var id = Guid.Parse((string)jo["id"]);
+                var f2 = cache ? (Fund2)(objects.ContainsKey(id) ? objects[id] : objects[id] = Fund2.FromJObject(jo)) : Fund2.FromJObject(jo);
+                if (load && f2.FundTypeId != null) f2.FundType = FindFundType2(f2.FundTypeId, cache: cache);
+                if (load && f2.LedgerId != null) f2.Ledger = FindLedger2(f2.LedgerId, cache: cache);
+                if (load && f2.CreationUserId != null) f2.CreationUser = FindUser2(f2.CreationUserId, cache: cache);
+                if (load && f2.LastWriteUserId != null) f2.LastWriteUser = FindUser2(f2.LastWriteUserId, cache: cache);
                 yield return f2;
             }
         }
 
         public Fund2 FindFund2(Guid? id, bool load = false, bool cache = true)
         {
-            var f2 = Fund2.FromJObject(FolioServiceClient.GetFund(id?.ToString()));
+            var f2 = cache ? (Fund2)(objects.ContainsKey(id.Value) ? objects[id.Value] : objects[id.Value] = Fund2.FromJObject(FolioServiceClient.GetFund(id?.ToString()))) : Fund2.FromJObject(FolioServiceClient.GetFund(id?.ToString()));
             if (f2 == null) return null;
-            if (load && f2.FundTypeId != null) f2.FundType = (FundType2)(cache && objects.ContainsKey(f2.FundTypeId.Value) ? objects[f2.FundTypeId.Value] : objects[f2.FundTypeId.Value] = FindFundType2(f2.FundTypeId));
-            if (load && f2.LedgerId != null) f2.Ledger = (Ledger2)(cache && objects.ContainsKey(f2.LedgerId.Value) ? objects[f2.LedgerId.Value] : objects[f2.LedgerId.Value] = FindLedger2(f2.LedgerId));
-            if (load && f2.CreationUserId != null) f2.CreationUser = (User2)(cache && objects.ContainsKey(f2.CreationUserId.Value) ? objects[f2.CreationUserId.Value] : objects[f2.CreationUserId.Value] = FindUser2(f2.CreationUserId));
-            if (load && f2.LastWriteUserId != null) f2.LastWriteUser = (User2)(cache && objects.ContainsKey(f2.LastWriteUserId.Value) ? objects[f2.LastWriteUserId.Value] : objects[f2.LastWriteUserId.Value] = FindUser2(f2.LastWriteUserId));
+            if (load && f2.FundTypeId != null) f2.FundType = FindFundType2(f2.FundTypeId, cache: cache);
+            if (load && f2.LedgerId != null) f2.Ledger = FindLedger2(f2.LedgerId, cache: cache);
+            if (load && f2.CreationUserId != null) f2.CreationUser = FindUser2(f2.CreationUserId, cache: cache);
+            if (load && f2.LastWriteUserId != null) f2.LastWriteUser = FindUser2(f2.LastWriteUserId, cache: cache);
             var i = 0;
             if (f2.AllocatedFromFunds != null) foreach (var aff in f2.AllocatedFromFunds)
                 {
                     aff.Id = (++i).ToString();
                     aff.FromFundId = f2.Id;
                     aff.FromFund = f2;
-                    if (load && aff.FundId != null) aff.Fund = (Fund2)(cache && objects.ContainsKey(aff.FundId.Value) ? objects[aff.FundId.Value] : objects[aff.FundId.Value] = FindFund2(aff.FundId));
+                    if (load && aff.FundId != null) aff.Fund = FindFund2(aff.FundId, cache: cache);
                 }
             i = 0;
             if (f2.AllocatedToFunds != null) foreach (var atf in f2.AllocatedToFunds)
@@ -1781,7 +1853,7 @@ namespace FolioLibrary
                     atf.Id = (++i).ToString();
                     atf.ToFundId = f2.Id;
                     atf.ToFund = f2;
-                    if (load && atf.FundId != null) atf.Fund = (Fund2)(cache && objects.ContainsKey(atf.FundId.Value) ? objects[atf.FundId.Value] : objects[atf.FundId.Value] = FindFund2(atf.FundId));
+                    if (load && atf.FundId != null) atf.Fund = FindFund2(atf.FundId, cache: cache);
                 }
             i = 0;
             if (f2.FundAcquisitionsUnits != null) foreach (var fau in f2.FundAcquisitionsUnits)
@@ -1789,7 +1861,7 @@ namespace FolioLibrary
                     fau.Id = (++i).ToString();
                     fau.FundId = f2.Id;
                     fau.Fund = f2;
-                    if (load && fau.AcquisitionsUnitId != null) fau.AcquisitionsUnit = (AcquisitionsUnit2)(cache && objects.ContainsKey(fau.AcquisitionsUnitId.Value) ? objects[fau.AcquisitionsUnitId.Value] : objects[fau.AcquisitionsUnitId.Value] = FindAcquisitionsUnit2(fau.AcquisitionsUnitId));
+                    if (load && fau.AcquisitionsUnitId != null) fau.AcquisitionsUnit = FindAcquisitionsUnit2(fau.AcquisitionsUnitId, cache: cache);
                 }
             i = 0;
             if (f2.FundTags != null) foreach (var ft in f2.FundTags)
@@ -1797,7 +1869,7 @@ namespace FolioLibrary
                     ft.Id = (++i).ToString();
                     ft.FundId = f2.Id;
                     ft.Fund = f2;
-                    if (load && ft.TagId != null) ft.Tag = (Tag2)(cache && objects.ContainsKey(ft.TagId.Value) ? objects[ft.TagId.Value] : objects[ft.TagId.Value] = FindTag2(ft.TagId));
+                    if (load && ft.TagId != null) ft.Tag = FindTag2(ft.TagId, cache: cache);
                 }
             return f2;
         }
@@ -1820,7 +1892,8 @@ namespace FolioLibrary
         {
             return FolioServiceClient.FundTypes(out count, where, orderBy, skip, take).Select(jo =>
             {
-                var ft2 = FundType2.FromJObject(jo);
+                var id = Guid.Parse((string)jo["id"]);
+                var ft2 = cache ? (FundType2)(objects.ContainsKey(id) ? objects[id] : objects[id] = FundType2.FromJObject(jo)) : FundType2.FromJObject(jo);
                 return ft2;
             }).ToArray();
         }
@@ -1829,7 +1902,8 @@ namespace FolioLibrary
         {
             foreach (var jo in FolioServiceClient.FundTypes(where, orderBy, skip, take))
             {
-                var ft2 = FundType2.FromJObject(jo);
+                var id = Guid.Parse((string)jo["id"]);
+                var ft2 = cache ? (FundType2)(objects.ContainsKey(id) ? objects[id] : objects[id] = FundType2.FromJObject(jo)) : FundType2.FromJObject(jo);
                 yield return ft2;
             }
         }
@@ -1854,9 +1928,10 @@ namespace FolioLibrary
         {
             return FolioServiceClient.Groups(out count, where, orderBy, skip, take).Select(jo =>
             {
-                var g2 = Group2.FromJObject(jo);
-                if (load && g2.CreationUserId != null) g2.CreationUser = (User2)(cache && objects.ContainsKey(g2.CreationUserId.Value) ? objects[g2.CreationUserId.Value] : objects[g2.CreationUserId.Value] = FindUser2(g2.CreationUserId));
-                if (load && g2.LastWriteUserId != null) g2.LastWriteUser = (User2)(cache && objects.ContainsKey(g2.LastWriteUserId.Value) ? objects[g2.LastWriteUserId.Value] : objects[g2.LastWriteUserId.Value] = FindUser2(g2.LastWriteUserId));
+                var id = Guid.Parse((string)jo["id"]);
+                var g2 = cache ? (Group2)(objects.ContainsKey(id) ? objects[id] : objects[id] = Group2.FromJObject(jo)) : Group2.FromJObject(jo);
+                if (load && g2.CreationUserId != null) g2.CreationUser = FindUser2(g2.CreationUserId, cache: cache);
+                if (load && g2.LastWriteUserId != null) g2.LastWriteUser = FindUser2(g2.LastWriteUserId, cache: cache);
                 return g2;
             }).ToArray();
         }
@@ -1865,19 +1940,20 @@ namespace FolioLibrary
         {
             foreach (var jo in FolioServiceClient.Groups(where, orderBy, skip, take))
             {
-                var g2 = Group2.FromJObject(jo);
-                if (load && g2.CreationUserId != null) g2.CreationUser = (User2)(cache && objects.ContainsKey(g2.CreationUserId.Value) ? objects[g2.CreationUserId.Value] : objects[g2.CreationUserId.Value] = FindUser2(g2.CreationUserId));
-                if (load && g2.LastWriteUserId != null) g2.LastWriteUser = (User2)(cache && objects.ContainsKey(g2.LastWriteUserId.Value) ? objects[g2.LastWriteUserId.Value] : objects[g2.LastWriteUserId.Value] = FindUser2(g2.LastWriteUserId));
+                var id = Guid.Parse((string)jo["id"]);
+                var g2 = cache ? (Group2)(objects.ContainsKey(id) ? objects[id] : objects[id] = Group2.FromJObject(jo)) : Group2.FromJObject(jo);
+                if (load && g2.CreationUserId != null) g2.CreationUser = FindUser2(g2.CreationUserId, cache: cache);
+                if (load && g2.LastWriteUserId != null) g2.LastWriteUser = FindUser2(g2.LastWriteUserId, cache: cache);
                 yield return g2;
             }
         }
 
         public Group2 FindGroup2(Guid? id, bool load = false, bool cache = true)
         {
-            var g2 = Group2.FromJObject(FolioServiceClient.GetGroup(id?.ToString()));
+            var g2 = cache ? (Group2)(objects.ContainsKey(id.Value) ? objects[id.Value] : objects[id.Value] = Group2.FromJObject(FolioServiceClient.GetGroup(id?.ToString()))) : Group2.FromJObject(FolioServiceClient.GetGroup(id?.ToString()));
             if (g2 == null) return null;
-            if (load && g2.CreationUserId != null) g2.CreationUser = (User2)(cache && objects.ContainsKey(g2.CreationUserId.Value) ? objects[g2.CreationUserId.Value] : objects[g2.CreationUserId.Value] = FindUser2(g2.CreationUserId));
-            if (load && g2.LastWriteUserId != null) g2.LastWriteUser = (User2)(cache && objects.ContainsKey(g2.LastWriteUserId.Value) ? objects[g2.LastWriteUserId.Value] : objects[g2.LastWriteUserId.Value] = FindUser2(g2.LastWriteUserId));
+            if (load && g2.CreationUserId != null) g2.CreationUser = FindUser2(g2.CreationUserId, cache: cache);
+            if (load && g2.LastWriteUserId != null) g2.LastWriteUser = FindUser2(g2.LastWriteUserId, cache: cache);
             return g2;
         }
 
@@ -1899,17 +1975,18 @@ namespace FolioLibrary
         {
             return FolioServiceClient.Holdings(out count, where, orderBy, skip, take).Select(jo =>
             {
-                var h2 = Holding2.FromJObject(jo);
-                if (load && h2.HoldingTypeId != null) h2.HoldingType = (HoldingType2)(cache && objects.ContainsKey(h2.HoldingTypeId.Value) ? objects[h2.HoldingTypeId.Value] : objects[h2.HoldingTypeId.Value] = FindHoldingType2(h2.HoldingTypeId));
-                if (load && h2.InstanceId != null) h2.Instance = (Instance2)(cache && objects.ContainsKey(h2.InstanceId.Value) ? objects[h2.InstanceId.Value] : objects[h2.InstanceId.Value] = FindInstance2(h2.InstanceId));
-                if (load && h2.LocationId != null) h2.Location = (Location2)(cache && objects.ContainsKey(h2.LocationId.Value) ? objects[h2.LocationId.Value] : objects[h2.LocationId.Value] = FindLocation2(h2.LocationId));
-                if (load && h2.TemporaryLocationId != null) h2.TemporaryLocation = (Location2)(cache && objects.ContainsKey(h2.TemporaryLocationId.Value) ? objects[h2.TemporaryLocationId.Value] : objects[h2.TemporaryLocationId.Value] = FindLocation2(h2.TemporaryLocationId));
-                if (load && h2.EffectiveLocationId != null) h2.EffectiveLocation = (Location2)(cache && objects.ContainsKey(h2.EffectiveLocationId.Value) ? objects[h2.EffectiveLocationId.Value] : objects[h2.EffectiveLocationId.Value] = FindLocation2(h2.EffectiveLocationId));
-                if (load && h2.CallNumberTypeId != null) h2.CallNumberType = (CallNumberType2)(cache && objects.ContainsKey(h2.CallNumberTypeId.Value) ? objects[h2.CallNumberTypeId.Value] : objects[h2.CallNumberTypeId.Value] = FindCallNumberType2(h2.CallNumberTypeId));
-                if (load && h2.IllPolicyId != null) h2.IllPolicy = (IllPolicy2)(cache && objects.ContainsKey(h2.IllPolicyId.Value) ? objects[h2.IllPolicyId.Value] : objects[h2.IllPolicyId.Value] = FindIllPolicy2(h2.IllPolicyId));
-                if (load && h2.CreationUserId != null) h2.CreationUser = (User2)(cache && objects.ContainsKey(h2.CreationUserId.Value) ? objects[h2.CreationUserId.Value] : objects[h2.CreationUserId.Value] = FindUser2(h2.CreationUserId));
-                if (load && h2.LastWriteUserId != null) h2.LastWriteUser = (User2)(cache && objects.ContainsKey(h2.LastWriteUserId.Value) ? objects[h2.LastWriteUserId.Value] : objects[h2.LastWriteUserId.Value] = FindUser2(h2.LastWriteUserId));
-                if (load && h2.SourceId != null) h2.Source = (Source2)(cache && objects.ContainsKey(h2.SourceId.Value) ? objects[h2.SourceId.Value] : objects[h2.SourceId.Value] = FindSource2(h2.SourceId));
+                var id = Guid.Parse((string)jo["id"]);
+                var h2 = cache ? (Holding2)(objects.ContainsKey(id) ? objects[id] : objects[id] = Holding2.FromJObject(jo)) : Holding2.FromJObject(jo);
+                if (load && h2.HoldingTypeId != null) h2.HoldingType = FindHoldingType2(h2.HoldingTypeId, cache: cache);
+                if (load && h2.InstanceId != null) h2.Instance = FindInstance2(h2.InstanceId, cache: cache);
+                if (load && h2.LocationId != null) h2.Location = FindLocation2(h2.LocationId, cache: cache);
+                if (load && h2.TemporaryLocationId != null) h2.TemporaryLocation = FindLocation2(h2.TemporaryLocationId, cache: cache);
+                if (load && h2.EffectiveLocationId != null) h2.EffectiveLocation = FindLocation2(h2.EffectiveLocationId, cache: cache);
+                if (load && h2.CallNumberTypeId != null) h2.CallNumberType = FindCallNumberType2(h2.CallNumberTypeId, cache: cache);
+                if (load && h2.IllPolicyId != null) h2.IllPolicy = FindIllPolicy2(h2.IllPolicyId, cache: cache);
+                if (load && h2.CreationUserId != null) h2.CreationUser = FindUser2(h2.CreationUserId, cache: cache);
+                if (load && h2.LastWriteUserId != null) h2.LastWriteUser = FindUser2(h2.LastWriteUserId, cache: cache);
+                if (load && h2.SourceId != null) h2.Source = FindSource2(h2.SourceId, cache: cache);
                 return h2;
             }).ToArray();
         }
@@ -1918,35 +1995,36 @@ namespace FolioLibrary
         {
             foreach (var jo in FolioServiceClient.Holdings(where, orderBy, skip, take))
             {
-                var h2 = Holding2.FromJObject(jo);
-                if (load && h2.HoldingTypeId != null) h2.HoldingType = (HoldingType2)(cache && objects.ContainsKey(h2.HoldingTypeId.Value) ? objects[h2.HoldingTypeId.Value] : objects[h2.HoldingTypeId.Value] = FindHoldingType2(h2.HoldingTypeId));
-                if (load && h2.InstanceId != null) h2.Instance = (Instance2)(cache && objects.ContainsKey(h2.InstanceId.Value) ? objects[h2.InstanceId.Value] : objects[h2.InstanceId.Value] = FindInstance2(h2.InstanceId));
-                if (load && h2.LocationId != null) h2.Location = (Location2)(cache && objects.ContainsKey(h2.LocationId.Value) ? objects[h2.LocationId.Value] : objects[h2.LocationId.Value] = FindLocation2(h2.LocationId));
-                if (load && h2.TemporaryLocationId != null) h2.TemporaryLocation = (Location2)(cache && objects.ContainsKey(h2.TemporaryLocationId.Value) ? objects[h2.TemporaryLocationId.Value] : objects[h2.TemporaryLocationId.Value] = FindLocation2(h2.TemporaryLocationId));
-                if (load && h2.EffectiveLocationId != null) h2.EffectiveLocation = (Location2)(cache && objects.ContainsKey(h2.EffectiveLocationId.Value) ? objects[h2.EffectiveLocationId.Value] : objects[h2.EffectiveLocationId.Value] = FindLocation2(h2.EffectiveLocationId));
-                if (load && h2.CallNumberTypeId != null) h2.CallNumberType = (CallNumberType2)(cache && objects.ContainsKey(h2.CallNumberTypeId.Value) ? objects[h2.CallNumberTypeId.Value] : objects[h2.CallNumberTypeId.Value] = FindCallNumberType2(h2.CallNumberTypeId));
-                if (load && h2.IllPolicyId != null) h2.IllPolicy = (IllPolicy2)(cache && objects.ContainsKey(h2.IllPolicyId.Value) ? objects[h2.IllPolicyId.Value] : objects[h2.IllPolicyId.Value] = FindIllPolicy2(h2.IllPolicyId));
-                if (load && h2.CreationUserId != null) h2.CreationUser = (User2)(cache && objects.ContainsKey(h2.CreationUserId.Value) ? objects[h2.CreationUserId.Value] : objects[h2.CreationUserId.Value] = FindUser2(h2.CreationUserId));
-                if (load && h2.LastWriteUserId != null) h2.LastWriteUser = (User2)(cache && objects.ContainsKey(h2.LastWriteUserId.Value) ? objects[h2.LastWriteUserId.Value] : objects[h2.LastWriteUserId.Value] = FindUser2(h2.LastWriteUserId));
-                if (load && h2.SourceId != null) h2.Source = (Source2)(cache && objects.ContainsKey(h2.SourceId.Value) ? objects[h2.SourceId.Value] : objects[h2.SourceId.Value] = FindSource2(h2.SourceId));
+                var id = Guid.Parse((string)jo["id"]);
+                var h2 = cache ? (Holding2)(objects.ContainsKey(id) ? objects[id] : objects[id] = Holding2.FromJObject(jo)) : Holding2.FromJObject(jo);
+                if (load && h2.HoldingTypeId != null) h2.HoldingType = FindHoldingType2(h2.HoldingTypeId, cache: cache);
+                if (load && h2.InstanceId != null) h2.Instance = FindInstance2(h2.InstanceId, cache: cache);
+                if (load && h2.LocationId != null) h2.Location = FindLocation2(h2.LocationId, cache: cache);
+                if (load && h2.TemporaryLocationId != null) h2.TemporaryLocation = FindLocation2(h2.TemporaryLocationId, cache: cache);
+                if (load && h2.EffectiveLocationId != null) h2.EffectiveLocation = FindLocation2(h2.EffectiveLocationId, cache: cache);
+                if (load && h2.CallNumberTypeId != null) h2.CallNumberType = FindCallNumberType2(h2.CallNumberTypeId, cache: cache);
+                if (load && h2.IllPolicyId != null) h2.IllPolicy = FindIllPolicy2(h2.IllPolicyId, cache: cache);
+                if (load && h2.CreationUserId != null) h2.CreationUser = FindUser2(h2.CreationUserId, cache: cache);
+                if (load && h2.LastWriteUserId != null) h2.LastWriteUser = FindUser2(h2.LastWriteUserId, cache: cache);
+                if (load && h2.SourceId != null) h2.Source = FindSource2(h2.SourceId, cache: cache);
                 yield return h2;
             }
         }
 
         public Holding2 FindHolding2(Guid? id, bool load = false, bool cache = true)
         {
-            var h2 = Holding2.FromJObject(FolioServiceClient.GetHolding(id?.ToString()));
+            var h2 = cache ? (Holding2)(objects.ContainsKey(id.Value) ? objects[id.Value] : objects[id.Value] = Holding2.FromJObject(FolioServiceClient.GetHolding(id?.ToString()))) : Holding2.FromJObject(FolioServiceClient.GetHolding(id?.ToString()));
             if (h2 == null) return null;
-            if (load && h2.HoldingTypeId != null) h2.HoldingType = (HoldingType2)(cache && objects.ContainsKey(h2.HoldingTypeId.Value) ? objects[h2.HoldingTypeId.Value] : objects[h2.HoldingTypeId.Value] = FindHoldingType2(h2.HoldingTypeId));
-            if (load && h2.InstanceId != null) h2.Instance = (Instance2)(cache && objects.ContainsKey(h2.InstanceId.Value) ? objects[h2.InstanceId.Value] : objects[h2.InstanceId.Value] = FindInstance2(h2.InstanceId));
-            if (load && h2.LocationId != null) h2.Location = (Location2)(cache && objects.ContainsKey(h2.LocationId.Value) ? objects[h2.LocationId.Value] : objects[h2.LocationId.Value] = FindLocation2(h2.LocationId));
-            if (load && h2.TemporaryLocationId != null) h2.TemporaryLocation = (Location2)(cache && objects.ContainsKey(h2.TemporaryLocationId.Value) ? objects[h2.TemporaryLocationId.Value] : objects[h2.TemporaryLocationId.Value] = FindLocation2(h2.TemporaryLocationId));
-            if (load && h2.EffectiveLocationId != null) h2.EffectiveLocation = (Location2)(cache && objects.ContainsKey(h2.EffectiveLocationId.Value) ? objects[h2.EffectiveLocationId.Value] : objects[h2.EffectiveLocationId.Value] = FindLocation2(h2.EffectiveLocationId));
-            if (load && h2.CallNumberTypeId != null) h2.CallNumberType = (CallNumberType2)(cache && objects.ContainsKey(h2.CallNumberTypeId.Value) ? objects[h2.CallNumberTypeId.Value] : objects[h2.CallNumberTypeId.Value] = FindCallNumberType2(h2.CallNumberTypeId));
-            if (load && h2.IllPolicyId != null) h2.IllPolicy = (IllPolicy2)(cache && objects.ContainsKey(h2.IllPolicyId.Value) ? objects[h2.IllPolicyId.Value] : objects[h2.IllPolicyId.Value] = FindIllPolicy2(h2.IllPolicyId));
-            if (load && h2.CreationUserId != null) h2.CreationUser = (User2)(cache && objects.ContainsKey(h2.CreationUserId.Value) ? objects[h2.CreationUserId.Value] : objects[h2.CreationUserId.Value] = FindUser2(h2.CreationUserId));
-            if (load && h2.LastWriteUserId != null) h2.LastWriteUser = (User2)(cache && objects.ContainsKey(h2.LastWriteUserId.Value) ? objects[h2.LastWriteUserId.Value] : objects[h2.LastWriteUserId.Value] = FindUser2(h2.LastWriteUserId));
-            if (load && h2.SourceId != null) h2.Source = (Source2)(cache && objects.ContainsKey(h2.SourceId.Value) ? objects[h2.SourceId.Value] : objects[h2.SourceId.Value] = FindSource2(h2.SourceId));
+            if (load && h2.HoldingTypeId != null) h2.HoldingType = FindHoldingType2(h2.HoldingTypeId, cache: cache);
+            if (load && h2.InstanceId != null) h2.Instance = FindInstance2(h2.InstanceId, cache: cache);
+            if (load && h2.LocationId != null) h2.Location = FindLocation2(h2.LocationId, cache: cache);
+            if (load && h2.TemporaryLocationId != null) h2.TemporaryLocation = FindLocation2(h2.TemporaryLocationId, cache: cache);
+            if (load && h2.EffectiveLocationId != null) h2.EffectiveLocation = FindLocation2(h2.EffectiveLocationId, cache: cache);
+            if (load && h2.CallNumberTypeId != null) h2.CallNumberType = FindCallNumberType2(h2.CallNumberTypeId, cache: cache);
+            if (load && h2.IllPolicyId != null) h2.IllPolicy = FindIllPolicy2(h2.IllPolicyId, cache: cache);
+            if (load && h2.CreationUserId != null) h2.CreationUser = FindUser2(h2.CreationUserId, cache: cache);
+            if (load && h2.LastWriteUserId != null) h2.LastWriteUser = FindUser2(h2.LastWriteUserId, cache: cache);
+            if (load && h2.SourceId != null) h2.Source = FindSource2(h2.SourceId, cache: cache);
             var i = 0;
             if (h2.Extents != null) foreach (var e2 in h2.Extents)
                 {
@@ -1967,7 +2045,7 @@ namespace FolioLibrary
                     hea.Id = (++i).ToString();
                     hea.HoldingId = h2.Id;
                     hea.Holding = h2;
-                    if (load && hea.RelationshipId != null) hea.Relationship = (ElectronicAccessRelationship2)(cache && objects.ContainsKey(hea.RelationshipId.Value) ? objects[hea.RelationshipId.Value] : objects[hea.RelationshipId.Value] = FindElectronicAccessRelationship2(hea.RelationshipId));
+                    if (load && hea.RelationshipId != null) hea.Relationship = FindElectronicAccessRelationship2(hea.RelationshipId, cache: cache);
                 }
             i = 0;
             if (h2.HoldingEntries != null) foreach (var he in h2.HoldingEntries)
@@ -1989,9 +2067,9 @@ namespace FolioLibrary
                     hn.Id = (++i).ToString();
                     hn.HoldingId = h2.Id;
                     hn.Holding = h2;
-                    if (load && hn.HoldingNoteTypeId != null) hn.HoldingNoteType = (HoldingNoteType2)(cache && objects.ContainsKey(hn.HoldingNoteTypeId.Value) ? objects[hn.HoldingNoteTypeId.Value] : objects[hn.HoldingNoteTypeId.Value] = FindHoldingNoteType2(hn.HoldingNoteTypeId));
-                    if (load && hn.CreationUserId != null) hn.CreationUser = (User2)(cache && objects.ContainsKey(hn.CreationUserId.Value) ? objects[hn.CreationUserId.Value] : objects[hn.CreationUserId.Value] = FindUser2(hn.CreationUserId));
-                    if (load && hn.LastWriteUserId != null) hn.LastWriteUser = (User2)(cache && objects.ContainsKey(hn.LastWriteUserId.Value) ? objects[hn.LastWriteUserId.Value] : objects[hn.LastWriteUserId.Value] = FindUser2(hn.LastWriteUserId));
+                    if (load && hn.HoldingNoteTypeId != null) hn.HoldingNoteType = FindHoldingNoteType2(hn.HoldingNoteTypeId, cache: cache);
+                    if (load && hn.CreationUserId != null) hn.CreationUser = FindUser2(hn.CreationUserId, cache: cache);
+                    if (load && hn.LastWriteUserId != null) hn.LastWriteUser = FindUser2(hn.LastWriteUserId, cache: cache);
                 }
             i = 0;
             if (h2.HoldingStatisticalCodes != null) foreach (var hsc in h2.HoldingStatisticalCodes)
@@ -1999,7 +2077,7 @@ namespace FolioLibrary
                     hsc.Id = (++i).ToString();
                     hsc.HoldingId = h2.Id;
                     hsc.Holding = h2;
-                    if (load && hsc.StatisticalCodeId != null) hsc.StatisticalCode = (StatisticalCode2)(cache && objects.ContainsKey(hsc.StatisticalCodeId.Value) ? objects[hsc.StatisticalCodeId.Value] : objects[hsc.StatisticalCodeId.Value] = FindStatisticalCode2(hsc.StatisticalCodeId));
+                    if (load && hsc.StatisticalCodeId != null) hsc.StatisticalCode = FindStatisticalCode2(hsc.StatisticalCodeId, cache: cache);
                 }
             i = 0;
             if (h2.HoldingTags != null) foreach (var ht in h2.HoldingTags)
@@ -2043,9 +2121,10 @@ namespace FolioLibrary
         {
             return FolioServiceClient.HoldingNoteTypes(out count, where, orderBy, skip, take).Select(jo =>
             {
-                var hnt2 = HoldingNoteType2.FromJObject(jo);
-                if (load && hnt2.CreationUserId != null) hnt2.CreationUser = (User2)(cache && objects.ContainsKey(hnt2.CreationUserId.Value) ? objects[hnt2.CreationUserId.Value] : objects[hnt2.CreationUserId.Value] = FindUser2(hnt2.CreationUserId));
-                if (load && hnt2.LastWriteUserId != null) hnt2.LastWriteUser = (User2)(cache && objects.ContainsKey(hnt2.LastWriteUserId.Value) ? objects[hnt2.LastWriteUserId.Value] : objects[hnt2.LastWriteUserId.Value] = FindUser2(hnt2.LastWriteUserId));
+                var id = Guid.Parse((string)jo["id"]);
+                var hnt2 = cache ? (HoldingNoteType2)(objects.ContainsKey(id) ? objects[id] : objects[id] = HoldingNoteType2.FromJObject(jo)) : HoldingNoteType2.FromJObject(jo);
+                if (load && hnt2.CreationUserId != null) hnt2.CreationUser = FindUser2(hnt2.CreationUserId, cache: cache);
+                if (load && hnt2.LastWriteUserId != null) hnt2.LastWriteUser = FindUser2(hnt2.LastWriteUserId, cache: cache);
                 return hnt2;
             }).ToArray();
         }
@@ -2054,19 +2133,20 @@ namespace FolioLibrary
         {
             foreach (var jo in FolioServiceClient.HoldingNoteTypes(where, orderBy, skip, take))
             {
-                var hnt2 = HoldingNoteType2.FromJObject(jo);
-                if (load && hnt2.CreationUserId != null) hnt2.CreationUser = (User2)(cache && objects.ContainsKey(hnt2.CreationUserId.Value) ? objects[hnt2.CreationUserId.Value] : objects[hnt2.CreationUserId.Value] = FindUser2(hnt2.CreationUserId));
-                if (load && hnt2.LastWriteUserId != null) hnt2.LastWriteUser = (User2)(cache && objects.ContainsKey(hnt2.LastWriteUserId.Value) ? objects[hnt2.LastWriteUserId.Value] : objects[hnt2.LastWriteUserId.Value] = FindUser2(hnt2.LastWriteUserId));
+                var id = Guid.Parse((string)jo["id"]);
+                var hnt2 = cache ? (HoldingNoteType2)(objects.ContainsKey(id) ? objects[id] : objects[id] = HoldingNoteType2.FromJObject(jo)) : HoldingNoteType2.FromJObject(jo);
+                if (load && hnt2.CreationUserId != null) hnt2.CreationUser = FindUser2(hnt2.CreationUserId, cache: cache);
+                if (load && hnt2.LastWriteUserId != null) hnt2.LastWriteUser = FindUser2(hnt2.LastWriteUserId, cache: cache);
                 yield return hnt2;
             }
         }
 
         public HoldingNoteType2 FindHoldingNoteType2(Guid? id, bool load = false, bool cache = true)
         {
-            var hnt2 = HoldingNoteType2.FromJObject(FolioServiceClient.GetHoldingNoteType(id?.ToString()));
+            var hnt2 = cache ? (HoldingNoteType2)(objects.ContainsKey(id.Value) ? objects[id.Value] : objects[id.Value] = HoldingNoteType2.FromJObject(FolioServiceClient.GetHoldingNoteType(id?.ToString()))) : HoldingNoteType2.FromJObject(FolioServiceClient.GetHoldingNoteType(id?.ToString()));
             if (hnt2 == null) return null;
-            if (load && hnt2.CreationUserId != null) hnt2.CreationUser = (User2)(cache && objects.ContainsKey(hnt2.CreationUserId.Value) ? objects[hnt2.CreationUserId.Value] : objects[hnt2.CreationUserId.Value] = FindUser2(hnt2.CreationUserId));
-            if (load && hnt2.LastWriteUserId != null) hnt2.LastWriteUser = (User2)(cache && objects.ContainsKey(hnt2.LastWriteUserId.Value) ? objects[hnt2.LastWriteUserId.Value] : objects[hnt2.LastWriteUserId.Value] = FindUser2(hnt2.LastWriteUserId));
+            if (load && hnt2.CreationUserId != null) hnt2.CreationUser = FindUser2(hnt2.CreationUserId, cache: cache);
+            if (load && hnt2.LastWriteUserId != null) hnt2.LastWriteUser = FindUser2(hnt2.LastWriteUserId, cache: cache);
             return hnt2;
         }
 
@@ -2088,9 +2168,10 @@ namespace FolioLibrary
         {
             return FolioServiceClient.HoldingTypes(out count, where, orderBy, skip, take).Select(jo =>
             {
-                var ht2 = HoldingType2.FromJObject(jo);
-                if (load && ht2.CreationUserId != null) ht2.CreationUser = (User2)(cache && objects.ContainsKey(ht2.CreationUserId.Value) ? objects[ht2.CreationUserId.Value] : objects[ht2.CreationUserId.Value] = FindUser2(ht2.CreationUserId));
-                if (load && ht2.LastWriteUserId != null) ht2.LastWriteUser = (User2)(cache && objects.ContainsKey(ht2.LastWriteUserId.Value) ? objects[ht2.LastWriteUserId.Value] : objects[ht2.LastWriteUserId.Value] = FindUser2(ht2.LastWriteUserId));
+                var id = Guid.Parse((string)jo["id"]);
+                var ht2 = cache ? (HoldingType2)(objects.ContainsKey(id) ? objects[id] : objects[id] = HoldingType2.FromJObject(jo)) : HoldingType2.FromJObject(jo);
+                if (load && ht2.CreationUserId != null) ht2.CreationUser = FindUser2(ht2.CreationUserId, cache: cache);
+                if (load && ht2.LastWriteUserId != null) ht2.LastWriteUser = FindUser2(ht2.LastWriteUserId, cache: cache);
                 return ht2;
             }).ToArray();
         }
@@ -2099,19 +2180,20 @@ namespace FolioLibrary
         {
             foreach (var jo in FolioServiceClient.HoldingTypes(where, orderBy, skip, take))
             {
-                var ht2 = HoldingType2.FromJObject(jo);
-                if (load && ht2.CreationUserId != null) ht2.CreationUser = (User2)(cache && objects.ContainsKey(ht2.CreationUserId.Value) ? objects[ht2.CreationUserId.Value] : objects[ht2.CreationUserId.Value] = FindUser2(ht2.CreationUserId));
-                if (load && ht2.LastWriteUserId != null) ht2.LastWriteUser = (User2)(cache && objects.ContainsKey(ht2.LastWriteUserId.Value) ? objects[ht2.LastWriteUserId.Value] : objects[ht2.LastWriteUserId.Value] = FindUser2(ht2.LastWriteUserId));
+                var id = Guid.Parse((string)jo["id"]);
+                var ht2 = cache ? (HoldingType2)(objects.ContainsKey(id) ? objects[id] : objects[id] = HoldingType2.FromJObject(jo)) : HoldingType2.FromJObject(jo);
+                if (load && ht2.CreationUserId != null) ht2.CreationUser = FindUser2(ht2.CreationUserId, cache: cache);
+                if (load && ht2.LastWriteUserId != null) ht2.LastWriteUser = FindUser2(ht2.LastWriteUserId, cache: cache);
                 yield return ht2;
             }
         }
 
         public HoldingType2 FindHoldingType2(Guid? id, bool load = false, bool cache = true)
         {
-            var ht2 = HoldingType2.FromJObject(FolioServiceClient.GetHoldingType(id?.ToString()));
+            var ht2 = cache ? (HoldingType2)(objects.ContainsKey(id.Value) ? objects[id.Value] : objects[id.Value] = HoldingType2.FromJObject(FolioServiceClient.GetHoldingType(id?.ToString()))) : HoldingType2.FromJObject(FolioServiceClient.GetHoldingType(id?.ToString()));
             if (ht2 == null) return null;
-            if (load && ht2.CreationUserId != null) ht2.CreationUser = (User2)(cache && objects.ContainsKey(ht2.CreationUserId.Value) ? objects[ht2.CreationUserId.Value] : objects[ht2.CreationUserId.Value] = FindUser2(ht2.CreationUserId));
-            if (load && ht2.LastWriteUserId != null) ht2.LastWriteUser = (User2)(cache && objects.ContainsKey(ht2.LastWriteUserId.Value) ? objects[ht2.LastWriteUserId.Value] : objects[ht2.LastWriteUserId.Value] = FindUser2(ht2.LastWriteUserId));
+            if (load && ht2.CreationUserId != null) ht2.CreationUser = FindUser2(ht2.CreationUserId, cache: cache);
+            if (load && ht2.LastWriteUserId != null) ht2.LastWriteUser = FindUser2(ht2.LastWriteUserId, cache: cache);
             return ht2;
         }
 
@@ -2137,9 +2219,10 @@ namespace FolioLibrary
         {
             return FolioServiceClient.IdTypes(out count, where, orderBy, skip, take).Select(jo =>
             {
-                var it2 = IdType2.FromJObject(jo);
-                if (load && it2.CreationUserId != null) it2.CreationUser = (User2)(cache && objects.ContainsKey(it2.CreationUserId.Value) ? objects[it2.CreationUserId.Value] : objects[it2.CreationUserId.Value] = FindUser2(it2.CreationUserId));
-                if (load && it2.LastWriteUserId != null) it2.LastWriteUser = (User2)(cache && objects.ContainsKey(it2.LastWriteUserId.Value) ? objects[it2.LastWriteUserId.Value] : objects[it2.LastWriteUserId.Value] = FindUser2(it2.LastWriteUserId));
+                var id = Guid.Parse((string)jo["id"]);
+                var it2 = cache ? (IdType2)(objects.ContainsKey(id) ? objects[id] : objects[id] = IdType2.FromJObject(jo)) : IdType2.FromJObject(jo);
+                if (load && it2.CreationUserId != null) it2.CreationUser = FindUser2(it2.CreationUserId, cache: cache);
+                if (load && it2.LastWriteUserId != null) it2.LastWriteUser = FindUser2(it2.LastWriteUserId, cache: cache);
                 return it2;
             }).ToArray();
         }
@@ -2148,19 +2231,20 @@ namespace FolioLibrary
         {
             foreach (var jo in FolioServiceClient.IdTypes(where, orderBy, skip, take))
             {
-                var it2 = IdType2.FromJObject(jo);
-                if (load && it2.CreationUserId != null) it2.CreationUser = (User2)(cache && objects.ContainsKey(it2.CreationUserId.Value) ? objects[it2.CreationUserId.Value] : objects[it2.CreationUserId.Value] = FindUser2(it2.CreationUserId));
-                if (load && it2.LastWriteUserId != null) it2.LastWriteUser = (User2)(cache && objects.ContainsKey(it2.LastWriteUserId.Value) ? objects[it2.LastWriteUserId.Value] : objects[it2.LastWriteUserId.Value] = FindUser2(it2.LastWriteUserId));
+                var id = Guid.Parse((string)jo["id"]);
+                var it2 = cache ? (IdType2)(objects.ContainsKey(id) ? objects[id] : objects[id] = IdType2.FromJObject(jo)) : IdType2.FromJObject(jo);
+                if (load && it2.CreationUserId != null) it2.CreationUser = FindUser2(it2.CreationUserId, cache: cache);
+                if (load && it2.LastWriteUserId != null) it2.LastWriteUser = FindUser2(it2.LastWriteUserId, cache: cache);
                 yield return it2;
             }
         }
 
         public IdType2 FindIdType2(Guid? id, bool load = false, bool cache = true)
         {
-            var it2 = IdType2.FromJObject(FolioServiceClient.GetIdType(id?.ToString()));
+            var it2 = cache ? (IdType2)(objects.ContainsKey(id.Value) ? objects[id.Value] : objects[id.Value] = IdType2.FromJObject(FolioServiceClient.GetIdType(id?.ToString()))) : IdType2.FromJObject(FolioServiceClient.GetIdType(id?.ToString()));
             if (it2 == null) return null;
-            if (load && it2.CreationUserId != null) it2.CreationUser = (User2)(cache && objects.ContainsKey(it2.CreationUserId.Value) ? objects[it2.CreationUserId.Value] : objects[it2.CreationUserId.Value] = FindUser2(it2.CreationUserId));
-            if (load && it2.LastWriteUserId != null) it2.LastWriteUser = (User2)(cache && objects.ContainsKey(it2.LastWriteUserId.Value) ? objects[it2.LastWriteUserId.Value] : objects[it2.LastWriteUserId.Value] = FindUser2(it2.LastWriteUserId));
+            if (load && it2.CreationUserId != null) it2.CreationUser = FindUser2(it2.CreationUserId, cache: cache);
+            if (load && it2.LastWriteUserId != null) it2.LastWriteUser = FindUser2(it2.LastWriteUserId, cache: cache);
             return it2;
         }
 
@@ -2182,9 +2266,10 @@ namespace FolioLibrary
         {
             return FolioServiceClient.IllPolicies(out count, where, orderBy, skip, take).Select(jo =>
             {
-                var ip2 = IllPolicy2.FromJObject(jo);
-                if (load && ip2.CreationUserId != null) ip2.CreationUser = (User2)(cache && objects.ContainsKey(ip2.CreationUserId.Value) ? objects[ip2.CreationUserId.Value] : objects[ip2.CreationUserId.Value] = FindUser2(ip2.CreationUserId));
-                if (load && ip2.LastWriteUserId != null) ip2.LastWriteUser = (User2)(cache && objects.ContainsKey(ip2.LastWriteUserId.Value) ? objects[ip2.LastWriteUserId.Value] : objects[ip2.LastWriteUserId.Value] = FindUser2(ip2.LastWriteUserId));
+                var id = Guid.Parse((string)jo["id"]);
+                var ip2 = cache ? (IllPolicy2)(objects.ContainsKey(id) ? objects[id] : objects[id] = IllPolicy2.FromJObject(jo)) : IllPolicy2.FromJObject(jo);
+                if (load && ip2.CreationUserId != null) ip2.CreationUser = FindUser2(ip2.CreationUserId, cache: cache);
+                if (load && ip2.LastWriteUserId != null) ip2.LastWriteUser = FindUser2(ip2.LastWriteUserId, cache: cache);
                 return ip2;
             }).ToArray();
         }
@@ -2193,19 +2278,20 @@ namespace FolioLibrary
         {
             foreach (var jo in FolioServiceClient.IllPolicies(where, orderBy, skip, take))
             {
-                var ip2 = IllPolicy2.FromJObject(jo);
-                if (load && ip2.CreationUserId != null) ip2.CreationUser = (User2)(cache && objects.ContainsKey(ip2.CreationUserId.Value) ? objects[ip2.CreationUserId.Value] : objects[ip2.CreationUserId.Value] = FindUser2(ip2.CreationUserId));
-                if (load && ip2.LastWriteUserId != null) ip2.LastWriteUser = (User2)(cache && objects.ContainsKey(ip2.LastWriteUserId.Value) ? objects[ip2.LastWriteUserId.Value] : objects[ip2.LastWriteUserId.Value] = FindUser2(ip2.LastWriteUserId));
+                var id = Guid.Parse((string)jo["id"]);
+                var ip2 = cache ? (IllPolicy2)(objects.ContainsKey(id) ? objects[id] : objects[id] = IllPolicy2.FromJObject(jo)) : IllPolicy2.FromJObject(jo);
+                if (load && ip2.CreationUserId != null) ip2.CreationUser = FindUser2(ip2.CreationUserId, cache: cache);
+                if (load && ip2.LastWriteUserId != null) ip2.LastWriteUser = FindUser2(ip2.LastWriteUserId, cache: cache);
                 yield return ip2;
             }
         }
 
         public IllPolicy2 FindIllPolicy2(Guid? id, bool load = false, bool cache = true)
         {
-            var ip2 = IllPolicy2.FromJObject(FolioServiceClient.GetIllPolicy(id?.ToString()));
+            var ip2 = cache ? (IllPolicy2)(objects.ContainsKey(id.Value) ? objects[id.Value] : objects[id.Value] = IllPolicy2.FromJObject(FolioServiceClient.GetIllPolicy(id?.ToString()))) : IllPolicy2.FromJObject(FolioServiceClient.GetIllPolicy(id?.ToString()));
             if (ip2 == null) return null;
-            if (load && ip2.CreationUserId != null) ip2.CreationUser = (User2)(cache && objects.ContainsKey(ip2.CreationUserId.Value) ? objects[ip2.CreationUserId.Value] : objects[ip2.CreationUserId.Value] = FindUser2(ip2.CreationUserId));
-            if (load && ip2.LastWriteUserId != null) ip2.LastWriteUser = (User2)(cache && objects.ContainsKey(ip2.LastWriteUserId.Value) ? objects[ip2.LastWriteUserId.Value] : objects[ip2.LastWriteUserId.Value] = FindUser2(ip2.LastWriteUserId));
+            if (load && ip2.CreationUserId != null) ip2.CreationUser = FindUser2(ip2.CreationUserId, cache: cache);
+            if (load && ip2.LastWriteUserId != null) ip2.LastWriteUser = FindUser2(ip2.LastWriteUserId, cache: cache);
             return ip2;
         }
 
@@ -2227,12 +2313,13 @@ namespace FolioLibrary
         {
             return FolioServiceClient.Instances(out count, where, orderBy, skip, take).Select(jo =>
             {
-                var i2 = Instance2.FromJObject(jo);
-                if (load && i2.InstanceTypeId != null) i2.InstanceType = (InstanceType2)(cache && objects.ContainsKey(i2.InstanceTypeId.Value) ? objects[i2.InstanceTypeId.Value] : objects[i2.InstanceTypeId.Value] = FindInstanceType2(i2.InstanceTypeId));
-                if (load && i2.IssuanceModeId != null) i2.IssuanceMode = (IssuanceMode)(cache && objects.ContainsKey(i2.IssuanceModeId.Value) ? objects[i2.IssuanceModeId.Value] : objects[i2.IssuanceModeId.Value] = FindIssuanceMode(i2.IssuanceModeId));
-                if (load && i2.StatusId != null) i2.Status = (Status)(cache && objects.ContainsKey(i2.StatusId.Value) ? objects[i2.StatusId.Value] : objects[i2.StatusId.Value] = FindStatus(i2.StatusId));
-                if (load && i2.CreationUserId != null) i2.CreationUser = (User2)(cache && objects.ContainsKey(i2.CreationUserId.Value) ? objects[i2.CreationUserId.Value] : objects[i2.CreationUserId.Value] = FindUser2(i2.CreationUserId));
-                if (load && i2.LastWriteUserId != null) i2.LastWriteUser = (User2)(cache && objects.ContainsKey(i2.LastWriteUserId.Value) ? objects[i2.LastWriteUserId.Value] : objects[i2.LastWriteUserId.Value] = FindUser2(i2.LastWriteUserId));
+                var id = Guid.Parse((string)jo["id"]);
+                var i2 = cache ? (Instance2)(objects.ContainsKey(id) ? objects[id] : objects[id] = Instance2.FromJObject(jo)) : Instance2.FromJObject(jo);
+                if (load && i2.InstanceTypeId != null) i2.InstanceType = FindInstanceType2(i2.InstanceTypeId, cache: cache);
+                if (load && i2.IssuanceModeId != null) i2.IssuanceMode = FindIssuanceMode(i2.IssuanceModeId, cache: cache);
+                if (load && i2.StatusId != null) i2.Status = FindStatus(i2.StatusId, cache: cache);
+                if (load && i2.CreationUserId != null) i2.CreationUser = FindUser2(i2.CreationUserId, cache: cache);
+                if (load && i2.LastWriteUserId != null) i2.LastWriteUser = FindUser2(i2.LastWriteUserId, cache: cache);
                 return i2;
             }).ToArray();
         }
@@ -2241,25 +2328,26 @@ namespace FolioLibrary
         {
             foreach (var jo in FolioServiceClient.Instances(where, orderBy, skip, take))
             {
-                var i2 = Instance2.FromJObject(jo);
-                if (load && i2.InstanceTypeId != null) i2.InstanceType = (InstanceType2)(cache && objects.ContainsKey(i2.InstanceTypeId.Value) ? objects[i2.InstanceTypeId.Value] : objects[i2.InstanceTypeId.Value] = FindInstanceType2(i2.InstanceTypeId));
-                if (load && i2.IssuanceModeId != null) i2.IssuanceMode = (IssuanceMode)(cache && objects.ContainsKey(i2.IssuanceModeId.Value) ? objects[i2.IssuanceModeId.Value] : objects[i2.IssuanceModeId.Value] = FindIssuanceMode(i2.IssuanceModeId));
-                if (load && i2.StatusId != null) i2.Status = (Status)(cache && objects.ContainsKey(i2.StatusId.Value) ? objects[i2.StatusId.Value] : objects[i2.StatusId.Value] = FindStatus(i2.StatusId));
-                if (load && i2.CreationUserId != null) i2.CreationUser = (User2)(cache && objects.ContainsKey(i2.CreationUserId.Value) ? objects[i2.CreationUserId.Value] : objects[i2.CreationUserId.Value] = FindUser2(i2.CreationUserId));
-                if (load && i2.LastWriteUserId != null) i2.LastWriteUser = (User2)(cache && objects.ContainsKey(i2.LastWriteUserId.Value) ? objects[i2.LastWriteUserId.Value] : objects[i2.LastWriteUserId.Value] = FindUser2(i2.LastWriteUserId));
+                var id = Guid.Parse((string)jo["id"]);
+                var i2 = cache ? (Instance2)(objects.ContainsKey(id) ? objects[id] : objects[id] = Instance2.FromJObject(jo)) : Instance2.FromJObject(jo);
+                if (load && i2.InstanceTypeId != null) i2.InstanceType = FindInstanceType2(i2.InstanceTypeId, cache: cache);
+                if (load && i2.IssuanceModeId != null) i2.IssuanceMode = FindIssuanceMode(i2.IssuanceModeId, cache: cache);
+                if (load && i2.StatusId != null) i2.Status = FindStatus(i2.StatusId, cache: cache);
+                if (load && i2.CreationUserId != null) i2.CreationUser = FindUser2(i2.CreationUserId, cache: cache);
+                if (load && i2.LastWriteUserId != null) i2.LastWriteUser = FindUser2(i2.LastWriteUserId, cache: cache);
                 yield return i2;
             }
         }
 
         public Instance2 FindInstance2(Guid? id, bool load = false, bool cache = true)
         {
-            var i2 = Instance2.FromJObject(FolioServiceClient.GetInstance(id?.ToString()));
+            var i2 = cache ? (Instance2)(objects.ContainsKey(id.Value) ? objects[id.Value] : objects[id.Value] = Instance2.FromJObject(FolioServiceClient.GetInstance(id?.ToString()))) : Instance2.FromJObject(FolioServiceClient.GetInstance(id?.ToString()));
             if (i2 == null) return null;
-            if (load && i2.InstanceTypeId != null) i2.InstanceType = (InstanceType2)(cache && objects.ContainsKey(i2.InstanceTypeId.Value) ? objects[i2.InstanceTypeId.Value] : objects[i2.InstanceTypeId.Value] = FindInstanceType2(i2.InstanceTypeId));
-            if (load && i2.IssuanceModeId != null) i2.IssuanceMode = (IssuanceMode)(cache && objects.ContainsKey(i2.IssuanceModeId.Value) ? objects[i2.IssuanceModeId.Value] : objects[i2.IssuanceModeId.Value] = FindIssuanceMode(i2.IssuanceModeId));
-            if (load && i2.StatusId != null) i2.Status = (Status)(cache && objects.ContainsKey(i2.StatusId.Value) ? objects[i2.StatusId.Value] : objects[i2.StatusId.Value] = FindStatus(i2.StatusId));
-            if (load && i2.CreationUserId != null) i2.CreationUser = (User2)(cache && objects.ContainsKey(i2.CreationUserId.Value) ? objects[i2.CreationUserId.Value] : objects[i2.CreationUserId.Value] = FindUser2(i2.CreationUserId));
-            if (load && i2.LastWriteUserId != null) i2.LastWriteUser = (User2)(cache && objects.ContainsKey(i2.LastWriteUserId.Value) ? objects[i2.LastWriteUserId.Value] : objects[i2.LastWriteUserId.Value] = FindUser2(i2.LastWriteUserId));
+            if (load && i2.InstanceTypeId != null) i2.InstanceType = FindInstanceType2(i2.InstanceTypeId, cache: cache);
+            if (load && i2.IssuanceModeId != null) i2.IssuanceMode = FindIssuanceMode(i2.IssuanceModeId, cache: cache);
+            if (load && i2.StatusId != null) i2.Status = FindStatus(i2.StatusId, cache: cache);
+            if (load && i2.CreationUserId != null) i2.CreationUser = FindUser2(i2.CreationUserId, cache: cache);
+            if (load && i2.LastWriteUserId != null) i2.LastWriteUser = FindUser2(i2.LastWriteUserId, cache: cache);
             var i = 0;
             if (i2.AdministrativeNotes != null) foreach (var an in i2.AdministrativeNotes)
                 {
@@ -2273,7 +2361,7 @@ namespace FolioLibrary
                     at.Id = (++i).ToString();
                     at.InstanceId = i2.Id;
                     at.Instance = i2;
-                    if (load && at.AlternativeTitleTypeId != null) at.AlternativeTitleType = (AlternativeTitleType2)(cache && objects.ContainsKey(at.AlternativeTitleTypeId.Value) ? objects[at.AlternativeTitleTypeId.Value] : objects[at.AlternativeTitleTypeId.Value] = FindAlternativeTitleType2(at.AlternativeTitleTypeId));
+                    if (load && at.AlternativeTitleTypeId != null) at.AlternativeTitleType = FindAlternativeTitleType2(at.AlternativeTitleTypeId, cache: cache);
                 }
             i = 0;
             if (i2.Classifications != null) foreach (var c in i2.Classifications)
@@ -2281,7 +2369,7 @@ namespace FolioLibrary
                     c.Id = (++i).ToString();
                     c.InstanceId = i2.Id;
                     c.Instance = i2;
-                    if (load && c.ClassificationTypeId != null) c.ClassificationType = (ClassificationType2)(cache && objects.ContainsKey(c.ClassificationTypeId.Value) ? objects[c.ClassificationTypeId.Value] : objects[c.ClassificationTypeId.Value] = FindClassificationType2(c.ClassificationTypeId));
+                    if (load && c.ClassificationTypeId != null) c.ClassificationType = FindClassificationType2(c.ClassificationTypeId, cache: cache);
                 }
             i = 0;
             if (i2.Contributors != null) foreach (var c2 in i2.Contributors)
@@ -2289,8 +2377,8 @@ namespace FolioLibrary
                     c2.Id = (++i).ToString();
                     c2.InstanceId = i2.Id;
                     c2.Instance = i2;
-                    if (load && c2.ContributorTypeId != null) c2.ContributorType = (ContributorType2)(cache && objects.ContainsKey(c2.ContributorTypeId.Value) ? objects[c2.ContributorTypeId.Value] : objects[c2.ContributorTypeId.Value] = FindContributorType2(c2.ContributorTypeId));
-                    if (load && c2.ContributorNameTypeId != null) c2.ContributorNameType = (ContributorNameType2)(cache && objects.ContainsKey(c2.ContributorNameTypeId.Value) ? objects[c2.ContributorNameTypeId.Value] : objects[c2.ContributorNameTypeId.Value] = FindContributorNameType2(c2.ContributorNameTypeId));
+                    if (load && c2.ContributorTypeId != null) c2.ContributorType = FindContributorType2(c2.ContributorTypeId, cache: cache);
+                    if (load && c2.ContributorNameTypeId != null) c2.ContributorNameType = FindContributorNameType2(c2.ContributorNameTypeId, cache: cache);
                 }
             i = 0;
             if (i2.Editions != null) foreach (var e2 in i2.Editions)
@@ -2305,7 +2393,7 @@ namespace FolioLibrary
                     ea.Id = (++i).ToString();
                     ea.InstanceId = i2.Id;
                     ea.Instance = i2;
-                    if (load && ea.RelationshipId != null) ea.Relationship = (ElectronicAccessRelationship2)(cache && objects.ContainsKey(ea.RelationshipId.Value) ? objects[ea.RelationshipId.Value] : objects[ea.RelationshipId.Value] = FindElectronicAccessRelationship2(ea.RelationshipId));
+                    if (load && ea.RelationshipId != null) ea.Relationship = FindElectronicAccessRelationship2(ea.RelationshipId, cache: cache);
                 }
             i = 0;
             if (i2.Identifiers != null) foreach (var i3 in i2.Identifiers)
@@ -2313,7 +2401,7 @@ namespace FolioLibrary
                     i3.Id = (++i).ToString();
                     i3.InstanceId = i2.Id;
                     i3.Instance = i2;
-                    if (load && i3.IdentifierTypeId != null) i3.IdentifierType = (IdType2)(cache && objects.ContainsKey(i3.IdentifierTypeId.Value) ? objects[i3.IdentifierTypeId.Value] : objects[i3.IdentifierTypeId.Value] = FindIdType2(i3.IdentifierTypeId));
+                    if (load && i3.IdentifierTypeId != null) i3.IdentifierType = FindIdType2(i3.IdentifierTypeId, cache: cache);
                 }
             i = 0;
             if (i2.InstanceFormat2s != null) foreach (var if2 in i2.InstanceFormat2s)
@@ -2321,7 +2409,7 @@ namespace FolioLibrary
                     if2.Id = (++i).ToString();
                     if2.InstanceId = i2.Id;
                     if2.Instance = i2;
-                    if (load && if2.FormatId != null) if2.Format = (Format)(cache && objects.ContainsKey(if2.FormatId.Value) ? objects[if2.FormatId.Value] : objects[if2.FormatId.Value] = FindFormat(if2.FormatId));
+                    if (load && if2.FormatId != null) if2.Format = FindFormat(if2.FormatId, cache: cache);
                 }
             i = 0;
             if (i2.InstanceNatureOfContentTerms != null) foreach (var inoct in i2.InstanceNatureOfContentTerms)
@@ -2329,7 +2417,7 @@ namespace FolioLibrary
                     inoct.Id = (++i).ToString();
                     inoct.InstanceId = i2.Id;
                     inoct.Instance = i2;
-                    if (load && inoct.NatureOfContentTermId != null) inoct.NatureOfContentTerm = (NatureOfContentTerm2)(cache && objects.ContainsKey(inoct.NatureOfContentTermId.Value) ? objects[inoct.NatureOfContentTermId.Value] : objects[inoct.NatureOfContentTermId.Value] = FindNatureOfContentTerm2(inoct.NatureOfContentTermId));
+                    if (load && inoct.NatureOfContentTermId != null) inoct.NatureOfContentTerm = FindNatureOfContentTerm2(inoct.NatureOfContentTermId, cache: cache);
                 }
             i = 0;
             if (i2.InstanceNotes != null) foreach (var @in in i2.InstanceNotes)
@@ -2337,7 +2425,7 @@ namespace FolioLibrary
                     @in.Id = (++i).ToString();
                     @in.InstanceId = i2.Id;
                     @in.Instance = i2;
-                    if (load && @in.InstanceNoteTypeId != null) @in.InstanceNoteType = (InstanceNoteType2)(cache && objects.ContainsKey(@in.InstanceNoteTypeId.Value) ? objects[@in.InstanceNoteTypeId.Value] : objects[@in.InstanceNoteTypeId.Value] = FindInstanceNoteType2(@in.InstanceNoteTypeId));
+                    if (load && @in.InstanceNoteTypeId != null) @in.InstanceNoteType = FindInstanceNoteType2(@in.InstanceNoteTypeId, cache: cache);
                 }
             i = 0;
             if (i2.InstanceStatisticalCodes != null) foreach (var isc in i2.InstanceStatisticalCodes)
@@ -2345,7 +2433,7 @@ namespace FolioLibrary
                     isc.Id = (++i).ToString();
                     isc.InstanceId = i2.Id;
                     isc.Instance = i2;
-                    if (load && isc.StatisticalCodeId != null) isc.StatisticalCode = (StatisticalCode2)(cache && objects.ContainsKey(isc.StatisticalCodeId.Value) ? objects[isc.StatisticalCodeId.Value] : objects[isc.StatisticalCodeId.Value] = FindStatisticalCode2(isc.StatisticalCodeId));
+                    if (load && isc.StatisticalCodeId != null) isc.StatisticalCode = FindStatisticalCode2(isc.StatisticalCodeId, cache: cache);
                 }
             i = 0;
             if (i2.InstanceTags != null) foreach (var it in i2.InstanceTags)
@@ -2424,9 +2512,10 @@ namespace FolioLibrary
         {
             return FolioServiceClient.InstanceNoteTypes(out count, where, orderBy, skip, take).Select(jo =>
             {
-                var int2 = InstanceNoteType2.FromJObject(jo);
-                if (load && int2.CreationUserId != null) int2.CreationUser = (User2)(cache && objects.ContainsKey(int2.CreationUserId.Value) ? objects[int2.CreationUserId.Value] : objects[int2.CreationUserId.Value] = FindUser2(int2.CreationUserId));
-                if (load && int2.LastWriteUserId != null) int2.LastWriteUser = (User2)(cache && objects.ContainsKey(int2.LastWriteUserId.Value) ? objects[int2.LastWriteUserId.Value] : objects[int2.LastWriteUserId.Value] = FindUser2(int2.LastWriteUserId));
+                var id = Guid.Parse((string)jo["id"]);
+                var int2 = cache ? (InstanceNoteType2)(objects.ContainsKey(id) ? objects[id] : objects[id] = InstanceNoteType2.FromJObject(jo)) : InstanceNoteType2.FromJObject(jo);
+                if (load && int2.CreationUserId != null) int2.CreationUser = FindUser2(int2.CreationUserId, cache: cache);
+                if (load && int2.LastWriteUserId != null) int2.LastWriteUser = FindUser2(int2.LastWriteUserId, cache: cache);
                 return int2;
             }).ToArray();
         }
@@ -2435,19 +2524,20 @@ namespace FolioLibrary
         {
             foreach (var jo in FolioServiceClient.InstanceNoteTypes(where, orderBy, skip, take))
             {
-                var int2 = InstanceNoteType2.FromJObject(jo);
-                if (load && int2.CreationUserId != null) int2.CreationUser = (User2)(cache && objects.ContainsKey(int2.CreationUserId.Value) ? objects[int2.CreationUserId.Value] : objects[int2.CreationUserId.Value] = FindUser2(int2.CreationUserId));
-                if (load && int2.LastWriteUserId != null) int2.LastWriteUser = (User2)(cache && objects.ContainsKey(int2.LastWriteUserId.Value) ? objects[int2.LastWriteUserId.Value] : objects[int2.LastWriteUserId.Value] = FindUser2(int2.LastWriteUserId));
+                var id = Guid.Parse((string)jo["id"]);
+                var int2 = cache ? (InstanceNoteType2)(objects.ContainsKey(id) ? objects[id] : objects[id] = InstanceNoteType2.FromJObject(jo)) : InstanceNoteType2.FromJObject(jo);
+                if (load && int2.CreationUserId != null) int2.CreationUser = FindUser2(int2.CreationUserId, cache: cache);
+                if (load && int2.LastWriteUserId != null) int2.LastWriteUser = FindUser2(int2.LastWriteUserId, cache: cache);
                 yield return int2;
             }
         }
 
         public InstanceNoteType2 FindInstanceNoteType2(Guid? id, bool load = false, bool cache = true)
         {
-            var int2 = InstanceNoteType2.FromJObject(FolioServiceClient.GetInstanceNoteType(id?.ToString()));
+            var int2 = cache ? (InstanceNoteType2)(objects.ContainsKey(id.Value) ? objects[id.Value] : objects[id.Value] = InstanceNoteType2.FromJObject(FolioServiceClient.GetInstanceNoteType(id?.ToString()))) : InstanceNoteType2.FromJObject(FolioServiceClient.GetInstanceNoteType(id?.ToString()));
             if (int2 == null) return null;
-            if (load && int2.CreationUserId != null) int2.CreationUser = (User2)(cache && objects.ContainsKey(int2.CreationUserId.Value) ? objects[int2.CreationUserId.Value] : objects[int2.CreationUserId.Value] = FindUser2(int2.CreationUserId));
-            if (load && int2.LastWriteUserId != null) int2.LastWriteUser = (User2)(cache && objects.ContainsKey(int2.LastWriteUserId.Value) ? objects[int2.LastWriteUserId.Value] : objects[int2.LastWriteUserId.Value] = FindUser2(int2.LastWriteUserId));
+            if (load && int2.CreationUserId != null) int2.CreationUser = FindUser2(int2.CreationUserId, cache: cache);
+            if (load && int2.LastWriteUserId != null) int2.LastWriteUser = FindUser2(int2.LastWriteUserId, cache: cache);
             return int2;
         }
 
@@ -2469,9 +2559,10 @@ namespace FolioLibrary
         {
             return FolioServiceClient.InstanceTypes(out count, where, orderBy, skip, take).Select(jo =>
             {
-                var it2 = InstanceType2.FromJObject(jo);
-                if (load && it2.CreationUserId != null) it2.CreationUser = (User2)(cache && objects.ContainsKey(it2.CreationUserId.Value) ? objects[it2.CreationUserId.Value] : objects[it2.CreationUserId.Value] = FindUser2(it2.CreationUserId));
-                if (load && it2.LastWriteUserId != null) it2.LastWriteUser = (User2)(cache && objects.ContainsKey(it2.LastWriteUserId.Value) ? objects[it2.LastWriteUserId.Value] : objects[it2.LastWriteUserId.Value] = FindUser2(it2.LastWriteUserId));
+                var id = Guid.Parse((string)jo["id"]);
+                var it2 = cache ? (InstanceType2)(objects.ContainsKey(id) ? objects[id] : objects[id] = InstanceType2.FromJObject(jo)) : InstanceType2.FromJObject(jo);
+                if (load && it2.CreationUserId != null) it2.CreationUser = FindUser2(it2.CreationUserId, cache: cache);
+                if (load && it2.LastWriteUserId != null) it2.LastWriteUser = FindUser2(it2.LastWriteUserId, cache: cache);
                 return it2;
             }).ToArray();
         }
@@ -2480,19 +2571,20 @@ namespace FolioLibrary
         {
             foreach (var jo in FolioServiceClient.InstanceTypes(where, orderBy, skip, take))
             {
-                var it2 = InstanceType2.FromJObject(jo);
-                if (load && it2.CreationUserId != null) it2.CreationUser = (User2)(cache && objects.ContainsKey(it2.CreationUserId.Value) ? objects[it2.CreationUserId.Value] : objects[it2.CreationUserId.Value] = FindUser2(it2.CreationUserId));
-                if (load && it2.LastWriteUserId != null) it2.LastWriteUser = (User2)(cache && objects.ContainsKey(it2.LastWriteUserId.Value) ? objects[it2.LastWriteUserId.Value] : objects[it2.LastWriteUserId.Value] = FindUser2(it2.LastWriteUserId));
+                var id = Guid.Parse((string)jo["id"]);
+                var it2 = cache ? (InstanceType2)(objects.ContainsKey(id) ? objects[id] : objects[id] = InstanceType2.FromJObject(jo)) : InstanceType2.FromJObject(jo);
+                if (load && it2.CreationUserId != null) it2.CreationUser = FindUser2(it2.CreationUserId, cache: cache);
+                if (load && it2.LastWriteUserId != null) it2.LastWriteUser = FindUser2(it2.LastWriteUserId, cache: cache);
                 yield return it2;
             }
         }
 
         public InstanceType2 FindInstanceType2(Guid? id, bool load = false, bool cache = true)
         {
-            var it2 = InstanceType2.FromJObject(FolioServiceClient.GetInstanceType(id?.ToString()));
+            var it2 = cache ? (InstanceType2)(objects.ContainsKey(id.Value) ? objects[id.Value] : objects[id.Value] = InstanceType2.FromJObject(FolioServiceClient.GetInstanceType(id?.ToString()))) : InstanceType2.FromJObject(FolioServiceClient.GetInstanceType(id?.ToString()));
             if (it2 == null) return null;
-            if (load && it2.CreationUserId != null) it2.CreationUser = (User2)(cache && objects.ContainsKey(it2.CreationUserId.Value) ? objects[it2.CreationUserId.Value] : objects[it2.CreationUserId.Value] = FindUser2(it2.CreationUserId));
-            if (load && it2.LastWriteUserId != null) it2.LastWriteUser = (User2)(cache && objects.ContainsKey(it2.LastWriteUserId.Value) ? objects[it2.LastWriteUserId.Value] : objects[it2.LastWriteUserId.Value] = FindUser2(it2.LastWriteUserId));
+            if (load && it2.CreationUserId != null) it2.CreationUser = FindUser2(it2.CreationUserId, cache: cache);
+            if (load && it2.LastWriteUserId != null) it2.LastWriteUser = FindUser2(it2.LastWriteUserId, cache: cache);
             return it2;
         }
 
@@ -2514,9 +2606,10 @@ namespace FolioLibrary
         {
             return FolioServiceClient.Institutions(out count, where, orderBy, skip, take).Select(jo =>
             {
-                var i2 = Institution2.FromJObject(jo);
-                if (load && i2.CreationUserId != null) i2.CreationUser = (User2)(cache && objects.ContainsKey(i2.CreationUserId.Value) ? objects[i2.CreationUserId.Value] : objects[i2.CreationUserId.Value] = FindUser2(i2.CreationUserId));
-                if (load && i2.LastWriteUserId != null) i2.LastWriteUser = (User2)(cache && objects.ContainsKey(i2.LastWriteUserId.Value) ? objects[i2.LastWriteUserId.Value] : objects[i2.LastWriteUserId.Value] = FindUser2(i2.LastWriteUserId));
+                var id = Guid.Parse((string)jo["id"]);
+                var i2 = cache ? (Institution2)(objects.ContainsKey(id) ? objects[id] : objects[id] = Institution2.FromJObject(jo)) : Institution2.FromJObject(jo);
+                if (load && i2.CreationUserId != null) i2.CreationUser = FindUser2(i2.CreationUserId, cache: cache);
+                if (load && i2.LastWriteUserId != null) i2.LastWriteUser = FindUser2(i2.LastWriteUserId, cache: cache);
                 return i2;
             }).ToArray();
         }
@@ -2525,19 +2618,20 @@ namespace FolioLibrary
         {
             foreach (var jo in FolioServiceClient.Institutions(where, orderBy, skip, take))
             {
-                var i2 = Institution2.FromJObject(jo);
-                if (load && i2.CreationUserId != null) i2.CreationUser = (User2)(cache && objects.ContainsKey(i2.CreationUserId.Value) ? objects[i2.CreationUserId.Value] : objects[i2.CreationUserId.Value] = FindUser2(i2.CreationUserId));
-                if (load && i2.LastWriteUserId != null) i2.LastWriteUser = (User2)(cache && objects.ContainsKey(i2.LastWriteUserId.Value) ? objects[i2.LastWriteUserId.Value] : objects[i2.LastWriteUserId.Value] = FindUser2(i2.LastWriteUserId));
+                var id = Guid.Parse((string)jo["id"]);
+                var i2 = cache ? (Institution2)(objects.ContainsKey(id) ? objects[id] : objects[id] = Institution2.FromJObject(jo)) : Institution2.FromJObject(jo);
+                if (load && i2.CreationUserId != null) i2.CreationUser = FindUser2(i2.CreationUserId, cache: cache);
+                if (load && i2.LastWriteUserId != null) i2.LastWriteUser = FindUser2(i2.LastWriteUserId, cache: cache);
                 yield return i2;
             }
         }
 
         public Institution2 FindInstitution2(Guid? id, bool load = false, bool cache = true)
         {
-            var i2 = Institution2.FromJObject(FolioServiceClient.GetInstitution(id?.ToString()));
+            var i2 = cache ? (Institution2)(objects.ContainsKey(id.Value) ? objects[id.Value] : objects[id.Value] = Institution2.FromJObject(FolioServiceClient.GetInstitution(id?.ToString()))) : Institution2.FromJObject(FolioServiceClient.GetInstitution(id?.ToString()));
             if (i2 == null) return null;
-            if (load && i2.CreationUserId != null) i2.CreationUser = (User2)(cache && objects.ContainsKey(i2.CreationUserId.Value) ? objects[i2.CreationUserId.Value] : objects[i2.CreationUserId.Value] = FindUser2(i2.CreationUserId));
-            if (load && i2.LastWriteUserId != null) i2.LastWriteUser = (User2)(cache && objects.ContainsKey(i2.LastWriteUserId.Value) ? objects[i2.LastWriteUserId.Value] : objects[i2.LastWriteUserId.Value] = FindUser2(i2.LastWriteUserId));
+            if (load && i2.CreationUserId != null) i2.CreationUser = FindUser2(i2.CreationUserId, cache: cache);
+            if (load && i2.LastWriteUserId != null) i2.LastWriteUser = FindUser2(i2.LastWriteUserId, cache: cache);
             return i2;
         }
 
@@ -2559,9 +2653,10 @@ namespace FolioLibrary
         {
             return FolioServiceClient.Interfaces(out count, where, orderBy, skip, take).Select(jo =>
             {
-                var i2 = Interface2.FromJObject(jo);
-                if (load && i2.CreationUserId != null) i2.CreationUser = (User2)(cache && objects.ContainsKey(i2.CreationUserId.Value) ? objects[i2.CreationUserId.Value] : objects[i2.CreationUserId.Value] = FindUser2(i2.CreationUserId));
-                if (load && i2.LastWriteUserId != null) i2.LastWriteUser = (User2)(cache && objects.ContainsKey(i2.LastWriteUserId.Value) ? objects[i2.LastWriteUserId.Value] : objects[i2.LastWriteUserId.Value] = FindUser2(i2.LastWriteUserId));
+                var id = Guid.Parse((string)jo["id"]);
+                var i2 = cache ? (Interface2)(objects.ContainsKey(id) ? objects[id] : objects[id] = Interface2.FromJObject(jo)) : Interface2.FromJObject(jo);
+                if (load && i2.CreationUserId != null) i2.CreationUser = FindUser2(i2.CreationUserId, cache: cache);
+                if (load && i2.LastWriteUserId != null) i2.LastWriteUser = FindUser2(i2.LastWriteUserId, cache: cache);
                 return i2;
             }).ToArray();
         }
@@ -2570,19 +2665,20 @@ namespace FolioLibrary
         {
             foreach (var jo in FolioServiceClient.Interfaces(where, orderBy, skip, take))
             {
-                var i2 = Interface2.FromJObject(jo);
-                if (load && i2.CreationUserId != null) i2.CreationUser = (User2)(cache && objects.ContainsKey(i2.CreationUserId.Value) ? objects[i2.CreationUserId.Value] : objects[i2.CreationUserId.Value] = FindUser2(i2.CreationUserId));
-                if (load && i2.LastWriteUserId != null) i2.LastWriteUser = (User2)(cache && objects.ContainsKey(i2.LastWriteUserId.Value) ? objects[i2.LastWriteUserId.Value] : objects[i2.LastWriteUserId.Value] = FindUser2(i2.LastWriteUserId));
+                var id = Guid.Parse((string)jo["id"]);
+                var i2 = cache ? (Interface2)(objects.ContainsKey(id) ? objects[id] : objects[id] = Interface2.FromJObject(jo)) : Interface2.FromJObject(jo);
+                if (load && i2.CreationUserId != null) i2.CreationUser = FindUser2(i2.CreationUserId, cache: cache);
+                if (load && i2.LastWriteUserId != null) i2.LastWriteUser = FindUser2(i2.LastWriteUserId, cache: cache);
                 yield return i2;
             }
         }
 
         public Interface2 FindInterface2(Guid? id, bool load = false, bool cache = true)
         {
-            var i2 = Interface2.FromJObject(FolioServiceClient.GetInterface(id?.ToString()));
+            var i2 = cache ? (Interface2)(objects.ContainsKey(id.Value) ? objects[id.Value] : objects[id.Value] = Interface2.FromJObject(FolioServiceClient.GetInterface(id?.ToString()))) : Interface2.FromJObject(FolioServiceClient.GetInterface(id?.ToString()));
             if (i2 == null) return null;
-            if (load && i2.CreationUserId != null) i2.CreationUser = (User2)(cache && objects.ContainsKey(i2.CreationUserId.Value) ? objects[i2.CreationUserId.Value] : objects[i2.CreationUserId.Value] = FindUser2(i2.CreationUserId));
-            if (load && i2.LastWriteUserId != null) i2.LastWriteUser = (User2)(cache && objects.ContainsKey(i2.LastWriteUserId.Value) ? objects[i2.LastWriteUserId.Value] : objects[i2.LastWriteUserId.Value] = FindUser2(i2.LastWriteUserId));
+            if (load && i2.CreationUserId != null) i2.CreationUser = FindUser2(i2.CreationUserId, cache: cache);
+            if (load && i2.LastWriteUserId != null) i2.LastWriteUser = FindUser2(i2.LastWriteUserId, cache: cache);
             var i = 0;
             if (i2.InterfaceTypes != null) foreach (var it in i2.InterfaceTypes)
                 {
@@ -2611,14 +2707,15 @@ namespace FolioLibrary
         {
             return FolioServiceClient.Invoices(out count, where, orderBy, skip, take).Select(jo =>
             {
-                var i2 = Invoice2.FromJObject(jo);
-                if (load && i2.ApprovedById != null) i2.ApprovedBy = (User2)(cache && objects.ContainsKey(i2.ApprovedById.Value) ? objects[i2.ApprovedById.Value] : objects[i2.ApprovedById.Value] = FindUser2(i2.ApprovedById));
-                if (load && i2.BatchGroupId != null) i2.BatchGroup = (BatchGroup2)(cache && objects.ContainsKey(i2.BatchGroupId.Value) ? objects[i2.BatchGroupId.Value] : objects[i2.BatchGroupId.Value] = FindBatchGroup2(i2.BatchGroupId));
-                if (load && i2.BillToId != null) i2.BillTo = (Configuration2)(cache && objects.ContainsKey(i2.BillToId.Value) ? objects[i2.BillToId.Value] : objects[i2.BillToId.Value] = FindConfiguration2(i2.BillToId));
-                if (load && i2.PaymentId != null) i2.Payment = (Transaction2)(cache && objects.ContainsKey(i2.PaymentId.Value) ? objects[i2.PaymentId.Value] : objects[i2.PaymentId.Value] = FindTransaction2(i2.PaymentId));
-                if (load && i2.VendorId != null) i2.Vendor = (Organization2)(cache && objects.ContainsKey(i2.VendorId.Value) ? objects[i2.VendorId.Value] : objects[i2.VendorId.Value] = FindOrganization2(i2.VendorId));
-                if (load && i2.CreationUserId != null) i2.CreationUser = (User2)(cache && objects.ContainsKey(i2.CreationUserId.Value) ? objects[i2.CreationUserId.Value] : objects[i2.CreationUserId.Value] = FindUser2(i2.CreationUserId));
-                if (load && i2.LastWriteUserId != null) i2.LastWriteUser = (User2)(cache && objects.ContainsKey(i2.LastWriteUserId.Value) ? objects[i2.LastWriteUserId.Value] : objects[i2.LastWriteUserId.Value] = FindUser2(i2.LastWriteUserId));
+                var id = Guid.Parse((string)jo["id"]);
+                var i2 = cache ? (Invoice2)(objects.ContainsKey(id) ? objects[id] : objects[id] = Invoice2.FromJObject(jo)) : Invoice2.FromJObject(jo);
+                if (load && i2.ApprovedById != null) i2.ApprovedBy = FindUser2(i2.ApprovedById, cache: cache);
+                if (load && i2.BatchGroupId != null) i2.BatchGroup = FindBatchGroup2(i2.BatchGroupId, cache: cache);
+                if (load && i2.BillToId != null) i2.BillTo = FindConfiguration2(i2.BillToId, cache: cache);
+                if (load && i2.PaymentId != null) i2.Payment = FindTransaction2(i2.PaymentId, cache: cache);
+                if (load && i2.VendorId != null) i2.Vendor = FindOrganization2(i2.VendorId, cache: cache);
+                if (load && i2.CreationUserId != null) i2.CreationUser = FindUser2(i2.CreationUserId, cache: cache);
+                if (load && i2.LastWriteUserId != null) i2.LastWriteUser = FindUser2(i2.LastWriteUserId, cache: cache);
                 return i2;
             }).ToArray();
         }
@@ -2627,36 +2724,37 @@ namespace FolioLibrary
         {
             foreach (var jo in FolioServiceClient.Invoices(where, orderBy, skip, take))
             {
-                var i2 = Invoice2.FromJObject(jo);
-                if (load && i2.ApprovedById != null) i2.ApprovedBy = (User2)(cache && objects.ContainsKey(i2.ApprovedById.Value) ? objects[i2.ApprovedById.Value] : objects[i2.ApprovedById.Value] = FindUser2(i2.ApprovedById));
-                if (load && i2.BatchGroupId != null) i2.BatchGroup = (BatchGroup2)(cache && objects.ContainsKey(i2.BatchGroupId.Value) ? objects[i2.BatchGroupId.Value] : objects[i2.BatchGroupId.Value] = FindBatchGroup2(i2.BatchGroupId));
-                if (load && i2.BillToId != null) i2.BillTo = (Configuration2)(cache && objects.ContainsKey(i2.BillToId.Value) ? objects[i2.BillToId.Value] : objects[i2.BillToId.Value] = FindConfiguration2(i2.BillToId));
-                if (load && i2.PaymentId != null) i2.Payment = (Transaction2)(cache && objects.ContainsKey(i2.PaymentId.Value) ? objects[i2.PaymentId.Value] : objects[i2.PaymentId.Value] = FindTransaction2(i2.PaymentId));
-                if (load && i2.VendorId != null) i2.Vendor = (Organization2)(cache && objects.ContainsKey(i2.VendorId.Value) ? objects[i2.VendorId.Value] : objects[i2.VendorId.Value] = FindOrganization2(i2.VendorId));
-                if (load && i2.CreationUserId != null) i2.CreationUser = (User2)(cache && objects.ContainsKey(i2.CreationUserId.Value) ? objects[i2.CreationUserId.Value] : objects[i2.CreationUserId.Value] = FindUser2(i2.CreationUserId));
-                if (load && i2.LastWriteUserId != null) i2.LastWriteUser = (User2)(cache && objects.ContainsKey(i2.LastWriteUserId.Value) ? objects[i2.LastWriteUserId.Value] : objects[i2.LastWriteUserId.Value] = FindUser2(i2.LastWriteUserId));
+                var id = Guid.Parse((string)jo["id"]);
+                var i2 = cache ? (Invoice2)(objects.ContainsKey(id) ? objects[id] : objects[id] = Invoice2.FromJObject(jo)) : Invoice2.FromJObject(jo);
+                if (load && i2.ApprovedById != null) i2.ApprovedBy = FindUser2(i2.ApprovedById, cache: cache);
+                if (load && i2.BatchGroupId != null) i2.BatchGroup = FindBatchGroup2(i2.BatchGroupId, cache: cache);
+                if (load && i2.BillToId != null) i2.BillTo = FindConfiguration2(i2.BillToId, cache: cache);
+                if (load && i2.PaymentId != null) i2.Payment = FindTransaction2(i2.PaymentId, cache: cache);
+                if (load && i2.VendorId != null) i2.Vendor = FindOrganization2(i2.VendorId, cache: cache);
+                if (load && i2.CreationUserId != null) i2.CreationUser = FindUser2(i2.CreationUserId, cache: cache);
+                if (load && i2.LastWriteUserId != null) i2.LastWriteUser = FindUser2(i2.LastWriteUserId, cache: cache);
                 yield return i2;
             }
         }
 
         public Invoice2 FindInvoice2(Guid? id, bool load = false, bool cache = true)
         {
-            var i2 = Invoice2.FromJObject(FolioServiceClient.GetInvoice(id?.ToString()));
+            var i2 = cache ? (Invoice2)(objects.ContainsKey(id.Value) ? objects[id.Value] : objects[id.Value] = Invoice2.FromJObject(FolioServiceClient.GetInvoice(id?.ToString()))) : Invoice2.FromJObject(FolioServiceClient.GetInvoice(id?.ToString()));
             if (i2 == null) return null;
-            if (load && i2.ApprovedById != null) i2.ApprovedBy = (User2)(cache && objects.ContainsKey(i2.ApprovedById.Value) ? objects[i2.ApprovedById.Value] : objects[i2.ApprovedById.Value] = FindUser2(i2.ApprovedById));
-            if (load && i2.BatchGroupId != null) i2.BatchGroup = (BatchGroup2)(cache && objects.ContainsKey(i2.BatchGroupId.Value) ? objects[i2.BatchGroupId.Value] : objects[i2.BatchGroupId.Value] = FindBatchGroup2(i2.BatchGroupId));
-            if (load && i2.BillToId != null) i2.BillTo = (Configuration2)(cache && objects.ContainsKey(i2.BillToId.Value) ? objects[i2.BillToId.Value] : objects[i2.BillToId.Value] = FindConfiguration2(i2.BillToId));
-            if (load && i2.PaymentId != null) i2.Payment = (Transaction2)(cache && objects.ContainsKey(i2.PaymentId.Value) ? objects[i2.PaymentId.Value] : objects[i2.PaymentId.Value] = FindTransaction2(i2.PaymentId));
-            if (load && i2.VendorId != null) i2.Vendor = (Organization2)(cache && objects.ContainsKey(i2.VendorId.Value) ? objects[i2.VendorId.Value] : objects[i2.VendorId.Value] = FindOrganization2(i2.VendorId));
-            if (load && i2.CreationUserId != null) i2.CreationUser = (User2)(cache && objects.ContainsKey(i2.CreationUserId.Value) ? objects[i2.CreationUserId.Value] : objects[i2.CreationUserId.Value] = FindUser2(i2.CreationUserId));
-            if (load && i2.LastWriteUserId != null) i2.LastWriteUser = (User2)(cache && objects.ContainsKey(i2.LastWriteUserId.Value) ? objects[i2.LastWriteUserId.Value] : objects[i2.LastWriteUserId.Value] = FindUser2(i2.LastWriteUserId));
+            if (load && i2.ApprovedById != null) i2.ApprovedBy = FindUser2(i2.ApprovedById, cache: cache);
+            if (load && i2.BatchGroupId != null) i2.BatchGroup = FindBatchGroup2(i2.BatchGroupId, cache: cache);
+            if (load && i2.BillToId != null) i2.BillTo = FindConfiguration2(i2.BillToId, cache: cache);
+            if (load && i2.PaymentId != null) i2.Payment = FindTransaction2(i2.PaymentId, cache: cache);
+            if (load && i2.VendorId != null) i2.Vendor = FindOrganization2(i2.VendorId, cache: cache);
+            if (load && i2.CreationUserId != null) i2.CreationUser = FindUser2(i2.CreationUserId, cache: cache);
+            if (load && i2.LastWriteUserId != null) i2.LastWriteUser = FindUser2(i2.LastWriteUserId, cache: cache);
             var i = 0;
             if (i2.InvoiceAcquisitionsUnits != null) foreach (var iau in i2.InvoiceAcquisitionsUnits)
                 {
                     iau.Id = (++i).ToString();
                     iau.InvoiceId = i2.Id;
                     iau.Invoice = i2;
-                    if (load && iau.AcquisitionsUnitId != null) iau.AcquisitionsUnit = (AcquisitionsUnit2)(cache && objects.ContainsKey(iau.AcquisitionsUnitId.Value) ? objects[iau.AcquisitionsUnitId.Value] : objects[iau.AcquisitionsUnitId.Value] = FindAcquisitionsUnit2(iau.AcquisitionsUnitId));
+                    if (load && iau.AcquisitionsUnitId != null) iau.AcquisitionsUnit = FindAcquisitionsUnit2(iau.AcquisitionsUnitId, cache: cache);
                 }
             i = 0;
             if (i2.InvoiceAdjustments != null) foreach (var ia in i2.InvoiceAdjustments)
@@ -2700,12 +2798,13 @@ namespace FolioLibrary
         {
             return FolioServiceClient.InvoiceItems(out count, where, orderBy, skip, take).Select(jo =>
             {
-                var ii2 = InvoiceItem2.FromJObject(jo);
-                if (load && ii2.InvoiceId != null) ii2.Invoice = (Invoice2)(cache && objects.ContainsKey(ii2.InvoiceId.Value) ? objects[ii2.InvoiceId.Value] : objects[ii2.InvoiceId.Value] = FindInvoice2(ii2.InvoiceId));
-                if (load && ii2.OrderItemId != null) ii2.OrderItem = (OrderItem2)(cache && objects.ContainsKey(ii2.OrderItemId.Value) ? objects[ii2.OrderItemId.Value] : objects[ii2.OrderItemId.Value] = FindOrderItem2(ii2.OrderItemId));
-                if (load && ii2.ProductIdTypeId != null) ii2.ProductIdType = (IdType2)(cache && objects.ContainsKey(ii2.ProductIdTypeId.Value) ? objects[ii2.ProductIdTypeId.Value] : objects[ii2.ProductIdTypeId.Value] = FindIdType2(ii2.ProductIdTypeId));
-                if (load && ii2.CreationUserId != null) ii2.CreationUser = (User2)(cache && objects.ContainsKey(ii2.CreationUserId.Value) ? objects[ii2.CreationUserId.Value] : objects[ii2.CreationUserId.Value] = FindUser2(ii2.CreationUserId));
-                if (load && ii2.LastWriteUserId != null) ii2.LastWriteUser = (User2)(cache && objects.ContainsKey(ii2.LastWriteUserId.Value) ? objects[ii2.LastWriteUserId.Value] : objects[ii2.LastWriteUserId.Value] = FindUser2(ii2.LastWriteUserId));
+                var id = Guid.Parse((string)jo["id"]);
+                var ii2 = cache ? (InvoiceItem2)(objects.ContainsKey(id) ? objects[id] : objects[id] = InvoiceItem2.FromJObject(jo)) : InvoiceItem2.FromJObject(jo);
+                if (load && ii2.InvoiceId != null) ii2.Invoice = FindInvoice2(ii2.InvoiceId, cache: cache);
+                if (load && ii2.OrderItemId != null) ii2.OrderItem = FindOrderItem2(ii2.OrderItemId, cache: cache);
+                if (load && ii2.ProductIdTypeId != null) ii2.ProductIdType = FindIdType2(ii2.ProductIdTypeId, cache: cache);
+                if (load && ii2.CreationUserId != null) ii2.CreationUser = FindUser2(ii2.CreationUserId, cache: cache);
+                if (load && ii2.LastWriteUserId != null) ii2.LastWriteUser = FindUser2(ii2.LastWriteUserId, cache: cache);
                 return ii2;
             }).ToArray();
         }
@@ -2714,25 +2813,26 @@ namespace FolioLibrary
         {
             foreach (var jo in FolioServiceClient.InvoiceItems(where, orderBy, skip, take))
             {
-                var ii2 = InvoiceItem2.FromJObject(jo);
-                if (load && ii2.InvoiceId != null) ii2.Invoice = (Invoice2)(cache && objects.ContainsKey(ii2.InvoiceId.Value) ? objects[ii2.InvoiceId.Value] : objects[ii2.InvoiceId.Value] = FindInvoice2(ii2.InvoiceId));
-                if (load && ii2.OrderItemId != null) ii2.OrderItem = (OrderItem2)(cache && objects.ContainsKey(ii2.OrderItemId.Value) ? objects[ii2.OrderItemId.Value] : objects[ii2.OrderItemId.Value] = FindOrderItem2(ii2.OrderItemId));
-                if (load && ii2.ProductIdTypeId != null) ii2.ProductIdType = (IdType2)(cache && objects.ContainsKey(ii2.ProductIdTypeId.Value) ? objects[ii2.ProductIdTypeId.Value] : objects[ii2.ProductIdTypeId.Value] = FindIdType2(ii2.ProductIdTypeId));
-                if (load && ii2.CreationUserId != null) ii2.CreationUser = (User2)(cache && objects.ContainsKey(ii2.CreationUserId.Value) ? objects[ii2.CreationUserId.Value] : objects[ii2.CreationUserId.Value] = FindUser2(ii2.CreationUserId));
-                if (load && ii2.LastWriteUserId != null) ii2.LastWriteUser = (User2)(cache && objects.ContainsKey(ii2.LastWriteUserId.Value) ? objects[ii2.LastWriteUserId.Value] : objects[ii2.LastWriteUserId.Value] = FindUser2(ii2.LastWriteUserId));
+                var id = Guid.Parse((string)jo["id"]);
+                var ii2 = cache ? (InvoiceItem2)(objects.ContainsKey(id) ? objects[id] : objects[id] = InvoiceItem2.FromJObject(jo)) : InvoiceItem2.FromJObject(jo);
+                if (load && ii2.InvoiceId != null) ii2.Invoice = FindInvoice2(ii2.InvoiceId, cache: cache);
+                if (load && ii2.OrderItemId != null) ii2.OrderItem = FindOrderItem2(ii2.OrderItemId, cache: cache);
+                if (load && ii2.ProductIdTypeId != null) ii2.ProductIdType = FindIdType2(ii2.ProductIdTypeId, cache: cache);
+                if (load && ii2.CreationUserId != null) ii2.CreationUser = FindUser2(ii2.CreationUserId, cache: cache);
+                if (load && ii2.LastWriteUserId != null) ii2.LastWriteUser = FindUser2(ii2.LastWriteUserId, cache: cache);
                 yield return ii2;
             }
         }
 
         public InvoiceItem2 FindInvoiceItem2(Guid? id, bool load = false, bool cache = true)
         {
-            var ii2 = InvoiceItem2.FromJObject(FolioServiceClient.GetInvoiceItem(id?.ToString()));
+            var ii2 = cache ? (InvoiceItem2)(objects.ContainsKey(id.Value) ? objects[id.Value] : objects[id.Value] = InvoiceItem2.FromJObject(FolioServiceClient.GetInvoiceItem(id?.ToString()))) : InvoiceItem2.FromJObject(FolioServiceClient.GetInvoiceItem(id?.ToString()));
             if (ii2 == null) return null;
-            if (load && ii2.InvoiceId != null) ii2.Invoice = (Invoice2)(cache && objects.ContainsKey(ii2.InvoiceId.Value) ? objects[ii2.InvoiceId.Value] : objects[ii2.InvoiceId.Value] = FindInvoice2(ii2.InvoiceId));
-            if (load && ii2.OrderItemId != null) ii2.OrderItem = (OrderItem2)(cache && objects.ContainsKey(ii2.OrderItemId.Value) ? objects[ii2.OrderItemId.Value] : objects[ii2.OrderItemId.Value] = FindOrderItem2(ii2.OrderItemId));
-            if (load && ii2.ProductIdTypeId != null) ii2.ProductIdType = (IdType2)(cache && objects.ContainsKey(ii2.ProductIdTypeId.Value) ? objects[ii2.ProductIdTypeId.Value] : objects[ii2.ProductIdTypeId.Value] = FindIdType2(ii2.ProductIdTypeId));
-            if (load && ii2.CreationUserId != null) ii2.CreationUser = (User2)(cache && objects.ContainsKey(ii2.CreationUserId.Value) ? objects[ii2.CreationUserId.Value] : objects[ii2.CreationUserId.Value] = FindUser2(ii2.CreationUserId));
-            if (load && ii2.LastWriteUserId != null) ii2.LastWriteUser = (User2)(cache && objects.ContainsKey(ii2.LastWriteUserId.Value) ? objects[ii2.LastWriteUserId.Value] : objects[ii2.LastWriteUserId.Value] = FindUser2(ii2.LastWriteUserId));
+            if (load && ii2.InvoiceId != null) ii2.Invoice = FindInvoice2(ii2.InvoiceId, cache: cache);
+            if (load && ii2.OrderItemId != null) ii2.OrderItem = FindOrderItem2(ii2.OrderItemId, cache: cache);
+            if (load && ii2.ProductIdTypeId != null) ii2.ProductIdType = FindIdType2(ii2.ProductIdTypeId, cache: cache);
+            if (load && ii2.CreationUserId != null) ii2.CreationUser = FindUser2(ii2.CreationUserId, cache: cache);
+            if (load && ii2.LastWriteUserId != null) ii2.LastWriteUser = FindUser2(ii2.LastWriteUserId, cache: cache);
             var i = 0;
             if (ii2.InvoiceItemAdjustments != null) foreach (var iia in ii2.InvoiceItemAdjustments)
                 {
@@ -2746,9 +2846,9 @@ namespace FolioLibrary
                     iif.Id = (++i).ToString();
                     iif.InvoiceItemId = ii2.Id;
                     iif.InvoiceItem = ii2;
-                    if (load && iif.EncumbranceId != null) iif.Encumbrance = (Transaction2)(cache && objects.ContainsKey(iif.EncumbranceId.Value) ? objects[iif.EncumbranceId.Value] : objects[iif.EncumbranceId.Value] = FindTransaction2(iif.EncumbranceId));
-                    if (load && iif.FundId != null) iif.Fund = (Fund2)(cache && objects.ContainsKey(iif.FundId.Value) ? objects[iif.FundId.Value] : objects[iif.FundId.Value] = FindFund2(iif.FundId));
-                    if (load && iif.ExpenseClassId != null) iif.ExpenseClass = (ExpenseClass2)(cache && objects.ContainsKey(iif.ExpenseClassId.Value) ? objects[iif.ExpenseClassId.Value] : objects[iif.ExpenseClassId.Value] = FindExpenseClass2(iif.ExpenseClassId));
+                    if (load && iif.EncumbranceId != null) iif.Encumbrance = FindTransaction2(iif.EncumbranceId, cache: cache);
+                    if (load && iif.FundId != null) iif.Fund = FindFund2(iif.FundId, cache: cache);
+                    if (load && iif.ExpenseClassId != null) iif.ExpenseClass = FindExpenseClass2(iif.ExpenseClassId, cache: cache);
                 }
             i = 0;
             if (ii2.InvoiceItemReferenceNumbers != null) foreach (var iirn in ii2.InvoiceItemReferenceNumbers)
@@ -2779,9 +2879,9 @@ namespace FolioLibrary
 
         public InvoiceTransactionSummary2 FindInvoiceTransactionSummary2(Guid? id, bool load = false, bool cache = true)
         {
-            var its2 = InvoiceTransactionSummary2.FromJObject(FolioServiceClient.GetInvoiceTransactionSummary(id?.ToString()));
+            var its2 = cache ? (InvoiceTransactionSummary2)(objects.ContainsKey(id.Value) ? objects[id.Value] : objects[id.Value] = InvoiceTransactionSummary2.FromJObject(FolioServiceClient.GetInvoiceTransactionSummary(id?.ToString()))) : InvoiceTransactionSummary2.FromJObject(FolioServiceClient.GetInvoiceTransactionSummary(id?.ToString()));
             if (its2 == null) return null;
-            if (load && its2.Id != null) its2.Invoice2 = (Invoice2)(cache && objects.ContainsKey(its2.Id.Value) ? objects[its2.Id.Value] : objects[its2.Id.Value] = FindInvoice2(its2.Id));
+            if (load && its2.Id != null) its2.Invoice2 = FindInvoice2(its2.Id, cache: cache);
             return its2;
         }
 
@@ -2803,9 +2903,10 @@ namespace FolioLibrary
         {
             return FolioServiceClient.ModeOfIssuances(out count, where, orderBy, skip, take).Select(jo =>
             {
-                var im = IssuanceMode.FromJObject(jo);
-                if (load && im.CreationUserId != null) im.CreationUser = (User2)(cache && objects.ContainsKey(im.CreationUserId.Value) ? objects[im.CreationUserId.Value] : objects[im.CreationUserId.Value] = FindUser2(im.CreationUserId));
-                if (load && im.LastWriteUserId != null) im.LastWriteUser = (User2)(cache && objects.ContainsKey(im.LastWriteUserId.Value) ? objects[im.LastWriteUserId.Value] : objects[im.LastWriteUserId.Value] = FindUser2(im.LastWriteUserId));
+                var id = Guid.Parse((string)jo["id"]);
+                var im = cache ? (IssuanceMode)(objects.ContainsKey(id) ? objects[id] : objects[id] = IssuanceMode.FromJObject(jo)) : IssuanceMode.FromJObject(jo);
+                if (load && im.CreationUserId != null) im.CreationUser = FindUser2(im.CreationUserId, cache: cache);
+                if (load && im.LastWriteUserId != null) im.LastWriteUser = FindUser2(im.LastWriteUserId, cache: cache);
                 return im;
             }).ToArray();
         }
@@ -2814,19 +2915,20 @@ namespace FolioLibrary
         {
             foreach (var jo in FolioServiceClient.ModeOfIssuances(where, orderBy, skip, take))
             {
-                var im = IssuanceMode.FromJObject(jo);
-                if (load && im.CreationUserId != null) im.CreationUser = (User2)(cache && objects.ContainsKey(im.CreationUserId.Value) ? objects[im.CreationUserId.Value] : objects[im.CreationUserId.Value] = FindUser2(im.CreationUserId));
-                if (load && im.LastWriteUserId != null) im.LastWriteUser = (User2)(cache && objects.ContainsKey(im.LastWriteUserId.Value) ? objects[im.LastWriteUserId.Value] : objects[im.LastWriteUserId.Value] = FindUser2(im.LastWriteUserId));
+                var id = Guid.Parse((string)jo["id"]);
+                var im = cache ? (IssuanceMode)(objects.ContainsKey(id) ? objects[id] : objects[id] = IssuanceMode.FromJObject(jo)) : IssuanceMode.FromJObject(jo);
+                if (load && im.CreationUserId != null) im.CreationUser = FindUser2(im.CreationUserId, cache: cache);
+                if (load && im.LastWriteUserId != null) im.LastWriteUser = FindUser2(im.LastWriteUserId, cache: cache);
                 yield return im;
             }
         }
 
         public IssuanceMode FindIssuanceMode(Guid? id, bool load = false, bool cache = true)
         {
-            var im = IssuanceMode.FromJObject(FolioServiceClient.GetModeOfIssuance(id?.ToString()));
+            var im = cache ? (IssuanceMode)(objects.ContainsKey(id.Value) ? objects[id.Value] : objects[id.Value] = IssuanceMode.FromJObject(FolioServiceClient.GetModeOfIssuance(id?.ToString()))) : IssuanceMode.FromJObject(FolioServiceClient.GetModeOfIssuance(id?.ToString()));
             if (im == null) return null;
-            if (load && im.CreationUserId != null) im.CreationUser = (User2)(cache && objects.ContainsKey(im.CreationUserId.Value) ? objects[im.CreationUserId.Value] : objects[im.CreationUserId.Value] = FindUser2(im.CreationUserId));
-            if (load && im.LastWriteUserId != null) im.LastWriteUser = (User2)(cache && objects.ContainsKey(im.LastWriteUserId.Value) ? objects[im.LastWriteUserId.Value] : objects[im.LastWriteUserId.Value] = FindUser2(im.LastWriteUserId));
+            if (load && im.CreationUserId != null) im.CreationUser = FindUser2(im.CreationUserId, cache: cache);
+            if (load && im.LastWriteUserId != null) im.LastWriteUser = FindUser2(im.LastWriteUserId, cache: cache);
             return im;
         }
 
@@ -2848,23 +2950,24 @@ namespace FolioLibrary
         {
             return FolioServiceClient.Items(out count, where, orderBy, skip, take).Select(jo =>
             {
-                var i2 = Item2.FromJObject(jo);
-                if (load && i2.HoldingId != null) i2.Holding = (Holding2)(cache && objects.ContainsKey(i2.HoldingId.Value) ? objects[i2.HoldingId.Value] : objects[i2.HoldingId.Value] = FindHolding2(i2.HoldingId));
-                if (load && i2.CallNumberTypeId != null) i2.CallNumberType = (CallNumberType2)(cache && objects.ContainsKey(i2.CallNumberTypeId.Value) ? objects[i2.CallNumberTypeId.Value] : objects[i2.CallNumberTypeId.Value] = FindCallNumberType2(i2.CallNumberTypeId));
-                if (load && i2.EffectiveCallNumberTypeId != null) i2.EffectiveCallNumberType = (CallNumberType2)(cache && objects.ContainsKey(i2.EffectiveCallNumberTypeId.Value) ? objects[i2.EffectiveCallNumberTypeId.Value] : objects[i2.EffectiveCallNumberTypeId.Value] = FindCallNumberType2(i2.EffectiveCallNumberTypeId));
-                if (load && i2.DamagedStatusId != null) i2.DamagedStatus = (ItemDamagedStatus2)(cache && objects.ContainsKey(i2.DamagedStatusId.Value) ? objects[i2.DamagedStatusId.Value] : objects[i2.DamagedStatusId.Value] = FindItemDamagedStatus2(i2.DamagedStatusId));
-                if (load && i2.MaterialTypeId != null) i2.MaterialType = (MaterialType2)(cache && objects.ContainsKey(i2.MaterialTypeId.Value) ? objects[i2.MaterialTypeId.Value] : objects[i2.MaterialTypeId.Value] = FindMaterialType2(i2.MaterialTypeId));
-                if (load && i2.PermanentLoanTypeId != null) i2.PermanentLoanType = (LoanType2)(cache && objects.ContainsKey(i2.PermanentLoanTypeId.Value) ? objects[i2.PermanentLoanTypeId.Value] : objects[i2.PermanentLoanTypeId.Value] = FindLoanType2(i2.PermanentLoanTypeId));
-                if (load && i2.TemporaryLoanTypeId != null) i2.TemporaryLoanType = (LoanType2)(cache && objects.ContainsKey(i2.TemporaryLoanTypeId.Value) ? objects[i2.TemporaryLoanTypeId.Value] : objects[i2.TemporaryLoanTypeId.Value] = FindLoanType2(i2.TemporaryLoanTypeId));
-                if (load && i2.PermanentLocationId != null) i2.PermanentLocation = (Location2)(cache && objects.ContainsKey(i2.PermanentLocationId.Value) ? objects[i2.PermanentLocationId.Value] : objects[i2.PermanentLocationId.Value] = FindLocation2(i2.PermanentLocationId));
-                if (load && i2.TemporaryLocationId != null) i2.TemporaryLocation = (Location2)(cache && objects.ContainsKey(i2.TemporaryLocationId.Value) ? objects[i2.TemporaryLocationId.Value] : objects[i2.TemporaryLocationId.Value] = FindLocation2(i2.TemporaryLocationId));
-                if (load && i2.EffectiveLocationId != null) i2.EffectiveLocation = (Location2)(cache && objects.ContainsKey(i2.EffectiveLocationId.Value) ? objects[i2.EffectiveLocationId.Value] : objects[i2.EffectiveLocationId.Value] = FindLocation2(i2.EffectiveLocationId));
-                if (load && i2.InTransitDestinationServicePointId != null) i2.InTransitDestinationServicePoint = (ServicePoint2)(cache && objects.ContainsKey(i2.InTransitDestinationServicePointId.Value) ? objects[i2.InTransitDestinationServicePointId.Value] : objects[i2.InTransitDestinationServicePointId.Value] = FindServicePoint2(i2.InTransitDestinationServicePointId));
-                if (load && i2.OrderItemId != null) i2.OrderItem = (OrderItem2)(cache && objects.ContainsKey(i2.OrderItemId.Value) ? objects[i2.OrderItemId.Value] : objects[i2.OrderItemId.Value] = FindOrderItem2(i2.OrderItemId));
-                if (load && i2.CreationUserId != null) i2.CreationUser = (User2)(cache && objects.ContainsKey(i2.CreationUserId.Value) ? objects[i2.CreationUserId.Value] : objects[i2.CreationUserId.Value] = FindUser2(i2.CreationUserId));
-                if (load && i2.LastWriteUserId != null) i2.LastWriteUser = (User2)(cache && objects.ContainsKey(i2.LastWriteUserId.Value) ? objects[i2.LastWriteUserId.Value] : objects[i2.LastWriteUserId.Value] = FindUser2(i2.LastWriteUserId));
-                if (load && i2.LastCheckInServicePointId != null) i2.LastCheckInServicePoint = (ServicePoint2)(cache && objects.ContainsKey(i2.LastCheckInServicePointId.Value) ? objects[i2.LastCheckInServicePointId.Value] : objects[i2.LastCheckInServicePointId.Value] = FindServicePoint2(i2.LastCheckInServicePointId));
-                if (load && i2.LastCheckInStaffMemberId != null) i2.LastCheckInStaffMember = (User2)(cache && objects.ContainsKey(i2.LastCheckInStaffMemberId.Value) ? objects[i2.LastCheckInStaffMemberId.Value] : objects[i2.LastCheckInStaffMemberId.Value] = FindUser2(i2.LastCheckInStaffMemberId));
+                var id = Guid.Parse((string)jo["id"]);
+                var i2 = cache ? (Item2)(objects.ContainsKey(id) ? objects[id] : objects[id] = Item2.FromJObject(jo)) : Item2.FromJObject(jo);
+                if (load && i2.HoldingId != null) i2.Holding = FindHolding2(i2.HoldingId, cache: cache);
+                if (load && i2.CallNumberTypeId != null) i2.CallNumberType = FindCallNumberType2(i2.CallNumberTypeId, cache: cache);
+                if (load && i2.EffectiveCallNumberTypeId != null) i2.EffectiveCallNumberType = FindCallNumberType2(i2.EffectiveCallNumberTypeId, cache: cache);
+                if (load && i2.DamagedStatusId != null) i2.DamagedStatus = FindItemDamagedStatus2(i2.DamagedStatusId, cache: cache);
+                if (load && i2.MaterialTypeId != null) i2.MaterialType = FindMaterialType2(i2.MaterialTypeId, cache: cache);
+                if (load && i2.PermanentLoanTypeId != null) i2.PermanentLoanType = FindLoanType2(i2.PermanentLoanTypeId, cache: cache);
+                if (load && i2.TemporaryLoanTypeId != null) i2.TemporaryLoanType = FindLoanType2(i2.TemporaryLoanTypeId, cache: cache);
+                if (load && i2.PermanentLocationId != null) i2.PermanentLocation = FindLocation2(i2.PermanentLocationId, cache: cache);
+                if (load && i2.TemporaryLocationId != null) i2.TemporaryLocation = FindLocation2(i2.TemporaryLocationId, cache: cache);
+                if (load && i2.EffectiveLocationId != null) i2.EffectiveLocation = FindLocation2(i2.EffectiveLocationId, cache: cache);
+                if (load && i2.InTransitDestinationServicePointId != null) i2.InTransitDestinationServicePoint = FindServicePoint2(i2.InTransitDestinationServicePointId, cache: cache);
+                if (load && i2.OrderItemId != null) i2.OrderItem = FindOrderItem2(i2.OrderItemId, cache: cache);
+                if (load && i2.CreationUserId != null) i2.CreationUser = FindUser2(i2.CreationUserId, cache: cache);
+                if (load && i2.LastWriteUserId != null) i2.LastWriteUser = FindUser2(i2.LastWriteUserId, cache: cache);
+                if (load && i2.LastCheckInServicePointId != null) i2.LastCheckInServicePoint = FindServicePoint2(i2.LastCheckInServicePointId, cache: cache);
+                if (load && i2.LastCheckInStaffMemberId != null) i2.LastCheckInStaffMember = FindUser2(i2.LastCheckInStaffMemberId, cache: cache);
                 return i2;
             }).ToArray();
         }
@@ -2873,47 +2976,48 @@ namespace FolioLibrary
         {
             foreach (var jo in FolioServiceClient.Items(where, orderBy, skip, take))
             {
-                var i2 = Item2.FromJObject(jo);
-                if (load && i2.HoldingId != null) i2.Holding = (Holding2)(cache && objects.ContainsKey(i2.HoldingId.Value) ? objects[i2.HoldingId.Value] : objects[i2.HoldingId.Value] = FindHolding2(i2.HoldingId));
-                if (load && i2.CallNumberTypeId != null) i2.CallNumberType = (CallNumberType2)(cache && objects.ContainsKey(i2.CallNumberTypeId.Value) ? objects[i2.CallNumberTypeId.Value] : objects[i2.CallNumberTypeId.Value] = FindCallNumberType2(i2.CallNumberTypeId));
-                if (load && i2.EffectiveCallNumberTypeId != null) i2.EffectiveCallNumberType = (CallNumberType2)(cache && objects.ContainsKey(i2.EffectiveCallNumberTypeId.Value) ? objects[i2.EffectiveCallNumberTypeId.Value] : objects[i2.EffectiveCallNumberTypeId.Value] = FindCallNumberType2(i2.EffectiveCallNumberTypeId));
-                if (load && i2.DamagedStatusId != null) i2.DamagedStatus = (ItemDamagedStatus2)(cache && objects.ContainsKey(i2.DamagedStatusId.Value) ? objects[i2.DamagedStatusId.Value] : objects[i2.DamagedStatusId.Value] = FindItemDamagedStatus2(i2.DamagedStatusId));
-                if (load && i2.MaterialTypeId != null) i2.MaterialType = (MaterialType2)(cache && objects.ContainsKey(i2.MaterialTypeId.Value) ? objects[i2.MaterialTypeId.Value] : objects[i2.MaterialTypeId.Value] = FindMaterialType2(i2.MaterialTypeId));
-                if (load && i2.PermanentLoanTypeId != null) i2.PermanentLoanType = (LoanType2)(cache && objects.ContainsKey(i2.PermanentLoanTypeId.Value) ? objects[i2.PermanentLoanTypeId.Value] : objects[i2.PermanentLoanTypeId.Value] = FindLoanType2(i2.PermanentLoanTypeId));
-                if (load && i2.TemporaryLoanTypeId != null) i2.TemporaryLoanType = (LoanType2)(cache && objects.ContainsKey(i2.TemporaryLoanTypeId.Value) ? objects[i2.TemporaryLoanTypeId.Value] : objects[i2.TemporaryLoanTypeId.Value] = FindLoanType2(i2.TemporaryLoanTypeId));
-                if (load && i2.PermanentLocationId != null) i2.PermanentLocation = (Location2)(cache && objects.ContainsKey(i2.PermanentLocationId.Value) ? objects[i2.PermanentLocationId.Value] : objects[i2.PermanentLocationId.Value] = FindLocation2(i2.PermanentLocationId));
-                if (load && i2.TemporaryLocationId != null) i2.TemporaryLocation = (Location2)(cache && objects.ContainsKey(i2.TemporaryLocationId.Value) ? objects[i2.TemporaryLocationId.Value] : objects[i2.TemporaryLocationId.Value] = FindLocation2(i2.TemporaryLocationId));
-                if (load && i2.EffectiveLocationId != null) i2.EffectiveLocation = (Location2)(cache && objects.ContainsKey(i2.EffectiveLocationId.Value) ? objects[i2.EffectiveLocationId.Value] : objects[i2.EffectiveLocationId.Value] = FindLocation2(i2.EffectiveLocationId));
-                if (load && i2.InTransitDestinationServicePointId != null) i2.InTransitDestinationServicePoint = (ServicePoint2)(cache && objects.ContainsKey(i2.InTransitDestinationServicePointId.Value) ? objects[i2.InTransitDestinationServicePointId.Value] : objects[i2.InTransitDestinationServicePointId.Value] = FindServicePoint2(i2.InTransitDestinationServicePointId));
-                if (load && i2.OrderItemId != null) i2.OrderItem = (OrderItem2)(cache && objects.ContainsKey(i2.OrderItemId.Value) ? objects[i2.OrderItemId.Value] : objects[i2.OrderItemId.Value] = FindOrderItem2(i2.OrderItemId));
-                if (load && i2.CreationUserId != null) i2.CreationUser = (User2)(cache && objects.ContainsKey(i2.CreationUserId.Value) ? objects[i2.CreationUserId.Value] : objects[i2.CreationUserId.Value] = FindUser2(i2.CreationUserId));
-                if (load && i2.LastWriteUserId != null) i2.LastWriteUser = (User2)(cache && objects.ContainsKey(i2.LastWriteUserId.Value) ? objects[i2.LastWriteUserId.Value] : objects[i2.LastWriteUserId.Value] = FindUser2(i2.LastWriteUserId));
-                if (load && i2.LastCheckInServicePointId != null) i2.LastCheckInServicePoint = (ServicePoint2)(cache && objects.ContainsKey(i2.LastCheckInServicePointId.Value) ? objects[i2.LastCheckInServicePointId.Value] : objects[i2.LastCheckInServicePointId.Value] = FindServicePoint2(i2.LastCheckInServicePointId));
-                if (load && i2.LastCheckInStaffMemberId != null) i2.LastCheckInStaffMember = (User2)(cache && objects.ContainsKey(i2.LastCheckInStaffMemberId.Value) ? objects[i2.LastCheckInStaffMemberId.Value] : objects[i2.LastCheckInStaffMemberId.Value] = FindUser2(i2.LastCheckInStaffMemberId));
+                var id = Guid.Parse((string)jo["id"]);
+                var i2 = cache ? (Item2)(objects.ContainsKey(id) ? objects[id] : objects[id] = Item2.FromJObject(jo)) : Item2.FromJObject(jo);
+                if (load && i2.HoldingId != null) i2.Holding = FindHolding2(i2.HoldingId, cache: cache);
+                if (load && i2.CallNumberTypeId != null) i2.CallNumberType = FindCallNumberType2(i2.CallNumberTypeId, cache: cache);
+                if (load && i2.EffectiveCallNumberTypeId != null) i2.EffectiveCallNumberType = FindCallNumberType2(i2.EffectiveCallNumberTypeId, cache: cache);
+                if (load && i2.DamagedStatusId != null) i2.DamagedStatus = FindItemDamagedStatus2(i2.DamagedStatusId, cache: cache);
+                if (load && i2.MaterialTypeId != null) i2.MaterialType = FindMaterialType2(i2.MaterialTypeId, cache: cache);
+                if (load && i2.PermanentLoanTypeId != null) i2.PermanentLoanType = FindLoanType2(i2.PermanentLoanTypeId, cache: cache);
+                if (load && i2.TemporaryLoanTypeId != null) i2.TemporaryLoanType = FindLoanType2(i2.TemporaryLoanTypeId, cache: cache);
+                if (load && i2.PermanentLocationId != null) i2.PermanentLocation = FindLocation2(i2.PermanentLocationId, cache: cache);
+                if (load && i2.TemporaryLocationId != null) i2.TemporaryLocation = FindLocation2(i2.TemporaryLocationId, cache: cache);
+                if (load && i2.EffectiveLocationId != null) i2.EffectiveLocation = FindLocation2(i2.EffectiveLocationId, cache: cache);
+                if (load && i2.InTransitDestinationServicePointId != null) i2.InTransitDestinationServicePoint = FindServicePoint2(i2.InTransitDestinationServicePointId, cache: cache);
+                if (load && i2.OrderItemId != null) i2.OrderItem = FindOrderItem2(i2.OrderItemId, cache: cache);
+                if (load && i2.CreationUserId != null) i2.CreationUser = FindUser2(i2.CreationUserId, cache: cache);
+                if (load && i2.LastWriteUserId != null) i2.LastWriteUser = FindUser2(i2.LastWriteUserId, cache: cache);
+                if (load && i2.LastCheckInServicePointId != null) i2.LastCheckInServicePoint = FindServicePoint2(i2.LastCheckInServicePointId, cache: cache);
+                if (load && i2.LastCheckInStaffMemberId != null) i2.LastCheckInStaffMember = FindUser2(i2.LastCheckInStaffMemberId, cache: cache);
                 yield return i2;
             }
         }
 
         public Item2 FindItem2(Guid? id, bool load = false, bool cache = true)
         {
-            var i2 = Item2.FromJObject(FolioServiceClient.GetItem(id?.ToString()));
+            var i2 = cache ? (Item2)(objects.ContainsKey(id.Value) ? objects[id.Value] : objects[id.Value] = Item2.FromJObject(FolioServiceClient.GetItem(id?.ToString()))) : Item2.FromJObject(FolioServiceClient.GetItem(id?.ToString()));
             if (i2 == null) return null;
-            if (load && i2.HoldingId != null) i2.Holding = (Holding2)(cache && objects.ContainsKey(i2.HoldingId.Value) ? objects[i2.HoldingId.Value] : objects[i2.HoldingId.Value] = FindHolding2(i2.HoldingId));
-            if (load && i2.CallNumberTypeId != null) i2.CallNumberType = (CallNumberType2)(cache && objects.ContainsKey(i2.CallNumberTypeId.Value) ? objects[i2.CallNumberTypeId.Value] : objects[i2.CallNumberTypeId.Value] = FindCallNumberType2(i2.CallNumberTypeId));
-            if (load && i2.EffectiveCallNumberTypeId != null) i2.EffectiveCallNumberType = (CallNumberType2)(cache && objects.ContainsKey(i2.EffectiveCallNumberTypeId.Value) ? objects[i2.EffectiveCallNumberTypeId.Value] : objects[i2.EffectiveCallNumberTypeId.Value] = FindCallNumberType2(i2.EffectiveCallNumberTypeId));
-            if (load && i2.DamagedStatusId != null) i2.DamagedStatus = (ItemDamagedStatus2)(cache && objects.ContainsKey(i2.DamagedStatusId.Value) ? objects[i2.DamagedStatusId.Value] : objects[i2.DamagedStatusId.Value] = FindItemDamagedStatus2(i2.DamagedStatusId));
-            if (load && i2.MaterialTypeId != null) i2.MaterialType = (MaterialType2)(cache && objects.ContainsKey(i2.MaterialTypeId.Value) ? objects[i2.MaterialTypeId.Value] : objects[i2.MaterialTypeId.Value] = FindMaterialType2(i2.MaterialTypeId));
-            if (load && i2.PermanentLoanTypeId != null) i2.PermanentLoanType = (LoanType2)(cache && objects.ContainsKey(i2.PermanentLoanTypeId.Value) ? objects[i2.PermanentLoanTypeId.Value] : objects[i2.PermanentLoanTypeId.Value] = FindLoanType2(i2.PermanentLoanTypeId));
-            if (load && i2.TemporaryLoanTypeId != null) i2.TemporaryLoanType = (LoanType2)(cache && objects.ContainsKey(i2.TemporaryLoanTypeId.Value) ? objects[i2.TemporaryLoanTypeId.Value] : objects[i2.TemporaryLoanTypeId.Value] = FindLoanType2(i2.TemporaryLoanTypeId));
-            if (load && i2.PermanentLocationId != null) i2.PermanentLocation = (Location2)(cache && objects.ContainsKey(i2.PermanentLocationId.Value) ? objects[i2.PermanentLocationId.Value] : objects[i2.PermanentLocationId.Value] = FindLocation2(i2.PermanentLocationId));
-            if (load && i2.TemporaryLocationId != null) i2.TemporaryLocation = (Location2)(cache && objects.ContainsKey(i2.TemporaryLocationId.Value) ? objects[i2.TemporaryLocationId.Value] : objects[i2.TemporaryLocationId.Value] = FindLocation2(i2.TemporaryLocationId));
-            if (load && i2.EffectiveLocationId != null) i2.EffectiveLocation = (Location2)(cache && objects.ContainsKey(i2.EffectiveLocationId.Value) ? objects[i2.EffectiveLocationId.Value] : objects[i2.EffectiveLocationId.Value] = FindLocation2(i2.EffectiveLocationId));
-            if (load && i2.InTransitDestinationServicePointId != null) i2.InTransitDestinationServicePoint = (ServicePoint2)(cache && objects.ContainsKey(i2.InTransitDestinationServicePointId.Value) ? objects[i2.InTransitDestinationServicePointId.Value] : objects[i2.InTransitDestinationServicePointId.Value] = FindServicePoint2(i2.InTransitDestinationServicePointId));
-            if (load && i2.OrderItemId != null) i2.OrderItem = (OrderItem2)(cache && objects.ContainsKey(i2.OrderItemId.Value) ? objects[i2.OrderItemId.Value] : objects[i2.OrderItemId.Value] = FindOrderItem2(i2.OrderItemId));
-            if (load && i2.CreationUserId != null) i2.CreationUser = (User2)(cache && objects.ContainsKey(i2.CreationUserId.Value) ? objects[i2.CreationUserId.Value] : objects[i2.CreationUserId.Value] = FindUser2(i2.CreationUserId));
-            if (load && i2.LastWriteUserId != null) i2.LastWriteUser = (User2)(cache && objects.ContainsKey(i2.LastWriteUserId.Value) ? objects[i2.LastWriteUserId.Value] : objects[i2.LastWriteUserId.Value] = FindUser2(i2.LastWriteUserId));
-            if (load && i2.LastCheckInServicePointId != null) i2.LastCheckInServicePoint = (ServicePoint2)(cache && objects.ContainsKey(i2.LastCheckInServicePointId.Value) ? objects[i2.LastCheckInServicePointId.Value] : objects[i2.LastCheckInServicePointId.Value] = FindServicePoint2(i2.LastCheckInServicePointId));
-            if (load && i2.LastCheckInStaffMemberId != null) i2.LastCheckInStaffMember = (User2)(cache && objects.ContainsKey(i2.LastCheckInStaffMemberId.Value) ? objects[i2.LastCheckInStaffMemberId.Value] : objects[i2.LastCheckInStaffMemberId.Value] = FindUser2(i2.LastCheckInStaffMemberId));
+            if (load && i2.HoldingId != null) i2.Holding = FindHolding2(i2.HoldingId, cache: cache);
+            if (load && i2.CallNumberTypeId != null) i2.CallNumberType = FindCallNumberType2(i2.CallNumberTypeId, cache: cache);
+            if (load && i2.EffectiveCallNumberTypeId != null) i2.EffectiveCallNumberType = FindCallNumberType2(i2.EffectiveCallNumberTypeId, cache: cache);
+            if (load && i2.DamagedStatusId != null) i2.DamagedStatus = FindItemDamagedStatus2(i2.DamagedStatusId, cache: cache);
+            if (load && i2.MaterialTypeId != null) i2.MaterialType = FindMaterialType2(i2.MaterialTypeId, cache: cache);
+            if (load && i2.PermanentLoanTypeId != null) i2.PermanentLoanType = FindLoanType2(i2.PermanentLoanTypeId, cache: cache);
+            if (load && i2.TemporaryLoanTypeId != null) i2.TemporaryLoanType = FindLoanType2(i2.TemporaryLoanTypeId, cache: cache);
+            if (load && i2.PermanentLocationId != null) i2.PermanentLocation = FindLocation2(i2.PermanentLocationId, cache: cache);
+            if (load && i2.TemporaryLocationId != null) i2.TemporaryLocation = FindLocation2(i2.TemporaryLocationId, cache: cache);
+            if (load && i2.EffectiveLocationId != null) i2.EffectiveLocation = FindLocation2(i2.EffectiveLocationId, cache: cache);
+            if (load && i2.InTransitDestinationServicePointId != null) i2.InTransitDestinationServicePoint = FindServicePoint2(i2.InTransitDestinationServicePointId, cache: cache);
+            if (load && i2.OrderItemId != null) i2.OrderItem = FindOrderItem2(i2.OrderItemId, cache: cache);
+            if (load && i2.CreationUserId != null) i2.CreationUser = FindUser2(i2.CreationUserId, cache: cache);
+            if (load && i2.LastWriteUserId != null) i2.LastWriteUser = FindUser2(i2.LastWriteUserId, cache: cache);
+            if (load && i2.LastCheckInServicePointId != null) i2.LastCheckInServicePoint = FindServicePoint2(i2.LastCheckInServicePointId, cache: cache);
+            if (load && i2.LastCheckInStaffMemberId != null) i2.LastCheckInStaffMember = FindUser2(i2.LastCheckInStaffMemberId, cache: cache);
             var i = 0;
             if (i2.CirculationNotes != null) foreach (var cn in i2.CirculationNotes)
                 {
@@ -2934,7 +3038,7 @@ namespace FolioLibrary
                     iea.Id = (++i).ToString();
                     iea.ItemId = i2.Id;
                     iea.Item = i2;
-                    if (load && iea.RelationshipId != null) iea.Relationship = (ElectronicAccessRelationship2)(cache && objects.ContainsKey(iea.RelationshipId.Value) ? objects[iea.RelationshipId.Value] : objects[iea.RelationshipId.Value] = FindElectronicAccessRelationship2(iea.RelationshipId));
+                    if (load && iea.RelationshipId != null) iea.Relationship = FindElectronicAccessRelationship2(iea.RelationshipId, cache: cache);
                 }
             i = 0;
             if (i2.ItemFormerIds != null) foreach (var ifi in i2.ItemFormerIds)
@@ -2949,9 +3053,9 @@ namespace FolioLibrary
                     @in.Id = (++i).ToString();
                     @in.ItemId = i2.Id;
                     @in.Item = i2;
-                    if (load && @in.ItemNoteTypeId != null) @in.ItemNoteType = (ItemNoteType2)(cache && objects.ContainsKey(@in.ItemNoteTypeId.Value) ? objects[@in.ItemNoteTypeId.Value] : objects[@in.ItemNoteTypeId.Value] = FindItemNoteType2(@in.ItemNoteTypeId));
-                    if (load && @in.CreationUserId != null) @in.CreationUser = (User2)(cache && objects.ContainsKey(@in.CreationUserId.Value) ? objects[@in.CreationUserId.Value] : objects[@in.CreationUserId.Value] = FindUser2(@in.CreationUserId));
-                    if (load && @in.LastWriteUserId != null) @in.LastWriteUser = (User2)(cache && objects.ContainsKey(@in.LastWriteUserId.Value) ? objects[@in.LastWriteUserId.Value] : objects[@in.LastWriteUserId.Value] = FindUser2(@in.LastWriteUserId));
+                    if (load && @in.ItemNoteTypeId != null) @in.ItemNoteType = FindItemNoteType2(@in.ItemNoteTypeId, cache: cache);
+                    if (load && @in.CreationUserId != null) @in.CreationUser = FindUser2(@in.CreationUserId, cache: cache);
+                    if (load && @in.LastWriteUserId != null) @in.LastWriteUser = FindUser2(@in.LastWriteUserId, cache: cache);
                 }
             i = 0;
             if (i2.ItemStatisticalCodes != null) foreach (var isc in i2.ItemStatisticalCodes)
@@ -2959,7 +3063,7 @@ namespace FolioLibrary
                     isc.Id = (++i).ToString();
                     isc.ItemId = i2.Id;
                     isc.Item = i2;
-                    if (load && isc.StatisticalCodeId != null) isc.StatisticalCode = (StatisticalCode2)(cache && objects.ContainsKey(isc.StatisticalCodeId.Value) ? objects[isc.StatisticalCodeId.Value] : objects[isc.StatisticalCodeId.Value] = FindStatisticalCode2(isc.StatisticalCodeId));
+                    if (load && isc.StatisticalCodeId != null) isc.StatisticalCode = FindStatisticalCode2(isc.StatisticalCodeId, cache: cache);
                 }
             i = 0;
             if (i2.ItemTags != null) foreach (var it in i2.ItemTags)
@@ -2996,9 +3100,10 @@ namespace FolioLibrary
         {
             return FolioServiceClient.ItemDamagedStatuses(out count, where, orderBy, skip, take).Select(jo =>
             {
-                var ids2 = ItemDamagedStatus2.FromJObject(jo);
-                if (load && ids2.CreationUserId != null) ids2.CreationUser = (User2)(cache && objects.ContainsKey(ids2.CreationUserId.Value) ? objects[ids2.CreationUserId.Value] : objects[ids2.CreationUserId.Value] = FindUser2(ids2.CreationUserId));
-                if (load && ids2.LastWriteUserId != null) ids2.LastWriteUser = (User2)(cache && objects.ContainsKey(ids2.LastWriteUserId.Value) ? objects[ids2.LastWriteUserId.Value] : objects[ids2.LastWriteUserId.Value] = FindUser2(ids2.LastWriteUserId));
+                var id = Guid.Parse((string)jo["id"]);
+                var ids2 = cache ? (ItemDamagedStatus2)(objects.ContainsKey(id) ? objects[id] : objects[id] = ItemDamagedStatus2.FromJObject(jo)) : ItemDamagedStatus2.FromJObject(jo);
+                if (load && ids2.CreationUserId != null) ids2.CreationUser = FindUser2(ids2.CreationUserId, cache: cache);
+                if (load && ids2.LastWriteUserId != null) ids2.LastWriteUser = FindUser2(ids2.LastWriteUserId, cache: cache);
                 return ids2;
             }).ToArray();
         }
@@ -3007,19 +3112,20 @@ namespace FolioLibrary
         {
             foreach (var jo in FolioServiceClient.ItemDamagedStatuses(where, orderBy, skip, take))
             {
-                var ids2 = ItemDamagedStatus2.FromJObject(jo);
-                if (load && ids2.CreationUserId != null) ids2.CreationUser = (User2)(cache && objects.ContainsKey(ids2.CreationUserId.Value) ? objects[ids2.CreationUserId.Value] : objects[ids2.CreationUserId.Value] = FindUser2(ids2.CreationUserId));
-                if (load && ids2.LastWriteUserId != null) ids2.LastWriteUser = (User2)(cache && objects.ContainsKey(ids2.LastWriteUserId.Value) ? objects[ids2.LastWriteUserId.Value] : objects[ids2.LastWriteUserId.Value] = FindUser2(ids2.LastWriteUserId));
+                var id = Guid.Parse((string)jo["id"]);
+                var ids2 = cache ? (ItemDamagedStatus2)(objects.ContainsKey(id) ? objects[id] : objects[id] = ItemDamagedStatus2.FromJObject(jo)) : ItemDamagedStatus2.FromJObject(jo);
+                if (load && ids2.CreationUserId != null) ids2.CreationUser = FindUser2(ids2.CreationUserId, cache: cache);
+                if (load && ids2.LastWriteUserId != null) ids2.LastWriteUser = FindUser2(ids2.LastWriteUserId, cache: cache);
                 yield return ids2;
             }
         }
 
         public ItemDamagedStatus2 FindItemDamagedStatus2(Guid? id, bool load = false, bool cache = true)
         {
-            var ids2 = ItemDamagedStatus2.FromJObject(FolioServiceClient.GetItemDamagedStatus(id?.ToString()));
+            var ids2 = cache ? (ItemDamagedStatus2)(objects.ContainsKey(id.Value) ? objects[id.Value] : objects[id.Value] = ItemDamagedStatus2.FromJObject(FolioServiceClient.GetItemDamagedStatus(id?.ToString()))) : ItemDamagedStatus2.FromJObject(FolioServiceClient.GetItemDamagedStatus(id?.ToString()));
             if (ids2 == null) return null;
-            if (load && ids2.CreationUserId != null) ids2.CreationUser = (User2)(cache && objects.ContainsKey(ids2.CreationUserId.Value) ? objects[ids2.CreationUserId.Value] : objects[ids2.CreationUserId.Value] = FindUser2(ids2.CreationUserId));
-            if (load && ids2.LastWriteUserId != null) ids2.LastWriteUser = (User2)(cache && objects.ContainsKey(ids2.LastWriteUserId.Value) ? objects[ids2.LastWriteUserId.Value] : objects[ids2.LastWriteUserId.Value] = FindUser2(ids2.LastWriteUserId));
+            if (load && ids2.CreationUserId != null) ids2.CreationUser = FindUser2(ids2.CreationUserId, cache: cache);
+            if (load && ids2.LastWriteUserId != null) ids2.LastWriteUser = FindUser2(ids2.LastWriteUserId, cache: cache);
             return ids2;
         }
 
@@ -3041,9 +3147,10 @@ namespace FolioLibrary
         {
             return FolioServiceClient.ItemNoteTypes(out count, where, orderBy, skip, take).Select(jo =>
             {
-                var int2 = ItemNoteType2.FromJObject(jo);
-                if (load && int2.CreationUserId != null) int2.CreationUser = (User2)(cache && objects.ContainsKey(int2.CreationUserId.Value) ? objects[int2.CreationUserId.Value] : objects[int2.CreationUserId.Value] = FindUser2(int2.CreationUserId));
-                if (load && int2.LastWriteUserId != null) int2.LastWriteUser = (User2)(cache && objects.ContainsKey(int2.LastWriteUserId.Value) ? objects[int2.LastWriteUserId.Value] : objects[int2.LastWriteUserId.Value] = FindUser2(int2.LastWriteUserId));
+                var id = Guid.Parse((string)jo["id"]);
+                var int2 = cache ? (ItemNoteType2)(objects.ContainsKey(id) ? objects[id] : objects[id] = ItemNoteType2.FromJObject(jo)) : ItemNoteType2.FromJObject(jo);
+                if (load && int2.CreationUserId != null) int2.CreationUser = FindUser2(int2.CreationUserId, cache: cache);
+                if (load && int2.LastWriteUserId != null) int2.LastWriteUser = FindUser2(int2.LastWriteUserId, cache: cache);
                 return int2;
             }).ToArray();
         }
@@ -3052,19 +3159,20 @@ namespace FolioLibrary
         {
             foreach (var jo in FolioServiceClient.ItemNoteTypes(where, orderBy, skip, take))
             {
-                var int2 = ItemNoteType2.FromJObject(jo);
-                if (load && int2.CreationUserId != null) int2.CreationUser = (User2)(cache && objects.ContainsKey(int2.CreationUserId.Value) ? objects[int2.CreationUserId.Value] : objects[int2.CreationUserId.Value] = FindUser2(int2.CreationUserId));
-                if (load && int2.LastWriteUserId != null) int2.LastWriteUser = (User2)(cache && objects.ContainsKey(int2.LastWriteUserId.Value) ? objects[int2.LastWriteUserId.Value] : objects[int2.LastWriteUserId.Value] = FindUser2(int2.LastWriteUserId));
+                var id = Guid.Parse((string)jo["id"]);
+                var int2 = cache ? (ItemNoteType2)(objects.ContainsKey(id) ? objects[id] : objects[id] = ItemNoteType2.FromJObject(jo)) : ItemNoteType2.FromJObject(jo);
+                if (load && int2.CreationUserId != null) int2.CreationUser = FindUser2(int2.CreationUserId, cache: cache);
+                if (load && int2.LastWriteUserId != null) int2.LastWriteUser = FindUser2(int2.LastWriteUserId, cache: cache);
                 yield return int2;
             }
         }
 
         public ItemNoteType2 FindItemNoteType2(Guid? id, bool load = false, bool cache = true)
         {
-            var int2 = ItemNoteType2.FromJObject(FolioServiceClient.GetItemNoteType(id?.ToString()));
+            var int2 = cache ? (ItemNoteType2)(objects.ContainsKey(id.Value) ? objects[id.Value] : objects[id.Value] = ItemNoteType2.FromJObject(FolioServiceClient.GetItemNoteType(id?.ToString()))) : ItemNoteType2.FromJObject(FolioServiceClient.GetItemNoteType(id?.ToString()));
             if (int2 == null) return null;
-            if (load && int2.CreationUserId != null) int2.CreationUser = (User2)(cache && objects.ContainsKey(int2.CreationUserId.Value) ? objects[int2.CreationUserId.Value] : objects[int2.CreationUserId.Value] = FindUser2(int2.CreationUserId));
-            if (load && int2.LastWriteUserId != null) int2.LastWriteUser = (User2)(cache && objects.ContainsKey(int2.LastWriteUserId.Value) ? objects[int2.LastWriteUserId.Value] : objects[int2.LastWriteUserId.Value] = FindUser2(int2.LastWriteUserId));
+            if (load && int2.CreationUserId != null) int2.CreationUser = FindUser2(int2.CreationUserId, cache: cache);
+            if (load && int2.LastWriteUserId != null) int2.LastWriteUser = FindUser2(int2.LastWriteUserId, cache: cache);
             return int2;
         }
 
@@ -3086,10 +3194,11 @@ namespace FolioLibrary
         {
             return FolioServiceClient.Ledgers(out count, where, orderBy, skip, take).Select(jo =>
             {
-                var l2 = Ledger2.FromJObject(jo);
-                if (load && l2.FiscalYearOneId != null) l2.FiscalYearOne = (FiscalYear2)(cache && objects.ContainsKey(l2.FiscalYearOneId.Value) ? objects[l2.FiscalYearOneId.Value] : objects[l2.FiscalYearOneId.Value] = FindFiscalYear2(l2.FiscalYearOneId));
-                if (load && l2.CreationUserId != null) l2.CreationUser = (User2)(cache && objects.ContainsKey(l2.CreationUserId.Value) ? objects[l2.CreationUserId.Value] : objects[l2.CreationUserId.Value] = FindUser2(l2.CreationUserId));
-                if (load && l2.LastWriteUserId != null) l2.LastWriteUser = (User2)(cache && objects.ContainsKey(l2.LastWriteUserId.Value) ? objects[l2.LastWriteUserId.Value] : objects[l2.LastWriteUserId.Value] = FindUser2(l2.LastWriteUserId));
+                var id = Guid.Parse((string)jo["id"]);
+                var l2 = cache ? (Ledger2)(objects.ContainsKey(id) ? objects[id] : objects[id] = Ledger2.FromJObject(jo)) : Ledger2.FromJObject(jo);
+                if (load && l2.FiscalYearOneId != null) l2.FiscalYearOne = FindFiscalYear2(l2.FiscalYearOneId, cache: cache);
+                if (load && l2.CreationUserId != null) l2.CreationUser = FindUser2(l2.CreationUserId, cache: cache);
+                if (load && l2.LastWriteUserId != null) l2.LastWriteUser = FindUser2(l2.LastWriteUserId, cache: cache);
                 return l2;
             }).ToArray();
         }
@@ -3098,28 +3207,29 @@ namespace FolioLibrary
         {
             foreach (var jo in FolioServiceClient.Ledgers(where, orderBy, skip, take))
             {
-                var l2 = Ledger2.FromJObject(jo);
-                if (load && l2.FiscalYearOneId != null) l2.FiscalYearOne = (FiscalYear2)(cache && objects.ContainsKey(l2.FiscalYearOneId.Value) ? objects[l2.FiscalYearOneId.Value] : objects[l2.FiscalYearOneId.Value] = FindFiscalYear2(l2.FiscalYearOneId));
-                if (load && l2.CreationUserId != null) l2.CreationUser = (User2)(cache && objects.ContainsKey(l2.CreationUserId.Value) ? objects[l2.CreationUserId.Value] : objects[l2.CreationUserId.Value] = FindUser2(l2.CreationUserId));
-                if (load && l2.LastWriteUserId != null) l2.LastWriteUser = (User2)(cache && objects.ContainsKey(l2.LastWriteUserId.Value) ? objects[l2.LastWriteUserId.Value] : objects[l2.LastWriteUserId.Value] = FindUser2(l2.LastWriteUserId));
+                var id = Guid.Parse((string)jo["id"]);
+                var l2 = cache ? (Ledger2)(objects.ContainsKey(id) ? objects[id] : objects[id] = Ledger2.FromJObject(jo)) : Ledger2.FromJObject(jo);
+                if (load && l2.FiscalYearOneId != null) l2.FiscalYearOne = FindFiscalYear2(l2.FiscalYearOneId, cache: cache);
+                if (load && l2.CreationUserId != null) l2.CreationUser = FindUser2(l2.CreationUserId, cache: cache);
+                if (load && l2.LastWriteUserId != null) l2.LastWriteUser = FindUser2(l2.LastWriteUserId, cache: cache);
                 yield return l2;
             }
         }
 
         public Ledger2 FindLedger2(Guid? id, bool load = false, bool cache = true)
         {
-            var l2 = Ledger2.FromJObject(FolioServiceClient.GetLedger(id?.ToString()));
+            var l2 = cache ? (Ledger2)(objects.ContainsKey(id.Value) ? objects[id.Value] : objects[id.Value] = Ledger2.FromJObject(FolioServiceClient.GetLedger(id?.ToString()))) : Ledger2.FromJObject(FolioServiceClient.GetLedger(id?.ToString()));
             if (l2 == null) return null;
-            if (load && l2.FiscalYearOneId != null) l2.FiscalYearOne = (FiscalYear2)(cache && objects.ContainsKey(l2.FiscalYearOneId.Value) ? objects[l2.FiscalYearOneId.Value] : objects[l2.FiscalYearOneId.Value] = FindFiscalYear2(l2.FiscalYearOneId));
-            if (load && l2.CreationUserId != null) l2.CreationUser = (User2)(cache && objects.ContainsKey(l2.CreationUserId.Value) ? objects[l2.CreationUserId.Value] : objects[l2.CreationUserId.Value] = FindUser2(l2.CreationUserId));
-            if (load && l2.LastWriteUserId != null) l2.LastWriteUser = (User2)(cache && objects.ContainsKey(l2.LastWriteUserId.Value) ? objects[l2.LastWriteUserId.Value] : objects[l2.LastWriteUserId.Value] = FindUser2(l2.LastWriteUserId));
+            if (load && l2.FiscalYearOneId != null) l2.FiscalYearOne = FindFiscalYear2(l2.FiscalYearOneId, cache: cache);
+            if (load && l2.CreationUserId != null) l2.CreationUser = FindUser2(l2.CreationUserId, cache: cache);
+            if (load && l2.LastWriteUserId != null) l2.LastWriteUser = FindUser2(l2.LastWriteUserId, cache: cache);
             var i = 0;
             if (l2.LedgerAcquisitionsUnits != null) foreach (var lau in l2.LedgerAcquisitionsUnits)
                 {
                     lau.Id = (++i).ToString();
                     lau.LedgerId = l2.Id;
                     lau.Ledger = l2;
-                    if (load && lau.AcquisitionsUnitId != null) lau.AcquisitionsUnit = (AcquisitionsUnit2)(cache && objects.ContainsKey(lau.AcquisitionsUnitId.Value) ? objects[lau.AcquisitionsUnitId.Value] : objects[lau.AcquisitionsUnitId.Value] = FindAcquisitionsUnit2(lau.AcquisitionsUnitId));
+                    if (load && lau.AcquisitionsUnitId != null) lau.AcquisitionsUnit = FindAcquisitionsUnit2(lau.AcquisitionsUnitId, cache: cache);
                 }
             return l2;
         }
@@ -3142,12 +3252,13 @@ namespace FolioLibrary
         {
             return FolioServiceClient.LedgerRollovers(out count, where, orderBy, skip, take).Select(jo =>
             {
-                var lr2 = LedgerRollover2.FromJObject(jo);
-                if (load && lr2.LedgerId != null) lr2.Ledger = (Ledger2)(cache && objects.ContainsKey(lr2.LedgerId.Value) ? objects[lr2.LedgerId.Value] : objects[lr2.LedgerId.Value] = FindLedger2(lr2.LedgerId));
-                if (load && lr2.FromFiscalYearId != null) lr2.FromFiscalYear = (FiscalYear2)(cache && objects.ContainsKey(lr2.FromFiscalYearId.Value) ? objects[lr2.FromFiscalYearId.Value] : objects[lr2.FromFiscalYearId.Value] = FindFiscalYear2(lr2.FromFiscalYearId));
-                if (load && lr2.ToFiscalYearId != null) lr2.ToFiscalYear = (FiscalYear2)(cache && objects.ContainsKey(lr2.ToFiscalYearId.Value) ? objects[lr2.ToFiscalYearId.Value] : objects[lr2.ToFiscalYearId.Value] = FindFiscalYear2(lr2.ToFiscalYearId));
-                if (load && lr2.CreationUserId != null) lr2.CreationUser = (User2)(cache && objects.ContainsKey(lr2.CreationUserId.Value) ? objects[lr2.CreationUserId.Value] : objects[lr2.CreationUserId.Value] = FindUser2(lr2.CreationUserId));
-                if (load && lr2.LastWriteUserId != null) lr2.LastWriteUser = (User2)(cache && objects.ContainsKey(lr2.LastWriteUserId.Value) ? objects[lr2.LastWriteUserId.Value] : objects[lr2.LastWriteUserId.Value] = FindUser2(lr2.LastWriteUserId));
+                var id = Guid.Parse((string)jo["id"]);
+                var lr2 = cache ? (LedgerRollover2)(objects.ContainsKey(id) ? objects[id] : objects[id] = LedgerRollover2.FromJObject(jo)) : LedgerRollover2.FromJObject(jo);
+                if (load && lr2.LedgerId != null) lr2.Ledger = FindLedger2(lr2.LedgerId, cache: cache);
+                if (load && lr2.FromFiscalYearId != null) lr2.FromFiscalYear = FindFiscalYear2(lr2.FromFiscalYearId, cache: cache);
+                if (load && lr2.ToFiscalYearId != null) lr2.ToFiscalYear = FindFiscalYear2(lr2.ToFiscalYearId, cache: cache);
+                if (load && lr2.CreationUserId != null) lr2.CreationUser = FindUser2(lr2.CreationUserId, cache: cache);
+                if (load && lr2.LastWriteUserId != null) lr2.LastWriteUser = FindUser2(lr2.LastWriteUserId, cache: cache);
                 return lr2;
             }).ToArray();
         }
@@ -3156,32 +3267,33 @@ namespace FolioLibrary
         {
             foreach (var jo in FolioServiceClient.LedgerRollovers(where, orderBy, skip, take))
             {
-                var lr2 = LedgerRollover2.FromJObject(jo);
-                if (load && lr2.LedgerId != null) lr2.Ledger = (Ledger2)(cache && objects.ContainsKey(lr2.LedgerId.Value) ? objects[lr2.LedgerId.Value] : objects[lr2.LedgerId.Value] = FindLedger2(lr2.LedgerId));
-                if (load && lr2.FromFiscalYearId != null) lr2.FromFiscalYear = (FiscalYear2)(cache && objects.ContainsKey(lr2.FromFiscalYearId.Value) ? objects[lr2.FromFiscalYearId.Value] : objects[lr2.FromFiscalYearId.Value] = FindFiscalYear2(lr2.FromFiscalYearId));
-                if (load && lr2.ToFiscalYearId != null) lr2.ToFiscalYear = (FiscalYear2)(cache && objects.ContainsKey(lr2.ToFiscalYearId.Value) ? objects[lr2.ToFiscalYearId.Value] : objects[lr2.ToFiscalYearId.Value] = FindFiscalYear2(lr2.ToFiscalYearId));
-                if (load && lr2.CreationUserId != null) lr2.CreationUser = (User2)(cache && objects.ContainsKey(lr2.CreationUserId.Value) ? objects[lr2.CreationUserId.Value] : objects[lr2.CreationUserId.Value] = FindUser2(lr2.CreationUserId));
-                if (load && lr2.LastWriteUserId != null) lr2.LastWriteUser = (User2)(cache && objects.ContainsKey(lr2.LastWriteUserId.Value) ? objects[lr2.LastWriteUserId.Value] : objects[lr2.LastWriteUserId.Value] = FindUser2(lr2.LastWriteUserId));
+                var id = Guid.Parse((string)jo["id"]);
+                var lr2 = cache ? (LedgerRollover2)(objects.ContainsKey(id) ? objects[id] : objects[id] = LedgerRollover2.FromJObject(jo)) : LedgerRollover2.FromJObject(jo);
+                if (load && lr2.LedgerId != null) lr2.Ledger = FindLedger2(lr2.LedgerId, cache: cache);
+                if (load && lr2.FromFiscalYearId != null) lr2.FromFiscalYear = FindFiscalYear2(lr2.FromFiscalYearId, cache: cache);
+                if (load && lr2.ToFiscalYearId != null) lr2.ToFiscalYear = FindFiscalYear2(lr2.ToFiscalYearId, cache: cache);
+                if (load && lr2.CreationUserId != null) lr2.CreationUser = FindUser2(lr2.CreationUserId, cache: cache);
+                if (load && lr2.LastWriteUserId != null) lr2.LastWriteUser = FindUser2(lr2.LastWriteUserId, cache: cache);
                 yield return lr2;
             }
         }
 
         public LedgerRollover2 FindLedgerRollover2(Guid? id, bool load = false, bool cache = true)
         {
-            var lr2 = LedgerRollover2.FromJObject(FolioServiceClient.GetLedgerRollover(id?.ToString()));
+            var lr2 = cache ? (LedgerRollover2)(objects.ContainsKey(id.Value) ? objects[id.Value] : objects[id.Value] = LedgerRollover2.FromJObject(FolioServiceClient.GetLedgerRollover(id?.ToString()))) : LedgerRollover2.FromJObject(FolioServiceClient.GetLedgerRollover(id?.ToString()));
             if (lr2 == null) return null;
-            if (load && lr2.LedgerId != null) lr2.Ledger = (Ledger2)(cache && objects.ContainsKey(lr2.LedgerId.Value) ? objects[lr2.LedgerId.Value] : objects[lr2.LedgerId.Value] = FindLedger2(lr2.LedgerId));
-            if (load && lr2.FromFiscalYearId != null) lr2.FromFiscalYear = (FiscalYear2)(cache && objects.ContainsKey(lr2.FromFiscalYearId.Value) ? objects[lr2.FromFiscalYearId.Value] : objects[lr2.FromFiscalYearId.Value] = FindFiscalYear2(lr2.FromFiscalYearId));
-            if (load && lr2.ToFiscalYearId != null) lr2.ToFiscalYear = (FiscalYear2)(cache && objects.ContainsKey(lr2.ToFiscalYearId.Value) ? objects[lr2.ToFiscalYearId.Value] : objects[lr2.ToFiscalYearId.Value] = FindFiscalYear2(lr2.ToFiscalYearId));
-            if (load && lr2.CreationUserId != null) lr2.CreationUser = (User2)(cache && objects.ContainsKey(lr2.CreationUserId.Value) ? objects[lr2.CreationUserId.Value] : objects[lr2.CreationUserId.Value] = FindUser2(lr2.CreationUserId));
-            if (load && lr2.LastWriteUserId != null) lr2.LastWriteUser = (User2)(cache && objects.ContainsKey(lr2.LastWriteUserId.Value) ? objects[lr2.LastWriteUserId.Value] : objects[lr2.LastWriteUserId.Value] = FindUser2(lr2.LastWriteUserId));
+            if (load && lr2.LedgerId != null) lr2.Ledger = FindLedger2(lr2.LedgerId, cache: cache);
+            if (load && lr2.FromFiscalYearId != null) lr2.FromFiscalYear = FindFiscalYear2(lr2.FromFiscalYearId, cache: cache);
+            if (load && lr2.ToFiscalYearId != null) lr2.ToFiscalYear = FindFiscalYear2(lr2.ToFiscalYearId, cache: cache);
+            if (load && lr2.CreationUserId != null) lr2.CreationUser = FindUser2(lr2.CreationUserId, cache: cache);
+            if (load && lr2.LastWriteUserId != null) lr2.LastWriteUser = FindUser2(lr2.LastWriteUserId, cache: cache);
             var i = 0;
             if (lr2.LedgerRolloverBudgetsRollovers != null) foreach (var lrbr in lr2.LedgerRolloverBudgetsRollovers)
                 {
                     lrbr.Id = (++i).ToString();
                     lrbr.LedgerRolloverId = lr2.Id;
                     lrbr.LedgerRollover = lr2;
-                    if (load && lrbr.FundTypeId != null) lrbr.FundType = (FundType2)(cache && objects.ContainsKey(lrbr.FundTypeId.Value) ? objects[lrbr.FundTypeId.Value] : objects[lrbr.FundTypeId.Value] = FindFundType2(lrbr.FundTypeId));
+                    if (load && lrbr.FundTypeId != null) lrbr.FundType = FindFundType2(lrbr.FundTypeId, cache: cache);
                 }
             i = 0;
             if (lr2.LedgerRolloverEncumbrancesRollovers != null) foreach (var lrer in lr2.LedgerRolloverEncumbrancesRollovers)
@@ -3211,10 +3323,11 @@ namespace FolioLibrary
         {
             return FolioServiceClient.LedgerRolloverErrors(out count, where, orderBy, skip, take).Select(jo =>
             {
-                var lre2 = LedgerRolloverError2.FromJObject(jo);
-                if (load && lre2.LedgerRolloverId != null) lre2.LedgerRollover = (LedgerRollover2)(cache && objects.ContainsKey(lre2.LedgerRolloverId.Value) ? objects[lre2.LedgerRolloverId.Value] : objects[lre2.LedgerRolloverId.Value] = FindLedgerRollover2(lre2.LedgerRolloverId));
-                if (load && lre2.CreationUserId != null) lre2.CreationUser = (User2)(cache && objects.ContainsKey(lre2.CreationUserId.Value) ? objects[lre2.CreationUserId.Value] : objects[lre2.CreationUserId.Value] = FindUser2(lre2.CreationUserId));
-                if (load && lre2.LastWriteUserId != null) lre2.LastWriteUser = (User2)(cache && objects.ContainsKey(lre2.LastWriteUserId.Value) ? objects[lre2.LastWriteUserId.Value] : objects[lre2.LastWriteUserId.Value] = FindUser2(lre2.LastWriteUserId));
+                var id = Guid.Parse((string)jo["id"]);
+                var lre2 = cache ? (LedgerRolloverError2)(objects.ContainsKey(id) ? objects[id] : objects[id] = LedgerRolloverError2.FromJObject(jo)) : LedgerRolloverError2.FromJObject(jo);
+                if (load && lre2.LedgerRolloverId != null) lre2.LedgerRollover = FindLedgerRollover2(lre2.LedgerRolloverId, cache: cache);
+                if (load && lre2.CreationUserId != null) lre2.CreationUser = FindUser2(lre2.CreationUserId, cache: cache);
+                if (load && lre2.LastWriteUserId != null) lre2.LastWriteUser = FindUser2(lre2.LastWriteUserId, cache: cache);
                 return lre2;
             }).ToArray();
         }
@@ -3223,21 +3336,22 @@ namespace FolioLibrary
         {
             foreach (var jo in FolioServiceClient.LedgerRolloverErrors(where, orderBy, skip, take))
             {
-                var lre2 = LedgerRolloverError2.FromJObject(jo);
-                if (load && lre2.LedgerRolloverId != null) lre2.LedgerRollover = (LedgerRollover2)(cache && objects.ContainsKey(lre2.LedgerRolloverId.Value) ? objects[lre2.LedgerRolloverId.Value] : objects[lre2.LedgerRolloverId.Value] = FindLedgerRollover2(lre2.LedgerRolloverId));
-                if (load && lre2.CreationUserId != null) lre2.CreationUser = (User2)(cache && objects.ContainsKey(lre2.CreationUserId.Value) ? objects[lre2.CreationUserId.Value] : objects[lre2.CreationUserId.Value] = FindUser2(lre2.CreationUserId));
-                if (load && lre2.LastWriteUserId != null) lre2.LastWriteUser = (User2)(cache && objects.ContainsKey(lre2.LastWriteUserId.Value) ? objects[lre2.LastWriteUserId.Value] : objects[lre2.LastWriteUserId.Value] = FindUser2(lre2.LastWriteUserId));
+                var id = Guid.Parse((string)jo["id"]);
+                var lre2 = cache ? (LedgerRolloverError2)(objects.ContainsKey(id) ? objects[id] : objects[id] = LedgerRolloverError2.FromJObject(jo)) : LedgerRolloverError2.FromJObject(jo);
+                if (load && lre2.LedgerRolloverId != null) lre2.LedgerRollover = FindLedgerRollover2(lre2.LedgerRolloverId, cache: cache);
+                if (load && lre2.CreationUserId != null) lre2.CreationUser = FindUser2(lre2.CreationUserId, cache: cache);
+                if (load && lre2.LastWriteUserId != null) lre2.LastWriteUser = FindUser2(lre2.LastWriteUserId, cache: cache);
                 yield return lre2;
             }
         }
 
         public LedgerRolloverError2 FindLedgerRolloverError2(Guid? id, bool load = false, bool cache = true)
         {
-            var lre2 = LedgerRolloverError2.FromJObject(FolioServiceClient.GetLedgerRolloverError(id?.ToString()));
+            var lre2 = cache ? (LedgerRolloverError2)(objects.ContainsKey(id.Value) ? objects[id.Value] : objects[id.Value] = LedgerRolloverError2.FromJObject(FolioServiceClient.GetLedgerRolloverError(id?.ToString()))) : LedgerRolloverError2.FromJObject(FolioServiceClient.GetLedgerRolloverError(id?.ToString()));
             if (lre2 == null) return null;
-            if (load && lre2.LedgerRolloverId != null) lre2.LedgerRollover = (LedgerRollover2)(cache && objects.ContainsKey(lre2.LedgerRolloverId.Value) ? objects[lre2.LedgerRolloverId.Value] : objects[lre2.LedgerRolloverId.Value] = FindLedgerRollover2(lre2.LedgerRolloverId));
-            if (load && lre2.CreationUserId != null) lre2.CreationUser = (User2)(cache && objects.ContainsKey(lre2.CreationUserId.Value) ? objects[lre2.CreationUserId.Value] : objects[lre2.CreationUserId.Value] = FindUser2(lre2.CreationUserId));
-            if (load && lre2.LastWriteUserId != null) lre2.LastWriteUser = (User2)(cache && objects.ContainsKey(lre2.LastWriteUserId.Value) ? objects[lre2.LastWriteUserId.Value] : objects[lre2.LastWriteUserId.Value] = FindUser2(lre2.LastWriteUserId));
+            if (load && lre2.LedgerRolloverId != null) lre2.LedgerRollover = FindLedgerRollover2(lre2.LedgerRolloverId, cache: cache);
+            if (load && lre2.CreationUserId != null) lre2.CreationUser = FindUser2(lre2.CreationUserId, cache: cache);
+            if (load && lre2.LastWriteUserId != null) lre2.LastWriteUser = FindUser2(lre2.LastWriteUserId, cache: cache);
             return lre2;
         }
 
@@ -3259,10 +3373,11 @@ namespace FolioLibrary
         {
             return FolioServiceClient.LedgerRolloverProgresses(out count, where, orderBy, skip, take).Select(jo =>
             {
-                var lrp2 = LedgerRolloverProgress2.FromJObject(jo);
-                if (load && lrp2.LedgerRolloverId != null) lrp2.LedgerRollover = (LedgerRollover2)(cache && objects.ContainsKey(lrp2.LedgerRolloverId.Value) ? objects[lrp2.LedgerRolloverId.Value] : objects[lrp2.LedgerRolloverId.Value] = FindLedgerRollover2(lrp2.LedgerRolloverId));
-                if (load && lrp2.CreationUserId != null) lrp2.CreationUser = (User2)(cache && objects.ContainsKey(lrp2.CreationUserId.Value) ? objects[lrp2.CreationUserId.Value] : objects[lrp2.CreationUserId.Value] = FindUser2(lrp2.CreationUserId));
-                if (load && lrp2.LastWriteUserId != null) lrp2.LastWriteUser = (User2)(cache && objects.ContainsKey(lrp2.LastWriteUserId.Value) ? objects[lrp2.LastWriteUserId.Value] : objects[lrp2.LastWriteUserId.Value] = FindUser2(lrp2.LastWriteUserId));
+                var id = Guid.Parse((string)jo["id"]);
+                var lrp2 = cache ? (LedgerRolloverProgress2)(objects.ContainsKey(id) ? objects[id] : objects[id] = LedgerRolloverProgress2.FromJObject(jo)) : LedgerRolloverProgress2.FromJObject(jo);
+                if (load && lrp2.LedgerRolloverId != null) lrp2.LedgerRollover = FindLedgerRollover2(lrp2.LedgerRolloverId, cache: cache);
+                if (load && lrp2.CreationUserId != null) lrp2.CreationUser = FindUser2(lrp2.CreationUserId, cache: cache);
+                if (load && lrp2.LastWriteUserId != null) lrp2.LastWriteUser = FindUser2(lrp2.LastWriteUserId, cache: cache);
                 return lrp2;
             }).ToArray();
         }
@@ -3271,21 +3386,22 @@ namespace FolioLibrary
         {
             foreach (var jo in FolioServiceClient.LedgerRolloverProgresses(where, orderBy, skip, take))
             {
-                var lrp2 = LedgerRolloverProgress2.FromJObject(jo);
-                if (load && lrp2.LedgerRolloverId != null) lrp2.LedgerRollover = (LedgerRollover2)(cache && objects.ContainsKey(lrp2.LedgerRolloverId.Value) ? objects[lrp2.LedgerRolloverId.Value] : objects[lrp2.LedgerRolloverId.Value] = FindLedgerRollover2(lrp2.LedgerRolloverId));
-                if (load && lrp2.CreationUserId != null) lrp2.CreationUser = (User2)(cache && objects.ContainsKey(lrp2.CreationUserId.Value) ? objects[lrp2.CreationUserId.Value] : objects[lrp2.CreationUserId.Value] = FindUser2(lrp2.CreationUserId));
-                if (load && lrp2.LastWriteUserId != null) lrp2.LastWriteUser = (User2)(cache && objects.ContainsKey(lrp2.LastWriteUserId.Value) ? objects[lrp2.LastWriteUserId.Value] : objects[lrp2.LastWriteUserId.Value] = FindUser2(lrp2.LastWriteUserId));
+                var id = Guid.Parse((string)jo["id"]);
+                var lrp2 = cache ? (LedgerRolloverProgress2)(objects.ContainsKey(id) ? objects[id] : objects[id] = LedgerRolloverProgress2.FromJObject(jo)) : LedgerRolloverProgress2.FromJObject(jo);
+                if (load && lrp2.LedgerRolloverId != null) lrp2.LedgerRollover = FindLedgerRollover2(lrp2.LedgerRolloverId, cache: cache);
+                if (load && lrp2.CreationUserId != null) lrp2.CreationUser = FindUser2(lrp2.CreationUserId, cache: cache);
+                if (load && lrp2.LastWriteUserId != null) lrp2.LastWriteUser = FindUser2(lrp2.LastWriteUserId, cache: cache);
                 yield return lrp2;
             }
         }
 
         public LedgerRolloverProgress2 FindLedgerRolloverProgress2(Guid? id, bool load = false, bool cache = true)
         {
-            var lrp2 = LedgerRolloverProgress2.FromJObject(FolioServiceClient.GetLedgerRolloverProgress(id?.ToString()));
+            var lrp2 = cache ? (LedgerRolloverProgress2)(objects.ContainsKey(id.Value) ? objects[id.Value] : objects[id.Value] = LedgerRolloverProgress2.FromJObject(FolioServiceClient.GetLedgerRolloverProgress(id?.ToString()))) : LedgerRolloverProgress2.FromJObject(FolioServiceClient.GetLedgerRolloverProgress(id?.ToString()));
             if (lrp2 == null) return null;
-            if (load && lrp2.LedgerRolloverId != null) lrp2.LedgerRollover = (LedgerRollover2)(cache && objects.ContainsKey(lrp2.LedgerRolloverId.Value) ? objects[lrp2.LedgerRolloverId.Value] : objects[lrp2.LedgerRolloverId.Value] = FindLedgerRollover2(lrp2.LedgerRolloverId));
-            if (load && lrp2.CreationUserId != null) lrp2.CreationUser = (User2)(cache && objects.ContainsKey(lrp2.CreationUserId.Value) ? objects[lrp2.CreationUserId.Value] : objects[lrp2.CreationUserId.Value] = FindUser2(lrp2.CreationUserId));
-            if (load && lrp2.LastWriteUserId != null) lrp2.LastWriteUser = (User2)(cache && objects.ContainsKey(lrp2.LastWriteUserId.Value) ? objects[lrp2.LastWriteUserId.Value] : objects[lrp2.LastWriteUserId.Value] = FindUser2(lrp2.LastWriteUserId));
+            if (load && lrp2.LedgerRolloverId != null) lrp2.LedgerRollover = FindLedgerRollover2(lrp2.LedgerRolloverId, cache: cache);
+            if (load && lrp2.CreationUserId != null) lrp2.CreationUser = FindUser2(lrp2.CreationUserId, cache: cache);
+            if (load && lrp2.LastWriteUserId != null) lrp2.LastWriteUser = FindUser2(lrp2.LastWriteUserId, cache: cache);
             return lrp2;
         }
 
@@ -3307,10 +3423,11 @@ namespace FolioLibrary
         {
             return FolioServiceClient.Libraries(out count, where, orderBy, skip, take).Select(jo =>
             {
-                var l2 = Library2.FromJObject(jo);
-                if (load && l2.CampusId != null) l2.Campus = (Campus2)(cache && objects.ContainsKey(l2.CampusId.Value) ? objects[l2.CampusId.Value] : objects[l2.CampusId.Value] = FindCampus2(l2.CampusId));
-                if (load && l2.CreationUserId != null) l2.CreationUser = (User2)(cache && objects.ContainsKey(l2.CreationUserId.Value) ? objects[l2.CreationUserId.Value] : objects[l2.CreationUserId.Value] = FindUser2(l2.CreationUserId));
-                if (load && l2.LastWriteUserId != null) l2.LastWriteUser = (User2)(cache && objects.ContainsKey(l2.LastWriteUserId.Value) ? objects[l2.LastWriteUserId.Value] : objects[l2.LastWriteUserId.Value] = FindUser2(l2.LastWriteUserId));
+                var id = Guid.Parse((string)jo["id"]);
+                var l2 = cache ? (Library2)(objects.ContainsKey(id) ? objects[id] : objects[id] = Library2.FromJObject(jo)) : Library2.FromJObject(jo);
+                if (load && l2.CampusId != null) l2.Campus = FindCampus2(l2.CampusId, cache: cache);
+                if (load && l2.CreationUserId != null) l2.CreationUser = FindUser2(l2.CreationUserId, cache: cache);
+                if (load && l2.LastWriteUserId != null) l2.LastWriteUser = FindUser2(l2.LastWriteUserId, cache: cache);
                 return l2;
             }).ToArray();
         }
@@ -3319,21 +3436,22 @@ namespace FolioLibrary
         {
             foreach (var jo in FolioServiceClient.Libraries(where, orderBy, skip, take))
             {
-                var l2 = Library2.FromJObject(jo);
-                if (load && l2.CampusId != null) l2.Campus = (Campus2)(cache && objects.ContainsKey(l2.CampusId.Value) ? objects[l2.CampusId.Value] : objects[l2.CampusId.Value] = FindCampus2(l2.CampusId));
-                if (load && l2.CreationUserId != null) l2.CreationUser = (User2)(cache && objects.ContainsKey(l2.CreationUserId.Value) ? objects[l2.CreationUserId.Value] : objects[l2.CreationUserId.Value] = FindUser2(l2.CreationUserId));
-                if (load && l2.LastWriteUserId != null) l2.LastWriteUser = (User2)(cache && objects.ContainsKey(l2.LastWriteUserId.Value) ? objects[l2.LastWriteUserId.Value] : objects[l2.LastWriteUserId.Value] = FindUser2(l2.LastWriteUserId));
+                var id = Guid.Parse((string)jo["id"]);
+                var l2 = cache ? (Library2)(objects.ContainsKey(id) ? objects[id] : objects[id] = Library2.FromJObject(jo)) : Library2.FromJObject(jo);
+                if (load && l2.CampusId != null) l2.Campus = FindCampus2(l2.CampusId, cache: cache);
+                if (load && l2.CreationUserId != null) l2.CreationUser = FindUser2(l2.CreationUserId, cache: cache);
+                if (load && l2.LastWriteUserId != null) l2.LastWriteUser = FindUser2(l2.LastWriteUserId, cache: cache);
                 yield return l2;
             }
         }
 
         public Library2 FindLibrary2(Guid? id, bool load = false, bool cache = true)
         {
-            var l2 = Library2.FromJObject(FolioServiceClient.GetLibrary(id?.ToString()));
+            var l2 = cache ? (Library2)(objects.ContainsKey(id.Value) ? objects[id.Value] : objects[id.Value] = Library2.FromJObject(FolioServiceClient.GetLibrary(id?.ToString()))) : Library2.FromJObject(FolioServiceClient.GetLibrary(id?.ToString()));
             if (l2 == null) return null;
-            if (load && l2.CampusId != null) l2.Campus = (Campus2)(cache && objects.ContainsKey(l2.CampusId.Value) ? objects[l2.CampusId.Value] : objects[l2.CampusId.Value] = FindCampus2(l2.CampusId));
-            if (load && l2.CreationUserId != null) l2.CreationUser = (User2)(cache && objects.ContainsKey(l2.CreationUserId.Value) ? objects[l2.CreationUserId.Value] : objects[l2.CreationUserId.Value] = FindUser2(l2.CreationUserId));
-            if (load && l2.LastWriteUserId != null) l2.LastWriteUser = (User2)(cache && objects.ContainsKey(l2.LastWriteUserId.Value) ? objects[l2.LastWriteUserId.Value] : objects[l2.LastWriteUserId.Value] = FindUser2(l2.LastWriteUserId));
+            if (load && l2.CampusId != null) l2.Campus = FindCampus2(l2.CampusId, cache: cache);
+            if (load && l2.CreationUserId != null) l2.CreationUser = FindUser2(l2.CreationUserId, cache: cache);
+            if (load && l2.LastWriteUserId != null) l2.LastWriteUser = FindUser2(l2.LastWriteUserId, cache: cache);
             return l2;
         }
 
@@ -3355,19 +3473,20 @@ namespace FolioLibrary
         {
             return FolioServiceClient.Loans(out count, where, orderBy, skip, take).Select(jo =>
             {
-                var l2 = Loan2.FromJObject(jo);
-                if (load && l2.UserId != null) l2.User = (User2)(cache && objects.ContainsKey(l2.UserId.Value) ? objects[l2.UserId.Value] : objects[l2.UserId.Value] = FindUser2(l2.UserId));
-                if (load && l2.ProxyUserId != null) l2.ProxyUser = (User2)(cache && objects.ContainsKey(l2.ProxyUserId.Value) ? objects[l2.ProxyUserId.Value] : objects[l2.ProxyUserId.Value] = FindUser2(l2.ProxyUserId));
-                if (load && l2.ItemId != null) l2.Item = (Item2)(cache && objects.ContainsKey(l2.ItemId.Value) ? objects[l2.ItemId.Value] : objects[l2.ItemId.Value] = FindItem2(l2.ItemId));
-                if (load && l2.ItemEffectiveLocationAtCheckOutId != null) l2.ItemEffectiveLocationAtCheckOut = (Location2)(cache && objects.ContainsKey(l2.ItemEffectiveLocationAtCheckOutId.Value) ? objects[l2.ItemEffectiveLocationAtCheckOutId.Value] : objects[l2.ItemEffectiveLocationAtCheckOutId.Value] = FindLocation2(l2.ItemEffectiveLocationAtCheckOutId));
-                if (load && l2.LoanPolicyId != null) l2.LoanPolicy = (LoanPolicy2)(cache && objects.ContainsKey(l2.LoanPolicyId.Value) ? objects[l2.LoanPolicyId.Value] : objects[l2.LoanPolicyId.Value] = FindLoanPolicy2(l2.LoanPolicyId));
-                if (load && l2.CheckoutServicePointId != null) l2.CheckoutServicePoint = (ServicePoint2)(cache && objects.ContainsKey(l2.CheckoutServicePointId.Value) ? objects[l2.CheckoutServicePointId.Value] : objects[l2.CheckoutServicePointId.Value] = FindServicePoint2(l2.CheckoutServicePointId));
-                if (load && l2.CheckinServicePointId != null) l2.CheckinServicePoint = (ServicePoint2)(cache && objects.ContainsKey(l2.CheckinServicePointId.Value) ? objects[l2.CheckinServicePointId.Value] : objects[l2.CheckinServicePointId.Value] = FindServicePoint2(l2.CheckinServicePointId));
-                if (load && l2.GroupId != null) l2.Group = (Group2)(cache && objects.ContainsKey(l2.GroupId.Value) ? objects[l2.GroupId.Value] : objects[l2.GroupId.Value] = FindGroup2(l2.GroupId));
-                if (load && l2.OverdueFinePolicyId != null) l2.OverdueFinePolicy = (OverdueFinePolicy2)(cache && objects.ContainsKey(l2.OverdueFinePolicyId.Value) ? objects[l2.OverdueFinePolicyId.Value] : objects[l2.OverdueFinePolicyId.Value] = FindOverdueFinePolicy2(l2.OverdueFinePolicyId));
-                if (load && l2.LostItemPolicyId != null) l2.LostItemPolicy = (LostItemFeePolicy2)(cache && objects.ContainsKey(l2.LostItemPolicyId.Value) ? objects[l2.LostItemPolicyId.Value] : objects[l2.LostItemPolicyId.Value] = FindLostItemFeePolicy2(l2.LostItemPolicyId));
-                if (load && l2.CreationUserId != null) l2.CreationUser = (User2)(cache && objects.ContainsKey(l2.CreationUserId.Value) ? objects[l2.CreationUserId.Value] : objects[l2.CreationUserId.Value] = FindUser2(l2.CreationUserId));
-                if (load && l2.LastWriteUserId != null) l2.LastWriteUser = (User2)(cache && objects.ContainsKey(l2.LastWriteUserId.Value) ? objects[l2.LastWriteUserId.Value] : objects[l2.LastWriteUserId.Value] = FindUser2(l2.LastWriteUserId));
+                var id = Guid.Parse((string)jo["id"]);
+                var l2 = cache ? (Loan2)(objects.ContainsKey(id) ? objects[id] : objects[id] = Loan2.FromJObject(jo)) : Loan2.FromJObject(jo);
+                if (load && l2.UserId != null) l2.User = FindUser2(l2.UserId, cache: cache);
+                if (load && l2.ProxyUserId != null) l2.ProxyUser = FindUser2(l2.ProxyUserId, cache: cache);
+                if (load && l2.ItemId != null) l2.Item = FindItem2(l2.ItemId, cache: cache);
+                if (load && l2.ItemEffectiveLocationAtCheckOutId != null) l2.ItemEffectiveLocationAtCheckOut = FindLocation2(l2.ItemEffectiveLocationAtCheckOutId, cache: cache);
+                if (load && l2.LoanPolicyId != null) l2.LoanPolicy = FindLoanPolicy2(l2.LoanPolicyId, cache: cache);
+                if (load && l2.CheckoutServicePointId != null) l2.CheckoutServicePoint = FindServicePoint2(l2.CheckoutServicePointId, cache: cache);
+                if (load && l2.CheckinServicePointId != null) l2.CheckinServicePoint = FindServicePoint2(l2.CheckinServicePointId, cache: cache);
+                if (load && l2.GroupId != null) l2.Group = FindGroup2(l2.GroupId, cache: cache);
+                if (load && l2.OverdueFinePolicyId != null) l2.OverdueFinePolicy = FindOverdueFinePolicy2(l2.OverdueFinePolicyId, cache: cache);
+                if (load && l2.LostItemPolicyId != null) l2.LostItemPolicy = FindLostItemFeePolicy2(l2.LostItemPolicyId, cache: cache);
+                if (load && l2.CreationUserId != null) l2.CreationUser = FindUser2(l2.CreationUserId, cache: cache);
+                if (load && l2.LastWriteUserId != null) l2.LastWriteUser = FindUser2(l2.LastWriteUserId, cache: cache);
                 return l2;
             }).ToArray();
         }
@@ -3376,39 +3495,40 @@ namespace FolioLibrary
         {
             foreach (var jo in FolioServiceClient.Loans(where, orderBy, skip, take))
             {
-                var l2 = Loan2.FromJObject(jo);
-                if (load && l2.UserId != null) l2.User = (User2)(cache && objects.ContainsKey(l2.UserId.Value) ? objects[l2.UserId.Value] : objects[l2.UserId.Value] = FindUser2(l2.UserId));
-                if (load && l2.ProxyUserId != null) l2.ProxyUser = (User2)(cache && objects.ContainsKey(l2.ProxyUserId.Value) ? objects[l2.ProxyUserId.Value] : objects[l2.ProxyUserId.Value] = FindUser2(l2.ProxyUserId));
-                if (load && l2.ItemId != null) l2.Item = (Item2)(cache && objects.ContainsKey(l2.ItemId.Value) ? objects[l2.ItemId.Value] : objects[l2.ItemId.Value] = FindItem2(l2.ItemId));
-                if (load && l2.ItemEffectiveLocationAtCheckOutId != null) l2.ItemEffectiveLocationAtCheckOut = (Location2)(cache && objects.ContainsKey(l2.ItemEffectiveLocationAtCheckOutId.Value) ? objects[l2.ItemEffectiveLocationAtCheckOutId.Value] : objects[l2.ItemEffectiveLocationAtCheckOutId.Value] = FindLocation2(l2.ItemEffectiveLocationAtCheckOutId));
-                if (load && l2.LoanPolicyId != null) l2.LoanPolicy = (LoanPolicy2)(cache && objects.ContainsKey(l2.LoanPolicyId.Value) ? objects[l2.LoanPolicyId.Value] : objects[l2.LoanPolicyId.Value] = FindLoanPolicy2(l2.LoanPolicyId));
-                if (load && l2.CheckoutServicePointId != null) l2.CheckoutServicePoint = (ServicePoint2)(cache && objects.ContainsKey(l2.CheckoutServicePointId.Value) ? objects[l2.CheckoutServicePointId.Value] : objects[l2.CheckoutServicePointId.Value] = FindServicePoint2(l2.CheckoutServicePointId));
-                if (load && l2.CheckinServicePointId != null) l2.CheckinServicePoint = (ServicePoint2)(cache && objects.ContainsKey(l2.CheckinServicePointId.Value) ? objects[l2.CheckinServicePointId.Value] : objects[l2.CheckinServicePointId.Value] = FindServicePoint2(l2.CheckinServicePointId));
-                if (load && l2.GroupId != null) l2.Group = (Group2)(cache && objects.ContainsKey(l2.GroupId.Value) ? objects[l2.GroupId.Value] : objects[l2.GroupId.Value] = FindGroup2(l2.GroupId));
-                if (load && l2.OverdueFinePolicyId != null) l2.OverdueFinePolicy = (OverdueFinePolicy2)(cache && objects.ContainsKey(l2.OverdueFinePolicyId.Value) ? objects[l2.OverdueFinePolicyId.Value] : objects[l2.OverdueFinePolicyId.Value] = FindOverdueFinePolicy2(l2.OverdueFinePolicyId));
-                if (load && l2.LostItemPolicyId != null) l2.LostItemPolicy = (LostItemFeePolicy2)(cache && objects.ContainsKey(l2.LostItemPolicyId.Value) ? objects[l2.LostItemPolicyId.Value] : objects[l2.LostItemPolicyId.Value] = FindLostItemFeePolicy2(l2.LostItemPolicyId));
-                if (load && l2.CreationUserId != null) l2.CreationUser = (User2)(cache && objects.ContainsKey(l2.CreationUserId.Value) ? objects[l2.CreationUserId.Value] : objects[l2.CreationUserId.Value] = FindUser2(l2.CreationUserId));
-                if (load && l2.LastWriteUserId != null) l2.LastWriteUser = (User2)(cache && objects.ContainsKey(l2.LastWriteUserId.Value) ? objects[l2.LastWriteUserId.Value] : objects[l2.LastWriteUserId.Value] = FindUser2(l2.LastWriteUserId));
+                var id = Guid.Parse((string)jo["id"]);
+                var l2 = cache ? (Loan2)(objects.ContainsKey(id) ? objects[id] : objects[id] = Loan2.FromJObject(jo)) : Loan2.FromJObject(jo);
+                if (load && l2.UserId != null) l2.User = FindUser2(l2.UserId, cache: cache);
+                if (load && l2.ProxyUserId != null) l2.ProxyUser = FindUser2(l2.ProxyUserId, cache: cache);
+                if (load && l2.ItemId != null) l2.Item = FindItem2(l2.ItemId, cache: cache);
+                if (load && l2.ItemEffectiveLocationAtCheckOutId != null) l2.ItemEffectiveLocationAtCheckOut = FindLocation2(l2.ItemEffectiveLocationAtCheckOutId, cache: cache);
+                if (load && l2.LoanPolicyId != null) l2.LoanPolicy = FindLoanPolicy2(l2.LoanPolicyId, cache: cache);
+                if (load && l2.CheckoutServicePointId != null) l2.CheckoutServicePoint = FindServicePoint2(l2.CheckoutServicePointId, cache: cache);
+                if (load && l2.CheckinServicePointId != null) l2.CheckinServicePoint = FindServicePoint2(l2.CheckinServicePointId, cache: cache);
+                if (load && l2.GroupId != null) l2.Group = FindGroup2(l2.GroupId, cache: cache);
+                if (load && l2.OverdueFinePolicyId != null) l2.OverdueFinePolicy = FindOverdueFinePolicy2(l2.OverdueFinePolicyId, cache: cache);
+                if (load && l2.LostItemPolicyId != null) l2.LostItemPolicy = FindLostItemFeePolicy2(l2.LostItemPolicyId, cache: cache);
+                if (load && l2.CreationUserId != null) l2.CreationUser = FindUser2(l2.CreationUserId, cache: cache);
+                if (load && l2.LastWriteUserId != null) l2.LastWriteUser = FindUser2(l2.LastWriteUserId, cache: cache);
                 yield return l2;
             }
         }
 
         public Loan2 FindLoan2(Guid? id, bool load = false, bool cache = true)
         {
-            var l2 = Loan2.FromJObject(FolioServiceClient.GetLoan(id?.ToString()));
+            var l2 = cache ? (Loan2)(objects.ContainsKey(id.Value) ? objects[id.Value] : objects[id.Value] = Loan2.FromJObject(FolioServiceClient.GetLoan(id?.ToString()))) : Loan2.FromJObject(FolioServiceClient.GetLoan(id?.ToString()));
             if (l2 == null) return null;
-            if (load && l2.UserId != null) l2.User = (User2)(cache && objects.ContainsKey(l2.UserId.Value) ? objects[l2.UserId.Value] : objects[l2.UserId.Value] = FindUser2(l2.UserId));
-            if (load && l2.ProxyUserId != null) l2.ProxyUser = (User2)(cache && objects.ContainsKey(l2.ProxyUserId.Value) ? objects[l2.ProxyUserId.Value] : objects[l2.ProxyUserId.Value] = FindUser2(l2.ProxyUserId));
-            if (load && l2.ItemId != null) l2.Item = (Item2)(cache && objects.ContainsKey(l2.ItemId.Value) ? objects[l2.ItemId.Value] : objects[l2.ItemId.Value] = FindItem2(l2.ItemId));
-            if (load && l2.ItemEffectiveLocationAtCheckOutId != null) l2.ItemEffectiveLocationAtCheckOut = (Location2)(cache && objects.ContainsKey(l2.ItemEffectiveLocationAtCheckOutId.Value) ? objects[l2.ItemEffectiveLocationAtCheckOutId.Value] : objects[l2.ItemEffectiveLocationAtCheckOutId.Value] = FindLocation2(l2.ItemEffectiveLocationAtCheckOutId));
-            if (load && l2.LoanPolicyId != null) l2.LoanPolicy = (LoanPolicy2)(cache && objects.ContainsKey(l2.LoanPolicyId.Value) ? objects[l2.LoanPolicyId.Value] : objects[l2.LoanPolicyId.Value] = FindLoanPolicy2(l2.LoanPolicyId));
-            if (load && l2.CheckoutServicePointId != null) l2.CheckoutServicePoint = (ServicePoint2)(cache && objects.ContainsKey(l2.CheckoutServicePointId.Value) ? objects[l2.CheckoutServicePointId.Value] : objects[l2.CheckoutServicePointId.Value] = FindServicePoint2(l2.CheckoutServicePointId));
-            if (load && l2.CheckinServicePointId != null) l2.CheckinServicePoint = (ServicePoint2)(cache && objects.ContainsKey(l2.CheckinServicePointId.Value) ? objects[l2.CheckinServicePointId.Value] : objects[l2.CheckinServicePointId.Value] = FindServicePoint2(l2.CheckinServicePointId));
-            if (load && l2.GroupId != null) l2.Group = (Group2)(cache && objects.ContainsKey(l2.GroupId.Value) ? objects[l2.GroupId.Value] : objects[l2.GroupId.Value] = FindGroup2(l2.GroupId));
-            if (load && l2.OverdueFinePolicyId != null) l2.OverdueFinePolicy = (OverdueFinePolicy2)(cache && objects.ContainsKey(l2.OverdueFinePolicyId.Value) ? objects[l2.OverdueFinePolicyId.Value] : objects[l2.OverdueFinePolicyId.Value] = FindOverdueFinePolicy2(l2.OverdueFinePolicyId));
-            if (load && l2.LostItemPolicyId != null) l2.LostItemPolicy = (LostItemFeePolicy2)(cache && objects.ContainsKey(l2.LostItemPolicyId.Value) ? objects[l2.LostItemPolicyId.Value] : objects[l2.LostItemPolicyId.Value] = FindLostItemFeePolicy2(l2.LostItemPolicyId));
-            if (load && l2.CreationUserId != null) l2.CreationUser = (User2)(cache && objects.ContainsKey(l2.CreationUserId.Value) ? objects[l2.CreationUserId.Value] : objects[l2.CreationUserId.Value] = FindUser2(l2.CreationUserId));
-            if (load && l2.LastWriteUserId != null) l2.LastWriteUser = (User2)(cache && objects.ContainsKey(l2.LastWriteUserId.Value) ? objects[l2.LastWriteUserId.Value] : objects[l2.LastWriteUserId.Value] = FindUser2(l2.LastWriteUserId));
+            if (load && l2.UserId != null) l2.User = FindUser2(l2.UserId, cache: cache);
+            if (load && l2.ProxyUserId != null) l2.ProxyUser = FindUser2(l2.ProxyUserId, cache: cache);
+            if (load && l2.ItemId != null) l2.Item = FindItem2(l2.ItemId, cache: cache);
+            if (load && l2.ItemEffectiveLocationAtCheckOutId != null) l2.ItemEffectiveLocationAtCheckOut = FindLocation2(l2.ItemEffectiveLocationAtCheckOutId, cache: cache);
+            if (load && l2.LoanPolicyId != null) l2.LoanPolicy = FindLoanPolicy2(l2.LoanPolicyId, cache: cache);
+            if (load && l2.CheckoutServicePointId != null) l2.CheckoutServicePoint = FindServicePoint2(l2.CheckoutServicePointId, cache: cache);
+            if (load && l2.CheckinServicePointId != null) l2.CheckinServicePoint = FindServicePoint2(l2.CheckinServicePointId, cache: cache);
+            if (load && l2.GroupId != null) l2.Group = FindGroup2(l2.GroupId, cache: cache);
+            if (load && l2.OverdueFinePolicyId != null) l2.OverdueFinePolicy = FindOverdueFinePolicy2(l2.OverdueFinePolicyId, cache: cache);
+            if (load && l2.LostItemPolicyId != null) l2.LostItemPolicy = FindLostItemFeePolicy2(l2.LostItemPolicyId, cache: cache);
+            if (load && l2.CreationUserId != null) l2.CreationUser = FindUser2(l2.CreationUserId, cache: cache);
+            if (load && l2.LastWriteUserId != null) l2.LastWriteUser = FindUser2(l2.LastWriteUserId, cache: cache);
             return l2;
         }
 
@@ -3430,11 +3550,12 @@ namespace FolioLibrary
         {
             return FolioServiceClient.LoanPolicies(out count, where, orderBy, skip, take).Select(jo =>
             {
-                var lp2 = LoanPolicy2.FromJObject(jo);
-                if (load && lp2.LoansPolicyFixedDueDateScheduleId != null) lp2.LoansPolicyFixedDueDateSchedule = (FixedDueDateSchedule2)(cache && objects.ContainsKey(lp2.LoansPolicyFixedDueDateScheduleId.Value) ? objects[lp2.LoansPolicyFixedDueDateScheduleId.Value] : objects[lp2.LoansPolicyFixedDueDateScheduleId.Value] = FindFixedDueDateSchedule2(lp2.LoansPolicyFixedDueDateScheduleId));
-                if (load && lp2.RenewalsPolicyAlternateFixedDueDateScheduleId != null) lp2.RenewalsPolicyAlternateFixedDueDateSchedule = (FixedDueDateSchedule2)(cache && objects.ContainsKey(lp2.RenewalsPolicyAlternateFixedDueDateScheduleId.Value) ? objects[lp2.RenewalsPolicyAlternateFixedDueDateScheduleId.Value] : objects[lp2.RenewalsPolicyAlternateFixedDueDateScheduleId.Value] = FindFixedDueDateSchedule2(lp2.RenewalsPolicyAlternateFixedDueDateScheduleId));
-                if (load && lp2.CreationUserId != null) lp2.CreationUser = (User2)(cache && objects.ContainsKey(lp2.CreationUserId.Value) ? objects[lp2.CreationUserId.Value] : objects[lp2.CreationUserId.Value] = FindUser2(lp2.CreationUserId));
-                if (load && lp2.LastWriteUserId != null) lp2.LastWriteUser = (User2)(cache && objects.ContainsKey(lp2.LastWriteUserId.Value) ? objects[lp2.LastWriteUserId.Value] : objects[lp2.LastWriteUserId.Value] = FindUser2(lp2.LastWriteUserId));
+                var id = Guid.Parse((string)jo["id"]);
+                var lp2 = cache ? (LoanPolicy2)(objects.ContainsKey(id) ? objects[id] : objects[id] = LoanPolicy2.FromJObject(jo)) : LoanPolicy2.FromJObject(jo);
+                if (load && lp2.LoansPolicyFixedDueDateScheduleId != null) lp2.LoansPolicyFixedDueDateSchedule = FindFixedDueDateSchedule2(lp2.LoansPolicyFixedDueDateScheduleId, cache: cache);
+                if (load && lp2.RenewalsPolicyAlternateFixedDueDateScheduleId != null) lp2.RenewalsPolicyAlternateFixedDueDateSchedule = FindFixedDueDateSchedule2(lp2.RenewalsPolicyAlternateFixedDueDateScheduleId, cache: cache);
+                if (load && lp2.CreationUserId != null) lp2.CreationUser = FindUser2(lp2.CreationUserId, cache: cache);
+                if (load && lp2.LastWriteUserId != null) lp2.LastWriteUser = FindUser2(lp2.LastWriteUserId, cache: cache);
                 return lp2;
             }).ToArray();
         }
@@ -3443,23 +3564,24 @@ namespace FolioLibrary
         {
             foreach (var jo in FolioServiceClient.LoanPolicies(where, orderBy, skip, take))
             {
-                var lp2 = LoanPolicy2.FromJObject(jo);
-                if (load && lp2.LoansPolicyFixedDueDateScheduleId != null) lp2.LoansPolicyFixedDueDateSchedule = (FixedDueDateSchedule2)(cache && objects.ContainsKey(lp2.LoansPolicyFixedDueDateScheduleId.Value) ? objects[lp2.LoansPolicyFixedDueDateScheduleId.Value] : objects[lp2.LoansPolicyFixedDueDateScheduleId.Value] = FindFixedDueDateSchedule2(lp2.LoansPolicyFixedDueDateScheduleId));
-                if (load && lp2.RenewalsPolicyAlternateFixedDueDateScheduleId != null) lp2.RenewalsPolicyAlternateFixedDueDateSchedule = (FixedDueDateSchedule2)(cache && objects.ContainsKey(lp2.RenewalsPolicyAlternateFixedDueDateScheduleId.Value) ? objects[lp2.RenewalsPolicyAlternateFixedDueDateScheduleId.Value] : objects[lp2.RenewalsPolicyAlternateFixedDueDateScheduleId.Value] = FindFixedDueDateSchedule2(lp2.RenewalsPolicyAlternateFixedDueDateScheduleId));
-                if (load && lp2.CreationUserId != null) lp2.CreationUser = (User2)(cache && objects.ContainsKey(lp2.CreationUserId.Value) ? objects[lp2.CreationUserId.Value] : objects[lp2.CreationUserId.Value] = FindUser2(lp2.CreationUserId));
-                if (load && lp2.LastWriteUserId != null) lp2.LastWriteUser = (User2)(cache && objects.ContainsKey(lp2.LastWriteUserId.Value) ? objects[lp2.LastWriteUserId.Value] : objects[lp2.LastWriteUserId.Value] = FindUser2(lp2.LastWriteUserId));
+                var id = Guid.Parse((string)jo["id"]);
+                var lp2 = cache ? (LoanPolicy2)(objects.ContainsKey(id) ? objects[id] : objects[id] = LoanPolicy2.FromJObject(jo)) : LoanPolicy2.FromJObject(jo);
+                if (load && lp2.LoansPolicyFixedDueDateScheduleId != null) lp2.LoansPolicyFixedDueDateSchedule = FindFixedDueDateSchedule2(lp2.LoansPolicyFixedDueDateScheduleId, cache: cache);
+                if (load && lp2.RenewalsPolicyAlternateFixedDueDateScheduleId != null) lp2.RenewalsPolicyAlternateFixedDueDateSchedule = FindFixedDueDateSchedule2(lp2.RenewalsPolicyAlternateFixedDueDateScheduleId, cache: cache);
+                if (load && lp2.CreationUserId != null) lp2.CreationUser = FindUser2(lp2.CreationUserId, cache: cache);
+                if (load && lp2.LastWriteUserId != null) lp2.LastWriteUser = FindUser2(lp2.LastWriteUserId, cache: cache);
                 yield return lp2;
             }
         }
 
         public LoanPolicy2 FindLoanPolicy2(Guid? id, bool load = false, bool cache = true)
         {
-            var lp2 = LoanPolicy2.FromJObject(FolioServiceClient.GetLoanPolicy(id?.ToString()));
+            var lp2 = cache ? (LoanPolicy2)(objects.ContainsKey(id.Value) ? objects[id.Value] : objects[id.Value] = LoanPolicy2.FromJObject(FolioServiceClient.GetLoanPolicy(id?.ToString()))) : LoanPolicy2.FromJObject(FolioServiceClient.GetLoanPolicy(id?.ToString()));
             if (lp2 == null) return null;
-            if (load && lp2.LoansPolicyFixedDueDateScheduleId != null) lp2.LoansPolicyFixedDueDateSchedule = (FixedDueDateSchedule2)(cache && objects.ContainsKey(lp2.LoansPolicyFixedDueDateScheduleId.Value) ? objects[lp2.LoansPolicyFixedDueDateScheduleId.Value] : objects[lp2.LoansPolicyFixedDueDateScheduleId.Value] = FindFixedDueDateSchedule2(lp2.LoansPolicyFixedDueDateScheduleId));
-            if (load && lp2.RenewalsPolicyAlternateFixedDueDateScheduleId != null) lp2.RenewalsPolicyAlternateFixedDueDateSchedule = (FixedDueDateSchedule2)(cache && objects.ContainsKey(lp2.RenewalsPolicyAlternateFixedDueDateScheduleId.Value) ? objects[lp2.RenewalsPolicyAlternateFixedDueDateScheduleId.Value] : objects[lp2.RenewalsPolicyAlternateFixedDueDateScheduleId.Value] = FindFixedDueDateSchedule2(lp2.RenewalsPolicyAlternateFixedDueDateScheduleId));
-            if (load && lp2.CreationUserId != null) lp2.CreationUser = (User2)(cache && objects.ContainsKey(lp2.CreationUserId.Value) ? objects[lp2.CreationUserId.Value] : objects[lp2.CreationUserId.Value] = FindUser2(lp2.CreationUserId));
-            if (load && lp2.LastWriteUserId != null) lp2.LastWriteUser = (User2)(cache && objects.ContainsKey(lp2.LastWriteUserId.Value) ? objects[lp2.LastWriteUserId.Value] : objects[lp2.LastWriteUserId.Value] = FindUser2(lp2.LastWriteUserId));
+            if (load && lp2.LoansPolicyFixedDueDateScheduleId != null) lp2.LoansPolicyFixedDueDateSchedule = FindFixedDueDateSchedule2(lp2.LoansPolicyFixedDueDateScheduleId, cache: cache);
+            if (load && lp2.RenewalsPolicyAlternateFixedDueDateScheduleId != null) lp2.RenewalsPolicyAlternateFixedDueDateSchedule = FindFixedDueDateSchedule2(lp2.RenewalsPolicyAlternateFixedDueDateScheduleId, cache: cache);
+            if (load && lp2.CreationUserId != null) lp2.CreationUser = FindUser2(lp2.CreationUserId, cache: cache);
+            if (load && lp2.LastWriteUserId != null) lp2.LastWriteUser = FindUser2(lp2.LastWriteUserId, cache: cache);
             return lp2;
         }
 
@@ -3481,9 +3603,10 @@ namespace FolioLibrary
         {
             return FolioServiceClient.LoanTypes(out count, where, orderBy, skip, take).Select(jo =>
             {
-                var lt2 = LoanType2.FromJObject(jo);
-                if (load && lt2.CreationUserId != null) lt2.CreationUser = (User2)(cache && objects.ContainsKey(lt2.CreationUserId.Value) ? objects[lt2.CreationUserId.Value] : objects[lt2.CreationUserId.Value] = FindUser2(lt2.CreationUserId));
-                if (load && lt2.LastWriteUserId != null) lt2.LastWriteUser = (User2)(cache && objects.ContainsKey(lt2.LastWriteUserId.Value) ? objects[lt2.LastWriteUserId.Value] : objects[lt2.LastWriteUserId.Value] = FindUser2(lt2.LastWriteUserId));
+                var id = Guid.Parse((string)jo["id"]);
+                var lt2 = cache ? (LoanType2)(objects.ContainsKey(id) ? objects[id] : objects[id] = LoanType2.FromJObject(jo)) : LoanType2.FromJObject(jo);
+                if (load && lt2.CreationUserId != null) lt2.CreationUser = FindUser2(lt2.CreationUserId, cache: cache);
+                if (load && lt2.LastWriteUserId != null) lt2.LastWriteUser = FindUser2(lt2.LastWriteUserId, cache: cache);
                 return lt2;
             }).ToArray();
         }
@@ -3492,19 +3615,20 @@ namespace FolioLibrary
         {
             foreach (var jo in FolioServiceClient.LoanTypes(where, orderBy, skip, take))
             {
-                var lt2 = LoanType2.FromJObject(jo);
-                if (load && lt2.CreationUserId != null) lt2.CreationUser = (User2)(cache && objects.ContainsKey(lt2.CreationUserId.Value) ? objects[lt2.CreationUserId.Value] : objects[lt2.CreationUserId.Value] = FindUser2(lt2.CreationUserId));
-                if (load && lt2.LastWriteUserId != null) lt2.LastWriteUser = (User2)(cache && objects.ContainsKey(lt2.LastWriteUserId.Value) ? objects[lt2.LastWriteUserId.Value] : objects[lt2.LastWriteUserId.Value] = FindUser2(lt2.LastWriteUserId));
+                var id = Guid.Parse((string)jo["id"]);
+                var lt2 = cache ? (LoanType2)(objects.ContainsKey(id) ? objects[id] : objects[id] = LoanType2.FromJObject(jo)) : LoanType2.FromJObject(jo);
+                if (load && lt2.CreationUserId != null) lt2.CreationUser = FindUser2(lt2.CreationUserId, cache: cache);
+                if (load && lt2.LastWriteUserId != null) lt2.LastWriteUser = FindUser2(lt2.LastWriteUserId, cache: cache);
                 yield return lt2;
             }
         }
 
         public LoanType2 FindLoanType2(Guid? id, bool load = false, bool cache = true)
         {
-            var lt2 = LoanType2.FromJObject(FolioServiceClient.GetLoanType(id?.ToString()));
+            var lt2 = cache ? (LoanType2)(objects.ContainsKey(id.Value) ? objects[id.Value] : objects[id.Value] = LoanType2.FromJObject(FolioServiceClient.GetLoanType(id?.ToString()))) : LoanType2.FromJObject(FolioServiceClient.GetLoanType(id?.ToString()));
             if (lt2 == null) return null;
-            if (load && lt2.CreationUserId != null) lt2.CreationUser = (User2)(cache && objects.ContainsKey(lt2.CreationUserId.Value) ? objects[lt2.CreationUserId.Value] : objects[lt2.CreationUserId.Value] = FindUser2(lt2.CreationUserId));
-            if (load && lt2.LastWriteUserId != null) lt2.LastWriteUser = (User2)(cache && objects.ContainsKey(lt2.LastWriteUserId.Value) ? objects[lt2.LastWriteUserId.Value] : objects[lt2.LastWriteUserId.Value] = FindUser2(lt2.LastWriteUserId));
+            if (load && lt2.CreationUserId != null) lt2.CreationUser = FindUser2(lt2.CreationUserId, cache: cache);
+            if (load && lt2.LastWriteUserId != null) lt2.LastWriteUser = FindUser2(lt2.LastWriteUserId, cache: cache);
             return lt2;
         }
 
@@ -3526,13 +3650,14 @@ namespace FolioLibrary
         {
             return FolioServiceClient.Locations(out count, where, orderBy, skip, take).Select(jo =>
             {
-                var l2 = Location2.FromJObject(jo);
-                if (load && l2.InstitutionId != null) l2.Institution = (Institution2)(cache && objects.ContainsKey(l2.InstitutionId.Value) ? objects[l2.InstitutionId.Value] : objects[l2.InstitutionId.Value] = FindInstitution2(l2.InstitutionId));
-                if (load && l2.CampusId != null) l2.Campus = (Campus2)(cache && objects.ContainsKey(l2.CampusId.Value) ? objects[l2.CampusId.Value] : objects[l2.CampusId.Value] = FindCampus2(l2.CampusId));
-                if (load && l2.LibraryId != null) l2.Library = (Library2)(cache && objects.ContainsKey(l2.LibraryId.Value) ? objects[l2.LibraryId.Value] : objects[l2.LibraryId.Value] = FindLibrary2(l2.LibraryId));
-                if (load && l2.PrimaryServicePointId != null) l2.PrimaryServicePoint = (ServicePoint2)(cache && objects.ContainsKey(l2.PrimaryServicePointId.Value) ? objects[l2.PrimaryServicePointId.Value] : objects[l2.PrimaryServicePointId.Value] = FindServicePoint2(l2.PrimaryServicePointId));
-                if (load && l2.CreationUserId != null) l2.CreationUser = (User2)(cache && objects.ContainsKey(l2.CreationUserId.Value) ? objects[l2.CreationUserId.Value] : objects[l2.CreationUserId.Value] = FindUser2(l2.CreationUserId));
-                if (load && l2.LastWriteUserId != null) l2.LastWriteUser = (User2)(cache && objects.ContainsKey(l2.LastWriteUserId.Value) ? objects[l2.LastWriteUserId.Value] : objects[l2.LastWriteUserId.Value] = FindUser2(l2.LastWriteUserId));
+                var id = Guid.Parse((string)jo["id"]);
+                var l2 = cache ? (Location2)(objects.ContainsKey(id) ? objects[id] : objects[id] = Location2.FromJObject(jo)) : Location2.FromJObject(jo);
+                if (load && l2.InstitutionId != null) l2.Institution = FindInstitution2(l2.InstitutionId, cache: cache);
+                if (load && l2.CampusId != null) l2.Campus = FindCampus2(l2.CampusId, cache: cache);
+                if (load && l2.LibraryId != null) l2.Library = FindLibrary2(l2.LibraryId, cache: cache);
+                if (load && l2.PrimaryServicePointId != null) l2.PrimaryServicePoint = FindServicePoint2(l2.PrimaryServicePointId, cache: cache);
+                if (load && l2.CreationUserId != null) l2.CreationUser = FindUser2(l2.CreationUserId, cache: cache);
+                if (load && l2.LastWriteUserId != null) l2.LastWriteUser = FindUser2(l2.LastWriteUserId, cache: cache);
                 return l2;
             }).ToArray();
         }
@@ -3541,34 +3666,35 @@ namespace FolioLibrary
         {
             foreach (var jo in FolioServiceClient.Locations(where, orderBy, skip, take))
             {
-                var l2 = Location2.FromJObject(jo);
-                if (load && l2.InstitutionId != null) l2.Institution = (Institution2)(cache && objects.ContainsKey(l2.InstitutionId.Value) ? objects[l2.InstitutionId.Value] : objects[l2.InstitutionId.Value] = FindInstitution2(l2.InstitutionId));
-                if (load && l2.CampusId != null) l2.Campus = (Campus2)(cache && objects.ContainsKey(l2.CampusId.Value) ? objects[l2.CampusId.Value] : objects[l2.CampusId.Value] = FindCampus2(l2.CampusId));
-                if (load && l2.LibraryId != null) l2.Library = (Library2)(cache && objects.ContainsKey(l2.LibraryId.Value) ? objects[l2.LibraryId.Value] : objects[l2.LibraryId.Value] = FindLibrary2(l2.LibraryId));
-                if (load && l2.PrimaryServicePointId != null) l2.PrimaryServicePoint = (ServicePoint2)(cache && objects.ContainsKey(l2.PrimaryServicePointId.Value) ? objects[l2.PrimaryServicePointId.Value] : objects[l2.PrimaryServicePointId.Value] = FindServicePoint2(l2.PrimaryServicePointId));
-                if (load && l2.CreationUserId != null) l2.CreationUser = (User2)(cache && objects.ContainsKey(l2.CreationUserId.Value) ? objects[l2.CreationUserId.Value] : objects[l2.CreationUserId.Value] = FindUser2(l2.CreationUserId));
-                if (load && l2.LastWriteUserId != null) l2.LastWriteUser = (User2)(cache && objects.ContainsKey(l2.LastWriteUserId.Value) ? objects[l2.LastWriteUserId.Value] : objects[l2.LastWriteUserId.Value] = FindUser2(l2.LastWriteUserId));
+                var id = Guid.Parse((string)jo["id"]);
+                var l2 = cache ? (Location2)(objects.ContainsKey(id) ? objects[id] : objects[id] = Location2.FromJObject(jo)) : Location2.FromJObject(jo);
+                if (load && l2.InstitutionId != null) l2.Institution = FindInstitution2(l2.InstitutionId, cache: cache);
+                if (load && l2.CampusId != null) l2.Campus = FindCampus2(l2.CampusId, cache: cache);
+                if (load && l2.LibraryId != null) l2.Library = FindLibrary2(l2.LibraryId, cache: cache);
+                if (load && l2.PrimaryServicePointId != null) l2.PrimaryServicePoint = FindServicePoint2(l2.PrimaryServicePointId, cache: cache);
+                if (load && l2.CreationUserId != null) l2.CreationUser = FindUser2(l2.CreationUserId, cache: cache);
+                if (load && l2.LastWriteUserId != null) l2.LastWriteUser = FindUser2(l2.LastWriteUserId, cache: cache);
                 yield return l2;
             }
         }
 
         public Location2 FindLocation2(Guid? id, bool load = false, bool cache = true)
         {
-            var l2 = Location2.FromJObject(FolioServiceClient.GetLocation(id?.ToString()));
+            var l2 = cache ? (Location2)(objects.ContainsKey(id.Value) ? objects[id.Value] : objects[id.Value] = Location2.FromJObject(FolioServiceClient.GetLocation(id?.ToString()))) : Location2.FromJObject(FolioServiceClient.GetLocation(id?.ToString()));
             if (l2 == null) return null;
-            if (load && l2.InstitutionId != null) l2.Institution = (Institution2)(cache && objects.ContainsKey(l2.InstitutionId.Value) ? objects[l2.InstitutionId.Value] : objects[l2.InstitutionId.Value] = FindInstitution2(l2.InstitutionId));
-            if (load && l2.CampusId != null) l2.Campus = (Campus2)(cache && objects.ContainsKey(l2.CampusId.Value) ? objects[l2.CampusId.Value] : objects[l2.CampusId.Value] = FindCampus2(l2.CampusId));
-            if (load && l2.LibraryId != null) l2.Library = (Library2)(cache && objects.ContainsKey(l2.LibraryId.Value) ? objects[l2.LibraryId.Value] : objects[l2.LibraryId.Value] = FindLibrary2(l2.LibraryId));
-            if (load && l2.PrimaryServicePointId != null) l2.PrimaryServicePoint = (ServicePoint2)(cache && objects.ContainsKey(l2.PrimaryServicePointId.Value) ? objects[l2.PrimaryServicePointId.Value] : objects[l2.PrimaryServicePointId.Value] = FindServicePoint2(l2.PrimaryServicePointId));
-            if (load && l2.CreationUserId != null) l2.CreationUser = (User2)(cache && objects.ContainsKey(l2.CreationUserId.Value) ? objects[l2.CreationUserId.Value] : objects[l2.CreationUserId.Value] = FindUser2(l2.CreationUserId));
-            if (load && l2.LastWriteUserId != null) l2.LastWriteUser = (User2)(cache && objects.ContainsKey(l2.LastWriteUserId.Value) ? objects[l2.LastWriteUserId.Value] : objects[l2.LastWriteUserId.Value] = FindUser2(l2.LastWriteUserId));
+            if (load && l2.InstitutionId != null) l2.Institution = FindInstitution2(l2.InstitutionId, cache: cache);
+            if (load && l2.CampusId != null) l2.Campus = FindCampus2(l2.CampusId, cache: cache);
+            if (load && l2.LibraryId != null) l2.Library = FindLibrary2(l2.LibraryId, cache: cache);
+            if (load && l2.PrimaryServicePointId != null) l2.PrimaryServicePoint = FindServicePoint2(l2.PrimaryServicePointId, cache: cache);
+            if (load && l2.CreationUserId != null) l2.CreationUser = FindUser2(l2.CreationUserId, cache: cache);
+            if (load && l2.LastWriteUserId != null) l2.LastWriteUser = FindUser2(l2.LastWriteUserId, cache: cache);
             var i = 0;
             if (l2.LocationServicePoints != null) foreach (var lsp in l2.LocationServicePoints)
                 {
                     lsp.Id = (++i).ToString();
                     lsp.LocationId = l2.Id;
                     lsp.Location = l2;
-                    if (load && lsp.ServicePointId != null) lsp.ServicePoint = (ServicePoint2)(cache && objects.ContainsKey(lsp.ServicePointId.Value) ? objects[lsp.ServicePointId.Value] : objects[lsp.ServicePointId.Value] = FindServicePoint2(lsp.ServicePointId));
+                    if (load && lsp.ServicePointId != null) lsp.ServicePoint = FindServicePoint2(lsp.ServicePointId, cache: cache);
                 }
             return l2;
         }
@@ -3591,11 +3717,12 @@ namespace FolioLibrary
         {
             return FolioServiceClient.LocationSettings(out count, where, orderBy, skip, take).Select(jo =>
             {
-                var ls = LocationSetting.FromJObject(jo);
-                if (load && ls.LocationId != null) ls.Location = (Location2)(cache && objects.ContainsKey(ls.LocationId.Value) ? objects[ls.LocationId.Value] : objects[ls.LocationId.Value] = FindLocation2(ls.LocationId));
-                if (load && ls.SettingsId != null) ls.Settings = (Setting)(cache && objects.ContainsKey(ls.SettingsId.Value) ? objects[ls.SettingsId.Value] : objects[ls.SettingsId.Value] = FindSetting(ls.SettingsId));
-                if (load && ls.CreationUserId != null) ls.CreationUser = (User2)(cache && objects.ContainsKey(ls.CreationUserId.Value) ? objects[ls.CreationUserId.Value] : objects[ls.CreationUserId.Value] = FindUser2(ls.CreationUserId));
-                if (load && ls.LastWriteUserId != null) ls.LastWriteUser = (User2)(cache && objects.ContainsKey(ls.LastWriteUserId.Value) ? objects[ls.LastWriteUserId.Value] : objects[ls.LastWriteUserId.Value] = FindUser2(ls.LastWriteUserId));
+                var id = Guid.Parse((string)jo["id"]);
+                var ls = cache ? (LocationSetting)(objects.ContainsKey(id) ? objects[id] : objects[id] = LocationSetting.FromJObject(jo)) : LocationSetting.FromJObject(jo);
+                if (load && ls.LocationId != null) ls.Location = FindLocation2(ls.LocationId, cache: cache);
+                if (load && ls.SettingsId != null) ls.Settings = FindSetting(ls.SettingsId, cache: cache);
+                if (load && ls.CreationUserId != null) ls.CreationUser = FindUser2(ls.CreationUserId, cache: cache);
+                if (load && ls.LastWriteUserId != null) ls.LastWriteUser = FindUser2(ls.LastWriteUserId, cache: cache);
                 return ls;
             }).ToArray();
         }
@@ -3604,23 +3731,24 @@ namespace FolioLibrary
         {
             foreach (var jo in FolioServiceClient.LocationSettings(where, orderBy, skip, take))
             {
-                var ls = LocationSetting.FromJObject(jo);
-                if (load && ls.LocationId != null) ls.Location = (Location2)(cache && objects.ContainsKey(ls.LocationId.Value) ? objects[ls.LocationId.Value] : objects[ls.LocationId.Value] = FindLocation2(ls.LocationId));
-                if (load && ls.SettingsId != null) ls.Settings = (Setting)(cache && objects.ContainsKey(ls.SettingsId.Value) ? objects[ls.SettingsId.Value] : objects[ls.SettingsId.Value] = FindSetting(ls.SettingsId));
-                if (load && ls.CreationUserId != null) ls.CreationUser = (User2)(cache && objects.ContainsKey(ls.CreationUserId.Value) ? objects[ls.CreationUserId.Value] : objects[ls.CreationUserId.Value] = FindUser2(ls.CreationUserId));
-                if (load && ls.LastWriteUserId != null) ls.LastWriteUser = (User2)(cache && objects.ContainsKey(ls.LastWriteUserId.Value) ? objects[ls.LastWriteUserId.Value] : objects[ls.LastWriteUserId.Value] = FindUser2(ls.LastWriteUserId));
+                var id = Guid.Parse((string)jo["id"]);
+                var ls = cache ? (LocationSetting)(objects.ContainsKey(id) ? objects[id] : objects[id] = LocationSetting.FromJObject(jo)) : LocationSetting.FromJObject(jo);
+                if (load && ls.LocationId != null) ls.Location = FindLocation2(ls.LocationId, cache: cache);
+                if (load && ls.SettingsId != null) ls.Settings = FindSetting(ls.SettingsId, cache: cache);
+                if (load && ls.CreationUserId != null) ls.CreationUser = FindUser2(ls.CreationUserId, cache: cache);
+                if (load && ls.LastWriteUserId != null) ls.LastWriteUser = FindUser2(ls.LastWriteUserId, cache: cache);
                 yield return ls;
             }
         }
 
         public LocationSetting FindLocationSetting(Guid? id, bool load = false, bool cache = true)
         {
-            var ls = LocationSetting.FromJObject(FolioServiceClient.GetLocationSetting(id?.ToString()));
+            var ls = cache ? (LocationSetting)(objects.ContainsKey(id.Value) ? objects[id.Value] : objects[id.Value] = LocationSetting.FromJObject(FolioServiceClient.GetLocationSetting(id?.ToString()))) : LocationSetting.FromJObject(FolioServiceClient.GetLocationSetting(id?.ToString()));
             if (ls == null) return null;
-            if (load && ls.LocationId != null) ls.Location = (Location2)(cache && objects.ContainsKey(ls.LocationId.Value) ? objects[ls.LocationId.Value] : objects[ls.LocationId.Value] = FindLocation2(ls.LocationId));
-            if (load && ls.SettingsId != null) ls.Settings = (Setting)(cache && objects.ContainsKey(ls.SettingsId.Value) ? objects[ls.SettingsId.Value] : objects[ls.SettingsId.Value] = FindSetting(ls.SettingsId));
-            if (load && ls.CreationUserId != null) ls.CreationUser = (User2)(cache && objects.ContainsKey(ls.CreationUserId.Value) ? objects[ls.CreationUserId.Value] : objects[ls.CreationUserId.Value] = FindUser2(ls.CreationUserId));
-            if (load && ls.LastWriteUserId != null) ls.LastWriteUser = (User2)(cache && objects.ContainsKey(ls.LastWriteUserId.Value) ? objects[ls.LastWriteUserId.Value] : objects[ls.LastWriteUserId.Value] = FindUser2(ls.LastWriteUserId));
+            if (load && ls.LocationId != null) ls.Location = FindLocation2(ls.LocationId, cache: cache);
+            if (load && ls.SettingsId != null) ls.Settings = FindSetting(ls.SettingsId, cache: cache);
+            if (load && ls.CreationUserId != null) ls.CreationUser = FindUser2(ls.CreationUserId, cache: cache);
+            if (load && ls.LastWriteUserId != null) ls.LastWriteUser = FindUser2(ls.LastWriteUserId, cache: cache);
             return ls;
         }
 
@@ -3648,9 +3776,10 @@ namespace FolioLibrary
         {
             return FolioServiceClient.LostItemFeePolicies(out count, where, orderBy, skip, take).Select(jo =>
             {
-                var lifp2 = LostItemFeePolicy2.FromJObject(jo);
-                if (load && lifp2.CreationUserId != null) lifp2.CreationUser = (User2)(cache && objects.ContainsKey(lifp2.CreationUserId.Value) ? objects[lifp2.CreationUserId.Value] : objects[lifp2.CreationUserId.Value] = FindUser2(lifp2.CreationUserId));
-                if (load && lifp2.LastWriteUserId != null) lifp2.LastWriteUser = (User2)(cache && objects.ContainsKey(lifp2.LastWriteUserId.Value) ? objects[lifp2.LastWriteUserId.Value] : objects[lifp2.LastWriteUserId.Value] = FindUser2(lifp2.LastWriteUserId));
+                var id = Guid.Parse((string)jo["id"]);
+                var lifp2 = cache ? (LostItemFeePolicy2)(objects.ContainsKey(id) ? objects[id] : objects[id] = LostItemFeePolicy2.FromJObject(jo)) : LostItemFeePolicy2.FromJObject(jo);
+                if (load && lifp2.CreationUserId != null) lifp2.CreationUser = FindUser2(lifp2.CreationUserId, cache: cache);
+                if (load && lifp2.LastWriteUserId != null) lifp2.LastWriteUser = FindUser2(lifp2.LastWriteUserId, cache: cache);
                 return lifp2;
             }).ToArray();
         }
@@ -3659,19 +3788,20 @@ namespace FolioLibrary
         {
             foreach (var jo in FolioServiceClient.LostItemFeePolicies(where, orderBy, skip, take))
             {
-                var lifp2 = LostItemFeePolicy2.FromJObject(jo);
-                if (load && lifp2.CreationUserId != null) lifp2.CreationUser = (User2)(cache && objects.ContainsKey(lifp2.CreationUserId.Value) ? objects[lifp2.CreationUserId.Value] : objects[lifp2.CreationUserId.Value] = FindUser2(lifp2.CreationUserId));
-                if (load && lifp2.LastWriteUserId != null) lifp2.LastWriteUser = (User2)(cache && objects.ContainsKey(lifp2.LastWriteUserId.Value) ? objects[lifp2.LastWriteUserId.Value] : objects[lifp2.LastWriteUserId.Value] = FindUser2(lifp2.LastWriteUserId));
+                var id = Guid.Parse((string)jo["id"]);
+                var lifp2 = cache ? (LostItemFeePolicy2)(objects.ContainsKey(id) ? objects[id] : objects[id] = LostItemFeePolicy2.FromJObject(jo)) : LostItemFeePolicy2.FromJObject(jo);
+                if (load && lifp2.CreationUserId != null) lifp2.CreationUser = FindUser2(lifp2.CreationUserId, cache: cache);
+                if (load && lifp2.LastWriteUserId != null) lifp2.LastWriteUser = FindUser2(lifp2.LastWriteUserId, cache: cache);
                 yield return lifp2;
             }
         }
 
         public LostItemFeePolicy2 FindLostItemFeePolicy2(Guid? id, bool load = false, bool cache = true)
         {
-            var lifp2 = LostItemFeePolicy2.FromJObject(FolioServiceClient.GetLostItemFeePolicy(id?.ToString()));
+            var lifp2 = cache ? (LostItemFeePolicy2)(objects.ContainsKey(id.Value) ? objects[id.Value] : objects[id.Value] = LostItemFeePolicy2.FromJObject(FolioServiceClient.GetLostItemFeePolicy(id?.ToString()))) : LostItemFeePolicy2.FromJObject(FolioServiceClient.GetLostItemFeePolicy(id?.ToString()));
             if (lifp2 == null) return null;
-            if (load && lifp2.CreationUserId != null) lifp2.CreationUser = (User2)(cache && objects.ContainsKey(lifp2.CreationUserId.Value) ? objects[lifp2.CreationUserId.Value] : objects[lifp2.CreationUserId.Value] = FindUser2(lifp2.CreationUserId));
-            if (load && lifp2.LastWriteUserId != null) lifp2.LastWriteUser = (User2)(cache && objects.ContainsKey(lifp2.LastWriteUserId.Value) ? objects[lifp2.LastWriteUserId.Value] : objects[lifp2.LastWriteUserId.Value] = FindUser2(lifp2.LastWriteUserId));
+            if (load && lifp2.CreationUserId != null) lifp2.CreationUser = FindUser2(lifp2.CreationUserId, cache: cache);
+            if (load && lifp2.LastWriteUserId != null) lifp2.LastWriteUser = FindUser2(lifp2.LastWriteUserId, cache: cache);
             return lifp2;
         }
 
@@ -3693,9 +3823,10 @@ namespace FolioLibrary
         {
             return FolioServiceClient.ManualBlockTemplates(out count, where, orderBy, skip, take).Select(jo =>
             {
-                var mbt2 = ManualBlockTemplate2.FromJObject(jo);
-                if (load && mbt2.CreationUserId != null) mbt2.CreationUser = (User2)(cache && objects.ContainsKey(mbt2.CreationUserId.Value) ? objects[mbt2.CreationUserId.Value] : objects[mbt2.CreationUserId.Value] = FindUser2(mbt2.CreationUserId));
-                if (load && mbt2.LastWriteUserId != null) mbt2.LastWriteUser = (User2)(cache && objects.ContainsKey(mbt2.LastWriteUserId.Value) ? objects[mbt2.LastWriteUserId.Value] : objects[mbt2.LastWriteUserId.Value] = FindUser2(mbt2.LastWriteUserId));
+                var id = Guid.Parse((string)jo["id"]);
+                var mbt2 = cache ? (ManualBlockTemplate2)(objects.ContainsKey(id) ? objects[id] : objects[id] = ManualBlockTemplate2.FromJObject(jo)) : ManualBlockTemplate2.FromJObject(jo);
+                if (load && mbt2.CreationUserId != null) mbt2.CreationUser = FindUser2(mbt2.CreationUserId, cache: cache);
+                if (load && mbt2.LastWriteUserId != null) mbt2.LastWriteUser = FindUser2(mbt2.LastWriteUserId, cache: cache);
                 return mbt2;
             }).ToArray();
         }
@@ -3704,19 +3835,20 @@ namespace FolioLibrary
         {
             foreach (var jo in FolioServiceClient.ManualBlockTemplates(where, orderBy, skip, take))
             {
-                var mbt2 = ManualBlockTemplate2.FromJObject(jo);
-                if (load && mbt2.CreationUserId != null) mbt2.CreationUser = (User2)(cache && objects.ContainsKey(mbt2.CreationUserId.Value) ? objects[mbt2.CreationUserId.Value] : objects[mbt2.CreationUserId.Value] = FindUser2(mbt2.CreationUserId));
-                if (load && mbt2.LastWriteUserId != null) mbt2.LastWriteUser = (User2)(cache && objects.ContainsKey(mbt2.LastWriteUserId.Value) ? objects[mbt2.LastWriteUserId.Value] : objects[mbt2.LastWriteUserId.Value] = FindUser2(mbt2.LastWriteUserId));
+                var id = Guid.Parse((string)jo["id"]);
+                var mbt2 = cache ? (ManualBlockTemplate2)(objects.ContainsKey(id) ? objects[id] : objects[id] = ManualBlockTemplate2.FromJObject(jo)) : ManualBlockTemplate2.FromJObject(jo);
+                if (load && mbt2.CreationUserId != null) mbt2.CreationUser = FindUser2(mbt2.CreationUserId, cache: cache);
+                if (load && mbt2.LastWriteUserId != null) mbt2.LastWriteUser = FindUser2(mbt2.LastWriteUserId, cache: cache);
                 yield return mbt2;
             }
         }
 
         public ManualBlockTemplate2 FindManualBlockTemplate2(Guid? id, bool load = false, bool cache = true)
         {
-            var mbt2 = ManualBlockTemplate2.FromJObject(FolioServiceClient.GetManualBlockTemplate(id?.ToString()));
+            var mbt2 = cache ? (ManualBlockTemplate2)(objects.ContainsKey(id.Value) ? objects[id.Value] : objects[id.Value] = ManualBlockTemplate2.FromJObject(FolioServiceClient.GetManualBlockTemplate(id?.ToString()))) : ManualBlockTemplate2.FromJObject(FolioServiceClient.GetManualBlockTemplate(id?.ToString()));
             if (mbt2 == null) return null;
-            if (load && mbt2.CreationUserId != null) mbt2.CreationUser = (User2)(cache && objects.ContainsKey(mbt2.CreationUserId.Value) ? objects[mbt2.CreationUserId.Value] : objects[mbt2.CreationUserId.Value] = FindUser2(mbt2.CreationUserId));
-            if (load && mbt2.LastWriteUserId != null) mbt2.LastWriteUser = (User2)(cache && objects.ContainsKey(mbt2.LastWriteUserId.Value) ? objects[mbt2.LastWriteUserId.Value] : objects[mbt2.LastWriteUserId.Value] = FindUser2(mbt2.LastWriteUserId));
+            if (load && mbt2.CreationUserId != null) mbt2.CreationUser = FindUser2(mbt2.CreationUserId, cache: cache);
+            if (load && mbt2.LastWriteUserId != null) mbt2.LastWriteUser = FindUser2(mbt2.LastWriteUserId, cache: cache);
             return mbt2;
         }
 
@@ -3738,9 +3870,10 @@ namespace FolioLibrary
         {
             return FolioServiceClient.MaterialTypes(out count, where, orderBy, skip, take).Select(jo =>
             {
-                var mt2 = MaterialType2.FromJObject(jo);
-                if (load && mt2.CreationUserId != null) mt2.CreationUser = (User2)(cache && objects.ContainsKey(mt2.CreationUserId.Value) ? objects[mt2.CreationUserId.Value] : objects[mt2.CreationUserId.Value] = FindUser2(mt2.CreationUserId));
-                if (load && mt2.LastWriteUserId != null) mt2.LastWriteUser = (User2)(cache && objects.ContainsKey(mt2.LastWriteUserId.Value) ? objects[mt2.LastWriteUserId.Value] : objects[mt2.LastWriteUserId.Value] = FindUser2(mt2.LastWriteUserId));
+                var id = Guid.Parse((string)jo["id"]);
+                var mt2 = cache ? (MaterialType2)(objects.ContainsKey(id) ? objects[id] : objects[id] = MaterialType2.FromJObject(jo)) : MaterialType2.FromJObject(jo);
+                if (load && mt2.CreationUserId != null) mt2.CreationUser = FindUser2(mt2.CreationUserId, cache: cache);
+                if (load && mt2.LastWriteUserId != null) mt2.LastWriteUser = FindUser2(mt2.LastWriteUserId, cache: cache);
                 return mt2;
             }).ToArray();
         }
@@ -3749,19 +3882,20 @@ namespace FolioLibrary
         {
             foreach (var jo in FolioServiceClient.MaterialTypes(where, orderBy, skip, take))
             {
-                var mt2 = MaterialType2.FromJObject(jo);
-                if (load && mt2.CreationUserId != null) mt2.CreationUser = (User2)(cache && objects.ContainsKey(mt2.CreationUserId.Value) ? objects[mt2.CreationUserId.Value] : objects[mt2.CreationUserId.Value] = FindUser2(mt2.CreationUserId));
-                if (load && mt2.LastWriteUserId != null) mt2.LastWriteUser = (User2)(cache && objects.ContainsKey(mt2.LastWriteUserId.Value) ? objects[mt2.LastWriteUserId.Value] : objects[mt2.LastWriteUserId.Value] = FindUser2(mt2.LastWriteUserId));
+                var id = Guid.Parse((string)jo["id"]);
+                var mt2 = cache ? (MaterialType2)(objects.ContainsKey(id) ? objects[id] : objects[id] = MaterialType2.FromJObject(jo)) : MaterialType2.FromJObject(jo);
+                if (load && mt2.CreationUserId != null) mt2.CreationUser = FindUser2(mt2.CreationUserId, cache: cache);
+                if (load && mt2.LastWriteUserId != null) mt2.LastWriteUser = FindUser2(mt2.LastWriteUserId, cache: cache);
                 yield return mt2;
             }
         }
 
         public MaterialType2 FindMaterialType2(Guid? id, bool load = false, bool cache = true)
         {
-            var mt2 = MaterialType2.FromJObject(FolioServiceClient.GetMaterialType(id?.ToString()));
+            var mt2 = cache ? (MaterialType2)(objects.ContainsKey(id.Value) ? objects[id.Value] : objects[id.Value] = MaterialType2.FromJObject(FolioServiceClient.GetMaterialType(id?.ToString()))) : MaterialType2.FromJObject(FolioServiceClient.GetMaterialType(id?.ToString()));
             if (mt2 == null) return null;
-            if (load && mt2.CreationUserId != null) mt2.CreationUser = (User2)(cache && objects.ContainsKey(mt2.CreationUserId.Value) ? objects[mt2.CreationUserId.Value] : objects[mt2.CreationUserId.Value] = FindUser2(mt2.CreationUserId));
-            if (load && mt2.LastWriteUserId != null) mt2.LastWriteUser = (User2)(cache && objects.ContainsKey(mt2.LastWriteUserId.Value) ? objects[mt2.LastWriteUserId.Value] : objects[mt2.LastWriteUserId.Value] = FindUser2(mt2.LastWriteUserId));
+            if (load && mt2.CreationUserId != null) mt2.CreationUser = FindUser2(mt2.CreationUserId, cache: cache);
+            if (load && mt2.LastWriteUserId != null) mt2.LastWriteUser = FindUser2(mt2.LastWriteUserId, cache: cache);
             return mt2;
         }
 
@@ -3783,9 +3917,10 @@ namespace FolioLibrary
         {
             return FolioServiceClient.NatureOfContentTerms(out count, where, orderBy, skip, take).Select(jo =>
             {
-                var noct2 = NatureOfContentTerm2.FromJObject(jo);
-                if (load && noct2.CreationUserId != null) noct2.CreationUser = (User2)(cache && objects.ContainsKey(noct2.CreationUserId.Value) ? objects[noct2.CreationUserId.Value] : objects[noct2.CreationUserId.Value] = FindUser2(noct2.CreationUserId));
-                if (load && noct2.LastWriteUserId != null) noct2.LastWriteUser = (User2)(cache && objects.ContainsKey(noct2.LastWriteUserId.Value) ? objects[noct2.LastWriteUserId.Value] : objects[noct2.LastWriteUserId.Value] = FindUser2(noct2.LastWriteUserId));
+                var id = Guid.Parse((string)jo["id"]);
+                var noct2 = cache ? (NatureOfContentTerm2)(objects.ContainsKey(id) ? objects[id] : objects[id] = NatureOfContentTerm2.FromJObject(jo)) : NatureOfContentTerm2.FromJObject(jo);
+                if (load && noct2.CreationUserId != null) noct2.CreationUser = FindUser2(noct2.CreationUserId, cache: cache);
+                if (load && noct2.LastWriteUserId != null) noct2.LastWriteUser = FindUser2(noct2.LastWriteUserId, cache: cache);
                 return noct2;
             }).ToArray();
         }
@@ -3794,19 +3929,20 @@ namespace FolioLibrary
         {
             foreach (var jo in FolioServiceClient.NatureOfContentTerms(where, orderBy, skip, take))
             {
-                var noct2 = NatureOfContentTerm2.FromJObject(jo);
-                if (load && noct2.CreationUserId != null) noct2.CreationUser = (User2)(cache && objects.ContainsKey(noct2.CreationUserId.Value) ? objects[noct2.CreationUserId.Value] : objects[noct2.CreationUserId.Value] = FindUser2(noct2.CreationUserId));
-                if (load && noct2.LastWriteUserId != null) noct2.LastWriteUser = (User2)(cache && objects.ContainsKey(noct2.LastWriteUserId.Value) ? objects[noct2.LastWriteUserId.Value] : objects[noct2.LastWriteUserId.Value] = FindUser2(noct2.LastWriteUserId));
+                var id = Guid.Parse((string)jo["id"]);
+                var noct2 = cache ? (NatureOfContentTerm2)(objects.ContainsKey(id) ? objects[id] : objects[id] = NatureOfContentTerm2.FromJObject(jo)) : NatureOfContentTerm2.FromJObject(jo);
+                if (load && noct2.CreationUserId != null) noct2.CreationUser = FindUser2(noct2.CreationUserId, cache: cache);
+                if (load && noct2.LastWriteUserId != null) noct2.LastWriteUser = FindUser2(noct2.LastWriteUserId, cache: cache);
                 yield return noct2;
             }
         }
 
         public NatureOfContentTerm2 FindNatureOfContentTerm2(Guid? id, bool load = false, bool cache = true)
         {
-            var noct2 = NatureOfContentTerm2.FromJObject(FolioServiceClient.GetNatureOfContentTerm(id?.ToString()));
+            var noct2 = cache ? (NatureOfContentTerm2)(objects.ContainsKey(id.Value) ? objects[id.Value] : objects[id.Value] = NatureOfContentTerm2.FromJObject(FolioServiceClient.GetNatureOfContentTerm(id?.ToString()))) : NatureOfContentTerm2.FromJObject(FolioServiceClient.GetNatureOfContentTerm(id?.ToString()));
             if (noct2 == null) return null;
-            if (load && noct2.CreationUserId != null) noct2.CreationUser = (User2)(cache && objects.ContainsKey(noct2.CreationUserId.Value) ? objects[noct2.CreationUserId.Value] : objects[noct2.CreationUserId.Value] = FindUser2(noct2.CreationUserId));
-            if (load && noct2.LastWriteUserId != null) noct2.LastWriteUser = (User2)(cache && objects.ContainsKey(noct2.LastWriteUserId.Value) ? objects[noct2.LastWriteUserId.Value] : objects[noct2.LastWriteUserId.Value] = FindUser2(noct2.LastWriteUserId));
+            if (load && noct2.CreationUserId != null) noct2.CreationUser = FindUser2(noct2.CreationUserId, cache: cache);
+            if (load && noct2.LastWriteUserId != null) noct2.LastWriteUser = FindUser2(noct2.LastWriteUserId, cache: cache);
             return noct2;
         }
 
@@ -3828,10 +3964,11 @@ namespace FolioLibrary
         {
             return FolioServiceClient.Notes(out count, where, orderBy, skip, take).Select(jo =>
             {
-                var n2 = Note2.FromJObject(jo);
-                if (load && n2.TypeId != null) n2.Type = (NoteType2)(cache && objects.ContainsKey(n2.TypeId.Value) ? objects[n2.TypeId.Value] : objects[n2.TypeId.Value] = FindNoteType2(n2.TypeId));
-                if (load && n2.CreationUserId != null) n2.CreationUser = (User2)(cache && objects.ContainsKey(n2.CreationUserId.Value) ? objects[n2.CreationUserId.Value] : objects[n2.CreationUserId.Value] = FindUser2(n2.CreationUserId));
-                if (load && n2.LastWriteUserId != null) n2.LastWriteUser = (User2)(cache && objects.ContainsKey(n2.LastWriteUserId.Value) ? objects[n2.LastWriteUserId.Value] : objects[n2.LastWriteUserId.Value] = FindUser2(n2.LastWriteUserId));
+                var id = Guid.Parse((string)jo["id"]);
+                var n2 = cache ? (Note2)(objects.ContainsKey(id) ? objects[id] : objects[id] = Note2.FromJObject(jo)) : Note2.FromJObject(jo);
+                if (load && n2.TypeId != null) n2.Type = FindNoteType2(n2.TypeId, cache: cache);
+                if (load && n2.CreationUserId != null) n2.CreationUser = FindUser2(n2.CreationUserId, cache: cache);
+                if (load && n2.LastWriteUserId != null) n2.LastWriteUser = FindUser2(n2.LastWriteUserId, cache: cache);
                 return n2;
             }).ToArray();
         }
@@ -3840,21 +3977,22 @@ namespace FolioLibrary
         {
             foreach (var jo in FolioServiceClient.Notes(where, orderBy, skip, take))
             {
-                var n2 = Note2.FromJObject(jo);
-                if (load && n2.TypeId != null) n2.Type = (NoteType2)(cache && objects.ContainsKey(n2.TypeId.Value) ? objects[n2.TypeId.Value] : objects[n2.TypeId.Value] = FindNoteType2(n2.TypeId));
-                if (load && n2.CreationUserId != null) n2.CreationUser = (User2)(cache && objects.ContainsKey(n2.CreationUserId.Value) ? objects[n2.CreationUserId.Value] : objects[n2.CreationUserId.Value] = FindUser2(n2.CreationUserId));
-                if (load && n2.LastWriteUserId != null) n2.LastWriteUser = (User2)(cache && objects.ContainsKey(n2.LastWriteUserId.Value) ? objects[n2.LastWriteUserId.Value] : objects[n2.LastWriteUserId.Value] = FindUser2(n2.LastWriteUserId));
+                var id = Guid.Parse((string)jo["id"]);
+                var n2 = cache ? (Note2)(objects.ContainsKey(id) ? objects[id] : objects[id] = Note2.FromJObject(jo)) : Note2.FromJObject(jo);
+                if (load && n2.TypeId != null) n2.Type = FindNoteType2(n2.TypeId, cache: cache);
+                if (load && n2.CreationUserId != null) n2.CreationUser = FindUser2(n2.CreationUserId, cache: cache);
+                if (load && n2.LastWriteUserId != null) n2.LastWriteUser = FindUser2(n2.LastWriteUserId, cache: cache);
                 yield return n2;
             }
         }
 
         public Note2 FindNote2(Guid? id, bool load = false, bool cache = true)
         {
-            var n2 = Note2.FromJObject(FolioServiceClient.GetNote(id?.ToString()));
+            var n2 = cache ? (Note2)(objects.ContainsKey(id.Value) ? objects[id.Value] : objects[id.Value] = Note2.FromJObject(FolioServiceClient.GetNote(id?.ToString()))) : Note2.FromJObject(FolioServiceClient.GetNote(id?.ToString()));
             if (n2 == null) return null;
-            if (load && n2.TypeId != null) n2.Type = (NoteType2)(cache && objects.ContainsKey(n2.TypeId.Value) ? objects[n2.TypeId.Value] : objects[n2.TypeId.Value] = FindNoteType2(n2.TypeId));
-            if (load && n2.CreationUserId != null) n2.CreationUser = (User2)(cache && objects.ContainsKey(n2.CreationUserId.Value) ? objects[n2.CreationUserId.Value] : objects[n2.CreationUserId.Value] = FindUser2(n2.CreationUserId));
-            if (load && n2.LastWriteUserId != null) n2.LastWriteUser = (User2)(cache && objects.ContainsKey(n2.LastWriteUserId.Value) ? objects[n2.LastWriteUserId.Value] : objects[n2.LastWriteUserId.Value] = FindUser2(n2.LastWriteUserId));
+            if (load && n2.TypeId != null) n2.Type = FindNoteType2(n2.TypeId, cache: cache);
+            if (load && n2.CreationUserId != null) n2.CreationUser = FindUser2(n2.CreationUserId, cache: cache);
+            if (load && n2.LastWriteUserId != null) n2.LastWriteUser = FindUser2(n2.LastWriteUserId, cache: cache);
             return n2;
         }
 
@@ -3876,9 +4014,10 @@ namespace FolioLibrary
         {
             return FolioServiceClient.NoteTypes(out count, where, orderBy, skip, take).Select(jo =>
             {
-                var nt2 = NoteType2.FromJObject(jo);
-                if (load && nt2.CreationUserId != null) nt2.CreationUser = (User2)(cache && objects.ContainsKey(nt2.CreationUserId.Value) ? objects[nt2.CreationUserId.Value] : objects[nt2.CreationUserId.Value] = FindUser2(nt2.CreationUserId));
-                if (load && nt2.LastWriteUserId != null) nt2.LastWriteUser = (User2)(cache && objects.ContainsKey(nt2.LastWriteUserId.Value) ? objects[nt2.LastWriteUserId.Value] : objects[nt2.LastWriteUserId.Value] = FindUser2(nt2.LastWriteUserId));
+                var id = Guid.Parse((string)jo["id"]);
+                var nt2 = cache ? (NoteType2)(objects.ContainsKey(id) ? objects[id] : objects[id] = NoteType2.FromJObject(jo)) : NoteType2.FromJObject(jo);
+                if (load && nt2.CreationUserId != null) nt2.CreationUser = FindUser2(nt2.CreationUserId, cache: cache);
+                if (load && nt2.LastWriteUserId != null) nt2.LastWriteUser = FindUser2(nt2.LastWriteUserId, cache: cache);
                 return nt2;
             }).ToArray();
         }
@@ -3887,19 +4026,20 @@ namespace FolioLibrary
         {
             foreach (var jo in FolioServiceClient.NoteTypes(where, orderBy, skip, take))
             {
-                var nt2 = NoteType2.FromJObject(jo);
-                if (load && nt2.CreationUserId != null) nt2.CreationUser = (User2)(cache && objects.ContainsKey(nt2.CreationUserId.Value) ? objects[nt2.CreationUserId.Value] : objects[nt2.CreationUserId.Value] = FindUser2(nt2.CreationUserId));
-                if (load && nt2.LastWriteUserId != null) nt2.LastWriteUser = (User2)(cache && objects.ContainsKey(nt2.LastWriteUserId.Value) ? objects[nt2.LastWriteUserId.Value] : objects[nt2.LastWriteUserId.Value] = FindUser2(nt2.LastWriteUserId));
+                var id = Guid.Parse((string)jo["id"]);
+                var nt2 = cache ? (NoteType2)(objects.ContainsKey(id) ? objects[id] : objects[id] = NoteType2.FromJObject(jo)) : NoteType2.FromJObject(jo);
+                if (load && nt2.CreationUserId != null) nt2.CreationUser = FindUser2(nt2.CreationUserId, cache: cache);
+                if (load && nt2.LastWriteUserId != null) nt2.LastWriteUser = FindUser2(nt2.LastWriteUserId, cache: cache);
                 yield return nt2;
             }
         }
 
         public NoteType2 FindNoteType2(Guid? id, bool load = false, bool cache = true)
         {
-            var nt2 = NoteType2.FromJObject(FolioServiceClient.GetNoteType(id?.ToString()));
+            var nt2 = cache ? (NoteType2)(objects.ContainsKey(id.Value) ? objects[id.Value] : objects[id.Value] = NoteType2.FromJObject(FolioServiceClient.GetNoteType(id?.ToString()))) : NoteType2.FromJObject(FolioServiceClient.GetNoteType(id?.ToString()));
             if (nt2 == null) return null;
-            if (load && nt2.CreationUserId != null) nt2.CreationUser = (User2)(cache && objects.ContainsKey(nt2.CreationUserId.Value) ? objects[nt2.CreationUserId.Value] : objects[nt2.CreationUserId.Value] = FindUser2(nt2.CreationUserId));
-            if (load && nt2.LastWriteUserId != null) nt2.LastWriteUser = (User2)(cache && objects.ContainsKey(nt2.LastWriteUserId.Value) ? objects[nt2.LastWriteUserId.Value] : objects[nt2.LastWriteUserId.Value] = FindUser2(nt2.LastWriteUserId));
+            if (load && nt2.CreationUserId != null) nt2.CreationUser = FindUser2(nt2.CreationUserId, cache: cache);
+            if (load && nt2.LastWriteUserId != null) nt2.LastWriteUser = FindUser2(nt2.LastWriteUserId, cache: cache);
             return nt2;
         }
 
@@ -3921,13 +4061,14 @@ namespace FolioLibrary
         {
             return FolioServiceClient.Orders(out count, where, orderBy, skip, take).Select(jo =>
             {
-                var o2 = Order2.FromJObject(jo);
-                if (load && o2.ApprovedById != null) o2.ApprovedBy = (User2)(cache && objects.ContainsKey(o2.ApprovedById.Value) ? objects[o2.ApprovedById.Value] : objects[o2.ApprovedById.Value] = FindUser2(o2.ApprovedById));
-                if (load && o2.AssignedToId != null) o2.AssignedTo = (User2)(cache && objects.ContainsKey(o2.AssignedToId.Value) ? objects[o2.AssignedToId.Value] : objects[o2.AssignedToId.Value] = FindUser2(o2.AssignedToId));
-                if (load && o2.TemplateId != null) o2.Template = (OrderTemplate2)(cache && objects.ContainsKey(o2.TemplateId.Value) ? objects[o2.TemplateId.Value] : objects[o2.TemplateId.Value] = FindOrderTemplate2(o2.TemplateId));
-                if (load && o2.VendorId != null) o2.Vendor = (Organization2)(cache && objects.ContainsKey(o2.VendorId.Value) ? objects[o2.VendorId.Value] : objects[o2.VendorId.Value] = FindOrganization2(o2.VendorId));
-                if (load && o2.CreationUserId != null) o2.CreationUser = (User2)(cache && objects.ContainsKey(o2.CreationUserId.Value) ? objects[o2.CreationUserId.Value] : objects[o2.CreationUserId.Value] = FindUser2(o2.CreationUserId));
-                if (load && o2.LastWriteUserId != null) o2.LastWriteUser = (User2)(cache && objects.ContainsKey(o2.LastWriteUserId.Value) ? objects[o2.LastWriteUserId.Value] : objects[o2.LastWriteUserId.Value] = FindUser2(o2.LastWriteUserId));
+                var id = Guid.Parse((string)jo["id"]);
+                var o2 = cache ? (Order2)(objects.ContainsKey(id) ? objects[id] : objects[id] = Order2.FromJObject(jo)) : Order2.FromJObject(jo);
+                if (load && o2.ApprovedById != null) o2.ApprovedBy = FindUser2(o2.ApprovedById, cache: cache);
+                if (load && o2.AssignedToId != null) o2.AssignedTo = FindUser2(o2.AssignedToId, cache: cache);
+                if (load && o2.TemplateId != null) o2.Template = FindOrderTemplate2(o2.TemplateId, cache: cache);
+                if (load && o2.VendorId != null) o2.Vendor = FindOrganization2(o2.VendorId, cache: cache);
+                if (load && o2.CreationUserId != null) o2.CreationUser = FindUser2(o2.CreationUserId, cache: cache);
+                if (load && o2.LastWriteUserId != null) o2.LastWriteUser = FindUser2(o2.LastWriteUserId, cache: cache);
                 return o2;
             }).ToArray();
         }
@@ -3936,34 +4077,35 @@ namespace FolioLibrary
         {
             foreach (var jo in FolioServiceClient.Orders(where, orderBy, skip, take))
             {
-                var o2 = Order2.FromJObject(jo);
-                if (load && o2.ApprovedById != null) o2.ApprovedBy = (User2)(cache && objects.ContainsKey(o2.ApprovedById.Value) ? objects[o2.ApprovedById.Value] : objects[o2.ApprovedById.Value] = FindUser2(o2.ApprovedById));
-                if (load && o2.AssignedToId != null) o2.AssignedTo = (User2)(cache && objects.ContainsKey(o2.AssignedToId.Value) ? objects[o2.AssignedToId.Value] : objects[o2.AssignedToId.Value] = FindUser2(o2.AssignedToId));
-                if (load && o2.TemplateId != null) o2.Template = (OrderTemplate2)(cache && objects.ContainsKey(o2.TemplateId.Value) ? objects[o2.TemplateId.Value] : objects[o2.TemplateId.Value] = FindOrderTemplate2(o2.TemplateId));
-                if (load && o2.VendorId != null) o2.Vendor = (Organization2)(cache && objects.ContainsKey(o2.VendorId.Value) ? objects[o2.VendorId.Value] : objects[o2.VendorId.Value] = FindOrganization2(o2.VendorId));
-                if (load && o2.CreationUserId != null) o2.CreationUser = (User2)(cache && objects.ContainsKey(o2.CreationUserId.Value) ? objects[o2.CreationUserId.Value] : objects[o2.CreationUserId.Value] = FindUser2(o2.CreationUserId));
-                if (load && o2.LastWriteUserId != null) o2.LastWriteUser = (User2)(cache && objects.ContainsKey(o2.LastWriteUserId.Value) ? objects[o2.LastWriteUserId.Value] : objects[o2.LastWriteUserId.Value] = FindUser2(o2.LastWriteUserId));
+                var id = Guid.Parse((string)jo["id"]);
+                var o2 = cache ? (Order2)(objects.ContainsKey(id) ? objects[id] : objects[id] = Order2.FromJObject(jo)) : Order2.FromJObject(jo);
+                if (load && o2.ApprovedById != null) o2.ApprovedBy = FindUser2(o2.ApprovedById, cache: cache);
+                if (load && o2.AssignedToId != null) o2.AssignedTo = FindUser2(o2.AssignedToId, cache: cache);
+                if (load && o2.TemplateId != null) o2.Template = FindOrderTemplate2(o2.TemplateId, cache: cache);
+                if (load && o2.VendorId != null) o2.Vendor = FindOrganization2(o2.VendorId, cache: cache);
+                if (load && o2.CreationUserId != null) o2.CreationUser = FindUser2(o2.CreationUserId, cache: cache);
+                if (load && o2.LastWriteUserId != null) o2.LastWriteUser = FindUser2(o2.LastWriteUserId, cache: cache);
                 yield return o2;
             }
         }
 
         public Order2 FindOrder2(Guid? id, bool load = false, bool cache = true)
         {
-            var o2 = Order2.FromJObject(FolioServiceClient.GetOrder(id?.ToString()));
+            var o2 = cache ? (Order2)(objects.ContainsKey(id.Value) ? objects[id.Value] : objects[id.Value] = Order2.FromJObject(FolioServiceClient.GetOrder(id?.ToString()))) : Order2.FromJObject(FolioServiceClient.GetOrder(id?.ToString()));
             if (o2 == null) return null;
-            if (load && o2.ApprovedById != null) o2.ApprovedBy = (User2)(cache && objects.ContainsKey(o2.ApprovedById.Value) ? objects[o2.ApprovedById.Value] : objects[o2.ApprovedById.Value] = FindUser2(o2.ApprovedById));
-            if (load && o2.AssignedToId != null) o2.AssignedTo = (User2)(cache && objects.ContainsKey(o2.AssignedToId.Value) ? objects[o2.AssignedToId.Value] : objects[o2.AssignedToId.Value] = FindUser2(o2.AssignedToId));
-            if (load && o2.TemplateId != null) o2.Template = (OrderTemplate2)(cache && objects.ContainsKey(o2.TemplateId.Value) ? objects[o2.TemplateId.Value] : objects[o2.TemplateId.Value] = FindOrderTemplate2(o2.TemplateId));
-            if (load && o2.VendorId != null) o2.Vendor = (Organization2)(cache && objects.ContainsKey(o2.VendorId.Value) ? objects[o2.VendorId.Value] : objects[o2.VendorId.Value] = FindOrganization2(o2.VendorId));
-            if (load && o2.CreationUserId != null) o2.CreationUser = (User2)(cache && objects.ContainsKey(o2.CreationUserId.Value) ? objects[o2.CreationUserId.Value] : objects[o2.CreationUserId.Value] = FindUser2(o2.CreationUserId));
-            if (load && o2.LastWriteUserId != null) o2.LastWriteUser = (User2)(cache && objects.ContainsKey(o2.LastWriteUserId.Value) ? objects[o2.LastWriteUserId.Value] : objects[o2.LastWriteUserId.Value] = FindUser2(o2.LastWriteUserId));
+            if (load && o2.ApprovedById != null) o2.ApprovedBy = FindUser2(o2.ApprovedById, cache: cache);
+            if (load && o2.AssignedToId != null) o2.AssignedTo = FindUser2(o2.AssignedToId, cache: cache);
+            if (load && o2.TemplateId != null) o2.Template = FindOrderTemplate2(o2.TemplateId, cache: cache);
+            if (load && o2.VendorId != null) o2.Vendor = FindOrganization2(o2.VendorId, cache: cache);
+            if (load && o2.CreationUserId != null) o2.CreationUser = FindUser2(o2.CreationUserId, cache: cache);
+            if (load && o2.LastWriteUserId != null) o2.LastWriteUser = FindUser2(o2.LastWriteUserId, cache: cache);
             var i = 0;
             if (o2.OrderAcquisitionsUnits != null) foreach (var oau in o2.OrderAcquisitionsUnits)
                 {
                     oau.Id = (++i).ToString();
                     oau.OrderId = o2.Id;
                     oau.Order = o2;
-                    if (load && oau.AcquisitionsUnitId != null) oau.AcquisitionsUnit = (AcquisitionsUnit2)(cache && objects.ContainsKey(oau.AcquisitionsUnitId.Value) ? objects[oau.AcquisitionsUnitId.Value] : objects[oau.AcquisitionsUnitId.Value] = FindAcquisitionsUnit2(oau.AcquisitionsUnitId));
+                    if (load && oau.AcquisitionsUnitId != null) oau.AcquisitionsUnit = FindAcquisitionsUnit2(oau.AcquisitionsUnitId, cache: cache);
                 }
             i = 0;
             if (o2.OrderNotes != null) foreach (var @on in o2.OrderNotes)
@@ -4000,9 +4142,10 @@ namespace FolioLibrary
         {
             return FolioServiceClient.OrderInvoices(out count, where, orderBy, skip, take).Select(jo =>
             {
-                var oi2 = OrderInvoice2.FromJObject(jo);
-                if (load && oi2.OrderId != null) oi2.Order = (Order2)(cache && objects.ContainsKey(oi2.OrderId.Value) ? objects[oi2.OrderId.Value] : objects[oi2.OrderId.Value] = FindOrder2(oi2.OrderId));
-                if (load && oi2.InvoiceId != null) oi2.Invoice = (Invoice2)(cache && objects.ContainsKey(oi2.InvoiceId.Value) ? objects[oi2.InvoiceId.Value] : objects[oi2.InvoiceId.Value] = FindInvoice2(oi2.InvoiceId));
+                var id = Guid.Parse((string)jo["id"]);
+                var oi2 = cache ? (OrderInvoice2)(objects.ContainsKey(id) ? objects[id] : objects[id] = OrderInvoice2.FromJObject(jo)) : OrderInvoice2.FromJObject(jo);
+                if (load && oi2.OrderId != null) oi2.Order = FindOrder2(oi2.OrderId, cache: cache);
+                if (load && oi2.InvoiceId != null) oi2.Invoice = FindInvoice2(oi2.InvoiceId, cache: cache);
                 return oi2;
             }).ToArray();
         }
@@ -4011,19 +4154,20 @@ namespace FolioLibrary
         {
             foreach (var jo in FolioServiceClient.OrderInvoices(where, orderBy, skip, take))
             {
-                var oi2 = OrderInvoice2.FromJObject(jo);
-                if (load && oi2.OrderId != null) oi2.Order = (Order2)(cache && objects.ContainsKey(oi2.OrderId.Value) ? objects[oi2.OrderId.Value] : objects[oi2.OrderId.Value] = FindOrder2(oi2.OrderId));
-                if (load && oi2.InvoiceId != null) oi2.Invoice = (Invoice2)(cache && objects.ContainsKey(oi2.InvoiceId.Value) ? objects[oi2.InvoiceId.Value] : objects[oi2.InvoiceId.Value] = FindInvoice2(oi2.InvoiceId));
+                var id = Guid.Parse((string)jo["id"]);
+                var oi2 = cache ? (OrderInvoice2)(objects.ContainsKey(id) ? objects[id] : objects[id] = OrderInvoice2.FromJObject(jo)) : OrderInvoice2.FromJObject(jo);
+                if (load && oi2.OrderId != null) oi2.Order = FindOrder2(oi2.OrderId, cache: cache);
+                if (load && oi2.InvoiceId != null) oi2.Invoice = FindInvoice2(oi2.InvoiceId, cache: cache);
                 yield return oi2;
             }
         }
 
         public OrderInvoice2 FindOrderInvoice2(Guid? id, bool load = false, bool cache = true)
         {
-            var oi2 = OrderInvoice2.FromJObject(FolioServiceClient.GetOrderInvoice(id?.ToString()));
+            var oi2 = cache ? (OrderInvoice2)(objects.ContainsKey(id.Value) ? objects[id.Value] : objects[id.Value] = OrderInvoice2.FromJObject(FolioServiceClient.GetOrderInvoice(id?.ToString()))) : OrderInvoice2.FromJObject(FolioServiceClient.GetOrderInvoice(id?.ToString()));
             if (oi2 == null) return null;
-            if (load && oi2.OrderId != null) oi2.Order = (Order2)(cache && objects.ContainsKey(oi2.OrderId.Value) ? objects[oi2.OrderId.Value] : objects[oi2.OrderId.Value] = FindOrder2(oi2.OrderId));
-            if (load && oi2.InvoiceId != null) oi2.Invoice = (Invoice2)(cache && objects.ContainsKey(oi2.InvoiceId.Value) ? objects[oi2.InvoiceId.Value] : objects[oi2.InvoiceId.Value] = FindInvoice2(oi2.InvoiceId));
+            if (load && oi2.OrderId != null) oi2.Order = FindOrder2(oi2.OrderId, cache: cache);
+            if (load && oi2.InvoiceId != null) oi2.Invoice = FindInvoice2(oi2.InvoiceId, cache: cache);
             return oi2;
         }
 
@@ -4045,17 +4189,18 @@ namespace FolioLibrary
         {
             return FolioServiceClient.OrderItems(out count, where, orderBy, skip, take).Select(jo =>
             {
-                var oi2 = OrderItem2.FromJObject(jo);
-                if (load && oi2.AcquisitionMethodId != null) oi2.AcquisitionMethod = (AcquisitionMethod2)(cache && objects.ContainsKey(oi2.AcquisitionMethodId.Value) ? objects[oi2.AcquisitionMethodId.Value] : objects[oi2.AcquisitionMethodId.Value] = FindAcquisitionMethod2(oi2.AcquisitionMethodId));
-                if (load && oi2.EresourceAccessProviderId != null) oi2.EresourceAccessProvider = (Organization2)(cache && objects.ContainsKey(oi2.EresourceAccessProviderId.Value) ? objects[oi2.EresourceAccessProviderId.Value] : objects[oi2.EresourceAccessProviderId.Value] = FindOrganization2(oi2.EresourceAccessProviderId));
-                if (load && oi2.EresourceMaterialTypeId != null) oi2.EresourceMaterialType = (MaterialType2)(cache && objects.ContainsKey(oi2.EresourceMaterialTypeId.Value) ? objects[oi2.EresourceMaterialTypeId.Value] : objects[oi2.EresourceMaterialTypeId.Value] = FindMaterialType2(oi2.EresourceMaterialTypeId));
-                if (load && oi2.InstanceId != null) oi2.Instance = (Instance2)(cache && objects.ContainsKey(oi2.InstanceId.Value) ? objects[oi2.InstanceId.Value] : objects[oi2.InstanceId.Value] = FindInstance2(oi2.InstanceId));
-                if (load && oi2.PackageOrderItemId != null) oi2.PackageOrderItem = (OrderItem2)(cache && objects.ContainsKey(oi2.PackageOrderItemId.Value) ? objects[oi2.PackageOrderItemId.Value] : objects[oi2.PackageOrderItemId.Value] = FindOrderItem2(oi2.PackageOrderItemId));
-                if (load && oi2.PhysicalMaterialTypeId != null) oi2.PhysicalMaterialType = (MaterialType2)(cache && objects.ContainsKey(oi2.PhysicalMaterialTypeId.Value) ? objects[oi2.PhysicalMaterialTypeId.Value] : objects[oi2.PhysicalMaterialTypeId.Value] = FindMaterialType2(oi2.PhysicalMaterialTypeId));
-                if (load && oi2.PhysicalMaterialSupplierId != null) oi2.PhysicalMaterialSupplier = (Organization2)(cache && objects.ContainsKey(oi2.PhysicalMaterialSupplierId.Value) ? objects[oi2.PhysicalMaterialSupplierId.Value] : objects[oi2.PhysicalMaterialSupplierId.Value] = FindOrganization2(oi2.PhysicalMaterialSupplierId));
-                if (load && oi2.OrderId != null) oi2.Order = (Order2)(cache && objects.ContainsKey(oi2.OrderId.Value) ? objects[oi2.OrderId.Value] : objects[oi2.OrderId.Value] = FindOrder2(oi2.OrderId));
-                if (load && oi2.CreationUserId != null) oi2.CreationUser = (User2)(cache && objects.ContainsKey(oi2.CreationUserId.Value) ? objects[oi2.CreationUserId.Value] : objects[oi2.CreationUserId.Value] = FindUser2(oi2.CreationUserId));
-                if (load && oi2.LastWriteUserId != null) oi2.LastWriteUser = (User2)(cache && objects.ContainsKey(oi2.LastWriteUserId.Value) ? objects[oi2.LastWriteUserId.Value] : objects[oi2.LastWriteUserId.Value] = FindUser2(oi2.LastWriteUserId));
+                var id = Guid.Parse((string)jo["id"]);
+                var oi2 = cache ? (OrderItem2)(objects.ContainsKey(id) ? objects[id] : objects[id] = OrderItem2.FromJObject(jo)) : OrderItem2.FromJObject(jo);
+                if (load && oi2.AcquisitionMethodId != null) oi2.AcquisitionMethod = FindAcquisitionMethod2(oi2.AcquisitionMethodId, cache: cache);
+                if (load && oi2.EresourceAccessProviderId != null) oi2.EresourceAccessProvider = FindOrganization2(oi2.EresourceAccessProviderId, cache: cache);
+                if (load && oi2.EresourceMaterialTypeId != null) oi2.EresourceMaterialType = FindMaterialType2(oi2.EresourceMaterialTypeId, cache: cache);
+                if (load && oi2.InstanceId != null) oi2.Instance = FindInstance2(oi2.InstanceId, cache: cache);
+                if (load && oi2.PackageOrderItemId != null) oi2.PackageOrderItem = FindOrderItem2(oi2.PackageOrderItemId, cache: cache);
+                if (load && oi2.PhysicalMaterialTypeId != null) oi2.PhysicalMaterialType = FindMaterialType2(oi2.PhysicalMaterialTypeId, cache: cache);
+                if (load && oi2.PhysicalMaterialSupplierId != null) oi2.PhysicalMaterialSupplier = FindOrganization2(oi2.PhysicalMaterialSupplierId, cache: cache);
+                if (load && oi2.OrderId != null) oi2.Order = FindOrder2(oi2.OrderId, cache: cache);
+                if (load && oi2.CreationUserId != null) oi2.CreationUser = FindUser2(oi2.CreationUserId, cache: cache);
+                if (load && oi2.LastWriteUserId != null) oi2.LastWriteUser = FindUser2(oi2.LastWriteUserId, cache: cache);
                 return oi2;
             }).ToArray();
         }
@@ -4064,42 +4209,43 @@ namespace FolioLibrary
         {
             foreach (var jo in FolioServiceClient.OrderItems(where, orderBy, skip, take))
             {
-                var oi2 = OrderItem2.FromJObject(jo);
-                if (load && oi2.AcquisitionMethodId != null) oi2.AcquisitionMethod = (AcquisitionMethod2)(cache && objects.ContainsKey(oi2.AcquisitionMethodId.Value) ? objects[oi2.AcquisitionMethodId.Value] : objects[oi2.AcquisitionMethodId.Value] = FindAcquisitionMethod2(oi2.AcquisitionMethodId));
-                if (load && oi2.EresourceAccessProviderId != null) oi2.EresourceAccessProvider = (Organization2)(cache && objects.ContainsKey(oi2.EresourceAccessProviderId.Value) ? objects[oi2.EresourceAccessProviderId.Value] : objects[oi2.EresourceAccessProviderId.Value] = FindOrganization2(oi2.EresourceAccessProviderId));
-                if (load && oi2.EresourceMaterialTypeId != null) oi2.EresourceMaterialType = (MaterialType2)(cache && objects.ContainsKey(oi2.EresourceMaterialTypeId.Value) ? objects[oi2.EresourceMaterialTypeId.Value] : objects[oi2.EresourceMaterialTypeId.Value] = FindMaterialType2(oi2.EresourceMaterialTypeId));
-                if (load && oi2.InstanceId != null) oi2.Instance = (Instance2)(cache && objects.ContainsKey(oi2.InstanceId.Value) ? objects[oi2.InstanceId.Value] : objects[oi2.InstanceId.Value] = FindInstance2(oi2.InstanceId));
-                if (load && oi2.PackageOrderItemId != null) oi2.PackageOrderItem = (OrderItem2)(cache && objects.ContainsKey(oi2.PackageOrderItemId.Value) ? objects[oi2.PackageOrderItemId.Value] : objects[oi2.PackageOrderItemId.Value] = FindOrderItem2(oi2.PackageOrderItemId));
-                if (load && oi2.PhysicalMaterialTypeId != null) oi2.PhysicalMaterialType = (MaterialType2)(cache && objects.ContainsKey(oi2.PhysicalMaterialTypeId.Value) ? objects[oi2.PhysicalMaterialTypeId.Value] : objects[oi2.PhysicalMaterialTypeId.Value] = FindMaterialType2(oi2.PhysicalMaterialTypeId));
-                if (load && oi2.PhysicalMaterialSupplierId != null) oi2.PhysicalMaterialSupplier = (Organization2)(cache && objects.ContainsKey(oi2.PhysicalMaterialSupplierId.Value) ? objects[oi2.PhysicalMaterialSupplierId.Value] : objects[oi2.PhysicalMaterialSupplierId.Value] = FindOrganization2(oi2.PhysicalMaterialSupplierId));
-                if (load && oi2.OrderId != null) oi2.Order = (Order2)(cache && objects.ContainsKey(oi2.OrderId.Value) ? objects[oi2.OrderId.Value] : objects[oi2.OrderId.Value] = FindOrder2(oi2.OrderId));
-                if (load && oi2.CreationUserId != null) oi2.CreationUser = (User2)(cache && objects.ContainsKey(oi2.CreationUserId.Value) ? objects[oi2.CreationUserId.Value] : objects[oi2.CreationUserId.Value] = FindUser2(oi2.CreationUserId));
-                if (load && oi2.LastWriteUserId != null) oi2.LastWriteUser = (User2)(cache && objects.ContainsKey(oi2.LastWriteUserId.Value) ? objects[oi2.LastWriteUserId.Value] : objects[oi2.LastWriteUserId.Value] = FindUser2(oi2.LastWriteUserId));
+                var id = Guid.Parse((string)jo["id"]);
+                var oi2 = cache ? (OrderItem2)(objects.ContainsKey(id) ? objects[id] : objects[id] = OrderItem2.FromJObject(jo)) : OrderItem2.FromJObject(jo);
+                if (load && oi2.AcquisitionMethodId != null) oi2.AcquisitionMethod = FindAcquisitionMethod2(oi2.AcquisitionMethodId, cache: cache);
+                if (load && oi2.EresourceAccessProviderId != null) oi2.EresourceAccessProvider = FindOrganization2(oi2.EresourceAccessProviderId, cache: cache);
+                if (load && oi2.EresourceMaterialTypeId != null) oi2.EresourceMaterialType = FindMaterialType2(oi2.EresourceMaterialTypeId, cache: cache);
+                if (load && oi2.InstanceId != null) oi2.Instance = FindInstance2(oi2.InstanceId, cache: cache);
+                if (load && oi2.PackageOrderItemId != null) oi2.PackageOrderItem = FindOrderItem2(oi2.PackageOrderItemId, cache: cache);
+                if (load && oi2.PhysicalMaterialTypeId != null) oi2.PhysicalMaterialType = FindMaterialType2(oi2.PhysicalMaterialTypeId, cache: cache);
+                if (load && oi2.PhysicalMaterialSupplierId != null) oi2.PhysicalMaterialSupplier = FindOrganization2(oi2.PhysicalMaterialSupplierId, cache: cache);
+                if (load && oi2.OrderId != null) oi2.Order = FindOrder2(oi2.OrderId, cache: cache);
+                if (load && oi2.CreationUserId != null) oi2.CreationUser = FindUser2(oi2.CreationUserId, cache: cache);
+                if (load && oi2.LastWriteUserId != null) oi2.LastWriteUser = FindUser2(oi2.LastWriteUserId, cache: cache);
                 yield return oi2;
             }
         }
 
         public OrderItem2 FindOrderItem2(Guid? id, bool load = false, bool cache = true)
         {
-            var oi2 = OrderItem2.FromJObject(FolioServiceClient.GetOrderItem(id?.ToString()));
+            var oi2 = cache ? (OrderItem2)(objects.ContainsKey(id.Value) ? objects[id.Value] : objects[id.Value] = OrderItem2.FromJObject(FolioServiceClient.GetOrderItem(id?.ToString()))) : OrderItem2.FromJObject(FolioServiceClient.GetOrderItem(id?.ToString()));
             if (oi2 == null) return null;
-            if (load && oi2.AcquisitionMethodId != null) oi2.AcquisitionMethod = (AcquisitionMethod2)(cache && objects.ContainsKey(oi2.AcquisitionMethodId.Value) ? objects[oi2.AcquisitionMethodId.Value] : objects[oi2.AcquisitionMethodId.Value] = FindAcquisitionMethod2(oi2.AcquisitionMethodId));
-            if (load && oi2.EresourceAccessProviderId != null) oi2.EresourceAccessProvider = (Organization2)(cache && objects.ContainsKey(oi2.EresourceAccessProviderId.Value) ? objects[oi2.EresourceAccessProviderId.Value] : objects[oi2.EresourceAccessProviderId.Value] = FindOrganization2(oi2.EresourceAccessProviderId));
-            if (load && oi2.EresourceMaterialTypeId != null) oi2.EresourceMaterialType = (MaterialType2)(cache && objects.ContainsKey(oi2.EresourceMaterialTypeId.Value) ? objects[oi2.EresourceMaterialTypeId.Value] : objects[oi2.EresourceMaterialTypeId.Value] = FindMaterialType2(oi2.EresourceMaterialTypeId));
-            if (load && oi2.InstanceId != null) oi2.Instance = (Instance2)(cache && objects.ContainsKey(oi2.InstanceId.Value) ? objects[oi2.InstanceId.Value] : objects[oi2.InstanceId.Value] = FindInstance2(oi2.InstanceId));
-            if (load && oi2.PackageOrderItemId != null) oi2.PackageOrderItem = (OrderItem2)(cache && objects.ContainsKey(oi2.PackageOrderItemId.Value) ? objects[oi2.PackageOrderItemId.Value] : objects[oi2.PackageOrderItemId.Value] = FindOrderItem2(oi2.PackageOrderItemId));
-            if (load && oi2.PhysicalMaterialTypeId != null) oi2.PhysicalMaterialType = (MaterialType2)(cache && objects.ContainsKey(oi2.PhysicalMaterialTypeId.Value) ? objects[oi2.PhysicalMaterialTypeId.Value] : objects[oi2.PhysicalMaterialTypeId.Value] = FindMaterialType2(oi2.PhysicalMaterialTypeId));
-            if (load && oi2.PhysicalMaterialSupplierId != null) oi2.PhysicalMaterialSupplier = (Organization2)(cache && objects.ContainsKey(oi2.PhysicalMaterialSupplierId.Value) ? objects[oi2.PhysicalMaterialSupplierId.Value] : objects[oi2.PhysicalMaterialSupplierId.Value] = FindOrganization2(oi2.PhysicalMaterialSupplierId));
-            if (load && oi2.OrderId != null) oi2.Order = (Order2)(cache && objects.ContainsKey(oi2.OrderId.Value) ? objects[oi2.OrderId.Value] : objects[oi2.OrderId.Value] = FindOrder2(oi2.OrderId));
-            if (load && oi2.CreationUserId != null) oi2.CreationUser = (User2)(cache && objects.ContainsKey(oi2.CreationUserId.Value) ? objects[oi2.CreationUserId.Value] : objects[oi2.CreationUserId.Value] = FindUser2(oi2.CreationUserId));
-            if (load && oi2.LastWriteUserId != null) oi2.LastWriteUser = (User2)(cache && objects.ContainsKey(oi2.LastWriteUserId.Value) ? objects[oi2.LastWriteUserId.Value] : objects[oi2.LastWriteUserId.Value] = FindUser2(oi2.LastWriteUserId));
+            if (load && oi2.AcquisitionMethodId != null) oi2.AcquisitionMethod = FindAcquisitionMethod2(oi2.AcquisitionMethodId, cache: cache);
+            if (load && oi2.EresourceAccessProviderId != null) oi2.EresourceAccessProvider = FindOrganization2(oi2.EresourceAccessProviderId, cache: cache);
+            if (load && oi2.EresourceMaterialTypeId != null) oi2.EresourceMaterialType = FindMaterialType2(oi2.EresourceMaterialTypeId, cache: cache);
+            if (load && oi2.InstanceId != null) oi2.Instance = FindInstance2(oi2.InstanceId, cache: cache);
+            if (load && oi2.PackageOrderItemId != null) oi2.PackageOrderItem = FindOrderItem2(oi2.PackageOrderItemId, cache: cache);
+            if (load && oi2.PhysicalMaterialTypeId != null) oi2.PhysicalMaterialType = FindMaterialType2(oi2.PhysicalMaterialTypeId, cache: cache);
+            if (load && oi2.PhysicalMaterialSupplierId != null) oi2.PhysicalMaterialSupplier = FindOrganization2(oi2.PhysicalMaterialSupplierId, cache: cache);
+            if (load && oi2.OrderId != null) oi2.Order = FindOrder2(oi2.OrderId, cache: cache);
+            if (load && oi2.CreationUserId != null) oi2.CreationUser = FindUser2(oi2.CreationUserId, cache: cache);
+            if (load && oi2.LastWriteUserId != null) oi2.LastWriteUser = FindUser2(oi2.LastWriteUserId, cache: cache);
             var i = 0;
             if (oi2.OrderItemAlerts != null) foreach (var oia in oi2.OrderItemAlerts)
                 {
                     oia.Id = (++i).ToString();
                     oia.OrderItemId = oi2.Id;
                     oia.OrderItem = oi2;
-                    if (load && oia.AlertId != null) oia.Alert = (Alert2)(cache && objects.ContainsKey(oia.AlertId.Value) ? objects[oia.AlertId.Value] : objects[oia.AlertId.Value] = FindAlert2(oia.AlertId));
+                    if (load && oia.AlertId != null) oia.Alert = FindAlert2(oia.AlertId, cache: cache);
                 }
             i = 0;
             if (oi2.OrderItemClaims != null) foreach (var oic in oi2.OrderItemClaims)
@@ -4114,7 +4260,7 @@ namespace FolioLibrary
                     oic2.Id = (++i).ToString();
                     oic2.OrderItemId = oi2.Id;
                     oic2.OrderItem = oi2;
-                    if (load && oic2.ContributorNameTypeId != null) oic2.ContributorNameType = (ContributorNameType2)(cache && objects.ContainsKey(oic2.ContributorNameTypeId.Value) ? objects[oic2.ContributorNameTypeId.Value] : objects[oic2.ContributorNameTypeId.Value] = FindContributorNameType2(oic2.ContributorNameTypeId));
+                    if (load && oic2.ContributorNameTypeId != null) oic2.ContributorNameType = FindContributorNameType2(oic2.ContributorNameTypeId, cache: cache);
                 }
             i = 0;
             if (oi2.OrderItemFunds != null) foreach (var oif in oi2.OrderItemFunds)
@@ -4122,9 +4268,9 @@ namespace FolioLibrary
                     oif.Id = (++i).ToString();
                     oif.OrderItemId = oi2.Id;
                     oif.OrderItem = oi2;
-                    if (load && oif.EncumbranceId != null) oif.Encumbrance = (Transaction2)(cache && objects.ContainsKey(oif.EncumbranceId.Value) ? objects[oif.EncumbranceId.Value] : objects[oif.EncumbranceId.Value] = FindTransaction2(oif.EncumbranceId));
-                    if (load && oif.FundId != null) oif.Fund = (Fund2)(cache && objects.ContainsKey(oif.FundId.Value) ? objects[oif.FundId.Value] : objects[oif.FundId.Value] = FindFund2(oif.FundId));
-                    if (load && oif.ExpenseClassId != null) oif.ExpenseClass = (ExpenseClass2)(cache && objects.ContainsKey(oif.ExpenseClassId.Value) ? objects[oif.ExpenseClassId.Value] : objects[oif.ExpenseClassId.Value] = FindExpenseClass2(oif.ExpenseClassId));
+                    if (load && oif.EncumbranceId != null) oif.Encumbrance = FindTransaction2(oif.EncumbranceId, cache: cache);
+                    if (load && oif.FundId != null) oif.Fund = FindFund2(oif.FundId, cache: cache);
+                    if (load && oif.ExpenseClassId != null) oif.ExpenseClass = FindExpenseClass2(oif.ExpenseClassId, cache: cache);
                 }
             i = 0;
             if (oi2.OrderItemLocation2s != null) foreach (var oil2 in oi2.OrderItemLocation2s)
@@ -4132,8 +4278,8 @@ namespace FolioLibrary
                     oil2.Id = (++i).ToString();
                     oil2.OrderItemId = oi2.Id;
                     oil2.OrderItem = oi2;
-                    if (load && oil2.LocationId != null) oil2.Location = (Location2)(cache && objects.ContainsKey(oil2.LocationId.Value) ? objects[oil2.LocationId.Value] : objects[oil2.LocationId.Value] = FindLocation2(oil2.LocationId));
-                    if (load && oil2.HoldingId != null) oil2.Holding = (Holding2)(cache && objects.ContainsKey(oil2.HoldingId.Value) ? objects[oil2.HoldingId.Value] : objects[oil2.HoldingId.Value] = FindHolding2(oil2.HoldingId));
+                    if (load && oil2.LocationId != null) oil2.Location = FindLocation2(oil2.LocationId, cache: cache);
+                    if (load && oil2.HoldingId != null) oil2.Holding = FindHolding2(oil2.HoldingId, cache: cache);
                 }
             i = 0;
             if (oi2.OrderItemProductIds != null) foreach (var oipi in oi2.OrderItemProductIds)
@@ -4141,7 +4287,7 @@ namespace FolioLibrary
                     oipi.Id = (++i).ToString();
                     oipi.OrderItemId = oi2.Id;
                     oipi.OrderItem = oi2;
-                    if (load && oipi.ProductIdTypeId != null) oipi.ProductIdType = (IdType2)(cache && objects.ContainsKey(oipi.ProductIdTypeId.Value) ? objects[oipi.ProductIdTypeId.Value] : objects[oipi.ProductIdTypeId.Value] = FindIdType2(oipi.ProductIdTypeId));
+                    if (load && oipi.ProductIdTypeId != null) oipi.ProductIdType = FindIdType2(oipi.ProductIdTypeId, cache: cache);
                 }
             i = 0;
             if (oi2.OrderItemReferenceNumbers != null) foreach (var oirn in oi2.OrderItemReferenceNumbers)
@@ -4156,7 +4302,7 @@ namespace FolioLibrary
                     oirc.Id = (++i).ToString();
                     oirc.OrderItemId = oi2.Id;
                     oirc.OrderItem = oi2;
-                    if (load && oirc.ReportingCodeId != null) oirc.ReportingCode = (ReportingCode2)(cache && objects.ContainsKey(oirc.ReportingCodeId.Value) ? objects[oirc.ReportingCodeId.Value] : objects[oirc.ReportingCodeId.Value] = FindReportingCode2(oirc.ReportingCodeId));
+                    if (load && oirc.ReportingCodeId != null) oirc.ReportingCode = FindReportingCode2(oirc.ReportingCodeId, cache: cache);
                 }
             i = 0;
             if (oi2.OrderItemTags != null) foreach (var oit in oi2.OrderItemTags)
@@ -4193,7 +4339,8 @@ namespace FolioLibrary
         {
             return FolioServiceClient.OrderTemplates(out count, where, orderBy, skip, take).Select(jo =>
             {
-                var ot2 = OrderTemplate2.FromJObject(jo);
+                var id = Guid.Parse((string)jo["id"]);
+                var ot2 = cache ? (OrderTemplate2)(objects.ContainsKey(id) ? objects[id] : objects[id] = OrderTemplate2.FromJObject(jo)) : OrderTemplate2.FromJObject(jo);
                 return ot2;
             }).ToArray();
         }
@@ -4202,7 +4349,8 @@ namespace FolioLibrary
         {
             foreach (var jo in FolioServiceClient.OrderTemplates(where, orderBy, skip, take))
             {
-                var ot2 = OrderTemplate2.FromJObject(jo);
+                var id = Guid.Parse((string)jo["id"]);
+                var ot2 = cache ? (OrderTemplate2)(objects.ContainsKey(id) ? objects[id] : objects[id] = OrderTemplate2.FromJObject(jo)) : OrderTemplate2.FromJObject(jo);
                 yield return ot2;
             }
         }
@@ -4221,9 +4369,9 @@ namespace FolioLibrary
 
         public OrderTransactionSummary2 FindOrderTransactionSummary2(Guid? id, bool load = false, bool cache = true)
         {
-            var ots2 = OrderTransactionSummary2.FromJObject(FolioServiceClient.GetOrderTransactionSummary(id?.ToString()));
+            var ots2 = cache ? (OrderTransactionSummary2)(objects.ContainsKey(id.Value) ? objects[id.Value] : objects[id.Value] = OrderTransactionSummary2.FromJObject(FolioServiceClient.GetOrderTransactionSummary(id?.ToString()))) : OrderTransactionSummary2.FromJObject(FolioServiceClient.GetOrderTransactionSummary(id?.ToString()));
             if (ots2 == null) return null;
-            if (load && ots2.Id != null) ots2.Order2 = (Order2)(cache && objects.ContainsKey(ots2.Id.Value) ? objects[ots2.Id.Value] : objects[ots2.Id.Value] = FindOrder2(ots2.Id));
+            if (load && ots2.Id != null) ots2.Order2 = FindOrder2(ots2.Id, cache: cache);
             return ots2;
         }
 
@@ -4245,9 +4393,10 @@ namespace FolioLibrary
         {
             return FolioServiceClient.Organizations(out count, where, orderBy, skip, take).Select(jo =>
             {
-                var o2 = Organization2.FromJObject(jo);
-                if (load && o2.CreationUserId != null) o2.CreationUser = (User2)(cache && objects.ContainsKey(o2.CreationUserId.Value) ? objects[o2.CreationUserId.Value] : objects[o2.CreationUserId.Value] = FindUser2(o2.CreationUserId));
-                if (load && o2.LastWriteUserId != null) o2.LastWriteUser = (User2)(cache && objects.ContainsKey(o2.LastWriteUserId.Value) ? objects[o2.LastWriteUserId.Value] : objects[o2.LastWriteUserId.Value] = FindUser2(o2.LastWriteUserId));
+                var id = Guid.Parse((string)jo["id"]);
+                var o2 = cache ? (Organization2)(objects.ContainsKey(id) ? objects[id] : objects[id] = Organization2.FromJObject(jo)) : Organization2.FromJObject(jo);
+                if (load && o2.CreationUserId != null) o2.CreationUser = FindUser2(o2.CreationUserId, cache: cache);
+                if (load && o2.LastWriteUserId != null) o2.LastWriteUser = FindUser2(o2.LastWriteUserId, cache: cache);
                 return o2;
             }).ToArray();
         }
@@ -4256,19 +4405,20 @@ namespace FolioLibrary
         {
             foreach (var jo in FolioServiceClient.Organizations(where, orderBy, skip, take))
             {
-                var o2 = Organization2.FromJObject(jo);
-                if (load && o2.CreationUserId != null) o2.CreationUser = (User2)(cache && objects.ContainsKey(o2.CreationUserId.Value) ? objects[o2.CreationUserId.Value] : objects[o2.CreationUserId.Value] = FindUser2(o2.CreationUserId));
-                if (load && o2.LastWriteUserId != null) o2.LastWriteUser = (User2)(cache && objects.ContainsKey(o2.LastWriteUserId.Value) ? objects[o2.LastWriteUserId.Value] : objects[o2.LastWriteUserId.Value] = FindUser2(o2.LastWriteUserId));
+                var id = Guid.Parse((string)jo["id"]);
+                var o2 = cache ? (Organization2)(objects.ContainsKey(id) ? objects[id] : objects[id] = Organization2.FromJObject(jo)) : Organization2.FromJObject(jo);
+                if (load && o2.CreationUserId != null) o2.CreationUser = FindUser2(o2.CreationUserId, cache: cache);
+                if (load && o2.LastWriteUserId != null) o2.LastWriteUser = FindUser2(o2.LastWriteUserId, cache: cache);
                 yield return o2;
             }
         }
 
         public Organization2 FindOrganization2(Guid? id, bool load = false, bool cache = true)
         {
-            var o2 = Organization2.FromJObject(FolioServiceClient.GetOrganization(id?.ToString()));
+            var o2 = cache ? (Organization2)(objects.ContainsKey(id.Value) ? objects[id.Value] : objects[id.Value] = Organization2.FromJObject(FolioServiceClient.GetOrganization(id?.ToString()))) : Organization2.FromJObject(FolioServiceClient.GetOrganization(id?.ToString()));
             if (o2 == null) return null;
-            if (load && o2.CreationUserId != null) o2.CreationUser = (User2)(cache && objects.ContainsKey(o2.CreationUserId.Value) ? objects[o2.CreationUserId.Value] : objects[o2.CreationUserId.Value] = FindUser2(o2.CreationUserId));
-            if (load && o2.LastWriteUserId != null) o2.LastWriteUser = (User2)(cache && objects.ContainsKey(o2.LastWriteUserId.Value) ? objects[o2.LastWriteUserId.Value] : objects[o2.LastWriteUserId.Value] = FindUser2(o2.LastWriteUserId));
+            if (load && o2.CreationUserId != null) o2.CreationUser = FindUser2(o2.CreationUserId, cache: cache);
+            if (load && o2.LastWriteUserId != null) o2.LastWriteUser = FindUser2(o2.LastWriteUserId, cache: cache);
             var i = 0;
             if (o2.Currencies != null) foreach (var c in o2.Currencies)
                 {
@@ -4289,7 +4439,7 @@ namespace FolioLibrary
                     oau.Id = (++i).ToString();
                     oau.OrganizationId = o2.Id;
                     oau.Organization = o2;
-                    if (load && oau.AcquisitionsUnitId != null) oau.AcquisitionsUnit = (AcquisitionsUnit2)(cache && objects.ContainsKey(oau.AcquisitionsUnitId.Value) ? objects[oau.AcquisitionsUnitId.Value] : objects[oau.AcquisitionsUnitId.Value] = FindAcquisitionsUnit2(oau.AcquisitionsUnitId));
+                    if (load && oau.AcquisitionsUnitId != null) oau.AcquisitionsUnit = FindAcquisitionsUnit2(oau.AcquisitionsUnitId, cache: cache);
                 }
             i = 0;
             if (o2.OrganizationAddresses != null) foreach (var oa2 in o2.OrganizationAddresses)
@@ -4297,8 +4447,8 @@ namespace FolioLibrary
                     oa2.Id = (++i).ToString();
                     oa2.OrganizationId = o2.Id;
                     oa2.Organization = o2;
-                    if (load && oa2.CreationUserId != null) oa2.CreationUser = (User2)(cache && objects.ContainsKey(oa2.CreationUserId.Value) ? objects[oa2.CreationUserId.Value] : objects[oa2.CreationUserId.Value] = FindUser2(oa2.CreationUserId));
-                    if (load && oa2.LastWriteUserId != null) oa2.LastWriteUser = (User2)(cache && objects.ContainsKey(oa2.LastWriteUserId.Value) ? objects[oa2.LastWriteUserId.Value] : objects[oa2.LastWriteUserId.Value] = FindUser2(oa2.LastWriteUserId));
+                    if (load && oa2.CreationUserId != null) oa2.CreationUser = FindUser2(oa2.CreationUserId, cache: cache);
+                    if (load && oa2.LastWriteUserId != null) oa2.LastWriteUser = FindUser2(oa2.LastWriteUserId, cache: cache);
                 }
             i = 0;
             if (o2.OrganizationAgreements != null) foreach (var oa3 in o2.OrganizationAgreements)
@@ -4327,7 +4477,7 @@ namespace FolioLibrary
                     oc2.Id = (++i).ToString();
                     oc2.OrganizationId = o2.Id;
                     oc2.Organization = o2;
-                    if (load && oc2.ContactId != null) oc2.Contact = (Contact2)(cache && objects.ContainsKey(oc2.ContactId.Value) ? objects[oc2.ContactId.Value] : objects[oc2.ContactId.Value] = FindContact2(oc2.ContactId));
+                    if (load && oc2.ContactId != null) oc2.Contact = FindContact2(oc2.ContactId, cache: cache);
                 }
             i = 0;
             if (o2.OrganizationEmails != null) foreach (var oe in o2.OrganizationEmails)
@@ -4335,8 +4485,8 @@ namespace FolioLibrary
                     oe.Id = (++i).ToString();
                     oe.OrganizationId = o2.Id;
                     oe.Organization = o2;
-                    if (load && oe.CreationUserId != null) oe.CreationUser = (User2)(cache && objects.ContainsKey(oe.CreationUserId.Value) ? objects[oe.CreationUserId.Value] : objects[oe.CreationUserId.Value] = FindUser2(oe.CreationUserId));
-                    if (load && oe.LastWriteUserId != null) oe.LastWriteUser = (User2)(cache && objects.ContainsKey(oe.LastWriteUserId.Value) ? objects[oe.LastWriteUserId.Value] : objects[oe.LastWriteUserId.Value] = FindUser2(oe.LastWriteUserId));
+                    if (load && oe.CreationUserId != null) oe.CreationUser = FindUser2(oe.CreationUserId, cache: cache);
+                    if (load && oe.LastWriteUserId != null) oe.LastWriteUser = FindUser2(oe.LastWriteUserId, cache: cache);
                 }
             i = 0;
             if (o2.OrganizationInterfaces != null) foreach (var oi in o2.OrganizationInterfaces)
@@ -4344,7 +4494,7 @@ namespace FolioLibrary
                     oi.Id = (++i).ToString();
                     oi.OrganizationId = o2.Id;
                     oi.Organization = o2;
-                    if (load && oi.InterfaceId != null) oi.Interface = (Interface2)(cache && objects.ContainsKey(oi.InterfaceId.Value) ? objects[oi.InterfaceId.Value] : objects[oi.InterfaceId.Value] = FindInterface2(oi.InterfaceId));
+                    if (load && oi.InterfaceId != null) oi.Interface = FindInterface2(oi.InterfaceId, cache: cache);
                 }
             i = 0;
             if (o2.OrganizationPhoneNumbers != null) foreach (var opn in o2.OrganizationPhoneNumbers)
@@ -4352,8 +4502,8 @@ namespace FolioLibrary
                     opn.Id = (++i).ToString();
                     opn.OrganizationId = o2.Id;
                     opn.Organization = o2;
-                    if (load && opn.CreationUserId != null) opn.CreationUser = (User2)(cache && objects.ContainsKey(opn.CreationUserId.Value) ? objects[opn.CreationUserId.Value] : objects[opn.CreationUserId.Value] = FindUser2(opn.CreationUserId));
-                    if (load && opn.LastWriteUserId != null) opn.LastWriteUser = (User2)(cache && objects.ContainsKey(opn.LastWriteUserId.Value) ? objects[opn.LastWriteUserId.Value] : objects[opn.LastWriteUserId.Value] = FindUser2(opn.LastWriteUserId));
+                    if (load && opn.CreationUserId != null) opn.CreationUser = FindUser2(opn.CreationUserId, cache: cache);
+                    if (load && opn.LastWriteUserId != null) opn.LastWriteUser = FindUser2(opn.LastWriteUserId, cache: cache);
                 }
             i = 0;
             if (o2.OrganizationTags != null) foreach (var ot in o2.OrganizationTags)
@@ -4375,8 +4525,8 @@ namespace FolioLibrary
                     ou.Id = (++i).ToString();
                     ou.OrganizationId = o2.Id;
                     ou.Organization = o2;
-                    if (load && ou.CreationUserId != null) ou.CreationUser = (User2)(cache && objects.ContainsKey(ou.CreationUserId.Value) ? objects[ou.CreationUserId.Value] : objects[ou.CreationUserId.Value] = FindUser2(ou.CreationUserId));
-                    if (load && ou.LastWriteUserId != null) ou.LastWriteUser = (User2)(cache && objects.ContainsKey(ou.LastWriteUserId.Value) ? objects[ou.LastWriteUserId.Value] : objects[ou.LastWriteUserId.Value] = FindUser2(ou.LastWriteUserId));
+                    if (load && ou.CreationUserId != null) ou.CreationUser = FindUser2(ou.CreationUserId, cache: cache);
+                    if (load && ou.LastWriteUserId != null) ou.LastWriteUser = FindUser2(ou.LastWriteUserId, cache: cache);
                 }
             return o2;
         }
@@ -4399,9 +4549,10 @@ namespace FolioLibrary
         {
             return FolioServiceClient.OverdueFinePolicies(out count, where, orderBy, skip, take).Select(jo =>
             {
-                var ofp2 = OverdueFinePolicy2.FromJObject(jo);
-                if (load && ofp2.CreationUserId != null) ofp2.CreationUser = (User2)(cache && objects.ContainsKey(ofp2.CreationUserId.Value) ? objects[ofp2.CreationUserId.Value] : objects[ofp2.CreationUserId.Value] = FindUser2(ofp2.CreationUserId));
-                if (load && ofp2.LastWriteUserId != null) ofp2.LastWriteUser = (User2)(cache && objects.ContainsKey(ofp2.LastWriteUserId.Value) ? objects[ofp2.LastWriteUserId.Value] : objects[ofp2.LastWriteUserId.Value] = FindUser2(ofp2.LastWriteUserId));
+                var id = Guid.Parse((string)jo["id"]);
+                var ofp2 = cache ? (OverdueFinePolicy2)(objects.ContainsKey(id) ? objects[id] : objects[id] = OverdueFinePolicy2.FromJObject(jo)) : OverdueFinePolicy2.FromJObject(jo);
+                if (load && ofp2.CreationUserId != null) ofp2.CreationUser = FindUser2(ofp2.CreationUserId, cache: cache);
+                if (load && ofp2.LastWriteUserId != null) ofp2.LastWriteUser = FindUser2(ofp2.LastWriteUserId, cache: cache);
                 return ofp2;
             }).ToArray();
         }
@@ -4410,19 +4561,20 @@ namespace FolioLibrary
         {
             foreach (var jo in FolioServiceClient.OverdueFinePolicies(where, orderBy, skip, take))
             {
-                var ofp2 = OverdueFinePolicy2.FromJObject(jo);
-                if (load && ofp2.CreationUserId != null) ofp2.CreationUser = (User2)(cache && objects.ContainsKey(ofp2.CreationUserId.Value) ? objects[ofp2.CreationUserId.Value] : objects[ofp2.CreationUserId.Value] = FindUser2(ofp2.CreationUserId));
-                if (load && ofp2.LastWriteUserId != null) ofp2.LastWriteUser = (User2)(cache && objects.ContainsKey(ofp2.LastWriteUserId.Value) ? objects[ofp2.LastWriteUserId.Value] : objects[ofp2.LastWriteUserId.Value] = FindUser2(ofp2.LastWriteUserId));
+                var id = Guid.Parse((string)jo["id"]);
+                var ofp2 = cache ? (OverdueFinePolicy2)(objects.ContainsKey(id) ? objects[id] : objects[id] = OverdueFinePolicy2.FromJObject(jo)) : OverdueFinePolicy2.FromJObject(jo);
+                if (load && ofp2.CreationUserId != null) ofp2.CreationUser = FindUser2(ofp2.CreationUserId, cache: cache);
+                if (load && ofp2.LastWriteUserId != null) ofp2.LastWriteUser = FindUser2(ofp2.LastWriteUserId, cache: cache);
                 yield return ofp2;
             }
         }
 
         public OverdueFinePolicy2 FindOverdueFinePolicy2(Guid? id, bool load = false, bool cache = true)
         {
-            var ofp2 = OverdueFinePolicy2.FromJObject(FolioServiceClient.GetOverdueFinePolicy(id?.ToString()));
+            var ofp2 = cache ? (OverdueFinePolicy2)(objects.ContainsKey(id.Value) ? objects[id.Value] : objects[id.Value] = OverdueFinePolicy2.FromJObject(FolioServiceClient.GetOverdueFinePolicy(id?.ToString()))) : OverdueFinePolicy2.FromJObject(FolioServiceClient.GetOverdueFinePolicy(id?.ToString()));
             if (ofp2 == null) return null;
-            if (load && ofp2.CreationUserId != null) ofp2.CreationUser = (User2)(cache && objects.ContainsKey(ofp2.CreationUserId.Value) ? objects[ofp2.CreationUserId.Value] : objects[ofp2.CreationUserId.Value] = FindUser2(ofp2.CreationUserId));
-            if (load && ofp2.LastWriteUserId != null) ofp2.LastWriteUser = (User2)(cache && objects.ContainsKey(ofp2.LastWriteUserId.Value) ? objects[ofp2.LastWriteUserId.Value] : objects[ofp2.LastWriteUserId.Value] = FindUser2(ofp2.LastWriteUserId));
+            if (load && ofp2.CreationUserId != null) ofp2.CreationUser = FindUser2(ofp2.CreationUserId, cache: cache);
+            if (load && ofp2.LastWriteUserId != null) ofp2.LastWriteUser = FindUser2(ofp2.LastWriteUserId, cache: cache);
             return ofp2;
         }
 
@@ -4444,11 +4596,12 @@ namespace FolioLibrary
         {
             return FolioServiceClient.Owners(out count, where, orderBy, skip, take).Select(jo =>
             {
-                var o2 = Owner2.FromJObject(jo);
-                if (load && o2.DefaultChargeNoticeId != null) o2.DefaultChargeNotice = (Template2)(cache && objects.ContainsKey(o2.DefaultChargeNoticeId.Value) ? objects[o2.DefaultChargeNoticeId.Value] : objects[o2.DefaultChargeNoticeId.Value] = FindTemplate2(o2.DefaultChargeNoticeId));
-                if (load && o2.DefaultActionNoticeId != null) o2.DefaultActionNotice = (Template2)(cache && objects.ContainsKey(o2.DefaultActionNoticeId.Value) ? objects[o2.DefaultActionNoticeId.Value] : objects[o2.DefaultActionNoticeId.Value] = FindTemplate2(o2.DefaultActionNoticeId));
-                if (load && o2.CreationUserId != null) o2.CreationUser = (User2)(cache && objects.ContainsKey(o2.CreationUserId.Value) ? objects[o2.CreationUserId.Value] : objects[o2.CreationUserId.Value] = FindUser2(o2.CreationUserId));
-                if (load && o2.LastWriteUserId != null) o2.LastWriteUser = (User2)(cache && objects.ContainsKey(o2.LastWriteUserId.Value) ? objects[o2.LastWriteUserId.Value] : objects[o2.LastWriteUserId.Value] = FindUser2(o2.LastWriteUserId));
+                var id = Guid.Parse((string)jo["id"]);
+                var o2 = cache ? (Owner2)(objects.ContainsKey(id) ? objects[id] : objects[id] = Owner2.FromJObject(jo)) : Owner2.FromJObject(jo);
+                if (load && o2.DefaultChargeNoticeId != null) o2.DefaultChargeNotice = FindTemplate2(o2.DefaultChargeNoticeId, cache: cache);
+                if (load && o2.DefaultActionNoticeId != null) o2.DefaultActionNotice = FindTemplate2(o2.DefaultActionNoticeId, cache: cache);
+                if (load && o2.CreationUserId != null) o2.CreationUser = FindUser2(o2.CreationUserId, cache: cache);
+                if (load && o2.LastWriteUserId != null) o2.LastWriteUser = FindUser2(o2.LastWriteUserId, cache: cache);
                 return o2;
             }).ToArray();
         }
@@ -4457,30 +4610,31 @@ namespace FolioLibrary
         {
             foreach (var jo in FolioServiceClient.Owners(where, orderBy, skip, take))
             {
-                var o2 = Owner2.FromJObject(jo);
-                if (load && o2.DefaultChargeNoticeId != null) o2.DefaultChargeNotice = (Template2)(cache && objects.ContainsKey(o2.DefaultChargeNoticeId.Value) ? objects[o2.DefaultChargeNoticeId.Value] : objects[o2.DefaultChargeNoticeId.Value] = FindTemplate2(o2.DefaultChargeNoticeId));
-                if (load && o2.DefaultActionNoticeId != null) o2.DefaultActionNotice = (Template2)(cache && objects.ContainsKey(o2.DefaultActionNoticeId.Value) ? objects[o2.DefaultActionNoticeId.Value] : objects[o2.DefaultActionNoticeId.Value] = FindTemplate2(o2.DefaultActionNoticeId));
-                if (load && o2.CreationUserId != null) o2.CreationUser = (User2)(cache && objects.ContainsKey(o2.CreationUserId.Value) ? objects[o2.CreationUserId.Value] : objects[o2.CreationUserId.Value] = FindUser2(o2.CreationUserId));
-                if (load && o2.LastWriteUserId != null) o2.LastWriteUser = (User2)(cache && objects.ContainsKey(o2.LastWriteUserId.Value) ? objects[o2.LastWriteUserId.Value] : objects[o2.LastWriteUserId.Value] = FindUser2(o2.LastWriteUserId));
+                var id = Guid.Parse((string)jo["id"]);
+                var o2 = cache ? (Owner2)(objects.ContainsKey(id) ? objects[id] : objects[id] = Owner2.FromJObject(jo)) : Owner2.FromJObject(jo);
+                if (load && o2.DefaultChargeNoticeId != null) o2.DefaultChargeNotice = FindTemplate2(o2.DefaultChargeNoticeId, cache: cache);
+                if (load && o2.DefaultActionNoticeId != null) o2.DefaultActionNotice = FindTemplate2(o2.DefaultActionNoticeId, cache: cache);
+                if (load && o2.CreationUserId != null) o2.CreationUser = FindUser2(o2.CreationUserId, cache: cache);
+                if (load && o2.LastWriteUserId != null) o2.LastWriteUser = FindUser2(o2.LastWriteUserId, cache: cache);
                 yield return o2;
             }
         }
 
         public Owner2 FindOwner2(Guid? id, bool load = false, bool cache = true)
         {
-            var o2 = Owner2.FromJObject(FolioServiceClient.GetOwner(id?.ToString()));
+            var o2 = cache ? (Owner2)(objects.ContainsKey(id.Value) ? objects[id.Value] : objects[id.Value] = Owner2.FromJObject(FolioServiceClient.GetOwner(id?.ToString()))) : Owner2.FromJObject(FolioServiceClient.GetOwner(id?.ToString()));
             if (o2 == null) return null;
-            if (load && o2.DefaultChargeNoticeId != null) o2.DefaultChargeNotice = (Template2)(cache && objects.ContainsKey(o2.DefaultChargeNoticeId.Value) ? objects[o2.DefaultChargeNoticeId.Value] : objects[o2.DefaultChargeNoticeId.Value] = FindTemplate2(o2.DefaultChargeNoticeId));
-            if (load && o2.DefaultActionNoticeId != null) o2.DefaultActionNotice = (Template2)(cache && objects.ContainsKey(o2.DefaultActionNoticeId.Value) ? objects[o2.DefaultActionNoticeId.Value] : objects[o2.DefaultActionNoticeId.Value] = FindTemplate2(o2.DefaultActionNoticeId));
-            if (load && o2.CreationUserId != null) o2.CreationUser = (User2)(cache && objects.ContainsKey(o2.CreationUserId.Value) ? objects[o2.CreationUserId.Value] : objects[o2.CreationUserId.Value] = FindUser2(o2.CreationUserId));
-            if (load && o2.LastWriteUserId != null) o2.LastWriteUser = (User2)(cache && objects.ContainsKey(o2.LastWriteUserId.Value) ? objects[o2.LastWriteUserId.Value] : objects[o2.LastWriteUserId.Value] = FindUser2(o2.LastWriteUserId));
+            if (load && o2.DefaultChargeNoticeId != null) o2.DefaultChargeNotice = FindTemplate2(o2.DefaultChargeNoticeId, cache: cache);
+            if (load && o2.DefaultActionNoticeId != null) o2.DefaultActionNotice = FindTemplate2(o2.DefaultActionNoticeId, cache: cache);
+            if (load && o2.CreationUserId != null) o2.CreationUser = FindUser2(o2.CreationUserId, cache: cache);
+            if (load && o2.LastWriteUserId != null) o2.LastWriteUser = FindUser2(o2.LastWriteUserId, cache: cache);
             var i = 0;
             if (o2.ServicePointOwners != null) foreach (var spo in o2.ServicePointOwners)
                 {
                     spo.Id = (++i).ToString();
                     spo.OwnerId = o2.Id;
                     spo.Owner = o2;
-                    if (load && spo.ServicePointId != null) spo.ServicePoint = (ServicePoint2)(cache && objects.ContainsKey(spo.ServicePointId.Value) ? objects[spo.ServicePointId.Value] : objects[spo.ServicePointId.Value] = FindServicePoint2(spo.ServicePointId));
+                    if (load && spo.ServicePointId != null) spo.ServicePoint = FindServicePoint2(spo.ServicePointId, cache: cache);
                 }
             return o2;
         }
@@ -4503,11 +4657,12 @@ namespace FolioLibrary
         {
             return FolioServiceClient.PatronActionSessions(out count, where, orderBy, skip, take).Select(jo =>
             {
-                var pas2 = PatronActionSession2.FromJObject(jo);
-                if (load && pas2.PatronId != null) pas2.Patron = (User2)(cache && objects.ContainsKey(pas2.PatronId.Value) ? objects[pas2.PatronId.Value] : objects[pas2.PatronId.Value] = FindUser2(pas2.PatronId));
-                if (load && pas2.LoanId != null) pas2.Loan = (Loan2)(cache && objects.ContainsKey(pas2.LoanId.Value) ? objects[pas2.LoanId.Value] : objects[pas2.LoanId.Value] = FindLoan2(pas2.LoanId));
-                if (load && pas2.CreationUserId != null) pas2.CreationUser = (User2)(cache && objects.ContainsKey(pas2.CreationUserId.Value) ? objects[pas2.CreationUserId.Value] : objects[pas2.CreationUserId.Value] = FindUser2(pas2.CreationUserId));
-                if (load && pas2.LastWriteUserId != null) pas2.LastWriteUser = (User2)(cache && objects.ContainsKey(pas2.LastWriteUserId.Value) ? objects[pas2.LastWriteUserId.Value] : objects[pas2.LastWriteUserId.Value] = FindUser2(pas2.LastWriteUserId));
+                var id = Guid.Parse((string)jo["id"]);
+                var pas2 = cache ? (PatronActionSession2)(objects.ContainsKey(id) ? objects[id] : objects[id] = PatronActionSession2.FromJObject(jo)) : PatronActionSession2.FromJObject(jo);
+                if (load && pas2.PatronId != null) pas2.Patron = FindUser2(pas2.PatronId, cache: cache);
+                if (load && pas2.LoanId != null) pas2.Loan = FindLoan2(pas2.LoanId, cache: cache);
+                if (load && pas2.CreationUserId != null) pas2.CreationUser = FindUser2(pas2.CreationUserId, cache: cache);
+                if (load && pas2.LastWriteUserId != null) pas2.LastWriteUser = FindUser2(pas2.LastWriteUserId, cache: cache);
                 return pas2;
             }).ToArray();
         }
@@ -4516,23 +4671,24 @@ namespace FolioLibrary
         {
             foreach (var jo in FolioServiceClient.PatronActionSessions(where, orderBy, skip, take))
             {
-                var pas2 = PatronActionSession2.FromJObject(jo);
-                if (load && pas2.PatronId != null) pas2.Patron = (User2)(cache && objects.ContainsKey(pas2.PatronId.Value) ? objects[pas2.PatronId.Value] : objects[pas2.PatronId.Value] = FindUser2(pas2.PatronId));
-                if (load && pas2.LoanId != null) pas2.Loan = (Loan2)(cache && objects.ContainsKey(pas2.LoanId.Value) ? objects[pas2.LoanId.Value] : objects[pas2.LoanId.Value] = FindLoan2(pas2.LoanId));
-                if (load && pas2.CreationUserId != null) pas2.CreationUser = (User2)(cache && objects.ContainsKey(pas2.CreationUserId.Value) ? objects[pas2.CreationUserId.Value] : objects[pas2.CreationUserId.Value] = FindUser2(pas2.CreationUserId));
-                if (load && pas2.LastWriteUserId != null) pas2.LastWriteUser = (User2)(cache && objects.ContainsKey(pas2.LastWriteUserId.Value) ? objects[pas2.LastWriteUserId.Value] : objects[pas2.LastWriteUserId.Value] = FindUser2(pas2.LastWriteUserId));
+                var id = Guid.Parse((string)jo["id"]);
+                var pas2 = cache ? (PatronActionSession2)(objects.ContainsKey(id) ? objects[id] : objects[id] = PatronActionSession2.FromJObject(jo)) : PatronActionSession2.FromJObject(jo);
+                if (load && pas2.PatronId != null) pas2.Patron = FindUser2(pas2.PatronId, cache: cache);
+                if (load && pas2.LoanId != null) pas2.Loan = FindLoan2(pas2.LoanId, cache: cache);
+                if (load && pas2.CreationUserId != null) pas2.CreationUser = FindUser2(pas2.CreationUserId, cache: cache);
+                if (load && pas2.LastWriteUserId != null) pas2.LastWriteUser = FindUser2(pas2.LastWriteUserId, cache: cache);
                 yield return pas2;
             }
         }
 
         public PatronActionSession2 FindPatronActionSession2(Guid? id, bool load = false, bool cache = true)
         {
-            var pas2 = PatronActionSession2.FromJObject(FolioServiceClient.GetPatronActionSession(id?.ToString()));
+            var pas2 = cache ? (PatronActionSession2)(objects.ContainsKey(id.Value) ? objects[id.Value] : objects[id.Value] = PatronActionSession2.FromJObject(FolioServiceClient.GetPatronActionSession(id?.ToString()))) : PatronActionSession2.FromJObject(FolioServiceClient.GetPatronActionSession(id?.ToString()));
             if (pas2 == null) return null;
-            if (load && pas2.PatronId != null) pas2.Patron = (User2)(cache && objects.ContainsKey(pas2.PatronId.Value) ? objects[pas2.PatronId.Value] : objects[pas2.PatronId.Value] = FindUser2(pas2.PatronId));
-            if (load && pas2.LoanId != null) pas2.Loan = (Loan2)(cache && objects.ContainsKey(pas2.LoanId.Value) ? objects[pas2.LoanId.Value] : objects[pas2.LoanId.Value] = FindLoan2(pas2.LoanId));
-            if (load && pas2.CreationUserId != null) pas2.CreationUser = (User2)(cache && objects.ContainsKey(pas2.CreationUserId.Value) ? objects[pas2.CreationUserId.Value] : objects[pas2.CreationUserId.Value] = FindUser2(pas2.CreationUserId));
-            if (load && pas2.LastWriteUserId != null) pas2.LastWriteUser = (User2)(cache && objects.ContainsKey(pas2.LastWriteUserId.Value) ? objects[pas2.LastWriteUserId.Value] : objects[pas2.LastWriteUserId.Value] = FindUser2(pas2.LastWriteUserId));
+            if (load && pas2.PatronId != null) pas2.Patron = FindUser2(pas2.PatronId, cache: cache);
+            if (load && pas2.LoanId != null) pas2.Loan = FindLoan2(pas2.LoanId, cache: cache);
+            if (load && pas2.CreationUserId != null) pas2.CreationUser = FindUser2(pas2.CreationUserId, cache: cache);
+            if (load && pas2.LastWriteUserId != null) pas2.LastWriteUser = FindUser2(pas2.LastWriteUserId, cache: cache);
             return pas2;
         }
 
@@ -4554,9 +4710,10 @@ namespace FolioLibrary
         {
             return FolioServiceClient.PatronNoticePolicies(out count, where, orderBy, skip, take).Select(jo =>
             {
-                var pnp2 = PatronNoticePolicy2.FromJObject(jo);
-                if (load && pnp2.CreationUserId != null) pnp2.CreationUser = (User2)(cache && objects.ContainsKey(pnp2.CreationUserId.Value) ? objects[pnp2.CreationUserId.Value] : objects[pnp2.CreationUserId.Value] = FindUser2(pnp2.CreationUserId));
-                if (load && pnp2.LastWriteUserId != null) pnp2.LastWriteUser = (User2)(cache && objects.ContainsKey(pnp2.LastWriteUserId.Value) ? objects[pnp2.LastWriteUserId.Value] : objects[pnp2.LastWriteUserId.Value] = FindUser2(pnp2.LastWriteUserId));
+                var id = Guid.Parse((string)jo["id"]);
+                var pnp2 = cache ? (PatronNoticePolicy2)(objects.ContainsKey(id) ? objects[id] : objects[id] = PatronNoticePolicy2.FromJObject(jo)) : PatronNoticePolicy2.FromJObject(jo);
+                if (load && pnp2.CreationUserId != null) pnp2.CreationUser = FindUser2(pnp2.CreationUserId, cache: cache);
+                if (load && pnp2.LastWriteUserId != null) pnp2.LastWriteUser = FindUser2(pnp2.LastWriteUserId, cache: cache);
                 return pnp2;
             }).ToArray();
         }
@@ -4565,26 +4722,27 @@ namespace FolioLibrary
         {
             foreach (var jo in FolioServiceClient.PatronNoticePolicies(where, orderBy, skip, take))
             {
-                var pnp2 = PatronNoticePolicy2.FromJObject(jo);
-                if (load && pnp2.CreationUserId != null) pnp2.CreationUser = (User2)(cache && objects.ContainsKey(pnp2.CreationUserId.Value) ? objects[pnp2.CreationUserId.Value] : objects[pnp2.CreationUserId.Value] = FindUser2(pnp2.CreationUserId));
-                if (load && pnp2.LastWriteUserId != null) pnp2.LastWriteUser = (User2)(cache && objects.ContainsKey(pnp2.LastWriteUserId.Value) ? objects[pnp2.LastWriteUserId.Value] : objects[pnp2.LastWriteUserId.Value] = FindUser2(pnp2.LastWriteUserId));
+                var id = Guid.Parse((string)jo["id"]);
+                var pnp2 = cache ? (PatronNoticePolicy2)(objects.ContainsKey(id) ? objects[id] : objects[id] = PatronNoticePolicy2.FromJObject(jo)) : PatronNoticePolicy2.FromJObject(jo);
+                if (load && pnp2.CreationUserId != null) pnp2.CreationUser = FindUser2(pnp2.CreationUserId, cache: cache);
+                if (load && pnp2.LastWriteUserId != null) pnp2.LastWriteUser = FindUser2(pnp2.LastWriteUserId, cache: cache);
                 yield return pnp2;
             }
         }
 
         public PatronNoticePolicy2 FindPatronNoticePolicy2(Guid? id, bool load = false, bool cache = true)
         {
-            var pnp2 = PatronNoticePolicy2.FromJObject(FolioServiceClient.GetPatronNoticePolicy(id?.ToString()));
+            var pnp2 = cache ? (PatronNoticePolicy2)(objects.ContainsKey(id.Value) ? objects[id.Value] : objects[id.Value] = PatronNoticePolicy2.FromJObject(FolioServiceClient.GetPatronNoticePolicy(id?.ToString()))) : PatronNoticePolicy2.FromJObject(FolioServiceClient.GetPatronNoticePolicy(id?.ToString()));
             if (pnp2 == null) return null;
-            if (load && pnp2.CreationUserId != null) pnp2.CreationUser = (User2)(cache && objects.ContainsKey(pnp2.CreationUserId.Value) ? objects[pnp2.CreationUserId.Value] : objects[pnp2.CreationUserId.Value] = FindUser2(pnp2.CreationUserId));
-            if (load && pnp2.LastWriteUserId != null) pnp2.LastWriteUser = (User2)(cache && objects.ContainsKey(pnp2.LastWriteUserId.Value) ? objects[pnp2.LastWriteUserId.Value] : objects[pnp2.LastWriteUserId.Value] = FindUser2(pnp2.LastWriteUserId));
+            if (load && pnp2.CreationUserId != null) pnp2.CreationUser = FindUser2(pnp2.CreationUserId, cache: cache);
+            if (load && pnp2.LastWriteUserId != null) pnp2.LastWriteUser = FindUser2(pnp2.LastWriteUserId, cache: cache);
             var i = 0;
             if (pnp2.PatronNoticePolicyFeeFineNotices != null) foreach (var pnpffn in pnp2.PatronNoticePolicyFeeFineNotices)
                 {
                     pnpffn.Id = (++i).ToString();
                     pnpffn.PatronNoticePolicyId = pnp2.Id;
                     pnpffn.PatronNoticePolicy = pnp2;
-                    if (load && pnpffn.TemplateId != null) pnpffn.Template = (Template2)(cache && objects.ContainsKey(pnpffn.TemplateId.Value) ? objects[pnpffn.TemplateId.Value] : objects[pnpffn.TemplateId.Value] = FindTemplate2(pnpffn.TemplateId));
+                    if (load && pnpffn.TemplateId != null) pnpffn.Template = FindTemplate2(pnpffn.TemplateId, cache: cache);
                 }
             i = 0;
             if (pnp2.PatronNoticePolicyLoanNotices != null) foreach (var pnpln in pnp2.PatronNoticePolicyLoanNotices)
@@ -4592,7 +4750,7 @@ namespace FolioLibrary
                     pnpln.Id = (++i).ToString();
                     pnpln.PatronNoticePolicyId = pnp2.Id;
                     pnpln.PatronNoticePolicy = pnp2;
-                    if (load && pnpln.TemplateId != null) pnpln.Template = (Template2)(cache && objects.ContainsKey(pnpln.TemplateId.Value) ? objects[pnpln.TemplateId.Value] : objects[pnpln.TemplateId.Value] = FindTemplate2(pnpln.TemplateId));
+                    if (load && pnpln.TemplateId != null) pnpln.Template = FindTemplate2(pnpln.TemplateId, cache: cache);
                 }
             i = 0;
             if (pnp2.PatronNoticePolicyRequestNotices != null) foreach (var pnprn in pnp2.PatronNoticePolicyRequestNotices)
@@ -4600,7 +4758,7 @@ namespace FolioLibrary
                     pnprn.Id = (++i).ToString();
                     pnprn.PatronNoticePolicyId = pnp2.Id;
                     pnprn.PatronNoticePolicy = pnp2;
-                    if (load && pnprn.TemplateId != null) pnprn.Template = (Template2)(cache && objects.ContainsKey(pnprn.TemplateId.Value) ? objects[pnprn.TemplateId.Value] : objects[pnprn.TemplateId.Value] = FindTemplate2(pnprn.TemplateId));
+                    if (load && pnprn.TemplateId != null) pnprn.Template = FindTemplate2(pnprn.TemplateId, cache: cache);
                 }
             return pnp2;
         }
@@ -4623,9 +4781,10 @@ namespace FolioLibrary
         {
             return FolioServiceClient.Payments(out count, where, orderBy, skip, take).Select(jo =>
             {
-                var p2 = Payment2.FromJObject(jo);
-                if (load && p2.FeeId != null) p2.Fee = (Fee2)(cache && objects.ContainsKey(p2.FeeId.Value) ? objects[p2.FeeId.Value] : objects[p2.FeeId.Value] = FindFee2(p2.FeeId));
-                if (load && p2.UserId != null) p2.User = (User2)(cache && objects.ContainsKey(p2.UserId.Value) ? objects[p2.UserId.Value] : objects[p2.UserId.Value] = FindUser2(p2.UserId));
+                var id = Guid.Parse((string)jo["id"]);
+                var p2 = cache ? (Payment2)(objects.ContainsKey(id) ? objects[id] : objects[id] = Payment2.FromJObject(jo)) : Payment2.FromJObject(jo);
+                if (load && p2.FeeId != null) p2.Fee = FindFee2(p2.FeeId, cache: cache);
+                if (load && p2.UserId != null) p2.User = FindUser2(p2.UserId, cache: cache);
                 return p2;
             }).ToArray();
         }
@@ -4634,19 +4793,20 @@ namespace FolioLibrary
         {
             foreach (var jo in FolioServiceClient.Payments(where, orderBy, skip, take))
             {
-                var p2 = Payment2.FromJObject(jo);
-                if (load && p2.FeeId != null) p2.Fee = (Fee2)(cache && objects.ContainsKey(p2.FeeId.Value) ? objects[p2.FeeId.Value] : objects[p2.FeeId.Value] = FindFee2(p2.FeeId));
-                if (load && p2.UserId != null) p2.User = (User2)(cache && objects.ContainsKey(p2.UserId.Value) ? objects[p2.UserId.Value] : objects[p2.UserId.Value] = FindUser2(p2.UserId));
+                var id = Guid.Parse((string)jo["id"]);
+                var p2 = cache ? (Payment2)(objects.ContainsKey(id) ? objects[id] : objects[id] = Payment2.FromJObject(jo)) : Payment2.FromJObject(jo);
+                if (load && p2.FeeId != null) p2.Fee = FindFee2(p2.FeeId, cache: cache);
+                if (load && p2.UserId != null) p2.User = FindUser2(p2.UserId, cache: cache);
                 yield return p2;
             }
         }
 
         public Payment2 FindPayment2(Guid? id, bool load = false, bool cache = true)
         {
-            var p2 = Payment2.FromJObject(FolioServiceClient.GetPayment(id?.ToString()));
+            var p2 = cache ? (Payment2)(objects.ContainsKey(id.Value) ? objects[id.Value] : objects[id.Value] = Payment2.FromJObject(FolioServiceClient.GetPayment(id?.ToString()))) : Payment2.FromJObject(FolioServiceClient.GetPayment(id?.ToString()));
             if (p2 == null) return null;
-            if (load && p2.FeeId != null) p2.Fee = (Fee2)(cache && objects.ContainsKey(p2.FeeId.Value) ? objects[p2.FeeId.Value] : objects[p2.FeeId.Value] = FindFee2(p2.FeeId));
-            if (load && p2.UserId != null) p2.User = (User2)(cache && objects.ContainsKey(p2.UserId.Value) ? objects[p2.UserId.Value] : objects[p2.UserId.Value] = FindUser2(p2.UserId));
+            if (load && p2.FeeId != null) p2.Fee = FindFee2(p2.FeeId, cache: cache);
+            if (load && p2.UserId != null) p2.User = FindUser2(p2.UserId, cache: cache);
             return p2;
         }
 
@@ -4668,10 +4828,11 @@ namespace FolioLibrary
         {
             return FolioServiceClient.PaymentMethods(out count, where, orderBy, skip, take).Select(jo =>
             {
-                var pm2 = PaymentMethod2.FromJObject(jo);
-                if (load && pm2.CreationUserId != null) pm2.CreationUser = (User2)(cache && objects.ContainsKey(pm2.CreationUserId.Value) ? objects[pm2.CreationUserId.Value] : objects[pm2.CreationUserId.Value] = FindUser2(pm2.CreationUserId));
-                if (load && pm2.LastWriteUserId != null) pm2.LastWriteUser = (User2)(cache && objects.ContainsKey(pm2.LastWriteUserId.Value) ? objects[pm2.LastWriteUserId.Value] : objects[pm2.LastWriteUserId.Value] = FindUser2(pm2.LastWriteUserId));
-                if (load && pm2.OwnerId != null) pm2.Owner = (Owner2)(cache && objects.ContainsKey(pm2.OwnerId.Value) ? objects[pm2.OwnerId.Value] : objects[pm2.OwnerId.Value] = FindOwner2(pm2.OwnerId));
+                var id = Guid.Parse((string)jo["id"]);
+                var pm2 = cache ? (PaymentMethod2)(objects.ContainsKey(id) ? objects[id] : objects[id] = PaymentMethod2.FromJObject(jo)) : PaymentMethod2.FromJObject(jo);
+                if (load && pm2.CreationUserId != null) pm2.CreationUser = FindUser2(pm2.CreationUserId, cache: cache);
+                if (load && pm2.LastWriteUserId != null) pm2.LastWriteUser = FindUser2(pm2.LastWriteUserId, cache: cache);
+                if (load && pm2.OwnerId != null) pm2.Owner = FindOwner2(pm2.OwnerId, cache: cache);
                 return pm2;
             }).ToArray();
         }
@@ -4680,21 +4841,22 @@ namespace FolioLibrary
         {
             foreach (var jo in FolioServiceClient.PaymentMethods(where, orderBy, skip, take))
             {
-                var pm2 = PaymentMethod2.FromJObject(jo);
-                if (load && pm2.CreationUserId != null) pm2.CreationUser = (User2)(cache && objects.ContainsKey(pm2.CreationUserId.Value) ? objects[pm2.CreationUserId.Value] : objects[pm2.CreationUserId.Value] = FindUser2(pm2.CreationUserId));
-                if (load && pm2.LastWriteUserId != null) pm2.LastWriteUser = (User2)(cache && objects.ContainsKey(pm2.LastWriteUserId.Value) ? objects[pm2.LastWriteUserId.Value] : objects[pm2.LastWriteUserId.Value] = FindUser2(pm2.LastWriteUserId));
-                if (load && pm2.OwnerId != null) pm2.Owner = (Owner2)(cache && objects.ContainsKey(pm2.OwnerId.Value) ? objects[pm2.OwnerId.Value] : objects[pm2.OwnerId.Value] = FindOwner2(pm2.OwnerId));
+                var id = Guid.Parse((string)jo["id"]);
+                var pm2 = cache ? (PaymentMethod2)(objects.ContainsKey(id) ? objects[id] : objects[id] = PaymentMethod2.FromJObject(jo)) : PaymentMethod2.FromJObject(jo);
+                if (load && pm2.CreationUserId != null) pm2.CreationUser = FindUser2(pm2.CreationUserId, cache: cache);
+                if (load && pm2.LastWriteUserId != null) pm2.LastWriteUser = FindUser2(pm2.LastWriteUserId, cache: cache);
+                if (load && pm2.OwnerId != null) pm2.Owner = FindOwner2(pm2.OwnerId, cache: cache);
                 yield return pm2;
             }
         }
 
         public PaymentMethod2 FindPaymentMethod2(Guid? id, bool load = false, bool cache = true)
         {
-            var pm2 = PaymentMethod2.FromJObject(FolioServiceClient.GetPaymentMethod(id?.ToString()));
+            var pm2 = cache ? (PaymentMethod2)(objects.ContainsKey(id.Value) ? objects[id.Value] : objects[id.Value] = PaymentMethod2.FromJObject(FolioServiceClient.GetPaymentMethod(id?.ToString()))) : PaymentMethod2.FromJObject(FolioServiceClient.GetPaymentMethod(id?.ToString()));
             if (pm2 == null) return null;
-            if (load && pm2.CreationUserId != null) pm2.CreationUser = (User2)(cache && objects.ContainsKey(pm2.CreationUserId.Value) ? objects[pm2.CreationUserId.Value] : objects[pm2.CreationUserId.Value] = FindUser2(pm2.CreationUserId));
-            if (load && pm2.LastWriteUserId != null) pm2.LastWriteUser = (User2)(cache && objects.ContainsKey(pm2.LastWriteUserId.Value) ? objects[pm2.LastWriteUserId.Value] : objects[pm2.LastWriteUserId.Value] = FindUser2(pm2.LastWriteUserId));
-            if (load && pm2.OwnerId != null) pm2.Owner = (Owner2)(cache && objects.ContainsKey(pm2.OwnerId.Value) ? objects[pm2.OwnerId.Value] : objects[pm2.OwnerId.Value] = FindOwner2(pm2.OwnerId));
+            if (load && pm2.CreationUserId != null) pm2.CreationUser = FindUser2(pm2.CreationUserId, cache: cache);
+            if (load && pm2.LastWriteUserId != null) pm2.LastWriteUser = FindUser2(pm2.LastWriteUserId, cache: cache);
+            if (load && pm2.OwnerId != null) pm2.Owner = FindOwner2(pm2.OwnerId, cache: cache);
             return pm2;
         }
 
@@ -4716,9 +4878,10 @@ namespace FolioLibrary
         {
             return FolioServiceClient.Permissions(out count, where, orderBy, skip, take).Select(jo =>
             {
-                var p2 = Permission2.FromJObject(jo);
-                if (load && p2.CreationUserId != null) p2.CreationUser = (User2)(cache && objects.ContainsKey(p2.CreationUserId.Value) ? objects[p2.CreationUserId.Value] : objects[p2.CreationUserId.Value] = FindUser2(p2.CreationUserId));
-                if (load && p2.LastWriteUserId != null) p2.LastWriteUser = (User2)(cache && objects.ContainsKey(p2.LastWriteUserId.Value) ? objects[p2.LastWriteUserId.Value] : objects[p2.LastWriteUserId.Value] = FindUser2(p2.LastWriteUserId));
+                var id = Guid.Parse((string)jo["id"]);
+                var p2 = cache ? (Permission2)(objects.ContainsKey(id) ? objects[id] : objects[id] = Permission2.FromJObject(jo)) : Permission2.FromJObject(jo);
+                if (load && p2.CreationUserId != null) p2.CreationUser = FindUser2(p2.CreationUserId, cache: cache);
+                if (load && p2.LastWriteUserId != null) p2.LastWriteUser = FindUser2(p2.LastWriteUserId, cache: cache);
                 return p2;
             }).ToArray();
         }
@@ -4727,19 +4890,20 @@ namespace FolioLibrary
         {
             foreach (var jo in FolioServiceClient.Permissions(where, orderBy, skip, take))
             {
-                var p2 = Permission2.FromJObject(jo);
-                if (load && p2.CreationUserId != null) p2.CreationUser = (User2)(cache && objects.ContainsKey(p2.CreationUserId.Value) ? objects[p2.CreationUserId.Value] : objects[p2.CreationUserId.Value] = FindUser2(p2.CreationUserId));
-                if (load && p2.LastWriteUserId != null) p2.LastWriteUser = (User2)(cache && objects.ContainsKey(p2.LastWriteUserId.Value) ? objects[p2.LastWriteUserId.Value] : objects[p2.LastWriteUserId.Value] = FindUser2(p2.LastWriteUserId));
+                var id = Guid.Parse((string)jo["id"]);
+                var p2 = cache ? (Permission2)(objects.ContainsKey(id) ? objects[id] : objects[id] = Permission2.FromJObject(jo)) : Permission2.FromJObject(jo);
+                if (load && p2.CreationUserId != null) p2.CreationUser = FindUser2(p2.CreationUserId, cache: cache);
+                if (load && p2.LastWriteUserId != null) p2.LastWriteUser = FindUser2(p2.LastWriteUserId, cache: cache);
                 yield return p2;
             }
         }
 
         public Permission2 FindPermission2(Guid? id, bool load = false, bool cache = true)
         {
-            var p2 = Permission2.FromJObject(FolioServiceClient.GetPermission(id?.ToString()));
+            var p2 = cache ? (Permission2)(objects.ContainsKey(id.Value) ? objects[id.Value] : objects[id.Value] = Permission2.FromJObject(FolioServiceClient.GetPermission(id?.ToString()))) : Permission2.FromJObject(FolioServiceClient.GetPermission(id?.ToString()));
             if (p2 == null) return null;
-            if (load && p2.CreationUserId != null) p2.CreationUser = (User2)(cache && objects.ContainsKey(p2.CreationUserId.Value) ? objects[p2.CreationUserId.Value] : objects[p2.CreationUserId.Value] = FindUser2(p2.CreationUserId));
-            if (load && p2.LastWriteUserId != null) p2.LastWriteUser = (User2)(cache && objects.ContainsKey(p2.LastWriteUserId.Value) ? objects[p2.LastWriteUserId.Value] : objects[p2.LastWriteUserId.Value] = FindUser2(p2.LastWriteUserId));
+            if (load && p2.CreationUserId != null) p2.CreationUser = FindUser2(p2.CreationUserId, cache: cache);
+            if (load && p2.LastWriteUserId != null) p2.LastWriteUser = FindUser2(p2.LastWriteUserId, cache: cache);
             var i = 0;
             if (p2.PermissionChildOfs != null) foreach (var pco in p2.PermissionChildOfs)
                 {
@@ -4753,7 +4917,7 @@ namespace FolioLibrary
                     pgt.Id = (++i).ToString();
                     pgt.PermissionId = p2.Id;
                     pgt.Permission = p2;
-                    if (load && pgt.PermissionsUserId != null) pgt.PermissionsUser = (PermissionsUser2)(cache && objects.ContainsKey(pgt.PermissionsUserId.Value) ? objects[pgt.PermissionsUserId.Value] : objects[pgt.PermissionsUserId.Value] = FindPermissionsUser2(pgt.PermissionsUserId));
+                    if (load && pgt.PermissionsUserId != null) pgt.PermissionsUser = FindPermissionsUser2(pgt.PermissionsUserId, cache: cache);
                 }
             i = 0;
             if (p2.PermissionSubPermissions != null) foreach (var psp in p2.PermissionSubPermissions)
@@ -4790,10 +4954,11 @@ namespace FolioLibrary
         {
             return FolioServiceClient.PermissionsUsers(out count, where, orderBy, skip, take).Select(jo =>
             {
-                var pu2 = PermissionsUser2.FromJObject(jo);
-                if (load && pu2.UserId != null) pu2.User = (User2)(cache && objects.ContainsKey(pu2.UserId.Value) ? objects[pu2.UserId.Value] : objects[pu2.UserId.Value] = FindUser2(pu2.UserId));
-                if (load && pu2.CreationUserId != null) pu2.CreationUser = (User2)(cache && objects.ContainsKey(pu2.CreationUserId.Value) ? objects[pu2.CreationUserId.Value] : objects[pu2.CreationUserId.Value] = FindUser2(pu2.CreationUserId));
-                if (load && pu2.LastWriteUserId != null) pu2.LastWriteUser = (User2)(cache && objects.ContainsKey(pu2.LastWriteUserId.Value) ? objects[pu2.LastWriteUserId.Value] : objects[pu2.LastWriteUserId.Value] = FindUser2(pu2.LastWriteUserId));
+                var id = Guid.Parse((string)jo["id"]);
+                var pu2 = cache ? (PermissionsUser2)(objects.ContainsKey(id) ? objects[id] : objects[id] = PermissionsUser2.FromJObject(jo)) : PermissionsUser2.FromJObject(jo);
+                if (load && pu2.UserId != null) pu2.User = FindUser2(pu2.UserId, cache: cache);
+                if (load && pu2.CreationUserId != null) pu2.CreationUser = FindUser2(pu2.CreationUserId, cache: cache);
+                if (load && pu2.LastWriteUserId != null) pu2.LastWriteUser = FindUser2(pu2.LastWriteUserId, cache: cache);
                 return pu2;
             }).ToArray();
         }
@@ -4802,21 +4967,22 @@ namespace FolioLibrary
         {
             foreach (var jo in FolioServiceClient.PermissionsUsers(where, orderBy, skip, take))
             {
-                var pu2 = PermissionsUser2.FromJObject(jo);
-                if (load && pu2.UserId != null) pu2.User = (User2)(cache && objects.ContainsKey(pu2.UserId.Value) ? objects[pu2.UserId.Value] : objects[pu2.UserId.Value] = FindUser2(pu2.UserId));
-                if (load && pu2.CreationUserId != null) pu2.CreationUser = (User2)(cache && objects.ContainsKey(pu2.CreationUserId.Value) ? objects[pu2.CreationUserId.Value] : objects[pu2.CreationUserId.Value] = FindUser2(pu2.CreationUserId));
-                if (load && pu2.LastWriteUserId != null) pu2.LastWriteUser = (User2)(cache && objects.ContainsKey(pu2.LastWriteUserId.Value) ? objects[pu2.LastWriteUserId.Value] : objects[pu2.LastWriteUserId.Value] = FindUser2(pu2.LastWriteUserId));
+                var id = Guid.Parse((string)jo["id"]);
+                var pu2 = cache ? (PermissionsUser2)(objects.ContainsKey(id) ? objects[id] : objects[id] = PermissionsUser2.FromJObject(jo)) : PermissionsUser2.FromJObject(jo);
+                if (load && pu2.UserId != null) pu2.User = FindUser2(pu2.UserId, cache: cache);
+                if (load && pu2.CreationUserId != null) pu2.CreationUser = FindUser2(pu2.CreationUserId, cache: cache);
+                if (load && pu2.LastWriteUserId != null) pu2.LastWriteUser = FindUser2(pu2.LastWriteUserId, cache: cache);
                 yield return pu2;
             }
         }
 
         public PermissionsUser2 FindPermissionsUser2(Guid? id, bool load = false, bool cache = true)
         {
-            var pu2 = PermissionsUser2.FromJObject(FolioServiceClient.GetPermissionsUser(id?.ToString()));
+            var pu2 = cache ? (PermissionsUser2)(objects.ContainsKey(id.Value) ? objects[id.Value] : objects[id.Value] = PermissionsUser2.FromJObject(FolioServiceClient.GetPermissionsUser(id?.ToString()))) : PermissionsUser2.FromJObject(FolioServiceClient.GetPermissionsUser(id?.ToString()));
             if (pu2 == null) return null;
-            if (load && pu2.UserId != null) pu2.User = (User2)(cache && objects.ContainsKey(pu2.UserId.Value) ? objects[pu2.UserId.Value] : objects[pu2.UserId.Value] = FindUser2(pu2.UserId));
-            if (load && pu2.CreationUserId != null) pu2.CreationUser = (User2)(cache && objects.ContainsKey(pu2.CreationUserId.Value) ? objects[pu2.CreationUserId.Value] : objects[pu2.CreationUserId.Value] = FindUser2(pu2.CreationUserId));
-            if (load && pu2.LastWriteUserId != null) pu2.LastWriteUser = (User2)(cache && objects.ContainsKey(pu2.LastWriteUserId.Value) ? objects[pu2.LastWriteUserId.Value] : objects[pu2.LastWriteUserId.Value] = FindUser2(pu2.LastWriteUserId));
+            if (load && pu2.UserId != null) pu2.User = FindUser2(pu2.UserId, cache: cache);
+            if (load && pu2.CreationUserId != null) pu2.CreationUser = FindUser2(pu2.CreationUserId, cache: cache);
+            if (load && pu2.LastWriteUserId != null) pu2.LastWriteUser = FindUser2(pu2.LastWriteUserId, cache: cache);
             var i = 0;
             if (pu2.PermissionsUserPermissions != null) foreach (var pup in pu2.PermissionsUserPermissions)
                 {
@@ -4845,11 +5011,12 @@ namespace FolioLibrary
         {
             return FolioServiceClient.PrecedingSucceedingTitles(out count, where, orderBy, skip, take).Select(jo =>
             {
-                var pst2 = PrecedingSucceedingTitle2.FromJObject(jo);
-                if (load && pst2.PrecedingInstanceId != null) pst2.PrecedingInstance = (Instance2)(cache && objects.ContainsKey(pst2.PrecedingInstanceId.Value) ? objects[pst2.PrecedingInstanceId.Value] : objects[pst2.PrecedingInstanceId.Value] = FindInstance2(pst2.PrecedingInstanceId));
-                if (load && pst2.SucceedingInstanceId != null) pst2.SucceedingInstance = (Instance2)(cache && objects.ContainsKey(pst2.SucceedingInstanceId.Value) ? objects[pst2.SucceedingInstanceId.Value] : objects[pst2.SucceedingInstanceId.Value] = FindInstance2(pst2.SucceedingInstanceId));
-                if (load && pst2.CreationUserId != null) pst2.CreationUser = (User2)(cache && objects.ContainsKey(pst2.CreationUserId.Value) ? objects[pst2.CreationUserId.Value] : objects[pst2.CreationUserId.Value] = FindUser2(pst2.CreationUserId));
-                if (load && pst2.LastWriteUserId != null) pst2.LastWriteUser = (User2)(cache && objects.ContainsKey(pst2.LastWriteUserId.Value) ? objects[pst2.LastWriteUserId.Value] : objects[pst2.LastWriteUserId.Value] = FindUser2(pst2.LastWriteUserId));
+                var id = Guid.Parse((string)jo["id"]);
+                var pst2 = cache ? (PrecedingSucceedingTitle2)(objects.ContainsKey(id) ? objects[id] : objects[id] = PrecedingSucceedingTitle2.FromJObject(jo)) : PrecedingSucceedingTitle2.FromJObject(jo);
+                if (load && pst2.PrecedingInstanceId != null) pst2.PrecedingInstance = FindInstance2(pst2.PrecedingInstanceId, cache: cache);
+                if (load && pst2.SucceedingInstanceId != null) pst2.SucceedingInstance = FindInstance2(pst2.SucceedingInstanceId, cache: cache);
+                if (load && pst2.CreationUserId != null) pst2.CreationUser = FindUser2(pst2.CreationUserId, cache: cache);
+                if (load && pst2.LastWriteUserId != null) pst2.LastWriteUser = FindUser2(pst2.LastWriteUserId, cache: cache);
                 return pst2;
             }).ToArray();
         }
@@ -4858,30 +5025,31 @@ namespace FolioLibrary
         {
             foreach (var jo in FolioServiceClient.PrecedingSucceedingTitles(where, orderBy, skip, take))
             {
-                var pst2 = PrecedingSucceedingTitle2.FromJObject(jo);
-                if (load && pst2.PrecedingInstanceId != null) pst2.PrecedingInstance = (Instance2)(cache && objects.ContainsKey(pst2.PrecedingInstanceId.Value) ? objects[pst2.PrecedingInstanceId.Value] : objects[pst2.PrecedingInstanceId.Value] = FindInstance2(pst2.PrecedingInstanceId));
-                if (load && pst2.SucceedingInstanceId != null) pst2.SucceedingInstance = (Instance2)(cache && objects.ContainsKey(pst2.SucceedingInstanceId.Value) ? objects[pst2.SucceedingInstanceId.Value] : objects[pst2.SucceedingInstanceId.Value] = FindInstance2(pst2.SucceedingInstanceId));
-                if (load && pst2.CreationUserId != null) pst2.CreationUser = (User2)(cache && objects.ContainsKey(pst2.CreationUserId.Value) ? objects[pst2.CreationUserId.Value] : objects[pst2.CreationUserId.Value] = FindUser2(pst2.CreationUserId));
-                if (load && pst2.LastWriteUserId != null) pst2.LastWriteUser = (User2)(cache && objects.ContainsKey(pst2.LastWriteUserId.Value) ? objects[pst2.LastWriteUserId.Value] : objects[pst2.LastWriteUserId.Value] = FindUser2(pst2.LastWriteUserId));
+                var id = Guid.Parse((string)jo["id"]);
+                var pst2 = cache ? (PrecedingSucceedingTitle2)(objects.ContainsKey(id) ? objects[id] : objects[id] = PrecedingSucceedingTitle2.FromJObject(jo)) : PrecedingSucceedingTitle2.FromJObject(jo);
+                if (load && pst2.PrecedingInstanceId != null) pst2.PrecedingInstance = FindInstance2(pst2.PrecedingInstanceId, cache: cache);
+                if (load && pst2.SucceedingInstanceId != null) pst2.SucceedingInstance = FindInstance2(pst2.SucceedingInstanceId, cache: cache);
+                if (load && pst2.CreationUserId != null) pst2.CreationUser = FindUser2(pst2.CreationUserId, cache: cache);
+                if (load && pst2.LastWriteUserId != null) pst2.LastWriteUser = FindUser2(pst2.LastWriteUserId, cache: cache);
                 yield return pst2;
             }
         }
 
         public PrecedingSucceedingTitle2 FindPrecedingSucceedingTitle2(Guid? id, bool load = false, bool cache = true)
         {
-            var pst2 = PrecedingSucceedingTitle2.FromJObject(FolioServiceClient.GetPrecedingSucceedingTitle(id?.ToString()));
+            var pst2 = cache ? (PrecedingSucceedingTitle2)(objects.ContainsKey(id.Value) ? objects[id.Value] : objects[id.Value] = PrecedingSucceedingTitle2.FromJObject(FolioServiceClient.GetPrecedingSucceedingTitle(id?.ToString()))) : PrecedingSucceedingTitle2.FromJObject(FolioServiceClient.GetPrecedingSucceedingTitle(id?.ToString()));
             if (pst2 == null) return null;
-            if (load && pst2.PrecedingInstanceId != null) pst2.PrecedingInstance = (Instance2)(cache && objects.ContainsKey(pst2.PrecedingInstanceId.Value) ? objects[pst2.PrecedingInstanceId.Value] : objects[pst2.PrecedingInstanceId.Value] = FindInstance2(pst2.PrecedingInstanceId));
-            if (load && pst2.SucceedingInstanceId != null) pst2.SucceedingInstance = (Instance2)(cache && objects.ContainsKey(pst2.SucceedingInstanceId.Value) ? objects[pst2.SucceedingInstanceId.Value] : objects[pst2.SucceedingInstanceId.Value] = FindInstance2(pst2.SucceedingInstanceId));
-            if (load && pst2.CreationUserId != null) pst2.CreationUser = (User2)(cache && objects.ContainsKey(pst2.CreationUserId.Value) ? objects[pst2.CreationUserId.Value] : objects[pst2.CreationUserId.Value] = FindUser2(pst2.CreationUserId));
-            if (load && pst2.LastWriteUserId != null) pst2.LastWriteUser = (User2)(cache && objects.ContainsKey(pst2.LastWriteUserId.Value) ? objects[pst2.LastWriteUserId.Value] : objects[pst2.LastWriteUserId.Value] = FindUser2(pst2.LastWriteUserId));
+            if (load && pst2.PrecedingInstanceId != null) pst2.PrecedingInstance = FindInstance2(pst2.PrecedingInstanceId, cache: cache);
+            if (load && pst2.SucceedingInstanceId != null) pst2.SucceedingInstance = FindInstance2(pst2.SucceedingInstanceId, cache: cache);
+            if (load && pst2.CreationUserId != null) pst2.CreationUser = FindUser2(pst2.CreationUserId, cache: cache);
+            if (load && pst2.LastWriteUserId != null) pst2.LastWriteUser = FindUser2(pst2.LastWriteUserId, cache: cache);
             var i = 0;
             if (pst2.PrecedingSucceedingTitleIdentifiers != null) foreach (var psti in pst2.PrecedingSucceedingTitleIdentifiers)
                 {
                     psti.Id = (++i).ToString();
                     psti.PrecedingSucceedingTitleId = pst2.Id;
                     psti.PrecedingSucceedingTitle = pst2;
-                    if (load && psti.IdentifierTypeId != null) psti.IdentifierType = (IdType2)(cache && objects.ContainsKey(psti.IdentifierTypeId.Value) ? objects[psti.IdentifierTypeId.Value] : objects[psti.IdentifierTypeId.Value] = FindIdType2(psti.IdentifierTypeId));
+                    if (load && psti.IdentifierTypeId != null) psti.IdentifierType = FindIdType2(psti.IdentifierTypeId, cache: cache);
                 }
             return pst2;
         }
@@ -4904,7 +5072,8 @@ namespace FolioLibrary
         {
             return FolioServiceClient.Prefixes(out count, where, orderBy, skip, take).Select(jo =>
             {
-                var p2 = Prefix2.FromJObject(jo);
+                var id = Guid.Parse((string)jo["id"]);
+                var p2 = cache ? (Prefix2)(objects.ContainsKey(id) ? objects[id] : objects[id] = Prefix2.FromJObject(jo)) : Prefix2.FromJObject(jo);
                 return p2;
             }).ToArray();
         }
@@ -4913,7 +5082,8 @@ namespace FolioLibrary
         {
             foreach (var jo in FolioServiceClient.Prefixes(where, orderBy, skip, take))
             {
-                var p2 = Prefix2.FromJObject(jo);
+                var id = Guid.Parse((string)jo["id"]);
+                var p2 = cache ? (Prefix2)(objects.ContainsKey(id) ? objects[id] : objects[id] = Prefix2.FromJObject(jo)) : Prefix2.FromJObject(jo);
                 yield return p2;
             }
         }
@@ -4938,9 +5108,10 @@ namespace FolioLibrary
         {
             return FolioServiceClient.Printers(out count, where, orderBy, skip, take).Select(jo =>
             {
-                var p = Printer.FromJObject(jo);
-                if (load && p.CreationUserId != null) p.CreationUser = (User2)(cache && objects.ContainsKey(p.CreationUserId.Value) ? objects[p.CreationUserId.Value] : objects[p.CreationUserId.Value] = FindUser2(p.CreationUserId));
-                if (load && p.LastWriteUserId != null) p.LastWriteUser = (User2)(cache && objects.ContainsKey(p.LastWriteUserId.Value) ? objects[p.LastWriteUserId.Value] : objects[p.LastWriteUserId.Value] = FindUser2(p.LastWriteUserId));
+                var id = Guid.Parse((string)jo["id"]);
+                var p = cache ? (Printer)(objects.ContainsKey(id) ? objects[id] : objects[id] = Printer.FromJObject(jo)) : Printer.FromJObject(jo);
+                if (load && p.CreationUserId != null) p.CreationUser = FindUser2(p.CreationUserId, cache: cache);
+                if (load && p.LastWriteUserId != null) p.LastWriteUser = FindUser2(p.LastWriteUserId, cache: cache);
                 return p;
             }).ToArray();
         }
@@ -4949,19 +5120,20 @@ namespace FolioLibrary
         {
             foreach (var jo in FolioServiceClient.Printers(where, orderBy, skip, take))
             {
-                var p = Printer.FromJObject(jo);
-                if (load && p.CreationUserId != null) p.CreationUser = (User2)(cache && objects.ContainsKey(p.CreationUserId.Value) ? objects[p.CreationUserId.Value] : objects[p.CreationUserId.Value] = FindUser2(p.CreationUserId));
-                if (load && p.LastWriteUserId != null) p.LastWriteUser = (User2)(cache && objects.ContainsKey(p.LastWriteUserId.Value) ? objects[p.LastWriteUserId.Value] : objects[p.LastWriteUserId.Value] = FindUser2(p.LastWriteUserId));
+                var id = Guid.Parse((string)jo["id"]);
+                var p = cache ? (Printer)(objects.ContainsKey(id) ? objects[id] : objects[id] = Printer.FromJObject(jo)) : Printer.FromJObject(jo);
+                if (load && p.CreationUserId != null) p.CreationUser = FindUser2(p.CreationUserId, cache: cache);
+                if (load && p.LastWriteUserId != null) p.LastWriteUser = FindUser2(p.LastWriteUserId, cache: cache);
                 yield return p;
             }
         }
 
         public Printer FindPrinter(Guid? id, bool load = false, bool cache = true)
         {
-            var p = Printer.FromJObject(FolioServiceClient.GetPrinter(id?.ToString()));
+            var p = cache ? (Printer)(objects.ContainsKey(id.Value) ? objects[id.Value] : objects[id.Value] = Printer.FromJObject(FolioServiceClient.GetPrinter(id?.ToString()))) : Printer.FromJObject(FolioServiceClient.GetPrinter(id?.ToString()));
             if (p == null) return null;
-            if (load && p.CreationUserId != null) p.CreationUser = (User2)(cache && objects.ContainsKey(p.CreationUserId.Value) ? objects[p.CreationUserId.Value] : objects[p.CreationUserId.Value] = FindUser2(p.CreationUserId));
-            if (load && p.LastWriteUserId != null) p.LastWriteUser = (User2)(cache && objects.ContainsKey(p.LastWriteUserId.Value) ? objects[p.LastWriteUserId.Value] : objects[p.LastWriteUserId.Value] = FindUser2(p.LastWriteUserId));
+            if (load && p.CreationUserId != null) p.CreationUser = FindUser2(p.CreationUserId, cache: cache);
+            if (load && p.LastWriteUserId != null) p.LastWriteUser = FindUser2(p.LastWriteUserId, cache: cache);
             return p;
         }
 
@@ -4983,11 +5155,12 @@ namespace FolioLibrary
         {
             return FolioServiceClient.Proxies(out count, where, orderBy, skip, take).Select(jo =>
             {
-                var p2 = Proxy2.FromJObject(jo);
-                if (load && p2.UserId != null) p2.User = (User2)(cache && objects.ContainsKey(p2.UserId.Value) ? objects[p2.UserId.Value] : objects[p2.UserId.Value] = FindUser2(p2.UserId));
-                if (load && p2.ProxyUserId != null) p2.ProxyUser = (User2)(cache && objects.ContainsKey(p2.ProxyUserId.Value) ? objects[p2.ProxyUserId.Value] : objects[p2.ProxyUserId.Value] = FindUser2(p2.ProxyUserId));
-                if (load && p2.CreationUserId != null) p2.CreationUser = (User2)(cache && objects.ContainsKey(p2.CreationUserId.Value) ? objects[p2.CreationUserId.Value] : objects[p2.CreationUserId.Value] = FindUser2(p2.CreationUserId));
-                if (load && p2.LastWriteUserId != null) p2.LastWriteUser = (User2)(cache && objects.ContainsKey(p2.LastWriteUserId.Value) ? objects[p2.LastWriteUserId.Value] : objects[p2.LastWriteUserId.Value] = FindUser2(p2.LastWriteUserId));
+                var id = Guid.Parse((string)jo["id"]);
+                var p2 = cache ? (Proxy2)(objects.ContainsKey(id) ? objects[id] : objects[id] = Proxy2.FromJObject(jo)) : Proxy2.FromJObject(jo);
+                if (load && p2.UserId != null) p2.User = FindUser2(p2.UserId, cache: cache);
+                if (load && p2.ProxyUserId != null) p2.ProxyUser = FindUser2(p2.ProxyUserId, cache: cache);
+                if (load && p2.CreationUserId != null) p2.CreationUser = FindUser2(p2.CreationUserId, cache: cache);
+                if (load && p2.LastWriteUserId != null) p2.LastWriteUser = FindUser2(p2.LastWriteUserId, cache: cache);
                 return p2;
             }).ToArray();
         }
@@ -4996,23 +5169,24 @@ namespace FolioLibrary
         {
             foreach (var jo in FolioServiceClient.Proxies(where, orderBy, skip, take))
             {
-                var p2 = Proxy2.FromJObject(jo);
-                if (load && p2.UserId != null) p2.User = (User2)(cache && objects.ContainsKey(p2.UserId.Value) ? objects[p2.UserId.Value] : objects[p2.UserId.Value] = FindUser2(p2.UserId));
-                if (load && p2.ProxyUserId != null) p2.ProxyUser = (User2)(cache && objects.ContainsKey(p2.ProxyUserId.Value) ? objects[p2.ProxyUserId.Value] : objects[p2.ProxyUserId.Value] = FindUser2(p2.ProxyUserId));
-                if (load && p2.CreationUserId != null) p2.CreationUser = (User2)(cache && objects.ContainsKey(p2.CreationUserId.Value) ? objects[p2.CreationUserId.Value] : objects[p2.CreationUserId.Value] = FindUser2(p2.CreationUserId));
-                if (load && p2.LastWriteUserId != null) p2.LastWriteUser = (User2)(cache && objects.ContainsKey(p2.LastWriteUserId.Value) ? objects[p2.LastWriteUserId.Value] : objects[p2.LastWriteUserId.Value] = FindUser2(p2.LastWriteUserId));
+                var id = Guid.Parse((string)jo["id"]);
+                var p2 = cache ? (Proxy2)(objects.ContainsKey(id) ? objects[id] : objects[id] = Proxy2.FromJObject(jo)) : Proxy2.FromJObject(jo);
+                if (load && p2.UserId != null) p2.User = FindUser2(p2.UserId, cache: cache);
+                if (load && p2.ProxyUserId != null) p2.ProxyUser = FindUser2(p2.ProxyUserId, cache: cache);
+                if (load && p2.CreationUserId != null) p2.CreationUser = FindUser2(p2.CreationUserId, cache: cache);
+                if (load && p2.LastWriteUserId != null) p2.LastWriteUser = FindUser2(p2.LastWriteUserId, cache: cache);
                 yield return p2;
             }
         }
 
         public Proxy2 FindProxy2(Guid? id, bool load = false, bool cache = true)
         {
-            var p2 = Proxy2.FromJObject(FolioServiceClient.GetProxy(id?.ToString()));
+            var p2 = cache ? (Proxy2)(objects.ContainsKey(id.Value) ? objects[id.Value] : objects[id.Value] = Proxy2.FromJObject(FolioServiceClient.GetProxy(id?.ToString()))) : Proxy2.FromJObject(FolioServiceClient.GetProxy(id?.ToString()));
             if (p2 == null) return null;
-            if (load && p2.UserId != null) p2.User = (User2)(cache && objects.ContainsKey(p2.UserId.Value) ? objects[p2.UserId.Value] : objects[p2.UserId.Value] = FindUser2(p2.UserId));
-            if (load && p2.ProxyUserId != null) p2.ProxyUser = (User2)(cache && objects.ContainsKey(p2.ProxyUserId.Value) ? objects[p2.ProxyUserId.Value] : objects[p2.ProxyUserId.Value] = FindUser2(p2.ProxyUserId));
-            if (load && p2.CreationUserId != null) p2.CreationUser = (User2)(cache && objects.ContainsKey(p2.CreationUserId.Value) ? objects[p2.CreationUserId.Value] : objects[p2.CreationUserId.Value] = FindUser2(p2.CreationUserId));
-            if (load && p2.LastWriteUserId != null) p2.LastWriteUser = (User2)(cache && objects.ContainsKey(p2.LastWriteUserId.Value) ? objects[p2.LastWriteUserId.Value] : objects[p2.LastWriteUserId.Value] = FindUser2(p2.LastWriteUserId));
+            if (load && p2.UserId != null) p2.User = FindUser2(p2.UserId, cache: cache);
+            if (load && p2.ProxyUserId != null) p2.ProxyUser = FindUser2(p2.ProxyUserId, cache: cache);
+            if (load && p2.CreationUserId != null) p2.CreationUser = FindUser2(p2.CreationUserId, cache: cache);
+            if (load && p2.LastWriteUserId != null) p2.LastWriteUser = FindUser2(p2.LastWriteUserId, cache: cache);
             return p2;
         }
 
@@ -5034,12 +5208,13 @@ namespace FolioLibrary
         {
             return FolioServiceClient.Receivings(out count, where, orderBy, skip, take).Select(jo =>
             {
-                var r2 = Receiving2.FromJObject(jo);
-                if (load && r2.ItemId != null) r2.Item = (Item2)(cache && objects.ContainsKey(r2.ItemId.Value) ? objects[r2.ItemId.Value] : objects[r2.ItemId.Value] = FindItem2(r2.ItemId));
-                if (load && r2.LocationId != null) r2.Location = (Location2)(cache && objects.ContainsKey(r2.LocationId.Value) ? objects[r2.LocationId.Value] : objects[r2.LocationId.Value] = FindLocation2(r2.LocationId));
-                if (load && r2.OrderItemId != null) r2.OrderItem = (OrderItem2)(cache && objects.ContainsKey(r2.OrderItemId.Value) ? objects[r2.OrderItemId.Value] : objects[r2.OrderItemId.Value] = FindOrderItem2(r2.OrderItemId));
-                if (load && r2.TitleId != null) r2.Title = (Title2)(cache && objects.ContainsKey(r2.TitleId.Value) ? objects[r2.TitleId.Value] : objects[r2.TitleId.Value] = FindTitle2(r2.TitleId));
-                if (load && r2.HoldingId != null) r2.Holding = (Holding2)(cache && objects.ContainsKey(r2.HoldingId.Value) ? objects[r2.HoldingId.Value] : objects[r2.HoldingId.Value] = FindHolding2(r2.HoldingId));
+                var id = Guid.Parse((string)jo["id"]);
+                var r2 = cache ? (Receiving2)(objects.ContainsKey(id) ? objects[id] : objects[id] = Receiving2.FromJObject(jo)) : Receiving2.FromJObject(jo);
+                if (load && r2.ItemId != null) r2.Item = FindItem2(r2.ItemId, cache: cache);
+                if (load && r2.LocationId != null) r2.Location = FindLocation2(r2.LocationId, cache: cache);
+                if (load && r2.OrderItemId != null) r2.OrderItem = FindOrderItem2(r2.OrderItemId, cache: cache);
+                if (load && r2.TitleId != null) r2.Title = FindTitle2(r2.TitleId, cache: cache);
+                if (load && r2.HoldingId != null) r2.Holding = FindHolding2(r2.HoldingId, cache: cache);
                 return r2;
             }).ToArray();
         }
@@ -5048,25 +5223,26 @@ namespace FolioLibrary
         {
             foreach (var jo in FolioServiceClient.Receivings(where, orderBy, skip, take))
             {
-                var r2 = Receiving2.FromJObject(jo);
-                if (load && r2.ItemId != null) r2.Item = (Item2)(cache && objects.ContainsKey(r2.ItemId.Value) ? objects[r2.ItemId.Value] : objects[r2.ItemId.Value] = FindItem2(r2.ItemId));
-                if (load && r2.LocationId != null) r2.Location = (Location2)(cache && objects.ContainsKey(r2.LocationId.Value) ? objects[r2.LocationId.Value] : objects[r2.LocationId.Value] = FindLocation2(r2.LocationId));
-                if (load && r2.OrderItemId != null) r2.OrderItem = (OrderItem2)(cache && objects.ContainsKey(r2.OrderItemId.Value) ? objects[r2.OrderItemId.Value] : objects[r2.OrderItemId.Value] = FindOrderItem2(r2.OrderItemId));
-                if (load && r2.TitleId != null) r2.Title = (Title2)(cache && objects.ContainsKey(r2.TitleId.Value) ? objects[r2.TitleId.Value] : objects[r2.TitleId.Value] = FindTitle2(r2.TitleId));
-                if (load && r2.HoldingId != null) r2.Holding = (Holding2)(cache && objects.ContainsKey(r2.HoldingId.Value) ? objects[r2.HoldingId.Value] : objects[r2.HoldingId.Value] = FindHolding2(r2.HoldingId));
+                var id = Guid.Parse((string)jo["id"]);
+                var r2 = cache ? (Receiving2)(objects.ContainsKey(id) ? objects[id] : objects[id] = Receiving2.FromJObject(jo)) : Receiving2.FromJObject(jo);
+                if (load && r2.ItemId != null) r2.Item = FindItem2(r2.ItemId, cache: cache);
+                if (load && r2.LocationId != null) r2.Location = FindLocation2(r2.LocationId, cache: cache);
+                if (load && r2.OrderItemId != null) r2.OrderItem = FindOrderItem2(r2.OrderItemId, cache: cache);
+                if (load && r2.TitleId != null) r2.Title = FindTitle2(r2.TitleId, cache: cache);
+                if (load && r2.HoldingId != null) r2.Holding = FindHolding2(r2.HoldingId, cache: cache);
                 yield return r2;
             }
         }
 
         public Receiving2 FindReceiving2(Guid? id, bool load = false, bool cache = true)
         {
-            var r2 = Receiving2.FromJObject(FolioServiceClient.GetReceiving(id?.ToString()));
+            var r2 = cache ? (Receiving2)(objects.ContainsKey(id.Value) ? objects[id.Value] : objects[id.Value] = Receiving2.FromJObject(FolioServiceClient.GetReceiving(id?.ToString()))) : Receiving2.FromJObject(FolioServiceClient.GetReceiving(id?.ToString()));
             if (r2 == null) return null;
-            if (load && r2.ItemId != null) r2.Item = (Item2)(cache && objects.ContainsKey(r2.ItemId.Value) ? objects[r2.ItemId.Value] : objects[r2.ItemId.Value] = FindItem2(r2.ItemId));
-            if (load && r2.LocationId != null) r2.Location = (Location2)(cache && objects.ContainsKey(r2.LocationId.Value) ? objects[r2.LocationId.Value] : objects[r2.LocationId.Value] = FindLocation2(r2.LocationId));
-            if (load && r2.OrderItemId != null) r2.OrderItem = (OrderItem2)(cache && objects.ContainsKey(r2.OrderItemId.Value) ? objects[r2.OrderItemId.Value] : objects[r2.OrderItemId.Value] = FindOrderItem2(r2.OrderItemId));
-            if (load && r2.TitleId != null) r2.Title = (Title2)(cache && objects.ContainsKey(r2.TitleId.Value) ? objects[r2.TitleId.Value] : objects[r2.TitleId.Value] = FindTitle2(r2.TitleId));
-            if (load && r2.HoldingId != null) r2.Holding = (Holding2)(cache && objects.ContainsKey(r2.HoldingId.Value) ? objects[r2.HoldingId.Value] : objects[r2.HoldingId.Value] = FindHolding2(r2.HoldingId));
+            if (load && r2.ItemId != null) r2.Item = FindItem2(r2.ItemId, cache: cache);
+            if (load && r2.LocationId != null) r2.Location = FindLocation2(r2.LocationId, cache: cache);
+            if (load && r2.OrderItemId != null) r2.OrderItem = FindOrderItem2(r2.OrderItemId, cache: cache);
+            if (load && r2.TitleId != null) r2.Title = FindTitle2(r2.TitleId, cache: cache);
+            if (load && r2.HoldingId != null) r2.Holding = FindHolding2(r2.HoldingId, cache: cache);
             return r2;
         }
 
@@ -5088,11 +5264,12 @@ namespace FolioLibrary
         {
             return FolioServiceClient.Records(out count, where, orderBy, skip, take).Select(jo =>
             {
-                var r2 = Record2.FromJObject(jo);
-                if (load && r2.SnapshotId != null) r2.Snapshot = (Snapshot2)(cache && objects.ContainsKey(r2.SnapshotId.Value) ? objects[r2.SnapshotId.Value] : objects[r2.SnapshotId.Value] = FindSnapshot2(r2.SnapshotId));
-                if (load && r2.InstanceId != null) r2.Instance = (Instance2)(cache && objects.ContainsKey(r2.InstanceId.Value) ? objects[r2.InstanceId.Value] : objects[r2.InstanceId.Value] = FindInstance2(r2.InstanceId));
-                if (load && r2.CreationUserId != null) r2.CreationUser = (User2)(cache && objects.ContainsKey(r2.CreationUserId.Value) ? objects[r2.CreationUserId.Value] : objects[r2.CreationUserId.Value] = FindUser2(r2.CreationUserId));
-                if (load && r2.LastWriteUserId != null) r2.LastWriteUser = (User2)(cache && objects.ContainsKey(r2.LastWriteUserId.Value) ? objects[r2.LastWriteUserId.Value] : objects[r2.LastWriteUserId.Value] = FindUser2(r2.LastWriteUserId));
+                var id = Guid.Parse((string)jo["id"]);
+                var r2 = cache ? (Record2)(objects.ContainsKey(id) ? objects[id] : objects[id] = Record2.FromJObject(jo)) : Record2.FromJObject(jo);
+                if (load && r2.SnapshotId != null) r2.Snapshot = FindSnapshot2(r2.SnapshotId, cache: cache);
+                if (load && r2.InstanceId != null) r2.Instance = FindInstance2(r2.InstanceId, cache: cache);
+                if (load && r2.CreationUserId != null) r2.CreationUser = FindUser2(r2.CreationUserId, cache: cache);
+                if (load && r2.LastWriteUserId != null) r2.LastWriteUser = FindUser2(r2.LastWriteUserId, cache: cache);
                 return r2;
             }).ToArray();
         }
@@ -5101,23 +5278,24 @@ namespace FolioLibrary
         {
             foreach (var jo in FolioServiceClient.Records(where, orderBy, skip, take))
             {
-                var r2 = Record2.FromJObject(jo);
-                if (load && r2.SnapshotId != null) r2.Snapshot = (Snapshot2)(cache && objects.ContainsKey(r2.SnapshotId.Value) ? objects[r2.SnapshotId.Value] : objects[r2.SnapshotId.Value] = FindSnapshot2(r2.SnapshotId));
-                if (load && r2.InstanceId != null) r2.Instance = (Instance2)(cache && objects.ContainsKey(r2.InstanceId.Value) ? objects[r2.InstanceId.Value] : objects[r2.InstanceId.Value] = FindInstance2(r2.InstanceId));
-                if (load && r2.CreationUserId != null) r2.CreationUser = (User2)(cache && objects.ContainsKey(r2.CreationUserId.Value) ? objects[r2.CreationUserId.Value] : objects[r2.CreationUserId.Value] = FindUser2(r2.CreationUserId));
-                if (load && r2.LastWriteUserId != null) r2.LastWriteUser = (User2)(cache && objects.ContainsKey(r2.LastWriteUserId.Value) ? objects[r2.LastWriteUserId.Value] : objects[r2.LastWriteUserId.Value] = FindUser2(r2.LastWriteUserId));
+                var id = Guid.Parse((string)jo["id"]);
+                var r2 = cache ? (Record2)(objects.ContainsKey(id) ? objects[id] : objects[id] = Record2.FromJObject(jo)) : Record2.FromJObject(jo);
+                if (load && r2.SnapshotId != null) r2.Snapshot = FindSnapshot2(r2.SnapshotId, cache: cache);
+                if (load && r2.InstanceId != null) r2.Instance = FindInstance2(r2.InstanceId, cache: cache);
+                if (load && r2.CreationUserId != null) r2.CreationUser = FindUser2(r2.CreationUserId, cache: cache);
+                if (load && r2.LastWriteUserId != null) r2.LastWriteUser = FindUser2(r2.LastWriteUserId, cache: cache);
                 yield return r2;
             }
         }
 
         public Record2 FindRecord2(Guid? id, bool load = false, bool cache = true)
         {
-            var r2 = Record2.FromJObject(FolioServiceClient.GetRecord(id?.ToString()));
+            var r2 = cache ? (Record2)(objects.ContainsKey(id.Value) ? objects[id.Value] : objects[id.Value] = Record2.FromJObject(FolioServiceClient.GetRecord(id?.ToString()))) : Record2.FromJObject(FolioServiceClient.GetRecord(id?.ToString()));
             if (r2 == null) return null;
-            if (load && r2.SnapshotId != null) r2.Snapshot = (Snapshot2)(cache && objects.ContainsKey(r2.SnapshotId.Value) ? objects[r2.SnapshotId.Value] : objects[r2.SnapshotId.Value] = FindSnapshot2(r2.SnapshotId));
-            if (load && r2.InstanceId != null) r2.Instance = (Instance2)(cache && objects.ContainsKey(r2.InstanceId.Value) ? objects[r2.InstanceId.Value] : objects[r2.InstanceId.Value] = FindInstance2(r2.InstanceId));
-            if (load && r2.CreationUserId != null) r2.CreationUser = (User2)(cache && objects.ContainsKey(r2.CreationUserId.Value) ? objects[r2.CreationUserId.Value] : objects[r2.CreationUserId.Value] = FindUser2(r2.CreationUserId));
-            if (load && r2.LastWriteUserId != null) r2.LastWriteUser = (User2)(cache && objects.ContainsKey(r2.LastWriteUserId.Value) ? objects[r2.LastWriteUserId.Value] : objects[r2.LastWriteUserId.Value] = FindUser2(r2.LastWriteUserId));
+            if (load && r2.SnapshotId != null) r2.Snapshot = FindSnapshot2(r2.SnapshotId, cache: cache);
+            if (load && r2.InstanceId != null) r2.Instance = FindInstance2(r2.InstanceId, cache: cache);
+            if (load && r2.CreationUserId != null) r2.CreationUser = FindUser2(r2.CreationUserId, cache: cache);
+            if (load && r2.LastWriteUserId != null) r2.LastWriteUser = FindUser2(r2.LastWriteUserId, cache: cache);
             return r2;
         }
 
@@ -5139,10 +5317,11 @@ namespace FolioLibrary
         {
             return FolioServiceClient.RefundReasons(out count, where, orderBy, skip, take).Select(jo =>
             {
-                var rr2 = RefundReason2.FromJObject(jo);
-                if (load && rr2.CreationUserId != null) rr2.CreationUser = (User2)(cache && objects.ContainsKey(rr2.CreationUserId.Value) ? objects[rr2.CreationUserId.Value] : objects[rr2.CreationUserId.Value] = FindUser2(rr2.CreationUserId));
-                if (load && rr2.LastWriteUserId != null) rr2.LastWriteUser = (User2)(cache && objects.ContainsKey(rr2.LastWriteUserId.Value) ? objects[rr2.LastWriteUserId.Value] : objects[rr2.LastWriteUserId.Value] = FindUser2(rr2.LastWriteUserId));
-                if (load && rr2.AccountId != null) rr2.Account = (Fee2)(cache && objects.ContainsKey(rr2.AccountId.Value) ? objects[rr2.AccountId.Value] : objects[rr2.AccountId.Value] = FindFee2(rr2.AccountId));
+                var id = Guid.Parse((string)jo["id"]);
+                var rr2 = cache ? (RefundReason2)(objects.ContainsKey(id) ? objects[id] : objects[id] = RefundReason2.FromJObject(jo)) : RefundReason2.FromJObject(jo);
+                if (load && rr2.CreationUserId != null) rr2.CreationUser = FindUser2(rr2.CreationUserId, cache: cache);
+                if (load && rr2.LastWriteUserId != null) rr2.LastWriteUser = FindUser2(rr2.LastWriteUserId, cache: cache);
+                if (load && rr2.AccountId != null) rr2.Account = FindFee2(rr2.AccountId, cache: cache);
                 return rr2;
             }).ToArray();
         }
@@ -5151,21 +5330,22 @@ namespace FolioLibrary
         {
             foreach (var jo in FolioServiceClient.RefundReasons(where, orderBy, skip, take))
             {
-                var rr2 = RefundReason2.FromJObject(jo);
-                if (load && rr2.CreationUserId != null) rr2.CreationUser = (User2)(cache && objects.ContainsKey(rr2.CreationUserId.Value) ? objects[rr2.CreationUserId.Value] : objects[rr2.CreationUserId.Value] = FindUser2(rr2.CreationUserId));
-                if (load && rr2.LastWriteUserId != null) rr2.LastWriteUser = (User2)(cache && objects.ContainsKey(rr2.LastWriteUserId.Value) ? objects[rr2.LastWriteUserId.Value] : objects[rr2.LastWriteUserId.Value] = FindUser2(rr2.LastWriteUserId));
-                if (load && rr2.AccountId != null) rr2.Account = (Fee2)(cache && objects.ContainsKey(rr2.AccountId.Value) ? objects[rr2.AccountId.Value] : objects[rr2.AccountId.Value] = FindFee2(rr2.AccountId));
+                var id = Guid.Parse((string)jo["id"]);
+                var rr2 = cache ? (RefundReason2)(objects.ContainsKey(id) ? objects[id] : objects[id] = RefundReason2.FromJObject(jo)) : RefundReason2.FromJObject(jo);
+                if (load && rr2.CreationUserId != null) rr2.CreationUser = FindUser2(rr2.CreationUserId, cache: cache);
+                if (load && rr2.LastWriteUserId != null) rr2.LastWriteUser = FindUser2(rr2.LastWriteUserId, cache: cache);
+                if (load && rr2.AccountId != null) rr2.Account = FindFee2(rr2.AccountId, cache: cache);
                 yield return rr2;
             }
         }
 
         public RefundReason2 FindRefundReason2(Guid? id, bool load = false, bool cache = true)
         {
-            var rr2 = RefundReason2.FromJObject(FolioServiceClient.GetRefundReason(id?.ToString()));
+            var rr2 = cache ? (RefundReason2)(objects.ContainsKey(id.Value) ? objects[id.Value] : objects[id.Value] = RefundReason2.FromJObject(FolioServiceClient.GetRefundReason(id?.ToString()))) : RefundReason2.FromJObject(FolioServiceClient.GetRefundReason(id?.ToString()));
             if (rr2 == null) return null;
-            if (load && rr2.CreationUserId != null) rr2.CreationUser = (User2)(cache && objects.ContainsKey(rr2.CreationUserId.Value) ? objects[rr2.CreationUserId.Value] : objects[rr2.CreationUserId.Value] = FindUser2(rr2.CreationUserId));
-            if (load && rr2.LastWriteUserId != null) rr2.LastWriteUser = (User2)(cache && objects.ContainsKey(rr2.LastWriteUserId.Value) ? objects[rr2.LastWriteUserId.Value] : objects[rr2.LastWriteUserId.Value] = FindUser2(rr2.LastWriteUserId));
-            if (load && rr2.AccountId != null) rr2.Account = (Fee2)(cache && objects.ContainsKey(rr2.AccountId.Value) ? objects[rr2.AccountId.Value] : objects[rr2.AccountId.Value] = FindFee2(rr2.AccountId));
+            if (load && rr2.CreationUserId != null) rr2.CreationUser = FindUser2(rr2.CreationUserId, cache: cache);
+            if (load && rr2.LastWriteUserId != null) rr2.LastWriteUser = FindUser2(rr2.LastWriteUserId, cache: cache);
+            if (load && rr2.AccountId != null) rr2.Account = FindFee2(rr2.AccountId, cache: cache);
             return rr2;
         }
 
@@ -5187,12 +5367,13 @@ namespace FolioLibrary
         {
             return FolioServiceClient.InstanceRelationships(out count, where, orderBy, skip, take).Select(jo =>
             {
-                var r = Relationship.FromJObject(jo);
-                if (load && r.SuperInstanceId != null) r.SuperInstance = (Instance2)(cache && objects.ContainsKey(r.SuperInstanceId.Value) ? objects[r.SuperInstanceId.Value] : objects[r.SuperInstanceId.Value] = FindInstance2(r.SuperInstanceId));
-                if (load && r.SubInstanceId != null) r.SubInstance = (Instance2)(cache && objects.ContainsKey(r.SubInstanceId.Value) ? objects[r.SubInstanceId.Value] : objects[r.SubInstanceId.Value] = FindInstance2(r.SubInstanceId));
-                if (load && r.InstanceRelationshipTypeId != null) r.InstanceRelationshipType = (RelationshipType)(cache && objects.ContainsKey(r.InstanceRelationshipTypeId.Value) ? objects[r.InstanceRelationshipTypeId.Value] : objects[r.InstanceRelationshipTypeId.Value] = FindRelationshipType(r.InstanceRelationshipTypeId));
-                if (load && r.CreationUserId != null) r.CreationUser = (User2)(cache && objects.ContainsKey(r.CreationUserId.Value) ? objects[r.CreationUserId.Value] : objects[r.CreationUserId.Value] = FindUser2(r.CreationUserId));
-                if (load && r.LastWriteUserId != null) r.LastWriteUser = (User2)(cache && objects.ContainsKey(r.LastWriteUserId.Value) ? objects[r.LastWriteUserId.Value] : objects[r.LastWriteUserId.Value] = FindUser2(r.LastWriteUserId));
+                var id = Guid.Parse((string)jo["id"]);
+                var r = cache ? (Relationship)(objects.ContainsKey(id) ? objects[id] : objects[id] = Relationship.FromJObject(jo)) : Relationship.FromJObject(jo);
+                if (load && r.SuperInstanceId != null) r.SuperInstance = FindInstance2(r.SuperInstanceId, cache: cache);
+                if (load && r.SubInstanceId != null) r.SubInstance = FindInstance2(r.SubInstanceId, cache: cache);
+                if (load && r.InstanceRelationshipTypeId != null) r.InstanceRelationshipType = FindRelationshipType(r.InstanceRelationshipTypeId, cache: cache);
+                if (load && r.CreationUserId != null) r.CreationUser = FindUser2(r.CreationUserId, cache: cache);
+                if (load && r.LastWriteUserId != null) r.LastWriteUser = FindUser2(r.LastWriteUserId, cache: cache);
                 return r;
             }).ToArray();
         }
@@ -5201,25 +5382,26 @@ namespace FolioLibrary
         {
             foreach (var jo in FolioServiceClient.InstanceRelationships(where, orderBy, skip, take))
             {
-                var r = Relationship.FromJObject(jo);
-                if (load && r.SuperInstanceId != null) r.SuperInstance = (Instance2)(cache && objects.ContainsKey(r.SuperInstanceId.Value) ? objects[r.SuperInstanceId.Value] : objects[r.SuperInstanceId.Value] = FindInstance2(r.SuperInstanceId));
-                if (load && r.SubInstanceId != null) r.SubInstance = (Instance2)(cache && objects.ContainsKey(r.SubInstanceId.Value) ? objects[r.SubInstanceId.Value] : objects[r.SubInstanceId.Value] = FindInstance2(r.SubInstanceId));
-                if (load && r.InstanceRelationshipTypeId != null) r.InstanceRelationshipType = (RelationshipType)(cache && objects.ContainsKey(r.InstanceRelationshipTypeId.Value) ? objects[r.InstanceRelationshipTypeId.Value] : objects[r.InstanceRelationshipTypeId.Value] = FindRelationshipType(r.InstanceRelationshipTypeId));
-                if (load && r.CreationUserId != null) r.CreationUser = (User2)(cache && objects.ContainsKey(r.CreationUserId.Value) ? objects[r.CreationUserId.Value] : objects[r.CreationUserId.Value] = FindUser2(r.CreationUserId));
-                if (load && r.LastWriteUserId != null) r.LastWriteUser = (User2)(cache && objects.ContainsKey(r.LastWriteUserId.Value) ? objects[r.LastWriteUserId.Value] : objects[r.LastWriteUserId.Value] = FindUser2(r.LastWriteUserId));
+                var id = Guid.Parse((string)jo["id"]);
+                var r = cache ? (Relationship)(objects.ContainsKey(id) ? objects[id] : objects[id] = Relationship.FromJObject(jo)) : Relationship.FromJObject(jo);
+                if (load && r.SuperInstanceId != null) r.SuperInstance = FindInstance2(r.SuperInstanceId, cache: cache);
+                if (load && r.SubInstanceId != null) r.SubInstance = FindInstance2(r.SubInstanceId, cache: cache);
+                if (load && r.InstanceRelationshipTypeId != null) r.InstanceRelationshipType = FindRelationshipType(r.InstanceRelationshipTypeId, cache: cache);
+                if (load && r.CreationUserId != null) r.CreationUser = FindUser2(r.CreationUserId, cache: cache);
+                if (load && r.LastWriteUserId != null) r.LastWriteUser = FindUser2(r.LastWriteUserId, cache: cache);
                 yield return r;
             }
         }
 
         public Relationship FindRelationship(Guid? id, bool load = false, bool cache = true)
         {
-            var r = Relationship.FromJObject(FolioServiceClient.GetInstanceRelationship(id?.ToString()));
+            var r = cache ? (Relationship)(objects.ContainsKey(id.Value) ? objects[id.Value] : objects[id.Value] = Relationship.FromJObject(FolioServiceClient.GetInstanceRelationship(id?.ToString()))) : Relationship.FromJObject(FolioServiceClient.GetInstanceRelationship(id?.ToString()));
             if (r == null) return null;
-            if (load && r.SuperInstanceId != null) r.SuperInstance = (Instance2)(cache && objects.ContainsKey(r.SuperInstanceId.Value) ? objects[r.SuperInstanceId.Value] : objects[r.SuperInstanceId.Value] = FindInstance2(r.SuperInstanceId));
-            if (load && r.SubInstanceId != null) r.SubInstance = (Instance2)(cache && objects.ContainsKey(r.SubInstanceId.Value) ? objects[r.SubInstanceId.Value] : objects[r.SubInstanceId.Value] = FindInstance2(r.SubInstanceId));
-            if (load && r.InstanceRelationshipTypeId != null) r.InstanceRelationshipType = (RelationshipType)(cache && objects.ContainsKey(r.InstanceRelationshipTypeId.Value) ? objects[r.InstanceRelationshipTypeId.Value] : objects[r.InstanceRelationshipTypeId.Value] = FindRelationshipType(r.InstanceRelationshipTypeId));
-            if (load && r.CreationUserId != null) r.CreationUser = (User2)(cache && objects.ContainsKey(r.CreationUserId.Value) ? objects[r.CreationUserId.Value] : objects[r.CreationUserId.Value] = FindUser2(r.CreationUserId));
-            if (load && r.LastWriteUserId != null) r.LastWriteUser = (User2)(cache && objects.ContainsKey(r.LastWriteUserId.Value) ? objects[r.LastWriteUserId.Value] : objects[r.LastWriteUserId.Value] = FindUser2(r.LastWriteUserId));
+            if (load && r.SuperInstanceId != null) r.SuperInstance = FindInstance2(r.SuperInstanceId, cache: cache);
+            if (load && r.SubInstanceId != null) r.SubInstance = FindInstance2(r.SubInstanceId, cache: cache);
+            if (load && r.InstanceRelationshipTypeId != null) r.InstanceRelationshipType = FindRelationshipType(r.InstanceRelationshipTypeId, cache: cache);
+            if (load && r.CreationUserId != null) r.CreationUser = FindUser2(r.CreationUserId, cache: cache);
+            if (load && r.LastWriteUserId != null) r.LastWriteUser = FindUser2(r.LastWriteUserId, cache: cache);
             return r;
         }
 
@@ -5241,9 +5423,10 @@ namespace FolioLibrary
         {
             return FolioServiceClient.InstanceRelationshipTypes(out count, where, orderBy, skip, take).Select(jo =>
             {
-                var rt = RelationshipType.FromJObject(jo);
-                if (load && rt.CreationUserId != null) rt.CreationUser = (User2)(cache && objects.ContainsKey(rt.CreationUserId.Value) ? objects[rt.CreationUserId.Value] : objects[rt.CreationUserId.Value] = FindUser2(rt.CreationUserId));
-                if (load && rt.LastWriteUserId != null) rt.LastWriteUser = (User2)(cache && objects.ContainsKey(rt.LastWriteUserId.Value) ? objects[rt.LastWriteUserId.Value] : objects[rt.LastWriteUserId.Value] = FindUser2(rt.LastWriteUserId));
+                var id = Guid.Parse((string)jo["id"]);
+                var rt = cache ? (RelationshipType)(objects.ContainsKey(id) ? objects[id] : objects[id] = RelationshipType.FromJObject(jo)) : RelationshipType.FromJObject(jo);
+                if (load && rt.CreationUserId != null) rt.CreationUser = FindUser2(rt.CreationUserId, cache: cache);
+                if (load && rt.LastWriteUserId != null) rt.LastWriteUser = FindUser2(rt.LastWriteUserId, cache: cache);
                 return rt;
             }).ToArray();
         }
@@ -5252,19 +5435,20 @@ namespace FolioLibrary
         {
             foreach (var jo in FolioServiceClient.InstanceRelationshipTypes(where, orderBy, skip, take))
             {
-                var rt = RelationshipType.FromJObject(jo);
-                if (load && rt.CreationUserId != null) rt.CreationUser = (User2)(cache && objects.ContainsKey(rt.CreationUserId.Value) ? objects[rt.CreationUserId.Value] : objects[rt.CreationUserId.Value] = FindUser2(rt.CreationUserId));
-                if (load && rt.LastWriteUserId != null) rt.LastWriteUser = (User2)(cache && objects.ContainsKey(rt.LastWriteUserId.Value) ? objects[rt.LastWriteUserId.Value] : objects[rt.LastWriteUserId.Value] = FindUser2(rt.LastWriteUserId));
+                var id = Guid.Parse((string)jo["id"]);
+                var rt = cache ? (RelationshipType)(objects.ContainsKey(id) ? objects[id] : objects[id] = RelationshipType.FromJObject(jo)) : RelationshipType.FromJObject(jo);
+                if (load && rt.CreationUserId != null) rt.CreationUser = FindUser2(rt.CreationUserId, cache: cache);
+                if (load && rt.LastWriteUserId != null) rt.LastWriteUser = FindUser2(rt.LastWriteUserId, cache: cache);
                 yield return rt;
             }
         }
 
         public RelationshipType FindRelationshipType(Guid? id, bool load = false, bool cache = true)
         {
-            var rt = RelationshipType.FromJObject(FolioServiceClient.GetInstanceRelationshipType(id?.ToString()));
+            var rt = cache ? (RelationshipType)(objects.ContainsKey(id.Value) ? objects[id.Value] : objects[id.Value] = RelationshipType.FromJObject(FolioServiceClient.GetInstanceRelationshipType(id?.ToString()))) : RelationshipType.FromJObject(FolioServiceClient.GetInstanceRelationshipType(id?.ToString()));
             if (rt == null) return null;
-            if (load && rt.CreationUserId != null) rt.CreationUser = (User2)(cache && objects.ContainsKey(rt.CreationUserId.Value) ? objects[rt.CreationUserId.Value] : objects[rt.CreationUserId.Value] = FindUser2(rt.CreationUserId));
-            if (load && rt.LastWriteUserId != null) rt.LastWriteUser = (User2)(cache && objects.ContainsKey(rt.LastWriteUserId.Value) ? objects[rt.LastWriteUserId.Value] : objects[rt.LastWriteUserId.Value] = FindUser2(rt.LastWriteUserId));
+            if (load && rt.CreationUserId != null) rt.CreationUser = FindUser2(rt.CreationUserId, cache: cache);
+            if (load && rt.LastWriteUserId != null) rt.LastWriteUser = FindUser2(rt.LastWriteUserId, cache: cache);
             return rt;
         }
 
@@ -5286,7 +5470,8 @@ namespace FolioLibrary
         {
             return FolioServiceClient.ReportingCodes(out count, where, orderBy, skip, take).Select(jo =>
             {
-                var rc2 = ReportingCode2.FromJObject(jo);
+                var id = Guid.Parse((string)jo["id"]);
+                var rc2 = cache ? (ReportingCode2)(objects.ContainsKey(id) ? objects[id] : objects[id] = ReportingCode2.FromJObject(jo)) : ReportingCode2.FromJObject(jo);
                 return rc2;
             }).ToArray();
         }
@@ -5295,7 +5480,8 @@ namespace FolioLibrary
         {
             foreach (var jo in FolioServiceClient.ReportingCodes(where, orderBy, skip, take))
             {
-                var rc2 = ReportingCode2.FromJObject(jo);
+                var id = Guid.Parse((string)jo["id"]);
+                var rc2 = cache ? (ReportingCode2)(objects.ContainsKey(id) ? objects[id] : objects[id] = ReportingCode2.FromJObject(jo)) : ReportingCode2.FromJObject(jo);
                 yield return rc2;
             }
         }
@@ -5320,16 +5506,17 @@ namespace FolioLibrary
         {
             return FolioServiceClient.Requests(out count, where, orderBy, skip, take).Select(jo =>
             {
-                var r2 = Request2.FromJObject(jo);
-                if (load && r2.RequesterId != null) r2.Requester = (User2)(cache && objects.ContainsKey(r2.RequesterId.Value) ? objects[r2.RequesterId.Value] : objects[r2.RequesterId.Value] = FindUser2(r2.RequesterId));
-                if (load && r2.ProxyUserId != null) r2.ProxyUser = (User2)(cache && objects.ContainsKey(r2.ProxyUserId.Value) ? objects[r2.ProxyUserId.Value] : objects[r2.ProxyUserId.Value] = FindUser2(r2.ProxyUserId));
-                if (load && r2.ItemId != null) r2.Item = (Item2)(cache && objects.ContainsKey(r2.ItemId.Value) ? objects[r2.ItemId.Value] : objects[r2.ItemId.Value] = FindItem2(r2.ItemId));
-                if (load && r2.CancellationReasonId != null) r2.CancellationReason = (CancellationReason2)(cache && objects.ContainsKey(r2.CancellationReasonId.Value) ? objects[r2.CancellationReasonId.Value] : objects[r2.CancellationReasonId.Value] = FindCancellationReason2(r2.CancellationReasonId));
-                if (load && r2.CancelledByUserId != null) r2.CancelledByUser = (User2)(cache && objects.ContainsKey(r2.CancelledByUserId.Value) ? objects[r2.CancelledByUserId.Value] : objects[r2.CancelledByUserId.Value] = FindUser2(r2.CancelledByUserId));
-                if (load && r2.DeliveryAddressTypeId != null) r2.DeliveryAddressType = (AddressType2)(cache && objects.ContainsKey(r2.DeliveryAddressTypeId.Value) ? objects[r2.DeliveryAddressTypeId.Value] : objects[r2.DeliveryAddressTypeId.Value] = FindAddressType2(r2.DeliveryAddressTypeId));
-                if (load && r2.PickupServicePointId != null) r2.PickupServicePoint = (ServicePoint2)(cache && objects.ContainsKey(r2.PickupServicePointId.Value) ? objects[r2.PickupServicePointId.Value] : objects[r2.PickupServicePointId.Value] = FindServicePoint2(r2.PickupServicePointId));
-                if (load && r2.CreationUserId != null) r2.CreationUser = (User2)(cache && objects.ContainsKey(r2.CreationUserId.Value) ? objects[r2.CreationUserId.Value] : objects[r2.CreationUserId.Value] = FindUser2(r2.CreationUserId));
-                if (load && r2.LastWriteUserId != null) r2.LastWriteUser = (User2)(cache && objects.ContainsKey(r2.LastWriteUserId.Value) ? objects[r2.LastWriteUserId.Value] : objects[r2.LastWriteUserId.Value] = FindUser2(r2.LastWriteUserId));
+                var id = Guid.Parse((string)jo["id"]);
+                var r2 = cache ? (Request2)(objects.ContainsKey(id) ? objects[id] : objects[id] = Request2.FromJObject(jo)) : Request2.FromJObject(jo);
+                if (load && r2.RequesterId != null) r2.Requester = FindUser2(r2.RequesterId, cache: cache);
+                if (load && r2.ProxyUserId != null) r2.ProxyUser = FindUser2(r2.ProxyUserId, cache: cache);
+                if (load && r2.ItemId != null) r2.Item = FindItem2(r2.ItemId, cache: cache);
+                if (load && r2.CancellationReasonId != null) r2.CancellationReason = FindCancellationReason2(r2.CancellationReasonId, cache: cache);
+                if (load && r2.CancelledByUserId != null) r2.CancelledByUser = FindUser2(r2.CancelledByUserId, cache: cache);
+                if (load && r2.DeliveryAddressTypeId != null) r2.DeliveryAddressType = FindAddressType2(r2.DeliveryAddressTypeId, cache: cache);
+                if (load && r2.PickupServicePointId != null) r2.PickupServicePoint = FindServicePoint2(r2.PickupServicePointId, cache: cache);
+                if (load && r2.CreationUserId != null) r2.CreationUser = FindUser2(r2.CreationUserId, cache: cache);
+                if (load && r2.LastWriteUserId != null) r2.LastWriteUser = FindUser2(r2.LastWriteUserId, cache: cache);
                 return r2;
             }).ToArray();
         }
@@ -5338,40 +5525,41 @@ namespace FolioLibrary
         {
             foreach (var jo in FolioServiceClient.Requests(where, orderBy, skip, take))
             {
-                var r2 = Request2.FromJObject(jo);
-                if (load && r2.RequesterId != null) r2.Requester = (User2)(cache && objects.ContainsKey(r2.RequesterId.Value) ? objects[r2.RequesterId.Value] : objects[r2.RequesterId.Value] = FindUser2(r2.RequesterId));
-                if (load && r2.ProxyUserId != null) r2.ProxyUser = (User2)(cache && objects.ContainsKey(r2.ProxyUserId.Value) ? objects[r2.ProxyUserId.Value] : objects[r2.ProxyUserId.Value] = FindUser2(r2.ProxyUserId));
-                if (load && r2.ItemId != null) r2.Item = (Item2)(cache && objects.ContainsKey(r2.ItemId.Value) ? objects[r2.ItemId.Value] : objects[r2.ItemId.Value] = FindItem2(r2.ItemId));
-                if (load && r2.CancellationReasonId != null) r2.CancellationReason = (CancellationReason2)(cache && objects.ContainsKey(r2.CancellationReasonId.Value) ? objects[r2.CancellationReasonId.Value] : objects[r2.CancellationReasonId.Value] = FindCancellationReason2(r2.CancellationReasonId));
-                if (load && r2.CancelledByUserId != null) r2.CancelledByUser = (User2)(cache && objects.ContainsKey(r2.CancelledByUserId.Value) ? objects[r2.CancelledByUserId.Value] : objects[r2.CancelledByUserId.Value] = FindUser2(r2.CancelledByUserId));
-                if (load && r2.DeliveryAddressTypeId != null) r2.DeliveryAddressType = (AddressType2)(cache && objects.ContainsKey(r2.DeliveryAddressTypeId.Value) ? objects[r2.DeliveryAddressTypeId.Value] : objects[r2.DeliveryAddressTypeId.Value] = FindAddressType2(r2.DeliveryAddressTypeId));
-                if (load && r2.PickupServicePointId != null) r2.PickupServicePoint = (ServicePoint2)(cache && objects.ContainsKey(r2.PickupServicePointId.Value) ? objects[r2.PickupServicePointId.Value] : objects[r2.PickupServicePointId.Value] = FindServicePoint2(r2.PickupServicePointId));
-                if (load && r2.CreationUserId != null) r2.CreationUser = (User2)(cache && objects.ContainsKey(r2.CreationUserId.Value) ? objects[r2.CreationUserId.Value] : objects[r2.CreationUserId.Value] = FindUser2(r2.CreationUserId));
-                if (load && r2.LastWriteUserId != null) r2.LastWriteUser = (User2)(cache && objects.ContainsKey(r2.LastWriteUserId.Value) ? objects[r2.LastWriteUserId.Value] : objects[r2.LastWriteUserId.Value] = FindUser2(r2.LastWriteUserId));
+                var id = Guid.Parse((string)jo["id"]);
+                var r2 = cache ? (Request2)(objects.ContainsKey(id) ? objects[id] : objects[id] = Request2.FromJObject(jo)) : Request2.FromJObject(jo);
+                if (load && r2.RequesterId != null) r2.Requester = FindUser2(r2.RequesterId, cache: cache);
+                if (load && r2.ProxyUserId != null) r2.ProxyUser = FindUser2(r2.ProxyUserId, cache: cache);
+                if (load && r2.ItemId != null) r2.Item = FindItem2(r2.ItemId, cache: cache);
+                if (load && r2.CancellationReasonId != null) r2.CancellationReason = FindCancellationReason2(r2.CancellationReasonId, cache: cache);
+                if (load && r2.CancelledByUserId != null) r2.CancelledByUser = FindUser2(r2.CancelledByUserId, cache: cache);
+                if (load && r2.DeliveryAddressTypeId != null) r2.DeliveryAddressType = FindAddressType2(r2.DeliveryAddressTypeId, cache: cache);
+                if (load && r2.PickupServicePointId != null) r2.PickupServicePoint = FindServicePoint2(r2.PickupServicePointId, cache: cache);
+                if (load && r2.CreationUserId != null) r2.CreationUser = FindUser2(r2.CreationUserId, cache: cache);
+                if (load && r2.LastWriteUserId != null) r2.LastWriteUser = FindUser2(r2.LastWriteUserId, cache: cache);
                 yield return r2;
             }
         }
 
         public Request2 FindRequest2(Guid? id, bool load = false, bool cache = true)
         {
-            var r2 = Request2.FromJObject(FolioServiceClient.GetRequest(id?.ToString()));
+            var r2 = cache ? (Request2)(objects.ContainsKey(id.Value) ? objects[id.Value] : objects[id.Value] = Request2.FromJObject(FolioServiceClient.GetRequest(id?.ToString()))) : Request2.FromJObject(FolioServiceClient.GetRequest(id?.ToString()));
             if (r2 == null) return null;
-            if (load && r2.RequesterId != null) r2.Requester = (User2)(cache && objects.ContainsKey(r2.RequesterId.Value) ? objects[r2.RequesterId.Value] : objects[r2.RequesterId.Value] = FindUser2(r2.RequesterId));
-            if (load && r2.ProxyUserId != null) r2.ProxyUser = (User2)(cache && objects.ContainsKey(r2.ProxyUserId.Value) ? objects[r2.ProxyUserId.Value] : objects[r2.ProxyUserId.Value] = FindUser2(r2.ProxyUserId));
-            if (load && r2.ItemId != null) r2.Item = (Item2)(cache && objects.ContainsKey(r2.ItemId.Value) ? objects[r2.ItemId.Value] : objects[r2.ItemId.Value] = FindItem2(r2.ItemId));
-            if (load && r2.CancellationReasonId != null) r2.CancellationReason = (CancellationReason2)(cache && objects.ContainsKey(r2.CancellationReasonId.Value) ? objects[r2.CancellationReasonId.Value] : objects[r2.CancellationReasonId.Value] = FindCancellationReason2(r2.CancellationReasonId));
-            if (load && r2.CancelledByUserId != null) r2.CancelledByUser = (User2)(cache && objects.ContainsKey(r2.CancelledByUserId.Value) ? objects[r2.CancelledByUserId.Value] : objects[r2.CancelledByUserId.Value] = FindUser2(r2.CancelledByUserId));
-            if (load && r2.DeliveryAddressTypeId != null) r2.DeliveryAddressType = (AddressType2)(cache && objects.ContainsKey(r2.DeliveryAddressTypeId.Value) ? objects[r2.DeliveryAddressTypeId.Value] : objects[r2.DeliveryAddressTypeId.Value] = FindAddressType2(r2.DeliveryAddressTypeId));
-            if (load && r2.PickupServicePointId != null) r2.PickupServicePoint = (ServicePoint2)(cache && objects.ContainsKey(r2.PickupServicePointId.Value) ? objects[r2.PickupServicePointId.Value] : objects[r2.PickupServicePointId.Value] = FindServicePoint2(r2.PickupServicePointId));
-            if (load && r2.CreationUserId != null) r2.CreationUser = (User2)(cache && objects.ContainsKey(r2.CreationUserId.Value) ? objects[r2.CreationUserId.Value] : objects[r2.CreationUserId.Value] = FindUser2(r2.CreationUserId));
-            if (load && r2.LastWriteUserId != null) r2.LastWriteUser = (User2)(cache && objects.ContainsKey(r2.LastWriteUserId.Value) ? objects[r2.LastWriteUserId.Value] : objects[r2.LastWriteUserId.Value] = FindUser2(r2.LastWriteUserId));
+            if (load && r2.RequesterId != null) r2.Requester = FindUser2(r2.RequesterId, cache: cache);
+            if (load && r2.ProxyUserId != null) r2.ProxyUser = FindUser2(r2.ProxyUserId, cache: cache);
+            if (load && r2.ItemId != null) r2.Item = FindItem2(r2.ItemId, cache: cache);
+            if (load && r2.CancellationReasonId != null) r2.CancellationReason = FindCancellationReason2(r2.CancellationReasonId, cache: cache);
+            if (load && r2.CancelledByUserId != null) r2.CancelledByUser = FindUser2(r2.CancelledByUserId, cache: cache);
+            if (load && r2.DeliveryAddressTypeId != null) r2.DeliveryAddressType = FindAddressType2(r2.DeliveryAddressTypeId, cache: cache);
+            if (load && r2.PickupServicePointId != null) r2.PickupServicePoint = FindServicePoint2(r2.PickupServicePointId, cache: cache);
+            if (load && r2.CreationUserId != null) r2.CreationUser = FindUser2(r2.CreationUserId, cache: cache);
+            if (load && r2.LastWriteUserId != null) r2.LastWriteUser = FindUser2(r2.LastWriteUserId, cache: cache);
             var i = 0;
             if (r2.RequestIdentifiers != null) foreach (var ri in r2.RequestIdentifiers)
                 {
                     ri.Id = (++i).ToString();
                     ri.RequestId = r2.Id;
                     ri.Request = r2;
-                    if (load && ri.IdentifierTypeId != null) ri.IdentifierType = (IdType2)(cache && objects.ContainsKey(ri.IdentifierTypeId.Value) ? objects[ri.IdentifierTypeId.Value] : objects[ri.IdentifierTypeId.Value] = FindIdType2(ri.IdentifierTypeId));
+                    if (load && ri.IdentifierTypeId != null) ri.IdentifierType = FindIdType2(ri.IdentifierTypeId, cache: cache);
                 }
             i = 0;
             if (r2.RequestTags != null) foreach (var rt in r2.RequestTags)
@@ -5401,9 +5589,10 @@ namespace FolioLibrary
         {
             return FolioServiceClient.RequestPolicies(out count, where, orderBy, skip, take).Select(jo =>
             {
-                var rp2 = RequestPolicy2.FromJObject(jo);
-                if (load && rp2.CreationUserId != null) rp2.CreationUser = (User2)(cache && objects.ContainsKey(rp2.CreationUserId.Value) ? objects[rp2.CreationUserId.Value] : objects[rp2.CreationUserId.Value] = FindUser2(rp2.CreationUserId));
-                if (load && rp2.LastWriteUserId != null) rp2.LastWriteUser = (User2)(cache && objects.ContainsKey(rp2.LastWriteUserId.Value) ? objects[rp2.LastWriteUserId.Value] : objects[rp2.LastWriteUserId.Value] = FindUser2(rp2.LastWriteUserId));
+                var id = Guid.Parse((string)jo["id"]);
+                var rp2 = cache ? (RequestPolicy2)(objects.ContainsKey(id) ? objects[id] : objects[id] = RequestPolicy2.FromJObject(jo)) : RequestPolicy2.FromJObject(jo);
+                if (load && rp2.CreationUserId != null) rp2.CreationUser = FindUser2(rp2.CreationUserId, cache: cache);
+                if (load && rp2.LastWriteUserId != null) rp2.LastWriteUser = FindUser2(rp2.LastWriteUserId, cache: cache);
                 return rp2;
             }).ToArray();
         }
@@ -5412,19 +5601,20 @@ namespace FolioLibrary
         {
             foreach (var jo in FolioServiceClient.RequestPolicies(where, orderBy, skip, take))
             {
-                var rp2 = RequestPolicy2.FromJObject(jo);
-                if (load && rp2.CreationUserId != null) rp2.CreationUser = (User2)(cache && objects.ContainsKey(rp2.CreationUserId.Value) ? objects[rp2.CreationUserId.Value] : objects[rp2.CreationUserId.Value] = FindUser2(rp2.CreationUserId));
-                if (load && rp2.LastWriteUserId != null) rp2.LastWriteUser = (User2)(cache && objects.ContainsKey(rp2.LastWriteUserId.Value) ? objects[rp2.LastWriteUserId.Value] : objects[rp2.LastWriteUserId.Value] = FindUser2(rp2.LastWriteUserId));
+                var id = Guid.Parse((string)jo["id"]);
+                var rp2 = cache ? (RequestPolicy2)(objects.ContainsKey(id) ? objects[id] : objects[id] = RequestPolicy2.FromJObject(jo)) : RequestPolicy2.FromJObject(jo);
+                if (load && rp2.CreationUserId != null) rp2.CreationUser = FindUser2(rp2.CreationUserId, cache: cache);
+                if (load && rp2.LastWriteUserId != null) rp2.LastWriteUser = FindUser2(rp2.LastWriteUserId, cache: cache);
                 yield return rp2;
             }
         }
 
         public RequestPolicy2 FindRequestPolicy2(Guid? id, bool load = false, bool cache = true)
         {
-            var rp2 = RequestPolicy2.FromJObject(FolioServiceClient.GetRequestPolicy(id?.ToString()));
+            var rp2 = cache ? (RequestPolicy2)(objects.ContainsKey(id.Value) ? objects[id.Value] : objects[id.Value] = RequestPolicy2.FromJObject(FolioServiceClient.GetRequestPolicy(id?.ToString()))) : RequestPolicy2.FromJObject(FolioServiceClient.GetRequestPolicy(id?.ToString()));
             if (rp2 == null) return null;
-            if (load && rp2.CreationUserId != null) rp2.CreationUser = (User2)(cache && objects.ContainsKey(rp2.CreationUserId.Value) ? objects[rp2.CreationUserId.Value] : objects[rp2.CreationUserId.Value] = FindUser2(rp2.CreationUserId));
-            if (load && rp2.LastWriteUserId != null) rp2.LastWriteUser = (User2)(cache && objects.ContainsKey(rp2.LastWriteUserId.Value) ? objects[rp2.LastWriteUserId.Value] : objects[rp2.LastWriteUserId.Value] = FindUser2(rp2.LastWriteUserId));
+            if (load && rp2.CreationUserId != null) rp2.CreationUser = FindUser2(rp2.CreationUserId, cache: cache);
+            if (load && rp2.LastWriteUserId != null) rp2.LastWriteUser = FindUser2(rp2.LastWriteUserId, cache: cache);
             var i = 0;
             if (rp2.RequestPolicyRequestTypes != null) foreach (var rprt in rp2.RequestPolicyRequestTypes)
                 {
@@ -5453,14 +5643,15 @@ namespace FolioLibrary
         {
             return FolioServiceClient.ScheduledNotices(out count, where, orderBy, skip, take).Select(jo =>
             {
-                var sn2 = ScheduledNotice2.FromJObject(jo);
-                if (load && sn2.LoanId != null) sn2.Loan = (Loan2)(cache && objects.ContainsKey(sn2.LoanId.Value) ? objects[sn2.LoanId.Value] : objects[sn2.LoanId.Value] = FindLoan2(sn2.LoanId));
-                if (load && sn2.RequestId != null) sn2.Request = (Request2)(cache && objects.ContainsKey(sn2.RequestId.Value) ? objects[sn2.RequestId.Value] : objects[sn2.RequestId.Value] = FindRequest2(sn2.RequestId));
-                if (load && sn2.PaymentId != null) sn2.Payment = (Payment2)(cache && objects.ContainsKey(sn2.PaymentId.Value) ? objects[sn2.PaymentId.Value] : objects[sn2.PaymentId.Value] = FindPayment2(sn2.PaymentId));
-                if (load && sn2.RecipientUserId != null) sn2.RecipientUser = (User2)(cache && objects.ContainsKey(sn2.RecipientUserId.Value) ? objects[sn2.RecipientUserId.Value] : objects[sn2.RecipientUserId.Value] = FindUser2(sn2.RecipientUserId));
-                if (load && sn2.NoticeConfigTemplateId != null) sn2.NoticeConfigTemplate = (Template2)(cache && objects.ContainsKey(sn2.NoticeConfigTemplateId.Value) ? objects[sn2.NoticeConfigTemplateId.Value] : objects[sn2.NoticeConfigTemplateId.Value] = FindTemplate2(sn2.NoticeConfigTemplateId));
-                if (load && sn2.CreationUserId != null) sn2.CreationUser = (User2)(cache && objects.ContainsKey(sn2.CreationUserId.Value) ? objects[sn2.CreationUserId.Value] : objects[sn2.CreationUserId.Value] = FindUser2(sn2.CreationUserId));
-                if (load && sn2.LastWriteUserId != null) sn2.LastWriteUser = (User2)(cache && objects.ContainsKey(sn2.LastWriteUserId.Value) ? objects[sn2.LastWriteUserId.Value] : objects[sn2.LastWriteUserId.Value] = FindUser2(sn2.LastWriteUserId));
+                var id = Guid.Parse((string)jo["id"]);
+                var sn2 = cache ? (ScheduledNotice2)(objects.ContainsKey(id) ? objects[id] : objects[id] = ScheduledNotice2.FromJObject(jo)) : ScheduledNotice2.FromJObject(jo);
+                if (load && sn2.LoanId != null) sn2.Loan = FindLoan2(sn2.LoanId, cache: cache);
+                if (load && sn2.RequestId != null) sn2.Request = FindRequest2(sn2.RequestId, cache: cache);
+                if (load && sn2.PaymentId != null) sn2.Payment = FindPayment2(sn2.PaymentId, cache: cache);
+                if (load && sn2.RecipientUserId != null) sn2.RecipientUser = FindUser2(sn2.RecipientUserId, cache: cache);
+                if (load && sn2.NoticeConfigTemplateId != null) sn2.NoticeConfigTemplate = FindTemplate2(sn2.NoticeConfigTemplateId, cache: cache);
+                if (load && sn2.CreationUserId != null) sn2.CreationUser = FindUser2(sn2.CreationUserId, cache: cache);
+                if (load && sn2.LastWriteUserId != null) sn2.LastWriteUser = FindUser2(sn2.LastWriteUserId, cache: cache);
                 return sn2;
             }).ToArray();
         }
@@ -5469,29 +5660,30 @@ namespace FolioLibrary
         {
             foreach (var jo in FolioServiceClient.ScheduledNotices(where, orderBy, skip, take))
             {
-                var sn2 = ScheduledNotice2.FromJObject(jo);
-                if (load && sn2.LoanId != null) sn2.Loan = (Loan2)(cache && objects.ContainsKey(sn2.LoanId.Value) ? objects[sn2.LoanId.Value] : objects[sn2.LoanId.Value] = FindLoan2(sn2.LoanId));
-                if (load && sn2.RequestId != null) sn2.Request = (Request2)(cache && objects.ContainsKey(sn2.RequestId.Value) ? objects[sn2.RequestId.Value] : objects[sn2.RequestId.Value] = FindRequest2(sn2.RequestId));
-                if (load && sn2.PaymentId != null) sn2.Payment = (Payment2)(cache && objects.ContainsKey(sn2.PaymentId.Value) ? objects[sn2.PaymentId.Value] : objects[sn2.PaymentId.Value] = FindPayment2(sn2.PaymentId));
-                if (load && sn2.RecipientUserId != null) sn2.RecipientUser = (User2)(cache && objects.ContainsKey(sn2.RecipientUserId.Value) ? objects[sn2.RecipientUserId.Value] : objects[sn2.RecipientUserId.Value] = FindUser2(sn2.RecipientUserId));
-                if (load && sn2.NoticeConfigTemplateId != null) sn2.NoticeConfigTemplate = (Template2)(cache && objects.ContainsKey(sn2.NoticeConfigTemplateId.Value) ? objects[sn2.NoticeConfigTemplateId.Value] : objects[sn2.NoticeConfigTemplateId.Value] = FindTemplate2(sn2.NoticeConfigTemplateId));
-                if (load && sn2.CreationUserId != null) sn2.CreationUser = (User2)(cache && objects.ContainsKey(sn2.CreationUserId.Value) ? objects[sn2.CreationUserId.Value] : objects[sn2.CreationUserId.Value] = FindUser2(sn2.CreationUserId));
-                if (load && sn2.LastWriteUserId != null) sn2.LastWriteUser = (User2)(cache && objects.ContainsKey(sn2.LastWriteUserId.Value) ? objects[sn2.LastWriteUserId.Value] : objects[sn2.LastWriteUserId.Value] = FindUser2(sn2.LastWriteUserId));
+                var id = Guid.Parse((string)jo["id"]);
+                var sn2 = cache ? (ScheduledNotice2)(objects.ContainsKey(id) ? objects[id] : objects[id] = ScheduledNotice2.FromJObject(jo)) : ScheduledNotice2.FromJObject(jo);
+                if (load && sn2.LoanId != null) sn2.Loan = FindLoan2(sn2.LoanId, cache: cache);
+                if (load && sn2.RequestId != null) sn2.Request = FindRequest2(sn2.RequestId, cache: cache);
+                if (load && sn2.PaymentId != null) sn2.Payment = FindPayment2(sn2.PaymentId, cache: cache);
+                if (load && sn2.RecipientUserId != null) sn2.RecipientUser = FindUser2(sn2.RecipientUserId, cache: cache);
+                if (load && sn2.NoticeConfigTemplateId != null) sn2.NoticeConfigTemplate = FindTemplate2(sn2.NoticeConfigTemplateId, cache: cache);
+                if (load && sn2.CreationUserId != null) sn2.CreationUser = FindUser2(sn2.CreationUserId, cache: cache);
+                if (load && sn2.LastWriteUserId != null) sn2.LastWriteUser = FindUser2(sn2.LastWriteUserId, cache: cache);
                 yield return sn2;
             }
         }
 
         public ScheduledNotice2 FindScheduledNotice2(Guid? id, bool load = false, bool cache = true)
         {
-            var sn2 = ScheduledNotice2.FromJObject(FolioServiceClient.GetScheduledNotice(id?.ToString()));
+            var sn2 = cache ? (ScheduledNotice2)(objects.ContainsKey(id.Value) ? objects[id.Value] : objects[id.Value] = ScheduledNotice2.FromJObject(FolioServiceClient.GetScheduledNotice(id?.ToString()))) : ScheduledNotice2.FromJObject(FolioServiceClient.GetScheduledNotice(id?.ToString()));
             if (sn2 == null) return null;
-            if (load && sn2.LoanId != null) sn2.Loan = (Loan2)(cache && objects.ContainsKey(sn2.LoanId.Value) ? objects[sn2.LoanId.Value] : objects[sn2.LoanId.Value] = FindLoan2(sn2.LoanId));
-            if (load && sn2.RequestId != null) sn2.Request = (Request2)(cache && objects.ContainsKey(sn2.RequestId.Value) ? objects[sn2.RequestId.Value] : objects[sn2.RequestId.Value] = FindRequest2(sn2.RequestId));
-            if (load && sn2.PaymentId != null) sn2.Payment = (Payment2)(cache && objects.ContainsKey(sn2.PaymentId.Value) ? objects[sn2.PaymentId.Value] : objects[sn2.PaymentId.Value] = FindPayment2(sn2.PaymentId));
-            if (load && sn2.RecipientUserId != null) sn2.RecipientUser = (User2)(cache && objects.ContainsKey(sn2.RecipientUserId.Value) ? objects[sn2.RecipientUserId.Value] : objects[sn2.RecipientUserId.Value] = FindUser2(sn2.RecipientUserId));
-            if (load && sn2.NoticeConfigTemplateId != null) sn2.NoticeConfigTemplate = (Template2)(cache && objects.ContainsKey(sn2.NoticeConfigTemplateId.Value) ? objects[sn2.NoticeConfigTemplateId.Value] : objects[sn2.NoticeConfigTemplateId.Value] = FindTemplate2(sn2.NoticeConfigTemplateId));
-            if (load && sn2.CreationUserId != null) sn2.CreationUser = (User2)(cache && objects.ContainsKey(sn2.CreationUserId.Value) ? objects[sn2.CreationUserId.Value] : objects[sn2.CreationUserId.Value] = FindUser2(sn2.CreationUserId));
-            if (load && sn2.LastWriteUserId != null) sn2.LastWriteUser = (User2)(cache && objects.ContainsKey(sn2.LastWriteUserId.Value) ? objects[sn2.LastWriteUserId.Value] : objects[sn2.LastWriteUserId.Value] = FindUser2(sn2.LastWriteUserId));
+            if (load && sn2.LoanId != null) sn2.Loan = FindLoan2(sn2.LoanId, cache: cache);
+            if (load && sn2.RequestId != null) sn2.Request = FindRequest2(sn2.RequestId, cache: cache);
+            if (load && sn2.PaymentId != null) sn2.Payment = FindPayment2(sn2.PaymentId, cache: cache);
+            if (load && sn2.RecipientUserId != null) sn2.RecipientUser = FindUser2(sn2.RecipientUserId, cache: cache);
+            if (load && sn2.NoticeConfigTemplateId != null) sn2.NoticeConfigTemplate = FindTemplate2(sn2.NoticeConfigTemplateId, cache: cache);
+            if (load && sn2.CreationUserId != null) sn2.CreationUser = FindUser2(sn2.CreationUserId, cache: cache);
+            if (load && sn2.LastWriteUserId != null) sn2.LastWriteUser = FindUser2(sn2.LastWriteUserId, cache: cache);
             return sn2;
         }
 
@@ -5513,9 +5705,10 @@ namespace FolioLibrary
         {
             return FolioServiceClient.ServicePoints(out count, where, orderBy, skip, take).Select(jo =>
             {
-                var sp2 = ServicePoint2.FromJObject(jo);
-                if (load && sp2.CreationUserId != null) sp2.CreationUser = (User2)(cache && objects.ContainsKey(sp2.CreationUserId.Value) ? objects[sp2.CreationUserId.Value] : objects[sp2.CreationUserId.Value] = FindUser2(sp2.CreationUserId));
-                if (load && sp2.LastWriteUserId != null) sp2.LastWriteUser = (User2)(cache && objects.ContainsKey(sp2.LastWriteUserId.Value) ? objects[sp2.LastWriteUserId.Value] : objects[sp2.LastWriteUserId.Value] = FindUser2(sp2.LastWriteUserId));
+                var id = Guid.Parse((string)jo["id"]);
+                var sp2 = cache ? (ServicePoint2)(objects.ContainsKey(id) ? objects[id] : objects[id] = ServicePoint2.FromJObject(jo)) : ServicePoint2.FromJObject(jo);
+                if (load && sp2.CreationUserId != null) sp2.CreationUser = FindUser2(sp2.CreationUserId, cache: cache);
+                if (load && sp2.LastWriteUserId != null) sp2.LastWriteUser = FindUser2(sp2.LastWriteUserId, cache: cache);
                 return sp2;
             }).ToArray();
         }
@@ -5524,26 +5717,27 @@ namespace FolioLibrary
         {
             foreach (var jo in FolioServiceClient.ServicePoints(where, orderBy, skip, take))
             {
-                var sp2 = ServicePoint2.FromJObject(jo);
-                if (load && sp2.CreationUserId != null) sp2.CreationUser = (User2)(cache && objects.ContainsKey(sp2.CreationUserId.Value) ? objects[sp2.CreationUserId.Value] : objects[sp2.CreationUserId.Value] = FindUser2(sp2.CreationUserId));
-                if (load && sp2.LastWriteUserId != null) sp2.LastWriteUser = (User2)(cache && objects.ContainsKey(sp2.LastWriteUserId.Value) ? objects[sp2.LastWriteUserId.Value] : objects[sp2.LastWriteUserId.Value] = FindUser2(sp2.LastWriteUserId));
+                var id = Guid.Parse((string)jo["id"]);
+                var sp2 = cache ? (ServicePoint2)(objects.ContainsKey(id) ? objects[id] : objects[id] = ServicePoint2.FromJObject(jo)) : ServicePoint2.FromJObject(jo);
+                if (load && sp2.CreationUserId != null) sp2.CreationUser = FindUser2(sp2.CreationUserId, cache: cache);
+                if (load && sp2.LastWriteUserId != null) sp2.LastWriteUser = FindUser2(sp2.LastWriteUserId, cache: cache);
                 yield return sp2;
             }
         }
 
         public ServicePoint2 FindServicePoint2(Guid? id, bool load = false, bool cache = true)
         {
-            var sp2 = ServicePoint2.FromJObject(FolioServiceClient.GetServicePoint(id?.ToString()));
+            var sp2 = cache ? (ServicePoint2)(objects.ContainsKey(id.Value) ? objects[id.Value] : objects[id.Value] = ServicePoint2.FromJObject(FolioServiceClient.GetServicePoint(id?.ToString()))) : ServicePoint2.FromJObject(FolioServiceClient.GetServicePoint(id?.ToString()));
             if (sp2 == null) return null;
-            if (load && sp2.CreationUserId != null) sp2.CreationUser = (User2)(cache && objects.ContainsKey(sp2.CreationUserId.Value) ? objects[sp2.CreationUserId.Value] : objects[sp2.CreationUserId.Value] = FindUser2(sp2.CreationUserId));
-            if (load && sp2.LastWriteUserId != null) sp2.LastWriteUser = (User2)(cache && objects.ContainsKey(sp2.LastWriteUserId.Value) ? objects[sp2.LastWriteUserId.Value] : objects[sp2.LastWriteUserId.Value] = FindUser2(sp2.LastWriteUserId));
+            if (load && sp2.CreationUserId != null) sp2.CreationUser = FindUser2(sp2.CreationUserId, cache: cache);
+            if (load && sp2.LastWriteUserId != null) sp2.LastWriteUser = FindUser2(sp2.LastWriteUserId, cache: cache);
             var i = 0;
             if (sp2.ServicePointStaffSlips != null) foreach (var spss in sp2.ServicePointStaffSlips)
                 {
                     spss.Id = (++i).ToString();
                     spss.ServicePointId = sp2.Id;
                     spss.ServicePoint = sp2;
-                    if (load && spss.StaffSlipId != null) spss.StaffSlip = (StaffSlip2)(cache && objects.ContainsKey(spss.StaffSlipId.Value) ? objects[spss.StaffSlipId.Value] : objects[spss.StaffSlipId.Value] = FindStaffSlip2(spss.StaffSlipId));
+                    if (load && spss.StaffSlipId != null) spss.StaffSlip = FindStaffSlip2(spss.StaffSlipId, cache: cache);
                 }
             return sp2;
         }
@@ -5566,11 +5760,12 @@ namespace FolioLibrary
         {
             return FolioServiceClient.ServicePointUsers(out count, where, orderBy, skip, take).Select(jo =>
             {
-                var spu2 = ServicePointUser2.FromJObject(jo);
-                if (load && spu2.UserId != null) spu2.User = (User2)(cache && objects.ContainsKey(spu2.UserId.Value) ? objects[spu2.UserId.Value] : objects[spu2.UserId.Value] = FindUser2(spu2.UserId));
-                if (load && spu2.DefaultServicePointId != null) spu2.DefaultServicePoint = (ServicePoint2)(cache && objects.ContainsKey(spu2.DefaultServicePointId.Value) ? objects[spu2.DefaultServicePointId.Value] : objects[spu2.DefaultServicePointId.Value] = FindServicePoint2(spu2.DefaultServicePointId));
-                if (load && spu2.CreationUserId != null) spu2.CreationUser = (User2)(cache && objects.ContainsKey(spu2.CreationUserId.Value) ? objects[spu2.CreationUserId.Value] : objects[spu2.CreationUserId.Value] = FindUser2(spu2.CreationUserId));
-                if (load && spu2.LastWriteUserId != null) spu2.LastWriteUser = (User2)(cache && objects.ContainsKey(spu2.LastWriteUserId.Value) ? objects[spu2.LastWriteUserId.Value] : objects[spu2.LastWriteUserId.Value] = FindUser2(spu2.LastWriteUserId));
+                var id = Guid.Parse((string)jo["id"]);
+                var spu2 = cache ? (ServicePointUser2)(objects.ContainsKey(id) ? objects[id] : objects[id] = ServicePointUser2.FromJObject(jo)) : ServicePointUser2.FromJObject(jo);
+                if (load && spu2.UserId != null) spu2.User = FindUser2(spu2.UserId, cache: cache);
+                if (load && spu2.DefaultServicePointId != null) spu2.DefaultServicePoint = FindServicePoint2(spu2.DefaultServicePointId, cache: cache);
+                if (load && spu2.CreationUserId != null) spu2.CreationUser = FindUser2(spu2.CreationUserId, cache: cache);
+                if (load && spu2.LastWriteUserId != null) spu2.LastWriteUser = FindUser2(spu2.LastWriteUserId, cache: cache);
                 return spu2;
             }).ToArray();
         }
@@ -5579,30 +5774,31 @@ namespace FolioLibrary
         {
             foreach (var jo in FolioServiceClient.ServicePointUsers(where, orderBy, skip, take))
             {
-                var spu2 = ServicePointUser2.FromJObject(jo);
-                if (load && spu2.UserId != null) spu2.User = (User2)(cache && objects.ContainsKey(spu2.UserId.Value) ? objects[spu2.UserId.Value] : objects[spu2.UserId.Value] = FindUser2(spu2.UserId));
-                if (load && spu2.DefaultServicePointId != null) spu2.DefaultServicePoint = (ServicePoint2)(cache && objects.ContainsKey(spu2.DefaultServicePointId.Value) ? objects[spu2.DefaultServicePointId.Value] : objects[spu2.DefaultServicePointId.Value] = FindServicePoint2(spu2.DefaultServicePointId));
-                if (load && spu2.CreationUserId != null) spu2.CreationUser = (User2)(cache && objects.ContainsKey(spu2.CreationUserId.Value) ? objects[spu2.CreationUserId.Value] : objects[spu2.CreationUserId.Value] = FindUser2(spu2.CreationUserId));
-                if (load && spu2.LastWriteUserId != null) spu2.LastWriteUser = (User2)(cache && objects.ContainsKey(spu2.LastWriteUserId.Value) ? objects[spu2.LastWriteUserId.Value] : objects[spu2.LastWriteUserId.Value] = FindUser2(spu2.LastWriteUserId));
+                var id = Guid.Parse((string)jo["id"]);
+                var spu2 = cache ? (ServicePointUser2)(objects.ContainsKey(id) ? objects[id] : objects[id] = ServicePointUser2.FromJObject(jo)) : ServicePointUser2.FromJObject(jo);
+                if (load && spu2.UserId != null) spu2.User = FindUser2(spu2.UserId, cache: cache);
+                if (load && spu2.DefaultServicePointId != null) spu2.DefaultServicePoint = FindServicePoint2(spu2.DefaultServicePointId, cache: cache);
+                if (load && spu2.CreationUserId != null) spu2.CreationUser = FindUser2(spu2.CreationUserId, cache: cache);
+                if (load && spu2.LastWriteUserId != null) spu2.LastWriteUser = FindUser2(spu2.LastWriteUserId, cache: cache);
                 yield return spu2;
             }
         }
 
         public ServicePointUser2 FindServicePointUser2(Guid? id, bool load = false, bool cache = true)
         {
-            var spu2 = ServicePointUser2.FromJObject(FolioServiceClient.GetServicePointUser(id?.ToString()));
+            var spu2 = cache ? (ServicePointUser2)(objects.ContainsKey(id.Value) ? objects[id.Value] : objects[id.Value] = ServicePointUser2.FromJObject(FolioServiceClient.GetServicePointUser(id?.ToString()))) : ServicePointUser2.FromJObject(FolioServiceClient.GetServicePointUser(id?.ToString()));
             if (spu2 == null) return null;
-            if (load && spu2.UserId != null) spu2.User = (User2)(cache && objects.ContainsKey(spu2.UserId.Value) ? objects[spu2.UserId.Value] : objects[spu2.UserId.Value] = FindUser2(spu2.UserId));
-            if (load && spu2.DefaultServicePointId != null) spu2.DefaultServicePoint = (ServicePoint2)(cache && objects.ContainsKey(spu2.DefaultServicePointId.Value) ? objects[spu2.DefaultServicePointId.Value] : objects[spu2.DefaultServicePointId.Value] = FindServicePoint2(spu2.DefaultServicePointId));
-            if (load && spu2.CreationUserId != null) spu2.CreationUser = (User2)(cache && objects.ContainsKey(spu2.CreationUserId.Value) ? objects[spu2.CreationUserId.Value] : objects[spu2.CreationUserId.Value] = FindUser2(spu2.CreationUserId));
-            if (load && spu2.LastWriteUserId != null) spu2.LastWriteUser = (User2)(cache && objects.ContainsKey(spu2.LastWriteUserId.Value) ? objects[spu2.LastWriteUserId.Value] : objects[spu2.LastWriteUserId.Value] = FindUser2(spu2.LastWriteUserId));
+            if (load && spu2.UserId != null) spu2.User = FindUser2(spu2.UserId, cache: cache);
+            if (load && spu2.DefaultServicePointId != null) spu2.DefaultServicePoint = FindServicePoint2(spu2.DefaultServicePointId, cache: cache);
+            if (load && spu2.CreationUserId != null) spu2.CreationUser = FindUser2(spu2.CreationUserId, cache: cache);
+            if (load && spu2.LastWriteUserId != null) spu2.LastWriteUser = FindUser2(spu2.LastWriteUserId, cache: cache);
             var i = 0;
             if (spu2.ServicePointUserServicePoints != null) foreach (var spusp in spu2.ServicePointUserServicePoints)
                 {
                     spusp.Id = (++i).ToString();
                     spusp.ServicePointUserId = spu2.Id;
                     spusp.ServicePointUser = spu2;
-                    if (load && spusp.ServicePointId != null) spusp.ServicePoint = (ServicePoint2)(cache && objects.ContainsKey(spusp.ServicePointId.Value) ? objects[spusp.ServicePointId.Value] : objects[spusp.ServicePointId.Value] = FindServicePoint2(spusp.ServicePointId));
+                    if (load && spusp.ServicePointId != null) spusp.ServicePoint = FindServicePoint2(spusp.ServicePointId, cache: cache);
                 }
             return spu2;
         }
@@ -5625,9 +5821,10 @@ namespace FolioLibrary
         {
             return FolioServiceClient.Settings(out count, where, orderBy, skip, take).Select(jo =>
             {
-                var s = Setting.FromJObject(jo);
-                if (load && s.CreationUserId != null) s.CreationUser = (User2)(cache && objects.ContainsKey(s.CreationUserId.Value) ? objects[s.CreationUserId.Value] : objects[s.CreationUserId.Value] = FindUser2(s.CreationUserId));
-                if (load && s.LastWriteUserId != null) s.LastWriteUser = (User2)(cache && objects.ContainsKey(s.LastWriteUserId.Value) ? objects[s.LastWriteUserId.Value] : objects[s.LastWriteUserId.Value] = FindUser2(s.LastWriteUserId));
+                var id = Guid.Parse((string)jo["id"]);
+                var s = cache ? (Setting)(objects.ContainsKey(id) ? objects[id] : objects[id] = Setting.FromJObject(jo)) : Setting.FromJObject(jo);
+                if (load && s.CreationUserId != null) s.CreationUser = FindUser2(s.CreationUserId, cache: cache);
+                if (load && s.LastWriteUserId != null) s.LastWriteUser = FindUser2(s.LastWriteUserId, cache: cache);
                 return s;
             }).ToArray();
         }
@@ -5636,19 +5833,20 @@ namespace FolioLibrary
         {
             foreach (var jo in FolioServiceClient.Settings(where, orderBy, skip, take))
             {
-                var s = Setting.FromJObject(jo);
-                if (load && s.CreationUserId != null) s.CreationUser = (User2)(cache && objects.ContainsKey(s.CreationUserId.Value) ? objects[s.CreationUserId.Value] : objects[s.CreationUserId.Value] = FindUser2(s.CreationUserId));
-                if (load && s.LastWriteUserId != null) s.LastWriteUser = (User2)(cache && objects.ContainsKey(s.LastWriteUserId.Value) ? objects[s.LastWriteUserId.Value] : objects[s.LastWriteUserId.Value] = FindUser2(s.LastWriteUserId));
+                var id = Guid.Parse((string)jo["id"]);
+                var s = cache ? (Setting)(objects.ContainsKey(id) ? objects[id] : objects[id] = Setting.FromJObject(jo)) : Setting.FromJObject(jo);
+                if (load && s.CreationUserId != null) s.CreationUser = FindUser2(s.CreationUserId, cache: cache);
+                if (load && s.LastWriteUserId != null) s.LastWriteUser = FindUser2(s.LastWriteUserId, cache: cache);
                 yield return s;
             }
         }
 
         public Setting FindSetting(Guid? id, bool load = false, bool cache = true)
         {
-            var s = Setting.FromJObject(FolioServiceClient.GetSetting(id?.ToString()));
+            var s = cache ? (Setting)(objects.ContainsKey(id.Value) ? objects[id.Value] : objects[id.Value] = Setting.FromJObject(FolioServiceClient.GetSetting(id?.ToString()))) : Setting.FromJObject(FolioServiceClient.GetSetting(id?.ToString()));
             if (s == null) return null;
-            if (load && s.CreationUserId != null) s.CreationUser = (User2)(cache && objects.ContainsKey(s.CreationUserId.Value) ? objects[s.CreationUserId.Value] : objects[s.CreationUserId.Value] = FindUser2(s.CreationUserId));
-            if (load && s.LastWriteUserId != null) s.LastWriteUser = (User2)(cache && objects.ContainsKey(s.LastWriteUserId.Value) ? objects[s.LastWriteUserId.Value] : objects[s.LastWriteUserId.Value] = FindUser2(s.LastWriteUserId));
+            if (load && s.CreationUserId != null) s.CreationUser = FindUser2(s.CreationUserId, cache: cache);
+            if (load && s.LastWriteUserId != null) s.LastWriteUser = FindUser2(s.LastWriteUserId, cache: cache);
             return s;
         }
 
@@ -5670,9 +5868,10 @@ namespace FolioLibrary
         {
             return FolioServiceClient.Snapshots(out count, where, orderBy, skip, take).Select(jo =>
             {
-                var s2 = Snapshot2.FromJObject(jo);
-                if (load && s2.CreationUserId != null) s2.CreationUser = (User2)(cache && objects.ContainsKey(s2.CreationUserId.Value) ? objects[s2.CreationUserId.Value] : objects[s2.CreationUserId.Value] = FindUser2(s2.CreationUserId));
-                if (load && s2.LastWriteUserId != null) s2.LastWriteUser = (User2)(cache && objects.ContainsKey(s2.LastWriteUserId.Value) ? objects[s2.LastWriteUserId.Value] : objects[s2.LastWriteUserId.Value] = FindUser2(s2.LastWriteUserId));
+                var id = Guid.Parse((string)jo["id"]);
+                var s2 = cache ? (Snapshot2)(objects.ContainsKey(id) ? objects[id] : objects[id] = Snapshot2.FromJObject(jo)) : Snapshot2.FromJObject(jo);
+                if (load && s2.CreationUserId != null) s2.CreationUser = FindUser2(s2.CreationUserId, cache: cache);
+                if (load && s2.LastWriteUserId != null) s2.LastWriteUser = FindUser2(s2.LastWriteUserId, cache: cache);
                 return s2;
             }).ToArray();
         }
@@ -5681,19 +5880,20 @@ namespace FolioLibrary
         {
             foreach (var jo in FolioServiceClient.Snapshots(where, orderBy, skip, take))
             {
-                var s2 = Snapshot2.FromJObject(jo);
-                if (load && s2.CreationUserId != null) s2.CreationUser = (User2)(cache && objects.ContainsKey(s2.CreationUserId.Value) ? objects[s2.CreationUserId.Value] : objects[s2.CreationUserId.Value] = FindUser2(s2.CreationUserId));
-                if (load && s2.LastWriteUserId != null) s2.LastWriteUser = (User2)(cache && objects.ContainsKey(s2.LastWriteUserId.Value) ? objects[s2.LastWriteUserId.Value] : objects[s2.LastWriteUserId.Value] = FindUser2(s2.LastWriteUserId));
+                var id = Guid.Parse((string)jo["id"]);
+                var s2 = cache ? (Snapshot2)(objects.ContainsKey(id) ? objects[id] : objects[id] = Snapshot2.FromJObject(jo)) : Snapshot2.FromJObject(jo);
+                if (load && s2.CreationUserId != null) s2.CreationUser = FindUser2(s2.CreationUserId, cache: cache);
+                if (load && s2.LastWriteUserId != null) s2.LastWriteUser = FindUser2(s2.LastWriteUserId, cache: cache);
                 yield return s2;
             }
         }
 
         public Snapshot2 FindSnapshot2(Guid? id, bool load = false, bool cache = true)
         {
-            var s2 = Snapshot2.FromJObject(FolioServiceClient.GetSnapshot(id?.ToString()));
+            var s2 = cache ? (Snapshot2)(objects.ContainsKey(id.Value) ? objects[id.Value] : objects[id.Value] = Snapshot2.FromJObject(FolioServiceClient.GetSnapshot(id?.ToString()))) : Snapshot2.FromJObject(FolioServiceClient.GetSnapshot(id?.ToString()));
             if (s2 == null) return null;
-            if (load && s2.CreationUserId != null) s2.CreationUser = (User2)(cache && objects.ContainsKey(s2.CreationUserId.Value) ? objects[s2.CreationUserId.Value] : objects[s2.CreationUserId.Value] = FindUser2(s2.CreationUserId));
-            if (load && s2.LastWriteUserId != null) s2.LastWriteUser = (User2)(cache && objects.ContainsKey(s2.LastWriteUserId.Value) ? objects[s2.LastWriteUserId.Value] : objects[s2.LastWriteUserId.Value] = FindUser2(s2.LastWriteUserId));
+            if (load && s2.CreationUserId != null) s2.CreationUser = FindUser2(s2.CreationUserId, cache: cache);
+            if (load && s2.LastWriteUserId != null) s2.LastWriteUser = FindUser2(s2.LastWriteUserId, cache: cache);
             return s2;
         }
 
@@ -5715,9 +5915,10 @@ namespace FolioLibrary
         {
             return FolioServiceClient.Sources(out count, where, orderBy, skip, take).Select(jo =>
             {
-                var s2 = Source2.FromJObject(jo);
-                if (load && s2.CreationUserId != null) s2.CreationUser = (User2)(cache && objects.ContainsKey(s2.CreationUserId.Value) ? objects[s2.CreationUserId.Value] : objects[s2.CreationUserId.Value] = FindUser2(s2.CreationUserId));
-                if (load && s2.LastWriteUserId != null) s2.LastWriteUser = (User2)(cache && objects.ContainsKey(s2.LastWriteUserId.Value) ? objects[s2.LastWriteUserId.Value] : objects[s2.LastWriteUserId.Value] = FindUser2(s2.LastWriteUserId));
+                var id = Guid.Parse((string)jo["id"]);
+                var s2 = cache ? (Source2)(objects.ContainsKey(id) ? objects[id] : objects[id] = Source2.FromJObject(jo)) : Source2.FromJObject(jo);
+                if (load && s2.CreationUserId != null) s2.CreationUser = FindUser2(s2.CreationUserId, cache: cache);
+                if (load && s2.LastWriteUserId != null) s2.LastWriteUser = FindUser2(s2.LastWriteUserId, cache: cache);
                 return s2;
             }).ToArray();
         }
@@ -5726,19 +5927,20 @@ namespace FolioLibrary
         {
             foreach (var jo in FolioServiceClient.Sources(where, orderBy, skip, take))
             {
-                var s2 = Source2.FromJObject(jo);
-                if (load && s2.CreationUserId != null) s2.CreationUser = (User2)(cache && objects.ContainsKey(s2.CreationUserId.Value) ? objects[s2.CreationUserId.Value] : objects[s2.CreationUserId.Value] = FindUser2(s2.CreationUserId));
-                if (load && s2.LastWriteUserId != null) s2.LastWriteUser = (User2)(cache && objects.ContainsKey(s2.LastWriteUserId.Value) ? objects[s2.LastWriteUserId.Value] : objects[s2.LastWriteUserId.Value] = FindUser2(s2.LastWriteUserId));
+                var id = Guid.Parse((string)jo["id"]);
+                var s2 = cache ? (Source2)(objects.ContainsKey(id) ? objects[id] : objects[id] = Source2.FromJObject(jo)) : Source2.FromJObject(jo);
+                if (load && s2.CreationUserId != null) s2.CreationUser = FindUser2(s2.CreationUserId, cache: cache);
+                if (load && s2.LastWriteUserId != null) s2.LastWriteUser = FindUser2(s2.LastWriteUserId, cache: cache);
                 yield return s2;
             }
         }
 
         public Source2 FindSource2(Guid? id, bool load = false, bool cache = true)
         {
-            var s2 = Source2.FromJObject(FolioServiceClient.GetSource(id?.ToString()));
+            var s2 = cache ? (Source2)(objects.ContainsKey(id.Value) ? objects[id.Value] : objects[id.Value] = Source2.FromJObject(FolioServiceClient.GetSource(id?.ToString()))) : Source2.FromJObject(FolioServiceClient.GetSource(id?.ToString()));
             if (s2 == null) return null;
-            if (load && s2.CreationUserId != null) s2.CreationUser = (User2)(cache && objects.ContainsKey(s2.CreationUserId.Value) ? objects[s2.CreationUserId.Value] : objects[s2.CreationUserId.Value] = FindUser2(s2.CreationUserId));
-            if (load && s2.LastWriteUserId != null) s2.LastWriteUser = (User2)(cache && objects.ContainsKey(s2.LastWriteUserId.Value) ? objects[s2.LastWriteUserId.Value] : objects[s2.LastWriteUserId.Value] = FindUser2(s2.LastWriteUserId));
+            if (load && s2.CreationUserId != null) s2.CreationUser = FindUser2(s2.CreationUserId, cache: cache);
+            if (load && s2.LastWriteUserId != null) s2.LastWriteUser = FindUser2(s2.LastWriteUserId, cache: cache);
             return s2;
         }
 
@@ -5760,9 +5962,10 @@ namespace FolioLibrary
         {
             return FolioServiceClient.StaffSlips(out count, where, orderBy, skip, take).Select(jo =>
             {
-                var ss2 = StaffSlip2.FromJObject(jo);
-                if (load && ss2.CreationUserId != null) ss2.CreationUser = (User2)(cache && objects.ContainsKey(ss2.CreationUserId.Value) ? objects[ss2.CreationUserId.Value] : objects[ss2.CreationUserId.Value] = FindUser2(ss2.CreationUserId));
-                if (load && ss2.LastWriteUserId != null) ss2.LastWriteUser = (User2)(cache && objects.ContainsKey(ss2.LastWriteUserId.Value) ? objects[ss2.LastWriteUserId.Value] : objects[ss2.LastWriteUserId.Value] = FindUser2(ss2.LastWriteUserId));
+                var id = Guid.Parse((string)jo["id"]);
+                var ss2 = cache ? (StaffSlip2)(objects.ContainsKey(id) ? objects[id] : objects[id] = StaffSlip2.FromJObject(jo)) : StaffSlip2.FromJObject(jo);
+                if (load && ss2.CreationUserId != null) ss2.CreationUser = FindUser2(ss2.CreationUserId, cache: cache);
+                if (load && ss2.LastWriteUserId != null) ss2.LastWriteUser = FindUser2(ss2.LastWriteUserId, cache: cache);
                 return ss2;
             }).ToArray();
         }
@@ -5771,19 +5974,20 @@ namespace FolioLibrary
         {
             foreach (var jo in FolioServiceClient.StaffSlips(where, orderBy, skip, take))
             {
-                var ss2 = StaffSlip2.FromJObject(jo);
-                if (load && ss2.CreationUserId != null) ss2.CreationUser = (User2)(cache && objects.ContainsKey(ss2.CreationUserId.Value) ? objects[ss2.CreationUserId.Value] : objects[ss2.CreationUserId.Value] = FindUser2(ss2.CreationUserId));
-                if (load && ss2.LastWriteUserId != null) ss2.LastWriteUser = (User2)(cache && objects.ContainsKey(ss2.LastWriteUserId.Value) ? objects[ss2.LastWriteUserId.Value] : objects[ss2.LastWriteUserId.Value] = FindUser2(ss2.LastWriteUserId));
+                var id = Guid.Parse((string)jo["id"]);
+                var ss2 = cache ? (StaffSlip2)(objects.ContainsKey(id) ? objects[id] : objects[id] = StaffSlip2.FromJObject(jo)) : StaffSlip2.FromJObject(jo);
+                if (load && ss2.CreationUserId != null) ss2.CreationUser = FindUser2(ss2.CreationUserId, cache: cache);
+                if (load && ss2.LastWriteUserId != null) ss2.LastWriteUser = FindUser2(ss2.LastWriteUserId, cache: cache);
                 yield return ss2;
             }
         }
 
         public StaffSlip2 FindStaffSlip2(Guid? id, bool load = false, bool cache = true)
         {
-            var ss2 = StaffSlip2.FromJObject(FolioServiceClient.GetStaffSlip(id?.ToString()));
+            var ss2 = cache ? (StaffSlip2)(objects.ContainsKey(id.Value) ? objects[id.Value] : objects[id.Value] = StaffSlip2.FromJObject(FolioServiceClient.GetStaffSlip(id?.ToString()))) : StaffSlip2.FromJObject(FolioServiceClient.GetStaffSlip(id?.ToString()));
             if (ss2 == null) return null;
-            if (load && ss2.CreationUserId != null) ss2.CreationUser = (User2)(cache && objects.ContainsKey(ss2.CreationUserId.Value) ? objects[ss2.CreationUserId.Value] : objects[ss2.CreationUserId.Value] = FindUser2(ss2.CreationUserId));
-            if (load && ss2.LastWriteUserId != null) ss2.LastWriteUser = (User2)(cache && objects.ContainsKey(ss2.LastWriteUserId.Value) ? objects[ss2.LastWriteUserId.Value] : objects[ss2.LastWriteUserId.Value] = FindUser2(ss2.LastWriteUserId));
+            if (load && ss2.CreationUserId != null) ss2.CreationUser = FindUser2(ss2.CreationUserId, cache: cache);
+            if (load && ss2.LastWriteUserId != null) ss2.LastWriteUser = FindUser2(ss2.LastWriteUserId, cache: cache);
             return ss2;
         }
 
@@ -5805,10 +6009,11 @@ namespace FolioLibrary
         {
             return FolioServiceClient.StatisticalCodes(out count, where, orderBy, skip, take).Select(jo =>
             {
-                var sc2 = StatisticalCode2.FromJObject(jo);
-                if (load && sc2.StatisticalCodeTypeId != null) sc2.StatisticalCodeType = (StatisticalCodeType2)(cache && objects.ContainsKey(sc2.StatisticalCodeTypeId.Value) ? objects[sc2.StatisticalCodeTypeId.Value] : objects[sc2.StatisticalCodeTypeId.Value] = FindStatisticalCodeType2(sc2.StatisticalCodeTypeId));
-                if (load && sc2.CreationUserId != null) sc2.CreationUser = (User2)(cache && objects.ContainsKey(sc2.CreationUserId.Value) ? objects[sc2.CreationUserId.Value] : objects[sc2.CreationUserId.Value] = FindUser2(sc2.CreationUserId));
-                if (load && sc2.LastWriteUserId != null) sc2.LastWriteUser = (User2)(cache && objects.ContainsKey(sc2.LastWriteUserId.Value) ? objects[sc2.LastWriteUserId.Value] : objects[sc2.LastWriteUserId.Value] = FindUser2(sc2.LastWriteUserId));
+                var id = Guid.Parse((string)jo["id"]);
+                var sc2 = cache ? (StatisticalCode2)(objects.ContainsKey(id) ? objects[id] : objects[id] = StatisticalCode2.FromJObject(jo)) : StatisticalCode2.FromJObject(jo);
+                if (load && sc2.StatisticalCodeTypeId != null) sc2.StatisticalCodeType = FindStatisticalCodeType2(sc2.StatisticalCodeTypeId, cache: cache);
+                if (load && sc2.CreationUserId != null) sc2.CreationUser = FindUser2(sc2.CreationUserId, cache: cache);
+                if (load && sc2.LastWriteUserId != null) sc2.LastWriteUser = FindUser2(sc2.LastWriteUserId, cache: cache);
                 return sc2;
             }).ToArray();
         }
@@ -5817,21 +6022,22 @@ namespace FolioLibrary
         {
             foreach (var jo in FolioServiceClient.StatisticalCodes(where, orderBy, skip, take))
             {
-                var sc2 = StatisticalCode2.FromJObject(jo);
-                if (load && sc2.StatisticalCodeTypeId != null) sc2.StatisticalCodeType = (StatisticalCodeType2)(cache && objects.ContainsKey(sc2.StatisticalCodeTypeId.Value) ? objects[sc2.StatisticalCodeTypeId.Value] : objects[sc2.StatisticalCodeTypeId.Value] = FindStatisticalCodeType2(sc2.StatisticalCodeTypeId));
-                if (load && sc2.CreationUserId != null) sc2.CreationUser = (User2)(cache && objects.ContainsKey(sc2.CreationUserId.Value) ? objects[sc2.CreationUserId.Value] : objects[sc2.CreationUserId.Value] = FindUser2(sc2.CreationUserId));
-                if (load && sc2.LastWriteUserId != null) sc2.LastWriteUser = (User2)(cache && objects.ContainsKey(sc2.LastWriteUserId.Value) ? objects[sc2.LastWriteUserId.Value] : objects[sc2.LastWriteUserId.Value] = FindUser2(sc2.LastWriteUserId));
+                var id = Guid.Parse((string)jo["id"]);
+                var sc2 = cache ? (StatisticalCode2)(objects.ContainsKey(id) ? objects[id] : objects[id] = StatisticalCode2.FromJObject(jo)) : StatisticalCode2.FromJObject(jo);
+                if (load && sc2.StatisticalCodeTypeId != null) sc2.StatisticalCodeType = FindStatisticalCodeType2(sc2.StatisticalCodeTypeId, cache: cache);
+                if (load && sc2.CreationUserId != null) sc2.CreationUser = FindUser2(sc2.CreationUserId, cache: cache);
+                if (load && sc2.LastWriteUserId != null) sc2.LastWriteUser = FindUser2(sc2.LastWriteUserId, cache: cache);
                 yield return sc2;
             }
         }
 
         public StatisticalCode2 FindStatisticalCode2(Guid? id, bool load = false, bool cache = true)
         {
-            var sc2 = StatisticalCode2.FromJObject(FolioServiceClient.GetStatisticalCode(id?.ToString()));
+            var sc2 = cache ? (StatisticalCode2)(objects.ContainsKey(id.Value) ? objects[id.Value] : objects[id.Value] = StatisticalCode2.FromJObject(FolioServiceClient.GetStatisticalCode(id?.ToString()))) : StatisticalCode2.FromJObject(FolioServiceClient.GetStatisticalCode(id?.ToString()));
             if (sc2 == null) return null;
-            if (load && sc2.StatisticalCodeTypeId != null) sc2.StatisticalCodeType = (StatisticalCodeType2)(cache && objects.ContainsKey(sc2.StatisticalCodeTypeId.Value) ? objects[sc2.StatisticalCodeTypeId.Value] : objects[sc2.StatisticalCodeTypeId.Value] = FindStatisticalCodeType2(sc2.StatisticalCodeTypeId));
-            if (load && sc2.CreationUserId != null) sc2.CreationUser = (User2)(cache && objects.ContainsKey(sc2.CreationUserId.Value) ? objects[sc2.CreationUserId.Value] : objects[sc2.CreationUserId.Value] = FindUser2(sc2.CreationUserId));
-            if (load && sc2.LastWriteUserId != null) sc2.LastWriteUser = (User2)(cache && objects.ContainsKey(sc2.LastWriteUserId.Value) ? objects[sc2.LastWriteUserId.Value] : objects[sc2.LastWriteUserId.Value] = FindUser2(sc2.LastWriteUserId));
+            if (load && sc2.StatisticalCodeTypeId != null) sc2.StatisticalCodeType = FindStatisticalCodeType2(sc2.StatisticalCodeTypeId, cache: cache);
+            if (load && sc2.CreationUserId != null) sc2.CreationUser = FindUser2(sc2.CreationUserId, cache: cache);
+            if (load && sc2.LastWriteUserId != null) sc2.LastWriteUser = FindUser2(sc2.LastWriteUserId, cache: cache);
             return sc2;
         }
 
@@ -5853,9 +6059,10 @@ namespace FolioLibrary
         {
             return FolioServiceClient.StatisticalCodeTypes(out count, where, orderBy, skip, take).Select(jo =>
             {
-                var sct2 = StatisticalCodeType2.FromJObject(jo);
-                if (load && sct2.CreationUserId != null) sct2.CreationUser = (User2)(cache && objects.ContainsKey(sct2.CreationUserId.Value) ? objects[sct2.CreationUserId.Value] : objects[sct2.CreationUserId.Value] = FindUser2(sct2.CreationUserId));
-                if (load && sct2.LastWriteUserId != null) sct2.LastWriteUser = (User2)(cache && objects.ContainsKey(sct2.LastWriteUserId.Value) ? objects[sct2.LastWriteUserId.Value] : objects[sct2.LastWriteUserId.Value] = FindUser2(sct2.LastWriteUserId));
+                var id = Guid.Parse((string)jo["id"]);
+                var sct2 = cache ? (StatisticalCodeType2)(objects.ContainsKey(id) ? objects[id] : objects[id] = StatisticalCodeType2.FromJObject(jo)) : StatisticalCodeType2.FromJObject(jo);
+                if (load && sct2.CreationUserId != null) sct2.CreationUser = FindUser2(sct2.CreationUserId, cache: cache);
+                if (load && sct2.LastWriteUserId != null) sct2.LastWriteUser = FindUser2(sct2.LastWriteUserId, cache: cache);
                 return sct2;
             }).ToArray();
         }
@@ -5864,19 +6071,20 @@ namespace FolioLibrary
         {
             foreach (var jo in FolioServiceClient.StatisticalCodeTypes(where, orderBy, skip, take))
             {
-                var sct2 = StatisticalCodeType2.FromJObject(jo);
-                if (load && sct2.CreationUserId != null) sct2.CreationUser = (User2)(cache && objects.ContainsKey(sct2.CreationUserId.Value) ? objects[sct2.CreationUserId.Value] : objects[sct2.CreationUserId.Value] = FindUser2(sct2.CreationUserId));
-                if (load && sct2.LastWriteUserId != null) sct2.LastWriteUser = (User2)(cache && objects.ContainsKey(sct2.LastWriteUserId.Value) ? objects[sct2.LastWriteUserId.Value] : objects[sct2.LastWriteUserId.Value] = FindUser2(sct2.LastWriteUserId));
+                var id = Guid.Parse((string)jo["id"]);
+                var sct2 = cache ? (StatisticalCodeType2)(objects.ContainsKey(id) ? objects[id] : objects[id] = StatisticalCodeType2.FromJObject(jo)) : StatisticalCodeType2.FromJObject(jo);
+                if (load && sct2.CreationUserId != null) sct2.CreationUser = FindUser2(sct2.CreationUserId, cache: cache);
+                if (load && sct2.LastWriteUserId != null) sct2.LastWriteUser = FindUser2(sct2.LastWriteUserId, cache: cache);
                 yield return sct2;
             }
         }
 
         public StatisticalCodeType2 FindStatisticalCodeType2(Guid? id, bool load = false, bool cache = true)
         {
-            var sct2 = StatisticalCodeType2.FromJObject(FolioServiceClient.GetStatisticalCodeType(id?.ToString()));
+            var sct2 = cache ? (StatisticalCodeType2)(objects.ContainsKey(id.Value) ? objects[id.Value] : objects[id.Value] = StatisticalCodeType2.FromJObject(FolioServiceClient.GetStatisticalCodeType(id?.ToString()))) : StatisticalCodeType2.FromJObject(FolioServiceClient.GetStatisticalCodeType(id?.ToString()));
             if (sct2 == null) return null;
-            if (load && sct2.CreationUserId != null) sct2.CreationUser = (User2)(cache && objects.ContainsKey(sct2.CreationUserId.Value) ? objects[sct2.CreationUserId.Value] : objects[sct2.CreationUserId.Value] = FindUser2(sct2.CreationUserId));
-            if (load && sct2.LastWriteUserId != null) sct2.LastWriteUser = (User2)(cache && objects.ContainsKey(sct2.LastWriteUserId.Value) ? objects[sct2.LastWriteUserId.Value] : objects[sct2.LastWriteUserId.Value] = FindUser2(sct2.LastWriteUserId));
+            if (load && sct2.CreationUserId != null) sct2.CreationUser = FindUser2(sct2.CreationUserId, cache: cache);
+            if (load && sct2.LastWriteUserId != null) sct2.LastWriteUser = FindUser2(sct2.LastWriteUserId, cache: cache);
             return sct2;
         }
 
@@ -5898,9 +6106,10 @@ namespace FolioLibrary
         {
             return FolioServiceClient.InstanceStatuses(out count, where, orderBy, skip, take).Select(jo =>
             {
-                var s = Status.FromJObject(jo);
-                if (load && s.CreationUserId != null) s.CreationUser = (User2)(cache && objects.ContainsKey(s.CreationUserId.Value) ? objects[s.CreationUserId.Value] : objects[s.CreationUserId.Value] = FindUser2(s.CreationUserId));
-                if (load && s.LastWriteUserId != null) s.LastWriteUser = (User2)(cache && objects.ContainsKey(s.LastWriteUserId.Value) ? objects[s.LastWriteUserId.Value] : objects[s.LastWriteUserId.Value] = FindUser2(s.LastWriteUserId));
+                var id = Guid.Parse((string)jo["id"]);
+                var s = cache ? (Status)(objects.ContainsKey(id) ? objects[id] : objects[id] = Status.FromJObject(jo)) : Status.FromJObject(jo);
+                if (load && s.CreationUserId != null) s.CreationUser = FindUser2(s.CreationUserId, cache: cache);
+                if (load && s.LastWriteUserId != null) s.LastWriteUser = FindUser2(s.LastWriteUserId, cache: cache);
                 return s;
             }).ToArray();
         }
@@ -5909,19 +6118,20 @@ namespace FolioLibrary
         {
             foreach (var jo in FolioServiceClient.InstanceStatuses(where, orderBy, skip, take))
             {
-                var s = Status.FromJObject(jo);
-                if (load && s.CreationUserId != null) s.CreationUser = (User2)(cache && objects.ContainsKey(s.CreationUserId.Value) ? objects[s.CreationUserId.Value] : objects[s.CreationUserId.Value] = FindUser2(s.CreationUserId));
-                if (load && s.LastWriteUserId != null) s.LastWriteUser = (User2)(cache && objects.ContainsKey(s.LastWriteUserId.Value) ? objects[s.LastWriteUserId.Value] : objects[s.LastWriteUserId.Value] = FindUser2(s.LastWriteUserId));
+                var id = Guid.Parse((string)jo["id"]);
+                var s = cache ? (Status)(objects.ContainsKey(id) ? objects[id] : objects[id] = Status.FromJObject(jo)) : Status.FromJObject(jo);
+                if (load && s.CreationUserId != null) s.CreationUser = FindUser2(s.CreationUserId, cache: cache);
+                if (load && s.LastWriteUserId != null) s.LastWriteUser = FindUser2(s.LastWriteUserId, cache: cache);
                 yield return s;
             }
         }
 
         public Status FindStatus(Guid? id, bool load = false, bool cache = true)
         {
-            var s = Status.FromJObject(FolioServiceClient.GetInstanceStatus(id?.ToString()));
+            var s = cache ? (Status)(objects.ContainsKey(id.Value) ? objects[id.Value] : objects[id.Value] = Status.FromJObject(FolioServiceClient.GetInstanceStatus(id?.ToString()))) : Status.FromJObject(FolioServiceClient.GetInstanceStatus(id?.ToString()));
             if (s == null) return null;
-            if (load && s.CreationUserId != null) s.CreationUser = (User2)(cache && objects.ContainsKey(s.CreationUserId.Value) ? objects[s.CreationUserId.Value] : objects[s.CreationUserId.Value] = FindUser2(s.CreationUserId));
-            if (load && s.LastWriteUserId != null) s.LastWriteUser = (User2)(cache && objects.ContainsKey(s.LastWriteUserId.Value) ? objects[s.LastWriteUserId.Value] : objects[s.LastWriteUserId.Value] = FindUser2(s.LastWriteUserId));
+            if (load && s.CreationUserId != null) s.CreationUser = FindUser2(s.CreationUserId, cache: cache);
+            if (load && s.LastWriteUserId != null) s.LastWriteUser = FindUser2(s.LastWriteUserId, cache: cache);
             return s;
         }
 
@@ -5943,7 +6153,8 @@ namespace FolioLibrary
         {
             return FolioServiceClient.Suffixes(out count, where, orderBy, skip, take).Select(jo =>
             {
-                var s2 = Suffix2.FromJObject(jo);
+                var id = Guid.Parse((string)jo["id"]);
+                var s2 = cache ? (Suffix2)(objects.ContainsKey(id) ? objects[id] : objects[id] = Suffix2.FromJObject(jo)) : Suffix2.FromJObject(jo);
                 return s2;
             }).ToArray();
         }
@@ -5952,7 +6163,8 @@ namespace FolioLibrary
         {
             foreach (var jo in FolioServiceClient.Suffixes(where, orderBy, skip, take))
             {
-                var s2 = Suffix2.FromJObject(jo);
+                var id = Guid.Parse((string)jo["id"]);
+                var s2 = cache ? (Suffix2)(objects.ContainsKey(id) ? objects[id] : objects[id] = Suffix2.FromJObject(jo)) : Suffix2.FromJObject(jo);
                 yield return s2;
             }
         }
@@ -5977,9 +6189,10 @@ namespace FolioLibrary
         {
             return FolioServiceClient.Tags(out count, where, orderBy, skip, take).Select(jo =>
             {
-                var t2 = Tag2.FromJObject(jo);
-                if (load && t2.CreationUserId != null) t2.CreationUser = (User2)(cache && objects.ContainsKey(t2.CreationUserId.Value) ? objects[t2.CreationUserId.Value] : objects[t2.CreationUserId.Value] = FindUser2(t2.CreationUserId));
-                if (load && t2.LastWriteUserId != null) t2.LastWriteUser = (User2)(cache && objects.ContainsKey(t2.LastWriteUserId.Value) ? objects[t2.LastWriteUserId.Value] : objects[t2.LastWriteUserId.Value] = FindUser2(t2.LastWriteUserId));
+                var id = Guid.Parse((string)jo["id"]);
+                var t2 = cache ? (Tag2)(objects.ContainsKey(id) ? objects[id] : objects[id] = Tag2.FromJObject(jo)) : Tag2.FromJObject(jo);
+                if (load && t2.CreationUserId != null) t2.CreationUser = FindUser2(t2.CreationUserId, cache: cache);
+                if (load && t2.LastWriteUserId != null) t2.LastWriteUser = FindUser2(t2.LastWriteUserId, cache: cache);
                 return t2;
             }).ToArray();
         }
@@ -5988,19 +6201,20 @@ namespace FolioLibrary
         {
             foreach (var jo in FolioServiceClient.Tags(where, orderBy, skip, take))
             {
-                var t2 = Tag2.FromJObject(jo);
-                if (load && t2.CreationUserId != null) t2.CreationUser = (User2)(cache && objects.ContainsKey(t2.CreationUserId.Value) ? objects[t2.CreationUserId.Value] : objects[t2.CreationUserId.Value] = FindUser2(t2.CreationUserId));
-                if (load && t2.LastWriteUserId != null) t2.LastWriteUser = (User2)(cache && objects.ContainsKey(t2.LastWriteUserId.Value) ? objects[t2.LastWriteUserId.Value] : objects[t2.LastWriteUserId.Value] = FindUser2(t2.LastWriteUserId));
+                var id = Guid.Parse((string)jo["id"]);
+                var t2 = cache ? (Tag2)(objects.ContainsKey(id) ? objects[id] : objects[id] = Tag2.FromJObject(jo)) : Tag2.FromJObject(jo);
+                if (load && t2.CreationUserId != null) t2.CreationUser = FindUser2(t2.CreationUserId, cache: cache);
+                if (load && t2.LastWriteUserId != null) t2.LastWriteUser = FindUser2(t2.LastWriteUserId, cache: cache);
                 yield return t2;
             }
         }
 
         public Tag2 FindTag2(Guid? id, bool load = false, bool cache = true)
         {
-            var t2 = Tag2.FromJObject(FolioServiceClient.GetTag(id?.ToString()));
+            var t2 = cache ? (Tag2)(objects.ContainsKey(id.Value) ? objects[id.Value] : objects[id.Value] = Tag2.FromJObject(FolioServiceClient.GetTag(id?.ToString()))) : Tag2.FromJObject(FolioServiceClient.GetTag(id?.ToString()));
             if (t2 == null) return null;
-            if (load && t2.CreationUserId != null) t2.CreationUser = (User2)(cache && objects.ContainsKey(t2.CreationUserId.Value) ? objects[t2.CreationUserId.Value] : objects[t2.CreationUserId.Value] = FindUser2(t2.CreationUserId));
-            if (load && t2.LastWriteUserId != null) t2.LastWriteUser = (User2)(cache && objects.ContainsKey(t2.LastWriteUserId.Value) ? objects[t2.LastWriteUserId.Value] : objects[t2.LastWriteUserId.Value] = FindUser2(t2.LastWriteUserId));
+            if (load && t2.CreationUserId != null) t2.CreationUser = FindUser2(t2.CreationUserId, cache: cache);
+            if (load && t2.LastWriteUserId != null) t2.LastWriteUser = FindUser2(t2.LastWriteUserId, cache: cache);
             return t2;
         }
 
@@ -6022,9 +6236,10 @@ namespace FolioLibrary
         {
             return FolioServiceClient.Templates(out count, where, orderBy, skip, take).Select(jo =>
             {
-                var t2 = Template2.FromJObject(jo);
-                if (load && t2.CreationUserId != null) t2.CreationUser = (User2)(cache && objects.ContainsKey(t2.CreationUserId.Value) ? objects[t2.CreationUserId.Value] : objects[t2.CreationUserId.Value] = FindUser2(t2.CreationUserId));
-                if (load && t2.LastWriteUserId != null) t2.LastWriteUser = (User2)(cache && objects.ContainsKey(t2.LastWriteUserId.Value) ? objects[t2.LastWriteUserId.Value] : objects[t2.LastWriteUserId.Value] = FindUser2(t2.LastWriteUserId));
+                var id = Guid.Parse((string)jo["id"]);
+                var t2 = cache ? (Template2)(objects.ContainsKey(id) ? objects[id] : objects[id] = Template2.FromJObject(jo)) : Template2.FromJObject(jo);
+                if (load && t2.CreationUserId != null) t2.CreationUser = FindUser2(t2.CreationUserId, cache: cache);
+                if (load && t2.LastWriteUserId != null) t2.LastWriteUser = FindUser2(t2.LastWriteUserId, cache: cache);
                 return t2;
             }).ToArray();
         }
@@ -6033,19 +6248,20 @@ namespace FolioLibrary
         {
             foreach (var jo in FolioServiceClient.Templates(where, orderBy, skip, take))
             {
-                var t2 = Template2.FromJObject(jo);
-                if (load && t2.CreationUserId != null) t2.CreationUser = (User2)(cache && objects.ContainsKey(t2.CreationUserId.Value) ? objects[t2.CreationUserId.Value] : objects[t2.CreationUserId.Value] = FindUser2(t2.CreationUserId));
-                if (load && t2.LastWriteUserId != null) t2.LastWriteUser = (User2)(cache && objects.ContainsKey(t2.LastWriteUserId.Value) ? objects[t2.LastWriteUserId.Value] : objects[t2.LastWriteUserId.Value] = FindUser2(t2.LastWriteUserId));
+                var id = Guid.Parse((string)jo["id"]);
+                var t2 = cache ? (Template2)(objects.ContainsKey(id) ? objects[id] : objects[id] = Template2.FromJObject(jo)) : Template2.FromJObject(jo);
+                if (load && t2.CreationUserId != null) t2.CreationUser = FindUser2(t2.CreationUserId, cache: cache);
+                if (load && t2.LastWriteUserId != null) t2.LastWriteUser = FindUser2(t2.LastWriteUserId, cache: cache);
                 yield return t2;
             }
         }
 
         public Template2 FindTemplate2(Guid? id, bool load = false, bool cache = true)
         {
-            var t2 = Template2.FromJObject(FolioServiceClient.GetTemplate(id?.ToString()));
+            var t2 = cache ? (Template2)(objects.ContainsKey(id.Value) ? objects[id.Value] : objects[id.Value] = Template2.FromJObject(FolioServiceClient.GetTemplate(id?.ToString()))) : Template2.FromJObject(FolioServiceClient.GetTemplate(id?.ToString()));
             if (t2 == null) return null;
-            if (load && t2.CreationUserId != null) t2.CreationUser = (User2)(cache && objects.ContainsKey(t2.CreationUserId.Value) ? objects[t2.CreationUserId.Value] : objects[t2.CreationUserId.Value] = FindUser2(t2.CreationUserId));
-            if (load && t2.LastWriteUserId != null) t2.LastWriteUser = (User2)(cache && objects.ContainsKey(t2.LastWriteUserId.Value) ? objects[t2.LastWriteUserId.Value] : objects[t2.LastWriteUserId.Value] = FindUser2(t2.LastWriteUserId));
+            if (load && t2.CreationUserId != null) t2.CreationUser = FindUser2(t2.CreationUserId, cache: cache);
+            if (load && t2.LastWriteUserId != null) t2.LastWriteUser = FindUser2(t2.LastWriteUserId, cache: cache);
             var i = 0;
             if (t2.TemplateOutputFormats != null) foreach (var tof in t2.TemplateOutputFormats)
                 {
@@ -6074,11 +6290,12 @@ namespace FolioLibrary
         {
             return FolioServiceClient.Titles(out count, where, orderBy, skip, take).Select(jo =>
             {
-                var t2 = Title2.FromJObject(jo);
-                if (load && t2.OrderItemId != null) t2.OrderItem = (OrderItem2)(cache && objects.ContainsKey(t2.OrderItemId.Value) ? objects[t2.OrderItemId.Value] : objects[t2.OrderItemId.Value] = FindOrderItem2(t2.OrderItemId));
-                if (load && t2.InstanceId != null) t2.Instance = (Instance2)(cache && objects.ContainsKey(t2.InstanceId.Value) ? objects[t2.InstanceId.Value] : objects[t2.InstanceId.Value] = FindInstance2(t2.InstanceId));
-                if (load && t2.CreationUserId != null) t2.CreationUser = (User2)(cache && objects.ContainsKey(t2.CreationUserId.Value) ? objects[t2.CreationUserId.Value] : objects[t2.CreationUserId.Value] = FindUser2(t2.CreationUserId));
-                if (load && t2.LastWriteUserId != null) t2.LastWriteUser = (User2)(cache && objects.ContainsKey(t2.LastWriteUserId.Value) ? objects[t2.LastWriteUserId.Value] : objects[t2.LastWriteUserId.Value] = FindUser2(t2.LastWriteUserId));
+                var id = Guid.Parse((string)jo["id"]);
+                var t2 = cache ? (Title2)(objects.ContainsKey(id) ? objects[id] : objects[id] = Title2.FromJObject(jo)) : Title2.FromJObject(jo);
+                if (load && t2.OrderItemId != null) t2.OrderItem = FindOrderItem2(t2.OrderItemId, cache: cache);
+                if (load && t2.InstanceId != null) t2.Instance = FindInstance2(t2.InstanceId, cache: cache);
+                if (load && t2.CreationUserId != null) t2.CreationUser = FindUser2(t2.CreationUserId, cache: cache);
+                if (load && t2.LastWriteUserId != null) t2.LastWriteUser = FindUser2(t2.LastWriteUserId, cache: cache);
                 return t2;
             }).ToArray();
         }
@@ -6087,30 +6304,31 @@ namespace FolioLibrary
         {
             foreach (var jo in FolioServiceClient.Titles(where, orderBy, skip, take))
             {
-                var t2 = Title2.FromJObject(jo);
-                if (load && t2.OrderItemId != null) t2.OrderItem = (OrderItem2)(cache && objects.ContainsKey(t2.OrderItemId.Value) ? objects[t2.OrderItemId.Value] : objects[t2.OrderItemId.Value] = FindOrderItem2(t2.OrderItemId));
-                if (load && t2.InstanceId != null) t2.Instance = (Instance2)(cache && objects.ContainsKey(t2.InstanceId.Value) ? objects[t2.InstanceId.Value] : objects[t2.InstanceId.Value] = FindInstance2(t2.InstanceId));
-                if (load && t2.CreationUserId != null) t2.CreationUser = (User2)(cache && objects.ContainsKey(t2.CreationUserId.Value) ? objects[t2.CreationUserId.Value] : objects[t2.CreationUserId.Value] = FindUser2(t2.CreationUserId));
-                if (load && t2.LastWriteUserId != null) t2.LastWriteUser = (User2)(cache && objects.ContainsKey(t2.LastWriteUserId.Value) ? objects[t2.LastWriteUserId.Value] : objects[t2.LastWriteUserId.Value] = FindUser2(t2.LastWriteUserId));
+                var id = Guid.Parse((string)jo["id"]);
+                var t2 = cache ? (Title2)(objects.ContainsKey(id) ? objects[id] : objects[id] = Title2.FromJObject(jo)) : Title2.FromJObject(jo);
+                if (load && t2.OrderItemId != null) t2.OrderItem = FindOrderItem2(t2.OrderItemId, cache: cache);
+                if (load && t2.InstanceId != null) t2.Instance = FindInstance2(t2.InstanceId, cache: cache);
+                if (load && t2.CreationUserId != null) t2.CreationUser = FindUser2(t2.CreationUserId, cache: cache);
+                if (load && t2.LastWriteUserId != null) t2.LastWriteUser = FindUser2(t2.LastWriteUserId, cache: cache);
                 yield return t2;
             }
         }
 
         public Title2 FindTitle2(Guid? id, bool load = false, bool cache = true)
         {
-            var t2 = Title2.FromJObject(FolioServiceClient.GetTitle(id?.ToString()));
+            var t2 = cache ? (Title2)(objects.ContainsKey(id.Value) ? objects[id.Value] : objects[id.Value] = Title2.FromJObject(FolioServiceClient.GetTitle(id?.ToString()))) : Title2.FromJObject(FolioServiceClient.GetTitle(id?.ToString()));
             if (t2 == null) return null;
-            if (load && t2.OrderItemId != null) t2.OrderItem = (OrderItem2)(cache && objects.ContainsKey(t2.OrderItemId.Value) ? objects[t2.OrderItemId.Value] : objects[t2.OrderItemId.Value] = FindOrderItem2(t2.OrderItemId));
-            if (load && t2.InstanceId != null) t2.Instance = (Instance2)(cache && objects.ContainsKey(t2.InstanceId.Value) ? objects[t2.InstanceId.Value] : objects[t2.InstanceId.Value] = FindInstance2(t2.InstanceId));
-            if (load && t2.CreationUserId != null) t2.CreationUser = (User2)(cache && objects.ContainsKey(t2.CreationUserId.Value) ? objects[t2.CreationUserId.Value] : objects[t2.CreationUserId.Value] = FindUser2(t2.CreationUserId));
-            if (load && t2.LastWriteUserId != null) t2.LastWriteUser = (User2)(cache && objects.ContainsKey(t2.LastWriteUserId.Value) ? objects[t2.LastWriteUserId.Value] : objects[t2.LastWriteUserId.Value] = FindUser2(t2.LastWriteUserId));
+            if (load && t2.OrderItemId != null) t2.OrderItem = FindOrderItem2(t2.OrderItemId, cache: cache);
+            if (load && t2.InstanceId != null) t2.Instance = FindInstance2(t2.InstanceId, cache: cache);
+            if (load && t2.CreationUserId != null) t2.CreationUser = FindUser2(t2.CreationUserId, cache: cache);
+            if (load && t2.LastWriteUserId != null) t2.LastWriteUser = FindUser2(t2.LastWriteUserId, cache: cache);
             var i = 0;
             if (t2.TitleContributors != null) foreach (var tc in t2.TitleContributors)
                 {
                     tc.Id = (++i).ToString();
                     tc.TitleId = t2.Id;
                     tc.Title = t2;
-                    if (load && tc.ContributorNameTypeId != null) tc.ContributorNameType = (ContributorNameType2)(cache && objects.ContainsKey(tc.ContributorNameTypeId.Value) ? objects[tc.ContributorNameTypeId.Value] : objects[tc.ContributorNameTypeId.Value] = FindContributorNameType2(tc.ContributorNameTypeId));
+                    if (load && tc.ContributorNameTypeId != null) tc.ContributorNameType = FindContributorNameType2(tc.ContributorNameTypeId, cache: cache);
                 }
             i = 0;
             if (t2.TitleProductIds != null) foreach (var tpi in t2.TitleProductIds)
@@ -6118,7 +6336,7 @@ namespace FolioLibrary
                     tpi.Id = (++i).ToString();
                     tpi.TitleId = t2.Id;
                     tpi.Title = t2;
-                    if (load && tpi.ProductIdTypeId != null) tpi.ProductIdType = (IdType2)(cache && objects.ContainsKey(tpi.ProductIdTypeId.Value) ? objects[tpi.ProductIdTypeId.Value] : objects[tpi.ProductIdTypeId.Value] = FindIdType2(tpi.ProductIdTypeId));
+                    if (load && tpi.ProductIdTypeId != null) tpi.ProductIdType = FindIdType2(tpi.ProductIdTypeId, cache: cache);
                 }
             return t2;
         }
@@ -6141,20 +6359,21 @@ namespace FolioLibrary
         {
             return FolioServiceClient.Transactions(out count, where, orderBy, skip, take).Select(jo =>
             {
-                var t2 = Transaction2.FromJObject(jo);
-                if (load && t2.AwaitingPaymentEncumbranceId != null) t2.AwaitingPaymentEncumbrance = (Transaction2)(cache && objects.ContainsKey(t2.AwaitingPaymentEncumbranceId.Value) ? objects[t2.AwaitingPaymentEncumbranceId.Value] : objects[t2.AwaitingPaymentEncumbranceId.Value] = FindTransaction2(t2.AwaitingPaymentEncumbranceId));
-                if (load && t2.OrderId != null) t2.Order = (Order2)(cache && objects.ContainsKey(t2.OrderId.Value) ? objects[t2.OrderId.Value] : objects[t2.OrderId.Value] = FindOrder2(t2.OrderId));
-                if (load && t2.OrderItemId != null) t2.OrderItem = (OrderItem2)(cache && objects.ContainsKey(t2.OrderItemId.Value) ? objects[t2.OrderItemId.Value] : objects[t2.OrderItemId.Value] = FindOrderItem2(t2.OrderItemId));
-                if (load && t2.ExpenseClassId != null) t2.ExpenseClass = (ExpenseClass2)(cache && objects.ContainsKey(t2.ExpenseClassId.Value) ? objects[t2.ExpenseClassId.Value] : objects[t2.ExpenseClassId.Value] = FindExpenseClass2(t2.ExpenseClassId));
-                if (load && t2.FiscalYearId != null) t2.FiscalYear = (FiscalYear2)(cache && objects.ContainsKey(t2.FiscalYearId.Value) ? objects[t2.FiscalYearId.Value] : objects[t2.FiscalYearId.Value] = FindFiscalYear2(t2.FiscalYearId));
-                if (load && t2.FromFundId != null) t2.FromFund = (Fund2)(cache && objects.ContainsKey(t2.FromFundId.Value) ? objects[t2.FromFundId.Value] : objects[t2.FromFundId.Value] = FindFund2(t2.FromFundId));
-                if (load && t2.PaymentEncumbranceId != null) t2.PaymentEncumbrance = (Transaction2)(cache && objects.ContainsKey(t2.PaymentEncumbranceId.Value) ? objects[t2.PaymentEncumbranceId.Value] : objects[t2.PaymentEncumbranceId.Value] = FindTransaction2(t2.PaymentEncumbranceId));
-                if (load && t2.SourceFiscalYearId != null) t2.SourceFiscalYear = (FiscalYear2)(cache && objects.ContainsKey(t2.SourceFiscalYearId.Value) ? objects[t2.SourceFiscalYearId.Value] : objects[t2.SourceFiscalYearId.Value] = FindFiscalYear2(t2.SourceFiscalYearId));
-                if (load && t2.InvoiceId != null) t2.Invoice = (Invoice2)(cache && objects.ContainsKey(t2.InvoiceId.Value) ? objects[t2.InvoiceId.Value] : objects[t2.InvoiceId.Value] = FindInvoice2(t2.InvoiceId));
-                if (load && t2.InvoiceItemId != null) t2.InvoiceItem = (InvoiceItem2)(cache && objects.ContainsKey(t2.InvoiceItemId.Value) ? objects[t2.InvoiceItemId.Value] : objects[t2.InvoiceItemId.Value] = FindInvoiceItem2(t2.InvoiceItemId));
-                if (load && t2.ToFundId != null) t2.ToFund = (Fund2)(cache && objects.ContainsKey(t2.ToFundId.Value) ? objects[t2.ToFundId.Value] : objects[t2.ToFundId.Value] = FindFund2(t2.ToFundId));
-                if (load && t2.CreationUserId != null) t2.CreationUser = (User2)(cache && objects.ContainsKey(t2.CreationUserId.Value) ? objects[t2.CreationUserId.Value] : objects[t2.CreationUserId.Value] = FindUser2(t2.CreationUserId));
-                if (load && t2.LastWriteUserId != null) t2.LastWriteUser = (User2)(cache && objects.ContainsKey(t2.LastWriteUserId.Value) ? objects[t2.LastWriteUserId.Value] : objects[t2.LastWriteUserId.Value] = FindUser2(t2.LastWriteUserId));
+                var id = Guid.Parse((string)jo["id"]);
+                var t2 = cache ? (Transaction2)(objects.ContainsKey(id) ? objects[id] : objects[id] = Transaction2.FromJObject(jo)) : Transaction2.FromJObject(jo);
+                if (load && t2.AwaitingPaymentEncumbranceId != null) t2.AwaitingPaymentEncumbrance = FindTransaction2(t2.AwaitingPaymentEncumbranceId, cache: cache);
+                if (load && t2.OrderId != null) t2.Order = FindOrder2(t2.OrderId, cache: cache);
+                if (load && t2.OrderItemId != null) t2.OrderItem = FindOrderItem2(t2.OrderItemId, cache: cache);
+                if (load && t2.ExpenseClassId != null) t2.ExpenseClass = FindExpenseClass2(t2.ExpenseClassId, cache: cache);
+                if (load && t2.FiscalYearId != null) t2.FiscalYear = FindFiscalYear2(t2.FiscalYearId, cache: cache);
+                if (load && t2.FromFundId != null) t2.FromFund = FindFund2(t2.FromFundId, cache: cache);
+                if (load && t2.PaymentEncumbranceId != null) t2.PaymentEncumbrance = FindTransaction2(t2.PaymentEncumbranceId, cache: cache);
+                if (load && t2.SourceFiscalYearId != null) t2.SourceFiscalYear = FindFiscalYear2(t2.SourceFiscalYearId, cache: cache);
+                if (load && t2.InvoiceId != null) t2.Invoice = FindInvoice2(t2.InvoiceId, cache: cache);
+                if (load && t2.InvoiceItemId != null) t2.InvoiceItem = FindInvoiceItem2(t2.InvoiceItemId, cache: cache);
+                if (load && t2.ToFundId != null) t2.ToFund = FindFund2(t2.ToFundId, cache: cache);
+                if (load && t2.CreationUserId != null) t2.CreationUser = FindUser2(t2.CreationUserId, cache: cache);
+                if (load && t2.LastWriteUserId != null) t2.LastWriteUser = FindUser2(t2.LastWriteUserId, cache: cache);
                 return t2;
             }).ToArray();
         }
@@ -6163,41 +6382,42 @@ namespace FolioLibrary
         {
             foreach (var jo in FolioServiceClient.Transactions(where, orderBy, skip, take))
             {
-                var t2 = Transaction2.FromJObject(jo);
-                if (load && t2.AwaitingPaymentEncumbranceId != null) t2.AwaitingPaymentEncumbrance = (Transaction2)(cache && objects.ContainsKey(t2.AwaitingPaymentEncumbranceId.Value) ? objects[t2.AwaitingPaymentEncumbranceId.Value] : objects[t2.AwaitingPaymentEncumbranceId.Value] = FindTransaction2(t2.AwaitingPaymentEncumbranceId));
-                if (load && t2.OrderId != null) t2.Order = (Order2)(cache && objects.ContainsKey(t2.OrderId.Value) ? objects[t2.OrderId.Value] : objects[t2.OrderId.Value] = FindOrder2(t2.OrderId));
-                if (load && t2.OrderItemId != null) t2.OrderItem = (OrderItem2)(cache && objects.ContainsKey(t2.OrderItemId.Value) ? objects[t2.OrderItemId.Value] : objects[t2.OrderItemId.Value] = FindOrderItem2(t2.OrderItemId));
-                if (load && t2.ExpenseClassId != null) t2.ExpenseClass = (ExpenseClass2)(cache && objects.ContainsKey(t2.ExpenseClassId.Value) ? objects[t2.ExpenseClassId.Value] : objects[t2.ExpenseClassId.Value] = FindExpenseClass2(t2.ExpenseClassId));
-                if (load && t2.FiscalYearId != null) t2.FiscalYear = (FiscalYear2)(cache && objects.ContainsKey(t2.FiscalYearId.Value) ? objects[t2.FiscalYearId.Value] : objects[t2.FiscalYearId.Value] = FindFiscalYear2(t2.FiscalYearId));
-                if (load && t2.FromFundId != null) t2.FromFund = (Fund2)(cache && objects.ContainsKey(t2.FromFundId.Value) ? objects[t2.FromFundId.Value] : objects[t2.FromFundId.Value] = FindFund2(t2.FromFundId));
-                if (load && t2.PaymentEncumbranceId != null) t2.PaymentEncumbrance = (Transaction2)(cache && objects.ContainsKey(t2.PaymentEncumbranceId.Value) ? objects[t2.PaymentEncumbranceId.Value] : objects[t2.PaymentEncumbranceId.Value] = FindTransaction2(t2.PaymentEncumbranceId));
-                if (load && t2.SourceFiscalYearId != null) t2.SourceFiscalYear = (FiscalYear2)(cache && objects.ContainsKey(t2.SourceFiscalYearId.Value) ? objects[t2.SourceFiscalYearId.Value] : objects[t2.SourceFiscalYearId.Value] = FindFiscalYear2(t2.SourceFiscalYearId));
-                if (load && t2.InvoiceId != null) t2.Invoice = (Invoice2)(cache && objects.ContainsKey(t2.InvoiceId.Value) ? objects[t2.InvoiceId.Value] : objects[t2.InvoiceId.Value] = FindInvoice2(t2.InvoiceId));
-                if (load && t2.InvoiceItemId != null) t2.InvoiceItem = (InvoiceItem2)(cache && objects.ContainsKey(t2.InvoiceItemId.Value) ? objects[t2.InvoiceItemId.Value] : objects[t2.InvoiceItemId.Value] = FindInvoiceItem2(t2.InvoiceItemId));
-                if (load && t2.ToFundId != null) t2.ToFund = (Fund2)(cache && objects.ContainsKey(t2.ToFundId.Value) ? objects[t2.ToFundId.Value] : objects[t2.ToFundId.Value] = FindFund2(t2.ToFundId));
-                if (load && t2.CreationUserId != null) t2.CreationUser = (User2)(cache && objects.ContainsKey(t2.CreationUserId.Value) ? objects[t2.CreationUserId.Value] : objects[t2.CreationUserId.Value] = FindUser2(t2.CreationUserId));
-                if (load && t2.LastWriteUserId != null) t2.LastWriteUser = (User2)(cache && objects.ContainsKey(t2.LastWriteUserId.Value) ? objects[t2.LastWriteUserId.Value] : objects[t2.LastWriteUserId.Value] = FindUser2(t2.LastWriteUserId));
+                var id = Guid.Parse((string)jo["id"]);
+                var t2 = cache ? (Transaction2)(objects.ContainsKey(id) ? objects[id] : objects[id] = Transaction2.FromJObject(jo)) : Transaction2.FromJObject(jo);
+                if (load && t2.AwaitingPaymentEncumbranceId != null) t2.AwaitingPaymentEncumbrance = FindTransaction2(t2.AwaitingPaymentEncumbranceId, cache: cache);
+                if (load && t2.OrderId != null) t2.Order = FindOrder2(t2.OrderId, cache: cache);
+                if (load && t2.OrderItemId != null) t2.OrderItem = FindOrderItem2(t2.OrderItemId, cache: cache);
+                if (load && t2.ExpenseClassId != null) t2.ExpenseClass = FindExpenseClass2(t2.ExpenseClassId, cache: cache);
+                if (load && t2.FiscalYearId != null) t2.FiscalYear = FindFiscalYear2(t2.FiscalYearId, cache: cache);
+                if (load && t2.FromFundId != null) t2.FromFund = FindFund2(t2.FromFundId, cache: cache);
+                if (load && t2.PaymentEncumbranceId != null) t2.PaymentEncumbrance = FindTransaction2(t2.PaymentEncumbranceId, cache: cache);
+                if (load && t2.SourceFiscalYearId != null) t2.SourceFiscalYear = FindFiscalYear2(t2.SourceFiscalYearId, cache: cache);
+                if (load && t2.InvoiceId != null) t2.Invoice = FindInvoice2(t2.InvoiceId, cache: cache);
+                if (load && t2.InvoiceItemId != null) t2.InvoiceItem = FindInvoiceItem2(t2.InvoiceItemId, cache: cache);
+                if (load && t2.ToFundId != null) t2.ToFund = FindFund2(t2.ToFundId, cache: cache);
+                if (load && t2.CreationUserId != null) t2.CreationUser = FindUser2(t2.CreationUserId, cache: cache);
+                if (load && t2.LastWriteUserId != null) t2.LastWriteUser = FindUser2(t2.LastWriteUserId, cache: cache);
                 yield return t2;
             }
         }
 
         public Transaction2 FindTransaction2(Guid? id, bool load = false, bool cache = true)
         {
-            var t2 = Transaction2.FromJObject(FolioServiceClient.GetTransaction(id?.ToString()));
+            var t2 = cache ? (Transaction2)(objects.ContainsKey(id.Value) ? objects[id.Value] : objects[id.Value] = Transaction2.FromJObject(FolioServiceClient.GetTransaction(id?.ToString()))) : Transaction2.FromJObject(FolioServiceClient.GetTransaction(id?.ToString()));
             if (t2 == null) return null;
-            if (load && t2.AwaitingPaymentEncumbranceId != null) t2.AwaitingPaymentEncumbrance = (Transaction2)(cache && objects.ContainsKey(t2.AwaitingPaymentEncumbranceId.Value) ? objects[t2.AwaitingPaymentEncumbranceId.Value] : objects[t2.AwaitingPaymentEncumbranceId.Value] = FindTransaction2(t2.AwaitingPaymentEncumbranceId));
-            if (load && t2.OrderId != null) t2.Order = (Order2)(cache && objects.ContainsKey(t2.OrderId.Value) ? objects[t2.OrderId.Value] : objects[t2.OrderId.Value] = FindOrder2(t2.OrderId));
-            if (load && t2.OrderItemId != null) t2.OrderItem = (OrderItem2)(cache && objects.ContainsKey(t2.OrderItemId.Value) ? objects[t2.OrderItemId.Value] : objects[t2.OrderItemId.Value] = FindOrderItem2(t2.OrderItemId));
-            if (load && t2.ExpenseClassId != null) t2.ExpenseClass = (ExpenseClass2)(cache && objects.ContainsKey(t2.ExpenseClassId.Value) ? objects[t2.ExpenseClassId.Value] : objects[t2.ExpenseClassId.Value] = FindExpenseClass2(t2.ExpenseClassId));
-            if (load && t2.FiscalYearId != null) t2.FiscalYear = (FiscalYear2)(cache && objects.ContainsKey(t2.FiscalYearId.Value) ? objects[t2.FiscalYearId.Value] : objects[t2.FiscalYearId.Value] = FindFiscalYear2(t2.FiscalYearId));
-            if (load && t2.FromFundId != null) t2.FromFund = (Fund2)(cache && objects.ContainsKey(t2.FromFundId.Value) ? objects[t2.FromFundId.Value] : objects[t2.FromFundId.Value] = FindFund2(t2.FromFundId));
-            if (load && t2.PaymentEncumbranceId != null) t2.PaymentEncumbrance = (Transaction2)(cache && objects.ContainsKey(t2.PaymentEncumbranceId.Value) ? objects[t2.PaymentEncumbranceId.Value] : objects[t2.PaymentEncumbranceId.Value] = FindTransaction2(t2.PaymentEncumbranceId));
-            if (load && t2.SourceFiscalYearId != null) t2.SourceFiscalYear = (FiscalYear2)(cache && objects.ContainsKey(t2.SourceFiscalYearId.Value) ? objects[t2.SourceFiscalYearId.Value] : objects[t2.SourceFiscalYearId.Value] = FindFiscalYear2(t2.SourceFiscalYearId));
-            if (load && t2.InvoiceId != null) t2.Invoice = (Invoice2)(cache && objects.ContainsKey(t2.InvoiceId.Value) ? objects[t2.InvoiceId.Value] : objects[t2.InvoiceId.Value] = FindInvoice2(t2.InvoiceId));
-            if (load && t2.InvoiceItemId != null) t2.InvoiceItem = (InvoiceItem2)(cache && objects.ContainsKey(t2.InvoiceItemId.Value) ? objects[t2.InvoiceItemId.Value] : objects[t2.InvoiceItemId.Value] = FindInvoiceItem2(t2.InvoiceItemId));
-            if (load && t2.ToFundId != null) t2.ToFund = (Fund2)(cache && objects.ContainsKey(t2.ToFundId.Value) ? objects[t2.ToFundId.Value] : objects[t2.ToFundId.Value] = FindFund2(t2.ToFundId));
-            if (load && t2.CreationUserId != null) t2.CreationUser = (User2)(cache && objects.ContainsKey(t2.CreationUserId.Value) ? objects[t2.CreationUserId.Value] : objects[t2.CreationUserId.Value] = FindUser2(t2.CreationUserId));
-            if (load && t2.LastWriteUserId != null) t2.LastWriteUser = (User2)(cache && objects.ContainsKey(t2.LastWriteUserId.Value) ? objects[t2.LastWriteUserId.Value] : objects[t2.LastWriteUserId.Value] = FindUser2(t2.LastWriteUserId));
+            if (load && t2.AwaitingPaymentEncumbranceId != null) t2.AwaitingPaymentEncumbrance = FindTransaction2(t2.AwaitingPaymentEncumbranceId, cache: cache);
+            if (load && t2.OrderId != null) t2.Order = FindOrder2(t2.OrderId, cache: cache);
+            if (load && t2.OrderItemId != null) t2.OrderItem = FindOrderItem2(t2.OrderItemId, cache: cache);
+            if (load && t2.ExpenseClassId != null) t2.ExpenseClass = FindExpenseClass2(t2.ExpenseClassId, cache: cache);
+            if (load && t2.FiscalYearId != null) t2.FiscalYear = FindFiscalYear2(t2.FiscalYearId, cache: cache);
+            if (load && t2.FromFundId != null) t2.FromFund = FindFund2(t2.FromFundId, cache: cache);
+            if (load && t2.PaymentEncumbranceId != null) t2.PaymentEncumbrance = FindTransaction2(t2.PaymentEncumbranceId, cache: cache);
+            if (load && t2.SourceFiscalYearId != null) t2.SourceFiscalYear = FindFiscalYear2(t2.SourceFiscalYearId, cache: cache);
+            if (load && t2.InvoiceId != null) t2.Invoice = FindInvoice2(t2.InvoiceId, cache: cache);
+            if (load && t2.InvoiceItemId != null) t2.InvoiceItem = FindInvoiceItem2(t2.InvoiceItemId, cache: cache);
+            if (load && t2.ToFundId != null) t2.ToFund = FindFund2(t2.ToFundId, cache: cache);
+            if (load && t2.CreationUserId != null) t2.CreationUser = FindUser2(t2.CreationUserId, cache: cache);
+            if (load && t2.LastWriteUserId != null) t2.LastWriteUser = FindUser2(t2.LastWriteUserId, cache: cache);
             var i = 0;
             if (t2.TransactionTags != null) foreach (var tt in t2.TransactionTags)
                 {
@@ -6226,10 +6446,11 @@ namespace FolioLibrary
         {
             return FolioServiceClient.TransferAccounts(out count, where, orderBy, skip, take).Select(jo =>
             {
-                var ta2 = TransferAccount2.FromJObject(jo);
-                if (load && ta2.CreationUserId != null) ta2.CreationUser = (User2)(cache && objects.ContainsKey(ta2.CreationUserId.Value) ? objects[ta2.CreationUserId.Value] : objects[ta2.CreationUserId.Value] = FindUser2(ta2.CreationUserId));
-                if (load && ta2.LastWriteUserId != null) ta2.LastWriteUser = (User2)(cache && objects.ContainsKey(ta2.LastWriteUserId.Value) ? objects[ta2.LastWriteUserId.Value] : objects[ta2.LastWriteUserId.Value] = FindUser2(ta2.LastWriteUserId));
-                if (load && ta2.OwnerId != null) ta2.Owner = (Owner2)(cache && objects.ContainsKey(ta2.OwnerId.Value) ? objects[ta2.OwnerId.Value] : objects[ta2.OwnerId.Value] = FindOwner2(ta2.OwnerId));
+                var id = Guid.Parse((string)jo["id"]);
+                var ta2 = cache ? (TransferAccount2)(objects.ContainsKey(id) ? objects[id] : objects[id] = TransferAccount2.FromJObject(jo)) : TransferAccount2.FromJObject(jo);
+                if (load && ta2.CreationUserId != null) ta2.CreationUser = FindUser2(ta2.CreationUserId, cache: cache);
+                if (load && ta2.LastWriteUserId != null) ta2.LastWriteUser = FindUser2(ta2.LastWriteUserId, cache: cache);
+                if (load && ta2.OwnerId != null) ta2.Owner = FindOwner2(ta2.OwnerId, cache: cache);
                 return ta2;
             }).ToArray();
         }
@@ -6238,21 +6459,22 @@ namespace FolioLibrary
         {
             foreach (var jo in FolioServiceClient.TransferAccounts(where, orderBy, skip, take))
             {
-                var ta2 = TransferAccount2.FromJObject(jo);
-                if (load && ta2.CreationUserId != null) ta2.CreationUser = (User2)(cache && objects.ContainsKey(ta2.CreationUserId.Value) ? objects[ta2.CreationUserId.Value] : objects[ta2.CreationUserId.Value] = FindUser2(ta2.CreationUserId));
-                if (load && ta2.LastWriteUserId != null) ta2.LastWriteUser = (User2)(cache && objects.ContainsKey(ta2.LastWriteUserId.Value) ? objects[ta2.LastWriteUserId.Value] : objects[ta2.LastWriteUserId.Value] = FindUser2(ta2.LastWriteUserId));
-                if (load && ta2.OwnerId != null) ta2.Owner = (Owner2)(cache && objects.ContainsKey(ta2.OwnerId.Value) ? objects[ta2.OwnerId.Value] : objects[ta2.OwnerId.Value] = FindOwner2(ta2.OwnerId));
+                var id = Guid.Parse((string)jo["id"]);
+                var ta2 = cache ? (TransferAccount2)(objects.ContainsKey(id) ? objects[id] : objects[id] = TransferAccount2.FromJObject(jo)) : TransferAccount2.FromJObject(jo);
+                if (load && ta2.CreationUserId != null) ta2.CreationUser = FindUser2(ta2.CreationUserId, cache: cache);
+                if (load && ta2.LastWriteUserId != null) ta2.LastWriteUser = FindUser2(ta2.LastWriteUserId, cache: cache);
+                if (load && ta2.OwnerId != null) ta2.Owner = FindOwner2(ta2.OwnerId, cache: cache);
                 yield return ta2;
             }
         }
 
         public TransferAccount2 FindTransferAccount2(Guid? id, bool load = false, bool cache = true)
         {
-            var ta2 = TransferAccount2.FromJObject(FolioServiceClient.GetTransferAccount(id?.ToString()));
+            var ta2 = cache ? (TransferAccount2)(objects.ContainsKey(id.Value) ? objects[id.Value] : objects[id.Value] = TransferAccount2.FromJObject(FolioServiceClient.GetTransferAccount(id?.ToString()))) : TransferAccount2.FromJObject(FolioServiceClient.GetTransferAccount(id?.ToString()));
             if (ta2 == null) return null;
-            if (load && ta2.CreationUserId != null) ta2.CreationUser = (User2)(cache && objects.ContainsKey(ta2.CreationUserId.Value) ? objects[ta2.CreationUserId.Value] : objects[ta2.CreationUserId.Value] = FindUser2(ta2.CreationUserId));
-            if (load && ta2.LastWriteUserId != null) ta2.LastWriteUser = (User2)(cache && objects.ContainsKey(ta2.LastWriteUserId.Value) ? objects[ta2.LastWriteUserId.Value] : objects[ta2.LastWriteUserId.Value] = FindUser2(ta2.LastWriteUserId));
-            if (load && ta2.OwnerId != null) ta2.Owner = (Owner2)(cache && objects.ContainsKey(ta2.OwnerId.Value) ? objects[ta2.OwnerId.Value] : objects[ta2.OwnerId.Value] = FindOwner2(ta2.OwnerId));
+            if (load && ta2.CreationUserId != null) ta2.CreationUser = FindUser2(ta2.CreationUserId, cache: cache);
+            if (load && ta2.LastWriteUserId != null) ta2.LastWriteUser = FindUser2(ta2.LastWriteUserId, cache: cache);
+            if (load && ta2.OwnerId != null) ta2.Owner = FindOwner2(ta2.OwnerId, cache: cache);
             return ta2;
         }
 
@@ -6274,7 +6496,8 @@ namespace FolioLibrary
         {
             return FolioServiceClient.TransferCriterias(out count, where, orderBy, skip, take).Select(jo =>
             {
-                var tc2 = TransferCriteria2.FromJObject(jo);
+                var id = Guid.Parse((string)jo["id"]);
+                var tc2 = cache ? (TransferCriteria2)(objects.ContainsKey(id) ? objects[id] : objects[id] = TransferCriteria2.FromJObject(jo)) : TransferCriteria2.FromJObject(jo);
                 return tc2;
             }).ToArray();
         }
@@ -6283,7 +6506,8 @@ namespace FolioLibrary
         {
             foreach (var jo in FolioServiceClient.TransferCriterias(where, orderBy, skip, take))
             {
-                var tc2 = TransferCriteria2.FromJObject(jo);
+                var id = Guid.Parse((string)jo["id"]);
+                var tc2 = cache ? (TransferCriteria2)(objects.ContainsKey(id) ? objects[id] : objects[id] = TransferCriteria2.FromJObject(jo)) : TransferCriteria2.FromJObject(jo);
                 yield return tc2;
             }
         }
@@ -6308,10 +6532,11 @@ namespace FolioLibrary
         {
             return FolioServiceClient.Users(out count, where, orderBy, skip, take).Select(jo =>
             {
-                var u2 = User2.FromJObject(jo);
-                if (load && u2.GroupId != null) u2.Group = (Group2)(cache && objects.ContainsKey(u2.GroupId.Value) ? objects[u2.GroupId.Value] : objects[u2.GroupId.Value] = FindGroup2(u2.GroupId));
-                if (load && u2.CreationUserId != null) u2.CreationUser = (User2)(cache && objects.ContainsKey(u2.CreationUserId.Value) ? objects[u2.CreationUserId.Value] : objects[u2.CreationUserId.Value] = FindUser2(u2.CreationUserId));
-                if (load && u2.LastWriteUserId != null) u2.LastWriteUser = (User2)(cache && objects.ContainsKey(u2.LastWriteUserId.Value) ? objects[u2.LastWriteUserId.Value] : objects[u2.LastWriteUserId.Value] = FindUser2(u2.LastWriteUserId));
+                var id = Guid.Parse((string)jo["id"]);
+                var u2 = cache ? (User2)(objects.ContainsKey(id) ? objects[id] : objects[id] = User2.FromJObject(jo)) : User2.FromJObject(jo);
+                if (load && u2.GroupId != null) u2.Group = FindGroup2(u2.GroupId, cache: cache);
+                if (load && u2.CreationUserId != null) u2.CreationUser = FindUser2(u2.CreationUserId, cache: cache);
+                if (load && u2.LastWriteUserId != null) u2.LastWriteUser = FindUser2(u2.LastWriteUserId, cache: cache);
                 return u2;
             }).ToArray();
         }
@@ -6320,28 +6545,29 @@ namespace FolioLibrary
         {
             foreach (var jo in FolioServiceClient.Users(where, orderBy, skip, take))
             {
-                var u2 = User2.FromJObject(jo);
-                if (load && u2.GroupId != null) u2.Group = (Group2)(cache && objects.ContainsKey(u2.GroupId.Value) ? objects[u2.GroupId.Value] : objects[u2.GroupId.Value] = FindGroup2(u2.GroupId));
-                if (load && u2.CreationUserId != null) u2.CreationUser = (User2)(cache && objects.ContainsKey(u2.CreationUserId.Value) ? objects[u2.CreationUserId.Value] : objects[u2.CreationUserId.Value] = FindUser2(u2.CreationUserId));
-                if (load && u2.LastWriteUserId != null) u2.LastWriteUser = (User2)(cache && objects.ContainsKey(u2.LastWriteUserId.Value) ? objects[u2.LastWriteUserId.Value] : objects[u2.LastWriteUserId.Value] = FindUser2(u2.LastWriteUserId));
+                var id = Guid.Parse((string)jo["id"]);
+                var u2 = cache ? (User2)(objects.ContainsKey(id) ? objects[id] : objects[id] = User2.FromJObject(jo)) : User2.FromJObject(jo);
+                if (load && u2.GroupId != null) u2.Group = FindGroup2(u2.GroupId, cache: cache);
+                if (load && u2.CreationUserId != null) u2.CreationUser = FindUser2(u2.CreationUserId, cache: cache);
+                if (load && u2.LastWriteUserId != null) u2.LastWriteUser = FindUser2(u2.LastWriteUserId, cache: cache);
                 yield return u2;
             }
         }
 
         public User2 FindUser2(Guid? id, bool load = false, bool cache = true)
         {
-            var u2 = User2.FromJObject(FolioServiceClient.GetUser(id?.ToString()));
+            var u2 = cache ? (User2)(objects.ContainsKey(id.Value) ? objects[id.Value] : objects[id.Value] = User2.FromJObject(FolioServiceClient.GetUser(id?.ToString()))) : User2.FromJObject(FolioServiceClient.GetUser(id?.ToString()));
             if (u2 == null) return null;
-            if (load && u2.GroupId != null) u2.Group = (Group2)(cache && objects.ContainsKey(u2.GroupId.Value) ? objects[u2.GroupId.Value] : objects[u2.GroupId.Value] = FindGroup2(u2.GroupId));
-            if (load && u2.CreationUserId != null) u2.CreationUser = (User2)(cache && objects.ContainsKey(u2.CreationUserId.Value) ? objects[u2.CreationUserId.Value] : objects[u2.CreationUserId.Value] = FindUser2(u2.CreationUserId));
-            if (load && u2.LastWriteUserId != null) u2.LastWriteUser = (User2)(cache && objects.ContainsKey(u2.LastWriteUserId.Value) ? objects[u2.LastWriteUserId.Value] : objects[u2.LastWriteUserId.Value] = FindUser2(u2.LastWriteUserId));
+            if (load && u2.GroupId != null) u2.Group = FindGroup2(u2.GroupId, cache: cache);
+            if (load && u2.CreationUserId != null) u2.CreationUser = FindUser2(u2.CreationUserId, cache: cache);
+            if (load && u2.LastWriteUserId != null) u2.LastWriteUser = FindUser2(u2.LastWriteUserId, cache: cache);
             var i = 0;
             if (u2.UserAddresses != null) foreach (var ua in u2.UserAddresses)
                 {
                     ua.Id = (++i).ToString();
                     ua.UserId = u2.Id;
                     ua.User = u2;
-                    if (load && ua.AddressTypeId != null) ua.AddressType = (AddressType2)(cache && objects.ContainsKey(ua.AddressTypeId.Value) ? objects[ua.AddressTypeId.Value] : objects[ua.AddressTypeId.Value] = FindAddressType2(ua.AddressTypeId));
+                    if (load && ua.AddressTypeId != null) ua.AddressType = FindAddressType2(ua.AddressTypeId, cache: cache);
                 }
             i = 0;
             if (u2.UserDepartments != null) foreach (var ud in u2.UserDepartments)
@@ -6349,7 +6575,7 @@ namespace FolioLibrary
                     ud.Id = (++i).ToString();
                     ud.UserId = u2.Id;
                     ud.User = u2;
-                    if (load && ud.DepartmentId != null) ud.Department = (Department2)(cache && objects.ContainsKey(ud.DepartmentId.Value) ? objects[ud.DepartmentId.Value] : objects[ud.DepartmentId.Value] = FindDepartment2(ud.DepartmentId));
+                    if (load && ud.DepartmentId != null) ud.Department = FindDepartment2(ud.DepartmentId, cache: cache);
                 }
             i = 0;
             if (u2.UserTags != null) foreach (var ut in u2.UserTags)
@@ -6379,11 +6605,12 @@ namespace FolioLibrary
         {
             return FolioServiceClient.UserAcquisitionsUnits(out count, where, orderBy, skip, take).Select(jo =>
             {
-                var uau2 = UserAcquisitionsUnit2.FromJObject(jo);
-                if (load && uau2.UserId != null) uau2.User = (User2)(cache && objects.ContainsKey(uau2.UserId.Value) ? objects[uau2.UserId.Value] : objects[uau2.UserId.Value] = FindUser2(uau2.UserId));
-                if (load && uau2.AcquisitionsUnitId != null) uau2.AcquisitionsUnit = (AcquisitionsUnit2)(cache && objects.ContainsKey(uau2.AcquisitionsUnitId.Value) ? objects[uau2.AcquisitionsUnitId.Value] : objects[uau2.AcquisitionsUnitId.Value] = FindAcquisitionsUnit2(uau2.AcquisitionsUnitId));
-                if (load && uau2.CreationUserId != null) uau2.CreationUser = (User2)(cache && objects.ContainsKey(uau2.CreationUserId.Value) ? objects[uau2.CreationUserId.Value] : objects[uau2.CreationUserId.Value] = FindUser2(uau2.CreationUserId));
-                if (load && uau2.LastWriteUserId != null) uau2.LastWriteUser = (User2)(cache && objects.ContainsKey(uau2.LastWriteUserId.Value) ? objects[uau2.LastWriteUserId.Value] : objects[uau2.LastWriteUserId.Value] = FindUser2(uau2.LastWriteUserId));
+                var id = Guid.Parse((string)jo["id"]);
+                var uau2 = cache ? (UserAcquisitionsUnit2)(objects.ContainsKey(id) ? objects[id] : objects[id] = UserAcquisitionsUnit2.FromJObject(jo)) : UserAcquisitionsUnit2.FromJObject(jo);
+                if (load && uau2.UserId != null) uau2.User = FindUser2(uau2.UserId, cache: cache);
+                if (load && uau2.AcquisitionsUnitId != null) uau2.AcquisitionsUnit = FindAcquisitionsUnit2(uau2.AcquisitionsUnitId, cache: cache);
+                if (load && uau2.CreationUserId != null) uau2.CreationUser = FindUser2(uau2.CreationUserId, cache: cache);
+                if (load && uau2.LastWriteUserId != null) uau2.LastWriteUser = FindUser2(uau2.LastWriteUserId, cache: cache);
                 return uau2;
             }).ToArray();
         }
@@ -6392,23 +6619,24 @@ namespace FolioLibrary
         {
             foreach (var jo in FolioServiceClient.UserAcquisitionsUnits(where, orderBy, skip, take))
             {
-                var uau2 = UserAcquisitionsUnit2.FromJObject(jo);
-                if (load && uau2.UserId != null) uau2.User = (User2)(cache && objects.ContainsKey(uau2.UserId.Value) ? objects[uau2.UserId.Value] : objects[uau2.UserId.Value] = FindUser2(uau2.UserId));
-                if (load && uau2.AcquisitionsUnitId != null) uau2.AcquisitionsUnit = (AcquisitionsUnit2)(cache && objects.ContainsKey(uau2.AcquisitionsUnitId.Value) ? objects[uau2.AcquisitionsUnitId.Value] : objects[uau2.AcquisitionsUnitId.Value] = FindAcquisitionsUnit2(uau2.AcquisitionsUnitId));
-                if (load && uau2.CreationUserId != null) uau2.CreationUser = (User2)(cache && objects.ContainsKey(uau2.CreationUserId.Value) ? objects[uau2.CreationUserId.Value] : objects[uau2.CreationUserId.Value] = FindUser2(uau2.CreationUserId));
-                if (load && uau2.LastWriteUserId != null) uau2.LastWriteUser = (User2)(cache && objects.ContainsKey(uau2.LastWriteUserId.Value) ? objects[uau2.LastWriteUserId.Value] : objects[uau2.LastWriteUserId.Value] = FindUser2(uau2.LastWriteUserId));
+                var id = Guid.Parse((string)jo["id"]);
+                var uau2 = cache ? (UserAcquisitionsUnit2)(objects.ContainsKey(id) ? objects[id] : objects[id] = UserAcquisitionsUnit2.FromJObject(jo)) : UserAcquisitionsUnit2.FromJObject(jo);
+                if (load && uau2.UserId != null) uau2.User = FindUser2(uau2.UserId, cache: cache);
+                if (load && uau2.AcquisitionsUnitId != null) uau2.AcquisitionsUnit = FindAcquisitionsUnit2(uau2.AcquisitionsUnitId, cache: cache);
+                if (load && uau2.CreationUserId != null) uau2.CreationUser = FindUser2(uau2.CreationUserId, cache: cache);
+                if (load && uau2.LastWriteUserId != null) uau2.LastWriteUser = FindUser2(uau2.LastWriteUserId, cache: cache);
                 yield return uau2;
             }
         }
 
         public UserAcquisitionsUnit2 FindUserAcquisitionsUnit2(Guid? id, bool load = false, bool cache = true)
         {
-            var uau2 = UserAcquisitionsUnit2.FromJObject(FolioServiceClient.GetUserAcquisitionsUnit(id?.ToString()));
+            var uau2 = cache ? (UserAcquisitionsUnit2)(objects.ContainsKey(id.Value) ? objects[id.Value] : objects[id.Value] = UserAcquisitionsUnit2.FromJObject(FolioServiceClient.GetUserAcquisitionsUnit(id?.ToString()))) : UserAcquisitionsUnit2.FromJObject(FolioServiceClient.GetUserAcquisitionsUnit(id?.ToString()));
             if (uau2 == null) return null;
-            if (load && uau2.UserId != null) uau2.User = (User2)(cache && objects.ContainsKey(uau2.UserId.Value) ? objects[uau2.UserId.Value] : objects[uau2.UserId.Value] = FindUser2(uau2.UserId));
-            if (load && uau2.AcquisitionsUnitId != null) uau2.AcquisitionsUnit = (AcquisitionsUnit2)(cache && objects.ContainsKey(uau2.AcquisitionsUnitId.Value) ? objects[uau2.AcquisitionsUnitId.Value] : objects[uau2.AcquisitionsUnitId.Value] = FindAcquisitionsUnit2(uau2.AcquisitionsUnitId));
-            if (load && uau2.CreationUserId != null) uau2.CreationUser = (User2)(cache && objects.ContainsKey(uau2.CreationUserId.Value) ? objects[uau2.CreationUserId.Value] : objects[uau2.CreationUserId.Value] = FindUser2(uau2.CreationUserId));
-            if (load && uau2.LastWriteUserId != null) uau2.LastWriteUser = (User2)(cache && objects.ContainsKey(uau2.LastWriteUserId.Value) ? objects[uau2.LastWriteUserId.Value] : objects[uau2.LastWriteUserId.Value] = FindUser2(uau2.LastWriteUserId));
+            if (load && uau2.UserId != null) uau2.User = FindUser2(uau2.UserId, cache: cache);
+            if (load && uau2.AcquisitionsUnitId != null) uau2.AcquisitionsUnit = FindAcquisitionsUnit2(uau2.AcquisitionsUnitId, cache: cache);
+            if (load && uau2.CreationUserId != null) uau2.CreationUser = FindUser2(uau2.CreationUserId, cache: cache);
+            if (load && uau2.LastWriteUserId != null) uau2.LastWriteUser = FindUser2(uau2.LastWriteUserId, cache: cache);
             return uau2;
         }
 
@@ -6430,12 +6658,13 @@ namespace FolioLibrary
         {
             return FolioServiceClient.UserRequestPreferences(out count, where, orderBy, skip, take).Select(jo =>
             {
-                var urp2 = UserRequestPreference2.FromJObject(jo);
-                if (load && urp2.UserId != null) urp2.User = (User2)(cache && objects.ContainsKey(urp2.UserId.Value) ? objects[urp2.UserId.Value] : objects[urp2.UserId.Value] = FindUser2(urp2.UserId));
-                if (load && urp2.DefaultServicePointId != null) urp2.DefaultServicePoint = (ServicePoint2)(cache && objects.ContainsKey(urp2.DefaultServicePointId.Value) ? objects[urp2.DefaultServicePointId.Value] : objects[urp2.DefaultServicePointId.Value] = FindServicePoint2(urp2.DefaultServicePointId));
-                if (load && urp2.DefaultDeliveryAddressTypeId != null) urp2.DefaultDeliveryAddressType = (AddressType2)(cache && objects.ContainsKey(urp2.DefaultDeliveryAddressTypeId.Value) ? objects[urp2.DefaultDeliveryAddressTypeId.Value] : objects[urp2.DefaultDeliveryAddressTypeId.Value] = FindAddressType2(urp2.DefaultDeliveryAddressTypeId));
-                if (load && urp2.CreationUserId != null) urp2.CreationUser = (User2)(cache && objects.ContainsKey(urp2.CreationUserId.Value) ? objects[urp2.CreationUserId.Value] : objects[urp2.CreationUserId.Value] = FindUser2(urp2.CreationUserId));
-                if (load && urp2.LastWriteUserId != null) urp2.LastWriteUser = (User2)(cache && objects.ContainsKey(urp2.LastWriteUserId.Value) ? objects[urp2.LastWriteUserId.Value] : objects[urp2.LastWriteUserId.Value] = FindUser2(urp2.LastWriteUserId));
+                var id = Guid.Parse((string)jo["id"]);
+                var urp2 = cache ? (UserRequestPreference2)(objects.ContainsKey(id) ? objects[id] : objects[id] = UserRequestPreference2.FromJObject(jo)) : UserRequestPreference2.FromJObject(jo);
+                if (load && urp2.UserId != null) urp2.User = FindUser2(urp2.UserId, cache: cache);
+                if (load && urp2.DefaultServicePointId != null) urp2.DefaultServicePoint = FindServicePoint2(urp2.DefaultServicePointId, cache: cache);
+                if (load && urp2.DefaultDeliveryAddressTypeId != null) urp2.DefaultDeliveryAddressType = FindAddressType2(urp2.DefaultDeliveryAddressTypeId, cache: cache);
+                if (load && urp2.CreationUserId != null) urp2.CreationUser = FindUser2(urp2.CreationUserId, cache: cache);
+                if (load && urp2.LastWriteUserId != null) urp2.LastWriteUser = FindUser2(urp2.LastWriteUserId, cache: cache);
                 return urp2;
             }).ToArray();
         }
@@ -6444,25 +6673,26 @@ namespace FolioLibrary
         {
             foreach (var jo in FolioServiceClient.UserRequestPreferences(where, orderBy, skip, take))
             {
-                var urp2 = UserRequestPreference2.FromJObject(jo);
-                if (load && urp2.UserId != null) urp2.User = (User2)(cache && objects.ContainsKey(urp2.UserId.Value) ? objects[urp2.UserId.Value] : objects[urp2.UserId.Value] = FindUser2(urp2.UserId));
-                if (load && urp2.DefaultServicePointId != null) urp2.DefaultServicePoint = (ServicePoint2)(cache && objects.ContainsKey(urp2.DefaultServicePointId.Value) ? objects[urp2.DefaultServicePointId.Value] : objects[urp2.DefaultServicePointId.Value] = FindServicePoint2(urp2.DefaultServicePointId));
-                if (load && urp2.DefaultDeliveryAddressTypeId != null) urp2.DefaultDeliveryAddressType = (AddressType2)(cache && objects.ContainsKey(urp2.DefaultDeliveryAddressTypeId.Value) ? objects[urp2.DefaultDeliveryAddressTypeId.Value] : objects[urp2.DefaultDeliveryAddressTypeId.Value] = FindAddressType2(urp2.DefaultDeliveryAddressTypeId));
-                if (load && urp2.CreationUserId != null) urp2.CreationUser = (User2)(cache && objects.ContainsKey(urp2.CreationUserId.Value) ? objects[urp2.CreationUserId.Value] : objects[urp2.CreationUserId.Value] = FindUser2(urp2.CreationUserId));
-                if (load && urp2.LastWriteUserId != null) urp2.LastWriteUser = (User2)(cache && objects.ContainsKey(urp2.LastWriteUserId.Value) ? objects[urp2.LastWriteUserId.Value] : objects[urp2.LastWriteUserId.Value] = FindUser2(urp2.LastWriteUserId));
+                var id = Guid.Parse((string)jo["id"]);
+                var urp2 = cache ? (UserRequestPreference2)(objects.ContainsKey(id) ? objects[id] : objects[id] = UserRequestPreference2.FromJObject(jo)) : UserRequestPreference2.FromJObject(jo);
+                if (load && urp2.UserId != null) urp2.User = FindUser2(urp2.UserId, cache: cache);
+                if (load && urp2.DefaultServicePointId != null) urp2.DefaultServicePoint = FindServicePoint2(urp2.DefaultServicePointId, cache: cache);
+                if (load && urp2.DefaultDeliveryAddressTypeId != null) urp2.DefaultDeliveryAddressType = FindAddressType2(urp2.DefaultDeliveryAddressTypeId, cache: cache);
+                if (load && urp2.CreationUserId != null) urp2.CreationUser = FindUser2(urp2.CreationUserId, cache: cache);
+                if (load && urp2.LastWriteUserId != null) urp2.LastWriteUser = FindUser2(urp2.LastWriteUserId, cache: cache);
                 yield return urp2;
             }
         }
 
         public UserRequestPreference2 FindUserRequestPreference2(Guid? id, bool load = false, bool cache = true)
         {
-            var urp2 = UserRequestPreference2.FromJObject(FolioServiceClient.GetUserRequestPreference(id?.ToString()));
+            var urp2 = cache ? (UserRequestPreference2)(objects.ContainsKey(id.Value) ? objects[id.Value] : objects[id.Value] = UserRequestPreference2.FromJObject(FolioServiceClient.GetUserRequestPreference(id?.ToString()))) : UserRequestPreference2.FromJObject(FolioServiceClient.GetUserRequestPreference(id?.ToString()));
             if (urp2 == null) return null;
-            if (load && urp2.UserId != null) urp2.User = (User2)(cache && objects.ContainsKey(urp2.UserId.Value) ? objects[urp2.UserId.Value] : objects[urp2.UserId.Value] = FindUser2(urp2.UserId));
-            if (load && urp2.DefaultServicePointId != null) urp2.DefaultServicePoint = (ServicePoint2)(cache && objects.ContainsKey(urp2.DefaultServicePointId.Value) ? objects[urp2.DefaultServicePointId.Value] : objects[urp2.DefaultServicePointId.Value] = FindServicePoint2(urp2.DefaultServicePointId));
-            if (load && urp2.DefaultDeliveryAddressTypeId != null) urp2.DefaultDeliveryAddressType = (AddressType2)(cache && objects.ContainsKey(urp2.DefaultDeliveryAddressTypeId.Value) ? objects[urp2.DefaultDeliveryAddressTypeId.Value] : objects[urp2.DefaultDeliveryAddressTypeId.Value] = FindAddressType2(urp2.DefaultDeliveryAddressTypeId));
-            if (load && urp2.CreationUserId != null) urp2.CreationUser = (User2)(cache && objects.ContainsKey(urp2.CreationUserId.Value) ? objects[urp2.CreationUserId.Value] : objects[urp2.CreationUserId.Value] = FindUser2(urp2.CreationUserId));
-            if (load && urp2.LastWriteUserId != null) urp2.LastWriteUser = (User2)(cache && objects.ContainsKey(urp2.LastWriteUserId.Value) ? objects[urp2.LastWriteUserId.Value] : objects[urp2.LastWriteUserId.Value] = FindUser2(urp2.LastWriteUserId));
+            if (load && urp2.UserId != null) urp2.User = FindUser2(urp2.UserId, cache: cache);
+            if (load && urp2.DefaultServicePointId != null) urp2.DefaultServicePoint = FindServicePoint2(urp2.DefaultServicePointId, cache: cache);
+            if (load && urp2.DefaultDeliveryAddressTypeId != null) urp2.DefaultDeliveryAddressType = FindAddressType2(urp2.DefaultDeliveryAddressTypeId, cache: cache);
+            if (load && urp2.CreationUserId != null) urp2.CreationUser = FindUser2(urp2.CreationUserId, cache: cache);
+            if (load && urp2.LastWriteUserId != null) urp2.LastWriteUser = FindUser2(urp2.LastWriteUserId, cache: cache);
             return urp2;
         }
 
@@ -6484,12 +6714,13 @@ namespace FolioLibrary
         {
             return FolioServiceClient.Vouchers(out count, where, orderBy, skip, take).Select(jo =>
             {
-                var v2 = Voucher2.FromJObject(jo);
-                if (load && v2.BatchGroupId != null) v2.BatchGroup = (BatchGroup2)(cache && objects.ContainsKey(v2.BatchGroupId.Value) ? objects[v2.BatchGroupId.Value] : objects[v2.BatchGroupId.Value] = FindBatchGroup2(v2.BatchGroupId));
-                if (load && v2.InvoiceId != null) v2.Invoice = (Invoice2)(cache && objects.ContainsKey(v2.InvoiceId.Value) ? objects[v2.InvoiceId.Value] : objects[v2.InvoiceId.Value] = FindInvoice2(v2.InvoiceId));
-                if (load && v2.VendorId != null) v2.Vendor = (Organization2)(cache && objects.ContainsKey(v2.VendorId.Value) ? objects[v2.VendorId.Value] : objects[v2.VendorId.Value] = FindOrganization2(v2.VendorId));
-                if (load && v2.CreationUserId != null) v2.CreationUser = (User2)(cache && objects.ContainsKey(v2.CreationUserId.Value) ? objects[v2.CreationUserId.Value] : objects[v2.CreationUserId.Value] = FindUser2(v2.CreationUserId));
-                if (load && v2.LastWriteUserId != null) v2.LastWriteUser = (User2)(cache && objects.ContainsKey(v2.LastWriteUserId.Value) ? objects[v2.LastWriteUserId.Value] : objects[v2.LastWriteUserId.Value] = FindUser2(v2.LastWriteUserId));
+                var id = Guid.Parse((string)jo["id"]);
+                var v2 = cache ? (Voucher2)(objects.ContainsKey(id) ? objects[id] : objects[id] = Voucher2.FromJObject(jo)) : Voucher2.FromJObject(jo);
+                if (load && v2.BatchGroupId != null) v2.BatchGroup = FindBatchGroup2(v2.BatchGroupId, cache: cache);
+                if (load && v2.InvoiceId != null) v2.Invoice = FindInvoice2(v2.InvoiceId, cache: cache);
+                if (load && v2.VendorId != null) v2.Vendor = FindOrganization2(v2.VendorId, cache: cache);
+                if (load && v2.CreationUserId != null) v2.CreationUser = FindUser2(v2.CreationUserId, cache: cache);
+                if (load && v2.LastWriteUserId != null) v2.LastWriteUser = FindUser2(v2.LastWriteUserId, cache: cache);
                 return v2;
             }).ToArray();
         }
@@ -6498,32 +6729,33 @@ namespace FolioLibrary
         {
             foreach (var jo in FolioServiceClient.Vouchers(where, orderBy, skip, take))
             {
-                var v2 = Voucher2.FromJObject(jo);
-                if (load && v2.BatchGroupId != null) v2.BatchGroup = (BatchGroup2)(cache && objects.ContainsKey(v2.BatchGroupId.Value) ? objects[v2.BatchGroupId.Value] : objects[v2.BatchGroupId.Value] = FindBatchGroup2(v2.BatchGroupId));
-                if (load && v2.InvoiceId != null) v2.Invoice = (Invoice2)(cache && objects.ContainsKey(v2.InvoiceId.Value) ? objects[v2.InvoiceId.Value] : objects[v2.InvoiceId.Value] = FindInvoice2(v2.InvoiceId));
-                if (load && v2.VendorId != null) v2.Vendor = (Organization2)(cache && objects.ContainsKey(v2.VendorId.Value) ? objects[v2.VendorId.Value] : objects[v2.VendorId.Value] = FindOrganization2(v2.VendorId));
-                if (load && v2.CreationUserId != null) v2.CreationUser = (User2)(cache && objects.ContainsKey(v2.CreationUserId.Value) ? objects[v2.CreationUserId.Value] : objects[v2.CreationUserId.Value] = FindUser2(v2.CreationUserId));
-                if (load && v2.LastWriteUserId != null) v2.LastWriteUser = (User2)(cache && objects.ContainsKey(v2.LastWriteUserId.Value) ? objects[v2.LastWriteUserId.Value] : objects[v2.LastWriteUserId.Value] = FindUser2(v2.LastWriteUserId));
+                var id = Guid.Parse((string)jo["id"]);
+                var v2 = cache ? (Voucher2)(objects.ContainsKey(id) ? objects[id] : objects[id] = Voucher2.FromJObject(jo)) : Voucher2.FromJObject(jo);
+                if (load && v2.BatchGroupId != null) v2.BatchGroup = FindBatchGroup2(v2.BatchGroupId, cache: cache);
+                if (load && v2.InvoiceId != null) v2.Invoice = FindInvoice2(v2.InvoiceId, cache: cache);
+                if (load && v2.VendorId != null) v2.Vendor = FindOrganization2(v2.VendorId, cache: cache);
+                if (load && v2.CreationUserId != null) v2.CreationUser = FindUser2(v2.CreationUserId, cache: cache);
+                if (load && v2.LastWriteUserId != null) v2.LastWriteUser = FindUser2(v2.LastWriteUserId, cache: cache);
                 yield return v2;
             }
         }
 
         public Voucher2 FindVoucher2(Guid? id, bool load = false, bool cache = true)
         {
-            var v2 = Voucher2.FromJObject(FolioServiceClient.GetVoucher(id?.ToString()));
+            var v2 = cache ? (Voucher2)(objects.ContainsKey(id.Value) ? objects[id.Value] : objects[id.Value] = Voucher2.FromJObject(FolioServiceClient.GetVoucher(id?.ToString()))) : Voucher2.FromJObject(FolioServiceClient.GetVoucher(id?.ToString()));
             if (v2 == null) return null;
-            if (load && v2.BatchGroupId != null) v2.BatchGroup = (BatchGroup2)(cache && objects.ContainsKey(v2.BatchGroupId.Value) ? objects[v2.BatchGroupId.Value] : objects[v2.BatchGroupId.Value] = FindBatchGroup2(v2.BatchGroupId));
-            if (load && v2.InvoiceId != null) v2.Invoice = (Invoice2)(cache && objects.ContainsKey(v2.InvoiceId.Value) ? objects[v2.InvoiceId.Value] : objects[v2.InvoiceId.Value] = FindInvoice2(v2.InvoiceId));
-            if (load && v2.VendorId != null) v2.Vendor = (Organization2)(cache && objects.ContainsKey(v2.VendorId.Value) ? objects[v2.VendorId.Value] : objects[v2.VendorId.Value] = FindOrganization2(v2.VendorId));
-            if (load && v2.CreationUserId != null) v2.CreationUser = (User2)(cache && objects.ContainsKey(v2.CreationUserId.Value) ? objects[v2.CreationUserId.Value] : objects[v2.CreationUserId.Value] = FindUser2(v2.CreationUserId));
-            if (load && v2.LastWriteUserId != null) v2.LastWriteUser = (User2)(cache && objects.ContainsKey(v2.LastWriteUserId.Value) ? objects[v2.LastWriteUserId.Value] : objects[v2.LastWriteUserId.Value] = FindUser2(v2.LastWriteUserId));
+            if (load && v2.BatchGroupId != null) v2.BatchGroup = FindBatchGroup2(v2.BatchGroupId, cache: cache);
+            if (load && v2.InvoiceId != null) v2.Invoice = FindInvoice2(v2.InvoiceId, cache: cache);
+            if (load && v2.VendorId != null) v2.Vendor = FindOrganization2(v2.VendorId, cache: cache);
+            if (load && v2.CreationUserId != null) v2.CreationUser = FindUser2(v2.CreationUserId, cache: cache);
+            if (load && v2.LastWriteUserId != null) v2.LastWriteUser = FindUser2(v2.LastWriteUserId, cache: cache);
             var i = 0;
             if (v2.VoucherAcquisitionsUnits != null) foreach (var vau in v2.VoucherAcquisitionsUnits)
                 {
                     vau.Id = (++i).ToString();
                     vau.VoucherId = v2.Id;
                     vau.Voucher = v2;
-                    if (load && vau.AcquisitionsUnitId != null) vau.AcquisitionsUnit = (AcquisitionsUnit2)(cache && objects.ContainsKey(vau.AcquisitionsUnitId.Value) ? objects[vau.AcquisitionsUnitId.Value] : objects[vau.AcquisitionsUnitId.Value] = FindAcquisitionsUnit2(vau.AcquisitionsUnitId));
+                    if (load && vau.AcquisitionsUnitId != null) vau.AcquisitionsUnit = FindAcquisitionsUnit2(vau.AcquisitionsUnitId, cache: cache);
                 }
             return v2;
         }
@@ -6546,11 +6778,12 @@ namespace FolioLibrary
         {
             return FolioServiceClient.VoucherItems(out count, where, orderBy, skip, take).Select(jo =>
             {
-                var vi2 = VoucherItem2.FromJObject(jo);
-                if (load && vi2.SubTransactionId != null) vi2.SubTransaction = (Transaction2)(cache && objects.ContainsKey(vi2.SubTransactionId.Value) ? objects[vi2.SubTransactionId.Value] : objects[vi2.SubTransactionId.Value] = FindTransaction2(vi2.SubTransactionId));
-                if (load && vi2.VoucherId != null) vi2.Voucher = (Voucher2)(cache && objects.ContainsKey(vi2.VoucherId.Value) ? objects[vi2.VoucherId.Value] : objects[vi2.VoucherId.Value] = FindVoucher2(vi2.VoucherId));
-                if (load && vi2.CreationUserId != null) vi2.CreationUser = (User2)(cache && objects.ContainsKey(vi2.CreationUserId.Value) ? objects[vi2.CreationUserId.Value] : objects[vi2.CreationUserId.Value] = FindUser2(vi2.CreationUserId));
-                if (load && vi2.LastWriteUserId != null) vi2.LastWriteUser = (User2)(cache && objects.ContainsKey(vi2.LastWriteUserId.Value) ? objects[vi2.LastWriteUserId.Value] : objects[vi2.LastWriteUserId.Value] = FindUser2(vi2.LastWriteUserId));
+                var id = Guid.Parse((string)jo["id"]);
+                var vi2 = cache ? (VoucherItem2)(objects.ContainsKey(id) ? objects[id] : objects[id] = VoucherItem2.FromJObject(jo)) : VoucherItem2.FromJObject(jo);
+                if (load && vi2.SubTransactionId != null) vi2.SubTransaction = FindTransaction2(vi2.SubTransactionId, cache: cache);
+                if (load && vi2.VoucherId != null) vi2.Voucher = FindVoucher2(vi2.VoucherId, cache: cache);
+                if (load && vi2.CreationUserId != null) vi2.CreationUser = FindUser2(vi2.CreationUserId, cache: cache);
+                if (load && vi2.LastWriteUserId != null) vi2.LastWriteUser = FindUser2(vi2.LastWriteUserId, cache: cache);
                 return vi2;
             }).ToArray();
         }
@@ -6559,32 +6792,33 @@ namespace FolioLibrary
         {
             foreach (var jo in FolioServiceClient.VoucherItems(where, orderBy, skip, take))
             {
-                var vi2 = VoucherItem2.FromJObject(jo);
-                if (load && vi2.SubTransactionId != null) vi2.SubTransaction = (Transaction2)(cache && objects.ContainsKey(vi2.SubTransactionId.Value) ? objects[vi2.SubTransactionId.Value] : objects[vi2.SubTransactionId.Value] = FindTransaction2(vi2.SubTransactionId));
-                if (load && vi2.VoucherId != null) vi2.Voucher = (Voucher2)(cache && objects.ContainsKey(vi2.VoucherId.Value) ? objects[vi2.VoucherId.Value] : objects[vi2.VoucherId.Value] = FindVoucher2(vi2.VoucherId));
-                if (load && vi2.CreationUserId != null) vi2.CreationUser = (User2)(cache && objects.ContainsKey(vi2.CreationUserId.Value) ? objects[vi2.CreationUserId.Value] : objects[vi2.CreationUserId.Value] = FindUser2(vi2.CreationUserId));
-                if (load && vi2.LastWriteUserId != null) vi2.LastWriteUser = (User2)(cache && objects.ContainsKey(vi2.LastWriteUserId.Value) ? objects[vi2.LastWriteUserId.Value] : objects[vi2.LastWriteUserId.Value] = FindUser2(vi2.LastWriteUserId));
+                var id = Guid.Parse((string)jo["id"]);
+                var vi2 = cache ? (VoucherItem2)(objects.ContainsKey(id) ? objects[id] : objects[id] = VoucherItem2.FromJObject(jo)) : VoucherItem2.FromJObject(jo);
+                if (load && vi2.SubTransactionId != null) vi2.SubTransaction = FindTransaction2(vi2.SubTransactionId, cache: cache);
+                if (load && vi2.VoucherId != null) vi2.Voucher = FindVoucher2(vi2.VoucherId, cache: cache);
+                if (load && vi2.CreationUserId != null) vi2.CreationUser = FindUser2(vi2.CreationUserId, cache: cache);
+                if (load && vi2.LastWriteUserId != null) vi2.LastWriteUser = FindUser2(vi2.LastWriteUserId, cache: cache);
                 yield return vi2;
             }
         }
 
         public VoucherItem2 FindVoucherItem2(Guid? id, bool load = false, bool cache = true)
         {
-            var vi2 = VoucherItem2.FromJObject(FolioServiceClient.GetVoucherItem(id?.ToString()));
+            var vi2 = cache ? (VoucherItem2)(objects.ContainsKey(id.Value) ? objects[id.Value] : objects[id.Value] = VoucherItem2.FromJObject(FolioServiceClient.GetVoucherItem(id?.ToString()))) : VoucherItem2.FromJObject(FolioServiceClient.GetVoucherItem(id?.ToString()));
             if (vi2 == null) return null;
-            if (load && vi2.SubTransactionId != null) vi2.SubTransaction = (Transaction2)(cache && objects.ContainsKey(vi2.SubTransactionId.Value) ? objects[vi2.SubTransactionId.Value] : objects[vi2.SubTransactionId.Value] = FindTransaction2(vi2.SubTransactionId));
-            if (load && vi2.VoucherId != null) vi2.Voucher = (Voucher2)(cache && objects.ContainsKey(vi2.VoucherId.Value) ? objects[vi2.VoucherId.Value] : objects[vi2.VoucherId.Value] = FindVoucher2(vi2.VoucherId));
-            if (load && vi2.CreationUserId != null) vi2.CreationUser = (User2)(cache && objects.ContainsKey(vi2.CreationUserId.Value) ? objects[vi2.CreationUserId.Value] : objects[vi2.CreationUserId.Value] = FindUser2(vi2.CreationUserId));
-            if (load && vi2.LastWriteUserId != null) vi2.LastWriteUser = (User2)(cache && objects.ContainsKey(vi2.LastWriteUserId.Value) ? objects[vi2.LastWriteUserId.Value] : objects[vi2.LastWriteUserId.Value] = FindUser2(vi2.LastWriteUserId));
+            if (load && vi2.SubTransactionId != null) vi2.SubTransaction = FindTransaction2(vi2.SubTransactionId, cache: cache);
+            if (load && vi2.VoucherId != null) vi2.Voucher = FindVoucher2(vi2.VoucherId, cache: cache);
+            if (load && vi2.CreationUserId != null) vi2.CreationUser = FindUser2(vi2.CreationUserId, cache: cache);
+            if (load && vi2.LastWriteUserId != null) vi2.LastWriteUser = FindUser2(vi2.LastWriteUserId, cache: cache);
             var i = 0;
             if (vi2.VoucherItemFunds != null) foreach (var vif in vi2.VoucherItemFunds)
                 {
                     vif.Id = (++i).ToString();
                     vif.VoucherItemId = vi2.Id;
                     vif.VoucherItem = vi2;
-                    if (load && vif.EncumbranceId != null) vif.Encumbrance = (Transaction2)(cache && objects.ContainsKey(vif.EncumbranceId.Value) ? objects[vif.EncumbranceId.Value] : objects[vif.EncumbranceId.Value] = FindTransaction2(vif.EncumbranceId));
-                    if (load && vif.FundId != null) vif.Fund = (Fund2)(cache && objects.ContainsKey(vif.FundId.Value) ? objects[vif.FundId.Value] : objects[vif.FundId.Value] = FindFund2(vif.FundId));
-                    if (load && vif.ExpenseClassId != null) vif.ExpenseClass = (ExpenseClass2)(cache && objects.ContainsKey(vif.ExpenseClassId.Value) ? objects[vif.ExpenseClassId.Value] : objects[vif.ExpenseClassId.Value] = FindExpenseClass2(vif.ExpenseClassId));
+                    if (load && vif.EncumbranceId != null) vif.Encumbrance = FindTransaction2(vif.EncumbranceId, cache: cache);
+                    if (load && vif.FundId != null) vif.Fund = FindFund2(vif.FundId, cache: cache);
+                    if (load && vif.ExpenseClassId != null) vif.ExpenseClass = FindExpenseClass2(vif.ExpenseClassId, cache: cache);
                 }
             i = 0;
             if (vi2.VoucherItemInvoiceItems != null) foreach (var viii in vi2.VoucherItemInvoiceItems)
@@ -6592,7 +6826,7 @@ namespace FolioLibrary
                     viii.Id = (++i).ToString();
                     viii.VoucherItemId = vi2.Id;
                     viii.VoucherItem = vi2;
-                    if (load && viii.InvoiceItemId != null) viii.InvoiceItem = (InvoiceItem2)(cache && objects.ContainsKey(viii.InvoiceItemId.Value) ? objects[viii.InvoiceItemId.Value] : objects[viii.InvoiceItemId.Value] = FindInvoiceItem2(viii.InvoiceItemId));
+                    if (load && viii.InvoiceItemId != null) viii.InvoiceItem = FindInvoiceItem2(viii.InvoiceItemId, cache: cache);
                 }
             return vi2;
         }
@@ -6615,10 +6849,11 @@ namespace FolioLibrary
         {
             return FolioServiceClient.WaiveReasons(out count, where, orderBy, skip, take).Select(jo =>
             {
-                var wr2 = WaiveReason2.FromJObject(jo);
-                if (load && wr2.CreationUserId != null) wr2.CreationUser = (User2)(cache && objects.ContainsKey(wr2.CreationUserId.Value) ? objects[wr2.CreationUserId.Value] : objects[wr2.CreationUserId.Value] = FindUser2(wr2.CreationUserId));
-                if (load && wr2.LastWriteUserId != null) wr2.LastWriteUser = (User2)(cache && objects.ContainsKey(wr2.LastWriteUserId.Value) ? objects[wr2.LastWriteUserId.Value] : objects[wr2.LastWriteUserId.Value] = FindUser2(wr2.LastWriteUserId));
-                if (load && wr2.AccountId != null) wr2.Account = (Fee2)(cache && objects.ContainsKey(wr2.AccountId.Value) ? objects[wr2.AccountId.Value] : objects[wr2.AccountId.Value] = FindFee2(wr2.AccountId));
+                var id = Guid.Parse((string)jo["id"]);
+                var wr2 = cache ? (WaiveReason2)(objects.ContainsKey(id) ? objects[id] : objects[id] = WaiveReason2.FromJObject(jo)) : WaiveReason2.FromJObject(jo);
+                if (load && wr2.CreationUserId != null) wr2.CreationUser = FindUser2(wr2.CreationUserId, cache: cache);
+                if (load && wr2.LastWriteUserId != null) wr2.LastWriteUser = FindUser2(wr2.LastWriteUserId, cache: cache);
+                if (load && wr2.AccountId != null) wr2.Account = FindFee2(wr2.AccountId, cache: cache);
                 return wr2;
             }).ToArray();
         }
@@ -6627,21 +6862,22 @@ namespace FolioLibrary
         {
             foreach (var jo in FolioServiceClient.WaiveReasons(where, orderBy, skip, take))
             {
-                var wr2 = WaiveReason2.FromJObject(jo);
-                if (load && wr2.CreationUserId != null) wr2.CreationUser = (User2)(cache && objects.ContainsKey(wr2.CreationUserId.Value) ? objects[wr2.CreationUserId.Value] : objects[wr2.CreationUserId.Value] = FindUser2(wr2.CreationUserId));
-                if (load && wr2.LastWriteUserId != null) wr2.LastWriteUser = (User2)(cache && objects.ContainsKey(wr2.LastWriteUserId.Value) ? objects[wr2.LastWriteUserId.Value] : objects[wr2.LastWriteUserId.Value] = FindUser2(wr2.LastWriteUserId));
-                if (load && wr2.AccountId != null) wr2.Account = (Fee2)(cache && objects.ContainsKey(wr2.AccountId.Value) ? objects[wr2.AccountId.Value] : objects[wr2.AccountId.Value] = FindFee2(wr2.AccountId));
+                var id = Guid.Parse((string)jo["id"]);
+                var wr2 = cache ? (WaiveReason2)(objects.ContainsKey(id) ? objects[id] : objects[id] = WaiveReason2.FromJObject(jo)) : WaiveReason2.FromJObject(jo);
+                if (load && wr2.CreationUserId != null) wr2.CreationUser = FindUser2(wr2.CreationUserId, cache: cache);
+                if (load && wr2.LastWriteUserId != null) wr2.LastWriteUser = FindUser2(wr2.LastWriteUserId, cache: cache);
+                if (load && wr2.AccountId != null) wr2.Account = FindFee2(wr2.AccountId, cache: cache);
                 yield return wr2;
             }
         }
 
         public WaiveReason2 FindWaiveReason2(Guid? id, bool load = false, bool cache = true)
         {
-            var wr2 = WaiveReason2.FromJObject(FolioServiceClient.GetWaiveReason(id?.ToString()));
+            var wr2 = cache ? (WaiveReason2)(objects.ContainsKey(id.Value) ? objects[id.Value] : objects[id.Value] = WaiveReason2.FromJObject(FolioServiceClient.GetWaiveReason(id?.ToString()))) : WaiveReason2.FromJObject(FolioServiceClient.GetWaiveReason(id?.ToString()));
             if (wr2 == null) return null;
-            if (load && wr2.CreationUserId != null) wr2.CreationUser = (User2)(cache && objects.ContainsKey(wr2.CreationUserId.Value) ? objects[wr2.CreationUserId.Value] : objects[wr2.CreationUserId.Value] = FindUser2(wr2.CreationUserId));
-            if (load && wr2.LastWriteUserId != null) wr2.LastWriteUser = (User2)(cache && objects.ContainsKey(wr2.LastWriteUserId.Value) ? objects[wr2.LastWriteUserId.Value] : objects[wr2.LastWriteUserId.Value] = FindUser2(wr2.LastWriteUserId));
-            if (load && wr2.AccountId != null) wr2.Account = (Fee2)(cache && objects.ContainsKey(wr2.AccountId.Value) ? objects[wr2.AccountId.Value] : objects[wr2.AccountId.Value] = FindFee2(wr2.AccountId));
+            if (load && wr2.CreationUserId != null) wr2.CreationUser = FindUser2(wr2.CreationUserId, cache: cache);
+            if (load && wr2.LastWriteUserId != null) wr2.LastWriteUser = FindUser2(wr2.LastWriteUserId, cache: cache);
+            if (load && wr2.AccountId != null) wr2.Account = FindFee2(wr2.AccountId, cache: cache);
             return wr2;
         }
 
