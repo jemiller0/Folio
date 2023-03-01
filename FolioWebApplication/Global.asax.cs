@@ -6,6 +6,7 @@ using System.Configuration;
 using System.Diagnostics;
 using System.Drawing;
 using System.Drawing.Printing;
+using System.Globalization;
 using System.Linq;
 using System.Net;
 using System.Net.Mail;
@@ -330,5 +331,7 @@ namespace FolioWebApplication
         }
 
         public static string Truncate(string value, int length) => value != null ? value.Length > length ? value.Substring(0, length - 1) + "…" : value : null;
+
+        public static CultureInfo GetCultureInfo(string currencySymbol) => currencySymbol == "USD" ? CultureInfo.CurrentCulture : CultureInfo.GetCultures(CultureTypes.SpecificCultures).FirstOrDefault(ci => new RegionInfo(ci.LCID).ISOCurrencySymbol == currencySymbol) ?? CultureInfo.CurrentCulture;
     }
 }
