@@ -158,7 +158,7 @@ namespace FolioWebApplication
                             SetSourcePermissions("View");
                             Session["LabelsPermission"] = "Edit";
                         }
-                        else if (hs.Contains("department:Preserv Binding & Shelf Prpe") || userName == "zpayne" || userName == "lyssa")
+                        else if (hs.Contains("department:Preserv Binding & Shelf Prpe") || hs.Contains("department:Preservation Conservation") || userName == "zpayne" || userName == "lyssa")
                         {
                             SetInventoryPermissions("View");
                             Session["LabelsPermission"] = "Edit";
