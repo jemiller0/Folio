@@ -3,6 +3,7 @@ using Newtonsoft.Json.Serialization;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http;
 
 namespace FolioLibrary
 {
@@ -59,6 +60,21 @@ namespace FolioLibrary
 
         public void Update(AcquisitionMethod2 acquisitionMethod2) => FolioServiceClient.UpdateAcquisitionMethod(acquisitionMethod2.ToJObject());
 
+        public void UpdateOrInsert(AcquisitionMethod2 acquisitionMethod2)
+        {
+            if (acquisitionMethod2.Id == null)
+                Insert(acquisitionMethod2);
+            else
+                try
+                {
+                    Update(acquisitionMethod2);
+                }
+                catch (HttpRequestException e)
+                {
+                    if (e.Message.Contains("NotFound")) Insert(acquisitionMethod2); else throw;
+                }
+        }
+
         public void DeleteAcquisitionMethod2(Guid? id) => FolioServiceClient.DeleteAcquisitionMethod(id?.ToString());
 
         public bool AnyAcquisitionsUnit2s(string where = null) => FolioServiceClient.AnyAcquisitionsUnits(where);
@@ -106,6 +122,21 @@ namespace FolioLibrary
         }
 
         public void Update(AcquisitionsUnit2 acquisitionsUnit2) => FolioServiceClient.UpdateAcquisitionsUnit(acquisitionsUnit2.ToJObject());
+
+        public void UpdateOrInsert(AcquisitionsUnit2 acquisitionsUnit2)
+        {
+            if (acquisitionsUnit2.Id == null)
+                Insert(acquisitionsUnit2);
+            else
+                try
+                {
+                    Update(acquisitionsUnit2);
+                }
+                catch (HttpRequestException e)
+                {
+                    if (e.Message.Contains("NotFound")) Insert(acquisitionsUnit2); else throw;
+                }
+        }
 
         public void DeleteAcquisitionsUnit2(Guid? id) => FolioServiceClient.DeleteAcquisitionsUnit(id?.ToString());
 
@@ -155,6 +186,21 @@ namespace FolioLibrary
 
         public void Update(AddressType2 addressType2) => FolioServiceClient.UpdateAddressType(addressType2.ToJObject());
 
+        public void UpdateOrInsert(AddressType2 addressType2)
+        {
+            if (addressType2.Id == null)
+                Insert(addressType2);
+            else
+                try
+                {
+                    Update(addressType2);
+                }
+                catch (HttpRequestException e)
+                {
+                    if (e.Message.Contains("NotFound")) Insert(addressType2); else throw;
+                }
+        }
+
         public void DeleteAddressType2(Guid? id) => FolioServiceClient.DeleteAddressType(id?.ToString());
 
         public bool AnyAlert2s(string where = null) => FolioServiceClient.AnyAlerts(where);
@@ -190,6 +236,21 @@ namespace FolioLibrary
         }
 
         public void Update(Alert2 alert2) => FolioServiceClient.UpdateAlert(alert2.ToJObject());
+
+        public void UpdateOrInsert(Alert2 alert2)
+        {
+            if (alert2.Id == null)
+                Insert(alert2);
+            else
+                try
+                {
+                    Update(alert2);
+                }
+                catch (HttpRequestException e)
+                {
+                    if (e.Message.Contains("NotFound")) Insert(alert2); else throw;
+                }
+        }
 
         public void DeleteAlert2(Guid? id) => FolioServiceClient.DeleteAlert(id?.ToString());
 
@@ -239,6 +300,21 @@ namespace FolioLibrary
 
         public void Update(AlternativeTitleType2 alternativeTitleType2) => FolioServiceClient.UpdateAlternativeTitleType(alternativeTitleType2.ToJObject());
 
+        public void UpdateOrInsert(AlternativeTitleType2 alternativeTitleType2)
+        {
+            if (alternativeTitleType2.Id == null)
+                Insert(alternativeTitleType2);
+            else
+                try
+                {
+                    Update(alternativeTitleType2);
+                }
+                catch (HttpRequestException e)
+                {
+                    if (e.Message.Contains("NotFound")) Insert(alternativeTitleType2); else throw;
+                }
+        }
+
         public void DeleteAlternativeTitleType2(Guid? id) => FolioServiceClient.DeleteAlternativeTitleType(id?.ToString());
 
         public bool AnyBatchGroup2s(string where = null) => FolioServiceClient.AnyBatchGroups(where);
@@ -286,6 +362,21 @@ namespace FolioLibrary
         }
 
         public void Update(BatchGroup2 batchGroup2) => FolioServiceClient.UpdateBatchGroup(batchGroup2.ToJObject());
+
+        public void UpdateOrInsert(BatchGroup2 batchGroup2)
+        {
+            if (batchGroup2.Id == null)
+                Insert(batchGroup2);
+            else
+                try
+                {
+                    Update(batchGroup2);
+                }
+                catch (HttpRequestException e)
+                {
+                    if (e.Message.Contains("NotFound")) Insert(batchGroup2); else throw;
+                }
+        }
 
         public void DeleteBatchGroup2(Guid? id) => FolioServiceClient.DeleteBatchGroup(id?.ToString());
 
@@ -338,6 +429,21 @@ namespace FolioLibrary
 
         public void Update(Block2 block2) => FolioServiceClient.UpdateBlock(block2.ToJObject());
 
+        public void UpdateOrInsert(Block2 block2)
+        {
+            if (block2.Id == null)
+                Insert(block2);
+            else
+                try
+                {
+                    Update(block2);
+                }
+                catch (HttpRequestException e)
+                {
+                    if (e.Message.Contains("NotFound")) Insert(block2); else throw;
+                }
+        }
+
         public void DeleteBlock2(Guid? id) => FolioServiceClient.DeleteBlock(id?.ToString());
 
         public bool AnyBlockCondition2s(string where = null) => FolioServiceClient.AnyBlockConditions(where);
@@ -385,6 +491,21 @@ namespace FolioLibrary
         }
 
         public void Update(BlockCondition2 blockCondition2) => FolioServiceClient.UpdateBlockCondition(blockCondition2.ToJObject());
+
+        public void UpdateOrInsert(BlockCondition2 blockCondition2)
+        {
+            if (blockCondition2.Id == null)
+                Insert(blockCondition2);
+            else
+                try
+                {
+                    Update(blockCondition2);
+                }
+                catch (HttpRequestException e)
+                {
+                    if (e.Message.Contains("NotFound")) Insert(blockCondition2); else throw;
+                }
+        }
 
         public void DeleteBlockCondition2(Guid? id) => FolioServiceClient.DeleteBlockCondition(id?.ToString());
 
@@ -440,6 +561,21 @@ namespace FolioLibrary
 
         public void Update(BlockLimit2 blockLimit2) => FolioServiceClient.UpdateBlockLimit(blockLimit2.ToJObject());
 
+        public void UpdateOrInsert(BlockLimit2 blockLimit2)
+        {
+            if (blockLimit2.Id == null)
+                Insert(blockLimit2);
+            else
+                try
+                {
+                    Update(blockLimit2);
+                }
+                catch (HttpRequestException e)
+                {
+                    if (e.Message.Contains("NotFound")) Insert(blockLimit2); else throw;
+                }
+        }
+
         public void DeleteBlockLimit2(Guid? id) => FolioServiceClient.DeleteBlockLimit(id?.ToString());
 
         public bool AnyBoundWithPart2s(string where = null) => FolioServiceClient.AnyBoundWithParts(where);
@@ -493,6 +629,21 @@ namespace FolioLibrary
         }
 
         public void Update(BoundWithPart2 boundWithPart2) => FolioServiceClient.UpdateBoundWithPart(boundWithPart2.ToJObject());
+
+        public void UpdateOrInsert(BoundWithPart2 boundWithPart2)
+        {
+            if (boundWithPart2.Id == null)
+                Insert(boundWithPart2);
+            else
+                try
+                {
+                    Update(boundWithPart2);
+                }
+                catch (HttpRequestException e)
+                {
+                    if (e.Message.Contains("NotFound")) Insert(boundWithPart2); else throw;
+                }
+        }
 
         public void DeleteBoundWithPart2(Guid? id) => FolioServiceClient.DeleteBoundWithPart(id?.ToString());
 
@@ -564,6 +715,21 @@ namespace FolioLibrary
 
         public void Update(Budget2 budget2) => FolioServiceClient.UpdateBudget(budget2.ToJObject());
 
+        public void UpdateOrInsert(Budget2 budget2)
+        {
+            if (budget2.Id == null)
+                Insert(budget2);
+            else
+                try
+                {
+                    Update(budget2);
+                }
+                catch (HttpRequestException e)
+                {
+                    if (e.Message.Contains("NotFound")) Insert(budget2); else throw;
+                }
+        }
+
         public void DeleteBudget2(Guid? id) => FolioServiceClient.DeleteBudget(id?.ToString());
 
         public bool AnyBudgetExpenseClass2s(string where = null) => FolioServiceClient.AnyBudgetExpenseClasses(where);
@@ -611,6 +777,21 @@ namespace FolioLibrary
         }
 
         public void Update(BudgetExpenseClass2 budgetExpenseClass2) => FolioServiceClient.UpdateBudgetExpenseClass(budgetExpenseClass2.ToJObject());
+
+        public void UpdateOrInsert(BudgetExpenseClass2 budgetExpenseClass2)
+        {
+            if (budgetExpenseClass2.Id == null)
+                Insert(budgetExpenseClass2);
+            else
+                try
+                {
+                    Update(budgetExpenseClass2);
+                }
+                catch (HttpRequestException e)
+                {
+                    if (e.Message.Contains("NotFound")) Insert(budgetExpenseClass2); else throw;
+                }
+        }
 
         public void DeleteBudgetExpenseClass2(Guid? id) => FolioServiceClient.DeleteBudgetExpenseClass(id?.ToString());
 
@@ -666,6 +847,21 @@ namespace FolioLibrary
 
         public void Update(BudgetGroup2 budgetGroup2) => FolioServiceClient.UpdateBudgetGroup(budgetGroup2.ToJObject());
 
+        public void UpdateOrInsert(BudgetGroup2 budgetGroup2)
+        {
+            if (budgetGroup2.Id == null)
+                Insert(budgetGroup2);
+            else
+                try
+                {
+                    Update(budgetGroup2);
+                }
+                catch (HttpRequestException e)
+                {
+                    if (e.Message.Contains("NotFound")) Insert(budgetGroup2); else throw;
+                }
+        }
+
         public void DeleteBudgetGroup2(Guid? id) => FolioServiceClient.DeleteBudgetGroup(id?.ToString());
 
         public bool AnyCallNumberType2s(string where = null) => FolioServiceClient.AnyCallNumberTypes(where);
@@ -713,6 +909,21 @@ namespace FolioLibrary
         }
 
         public void Update(CallNumberType2 callNumberType2) => FolioServiceClient.UpdateCallNumberType(callNumberType2.ToJObject());
+
+        public void UpdateOrInsert(CallNumberType2 callNumberType2)
+        {
+            if (callNumberType2.Id == null)
+                Insert(callNumberType2);
+            else
+                try
+                {
+                    Update(callNumberType2);
+                }
+                catch (HttpRequestException e)
+                {
+                    if (e.Message.Contains("NotFound")) Insert(callNumberType2); else throw;
+                }
+        }
 
         public void DeleteCallNumberType2(Guid? id) => FolioServiceClient.DeleteCallNumberType(id?.ToString());
 
@@ -765,6 +976,21 @@ namespace FolioLibrary
 
         public void Update(Campus2 campus2) => FolioServiceClient.UpdateCampus(campus2.ToJObject());
 
+        public void UpdateOrInsert(Campus2 campus2)
+        {
+            if (campus2.Id == null)
+                Insert(campus2);
+            else
+                try
+                {
+                    Update(campus2);
+                }
+                catch (HttpRequestException e)
+                {
+                    if (e.Message.Contains("NotFound")) Insert(campus2); else throw;
+                }
+        }
+
         public void DeleteCampus2(Guid? id) => FolioServiceClient.DeleteCampus(id?.ToString());
 
         public bool AnyCancellationReason2s(string where = null) => FolioServiceClient.AnyCancellationReasons(where);
@@ -813,6 +1039,21 @@ namespace FolioLibrary
 
         public void Update(CancellationReason2 cancellationReason2) => FolioServiceClient.UpdateCancellationReason(cancellationReason2.ToJObject());
 
+        public void UpdateOrInsert(CancellationReason2 cancellationReason2)
+        {
+            if (cancellationReason2.Id == null)
+                Insert(cancellationReason2);
+            else
+                try
+                {
+                    Update(cancellationReason2);
+                }
+                catch (HttpRequestException e)
+                {
+                    if (e.Message.Contains("NotFound")) Insert(cancellationReason2); else throw;
+                }
+        }
+
         public void DeleteCancellationReason2(Guid? id) => FolioServiceClient.DeleteCancellationReason(id?.ToString());
 
         public bool AnyCategory2s(string where = null) => FolioServiceClient.AnyCategories(where);
@@ -860,6 +1101,21 @@ namespace FolioLibrary
         }
 
         public void Update(Category2 category2) => FolioServiceClient.UpdateCategory(category2.ToJObject());
+
+        public void UpdateOrInsert(Category2 category2)
+        {
+            if (category2.Id == null)
+                Insert(category2);
+            else
+                try
+                {
+                    Update(category2);
+                }
+                catch (HttpRequestException e)
+                {
+                    if (e.Message.Contains("NotFound")) Insert(category2); else throw;
+                }
+        }
 
         public void DeleteCategory2(Guid? id) => FolioServiceClient.DeleteCategory(id?.ToString());
 
@@ -915,6 +1171,21 @@ namespace FolioLibrary
 
         public void Update(CheckIn2 checkIn2) => FolioServiceClient.UpdateCheckIn(checkIn2.ToJObject());
 
+        public void UpdateOrInsert(CheckIn2 checkIn2)
+        {
+            if (checkIn2.Id == null)
+                Insert(checkIn2);
+            else
+                try
+                {
+                    Update(checkIn2);
+                }
+                catch (HttpRequestException e)
+                {
+                    if (e.Message.Contains("NotFound")) Insert(checkIn2); else throw;
+                }
+        }
+
         public void DeleteCheckIn2(Guid? id) => FolioServiceClient.DeleteCheckIn(id?.ToString());
 
         public CirculationRule2 FindCirculationRule2(bool load = false, bool cache = true) => CirculationRule2.FromJObject(FolioServiceClient.GetCirculationRule());
@@ -967,6 +1238,21 @@ namespace FolioLibrary
 
         public void Update(ClassificationType2 classificationType2) => FolioServiceClient.UpdateClassificationType(classificationType2.ToJObject());
 
+        public void UpdateOrInsert(ClassificationType2 classificationType2)
+        {
+            if (classificationType2.Id == null)
+                Insert(classificationType2);
+            else
+                try
+                {
+                    Update(classificationType2);
+                }
+                catch (HttpRequestException e)
+                {
+                    if (e.Message.Contains("NotFound")) Insert(classificationType2); else throw;
+                }
+        }
+
         public void DeleteClassificationType2(Guid? id) => FolioServiceClient.DeleteClassificationType(id?.ToString());
 
         public bool AnyCloseReason2s(string where = null) => FolioServiceClient.AnyCloseReasons(where);
@@ -1002,6 +1288,21 @@ namespace FolioLibrary
         }
 
         public void Update(CloseReason2 closeReason2) => FolioServiceClient.UpdateCloseReason(closeReason2.ToJObject());
+
+        public void UpdateOrInsert(CloseReason2 closeReason2)
+        {
+            if (closeReason2.Id == null)
+                Insert(closeReason2);
+            else
+                try
+                {
+                    Update(closeReason2);
+                }
+                catch (HttpRequestException e)
+                {
+                    if (e.Message.Contains("NotFound")) Insert(closeReason2); else throw;
+                }
+        }
 
         public void DeleteCloseReason2(Guid? id) => FolioServiceClient.DeleteCloseReason(id?.ToString());
 
@@ -1051,6 +1352,21 @@ namespace FolioLibrary
 
         public void Update(Comment2 comment2) => FolioServiceClient.UpdateComment(comment2.ToJObject());
 
+        public void UpdateOrInsert(Comment2 comment2)
+        {
+            if (comment2.Id == null)
+                Insert(comment2);
+            else
+                try
+                {
+                    Update(comment2);
+                }
+                catch (HttpRequestException e)
+                {
+                    if (e.Message.Contains("NotFound")) Insert(comment2); else throw;
+                }
+        }
+
         public void DeleteComment2(Guid? id) => FolioServiceClient.DeleteComment(id?.ToString());
 
         public bool AnyConfiguration2s(string where = null) => FolioServiceClient.AnyConfigurations(where);
@@ -1098,6 +1414,21 @@ namespace FolioLibrary
         }
 
         public void Update(Configuration2 configuration2) => FolioServiceClient.UpdateConfiguration(configuration2.ToJObject());
+
+        public void UpdateOrInsert(Configuration2 configuration2)
+        {
+            if (configuration2.Id == null)
+                Insert(configuration2);
+            else
+                try
+                {
+                    Update(configuration2);
+                }
+                catch (HttpRequestException e)
+                {
+                    if (e.Message.Contains("NotFound")) Insert(configuration2); else throw;
+                }
+        }
 
         public void DeleteConfiguration2(Guid? id) => FolioServiceClient.DeleteConfiguration(id?.ToString());
 
@@ -1191,6 +1522,21 @@ namespace FolioLibrary
 
         public void Update(Contact2 contact2) => FolioServiceClient.UpdateContact(contact2.ToJObject());
 
+        public void UpdateOrInsert(Contact2 contact2)
+        {
+            if (contact2.Id == null)
+                Insert(contact2);
+            else
+                try
+                {
+                    Update(contact2);
+                }
+                catch (HttpRequestException e)
+                {
+                    if (e.Message.Contains("NotFound")) Insert(contact2); else throw;
+                }
+        }
+
         public void DeleteContact2(Guid? id) => FolioServiceClient.DeleteContact(id?.ToString());
 
         public bool AnyContributorNameType2s(string where = null) => FolioServiceClient.AnyContributorNameTypes(where);
@@ -1239,6 +1585,21 @@ namespace FolioLibrary
 
         public void Update(ContributorNameType2 contributorNameType2) => FolioServiceClient.UpdateContributorNameType(contributorNameType2.ToJObject());
 
+        public void UpdateOrInsert(ContributorNameType2 contributorNameType2)
+        {
+            if (contributorNameType2.Id == null)
+                Insert(contributorNameType2);
+            else
+                try
+                {
+                    Update(contributorNameType2);
+                }
+                catch (HttpRequestException e)
+                {
+                    if (e.Message.Contains("NotFound")) Insert(contributorNameType2); else throw;
+                }
+        }
+
         public void DeleteContributorNameType2(Guid? id) => FolioServiceClient.DeleteContributorNameType(id?.ToString());
 
         public bool AnyContributorType2s(string where = null) => FolioServiceClient.AnyContributorTypes(where);
@@ -1286,6 +1647,21 @@ namespace FolioLibrary
         }
 
         public void Update(ContributorType2 contributorType2) => FolioServiceClient.UpdateContributorType(contributorType2.ToJObject());
+
+        public void UpdateOrInsert(ContributorType2 contributorType2)
+        {
+            if (contributorType2.Id == null)
+                Insert(contributorType2);
+            else
+                try
+                {
+                    Update(contributorType2);
+                }
+                catch (HttpRequestException e)
+                {
+                    if (e.Message.Contains("NotFound")) Insert(contributorType2); else throw;
+                }
+        }
 
         public void DeleteContributorType2(Guid? id) => FolioServiceClient.DeleteContributorType(id?.ToString());
 
@@ -1342,6 +1718,21 @@ namespace FolioLibrary
 
         public void Update(CustomField2 customField2) => FolioServiceClient.UpdateCustomField(customField2.ToJObject());
 
+        public void UpdateOrInsert(CustomField2 customField2)
+        {
+            if (customField2.Id == null)
+                Insert(customField2);
+            else
+                try
+                {
+                    Update(customField2);
+                }
+                catch (HttpRequestException e)
+                {
+                    if (e.Message.Contains("NotFound")) Insert(customField2); else throw;
+                }
+        }
+
         public void DeleteCustomField2(Guid? id) => FolioServiceClient.DeleteCustomField(id?.ToString());
 
         public bool AnyDepartment2s(string where = null) => FolioServiceClient.AnyDepartments(where);
@@ -1389,6 +1780,21 @@ namespace FolioLibrary
         }
 
         public void Update(Department2 department2) => FolioServiceClient.UpdateDepartment(department2.ToJObject());
+
+        public void UpdateOrInsert(Department2 department2)
+        {
+            if (department2.Id == null)
+                Insert(department2);
+            else
+                try
+                {
+                    Update(department2);
+                }
+                catch (HttpRequestException e)
+                {
+                    if (e.Message.Contains("NotFound")) Insert(department2); else throw;
+                }
+        }
 
         public void DeleteDepartment2(Guid? id) => FolioServiceClient.DeleteDepartment(id?.ToString());
 
@@ -1438,6 +1844,21 @@ namespace FolioLibrary
 
         public void Update(ElectronicAccessRelationship2 electronicAccessRelationship2) => FolioServiceClient.UpdateElectronicAccessRelationship(electronicAccessRelationship2.ToJObject());
 
+        public void UpdateOrInsert(ElectronicAccessRelationship2 electronicAccessRelationship2)
+        {
+            if (electronicAccessRelationship2.Id == null)
+                Insert(electronicAccessRelationship2);
+            else
+                try
+                {
+                    Update(electronicAccessRelationship2);
+                }
+                catch (HttpRequestException e)
+                {
+                    if (e.Message.Contains("NotFound")) Insert(electronicAccessRelationship2); else throw;
+                }
+        }
+
         public void DeleteElectronicAccessRelationship2(Guid? id) => FolioServiceClient.DeleteElectronicAccessRelationship(id?.ToString());
 
         public bool AnyExpenseClass2s(string where = null) => FolioServiceClient.AnyExpenseClasses(where);
@@ -1485,6 +1906,21 @@ namespace FolioLibrary
         }
 
         public void Update(ExpenseClass2 expenseClass2) => FolioServiceClient.UpdateExpenseClass(expenseClass2.ToJObject());
+
+        public void UpdateOrInsert(ExpenseClass2 expenseClass2)
+        {
+            if (expenseClass2.Id == null)
+                Insert(expenseClass2);
+            else
+                try
+                {
+                    Update(expenseClass2);
+                }
+                catch (HttpRequestException e)
+                {
+                    if (e.Message.Contains("NotFound")) Insert(expenseClass2); else throw;
+                }
+        }
 
         public void DeleteExpenseClass2(Guid? id) => FolioServiceClient.DeleteExpenseClass(id?.ToString());
 
@@ -1558,6 +1994,21 @@ namespace FolioLibrary
 
         public void Update(Fee2 fee2) => FolioServiceClient.UpdateFee(fee2.ToJObject());
 
+        public void UpdateOrInsert(Fee2 fee2)
+        {
+            if (fee2.Id == null)
+                Insert(fee2);
+            else
+                try
+                {
+                    Update(fee2);
+                }
+                catch (HttpRequestException e)
+                {
+                    if (e.Message.Contains("NotFound")) Insert(fee2); else throw;
+                }
+        }
+
         public void DeleteFee2(Guid? id) => FolioServiceClient.DeleteFee(id?.ToString());
 
         public bool AnyFeeType2s(string where = null) => FolioServiceClient.AnyFeeTypes(where);
@@ -1615,6 +2066,21 @@ namespace FolioLibrary
 
         public void Update(FeeType2 feeType2) => FolioServiceClient.UpdateFeeType(feeType2.ToJObject());
 
+        public void UpdateOrInsert(FeeType2 feeType2)
+        {
+            if (feeType2.Id == null)
+                Insert(feeType2);
+            else
+                try
+                {
+                    Update(feeType2);
+                }
+                catch (HttpRequestException e)
+                {
+                    if (e.Message.Contains("NotFound")) Insert(feeType2); else throw;
+                }
+        }
+
         public void DeleteFeeType2(Guid? id) => FolioServiceClient.DeleteFeeType(id?.ToString());
 
         public bool AnyFinanceGroup2s(string where = null) => FolioServiceClient.AnyFinanceGroups(where);
@@ -1670,6 +2136,21 @@ namespace FolioLibrary
         }
 
         public void Update(FinanceGroup2 financeGroup2) => FolioServiceClient.UpdateFinanceGroup(financeGroup2.ToJObject());
+
+        public void UpdateOrInsert(FinanceGroup2 financeGroup2)
+        {
+            if (financeGroup2.Id == null)
+                Insert(financeGroup2);
+            else
+                try
+                {
+                    Update(financeGroup2);
+                }
+                catch (HttpRequestException e)
+                {
+                    if (e.Message.Contains("NotFound")) Insert(financeGroup2); else throw;
+                }
+        }
 
         public void DeleteFinanceGroup2(Guid? id) => FolioServiceClient.DeleteFinanceGroup(id?.ToString());
 
@@ -1727,6 +2208,21 @@ namespace FolioLibrary
 
         public void Update(FiscalYear2 fiscalYear2) => FolioServiceClient.UpdateFiscalYear(fiscalYear2.ToJObject());
 
+        public void UpdateOrInsert(FiscalYear2 fiscalYear2)
+        {
+            if (fiscalYear2.Id == null)
+                Insert(fiscalYear2);
+            else
+                try
+                {
+                    Update(fiscalYear2);
+                }
+                catch (HttpRequestException e)
+                {
+                    if (e.Message.Contains("NotFound")) Insert(fiscalYear2); else throw;
+                }
+        }
+
         public void DeleteFiscalYear2(Guid? id) => FolioServiceClient.DeleteFiscalYear(id?.ToString());
 
         public bool AnyFixedDueDateSchedule2s(string where = null) => FolioServiceClient.AnyFixedDueDateSchedules(where);
@@ -1782,6 +2278,21 @@ namespace FolioLibrary
 
         public void Update(FixedDueDateSchedule2 fixedDueDateSchedule2) => FolioServiceClient.UpdateFixedDueDateSchedule(fixedDueDateSchedule2.ToJObject());
 
+        public void UpdateOrInsert(FixedDueDateSchedule2 fixedDueDateSchedule2)
+        {
+            if (fixedDueDateSchedule2.Id == null)
+                Insert(fixedDueDateSchedule2);
+            else
+                try
+                {
+                    Update(fixedDueDateSchedule2);
+                }
+                catch (HttpRequestException e)
+                {
+                    if (e.Message.Contains("NotFound")) Insert(fixedDueDateSchedule2); else throw;
+                }
+        }
+
         public void DeleteFixedDueDateSchedule2(Guid? id) => FolioServiceClient.DeleteFixedDueDateSchedule(id?.ToString());
 
         public bool AnyFormats(string where = null) => FolioServiceClient.AnyInstanceFormats(where);
@@ -1829,6 +2340,21 @@ namespace FolioLibrary
         }
 
         public void Update(Format format) => FolioServiceClient.UpdateInstanceFormat(format.ToJObject());
+
+        public void UpdateOrInsert(Format format)
+        {
+            if (format.Id == null)
+                Insert(format);
+            else
+                try
+                {
+                    Update(format);
+                }
+                catch (HttpRequestException e)
+                {
+                    if (e.Message.Contains("NotFound")) Insert(format); else throw;
+                }
+        }
 
         public void DeleteFormat(Guid? id) => FolioServiceClient.DeleteInstanceFormat(id?.ToString());
 
@@ -1916,6 +2442,21 @@ namespace FolioLibrary
 
         public void Update(Fund2 fund2) => FolioServiceClient.UpdateFund(fund2.ToJObject());
 
+        public void UpdateOrInsert(Fund2 fund2)
+        {
+            if (fund2.Id == null)
+                Insert(fund2);
+            else
+                try
+                {
+                    Update(fund2);
+                }
+                catch (HttpRequestException e)
+                {
+                    if (e.Message.Contains("NotFound")) Insert(fund2); else throw;
+                }
+        }
+
         public void DeleteFund2(Guid? id) => FolioServiceClient.DeleteFund(id?.ToString());
 
         public bool AnyFundType2s(string where = null) => FolioServiceClient.AnyFundTypes(where);
@@ -1951,6 +2492,21 @@ namespace FolioLibrary
         }
 
         public void Update(FundType2 fundType2) => FolioServiceClient.UpdateFundType(fundType2.ToJObject());
+
+        public void UpdateOrInsert(FundType2 fundType2)
+        {
+            if (fundType2.Id == null)
+                Insert(fundType2);
+            else
+                try
+                {
+                    Update(fundType2);
+                }
+                catch (HttpRequestException e)
+                {
+                    if (e.Message.Contains("NotFound")) Insert(fundType2); else throw;
+                }
+        }
 
         public void DeleteFundType2(Guid? id) => FolioServiceClient.DeleteFundType(id?.ToString());
 
@@ -1999,6 +2555,21 @@ namespace FolioLibrary
         }
 
         public void Update(Group2 group2) => FolioServiceClient.UpdateGroup(group2.ToJObject());
+
+        public void UpdateOrInsert(Group2 group2)
+        {
+            if (group2.Id == null)
+                Insert(group2);
+            else
+                try
+                {
+                    Update(group2);
+                }
+                catch (HttpRequestException e)
+                {
+                    if (e.Message.Contains("NotFound")) Insert(group2); else throw;
+                }
+        }
 
         public void DeleteGroup2(Guid? id) => FolioServiceClient.DeleteGroup(id?.ToString());
 
@@ -2147,6 +2718,21 @@ namespace FolioLibrary
 
         public void Update(Holding2 holding2) => FolioServiceClient.UpdateHolding(holding2.ToJObject());
 
+        public void UpdateOrInsert(Holding2 holding2)
+        {
+            if (holding2.Id == null)
+                Insert(holding2);
+            else
+                try
+                {
+                    Update(holding2);
+                }
+                catch (HttpRequestException e)
+                {
+                    if (e.Message.Contains("NotFound")) Insert(holding2); else throw;
+                }
+        }
+
         public void DeleteHolding2(Guid? id) => FolioServiceClient.DeleteHolding(id?.ToString());
 
         public bool AnyHoldingNoteType2s(string where = null) => FolioServiceClient.AnyHoldingNoteTypes(where);
@@ -2195,6 +2781,21 @@ namespace FolioLibrary
 
         public void Update(HoldingNoteType2 holdingNoteType2) => FolioServiceClient.UpdateHoldingNoteType(holdingNoteType2.ToJObject());
 
+        public void UpdateOrInsert(HoldingNoteType2 holdingNoteType2)
+        {
+            if (holdingNoteType2.Id == null)
+                Insert(holdingNoteType2);
+            else
+                try
+                {
+                    Update(holdingNoteType2);
+                }
+                catch (HttpRequestException e)
+                {
+                    if (e.Message.Contains("NotFound")) Insert(holdingNoteType2); else throw;
+                }
+        }
+
         public void DeleteHoldingNoteType2(Guid? id) => FolioServiceClient.DeleteHoldingNoteType(id?.ToString());
 
         public bool AnyHoldingType2s(string where = null) => FolioServiceClient.AnyHoldingTypes(where);
@@ -2242,6 +2843,21 @@ namespace FolioLibrary
         }
 
         public void Update(HoldingType2 holdingType2) => FolioServiceClient.UpdateHoldingType(holdingType2.ToJObject());
+
+        public void UpdateOrInsert(HoldingType2 holdingType2)
+        {
+            if (holdingType2.Id == null)
+                Insert(holdingType2);
+            else
+                try
+                {
+                    Update(holdingType2);
+                }
+                catch (HttpRequestException e)
+                {
+                    if (e.Message.Contains("NotFound")) Insert(holdingType2); else throw;
+                }
+        }
 
         public void DeleteHoldingType2(Guid? id) => FolioServiceClient.DeleteHoldingType(id?.ToString());
 
@@ -2295,6 +2911,21 @@ namespace FolioLibrary
 
         public void Update(IdType2 idType2) => FolioServiceClient.UpdateIdType(idType2.ToJObject());
 
+        public void UpdateOrInsert(IdType2 idType2)
+        {
+            if (idType2.Id == null)
+                Insert(idType2);
+            else
+                try
+                {
+                    Update(idType2);
+                }
+                catch (HttpRequestException e)
+                {
+                    if (e.Message.Contains("NotFound")) Insert(idType2); else throw;
+                }
+        }
+
         public void DeleteIdType2(Guid? id) => FolioServiceClient.DeleteIdType(id?.ToString());
 
         public bool AnyIllPolicy2s(string where = null) => FolioServiceClient.AnyIllPolicies(where);
@@ -2342,6 +2973,21 @@ namespace FolioLibrary
         }
 
         public void Update(IllPolicy2 illPolicy2) => FolioServiceClient.UpdateIllPolicy(illPolicy2.ToJObject());
+
+        public void UpdateOrInsert(IllPolicy2 illPolicy2)
+        {
+            if (illPolicy2.Id == null)
+                Insert(illPolicy2);
+            else
+                try
+                {
+                    Update(illPolicy2);
+                }
+                catch (HttpRequestException e)
+                {
+                    if (e.Message.Contains("NotFound")) Insert(illPolicy2); else throw;
+                }
+        }
 
         public void DeleteIllPolicy2(Guid? id) => FolioServiceClient.DeleteIllPolicy(id?.ToString());
 
@@ -2543,6 +3189,21 @@ namespace FolioLibrary
 
         public void Update(Instance2 instance2) => FolioServiceClient.UpdateInstance(instance2.ToJObject());
 
+        public void UpdateOrInsert(Instance2 instance2)
+        {
+            if (instance2.Id == null)
+                Insert(instance2);
+            else
+                try
+                {
+                    Update(instance2);
+                }
+                catch (HttpRequestException e)
+                {
+                    if (e.Message.Contains("NotFound")) Insert(instance2); else throw;
+                }
+        }
+
         public void DeleteInstance2(Guid? id) => FolioServiceClient.DeleteInstance(id?.ToString());
 
         public bool AnyInstanceNoteType2s(string where = null) => FolioServiceClient.AnyInstanceNoteTypes(where);
@@ -2590,6 +3251,21 @@ namespace FolioLibrary
         }
 
         public void Update(InstanceNoteType2 instanceNoteType2) => FolioServiceClient.UpdateInstanceNoteType(instanceNoteType2.ToJObject());
+
+        public void UpdateOrInsert(InstanceNoteType2 instanceNoteType2)
+        {
+            if (instanceNoteType2.Id == null)
+                Insert(instanceNoteType2);
+            else
+                try
+                {
+                    Update(instanceNoteType2);
+                }
+                catch (HttpRequestException e)
+                {
+                    if (e.Message.Contains("NotFound")) Insert(instanceNoteType2); else throw;
+                }
+        }
 
         public void DeleteInstanceNoteType2(Guid? id) => FolioServiceClient.DeleteInstanceNoteType(id?.ToString());
 
@@ -2639,6 +3315,21 @@ namespace FolioLibrary
 
         public void Update(InstanceType2 instanceType2) => FolioServiceClient.UpdateInstanceType(instanceType2.ToJObject());
 
+        public void UpdateOrInsert(InstanceType2 instanceType2)
+        {
+            if (instanceType2.Id == null)
+                Insert(instanceType2);
+            else
+                try
+                {
+                    Update(instanceType2);
+                }
+                catch (HttpRequestException e)
+                {
+                    if (e.Message.Contains("NotFound")) Insert(instanceType2); else throw;
+                }
+        }
+
         public void DeleteInstanceType2(Guid? id) => FolioServiceClient.DeleteInstanceType(id?.ToString());
 
         public bool AnyInstitution2s(string where = null) => FolioServiceClient.AnyInstitutions(where);
@@ -2686,6 +3377,21 @@ namespace FolioLibrary
         }
 
         public void Update(Institution2 institution2) => FolioServiceClient.UpdateInstitution(institution2.ToJObject());
+
+        public void UpdateOrInsert(Institution2 institution2)
+        {
+            if (institution2.Id == null)
+                Insert(institution2);
+            else
+                try
+                {
+                    Update(institution2);
+                }
+                catch (HttpRequestException e)
+                {
+                    if (e.Message.Contains("NotFound")) Insert(institution2); else throw;
+                }
+        }
 
         public void DeleteInstitution2(Guid? id) => FolioServiceClient.DeleteInstitution(id?.ToString());
 
@@ -2741,6 +3447,21 @@ namespace FolioLibrary
         }
 
         public void Update(Interface2 interface2) => FolioServiceClient.UpdateInterface(interface2.ToJObject());
+
+        public void UpdateOrInsert(Interface2 interface2)
+        {
+            if (interface2.Id == null)
+                Insert(interface2);
+            else
+                try
+                {
+                    Update(interface2);
+                }
+                catch (HttpRequestException e)
+                {
+                    if (e.Message.Contains("NotFound")) Insert(interface2); else throw;
+                }
+        }
 
         public void DeleteInterface2(Guid? id) => FolioServiceClient.DeleteInterface(id?.ToString());
 
@@ -2834,6 +3555,21 @@ namespace FolioLibrary
 
         public void Update(Invoice2 invoice2) => FolioServiceClient.UpdateInvoice(invoice2.ToJObject());
 
+        public void UpdateOrInsert(Invoice2 invoice2)
+        {
+            if (invoice2.Id == null)
+                Insert(invoice2);
+            else
+                try
+                {
+                    Update(invoice2);
+                }
+                catch (HttpRequestException e)
+                {
+                    if (e.Message.Contains("NotFound")) Insert(invoice2); else throw;
+                }
+        }
+
         public void DeleteInvoice2(Guid? id) => FolioServiceClient.DeleteInvoice(id?.ToString());
 
         public bool AnyInvoiceItem2s(string where = null) => FolioServiceClient.AnyInvoiceItems(where);
@@ -2922,6 +3658,21 @@ namespace FolioLibrary
 
         public void Update(InvoiceItem2 invoiceItem2) => FolioServiceClient.UpdateInvoiceItem(invoiceItem2.ToJObject());
 
+        public void UpdateOrInsert(InvoiceItem2 invoiceItem2)
+        {
+            if (invoiceItem2.Id == null)
+                Insert(invoiceItem2);
+            else
+                try
+                {
+                    Update(invoiceItem2);
+                }
+                catch (HttpRequestException e)
+                {
+                    if (e.Message.Contains("NotFound")) Insert(invoiceItem2); else throw;
+                }
+        }
+
         public void DeleteInvoiceItem2(Guid? id) => FolioServiceClient.DeleteInvoiceItem(id?.ToString());
 
         public InvoiceTransactionSummary2 FindInvoiceTransactionSummary2(Guid? id, bool load = false, bool cache = true)
@@ -2940,6 +3691,21 @@ namespace FolioLibrary
         }
 
         public void Update(InvoiceTransactionSummary2 invoiceTransactionSummary2) => FolioServiceClient.UpdateInvoiceTransactionSummary(invoiceTransactionSummary2.ToJObject());
+
+        public void UpdateOrInsert(InvoiceTransactionSummary2 invoiceTransactionSummary2)
+        {
+            if (invoiceTransactionSummary2.Id == null)
+                Insert(invoiceTransactionSummary2);
+            else
+                try
+                {
+                    Update(invoiceTransactionSummary2);
+                }
+                catch (HttpRequestException e)
+                {
+                    if (e.Message.Contains("NotFound")) Insert(invoiceTransactionSummary2); else throw;
+                }
+        }
 
         public void DeleteInvoiceTransactionSummary2(Guid? id) => FolioServiceClient.DeleteInvoiceTransactionSummary(id?.ToString());
 
@@ -2988,6 +3754,21 @@ namespace FolioLibrary
         }
 
         public void Update(IssuanceMode issuanceMode) => FolioServiceClient.UpdateModeOfIssuance(issuanceMode.ToJObject());
+
+        public void UpdateOrInsert(IssuanceMode issuanceMode)
+        {
+            if (issuanceMode.Id == null)
+                Insert(issuanceMode);
+            else
+                try
+                {
+                    Update(issuanceMode);
+                }
+                catch (HttpRequestException e)
+                {
+                    if (e.Message.Contains("NotFound")) Insert(issuanceMode); else throw;
+                }
+        }
 
         public void DeleteIssuanceMode(Guid? id) => FolioServiceClient.DeleteModeOfIssuance(id?.ToString());
 
@@ -3140,6 +3921,21 @@ namespace FolioLibrary
 
         public void Update(Item2 item2) => FolioServiceClient.UpdateItem(item2.ToJObject());
 
+        public void UpdateOrInsert(Item2 item2)
+        {
+            if (item2.Id == null)
+                Insert(item2);
+            else
+                try
+                {
+                    Update(item2);
+                }
+                catch (HttpRequestException e)
+                {
+                    if (e.Message.Contains("NotFound")) Insert(item2); else throw;
+                }
+        }
+
         public void DeleteItem2(Guid? id) => FolioServiceClient.DeleteItem(id?.ToString());
 
         public bool AnyItemDamagedStatus2s(string where = null) => FolioServiceClient.AnyItemDamagedStatuses(where);
@@ -3188,6 +3984,21 @@ namespace FolioLibrary
 
         public void Update(ItemDamagedStatus2 itemDamagedStatus2) => FolioServiceClient.UpdateItemDamagedStatus(itemDamagedStatus2.ToJObject());
 
+        public void UpdateOrInsert(ItemDamagedStatus2 itemDamagedStatus2)
+        {
+            if (itemDamagedStatus2.Id == null)
+                Insert(itemDamagedStatus2);
+            else
+                try
+                {
+                    Update(itemDamagedStatus2);
+                }
+                catch (HttpRequestException e)
+                {
+                    if (e.Message.Contains("NotFound")) Insert(itemDamagedStatus2); else throw;
+                }
+        }
+
         public void DeleteItemDamagedStatus2(Guid? id) => FolioServiceClient.DeleteItemDamagedStatus(id?.ToString());
 
         public bool AnyItemNoteType2s(string where = null) => FolioServiceClient.AnyItemNoteTypes(where);
@@ -3235,6 +4046,21 @@ namespace FolioLibrary
         }
 
         public void Update(ItemNoteType2 itemNoteType2) => FolioServiceClient.UpdateItemNoteType(itemNoteType2.ToJObject());
+
+        public void UpdateOrInsert(ItemNoteType2 itemNoteType2)
+        {
+            if (itemNoteType2.Id == null)
+                Insert(itemNoteType2);
+            else
+                try
+                {
+                    Update(itemNoteType2);
+                }
+                catch (HttpRequestException e)
+                {
+                    if (e.Message.Contains("NotFound")) Insert(itemNoteType2); else throw;
+                }
+        }
 
         public void DeleteItemNoteType2(Guid? id) => FolioServiceClient.DeleteItemNoteType(id?.ToString());
 
@@ -3294,6 +4120,21 @@ namespace FolioLibrary
         }
 
         public void Update(Ledger2 ledger2) => FolioServiceClient.UpdateLedger(ledger2.ToJObject());
+
+        public void UpdateOrInsert(Ledger2 ledger2)
+        {
+            if (ledger2.Id == null)
+                Insert(ledger2);
+            else
+                try
+                {
+                    Update(ledger2);
+                }
+                catch (HttpRequestException e)
+                {
+                    if (e.Message.Contains("NotFound")) Insert(ledger2); else throw;
+                }
+        }
 
         public void DeleteLedger2(Guid? id) => FolioServiceClient.DeleteLedger(id?.ToString());
 
@@ -3367,6 +4208,21 @@ namespace FolioLibrary
 
         public void Update(LedgerRollover2 ledgerRollover2) => FolioServiceClient.UpdateLedgerRollover(ledgerRollover2.ToJObject());
 
+        public void UpdateOrInsert(LedgerRollover2 ledgerRollover2)
+        {
+            if (ledgerRollover2.Id == null)
+                Insert(ledgerRollover2);
+            else
+                try
+                {
+                    Update(ledgerRollover2);
+                }
+                catch (HttpRequestException e)
+                {
+                    if (e.Message.Contains("NotFound")) Insert(ledgerRollover2); else throw;
+                }
+        }
+
         public void DeleteLedgerRollover2(Guid? id) => FolioServiceClient.DeleteLedgerRollover(id?.ToString());
 
         public bool AnyLedgerRolloverError2s(string where = null) => FolioServiceClient.AnyLedgerRolloverErrors(where);
@@ -3417,6 +4273,21 @@ namespace FolioLibrary
         }
 
         public void Update(LedgerRolloverError2 ledgerRolloverError2) => FolioServiceClient.UpdateLedgerRolloverError(ledgerRolloverError2.ToJObject());
+
+        public void UpdateOrInsert(LedgerRolloverError2 ledgerRolloverError2)
+        {
+            if (ledgerRolloverError2.Id == null)
+                Insert(ledgerRolloverError2);
+            else
+                try
+                {
+                    Update(ledgerRolloverError2);
+                }
+                catch (HttpRequestException e)
+                {
+                    if (e.Message.Contains("NotFound")) Insert(ledgerRolloverError2); else throw;
+                }
+        }
 
         public void DeleteLedgerRolloverError2(Guid? id) => FolioServiceClient.DeleteLedgerRolloverError(id?.ToString());
 
@@ -3469,6 +4340,21 @@ namespace FolioLibrary
 
         public void Update(LedgerRolloverProgress2 ledgerRolloverProgress2) => FolioServiceClient.UpdateLedgerRolloverProgress(ledgerRolloverProgress2.ToJObject());
 
+        public void UpdateOrInsert(LedgerRolloverProgress2 ledgerRolloverProgress2)
+        {
+            if (ledgerRolloverProgress2.Id == null)
+                Insert(ledgerRolloverProgress2);
+            else
+                try
+                {
+                    Update(ledgerRolloverProgress2);
+                }
+                catch (HttpRequestException e)
+                {
+                    if (e.Message.Contains("NotFound")) Insert(ledgerRolloverProgress2); else throw;
+                }
+        }
+
         public void DeleteLedgerRolloverProgress2(Guid? id) => FolioServiceClient.DeleteLedgerRolloverProgress(id?.ToString());
 
         public bool AnyLibrary2s(string where = null) => FolioServiceClient.AnyLibraries(where);
@@ -3519,6 +4405,21 @@ namespace FolioLibrary
         }
 
         public void Update(Library2 library2) => FolioServiceClient.UpdateLibrary(library2.ToJObject());
+
+        public void UpdateOrInsert(Library2 library2)
+        {
+            if (library2.Id == null)
+                Insert(library2);
+            else
+                try
+                {
+                    Update(library2);
+                }
+                catch (HttpRequestException e)
+                {
+                    if (e.Message.Contains("NotFound")) Insert(library2); else throw;
+                }
+        }
 
         public void DeleteLibrary2(Guid? id) => FolioServiceClient.DeleteLibrary(id?.ToString());
 
@@ -3598,6 +4499,21 @@ namespace FolioLibrary
 
         public void Update(Loan2 loan2) => FolioServiceClient.UpdateLoan(loan2.ToJObject());
 
+        public void UpdateOrInsert(Loan2 loan2)
+        {
+            if (loan2.Id == null)
+                Insert(loan2);
+            else
+                try
+                {
+                    Update(loan2);
+                }
+                catch (HttpRequestException e)
+                {
+                    if (e.Message.Contains("NotFound")) Insert(loan2); else throw;
+                }
+        }
+
         public void DeleteLoan2(Guid? id) => FolioServiceClient.DeleteLoan(id?.ToString());
 
         public bool AnyLoanPolicy2s(string where = null) => FolioServiceClient.AnyLoanPolicies(where);
@@ -3652,6 +4568,21 @@ namespace FolioLibrary
 
         public void Update(LoanPolicy2 loanPolicy2) => FolioServiceClient.UpdateLoanPolicy(loanPolicy2.ToJObject());
 
+        public void UpdateOrInsert(LoanPolicy2 loanPolicy2)
+        {
+            if (loanPolicy2.Id == null)
+                Insert(loanPolicy2);
+            else
+                try
+                {
+                    Update(loanPolicy2);
+                }
+                catch (HttpRequestException e)
+                {
+                    if (e.Message.Contains("NotFound")) Insert(loanPolicy2); else throw;
+                }
+        }
+
         public void DeleteLoanPolicy2(Guid? id) => FolioServiceClient.DeleteLoanPolicy(id?.ToString());
 
         public bool AnyLoanType2s(string where = null) => FolioServiceClient.AnyLoanTypes(where);
@@ -3699,6 +4630,21 @@ namespace FolioLibrary
         }
 
         public void Update(LoanType2 loanType2) => FolioServiceClient.UpdateLoanType(loanType2.ToJObject());
+
+        public void UpdateOrInsert(LoanType2 loanType2)
+        {
+            if (loanType2.Id == null)
+                Insert(loanType2);
+            else
+                try
+                {
+                    Update(loanType2);
+                }
+                catch (HttpRequestException e)
+                {
+                    if (e.Message.Contains("NotFound")) Insert(loanType2); else throw;
+                }
+        }
 
         public void DeleteLoanType2(Guid? id) => FolioServiceClient.DeleteLoanType(id?.ToString());
 
@@ -3768,6 +4714,21 @@ namespace FolioLibrary
 
         public void Update(Location2 location2) => FolioServiceClient.UpdateLocation(location2.ToJObject());
 
+        public void UpdateOrInsert(Location2 location2)
+        {
+            if (location2.Id == null)
+                Insert(location2);
+            else
+                try
+                {
+                    Update(location2);
+                }
+                catch (HttpRequestException e)
+                {
+                    if (e.Message.Contains("NotFound")) Insert(location2); else throw;
+                }
+        }
+
         public void DeleteLocation2(Guid? id) => FolioServiceClient.DeleteLocation(id?.ToString());
 
         public bool AnyLocationSettings(string where = null) => FolioServiceClient.AnyLocationSettings(where);
@@ -3821,6 +4782,21 @@ namespace FolioLibrary
         }
 
         public void Update(LocationSetting locationSetting) => FolioServiceClient.UpdateLocationSetting(locationSetting.ToJObject());
+
+        public void UpdateOrInsert(LocationSetting locationSetting)
+        {
+            if (locationSetting.Id == null)
+                Insert(locationSetting);
+            else
+                try
+                {
+                    Update(locationSetting);
+                }
+                catch (HttpRequestException e)
+                {
+                    if (e.Message.Contains("NotFound")) Insert(locationSetting); else throw;
+                }
+        }
 
         public void DeleteLocationSetting(Guid? id) => FolioServiceClient.DeleteLocationSetting(id?.ToString());
 
@@ -3876,6 +4852,21 @@ namespace FolioLibrary
 
         public void Update(LostItemFeePolicy2 lostItemFeePolicy2) => FolioServiceClient.UpdateLostItemFeePolicy(lostItemFeePolicy2.ToJObject());
 
+        public void UpdateOrInsert(LostItemFeePolicy2 lostItemFeePolicy2)
+        {
+            if (lostItemFeePolicy2.Id == null)
+                Insert(lostItemFeePolicy2);
+            else
+                try
+                {
+                    Update(lostItemFeePolicy2);
+                }
+                catch (HttpRequestException e)
+                {
+                    if (e.Message.Contains("NotFound")) Insert(lostItemFeePolicy2); else throw;
+                }
+        }
+
         public void DeleteLostItemFeePolicy2(Guid? id) => FolioServiceClient.DeleteLostItemFeePolicy(id?.ToString());
 
         public bool AnyManualBlockTemplate2s(string where = null) => FolioServiceClient.AnyManualBlockTemplates(where);
@@ -3923,6 +4914,21 @@ namespace FolioLibrary
         }
 
         public void Update(ManualBlockTemplate2 manualBlockTemplate2) => FolioServiceClient.UpdateManualBlockTemplate(manualBlockTemplate2.ToJObject());
+
+        public void UpdateOrInsert(ManualBlockTemplate2 manualBlockTemplate2)
+        {
+            if (manualBlockTemplate2.Id == null)
+                Insert(manualBlockTemplate2);
+            else
+                try
+                {
+                    Update(manualBlockTemplate2);
+                }
+                catch (HttpRequestException e)
+                {
+                    if (e.Message.Contains("NotFound")) Insert(manualBlockTemplate2); else throw;
+                }
+        }
 
         public void DeleteManualBlockTemplate2(Guid? id) => FolioServiceClient.DeleteManualBlockTemplate(id?.ToString());
 
@@ -3972,6 +4978,21 @@ namespace FolioLibrary
 
         public void Update(MaterialType2 materialType2) => FolioServiceClient.UpdateMaterialType(materialType2.ToJObject());
 
+        public void UpdateOrInsert(MaterialType2 materialType2)
+        {
+            if (materialType2.Id == null)
+                Insert(materialType2);
+            else
+                try
+                {
+                    Update(materialType2);
+                }
+                catch (HttpRequestException e)
+                {
+                    if (e.Message.Contains("NotFound")) Insert(materialType2); else throw;
+                }
+        }
+
         public void DeleteMaterialType2(Guid? id) => FolioServiceClient.DeleteMaterialType(id?.ToString());
 
         public bool AnyNatureOfContentTerm2s(string where = null) => FolioServiceClient.AnyNatureOfContentTerms(where);
@@ -4019,6 +5040,21 @@ namespace FolioLibrary
         }
 
         public void Update(NatureOfContentTerm2 natureOfContentTerm2) => FolioServiceClient.UpdateNatureOfContentTerm(natureOfContentTerm2.ToJObject());
+
+        public void UpdateOrInsert(NatureOfContentTerm2 natureOfContentTerm2)
+        {
+            if (natureOfContentTerm2.Id == null)
+                Insert(natureOfContentTerm2);
+            else
+                try
+                {
+                    Update(natureOfContentTerm2);
+                }
+                catch (HttpRequestException e)
+                {
+                    if (e.Message.Contains("NotFound")) Insert(natureOfContentTerm2); else throw;
+                }
+        }
 
         public void DeleteNatureOfContentTerm2(Guid? id) => FolioServiceClient.DeleteNatureOfContentTerm(id?.ToString());
 
@@ -4071,6 +5107,21 @@ namespace FolioLibrary
 
         public void Update(Note2 note2) => FolioServiceClient.UpdateNote(note2.ToJObject());
 
+        public void UpdateOrInsert(Note2 note2)
+        {
+            if (note2.Id == null)
+                Insert(note2);
+            else
+                try
+                {
+                    Update(note2);
+                }
+                catch (HttpRequestException e)
+                {
+                    if (e.Message.Contains("NotFound")) Insert(note2); else throw;
+                }
+        }
+
         public void DeleteNote2(Guid? id) => FolioServiceClient.DeleteNote(id?.ToString());
 
         public bool AnyNoteType2s(string where = null) => FolioServiceClient.AnyNoteTypes(where);
@@ -4118,6 +5169,21 @@ namespace FolioLibrary
         }
 
         public void Update(NoteType2 noteType2) => FolioServiceClient.UpdateNoteType(noteType2.ToJObject());
+
+        public void UpdateOrInsert(NoteType2 noteType2)
+        {
+            if (noteType2.Id == null)
+                Insert(noteType2);
+            else
+                try
+                {
+                    Update(noteType2);
+                }
+                catch (HttpRequestException e)
+                {
+                    if (e.Message.Contains("NotFound")) Insert(noteType2); else throw;
+                }
+        }
 
         public void DeleteNoteType2(Guid? id) => FolioServiceClient.DeleteNoteType(id?.ToString());
 
@@ -4201,6 +5267,21 @@ namespace FolioLibrary
 
         public void Update(Order2 order2) => FolioServiceClient.UpdateOrder(order2.ToJObject());
 
+        public void UpdateOrInsert(Order2 order2)
+        {
+            if (order2.Id == null)
+                Insert(order2);
+            else
+                try
+                {
+                    Update(order2);
+                }
+                catch (HttpRequestException e)
+                {
+                    if (e.Message.Contains("NotFound")) Insert(order2); else throw;
+                }
+        }
+
         public void DeleteOrder2(Guid? id) => FolioServiceClient.DeleteOrder(id?.ToString());
 
         public bool AnyOrderInvoice2s(string where = null) => FolioServiceClient.AnyOrderInvoices(where);
@@ -4248,6 +5329,21 @@ namespace FolioLibrary
         }
 
         public void Update(OrderInvoice2 orderInvoice2) => FolioServiceClient.UpdateOrderInvoice(orderInvoice2.ToJObject());
+
+        public void UpdateOrInsert(OrderInvoice2 orderInvoice2)
+        {
+            if (orderInvoice2.Id == null)
+                Insert(orderInvoice2);
+            else
+                try
+                {
+                    Update(orderInvoice2);
+                }
+                catch (HttpRequestException e)
+                {
+                    if (e.Message.Contains("NotFound")) Insert(orderInvoice2); else throw;
+                }
+        }
 
         public void DeleteOrderInvoice2(Guid? id) => FolioServiceClient.DeleteOrderInvoice(id?.ToString());
 
@@ -4400,6 +5496,21 @@ namespace FolioLibrary
 
         public void Update(OrderItem2 orderItem2) => FolioServiceClient.UpdateOrderItem(orderItem2.ToJObject());
 
+        public void UpdateOrInsert(OrderItem2 orderItem2)
+        {
+            if (orderItem2.Id == null)
+                Insert(orderItem2);
+            else
+                try
+                {
+                    Update(orderItem2);
+                }
+                catch (HttpRequestException e)
+                {
+                    if (e.Message.Contains("NotFound")) Insert(orderItem2); else throw;
+                }
+        }
+
         public void DeleteOrderItem2(Guid? id) => FolioServiceClient.DeleteOrderItem(id?.ToString());
 
         public bool AnyOrderTemplate2s(string where = null) => FolioServiceClient.AnyOrderTemplates(where);
@@ -4436,6 +5547,21 @@ namespace FolioLibrary
 
         public void Update(OrderTemplate2 orderTemplate2) => FolioServiceClient.UpdateOrderTemplate(orderTemplate2.ToJObject());
 
+        public void UpdateOrInsert(OrderTemplate2 orderTemplate2)
+        {
+            if (orderTemplate2.Id == null)
+                Insert(orderTemplate2);
+            else
+                try
+                {
+                    Update(orderTemplate2);
+                }
+                catch (HttpRequestException e)
+                {
+                    if (e.Message.Contains("NotFound")) Insert(orderTemplate2); else throw;
+                }
+        }
+
         public void DeleteOrderTemplate2(Guid? id) => FolioServiceClient.DeleteOrderTemplate(id?.ToString());
 
         public OrderTransactionSummary2 FindOrderTransactionSummary2(Guid? id, bool load = false, bool cache = true)
@@ -4454,6 +5580,21 @@ namespace FolioLibrary
         }
 
         public void Update(OrderTransactionSummary2 orderTransactionSummary2) => FolioServiceClient.UpdateOrderTransactionSummary(orderTransactionSummary2.ToJObject());
+
+        public void UpdateOrInsert(OrderTransactionSummary2 orderTransactionSummary2)
+        {
+            if (orderTransactionSummary2.Id == null)
+                Insert(orderTransactionSummary2);
+            else
+                try
+                {
+                    Update(orderTransactionSummary2);
+                }
+                catch (HttpRequestException e)
+                {
+                    if (e.Message.Contains("NotFound")) Insert(orderTransactionSummary2); else throw;
+                }
+        }
 
         public void DeleteOrderTransactionSummary2(Guid? id) => FolioServiceClient.DeleteOrderTransactionSummary(id?.ToString());
 
@@ -4612,6 +5753,21 @@ namespace FolioLibrary
 
         public void Update(Organization2 organization2) => FolioServiceClient.UpdateOrganization(organization2.ToJObject());
 
+        public void UpdateOrInsert(Organization2 organization2)
+        {
+            if (organization2.Id == null)
+                Insert(organization2);
+            else
+                try
+                {
+                    Update(organization2);
+                }
+                catch (HttpRequestException e)
+                {
+                    if (e.Message.Contains("NotFound")) Insert(organization2); else throw;
+                }
+        }
+
         public void DeleteOrganization2(Guid? id) => FolioServiceClient.DeleteOrganization(id?.ToString());
 
         public bool AnyOverdueFinePolicy2s(string where = null) => FolioServiceClient.AnyOverdueFinePolicies(where);
@@ -4659,6 +5815,21 @@ namespace FolioLibrary
         }
 
         public void Update(OverdueFinePolicy2 overdueFinePolicy2) => FolioServiceClient.UpdateOverdueFinePolicy(overdueFinePolicy2.ToJObject());
+
+        public void UpdateOrInsert(OverdueFinePolicy2 overdueFinePolicy2)
+        {
+            if (overdueFinePolicy2.Id == null)
+                Insert(overdueFinePolicy2);
+            else
+                try
+                {
+                    Update(overdueFinePolicy2);
+                }
+                catch (HttpRequestException e)
+                {
+                    if (e.Message.Contains("NotFound")) Insert(overdueFinePolicy2); else throw;
+                }
+        }
 
         public void DeleteOverdueFinePolicy2(Guid? id) => FolioServiceClient.DeleteOverdueFinePolicy(id?.ToString());
 
@@ -4722,6 +5893,21 @@ namespace FolioLibrary
 
         public void Update(Owner2 owner2) => FolioServiceClient.UpdateOwner(owner2.ToJObject());
 
+        public void UpdateOrInsert(Owner2 owner2)
+        {
+            if (owner2.Id == null)
+                Insert(owner2);
+            else
+                try
+                {
+                    Update(owner2);
+                }
+                catch (HttpRequestException e)
+                {
+                    if (e.Message.Contains("NotFound")) Insert(owner2); else throw;
+                }
+        }
+
         public void DeleteOwner2(Guid? id) => FolioServiceClient.DeleteOwner(id?.ToString());
 
         public bool AnyPatronActionSession2s(string where = null) => FolioServiceClient.AnyPatronActionSessions(where);
@@ -4775,6 +5961,21 @@ namespace FolioLibrary
         }
 
         public void Update(PatronActionSession2 patronActionSession2) => FolioServiceClient.UpdatePatronActionSession(patronActionSession2.ToJObject());
+
+        public void UpdateOrInsert(PatronActionSession2 patronActionSession2)
+        {
+            if (patronActionSession2.Id == null)
+                Insert(patronActionSession2);
+            else
+                try
+                {
+                    Update(patronActionSession2);
+                }
+                catch (HttpRequestException e)
+                {
+                    if (e.Message.Contains("NotFound")) Insert(patronActionSession2); else throw;
+                }
+        }
 
         public void DeletePatronActionSession2(Guid? id) => FolioServiceClient.DeletePatronActionSession(id?.ToString());
 
@@ -4848,6 +6049,21 @@ namespace FolioLibrary
 
         public void Update(PatronNoticePolicy2 patronNoticePolicy2) => FolioServiceClient.UpdatePatronNoticePolicy(patronNoticePolicy2.ToJObject());
 
+        public void UpdateOrInsert(PatronNoticePolicy2 patronNoticePolicy2)
+        {
+            if (patronNoticePolicy2.Id == null)
+                Insert(patronNoticePolicy2);
+            else
+                try
+                {
+                    Update(patronNoticePolicy2);
+                }
+                catch (HttpRequestException e)
+                {
+                    if (e.Message.Contains("NotFound")) Insert(patronNoticePolicy2); else throw;
+                }
+        }
+
         public void DeletePatronNoticePolicy2(Guid? id) => FolioServiceClient.DeletePatronNoticePolicy(id?.ToString());
 
         public bool AnyPayment2s(string where = null) => FolioServiceClient.AnyPayments(where);
@@ -4895,6 +6111,21 @@ namespace FolioLibrary
         }
 
         public void Update(Payment2 payment2) => FolioServiceClient.UpdatePayment(payment2.ToJObject());
+
+        public void UpdateOrInsert(Payment2 payment2)
+        {
+            if (payment2.Id == null)
+                Insert(payment2);
+            else
+                try
+                {
+                    Update(payment2);
+                }
+                catch (HttpRequestException e)
+                {
+                    if (e.Message.Contains("NotFound")) Insert(payment2); else throw;
+                }
+        }
 
         public void DeletePayment2(Guid? id) => FolioServiceClient.DeletePayment(id?.ToString());
 
@@ -4946,6 +6177,21 @@ namespace FolioLibrary
         }
 
         public void Update(PaymentMethod2 paymentMethod2) => FolioServiceClient.UpdatePaymentMethod(paymentMethod2.ToJObject());
+
+        public void UpdateOrInsert(PaymentMethod2 paymentMethod2)
+        {
+            if (paymentMethod2.Id == null)
+                Insert(paymentMethod2);
+            else
+                try
+                {
+                    Update(paymentMethod2);
+                }
+                catch (HttpRequestException e)
+                {
+                    if (e.Message.Contains("NotFound")) Insert(paymentMethod2); else throw;
+                }
+        }
 
         public void DeletePaymentMethod2(Guid? id) => FolioServiceClient.DeletePaymentMethod(id?.ToString());
 
@@ -5024,6 +6270,21 @@ namespace FolioLibrary
 
         public void Update(Permission2 permission2) => FolioServiceClient.UpdatePermission(permission2.ToJObject());
 
+        public void UpdateOrInsert(Permission2 permission2)
+        {
+            if (permission2.Id == null)
+                Insert(permission2);
+            else
+                try
+                {
+                    Update(permission2);
+                }
+                catch (HttpRequestException e)
+                {
+                    if (e.Message.Contains("NotFound")) Insert(permission2); else throw;
+                }
+        }
+
         public void DeletePermission2(Guid? id) => FolioServiceClient.DeletePermission(id?.ToString());
 
         public bool AnyPermissionsUser2s(string where = null) => FolioServiceClient.AnyPermissionsUsers(where);
@@ -5081,6 +6342,21 @@ namespace FolioLibrary
         }
 
         public void Update(PermissionsUser2 permissionsUser2) => FolioServiceClient.UpdatePermissionsUser(permissionsUser2.ToJObject());
+
+        public void UpdateOrInsert(PermissionsUser2 permissionsUser2)
+        {
+            if (permissionsUser2.Id == null)
+                Insert(permissionsUser2);
+            else
+                try
+                {
+                    Update(permissionsUser2);
+                }
+                catch (HttpRequestException e)
+                {
+                    if (e.Message.Contains("NotFound")) Insert(permissionsUser2); else throw;
+                }
+        }
 
         public void DeletePermissionsUser2(Guid? id) => FolioServiceClient.DeletePermissionsUser(id?.ToString());
 
@@ -5144,6 +6420,21 @@ namespace FolioLibrary
 
         public void Update(PrecedingSucceedingTitle2 precedingSucceedingTitle2) => FolioServiceClient.UpdatePrecedingSucceedingTitle(precedingSucceedingTitle2.ToJObject());
 
+        public void UpdateOrInsert(PrecedingSucceedingTitle2 precedingSucceedingTitle2)
+        {
+            if (precedingSucceedingTitle2.Id == null)
+                Insert(precedingSucceedingTitle2);
+            else
+                try
+                {
+                    Update(precedingSucceedingTitle2);
+                }
+                catch (HttpRequestException e)
+                {
+                    if (e.Message.Contains("NotFound")) Insert(precedingSucceedingTitle2); else throw;
+                }
+        }
+
         public void DeletePrecedingSucceedingTitle2(Guid? id) => FolioServiceClient.DeletePrecedingSucceedingTitle(id?.ToString());
 
         public bool AnyPrefix2s(string where = null) => FolioServiceClient.AnyPrefixes(where);
@@ -5179,6 +6470,21 @@ namespace FolioLibrary
         }
 
         public void Update(Prefix2 prefix2) => FolioServiceClient.UpdatePrefix(prefix2.ToJObject());
+
+        public void UpdateOrInsert(Prefix2 prefix2)
+        {
+            if (prefix2.Id == null)
+                Insert(prefix2);
+            else
+                try
+                {
+                    Update(prefix2);
+                }
+                catch (HttpRequestException e)
+                {
+                    if (e.Message.Contains("NotFound")) Insert(prefix2); else throw;
+                }
+        }
 
         public void DeletePrefix2(Guid? id) => FolioServiceClient.DeletePrefix(id?.ToString());
 
@@ -5227,6 +6533,21 @@ namespace FolioLibrary
         }
 
         public void Update(Printer printer) => FolioServiceClient.UpdatePrinter(printer.ToJObject());
+
+        public void UpdateOrInsert(Printer printer)
+        {
+            if (printer.Id == null)
+                Insert(printer);
+            else
+                try
+                {
+                    Update(printer);
+                }
+                catch (HttpRequestException e)
+                {
+                    if (e.Message.Contains("NotFound")) Insert(printer); else throw;
+                }
+        }
 
         public void DeletePrinter(Guid? id) => FolioServiceClient.DeletePrinter(id?.ToString());
 
@@ -5281,6 +6602,21 @@ namespace FolioLibrary
         }
 
         public void Update(Proxy2 proxy2) => FolioServiceClient.UpdateProxy(proxy2.ToJObject());
+
+        public void UpdateOrInsert(Proxy2 proxy2)
+        {
+            if (proxy2.Id == null)
+                Insert(proxy2);
+            else
+                try
+                {
+                    Update(proxy2);
+                }
+                catch (HttpRequestException e)
+                {
+                    if (e.Message.Contains("NotFound")) Insert(proxy2); else throw;
+                }
+        }
 
         public void DeleteProxy2(Guid? id) => FolioServiceClient.DeleteProxy(id?.ToString());
 
@@ -5339,6 +6675,21 @@ namespace FolioLibrary
 
         public void Update(Receiving2 receiving2) => FolioServiceClient.UpdateReceiving(receiving2.ToJObject());
 
+        public void UpdateOrInsert(Receiving2 receiving2)
+        {
+            if (receiving2.Id == null)
+                Insert(receiving2);
+            else
+                try
+                {
+                    Update(receiving2);
+                }
+                catch (HttpRequestException e)
+                {
+                    if (e.Message.Contains("NotFound")) Insert(receiving2); else throw;
+                }
+        }
+
         public void DeleteReceiving2(Guid? id) => FolioServiceClient.DeleteReceiving(id?.ToString());
 
         public bool AnyRecord2s(string where = null) => FolioServiceClient.AnyRecords(where);
@@ -5393,6 +6744,21 @@ namespace FolioLibrary
 
         public void Update(Record2 record2) => FolioServiceClient.UpdateRecord(record2.ToJObject());
 
+        public void UpdateOrInsert(Record2 record2)
+        {
+            if (record2.Id == null)
+                Insert(record2);
+            else
+                try
+                {
+                    Update(record2);
+                }
+                catch (HttpRequestException e)
+                {
+                    if (e.Message.Contains("NotFound")) Insert(record2); else throw;
+                }
+        }
+
         public void DeleteRecord2(Guid? id) => FolioServiceClient.DeleteRecord(id?.ToString());
 
         public bool AnyRefundReason2s(string where = null) => FolioServiceClient.AnyRefundReasons(where);
@@ -5443,6 +6809,21 @@ namespace FolioLibrary
         }
 
         public void Update(RefundReason2 refundReason2) => FolioServiceClient.UpdateRefundReason(refundReason2.ToJObject());
+
+        public void UpdateOrInsert(RefundReason2 refundReason2)
+        {
+            if (refundReason2.Id == null)
+                Insert(refundReason2);
+            else
+                try
+                {
+                    Update(refundReason2);
+                }
+                catch (HttpRequestException e)
+                {
+                    if (e.Message.Contains("NotFound")) Insert(refundReason2); else throw;
+                }
+        }
 
         public void DeleteRefundReason2(Guid? id) => FolioServiceClient.DeleteRefundReason(id?.ToString());
 
@@ -5501,6 +6882,21 @@ namespace FolioLibrary
 
         public void Update(Relationship relationship) => FolioServiceClient.UpdateInstanceRelationship(relationship.ToJObject());
 
+        public void UpdateOrInsert(Relationship relationship)
+        {
+            if (relationship.Id == null)
+                Insert(relationship);
+            else
+                try
+                {
+                    Update(relationship);
+                }
+                catch (HttpRequestException e)
+                {
+                    if (e.Message.Contains("NotFound")) Insert(relationship); else throw;
+                }
+        }
+
         public void DeleteRelationship(Guid? id) => FolioServiceClient.DeleteInstanceRelationship(id?.ToString());
 
         public bool AnyRelationshipTypes(string where = null) => FolioServiceClient.AnyInstanceRelationshipTypes(where);
@@ -5549,6 +6945,21 @@ namespace FolioLibrary
 
         public void Update(RelationshipType relationshipType) => FolioServiceClient.UpdateInstanceRelationshipType(relationshipType.ToJObject());
 
+        public void UpdateOrInsert(RelationshipType relationshipType)
+        {
+            if (relationshipType.Id == null)
+                Insert(relationshipType);
+            else
+                try
+                {
+                    Update(relationshipType);
+                }
+                catch (HttpRequestException e)
+                {
+                    if (e.Message.Contains("NotFound")) Insert(relationshipType); else throw;
+                }
+        }
+
         public void DeleteRelationshipType(Guid? id) => FolioServiceClient.DeleteInstanceRelationshipType(id?.ToString());
 
         public bool AnyReportingCode2s(string where = null) => FolioServiceClient.AnyReportingCodes(where);
@@ -5584,6 +6995,21 @@ namespace FolioLibrary
         }
 
         public void Update(ReportingCode2 reportingCode2) => FolioServiceClient.UpdateReportingCode(reportingCode2.ToJObject());
+
+        public void UpdateOrInsert(ReportingCode2 reportingCode2)
+        {
+            if (reportingCode2.Id == null)
+                Insert(reportingCode2);
+            else
+                try
+                {
+                    Update(reportingCode2);
+                }
+                catch (HttpRequestException e)
+                {
+                    if (e.Message.Contains("NotFound")) Insert(reportingCode2); else throw;
+                }
+        }
 
         public void DeleteReportingCode2(Guid? id) => FolioServiceClient.DeleteReportingCode(id?.ToString());
 
@@ -5669,6 +7095,21 @@ namespace FolioLibrary
 
         public void Update(Request2 request2) => FolioServiceClient.UpdateRequest(request2.ToJObject());
 
+        public void UpdateOrInsert(Request2 request2)
+        {
+            if (request2.Id == null)
+                Insert(request2);
+            else
+                try
+                {
+                    Update(request2);
+                }
+                catch (HttpRequestException e)
+                {
+                    if (e.Message.Contains("NotFound")) Insert(request2); else throw;
+                }
+        }
+
         public void DeleteRequest2(Guid? id) => FolioServiceClient.DeleteRequest(id?.ToString());
 
         public bool AnyRequestPolicy2s(string where = null) => FolioServiceClient.AnyRequestPolicies(where);
@@ -5723,6 +7164,21 @@ namespace FolioLibrary
         }
 
         public void Update(RequestPolicy2 requestPolicy2) => FolioServiceClient.UpdateRequestPolicy(requestPolicy2.ToJObject());
+
+        public void UpdateOrInsert(RequestPolicy2 requestPolicy2)
+        {
+            if (requestPolicy2.Id == null)
+                Insert(requestPolicy2);
+            else
+                try
+                {
+                    Update(requestPolicy2);
+                }
+                catch (HttpRequestException e)
+                {
+                    if (e.Message.Contains("NotFound")) Insert(requestPolicy2); else throw;
+                }
+        }
 
         public void DeleteRequestPolicy2(Guid? id) => FolioServiceClient.DeleteRequestPolicy(id?.ToString());
 
@@ -5787,6 +7243,21 @@ namespace FolioLibrary
 
         public void Update(ScheduledNotice2 scheduledNotice2) => FolioServiceClient.UpdateScheduledNotice(scheduledNotice2.ToJObject());
 
+        public void UpdateOrInsert(ScheduledNotice2 scheduledNotice2)
+        {
+            if (scheduledNotice2.Id == null)
+                Insert(scheduledNotice2);
+            else
+                try
+                {
+                    Update(scheduledNotice2);
+                }
+                catch (HttpRequestException e)
+                {
+                    if (e.Message.Contains("NotFound")) Insert(scheduledNotice2); else throw;
+                }
+        }
+
         public void DeleteScheduledNotice2(Guid? id) => FolioServiceClient.DeleteScheduledNotice(id?.ToString());
 
         public bool AnyServicePoint2s(string where = null) => FolioServiceClient.AnyServicePoints(where);
@@ -5842,6 +7313,21 @@ namespace FolioLibrary
         }
 
         public void Update(ServicePoint2 servicePoint2) => FolioServiceClient.UpdateServicePoint(servicePoint2.ToJObject());
+
+        public void UpdateOrInsert(ServicePoint2 servicePoint2)
+        {
+            if (servicePoint2.Id == null)
+                Insert(servicePoint2);
+            else
+                try
+                {
+                    Update(servicePoint2);
+                }
+                catch (HttpRequestException e)
+                {
+                    if (e.Message.Contains("NotFound")) Insert(servicePoint2); else throw;
+                }
+        }
 
         public void DeleteServicePoint2(Guid? id) => FolioServiceClient.DeleteServicePoint(id?.ToString());
 
@@ -5905,6 +7391,21 @@ namespace FolioLibrary
 
         public void Update(ServicePointUser2 servicePointUser2) => FolioServiceClient.UpdateServicePointUser(servicePointUser2.ToJObject());
 
+        public void UpdateOrInsert(ServicePointUser2 servicePointUser2)
+        {
+            if (servicePointUser2.Id == null)
+                Insert(servicePointUser2);
+            else
+                try
+                {
+                    Update(servicePointUser2);
+                }
+                catch (HttpRequestException e)
+                {
+                    if (e.Message.Contains("NotFound")) Insert(servicePointUser2); else throw;
+                }
+        }
+
         public void DeleteServicePointUser2(Guid? id) => FolioServiceClient.DeleteServicePointUser(id?.ToString());
 
         public bool AnySettings(string where = null) => FolioServiceClient.AnySettings(where);
@@ -5952,6 +7453,21 @@ namespace FolioLibrary
         }
 
         public void Update(Setting setting) => FolioServiceClient.UpdateSetting(setting.ToJObject());
+
+        public void UpdateOrInsert(Setting setting)
+        {
+            if (setting.Id == null)
+                Insert(setting);
+            else
+                try
+                {
+                    Update(setting);
+                }
+                catch (HttpRequestException e)
+                {
+                    if (e.Message.Contains("NotFound")) Insert(setting); else throw;
+                }
+        }
 
         public void DeleteSetting(Guid? id) => FolioServiceClient.DeleteSetting(id?.ToString());
 
@@ -6001,6 +7517,21 @@ namespace FolioLibrary
 
         public void Update(Snapshot2 snapshot2) => FolioServiceClient.UpdateSnapshot(snapshot2.ToJObject());
 
+        public void UpdateOrInsert(Snapshot2 snapshot2)
+        {
+            if (snapshot2.Id == null)
+                Insert(snapshot2);
+            else
+                try
+                {
+                    Update(snapshot2);
+                }
+                catch (HttpRequestException e)
+                {
+                    if (e.Message.Contains("NotFound")) Insert(snapshot2); else throw;
+                }
+        }
+
         public void DeleteSnapshot2(Guid? id) => FolioServiceClient.DeleteSnapshot(id?.ToString());
 
         public bool AnySource2s(string where = null) => FolioServiceClient.AnySources(where);
@@ -6049,6 +7580,21 @@ namespace FolioLibrary
 
         public void Update(Source2 source2) => FolioServiceClient.UpdateSource(source2.ToJObject());
 
+        public void UpdateOrInsert(Source2 source2)
+        {
+            if (source2.Id == null)
+                Insert(source2);
+            else
+                try
+                {
+                    Update(source2);
+                }
+                catch (HttpRequestException e)
+                {
+                    if (e.Message.Contains("NotFound")) Insert(source2); else throw;
+                }
+        }
+
         public void DeleteSource2(Guid? id) => FolioServiceClient.DeleteSource(id?.ToString());
 
         public bool AnyStaffSlip2s(string where = null) => FolioServiceClient.AnyStaffSlips(where);
@@ -6096,6 +7642,21 @@ namespace FolioLibrary
         }
 
         public void Update(StaffSlip2 staffSlip2) => FolioServiceClient.UpdateStaffSlip(staffSlip2.ToJObject());
+
+        public void UpdateOrInsert(StaffSlip2 staffSlip2)
+        {
+            if (staffSlip2.Id == null)
+                Insert(staffSlip2);
+            else
+                try
+                {
+                    Update(staffSlip2);
+                }
+                catch (HttpRequestException e)
+                {
+                    if (e.Message.Contains("NotFound")) Insert(staffSlip2); else throw;
+                }
+        }
 
         public void DeleteStaffSlip2(Guid? id) => FolioServiceClient.DeleteStaffSlip(id?.ToString());
 
@@ -6148,6 +7709,21 @@ namespace FolioLibrary
 
         public void Update(StatisticalCode2 statisticalCode2) => FolioServiceClient.UpdateStatisticalCode(statisticalCode2.ToJObject());
 
+        public void UpdateOrInsert(StatisticalCode2 statisticalCode2)
+        {
+            if (statisticalCode2.Id == null)
+                Insert(statisticalCode2);
+            else
+                try
+                {
+                    Update(statisticalCode2);
+                }
+                catch (HttpRequestException e)
+                {
+                    if (e.Message.Contains("NotFound")) Insert(statisticalCode2); else throw;
+                }
+        }
+
         public void DeleteStatisticalCode2(Guid? id) => FolioServiceClient.DeleteStatisticalCode(id?.ToString());
 
         public bool AnyStatisticalCodeType2s(string where = null) => FolioServiceClient.AnyStatisticalCodeTypes(where);
@@ -6195,6 +7771,21 @@ namespace FolioLibrary
         }
 
         public void Update(StatisticalCodeType2 statisticalCodeType2) => FolioServiceClient.UpdateStatisticalCodeType(statisticalCodeType2.ToJObject());
+
+        public void UpdateOrInsert(StatisticalCodeType2 statisticalCodeType2)
+        {
+            if (statisticalCodeType2.Id == null)
+                Insert(statisticalCodeType2);
+            else
+                try
+                {
+                    Update(statisticalCodeType2);
+                }
+                catch (HttpRequestException e)
+                {
+                    if (e.Message.Contains("NotFound")) Insert(statisticalCodeType2); else throw;
+                }
+        }
 
         public void DeleteStatisticalCodeType2(Guid? id) => FolioServiceClient.DeleteStatisticalCodeType(id?.ToString());
 
@@ -6244,6 +7835,21 @@ namespace FolioLibrary
 
         public void Update(Status status) => FolioServiceClient.UpdateInstanceStatus(status.ToJObject());
 
+        public void UpdateOrInsert(Status status)
+        {
+            if (status.Id == null)
+                Insert(status);
+            else
+                try
+                {
+                    Update(status);
+                }
+                catch (HttpRequestException e)
+                {
+                    if (e.Message.Contains("NotFound")) Insert(status); else throw;
+                }
+        }
+
         public void DeleteStatus(Guid? id) => FolioServiceClient.DeleteInstanceStatus(id?.ToString());
 
         public bool AnySuffix2s(string where = null) => FolioServiceClient.AnySuffixes(where);
@@ -6279,6 +7885,21 @@ namespace FolioLibrary
         }
 
         public void Update(Suffix2 suffix2) => FolioServiceClient.UpdateSuffix(suffix2.ToJObject());
+
+        public void UpdateOrInsert(Suffix2 suffix2)
+        {
+            if (suffix2.Id == null)
+                Insert(suffix2);
+            else
+                try
+                {
+                    Update(suffix2);
+                }
+                catch (HttpRequestException e)
+                {
+                    if (e.Message.Contains("NotFound")) Insert(suffix2); else throw;
+                }
+        }
 
         public void DeleteSuffix2(Guid? id) => FolioServiceClient.DeleteSuffix(id?.ToString());
 
@@ -6327,6 +7948,21 @@ namespace FolioLibrary
         }
 
         public void Update(Tag2 tag2) => FolioServiceClient.UpdateTag(tag2.ToJObject());
+
+        public void UpdateOrInsert(Tag2 tag2)
+        {
+            if (tag2.Id == null)
+                Insert(tag2);
+            else
+                try
+                {
+                    Update(tag2);
+                }
+                catch (HttpRequestException e)
+                {
+                    if (e.Message.Contains("NotFound")) Insert(tag2); else throw;
+                }
+        }
 
         public void DeleteTag2(Guid? id) => FolioServiceClient.DeleteTag(id?.ToString());
 
@@ -6382,6 +8018,21 @@ namespace FolioLibrary
         }
 
         public void Update(Template2 template2) => FolioServiceClient.UpdateTemplate(template2.ToJObject());
+
+        public void UpdateOrInsert(Template2 template2)
+        {
+            if (template2.Id == null)
+                Insert(template2);
+            else
+                try
+                {
+                    Update(template2);
+                }
+                catch (HttpRequestException e)
+                {
+                    if (e.Message.Contains("NotFound")) Insert(template2); else throw;
+                }
+        }
 
         public void DeleteTemplate2(Guid? id) => FolioServiceClient.DeleteTemplate(id?.ToString());
 
@@ -6452,6 +8103,21 @@ namespace FolioLibrary
         }
 
         public void Update(Title2 title2) => FolioServiceClient.UpdateTitle(title2.ToJObject());
+
+        public void UpdateOrInsert(Title2 title2)
+        {
+            if (title2.Id == null)
+                Insert(title2);
+            else
+                try
+                {
+                    Update(title2);
+                }
+                catch (HttpRequestException e)
+                {
+                    if (e.Message.Contains("NotFound")) Insert(title2); else throw;
+                }
+        }
 
         public void DeleteTitle2(Guid? id) => FolioServiceClient.DeleteTitle(id?.ToString());
 
@@ -6541,6 +8207,21 @@ namespace FolioLibrary
 
         public void Update(Transaction2 transaction2) => FolioServiceClient.UpdateTransaction(transaction2.ToJObject());
 
+        public void UpdateOrInsert(Transaction2 transaction2)
+        {
+            if (transaction2.Id == null)
+                Insert(transaction2);
+            else
+                try
+                {
+                    Update(transaction2);
+                }
+                catch (HttpRequestException e)
+                {
+                    if (e.Message.Contains("NotFound")) Insert(transaction2); else throw;
+                }
+        }
+
         public void DeleteTransaction2(Guid? id) => FolioServiceClient.DeleteTransaction(id?.ToString());
 
         public bool AnyTransferAccount2s(string where = null) => FolioServiceClient.AnyTransferAccounts(where);
@@ -6592,6 +8273,21 @@ namespace FolioLibrary
 
         public void Update(TransferAccount2 transferAccount2) => FolioServiceClient.UpdateTransferAccount(transferAccount2.ToJObject());
 
+        public void UpdateOrInsert(TransferAccount2 transferAccount2)
+        {
+            if (transferAccount2.Id == null)
+                Insert(transferAccount2);
+            else
+                try
+                {
+                    Update(transferAccount2);
+                }
+                catch (HttpRequestException e)
+                {
+                    if (e.Message.Contains("NotFound")) Insert(transferAccount2); else throw;
+                }
+        }
+
         public void DeleteTransferAccount2(Guid? id) => FolioServiceClient.DeleteTransferAccount(id?.ToString());
 
         public bool AnyTransferCriteria2s(string where = null) => FolioServiceClient.AnyTransferCriterias(where);
@@ -6627,6 +8323,21 @@ namespace FolioLibrary
         }
 
         public void Update(TransferCriteria2 transferCriteria2) => FolioServiceClient.UpdateTransferCriteria(transferCriteria2.ToJObject());
+
+        public void UpdateOrInsert(TransferCriteria2 transferCriteria2)
+        {
+            if (transferCriteria2.Id == null)
+                Insert(transferCriteria2);
+            else
+                try
+                {
+                    Update(transferCriteria2);
+                }
+                catch (HttpRequestException e)
+                {
+                    if (e.Message.Contains("NotFound")) Insert(transferCriteria2); else throw;
+                }
+        }
 
         public void DeleteTransferCriteria2(Guid? id) => FolioServiceClient.DeleteTransferCriteria(id?.ToString());
 
@@ -6702,6 +8413,21 @@ namespace FolioLibrary
 
         public void Update(User2 user2) => FolioServiceClient.UpdateUser(user2.ToJObject());
 
+        public void UpdateOrInsert(User2 user2)
+        {
+            if (user2.Id == null)
+                Insert(user2);
+            else
+                try
+                {
+                    Update(user2);
+                }
+                catch (HttpRequestException e)
+                {
+                    if (e.Message.Contains("NotFound")) Insert(user2); else throw;
+                }
+        }
+
         public void DeleteUser2(Guid? id) => FolioServiceClient.DeleteUser(id?.ToString());
 
         public bool AnyUserAcquisitionsUnit2s(string where = null) => FolioServiceClient.AnyUserAcquisitionsUnits(where);
@@ -6755,6 +8481,21 @@ namespace FolioLibrary
         }
 
         public void Update(UserAcquisitionsUnit2 userAcquisitionsUnit2) => FolioServiceClient.UpdateUserAcquisitionsUnit(userAcquisitionsUnit2.ToJObject());
+
+        public void UpdateOrInsert(UserAcquisitionsUnit2 userAcquisitionsUnit2)
+        {
+            if (userAcquisitionsUnit2.Id == null)
+                Insert(userAcquisitionsUnit2);
+            else
+                try
+                {
+                    Update(userAcquisitionsUnit2);
+                }
+                catch (HttpRequestException e)
+                {
+                    if (e.Message.Contains("NotFound")) Insert(userAcquisitionsUnit2); else throw;
+                }
+        }
 
         public void DeleteUserAcquisitionsUnit2(Guid? id) => FolioServiceClient.DeleteUserAcquisitionsUnit(id?.ToString());
 
@@ -6812,6 +8553,21 @@ namespace FolioLibrary
         }
 
         public void Update(UserRequestPreference2 userRequestPreference2) => FolioServiceClient.UpdateUserRequestPreference(userRequestPreference2.ToJObject());
+
+        public void UpdateOrInsert(UserRequestPreference2 userRequestPreference2)
+        {
+            if (userRequestPreference2.Id == null)
+                Insert(userRequestPreference2);
+            else
+                try
+                {
+                    Update(userRequestPreference2);
+                }
+                catch (HttpRequestException e)
+                {
+                    if (e.Message.Contains("NotFound")) Insert(userRequestPreference2); else throw;
+                }
+        }
 
         public void DeleteUserRequestPreference2(Guid? id) => FolioServiceClient.DeleteUserRequestPreference(id?.ToString());
 
@@ -6877,6 +8633,21 @@ namespace FolioLibrary
         }
 
         public void Update(Voucher2 voucher2) => FolioServiceClient.UpdateVoucher(voucher2.ToJObject());
+
+        public void UpdateOrInsert(Voucher2 voucher2)
+        {
+            if (voucher2.Id == null)
+                Insert(voucher2);
+            else
+                try
+                {
+                    Update(voucher2);
+                }
+                catch (HttpRequestException e)
+                {
+                    if (e.Message.Contains("NotFound")) Insert(voucher2); else throw;
+                }
+        }
 
         public void DeleteVoucher2(Guid? id) => FolioServiceClient.DeleteVoucher(id?.ToString());
 
@@ -6950,6 +8721,21 @@ namespace FolioLibrary
 
         public void Update(VoucherItem2 voucherItem2) => FolioServiceClient.UpdateVoucherItem(voucherItem2.ToJObject());
 
+        public void UpdateOrInsert(VoucherItem2 voucherItem2)
+        {
+            if (voucherItem2.Id == null)
+                Insert(voucherItem2);
+            else
+                try
+                {
+                    Update(voucherItem2);
+                }
+                catch (HttpRequestException e)
+                {
+                    if (e.Message.Contains("NotFound")) Insert(voucherItem2); else throw;
+                }
+        }
+
         public void DeleteVoucherItem2(Guid? id) => FolioServiceClient.DeleteVoucherItem(id?.ToString());
 
         public bool AnyWaiveReason2s(string where = null) => FolioServiceClient.AnyWaiveReasons(where);
@@ -7000,6 +8786,21 @@ namespace FolioLibrary
         }
 
         public void Update(WaiveReason2 waiveReason2) => FolioServiceClient.UpdateWaiveReason(waiveReason2.ToJObject());
+
+        public void UpdateOrInsert(WaiveReason2 waiveReason2)
+        {
+            if (waiveReason2.Id == null)
+                Insert(waiveReason2);
+            else
+                try
+                {
+                    Update(waiveReason2);
+                }
+                catch (HttpRequestException e)
+                {
+                    if (e.Message.Contains("NotFound")) Insert(waiveReason2); else throw;
+                }
+        }
 
         public void DeleteWaiveReason2(Guid? id) => FolioServiceClient.DeleteWaiveReason(id?.ToString());
 

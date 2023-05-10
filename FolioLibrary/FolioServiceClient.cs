@@ -16110,7 +16110,7 @@ namespace FolioLibrary
             var s = Stopwatch.StartNew();
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "Getting object {0}", id);
             AuthenticateIfNecessary();
-            url = $"{Url}/{url}/{id}";
+            url = $"{Url}/{url}{(id != null ? $"/{id}" : "")}";
             traceSource.TraceEvent(TraceEventType.Verbose, 0, url);
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", httpClient.DefaultRequestHeaders);
             var hrm = httpClient.GetAsync(url).Result;
