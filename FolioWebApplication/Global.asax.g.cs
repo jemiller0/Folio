@@ -21,6 +21,7 @@ namespace FolioWebApplication
 
         private void SetPermissions(HashSet<string> roles)
         {
+            SetAgreementsPermissions(roles);
             SetCirculationPermissions(roles);
             SetConfigurationPermissions(roles);
             SetFeesPermissions(roles);
@@ -34,6 +35,12 @@ namespace FolioWebApplication
             SetSourcePermissions(roles);
             SetTemplatesPermissions(roles);
             SetUsersPermissions(roles);
+        }
+
+        private void SetAgreementsPermissions(HashSet<string> roles)
+        {
+            Session["Agreement2sPermission"] = roles.Contains("all") || roles.Contains("uc.agreements.view") ? "View" : null;
+            Session["AgreementItem2sPermission"] = roles.Contains("all") || roles.Contains("uc.agreementitems.view") ? "View" : null;
         }
 
         private void SetCirculationPermissions(HashSet<string> roles)
@@ -368,6 +375,7 @@ namespace FolioWebApplication
 
         private void SetPermissions(string permission = null)
         {
+            SetAgreementsPermissions(permission);
             SetCirculationPermissions(permission);
             SetConfigurationPermissions(permission);
             SetFeesPermissions(permission);
@@ -381,6 +389,12 @@ namespace FolioWebApplication
             SetSourcePermissions(permission);
             SetTemplatesPermissions(permission);
             SetUsersPermissions(permission);
+        }
+
+        private void SetAgreementsPermissions(string permission = null)
+        {
+            Session["Agreement2sPermission"] = permission;
+            Session["AgreementItem2sPermission"] = permission;
         }
 
         private void SetCirculationPermissions(string permission = null)

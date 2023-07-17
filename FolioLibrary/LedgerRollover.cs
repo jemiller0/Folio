@@ -56,6 +56,9 @@ namespace FolioLibrary
         public virtual Guid? Tofiscalyearid { get; set; }
 
         [ScaffoldColumn(false)]
+        public virtual ICollection<LedgerFiscalYearRolloverBudget> LedgerFiscalYearRolloverBudgets { get; set; }
+
+        [ScaffoldColumn(false)]
         public virtual ICollection<LedgerRolloverError> LedgerRolloverErrors { get; set; }
 
         [ScaffoldColumn(false)]

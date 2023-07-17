@@ -119,6 +119,7 @@ namespace FolioWebApplication
                             || userName == "t-9wsch1"
                             )
                         {
+                            SetAgreementsPermissions("View");
                             SetCirculationPermissions("View");
                             SetConfigurationPermissions("View");
                             SetFeesPermissions("View");

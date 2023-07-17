@@ -321,7 +321,11 @@
                         </telerik:GridTemplateColumn>
                         <telerik:GridBoundColumn HeaderText="Edition" DataField="Edition" AutoPostBackOnFilter="true" HtmlEncode="true" CurrentFilterFunction="StartsWith" />
                         <telerik:GridBoundColumn HeaderText="Checkin Items" DataField="CheckinItems" AutoPostBackOnFilter="true" />
-                        <telerik:GridBoundColumn HeaderText="Agreement Id" DataField="AgreementId" AutoPostBackOnFilter="true" CurrentFilterFunction="EqualTo" />
+                        <telerik:GridTemplateColumn HeaderText="Agreement" DataField="Agreement.Name" AllowSorting="false" AutoPostBackOnFilter="true" CurrentFilterFunction="StartsWith">
+                            <ItemTemplate>
+                                <asp:HyperLink ID="AgreementHyperLink" runat="server" Text='<%#: Eval("AgreementId") != null ? Eval("Agreement.Name") ?? "&nbsp;" : "" %>' NavigateUrl='<%# $"~/Agreement2s/Edit.aspx?Id={Eval("AgreementId")}" %>' Enabled='<%# Session["Agreement2sPermission"] != null %>' />
+                            </ItemTemplate>
+                        </telerik:GridTemplateColumn>
                         <telerik:GridTemplateColumn HeaderText="Acquisition Method" DataField="AcquisitionMethod.Name" AllowSorting="false" AutoPostBackOnFilter="true" CurrentFilterFunction="StartsWith">
                             <ItemTemplate>
                                 <asp:HyperLink ID="AcquisitionMethodHyperLink" runat="server" Text='<%#: Eval("AcquisitionMethodId") != null ? Eval("AcquisitionMethod.Name") ?? "&nbsp;" : "" %>' NavigateUrl='<%# $"~/AcquisitionMethod2s/Edit.aspx?Id={Eval("AcquisitionMethodId")}" %>' Enabled='<%# Session["AcquisitionMethod2sPermission"] != null %>' />

@@ -79,7 +79,7 @@ namespace FolioWebApplication.Order2s
                 Global.GetCqlFilter(OrderItem2sRadGrid, "Id", "id"),
                 Global.GetCqlFilter(OrderItem2sRadGrid, "Edition", "edition"),
                 Global.GetCqlFilter(OrderItem2sRadGrid, "CheckinItems", "checkinItems"),
-                Global.GetCqlFilter(OrderItem2sRadGrid, "AgreementId", "agreementId"),
+                Global.GetCqlFilter(OrderItem2sRadGrid, "Agreement.Name", "agreementId", "name", folioServiceContext.FolioServiceClient.Agreements),
                 Global.GetCqlFilter(OrderItem2sRadGrid, "AcquisitionMethod.Name", "acquisitionMethod", "value", folioServiceContext.FolioServiceClient.AcquisitionMethods),
                 Global.GetCqlFilter(OrderItem2sRadGrid, "AutomaticExport", "automaticExport"),
                 Global.GetCqlFilter(OrderItem2sRadGrid, "CancellationRestriction", "cancellationRestriction"),

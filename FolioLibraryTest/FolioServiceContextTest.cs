@@ -51,6 +51,30 @@ namespace FolioLibraryTest
         }
 
         [TestMethod]
+        public void Agreements_DeserializeAgreement2Test()
+        {
+            var s = Stopwatch.StartNew();
+            var a2 = folioServiceContext.Agreement2s(take: 1).SingleOrDefault();
+            if (a2 == null) Assert.Inconclusive();
+            var a3 = folioDapperContext.Agreement2s(take: 1).SingleOrDefault();
+            a3.Content = null;
+            Assert.AreEqual(a2.ToString(), a3.ToString());
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"Agreements_DeserializeAgreement2Test()\r\n    ElapsedTime={s.Elapsed}");
+        }
+
+        [TestMethod]
+        public void Agreements_DeserializeAgreementItem2Test()
+        {
+            var s = Stopwatch.StartNew();
+            var ai2 = folioServiceContext.AgreementItem2s(take: 1).SingleOrDefault();
+            if (ai2 == null) Assert.Inconclusive();
+            var ai3 = folioDapperContext.AgreementItem2s(take: 1).SingleOrDefault();
+            ai3.Content = null;
+            Assert.AreEqual(ai2.ToString(), ai3.ToString());
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"Agreements_DeserializeAgreementItem2Test()\r\n    ElapsedTime={s.Elapsed}");
+        }
+
+        [TestMethod]
         public void Orders_DeserializeAlert2Test()
         {
             var s = Stopwatch.StartNew();
@@ -344,6 +368,14 @@ namespace FolioLibraryTest
             d3.Content = null;
             Assert.AreEqual(d2.ToString(), d3.ToString());
             traceSource.TraceEvent(TraceEventType.Information, 0, $"Users_DeserializeDepartment2Test()\r\n    ElapsedTime={s.Elapsed}");
+        }
+
+        [TestMethod]
+        public void Invoices_DeserializeDocument2Test()
+        {
+            var s = Stopwatch.StartNew();
+            Assert.Inconclusive();
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"Invoices_DeserializeDocument2Test()\r\n    ElapsedTime={s.Elapsed}");
         }
 
         [TestMethod]

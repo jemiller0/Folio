@@ -77,6 +77,48 @@ namespace FolioWebApplicationTest
         }
 
         [TestMethod]
+        public void Agreement2sDefaultAspxTest()
+        {
+            var s = Stopwatch.StartNew();
+            try
+            {
+                var hrm = httpClient.GetAsync($"{Url}/Agreement2s/Default.aspx").Result;
+                hrm.EnsureSuccessStatusCode();
+                Assert.IsTrue(s.Elapsed < TimeSpan.FromSeconds(30));
+            }
+            catch (Exception e)
+            {
+                traceSource.TraceEvent(TraceEventType.Error, 0, e.ToString());
+                throw;
+            }
+            finally
+            {
+                traceSource.TraceEvent(TraceEventType.Information, 0, $"Agreement2sDefaultAspxTest()\r\n    ElapsedTime={s.Elapsed}");
+            }
+        }
+
+        [TestMethod]
+        public void AgreementItem2sDefaultAspxTest()
+        {
+            var s = Stopwatch.StartNew();
+            try
+            {
+                var hrm = httpClient.GetAsync($"{Url}/AgreementItem2s/Default.aspx").Result;
+                hrm.EnsureSuccessStatusCode();
+                Assert.IsTrue(s.Elapsed < TimeSpan.FromSeconds(30));
+            }
+            catch (Exception e)
+            {
+                traceSource.TraceEvent(TraceEventType.Error, 0, e.ToString());
+                throw;
+            }
+            finally
+            {
+                traceSource.TraceEvent(TraceEventType.Information, 0, $"AgreementItem2sDefaultAspxTest()\r\n    ElapsedTime={s.Elapsed}");
+            }
+        }
+
+        [TestMethod]
         public void Alert2sDefaultAspxTest()
         {
             var s = Stopwatch.StartNew();

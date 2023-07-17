@@ -40,25 +40,25 @@ namespace FolioLibrary
         [Column("item_aged_lost_overdue_duration"), Display(Name = "Item Aged Lost Overdue Duration", Order = 4), JsonProperty("itemAgedLostOverdue.duration")]
         public virtual int? ItemAgedLostOverdueDuration { get; set; }
 
-        [Column("item_aged_lost_overdue_interval_id"), Display(Name = "Item Aged Lost Overdue Interval", Order = 5), JsonProperty("itemAgedLostOverdue.intervalId"), RegularExpression(@"^(Minutes|Hours|Days|Weeks|Months|Years)$"), StringLength(1024)]
+        [Column("item_aged_lost_overdue_interval_id"), Display(Name = "Item Aged Lost Overdue Interval", Order = 5), JsonProperty("itemAgedLostOverdue.intervalId"), RegularExpression(@"^(Minutes|Hours|Days|Weeks|Months)$"), StringLength(1024)]
         public virtual string ItemAgedLostOverdueInterval { get; set; }
 
         [Column("patron_billed_after_aged_lost_duration"), Display(Name = "Patron Billed After Aged Lost Duration", Order = 6), JsonProperty("patronBilledAfterAgedLost.duration")]
         public virtual int? PatronBilledAfterAgedLostDuration { get; set; }
 
-        [Column("patron_billed_after_aged_lost_interval_id"), Display(Name = "Patron Billed After Aged Lost Interval", Order = 7), JsonProperty("patronBilledAfterAgedLost.intervalId"), RegularExpression(@"^(Minutes|Hours|Days|Weeks|Months|Years)$"), StringLength(1024)]
+        [Column("patron_billed_after_aged_lost_interval_id"), Display(Name = "Patron Billed After Aged Lost Interval", Order = 7), JsonProperty("patronBilledAfterAgedLost.intervalId"), RegularExpression(@"^(Minutes|Hours|Days|Weeks|Months)$"), StringLength(1024)]
         public virtual string PatronBilledAfterAgedLostInterval { get; set; }
 
         [Column("recalled_item_aged_lost_overdue_duration"), Display(Name = "Recalled Item Aged Lost Overdue Duration", Order = 8), JsonProperty("recalledItemAgedLostOverdue.duration")]
         public virtual int? RecalledItemAgedLostOverdueDuration { get; set; }
 
-        [Column("recalled_item_aged_lost_overdue_interval_id"), Display(Name = "Recalled Item Aged Lost Overdue Interval", Order = 9), JsonProperty("recalledItemAgedLostOverdue.intervalId"), RegularExpression(@"^(Minutes|Hours|Days|Weeks|Months|Years)$"), StringLength(1024)]
+        [Column("recalled_item_aged_lost_overdue_interval_id"), Display(Name = "Recalled Item Aged Lost Overdue Interval", Order = 9), JsonProperty("recalledItemAgedLostOverdue.intervalId"), RegularExpression(@"^(Minutes|Hours|Days|Weeks|Months)$"), StringLength(1024)]
         public virtual string RecalledItemAgedLostOverdueInterval { get; set; }
 
         [Column("patron_billed_after_recalled_item_aged_lost_duration"), Display(Name = "Patron Billed After Recalled Item Aged Lost Duration", Order = 10), JsonProperty("patronBilledAfterRecalledItemAgedLost.duration")]
         public virtual int? PatronBilledAfterRecalledItemAgedLostDuration { get; set; }
 
-        [Column("patron_billed_after_recalled_item_aged_lost_interval_id"), Display(Name = "Patron Billed After Recalled Item Aged Lost Interval", Order = 11), JsonProperty("patronBilledAfterRecalledItemAgedLost.intervalId"), RegularExpression(@"^(Minutes|Hours|Days|Weeks|Months|Years)$"), StringLength(1024)]
+        [Column("patron_billed_after_recalled_item_aged_lost_interval_id"), Display(Name = "Patron Billed After Recalled Item Aged Lost Interval", Order = 11), JsonProperty("patronBilledAfterRecalledItemAgedLost.intervalId"), RegularExpression(@"^(Minutes|Hours|Days|Weeks|Months)$"), StringLength(1024)]
         public virtual string PatronBilledAfterRecalledItemAgedLostInterval { get; set; }
 
         [Column("charge_amount_item_charge_type"), Display(Name = "Charge Amount Item Charge Type", Order = 12), JsonProperty("chargeAmountItem.chargeType"), StringLength(1024)]
@@ -79,7 +79,7 @@ namespace FolioLibrary
         [Column("lost_item_charge_fee_fine_duration"), Display(Name = "Lost Item Charge Fee Fine Duration", Order = 17), JsonProperty("lostItemChargeFeeFine.duration")]
         public virtual int? LostItemChargeFeeFineDuration { get; set; }
 
-        [Column("lost_item_charge_fee_fine_interval_id"), Display(Name = "Lost Item Charge Fee Fine Interval", Order = 18), JsonProperty("lostItemChargeFeeFine.intervalId"), RegularExpression(@"^(Minutes|Hours|Days|Weeks|Months|Years)$"), StringLength(1024)]
+        [Column("lost_item_charge_fee_fine_interval_id"), Display(Name = "Lost Item Charge Fee Fine Interval", Order = 18), JsonProperty("lostItemChargeFeeFine.intervalId"), RegularExpression(@"^(Minutes|Hours|Days|Weeks|Months)$"), StringLength(1024)]
         public virtual string LostItemChargeFeeFineInterval { get; set; }
 
         [Column("returned_lost_item_processing_fee"), Display(Name = "Returned Lost Item Processing Fee", Order = 19), JsonProperty("returnedLostItemProcessingFee")]
@@ -100,7 +100,7 @@ namespace FolioLibrary
         [Column("fees_fines_shall_refunded_duration"), Display(Name = "Fees Fines Shall Refunded Duration", Order = 24), JsonProperty("feesFinesShallRefunded.duration")]
         public virtual int? FeesFinesShallRefundedDuration { get; set; }
 
-        [Column("fees_fines_shall_refunded_interval_id"), Display(Name = "Fees Fines Shall Refunded Interval", Order = 25), JsonProperty("feesFinesShallRefunded.intervalId"), RegularExpression(@"^(Minutes|Hours|Days|Weeks|Months|Years)$"), StringLength(1024)]
+        [Column("fees_fines_shall_refunded_interval_id"), Display(Name = "Fees Fines Shall Refunded Interval", Order = 25), JsonProperty("feesFinesShallRefunded.intervalId"), RegularExpression(@"^(Minutes|Hours|Days|Weeks|Months)$"), StringLength(1024)]
         public virtual string FeesFinesShallRefundedInterval { get; set; }
 
         [Column("created_date"), DataType(DataType.DateTime), Display(Name = "Creation Time", Order = 26), DisplayFormat(DataFormatString = "{0:g}"), Editable(false), JsonProperty("metadata.createdDate")]

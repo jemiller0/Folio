@@ -173,6 +173,60 @@ LEFT JOIN uc.instances AS i ON i.id = an.instance_id
         }
 
         [TestMethod]
+        public void QueryAgreement2sTest()
+        {
+            var s = Stopwatch.StartNew();
+            folioDapperContext.Agreement2s(take: 1).ToArray();
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"Agreement2sTest()\r\n    ElapsedTime={s.Elapsed}");
+        }
+
+        [TestMethod]
+        public void Agreement2sQueryTest()
+        {
+            var s = Stopwatch.StartNew();
+            folioDapperContext.Query(@"
+SELECT
+a2.id AS ""Id"",
+a2.name AS ""Name"",
+a2.description AS ""Description"",
+a2.start_date AS ""StartDate"",
+a2.end_date AS ""EndDate"",
+a2.cancellation_deadline AS ""CancellationDeadline"",
+a2.date_created AS ""DateCreated"",
+a2.last_updated AS ""LastUpdated"",
+a2.content AS ""Content"" 
+FROM uc.agreements AS a2
+ ORDER BY a2.name
+", take: 1);
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"Agreement2sQueryTest()\r\n    ElapsedTime={s.Elapsed}");
+        }
+
+        [TestMethod]
+        public void QueryAgreementItem2sTest()
+        {
+            var s = Stopwatch.StartNew();
+            folioDapperContext.AgreementItem2s(take: 1).ToArray();
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"AgreementItem2sTest()\r\n    ElapsedTime={s.Elapsed}");
+        }
+
+        [TestMethod]
+        public void AgreementItem2sQueryTest()
+        {
+            var s = Stopwatch.StartNew();
+            folioDapperContext.Query(@"
+SELECT
+ai2.id AS ""Id"",
+ai2.date_created AS ""DateCreated"",
+ai2.last_updated AS ""LastUpdated"",
+ai2.agreement_id AS ""AgreementId"",
+ai2.content AS ""Content"" 
+FROM uc.agreement_items AS ai2
+ ORDER BY ai2.id
+", take: 1);
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"AgreementItem2sQueryTest()\r\n    ElapsedTime={s.Elapsed}");
+        }
+
+        [TestMethod]
         public void QueryAlert2sTest()
         {
             var s = Stopwatch.StartNew();
@@ -5149,6 +5203,7 @@ SELECT
 oi2.id AS ""Id"",
 oi2.edition AS ""Edition"",
 oi2.checkin_items AS ""CheckinItems"",
+a.name AS ""Agreement"",
 oi2.agreement_id AS ""AgreementId"",
 am.value AS ""AcquisitionMethod"",
 oi2.acquisition_method_id AS ""AcquisitionMethodId"",
@@ -5227,6 +5282,7 @@ lwu.username AS ""LastWriteUser"",
 oi2.updated_by_user_id AS ""LastWriteUserId"",
 oi2.content AS ""Content"" 
 FROM uc.order_items AS oi2
+LEFT JOIN uc.agreements AS a ON a.id = oi2.agreement_id
 LEFT JOIN uc.acquisition_methods AS am ON am.id = oi2.acquisition_method_id
 LEFT JOIN uc.organizations AS eap ON eap.id = oi2.eresource_access_provider_id
 LEFT JOIN uc.material_types AS emt ON emt.id = oi2.eresource_material_type_id

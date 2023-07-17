@@ -33,12 +33,12 @@
                                     <asp:Literal ID="CheckinItemsLiteral" runat="server" Text='<%#: Eval("CheckinItems") %>' />
                                 </td>
                             </tr>
-                            <tr runat="server" visible='<%# Eval("AgreementId") != null %>'>
+                            <tr runat="server" visible='<%# Eval("Agreement") != null %>'>
                                 <td>
-                                    <asp:Label ID="AgreementIdLabel" runat="server" Text="Agreement Id:" AssociatedControlID="AgreementIdLiteral" />
+                                    <asp:Label ID="AgreementLabel" runat="server" Text="Agreement:" AssociatedControlID="AgreementHyperLink" />
                                 </td>
                                 <td>
-                                    <asp:Literal ID="AgreementIdLiteral" runat="server" Text='<%#: Eval("AgreementId") %>' />
+                                    <asp:HyperLink ID="AgreementHyperLink" runat="server" Text='<%#: Eval("Agreement.Name") %>' NavigateUrl='<%# $"~/Agreement2s/Edit.aspx?Id={Eval("AgreementId")}" %>' Enabled='<%# Session["Agreement2sPermission"] != null %>' />
                                 </td>
                             </tr>
                             <tr runat="server" visible='<%# Eval("AcquisitionMethod") != null %>'>
@@ -805,7 +805,11 @@
                         </telerik:GridTemplateColumn>
                         <telerik:GridBoundColumn HeaderText="Edition" DataField="Edition" AutoPostBackOnFilter="true" HtmlEncode="true" CurrentFilterFunction="StartsWith" />
                         <telerik:GridBoundColumn HeaderText="Checkin Items" DataField="CheckinItems" AutoPostBackOnFilter="true" />
-                        <telerik:GridBoundColumn HeaderText="Agreement Id" DataField="AgreementId" AutoPostBackOnFilter="true" CurrentFilterFunction="EqualTo" />
+                        <telerik:GridTemplateColumn HeaderText="Agreement" DataField="Agreement.Name" AllowSorting="false" AutoPostBackOnFilter="true" CurrentFilterFunction="StartsWith">
+                            <ItemTemplate>
+                                <asp:HyperLink ID="AgreementHyperLink" runat="server" Text='<%#: Eval("AgreementId") != null ? Eval("Agreement.Name") ?? "&nbsp;" : "" %>' NavigateUrl='<%# $"~/Agreement2s/Edit.aspx?Id={Eval("AgreementId")}" %>' Enabled='<%# Session["Agreement2sPermission"] != null %>' />
+                            </ItemTemplate>
+                        </telerik:GridTemplateColumn>
                         <telerik:GridTemplateColumn HeaderText="Acquisition Method" DataField="AcquisitionMethod.Name" AllowSorting="false" AutoPostBackOnFilter="true" CurrentFilterFunction="StartsWith">
                             <ItemTemplate>
                                 <asp:HyperLink ID="AcquisitionMethodHyperLink" runat="server" Text='<%#: Eval("AcquisitionMethodId") != null ? Eval("AcquisitionMethod.Name") ?? "&nbsp;" : "" %>' NavigateUrl='<%# $"~/AcquisitionMethod2s/Edit.aspx?Id={Eval("AcquisitionMethodId")}" %>' Enabled='<%# Session["AcquisitionMethod2sPermission"] != null %>' />

@@ -44,6 +44,9 @@ namespace FolioLibrary
         public virtual ICollection<Budget> Budgets { get; set; }
 
         [ScaffoldColumn(false)]
+        public virtual ICollection<LedgerFiscalYearRolloverBudget> LedgerFiscalYearRolloverBudgets { get; set; }
+
+        [ScaffoldColumn(false)]
         public virtual ICollection<LedgerRollover> LedgerRollovers { get; set; }
 
         [ScaffoldColumn(false)]

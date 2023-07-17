@@ -99,6 +99,60 @@ namespace FolioWebApplicationTest
         }
 
         [TestMethod]
+        public void Agreement2sEditAspxTest()
+        {
+            var s = Stopwatch.StartNew();
+            try
+            {
+                var a2 = folioServiceContext.Agreement2s(take: 1).SingleOrDefault();
+                if (a2 != null)
+                {
+                    var hrm = httpClient.GetAsync($"{Url}/Agreement2s/Edit.aspx?Id={a2.Id}").Result;
+                    hrm.EnsureSuccessStatusCode();
+                    Assert.IsTrue(s.Elapsed < timeSpan);
+                }
+                else
+                    Assert.Inconclusive();
+            }
+            catch (Exception e)
+            {
+                traceSource.TraceEvent(TraceEventType.Error, 0, e.ToString());
+                throw;
+            }
+            finally
+            {
+                traceSource.TraceEvent(TraceEventType.Information, 0, $"Agreement2sEditAspxTest()\r\n    ElapsedTime={s.Elapsed}");
+            }
+        }
+
+        [TestMethod]
+        public void AgreementItem2sEditAspxTest()
+        {
+            var s = Stopwatch.StartNew();
+            try
+            {
+                var ai2 = folioServiceContext.AgreementItem2s(take: 1).SingleOrDefault();
+                if (ai2 != null)
+                {
+                    var hrm = httpClient.GetAsync($"{Url}/AgreementItem2s/Edit.aspx?Id={ai2.Id}").Result;
+                    hrm.EnsureSuccessStatusCode();
+                    Assert.IsTrue(s.Elapsed < timeSpan);
+                }
+                else
+                    Assert.Inconclusive();
+            }
+            catch (Exception e)
+            {
+                traceSource.TraceEvent(TraceEventType.Error, 0, e.ToString());
+                throw;
+            }
+            finally
+            {
+                traceSource.TraceEvent(TraceEventType.Information, 0, $"AgreementItem2sEditAspxTest()\r\n    ElapsedTime={s.Elapsed}");
+            }
+        }
+
+        [TestMethod]
         public void Alert2sEditAspxTest()
         {
             var s = Stopwatch.StartNew();

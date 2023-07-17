@@ -46,6 +46,26 @@ CAST(at.jsonb#>>'{metadata,updatedByUserId}' AS UUID) AS updated_by_user_id,
 at.jsonb#>>'{metadata,updatedByUsername}' AS updated_by_username,
 jsonb_pretty(COALESCE(jsonb_set(jsonb, '{metadata,createdDate}', ('"' || (jsonb#>>'{metadata,createdDate}') || CASE WHEN jsonb#>>'{metadata,createdDate}' !~ '([-+]\d\d:\d\d)|Z$' THEN '+00:00' ELSE '' END || '"')::jsonb), jsonb)) AS content
 FROM uchicago_mod_users.addresstype at;
+CREATE VIEW uc.agreements AS
+SELECT
+a.id AS id,
+CAST(a.jsonb->>'name' AS VARCHAR(255)) AS name,
+a.jsonb->>'description' AS description,
+uc.DATE_CAST(a.jsonb->>'startDate') AS start_date,
+uc.DATE_CAST(a.jsonb->>'endDate') AS end_date,
+uc.TIMESTAMP_CAST(a.jsonb->>'cancellationDeadline') AS cancellation_deadline,
+uc.DATE_CAST(a.jsonb->>'dateCreated') AS date_created,
+uc.TIMESTAMP_CAST(a.jsonb->>'lastUpdated') AS last_updated,
+jsonb_pretty(a.jsonb) AS content
+FROM uc_agreements.agreements a;
+CREATE VIEW uc.agreement_items AS
+SELECT
+ai.id AS id,
+uc.DATE_CAST(ai.jsonb->>'dateCreated') AS date_created,
+uc.TIMESTAMP_CAST(ai.jsonb->>'lastUpdated') AS last_updated,
+CAST(jsonb#>>'{owner,id}' AS UUID) AS agreement_id,
+jsonb_pretty(ai.jsonb) AS content
+FROM uc_agreements.agreement_items ai;
 CREATE VIEW uc.alerts AS
 SELECT
 a.id AS id,
@@ -552,10 +572,10 @@ d.id AS id,
 d.jsonb#>>'{documentMetadata,name}' AS document_metadata_name,
 CAST(d.jsonb#>>'{documentMetadata,invoiceId}' AS UUID) AS document_metadata_invoice_id,
 d.jsonb#>>'{documentMetadata,url}' AS document_metadata_url,
-uc.DATE_CAST(d.jsonb#>>'{documentMetadata,metadata,createdDate}') AS document_metadata_metadata_created_date,
+uc.TIMESTAMP_CAST(d.jsonb#>>'{documentMetadata,metadata,createdDate}') AS document_metadata_metadata_created_date,
 CAST(d.jsonb#>>'{documentMetadata,metadata,createdByUserId}' AS UUID) AS document_metadata_metadata_created_by_user_id,
 d.jsonb#>>'{documentMetadata,metadata,createdByUsername}' AS document_metadata_metadata_created_by_username,
-uc.DATE_CAST(d.jsonb#>>'{documentMetadata,metadata,updatedDate}') AS document_metadata_metadata_updated_date,
+uc.TIMESTAMP_CAST(d.jsonb#>>'{documentMetadata,metadata,updatedDate}') AS document_metadata_metadata_updated_date,
 CAST(d.jsonb#>>'{documentMetadata,metadata,updatedByUserId}' AS UUID) AS document_metadata_metadata_updated_by_user_id,
 d.jsonb#>>'{documentMetadata,metadata,updatedByUsername}' AS document_metadata_metadata_updated_by_username,
 d.jsonb#>>'{contents,data}' AS contents_data,

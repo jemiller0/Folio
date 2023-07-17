@@ -12,7 +12,7 @@ namespace FolioLibrary
 {
     public partial class FolioBulkCopyContext : IDisposable
     {
-        private DataTable acquisitionMethodsDataTable, acquisitionsUnitsDataTable, addressTypesDataTable, alertsDataTable, alternativeTitleTypesDataTable, authAttemptsDataTable, authCredentialsHistoriesDataTable, authPasswordActionsDataTable, batchGroupsDataTable, blocksDataTable, blockConditionsDataTable, blockLimitsDataTable, boundWithPartsDataTable, budgetsDataTable, budgetExpenseClassesDataTable, budgetGroupsDataTable, callNumberTypesDataTable, campusesDataTable, cancellationReasonsDataTable, categoriesDataTable, checkInsDataTable, circulationRulesDataTable, classificationTypesDataTable, closeReasonsDataTable, commentsDataTable, configurationsDataTable, contactsDataTable, contactTypesDataTable, contributorNameTypesDataTable, contributorTypesDataTable, countriesDataTable, customFieldsDataTable, departmentsDataTable, documentsDataTable, donorsDataTable, donorFiscalYearsDataTable, electronicAccessRelationshipsDataTable, errorRecordsDataTable, eventLogsDataTable, expenseClassesDataTable, feesDataTable, feeTypesDataTable, financeGroupsDataTable, fiscalYearsDataTable, fixedDueDateSchedulesDataTable, fundsDataTable, fund3sDataTable, fundTypesDataTable, groupsDataTable, holdingsDataTable, holdingDonor2sDataTable, holdingNoteTypesDataTable, holdingTypesDataTable, hridSettingsDataTable, idTypesDataTable, illPoliciesDataTable, instancesDataTable, instanceFormatsDataTable, instanceNoteTypesDataTable, instanceRelationshipsDataTable, instanceRelationshipTypesDataTable, instanceSourceMarcsDataTable, instanceStatusesDataTable, instanceTypesDataTable, institutionsDataTable, interfacesDataTable, interfaceCredentialsDataTable, invoicesDataTable, invoice3sDataTable, invoiceItemsDataTable, invoiceItem3sDataTable, invoiceItemDonorsDataTable, invoiceItemFund2sDataTable, invoiceStatusesDataTable, invoiceTransactionSummariesDataTable, itemsDataTable, itemDamagedStatusesDataTable, itemDonor2sDataTable, itemNoteTypesDataTable, itemOrderItemsDataTable, itemStatusesDataTable, ledgersDataTable, ledgerRolloversDataTable, ledgerRolloverErrorsDataTable, ledgerRolloverProgressesDataTable, librariesDataTable, linksDataTable, loansDataTable, loanEventsDataTable, loanPoliciesDataTable, loanTypesDataTable, locationsDataTable, loginsDataTable, lostItemFeePoliciesDataTable, manualBlockTemplatesDataTable, marcRecordsDataTable, materialTypesDataTable, modeOfIssuancesDataTable, natureOfContentTermsDataTable, notesDataTable, noteLinksDataTable, noteTypesDataTable, oclcHoldingsDataTable, oclcNumber2sDataTable, ordersDataTable, order3sDataTable, orderInvoicesDataTable, orderItemsDataTable, orderItem3sDataTable, orderItemDonorsDataTable, orderItemFund3sDataTable, orderStatusesDataTable, orderStatus2sDataTable, orderTemplatesDataTable, orderTransactionSummariesDataTable, orderTypesDataTable, orderType2sDataTable, organizationsDataTable, overdueFinePoliciesDataTable, ownersDataTable, patronActionSessionsDataTable, patronNoticePoliciesDataTable, paymentsDataTable, paymentMethodsDataTable, paymentTypesDataTable, permissionsDataTable, permissionsUsersDataTable, personDonorsDataTable, precedingSucceedingTitlesDataTable, prefixesDataTable, proxiesDataTable, rawRecordsDataTable, receiptStatusesDataTable, receivingsDataTable, recordsDataTable, refundReasonsDataTable, relatedInstanceTypesDataTable, reportingCodesDataTable, requestsDataTable, requestPoliciesDataTable, scheduledNoticesDataTable, servicePointsDataTable, servicePointUsersDataTable, snapshotsDataTable, sourcesDataTable, staffSlipsDataTable, statisticalCodesDataTable, statisticalCodeTypesDataTable, suffixesDataTable, tagsDataTable, templatesDataTable, titlesDataTable, transactionsDataTable, transferAccountsDataTable, transferCriteriasDataTable, usersDataTable, userAcquisitionsUnitsDataTable, userRequestPreferencesDataTable, userSummariesDataTable, vendorsDataTable, vouchersDataTable, voucher3sDataTable, voucherItemsDataTable, voucherItem3sDataTable, voucherStatusesDataTable, waiveReasonsDataTable;
+        private DataTable acquisitionMethodsDataTable, acquisitionsUnitsDataTable, actualCostRecordsDataTable, addressTypesDataTable, agreementsDataTable, agreementItemsDataTable, alertsDataTable, alternativeTitleTypesDataTable, authAttemptsDataTable, authCredentialsHistoriesDataTable, authoritySourceFilesDataTable, authPasswordActionsDataTable, batchGroupsDataTable, blocksDataTable, blockConditionsDataTable, blockLimitsDataTable, boundWithPartsDataTable, budgetsDataTable, budgetExpenseClassesDataTable, budgetGroupsDataTable, callNumberTypesDataTable, campusesDataTable, cancellationReasonsDataTable, categoriesDataTable, checkInsDataTable, circulationRulesDataTable, classificationTypesDataTable, closeReasonsDataTable, commentsDataTable, configurationsDataTable, contactsDataTable, contactTypesDataTable, contributorNameTypesDataTable, contributorTypesDataTable, countriesDataTable, customFieldsDataTable, departmentsDataTable, documentsDataTable, donorsDataTable, donorFiscalYearsDataTable, electronicAccessRelationshipsDataTable, errorRecordsDataTable, eventLogsDataTable, expenseClassesDataTable, feesDataTable, feeTypesDataTable, financeGroupsDataTable, fiscalYearsDataTable, fixedDueDateSchedulesDataTable, fundsDataTable, fund3sDataTable, fundTypesDataTable, groupsDataTable, holdingsDataTable, holdingDonor2sDataTable, holdingNoteTypesDataTable, holdingTypesDataTable, hridSettingsDataTable, idTypesDataTable, illPoliciesDataTable, instancesDataTable, instanceFormatsDataTable, instanceNoteTypesDataTable, instanceRelationshipsDataTable, instanceRelationshipTypesDataTable, instanceSourceMarcsDataTable, instanceStatusesDataTable, instanceTypesDataTable, institutionsDataTable, interfacesDataTable, interfaceCredentialsDataTable, invoicesDataTable, invoice3sDataTable, invoiceItemsDataTable, invoiceItem3sDataTable, invoiceItemDonorsDataTable, invoiceItemFund2sDataTable, invoiceStatusesDataTable, invoiceTransactionSummariesDataTable, itemsDataTable, itemDamagedStatusesDataTable, itemDonor2sDataTable, itemNoteTypesDataTable, itemOrderItemsDataTable, itemStatusesDataTable, ledgersDataTable, ledgerFiscalYearRolloverBudgetsDataTable, ledgerRolloversDataTable, ledgerRolloverErrorsDataTable, ledgerRolloverProgressesDataTable, librariesDataTable, linksDataTable, loansDataTable, loanEventsDataTable, loanPoliciesDataTable, loanTypesDataTable, locationsDataTable, loginsDataTable, lostItemFeePoliciesDataTable, manualBlockTemplatesDataTable, marcRecordsDataTable, materialTypesDataTable, modeOfIssuancesDataTable, natureOfContentTermsDataTable, notesDataTable, noteLinksDataTable, noteTypesDataTable, oclcHoldingsDataTable, oclcHolding2sDataTable, oclcNumber2sDataTable, ordersDataTable, order3sDataTable, orderInvoicesDataTable, orderItemsDataTable, orderItem3sDataTable, orderItemDonorsDataTable, orderItemFund3sDataTable, orderStatusesDataTable, orderStatus2sDataTable, orderTemplatesDataTable, orderTransactionSummariesDataTable, orderTypesDataTable, orderType2sDataTable, organizationsDataTable, organizationType2sDataTable, overdueFinePoliciesDataTable, ownersDataTable, patronActionSessionsDataTable, patronNoticePoliciesDataTable, patronPinsDataTable, paymentsDataTable, paymentMethodsDataTable, paymentTypesDataTable, permissionsDataTable, permissionsUsersDataTable, personDonorsDataTable, precedingSucceedingTitlesDataTable, prefixesDataTable, proxiesDataTable, rawRecordsDataTable, receiptStatusesDataTable, receivingsDataTable, recordsDataTable, refundReasonsDataTable, relatedInstanceTypesDataTable, reportingCodesDataTable, requestsDataTable, requestPoliciesDataTable, scheduledNoticesDataTable, servicePointsDataTable, servicePointUsersDataTable, snapshotsDataTable, sourcesDataTable, staffSlipsDataTable, statisticalCodesDataTable, statisticalCodeTypesDataTable, suffixesDataTable, tagsDataTable, templatesDataTable, titlesDataTable, transactionsDataTable, transferAccountsDataTable, transferCriteriasDataTable, usersDataTable, userAcquisitionsUnitsDataTable, userRequestPreferencesDataTable, userSummariesDataTable, vendorsDataTable, vouchersDataTable, voucher3sDataTable, voucherItemsDataTable, voucherItem3sDataTable, voucherStatusesDataTable, waiveReasonsDataTable;
         private bool checkConstraints;
         private string connectionString;
         private bool identityInsert;
@@ -77,6 +77,25 @@ namespace FolioLibrary
             acquisitionsUnitsDataTable.Rows.Add(dr);
         }
 
+        public void Insert(ActualCostRecord actualCostRecord)
+        {
+            if (actualCostRecordsDataTable == null)
+            {
+                actualCostRecordsDataTable = new DataTable();
+                actualCostRecordsDataTable.Columns.Add(new DataColumn { ColumnName = "id", DataType = typeof(Guid) });
+                actualCostRecordsDataTable.Columns.Add(new DataColumn { ColumnName = "jsonb", DataType = typeof(string) });
+                actualCostRecordsDataTable.Columns.Add(new DataColumn { ColumnName = "creation_date", DataType = typeof(DateTime) });
+                actualCostRecordsDataTable.Columns.Add(new DataColumn { ColumnName = "created_by", DataType = typeof(string) });
+                actualCostRecordsDataTable.Columns["jsonb"].ExtendedProperties["NpgsqlDbType"] = NpgsqlDbType.Jsonb;
+            }
+            var dr = actualCostRecordsDataTable.NewRow();
+            dr["id"] = (object)actualCostRecord.Id ?? DBNull.Value;
+            dr["jsonb"] = (object)actualCostRecord.Content ?? DBNull.Value;
+            dr["creation_date"] = (object)actualCostRecord.CreationTime ?? DBNull.Value;
+            dr["created_by"] = (object)actualCostRecord.CreationUserId ?? DBNull.Value;
+            actualCostRecordsDataTable.Rows.Add(dr);
+        }
+
         public void Insert(AddressType addressType)
         {
             if (addressTypesDataTable == null)
@@ -94,6 +113,36 @@ namespace FolioLibrary
             dr["creation_date"] = (object)addressType.CreationTime ?? DBNull.Value;
             dr["created_by"] = (object)addressType.CreationUserId ?? DBNull.Value;
             addressTypesDataTable.Rows.Add(dr);
+        }
+
+        public void Insert(Agreement agreement)
+        {
+            if (agreementsDataTable == null)
+            {
+                agreementsDataTable = new DataTable();
+                agreementsDataTable.Columns.Add(new DataColumn { ColumnName = "id", DataType = typeof(Guid) });
+                agreementsDataTable.Columns.Add(new DataColumn { ColumnName = "jsonb", DataType = typeof(string) });
+                agreementsDataTable.Columns["jsonb"].ExtendedProperties["NpgsqlDbType"] = NpgsqlDbType.Jsonb;
+            }
+            var dr = agreementsDataTable.NewRow();
+            dr["id"] = (object)agreement.Id ?? DBNull.Value;
+            dr["jsonb"] = (object)agreement.Content ?? DBNull.Value;
+            agreementsDataTable.Rows.Add(dr);
+        }
+
+        public void Insert(AgreementItem agreementItem)
+        {
+            if (agreementItemsDataTable == null)
+            {
+                agreementItemsDataTable = new DataTable();
+                agreementItemsDataTable.Columns.Add(new DataColumn { ColumnName = "id", DataType = typeof(Guid) });
+                agreementItemsDataTable.Columns.Add(new DataColumn { ColumnName = "jsonb", DataType = typeof(string) });
+                agreementItemsDataTable.Columns["jsonb"].ExtendedProperties["NpgsqlDbType"] = NpgsqlDbType.Jsonb;
+            }
+            var dr = agreementItemsDataTable.NewRow();
+            dr["id"] = (object)agreementItem.Id ?? DBNull.Value;
+            dr["jsonb"] = (object)agreementItem.Content ?? DBNull.Value;
+            agreementItemsDataTable.Rows.Add(dr);
         }
 
         public void Insert(Alert alert)
@@ -170,6 +219,25 @@ namespace FolioLibrary
             dr["creation_date"] = (object)authCredentialsHistory.CreationTime ?? DBNull.Value;
             dr["created_by"] = (object)authCredentialsHistory.CreationUserId ?? DBNull.Value;
             authCredentialsHistoriesDataTable.Rows.Add(dr);
+        }
+
+        public void Insert(AuthoritySourceFile authoritySourceFile)
+        {
+            if (authoritySourceFilesDataTable == null)
+            {
+                authoritySourceFilesDataTable = new DataTable();
+                authoritySourceFilesDataTable.Columns.Add(new DataColumn { ColumnName = "id", DataType = typeof(Guid) });
+                authoritySourceFilesDataTable.Columns.Add(new DataColumn { ColumnName = "jsonb", DataType = typeof(string) });
+                authoritySourceFilesDataTable.Columns.Add(new DataColumn { ColumnName = "creation_date", DataType = typeof(DateTime) });
+                authoritySourceFilesDataTable.Columns.Add(new DataColumn { ColumnName = "created_by", DataType = typeof(string) });
+                authoritySourceFilesDataTable.Columns["jsonb"].ExtendedProperties["NpgsqlDbType"] = NpgsqlDbType.Jsonb;
+            }
+            var dr = authoritySourceFilesDataTable.NewRow();
+            dr["id"] = (object)authoritySourceFile.Id ?? DBNull.Value;
+            dr["jsonb"] = (object)authoritySourceFile.Content ?? DBNull.Value;
+            dr["creation_date"] = (object)authoritySourceFile.CreationTime ?? DBNull.Value;
+            dr["created_by"] = (object)authoritySourceFile.CreationUserId ?? DBNull.Value;
+            authoritySourceFilesDataTable.Rows.Add(dr);
         }
 
         public void Insert(AuthPasswordAction authPasswordAction)
@@ -1739,6 +1807,31 @@ namespace FolioLibrary
             ledgersDataTable.Rows.Add(dr);
         }
 
+        public void Insert(LedgerFiscalYearRolloverBudget ledgerFiscalYearRolloverBudget)
+        {
+            if (ledgerFiscalYearRolloverBudgetsDataTable == null)
+            {
+                ledgerFiscalYearRolloverBudgetsDataTable = new DataTable();
+                ledgerFiscalYearRolloverBudgetsDataTable.Columns.Add(new DataColumn { ColumnName = "id", DataType = typeof(Guid) });
+                ledgerFiscalYearRolloverBudgetsDataTable.Columns.Add(new DataColumn { ColumnName = "jsonb", DataType = typeof(string) });
+                ledgerFiscalYearRolloverBudgetsDataTable.Columns.Add(new DataColumn { ColumnName = "creation_date", DataType = typeof(DateTime) });
+                ledgerFiscalYearRolloverBudgetsDataTable.Columns.Add(new DataColumn { ColumnName = "created_by", DataType = typeof(string) });
+                ledgerFiscalYearRolloverBudgetsDataTable.Columns.Add(new DataColumn { ColumnName = "ledgerrolloverid", DataType = typeof(Guid) });
+                ledgerFiscalYearRolloverBudgetsDataTable.Columns.Add(new DataColumn { ColumnName = "fundid", DataType = typeof(Guid) });
+                ledgerFiscalYearRolloverBudgetsDataTable.Columns.Add(new DataColumn { ColumnName = "fiscalyearid", DataType = typeof(Guid) });
+                ledgerFiscalYearRolloverBudgetsDataTable.Columns["jsonb"].ExtendedProperties["NpgsqlDbType"] = NpgsqlDbType.Jsonb;
+            }
+            var dr = ledgerFiscalYearRolloverBudgetsDataTable.NewRow();
+            dr["id"] = (object)ledgerFiscalYearRolloverBudget.Id ?? DBNull.Value;
+            dr["jsonb"] = (object)ledgerFiscalYearRolloverBudget.Content ?? DBNull.Value;
+            dr["creation_date"] = (object)ledgerFiscalYearRolloverBudget.CreationTime ?? DBNull.Value;
+            dr["created_by"] = (object)ledgerFiscalYearRolloverBudget.CreationUserId ?? DBNull.Value;
+            dr["ledgerrolloverid"] = (object)ledgerFiscalYearRolloverBudget.Ledgerrolloverid ?? DBNull.Value;
+            dr["fundid"] = (object)ledgerFiscalYearRolloverBudget.Fundid ?? DBNull.Value;
+            dr["fiscalyearid"] = (object)ledgerFiscalYearRolloverBudget.Fiscalyearid ?? DBNull.Value;
+            ledgerFiscalYearRolloverBudgetsDataTable.Rows.Add(dr);
+        }
+
         public void Insert(LedgerRollover ledgerRollover)
         {
             if (ledgerRolloversDataTable == null)
@@ -2166,6 +2259,23 @@ namespace FolioLibrary
             oclcHoldingsDataTable.Rows.Add(dr);
         }
 
+        public void Insert(OclcHolding2 oclcHolding2)
+        {
+            if (oclcHolding2sDataTable == null)
+            {
+                oclcHolding2sDataTable = new DataTable();
+                oclcHolding2sDataTable.Columns.Add(new DataColumn { ColumnName = "number", DataType = typeof(int) });
+                oclcHolding2sDataTable.Columns.Add(new DataColumn { ColumnName = "instance_id", DataType = typeof(int) });
+                oclcHolding2sDataTable.Columns.Add(new DataColumn { ColumnName = "last_write_time", DataType = typeof(DateTime) });
+                
+            }
+            var dr = oclcHolding2sDataTable.NewRow();
+            dr["number"] = (object)oclcHolding2.Number ?? DBNull.Value;
+            dr["instance_id"] = (object)oclcHolding2.InstanceId ?? DBNull.Value;
+            dr["last_write_time"] = (object)oclcHolding2.LastWriteTime ?? DBNull.Value;
+            oclcHolding2sDataTable.Rows.Add(dr);
+        }
+
         public void Insert(OclcNumber2 oclcNumber2)
         {
             if (oclcNumber2sDataTable == null)
@@ -2543,6 +2653,25 @@ namespace FolioLibrary
             organizationsDataTable.Rows.Add(dr);
         }
 
+        public void Insert(OrganizationType2 organizationType2)
+        {
+            if (organizationType2sDataTable == null)
+            {
+                organizationType2sDataTable = new DataTable();
+                organizationType2sDataTable.Columns.Add(new DataColumn { ColumnName = "id", DataType = typeof(Guid) });
+                organizationType2sDataTable.Columns.Add(new DataColumn { ColumnName = "jsonb", DataType = typeof(string) });
+                organizationType2sDataTable.Columns.Add(new DataColumn { ColumnName = "creation_date", DataType = typeof(DateTime) });
+                organizationType2sDataTable.Columns.Add(new DataColumn { ColumnName = "created_by", DataType = typeof(string) });
+                organizationType2sDataTable.Columns["jsonb"].ExtendedProperties["NpgsqlDbType"] = NpgsqlDbType.Jsonb;
+            }
+            var dr = organizationType2sDataTable.NewRow();
+            dr["id"] = (object)organizationType2.Id ?? DBNull.Value;
+            dr["jsonb"] = (object)organizationType2.Content ?? DBNull.Value;
+            dr["creation_date"] = (object)organizationType2.CreationTime ?? DBNull.Value;
+            dr["created_by"] = (object)organizationType2.CreationUserId ?? DBNull.Value;
+            organizationType2sDataTable.Rows.Add(dr);
+        }
+
         public void Insert(OverdueFinePolicy overdueFinePolicy)
         {
             if (overdueFinePoliciesDataTable == null)
@@ -2617,6 +2746,25 @@ namespace FolioLibrary
             dr["creation_date"] = (object)patronNoticePolicy.CreationTime ?? DBNull.Value;
             dr["created_by"] = (object)patronNoticePolicy.CreationUserId ?? DBNull.Value;
             patronNoticePoliciesDataTable.Rows.Add(dr);
+        }
+
+        public void Insert(PatronPin patronPin)
+        {
+            if (patronPinsDataTable == null)
+            {
+                patronPinsDataTable = new DataTable();
+                patronPinsDataTable.Columns.Add(new DataColumn { ColumnName = "id", DataType = typeof(Guid) });
+                patronPinsDataTable.Columns.Add(new DataColumn { ColumnName = "jsonb", DataType = typeof(string) });
+                patronPinsDataTable.Columns.Add(new DataColumn { ColumnName = "creation_date", DataType = typeof(DateTime) });
+                patronPinsDataTable.Columns.Add(new DataColumn { ColumnName = "created_by", DataType = typeof(string) });
+                patronPinsDataTable.Columns["jsonb"].ExtendedProperties["NpgsqlDbType"] = NpgsqlDbType.Jsonb;
+            }
+            var dr = patronPinsDataTable.NewRow();
+            dr["id"] = (object)patronPin.Id ?? DBNull.Value;
+            dr["jsonb"] = (object)patronPin.Content ?? DBNull.Value;
+            dr["creation_date"] = (object)patronPin.CreationTime ?? DBNull.Value;
+            dr["created_by"] = (object)patronPin.CreationUserId ?? DBNull.Value;
+            patronPinsDataTable.Rows.Add(dr);
         }
 
         public void Insert(Payment payment)
@@ -2928,15 +3076,11 @@ namespace FolioLibrary
                 relatedInstanceTypesDataTable = new DataTable();
                 relatedInstanceTypesDataTable.Columns.Add(new DataColumn { ColumnName = "id", DataType = typeof(Guid) });
                 relatedInstanceTypesDataTable.Columns.Add(new DataColumn { ColumnName = "jsonb", DataType = typeof(string) });
-                relatedInstanceTypesDataTable.Columns.Add(new DataColumn { ColumnName = "creation_date", DataType = typeof(DateTime) });
-                relatedInstanceTypesDataTable.Columns.Add(new DataColumn { ColumnName = "created_by", DataType = typeof(string) });
                 relatedInstanceTypesDataTable.Columns["jsonb"].ExtendedProperties["NpgsqlDbType"] = NpgsqlDbType.Jsonb;
             }
             var dr = relatedInstanceTypesDataTable.NewRow();
             dr["id"] = (object)relatedInstanceType.Id ?? DBNull.Value;
             dr["jsonb"] = (object)relatedInstanceType.Content ?? DBNull.Value;
-            dr["creation_date"] = (object)relatedInstanceType.CreationTime ?? DBNull.Value;
-            dr["created_by"] = (object)relatedInstanceType.CreationUserId ?? DBNull.Value;
             relatedInstanceTypesDataTable.Rows.Add(dr);
         }
 
@@ -3625,6 +3769,17 @@ namespace FolioLibrary
                 sqlBulkCopy.WriteToServer(acquisitionsUnitsDataTable);
                 acquisitionsUnitsDataTable.Clear();
             }
+            if (actualCostRecordsDataTable != null && actualCostRecordsDataTable.Rows.Count > 0)
+            {
+                sqlBulkCopy.DestinationTableName = $"uchicago_mod_circulation_storage{(IsMySql ? "_" : ".")}actual_cost_record";
+                sqlBulkCopy.ColumnMappings.Clear();
+                sqlBulkCopy.ColumnMappings.Add("id", "id");
+                sqlBulkCopy.ColumnMappings.Add("jsonb", "jsonb");
+                sqlBulkCopy.ColumnMappings.Add("creation_date", "creation_date");
+                sqlBulkCopy.ColumnMappings.Add("created_by", "created_by");
+                sqlBulkCopy.WriteToServer(actualCostRecordsDataTable);
+                actualCostRecordsDataTable.Clear();
+            }
             if (addressTypesDataTable != null && addressTypesDataTable.Rows.Count > 0)
             {
                 sqlBulkCopy.DestinationTableName = $"uchicago_mod_users{(IsMySql ? "_" : ".")}addresstype";
@@ -3635,6 +3790,24 @@ namespace FolioLibrary
                 sqlBulkCopy.ColumnMappings.Add("created_by", "created_by");
                 sqlBulkCopy.WriteToServer(addressTypesDataTable);
                 addressTypesDataTable.Clear();
+            }
+            if (agreementsDataTable != null && agreementsDataTable.Rows.Count > 0)
+            {
+                sqlBulkCopy.DestinationTableName = $"uc_agreements{(IsMySql ? "_" : ".")}agreements";
+                sqlBulkCopy.ColumnMappings.Clear();
+                sqlBulkCopy.ColumnMappings.Add("id", "id");
+                sqlBulkCopy.ColumnMappings.Add("jsonb", "jsonb");
+                sqlBulkCopy.WriteToServer(agreementsDataTable);
+                agreementsDataTable.Clear();
+            }
+            if (agreementItemsDataTable != null && agreementItemsDataTable.Rows.Count > 0)
+            {
+                sqlBulkCopy.DestinationTableName = $"uc_agreements{(IsMySql ? "_" : ".")}agreement_items";
+                sqlBulkCopy.ColumnMappings.Clear();
+                sqlBulkCopy.ColumnMappings.Add("id", "id");
+                sqlBulkCopy.ColumnMappings.Add("jsonb", "jsonb");
+                sqlBulkCopy.WriteToServer(agreementItemsDataTable);
+                agreementItemsDataTable.Clear();
             }
             if (alertsDataTable != null && alertsDataTable.Rows.Count > 0)
             {
@@ -3679,6 +3852,17 @@ namespace FolioLibrary
                 sqlBulkCopy.ColumnMappings.Add("created_by", "created_by");
                 sqlBulkCopy.WriteToServer(authCredentialsHistoriesDataTable);
                 authCredentialsHistoriesDataTable.Clear();
+            }
+            if (authoritySourceFilesDataTable != null && authoritySourceFilesDataTable.Rows.Count > 0)
+            {
+                sqlBulkCopy.DestinationTableName = $"uchicago_mod_inventory_storage{(IsMySql ? "_" : ".")}authority_source_file";
+                sqlBulkCopy.ColumnMappings.Clear();
+                sqlBulkCopy.ColumnMappings.Add("id", "id");
+                sqlBulkCopy.ColumnMappings.Add("jsonb", "jsonb");
+                sqlBulkCopy.ColumnMappings.Add("creation_date", "creation_date");
+                sqlBulkCopy.ColumnMappings.Add("created_by", "created_by");
+                sqlBulkCopy.WriteToServer(authoritySourceFilesDataTable);
+                authoritySourceFilesDataTable.Clear();
             }
             if (authPasswordActionsDataTable != null && authPasswordActionsDataTable.Rows.Count > 0)
             {
@@ -4576,6 +4760,20 @@ namespace FolioLibrary
                 sqlBulkCopy.WriteToServer(ledgersDataTable);
                 ledgersDataTable.Clear();
             }
+            if (ledgerFiscalYearRolloverBudgetsDataTable != null && ledgerFiscalYearRolloverBudgetsDataTable.Rows.Count > 0)
+            {
+                sqlBulkCopy.DestinationTableName = $"uchicago_mod_finance_storage{(IsMySql ? "_" : ".")}ledger_fiscal_year_rollover_budget";
+                sqlBulkCopy.ColumnMappings.Clear();
+                sqlBulkCopy.ColumnMappings.Add("id", "id");
+                sqlBulkCopy.ColumnMappings.Add("jsonb", "jsonb");
+                sqlBulkCopy.ColumnMappings.Add("creation_date", "creation_date");
+                sqlBulkCopy.ColumnMappings.Add("created_by", "created_by");
+                sqlBulkCopy.ColumnMappings.Add("ledgerrolloverid", "ledgerrolloverid");
+                sqlBulkCopy.ColumnMappings.Add("fundid", "fundid");
+                sqlBulkCopy.ColumnMappings.Add("fiscalyearid", "fiscalyearid");
+                sqlBulkCopy.WriteToServer(ledgerFiscalYearRolloverBudgetsDataTable);
+                ledgerFiscalYearRolloverBudgetsDataTable.Clear();
+            }
             if (ledgerRolloversDataTable != null && ledgerRolloversDataTable.Rows.Count > 0)
             {
                 sqlBulkCopy.DestinationTableName = $"uchicago_mod_finance_storage{(IsMySql ? "_" : ".")}ledger_fiscal_year_rollover";
@@ -4821,6 +5019,16 @@ namespace FolioLibrary
                 sqlBulkCopy.WriteToServer(oclcHoldingsDataTable);
                 oclcHoldingsDataTable.Clear();
             }
+            if (oclcHolding2sDataTable != null && oclcHolding2sDataTable.Rows.Count > 0)
+            {
+                sqlBulkCopy.DestinationTableName = $"local{(IsMySql ? "_" : ".")}oclc_holdings2";
+                sqlBulkCopy.ColumnMappings.Clear();
+                sqlBulkCopy.ColumnMappings.Add("number", "number");
+                sqlBulkCopy.ColumnMappings.Add("instance_id", "instance_id");
+                sqlBulkCopy.ColumnMappings.Add("last_write_time", "last_write_time");
+                sqlBulkCopy.WriteToServer(oclcHolding2sDataTable);
+                oclcHolding2sDataTable.Clear();
+            }
             if (oclcNumber2sDataTable != null && oclcNumber2sDataTable.Rows.Count > 0)
             {
                 sqlBulkCopy.DestinationTableName = $"local{(IsMySql ? "_" : ".")}oclc_numbers";
@@ -5032,6 +5240,17 @@ namespace FolioLibrary
                 sqlBulkCopy.WriteToServer(organizationsDataTable);
                 organizationsDataTable.Clear();
             }
+            if (organizationType2sDataTable != null && organizationType2sDataTable.Rows.Count > 0)
+            {
+                sqlBulkCopy.DestinationTableName = $"uchicago_mod_organizations_storage{(IsMySql ? "_" : ".")}organization_types";
+                sqlBulkCopy.ColumnMappings.Clear();
+                sqlBulkCopy.ColumnMappings.Add("id", "id");
+                sqlBulkCopy.ColumnMappings.Add("jsonb", "jsonb");
+                sqlBulkCopy.ColumnMappings.Add("creation_date", "creation_date");
+                sqlBulkCopy.ColumnMappings.Add("created_by", "created_by");
+                sqlBulkCopy.WriteToServer(organizationType2sDataTable);
+                organizationType2sDataTable.Clear();
+            }
             if (overdueFinePoliciesDataTable != null && overdueFinePoliciesDataTable.Rows.Count > 0)
             {
                 sqlBulkCopy.DestinationTableName = $"uchicago_mod_feesfines{(IsMySql ? "_" : ".")}overdue_fine_policy";
@@ -5075,6 +5294,17 @@ namespace FolioLibrary
                 sqlBulkCopy.ColumnMappings.Add("created_by", "created_by");
                 sqlBulkCopy.WriteToServer(patronNoticePoliciesDataTable);
                 patronNoticePoliciesDataTable.Clear();
+            }
+            if (patronPinsDataTable != null && patronPinsDataTable.Rows.Count > 0)
+            {
+                sqlBulkCopy.DestinationTableName = $"uchicago_mod_users{(IsMySql ? "_" : ".")}patronpin";
+                sqlBulkCopy.ColumnMappings.Clear();
+                sqlBulkCopy.ColumnMappings.Add("id", "id");
+                sqlBulkCopy.ColumnMappings.Add("jsonb", "jsonb");
+                sqlBulkCopy.ColumnMappings.Add("creation_date", "creation_date");
+                sqlBulkCopy.ColumnMappings.Add("created_by", "created_by");
+                sqlBulkCopy.WriteToServer(patronPinsDataTable);
+                patronPinsDataTable.Clear();
             }
             if (paymentsDataTable != null && paymentsDataTable.Rows.Count > 0)
             {
@@ -5254,8 +5484,6 @@ namespace FolioLibrary
                 sqlBulkCopy.ColumnMappings.Clear();
                 sqlBulkCopy.ColumnMappings.Add("id", "id");
                 sqlBulkCopy.ColumnMappings.Add("jsonb", "jsonb");
-                sqlBulkCopy.ColumnMappings.Add("creation_date", "creation_date");
-                sqlBulkCopy.ColumnMappings.Add("created_by", "created_by");
                 sqlBulkCopy.WriteToServer(relatedInstanceTypesDataTable);
                 relatedInstanceTypesDataTable.Clear();
             }
@@ -5641,11 +5869,15 @@ namespace FolioLibrary
             if (sqlBulkCopy != null) sqlBulkCopy.Close();
             if (acquisitionMethodsDataTable != null) acquisitionMethodsDataTable.Dispose();
             if (acquisitionsUnitsDataTable != null) acquisitionsUnitsDataTable.Dispose();
+            if (actualCostRecordsDataTable != null) actualCostRecordsDataTable.Dispose();
             if (addressTypesDataTable != null) addressTypesDataTable.Dispose();
+            if (agreementsDataTable != null) agreementsDataTable.Dispose();
+            if (agreementItemsDataTable != null) agreementItemsDataTable.Dispose();
             if (alertsDataTable != null) alertsDataTable.Dispose();
             if (alternativeTitleTypesDataTable != null) alternativeTitleTypesDataTable.Dispose();
             if (authAttemptsDataTable != null) authAttemptsDataTable.Dispose();
             if (authCredentialsHistoriesDataTable != null) authCredentialsHistoriesDataTable.Dispose();
+            if (authoritySourceFilesDataTable != null) authoritySourceFilesDataTable.Dispose();
             if (authPasswordActionsDataTable != null) authPasswordActionsDataTable.Dispose();
             if (batchGroupsDataTable != null) batchGroupsDataTable.Dispose();
             if (blocksDataTable != null) blocksDataTable.Dispose();
@@ -5721,6 +5953,7 @@ namespace FolioLibrary
             if (itemOrderItemsDataTable != null) itemOrderItemsDataTable.Dispose();
             if (itemStatusesDataTable != null) itemStatusesDataTable.Dispose();
             if (ledgersDataTable != null) ledgersDataTable.Dispose();
+            if (ledgerFiscalYearRolloverBudgetsDataTable != null) ledgerFiscalYearRolloverBudgetsDataTable.Dispose();
             if (ledgerRolloversDataTable != null) ledgerRolloversDataTable.Dispose();
             if (ledgerRolloverErrorsDataTable != null) ledgerRolloverErrorsDataTable.Dispose();
             if (ledgerRolloverProgressesDataTable != null) ledgerRolloverProgressesDataTable.Dispose();
@@ -5742,6 +5975,7 @@ namespace FolioLibrary
             if (noteLinksDataTable != null) noteLinksDataTable.Dispose();
             if (noteTypesDataTable != null) noteTypesDataTable.Dispose();
             if (oclcHoldingsDataTable != null) oclcHoldingsDataTable.Dispose();
+            if (oclcHolding2sDataTable != null) oclcHolding2sDataTable.Dispose();
             if (oclcNumber2sDataTable != null) oclcNumber2sDataTable.Dispose();
             if (ordersDataTable != null) ordersDataTable.Dispose();
             if (order3sDataTable != null) order3sDataTable.Dispose();
@@ -5757,10 +5991,12 @@ namespace FolioLibrary
             if (orderTypesDataTable != null) orderTypesDataTable.Dispose();
             if (orderType2sDataTable != null) orderType2sDataTable.Dispose();
             if (organizationsDataTable != null) organizationsDataTable.Dispose();
+            if (organizationType2sDataTable != null) organizationType2sDataTable.Dispose();
             if (overdueFinePoliciesDataTable != null) overdueFinePoliciesDataTable.Dispose();
             if (ownersDataTable != null) ownersDataTable.Dispose();
             if (patronActionSessionsDataTable != null) patronActionSessionsDataTable.Dispose();
             if (patronNoticePoliciesDataTable != null) patronNoticePoliciesDataTable.Dispose();
+            if (patronPinsDataTable != null) patronPinsDataTable.Dispose();
             if (paymentsDataTable != null) paymentsDataTable.Dispose();
             if (paymentMethodsDataTable != null) paymentMethodsDataTable.Dispose();
             if (paymentTypesDataTable != null) paymentTypesDataTable.Dispose();

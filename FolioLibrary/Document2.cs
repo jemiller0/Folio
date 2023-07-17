@@ -26,71 +26,71 @@ namespace FolioLibrary
             return ValidationResult.Success;
         }
 
-        [Column("id"), Display(Order = 1), Editable(false), JsonProperty("id")]
+        [Column("id"), Display(Order = 1), Editable(false), JsonProperty("documentMetadata.id")]
         public virtual Guid? Id { get; set; }
 
-        [Column("document_metadata_name"), Display(Name = "Document Metadata Name", Order = 2), JsonProperty("documentMetadata.name"), Required, StringLength(1024)]
-        public virtual string DocumentMetadataName { get; set; }
+        [Column("document_metadata_name"), Display(Order = 2), JsonProperty("documentMetadata.name"), Required, StringLength(1024)]
+        public virtual string Name { get; set; }
 
-        [Display(Name = "Document Metadata Invoice", Order = 3)]
-        public virtual Invoice2 DocumentMetadataInvoice { get; set; }
+        [Display(Order = 3)]
+        public virtual Invoice2 Invoice { get; set; }
 
-        [Column("document_metadata_invoice_id"), Display(Name = "Document Metadata Invoice", Order = 4), JsonProperty("documentMetadata.invoiceId"), Required]
-        public virtual Guid? DocumentMetadataInvoiceId { get; set; }
+        [Column("document_metadata_invoice_id"), Display(Name = "Invoice", Order = 4), JsonProperty("documentMetadata.invoiceId"), Required]
+        public virtual Guid? InvoiceId { get; set; }
 
-        [Column("document_metadata_url"), DataType(DataType.Url), Display(Name = "Document Metadata URL", Order = 5), JsonProperty("documentMetadata.url"), StringLength(1024)]
-        public virtual string DocumentMetadataUrl { get; set; }
+        [Column("document_metadata_url"), DataType(DataType.Url), Display(Name = "URL", Order = 5), JsonProperty("documentMetadata.url"), StringLength(1024)]
+        public virtual string Url { get; set; }
 
-        [Column("document_metadata_metadata_created_date"), DataType(DataType.Date), Display(Name = "Document Metadata Metadata Created Date", Order = 6), DisplayFormat(DataFormatString = "{0:d}", ApplyFormatInEditMode = true), JsonProperty("documentMetadata.metadata.createdDate"), Required]
-        public virtual DateTime? DocumentMetadataMetadataCreatedDate { get; set; }
-
-        [Display(Name = "Document Metadata Metadata Created By User", Order = 7), InverseProperty("Document2s")]
-        public virtual User2 DocumentMetadataMetadataCreatedByUser { get; set; }
-
-        [Column("document_metadata_metadata_created_by_user_id"), Display(Name = "Document Metadata Metadata Created By User", Order = 8), JsonProperty("documentMetadata.metadata.createdByUserId")]
-        public virtual Guid? DocumentMetadataMetadataCreatedByUserId { get; set; }
-
-        [Column("document_metadata_metadata_created_by_username"), Display(Name = "Document Metadata Metadata Created By Username", Order = 9), JsonProperty("documentMetadata.metadata.createdByUsername"), StringLength(1024)]
-        public virtual string DocumentMetadataMetadataCreatedByUsername { get; set; }
-
-        [Column("document_metadata_metadata_updated_date"), DataType(DataType.Date), Display(Name = "Document Metadata Metadata Updated Date", Order = 10), DisplayFormat(DataFormatString = "{0:d}", ApplyFormatInEditMode = true), JsonProperty("documentMetadata.metadata.updatedDate")]
-        public virtual DateTime? DocumentMetadataMetadataUpdatedDate { get; set; }
-
-        [Display(Name = "Document Metadata Metadata Updated By User", Order = 11), InverseProperty("Document2s1")]
-        public virtual User2 DocumentMetadataMetadataUpdatedByUser { get; set; }
-
-        [Column("document_metadata_metadata_updated_by_user_id"), Display(Name = "Document Metadata Metadata Updated By User", Order = 12), JsonProperty("documentMetadata.metadata.updatedByUserId")]
-        public virtual Guid? DocumentMetadataMetadataUpdatedByUserId { get; set; }
-
-        [Column("document_metadata_metadata_updated_by_username"), Display(Name = "Document Metadata Metadata Updated By Username", Order = 13), JsonProperty("documentMetadata.metadata.updatedByUsername"), StringLength(1024)]
-        public virtual string DocumentMetadataMetadataUpdatedByUsername { get; set; }
-
-        [Column("contents_data"), Display(Name = "Contents Data", Order = 14), JsonProperty("contents.data"), Required, StringLength(1024)]
-        public virtual string ContentsData { get; set; }
-
-        [Column("created_date"), DataType(DataType.DateTime), Display(Name = "Creation Time", Order = 15), DisplayFormat(DataFormatString = "{0:g}"), Editable(false), JsonProperty("metadata.createdDate")]
+        [Column("document_metadata_metadata_created_date"), DataType(DataType.DateTime), Display(Name = "Creation Time", Order = 6), DisplayFormat(DataFormatString = "{0:g}"), Editable(false), JsonProperty("documentMetadata.metadata.createdDate")]
         public virtual DateTime? CreationTime { get; set; }
 
-        [Display(Name = "Creation User", Order = 16), InverseProperty("Document2s2")]
+        [Display(Name = "Creation User", Order = 7), InverseProperty("Document2s")]
         public virtual User2 CreationUser { get; set; }
 
-        [Column("created_by_user_id"), Display(Name = "Creation User", Order = 17), Editable(false), JsonProperty("metadata.createdByUserId")]
+        [Column("document_metadata_metadata_created_by_user_id"), Display(Name = "Creation User", Order = 8), Editable(false), JsonProperty("documentMetadata.metadata.createdByUserId")]
         public virtual Guid? CreationUserId { get; set; }
 
-        [Column("created_by_username"), JsonProperty("metadata.createdByUsername"), ScaffoldColumn(false), StringLength(1024)]
+        [Column("document_metadata_metadata_created_by_username"), JsonProperty("documentMetadata.metadata.createdByUsername"), ScaffoldColumn(false), StringLength(1024)]
         public virtual string CreationUserUsername { get; set; }
 
-        [Column("updated_date"), DataType(DataType.DateTime), Display(Name = "Last Write Time", Order = 19), DisplayFormat(DataFormatString = "{0:g}"), Editable(false), JsonProperty("metadata.updatedDate")]
+        [Column("document_metadata_metadata_updated_date"), DataType(DataType.DateTime), Display(Name = "Last Write Time", Order = 10), DisplayFormat(DataFormatString = "{0:g}"), Editable(false), JsonProperty("documentMetadata.metadata.updatedDate")]
         public virtual DateTime? LastWriteTime { get; set; }
 
-        [Display(Name = "Last Write User", Order = 20), InverseProperty("Document2s3")]
+        [Display(Name = "Last Write User", Order = 11), InverseProperty("Document2s1")]
         public virtual User2 LastWriteUser { get; set; }
 
-        [Column("updated_by_user_id"), Display(Name = "Last Write User", Order = 21), Editable(false), JsonProperty("metadata.updatedByUserId")]
+        [Column("document_metadata_metadata_updated_by_user_id"), Display(Name = "Last Write User", Order = 12), Editable(false), JsonProperty("documentMetadata.metadata.updatedByUserId")]
         public virtual Guid? LastWriteUserId { get; set; }
 
-        [Column("updated_by_username"), JsonProperty("metadata.updatedByUsername"), ScaffoldColumn(false), StringLength(1024)]
+        [Column("document_metadata_metadata_updated_by_username"), JsonProperty("documentMetadata.metadata.updatedByUsername"), ScaffoldColumn(false), StringLength(1024)]
         public virtual string LastWriteUserUsername { get; set; }
+
+        [Column("contents_data"), Display(Order = 14), JsonProperty("contents.data"), Required, StringLength(1024)]
+        public virtual string Data { get; set; }
+
+        [Column("created_date"), Display(Name = "Creation Time 2", Order = 15), DisplayFormat(DataFormatString = "{0:g}", ApplyFormatInEditMode = true), JsonProperty("metadata.createdDate"), Required]
+        public virtual DateTime? CreationTime2 { get; set; }
+
+        [Column("created_by_user_id"), Display(Name = "User 2", Order = 16), ForeignKey("User2"), JsonProperty("metadata.createdByUserId")]
+        public virtual Guid? CreationUserId2 { get; set; }
+
+        [Display(Name = "User 2", Order = 17), InverseProperty("Document2s2")]
+        public virtual User2 User2 { get; set; }
+
+        [Column("created_by_username"), Display(Name = "Creation User Username 2", Order = 18), JsonProperty("metadata.createdByUsername"), StringLength(1024)]
+        public virtual string CreationUserUsername2 { get; set; }
+
+        [Column("updated_date"), Display(Name = "Last Write Time 2", Order = 19), DisplayFormat(DataFormatString = "{0:g}"), Editable(false), JsonProperty("metadata.updatedDate")]
+        public virtual DateTime? LastWriteTime2 { get; set; }
+
+        [Column("updated_by_user_id"), Display(Name = "User 3", Order = 20), Editable(false), ForeignKey("User3"), JsonProperty("metadata.updatedByUserId")]
+        public virtual Guid? LastWriteUserId2 { get; set; }
+
+        [Display(Name = "User 3", Order = 21), InverseProperty("Document2s3")]
+        public virtual User2 User3 { get; set; }
+
+        [Column("updated_by_username"), Display(Name = "Last Write User Username 2", Order = 22), Editable(false), JsonProperty("metadata.updatedByUsername"), StringLength(1024)]
+        public virtual string LastWriteUserUsername2 { get; set; }
 
         [Column("content"), CustomValidation(typeof(Document), nameof(ValidateContent)), DataType(DataType.MultilineText), Display(Order = 23), Editable(false)]
         public virtual string Content { get; set; }
@@ -98,54 +98,54 @@ namespace FolioLibrary
         [Column("invoiceid"), Display(Order = 24)]
         public virtual Guid? Invoiceid { get; set; }
 
-        [Column("document_data"), Display(Name = "Document Data", Order = 25)]
-        public virtual string DocumentData { get; set; }
+        [Column("document_data"), Display(Name = "Data 2", Order = 25)]
+        public virtual string Data2 { get; set; }
 
-        public override string ToString() => $"{{ {nameof(Id)} = {Id}, {nameof(DocumentMetadataName)} = {DocumentMetadataName}, {nameof(DocumentMetadataInvoiceId)} = {DocumentMetadataInvoiceId}, {nameof(DocumentMetadataUrl)} = {DocumentMetadataUrl}, {nameof(DocumentMetadataMetadataCreatedDate)} = {DocumentMetadataMetadataCreatedDate}, {nameof(DocumentMetadataMetadataCreatedByUserId)} = {DocumentMetadataMetadataCreatedByUserId}, {nameof(DocumentMetadataMetadataCreatedByUsername)} = {DocumentMetadataMetadataCreatedByUsername}, {nameof(DocumentMetadataMetadataUpdatedDate)} = {DocumentMetadataMetadataUpdatedDate}, {nameof(DocumentMetadataMetadataUpdatedByUserId)} = {DocumentMetadataMetadataUpdatedByUserId}, {nameof(DocumentMetadataMetadataUpdatedByUsername)} = {DocumentMetadataMetadataUpdatedByUsername}, {nameof(ContentsData)} = {ContentsData}, {nameof(CreationTime)} = {CreationTime}, {nameof(CreationUserId)} = {CreationUserId}, {nameof(CreationUserUsername)} = {CreationUserUsername}, {nameof(LastWriteTime)} = {LastWriteTime}, {nameof(LastWriteUserId)} = {LastWriteUserId}, {nameof(LastWriteUserUsername)} = {LastWriteUserUsername}, {nameof(Content)} = {Content}, {nameof(Invoiceid)} = {Invoiceid}, {nameof(DocumentData)} = {DocumentData} }}";
+        public override string ToString() => $"{{ {nameof(Id)} = {Id}, {nameof(Name)} = {Name}, {nameof(InvoiceId)} = {InvoiceId}, {nameof(Url)} = {Url}, {nameof(CreationTime)} = {CreationTime}, {nameof(CreationUserId)} = {CreationUserId}, {nameof(CreationUserUsername)} = {CreationUserUsername}, {nameof(LastWriteTime)} = {LastWriteTime}, {nameof(LastWriteUserId)} = {LastWriteUserId}, {nameof(LastWriteUserUsername)} = {LastWriteUserUsername}, {nameof(Data)} = {Data}, {nameof(CreationTime2)} = {CreationTime2}, {nameof(CreationUserId2)} = {CreationUserId2}, {nameof(CreationUserUsername2)} = {CreationUserUsername2}, {nameof(LastWriteTime2)} = {LastWriteTime2}, {nameof(LastWriteUserId2)} = {LastWriteUserId2}, {nameof(LastWriteUserUsername2)} = {LastWriteUserUsername2}, {nameof(Content)} = {Content}, {nameof(Invoiceid)} = {Invoiceid}, {nameof(Data2)} = {Data2} }}";
 
         public static Document2 FromJObject(JObject jObject) => jObject != null ? new Document2
         {
-            Id = (Guid?)jObject.SelectToken("id"),
-            DocumentMetadataName = (string)jObject.SelectToken("documentMetadata.name"),
-            DocumentMetadataInvoiceId = (Guid?)jObject.SelectToken("documentMetadata.invoiceId"),
-            DocumentMetadataUrl = (string)jObject.SelectToken("documentMetadata.url"),
-            DocumentMetadataMetadataCreatedDate = ((DateTime?)jObject.SelectToken("documentMetadata.metadata.createdDate"))?.ToUniversalTime(),
-            DocumentMetadataMetadataCreatedByUserId = (Guid?)jObject.SelectToken("documentMetadata.metadata.createdByUserId"),
-            DocumentMetadataMetadataCreatedByUsername = (string)jObject.SelectToken("documentMetadata.metadata.createdByUsername"),
-            DocumentMetadataMetadataUpdatedDate = ((DateTime?)jObject.SelectToken("documentMetadata.metadata.updatedDate"))?.ToUniversalTime(),
-            DocumentMetadataMetadataUpdatedByUserId = (Guid?)jObject.SelectToken("documentMetadata.metadata.updatedByUserId"),
-            DocumentMetadataMetadataUpdatedByUsername = (string)jObject.SelectToken("documentMetadata.metadata.updatedByUsername"),
-            ContentsData = (string)jObject.SelectToken("contents.data"),
-            CreationTime = (DateTime?)jObject.SelectToken("metadata.createdDate"),
-            CreationUserId = (Guid?)jObject.SelectToken("metadata.createdByUserId"),
-            CreationUserUsername = (string)jObject.SelectToken("metadata.createdByUsername"),
-            LastWriteTime = (DateTime?)jObject.SelectToken("metadata.updatedDate"),
-            LastWriteUserId = (Guid?)jObject.SelectToken("metadata.updatedByUserId"),
-            LastWriteUserUsername = (string)jObject.SelectToken("metadata.updatedByUsername"),
+            Id = (Guid?)jObject.SelectToken("documentMetadata.id"),
+            Name = (string)jObject.SelectToken("documentMetadata.name"),
+            InvoiceId = (Guid?)jObject.SelectToken("documentMetadata.invoiceId"),
+            Url = (string)jObject.SelectToken("documentMetadata.url"),
+            CreationTime = (DateTime?)jObject.SelectToken("documentMetadata.metadata.createdDate"),
+            CreationUserId = (Guid?)jObject.SelectToken("documentMetadata.metadata.createdByUserId"),
+            CreationUserUsername = (string)jObject.SelectToken("documentMetadata.metadata.createdByUsername"),
+            LastWriteTime = (DateTime?)jObject.SelectToken("documentMetadata.metadata.updatedDate"),
+            LastWriteUserId = (Guid?)jObject.SelectToken("documentMetadata.metadata.updatedByUserId"),
+            LastWriteUserUsername = (string)jObject.SelectToken("documentMetadata.metadata.updatedByUsername"),
+            Data = (string)jObject.SelectToken("contents.data"),
+            CreationTime2 = (DateTime?)jObject.SelectToken("metadata.createdDate"),
+            CreationUserId2 = (Guid?)jObject.SelectToken("metadata.createdByUserId"),
+            CreationUserUsername2 = (string)jObject.SelectToken("metadata.createdByUsername"),
+            LastWriteTime2 = (DateTime?)jObject.SelectToken("metadata.updatedDate"),
+            LastWriteUserId2 = (Guid?)jObject.SelectToken("metadata.updatedByUserId"),
+            LastWriteUserUsername2 = (string)jObject.SelectToken("metadata.updatedByUsername"),
             Content = JsonConvert.SerializeObject(jObject, FolioDapperContext.UniversalTimeJsonSerializationSettings)
         } : null;
 
         public JObject ToJObject() => new JObject(
-            new JProperty("id", Id),
             new JProperty("documentMetadata", new JObject(
-                new JProperty("name", DocumentMetadataName),
-                new JProperty("invoiceId", DocumentMetadataInvoiceId),
-                new JProperty("url", DocumentMetadataUrl),
+                new JProperty("id", Id),
+                new JProperty("name", Name),
+                new JProperty("invoiceId", InvoiceId),
+                new JProperty("url", Url),
                 new JProperty("metadata", new JObject(
-                    new JProperty("createdDate", DocumentMetadataMetadataCreatedDate?.ToLocalTime()),
-                    new JProperty("createdByUserId", DocumentMetadataMetadataCreatedByUserId),
-                    new JProperty("createdByUsername", DocumentMetadataMetadataCreatedByUsername),
-                    new JProperty("updatedDate", DocumentMetadataMetadataUpdatedDate?.ToLocalTime()),
-                    new JProperty("updatedByUserId", DocumentMetadataMetadataUpdatedByUserId),
-                    new JProperty("updatedByUsername", DocumentMetadataMetadataUpdatedByUsername))))),
+                    new JProperty("createdDate", CreationTime?.ToLocalTime()),
+                    new JProperty("createdByUserId", CreationUserId),
+                    new JProperty("createdByUsername", CreationUserUsername),
+                    new JProperty("updatedDate", LastWriteTime?.ToLocalTime()),
+                    new JProperty("updatedByUserId", LastWriteUserId),
+                    new JProperty("updatedByUsername", LastWriteUserUsername))))),
             new JProperty("contents", new JObject(
-                new JProperty("data", ContentsData))),
+                new JProperty("data", Data))),
             new JProperty("metadata", new JObject(
-                new JProperty("createdDate", CreationTime?.ToLocalTime()),
-                new JProperty("createdByUserId", CreationUserId),
-                new JProperty("createdByUsername", CreationUserUsername),
-                new JProperty("updatedDate", LastWriteTime?.ToLocalTime()),
-                new JProperty("updatedByUserId", LastWriteUserId),
-                new JProperty("updatedByUsername", LastWriteUserUsername)))).RemoveNullAndEmptyProperties();
+                new JProperty("createdDate", CreationTime2?.ToLocalTime()),
+                new JProperty("createdByUserId", CreationUserId2),
+                new JProperty("createdByUsername", CreationUserUsername2),
+                new JProperty("updatedDate", LastWriteTime2?.ToLocalTime()),
+                new JProperty("updatedByUserId", LastWriteUserId2),
+                new JProperty("updatedByUsername", LastWriteUserUsername2)))).RemoveNullAndEmptyProperties();
     }
 }

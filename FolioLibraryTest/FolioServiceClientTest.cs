@@ -64,6 +64,26 @@ namespace FolioLibraryTest
         }
 
         [TestMethod]
+        public void CountActualCostRecordsTest()
+        {
+            var s = Stopwatch.StartNew();
+            var i = folioServiceClient.CountActualCostRecords();
+            var j = folioDapperContext.CountActualCostRecords();
+            Assert.IsTrue(i == j);
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"CountActualCostRecordsTest()\r\n    ElapsedTime={s.Elapsed}");
+        }
+
+        [TestMethod]
+        public void CirculationActualCostRecordsTest()
+        {
+            var s = Stopwatch.StartNew();
+            var l = folioServiceClient.ActualCostRecords(take: take).Select(jo => (string)jo["id"]).ToArray();
+            var l2 = folioDapperContext.ActualCostRecords(take: take).Select(u => u.Id.ToString()).ToArray();
+            Assert.IsTrue(l.SequenceEqual(l2));
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"ActualCostRecordsTest()\r\n    ElapsedTime={s.Elapsed}");
+        }
+
+        [TestMethod]
         public void CountAddressTypesTest()
         {
             var s = Stopwatch.StartNew();
@@ -81,6 +101,46 @@ namespace FolioLibraryTest
             var l2 = folioDapperContext.AddressTypes(take: take).Select(u => u.Id.ToString()).ToArray();
             Assert.IsTrue(l.SequenceEqual(l2));
             traceSource.TraceEvent(TraceEventType.Information, 0, $"AddressTypesTest()\r\n    ElapsedTime={s.Elapsed}");
+        }
+
+        [TestMethod]
+        public void CountAgreementsTest()
+        {
+            var s = Stopwatch.StartNew();
+            var i = folioServiceClient.CountAgreements();
+            var j = folioDapperContext.CountAgreements();
+            Assert.IsTrue(i == j);
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"CountAgreementsTest()\r\n    ElapsedTime={s.Elapsed}");
+        }
+
+        [TestMethod]
+        public void AgreementsAgreementsTest()
+        {
+            var s = Stopwatch.StartNew();
+            var l = folioServiceClient.Agreements(take: take).Select(jo => (string)jo["id"]).ToArray();
+            var l2 = folioDapperContext.Agreements(take: take).Select(u => u.Id.ToString()).ToArray();
+            Assert.IsTrue(l.SequenceEqual(l2));
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"AgreementsTest()\r\n    ElapsedTime={s.Elapsed}");
+        }
+
+        [TestMethod]
+        public void CountAgreementItemsTest()
+        {
+            var s = Stopwatch.StartNew();
+            var i = folioServiceClient.CountAgreementItems();
+            var j = folioDapperContext.CountAgreementItems();
+            Assert.IsTrue(i == j);
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"CountAgreementItemsTest()\r\n    ElapsedTime={s.Elapsed}");
+        }
+
+        [TestMethod]
+        public void AgreementsAgreementItemsTest()
+        {
+            var s = Stopwatch.StartNew();
+            var l = folioServiceClient.AgreementItems(take: take).Select(jo => (string)jo["id"]).ToArray();
+            var l2 = folioDapperContext.AgreementItems(take: take).Select(u => u.Id.ToString()).ToArray();
+            Assert.IsTrue(l.SequenceEqual(l2));
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"AgreementItemsTest()\r\n    ElapsedTime={s.Elapsed}");
         }
 
         [TestMethod]
@@ -121,6 +181,26 @@ namespace FolioLibraryTest
             var l2 = folioDapperContext.AlternativeTitleTypes(take: take).Select(u => u.Id.ToString()).ToArray();
             Assert.IsTrue(l.SequenceEqual(l2));
             traceSource.TraceEvent(TraceEventType.Information, 0, $"AlternativeTitleTypesTest()\r\n    ElapsedTime={s.Elapsed}");
+        }
+
+        [TestMethod]
+        public void CountAuthoritySourceFilesTest()
+        {
+            var s = Stopwatch.StartNew();
+            var i = folioServiceClient.CountAuthoritySourceFiles();
+            var j = folioDapperContext.CountAuthoritySourceFiles();
+            Assert.IsTrue(i == j);
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"CountAuthoritySourceFilesTest()\r\n    ElapsedTime={s.Elapsed}");
+        }
+
+        [TestMethod]
+        public void InventoryAuthoritySourceFilesTest()
+        {
+            var s = Stopwatch.StartNew();
+            var l = folioServiceClient.AuthoritySourceFiles(take: take).Select(jo => (string)jo["id"]).ToArray();
+            var l2 = folioDapperContext.AuthoritySourceFiles(take: take).Select(u => u.Id.ToString()).ToArray();
+            Assert.IsTrue(l.SequenceEqual(l2));
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"AuthoritySourceFilesTest()\r\n    ElapsedTime={s.Elapsed}");
         }
 
         [TestMethod]
@@ -561,6 +641,22 @@ namespace FolioLibraryTest
             var l2 = folioDapperContext.Departments(take: take).Select(u => u.Id.ToString()).ToArray();
             Assert.IsTrue(l.SequenceEqual(l2));
             traceSource.TraceEvent(TraceEventType.Information, 0, $"DepartmentsTest()\r\n    ElapsedTime={s.Elapsed}");
+        }
+
+        [TestMethod]
+        public void CountDocumentsTest()
+        {
+            var s = Stopwatch.StartNew();
+            Assert.Inconclusive();
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"CountDocumentsTest()\r\n    ElapsedTime={s.Elapsed}");
+        }
+
+        [TestMethod]
+        public void InvoicesDocumentsTest()
+        {
+            var s = Stopwatch.StartNew();
+            Assert.Inconclusive();
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"DocumentsTest()\r\n    ElapsedTime={s.Elapsed}");
         }
 
         [TestMethod]
@@ -1164,6 +1260,26 @@ namespace FolioLibraryTest
         }
 
         [TestMethod]
+        public void CountLedgerFiscalYearRolloverBudgetsTest()
+        {
+            var s = Stopwatch.StartNew();
+            var i = folioServiceClient.CountLedgerFiscalYearRolloverBudgets();
+            var j = folioDapperContext.CountLedgerFiscalYearRolloverBudgets();
+            Assert.IsTrue(i == j);
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"CountLedgerFiscalYearRolloverBudgetsTest()\r\n    ElapsedTime={s.Elapsed}");
+        }
+
+        [TestMethod]
+        public void FinanceLedgerFiscalYearRolloverBudgetsTest()
+        {
+            var s = Stopwatch.StartNew();
+            var l = folioServiceClient.LedgerFiscalYearRolloverBudgets(take: take).Select(jo => (string)jo["id"]).ToArray();
+            var l2 = folioDapperContext.LedgerFiscalYearRolloverBudgets(take: take).Select(u => u.Id.ToString()).ToArray();
+            Assert.IsTrue(l.SequenceEqual(l2));
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"LedgerFiscalYearRolloverBudgetsTest()\r\n    ElapsedTime={s.Elapsed}");
+        }
+
+        [TestMethod]
         public void CountLedgerRolloversTest()
         {
             var s = Stopwatch.StartNew();
@@ -1564,6 +1680,26 @@ namespace FolioLibraryTest
         }
 
         [TestMethod]
+        public void CountOrganizationType2sTest()
+        {
+            var s = Stopwatch.StartNew();
+            var i = folioServiceClient.CountOrganizationType2s();
+            var j = folioDapperContext.CountOrganizationType2s();
+            Assert.IsTrue(i == j);
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"CountOrganizationType2sTest()\r\n    ElapsedTime={s.Elapsed}");
+        }
+
+        [TestMethod]
+        public void OrganizationsOrganizationType2sTest()
+        {
+            var s = Stopwatch.StartNew();
+            var l = folioServiceClient.OrganizationType2s(take: take).Select(jo => (string)jo["id"]).ToArray();
+            var l2 = folioDapperContext.OrganizationType2s(take: take).Select(u => u.Id.ToString()).ToArray();
+            Assert.IsTrue(l.SequenceEqual(l2));
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"OrganizationType2sTest()\r\n    ElapsedTime={s.Elapsed}");
+        }
+
+        [TestMethod]
         public void CountOverdueFinePoliciesTest()
         {
             var s = Stopwatch.StartNew();
@@ -1641,6 +1777,26 @@ namespace FolioLibraryTest
             var l2 = folioDapperContext.PatronNoticePolicies(take: take).Select(u => u.Id.ToString()).ToArray();
             Assert.IsTrue(l.SequenceEqual(l2));
             traceSource.TraceEvent(TraceEventType.Information, 0, $"PatronNoticePoliciesTest()\r\n    ElapsedTime={s.Elapsed}");
+        }
+
+        [TestMethod]
+        public void CountPatronPinsTest()
+        {
+            var s = Stopwatch.StartNew();
+            var i = folioServiceClient.CountPatronPins();
+            var j = folioDapperContext.CountPatronPins();
+            Assert.IsTrue(i == j);
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"CountPatronPinsTest()\r\n    ElapsedTime={s.Elapsed}");
+        }
+
+        [TestMethod]
+        public void UsersPatronPinsTest()
+        {
+            var s = Stopwatch.StartNew();
+            var l = folioServiceClient.PatronPins(take: take).Select(jo => (string)jo["id"]).ToArray();
+            var l2 = folioDapperContext.PatronPins(take: take).Select(u => u.Id.ToString()).ToArray();
+            Assert.IsTrue(l.SequenceEqual(l2));
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"PatronPinsTest()\r\n    ElapsedTime={s.Elapsed}");
         }
 
         [TestMethod]
@@ -2392,6 +2548,30 @@ namespace FolioLibraryTest
         }
 
         [TestMethod]
+        public void DeserializeAgreement2Test()
+        {
+            var s = Stopwatch.StartNew();
+            var jo = folioServiceClient.Agreements(take: 1).SingleOrDefault();
+            if (jo == null) Assert.Inconclusive();
+            var a2 = JsonConvert.DeserializeObject<Agreement2>(jo.ToString());
+            traceSource.TraceEvent(TraceEventType.Information, 0, a2.ToString());
+            Assert.IsNotNull(a2);
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"DeserializeAgreement2Test()\r\n    ElapsedTime={s.Elapsed}");
+        }
+
+        [TestMethod]
+        public void DeserializeAgreementItem2Test()
+        {
+            var s = Stopwatch.StartNew();
+            var jo = folioServiceClient.AgreementItems(take: 1).SingleOrDefault();
+            if (jo == null) Assert.Inconclusive();
+            var ai2 = JsonConvert.DeserializeObject<AgreementItem2>(jo.ToString());
+            traceSource.TraceEvent(TraceEventType.Information, 0, ai2.ToString());
+            Assert.IsNotNull(ai2);
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"DeserializeAgreementItem2Test()\r\n    ElapsedTime={s.Elapsed}");
+        }
+
+        [TestMethod]
         public void DeserializeAlert2Test()
         {
             var s = Stopwatch.StartNew();
@@ -2905,6 +3085,14 @@ namespace FolioLibraryTest
             traceSource.TraceEvent(TraceEventType.Information, 0, d2.ToString());
             Assert.IsNotNull(d2);
             traceSource.TraceEvent(TraceEventType.Information, 0, $"DeserializeDepartment2Test()\r\n    ElapsedTime={s.Elapsed}");
+        }
+
+        [TestMethod]
+        public void DeserializeDocument2Test()
+        {
+            var s = Stopwatch.StartNew();
+            Assert.Inconclusive();
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"DeserializeDocument2Test()\r\n    ElapsedTime={s.Elapsed}");
         }
 
         [TestMethod]

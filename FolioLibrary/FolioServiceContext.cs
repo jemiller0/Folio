@@ -18,7 +18,7 @@ namespace FolioLibrary
 
         public int CountAcquisitionMethod2s(string where = null) => FolioServiceClient.CountAcquisitionMethods(where);
 
-        public AcquisitionMethod2[] AcquisitionMethod2s(out int count, string where = null, string orderBy = null, int? skip = null, int? take = null, bool load = false, bool cache = true)
+        public AcquisitionMethod2[] AcquisitionMethod2s(out int count, string where = null, string orderBy = null, int? skip = null, int? take = 100, bool load = false, bool cache = true)
         {
             return FolioServiceClient.AcquisitionMethods(out count, where, orderBy, skip, take).Select(jo =>
             {
@@ -75,13 +75,25 @@ namespace FolioLibrary
                 }
         }
 
+        public void InsertOrUpdate(AcquisitionMethod2 acquisitionMethod2)
+        {
+            try
+            {
+                Insert(acquisitionMethod2);
+            }
+            catch (HttpRequestException e)
+            {
+                if (e.Message.Contains("duplicate key")) Update(acquisitionMethod2); else throw;
+            }
+        }
+
         public void DeleteAcquisitionMethod2(Guid? id) => FolioServiceClient.DeleteAcquisitionMethod(id?.ToString());
 
         public bool AnyAcquisitionsUnit2s(string where = null) => FolioServiceClient.AnyAcquisitionsUnits(where);
 
         public int CountAcquisitionsUnit2s(string where = null) => FolioServiceClient.CountAcquisitionsUnits(where);
 
-        public AcquisitionsUnit2[] AcquisitionsUnit2s(out int count, string where = null, string orderBy = null, int? skip = null, int? take = null, bool load = false, bool cache = true)
+        public AcquisitionsUnit2[] AcquisitionsUnit2s(out int count, string where = null, string orderBy = null, int? skip = null, int? take = 100, bool load = false, bool cache = true)
         {
             return FolioServiceClient.AcquisitionsUnits(out count, where, orderBy, skip, take).Select(jo =>
             {
@@ -138,13 +150,25 @@ namespace FolioLibrary
                 }
         }
 
+        public void InsertOrUpdate(AcquisitionsUnit2 acquisitionsUnit2)
+        {
+            try
+            {
+                Insert(acquisitionsUnit2);
+            }
+            catch (HttpRequestException e)
+            {
+                if (e.Message.Contains("duplicate key")) Update(acquisitionsUnit2); else throw;
+            }
+        }
+
         public void DeleteAcquisitionsUnit2(Guid? id) => FolioServiceClient.DeleteAcquisitionsUnit(id?.ToString());
 
         public bool AnyAddressType2s(string where = null) => FolioServiceClient.AnyAddressTypes(where);
 
         public int CountAddressType2s(string where = null) => FolioServiceClient.CountAddressTypes(where);
 
-        public AddressType2[] AddressType2s(out int count, string where = null, string orderBy = null, int? skip = null, int? take = null, bool load = false, bool cache = true)
+        public AddressType2[] AddressType2s(out int count, string where = null, string orderBy = null, int? skip = null, int? take = 100, bool load = false, bool cache = true)
         {
             return FolioServiceClient.AddressTypes(out count, where, orderBy, skip, take).Select(jo =>
             {
@@ -201,13 +225,151 @@ namespace FolioLibrary
                 }
         }
 
+        public void InsertOrUpdate(AddressType2 addressType2)
+        {
+            try
+            {
+                Insert(addressType2);
+            }
+            catch (HttpRequestException e)
+            {
+                if (e.Message.Contains("duplicate key")) Update(addressType2); else throw;
+            }
+        }
+
         public void DeleteAddressType2(Guid? id) => FolioServiceClient.DeleteAddressType(id?.ToString());
+
+        public bool AnyAgreement2s(string where = null) => FolioServiceClient.AnyAgreements(where);
+
+        public int CountAgreement2s(string where = null) => FolioServiceClient.CountAgreements(where);
+
+        public Agreement2[] Agreement2s(out int count, string where = null, string orderBy = null, int? skip = null, int? take = 100, bool load = false, bool cache = true)
+        {
+            return FolioServiceClient.Agreements(out count, where, orderBy, skip, take).Select(jo =>
+            {
+                var id = Guid.Parse((string)jo["id"]);
+                var a2 = cache ? (Agreement2)(objects.ContainsKey(id) ? objects[id] : objects[id] = Agreement2.FromJObject(jo)) : Agreement2.FromJObject(jo);
+                return a2;
+            }).ToArray();
+        }
+
+        public IEnumerable<Agreement2> Agreement2s(string where = null, string orderBy = null, int? skip = null, int? take = null, bool load = false, bool cache = true)
+        {
+            foreach (var jo in FolioServiceClient.Agreements(where, orderBy, skip, take))
+            {
+                var id = Guid.Parse((string)jo["id"]);
+                var a2 = cache ? (Agreement2)(objects.ContainsKey(id) ? objects[id] : objects[id] = Agreement2.FromJObject(jo)) : Agreement2.FromJObject(jo);
+                yield return a2;
+            }
+        }
+
+        public Agreement2 FindAgreement2(Guid? id, bool load = false, bool cache = true) => Agreement2.FromJObject(FolioServiceClient.GetAgreement(id?.ToString()));
+
+        public void Insert(Agreement2 agreement2)
+        {
+            if (agreement2.Id == null) agreement2.Id = Guid.NewGuid();
+            FolioServiceClient.InsertAgreement(agreement2.ToJObject());
+        }
+
+        public void Update(Agreement2 agreement2) => FolioServiceClient.UpdateAgreement(agreement2.ToJObject());
+
+        public void UpdateOrInsert(Agreement2 agreement2)
+        {
+            if (agreement2.Id == null)
+                Insert(agreement2);
+            else
+                try
+                {
+                    Update(agreement2);
+                }
+                catch (HttpRequestException e)
+                {
+                    if (e.Message.Contains("NotFound")) Insert(agreement2); else throw;
+                }
+        }
+
+        public void InsertOrUpdate(Agreement2 agreement2)
+        {
+            try
+            {
+                Insert(agreement2);
+            }
+            catch (HttpRequestException e)
+            {
+                if (e.Message.Contains("duplicate key")) Update(agreement2); else throw;
+            }
+        }
+
+        public void DeleteAgreement2(Guid? id) => FolioServiceClient.DeleteAgreement(id?.ToString());
+
+        public bool AnyAgreementItem2s(string where = null) => FolioServiceClient.AnyAgreementItems(where);
+
+        public int CountAgreementItem2s(string where = null) => FolioServiceClient.CountAgreementItems(where);
+
+        public AgreementItem2[] AgreementItem2s(out int count, string where = null, string orderBy = null, int? skip = null, int? take = 100, bool load = false, bool cache = true)
+        {
+            return FolioServiceClient.AgreementItems(out count, where, orderBy, skip, take).Select(jo =>
+            {
+                var id = Guid.Parse((string)jo["id"]);
+                var ai2 = cache ? (AgreementItem2)(objects.ContainsKey(id) ? objects[id] : objects[id] = AgreementItem2.FromJObject(jo)) : AgreementItem2.FromJObject(jo);
+                return ai2;
+            }).ToArray();
+        }
+
+        public IEnumerable<AgreementItem2> AgreementItem2s(string where = null, string orderBy = null, int? skip = null, int? take = null, bool load = false, bool cache = true)
+        {
+            foreach (var jo in FolioServiceClient.AgreementItems(where, orderBy, skip, take))
+            {
+                var id = Guid.Parse((string)jo["id"]);
+                var ai2 = cache ? (AgreementItem2)(objects.ContainsKey(id) ? objects[id] : objects[id] = AgreementItem2.FromJObject(jo)) : AgreementItem2.FromJObject(jo);
+                yield return ai2;
+            }
+        }
+
+        public AgreementItem2 FindAgreementItem2(Guid? id, bool load = false, bool cache = true) => AgreementItem2.FromJObject(FolioServiceClient.GetAgreementItem(id?.ToString()));
+
+        public void Insert(AgreementItem2 agreementItem2)
+        {
+            if (agreementItem2.Id == null) agreementItem2.Id = Guid.NewGuid();
+            FolioServiceClient.InsertAgreementItem(agreementItem2.ToJObject());
+        }
+
+        public void Update(AgreementItem2 agreementItem2) => FolioServiceClient.UpdateAgreementItem(agreementItem2.ToJObject());
+
+        public void UpdateOrInsert(AgreementItem2 agreementItem2)
+        {
+            if (agreementItem2.Id == null)
+                Insert(agreementItem2);
+            else
+                try
+                {
+                    Update(agreementItem2);
+                }
+                catch (HttpRequestException e)
+                {
+                    if (e.Message.Contains("NotFound")) Insert(agreementItem2); else throw;
+                }
+        }
+
+        public void InsertOrUpdate(AgreementItem2 agreementItem2)
+        {
+            try
+            {
+                Insert(agreementItem2);
+            }
+            catch (HttpRequestException e)
+            {
+                if (e.Message.Contains("duplicate key")) Update(agreementItem2); else throw;
+            }
+        }
+
+        public void DeleteAgreementItem2(Guid? id) => FolioServiceClient.DeleteAgreementItem(id?.ToString());
 
         public bool AnyAlert2s(string where = null) => FolioServiceClient.AnyAlerts(where);
 
         public int CountAlert2s(string where = null) => FolioServiceClient.CountAlerts(where);
 
-        public Alert2[] Alert2s(out int count, string where = null, string orderBy = null, int? skip = null, int? take = null, bool load = false, bool cache = true)
+        public Alert2[] Alert2s(out int count, string where = null, string orderBy = null, int? skip = null, int? take = 100, bool load = false, bool cache = true)
         {
             return FolioServiceClient.Alerts(out count, where, orderBy, skip, take).Select(jo =>
             {
@@ -252,13 +414,25 @@ namespace FolioLibrary
                 }
         }
 
+        public void InsertOrUpdate(Alert2 alert2)
+        {
+            try
+            {
+                Insert(alert2);
+            }
+            catch (HttpRequestException e)
+            {
+                if (e.Message.Contains("duplicate key")) Update(alert2); else throw;
+            }
+        }
+
         public void DeleteAlert2(Guid? id) => FolioServiceClient.DeleteAlert(id?.ToString());
 
         public bool AnyAlternativeTitleType2s(string where = null) => FolioServiceClient.AnyAlternativeTitleTypes(where);
 
         public int CountAlternativeTitleType2s(string where = null) => FolioServiceClient.CountAlternativeTitleTypes(where);
 
-        public AlternativeTitleType2[] AlternativeTitleType2s(out int count, string where = null, string orderBy = null, int? skip = null, int? take = null, bool load = false, bool cache = true)
+        public AlternativeTitleType2[] AlternativeTitleType2s(out int count, string where = null, string orderBy = null, int? skip = null, int? take = 100, bool load = false, bool cache = true)
         {
             return FolioServiceClient.AlternativeTitleTypes(out count, where, orderBy, skip, take).Select(jo =>
             {
@@ -315,13 +489,25 @@ namespace FolioLibrary
                 }
         }
 
+        public void InsertOrUpdate(AlternativeTitleType2 alternativeTitleType2)
+        {
+            try
+            {
+                Insert(alternativeTitleType2);
+            }
+            catch (HttpRequestException e)
+            {
+                if (e.Message.Contains("duplicate key")) Update(alternativeTitleType2); else throw;
+            }
+        }
+
         public void DeleteAlternativeTitleType2(Guid? id) => FolioServiceClient.DeleteAlternativeTitleType(id?.ToString());
 
         public bool AnyBatchGroup2s(string where = null) => FolioServiceClient.AnyBatchGroups(where);
 
         public int CountBatchGroup2s(string where = null) => FolioServiceClient.CountBatchGroups(where);
 
-        public BatchGroup2[] BatchGroup2s(out int count, string where = null, string orderBy = null, int? skip = null, int? take = null, bool load = false, bool cache = true)
+        public BatchGroup2[] BatchGroup2s(out int count, string where = null, string orderBy = null, int? skip = null, int? take = 100, bool load = false, bool cache = true)
         {
             return FolioServiceClient.BatchGroups(out count, where, orderBy, skip, take).Select(jo =>
             {
@@ -378,13 +564,25 @@ namespace FolioLibrary
                 }
         }
 
+        public void InsertOrUpdate(BatchGroup2 batchGroup2)
+        {
+            try
+            {
+                Insert(batchGroup2);
+            }
+            catch (HttpRequestException e)
+            {
+                if (e.Message.Contains("duplicate key")) Update(batchGroup2); else throw;
+            }
+        }
+
         public void DeleteBatchGroup2(Guid? id) => FolioServiceClient.DeleteBatchGroup(id?.ToString());
 
         public bool AnyBlock2s(string where = null) => FolioServiceClient.AnyBlocks(where);
 
         public int CountBlock2s(string where = null) => FolioServiceClient.CountBlocks(where);
 
-        public Block2[] Block2s(out int count, string where = null, string orderBy = null, int? skip = null, int? take = null, bool load = false, bool cache = true)
+        public Block2[] Block2s(out int count, string where = null, string orderBy = null, int? skip = null, int? take = 100, bool load = false, bool cache = true)
         {
             return FolioServiceClient.Blocks(out count, where, orderBy, skip, take).Select(jo =>
             {
@@ -444,13 +642,25 @@ namespace FolioLibrary
                 }
         }
 
+        public void InsertOrUpdate(Block2 block2)
+        {
+            try
+            {
+                Insert(block2);
+            }
+            catch (HttpRequestException e)
+            {
+                if (e.Message.Contains("duplicate key")) Update(block2); else throw;
+            }
+        }
+
         public void DeleteBlock2(Guid? id) => FolioServiceClient.DeleteBlock(id?.ToString());
 
         public bool AnyBlockCondition2s(string where = null) => FolioServiceClient.AnyBlockConditions(where);
 
         public int CountBlockCondition2s(string where = null) => FolioServiceClient.CountBlockConditions(where);
 
-        public BlockCondition2[] BlockCondition2s(out int count, string where = null, string orderBy = null, int? skip = null, int? take = null, bool load = false, bool cache = true)
+        public BlockCondition2[] BlockCondition2s(out int count, string where = null, string orderBy = null, int? skip = null, int? take = 100, bool load = false, bool cache = true)
         {
             return FolioServiceClient.BlockConditions(out count, where, orderBy, skip, take).Select(jo =>
             {
@@ -507,13 +717,25 @@ namespace FolioLibrary
                 }
         }
 
+        public void InsertOrUpdate(BlockCondition2 blockCondition2)
+        {
+            try
+            {
+                Insert(blockCondition2);
+            }
+            catch (HttpRequestException e)
+            {
+                if (e.Message.Contains("duplicate key")) Update(blockCondition2); else throw;
+            }
+        }
+
         public void DeleteBlockCondition2(Guid? id) => FolioServiceClient.DeleteBlockCondition(id?.ToString());
 
         public bool AnyBlockLimit2s(string where = null) => FolioServiceClient.AnyBlockLimits(where);
 
         public int CountBlockLimit2s(string where = null) => FolioServiceClient.CountBlockLimits(where);
 
-        public BlockLimit2[] BlockLimit2s(out int count, string where = null, string orderBy = null, int? skip = null, int? take = null, bool load = false, bool cache = true)
+        public BlockLimit2[] BlockLimit2s(out int count, string where = null, string orderBy = null, int? skip = null, int? take = 100, bool load = false, bool cache = true)
         {
             return FolioServiceClient.BlockLimits(out count, where, orderBy, skip, take).Select(jo =>
             {
@@ -576,13 +798,25 @@ namespace FolioLibrary
                 }
         }
 
+        public void InsertOrUpdate(BlockLimit2 blockLimit2)
+        {
+            try
+            {
+                Insert(blockLimit2);
+            }
+            catch (HttpRequestException e)
+            {
+                if (e.Message.Contains("duplicate key")) Update(blockLimit2); else throw;
+            }
+        }
+
         public void DeleteBlockLimit2(Guid? id) => FolioServiceClient.DeleteBlockLimit(id?.ToString());
 
         public bool AnyBoundWithPart2s(string where = null) => FolioServiceClient.AnyBoundWithParts(where);
 
         public int CountBoundWithPart2s(string where = null) => FolioServiceClient.CountBoundWithParts(where);
 
-        public BoundWithPart2[] BoundWithPart2s(out int count, string where = null, string orderBy = null, int? skip = null, int? take = null, bool load = false, bool cache = true)
+        public BoundWithPart2[] BoundWithPart2s(out int count, string where = null, string orderBy = null, int? skip = null, int? take = 100, bool load = false, bool cache = true)
         {
             return FolioServiceClient.BoundWithParts(out count, where, orderBy, skip, take).Select(jo =>
             {
@@ -645,13 +879,25 @@ namespace FolioLibrary
                 }
         }
 
+        public void InsertOrUpdate(BoundWithPart2 boundWithPart2)
+        {
+            try
+            {
+                Insert(boundWithPart2);
+            }
+            catch (HttpRequestException e)
+            {
+                if (e.Message.Contains("duplicate key")) Update(boundWithPart2); else throw;
+            }
+        }
+
         public void DeleteBoundWithPart2(Guid? id) => FolioServiceClient.DeleteBoundWithPart(id?.ToString());
 
         public bool AnyBudget2s(string where = null) => FolioServiceClient.AnyBudgets(where);
 
         public int CountBudget2s(string where = null) => FolioServiceClient.CountBudgets(where);
 
-        public Budget2[] Budget2s(out int count, string where = null, string orderBy = null, int? skip = null, int? take = null, bool load = false, bool cache = true)
+        public Budget2[] Budget2s(out int count, string where = null, string orderBy = null, int? skip = null, int? take = 100, bool load = false, bool cache = true)
         {
             return FolioServiceClient.Budgets(out count, where, orderBy, skip, take).Select(jo =>
             {
@@ -730,13 +976,25 @@ namespace FolioLibrary
                 }
         }
 
+        public void InsertOrUpdate(Budget2 budget2)
+        {
+            try
+            {
+                Insert(budget2);
+            }
+            catch (HttpRequestException e)
+            {
+                if (e.Message.Contains("duplicate key")) Update(budget2); else throw;
+            }
+        }
+
         public void DeleteBudget2(Guid? id) => FolioServiceClient.DeleteBudget(id?.ToString());
 
         public bool AnyBudgetExpenseClass2s(string where = null) => FolioServiceClient.AnyBudgetExpenseClasses(where);
 
         public int CountBudgetExpenseClass2s(string where = null) => FolioServiceClient.CountBudgetExpenseClasses(where);
 
-        public BudgetExpenseClass2[] BudgetExpenseClass2s(out int count, string where = null, string orderBy = null, int? skip = null, int? take = null, bool load = false, bool cache = true)
+        public BudgetExpenseClass2[] BudgetExpenseClass2s(out int count, string where = null, string orderBy = null, int? skip = null, int? take = 100, bool load = false, bool cache = true)
         {
             return FolioServiceClient.BudgetExpenseClasses(out count, where, orderBy, skip, take).Select(jo =>
             {
@@ -793,13 +1051,25 @@ namespace FolioLibrary
                 }
         }
 
+        public void InsertOrUpdate(BudgetExpenseClass2 budgetExpenseClass2)
+        {
+            try
+            {
+                Insert(budgetExpenseClass2);
+            }
+            catch (HttpRequestException e)
+            {
+                if (e.Message.Contains("duplicate key")) Update(budgetExpenseClass2); else throw;
+            }
+        }
+
         public void DeleteBudgetExpenseClass2(Guid? id) => FolioServiceClient.DeleteBudgetExpenseClass(id?.ToString());
 
         public bool AnyBudgetGroup2s(string where = null) => FolioServiceClient.AnyBudgetGroups(where);
 
         public int CountBudgetGroup2s(string where = null) => FolioServiceClient.CountBudgetGroups(where);
 
-        public BudgetGroup2[] BudgetGroup2s(out int count, string where = null, string orderBy = null, int? skip = null, int? take = null, bool load = false, bool cache = true)
+        public BudgetGroup2[] BudgetGroup2s(out int count, string where = null, string orderBy = null, int? skip = null, int? take = 100, bool load = false, bool cache = true)
         {
             return FolioServiceClient.BudgetGroups(out count, where, orderBy, skip, take).Select(jo =>
             {
@@ -862,13 +1132,25 @@ namespace FolioLibrary
                 }
         }
 
+        public void InsertOrUpdate(BudgetGroup2 budgetGroup2)
+        {
+            try
+            {
+                Insert(budgetGroup2);
+            }
+            catch (HttpRequestException e)
+            {
+                if (e.Message.Contains("duplicate key")) Update(budgetGroup2); else throw;
+            }
+        }
+
         public void DeleteBudgetGroup2(Guid? id) => FolioServiceClient.DeleteBudgetGroup(id?.ToString());
 
         public bool AnyCallNumberType2s(string where = null) => FolioServiceClient.AnyCallNumberTypes(where);
 
         public int CountCallNumberType2s(string where = null) => FolioServiceClient.CountCallNumberTypes(where);
 
-        public CallNumberType2[] CallNumberType2s(out int count, string where = null, string orderBy = null, int? skip = null, int? take = null, bool load = false, bool cache = true)
+        public CallNumberType2[] CallNumberType2s(out int count, string where = null, string orderBy = null, int? skip = null, int? take = 100, bool load = false, bool cache = true)
         {
             return FolioServiceClient.CallNumberTypes(out count, where, orderBy, skip, take).Select(jo =>
             {
@@ -925,13 +1207,25 @@ namespace FolioLibrary
                 }
         }
 
+        public void InsertOrUpdate(CallNumberType2 callNumberType2)
+        {
+            try
+            {
+                Insert(callNumberType2);
+            }
+            catch (HttpRequestException e)
+            {
+                if (e.Message.Contains("duplicate key")) Update(callNumberType2); else throw;
+            }
+        }
+
         public void DeleteCallNumberType2(Guid? id) => FolioServiceClient.DeleteCallNumberType(id?.ToString());
 
         public bool AnyCampus2s(string where = null) => FolioServiceClient.AnyCampuses(where);
 
         public int CountCampus2s(string where = null) => FolioServiceClient.CountCampuses(where);
 
-        public Campus2[] Campus2s(out int count, string where = null, string orderBy = null, int? skip = null, int? take = null, bool load = false, bool cache = true)
+        public Campus2[] Campus2s(out int count, string where = null, string orderBy = null, int? skip = null, int? take = 100, bool load = false, bool cache = true)
         {
             return FolioServiceClient.Campuses(out count, where, orderBy, skip, take).Select(jo =>
             {
@@ -991,13 +1285,25 @@ namespace FolioLibrary
                 }
         }
 
+        public void InsertOrUpdate(Campus2 campus2)
+        {
+            try
+            {
+                Insert(campus2);
+            }
+            catch (HttpRequestException e)
+            {
+                if (e.Message.Contains("duplicate key")) Update(campus2); else throw;
+            }
+        }
+
         public void DeleteCampus2(Guid? id) => FolioServiceClient.DeleteCampus(id?.ToString());
 
         public bool AnyCancellationReason2s(string where = null) => FolioServiceClient.AnyCancellationReasons(where);
 
         public int CountCancellationReason2s(string where = null) => FolioServiceClient.CountCancellationReasons(where);
 
-        public CancellationReason2[] CancellationReason2s(out int count, string where = null, string orderBy = null, int? skip = null, int? take = null, bool load = false, bool cache = true)
+        public CancellationReason2[] CancellationReason2s(out int count, string where = null, string orderBy = null, int? skip = null, int? take = 100, bool load = false, bool cache = true)
         {
             return FolioServiceClient.CancellationReasons(out count, where, orderBy, skip, take).Select(jo =>
             {
@@ -1054,13 +1360,25 @@ namespace FolioLibrary
                 }
         }
 
+        public void InsertOrUpdate(CancellationReason2 cancellationReason2)
+        {
+            try
+            {
+                Insert(cancellationReason2);
+            }
+            catch (HttpRequestException e)
+            {
+                if (e.Message.Contains("duplicate key")) Update(cancellationReason2); else throw;
+            }
+        }
+
         public void DeleteCancellationReason2(Guid? id) => FolioServiceClient.DeleteCancellationReason(id?.ToString());
 
         public bool AnyCategory2s(string where = null) => FolioServiceClient.AnyCategories(where);
 
         public int CountCategory2s(string where = null) => FolioServiceClient.CountCategories(where);
 
-        public Category2[] Category2s(out int count, string where = null, string orderBy = null, int? skip = null, int? take = null, bool load = false, bool cache = true)
+        public Category2[] Category2s(out int count, string where = null, string orderBy = null, int? skip = null, int? take = 100, bool load = false, bool cache = true)
         {
             return FolioServiceClient.Categories(out count, where, orderBy, skip, take).Select(jo =>
             {
@@ -1117,13 +1435,25 @@ namespace FolioLibrary
                 }
         }
 
+        public void InsertOrUpdate(Category2 category2)
+        {
+            try
+            {
+                Insert(category2);
+            }
+            catch (HttpRequestException e)
+            {
+                if (e.Message.Contains("duplicate key")) Update(category2); else throw;
+            }
+        }
+
         public void DeleteCategory2(Guid? id) => FolioServiceClient.DeleteCategory(id?.ToString());
 
         public bool AnyCheckIn2s(string where = null) => FolioServiceClient.AnyCheckIns(where);
 
         public int CountCheckIn2s(string where = null) => FolioServiceClient.CountCheckIns(where);
 
-        public CheckIn2[] CheckIn2s(out int count, string where = null, string orderBy = null, int? skip = null, int? take = null, bool load = false, bool cache = true)
+        public CheckIn2[] CheckIn2s(out int count, string where = null, string orderBy = null, int? skip = null, int? take = 100, bool load = false, bool cache = true)
         {
             return FolioServiceClient.CheckIns(out count, where, orderBy, skip, take).Select(jo =>
             {
@@ -1186,6 +1516,18 @@ namespace FolioLibrary
                 }
         }
 
+        public void InsertOrUpdate(CheckIn2 checkIn2)
+        {
+            try
+            {
+                Insert(checkIn2);
+            }
+            catch (HttpRequestException e)
+            {
+                if (e.Message.Contains("duplicate key")) Update(checkIn2); else throw;
+            }
+        }
+
         public void DeleteCheckIn2(Guid? id) => FolioServiceClient.DeleteCheckIn(id?.ToString());
 
         public CirculationRule2 FindCirculationRule2(bool load = false, bool cache = true) => CirculationRule2.FromJObject(FolioServiceClient.GetCirculationRule());
@@ -1196,7 +1538,7 @@ namespace FolioLibrary
 
         public int CountClassificationType2s(string where = null) => FolioServiceClient.CountClassificationTypes(where);
 
-        public ClassificationType2[] ClassificationType2s(out int count, string where = null, string orderBy = null, int? skip = null, int? take = null, bool load = false, bool cache = true)
+        public ClassificationType2[] ClassificationType2s(out int count, string where = null, string orderBy = null, int? skip = null, int? take = 100, bool load = false, bool cache = true)
         {
             return FolioServiceClient.ClassificationTypes(out count, where, orderBy, skip, take).Select(jo =>
             {
@@ -1253,13 +1595,25 @@ namespace FolioLibrary
                 }
         }
 
+        public void InsertOrUpdate(ClassificationType2 classificationType2)
+        {
+            try
+            {
+                Insert(classificationType2);
+            }
+            catch (HttpRequestException e)
+            {
+                if (e.Message.Contains("duplicate key")) Update(classificationType2); else throw;
+            }
+        }
+
         public void DeleteClassificationType2(Guid? id) => FolioServiceClient.DeleteClassificationType(id?.ToString());
 
         public bool AnyCloseReason2s(string where = null) => FolioServiceClient.AnyCloseReasons(where);
 
         public int CountCloseReason2s(string where = null) => FolioServiceClient.CountCloseReasons(where);
 
-        public CloseReason2[] CloseReason2s(out int count, string where = null, string orderBy = null, int? skip = null, int? take = null, bool load = false, bool cache = true)
+        public CloseReason2[] CloseReason2s(out int count, string where = null, string orderBy = null, int? skip = null, int? take = 100, bool load = false, bool cache = true)
         {
             return FolioServiceClient.CloseReasons(out count, where, orderBy, skip, take).Select(jo =>
             {
@@ -1304,13 +1658,25 @@ namespace FolioLibrary
                 }
         }
 
+        public void InsertOrUpdate(CloseReason2 closeReason2)
+        {
+            try
+            {
+                Insert(closeReason2);
+            }
+            catch (HttpRequestException e)
+            {
+                if (e.Message.Contains("duplicate key")) Update(closeReason2); else throw;
+            }
+        }
+
         public void DeleteCloseReason2(Guid? id) => FolioServiceClient.DeleteCloseReason(id?.ToString());
 
         public bool AnyComment2s(string where = null) => FolioServiceClient.AnyComments(where);
 
         public int CountComment2s(string where = null) => FolioServiceClient.CountComments(where);
 
-        public Comment2[] Comment2s(out int count, string where = null, string orderBy = null, int? skip = null, int? take = null, bool load = false, bool cache = true)
+        public Comment2[] Comment2s(out int count, string where = null, string orderBy = null, int? skip = null, int? take = 100, bool load = false, bool cache = true)
         {
             return FolioServiceClient.Comments(out count, where, orderBy, skip, take).Select(jo =>
             {
@@ -1367,13 +1733,25 @@ namespace FolioLibrary
                 }
         }
 
+        public void InsertOrUpdate(Comment2 comment2)
+        {
+            try
+            {
+                Insert(comment2);
+            }
+            catch (HttpRequestException e)
+            {
+                if (e.Message.Contains("duplicate key")) Update(comment2); else throw;
+            }
+        }
+
         public void DeleteComment2(Guid? id) => FolioServiceClient.DeleteComment(id?.ToString());
 
         public bool AnyConfiguration2s(string where = null) => FolioServiceClient.AnyConfigurations(where);
 
         public int CountConfiguration2s(string where = null) => FolioServiceClient.CountConfigurations(where);
 
-        public Configuration2[] Configuration2s(out int count, string where = null, string orderBy = null, int? skip = null, int? take = null, bool load = false, bool cache = true)
+        public Configuration2[] Configuration2s(out int count, string where = null, string orderBy = null, int? skip = null, int? take = 100, bool load = false, bool cache = true)
         {
             return FolioServiceClient.Configurations(out count, where, orderBy, skip, take).Select(jo =>
             {
@@ -1430,13 +1808,25 @@ namespace FolioLibrary
                 }
         }
 
+        public void InsertOrUpdate(Configuration2 configuration2)
+        {
+            try
+            {
+                Insert(configuration2);
+            }
+            catch (HttpRequestException e)
+            {
+                if (e.Message.Contains("duplicate key")) Update(configuration2); else throw;
+            }
+        }
+
         public void DeleteConfiguration2(Guid? id) => FolioServiceClient.DeleteConfiguration(id?.ToString());
 
         public bool AnyContact2s(string where = null) => FolioServiceClient.AnyContacts(where);
 
         public int CountContact2s(string where = null) => FolioServiceClient.CountContacts(where);
 
-        public Contact2[] Contact2s(out int count, string where = null, string orderBy = null, int? skip = null, int? take = null, bool load = false, bool cache = true)
+        public Contact2[] Contact2s(out int count, string where = null, string orderBy = null, int? skip = null, int? take = 100, bool load = false, bool cache = true)
         {
             return FolioServiceClient.Contacts(out count, where, orderBy, skip, take).Select(jo =>
             {
@@ -1537,13 +1927,25 @@ namespace FolioLibrary
                 }
         }
 
+        public void InsertOrUpdate(Contact2 contact2)
+        {
+            try
+            {
+                Insert(contact2);
+            }
+            catch (HttpRequestException e)
+            {
+                if (e.Message.Contains("duplicate key")) Update(contact2); else throw;
+            }
+        }
+
         public void DeleteContact2(Guid? id) => FolioServiceClient.DeleteContact(id?.ToString());
 
         public bool AnyContributorNameType2s(string where = null) => FolioServiceClient.AnyContributorNameTypes(where);
 
         public int CountContributorNameType2s(string where = null) => FolioServiceClient.CountContributorNameTypes(where);
 
-        public ContributorNameType2[] ContributorNameType2s(out int count, string where = null, string orderBy = null, int? skip = null, int? take = null, bool load = false, bool cache = true)
+        public ContributorNameType2[] ContributorNameType2s(out int count, string where = null, string orderBy = null, int? skip = null, int? take = 100, bool load = false, bool cache = true)
         {
             return FolioServiceClient.ContributorNameTypes(out count, where, orderBy, skip, take).Select(jo =>
             {
@@ -1600,13 +2002,25 @@ namespace FolioLibrary
                 }
         }
 
+        public void InsertOrUpdate(ContributorNameType2 contributorNameType2)
+        {
+            try
+            {
+                Insert(contributorNameType2);
+            }
+            catch (HttpRequestException e)
+            {
+                if (e.Message.Contains("duplicate key")) Update(contributorNameType2); else throw;
+            }
+        }
+
         public void DeleteContributorNameType2(Guid? id) => FolioServiceClient.DeleteContributorNameType(id?.ToString());
 
         public bool AnyContributorType2s(string where = null) => FolioServiceClient.AnyContributorTypes(where);
 
         public int CountContributorType2s(string where = null) => FolioServiceClient.CountContributorTypes(where);
 
-        public ContributorType2[] ContributorType2s(out int count, string where = null, string orderBy = null, int? skip = null, int? take = null, bool load = false, bool cache = true)
+        public ContributorType2[] ContributorType2s(out int count, string where = null, string orderBy = null, int? skip = null, int? take = 100, bool load = false, bool cache = true)
         {
             return FolioServiceClient.ContributorTypes(out count, where, orderBy, skip, take).Select(jo =>
             {
@@ -1663,13 +2077,25 @@ namespace FolioLibrary
                 }
         }
 
+        public void InsertOrUpdate(ContributorType2 contributorType2)
+        {
+            try
+            {
+                Insert(contributorType2);
+            }
+            catch (HttpRequestException e)
+            {
+                if (e.Message.Contains("duplicate key")) Update(contributorType2); else throw;
+            }
+        }
+
         public void DeleteContributorType2(Guid? id) => FolioServiceClient.DeleteContributorType(id?.ToString());
 
         public bool AnyCustomField2s(string where = null) => FolioServiceClient.AnyCustomFields(where);
 
         public int CountCustomField2s(string where = null) => FolioServiceClient.CountCustomFields(where);
 
-        public CustomField2[] CustomField2s(out int count, string where = null, string orderBy = null, int? skip = null, int? take = null, bool load = false, bool cache = true)
+        public CustomField2[] CustomField2s(out int count, string where = null, string orderBy = null, int? skip = null, int? take = 100, bool load = false, bool cache = true)
         {
             return FolioServiceClient.CustomFields(out count, where, orderBy, skip, take).Select(jo =>
             {
@@ -1733,13 +2159,25 @@ namespace FolioLibrary
                 }
         }
 
+        public void InsertOrUpdate(CustomField2 customField2)
+        {
+            try
+            {
+                Insert(customField2);
+            }
+            catch (HttpRequestException e)
+            {
+                if (e.Message.Contains("duplicate key")) Update(customField2); else throw;
+            }
+        }
+
         public void DeleteCustomField2(Guid? id) => FolioServiceClient.DeleteCustomField(id?.ToString());
 
         public bool AnyDepartment2s(string where = null) => FolioServiceClient.AnyDepartments(where);
 
         public int CountDepartment2s(string where = null) => FolioServiceClient.CountDepartments(where);
 
-        public Department2[] Department2s(out int count, string where = null, string orderBy = null, int? skip = null, int? take = null, bool load = false, bool cache = true)
+        public Department2[] Department2s(out int count, string where = null, string orderBy = null, int? skip = null, int? take = 100, bool load = false, bool cache = true)
         {
             return FolioServiceClient.Departments(out count, where, orderBy, skip, take).Select(jo =>
             {
@@ -1796,13 +2234,80 @@ namespace FolioLibrary
                 }
         }
 
+        public void InsertOrUpdate(Department2 department2)
+        {
+            try
+            {
+                Insert(department2);
+            }
+            catch (HttpRequestException e)
+            {
+                if (e.Message.Contains("duplicate key")) Update(department2); else throw;
+            }
+        }
+
         public void DeleteDepartment2(Guid? id) => FolioServiceClient.DeleteDepartment(id?.ToString());
+
+        public bool AnyDocument2s(Guid? invoiceId, string where = null) => FolioServiceClient.AnyDocuments(invoiceId?.ToString(), where);
+
+        public int CountDocument2s(Guid? invoiceId, string where = null) => FolioServiceClient.CountDocuments(invoiceId?.ToString(), where);
+
+        public Document2[] Document2s(Guid? invoiceId, out int count, string where = null, string orderBy = null, int? skip = null, int? take = 100, bool load = false, bool cache = true)
+        {
+            return FolioServiceClient.Documents(invoiceId?.ToString(), out count, where, orderBy, skip, take).Select(jo =>
+            {
+                var id = Guid.Parse((string)jo["id"]);
+                var d2 = cache ? (Document2)(objects.ContainsKey(id) ? objects[id] : objects[id] = Document2.FromJObject(jo)) : Document2.FromJObject(jo);
+                if (load && d2.InvoiceId != null) d2.Invoice = FindInvoice2(d2.InvoiceId, cache: cache);
+                if (load && d2.CreationUserId != null) d2.CreationUser = FindUser2(d2.CreationUserId, cache: cache);
+                if (load && d2.LastWriteUserId != null) d2.LastWriteUser = FindUser2(d2.LastWriteUserId, cache: cache);
+                if (load && d2.CreationUserId2 != null) d2.User2 = FindUser2(d2.CreationUserId2, cache: cache);
+                if (load && d2.LastWriteUserId2 != null) d2.User3 = FindUser2(d2.LastWriteUserId2, cache: cache);
+                return d2;
+            }).ToArray();
+        }
+
+        public IEnumerable<Document2> Document2s(Guid? invoiceId, string where = null, string orderBy = null, int? skip = null, int? take = null, bool load = false, bool cache = true)
+        {
+            foreach (var jo in FolioServiceClient.Documents(invoiceId?.ToString(), where, orderBy, skip, take))
+            {
+                var id = Guid.Parse((string)jo["id"]);
+                var d2 = cache ? (Document2)(objects.ContainsKey(id) ? objects[id] : objects[id] = Document2.FromJObject(jo)) : Document2.FromJObject(jo);
+                if (load && d2.InvoiceId != null) d2.Invoice = FindInvoice2(d2.InvoiceId, cache: cache);
+                if (load && d2.CreationUserId != null) d2.CreationUser = FindUser2(d2.CreationUserId, cache: cache);
+                if (load && d2.LastWriteUserId != null) d2.LastWriteUser = FindUser2(d2.LastWriteUserId, cache: cache);
+                if (load && d2.CreationUserId2 != null) d2.User2 = FindUser2(d2.CreationUserId2, cache: cache);
+                if (load && d2.LastWriteUserId2 != null) d2.User3 = FindUser2(d2.LastWriteUserId2, cache: cache);
+                yield return d2;
+            }
+        }
+
+        public Document2 FindDocument2(Guid? invoiceId, Guid? id, bool load = false, bool cache = true)
+        {
+            if (id == null) return null;
+            var d2 = cache ? (Document2)(objects.ContainsKey(id.Value) ? objects[id.Value] : objects[id.Value] = Document2.FromJObject(FolioServiceClient.GetDocument(invoiceId?.ToString(), id?.ToString()))) : Document2.FromJObject(FolioServiceClient.GetDocument(invoiceId?.ToString(), id?.ToString()));
+            if (d2 == null) return null;
+            if (load && d2.InvoiceId != null) d2.Invoice = FindInvoice2(d2.InvoiceId, cache: cache);
+            if (load && d2.CreationUserId != null) d2.CreationUser = FindUser2(d2.CreationUserId, cache: cache);
+            if (load && d2.LastWriteUserId != null) d2.LastWriteUser = FindUser2(d2.LastWriteUserId, cache: cache);
+            if (load && d2.CreationUserId2 != null) d2.User2 = FindUser2(d2.CreationUserId2, cache: cache);
+            if (load && d2.LastWriteUserId2 != null) d2.User3 = FindUser2(d2.LastWriteUserId2, cache: cache);
+            return d2;
+        }
+
+        public void Insert(Guid? invoiceId, Document2 document2)
+        {
+            if (document2.Id == null) document2.Id = Guid.NewGuid();
+            FolioServiceClient.InsertDocument(invoiceId?.ToString(), document2.ToJObject());
+        }
+
+        public void DeleteDocument2(Guid? invoiceId, Guid? id) => FolioServiceClient.DeleteDocument(invoiceId?.ToString(), id?.ToString());
 
         public bool AnyElectronicAccessRelationship2s(string where = null) => FolioServiceClient.AnyElectronicAccessRelationships(where);
 
         public int CountElectronicAccessRelationship2s(string where = null) => FolioServiceClient.CountElectronicAccessRelationships(where);
 
-        public ElectronicAccessRelationship2[] ElectronicAccessRelationship2s(out int count, string where = null, string orderBy = null, int? skip = null, int? take = null, bool load = false, bool cache = true)
+        public ElectronicAccessRelationship2[] ElectronicAccessRelationship2s(out int count, string where = null, string orderBy = null, int? skip = null, int? take = 100, bool load = false, bool cache = true)
         {
             return FolioServiceClient.ElectronicAccessRelationships(out count, where, orderBy, skip, take).Select(jo =>
             {
@@ -1859,13 +2364,25 @@ namespace FolioLibrary
                 }
         }
 
+        public void InsertOrUpdate(ElectronicAccessRelationship2 electronicAccessRelationship2)
+        {
+            try
+            {
+                Insert(electronicAccessRelationship2);
+            }
+            catch (HttpRequestException e)
+            {
+                if (e.Message.Contains("duplicate key")) Update(electronicAccessRelationship2); else throw;
+            }
+        }
+
         public void DeleteElectronicAccessRelationship2(Guid? id) => FolioServiceClient.DeleteElectronicAccessRelationship(id?.ToString());
 
         public bool AnyExpenseClass2s(string where = null) => FolioServiceClient.AnyExpenseClasses(where);
 
         public int CountExpenseClass2s(string where = null) => FolioServiceClient.CountExpenseClasses(where);
 
-        public ExpenseClass2[] ExpenseClass2s(out int count, string where = null, string orderBy = null, int? skip = null, int? take = null, bool load = false, bool cache = true)
+        public ExpenseClass2[] ExpenseClass2s(out int count, string where = null, string orderBy = null, int? skip = null, int? take = 100, bool load = false, bool cache = true)
         {
             return FolioServiceClient.ExpenseClasses(out count, where, orderBy, skip, take).Select(jo =>
             {
@@ -1922,13 +2439,25 @@ namespace FolioLibrary
                 }
         }
 
+        public void InsertOrUpdate(ExpenseClass2 expenseClass2)
+        {
+            try
+            {
+                Insert(expenseClass2);
+            }
+            catch (HttpRequestException e)
+            {
+                if (e.Message.Contains("duplicate key")) Update(expenseClass2); else throw;
+            }
+        }
+
         public void DeleteExpenseClass2(Guid? id) => FolioServiceClient.DeleteExpenseClass(id?.ToString());
 
         public bool AnyFee2s(string where = null) => FolioServiceClient.AnyFees(where);
 
         public int CountFee2s(string where = null) => FolioServiceClient.CountFees(where);
 
-        public Fee2[] Fee2s(out int count, string where = null, string orderBy = null, int? skip = null, int? take = null, bool load = false, bool cache = true)
+        public Fee2[] Fee2s(out int count, string where = null, string orderBy = null, int? skip = null, int? take = 100, bool load = false, bool cache = true)
         {
             return FolioServiceClient.Fees(out count, where, orderBy, skip, take).Select(jo =>
             {
@@ -2009,13 +2538,25 @@ namespace FolioLibrary
                 }
         }
 
+        public void InsertOrUpdate(Fee2 fee2)
+        {
+            try
+            {
+                Insert(fee2);
+            }
+            catch (HttpRequestException e)
+            {
+                if (e.Message.Contains("duplicate key")) Update(fee2); else throw;
+            }
+        }
+
         public void DeleteFee2(Guid? id) => FolioServiceClient.DeleteFee(id?.ToString());
 
         public bool AnyFeeType2s(string where = null) => FolioServiceClient.AnyFeeTypes(where);
 
         public int CountFeeType2s(string where = null) => FolioServiceClient.CountFeeTypes(where);
 
-        public FeeType2[] FeeType2s(out int count, string where = null, string orderBy = null, int? skip = null, int? take = null, bool load = false, bool cache = true)
+        public FeeType2[] FeeType2s(out int count, string where = null, string orderBy = null, int? skip = null, int? take = 100, bool load = false, bool cache = true)
         {
             return FolioServiceClient.FeeTypes(out count, where, orderBy, skip, take).Select(jo =>
             {
@@ -2081,13 +2622,25 @@ namespace FolioLibrary
                 }
         }
 
+        public void InsertOrUpdate(FeeType2 feeType2)
+        {
+            try
+            {
+                Insert(feeType2);
+            }
+            catch (HttpRequestException e)
+            {
+                if (e.Message.Contains("duplicate key")) Update(feeType2); else throw;
+            }
+        }
+
         public void DeleteFeeType2(Guid? id) => FolioServiceClient.DeleteFeeType(id?.ToString());
 
         public bool AnyFinanceGroup2s(string where = null) => FolioServiceClient.AnyFinanceGroups(where);
 
         public int CountFinanceGroup2s(string where = null) => FolioServiceClient.CountFinanceGroups(where);
 
-        public FinanceGroup2[] FinanceGroup2s(out int count, string where = null, string orderBy = null, int? skip = null, int? take = null, bool load = false, bool cache = true)
+        public FinanceGroup2[] FinanceGroup2s(out int count, string where = null, string orderBy = null, int? skip = null, int? take = 100, bool load = false, bool cache = true)
         {
             return FolioServiceClient.FinanceGroups(out count, where, orderBy, skip, take).Select(jo =>
             {
@@ -2152,13 +2705,25 @@ namespace FolioLibrary
                 }
         }
 
+        public void InsertOrUpdate(FinanceGroup2 financeGroup2)
+        {
+            try
+            {
+                Insert(financeGroup2);
+            }
+            catch (HttpRequestException e)
+            {
+                if (e.Message.Contains("duplicate key")) Update(financeGroup2); else throw;
+            }
+        }
+
         public void DeleteFinanceGroup2(Guid? id) => FolioServiceClient.DeleteFinanceGroup(id?.ToString());
 
         public bool AnyFiscalYear2s(string where = null) => FolioServiceClient.AnyFiscalYears(where);
 
         public int CountFiscalYear2s(string where = null) => FolioServiceClient.CountFiscalYears(where);
 
-        public FiscalYear2[] FiscalYear2s(out int count, string where = null, string orderBy = null, int? skip = null, int? take = null, bool load = false, bool cache = true)
+        public FiscalYear2[] FiscalYear2s(out int count, string where = null, string orderBy = null, int? skip = null, int? take = 100, bool load = false, bool cache = true)
         {
             return FolioServiceClient.FiscalYears(out count, where, orderBy, skip, take).Select(jo =>
             {
@@ -2223,13 +2788,25 @@ namespace FolioLibrary
                 }
         }
 
+        public void InsertOrUpdate(FiscalYear2 fiscalYear2)
+        {
+            try
+            {
+                Insert(fiscalYear2);
+            }
+            catch (HttpRequestException e)
+            {
+                if (e.Message.Contains("duplicate key")) Update(fiscalYear2); else throw;
+            }
+        }
+
         public void DeleteFiscalYear2(Guid? id) => FolioServiceClient.DeleteFiscalYear(id?.ToString());
 
         public bool AnyFixedDueDateSchedule2s(string where = null) => FolioServiceClient.AnyFixedDueDateSchedules(where);
 
         public int CountFixedDueDateSchedule2s(string where = null) => FolioServiceClient.CountFixedDueDateSchedules(where);
 
-        public FixedDueDateSchedule2[] FixedDueDateSchedule2s(out int count, string where = null, string orderBy = null, int? skip = null, int? take = null, bool load = false, bool cache = true)
+        public FixedDueDateSchedule2[] FixedDueDateSchedule2s(out int count, string where = null, string orderBy = null, int? skip = null, int? take = 100, bool load = false, bool cache = true)
         {
             return FolioServiceClient.FixedDueDateSchedules(out count, where, orderBy, skip, take).Select(jo =>
             {
@@ -2293,13 +2870,25 @@ namespace FolioLibrary
                 }
         }
 
+        public void InsertOrUpdate(FixedDueDateSchedule2 fixedDueDateSchedule2)
+        {
+            try
+            {
+                Insert(fixedDueDateSchedule2);
+            }
+            catch (HttpRequestException e)
+            {
+                if (e.Message.Contains("duplicate key")) Update(fixedDueDateSchedule2); else throw;
+            }
+        }
+
         public void DeleteFixedDueDateSchedule2(Guid? id) => FolioServiceClient.DeleteFixedDueDateSchedule(id?.ToString());
 
         public bool AnyFormats(string where = null) => FolioServiceClient.AnyInstanceFormats(where);
 
         public int CountFormats(string where = null) => FolioServiceClient.CountInstanceFormats(where);
 
-        public Format[] Formats(out int count, string where = null, string orderBy = null, int? skip = null, int? take = null, bool load = false, bool cache = true)
+        public Format[] Formats(out int count, string where = null, string orderBy = null, int? skip = null, int? take = 100, bool load = false, bool cache = true)
         {
             return FolioServiceClient.InstanceFormats(out count, where, orderBy, skip, take).Select(jo =>
             {
@@ -2356,13 +2945,25 @@ namespace FolioLibrary
                 }
         }
 
+        public void InsertOrUpdate(Format format)
+        {
+            try
+            {
+                Insert(format);
+            }
+            catch (HttpRequestException e)
+            {
+                if (e.Message.Contains("duplicate key")) Update(format); else throw;
+            }
+        }
+
         public void DeleteFormat(Guid? id) => FolioServiceClient.DeleteInstanceFormat(id?.ToString());
 
         public bool AnyFund2s(string where = null) => FolioServiceClient.AnyFunds(where);
 
         public int CountFund2s(string where = null) => FolioServiceClient.CountFunds(where);
 
-        public Fund2[] Fund2s(out int count, string where = null, string orderBy = null, int? skip = null, int? take = null, bool load = false, bool cache = true)
+        public Fund2[] Fund2s(out int count, string where = null, string orderBy = null, int? skip = null, int? take = 100, bool load = false, bool cache = true)
         {
             return FolioServiceClient.Funds(out count, where, orderBy, skip, take).Select(jo =>
             {
@@ -2457,13 +3058,25 @@ namespace FolioLibrary
                 }
         }
 
+        public void InsertOrUpdate(Fund2 fund2)
+        {
+            try
+            {
+                Insert(fund2);
+            }
+            catch (HttpRequestException e)
+            {
+                if (e.Message.Contains("duplicate key")) Update(fund2); else throw;
+            }
+        }
+
         public void DeleteFund2(Guid? id) => FolioServiceClient.DeleteFund(id?.ToString());
 
         public bool AnyFundType2s(string where = null) => FolioServiceClient.AnyFundTypes(where);
 
         public int CountFundType2s(string where = null) => FolioServiceClient.CountFundTypes(where);
 
-        public FundType2[] FundType2s(out int count, string where = null, string orderBy = null, int? skip = null, int? take = null, bool load = false, bool cache = true)
+        public FundType2[] FundType2s(out int count, string where = null, string orderBy = null, int? skip = null, int? take = 100, bool load = false, bool cache = true)
         {
             return FolioServiceClient.FundTypes(out count, where, orderBy, skip, take).Select(jo =>
             {
@@ -2508,13 +3121,25 @@ namespace FolioLibrary
                 }
         }
 
+        public void InsertOrUpdate(FundType2 fundType2)
+        {
+            try
+            {
+                Insert(fundType2);
+            }
+            catch (HttpRequestException e)
+            {
+                if (e.Message.Contains("duplicate key")) Update(fundType2); else throw;
+            }
+        }
+
         public void DeleteFundType2(Guid? id) => FolioServiceClient.DeleteFundType(id?.ToString());
 
         public bool AnyGroup2s(string where = null) => FolioServiceClient.AnyGroups(where);
 
         public int CountGroup2s(string where = null) => FolioServiceClient.CountGroups(where);
 
-        public Group2[] Group2s(out int count, string where = null, string orderBy = null, int? skip = null, int? take = null, bool load = false, bool cache = true)
+        public Group2[] Group2s(out int count, string where = null, string orderBy = null, int? skip = null, int? take = 100, bool load = false, bool cache = true)
         {
             return FolioServiceClient.Groups(out count, where, orderBy, skip, take).Select(jo =>
             {
@@ -2571,13 +3196,25 @@ namespace FolioLibrary
                 }
         }
 
+        public void InsertOrUpdate(Group2 group2)
+        {
+            try
+            {
+                Insert(group2);
+            }
+            catch (HttpRequestException e)
+            {
+                if (e.Message.Contains("duplicate key")) Update(group2); else throw;
+            }
+        }
+
         public void DeleteGroup2(Guid? id) => FolioServiceClient.DeleteGroup(id?.ToString());
 
         public bool AnyHolding2s(string where = null) => FolioServiceClient.AnyHoldings(where);
 
         public int CountHolding2s(string where = null) => FolioServiceClient.CountHoldings(where);
 
-        public Holding2[] Holding2s(out int count, string where = null, string orderBy = null, int? skip = null, int? take = null, bool load = false, bool cache = true)
+        public Holding2[] Holding2s(out int count, string where = null, string orderBy = null, int? skip = null, int? take = 100, bool load = false, bool cache = true)
         {
             return FolioServiceClient.Holdings(out count, where, orderBy, skip, take).Select(jo =>
             {
@@ -2733,13 +3370,25 @@ namespace FolioLibrary
                 }
         }
 
+        public void InsertOrUpdate(Holding2 holding2)
+        {
+            try
+            {
+                Insert(holding2);
+            }
+            catch (HttpRequestException e)
+            {
+                if (e.Message.Contains("duplicate key")) Update(holding2); else throw;
+            }
+        }
+
         public void DeleteHolding2(Guid? id) => FolioServiceClient.DeleteHolding(id?.ToString());
 
         public bool AnyHoldingNoteType2s(string where = null) => FolioServiceClient.AnyHoldingNoteTypes(where);
 
         public int CountHoldingNoteType2s(string where = null) => FolioServiceClient.CountHoldingNoteTypes(where);
 
-        public HoldingNoteType2[] HoldingNoteType2s(out int count, string where = null, string orderBy = null, int? skip = null, int? take = null, bool load = false, bool cache = true)
+        public HoldingNoteType2[] HoldingNoteType2s(out int count, string where = null, string orderBy = null, int? skip = null, int? take = 100, bool load = false, bool cache = true)
         {
             return FolioServiceClient.HoldingNoteTypes(out count, where, orderBy, skip, take).Select(jo =>
             {
@@ -2796,13 +3445,25 @@ namespace FolioLibrary
                 }
         }
 
+        public void InsertOrUpdate(HoldingNoteType2 holdingNoteType2)
+        {
+            try
+            {
+                Insert(holdingNoteType2);
+            }
+            catch (HttpRequestException e)
+            {
+                if (e.Message.Contains("duplicate key")) Update(holdingNoteType2); else throw;
+            }
+        }
+
         public void DeleteHoldingNoteType2(Guid? id) => FolioServiceClient.DeleteHoldingNoteType(id?.ToString());
 
         public bool AnyHoldingType2s(string where = null) => FolioServiceClient.AnyHoldingTypes(where);
 
         public int CountHoldingType2s(string where = null) => FolioServiceClient.CountHoldingTypes(where);
 
-        public HoldingType2[] HoldingType2s(out int count, string where = null, string orderBy = null, int? skip = null, int? take = null, bool load = false, bool cache = true)
+        public HoldingType2[] HoldingType2s(out int count, string where = null, string orderBy = null, int? skip = null, int? take = 100, bool load = false, bool cache = true)
         {
             return FolioServiceClient.HoldingTypes(out count, where, orderBy, skip, take).Select(jo =>
             {
@@ -2859,6 +3520,18 @@ namespace FolioLibrary
                 }
         }
 
+        public void InsertOrUpdate(HoldingType2 holdingType2)
+        {
+            try
+            {
+                Insert(holdingType2);
+            }
+            catch (HttpRequestException e)
+            {
+                if (e.Message.Contains("duplicate key")) Update(holdingType2); else throw;
+            }
+        }
+
         public void DeleteHoldingType2(Guid? id) => FolioServiceClient.DeleteHoldingType(id?.ToString());
 
         public HridSetting2 FindHridSetting2(bool load = false, bool cache = true) => HridSetting2.FromJObject(FolioServiceClient.GetHridSetting());
@@ -2869,7 +3542,7 @@ namespace FolioLibrary
 
         public int CountIdType2s(string where = null) => FolioServiceClient.CountIdTypes(where);
 
-        public IdType2[] IdType2s(out int count, string where = null, string orderBy = null, int? skip = null, int? take = null, bool load = false, bool cache = true)
+        public IdType2[] IdType2s(out int count, string where = null, string orderBy = null, int? skip = null, int? take = 100, bool load = false, bool cache = true)
         {
             return FolioServiceClient.IdTypes(out count, where, orderBy, skip, take).Select(jo =>
             {
@@ -2926,13 +3599,25 @@ namespace FolioLibrary
                 }
         }
 
+        public void InsertOrUpdate(IdType2 idType2)
+        {
+            try
+            {
+                Insert(idType2);
+            }
+            catch (HttpRequestException e)
+            {
+                if (e.Message.Contains("duplicate key")) Update(idType2); else throw;
+            }
+        }
+
         public void DeleteIdType2(Guid? id) => FolioServiceClient.DeleteIdType(id?.ToString());
 
         public bool AnyIllPolicy2s(string where = null) => FolioServiceClient.AnyIllPolicies(where);
 
         public int CountIllPolicy2s(string where = null) => FolioServiceClient.CountIllPolicies(where);
 
-        public IllPolicy2[] IllPolicy2s(out int count, string where = null, string orderBy = null, int? skip = null, int? take = null, bool load = false, bool cache = true)
+        public IllPolicy2[] IllPolicy2s(out int count, string where = null, string orderBy = null, int? skip = null, int? take = 100, bool load = false, bool cache = true)
         {
             return FolioServiceClient.IllPolicies(out count, where, orderBy, skip, take).Select(jo =>
             {
@@ -2989,13 +3674,25 @@ namespace FolioLibrary
                 }
         }
 
+        public void InsertOrUpdate(IllPolicy2 illPolicy2)
+        {
+            try
+            {
+                Insert(illPolicy2);
+            }
+            catch (HttpRequestException e)
+            {
+                if (e.Message.Contains("duplicate key")) Update(illPolicy2); else throw;
+            }
+        }
+
         public void DeleteIllPolicy2(Guid? id) => FolioServiceClient.DeleteIllPolicy(id?.ToString());
 
         public bool AnyInstance2s(string where = null) => FolioServiceClient.AnyInstances(where);
 
         public int CountInstance2s(string where = null) => FolioServiceClient.CountInstances(where);
 
-        public Instance2[] Instance2s(out int count, string where = null, string orderBy = null, int? skip = null, int? take = null, bool load = false, bool cache = true)
+        public Instance2[] Instance2s(out int count, string where = null, string orderBy = null, int? skip = null, int? take = 100, bool load = false, bool cache = true)
         {
             return FolioServiceClient.Instances(out count, where, orderBy, skip, take).Select(jo =>
             {
@@ -3204,13 +3901,25 @@ namespace FolioLibrary
                 }
         }
 
+        public void InsertOrUpdate(Instance2 instance2)
+        {
+            try
+            {
+                Insert(instance2);
+            }
+            catch (HttpRequestException e)
+            {
+                if (e.Message.Contains("duplicate key")) Update(instance2); else throw;
+            }
+        }
+
         public void DeleteInstance2(Guid? id) => FolioServiceClient.DeleteInstance(id?.ToString());
 
         public bool AnyInstanceNoteType2s(string where = null) => FolioServiceClient.AnyInstanceNoteTypes(where);
 
         public int CountInstanceNoteType2s(string where = null) => FolioServiceClient.CountInstanceNoteTypes(where);
 
-        public InstanceNoteType2[] InstanceNoteType2s(out int count, string where = null, string orderBy = null, int? skip = null, int? take = null, bool load = false, bool cache = true)
+        public InstanceNoteType2[] InstanceNoteType2s(out int count, string where = null, string orderBy = null, int? skip = null, int? take = 100, bool load = false, bool cache = true)
         {
             return FolioServiceClient.InstanceNoteTypes(out count, where, orderBy, skip, take).Select(jo =>
             {
@@ -3267,13 +3976,25 @@ namespace FolioLibrary
                 }
         }
 
+        public void InsertOrUpdate(InstanceNoteType2 instanceNoteType2)
+        {
+            try
+            {
+                Insert(instanceNoteType2);
+            }
+            catch (HttpRequestException e)
+            {
+                if (e.Message.Contains("duplicate key")) Update(instanceNoteType2); else throw;
+            }
+        }
+
         public void DeleteInstanceNoteType2(Guid? id) => FolioServiceClient.DeleteInstanceNoteType(id?.ToString());
 
         public bool AnyInstanceType2s(string where = null) => FolioServiceClient.AnyInstanceTypes(where);
 
         public int CountInstanceType2s(string where = null) => FolioServiceClient.CountInstanceTypes(where);
 
-        public InstanceType2[] InstanceType2s(out int count, string where = null, string orderBy = null, int? skip = null, int? take = null, bool load = false, bool cache = true)
+        public InstanceType2[] InstanceType2s(out int count, string where = null, string orderBy = null, int? skip = null, int? take = 100, bool load = false, bool cache = true)
         {
             return FolioServiceClient.InstanceTypes(out count, where, orderBy, skip, take).Select(jo =>
             {
@@ -3330,13 +4051,25 @@ namespace FolioLibrary
                 }
         }
 
+        public void InsertOrUpdate(InstanceType2 instanceType2)
+        {
+            try
+            {
+                Insert(instanceType2);
+            }
+            catch (HttpRequestException e)
+            {
+                if (e.Message.Contains("duplicate key")) Update(instanceType2); else throw;
+            }
+        }
+
         public void DeleteInstanceType2(Guid? id) => FolioServiceClient.DeleteInstanceType(id?.ToString());
 
         public bool AnyInstitution2s(string where = null) => FolioServiceClient.AnyInstitutions(where);
 
         public int CountInstitution2s(string where = null) => FolioServiceClient.CountInstitutions(where);
 
-        public Institution2[] Institution2s(out int count, string where = null, string orderBy = null, int? skip = null, int? take = null, bool load = false, bool cache = true)
+        public Institution2[] Institution2s(out int count, string where = null, string orderBy = null, int? skip = null, int? take = 100, bool load = false, bool cache = true)
         {
             return FolioServiceClient.Institutions(out count, where, orderBy, skip, take).Select(jo =>
             {
@@ -3393,13 +4126,25 @@ namespace FolioLibrary
                 }
         }
 
+        public void InsertOrUpdate(Institution2 institution2)
+        {
+            try
+            {
+                Insert(institution2);
+            }
+            catch (HttpRequestException e)
+            {
+                if (e.Message.Contains("duplicate key")) Update(institution2); else throw;
+            }
+        }
+
         public void DeleteInstitution2(Guid? id) => FolioServiceClient.DeleteInstitution(id?.ToString());
 
         public bool AnyInterface2s(string where = null) => FolioServiceClient.AnyInterfaces(where);
 
         public int CountInterface2s(string where = null) => FolioServiceClient.CountInterfaces(where);
 
-        public Interface2[] Interface2s(out int count, string where = null, string orderBy = null, int? skip = null, int? take = null, bool load = false, bool cache = true)
+        public Interface2[] Interface2s(out int count, string where = null, string orderBy = null, int? skip = null, int? take = 100, bool load = false, bool cache = true)
         {
             return FolioServiceClient.Interfaces(out count, where, orderBy, skip, take).Select(jo =>
             {
@@ -3463,13 +4208,25 @@ namespace FolioLibrary
                 }
         }
 
+        public void InsertOrUpdate(Interface2 interface2)
+        {
+            try
+            {
+                Insert(interface2);
+            }
+            catch (HttpRequestException e)
+            {
+                if (e.Message.Contains("duplicate key")) Update(interface2); else throw;
+            }
+        }
+
         public void DeleteInterface2(Guid? id) => FolioServiceClient.DeleteInterface(id?.ToString());
 
         public bool AnyInvoice2s(string where = null) => FolioServiceClient.AnyInvoices(where);
 
         public int CountInvoice2s(string where = null) => FolioServiceClient.CountInvoices(where);
 
-        public Invoice2[] Invoice2s(out int count, string where = null, string orderBy = null, int? skip = null, int? take = null, bool load = false, bool cache = true)
+        public Invoice2[] Invoice2s(out int count, string where = null, string orderBy = null, int? skip = null, int? take = 100, bool load = false, bool cache = true)
         {
             return FolioServiceClient.Invoices(out count, where, orderBy, skip, take).Select(jo =>
             {
@@ -3570,13 +4327,25 @@ namespace FolioLibrary
                 }
         }
 
+        public void InsertOrUpdate(Invoice2 invoice2)
+        {
+            try
+            {
+                Insert(invoice2);
+            }
+            catch (HttpRequestException e)
+            {
+                if (e.Message.Contains("duplicate key")) Update(invoice2); else throw;
+            }
+        }
+
         public void DeleteInvoice2(Guid? id) => FolioServiceClient.DeleteInvoice(id?.ToString());
 
         public bool AnyInvoiceItem2s(string where = null) => FolioServiceClient.AnyInvoiceItems(where);
 
         public int CountInvoiceItem2s(string where = null) => FolioServiceClient.CountInvoiceItems(where);
 
-        public InvoiceItem2[] InvoiceItem2s(out int count, string where = null, string orderBy = null, int? skip = null, int? take = null, bool load = false, bool cache = true)
+        public InvoiceItem2[] InvoiceItem2s(out int count, string where = null, string orderBy = null, int? skip = null, int? take = 100, bool load = false, bool cache = true)
         {
             return FolioServiceClient.InvoiceItems(out count, where, orderBy, skip, take).Select(jo =>
             {
@@ -3673,6 +4442,18 @@ namespace FolioLibrary
                 }
         }
 
+        public void InsertOrUpdate(InvoiceItem2 invoiceItem2)
+        {
+            try
+            {
+                Insert(invoiceItem2);
+            }
+            catch (HttpRequestException e)
+            {
+                if (e.Message.Contains("duplicate key")) Update(invoiceItem2); else throw;
+            }
+        }
+
         public void DeleteInvoiceItem2(Guid? id) => FolioServiceClient.DeleteInvoiceItem(id?.ToString());
 
         public InvoiceTransactionSummary2 FindInvoiceTransactionSummary2(Guid? id, bool load = false, bool cache = true)
@@ -3707,13 +4488,25 @@ namespace FolioLibrary
                 }
         }
 
+        public void InsertOrUpdate(InvoiceTransactionSummary2 invoiceTransactionSummary2)
+        {
+            try
+            {
+                Insert(invoiceTransactionSummary2);
+            }
+            catch (HttpRequestException e)
+            {
+                if (e.Message.Contains("duplicate key")) Update(invoiceTransactionSummary2); else throw;
+            }
+        }
+
         public void DeleteInvoiceTransactionSummary2(Guid? id) => FolioServiceClient.DeleteInvoiceTransactionSummary(id?.ToString());
 
         public bool AnyIssuanceModes(string where = null) => FolioServiceClient.AnyModeOfIssuances(where);
 
         public int CountIssuanceModes(string where = null) => FolioServiceClient.CountModeOfIssuances(where);
 
-        public IssuanceMode[] IssuanceModes(out int count, string where = null, string orderBy = null, int? skip = null, int? take = null, bool load = false, bool cache = true)
+        public IssuanceMode[] IssuanceModes(out int count, string where = null, string orderBy = null, int? skip = null, int? take = 100, bool load = false, bool cache = true)
         {
             return FolioServiceClient.ModeOfIssuances(out count, where, orderBy, skip, take).Select(jo =>
             {
@@ -3770,13 +4563,25 @@ namespace FolioLibrary
                 }
         }
 
+        public void InsertOrUpdate(IssuanceMode issuanceMode)
+        {
+            try
+            {
+                Insert(issuanceMode);
+            }
+            catch (HttpRequestException e)
+            {
+                if (e.Message.Contains("duplicate key")) Update(issuanceMode); else throw;
+            }
+        }
+
         public void DeleteIssuanceMode(Guid? id) => FolioServiceClient.DeleteModeOfIssuance(id?.ToString());
 
         public bool AnyItem2s(string where = null) => FolioServiceClient.AnyItems(where);
 
         public int CountItem2s(string where = null) => FolioServiceClient.CountItems(where);
 
-        public Item2[] Item2s(out int count, string where = null, string orderBy = null, int? skip = null, int? take = null, bool load = false, bool cache = true)
+        public Item2[] Item2s(out int count, string where = null, string orderBy = null, int? skip = null, int? take = 100, bool load = false, bool cache = true)
         {
             return FolioServiceClient.Items(out count, where, orderBy, skip, take).Select(jo =>
             {
@@ -3936,13 +4741,25 @@ namespace FolioLibrary
                 }
         }
 
+        public void InsertOrUpdate(Item2 item2)
+        {
+            try
+            {
+                Insert(item2);
+            }
+            catch (HttpRequestException e)
+            {
+                if (e.Message.Contains("duplicate key")) Update(item2); else throw;
+            }
+        }
+
         public void DeleteItem2(Guid? id) => FolioServiceClient.DeleteItem(id?.ToString());
 
         public bool AnyItemDamagedStatus2s(string where = null) => FolioServiceClient.AnyItemDamagedStatuses(where);
 
         public int CountItemDamagedStatus2s(string where = null) => FolioServiceClient.CountItemDamagedStatuses(where);
 
-        public ItemDamagedStatus2[] ItemDamagedStatus2s(out int count, string where = null, string orderBy = null, int? skip = null, int? take = null, bool load = false, bool cache = true)
+        public ItemDamagedStatus2[] ItemDamagedStatus2s(out int count, string where = null, string orderBy = null, int? skip = null, int? take = 100, bool load = false, bool cache = true)
         {
             return FolioServiceClient.ItemDamagedStatuses(out count, where, orderBy, skip, take).Select(jo =>
             {
@@ -3999,13 +4816,25 @@ namespace FolioLibrary
                 }
         }
 
+        public void InsertOrUpdate(ItemDamagedStatus2 itemDamagedStatus2)
+        {
+            try
+            {
+                Insert(itemDamagedStatus2);
+            }
+            catch (HttpRequestException e)
+            {
+                if (e.Message.Contains("duplicate key")) Update(itemDamagedStatus2); else throw;
+            }
+        }
+
         public void DeleteItemDamagedStatus2(Guid? id) => FolioServiceClient.DeleteItemDamagedStatus(id?.ToString());
 
         public bool AnyItemNoteType2s(string where = null) => FolioServiceClient.AnyItemNoteTypes(where);
 
         public int CountItemNoteType2s(string where = null) => FolioServiceClient.CountItemNoteTypes(where);
 
-        public ItemNoteType2[] ItemNoteType2s(out int count, string where = null, string orderBy = null, int? skip = null, int? take = null, bool load = false, bool cache = true)
+        public ItemNoteType2[] ItemNoteType2s(out int count, string where = null, string orderBy = null, int? skip = null, int? take = 100, bool load = false, bool cache = true)
         {
             return FolioServiceClient.ItemNoteTypes(out count, where, orderBy, skip, take).Select(jo =>
             {
@@ -4062,13 +4891,25 @@ namespace FolioLibrary
                 }
         }
 
+        public void InsertOrUpdate(ItemNoteType2 itemNoteType2)
+        {
+            try
+            {
+                Insert(itemNoteType2);
+            }
+            catch (HttpRequestException e)
+            {
+                if (e.Message.Contains("duplicate key")) Update(itemNoteType2); else throw;
+            }
+        }
+
         public void DeleteItemNoteType2(Guid? id) => FolioServiceClient.DeleteItemNoteType(id?.ToString());
 
         public bool AnyLedger2s(string where = null) => FolioServiceClient.AnyLedgers(where);
 
         public int CountLedger2s(string where = null) => FolioServiceClient.CountLedgers(where);
 
-        public Ledger2[] Ledger2s(out int count, string where = null, string orderBy = null, int? skip = null, int? take = null, bool load = false, bool cache = true)
+        public Ledger2[] Ledger2s(out int count, string where = null, string orderBy = null, int? skip = null, int? take = 100, bool load = false, bool cache = true)
         {
             return FolioServiceClient.Ledgers(out count, where, orderBy, skip, take).Select(jo =>
             {
@@ -4136,13 +4977,25 @@ namespace FolioLibrary
                 }
         }
 
+        public void InsertOrUpdate(Ledger2 ledger2)
+        {
+            try
+            {
+                Insert(ledger2);
+            }
+            catch (HttpRequestException e)
+            {
+                if (e.Message.Contains("duplicate key")) Update(ledger2); else throw;
+            }
+        }
+
         public void DeleteLedger2(Guid? id) => FolioServiceClient.DeleteLedger(id?.ToString());
 
         public bool AnyLedgerRollover2s(string where = null) => FolioServiceClient.AnyLedgerRollovers(where);
 
         public int CountLedgerRollover2s(string where = null) => FolioServiceClient.CountLedgerRollovers(where);
 
-        public LedgerRollover2[] LedgerRollover2s(out int count, string where = null, string orderBy = null, int? skip = null, int? take = null, bool load = false, bool cache = true)
+        public LedgerRollover2[] LedgerRollover2s(out int count, string where = null, string orderBy = null, int? skip = null, int? take = 100, bool load = false, bool cache = true)
         {
             return FolioServiceClient.LedgerRollovers(out count, where, orderBy, skip, take).Select(jo =>
             {
@@ -4223,13 +5076,25 @@ namespace FolioLibrary
                 }
         }
 
+        public void InsertOrUpdate(LedgerRollover2 ledgerRollover2)
+        {
+            try
+            {
+                Insert(ledgerRollover2);
+            }
+            catch (HttpRequestException e)
+            {
+                if (e.Message.Contains("duplicate key")) Update(ledgerRollover2); else throw;
+            }
+        }
+
         public void DeleteLedgerRollover2(Guid? id) => FolioServiceClient.DeleteLedgerRollover(id?.ToString());
 
         public bool AnyLedgerRolloverError2s(string where = null) => FolioServiceClient.AnyLedgerRolloverErrors(where);
 
         public int CountLedgerRolloverError2s(string where = null) => FolioServiceClient.CountLedgerRolloverErrors(where);
 
-        public LedgerRolloverError2[] LedgerRolloverError2s(out int count, string where = null, string orderBy = null, int? skip = null, int? take = null, bool load = false, bool cache = true)
+        public LedgerRolloverError2[] LedgerRolloverError2s(out int count, string where = null, string orderBy = null, int? skip = null, int? take = 100, bool load = false, bool cache = true)
         {
             return FolioServiceClient.LedgerRolloverErrors(out count, where, orderBy, skip, take).Select(jo =>
             {
@@ -4289,13 +5154,25 @@ namespace FolioLibrary
                 }
         }
 
+        public void InsertOrUpdate(LedgerRolloverError2 ledgerRolloverError2)
+        {
+            try
+            {
+                Insert(ledgerRolloverError2);
+            }
+            catch (HttpRequestException e)
+            {
+                if (e.Message.Contains("duplicate key")) Update(ledgerRolloverError2); else throw;
+            }
+        }
+
         public void DeleteLedgerRolloverError2(Guid? id) => FolioServiceClient.DeleteLedgerRolloverError(id?.ToString());
 
         public bool AnyLedgerRolloverProgress2s(string where = null) => FolioServiceClient.AnyLedgerRolloverProgresses(where);
 
         public int CountLedgerRolloverProgress2s(string where = null) => FolioServiceClient.CountLedgerRolloverProgresses(where);
 
-        public LedgerRolloverProgress2[] LedgerRolloverProgress2s(out int count, string where = null, string orderBy = null, int? skip = null, int? take = null, bool load = false, bool cache = true)
+        public LedgerRolloverProgress2[] LedgerRolloverProgress2s(out int count, string where = null, string orderBy = null, int? skip = null, int? take = 100, bool load = false, bool cache = true)
         {
             return FolioServiceClient.LedgerRolloverProgresses(out count, where, orderBy, skip, take).Select(jo =>
             {
@@ -4355,13 +5232,25 @@ namespace FolioLibrary
                 }
         }
 
+        public void InsertOrUpdate(LedgerRolloverProgress2 ledgerRolloverProgress2)
+        {
+            try
+            {
+                Insert(ledgerRolloverProgress2);
+            }
+            catch (HttpRequestException e)
+            {
+                if (e.Message.Contains("duplicate key")) Update(ledgerRolloverProgress2); else throw;
+            }
+        }
+
         public void DeleteLedgerRolloverProgress2(Guid? id) => FolioServiceClient.DeleteLedgerRolloverProgress(id?.ToString());
 
         public bool AnyLibrary2s(string where = null) => FolioServiceClient.AnyLibraries(where);
 
         public int CountLibrary2s(string where = null) => FolioServiceClient.CountLibraries(where);
 
-        public Library2[] Library2s(out int count, string where = null, string orderBy = null, int? skip = null, int? take = null, bool load = false, bool cache = true)
+        public Library2[] Library2s(out int count, string where = null, string orderBy = null, int? skip = null, int? take = 100, bool load = false, bool cache = true)
         {
             return FolioServiceClient.Libraries(out count, where, orderBy, skip, take).Select(jo =>
             {
@@ -4421,13 +5310,25 @@ namespace FolioLibrary
                 }
         }
 
+        public void InsertOrUpdate(Library2 library2)
+        {
+            try
+            {
+                Insert(library2);
+            }
+            catch (HttpRequestException e)
+            {
+                if (e.Message.Contains("duplicate key")) Update(library2); else throw;
+            }
+        }
+
         public void DeleteLibrary2(Guid? id) => FolioServiceClient.DeleteLibrary(id?.ToString());
 
         public bool AnyLoan2s(string where = null) => FolioServiceClient.AnyLoans(where);
 
         public int CountLoan2s(string where = null) => FolioServiceClient.CountLoans(where);
 
-        public Loan2[] Loan2s(out int count, string where = null, string orderBy = null, int? skip = null, int? take = null, bool load = false, bool cache = true)
+        public Loan2[] Loan2s(out int count, string where = null, string orderBy = null, int? skip = null, int? take = 100, bool load = false, bool cache = true)
         {
             return FolioServiceClient.Loans(out count, where, orderBy, skip, take).Select(jo =>
             {
@@ -4514,13 +5415,25 @@ namespace FolioLibrary
                 }
         }
 
+        public void InsertOrUpdate(Loan2 loan2)
+        {
+            try
+            {
+                Insert(loan2);
+            }
+            catch (HttpRequestException e)
+            {
+                if (e.Message.Contains("duplicate key")) Update(loan2); else throw;
+            }
+        }
+
         public void DeleteLoan2(Guid? id) => FolioServiceClient.DeleteLoan(id?.ToString());
 
         public bool AnyLoanPolicy2s(string where = null) => FolioServiceClient.AnyLoanPolicies(where);
 
         public int CountLoanPolicy2s(string where = null) => FolioServiceClient.CountLoanPolicies(where);
 
-        public LoanPolicy2[] LoanPolicy2s(out int count, string where = null, string orderBy = null, int? skip = null, int? take = null, bool load = false, bool cache = true)
+        public LoanPolicy2[] LoanPolicy2s(out int count, string where = null, string orderBy = null, int? skip = null, int? take = 100, bool load = false, bool cache = true)
         {
             return FolioServiceClient.LoanPolicies(out count, where, orderBy, skip, take).Select(jo =>
             {
@@ -4583,13 +5496,25 @@ namespace FolioLibrary
                 }
         }
 
+        public void InsertOrUpdate(LoanPolicy2 loanPolicy2)
+        {
+            try
+            {
+                Insert(loanPolicy2);
+            }
+            catch (HttpRequestException e)
+            {
+                if (e.Message.Contains("duplicate key")) Update(loanPolicy2); else throw;
+            }
+        }
+
         public void DeleteLoanPolicy2(Guid? id) => FolioServiceClient.DeleteLoanPolicy(id?.ToString());
 
         public bool AnyLoanType2s(string where = null) => FolioServiceClient.AnyLoanTypes(where);
 
         public int CountLoanType2s(string where = null) => FolioServiceClient.CountLoanTypes(where);
 
-        public LoanType2[] LoanType2s(out int count, string where = null, string orderBy = null, int? skip = null, int? take = null, bool load = false, bool cache = true)
+        public LoanType2[] LoanType2s(out int count, string where = null, string orderBy = null, int? skip = null, int? take = 100, bool load = false, bool cache = true)
         {
             return FolioServiceClient.LoanTypes(out count, where, orderBy, skip, take).Select(jo =>
             {
@@ -4646,13 +5571,25 @@ namespace FolioLibrary
                 }
         }
 
+        public void InsertOrUpdate(LoanType2 loanType2)
+        {
+            try
+            {
+                Insert(loanType2);
+            }
+            catch (HttpRequestException e)
+            {
+                if (e.Message.Contains("duplicate key")) Update(loanType2); else throw;
+            }
+        }
+
         public void DeleteLoanType2(Guid? id) => FolioServiceClient.DeleteLoanType(id?.ToString());
 
         public bool AnyLocation2s(string where = null) => FolioServiceClient.AnyLocations(where);
 
         public int CountLocation2s(string where = null) => FolioServiceClient.CountLocations(where);
 
-        public Location2[] Location2s(out int count, string where = null, string orderBy = null, int? skip = null, int? take = null, bool load = false, bool cache = true)
+        public Location2[] Location2s(out int count, string where = null, string orderBy = null, int? skip = null, int? take = 100, bool load = false, bool cache = true)
         {
             return FolioServiceClient.Locations(out count, where, orderBy, skip, take).Select(jo =>
             {
@@ -4729,13 +5666,25 @@ namespace FolioLibrary
                 }
         }
 
+        public void InsertOrUpdate(Location2 location2)
+        {
+            try
+            {
+                Insert(location2);
+            }
+            catch (HttpRequestException e)
+            {
+                if (e.Message.Contains("duplicate key")) Update(location2); else throw;
+            }
+        }
+
         public void DeleteLocation2(Guid? id) => FolioServiceClient.DeleteLocation(id?.ToString());
 
         public bool AnyLocationSettings(string where = null) => FolioServiceClient.AnyLocationSettings(where);
 
         public int CountLocationSettings(string where = null) => FolioServiceClient.CountLocationSettings(where);
 
-        public LocationSetting[] LocationSettings(out int count, string where = null, string orderBy = null, int? skip = null, int? take = null, bool load = false, bool cache = true)
+        public LocationSetting[] LocationSettings(out int count, string where = null, string orderBy = null, int? skip = null, int? take = 100, bool load = false, bool cache = true)
         {
             return FolioServiceClient.LocationSettings(out count, where, orderBy, skip, take).Select(jo =>
             {
@@ -4798,6 +5747,18 @@ namespace FolioLibrary
                 }
         }
 
+        public void InsertOrUpdate(LocationSetting locationSetting)
+        {
+            try
+            {
+                Insert(locationSetting);
+            }
+            catch (HttpRequestException e)
+            {
+                if (e.Message.Contains("duplicate key")) Update(locationSetting); else throw;
+            }
+        }
+
         public void DeleteLocationSetting(Guid? id) => FolioServiceClient.DeleteLocationSetting(id?.ToString());
 
         public void Insert(Login2 login2)
@@ -4810,7 +5771,7 @@ namespace FolioLibrary
 
         public int CountLostItemFeePolicy2s(string where = null) => FolioServiceClient.CountLostItemFeePolicies(where);
 
-        public LostItemFeePolicy2[] LostItemFeePolicy2s(out int count, string where = null, string orderBy = null, int? skip = null, int? take = null, bool load = false, bool cache = true)
+        public LostItemFeePolicy2[] LostItemFeePolicy2s(out int count, string where = null, string orderBy = null, int? skip = null, int? take = 100, bool load = false, bool cache = true)
         {
             return FolioServiceClient.LostItemFeePolicies(out count, where, orderBy, skip, take).Select(jo =>
             {
@@ -4867,13 +5828,25 @@ namespace FolioLibrary
                 }
         }
 
+        public void InsertOrUpdate(LostItemFeePolicy2 lostItemFeePolicy2)
+        {
+            try
+            {
+                Insert(lostItemFeePolicy2);
+            }
+            catch (HttpRequestException e)
+            {
+                if (e.Message.Contains("duplicate key")) Update(lostItemFeePolicy2); else throw;
+            }
+        }
+
         public void DeleteLostItemFeePolicy2(Guid? id) => FolioServiceClient.DeleteLostItemFeePolicy(id?.ToString());
 
         public bool AnyManualBlockTemplate2s(string where = null) => FolioServiceClient.AnyManualBlockTemplates(where);
 
         public int CountManualBlockTemplate2s(string where = null) => FolioServiceClient.CountManualBlockTemplates(where);
 
-        public ManualBlockTemplate2[] ManualBlockTemplate2s(out int count, string where = null, string orderBy = null, int? skip = null, int? take = null, bool load = false, bool cache = true)
+        public ManualBlockTemplate2[] ManualBlockTemplate2s(out int count, string where = null, string orderBy = null, int? skip = null, int? take = 100, bool load = false, bool cache = true)
         {
             return FolioServiceClient.ManualBlockTemplates(out count, where, orderBy, skip, take).Select(jo =>
             {
@@ -4930,13 +5903,25 @@ namespace FolioLibrary
                 }
         }
 
+        public void InsertOrUpdate(ManualBlockTemplate2 manualBlockTemplate2)
+        {
+            try
+            {
+                Insert(manualBlockTemplate2);
+            }
+            catch (HttpRequestException e)
+            {
+                if (e.Message.Contains("duplicate key")) Update(manualBlockTemplate2); else throw;
+            }
+        }
+
         public void DeleteManualBlockTemplate2(Guid? id) => FolioServiceClient.DeleteManualBlockTemplate(id?.ToString());
 
         public bool AnyMaterialType2s(string where = null) => FolioServiceClient.AnyMaterialTypes(where);
 
         public int CountMaterialType2s(string where = null) => FolioServiceClient.CountMaterialTypes(where);
 
-        public MaterialType2[] MaterialType2s(out int count, string where = null, string orderBy = null, int? skip = null, int? take = null, bool load = false, bool cache = true)
+        public MaterialType2[] MaterialType2s(out int count, string where = null, string orderBy = null, int? skip = null, int? take = 100, bool load = false, bool cache = true)
         {
             return FolioServiceClient.MaterialTypes(out count, where, orderBy, skip, take).Select(jo =>
             {
@@ -4993,13 +5978,25 @@ namespace FolioLibrary
                 }
         }
 
+        public void InsertOrUpdate(MaterialType2 materialType2)
+        {
+            try
+            {
+                Insert(materialType2);
+            }
+            catch (HttpRequestException e)
+            {
+                if (e.Message.Contains("duplicate key")) Update(materialType2); else throw;
+            }
+        }
+
         public void DeleteMaterialType2(Guid? id) => FolioServiceClient.DeleteMaterialType(id?.ToString());
 
         public bool AnyNatureOfContentTerm2s(string where = null) => FolioServiceClient.AnyNatureOfContentTerms(where);
 
         public int CountNatureOfContentTerm2s(string where = null) => FolioServiceClient.CountNatureOfContentTerms(where);
 
-        public NatureOfContentTerm2[] NatureOfContentTerm2s(out int count, string where = null, string orderBy = null, int? skip = null, int? take = null, bool load = false, bool cache = true)
+        public NatureOfContentTerm2[] NatureOfContentTerm2s(out int count, string where = null, string orderBy = null, int? skip = null, int? take = 100, bool load = false, bool cache = true)
         {
             return FolioServiceClient.NatureOfContentTerms(out count, where, orderBy, skip, take).Select(jo =>
             {
@@ -5056,13 +6053,25 @@ namespace FolioLibrary
                 }
         }
 
+        public void InsertOrUpdate(NatureOfContentTerm2 natureOfContentTerm2)
+        {
+            try
+            {
+                Insert(natureOfContentTerm2);
+            }
+            catch (HttpRequestException e)
+            {
+                if (e.Message.Contains("duplicate key")) Update(natureOfContentTerm2); else throw;
+            }
+        }
+
         public void DeleteNatureOfContentTerm2(Guid? id) => FolioServiceClient.DeleteNatureOfContentTerm(id?.ToString());
 
         public bool AnyNote2s(string where = null) => FolioServiceClient.AnyNotes(where);
 
         public int CountNote2s(string where = null) => FolioServiceClient.CountNotes(where);
 
-        public Note2[] Note2s(out int count, string where = null, string orderBy = null, int? skip = null, int? take = null, bool load = false, bool cache = true)
+        public Note2[] Note2s(out int count, string where = null, string orderBy = null, int? skip = null, int? take = 100, bool load = false, bool cache = true)
         {
             return FolioServiceClient.Notes(out count, where, orderBy, skip, take).Select(jo =>
             {
@@ -5122,13 +6131,25 @@ namespace FolioLibrary
                 }
         }
 
+        public void InsertOrUpdate(Note2 note2)
+        {
+            try
+            {
+                Insert(note2);
+            }
+            catch (HttpRequestException e)
+            {
+                if (e.Message.Contains("duplicate key")) Update(note2); else throw;
+            }
+        }
+
         public void DeleteNote2(Guid? id) => FolioServiceClient.DeleteNote(id?.ToString());
 
         public bool AnyNoteType2s(string where = null) => FolioServiceClient.AnyNoteTypes(where);
 
         public int CountNoteType2s(string where = null) => FolioServiceClient.CountNoteTypes(where);
 
-        public NoteType2[] NoteType2s(out int count, string where = null, string orderBy = null, int? skip = null, int? take = null, bool load = false, bool cache = true)
+        public NoteType2[] NoteType2s(out int count, string where = null, string orderBy = null, int? skip = null, int? take = 100, bool load = false, bool cache = true)
         {
             return FolioServiceClient.NoteTypes(out count, where, orderBy, skip, take).Select(jo =>
             {
@@ -5185,13 +6206,25 @@ namespace FolioLibrary
                 }
         }
 
+        public void InsertOrUpdate(NoteType2 noteType2)
+        {
+            try
+            {
+                Insert(noteType2);
+            }
+            catch (HttpRequestException e)
+            {
+                if (e.Message.Contains("duplicate key")) Update(noteType2); else throw;
+            }
+        }
+
         public void DeleteNoteType2(Guid? id) => FolioServiceClient.DeleteNoteType(id?.ToString());
 
         public bool AnyOrder2s(string where = null) => FolioServiceClient.AnyOrders(where);
 
         public int CountOrder2s(string where = null) => FolioServiceClient.CountOrders(where);
 
-        public Order2[] Order2s(out int count, string where = null, string orderBy = null, int? skip = null, int? take = null, bool load = false, bool cache = true)
+        public Order2[] Order2s(out int count, string where = null, string orderBy = null, int? skip = null, int? take = 100, bool load = false, bool cache = true)
         {
             return FolioServiceClient.Orders(out count, where, orderBy, skip, take).Select(jo =>
             {
@@ -5282,13 +6315,25 @@ namespace FolioLibrary
                 }
         }
 
+        public void InsertOrUpdate(Order2 order2)
+        {
+            try
+            {
+                Insert(order2);
+            }
+            catch (HttpRequestException e)
+            {
+                if (e.Message.Contains("duplicate key")) Update(order2); else throw;
+            }
+        }
+
         public void DeleteOrder2(Guid? id) => FolioServiceClient.DeleteOrder(id?.ToString());
 
         public bool AnyOrderInvoice2s(string where = null) => FolioServiceClient.AnyOrderInvoices(where);
 
         public int CountOrderInvoice2s(string where = null) => FolioServiceClient.CountOrderInvoices(where);
 
-        public OrderInvoice2[] OrderInvoice2s(out int count, string where = null, string orderBy = null, int? skip = null, int? take = null, bool load = false, bool cache = true)
+        public OrderInvoice2[] OrderInvoice2s(out int count, string where = null, string orderBy = null, int? skip = null, int? take = 100, bool load = false, bool cache = true)
         {
             return FolioServiceClient.OrderInvoices(out count, where, orderBy, skip, take).Select(jo =>
             {
@@ -5345,18 +6390,31 @@ namespace FolioLibrary
                 }
         }
 
+        public void InsertOrUpdate(OrderInvoice2 orderInvoice2)
+        {
+            try
+            {
+                Insert(orderInvoice2);
+            }
+            catch (HttpRequestException e)
+            {
+                if (e.Message.Contains("duplicate key")) Update(orderInvoice2); else throw;
+            }
+        }
+
         public void DeleteOrderInvoice2(Guid? id) => FolioServiceClient.DeleteOrderInvoice(id?.ToString());
 
         public bool AnyOrderItem2s(string where = null) => FolioServiceClient.AnyOrderItems(where);
 
         public int CountOrderItem2s(string where = null) => FolioServiceClient.CountOrderItems(where);
 
-        public OrderItem2[] OrderItem2s(out int count, string where = null, string orderBy = null, int? skip = null, int? take = null, bool load = false, bool cache = true)
+        public OrderItem2[] OrderItem2s(out int count, string where = null, string orderBy = null, int? skip = null, int? take = 100, bool load = false, bool cache = true)
         {
             return FolioServiceClient.OrderItems(out count, where, orderBy, skip, take).Select(jo =>
             {
                 var id = Guid.Parse((string)jo["id"]);
                 var oi2 = cache ? (OrderItem2)(objects.ContainsKey(id) ? objects[id] : objects[id] = OrderItem2.FromJObject(jo)) : OrderItem2.FromJObject(jo);
+                if (load && oi2.AgreementId != null) oi2.Agreement = FindAgreement2(oi2.AgreementId, cache: cache);
                 if (load && oi2.AcquisitionMethodId != null) oi2.AcquisitionMethod = FindAcquisitionMethod2(oi2.AcquisitionMethodId, cache: cache);
                 if (load && oi2.EresourceAccessProviderId != null) oi2.EresourceAccessProvider = FindOrganization2(oi2.EresourceAccessProviderId, cache: cache);
                 if (load && oi2.EresourceMaterialTypeId != null) oi2.EresourceMaterialType = FindMaterialType2(oi2.EresourceMaterialTypeId, cache: cache);
@@ -5377,6 +6435,7 @@ namespace FolioLibrary
             {
                 var id = Guid.Parse((string)jo["id"]);
                 var oi2 = cache ? (OrderItem2)(objects.ContainsKey(id) ? objects[id] : objects[id] = OrderItem2.FromJObject(jo)) : OrderItem2.FromJObject(jo);
+                if (load && oi2.AgreementId != null) oi2.Agreement = FindAgreement2(oi2.AgreementId, cache: cache);
                 if (load && oi2.AcquisitionMethodId != null) oi2.AcquisitionMethod = FindAcquisitionMethod2(oi2.AcquisitionMethodId, cache: cache);
                 if (load && oi2.EresourceAccessProviderId != null) oi2.EresourceAccessProvider = FindOrganization2(oi2.EresourceAccessProviderId, cache: cache);
                 if (load && oi2.EresourceMaterialTypeId != null) oi2.EresourceMaterialType = FindMaterialType2(oi2.EresourceMaterialTypeId, cache: cache);
@@ -5396,6 +6455,7 @@ namespace FolioLibrary
             if (id == null) return null;
             var oi2 = cache ? (OrderItem2)(objects.ContainsKey(id.Value) ? objects[id.Value] : objects[id.Value] = OrderItem2.FromJObject(FolioServiceClient.GetOrderItem(id?.ToString()))) : OrderItem2.FromJObject(FolioServiceClient.GetOrderItem(id?.ToString()));
             if (oi2 == null) return null;
+            if (load && oi2.AgreementId != null) oi2.Agreement = FindAgreement2(oi2.AgreementId, cache: cache);
             if (load && oi2.AcquisitionMethodId != null) oi2.AcquisitionMethod = FindAcquisitionMethod2(oi2.AcquisitionMethodId, cache: cache);
             if (load && oi2.EresourceAccessProviderId != null) oi2.EresourceAccessProvider = FindOrganization2(oi2.EresourceAccessProviderId, cache: cache);
             if (load && oi2.EresourceMaterialTypeId != null) oi2.EresourceMaterialType = FindMaterialType2(oi2.EresourceMaterialTypeId, cache: cache);
@@ -5511,13 +6571,25 @@ namespace FolioLibrary
                 }
         }
 
+        public void InsertOrUpdate(OrderItem2 orderItem2)
+        {
+            try
+            {
+                Insert(orderItem2);
+            }
+            catch (HttpRequestException e)
+            {
+                if (e.Message.Contains("duplicate key")) Update(orderItem2); else throw;
+            }
+        }
+
         public void DeleteOrderItem2(Guid? id) => FolioServiceClient.DeleteOrderItem(id?.ToString());
 
         public bool AnyOrderTemplate2s(string where = null) => FolioServiceClient.AnyOrderTemplates(where);
 
         public int CountOrderTemplate2s(string where = null) => FolioServiceClient.CountOrderTemplates(where);
 
-        public OrderTemplate2[] OrderTemplate2s(out int count, string where = null, string orderBy = null, int? skip = null, int? take = null, bool load = false, bool cache = true)
+        public OrderTemplate2[] OrderTemplate2s(out int count, string where = null, string orderBy = null, int? skip = null, int? take = 100, bool load = false, bool cache = true)
         {
             return FolioServiceClient.OrderTemplates(out count, where, orderBy, skip, take).Select(jo =>
             {
@@ -5562,6 +6634,18 @@ namespace FolioLibrary
                 }
         }
 
+        public void InsertOrUpdate(OrderTemplate2 orderTemplate2)
+        {
+            try
+            {
+                Insert(orderTemplate2);
+            }
+            catch (HttpRequestException e)
+            {
+                if (e.Message.Contains("duplicate key")) Update(orderTemplate2); else throw;
+            }
+        }
+
         public void DeleteOrderTemplate2(Guid? id) => FolioServiceClient.DeleteOrderTemplate(id?.ToString());
 
         public OrderTransactionSummary2 FindOrderTransactionSummary2(Guid? id, bool load = false, bool cache = true)
@@ -5596,13 +6680,25 @@ namespace FolioLibrary
                 }
         }
 
+        public void InsertOrUpdate(OrderTransactionSummary2 orderTransactionSummary2)
+        {
+            try
+            {
+                Insert(orderTransactionSummary2);
+            }
+            catch (HttpRequestException e)
+            {
+                if (e.Message.Contains("duplicate key")) Update(orderTransactionSummary2); else throw;
+            }
+        }
+
         public void DeleteOrderTransactionSummary2(Guid? id) => FolioServiceClient.DeleteOrderTransactionSummary(id?.ToString());
 
         public bool AnyOrganization2s(string where = null) => FolioServiceClient.AnyOrganizations(where);
 
         public int CountOrganization2s(string where = null) => FolioServiceClient.CountOrganizations(where);
 
-        public Organization2[] Organization2s(out int count, string where = null, string orderBy = null, int? skip = null, int? take = null, bool load = false, bool cache = true)
+        public Organization2[] Organization2s(out int count, string where = null, string orderBy = null, int? skip = null, int? take = 100, bool load = false, bool cache = true)
         {
             return FolioServiceClient.Organizations(out count, where, orderBy, skip, take).Select(jo =>
             {
@@ -5768,13 +6864,25 @@ namespace FolioLibrary
                 }
         }
 
+        public void InsertOrUpdate(Organization2 organization2)
+        {
+            try
+            {
+                Insert(organization2);
+            }
+            catch (HttpRequestException e)
+            {
+                if (e.Message.Contains("duplicate key")) Update(organization2); else throw;
+            }
+        }
+
         public void DeleteOrganization2(Guid? id) => FolioServiceClient.DeleteOrganization(id?.ToString());
 
         public bool AnyOverdueFinePolicy2s(string where = null) => FolioServiceClient.AnyOverdueFinePolicies(where);
 
         public int CountOverdueFinePolicy2s(string where = null) => FolioServiceClient.CountOverdueFinePolicies(where);
 
-        public OverdueFinePolicy2[] OverdueFinePolicy2s(out int count, string where = null, string orderBy = null, int? skip = null, int? take = null, bool load = false, bool cache = true)
+        public OverdueFinePolicy2[] OverdueFinePolicy2s(out int count, string where = null, string orderBy = null, int? skip = null, int? take = 100, bool load = false, bool cache = true)
         {
             return FolioServiceClient.OverdueFinePolicies(out count, where, orderBy, skip, take).Select(jo =>
             {
@@ -5831,13 +6939,25 @@ namespace FolioLibrary
                 }
         }
 
+        public void InsertOrUpdate(OverdueFinePolicy2 overdueFinePolicy2)
+        {
+            try
+            {
+                Insert(overdueFinePolicy2);
+            }
+            catch (HttpRequestException e)
+            {
+                if (e.Message.Contains("duplicate key")) Update(overdueFinePolicy2); else throw;
+            }
+        }
+
         public void DeleteOverdueFinePolicy2(Guid? id) => FolioServiceClient.DeleteOverdueFinePolicy(id?.ToString());
 
         public bool AnyOwner2s(string where = null) => FolioServiceClient.AnyOwners(where);
 
         public int CountOwner2s(string where = null) => FolioServiceClient.CountOwners(where);
 
-        public Owner2[] Owner2s(out int count, string where = null, string orderBy = null, int? skip = null, int? take = null, bool load = false, bool cache = true)
+        public Owner2[] Owner2s(out int count, string where = null, string orderBy = null, int? skip = null, int? take = 100, bool load = false, bool cache = true)
         {
             return FolioServiceClient.Owners(out count, where, orderBy, skip, take).Select(jo =>
             {
@@ -5908,13 +7028,25 @@ namespace FolioLibrary
                 }
         }
 
+        public void InsertOrUpdate(Owner2 owner2)
+        {
+            try
+            {
+                Insert(owner2);
+            }
+            catch (HttpRequestException e)
+            {
+                if (e.Message.Contains("duplicate key")) Update(owner2); else throw;
+            }
+        }
+
         public void DeleteOwner2(Guid? id) => FolioServiceClient.DeleteOwner(id?.ToString());
 
         public bool AnyPatronActionSession2s(string where = null) => FolioServiceClient.AnyPatronActionSessions(where);
 
         public int CountPatronActionSession2s(string where = null) => FolioServiceClient.CountPatronActionSessions(where);
 
-        public PatronActionSession2[] PatronActionSession2s(out int count, string where = null, string orderBy = null, int? skip = null, int? take = null, bool load = false, bool cache = true)
+        public PatronActionSession2[] PatronActionSession2s(out int count, string where = null, string orderBy = null, int? skip = null, int? take = 100, bool load = false, bool cache = true)
         {
             return FolioServiceClient.PatronActionSessions(out count, where, orderBy, skip, take).Select(jo =>
             {
@@ -5977,13 +7109,25 @@ namespace FolioLibrary
                 }
         }
 
+        public void InsertOrUpdate(PatronActionSession2 patronActionSession2)
+        {
+            try
+            {
+                Insert(patronActionSession2);
+            }
+            catch (HttpRequestException e)
+            {
+                if (e.Message.Contains("duplicate key")) Update(patronActionSession2); else throw;
+            }
+        }
+
         public void DeletePatronActionSession2(Guid? id) => FolioServiceClient.DeletePatronActionSession(id?.ToString());
 
         public bool AnyPatronNoticePolicy2s(string where = null) => FolioServiceClient.AnyPatronNoticePolicies(where);
 
         public int CountPatronNoticePolicy2s(string where = null) => FolioServiceClient.CountPatronNoticePolicies(where);
 
-        public PatronNoticePolicy2[] PatronNoticePolicy2s(out int count, string where = null, string orderBy = null, int? skip = null, int? take = null, bool load = false, bool cache = true)
+        public PatronNoticePolicy2[] PatronNoticePolicy2s(out int count, string where = null, string orderBy = null, int? skip = null, int? take = 100, bool load = false, bool cache = true)
         {
             return FolioServiceClient.PatronNoticePolicies(out count, where, orderBy, skip, take).Select(jo =>
             {
@@ -6064,13 +7208,25 @@ namespace FolioLibrary
                 }
         }
 
+        public void InsertOrUpdate(PatronNoticePolicy2 patronNoticePolicy2)
+        {
+            try
+            {
+                Insert(patronNoticePolicy2);
+            }
+            catch (HttpRequestException e)
+            {
+                if (e.Message.Contains("duplicate key")) Update(patronNoticePolicy2); else throw;
+            }
+        }
+
         public void DeletePatronNoticePolicy2(Guid? id) => FolioServiceClient.DeletePatronNoticePolicy(id?.ToString());
 
         public bool AnyPayment2s(string where = null) => FolioServiceClient.AnyPayments(where);
 
         public int CountPayment2s(string where = null) => FolioServiceClient.CountPayments(where);
 
-        public Payment2[] Payment2s(out int count, string where = null, string orderBy = null, int? skip = null, int? take = null, bool load = false, bool cache = true)
+        public Payment2[] Payment2s(out int count, string where = null, string orderBy = null, int? skip = null, int? take = 100, bool load = false, bool cache = true)
         {
             return FolioServiceClient.Payments(out count, where, orderBy, skip, take).Select(jo =>
             {
@@ -6127,13 +7283,25 @@ namespace FolioLibrary
                 }
         }
 
+        public void InsertOrUpdate(Payment2 payment2)
+        {
+            try
+            {
+                Insert(payment2);
+            }
+            catch (HttpRequestException e)
+            {
+                if (e.Message.Contains("duplicate key")) Update(payment2); else throw;
+            }
+        }
+
         public void DeletePayment2(Guid? id) => FolioServiceClient.DeletePayment(id?.ToString());
 
         public bool AnyPaymentMethod2s(string where = null) => FolioServiceClient.AnyPaymentMethods(where);
 
         public int CountPaymentMethod2s(string where = null) => FolioServiceClient.CountPaymentMethods(where);
 
-        public PaymentMethod2[] PaymentMethod2s(out int count, string where = null, string orderBy = null, int? skip = null, int? take = null, bool load = false, bool cache = true)
+        public PaymentMethod2[] PaymentMethod2s(out int count, string where = null, string orderBy = null, int? skip = null, int? take = 100, bool load = false, bool cache = true)
         {
             return FolioServiceClient.PaymentMethods(out count, where, orderBy, skip, take).Select(jo =>
             {
@@ -6193,13 +7361,25 @@ namespace FolioLibrary
                 }
         }
 
+        public void InsertOrUpdate(PaymentMethod2 paymentMethod2)
+        {
+            try
+            {
+                Insert(paymentMethod2);
+            }
+            catch (HttpRequestException e)
+            {
+                if (e.Message.Contains("duplicate key")) Update(paymentMethod2); else throw;
+            }
+        }
+
         public void DeletePaymentMethod2(Guid? id) => FolioServiceClient.DeletePaymentMethod(id?.ToString());
 
         public bool AnyPermission2s(string where = null) => FolioServiceClient.AnyPermissions(where);
 
         public int CountPermission2s(string where = null) => FolioServiceClient.CountPermissions(where);
 
-        public Permission2[] Permission2s(out int count, string where = null, string orderBy = null, int? skip = null, int? take = null, bool load = false, bool cache = true)
+        public Permission2[] Permission2s(out int count, string where = null, string orderBy = null, int? skip = null, int? take = 100, bool load = false, bool cache = true)
         {
             return FolioServiceClient.Permissions(out count, where, orderBy, skip, take).Select(jo =>
             {
@@ -6285,13 +7465,25 @@ namespace FolioLibrary
                 }
         }
 
+        public void InsertOrUpdate(Permission2 permission2)
+        {
+            try
+            {
+                Insert(permission2);
+            }
+            catch (HttpRequestException e)
+            {
+                if (e.Message.Contains("duplicate key")) Update(permission2); else throw;
+            }
+        }
+
         public void DeletePermission2(Guid? id) => FolioServiceClient.DeletePermission(id?.ToString());
 
         public bool AnyPermissionsUser2s(string where = null) => FolioServiceClient.AnyPermissionsUsers(where);
 
         public int CountPermissionsUser2s(string where = null) => FolioServiceClient.CountPermissionsUsers(where);
 
-        public PermissionsUser2[] PermissionsUser2s(out int count, string where = null, string orderBy = null, int? skip = null, int? take = null, bool load = false, bool cache = true)
+        public PermissionsUser2[] PermissionsUser2s(out int count, string where = null, string orderBy = null, int? skip = null, int? take = 100, bool load = false, bool cache = true)
         {
             return FolioServiceClient.PermissionsUsers(out count, where, orderBy, skip, take).Select(jo =>
             {
@@ -6358,13 +7550,25 @@ namespace FolioLibrary
                 }
         }
 
+        public void InsertOrUpdate(PermissionsUser2 permissionsUser2)
+        {
+            try
+            {
+                Insert(permissionsUser2);
+            }
+            catch (HttpRequestException e)
+            {
+                if (e.Message.Contains("duplicate key")) Update(permissionsUser2); else throw;
+            }
+        }
+
         public void DeletePermissionsUser2(Guid? id) => FolioServiceClient.DeletePermissionsUser(id?.ToString());
 
         public bool AnyPrecedingSucceedingTitle2s(string where = null) => FolioServiceClient.AnyPrecedingSucceedingTitles(where);
 
         public int CountPrecedingSucceedingTitle2s(string where = null) => FolioServiceClient.CountPrecedingSucceedingTitles(where);
 
-        public PrecedingSucceedingTitle2[] PrecedingSucceedingTitle2s(out int count, string where = null, string orderBy = null, int? skip = null, int? take = null, bool load = false, bool cache = true)
+        public PrecedingSucceedingTitle2[] PrecedingSucceedingTitle2s(out int count, string where = null, string orderBy = null, int? skip = null, int? take = 100, bool load = false, bool cache = true)
         {
             return FolioServiceClient.PrecedingSucceedingTitles(out count, where, orderBy, skip, take).Select(jo =>
             {
@@ -6435,13 +7639,25 @@ namespace FolioLibrary
                 }
         }
 
+        public void InsertOrUpdate(PrecedingSucceedingTitle2 precedingSucceedingTitle2)
+        {
+            try
+            {
+                Insert(precedingSucceedingTitle2);
+            }
+            catch (HttpRequestException e)
+            {
+                if (e.Message.Contains("duplicate key")) Update(precedingSucceedingTitle2); else throw;
+            }
+        }
+
         public void DeletePrecedingSucceedingTitle2(Guid? id) => FolioServiceClient.DeletePrecedingSucceedingTitle(id?.ToString());
 
         public bool AnyPrefix2s(string where = null) => FolioServiceClient.AnyPrefixes(where);
 
         public int CountPrefix2s(string where = null) => FolioServiceClient.CountPrefixes(where);
 
-        public Prefix2[] Prefix2s(out int count, string where = null, string orderBy = null, int? skip = null, int? take = null, bool load = false, bool cache = true)
+        public Prefix2[] Prefix2s(out int count, string where = null, string orderBy = null, int? skip = null, int? take = 100, bool load = false, bool cache = true)
         {
             return FolioServiceClient.Prefixes(out count, where, orderBy, skip, take).Select(jo =>
             {
@@ -6486,13 +7702,25 @@ namespace FolioLibrary
                 }
         }
 
+        public void InsertOrUpdate(Prefix2 prefix2)
+        {
+            try
+            {
+                Insert(prefix2);
+            }
+            catch (HttpRequestException e)
+            {
+                if (e.Message.Contains("duplicate key")) Update(prefix2); else throw;
+            }
+        }
+
         public void DeletePrefix2(Guid? id) => FolioServiceClient.DeletePrefix(id?.ToString());
 
         public bool AnyPrinters(string where = null) => FolioServiceClient.AnyPrinters(where);
 
         public int CountPrinters(string where = null) => FolioServiceClient.CountPrinters(where);
 
-        public Printer[] Printers(out int count, string where = null, string orderBy = null, int? skip = null, int? take = null, bool load = false, bool cache = true)
+        public Printer[] Printers(out int count, string where = null, string orderBy = null, int? skip = null, int? take = 100, bool load = false, bool cache = true)
         {
             return FolioServiceClient.Printers(out count, where, orderBy, skip, take).Select(jo =>
             {
@@ -6549,13 +7777,25 @@ namespace FolioLibrary
                 }
         }
 
+        public void InsertOrUpdate(Printer printer)
+        {
+            try
+            {
+                Insert(printer);
+            }
+            catch (HttpRequestException e)
+            {
+                if (e.Message.Contains("duplicate key")) Update(printer); else throw;
+            }
+        }
+
         public void DeletePrinter(Guid? id) => FolioServiceClient.DeletePrinter(id?.ToString());
 
         public bool AnyProxy2s(string where = null) => FolioServiceClient.AnyProxies(where);
 
         public int CountProxy2s(string where = null) => FolioServiceClient.CountProxies(where);
 
-        public Proxy2[] Proxy2s(out int count, string where = null, string orderBy = null, int? skip = null, int? take = null, bool load = false, bool cache = true)
+        public Proxy2[] Proxy2s(out int count, string where = null, string orderBy = null, int? skip = null, int? take = 100, bool load = false, bool cache = true)
         {
             return FolioServiceClient.Proxies(out count, where, orderBy, skip, take).Select(jo =>
             {
@@ -6618,13 +7858,25 @@ namespace FolioLibrary
                 }
         }
 
+        public void InsertOrUpdate(Proxy2 proxy2)
+        {
+            try
+            {
+                Insert(proxy2);
+            }
+            catch (HttpRequestException e)
+            {
+                if (e.Message.Contains("duplicate key")) Update(proxy2); else throw;
+            }
+        }
+
         public void DeleteProxy2(Guid? id) => FolioServiceClient.DeleteProxy(id?.ToString());
 
         public bool AnyReceiving2s(string where = null) => FolioServiceClient.AnyReceivings(where);
 
         public int CountReceiving2s(string where = null) => FolioServiceClient.CountReceivings(where);
 
-        public Receiving2[] Receiving2s(out int count, string where = null, string orderBy = null, int? skip = null, int? take = null, bool load = false, bool cache = true)
+        public Receiving2[] Receiving2s(out int count, string where = null, string orderBy = null, int? skip = null, int? take = 100, bool load = false, bool cache = true)
         {
             return FolioServiceClient.Receivings(out count, where, orderBy, skip, take).Select(jo =>
             {
@@ -6690,13 +7942,25 @@ namespace FolioLibrary
                 }
         }
 
+        public void InsertOrUpdate(Receiving2 receiving2)
+        {
+            try
+            {
+                Insert(receiving2);
+            }
+            catch (HttpRequestException e)
+            {
+                if (e.Message.Contains("duplicate key")) Update(receiving2); else throw;
+            }
+        }
+
         public void DeleteReceiving2(Guid? id) => FolioServiceClient.DeleteReceiving(id?.ToString());
 
         public bool AnyRecord2s(string where = null) => FolioServiceClient.AnyRecords(where);
 
         public int CountRecord2s(string where = null) => FolioServiceClient.CountRecords(where);
 
-        public Record2[] Record2s(out int count, string where = null, string orderBy = null, int? skip = null, int? take = null, bool load = false, bool cache = true)
+        public Record2[] Record2s(out int count, string where = null, string orderBy = null, int? skip = null, int? take = 100, bool load = false, bool cache = true)
         {
             return FolioServiceClient.Records(out count, where, orderBy, skip, take).Select(jo =>
             {
@@ -6759,13 +8023,25 @@ namespace FolioLibrary
                 }
         }
 
+        public void InsertOrUpdate(Record2 record2)
+        {
+            try
+            {
+                Insert(record2);
+            }
+            catch (HttpRequestException e)
+            {
+                if (e.Message.Contains("duplicate key")) Update(record2); else throw;
+            }
+        }
+
         public void DeleteRecord2(Guid? id) => FolioServiceClient.DeleteRecord(id?.ToString());
 
         public bool AnyRefundReason2s(string where = null) => FolioServiceClient.AnyRefundReasons(where);
 
         public int CountRefundReason2s(string where = null) => FolioServiceClient.CountRefundReasons(where);
 
-        public RefundReason2[] RefundReason2s(out int count, string where = null, string orderBy = null, int? skip = null, int? take = null, bool load = false, bool cache = true)
+        public RefundReason2[] RefundReason2s(out int count, string where = null, string orderBy = null, int? skip = null, int? take = 100, bool load = false, bool cache = true)
         {
             return FolioServiceClient.RefundReasons(out count, where, orderBy, skip, take).Select(jo =>
             {
@@ -6825,13 +8101,25 @@ namespace FolioLibrary
                 }
         }
 
+        public void InsertOrUpdate(RefundReason2 refundReason2)
+        {
+            try
+            {
+                Insert(refundReason2);
+            }
+            catch (HttpRequestException e)
+            {
+                if (e.Message.Contains("duplicate key")) Update(refundReason2); else throw;
+            }
+        }
+
         public void DeleteRefundReason2(Guid? id) => FolioServiceClient.DeleteRefundReason(id?.ToString());
 
         public bool AnyRelationships(string where = null) => FolioServiceClient.AnyInstanceRelationships(where);
 
         public int CountRelationships(string where = null) => FolioServiceClient.CountInstanceRelationships(where);
 
-        public Relationship[] Relationships(out int count, string where = null, string orderBy = null, int? skip = null, int? take = null, bool load = false, bool cache = true)
+        public Relationship[] Relationships(out int count, string where = null, string orderBy = null, int? skip = null, int? take = 100, bool load = false, bool cache = true)
         {
             return FolioServiceClient.InstanceRelationships(out count, where, orderBy, skip, take).Select(jo =>
             {
@@ -6897,13 +8185,25 @@ namespace FolioLibrary
                 }
         }
 
+        public void InsertOrUpdate(Relationship relationship)
+        {
+            try
+            {
+                Insert(relationship);
+            }
+            catch (HttpRequestException e)
+            {
+                if (e.Message.Contains("duplicate key")) Update(relationship); else throw;
+            }
+        }
+
         public void DeleteRelationship(Guid? id) => FolioServiceClient.DeleteInstanceRelationship(id?.ToString());
 
         public bool AnyRelationshipTypes(string where = null) => FolioServiceClient.AnyInstanceRelationshipTypes(where);
 
         public int CountRelationshipTypes(string where = null) => FolioServiceClient.CountInstanceRelationshipTypes(where);
 
-        public RelationshipType[] RelationshipTypes(out int count, string where = null, string orderBy = null, int? skip = null, int? take = null, bool load = false, bool cache = true)
+        public RelationshipType[] RelationshipTypes(out int count, string where = null, string orderBy = null, int? skip = null, int? take = 100, bool load = false, bool cache = true)
         {
             return FolioServiceClient.InstanceRelationshipTypes(out count, where, orderBy, skip, take).Select(jo =>
             {
@@ -6960,13 +8260,25 @@ namespace FolioLibrary
                 }
         }
 
+        public void InsertOrUpdate(RelationshipType relationshipType)
+        {
+            try
+            {
+                Insert(relationshipType);
+            }
+            catch (HttpRequestException e)
+            {
+                if (e.Message.Contains("duplicate key")) Update(relationshipType); else throw;
+            }
+        }
+
         public void DeleteRelationshipType(Guid? id) => FolioServiceClient.DeleteInstanceRelationshipType(id?.ToString());
 
         public bool AnyReportingCode2s(string where = null) => FolioServiceClient.AnyReportingCodes(where);
 
         public int CountReportingCode2s(string where = null) => FolioServiceClient.CountReportingCodes(where);
 
-        public ReportingCode2[] ReportingCode2s(out int count, string where = null, string orderBy = null, int? skip = null, int? take = null, bool load = false, bool cache = true)
+        public ReportingCode2[] ReportingCode2s(out int count, string where = null, string orderBy = null, int? skip = null, int? take = 100, bool load = false, bool cache = true)
         {
             return FolioServiceClient.ReportingCodes(out count, where, orderBy, skip, take).Select(jo =>
             {
@@ -7011,13 +8323,25 @@ namespace FolioLibrary
                 }
         }
 
+        public void InsertOrUpdate(ReportingCode2 reportingCode2)
+        {
+            try
+            {
+                Insert(reportingCode2);
+            }
+            catch (HttpRequestException e)
+            {
+                if (e.Message.Contains("duplicate key")) Update(reportingCode2); else throw;
+            }
+        }
+
         public void DeleteReportingCode2(Guid? id) => FolioServiceClient.DeleteReportingCode(id?.ToString());
 
         public bool AnyRequest2s(string where = null) => FolioServiceClient.AnyRequests(where);
 
         public int CountRequest2s(string where = null) => FolioServiceClient.CountRequests(where);
 
-        public Request2[] Request2s(out int count, string where = null, string orderBy = null, int? skip = null, int? take = null, bool load = false, bool cache = true)
+        public Request2[] Request2s(out int count, string where = null, string orderBy = null, int? skip = null, int? take = 100, bool load = false, bool cache = true)
         {
             return FolioServiceClient.Requests(out count, where, orderBy, skip, take).Select(jo =>
             {
@@ -7110,13 +8434,25 @@ namespace FolioLibrary
                 }
         }
 
+        public void InsertOrUpdate(Request2 request2)
+        {
+            try
+            {
+                Insert(request2);
+            }
+            catch (HttpRequestException e)
+            {
+                if (e.Message.Contains("duplicate key")) Update(request2); else throw;
+            }
+        }
+
         public void DeleteRequest2(Guid? id) => FolioServiceClient.DeleteRequest(id?.ToString());
 
         public bool AnyRequestPolicy2s(string where = null) => FolioServiceClient.AnyRequestPolicies(where);
 
         public int CountRequestPolicy2s(string where = null) => FolioServiceClient.CountRequestPolicies(where);
 
-        public RequestPolicy2[] RequestPolicy2s(out int count, string where = null, string orderBy = null, int? skip = null, int? take = null, bool load = false, bool cache = true)
+        public RequestPolicy2[] RequestPolicy2s(out int count, string where = null, string orderBy = null, int? skip = null, int? take = 100, bool load = false, bool cache = true)
         {
             return FolioServiceClient.RequestPolicies(out count, where, orderBy, skip, take).Select(jo =>
             {
@@ -7180,13 +8516,25 @@ namespace FolioLibrary
                 }
         }
 
+        public void InsertOrUpdate(RequestPolicy2 requestPolicy2)
+        {
+            try
+            {
+                Insert(requestPolicy2);
+            }
+            catch (HttpRequestException e)
+            {
+                if (e.Message.Contains("duplicate key")) Update(requestPolicy2); else throw;
+            }
+        }
+
         public void DeleteRequestPolicy2(Guid? id) => FolioServiceClient.DeleteRequestPolicy(id?.ToString());
 
         public bool AnyScheduledNotice2s(string where = null) => FolioServiceClient.AnyScheduledNotices(where);
 
         public int CountScheduledNotice2s(string where = null) => FolioServiceClient.CountScheduledNotices(where);
 
-        public ScheduledNotice2[] ScheduledNotice2s(out int count, string where = null, string orderBy = null, int? skip = null, int? take = null, bool load = false, bool cache = true)
+        public ScheduledNotice2[] ScheduledNotice2s(out int count, string where = null, string orderBy = null, int? skip = null, int? take = 100, bool load = false, bool cache = true)
         {
             return FolioServiceClient.ScheduledNotices(out count, where, orderBy, skip, take).Select(jo =>
             {
@@ -7258,13 +8606,25 @@ namespace FolioLibrary
                 }
         }
 
+        public void InsertOrUpdate(ScheduledNotice2 scheduledNotice2)
+        {
+            try
+            {
+                Insert(scheduledNotice2);
+            }
+            catch (HttpRequestException e)
+            {
+                if (e.Message.Contains("duplicate key")) Update(scheduledNotice2); else throw;
+            }
+        }
+
         public void DeleteScheduledNotice2(Guid? id) => FolioServiceClient.DeleteScheduledNotice(id?.ToString());
 
         public bool AnyServicePoint2s(string where = null) => FolioServiceClient.AnyServicePoints(where);
 
         public int CountServicePoint2s(string where = null) => FolioServiceClient.CountServicePoints(where);
 
-        public ServicePoint2[] ServicePoint2s(out int count, string where = null, string orderBy = null, int? skip = null, int? take = null, bool load = false, bool cache = true)
+        public ServicePoint2[] ServicePoint2s(out int count, string where = null, string orderBy = null, int? skip = null, int? take = 100, bool load = false, bool cache = true)
         {
             return FolioServiceClient.ServicePoints(out count, where, orderBy, skip, take).Select(jo =>
             {
@@ -7329,13 +8689,25 @@ namespace FolioLibrary
                 }
         }
 
+        public void InsertOrUpdate(ServicePoint2 servicePoint2)
+        {
+            try
+            {
+                Insert(servicePoint2);
+            }
+            catch (HttpRequestException e)
+            {
+                if (e.Message.Contains("duplicate key")) Update(servicePoint2); else throw;
+            }
+        }
+
         public void DeleteServicePoint2(Guid? id) => FolioServiceClient.DeleteServicePoint(id?.ToString());
 
         public bool AnyServicePointUser2s(string where = null) => FolioServiceClient.AnyServicePointUsers(where);
 
         public int CountServicePointUser2s(string where = null) => FolioServiceClient.CountServicePointUsers(where);
 
-        public ServicePointUser2[] ServicePointUser2s(out int count, string where = null, string orderBy = null, int? skip = null, int? take = null, bool load = false, bool cache = true)
+        public ServicePointUser2[] ServicePointUser2s(out int count, string where = null, string orderBy = null, int? skip = null, int? take = 100, bool load = false, bool cache = true)
         {
             return FolioServiceClient.ServicePointUsers(out count, where, orderBy, skip, take).Select(jo =>
             {
@@ -7406,13 +8778,25 @@ namespace FolioLibrary
                 }
         }
 
+        public void InsertOrUpdate(ServicePointUser2 servicePointUser2)
+        {
+            try
+            {
+                Insert(servicePointUser2);
+            }
+            catch (HttpRequestException e)
+            {
+                if (e.Message.Contains("duplicate key")) Update(servicePointUser2); else throw;
+            }
+        }
+
         public void DeleteServicePointUser2(Guid? id) => FolioServiceClient.DeleteServicePointUser(id?.ToString());
 
         public bool AnySettings(string where = null) => FolioServiceClient.AnySettings(where);
 
         public int CountSettings(string where = null) => FolioServiceClient.CountSettings(where);
 
-        public Setting[] Settings(out int count, string where = null, string orderBy = null, int? skip = null, int? take = null, bool load = false, bool cache = true)
+        public Setting[] Settings(out int count, string where = null, string orderBy = null, int? skip = null, int? take = 100, bool load = false, bool cache = true)
         {
             return FolioServiceClient.Settings(out count, where, orderBy, skip, take).Select(jo =>
             {
@@ -7469,13 +8853,25 @@ namespace FolioLibrary
                 }
         }
 
+        public void InsertOrUpdate(Setting setting)
+        {
+            try
+            {
+                Insert(setting);
+            }
+            catch (HttpRequestException e)
+            {
+                if (e.Message.Contains("duplicate key")) Update(setting); else throw;
+            }
+        }
+
         public void DeleteSetting(Guid? id) => FolioServiceClient.DeleteSetting(id?.ToString());
 
         public bool AnySnapshot2s(string where = null) => FolioServiceClient.AnySnapshots(where);
 
         public int CountSnapshot2s(string where = null) => FolioServiceClient.CountSnapshots(where);
 
-        public Snapshot2[] Snapshot2s(out int count, string where = null, string orderBy = null, int? skip = null, int? take = null, bool load = false, bool cache = true)
+        public Snapshot2[] Snapshot2s(out int count, string where = null, string orderBy = null, int? skip = null, int? take = 100, bool load = false, bool cache = true)
         {
             return FolioServiceClient.Snapshots(out count, where, orderBy, skip, take).Select(jo =>
             {
@@ -7532,13 +8928,25 @@ namespace FolioLibrary
                 }
         }
 
+        public void InsertOrUpdate(Snapshot2 snapshot2)
+        {
+            try
+            {
+                Insert(snapshot2);
+            }
+            catch (HttpRequestException e)
+            {
+                if (e.Message.Contains("duplicate key")) Update(snapshot2); else throw;
+            }
+        }
+
         public void DeleteSnapshot2(Guid? id) => FolioServiceClient.DeleteSnapshot(id?.ToString());
 
         public bool AnySource2s(string where = null) => FolioServiceClient.AnySources(where);
 
         public int CountSource2s(string where = null) => FolioServiceClient.CountSources(where);
 
-        public Source2[] Source2s(out int count, string where = null, string orderBy = null, int? skip = null, int? take = null, bool load = false, bool cache = true)
+        public Source2[] Source2s(out int count, string where = null, string orderBy = null, int? skip = null, int? take = 100, bool load = false, bool cache = true)
         {
             return FolioServiceClient.Sources(out count, where, orderBy, skip, take).Select(jo =>
             {
@@ -7595,13 +9003,25 @@ namespace FolioLibrary
                 }
         }
 
+        public void InsertOrUpdate(Source2 source2)
+        {
+            try
+            {
+                Insert(source2);
+            }
+            catch (HttpRequestException e)
+            {
+                if (e.Message.Contains("duplicate key")) Update(source2); else throw;
+            }
+        }
+
         public void DeleteSource2(Guid? id) => FolioServiceClient.DeleteSource(id?.ToString());
 
         public bool AnyStaffSlip2s(string where = null) => FolioServiceClient.AnyStaffSlips(where);
 
         public int CountStaffSlip2s(string where = null) => FolioServiceClient.CountStaffSlips(where);
 
-        public StaffSlip2[] StaffSlip2s(out int count, string where = null, string orderBy = null, int? skip = null, int? take = null, bool load = false, bool cache = true)
+        public StaffSlip2[] StaffSlip2s(out int count, string where = null, string orderBy = null, int? skip = null, int? take = 100, bool load = false, bool cache = true)
         {
             return FolioServiceClient.StaffSlips(out count, where, orderBy, skip, take).Select(jo =>
             {
@@ -7658,13 +9078,25 @@ namespace FolioLibrary
                 }
         }
 
+        public void InsertOrUpdate(StaffSlip2 staffSlip2)
+        {
+            try
+            {
+                Insert(staffSlip2);
+            }
+            catch (HttpRequestException e)
+            {
+                if (e.Message.Contains("duplicate key")) Update(staffSlip2); else throw;
+            }
+        }
+
         public void DeleteStaffSlip2(Guid? id) => FolioServiceClient.DeleteStaffSlip(id?.ToString());
 
         public bool AnyStatisticalCode2s(string where = null) => FolioServiceClient.AnyStatisticalCodes(where);
 
         public int CountStatisticalCode2s(string where = null) => FolioServiceClient.CountStatisticalCodes(where);
 
-        public StatisticalCode2[] StatisticalCode2s(out int count, string where = null, string orderBy = null, int? skip = null, int? take = null, bool load = false, bool cache = true)
+        public StatisticalCode2[] StatisticalCode2s(out int count, string where = null, string orderBy = null, int? skip = null, int? take = 100, bool load = false, bool cache = true)
         {
             return FolioServiceClient.StatisticalCodes(out count, where, orderBy, skip, take).Select(jo =>
             {
@@ -7724,13 +9156,25 @@ namespace FolioLibrary
                 }
         }
 
+        public void InsertOrUpdate(StatisticalCode2 statisticalCode2)
+        {
+            try
+            {
+                Insert(statisticalCode2);
+            }
+            catch (HttpRequestException e)
+            {
+                if (e.Message.Contains("duplicate key")) Update(statisticalCode2); else throw;
+            }
+        }
+
         public void DeleteStatisticalCode2(Guid? id) => FolioServiceClient.DeleteStatisticalCode(id?.ToString());
 
         public bool AnyStatisticalCodeType2s(string where = null) => FolioServiceClient.AnyStatisticalCodeTypes(where);
 
         public int CountStatisticalCodeType2s(string where = null) => FolioServiceClient.CountStatisticalCodeTypes(where);
 
-        public StatisticalCodeType2[] StatisticalCodeType2s(out int count, string where = null, string orderBy = null, int? skip = null, int? take = null, bool load = false, bool cache = true)
+        public StatisticalCodeType2[] StatisticalCodeType2s(out int count, string where = null, string orderBy = null, int? skip = null, int? take = 100, bool load = false, bool cache = true)
         {
             return FolioServiceClient.StatisticalCodeTypes(out count, where, orderBy, skip, take).Select(jo =>
             {
@@ -7787,13 +9231,25 @@ namespace FolioLibrary
                 }
         }
 
+        public void InsertOrUpdate(StatisticalCodeType2 statisticalCodeType2)
+        {
+            try
+            {
+                Insert(statisticalCodeType2);
+            }
+            catch (HttpRequestException e)
+            {
+                if (e.Message.Contains("duplicate key")) Update(statisticalCodeType2); else throw;
+            }
+        }
+
         public void DeleteStatisticalCodeType2(Guid? id) => FolioServiceClient.DeleteStatisticalCodeType(id?.ToString());
 
         public bool AnyStatuses(string where = null) => FolioServiceClient.AnyInstanceStatuses(where);
 
         public int CountStatuses(string where = null) => FolioServiceClient.CountInstanceStatuses(where);
 
-        public Status[] Statuses(out int count, string where = null, string orderBy = null, int? skip = null, int? take = null, bool load = false, bool cache = true)
+        public Status[] Statuses(out int count, string where = null, string orderBy = null, int? skip = null, int? take = 100, bool load = false, bool cache = true)
         {
             return FolioServiceClient.InstanceStatuses(out count, where, orderBy, skip, take).Select(jo =>
             {
@@ -7850,13 +9306,25 @@ namespace FolioLibrary
                 }
         }
 
+        public void InsertOrUpdate(Status status)
+        {
+            try
+            {
+                Insert(status);
+            }
+            catch (HttpRequestException e)
+            {
+                if (e.Message.Contains("duplicate key")) Update(status); else throw;
+            }
+        }
+
         public void DeleteStatus(Guid? id) => FolioServiceClient.DeleteInstanceStatus(id?.ToString());
 
         public bool AnySuffix2s(string where = null) => FolioServiceClient.AnySuffixes(where);
 
         public int CountSuffix2s(string where = null) => FolioServiceClient.CountSuffixes(where);
 
-        public Suffix2[] Suffix2s(out int count, string where = null, string orderBy = null, int? skip = null, int? take = null, bool load = false, bool cache = true)
+        public Suffix2[] Suffix2s(out int count, string where = null, string orderBy = null, int? skip = null, int? take = 100, bool load = false, bool cache = true)
         {
             return FolioServiceClient.Suffixes(out count, where, orderBy, skip, take).Select(jo =>
             {
@@ -7901,13 +9369,25 @@ namespace FolioLibrary
                 }
         }
 
+        public void InsertOrUpdate(Suffix2 suffix2)
+        {
+            try
+            {
+                Insert(suffix2);
+            }
+            catch (HttpRequestException e)
+            {
+                if (e.Message.Contains("duplicate key")) Update(suffix2); else throw;
+            }
+        }
+
         public void DeleteSuffix2(Guid? id) => FolioServiceClient.DeleteSuffix(id?.ToString());
 
         public bool AnyTag2s(string where = null) => FolioServiceClient.AnyTags(where);
 
         public int CountTag2s(string where = null) => FolioServiceClient.CountTags(where);
 
-        public Tag2[] Tag2s(out int count, string where = null, string orderBy = null, int? skip = null, int? take = null, bool load = false, bool cache = true)
+        public Tag2[] Tag2s(out int count, string where = null, string orderBy = null, int? skip = null, int? take = 100, bool load = false, bool cache = true)
         {
             return FolioServiceClient.Tags(out count, where, orderBy, skip, take).Select(jo =>
             {
@@ -7964,13 +9444,25 @@ namespace FolioLibrary
                 }
         }
 
+        public void InsertOrUpdate(Tag2 tag2)
+        {
+            try
+            {
+                Insert(tag2);
+            }
+            catch (HttpRequestException e)
+            {
+                if (e.Message.Contains("duplicate key")) Update(tag2); else throw;
+            }
+        }
+
         public void DeleteTag2(Guid? id) => FolioServiceClient.DeleteTag(id?.ToString());
 
         public bool AnyTemplate2s(string where = null) => FolioServiceClient.AnyTemplates(where);
 
         public int CountTemplate2s(string where = null) => FolioServiceClient.CountTemplates(where);
 
-        public Template2[] Template2s(out int count, string where = null, string orderBy = null, int? skip = null, int? take = null, bool load = false, bool cache = true)
+        public Template2[] Template2s(out int count, string where = null, string orderBy = null, int? skip = null, int? take = 100, bool load = false, bool cache = true)
         {
             return FolioServiceClient.Templates(out count, where, orderBy, skip, take).Select(jo =>
             {
@@ -8034,13 +9526,25 @@ namespace FolioLibrary
                 }
         }
 
+        public void InsertOrUpdate(Template2 template2)
+        {
+            try
+            {
+                Insert(template2);
+            }
+            catch (HttpRequestException e)
+            {
+                if (e.Message.Contains("duplicate key")) Update(template2); else throw;
+            }
+        }
+
         public void DeleteTemplate2(Guid? id) => FolioServiceClient.DeleteTemplate(id?.ToString());
 
         public bool AnyTitle2s(string where = null) => FolioServiceClient.AnyTitles(where);
 
         public int CountTitle2s(string where = null) => FolioServiceClient.CountTitles(where);
 
-        public Title2[] Title2s(out int count, string where = null, string orderBy = null, int? skip = null, int? take = null, bool load = false, bool cache = true)
+        public Title2[] Title2s(out int count, string where = null, string orderBy = null, int? skip = null, int? take = 100, bool load = false, bool cache = true)
         {
             return FolioServiceClient.Titles(out count, where, orderBy, skip, take).Select(jo =>
             {
@@ -8119,13 +9623,25 @@ namespace FolioLibrary
                 }
         }
 
+        public void InsertOrUpdate(Title2 title2)
+        {
+            try
+            {
+                Insert(title2);
+            }
+            catch (HttpRequestException e)
+            {
+                if (e.Message.Contains("duplicate key")) Update(title2); else throw;
+            }
+        }
+
         public void DeleteTitle2(Guid? id) => FolioServiceClient.DeleteTitle(id?.ToString());
 
         public bool AnyTransaction2s(string where = null) => FolioServiceClient.AnyTransactions(where);
 
         public int CountTransaction2s(string where = null) => FolioServiceClient.CountTransactions(where);
 
-        public Transaction2[] Transaction2s(out int count, string where = null, string orderBy = null, int? skip = null, int? take = null, bool load = false, bool cache = true)
+        public Transaction2[] Transaction2s(out int count, string where = null, string orderBy = null, int? skip = null, int? take = 100, bool load = false, bool cache = true)
         {
             return FolioServiceClient.Transactions(out count, where, orderBy, skip, take).Select(jo =>
             {
@@ -8222,13 +9738,25 @@ namespace FolioLibrary
                 }
         }
 
+        public void InsertOrUpdate(Transaction2 transaction2)
+        {
+            try
+            {
+                Insert(transaction2);
+            }
+            catch (HttpRequestException e)
+            {
+                if (e.Message.Contains("duplicate key")) Update(transaction2); else throw;
+            }
+        }
+
         public void DeleteTransaction2(Guid? id) => FolioServiceClient.DeleteTransaction(id?.ToString());
 
         public bool AnyTransferAccount2s(string where = null) => FolioServiceClient.AnyTransferAccounts(where);
 
         public int CountTransferAccount2s(string where = null) => FolioServiceClient.CountTransferAccounts(where);
 
-        public TransferAccount2[] TransferAccount2s(out int count, string where = null, string orderBy = null, int? skip = null, int? take = null, bool load = false, bool cache = true)
+        public TransferAccount2[] TransferAccount2s(out int count, string where = null, string orderBy = null, int? skip = null, int? take = 100, bool load = false, bool cache = true)
         {
             return FolioServiceClient.TransferAccounts(out count, where, orderBy, skip, take).Select(jo =>
             {
@@ -8288,13 +9816,25 @@ namespace FolioLibrary
                 }
         }
 
+        public void InsertOrUpdate(TransferAccount2 transferAccount2)
+        {
+            try
+            {
+                Insert(transferAccount2);
+            }
+            catch (HttpRequestException e)
+            {
+                if (e.Message.Contains("duplicate key")) Update(transferAccount2); else throw;
+            }
+        }
+
         public void DeleteTransferAccount2(Guid? id) => FolioServiceClient.DeleteTransferAccount(id?.ToString());
 
         public bool AnyTransferCriteria2s(string where = null) => FolioServiceClient.AnyTransferCriterias(where);
 
         public int CountTransferCriteria2s(string where = null) => FolioServiceClient.CountTransferCriterias(where);
 
-        public TransferCriteria2[] TransferCriteria2s(out int count, string where = null, string orderBy = null, int? skip = null, int? take = null, bool load = false, bool cache = true)
+        public TransferCriteria2[] TransferCriteria2s(out int count, string where = null, string orderBy = null, int? skip = null, int? take = 100, bool load = false, bool cache = true)
         {
             return FolioServiceClient.TransferCriterias(out count, where, orderBy, skip, take).Select(jo =>
             {
@@ -8339,13 +9879,25 @@ namespace FolioLibrary
                 }
         }
 
+        public void InsertOrUpdate(TransferCriteria2 transferCriteria2)
+        {
+            try
+            {
+                Insert(transferCriteria2);
+            }
+            catch (HttpRequestException e)
+            {
+                if (e.Message.Contains("duplicate key")) Update(transferCriteria2); else throw;
+            }
+        }
+
         public void DeleteTransferCriteria2(Guid? id) => FolioServiceClient.DeleteTransferCriteria(id?.ToString());
 
         public bool AnyUser2s(string where = null) => FolioServiceClient.AnyUsers(where);
 
         public int CountUser2s(string where = null) => FolioServiceClient.CountUsers(where);
 
-        public User2[] User2s(out int count, string where = null, string orderBy = null, int? skip = null, int? take = null, bool load = false, bool cache = true)
+        public User2[] User2s(out int count, string where = null, string orderBy = null, int? skip = null, int? take = 100, bool load = false, bool cache = true)
         {
             return FolioServiceClient.Users(out count, where, orderBy, skip, take).Select(jo =>
             {
@@ -8428,13 +9980,25 @@ namespace FolioLibrary
                 }
         }
 
+        public void InsertOrUpdate(User2 user2)
+        {
+            try
+            {
+                Insert(user2);
+            }
+            catch (HttpRequestException e)
+            {
+                if (e.Message.Contains("duplicate key")) Update(user2); else throw;
+            }
+        }
+
         public void DeleteUser2(Guid? id) => FolioServiceClient.DeleteUser(id?.ToString());
 
         public bool AnyUserAcquisitionsUnit2s(string where = null) => FolioServiceClient.AnyUserAcquisitionsUnits(where);
 
         public int CountUserAcquisitionsUnit2s(string where = null) => FolioServiceClient.CountUserAcquisitionsUnits(where);
 
-        public UserAcquisitionsUnit2[] UserAcquisitionsUnit2s(out int count, string where = null, string orderBy = null, int? skip = null, int? take = null, bool load = false, bool cache = true)
+        public UserAcquisitionsUnit2[] UserAcquisitionsUnit2s(out int count, string where = null, string orderBy = null, int? skip = null, int? take = 100, bool load = false, bool cache = true)
         {
             return FolioServiceClient.UserAcquisitionsUnits(out count, where, orderBy, skip, take).Select(jo =>
             {
@@ -8497,13 +10061,25 @@ namespace FolioLibrary
                 }
         }
 
+        public void InsertOrUpdate(UserAcquisitionsUnit2 userAcquisitionsUnit2)
+        {
+            try
+            {
+                Insert(userAcquisitionsUnit2);
+            }
+            catch (HttpRequestException e)
+            {
+                if (e.Message.Contains("duplicate key")) Update(userAcquisitionsUnit2); else throw;
+            }
+        }
+
         public void DeleteUserAcquisitionsUnit2(Guid? id) => FolioServiceClient.DeleteUserAcquisitionsUnit(id?.ToString());
 
         public bool AnyUserRequestPreference2s(string where = null) => FolioServiceClient.AnyUserRequestPreferences(where);
 
         public int CountUserRequestPreference2s(string where = null) => FolioServiceClient.CountUserRequestPreferences(where);
 
-        public UserRequestPreference2[] UserRequestPreference2s(out int count, string where = null, string orderBy = null, int? skip = null, int? take = null, bool load = false, bool cache = true)
+        public UserRequestPreference2[] UserRequestPreference2s(out int count, string where = null, string orderBy = null, int? skip = null, int? take = 100, bool load = false, bool cache = true)
         {
             return FolioServiceClient.UserRequestPreferences(out count, where, orderBy, skip, take).Select(jo =>
             {
@@ -8569,13 +10145,25 @@ namespace FolioLibrary
                 }
         }
 
+        public void InsertOrUpdate(UserRequestPreference2 userRequestPreference2)
+        {
+            try
+            {
+                Insert(userRequestPreference2);
+            }
+            catch (HttpRequestException e)
+            {
+                if (e.Message.Contains("duplicate key")) Update(userRequestPreference2); else throw;
+            }
+        }
+
         public void DeleteUserRequestPreference2(Guid? id) => FolioServiceClient.DeleteUserRequestPreference(id?.ToString());
 
         public bool AnyVoucher2s(string where = null) => FolioServiceClient.AnyVouchers(where);
 
         public int CountVoucher2s(string where = null) => FolioServiceClient.CountVouchers(where);
 
-        public Voucher2[] Voucher2s(out int count, string where = null, string orderBy = null, int? skip = null, int? take = null, bool load = false, bool cache = true)
+        public Voucher2[] Voucher2s(out int count, string where = null, string orderBy = null, int? skip = null, int? take = 100, bool load = false, bool cache = true)
         {
             return FolioServiceClient.Vouchers(out count, where, orderBy, skip, take).Select(jo =>
             {
@@ -8649,13 +10237,25 @@ namespace FolioLibrary
                 }
         }
 
+        public void InsertOrUpdate(Voucher2 voucher2)
+        {
+            try
+            {
+                Insert(voucher2);
+            }
+            catch (HttpRequestException e)
+            {
+                if (e.Message.Contains("duplicate key")) Update(voucher2); else throw;
+            }
+        }
+
         public void DeleteVoucher2(Guid? id) => FolioServiceClient.DeleteVoucher(id?.ToString());
 
         public bool AnyVoucherItem2s(string where = null) => FolioServiceClient.AnyVoucherItems(where);
 
         public int CountVoucherItem2s(string where = null) => FolioServiceClient.CountVoucherItems(where);
 
-        public VoucherItem2[] VoucherItem2s(out int count, string where = null, string orderBy = null, int? skip = null, int? take = null, bool load = false, bool cache = true)
+        public VoucherItem2[] VoucherItem2s(out int count, string where = null, string orderBy = null, int? skip = null, int? take = 100, bool load = false, bool cache = true)
         {
             return FolioServiceClient.VoucherItems(out count, where, orderBy, skip, take).Select(jo =>
             {
@@ -8736,13 +10336,25 @@ namespace FolioLibrary
                 }
         }
 
+        public void InsertOrUpdate(VoucherItem2 voucherItem2)
+        {
+            try
+            {
+                Insert(voucherItem2);
+            }
+            catch (HttpRequestException e)
+            {
+                if (e.Message.Contains("duplicate key")) Update(voucherItem2); else throw;
+            }
+        }
+
         public void DeleteVoucherItem2(Guid? id) => FolioServiceClient.DeleteVoucherItem(id?.ToString());
 
         public bool AnyWaiveReason2s(string where = null) => FolioServiceClient.AnyWaiveReasons(where);
 
         public int CountWaiveReason2s(string where = null) => FolioServiceClient.CountWaiveReasons(where);
 
-        public WaiveReason2[] WaiveReason2s(out int count, string where = null, string orderBy = null, int? skip = null, int? take = null, bool load = false, bool cache = true)
+        public WaiveReason2[] WaiveReason2s(out int count, string where = null, string orderBy = null, int? skip = null, int? take = 100, bool load = false, bool cache = true)
         {
             return FolioServiceClient.WaiveReasons(out count, where, orderBy, skip, take).Select(jo =>
             {
@@ -8800,6 +10412,18 @@ namespace FolioLibrary
                 {
                     if (e.Message.Contains("NotFound")) Insert(waiveReason2); else throw;
                 }
+        }
+
+        public void InsertOrUpdate(WaiveReason2 waiveReason2)
+        {
+            try
+            {
+                Insert(waiveReason2);
+            }
+            catch (HttpRequestException e)
+            {
+                if (e.Message.Contains("duplicate key")) Update(waiveReason2); else throw;
+            }
         }
 
         public void DeleteWaiveReason2(Guid? id) => FolioServiceClient.DeleteWaiveReason(id?.ToString());

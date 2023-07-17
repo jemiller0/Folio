@@ -66,7 +66,7 @@ namespace FolioLibrary
         [Column("notice_config_recurring_period_duration"), Display(Name = "Notice Config Recurring Period Duration", Order = 13), JsonProperty("noticeConfig.recurringPeriod.duration"), Required]
         public virtual int? NoticeConfigRecurringPeriodDuration { get; set; }
 
-        [Column("notice_config_recurring_period_interval_id"), Display(Name = "Notice Config Recurring Period Interval", Order = 14), JsonProperty("noticeConfig.recurringPeriod.intervalId"), RegularExpression(@"^(Minutes|Hours|Days|Weeks|Months|Years)$"), Required, StringLength(1024)]
+        [Column("notice_config_recurring_period_interval_id"), Display(Name = "Notice Config Recurring Period Interval", Order = 14), JsonProperty("noticeConfig.recurringPeriod.intervalId"), RegularExpression(@"^(Minutes|Hours|Days|Weeks|Months)$"), Required, StringLength(1024)]
         public virtual string NoticeConfigRecurringPeriodInterval { get; set; }
 
         [Display(Name = "Notice Config Template", Order = 15)]
