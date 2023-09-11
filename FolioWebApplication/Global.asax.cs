@@ -119,7 +119,7 @@ namespace FolioWebApplication
                             || userName == "t-9wsch1"
                             )
                         {
-                            SetAgreementsPermissions("View");
+                            //SetAgreementsPermissions("View");
                             SetCirculationPermissions("View");
                             SetConfigurationPermissions("View");
                             SetFeesPermissions("View");
@@ -145,9 +145,11 @@ namespace FolioWebApplication
                             || hs.Contains("department:Law Cataloging")
                             || hs.Contains("department:Law Library Administration")
                             || hs.Contains("department:Scrc-Pres")
+                            || hs.Contains("department:Scrc-Reader Services")
                             || hs.Contains("department:Area Studies - East Asia")
                             || hs.Contains("department:Law Acquisitions & Erm")
                             || hs.Contains("department:E-Resources Management")
+                            || hs.Contains("department:Preservation Management")
                             || userName == "burnstein"
                             )
                         {
@@ -214,6 +216,28 @@ namespace FolioWebApplication
         protected void Session_End(object sender, EventArgs e) { }
 
         protected void Application_End(object sender, EventArgs e) { }
+
+        private static Dictionary<GridKnownFunction, string> ermFormats = new Dictionary<GridKnownFunction, string>
+        {
+            { GridKnownFunction.Between, "{0} within \"{1}\"" },
+            { GridKnownFunction.Contains, "{0} == \"*{1}*\"" },
+            { GridKnownFunction.Custom, "" },
+            { GridKnownFunction.DoesNotContain, "{0} <> \"*{1}*\"" },
+            { GridKnownFunction.EndsWith, "{0} == \"*{1}\"" },
+            { GridKnownFunction.EqualTo, "{0} == \"{1}\"" },
+            { GridKnownFunction.GreaterThan, "{0} > \"{1}\"" },
+            { GridKnownFunction.GreaterThanOrEqualTo, "{0} >= \"{1}\"" },
+            { GridKnownFunction.IsEmpty, "{0} == \"\"" },
+            { GridKnownFunction.IsNull, "(cql.allRecords=1 not {0} = \"\")" },
+            { GridKnownFunction.LessThan, "{0} < \"{1}\"" },
+            { GridKnownFunction.LessThanOrEqualTo, "{0} <= \"{1}\"" },
+            { GridKnownFunction.NoFilter, "" },
+            { GridKnownFunction.NotBetween, "{0} within \"{1}\"" },
+            { GridKnownFunction.NotEqualTo, "{0} <> \"{1}\"" },
+            { GridKnownFunction.NotIsEmpty, "({0} = \"\" not {0} == \"\")" },
+            { GridKnownFunction.NotIsNull, "{0} = \"\"" },
+            { GridKnownFunction.StartsWith, "{0} == \"{1}*\"" }
+        };
 
         private static Dictionary<GridKnownFunction, string> formats = new Dictionary<GridKnownFunction, string>
         {

@@ -1883,6 +1883,27 @@ namespace FolioWebApplicationTest
         }
 
         [TestMethod]
+        public void ReferenceData2sDefaultAspxTest()
+        {
+            var s = Stopwatch.StartNew();
+            try
+            {
+                var hrm = httpClient.GetAsync($"{Url}/ReferenceData2s/Default.aspx").Result;
+                hrm.EnsureSuccessStatusCode();
+                Assert.IsTrue(s.Elapsed < TimeSpan.FromSeconds(30));
+            }
+            catch (Exception e)
+            {
+                traceSource.TraceEvent(TraceEventType.Error, 0, e.ToString());
+                throw;
+            }
+            finally
+            {
+                traceSource.TraceEvent(TraceEventType.Information, 0, $"ReferenceData2sDefaultAspxTest()\r\n    ElapsedTime={s.Elapsed}");
+            }
+        }
+
+        [TestMethod]
         public void RefundReason2sDefaultAspxTest()
         {
             var s = Stopwatch.StartNew();

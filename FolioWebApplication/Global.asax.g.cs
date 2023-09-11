@@ -41,6 +41,8 @@ namespace FolioWebApplication
         {
             Session["Agreement2sPermission"] = roles.Contains("all") || roles.Contains("uc.agreements.view") ? "View" : null;
             Session["AgreementItem2sPermission"] = roles.Contains("all") || roles.Contains("uc.agreementitems.view") ? "View" : null;
+            Session["AgreementOrganizationsPermission"] = roles.Contains("all") || roles.Contains("uc.agreementorganizations.view") ? "View" : null;
+            Session["ReferenceData2sPermission"] = roles.Contains("all") || roles.Contains("uc.referencedatas.view") ? "View" : null;
         }
 
         private void SetCirculationPermissions(HashSet<string> roles)
@@ -395,6 +397,8 @@ namespace FolioWebApplication
         {
             Session["Agreement2sPermission"] = permission;
             Session["AgreementItem2sPermission"] = permission;
+            Session["AgreementOrganizationsPermission"] = permission;
+            Session["ReferenceData2sPermission"] = permission;
         }
 
         private void SetCirculationPermissions(string permission = null)

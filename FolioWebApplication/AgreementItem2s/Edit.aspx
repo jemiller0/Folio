@@ -17,28 +17,28 @@
                                     <asp:HyperLink ID="IdHyperLink" runat="server" Text='<%# Eval("Id") %>' NavigateUrl='<%# $"Edit.aspx?Id={Eval("Id")}" %>' />
                                 </td>
                             </tr>
-                            <tr runat="server" visible='<%# Eval("DateCreated") != null %>'>
+                            <tr runat="server" visible='<%# Eval("CreationTime") != null %>'>
                                 <td>
-                                    <asp:Label ID="DateCreatedLabel" runat="server" Text="Date Created:" AssociatedControlID="DateCreatedLiteral" />
+                                    <asp:Label ID="CreationTimeLabel" runat="server" Text="Creation Time:" AssociatedControlID="CreationTimeLiteral" />
                                 </td>
                                 <td>
-                                    <asp:Literal ID="DateCreatedLiteral" runat="server" Text='<%# Eval("DateCreated", "{0:d}") %>' />
-                                </td>
-                            </tr>
-                            <tr runat="server" visible='<%# Eval("LastUpdated") != null %>'>
-                                <td>
-                                    <asp:Label ID="LastUpdatedLabel" runat="server" Text="Last Updated:" AssociatedControlID="LastUpdatedLiteral" />
-                                </td>
-                                <td>
-                                    <asp:Literal ID="LastUpdatedLiteral" runat="server" Text='<%# Eval("LastUpdated", "{0:g}") %>' />
+                                    <asp:Literal ID="CreationTimeLiteral" runat="server" Text='<%# Eval("CreationTime", "{0:g}") %>' />
                                 </td>
                             </tr>
-                            <tr runat="server" visible='<%# Eval("AgreementId") != null %>'>
+                            <tr runat="server" visible='<%# Eval("LastWriteTime") != null %>'>
                                 <td>
-                                    <asp:Label ID="AgreementIdLabel" runat="server" Text="Agreement Id:" AssociatedControlID="AgreementIdLiteral" />
+                                    <asp:Label ID="LastWriteTimeLabel" runat="server" Text="Last Write Time:" AssociatedControlID="LastWriteTimeLiteral" />
                                 </td>
                                 <td>
-                                    <asp:Literal ID="AgreementIdLiteral" runat="server" Text='<%#: Eval("AgreementId") %>' />
+                                    <asp:Literal ID="LastWriteTimeLiteral" runat="server" Text='<%# Eval("LastWriteTime", "{0:g}") %>' />
+                                </td>
+                            </tr>
+                            <tr runat="server" visible='<%# Eval("Agreement") != null %>'>
+                                <td>
+                                    <asp:Label ID="AgreementLabel" runat="server" Text="Agreement:" AssociatedControlID="AgreementHyperLink" />
+                                </td>
+                                <td>
+                                    <asp:HyperLink ID="AgreementHyperLink" runat="server" Text='<%#: Eval("Agreement.Name") %>' NavigateUrl='<%# $"~/Agreement2s/Edit.aspx?Id={Eval("AgreementId")}" %>' Enabled='<%# Session["Agreement2sPermission"] != null %>' />
                                 </td>
                             </tr>
                             <tr runat="server" visible='<%# Eval("Content") != null %>'>

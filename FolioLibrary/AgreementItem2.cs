@@ -30,33 +30,36 @@ namespace FolioLibrary
         [Column("id"), Display(Order = 1), Editable(false), JsonProperty("id")]
         public virtual Guid? Id { get; set; }
 
-        [Column("date_created"), DataType(DataType.Date), Display(Name = "Date Created", Order = 2), DisplayFormat(DataFormatString = "{0:d}", ApplyFormatInEditMode = true), JsonProperty("dateCreated")]
-        public virtual DateTime? DateCreated { get; set; }
+        [Column("date_created"), DataType(DataType.DateTime), Display(Name = "Creation Time", Order = 2), DisplayFormat(DataFormatString = "{0:g}"), Editable(false), JsonProperty("dateCreated")]
+        public virtual DateTime? CreationTime { get; set; }
 
-        [Column("last_updated"), Display(Name = "Last Updated", Order = 3), DisplayFormat(DataFormatString = "{0:g}", ApplyFormatInEditMode = true), JsonProperty("lastUpdated")]
-        public virtual DateTime? LastUpdated { get; set; }
+        [Column("last_updated"), DataType(DataType.DateTime), Display(Name = "Last Write Time", Order = 3), DisplayFormat(DataFormatString = "{0:g}"), Editable(false), JsonProperty("lastUpdated")]
+        public virtual DateTime? LastWriteTime { get; set; }
 
-        [Column("agreement_id"), Display(Name = "Agreement Id", Order = 4), JsonProperty("owner.id")]
+        [Display(Order = 4)]
+        public virtual Agreement2 Agreement { get; set; }
+
+        [Column("agreement_id"), Display(Name = "Agreement", Order = 5), JsonProperty("owner.id")]
         public virtual Guid? AgreementId { get; set; }
 
-        [Column("content"), CustomValidation(typeof(AgreementItem), nameof(ValidateContent)), DataType(DataType.MultilineText), Display(Order = 5), Editable(false)]
+        [Column("content"), CustomValidation(typeof(AgreementItem), nameof(ValidateContent)), DataType(DataType.MultilineText), Display(Order = 6), Editable(false)]
         public virtual string Content { get; set; }
 
-        public override string ToString() => $"{{ {nameof(Id)} = {Id}, {nameof(DateCreated)} = {DateCreated}, {nameof(LastUpdated)} = {LastUpdated}, {nameof(AgreementId)} = {AgreementId}, {nameof(Content)} = {Content} }}";
+        public override string ToString() => $"{{ {nameof(Id)} = {Id}, {nameof(CreationTime)} = {CreationTime}, {nameof(LastWriteTime)} = {LastWriteTime}, {nameof(AgreementId)} = {AgreementId}, {nameof(Content)} = {Content} }}";
 
         public static AgreementItem2 FromJObject(JObject jObject) => jObject != null ? new AgreementItem2
         {
             Id = (Guid?)jObject.SelectToken("id"),
-            DateCreated = ((DateTime?)jObject.SelectToken("dateCreated"))?.ToUniversalTime(),
-            LastUpdated = (DateTime?)jObject.SelectToken("lastUpdated"),
+            CreationTime = (DateTime?)jObject.SelectToken("dateCreated"),
+            LastWriteTime = (DateTime?)jObject.SelectToken("lastUpdated"),
             AgreementId = (Guid?)jObject.SelectToken("owner.id"),
             Content = JsonConvert.SerializeObject(jObject, FolioDapperContext.UniversalTimeJsonSerializationSettings)
         } : null;
 
         public JObject ToJObject() => new JObject(
             new JProperty("id", Id),
-            new JProperty("dateCreated", DateCreated?.ToLocalTime()),
-            new JProperty("lastUpdated", LastUpdated?.ToLocalTime()),
+            new JProperty("dateCreated", CreationTime?.ToLocalTime()),
+            new JProperty("lastUpdated", LastWriteTime?.ToLocalTime()),
             new JProperty("owner", new JObject(
                 new JProperty("id", AgreementId)))).RemoveNullAndEmptyProperties();
     }

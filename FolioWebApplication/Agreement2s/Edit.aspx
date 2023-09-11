@@ -25,14 +25,6 @@
                                     <asp:Literal ID="NameLiteral" runat="server" Text='<%#: Eval("Name") %>' />
                                 </td>
                             </tr>
-                            <tr runat="server" visible='<%# Eval("Description") != null %>'>
-                                <td>
-                                    <asp:Label ID="DescriptionLabel" runat="server" Text="Description:" AssociatedControlID="DescriptionLiteral" />
-                                </td>
-                                <td>
-                                    <asp:Literal ID="DescriptionLiteral" runat="server" Text='<%#: Eval("Description") %>' />
-                                </td>
-                            </tr>
                             <tr runat="server" visible='<%# Eval("StartDate") != null %>'>
                                 <td>
                                     <asp:Label ID="StartDateLabel" runat="server" Text="Start Date:" AssociatedControlID="StartDateLiteral" />
@@ -49,28 +41,52 @@
                                     <asp:Literal ID="EndDateLiteral" runat="server" Text='<%# Eval("EndDate", "{0:d}") %>' />
                                 </td>
                             </tr>
-                            <tr runat="server" visible='<%# Eval("CancellationDeadline") != null %>'>
+                            <tr runat="server" visible='<%# Eval("CancellationDeadlineDate") != null %>'>
                                 <td>
-                                    <asp:Label ID="CancellationDeadlineLabel" runat="server" Text="Cancellation Deadline:" AssociatedControlID="CancellationDeadlineLiteral" />
+                                    <asp:Label ID="CancellationDeadlineDateLabel" runat="server" Text="Cancellation Deadline Date:" AssociatedControlID="CancellationDeadlineDateLiteral" />
                                 </td>
                                 <td>
-                                    <asp:Literal ID="CancellationDeadlineLiteral" runat="server" Text='<%# Eval("CancellationDeadline", "{0:g}") %>' />
-                                </td>
-                            </tr>
-                            <tr runat="server" visible='<%# Eval("DateCreated") != null %>'>
-                                <td>
-                                    <asp:Label ID="DateCreatedLabel" runat="server" Text="Date Created:" AssociatedControlID="DateCreatedLiteral" />
-                                </td>
-                                <td>
-                                    <asp:Literal ID="DateCreatedLiteral" runat="server" Text='<%# Eval("DateCreated", "{0:d}") %>' />
+                                    <asp:Literal ID="CancellationDeadlineDateLiteral" runat="server" Text='<%# Eval("CancellationDeadlineDate", "{0:d}") %>' />
                                 </td>
                             </tr>
-                            <tr runat="server" visible='<%# Eval("LastUpdated") != null %>'>
+                            <tr runat="server" visible='<%# Eval("Status") != null %>'>
                                 <td>
-                                    <asp:Label ID="LastUpdatedLabel" runat="server" Text="Last Updated:" AssociatedControlID="LastUpdatedLiteral" />
+                                    <asp:Label ID="StatusLabel" runat="server" Text="Status:" AssociatedControlID="StatusLiteral" />
                                 </td>
                                 <td>
-                                    <asp:Literal ID="LastUpdatedLiteral" runat="server" Text='<%# Eval("LastUpdated", "{0:g}") %>' />
+                                    <asp:Literal ID="StatusLiteral" runat="server" Text='<%#: Eval("Status") %>' />
+                                </td>
+                            </tr>
+                            <tr runat="server" visible='<%# Eval("IsPerpetual") != null %>'>
+                                <td>
+                                    <asp:Label ID="IsPerpetualLabel" runat="server" Text="Is Perpetual:" AssociatedControlID="IsPerpetualLiteral" />
+                                </td>
+                                <td>
+                                    <asp:Literal ID="IsPerpetualLiteral" runat="server" Text='<%#: Eval("IsPerpetual") %>' />
+                                </td>
+                            </tr>
+                            <tr runat="server" visible='<%# Eval("Description") != null %>'>
+                                <td>
+                                    <asp:Label ID="DescriptionLabel" runat="server" Text="Description:" AssociatedControlID="DescriptionLiteral" />
+                                </td>
+                                <td>
+                                    <asp:Literal ID="DescriptionLiteral" runat="server" Text='<%#: Eval("Description") %>' />
+                                </td>
+                            </tr>
+                            <tr runat="server" visible='<%# Eval("CreationTime") != null %>'>
+                                <td>
+                                    <asp:Label ID="CreationTimeLabel" runat="server" Text="Creation Time:" AssociatedControlID="CreationTimeLiteral" />
+                                </td>
+                                <td>
+                                    <asp:Literal ID="CreationTimeLiteral" runat="server" Text='<%# Eval("CreationTime", "{0:g}") %>' />
+                                </td>
+                            </tr>
+                            <tr runat="server" visible='<%# Eval("LastWriteTime") != null %>'>
+                                <td>
+                                    <asp:Label ID="LastWriteTimeLabel" runat="server" Text="Last Write Time:" AssociatedControlID="LastWriteTimeLiteral" />
+                                </td>
+                                <td>
+                                    <asp:Literal ID="LastWriteTimeLiteral" runat="server" Text='<%# Eval("LastWriteTime", "{0:g}") %>' />
                                 </td>
                             </tr>
                             <tr runat="server" visible='<%# Eval("Content") != null %>'>
@@ -85,6 +101,51 @@
                     </asp:Panel>
                 </ItemTemplate>
             </asp:FormView>
+        </fieldset>
+    </asp:Panel>
+    <asp:Panel ID="AgreementItem2sPanel" runat="server" Visible='<%# (string)Session["AgreementItem2sPermission"] != null && Agreement2FormView.DataKey.Value != null %>'>
+        <fieldset>
+            <legend>
+                <asp:HyperLink ID="AgreementItem2sHyperLink" runat="server" Text="Agreement Items" NavigateUrl="~/AgreementItem2s/Default.aspx" /></legend>
+            <telerik:RadGrid ID="AgreementItem2sRadGrid" runat="server" AutoGenerateColumns="false" AllowSorting="true" AllowFilteringByColumn="false" GroupingSettings-CaseSensitive="false" AllowPaging="true" AllowCustomPaging="true" PageSize="10" EnableLinqExpressions="false" OnNeedDataSource="AgreementItem2sRadGrid_NeedDataSource">
+                <MasterTableView DataKeyNames="Id" PagerStyle-Mode="NextPrevNumericAndAdvanced" NoMasterRecordsText="No agreement items found">
+                    <SortExpressions>
+                        <telerik:GridSortExpression FieldName="LastWriteTime" SortOrder="Descending" />
+                    </SortExpressions>
+                    <Columns>
+                        <telerik:GridTemplateColumn AllowFiltering="false" ItemStyle-Width="0px">
+                            <ItemTemplate>
+                                <asp:HyperLink ID="ViewHyperLink" Text="View" NavigateUrl='<%# $"~/AgreementItem2s/Edit.aspx?Id={Eval("Id")}" %>' runat="server" />
+                            </ItemTemplate>
+                        </telerik:GridTemplateColumn>
+                        <telerik:GridTemplateColumn HeaderText="Id" DataField="Id" SortExpression="Id" AutoPostBackOnFilter="true" CurrentFilterFunction="EqualTo">
+                            <ItemTemplate>
+                                <asp:HyperLink ID="IdHyperLink" runat="server" Text='<%# Eval("Id") ?? "&nbsp;" %>' NavigateUrl='<%# $"~/AgreementItem2s/Edit.aspx?Id={Eval("Id")}" %>' />
+                            </ItemTemplate>
+                        </telerik:GridTemplateColumn>
+                        <telerik:GridBoundColumn HeaderText="Creation Time" DataField="CreationTime" AutoPostBackOnFilter="true" DataFormatString="{0:g}" />
+                        <telerik:GridBoundColumn HeaderText="Last Write Time" DataField="LastWriteTime" AutoPostBackOnFilter="true" DataFormatString="{0:g}" />
+                    </Columns>
+                </MasterTableView>
+            </telerik:RadGrid>
+        </fieldset>
+    </asp:Panel>
+    <asp:Panel ID="AgreementOrganizationsPanel" runat="server" Visible='<%# (string)Session["AgreementOrganizationsPermission"] != null && Agreement2FormView.DataKey.Value != null %>'>
+        <fieldset>
+            <legend>
+                <asp:HyperLink ID="AgreementOrganizationsHyperLink" runat="server" Text="Agreement Organizations" NavigateUrl="~/AgreementOrganizations/Default.aspx" Enabled="false" /></legend>
+            <telerik:RadGrid ID="AgreementOrganizationsRadGrid" runat="server" AutoGenerateColumns="false" AllowSorting="true" AllowFilteringByColumn="false" GroupingSettings-CaseSensitive="false" AllowPaging="true" PageSize="10" EnableLinqExpressions="false" OnNeedDataSource="AgreementOrganizationsRadGrid_NeedDataSource">
+                <MasterTableView DataKeyNames="Id" PagerStyle-Mode="NextPrevNumericAndAdvanced" NoMasterRecordsText="No agreement organizations found">
+                    <Columns>
+                        <telerik:GridBoundColumn HeaderText="Primary Org" DataField="PrimaryOrg" AutoPostBackOnFilter="true" />
+                        <telerik:GridTemplateColumn HeaderText="Organization" DataField="Organization.Name" AllowSorting="false" AutoPostBackOnFilter="true" CurrentFilterFunction="StartsWith">
+                            <ItemTemplate>
+                                <asp:HyperLink ID="OrganizationHyperLink" runat="server" Text='<%#: Eval("Organization.Name") %>' NavigateUrl='<%# $"~/Organization2s/Edit.aspx?Id={Eval("OrganizationId")}" %>' Enabled='<%# Session["Organization2sPermission"] != null %>' />
+                            </ItemTemplate>
+                        </telerik:GridTemplateColumn>
+                    </Columns>
+                </MasterTableView>
+            </telerik:RadGrid>
         </fieldset>
     </asp:Panel>
     <asp:Panel ID="OrderItem2sPanel" runat="server" Visible='<%# (string)Session["OrderItem2sPermission"] != null && Agreement2FormView.DataKey.Value != null %>'>
@@ -230,6 +291,16 @@
     </asp:Panel>
     <telerik:RadAjaxManager ID="RadAjaxManager1" runat="server">
         <AjaxSettings>
+            <telerik:AjaxSetting AjaxControlID="AgreementItem2sRadGrid">
+                <UpdatedControls>
+                    <telerik:AjaxUpdatedControl ControlID="AgreementItem2sPanel" LoadingPanelID="RadAjaxLoadingPanel1" />
+                </UpdatedControls>
+            </telerik:AjaxSetting>
+            <telerik:AjaxSetting AjaxControlID="AgreementOrganizationsRadGrid">
+                <UpdatedControls>
+                    <telerik:AjaxUpdatedControl ControlID="AgreementOrganizationsPanel" LoadingPanelID="RadAjaxLoadingPanel1" />
+                </UpdatedControls>
+            </telerik:AjaxSetting>
             <telerik:AjaxSetting AjaxControlID="OrderItem2sRadGrid">
                 <UpdatedControls>
                     <telerik:AjaxUpdatedControl ControlID="OrderItem2sPanel" LoadingPanelID="RadAjaxLoadingPanel1" />

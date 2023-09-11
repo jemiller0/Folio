@@ -312,6 +312,7 @@ namespace FolioLibrary
             {
                 var id = Guid.Parse((string)jo["id"]);
                 var ai2 = cache ? (AgreementItem2)(objects.ContainsKey(id) ? objects[id] : objects[id] = AgreementItem2.FromJObject(jo)) : AgreementItem2.FromJObject(jo);
+                if (load && ai2.AgreementId != null) ai2.Agreement = FindAgreement2(ai2.AgreementId, cache: cache);
                 return ai2;
             }).ToArray();
         }
@@ -322,11 +323,19 @@ namespace FolioLibrary
             {
                 var id = Guid.Parse((string)jo["id"]);
                 var ai2 = cache ? (AgreementItem2)(objects.ContainsKey(id) ? objects[id] : objects[id] = AgreementItem2.FromJObject(jo)) : AgreementItem2.FromJObject(jo);
+                if (load && ai2.AgreementId != null) ai2.Agreement = FindAgreement2(ai2.AgreementId, cache: cache);
                 yield return ai2;
             }
         }
 
-        public AgreementItem2 FindAgreementItem2(Guid? id, bool load = false, bool cache = true) => AgreementItem2.FromJObject(FolioServiceClient.GetAgreementItem(id?.ToString()));
+        public AgreementItem2 FindAgreementItem2(Guid? id, bool load = false, bool cache = true)
+        {
+            if (id == null) return null;
+            var ai2 = cache ? (AgreementItem2)(objects.ContainsKey(id.Value) ? objects[id.Value] : objects[id.Value] = AgreementItem2.FromJObject(FolioServiceClient.GetAgreementItem(id?.ToString()))) : AgreementItem2.FromJObject(FolioServiceClient.GetAgreementItem(id?.ToString()));
+            if (ai2 == null) return null;
+            if (load && ai2.AgreementId != null) ai2.Agreement = FindAgreement2(ai2.AgreementId, cache: cache);
+            return ai2;
+        }
 
         public void Insert(AgreementItem2 agreementItem2)
         {
@@ -8036,6 +8045,69 @@ namespace FolioLibrary
         }
 
         public void DeleteRecord2(Guid? id) => FolioServiceClient.DeleteRecord(id?.ToString());
+
+        public bool AnyReferenceData2s(string where = null) => FolioServiceClient.AnyReferenceDatas(where);
+
+        public int CountReferenceData2s(string where = null) => FolioServiceClient.CountReferenceDatas(where);
+
+        public ReferenceData2[] ReferenceData2s(out int count, string where = null, string orderBy = null, int? skip = null, int? take = 100, bool load = false, bool cache = true)
+        {
+            return FolioServiceClient.ReferenceDatas(out count, where, orderBy, skip, take).Select(jo =>
+            {
+                var id = Guid.Parse((string)jo["id"]);
+                var rd2 = cache ? (ReferenceData2)(objects.ContainsKey(id) ? objects[id] : objects[id] = ReferenceData2.FromJObject(jo)) : ReferenceData2.FromJObject(jo);
+                return rd2;
+            }).ToArray();
+        }
+
+        public IEnumerable<ReferenceData2> ReferenceData2s(string where = null, string orderBy = null, int? skip = null, int? take = null, bool load = false, bool cache = true)
+        {
+            foreach (var jo in FolioServiceClient.ReferenceDatas(where, orderBy, skip, take))
+            {
+                var id = Guid.Parse((string)jo["id"]);
+                var rd2 = cache ? (ReferenceData2)(objects.ContainsKey(id) ? objects[id] : objects[id] = ReferenceData2.FromJObject(jo)) : ReferenceData2.FromJObject(jo);
+                yield return rd2;
+            }
+        }
+
+        public ReferenceData2 FindReferenceData2(Guid? id, bool load = false, bool cache = true) => ReferenceData2.FromJObject(FolioServiceClient.GetReferenceData(id?.ToString()));
+
+        public void Insert(ReferenceData2 referenceData2)
+        {
+            if (referenceData2.Id == null) referenceData2.Id = Guid.NewGuid();
+            FolioServiceClient.InsertReferenceData(referenceData2.ToJObject());
+        }
+
+        public void Update(ReferenceData2 referenceData2) => FolioServiceClient.UpdateReferenceData(referenceData2.ToJObject());
+
+        public void UpdateOrInsert(ReferenceData2 referenceData2)
+        {
+            if (referenceData2.Id == null)
+                Insert(referenceData2);
+            else
+                try
+                {
+                    Update(referenceData2);
+                }
+                catch (HttpRequestException e)
+                {
+                    if (e.Message.Contains("NotFound")) Insert(referenceData2); else throw;
+                }
+        }
+
+        public void InsertOrUpdate(ReferenceData2 referenceData2)
+        {
+            try
+            {
+                Insert(referenceData2);
+            }
+            catch (HttpRequestException e)
+            {
+                if (e.Message.Contains("duplicate key")) Update(referenceData2); else throw;
+            }
+        }
+
+        public void DeleteReferenceData2(Guid? id) => FolioServiceClient.DeleteReferenceData(id?.ToString());
 
         public bool AnyRefundReason2s(string where = null) => FolioServiceClient.AnyRefundReasons(where);
 

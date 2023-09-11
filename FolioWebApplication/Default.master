@@ -37,10 +37,11 @@
         <div id="MenuDiv">
             <telerik:RadMenu ID="RadMenu2" runat="server" Width="100%">
                 <Items>
-                    <telerik:RadMenuItem Text="Agreements" Visible='<%# Session["Agreement2sPermission"] != null || Session["AgreementItem2sPermission"] != null %>'>
+                    <telerik:RadMenuItem Text="Agreements" Visible='<%# Session["Agreement2sPermission"] != null || Session["AgreementItem2sPermission"] != null || Session["ReferenceData2sPermission"] != null %>'>
                         <Items>
                             <telerik:RadMenuItem Text="Agreement Items" NavigateUrl="~/AgreementItem2s/Default.aspx" Visible='<%# Session["AgreementItem2sPermission"] != null %>' />
                             <telerik:RadMenuItem Text="Agreements" NavigateUrl="~/Agreement2s/Default.aspx" Visible='<%# Session["Agreement2sPermission"] != null %>' />
+                            <telerik:RadMenuItem Text="Reference Datas" NavigateUrl="~/ReferenceData2s/Default.aspx" Visible='<%# Session["ReferenceData2sPermission"] != null %>' />
                         </Items>
                     </telerik:RadMenuItem>
                     <telerik:RadMenuItem Text="Circulation" Visible='<%# Session["CancellationReason2sPermission"] != null || Session["CheckIn2sPermission"] != null || Session["FixedDueDateSchedule2sPermission"] != null || Session["Loan2sPermission"] != null || Session["LoanPolicy2sPermission"] != null || Session["PatronActionSession2sPermission"] != null || Session["PatronNoticePolicy2sPermission"] != null || Session["Request2sPermission"] != null || Session["RequestPolicy2sPermission"] != null || Session["ScheduledNotice2sPermission"] != null || Session["StaffSlip2sPermission"] != null || Session["UserRequestPreference2sPermission"] != null %>'>

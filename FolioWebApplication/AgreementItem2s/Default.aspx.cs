@@ -24,13 +24,13 @@ namespace FolioWebApplication.AgreementItem2s
 
         protected void AgreementItem2sRadGrid_NeedDataSource(object sender, GridNeedDataSourceEventArgs e)
         {
-            var d = new Dictionary<string, string>() { { "Id", "id" }, { "DateCreated", "dateCreated" }, { "LastUpdated", "lastUpdated" }, { "AgreementId", "owner.id" } };
+            var d = new Dictionary<string, string>() { { "Id", "id" }, { "CreationTime", "dateCreated" }, { "LastWriteTime", "lastUpdated" }, { "AgreementId", "owner.id" } };
             var where = Global.Trim(string.Join(" and ", new string[]
             {
                 Global.GetCqlFilter(AgreementItem2sRadGrid, "Id", "id"),
-                Global.GetCqlFilter(AgreementItem2sRadGrid, "DateCreated", "dateCreated"),
-                Global.GetCqlFilter(AgreementItem2sRadGrid, "LastUpdated", "lastUpdated"),
-                Global.GetCqlFilter(AgreementItem2sRadGrid, "AgreementId", "owner.id")
+                Global.GetCqlFilter(AgreementItem2sRadGrid, "CreationTime", "dateCreated"),
+                Global.GetCqlFilter(AgreementItem2sRadGrid, "LastWriteTime", "lastUpdated"),
+                Global.GetCqlFilter(AgreementItem2sRadGrid, "Agreement.Name", "owner.id", "name", folioServiceContext.FolioServiceClient.Agreements)
             }.Where(s => s != null)));
             AgreementItem2sRadGrid.DataSource = folioServiceContext.AgreementItem2s(out var i, where, AgreementItem2sRadGrid.MasterTableView.SortExpressions.Count > 0 ? $"{d[AgreementItem2sRadGrid.MasterTableView.SortExpressions[0].FieldName]}{(AgreementItem2sRadGrid.MasterTableView.SortExpressions[0].SortOrder == GridSortOrder.Descending ? "/sort.descending" : "")}" : null, AgreementItem2sRadGrid.PageSize * AgreementItem2sRadGrid.CurrentPageIndex, AgreementItem2sRadGrid.PageSize, true);
             AgreementItem2sRadGrid.VirtualItemCount = i;
@@ -45,17 +45,17 @@ namespace FolioWebApplication.AgreementItem2s
             Response.Charset = "utf-8";
             Response.AppendHeader("Content-Disposition", "attachment; filename=\"AgreementItem2s.txt\"");
             Response.BufferOutput = false;
-            Response.Write("Id\tDateCreated\tLastUpdated\tAgreementId\r\n");
-            var d = new Dictionary<string, string>() { { "Id", "id" }, { "DateCreated", "dateCreated" }, { "LastUpdated", "lastUpdated" }, { "AgreementId", "owner.id" } };
+            Response.Write("Id\tCreationTime\tLastWriteTime\tAgreement\tAgreementId\r\n");
+            var d = new Dictionary<string, string>() { { "Id", "id" }, { "CreationTime", "dateCreated" }, { "LastWriteTime", "lastUpdated" }, { "AgreementId", "owner.id" } };
             var where = Global.Trim(string.Join(" and ", new string[]
             {
                 Global.GetCqlFilter(AgreementItem2sRadGrid, "Id", "id"),
-                Global.GetCqlFilter(AgreementItem2sRadGrid, "DateCreated", "dateCreated"),
-                Global.GetCqlFilter(AgreementItem2sRadGrid, "LastUpdated", "lastUpdated"),
-                Global.GetCqlFilter(AgreementItem2sRadGrid, "AgreementId", "owner.id")
+                Global.GetCqlFilter(AgreementItem2sRadGrid, "CreationTime", "dateCreated"),
+                Global.GetCqlFilter(AgreementItem2sRadGrid, "LastWriteTime", "lastUpdated"),
+                Global.GetCqlFilter(AgreementItem2sRadGrid, "Agreement.Name", "owner.id", "name", folioServiceContext.FolioServiceClient.Agreements)
             }.Where(s => s != null)));
             foreach (var ai2 in folioServiceContext.AgreementItem2s(where, AgreementItem2sRadGrid.MasterTableView.SortExpressions.Count > 0 ? $"{d[AgreementItem2sRadGrid.MasterTableView.SortExpressions[0].FieldName]}{(AgreementItem2sRadGrid.MasterTableView.SortExpressions[0].SortOrder == GridSortOrder.Descending ? "/sort.descending" : "")}" : null, load: true))
-                Response.Write($"{ai2.Id}\t{ai2.DateCreated:M/d/yyyy}\t{ai2.LastUpdated:M/d/yyyy}\t{ai2.AgreementId}\r\n");
+                Response.Write($"{ai2.Id}\t{ai2.CreationTime:M/d/yyyy HH:mm:ss}\t{ai2.LastWriteTime:M/d/yyyy HH:mm:ss}\t{Global.TextEncode(ai2.Agreement?.Name)}\t{ai2.AgreementId}\r\n");
             Response.End();
         }
 

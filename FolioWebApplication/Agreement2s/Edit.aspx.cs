@@ -34,6 +34,40 @@ namespace FolioWebApplication.Agreement2s
             Title = $"Agreement {a2.Name}";
         }
 
+        protected void AgreementItem2sRadGrid_NeedDataSource(object sender, GridNeedDataSourceEventArgs e)
+        {
+            if (Session["AgreementItem2sPermission"] == null) return;
+            var id = (Guid?)Agreement2FormView.DataKey.Value;
+            if (id == null) return;
+            var d = new Dictionary<string, string>() { { "Id", "id" }, { "CreationTime", "dateCreated" }, { "LastWriteTime", "lastUpdated" }, { "AgreementId", "owner.id" } };
+            var where = Global.Trim(string.Join(" and ", new string[]
+            {
+                $"owner.id == \"{id}\"",
+                Global.GetCqlFilter(AgreementItem2sRadGrid, "Id", "id"),
+                Global.GetCqlFilter(AgreementItem2sRadGrid, "CreationTime", "dateCreated"),
+                Global.GetCqlFilter(AgreementItem2sRadGrid, "LastWriteTime", "lastUpdated")
+            }.Where(s => s != null)));
+            AgreementItem2sRadGrid.DataSource = folioServiceContext.AgreementItem2s(out var i, where, AgreementItem2sRadGrid.MasterTableView.SortExpressions.Count > 0 ? $"{d[AgreementItem2sRadGrid.MasterTableView.SortExpressions[0].FieldName]}{(AgreementItem2sRadGrid.MasterTableView.SortExpressions[0].SortOrder == GridSortOrder.Descending ? "/sort.descending" : "")}" : null, AgreementItem2sRadGrid.PageSize * AgreementItem2sRadGrid.CurrentPageIndex, AgreementItem2sRadGrid.PageSize, true);
+            AgreementItem2sRadGrid.VirtualItemCount = i;
+            if (AgreementItem2sRadGrid.MasterTableView.FilterExpression == "")
+            {
+                AgreementItem2sRadGrid.AllowFilteringByColumn = AgreementItem2sRadGrid.VirtualItemCount > 10;
+                AgreementItem2sPanel.Visible = Agreement2FormView.DataKey.Value != null && Session["AgreementItem2sPermission"] != null && AgreementItem2sRadGrid.VirtualItemCount > 0;
+            }
+            traceSource.TraceEvent(TraceEventType.Verbose, 0, $"where = {where}");
+        }
+
+        protected void AgreementOrganizationsRadGrid_NeedDataSource(object sender, GridNeedDataSourceEventArgs e)
+        {
+            if (Session["AgreementOrganizationsPermission"] == null) return;
+            var id = (Guid?)Agreement2FormView.DataKey.Value;
+            if (id == null) return;
+            var l = folioServiceContext.FindAgreement2(id, true).AgreementOrganizations ?? new AgreementOrganization[] { };
+            AgreementOrganizationsRadGrid.DataSource = l;
+            AgreementOrganizationsRadGrid.AllowFilteringByColumn = l.Count() > 10;
+            AgreementOrganizationsPanel.Visible = Agreement2FormView.DataKey.Value != null && ((string)Session["AgreementOrganizationsPermission"] == "Edit" || Session["AgreementOrganizationsPermission"] != null && l.Any());
+        }
+
         protected void OrderItem2sRadGrid_NeedDataSource(object sender, GridNeedDataSourceEventArgs e)
         {
             if (Session["OrderItem2sPermission"] == null) return;

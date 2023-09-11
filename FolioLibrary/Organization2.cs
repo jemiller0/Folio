@@ -238,64 +238,67 @@ namespace FolioLibrary
         [Column("content"), CustomValidation(typeof(Organization), nameof(ValidateContent)), DataType(DataType.MultilineText), Display(Order = 70), Editable(false)]
         public virtual string Content { get; set; }
 
-        [Display(Order = 71), JsonConverter(typeof(ArrayJsonConverter<List<Currency>, Currency>), "Content"), JsonProperty("vendorCurrencies")]
+        [Display(Name = "Agreement Organizations", Order = 71)]
+        public virtual ICollection<AgreementOrganization> AgreementOrganizations { get; set; }
+
+        [Display(Order = 72), JsonConverter(typeof(ArrayJsonConverter<List<Currency>, Currency>), "Content"), JsonProperty("vendorCurrencies")]
         public virtual ICollection<Currency> Currencies { get; set; }
 
-        [Display(Name = "Invoices", Order = 72)]
+        [Display(Name = "Invoices", Order = 73)]
         public virtual ICollection<Invoice2> Invoice2s { get; set; }
 
-        [Display(Name = "Orders", Order = 73)]
+        [Display(Name = "Orders", Order = 74)]
         public virtual ICollection<Order2> Order2s { get; set; }
 
-        [Display(Name = "Order Items", Order = 74)]
+        [Display(Name = "Order Items", Order = 75)]
         public virtual ICollection<OrderItem2> OrderItem2s { get; set; }
 
-        [Display(Name = "Order Items 1", Order = 75)]
+        [Display(Name = "Order Items 1", Order = 76)]
         public virtual ICollection<OrderItem2> OrderItem2s1 { get; set; }
 
-        [Display(Name = "Organization Accounts", Order = 76), JsonProperty("accounts")]
+        [Display(Name = "Organization Accounts", Order = 77), JsonProperty("accounts")]
         public virtual ICollection<OrganizationAccount> OrganizationAccounts { get; set; }
 
-        [Display(Name = "Organization Acquisitions Units", Order = 77), JsonConverter(typeof(ArrayJsonConverter<List<OrganizationAcquisitionsUnit>, OrganizationAcquisitionsUnit>), "AcquisitionsUnitId"), JsonProperty("acqUnitIds")]
+        [Display(Name = "Organization Acquisitions Units", Order = 78), JsonConverter(typeof(ArrayJsonConverter<List<OrganizationAcquisitionsUnit>, OrganizationAcquisitionsUnit>), "AcquisitionsUnitId"), JsonProperty("acqUnitIds")]
         public virtual ICollection<OrganizationAcquisitionsUnit> OrganizationAcquisitionsUnits { get; set; }
 
-        [Display(Name = "Organization Addresses", Order = 78), JsonProperty("addresses")]
+        [Display(Name = "Organization Addresses", Order = 79), JsonProperty("addresses")]
         public virtual ICollection<OrganizationAddress> OrganizationAddresses { get; set; }
 
-        [Display(Name = "Organization Agreements", Order = 79), JsonProperty("agreements")]
+        [Display(Name = "Organization Agreements", Order = 80), JsonProperty("agreements")]
         public virtual ICollection<OrganizationAgreement> OrganizationAgreements { get; set; }
 
-        [Display(Name = "Organization Aliases", Order = 80), JsonProperty("aliases")]
+        [Display(Name = "Organization Aliases", Order = 81), JsonProperty("aliases")]
         public virtual ICollection<OrganizationAlias> OrganizationAliases { get; set; }
 
-        [Display(Name = "Organization Changelogs", Order = 81), JsonProperty("changelogs")]
+        [Display(Name = "Organization Changelogs", Order = 82), JsonProperty("changelogs")]
         public virtual ICollection<OrganizationChangelog> OrganizationChangelogs { get; set; }
 
-        [Display(Name = "Organization Contacts", Order = 82), JsonConverter(typeof(ArrayJsonConverter<List<OrganizationContact>, OrganizationContact>), "ContactId"), JsonProperty("contacts")]
+        [Display(Name = "Organization Contacts", Order = 83), JsonConverter(typeof(ArrayJsonConverter<List<OrganizationContact>, OrganizationContact>), "ContactId"), JsonProperty("contacts")]
         public virtual ICollection<OrganizationContact> OrganizationContacts { get; set; }
 
-        [Display(Name = "Organization Emails", Order = 83), JsonProperty("emails")]
+        [Display(Name = "Organization Emails", Order = 84), JsonProperty("emails")]
         public virtual ICollection<OrganizationEmail> OrganizationEmails { get; set; }
 
-        [Display(Name = "Organization Interfaces", Order = 84), JsonConverter(typeof(ArrayJsonConverter<List<OrganizationInterface>, OrganizationInterface>), "InterfaceId"), JsonProperty("interfaces")]
+        [Display(Name = "Organization Interfaces", Order = 85), JsonConverter(typeof(ArrayJsonConverter<List<OrganizationInterface>, OrganizationInterface>), "InterfaceId"), JsonProperty("interfaces")]
         public virtual ICollection<OrganizationInterface> OrganizationInterfaces { get; set; }
 
-        [Display(Name = "Organization Notes", Order = 85)]
+        [Display(Name = "Organization Notes", Order = 86)]
         public virtual ICollection<OrganizationNote> OrganizationNotes { get; set; }
 
-        [Display(Name = "Organization Phone Numbers", Order = 86), JsonProperty("phoneNumbers")]
+        [Display(Name = "Organization Phone Numbers", Order = 87), JsonProperty("phoneNumbers")]
         public virtual ICollection<OrganizationPhoneNumber> OrganizationPhoneNumbers { get; set; }
 
-        [Display(Name = "Organization Tags", Order = 87), JsonConverter(typeof(ArrayJsonConverter<List<OrganizationTag>, OrganizationTag>), "Content"), JsonProperty("tags.tagList")]
+        [Display(Name = "Organization Tags", Order = 88), JsonConverter(typeof(ArrayJsonConverter<List<OrganizationTag>, OrganizationTag>), "Content"), JsonProperty("tags.tagList")]
         public virtual ICollection<OrganizationTag> OrganizationTags { get; set; }
 
-        [Display(Name = "Organization Types", Order = 88), JsonConverter(typeof(ArrayJsonConverter<List<OrganizationType>, OrganizationType>), "Content"), JsonProperty("organizationTypes")]
+        [Display(Name = "Organization Types", Order = 89), JsonConverter(typeof(ArrayJsonConverter<List<OrganizationType>, OrganizationType>), "Content"), JsonProperty("organizationTypes")]
         public virtual ICollection<OrganizationType> OrganizationTypes { get; set; }
 
-        [Display(Name = "Organization URLs", Order = 89), JsonProperty("urls")]
+        [Display(Name = "Organization URLs", Order = 90), JsonProperty("urls")]
         public virtual ICollection<OrganizationUrl> OrganizationUrls { get; set; }
 
-        [Display(Name = "Vouchers", Order = 90)]
+        [Display(Name = "Vouchers", Order = 91)]
         public virtual ICollection<Voucher2> Voucher2s { get; set; }
 
         public override string ToString() => $"{{ {nameof(Id)} = {Id}, {nameof(Name)} = {Name}, {nameof(Code)} = {Code}, {nameof(Description)} = {Description}, {nameof(ExportToAccounting)} = {ExportToAccounting}, {nameof(Status)} = {Status}, {nameof(Language)} = {Language}, {nameof(AccountingCode)} = {AccountingCode}, {nameof(PaymentMethod)} = {PaymentMethod}, {nameof(AccessProvider)} = {AccessProvider}, {nameof(Governmental)} = {Governmental}, {nameof(Licensor)} = {Licensor}, {nameof(MaterialSupplier)} = {MaterialSupplier}, {nameof(ClaimingInterval)} = {ClaimingInterval}, {nameof(DiscountPercent)} = {DiscountPercent}, {nameof(ExpectedActivationInterval)} = {ExpectedActivationInterval}, {nameof(ExpectedInvoiceInterval)} = {ExpectedInvoiceInterval}, {nameof(RenewalActivationInterval)} = {RenewalActivationInterval}, {nameof(SubscriptionInterval)} = {SubscriptionInterval}, {nameof(ExpectedReceiptInterval)} = {ExpectedReceiptInterval}, {nameof(TaxId)} = {TaxId}, {nameof(LiableForVat)} = {LiableForVat}, {nameof(TaxPercentage)} = {TaxPercentage}, {nameof(EdiVendorEdiCode)} = {EdiVendorEdiCode}, {nameof(EdiVendorEdiType)} = {EdiVendorEdiType}, {nameof(EdiLibEdiCode)} = {EdiLibEdiCode}, {nameof(EdiLibEdiType)} = {EdiLibEdiType}, {nameof(EdiProrateTax)} = {EdiProrateTax}, {nameof(EdiProrateFees)} = {EdiProrateFees}, {nameof(EdiNamingConvention)} = {EdiNamingConvention}, {nameof(EdiSendAcctNum)} = {EdiSendAcctNum}, {nameof(EdiSupportOrder)} = {EdiSupportOrder}, {nameof(EdiSupportInvoice)} = {EdiSupportInvoice}, {nameof(EdiNotes)} = {EdiNotes}, {nameof(EdiFtpFtpFormat)} = {EdiFtpFtpFormat}, {nameof(EdiFtpServerAddress)} = {EdiFtpServerAddress}, {nameof(EdiFtpUsername)} = {EdiFtpUsername}, {nameof(EdiFtpPassword)} = {EdiFtpPassword}, {nameof(EdiFtpFtpMode)} = {EdiFtpFtpMode}, {nameof(EdiFtpFtpConnMode)} = {EdiFtpFtpConnMode}, {nameof(EdiFtpFtpPort)} = {EdiFtpFtpPort}, {nameof(EdiFtpOrderDirectory)} = {EdiFtpOrderDirectory}, {nameof(EdiFtpInvoiceDirectory)} = {EdiFtpInvoiceDirectory}, {nameof(EdiFtpNotes)} = {EdiFtpNotes}, {nameof(EdiJobScheduleEdi)} = {EdiJobScheduleEdi}, {nameof(EdiJobSchedulingDate)} = {EdiJobSchedulingDate}, {nameof(EdiJobTime)} = {EdiJobTime}, {nameof(EdiJobIsMonday)} = {EdiJobIsMonday}, {nameof(EdiJobIsTuesday)} = {EdiJobIsTuesday}, {nameof(EdiJobIsWednesday)} = {EdiJobIsWednesday}, {nameof(EdiJobIsThursday)} = {EdiJobIsThursday}, {nameof(EdiJobIsFriday)} = {EdiJobIsFriday}, {nameof(EdiJobIsSaturday)} = {EdiJobIsSaturday}, {nameof(EdiJobIsSunday)} = {EdiJobIsSunday}, {nameof(EdiJobSendToEmails)} = {EdiJobSendToEmails}, {nameof(EdiJobNotifyAllEdi)} = {EdiJobNotifyAllEdi}, {nameof(EdiJobNotifyInvoiceOnly)} = {EdiJobNotifyInvoiceOnly}, {nameof(EdiJobNotifyErrorOnly)} = {EdiJobNotifyErrorOnly}, {nameof(EdiJobSchedulingNotes)} = {EdiJobSchedulingNotes}, {nameof(IsVendor)} = {IsVendor}, {nameof(SanCode)} = {SanCode}, {nameof(CreationTime)} = {CreationTime}, {nameof(CreationUserId)} = {CreationUserId}, {nameof(CreationUserUsername)} = {CreationUserUsername}, {nameof(LastWriteTime)} = {LastWriteTime}, {nameof(LastWriteUserId)} = {LastWriteUserId}, {nameof(LastWriteUserUsername)} = {LastWriteUserUsername}, {nameof(Content)} = {Content}, {nameof(Currencies)} = {(Currencies != null ? $"{{ {string.Join(", ", Currencies)} }}" : "")}, {nameof(OrganizationAccounts)} = {(OrganizationAccounts != null ? $"{{ {string.Join(", ", OrganizationAccounts)} }}" : "")}, {nameof(OrganizationAcquisitionsUnits)} = {(OrganizationAcquisitionsUnits != null ? $"{{ {string.Join(", ", OrganizationAcquisitionsUnits)} }}" : "")}, {nameof(OrganizationAddresses)} = {(OrganizationAddresses != null ? $"{{ {string.Join(", ", OrganizationAddresses)} }}" : "")}, {nameof(OrganizationAgreements)} = {(OrganizationAgreements != null ? $"{{ {string.Join(", ", OrganizationAgreements)} }}" : "")}, {nameof(OrganizationAliases)} = {(OrganizationAliases != null ? $"{{ {string.Join(", ", OrganizationAliases)} }}" : "")}, {nameof(OrganizationChangelogs)} = {(OrganizationChangelogs != null ? $"{{ {string.Join(", ", OrganizationChangelogs)} }}" : "")}, {nameof(OrganizationContacts)} = {(OrganizationContacts != null ? $"{{ {string.Join(", ", OrganizationContacts)} }}" : "")}, {nameof(OrganizationEmails)} = {(OrganizationEmails != null ? $"{{ {string.Join(", ", OrganizationEmails)} }}" : "")}, {nameof(OrganizationInterfaces)} = {(OrganizationInterfaces != null ? $"{{ {string.Join(", ", OrganizationInterfaces)} }}" : "")}, {nameof(OrganizationPhoneNumbers)} = {(OrganizationPhoneNumbers != null ? $"{{ {string.Join(", ", OrganizationPhoneNumbers)} }}" : "")}, {nameof(OrganizationTags)} = {(OrganizationTags != null ? $"{{ {string.Join(", ", OrganizationTags)} }}" : "")}, {nameof(OrganizationTypes)} = {(OrganizationTypes != null ? $"{{ {string.Join(", ", OrganizationTypes)} }}" : "")}, {nameof(OrganizationUrls)} = {(OrganizationUrls != null ? $"{{ {string.Join(", ", OrganizationUrls)} }}" : "")} }}";

@@ -9,6 +9,10 @@ namespace FolioWebApplication.Organization2s
 
         protected FormView Organization2FormView;
 
+        protected Panel AgreementOrganizationsPanel;
+
+        protected RadGrid AgreementOrganizationsRadGrid;
+
         protected Panel CurrenciesPanel;
 
         protected RadGrid CurrenciesRadGrid;

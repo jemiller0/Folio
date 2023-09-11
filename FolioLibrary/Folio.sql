@@ -46,22 +46,31 @@ CAST(at.jsonb#>>'{metadata,updatedByUserId}' AS UUID) AS updated_by_user_id,
 at.jsonb#>>'{metadata,updatedByUsername}' AS updated_by_username,
 jsonb_pretty(COALESCE(jsonb_set(jsonb, '{metadata,createdDate}', ('"' || (jsonb#>>'{metadata,createdDate}') || CASE WHEN jsonb#>>'{metadata,createdDate}' !~ '([-+]\d\d:\d\d)|Z$' THEN '+00:00' ELSE '' END || '"')::jsonb), jsonb)) AS content
 FROM uchicago_mod_users.addresstype at;
+CREATE VIEW uc.agreement_organizations AS
+SELECT
+uuid_generate_v5(a.id, ao.ordinality::text)::text AS id,
+a.id AS agreement_id,
+CAST(ao.jsonb->>'primaryOrg' AS BOOLEAN) AS primary_org,
+CAST(ao.jsonb#>>'{org,orgsUuid}' AS UUID) AS organization_id
+FROM uc_agreements.agreements a, jsonb_array_elements(a.jsonb->'orgs') WITH ORDINALITY ao (jsonb);
 CREATE VIEW uc.agreements AS
 SELECT
 a.id AS id,
 CAST(a.jsonb->>'name' AS VARCHAR(255)) AS name,
-a.jsonb->>'description' AS description,
 uc.DATE_CAST(a.jsonb->>'startDate') AS start_date,
 uc.DATE_CAST(a.jsonb->>'endDate') AS end_date,
-uc.TIMESTAMP_CAST(a.jsonb->>'cancellationDeadline') AS cancellation_deadline,
-uc.DATE_CAST(a.jsonb->>'dateCreated') AS date_created,
+uc.DATE_CAST(a.jsonb->>'cancellationDeadline') AS cancellation_deadline,
+a.jsonb#>>'{agreementStatus,label}' AS agreement_status_label,
+a.jsonb#>>'{isPerpetual,label}' AS is_perpetual_label,
+a.jsonb->>'description' AS description,
+uc.TIMESTAMP_CAST(a.jsonb->>'dateCreated') AS date_created,
 uc.TIMESTAMP_CAST(a.jsonb->>'lastUpdated') AS last_updated,
 jsonb_pretty(a.jsonb) AS content
 FROM uc_agreements.agreements a;
 CREATE VIEW uc.agreement_items AS
 SELECT
 ai.id AS id,
-uc.DATE_CAST(ai.jsonb->>'dateCreated') AS date_created,
+uc.TIMESTAMP_CAST(ai.jsonb->>'dateCreated') AS date_created,
 uc.TIMESTAMP_CAST(ai.jsonb->>'lastUpdated') AS last_updated,
 CAST(jsonb#>>'{owner,id}' AS UUID) AS agreement_id,
 jsonb_pretty(ai.jsonb) AS content
@@ -2826,6 +2835,13 @@ r.updated_by_user_id AS last_write_user_id,
 r.updated_date AS last_write_time,
 r.external_hrid AS instance_short_id
 FROM uchicago_mod_source_record_storage.records_lb r;
+CREATE VIEW uc.reference_datas AS
+SELECT
+rd.id AS id,
+rd.jsonb->>'label' AS label,
+rd.jsonb->>'value' AS value,
+jsonb_pretty(rd.jsonb) AS content
+FROM uc_agreements.reference_datas rd;
 CREATE VIEW uc.refund_reasons AS
 SELECT
 rr.id AS id,

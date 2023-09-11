@@ -188,12 +188,14 @@ LEFT JOIN uc.instances AS i ON i.id = an.instance_id
 SELECT
 a2.id AS ""Id"",
 a2.name AS ""Name"",
-a2.description AS ""Description"",
 a2.start_date AS ""StartDate"",
 a2.end_date AS ""EndDate"",
-a2.cancellation_deadline AS ""CancellationDeadline"",
-a2.date_created AS ""DateCreated"",
-a2.last_updated AS ""LastUpdated"",
+a2.cancellation_deadline AS ""CancellationDeadlineDate"",
+a2.status_label AS ""Status"",
+a2.is_perpetual_label AS ""IsPerpetual"",
+a2.description AS ""Description"",
+a2.date_created AS ""CreationTime"",
+a2.last_updated AS ""LastWriteTime"",
 a2.content AS ""Content"" 
 FROM uc.agreements AS a2
  ORDER BY a2.name
@@ -216,14 +218,43 @@ FROM uc.agreements AS a2
             folioDapperContext.Query(@"
 SELECT
 ai2.id AS ""Id"",
-ai2.date_created AS ""DateCreated"",
-ai2.last_updated AS ""LastUpdated"",
+ai2.date_created AS ""CreationTime"",
+ai2.last_updated AS ""LastWriteTime"",
+a.name AS ""Agreement"",
 ai2.agreement_id AS ""AgreementId"",
 ai2.content AS ""Content"" 
 FROM uc.agreement_items AS ai2
+LEFT JOIN uc.agreements AS a ON a.id = ai2.agreement_id
  ORDER BY ai2.id
 ", take: 1);
             traceSource.TraceEvent(TraceEventType.Information, 0, $"AgreementItem2sQueryTest()\r\n    ElapsedTime={s.Elapsed}");
+        }
+
+        [TestMethod]
+        public void QueryAgreementOrganizationsTest()
+        {
+            var s = Stopwatch.StartNew();
+            folioDapperContext.AgreementOrganizations(take: 1).ToArray();
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"AgreementOrganizationsTest()\r\n    ElapsedTime={s.Elapsed}");
+        }
+
+        [TestMethod]
+        public void AgreementOrganizationsQueryTest()
+        {
+            var s = Stopwatch.StartNew();
+            folioDapperContext.Query(@"
+SELECT
+a.name AS ""Agreement"",
+ao.agreement_id AS ""AgreementId"",
+ao.primary_org AS ""PrimaryOrg"",
+o.name AS ""Organization"",
+ao.organization_id AS ""OrganizationId"" 
+FROM uc.agreement_organizations AS ao
+LEFT JOIN uc.agreements AS a ON a.id = ao.agreement_id
+LEFT JOIN uc.organizations AS o ON o.id = ao.organization_id
+ ORDER BY ao.id
+", take: 1);
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"AgreementOrganizationsQueryTest()\r\n    ElapsedTime={s.Elapsed}");
         }
 
         [TestMethod]
@@ -7304,6 +7335,30 @@ LEFT JOIN uc.raw_records AS rr2 ON rr2.id = r2.id
  ORDER BY r2.id
 ", take: 1);
             traceSource.TraceEvent(TraceEventType.Information, 0, $"Record2sQueryTest()\r\n    ElapsedTime={s.Elapsed}");
+        }
+
+        [TestMethod]
+        public void QueryReferenceData2sTest()
+        {
+            var s = Stopwatch.StartNew();
+            folioDapperContext.ReferenceData2s(take: 1).ToArray();
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"ReferenceData2sTest()\r\n    ElapsedTime={s.Elapsed}");
+        }
+
+        [TestMethod]
+        public void ReferenceData2sQueryTest()
+        {
+            var s = Stopwatch.StartNew();
+            folioDapperContext.Query(@"
+SELECT
+rd2.id AS ""Id"",
+rd2.label AS ""Label"",
+rd2.value AS ""Value"",
+rd2.content AS ""Content"" 
+FROM uc.reference_datas AS rd2
+ ORDER BY rd2.id
+", take: 1);
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"ReferenceData2sQueryTest()\r\n    ElapsedTime={s.Elapsed}");
         }
 
         [TestMethod]

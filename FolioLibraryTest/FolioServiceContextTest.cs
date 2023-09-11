@@ -56,6 +56,7 @@ namespace FolioLibraryTest
             var s = Stopwatch.StartNew();
             var a2 = folioServiceContext.Agreement2s(take: 1).SingleOrDefault();
             if (a2 == null) Assert.Inconclusive();
+            a2.AgreementOrganizations = null;
             var a3 = folioDapperContext.Agreement2s(take: 1).SingleOrDefault();
             a3.Content = null;
             Assert.AreEqual(a2.ToString(), a3.ToString());
@@ -1209,6 +1210,18 @@ namespace FolioLibraryTest
             var r3 = folioDapperContext.Record2s(take: 1).SingleOrDefault();
             Assert.AreEqual(r2.ToString(), r3.ToString());
             traceSource.TraceEvent(TraceEventType.Information, 0, $"Source_DeserializeRecord2Test()\r\n    ElapsedTime={s.Elapsed}");
+        }
+
+        [TestMethod]
+        public void Agreements_DeserializeReferenceData2Test()
+        {
+            var s = Stopwatch.StartNew();
+            var rd2 = folioServiceContext.ReferenceData2s(take: 1).SingleOrDefault();
+            if (rd2 == null) Assert.Inconclusive();
+            var rd3 = folioDapperContext.ReferenceData2s(take: 1).SingleOrDefault();
+            rd3.Content = null;
+            Assert.AreEqual(rd2.ToString(), rd3.ToString());
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"Agreements_DeserializeReferenceData2Test()\r\n    ElapsedTime={s.Elapsed}");
         }
 
         [TestMethod]

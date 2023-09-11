@@ -624,6 +624,7 @@ namespace FolioLibrary
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "Querying agreements");
             AuthenticateIfNecessary();
             if ((skip != null || take != null) && take != 0) orderBy = orderBy ?? "id";
+            where = GetErmWhere(where);
             var l = (new[] { where != null ? $"filters={WebUtility.UrlEncode(where)}" : null, orderBy != null ? $"sort={WebUtility.UrlEncode(orderBy)}" : null, skip != null ? $"offset={skip}" : null, take != null ? $"perPage={take}" : null }).Where(s3 => s3 != null);
             var url = $"{Url}/erm/sas?stats=true{(l.Any() ? $"&{string.Join("&", l)}" : "")}";
             traceSource.TraceEvent(TraceEventType.Verbose, 0, url);
@@ -646,10 +647,11 @@ namespace FolioLibrary
             skip = skip ?? 0;
             take = take ?? int.MaxValue;
             orderBy = orderBy ?? "id";
+            where = GetErmWhere(where);
             while (take > 0)
             {
                 var l = (new[] { where != null ? $"filters={WebUtility.UrlEncode(where)}" : null, orderBy != null ? $"sort={WebUtility.UrlEncode(orderBy)}" : null, skip != null ? $"offset={skip}" : null, take != null ? $"perPage={Math.Min(take.Value, 100)}" : null }).Where(s3 => s3 != null);
-            var url = $"{Url}/erm/sas?stats=true{(l.Any() ? $"&{string.Join("&", l)}" : "")}";
+                var url = $"{Url}/erm/sas?stats=true{(l.Any() ? $"&{string.Join("&", l)}" : "")}";
                 traceSource.TraceEvent(TraceEventType.Verbose, 0, url);
                 traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", httpClient.DefaultRequestHeaders);
                 var hrm = httpClient.GetAsync(url, HttpCompletionOption.ResponseHeadersRead).Result;
@@ -766,6 +768,7 @@ namespace FolioLibrary
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "Querying agreement items");
             AuthenticateIfNecessary();
             if ((skip != null || take != null) && take != 0) orderBy = orderBy ?? "id";
+            where = GetErmWhere(where);
             var l = (new[] { where != null ? $"filters={WebUtility.UrlEncode(where)}" : null, orderBy != null ? $"sort={WebUtility.UrlEncode(orderBy)}" : null, skip != null ? $"offset={skip}" : null, take != null ? $"perPage={take}" : null }).Where(s3 => s3 != null);
             var url = $"{Url}/erm/entitlements?stats=true{(l.Any() ? $"&{string.Join("&", l)}" : "")}";
             traceSource.TraceEvent(TraceEventType.Verbose, 0, url);
@@ -788,10 +791,11 @@ namespace FolioLibrary
             skip = skip ?? 0;
             take = take ?? int.MaxValue;
             orderBy = orderBy ?? "id";
+            where = GetErmWhere(where);
             while (take > 0)
             {
                 var l = (new[] { where != null ? $"filters={WebUtility.UrlEncode(where)}" : null, orderBy != null ? $"sort={WebUtility.UrlEncode(orderBy)}" : null, skip != null ? $"offset={skip}" : null, take != null ? $"perPage={Math.Min(take.Value, 100)}" : null }).Where(s3 => s3 != null);
-            var url = $"{Url}/erm/entitlements?stats=true{(l.Any() ? $"&{string.Join("&", l)}" : "")}";
+                var url = $"{Url}/erm/entitlements?stats=true{(l.Any() ? $"&{string.Join("&", l)}" : "")}";
                 traceSource.TraceEvent(TraceEventType.Verbose, 0, url);
                 traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", httpClient.DefaultRequestHeaders);
                 var hrm = httpClient.GetAsync(url, HttpCompletionOption.ResponseHeadersRead).Result;
@@ -13498,6 +13502,139 @@ namespace FolioLibrary
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", s.Elapsed);
         }
 
+        public bool AnyReferenceDatas(string where = null) => ReferenceDatas(where, take: 1).Any();
+
+        public int CountReferenceDatas(string where = null)
+        {
+            ReferenceDatas(out var i, take: 0);
+            return i;
+        }
+
+        public JObject[] ReferenceDatas(out int count, string where = null, string orderBy = null, int? skip = null, int? take = 100)
+        {
+            var s = Stopwatch.StartNew();
+            traceSource.TraceEvent(TraceEventType.Verbose, 0, "Querying reference datas");
+            AuthenticateIfNecessary();
+            if ((skip != null || take != null) && take != 0) orderBy = orderBy ?? "id";
+            where = GetErmWhere(where);
+            var l = (new[] { where != null ? $"filters={WebUtility.UrlEncode(where)}" : null, orderBy != null ? $"sort={WebUtility.UrlEncode(orderBy)}" : null, skip != null ? $"offset={skip}" : null, take != null ? $"perPage={take}" : null }).Where(s3 => s3 != null);
+            var url = $"{Url}/erm/refdata?stats=true{(l.Any() ? $"&{string.Join("&", l)}" : "")}";
+            traceSource.TraceEvent(TraceEventType.Verbose, 0, url);
+            traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", httpClient.DefaultRequestHeaders);
+            var hrm = httpClient.GetAsync(url).Result;
+            var s2 = hrm.Content.ReadAsStringAsync().Result;
+            traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}{1}", hrm.Headers, s2);
+            var jo = hrm.Content.Headers.ContentType?.MediaType == "application/json" ? JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings) : null;
+            if (hrm.StatusCode != HttpStatusCode.OK) throw new HttpRequestException($"Response status code does not indicate success: {hrm.StatusCode} ({hrm.ReasonPhrase}).\r\n{s2}");
+            traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", s.Elapsed);
+            count = (int)jo["totalRecords"];
+            return jo.Properties().SkipWhile(jp => jp.Name == "totalRecords").First().Value.Cast<JObject>().ToArray();
+        }
+
+        public IEnumerable<JObject> ReferenceDatas(string where = null, string orderBy = null, int? skip = null, int? take = null)
+        {
+            var s = Stopwatch.StartNew();
+            traceSource.TraceEvent(TraceEventType.Verbose, 0, "Querying reference datas");
+            AuthenticateIfNecessary();
+            if ((skip != null || take != null) && take != 0) orderBy = orderBy ?? "id";
+            var l = (new[] { where != null ? $"filters={WebUtility.UrlEncode(where)}" : null, orderBy != null ? $"sort={WebUtility.UrlEncode(orderBy)}" : null, skip != null ? $"offset={skip}" : null, take != null ? $"perPage={take}" : null }).Where(s3 => s3 != null);
+            var url = $"{Url}/erm/refdata?stats=true{(l.Any() ? $"&{string.Join("&", l)}" : "")}";
+            traceSource.TraceEvent(TraceEventType.Verbose, 0, url);
+            traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", httpClient.DefaultRequestHeaders);
+            var hrm = httpClient.GetAsync(url, HttpCompletionOption.ResponseHeadersRead).Result;
+            traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", hrm.Headers);
+            if (hrm.StatusCode != HttpStatusCode.OK)
+            {
+                var s2 = hrm.Content.ReadAsStringAsync().Result;
+                if (hrm.Content.Headers.ContentType?.MediaType == "application/json") s2 = JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings).ToString();
+                traceSource.TraceEvent(TraceEventType.Verbose, 0, s2);
+                throw new HttpRequestException($"Response status code does not indicate success: {hrm.StatusCode} ({hrm.ReasonPhrase}).\r\n{s2}");
+            }
+            using (var sr = new StreamReader(hrm.Content.ReadAsStreamAsync().Result))
+            using (var jtr = new JsonTextReader(sr) { SupportMultipleContent = true })
+            {
+                if (!jtr.Read()) throw new InvalidDataException();
+                while (jtr.Read() && jtr.TokenType != JsonToken.StartArray) ;
+                while (jtr.Read() && jtr.TokenType != JsonToken.EndArray)
+                {
+                    var jo = (JObject)localTimeJsonSerializer.Deserialize(jtr);
+                    traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", jo);
+                    yield return jo;
+                }
+            }
+            traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", s.Elapsed);
+        }
+
+        public JObject GetReferenceData(string id)
+        {
+            var s = Stopwatch.StartNew();
+            traceSource.TraceEvent(TraceEventType.Verbose, 0, "Getting reference data {0}", id);
+            if (id == null) return null;
+            AuthenticateIfNecessary();
+            var url = $"{Url}/erm/refdata/{id}";
+            traceSource.TraceEvent(TraceEventType.Verbose, 0, url);
+            traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", httpClient.DefaultRequestHeaders);
+            var hrm = httpClient.GetAsync(url).Result;
+            var s2 = hrm.Content.ReadAsStringAsync().Result;
+            traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}{1}", hrm.Headers, s2);
+            var jo = hrm.Content.Headers.ContentType?.MediaType == "application/json" ? JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings) : null;
+            if (hrm.StatusCode != HttpStatusCode.OK && hrm.StatusCode != HttpStatusCode.NotFound) throw new HttpRequestException($"Response status code does not indicate success: {hrm.StatusCode} ({hrm.ReasonPhrase}).\r\n{s2}");
+            traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", s.Elapsed);
+            return jo;
+        }
+
+        public JObject InsertReferenceData(JObject referenceData)
+        {
+            var s = Stopwatch.StartNew();
+            if (referenceData["id"] == null) referenceData["id"] = Guid.NewGuid();
+            traceSource.TraceEvent(TraceEventType.Verbose, 0, "Inserting reference data {0}", referenceData["id"]);
+            AuthenticateIfNecessary();
+            var url = $"{Url}/erm/refdata";
+            traceSource.TraceEvent(TraceEventType.Verbose, 0, url);
+            var s2 = JsonConvert.SerializeObject(referenceData, universalTimeJsonSerializationSettings);
+            var sc = new StringContent(s2, Encoding.UTF8, "application/json");
+            traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}{1}", httpClient.DefaultRequestHeaders, s2);
+            var hrm = httpClient.PostAsync(url, sc).Result;
+            s2 = hrm.Content.ReadAsStringAsync().Result;
+            traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}{1}", hrm.Headers, s2);
+            var jo = hrm.Content.Headers.ContentType?.MediaType == "application/json" ? JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings) : null;
+            if (hrm.StatusCode != HttpStatusCode.Created) throw new HttpRequestException($"Response status code does not indicate success: {hrm.StatusCode} ({hrm.ReasonPhrase}).\r\n{s2}");
+            traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", s.Elapsed);
+            return jo;
+        }
+
+        public void UpdateReferenceData(JObject referenceData)
+        {
+            var s = Stopwatch.StartNew();
+            traceSource.TraceEvent(TraceEventType.Verbose, 0, $"Updating reference data {referenceData["id"]}");
+            AuthenticateIfNecessary();
+            var url = $"{Url}/erm/refdata/{referenceData["id"]}";
+            traceSource.TraceEvent(TraceEventType.Verbose, 0, url);
+            var s2 = JsonConvert.SerializeObject(referenceData, universalTimeJsonSerializationSettings);
+            var sc = new StringContent(s2, Encoding.UTF8, "application/json");
+            traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}{1}", httpClient.DefaultRequestHeaders, s2);
+            var hrm = httpClient.PutAsync(url, sc).Result;
+            s2 = hrm.Content.ReadAsStringAsync().Result;
+            traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}{1}", hrm.Headers, s2);
+            if (hrm.StatusCode != HttpStatusCode.NoContent) throw new HttpRequestException($"Response status code does not indicate success: {hrm.StatusCode} ({hrm.ReasonPhrase}).\r\n{s2}");
+            traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", s.Elapsed);
+        }
+
+        public void DeleteReferenceData(string id)
+        {
+            var s = Stopwatch.StartNew();
+            traceSource.TraceEvent(TraceEventType.Verbose, 0, $"Deleting reference data {id}");
+            AuthenticateIfNecessary();
+            var url = $"{Url}/erm/refdata/{id}";
+            traceSource.TraceEvent(TraceEventType.Verbose, 0, url);
+            traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", httpClient.DefaultRequestHeaders);
+            var hrm = httpClient.DeleteAsync(url).Result;
+            var s2 = hrm.Content.ReadAsStringAsync().Result;
+            traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}{1}", hrm.Headers, s2);
+            if (hrm.StatusCode != HttpStatusCode.NoContent) throw new HttpRequestException($"Response status code does not indicate success: {hrm.StatusCode} ({hrm.ReasonPhrase}).\r\n{s2}");
+            traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", s.Elapsed);
+        }
+
         public bool AnyRefundReasons(string where = null) => RefundReasons(where, take: 1).Any();
 
         public int CountRefundReasons(string where = null)
@@ -17226,6 +17363,17 @@ namespace FolioLibrary
             value = value.Replace("*", "\\*");
             value = value.Replace("^", "\\^");
             return value;
+        }
+
+        public static string GetErmWhere(string cqlWhere)
+        {
+            if (cqlWhere == null) return null;
+            cqlWhere = Regex.Replace(cqlWhere, "\" and ", "\"&&", RegexOptions.Compiled);
+            cqlWhere = Regex.Replace(cqlWhere, @" == (?<!\\)""\*(.*?)\*(?<!\\)""", "=~$1", RegexOptions.Compiled);
+            cqlWhere = Regex.Replace(cqlWhere, @" == (?<!\\)""\*(.*?)(?<!\\)""", "=~$1", RegexOptions.Compiled);
+            cqlWhere = Regex.Replace(cqlWhere, @" == (?<!\\)""(.*?)\*(?<!\\)""", "=~$1", RegexOptions.Compiled);
+            cqlWhere = Regex.Replace(cqlWhere, @" == (?<!\\)""(.*?)(?<!\\)""", "==$1", RegexOptions.Compiled);
+            return cqlWhere;
         }
 
         public void Dispose()

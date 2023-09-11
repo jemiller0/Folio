@@ -9,6 +9,14 @@ namespace FolioWebApplication.Agreement2s
 
         protected FormView Agreement2FormView;
 
+        protected Panel AgreementItem2sPanel;
+
+        protected RadGrid AgreementItem2sRadGrid;
+
+        protected Panel AgreementOrganizationsPanel;
+
+        protected RadGrid AgreementOrganizationsRadGrid;
+
         protected Panel OrderItem2sPanel;
 
         protected RadGrid OrderItem2sRadGrid;

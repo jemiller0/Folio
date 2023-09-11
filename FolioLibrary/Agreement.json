@@ -13,9 +13,6 @@
       "minLength": 1,
       "maxLength": 255
     },
-    "description": {
-      "type": "string"
-    },
     "startDate": {
       "type": "string",
       "format": "date-time"
@@ -27,6 +24,45 @@
     "cancellationDeadline": {
       "type": "string",
       "format": "date-time"
+    },
+    "agreementStatus": {
+      "type": "object",
+      "properties": {
+        "label": {
+          "type": "string"
+        }
+      }
+    },
+    "isPerpetual": {
+      "type": "object",
+      "properties": {
+        "label": {
+          "type": "string"
+        }
+      }
+    },
+    "orgs": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "primaryOrg": {
+            "type": "boolean"
+          },
+          "org": {
+            "type": "object",
+            "properties": {
+              "orgsUuid": {
+                "type": "string",
+                "pattern": "^[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12}$"
+              }
+            }
+          }
+        }
+      }
+    },
+    "description": {
+      "type": "string"
     },
     "dateCreated": {
       "type": "string",

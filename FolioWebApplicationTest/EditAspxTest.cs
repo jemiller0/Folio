@@ -2421,6 +2421,33 @@ namespace FolioWebApplicationTest
         }
 
         [TestMethod]
+        public void ReferenceData2sEditAspxTest()
+        {
+            var s = Stopwatch.StartNew();
+            try
+            {
+                var rd2 = folioServiceContext.ReferenceData2s(take: 1).SingleOrDefault();
+                if (rd2 != null)
+                {
+                    var hrm = httpClient.GetAsync($"{Url}/ReferenceData2s/Edit.aspx?Id={rd2.Id}").Result;
+                    hrm.EnsureSuccessStatusCode();
+                    Assert.IsTrue(s.Elapsed < timeSpan);
+                }
+                else
+                    Assert.Inconclusive();
+            }
+            catch (Exception e)
+            {
+                traceSource.TraceEvent(TraceEventType.Error, 0, e.ToString());
+                throw;
+            }
+            finally
+            {
+                traceSource.TraceEvent(TraceEventType.Information, 0, $"ReferenceData2sEditAspxTest()\r\n    ElapsedTime={s.Elapsed}");
+            }
+        }
+
+        [TestMethod]
         public void RefundReason2sEditAspxTest()
         {
             var s = Stopwatch.StartNew();

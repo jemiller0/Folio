@@ -1980,6 +1980,26 @@ namespace FolioLibraryTest
         }
 
         [TestMethod]
+        public void CountReferenceDatasTest()
+        {
+            var s = Stopwatch.StartNew();
+            var i = folioServiceClient.CountReferenceDatas();
+            var j = folioDapperContext.CountReferenceDatas();
+            Assert.IsTrue(i == j);
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"CountReferenceDatasTest()\r\n    ElapsedTime={s.Elapsed}");
+        }
+
+        [TestMethod]
+        public void AgreementsReferenceDatasTest()
+        {
+            var s = Stopwatch.StartNew();
+            var l = folioServiceClient.ReferenceDatas(take: take).Select(jo => (string)jo["id"]).ToArray();
+            var l2 = folioDapperContext.ReferenceDatas(take: take).Select(u => u.Id.ToString()).ToArray();
+            Assert.IsTrue(l.SequenceEqual(l2));
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"ReferenceDatasTest()\r\n    ElapsedTime={s.Elapsed}");
+        }
+
+        [TestMethod]
         public void CountRefundReasonsTest()
         {
             var s = Stopwatch.StartNew();
@@ -2569,6 +2589,18 @@ namespace FolioLibraryTest
             traceSource.TraceEvent(TraceEventType.Information, 0, ai2.ToString());
             Assert.IsNotNull(ai2);
             traceSource.TraceEvent(TraceEventType.Information, 0, $"DeserializeAgreementItem2Test()\r\n    ElapsedTime={s.Elapsed}");
+        }
+
+        [TestMethod]
+        public void DeserializeAgreementOrganizationTest()
+        {
+            var s = Stopwatch.StartNew();
+            var jo = folioServiceClient.Agreements(take: 1).SingleOrDefault();
+            if (jo == null) Assert.Inconclusive();
+            var ao = JsonConvert.DeserializeObject<AgreementOrganization>(jo.ToString());
+            traceSource.TraceEvent(TraceEventType.Information, 0, ao.ToString());
+            Assert.IsNotNull(ao);
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"DeserializeAgreementOrganizationTest()\r\n    ElapsedTime={s.Elapsed}");
         }
 
         [TestMethod]
@@ -4881,6 +4913,18 @@ namespace FolioLibraryTest
             traceSource.TraceEvent(TraceEventType.Information, 0, r2.ToString());
             Assert.IsNotNull(r2);
             traceSource.TraceEvent(TraceEventType.Information, 0, $"DeserializeRecord2Test()\r\n    ElapsedTime={s.Elapsed}");
+        }
+
+        [TestMethod]
+        public void DeserializeReferenceData2Test()
+        {
+            var s = Stopwatch.StartNew();
+            var jo = folioServiceClient.ReferenceDatas(take: 1).SingleOrDefault();
+            if (jo == null) Assert.Inconclusive();
+            var rd2 = JsonConvert.DeserializeObject<ReferenceData2>(jo.ToString());
+            traceSource.TraceEvent(TraceEventType.Information, 0, rd2.ToString());
+            Assert.IsNotNull(rd2);
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"DeserializeReferenceData2Test()\r\n    ElapsedTime={s.Elapsed}");
         }
 
         [TestMethod]
