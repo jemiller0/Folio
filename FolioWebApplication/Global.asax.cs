@@ -161,7 +161,7 @@ namespace FolioWebApplication
                             SetSourcePermissions("View");
                             Session["LabelsPermission"] = "Edit";
                         }
-                        else if (hs.Contains("department:Preserv Binding & Shelf Prpe") || hs.Contains("department:Preservation Conservation") || userName == "zpayne" || userName == "lyssa")
+                        else if (hs.Contains("department:Preserv Binding & Shelf Prpe") || hs.Contains("department:Preservation Conservation") || userName == "zpayne" || userName == "lyssa" || userName == "sydani")
                         {
                             SetInventoryPermissions("View");
                             Session["LabelsPermission"] = "Edit";
@@ -271,7 +271,9 @@ namespace FolioWebApplication
                 if (query == null || gc.CurrentFilterFunction == GridKnownFunction.IsNull || gc.CurrentFilterFunction == GridKnownFunction.NotIsNull)
                 {
                     if (gc.DataType == typeof(DateTime)) gc.CurrentFilterValue = DateTime.TryParse(gc.CurrentFilterValue, out var dt) ? dt.ToUniversalTime().ToString("yyyy-MM-ddTHH:mm:ss.fff+00:00"/*"o"*/) : null;
-                    return string.Format(formats[gc.CurrentFilterFunction], name, FolioServiceClient.EncodeCql(gc.CurrentFilterValue));
+                    if (gc.DataType == typeof(decimal)) gc.CurrentFilterValue = decimal.TryParse(gc.CurrentFilterValue.Replace("$", ""), out var d) ? Regex.Replace($"{d}{(!d.ToString().Contains(".") ? ".0" : "")}", @"\.00$", ".0") : null;
+                    //if (gc.CurrentFilterValue == "") return null;
+                    return string.Format(formats[gc.CurrentFilterFunction]/*.Replace("\"", gc.DataType == typeof(decimal) ? "" : "\"")*/, name, FolioServiceClient.EncodeCql(gc.CurrentFilterValue));
                 }
                 else
                     return $"{name} == ({string.Join(" or ", query(GetCqlFilter(radGrid, dataField, name2), null, null, radGrid.PageSize).Select(jo => $"\"{jo["id"]}\""))})".Replace(" == ()", " == false");

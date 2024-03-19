@@ -268,7 +268,7 @@ namespace FolioLibrary
             PublicationFrequencies = jObject.SelectToken("publicationFrequency")?.Select(jt => PublicationFrequency.FromJObject((JValue)jt)).ToArray(),
             PublicationRanges = jObject.SelectToken("publicationRange")?.Select(jt => PublicationRange.FromJObject((JValue)jt)).ToArray(),
             Publications = jObject.SelectToken("publication")?.Where(jt => jt.HasValues).Select(jt => Publication.FromJObject((JObject)jt)).ToArray(),
-            Series = jObject.SelectToken("series")?.Select(jt => FolioLibrary.Series.FromJObject((JValue)jt)).ToArray(),
+            //Series = jObject.SelectToken("series")?.Select(jt => FolioLibrary.Series.FromJObject((JValue)jt)).ToArray(),
             Subjects = jObject.SelectToken("subjects")?.Select(jt => Subject.FromJObject((JValue)jt)).ToArray()
         } : null;
 
